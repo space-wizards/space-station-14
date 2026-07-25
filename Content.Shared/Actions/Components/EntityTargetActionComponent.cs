@@ -7,7 +7,7 @@ namespace Content.Shared.Actions.Components;
 /// <summary>
 /// Used on action entities to define an action that triggers when targeting an entity.
 /// If used with <see cref="WorldTargetActionComponent"/>, the event here can be set to null and <c>Optional</c> should be set.
-/// Then <see cref="WorldActionEvent"> can have <c>TargetEntity</c> optionally set to the client's hovered entity, if it is valid.
+/// Then WorldActionEvent can have <c>TargetEntity</c> optionally set to the client's hovered entity, if it is valid.
 /// Using entity-world targeting like this will always give coords, but doesn't need to have an entity.
 /// </summary>
 /// <remarks>

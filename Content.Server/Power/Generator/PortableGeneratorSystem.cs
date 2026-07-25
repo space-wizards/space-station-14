@@ -14,7 +14,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.Power.Generator;
 
 /// <summary>
-/// Implements logic for portable generators (the PACMAN). Primarily UI & power switching behavior.
+/// Implements logic for portable generators (the PACMAN). Primarily UI and power switching behavior.
 /// </summary>
 /// <seealso cref="PortableGeneratorComponent"/>
 public sealed partial class PortableGeneratorSystem : SharedPortableGeneratorSystem

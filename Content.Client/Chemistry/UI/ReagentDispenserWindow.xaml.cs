@@ -79,7 +79,6 @@ namespace Content.Client.Chemistry.UI
         /// <para>Also highlights a reagent if it's dispense button is being mouse hovered.</para>
         /// </summary>
         /// <param name="state">State data for the dispenser.</param>
-        /// or null if no button is being hovered.</param>
         public void UpdateContainerInfo(ReagentDispenserBoundUserInterfaceState state)
         {
             ContainerInfo.Children.Clear();

@@ -55,7 +55,7 @@ public sealed partial class ApcVisualizerSystem : VisualizerSystem<ApcVisualsCom
         }
         else
         {
-            /// Overrides all of the lock and channel indicators.
+            // Overrides all of the lock and channel indicators.
             SpriteSystem.LayerSetRsiState((uid, args.Sprite), ApcVisualLayers.ChargeState, comp.EmaggedScreenState);
             for (var i = 0; i < comp.LockIndicators; ++i)
             {

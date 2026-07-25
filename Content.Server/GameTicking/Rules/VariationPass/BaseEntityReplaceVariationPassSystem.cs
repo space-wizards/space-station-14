@@ -8,9 +8,9 @@ namespace Content.Server.GameTicking.Rules.VariationPass;
 
 /// <inheritdoc cref="EntityReplaceVariationPassComponent"/>
 /// <summary>
-///     A base system for fast replacement of entities utilizing a query, rather than having to iterate every entity
-///     To use, you must have a marker component to use for <see cref="TEntComp"/>--each replaceable entity must have it
-///     Then you need an inheriting system as well as a unique game rule component for <see cref="TGameRuleComp"/>
+///     A base system for fast replacement of entities utilizing a query, rather than having to iterate every entity.
+///     To use, you must have a marker component to use for <typeparamref name="TEntComp"/> - each replaceable entity must have it.
+///     Then you need an inheriting system as well as a unique game rule component for <typeparamref name="TGameRuleComp"/>.
 ///
 ///     This means a bit more boilerplate for each one, but significantly faster to actually execute.
 ///     See <see cref="WallReplaceVariationPassSystem"/>
@@ -21,7 +21,7 @@ public abstract class BaseEntityReplaceVariationPassSystem<TEntComp, TGameRuleCo
 {
     /// <summary>
     ///     Used so we don't modify while enumerating
-    ///     if the replaced entity also has <see cref="TEntComp"/>.
+    ///     if the replaced entity also has <typeparamref name="TEntComp"/>.
     ///
     ///     Filled and cleared within the same tick so no persistence issues.
     /// </summary>

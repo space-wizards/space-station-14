@@ -351,7 +351,7 @@ public abstract partial class SharedStorageSystem : EntitySystem
     /// <summary>
     /// Copy this component's datafields from one entity to another.
     /// This can't use CopyComp because we don't want to copy the references to the items inside the storage.
-    /// <summary>
+    /// </summary>
     public void CopyComponent(Entity<StorageComponent?> source, EntityUid target)
     {
         if (!Resolve(source, ref source.Comp))

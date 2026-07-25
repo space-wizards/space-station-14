@@ -39,7 +39,7 @@ public sealed partial class RandomDecalSpawnerComponent : Component
     /// The maximum amount of decals to spawn within a tile.
     /// </summary>
     /// <remarks>
-    /// A value <= 0 or null is considered unlimited.
+    /// A value less than or equal to 0 or null is considered unlimited.
     /// </remarks>
     [DataField]
     public int? MaxDecalsPerTile = null;

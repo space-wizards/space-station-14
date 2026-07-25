@@ -12,11 +12,11 @@ using Content.Shared.Interaction;
 using Content.Shared.Nutrition;
 using Content.Shared.Nutrition.EntitySystems;
 
-/// <summary>
-/// System for vapes
-/// </summary>
 namespace Content.Server.Nutrition.EntitySystems
 {
+    /// <summary>
+    /// System for vapes
+    /// </summary>
     public sealed partial class SmokingSystem
     {
         [Dependency] private DoAfterSystem _doAfterSystem = default!;

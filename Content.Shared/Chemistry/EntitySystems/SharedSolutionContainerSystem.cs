@@ -415,8 +415,6 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <summary>
     ///     Removes part of the solution in the container.
     /// </summary>
-    /// <param name="targetUid"></param>
-    /// <param name="solutionHolder"></param>
     /// <param name="quantity">the volume of solution to remove.</param>
     /// <returns>The solution that was removed.</returns>
     public Solution SplitSolution(Entity<SolutionComponent> soln, FixedPoint2 quantity)
@@ -482,8 +480,6 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <summary>
     ///     Sets the capacity (maximum volume) of a solution to a new value.
     /// </summary>
-    /// <param name="targetUid">The entity containing the solution.</param>
-    /// <param name="targetSolution">The solution to set the capacity of.</param>
     /// <param name="capacity">The value to set the capacity of the solution to.</param>
     public void SetCapacity(Entity<SolutionComponent> soln, FixedPoint2 capacity)
     {
@@ -509,8 +505,6 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <summary>
     ///     Adds reagent of an Id to the container.
     /// </summary>
-    /// <param name="targetUid"></param>
-    /// <param name="targetSolution">Container to which we are adding reagent</param>
     /// <param name="reagentQuantity">The reagent to add.</param>
     /// <param name="acceptedQuantity">The amount of reagent successfully added.</param>
     /// <returns>If all the reagent could be added.</returns>
@@ -543,8 +537,6 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <summary>
     ///     Adds reagent of an Id to the container.
     /// </summary>
-    /// <param name="targetUid"></param>
-    /// <param name="targetSolution">Container to which we are adding reagent</param>
     /// <param name="prototype">The Id of the reagent to add.</param>
     /// <param name="quantity">The amount of reagent to add.</param>
     /// <returns>If all the reagent could be added.</returns>
@@ -555,8 +547,6 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <summary>
     ///     Adds reagent of an Id to the container.
     /// </summary>
-    /// <param name="targetUid"></param>
-    /// <param name="targetSolution">Container to which we are adding reagent</param>
     /// <param name="prototype">The Id of the reagent to add.</param>
     /// <param name="quantity">The amount of reagent to add.</param>
     /// <param name="acceptedQuantity">The amount of reagent successfully added.</param>
@@ -570,8 +560,6 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <summary>
     ///     Adds reagent of an Id to the container.
     /// </summary>
-    /// <param name="targetUid"></param>
-    /// <param name="targetSolution">Container to which we are adding reagent</param>
     /// <param name="reagentId">The reagent to add.</param>
     /// <param name="quantity">The amount of reagent to add.</param>
     /// <param name="acceptedQuantity">The amount of reagent successfully added.</param>
@@ -585,8 +573,6 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <summary>
     ///     Removes reagent from a container.
     /// </summary>
-    /// <param name="targetUid"></param>
-    /// <param name="container">Solution container from which we are removing reagent.</param>
     /// <param name="reagentQuantity">The reagent to remove.</param>
     /// <returns>The amount of reagent that was removed.</returns>
     public FixedPoint2 RemoveReagent(Entity<SolutionComponent> soln, ReagentQuantity reagentQuantity)
@@ -605,8 +591,6 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <summary>
     ///     Removes reagent from a container.
     /// </summary>
-    /// <param name="targetUid"></param>
-    /// <param name="container">Solution container from which we are removing reagent</param>
     /// <param name="prototype">The Id of the reagent to remove.</param>
     /// <param name="quantity">The amount of reagent to remove.</param>
     /// <returns>The amount of reagent that was removed.</returns>
@@ -618,8 +602,6 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <summary>
     ///     Removes reagent from a container.
     /// </summary>
-    /// <param name="targetUid"></param>
-    /// <param name="container">Solution container from which we are removing reagent</param>
     /// <param name="reagentId">The reagent to remove.</param>
     /// <param name="quantity">The amount of reagent to remove.</param>
     /// <returns>The amount of reagent that was removed.</returns>
@@ -631,11 +613,8 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <summary>
     ///     Moves some quantity of a solution from one solution to another.
     /// </summary>
-    /// <param name="sourceUid">entity holding the source solution</param>
-    /// <param name="targetUid">entity holding the target solution</param>
     /// <param name="source">source solution</param>
-    /// <param name="target">target solution</param>
-    /// <param name="quantity">quantity of solution to move from source to target. If this is a negative number, the source & target roles are reversed.</param>
+    /// <param name="quantity">quantity of solution to move from source to target. If this is a negative number, the source and target roles are reversed.</param>
     public bool TryTransferSolution(Entity<SolutionComponent> soln, Solution source, FixedPoint2 quantity)
     {
         var (uid, comp) = soln;
@@ -677,9 +656,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <summary>
     ///     Adds as much of a solution to a container as can fit and updates the container.
     /// </summary>
-    /// <param name="targetUid">The entity containing <paramref cref="targetSolution"/></param>
-    /// <param name="targetSolution">The solution being added to.</param>
-    /// <param name="toAdd">The solution being added to <paramref cref="targetSolution"/>. This solution is not modified.</param>
+    /// <param name="toAdd">The solution being added to <paramref cref="soln"/>. This solution is not modified.</param>
     /// <returns>The quantity of the solution actually added.</returns>
     public FixedPoint2 AddSolution(Entity<SolutionComponent> soln, Solution toAdd)
     {
@@ -706,9 +683,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     ///     Adds a solution to a container and updates the container.
     ///     This can exceed the maximum volume of the solution added to.
     /// </summary>
-    /// <param name="targetUid">The entity containing <paramref cref="targetSolution"/></param>
-    /// <param name="targetSolution">The solution being added to.</param>
-    /// <param name="toAdd">The solution being added to <paramref cref="targetSolution"/>. This solution is not modified.</param>
+    /// <param name="toAdd">The solution being added to <paramref cref="soln"/>. This solution is not modified.</param>
     /// <returns>Whether any reagents were added to the solution.</returns>
     public bool ForceAddSolution(Entity<SolutionComponent> soln, Solution toAdd)
     {
@@ -726,8 +701,6 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     ///     Adds a solution to the container, removing the overflow.
     ///     Unlike <see cref="TryAddSolution"/> it will ignore size limits.
     /// </summary>
-    /// <param name="targetUid">The entity containing <paramref cref="targetSolution"/></param>
-    /// <param name="targetSolution">The solution being added to.</param>
     /// <param name="toAdd">The solution being added to <paramref cref="targetSolution"/></param>
     /// <param name="overflowThreshold">The combined volume above which the overflow will be returned.
     /// If the combined volume is below this an empty solution is returned.</param>
@@ -753,8 +726,6 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <summary>
     ///     Removes an amount from all reagents in a solution, adding it to a new solution.
     /// </summary>
-    /// <param name="uid">The entity containing the solution.</param>
-    /// <param name="solution">The solution to remove reagents from.</param>
     /// <param name="quantity">The amount to remove from every reagent in the solution.</param>
     /// <returns>A new solution containing every removed reagent from the original solution.</returns>
     public Solution RemoveEachReagent(Entity<SolutionComponent> soln, FixedPoint2 quantity)
@@ -787,8 +758,6 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <summary>
     ///     Sets the temperature of a solution to a new value and then checks for reaction processing.
     /// </summary>
-    /// <param name="owner">The entity in which the solution is located.</param>
-    /// <param name="solution">The solution to set the temperature of.</param>
     /// <param name="temperature">The new value to set the temperature to.</param>
     public void SetTemperature(Entity<SolutionComponent> soln, float temperature)
     {
@@ -805,8 +774,6 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <summary>
     ///     Sets the thermal energy of a solution to a new value and then checks for reaction processing.
     /// </summary>
-    /// <param name="owner">The entity in which the solution is located.</param>
-    /// <param name="solution">The solution to set the thermal energy of.</param>
     /// <param name="thermalEnergy">The new value to set the thermal energy to.</param>
     public void SetThermalEnergy(Entity<SolutionComponent> soln, float thermalEnergy)
     {
@@ -821,8 +788,6 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <summary>
     ///     Adds some thermal energy to a solution and then checks for reaction processing.
     /// </summary>
-    /// <param name="owner">The entity in which the solution is located.</param>
-    /// <param name="solution">The solution to set the thermal energy of.</param>
     /// <param name="thermalEnergy">The new value to set the thermal energy to.</param>
     public void AddThermalEnergy(Entity<SolutionComponent> soln, float thermalEnergy)
     {

@@ -52,7 +52,7 @@ public sealed class GetItemActionsEvent : EntityEventArgs
 
     /// <summary>
     /// Grant the given action. If the EntityUid does not refer to a valid action entity, it will create a new action and
-    /// store it in <see cref="container"/>.
+    /// store it in <paramref name="container"/>.
     /// </summary>
     public void AddAction(ref EntityUid? actionId, string prototypeId, EntityUid container)
     {
@@ -112,8 +112,8 @@ public sealed class RequestPerformActionEvent : EntityEventArgs
 }
 
 /// <summary>
-///     This is the type of event that gets raised when an <see cref="InstantAction"/> is performed. The <see
-///     cref="Performer"/> field is automatically filled out by the <see cref="SharedActionsSystem"/>.
+///     This is the type of event that gets raised when an InstantAction is performed. The <see
+///     cref="InstantActionEvent.Performer"/> field is automatically filled out by the <see cref="SharedActionsSystem"/>.
 /// </summary>
 /// <remarks>
 ///     To define a new action for some system, you need to create an event that inherits from this class.
@@ -121,9 +121,9 @@ public sealed class RequestPerformActionEvent : EntityEventArgs
 public abstract partial class InstantActionEvent : BaseActionEvent { }
 
 /// <summary>
-///     This is the type of event that gets raised when an <see cref="EntityTargetAction"/> is performed. The <see
-///     cref="Performer"/> and <see cref="Target"/> fields will automatically be filled out by the <see
-///     cref="SharedActionsSystem"/>.
+///     This is the type of event that gets raised when an EntityTargetAction is performed.
+///     The <see cref="EntityTargetActionEvent.Performer"/> and <see cref="EntityTargetActionEvent.Target"/>
+///     fields will automatically be filled out by the <see cref="SharedActionsSystem"/>.
 /// </summary>
 /// <remarks>
 ///     To define a new action for some system, you need to create an event that inherits from this class.
@@ -137,9 +137,9 @@ public abstract partial class EntityTargetActionEvent : BaseActionEvent
 }
 
 /// <summary>
-///     This is the type of event that gets raised when an <see cref="WorldTargetAction"/> is performed. The <see
-///     cref="Performer"/> and <see cref="Target"/> fields will automatically be filled out by the <see
-///     cref="SharedActionsSystem"/>.
+///     This is the type of event that gets raised when a WorldTargetAction is performed. The <see
+///     cref="WorldTargetActionEvent.Performer"/> and <see cref="WorldTargetActionEvent.Target"/>
+///     fields will automatically be filled out by the <see cref="SharedActionsSystem"/>.
 /// </summary>
 /// <remarks>
 ///     To define a new action for some system, you need to create an event that inherits from this class.
@@ -159,8 +159,8 @@ public abstract partial class WorldTargetActionEvent : BaseActionEvent
 }
 
 /// <summary>
-///     Base class for events that are raised when an action gets performed. This should not generally be used outside of the action
-///     system.
+///     Base class for events that are raised when an action gets performed.
+///     This should not generally be used outside the action system.
 /// </summary>
 [ImplicitDataDefinitionForInheritors]
 public abstract partial class BaseActionEvent : HandledEntityEventArgs

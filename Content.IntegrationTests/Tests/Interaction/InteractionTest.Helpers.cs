@@ -174,7 +174,7 @@ public abstract partial class InteractionTest
     /// <summary>
     /// Place an entity prototype into the players hand. Deletes any currently held entity.
     /// </summary>
-    /// <param name="entity">The entity type & quantity to spawn and place into the users hand</param>
+    /// <param name="entity">The entity type and quantity to spawn and place into the users hand</param>
     /// <param name="enableToggleable">Whether or not to automatically enable any toggleable items</param>
     protected async Task<NetEntity> PlaceInHands(EntitySpecifier entity, bool enableToggleable = true)
     {
@@ -333,7 +333,7 @@ public abstract partial class InteractionTest
     /// <param name="id">The entity or stack prototype to spawn and place into the users hand</param>
     /// <param name="quantity">The number of entities to spawn. If the prototype is a stack, this sets the stack count.</param>
     /// <param name="awaitDoAfters">Whether or not to wait for any do-afters to complete</param>
-    /// <param name="altInteract">If true, perform an alternate interaction instead of a standard one.
+    /// <param name="altInteract">If true, perform an alternate interaction instead of a standard one.</param>
     protected async Task InteractUsing(string id, int quantity = 1, bool awaitDoAfters = true, bool altInteract = false)
     {
         await InteractUsing((id, quantity), awaitDoAfters, altInteract);
@@ -342,9 +342,9 @@ public abstract partial class InteractionTest
     /// <summary>
     /// Place an entity prototype into the players hand and interact with the given entity (or target position).
     /// </summary>
-    /// <param name="entity">The entity type & quantity to spawn and place into the users hand</param>
-    /// <param name="awaitDoAfters">Whether or not to wait for any do-afters to complete</param>
-    /// <param name="altInteract">If true, perform an alternate interaction instead of a standard one.
+    /// <param name="entity">The entity type and quantity to spawn and place into the users hand</param>
+    /// <param name="awaitDoAfters">Whether to wait for any do-afters to complete</param>
+    /// <param name="altInteract">If true, perform an alternate interaction instead of a standard one.</param>
     protected async Task InteractUsing(EntitySpecifier entity, bool awaitDoAfters = true, bool altInteract = false)
     {
         // For every interaction, we will also examine the entity, just in case this breaks something, somehow.
@@ -361,8 +361,8 @@ public abstract partial class InteractionTest
     /// <summary>
     /// Interact with an entity using the currently held entity.
     /// </summary>
-    /// <param name="awaitDoAfters">Whether or not to wait for any do-afters to complete</param>
-    /// <param name="altInteract">If true, performs an alternate interaction instead of a standard one.
+    /// <param name="awaitDoAfters">Whether to wait for any do-afters to complete</param>
+    /// <param name="altInteract">If true, performs an alternate interaction instead of a standard one.</param>
     protected async Task Interact(bool awaitDoAfters = true, bool altInteract = false)
     {
         if (Target == null || !Target.Value.IsClientSide())
@@ -887,7 +887,7 @@ public abstract partial class InteractionTest
     /// Check that some entity is close to a certain coordinate location.
     /// </summary>
     /// <param name="target">The entity to check the location for. Defaults to <see cref="target"/></param>
-    /// <param name="coordinates">The coordinates the entity should be at.</param>
+    /// <param name="coords">The coordinates the entity should be at.</param>
     /// <param name="radius">The maximum allowed distance from the target coords</param>
     protected void AssertLocation(NetEntity? target, NetCoordinates coords, float radius = 0.01f)
     {

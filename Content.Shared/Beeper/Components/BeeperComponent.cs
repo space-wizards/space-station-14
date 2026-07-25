@@ -17,7 +17,7 @@ namespace Content.Shared.Beeper.Components;
 public sealed partial class BeeperComponent : Component
 {
     /// <summary>
-    /// How much to scale the interval by (< 0 = min, > 1 = max)
+    /// How much to scale the interval by (less than 0 will be min, greater than 1 will be max)
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public FixedPoint2 IntervalScaling = 0;

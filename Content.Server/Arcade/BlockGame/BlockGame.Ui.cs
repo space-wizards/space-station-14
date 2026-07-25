@@ -206,7 +206,7 @@ public sealed partial class BlockGame
     /// <summary>
     /// Handles broadcasting the full player-visible game state to a specific player/spectator.
     /// </summary>
-    /// <param name="session">The target recipient.</param>
+    /// <param name="actor">The target recipient.</param>
     private void FullUpdate(EntityUid actor)
     {
         UpdateFieldUI(actor);

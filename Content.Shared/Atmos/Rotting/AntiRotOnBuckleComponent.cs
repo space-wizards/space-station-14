@@ -16,7 +16,7 @@ public sealed partial class AntiRotOnBuckleComponent : Component
 
     /// <summary>
     /// Whether this component is active or not.
-    /// </summarY>
+    /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public bool Enabled = true;
 }

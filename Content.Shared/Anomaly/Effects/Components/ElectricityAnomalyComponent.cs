@@ -53,13 +53,13 @@ public sealed partial class ElectricityAnomalyComponent : Component
 
     /// <summary>
     /// Energy consumed from devices by the emp pulse upon going supercritical.
-    /// <summary>
+    /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float EmpEnergyConsumption = 100000f;
 
     /// <summary>
     /// Duration of devices being disabled by the emp pulse upon going supercritical.
-    /// <summary>
+    /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan EmpDisabledDuration = TimeSpan.FromSeconds(60);
 }

@@ -3,7 +3,7 @@ using Content.Shared.Damage.Components;
 namespace Content.Shared.Destructible.Thresholds.Triggers;
 
 /// <summary>
-/// A condition for triggering a <see cref="DamageThreshold">.
+/// A condition for triggering a <see cref="DamageThreshold"/>.
 /// </summary>
 /// <remarks>
 /// I decided against converting these into EntityEffectConditions for performance reasons

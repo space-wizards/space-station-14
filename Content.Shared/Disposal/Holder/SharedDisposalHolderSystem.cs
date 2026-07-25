@@ -92,7 +92,7 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
     /// <param name="tube">The tube the holder is attempting to enter.</param>
     /// <returns>True if the holder can enter the tube.</returns>
     /// <remarks>
-    /// This function will call <see cref="Exit"> on any critical failure.
+    /// This function will call <see cref="Exit"/> on any critical failure.
     /// </remarks>
     public bool TryEnterTube(Entity<DisposalHolderComponent> ent, Entity<DisposalTubeComponent?> tube)
     {
@@ -137,7 +137,7 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
                 _audio.PlayPvs(ent.Comp.ClangSound, xform.Coordinates);
             }
 
-            // If the disposed entity re-entered a suspect pipe, 
+            // If the disposed entity re-entered a suspect pipe,
             // it is likely caught in a loop and should try to escape
             if (ent.Comp.SuspectPipes.Contains(tube))
             {
@@ -149,7 +149,7 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
             var delta = 2 * Angle.ShortestDistance(ent.Comp.CurrentDirection.ToAngle(), ev.Next.ToAngle()).Theta / Math.PI;
             ent.Comp.DirectionBias += (float)Math.Clamp(delta, -1, 1);
 
-            // If the updated travel direction bias exceeds the allowed threshold, 
+            // If the updated travel direction bias exceeds the allowed threshold,
             // the pipe is marked as suspect.
             if (Math.Abs(ent.Comp.DirectionBias) >= ent.Comp.DirectionBiasThreshold)
             {
@@ -230,8 +230,8 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
     /// <summary>
     /// Checks if the tags on a disposal holder has any overlap with specified list of tags.
     /// </summary>
-    /// <param name="ent">The diposal holder.</param>
-    /// <param name="tag">The list of tags.</param>
+    /// <param name="ent">The disposal holder.</param>
+    /// <param name="tags">The list of tags.</param>
     /// <returns>True if the disposal holder has one of the listed tags.</returns>
     public bool TagsOverlap(Entity<DisposalHolderComponent> ent, HashSet<string> tags)
     {

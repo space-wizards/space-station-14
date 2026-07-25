@@ -5,7 +5,7 @@ namespace Content.Shared.Chemistry.Components;
 /// <summary>
 /// Denotes that there is a solution contained in this entity that can be
 /// easily dumped into (that is, completely removed from the dumping container
-/// into this one). Think pouring a container fully into this. The action for this is represented via drag & drop.
+/// into this one). Think pouring a container fully into this. The action for this is represented via drag and drop.
 ///
 /// To represent it being possible to controllably pour volumes into the entity, see <see cref="RefillableSolutionComponent"/>.
 /// </summary>

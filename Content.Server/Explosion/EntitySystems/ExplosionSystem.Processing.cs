@@ -679,7 +679,7 @@ sealed class Explosion
 
     /// <summary>
     ///     The set of tiles that need to be updated when the explosion has finished processing. Used to avoid having
-    ///     the explosion trigger chunk regeneration & shuttle-system processing every tick.
+    ///     the explosion trigger chunk regeneration and shuttle-system processing every tick.
     /// </summary>
     private readonly Dictionary<Entity<MapGridComponent>, List<(Vector2i, Tile)>> _tileUpdateDict = new();
 

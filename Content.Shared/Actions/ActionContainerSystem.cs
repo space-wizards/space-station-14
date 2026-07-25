@@ -12,7 +12,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Actions;
 
 /// <summary>
-/// Handles storing & spawning action entities in a container.
+/// Handles storing and spawning action entities in a container.
 /// </summary>
 public sealed partial class ActionContainerSystem : EntitySystem
 {
@@ -77,7 +77,7 @@ public sealed partial class ActionContainerSystem : EntitySystem
         return EnsureAction(uid, ref actionId, out _, actionPrototypeId, comp);
     }
 
-    /// <inheritdoc cref="EnsureAction(Robust.Shared.GameObjects.EntityUid,ref System.Nullable{Robust.Shared.GameObjects.EntityUid},string?,Content.Shared.Actions.ActionsContainerComponent?)"/>
+    /// <inheritdoc cref="EnsureAction(EntityUid, ref EntityUid?, string, ActionsContainerComponent?)"/>
     public bool EnsureAction(EntityUid uid,
         [NotNullWhen(true)] ref EntityUid? actionId,
         [NotNullWhen(true)] out ActionComponent? action,

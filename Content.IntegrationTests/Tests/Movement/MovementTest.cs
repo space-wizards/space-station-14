@@ -62,7 +62,7 @@ public abstract class MovementTest : InteractionTest
     }
 
     /// <summary>
-    /// Get the relative horizontal between two entities. Defaults to using the target & player entity.
+    /// Get the relative horizontal between two entities. Defaults to using the target and player entity.
     /// </summary>
     protected float Delta(NetEntity? target = null, NetEntity? other = null)
     {

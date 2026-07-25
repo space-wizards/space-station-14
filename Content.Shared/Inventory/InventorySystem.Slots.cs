@@ -58,7 +58,7 @@ public partial class InventorySystem : EntitySystem
     /// <summary>
     /// Copy this component's datafields from one entity to another.
     /// This can't use CopyComp because the template needs to be applied using the API method.
-    /// <summary>
+    /// </summary>
     public void CopyComponent(Entity<InventoryComponent?> source, EntityUid target)
     {
         if (!Resolve(source, ref source.Comp))

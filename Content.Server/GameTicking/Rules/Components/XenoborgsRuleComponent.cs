@@ -32,13 +32,13 @@ public sealed partial class XenoborgsRuleComponent : Component
     public int MaxNumberXenoborgs = 0;
 
     /// <summary>
-    /// If the announcment of the death of the mothership core was sent
+    /// If the announcement of the death of the mothership core was sent
     /// </summary>
     [DataField]
     public bool MothershipCoreDeathAnnouncmentSent = false;
 
     /// <summary>
-    /// If the emergency shuttle trigged by <see cref="XenoborgShuttleCallPercentage"> was already called.
+    /// If the emergency shuttle triggered by <see cref="XenoborgShuttleCallPercentage"/> was already called.
     /// Will only call once. if a admin recalls it. it won't call again unless this is set to false by a admin
     /// </summary>
     [DataField]

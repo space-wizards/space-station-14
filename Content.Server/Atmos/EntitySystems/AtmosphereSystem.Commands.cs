@@ -135,7 +135,7 @@ public sealed partial class AtmosphereSystem
     }
 
     /// <summary>
-    /// Clears & re-creates all references to <see cref="TileAtmosphere"/>s stored on a grid.
+    /// Clears and re-creates all references to <see cref="TileAtmosphere"/>s stored on a grid.
     /// </summary>
     private void RebuildGridTiles(
         Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent)

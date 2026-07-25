@@ -61,7 +61,7 @@ public sealed partial class TargetActionComponent : Component
 
     /// <summary>
     ///     If true, and if <see cref="ShowHandItemOverlay"/> is enabled, then this action's icon will be drawn by that
-    ///     over lay in place of the currently held item "held item".
+    ///     overlay in place of the currently held item "held item".
     /// </summary>
     [DataField]
     public bool TargetingIndicator = true;

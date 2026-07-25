@@ -7,7 +7,7 @@ namespace Content.Shared.Administration;
 /// Shared datatypes and constants for the administrative quick info system.
 /// </summary>
 /// <remarks>
-/// "Quick Info" Allows admins to quickly get basic information & action links
+/// "Quick Info" Allows admins to quickly get basic information and action links
 /// about (player) entities in nice little popups.
 /// </remarks>
 public static class QuickInfoShared

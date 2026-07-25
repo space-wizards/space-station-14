@@ -319,7 +319,7 @@ public abstract partial class SharedSuitSensorSystem : EntitySystem
 
     /// <summary>
     /// Sets mode of the <see cref="SuitSensorComponent"/> of the chosen entity.
-    /// Makes popup when <param name="userUid"> not null
+    /// Makes popup when <paramref name="userUid"/> not null
     /// </summary>
     /// <param name="sensors">Entity and it's component that should be changed</param>
     /// <param name="mode">Selected mode</param>
@@ -356,7 +356,7 @@ public abstract partial class SharedSuitSensorSystem : EntitySystem
     /// <summary>
     /// Attempts to get full <see cref="SuitSensorStatus"/> from the <see cref="SuitSensorComponent"/>
     /// </summary>
-    /// <param name="uid">Entity to get status</param>
+    /// <param name="ent">Entity to get status</param>
     /// <returns>Full <see cref="SuitSensorStatus"/> of the chosen uid</returns>
     public SuitSensorStatus? GetSensorState(Entity<SuitSensorComponent?, TransformComponent?> ent)
     {

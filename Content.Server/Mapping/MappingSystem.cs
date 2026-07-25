@@ -27,7 +27,7 @@ public sealed partial class MappingSystem : EntitySystem
 
     // Not a comp because I don't want to deal with this getting saved onto maps ever
     /// <summary>
-    ///     map id -> next autosave timespan & original filename.
+    ///     map id -> next autosave timespan and original filename.
     /// </summary>
     /// <returns></returns>
     private Dictionary<EntityUid, (TimeSpan next, string fileName)> _currentlyAutosaving = new();

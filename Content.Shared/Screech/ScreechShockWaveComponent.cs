@@ -3,7 +3,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Screech;
 
 /// <summary>
-/// This component displays & configures screen-distorting screeches. The associated overlay is <see cref="ScreechShockWaveOverlay"/> on the client side.
+/// This component displays and configures screen-distorting screeches. The associated overlay is <see cref="ScreechShockWaveOverlay"/> on the client side.
 /// This component by itself has no stunning propriety; it is solely for the display of screeches.
 /// </summary>
 [RegisterComponent, NetworkedComponent]

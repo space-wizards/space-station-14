@@ -8,7 +8,7 @@ namespace Content.Server.Botany.Components
     public sealed partial class SeedComponent : SharedSeedComponent
     {
         /// <summary>
-        ///     Seed data containing information about the plant type & properties that this seed can grow seed. If
+        ///     Seed data containing information about the plant type and properties that this seed can grow seed. If
         ///     null, will instead attempt to get data from a seed prototype, if one is defined. See <see
         ///     cref="SeedId"/>.
         /// </summary>

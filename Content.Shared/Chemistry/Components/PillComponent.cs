@@ -6,7 +6,7 @@ namespace Content.Shared.Chemistry.Components;
 public sealed partial class PillComponent : Component
 {
     /// <summary>
-    /// The pill id. Used for networking & serializing pill visuals.
+    /// The pill id. Used for networking and serializing pill visuals.
     /// </summary>
     [AutoNetworkedField]
     [DataField("pillType")]

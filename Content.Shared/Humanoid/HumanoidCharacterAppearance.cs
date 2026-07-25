@@ -120,7 +120,7 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
     ///     Generates a randomized character appearance.
     /// </summary>
     /// <remarks>
-    ///     When <see cref="RandomizeCfg"/> and an existing <see cref="HumanoidCharacterAppearance"> are passed in,
+    ///     When <see cref="RandomizeCfg"/> and an existing <see cref="HumanoidCharacterAppearance"/> are passed in,
     ///     values will be selectively randomized with the option to maintain existing values.
     /// </remarks>
     /// <param name="charEditorRandomizeConfig">Which values to randomize.</param>

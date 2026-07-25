@@ -12,7 +12,7 @@ namespace Content.Shared.Toggleable;
 public sealed partial class ToggleActionEvent : InstantActionEvent;
 
 /// <summary>
-///     Generic enum keys for toggle-visualizer appearance data & sprite layers.
+///     Generic enum keys for toggle-visualizer appearance data and sprite layers.
 /// </summary>
 [Serializable, NetSerializable]
 public enum ToggleableVisuals : byte

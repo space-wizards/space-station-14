@@ -272,9 +272,9 @@ public abstract partial class SharedStackSystem
     }
 
     // TODO
-    /// <summary>
-    /// Increase a stack count by an amount, and spawn new entities if above the max.
-    /// </summary>
+    // <summary>
+    // Increase a stack count by an amount, and spawn new entities if above the max.
+    // </summary>
     // public List<EntityUid> RaiseCountAndSpawn(Entity<StackComponent?> ent, int amount);
 
     /// <summary>

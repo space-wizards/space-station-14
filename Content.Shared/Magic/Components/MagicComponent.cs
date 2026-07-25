@@ -23,7 +23,7 @@ public sealed partial class MagicComponent : Component
 
     // TODO: List requirements in action desc
     /// <summary>
-    ///     Does this spell require Wizard Robes & Hat?
+    ///     Does this spell require Wizard Robes and Hat?
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool RequiresClothes;

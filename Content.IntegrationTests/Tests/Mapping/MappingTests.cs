@@ -12,7 +12,7 @@ public sealed class MappingTests : GameTest
         new() { Dirty = true, Connected = true, DummyTicker = false };
 
     /// <summary>
-    /// Checks that the mapping command creates paused & uninitialized maps.
+    /// Checks that the mapping command creates paused and uninitialized maps.
     /// </summary>
     [Test]
     public async Task MappingTest()

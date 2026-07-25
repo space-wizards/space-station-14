@@ -86,7 +86,7 @@ public sealed partial class GridAtmosphereComponent : Component
 
     /// <summary>
     /// A list of entities that have a <see cref="DeltaPressureComponent"/> and are to
-    /// be processed by the <see cref="DeltaPressureSystem"/>, if enabled.
+    /// be processed by the <see cref="SharedDeltaPressureSystem"/>, if enabled.
     ///
     /// To prevent massive bookkeeping overhead, this list is processed in-place,
     /// with add/remove/find operations helped via a dict.

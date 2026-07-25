@@ -492,7 +492,7 @@ public abstract partial class SharedAtmosphereSystem
 
     /// <summary>
     /// Calculates the moles that must be transferred from
-    /// <see cref="gasMixture1"/> to <see cref="gasMixture2"/> to equalize pressure.
+    /// <paramref name="gasMixture1"/> to <paramref name="gasMixture2"/> to equalize pressure.
     /// </summary>
     public float MolesToEqualizePressure(GasMixture gasMixture1, GasMixture gasMixture2)
     {

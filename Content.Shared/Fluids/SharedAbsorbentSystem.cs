@@ -191,7 +191,7 @@ public abstract partial class SharedAbsorbentSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Logic for an transferring contaminants to a non-empty refillable & reabsorbing water if any available.
+    ///     Logic for an transferring contaminants to a non-empty refillable and reabsorbing water if any available.
     /// </summary>
     private bool TryTwoWayAbsorbentRefillableTransfer(Entity<AbsorbentComponent> absorbEnt,
         Entity<SolutionComponent> absorbentSoln,

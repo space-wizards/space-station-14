@@ -492,7 +492,7 @@ public sealed partial class AccessReaderSystem : EntitySystem
         AddAccesses(ent, accesses);
     }
 
-    /// <inheritdoc cref = "TrySetAccesses"/>
+    /// <inheritdoc cref = "TrySetAccesses(Entity{AccessReaderComponent}, List{HashSet{ProtoId{AccessLevelPrototype}}})"/>
     public void TrySetAccesses(Entity<AccessReaderComponent> ent, List<ProtoId<AccessLevelPrototype>> accesses)
     {
         if (CanConfigureAccessReader(ent))
@@ -501,7 +501,7 @@ public sealed partial class AccessReaderSystem : EntitySystem
         }
     }
 
-    /// <inheritdoc cref = "SetAccesses"/>
+    /// <inheritdoc cref = "SetAccesses(Entity{AccessReaderComponent}, List{HashSet{ProtoId{AccessLevelPrototype}}})"/>
     private void SetAccesses(Entity<AccessReaderComponent> ent, List<ProtoId<AccessLevelPrototype>> accesses)
     {
         ent.Comp.AccessLists.Clear();
@@ -537,7 +537,7 @@ public sealed partial class AccessReaderSystem : EntitySystem
         RaiseLocalEvent(ent, new AccessReaderConfigurationChangedEvent());
     }
 
-    /// <inheritdoc cref = "TryAddAccesses"/>
+    /// <inheritdoc cref = "TryAddAccesses(Entity{AccessReaderComponent}, List{HashSet{ProtoId{AccessLevelPrototype}}})"/>
     public void TryAddAccesses(Entity<AccessReaderComponent> ent, List<ProtoId<AccessLevelPrototype>> accesses)
     {
         if (CanConfigureAccessReader(ent))
@@ -546,7 +546,7 @@ public sealed partial class AccessReaderSystem : EntitySystem
         }
     }
 
-    /// <inheritdoc cref = "AddAccesses"/>
+    /// <inheritdoc cref = "AddAccesses(Entity{AccessReaderComponent}, List{HashSet{ProtoId{AccessLevelPrototype}}})"/>
     private void AddAccesses(Entity<AccessReaderComponent> ent, List<ProtoId<AccessLevelPrototype>> accesses)
     {
         foreach (var access in accesses)
@@ -563,7 +563,6 @@ public sealed partial class AccessReaderSystem : EntitySystem
     /// </summary>
     /// <param name="ent">The access reader entity to which the access permission is being added.</param>
     /// <param name="access">The access permission being added.</param>
-    /// <param name="dirty">If true, the component will be  marked as changed afterward.</param>
     public void TryAddAccess(Entity<AccessReaderComponent> ent, HashSet<ProtoId<AccessLevelPrototype>> access)
     {
         if (CanConfigureAccessReader(ent))
@@ -589,7 +588,7 @@ public sealed partial class AccessReaderSystem : EntitySystem
         RaiseLocalEvent(ent, new AccessReaderConfigurationChangedEvent());
     }
 
-    /// <inheritdoc cref = "TryAddAccess"/>
+    /// <inheritdoc cref = "TryAddAccess(Entity{AccessReaderComponent}, HashSet{ProtoId{AccessLevelPrototype}})"/>
     public void TryAddAccess(Entity<AccessReaderComponent> ent, ProtoId<AccessLevelPrototype> access)
     {
         if (CanConfigureAccessReader(ent))
@@ -598,7 +597,7 @@ public sealed partial class AccessReaderSystem : EntitySystem
         }
     }
 
-    /// <inheritdoc cref = "AddAccess"/>
+    /// <inheritdoc cref = "AddAccess(Entity{AccessReaderComponent}, HashSet{ProtoId{AccessLevelPrototype}}, bool)"/>
     private void AddAccess(Entity<AccessReaderComponent> ent, ProtoId<AccessLevelPrototype> access, bool dirty = true)
     {
         AddAccess(ent, new HashSet<ProtoId<AccessLevelPrototype>>() { access }, dirty);
@@ -633,7 +632,7 @@ public sealed partial class AccessReaderSystem : EntitySystem
         RaiseLocalEvent(ent, new AccessReaderConfigurationChangedEvent());
     }
 
-    /// <inheritdoc cref = "TryRemoveAccesses"/>
+    /// <inheritdoc cref = "TryRemoveAccesses(Entity{AccessReaderComponent}, List{HashSet{ProtoId{AccessLevelPrototype}}})"/>
     public void TryRemoveAccesses(Entity<AccessReaderComponent> ent, List<ProtoId<AccessLevelPrototype>> accesses)
     {
         if (CanConfigureAccessReader(ent))
@@ -642,7 +641,7 @@ public sealed partial class AccessReaderSystem : EntitySystem
         }
     }
 
-    /// <inheritdoc cref = "RemoveAccesses"/>
+    /// <inheritdoc cref = "RemoveAccesses(Entity{AccessReaderComponent}, List{HashSet{ProtoId{AccessLevelPrototype}}})"/>
     private void RemoveAccesses(Entity<AccessReaderComponent> ent, List<ProtoId<AccessLevelPrototype>> accesses)
     {
         foreach (var access in accesses)
@@ -659,7 +658,6 @@ public sealed partial class AccessReaderSystem : EntitySystem
     /// </summary>
     /// <param name="ent">The access reader entity from which the access permission is being removed.</param>
     /// <param name="access">The access permission being removed.</param>
-    /// <param name="dirty">If true, the component will be marked as changed afterward.</param>
     public void TryRemoveAccess(Entity<AccessReaderComponent> ent, HashSet<ProtoId<AccessLevelPrototype>> access)
     {
         if (CanConfigureAccessReader(ent))
@@ -691,7 +689,7 @@ public sealed partial class AccessReaderSystem : EntitySystem
         RaiseLocalEvent(ent, new AccessReaderConfigurationChangedEvent());
     }
 
-    /// <inheritdoc cref = "TryRemoveAccess"/>
+    /// <inheritdoc cref = "TryRemoveAccess(Entity{AccessReaderComponent}, HashSet{ProtoId{AccessLevelPrototype}})"/>
     public void TryRemoveAccess(Entity<AccessReaderComponent> ent, ProtoId<AccessLevelPrototype> access)
     {
         if (CanConfigureAccessReader(ent))
@@ -700,7 +698,7 @@ public sealed partial class AccessReaderSystem : EntitySystem
         }
     }
 
-    /// <inheritdoc cref = "RemoveAccess"/>
+    /// <inheritdoc cref = "RemoveAccess(Entity{AccessReaderComponent}, HashSet{ProtoId{AccessLevelPrototype}}, bool)"/>
     private void RemoveAccess(Entity<AccessReaderComponent> ent, ProtoId<AccessLevelPrototype> access, bool dirty = true)
     {
         RemoveAccess(ent, new HashSet<ProtoId<AccessLevelPrototype>>() { access }, dirty);
@@ -785,7 +783,7 @@ public sealed partial class AccessReaderSystem : EntitySystem
     /// Replaces all deny tags on an access reader with those from a supplied list.
     /// </summary>
     /// <param name="ent">The access reader entity.</param>
-    /// <param name="tag">The new tags that are replacing the old.</param>
+    /// <param name="tags">The new tags that are replacing the old.</param>
     public void SetDenyTags(Entity<AccessReaderComponent> ent, HashSet<ProtoId<AccessLevelPrototype>> tags)
     {
         ent.Comp.DenyTags.Clear();

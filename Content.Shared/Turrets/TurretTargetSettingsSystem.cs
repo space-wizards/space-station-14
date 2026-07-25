@@ -40,7 +40,7 @@ public sealed partial class TurretTargetSettingsSystem : EntitySystem
     /// Adds or removes a collection of access levels from a <see cref="TurretTargetSettingsComponent.ExemptAccessLevels"/> list.
     /// </summary>
     /// <param name="ent">The entity and its <see cref="TurretTargetSettingsComponent"/></param>
-    /// <param name="exemption">The collection of access level proto IDs to add or remove</param>
+    /// <param name="exemptions">The collection of access level proto IDs to add or remove</param>
     /// <param name="enabled">Set 'true' to add the collection as exemptions, or 'false' to remove them</param>
     [PublicAPI]
     public void SetAccessLevelExemptions(Entity<TurretTargetSettingsComponent> ent, ICollection<ProtoId<AccessLevelPrototype>> exemptions, bool enabled)

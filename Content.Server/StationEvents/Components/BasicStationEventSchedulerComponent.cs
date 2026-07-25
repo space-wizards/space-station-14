@@ -26,7 +26,7 @@ public sealed partial class BasicStationEventSchedulerComponent : Component
     public MinMax MinMaxEventTiming = new(3 * 60, 10 * 60);
 
     /// <summary>
-    /// How long until the next check for an event runs, is initially set based on MinimumTimeUntilFirstEvent & MinMaxEventTiming.
+    /// How long until the next check for an event runs, is initially set based on MinimumTimeUntilFirstEvent and MinMaxEventTiming.
     /// </summary>
     [DataField]
     public float TimeUntilNextEvent;

@@ -30,7 +30,7 @@ public sealed partial class DevourerComponent : Component
 
     /// <summary>
     /// The amount of time it takes to devour a mob.
-    /// <remarks>
+    /// </summary>
     [DataField, AutoNetworkedField]
     public float DevourTime = 3f;
 

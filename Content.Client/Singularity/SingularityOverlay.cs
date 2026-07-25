@@ -107,10 +107,11 @@ namespace Content.Client.Singularity
         }
 
         /// <summary>
-        /// Repeats the transformation applied by the shader in <see cref="Resources/Textures/Shaders/singularity.swsl"/>
+        /// Repeats the transformation applied by the shader in Resources/Textures/Shaders/singularity.swsl
         /// </summary>
         private void OnProjectFromScreenToMap(ref PixelToMapEvent args)
-        {   // Mostly copypasta from the singularity shader.
+        {
+            // Mostly copypasta from the singularity shader.
             if (_reducedMotion)
                 return;
             if (args.Viewport.Eye == null)

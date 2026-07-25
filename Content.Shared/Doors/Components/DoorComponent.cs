@@ -55,7 +55,7 @@ public sealed partial class DoorComponent : Component
     public TimeSpan OpenTimeTwo = TimeSpan.FromSeconds(0.2f);
 
     /// <summary>
-    ///     Interval between deny sounds & visuals;
+    ///     Interval between deny sounds and visuals;
     /// </summary>
     [DataField]
     public TimeSpan DenyDuration = TimeSpan.FromSeconds(0.45f);

@@ -188,7 +188,6 @@ public abstract partial class SharedDisposalUnitSystem : EntitySystem
     /// <param name="ent">The disposal unit.</param>
     /// <param name="inserted">The entity inserted.</param>
     /// <param name="user">The one who inserted the entity.</param>
-    /// <param name="doInsert">Do the insertion now.</param>
     protected void Insert(Entity<DisposalUnitComponent> ent, EntityUid inserted, EntityUid? user = null)
     {
         if (ent.Comp.Container != null)
@@ -448,7 +447,6 @@ public abstract partial class SharedDisposalUnitSystem : EntitySystem
     /// Sets a disposal unit to move towards flushing itself.
     /// </summary>
     /// <param name="ent">The disposal unit.</param>
-    /// <param name="metadata">The disposal unit's metadata.</param>
     public void SetEngage(Entity<DisposalUnitComponent> ent, bool engaged)
     {
         ent.Comp.Engaged = engaged;
@@ -461,7 +459,6 @@ public abstract partial class SharedDisposalUnitSystem : EntitySystem
     /// Primes a disposal unit to automatically flush sometime in the future.
     /// </summary>
     /// <param name="ent">The disposal unit.</param>
-    /// <param name="metadata">The disposal unit's metadata.</param>
     public void AutomaticEngage(Entity<DisposalUnitComponent> ent)
     {
         if (!ent.Comp.AutomaticEngage)

@@ -96,7 +96,7 @@ public sealed partial class SpawnExplosionWindow : DefaultWindow
     }
 
     /// <summary>
-    ///     Set the current grid & indices based on the attached entities current location.
+    ///     Set the current grid and indices based on the attached entities current location.
     /// </summary>
     private void SetLocation()
     {

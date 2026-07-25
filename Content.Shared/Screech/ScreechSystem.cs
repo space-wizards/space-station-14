@@ -111,7 +111,7 @@ public sealed partial class ScreechSystem : EntitySystem
 }
 
 /// <summary>
-/// Event that is used to check if an entity hears the screech & feels its full effects.
+/// Event that is used to check if an entity hears the screech and feels its full effects.
 /// </summary>
 [ByRefEvent]
 public record struct ScreechEffectAttemptEvent(EntityUid Source, bool Cancelled = false) : IInventoryRelayEvent

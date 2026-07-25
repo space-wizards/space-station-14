@@ -4,7 +4,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Research.Components;
 
 /// <summary>
-/// Component for stealing technologies from a R&D server, when gloves are enabled.
+/// Component for stealing technologies from a RnD server, when gloves are enabled.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedResearchStealerSystem))]
 public sealed partial class ResearchStealerComponent : Component

@@ -17,7 +17,7 @@ using SharedToolSystem = Content.Shared.Tools.Systems.SharedToolSystem;
 namespace Content.Shared.Radio.EntitySystems;
 
 /// <summary>
-///     This system manages encryption keys & key holders for use with radio channels.
+///     This system manages encryption keys and key holders for use with radio channels.
 /// </summary>
 public sealed partial class EncryptionKeySystem : EntitySystem
 {

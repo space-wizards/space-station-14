@@ -22,7 +22,7 @@ public record struct TriggerEvent(EntityUid? User = null, string? Key = null, bo
 /// Allows to have multiple independent triggers on the same entity.
 /// Setting this to null will activate all triggers.
 /// </param>
-/// <param name="Handled">Marks the event as handled if at least one trigger effect was activated.</param>
+/// <param name="Cancelled">Marks the event as canceled if the trigger is not possible.</param>
 [ByRefEvent]
 public record struct AttemptTriggerEvent(EntityUid? User, string? Key = null, bool Cancelled = false);
 
