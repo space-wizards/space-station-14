@@ -240,6 +240,42 @@
   - type: TargetAction
 
 - type: entity
+  parent: ActionToggleNightVision
+  id: ActionChangelingNightVision
+  name: Toggle Night Vision
+  description: Turns our night vision on/off.
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+    icon:
+      sprite: Interface/Actions/changeling2.rsi
+      state: nv_on
+
+- type: entity
+  parent: BaseAction
+  id: ActionChangelingScreech
+  name: Screech
+  description: We produce a deafening screech that weakens those around us.
+  components:
+  - type: Action
+    useDelay: 60 # unbalanced :godo:
+    raiseOnAction: true
+    icon:
+      sprite: Interface/Actions/changeling2.rsi
+      state: screech
+  - type: ScreechAction
+    effects:
+    - !type:MovementSpeedModifier
+      walkSpeedModifier: 0.5
+      sprintSpeedModifier: 0.5
+      time: 5
+    - !type:Disarm
+    - !type:ModifyKnockdown
+      probability: 0.5
+  - type: InstantAction
+    event: !type:ScreechActionEvent
+
+- type: entity
   parent: BaseAction
   id: ActionChangelingFakeMindshieldToggle
   name: '[color=green]Toggle Fake Mindshield[/color]'

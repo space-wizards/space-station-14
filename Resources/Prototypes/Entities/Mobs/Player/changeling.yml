@@ -7,6 +7,9 @@
   - type: ChangelingDevour
   - type: ChangelingIdentity
   - type: ChangelingTransform
+  - type: DestructionResistance
+  - type: RevolutionaryImmune
+  - type: ZombieImmune
   - type: ActionGrant
     actions:
     - ActionChangelingStore
@@ -15,7 +18,7 @@
       ChangelingDNA: 60
 
 - type: entity
-  parent: [ SimpleSpaceMobBase, MobNightVision ]
+  parent: [ SimpleSpaceMobBase, MobNightVision, BaseMobDestructible ]
   id: MobHeadSlug
   name: headslug
   description: A small, slug-like creature with a large, gaping maw. It's covered in a thick, slimy mucus.
@@ -92,6 +95,19 @@
     # this is set to false as to not mess with a changeling's ability to disguise.
     accentHide: false
     titleText: changeling-voice-mimic-window-title
+
+- type: entity # dummy prototype for the store listing
+  id: ChangelingNightVisionDummy
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: NightVision
+    enabled: false # Disabled by default
+    action: ActionChangelingNightVision
+    lightingColor: "#AF0909AA"
+    noiseAmount: 1
+    noiseMultiplier: 2
+    overlayColor: "#AB0808AA"
+    prioritized: false # Technically eye augments, so we want things such as NVGs to take priority if able
 
 - type: entity # dummy prototype for the store listing
   id: ChangelingFakeMindshieldDummy

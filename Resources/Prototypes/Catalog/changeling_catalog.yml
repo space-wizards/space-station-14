@@ -146,6 +146,36 @@
   productAction: ActionChangelingLastResort
 
 - type: listing
+  id: ChangelingNightVision
+  name: changeling-catalog-night-vision-name
+  description: changeling-catalog-night-vision-desc
+  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: nv_on }
+  applyToMob: true
+  cost:
+    ChangelingDNA: 5
+  categories:
+  - ChangelingStoreUtility
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  productComponents: ChangelingNightVisionDummy
+
+- type: listing
+  id: ChangelingScreech
+  name: changeling-catalog-screech-name
+  description: changeling-catalog-screech-desc
+  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: screech }
+  applyToMob: true
+  cost:
+    ChangelingDNA: 20
+  categories:
+  - ChangelingStoreCombat
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  productAction: ActionChangelingScreech
+
+- type: listing
   id: ChangelingFakeMindshield
   name: changeling-catalog-voice-mindshield-name
   description: changeling-catalog-voice-mindshield-desc

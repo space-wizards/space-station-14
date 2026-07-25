@@ -11,11 +11,13 @@ using Content.Shared.Electrocution;
 using Content.Shared.Explosion;
 using Content.Shared.Eye.Blinding.Systems;
 using Content.Shared.Flash;
+using Content.Shared.Glue;
 using Content.Shared.Gravity;
 using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Implants;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Mindshield;
+using Content.Shared.Lube;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
 using Content.Shared.NameModifier.EntitySystems;
@@ -24,7 +26,9 @@ using Content.Shared.Nutrition;
 using Content.Shared.Overlays;
 using Content.Shared.Projectiles;
 using Content.Shared.Radio;
+using Content.Shared.Screech;
 using Content.Shared.Slippery;
+using Content.Shared.Speech;
 using Content.Shared.Standing;
 using Content.Shared.Strip.Components;
 using Content.Shared.Temperature;
@@ -68,6 +72,7 @@ public partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, DownedEvent>(RelayInventoryEvent);
 
         // by-ref events
+        SubscribeLocalEvent<InventoryComponent, AccentGetEvent>(RefRelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, RefreshFrictionModifiersEvent>(RefRelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, BeforeStaminaDamageEvent>(RefRelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, GetExplosionResistanceEvent>(RefRelayInventoryEvent);
@@ -84,7 +89,10 @@ public partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, UnwieldAttemptEvent>(RefRelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, IngestionAttemptEvent>(RefRelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, GetMindShieldStatusEvent>(RefRelayInventoryEvent, after: [typeof(SharedSubdermalImplantSystem)]); // ordering so that things like mindshield-flipping hats can be done
+        SubscribeLocalEvent<InventoryComponent, ScreechEffectAttemptEvent>(RefRelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, RefreshNightVisionEvent>(RefRelayInventoryEvent);
+        SubscribeLocalEvent<InventoryComponent, GluedEffectAttemptEvent>(RefRelayInventoryEvent);
+        SubscribeLocalEvent<InventoryComponent, LubedEffectAttemptEvent>(RefRelayInventoryEvent);
 
         // Eye/vision events
         SubscribeLocalEvent<InventoryComponent, CanSeeAttemptEvent>(RelayInventoryEvent);

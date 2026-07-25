@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   abstract: true
   id: BasePlasticExplosiveTrigger
   components:
@@ -41,22 +41,17 @@
 
 - type: entity
   abstract: true
-  parent: [ BaseItem, BasePlasticExplosiveTrigger ]
+  parent: [ BaseItem, BaseItemDestructible, BasePlasticExplosiveTrigger ]
   id: BasePlasticExplosive
   components:
   - type: Item
     size: Small
-  - type: Damageable
-  - type: Injurable
-    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
         damage: 50
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
       - !type:ExplodeBehavior
   - type: Explosive # Powerful explosion in a very small radius. Doesn't break underplating.
     explosionType: DemolitionCharge

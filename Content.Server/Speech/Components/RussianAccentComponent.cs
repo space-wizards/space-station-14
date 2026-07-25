@@ -1,4 +1,6 @@
+using Content.Shared.Speech.Components;
+
 namespace Content.Server.Speech.Components;
 
 [RegisterComponent]
-public sealed partial class RussianAccentComponent : Component {}
+public sealed partial class RussianAccentComponent : BaseAccentComponent;
