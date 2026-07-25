@@ -25,18 +25,15 @@ public sealed partial class ChangelingMetabolismSystem : EntitySystem
 
     private void AddMetabolizer(Entity<ChangelingMetabolismComponent> ent)
     {
-        if (TerminatingOrDeleted(ent) || !Exists(ent))
-            return;
-
         if (!_container.TryGetContainer(ent, BodyComponent.ContainerID, out var container))
-        {
-            Log.Error($"Entity {ToPrettyString(ent)} with a {nameof(ChangelingMetabolismComponent)} is missing a container ({BodyComponent.ContainerID}).");
             return;
-        }
 
         foreach (var organ in container.ContainedEntities)
         {
-            _metabolizer.TryAddMetabolizerType(organ, ent.Comp.AddedMetabolizer);
+            if (!TryComp<MetabolizerComponent>(organ, out var metabolizerComp))
+                continue;
+
+            _metabolizer.TryAddMetabolizerType((organ, metabolizerComp), ent.Comp.AddedMetabolizer);
         }
     }
 }
