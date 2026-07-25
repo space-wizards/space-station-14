@@ -109,8 +109,8 @@ public sealed partial class AtmosphereSystem
 
 
         // Force Invalidate & update air on all tiles
-        Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> grid =
-            new(ent.Owner, ent.Comp1, Comp<GasTileOverlayComponent>(ent), ent.Comp2, Transform(ent));
+        Entity<GridAtmosphereComponent, MapGridComponent, TransformComponent> grid =
+            new(ent.Owner, ent.Comp1, ent.Comp2, Transform(ent));
 
         RebuildGridTiles(grid);
 
@@ -138,7 +138,7 @@ public sealed partial class AtmosphereSystem
     /// Clears & re-creates all references to <see cref="TileAtmosphere"/>s stored on a grid.
     /// </summary>
     private void RebuildGridTiles(
-        Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent)
+        Entity<GridAtmosphereComponent, MapGridComponent, TransformComponent> ent)
     {
         foreach (var indices in ent.Comp1.Tiles.Keys)
         {
@@ -160,7 +160,7 @@ public sealed partial class AtmosphereSystem
         atmos.Tiles.Clear();
 
         var volume = GetVolumeForTiles(ent);
-        TryComp(ent.Comp4.MapUid, out MapAtmosphereComponent? mapAtmos);
+        TryComp(ent.Comp3.MapUid, out MapAtmosphereComponent? mapAtmos);
 
         var enumerator = _map.GetAllTilesEnumerator(ent, ent);
         while (enumerator.MoveNext(out var tileRef))

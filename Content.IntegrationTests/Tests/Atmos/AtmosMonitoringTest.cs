@@ -117,7 +117,7 @@ public sealed class AtmosMonitoringTest : AtmosTest
             Is.SameAs(atmosMonitor.TileGas),
             "Atmos monitor's TileGas does not match actual tile mixture after spawn.");
 
-        SAtmos.RebuildGridAtmosphere((ProcessEnt.Owner, RelevantAtmos, ProcessEnt.Comp3));
+        SAtmos.RebuildGridAtmosphere((ProcessEnt.Owner, RelevantAtmos, ProcessEnt.Comp2));
 
         // EXTREMELY IMPORTANT: The reference to the tile mixture on the tile should be completely different.
         var newTileMixture = SAtmos.GetTileMixture(airSensorUid);

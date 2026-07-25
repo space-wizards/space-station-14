@@ -9,6 +9,7 @@ using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
+using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
@@ -35,6 +36,7 @@ public sealed partial class GasTileHeatBlurOverlay : Overlay
 
     private readonly SharedMapSystem _maps;
     private readonly SharedTransformSystem _xformSys;
+    private readonly ChunkEntitySystem _chunkEntitySystem;
     private readonly ShaderInstance _shader;
 
     private readonly Texture _noiseTexture;
@@ -65,6 +67,7 @@ public sealed partial class GasTileHeatBlurOverlay : Overlay
         IoCManager.InjectDependencies(this);
         _maps = _entManager.System<SharedMapSystem>();
         _xformSys = _entManager.System<SharedTransformSystem>();
+        _chunkEntitySystem = _entManager.System<ChunkEntitySystem>();
 
         _noiseTexture = _resourceCache.GetTexture("/Textures/Effects/HeatBlur/perlin_noise.png");
         _heatGradientTexture = _resourceCache.GetTexture("/Textures/Effects/HeatBlur/soft_circle.png");
@@ -108,7 +111,7 @@ public sealed partial class GasTileHeatBlurOverlay : Overlay
                 name: $"{nameof(GasTileHeatBlurOverlaySystem)}-blur");
         }
 
-        var overlayQuery = _entManager.GetEntityQuery<GasTileOverlayComponent>();
+        var overlayQuery = _entManager.GetEntityQuery<GasOverlayChunkComponent>();
 
         args.WorldHandle.UseShader(_proto.Index(UnshadedShader).Instance());
 
@@ -130,9 +133,6 @@ public sealed partial class GasTileHeatBlurOverlay : Overlay
                 _maps.FindGridsIntersecting(mapId, worldAABB, ref _intersectingGrids);
                 foreach (var grid in _intersectingGrids)
                 {
-                    if (!overlayQuery.TryGetComponent(grid.Owner, out var comp))
-                        continue;
-
                     var gridEntToWorld = _xformSys.GetWorldMatrix(grid.Owner);
                     var gridEntToViewportLocal = gridEntToWorld * worldToViewportLocal;
 
@@ -163,14 +163,17 @@ public sealed partial class GasTileHeatBlurOverlay : Overlay
                         (int)MathF.Ceiling(floatBounds.Top));
 
                     // for each tile and its gas --->
-                    foreach (var chunk in comp.Chunks.Values)
+                    var chunks = _chunkEntitySystem.GetChunksIntersecting(grid.Owner, floatBounds, overlayQuery);
+                    while (chunks.MoveNext(out var chunkEnt))
                     {
+                        var chunk = chunkEnt.Value.Comp2;
+                        var chunkOrigin = chunkEnt.Value.Comp1.Chunk * SharedGasTileOverlaySystem.ChunkSize;
                         var enumerator = new GasChunkEnumerator(chunk);
 
                         while (enumerator.MoveNext(out var tileGas))
                         {
                             // Check and make sure the tile is within the viewport/screen
-                            var tilePosition = chunk.Origin + (enumerator.X, enumerator.Y);
+                            var tilePosition = chunkOrigin + (enumerator.X, enumerator.Y);
                             if (!localBounds.Contains(tilePosition))
                                 continue;
 

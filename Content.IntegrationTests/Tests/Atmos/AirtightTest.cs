@@ -123,7 +123,7 @@ public sealed class AirtightTest : AtmosTest
         // Before an entity is spawned, the tile in question should be completely unblocked.
         // This should be reflected in a reconstruction.
         Assert.That(
-            SAtmos.IsTileAirBlocked(ProcessEnt.Owner, Vector2i.Zero, mapGridComp: ProcessEnt.Comp3),
+            SAtmos.IsTileAirBlocked(ProcessEnt.Owner, Vector2i.Zero, mapGridComp: ProcessEnt.Comp2),
             Is.False,
             "Expected no airtightness for reconstructed AirtightData before spawning an airtight entity.");
 
@@ -134,7 +134,7 @@ public sealed class AirtightTest : AtmosTest
 
         // Now, immediately after spawn, the reconstructed data should reflect airtightness.
         Assert.That(
-            SAtmos.IsTileAirBlocked(ProcessEnt.Owner, Vector2i.Zero, mapGridComp: ProcessEnt.Comp3),
+            SAtmos.IsTileAirBlocked(ProcessEnt.Owner, Vector2i.Zero, mapGridComp: ProcessEnt.Comp2),
             Is.True,
             "Expected airtightness for reconstructed AirtightData immediately after spawn.");
     }
@@ -214,7 +214,7 @@ public sealed class AirtightTest : AtmosTest
         using (Assert.EnterMultipleScope())
         {
             Assert.That(
-                SAtmos.IsTileAirBlocked(ProcessEnt.Owner, Vector2i.Zero, mapGridComp: ProcessEnt.Comp3),
+                SAtmos.IsTileAirBlocked(ProcessEnt.Owner, Vector2i.Zero, mapGridComp: ProcessEnt.Comp2),
                 Is.True,
                 "Expected airtightness for reconstructed AirtightData after atmos tick.");
 
@@ -259,21 +259,21 @@ public sealed class AirtightTest : AtmosTest
         SAtmos.RunProcessingFull(ProcessEnt, MapData.Grid.Owner, SAtmos.AtmosTickRate);
 
         Assert.That(
-            SAtmos.IsTileAirBlocked(ProcessEnt.Owner, Vector2i.Zero, mapGridComp: ProcessEnt.Comp3),
+            SAtmos.IsTileAirBlocked(ProcessEnt.Owner, Vector2i.Zero, mapGridComp: ProcessEnt.Comp2),
             Is.True,
             "Expected airtightness for reconstructed AirtightData before deletion.");
 
         SDeleteNow(_targetWall);
 
         Assert.That(
-            SAtmos.IsTileAirBlocked(ProcessEnt.Owner, Vector2i.Zero, mapGridComp: ProcessEnt.Comp3),
+            SAtmos.IsTileAirBlocked(ProcessEnt.Owner, Vector2i.Zero, mapGridComp: ProcessEnt.Comp2),
             Is.False,
             "Expected no airtightness for reconstructed AirtightData immediately after deletion.");
 
         SAtmos.RunProcessingFull(ProcessEnt, MapData.Grid.Owner, SAtmos.AtmosTickRate);
 
         Assert.That(
-            SAtmos.IsTileAirBlocked(ProcessEnt.Owner, Vector2i.Zero, mapGridComp: ProcessEnt.Comp3),
+            SAtmos.IsTileAirBlocked(ProcessEnt.Owner, Vector2i.Zero, mapGridComp: ProcessEnt.Comp2),
             Is.False,
             "Expected no airtightness for reconstructed AirtightData after atmos tick.");
     }

@@ -29,7 +29,7 @@ public abstract partial class AtmosTest : GameTest
     /// Used in <see cref="AtmosphereSystem.RunProcessingFull"/>. Resolved during test setup.
     /// </summary>
     /// <remarks>This will be null if no <see cref="TestMapPath"/> is provided.</remarks>
-    protected Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ProcessEnt;
+    protected Entity<GridAtmosphereComponent, MapGridComponent, TransformComponent> ProcessEnt;
 
     /// <summary>
     /// Helper shorthand of <see cref="ProcessEnt"/>.
@@ -61,7 +61,6 @@ public abstract partial class AtmosTest : GameTest
         Pair.TestMap = await Pair.LoadTestMap(TestMapPath.Value);
 
         var gridAtmosComp = SComp<GridAtmosphereComponent>(MapData.Grid);
-        var overlayComp = SComp<GasTileOverlayComponent>(MapData.Grid);
         var mapGridComp = SComp<MapGridComponent>(MapData.Grid);
         var xform = SComp<TransformComponent>(MapData.Grid);
 
@@ -71,20 +70,15 @@ public abstract partial class AtmosTest : GameTest
                 Is.Not.Null,
                 "Loaded map doesn't have a GridAtmosphereComponent on its grid. " +
                 "Does your TestMapPath have the necessary Atmospherics components?");
-            Assert.That(overlayComp,
-                Is.Not.Null,
-                "Loaded map doesn't have a GasTileOverlayComponent on its grid. " +
-                "Does your TestMapPath have the necessary Atmospherics components?");
             Assert.That(mapGridComp,
                 Is.Not.Null,
                 "Loaded map doesn't have a MapGridComponent on its grid. " +
                 "Does your TestMapPath have the necessary Atmospherics components?");
         }
 
-        ProcessEnt = new Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent>(
+        ProcessEnt = new Entity<GridAtmosphereComponent, MapGridComponent, TransformComponent>(
             MapData.Grid.Owner,
             gridAtmosComp,
-            overlayComp,
             mapGridComp,
             xform);
 

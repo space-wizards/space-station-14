@@ -6,6 +6,7 @@ using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Enums;
+using Robust.Shared.GameStates;
 using Robust.Shared.Graphics.RSI;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -32,6 +33,7 @@ public sealed partial class GasTileVisibleGasOverlay : Overlay
     private readonly SharedMapSystem _mapSystem;
     private readonly SharedTransformSystem _xformSys;
     private readonly SharedGasTileOverlaySystem _gasTileOverlaySystem;
+    private readonly ChunkEntitySystem _chunkEntitySystem;
     private readonly SpriteSystem _spriteSystem;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceEntities | OverlaySpace.WorldSpaceBelowWorld;
@@ -56,20 +58,25 @@ public sealed partial class GasTileVisibleGasOverlay : Overlay
         _mapSystem = _entManager.System<SharedMapSystem>();
         _xformSys = _entManager.System<SharedTransformSystem>();
         _gasTileOverlaySystem = _entManager.System<SharedGasTileOverlaySystem>();
+        _chunkEntitySystem = _entManager.System<ChunkEntitySystem>();
         _spriteSystem = _entManager.System<SpriteSystem>();
 
         _shader = _protoManager.Index(UnshadedShader).Instance();
         ZIndex = GasOverlayZIndex;
 
-        _gasCount = _gasTileOverlaySystem.VisibleGasId.Length;
+        _gasCount = _gasTileOverlaySystem.VisibleGasCount;
         _timer = new float[_gasCount];
         _frameDelays = new float[_gasCount][];
         _frameCounter = new int[_gasCount];
         _frames = new Texture[_gasCount][];
 
-        for (var i = 0; i < _gasCount; i++)
+        var visibleGasIndex = 0;
+        for (var gasId = 0; gasId < Atmospherics.TotalNumberOfGases; gasId++)
         {
-            var gasPrototype = _atmosphereSystem.GetGas(_gasTileOverlaySystem.VisibleGasId[i]);
+            if (!_gasTileOverlaySystem.IsGasVisible(gasId))
+                continue;
+
+            var gasPrototype = _atmosphereSystem.GetGas(gasId);
 
             switch (gasPrototype.GasOverlaySprite)
             {
@@ -78,17 +85,22 @@ public sealed partial class GasTileVisibleGasOverlay : Overlay
                     var stateId = animated.RsiState;
 
                     if (!rsi.TryGetState(stateId, out var state))
+                    {
+                        visibleGasIndex++;
                         continue;
+                    }
 
-                    _frames[i] = state.GetFrames(RsiDirection.South);
-                    _frameDelays[i] = state.GetDelays();
-                    _frameCounter[i] = 0;
+                    _frames[visibleGasIndex] = state.GetFrames(RsiDirection.South);
+                    _frameDelays[visibleGasIndex] = state.GetDelays();
+                    _frameCounter[visibleGasIndex] = 0;
                     break;
                 case SpriteSpecifier.Texture texture:
-                    _frames[i] = new[] { _spriteSystem.Frame0(texture) };
-                    _frameDelays[i] = Array.Empty<float>();
+                    _frames[visibleGasIndex] = new[] { _spriteSystem.Frame0(texture) };
+                    _frameDelays[visibleGasIndex] = Array.Empty<float>();
                     break;
             }
+
+            visibleGasIndex++;
         }
     }
 
@@ -121,13 +133,14 @@ public sealed partial class GasTileVisibleGasOverlay : Overlay
 
         var drawHandle = args.WorldHandle;
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
-        var overlayQuery = _entManager.GetEntityQuery<GasTileOverlayComponent>();
+        var overlayQuery = _entManager.GetEntityQuery<GasOverlayChunkComponent>();
         var gridState = (args.WorldBounds,
             args.WorldHandle,
             _gasCount,
             _frames,
             _frameCounter,
             _shader,
+            _chunkEntitySystem,
             overlayQuery,
             xformQuery,
             _xformSys);
@@ -152,12 +165,12 @@ public sealed partial class GasTileVisibleGasOverlay : Overlay
                     Texture[][] frames,
                     int[] frameCounter,
                     ShaderInstance shader,
-                    EntityQuery<GasTileOverlayComponent> overlayQuery,
+                    ChunkEntitySystem chunkEntitySystem,
+                    EntityQuery<GasOverlayChunkComponent> overlayQuery,
                     EntityQuery<TransformComponent> xformQuery,
                     SharedTransformSystem xformSys) state) =>
             {
-                if (!state.overlayQuery.TryGetComponent(uid, out var comp) ||
-                    !state.xformQuery.TryGetComponent(uid, out var gridXform))
+                if (!state.xformQuery.TryGetComponent(uid, out var gridXform))
                 {
                     return true;
                 }
@@ -176,22 +189,25 @@ public sealed partial class GasTileVisibleGasOverlay : Overlay
                 // by chunk, even though its currently slower.
 
                 state.drawHandle.UseShader(null);
-                foreach (var chunk in comp.Chunks.Values)
+                var chunks = state.chunkEntitySystem.GetChunksIntersecting(uid, floatBounds, state.overlayQuery);
+                while (chunks.MoveNext(out var chunkEnt))
                 {
+                    var chunk = chunkEnt.Value.Comp2;
+                    var chunkOrigin = chunkEnt.Value.Comp1.Chunk * SharedGasTileOverlaySystem.ChunkSize;
                     var enumerator = new GasChunkEnumerator(chunk);
 
                     while (enumerator.MoveNext(out var gas))
                     {
-                        if (gas.Opacity == null!)
+                        if (gas.PackedOpacity == 0)
                             continue;
 
-                        var tilePosition = chunk.Origin + (enumerator.X, enumerator.Y);
+                        var tilePosition = chunkOrigin + (enumerator.X, enumerator.Y);
                         if (!localBounds.Contains(tilePosition))
                             continue;
 
                         for (var i = 0; i < state.gasCount; i++)
                         {
-                            var opacity = gas.Opacity[i];
+                            var opacity = gas.GetOpacity(i);
                             if (opacity > 0)
                             {
                                 state.drawHandle.DrawTexture(state.frames[i][state.frameCounter[i]],
@@ -234,9 +250,9 @@ public sealed partial class GasTileVisibleGasOverlay : Overlay
             {
                 var tilePosition = new Vector2(x, y);
 
-                for (var i = 0; i < atmos.OverlayData.Opacity.Length; i++)
+                for (var i = 0; i < _gasCount; i++)
                 {
-                    var opacity = atmos.OverlayData.Opacity[i];
+                    var opacity = atmos.OverlayData.GetOpacity(i);
 
                     if (opacity > 0)
                         handle.DrawTexture(_frames[i][_frameCounter[i]], tilePosition, Color.White.WithAlpha(opacity));

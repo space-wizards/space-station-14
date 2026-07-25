@@ -1,61 +1,157 @@
-using Content.Shared.Atmos.Components;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Atmos.EntitySystems;
 
 public abstract partial class SharedGasTileOverlaySystem : EntitySystem
 {
-    public const byte ChunkSize = 8;
+    public const int ChunkSize = ChunkEntitySystem.ChunkSize;
+    public const int MaxPackedOpacityGases = 8;
     protected float AccumulatedFrameTime;
-    protected bool PvsEnabled;
 
     [Dependency] protected IConfigurationManager ConfMan = default!;
     [Dependency] private SharedAtmosphereSystem _atmosphere = default!;
 
     /// <summary>
-    ///     array of the ids of all visible gases.
+    ///     Bitmask of all gases with visible overlays. Bit N corresponds to gas ID N.
     /// </summary>
-    public int[] VisibleGasId = default!;
+    public uint VisibleGasId { get; private set; }
+
+    /// <summary>
+    ///     Number of gas IDs present in <see cref="VisibleGasId"/>.
+    /// </summary>
+    public int VisibleGasCount { get; private set; }
 
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<GasTileOverlayComponent, ComponentGetState>(OnGetState);
+        SubscribeLocalEvent<GasOverlayChunkComponent, ComponentGetState>(OnGetState);
+        SubscribeLocalEvent<GasOverlayChunkComponent, ComponentHandleState>(OnHandleState);
 
-        List<int> visibleGases = new();
+        if (Atmospherics.TotalNumberOfGases > sizeof(uint) * 8)
+            throw new InvalidOperationException("Gas overlay visibility mask supports at most 32 gases.");
+
+        VisibleGasId = 0;
+        VisibleGasCount = 0;
 
         for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
         {
             var gasPrototype = _atmosphere.GetGas(i);
             if (gasPrototype.GasOverlaySprite != null)
-                visibleGases.Add(i);
+            {
+                VisibleGasId |= GetGasIdMask(i);
+                VisibleGasCount++;
+            }
         }
-        VisibleGasId = visibleGases.ToArray();
+
+        if (VisibleGasCount > MaxPackedOpacityGases)
+            throw new InvalidOperationException($"Gas overlay opacity supports at most {MaxPackedOpacityGases} visible gases.");
     }
 
-    private void OnGetState(EntityUid uid, GasTileOverlayComponent component, ref ComponentGetState args)
+    public bool IsGasVisible(int gasId)
     {
-        if (PvsEnabled && !args.ReplayState)
-            return;
+        DebugTools.Assert(gasId >= 0 && gasId < Atmospherics.TotalNumberOfGases);
+        return (VisibleGasId & GetGasIdMask(gasId)) != 0;
+    }
 
-        // Should this be a full component state or a delta-state?
-        if (args.FromTick <= component.CreationTick || args.FromTick <= component.ForceTick)
+    private static uint GetGasIdMask(int gasId)
+    {
+        return 1u << gasId;
+    }
+
+    private void OnGetState(EntityUid uid, GasOverlayChunkComponent component, ref ComponentGetState args)
+    {
+        if (args.FromTick <= component.CreationTick)
         {
-            args.State = new GasTileOverlayState(component.Chunks);
+            var fireData = new GasOverlayFireData[component.FireData.Length];
+            var opacityData = new GasOverlayOpacityData[component.OpacityData.Length];
+            var temperatureData = new GasOverlayTemperatureData[component.TemperatureData.Length];
+
+            Array.Copy(component.FireData, fireData, component.FireData.Length);
+            Array.Copy(component.OpacityData, opacityData, component.OpacityData.Length);
+            Array.Copy(component.TemperatureData, temperatureData, component.TemperatureData.Length);
+
+            args.State = new GasOverlayChunkState(fireData, opacityData, temperatureData);
             return;
         }
 
-        var data = new Dictionary<Vector2i, GasOverlayChunk>();
-        foreach (var (index, chunk) in component.Chunks)
+        var fireCount = 0;
+        var opacityCount = 0;
+        var temperatureCount = 0;
+
+        for (var i = 0; i < component.FireData.Length; i++)
         {
-            if (chunk.LastUpdate >= args.FromTick)
-                data[index] = chunk;
+            if (component.FireLastModified[i] > args.FromTick)
+                fireCount++;
+
+            if (component.OpacityLastModified[i] > args.FromTick)
+                opacityCount++;
+
+            if (component.TemperatureLastModified[i] > args.FromTick)
+                temperatureCount++;
         }
 
-        args.State = new GasTileOverlayDeltaState(data, new(component.Chunks.Keys));
+        var fire = fireCount == 0 ? Array.Empty<GasOverlayFireDelta>() : new GasOverlayFireDelta[fireCount];
+        var opacity = opacityCount == 0 ? Array.Empty<GasOverlayOpacityDelta>() : new GasOverlayOpacityDelta[opacityCount];
+        var temperature = temperatureCount == 0 ? Array.Empty<GasOverlayTemperatureDelta>() : new GasOverlayTemperatureDelta[temperatureCount];
+
+        fireCount = 0;
+        opacityCount = 0;
+        temperatureCount = 0;
+
+        for (var i = 0; i < component.FireData.Length; i++)
+        {
+            var index = (byte) i;
+
+            if (component.FireLastModified[i] > args.FromTick)
+                fire[fireCount++] = new GasOverlayFireDelta(index, component.FireData[i]);
+
+            if (component.OpacityLastModified[i] > args.FromTick)
+                opacity[opacityCount++] = new GasOverlayOpacityDelta(index, component.OpacityData[i]);
+
+            if (component.TemperatureLastModified[i] > args.FromTick)
+                temperature[temperatureCount++] = new GasOverlayTemperatureDelta(index, component.TemperatureData[i]);
+        }
+
+        args.State = new GasOverlayChunkDeltaState(fire, opacity, temperature);
+    }
+
+    private void OnHandleState(EntityUid uid, GasOverlayChunkComponent component, ref ComponentHandleState args)
+    {
+        switch (args.Current)
+        {
+            case GasOverlayChunkState state:
+                if (component.FireData.Length != state.FireData.Length)
+                    component.FireData = new GasOverlayFireData[state.FireData.Length];
+                if (component.OpacityData.Length != state.OpacityData.Length)
+                    component.OpacityData = new GasOverlayOpacityData[state.OpacityData.Length];
+                if (component.TemperatureData.Length != state.TemperatureData.Length)
+                    component.TemperatureData = new GasOverlayTemperatureData[state.TemperatureData.Length];
+
+                Array.Copy(state.FireData, component.FireData, state.FireData.Length);
+                Array.Copy(state.OpacityData, component.OpacityData, state.OpacityData.Length);
+                Array.Copy(state.TemperatureData, component.TemperatureData, state.TemperatureData.Length);
+                break;
+            case GasOverlayChunkDeltaState delta:
+                foreach (var modified in delta.ModifiedFire)
+                {
+                    component.FireData[modified.Index] = modified.Data;
+                }
+
+                foreach (var modified in delta.ModifiedOpacity)
+                {
+                    component.OpacityData[modified.Index] = modified.Data;
+                }
+
+                foreach (var modified in delta.ModifiedTemperature)
+                {
+                    component.TemperatureData[modified.Index] = modified.Data;
+                }
+                break;
+        }
     }
 
     public static Vector2i GetGasChunkIndices(Vector2i indices)
@@ -64,10 +160,64 @@ public abstract partial class SharedGasTileOverlaySystem : EntitySystem
     }
 
     [Serializable, NetSerializable]
+    public readonly struct GasOverlayFireData(byte fireState) : IEquatable<GasOverlayFireData>
+    {
+        [ViewVariables] public readonly byte FireState = fireState;
+
+        public bool Equals(GasOverlayFireData other)
+        {
+            return FireState == other.FireState;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public readonly struct GasOverlayOpacityData(ulong packedOpacity) : IEquatable<GasOverlayOpacityData>
+    {
+        [ViewVariables] public readonly ulong PackedOpacity = packedOpacity;
+
+        public byte GetOpacity(int index)
+        {
+            DebugTools.Assert(index >= 0 && index < MaxPackedOpacityGases);
+            return (byte) (PackedOpacity >> (index * 8));
+        }
+
+        public static ulong SetOpacity(ulong packedOpacity, int index, byte opacity)
+        {
+            DebugTools.Assert(index >= 0 && index < MaxPackedOpacityGases);
+            var shift = index * 8;
+            var mask = 0xFFUL << shift;
+            return (packedOpacity & ~mask) | ((ulong) opacity << shift);
+        }
+
+        public bool Equals(GasOverlayOpacityData other)
+        {
+            return PackedOpacity == other.PackedOpacity;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public readonly struct GasOverlayTemperatureData(ThermalByte byteTemp, bool active = true)
+        : IEquatable<GasOverlayTemperatureData>
+    {
+        /// <summary>
+        /// Whether this tile has authoritative temperature overlay data. This distinguishes absent chunk data from
+        /// a real tile at <see cref="ThermalByte.TempMinimum"/>.
+        /// </summary>
+        [ViewVariables] public readonly bool Active = active;
+
+        [ViewVariables] public readonly ThermalByte ByteGasTemperature = byteTemp;
+
+        public bool Equals(GasOverlayTemperatureData other)
+        {
+            return Active == other.Active && ByteGasTemperature == other.ByteGasTemperature;
+        }
+    }
+
+    [Serializable, NetSerializable]
     public readonly struct GasOverlayData : IEquatable<GasOverlayData>
     {
         [ViewVariables] public readonly byte FireState;
-        [ViewVariables] public readonly byte[] Opacity;
+        [ViewVariables] public readonly ulong PackedOpacity;
         // TODO change fire color based on ByteTemp
 
         /// <summary>
@@ -78,11 +228,17 @@ public abstract partial class SharedGasTileOverlaySystem : EntitySystem
         public readonly ThermalByte ByteGasTemperature;
 
 
-        public GasOverlayData(byte fireState, byte[] opacity, ThermalByte byteTemp)
+        public GasOverlayData(byte fireState, ulong packedOpacity, ThermalByte byteTemp)
         {
             FireState = fireState;
-            Opacity = opacity;
+            PackedOpacity = packedOpacity;
             ByteGasTemperature = byteTemp;
+        }
+
+        public byte GetOpacity(int index)
+        {
+            DebugTools.Assert(index >= 0 && index < MaxPackedOpacityGases);
+            return (byte) (PackedOpacity >> (index * 8));
         }
 
         public bool Equals(GasOverlayData other)
@@ -90,30 +246,14 @@ public abstract partial class SharedGasTileOverlaySystem : EntitySystem
             if (FireState != other.FireState)
                 return false;
 
-            if (Opacity?.Length != other.Opacity?.Length)
+            if (PackedOpacity != other.PackedOpacity)
                 return false;
-
-            if (Opacity != null && other.Opacity != null)
-            {
-                for (var i = 0; i < Opacity.Length; i++)
-                {
-                    if (Opacity[i] != other.Opacity[i])
-                        return false;
-                }
-            }
 
             if (ByteGasTemperature != other.ByteGasTemperature)
                 return false;
 
             return true;
         }
-    }
-
-    [Serializable, NetSerializable]
-    public sealed class GasOverlayUpdateEvent : EntityEventArgs
-    {
-        public Dictionary<NetEntity, List<GasOverlayChunk>> UpdatedChunks = new();
-        public Dictionary<NetEntity, HashSet<Vector2i>> RemovedChunks = new();
     }
 }
 

@@ -110,7 +110,7 @@ public sealed partial class AtmosphereSystem
     /// <param name="ent">The grid.</param>
     /// <param name="excitedGroup">The <see cref="ExcitedGroups"/> to equalize and dissolve.</param>
     private void ExcitedGroupSelfBreakdown(
-        Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
+        Entity<GridAtmosphereComponent, MapGridComponent, TransformComponent> ent,
         ExcitedGroup excitedGroup)
     {
         DebugTools.Assert(!excitedGroup.Disposed, "Excited group is disposed!");

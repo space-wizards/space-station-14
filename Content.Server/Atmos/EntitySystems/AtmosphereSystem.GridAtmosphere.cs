@@ -44,7 +44,6 @@ public sealed partial class AtmosphereSystem
 
     private void OnGridAtmosphereInit(EntityUid uid, GridAtmosphereComponent component, ComponentInit args)
     {
-        EnsureComp<GasTileOverlayComponent>(uid);
         foreach (var tile in component.Tiles.Values)
         {
             tile.GridIndex = uid;
@@ -161,7 +160,7 @@ public sealed partial class AtmosphereSystem
     /// Update array of adjacent tiles and the adjacency flags.
     /// </summary>
     private void UpdateAdjacentTiles(
-        Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
+        Entity<GridAtmosphereComponent, MapGridComponent, TransformComponent> ent,
         TileAtmosphere tile,
         bool activate = false)
     {

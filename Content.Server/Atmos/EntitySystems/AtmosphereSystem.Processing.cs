@@ -45,7 +45,7 @@ namespace Content.Server.Atmos.EntitySystems
             return tile;
         }
 
-        private readonly List<Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent>> _currentRunAtmosphere = new();
+        private readonly List<Entity<GridAtmosphereComponent, MapGridComponent, TransformComponent>> _currentRunAtmosphere = new();
 
         /// <summary>
         ///     Revalidates all invalid coordinates in a grid atmosphere.
@@ -53,15 +53,15 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         /// <param name="ent">The grid atmosphere in question.</param>
         /// <returns>Whether the process succeeded or got paused due to time constrains.</returns>
-        private bool ProcessRevalidate(Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent)
+        private bool ProcessRevalidate(Entity<GridAtmosphereComponent, MapGridComponent, TransformComponent> ent)
         {
-            if (ent.Comp4.MapUid == null)
+            if (ent.Comp3.MapUid == null)
             {
                 Log.Error($"Attempted to process atmosphere on a map-less grid? Grid: {ToPrettyString(ent)}");
                 return true;
             }
 
-            var (uid, atmosphere, visuals, grid, xform) = ent;
+            var (uid, atmosphere, grid, xform) = ent;
             var volume = GetVolumeForTiles(grid);
             TryComp(xform.MapUid, out MapAtmosphereComponent? mapAtmos);
 
@@ -135,7 +135,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// adjacent to any grid-tiles.
         /// </summary>
         private void TrimDisconnectedMapTiles(
-            Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent)
+            Entity<GridAtmosphereComponent, MapGridComponent, TransformComponent> ent)
         {
             var atmos = ent.Comp1;
 
@@ -149,7 +149,7 @@ namespace Content.Server.Atmos.EntitySystems
                 for (var i = 0; i < Atmospherics.Directions; i++)
                 {
                     var indices = tile.GridIndices.Offset((AtmosDirection) (1 << i));
-                    if (_map.TryGetTile(ent.Comp3, indices, out var gridTile) && !gridTile.IsEmpty)
+                    if (_map.TryGetTile(ent.Comp2, indices, out var gridTile) && !gridTile.IsEmpty)
                     {
                         connected = true;
                         break;
@@ -171,13 +171,13 @@ namespace Content.Server.Atmos.EntitySystems
         /// tile should be considered "space"
         /// </summary>
         private void UpdateTileData(
-            Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
+            Entity<GridAtmosphereComponent, MapGridComponent, TransformComponent> ent,
             MapAtmosphereComponent? mapAtmos,
             TileAtmosphere tile)
         {
             var idx = tile.GridIndices;
             bool mapAtmosphere;
-            if (_map.TryGetTile(ent.Comp3, idx, out var gTile) && !gTile.IsEmpty)
+            if (_map.TryGetTile(ent.Comp2, idx, out var gTile) && !gTile.IsEmpty)
             {
                 var contentDef = (ContentTileDefinition) _tileDefinitionManager[gTile.TypeId];
                 mapAtmosphere = contentDef.MapAtmosphere;
@@ -201,7 +201,7 @@ namespace Content.Server.Atmos.EntitySystems
                 }
             }
 
-            UpdateAirtightData(ent.Owner, ent.Comp1, ent.Comp3, tile);
+            UpdateAirtightData(ent.Owner, ent.Comp1, ent.Comp2, tile);
 
             if (mapAtmosphere)
             {
@@ -242,7 +242,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// Check whether a grid-tile should have an air mixture, and give it one if it doesn't already have one.
         /// </summary>
         private void UpdateTileAir(
-            Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
+            Entity<GridAtmosphereComponent, MapGridComponent, TransformComponent> ent,
             TileAtmosphere tile,
             float volume)
         {
@@ -266,7 +266,7 @@ namespace Content.Server.Atmos.EntitySystems
                 tile.ArchivedCycle = 0;
                 tile.LastShare = 0f;
                 tile.Hotspot = new Hotspot();
-                NotifyDeviceTileChanged((ent.Owner, ent.Comp1, ent.Comp3), tile.GridIndices);
+                NotifyDeviceTileChanged((ent.Owner, ent.Comp1, ent.Comp2), tile.GridIndices);
                 return;
             }
 
@@ -280,7 +280,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             // Since we assigned the tile a new GasMixture we need to tell any devices
             // on this tile that the reference has changed.
-            NotifyDeviceTileChanged((ent.Owner, ent.Comp1, ent.Comp3), tile.GridIndices);
+            NotifyDeviceTileChanged((ent.Owner, ent.Comp1, ent.Comp2), tile.GridIndices);
         }
 
         private void QueueRunTiles(
@@ -296,7 +296,7 @@ namespace Content.Server.Atmos.EntitySystems
             }
         }
 
-        private bool ProcessTileEqualize(Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent)
+        private bool ProcessTileEqualize(Entity<GridAtmosphereComponent, MapGridComponent, TransformComponent> ent)
         {
             var atmosphere = ent.Comp1;
             if (!atmosphere.ProcessingPaused)
@@ -322,7 +322,7 @@ namespace Content.Server.Atmos.EntitySystems
         }
 
         private bool ProcessActiveTiles(
-            Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent)
+            Entity<GridAtmosphereComponent, MapGridComponent, TransformComponent> ent)
         {
             var atmosphere = ent.Comp1;
             if(!atmosphere.ProcessingPaused)
@@ -348,7 +348,7 @@ namespace Content.Server.Atmos.EntitySystems
         }
 
         private bool ProcessExcitedGroups(
-            Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent)
+            Entity<GridAtmosphereComponent, MapGridComponent, TransformComponent> ent)
         {
             var gridAtmosphere = ent.Comp1;
             if (!gridAtmosphere.ProcessingPaused)
@@ -418,7 +418,7 @@ namespace Content.Server.Atmos.EntitySystems
         }
 
         private bool ProcessHotspots(
-            Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent)
+            Entity<GridAtmosphereComponent, MapGridComponent, TransformComponent> ent)
         {
             var atmosphere = ent.Comp1;
             if(!atmosphere.ProcessingPaused)
@@ -473,7 +473,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         /// <returns>True if we've finished processing all entities that required processing this run,
         /// otherwise, false.</returns>
-        private bool ProcessDeltaPressure(Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent)
+        private bool ProcessDeltaPressure(Entity<GridAtmosphereComponent, MapGridComponent, TransformComponent> ent)
         {
             var atmosphere = ent.Comp1;
             var count = atmosphere.DeltaPressureEntities.Count;
@@ -585,7 +585,7 @@ namespace Content.Server.Atmos.EntitySystems
         }
 
         private bool ProcessAtmosDevices(
-            Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
+            Entity<GridAtmosphereComponent, MapGridComponent, TransformComponent> ent,
             Entity<MapAtmosphereComponent?> map)
         {
             var atmosphere = ent.Comp1;
@@ -601,7 +601,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             var time = _gameTiming.CurTime;
             var number = 0;
-            var ev = new AtmosDeviceUpdateEvent(RealAtmosTime(), (ent, ent.Comp1, ent.Comp2), map);
+            var ev = new AtmosDeviceUpdateEvent(RealAtmosTime(), (ent.Owner, ent.Comp1), map);
             while (atmosphere.CurrentRunAtmosDevices.TryDequeue(out var device))
             {
                 RaiseLocalEvent(device, ref ev);
@@ -630,10 +630,10 @@ namespace Content.Server.Atmos.EntitySystems
                 _currentRunAtmosphereIndex = 0;
                 _currentRunAtmosphere.Clear();
 
-                var query = EntityQueryEnumerator<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent>();
-                while (query.MoveNext(out var uid, out var atmos, out var overlay, out var grid, out var xform ))
+                var query = EntityQueryEnumerator<GridAtmosphereComponent, MapGridComponent, TransformComponent>();
+                while (query.MoveNext(out var uid, out var atmos, out var grid, out var xform))
                 {
-                    _currentRunAtmosphere.Add((uid, atmos, overlay, grid, xform));
+                    _currentRunAtmosphere.Add((uid, atmos, grid, xform));
                 }
             }
 
@@ -643,7 +643,7 @@ namespace Content.Server.Atmos.EntitySystems
             for (; _currentRunAtmosphereIndex < _currentRunAtmosphere.Count; _currentRunAtmosphereIndex++)
             {
                 var ent = _currentRunAtmosphere[_currentRunAtmosphereIndex];
-                var (owner, atmosphere, visuals, grid, xform) = ent;
+                var (owner, atmosphere, grid, xform) = ent;
 
                 if (xform.MapUid == null
                     || TerminatingOrDeleted(xform.MapUid.Value)
@@ -683,13 +683,13 @@ namespace Content.Server.Atmos.EntitySystems
         /// <see cref="GridAtmosphereComponent"/>'s map.</param>
         /// <param name="frameTime">The elapsed time since the last frame.</param>
         /// <returns>An <see cref="AtmosphereProcessingCompletionState"/> that represents the completion state.</returns>
-        private AtmosphereProcessingCompletionState ProcessAtmosphere(Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
+        private AtmosphereProcessingCompletionState ProcessAtmosphere(Entity<GridAtmosphereComponent, MapGridComponent, TransformComponent> ent,
             Entity<MapAtmosphereComponent?> mapAtmosphere,
             float frameTime)
         {
             // They call me the deconstructor the way i be deconstructing it
             // and by it, i mean... my entity
-            var (owner, atmosphere, visuals, grid, xform) = ent;
+            var (owner, atmosphere, grid, xform) = ent;
 
             atmosphere.Timer += frameTime;
 
