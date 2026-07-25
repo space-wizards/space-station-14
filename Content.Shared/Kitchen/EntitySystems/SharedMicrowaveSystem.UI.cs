@@ -24,7 +24,10 @@ public abstract partial class SharedMicrowaveSystem
             return;
 
         ContainerSys.EmptyContainer(ent.Comp.Storage);
-        AudioSys.PlayPredicted(ent.Comp.ClickSound, ent, args.Actor, AudioParams.Default.WithVolume(-2));
+
+        var audioParams = ent.Comp.ClickSound?.Params ?? AudioParams.Default;
+        audioParams = audioParams.AddVolume(-2);
+        AudioSys.PlayPredicted(ent.Comp.ClickSound, ent, args.Actor, audioParams);
     }
 
     /// <summary>
@@ -37,7 +40,10 @@ public abstract partial class SharedMicrowaveSystem
             return;
 
         ContainerSys.Remove(GetEntity(args.EntityId), ent.Comp.Storage);
-        AudioSys.PlayPredicted(ent.Comp.ClickSound, ent, args.Actor, AudioParams.Default.WithVolume(-2));
+
+        var audioParams = ent.Comp.ClickSound?.Params ?? AudioParams.Default;
+        audioParams = audioParams.AddVolume(-2);
+        AudioSys.PlayPredicted(ent.Comp.ClickSound, ent, args.Actor, audioParams);
     }
 
     /// <summary>
@@ -59,7 +65,9 @@ public abstract partial class SharedMicrowaveSystem
         ent.Comp.CurrentCookTimerTime = args.NewCookTime;
         Dirty(ent);
 
-        AudioSys.PlayPredicted(ent.Comp.ClickSound, ent, args.Actor, AudioParams.Default.WithVolume(-2));
+        var audioParams = ent.Comp.ClickSound?.Params ?? AudioParams.Default;
+        audioParams = audioParams.AddVolume(-2);
+        AudioSys.PlayPredicted(ent.Comp.ClickSound, ent, args.Actor, audioParams);
         UpdateUserInterfaceState(ent.AsNullable());
     }
 
