@@ -138,12 +138,13 @@
     sprite: Structures/Storage/Crates/surgery.rsi
 
 - type: entity
-  parent: CrateGeneric
+  parent: BaseCrate
   id: CrateWeb
   name: web crate
   components:
   - type: Icon
     sprite: Structures/Storage/Crates/web.rsi
+    state: icon
   - type: Sprite
     sprite: Structures/Storage/Crates/web.rsi
     layers:
@@ -157,8 +158,12 @@
   - type: Construction
     graph: WebStructures
     node: crate
+    containers:
+    - entity_storage
   - type: Damageable
     damageModifierSet: Web
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -190,6 +195,7 @@
   components:
   - type: Icon
     sprite: Structures/Storage/Crates/sec_gear.rsi
+    state: icon
   - type: Sprite
     sprite: Structures/Storage/Crates/sec_gear.rsi
   - type: AccessReader
@@ -337,7 +343,7 @@
     access: [["SyndicateAgent", "NuclearOperative"]]
 
 - type: entity
-  parent: CrateGeneric
+  parent: BaseCrate
   id: CrateLivestock
   name: livestock crate
   components:
@@ -356,6 +362,9 @@
   - type: Icon
     sprite: Structures/Storage/Crates/livestock.rsi
     state: base
+  - type: Damageable
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -394,7 +403,7 @@
     price: 125
 
 - type: entity
-  parent: CrateGeneric
+  parent: BaseCrate
   id: CrateRodentCage
   name: hamster cage
   components:
@@ -412,6 +421,10 @@
       map: ["enum.PaperLabelVisuals.Layer"]
   - type: Icon
     sprite: Structures/Storage/Crates/cage.rsi
+    state: icon
+  - type: Damageable
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -689,7 +702,7 @@
     state: crate_icon
 
 - type: entity
-  parent: CrateGeneric
+  parent: BaseCrate
   id: CrateCoffin
   name: coffin
   description: A comfy coffin, excellent place for the vampires and corpses.
@@ -705,6 +718,9 @@
   - type: Icon
     sprite: Structures/Storage/Crates/coffin.rsi
     state: base
+  - type: Damageable
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -728,7 +744,7 @@
     - entity_storage
 
 - type: entity
-  parent: CrateGeneric
+  parent: BaseCrate
   id: CrateWoodenGrave
   name: grave
   suffix: wooden
@@ -747,6 +763,9 @@
   - type: Icon
     sprite: Structures/Storage/Crates/wooden_grave.rsi
     state: base
+  - type: Damageable
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:

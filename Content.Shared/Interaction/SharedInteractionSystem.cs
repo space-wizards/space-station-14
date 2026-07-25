@@ -153,6 +153,7 @@ namespace Content.Shared.Interaction
         private void OnBoundInterfaceInteractAttempt(Entity<UserInterfaceComponent> ent, ref BoundUserInterfaceMessageAttempt ev)
         {
             _uiQuery.TryComp(ev.Target, out var aUiComp);
+
             if (!_actionBlockerSystem.CanInteract(ev.Actor, ev.Target))
             {
                 // We permit ghosts to open uis unless explicitly blocked
@@ -177,6 +178,10 @@ namespace Content.Shared.Interaction
             }
 
             if (aUiComp == null)
+                return;
+
+            // Key shouldn't ever be null.
+            if (!aUiComp.Key.Equals(ev.UiKey))
                 return;
 
             if (aUiComp.SingleUser && aUiComp.CurrentSingleUser != null && aUiComp.CurrentSingleUser != ev.Actor)
