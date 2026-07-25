@@ -98,8 +98,10 @@
   description: Use this to prevent your disguise from rotating, making it easier to hide in some scenarios.
   components:
   - type: Action
-    icon: Interface/VerbIcons/refresh.svg.192dpi.png
     itemIconStyle: BigAction
+  - type: Sprite
+    layers:
+    - texture: Interface/VerbIcons/refresh.svg.192dpi.png
   - type: InstantAction
     event: !type:DisguiseToggleNoRotEvent
 
@@ -110,9 +112,10 @@
   description: For many objects you will want to be anchored to not be completely obvious.
   components:
   - type: Action
-    icon:
-      sprite: Objects/Tools/wrench.rsi
-      state: icon
     itemIconStyle: BigAction
+  - type: Sprite
+    sprite: Objects/Tools/wrench.rsi
+    layers:
+    - state: icon
   - type: InstantAction
     event: !type:DisguiseToggleAnchoredEvent
