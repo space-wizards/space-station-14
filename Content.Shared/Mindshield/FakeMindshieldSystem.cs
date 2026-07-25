@@ -58,13 +58,14 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
     /// An associated tuple. The state in <see cref="FakeMindShieldComponent"/> will be used
     /// to display the appropriate popup.
     /// </param>
-    private void ShowTogglePopup(Entity<FakeMindShieldComponent> ent)
+    /// <param name="performer">The entity that toggled the fake mindshield.</param>
+    private void ShowTogglePopup(Entity<FakeMindShieldComponent> ent, EntityUid performer)
     {
         var message = ent.Comp.IsEnabled
             ? Loc.GetString("fake-mindshield-enabled")
             : Loc.GetString("fake-mindshield-disabled");
 
-        _popups.PopupEntity(message, ent, ent);
+        _popups.PopupEntity(message, performer, performer);
     }
 
     private void OnFakeMindshieldEquip(Entity<FakeMindShieldComponent> ent, ref ClothingGotEquippedEvent args)
@@ -117,7 +118,7 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
         ent.Comp.IsEnabled = !ent.Comp.IsEnabled;
         args.Toggle = true;
         args.Handled = true;
-        ShowTogglePopup(ent);
+        ShowTogglePopup(ent, args.Performer);
         Dirty(ent.Owner, ent.Comp);
         _mindShields.RefreshMindshieldStatus(args.Performer);
     }
