@@ -5240,3 +5240,19 @@
   id: 9894
   time: '2026-07-23T06:39:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43315
+- author: Dogbone10
+  changes:
+  - message: Bluespace bags can now fit Ginormous items, HOWEVER they've had their size slightly reduced.
+    type: Tweak
+  - message: Marked unique backpacks (syndicate filled ones mostly) with the Backpack tag.
+    type: Fix
+  id: 9895
+  time: '2026-07-24T15:20:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43294
+- author: whatston3
+  changes:
+  - message: Light bulbs and tubes once again break into glass shards when sufficiently damaged.
+    type: Fix
+  id: 9896
+  time: '2026-07-24T23:00:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44895
