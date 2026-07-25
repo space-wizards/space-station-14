@@ -433,6 +433,7 @@
 # button frames
 
 - type: entity
+  parent: StructureHealthFurnitureWeak
   id: ButtonFrame
   name: button frame
   categories: [ HideSpawnMenu ]

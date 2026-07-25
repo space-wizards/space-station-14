@@ -113,7 +113,7 @@
     soundHit:
       collection: MetalThud
   - type: ExplosionResistance
-    damageCoefficient: 0.1
+    damageCoefficient: 0.2
   - type: Airtight
   - type: GenericVisualizer
     visuals:
