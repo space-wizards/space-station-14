@@ -53,12 +53,14 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
 
     /// <summary>
     /// The Instrument playing the tracks. This is needed for the UI to read out current track time.
-    /// on <see cref="FrameUpdate"/>.
+    /// on <see cref="FrameUpdate" />.
     /// </summary>
     public Entity<InstrumentComponent> Instrument;
 
     private bool IsShuffle => ShuffleButton.Pressed;
     private string CurrentFilter => FilterBar.Text;
+
+    /// <inheritdoc />
     public override string ButtonName => Loc.GetString("instruments-component-menu-file-midi-source-button");
 
     /// <summary>
@@ -261,9 +263,7 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
         }
 
         if (obj.Button.Pressed && !TrackList.GetSelected().Any())
-        {
             TrackList[_random.Next(0, TrackList.Count)].Selected = true;
-        }
     }
 
     private void OnPlaybackSliderValueChanged(Range _)
@@ -398,7 +398,7 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
     /// <summary>
     /// Selects the next MIDI track from the list according to shuffle and filter settings.
     /// </summary>
-    /// <remarks>Selecting another track causes its playback if <see cref="IsPlaying"/> is true.</remarks>
+    /// <remarks>Selecting another track causes its playback if <see cref="IsPlaying" /> is true.</remarks>
     public void SelectNextTrack()
     {
         // Only proceed if file panel is active.

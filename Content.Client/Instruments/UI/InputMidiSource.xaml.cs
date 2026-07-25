@@ -16,6 +16,7 @@ public sealed partial class InputMidiSource : InstrumentMidiSourceBase
     /// </summary>
     public event Action? CloseInputRequest;
 
+    /// <inheritdoc />
     public override string ButtonName => Loc.GetString("instruments-component-menu-input-midi-source-button");
 
     public InputMidiSource()

@@ -56,7 +56,7 @@ public sealed partial class ChannelsControl : Control
     {
         for (var i = 0; i < RobustMidiEvent.MaxChannels; i++)
         {
-            var item = new ChannelItem()
+            var item = new ChannelItem
             {
                 ChannelId = i,
             };
@@ -68,6 +68,9 @@ public sealed partial class ChannelsControl : Control
     /// <summary>
     /// Replaces the current list of channels with the passed one.
     /// </summary>
+    /// <remarks>
+    /// Calling this method overrides the toggle state of all channel items. Ensure to pass correct values.
+    /// </remarks>
     /// <param name="channels">List of channels consisting of their index, display name and state.</param>
     public void SetChannels((int, string, string, string, bool)[] channels)
     {

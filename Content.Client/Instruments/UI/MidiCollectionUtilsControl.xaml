@@ -1,11 +1,17 @@
 <Control xmlns="https://spacestation14.io"
          xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls">
     <BoxContainer Orientation="Vertical">
-        <Label Name="MidiCountLabel"/>
+        <Label Name="MidiCountLabel" />
         <BoxContainer Orientation="Horizontal">
-            <Button Name="OpenDirectoryButton" Text="{Loc 'instruments-component-midi-file-collection-open-dir-button'}" HorizontalExpand="true" VerticalExpand="true" StyleClasses="OpenRight" />
-            <Button Name="ReloadCollectionButton" Text="{Loc 'instruments-component-midi-file-collection-reload-button'}" HorizontalExpand="true" VerticalExpand="true" StyleClasses="OpenBoth" />
-            <controls:ConfirmButton Name="DeleteAllButton" Text="{Loc 'instruments-component-midi-file-collection-delete-all-button'}" HorizontalExpand="true" VerticalExpand="true" StyleClasses="OpenLeft"/>
+            <Button Name="OpenDirectoryButton"
+                    Text="{Loc 'instruments-component-midi-file-collection-open-dir-button'}" HorizontalExpand="true"
+                    VerticalExpand="true" StyleClasses="OpenRight" />
+            <Button Name="ReloadCollectionButton"
+                    Text="{Loc 'instruments-component-midi-file-collection-reload-button'}" HorizontalExpand="true"
+                    VerticalExpand="true" StyleClasses="OpenBoth" />
+            <controls:ConfirmButton Name="DeleteAllButton"
+                                    Text="{Loc 'instruments-component-midi-file-collection-delete-all-button'}"
+                                    HorizontalExpand="true" VerticalExpand="true" StyleClasses="OpenLeft" />
         </BoxContainer>
     </BoxContainer>
 </Control>

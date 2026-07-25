@@ -5,7 +5,8 @@
                       SetSize="500 500">
     <BoxContainer Orientation="Vertical" Margin="1,0,0,5" SeparationOverride="10">
         <TabContainer Name="MainTabContainer" VerticalExpand="True">
-            <BoxContainer Name="InstrumentContainer" Orientation="Horizontal" VerticalExpand="True" SeparationOverride="10">
+            <BoxContainer Name="InstrumentContainer" Orientation="Horizontal" VerticalExpand="True"
+                          SeparationOverride="10">
                 <BoxContainer Orientation="Vertical" VerticalExpand="True">
                     <BoxContainer Name="MidiSourceButtonsBoxContainer" Orientation="Vertical">
                         <Label Text="{Loc 'instruments-component-menu-midi-source-button'}" />
@@ -16,7 +17,8 @@
                 </BoxContainer>
                 <BoxContainer Name="MidiSourcesContainer" VerticalExpand="True" HorizontalExpand="True" />
             </BoxContainer>
-            <ScrollContainer Name="ConfigScrollContainer" HScrollEnabled="False" HorizontalExpand="True" VerticalExpand="True">
+            <ScrollContainer Name="ConfigScrollContainer" HScrollEnabled="False" HorizontalExpand="True"
+                             VerticalExpand="True">
                 <BoxContainer
                     Name="ConfigurationItemsContainer"
                     Orientation="Vertical"

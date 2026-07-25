@@ -4,7 +4,7 @@
         <ScrollContainer MinHeight="90">
             <BoxContainer Orientation="Vertical" Name="ChannelsContainer" SeparationOverride="3" />
         </ScrollContainer>
-        <controls:HSpacer Spacing="10"></controls:HSpacer>
+        <controls:HSpacer Spacing="10" />
         <GridContainer Columns="5" HSeparationOverride="1" VSeparationOverride="1">
             <!-- Name display selector -->
             <Label Text="{Loc 'instruments-component-channels-name-display-selector-label'}" />

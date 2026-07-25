@@ -14,6 +14,9 @@ public sealed partial class ChannelItem : Control
     /// </summary>
     public event Action<int, bool>? SwitchFilteredChannel;
 
+    /// <summary>
+    ///  MIDI channel ID this item is assigned to.
+    /// </summary>
     public int ChannelId
     {
         get;
@@ -24,12 +27,18 @@ public sealed partial class ChannelItem : Control
         }
     }
 
+    /// <summary>
+    /// UI state (on/off) of this channel item.
+    /// </summary>
     public bool ChannelState
     {
         get => ChannelEnableSwitchButton.Pressed;
         set => ChannelEnableSwitchButton.Pressed = value;
     }
 
+    /// <summary>
+    /// Name of this channel item in the UI.
+    /// </summary>
     public string? ChannelName
     {
         get => ChannelNameLabel.Text;

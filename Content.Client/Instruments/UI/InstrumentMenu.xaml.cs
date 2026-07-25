@@ -73,9 +73,9 @@ public sealed partial class InstrumentMenu : FancyWindow
     }
 
     /// <summary>
-    /// Takes the given control and registers it as an option for the configuration collapsible.
+    /// Takes the given control and registers it as an option for the configuration tab control.
     /// </summary>
-    /// <param name="name">The string to display on the collapsible button for this configuration.</param>
+    /// <param name="name">The string to display on the tab header for this configuration.</param>
     /// <param name="ctrl">The control used for this configuration.</param>
     public void AddConfigurationControl(string name, Control ctrl)
     {
@@ -103,7 +103,7 @@ public sealed partial class InstrumentMenu : FancyWindow
     /// Disables & hides the currently active source control, then enables & shows the given one.
     /// </summary>
     /// <param name="source">The source control to enable.</param>
-    /// <remarks>The given source must be registered first using the <see cref="SetupSources"/> function.</remarks>
+    /// <remarks>The given source must be registered first using the <see cref="SetupSources" /> function.</remarks>
     public void SwitchMode(InstrumentMidiSourceBase source)
     {
         _currentMode?.Disable();
@@ -122,7 +122,7 @@ public sealed partial class InstrumentMenu : FancyWindow
     }
 
     /// <summary>
-    /// Takes an entity with an <see cref="InstrumentComponent"/> and displays its sprite on the left hand side.
+    /// Takes an entity with an <see cref="InstrumentComponent" /> and displays its sprite on the left hand side.
     /// </summary>
     /// <param name="entity">The entity to display.</param>
     public void SetInstrument(Entity<InstrumentComponent> entity)
