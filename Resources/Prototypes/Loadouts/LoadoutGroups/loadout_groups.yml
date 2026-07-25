@@ -1603,6 +1603,7 @@
   - SecurityBeret
   - SecurityHat
   - TrooperHat
+  - SecurityHatCap # DS14
 
 - type: loadoutGroup
   id: SecurityMask

@@ -179,3 +179,14 @@
     sprite: _DeadSpace/Clothing/Head/Hats/capcap_black.rsi
   - type: Item
     sprite: _DeadSpace/Clothing/Head/Hats/capcap_black.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatCapSecurity
+  name: фуражка СБ
+  description: Прочная фуражка сотрудника службы безопасности. Напомните обычным работникам, кто здесь главный.
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Clothing/Head/Hats/sechat.rsi
+    - type: Clothing
+      sprite: _DeadSpace/Clothing/Head/Hats/sechat.rsi

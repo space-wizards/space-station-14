@@ -44,6 +44,15 @@
   equipment:
     head: ClothingHeadHatSecurityTrooper
 
+# DS14-start
+
+- type: loadout
+  id: SecurityHatCap
+  equipment:
+    head: ClothingHeadHatCapSecurity
+
+# DS14 -end
+
 # Masks
 - type: loadout
   id: SecurityBandana
