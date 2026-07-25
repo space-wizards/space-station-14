@@ -121,7 +121,7 @@
   components:
   - type: HitscanBasicRaycast
     collisionMask: BulletImpassable
-    maxDistance: 5
+    maxDistance: 8
   - type: HitscanBasicVisuals
     speed: 260
     bullet:

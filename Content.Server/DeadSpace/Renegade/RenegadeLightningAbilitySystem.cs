@@ -12,6 +12,7 @@ using Content.Shared.DeadSpace.Renegade;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.StatusEffect;
+using Content.Server.Electrocution;
 
 namespace Content.Server.DeadSpace.Renegade;
 
@@ -25,7 +26,7 @@ public sealed class RenegadeLightningAbilitySystem : EntitySystem
     [Dependency] private readonly StatusEffectsSystem _statusEffect = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly SharedStunSystem _stun = default!;
+    [Dependency] private readonly ElectrocutionSystem _electrocution = default!;
 
     public override void Initialize()
     {
@@ -88,7 +89,12 @@ public sealed class RenegadeLightningAbilitySystem : EntitySystem
                 continue;
 
             _beam.TryCreateBeam(uid, entity, component.LightingPrototypeId);
-            _stun.TryUpdateParalyzeDuration(entity, TimeSpan.FromSeconds(5));
+            _electrocution.TryDoElectrocution(entity,
+                uid,
+                shockDamage: null,
+                time: TimeSpan.FromSeconds(5),
+                refresh: true,
+                isLightning: true);
         }
     }
 }

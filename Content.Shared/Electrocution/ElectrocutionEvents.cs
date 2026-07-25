@@ -10,6 +10,7 @@ namespace Content.Shared.Electrocution
         public readonly EntityUid? SourceUid;
         public float SiemensCoefficient = 1f;
         public bool IgnoreInsulation { get; set; } = false; // DS14
+        public bool IsLightning { get; set; } = false; // DS14
 
         public ElectrocutionAttemptEvent(EntityUid targetUid, EntityUid? sourceUid, float siemensCoefficient, SlotFlags targetSlots)
         {

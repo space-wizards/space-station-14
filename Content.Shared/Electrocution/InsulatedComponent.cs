@@ -17,6 +17,9 @@ namespace Content.Shared.Electrocution
         // DS14-start
         [DataField, AutoNetworkedField]
         public bool ShowInExamine = true;
+
+        [DataField, AutoNetworkedField]
+        public float LightningProtectionChance = 0.65f;
         // DS14-end
     }
 }

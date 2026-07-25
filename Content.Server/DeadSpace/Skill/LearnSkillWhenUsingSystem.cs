@@ -9,6 +9,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Nutrition.EntitySystems;
 using Robust.Server.Audio;
+using Content.Shared.Hands.EntitySystems;
 
 namespace Content.Server.DeadSpace.Skill;
 
@@ -19,6 +20,7 @@ public sealed class LearnSkillWhenUsingSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly LanguageSystem _languageSystem = default!;
+	[Dependency] private readonly SharedHandsSystem _hands = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -60,7 +62,7 @@ public sealed class LearnSkillWhenUsingSystem : EntitySystem
             target: args.User,
             used: uid)
         {
-            BreakOnHandChange = false,
+            BreakOnHandChange = true,
             BreakOnMove = true,
             BreakOnDamage = true,
             MovementThreshold = 0.01f,
@@ -96,7 +98,10 @@ public sealed class LearnSkillWhenUsingSystem : EntitySystem
     {
         if (args.Cancelled || args.Handled || !Exists(args.Used))
             return;
-
+		
+		 if (!_hands.IsHolding(args.User, uid))
+            return;
+		
         foreach (var skill in component.Skills)
         {
             _skillSystem.AddSkillProgress(args.User, skill, component.Points[skill]);

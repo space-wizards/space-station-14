@@ -31,6 +31,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using PullableComponent = Content.Shared.Movement.Pulling.Components.PullableComponent;
 using PullerComponent = Content.Shared.Movement.Pulling.Components.PullerComponent;
+using Content.Server.Lightning.Components; //DS14
 
 namespace Content.Server.Electrocution;
 
@@ -231,7 +232,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
                 lastRet = TryDoElectrocution(
                     entity,
                     uid,
-                    (int) (electrified.ShockDamage * MathF.Pow(RecursiveDamageMultiplier, depth)),
+                    (int)(electrified.ShockDamage * MathF.Pow(RecursiveDamageMultiplier, depth)),
                     TimeSpan.FromSeconds(electrified.ShockTime * MathF.Pow(RecursiveTimeMultiplier, depth)),
                     true,
                     electrified.SiemensCoefficient,
@@ -261,7 +262,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
                     entity,
                     uid,
                     node,
-                    (int) (electrified.ShockDamage * MathF.Pow(RecursiveDamageMultiplier, depth) * damageScalar),
+                    (int)(electrified.ShockDamage * MathF.Pow(RecursiveDamageMultiplier, depth) * damageScalar),
                     TimeSpan.FromSeconds(electrified.ShockTime * MathF.Pow(RecursiveTimeMultiplier, depth) * timeScalar),
                     true,
                     electrified.SiemensCoefficient);
@@ -291,10 +292,10 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
 
     /// <inheritdoc/>
     public override bool TryDoElectrocution(
-        EntityUid uid, EntityUid? sourceUid, int shockDamage, TimeSpan time, bool refresh, float siemensCoefficient = 1f,
-        StatusEffectsComponent? statusEffects = null, bool ignoreInsulation = false)
+        EntityUid uid, EntityUid? sourceUid, int? shockDamage, TimeSpan time, bool refresh, float siemensCoefficient = 1f, // DS14
+        StatusEffectsComponent? statusEffects = null, bool ignoreInsulation = false, bool isLightning = false) // DS14
     {
-        if (!DoCommonElectrocutionAttempt(uid, sourceUid, ref siemensCoefficient, ignoreInsulation)
+        if (!DoCommonElectrocutionAttempt(uid, sourceUid, ref siemensCoefficient, ignoreInsulation, isLightning) // DS14
             || !DoCommonElectrocution(uid, sourceUid, shockDamage, time, refresh, siemensCoefficient, statusEffects))
             return false;
 
@@ -354,13 +355,15 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         return true;
     }
 
-    private bool DoCommonElectrocutionAttempt(EntityUid uid, EntityUid? sourceUid, ref float siemensCoefficient, bool ignoreInsulation = false)
+    private bool DoCommonElectrocutionAttempt(EntityUid uid, EntityUid? sourceUid, ref float siemensCoefficient,
+        bool ignoreInsulation = false, bool isLightning = false) // DS14
     {
 
         var attemptEvent = new ElectrocutionAttemptEvent(uid, sourceUid, siemensCoefficient,
             ignoreInsulation ? SlotFlags.NONE : ~SlotFlags.POCKET)
         {
-        IgnoreInsulation = ignoreInsulation // DS14
+            IgnoreInsulation = ignoreInsulation, // DS14
+            IsLightning = isLightning // DS14
         };
         RaiseLocalEvent(uid, attemptEvent, true);
 
@@ -381,7 +384,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
 
         if (shockDamage != null)
         {
-            shockDamage = (int) (shockDamage * siemensCoefficient);
+            shockDamage = (int)(shockDamage * siemensCoefficient);
 
             if (shockDamage.Value <= 0)
                 return false;
@@ -492,4 +495,23 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         }
         _audio.PlayPvs(electrified.ShockNoises, targetUid, AudioParams.Default.WithVolume(electrified.ShockVolume));
     }
+
+    //DS14-start
+    protected override void OnInsulatedElectrocutionAttempt(EntityUid uid, InsulatedComponent insulated, ElectrocutionAttemptEvent args)
+    {
+        if (args.IgnoreInsulation)
+            return;
+
+        if (args.IsLightning ||
+            args.SourceUid != null && HasComp<LightningComponent>(args.SourceUid.Value))
+        {
+            if (!_random.Prob(insulated.LightningProtectionChance))
+            {
+                return;
+            }
+        }
+
+        base.OnInsulatedElectrocutionAttempt(uid, insulated, args);
+    }
+    //DS14-end
 }

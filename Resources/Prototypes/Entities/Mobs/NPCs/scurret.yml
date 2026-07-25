@@ -132,11 +132,6 @@
             sprite: Mobs/Animals/scurret/displacement.rsi
             state: back
   - type: Hands
-    leftHandDisplacement:
-      sizeMaps:
-        32:
-          sprite: Mobs/Animals/scurret/displacement.rsi
-          state: hand
 
   - type: InventorySlots
   - type: Edible # Why? I'm not sure but I also am afraid of the answer.
