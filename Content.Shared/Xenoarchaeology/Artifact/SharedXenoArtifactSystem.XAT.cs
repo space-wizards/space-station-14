@@ -70,8 +70,8 @@ public abstract partial class SharedXenoArtifactSystem
             unlockingComp.EndTime = _timing.CurTime + ent.Comp.UnlockStateDuration;
             Log.Debug($"{ToPrettyString(ent)} entered unlocking state");
 
-            if (_net.IsServer)
-                _popup.PopupEntity(Loc.GetString("artifact-unlock-state-begin"), ent);
+            if (_net.IsServer && ent.Comp.UnlockBeginMsg != null)
+                _popup.PopupEntity(Loc.GetString(ent.Comp.UnlockBeginMsg), ent);
             Dirty(ent);
         }
         else if (node != null)
@@ -87,6 +87,9 @@ public abstract partial class SharedXenoArtifactSystem
                )
                 // we add time on each new trigger, if it is not going to fail us
                 unlockingComp.EndTime += ent.Comp.UnlockStateIncrementPerNode;
+
+            if (_net.IsServer && ent.Comp.UnlockContinueMsg != null)
+                _popup.PopupEntity(Loc.GetString(ent.Comp.UnlockContinueMsg), ent);
         }
 
         if (node != null && unlockingComp.TriggeredNodeIndexes.Add(GetIndex(ent, node.Value)))
