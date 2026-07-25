@@ -27,7 +27,7 @@ namespace Content.Server.Atmos.EntitySystems
         private readonly TileAtmosphere[] _depressurizeProgressionOrder = new TileAtmosphere[Atmospherics.MonstermosHardTileLimit * 2];
 
         private void EqualizePressureInZone(
-            Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
+            Entity<GridAtmosphereComponent, MapGridComponent, TransformComponent> ent,
             TileAtmosphere tile,
             int cycleNum)
         {
@@ -371,7 +371,7 @@ namespace Content.Server.Atmos.EntitySystems
         }
 
         private void ExplosivelyDepressurize(
-            Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
+            Entity<GridAtmosphereComponent, MapGridComponent, TransformComponent> ent,
             TileAtmosphere tile,
             int cycleNum)
         {
@@ -382,7 +382,7 @@ namespace Content.Server.Atmos.EntitySystems
             const int limit = Atmospherics.MonstermosHardTileLimit;
 
             var totalMolesRemoved = 0f;
-            var (owner, gridAtmosphere, visuals, mapGrid, _) = ent;
+            var (owner, gridAtmosphere, mapGrid, _) = ent;
             var queueCycle = ++gridAtmosphere.EqualizationQueueCycleControl;
 
             var tileCount = 0;
@@ -574,13 +574,13 @@ namespace Content.Server.Atmos.EntitySystems
         }
 
         private void ConsiderFirelocks(
-            Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
+            Entity<GridAtmosphereComponent, MapGridComponent, TransformComponent> ent,
             TileAtmosphere tile,
             TileAtmosphere other)
         {
             var reconsiderAdjacent = false;
 
-            var mapGrid = ent.Comp3;
+            var mapGrid = ent.Comp2;
             foreach (var entity in _map.GetAnchoredEntities(ent.Owner, mapGrid, tile.GridIndices))
             {
                 if (_firelockQuery.TryGetComponent(entity, out var firelock))
@@ -601,8 +601,8 @@ namespace Content.Server.Atmos.EntitySystems
             // This ensures that UpdateAdjacentTiles has updated data before updating flags.
             // This allows monstermos' floodfill check that determines if firelocks have dropped
             // to work correctly.
-            UpdateAirtightData(ent.Owner, ent.Comp1, ent.Comp3, tile);
-            UpdateAirtightData(ent.Owner, ent.Comp1, ent.Comp3, other);
+            UpdateAirtightData(ent.Owner, ent.Comp1, ent.Comp2, tile);
+            UpdateAirtightData(ent.Owner, ent.Comp1, ent.Comp2, other);
 
             UpdateAdjacentTiles(ent, tile);
             UpdateAdjacentTiles(ent, other);
@@ -612,7 +612,7 @@ namespace Content.Server.Atmos.EntitySystems
         }
 
         private void FinalizeEq(
-            Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
+            Entity<GridAtmosphereComponent, MapGridComponent, TransformComponent> ent,
             TileAtmosphere tile)
         {
             Span<float> transferDirections = stackalloc float[Atmospherics.Directions];
@@ -651,7 +651,7 @@ namespace Content.Server.Atmos.EntitySystems
         }
 
         private void FinalizeEqNeighbors(
-            Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
+            Entity<GridAtmosphereComponent, MapGridComponent, TransformComponent> ent,
             TileAtmosphere tile, ReadOnlySpan<float> transferDirs)
         {
             for (var i = 0; i < Atmospherics.Directions; i++)

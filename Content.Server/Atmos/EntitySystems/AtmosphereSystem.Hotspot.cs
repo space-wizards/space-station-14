@@ -56,7 +56,7 @@ public sealed partial class AtmosphereSystem
     /// <param name="ent">The grid entity that belongs to the tile to process.</param>
     /// <param name="tile">The <see cref="TileAtmosphere"/> to process.</param>
     private void ProcessHotspot(
-        Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
+        Entity<GridAtmosphereComponent, MapGridComponent, TransformComponent> ent,
         TileAtmosphere tile)
     {
         var gridAtmosphere = ent.Comp1;

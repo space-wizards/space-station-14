@@ -51,7 +51,7 @@ public partial class AtmosphereSystem
     /// <param name="grid">The grid the tile is on.</param>
     /// <param name="tile">The tile to invalidate.</param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void InvalidateVisuals(Entity<GasTileOverlayComponent?> grid, Vector2i tile)
+    public void InvalidateVisuals(Entity<GridAtmosphereComponent?> grid, Vector2i tile)
     {
         _gasTileOverlaySystem.Invalidate(grid, tile);
     }
@@ -68,10 +68,10 @@ public partial class AtmosphereSystem
     /// <param name="tile">The tile to invalidate.</param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void InvalidateVisuals(
-        Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
+        Entity<GridAtmosphereComponent, MapGridComponent, TransformComponent> ent,
         TileAtmosphere tile)
     {
-        _gasTileOverlaySystem.Invalidate((ent.Owner, ent.Comp2), tile.GridIndices);
+        _gasTileOverlaySystem.Invalidate((ent.Owner, ent.Comp1), tile.GridIndices);
     }
 
     /// <summary>

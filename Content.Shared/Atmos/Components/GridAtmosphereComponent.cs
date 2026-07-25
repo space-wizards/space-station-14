@@ -1,4 +1,5 @@
 using System.Collections.Concurrent;
+using Content.Shared.Atmos;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Atmos.Serialization;
 using Content.Shared.NodeContainer.NodeGroups;
@@ -137,6 +138,9 @@ public sealed partial class GridAtmosphereComponent : Component
 
     [ViewVariables]
     public readonly HashSet<Vector2i> InvalidatedCoords = new(1000);
+
+    [ViewVariables]
+    public readonly Dictionary<Vector2i, GasOverlayInvalidTileMask> InvalidOverlayChunks = new(4);
 
     [ViewVariables]
     public readonly Queue<TileAtmosphere> CurrentRunInvalidatedTiles = new();

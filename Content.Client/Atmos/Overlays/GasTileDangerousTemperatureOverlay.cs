@@ -5,6 +5,7 @@ using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
+using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using System.Numerics;
@@ -24,7 +25,8 @@ public sealed partial class GasTileDangerousTemperatureOverlay : Overlay
     private GasTileOverlaySystem? _gasTileOverlay;
     private readonly SharedMapSystem _mapSys;
     private readonly SharedTransformSystem _xformSys;
-    private EntityQuery<GasTileOverlayComponent> _overlayQuery;
+    private readonly ChunkEntitySystem _chunkEntitySystem;
+    private EntityQuery<GasOverlayChunkComponent> _overlayQuery;
 
     private readonly OverlayResourceCache<CachedResources> _resources = new();
     private List<Entity<MapGridComponent>> _grids = new();
@@ -39,8 +41,9 @@ public sealed partial class GasTileDangerousTemperatureOverlay : Overlay
         IoCManager.InjectDependencies(this);
         _mapSys = _entManager.System<SharedMapSystem>();
         _xformSys = _entManager.System<SharedTransformSystem>();
+        _chunkEntitySystem = _entManager.System<ChunkEntitySystem>();
 
-        _overlayQuery = _entManager.GetEntityQuery<GasTileOverlayComponent>();
+        _overlayQuery = _entManager.GetEntityQuery<GasOverlayChunkComponent>();
 
         for (byte i = 0; i <= ThermalByte.TempResolution; i++)
         {
@@ -179,9 +182,6 @@ public sealed partial class GasTileDangerousTemperatureOverlay : Overlay
 
                 foreach (var grid in _grids)
                 {
-                    if (!_overlayQuery.TryGetComponent(grid.Owner, out var comp))
-                        continue;
-
                     var gridTileSizeVec = grid.Comp.TileSizeVector;
                     var gridTileCenterVec = grid.Comp.TileSizeHalfVector;
                     var gridEntToWorld = _xformSys.GetWorldMatrix(grid.Owner);
@@ -198,12 +198,15 @@ public sealed partial class GasTileDangerousTemperatureOverlay : Overlay
                         (int)MathF.Ceiling(floatBounds.Right),
                         (int)MathF.Ceiling(floatBounds.Top));
 
-                    foreach (var chunk in comp.Chunks.Values)
+                    var chunks = _chunkEntitySystem.GetChunksIntersecting(grid.Owner, floatBounds, _overlayQuery);
+                    while (chunks.MoveNext(out var chunkEnt))
                     {
+                        var chunk = chunkEnt.Value.Comp2;
+                        var chunkOrigin = chunkEnt.Value.Comp1.Chunk * SharedGasTileOverlaySystem.ChunkSize;
                         var enumerator = new GasChunkEnumerator(chunk);
                         while (enumerator.MoveNext(out var tileGas))
                         {
-                            var tilePosition = chunk.Origin + (enumerator.X, enumerator.Y);
+                            var tilePosition = chunkOrigin + (enumerator.X, enumerator.Y);
                             if (!localBounds.Contains(tilePosition))
                                 continue;
 

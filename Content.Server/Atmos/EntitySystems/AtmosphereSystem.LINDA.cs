@@ -9,7 +9,7 @@ namespace Content.Server.Atmos.EntitySystems
     {
 
         private void ProcessCell(
-            Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
+            Entity<GridAtmosphereComponent, MapGridComponent, TransformComponent> ent,
             TileAtmosphere tile, int fireCount)
         {
             var gridAtmosphere = ent.Comp1;

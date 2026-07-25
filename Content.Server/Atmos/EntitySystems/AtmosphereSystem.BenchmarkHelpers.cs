@@ -22,7 +22,7 @@ public sealed partial class AtmosphereSystem
     /// <param name="mapEnt">The optional mapEntity to provide when benchmarking ProcessAtmosDevices.</param>
     /// <returns>True if the processing stage completed, false if the processing stage had to pause processing due to time constraints.</returns>
     public bool RunProcessingStage(
-        Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
+        Entity<GridAtmosphereComponent, MapGridComponent, TransformComponent> ent,
         AtmosphereProcessingState state,
         Entity<MapAtmosphereComponent?>? mapEnt = null)
     {
@@ -54,7 +54,7 @@ public sealed partial class AtmosphereSystem
     /// <param name="ent">The entity to simulate.</param>
     /// <param name="mapAtmosphere">The <see cref="MapAtmosphereComponent"/> that belongs to the grid's map.</param>
     /// <param name="frameTime">Elapsed time to simulate. Recommended value is <see cref="AtmosTickRate"/>.</param>
-    public void RunProcessingFull(Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
+    public void RunProcessingFull(Entity<GridAtmosphereComponent, MapGridComponent, TransformComponent> ent,
         Entity<MapAtmosphereComponent?> mapAtmosphere,
         float frameTime)
     {

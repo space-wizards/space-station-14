@@ -51,12 +51,6 @@ public sealed partial class SubstepAtmosCommand : LocalizedEntityCommands
             return;
         }
 
-        if (!EntityManager.TryGetComponent<GasTileOverlayComponent>(grid, out var gasTile))
-        {
-            shell.WriteError(Loc.GetString("cmd-error-no-gastileoverlay"));
-            return;
-        }
-
         if (!EntityManager.TryGetComponent<MapGridComponent>(grid, out var mapGrid))
         {
             shell.WriteError(Loc.GetString("cmd-error-no-mapgrid"));
@@ -72,9 +66,8 @@ public sealed partial class SubstepAtmosCommand : LocalizedEntityCommands
         }
 
         var newEnt =
-            new Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent>(grid,
+            new Entity<GridAtmosphereComponent, MapGridComponent, TransformComponent>(grid,
                 gridAtmos,
-                gasTile,
                 mapGrid,
                 xform);
 

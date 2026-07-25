@@ -1,11 +1,13 @@
 using Content.Client.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Species;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Enums;
+using Robust.Shared.GameStates;
 using Robust.Shared.Graphics.RSI;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -29,6 +31,7 @@ public sealed partial class GasTileFireOverlay : Overlay
 
     private readonly SharedTransformSystem _xformSys;
     private readonly SharedMapSystem _mapSystem = default!;
+    private readonly ChunkEntitySystem _chunkEntitySystem;
     private readonly ShaderInstance _shader;
 
     private readonly float[] _timer;
@@ -48,6 +51,7 @@ public sealed partial class GasTileFireOverlay : Overlay
         IoCManager.InjectDependencies(this);
         _xformSys = _entManager.System<SharedTransformSystem>();
         _mapSystem = _entManager.System<SharedMapSystem>();
+        _chunkEntitySystem = _entManager.System<ChunkEntitySystem>();
         _shader = _protoMan.Index(UnshadedShader).Instance();
         ZIndex = GasOverlayZIndex;
 
@@ -96,12 +100,13 @@ public sealed partial class GasTileFireOverlay : Overlay
 
         var drawHandle = args.WorldHandle;
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
-        var overlayQuery = _entManager.GetEntityQuery<GasTileOverlayComponent>();
+        var overlayQuery = _entManager.GetEntityQuery<GasOverlayChunkComponent>();
         var gridState = (args.WorldBounds,
             args.WorldHandle,
             _frames,
             _frameCounter,
             _shader,
+            _chunkEntitySystem,
             overlayQuery,
             xformQuery,
             _xformSys);
@@ -119,12 +124,12 @@ public sealed partial class GasTileFireOverlay : Overlay
                     Texture[][] frames,
                     int[] frameCounter,
                     ShaderInstance shader,
-                    EntityQuery<GasTileOverlayComponent> overlayQuery,
+                    ChunkEntitySystem chunkEntitySystem,
+                    EntityQuery<GasOverlayChunkComponent> overlayQuery,
                     EntityQuery<TransformComponent> xformQuery,
                     SharedTransformSystem xformSys) state) =>
             {
-                if (!state.overlayQuery.TryGetComponent(uid, out var comp) ||
-                    !state.xformQuery.TryGetComponent(uid, out var gridXform))
+                if (!state.xformQuery.TryGetComponent(uid, out var gridXform))
                 {
                     return true;
                 }
@@ -143,8 +148,11 @@ public sealed partial class GasTileFireOverlay : Overlay
                 // by chunk, even though its currently slower.
 
                 state.drawHandle.UseShader(state.shader);
-                foreach (var chunk in comp.Chunks.Values)
+                var chunks = state.chunkEntitySystem.GetChunksIntersecting(uid, floatBounds, state.overlayQuery);
+                while (chunks.MoveNext(out var chunkEnt))
                 {
+                    var chunk = chunkEnt.Value.Comp2;
+                    var chunkOrigin = chunkEnt.Value.Comp1.Chunk * SharedGasTileOverlaySystem.ChunkSize;
                     var enumerator = new GasChunkEnumerator(chunk);
 
                     while (enumerator.MoveNext(out var gas))
@@ -152,7 +160,7 @@ public sealed partial class GasTileFireOverlay : Overlay
                         if (gas.FireState == 0)
                             continue;
 
-                        var index = chunk.Origin + (enumerator.X, enumerator.Y);
+                        var index = chunkOrigin + (enumerator.X, enumerator.Y);
                         if (!localBounds.Contains(index))
                             continue;
 
