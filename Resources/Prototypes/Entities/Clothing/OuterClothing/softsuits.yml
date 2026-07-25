@@ -37,12 +37,12 @@
       coefficients:
         Blunt: 0.70
         Slash: 0.70
-        Piercing: 0.70 
+        Piercing: 0.70
         Heat: 0.80
   - type: StaminaResistance
     damageCoefficient: 0.6
   - type: ExplosionResistance
-    damageCoefficient: 0.90 
+    damageCoefficient: 0.90
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.9
@@ -130,6 +130,10 @@
     walkModifier: 0.85
     sprintModifier: 0.85
   - type: HeldSpeedModifier
+  - type: PhysicalComposition
+    materialComposition: #DS14
+      Steel: 25
+      Glass: 25 #DS14
 
 #Paramedic Voidsuit
 - type: entity

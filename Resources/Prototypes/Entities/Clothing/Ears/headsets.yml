@@ -36,6 +36,9 @@
   - type: EmitSoundOnLand
     sound:
       path: /Audio/_DeadSpace/Items/Handing/headset/headset_drop.ogg
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 50
   #DS14-End
 
 - type: entity

@@ -16,6 +16,10 @@
   - type: EmitSoundOnLand
     sound:
       path: /Audio/_DeadSpace/Items/Handing/glasses/goggles_drop.ogg
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 25
+      Glass: 25
   #DS14-End
 
 - type: entity
@@ -147,6 +151,8 @@
     flavors:
       - onion
       - greasey
+  - type: StaticPrice #DS14
+    price: 8
 
 - type: entity
   parent: ClothingEyesHudBase

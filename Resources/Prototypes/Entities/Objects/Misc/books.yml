@@ -58,6 +58,9 @@
   - type: EmitSoundOnLand
     sound:
       path: /Audio/_DeadSpace/Items/Handing/book_drop.ogg
+  - type: PhysicalComposition
+    materialComposition:
+      Paper: 200
   #DS14-End
 
 - type: entity
