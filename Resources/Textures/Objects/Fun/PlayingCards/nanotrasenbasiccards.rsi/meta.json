@@ -99,6 +99,9 @@
         },
         {
             "name": "syndi_backside"
+        } ,
+        {
+            "name": "red_backside"
         }
     ]
 }

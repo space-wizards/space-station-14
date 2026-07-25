@@ -103,6 +103,19 @@
     - type: Sprite
       state: deck_nanotrasen_full
 
+- type: entity
+  parent: [standardDeck, BaseCards]
+  id: redCardDeck
+  name: Red Deck of Cards
+  components:
+    - type: Stack
+      count: 52
+    - type: Cards
+      cardBack: red_backside
+      baseState: syndi_base
+    - type: Sprite
+      state: deck_nanotrasen_full
+
 - type: stack
   id: CardsStack
   maxCount: 52
