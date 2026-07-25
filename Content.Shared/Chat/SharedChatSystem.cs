@@ -49,7 +49,6 @@ public abstract partial class SharedChatSystem : EntitySystem
     [Dependency] private ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private IRobustRandom _random = default!;
-    [Dependency] private INetManager _net = default!;
 
     /// <summary>
     /// Cache of the keycodes for faster lookup.
