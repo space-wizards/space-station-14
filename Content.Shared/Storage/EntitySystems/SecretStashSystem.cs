@@ -101,7 +101,7 @@ public sealed partial class SecretStashSystem : EntitySystem
         if (HasItemInside(entity))
         {
             var popup = Loc.GetString("comp-secret-stash-action-hide-container-not-empty");
-            _popupSystem.PopupClient(popup, entity, userUid);
+            _popupSystem.PopupEntity(popup, entity, userUid);
             return false;
         }
 
@@ -111,7 +111,7 @@ public sealed partial class SecretStashSystem : EntitySystem
         {
             var msg = Loc.GetString("comp-secret-stash-action-hide-item-too-big",
                 ("item", itemToHideUid), ("stashname", GetStashName(entity)));
-            _popupSystem.PopupClient(msg, entity, userUid);
+            _popupSystem.PopupEntity(msg, entity, userUid);
             return false;
         }
 
@@ -122,7 +122,7 @@ public sealed partial class SecretStashSystem : EntitySystem
         // all done, show success message
         var successMsg = Loc.GetString("comp-secret-stash-action-hide-success",
             ("item", itemToHideUid), ("stashname", GetStashName(entity)));
-        _popupSystem.PopupClient(successMsg, entity, userUid);
+        _popupSystem.PopupEntity(successMsg, entity, userUid);
         return true;
     }
 
@@ -148,7 +148,7 @@ public sealed partial class SecretStashSystem : EntitySystem
         // show success message
         var successMsg = Loc.GetString("comp-secret-stash-action-get-item-found-something",
             ("stashname", GetStashName(entity)));
-        _popupSystem.PopupClient(successMsg, entity, userUid);
+        _popupSystem.PopupEntity(successMsg, entity, userUid);
 
         return true;
     }
@@ -234,7 +234,7 @@ public sealed partial class SecretStashSystem : EntitySystem
         if (storedInside != null && storedInside.Count >= 1)
         {
             var popup = Loc.GetString("comp-secret-stash-on-destroyed-popup", ("stashname", GetStashName(entity)));
-            _popupSystem.PopupPredicted(popup, storedInside[0], null, PopupType.MediumCaution);
+            _popupSystem.PopupEntity(popup, storedInside[0], PopupType.MediumCaution);
         }
     }
 

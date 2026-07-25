@@ -48,7 +48,6 @@ public sealed partial class RevenantSystem
     [Dependency] private SharedMapSystem _mapSystem = default!;
 
     [Dependency] private EntityQuery<TagComponent> _tagQuery = default!;
-    [Dependency] private EntityQuery<EntityStorageComponent> _entityStorageQuery = default!;
     [Dependency] private EntityQuery<ItemComponent> _itemQuery = default!;
     [Dependency] private EntityQuery<PoweredLightComponent> _poweredLightQuery = default!;
     [Dependency] private EntityQuery<MobStateComponent> _mobStateQuery = default!;
@@ -281,8 +280,7 @@ public sealed partial class RevenantSystem
                 continue;
 
             //randomly opens some lockers and such.
-            if (_entityStorageQuery.TryGetComponent(ent, out var entstorecomp))
-                _entityStorage.OpenStorage(ent, entstorecomp);
+            _entityStorage.OpenStorage(ent, args.Performer);
 
             //chucks shit
             if (_itemQuery.HasComponent(ent) &&

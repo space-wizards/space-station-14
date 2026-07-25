@@ -76,7 +76,7 @@ public sealed partial class IngestionSystem
         if (checkDistance && !_transform.GetMapCoordinates(user).InRange(_transform.GetMapCoordinates(target), MaxFeedDistance))
         {
             var message = Loc.GetString("interaction-system-user-interaction-cannot-reach");
-            _popup.PopupClient(message, user, user);
+            _popup.PopupEntity(message, user, user);
             return false;
         }
 
@@ -86,8 +86,8 @@ public sealed partial class IngestionSystem
         if (!attempt.Cancelled)
             return true;
 
-        if (showPopUp && attempt.Blocker != null)
-            _popup.PopupClient(Loc.GetString("ingestion-remove-mask", ("entity", attempt.Blocker.Value)), target, user);
+        if (attempt.Blocker != null)
+            _popup.PopupEntity(Loc.GetString("ingestion-remove-mask", ("entity", attempt.Blocker.Value)), target, user);
 
         return false;
     }
@@ -314,7 +314,7 @@ public sealed partial class IngestionSystem
 
         if (solution == null)
         {
-            _popup.PopupClient(Loc.GetString("ingestion-try-use-is-empty", ("entity", ingested)), ingested, user);
+            _popup.PopupEntity(Loc.GetString("ingestion-try-use-is-empty", ("entity", ingested)), ingested, user);
             return false;
         }
 
