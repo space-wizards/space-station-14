@@ -5,6 +5,7 @@ namespace Content.Shared.ValueSelectors.Numbers;
 /// <summary>
 /// Used for implementing custom value selection of <see cref="int"/>egers.
 /// </summary>
+[ImplicitDataDefinitionForInheritors]
 public abstract partial class NumberSelector : IBaseValueSelector<int, float>
 {
     /// <summary>

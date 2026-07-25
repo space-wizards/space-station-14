@@ -4,7 +4,6 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown.Validation;
 using Robust.Shared.Serialization.Markdown.Value;
-using Robust.Shared.Serialization.TypeSerializers.Interfaces;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.ValueSelectors;
@@ -12,8 +11,7 @@ namespace Content.Shared.ValueSelectors;
 /// <summary>
 /// Base serializer for all types implementing <see cref="IBaseValueSelector{TMain,TFrac}"/>.
 /// </summary>
-public abstract class BaseValueSelectorTypeSerializer<TMain, TFrac> :
-    ITypeReader<IBaseValueSelector<TMain, TFrac>, ValueDataNode>
+public abstract class BaseValueSelectorTypeSerializer<TMain, TFrac>
     where TMain : INumber<TMain>, IParsable<TMain>
     where TFrac : INumber<TFrac>, IParsable<TFrac>
 {
@@ -23,7 +21,7 @@ public abstract class BaseValueSelectorTypeSerializer<TMain, TFrac> :
 
     protected abstract IBaseValueSelector<TMain, TFrac> GetRangeSelector(TMain min, TMain max);
 
-    public ValidationNode Validate(ISerializationManager serializationManager,
+    protected ValidationNode ValidateImpl(ISerializationManager serializationManager,
         ValueDataNode node,
         IDependencyCollection dependencies,
         ISerializationContext? context = null)
@@ -45,7 +43,7 @@ public abstract class BaseValueSelectorTypeSerializer<TMain, TFrac> :
         return new ErrorNode(node, "Custom validation not supported! Please specify the type manually!");
     }
 
-    public IBaseValueSelector<TMain, TFrac> Read(ISerializationManager serializationManager,
+    protected IBaseValueSelector<TMain, TFrac> ReadImpl(ISerializationManager serializationManager,
         ValueDataNode node,
         IDependencyCollection dependencies,
         SerializationHookContext hookCtx,
