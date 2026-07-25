@@ -47,6 +47,11 @@
   defaultLinks: [ DoorBolt ]
 
 - type: sourcePort
+  id: DoorBoltStatus
+  name: signal-port-name-doorboltstatus
+  description: signal-port-description-doorboltstatus
+
+- type: sourcePort
   id: DockStatus
   name: signal-port-name-dockstatus
   description: signal-port-description-dockstatus
