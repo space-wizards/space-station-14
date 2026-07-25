@@ -120,7 +120,7 @@ public abstract partial class SharedStackSystem
     {
         transferred = 0;
 
-        if (donor == recipient)
+        if (donor.Owner == recipient.Owner)
             return false;
 
         // Recipient is being torn down, don't give it anything.
