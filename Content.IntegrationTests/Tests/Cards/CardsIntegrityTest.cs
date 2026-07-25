@@ -211,6 +211,8 @@ public sealed partial class CardsTest : GameTest
 
             Assert.That(splitCards.Cards.Count, Is.EqualTo(before));
             Assert.That(splitStack.Count, Is.EqualTo(stackBefore));
+
+            SQueueDel(split.Value);
         });
     }
 }

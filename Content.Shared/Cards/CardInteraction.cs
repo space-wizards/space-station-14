@@ -10,6 +10,7 @@ namespace Content.Shared.Cards;
 public abstract partial class SharedCardSystem
 {
     // When 'E' pressed in the world
+    // Flips the deck
     [SubscribeLocalEvent]
     private void OnCardsActivate(Entity<CardsComponent> ent, ref ActivateInWorldEvent args)
     {
@@ -45,12 +46,14 @@ public abstract partial class SharedCardSystem
         }
     }
 
+    // Used for strip menu visuals. Need to updated whenever moved into or out of inventory.
     [SubscribeLocalEvent]
     private void OnPickupEvent(Entity<CardsComponent> ent, ref HandSelectedEvent args)
     {
         UpdateVisualState(ent);
     }
 
+    // Used for strip menu visuals. Need to updated whenever moved into or out of inventory.
     [SubscribeLocalEvent]
     protected virtual void OnCardsDropped(Entity<CardsComponent> ent, ref DroppedEvent args)
     {
@@ -65,6 +68,9 @@ public abstract partial class SharedCardSystem
 
         var user = args.User;
 
+        // Verbs here have low priority so they are always below the stack split verbs
+
+        // Flip verb
         args.Verbs.Add(
             new AlternativeVerb
             {
@@ -74,6 +80,7 @@ public abstract partial class SharedCardSystem
             }
         );
 
+        // Shuffle verb
         args.Verbs.Add(
             new AlternativeVerb
             {
@@ -83,6 +90,8 @@ public abstract partial class SharedCardSystem
             }
         );
 
+        // Fan verb
+        // Can only fan when not inside a container
         if (
             !Container.TryGetContainingContainer(ent.Owner, out var container)
             || Hands.EnumerateHands(container.Owner).Contains(container.ID)
@@ -97,6 +106,9 @@ public abstract partial class SharedCardSystem
             );
         var priority = -200;
 
+        // Take card verbs
+        // Can only take card when fanned
+        // If face down will take a random card
         if (!ent.Comp.Fanned)
             return;
         if (ent.Comp.Flipped)

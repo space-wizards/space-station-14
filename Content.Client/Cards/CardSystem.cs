@@ -19,11 +19,11 @@ public sealed partial class CardSystem : SharedCardSystem
     private IPlayerManager _playerManager = default!;
 
     /// <summary>
-    /// Calculates the local position of a card on a fanned arc, given its angle from center.
+    /// Calculates the local position of a card on a fanned arc, given its angle from center. It is shifted downwards 3/4 of radius to center it.
     /// </summary>
     /// <param name="angle">The angle of the card along the fan, in radians, where 0 is centered.</param>
     /// <param name="radius">The radius of the fan's arc.</param>
-    /// <returns>The local position offset for the card.</returns>
+    /// <returns>The local position offset for the card. In pixel coordinates scale.</returns>
     public static Vector2 FanPosition(double angle, float radius) =>
         new((float)Math.Sin(angle) * radius, (float)Math.Cos(angle) * radius - radius * (3f / 4f));
 
@@ -38,56 +38,57 @@ public sealed partial class CardSystem : SharedCardSystem
     /// Calculates the position and rotation of a card at a given index within a fanned hand,
     /// arranging cards in a semi-circle from left to right.
     /// </summary>
-    /// <param name="inx">The zero-based index of the card within the hand.</param>
+    /// <param name="idx">The index of the card of those to be fanned.</param>
     /// <param name="count">The total number of cards in the hand.</param>
-    /// <returns>A tuple containing the card's local position and rotation.</returns>
-    public static (Vector2, Angle) GetCardPosRot(int inx, int count)
+    /// <returns>A tuple containing the card's position and rotation.</returns>
+    public static (Vector2, Angle) GetCardPosRot(int idx, int count)
     {
         var radius = FanRadius(count);
-        return GetCardPosRot(inx, count, radius);
+        return GetCardPosRot(idx, count, radius);
     }
 
     /// <summary>
     /// Calculates the position and rotation of a card at a given index within a fanned hand,
     /// arranging cards in a semi-circle from left to right.
     /// </summary>
-    /// <param name="inx">The zero-based index of the card within the hand.</param>
+    /// <param name="idx">The index of the card of those to be fanned.</param>
     /// <param name="count">The total number of cards in the hand.</param>
     /// <param name="radius">The radius of the fan's arc.</param>
-    /// <returns>A tuple containing the card's local position and rotation.</returns>
-    public static (Vector2, Angle) GetCardPosRot(int inx, int count, float radius)
+    /// <returns>A tuple containing the card's position and rotation.</returns>
+    public static (Vector2, Angle) GetCardPosRot(int idx, int count, float radius)
     {
         // Semi-circle from left to right
-        float angle = (inx - count / 2.0f + 0.5f) / count * (float)Math.PI;
+        float angle = (idx - count / 2.0f + 0.5f) / count * (float)Math.PI;
         var position = FanPosition(angle, radius);
         var rotation = new Angle(-angle);
         return (position, rotation);
     }
 
-    // Layer names for each card
-    private static (string Base, string LayerOne, string LayerTwo) CardLayers(int i) =>
-        ($"card_{i}_base", $"card_{i}_layerOne", $"card_{i}_layerTwo");
+    /// <summary>
+    /// Gets the layer names for the 3 layers sprite layers used for a card.
+    /// </summary>
+    /// <param name="idx">The index of the card of those to be fanned.</param>
+    /// <returns>The three layer names</returns>
+    private static (string Base, string LayerOne, string LayerTwo) CardLayers(int idx) =>
+        ($"card_{idx}_base", $"card_{idx}_layerOne", $"card_{idx}_layerTwo");
 
     [SubscribeLocalEvent]
-    private void OnAppearanceChanged(EntityUid uid, CardsComponent component, ref AppearanceChangeEvent args)
+    private void OnAppearanceChanged(EntityUid uid, CardsComponent _, ref AppearanceChangeEvent args)
     {
         Appearance.TryGetData<bool>(uid, CardVisuals.IsFlipped, out var flipped, args.Component);
 
         // Card visuals state will only have one card in it if not fanned
         // It will have a max of MaxFanned when fanned
         if (!Appearance.TryGetData<CardListVisualState>(uid, CardVisuals.CardList, out var visualState, args.Component))
-            visualState = new CardListVisualState(new List<CardData>(), 0, 0);
-        if (
-            !TryComp<SpriteComponent>(uid, out var sprite)
-            || !TryComp<CardsComponent>(uid, out var cards)
-            || !TryComp<StackComponent>(uid, out var stack)
-            || !TryComp<TransformComponent>(uid, out var xform)
-        )
+            visualState = new CardListVisualState(new List<CardData>(), 0, 0, 1);
+
+        if (!TryComp<SpriteComponent>(uid, out var sprite))
             return;
 
+        var xform = Transform(uid);
 
         // Hide in strip menu
-        // TODO: This should be done in a less bad way
+        // TODO: This should be done in a less bad way. The strip menu system should have a method or field for setting this.
         if (
             HasComp<MobStateComponent>(xform.ParentUid)
             && xform.ParentUid != _playerManager.LocalSession?.AttachedEntity
@@ -98,12 +99,11 @@ public sealed partial class CardSystem : SharedCardSystem
             flipped = false;
         }
 
-        var count = visualState.Count;
-        var radius = FanRadius(count);
         // Delete all layers which are not used here
         // Assumes that all layers will have the card before it have a layer
         // If it runs into a layer which doesn't exists it assumes no more later layers will exists
-        for (var i = count; i < cards.MaxFanned; i++)
+        // Might run into problems if the MaxFanned changes frequently
+        for (var i = visualState.Count; i < visualState.MaxFanned; i++)
         {
             var (baseLayer, layerOne, layerTwo) = CardLayers(i);
             if (!_sprite.LayerExists((uid, sprite), baseLayer))
@@ -113,17 +113,18 @@ public sealed partial class CardSystem : SharedCardSystem
             _sprite.RemoveLayer((uid, sprite), layerTwo);
         }
 
-        for (var i = 0; i < count; i++)
+        var radius = FanRadius(visualState.Count);
+        for (var i = 0; i < visualState.Count; i++)
         {
             var card = visualState.CardList[visualState.Start + i];
             var (baseLayer, layerOne, layerTwo) = CardLayers(i);
 
-            if (card.CardId.Id == null || !PrototypeManager.TryIndex<CardPrototype>(card.CardId, out var prototype))
+            if (card.CardId.Id == null || !PrototypeManager.TryIndex(card.CardId, out var prototype))
                 continue;
 
-            var (position, rotation) = GetCardPosRot(i, count, radius);
+            var (position, rotation) = GetCardPosRot(i, visualState.Count, radius);
 
-            // Creates layers
+            // Creates layers if not already present.
             _sprite.LayerMapReserve((uid, sprite), baseLayer);
             _sprite.LayerMapReserve((uid, sprite), layerOne);
             _sprite.LayerMapReserve((uid, sprite), layerTwo);
@@ -151,6 +152,7 @@ public sealed partial class CardSystem : SharedCardSystem
         }
     }
 
+    // Adds sprites to sprite layers and colours them.
     private void BuildCard(
         CardPrototype prototype,
         string baseLayer,

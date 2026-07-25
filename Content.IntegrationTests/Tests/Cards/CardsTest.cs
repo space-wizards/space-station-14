@@ -21,6 +21,8 @@ public sealed partial class CardsTest
 
     private const string CardsProtoId = "cardDeck";
 
+    private const string Player = "MobHuman";
+
     /// <summary>
     /// Helper to spawn a card deck.
     /// Can spawn a deck with some cards removed. Don't use <c>removed</c> in tests unless splitting is checked separately.
@@ -51,7 +53,7 @@ public sealed partial class CardsTest
 
         await Server.WaitAssertion(() =>
         {
-            var player = SSpawnAtPosition("MobHuman", coords);
+            var player = SSpawnAtPosition(Player, coords);
             var (uid, cards, stack) = SpawnDeck(coords);
             var cardsBefore = cards.Cards.Count;
 

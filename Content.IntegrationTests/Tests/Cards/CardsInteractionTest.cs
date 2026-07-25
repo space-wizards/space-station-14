@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Shared.Cards;
+using Content.Shared.Interaction;
 using Content.Shared.Stacks;
 
 namespace Content.IntegrationTests.Cards;

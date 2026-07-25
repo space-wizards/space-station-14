@@ -48,27 +48,30 @@ public abstract partial class SharedCardSystem : EntitySystem
         for (var i = 0; i < ent.Comp.Cards.Count; i++)
         {
             var card = ent.Comp.Cards[i];
+            // Checks if this card has already been modified.
+            // A card will only have a whitespace BaseState on initialization.
             if (
                 !card.BaseState.IsWhiteSpace()
                 || !PrototypeManager.TryIndex<CardPrototype>(card.CardId, out var prototype)
             )
                 continue;
+            // Sets the card sprites to either the sprites set by the card or by the deck.
             card.BaseState = prototype.BaseState == null ? ent.Comp.BaseState : prototype.BaseState;
             card.CardBack = prototype.CardBack == null ? ent.Comp.CardBack : prototype.CardBack;
             ent.Comp.Cards[i] = card;
         }
     }
 
+    // Whenever stacks are merged.
     [SubscribeLocalEvent]
     private void OnMergeEvent(Entity<CardsComponent> ent, ref StackMergeEvent args)
     {
         if (!TryComp<CardsComponent>(args.Donor, out var donorComp))
             return;
-        // If BeingCherryPicked the merging is sorted elsewhere
+        // If BeingCherryPicked the merging is dealt with elsewhere
         if (ent.Comp.BeingCherryPicked || donorComp.BeingCherryPicked)
             return;
 
-        // Animation must be before cards move
         TakeFromDeck(ent.Comp, donorComp, args.Amount);
         UpdateVisualState(ent);
         UpdateVisualState((args.Donor, donorComp));
@@ -77,6 +80,7 @@ public abstract partial class SharedCardSystem : EntitySystem
         Dirty(args.Donor, donorComp);
     }
 
+    // Whenever stacks are split.
     [SubscribeLocalEvent]
     private void OnSplitEvent(Entity<CardsComponent> ent, ref StackSplitEvent args)
     {
@@ -197,7 +201,6 @@ public abstract partial class SharedCardSystem : EntitySystem
 
     /// <summary>
     /// Attempts to toggle whether the given card stack is displayed fanned out.
-    /// Resets the cycled amount when un-fanning.
     /// </summary>
     /// <param name="cards">The card stack entity to fan or unfan.</param>
     /// <returns><c>true</c> if the fan state was toggled. Currently always returns <c>true</c>.</returns>

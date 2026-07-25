@@ -46,7 +46,7 @@ public sealed partial class CardsComponent : Component
     public int MaxFanned = 10;
 
     /// <summary>
-    /// Whether a specific card is currently being taken from this deck, preventing automatic
+    /// Whether a specific card is currently being taken from this deck, stops
     /// merge/split logic from pulling from the top or bottom of the deck instead.
     /// </summary>
     internal bool BeingCherryPicked;

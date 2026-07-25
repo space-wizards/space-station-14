@@ -7,6 +7,7 @@ namespace Content.Server.Cards;
 [UsedImplicitly]
 public sealed partial class CardSystem : SharedCardSystem
 {
+    // Server-side index counter. Needed so that all cards have unique ids. Basically a EntityUid but for cards.
     private int _inxCounter = 0;
 
     protected override void OnCardsInit(Entity<CardsComponent> ent, ref ComponentInit args)
@@ -15,6 +16,8 @@ public sealed partial class CardSystem : SharedCardSystem
         for (var i = 0; i < ent.Comp.Cards.Count; i++)
         {
             var card = ent.Comp.Cards[i];
+            if (card.CardInx != 0)
+                continue;
             card.CardInx = _inxCounter;
             _inxCounter++;
             ent.Comp.Cards[i] = card;
