@@ -1,0 +1,394 @@
+# Cloak
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCapedeFOA
+  categories: [ HideSpawnMenu ]
+  name: плащ компании "deFo"
+  description: Плащ разработанный компанией "deFo".
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/unemotional/cloak.rsi
+
+# Jumpsuit
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformdeFOA
+  categories: [ HideSpawnMenu ]
+  name: комбинезон "deFo"
+  description: Комбинезон разработанный компанией "deFo".
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/unemotional/jumpsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/unemotional/jumpsuit.rsi
+
+# Magboots
+- type: entity
+  parent: ClothingShoesBootsMagSyndie
+  id: ClothingShoesBootsdeFOA
+  name: улучшенные магнитные ботинки "deFo"
+  description: Магнитные ботнки разработанные компанией "deFo".
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/unemotional/magboots.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/unemotional/magboots.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 1
+  - type: GasTank
+    outputPressure: 21.3
+    air:
+      # 2 minutes of thrust
+      volume: 5
+      temperature: 293.15
+      moles:
+        - 2.051379050 # oxygen
+
+# Hud
+- type: entity
+  parent: [ClothingEyesBase, ShowSecurityIcons, ShowMedicalIcons]
+  id: ClothingEyesHuddeFOA
+  categories: [ HideSpawnMenu ]
+  name: визор "deFo"
+  description: Визор разработанный компанией "deFO".
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/unemotional/hud.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/unemotional/hud.rsi
+  - type: ShowHealthBars
+    damageContainers:
+    - Biological
+    - Inorganic
+    - Silicon
+  - type: ShowSyndicateIcons
+  - type: FlashImmunity
+  - type: EyeProtection
+  - type: SolutionScanner
+
+# Belt
+- type: entity
+  parent: [ ClothingBeltStorageBase, ContentsExplosionResistanceBase ]
+  id: ClothingBeltdeFOA
+  name: РПС "deFo"
+  description: Изготовлено на заказ компанией "deFo".
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/unemotional/belt.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/unemotional/belt.rsi
+  - type: Storage
+    grid:
+      - 0,0,7,1
+  - type: Item
+    size: Huge
+  - type: StorageFill
+    contents:
+      - id: MultitoolIrisReda
+      - id: JawsOfLifeIrisReda
+      - id: trayScannerIrisReda
+      - id: WelderIrisReda
+      - id: PowerDrillIrisReda
+      - id: GasAnalyzerIrisReda
+      - id: HandHeldMassScannerIrisReda
+
+- type: entity
+  parent: Multitool
+  id: MultitoolIrisReda
+  name: Мультитул "LuaTech"
+  description: Мультитул, изготовленый на заказ организацией LuaTech.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/unemotional/Tools/iris_tools_multitool.rsi
+    layers:
+    - state: icon
+    - state: green-unlit
+      shader: unshaded
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/unemotional/Tools/iris_tools_multitool.rsi
+    quickEquip: false
+    slots:
+    - Belt
+
+- type: entity
+  parent: trayScanner
+  id: trayScannerIrisReda
+  name: Т-лучевой сканер "LuaTech"
+  description: Т-лучевой сканер, изготовленый на заказ организацией LuaTech.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/unemotional/Tools/iris_tools_trayscanner.rsi
+    layers:
+    - state: tray-off
+      map: ["base"]
+  - type: Item
+    sprite: _DeadSpace/Sponsor/unemotional/Tools/iris_tools_trayscanner.rsi
+
+- type: entity
+  parent: JawsOfLife
+  id: JawsOfLifeIrisReda
+  name: челюсти жизни "LuaTech"
+  description: Изготовлено на заказ организацией "LuaTech".
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/unemotional/Tools/iris_tools_jawsoflife.rsi
+    state: syn_jaws_pry
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: syn_inhand-left
+      right:
+      - state: syn_inhand-right
+    size: Normal
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/unemotional/Tools/iris_tools_jawsoflife.rsi
+    quickEquip: false
+    slots:
+      - Belt
+  - type: MultipleTool
+    entries:
+      - behavior: Prying
+        sprite:
+          sprite: _DeadSpace/Sponsor/unemotional/Tools/iris_tools_jawsoflife.rsi
+          state: syn_jaws_pry
+        useSound: /Audio/Items/jaws_pry.ogg
+        changeSound: /Audio/Items/change_jaws.ogg
+      - behavior: Cutting
+        sprite:
+          sprite: _DeadSpace/Sponsor/unemotional/Tools/iris_tools_jawsoflife.rsi
+          state: syn_jaws_cutter
+        useSound: /Audio/Items/jaws_cut.ogg
+        changeSound: /Audio/Items/change_jaws.ogg
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 10
+
+- type: entity
+  parent: WelderExperimental
+  id: WelderIrisReda
+  name: сварочный аппарат "LuaTech"
+  description: Изготовлено на заказ организацией LuaTech.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/unemotional/Tools/iris_tools_welder.rsi
+  - type: Item
+    sprite: _DeadSpace/Sponsor/unemotional/Tools/iris_tools_welder.rsi
+
+- type: entity
+  parent: PowerDrill
+  id: PowerDrillIrisReda
+  name: электродрель "LuaTech"
+  description: Изготовлено на заказ организацией LuaTech.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/unemotional/Tools/iris_tools_powerdrill.rsi
+    state: drill_screw
+  - type: Item
+    sprite: _DeadSpace/Sponsor/unemotional/Tools/iris_tools_powerdrill.rsi
+    size: Small
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/unemotional/Tools/iris_tools_powerdrill.rsi
+    quickEquip: false
+    slots:
+      - Belt
+  - type: MultipleTool
+    statusShowBehavior: true
+    entries:
+      - behavior: Screwing
+        sprite:
+          sprite: _DeadSpace/Sponsor/unemotional/Tools/iris_tools_powerdrill.rsi
+          state: drill_screw
+        useSound:
+          path: /Audio/Items/drill_use.ogg
+        changeSound:
+          path: /Audio/Items/change_drill.ogg
+      - behavior: Anchoring
+        sprite:
+          sprite: _DeadSpace/Sponsor/unemotional/Tools/iris_tools_powerdrill.rsi
+          state: drill_bolt
+        useSound:
+          path: /Audio/Items/drill_use.ogg
+        changeSound:
+          path: /Audio/Items/change_drill.ogg
+
+- type: entity
+  name: ручной сканер массы "LuaTech"
+  parent: HandHeldMassScanner
+  id: HandHeldMassScannerIrisReda
+  description: Изготовлено на заказ организацией LuaTech.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Item
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/unemotional/Tools/iris_tools_massscanner.rsi
+    state: icon
+    layers:
+      - state: icon
+      - state: scanner
+        shader: unshaded
+        visible: true
+        map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+
+- type: entity
+  parent: HolofanProjector
+  id: HolofanProjectorIrisReda
+  name: атмос голопроектор "LuaTech"
+  description: Изготовлено на заказ организацией LuaTech.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/unemotional/Tools/iris_tools_holofanprojector.rsi
+    state: icon
+
+- type: entity
+  name: газоанализатор "LuaTech"
+  parent: GasAnalyzer
+  id: GasAnalyzerIrisReda
+  description: Изготовлено на заказ организацией LuaTech.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/unemotional/Tools/iris_tools_gasanalyzer.rsi
+    layers:
+      - state: icon
+        map: ["analyzer"]
+
+# Gloves
+- type: entity
+  parent: ClothingHandsGlovesCombat
+  id: GlovesdeFOA
+  name: перчатки "deFo"
+  description: Изготовлено на заказ компанией "deFo".
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/unemotional/gloves.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/unemotional/gloves.rsi
+
+# Mask
+- type: entity
+  parent: ClothingMaskGasSecurity
+  id: ClothingMaskdeFOA
+  name: маска "deFo"
+  description: Изготовлено на заказ компанией "deFo".
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/unemotional/gasmask.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/unemotional/gasmask.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitAtmos
+  id: ClothingOuterHardsuitdeFOA
+  name: скафандр "deFo"
+  description: Изготовлено на заказ компанией "deFo".
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/unemotional/hardsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/unemotional/hardsuit.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitdeFOA
+  - type: Item
+    size: Huge
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 1
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.6
+        Heat: 0.5
+        Radiation: 0.5
+        Caustic: 0.5
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+  - type: HardsuitIdentification
+    nonlethal: true
+  - type: HideLayerClothing
+    slots:
+    - Tail
+    hideOnToggle: true
+
+- type: entity
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
+  id: ClothingHeadHelmetHardsuitdeFOA
+  categories: [ HideSpawnMenu ]
+  name: шлем "deFo"
+  description: Изготовлено на заказ компанией "deFo".
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/unemotional/helmet.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/unemotional/helmet.rsi
+  - type: PointLight
+    radius: 7
+    energy: 3
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Paper
+- type: entity
+  parent: PaperPrintedCentcomm
+  id: PaperLawsdeFoA
+  name: распечатанный документ
+  description: Лист бумаги с заголовком центкома. Страшно даже смотреть на него.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Paper
+    stampState: paper_stamp-centcom
+    stampedBy:
+    - stampedColor: '#006600FF'
+      stampedName: Центральное Командование
+    - stampedColor: '#00BE00FF'
+      stampedName: Одобрено
+    content: paper-law-unemotional
+
+# Backpack
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackdeFoA
+  name: рюкзак "deFo"
+  description: Изготовлено на заказ компанией "deFo".
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/unemotional/backpack.rsi
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,11,5
+  - type: StorageFill
+    contents:
+    - id: PaperLawsdeFoA
+    - id: ClothingOuterHardsuitdeFOA
+    - id: ClothingMaskdeFOA
+    - id: GlovesdeFOA
+    - id: ClothingBeltdeFOA
+    - id: ClothingEyesHuddeFOA
+    - id: ClothingShoesBootsdeFOA
+    - id: ClothingUniformdeFOA
+    - id: ClothingNeckCapedeFOA
+    - id: HolofanProjectorIrisReda
