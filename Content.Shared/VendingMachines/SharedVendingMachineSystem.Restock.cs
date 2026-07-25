@@ -56,6 +56,7 @@ public abstract partial class SharedVendingMachineSystem
         TryUpdateVisualState((uid, vendComponent));
     }
 
+    [SubscribeLocalEvent]
     private void OnAfterInteract(EntityUid uid, VendingMachineRestockComponent component, AfterInteractEvent args)
     {
         if (args.Target is not { } target || !args.CanReach || args.Handled)
@@ -102,6 +103,7 @@ public abstract partial class SharedVendingMachineSystem
         machineComponent.RestockStream = Audio.PlayPredicted(component.SoundRestockStart, target, args.User)?.Entity;
     }
 
+    [SubscribeLocalEvent]
     private void OnRestockDoAfter(Entity<VendingMachineComponent> ent, ref RestockDoAfterEvent args)
     {
         if (args.Cancelled)

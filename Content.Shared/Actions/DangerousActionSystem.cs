@@ -4,10 +4,7 @@ using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Popups;
 
 namespace Content.Shared.Actions;
-/// <summary>
-/// Just the system to realize Dangerous Action Component.
-/// <seealso cref="DangerousActionComponent"/>
-/// </summary>
+
 public sealed partial class DangerousActionSystem : EntitySystem
 {
     [Dependency] private SharedPopupSystem _popup = default!;
@@ -23,10 +20,10 @@ public sealed partial class DangerousActionSystem : EntitySystem
     {
         if (args.Cancelled)
             return;
-        //query for pacification
+
         if (!_pacifiedQuery.HasComp(args.User))
             return;
-        //if found popup message and cancel
+
         _popup.PopupEntity(Loc.GetString(ent.Comp.PacificationMessage), args.User, args.User);
         args.Cancelled = true;
     }
