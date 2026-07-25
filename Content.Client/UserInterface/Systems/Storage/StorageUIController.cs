@@ -179,9 +179,10 @@ public sealed partial class StorageUIController : UIController, IOnSystemChanged
             {
                 window.OpenCenteredLeft();
             }
+
+            _ui.RegisterControl(sBui, window);
         }
 
-        _ui.RegisterControl(sBui, window);
         return window;
     }
 
