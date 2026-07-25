@@ -1,6 +1,6 @@
 ent-ADTBlackChair = чёрное кресло
     .desc = Выглядит крайне комфортно
-ent-ADTVioletChair = фиолетовое кресло
+ent-ADTVioletChair = white chair
     .desc = Выглядит крайне комфортно
 ent-ADTRedChair = красное кресло
     .desc = Выглядит крайне комфортно
