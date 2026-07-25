@@ -240,6 +240,7 @@
     - map: [ "enum.DamageStateVisualLayers.BaseUnshaded"]
       state: eyes
       shader: unshaded
+      color: red
   - type: SpriteMovement
     movementLayers:
       movement:
@@ -348,8 +349,19 @@
   name: cancer rat servant
   id: MobRatServantCancer
   parent: [ MobCancerBase, MobRatServantBase ]
+  description: A lil cancer for you.
   categories: [ HideSpawnMenu ]
   components:
+  - type: Sprite
+    drawdepth: SmallMobs
+    sprite: Mobs/Animals/rat.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: rat
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded"]
+      state: eyes
+      shader: unshaded
+      color: lightGreen
   - type: PointLight
     color: LightGreen
     radius: 2
