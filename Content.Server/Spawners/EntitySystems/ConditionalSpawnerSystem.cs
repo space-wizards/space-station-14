@@ -144,7 +144,7 @@ namespace Content.Server.Spawners.EntitySystems
             }
 
             // ReSharper disable once CompareOfFloatsByEqualityOperator
-            if (spawner.Comp.Chance == 1.0f || !_robustRandom.Prob(spawner.Comp.Chance))
+            if (spawner.Comp.Chance == 1.0f || _robustRandom.Prob(spawner.Comp.Chance))
             {
                 return spawner.Comp.Prototypes;
             }
