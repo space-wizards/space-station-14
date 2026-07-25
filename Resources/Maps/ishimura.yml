@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 05/23/2026 17:36:35
-  entityCount: 25179
+  entityCount: 25180
 maps:
 - 1
 grids:
@@ -142149,6 +142149,13 @@ entities:
     components:
     - type: Transform
       pos: 19.5,-5.5
+      parent: 2
+- proto: SpawnPointSecurityPilot
+  entities:
+  - uid: 37486
+    components:
+    - type: Transform
+      pos: 33.5,-10.5
       parent: 2
 - proto: SpawnPointSeniorAdministrator
   entities:
