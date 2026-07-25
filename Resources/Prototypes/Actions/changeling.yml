@@ -47,6 +47,7 @@
     iconOn: { sprite : Interface/Actions/changeling.rsi, state: "devour_on" }
     itemIconStyle: BigAction
     priority: 1
+  - type: ActionRequireMouthUncovered
   - type: TargetAction
   - type: EntityTargetAction
     event: !type:ChangelingDevourActionEvent
