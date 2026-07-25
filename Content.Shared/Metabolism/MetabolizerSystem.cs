@@ -319,7 +319,6 @@ public sealed partial class MetabolizerSystem : EntitySystem
             ent.Comp.MetabolizerTypes = new HashSet<ProtoId<MetabolizerTypePrototype>>();
 
         return ent.Comp.MetabolizerTypes.Add(metabolizer);
-
     }
 }
 
