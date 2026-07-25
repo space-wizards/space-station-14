@@ -63,7 +63,7 @@ public sealed partial class IngestionSystem
     /// </summary>
     /// <param name="user">The mouth action's user to check</param>
     /// <param name="flags">The slots to check that are not being blocked.</param>
-    /// <returns></returns>
+    /// <returns>True if the user has a free mouth, otherwise False</returns>
     public bool HasMouthAvailable(EntityUid user, SlotFlags flags = DefaultFlags)
     {
         return HasMouthAvailable(user, user, flags);
@@ -74,7 +74,7 @@ public sealed partial class IngestionSystem
     /// </summary>
     /// <param name="user">The one performing the action</param>
     /// <param name="target">The target whose mouth is checked</param>
-    /// <returns></returns>
+    /// <returns>True if the user has a free mouth that can reach the target, otherwise False</returns>
     public bool HasMouthAvailable(EntityUid user, EntityUid target)
     {
         return HasMouthAvailable(user, target, DefaultFlags);
@@ -82,9 +82,9 @@ public sealed partial class IngestionSystem
 
     /// <inheritdoc cref="HasMouthAvailable(EntityUid, EntityUid)"/>
     /// Overflow which takes custom flags for a mouth being blocked, in case the entity has a mouth not on the face.
-    public bool HasMouthAvailable(EntityUid user, EntityUid target, SlotFlags flags, bool checkDistance = true, bool showPopUp = true)
+    public bool HasMouthAvailable(EntityUid user, EntityUid target, SlotFlags flags)
     {
-        if (checkDistance && !_transform.GetMapCoordinates(user).InRange(_transform.GetMapCoordinates(target), MaxFeedDistance))
+        if (!_transform.GetMapCoordinates(user).InRange(_transform.GetMapCoordinates(target), MaxFeedDistance))
         {
             var message = Loc.GetString("interaction-system-user-interaction-cannot-reach");
             _popup.PopupEntity(message, user, user);
