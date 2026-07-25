@@ -257,26 +257,28 @@
           type: [ Rat ]
         - !type:ReagentCondition
           reagent: Ammonia
-          min: 1
         ignoreResistances: true
         damage:
           Brute: -2.5
           Burn: -2.5
           Airloss: -5
+        scaling: true
       - !type:ModifyBloodLevel
         amount: 1
         conditions:
         - !type:MetabolizerTypeCondition
           type: [ Rat ]
-        - !type:ReagentCondition
-          reagent: Ammonia
-          min: 1
+        scaling: true
       - !type:Oxygenate # ammonia displaces nitrogen in vox blood
         conditions:
         - !type:MetabolizerTypeCondition
           type: [ Vox ]
         factor: -4
-
+      - !type:ModifyBleed
+        amount: -0.5
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [ Rat ]
 
 - type: reagent
   id: Diethylamine

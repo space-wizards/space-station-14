@@ -168,15 +168,13 @@
         conditions:
         - !type:MetabolizerTypeCondition
           type: [ LikesRadiation ]
-        - !type:ReagentCondition
-          reagent: Tritium
-          min: 1
         ignoreResistances: true
         damage:
-          Brute: -10
-          Burn: -10
-          Airloss: -5
+          Brute: -5
+          Burn: -5
+          Airloss: -3
           Toxin: -3
+        scaling: true
       - !type:ModifyBloodLevel
         amount: 3
         conditions:
@@ -184,7 +182,12 @@
           type: [ LikesRadiation ]
         - !type:ReagentCondition
           reagent: Tritium
-          min: 1
+        scaling: true
+      - !type:ModifyBleed
+        amount: -0.5
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [ LikesRadiation ]
 
 - type: reagent
   id: CarbonDioxide
