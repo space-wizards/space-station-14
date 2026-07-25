@@ -25,6 +25,9 @@ public sealed partial class ChangelingMetabolismSystem : EntitySystem
 
     private void AddMetabolizer(Entity<ChangelingMetabolismComponent> ent)
     {
+        if (TerminatingOrDeleted(ent) || !Exists(ent))
+            return;
+
         if (!_container.TryGetContainer(ent, BodyComponent.ContainerID, out var container))
         {
             Log.Error($"Entity {ToPrettyString(ent)} with a {nameof(ChangelingMetabolismComponent)} is missing a container ({BodyComponent.ContainerID}).");
