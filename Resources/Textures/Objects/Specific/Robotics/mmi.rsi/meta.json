@@ -1,96 +1,96 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/cf45322c7ee16f9d7e43d5260daf24ceb77c1b25, mmi_searching and mmi_xenoborg edited from mmi_alive by SlamBamActionman (Github)",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "mmi_icon"
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/cf45322c7ee16f9d7e43d5260daf24ceb77c1b25, mmi_searching and mmi_xenoborg edited from mmi_alive by SlamBamActionman (Github)",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "mmi_off"
-    },
-    {
-      "name": "mmi_alive"
-    },
-    {
-      "name": "mmi_dead"
-    },
-    {
-      "name": "mmi_xenoborg"
-    },
-    {
-      "name": "mmi_searching",
-      "delays": [
-        [
-          0.2,
-          0.2,
-          0.2,
-          0.2
-        ]
-      ]
-    },
-    {
-      "name": "mmi_brain"
-    },
-    {
-      "name": "mmi_brain_alien"
-    },
-    {
-      "name": "posibrain"
-    },
-    {
-      "name": "posibrain-occupied",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1
-        ]
-      ]
-    },
-    {
-      "name": "posibrain-searching",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1
-        ]
-      ]
-    }
-  ]
+    "states": [
+        {
+            "name": "mmi_icon"
+        },
+        {
+            "name": "mmi_off"
+        },
+        {
+            "name": "mmi_alive"
+        },
+        {
+            "name": "mmi_dead"
+        },
+        {
+            "name": "mmi_xenoborg"
+        },
+        {
+            "name": "mmi_searching",
+            "delays": [
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "mmi_brain"
+        },
+        {
+            "name": "mmi_brain_alien"
+        },
+        {
+            "name": "posibrain"
+        },
+        {
+            "name": "posibrain-occupied",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "posibrain-searching",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        }
+    ]
 }
