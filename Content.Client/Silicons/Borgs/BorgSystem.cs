@@ -147,4 +147,9 @@ public sealed partial class BorgSystem : SharedBorgSystem
         base.Update(frameTime);
         UpdateBattery(frameTime);
     }
+
+    protected override void EnableGhostRole(Entity<MMIComponent> entity)
+    {
+        // Handled on Content.Server
+    }
 }

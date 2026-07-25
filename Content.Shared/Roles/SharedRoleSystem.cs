@@ -11,6 +11,7 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -26,6 +27,7 @@ public abstract partial class SharedRoleSystem : EntitySystem
     [Dependency] protected ISharedPlayerManager Player = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
     [Dependency] private SharedMindSystem _minds = default!;
+    [Dependency] private INetManager _net = default!;
 
     private JobRequirementOverridePrototype? _requirementOverride;
 
@@ -258,7 +260,7 @@ public abstract partial class SharedRoleSystem : EntitySystem
         Dirty(mind, comp);
 
         // Update player character window
-        if (Player.TryGetSessionById(comp.UserId, out var session))
+        if (Player.TryGetSessionById(comp.UserId, out var session) && _net.IsServer)
             RaiseNetworkEvent(new MindRoleTypeChangedEvent(), session.Channel);
         else
         {

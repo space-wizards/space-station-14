@@ -60,16 +60,17 @@ public sealed partial class MMIComponent : Component
     public bool EnableGhostRole;
 
     /// <summary>
-    /// If true, the brain required to create a ghost role must have had a player inhabit it at some point.
-    /// </summary>
-    [DataField]
-    public bool GhostRoleRequiresPlayerBrain = true;
-
-    /// <summary>
-    /// If true, the brain required to create a ghost role must have had a player inhabit it at some point.
+    /// The settings for the ghost role, if <see cref="EnableGhostRole"/> is true.
     /// </summary>
     [DataField]
     public GhostRoleSettings? GhostRole;
+
+    /// <summary>
+    /// If true, the brain required to create a ghost role via <see cref="EnableGhostRole"/> must have had a player inhabit it at some point.
+    /// This prevents gibbing NPCs (such as NPC corpses) providing a ghost role.
+    /// </summary>
+    [DataField]
+    public bool GhostRoleRequiresPlayerBrain = true;
 }
 
 [Serializable, NetSerializable]

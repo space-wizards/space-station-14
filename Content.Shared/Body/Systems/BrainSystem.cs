@@ -30,8 +30,8 @@ public sealed partial class BrainSystem : EntitySystem
         var oldMindCont = EnsureComp<MindContainerComponent>(oldEntity);
 
         // A mind being moved from body -> brain counts as having inhabited the same container, even if the mind has since left.
-        if (HasComp<BrainComponent>(newEntity) && oldMindCont.LatestMind != null)
-            _mindSystem.UpdateLatestMind((newEntity, newMindCont), oldMindCont.LatestMind);
+        if (HasComp<BrainComponent>(newEntity) && oldMindCont.LastMind != null)
+            _mindSystem.SetLastMind((newEntity, newMindCont), oldMindCont.LastMind);
 
         var ghostOnMove = EnsureComp<GhostOnMoveComponent>(newEntity);
         ghostOnMove.MustBeDead = HasComp<MobStateComponent>(newEntity); // Don't ghost living players out of their bodies.

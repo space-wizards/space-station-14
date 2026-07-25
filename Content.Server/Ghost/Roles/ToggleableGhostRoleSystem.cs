@@ -62,11 +62,7 @@ public sealed partial class ToggleableGhostRoleSystem : EntitySystem
         EnsureComp<GhostTakeoverAvailableComponent>(ent);
 
         // GhostRoleComponent inherits custom settings from the ToggleableGhostRoleComponent
-        ghostRole.RoleName = Loc.GetString(ent.Comp.RoleName);
-        ghostRole.RoleDescription = Loc.GetString(ent.Comp.RoleDescription);
-        ghostRole.RoleRules = Loc.GetString(ent.Comp.RoleRules);
-        ghostRole.JobProto = ent.Comp.JobProto;
-        ghostRole.MindRoles = ent.Comp.MindRoles;
+        _ghostRole.ApplyGhostRoleSettings((ent, ghostRole), ent.Comp.GhostRole);
     }
 
     private void OnExamined(EntityUid uid, ToggleableGhostRoleComponent component, ExaminedEvent args)

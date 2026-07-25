@@ -42,21 +42,42 @@ public abstract partial class SharedBorgSystem
             if (!_roles.MindHasRole<SiliconBrainRoleComponent>(mindId))
                 _roles.MindAddRole(mindId, SiliconBrainRole, silent: true);
         }
+        else if (ent.Comp.EnableGhostRole)
+        {
+            if (!ent.Comp.GhostRoleRequiresPlayerBrain ||
+                TryComp<MindContainerComponent>(brain, out var mindContainer) &&
+                mindContainer.LastMind != null)
+            {
+                if (ent.Comp.EnableGhostRole && ent.Comp.GhostRole != null)
+                {
+                    EnableGhostRole((ent.Owner, ent.Comp));
+                    // We set the data here, for visual prediction purposes.
+                    _appearance.SetData(ent.Owner, MMIVisuals.MindState, MMIVisualsMindstate.Searching);
+                }
+            }
+            else
+            {
+                _appearance.SetData(ent.Owner, MMIVisuals.MindState, MMIVisualsMindstate.NoMind);
+            }
+        }
 
         _appearance.SetData(ent.Owner, MMIVisuals.BrainPresent, true);
     }
 
     private void OnMMIMindAdded(Entity<MMIComponent> ent, ref MindAddedMessage args)
     {
-        _appearance.SetData(ent.Owner, MMIVisuals.HasMind, true);
+        _appearance.SetData(ent.Owner, MMIVisuals.MindState, MMIVisualsMindstate.HasMind);
     }
 
     private void OnMMIMindRemoved(Entity<MMIComponent> ent, ref MindRemovedMessage args)
     {
-        _appearance.SetData(ent.Owner, MMIVisuals.HasMind, false);
+        if (ent.Comp.EnableGhostRole)
+            EnableGhostRole((ent.Owner, ent.Comp));
+        else
+            _appearance.SetData(ent.Owner, MMIVisuals.MindState, MMIVisualsMindstate.NoMind);
     }
 
-    private void OnMMILinkedRemoved(Entity<MMIComponent> ent, ref EntRemovedFromContainerMessage args)
+    protected virtual void OnMMILinkedRemoved(Entity<MMIComponent> ent, ref EntRemovedFromContainerMessage args)
     {
         if (_timing.ApplyingState)
             return; // The changes are already networked with the same game state
@@ -74,4 +95,6 @@ public abstract partial class SharedBorgSystem
 
         _appearance.SetData(ent, MMIVisuals.BrainPresent, false);
     }
+
+    protected abstract void EnableGhostRole(Entity<MMIComponent> entity);
 }
