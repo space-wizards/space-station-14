@@ -40,6 +40,7 @@
   - type: Appearance
   - type: AnimationPlayer
   - type: Damageable
+  - type: Godmode
   - type: GuideHelp
     guides:
     - AnomalousResearch
