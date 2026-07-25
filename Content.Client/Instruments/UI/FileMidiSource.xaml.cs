@@ -246,11 +246,20 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
 
     private void OnLoopButtonToggled(ButtonToggledEventArgs obj)
     {
+        if (LoopButton.Pressed && ShuffleButton.Pressed)
+            ShuffleButton.Pressed = false;
+
         LoopingToggled?.Invoke(LoopButton.Pressed);
     }
 
     private void OnShuffleButtonPressed(ButtonEventArgs obj)
     {
+        if (ShuffleButton.Pressed && LoopButton.Pressed)
+        {
+            LoopingToggled?.Invoke(false);
+            LoopButton.Pressed = false;
+        }
+
         if (obj.Button.Pressed && !TrackList.GetSelected().Any())
         {
             TrackList[_random.Next(0, TrackList.Count)].Selected = true;
