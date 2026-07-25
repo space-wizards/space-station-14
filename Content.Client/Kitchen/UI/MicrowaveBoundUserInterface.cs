@@ -9,13 +9,21 @@ using Robust.Client.UserInterface;
 namespace Content.Client.Kitchen.UI;
 
 [UsedImplicitly]
-public sealed partial class MicrowaveBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
+public sealed partial class MicrowaveBoundUserInterface : BoundUserInterface
 {
+    [Dependency] private SpriteSystem _sprite = default!;
+    private readonly MicrowaveSystem _microwave;
+
     [ViewVariables]
     private MicrowaveMenu? _menu;
 
     [ViewVariables]
     private readonly Dictionary<int, EntityUid> _solids = new();
+
+    public MicrowaveBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+    {
+        _microwave = EntMan.System<MicrowaveSystem>();
+    }
 
     protected override void Open()
     {
@@ -58,11 +66,8 @@ public sealed partial class MicrowaveBoundUserInterface(EntityUid owner, Enum ui
         if (_menu is null || !EntMan.TryGetComponent<MicrowaveComponent>(Owner, out var comp))
             return;
 
-        var microwaveSys = EntMan.System<MicrowaveSystem>();
-        var spriteSys = EntMan.System<SpriteSystem>();
-
-        RefreshContentsDisplay(microwaveSys, spriteSys);
-        UpdateActiveDisplay(comp, microwaveSys);
+        RefreshContentsDisplay();
+        UpdateActiveDisplay(comp);
 
         // Update the currently-selected cook time label and button
         var buttonIndex = comp.CurrentCookTimeButtonIndex;
@@ -80,21 +85,18 @@ public sealed partial class MicrowaveBoundUserInterface(EntityUid owner, Enum ui
     /// <summary>
     ///     Update the state of various controls in this menu based on the active / empty status of the microwave.
     /// </summary>
-    private void UpdateActiveDisplay(MicrowaveComponent? comp, MicrowaveSystem? microwaveSys = null)
+    private void UpdateActiveDisplay(MicrowaveComponent? comp)
     {
         if (_menu is null)
             return;
 
-        microwaveSys ??= EntMan.System<MicrowaveSystem>();
-
         // Disable various UI controls if the microwave is active or empty
         var isActive = EntMan.TryGetComponent<ActiveMicrowaveComponent>(Owner, out var activeComp);
-        var isEmpty = !microwaveSys.HasContents((Owner, comp));
-        var disableInteraction = isActive || isEmpty;
+        var isEmpty = !_microwave.HasContents((Owner, comp));
         _menu.IsBusy = isActive;
-        _menu.ToggleBusyDisableOverlayPanel(disableInteraction);
-        _menu.StartButton.Disabled = disableInteraction;
-        _menu.EjectButton.Disabled = disableInteraction;
+        _menu.ToggleBusyDisableOverlayPanel(isActive);
+        _menu.StartButton.Disabled = isActive || isEmpty;
+        _menu.EjectButton.Disabled = isActive || isEmpty;
 
         if (activeComp != null)
             _menu.CurrentCooktimeEnd = activeComp.CookTimeEnd;
@@ -106,25 +108,20 @@ public sealed partial class MicrowaveBoundUserInterface(EntityUid owner, Enum ui
     /// <summary>
     ///     Update the panel containing all of the microwave's contents.
     /// </summary>
-    private void RefreshContentsDisplay(MicrowaveSystem? microwaveSys = null, SpriteSystem? spriteSys = null)
+    private void RefreshContentsDisplay()
     {
         if (_menu == null)
             return;
 
-        microwaveSys ??= EntMan.System<MicrowaveSystem>();
-        spriteSys ??= EntMan.System<SpriteSystem>();
-
         _solids.Clear();
         _menu.IngredientsList.Clear();
-        var containedSolids = microwaveSys.GetMicrowaveContents(Owner);
-
-        foreach (var entity in containedSolids)
+        foreach (var entity in _microwave.GetMicrowaveContents(Owner))
         {
             if (EntMan.Deleted(entity))
                 continue;
 
             // TODO just use sprite view
-            var itemIcon = GetEntityIcon(entity, spriteSys);
+            var itemIcon = GetEntityIcon(entity);
             var itemName = EntMan.GetComponent<MetaDataComponent>(entity).EntityName;
             var solidItem = _menu.IngredientsList.AddItem(itemName, itemIcon);
             var solidIndex = _menu.IngredientsList.IndexOf(solidItem);
@@ -136,12 +133,10 @@ public sealed partial class MicrowaveBoundUserInterface(EntityUid owner, Enum ui
     ///     Get the texture associated with an ingredient.
     /// </summary>
     /// <param name="uid">The ingredient entity.</param>
-    private Texture? GetEntityIcon(EntityUid uid, SpriteSystem? spriteSys = null)
+    private Texture? GetEntityIcon(EntityUid uid)
     {
-        spriteSys ??= EntMan.System<SpriteSystem>();
-
         if (EntMan.TryGetComponent<IconComponent>(uid, out var icon))
-            return spriteSys.GetIcon(icon);
+            return _sprite.GetIcon(icon);
 
         if (EntMan.TryGetComponent<SpriteComponent>(uid, out var sprite))
             return sprite.Icon?.Default;
