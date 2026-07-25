@@ -157,7 +157,7 @@ public sealed partial class ToolRefinableSystem : EntitySystem
         if (component.Sound != null)
             _audio.PlayPredicted(component.Sound, Transform(uid).Coordinates, args.User, AudioParams.Default.WithVolume(-2));
 
-        _gib.TryGib(uid);
+        _gib.Gib(uid);
         _destructible.DestroyEntity(uid);
     }
 

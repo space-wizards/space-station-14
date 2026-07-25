@@ -40,7 +40,7 @@ public sealed partial class ArtifactCrusherSystem : SharedArtifactCrusherSystem
                 }
             }
 
-            if (_gibbing.TryGib(contained, out var gibs))
+            if (_gibbing.Gib(contained, out var gibs))
             {
                 foreach (var gib in gibs)
                 {
