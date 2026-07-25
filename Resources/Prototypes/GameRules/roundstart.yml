@@ -481,8 +481,8 @@
   - type: GameRule
     minPlayers: 25 # DS14
     delay:
-      min: 60 # DS14
-      max: 90 # DS14
+      min: 600 # DS14
+      max: 900 # DS14
   - type: ZombieRule
   - type: AntagSelection
     selectionTime: IntraPlayerSpawn
