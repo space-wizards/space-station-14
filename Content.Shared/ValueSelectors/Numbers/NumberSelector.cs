@@ -1,13 +1,11 @@
-using JetBrains.Annotations;
 using Robust.Shared.Random;
 
 namespace Content.Shared.ValueSelectors.Numbers;
 
 /// <summary>
-/// Used for implementing custom value selection.
+/// Used for implementing custom value selection of <see cref="int"/>egers.
 /// </summary>
-[ImplicitDataDefinitionForInheritors, UsedImplicitly(ImplicitUseTargetFlags.WithInheritors)]
-public abstract partial class NumberSelector
+public abstract partial class NumberSelector : IBaseValueSelector<int, float>
 {
     /// <summary>
     /// Returns a value for this selector given a randomizer.

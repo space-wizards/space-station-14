@@ -1,28 +1,18 @@
-using JetBrains.Annotations;
 using Robust.Shared.Random;
 
 namespace Content.Shared.ValueSelectors.Floats;
 
 /// <summary>
-/// Used for implementing custom value selection.
+/// Used for implementing custom value selection of <see cref="float"/>s.
 /// </summary>
-[ImplicitDataDefinitionForInheritors, UsedImplicitly(ImplicitUseTargetFlags.WithInheritors)]
-public abstract partial class FloatSelector
+public abstract partial class FloatSelector : IBaseValueSelector<float, float>
 {
-    /// <summary>
-    /// Returns a value for this selector given a randomizer.
-    /// </summary>
+    /// <inheritdoc/>
     public abstract float Get(IRobustRandom rand);
 
-    /// <summary>
-    /// Odds of occurrence
-    /// </summary>
-    /// <returns>An odds multiplier of at least one occurrence</returns>
+    /// <inheritdoc/>
     public abstract float Odds();
 
-    /// <summary>
-    /// Average number of occurrences
-    /// </summary>
-    /// <returns>The average amount of occurrences</returns>
+    /// <inheritdoc/>
     public abstract float Average();
 }

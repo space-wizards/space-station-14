@@ -2,16 +2,11 @@ using Robust.Shared.Random;
 
 namespace Content.Shared.ValueSelectors.Floats;
 
-/// <summary>
-/// Gives a constant value.
-/// </summary>
-public sealed partial class ConstantFloatSelector : FloatSelector
+/// <inheritdoc cref="IConstantValueSelector{T}"/>
+public sealed partial class ConstantFloatSelector : FloatSelector, IConstantValueSelector<float>
 {
-    /// <summary>
-    /// The constant value of this selector.
-    /// </summary>
     [DataField]
-    public float Value = 1f;
+    public float Value { get; set; } = 1f;
 
     public ConstantFloatSelector(float value)
     {
