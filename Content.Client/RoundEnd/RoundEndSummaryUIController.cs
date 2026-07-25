@@ -15,6 +15,12 @@ public sealed partial class RoundEndSummaryUIController : UIController,
 {
     [Dependency] private IInputManager _input = default!;
 
+    /// <summary>
+    /// Raised when the round summary window is opened or closed.
+    /// Argument is true when window is open
+    /// </summary>
+    public event Action<bool>? OnWindowToggled;
+
     private RoundEndSummaryWindow? _window;
 
     public void ToggleScoreboardWindow(ICommonSession? session = null)
@@ -31,6 +37,8 @@ public sealed partial class RoundEndSummaryUIController : UIController,
             _window.OpenCenteredRight();
             _window.MoveToFront();
         }
+
+        OnWindowToggled?.Invoke(_window.IsOpen);
     }
 
     public void OpenRoundEndSummaryWindow(RoundEndMessageEvent message)
@@ -41,6 +49,7 @@ public sealed partial class RoundEndSummaryUIController : UIController,
 
         _window = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundEndText,
             message.RoundDuration, message.RoundId, message.AllPlayersEndInfo);
+        _window.OnClose += () => OnWindowToggled?.Invoke(false);
     }
 
     public void OnSystemLoaded(ClientGameTicker system)
