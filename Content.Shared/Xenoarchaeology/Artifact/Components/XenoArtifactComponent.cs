@@ -168,25 +168,25 @@ public sealed partial class XenoArtifactComponent : Component
     public EntProtoId<InstantActionComponent> SelfActivateAction = "ActionArtifactActivate";
 
     /// <summary>
-    /// Message shown on artifact unlock beginning
+    /// Message shown on artifact unlock beginning.
     /// </summary>
     [DataField]
     public LocId? UnlockBeginMsg = "artifact-unlock-state-begin";
 
     /// <summary>
-    /// Message shown on trigger being applied successfully whilst the artifact is unlocking
+    /// Message shown on trigger being applied successfully whilst the artifact is unlocking.
     /// </summary>
     [DataField]
     public LocId? UnlockContinueMsg = "artifact-unlock-state-continue";
 
     /// <summary>
-    /// Message shown on artifact unlocking ending successfully
+    /// Message shown on artifact unlocking ending successfully.
     /// </summary>
     [DataField]
     public LocId? UnlockSuccessMsg = "artifact-unlock-state-end-success";
 
     /// <summary>
-    /// Message shown on artifact unlocking ending unsuccessfully
+    /// Message shown on artifact unlocking ending with failure.
     /// </summary>
     [DataField]
     public LocId? UnlockFailureMsg = "artifact-unlock-state-end-failure";

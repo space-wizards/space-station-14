@@ -72,6 +72,7 @@ public abstract partial class SharedXenoArtifactSystem
 
             if (ent.Comp.UnlockBeginMsg != null)
                 _popup.PopupEntity(Loc.GetString(ent.Comp.UnlockBeginMsg), ent);
+
             Dirty(ent);
         }
         else if (node != null)

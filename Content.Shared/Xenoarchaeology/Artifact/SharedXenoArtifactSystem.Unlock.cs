@@ -74,7 +74,7 @@ public abstract partial class SharedXenoArtifactSystem
         {
             SetNodeUnlocked((ent, artifactComponent), node.Value);
             ActivateNode((ent, ent), (node.Value, node.Value), null, null, Transform(ent).Coordinates, false);
-            unlockAttemptResultMsg = ent.Comp2.UnlockSuccessMsg;
+            unlockAttemptResultMsg = artifactComponent.UnlockSuccessMsg;
 
             // as an experiment - unlocking node doesn't activate it, activation is left for player to decide.
             // var activated = ActivateNode((ent, artifactComponent), node.Value, null, null, Transform(ent).Coordinates, false);
@@ -83,7 +83,7 @@ public abstract partial class SharedXenoArtifactSystem
         }
         else
         {
-            unlockAttemptResultMsg = ent.Comp2.UnlockFailureMsg;
+            unlockAttemptResultMsg = artifactComponent.UnlockFailureMsg;
             soundEffect = unlockingComponent.UnlockActivationFailedSound;
         }
 
@@ -91,6 +91,7 @@ public abstract partial class SharedXenoArtifactSystem
         {
             if (unlockAttemptResultMsg != null)
                 _popup.PopupEntity(Loc.GetString(unlockAttemptResultMsg), ent);
+
             _audio.PlayPvs(soundEffect, ent.Owner);
         }
 
