@@ -218,8 +218,8 @@ public abstract partial class SharedCardSystem : EntitySystem
     {
         var cards = GetEntity(args.Cards);
         var user = GetEntity(args.User);
-        if (TryComp<CardsComponent>(cards, out var comp) && TryComp<TransformComponent>(user, out var transComp))
-            TryTakeCard((cards, comp), (user, transComp), args.CardInx, out _);
+        if (TryComp<CardsComponent>(cards, out var comp))
+            TryTakeCard((cards, comp), (user, Transform(user)), args.CardInx, out _);
     }
 
     /// <summary>
