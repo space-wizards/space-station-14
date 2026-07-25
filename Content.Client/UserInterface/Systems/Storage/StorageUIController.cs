@@ -156,6 +156,13 @@ public sealed partial class StorageUIController : UIController, IOnSystemChanged
         }
         else
         {
+            var hotbar = UIManager.GetActiveUIWidgetOrNull<HotbarGui>();
+            if (hotbar != null)
+            {
+                hotbar.DoubleStorageContainer.Visible = false;
+                hotbar.SingleStorageContainer.Visible = false;
+            }
+
             // Open at parent position if it's open.
             if (_ui.TryGetOpenUi<StorageBoundUserInterface>(EntityManager.GetComponent<TransformComponent>(sBui.Owner).ParentUid,
                     StorageComponent.StorageUiKey.Key, out var bui) && bui.Position != null)
