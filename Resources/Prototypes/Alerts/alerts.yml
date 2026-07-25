@@ -64,6 +64,15 @@
   description: alerts-high-toxin-desc
 
 - type: alert
+  id: ToxinsGood
+  category: Toxins
+  icons:
+  - sprite: /Textures/Interface/Alerts/breathing.rsi
+    state: good_tox
+  name: alerts-good-toxin-name
+  description: alerts-good-toxin-desc
+
+- type: alert
   id: LowPressure
   category: Pressure
   icons:

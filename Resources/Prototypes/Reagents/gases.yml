@@ -164,6 +164,14 @@
         minScale: 1.5
         clear: True
         time: 5
+      - !type:AdjustAlert
+        alertType: ToxinsGood
+        minScale: 0.5
+        clear: True
+        time: 5
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [ LikesRadiation ]
       - !type:EvenHealthChange
         conditions:
         - !type:MetabolizerTypeCondition
