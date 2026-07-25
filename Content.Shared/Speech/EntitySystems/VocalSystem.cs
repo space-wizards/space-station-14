@@ -24,6 +24,7 @@ public sealed partial class VocalSystem : EntitySystem
     {
         // try to add scream action when vocal comp added
         _actions.AddAction(ent.Owner, ref ent.Comp.EmoteActionEntity, ent.Comp.EmoteAction);
+        Dirty(ent);
     }
 
     [SubscribeLocalEvent]
@@ -31,6 +32,7 @@ public sealed partial class VocalSystem : EntitySystem
     {
         // remove scream action when component removed
         _actions.RemoveAction(ent.Owner, ent.Comp.EmoteActionEntity);
+        Dirty(ent);
     }
 
     [SubscribeLocalEvent]
@@ -117,5 +119,6 @@ public sealed partial class VocalSystem : EntitySystem
             return;
 
         ent.Comp.EmoteSounds = protoId;
+        Dirty(ent);
     }
 }
