@@ -15,4 +15,6 @@ public sealed partial class ChangelingMetabolismComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public ProtoId<MetabolizerTypePrototype> AddedMetabolizer = "Changeling";
+
+    public override bool SendOnlyToOwner => true;
 }
