@@ -366,6 +366,11 @@
     color: LightGreen
     radius: 2
     energy: 1
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: UnstableMutagen
+        Quantity: 50
 
 - type: entityTable
   id: RatKingLoot

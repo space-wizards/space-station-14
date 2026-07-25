@@ -2202,14 +2202,7 @@
     bloodReferenceSolution:
       reagents:
       - ReagentId: UnstableMutagen
-        Quantity: 50
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: UncookedAnimalProteins
-        Quantity: 5
-      - ReagentId: Uranium
-        Quantity: 10
+        Quantity: 300
   - type: Body
   - type: EntityTableContainerFill
     containers:
@@ -2235,6 +2228,18 @@
   parent: [ MobMouse, MobCancerBase ]
   id: MobMouseCancer
   components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: UncookedAnimalProteins
+        Quantity: 5
+      - ReagentId: Uranium
+        Quantity: 10
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: UnstableMutagen
+        Quantity: 50
   - type: GhostRole
     name: ghost-role-information-cancer-mouse-name
     description: ghost-role-information-cancer-mouse-description
