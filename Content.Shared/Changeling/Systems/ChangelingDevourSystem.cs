@@ -244,7 +244,7 @@ public sealed partial class ChangelingDevourSystem : EntitySystem
             return false;
         }
 
-        return _ingestion.HasMouthAvailable(changeling.Owner, changeling.Owner, SlotFlags.HEAD | SlotFlags.MASK, false, showPopup);
+        return true;
     }
 
     /// <summary>
