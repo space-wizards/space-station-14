@@ -8,7 +8,8 @@
     xmlns:style="clr-namespace:Content.Client.Stylesheets"
     xmlns:lobbyUi="clr-namespace:Content.Client.Lobby.UI"
     xmlns:info="clr-namespace:Content.Client.Info"
-    xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.Chat.Widgets">
+    xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.Chat.Widgets"
+    xmlns:system="clr-namespace:System;assembly=System.Runtime">
     <!-- Background -->
     <TextureRect Access="Public" VerticalExpand="True" HorizontalExpand="True" Name="Background"
                  Stretch="KeepAspectCovered" />
@@ -80,15 +81,37 @@
                     <controls:HSpacer Spacing="10" />
                     <!-- Voting & misc button bar -->
                     <BoxContainer Orientation="Horizontal" MinSize="0 40" HorizontalAlignment="Right">
-                        <Button Name="RoundSummaryButton" Access="Public" StyleClasses="ButtonBig"
-                                ToggleMode="true" Text="{Loc 'ui-lobby-round-summary-button'}" />
-                        <Button Name="AHelpButton" Access="Public" Text="{Loc 'ui-lobby-ahelp-button'}"
-                                StyleClasses="ButtonBig" />
-                        <vote:VoteCallMenuButton Name="CallVoteButton" StyleClasses="ButtonBig" />
-                        <Button Name="OptionsButton" Access="Public" StyleClasses="ButtonBig"
-                                Text="{Loc 'ui-lobby-options-button'}" />
-                        <Button Name="LeaveButton" Access="Public" StyleClasses="ButtonBig"
-                                Text="{Loc 'ui-lobby-leave-button'}" />
+                        <Button Name="RoundSummaryButton" Access="Public" ToggleMode="true"
+                            Text="{Loc 'ui-lobby-round-summary-button'}">
+                            <Control.StyleClasses>
+                                <system:String>ButtonBig</system:String>
+                                <system:String>OpenRight</system:String>
+                            </Control.StyleClasses>
+                        </Button>
+                        <Button Name="AHelpButton" Access="Public" Text="{Loc 'ui-lobby-ahelp-button'}">
+                            <Control.StyleClasses>
+                                <system:String>ButtonBig</system:String>
+                                <system:String>OpenBoth</system:String>
+                            </Control.StyleClasses>
+                        </Button>
+                        <vote:VoteCallMenuButton Name="CallVoteButton">
+                            <Control.StyleClasses>
+                                <system:String>ButtonBig</system:String>
+                                <system:String>OpenBoth</system:String>
+                            </Control.StyleClasses>
+                        </vote:VoteCallMenuButton>
+                        <Button Name="OptionsButton" Access="Public" Text="{Loc 'ui-lobby-options-button'}">
+                            <Control.StyleClasses>
+                                <system:String>ButtonBig</system:String>
+                                <system:String>OpenBoth</system:String>
+                            </Control.StyleClasses>
+                        </Button>
+                        <Button Name="LeaveButton" Access="Public" Text="{Loc 'ui-lobby-leave-button'}">
+                            <Control.StyleClasses>
+                                <system:String>ButtonBig</system:String>
+                                <system:String>OpenLeft</system:String>
+                            </Control.StyleClasses>
+                        </Button>
                     </BoxContainer>
                     <controls:HSpacer Spacing="10" />
                     <!-- Server info -->
