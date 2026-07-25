@@ -195,6 +195,8 @@ namespace Content.Client.Lobby
                 Lobby!.ObserveButton.Disabled = true;
             }
 
+            Lobby!.ConfigureRoundSummaryButton();
+
             if (_gameTicker.ServerInfoBlob != null)
             {
                 Lobby!.ServerInfo.SetInfoBlob(_gameTicker.ServerInfoBlob);

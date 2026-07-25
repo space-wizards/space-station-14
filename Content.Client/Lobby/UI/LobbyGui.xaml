@@ -81,7 +81,7 @@
                     <!-- Voting & misc button bar -->
                     <BoxContainer Orientation="Horizontal" MinSize="0 40" HorizontalAlignment="Right">
                         <Button Name="RoundSummaryButton" Access="Public" StyleClasses="ButtonBig"
-                                Text="{Loc 'ui-lobby-round-summary-button'}" />
+                                ToggleMode="true" Text="{Loc 'ui-lobby-round-summary-button'}" />
                         <Button Name="AHelpButton" Access="Public" Text="{Loc 'ui-lobby-ahelp-button'}"
                                 StyleClasses="ButtonBig" />
                         <vote:VoteCallMenuButton Name="CallVoteButton" StyleClasses="ButtonBig" />

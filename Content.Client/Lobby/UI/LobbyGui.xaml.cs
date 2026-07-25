@@ -24,7 +24,10 @@ namespace Content.Client.Lobby.UI
 
             LeaveButton.OnPressed += _ => _consoleHost.ExecuteCommand("disconnect");
             OptionsButton.OnPressed += _ => UserInterfaceManager.GetUIController<OptionsUIController>().ToggleWindow();
-            RoundSummaryButton.OnPressed += _ => UserInterfaceManager.GetUIController<RoundEndSummaryUIController>().ToggleScoreboardWindow();
+
+            var roundSummaryController = UserInterfaceManager.GetUIController<RoundEndSummaryUIController>();
+            RoundSummaryButton.OnToggled += _ => roundSummaryController.ToggleScoreboardWindow();
+            ConfigureRoundSummaryButton();
 
             CollapseButton.OnPressed += _ => TogglePanel(false);
             ExpandButton.OnPressed += _ => TogglePanel(true);
@@ -56,6 +59,17 @@ namespace Content.Client.Lobby.UI
 
                     break;
             }
+        }
+
+        /// <summary>
+        /// Initialize the current state of the round summary button
+        /// based on whether it's already open and we have info to show.
+        /// </summary>
+        public void ConfigureRoundSummaryButton()
+        {
+            var roundSummaryController = UserInterfaceManager.GetUIController<RoundEndSummaryUIController>();
+            RoundSummaryButton.Disabled = !roundSummaryController.IsSummaryValid();
+            RoundSummaryButton.Pressed = roundSummaryController.IsSummaryOpen();
         }
 
         private void TogglePanel(bool value)
