@@ -109,7 +109,7 @@ public sealed partial class StorageUIController : UIController, IOnSystemChanged
 
         if (StaticStorageUIEnabled)
         {
-            var hotbar = UIManager.GetActiveUIWidgetOrNull<HotbarGui>();
+            var hotbar = UIManager.GetActiveUIWidgetOrNull<StorageGui>();
             // this lambda handles the nested storage case
             // during nested storage, a parent window hides and a child window is
             // immediately inserted to the end of the list
