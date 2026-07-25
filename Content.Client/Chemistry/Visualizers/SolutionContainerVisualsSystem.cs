@@ -80,6 +80,9 @@ public sealed partial class SolutionContainerVisualsSystem : VisualizerSystem<So
                 changeColor = reagentProto.MetamorphicChangeColor;
                 fillSprite = reagentProto.MetamorphicSprite ?? fillSprite;
             }
+            else if (reagentProto?.MetamorphicSprite == null)
+                // The reagent has no metamorphic sprite, so use the default one
+                SpriteSystem.LayerSetVisible(ent, fillLayer, true);
             else
                 SpriteSystem.LayerSetVisible(ent, fillLayer, false);
         }
