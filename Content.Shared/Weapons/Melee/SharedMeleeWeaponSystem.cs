@@ -118,7 +118,7 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
     {
         foreach (var entity in args.HitEntities)
         {
-            _effects.ApplyEffects(entity, ent.Comp.Effects, FixedPoint2.New(1), args.User);
+            _effects.ApplyEffects(entity, ent.Comp.Effects, 1f, args.User);
         }
     }
 
