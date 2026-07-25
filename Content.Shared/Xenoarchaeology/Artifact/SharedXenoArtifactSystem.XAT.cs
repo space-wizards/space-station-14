@@ -70,8 +70,9 @@ public abstract partial class SharedXenoArtifactSystem
             unlockingComp.EndTime = _timing.CurTime + ent.Comp.UnlockStateDuration;
             Log.Debug($"{ToPrettyString(ent)} entered unlocking state");
 
-            if (_net.IsServer)
-                _popup.PopupEntity(Loc.GetString("artifact-unlock-state-begin"), ent);
+            if (ent.Comp.UnlockBeginMsg != null)
+                _popup.PopupEntity(Loc.GetString(ent.Comp.UnlockBeginMsg), ent);
+
             Dirty(ent);
             if (node != null && unlockingComp.TriggeredNodeIndexes.Add(GetIndex(ent, node.Value)))
             {
@@ -102,6 +103,9 @@ public abstract partial class SharedXenoArtifactSystem
                         if (unlockingComp.TriggeredNodeIndexes.All(x => predecessorNodeIndices.Contains(x)))
                         {
                             unlockingComp.EndTime += ent.Comp.UnlockStateIncrementPerNode; // We have found an unlockable node that is still possible to unlock - it contains all triggers in its predecessors
+                          
+                                      if (ent.Comp.UnlockContinueMsg != null)
+                                        _popup.PopupEntity(Loc.GetString(ent.Comp.UnlockContinueMsg), ent);
                             break;
                         }
                     }

@@ -89,6 +89,7 @@
       amount: -20
     - !type:PlantAdjustMutationMod
       amount: 0.1
+    - !type:PlantRemoveKudzu
   metabolisms:
     Bloodstream:
       effects:
@@ -228,9 +229,10 @@
           reagent: Ammonia
           min: 1
         ignoreResistances: true
+        scaling: true
         damage:
           types:
-            Poison: 0.25
+            Poison: 1
       - !type:Vomit
         probability: 0.12
         conditions:
@@ -249,7 +251,7 @@
         - !type:ReagentCondition
           reagent: Ammonia
           min: 0.25
-      - !type:HealthChange
+      - !type:EvenHealthChange
         conditions:
         - !type:MetabolizerTypeCondition
           type: [ Rat ]
@@ -258,11 +260,9 @@
           min: 1
         ignoreResistances: true
         damage:
-          groups:
-            Brute: -2.5
-            Burn: -2.5
-          types:
-            Bloodloss: -5
+          Brute: -2.5
+          Burn: -2.5
+          Airloss: -5
       - !type:ModifyBloodLevel
         amount: 1
         conditions:

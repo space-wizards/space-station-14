@@ -12,7 +12,7 @@ namespace Content.Server.Temperature.Systems;
 
 public sealed partial class TemperatureSystem : SharedTemperatureSystem
 {
-    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
+    [Dependency] private AtmosphereSystem _atmosphere = default!;
 
     public override void Initialize()
     {

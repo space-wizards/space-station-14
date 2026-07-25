@@ -19,10 +19,8 @@
   - type: StatusEffects
     allowed:
     - Electrocution
-    - TemporaryBlindness
     - Pacified
     - Flashed
-    - RadiationProtection
     - Adrenaline
   - type: Buckle
   - type: StandingState
@@ -92,10 +90,8 @@
   - type: StatusEffects
     allowed:
     - Electrocution
-    - TemporaryBlindness
     - Pacified
     - Flashed
-    - RadiationProtection
     - Adrenaline
   - type: Bloodstream
     bloodReferenceSolution:
@@ -105,5 +101,3 @@
   - type: MobPrice
     price: 150
   - type: FloatingVisuals
-  - type: GhostOnMove
-    mustBeDead: true
