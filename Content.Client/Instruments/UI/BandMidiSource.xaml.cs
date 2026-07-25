@@ -27,6 +27,12 @@ public sealed partial class BandMidiSource : InstrumentMidiSourceBase
         BandList.OnItemSelected += OnBandItemSelected;
     }
 
+    protected override void VisibilityChanged(bool newVisible)
+    {
+        if (newVisible)
+            RefreshBandRequest?.Invoke();
+    }
+
     private void OnRefreshPressed(BaseButton.ButtonEventArgs _)
     {
         RefreshBandRequest?.Invoke();
