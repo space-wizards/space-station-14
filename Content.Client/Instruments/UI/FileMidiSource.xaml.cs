@@ -409,7 +409,22 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
         {
             if (IsShuffle)
             {
-                TrackList[_random.Next(0, TrackList.Count)].Selected = true;
+                var randomIndex = _random.Next(0, TrackList.Count);
+                var randomTrack = TrackList[randomIndex];
+                if (randomTrack.Selected)
+                {
+                    // Try going one up or down if we roll the already selected track.
+                    if (TrackList.Count - 1 > randomIndex)
+                        TrackList[randomIndex + 1].Selected = true;
+                    else if (randomIndex > 0)
+                        TrackList[randomIndex - 1].Selected = true;
+                    else
+                        randomTrack.Selected = true;
+                }
+                else
+                {
+                    randomTrack.Selected = true;
+                }
             }
             else
             {
