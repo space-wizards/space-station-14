@@ -90,7 +90,7 @@ public sealed class UnitologyRuleSystem : GameRuleSystem<UnitologyRuleComponent>
         SubscribeLocalEvent<UnitologyRuleComponent, StageConvergenceEvent>(OnStageConvergence);
     }
 
-    public bool TryGrantUnitologyRole(EntityUid target, ProtoId<AntagPrototype> role, ICommonSession? session = null)
+    public bool TryGrantUnitologyRole(EntityUid target, ProtoId<AntagPrototype> role, ICommonSession? session = null, bool forceCreateRule = true)
     {
         if (!_mindSystem.TryGetMind(target, out var mindId, out var mind))
             return false;
@@ -120,7 +120,7 @@ public sealed class UnitologyRuleSystem : GameRuleSystem<UnitologyRuleComponent>
             break;
         }
 
-        if (session != null)
+        if (session != null && forceCreateRule)
         {
             var rule = _antag.ForceGetGameRuleEnt<UnitologyRuleComponent>(UnitologyRule);
             var antagSelection = Comp<AntagSelectionComponent>(rule.Owner);

@@ -46,7 +46,7 @@ public sealed class UnitologyEnslavedSystem : EntitySystem
         }
 
         RemComp<MindShieldComponent>(uid);
-        _unitologyRule.TryGrantUnitologyRole(uid, UnitologyRuleSystem.EnslavedUnitologyAntagRole);
+        _unitologyRule.TryGrantUnitologyRole(uid, UnitologyRuleSystem.EnslavedUnitologyAntagRole, forceCreateRule: false);
     }
 
     private void OnMindShieldAdded(EntityUid uid, UnitologyEnslavedComponent comp, ref UnitologyMindShieldAddedEvent args)
