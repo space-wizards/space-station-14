@@ -17,6 +17,7 @@ public sealed partial class BodySystem
         SubscribeLocalEvent<BodyComponent, ApplyOrganProfileDataEvent>(RefRelayBodyEvent);
         SubscribeLocalEvent<BodyComponent, ApplyOrganMarkingsEvent>(RefRelayBodyEvent);
         SubscribeLocalEvent<BodyComponent, OrganCopyAppearanceEvent>(RefRelayBodyEvent);
+
         SubscribeLocalEvent<BodyComponent, HumanoidLayerVisibilityChangedEvent>(RelayBodyEvent);
     }
 
