@@ -115,7 +115,7 @@ public sealed partial class CardSystem : SharedCardSystem
         for (var i = 0; i < visualState.Count; i++)
         {
             // If flipped counts from the back
-            var card = visualState.CardList[visualState.Start + (flipped ? -i - 1 : i)];
+            var card = visualState.CardList[visualState.Start + (flipped ? i : -i - 1)];
             var (baseLayer, layerOne, layerTwo) = CardLayers(i);
 
             if (card.CardId.Id == null || !PrototypeManager.TryIndex(card.CardId, out var prototype))
