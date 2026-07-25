@@ -227,13 +227,12 @@ namespace Content.Client.ContextMenu.UI
                     continue;
                 }
 
-                if ((visibility & MenuVisibility.Invisible) == 0)
+                if ((visibility & MenuVisibility.Invisible) == 0
+                    && _spriteQuery.TryGetComponent(entity, out var sprite)
+                    && !sprite.Visible)
                 {
-                    if (_spriteQuery.TryGetComponent(entity, out var sprite) && !sprite.Visible)
-                    {
-                        RemoveEntity(entity);
-                        continue;
-                    }
+                    RemoveEntity(entity);
+                    continue;
                 }
 
                 if ((visibility & MenuVisibility.NoFov) == MenuVisibility.NoFov)
