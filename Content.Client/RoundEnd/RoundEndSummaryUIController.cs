@@ -48,4 +48,20 @@ public sealed partial class RoundEndSummaryUIController : UIController,
         _input.SetInputCommand(ContentKeyFunctions.ToggleRoundEndSummaryWindow,
             InputCmdHandler.FromDelegate(ToggleScoreboardWindow));
     }
+
+    /// <summary>
+    /// Returns true if we have the information to open the round summary window
+    /// </summary>
+    public bool IsSummaryValid()
+    {
+        return _window != null;
+    }
+
+    /// <summary>
+    /// Return true if the round summary window is currently open
+    /// </summary>
+    public bool IsSummaryOpen()
+    {
+        return _window != null && _window.IsOpen;
+    }
 }
