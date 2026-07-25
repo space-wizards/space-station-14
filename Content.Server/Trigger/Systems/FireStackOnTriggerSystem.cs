@@ -1,4 +1,5 @@
 using Content.Server.Atmos.EntitySystems;
+using Content.Shared.Atmos.Components;
 using Content.Shared.Trigger;
 using Content.Shared.Trigger.Components.Effects;
 
@@ -8,9 +9,9 @@ namespace Content.Server.Trigger.Systems;
 /// Trigger system for adding or removing fire stacks from an entity with <see cref="FlammableComponent"/>.
 /// </summary>
 /// <seealso cref="IgniteOnTriggerSystem"/>
-public sealed class FireStackOnTriggerSystem : EntitySystem
+public sealed partial class FireStackOnTriggerSystem : EntitySystem
 {
-    [Dependency] private readonly FlammableSystem _flame = default!;
+    [Dependency] private FlammableSystem _flame = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -31,7 +32,10 @@ public sealed class FireStackOnTriggerSystem : EntitySystem
         if (target == null)
             return;
 
-        _flame.AdjustFireStacks(target.Value, ent.Comp.FireStacks, ignite: ent.Comp.DoIgnite);
+        if (!TryComp<FlammableComponent>(target.Value, out var flammable))
+            return;
+
+        _flame.AdjustFireStacks(target.Value, ent.Comp.FireStacks, ignite: ent.Comp.DoIgnite, flammable: flammable);
 
         args.Handled = true;
     }
@@ -46,7 +50,10 @@ public sealed class FireStackOnTriggerSystem : EntitySystem
         if (target == null)
             return;
 
-        _flame.Extinguish(target.Value);
+        if (!TryComp<FlammableComponent>(target.Value, out var flammable))
+            return;
+
+        _flame.Extinguish(target.Value, flammable: flammable);
 
         args.Handled = true;
     }

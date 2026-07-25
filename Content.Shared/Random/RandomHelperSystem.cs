@@ -8,10 +8,10 @@ namespace Content.Shared.Random;
 /// <summary>
 ///     System containing various content-related random helpers.
 /// </summary>
-public sealed class RandomHelperSystem : EntitySystem
+public sealed partial class RandomHelperSystem : EntitySystem
 {
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     public void RandomOffset(EntityUid entity, float minX, float maxX, float minY, float maxY)
     {
