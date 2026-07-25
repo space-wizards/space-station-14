@@ -39,6 +39,7 @@
     - id: ClothingUnderwearBottomBoxersMysticalRayAlt
     - id: PlushieMysticalRayAlt
     - id: ClothingHeadHatMysticalRayAlt
+    - id: MedkitAdvancedFilled
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
 
