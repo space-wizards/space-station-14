@@ -115,8 +115,8 @@ namespace Content.Client.Inventory
         {
             OnLinkInventorySlots?.Invoke(uid, component);
 
-            // TODO: Refactor clientside inventories. I hate how messy they are and that SlotData is not networked
-            // This code updates all slot blockers because of that
+            // TODO: Refactor client-side inventories. Code is VERY messy all over the UIController and this system.
+            // Also StippableBUI has some duplication
             var enumerator = GetSlotEnumerator(uid);
             while (enumerator.NextItem(out var item))
             {
