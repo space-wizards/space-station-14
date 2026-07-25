@@ -66,15 +66,7 @@ public abstract partial class SharedGasTileOverlaySystem : EntitySystem
     {
         if (args.FromTick <= component.CreationTick)
         {
-            var fireData = new GasOverlayFireData[component.FireData.Length];
-            var opacityData = new GasOverlayOpacityData[component.OpacityData.Length];
-            var temperatureData = new GasOverlayTemperatureData[component.TemperatureData.Length];
-
-            Array.Copy(component.FireData, fireData, component.FireData.Length);
-            Array.Copy(component.OpacityData, opacityData, component.OpacityData.Length);
-            Array.Copy(component.TemperatureData, temperatureData, component.TemperatureData.Length);
-
-            args.State = new GasOverlayChunkState(fireData, opacityData, temperatureData);
+            args.State = CreateFullState(component);
             return;
         }
 
@@ -117,6 +109,19 @@ public abstract partial class SharedGasTileOverlaySystem : EntitySystem
         }
 
         args.State = new GasOverlayChunkDeltaState(fire, opacity, temperature);
+    }
+
+    protected virtual GasOverlayChunkState CreateFullState(GasOverlayChunkComponent component)
+    {
+        var fireData = new GasOverlayFireData[component.FireData.Length];
+        var opacityData = new GasOverlayOpacityData[component.OpacityData.Length];
+        var temperatureData = new GasOverlayTemperatureData[component.TemperatureData.Length];
+
+        Array.Copy(component.FireData, fireData, component.FireData.Length);
+        Array.Copy(component.OpacityData, opacityData, component.OpacityData.Length);
+        Array.Copy(component.TemperatureData, temperatureData, component.TemperatureData.Length);
+
+        return new GasOverlayChunkState(fireData, opacityData, temperatureData);
     }
 
     private void OnHandleState(EntityUid uid, GasOverlayChunkComponent component, ref ComponentHandleState args)

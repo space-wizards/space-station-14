@@ -36,6 +36,11 @@ public sealed partial class GasTileOverlaySystem : SharedGasTileOverlaySystem
     private void UpdateTickRate(float value) => _updateInterval = value > 0.0f ? 1 / value : float.MaxValue;
     private void UpdateThresholds(int value) => _thresholds = value;
 
+    protected override GasOverlayChunkState CreateFullState(GasOverlayChunkComponent component)
+    {
+        return new GasOverlayChunkState(component.FireData, component.OpacityData, component.TemperatureData);
+    }
+
     public void Invalidate(Entity<GridAtmosphereComponent?> grid, Vector2i index)
     {
         if (!_gridAtmosphereQuery.Resolve(grid.Owner, ref grid.Comp))
