@@ -14,7 +14,7 @@ namespace Content.Client.Changelog;
 [GenerateTypedNameReferences]
 public sealed partial class ChangelogEntry : Control
 {
-    [Dependency] private readonly IResourceCache _resourceCache = default!;
+    [Dependency] private IResourceCache _resourceCache = default!;
 
     public ChangelogEntry()
     {
