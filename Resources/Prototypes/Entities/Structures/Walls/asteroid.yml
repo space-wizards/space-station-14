@@ -6,6 +6,8 @@
 - type: entity
   parent: BaseWall
   id: BaseAsteroidRock
+  name: asteroid rock
+  description: A rocky asteroid.
   components:
   - type: Transform
     noRot: true
@@ -45,8 +47,6 @@
 - type: entity
   parent: [ BaseAsteroidRock, StructureHealthBarrierWeak ]
   id: AsteroidRock
-  name: asteroid rock
-  description: A rocky asteroid.
   components:
   - type: Damageable
     damageModifierSet: RockMod
@@ -96,6 +96,10 @@
     intensitySlope: 2.5
     maxIntensity: 10
     canCreateVacuum: false
+  - type: Injurable
+    damageContainer: StructuralInorganic
+  - type: Damageable
+    damageModifierSet: RockMod
   - type: Destructible
     thresholds:
     - trigger:
@@ -426,7 +430,7 @@
       map: [ "enum.MiningScannerVisualLayers.Overlay" ]
 
 - type: entity
-  parent: [ BaseRockGibtonite, AsteroidRock ]
+  parent: [ BaseRockGibtonite, BaseAsteroidRock ]
   id: AsteroidRockGibtonite
   components:
   - type: Sprite
@@ -456,8 +460,8 @@
     oreRarityPrototypeId: RandomOreDistributionStandard
 
 - type: entity
-  id: IronRock
-  parent: AsteroidRock
+  abstract: true
+  id: VisualsIronRock
   name: ironrock
   suffix: Low Ore Yield
   description: A rocky asteroid.
@@ -481,6 +485,10 @@
       state: ironrock_north
     - map: [ "enum.EdgeLayer.West" ]
       state: ironrock_west
+
+- type: entity
+  parent: [ VisualsIronRock, AsteroidRock ]
+  id: IronRock
 
 - type: entity
   id: IronRockMining
@@ -756,7 +764,7 @@
       map: [ "enum.MiningScannerVisualLayers.Overlay" ]
 
 - type: entity
-  parent: [ BaseRockGibtonite, IronRock ]
+  parent: [ VisualsIronRock, BaseRockGibtonite, BaseAsteroidRock ]
   id: IronRockGibtonite
   components:
   - type: Sprite
