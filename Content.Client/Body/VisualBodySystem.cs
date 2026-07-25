@@ -190,7 +190,8 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
             if (!_marking.TryGetMarking(marking, out var proto))
                 continue;
 
-            if (!_sprite.LayerMapTryGet(target, proto.BodyPart, out var index, true))
+            if (!_sprite.LayerMapTryGet(target, proto.BodyPart, out var index, true)
+                || !_sprite.TryGetLayer(target, index, out var bodypartLayer, true))
                 continue;
 
             ent.Comp.MarkingsDisplacement.TryGetValue(proto.BodyPart, out var displacement);
@@ -206,7 +207,7 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
 
                 var layerId = $"{proto.ID}-{rsi.RsiState}";
 
-                if (!_sprite.LayerMapTryGet(target, layerId, out _, false))
+                if (!_sprite.LayerMapTryGet(target, layerId, out var spriteLayer, false))
                 {
                     // Having three separate indices and a magic +1 is cursed, but:
                     // - index refers to the index of the organ the marking is applied to
@@ -215,15 +216,16 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
                     //   an additional offset to ensure that the order of the base sprites is correct
                     //   after inserting a displacement layer
                     // - The +1 ensures that markings render on top of the base organ
-                    var spriteLayer = _sprite.AddLayer(target, sprite, index + i + numDisplacements + 1);
+                    spriteLayer = _sprite.AddLayer(target, sprite, index + i + numDisplacements + 1);
                     _sprite.LayerMapSet(target, layerId, spriteLayer);
-                    _sprite.LayerSetSprite(target, layerId, rsi);
+                    _sprite.LayerSetSprite(target, spriteLayer, rsi);
+                    _sprite.LayerSetVisible(target, spriteLayer, bodypartLayer.Visible);
                 }
 
                 if (marking.MarkingColors is not null && i < marking.MarkingColors.Count)
-                    _sprite.LayerSetColor(target, layerId, marking.MarkingColors[i]);
+                    _sprite.LayerSetColor(target, spriteLayer, marking.MarkingColors[i]);
                 else
-                    _sprite.LayerSetColor(target, layerId, Color.White);
+                    _sprite.LayerSetColor(target, spriteLayer, Color.White);
 
                 if (displacement != null && proto.CanBeDisplaced)
                 {
@@ -290,6 +292,8 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
     {
         if (!ent.Comp.HideableLayers.Contains(args.Args.Layer))
             return;
+
+        args.Args.Handled = true;
 
         foreach (var markings in ent.Comp.Markings.Values)
         {
