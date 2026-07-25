@@ -5011,3 +5011,10 @@ Entries:
   changes:
   - type: Add
     message: добавлено регулирование громкости музыкального автомата
+- id: 497
+  author: WhoTo315
+  time: '2026-07-25T18:36:02.517440+00:00'
+  pr: 2010
+  changes:
+  - type: Fix
+    message: На карту Ishimura добавлен спавн пилота СБ.
