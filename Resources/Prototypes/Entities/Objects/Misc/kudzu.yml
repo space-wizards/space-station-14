@@ -263,12 +263,7 @@
     tags:
     - Meat
     - Ruminant
-
-- type: entity
-  parent: BaseFleshKudzu
-  id: FleshKudzu
-  components:
-  - type: Temperature
+    - type: Temperature
   - type: TemperatureDamage
     heatDamage:
       types:
@@ -277,6 +272,11 @@
       types:
         Cold: 5 #per second, scales with temperature & other constants
     coldDamageThreshold: 0
+
+- type: entity
+  parent: BaseFleshKudzu
+  id: FleshKudzu
+  components:
   - type: Barotrauma
     damage:
       types:
@@ -286,16 +286,6 @@
   parent: BaseFleshKudzu
   id: FleshKudzuSpace
   suffix: Space
-  components:
-  - type: Temperature
-  - type: TemperatureDamage
-    heatDamage:
-      types:
-        Heat: 10
-    coldDamage:
-      types:
-        Cold: 5 #per second, scales with temperature & other constants
-    coldDamageThreshold: 0
 
 - type: entity
   parent: [ BaseKudzu, BaseShadow ]
