@@ -29,6 +29,7 @@
     - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
       state: eyes
       shader: unshaded
+      color: red
   - type: TypingIndicator
     proto: regal
   - type: Physics
@@ -176,6 +177,16 @@
   name: cancer rat king
   description: He's da rat. He make da acute radiation syndrome.
   components:
+  - type: Sprite
+    sprite: Mobs/Animals/regalrat.rsi
+    scale: 1.2, 1.2
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: regalrat
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: eyes
+      shader: unshaded
+      color: lightGreen
   - type: RadiationSource
     intensity: 1
     slope: 0.25
