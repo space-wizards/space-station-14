@@ -94,8 +94,6 @@ public sealed partial class CardSystem : SharedCardSystem
             && xform.ParentUid != _playerManager.LocalSession?.AttachedEntity
         )
         {
-            if (flipped)
-                visualState.Start = 0;
             flipped = false;
         }
 
@@ -116,7 +114,8 @@ public sealed partial class CardSystem : SharedCardSystem
         var radius = FanRadius(visualState.Count);
         for (var i = 0; i < visualState.Count; i++)
         {
-            var card = visualState.CardList[visualState.Start + i];
+            // If flipped counts from the back
+            var card = visualState.CardList[visualState.Start + (flipped ? -i - 1 : i)];
             var (baseLayer, layerOne, layerTwo) = CardLayers(i);
 
             if (card.CardId.Id == null || !PrototypeManager.TryIndex(card.CardId, out var prototype))
