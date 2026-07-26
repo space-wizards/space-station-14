@@ -264,6 +264,7 @@
   id: WindowDirectional
   graph: WindowDirectional
   targetNode: windowDirectional
+  canRotate: true
 
 - type: construction
   parent: WindowDirectional
@@ -510,7 +511,7 @@
   targetNode: glassAirlock
 
 - type: construction
-  parent: BaseStructureFullTile
+  parent: BaseStructureFullTileDirectional
   id: AirlockShuttle
   graph: AirlockShuttle
   targetNode: airlock
