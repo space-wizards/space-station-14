@@ -109,6 +109,8 @@ public sealed partial class CargoSystem
             if (FulfillOrder(currentOrder, currentOrder.Account, xform.Coordinates, comp.PrinterOutput))
             {
                 currentOrder.NumDispatched++;
+                if (currentOrder.NumDispatched >= currentOrder.OrderQuantity)
+                    comp.CurrentOrders.Remove(currentOrder);
 
                 var teleportSound = comp.TeleportSound;
                 var audioParams = teleportSound?.Params ?? AudioParams.Default;
