@@ -23,7 +23,7 @@ public sealed partial class MicrowaveMealRecipePrototype : IPrototype
     /// <remarks>
     ///     This is used to sort recipes in alphabetical order in the guidebook.
     /// </remarks>
-    [DataField]
+    [DataField("name")]
     private LocId _name = string.Empty;
 
     public string Name => Loc.GetString(_name);
