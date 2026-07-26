@@ -15,6 +15,7 @@ station-ai-fixer-console-window-station-ai-online = Online
 station-ai-fixer-console-window-station-ai-offline = Offline
 station-ai-fixer-console-window-station-ai-rebooting = Rebooting...
 
+station-ai-fixer-console-window-controls = Controls
 station-ai-fixer-console-window-controls-locked = Controls locked
 
 station-ai-fixer-console-window-station-ai-eject = Eject storage unit
@@ -32,6 +33,6 @@ station-ai-fixer-console-window-continue-action = Continue
 station-ai-fixer-console-window-cancel-action = Cancel
 
 station-ai-fixer-console-window-purge-warning-title = Initiating AI purge
-station-ai-fixer-console-window-purge-warning-1 = You are about to permanently delete an artifical intelligence. 
+station-ai-fixer-console-window-purge-warning-1 = You are about to permanently delete an artificial intelligence.
 station-ai-fixer-console-window-purge-warning-2 = Once this operation is complete, the intelligence will be gone and cannot be revived.
 station-ai-fixer-console-window-purge-warning-3 = Do you wish to proceed?
