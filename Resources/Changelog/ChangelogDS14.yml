@@ -5192,3 +5192,10 @@ Entries:
   changes:
   - type: Fix
     message: Работа некоторых тестов.
+- id: 510
+  author: trefasv
+  time: '2026-07-26T14:00:51.133785+00:00'
+  pr: 2019
+  changes:
+  - type: Add
+    message: Обычный и полярный медведи, которых можно заказать в карго!
