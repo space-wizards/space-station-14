@@ -1,9 +1,9 @@
 using Content.Shared.Actions;
 using Content.Shared.Popups;
-using Content.Shared.Prototypes;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -52,10 +52,10 @@ public abstract partial class SharedXenoArtifactSystem : EntitySystem
     {
         EffectPrototypeIds.Clear();
 
-        foreach (var entityPrototype in PrototypeManager.EnumeratePrototypes<EntityPrototype>())
+        foreach (var entityPrototype in ProtoMan.EnumeratePrototypes<EntityPrototype>())
         {
             // all effect prototypes are marked as nodes, as nodes are born from those prototypes
-            if (entityPrototype.HasComponent<XenoArtifactNodeComponent>() && !entityPrototype.Abstract)
+            if (entityPrototype.HasComp<XenoArtifactNodeComponent>(Factory) && !entityPrototype.Abstract)
                 EffectPrototypeIds.Add(entityPrototype.ID);
         }
     }
