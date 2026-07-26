@@ -5,6 +5,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Cards
+    cards: []
   - type: Stack
     stackType: CardsStack
     baseLayer: base
@@ -93,7 +94,7 @@
 
 - type: entity
   parent: [BaseStandardDeck, BaseCards]
-  id: cardDeck
+  id: CardDeck
   name: deck of cards
   components:
     - type: Stack
