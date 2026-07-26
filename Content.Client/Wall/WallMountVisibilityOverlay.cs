@@ -260,8 +260,7 @@ public sealed partial class WallMountVisibilityOverlay(
 
     protected override void DisposeBehavior()
     {
-        _fadeCache.Dispose();
-        _toRemove.Clear();
+        RestoreAll();
 
         base.DisposeBehavior();
     }
