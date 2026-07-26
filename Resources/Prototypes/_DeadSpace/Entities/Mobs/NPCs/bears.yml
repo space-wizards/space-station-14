@@ -1,0 +1,159 @@
+- type: entity
+  name: медведь
+  id: MobBear
+  parent: SimpleMobBase
+  description: Обычный медведь. Может быть, его можно погладить.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _DeadSpace/Mobs/Animals/bear_normal.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: bear
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: bear
+      Critical:
+        Base: bear_dead
+      Dead:
+        Base: bear_dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatBear
+      amount: 3
+    - id: MaterialHideBearNormal
+      amount: 1
+      prob: 0.3
+  - type: ReplacementAccent
+    accent: genericAggressive
+  - type: Vocal
+    sounds:
+      Unsexed: Bear
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Blood
+        Quantity: 250
+  - type: MeleeWeapon
+    angle: 0
+    attackRate: 1
+    damage:
+      types:
+        Slash: 20
+        Piercing: 20
+        Structural: 50
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      300: Critical
+      350: Dead
+  - type: Stamina
+    baseCritThreshold: 250
+  - type: NPCRetaliation
+    attackMemoryLength: 10
+  - type: FactionException
+  - type: NpcFactionMember
+    factions:
+      - Passive
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+  - type: InteractionPopup
+    successChance: 0.25
+    interactSuccessString: petting-success-bear
+    interactFailureString: petting-failure-bear
+    interactSuccessSound:
+      path: /Audio/Animals/sloth_squeak.ogg
+
+  - type: GhostRole
+    name: Медведь
+    description: Громоздкий  и опасный медведь, которого не стоит провоцировать. 
+    rules: ghost-role-information-nonantagonist-rules
+    mindRoles:
+    - MindRoleGhostRoleNeutral
+    raffle:
+      settings: short
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  name: полярный медведь
+  id: MobBearPolar
+  parent: SimpleMobBase
+  description: Полярный медведь, крупнее и опаснее обычного. Точно ли его стоит гладить?
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _DeadSpace/Mobs/Animals/bear_polar.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: bear
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: bear
+      Critical:
+        Base: bear_dead
+      Dead:
+        Base: bear_dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatBear
+      amount: 4
+    - id: MaterialHideBearPolar
+      amount: 1
+      prob: 0.4
+  - type: ReplacementAccent
+    accent: genericAggressive
+  - type: Vocal
+    sounds:
+      Unsexed: Bear
+  - type: ScaleVisuals
+    scale: 1, 1.15
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Blood
+        Quantity: 250
+  - type: MeleeWeapon
+    angle: 0
+    attackRate: 1
+    damage:
+      types:
+        Slash: 22
+        Piercing: 22
+        Structural: 55
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      350: Critical
+      400: Dead
+  - type: Stamina
+    baseCritThreshold: 250
+  - type: NPCRetaliation
+    attackMemoryLength: 10
+  - type: FactionException
+  - type: NpcFactionMember
+    factions:
+      - Passive
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+  - type: InteractionPopup
+    successChance: 0.25
+    interactSuccessString: petting-success-bear
+    interactFailureString: petting-failure-bear
+    interactSuccessSound:
+      path: /Audio/Animals/sloth_squeak.ogg
+
+
+
+  - type: GhostRole
+    name: Полярный медведь
+    description: Громоздкий  и опасный полярный медведь, абсолютный хищник в своей биосфере. 
+    rules: ghost-role-information-nonantagonist-rules
+    mindRoles:
+    - MindRoleGhostRoleNeutral
+    raffle:
+      settings: short
+  - type: GhostTakeoverAvailable

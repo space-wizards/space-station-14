@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/4f6190e2895e09116663ef282d3ce1d8b35c032e , bear pelt remade by Alekshhh. Vox edit made by Flareguy",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "bear-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "bear-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "bear-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "bearpolar-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "bearpolar-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "bearpolar-inhand-right",
+      "directions": 4
+    }
+  ]
+}

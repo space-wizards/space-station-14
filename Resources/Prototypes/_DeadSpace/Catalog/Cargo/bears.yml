@@ -1,0 +1,19 @@
+- type: cargoProduct
+  id: LivestockBear
+  icon:
+    sprite: _DeadSpace/Mobs/Animals/bear_normal.rsi
+    state: icon
+  product: CrateNPCBear
+  cost: 1500
+  category: cargoproduct-category-name-livestock
+  group: service # DS14
+
+- type: cargoProduct
+  id: LivestockBearPolar
+  icon:
+    sprite: _DeadSpace/Mobs/Animals/bear_polar.rsi
+    state: icon
+  product: CrateNPCBearPolar
+  cost: 2000
+  category: cargoproduct-category-name-livestock
+  group: service # DS14

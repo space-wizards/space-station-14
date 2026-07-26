@@ -1,0 +1,60 @@
+- type: entity
+  parent: MaterialBase
+  id: MaterialHideBearNormal
+  name: медвежья шкура
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Materials/bears-pelt.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: bearpelt
+  - type: Item
+    sprite: _DeadSpace/Clothing/Head/Misc/hired.rsi
+    heldPrefix: bear
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Head/Misc/hired.rsi
+    equippedPrefix: bear
+    slots:
+      - HEAD
+  #DS14-Start
+  - type: EmitSoundOnPickup
+    sound:
+      path: /Audio/_DeadSpace/Items/Handing/cloth/cloth_pickup.ogg
+  - type: EmitSoundOnDrop
+    sound:
+      path: /Audio/_DeadSpace/Items/Handing/cloth/cloth_drop.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_DeadSpace/Items/Handing/cloth/cloth_drop.ogg
+  #DS14-End
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialHideBearPolar
+  name: полярная медвежья шкура
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Materials/bears-pelt.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: bearpeltpolar
+  - type: Item
+    sprite: _DeadSpace/Clothing/Head/Misc/hired.rsi
+    heldPrefix: bearpolar
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Head/Misc/hired.rsi
+    equippedPrefix: bearpolar
+    slots:
+      - HEAD
+  #DS14-Start
+  - type: EmitSoundOnPickup
+    sound:
+      path: /Audio/_DeadSpace/Items/Handing/cloth/cloth_pickup.ogg
+  - type: EmitSoundOnDrop
+    sound:
+      path: /Audio/_DeadSpace/Items/Handing/cloth/cloth_drop.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_DeadSpace/Items/Handing/cloth/cloth_drop.ogg
+  #DS14-End
+

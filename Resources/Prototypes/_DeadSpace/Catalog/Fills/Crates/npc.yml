@@ -74,3 +74,27 @@
       entity_storage:
         id: MobTurtle
         amount: 1
+      
+- type: entity
+  parent: CrateLivestock
+  id: CrateNPCBear
+  name: ящик с медведем
+  description: Ящик, в котором находится медведь. Возможно не разьяренный.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: MobBear
+        amount: 1
+
+- type: entity
+  parent: CrateLivestock
+  id: CrateNPCBearPolar
+  name: ящик с полярным медведем
+  description: Ящик, в котором находится полярный медведь. Белый, как снег.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: MobBearPolar
+        amount: 1
