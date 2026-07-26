@@ -50,6 +50,10 @@ public sealed partial class RoundEndSummaryUIController : UIController,
         _window = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundEndText,
             message.RoundDuration, message.RoundId, message.AllPlayersEndInfo);
         _window.OnClose += () => OnWindowToggled?.Invoke(false);
+
+        _window.OpenCenteredRight();
+        _window.MoveToFront();
+        OnWindowToggled?.Invoke(true);
     }
 
     public void OnSystemLoaded(ClientGameTicker system)
@@ -64,13 +68,5 @@ public sealed partial class RoundEndSummaryUIController : UIController,
     public bool IsSummaryValid()
     {
         return _window != null;
-    }
-
-    /// <summary>
-    /// Return true if the round summary window is currently open
-    /// </summary>
-    public bool IsSummaryOpen()
-    {
-        return _window != null && _window.IsOpen;
     }
 }
