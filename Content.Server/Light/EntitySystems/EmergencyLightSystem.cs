@@ -31,6 +31,23 @@ public sealed partial class EmergencyLightSystem : SharedEmergencyLightSystem
         SubscribeLocalEvent<AlertLevelChangedEvent>(OnAlertLevelChanged);
         SubscribeLocalEvent<EmergencyLightComponent, ExaminedEvent>(OnEmergencyExamine);
         SubscribeLocalEvent<EmergencyLightComponent, PowerChangedEvent>(OnEmergencyPower);
+        SubscribeLocalEvent<EmergencyLightComponent, MapInitEvent>(OnMapInit);
+    }
+
+    private void OnMapInit(EntityUid uid, EmergencyLightComponent component, MapInitEvent args)
+    {
+        // This forces the light active during creation so that it will start charging
+        EnsureComp<ActiveEmergencyLightComponent>(uid);
+
+        // This is just so that the light has the right color and turns on when constucted on non green alert level
+        Entity<EmergencyLightComponent> entity = (uid, component);
+        EntityUid? station = _station.GetOwningStation(entity.Owner);
+        if (station == null)
+            return;
+        if (!TryComp<AlertLevelComponent>(station, out var alerts))
+            return;
+        AlertLevelChangedEvent ev = new AlertLevelChangedEvent((EntityUid)station, alerts.CurrentLevel);
+        OnAlertLevelChanged(ev);
     }
 
     private void OnEmergencyPower(Entity<EmergencyLightComponent> entity, ref PowerChangedEvent args)
@@ -78,14 +95,19 @@ public sealed partial class EmergencyLightSystem : SharedEmergencyLightSystem
 
     private void OnEmergencyLightEvent(EntityUid uid, EmergencyLightComponent component, EmergencyLightEvent args)
     {
+        if (component.IsEnabled) //We want the light to always update if it is trying to be on
+        {
+            EnsureComp<ActiveEmergencyLightComponent>(uid);
+            return;
+        }
         switch (args.State)
         {
             case EmergencyLightState.On:
             case EmergencyLightState.Charging:
+            case EmergencyLightState.Empty:
                 EnsureComp<ActiveEmergencyLightComponent>(uid);
                 break;
             case EmergencyLightState.Full:
-            case EmergencyLightState.Empty:
                 RemComp<ActiveEmergencyLightComponent>(uid);
                 break;
             default:
@@ -107,13 +129,11 @@ public sealed partial class EmergencyLightSystem : SharedEmergencyLightSystem
             if (CompOrNull<StationMemberComponent>(xform.GridUid)?.Station != ev.Station)
                 continue;
 
-            _pointLight.SetColor(uid, details.EmergencyLightColor, pointLight);
-            _appearance.SetData(uid, EmergencyLightVisuals.Color, details.EmergencyLightColor, appearance);
-
             if (details.ForceEnableEmergencyLights && !light.ForciblyEnabled)
             {
                 light.ForciblyEnabled = true;
                 TurnOn((uid, light));
+                UpdateState((uid, light));
             }
             else if (!details.ForceEnableEmergencyLights && light.ForciblyEnabled)
             {
@@ -143,27 +163,63 @@ public sealed partial class EmergencyLightSystem : SharedEmergencyLightSystem
 
     private void Update(Entity<EmergencyLightComponent> entity, BatteryComponent battery, float frameTime)
     {
-        if (entity.Comp.State == EmergencyLightState.On)
+        float batteryCharge = _battery.GetCharge((entity.Owner, battery));
+        float maxCharge = _battery.GetMaxCharge((entity.Owner, battery));
+
+        // If the light is running try and consume power
+        bool lightOn = entity.Comp.IsEnabled;
+        if (lightOn)
         {
-            if (!_battery.TryUseCharge((entity.Owner, battery), entity.Comp.Wattage * frameTime))
+            batteryCharge -= entity.Comp.Wattage * frameTime;
+        }
+
+        if (TryComp<ApcPowerReceiverComponent>(entity.Owner, out var receiver))
+        {
+            if (receiver.Powered) // Only charge if powered
             {
-                SetState(entity.Owner, entity.Comp, EmergencyLightState.Empty);
-                TurnOff(entity);
+                float oldCharge = batteryCharge;
+                batteryCharge = Math.Clamp(oldCharge + entity.Comp.ChargingWattage * frameTime * entity.Comp.ChargingEfficiency, 0, maxCharge);
+                float delta = batteryCharge - oldCharge;
+                receiver.Load = (int)((delta / frameTime) / entity.Comp.ChargingEfficiency); // Reduce load if full wattage not needed
             }
+            else
+            {
+                receiver.Load = 1;
+            }
+        }
+
+        // Update state with new battery charge level
+        if (batteryCharge <= 0)
+        {
+            TurnOff(entity);
+            SetState(entity.Owner, entity.Comp, EmergencyLightState.Empty);
+        }
+        else if (batteryCharge == maxCharge)
+        {
+            if (lightOn)
+                TurnOn(entity);
+            else //If the light is off and the system fills set load to 1 because this is out last update call till the light turns back on
+                if (TryComp<ApcPowerReceiverComponent>(entity.Owner, out var receiver2))
+                    receiver2.Load = 1;
+            SetState(entity.Owner, entity.Comp, EmergencyLightState.Full);
         }
         else
         {
-            _battery.ChangeCharge((entity.Owner, battery), entity.Comp.ChargingWattage * frameTime * entity.Comp.ChargingEfficiency);
-            if (_battery.IsFull((entity.Owner, battery)))
+            if (TryComp<ApcPowerReceiverComponent>(entity.Owner, out var receiver3))
             {
-                if (TryComp<ApcPowerReceiverComponent>(entity.Owner, out var receiver))
-                {
-                    receiver.Load = 1;
-                }
-
-                SetState(entity.Owner, entity.Comp, EmergencyLightState.Full);
+                if (receiver3.Powered)
+                    SetState(entity.Owner, entity.Comp, EmergencyLightState.Charging);
+                else
+                    SetState(entity.Owner, entity.Comp, EmergencyLightState.On);
+            }
+            else
+            {
+                SetState(entity.Owner, entity.Comp, EmergencyLightState.On);
             }
         }
+        if (batteryCharge < 0)
+            batteryCharge = 0;
+        _battery.SetCharge((entity.Owner, battery), batteryCharge);
     }
 
     /// <summary>
@@ -180,32 +236,27 @@ public sealed partial class EmergencyLightSystem : SharedEmergencyLightSystem
         if (alerts.AlertLevels == null || !alerts.AlertLevels.Levels.TryGetValue(alerts.CurrentLevel, out var details))
         {
             TurnOff(entity, Color.Red); // if no alert, default to off red state
+            entity.Comp.IsEnabled = false;
             return;
         }
 
         if (receiver.Powered && !entity.Comp.ForciblyEnabled) // Green alert
         {
-            receiver.Load = (int) Math.Abs(entity.Comp.Wattage);
-            TurnOff(entity, details.Color);
-            SetState(entity.Owner, entity.Comp, EmergencyLightState.Charging);
+            TurnOff(entity, details.EmergencyLightColor);
+            entity.Comp.IsEnabled = false;
         }
         else if (!receiver.Powered) // If internal battery runs out it will end in off red state
         {
             TurnOn(entity, Color.Red);
-            SetState(entity.Owner, entity.Comp, EmergencyLightState.On);
+            entity.Comp.IsEnabled = true;
+            RaiseLocalEvent(entity.Owner, new EmergencyLightEvent(EmergencyLightState.On));
         }
         else // Powered and enabled
         {
-            TurnOn(entity, details.Color);
-            SetState(entity.Owner, entity.Comp, EmergencyLightState.On);
+            TurnOn(entity, details.EmergencyLightColor);
+            entity.Comp.IsEnabled = true;
+            RaiseLocalEvent(entity.Owner, new EmergencyLightEvent(EmergencyLightState.On));
         }
-    }
-
-    private void TurnOff(Entity<EmergencyLightComponent> entity)
-    {
-        _pointLight.SetEnabled(entity.Owner, false);
-        _appearance.SetData(entity.Owner, EmergencyLightVisuals.On, false);
-        _ambient.SetAmbience(entity.Owner, false);
     }
 
     /// <summary>
@@ -220,11 +271,11 @@ public sealed partial class EmergencyLightSystem : SharedEmergencyLightSystem
         _ambient.SetAmbience(entity.Owner, false);
     }
 
-    private void TurnOn(Entity<EmergencyLightComponent> entity)
+    private void TurnOff(Entity<EmergencyLightComponent> entity)
     {
-        _pointLight.SetEnabled(entity.Owner, true);
-        _appearance.SetData(entity.Owner, EmergencyLightVisuals.On, true);
-        _ambient.SetAmbience(entity.Owner, true);
+        _pointLight.SetEnabled(entity.Owner, false);
+        _appearance.SetData(entity.Owner, EmergencyLightVisuals.On, false);
+        _ambient.SetAmbience(entity.Owner, false);
     }
 
     /// <summary>
@@ -235,6 +286,13 @@ public sealed partial class EmergencyLightSystem : SharedEmergencyLightSystem
         _pointLight.SetEnabled(entity.Owner, true);
         _pointLight.SetColor(entity.Owner, color);
         _appearance.SetData(entity.Owner, EmergencyLightVisuals.Color, color);
+        _appearance.SetData(entity.Owner, EmergencyLightVisuals.On, true);
+        _ambient.SetAmbience(entity.Owner, true);
+    }
+
+    private void TurnOn(Entity<EmergencyLightComponent> entity)
+    {
+        _pointLight.SetEnabled(entity.Owner, true);
         _appearance.SetData(entity.Owner, EmergencyLightVisuals.On, true);
         _ambient.SetAmbience(entity.Owner, true);
     }
