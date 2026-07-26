@@ -19,7 +19,7 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
     [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private TagSystem _tag = default!;
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private SharedMindShieldSystem _mindShields = default!;
+    [Dependency] private MindShieldSystem _mindShields = default!;
     [Dependency] private SharedPopupSystem _popups = default!;
 
     public override void Initialize()
@@ -27,28 +27,15 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
         base.Initialize();
 
         // Other events
-        SubscribeLocalEvent<FakeMindShieldComponent, ChameleonControllerOutfitSelectedEvent>(OnChameleonControllerOutfitSelected);
         SubscribeLocalEvent<FakeMindShieldComponent, ImplantRelayEvent<ChameleonControllerOutfitSelectedEvent>>((ent, ref relay) => OnChameleonControllerOutfitSelectedImplant(ent, ref relay.Args, relay.ImplantedEntity));
 
         // Toggle events
-        SubscribeLocalEvent<FakeMindShieldComponent, FakeMindShieldToggleEvent>(OnToggleMindshield);
         SubscribeLocalEvent<FakeMindShieldComponent, InventoryRelayedEvent<FakeMindShieldToggleEvent>>((e, ref sk) => OnToggleMindshield(e, ref sk.Args));
         SubscribeLocalEvent<FakeMindShieldComponent, ImplantRelayEvent<FakeMindShieldToggleEvent>>((e, ref sk) => OnToggleMindshield(e, ref sk.Args));
 
         // Mindshield events
         SubscribeLocalEvent<FakeMindShieldComponent, ImplantRelayEvent<GetMindShieldStatusEvent>>((a, ref k) => OnQueryStatus(a, ref k.Args));
         SubscribeLocalEvent<FakeMindShieldComponent, InventoryRelayedEvent<GetMindShieldStatusEvent>>((a, ref k) => OnQueryStatus(a, ref k.Args));
-        SubscribeLocalEvent<FakeMindShieldComponent, GetMindShieldStatusEvent>(OnQueryStatus);
-
-        // these five events are to manage the mindshield's dirtying
-        SubscribeLocalEvent<FakeMindShieldComponent, ImplantImplantedEvent>(OnFakeMindshieldImplanted);
-        SubscribeLocalEvent<FakeMindShieldComponent, ImplantRemovedEvent>(OnFakeMindshieldImplantRemoved);
-        SubscribeLocalEvent<FakeMindShieldComponent, ComponentRemove>(OnFakeMindshieldRemoved);
-        SubscribeLocalEvent<FakeMindShieldComponent, ClothingGotEquippedEvent>(OnFakeMindshieldEquip);
-        SubscribeLocalEvent<FakeMindShieldComponent, ClothingGotUnequippedEvent>(OnFakeMindshieldUnequip);
-
-        // Innate things
-        SubscribeLocalEvent<FakeMindShieldComponent, MapInitEvent>(OnMapInit);
     }
 
     /// <summary>
@@ -68,16 +55,19 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
         _popups.PopupEntity(message, performer, performer);
     }
 
+    [SubscribeLocalEvent]
     private void OnFakeMindshieldEquip(Entity<FakeMindShieldComponent> ent, ref ClothingGotEquippedEvent args)
     {
         _mindShields.RefreshMindshieldStatus(args.Wearer);
     }
 
+    [SubscribeLocalEvent]
     private void OnFakeMindshieldUnequip(Entity<FakeMindShieldComponent> ent, ref ClothingGotUnequippedEvent args)
     {
         _mindShields.RefreshMindshieldStatus(args.Wearer);
     }
 
+    [SubscribeLocalEvent]
     private void OnFakeMindshieldRemoved(Entity<FakeMindShieldComponent> ent, ref ComponentRemove args)
     {
         if (!ent.Comp.IsInnate)
@@ -86,16 +76,19 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
         _mindShields.RefreshMindshieldStatus(ent.Owner);
     }
 
+    [SubscribeLocalEvent]
     private void OnFakeMindshieldImplantRemoved(Entity<FakeMindShieldComponent> ent, ref ImplantRemovedEvent args)
     {
         _mindShields.RefreshMindshieldStatus(args.Implanted);
     }
 
+    [SubscribeLocalEvent]
     private void OnFakeMindshieldImplanted(Entity<FakeMindShieldComponent> ent, ref ImplantImplantedEvent args)
     {
         _mindShields.RefreshMindshieldStatus(args.Implanted);
     }
 
+    [SubscribeLocalEvent]
     private void OnMapInit(Entity<FakeMindShieldComponent> ent, ref MapInitEvent args)
     {
         if (!ent.Comp.IsInnate)
@@ -105,11 +98,13 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
         _mindShields.RefreshMindshieldStatus(ent.Owner);
     }
 
+    [SubscribeLocalEvent]
     private void OnQueryStatus(Entity<FakeMindShieldComponent> ent, ref GetMindShieldStatusEvent args)
     {
         args.IsVisible |= ent.Comp.IsEnabled;
     }
 
+    [SubscribeLocalEvent]
     private void OnToggleMindshield(Entity<FakeMindShieldComponent> ent, ref FakeMindShieldToggleEvent args)
     {
         if (args.ActionTag != ent.Comp.ActionTag)
@@ -123,6 +118,7 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
         _mindShields.RefreshMindshieldStatus(args.Performer);
     }
 
+    [SubscribeLocalEvent]
     private void OnChameleonControllerOutfitSelected(Entity<FakeMindShieldComponent> ent, ref ChameleonControllerOutfitSelectedEvent args)
     {
         HandleChameleonOutfit(ent, ent.Comp, ent.Owner, ent.Owner, ref args);

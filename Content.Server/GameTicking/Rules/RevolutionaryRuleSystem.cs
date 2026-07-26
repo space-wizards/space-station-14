@@ -30,7 +30,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Content.Shared.Cuffs.Components;
 using Robust.Shared.Player;
-using Content.Server.Mindshield;
+using Content.Shared.Mindshield;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -58,7 +58,6 @@ public sealed partial class RevolutionaryRuleSystem : GameRuleSystem<Revolutiona
     //Used in OnPostFlash, no reference to the rule component is available
     public readonly ProtoId<NpcFactionPrototype> RevolutionaryNpcFaction = "Revolutionary";
     public readonly ProtoId<NpcFactionPrototype> RevPrototypeId = "Rev";
-
 
     public override void Initialize()
     {

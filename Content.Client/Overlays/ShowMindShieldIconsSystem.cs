@@ -6,15 +6,9 @@ namespace Content.Client.Overlays;
 
 public sealed partial class ShowMindShieldIconsSystem : EquipmentHudSystem<ShowMindShieldIconsComponent>
 {
-    [Dependency] private SharedMindShieldSystem _mindShield = default!;
+    [Dependency] private MindShieldSystem _mindShield = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<StatusIconComponent, GetStatusIconsEvent>(OnGetStatusIconsEvent);
-    }
-
+    [SubscribeLocalEvent]
     private void OnGetStatusIconsEvent(Entity<StatusIconComponent> ent, ref GetStatusIconsEvent args)
     {
         // Is active checks for our ability to display status icons
@@ -22,7 +16,7 @@ public sealed partial class ShowMindShieldIconsSystem : EquipmentHudSystem<ShowM
             return;
 
         _mindShield.GetMindshieldStatus(ent.Owner, out _, out var isVisible);
-        if (isVisible && ProtoMan.Resolve(SharedMindShieldSystem.StatusIcon, out var statusIconPrototype))
+        if (isVisible && ProtoMan.Resolve(MindShieldSystem.StatusIcon, out var statusIconPrototype))
             args.StatusIcons.Add(statusIconPrototype);
     }
 }

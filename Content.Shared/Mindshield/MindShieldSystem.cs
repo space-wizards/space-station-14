@@ -7,7 +7,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Mindshield;
 
-public abstract class SharedMindShieldSystem : EntitySystem
+public abstract class MindShieldSystem : EntitySystem
 {
     /// <summary>
     /// Status icon displayed in the sec HUD.
@@ -21,41 +21,40 @@ public abstract class SharedMindShieldSystem : EntitySystem
         // Mind shield status events
         SubscribeLocalEvent<MindShieldComponent, ImplantRelayEvent<GetMindShieldStatusEvent>>((e, ref k) => OnStatusQuery(e, ref k.Args));
         SubscribeLocalEvent<MindShieldComponent, InventoryRelayedEvent<GetMindShieldStatusEvent>>((e, ref k) => OnStatusQuery(e, ref k.Args));
-        SubscribeLocalEvent<MindShieldComponent, GetMindShieldStatusEvent>(OnStatusQuery);
-        SubscribeLocalEvent<MindShieldComponent, MapInitEvent>(OnMindshieldMapInit);
-        // these five events are to manage the mindshield's dirtying
-        SubscribeLocalEvent<MindShieldComponent, ImplantImplantedEvent>(OnMindshieldImplanted);
-        SubscribeLocalEvent<MindShieldComponent, ImplantRemovedEvent>(OnMindshieldImplantRemoved);
-        SubscribeLocalEvent<MindShieldComponent, ComponentRemove>(OnMindshieldRemoved);
-        SubscribeLocalEvent<MindShieldComponent, ClothingGotEquippedEvent>(OnMindshieldEquip);
-        SubscribeLocalEvent<MindShieldComponent, ClothingGotUnequippedEvent>(OnMindshieldUnequip);
+
     }
 
+    [SubscribeLocalEvent]
     private void OnMindshieldUnequip(Entity<MindShieldComponent> ent, ref ClothingGotUnequippedEvent args)
     {
         RefreshMindshieldStatus(args.Wearer);
     }
 
+    [SubscribeLocalEvent]
     private void OnMindshieldEquip(Entity<MindShieldComponent> ent, ref ClothingGotEquippedEvent args)
     {
         RefreshMindshieldStatus(args.Wearer);
     }
 
+    [SubscribeLocalEvent]
     private void OnMindshieldRemoved(Entity<MindShieldComponent> ent, ref ComponentRemove args)
     {
         RefreshMindshieldStatus(ent.Owner);
     }
 
+    [SubscribeLocalEvent]
     private void OnMindshieldImplantRemoved(Entity<MindShieldComponent> ent, ref ImplantRemovedEvent args)
     {
         RefreshMindshieldStatus(args.Implanted);
     }
 
+    [SubscribeLocalEvent]
     private void OnMindshieldImplanted(Entity<MindShieldComponent> ent, ref ImplantImplantedEvent args)
     {
         RefreshMindshieldStatus(args.Implanted);
     }
 
+    [SubscribeLocalEvent]
     private void OnMindshieldMapInit(Entity<MindShieldComponent> ent, ref MapInitEvent args)
     {
         // todo: make it not refresh on implant & clothing items
@@ -67,7 +66,11 @@ public abstract class SharedMindShieldSystem : EntitySystem
     /// </summary>
     public void RefreshMindshieldStatus(EntityUid ent)
     {
-        GetMindshieldStatusInner(ent, out var mindshielded, out var visible);
+        var ev = new GetMindShieldStatusEvent();
+        RaiseLocalEvent(ent, ref ev);
+        var mindshielded = ev.IsMindshielded;
+        var visible = ev.IsVisible;
+
         if (!mindshielded && !visible)
         {
             if (HasComp<MindShieldStatusComponent>(ent))
@@ -82,6 +85,7 @@ public abstract class SharedMindShieldSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnStatusQuery(Entity<MindShieldComponent> e, ref GetMindShieldStatusEvent args)
     {
         args.IsMindshielded = true;
@@ -106,15 +110,6 @@ public abstract class SharedMindShieldSystem : EntitySystem
         {
             isMindshielded = isVisible = false;
         }
-    }
-
-    // Used to refresh the cache
-    private void GetMindshieldStatusInner(EntityUid entity, out bool isMindshielded, out bool isVisible)
-    {
-        var ev = new GetMindShieldStatusEvent();
-        RaiseLocalEvent(entity, ref ev);
-        isMindshielded = ev.IsMindshielded;
-        isVisible = ev.IsVisible;
     }
 }
 

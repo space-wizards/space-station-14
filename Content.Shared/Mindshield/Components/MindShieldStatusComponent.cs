@@ -6,7 +6,7 @@ namespace Content.Shared.Mindshield.Components;
 /// This component stores an entity's mindshield status for easier retrieval later on
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-[Access(typeof(SharedMindShieldSystem))]
+[Access(typeof(MindShieldSystem))]
 public sealed partial class MindShieldStatusComponent : Component
 {
     /// <summary>

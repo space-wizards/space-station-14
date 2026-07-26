@@ -8,7 +8,7 @@ namespace Content.Shared.Mindshield.Components;
 /// A toggleable fake mindshield that only produces mindshield visuals, but does not protect against anything.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-[Access(typeof(SharedMindShieldSystem), typeof(FakeMindShieldSystem))]
+[Access(typeof(MindShieldSystem), typeof(FakeMindShieldSystem))]
 public sealed partial class FakeMindShieldComponent : Component
 {
     /// <summary>

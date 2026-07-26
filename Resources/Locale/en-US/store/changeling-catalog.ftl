@@ -34,7 +34,7 @@ changeling-catalog-last-resort-desc = Gib your current body and escape as a weak
                                       Warning! This resets your progress as a changeling, removing your store purchases and absorbed identities!
 
 changeling-catalog-voice-mindshield-name = Fake Mindshield
-changeling-catalog-voice-mindshield-desc = Modify our neuron's natural waves to copy those produced by Nanotrasen mindshield implants, making us look mindshielded to security members. Can be toggled.
+changeling-catalog-voice-mindshield-desc = Modify your neuron's natural waves to copy those produced by Nanotrasen mindshield implants, making you look mindshielded to security members. Can be toggled.
 
 changeling-catalog-night-vision-name = Night Vision
-changeling-catalog-night-vision-desc = We modify our photoreceptors and heighten our senses as to become able to see in complete darkness.
+changeling-catalog-night-vision-desc = You modify your photoreceptors and heighten your senses as to become able to see in complete darkness.
