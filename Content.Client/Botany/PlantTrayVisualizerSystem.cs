@@ -18,9 +18,9 @@ public sealed partial class PlantTrayVisualizerSystem : VisualizerSystem<PlantTr
     /// </summary>
     private readonly HashSet<EntityUid> _pendingTrayUpdates = [];
 
-    public override void FrameUpdate(float frameTime)
+    public override void Update(float frameTime)
     {
-        base.FrameUpdate(frameTime);
+        base.Update(frameTime);
 
         foreach (var uid in _pendingTrayUpdates)
         {
