@@ -19,6 +19,12 @@
   - type: Tag
     tags:
     - TabletopBoard
+  - type: ActivatableUI
+    key: enum.TabletopUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.TabletopUiKey.Key:
+        type: TabletopGameBoundUserInterface
 
 # A draggable item for tabletop boards.
 # Entities dragged onto the board have their appearance copied onto one of these.
