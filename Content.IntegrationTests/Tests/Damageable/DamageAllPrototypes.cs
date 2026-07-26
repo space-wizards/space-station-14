@@ -9,6 +9,13 @@ using Content.Shared.FixedPoint;
 
 namespace Content.IntegrationTests.Tests.Damageable;
 
+/// <summary>
+/// Major part of why we need this test is to check that entities marked as 'Damageable' have 'Injurable' sister component,
+/// because they work in pairs with current damage system. Please be careful when modifying test for special cases
+/// of having 'Damageable' without proper 'Injurable'. In future updates, when there will be entities that
+/// have damage model not relying on our simple 'Injurable' implementation, test must be improved to validate
+/// that there at least one way of handling damage attached to entity.
+/// </summary>
 [TestFixture]
 [TestOf(typeof(DamageableComponent))]
 [TestOf(typeof(DamageableSystem))]
@@ -25,14 +32,14 @@ public sealed class DamageAllPrototypesTest : GameTest
 
         try
         {
-            foreach (var damageable in GameDataScrounger.EntitiesWithComponent("Damageable"))
+            foreach (var damageable in GameDataScrounger.EntitiesWithComponent("Injurable"))
             {
                 var entity = await SpawnAtPosition(damageable, map.GridCoords);
 
                 try
                 {
                     // Intentionally cannot take damage, ignore it.
-                    if (SEntMan.HasComponent<GodmodeComponent>(entity) || !SEntMan.HasComponent<InjurableComponent>(entity))
+                    if (SEntMan.HasComponent<GodmodeComponent>(entity))
                         continue;
 
                     var canBeDamaged = false;
