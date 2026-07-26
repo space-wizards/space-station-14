@@ -24,17 +24,17 @@ public sealed partial class ProceedWireAction : ComponentWireAction<DefusableCom
 
     public override object StatusKey { get; } = DefusableWireStatus.ProceedIndicator;
 
-    public override bool Cut(EntityUid user, Wire wire, DefusableComponent comp)
+    public override bool Cut(EntityUid? user, Wire wire, DefusableComponent comp)
     {
         return EntityManager.System<DefusableSystem>().ProceedWireCut(user, wire, comp);
     }
 
-    public override bool Mend(EntityUid user, Wire wire, DefusableComponent comp)
+    public override bool Mend(EntityUid? user, Wire wire, DefusableComponent comp)
     {
         return true;
     }
 
-    public override void Pulse(EntityUid user, Wire wire, DefusableComponent comp)
+    public override void Pulse(EntityUid? user, Wire wire, DefusableComponent comp)
     {
         EntityManager.System<DefusableSystem>().ProceedWirePulse(user, wire, comp);
     }

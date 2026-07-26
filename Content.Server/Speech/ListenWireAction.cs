@@ -68,7 +68,7 @@ public sealed partial class ListenWireAction : BaseToggleWireAction
         return !EntityManager.HasComponent<BlockListeningComponent>(owner);
     }
 
-    public override void Pulse(EntityUid user, Wire wire)
+    public override void Pulse(EntityUid? user, Wire wire)
     {
         if (!GetValue(wire.Owner) || !IsPowered(wire.Owner))
             return;
