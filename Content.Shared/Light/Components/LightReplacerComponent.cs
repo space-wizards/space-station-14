@@ -1,3 +1,4 @@
+using Content.Shared.Light.Components;
 using Content.Shared.Light.EntitySystems;
 using Content.Shared.Storage;
 using Robust.Shared.Audio;

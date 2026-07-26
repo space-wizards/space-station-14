@@ -8,9 +8,9 @@ namespace Content.Shared.Traits.Assorted;
 /// <summary>
 /// This handles permanent blindness, both the examine and the actual effect.
 /// </summary>
-public sealed class PermanentBlindnessSystem : EntitySystem
+public sealed partial class PermanentBlindnessSystem : EntitySystem
 {
-    [Dependency] private readonly BlindableSystem _blinding = default!;
+    [Dependency] private BlindableSystem _blinding = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -38,18 +38,23 @@ public sealed class PermanentBlindnessSystem : EntitySystem
             _blinding.SetMinDamage((blindness.Owner, blindable), 0);
             _blinding.AdjustEyeDamage((blindness.Owner, blindable), -blindable.EyeDamage); // This heals your eyes, in case traits using this component are removed! Should be changed if traits are refactored!
         }
+
+        // Heal all eye damage when the component is removed.
+        // Otherwise you would still be blind, but not *permanently* blind, meaning you have to heal the eye damage with oculine.
+        // This is needed for changelings that transform from a blind player to a non-blind one.
+        _blinding.AdjustEyeDamage((blindness.Owner, blindable), -blindable.EyeDamage);
     }
 
     private void OnMapInit(Entity<PermanentBlindnessComponent> blindness, ref MapInitEvent args)
     {
-        if(!TryComp<BlindableComponent>(blindness.Owner, out var blindable))
+        if (!TryComp<BlindableComponent>(blindness.Owner, out var blindable))
             return;
 
         if (blindness.Comp.Blindness != 0)
             _blinding.SetMinDamage((blindness.Owner, blindable), blindness.Comp.Blindness);
         else
         {
-            var maxMagnitudeInt = (int) BlurryVisionComponent.MaxMagnitude;
+            var maxMagnitudeInt = (int)BlurryVisionComponent.MaxMagnitude;
             _blinding.SetMinDamage((blindness.Owner, blindable), maxMagnitudeInt);
         }
     }

@@ -1,10 +1,8 @@
 - type: entity
-  id: BaseStructureComputer
-  parent: BaseStructure
   abstract: true
+  parent: BaseStructure
+  id: BaseStructureComputerIndestructible
   components:
-  - type: Physics
-    bodyType: Static
   - type: Fixtures
     fixtures:
       fix1:
@@ -21,12 +19,21 @@
   - type: Anchorable
   - type: Construction
     graph: Computer
-    node: frameUnsecured
   - type: Sprite
     drawdepth: Objects
+
+- type: entity
+  abstract: true
+  parent: BaseStructureComputerIndestructible
+  id: BaseStructureComputer
+  components:
+  - type: Construction
+    graph: Computer
+    node: frameUnsecured
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: Electronic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -64,7 +71,7 @@
           monitorUnsecured: { state: 4 }
 
 - type: entity
-  parent: BaseStructureComputer
+  parent: BaseStructureComputerIndestructible
   id: ComputerBroken
   name: broken computer
   description: This computer has seen better days.
@@ -78,12 +85,6 @@
     state: broken
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 50

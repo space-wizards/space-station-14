@@ -40,7 +40,6 @@
     Water: 4
     Nitrogen: 1
 
-
 - type: reaction
   id: SapBloodBreakdown
   source: true
@@ -83,6 +82,21 @@
     Protein: 6
 
 - type: reaction
+  id: SulfurBloodBreakdown
+  source: true
+  requiredMixerCategories:
+  - Centrifuge
+  reactants:
+    SulfurBlood:
+      amount: 20
+  products:
+    Water: 10
+    Sulfur: 2
+    Hydrogen: 1
+    CarbonDioxide: 3
+    Protein: 4
+
+- type: reaction
   id: ZombieBloodBreakdown
   source: true
   requiredMixerCategories:
@@ -94,3 +108,27 @@
     Mold: 2
     Protein: 1
     Toxin: 1
+
+- type: reaction
+  id: CognizineCreateSlime
+  quantized: true
+  reactants:
+    Cognizine:
+      amount: 5
+    Slime:
+      amount: 15
+  effects:
+  - !type:SpawnEntity
+    entity: MobAdultSlimesGreen
+
+- type: reaction
+  id: VestineCreateSlime
+  quantized: true
+  reactants:
+    Vestine:
+      amount: 5
+    Slime:
+      amount: 15
+  effects:
+  - !type:SpawnEntity
+    entity: MobAdultSlimesGreenAngry
