@@ -28,14 +28,15 @@ public abstract partial class SharedTabletopSystem : EntitySystem
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private SharedInteractionSystem _interaction = default!;
-    [Dependency] private SharedMapSystem _map = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedTransformSystem _transforms = default!;
 
     [Dependency] protected EntityQuery<ActorComponent> ActorQuery;
+    [Dependency] protected EntityQuery<AppearanceComponent> AppearanceQuery;
+    [Dependency] protected EntityQuery<TabletopBackgroundComponent> BackgroundQuery;
+    [Dependency] protected EntityQuery<TabletopDraggableComponent> DraggableQuery;
     [Dependency] protected EntityQuery<TabletopGameComponent> GameQuery;
     [Dependency] protected EntityQuery<TabletopGamerComponent> GamerQuery;
-    [Dependency] protected EntityQuery<TabletopDraggableComponent> DraggableQuery;
 
     /// <summary>
     /// The prototype to use to represent items dragged into the tabletop map.
@@ -86,11 +87,17 @@ public abstract partial class SharedTabletopSystem : EntitySystem
         if (!table.Comp.HasSession)
             return;
 
-        // Clients
-        if (_net.IsClient
-            || table.Comp.Players.ContainsKey(userSession) && table.Comp.Entities.Remove(piece))
+        // If this is the client, just assume it's valid
+        if (_net.IsClient)
         {
             PredictedQueueDel(piece);
+            table.Comp.NumBoardEntities--;
+        }
+        else if (table.Comp.Players.ContainsKey(userSession) && table.Comp.Entities.Remove(piece))
+        {
+            PredictedQueueDel(piece);
+            table.Comp.NumBoardEntities = table.Comp.Entities.Count;
+            Dirty(table);
         }
     }
 
@@ -100,7 +107,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
         if (!_cfg.GetCVar(CCVars.GameTabletopPlace))
             return;
 
-        if (ent.Comp.Session is null)
+        if (!ent.Comp.HasSession)
             return;
 
         if (!_hands.TryGetActiveItem(args.User, out var maybeHandEnt) || maybeHandEnt is not { } handEnt)
@@ -121,20 +128,10 @@ public abstract partial class SharedTabletopSystem : EntitySystem
     private void CopyEntity(EntityUid target, Entity<TabletopGameComponent> ent, EntityUid user)
     {
         int entCount;
-        if (_net.IsServer)
-        {
-            if (ent.Comp.Session is not { } session)
-                return;
+        if (!ent.Comp.HasSession)
+            return;
 
-            entCount = session.Entities.Count;
-        }
-        else
-        {
-            if (!ent.Comp.HasSession)
-                return;
-
-            entCount = ent.Comp.NumBoardEntities;
-        }
+        entCount = _net.IsServer ? ent.Comp.Entities.Count : ent.Comp.NumBoardEntities;
 
         // Delay count check - prints should happen last.
         if (entCount >= MaxTabletopPieces)
@@ -145,17 +142,34 @@ public abstract partial class SharedTabletopSystem : EntitySystem
 
         var meta = MetaData(target);
 
-        var hologram = EntityManager.PredictedSpawn(GamePiecePrototype, session.Position.Offset(-1, 0));
+        var hologram = EntityManager.PredictedSpawn(GamePiecePrototype, ent.Comp.Position.Offset(-1, 0));
 
         // Make sure the entity can be dragged and can be removed, move it into the board game world and add it to the Entities hashmap.
         EnsureComp<TabletopDraggableComponent>(hologram);
         EnsureComp<TabletopHologramComponent>(hologram);
         _meta.SetEntityName(hologram, Name(target, meta));
-        if (meta.EntityPrototype is { } proto)
-            _appearance.SetData(hologram, TabletopItemVisuals.Prototype, proto.ID);
+
+        // Try to get existing tabletop visuals if we can (copying existing pieces), otherwise get this entity's prototype of this object.
+        if (AppearanceQuery.TryComp(target, out AppearanceComponent? appearance)
+            && _appearance.TryGetData<string>(target, TabletopItemVisuals.Prototype, out var appearProto, appearance))
+        {
+            _appearance.SetData(hologram, TabletopItemVisuals.Prototype, appearProto);
+        }
+        else if (meta.EntityPrototype is { } metaProto)
+        {
+            _appearance.SetData(hologram, TabletopItemVisuals.Prototype, metaProto.ID);
+        }
+
         if (_net.IsServer)
-            session.Entities.Add(hologram);
-        Dirty(ent);
+        {
+            ent.Comp.Entities.Add(hologram);
+            ent.Comp.NumBoardEntities = ent.Comp.Entities.Count;
+            Dirty(ent);
+        }
+        else
+        {
+            ent.Comp.NumBoardEntities++;
+        }
 
         _popup.PopupEntity(Loc.GetString("tabletop-added-piece"), ent, user);
     }
@@ -293,7 +307,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (!DraggableQuery.HasComp(args.Target))
+        if (!DraggableQuery.HasComp(args.Target) && !BackgroundQuery.HasComp(args.Target))
             return;
 
         // Assume that this can be dragged.

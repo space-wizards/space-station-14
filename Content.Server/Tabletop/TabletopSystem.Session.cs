@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Shared.Tabletop;
 using Content.Shared.Tabletop.Components;
 using Content.Shared.Tabletop.Events;
+using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
@@ -10,33 +11,29 @@ namespace Content.Server.Tabletop;
 public sealed partial class TabletopSystem
 {
     /// <summary>
-    ///     Ensures that a <see cref="TabletopSession"/> exists on a <see cref="TabletopGameComponent"/>.
+    ///     Ensures that the <see cref="TabletopGameComponent"/> in the entity passed has a valid session.
     ///     Creates it and sets it up if it doesn't.
     /// </summary>
     /// <param name="tabletop">The tabletop game in question.</param>
-    /// <returns>The session for the given tabletop game.</returns>
-    public TabletopSession EnsureSession(Entity<TabletopGameComponent> ent)
+    public void EnsureSession(Entity<TabletopGameComponent> ent)
     {
         // We already have a session, return it.
         // TODO: if tables are connected, treat them as a single entity. This can be done by sharing the session.
-        if (ent.Comp.Session != null)
-            return ent.Comp.Session;
+        if (ent.Comp.HasSession)
+            return;
 
         // We make sure that the tabletop map exists before continuing.
         EnsureTabletopMap();
 
         // Create new session.
-        var session = new TabletopSession(TabletopMap, GetNextTabletopPosition());
-        ent.Comp.Session = session;
+        ent.Comp.Position = new(GetNextTabletopPosition(), TabletopMap);
 
         // Since this is the first time opening this session, set up the game.
-        ent.Comp.Setup.SetupTabletop(session, EntityManager);
-        ent.Comp.NumBoardEntities = ent.Comp.Session.Entities.Count;
+        ent.Comp.Setup.SetupTabletop(ent.Comp, EntityManager);
+        ent.Comp.NumBoardEntities = ent.Comp.Entities.Count;
         Dirty(ent);
 
-        Log.Info($"Created tabletop session number {ent.Comp} at position {session.Position}.");
-
-        return session;
+        Log.Info($"Created tabletop session number {ent.Comp} at position {ent.Comp.Position}.");
     }
 
     /// <summary>
@@ -51,13 +48,15 @@ public sealed partial class TabletopSystem
         if (!tabletop.HasSession)
             return;
 
-        foreach (var (player, _) in session.Players)
+        foreach (var (player, _) in tabletop.Players)
             CloseSessionFor(player, uid);
 
-        foreach (var euid in session.Entities)
+        foreach (var euid in tabletop.Entities)
             QueueDel(euid);
 
-        tabletop.Session = null;
+        tabletop.Players.Clear();
+        tabletop.Entities.Clear();
+        tabletop.Position = MapCoordinates.Nullspace;
         Dirty(uid, tabletop);
     }
 
@@ -67,7 +66,7 @@ public sealed partial class TabletopSystem
             return;
 
         // Make sure we have a session, and add the player to it if not added already.
-        var session = EnsureSession((uid, tabletop));
+        EnsureSession((uid, tabletop));
 
         if (tabletop.Players.ContainsKey(player))
             return;
@@ -100,7 +99,7 @@ public sealed partial class TabletopSystem
         if (!TryComp(uid, out TabletopGameComponent? tabletop) || !tabletop.HasSession)
             return;
 
-        if (!session.Players.TryGetValue(player, out var data))
+        if (!tabletop.Players.TryGetValue(player, out var data))
             return;
 
         if (removeGamerComponent && player.AttachedEntity is { } attachedEntity && TryComp(attachedEntity, out TabletopGamerComponent? gamer))
@@ -112,9 +111,9 @@ public sealed partial class TabletopSystem
             RemComp<TabletopGamerComponent>(attachedEntity);
         }
 
-        session.Players.Remove(player);
-        session.Entities.Remove(data.Camera);
-        tabletop.NumBoardEntities = session.Entities.Count;
+        tabletop.Players.Remove(player);
+        tabletop.Entities.Remove(data.Camera);
+        tabletop.NumBoardEntities = tabletop.Entities.Count;
         Dirty(uid, tabletop);
 
         // Deleting the view subscriber automatically cleans up subscriptions, no need to do anything else.

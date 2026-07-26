@@ -59,11 +59,11 @@ public sealed partial class TabletopGameComponent : Component
     /// The set of players currently playing this tabletop game.
     /// </summary>
     [DataField(serverOnly: true), ViewVariables(VVAccess.ReadOnly)]
-    public readonly Dictionary<ICommonSession, TabletopSessionPlayerData> Players = [];
+    public Dictionary<ICommonSession, TabletopSessionPlayerData> Players = [];
 
     /// <summary>
     /// All entities bound to this session. If you create an entity for this session, you have to add it here.
     /// </summary>
     [DataField(serverOnly: true), ViewVariables(VVAccess.ReadOnly)]
-    public readonly HashSet<EntityUid> Entities = [];
+    public HashSet<EntityUid> Entities = [];
 }

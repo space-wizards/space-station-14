@@ -39,7 +39,9 @@
 - type: entity
   abstract: true
   id: BaseBoardTabletop
-  name: baseboard
+  name: board
   components:
+  - type: TabletopBackground
+  - type: Clickable # For pointing
   - type: Sprite
     drawdepth: FloorTiles
