@@ -4,6 +4,9 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Cards;
 
+/// <summary>
+/// Handles the card information in a deck of cards.
+/// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 public sealed partial class CardsComponent : Component
 {
