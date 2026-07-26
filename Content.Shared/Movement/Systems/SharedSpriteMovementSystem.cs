@@ -8,13 +8,7 @@ public abstract partial class SharedSpriteMovementSystem : EntitySystem
 {
     [Dependency] private ActionBlockerSystem _actionBlocker = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<SpriteMovementComponent, SpriteMoveEvent>(OnSpriteMoveInput);
-    }
-
+    [SubscribeLocalEvent]
     private void OnSpriteMoveInput(Entity<SpriteMovementComponent> ent, ref SpriteMoveEvent args)
     {
         var isMoving = args.IsMoving && _actionBlocker.CanMove(ent);
