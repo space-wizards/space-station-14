@@ -4,12 +4,13 @@ using Content.Shared.Inventory;
 using Content.Shared.Mindshield.Components;
 using Content.Shared.StatusIcon;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Mindshield;
 
 public sealed partial class MindShieldSystem : EntitySystem
 {
-    [Dependency] private INetManager _net = default!;
+    [Dependency] private IGameTiming _timing = default!;
     /// <summary>
     /// Status icon displayed in the sec HUD.
     /// </summary>
@@ -27,7 +28,7 @@ public sealed partial class MindShieldSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnMindshieldUnequip(Entity<MindShieldComponent> ent, ref ClothingGotUnequippedEvent args)
     {
-        if (_net.ApplyingState)
+        if (_timing.ApplyingState)
             return;
 
         RefreshMindshieldStatus(args.Wearer);
@@ -36,7 +37,7 @@ public sealed partial class MindShieldSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnMindshieldEquip(Entity<MindShieldComponent> ent, ref ClothingGotEquippedEvent args)
     {
-        if (_net.ApplyingState)
+        if (_timing.ApplyingState)
             return;
 
         RefreshMindshieldStatus(args.Wearer);

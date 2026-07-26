@@ -36,9 +36,13 @@ public sealed partial class MindshieldImplantSystem : EntitySystem
 
         if (TryComp<RevolutionaryComponent>(uid, out var comp))
         {
-            if (_mind.TryGetMind(uid, out var mindId, out _) && _role.MindRemoveRole<RevolutionaryRoleComponent>(mindId))
+            if (_mind.TryGetMind(uid, out var mindId, out _))
+            {
                 _log.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(uid)} was deconverted due to being implanted with a Mindshield.");
 
+                if (_role.MindHasRole<RevolutionaryRoleComponent>(mindId))
+                    _role.MindRemoveRole<RevolutionaryRoleComponent>(mindId);
+            }
             var name = Identity.Entity(uid, EntityManager);
             RemComp<RevolutionaryComponent>(uid);
             _sharedStun.TryUpdateParalyzeDuration(uid, comp.StunTime);

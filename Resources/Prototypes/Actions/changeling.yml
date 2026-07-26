@@ -315,7 +315,7 @@
     useDelay: 1
     raiseOnUser: true
   - type: Sprite
-    sprite: Interface/Actions/actions_fakemindshield.rsi
+    sprite: Interface/Actions/changeling2.rsi
     layers:
     - state: mindshield_off
       map: ["enum.ActionVisuals.Icon"]
