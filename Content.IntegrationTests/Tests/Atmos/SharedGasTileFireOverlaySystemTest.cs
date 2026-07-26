@@ -45,7 +45,7 @@ public sealed partial class SharedGasTileOverlayTest
             var localY = MathHelper.Mod(tileIndices.Y, SharedGasTileOverlaySystem.ChunkSize);
             int tileIndex = localX + localY * SharedGasTileOverlaySystem.ChunkSize;
 
-            var tile = chunk.TileData[tileIndex];
+            var tile = chunk.TileFireData[tileIndex];
 
             Assert.That(tile.FireState, Is.GreaterThan(0), $"Tile at {tileIndices} is not set on fire!");
         });
