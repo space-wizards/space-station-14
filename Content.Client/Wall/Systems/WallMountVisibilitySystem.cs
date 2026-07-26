@@ -6,7 +6,6 @@ using Robust.Client.Graphics;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 
 namespace Content.Client.Wall.Systems;
 
@@ -16,16 +15,10 @@ namespace Content.Client.Wall.Systems;
 public sealed partial class WallMountVisibilitySystem : EntitySystem
 {
     [Dependency] private IConfigurationManager _cfg = default!;
-    [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IOverlayManager _overlay = default!;
     [Dependency] private SharedMapSystem _map = default!;
     [Dependency] private SpriteSystem _sprite = default!;
     [Dependency] private TagSystem _tag = default!;
-    [Dependency] private TransformSystem _xform = default!;
-    [Dependency] private WallMountTreeSystem _tree = default!;
-
-    [Dependency] private EntityQuery<MapGridComponent> _gridQuery = default!;
-    [Dependency] private EntityQuery<SpriteComponent> _spriteQuery = default!;
 
     /// <summary>
     /// Tags that block visibility when present on the same tile.
@@ -48,7 +41,7 @@ public sealed partial class WallMountVisibilitySystem : EntitySystem
     {
         base.Initialize();
 
-        _overlayInstance = new WallMountVisibilityOverlay(_timing, _map, _sprite, _xform, _tree, this, _gridQuery, _spriteQuery);
+        _overlayInstance = new WallMountVisibilityOverlay();
 
         Subs.CVar(_cfg, CCVars.WallMountDirectionalVisibility, OnDirectionalVisibilityChanged, true);
         Subs.CVar(_cfg, CCVars.WallMountFade, OnFadeChanged, true);

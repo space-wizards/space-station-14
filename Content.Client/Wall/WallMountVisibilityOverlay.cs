@@ -14,25 +14,33 @@ namespace Content.Client.Wall;
 /// <summary>
 /// Manages the visibility of wall-mounted entities based on their facing arc relative to the viewport's eye.
 /// </summary>
-public sealed partial class WallMountVisibilityOverlay(
-    IGameTiming timing,
-    SharedMapSystem map,
-    SpriteSystem sprite,
-    TransformSystem xform,
-    WallMountTreeSystem tree,
-    WallMountVisibilitySystem visibility,
-    EntityQuery<MapGridComponent> gridQuery,
-    EntityQuery<SpriteComponent> spriteQuery) : Overlay
+public sealed partial class WallMountVisibilityOverlay : Overlay
 {
-    private readonly IGameTiming _timing = timing;
-    private readonly SharedMapSystem _map = map;
-    private readonly SpriteSystem _sprite = sprite;
-    private readonly TransformSystem _xform = xform;
-    private readonly WallMountTreeSystem _tree = tree;
-    private readonly WallMountVisibilitySystem _visibility = visibility;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
-    private readonly EntityQuery<MapGridComponent> _gridQuery = gridQuery;
-    private readonly EntityQuery<SpriteComponent> _spriteQuery = spriteQuery;
+    private readonly SharedMapSystem _map;
+    private readonly SpriteSystem _sprite;
+    private readonly TransformSystem _xform;
+    private readonly WallMountTreeSystem _tree;
+    private readonly WallMountVisibilitySystem _visibility;
+
+    private readonly EntityQuery<MapGridComponent> _gridQuery;
+    private readonly EntityQuery<SpriteComponent> _spriteQuery;
+
+    public WallMountVisibilityOverlay()
+    {
+        IoCManager.InjectDependencies(this);
+
+        _map = _entManager.System<SharedMapSystem>();
+        _sprite = _entManager.System<SpriteSystem>();
+        _xform = _entManager.System<TransformSystem>();
+        _tree = _entManager.System<WallMountTreeSystem>();
+        _visibility = _entManager.System<WallMountVisibilitySystem>();
+
+        _gridQuery = _entManager.GetEntityQuery<MapGridComponent>();
+        _spriteQuery = _entManager.GetEntityQuery<SpriteComponent>();
+    }
 
     /// <summary>
     /// Caches <see cref="ViewportFadeState"/> instances per viewport.
