@@ -15,6 +15,9 @@ namespace Content.Client.Instruments;
 
 public sealed partial class InstrumentSystem : SharedInstrumentSystem
 {
+    private const int MidiMinVolume = 0;
+    private const int MidiMaxVolume = 127;
+
     [Dependency] private IClientNetManager _netManager = default!;
     [Dependency] private IMidiManager _midiManager = default!;
     [Dependency] private IGameTiming _gameTiming = default!;
@@ -98,13 +101,16 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         RaiseNetworkEvent(new InstrumentSetMasterEvent(GetNetEntity(uid), GetNetEntity(masterUid)));
     }
 
-    public void SetMinVolume(EntityUid uid, byte volume)
+    public void SetMinVolume(EntityUid uid, int volume)
     {
         if (!TryComp(uid, out InstrumentComponent? instrument))
             return;
-        instrument.MinVolume = volume;
 
-        RaiseNetworkEvent(new InstrumentSetMidiMinVolumeEvent(GetNetEntity(uid), volume));
+        var byteMinVolume = (byte)Math.Min(Math.Max(MidiMinVolume, volume), MidiMaxVolume);
+        instrument.MinVolume = byteMinVolume;
+
+        RaiseNetworkEvent(new InstrumentSetMidiMinVolumeEvent(GetNetEntity(uid), byteMinVolume));
+        UpdateRenderer(uid);
     }
 
     public void SetFilteredChannel(EntityUid uid, int channel, bool value)
