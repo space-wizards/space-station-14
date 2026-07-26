@@ -34,6 +34,7 @@
     deviceNetId: Wired
     receiveFrequencyId: SurveillanceCamera
     transmitFrequencyId: SurveillanceCamera
+    prefix: device-address-prefix-camera-monitor
   - type: WiredNetwork
   - type: DeviceNetworkRequiresPower
   - type: SurveillanceCameraMonitor

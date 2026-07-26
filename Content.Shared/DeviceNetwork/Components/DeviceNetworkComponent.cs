@@ -9,16 +9,59 @@ namespace Content.Shared.DeviceNetwork.Components;
 [Access(typeof(SharedDeviceNetworkSystem), typeof(DeviceNet))]
 public sealed partial class DeviceNetworkComponent : Component
 {
-    [DataField("deviceNetId"), AutoNetworkedField]
-    public DeviceNetIdDefaults NetIdEnum { get; set; }
+    public int DeviceNetId => (int) Data.NetIdEnum;
 
-    public int DeviceNetId => (int) NetIdEnum;
+    [ViewVariables]
+    public uint? ReceiveFrequency
+    {
+        get => Data.ReceiveFrequency;
+        set => Data.ReceiveFrequency = value;
+    }
 
-    /// <summary>
-    ///     The frequency that this device is listening on.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public uint? ReceiveFrequency;
+    [ViewVariables]
+    public uint? TransmitFrequency
+    {
+        get => Data.TransmitFrequency;
+        set => Data.TransmitFrequency = value;
+    }
+
+    [ViewVariables]
+    public string Address
+    {
+        get => Data.Address;
+        set => Data.Address = value;
+    }
+
+    [ViewVariables]
+    public bool CustomAddress
+    {
+        get => Data.CustomAddress;
+        set => Data.CustomAddress = value;
+    }
+
+    [ViewVariables]
+    public bool ReceiveAll
+    {
+        get => Data.ReceiveAll;
+        set => Data.ReceiveAll = value;
+    }
+
+    [ViewVariables]
+    public bool SendBroadcastAttemptEvent
+    {
+        get => Data.SendBroadcastAttemptEvent;
+        set => Data.SendBroadcastAttemptEvent = value;
+    }
+
+    [ViewVariables]
+    public LocId? Prefix
+    {
+        get => Data.Prefix;
+        set => Data.Prefix = value;
+    }
+
+    [IncludeDataField, AutoNetworkedField]
+    public DeviceData Data;
 
     /// <summary>
     ///     frequency prototype. Used to select a default frequency to listen to on. Used when the map is
@@ -28,44 +71,11 @@ public sealed partial class DeviceNetworkComponent : Component
     public ProtoId<DeviceFrequencyPrototype>? ReceiveFrequencyId;
 
     /// <summary>
-    ///     The frequency that this device going to try transmit on.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public uint? TransmitFrequency;
-
-    /// <summary>
     ///     frequency prototype. Used to select a default frequency to transmit on. Used when the map is
     ///     initialized.
     /// </summary>
     [DataField]
     public ProtoId<DeviceFrequencyPrototype>? TransmitFrequencyId;
-
-    /// <summary>
-    ///     The address of the device, either on the network it is currently connected to or whatever address it
-    ///     most recently used.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public string Address = string.Empty;
-
-    /// <summary>
-    ///     If true, the address was customized and should be preserved across networks. If false, a randomly
-    ///     generated address will be created whenever this device connects to a network.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool CustomAddress;
-
-    /// <summary>
-    ///     Prefix to prepend to any automatically generated addresses. Helps players to identify devices. This gets
-    ///     localized.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public string? Prefix;
-
-    /// <summary>
-    ///     Whether the device should listen for all device messages, regardless of the intended recipient.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool ReceiveAll;
 
     /// <summary>
     ///     If the device should show its address upon an examine. Useful for devices
@@ -79,13 +89,6 @@ public sealed partial class DeviceNetworkComponent : Component
     /// </summary>
     [DataField]
     public bool AutoConnect = true;
-
-    /// <summary>
-    ///     Whether to send the broadcast recipients list to the sender so it can be filtered.
-    /// <see cref="DeviceListSystem"/>
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool SendBroadcastAttemptEvent;
 
     /// <summary>
     ///     Whether this device's address can be saved to device-lists

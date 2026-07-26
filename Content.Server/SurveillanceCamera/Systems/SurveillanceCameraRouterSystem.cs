@@ -1,6 +1,5 @@
 using Content.Server.DeviceNetwork.Systems;
 using Content.Shared.ActionBlocker;
-using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Power;
 using Content.Shared.SurveillanceCamera;
@@ -15,232 +14,159 @@ public sealed partial class SurveillanceCameraRouterSystem : EntitySystem
     [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
     [Dependency] private ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private UserInterfaceSystem _userInterface = default!;
+    [Dependency] private EntityQuery<SurveillanceCameraRouterComponent> _query = default!;
+
     public override void Initialize()
     {
-        SubscribeLocalEvent<SurveillanceCameraRouterComponent, ComponentInit>(OnInitialize);
-        SubscribeLocalEvent<SurveillanceCameraRouterComponent, DeviceNetworkPacketEvent>(OnPacketReceive);
+        base.Initialize();
+        SubscribeLocalEvent<SurveillanceCameraRouterComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<SurveillanceCameraRouterComponent, SurveillanceCameraSetupSetNetwork>(OnSetNetwork);
         SubscribeLocalEvent<SurveillanceCameraRouterComponent, GetVerbsEvent<AlternativeVerb>>(AddVerbs);
         SubscribeLocalEvent<SurveillanceCameraRouterComponent, PowerChangedEvent>(OnPowerChanged);
     }
 
-    private void OnInitialize(EntityUid uid, SurveillanceCameraRouterComponent router, ComponentInit args)
+    private void OnMapInit(Entity<SurveillanceCameraRouterComponent> ent, ref MapInitEvent args)
     {
-        if (router.SubnetFrequencyId == null ||
-            !ProtoMan.TryIndex(router.SubnetFrequencyId, out DeviceFrequencyPrototype? subnetFrequency))
+        if (ent.Comp.SubnetFrequencyId == null
+            || !ProtoMan.TryIndex(ent.Comp.SubnetFrequencyId, out var subnetFrequency))
+            return;
+
+        ent.Comp.SubnetFrequency = subnetFrequency.Frequency;
+        ent.Comp.Active = true;
+
+        if (string.IsNullOrEmpty(ent.Comp.SubnetName) && subnetFrequency.Name != null)
+            ent.Comp.SubnetName = Loc.GetString(subnetFrequency.Name);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnSubnetConnect(Entity<SurveillanceCameraRouterComponent> ent, ref DeviceNetworkPacketEvent<SurveillanceCameraSubnetConnectPayload> args)
+    {
+        AddMonitorToRoute(ent.AsNullable(), args.SenderAddress);
+        PingSubnet(ent.AsNullable());
+    }
+
+    [SubscribeLocalEvent]
+    private void OnSubnetDisconnect(Entity<SurveillanceCameraRouterComponent> ent, ref DeviceNetworkPacketEvent<SurveillanceCameraSubnetDisconnectPayload> args)
+    {
+        RemoveMonitorFromRoute(ent.AsNullable(), args.SenderAddress);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnSubnetPing(Entity<SurveillanceCameraRouterComponent> ent, ref DeviceNetworkPacketEvent<SurveillanceCameraPingSubnetPayload> args)
+    {
+        var response = new SurveillanceCameraSubnetDataPayload
+        {
+            Subnet = ent.Comp.SubnetName,
+            TransmitFrequency = ent.Comp.SubnetFrequency,
+        };
+        _deviceNetworkSystem.QueuePacket(ent.Owner, args.SenderAddress, response);
+    }
+
+    private void OnPowerChanged(Entity<SurveillanceCameraRouterComponent> ent, ref PowerChangedEvent args)
+    {
+        ent.Comp.MonitorRoutes.Clear();
+        ent.Comp.Active = args.Powered;
+    }
+
+    private void AddVerbs(Entity<SurveillanceCameraRouterComponent> ent, ref GetVerbsEvent<AlternativeVerb> verbs)
+    {
+        if (!_actionBlocker.CanInteract(verbs.User, ent.Owner) || !_actionBlocker.CanComplexInteract(verbs.User))
         {
             return;
         }
 
-        router.SubnetFrequency = subnetFrequency.Frequency;
-        router.Active = true;
-    }
-
-    private void OnPacketReceive(Entity<SurveillanceCameraRouterComponent> ent, ref DeviceNetworkPacketEvent args)
-    {
-        var (uid, router) = ent;
-        if (!router.Active || string.IsNullOrEmpty(args.SenderAddress))
-            return;
-
-        switch (args.Data)
-        {
-            case SurveillanceCameraConnectPayload connect:
-                ConnectCamera(uid, args.SenderAddress, connect.Address, router);
-                break;
-            case SurveillanceCameraHeartbeatPayload heartbeat:
-                SendHeartbeat(uid, args.SenderAddress, heartbeat.Address, router);
-                break;
-            case SurveillanceCameraSubnetConnectPayload:
-                AddMonitorToRoute(uid, args.SenderAddress, router);
-                PingSubnet(uid, router);
-                break;
-            case SurveillanceCameraSubnetDisconnectPayload:
-                RemoveMonitorFromRoute(uid, args.SenderAddress, router);
-                break;
-            case SurveillanceCameraPingSubnetPayload:
-                PingSubnet(uid, router);
-                break;
-            case SurveillanceCameraPingPayload:
-                SubnetPingResponse(uid, args.SenderAddress, router);
-                break;
-            case SurveillanceCameraDataPayload:
-                SendCameraInfo(uid, args.Data, router);
-                break;
-        }
-    }
-
-    private void OnPowerChanged(EntityUid uid, SurveillanceCameraRouterComponent component, ref PowerChangedEvent args)
-    {
-        component.MonitorRoutes.Clear();
-        component.Active = args.Powered;
-    }
-
-    private void AddVerbs(EntityUid uid, SurveillanceCameraRouterComponent component, GetVerbsEvent<AlternativeVerb> verbs)
-    {
-        if (!_actionBlocker.CanInteract(verbs.User, uid) || !_actionBlocker.CanComplexInteract(verbs.User))
-        {
-            return;
-        }
-
-        if (component.SubnetFrequencyId != null)
+        if (ent.Comp.SubnetFrequencyId != null)
         {
             return;
         }
 
         AlternativeVerb verb = new();
+        var user = verbs.User;
         verb.Text = Loc.GetString("surveillance-camera-setup");
-        verb.Act = () => OpenSetupInterface(uid, verbs.User, component);
+        verb.Act = () => OpenSetupInterface(ent.AsNullable(), user);
         verbs.Verbs.Add(verb);
     }
 
-    private void OnSetNetwork(EntityUid uid, SurveillanceCameraRouterComponent component,
-            SurveillanceCameraSetupSetNetwork args)
+    private void OnSetNetwork(Entity<SurveillanceCameraRouterComponent> ent, ref SurveillanceCameraSetupSetNetwork args)
     {
         if (args.UiKey is not SurveillanceCameraSetupUiKey key
             || key != SurveillanceCameraSetupUiKey.Router)
         {
             return;
         }
-        if (args.Network < 0 || args.Network >= component.AvailableNetworks.Count)
+        if (args.Network < 0 || args.Network >= ent.Comp.AvailableNetworks.Count)
         {
             return;
         }
 
-        if (!ProtoMan.Resolve<DeviceFrequencyPrototype>(component.AvailableNetworks[args.Network],
-                out var frequency))
+        if (!ProtoMan.Resolve(ent.Comp.AvailableNetworks[args.Network], out var frequency))
         {
             return;
         }
 
-        component.SubnetFrequencyId = component.AvailableNetworks[args.Network];
-        component.SubnetFrequency = frequency.Frequency;
-        component.Active = true;
-        UpdateSetupInterface(uid, component);
+        ent.Comp.SubnetFrequencyId = ent.Comp.AvailableNetworks[args.Network];
+        ent.Comp.SubnetFrequency = frequency.Frequency;
+        ent.Comp.Active = true;
+        UpdateSetupInterface(ent.AsNullable());
     }
 
-    private void OpenSetupInterface(EntityUid uid, EntityUid player, SurveillanceCameraRouterComponent? camera = null)
+    private void OpenSetupInterface(Entity<SurveillanceCameraRouterComponent?> ent, EntityUid player)
     {
-        if (!Resolve(uid, ref camera))
+        if (!_query.Resolve(ref ent))
             return;
 
-        if (!_userInterface.TryOpenUi(uid, SurveillanceCameraSetupUiKey.Router, player))
+        if (!_userInterface.TryOpenUi(ent.Owner, SurveillanceCameraSetupUiKey.Router, player))
             return;
 
-        UpdateSetupInterface(uid, camera);
+        UpdateSetupInterface(ent.AsNullable());
     }
 
-    private void UpdateSetupInterface(EntityUid uid, SurveillanceCameraRouterComponent? router = null, DeviceNetworkComponent? deviceNet = null)
+    private void UpdateSetupInterface(Entity<SurveillanceCameraRouterComponent?, DeviceNetworkComponent?> ent)
     {
-        if (!Resolve(uid, ref router, ref deviceNet))
+        if (!_query.Resolve(ent.Owner, ref ent.Comp1) || !Resolve(ent.Owner, ref ent.Comp2))
+            return;
+
+        if (ent.Comp1.AvailableNetworks.Count == 0 || ent.Comp1.SubnetFrequencyId != null)
         {
+            _userInterface.CloseUi(ent.Owner, SurveillanceCameraSetupUiKey.Router);
             return;
         }
 
-        if (router.AvailableNetworks.Count == 0 || router.SubnetFrequencyId != null)
-        {
-            _userInterface.CloseUi(uid, SurveillanceCameraSetupUiKey.Router);
-            return;
-        }
-
-        var state = new SurveillanceCameraSetupBoundUiState(router.SubnetName, deviceNet.ReceiveFrequency ?? 0,
-            router.AvailableNetworks, true, router.SubnetFrequencyId != null);
-        _userInterface.SetUiState(uid, SurveillanceCameraSetupUiKey.Router, state);
-    }
-
-    private void SendHeartbeat(EntityUid uid, string origin, string destination,
-        SurveillanceCameraRouterComponent? router = null)
-    {
-        if (!Resolve(uid, ref router))
-        {
-            return;
-        }
-
-        var payload = new SurveillanceCameraHeartbeatPayload
-        {
-            Address = origin,
-        };
-
-        _deviceNetworkSystem.QueuePacket(uid, destination, payload, router.SubnetFrequency);
-    }
-
-    private void SubnetPingResponse(EntityUid uid, string origin, SurveillanceCameraRouterComponent? router = null)
-    {
-        if (!Resolve(uid, ref router) || router.SubnetFrequencyId == null)
-        {
-            return;
-        }
-
-        var payload = new SurveillanceCameraSubnetDataPayload
-        {
-            Subnet = router.SubnetFrequencyId,
-        };
-
-        _deviceNetworkSystem.QueuePacket(uid, origin, payload);
-    }
-
-    private void ConnectCamera(EntityUid uid, string origin, string address, SurveillanceCameraRouterComponent? router = null)
-    {
-        if (!Resolve(uid, ref router))
-        {
-            return;
-        }
-
-        var payload = new SurveillanceCameraConnectPayload
-        {
-            Address = origin,
-        };
-
-        _deviceNetworkSystem.QueuePacket(uid, address, payload, router.SubnetFrequency);
+        var state = new SurveillanceCameraSetupBoundUiState(ent.Comp1.SubnetName,
+            ent.Comp2.ReceiveFrequency ?? 0,
+            ent.Comp1.AvailableNetworks,
+            true,
+            ent.Comp1.SubnetFrequencyId != null);
+        _userInterface.SetUiState(ent.Owner, SurveillanceCameraSetupUiKey.Router, state);
     }
 
     // Adds a monitor to the set of routes.
-    private void AddMonitorToRoute(EntityUid uid, string address, SurveillanceCameraRouterComponent? router = null)
+    private void AddMonitorToRoute(Entity<SurveillanceCameraRouterComponent?> ent, string address)
     {
-        if (!Resolve(uid, ref router))
-        {
+        if (!_query.Resolve(ref ent) || ent.Comp == null)
             return;
-        }
 
-        router.MonitorRoutes.Add(address);
+        ent.Comp.MonitorRoutes.Add(address);
     }
 
-    private void RemoveMonitorFromRoute(EntityUid uid, string address, SurveillanceCameraRouterComponent? router = null)
+    private void RemoveMonitorFromRoute(Entity<SurveillanceCameraRouterComponent?> ent, string address)
     {
-        if (!Resolve(uid, ref router))
-        {
+        if (!_query.Resolve(ref ent) || ent.Comp == null)
             return;
-        }
 
-        router.MonitorRoutes.Remove(address);
+        ent.Comp.MonitorRoutes.Remove(address);
     }
 
     // Pings a subnet to get all camera information.
-    private void PingSubnet(EntityUid uid, SurveillanceCameraRouterComponent? router = null)
+    private void PingSubnet(Entity<SurveillanceCameraRouterComponent?> ent)
     {
-        if (!Resolve(uid, ref router))
-        {
+        if (!_query.Resolve(ref ent) || ent.Comp == null)
             return;
-        }
 
         var payload = new SurveillanceCameraPingPayload
         {
-            Subnet = router.SubnetName,
+            Subnet = ent.Comp.SubnetName,
         };
-
-        _deviceNetworkSystem.QueuePacket(uid, null, payload, router.SubnetFrequency);
-    }
-
-    // Sends camera information to all monitors currently interested.
-    private void SendCameraInfo(EntityUid uid, NetworkPayload payload, SurveillanceCameraRouterComponent? router = null)
-    {
-        if (!Resolve(uid, ref router))
-        {
-            return;
-        }
-
-        foreach (var address in router.MonitorRoutes)
-        {
-            _deviceNetworkSystem.QueuePacket(uid, address, payload);
-        }
+        _deviceNetworkSystem.QueuePacket(ent.Owner, null, payload, ent.Comp.SubnetFrequency);
     }
 }

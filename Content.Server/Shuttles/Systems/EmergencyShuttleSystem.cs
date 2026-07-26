@@ -19,7 +19,6 @@ using Content.Server.Station.Systems;
 using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
-using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.GameTicking;
 using Content.Shared.Localizations;
@@ -213,9 +212,9 @@ public sealed partial class EmergencyShuttleSystem : SharedEmergencyShuttleSyste
         {
             var payload = new ScreenShuttlePayload
             {
-                Shuttle = GetNetEntity(uid),
-                SourceMap = GetNetEntity(args.FromMapUid),
-                DestinationMap = GetNetEntity(_transformSystem.GetMap(args.TargetCoordinates)),
+                Shuttle = uid,
+                SourceMap = args.FromMapUid,
+                DestinationMap = _transformSystem.GetMap(args.TargetCoordinates),
                 ShuttleTime = ftlTime,
                 SourceTime = ftlTime,
                 DestinationTime = ftlTime,
@@ -235,9 +234,9 @@ public sealed partial class EmergencyShuttleSystem : SharedEmergencyShuttleSyste
         {
             var payload = new ScreenShuttlePayload
             {
-                Shuttle = GetNetEntity(shuttle),
-                SourceMap = GetNetEntity(_roundEnd.GetCentcomm()),
-                DestinationMap = GetNetEntity(_roundEnd.GetStation()),
+                Shuttle = shuttle,
+                SourceMap = _roundEnd.GetCentcomm(),
+                DestinationMap = _roundEnd.GetStation(),
                 ShuttleTime = countdownTime,
                 SourceTime = countdownTime,
                 DestinationTime = countdownTime,
@@ -380,9 +379,9 @@ public sealed partial class EmergencyShuttleSystem : SharedEmergencyShuttleSyste
         {
             var payload = new ScreenShuttlePayload
             {
-                Shuttle = GetNetEntity(shuttle),
-                SourceMap = GetNetEntity(targetXform.MapUid),
-                DestinationMap = GetNetEntity(_roundEnd.GetCentcomm()),
+                Shuttle = shuttle,
+                SourceMap = targetXform.MapUid,
+                DestinationMap = _roundEnd.GetCentcomm(),
                 ShuttleTime = time,
                 SourceTime = time,
                 DestinationTime = time + TimeSpan.FromSeconds(TransitTime),

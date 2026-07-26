@@ -5,8 +5,17 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Medical.SuitSensors;
 
-[Serializable, NetSerializable]
-public sealed partial class SuitSensorStatus : NetworkPayload
+/// <summary>
+/// A network payload that contains <see cref="SuitSensorStatus"/>.
+/// </summary>
+public sealed partial class SuitSensorStatusPayload : NetworkPayloadBase<SuitSensorStatusPayload>
+{
+    [DataField]
+    public SuitSensorStatus Data;
+}
+
+[DataDefinition, Serializable, NetSerializable]
+public partial struct SuitSensorStatus : IEquatable<SuitSensorStatus>
 {
     public SuitSensorStatus(NetEntity ownerUid, NetEntity suitSensorUid, string name, string job, string jobIcon, List<string> jobDepartments)
     {
@@ -30,6 +39,51 @@ public sealed partial class SuitSensorStatus : NetworkPayload
     public int? TotalDamageThreshold;
     public float? DamagePercentage => TotalDamageThreshold == null || TotalDamage == null ? null : TotalDamage / (float) TotalDamageThreshold;
     public NetCoordinates? Coordinates;
+
+    public bool Equals(SuitSensorStatus other)
+    {
+        return Timestamp.Equals(other.Timestamp)
+               && SuitSensorUid.Equals(other.SuitSensorUid)
+               && OwnerUid.Equals(other.OwnerUid)
+               && Name == other.Name
+               && Job == other.Job
+               && JobIcon == other.JobIcon
+               && IsAlive == other.IsAlive
+               && TotalDamage == other.TotalDamage
+               && TotalDamageThreshold == other.TotalDamageThreshold
+               && Nullable.Equals(Coordinates, other.Coordinates);
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return obj is SuitSensorStatus other && Equals(other);
+    }
+
+    public override int GetHashCode()
+    {
+        var hashCode = new HashCode();
+        hashCode.Add(Timestamp);
+        hashCode.Add(SuitSensorUid);
+        hashCode.Add(OwnerUid);
+        hashCode.Add(Name);
+        hashCode.Add(Job);
+        hashCode.Add(JobIcon);
+        hashCode.Add(IsAlive);
+        hashCode.Add(TotalDamage);
+        hashCode.Add(TotalDamageThreshold);
+        hashCode.Add(Coordinates);
+        return hashCode.ToHashCode();
+    }
+
+    public static bool operator ==(SuitSensorStatus left, SuitSensorStatus right)
+    {
+        return left.Equals(right);
+    }
+
+    public static bool operator !=(SuitSensorStatus left, SuitSensorStatus right)
+    {
+        return !left.Equals(right);
+    }
 }
 
 [Serializable, NetSerializable]

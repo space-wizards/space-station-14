@@ -155,9 +155,9 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         public bool PressureLockoutOverride = false;
         #endregion
 
-        public GasVentPumpDataPayload ToAirAlarmData()
+        public GasVentPumpData ToAirAlarmData()
         {
-            return new GasVentPumpDataPayload
+            return new GasVentPumpData
             {
                 Enabled = Enabled,
                 Dirty = IsDirty,
@@ -169,7 +169,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
             };
         }
 
-        public void FromAirAlarmData(GasVentPumpDataPayload dataPayload)
+        public void FromAirAlarmData(GasVentPumpData dataPayload)
         {
             Enabled = dataPayload.Enabled;
             IsDirty = dataPayload.Dirty;

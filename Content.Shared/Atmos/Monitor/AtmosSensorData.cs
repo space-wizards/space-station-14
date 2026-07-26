@@ -1,12 +1,30 @@
-using Content.Shared.Atmos.Monitor.Components;
+using Content.Shared.DeviceNetwork;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.Monitor;
 
-[Serializable, NetSerializable]
-public sealed partial class AtmosSensorDataPayload : AtmosDeviceDataPayload
+/// <summary>
+/// Contains <see cref="AtmosMonitorData"/>.
+/// </summary>
+public sealed partial class AtmosMonitorDataPayload : NetworkPayloadBase<AtmosMonitorDataPayload>
 {
-    public AtmosSensorDataPayload(float pressure, float temperature, float totalMoles, AtmosAlarmType alarmState, Dictionary<Gas, float> gases, AtmosAlarmThreshold pressureThreshold, AtmosAlarmThreshold temperatureThreshold, Dictionary<Gas, AtmosAlarmThreshold> gasThresholds)
+    [DataField]
+    public AtmosMonitorData Data;
+}
+
+[DataDefinition, Serializable, NetSerializable]
+public sealed partial class AtmosMonitorData : IAtmosDeviceData
+{
+    public NetworkPayload GetPayload()
+    {
+        return new AtmosMonitorDataPayload { Data = this };
+    }
+
+    public bool Enabled { get; set; }
+    public bool Dirty { get; set; }
+    public bool IgnoreAlarms { get; set; }
+
+    public AtmosMonitorData(float pressure, float temperature, float totalMoles, AtmosAlarmType alarmState, Dictionary<Gas, float> gases, AtmosAlarmThreshold pressureThreshold, AtmosAlarmThreshold temperatureThreshold, Dictionary<Gas, AtmosAlarmThreshold> gasThresholds)
     {
         Pressure = pressure;
         Temperature = temperature;

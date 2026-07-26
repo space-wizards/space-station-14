@@ -12,33 +12,24 @@ public sealed partial class BatterySensorSystem : EntitySystem
     [Dependency] private DeviceNetworkSystem _deviceNetwork = default!;
     [Dependency] private SharedBatterySystem _battery = default!;
 
-    public override void Initialize()
+    [SubscribeLocalEvent]
+    private void OnSensorRequest(Entity<BatterySensorComponent> ent, ref DeviceNetworkPacketEvent<BatterySensorSyncPayload> args)
     {
-        SubscribeLocalEvent<BatterySensorComponent, DeviceNetworkPacketEvent>(PacketReceived);
-    }
+        var battery = Comp<BatteryComponent>(ent);
+        var currentCharge = _battery.GetCharge((ent.Owner, battery));
+        var netBattery = Comp<PowerNetworkBatteryComponent>(ent);
 
-    private void PacketReceived(Entity<BatterySensorComponent> ent, ref DeviceNetworkPacketEvent args)
-    {
-        switch (args.Data)
+        var dataPayload = new BatterySensorDataPayload
         {
-            case BatterySensorRequestPayload:
-                var battery = Comp<BatteryComponent>(ent);
-                var currentCharge = _battery.GetCharge((ent.Owner, battery));
-                var netBattery = Comp<PowerNetworkBatteryComponent>(ent);
+            Data = new BatterySensorData(
+                currentCharge,
+                battery.MaxCharge,
+                netBattery.CurrentReceiving,
+                netBattery.MaxChargeRate,
+                netBattery.CurrentSupply,
+                netBattery.MaxSupply),
+        };
 
-                var payload = new BatterySensorSyncPayload
-                {
-                    Data = new BatterySensorData(
-                        currentCharge,
-                        battery.MaxCharge,
-                        netBattery.CurrentReceiving,
-                        netBattery.MaxChargeRate,
-                        netBattery.CurrentSupply,
-                        netBattery.MaxSupply),
-                };
-
-                _deviceNetwork.QueuePacket(ent.Owner, args.SenderAddress, payload);
-                break;
-        }
+        _deviceNetwork.QueuePacket(ent.Owner, args.SenderAddress, dataPayload);
     }
 }

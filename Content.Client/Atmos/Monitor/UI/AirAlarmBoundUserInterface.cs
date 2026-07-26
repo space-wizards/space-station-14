@@ -33,12 +33,12 @@ public sealed class AirAlarmBoundUserInterface : BoundUserInterface
         SendMessage(new AirAlarmResyncAllDevicesMessage());
     }
 
-    private void OnDeviceDataChanged(string address, AtmosDeviceDataPayload dataPayload)
+    private void OnDeviceDataChanged(string address, IAtmosDeviceData dataPayload)
     {
         SendMessage(new AirAlarmUpdateDeviceDataMessage(address, dataPayload));
     }
 
-	private void OnDeviceDataCopied(AtmosDeviceDataPayload dataPayload)
+	private void OnDeviceDataCopied(IAtmosDeviceData dataPayload)
     {
         SendMessage(new AirAlarmCopyDeviceDataMessage(dataPayload));
     }

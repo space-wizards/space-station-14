@@ -28,6 +28,7 @@ public sealed partial class DeployableTurretSystem : SharedDeployableTurretSyste
     [Dependency] private BatteryWeaponFireModesSystem _fireModes = default!;
     [Dependency] private TurretTargetSettingsSystem _turretTargetingSettings = default!;
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceQuery = default!;
 
     public override void Initialize()
     {
@@ -38,7 +39,6 @@ public sealed partial class DeployableTurretSystem : SharedDeployableTurretSyste
         SubscribeLocalEvent<DeployableTurretComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<DeployableTurretComponent, BreakageEventArgs>(OnBroken);
         SubscribeLocalEvent<DeployableTurretComponent, RepairedEvent>(OnRepaired);
-        SubscribeLocalEvent<DeployableTurretComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
         SubscribeLocalEvent<DeployableTurretComponent, BeforeBroadcastAttemptEvent>(OnBeforeBroadcast);
     }
 
@@ -71,32 +71,28 @@ public sealed partial class DeployableTurretSystem : SharedDeployableTurretSyste
             _appearance.SetData(ent, DeployableTurretVisuals.Broken, false, appearance);
     }
 
-    private void OnPacketReceived(Entity<DeployableTurretComponent> ent, ref DeviceNetworkPacketEvent args)
+    [SubscribeLocalEvent]
+    private void OnSetArmament(Entity<DeployableTurretComponent> ent, ref DeviceNetworkPacketEvent<TurretControllerSetArmamentPayload> args)
     {
-        // Received a command to change armament state
-        if (args.Data is TurretControllerSetArmamentPayload armamentPayload)
-        {
-            if (TryComp<BatteryWeaponFireModesComponent>(ent, out var batteryWeaponFireModes))
-                _fireModes.TrySetFireMode((ent.Owner, batteryWeaponFireModes), armamentPayload.ArmamentState);
+        if (TryComp<BatteryWeaponFireModesComponent>(ent, out var batteryWeaponFireModes))
+            _fireModes.TrySetFireMode((ent.Owner, batteryWeaponFireModes), args.Data.ArmamentState);
 
-            TrySetState(ent, armamentPayload.ArmamentState >= 0);
-            return;
-        }
+        TrySetState(ent, args.Data.ArmamentState >= 0);
+    }
 
-        // Received a command to change access exemptions
-        if (args.Data is TurretControllerSetAccessPayload accessExemptions
-            && TryComp<TurretTargetSettingsComponent>(ent, out var turretTargetSettings))
-        {
-            _turretTargetingSettings.SyncAccessLevelExemptions((ent, turretTargetSettings), accessExemptions.AccessExemptions);
+    [SubscribeLocalEvent]
+    private void OnSetAccess(Entity<DeployableTurretComponent> ent, ref DeviceNetworkPacketEvent<TurretControllerSetAccessPayload> args)
+    {
+        if (!TryComp<TurretTargetSettingsComponent>(ent, out var targetSettings))
             return;
-        }
 
-        // Received a command to update the device network
-        if (args.Data is TurretControllerRequestPayload)
-        {
-            SendStateUpdateToDeviceNetwork(ent);
-            return;
-        }
+        _turretTargetingSettings.SyncAccessLevelExemptions((ent, targetSettings), args.Data.AccessExemptions);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnRequest(Entity<DeployableTurretComponent> ent, ref DeviceNetworkPacketEvent<TurretControllerRequestPayload> args)
+    {
+        SendStateUpdateToDeviceNetwork(ent);
     }
 
     private void OnBeforeBroadcast(Entity<DeployableTurretComponent> ent, ref BeforeBroadcastAttemptEvent args)
@@ -109,10 +105,10 @@ public sealed partial class DeployableTurretSystem : SharedDeployableTurretSyste
         // Only broadcast to connected devices
         foreach (var recipient in deviceNetwork.DeviceLists)
         {
-            if (!TryComp<DeviceNetworkComponent>(recipient, out var recipientDeviceNetwork))
+            if (!_deviceQuery.TryComp(recipient, out var recipientDeviceNetwork))
                 continue;
 
-            recipientDeviceNetworks.Add(new Device((recipient, recipientDeviceNetwork)));
+            recipientDeviceNetworks.Add(new Device(recipient, recipientDeviceNetwork.Data));
         }
 
         if (recipientDeviceNetworks.Count > 0)

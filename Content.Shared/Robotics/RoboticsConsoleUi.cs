@@ -136,14 +136,20 @@ public partial record struct CyborgControlData
     }
 }
 
-[Serializable, NetSerializable]
-public sealed partial class RoboticsCyborgDisablePayload : NetworkPayload;
+/// <summary>
+/// Disables a borg when received.
+/// </summary>
+public sealed partial class RoboticsCyborgDisablePayload : NetworkPayloadBase<RoboticsCyborgDisablePayload>;
 
-[Serializable, NetSerializable]
-public sealed partial class RoboticsCyborgDestroyPayload : NetworkPayload;
+/// <summary>
+/// Destroys a borg when received.
+/// </summary>
+public sealed partial class RoboticsCyborgDestroyPayload : NetworkPayloadBase<RoboticsCyborgDestroyPayload>;
 
-[Serializable, NetSerializable]
-public sealed partial class RoboticsCyborgDataPayload : NetworkPayload
+/// <summary>
+/// A wrapper for <see cref="CyborgControlData"/>
+/// </summary>
+public sealed partial class RoboticsCyborgDataPayload : NetworkPayloadBase<RoboticsCyborgDataPayload>
 {
     [DataField]
     public CyborgControlData Data;

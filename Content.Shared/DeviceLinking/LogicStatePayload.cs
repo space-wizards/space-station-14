@@ -1,10 +1,11 @@
 ﻿using Content.Shared.DeviceNetwork;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.DeviceLinking;
 
-[Serializable, NetSerializable]
-public sealed partial class LogicStatePayload : NetworkPayload
+/// <summary>
+/// Contains a logic state of a <see cref="SignalPayload"/>.
+/// </summary>
+public sealed partial class LogicStatePayload : NetworkPayloadBase<LogicStatePayload>
 {
     [DataField]
     public SignalState State;

@@ -1,5 +1,4 @@
 using Content.Shared.Audio;
-using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.DeviceLinking;
@@ -49,7 +48,6 @@ public abstract partial class SharedPoweredLightSystem : EntitySystem
         SubscribeLocalEvent<PoweredLightComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<PoweredLightComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<PoweredLightComponent, SignalReceivedEvent>(OnSignalReceived);
-        SubscribeLocalEvent<PoweredLightComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
         SubscribeLocalEvent<PoweredLightComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<PoweredLightComponent, PoweredLightDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<PoweredLightComponent, DamageChangedEvent>(HandleLightDamaged);
@@ -128,14 +126,12 @@ public abstract partial class SharedPoweredLightSystem : EntitySystem
     }
 
     /// <summary>
-    /// Turns the light on or of when receiving a <see cref="TogglePayload"/>.
+    /// Turns the light on or of when receiving a <see cref="ApcNetTogglePayload"/>.
     /// </summary>
-    private void OnPacketReceived(EntityUid uid, PoweredLightComponent component, DeviceNetworkPacketEvent args)
+    [SubscribeLocalEvent]
+    private void OnPacketReceived(Entity<PoweredLightComponent> ent, ref DeviceNetworkPacketEvent<ApcNetTogglePayload> args)
     {
-        if (args.Data is not TogglePayload toggle)
-            return;
-
-        SetState(uid, toggle.Enabled, component);
+        SetState(ent, args.Data.Enabled, ent.Comp);
     }
 
     /// <summary>

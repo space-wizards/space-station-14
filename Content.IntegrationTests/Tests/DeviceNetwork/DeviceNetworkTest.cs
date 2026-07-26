@@ -2,11 +2,9 @@ using System.Numerics;
 using Content.IntegrationTests.Fixtures;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
-using Content.Shared.DeviceNetwork;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Content.Shared.DeviceNetwork.Components;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.IntegrationTests.Tests.DeviceNetwork
 {
@@ -166,11 +164,11 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
             await server.WaitRunTicks(2);
             await server.WaitIdleAsync();
 
+            var secondPayload = new SecondTestPayload();
+
             await server.WaitAssertion(() =>
             {
                 Assert.That(payload, Is.EqualTo(deviceNetTestSystem.LastPayload));
-
-                var secondPayload = new SecondTestPayload();
 
                 wirelessNetworkComponent.Range = 0;
 
@@ -182,7 +180,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
 
             await server.WaitAssertion(() =>
             {
-                Assert.That(payload, Is.Not.EqualTo(deviceNetTestSystem.LastPayload));
+                Assert.That(secondPayload, Is.Not.EqualTo(deviceNetTestSystem.LastPayload));
             });
         }
 

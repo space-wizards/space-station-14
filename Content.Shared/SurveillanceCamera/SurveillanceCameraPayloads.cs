@@ -1,54 +1,73 @@
 ﻿using Content.Shared.DeviceNetwork;
-using Robust.Shared.Serialization;
+using Content.Shared.DeviceNetwork.Payloads;
 
 namespace Content.Shared.SurveillanceCamera;
 
-[Serializable, NetSerializable]
-public sealed partial class SurveillanceCameraConnectPayload : NetworkPayload
-{
-    [DataField]
-    public string Address;
-}
+/// <summary>
+/// Response to <see cref="SurveillanceCameraConnectRequestPayload"/>
+/// from the camera in order to establish the connection.
+/// </summary>
+public sealed partial class SurveillanceCameraConnectPayload : RoutableNetworkPayload<SurveillanceCameraConnectPayload>;
 
-[Serializable, NetSerializable]
-public sealed partial class SurveillanceCameraSubnetConnectPayload : NetworkPayload;
+/// <summary>
+/// Request to connect to a camera from the camera monitor.
+/// </summary>
+public sealed partial class SurveillanceCameraConnectRequestPayload : RoutableNetworkPayload<SurveillanceCameraConnectRequestPayload>;
 
-[Serializable, NetSerializable]
-public sealed partial class SurveillanceCameraSubnetDisconnectPayload : NetworkPayload;
+/// <summary>
+/// Message sent periodically by an active camera monitor towards the active camera.
+/// </summary>
+public sealed partial class SurveillanceCameraHeartbeatRequestPayload : RoutableNetworkPayload<SurveillanceCameraHeartbeatRequestPayload>;
 
-[Serializable, NetSerializable]
-public sealed partial class SurveillanceCameraHeartbeatPayload : NetworkPayload
-{
-    [DataField]
-    public string Address;
-}
+/// <summary>
+/// Response from the camera to the <see cref="SurveillanceCameraHeartbeatRequestPayload"/>.
+/// </summary>
+public sealed partial class SurveillanceCameraHeartbeatPayload : RoutableNetworkPayload<SurveillanceCameraHeartbeatPayload>;
 
-[Serializable, NetSerializable]
-public sealed partial class SurveillanceCameraPingPayload : NetworkPayload
+/// <summary>
+/// Request to get <see cref="SurveillanceCameraDataPayload"/> from all cameras on a certain subnet.
+/// </summary>
+public sealed partial class SurveillanceCameraPingPayload : RoutableNetworkPayload<SurveillanceCameraPingPayload>
 {
     [DataField]
     public string Subnet;
 }
 
-[Serializable, NetSerializable]
-public sealed partial class SurveillanceCameraPingSubnetPayload : NetworkPayload;
-
-[Serializable, NetSerializable]
-public sealed partial class SurveillanceCameraDataPayload : NetworkPayload
+/// <summary>
+/// Response to the <see cref="SurveillanceCameraPingPayload"/> request, contains info about a camera on a subnet.
+/// </summary>
+public sealed partial class SurveillanceCameraDataPayload : RoutableNetworkPayload<SurveillanceCameraDataPayload>
 {
     [DataField]
     public string Name;
 
     [DataField]
     public string Subnet;
-
-    [DataField]
-    public string Address;
 }
 
-[Serializable, NetSerializable]
-public sealed partial class SurveillanceCameraSubnetDataPayload : NetworkPayload
+/// <summary>
+/// Request to connect to a camera subnet.
+/// </summary>
+public sealed partial class SurveillanceCameraSubnetConnectPayload : NetworkPayloadBase<SurveillanceCameraSubnetConnectPayload>;
+
+/// <summary>
+/// Request to disconnect from a camera subnet.
+/// </summary>
+public sealed partial class SurveillanceCameraSubnetDisconnectPayload : NetworkPayloadBase<SurveillanceCameraSubnetDisconnectPayload>;
+
+/// <summary>
+/// Request to get all available subnets.
+/// </summary>
+public sealed partial class SurveillanceCameraPingSubnetPayload : NetworkPayloadBase<SurveillanceCameraPingSubnetPayload>;
+
+/// <summary>
+/// Response to the <see cref="SurveillanceCameraPingSubnetPayload"/>, contains the name of the available subnet.
+/// </summary>
+public sealed partial class SurveillanceCameraSubnetDataPayload : NetworkPayloadBase<SurveillanceCameraSubnetDataPayload>
 {
     [DataField]
     public string Subnet;
+
+    [DataField]
+    public uint TransmitFrequency;
 }

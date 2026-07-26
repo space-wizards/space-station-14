@@ -1,7 +1,7 @@
 using Content.Client.Buffers;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Systems;
-using Robust.Shared.Player;
+
 namespace Content.Client.DeviceNetwork.Systems;
 
 public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem

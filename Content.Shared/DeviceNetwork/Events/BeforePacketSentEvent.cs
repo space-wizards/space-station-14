@@ -15,4 +15,4 @@ public record struct BeforePacketSentEvent(
     EntityUid Sender,
     TransformComponent SenderTransform,
     Vector2 SenderPosition,
-    bool Cancelled = false) : IDeviceNetworkPacket;
+    bool Cancelled = false);

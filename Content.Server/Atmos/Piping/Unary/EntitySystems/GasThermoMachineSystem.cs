@@ -1,4 +1,5 @@
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Atmos.Monitor.Payloads;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
@@ -8,10 +9,8 @@ using Content.Shared.Atmos.Piping.Unary.Components;
 using JetBrains.Annotations;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Atmos.Components;
-using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Piping.Unary.Systems;
 using Content.Shared.DeviceNetwork.Events;
-using Content.Shared.DeviceNetwork.Components;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 {
@@ -26,11 +25,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
-
             SubscribeLocalEvent<GasThermoMachineComponent, AtmosDeviceUpdateEvent>(OnThermoMachineUpdated);
-
-            // Device network
-            SubscribeLocalEvent<GasThermoMachineComponent, DeviceNetworkPacketEvent>(OnPacketRecv);
         }
 
         private void OnThermoMachineUpdated(EntityUid uid, GasThermoMachineComponent thermoMachine, ref AtmosDeviceUpdateEvent args)
@@ -116,26 +111,15 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             }
         }
 
-        private void OnPacketRecv(Entity<GasThermoMachineComponent> ent, ref DeviceNetworkPacketEvent args)
+        [SubscribeLocalEvent]
+        private void OnSyncPayload(Entity<GasThermoMachineComponent> ent, ref DeviceNetworkPacketEvent<AtmosSyncPayload> args)
         {
-            var (uid, component) = ent;
-            if (!TryComp(uid, out DeviceNetworkComponent? netConn))
-                return;
-
-            switch (args.Data)
+            var data = new GasThermoMachineDataPayload
             {
-                case AtmosSyncDevicePayload:
-                    var payload = new AtmosSyncDevicePayload
-                    {
-                        Data = new GasThermoMachineData
-                        {
-                            EnergyDelta = component.LastEnergyDelta,
-                        },
-                    };
+                EnergyDelta = ent.Comp.LastEnergyDelta,
+            };
 
-                    _deviceNetwork.QueuePacket((uid, netConn), args.SenderAddress, payload);
-                    return;
-            }
+            _deviceNetwork.QueuePacket(ent.Owner, args.SenderAddress, data);
         }
     }
 }

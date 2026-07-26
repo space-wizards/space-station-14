@@ -56,8 +56,8 @@ public sealed partial class NetProbeCartridgeSystem : EntitySystem
         var device = new ProbedNetworkDevice(
             Name(target),
             networkComponent.Address,
-            networkComponent.ReceiveFrequency?.FrequencyToString() ?? string.Empty,
-            networkComponent.DeviceNetId.DeviceNetIdToLocalizedName()
+            DeviceLocalizationHelpers.FrequencyToString(networkComponent.ReceiveFrequency),
+            DeviceLocalizationHelpers.DeviceNetIdToLocalizedName(networkComponent.DeviceNetId, Loc)
         );
 
         component.ProbedDevices.Add(device);

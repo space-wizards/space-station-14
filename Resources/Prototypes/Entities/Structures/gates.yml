@@ -24,6 +24,8 @@
     receiveFrequencyId: BasicDevice
   - type: WirelessNetwork
     range: 200
+  - type: SoundOnOverload
+  - type: SpawnOnOverload
 
 - type: entity
   parent: BaseLogicItem

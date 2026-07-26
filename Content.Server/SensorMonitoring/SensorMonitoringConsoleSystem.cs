@@ -1,4 +1,5 @@
 ﻿using Content.Server.Atmos.Monitor.Components;
+using Content.Server.Atmos.Monitor.Payloads;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Power.Generation.Teg;
 using Content.Shared.Atmos.Components;
@@ -41,7 +42,6 @@ public sealed partial class SensorMonitoringConsoleSystem : EntitySystem
 
         SubscribeLocalEvent<SensorMonitoringConsoleComponent, DeviceListUpdateEvent>(DeviceListUpdated);
         SubscribeLocalEvent<SensorMonitoringConsoleComponent, ComponentStartup>(ConsoleStartup);
-        SubscribeLocalEvent<SensorMonitoringConsoleComponent, DeviceNetworkPacketEvent>(DevicePacketReceived);
         SubscribeLocalEvent<SensorMonitoringConsoleComponent, AtmosDeviceUpdateEvent>(AtmosUpdate);
     }
 
@@ -143,83 +143,86 @@ public sealed partial class SensorMonitoringConsoleSystem : EntitySystem
         return SensorDeviceType.Unknown;
     }
 
-    private void DevicePacketReceived(EntityUid uid, SensorMonitoringConsoleComponent component,
-        DeviceNetworkPacketEvent args)
+    [SubscribeLocalEvent]
+    private void OnTegReceived(Entity<SensorMonitoringConsoleComponent> ent, ref DeviceNetworkPacketEvent<TegSensorPayload> args)
     {
-        if (!component.Sensors.TryGetValue(args.Sender, out var sensorData))
+        var payload = args.Data;
+        if (!ent.Comp.Sensors.TryGetValue(args.Sender, out var sensorData))
             return;
 
-        switch (sensorData.DeviceType)
-        {
-            case SensorDeviceType.Teg:
-                if (args.Data is not TegSensorPayload tegData)
-                    return;
+        // @formatter:off
+        WriteSample(ent, sensorData, "teg_last_generated", SensorUnit.EnergyJ, payload.LastGeneration);
+        WriteSample(ent, sensorData, "teg_power",          SensorUnit.PowerW,  payload.PowerOutput);
+        if (ent.Comp.DebugStreams)
+            WriteSample(ent, sensorData, "teg_ramp_pos", SensorUnit.PowerW, payload.RampPosition);
 
-                // @formatter:off
-                WriteSample(component, sensorData, "teg_last_generated", SensorUnit.EnergyJ, tegData.LastGeneration);
-                WriteSample(component, sensorData, "teg_power",          SensorUnit.PowerW,  tegData.PowerOutput);
-                if (component.DebugStreams)
-                    WriteSample(component, sensorData, "teg_ramp_pos", SensorUnit.PowerW, tegData.RampPosition);
+        WriteSample(ent, sensorData, "teg_circ_a_in_pressure",     SensorUnit.PressureKpa,  payload.CirculatorA.InletPressure);
+        WriteSample(ent, sensorData, "teg_circ_a_in_temperature",  SensorUnit.TemperatureK, payload.CirculatorA.InletTemperature);
+        WriteSample(ent, sensorData, "teg_circ_a_out_pressure",    SensorUnit.PressureKpa,  payload.CirculatorA.OutletPressure);
+        WriteSample(ent, sensorData, "teg_circ_a_out_temperature", SensorUnit.TemperatureK, payload.CirculatorA.OutletTemperature);
 
-                WriteSample(component, sensorData, "teg_circ_a_in_pressure",     SensorUnit.PressureKpa,  tegData.CirculatorA.InletPressure);
-                WriteSample(component, sensorData, "teg_circ_a_in_temperature",  SensorUnit.TemperatureK, tegData.CirculatorA.InletTemperature);
-                WriteSample(component, sensorData, "teg_circ_a_out_pressure",    SensorUnit.PressureKpa,  tegData.CirculatorA.OutletPressure);
-                WriteSample(component, sensorData, "teg_circ_a_out_temperature", SensorUnit.TemperatureK, tegData.CirculatorA.OutletTemperature);
+        WriteSample(ent, sensorData, "teg_circ_b_in_pressure",     SensorUnit.PressureKpa,  payload.CirculatorB.InletPressure);
+        WriteSample(ent, sensorData, "teg_circ_b_in_temperature",  SensorUnit.TemperatureK, payload.CirculatorB.InletTemperature);
+        WriteSample(ent, sensorData, "teg_circ_b_out_pressure",    SensorUnit.PressureKpa,  payload.CirculatorB.OutletPressure);
+        WriteSample(ent, sensorData, "teg_circ_b_out_temperature", SensorUnit.TemperatureK, payload.CirculatorB.OutletTemperature);
+        // @formatter:on
+    }
 
-                WriteSample(component, sensorData, "teg_circ_b_in_pressure",     SensorUnit.PressureKpa,  tegData.CirculatorB.InletPressure);
-                WriteSample(component, sensorData, "teg_circ_b_in_temperature",  SensorUnit.TemperatureK, tegData.CirculatorB.InletTemperature);
-                WriteSample(component, sensorData, "teg_circ_b_out_pressure",    SensorUnit.PressureKpa,  tegData.CirculatorB.OutletPressure);
-                WriteSample(component, sensorData, "teg_circ_b_out_temperature", SensorUnit.TemperatureK, tegData.CirculatorB.OutletTemperature);
-                // @formatter:on
-                break;
+    [SubscribeLocalEvent]
+    private void OnAtmosSensorReceived(Entity<SensorMonitoringConsoleComponent> ent, ref DeviceNetworkPacketEvent<AtmosMonitorDataPayload> args)
+    {
+        var payload = args.Data.Data;
+        if (!ent.Comp.Sensors.TryGetValue(args.Sender, out var sensorData))
+            return;
 
-            case SensorDeviceType.AtmosSensor:
-                if (args.Data is not AtmosSyncDevicePayload { Data: AtmosSensorDataPayload atmosData })
-                    return;
+        // @formatter:off
+        WriteSample(ent, sensorData, "atmo_pressure",    SensorUnit.PressureKpa,  payload.Pressure);
+        WriteSample(ent, sensorData, "atmo_temperature", SensorUnit.TemperatureK, payload.Temperature);
+        // @formatter:on
+    }
 
-                // @formatter:off
-                WriteSample(component, sensorData, "atmo_pressure",    SensorUnit.PressureKpa,    atmosData.Pressure);
-                WriteSample(component, sensorData, "atmo_temperature", SensorUnit.TemperatureK, atmosData.Temperature);
-                // @formatter:on
-                break;
+    [SubscribeLocalEvent]
+    private void OnThermoMachineReceived(Entity<SensorMonitoringConsoleComponent> ent, ref DeviceNetworkPacketEvent<GasThermoMachineDataPayload> args)
+    {
+        var payload = args.Data;
+        if (!ent.Comp.Sensors.TryGetValue(args.Sender, out var sensorData))
+            return;
 
-            case SensorDeviceType.ThermoMachine:
-                if (args.Data is not AtmosSyncDevicePayload { Data: GasThermoMachineData thermoData })
-                    return;
+        // @formatter:off
+        WriteSample(ent, sensorData, "abs_energy_delta", SensorUnit.EnergyJ, MathF.Abs(payload.EnergyDelta));
+        // @formatter:on
+    }
 
-                // @formatter:off
-                WriteSample(component, sensorData, "abs_energy_delta", SensorUnit.EnergyJ, MathF.Abs(thermoData.EnergyDelta));
-                // @formatter:on
-                break;
+    [SubscribeLocalEvent]
+    private void OnVolumePipeReceived(Entity<SensorMonitoringConsoleComponent> ent, ref DeviceNetworkPacketEvent<GasVolumePumpDataPayload> args)
+    {
+        var payload = args.Data;
+        if (!ent.Comp.Sensors.TryGetValue(args.Sender, out var sensorData))
+            return;
 
-            case SensorDeviceType.VolumePump:
-                if (args.Data is not AtmosSyncDevicePayload { Data: GasVolumePumpData volumePumpData })
-                    return;
+        // @formatter:off
+        WriteSample(ent, sensorData, "moles_transferred", SensorUnit.Moles, payload.LastMolesTransferred);
+        // @formatter:on
+    }
 
-                // @formatter:off
-                WriteSample(component, sensorData, "moles_transferred", SensorUnit.Moles, volumePumpData.LastMolesTransferred);
-                // @formatter:on
-                break;
+    [SubscribeLocalEvent]
+    private void OnBatteryReceived(Entity<SensorMonitoringConsoleComponent> ent, ref DeviceNetworkPacketEvent<BatterySensorDataPayload> args)
+    {
+        if (!ent.Comp.Sensors.TryGetValue(args.Sender, out var sensorData))
+            return;
 
-            case SensorDeviceType.Battery:
-                if (args.Data is not BatterySensorSyncPayload payload)
-                    return;
+        var batteryData = args.Data.Data;
 
-                var batteryData = payload.Data;
+        // @formatter:off
+        WriteSample(ent, sensorData, "charge",        SensorUnit.EnergyJ, batteryData.Charge);
+        WriteSample(ent, sensorData, "charge_max",    SensorUnit.EnergyJ, batteryData.MaxCharge);
 
-                // @formatter:off
-                WriteSample(component, sensorData, "charge",        SensorUnit.EnergyJ, batteryData.Charge);
-                WriteSample(component, sensorData, "charge_max",    SensorUnit.EnergyJ, batteryData.MaxCharge);
+        WriteSample(ent, sensorData, "receiving",     SensorUnit.PowerW,  batteryData.Receiving);
+        WriteSample(ent, sensorData, "receiving_max", SensorUnit.PowerW,  batteryData.MaxReceiving);
 
-                WriteSample(component, sensorData, "receiving",     SensorUnit.PowerW,  batteryData.Receiving);
-                WriteSample(component, sensorData, "receiving_max", SensorUnit.PowerW,  batteryData.MaxReceiving);
-
-                WriteSample(component, sensorData, "supplying",     SensorUnit.PowerW,  batteryData.Supplying);
-                WriteSample(component, sensorData, "supplying_max", SensorUnit.PowerW,  batteryData.MaxSupplying);
-                // @formatter:on
-
-                break;
-        }
+        WriteSample(ent, sensorData, "supplying",     SensorUnit.PowerW,  batteryData.Supplying);
+        WriteSample(ent, sensorData, "supplying_max", SensorUnit.PowerW,  batteryData.MaxSupplying);
+        // @formatter:on
     }
 
     private void WriteSample(
@@ -255,15 +258,11 @@ public sealed partial class SensorMonitoringConsoleSystem : EntitySystem
             switch (data.DeviceType)
             {
                 case SensorDeviceType.Teg:
-                    payload = new TegSensorSyncPayload();
-                    break;
-
                 case SensorDeviceType.AtmosSensor:
                 case SensorDeviceType.ThermoMachine:
                 case SensorDeviceType.VolumePump:
-                    payload = new AtmosSyncDevicePayload();
+                    payload = new AtmosSyncPayload();
                     break;
-
                 default:
                     // Unknown device type, don't do anything.
                     continue;
@@ -283,7 +282,7 @@ public sealed partial class SensorMonitoringConsoleSystem : EntitySystem
             switch (data.DeviceType)
             {
                 case SensorDeviceType.Battery:
-                    payload = new BatterySensorRequestPayload();
+                    payload = new BatterySensorSyncPayload();
                     break;
                 default:
                     // Unknown device type, don't do anything.

@@ -1,25 +1,11 @@
 using Content.Shared.DeviceNetwork;
-using JetBrains.Annotations;
 using Content.Server.Buffers;
-using Content.Server.GameTicking.Events;
-using System.Buffers;
-using System.Diagnostics.CodeAnalysis;
-using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Systems;
-using Content.Shared.GameTicking;
-using Robust.Server.GameStates;
-using Content.Shared.Examine;
-using JetBrains.Annotations;
-using Robust.Shared.Random;
 
 namespace Content.Server.DeviceNetwork.Systems;
 
-/// <summary>
-///     Entity system that handles everything device network related.
-///     Device networking allows machines and devices to communicate with each other while adhering to restrictions like range or being connected to the same powernet.
-/// </summary>
-[UsedImplicitly]
+/// <inheritdoc/>
 public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
 {
     [Dependency] private DeviceListSystem _deviceLists = default!;
@@ -32,26 +18,9 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
         EntityArrayPool = new ServerRobustArrayPool<EntityUid?>();
     }
 
-    /// <summary>
-    /// Removes the <see cref="DeviceNetworkManagerComponent"/> if it no longer has any entities in its networks.
-    /// </summary>
-    private void CheckClearManager()
-    {
-        if (!TryGetManager(out var found))
-            return;
-
-        foreach (var network in found.Value.Comp.Networks.Values)
-        {
-            if (network.Devices.Count != 0)
-                return;
-        }
-
-        Del(found);
-    }
-
-    /// <summary>
     /// Automatically disconnect when an entity with a DeviceNetworkComponent shuts down.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnNetworkShutdown(Entity<DeviceNetworkComponent> ent, ref ComponentShutdown args)
     {
         var component = ent.Comp;
@@ -73,7 +42,5 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
 
         if (TryGetNetwork(component.DeviceNetId, out var network))
             network.Remove(ent);
-
-        CheckClearManager();
     }
 }

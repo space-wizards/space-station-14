@@ -1,7 +1,6 @@
 using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.Monitor.Systems;
 using Content.Server.DeviceNetwork.Systems;
-using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
 
@@ -125,12 +124,12 @@ public sealed class AirAlarmFilterMode : AirAlarmModeExecutor
 
         foreach (var (addr, device) in alarm.VentData)
         {
-            AirAlarmSystem.SetData(uid, addr, GasVentPumpDataPayload.FilterModePreset);
+            AirAlarmSystem.SetData(uid, addr, GasVentPumpData.FilterModePreset);
         }
 
         foreach (var (addr, device) in alarm.ScrubberData)
         {
-            AirAlarmSystem.SetData(uid, addr, GasVentScrubberDataPayload.FilterModePreset);
+            AirAlarmSystem.SetData(uid, addr, GasVentScrubberData.FilterModePreset);
         }
     }
 }
@@ -144,12 +143,12 @@ public sealed class AirAlarmWideFilterMode : AirAlarmModeExecutor
 
         foreach (var (addr, device) in alarm.VentData)
         {
-            AirAlarmSystem.SetData(uid, addr, GasVentPumpDataPayload.FilterModePreset);
+            AirAlarmSystem.SetData(uid, addr, GasVentPumpData.FilterModePreset);
         }
 
         foreach (var (addr, device) in alarm.ScrubberData)
         {
-            AirAlarmSystem.SetData(uid, addr, GasVentScrubberDataPayload.WideFilterModePreset);
+            AirAlarmSystem.SetData(uid, addr, GasVentScrubberData.WideFilterModePreset);
         }
     }
 }
@@ -163,12 +162,12 @@ public sealed class AirAlarmPanicMode : AirAlarmModeExecutor
 
         foreach (var (addr, device) in alarm.VentData)
         {
-            AirAlarmSystem.SetData(uid, addr, GasVentPumpDataPayload.PanicModePreset);
+            AirAlarmSystem.SetData(uid, addr, GasVentPumpData.PanicModePreset);
         }
 
         foreach (var (addr, device) in alarm.ScrubberData)
         {
-            AirAlarmSystem.SetData(uid, addr, GasVentScrubberDataPayload.PanicModePreset);
+            AirAlarmSystem.SetData(uid, addr, GasVentScrubberData.PanicModePreset);
         }
     }
 }
@@ -182,12 +181,12 @@ public sealed class AirAlarmFillMode : AirAlarmModeExecutor
 
         foreach (var (addr, device) in alarm.VentData)
         {
-            AirAlarmSystem.SetData(uid, addr, GasVentPumpDataPayload.FillModePreset);
+            AirAlarmSystem.SetData(uid, addr, GasVentPumpData.FillModePreset);
         }
 
         foreach (var (addr, device) in alarm.ScrubberData)
         {
-            AirAlarmSystem.SetData(uid, addr, GasVentScrubberDataPayload.FillModePreset);
+            AirAlarmSystem.SetData(uid, addr, GasVentScrubberData.FillModePreset);
         }
     }
 }

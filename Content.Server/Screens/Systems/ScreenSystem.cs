@@ -15,30 +15,13 @@ public sealed partial class ScreenSystem : EntitySystem
     [Dependency] private IGameTiming _gameTiming = default!;
     [Dependency] private SharedAppearanceSystem _appearanceSystem = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<ScreenComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
-    }
-
-    /// <summary>
-    ///     Calls either a normal screen text update or shuttle timer update based on the presence of
-    ///     <see cref="ShuttleTimerMasks.ShuttleMap"/> in <see cref="args.Data"/>
-    /// </summary>
-    private void OnPacketReceived(Entity<ScreenComponent> ent, ref DeviceNetworkPacketEvent args)
-    {
-        if (args.Data is ScreenShuttlePayload)
-            ShuttleTimer(ent, ref args);
-        else
-            ScreenText(ent, ref args);
-    }
-
     /// <summary>
     ///     Send a text update to every screen on the same MapUid as the originating comms console.
     /// </summary>
-    private void ScreenText(Entity<ScreenComponent> ent, ref DeviceNetworkPacketEvent args)
+    [SubscribeLocalEvent]
+    private void OnScreenText(Entity<ScreenComponent> ent, ref DeviceNetworkPacketEvent<ScreenTextPayload> args)
     {
+        var text = args.Data.Text;
         // don't allow text updates if there's an active timer
         // (and just check here so the server doesn't have to track them)
         if (_appearanceSystem.TryGetData(ent, TextScreenVisuals.TargetTime, out TimeSpan target)
@@ -48,16 +31,14 @@ public sealed partial class ScreenSystem : EntitySystem
         var screenMap = Transform(ent).MapUid;
         var argsMap = Transform(args.Sender).MapUid;
 
-        if (screenMap != null
-            && argsMap != null
-            && screenMap == argsMap
-            && args.Data is ScreenTextPayload payload
-            && payload.Text != null
-            )
-        {
-            _appearanceSystem.SetData(ent, TextScreenVisuals.DefaultText, payload.Text);
-            _appearanceSystem.SetData(ent, TextScreenVisuals.ScreenText, payload.Text);
-        }
+        if (screenMap == null
+            || argsMap == null
+            || screenMap != argsMap
+            || text == null)
+            return;
+
+        _appearanceSystem.SetData(ent, TextScreenVisuals.DefaultText, text);
+        _appearanceSystem.SetData(ent, TextScreenVisuals.ScreenText, text);
     }
 
     /// <summary>
@@ -68,15 +49,14 @@ public sealed partial class ScreenSystem : EntitySystem
     /// Subnets are the shuttle, source, and dest. Source/dest change each jump.
     /// This is required to send different timers to the shuttle/terminal/station.
     /// </summary>
-    private void ShuttleTimer(Entity<ScreenComponent> ent, ref DeviceNetworkPacketEvent args)
+    [SubscribeLocalEvent]
+    private void OnShuttleTimer(Entity<ScreenComponent> ent, ref DeviceNetworkPacketEvent<ScreenShuttlePayload> args)
     {
+        var payload = args.Data;
         var timerXform = Transform(ent);
 
         // no false positives.
         if (timerXform.MapUid == null)
-            return;
-
-        if (args.Data is not ScreenShuttlePayload payload)
             return;
 
         string? text = null;
@@ -85,13 +65,13 @@ public sealed partial class ScreenSystem : EntitySystem
         switch (timerXform.MapUid)
         {
             // sometimes the timer transforms on FTL shuttles have a hyperspace mapent, so matching by grid works as a fallback.
-            case var local when local == GetEntity(payload.Shuttle) || timerXform.GridUid == GetEntity(payload.Shuttle):
+            case var local when local == payload.Shuttle || timerXform.GridUid == payload.Shuttle:
                 time = payload.ShuttleTime;
                 break;
-            case var origin when origin == GetEntity(payload.SourceMap):
+            case var origin when origin == payload.SourceMap:
                 time = payload.SourceTime;
                 break;
-            case var remote when remote == GetEntity(payload.DestinationMap):
+            case var remote when remote == payload.DestinationMap:
                 time = payload.DestinationTime;
                 text = ShuttleTimerMasks.ETA;
                 break;

@@ -163,7 +163,6 @@ namespace Content.Server.Entry
             _euiManager.Initialize();
             _gameMap.Initialize();
             _entSys.GetEntitySystem<GameTicker>().PostInitialize();
-            _entSys.GetEntitySystem<SharedDeviceNetworkSystem>().PostInit();
             _ban.Initialize();
             _connection.PostInit();
             _multiServerKick.Initialize();

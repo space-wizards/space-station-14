@@ -2,10 +2,13 @@ using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Power.Components;
 using Content.Shared.Power.EntitySystems;
+using Content.Server.DeviceNetwork.Components;
+using Content.Server.Power.EntitySystems;
+using Content.Shared.DeviceNetwork.Events;
 
 namespace Content.Shared.DeviceNetwork.Systems;
 
-public sealed partial class DeviceNetworkRequiresPowerSystem : BeforeDevicePayloadSystem<DeviceNetworkRequiresPowerComponent>
+public sealed class DeviceNetworkRequiresPowerSystem : EntitySystem
 {
     [Dependency] private SharedPowerReceiverSystem _power = default!;
 
@@ -21,10 +24,5 @@ public sealed partial class DeviceNetworkRequiresPowerSystem : BeforeDevicePaylo
         {
             args.Cancelled = true;
         }
-    }
-
-    protected override void OnBeforePayload(Entity<DeviceNetworkRequiresPowerComponent> ent, ref BeforePacketSentEvent args)
-    {
-        OnBeforePacketSent(ent, ref args);
     }
 }
