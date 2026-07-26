@@ -34,13 +34,7 @@ public abstract class RelayAccentSystem<T> : EntitySystem where T : BaseAccentCo
     {
         SubscribeLocalEvent<T, AccentGetEvent>(OnAccent, before: AccentBefore, after: AccentAfter);
         SubscribeLocalEvent<T, InventoryRelayedEvent<AccentGetEvent>>(OnInventoryRelayAccent, before: RelayAccentBefore, after: RelayAccentAfter);
-        SubscribeLocalEvent<T, StatusEffectRelayedEvent<AccentGetEvent>>((e, c, ev) =>
-        {
-            var accentGetEvent = ev.Args;
-            OnAccent((e, c), ref accentGetEvent);
-        },
-        before: RelayAccentBefore,
-        after: RelayAccentAfter);
+        SubscribeLocalEvent<T, StatusEffectRelayedEvent<AccentGetEvent>>(OnStatusEffectRelayAccent, before: RelayAccentBefore, after: RelayAccentAfter);
     }
 
     protected virtual void OnInventoryRelayAccent(Entity<T> ent, ref InventoryRelayedEvent<AccentGetEvent> args)
@@ -49,6 +43,13 @@ public abstract class RelayAccentSystem<T> : EntitySystem where T : BaseAccentCo
             return;
 
         OnAccent(ent, ref args.Args);
+    }
+
+    protected virtual void OnStatusEffectRelayAccent(Entity<T> ent, ref StatusEffectRelayedEvent<AccentGetEvent> args)
+    {
+        var ev = args.Args;
+        OnAccent(ent, ref ev);
+        args.Args = ev;
     }
 
     protected virtual void OnAccent(Entity<T> ent, ref AccentGetEvent args)

@@ -43,12 +43,16 @@ public sealed partial class AbsorbentComponent : Component
         AudioParams.Default.WithVariation(SharedContentAudioSystem.DefaultVariation));
 
     [DataField]
-    public SoundSpecifier TransferSound = new SoundPathSpecifier("/Audio/Effects/Fluids/slosh.ogg",
-        AudioParams.Default.WithVariation(SharedContentAudioSystem.DefaultVariation).WithVolume(-3f));
+    public SoundSpecifier TransferSound = new SoundPathSpecifier("/Audio/Effects/Fluids/slosh.ogg")
+    {
+        Params = AudioParams.Default.WithVariation(SharedContentAudioSystem.DefaultVariation).AddVolume(-3f),
+    };
 
     public static readonly SoundSpecifier DefaultTransferSound =
-        new SoundPathSpecifier("/Audio/Effects/Fluids/slosh.ogg",
-            AudioParams.Default.WithVariation(SharedContentAudioSystem.DefaultVariation).WithVolume(-3f));
+        new SoundPathSpecifier("/Audio/Effects/Fluids/slosh.ogg")
+        {
+            Params = AudioParams.Default.WithVariation(SharedContentAudioSystem.DefaultVariation).AddVolume(-3f),
+        };
 
     /// <summary>
     /// Marker that absorbent component owner should try to use 'absorber solution' to replace solution to be absorbed.
