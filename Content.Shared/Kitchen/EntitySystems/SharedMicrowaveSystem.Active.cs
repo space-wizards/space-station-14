@@ -29,8 +29,8 @@ public abstract partial class SharedMicrowaveSystem
         var audioParams = microwaveComponent.LoopingSound?.Params ?? AudioParams.Default;
         audioParams = audioParams.WithLoop(true).WithMaxDistance(5);
 
-        var pvs = AudioSys.PlayPredicted(microwaveComponent.LoopingSound, ent, ent.Comp.User, audioParams);
-        microwaveComponent.PlayingStream = pvs?.Entity;
+        var loopSound = AudioSys.PlayPredicted(microwaveComponent.LoopingSound, ent, ent.Comp.User, audioParams);
+        microwaveComponent.PlayingStream = loopSound?.Entity;
         Dirty(ent, microwaveComponent);
     }
 
