@@ -19,7 +19,7 @@ public sealed partial class CardsTest
     [SidedDependency(Side.Server)]
     private readonly IComponentFactory _sCompFact = null!;
 
-    private const string CardsProtoId = "cardDeck";
+    private const string CardsProtoId = "CardDeck";
 
     private const string Player = "MobHuman";
 
@@ -46,7 +46,7 @@ public sealed partial class CardsTest
     }
 
     [Test]
-    public async Task TryTakeCardWithInvalidInxFails()
+    public async Task TryTakeCardWithInvalidIndexFails()
     {
         await Pair.CreateTestMap();
         var coords = Pair.TestMap!.GridCoords;
@@ -79,7 +79,7 @@ public sealed partial class CardsTest
             var (uid, cards, stack) = SpawnDeck(coords);
             Assert.That(cards.Flipped, Is.False);
 
-            var originalFirstCards = cards.Cards.Take(5).Select(c => c.CardInx).ToList();
+            var originalFirstCards = cards.Cards.Take(5).Select(c => c.CardIndex).ToList();
 
             var split = _sStacks.Split((uid, stack), 5, coords);
             Assert.That(split, Is.Not.Null);
@@ -87,11 +87,11 @@ public sealed partial class CardsTest
             if (!SEntMan.TryGetComponent<CardsComponent>(split!.Value, out var splitCards))
                 Assert.Fail($"Missing {nameof(CardsComponent)} on split");
 
-            var splitInxes = splitCards!.Cards.Select(c => c.CardInx).ToList();
+            var splitInxes = splitCards!.Cards.Select(c => c.CardIndex).ToList();
             Assert.That(
                 splitInxes,
                 Is.EquivalentTo(originalFirstCards),
-                "Unflipped deck: split should take the first N cards (by CardInx)"
+                "Unflipped deck: split should take the first N cards (by CardIndex)"
             );
         });
     }
@@ -106,7 +106,7 @@ public sealed partial class CardsTest
         {
             var (uid, cards, stack) = SpawnDeck(coords);
             var total = cards.Cards.Count;
-            var originalLastCards = cards.Cards.TakeLast(5).Select(c => c.CardInx).ToList();
+            var originalLastCards = cards.Cards.TakeLast(5).Select(c => c.CardIndex).ToList();
 
             _sCards.TryFlipCards((uid, cards));
 
@@ -116,11 +116,11 @@ public sealed partial class CardsTest
             if (!SEntMan.TryGetComponent<CardsComponent>(split!.Value, out var splitCards))
                 Assert.Fail($"Missing {nameof(CardsComponent)} on split");
 
-            var splitInxes = splitCards!.Cards.Select(c => c.CardInx).ToList();
+            var splitInxes = splitCards!.Cards.Select(c => c.CardIndex).ToList();
             Assert.That(
                 splitInxes,
                 Is.EquivalentTo(originalLastCards),
-                "Flipped deck: split should take the last N cards (by CardInx)"
+                "Flipped deck: split should take the last N cards (by CardIndex)"
             );
         });
     }
@@ -152,7 +152,7 @@ public sealed partial class CardsTest
     }
 
     [Test]
-    public async Task CardInxesAreUniqueAfterSpawn()
+    public async Task CardIndexesAreUniqueAfterSpawn()
     {
         await Pair.CreateTestMap();
         var coords = Pair.TestMap!.GridCoords;
@@ -169,15 +169,15 @@ public sealed partial class CardsTest
                 .Concat(cardsC.Cards)
                 .Concat(cardsD.Cards)
                 .Concat(cardsE.Cards);
-            var inxes = allCardLists.Select(c => c.CardInx).ToList();
-            var distinct = inxes.Distinct().ToList();
+            var indexes = allCardLists.Select(c => c.CardIndex).ToList();
+            var distinct = indexes.Distinct().ToList();
 
-            Assert.That(distinct.Count, Is.EqualTo(inxes.Count), "Every CardInx should be unique across the deck");
+            Assert.That(distinct.Count, Is.EqualTo(indexes.Count), "Every CardInx should be unique across the deck");
         });
     }
 
     [Test]
-    public async Task ShuffleRetainsAllCardInxes()
+    public async Task ShuffleRetainsAllCardIndexes()
     {
         await Pair.CreateTestMap();
         var coords = Pair.TestMap!.GridCoords;
@@ -185,12 +185,12 @@ public sealed partial class CardsTest
         await Server.WaitAssertion(() =>
         {
             var (uid, cards, _) = SpawnDeck(coords);
-            var before = cards.Cards.Select(c => c.CardInx).OrderBy(x => x).ToList();
+            var before = cards.Cards.Select(c => c.CardIndex).OrderBy(x => x).ToList();
 
             _sCards.TryShuffleCards((uid, cards));
 
-            var after = cards.Cards.Select(c => c.CardInx).OrderBy(x => x).ToList();
-            Assert.That(after, Is.EqualTo(before), "After shuffle the same CardInxes must all be present");
+            var after = cards.Cards.Select(c => c.CardIndex).OrderBy(x => x).ToList();
+            Assert.That(after, Is.EqualTo(before), "After shuffle the same CardIndex must all be present");
         });
     }
 

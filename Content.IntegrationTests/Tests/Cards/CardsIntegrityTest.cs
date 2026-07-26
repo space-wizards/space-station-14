@@ -188,7 +188,7 @@ public sealed partial class CardsTest : GameTest
             var before = cards.Cards.Count;
             var stackBefore = stack.Count;
 
-            if (!_sCards.TryTakeCard((uid, cards), (player, playerXform), cards.Cards[20].CardInx, out var split))
+            if (!_sCards.TryTakeCard((uid, cards), (player, playerXform), cards.Cards[20].CardIndex, out var split))
                 Assert.Fail();
             if (split == null)
                 Assert.Fail();
@@ -206,7 +206,7 @@ public sealed partial class CardsTest : GameTest
             Assert.That(cards.Cards.Count + splitCards.Cards.Count, Is.EqualTo(before));
             Assert.That(stack.Count + splitStack.Count, Is.EqualTo(stackBefore));
 
-            if (!_sCards.TryTakeCard((uid, cards), (player, playerXform), cards.Cards[0].CardInx, out split))
+            if (!_sCards.TryTakeCard((uid, cards), (player, playerXform), cards.Cards[0].CardIndex, out split))
                 Assert.Fail();
 
             Assert.That(splitCards.Cards.Count, Is.EqualTo(before));

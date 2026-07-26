@@ -16,9 +16,9 @@ public sealed partial class CardSystem : SharedCardSystem
         for (var i = 0; i < ent.Comp.Cards.Count; i++)
         {
             var card = ent.Comp.Cards[i];
-            if (card.CardInx != 0)
+            if (card.CardIndex != 0)
                 continue;
-            card.CardInx = _inxCounter;
+            card.CardIndex = _inxCounter;
             _inxCounter++;
             ent.Comp.Cards[i] = card;
         }

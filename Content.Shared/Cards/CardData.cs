@@ -32,7 +32,7 @@ public partial struct CardData
     /// It is not an index within a deck.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public int CardInx;
+    public int CardIndex;
 
     public CardData(ProtoId<CardPrototype> cardId)
     {

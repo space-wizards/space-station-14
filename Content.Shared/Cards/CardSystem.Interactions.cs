@@ -120,7 +120,7 @@ public abstract partial class SharedCardSystem
                     new AlternativeVerb
                     {
                         Text = Loc.GetString(card.CardId.ToString().Replace('_', '-')),
-                        Act = () => TryTakeCard(ent, user, card.CardInx, out _),
+                        Act = () => TryTakeCard(ent, user, card.CardIndex, out _),
                         Category = VerbCategory.TakeCard,
                         Priority = priority--,
                     }
@@ -136,7 +136,7 @@ public abstract partial class SharedCardSystem
                 new AlternativeVerb
                 {
                     Text = Loc.GetString("comp-cards-random-card"),
-                    Act = () => TryTakeCard(ent, user, ent.Comp.Cards[randomIndex].CardInx, out _),
+                    Act = () => TryTakeCard(ent, user, ent.Comp.Cards[randomIndex].CardIndex, out _),
                     Priority = -200,
                 }
             );

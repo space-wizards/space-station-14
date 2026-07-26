@@ -209,7 +209,7 @@ public abstract partial class SharedCardSystem : EntitySystem
     /// </summary>
     /// <param name="cards">The card stack entity to take a card from.</param>
     /// <param name="user">The entity attempting to take the card.</param>
-    /// <param name="cardInx">The index of the specific card being taken from the stack.</param>
+    /// <param name="cardIndex">The index of the specific card being taken from the stack.</param>
     /// <param name="split">
     /// When this method returns, contains the entity that the split-off card(s) ended up on,
     /// or <c>null</c> if no split occurred or the operation failed.
@@ -218,7 +218,7 @@ public abstract partial class SharedCardSystem : EntitySystem
     public bool TryTakeCard(
         Entity<CardsComponent> cards,
         Entity<TransformComponent?> user,
-        int cardInx,
+        int cardIndex,
         out EntityUid? split
     )
     {
@@ -251,7 +251,7 @@ public abstract partial class SharedCardSystem : EntitySystem
         }
 
         // Animation must be before cards are moved
-        var card = GetCardFromInx(cards.Comp.Cards, cardInx);
+        var card = GetCardFromInx(cards.Comp.Cards, cardIndex);
         if (!card.HasValue)
         {
             if (!Exists(cards.Owner))
@@ -290,11 +290,11 @@ public abstract partial class SharedCardSystem : EntitySystem
     /// Finds the <see cref="CardData"/> in the given list whose card index matches the specified value.
     /// </summary>
     /// <param name="cards">The list of cards to search.</param>
-    /// <param name="cardInx">The card index to search for.</param>
+    /// <param name="cardIndex">The card index to search for.</param>
     /// <returns>The matching <see cref="CardData"/>, or <c>null</c> if no card with that index exists.</returns>
-    public CardData? GetCardFromInx(List<CardData> cards, int cardInx)
+    public CardData? GetCardFromInx(List<CardData> cards, int cardIndex)
     {
-        var card = cards.Find(c => c.CardInx == cardInx);
+        var card = cards.Find(c => c.CardIndex == cardIndex);
         return card.CardId.Id == null ? null : card;
     }
 }
