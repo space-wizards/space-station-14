@@ -222,7 +222,7 @@ public sealed partial class ConditionalSpawnerSystem : EntitySystem
 
     private MapCoordinates GetRandomOffset(MapCoordinates coords, float offset)
     {
-        var vOffset = _robustRandom.NextVector2Box(-offset, offset);
+        var vOffset = _robustRandom.NextVector2Box(offset, offset);
         return coords.Offset(vOffset);
     }
 }
