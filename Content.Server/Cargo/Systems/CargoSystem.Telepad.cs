@@ -48,7 +48,6 @@ public sealed partial class CargoSystem
             tele.CurrentOrders.Add(args.Order);
 
             tele.Accumulator = tele.Delay;
-
             args.Handled = true;
             args.FulfillmentEntity = uid;
             return;
