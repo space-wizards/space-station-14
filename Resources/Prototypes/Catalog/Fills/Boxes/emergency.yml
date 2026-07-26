@@ -4,6 +4,11 @@
   name: O2 survival box
   description: A small box containing a breath mask, an emergency oxygen tank, and an emergency medipen. Standard-issue for most oxygen-breathing crew.
   components:
+  - type: Item
+    size: 5
+  - type: Storage
+    grid:
+      - 0,0,2,3
   - type: EntityTableContainerFill
     containers:
       storagebase: !type:AllSelector
@@ -11,6 +16,7 @@
         - id: ClothingMaskBreath
         - id: EmergencyOxygenTankFilled
         - id: EmergencyMedipen
+        - id: Flare
   - type: Sprite
     layers:
     - state: internals
