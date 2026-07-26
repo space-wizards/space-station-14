@@ -1,13 +1,12 @@
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
+using Content.Shared.Movement.Systems;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Movement.Systems;
 
-/// <summary>
-/// Controls the switching of motion and standing still animation
-/// </summary>
-public sealed partial class SpriteMovementSystem : EntitySystem
+/// <inheritdoc/>
+public sealed partial class SpriteMovementSystem : SharedSpriteMovementSystem
 {
     [Dependency] private SpriteSystem _sprite = default!;
 
