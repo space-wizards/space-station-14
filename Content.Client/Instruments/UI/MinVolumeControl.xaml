@@ -1,0 +1,5 @@
+﻿<Control xmlns="https://spacestation14.io">
+    <BoxContainer Orientation="Horizontal" VerticalExpand="True">
+        <Slider Name="MidiMinVolumeSlider" HorizontalExpand="True" MinValue="0" MaxValue="127" />
+    </BoxContainer>
+</Control>
