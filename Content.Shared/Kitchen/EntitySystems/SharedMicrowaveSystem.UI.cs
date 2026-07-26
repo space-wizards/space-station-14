@@ -52,8 +52,7 @@ public abstract partial class SharedMicrowaveSystem
     [SubscribeLocalEvent]
     private void OnSelectCookTime(Entity<MicrowaveComponent> ent, ref MicrowaveSelectCookTimeMessage args)
     {
-        if (!HasContents(ent.AsNullable())
-            || IsActiveMicrowave(ent.AsNullable())
+        if (IsActiveMicrowave(ent.AsNullable())
             || !_power.IsPowered(ent.Owner))
             return;
 
