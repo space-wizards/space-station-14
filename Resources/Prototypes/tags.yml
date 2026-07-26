@@ -1082,8 +1082,8 @@
   id: PetOnly # Used by human, diona, arachnid InventoryTemplate to blacklist back slot items.
 
 - type: Tag
-  id: PetWearable # Used by hamster, kangaroo, pet, petAdvanced, SmartCorgi InventoryTemplate to whitelist mask slots.
-                  # SmartCorgi and petAdvanced use it for eyes slots. petAdvanced uses it for head slot.
+  id: PetWearable # Used by hamster, kangaroo, pet, petAdvanced, InventoryTemplate to whitelist mask slots.
+                  # petAdvanced uses it for eyes and head slot.
 
 - type: Tag
   id: Pickaxe # GatherableComponent whitelist on WallRock.
