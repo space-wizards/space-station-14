@@ -10,24 +10,20 @@ namespace Content.Shared.Timing;
 /// </summary>
 public partial class UseDelaySystem
 {
-    public void InitializeEvents()
-    {
-        SubscribeLocalEvent<UseDelayOnShootComponent, GunShotEvent>(OnUseShoot);
-        SubscribeLocalEvent<UseDelayOnMeleeHitComponent, MeleeHitEvent>(OnMeleeHit);
-        SubscribeLocalEvent<UseDelayOnThrowHitComponent, ThrowDoHitEvent>(OnThrowHitEvent);
-    }
-
+    [SubscribeLocalEvent]
     private void OnUseShoot(Entity<UseDelayOnShootComponent> ent, ref GunShotEvent args)
     {
         TryResetDelay(ent, checkDelayed: true, id: ent.Comp.UseDelayId);
     }
 
+    [SubscribeLocalEvent]
     private void OnMeleeHit(Entity<UseDelayOnMeleeHitComponent> ent, ref MeleeHitEvent args)
     {
         if (args.HitEntities.Any() || ent.Comp.IncludeMiss)
             TryResetDelay(ent, checkDelayed: true, id: ent.Comp.UseDelayId);
     }
 
+    [SubscribeLocalEvent]
     private void OnThrowHitEvent(Entity<UseDelayOnThrowHitComponent> ent, ref ThrowDoHitEvent args)
     {
         TryResetDelay(ent, checkDelayed: true, id: ent.Comp.UseDelayId);
