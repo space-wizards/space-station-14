@@ -1,4 +1,4 @@
-using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Destructible.Thresholds.Triggers;
@@ -24,5 +24,30 @@ public sealed partial class OrTrigger : IThresholdTrigger
         }
 
         return false;
+    }
+
+    public int CompareTo(IThresholdTrigger? other)
+    {
+        var comparison = 0;
+        foreach (var trigger in Triggers)
+        {
+            comparison += trigger.CompareTo(other);
+        }
+
+        return Math.Clamp(comparison, -1, 1);
+    }
+
+    public bool Equals(IThresholdTrigger? other)
+    {
+        if (other is not OrTrigger trigger || trigger.Triggers.Count != Triggers.Count)
+            return false;
+
+        for (var i = 0; i < Triggers.Count; i++)
+        {
+            if (!trigger.Triggers[i].Equals(Triggers[i]))
+                return false;
+        }
+
+        return true;
     }
 }

@@ -2,6 +2,7 @@
 using Content.Shared.Trigger.Components.Triggers;
 using Content.Shared.Examine;
 using Content.Shared.Verbs;
+using Robust.Shared.Random;
 
 namespace Content.Shared.Trigger.Systems;
 
@@ -99,7 +100,7 @@ public sealed partial class TriggerSystem
                     {
                         ent.Comp.Delay = option;
                         Dirty(ent);
-                        _popup.PopupClient(Loc.GetString("timer-trigger-popup-set", ("time", option.TotalSeconds)), user, user);
+                        _popup.PopupEntity(Loc.GetString("timer-trigger-popup-set", ("time", option.TotalSeconds)), user, user);
                     }
                 });
             }
@@ -124,7 +125,7 @@ public sealed partial class TriggerSystem
         if (ent.Comp.DelayOptions[^1] <= ent.Comp.Delay)
         {
             ent.Comp.Delay = ent.Comp.DelayOptions[0];
-            _popup.PopupClient(Loc.GetString("timer-trigger-popup-set", ("time", ent.Comp.Delay)), ent.Owner, user);
+            _popup.PopupEntity(Loc.GetString("timer-trigger-popup-set", ("time", ent.Comp.Delay)), ent.Owner, user);
             return;
         }
 
@@ -133,7 +134,7 @@ public sealed partial class TriggerSystem
             if (option > ent.Comp.Delay)
             {
                 ent.Comp.Delay = option;
-                _popup.PopupClient(Loc.GetString("timer-trigger-popup-set", ("time", option)), ent.Owner, user);
+                _popup.PopupEntity(Loc.GetString("timer-trigger-popup-set", ("time", option)), ent.Owner, user);
                 return;
             }
         }

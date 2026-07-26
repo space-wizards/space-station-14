@@ -1,11 +1,9 @@
-﻿using System.Numerics;
+using System.Numerics;
 using Content.Shared.Conveyor;
 using Content.Shared.Gravity;
-using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
-using Robust.Shared.Collections;
-using Robust.Shared.Map;
+using Content.Shared.Stacks;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Controllers;
@@ -15,34 +13,30 @@ using Robust.Shared.Threading;
 
 namespace Content.Shared.Physics.Controllers;
 
-public abstract class SharedConveyorController : VirtualController
+public abstract partial class SharedConveyorController : VirtualController
 {
-    [Dependency] protected readonly IMapManager MapManager = default!;
-    [Dependency] private   readonly IParallelManager _parallel = default!;
-    [Dependency] private   readonly CollisionWakeSystem _wake = default!;
-    [Dependency] protected readonly EntityLookupSystem Lookup = default!;
-    [Dependency] private   readonly FixtureSystem _fixtures = default!;
-    [Dependency] private   readonly SharedGravitySystem _gravity = default!;
-    [Dependency] private   readonly SharedMoverController _mover = default!;
+    [Dependency] private IParallelManager _parallel = default!;
+    [Dependency] private CollisionWakeSystem _wake = default!;
+    [Dependency] protected EntityLookupSystem Lookup = default!;
+    [Dependency] private FixtureSystem _fixtures = default!;
+    [Dependency] private SharedGravitySystem _gravity = default!;
+    [Dependency] private SharedMoverController _mover = default!;
+    [Dependency] private SharedStackSystem _stack = default!;
 
     protected const string ConveyorFixture = "conveyor";
 
     private ConveyorJob _job;
 
-    private EntityQuery<ConveyorComponent> _conveyorQuery;
-    private EntityQuery<ConveyedComponent> _conveyedQuery;
-    protected EntityQuery<PhysicsComponent> PhysicsQuery;
-    protected EntityQuery<TransformComponent> XformQuery;
+    [Dependency] private EntityQuery<ConveyorComponent> _conveyorQuery = default!;
+    [Dependency] private EntityQuery<ConveyedComponent> _conveyedQuery = default!;
+    [Dependency] protected EntityQuery<PhysicsComponent> PhysicsQuery = default!;
+    [Dependency] protected EntityQuery<TransformComponent> XformQuery = default!;
 
     protected HashSet<EntityUid> Intersecting = new();
 
     public override void Initialize()
     {
         _job = new ConveyorJob(this);
-        _conveyorQuery = GetEntityQuery<ConveyorComponent>();
-        _conveyedQuery = GetEntityQuery<ConveyedComponent>();
-        PhysicsQuery = GetEntityQuery<PhysicsComponent>();
-        XformQuery = GetEntityQuery<TransformComponent>();
 
         UpdatesAfter.Add(typeof(SharedMoverController));
 
@@ -58,6 +52,9 @@ public abstract class SharedConveyorController : VirtualController
 
     private void OnConveyedFriction(Entity<ConveyedComponent> ent, ref TileFrictionEvent args)
     {
+        if(!ent.Comp.Conveying)
+            return;
+
         // Conveyed entities don't get friction, they just get wishdir applied so will inherently slowdown anyway.
         args.Modifier = 0f;
     }
@@ -140,7 +137,15 @@ public abstract class SharedConveyorController : VirtualController
                 continue;
 
             var physics = ent.Entity.Comp3;
+
+            if (physics.BodyStatus != BodyStatus.OnGround)
+            {
+                SetConveying(ent.Entity.Owner, ent.Entity.Comp1, false);
+                continue;
+            }
+
             var velocity = physics.LinearVelocity;
+            var angularVelocity = physics.AngularVelocity;
             var targetDir = ent.Direction;
 
             // If mob is moving with the conveyor then combine the directions.
@@ -153,7 +158,15 @@ public abstract class SharedConveyorController : VirtualController
 
             if (ent.Result)
             {
-                SetConveying(ent.Entity.Owner, ent.Entity.Comp1, targetDir.LengthSquared() > 0f);
+                if (targetDir.LengthSquared() > 0f)
+                {
+                    SetConveying(ent.Entity.Owner, ent.Entity.Comp1, true);
+                }
+                else if (ent.Entity.Comp1.Conveying)
+                {
+                    SetConveying(ent.Entity.Owner, ent.Entity.Comp1, false);
+                    _stack.TryMergeToContacts(ent.Entity.Owner);
+                }
 
                 // We apply friction here so when we push items towards the center of the conveyor they don't go overspeed.
                 // We also don't want this to apply to mobs as they apply their own friction and otherwise
@@ -163,6 +176,7 @@ public abstract class SharedConveyorController : VirtualController
                     // We provide a small minimum friction speed as well for those times where the friction would stop large objects
                     // snagged on corners from sliding into the centerline.
                     _mover.Friction(0.2f, frameTime: frameTime, friction: 5f, ref velocity);
+                    _mover.Friction(0f, frameTime: frameTime, friction: 5f, ref angularVelocity);
                 }
 
                 SharedMoverController.Accelerate(ref velocity, targetDir, 20f, frameTime);
@@ -172,8 +186,10 @@ public abstract class SharedConveyorController : VirtualController
                 // Need friction to outweigh the movement as it will bounce a bit against the wall.
                 // This facilitates being able to sleep entities colliding into walls.
                 _mover.Friction(0f, frameTime: frameTime, friction: 40f, ref velocity);
+                _mover.Friction(0f, frameTime: frameTime, friction: 40f, ref angularVelocity);
             }
 
+            PhysicsSystem.SetAngularVelocity(ent.Entity.Owner, angularVelocity);
             PhysicsSystem.SetLinearVelocity(ent.Entity.Owner, velocity, wakeBody: false);
 
             if (!IsConveyed((ent.Entity.Owner, ent.Entity.Comp2)))

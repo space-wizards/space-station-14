@@ -138,12 +138,13 @@
     sprite: Structures/Storage/Crates/surgery.rsi
 
 - type: entity
-  parent: CrateGeneric
+  parent: BaseCrate
   id: CrateWeb
   name: web crate
   components:
   - type: Icon
     sprite: Structures/Storage/Crates/web.rsi
+    state: icon
   - type: Sprite
     sprite: Structures/Storage/Crates/web.rsi
     layers:
@@ -157,19 +158,14 @@
   - type: Construction
     graph: WebStructures
     node: crate
+    containers:
+    - entity_storage
   - type: Damageable
     damageModifierSet: Web
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WoodDestroy
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 50
@@ -199,6 +195,7 @@
   components:
   - type: Icon
     sprite: Structures/Storage/Crates/sec_gear.rsi
+    state: icon
   - type: Sprite
     sprite: Structures/Storage/Crates/sec_gear.rsi
   - type: AccessReader
@@ -333,7 +330,20 @@
     access: [["Command"]]
 
 - type: entity
-  parent: CrateGeneric
+  parent: CrateBaseSecure
+  id: CrateSyndicateSecure
+  name: secure syndicate crate
+  description: A dark steel crate with red bands and a letter S embossed on the front.
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/syndicate_secure.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/syndicate_secure.rsi
+  - type: AccessReader
+    access: [["SyndicateAgent", "NuclearOperative"]]
+
+- type: entity
+  parent: BaseCrate
   id: CrateLivestock
   name: livestock crate
   components:
@@ -352,6 +362,9 @@
   - type: Icon
     sprite: Structures/Storage/Crates/livestock.rsi
     state: base
+  - type: Damageable
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -390,7 +403,7 @@
     price: 125
 
 - type: entity
-  parent: CrateGeneric
+  parent: BaseCrate
   id: CrateRodentCage
   name: hamster cage
   components:
@@ -408,17 +421,12 @@
       map: ["enum.PaperLabelVisuals.Layer"]
   - type: Icon
     sprite: Structures/Storage/Crates/cage.rsi
+    state: icon
+  - type: Damageable
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
-        !type:DamageTrigger
-        damage: 75
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalGlassBreak
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 15
@@ -694,7 +702,7 @@
     state: crate_icon
 
 - type: entity
-  parent: CrateGeneric
+  parent: BaseCrate
   id: CrateCoffin
   name: coffin
   description: A comfy coffin, excellent place for the vampires and corpses.
@@ -710,17 +718,11 @@
   - type: Icon
     sprite: Structures/Storage/Crates/coffin.rsi
     state: base
+  - type: Damageable
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
-        !type:DamageTrigger
-        damage: 75
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WoodDestroy
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 15
@@ -742,7 +744,7 @@
     - entity_storage
 
 - type: entity
-  parent: CrateGeneric
+  parent: BaseCrate
   id: CrateWoodenGrave
   name: grave
   suffix: wooden
@@ -761,17 +763,11 @@
   - type: Icon
     sprite: Structures/Storage/Crates/wooden_grave.rsi
     state: base
+  - type: Damageable
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
-        !type:DamageTrigger
-        damage: 400
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WoodDestroy
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 200 # discourage just beating the grave to break it open
@@ -822,7 +818,7 @@
 - type: entity
   parent: CrateGenericSteel
   id: CrateSyndicate
-  name: Syndicate crate
+  name: syndicate crate
   description: A dark steel crate with red bands and a letter S embossed on the front.
   components:
   - type: Icon
@@ -888,6 +884,7 @@
   components:
   - type: Stealth
     hadOutline: true
+    shimmerFrequency: 0.05
   - type: StealthOnMove
     passiveVisibilityRate: -0.10
     movementVisibilityRate: 0.10

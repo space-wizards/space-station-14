@@ -1,4 +1,4 @@
-using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Damage.Prototypes;
 using Robust.Shared.Prototypes;
@@ -28,6 +28,22 @@ public sealed partial class DamageGroupTrigger : IThresholdTrigger
 
     public bool Reached(Entity<DamageableComponent> damageable, SharedDestructibleSystem system)
     {
-        return damageable.Comp.DamagePerGroup[DamageGroup] >= Damage;
+        return system.Damageable.GetDamagePerGroup(damageable.Owner).GetValueOrDefault(DamageGroup) >= Damage;
+    }
+
+    public int CompareTo(IThresholdTrigger? other)
+    {
+        if (other is DamageGroupTrigger trigger && trigger.DamageGroup == DamageGroup)
+        {
+            return Damage.CompareTo(trigger.Damage);
+        }
+
+        // Not comparable...
+        return 0;
+    }
+
+    public bool Equals(IThresholdTrigger? other)
+    {
+        return other is DamageGroupTrigger trigger && trigger.DamageGroup == DamageGroup && trigger.Damage == Damage;
     }
 }

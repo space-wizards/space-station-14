@@ -1,3 +1,4 @@
+using Content.Client.Resources;
 using Content.Client.Stylesheets.Fonts;
 using Content.Client.Stylesheets.Palette;
 using Robust.Client.UserInterface;
@@ -11,6 +12,10 @@ public sealed class LabelSheetlet : Sheetlet<PalettedStylesheet>
 {
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
+        var robotoMonoBold11 = ResCache.GetFont("/Fonts/RobotoMono/RobotoMono-Bold.ttf", size: 11);
+        var robotoMonoBold12 = ResCache.GetFont("/Fonts/RobotoMono/RobotoMono-Bold.ttf", size: 12);
+        var robotoMonoBold14 = ResCache.GetFont("/Fonts/RobotoMono/RobotoMono-Bold.ttf", size: 14);
+
         return
         [
             E<Label>()
@@ -21,6 +26,10 @@ public sealed class LabelSheetlet : Sheetlet<PalettedStylesheet>
                 .Class(StyleClass.LabelHeadingBigger)
                 .Font(sheet.BaseFont.GetFont(20, FontKind.Bold))
                 .FontColor(sheet.HighlightPalette.Text),
+            E<Label>()
+                .Class(StyleClass.LabelSubHeading)
+                .Font(sheet.BaseFont.GetFont(14, FontKind.Italic))
+                .FontColor(sheet.HighlightPalette.TextDark),
             E<Label>()
                 .Class(StyleClass.LabelSubText)
                 .Font(sheet.BaseFont.GetFont(10))
@@ -58,6 +67,17 @@ public sealed class LabelSheetlet : Sheetlet<PalettedStylesheet>
             E<Label>()
                 .Class(StyleClass.StatusCritical)
                 .FontColor(Palettes.Status.Critical),
+
+            // Console text
+            E<Label>()
+                .Class(StyleClass.LabelMonospaceText)
+                .Prop(Label.StylePropertyFont, robotoMonoBold11),
+            E<Label>()
+                .Class(StyleClass.LabelMonospaceSubHeading)
+                .Prop(Label.StylePropertyFont, robotoMonoBold12),
+            E<Label>()
+                .Class(StyleClass.LabelMonospaceHeading)
+                .Prop(Label.StylePropertyFont, robotoMonoBold14),
         ];
     }
 }

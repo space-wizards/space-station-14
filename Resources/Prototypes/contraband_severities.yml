@@ -3,11 +3,13 @@
 - type: contrabandSeverity
   id: Minor
   examineText: contraband-examine-text-Minor
+  color: yellow
 
 # Dangerous fucking shit that doesn't belong to CyberSun or NanoTrasen, RPGs, retro laser blasters, unholy things
 - type: contrabandSeverity
   id: Major
   examineText: contraband-examine-text-Major
+  color: red
 
 # Having this without a good reason might get you yelled at by security. (spears, shivs, etc).
 # or, Having this as a regular crew member, not the department it was made for, is considered theft IC. (rcd, sec gear, etc)
@@ -15,23 +17,28 @@
   id: Restricted
   examineText: contraband-examine-text-Restricted
   showDepartmentsAndJobs: true
+  color: yellow
 
 # Having this as a regular crew member is considered grand theft. (nuke disk, captain's gear, objective items, etc)
 - type: contrabandSeverity
   id: GrandTheft
   examineText: contraband-examine-text-GrandTheft
+  color: red
 
 # This is highly illegal contraband and is illegal to own IC.
 - type: contrabandSeverity
   id: HighlyIllegal
   examineText: contraband-examine-text-Highly-Illegal
+  color: crimson
 
 # This is clear syndicate contraband and is illegal to own IC.
 - type: contrabandSeverity
   id: Syndicate
   examineText: contraband-examine-text-Syndicate
+  color: crimson
 
 # This is magical contraband and not permitted to be used IC.
 - type: contrabandSeverity
   id: Magical
   examineText: contraband-examine-text-Magical
+  color: "#b337b3"

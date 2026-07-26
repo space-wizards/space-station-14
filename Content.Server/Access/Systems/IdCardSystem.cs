@@ -8,21 +8,20 @@ using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Chat;
 using Content.Shared.Database;
+using Content.Shared.Kitchen;
 using Content.Shared.Popups;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Content.Server.Kitchen.EntitySystems;
 
 namespace Content.Server.Access.Systems;
 
-public sealed class IdCardSystem : SharedIdCardSystem
+public sealed partial class IdCardSystem : SharedIdCardSystem
 {
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly MicrowaveSystem _microwave = default!;
+    [Dependency] private PopupSystem _popupSystem = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private IAdminLogManager _adminLogger = default!;
+    [Dependency] private ChatSystem _chat = default!;
+    [Dependency] private MicrowaveSystem _microwave = default!;
 
     public override void Initialize()
     {
@@ -81,7 +80,7 @@ public sealed class IdCardSystem : SharedIdCardSystem
             }
 
             // Give them a wonderful new access to compensate for everything
-            var ids = _prototypeManager.EnumeratePrototypes<AccessLevelPrototype>().Where(x => x.CanAddToIdCard).ToArray();
+            var ids = ProtoMan.EnumeratePrototypes<AccessLevelPrototype>().Where(x => x.CanAddToIdCard).ToArray();
 
             if (ids.Length == 0)
                 return;
@@ -97,12 +96,10 @@ public sealed class IdCardSystem : SharedIdCardSystem
         }
     }
 
-    public override void ExpireId(Entity<ExpireIdCardComponent> ent)
+    public override bool ExpireId(Entity<ExpireIdCardComponent> ent)
     {
-        if (ent.Comp.Expired)
-            return;
-
-        base.ExpireId(ent);
+        if (!base.ExpireId(ent))
+            return false;
 
         if (ent.Comp.ExpireMessage != null)
         {
@@ -113,5 +110,7 @@ public sealed class IdCardSystem : SharedIdCardSystem
                 ChatTransmitRange.Normal,
                 true);
         }
+
+        return true;
     }
 }

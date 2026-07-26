@@ -1,9 +1,10 @@
+using Content.Shared.Speech.Components;
 using Robust.Shared.Audio;
 
 namespace Content.Server.Speech.Components;
 
 [RegisterComponent]
-public sealed partial class MumbleAccentComponent : Component
+public sealed partial class MumbleAccentComponent : BaseAccentComponent
 {
     /// <summary>
     /// This modifies the audio parameters of emote sounds, screaming, laughing, etc.
