@@ -10,7 +10,6 @@ using Content.Shared.Power;
 using Content.Shared.Station.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Random;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Cargo.Systems;
 
@@ -40,9 +39,8 @@ public sealed partial class CargoSystem
             if (_station.GetOwningStation(uid, xform) != args.Station)
                 continue;
 
-            // todo cannot be fucking asked to figure out device linking rn but this shouldn't just default to the first port.
-            if (!TryGetLinkedConsole((uid, tele), out var console) ||
-                console.Value.Owner != args.OrderConsole.Owner)
+
+            if (!IsLinkedToConsole(uid, GetEntity(args.Order.ApprovingConsole)))
                 continue;
 
             for (var i = 0; i < args.Order.OrderQuantity; i++)
@@ -56,19 +54,39 @@ public sealed partial class CargoSystem
         }
     }
 
-    private bool TryGetLinkedConsole(Entity<CargoTelepadComponent> ent,
-        [NotNullWhen(true)] out Entity<CargoOrderConsoleComponent>? console)
+    private bool IsLinkedToConsole(
+        EntityUid uid,
+        EntityUid? approvingConsole,
+        [NotNullWhen(true)] List<Entity<CargoOrderConsoleComponent>>? consoles = null
+    )
     {
-        console = null;
-        if (!TryComp<DeviceLinkSinkComponent>(ent, out var sinkComponent) ||
-            sinkComponent.LinkedSources.FirstOrNull() is not { } linked)
+        if (approvingConsole == null)
             return false;
 
-        if (!TryComp<CargoOrderConsoleComponent>(linked, out var consoleComp))
+        if (consoles == null && !TryGetLinkedConsoles(uid, out consoles))
+        {
+            consoles = null;
             return false;
+        }
 
-        console = (linked, consoleComp);
-        return true;
+        return consoles.Any(console => console.Owner == approvingConsole);
+    }
+
+    private bool TryGetLinkedConsoles(
+        EntityUid uid,
+        [NotNullWhen(true)] out List<Entity<CargoOrderConsoleComponent>> consoles
+    )
+    {
+        consoles = new();
+        if (!TryComp<DeviceLinkSinkComponent>(uid, out var sinkComponent))
+            return false;
+        foreach (var linked in sinkComponent.LinkedSources)
+        {
+            if (!TryComp<CargoOrderConsoleComponent>(linked, out var consoleComp))
+                continue;
+            consoles.Add((linked, consoleComp));
+        }
+        return consoles.Count > 0;
     }
 
 
@@ -98,7 +116,7 @@ public sealed partial class CargoSystem
                 continue;
             }
 
-            if (comp.CurrentOrders.Count == 0 || !TryGetLinkedConsole((uid, comp), out var console))
+            if (comp.CurrentOrders.Count == 0 || !TryGetLinkedConsoles(uid, out var consoles))
             {
                 comp.Accumulator += comp.Delay;
                 continue;
@@ -146,12 +164,9 @@ public sealed partial class CargoSystem
             !TryComp<StationDataComponent>(station, out var data))
             return;
 
-        if (!TryGetLinkedConsole(ent, out var console))
-            return;
-
         foreach (var order in ent.Comp.CurrentOrders)
         {
-            TryFulfillOrder((station, data), console.Value.Comp.Account, order, db);
+            TryFulfillOrder((station, data), order.Account, order, db);
         }
     }
 
