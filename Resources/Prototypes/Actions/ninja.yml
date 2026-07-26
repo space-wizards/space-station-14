@@ -84,11 +84,12 @@
   components:
   - type: Action
     useDelay: 1
-    icon:
-      sprite: Objects/Misc/nanocuffs.rsi
-      state: nanocuff
     itemIconStyle: NoItem
     priority: -14
+  - type: Sprite
+    sprite: Objects/Misc/nanocuffs.rsi
+    layers:
+    - state: nanocuff
   - type: ChargeCostAction
     charge: 14.4
     noPowerPopup: ninja-no-power
