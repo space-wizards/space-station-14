@@ -76,7 +76,7 @@
       shader: unshaded
   - type: Battery
     maxCharge: 360
-    startingCharge: 360 
+    startingCharge: 360
   - type: Tag
     tags:
       - PowerCellSmall
@@ -360,6 +360,11 @@
   - type: Battery
     maxCharge: 2700
     startingCharge: 2700
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Lithium
+        Quantity: 10
 
 - type: entity
   id: PowerCageHigh
@@ -378,6 +383,11 @@
   - type: Battery
     maxCharge: 6200
     startingCharge: 6200
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Lithium
+        Quantity: 15
 
 - type: entity
   id: PowerCageSmallEmpty
