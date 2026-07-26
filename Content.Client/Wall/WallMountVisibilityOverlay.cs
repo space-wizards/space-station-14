@@ -74,7 +74,7 @@ public sealed partial class WallMountVisibilityOverlay(
 
         viewportState.WasFovEnabled = true;
 
-        var fadeStep = FadeSpeed * (float)_timing.FrameTime.TotalSeconds;
+        var fadeStep = _visibility.FadeEnabled ? FadeSpeed * (float)_timing.FrameTime.TotalSeconds : 1f;
         var matrix = args.Viewport.GetWorldToLocalMatrix();
 
         viewportState.SeenThisFrame.Clear();

@@ -39,12 +39,19 @@ public sealed partial class WallMountVisibilitySystem : EntitySystem
     /// </summary>
     public bool DirectionalVisibilityEnabled = true;
 
+    /// <summary>
+    /// Whether wall-mount visibility changes fade smoothly or snap instantly.
+    /// </summary>
+    public bool FadeEnabled = true;
+
     public override void Initialize()
     {
         base.Initialize();
 
         _overlayInstance = new WallMountVisibilityOverlay(_timing, _map, _sprite, _xform, _tree, this, _gridQuery, _spriteQuery);
+
         Subs.CVar(_cfg, CCVars.WallMountDirectionalVisibility, OnDirectionalVisibilityChanged, true);
+        Subs.CVar(_cfg, CCVars.WallMountFade, OnFadeChanged, true);
     }
 
     public override void Shutdown()
@@ -65,6 +72,11 @@ public sealed partial class WallMountVisibilitySystem : EntitySystem
             _overlay.RemoveOverlay(_overlayInstance);
             SetAllVisible(true);
         }
+    }
+
+    private void OnFadeChanged(bool enabled)
+    {
+        FadeEnabled = enabled;
     }
 
     /// <summary>

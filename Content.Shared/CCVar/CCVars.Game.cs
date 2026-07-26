@@ -441,4 +441,10 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<bool> WallMountDirectionalVisibility =
         CVarDef.Create("game.wallmount_directional_visibility", true, CVar.SERVER | CVar.REPLICATED);
+
+    /// <summary>
+    /// Whether wall-mounted entities fade in/out when entering or leaving the facing arc.
+    /// </summary>
+    public static readonly CVarDef<bool> WallMountFade =
+        CVarDef.Create("game.wallmount_fade", true, CVar.SERVER | CVar.REPLICATED);
 }
