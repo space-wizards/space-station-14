@@ -147,7 +147,7 @@ public sealed partial class StorageUIController : UIController, IOnSystemChanged
     {
         if (StaticStorageUIEnabled)
         {
-            var hotbar = UIManager.GetActiveUIWidgetOrNull<HotbarGui>();
+            var storageDisplay = UIManager.GetActiveUIWidgetOrNull<StorageGui>();
             // this lambda handles the nested storage case
             // during nested storage, a parent window hides and a child window is
             // immediately inserted to the end of the list
@@ -166,41 +166,34 @@ public sealed partial class StorageUIController : UIController, IOnSystemChanged
                 child.SetPositionInParent(invisibleIndex);
             };
 
-            if (hotbar != null)
+            if (storageDisplay != null)
             {
-                hotbar.DoubleStorageContainer.Visible = _openStorageLimit == 2;
-                hotbar.SingleStorageContainer.Visible = _openStorageLimit != 2;
+                storageDisplay.DoubleStorageContainer.Visible = _openStorageLimit == 2;
+                storageDisplay.SingleStorageContainer.Visible = _openStorageLimit != 2;
             }
 
             if (_openStorageLimit == 2)
             {
-                if (hotbar?.LeftStorageContainer.Children.Any(c => c.Visible) == false) // we're comparing booleans because it's bool? and not bool from the optional chaining
+                if (storageDisplay?.LeftStorageContainer.Children.Any(c => c.Visible) == false) // we're comparing booleans because it's bool? and not bool from the optional chaining
                 {
-                    hotbar?.LeftStorageContainer.AddChild(window);
-                    reorder(hotbar?.LeftStorageContainer, window);
+                    storageDisplay?.LeftStorageContainer.AddChild(window);
+                    reorder(storageDisplay?.LeftStorageContainer, window);
                 }
                 else
                 {
-                    hotbar?.RightStorageContainer.AddChild(window);
-                    reorder(hotbar?.RightStorageContainer, window);
+                    storageDisplay?.RightStorageContainer.AddChild(window);
+                    reorder(storageDisplay?.RightStorageContainer, window);
                 }
             }
             else
             {
-                hotbar?.SingleStorageContainer.AddChild(window);
-                reorder(hotbar?.SingleStorageContainer, window);
+                storageDisplay?.SingleStorageContainer.AddChild(window);
+                reorder(storageDisplay?.SingleStorageContainer, window);
             }
             _closeRecentWindowUIController.SetMostRecentlyInteractedWindow(window);
         }
         else
         {
-            var hotbar = UIManager.GetActiveUIWidgetOrNull<HotbarGui>();
-            if (hotbar != null)
-            {
-                hotbar.DoubleStorageContainer.Visible = false;
-                hotbar.SingleStorageContainer.Visible = false;
-            }
-
             // Open at parent position if it's open.
             if (_ui.TryGetOpenUi<StorageBoundUserInterface>(EntityManager.GetComponent<TransformComponent>(sBui.Owner).ParentUid,
                     StorageComponent.StorageUiKey.Key, out var bui) && bui.Position != null)

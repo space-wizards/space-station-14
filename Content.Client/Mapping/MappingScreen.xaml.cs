@@ -50,7 +50,7 @@ public sealed partial class MappingScreen : InGameScreen
         SetAnchorPreset(ViewportContainer, LayoutPreset.Wide);
         SetAnchorPreset(SpawnContainer, LayoutPreset.Wide);
         SetAnchorPreset(MainViewport, LayoutPreset.Wide);
-        SetAnchorAndMarginPreset(Hotbar, LayoutPreset.Wide, margin: 5);
+        SetAnchorAndMarginPreset(BottomContainer, LayoutPreset.Wide, margin: 5);
         SetAnchorAndMarginPreset(Actions, LayoutPreset.TopWide, margin: 5);
 
         ScreenContainer.OnSplitResizeFinished += () =>

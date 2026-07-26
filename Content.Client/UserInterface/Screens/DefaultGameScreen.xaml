@@ -7,6 +7,7 @@
     xmlns:alerts="clr-namespace:Content.Client.UserInterface.Systems.Alerts.Widgets"
     xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.Ghost.Widgets"
     xmlns:hotbar="clr-namespace:Content.Client.UserInterface.Systems.Hotbar.Widgets"
+    xmlns:storage="clr-namespace:Content.Client.UserInterface.Systems.Storage.Controls"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     xmlns:inventory="clr-namespace:Content.Client.UserInterface.Systems.Inventory.Widgets"
     Name="DefaultHud"
@@ -26,6 +27,7 @@
         <actions:ActionsBar Name="Actions" Access="Protected" />
     </BoxContainer>
     <BoxContainer Name="BottomContainer" Orientation="Vertical" Align="End">
+        <storage:StorageGui Name="Storage" Access="Protected" VerticalAlignment="Bottom" />
         <widgets:GhostGui Name="Ghost" Access="Protected" VerticalAlignment="Bottom" />
         <hotbar:HotbarGui Name="Hotbar" Access="Protected" VerticalAlignment="Bottom" />
     </BoxContainer>

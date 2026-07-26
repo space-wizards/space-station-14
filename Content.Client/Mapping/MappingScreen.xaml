@@ -3,6 +3,7 @@
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.Chat.Widgets"
     xmlns:hotbar="clr-namespace:Content.Client.UserInterface.Systems.Hotbar.Widgets"
+    xmlns:storage="clr-namespace:Content.Client.UserInterface.Systems.Storage.Controls"
     xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     xmlns:mapping="clr-namespace:Content.Client.Mapping"
     VerticalExpand="False"
@@ -59,7 +60,10 @@
         </BoxContainer>
         <LayoutContainer Name="ViewportContainer" HorizontalExpand="True" VerticalExpand="True">
             <controls:MainViewport Name="MainViewport"/>
-            <hotbar:HotbarGui Name="Hotbar" VerticalAlignment="Bottom"/>
+            <BoxContainer Name="BottomContainer" Orientation="Vertical" Align="End">
+                <storage:StorageGui Name="Storage" Access="Protected" VerticalAlignment="Bottom" />
+                <hotbar:HotbarGui Name="Hotbar" VerticalAlignment="Bottom"/>
+            </BoxContainer>
             <PanelContainer Name="Actions" VerticalExpand="True" HorizontalExpand="True"
                             MaxHeight="48">
                 <PanelContainer.PanelOverride>

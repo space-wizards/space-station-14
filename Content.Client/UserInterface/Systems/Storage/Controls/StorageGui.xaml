@@ -1,0 +1,34 @@
+<storage:StorageGui
+    xmlns="https://spacestation14.io"
+    xmlns:storage="clr-namespace:Content.Client.UserInterface.Systems.Storage.Controls"
+    VerticalAlignment="Bottom"
+    Orientation="Vertical"
+    HorizontalAlignment="Center">
+    <BoxContainer Name="SingleStorageContainer"
+                    Access="Public"
+                    HorizontalAlignment="Center"
+                    HorizontalExpand="True"
+                    Margin="10">
+    </BoxContainer>
+    <BoxContainer Name="DoubleStorageContainer"
+                    Access="Public"
+                    HorizontalAlignment="Stretch"
+                    HorizontalExpand="True"
+                    Margin="10">
+        <BoxContainer Name="LeftStorageContainer"
+                        Access="Public"
+                        HorizontalAlignment="Left"
+                        HorizontalExpand="True"
+                        VerticalAlignment="Bottom"
+                        Margin="10">
+        </BoxContainer>
+        <BoxContainer Name="RightStorageContainer"
+                        Access="Public"
+                        HorizontalAlignment="Right"
+                        HorizontalExpand="True"
+                        VerticalAlignment="Bottom"
+                        Margin="10">
+        </BoxContainer>
+    </BoxContainer>
+</storage:StorageGui>
+
