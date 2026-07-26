@@ -84,7 +84,7 @@ public sealed partial class MicrowaveMenu : FancyWindow
     public void SetIngredientPanelLight(bool value)
     {
         var panelColor = value
-            ? Color.FromHex("#947300")
+            ? Color.DarkGoldenrod
             : Color.FromHex("#1B1B1E");
 
         _ingredientsStylebox.BackgroundColor = panelColor;
