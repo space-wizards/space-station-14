@@ -12,35 +12,16 @@ namespace Content.Shared.Cards;
 
 public abstract partial class SharedCardSystem : EntitySystem
 {
-    [Dependency]
-    protected SharedStackSystem Stacks = default!;
-
-    [Dependency]
-    protected SharedHandsSystem Hands = default!;
-
-    [Dependency]
-    protected SharedPopupSystem Popup = default!;
-
-    [Dependency]
-    protected SharedAppearanceSystem Appearance = default!;
-
-    [Dependency]
-    protected SharedAudioSystem Audio = default!;
-
-    [Dependency]
-    protected SharedContainerSystem Container = default!;
-
-    [Dependency]
-    protected IGameTiming Timing = default!;
-
-    [Dependency]
-    protected SharedTransformSystem TransformSystem = default!;
-
-    [Dependency]
-    protected IPrototypeManager PrototypeManager = default!;
-
-    [Dependency]
-    protected ISharedPlayerManager PlayerManager = default!;
+    [Dependency] protected SharedStackSystem Stacks = default!;
+    [Dependency] protected SharedHandsSystem Hands = default!;
+    [Dependency] protected SharedPopupSystem Popup = default!;
+    [Dependency] protected SharedAppearanceSystem Appearance = default!;
+    [Dependency] protected SharedAudioSystem Audio = default!;
+    [Dependency] protected SharedContainerSystem Container = default!;
+    [Dependency] protected IGameTiming Timing = default!;
+    [Dependency] protected SharedTransformSystem TransformSystem = default!;
+    [Dependency] protected IPrototypeManager PrototypeManager = default!;
+    [Dependency] protected ISharedPlayerManager PlayerManager = default!;
 
     [SubscribeLocalEvent]
     protected virtual void OnCardsInit(Entity<CardsComponent> ent, ref ComponentInit args)

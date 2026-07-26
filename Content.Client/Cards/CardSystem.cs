@@ -12,11 +12,9 @@ namespace Content.Client.Cards;
 [UsedImplicitly]
 public sealed partial class CardSystem : SharedCardSystem
 {
-    [Dependency]
-    private SpriteSystem _sprite = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
-    [Dependency]
-    private IPlayerManager _playerManager = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
 
     /// <summary>
     /// Calculates the local position of a card on a fanned arc, given its angle from center. It is shifted downwards 3/4 of radius to center it.
