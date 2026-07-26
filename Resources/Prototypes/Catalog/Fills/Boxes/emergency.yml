@@ -5,7 +5,7 @@
   description: A small box containing a breath mask, an emergency oxygen tank, and an emergency medipen. Standard-issue for most oxygen-breathing crew.
   components:
   - type: Item
-    size: 5
+    shape: 0,0,1,2
   - type: Storage
     grid:
       - 0,0,2,3
