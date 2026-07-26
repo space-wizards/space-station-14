@@ -1,0 +1,303 @@
+# Катридж 9x39SP6
+- type: entity
+  id: CartridgeBullet9x39SP6
+  name: патрон (9х39 мм СП-6)
+  parent: BaseCartridgeCaselessRifle
+  components:
+  - type: Tag
+    tags:
+    - CartridgeBulletVSK
+  - type: CartridgeAmmo
+    proto: Bullet9x39SP6
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#ff6e52"
+
+# Проджектайл 9x39SP6
+- type: entity
+  id: Bullet9x39SP6
+  parent: BulletTrace
+  name: патрон (9х39 мм СП-6)
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+       Piercing: 40
+
+# Коробка патрон 9x39SP6
+- type: entity
+  parent: BaseMagazineBoxPistol
+  id: MagazineBoxVSKAki
+  name: коробка патронов (9х39 мм СП-6)
+  suffix: Akitovsky
+  components:
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+    whitelist:
+      tags:
+        - CartridgeBulletVSK
+    proto: CartridgeBullet9x39SP6
+    capacity: 60
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Weapons/Guns/Ammunition/Boxes/pistol.rsi # DS14-texture-localization
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+# Картридж .357 Magnum FMJ
+- type: entity
+  parent: BaseCartridgeMagnum
+  id: Cartridge357MagnumFMJ
+  name: патрон (.357 Magnum FMJ)
+  suffix: Akitovsky
+  components:
+  - type: CartridgeAmmo
+    proto: Bullet357MagnumFMJ
+  - type: Tag
+    tags:
+      - Cartridge357
+
+# Проджектайл .357 Magnum FMJ
+- type: entity
+  parent: BulletTrace
+  id: Bullet357MagnumFMJ
+  categories: [ HideSpawnMenu ]
+  name: патрон (.357 Magnum FMJ)
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Piercing: 70
+
+# Коробка патронов .357 Magnum FMJ
+- type: entity
+  parent: BaseMagazineBoxMagnum
+  id: MagazineBox357MagnumFMJ
+  name: коробка патронов (.45 магнум)
+  suffix: Akitovsky
+  components:
+  - type: BallisticAmmoProvider
+    proto: Cartridge357MagnumFMJ
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+# Картридж 5.56х45 мм SSA AP
+- type: entity
+  parent: BaseCartridgeRifle
+  id: Cartridge556x45AP
+  name: патрон (5.56х45 мм SSA AP)
+  suffix: Akitovsky
+  components:
+  - type: CartridgeAmmo
+    proto: Bullet556x45AP
+
+# Проджектайл 5.56х45 мм SSA AP
+- type: entity
+  parent: BulletTrace
+  id: Bullet556x45AP
+  categories: [ HideSpawnMenu ]
+  name: патрон (5.56х45 мм SSA AP)
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Piercing: 40
+
+# Коробка патронов 5.56х45 мм SSA AP
+- type: entity
+  parent: BaseMagazineBoxRifle
+  id: MagazineBox556x45AP
+  name: коробка патронов (5.56х45 мм SSA AP)
+  suffix: Akitovsky
+  components:
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+    whitelist:
+      tags:
+        - CartridgeRifle
+    proto: Cartridge556x45AP
+    capacity: 60
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+# Картридж 12х70 дробь Пиранья
+- type: entity
+  parent: BaseShellShotgun
+  id: Cartridge12x70Piranha
+  name: ружейный патрон (12х70 дробь Пиранья)
+  suffix: Akitovsky
+  components:
+  - type: CartridgeAmmo
+    proto: Pellet12x70Piranha
+  - type: Tag
+    tags:
+      - ShellShotgun
+
+# Дробина 12х70 Пиранья
+- type: entity
+  parent: PelletShotgunTrace
+  id: Pellet12x70PiranhaBase
+  categories: [ HideSpawnMenu ]
+  name: ружейный патрон (12х70 дробь Пиранья)
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Piercing: 21
+        Structural: 50
+
+# Проджектайл 12х70 дробь Пиранья
+- type: entity
+  parent: Pellet12x70PiranhaBase
+  id: Pellet12x70Piranha
+  categories: [ HideSpawnMenu ]
+  name: ружейный патрон (12х70 дробь Пиранья)
+  components:
+  - type: ProjectileSpread
+    proto: Pellet12x70PiranhaBase
+    count: 6
+    spread: 15        
+
+# Коробка патронов 12х70 дробь Пиранья
+- type: entity
+  parent: AmmoProviderShotgunShell
+  id: MagazineBox12x70Piranha
+  name: коробка ружейных патронов (12х70 дробь Пиранья)
+  suffix: Akitovsky
+  components:
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+    whitelist:
+      tags:
+        - ShellShotgun
+    proto: Cartridge12x70Piranha
+    capacity: 20 
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: lethal
+
+# Катридж 9х19 мм AP 6.3
+- type: entity
+  parent: BaseCartridgePistol
+  id: Cartridge9x19AP63
+  name: патрон (9х19 мм AP 6.3)
+  suffix: Akitovsky
+  components:
+  - type: CartridgeAmmo
+    proto: Bullet9x19AP63
+
+# Проджектайл 9х19 мм AP 6.3
+- type: entity
+  parent: BulletTrace
+  id: Bullet9x19AP63
+  categories: [ HideSpawnMenu ]
+  name: патрон (9х19 мм AP 6.3)
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Piercing: 30
+
+# Коробка патронов 9х19 мм AP 6.3
+- type: entity
+  parent: BaseMagazineBoxPistol
+  id: MagazineBox9x19AP63
+  name: коробка патронов (9х19 мм AP 6.3)
+  suffix: Akitovsky
+  components:
+  - type: BallisticAmmoProvider
+    proto: Cartridge9x19AP63
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    
+# Катридж .408 CT
+- type: entity
+  parent: BaseCartridge
+  id: Cartridge408CT
+  name: патрон (.408 CT)
+  suffix: Akitovsky
+  components:
+  - type: Tag
+    tags:
+    - Cartridge408CT
+  - type: CartridgeAmmo
+    proto: Bullet408CT
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/large_casing.rsi
+    layers:
+    - state: base
+      map: ["enum.AmmoVisualLayers.Base"]
+  - type: Appearance
+  - type: SpentAmmoVisuals
+
+# Проджектайл .408 CT
+- type: entity
+  parent: BulletTrace
+  id: Bullet408CT
+  categories: [ HideSpawnMenu ]
+  name: патрон (.408 CT)
+  components:
+  - type: HitscanBasicRaycast
+    collisionMask: BulletImpassable
+    maxDistance: 120
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Piercing: 175
+        Blunt: 70
+
+# Коробка патронов .408 CT
+- type: entity
+  parent: BaseMagazineBoxAntiMateriel
+  id: MagazineBox408CT
+  name: коробка патронов (.408 CT)
+  suffix: Akitovsky
+  components:
+  - type: BallisticAmmoProvider
+    proto: Cartridge408CT
+    mayTransfer: true
+    whitelist:
+      tags:
+        - Cartridge408CT
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+# Проджектайл 12.7x55 безгильзовый
+- type: entity
+  parent: BulletTrace
+  id: BulletRSh12Aki
+  name: патрон (12.7x55 безгильзовый)
+  description: Если вы можете видеть это, вы вероятно мертвы!
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Piercing: 65

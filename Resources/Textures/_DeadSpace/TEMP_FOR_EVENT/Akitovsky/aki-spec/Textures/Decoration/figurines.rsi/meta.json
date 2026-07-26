@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Characters created by their respective owners. Each item worn has its respective license and copyright. Final figurine sprites made by DrSmugleaf.",
+  "size": {
+    "x": 32,
+    "y": 34
+  },
+  "states": [
+    {
+      "name": "aino_delta"
+    },
+    {
+      "name": "floria_delta"
+    },
+    {
+      "name": "regular_delta"
+    }
+  ]
+}

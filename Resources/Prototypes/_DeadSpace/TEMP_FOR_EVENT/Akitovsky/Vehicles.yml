@@ -1,0 +1,540 @@
+- type: entity
+  abstract: true
+  id: RMCPropVehicleBaseAki
+  components:
+  - type: Transform
+    noRot: true
+  - type: Physics
+    bodyType: Static
+    fixedRotation: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,1.4,0.5"
+        density: 190
+        layer:
+        - MobMask
+  - type: Sprite
+    sprite: _DeadSpace/TEMP_FOR_EVENT/Akitovsky/aki-spec/Textures/Decoration/vehicles.rsi
+    offset: 0.5, 0.5
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 3000
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Clickable
+  - type: InteractionOutline
+  - type: RequireProjectileTarget
+
+# Vehicles
+
+- type: entity
+  parent: RMCPropVehicleBaseAki
+  id: RMCPropVehicleMonoSupronOrangeAki
+  suffix: Akitovsky, Маппинг, Orange
+  name: моно-супрон
+  description: Моно-супрон - это массовое гражданское транспортное средство для колониальных рынков, как внутри, так и за пределами Объединённых Наций. Производится компанией 'Мицутани' - автомобильным брендом и подразделением корпорации Weston-Yamada.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/TEMP_FOR_EVENT/Akitovsky/aki-spec/Textures/Decoration/vehicles.rsi
+    state: mizutani_orange
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeAki
+  id: RMCPropVehicleMonoSupronOrangeFlippedAki
+  suffix: Akitovsky, Маппинг, Orange, Flipped
+  components:
+  - type: Sprite
+    state: mizutani_orange_f
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeAki
+  id: RMCPropVehicleMonoSupronBlackAki
+  suffix: Akitovsky, Маппинг, Black
+  components:
+  - type: Sprite
+    state: mizutani_black
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeAki
+  id: RMCPropVehicleMonoSupronBlackFlippedAki
+  suffix: Akitovsky, Маппинг, Black, Flipped
+  components:
+  - type: Sprite
+    state: mizutani_black_f
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeAki
+  id: RMCPropVehicleMonoSupronBlueAki
+  suffix: Akitovsky, Маппинг, Blue
+  components:
+  - type: Sprite
+    state: mizutani_blue
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeAki
+  id: RMCPropVehicleMonoSupronBlueFlippedAki
+  suffix: Akitovsky, Маппинг, Blue, Flipped
+  components:
+  - type: Sprite
+    state: mizutani_blue_f
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeAki
+  id: RMCPropVehicleMonoSupronBrownAki
+  suffix: Akitovsky, Маппинг, Brown
+  components:
+  - type: Sprite
+    state: mizutani_brown
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeAki
+  id: RMCPropVehicleMonoSupronBrownFlippedAki
+  suffix: Akitovsky, Маппинг, Brown, Flipped
+  components:
+  - type: Sprite
+    state: mizutani_brown_f
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeAki
+  id: RMCPropVehicleMonoSupronCopAki
+  suffix: Akitovsky, Маппинг, Cop
+  components:
+  - type: Sprite
+    state: mizutani_cop
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeAki
+  id: RMCPropVehicleMonoSupronCopFlippedAki
+  suffix: Akitovsky, Маппинг, Cop, Flipped
+  components:
+  - type: Sprite
+    state: mizutani_cop_f
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeAki
+  id: RMCPropVehicleMonoSupronDesatBlueAki
+  suffix: Akitovsky, Маппинг, Desat Blue
+  components:
+  - type: Sprite
+    state: mizutani_desatblue
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeAki
+  id: RMCPropVehicleMonoSupronDesatBlueFlippedAki
+  suffix: Akitovsky, Маппинг, Desat Blue, Flipped
+  components:
+  - type: Sprite
+    state: mizutani_desatblue_f
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeAki
+  id: RMCPropVehicleMonoSupronGreenAki
+  suffix: Akitovsky, Маппинг, Green
+  components:
+  - type: Sprite
+    state: mizutani_green
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeAki
+  id: RMCPropVehicleMonoSupronGreenFlippedAki
+  suffix: Akitovsky, Маппинг, Green, Flipped
+  components:
+  - type: Sprite
+    state: mizutani_green_f
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeAki
+  id: RMCPropVehicleMonoSupronLightBlueAki
+  suffix: Akitovsky, Маппинг, LightBlue
+  components:
+  - type: Sprite
+    state: mizutani_lightblue
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeAki
+  id: RMCPropVehicleMonoSupronLightBlueFlippedAki
+  suffix: Akitovsky, Маппинг, LightBlue, Flipped
+  components:
+  - type: Sprite
+    state: mizutani_lightblue_f
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeAki
+  id: RMCPropVehicleMonoSupronPinkAki
+  suffix: Akitovsky, Маппинг, Pink
+  components:
+  - type: Sprite
+    state: mizutani_pink
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeAki
+  id: RMCPropVehicleMonoSupronPinkFlippedAki
+  suffix: Akitovsky, Маппинг, Pink, Flipped
+  components:
+  - type: Sprite
+    state: mizutani_pink_f
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeAki
+  id: RMCPropVehicleMonoSupronPurpleAki
+  suffix: Akitovsky, Маппинг, Purple
+  components:
+  - type: Sprite
+    state: mizutani_purple
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeAki
+  id: RMCPropVehicleMonoSupronPurpleFlippedAki
+  suffix: Akitovsky, Маппинг, Purple, Flipped
+  components:
+  - type: Sprite
+    state: mizutani_purple_f
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeAki
+  id: RMCPropVehicleMonoSupronRedAki
+  suffix: Akitovsky, Маппинг, Red
+  components:
+  - type: Sprite
+    state: mizutani_red
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeAki
+  id: RMCPropVehicleMonoSupronRedFlippedAki
+  suffix: Akitovsky, Маппинг, Red, Flipped
+  components:
+  - type: Sprite
+    state: mizutani_red_f
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeAki
+  id: RMCPropVehicleMonoSupronShellAki
+  suffix: Akitovsky, Маппинг, Shell
+  components:
+  - type: Sprite
+    state: mizutani_shell
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeAki
+  id: RMCPropVehicleMonoSupronShellFlippedAki
+  suffix: Akitovsky, Маппинг, Shell, Flipped
+  components:
+  - type: Sprite
+    state: mizutani_shell_f
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeAki
+  id: RMCPropVehicleMonoSupronTaxiAki
+  suffix: Akitovsky, Маппинг, Taxi
+  components:
+  - type: Sprite
+    state: mizutani_taxi
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeAki
+  id: RMCPropVehicleMonoSupronTaxiFlippedAki
+  suffix: Akitovsky, Маппинг, Taxi, Flipped
+  components:
+  - type: Sprite
+    state: mizutani_taxi_f
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeAki
+  id: RMCPropVehicleMonoSupronTurquoiseAki
+  suffix: Akitovsky, Маппинг, Turquoise
+  components:
+  - type: Sprite
+    state: mizutani_turquoise
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeAki
+  id: RMCPropVehicleMonoSupronTurquoiseFlippedAki
+  suffix: Akitovsky, Маппинг, Turquoise, Flipped
+  components:
+  - type: Sprite
+    state: mizutani_turquoise_f
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeAki
+  id: RMCPropVehicleMonoSupronWYAki
+  suffix: Akitovsky, Маппинг, WeYa
+  components:
+  - type: Sprite
+    state: mizutani_wy
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeAki
+  id: RMCPropVehicleMonoSupronWYFlippedAki
+  suffix: Akitovsky, Маппинг, WeYa, Flipped
+  components:
+  - type: Sprite
+    state: mizutani_wy_f
+
+# Destroyed
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeAki
+  id: RMCPropVehicleMonoSupronOrangeDestroyedAki
+  suffix: Akitovsky, Маппинг, Orange, Destroyed
+  components:
+  - type: Sprite
+    state: mizutani_orange_damage
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1750
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeDestroyedAki
+  id: RMCPropVehicleMonoSupronOrangeDestroyedFlippedAki
+  suffix: Akitovsky, Маппинг, Orange, Destroyed, Flipped
+  components:
+  - type: Sprite
+    state: mizutani_orange_damage_f
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeDestroyedAki
+  id: RMCPropVehicleMonoSupronBlackDestroyedAki
+  suffix: Akitovsky, Маппинг, Black, Destroyed
+  components:
+  - type: Sprite
+    state: mizutani_black_damage
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeDestroyedAki
+  id: RMCPropVehicleMonoSupronBlackDestroyedFlippedAki
+  suffix: Akitovsky, Маппинг, Black, Destroyed, Flipped
+  components:
+  - type: Sprite
+    state: mizutani_black_damage_f
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeDestroyedAki
+  id: RMCPropVehicleMonoSupronBlueDestroyedAki
+  suffix: Akitovsky, Маппинг, Blue, Destroyed
+  components:
+  - type: Sprite
+    state: mizutani_blue_damage
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeDestroyedAki
+  id: RMCPropVehicleMonoSupronBlueDestroyedFlippedAki
+  suffix: Akitovsky, Маппинг, Blue, Destroyed, Flipped
+  components:
+  - type: Sprite
+    state: mizutani_blue_damage_f
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeDestroyedAki
+  id: RMCPropVehicleMonoSupronBrownDestroyedAki
+  suffix: Akitovsky, Маппинг, Brown, Destroyed
+  components:
+  - type: Sprite
+    state: mizutani_brown_damage
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeDestroyedAki
+  id: RMCPropVehicleMonoSupronBrownDestroyedFlippedAki
+  suffix: Akitovsky, Маппинг, Brown, Destroyed, Flipped
+  components:
+  - type: Sprite
+    state: mizutani_brown_damage_f
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeDestroyedAki
+  id: RMCPropVehicleMonoSupronCopDestroyedAki
+  suffix: Akitovsky, Маппинг, Cop, Destroyed
+  components:
+  - type: Sprite
+    state: mizutani_cop_damage
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeDestroyedAki
+  id: RMCPropVehicleMonoSupronCopDestroyedFlippedAki
+  suffix: Akitovsky, Маппинг, Cop, Destroyed, Flipped
+  components:
+  - type: Sprite
+    state: mizutani_cop_damage_f
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeDestroyedAki
+  id: RMCPropVehicleMonoSupronDesatBlueDestroyedAki
+  suffix: Akitovsky, Маппинг, DesatBlue, Destroyed
+  components:
+  - type: Sprite
+    state: mizutani_desatblue_damage
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeDestroyedAki
+  id: RMCPropVehicleMonoSupronDesatBlueDestroyedFlippedAki
+  suffix: Akitovsky, Маппинг, DesatBlue, Destroyed, Flipped
+  components:
+  - type: Sprite
+    state: mizutani_desatblue_damage_f
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeDestroyedAki
+  id: RMCPropVehicleMonoSupronGreenDestroyedAki
+  suffix: Akitovsky, Маппинг, Green, Destroyed
+  components:
+  - type: Sprite
+    state: mizutani_green_damage
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeDestroyedAki
+  id: RMCPropVehicleMonoSupronGreenDestroyedFlippedAki
+  suffix: Akitovsky, Маппинг, Green, Destroyed, Flipped
+  components:
+  - type: Sprite
+    state: mizutani_green_damage_f
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeDestroyedAki
+  id: RMCPropVehicleMonoSupronLightBlueDestroyedAki
+  suffix: Akitovsky, Маппинг, LightBlue, Destroyed
+  components:
+  - type: Sprite
+    state: mizutani_lightblue_damage
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeDestroyedAki
+  id: RMCPropVehicleMonoSupronLightBlueDestroyedFlippedAki
+  suffix: Akitovsky, Маппинг, LightBlue, Destroyed, Flipped
+  components:
+  - type: Sprite
+    state: mizutani_lightblue_damage_f
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeDestroyedAki
+  id: RMCPropVehicleMonoSupronPinkDestroyedAki
+  suffix: Akitovsky, Маппинг, Pink, Destroyed
+  components:
+  - type: Sprite
+    state: mizutani_pink_damage
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeDestroyedAki
+  id: RMCPropVehicleMonoSupronPinkDestroyedFlippedAki
+  suffix: Akitovsky, Маппинг, Pink, Destroyed, Flipped
+  components:
+  - type: Sprite
+    state: mizutani_pink_damage_f
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeDestroyedAki
+  id: RMCPropVehicleMonoSupronPurpleDestroyedAki
+  suffix: Akitovsky, Маппинг, Purple, Destroyed
+  components:
+  - type: Sprite
+    state: mizutani_purple_damage
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeDestroyedAki
+  id: RMCPropVehicleMonoSupronPurpleDestroyedFlippedAki
+  suffix: Akitovsky, Маппинг, Purple, Destroyed, Flipped
+  components:
+  - type: Sprite
+    state: mizutani_purple_damage_f
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeDestroyedAki
+  id: RMCPropVehicleMonoSupronRedDestroyedAki
+  suffix: Akitovsky, Маппинг, Red, Destroyed
+  components:
+  - type: Sprite
+    state: mizutani_red_damage
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeDestroyedAki
+  id: RMCPropVehicleMonoSupronRedDestroyedFlippedAki
+  suffix: Akitovsky, Маппинг, Red, Destroyed, Flipped
+  components:
+  - type: Sprite
+    state: mizutani_red_damage_f
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeDestroyedAki
+  id: RMCPropVehicleMonoSupronTaxiDestroyedAki
+  suffix: Akitovsky, Маппинг, Taxi, Destroyed
+  components:
+  - type: Sprite
+    state: mizutani_taxi_damage
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeDestroyedAki
+  id: RMCPropVehicleMonoSupronTaxiDestroyedFlippedAki
+  suffix: Akitovsky, Маппинг, Taxi, Destroyed, Flipped
+  components:
+  - type: Sprite
+    state: mizutani_taxi_damage_f
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeDestroyedAki
+  id: RMCPropVehicleMonoSupronTurquoiseDestroyedAki
+  suffix: Akitovsky, Маппинг, Turquoise, Destroyed
+  components:
+  - type: Sprite
+    state: mizutani_turquoise_damage
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeDestroyedAki
+  id: RMCPropVehicleMonoSupronTurquoiseDestroyedFlippedAki
+  suffix: Akitovsky, Маппинг, Turquoise, Destroyed, Flipped
+  components:
+  - type: Sprite
+    state: mizutani_turquoise_damage_f
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeDestroyedAki
+  id: RMCPropVehicleMonoSupronWYDestroyedAki
+  suffix: Akitovsky, Маппинг, WeYa, Destroyed
+  components:
+  - type: Sprite
+    state: mizutani_wy_damage
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeDestroyedAki
+  id: RMCPropVehicleMonoSupronWYDestroyedFlippedAki
+  suffix: Akitovsky, Маппинг, WeYa, Destroyed, Flipped
+  components:
+  - type: Sprite
+    state: mizutani_wy_damage_f
+
+# Offset
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronOrangeAki
+  id: RMCPropVehicleMonoSupronBlueOffsetAki
+  suffix: Akitovsky, Маппинг, Blue, Offset
+  components:
+  - type: Sprite
+    state: mizutani_blue_f
+    offset: 0.5,0.8
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronBlueOffsetAki
+  id: RMCPropVehicleMonoSupronRedOffsetAki
+  suffix: Akitovsky, Маппинг, Red, Offset
+  components:
+  - type: Sprite
+    state: mizutani_red
+
+- type: entity
+  parent: RMCPropVehicleMonoSupronBlueOffsetAki
+  id: RMCPropVehicleMonoSupronTurquoiseOffsetAki
+  suffix: Akitovsky, Маппинг, Turquoise, Offset
+  components:
+  - type: Sprite
+    state: mizutani_turquoise_f

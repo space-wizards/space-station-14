@@ -1,0 +1,76 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from cmss13 at https://github.com/cmss13-devs/cmss13/blob/e77c994c8b3fcf97b13886de7c56c6b407108598/icons/obj/structures/machinery/comm_tower3.dmi",
+  "size": {
+    "x": 64,
+    "y": 128
+  },
+  "states": [
+    {
+      "name": "static1",
+      "delays": [
+        [
+          2,
+          2.5
+        ]
+      ]
+    },
+    {
+      "name": "static1_off"
+    },
+    {
+      "name": "static1_broken"
+    },
+    {
+      "name": "comms_landmark"
+    },
+    {
+      "name": "comms_landmark_1"
+    },
+    {
+      "name": "comms_landmark_2"
+    },
+    {
+      "name": "resin_growing",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "resin_final"
+    },
+    {
+      "name": "resin_idle",
+      "delays": [
+        [
+          0.3,
+          0.3,
+          0.3,
+          0.2
+        ]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Sprited by discord: odlieerr",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "banner_viva"
+        },
+        {
+            "name": "banner_delta"
+        }
+    ]
+}

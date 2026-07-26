@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "license": "CC-BY-NC-SA-3.0",
+  "copyright": "Created by INFRARED_BARON for MS13",
+  "size": {
+    "x": 64,
+    "y": 64
+  },
+  "states": [
+    {
+      "name": "junction-right-top"
+    },
+    {
+      "name": "turn-WS"
+    },
+    {
+      "name": "junction-right-bottom"
+    },
+    {
+      "name": "turn-NW"
+    },
+    {
+      "name": "junction-left-bottom"
+    },
+    {
+      "name": "turn-NE"
+    },
+    {
+      "name": "junction-left-top"
+    },
+    {
+      "name": "turn-SE"
+    },
+    {
+      "name": "rails",
+	  "directions": 4
+    }
+  ]
+}

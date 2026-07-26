@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "license": "CC-BY-NC-SA-3.0",
+  "copyright": "Taken from mojave-sun-13 at https://github.com/Mojave-Sun/mojave-sun-13/blob/ffcecc82f28c796f8eff92ac46ff0f5e0d9b1ab6/mojave/icons/structure/miscellaneous.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "skeleton"
+    },
+    {
+      "name": "trashbin"
+    },
+    {
+      "name": "trashbin-1"
+    },
+    {
+      "name": "trashbin-2"
+    },
+    {
+      "name": "trashbin-3"
+    }
+  ]
+}

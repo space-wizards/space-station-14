@@ -1,0 +1,1266 @@
+# Спавнеры
+# Лейтенант Кайсанен СпецНаз НТ
+- type: entity
+  parent: CustomizableSpawnerBase
+  id: CustomizableSpawnerLieutenantKaisanenSand
+  name: ИВЕНТОВЫЙ !Лейтенант Кайсанен СпецНаз НТ «Дельта-6»
+  suffix: Akitovsky, Ивент, Кастомизируемый персонаж, Песок
+  components:
+  - type: Sprite
+    layers:
+    - state: timed
+    - sprite: _DeadSpace/TEMP_FOR_EVENT/Akitovsky/aki-spec/Textures/Other/markers.rsi
+      state: kaisanen_sand
+  - type: CustomizableHumanoidSpawner
+    jobPrototype: JobLieutenantSpecialForceKaisanenSand
+    allowedSpecies:
+    - Human
+    - Demon
+
+- type: job
+  id: JobLieutenantSpecialForceKaisanenSand
+  name: Офицер «Дельта-6»
+  description: job-description-soo
+  playTimeTracker: PlayTimeTrackerSpecialForceLieutenantKaisanenSand
+  setPreference: false
+  startingGear: LieutenantSpecialForceKaisanenSand
+  icon: "JobIconERTLeader"
+  supervisors: job-supervisors-no-one
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
+  access:
+  - CentralCommand
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+    - type: AntagImmune
+    - type: ZombieImmune
+    - type: NpcFactionMember
+      factions:
+      - CentralCommand
+
+- type: startingGear
+  id: LieutenantSpecialForceKaisanenSand
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitAkiDeltaSand
+    eyes: ClothingEyesGlassesAkiDeltaSand
+    ears: ClothingHeadsetDelta
+    mask: ClothingMaskNeckGaiter
+    gloves: ClothingHandsGlovesCombatAkiDeltaSand
+    shoes: ClothingShoesBootsJackAkiDeltaSand
+    head: ClothingHeadHatPanamaAkiSandNVD
+    id: AkiDeltaIDCard
+    belt: ClothingBeltMilitaryWebbingAkiDeltaSand
+    pocket1: RMCPouchMagazineAki
+    pocket2: RMCPouchMedicalSocAki
+    outerClothing: ClothingOuterArmorDeltaAkiSand
+    back: ClothingMilitaryBackpackDeltaAkiSand
+    suitstorage: WeaponCheyTacM200Aki
+  inhand:
+    - AutosurgeonRevive
+  storage:
+    pocket1:
+    - MagazinePistolTochmash9x19AP63
+    - MagazinePistolTochmash9x19AP63
+    - MagazinePistolTochmash9x19AP63
+    - MagazinePistolTochmash9x19AP63
+    - MagazinePistolTochmash9x19AP63
+    - MagazinePistolTochmash9x19AP63
+    back:
+    - CrowbarRed
+    - MagazineBox408CT
+    - MagazineBox408CT
+    - MagazineBox9x19AP63
+    - EmergencyMedipen
+    - WeaponKRISSVectorAki
+    - BoxMRE
+    - Flare
+    - CombatMedipen
+    - CombatMedipen
+    - PinpointerUniversal
+    belt:
+    - Handcuffs
+    - Handcuffs
+    - MagazineCheyTacM200Aki408CT
+    - MagazineCheyTacM200Aki408CT
+    - MagazineCheyTacM200Aki408CT
+    - MagazineCheyTacM200Aki408CT
+
+
+# Спавнеры
+# Лейтенант Кайсанен СпецНаз НТ
+- type: entity
+  parent: CustomizableSpawnerBase
+  id: CustomizableSpawnerLieutenantKaisanenBlack
+  name: ИВЕНТОВЫЙ !Лейтенант Кайсанен СпецНаз НТ «Дельта-6»
+  suffix: Akitovsky, Ивент, Кастомизируемый персонаж
+  components:
+  - type: Sprite
+    layers:
+    - state: timed
+    - sprite: _DeadSpace/TEMP_FOR_EVENT/Akitovsky/aki-spec/Textures/Other/markers.rsi
+      state: kaisanen_black
+  - type: CustomizableHumanoidSpawner
+    jobPrototype: JobLieutenantSpecialForceKaisanenBlack
+    allowedSpecies:
+    - Human
+    - Demon
+
+- type: job
+  id: JobLieutenantSpecialForceKaisanenBlack
+  name: Офицер «Дельта-6»
+  description: job-description-soo
+  playTimeTracker: PlayTimeTrackerSpecialForceLieutenantKaisanenBlack
+  setPreference: false
+  startingGear: LieutenantSpecialForceKaisanenBlack
+  icon: "JobIconERTLeader"
+  supervisors: job-supervisors-no-one
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
+  access:
+  - CentralCommand
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+    - type: AntagImmune
+    - type: ZombieImmune
+    - type: NpcFactionMember
+      factions:
+      - CentralCommand
+
+- type: startingGear
+  id: LieutenantSpecialForceKaisanenBlack
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitAkiDeltaBlack
+    eyes: ClothingEyesGlassesAkiDeltaBlack
+    ears: ClothingHeadsetDelta
+    mask: ClothingMaskNeckGaiter
+    gloves: ClothingHandsGlovesAkiDeltaBlack
+    shoes: ClothingShoesBootsJackAkiDeltaBlack
+    id: AkiDeltaIDCard
+    belt: ClothingBeltMilitaryWebbingAkiDeltaBlack
+    pocket1: WeaponPistolDesertEagleAki
+    pocket2: DrinkMREFlask
+    outerClothing: ClothingOuterArmorDeltaAkiBlack
+    back: ClothingMilitaryBackpackDeltaAkiBlack
+    suitstorage: WeaponVSKAki
+  inhand:
+    - AutosurgeonRevive
+  storage:
+    back:
+    - MagazineBoxVSKAki
+    - MagazineBoxVSKAki
+    - MagazineBoxVSKAki
+    - CrowbarRed
+    - EmergencyMedipen
+    - BoxMRE
+    - Flare
+    - CombatMedipen
+    - CombatMedipen
+    - PinpointerUniversal
+    belt:
+    - Handcuffs
+    - Handcuffs
+    - MagazineVSK9x39SP6
+    - MagazineVSK9x39SP6
+    - MagazineVSK9x39SP6
+    - MagazineVSK9x39SP6
+    - MagazineVSK9x39SP6
+    - MagazineVSK9x39SP6
+    - MagazineEagle357MagnumFMJ
+    - MagazineEagle357MagnumFMJ
+
+
+
+
+
+# Лейтенант Мирс СпецНаз НТ
+- type: entity
+  parent: CustomizableSpawnerBase
+  id: CustomizableSpawnerLieutenantMirs
+  name: ИВЕНТОВЫЙ !Лейтенант Мирс СпецНаз НТ «Дельта-6»
+  suffix: Akitovsky, Ивент, Кастомизируемый персонаж, Песок
+  components:
+  - type: Sprite
+    layers:
+    - state: timed
+    - sprite: _DeadSpace/TEMP_FOR_EVENT/Akitovsky/aki-spec/Textures/Other/markers.rsi
+      state: mirs
+  - type: CustomizableHumanoidSpawner
+    jobPrototype: JobLieutenantSpecialForceMirs
+    allowedSpecies:
+    - Human
+    - Demon
+
+- type: job
+  id: JobLieutenantSpecialForceMirs
+  name: Офицер «Дельта-6»
+  description: job-description-soo
+  playTimeTracker: PlayTimeTrackerSpecialForceLieutenantMirs
+  setPreference: false
+  startingGear: LieutenantSpecialForceMirs
+  icon: "JobIconERTLeader"
+  supervisors: job-supervisors-no-one
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
+  access:
+  - CentralCommand
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant, EventRadioImplantUnitologyMeta ]
+  - !type:AddComponentSpecial
+    components:
+    - type: AntagImmune
+    - type: ZombieImmune
+    - type: NpcFactionMember
+      factions:
+      - CentralCommand
+
+- type: startingGear
+  id: LieutenantSpecialForceMirs
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitAkiDeltaSand
+    eyes: ClothingEyesGlassesAkiDeltaSand
+    ears: ClothingHeadsetDelta
+    head: ClothingHeadHelmetAkiDeltaSandNVD
+    mask: ClothingMaskNeckGaiter
+    neck: ClothingNeckCloakAkiDeltaFloria
+    gloves: ClothingHandsGlovesCombatAkiDeltaSand
+    shoes: ClothingShoesBootsJackAkiDeltaSand
+    id: AkiDeltaIDCard
+    belt: ClothingBeltMilitaryWebbingAkiDeltaSand
+    pocket1: RMCPouchMagazineAki
+    pocket2: WeaponRevolverRSh12Aki
+    suitstorage: WeaponRevolverRSh12Aki
+    outerClothing: ClothingOuterArmorDeltaAkiSand
+    back: ClothingMilitaryBackpackDeltaAkiSand
+  inhand:
+    - AutosurgeonRevive
+  storage:
+    pocket1:
+    - MagazineBox12x70Piranha
+    - MagazineBox12x70Piranha
+    - MagazineBox12x70Piranha
+    back:
+    - WeaponShotgunBulldogAki
+    - CrowbarRed
+    - EmergencyMedipen
+    - BoxMRE
+    - Flare
+    - CombatMedipen
+    - CombatMedipen
+    - PinpointerUniversal
+    - BSAACombatKitFilled
+    belt:
+    - Handcuffs
+    - Handcuffs
+    - Magazine12x70PiranhaExtended
+    - Magazine12x70PiranhaExtended
+    - Magazine12x70PiranhaExtended
+    - Magazine12x70Piranha
+    - Magazine12x70Piranha
+    - Magazine12x70Piranha
+
+# Полковник ВСН
+- type: entity
+  parent: CustomizableSpawnerBase
+  id: CustomizableSpawnerGeneral
+  name: ИВЕНТОВЫЙ !Полковник ВСН
+  suffix: Akitovsky, Ивент, Кастомизируемый персонаж
+  components:
+  - type: Sprite
+    layers:
+    - state: timed
+    - sprite: _DeadSpace/TEMP_FOR_EVENT/Akitovsky/aki-spec/Textures/Other/markers.rsi
+      state: general
+  - type: CustomizableHumanoidSpawner
+    jobPrototype: JobGeneralSpecialForce
+    allowedSpecies:
+    - Human
+    - Demon
+
+- type: job
+  id: JobGeneralSpecialForce
+  name: Полковник ВСН
+  description: job-description-soo
+  playTimeTracker: PlayTimeTrackerSpecialForceGeneral
+  setPreference: false
+  startingGear: GeneralSpecialForce
+  icon: "JobIconNanotrasenRed"
+  supervisors: job-supervisors-no-one
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
+  access:
+  - CentralCommand
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+    - type: AntagImmune
+    - type: ZombieImmune
+    - type: NpcFactionMember
+      factions:
+      - CentralCommand
+
+- type: startingGear
+  id: GeneralSpecialForce
+  equipment:
+    jumpsuit: ClothingUniformJumpsuit3eilado
+    eyes: ClothingEyesGlassesHiddenSecurity
+    ears: ClothingHeadsetDeltaGeneral
+    mask: ClothingMaskBreathTaipan
+    gloves: ClothingHandsGlovesAkiDeltaBlack
+    shoes: ClothingShoesBootsLaceup
+    id: CentcomSpecialOperationsOfficerIDCard
+    pocket1: ADTtelescopicBaton 
+    outerClothing: ClothingOuterCoatHoSTrenchAkiDeltaGeneral
+
+# Капитан Мыло СпецНаз НТ
+- type: entity
+  parent: CustomizableSpawnerBase
+  id: CustomizableSpawnerCaptainMylo
+  name: ИВЕНТОВЫЙ !Капитан Мыло СпецНаз НТ «Дельта-6»
+  suffix: Akitovsky, Ивент, Кастомизируемый персонаж, Песок
+  components:
+  - type: Sprite
+    layers:
+    - state: timed
+    - sprite: _DeadSpace/TEMP_FOR_EVENT/Akitovsky/aki-spec/Textures/Other/markers.rsi
+      state: mylo
+  - type: CustomizableHumanoidSpawner
+    jobPrototype: JobCaptainSpecialForceMylo
+    allowedSpecies:
+    - Human
+    - Demon
+
+- type: job
+  id: JobCaptainSpecialForceMylo
+  name: Старший Офицер «Дельта-6»
+  description: job-description-soo
+  playTimeTracker: PlayTimeTrackerSpecialForceCaptainMylo
+  setPreference: false
+  startingGear: CaptainSpecialForceMylo
+  icon: "JobIconBSAALeader"
+  supervisors: job-supervisors-no-one
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
+  access:
+  - CentralCommand
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+    - type: AntagImmune
+    - type: ZombieImmune
+    - type: NpcFactionMember
+      factions:
+      - CentralCommand
+
+- type: startingGear
+  id: CaptainSpecialForceMylo
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitAkiDeltaSand
+    eyes: ClothingEyesGlassesAkiDeltaSand
+    ears: ClothingHeadsetDelta
+    mask: CigarGold
+    gloves: ClothingHandsGlovesCombatAkiDeltaSand
+    shoes: ClothingShoesBootsJackAkiDeltaSand
+    id: AkiDeltaIDCard
+    belt: ClothingBeltMilitaryWebbingAkiDeltaSand
+    pocket1: WeaponPistolDesertEagleAki
+    pocket2: DrinkMREFlask
+    outerClothing: ClothingOuterArmorDeltaAkiSand
+    back: ClothingMilitaryBackpackDeltaAkiSand
+    suitstorage: WeaponRifleHK416Aki
+  storage:
+    back:
+    - MagazineBox556x45AP
+    - MagazineBox556x45AP
+    - CrowbarRed
+    - EmergencyMedipen
+    - BoxMRE
+    - Flare
+    - CombatMedipen
+    - PinpointerUniversal
+    - MagazineEagle357MagnumFMJ
+    - MagazineEagle357MagnumFMJ
+    - ClothingMaskNeckGaiter
+    - CigarGoldCase
+    - FlippoEngravedLighter
+    belt:
+    - Magazine556x45APExtended
+    - Magazine556x45APExtended
+    - Magazine556x45APExtended
+    - Magazine556x45AP
+    - Magazine556x45AP
+    - Magazine556x45AP
+    - Handcuffs
+    - Handcuffs
+
+# Боец СпецНаз НТ Дельта-6
+- type: entity
+  parent: CustomizableSpawnerBase
+  id: CustomizableSpawnerSoldierDelta6
+  name: ИВЕНТОВЫЙ Боец СпецНаз НТ «Дельта-6»
+  suffix: Akitovsky, Ивент, Кастомизируемый персонаж
+  components:
+  - type: Sprite
+    layers:
+    - state: timed
+    - sprite: _DeadSpace/TEMP_FOR_EVENT/Akitovsky/aki-spec/Textures/Other/markers.rsi
+      state: soldier
+  - type: CustomizableHumanoidSpawner
+    jobPrototype: JobSoldierDelta6SpecialForce
+    allowedSpecies:
+    - Human
+    - Shark
+    - Demon
+
+- type: job
+  id: JobSoldierDelta6SpecialForce
+  name: Боец «Дельта-6»
+  description: job-description-soo
+  playTimeTracker: PlayTimeTrackerSpecialForceSoldierDelta6
+  setPreference: false
+  startingGear: SoldierDelta6SpecialForce
+  icon: "JobIconERT"
+  supervisors: job-supervisors-no-one
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
+  access:
+  - CentralCommand
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+    - type: AntagImmune
+    - type: ZombieImmune
+    - type: NpcFactionMember
+      factions:
+      - CentralCommand
+
+- type: startingGear
+  id: SoldierDelta6SpecialForce
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitAkiDeltaStartingGear
+    socks: ClothingUnderwearSocksNormal
+    ears: ClothingHeadsetDelta6
+    id: AkiDeltaIDCard
+
+# Медик Клещ СпецНаз НТ Дельта-6
+- type: entity
+  parent: CustomizableSpawnerBase
+  id: CustomizableSpawnerKleshMedicalDelta6
+  name: ИВЕНТОВЫЙ Медик КЛЕЩ СпецНаз НТ «Дельта-6»
+  suffix: Akitovsky, Ивент, Кастомизируемый персонаж
+  components:
+  - type: Sprite
+    layers:
+    - state: timed
+    - sprite: _DeadSpace/TEMP_FOR_EVENT/Akitovsky/aki-spec/Textures/Other/markers.rsi
+      state: medical
+  - type: CustomizableHumanoidSpawner
+    jobPrototype: JobMedicalKleshSpecialForceDelta6
+    allowedSpecies:
+    - Human
+    - Shark
+    - Demon
+
+- type: job
+  id: JobMedicalKleshSpecialForceDelta6
+  name: Медик «Дельта-6»
+  description: job-description-soo
+  playTimeTracker: PlayTimeTrackerKleshSpecialForceMedicalDelta6
+  setPreference: false
+  startingGear: MedicalDelta6KleshSpecialForce
+  icon: "JobIconSFMedicalAkiDelta"
+  supervisors: job-supervisors-no-one
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
+  access:
+  - CentralCommand
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+    - type: AntagImmune
+    - type: ZombieImmune
+    - type: NpcFactionMember
+      factions:
+      - CentralCommand
+
+- type: startingGear
+  id: MedicalDelta6KleshSpecialForce
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitsastr
+    mask: ClothingMasksastr
+    gloves: ClothingHandsGlovessastr
+    neck: ClothingNeckGhillieAltsastr
+    eyes: ClothingEyesHudMedicalsastr
+    head: ClothingHeadHelmetAkiDeltaSandNVDKlesh
+    back: ClothingBackpacksastrAki
+    belt: ClothingBeltMilitaryWebbingsastrAki
+    outerClothing: ClothingOuterArmorDeltaAkiSandKlesh
+    shoes: ClothingShoesBootsMagsastr
+    socks: ClothingUnderwearSocksNormal
+    ears: ClothingHeadsetDelta6Klesh
+    id: AkiDeltaIDCard
+    pocket1: HypoAkiDelta
+
+# Медик СпецНаз НТ Дельта-6
+- type: entity
+  parent: CustomizableSpawnerBase
+  id: CustomizableSpawnerMedicalDelta6
+  name: ИВЕНТОВЫЙ Медик СпецНаз НТ «Дельта-6»
+  suffix: Akitovsky, Ивент, Кастомизируемый персонаж
+  components:
+  - type: Sprite
+    layers:
+    - state: timed
+    - sprite: _DeadSpace/TEMP_FOR_EVENT/Akitovsky/aki-spec/Textures/Other/markers.rsi
+      state: medical
+  - type: CustomizableHumanoidSpawner
+    jobPrototype: JobMedicalSpecialForceDelta6
+    allowedSpecies:
+    - Human
+    - Shark
+    - Demon
+
+- type: job
+  id: JobMedicalSpecialForceDelta6
+  name: Медик «Дельта-6»
+  description: job-description-soo
+  playTimeTracker: PlayTimeTrackerSpecialForceMedicalDelta6
+  setPreference: false
+  startingGear: MedicalDelta6SpecialForce
+  icon: "JobIconSFMedicalAkiDelta"
+  supervisors: job-supervisors-no-one
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
+  access:
+  - CentralCommand
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+    - type: AntagImmune
+    - type: ZombieImmune
+    - type: NpcFactionMember
+      factions:
+      - CentralCommand
+
+- type: startingGear
+  id: MedicalDelta6SpecialForce
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitAkiDeltaStartingGear
+    socks: ClothingUnderwearSocksNormal
+    ears: ClothingHeadsetDelta6
+    id: AkiDeltaIDCard
+    pocket1: HypoAkiDelta
+
+# Боец СпецНаз НТ Дельта-8
+- type: entity
+  parent: CustomizableSpawnerBase
+  id: CustomizableSpawnerSoldierDelta8
+  name: ИВЕНТОВЫЙ Боец СпецНаз НТ «Дельта-8»
+  suffix: Akitovsky, Ивент, Кастомизируемый персонаж
+  components:
+  - type: Sprite
+    layers:
+    - state: timed
+    - sprite: _DeadSpace/TEMP_FOR_EVENT/Akitovsky/aki-spec/Textures/Other/markers.rsi
+      state: soldier
+  - type: CustomizableHumanoidSpawner
+    jobPrototype: JobSoldierDelta8SpecialForce
+    allowedSpecies:
+    - Human
+    - Shark
+    - Demon
+
+- type: job
+  id: JobSoldierDelta8SpecialForce
+  name: Боец «Дельта-8»
+  description: job-description-soo
+  playTimeTracker: PlayTimeTrackerSpecialForceSoldierDelta8
+  setPreference: false
+  startingGear: SoldierDelta8SpecialForce
+  icon: "JobIconERT"
+  supervisors: job-supervisors-no-one
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
+  access:
+  - CentralCommand
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+    - type: AntagImmune
+    - type: ZombieImmune
+    - type: NpcFactionMember
+      factions:
+      - CentralCommand
+
+- type: startingGear
+  id: SoldierDelta8SpecialForce
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitAkiDeltaStartingGear
+    socks: ClothingUnderwearSocksNormal
+    ears: ClothingHeadsetDelta8
+    id: AkiDeltaIDCard
+
+# Медик СпецНаз НТ Дельта-8
+- type: entity
+  parent: CustomizableSpawnerBase
+  id: CustomizableSpawnerMedicalDelta8
+  name: ИВЕНТОВЫЙ Медик СпецНаз НТ «Дельта-8»
+  suffix: Akitovsky, Ивент, Кастомизируемый персонаж
+  components:
+  - type: Sprite
+    layers:
+    - state: timed
+    - sprite: _DeadSpace/TEMP_FOR_EVENT/Akitovsky/aki-spec/Textures/Other/markers.rsi
+      state: medical
+  - type: CustomizableHumanoidSpawner
+    jobPrototype: JobMedicalSpecialForceDelta8
+    allowedSpecies:
+    - Human
+    - Shark
+    - Demon
+
+- type: job
+  id: JobMedicalSpecialForceDelta8
+  name: Медик «Дельта-8»
+  description: job-description-soo
+  playTimeTracker: PlayTimeTrackerSpecialForceMedicalDelta8
+  setPreference: false
+  startingGear: MedicalDelta8SpecialForce
+  icon: "JobIconSFMedicalAkiDelta"
+  supervisors: job-supervisors-no-one
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
+  access:
+  - CentralCommand
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+    - type: AntagImmune
+    - type: ZombieImmune
+    - type: NpcFactionMember
+      factions:
+      - CentralCommand
+
+- type: startingGear
+  id: MedicalDelta8SpecialForce
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitAkiDeltaStartingGear
+    socks: ClothingUnderwearSocksNormal
+    ears: ClothingHeadsetDelta8
+    id: AkiDeltaIDCard
+    pocket1: HypoAkiDelta
+
+
+
+
+
+
+
+
+
+
+############ КПСК
+# Старший Проповедник
+- type: entity
+  parent: CustomizableSpawnerBase
+  id: CustomizableSpawnerAramRoss
+  name: ИВЕНТОВЫЙ Юни Старший Проповедник (Дредноут)
+  suffix: Akitovsky, Ивент, Кастомизируемый персонаж
+  components:
+  - type: Sprite
+    layers:
+    - state: timed
+    - sprite: _DeadSpace/TEMP_FOR_EVENT/Akitovsky/aki-spec/Textures/Other/markers.rsi
+      state: uni_ARAMROSS
+  - type: CustomizableHumanoidSpawner
+    jobPrototype: JobAramRoss
+    allowedSpecies:
+    - Human
+    - Demon
+    - Reptilian
+
+- type: job
+  id: JobAramRoss
+  name: Старший Проповедник
+  description: job-description-soo
+  playTimeTracker: PlayTimeTrackerAramRoss
+  setPreference: false
+  startingGear: AramRoss
+  icon: "JobIconUnitologyLead"
+  supervisors: job-supervisors-no-one
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
+  access:
+  - NuclearOperative
+  - SyndicateAgent
+  special:
+  - !type:AddImplantSpecial
+    implants: [ EventRadioImplantUnitologyMeta ]
+  - !type:AddComponentSpecial
+    components:
+    - type: AntagImmune
+    - type: ZombieImmune
+    - type: NpcFactionMember
+      factions:
+      - Syndicate
+
+- type: startingGear
+  id: AramRoss
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitUnitology
+    ears: ClothingHeadsetKPSKAramRoss
+    mask: ClothingMaskGasUnitology
+    eyes: ClothingEyesHudUnitologyVisor
+    gloves: ClothingHandsGlovesCombatUnitology
+    shoes: ClothingShoesBootsJackFilled
+    head: ADTClothingHeadSea
+    id: AkiDeltaIDCard
+    belt: ClothingBeltUnitologyCommanderWebbingAki
+    outerClothing: ClothingOuterArmorDeltaFatAkiBlack
+    back: ClothingBackpackMilitarySatchelAki
+    suitstorage: WeaponMachineGunWhirl
+    pocket1: RMCPouchMagazineAki
+    pocket2: RMCPouchMedicalSocAki
+  storage:
+    back:
+    - CrowbarRed
+    - EmergencyMedipen
+    - BoxMRE
+    - Flare
+    - MedicatedSuture
+    - Ointment
+    - Tourniquet3
+    - PunctAutoInjector
+    - PunctAutoInjector
+    - UniPhoneAramRossUplink
+    - HypoAkiKPSK
+    - BinocularsAki
+    - HandheldStationMapUnpowered
+    belt:
+    - MagazineWhirl
+    - MagazineWhirl
+    pocket1:
+    - MagazineWhirl
+    - MagazineWhirl
+    - MagazineWhirl
+    - MagazineWhirl
+    - MagazineWhirl
+    - MagazineWhirl
+    pocket2:
+    - MedicatedSuture
+    - MedicatedSuture
+    - MedicatedSuture
+    - RegenerativeMesh
+    - InjectorCaseFilledAki
+    - SyringeSaline
+    - SyringeSaline
+    - EmergencyMedipen
+    - EmergencyMedipen
+    - Tourniquet3
+
+# Вознесённые
+- type: entity
+  parent: CustomizableSpawnerBase
+  id: CustomizableSpawnerAscended
+  name: ИВЕНТОВЫЙ Юни Вознесённый
+  suffix: Akitovsky, Ивент, Кастомизируемый персонаж
+  components:
+  - type: Sprite
+    layers:
+    - state: timed
+    - sprite: _DeadSpace/TEMP_FOR_EVENT/Akitovsky/aki-spec/Textures/Other/markers.rsi
+      state: uni_ascended
+  - type: CustomizableHumanoidSpawner
+    jobPrototype: JobAscended
+    allowedSpecies:
+    - Human
+    - Demon
+    - Reptilian
+
+- type: job
+  id: JobAscended
+  name: Вознесённый
+  description: job-description-soo
+  playTimeTracker: PlayTimeTrackerAscended
+  setPreference: false
+  startingGear: Ascended
+  icon: "JobIconUnitologyGeist"
+  supervisors: job-supervisors-no-one
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
+  access:
+  - NuclearOperative
+  - SyndicateAgent
+  special:
+  - !type:AddImplantSpecial
+    implants: [ EventRadioImplantUnitologyMeta ]
+  - !type:AddComponentSpecial
+    components:
+    - type: AntagImmune
+    - type: ZombieImmune
+    - type: NpcFactionMember
+      factions:
+      - Syndicate
+    - type: TheCircleGeist
+
+- type: startingGear
+  id: Ascended
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitUnitology
+    ears: ClothingHeadsetKPSKAramRoss
+    mask: ClothingMaskGasUnitology
+    eyes: ClothingEyesHudUnitologyVisor
+    gloves: ClothingHandsGlovesCombatUnitology
+    shoes: ADTClothingFootWrapsBlack
+    head: ClothingHeadHelmetUnitologyGeist
+    neck: ClothingNeckUnitologyGeistMantle
+    id: AkiDeltaIDCard
+    belt: ClothingBeltUnitologyCommanderWebbingAki
+    outerClothing: ClothingOuterHardsuitUnitologyGeistAki
+    back: ClothingBackpackMilitarySatchelAki
+    suitstorage: WeaponRifleAsValAki
+    pocket1: RMCPouchMagazineAki
+    pocket2: RMCPouchMedicalSocAki
+  storage:
+    back:
+    - CrowbarRed
+    - EmergencyMedipen
+    - BoxMRE
+    - Flare
+    - MedicatedSuture
+    - Ointment
+    - Tourniquet3
+    - PunctAutoInjector
+    - PunctAutoInjector
+    - HypoAkiKPSK
+    - BinocularsAki
+    - HandheldStationMapUnpowered
+    belt:
+    - MagazineBoxVSKAki
+    - MagazineBoxVSKAki
+    - MagazineVSK9x39SP6
+    - MagazineVSK9x39SP6
+    - MagazineVSK9x39SP6
+    - MagazineVSK9x39SP6
+    pocket1:
+    - MagazineVSK9x39SP6
+    - MagazineVSK9x39SP6
+    - MagazineVSK9x39SP6
+    - MagazineVSK9x39SP6
+    - MagazineVSK9x39SP6
+    - MagazineVSK9x39SP6
+    pocket2:
+    - MedicatedSuture
+    - MedicatedSuture
+    - MedicatedSuture
+    - RegenerativeMesh
+    - InjectorCaseFilledAki
+    - SyringeSaline
+    - SyringeSaline
+    - EmergencyMedipen
+    - EmergencyMedipen
+    - Tourniquet3
+
+# Командир КПСК
+- type: entity
+  parent: CustomizableSpawnerBase
+  id: CustomizableSpawnerCommanderKPSK
+  name: ИВЕНТОВЫЙ Юни Командир КПСК (АН-94)
+  suffix: Akitovsky, Ивент, Кастомизируемый персонаж
+  components:
+  - type: Sprite
+    layers:
+    - state: timed
+    - sprite: _DeadSpace/TEMP_FOR_EVENT/Akitovsky/aki-spec/Textures/Other/markers.rsi
+      state: kpsk_commander
+  - type: CustomizableHumanoidSpawner
+    jobPrototype: JobCommanderKPSK
+    allowedSpecies:
+    - Human
+    - Demon
+    - Reptilian
+
+- type: job
+  id: JobCommanderKPSK
+  name: Командир «Пурга»
+  description: job-description-soo
+  playTimeTracker: PlayTimeTrackerCommanderKPSK
+  setPreference: false
+  startingGear: CommanderKPSK
+  icon: "JobIconUnitologyHeavy"
+  supervisors: job-supervisors-no-one
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
+  access:
+  - NuclearOperative
+  - SyndicateAgent
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: AntagImmune
+    - type: ZombieImmune
+    - type: NpcFactionMember
+      factions:
+      - Syndicate
+
+- type: startingGear
+  id: CommanderKPSK
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMaugliAkiKPSK
+    ears: ClothingHeadsetKPSK
+    mask: ClothingMaskAkiKPSK
+    eyes: ClothingEyesGlassesHudAkiKPSK
+    gloves: ClothingHandsGlovesCombat
+    shoes: ClothingShoesBootsJackFilled
+    head: ClothingHeadUSSPjuggernautHelmetArmoredAkiKPSK
+    neck: ClothingNeckKPSKCommanderAki
+    id: AkiDeltaIDCard
+    belt: ClothingBeltAkiKPSK
+    outerClothing: ClothingOuterArmorDeltaFatAkiBlack
+    back: ClothingBackpackMilitarySatchelAki
+    suitstorage: WeaponRifleAbakanAki
+    pocket1: RMCPouchMagazineAki
+    pocket2: RMCPouchMedicalSocAki
+  inhand:
+    - BookFSCPAki
+  storage:
+    back:
+    - MagazineBox556x45AP
+    - MagazineBox556x45AP
+    - CrowbarRed
+    - BoxMRE
+    - Flare
+    - BoxFlare
+    - SmokeGrenade
+    - SmokeGrenade
+    - SyndicateWhistle
+    - BinocularsAki
+    - HandheldStationMapUnpowered
+    belt:
+    - Magazine556x45APExtended
+    - Magazine556x45APExtended
+    - Magazine556x45APExtended
+    - Magazine556x45APExtended
+    pocket1:
+    - Magazine556x45AP
+    - Magazine556x45AP
+    - Magazine556x45AP
+    - Magazine556x45AP
+    pocket2:
+    - MedicatedSuture
+    - MedicatedSuture
+    - MedicatedSuture
+    - RegenerativeMesh
+    - InjectorCaseFilledAki
+    - SyringeSaline
+    - SyringeSaline
+    - EmergencyMedipen
+    - EmergencyMedipen
+    - Tourniquet3
+
+# Санитар КПСК
+- type: entity
+  parent: CustomizableSpawnerBase
+  id: CustomizableSpawnerMedicKPSK
+  name: ИВЕНТОВЫЙ Юни Медик КПСК (Точмаш)
+  suffix: Akitovsky, Ивент, Кастомизируемый персонаж
+  components:
+  - type: Sprite
+    layers:
+    - state: timed
+    - sprite: _DeadSpace/TEMP_FOR_EVENT/Akitovsky/aki-spec/Textures/Other/markers.rsi
+      state: kpsk_medic
+  - type: CustomizableHumanoidSpawner
+    jobPrototype: JobMedicKPSK
+    allowedSpecies:
+    - Human
+    - Demon
+    - Reptilian
+
+- type: job
+  id: JobMedicKPSK
+  name: Санитар «Пурга»
+  description: job-description-soo
+  playTimeTracker: PlayTimeTrackerMedicKPSK
+  setPreference: false
+  startingGear: MedicKPSK
+  icon: "JobIconUnitologyMedic"
+  supervisors: job-supervisors-no-one
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
+  access:
+  - NuclearOperative
+  - SyndicateAgent
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: AntagImmune
+    - type: ZombieImmune
+    - type: NpcFactionMember
+      factions:
+      - Syndicate
+
+- type: startingGear
+  id: MedicKPSK
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMaugliAkiKPSK
+    ears: ClothingHeadsetKPSK
+    mask: ClothingMaskAkiKPSK
+    eyes: ClothingEyesHudSyndicateAgent
+    gloves: ClothingHandsGlovesCombat
+    shoes: ClothingShoesBootsJackFilled
+    head: ClothingHeadHatBeretMedicKPSKAki
+    id: AkiDeltaIDCard
+    belt: ClothingBeltUnitologyLightWebbingAki
+    outerClothing: ClothingOuterArmorDeltaFatAkiBlack
+    back: ClothingBackpackMilitarySatchelAki
+    suitstorage: WeaponTochmashAki
+    pocket1: RMCPouchMagazineAki
+    pocket2: RMCPouchMedicalSocAki
+  inhand:
+    - BookFSCPAki
+  storage:
+    back:
+    - CrowbarRed
+    - EmergencyMedipen
+    - BoxMRE
+    - Flare
+    - MagazineBox9x19AP63
+    - MagazineBox9x19AP63
+    - BoxFlare
+    - SmokeGrenade
+    - HandheldStationMapUnpowered
+    belt:
+    - HypoAkiKPSK
+    - BodyBagFolded
+    - BodyBagFolded
+    - EmergencyRollerBedSpawnFolded
+    - ChemistryBottlePuncturase
+    - ChemistryBottlePuncturase
+    - ChemistryBottleBicaridine
+    - ChemistryBottleDexalinPlus
+    - ChemistryBottleDermaline
+    - ChemistryBottleDylovene
+    pocket1:
+    - MagazinePistolTochmash9x19AP63
+    - MagazinePistolTochmash9x19AP63
+    - MagazinePistolTochmash9x19AP63
+    - MagazinePistolTochmash9x19AP63
+    - MagazinePistolTochmash9x19AP63
+    - MagazinePistolTochmash9x19AP63
+    pocket2:
+    - MedicatedSuture
+    - MedicatedSuture
+    - MedicatedSuture
+    - RegenerativeMesh
+    - InjectorCaseFilledAki
+    - SyringeSaline
+    - SyringeSaline
+    - EmergencyMedipen
+    - EmergencyMedipen
+    - Tourniquet3
+
+# Боец КПСК
+- type: entity
+  parent: CustomizableSpawnerBase
+  id: CustomizableSpawnerSoldierKPSK
+  name: ИВЕНТОВЫЙ Юни Солдат КПСК (АН-94)
+  suffix: Akitovsky, Ивент, Кастомизируемый персонаж
+  components:
+  - type: Sprite
+    layers:
+    - state: timed
+    - sprite: _DeadSpace/TEMP_FOR_EVENT/Akitovsky/aki-spec/Textures/Other/markers.rsi
+      state: kpsk_soldier
+  - type: CustomizableHumanoidSpawner
+    jobPrototype: JobSoldierKPSK
+    allowedSpecies:
+    - Human
+    - Demon
+    - Reptilian
+
+- type: job
+  id: JobSoldierKPSK
+  name: Боец «Пурга»
+  description: job-description-soo
+  playTimeTracker: PlayTimeTrackerSoldierKPSK
+  setPreference: false
+  requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 36000 # 10 hours
+  startingGear: SoldierKPSK
+  icon: "JobIconUnitology"
+  supervisors: job-supervisors-no-one
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
+  access:
+  - NuclearOperative
+  - SyndicateAgent
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: AntagImmune
+    - type: ZombieImmune
+    - type: NpcFactionMember
+      factions:
+      - Syndicate
+
+- type: startingGear
+  id: SoldierKPSK
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMaugliAkiKPSK
+    ears: ClothingHeadsetKPSK
+    mask: ClothingMaskAkiKPSK
+    eyes: ClothingEyesGlassesHudAkiKPSK
+    gloves: ClothingHandsGlovesCombat
+    shoes: ClothingShoesBootsJackFilled
+    head: ClothingHeadUSSPjuggernautHelmetArmoredAkiKPSK
+    id: AkiKPSKSoldierIDCard
+    belt: ClothingBeltAkiKPSK
+    outerClothing: ClothingOuterArmorDeltaFatAkiBlack
+    back: ClothingBackpackMilitarySatchelAki
+    suitstorage: WeaponRifleAbakanAki
+    pocket1: RMCPouchMagazineAki
+    pocket2: RMCPouchGeneralAki
+  inhand:
+    - BookFSCPAki
+  storage:
+    back:
+    - CrowbarRed
+    - EmergencyMedipen
+    - BoxMRE
+    - Flare
+    - MedicatedSuture
+    - Ointment
+    - Tourniquet3
+    - HandheldStationMapUnpowered
+    - PunctAutoInjector
+    - PunctAutoInjector
+    belt:
+    - Magazine556x45APExtended
+    - Magazine556x45APExtended
+    - Magazine556x45APExtended
+    - MagazineBox556x45AP
+    - MagazineBox556x45AP
+    pocket1:
+    - Magazine556x45AP
+    - Magazine556x45AP
+    - Magazine556x45AP
+    - Magazine556x45AP
+
+# Доспавн Боец КПСК
+- type: entity
+  id: RandomSpawnerSoldierKPSKAki
+  name: ИВЕНТОВЫЙ Юни Солдат КПСК ДОСПАВН (АКМС)
+  suffix: Akitovsky, Ивент, Случайный персонаж
+  components:
+    - type: Sprite
+      sprite: _Corvax/Sponsor/jesuisunfou/Clothing/Head/Hats/ussp.rsi
+      state: icon
+    - type: RandomHumanoidSpawner
+      settings: KPSKSoldierAki
+
+- type: randomHumanoidSettings
+  id: KPSKSoldierAki
+  parent: EventHumanoid
+  speciesBlacklist:
+    - Arachnid
+    - Diona
+    - Dwarf
+    # - Human
+    - Moth
+    - Reptilian
+    - SlimePerson
+    - Vox
+    - Demon
+    - Shark
+    - Tajaran
+    - Vulpkanin
+    - Felinid
+    - Kobolt
+    - Xenomorph
+    - IPC
+  components:
+    - type: GhostRole
+      name: Боец КПСК
+      description: ghost-role-information-fscp-recruit-description
+      job: JobSoldierKPSK
+    - type: Loadout
+      prototypes: [ SoldierAdditSpawnKPSK ]
+    - type: RandomMetadata
+      nameSegments:
+      - NamesLastMale
+      nameFormat: name-format-kpsk-private
+
+- type: startingGear
+  id: SoldierAdditSpawnKPSK
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMaugliAkiKPSK
+    ears: ClothingHeadsetKPSK
+    mask: ClothingMaskAkiKPSK
+    eyes: ClothingEyesGlassesHudAkiKPSK
+    gloves: ClothingHandsGlovesCombat
+    shoes: ClothingShoesBootsJackFilled
+    head: ClothingHeadUSSPjuggernautHelmetArmoredAkiKPSK
+    id: AkiKPSKSoldierIDCard
+    belt: ClothingBeltAkiKPSK
+    outerClothing: ClothingOuterArmorDeltaFatAkiBlack
+    back: ClothingBackpackMilitarySatchelAki
+    suitstorage: WeaponRifleAk
+    pocket2: RMCPouchGeneralAki
+  inhand:
+    - BookFSCPAki
+  storage:
+    back:
+    - CrowbarRed
+    - EmergencyMedipen
+    - BoxMRE
+    - Flare
+    - MedicatedSuture
+    - Ointment
+    - Tourniquet3
+    - HandheldStationMapUnpowered
+    belt:
+    - MagazineLightRifle
+    - MagazineLightRifle
+    - MagazineLightRifle
+    - MagazineLightRifle
+    - MagazineLightRifle
+    - MagazineLightRifle
+    - MagazineBoxLightRifle
+    - MagazineBoxLightRifle

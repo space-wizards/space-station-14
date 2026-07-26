@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "license": "CC-BY-NC-SA-3.0",
+  "copyright": "Taken from mojave-sun-13 at https://github.com/Mojave-Sun/mojave-sun-13/blob/c935466d94a1450d41b2b2a8a904b46d0f7dceab/mojave/icons/obstacles/barriers.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "concrete_barrier",
+      "directions": 4
+    },
+    {
+      "name": "concrete_barrier_1",
+      "directions": 4
+    },
+    {
+      "name": "concrete_barrier_2",
+      "directions": 4
+    },
+    {
+      "name": "concrete_barrier_3",
+      "directions": 4
+    },
+    {
+      "name": "concrete_barrier_4",
+      "directions": 4
+    },
+    {
+      "name": "concrete_barrier_5",
+      "directions": 4
+    },
+    {
+      "name": "concrete_barrier_alt",
+      "directions": 4
+    },
+    {
+      "name": "concrete_barrier_alt_1",
+      "directions": 4
+    },
+    {
+      "name": "road_barrier",
+      "directions": 4
+    }
+  ]
+}

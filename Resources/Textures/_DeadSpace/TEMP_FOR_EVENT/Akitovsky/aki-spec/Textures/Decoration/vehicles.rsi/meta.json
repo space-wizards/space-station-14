@@ -1,0 +1,185 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from cmss13 at https://github.com/cmss13-devs/cmss13/blob/789a362bc55d2d6331bc89699bb4f9f792695853/icons/obj/structures/props/vehicles",
+  "size": {
+    "x": 64,
+    "y": 64
+  },
+  "states": [
+    {
+      "name": "mizutani_black"
+    },
+    {
+      "name": "mizutani_black_f"
+    },
+    {
+      "name": "mizutani_black_damage"
+    },
+    {
+      "name": "mizutani_black_damage_f"
+    },
+    {
+      "name": "mizutani_blue"
+    },
+    {
+      "name": "mizutani_blue_f"
+    },
+    {
+      "name": "mizutani_blue_damage"
+    },
+    {
+      "name": "mizutani_blue_damage_f"
+    },
+    {
+      "name": "mizutani_brown"
+    },
+    {
+      "name": "mizutani_brown_f"
+    },
+    {
+      "name": "mizutani_brown_damage"
+    },
+    {
+      "name": "mizutani_brown_damage_f"
+    },
+    {
+      "name": "mizutani_cop"
+    },
+    {
+      "name": "mizutani_cop_f"
+    },
+    {
+      "name": "mizutani_cop_damage"
+    },
+    {
+      "name": "mizutani_cop_damage_f"
+    },
+    {
+      "name": "mizutani_desatblue"
+    },
+    {
+      "name": "mizutani_desatblue_f"
+    },
+    {
+      "name": "mizutani_desatblue_damage"
+    },
+    {
+      "name": "mizutani_desatblue_damage_f"
+    },
+    {
+      "name": "mizutani_green"
+    },
+    {
+      "name": "mizutani_green_f"
+    },
+    {
+      "name": "mizutani_green_damage"
+    },
+    {
+      "name": "mizutani_green_damage_f"
+    },
+    {
+      "name": "mizutani_lightblue"
+    },
+    {
+      "name": "mizutani_lightblue_f"
+    },
+    {
+      "name": "mizutani_lightblue_damage"
+    },
+    {
+      "name": "mizutani_lightblue_damage_f"
+    },
+    {
+      "name": "mizutani_orange"
+    },
+    {
+      "name": "mizutani_orange_f"
+    },
+    {
+      "name": "mizutani_orange_damage"
+    },
+    {
+      "name": "mizutani_orange_damage_f"
+    },
+    {
+      "name": "mizutani_pink"
+    },
+    {
+      "name": "mizutani_pink_f"
+    },
+    {
+      "name": "mizutani_pink_damage"
+    },
+    {
+      "name": "mizutani_pink_damage_f"
+    },
+    {
+      "name": "mizutani_purple"
+    },
+    {
+      "name": "mizutani_purple_f"
+    },
+    {
+      "name": "mizutani_purple_damage"
+    },
+    {
+      "name": "mizutani_purple_damage_f"
+    },
+    {
+      "name": "mizutani_red"
+    },
+    {
+      "name": "mizutani_red_f"
+    },
+    {
+      "name": "mizutani_red_damage"
+    },
+    {
+      "name": "mizutani_red_damage_f"
+    },
+    {
+      "name": "mizutani_shell"
+    },
+    {
+      "name": "mizutani_shell_f"
+    },
+    {
+      "name": "mizutani_taxi"
+    },
+    {
+      "name": "mizutani_taxi_f"
+    },
+    {
+      "name": "mizutani_taxi_damage"
+    },
+    {
+      "name": "mizutani_taxi_damage_f"
+    },
+    {
+      "name": "mizutani_turquoise"
+    },
+    {
+      "name": "mizutani_turquoise_f"
+    },
+    {
+      "name": "mizutani_turquoise_damage"
+    },
+    {
+      "name": "mizutani_turquoise_damage_f"
+    },
+    {
+      "name": "mizutani_wy"
+    },
+    {
+      "name": "mizutani_wy_f"
+    },
+    {
+      "name": "mizutani_wy_damage"
+    },
+    {
+      "name": "mizutani_wy_damage_f"
+    }
+  ]
+}

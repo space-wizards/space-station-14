@@ -1,0 +1,26 @@
+{
+  "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by sastr. (Dicord) for Space Station 14 Мёртвый Космос",
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "icon-inhand-left",
+      "directions": 4
+    },
+    {
+        "name": "equipped-SUITSTORAGE",
+        "directions": 4
+    },
+    {
+      "name": "icon-inhand-right",
+      "directions": 4
+    }
+  ]
+}

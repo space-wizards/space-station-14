@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "license": "CC-BY-NC-SA-3.0",
+  "copyright": "Taken from mojave-sun-13 at https://github.com/Mojave-Sun/mojave-sun-13/blob/0587dd16e28108bdf0b0a28e2caae4319845e861/mojave/icons/structure/street_signs.dmi",
+  "size": {
+    "x": 32,
+    "y": 48
+  },
+  "states": [
+    {
+      "name": "interstate",
+      "directions": 8
+    },
+    {
+      "name": "stop",
+      "directions": 4
+    },
+    {
+      "name": "noturn",
+      "directions": 4
+    },
+    {
+      "name": "noparking"
+    },
+    {
+      "name": "street"
+    },
+    {
+      "name": "direction",
+      "directions": 4
+    },
+    {
+      "name": "busstop"
+    },
+    {
+      "name": "railcrossing"
+    },
+    {
+      "name": "onlydir",
+      "directions": 4
+    },
+    {
+      "name": "speed",
+      "directions": 4
+    },
+    {
+      "name": "warnings",
+      "directions": 4
+    },
+    {
+      "name": "turn",
+      "directions": 8
+    },
+    {
+      "name": "interstate80_shot"
+    },
+    {
+      "name": "exit",
+      "directions": 4
+    },
+    {
+      "name": "nopedestrian"
+    },
+    {
+      "name": "merge"
+    },
+    {
+      "name": "snake"
+    }
+  ]
+}

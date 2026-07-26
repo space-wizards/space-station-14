@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from cmss13 at https://github.com/cmss13-devs/cmss13/blob/41109aa6eebf87892e41b61418b7b06b279d04b6/icons/obj/structures/barricades.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "sandbag",
+      "directions": 4
+    }
+  ]
+}

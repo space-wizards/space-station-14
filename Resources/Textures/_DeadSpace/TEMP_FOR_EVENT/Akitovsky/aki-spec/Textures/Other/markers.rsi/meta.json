@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Create by Non_stop_smetana [Discord]",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "kaisanen_sand"
+    },
+    {
+      "name": "kaisanen_black"
+    },
+    {
+      "name": "mirs"
+    },
+    {
+      "name": "soldier"
+    },
+    {
+      "name": "mylo"
+    },
+    {
+      "name": "medical"
+    },
+    {
+      "name": "general"
+    },
+    {
+      "name": "uni_ARAMROSS"
+    },
+    {
+      "name": "uni_ascended"
+    },
+    {
+      "name": "kpsk_commander"
+    },
+    {
+      "name": "kpsk_medic"
+    },
+    {
+      "name": "kpsk_soldier"
+    }
+  ]
+}

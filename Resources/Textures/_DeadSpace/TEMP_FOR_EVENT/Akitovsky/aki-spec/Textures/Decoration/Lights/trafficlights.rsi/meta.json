@@ -1,0 +1,103 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from cms13 at https://github.com/cmss13-devs/cmss13/blob/789a362bc55d2d6331bc89699bb4f9f792695853/icons/obj/structures/props/streetlights.dmi",
+  "size": {
+    "x": 64,
+    "y": 64
+  },
+  "states": [
+    {
+      "name": "trafficlight",
+      "directions": 4
+    },
+    {
+      "name": "trafficlight_on",
+      "directions": 4,
+      "delays": [
+        [
+          10,
+          15,
+          10,
+          5,
+          2.5,
+          15
+        ],
+        [
+          10,
+          15,
+          10,
+          5,
+          2.5,
+          15
+        ],
+        [
+          10,
+          15,
+          10,
+          5,
+          2.5,
+          15
+        ],
+        [
+          10,
+          15,
+          10,
+          5,
+          2.5,
+          15
+        ]
+      ]
+    },
+    {
+      "name": "trafficlight_alt",
+      "directions": 4
+    },
+    {
+      "name": "trafficlight_alt_on",
+      "directions": 4,
+      "delays": [
+        [
+          10,
+          15,
+          10,
+          5,
+          15,
+          10
+        ],
+        [
+          10,
+          15,
+          10,
+          5,
+          15,
+          10
+        ],
+        [
+          10,
+          15,
+          10,
+          5,
+          15,
+          10
+        ],
+        [
+          10,
+          15,
+          10,
+          5,
+          15,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "trafficlight_damaged",
+      "directions": 4
+    },
+    {
+      "name": "trafficlight_alt_damaged",
+      "directions": 4
+    }
+  ]
+}

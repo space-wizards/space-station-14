@@ -58,6 +58,8 @@ namespace Content.IntegrationTests.Tests
             {"/Maps/Shuttles/ShuttleEvent/honki.yml", ["GoldenBikeHorn", "RubberStampClown"]},
             {"/Maps/Shuttles/ShuttleEvent/syndie_evacpod.yml", ["RubberStampSyndicate"]},
             // DS14-start: Add our custom maps to whitelist
+            {"/Maps/_DeadSpace/TEMP_FOR_EVENT/Akitovsky/KPSKPlanetVolume1.yml", ["BoxFolderBlueFilled"]},
+            {"/Maps/_DeadSpace/TEMP_FOR_EVENT/Akitovsky/SpecOpsBase.yml", ["BoxFolderBlueFilled", "BoxFolderCentComThreePapers", "ClothingHeadHatCatEars"]},
             {"/Maps/barratry.yml", ["RubberStampCaptain"]},
             {"/Maps/cluster.yml", ["RubberStampMime"]},
             {"/Maps/corvax_pilgrim.yml", ["ClothingHeadHatCatEars", "BoxFolderCentCom"]},

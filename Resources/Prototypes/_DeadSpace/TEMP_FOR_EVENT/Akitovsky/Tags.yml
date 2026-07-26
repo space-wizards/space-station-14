@@ -1,0 +1,14 @@
+- type: Tag
+  id: MagazinePistolTochmash
+
+- type: Tag
+  id: MagazineCheyTac
+
+- type: Tag
+  id: Cartridge408CT
+
+- type: Tag
+  id: Pouch
+
+- type: Tag
+  id: RMCRocketAmmo84mm

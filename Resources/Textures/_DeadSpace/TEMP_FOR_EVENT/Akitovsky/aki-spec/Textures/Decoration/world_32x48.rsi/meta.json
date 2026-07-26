@@ -1,0 +1,168 @@
+{
+  "version": 1,
+  "license": "CC-BY-NC-SA-3.0",
+  "copyright": "Taken from mojave-sun-13 at https://github.com/Mojave-Sun/mojave-sun-13/blob/ffcecc82f28c796f8eff92ac46ff0f5e0d9b1ab6/mojave/icons/structure/miscellaneous.dmi",
+  "size": {
+    "x": 32,
+    "y": 48
+  },
+  "states": [
+    {
+      "name": "barrels1"
+    },
+    {
+      "name": "barrels2"
+    },
+    {
+      "name": "barrels3"
+    },
+    {
+      "name": "barrels4"
+    },
+    {
+      "name": "barrels5"
+    },
+    {
+      "name": "barrels6"
+    },
+    {
+      "name": "pot_1"
+    },
+    {
+      "name": "pot_2"
+    },
+    {
+      "name": "pot_3"
+    },
+    {
+      "name": "pot_4"
+    },
+    {
+      "name": "shower",
+      "directions": 4
+    },
+    {
+      "name": "scattered_papers",
+      "directions": 8
+    },
+    {
+      "name": "papers_1",
+      "directions": 4
+    },
+    {
+      "name": "papers_2",
+      "directions": 4
+    },
+    {
+      "name": "papers_3",
+      "directions": 4
+    },
+    {
+      "name": "woodscrap",
+      "directions": 8
+    },
+    {
+      "name": "brickrubble",
+      "directions": 8
+    },
+    {
+      "name": "cardboard",
+      "directions": 8
+    },
+    {
+      "name": "pallet",
+      "directions": 4
+    },
+    {
+      "name": "pallet_stack",
+      "directions": 4
+    },
+    {
+      "name": "brickpile"
+    },
+    {
+      "name": "bookstack_1"
+    },
+    {
+      "name": "bookstack_2"
+    },
+    {
+      "name": "bookstack_3"
+    },
+    {
+      "name": "bookpile_1"
+    },
+    {
+      "name": "bookpile_2"
+    },
+    {
+      "name": "bookpile_3"
+    },
+    {
+      "name": "bookpile_4"
+    },
+    {
+      "name": "bookpile_5"
+    },
+    {
+      "name": "bookpile_6"
+    },
+    {
+      "name": "foodstuff_1"
+    },
+    {
+      "name": "foodstuff_2"
+    },
+    {
+      "name": "foodstuff_3"
+    },
+    {
+      "name": "foodstuff_4"
+    },
+    {
+      "name": "foodstuff_5"
+    },
+    {
+      "name": "foodstuff_6"
+    },
+    {
+      "name": "trashbags_1"
+    },
+    {
+      "name": "trashbags_2"
+    },
+    {
+      "name": "trashbags_3"
+    },
+    {
+      "name": "trashbags_4"
+    },
+    {
+      "name": "trashbags_5"
+    },
+    {
+      "name": "trashbags_6"
+    },
+    {
+      "name": "glass_1"
+    },
+    {
+      "name": "glass_2"
+    },
+    {
+      "name": "glass_3"
+    },
+    {
+      "name": "glass_4"
+    },
+    {
+      "name": "glass_5"
+    },
+    {
+      "name": "glass_6"
+    },
+    {
+      "name": "mine_sign"
+    }
+  ]
+}

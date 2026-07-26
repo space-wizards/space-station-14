@@ -1,0 +1,44 @@
+- type: playTimeTracker
+  id: PlayTimeTrackerSpecialForceLieutenantKaisanenSand
+
+- type: playTimeTracker
+  id: PlayTimeTrackerSpecialForceLieutenantKaisanenBlack
+
+- type: playTimeTracker
+  id: PlayTimeTrackerSpecialForceLieutenantMirs
+
+- type: playTimeTracker
+  id: PlayTimeTrackerSpecialForceGeneral
+
+- type: playTimeTracker
+  id: PlayTimeTrackerSpecialForceCaptainMylo
+
+- type: playTimeTracker
+  id: PlayTimeTrackerSpecialForceSoldierDelta6
+
+- type: playTimeTracker
+  id: PlayTimeTrackerSpecialForceMedicalDelta6
+
+- type: playTimeTracker
+  id: PlayTimeTrackerKleshSpecialForceMedicalDelta6
+
+- type: playTimeTracker
+  id: PlayTimeTrackerSpecialForceSoldierDelta8
+
+- type: playTimeTracker
+  id: PlayTimeTrackerSpecialForceMedicalDelta8
+
+- type: playTimeTracker
+  id: PlayTimeTrackerAramRoss
+
+- type: playTimeTracker
+  id: PlayTimeTrackerAscended
+
+- type: playTimeTracker
+  id: PlayTimeTrackerMedicKPSK
+
+- type: playTimeTracker
+  id: PlayTimeTrackerCommanderKPSK
+
+- type: playTimeTracker
+  id: PlayTimeTrackerSoldierKPSK
