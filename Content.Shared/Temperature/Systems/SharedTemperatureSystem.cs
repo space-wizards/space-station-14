@@ -34,6 +34,11 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
         SubscribeLocalEvent<TemperatureSpeedComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovementSpeedModifiers);
     }
 
+    /// <remarks>
+    /// Calculates the HeatCapacity for this entity based on its SpecificHeat and mass.
+    /// This is a carryover from the old TemperatureSystem.
+    /// If this entity does not have a <see cref="PhysicsComponent"/>, then it assumes it's 1kg.
+    /// </remarks>
     protected virtual void OnMapInit(Entity<TemperatureComponent> entity, ref MapInitEvent args)
     {
         // We calculate the heat capacity for our entity by multiplying its mass by its specific heat.
