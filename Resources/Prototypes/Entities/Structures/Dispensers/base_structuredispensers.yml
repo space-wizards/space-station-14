@@ -1,7 +1,7 @@
 - type: entity
   abstract: true
   id: ReagentDispenserBase
-  parent: [ SmallConstructibleMachine, BaseSmallConstructibleMachineDestructible ]
+  parent: SmallConstructibleMachine
   placement:
     mode: SnapgridCenter
   components:
@@ -44,8 +44,10 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 200
       behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak

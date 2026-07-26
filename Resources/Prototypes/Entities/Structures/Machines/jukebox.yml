@@ -1,7 +1,7 @@
 - type: entity
   id: Jukebox
   name: jukebox
-  parent: [ BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible ]
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
   description: A machine capable of playing a wide variety of tunes. Enjoyment not guaranteed.
   components:
   - type: StationAiWhitelist
@@ -37,15 +37,21 @@
     layoutId: Jukebox
   - type: Damageable
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 175
+        damage: 75
       behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WoodDestroy
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 2
   - type: Physics
     bodyType: Static
   - type: Fixtures

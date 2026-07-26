@@ -1,6 +1,6 @@
 ﻿- type: entity
   id: MedicalScanner
-  parent: [ BaseMachinePowered, BaseConstructibleMachineDestructible ]
+  parent: BaseMachinePowered
   name: medical scanner
   description: A bulky medical scanner.
   components:
@@ -52,15 +52,21 @@
       machine_parts: !type:Container
   - type: Damageable
     damageModifierSet: StrongMetallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 175
+        damage: 100
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: Machine
     board: MedicalScannerMachineCircuitboard
   - type: WiresPanel

@@ -1,6 +1,6 @@
 ﻿- type: entity
   id: CloningPod
-  parent: [ BaseMachinePowered, BaseConstructibleMachineDestructible ]
+  parent: BaseMachinePowered
   name: cloning pod
   description: A Cloning Pod. 50% reliable.
   components:
@@ -32,14 +32,21 @@
       - clonepod-bodyContainer
   - type: Damageable
     damageModifierSet: StrongMetallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
-    - trigger: !type:DamageTrigger
-        damage: 175
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: Machine
     board: CloningPodMachineCircuitboard
   - type: MaterialStorage

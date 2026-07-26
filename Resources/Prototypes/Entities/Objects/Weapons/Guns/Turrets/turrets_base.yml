@@ -1,9 +1,10 @@
 - type: entity
-  abstract: true
   parent: BaseStructure
-  id: BaseWeaponTurretIndestructible
+  id: BaseWeaponTurret
   name: turret
+  abstract: true
   components:
+  - type: Clickable
   - type: InteractionOutline
   - type: Actions
   - type: Fixtures
@@ -31,6 +32,26 @@
       path: /Audio/Effects/double_beep.ogg
   - type: CombatMode
     toggleMouseRotator: false
+  - type: Damageable
+  - type: Injurable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+       # TODO: Construction graph
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 3
+            max: 5
   - type: HTN
     rootTask:
       task: TurretCompound
@@ -49,41 +70,11 @@
     context: "human"
 
 - type: entity
-  abstract: true
-  id: BaseTurretDestructible
-  components:
-  - type: Damageable
-  - type: Injurable
-    damageContainer: StructuralInorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 300
-        # TODO: Construction graph
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalGlassBreak
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          SheetSteel1:
-            min: 3
-            max: 5
-
-- type: entity
-  abstract: true
-  parent: [ BaseWeaponTurretIndestructible, BaseTurretDestructible ]
-  id: BaseWeaponTurret
-
-- type: entity
-  abstract: true
-  parent: BaseWeaponTurretIndestructible
-  id: BaseWeaponBallisticTurretIndestructible
-  name: ballistic turret
+  parent: BaseWeaponTurret
+  id: BaseWeaponBallisticTurret
   description: A ballistic machine gun auto-turret.
+  name: ballistic turret
+  abstract: true
   components:
   - type: ContainerContainer
     containers:
@@ -100,16 +91,11 @@
     capacity: 500
 
 - type: entity
-  abstract: true
-  parent: [ BaseWeaponBallisticTurretIndestructible, BaseTurretDestructible ]
-  id: BaseWeaponBallisticTurret
-
-- type: entity
-  abstract: true
-  parent: BaseWeaponTurretIndestructible
-  id: BaseWeaponEnergyTurretIndestructible
+  parent: BaseWeaponTurret
+  id: BaseWeaponEnergyTurret
   name: laser turret
   description: An auto-turret armed with a heavy laser. Its weapon will recharge while connected to an active power grid.
+  abstract: true
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Turrets/sentry_turret.rsi
@@ -149,8 +135,3 @@
       task: EnergyTurretCompound
   - type: StaticPrice
     price: 200
-
-- type: entity
-  abstract: true
-  parent: [ BaseWeaponEnergyTurretIndestructible, BaseTurretDestructible ]
-  id: BaseWeaponEnergyTurret
