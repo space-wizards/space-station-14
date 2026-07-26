@@ -50,9 +50,9 @@ public sealed partial class CardSystem : SharedCardSystem
             var (baseLayer, layerOne, layerTwo) = CardLayers(i);
             if (!_sprite.LayerExists((uid, sprite), baseLayer))
                 break;
-            _sprite.RemoveLayer((uid, sprite), baseLayer);
-            _sprite.RemoveLayer((uid, sprite), layerOne);
-            _sprite.RemoveLayer((uid, sprite), layerTwo);
+            _sprite.RemoveLayer((uid, sprite), baseLayer, true);
+            _sprite.RemoveLayer((uid, sprite), layerOne, true);
+            _sprite.RemoveLayer((uid, sprite), layerTwo, true);
         }
 
         var radius = FanRadius(visualState.Count);
