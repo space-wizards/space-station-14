@@ -31,7 +31,7 @@ public sealed partial class PlantChangeStatEntityEffectSystem : EntityEffectSyst
             return;
         }
 
-        if (!EntityManager.TryGetComponent(entity.Owner, registration.Type, out var plantComp))
+        if (!TryComp(entity.Owner, registration.Type, out var plantComp))
             return;
 
         var field = registration.Type.GetField(targetDataField);

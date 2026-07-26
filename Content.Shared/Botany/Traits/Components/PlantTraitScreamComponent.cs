@@ -13,7 +13,7 @@ public sealed partial class PlantTraitScreamComponent : PlantTraitsComponent
     /// The sound to play when the plant screams.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public SoundSpecifier ScreamSound = new SoundCollectionSpecifier("PlantScreams");
+    public SoundSpecifier ScreamSound = new SoundCollectionSpecifier("PlantScreams", AudioParams.Default.AddVolume(-10));
 
     [DataField]
     public override LocId TraitState { get; set; } = "mutation-plant-scream";
