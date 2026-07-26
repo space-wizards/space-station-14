@@ -7,27 +7,19 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Objectives.Systems;
 
-public sealed class KillLimitConditionSystem : EntitySystem
+public sealed partial class KillLimitConditionSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedMindSystem _mind = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedMindSystem _mind = default!;
+    [Dependency] private MetaDataSystem _metaData = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<KillLimitConditionComponent, ObjectiveAssignedEvent>(OnAssigned);
-        SubscribeLocalEvent<KillLimitConditionComponent, ObjectiveAfterAssignEvent>(OnAfterAssign);
-        SubscribeLocalEvent<KillLimitConditionComponent, ObjectiveGetProgressEvent>(OnGetProgress);
-        SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
-        SubscribeLocalEvent<KillReportedEvent>(OnKillReported);
-    }
-
+    [SubscribeLocalEvent]
     private void OnAssigned(Entity<KillLimitConditionComponent> condition, ref ObjectiveAssignedEvent args)
     {
         condition.Comp.PermissibleKillCount = _random.Next(condition.Comp.MinKillCount, condition.Comp.MaxKillCount);
     }
+
+    [SubscribeLocalEvent]
     private void OnAfterAssign(Entity<KillLimitConditionComponent> condition, ref ObjectiveAfterAssignEvent args)
     {
         string title;
@@ -36,6 +28,7 @@ public sealed class KillLimitConditionSystem : EntitySystem
         _metaData.SetEntityName(condition.Owner, title, args.Meta);
     }
 
+    [SubscribeLocalEvent]
     private void OnGetProgress(Entity<KillLimitConditionComponent> condition, ref ObjectiveGetProgressEvent args)
     {
         args.Progress = condition.Comp.PermissibleKillCount >= condition.Comp.KillList.Count ? 1f : 0f;
@@ -48,6 +41,7 @@ public sealed class KillLimitConditionSystem : EntitySystem
     /// <summary>
     /// Tracks revival of a possible target.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnMobStateChanged(MobStateChangedEvent ev)
     {
         if (ev.NewMobState == MobState.Dead && ev.OldMobState != MobState.Dead)
@@ -61,6 +55,7 @@ public sealed class KillLimitConditionSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnKillReported(ref KillReportedEvent ev)
     {
         if (ev.Primary is KillPlayerSource killer)
