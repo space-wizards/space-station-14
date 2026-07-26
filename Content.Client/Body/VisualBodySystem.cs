@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Client.DisplacementMap;
+using Content.Client.Sprite;
 using Content.Shared.Body;
 using Content.Shared.CCVar;
 using Content.Shared.Humanoid.Markings;
@@ -17,6 +18,7 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
     [Dependency] private DisplacementMapSystem _displacement = default!;
     [Dependency] private MarkingManager _marking = default!;
     [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private SpriteDirectionLayeringSystem _spriteDirection = default!;
 
     public override void Initialize()
     {
@@ -215,7 +217,7 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
                     //   an additional offset to ensure that the order of the base sprites is correct
                     //   after inserting a displacement layer
                     // - The +1 ensures that markings render on top of the base organ
-                    var spriteLayer = _sprite.AddLayer(target, sprite, index + i + numDisplacements + 1);
+                    var spriteLayer = _sprite.AddLayer(target, sprite, index + i + numDisplacements + 1, index);
                     _sprite.LayerMapSet(target, layerId, spriteLayer);
                     _sprite.LayerSetSprite(target, layerId, rsi);
                 }
@@ -249,6 +251,8 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
 
             applied.Add(marking);
         }
+
+        _spriteDirection.DirtyCachedOverrides(target.Owner);
         ent.Comp.AppliedMarkings = applied;
     }
 
@@ -284,6 +288,8 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
                 _sprite.RemoveLayer(target, index);
             }
         }
+
+        _spriteDirection.DirtyCachedOverrides(target.Owner);
     }
 
     private void OnMarkingsChangedVisibility(Entity<VisualOrganMarkingsComponent> ent, ref BodyRelayedEvent<HumanoidLayerVisibilityChangedEvent> args)
