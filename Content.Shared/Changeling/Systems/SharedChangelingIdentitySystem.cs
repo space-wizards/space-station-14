@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Changeling.Components;
 using Content.Shared.Cloning;
@@ -44,7 +44,7 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
     {
         if (args.ObtainedIdentity)
         {
-            GrantIdentity(ent, args.Devoured);
+            GrantIdentity(ent.Owner, args.Devoured);
         }
 
         if (args.GrantedDna && TryGetDataFromOriginal(ent.AsNullable(), args.Devoured, out var data))
@@ -66,7 +66,7 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
     private void OnMapInit(Entity<ChangelingIdentityComponent> ent, ref MapInitEvent args)
     {
         // Make a backup of our current identity so we can transform back.
-        GrantIdentity(ent, ent.Owner);
+        GrantIdentity(ent.Owner, ent.Owner);
 
         if (!TryGetDataFromOriginal(ent.AsNullable(), ent, out var data))
             return;
@@ -196,8 +196,11 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
     /// </summary>
     /// <param name="ent">The Changeling.</param>
     /// <param name="target">The target to clone.</param>
-    public EntityUid? GrantIdentity(Entity<ChangelingIdentityComponent> ent, EntityUid target)
+    public EntityUid? GrantIdentity(Entity<ChangelingIdentityComponent?> ent, EntityUid target)
     {
+        if (!Resolve(ent.Owner, ref ent.Comp))
+            return null;
+
         var clone = CloneToPausedMap(ent.Comp.IdentityCloningSettings, target);
 
         if (clone == null)
@@ -212,7 +215,7 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
         }
 
         UpdateIdentityData(newIdentity, clone.Value, target);
-        AddDevouredReference(ent, target);
+        AddDevouredReference(ent!, target);
 
         HandlePvsOverride(ent, clone.Value);
         Dirty(ent);
@@ -412,6 +415,26 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
             return false;
 
         identityData = ent.Comp.ConsumedIdentities.FirstOrDefault(data => data.Original == original);
+
+        return identityData != null;
+    }
+
+    /// <summary>
+    /// Fetches the <see cref="ChangelingIdentityData"/> from an entity's <see cref="ChangelingIdentityComponent"/> based on the identity they are currently using.
+    /// </summary>
+    /// <param name="ent">The changeling entity.</param>
+    /// <param name="identityData">The returned <see cref="ChangelingIdentityData"/> for the current identity if one is found.</param>
+    /// <returns>True if identity data is found, otherwise False.</returns>
+    public bool TryGetCurrentIdentityData(Entity<ChangelingIdentityComponent?> ent, [NotNullWhen(true)] out ChangelingIdentityData? identityData)
+    {
+        identityData = null;
+        if (!Resolve(ent, ref ent.Comp, false))
+            return false;
+
+        if (ent.Comp.CurrentIdentity == null)
+            return false;
+
+        identityData = ent.Comp.ConsumedIdentities.FirstOrDefault(data => data.Identity == ent.Comp.CurrentIdentity);
 
         return identityData != null;
     }

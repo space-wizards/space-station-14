@@ -4,7 +4,6 @@ using Content.Shared.Prototypes;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -17,7 +16,6 @@ public abstract partial class SharedXenoArtifactSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private INetManager _net = default!;
-    [Dependency] protected IPrototypeManager PrototypeManager = default!;
     [Dependency] protected IRobustRandom RobustRandom = default!;
     [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private SharedContainerSystem _container = default!;
