@@ -1,4 +1,5 @@
 using Content.Shared.Movement.Systems;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Movement.Components;
 
@@ -13,7 +14,8 @@ namespace Content.Shared.Movement.Components;
 /// </remarks>
 /// <seealso cref="InputMoverComponent"/>
 /// <seealso cref="SharedMoverController.UpdateMoverStatus"/>
-[RegisterComponent, Access(typeof(SharedMoverController))]
+[RegisterComponent, NetworkedComponent]
+[Access(typeof(SharedMoverController))]
 public sealed partial class ActiveInputMoverComponent : Component
 {
     /// <summary>
