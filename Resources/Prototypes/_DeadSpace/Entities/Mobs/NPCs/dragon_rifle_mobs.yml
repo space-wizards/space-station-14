@@ -196,6 +196,13 @@
     color: "#22334411"
     animation: true
     transitionSpeed: 100
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - CarpDragonChannel
+  - type: ActiveRadio
+    channels:
+    - CarpDragonChannel
 
 - type: entity
   parent: BaseMobMiniDragon
