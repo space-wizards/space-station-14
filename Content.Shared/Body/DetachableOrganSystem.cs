@@ -24,7 +24,7 @@ public sealed partial class DetachableOrganSystem : EntitySystem
             return null;
 
         _organRelation.Orphan(organ.Owner);
-        var body = SpawnNextToOrDrop(organ.Comp.DetachedBody, oldBody);
+        var body = PredictedSpawnNextToOrDrop(organ.Comp.DetachedBody, oldBody);
 
         if (!_container.TryGetContainer(body, BodyComponent.ContainerID, out var container))
         {

@@ -1,7 +1,7 @@
 - type: entity
-  id: DetachedBody
   parent:
   - BaseSpeciesLayers
+  id: DetachedBody
   save: false
   components:
   - type: Clickable
@@ -12,3 +12,4 @@
   - type: HideableHumanoidLayers
   - type: Item
   - type: InteractionOutline
+  - type: InputMover

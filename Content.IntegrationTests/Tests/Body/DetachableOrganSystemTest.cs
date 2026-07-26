@@ -12,27 +12,34 @@ namespace Content.IntegrationTests.Tests.Body;
 [TestOf(typeof(DetachableOrganSystem))]
 public sealed class DetachableOrganSystemTest : GameTest
 {
+    private const string DetachTestOldBody = "DetachTestOldBody";
+    private const string DetachTestNewBody = "DetachTestNewBody";
+    private const string DetachTestGrandParentOrgan = "DetachTestGrandParentOrgan";
+    private const string DetachTestRootOrgan = "DetachTestRootOrgan";
+    private const string DetachTestChildOrgan = "DetachTestChildOrgan";
+    private const string DetachTestSiblingOrgan = "DetachTestSiblingOrgan";
+
     [TestPrototypes]
-    private const string Prototypes = @"
+    private const string Prototypes = $@"
 - type: entity
-  id: DetachTestOldBody
+  id: {DetachTestOldBody}
   components:
   - type: Body
 
 - type: entity
-  id: DetachTestNewBody
+  id: {DetachTestNewBody}
   components:
   - type: Body
 
 - type: entity
-  id: DetachTestGrandParentOrgan
+  id: {DetachTestGrandParentOrgan}
   components:
   - type: Organ
   - type: ParentOrgan
   - type: ChildOrgan
 
 - type: entity
-  id: DetachTestRootOrgan
+  id: {DetachTestRootOrgan}
   components:
   - type: Organ
   - type: ParentOrgan
@@ -41,13 +48,13 @@ public sealed class DetachableOrganSystemTest : GameTest
     detachedBody: DetachTestNewBody
 
 - type: entity
-  id: DetachTestChildOrgan
+  id: {DetachTestChildOrgan}
   components:
   - type: Organ
   - type: ChildOrgan
 
 - type: entity
-  id: DetachTestSiblingOrgan
+  id: {DetachTestSiblingOrgan}
   components:
   - type: Organ
   - type: ChildOrgan
@@ -61,13 +68,13 @@ public sealed class DetachableOrganSystemTest : GameTest
     [RunOnSide(Side.Server)]
     public void Detach()
     {
-        var oldBody = SSpawn("DetachTestOldBody");
+        var oldBody = SSpawn(DetachTestOldBody);
         var oldBodyContainer = _container.GetContainer(oldBody, BodyComponent.ContainerID);
 
-        var grandParent = SSpawn("DetachTestGrandParentOrgan");
-        var root = SSpawn("DetachTestRootOrgan");
-        var child = SSpawn("DetachTestChildOrgan");
-        var sibling = SSpawn("DetachTestSiblingOrgan");
+        var grandParent = SSpawn(DetachTestGrandParentOrgan);
+        var root = SSpawn(DetachTestRootOrgan);
+        var child = SSpawn(DetachTestChildOrgan);
+        var sibling = SSpawn(DetachTestSiblingOrgan);
 
         _container.Insert(grandParent, oldBodyContainer, force: true);
         _container.Insert(root, oldBodyContainer, force: true);
