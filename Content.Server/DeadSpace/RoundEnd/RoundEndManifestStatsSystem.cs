@@ -285,8 +285,9 @@ public sealed class RoundEndManifestStatsSystem : EntitySystem
         if (_frozenDisplaySnapshots.Contains(mindId))
             return;
 
-        // Entity and map teardown can detach minds after a bulk-delete command has captured its entity list.
-        if (TerminatingOrDeleted(source) ||
+        // Mind, entity, and map teardown can detach minds after a bulk-delete command has captured its entity list.
+        if (TerminatingOrDeleted(mindId) ||
+            TerminatingOrDeleted(source) ||
             !TryComp(source, out TransformComponent? transform) ||
             transform.MapUid is not { } mapUid ||
             TerminatingOrDeleted(mapUid))

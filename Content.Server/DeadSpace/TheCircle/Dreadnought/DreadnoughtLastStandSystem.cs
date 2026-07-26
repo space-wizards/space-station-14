@@ -14,6 +14,8 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Mobs.Events;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Stunnable;
+using Content.Shared.Traits.Assorted;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
@@ -23,7 +25,7 @@ namespace Content.Server.DeadSpace.TheCircle.Dreadnought;
 public sealed class DreadnoughtLastStandSystem : EntitySystem
 {
     private const string OuterClothingSlot = "outerClothing";
-    private readonly HashSet<EntityUid> _pendingStrapDestruction = [];
+    private readonly Dictionary<EntityUid, (EntityUid Wearer, TimeSpan StunDuration)> _pendingStrapDestruction = [];
 
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -32,6 +34,7 @@ public sealed class DreadnoughtLastStandSystem : EntitySystem
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly MobThresholdSystem _thresholds = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
+    [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
@@ -52,12 +55,12 @@ public sealed class DreadnoughtLastStandSystem : EntitySystem
     {
         var wearer = args.Buckle.Owner;
         if (!_inventory.TryGetSlotEntity(wearer, OuterClothingSlot, out var outerClothing) ||
-            !HasComp<DreadnoughtLastStandComponent>(outerClothing.Value))
+            !TryComp<DreadnoughtLastStandComponent>(outerClothing.Value, out var dreadnought))
             return;
 
         // Buckle() still validates its parent relationship after this event.
         // Destroy the strap on the following update, once buckling has completed.
-        _pendingStrapDestruction.Add(ent.Owner);
+        _pendingStrapDestruction[ent.Owner] = (wearer, dreadnought.StrapBreakStunDuration);
     }
 
     private void OnGetActions(Entity<DreadnoughtLastStandComponent> ent, ref GetItemActionsEvent args)
@@ -105,7 +108,7 @@ public sealed class DreadnoughtLastStandSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        foreach (var strap in _pendingStrapDestruction)
+        foreach (var (strap, pending) in _pendingStrapDestruction)
         {
             if (Deleted(strap))
                 continue;
@@ -114,6 +117,7 @@ public sealed class DreadnoughtLastStandSystem : EntitySystem
             _audio.PlayPvs(new SoundCollectionSpecifier("MetalBreak"), strap);
             Spawn("SheetSteel1", coordinates);
             _destructible.DestroyEntity(strap);
+            _stun.TryUpdateParalyzeDuration(pending.Wearer, pending.StunDuration);
         }
         _pendingStrapDestruction.Clear();
 
@@ -125,6 +129,7 @@ public sealed class DreadnoughtLastStandSystem : EntitySystem
 
             component.Expired = true;
             Dirty(uid, component);
+            EnsureComp<UnrevivableComponent>(uid);
             _mobState.UpdateMobState(uid);
         }
     }

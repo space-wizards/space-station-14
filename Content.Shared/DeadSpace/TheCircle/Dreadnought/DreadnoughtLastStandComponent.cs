@@ -1,9 +1,11 @@
 // Мёртвый Космос, Licensed under custom terms with restrictions on public hosting and commercial use, full text: https://raw.githubusercontent.com/dead-space-server/space-station-14-fobos/master/LICENSE.TXT
 
 using Content.Shared.Actions;
+using Content.Shared.DoAfter;
 using Content.Shared.Inventory;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.DeadSpace.TheCircle.Dreadnought;
 
@@ -24,6 +26,12 @@ public sealed partial class DreadnoughtLastStandComponent : Component
 
     [DataField]
     public float DeathDamage = 165f;
+
+    [DataField]
+    public TimeSpan BuckleDelay = TimeSpan.FromSeconds(1);
+
+    [DataField]
+    public TimeSpan StrapBreakStunDuration = TimeSpan.FromSeconds(3);
 
     [DataField]
     public SlotFlags RequiredSlots = SlotFlags.OUTERCLOTHING;
@@ -52,3 +60,6 @@ public sealed partial class DreadnoughtLastStandActiveComponent : Component
 }
 
 public sealed partial class DreadnoughtLastStandActionEvent : InstantActionEvent;
+
+[Serializable, NetSerializable]
+public sealed partial class DreadnoughtBuckleDoAfterEvent : SimpleDoAfterEvent;
