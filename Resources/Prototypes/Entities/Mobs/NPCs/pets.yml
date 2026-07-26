@@ -15,7 +15,7 @@
       state: ian
   - type: Inventory
     speciesId: dog
-    templateId: petAdvanced
+    templateId: Corgi
     displacements:
       head:
         sizeMaps:
@@ -100,7 +100,7 @@
       gender: female
   - type: Inventory
     speciesId: dog
-    templateId: petAdvanced
+    templateId: Corgi
     displacements:
       head:
         sizeMaps:
