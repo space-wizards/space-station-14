@@ -23,7 +23,6 @@ public sealed partial class TargetOutlineSystem : EntitySystem
     [Dependency] private EntityLookupSystem _lookup = default!;
     [Dependency] private IInputManager _inputManager = default!;
     [Dependency] private IPlayerManager _playerManager = default!;
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private SharedTransformSystem _transformSystem = default!;
@@ -83,8 +82,8 @@ public sealed partial class TargetOutlineSystem : EntitySystem
     {
         base.Initialize();
 
-        _shaderTargetValid = _prototypeManager.Index(ShaderTargetValid).InstanceUnique();
-        _shaderTargetInvalid = _prototypeManager.Index(ShaderTargetInvalid).InstanceUnique();
+        _shaderTargetValid = ProtoMan.Index(ShaderTargetValid).InstanceUnique();
+        _shaderTargetInvalid = ProtoMan.Index(ShaderTargetInvalid).InstanceUnique();
     }
 
     public void Disable()
