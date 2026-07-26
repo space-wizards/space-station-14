@@ -1,7 +1,6 @@
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.IntegrationTests.Utility;
-using Content.Shared.Anomaly.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
@@ -33,7 +32,7 @@ public sealed class DamageAllPrototypesTest : GameTest
                 try
                 {
                     // Intentionally cannot take damage, ignore it.
-                    if (SEntMan.HasComponent<GodmodeComponent>(entity) || SEntMan.HasComponent<AnomalyComponent>(entity))
+                    if (SEntMan.HasComponent<GodmodeComponent>(entity) || !SEntMan.HasComponent<InjurableComponent>(entity))
                         continue;
 
                     var canBeDamaged = false;
