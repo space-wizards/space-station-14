@@ -1,4 +1,5 @@
 using System.Linq;
+using JetBrains.Annotations;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Cards;
@@ -11,18 +12,6 @@ public sealed partial class CardsComponent : Component
     /// </summary>
     [DataField(required: true, customTypeSerializer: typeof(CardDataSerializer)), AutoNetworkedField]
     public List<CardData> Cards = new();
-
-    /// <summary>
-    /// The number of cards currently in this deck.
-    /// </summary>
-    [ViewVariables]
-    public int NumberOfCards => Cards.Count;
-
-    /// <summary>
-    /// The prototype IDs of all cards currently in this deck.
-    /// </summary>
-    [ViewVariables]
-    public List<string> CardPrototypes => Cards.Select(c => (string)c.CardId).ToList();
 
     /// <summary>
     /// Whether the deck is flipped. If <c>true</c>, the cards are face-side up.
@@ -62,4 +51,17 @@ public sealed partial class CardsComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public string CardBack = "sc_backside";
+
+    /// <summary>
+    /// The number of cards currently in this deck. Used for debugging only.
+    /// </summary>
+    [ViewVariables(access: VVAccess.ReadOnly), UsedImplicitly]
+    private int NumberOfCards => Cards.Count;
+
+    /// <summary>
+    /// The prototype IDs of all cards currently in this deck. Used for debugging only.
+    /// </summary>
+    [ViewVariables(access: VVAccess.ReadOnly), UsedImplicitly]
+    private List<string> CardPrototypes => Cards.Select(c => (string)c.CardId).ToList();
+
 }
