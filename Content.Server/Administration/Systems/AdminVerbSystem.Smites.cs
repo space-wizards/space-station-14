@@ -147,7 +147,7 @@ public sealed partial class AdminVerbSystem
         {
             Text = chessName,
             Category = VerbCategory.Smite,
-            Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Fun/Tabletop/chessboard.rsi"), "chessboard"),
+            Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Fun/Tabletop/boards.rsi"), "chess"),
             Act = () =>
             {
                 _sharedGodmodeSystem.EnableGodmode(args.Target); // So they don't suffocate.

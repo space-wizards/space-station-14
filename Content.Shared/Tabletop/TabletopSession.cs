@@ -9,21 +9,4 @@ namespace Content.Shared.Tabletop;
 /// </summary>
 public sealed class TabletopSession(MapId tabletopMap, Vector2 position)
 {
-    /// <summary>
-    /// The center position of this session.
-    /// </summary>
-    [ViewVariables]
-    public readonly MapCoordinates Position = new(position, tabletopMap);
-
-    /// <summary>
-    /// The set of players currently playing this tabletop game.
-    /// </summary>
-    [ViewVariables]
-    public readonly Dictionary<ICommonSession, TabletopSessionPlayerData> Players = [];
-
-    /// <summary>
-    /// All entities bound to this session. If you create an entity for this session, you have to add it here.
-    /// </summary>
-    [ViewVariables]
-    public readonly HashSet<EntityUid> Entities = [];
 }

@@ -1,3 +1,4 @@
+using Content.Shared.Tabletop.Components;
 using JetBrains.Annotations;
 
 namespace Content.Shared.Tabletop;
@@ -5,9 +6,8 @@ namespace Content.Shared.Tabletop;
 [UsedImplicitly]
 public sealed partial class TabletopEmptySetup : TabletopSetup
 {
-    public override void SetupTabletop(TabletopSession session, IEntityManager entityManager)
+    public override void SetupTabletop(TabletopGameComponent tabletop, IEntityManager entityManager)
     {
-        var board = entityManager.SpawnEntity(BoardPrototype, session.Position.Offset(0, 0));
-        session.Entities.Add(board);
+        SpawnPiece(BoardPrototype, tabletop.Position, tabletop, entityManager);
     }
 }

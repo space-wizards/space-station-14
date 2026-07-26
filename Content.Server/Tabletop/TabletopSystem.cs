@@ -30,11 +30,11 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
         if (args.SenderSession is not { } playerSession)
             return;
 
-        if (!GameQuery.TryComp(GetEntity(msg.TableUid), out TabletopGameComponent? tabletop) || tabletop.Session is not { } session)
+        if (!GameQuery.TryComp(GetEntity(msg.TableUid), out TabletopGameComponent? tabletop) || !tabletop.HasSession)
             return;
 
         // Check if player is actually playing at this table.
-        if (!session.Players.ContainsKey(playerSession))
+        if (!tabletop.Players.ContainsKey(playerSession))
             return;
 
         base.OnTabletopMove(msg, args);

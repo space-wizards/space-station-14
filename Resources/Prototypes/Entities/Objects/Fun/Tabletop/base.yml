@@ -24,6 +24,8 @@
 # Entities dragged onto the board have their appearance copied onto one of these.
 - type: entity
   id: BaseTabletopPiece
+  description: A piece used for playing a board game.
+  categories: [HideSpawnMenu]
   components:
   - type: TabletopDraggable
   - type: Sprite

@@ -1,8 +1,12 @@
+using Content.Shared.Tabletop.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Tabletop;
 
+/// <summary>
+/// A class to set up pieces for a game of backgammon.
+/// </summary>
 [UsedImplicitly]
 public sealed partial class TabletopBackgammonSetup : TabletopSetup
 {
@@ -12,9 +16,9 @@ public sealed partial class TabletopBackgammonSetup : TabletopSetup
     [DataField]
     public EntProtoId BlackPiecePrototype = "BlackTabletopPiece";
 
-    public override void SetupTabletop(TabletopSession session, IEntityManager entityManager)
+    public override void SetupTabletop(TabletopGameComponent tabletop, IEntityManager entityManager)
     {
-        entityManager.SpawnEntity(BoardPrototype, session.Position);
+        entityManager.SpawnEntity(BoardPrototype, tabletop.Position);
 
         const float borderLengthX = 7.35f; //BORDER
         const float borderLengthY = 5.60f; //BORDER
@@ -41,10 +45,9 @@ public sealed partial class TabletopBackgammonSetup : TabletopSetup
             bool isTop,
             bool isLeftSide)
         {
+            var pieceProtoId = isBlackPiece ? BlackPiecePrototype : WhitePiecePrototype;
             for (var i = 0; i < numberOfPieces; i++)
-            {
-                session.Entities.Add(entityManager.SpawnEntity(isBlackPiece ? BlackPiecePrototype : WhitePiecePrototype, session.Position.Offset(GetXPosition(distanceFromSide, isLeftSide), GetYPosition(i, isTop))));
-            }
+                SpawnPiece(pieceProtoId, tabletop.Position.Offset(GetXPosition(distanceFromSide, isLeftSide), GetYPosition(i, isTop)), tabletop, entityManager);
         }
 
         // top left

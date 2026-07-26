@@ -1,13 +1,15 @@
 using System.Numerics;
 using Robust.Shared.GameStates;
+using Robust.Shared.Map;
+using Robust.Shared.Player;
 
 namespace Content.Shared.Tabletop.Components;
 
 /// <summary>
 /// A component that makes an object playable as a tabletop game.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
-[Access(typeof(SharedTabletopSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[Access(typeof(SharedTabletopSystem), typeof(TabletopSetup))]
 public sealed partial class TabletopGameComponent : Component
 {
     /// <summary>
@@ -35,8 +37,33 @@ public sealed partial class TabletopGameComponent : Component
     public Vector2 CameraZoom { get; private set; } = Vector2.One;
 
     /// <summary>
-    /// The specific session of this tabletop.
+    /// The position of the session. If the map is invalid, this game does not have a table set up.
+    /// Useful for both server and client.
     /// </summary>
-    [ViewVariables]
-    public TabletopSession? Session { get; set; } = null;
+    [DataField, AutoNetworkedField]
+    public MapCoordinates Position;
+
+    /// <summary>
+    /// Convenience field, returns whether or not the game has an active session.
+    /// </summary>
+    public bool HasSession => Position.MapId != MapId.Nullspace;
+
+    /// <summary>
+    /// The number of entities used in the session.
+    /// Useful for the client.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public int NumBoardEntities;
+
+    /// <summary>
+    /// The set of players currently playing this tabletop game.
+    /// </summary>
+    [DataField(serverOnly: true), ViewVariables(VVAccess.ReadOnly)]
+    public readonly Dictionary<ICommonSession, TabletopSessionPlayerData> Players = [];
+
+    /// <summary>
+    /// All entities bound to this session. If you create an entity for this session, you have to add it here.
+    /// </summary>
+    [DataField(serverOnly: true), ViewVariables(VVAccess.ReadOnly)]
+    public readonly HashSet<EntityUid> Entities = [];
 }

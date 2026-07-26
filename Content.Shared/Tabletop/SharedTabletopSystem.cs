@@ -22,6 +22,7 @@ namespace Content.Shared.Tabletop;
 public abstract partial class SharedTabletopSystem : EntitySystem
 {
     [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private INetManager _net = default!;
     [Dependency] private ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private MetaDataSystem _meta = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
@@ -33,6 +34,8 @@ public abstract partial class SharedTabletopSystem : EntitySystem
 
     [Dependency] protected EntityQuery<ActorComponent> ActorQuery;
     [Dependency] protected EntityQuery<TabletopGameComponent> GameQuery;
+    [Dependency] protected EntityQuery<TabletopGamerComponent> GamerQuery;
+    [Dependency] protected EntityQuery<TabletopDraggableComponent> DraggableQuery;
 
     /// <summary>
     /// The prototype to use to represent items dragged into the tabletop map.
@@ -49,6 +52,8 @@ public abstract partial class SharedTabletopSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<TabletopGameComponent, GetVerbsEvent<ActivationVerb>>(AddPlayGameVerb);
+        SubscribeLocalEvent<TabletopDraggableComponent, GetVerbsEvent<AlternativeVerb>>(AddDraggableCopyVerb);
+        SubscribeLocalEvent<TabletopHologramComponent, GetVerbsEvent<Verb>>(AddHologramRemoveVerb);
         SubscribeNetworkEvent<TabletopRequestTakeOut>(OnTabletopRequestTakeOut);
     }
 
@@ -59,7 +64,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
 
         var table = GetEntity(msg.TableUid);
 
-        if (!GameQuery.TryComp(table, out TabletopGameComponent? tabletop) || tabletop.Session is not { } session)
+        if (!GameQuery.TryComp(table, out TabletopGameComponent? tabletop) || !tabletop.HasSession)
             return;
 
         if (!msg.Entity.IsValid())
@@ -73,14 +78,20 @@ public abstract partial class SharedTabletopSystem : EntitySystem
             return;
         }
 
-        // Check if player is actually playing at this table.
-        if (!session.Players.ContainsKey(playerSession))
+        RemovePiece(entity, (table, tabletop), playerSession);
+    }
+
+    private void RemovePiece(EntityUid piece, Entity<TabletopGameComponent> table, ICommonSession userSession)
+    {
+        if (!table.Comp.HasSession)
             return;
 
-        // Find the entity, remove it from the session and set it's position to the tabletop.
-        session.Entities.TryGetValue(entity, out var result);
-        session.Entities.Remove(result);
-        PredictedQueueDel(result);
+        // Clients
+        if (_net.IsClient
+            || table.Comp.Players.ContainsKey(userSession) && table.Comp.Entities.Remove(piece))
+        {
+            PredictedQueueDel(piece);
+        }
     }
 
     [SubscribeLocalEvent]
@@ -89,10 +100,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
         if (!_cfg.GetCVar(CCVars.GameTabletopPlace))
             return;
 
-        if (!HasComp<HandsComponent>(args.User))
-            return;
-
-        if (ent.Comp.Session is not { } session)
+        if (ent.Comp.Session is null)
             return;
 
         if (!_hands.TryGetActiveItem(args.User, out var maybeHandEnt) || maybeHandEnt is not { } handEnt)
@@ -101,26 +109,109 @@ public abstract partial class SharedTabletopSystem : EntitySystem
         if (!HasComp<ItemComponent>(handEnt))
             return;
 
-        // Delay count check - prints should happen last.
-        if (session.Entities.Count >= MaxTabletopPieces)
+        CopyEntity(handEnt, ent, args.User);
+    }
+
+    /// <summary>
+    /// Creates a sanitized copy of an entity and sends it into a particular tabletop game.
+    /// </summary>
+    /// <param name="target">The entity to copy.</param>
+    /// <param name="ent">The tabletop game to send the piece into.</param>
+    /// <param name="user">The user to show a popup on </param>
+    private void CopyEntity(EntityUid target, Entity<TabletopGameComponent> ent, EntityUid user)
+    {
+        int entCount;
+        if (_net.IsServer)
         {
-            _popup.PopupEntity(Loc.GetString("tabletop-cant-add-more"), ent.Owner, args.User);
+            if (ent.Comp.Session is not { } session)
+                return;
+
+            entCount = session.Entities.Count;
+        }
+        else
+        {
+            if (!ent.Comp.HasSession)
+                return;
+
+            entCount = ent.Comp.NumBoardEntities;
+        }
+
+        // Delay count check - prints should happen last.
+        if (entCount >= MaxTabletopPieces)
+        {
+            _popup.PopupEntity(Loc.GetString("tabletop-cant-add-more"), ent, user);
             return;
         }
 
-        var meta = MetaData(handEnt);
+        var meta = MetaData(target);
 
         var hologram = EntityManager.PredictedSpawn(GamePiecePrototype, session.Position.Offset(-1, 0));
 
         // Make sure the entity can be dragged and can be removed, move it into the board game world and add it to the Entities hashmap.
         EnsureComp<TabletopDraggableComponent>(hologram);
         EnsureComp<TabletopHologramComponent>(hologram);
-        _meta.SetEntityName(hologram, Name(handEnt, meta));
+        _meta.SetEntityName(hologram, Name(target, meta));
         if (meta.EntityPrototype is { } proto)
             _appearance.SetData(hologram, TabletopItemVisuals.Prototype, proto.ID);
-        session.Entities.Add(hologram);
+        if (_net.IsServer)
+            session.Entities.Add(hologram);
+        Dirty(ent);
 
-        _popup.PopupEntity(Loc.GetString("tabletop-added-piece"), ent.Owner, args.User);
+        _popup.PopupEntity(Loc.GetString("tabletop-added-piece"), ent, user);
+    }
+
+    private void AddDraggableCopyVerb(Entity<TabletopDraggableComponent> entity, ref GetVerbsEvent<AlternativeVerb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract)
+            return;
+
+        if (!GamerQuery.TryComp(args.User, out var gamer)
+            || !GameQuery.TryComp(gamer.Tabletop, out var game))
+            return;
+
+        // Will get closed later if CanSeeTable returns false.
+        var disabled = !CanSeeTable(args.User, gamer.Tabletop);
+        var user = args.User;
+
+        var copyVerb = new AlternativeVerb()
+        {
+            Text = Loc.GetString("tabletop-verb-copy-piece"),
+            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/flip.svg.192dpi.png")),
+            Act = () => CopyEntity(entity, (gamer.Tabletop, game), user),
+            Disabled = disabled,
+            Message = Loc.GetString(disabled ? "tabletop-verb-copy-piece-message-disabled" : "tabletop-verb-copy-piece-message")
+        };
+
+        args.Verbs.Add(copyVerb);
+    }
+
+    private void AddHologramRemoveVerb(Entity<TabletopHologramComponent> entity, ref GetVerbsEvent<Verb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract)
+            return;
+
+        if (!GamerQuery.TryComp(args.User, out var gamer)
+            || !GameQuery.TryComp(gamer.Tabletop, out var game))
+            return;
+
+        if (!ActorQuery.TryComp(args.User, out var actor))
+            return;
+
+        // Will get closed later if CanSeeTable returns false.
+        var disabled = !CanSeeTable(args.User, gamer.Tabletop);
+        var user = args.User;
+
+        var removeVerb = new Verb()
+        {
+            Text = Loc.GetString("tabletop-verb-remove-piece"),
+            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/delete.svg.192dpi.png")),
+            Act = () => RemovePiece(entity, (gamer.Tabletop, game), actor.PlayerSession),
+            Disabled = disabled,
+            Priority = 1,
+            Message = Loc.GetString(disabled ? "tabletop-verb-remove-piece-message-disabled" : "tabletop-verb-remove-piece-message")
+        };
+
+        args.Verbs.Add(removeVerb);
     }
 
     /// <summary>
@@ -166,7 +257,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
 
         // Move the entity and dirty it (we use the map ID from the entity so noone can try to be funny and move the item to another map)
         var transform = Comp<TransformComponent>(moved);
-        _transforms.SetParent(moved, transform, _map.GetMapOrInvalid(transform.MapID));
+        _transforms.SetParent(moved, transform, transform.MapUid ?? EntityUid.Invalid);
         _transforms.SetLocalPosition(moved, msg.Coordinates.Position, transform);
     }
 
@@ -175,7 +266,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
     {
         var dragged = GetEntity(msg.DraggedEntityUid);
 
-        if (!TryComp(dragged, out TabletopDraggableComponent? draggableComponent))
+        if (!DraggableQuery.TryComp(dragged, out TabletopDraggableComponent? draggableComponent))
             return;
 
         draggableComponent.DraggingPlayer = msg.IsDragging ? args.SenderSession.UserId : null;
@@ -202,7 +293,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (!HasComp<TabletopDraggableComponent>(args.Target))
+        if (!DraggableQuery.HasComp(args.Target))
             return;
 
         // Assume that this can be dragged.
@@ -245,7 +336,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
 
     protected bool CanDrag(EntityUid playerEntity, EntityUid target, [NotNullWhen(true)] out TabletopDraggableComponent? draggable)
     {
-        if (!TryComp(target, out draggable))
+        if (!DraggableQuery.TryComp(target, out draggable))
             return false;
 
         // CanSeeTable checks interaction action blockers. So no need to check them here.

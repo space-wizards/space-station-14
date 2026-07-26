@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Client.Tabletop.UI;
+using Content.Client.Verbs.UI;
 using Content.Client.Viewport;
 using Content.Shared.Tabletop;
 using Content.Shared.Tabletop.Components;
@@ -23,7 +24,7 @@ namespace Content.Client.Tabletop;
 public sealed partial class TabletopSystem : SharedTabletopSystem
 {
     [Dependency] private IInputManager _inputManager = default!;
-    [Dependency] private IUserInterfaceManager _uiManger = default!;
+    [Dependency] private IUserInterfaceManager _uiManager = default!;
     [Dependency] private IPlayerManager _playerManager = default!;
     [Dependency] private IGameTiming _gameTiming = default!;
     [Dependency] private AppearanceSystem _appearance = default!;
@@ -164,15 +165,12 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
     }
     private bool OnUseSecondary(in PointerInputCmdArgs args)
     {
-        if (_draggedEntity != null && _table != null)
-        {
-            var ev = new TabletopRequestTakeOut
-            {
-                Entity = GetNetEntity(_draggedEntity.Value),
-                TableUid = GetNetEntity(_table.Value)
-            };
-            RaiseNetworkEvent(ev);
-        }
+        if (_table == null || _draggedEntity != null)
+            return false;
+
+        if (args.State == BoundKeyState.Down)
+            return OnRightMouseDown(args);
+
         return false;
     }
 
@@ -191,7 +189,7 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
         }
 
         // Try to get the viewport under the cursor
-        if (_uiManger.MouseGetControl(args.ScreenCoordinates) as ScalingViewport is not { } viewport)
+        if (_uiManager.MouseGetControl(args.ScreenCoordinates) as ScalingViewport is not { } viewport)
         {
             return false;
         }
@@ -204,6 +202,28 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
     {
         StopDragging();
         return false;
+    }
+
+    private bool OnRightMouseDown(in PointerInputCmdArgs args)
+    {
+        // Return if no player entity
+        if (_playerManager.LocalEntity is not { } playerEntity)
+            return false;
+
+        if (_draggedEntity != null)
+            return false;
+
+        var entity = args.EntityUid;
+
+        // Return if can not see table or stunned/no hands
+        if (!CanSeeTable(playerEntity, _table) || !CanDrag(playerEntity, entity, out _))
+        {
+            return false;
+        }
+
+        // Need to force the verb menu, our piece is in the middle of goddamn nowhere.
+        _uiManager.GetUIController<VerbMenuUIController>().OpenVerbMenu(entity, force: true);
+        return true;
     }
 
     /// <summary>

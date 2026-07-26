@@ -12,10 +12,6 @@
     size: 338, 274
     setup: !type:TabletopCheckerSetup
       boardPrototype: ChessBoardTabletop
-      prototypePieceWhite: CheckerPieceRed
-      prototypeCrownWhite: CheckerCrownRed
-      prototypePieceBlack: CheckerPieceBlack
-      prototypeCrownBlack: CheckerCrownBlack
 
 # The pieces
 - type: entity

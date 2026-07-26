@@ -31,6 +31,8 @@ public sealed partial class TabletopSystem
 
         // Since this is the first time opening this session, set up the game.
         ent.Comp.Setup.SetupTabletop(session, EntityManager);
+        ent.Comp.NumBoardEntities = ent.Comp.Session.Entities.Count;
+        Dirty(ent);
 
         Log.Info($"Created tabletop session number {ent.Comp} at position {session.Position}.");
 
@@ -46,7 +48,7 @@ public sealed partial class TabletopSystem
         if (!GameQuery.TryComp(uid, out TabletopGameComponent? tabletop))
             return;
 
-        if (tabletop.Session is not { } session)
+        if (!tabletop.HasSession)
             return;
 
         foreach (var (player, _) in session.Players)
@@ -56,6 +58,7 @@ public sealed partial class TabletopSystem
             QueueDel(euid);
 
         tabletop.Session = null;
+        Dirty(uid, tabletop);
     }
 
     public override void OpenSessionFor(ICommonSession player, EntityUid uid)
@@ -66,7 +69,7 @@ public sealed partial class TabletopSystem
         // Make sure we have a session, and add the player to it if not added already.
         var session = EnsureSession((uid, tabletop));
 
-        if (session.Players.ContainsKey(player))
+        if (tabletop.Players.ContainsKey(player))
             return;
 
         if (TryComp(attachedEntity, out TabletopGamerComponent? gamer))
@@ -77,22 +80,24 @@ public sealed partial class TabletopSystem
 
         // Create a camera for the gamer to use.
         var camera = CreateCamera(tabletop, player);
+        tabletop.NumBoardEntities = tabletop.Entities.Count;
+        Dirty(uid, tabletop);
 
-        session.Players[player] = new TabletopSessionPlayerData { Camera = camera };
+        tabletop.Players[player] = new TabletopSessionPlayerData { Camera = camera };
 
         // Tell the gamer to open a viewport for the tabletop game.
         RaiseNetworkEvent(new TabletopPlayEvent(GetNetEntity(uid), GetNetEntity(camera), Loc.GetString(tabletop.BoardName), tabletop.Size), player.Channel);
     }
 
     /// <summary>
-    ///     Removes a player from a tabletop game session, and sends them a message so their tabletop window is closed.
+    /// Removes a player from a tabletop game session, and sends them a message so their tabletop window is closed.
     /// </summary>
     /// <param name="player">The player in question.</param>
     /// <param name="uid">The UID of the tabletop game entity.</param>
     /// <param name="removeGamerComponent">Whether to remove the <see cref="TabletopGamerComponent"/> from the player's attached entity.</param>
     public void CloseSessionFor(ICommonSession player, EntityUid uid, bool removeGamerComponent = true)
     {
-        if (!TryComp(uid, out TabletopGameComponent? tabletop) || tabletop.Session is not { } session)
+        if (!TryComp(uid, out TabletopGameComponent? tabletop) || !tabletop.HasSession)
             return;
 
         if (!session.Players.TryGetValue(player, out var data))
@@ -109,6 +114,8 @@ public sealed partial class TabletopSystem
 
         session.Players.Remove(player);
         session.Entities.Remove(data.Camera);
+        tabletop.NumBoardEntities = session.Entities.Count;
+        Dirty(uid, tabletop);
 
         // Deleting the view subscriber automatically cleans up subscriptions, no need to do anything else.
         QueueDel(data.Camera);
@@ -123,12 +130,10 @@ public sealed partial class TabletopSystem
     /// <returns>The UID of the camera entity.</returns>
     private EntityUid CreateCamera(TabletopGameComponent tabletop, ICommonSession player, Vector2 offset = default)
     {
-        DebugTools.AssertNotNull(tabletop.Session);
-
-        var session = tabletop.Session!;
+        DebugTools.Assert(tabletop.HasSession);
 
         // Spawn an empty entity at the coordinates.
-        var camera = EntityManager.SpawnEntity(null, session.Position.Offset(offset));
+        var camera = EntityManager.SpawnEntity(null, tabletop.Position.Offset(offset));
 
         // Add an eye component and disable FOV.
         var eyeComponent = EnsureComp<EyeComponent>(camera);
