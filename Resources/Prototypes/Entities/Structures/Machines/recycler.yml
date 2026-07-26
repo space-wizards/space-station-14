@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: Recycler
   parent: BaseMachinePowered
   name: recycler
@@ -52,12 +52,16 @@
     noRot: false
   - type: Sprite
     drawdepth: Doors
-    sprite: Structures/Machines/recycling.rsi
+    sprite: Structures/Machines/recycler.rsi
     layers:
-    - state: grinder-o0
+    - state: recycler-o0
       map: ["enum.RecyclerVisualLayers.Main"]
   - type: Appearance
   - type: RecyclerVisuals
+  - type: DirectionalArrowIndicator
+    arrows:
+    - offset: 0, -1.35
+    - offset: 0, 0
 
   - type: CollideMaterialReclaimer
   - type: MaterialReclaimer

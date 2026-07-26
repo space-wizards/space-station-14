@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 268.0.0
+  engineVersion: 277.0.0
   forkId: ""
   forkVersion: ""
-  time: 12/27/2025 23:30:45
-  entityCount: 18260
+  time: 05/27/2026 14:38:48
+  entityCount: 18268
 maps:
 - 1793
 grids:
@@ -6583,9 +6583,10 @@ entities:
           23,22:
             1: 3059
           23,23:
-            1: 63095
+            1: 1655
+            6: 61440
           23,24:
-            1: 15
+            6: 15
           24,20:
             1: 4369
           24,21:
@@ -6647,6 +6648,8 @@ entities:
     - type: RadiationGridResistance
     - type: NavMap
     - type: ExplosionAirtightGrid
+    - type: TileHistory
+      chunkHistory: {}
   - uid: 1793
     components:
     - type: MetaData
@@ -12835,6 +12838,46 @@ entities:
     components:
     - type: Transform
       pos: 77.5,12.5
+      parent: 1
+  - uid: 18261
+    components:
+    - type: Transform
+      pos: 92.5,96.5
+      parent: 1
+  - uid: 18262
+    components:
+    - type: Transform
+      pos: 92.5,95.5
+      parent: 1
+  - uid: 18263
+    components:
+    - type: Transform
+      pos: 93.5,96.5
+      parent: 1
+  - uid: 18264
+    components:
+    - type: Transform
+      pos: 93.5,95.5
+      parent: 1
+  - uid: 18265
+    components:
+    - type: Transform
+      pos: 94.5,96.5
+      parent: 1
+  - uid: 18266
+    components:
+    - type: Transform
+      pos: 94.5,95.5
+      parent: 1
+  - uid: 18267
+    components:
+    - type: Transform
+      pos: 95.5,96.5
+      parent: 1
+  - uid: 18268
+    components:
+    - type: Transform
+      pos: 95.5,95.5
       parent: 1
 - proto: AtmosFixFreezerMarker
   entities:
@@ -52283,7 +52326,7 @@ entities:
     components:
     - type: Transform
       anchored: False
-      rot: -1.5707963267948966 rad
+      rot: -3.141592653589793 rad
       pos: 43.5,109.5
       parent: 1
     - type: Physics
@@ -56307,6 +56350,11 @@ entities:
     - type: Transform
       pos: 52.5,94.5
       parent: 1
+    - type: GasMixer
+      inletTwoConcentration: 0.78
+      inletOneConcentration: 0.22
+      targetPressure: 303.975
+      enabled: True
 - proto: GasOutletInjector
   entities:
   - uid: 940
@@ -60465,12 +60513,6 @@ entities:
       parent: 1
     - type: AtmosPipeColor
       color: '#009900FF'
-  - uid: 5213
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 50.5,92.5
-      parent: 1
   - uid: 5214
     components:
     - type: Transform
@@ -60482,12 +60524,6 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 50.5,94.5
-      parent: 1
-  - uid: 5216
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 51.5,94.5
       parent: 1
   - uid: 5217
     components:
@@ -75441,6 +75477,18 @@ entities:
       parent: 1
     - type: AtmosPipeColor
       color: '#0055CCFF'
+  - uid: 5213
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 51.5,94.5
+      parent: 1
+  - uid: 5216
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 50.5,92.5
+      parent: 1
   - uid: 5240
     components:
     - type: Transform
@@ -76771,6 +76819,9 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 49.5,92.5
       parent: 1
+    - type: GasPressurePump
+      targetPressure: 4500
+      enabled: True
     - type: AtmosPipeColor
       color: '#009900FF'
   - uid: 5196
@@ -76791,6 +76842,9 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 49.5,94.5
       parent: 1
+    - type: GasPressurePump
+      targetPressure: 4500
+      enabled: True
     - type: AtmosPipeColor
       color: '#009900FF'
   - uid: 5198
@@ -76813,26 +76867,6 @@ entities:
       parent: 1
     - type: AtmosPipeColor
       color: '#009900FF'
-  - uid: 5220
-    components:
-    - type: MetaData
-      name: distro gas pump
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 55.5,96.5
-      parent: 1
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
-  - uid: 5223
-    components:
-    - type: MetaData
-      name: waste gas pump
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 55.5,97.5
-      parent: 1
-    - type: AtmosPipeColor
-      color: '#990000FF'
   - uid: 10269
     components:
     - type: Transform
@@ -76929,6 +76963,24 @@ entities:
       parent: 1
     - type: AtmosPipeColor
       color: '#0055CCFF'
+  - uid: 5220
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 55.5,96.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
+  - uid: 5223
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 55.5,97.5
+      parent: 1
+    - type: GasValve
+      open: False
+    - type: AtmosPipeColor
+      color: '#990000FF'
   - uid: 15371
     components:
     - type: MetaData
@@ -82939,7 +82991,6 @@ entities:
   - uid: 6652
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 59.5,38.5
       parent: 1
   - uid: 6788
@@ -82960,13 +83011,11 @@ entities:
   - uid: 7073
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 57.5,38.5
       parent: 1
   - uid: 7244
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 58.5,38.5
       parent: 1
   - uid: 7306
@@ -83002,7 +83051,6 @@ entities:
   - uid: 7839
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 57.5,40.5
       parent: 1
   - uid: 8487
@@ -83018,7 +83066,6 @@ entities:
   - uid: 8762
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 57.5,39.5
       parent: 1
   - uid: 8901
@@ -83119,13 +83166,11 @@ entities:
   - uid: 10802
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 60.5,38.5
       parent: 1
   - uid: 10818
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 61.5,38.5
       parent: 1
   - uid: 10820

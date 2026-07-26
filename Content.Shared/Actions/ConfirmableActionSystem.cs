@@ -8,10 +8,10 @@ namespace Content.Shared.Actions;
 /// <summary>
 /// Handles action priming, confirmation and automatic unpriming.
 /// </summary>
-public sealed class ConfirmableActionSystem : EntitySystem
+public sealed partial class ConfirmableActionSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {
@@ -68,7 +68,7 @@ public sealed class ConfirmableActionSystem : EntitySystem
         comp.NextUnprime = comp.NextConfirm + comp.PrimeTime;
         Dirty(uid, comp);
 
-        _popup.PopupClient(Loc.GetString(comp.Popup), user, user, PopupType.LargeCaution);
+        _popup.PopupEntity(Loc.GetString(comp.Popup), user, user, PopupType.LargeCaution);
     }
 
     private void Unprime(Entity<ConfirmableActionComponent> ent)

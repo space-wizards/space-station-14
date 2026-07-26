@@ -9,29 +9,28 @@ using Content.Shared.Chat.Prototypes;
 using Content.Shared.Clumsy;
 using Content.Shared.Cluwne;
 using Content.Shared.Damage.Systems;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Mobs;
 using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Stunnable;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Cluwne;
 
-public sealed class CluwneSystem : EntitySystem
+public sealed partial class CluwneSystem : EntitySystem
 {
 
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly IRobustRandom _robustRandom = default!;
-    [Dependency] private readonly SharedStunSystem _stunSystem = default!;
-    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly AutoEmoteSystem _autoEmote = default!;
-    [Dependency] private readonly NameModifierSystem _nameMod = default!;
-    [Dependency] private readonly OutfitSystem _outfitSystem = default!;
+    [Dependency] private PopupSystem _popupSystem = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private IRobustRandom _robustRandom = default!;
+    [Dependency] private SharedStunSystem _stunSystem = default!;
+    [Dependency] private DamageableSystem _damageableSystem = default!;
+    [Dependency] private ChatSystem _chat = default!;
+    [Dependency] private AutoEmoteSystem _autoEmote = default!;
+    [Dependency] private NameModifierSystem _nameMod = default!;
+    [Dependency] private OutfitSystem _outfitSystem = default!;
 
     public override void Initialize()
     {
@@ -68,7 +67,7 @@ public sealed class CluwneSystem : EntitySystem
         if (ent.Comp.EmoteSoundsId == null)
             return;
 
-        _prototypeManager.TryIndex(ent.Comp.EmoteSoundsId, out EmoteSounds);
+        ProtoMan.TryIndex(ent.Comp.EmoteSoundsId, out EmoteSounds);
 
 
         if (ent.Comp.RandomEmote && ent.Comp.AutoEmoteId != null)
@@ -79,13 +78,11 @@ public sealed class CluwneSystem : EntitySystem
 
         EnsureComp<ClumsyComponent>(ent.Owner);
 
-        var transformMessage = Loc.GetString(ent.Comp.TransformMessage, ("target", ent.Owner));
-
+        var transformMessage = Loc.GetString(ent.Comp.TransformMessage, ("target", Identity.Entity(ent.Owner, EntityManager)));
         _popupSystem.PopupEntity(transformMessage, ent.Owner, PopupType.LargeCaution);
         _audio.PlayPvs(ent.Comp.SpawnSound, ent.Owner);
 
         _nameMod.RefreshNameModifiers(ent.Owner);
-
 
         _outfitSystem.SetOutfit(ent.Owner, ent.Comp.OutfitId, unremovable: true);
     }
