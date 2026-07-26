@@ -1,7 +1,6 @@
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Damage.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
@@ -24,12 +23,6 @@ public abstract partial class SharedHealthAnalyzerSystem : EntitySystem
     [Dependency] private SharedSolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private SharedUserInterfaceSystem _ui = default!;
-
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<HealthAnalyzerComponent, AfterInteractEvent>(OnAfterInteract);
-        SubscribeLocalEvent<HealthAnalyzerComponent, HealthAnalyzerDoAfterEvent>(OnDoAfter);
-    }
 
     public override void Update(float frameTime)
     {
@@ -69,6 +62,7 @@ public abstract partial class SharedHealthAnalyzerSystem : EntitySystem
     /// <summary>
     /// Trigger the doafter for scanning
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnAfterInteract(Entity<HealthAnalyzerComponent> analyzer, ref AfterInteractEvent args)
     {
         if (args.Target == null || !args.CanReach || !HasComp<MobStateComponent>(args.Target))
@@ -89,6 +83,7 @@ public abstract partial class SharedHealthAnalyzerSystem : EntitySystem
         _popup.PopupEntity(msg, args.Target.Value, args.Target.Value, PopupType.Medium);
     }
 
+    [SubscribeLocalEvent]
     private void OnDoAfter(Entity<HealthAnalyzerComponent> analyzer, ref HealthAnalyzerDoAfterEvent args)
     {
         if (args.Handled || args.Cancelled || args.Target == null)
@@ -149,7 +144,7 @@ public abstract partial class SharedHealthAnalyzerSystem : EntitySystem
     /// <returns>Returns a <see cref="HealthAnalyzerUiState"/> without a valid temperature.</returns>
     public virtual HealthAnalyzerUiState GetHealthAnalyzerUiState(EntityUid? target, bool scanMode)
     {
-        if (!target.HasValue || !HasComp<DamageableComponent>(target))
+        if (!target.HasValue)
             return new HealthAnalyzerUiState();
 
         var entity = target.Value;
