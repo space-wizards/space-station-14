@@ -2,7 +2,6 @@ using System.Linq;
 using System.Text;
 using Content.Server.Administration;
 using Content.Shared.Administration;
-using Content.Shared.Prototypes;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Content.Shared.Xenoarchaeology.Artifact.Prototypes;
 using Robust.Shared.Console;
@@ -347,7 +346,7 @@ public sealed partial class XenoArtifactTypeParser : CustomTypeParser<ProtoId<En
         if (Array.IndexOf(Options, protoId) == -1)
             return false;
 
-        if (!_prototypeManager.TryIndex<EntityPrototype>(protoId, out var _))
+        if (!_prototypeManager.TryIndex<EntityPrototype>(protoId, out _))
             return false;
         
         return true;
@@ -371,6 +370,7 @@ public sealed partial class XenoArtifactTypeParser : CustomTypeParser<ProtoId<En
 /// </summary>
 public sealed partial class XenoEffectParser : CustomTypeParser<ProtoId<EntityPrototype>>
 {
+    [Dependency] private IComponentFactory _componentFactory = default!;
     [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private IEntitySystemManager _systemManager = default!;
 
@@ -394,7 +394,7 @@ public sealed partial class XenoEffectParser : CustomTypeParser<ProtoId<EntityPr
             return false;
 
         // all effect prototypes are marked as nodes, as nodes are born from those prototypes
-        return prototype.HasComponent<XenoArtifactNodeComponent>();
+        return prototype.HasComp<XenoArtifactNodeComponent>(_componentFactory);
     }
 
     public override CompletionResult TryAutocomplete(ParserContext ctx, CommandArgument? arg)
