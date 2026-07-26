@@ -283,7 +283,7 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
         if (!EntMan.TryGetComponent<InstrumentComponent>(Owner, out var instrument))
             return;
 
-        List<(int, string, string, string, bool)> channelSettings = [];
+        List<MidiChannelInfo> channelSettings = [];
 
         var activeInstrument = ResolveActiveInstrument(instrument);
 
@@ -300,10 +300,25 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
                 instrumentName = resolvedMidiChannel.InstrumentName ?? "";
                 programName = resolvedMidiChannel.ProgramName ?? "";
                 var state = !instrument?.FilteredChannels[i] ?? false;
-                channelSettings.Add((i, trackName, instrumentName, programName, state));
+                channelSettings.Add(new MidiChannelInfo(i, trackName, instrumentName, programName, state));
             }
         }
 
         _channelsControl.SetChannels(channelSettings.ToArray());
     }
 }
+
+/// <summary>
+/// Simple DTO for relaying MIDI channel information
+/// </summary>
+/// <param name="Id">MIDI channel ID</param>
+/// <param name="TrackName">MIDI channel track name</param>
+/// <param name="ProgramName">MIDI channel track name</param>
+/// <param name="InstrumentName">MIDI channel track name</param>
+/// <param name="FilterState">MIDI channel filter state</param>
+public readonly record struct MidiChannelInfo(
+    int Id,
+    string TrackName,
+    string ProgramName,
+    string InstrumentName,
+    bool FilterState);

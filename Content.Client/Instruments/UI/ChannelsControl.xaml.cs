@@ -72,7 +72,7 @@ public sealed partial class ChannelsControl : Control
     /// Calling this method overrides the toggle state of all channel items. Ensure to pass correct values.
     /// </remarks>
     /// <param name="channels">List of channels consisting of their index, display name and state.</param>
-    public void SetChannels((int, string, string, string, bool)[] channels)
+    public void SetChannels(MidiChannelInfo[] channels)
     {
         TrackSelectorButton.Disabled = true;
         InstrumentSelectorButton.Disabled = true;
@@ -95,21 +95,21 @@ public sealed partial class ChannelsControl : Control
 
             var channel = channels[i];
 
-            if (channel.Item2.Length > 0)
+            if (channel.TrackName.Length > 0)
                 TrackSelectorButton.Disabled = false;
-            if (channel.Item3.Length > 0)
+            if (channel.InstrumentName.Length > 0)
                 InstrumentSelectorButton.Disabled = false;
-            if (channel.Item4.Length > 0)
+            if (channel.ProgramName.Length > 0)
                 ProgramSelectorButton.Disabled = false;
 
             if (TrackSelectorButton.Pressed)
-                cItem.ChannelName = channel.Item2;
+                cItem.ChannelName = channel.TrackName;
             if (InstrumentSelectorButton.Pressed)
-                cItem.ChannelName = channel.Item3;
+                cItem.ChannelName = channel.InstrumentName;
             if (ProgramSelectorButton.Pressed)
-                cItem.ChannelName = channel.Item4;
+                cItem.ChannelName = channel.ProgramName;
 
-            cItem.ChannelState = channel.Item5;
+            cItem.ChannelState = channel.FilterState;
             cItem.Visible = true;
         }
     }
