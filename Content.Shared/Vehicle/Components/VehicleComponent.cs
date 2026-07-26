@@ -45,6 +45,12 @@ public sealed partial class VehicleComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool RequiresHands = true;
+
+    /// <summary>
+    /// Whether the operator can attack while operating this vehicle.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool CanAttack;
 }
 
 [Serializable, NetSerializable]
