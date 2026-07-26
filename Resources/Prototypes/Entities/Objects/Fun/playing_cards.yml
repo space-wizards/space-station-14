@@ -30,7 +30,6 @@
   - type: Item
     sprite: Objects/Fun/PlayingCards/nanotrasenbasiccards.rsi
     size: Normal
-    state: deck_single
   - type: Appearance
 
 - type: entity
