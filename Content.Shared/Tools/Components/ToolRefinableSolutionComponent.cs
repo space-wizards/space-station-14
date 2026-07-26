@@ -6,7 +6,7 @@ namespace Content.Shared.Tools.Components;
 /// <summary>
 /// Used for something that can be refined by some tool with splitting of solution in process.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(ToolRefinablSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(ToolRefinableSystem))]
 public sealed partial class ToolRefinableSolutionComponent : Component
 {
     /// <summary>
