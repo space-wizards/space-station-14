@@ -4,12 +4,10 @@ using Content.Shared.Clothing.Events;
 using Content.Shared.DoAfter;
 using Content.Shared.Foldable;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Internals;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
-using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -24,23 +22,13 @@ public sealed partial class MaskSystem : EntitySystem
     [Dependency] private InventorySystem _inventorySystem = default!;
     [Dependency] private SharedPopupSystem _popupSystem = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<MaskComponent, GotUnequippedEvent>(OnGotUnequipped);
-        SubscribeLocalEvent<MaskComponent, GetItemActionsEvent>(OnGetActions);
-        SubscribeLocalEvent<MaskComponent, ToggleMaskEvent>(OnToggleMaskAction);
-        SubscribeLocalEvent<MaskComponent, InventoryRelayedEvent<GetVerbsEvent<EquipmentVerb>>>(OnGetInteractionVerbs);
-        SubscribeLocalEvent<MaskComponent, ToggleMaskDoAfterEvent>(OnToggleMaskDoAfterEvent);
-        SubscribeLocalEvent<MaskComponent, FoldedEvent>(OnFolded);
-    }
-
+    [SubscribeLocalEvent]
     private void OnGotUnequipped(Entity<MaskComponent> mask, ref GotUnequippedEvent args)
     {
         ToggleMask(mask, false);
     }
 
+    [SubscribeLocalEvent]
     private void OnGetActions(Entity<MaskComponent> mask, ref GetItemActionsEvent args)
     {
         if (!_inventorySystem.InSlotWithFlags(mask.Owner, SlotFlags.MASK)
@@ -51,6 +39,7 @@ public sealed partial class MaskSystem : EntitySystem
         Dirty(mask);
     }
 
+    [SubscribeLocalEvent]
     private void OnToggleMaskAction(Entity<MaskComponent> mask, ref ToggleMaskEvent args)
     {
         if (args.Handled
@@ -59,11 +48,12 @@ public sealed partial class MaskSystem : EntitySystem
             || !_inventorySystem.InSlotWithFlags(mask.Owner, SlotFlags.MASK))
             return;
 
-        AttemptToggleMask(mask, args.Performer, args.Performer);
+        TryToggleMask(mask, args.Performer, args.Performer);
 
         args.Handled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnGetInteractionVerbs(Entity<MaskComponent> mask, ref InventoryRelayedEvent<GetVerbsEvent<EquipmentVerb>> args)
     {
         var evArgs = args.Args;
@@ -79,7 +69,7 @@ public sealed partial class MaskSystem : EntitySystem
         EquipmentVerb verb = new()
         {
             Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/dot.svg.192dpi.png")),
-            Act = () => AttemptToggleMask(mask, evArgs.User, evArgs.Target),
+            Act = () => TryToggleMask(mask, evArgs.User, evArgs.Target),
             Text = Loc.GetString($"verb-name-mask-pull-{dir}"),
             Message = Loc.GetString($"verb-description-mask-pull-{dir}"),
             TextStyleClass = "InteractionVerb",
@@ -96,7 +86,7 @@ public sealed partial class MaskSystem : EntitySystem
     /// <param name="wearer"> The person wearing the mask.</param>
     /// <param name="state"> The wanted state of the mask. If undefined/null, it simply toggles the mask.</param>
     /// <param name="force"> If true, it forces the mask to be toggled even if it cannot be toggled.</param>
-    private void AttemptToggleMask(Entity<MaskComponent> mask, EntityUid puller, EntityUid wearer, bool? state = null, bool force = false)
+    private void TryToggleMask(Entity<MaskComponent> mask, EntityUid puller, EntityUid wearer, bool? state = null, bool force = false)
     {
         TimeSpan delay;
         var dir = mask.Comp.IsToggled ? "up" : "down";
@@ -106,7 +96,7 @@ public sealed partial class MaskSystem : EntitySystem
             delay = TimeSpan.Zero;
 
             var message = Loc.GetString($"action-mask-pull-{dir}-popup-message", ("mask", mask));
-            _popupSystem.PopupClient(message, wearer, wearer);
+            _popupSystem.PopupEntity(message, wearer, wearer);
         }
         else
         {
@@ -126,6 +116,7 @@ public sealed partial class MaskSystem : EntitySystem
             });
     }
 
+    [SubscribeLocalEvent]
     private void OnToggleMaskDoAfterEvent(Entity<MaskComponent> mask, ref ToggleMaskDoAfterEvent args)
     {
         if (_timingSystem.ApplyingState || args.Handled || args.Cancelled)
@@ -143,7 +134,7 @@ public sealed partial class MaskSystem : EntitySystem
 
             var messagePuller =
                 Loc.GetString($"verb-mask-pulled-{dir}-popup-message", ("wearer", Identity.Entity(args.Target.Value, EntityManager)), ("mask", mask));
-            _popupSystem.PopupClient(messagePuller, args.User, args.User);
+            _popupSystem.PopupEntity(messagePuller, args.User, args.User);
         }
 
         args.Handled = true;
@@ -180,6 +171,7 @@ public sealed partial class MaskSystem : EntitySystem
         Dirty(mask);
     }
 
+    [SubscribeLocalEvent]
     private void OnFolded(Entity<MaskComponent> mask, ref FoldedEvent args)
     {
         // See FoldableClothingComponent
