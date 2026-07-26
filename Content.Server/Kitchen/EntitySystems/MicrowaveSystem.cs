@@ -112,8 +112,9 @@ namespace Content.Server.Kitchen.EntitySystems
                 return;
             SetAppearance(ent.Owner, MicrowaveVisualState.Cooking, microwaveComponent);
 
-            microwaveComponent.PlayingStream =
-                _audio.PlayPvs(microwaveComponent.LoopingSound, ent, AudioParams.Default.WithLoop(true).WithMaxDistance(5))?.Entity;
+            var audioParams = microwaveComponent.LoopingSound?.Params ?? AudioParams.Default;
+            audioParams = audioParams.WithLoop(true).WithMaxDistance(5);
+            microwaveComponent.PlayingStream = _audio.PlayPvs(microwaveComponent.LoopingSound, ent, audioParams)?.Entity;
             _powerState.SetWorkingState(ent.Owner, true);
         }
 
@@ -178,8 +179,7 @@ namespace Content.Server.Kitchen.EntitySystems
             var heatToAdd = time * component.BaseHeatMultiplier;
             foreach (var entity in component.Storage.ContainedEntities)
             {
-                if (TryComp<TemperatureComponent>(entity, out var tempComp))
-                    _temperature.ChangeHeat(entity, heatToAdd * component.ObjectHeatMultiplier, false, tempComp);
+                _temperature.ChangeHeat(entity, heatToAdd * component.ObjectHeatMultiplier, false);
 
                 foreach (var (_, soln) in _solutionContainer.EnumerateSolutions(entity))
                 {
@@ -309,7 +309,9 @@ namespace Content.Server.Kitchen.EntitySystems
 
             _popupSystem.PopupEntity(selfMessage, othersMessage, victim, victim);
 
-            _audio.PlayPvs(ent.Comp.ClickSound, ent.Owner, AudioParams.Default.WithVolume(-2));
+            var audioParams = ent.Comp.ClickSound?.Params ?? AudioParams.Default;
+            audioParams = audioParams.AddVolume(-2);
+            _audio.PlayPvs(ent.Comp.ClickSound, ent.Owner, audioParams);
             ent.Comp.CurrentCookTimerTime = 10;
             Wzhzhzh(ent.Owner, ent.Comp, args.Victim);
             UpdateUserInterfaceState(ent.Owner, ent.Comp);
@@ -718,7 +720,9 @@ namespace Content.Server.Kitchen.EntitySystems
                 return;
 
             _container.EmptyContainer(ent.Comp.Storage);
-            _audio.PlayPvs(ent.Comp.ClickSound, ent, AudioParams.Default.WithVolume(-2));
+            var audioParams = ent.Comp.ClickSound?.Params ?? AudioParams.Default;
+            audioParams = audioParams.AddVolume(-2);
+            _audio.PlayPvs(ent.Comp.ClickSound, ent, audioParams);
             UpdateUserInterfaceState(ent, ent.Comp);
         }
 
@@ -743,7 +747,9 @@ namespace Content.Server.Kitchen.EntitySystems
             ent.Comp.CurrentCookTimeButtonIndex = args.ButtonIndex;
             ent.Comp.CurrentCookTimerTime = args.NewCookTime;
             ent.Comp.CurrentCookTimeEnd = TimeSpan.Zero;
-            _audio.PlayPvs(ent.Comp.ClickSound, ent, AudioParams.Default.WithVolume(-2));
+            var audioParams = ent.Comp.ClickSound?.Params ?? AudioParams.Default;
+            audioParams = audioParams.AddVolume(-2);
+            _audio.PlayPvs(ent.Comp.ClickSound, ent, audioParams);
             UpdateUserInterfaceState(ent, ent.Comp);
         }
         #endregion

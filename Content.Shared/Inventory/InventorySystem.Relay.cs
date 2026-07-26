@@ -50,7 +50,6 @@ public partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, RefreshMovementSpeedModifiersEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, BeforeStripEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, SeeIdentityAttemptEvent>(RelayInventoryEvent);
-        SubscribeLocalEvent<InventoryComponent, ModifyChangedTemperatureEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, GetDefaultRadioChannelEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, RefreshNameModifiersEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, TransformSpeakerNameEvent>(RelayInventoryEvent);
@@ -89,6 +88,7 @@ public partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, UnwieldAttemptEvent>(RefRelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, IngestionAttemptEvent>(RefRelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, GetMindShieldStatusEvent>(RefRelayInventoryEvent, after: [typeof(SharedSubdermalImplantSystem)]); // ordering so that things like mindshield-flipping hats can be done
+        SubscribeLocalEvent<InventoryComponent, BeforeHeatExchangeEvent>(RefRelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, ScreechEffectAttemptEvent>(RefRelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, RefreshNightVisionEvent>(RefRelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, GluedEffectAttemptEvent>(RefRelayInventoryEvent);
