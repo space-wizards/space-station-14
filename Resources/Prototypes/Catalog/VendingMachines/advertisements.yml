@@ -143,12 +143,6 @@
     count: 6
 
 - type: localizedDataset
-  id: FirebotAd
-  values:
-    prefix: advertisement-firebot-
-    count: 4
-
-- type: localizedDataset
   id: GoodCleanFunAds
   values:
     prefix: advertisement-goodcleanfun-
@@ -279,12 +273,6 @@
   values:
     prefix: advertisement-virodrobe-
     count: 3
-
-- type: localizedDataset
-  id: MedibotAds
-  values:
-    prefix: advertisement-medibot-
-    count: 17
 
 - type: localizedDataset
   id: PrideDrobeAds

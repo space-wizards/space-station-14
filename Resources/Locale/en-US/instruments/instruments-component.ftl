@@ -7,22 +7,45 @@ instruments-component-menu-no-midi-support = MIDI support is currently not
                                              If on Linux, you may need to install
                                              FluidSynth or a development package
                                              for FluidSynth.
-instruments-component-menu-input-button = MIDI Input
-instruments-component-menu-band-button = Join Band
-instruments-component-menu-play-button = Play MIDI
+instruments-component-menu-play-tab-title = Play
+instruments-component-menu-config-tab-title = Configuration
+instruments-component-menu-midi-source-button = MIDI Source
+instruments-component-menu-unknown-midi-source-button = Unknown
+instruments-component-menu-input-midi-source-button = Input
+instruments-component-menu-band-midi-source-button = Band
+instruments-component-menu-file-midi-source-button = Files
+instruments-component-menu-play-stop-button = Play
 instruments-component-menu-loop-button = Loop
-instruments-component-menu-channels-button = Channels
-instruments-component-menu-stop-button = Stop
-instruments-component-menu-midi-min-volume-slider-label = MIDI Input Min Volume
-instruments-component-band-menu = Choose band leader
-instrument-component-band-refresh = Refresh
+instruments-component-menu-shuffle-button = Shuffle
+instruments-component-menu-channels-label = Channels [italic](updated on playback)[/italic]
+instruments-component-menu-files-track-playtime-seconds-minutes = {$currentMinutes}:{$currentSeconds}/{$totalMinutes}:{$totalSeconds}
+instruments-component-menu-files-track-playtime-seconds-minutes-hours = {$currentHours}:{$currentMinutes}:{$currentSeconds}/{$totalHours}:{$totalMinutes}:{$totalSeconds}
+instruments-component-menu-files-file-remove-disabled-info = Stop playback and select an item to remove it.
+instruments-component-menu-files-add-button = Add
+instruments-component-menu-files-remove-button = Remove
+instruments-component-menu-files-rename-button = Rename
+instruments-component-menu-files-rename-dialog-title = Rename file
+instruments-component-menu-files-rename-dialog-prompt = New name
+instruments-component-menu-files-filter = Filter...
+instruments-component-menu-files-error = Operation failed due to an unexpected error.
+instruments-component-menu-input-notice-label = Connect a MIDI device to your PC
+                                                and play some music.
+instruments-component-band-title-label = Bands
+instruments-component-band-refresh = Refresh
 instruments-component-channels-menu = MIDI Channel Selection
-instrument-component-channel-name = MIDI Channel {$number}
-instruments-component-channels-all-button = All
-instruments-component-channels-clear-button = Clear
-instruments-component-channels-track-names-toggle = Show Track Names
-instruments-component-channels-single = {$channel} {$name}
-instruments-component-channels-multi = {$channel} {$name} ({$other})
+instruments-component-channels-all-button = On
+instruments-component-channels-clear-button = Off
+instruments-component-channels-all-channels-label = All Channels
+instruments-component-channels-name-display-selector-label = Display Name
+instruments-component-channels-name-display-selector-track-button = Track
+instruments-component-channels-name-display-selector-program-button = Program
+instruments-component-channels-name-display-selector-instrument-button = Instrument
+instruments-component-midi-file-collection-label = MIDI Collection
+instruments-component-midi-file-collection-size-label = {$count} MIDI files loaded
+instruments-component-midi-file-collection-open-dir-button = Open Folder
+instruments-component-midi-file-collection-reload-button = Reload Collection
+instruments-component-midi-file-collection-delete-all-button = Clear Collection
+instruments-component-menu-midi-min-volume-slider-label = MIDI Input Min Volume
 
 
 # SwappableInstrumentComponent

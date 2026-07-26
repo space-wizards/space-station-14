@@ -36,8 +36,16 @@ roles-antag-space-ninja-objective = Use your stealth to sabotage the station, no
 roles-antag-paradox-clone-name = Paradox Clone
 roles-antag-paradox-clone-objective = A freak space-time anomaly has teleported you into another reality! Now you have to find your counterpart and kill and replace them.
 
+roles-antag-pirate-name = Pirate
+
 roles-antag-thief-name = Thief
 roles-antag-thief-objective = Add some NT property to your personal collection without using violence.
 
 roles-antag-dragon-name = Space Dragon
 roles-antag-dragon-objective = Create a carp army to take over this quadrant.
+
+roles-antag-mothership-core-name = Xenoborg Core
+roles-antag-mothership-core-objective = Use your xenoborgs to create even more xenoborgs.
+
+roles-antag-xenoborg-name = Xenoborg
+roles-antag-xenoborg-objective = Help the mothership create more xenoborgs.

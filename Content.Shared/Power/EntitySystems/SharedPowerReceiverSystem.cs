@@ -8,12 +8,12 @@ using Robust.Shared.Network;
 
 namespace Content.Shared.Power.EntitySystems;
 
-public abstract class SharedPowerReceiverSystem : EntitySystem
+public abstract partial class SharedPowerReceiverSystem : EntitySystem
 {
-    [Dependency] private readonly INetManager _netMan = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedPowerNetSystem _net = default!;
+    [Dependency] private INetManager _netMan = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedPowerNetSystem _net = default!;
 
     public abstract bool ResolveApc(EntityUid entity, [NotNullWhen(true)] ref SharedApcPowerReceiverComponent? component);
 
@@ -68,7 +68,7 @@ public abstract class SharedPowerReceiverSystem : EntitySystem
         if (playSwitchSound)
         {
             _audio.PlayPredicted(new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg"), uid, user: user,
-                AudioParams.Default.WithVolume(-2f));
+                AudioParams.Default.WithVariation(-2f));
         }
 
         if (_netMan.IsClient && receiver.PowerDisabled)
@@ -92,8 +92,19 @@ public abstract class SharedPowerReceiverSystem : EntitySystem
         // NOOP on server because client has 0 idea of load so we can't raise it properly in shared.
     }
 
-	/// <summary>
-	/// Checks if entity is APC-powered device, and if it have power.
+    /// <summary>
+    /// Sets the power load of this power receiver.
+    /// </summary>
+    public void SetLoad(Entity<SharedApcPowerReceiverComponent?> entity, float load)
+    {
+        if (!ResolveApc(entity.Owner, ref entity.Comp))
+            return;
+
+        entity.Comp.Load = load;
+    }
+
+    /// <summary>
+    /// Checks if entity is APC-powered device, and if it have power.
     /// </summary>
     public bool IsPowered(Entity<SharedApcPowerReceiverComponent?> entity)
     {

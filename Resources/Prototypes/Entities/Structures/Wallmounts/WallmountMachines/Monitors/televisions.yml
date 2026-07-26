@@ -11,10 +11,10 @@
   - type: Sprite
     sprite: Structures/Wallmounts/flatscreentv.rsi
     layers:
-      - map: ["computerLayerBody"]
-        state: television_wall
-      - map: ["computerLayerScreen"]
-        state: television_wallscreen
+    - map: ["computerLayerBody"]
+      state: television_wall
+    - map: ["computerLayerScreen"]
+      state: television_wallscreen
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: SurveillanceCamera
@@ -35,27 +35,21 @@
           type: SurveillanceCameraMonitorBoundUserInterface
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 3.0
     color: "#b89f25"
   - type: Destructible
     thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 200
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-      - trigger:
-          !type:DamageTrigger
-          damage: 100
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-          - !type:PlaySoundBehavior
-            sound:
-              collection: MetalGlassBreak
-              params:
-                volume: -4
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+          params:
+            volume: -4
   - type: StationAiWhitelist
 
 - type: entity
@@ -71,26 +65,20 @@
     drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/flatscreentv.rsi
     layers:
-      - map: ["computerLayerBody"]
-        state: television_wall
-      - map: ["computerLayerScreen"]
-        state: television_wallscreen
+    - map: ["computerLayerBody"]
+      state: television_wall
+    - map: ["computerLayerScreen"]
+      state: television_wallscreen
   - type: Destructible
     thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 20
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-      - trigger:
-          !type:DamageTrigger
-          damage: 15
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-          - !type:PlaySoundBehavior
-            sound:
-              collection: MetalGlassBreak
-              params:
-                volume: -4
+    - trigger:
+        !type:DamageTrigger
+        damage: 15
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+          params:
+            volume: -4

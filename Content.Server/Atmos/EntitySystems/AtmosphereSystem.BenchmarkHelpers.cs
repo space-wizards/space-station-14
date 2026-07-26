@@ -1,5 +1,6 @@
 using Content.Server.Atmos.Components;
 using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.EntitySystems;
 using Robust.Shared.Map.Components;
 
 namespace Content.Server.Atmos.EntitySystems;
@@ -45,5 +46,28 @@ public sealed partial class AtmosphereSystem
         ent.Comp1.ProcessingPaused = !processingPaused;
 
         return processingPaused;
+    }
+
+    /// <summary>
+    /// Fully runs one <see cref="GridAtmosphereComponent"/> entity through the entire Atmos processing loop.
+    /// </summary>
+    /// <param name="ent">The entity to simulate.</param>
+    /// <param name="mapAtmosphere">The <see cref="MapAtmosphereComponent"/> that belongs to the grid's map.</param>
+    /// <param name="frameTime">Elapsed time to simulate. Recommended value is <see cref="AtmosTickRate"/>.</param>
+    public void RunProcessingFull(Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
+        Entity<MapAtmosphereComponent?> mapAtmosphere,
+        float frameTime)
+    {
+        while (ProcessAtmosphere(ent, mapAtmosphere, frameTime) != AtmosphereProcessingCompletionState.Finished) { }
+    }
+
+    /// <summary>
+    /// Allows or disallows atmosphere simulation on a <see cref="GridAtmosphereComponent"/>.
+    /// </summary>
+    /// <param name="ent">The atmosphere to pause or unpause processing.</param>
+    /// <param name="simulate">The state to set. True means that the atmosphere is allowed to simulate, false otherwise.</param>
+    public void SetAtmosphereSimulation(Entity<GridAtmosphereComponent> ent, bool simulate)
+    {
+        ent.Comp.Simulated = simulate;
     }
 }
