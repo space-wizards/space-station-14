@@ -50,29 +50,6 @@ public abstract partial class SharedMicrowaveSystem
     }
 
     /// <summary>
-    ///     Check whether or not this microwave has space for the item, in both capacity and item size.
-    /// </summary>
-    /// <param name="ent">The microwave entity.</param>
-    /// <param name="item">The item to attempt to insert.</param>
-    /// <returns>Whether or not the item fits in the microwave. False if the item is too big or the microwave is full.</returns>
-    private bool CanFitInMicrowave(Entity<MicrowaveComponent?> ent, Entity<ItemComponent?> item)
-    {
-        if (!Resolve(ent.Owner, ref ent.Comp) || !Resolve(item.Owner, ref item.Comp))
-            return false;
-
-        var microwave = ent.Comp;
-        if (microwave.Storage.Count >= microwave.Capacity)
-            return false;
-
-        var maxSize = _item.GetSizePrototype(microwave.MaxItemSize);
-        var itemSize = _item.GetSizePrototype(item.Comp.Size);
-        if (itemSize > maxSize)
-            return false;
-
-        return true;
-    }
-
-    /// <summary>
     ///     Attempt to insert an entity into the microwave, resulting in a pop-up message if this is not possible.
     /// </summary>
     private void OnInteractUsing(Entity<MicrowaveComponent> ent, ref InteractUsingEvent args)
@@ -135,5 +112,28 @@ public abstract partial class SharedMicrowaveSystem
             return;
 
         UpdateUserInterfaceState((uid, component));
+    }
+
+    /// <summary>
+    ///     Check whether or not this microwave has space for the item, in both capacity and item size.
+    /// </summary>
+    /// <param name="ent">The microwave entity.</param>
+    /// <param name="item">The item to attempt to insert.</param>
+    /// <returns>Whether or not the item fits in the microwave. False if the item is too big or the microwave is full.</returns>
+    private bool CanFitInMicrowave(Entity<MicrowaveComponent?> ent, Entity<ItemComponent?> item)
+    {
+        if (!Resolve(ent.Owner, ref ent.Comp) || !Resolve(item.Owner, ref item.Comp))
+            return false;
+
+        var microwave = ent.Comp;
+        if (microwave.Storage.Count >= microwave.Capacity)
+            return false;
+
+        var maxSize = _item.GetSizePrototype(microwave.MaxItemSize);
+        var itemSize = _item.GetSizePrototype(item.Comp.Size);
+        if (itemSize > maxSize)
+            return false;
+
+        return true;
     }
 }
