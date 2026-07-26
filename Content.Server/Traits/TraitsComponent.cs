@@ -18,7 +18,8 @@ public sealed partial class TraitsComponent : Component
 }
 
 [Serializable]
-public struct TraitStatus
+[DataDefinition]
+public partial struct TraitStatus
 {
     [DataField]
     public ProtoId<TraitPrototype> Trait;

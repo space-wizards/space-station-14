@@ -89,7 +89,7 @@ public sealed partial class TraitSystem : EntitySystem
             return;
 
         if (!TryComp<TraitsComponent>(args.MindEntity.Comp.OwnedEntity, out var traitsComp) ||
-            !_prototypeManager.TryIndex(args.MindRoleEntity.Comp.AntagPrototype, out var antag) || !antag.RevertTraits)
+            !ProtoMan.TryIndex(args.MindRoleEntity.Comp.AntagPrototype, out var antag) || !antag.RevertTraits)
             return;
 
         var traitSet = traitsComp.AppliedTraits;
@@ -99,7 +99,7 @@ public sealed partial class TraitSystem : EntitySystem
             if (!trait.Revertable)
                 continue;
 
-            if (!_prototypeManager.TryIndex(trait.Trait, out var traitPrototype))
+            if (!ProtoMan.TryIndex(trait.Trait, out var traitPrototype))
             {
                 Log.Warning($"No trait found with ID {trait.Trait}!");
                 return;
