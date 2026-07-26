@@ -248,6 +248,16 @@ public sealed partial class WallMountVisibilityOverlay(
         viewportState.SeenThisFrame.Clear();
     }
 
+    /// <summary>
+    /// Restores all tracked sprites and clears all fade states.
+    /// </summary>
+    public void RestoreAll()
+    {
+        _fadeCache.Dispose();
+        _originalAlphas.Clear();
+        _toRemove.Clear();
+    }
+
     protected override void DisposeBehavior()
     {
         _fadeCache.Dispose();

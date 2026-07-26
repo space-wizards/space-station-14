@@ -70,7 +70,7 @@ public sealed partial class WallMountVisibilitySystem : EntitySystem
         else
         {
             _overlay.RemoveOverlay(_overlayInstance);
-            SetAllVisible(true);
+            _overlayInstance.RestoreAll();
         }
     }
 
@@ -107,18 +107,6 @@ public sealed partial class WallMountVisibilitySystem : EntitySystem
             return;
 
         _sprite.SetVisible((ent, sprite), true);
-    }
-
-    /// <summary>
-    /// Forces all wall-mount entities to become visible or hidden.
-    /// </summary>
-    public void SetAllVisible(bool visible)
-    {
-        var query = AllEntityQuery<WallMountComponent, SpriteComponent>();
-        while (query.MoveNext(out var uid, out _, out var sprite))
-        {
-            _sprite.SetVisible((uid, sprite), visible);
-        }
     }
 
     /// <summary>
