@@ -3,6 +3,7 @@ using Content.Server.Destructible;
 using Content.Server.Effects;
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Camera;
+using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
@@ -13,14 +14,14 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Projectiles;
 
-public sealed class ProjectileSystem : SharedProjectileSystem
+public sealed partial class ProjectileSystem : SharedProjectileSystem
 {
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly ColorFlashEffectSystem _color = default!;
-    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-    [Dependency] private readonly DestructibleSystem _destructibleSystem = default!;
-    [Dependency] private readonly GunSystem _guns = default!;
-    [Dependency] private readonly SharedCameraRecoilSystem _sharedCameraRecoil = default!;
+    [Dependency] private IAdminLogManager _adminLogger = default!;
+    [Dependency] private ColorFlashEffectSystem _color = default!;
+    [Dependency] private DamageableSystem _damageableSystem = default!;
+    [Dependency] private DestructibleSystem _destructibleSystem = default!;
+    [Dependency] private GunSystem _guns = default!;
+    [Dependency] private SharedCameraRecoilSystem _sharedCameraRecoil = default!;
 
     public override void Initialize()
     {
@@ -52,7 +53,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
         var damageRequired = _destructibleSystem.DestroyedAt(target);
         if (TryComp<DamageableComponent>(target, out var damageableComponent))
         {
-            damageRequired -= damageableComponent.TotalDamage;
+            damageRequired -= _damageableSystem.GetTotalDamage((target, damageableComponent));
             damageRequired = FixedPoint2.Max(damageRequired, FixedPoint2.Zero);
         }
         var deleted = Deleted(target);
@@ -68,45 +69,11 @@ public sealed class ProjectileSystem : SharedProjectileSystem
                 LogImpact.Medium,
                 $"Projectile {ToPrettyString(uid):projectile} shot by {ToPrettyString(component.Shooter!.Value):user} hit {otherName:target} and dealt {damage:damage} damage");
 
-            // If penetration is to be considered, we need to do some checks to see if the projectile should stop.
-            if (component.PenetrationThreshold != 0)
-            {
-                // If a damage type is required, stop the bullet if the hit entity doesn't have that type.
-                if (component.PenetrationDamageTypeRequirement != null)
-                {
-                    var stopPenetration = false;
-                    foreach (var requiredDamageType in component.PenetrationDamageTypeRequirement)
-                    {
-                        if (!damage.DamageDict.Keys.Contains(requiredDamageType))
-                        {
-                            stopPenetration = true;
-                            break;
-                        }
-                    }
-                    if (stopPenetration)
-                        component.ProjectileSpent = true;
-                }
-
-                // If the object won't be destroyed, it "tanks" the penetration hit.
-                if (damage.GetTotal() < damageRequired)
-                {
-                    component.ProjectileSpent = true;
-                }
-
-                if (!component.ProjectileSpent)
-                {
-                    component.PenetrationAmount += damageRequired;
-                    // The projectile has dealt enough damage to be spent.
-                    if (component.PenetrationAmount >= component.PenetrationThreshold)
-                    {
-                        component.ProjectileSpent = true;
-                    }
-                }
-            }
-            else
-            {
-                component.ProjectileSpent = true;
-            }
+            component.ProjectileSpent = !TryPenetrate((uid, component), damage, damageRequired);
+        }
+        else
+        {
+            component.ProjectileSpent = true;
         }
 
         if (!deleted)
@@ -124,5 +91,42 @@ public sealed class ProjectileSystem : SharedProjectileSystem
         {
             RaiseNetworkEvent(new ImpactEffectEvent(component.ImpactEffect, GetNetCoordinates(xform.Coordinates)), Filter.Pvs(xform.Coordinates, entityMan: EntityManager));
         }
+    }
+
+    private bool TryPenetrate(Entity<ProjectileComponent> projectile, DamageSpecifier damage, FixedPoint2 damageRequired)
+    {
+        // If penetration is to be considered, we need to do some checks to see if the projectile should stop.
+        if (projectile.Comp.PenetrationThreshold == 0)
+            return false;
+
+        // If a damage type is required, stop the bullet if the hit entity doesn't have that type.
+        if (projectile.Comp.PenetrationDamageTypeRequirement != null)
+        {
+            foreach (var requiredDamageType in projectile.Comp.PenetrationDamageTypeRequirement)
+            {
+                if (damage.DamageDict.Keys.Contains(requiredDamageType))
+                    continue;
+
+                return false;
+            }
+        }
+
+        // If the object won't be destroyed, it "tanks" the penetration hit.
+        if (damage.GetTotal() < damageRequired)
+        {
+            return false;
+        }
+
+        if (!projectile.Comp.ProjectileSpent)
+        {
+            projectile.Comp.PenetrationAmount += damageRequired;
+            // The projectile has dealt enough damage to be spent.
+            if (projectile.Comp.PenetrationAmount >= projectile.Comp.PenetrationThreshold)
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

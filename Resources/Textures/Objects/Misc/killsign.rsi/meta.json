@@ -1,24 +1,118 @@
 {
     "version": 1,
     "license": "CC-BY-NC-SA-3.0",
-    "copyright": "Created by github user @moonheart08",
+    "copyright": "Created by github user @moonheart08 | bald, cat, dog, furry, it, nerd, peak, raider, stinky and icon-hidden states edited by ScarKy0(Github)",
     "size": {
         "x": 32,
         "y": 32
     },
     "states": [
         {
-            "name": "sign",
+            "name": "bald",
             "directions": 1,
             "delays": [
                 [
-                    0.1,
-                    0.1
+                    0.15,
+                    0.15
+                ]
+            ]
+        },
+        {
+            "name": "cat",
+            "directions": 1,
+            "delays": [
+                [
+                    0.15,
+                    0.15
+                ]
+            ]
+        },
+        {
+            "name": "dog",
+            "directions": 1,
+            "delays": [
+                [
+                    0.15,
+                    0.15
+                ]
+            ]
+        },
+        {
+            "name": "furry",
+            "directions": 1,
+            "delays": [
+                [
+                    0.15,
+                    0.15
+                ]
+            ]
+        },
+        {
+            "name": "it",
+            "directions": 1,
+            "delays": [
+                [
+                    0.15,
+                    0.15
+                ]
+            ]
+        },
+        {
+            "name": "kill",
+            "directions": 1,
+            "delays": [
+                [
+                    0.15,
+                    0.15
+                ]
+            ]
+        },
+        {
+            "name": "nerd",
+            "directions": 1,
+            "delays": [
+                [
+                    0.15,
+                    0.15
+                ]
+            ]
+        },
+        {
+            "name": "peak",
+            "directions": 1,
+            "delays": [
+                [
+                    0.15,
+                    0.15
+                ]
+            ]
+        },
+        {
+            "name": "raider",
+            "directions": 1,
+            "delays": [
+                [
+                    0.15,
+                    0.15
+                ]
+            ]
+        },
+        {
+            "name": "stinky",
+            "directions": 1,
+            "delays": [
+                [
+                    0.15,
+                    0.15
                 ]
             ]
         },
         {
             "name": "icon",
+            "directions": 1
+        },
+        {
+            "name": "icon-hidden",
             "directions": 1
         }
     ]

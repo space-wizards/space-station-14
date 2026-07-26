@@ -1,6 +1,6 @@
 - type: entity
   id: MachineArtifactAnalyzer
-  parent: [ BaseMachinePowered, SmallConstructibleMachine ]
+  parent: [ BaseMachinePowered, SmallConstructibleMachine, BaseSmallConstructibleMachineDestructible ]
   name: artifact analyzer
   description: A platform capable of performing analysis on various types of artifacts.
   components:
@@ -45,11 +45,18 @@
         - LowImpassable
         - BulletImpassable
         hard: False
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
   - type: Transform
     anchored: true
   - type: ApcPowerReceiver
-    powerLoad: 12000
-    needsPower: false #only turns on when scanning
+    powerLoad: 5000
   - type: ArtifactAnalyzer
   - type: ItemPlacer
     whitelist:
@@ -82,7 +89,7 @@
 
 - type: entity
   id: MachineArtifactCrusher
-  parent: [ ConstructibleMachine, BaseMachinePowered ]
+  parent: [ ConstructibleMachine, BaseMachinePowered, BaseConstructibleMachineDestructible ]
   name: artifact crusher
   description: Best not to let your fingers get stuck...
   components:
@@ -122,6 +129,17 @@
         - HighImpassable
         layer:
         - HighImpassable
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 175
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:EmptyContainersBehaviour
+        containers:
+        - entity_storage
   - type: EntityStorage
     capacity: 1
     whitelist:

@@ -4,8 +4,7 @@ using Content.Shared.Weapons.Ranged.Events;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
 
-
-public sealed class GunSpreadModifierSystem: EntitySystem
+public sealed class GunSpreadModifierSystem : EntitySystem
 {
     public override void Initialize()
     {
@@ -14,14 +13,14 @@ public sealed class GunSpreadModifierSystem: EntitySystem
         SubscribeLocalEvent<GunSpreadModifierComponent, ExaminedEvent>(OnExamine);
     }
 
-    private void OnGunGetAmmoSpread(EntityUid uid, GunSpreadModifierComponent comp, ref GunGetAmmoSpreadEvent args)
+    private void OnGunGetAmmoSpread(Entity<GunSpreadModifierComponent> ent, ref GunGetAmmoSpreadEvent args)
     {
-        args.Spread *= comp.Spread;
+        args.Spread *= ent.Comp.Spread;
     }
 
-    private void OnExamine(EntityUid uid, GunSpreadModifierComponent comp, ExaminedEvent args)
+    private void OnExamine(Entity<GunSpreadModifierComponent> ent, ref ExaminedEvent args)
     {
-        var percentage = Math.Round(comp.Spread * 100);
+        var percentage = Math.Round(ent.Comp.Spread * 100);
         var loc = percentage < 100 ? "examine-gun-spread-modifier-reduction" : "examine-gun-spread-modifier-increase";
         percentage = percentage < 100 ? 100 - percentage : percentage - 100;
         var msg = Loc.GetString(loc, ("percentage", percentage));

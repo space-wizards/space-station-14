@@ -5,9 +5,9 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Ban)]
-    public sealed class PardonCommand : LocalizedCommands
+    public sealed partial class PardonCommand : LocalizedCommands
     {
-        [Dependency] private readonly IServerDbManager _dbManager = default!;
+        [Dependency] private IServerDbManager _dbManager = default!;
 
         public override string Command => "pardon";
 
@@ -27,7 +27,7 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            var ban = await _dbManager.GetServerBanAsync(banId);
+            var ban = await _dbManager.GetBanAsync(banId);
 
             if (ban == null)
             {
@@ -50,7 +50,7 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            await _dbManager.AddServerUnbanAsync(new ServerUnbanDef(banId, player?.UserId, DateTimeOffset.Now));
+            await _dbManager.AddUnbanAsync(new UnbanDef(banId, player?.UserId, DateTimeOffset.Now));
 
             shell.WriteLine(Loc.GetString($"cmd-pardon-success", ("id", banId)));
         }
