@@ -34,6 +34,7 @@
   - type: Appearance
 
 - type: entity
+  abstract: true
   id: BaseStandardDeck
   categories: [ HideSpawnMenu ]
   components:
