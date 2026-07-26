@@ -17,7 +17,8 @@
   suffix: Full
   components:
   - type: Tag
-    tags: []
+    tags:
+    - CartonDrink
 
 - type: entity
   abstract: true
@@ -34,7 +35,8 @@
   suffix: Full
   components:
   - type: Tag
-    tags: [ ]
+    tags:
+    - CartonDrink
 
 - type: entity
   abstract: true
@@ -49,6 +51,7 @@
     tags:
     - DrinkBottle # Need this to fit in the soda dispenser, probably needs a better name
     - Trash
+    - CartonDrink
 
 - type: entity
   abstract: true
@@ -59,6 +62,7 @@
   - type: Tag
     tags:
     - DrinkBottle # Need this to fit in the soda dispenser, probably needs a better name
+    - CartonDrink
 
 # Small carton
 
@@ -82,7 +86,8 @@
       - ReagentId: JuiceLime
         Quantity: 60
   - type: Tag
-    tags: [ ]
+    tags:
+    - CartonDrink
 
 - type: entity
   parent: DrinkCartonBase
@@ -104,7 +109,8 @@
       - ReagentId: JuiceOrange
         Quantity: 60
   - type: Tag
-    tags: [ ]
+    tags:
+    - CartonDrink
 
 - type: entity
   parent: DrinkCartonBase
@@ -126,7 +132,8 @@
       - ReagentId: JuiceTomato
         Quantity: 60
   - type: Tag
-    tags: []
+    tags:
+    - CartonDrink
 
 - type: entity
   parent: DrinkCartonBaseFull
@@ -162,7 +169,8 @@
       - ReagentId: Cream
         Quantity: 60
   - type: Tag
-    tags: [ ]
+    tags:
+    - CartonDrink
 
 - type: entity
   parent: [DrinkBaseMaterialPlastic, DrinkCartonBaseFull]
@@ -214,7 +222,8 @@
       - ReagentId: Milk
         Quantity: 120
   - type: Tag
-    tags: [ ]
+    tags:
+    - CartonDrink
 
 - type: entity
   parent: DrinkCartonNormalBase
@@ -236,7 +245,8 @@
       - ReagentId: MilkSoy
         Quantity: 120
   - type: Tag
-    tags: [ ]
+    tags:
+    - CartonDrink
 
 - type: entity
   parent: [DrinkBaseMaterialPlastic, DrinkCartonNormalBase]
@@ -259,7 +269,8 @@
       - ReagentId: MilkOat
         Quantity: 120
   - type: Tag
-    tags: [ ]
+    tags:
+    - CartonDrink
 
 # Large cartons
 

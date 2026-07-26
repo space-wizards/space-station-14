@@ -11,6 +11,7 @@
     sprite: Clothing/Head/Helmets/eva.rsi
   - type: Tag
     tags:
+    - HeadWearable
     - HelmetEVA
     - WhitelistChameleon
     - CorgiWearable
@@ -28,6 +29,7 @@
     sprite: Clothing/Head/Helmets/eva_large.rsi
   - type: Tag
     tags:
+    - HeadWearable
     - HelmetEVA
     - WhitelistChameleon
     - CorgiWearable
@@ -109,5 +111,6 @@
     color: "#00ffff"
   - type: Tag
     tags:
+    - HeadWearable
     - HelmetEVA
     - WhitelistChameleon

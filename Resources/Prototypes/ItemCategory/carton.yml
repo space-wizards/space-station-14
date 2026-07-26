@@ -1,0 +1,7 @@
+- type: itemCategory
+  id: CartonCategory
+  name: item-category-carton
+  icon: DrinkJuiceOrangeCarton
+  whitelist:
+    tags:
+    - CartonDrink

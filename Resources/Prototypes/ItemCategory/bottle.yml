@@ -1,0 +1,7 @@
+- type: itemCategory
+  id: BottleCategory
+  name: item-category-bottle
+  icon: DrinkBeerBottleFull
+  whitelist:
+    tags:
+    - BottledDrink

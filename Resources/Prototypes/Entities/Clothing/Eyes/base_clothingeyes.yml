@@ -10,6 +10,9 @@
   - type: Item
     size: Small
     storedRotation: -90
+  - type: Tag
+    tags:
+    - GlassesWearable
 
 - type: entity
   parent: [ClothingEyesBase, BaseFoldable]
@@ -30,6 +33,9 @@
       state: icon
       visible: false
       scale: -1,1
+  - type: Tag
+    tags:
+    - GlassesWearable
 
 - type: entity
   parent: ClothingHeadEyeBaseFlippable

@@ -182,8 +182,9 @@
   abstract: true
   components:
   - type: Tag
-    tags:
-    - Backpack # ignore "WhitelistChameleon" tag
+    tags: # ignore "WhitelistChameleon" tag
+    - BackpackWearable
+    - Backpack
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -191,8 +192,9 @@
   abstract: true
   components:
   - type: Tag
-    tags:
-    - Backpack # ignore "WhitelistChameleon" tag
+    tags: # ignore "WhitelistChameleon" tag
+    - BackpackWearable
+    - Backpack
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicate
@@ -214,6 +216,7 @@
   - type: Tag
     tags:
     - Backpack # ignore "WhitelistChameleon" tag
+    - BackpackWearable
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicate
@@ -232,9 +235,10 @@
   id: ClothingBackpackDuffelSyndicateMedicalBundle
   abstract: true
   components:
-  - type: Tag
-    tags:
-    - Backpack # ignore "WhitelistChameleon" tag
+    - type: Tag
+      tags: # ignore "WhitelistChameleon" tag
+      - BackpackWearable
+      - Backpack
 
 - type: entity
   parent: ClothingBackpackHoldingBase #Standardized Bluespace Bags

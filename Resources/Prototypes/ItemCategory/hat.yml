@@ -1,0 +1,7 @@
+- type: itemCategory
+  id: HatCategory
+  name: item-category-hat
+  icon: ClothingHeadPropellerHat
+  whitelist:
+    tags:
+      - HeadWearable

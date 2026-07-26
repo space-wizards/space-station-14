@@ -56,6 +56,7 @@
     - HudMedical
     - PetWearable
     - WhitelistChameleon
+    - GlassesWearable
 
 - type: entity
   parent: [ClothingEyesHudBase, ShowSecurityIcons, BaseSecurityContraband]
@@ -72,6 +73,7 @@
     - HudSecurity
     - PetWearable
     - WhitelistChameleon
+    - GlassesWearable
 
 - type: entity
   parent: [ClothingEyesHudBase, BaseCommandContraband]
@@ -88,6 +90,7 @@
     tags:
     - PetWearable
     - WhitelistChameleon
+    - GlassesWearable
 
 - type: entity
   parent: ClothingEyesHudBase
@@ -105,6 +108,7 @@
     tags:
     - PetWearable
     - WhitelistChameleon
+    - GlassesWearable
 
 - type: entity
   parent: [SolutionFood, SolutionSmall, ClothingEyesHudBase]
@@ -229,6 +233,7 @@
     tags:
     - PetWearable
     - WhitelistChameleon
+    - GlassesWearable
 
 - type: entity
   parent: [ClothingEyesHudBase, ShowSecurityIcons, BaseSyndicateContraband]
@@ -246,6 +251,7 @@
     tags:
     - PetWearable
     - WhitelistChameleon
+    - GlassesWearable
 
 - type: entity
   parent: [ClothingEyesGlassesSunglasses, ShowSecurityIcons]
@@ -270,6 +276,7 @@
     - PetWearable
     - WhitelistChameleon
     - HudMedical
+    - GlassesWearable
 
 - type: entity
   parent: [ClothingEyesEyepatchHudMedical, ClothingHeadEyeBaseFlipped]
@@ -291,6 +298,7 @@
     - PetWearable
     - WhitelistChameleon
     - HudSecurity
+    - GlassesWearable
 
 - type: entity
   parent: [ClothingEyesEyepatchHudSecurity,  ClothingHeadEyeBaseFlipped]

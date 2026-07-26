@@ -1,0 +1,7 @@
+- type: itemCategory
+  id: BarToolCategory
+  name: item-category-tool
+  icon: DrinkGlass
+  whitelist:
+    tags:
+    - BarTool

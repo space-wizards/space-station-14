@@ -38,6 +38,7 @@
   - type: Tag
     tags:
     - WhitelistChameleon
+    - FeetWearable
 
 - type: entity
   parent: [ClothingShoesBootsMagBase]
@@ -61,6 +62,7 @@
     tags:
     - WhitelistChameleon
     - HighRiskItem
+    - FeetWearable
   - type: StaticPrice
     price: 750
   - type: StealTarget

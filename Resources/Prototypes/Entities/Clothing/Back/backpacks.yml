@@ -38,6 +38,7 @@
     tags:
     - WhitelistChameleon
     - Backpack
+    - BackpackWearable
 
 - type: entity
   parent: ClothingBackpack

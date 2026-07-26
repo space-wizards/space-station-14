@@ -155,6 +155,7 @@
   - type: Tag
     tags:
     - Metal
+    - BarTool
   - type: Sprite
     state: bar_spoon
   - type: Item

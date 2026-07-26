@@ -68,6 +68,7 @@
   - type: Tag
     tags:
     - ClothMade
+    - HeadWearable
     - Recyclable
     - HamsterWearable
     - WhitelistChameleon
@@ -80,6 +81,7 @@
   - type: Tag
     tags:
     - ClothMade
+    - HeadWearable
     - Recyclable
     - HamsterWearable
     - WhitelistChameleon
@@ -225,6 +227,7 @@
   - type: Tag
     tags:
     - ClothMade
+    - HeadWearable
     - Recyclable
     - HamsterWearable
     - WhitelistChameleon
@@ -237,6 +240,7 @@
   - type: Tag
     tags:
     - ClothMade
+    - HeadWearable
     - Recyclable
     - HamsterWearable
     - WhitelistChameleon
@@ -318,6 +322,7 @@
   - type: Tag
     tags:
     - ClothMade
+    - HeadWearable
     - Recyclable
     - HamsterWearable
     - WhitelistChameleon
@@ -330,6 +335,7 @@
   - type: Tag
     tags:
     - ClothMade
+    - HeadWearable
     - Recyclable
     - HamsterWearable
     - WhitelistChameleon

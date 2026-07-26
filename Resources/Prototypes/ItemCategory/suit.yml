@@ -1,0 +1,7 @@
+- type: itemCategory
+  id: SuitCategory
+  name: item-category-suit
+  icon: ClothingUniformJumpsuitColorGrey
+  whitelist:
+    tags:
+      - TorsoWearable

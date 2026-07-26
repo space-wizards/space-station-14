@@ -65,6 +65,7 @@
       cell_slot: !type:ContainerSlot
   - type: Tag
     tags:
+    - HeadWearable
     - WhitelistChameleon
 
 - type: entity

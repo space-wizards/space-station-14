@@ -6,7 +6,8 @@
   suffix: Chameleon
   components:
     - type: Tag
-      tags: [] # ignore "WhitelistChameleon" tag
+      tags:  # ignore "WhitelistChameleon" tag
+        - TorsoWearable
     - type: Sprite
       sprite: Clothing/OuterClothing/Vests/vest.rsi
     - type: Clothing

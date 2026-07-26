@@ -21,6 +21,9 @@
     metamorphicDefaultSprite:
       sprite: Objects/Consumable/Drinks/glass_clear.rsi
       state: icon
+  - type: Tag
+    tags:
+    - BarTool
   - type: Destructible
     thresholds:
     - trigger:

@@ -69,6 +69,7 @@
     reduction: 0.2
   - type: Tag
     tags:
+    - HeadWearable
     - WhitelistChameleon
 
 #Engineering Hardsuit
@@ -130,6 +131,7 @@
     lowPressureMultiplier: 1000
   - type: Tag
     tags:
+    - HeadWearable
     - WhitelistChameleon
 
 #Spationaut Hardsuit
@@ -190,6 +192,7 @@
     lowPressureMultiplier: 1000
   - type: Tag
     tags:
+    - HeadWearable
     - WhitelistChameleon
 
 #Salvage Hardsuit
@@ -211,6 +214,7 @@
     energy: 3
   - type: Tag
     tags:
+    - HeadWearable
     - WhitelistChameleon
 
 #Goliath Hardsuit
@@ -264,6 +268,7 @@
     lowPressureMultiplier: 1000
   - type: Tag
     tags:
+    - HeadWearable
     - WhitelistChameleon
 
 #Maxim Hardsuit
@@ -314,6 +319,7 @@
         Heat: 0.9
   - type: Tag
     tags:
+    - HeadWearable
     - WhitelistChameleon
 
 #Brigmedic Hardsuit
@@ -382,6 +388,7 @@
     lowPressureMultiplier: 1000
   - type: Tag
     tags:
+    - HeadWearable
     - WhitelistChameleon
 
 #Chief Engineer's Hardsuit
@@ -445,6 +452,7 @@
     reduction: 0.2
   - type: Tag
     tags:
+    - HeadWearable
     - WhitelistChameleon
 
 #Chief Medical Officer's Hardsuit
@@ -465,6 +473,7 @@
     lowPressureMultiplier: 1000
   - type: Tag
     tags:
+    - HeadWearable
     - WhitelistChameleon
 
 #Research Director's Hardsuit
@@ -485,6 +494,7 @@
     lowPressureMultiplier: 1000
   - type: Tag
     tags:
+    - HeadWearable
     - WhitelistChameleon
 
 #Head of Security's hardsuit
@@ -556,6 +566,7 @@
         Heat: 0.9
   - type: Tag
     tags:
+    - HeadWearable
     - WhitelistChameleon
 
 #Blood-red Medic Hardsuit
@@ -612,6 +623,7 @@
         Heat: 0.9
   - type: Tag
     tags:
+    - HeadWearable
     - WhitelistChameleon
 
 #Syndicate Commander Hardsuit
@@ -639,6 +651,7 @@
         Heat: 0.9
   - type: Tag
     tags:
+    - HeadWearable
     - WhitelistChameleon
 
 #Cybersun Juggernaut Hardsuit
@@ -664,6 +677,7 @@
         Heat: 0.9
   - type: Tag
     tags:
+    - HeadWearable
     - WhitelistChameleon
 
 #Wizard Hardsuit
@@ -691,6 +705,7 @@
         Heat: 0.9
   - type: Tag
     tags:
+    - HeadWearable
     - WhitelistChameleon
 
 #Organic Space Suit

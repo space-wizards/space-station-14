@@ -6,7 +6,8 @@
   suffix: Chameleon
   components:
     - type: Tag
-      tags: [] # ignore "WhitelistChameleon" tag
+      tags: # ignore "WhitelistChameleon" tag
+      - BackpackWearable
     - type: Sprite
       sprite: Clothing/Back/Backpacks/backpack.rsi
     - type: ChameleonClothing
@@ -29,6 +30,7 @@
     tags:
     - NozzleBackTank
     - WhitelistChameleon
+    - BackpackWearable
   - type: Sprite
     sprite: Clothing/Back/Backpacks/waterbackpack.rsi
     state: icon
@@ -93,6 +95,7 @@
     - CorgiWearable
     - PetOnly
     - ScurretWearable
+    - BackpackWearable
   - type: Construction
     graph: ClothingBagPet
     node: bagPet

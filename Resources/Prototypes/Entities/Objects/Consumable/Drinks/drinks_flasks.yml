@@ -13,6 +13,9 @@
     closeable: true
     closeSound:
       collection: flaskCloseSounds
+  - type: Tag
+    tags:
+    - BarTool
 
 # Flasks
 
@@ -110,3 +113,6 @@
     qualities:
     - Rolling # Perfectly cylindrical flask
     speedModifier: 0.75
+  - type: Tag
+    tags:
+    - BarTool
