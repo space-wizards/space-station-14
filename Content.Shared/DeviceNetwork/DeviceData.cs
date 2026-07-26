@@ -1,10 +1,12 @@
-﻿namespace Content.Shared.DeviceNetwork;
+﻿using Robust.Shared.Serialization;
+
+namespace Content.Shared.DeviceNetwork;
 
 /// <summary>
 /// Represents data about a networked device that is
 /// capable of transmitting and receiving network packets.
 /// </summary>
-[DataDefinition]
+[DataDefinition, Serializable, NetSerializable]
 public partial record struct DeviceData
 {
     [DataField("deviceNetId")]

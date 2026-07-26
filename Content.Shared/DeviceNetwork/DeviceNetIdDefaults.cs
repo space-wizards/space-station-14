@@ -1,5 +1,8 @@
-﻿namespace Content.Shared.DeviceNetwork;
+﻿using Robust.Shared.Serialization;
 
+namespace Content.Shared.DeviceNetwork;
+
+[Serializable, NetSerializable]
 public enum DeviceNetIdDefaults
 {
     Private,

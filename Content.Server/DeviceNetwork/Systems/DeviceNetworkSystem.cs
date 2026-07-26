@@ -21,16 +21,10 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
     /// </summary>
     private readonly Dictionary<int, DeviceNet> _networks = new(4);
 
-    public override void Initialize()
-    {
-        base.Initialize();
-        SubscribeLocalEvent<DeviceNetworkComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<DeviceNetworkComponent, ComponentShutdown>(OnNetworkShutdown);
-    }
-
     /// <summary>
     /// Automatically attempt to connect some devices when a map starts.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnMapInit(Entity<DeviceNetworkComponent> ent, ref MapInitEvent args)
     {
         var device = ent.Comp;
@@ -55,6 +49,7 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
     /// <summary>
     /// Automatically disconnect when an entity with a DeviceNetworkComponent shuts down.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnNetworkShutdown(Entity<DeviceNetworkComponent> ent, ref ComponentShutdown args)
     {
         var component = ent.Comp;

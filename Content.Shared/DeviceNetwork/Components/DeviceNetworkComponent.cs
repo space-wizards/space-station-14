@@ -1,7 +1,6 @@
 using Content.Shared.DeviceNetwork.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.DeviceNetwork.Components;
 

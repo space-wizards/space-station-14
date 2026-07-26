@@ -12,12 +12,7 @@ namespace Content.Shared.DeviceNetwork.Systems;
 /// </summary>
 public abstract partial class SharedDeviceNetworkSystem : EntitySystem, IDevicePayloadRaiser
 {
-    public override void Initialize()
-    {
-        base.Initialize();
-        SubscribeLocalEvent<DeviceNetworkComponent, ExaminedEvent>(OnExamine);
-    }
-
+    [SubscribeLocalEvent]
     private void OnExamine(Entity<DeviceNetworkComponent> ent, ref ExaminedEvent args)
     {
         if (ent.Comp.ExaminableAddress)
