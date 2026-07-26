@@ -55,9 +55,6 @@ public sealed partial class RoundEndSummaryWindow : DefaultWindow
         roundEndTabs.AddChild(MakePlayerManifestTab());
 
         ContentsContainer.AddChild(roundEndTabs);
-
-        OpenCenteredRight();
-        MoveToFront();
     }
 
     private static BoxContainer MakeRoundEndSummaryTab(string gamemode, string roundEnd, TimeSpan roundDuration, int roundId)

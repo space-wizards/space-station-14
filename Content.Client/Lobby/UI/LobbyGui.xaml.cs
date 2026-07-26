@@ -70,7 +70,6 @@ namespace Content.Client.Lobby.UI
         {
             var roundSummaryController = UserInterfaceManager.GetUIController<RoundEndSummaryUIController>();
             RoundSummaryButton.Disabled = !roundSummaryController.IsSummaryValid();
-            RoundSummaryButton.Pressed = roundSummaryController.IsSummaryOpen();
         }
 
         private void TogglePanel(bool value)
