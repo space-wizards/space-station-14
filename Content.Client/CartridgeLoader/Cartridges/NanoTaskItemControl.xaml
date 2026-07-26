@@ -22,7 +22,11 @@
         </Button>
         <Button Name="DoneButton"
                 VerticalExpand="True"
-                Text="{Loc 'nano-task-ui-done'}"
-                StyleClasses="ButtonSmall OpenLeft" />
+                Text="{Loc 'nano-task-ui-done'}">
+            <Button.StyleClasses>
+                <system:String>ButtonSmall</system:String>
+                <system:String>OpenLeft</system:String>
+            </Button.StyleClasses>
+        </Button>
     </BoxContainer>
 </Control>
