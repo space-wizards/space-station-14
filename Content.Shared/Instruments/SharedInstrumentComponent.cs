@@ -28,8 +28,8 @@ public abstract partial class SharedInstrumentComponent : Component
     [DataField]
     public bool RespectMidiLimits { get; set; } = true;
 
-    [DataField("minVolume"), ViewVariables(VVAccess.ReadWrite)]
-    public byte MinVolume { get; set; } = 0;
+    [DataField]
+    public byte MinVolume { get; set; }
 
     [ViewVariables(VVAccess.ReadWrite)]
     public EntityUid? Master { get; set; } = null;

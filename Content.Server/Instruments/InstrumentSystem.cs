@@ -84,7 +84,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
             RespectMidiLimits = component.RespectMidiLimits,
             Master = GetNetEntity(component.Master),
             FilteredChannels = component.FilteredChannels,
-            MinVolume = component.MinVolume
+            MinVolume = component.MinVolume,
         };
     }
 
