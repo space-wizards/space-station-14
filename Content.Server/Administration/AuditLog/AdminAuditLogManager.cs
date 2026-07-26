@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Database;
 using Content.Server.GameTicking;
@@ -65,6 +66,7 @@ public sealed class AdminAuditLogManager : IAdminAuditLogManager
     private TimeSpan _queueSendDelay;
     private TimeSpan _nextUpdateTime;
     private int _savingLogs;
+    private readonly JsonSerializerOptions _jsonOptions = AdminLogJsonOptions.Minimal;
     private int _serverId;
     private int _roundId;
 
@@ -166,7 +168,7 @@ public sealed class AdminAuditLogManager : IAdminAuditLogManager
                 member = memberName,
                 oldValue = oldStr,
                 newValue = newStr
-            }));
+            }, _jsonOptions));
     }
 
     //There are too many Vs in this name

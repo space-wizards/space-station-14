@@ -1,5 +1,6 @@
 using System.Text.Json;
 using Content.Server.Administration.AuditLog;
+using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
@@ -62,7 +63,7 @@ namespace Content.Server.Administration.UI
                                 {
                                     announcement = doAnnounce.Announcement,
                                     type = "Server"
-                                }));
+                                }, AdminLogJsonOptions.Minimal));
                             break;
                         // TODO: Per-station announcement support
                         case AdminAnnounceType.Station:
@@ -79,7 +80,7 @@ namespace Content.Server.Administration.UI
                                 {
                                     announcement = doAnnounce.Announcement,
                                     type = "Global"
-                                }));
+                                }, AdminLogJsonOptions.Minimal));
                             break;
                     }
 

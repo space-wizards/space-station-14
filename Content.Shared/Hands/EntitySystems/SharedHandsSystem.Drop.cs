@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Shared.Administration.Logs.Payloads;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
@@ -262,7 +263,11 @@ public abstract partial class SharedHandsSystem
             _interactionSystem.DroppedInteraction(ent, entity.Value);
 
         if (log)
-            _adminLogger.Add(LogType.Drop, LogImpact.Low, $"{ent:user} dropped {entity:entity}");
+            _adminLogger.Add(LogType.Drop, LogImpact.Low,
+                $"{ent:user} dropped {entity:entity}",
+                new ItemTransferLogPayload(
+                    MetaData(entity.Value).EntityPrototype?.ID,
+                    MetaData(entity.Value).EntityName));
 
         if (handId == ent.Comp.ActiveHandId)
             RaiseLocalEvent(entity.Value, new HandDeselectedEvent(ent));

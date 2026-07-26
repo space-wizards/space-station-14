@@ -6,6 +6,7 @@ using Content.Shared.Access.Components;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Prototypes;
+using Content.Shared.Administration.Logs.Payloads;
 using Content.Shared.Database;
 using Content.Shared.Labels.EntitySystems;
 using Content.Shared.NameIdentifier;
@@ -181,7 +182,10 @@ public sealed partial class CargoSystem
 
             TryRemoveBounty(station, bounty.Value, false);
             FillBountyDatabase(station);
-            _adminLogger.Add(LogType.Action, LogImpact.Low, $"Bounty \"{bounty.Value.Bounty}\" (id:{bounty.Value.Id}) was fulfilled");
+            _adminLogger.Add(LogType.CargoBounty,
+                LogImpact.Low,
+                $"Bounty \"{bounty.Value.Bounty}\" (id:{bounty.Value.Id}) was fulfilled",
+                new CargoBountyLogPayload(bounty.Value.Id, bounty.Value.Bounty.Id, "Fulfilled"));
         }
     }
 
@@ -437,7 +441,10 @@ public sealed partial class CargoSystem
             return false;
         }
         component.Bounties.Add(new CargoBountyData(bounty, randomVal));
-        _adminLogger.Add(LogType.Action, LogImpact.Low, $"Added bounty \"{bounty.ID}\" (id:{component.TotalBounties}) to station {uid}");
+        _adminLogger.Add(LogType.CargoBounty,
+            LogImpact.Low,
+            $"Bounty \"{bounty.ID}\" was added to station {uid}",
+            new CargoBountyLogPayload(newBounty.Id, bounty.ID, "Added"));
         component.TotalBounties++;
         return true;
     }

@@ -1,8 +1,8 @@
 using System.Text.Json;
 using Content.Server.Administration.AuditLog;
+using Content.Server.Administration.AuditLog.Payloads;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Robust.Shared.Map;
 using Robust.Shared.Placement;
@@ -62,12 +62,14 @@ public sealed partial class PlacementLoggerSystem : EntitySystem
                     AuditSeverity.Notable,
                     $"Placement system {ev.PlacementEventAction.ToString().ToLower()}d entity {ToPrettyString(ev.EditedEntity)} at {ev.Coordinates}",
                     targetEntity: ev.EditedEntity,
-                    payload: JsonSerializer.SerializeToDocument(new
-                    {
-                        action = ev.PlacementEventAction.ToString(),
-                        editedEntity = (int) ev.EditedEntity,
-                        coordinates = ev.Coordinates.ToString()
-                    }));
+                    payload: JsonSerializer.SerializeToDocument(
+                        new AuditEntityActionPayload(
+                            actorSession.UserId.UserId,
+                            ev.PlacementEventAction.ToString(),
+                            TryComp<MetaDataComponent>(ev.EditedEntity, out var meta) ? meta.EntityPrototype?.ID : null,
+                            ev.Coordinates.X,
+                            ev.Coordinates.Y),
+                        AdminLogJsonOptions.Minimal));
             }
         }
         else if (actor != null)

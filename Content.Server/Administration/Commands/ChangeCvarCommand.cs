@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Text.Json;
 using Content.Server.Administration.AuditLog;
+using Content.Server.Administration.AuditLog.Payloads;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
@@ -194,12 +195,9 @@ public sealed partial class ChangeCvarCommand : IConsoleCommand
                     AdminAuditAction.CvarChange,
                     AuditSeverity.Critical,
                     $"Changed CVar {cvar}: {oldValueText} → {newValueText}",
-                    payload: JsonSerializer.SerializeToDocument(new
-                    {
-                        cvarName = cvar,
-                        oldValue = oldValueText,
-                        newValue = newValueText,
-                    }));
+                    payload: JsonSerializer.SerializeToDocument(
+                        new AuditCvarPayload(shell.Player!.UserId.UserId, cvar, oldValueText, newValueText),
+                        AdminLogJsonOptions.Minimal));
 
                 shell.WriteLine(Loc.GetString("cmd-changecvar-success", ("cvar", cvar), ("old", oldValue), ("value", parsed)));
             }

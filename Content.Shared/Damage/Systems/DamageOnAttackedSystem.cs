@@ -1,4 +1,5 @@
 using Content.Shared.Administration.Logs;
+using Content.Shared.Administration.Logs.Payloads;
 using Content.Shared.Damage.Components;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
@@ -7,8 +8,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Popups;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Network;
-using Robust.Shared.Timing;
+using System.Linq;
 
 namespace Content.Shared.Damage.Systems;
 
@@ -77,7 +77,16 @@ public sealed partial class DamageOnAttackedSystem : EntitySystem
 
         if (totalDamage.AnyPositive())
         {
-            _adminLogger.Add(LogType.Damaged, $"{args.User:user} injured themselves by attacking {entity:target} and received {totalDamage.GetTotal():damage} damage");
+            var byType = totalDamage.DamageDict
+                .Select(kvp => new DamageEntrySnapshot(kvp.Key.Id, Math.Abs(kvp.Value.Int())))
+                .ToList();
+            _adminLogger.Add(LogType.Damaged,
+                $"{args.User:user} injured themselves by attacking {entity:target} and received {totalDamage.GetTotal():damage} damage",
+                new CombatDamageLogPayload(
+                    MetaData(entity).EntityPrototype?.ID,
+                    null,
+                    byType,
+                    Math.Abs(totalDamage.GetTotal().Int())));
             _audioSystem.PlayPredicted(entity.Comp.InteractSound, entity, args.User);
 
             if (entity.Comp.PopupText != null)

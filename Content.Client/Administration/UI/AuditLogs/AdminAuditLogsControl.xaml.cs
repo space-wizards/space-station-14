@@ -204,6 +204,51 @@ public sealed partial class AdminAuditLogsControl : Control
             }
         }
 
+        // Payload display lines (pre-processed server-side; no JSON parsing in client).
+        // Fall back to stripped raw JSON
+        if (log.PayloadLines is { Length: > 0 })
+        {
+            message.AddText("\n  ");
+            message.PushColor(MetadataLabelColor);
+            message.AddText("payload");
+            message.Pop();
+            foreach (var line in log.PayloadLines)
+            {
+                message.AddText("\n    ");
+                var colonIdx = line.IndexOf(':');
+                if (colonIdx > 0 && colonIdx < line.Length - 1)
+                {
+                    message.PushColor(MetadataLabelColor);
+                    message.AddText(line[..colonIdx]);
+                    message.AddText(":");
+                    message.Pop();
+                    message.PushColor(MessageColor);
+                    message.AddText(line[(colonIdx + 1)..]);
+                    message.Pop();
+                }
+                else
+                {
+                    message.PushColor(MetadataLabelColor);
+                    message.AddText(line);
+                    message.Pop();
+                }
+            }
+        }
+        else if (!string.IsNullOrEmpty(log.PayloadJson))
+        {
+            // Fallback
+            message.AddText("\n  ");
+            message.PushColor(MetadataLabelColor);
+            message.AddText("payload: ");
+            message.Pop();
+            message.PushColor(MessageColor);
+            var trimmed = log.PayloadJson.Trim();
+            if (trimmed.Length >= 2 && trimmed[0] == '{' && trimmed[trimmed.Length - 1] == '}')
+                trimmed = trimmed.Substring(1, trimmed.Length - 2).Trim();
+            message.AddText(trimmed);
+            message.Pop();
+        }
+
         return message;
     }
 

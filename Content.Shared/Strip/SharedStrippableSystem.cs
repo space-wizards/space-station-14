@@ -1,6 +1,7 @@
 
 using System.Linq;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Administration.Logs.Payloads;
 using Content.Shared.CombatMode;
 using Content.Shared.Cuffs;
 using Content.Shared.Database;
@@ -219,7 +220,10 @@ public abstract partial class SharedStrippableSystem : EntitySystem
             LogType.Stripping,
             LogImpact.Low,
             $"{user:actor} is trying to {prefix}place the item {held:subject} in {target:victim}'s {slot} slot",
-            new { slot });
+            new ItemTransferLogPayload(
+                MetaData(held).EntityPrototype?.ID,
+                MetaData(held).EntityName,
+                SlotName: slot));
 
         var doAfterArgs = new DoAfterArgs(EntityManager, user, time, new StrippableDoAfterEvent(true, true, slot), user, target, held)
         {
@@ -258,7 +262,10 @@ public abstract partial class SharedStrippableSystem : EntitySystem
             LogType.Stripping,
             LogImpact.Medium,
             $"{user:actor} has placed the item {held:subject} in {target:victim}'s {slot} slot",
-            new { slot });
+            new ItemTransferLogPayload(
+                MetaData(held).EntityPrototype?.ID,
+                MetaData(held).EntityName,
+                SlotName: slot));
     }
 
     /// <summary>
@@ -337,7 +344,10 @@ public abstract partial class SharedStrippableSystem : EntitySystem
             LogType.Stripping,
             LogImpact.Low,
             $"{user:actor} is trying to {prefix}strip the item {item:subject} from {target:victim}'s {slot} slot",
-            new { slot });
+            new ItemTransferLogPayload(
+                MetaData(item).EntityPrototype?.ID,
+                MetaData(item).EntityName,
+                SlotName: slot));
 
         _interactionSystem.DoContactInteraction(user, item);
 
@@ -379,7 +389,10 @@ public abstract partial class SharedStrippableSystem : EntitySystem
             LogType.Stripping,
             LogImpact.High,
             $"{user:actor} has stripped the item {item:subject} from {target:victim}'s {slot} slot",
-            new { slot });
+            new ItemTransferLogPayload(
+                MetaData(item).EntityPrototype?.ID,
+                MetaData(item).EntityName,
+                SlotName: slot));
     }
 
     /// <summary>
@@ -453,7 +466,10 @@ public abstract partial class SharedStrippableSystem : EntitySystem
             LogType.Stripping,
             LogImpact.Low,
             $"{user:actor} is trying to {prefix}place the item {held:subject} in {target:victim}'s hands",
-            new { slot = handName });
+            new ItemTransferLogPayload(
+                MetaData(held).EntityPrototype?.ID,
+                MetaData(held).EntityName,
+                SlotName: handName));
 
         var doAfterArgs = new DoAfterArgs(EntityManager, user, time, new StrippableDoAfterEvent(true, false, handName), user, target, held)
         {
@@ -492,7 +508,10 @@ public abstract partial class SharedStrippableSystem : EntitySystem
             LogType.Stripping,
             LogImpact.Medium,
             $"{user:actor} has placed the item {held:subject} in {target:victim}'s hands",
-            new { slot = handName });
+            new ItemTransferLogPayload(
+                MetaData(held).EntityPrototype?.ID,
+                MetaData(held).EntityName,
+                SlotName: handName));
 
         // Hand update will trigger strippable update.
     }
@@ -572,7 +591,10 @@ public abstract partial class SharedStrippableSystem : EntitySystem
             LogType.Stripping,
             LogImpact.Low,
             $"{user:actor} is trying to {prefix}strip the item {item:subject} from {target:victim}'s hands",
-            new { slot = handName });
+            new ItemTransferLogPayload(
+                MetaData(item).EntityPrototype?.ID,
+                MetaData(item).EntityName,
+                SlotName: handName));
 
         _interactionSystem.DoContactInteraction(user, item);
 
@@ -614,7 +636,10 @@ public abstract partial class SharedStrippableSystem : EntitySystem
             LogType.Stripping,
             LogImpact.High,
             $"{user:actor} has stripped the item {item:subject} from {target:victim}'s hands",
-            new { slot = handName });
+            new ItemTransferLogPayload(
+                MetaData(item).EntityPrototype?.ID,
+                MetaData(item).EntityName,
+                SlotName: handName));
 
         // Hand update will trigger strippable update.
     }

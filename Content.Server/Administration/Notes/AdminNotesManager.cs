@@ -3,6 +3,8 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Content.Server.Administration.AuditLog;
+using Content.Server.Administration.AuditLog.Payloads;
+using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Database;
 using Content.Server.EUI;
@@ -175,15 +177,9 @@ public sealed partial class AdminNotesManager : IAdminNotesManager, IPostInjectI
                 AuditSeverity.Notable,
                 $"Created {type} #{noteId} for player {player}",
                 targetPlayerUserId: player,
-                payload: JsonSerializer.SerializeToDocument(new
-                {
-                    noteId,
-                    type = type.ToString(),
-                    message,
-                    severity = severity?.ToString(),
-                    secret,
-                    expiryTime
-                }));
+                payload: JsonSerializer.SerializeToDocument(
+                    new AuditNotePayload(createdBy.UserId.UserId, type.ToString(), noteId, message, secret),
+                    AdminLogJsonOptions.Minimal));
         }
 
         NoteAdded?.Invoke(note);
@@ -240,12 +236,9 @@ public sealed partial class AdminNotesManager : IAdminNotesManager, IPostInjectI
                 AuditSeverity.Notable,
                 $"Deleted {type} #{noteId}",
                 targetPlayerUserId: note.Players.FirstOrDefault().UserId,
-                payload: JsonSerializer.SerializeToDocument(new
-                {
-                    noteId,
-                    type = type.ToString(),
-                    message = note.Message
-                }));
+                payload: JsonSerializer.SerializeToDocument(
+                    new AuditNotePayload(deletedBy.UserId.UserId, type.ToString(), noteId, note.Message, note.Secret),
+                    AdminLogJsonOptions.Minimal));
         }
 
         NoteDeleted?.Invoke(note);
@@ -344,19 +337,16 @@ public sealed partial class AdminNotesManager : IAdminNotesManager, IPostInjectI
                 AuditSeverity.Notable,
                 $"Edited {type} #{noteId}",
                 targetPlayerUserId: note.Players.FirstOrDefault().UserId,
-                payload: JsonSerializer.SerializeToDocument(new
-                {
-                    noteId,
-                    type = type.ToString(),
-                    oldMessage = note.Message,
-                    newMessage = message,
-                    oldSeverity = note.NoteSeverity?.ToString(),
-                    newSeverity = severity?.ToString(),
-                    oldSecret = note.Secret,
-                    newSecret = secret,
-                    oldExpiry = note.ExpiryTime,
-                    newExpiry = expiryTime
-                }));
+                payload: JsonSerializer.SerializeToDocument(
+                    new AuditNotePayload(
+                        editedBy.UserId.UserId,
+                        type.ToString(),
+                        noteId,
+                        message,
+                        secret,
+                        OldNoteText: note.Message,
+                        OldSeverity: note.NoteSeverity?.ToString()),
+                    AdminLogJsonOptions.Minimal));
         }
 
         NoteModified?.Invoke(newNote);

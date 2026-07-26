@@ -1,5 +1,5 @@
-using System.Text.Json;
 using System.Linq;
+using Content.Shared.Administration.Logs.Payloads;
 using System.Numerics;
 using Content.Server.Administration.Logs;
 using Content.Shared.Administration.Logs;
@@ -8,7 +8,6 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Destructible;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NPC.Pathfinding;
-using Content.Shared.Armor;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Camera;
 using Content.Shared.CCVar;
@@ -23,7 +22,6 @@ using Content.Shared.Inventory;
 using Content.Shared.Maps;
 using Content.Shared.Throwing;
 using Robust.Server.GameStates;
-using Robust.Server.Player;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
@@ -255,15 +253,14 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
                 LogType.Explosion,
                 LogImpact.High,
                 $"{uid:entity} exploded ({typeId}) at Pos:{(posFound ? $"{gridPos:coordinates}" : "[Grid or Map not found]")} with intensity {totalIntensity} slope {slope}",
-                JsonSerializer.SerializeToDocument(new
-                {
-                    explosive = (int) uid,
-                    explosionType = typeId,
-                    coordinates = posFound ? gridPos.ToString() : "[Grid or Map not found]",
+                new ExplosionLogPayload(
+                    typeId,
                     totalIntensity,
                     slope,
-                    radius = IntensityToRadius(totalIntensity, slope, maxTileIntensity)
-                }),
+                    IntensityToRadius(totalIntensity, slope, maxTileIntensity),
+                    mapPos.X,
+                    mapPos.Y,
+                    (int) mapPos.MapId),
                 players: semantics.Players,
                 entities: semantics.Entities,
                 playerRoles: semantics.PlayerRoles);
@@ -281,16 +278,14 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
                     LogType.Explosion,
                     logImpact,
                     $"{user.Value:user} caused {uid:entity} to explode ({typeId}) at Pos:{gridPos:coordinates} with intensity {totalIntensity} slope {slope}",
-                    JsonSerializer.SerializeToDocument(new
-                    {
-                        actor = (int) user.Value,
-                        explosive = (int) uid,
-                        explosionType = typeId,
-                        coordinates = gridPos.ToString(),
+                    new ExplosionLogPayload(
+                        typeId,
                         totalIntensity,
                         slope,
-                        radius = IntensityToRadius(totalIntensity, slope, maxTileIntensity)
-                    }),
+                        IntensityToRadius(totalIntensity, slope, maxTileIntensity),
+                        mapPos.X,
+                        mapPos.Y,
+                        (int) mapPos.MapId),
                     players: semantics.Players,
                     entities: semantics.Entities,
                     playerRoles: semantics.PlayerRoles);
@@ -299,16 +294,14 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
                     LogType.Explosion,
                     logImpact,
                     $"{user.Value:user} caused {uid:entity} to explode ({typeId}) at Pos:[Grid or Map not found] with intensity {totalIntensity} slope {slope}",
-                    JsonSerializer.SerializeToDocument(new
-                    {
-                        actor = (int) user.Value,
-                        explosive = (int) uid,
-                        explosionType = typeId,
-                        coordinates = "[Grid or Map not found]",
+                    new ExplosionLogPayload(
+                        typeId,
                         totalIntensity,
                         slope,
-                        radius = IntensityToRadius(totalIntensity, slope, maxTileIntensity)
-                    }),
+                        IntensityToRadius(totalIntensity, slope, maxTileIntensity),
+                        mapPos.X,
+                        mapPos.Y,
+                        (int) mapPos.MapId),
                     players: semantics.Players,
                     entities: semantics.Entities,
                     playerRoles: semantics.PlayerRoles);
@@ -349,15 +342,14 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
                 LogType.Explosion,
                 LogImpact.High,
                 $"Explosion ({typeId}) spawned at {epicenter:coordinates} with intensity {totalIntensity} slope {slope}",
-                JsonSerializer.SerializeToDocument(new
-                {
-                    cause = cause is null ? null : (int?) cause.Value,
-                    explosionType = typeId,
-                    coordinates = epicenter.ToString(),
+                new ExplosionLogPayload(
+                    typeId,
                     totalIntensity,
                     slope,
-                    radius = IntensityToRadius(totalIntensity, slope, maxTileIntensity)
-                }),
+                    IntensityToRadius(totalIntensity, slope, maxTileIntensity),
+                    epicenter.X,
+                    epicenter.Y,
+                    (int) epicenter.MapId),
                 players: semantics.Players,
                 entities: semantics.Entities,
                 playerRoles: semantics.PlayerRoles);

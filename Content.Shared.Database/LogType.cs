@@ -519,4 +519,19 @@ public enum LogType
     /// Silicon law changes.
     /// </summary>
     SiliconLaw = 111,
+
+    /// <summary>
+    /// A mob transitioned to a new state (Alive - Critical, Critical - Dead, etc.).
+    /// </summary>
+    MobStateChange = 112,
+
+    /// <summary>
+    /// A cargo order was submitted, approved, or otherwise changed status.
+    /// </summary>
+    CargoOrder = 113,
+
+    /// <summary>
+    /// A cargo bounty was added or fulfilled.
+    /// </summary>
+    CargoBounty = 114,
 }

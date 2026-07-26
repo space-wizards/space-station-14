@@ -1,8 +1,9 @@
 using Content.Shared.Database;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Administration.Logs;
 
-[Serializable]
+[Serializable, NetSerializable]
 public record struct SharedAdminAuditLog(
     int Id,
     AdminAuditAction Action,
@@ -15,4 +16,6 @@ public record struct SharedAdminAuditLog(
     string? TargetPlayerUserName,
     int? TargetEntityUid,
     string? TargetEntityName,
-    string? TargetEntityPrototype);
+    string? TargetEntityPrototype,
+    string? PayloadJson = null,
+    string[]? PayloadLines = null);

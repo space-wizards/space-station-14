@@ -6,6 +6,7 @@ using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Events;
 using Content.Shared.Cargo.Prototypes;
+using Content.Shared.Administration.Logs.Payloads;
 using Content.Shared.Database;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Interaction;
@@ -85,9 +86,19 @@ namespace Content.Server.Cargo.Systems
 
             // Log order addition
             _audio.PlayPvs(ent.Comp.ScanSound, ent);
-            _adminLogger.Add(LogType.Action,
+            _adminLogger.Add(LogType.CargoOrder,
                 LogImpact.Low,
-                $"{args.User:user} inserted order slip [orderId:{data.OrderId}, quantity:{data.OrderQuantity}, product:{data.Product}, requester:{data.Requester}, reason:{data.Reason}]");
+                $"{args.User:actor} inserted cargo order slip for {product.Name}",
+                new CargoOrderLogPayload(
+                    data.OrderId,
+                    data.Product.Id,
+                    product.Name,
+                    data.OrderQuantity,
+                    product.Cost * data.OrderQuantity,
+                    "Inserted",
+                    data.Requester,
+                    string.IsNullOrWhiteSpace(data.Reason) ? null : data.Reason,
+                    data.Account.Id));
             QueueDel(args.Used);
             args.Handled = true;
         }
@@ -253,9 +264,19 @@ namespace Content.Server.Cargo.Systems
             _popup.PopupCursor(Loc.GetString("cargo-console-trade-station", ("destination", MetaData(ev.FulfillmentEntity.Value).EntityName)), args.Actor);
 
             // Log order approval
-            _adminLogger.Add(LogType.Action,
+            _adminLogger.Add(LogType.CargoOrder,
                 LogImpact.Low,
-                $"{player:user} approved order [orderId:{order.OrderId}, quantity:{order.OrderQuantity}, product:{order.Product}, requester:{order.Requester}, reason:{order.Reason}] on account {order.Account} with balance at {accountBalance}");
+                $"{player:actor} approved cargo order for {product.Name}",
+                new CargoOrderLogPayload(
+                    order.OrderId,
+                    order.Product.Id,
+                    product.Name,
+                    order.OrderQuantity,
+                    cost,
+                    "Approved",
+                    order.Requester,
+                    string.IsNullOrWhiteSpace(order.Reason) ? null : order.Reason,
+                    order.Account.Id));
 
             orderDatabase.Orders[component.Account].Remove(order);
             UpdateBankAccount((station.Value, bank), -cost, order.Account);
@@ -403,9 +424,19 @@ namespace Content.Server.Cargo.Systems
             }
 
             // Log order addition
-            _adminLogger.Add(LogType.Action,
+            _adminLogger.Add(LogType.CargoOrder,
                 LogImpact.Low,
-                $"{player:user} added order [orderId:{data.OrderId}, quantity:{data.OrderQuantity}, product:{data.Product}, requester:{data.Requester}, reason:{data.Reason}]");
+                $"{player:actor} submitted cargo order for {product.Name}",
+                new CargoOrderLogPayload(
+                    data.OrderId,
+                    data.Product.Id,
+                    product.Name,
+                    data.OrderQuantity,
+                    product.Cost * data.OrderQuantity,
+                    "Added",
+                    data.Requester,
+                    string.IsNullOrWhiteSpace(data.Reason) ? null : data.Reason,
+                    data.Account.Id));
 
         }
 
@@ -541,9 +572,19 @@ namespace Content.Server.Cargo.Systems
             order.Approved = true;
 
             // Log order addition
-            _adminLogger.Add(LogType.Action,
-                LogImpact.Low,
-                $"AddAndApproveOrder {description} added order [orderId:{order.OrderId}, quantity:{order.OrderQuantity}, product:{order.Product}, requester:{order.Requester}, reason:{order.Reason}]");
+            _adminLogger.Add(LogType.CargoOrder,
+                LogImpact.Medium,
+                $"Cargo order for {product.Name} was added and approved",
+                new CargoOrderLogPayload(
+                    order.OrderId,
+                    order.Product.Id,
+                    product.Name,
+                    order.OrderQuantity,
+                    product.Cost * order.OrderQuantity,
+                    "AddedAndApproved",
+                    order.Requester,
+                    string.IsNullOrWhiteSpace(order.Reason) ? null : order.Reason,
+                    order.Account.Id));
 
             // Add it to the list
             return TryAddOrder(dbUid, account, order, component) && TryFulfillOrder(stationData, account, order, component).HasValue;

@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Text.Json;
 using Content.Server.Administration.AuditLog;
+using Content.Server.Administration.AuditLog.Payloads;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.Notes;
@@ -11,7 +12,6 @@ using Content.Shared.Administration.Systems;
 using Content.Shared.Database;
 using Content.Shared.Eui;
 using Content.Shared.Follower;
-using Content.Shared.Players;
 using Robust.Server.Player;
 using Robust.Shared.Player;
 
@@ -112,10 +112,9 @@ public sealed partial class PlayerPanelEui : BaseEui
                         $"Unfroze {_targetPlayer.Username}",
                         targetPlayerUserId: _targetPlayer.UserId.UserId,
                         targetEntity: session.AttachedEntity.Value,
-                        payload: JsonSerializer.SerializeToDocument(new
-                        {
-                            action = "unfreeze"
-                        }));
+                        payload: JsonSerializer.SerializeToDocument(
+                            new AuditFreezePayload(Player.UserId, "unfreeze"),
+                            AdminLogJsonOptions.Minimal));
                     SetPlayerState();
                     return;
                 }
@@ -131,10 +130,9 @@ public sealed partial class PlayerPanelEui : BaseEui
                         $"Froze and muted {_targetPlayer.Username}",
                         targetPlayerUserId: _targetPlayer.UserId.UserId,
                         targetEntity: session.AttachedEntity.Value,
-                        payload: JsonSerializer.SerializeToDocument(new
-                        {
-                            action = "freeze_and_mute"
-                        }));
+                        payload: JsonSerializer.SerializeToDocument(
+                            new AuditFreezePayload(Player.UserId, "freeze_and_mute", Muted: true),
+                            AdminLogJsonOptions.Minimal));
                 }
                 else
                 {
@@ -147,10 +145,9 @@ public sealed partial class PlayerPanelEui : BaseEui
                         $"Froze {_targetPlayer.Username}",
                         targetPlayerUserId: _targetPlayer.UserId.UserId,
                         targetEntity: session.AttachedEntity.Value,
-                        payload: JsonSerializer.SerializeToDocument(new
-                        {
-                            action = "freeze"
-                        }));
+                        payload: JsonSerializer.SerializeToDocument(
+                            new AuditFreezePayload(Player.UserId, "freeze"),
+                            AdminLogJsonOptions.Minimal));
                 }
                 SetPlayerState();
                 break;

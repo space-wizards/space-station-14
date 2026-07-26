@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Mind;
 using Content.Shared.Overlays;
@@ -58,6 +59,11 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
             return;
         }
 
+        // Snapshot previous laws BEFORE SiliconEmaggedEvent mutates them.
+        var previousLaws = TryComp<SiliconLawProviderComponent>(uid, out var providerForSnapshot)
+            ? (IReadOnlyList<string>) (providerForSnapshot.Lawset?.Laws?.Select(l => l.LawString).ToList() ?? new List<string>())
+            : Array.Empty<string>();
+
         var ev = new SiliconEmaggedEvent(args.UserUid);
         RaiseLocalEvent(uid, ref ev);
 
@@ -65,8 +71,8 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
 
         if (!TryComp<SiliconLawProviderComponent>(uid, out var lawcomp))
             return;
-            
-        NotifyLawsChanged((uid, lawcomp), component.EmaggedSound);
+
+        NotifyLawsChanged((uid, lawcomp), component.EmaggedSound, previousLaws);
         if(_mind.TryGetMind(uid, out var mindId, out _))
             EnsureSubvertedSiliconRole(mindId);
 
@@ -75,9 +81,11 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
         args.Handled = true;
     }
 
-    public virtual void NotifyLawsChanged(Entity<SiliconLawProviderComponent> ent, SoundSpecifier? cue = null)
+    public virtual void NotifyLawsChanged(
+        Entity<SiliconLawProviderComponent> ent,
+        SoundSpecifier? cue = null,
+        IReadOnlyList<string>? previousLaws = null)
     {
-
     }
 
     protected virtual void EnsureSubvertedSiliconRole(EntityUid mindId)

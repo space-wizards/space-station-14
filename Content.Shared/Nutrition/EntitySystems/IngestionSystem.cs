@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.Administration.Logs.Payloads;
 using Content.Shared.Actions.Events;
 
 using Content.Shared.Administration.Logs;
@@ -294,14 +295,10 @@ public sealed partial class IngestionSystem : EntitySystem
                 LogType.ForceFeed,
                 LogImpact.Medium,
                 $"{args.User:actor} is forcing {entity.Owner:victim} to eat {food:tool} {foodSolution}",
-                new
-                {
-                    actor = (int) args.User,
-                    victim = (int) entity.Owner,
-                    tool = (int) food,
-                    stage = "attempt",
-                    foodSolution = SerializeSolutionForAdminLog(foodSolution)
-                });
+                new ChemistryInjectionLogPayload(
+                    foodSolution.Contents.Select(r => new ReagentSnapshot(r.Reagent.Prototype, r.Quantity.Int())).ToList(),
+                    foodSolution.Volume.Int(),
+                    "Ingest"));
         }
         else
         {
@@ -312,14 +309,10 @@ public sealed partial class IngestionSystem : EntitySystem
                 LogType.Ingestion,
                 LogImpact.Low,
                 $"{entity.Owner:actor} is eating {food:tool} {foodSolution}",
-                new
-                {
-                    actor = (int) entity.Owner,
-                    victim = (int) entity.Owner,
-                    tool = (int) food,
-                    stage = "attempt",
-                    foodSolution = SerializeSolutionForAdminLog(foodSolution)
-                },
+                new ChemistryInjectionLogPayload(
+                    foodSolution.Contents.Select(r => new ReagentSnapshot(r.Reagent.Prototype, r.Quantity.Int())).ToList(),
+                    foodSolution.Volume.Int(),
+                    "Ingest"),
                 players: selfActionSemantics.Players,
                 entities: selfActionSemantics.Entities,
                 playerRoles: selfActionSemantics.PlayerRoles);
@@ -504,14 +497,10 @@ public sealed partial class IngestionSystem : EntitySystem
                 LogType.ForceFeed,
                 LogImpact.Medium,
                 $"{args.User:actor} forced {args.Target:victim} to eat {entity.Owner:tool}",
-                new
-                {
-                    actor = (int) args.User,
-                    victim = (int) args.Target,
-                    tool = (int) entity.Owner,
-                    stage = "success",
-                    consumed = SerializeSolutionForAdminLog(args.Split)
-                });
+                new ChemistryInjectionLogPayload(
+                    args.Split.Contents.Select(r => new ReagentSnapshot(r.Reagent.Prototype, r.Quantity.Int())).ToList(),
+                    args.Split.Volume.Int(),
+                    "Ingest"));
         }
         else
         {
@@ -530,14 +519,10 @@ public sealed partial class IngestionSystem : EntitySystem
                 LogType.Ingestion,
                 LogImpact.Low,
                 $"{args.User:actor} ate {entity.Owner:tool}",
-                new
-                {
-                    actor = (int) args.User,
-                    victim = (int) args.Target,
-                    tool = (int) entity.Owner,
-                    stage = "success",
-                    consumed = SerializeSolutionForAdminLog(args.Split)
-                },
+                new ChemistryInjectionLogPayload(
+                    args.Split.Contents.Select(r => new ReagentSnapshot(r.Reagent.Prototype, r.Quantity.Int())).ToList(),
+                    args.Split.Volume.Int(),
+                    "Ingest"),
                 players: selfActionSemantics.Players,
                 entities: selfActionSemantics.Entities,
                 playerRoles: selfActionSemantics.PlayerRoles);

@@ -1,4 +1,5 @@
 using Content.Shared.Administration.Logs;
+using Content.Shared.Administration.Logs.Payloads;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
@@ -7,6 +8,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Tools.Systems;
 using Robust.Shared.Serialization;
+using System.Linq;
 
 namespace Content.Shared.Repairable;
 
@@ -69,7 +71,16 @@ public sealed partial class RepairableSystem : EntitySystem
     private void RepairSomeDamage(Entity<DamageableComponent?> ent, float damageAmount, EntityUid user)
     {
         var damageChanged = _damageableSystem.HealEvenly(ent.Owner, damageAmount, origin: user);
-        _adminLogger.Add(LogType.Healed, $"{user:user} repaired {ent.Owner:target} by {damageChanged.GetTotal()}");
+        var byType = damageChanged.DamageDict
+            .Select(kvp => new DamageEntrySnapshot(kvp.Key.Id, Math.Abs(kvp.Value.Int())))
+            .ToList();
+        _adminLogger.Add(LogType.Healed,
+            $"{user:user} repaired {ent.Owner:target} by {damageChanged.GetTotal()}",
+            new CombatDamageLogPayload(
+                null,
+                null,
+                byType,
+                Math.Abs(damageChanged.GetTotal().Int())));
     }
 
     /// <summary>
@@ -81,7 +92,16 @@ public sealed partial class RepairableSystem : EntitySystem
     private void RepairSomeDamage(Entity<DamageableComponent?> ent, Damage.DamageSpecifier damageAmount, EntityUid user)
     {
         var damageChanged = _damageableSystem.ChangeDamage(ent.Owner, damageAmount, true, false, origin: user);
-        _adminLogger.Add(LogType.Healed, $"{user:user} repaired {ent.Owner:target} by {damageChanged.GetTotal()}");
+        var byType = damageChanged.DamageDict
+            .Select(kvp => new DamageEntrySnapshot(kvp.Key.Id, Math.Abs(kvp.Value.Int())))
+            .ToList();
+        _adminLogger.Add(LogType.Healed,
+            $"{user:user} repaired {ent.Owner:target} by {damageChanged.GetTotal()}",
+            new CombatDamageLogPayload(
+                null,
+                null,
+                byType,
+                Math.Abs(damageChanged.GetTotal().Int())));
     }
 
     /// <summary>
@@ -92,7 +112,13 @@ public sealed partial class RepairableSystem : EntitySystem
     private void RepairAllDamage(Entity<DamageableComponent?> ent, EntityUid user)
     {
         _damageableSystem.ClearAllDamage(ent);
-        _adminLogger.Add(LogType.Healed, $"{user:user} repaired {ent.Owner:target} back to full health");
+        _adminLogger.Add(LogType.Healed,
+            $"{user:user} repaired {ent.Owner:target} back to full health",
+            new CombatDamageLogPayload(
+                null,
+                null,
+                Array.Empty<DamageEntrySnapshot>(),
+                0));
     }
 
     private void Repair(Entity<RepairableComponent> ent, ref InteractUsingEvent args)

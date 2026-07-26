@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.Administration.Logs.Payloads;
 using Content.Server.Administration;
 using Content.Server.Chat.Managers;
 using Content.Server.Station.Systems;
@@ -83,7 +84,14 @@ public sealed partial class SiliconLawSystem : SharedSiliconLawSystem
 
     private void OnLawProviderMindAdded(Entity<SiliconLawProviderComponent> ent, ref MindAddedMessage args)
     {
-        _adminLogger.Add(LogType.SiliconLaw, LogImpact.Low, $"{ent.Owner} laws at MindAdded are [{ent.Comp.Lawset?.LoggingString()}]");
+        var lawStrings = ent.Comp.Lawset?.Laws?.Select(l => l.LawString).ToList() ?? new List<string>();
+        _adminLogger.Add(LogType.SiliconLaw,
+            LogImpact.Low,
+            $"{ent.Owner} laws at MindAdded are [{ent.Comp.Lawset?.LoggingString()}]",
+            new SiliconLawChangeLogPayload(
+                new List<string>(),
+                lawStrings,
+                "Full"));
 
         if (!ent.Comp.Subverted)
             return;
@@ -140,10 +148,13 @@ public sealed partial class SiliconLawSystem : SharedSiliconLawSystem
         // Emagged borgs are immune to ion storm
         if (!_emag.CheckFlag(ent, EmagType.Interaction))
         {
+            // Capture previous laws before overwriting the lawset.
+            var previousLaws = ent.Comp.Lawset?.Laws?.Select(l => l.LawString).ToList() ?? new List<string>();
+
             ent.Comp.Lawset = args.Lawset;
 
             // gotta tell player to check their laws
-            NotifyLawsChanged(ent, ent.Comp.LawUploadSound);
+            NotifyLawsChangedWithHistory(ent, ent.Comp.LawUploadSound, previousLaws, "IonStorm");
 
             // Show the silicon has been subverted.
             ent.Comp.Subverted = true;
@@ -249,11 +260,33 @@ public sealed partial class SiliconLawSystem : SharedSiliconLawSystem
         return ev.Laws;
     }
 
-    public override void NotifyLawsChanged(Entity<SiliconLawProviderComponent> ent, SoundSpecifier? cue = null)
+    public override void NotifyLawsChanged(
+        Entity<SiliconLawProviderComponent> ent,
+        SoundSpecifier? cue = null,
+        IReadOnlyList<string>? previousLaws = null)
+    {
+        NotifyLawsChangedWithHistory(ent, cue, previousLaws ?? Array.Empty<string>());
+    }
+
+    /// <summary>
+    /// Notify a silicon entity that its laws have changed, and emit an admin log entry with the previous law state.
+    /// </summary>
+    private void NotifyLawsChangedWithHistory(
+        Entity<SiliconLawProviderComponent> ent,
+        SoundSpecifier? cue,
+        IReadOnlyList<string> previousLaws,
+        string changeType = "Full")
     {
         base.NotifyLawsChanged(ent, cue);
 
-        _adminLogger.Add(LogType.SiliconLaw, LogImpact.Low, $"{ent} laws changed to [{ent.Comp.Lawset?.LoggingString()}]");
+        var newLawStrings = ent.Comp.Lawset?.Laws?.Select(l => l.LawString).ToList() ?? new List<string>();
+        _adminLogger.Add(LogType.SiliconLaw,
+            LogImpact.Low,
+            $"{ent} laws changed to [{ent.Comp.Lawset?.LoggingString()}]",
+            new SiliconLawChangeLogPayload(
+                previousLaws,
+                newLawStrings,
+                changeType));
 
         if (!TryComp<ActorComponent>(ent, out var actor))
             return;
@@ -297,9 +330,12 @@ public sealed partial class SiliconLawSystem : SharedSiliconLawSystem
         if (component.Lawset == null)
             component.Lawset = new SiliconLawset();
 
+        // Capture previous laws before overwriting them.
+        var previousLaws = component.Lawset.Laws.Select(l => l.LawString).ToList();
+
         component.Lawset.Laws = newLaws;
         RankLaws(component.Lawset.Laws);
-        NotifyLawsChanged((target,component), cue);
+        NotifyLawsChangedWithHistory((target, component), cue, previousLaws);
     }
 
     protected override void OnUpdaterInsert(Entity<SiliconLawUpdaterComponent> ent, ref EntInsertedIntoContainerMessage args)

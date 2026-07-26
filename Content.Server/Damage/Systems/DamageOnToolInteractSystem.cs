@@ -1,11 +1,12 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Damage.Components;
-using Content.Shared.Damage;
+using Content.Shared.Administration.Logs.Payloads;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Tools.Components;
 using Content.Shared.Tools.Systems;
 using ItemToggleComponent = Content.Shared.Item.ItemToggle.Components.ItemToggleComponent;
+using System.Linq;
 
 namespace Content.Server.Damage.Systems
 {
@@ -37,8 +38,16 @@ namespace Content.Server.Damage.Systems
             {
                 if (_damageableSystem.TryChangeDamage(args.Target, weldingDamage, out var dmg, origin: args.User))
                 {
+                    var byType = dmg.DamageDict
+                        .Select(kvp => new DamageEntrySnapshot(kvp.Key.Id, Math.Abs(kvp.Value.Int())))
+                        .ToList();
                     _adminLogger.Add(LogType.Damaged,
-                        $"{args.User:user} used {args.Used:used} as a welder to deal {dmg.GetTotal():damage} damage to {args.Target:target}");
+                        $"{args.User:user} used {args.Used:used} as a welder to deal {dmg.GetTotal():damage} damage to {args.Target:target}",
+                        new CombatDamageLogPayload(
+                            MetaData(args.Used).EntityPrototype?.ID,
+                            null,
+                            byType,
+                            Math.Abs(dmg.GetTotal().Int())));
                 }
 
                 args.Handled = true;
@@ -48,8 +57,16 @@ namespace Content.Server.Damage.Systems
             {
                 if (_damageableSystem.TryChangeDamage(args.Target, damage, out var dmg, origin: args.User))
                 {
+                    var byType = dmg.DamageDict
+                        .Select(kvp => new DamageEntrySnapshot(kvp.Key.Id, Math.Abs(kvp.Value.Int())))
+                        .ToList();
                     _adminLogger.Add(LogType.Damaged,
-                        $"{args.User:user} used {args.Used:used} as a tool to deal {dmg.GetTotal():damage} damage to {args.Target:target}");
+                        $"{args.User:user} used {args.Used:used} as a tool to deal {dmg.GetTotal():damage} damage to {args.Target:target}",
+                        new CombatDamageLogPayload(
+                            MetaData(args.Used).EntityPrototype?.ID,
+                            null,
+                            byType,
+                            Math.Abs(dmg.GetTotal().Int())));
                 }
 
                 args.Handled = true;

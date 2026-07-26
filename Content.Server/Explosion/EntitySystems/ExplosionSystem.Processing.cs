@@ -1,3 +1,4 @@
+using Content.Shared.Administration.Logs.Payloads;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
@@ -15,6 +16,7 @@ using Robust.Shared.Timing;
 using System.Numerics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using System.Linq;
 using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
 
 namespace Content.Server.Explosion.EntitySystems;
@@ -457,10 +459,25 @@ public sealed partial class ExplosionSystem
                 if (_actorQuery.HasComp(entity))
                 {
                     // Log damage to player entities only; this will create a massive amount of log spam otherwise.
+                    var byType = damage.DamageDict
+                        .Select(kvp => new DamageEntrySnapshot(kvp.Key.Id, kvp.Value.Int()))
+                        .ToList();
                     if (cause is not null)
-                        _adminLogger.Add(LogType.ExplosionHit, LogImpact.Medium, $"Explosion of {cause:actor} dealt {damage.GetTotal()} damage to {entity:subject}");
+                        _adminLogger.Add(LogType.ExplosionHit, LogImpact.Medium,
+                            $"Explosion of {cause:actor} dealt {damage.GetTotal()} damage to {entity:subject}",
+                            new CombatDamageLogPayload(
+                                MetaData(cause.Value).EntityPrototype?.ID,
+                                null,
+                                byType,
+                                damage.GetTotal().Int()));
                     else
-                        _adminLogger.Add(LogType.ExplosionHit, LogImpact.Medium, $"Explosion at {epicenter:epicenter} dealt {damage.GetTotal()} damage to {entity:subject}");
+                        _adminLogger.Add(LogType.ExplosionHit, LogImpact.Medium,
+                            $"Explosion at {epicenter:epicenter} dealt {damage.GetTotal()} damage to {entity:subject}",
+                            new CombatDamageLogPayload(
+                                null,
+                                null,
+                                byType,
+                                damage.GetTotal().Int()));
                 }
             }
         }

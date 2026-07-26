@@ -1,4 +1,5 @@
 using Content.Shared.Administration.Logs;
+using Content.Shared.Administration.Logs.Payloads;
 using Content.Shared.Damage.Components;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
@@ -7,12 +8,10 @@ using Content.Shared.Popups;
 using Robust.Shared.Random;
 using Content.Shared.Throwing;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Network;
 using Robust.Shared.Timing;
-using Content.Shared.Random;
 using Content.Shared.Movement.Pulling.Components;
-using Content.Shared.Effects;
 using Content.Shared.Stunnable;
+using System.Linq;
 
 namespace Content.Shared.Damage.Systems;
 
@@ -84,7 +83,16 @@ public sealed partial class DamageOnInteractSystem : EntitySystem
             entity.Comp.NextInteraction = _gameTiming.CurTime + TimeSpan.FromSeconds(entity.Comp.InteractTimer);
 
             args.Handled = true;
-            _adminLogger.Add(LogType.Damaged, $"{args.User:user} injured their hand by interacting with {args.Target:target} and received {totalDamage.GetTotal():damage} damage");
+            var byType = totalDamage.DamageDict
+                .Select(kvp => new DamageEntrySnapshot(kvp.Key.Id, Math.Abs(kvp.Value.Int())))
+                .ToList();
+            _adminLogger.Add(LogType.Damaged,
+                $"{args.User:user} injured their hand by interacting with {args.Target:target} and received {totalDamage.GetTotal():damage} damage",
+                new CombatDamageLogPayload(
+                    MetaData(entity).EntityPrototype?.ID,
+                    null,
+                    byType,
+                    Math.Abs(totalDamage.GetTotal().Int())));
             _audioSystem.PlayPredicted(entity.Comp.InteractSound, args.Target, args.User);
 
             if (entity.Comp.PopupText != null)

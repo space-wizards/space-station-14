@@ -1,11 +1,10 @@
 using System.Numerics;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Administration.Logs.Payloads;
 using Content.Shared.Camera;
 using Content.Shared.CCVar;
 using Content.Shared.Construction.Components;
-using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Database;
-using Content.Shared.Friction;
 using Content.Shared.Projectiles;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
@@ -196,7 +195,11 @@ public sealed partial class ThrowingSystem : EntitySystem
         }
 
         if (user != null)
-            _adminLogger.Add(LogType.Throw, LogImpact.Low, $"{user.Value:user} threw {uid:entity}");
+            _adminLogger.Add(LogType.Throw, LogImpact.Low,
+                $"{user.Value:user} threw {uid:entity}",
+                new ItemTransferLogPayload(
+                    MetaData(uid).EntityPrototype?.ID,
+                    MetaData(uid).EntityName));
 
         // if compensateFriction==true compensate for the distance the item will slide over the floor after landing by reducing the throw speed accordingly.
         // else let the item land on the cursor and from where it slides a little further.

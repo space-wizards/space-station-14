@@ -1,5 +1,5 @@
+using Content.Shared.Administration.Logs.Payloads;
 using Content.Shared.Database;
-using Content.Shared.Humanoid;
 using Content.Shared.Mobs.Components;
 using Robust.Shared.Player;
 
@@ -113,9 +113,20 @@ public partial class MobStateSystem
         OnStateChanged(target, component, oldState, newState);
         RaiseLocalEvent(target, ev, true);
         if (origin != null && HasComp<ActorComponent>(origin) && HasComp<ActorComponent>(target) && oldState < newState)
-            _adminLogger.Add(LogType.Damaged, LogImpact.High, $"{origin:player} caused {target:player} state to change from {oldState} to {newState}");
+            _adminLogger.Add(LogType.MobStateChange,
+                LogImpact.High,
+                $"{origin:player} caused {target:player} state to change from {oldState} to {newState}",
+                new MobStateChangeLogPayload(
+                    oldState.ToString(),
+                    newState.ToString(),
+                    MetaData(origin.Value).EntityPrototype?.ID));
         else
-            _adminLogger.Add(LogType.Damaged, oldState == MobState.Alive ? LogImpact.Low : LogImpact.Medium, $"{target:user} state changed from {oldState} to {newState}");
+            _adminLogger.Add(LogType.MobStateChange,
+                oldState == MobState.Alive ? LogImpact.Low : LogImpact.Medium,
+                $"{target:user} state changed from {oldState} to {newState}",
+                new MobStateChangeLogPayload(
+                    oldState.ToString(),
+                    newState.ToString()));
         Dirty(target, component);
     }
 

@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Administration.Logs.Payloads;
 using Content.Shared.Database;
 using Content.Shared.Gravity;
 using Content.Shared.Physics;
@@ -124,7 +125,11 @@ namespace Content.Shared.Throwing
 
             // Assume it's uninteresting if it has no thrower. For now anyway.
             if (thrownItem.Thrower is not null)
-                _adminLogger.Add(LogType.Landed, LogImpact.Low, $"{uid:entity} thrown by {thrownItem.Thrower.Value:thrower} landed.");
+                _adminLogger.Add(LogType.Landed, LogImpact.Low,
+                    $"{uid:entity} thrown by {thrownItem.Thrower.Value:thrower} landed.",
+                    new ItemTransferLogPayload(
+                        MetaData(uid).EntityPrototype?.ID,
+                        MetaData(uid).EntityName));
 
             _broadphase.RegenerateContacts((uid, physics));
             var landEvent = new LandEvent(thrownItem.Thrower, playSound);

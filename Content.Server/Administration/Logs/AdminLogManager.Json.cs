@@ -17,7 +17,8 @@ public sealed partial class AdminLogManager
     {
         _jsonOptions = new JsonSerializerOptions
         {
-            PropertyNamingPolicy = NamingPolicy
+            PropertyNamingPolicy = NamingPolicy,
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
         };
 
         var interfaces = new ValueList<IAdminLogConverter>();

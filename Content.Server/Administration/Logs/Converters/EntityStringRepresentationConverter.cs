@@ -1,13 +1,24 @@
 using System.Text.Json;
-using Content.Server.Administration.Managers;
 
 namespace Content.Server.Administration.Logs.Converters;
 
+/// <summary>
+/// Serializes <see cref="EntityStringRepresentation"/> to a structured JSON object.
+/// </summary>
+/// <remarks>
+/// <para>Output shape, camelCase, nulls omitted:</para>
+/// <code>
+/// { "id": 1234, "name": "John Doe", "player": "GUID", "prototype": "MobHuman", "deleted": true }
+/// </code>
+/// <para>
+/// The <c>player</c> field is only written when the entity has an attached session.
+/// The <c>prototype</c> field is the prototype ID
+/// The <c>deleted</c> field is only written when true.
+/// </para>
+/// </remarks>
 [AdminLogConverter]
 public sealed partial class EntityStringRepresentationConverter : AdminLogConverter<EntityStringRepresentation>
 {
-    [Dependency] private IAdminManager _adminManager = default!;
-
     public override void Write(Utf8JsonWriter writer, EntityStringRepresentation value, JsonSerializerOptions options)
     {
         writer.WriteStartObject();
@@ -21,12 +32,8 @@ public sealed partial class EntityStringRepresentationConverter : AdminLogConver
 
         if (value.Session != null)
         {
+            // GUID
             writer.WriteString("player", value.Session.UserId.UserId);
-
-            if (_adminManager.IsAdmin(value.Session))
-            {
-                writer.WriteBoolean("admin", true);
-            }
         }
 
         if (value.Prototype != null)

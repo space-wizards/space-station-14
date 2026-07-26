@@ -134,8 +134,8 @@ public sealed partial class ImmovableRodSystem : EntitySystem
                 return;
             }
 
-            var coords = Transform(uid).Coordinates;
-            _adminLogger.Add(LogType.Gib, LogImpact.Low, $"{uid:actor} gibbed {ent:victim} at X:{coords.X} Y:{coords.Y}");
+            var gibCoords = Transform(uid).Coordinates;
+            _adminLogger.Add(LogType.Gib, LogImpact.Low, $"{uid:actor} gibbed {ent:victim} at X:{gibCoords.X} Y:{gibCoords.Y}");
 
             _gibbing.Gib(ent);
             _popup.PopupEntity(Loc.GetString("immovable-rod-penetrated-mob", ("rod", uid), ("mob", ent)), uid, PopupType.LargeCaution);

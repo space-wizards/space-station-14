@@ -22,7 +22,7 @@ public sealed class AdminAuditLogsEui : BaseEui
 
     private const char CsvSeparator = ',';
     private const string CsvQuote = "\"";
-    private const string CsvHeader = "Date,ID,AdminName,Action,Severity,Target,Message";
+    private const string CsvHeader = "Date,ID,AdminName,Action,Severity,Target,Message,Payload";
 
     private ISawmill _sawmill = default!;
 
@@ -171,6 +171,14 @@ public sealed class AdminAuditLogsEui : BaseEui
                 await writer.WriteAsync(CsvQuote);
                 await writer.WriteAsync(log.Message.Replace(CsvQuote, CsvQuote + CsvQuote));
                 await writer.WriteAsync(CsvQuote);
+                await writer.WriteAsync(CsvSeparator);
+                // Payload, empty when no payload was provided
+                if (!string.IsNullOrEmpty(log.PayloadJson))
+                {
+                    await writer.WriteAsync(CsvQuote);
+                    await writer.WriteAsync(log.PayloadJson.Replace(CsvQuote, CsvQuote + CsvQuote));
+                    await writer.WriteAsync(CsvQuote);
+                }
                 await writer.WriteLineAsync();
             }
         }

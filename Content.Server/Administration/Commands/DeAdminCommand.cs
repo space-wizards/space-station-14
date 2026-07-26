@@ -1,5 +1,6 @@
 using System.Text.Json;
 using Content.Server.Administration.AuditLog;
+using Content.Server.Administration.AuditLog.Payloads;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
 using Content.Shared.Database;
@@ -33,10 +34,9 @@ namespace Content.Server.Administration.Commands
                 AdminAuditAction.DeAdmin,
                 AuditSeverity.Notable,
                 "De-adminned self",
-                payload: JsonSerializer.SerializeToDocument(new
-                {
-                    action = "deadmin_self"
-                }));
+                payload: JsonSerializer.SerializeToDocument(
+                    new AuditAdminRankPayload(player.UserId.UserId, "deadmin_self"),
+                    Logs.AdminLogJsonOptions.Minimal));
         }
     }
 }

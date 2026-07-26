@@ -20,4 +20,6 @@ public readonly record struct SharedAdminLog(
     string Message,
     Guid[] Players,
     SharedAdminLogEntity[] Entities,
-    SharedAdminLogPlayer[]? PlayerRoles = null);
+    SharedAdminLogPlayer[]? PlayerRoles = null,
+    string? PayloadJson = null,
+    string[]? PayloadLines = null);

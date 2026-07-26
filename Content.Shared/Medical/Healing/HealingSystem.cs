@@ -1,4 +1,5 @@
 using Content.Shared.Administration.Logs;
+using Content.Shared.Administration.Logs.Payloads;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.EntitySystems;
@@ -6,7 +7,6 @@ using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
-using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -16,6 +16,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Robust.Shared.Audio.Systems;
+using System.Linq;
 
 namespace Content.Shared.Medical.Healing;
 
@@ -99,15 +100,25 @@ public sealed partial class HealingSystem : EntitySystem
             PredictedQueueDel(args.Used.Value);
         }
 
+        var byType = healed.DamageDict
+            .Select(kvp => new DamageEntrySnapshot(kvp.Key.Id, Math.Abs(kvp.Value.Int())))
+            .ToList();
+        var healPayload = new CombatDamageLogPayload(
+            MetaData(args.Used.Value).EntityPrototype?.ID,
+            null,
+            byType,
+            Math.Abs(total.Int()));
         if (target.Owner != args.User)
         {
             _adminLogger.Add(LogType.Healed,
-                $"{args.User:user} healed {target.Owner:target} for {total:damage} damage");
+                $"{args.User:user} healed {target.Owner:target} for {total:damage} damage",
+                healPayload);
         }
         else
         {
             _adminLogger.Add(LogType.Healed,
-                $"{args.User:user} healed themselves for {total:damage} damage");
+                $"{args.User:user} healed themselves for {total:damage} damage",
+                healPayload);
         }
 
         _audio.PlayPredicted(healing.HealingEndSound, target.Owner, args.User);

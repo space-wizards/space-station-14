@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Administration.Logs.Payloads;
 using Content.Shared.CCVar;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
@@ -733,7 +734,11 @@ public abstract partial class SharedStorageSystem : EntitySystem
             _adminLogger.Add(
                 LogType.Storage,
                 LogImpact.Low,
-                $"{player:player} is attempting to take {item:item} out of {storage:storage}");
+                $"{player:player} is attempting to take {item:item} out of {storage:storage}",
+                new ItemTransferLogPayload(
+                    MetaData(item.Owner).EntityPrototype?.ID,
+                    MetaData(item.Owner).EntityName,
+                    SourceContainerPrototype: MetaData(storage.Owner).EntityPrototype?.ID));
 
             if (_sharedHandsSystem.TryPickupAnyHand(player, item, handsComp: player.Comp)
                 && storage.Comp.StorageRemoveSound != null
@@ -828,7 +833,11 @@ public abstract partial class SharedStorageSystem : EntitySystem
         _adminLogger.Add(
             LogType.Storage,
             LogImpact.Low,
-            $"{player:player} is inserting {item:item} into {storage:storage}");
+            $"{player:player} is inserting {item:item} into {storage:storage}",
+            new ItemTransferLogPayload(
+                MetaData(item.Owner).EntityPrototype?.ID,
+                MetaData(item.Owner).EntityName,
+                DestinationContainerPrototype: MetaData(storage.Owner).EntityPrototype?.ID));
         InsertAt(storage!, item!, msg.Location, out _, player, stackAutomatically: false);
     }
 
@@ -840,7 +849,11 @@ public abstract partial class SharedStorageSystem : EntitySystem
         _adminLogger.Add(
             LogType.Storage,
             LogImpact.Low,
-            $"{player:player} is inserting {item:item} into {storage:storage}");
+            $"{player:player} is inserting {item:item} into {storage:storage}",
+            new ItemTransferLogPayload(
+                MetaData(item.Owner).EntityPrototype?.ID,
+                MetaData(item.Owner).EntityName,
+                DestinationContainerPrototype: MetaData(storage.Owner).EntityPrototype?.ID));
         InsertAt(storage!, item!, msg.Location, out _, player, stackAutomatically: false);
     }
 

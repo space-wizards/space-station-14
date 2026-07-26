@@ -1,5 +1,6 @@
 
 using System.Linq;
+using Content.Shared.Administration.Logs.Payloads;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Components;
@@ -233,14 +234,10 @@ public sealed partial class InjectorSystem : EntitySystem
                     LogType.ForceFeed,
                     LogImpact.Medium,
                     $"{user:actor} is attempting to draw {amount} units from themselves using {injector:tool}.",
-                    new
-                    {
-                        actor = (int) user,
-                        victim = (int) user,
-                        tool = (int) injector.Owner,
-                        attemptedTransferAmount = amount,
-                        injectorSolution = SerializeSolutionForAdminLog(injectorSolution)
-                    },
+                    new ChemistryInjectionLogPayload(
+                        injectorSolution.Contents.Select(r => new ReagentSnapshot(r.Reagent.Prototype, r.Quantity.Int())).ToList(),
+                        amount.Int(),
+                        "Draw"),
                     players: selfActionSemantics.Players,
                     entities: selfActionSemantics.Entities,
                     playerRoles: selfActionSemantics.PlayerRoles);
@@ -251,14 +248,10 @@ public sealed partial class InjectorSystem : EntitySystem
                     LogType.Ingestion,
                     LogImpact.Medium,
                     $"{user:actor} is attempting to inject themselves with a solution {injectorSolution:solution} using {injector:tool}.",
-                    new
-                    {
-                        actor = (int) user,
-                        victim = (int) user,
-                        tool = (int) injector.Owner,
-                        attemptedTransferAmount = amount,
-                        injectorSolution = SerializeSolutionForAdminLog(injectorSolution)
-                    },
+                    new ChemistryInjectionLogPayload(
+                        injectorSolution.Contents.Select(r => new ReagentSnapshot(r.Reagent.Prototype, r.Quantity.Int())).ToList(),
+                        amount.Int(),
+                        "Inject"),
                     players: selfActionSemantics.Players,
                     entities: selfActionSemantics.Entities,
                     playerRoles: selfActionSemantics.PlayerRoles);
@@ -277,14 +270,10 @@ public sealed partial class InjectorSystem : EntitySystem
                     LogType.ForceFeed,
                     LogImpact.Medium,
                     $"{user:actor} is attempting to draw {amount} units from {target:victim} using {injector:tool}",
-                    new
-                    {
-                        actor = (int) user,
-                        victim = (int) target,
-                        tool = (int) injector.Owner,
-                        attemptedTransferAmount = amount,
-                        injectorSolution = SerializeSolutionForAdminLog(injectorSolution)
-                    });
+                    new ChemistryInjectionLogPayload(
+                        injectorSolution.Contents.Select(r => new ReagentSnapshot(r.Reagent.Prototype, r.Quantity.Int())).ToList(),
+                        amount.Int(),
+                        "Draw"));
             }
             else
             {
@@ -292,14 +281,10 @@ public sealed partial class InjectorSystem : EntitySystem
                     LogType.ForceFeed,
                     LogImpact.Medium,
                     $"{user:actor} is attempting to inject {target:victim} with a solution {injectorSolution:solution} using {injector:tool}",
-                    new
-                    {
-                        actor = (int) user,
-                        victim = (int) target,
-                        tool = (int) injector.Owner,
-                        attemptedTransferAmount = amount,
-                        injectorSolution = SerializeSolutionForAdminLog(injectorSolution)
-                    });
+                    new ChemistryInjectionLogPayload(
+                        injectorSolution.Contents.Select(r => new ReagentSnapshot(r.Reagent.Prototype, r.Quantity.Int())).ToList(),
+                        amount.Int(),
+                        "Inject"));
             }
         }
 
@@ -594,13 +579,10 @@ public sealed partial class InjectorSystem : EntitySystem
                 LogType.ForceFeed,
                 LogImpact.Medium,
                 $"{user:actor} injected themselves with a solution {removedSolution:removedSolution} using {injector:tool}",
-                new
-                {
-                    actor = (int) user,
-                    victim = (int) target,
-                    tool = (int) injector.Owner,
-                    transferredSolution = SerializeSolutionForAdminLog(removedSolution)
-                },
+                new ChemistryInjectionLogPayload(
+                    removedSolution.Contents.Select(r => new ReagentSnapshot(r.Reagent.Prototype, r.Quantity.Int())).ToList(),
+                    removedSolution.Volume.Int(),
+                    "Inject"),
                 players: selfActionSemantics.Players,
                 entities: selfActionSemantics.Entities,
                 playerRoles: selfActionSemantics.PlayerRoles);
@@ -611,13 +593,10 @@ public sealed partial class InjectorSystem : EntitySystem
                 LogType.ForceFeed,
                 LogImpact.Medium,
                 $"{user:actor} injected {target:victim} with a solution {removedSolution:removedSolution} using {injector:tool}",
-                new
-                {
-                    actor = (int) user,
-                    victim = (int) target,
-                    tool = (int) injector.Owner,
-                    transferredSolution = SerializeSolutionForAdminLog(removedSolution)
-                });
+                new ChemistryInjectionLogPayload(
+                    removedSolution.Contents.Select(r => new ReagentSnapshot(r.Reagent.Prototype, r.Quantity.Int())).ToList(),
+                    removedSolution.Volume.Int(),
+                    "Inject"));
         }
 
         AfterInject(injector, user, target);

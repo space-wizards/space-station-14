@@ -240,6 +240,17 @@ public sealed class AdminLogLabel : BoxContainer
             message.Pop();
         }
 
+        // Structured payload — display as formatted key/value pairs when available.
+        if (log.PayloadLines is { Length: > 0 })
+        {
+            AppendPayloadLines(message, log.PayloadLines);
+        }
+        else if (!string.IsNullOrEmpty(log.PayloadJson))
+        {
+            // Fallback, render raw stripped JSON
+            AppendPayloadRaw(message, log.PayloadJson);
+        }
+
         return message;
     }
 
@@ -250,6 +261,56 @@ public sealed class AdminLogLabel : BoxContainer
 
         _showMetadata = showMetadata;
         _messageLabel.SetMessage(BuildMessage(Log, _showMetadata));
+    }
+
+    /// <summary>
+    /// Renders pre-formatted payload display lines produced by the server.
+    /// Each line is a "key: value" string. No JSON parsing
+    /// </summary>
+    private static void AppendPayloadLines(FormattedMessage message, string[] lines)
+    {
+        message.AddText("\n    ");
+        message.PushColor(MetadataLabelColor);
+        message.AddText("payload");
+        message.Pop();
+
+        foreach (var line in lines)
+        {
+            message.AddText("\n        ");
+            var colonIdx = line.IndexOf(':');
+            if (colonIdx > 0 && colonIdx < line.Length - 1)
+            {
+                message.PushColor(MetadataLabelColor);
+                message.AddText(line[..colonIdx]);
+                message.AddText(":");
+                message.Pop();
+                message.PushColor(MetadataValueColor);
+                message.AddText(line[(colonIdx + 1)..]);
+                message.Pop();
+            }
+            else
+            {
+                // Schema version line or other special line (e.g. "[schema v1]")
+                message.PushColor(ImpactLowColor);
+                message.AddText(line);
+                message.Pop();
+            }
+        }
+    }
+
+    // Same here
+    private static void AppendPayloadRaw(FormattedMessage message, string payloadJson)
+    {
+        message.AddText("\n    ");
+        message.PushColor(MetadataLabelColor);
+        message.AddText("payload: ");
+        message.Pop();
+        message.PushColor(MetadataValueColor);
+        var trimmed = payloadJson.Trim();
+        if (trimmed.Length >= 2 && trimmed[0] == '{' && trimmed[trimmed.Length - 1] == '}')
+            trimmed = trimmed.Substring(1, trimmed.Length - 2).Trim();
+        message.AddText(trimmed);
+        message.Pop();
     }
 
     private void VisibilityChanged(Control control)

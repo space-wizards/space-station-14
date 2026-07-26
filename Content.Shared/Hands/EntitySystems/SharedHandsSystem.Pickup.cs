@@ -1,3 +1,4 @@
+using Content.Shared.Administration.Logs.Payloads;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Item;
@@ -292,7 +293,11 @@ public abstract partial class SharedHandsSystem
         _interactionSystem.DoContactInteraction(uid, entity); //Possibly fires twice if manually picked up via interacting with the object
 
         if (log)
-            _adminLogger.Add(LogType.Pickup, LogImpact.Low, $"{uid:user} picked up {entity:entity}");
+            _adminLogger.Add(LogType.Pickup, LogImpact.Low,
+                $"{uid:user} picked up {entity:entity}",
+                new ItemTransferLogPayload(
+                    MetaData(entity).EntityPrototype?.ID,
+                    MetaData(entity).EntityName));
 
         Dirty(uid, hands);
 

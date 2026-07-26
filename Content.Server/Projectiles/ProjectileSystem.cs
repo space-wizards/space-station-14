@@ -1,4 +1,4 @@
-using System.Text.Json;
+using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Destructible;
 using Content.Shared.Administration.Logs;
@@ -8,6 +8,7 @@ using Content.Shared.Camera;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
+using Content.Shared.Administration.Logs.Payloads;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Projectiles;
@@ -70,18 +71,21 @@ public sealed partial class ProjectileSystem : SharedProjectileSystem
 
             var weapon = component.Weapon;
             var semantics = AdminLogHelpers.GetActorSubjectVictimSemantics(_player, component.Shooter!.Value, uid, target, weapon);
+            var weaponMeta = weapon is { } wEnt ? MetaData(wEnt) : null;
+            var damageEntries = damage?.DamageDict
+                .Select(kvp => new DamageEntrySnapshot(kvp.Key.Id, kvp.Value.Int()))
+                .ToList() ?? new List<DamageEntrySnapshot>();
             _adminLogger.Add(
                 LogType.BulletHit,
                 LogImpact.Medium,
                 $"{component.Shooter!.Value:user} shot {uid:projectile} and hit {otherName:target} for {damage:damage} damage",
-                JsonSerializer.SerializeToDocument(new
-                {
-                    shooter = (int) component.Shooter!.Value,
-                    projectile = (int) uid,
-                    weapon = weapon is { } w ? (int?) w : null,
-                    target = (int) target,
-                    totalDamage = damage?.GetTotal()
-                }),
+                new CombatHitLogPayload(
+                    weaponMeta?.EntityPrototype?.ID,
+                    weaponMeta?.EntityName,
+                    damageEntries,
+                    damage?.GetTotal().Int() ?? 0,
+                    "Hit",
+                    MetaData(uid).EntityPrototype?.ID),
                 players: semantics.Players,
                 entities: semantics.Entities,
                 playerRoles: semantics.PlayerRoles);

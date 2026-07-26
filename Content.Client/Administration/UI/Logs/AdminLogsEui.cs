@@ -21,7 +21,7 @@ public sealed partial class AdminLogsEui : BaseEui
 
     private const char CsvSeparator = ',';
     private const string CsvQuote = "\"";
-    private const string CsvHeader = "Date,ID,PlayerID,EntityParticipation,Severity,Type,Message";
+    private const string CsvHeader = "Date,ID,PlayerID,EntityParticipation,Severity,Type,Message,Payload";
 
     private ISawmill _sawmill;
 
@@ -167,6 +167,14 @@ public sealed partial class AdminLogsEui : BaseEui
                 await writer.WriteAsync(CsvQuote);
                 await writer.WriteAsync(log.Message.Replace(CsvQuote, CsvQuote + CsvQuote));
                 await writer.WriteAsync(CsvQuote);
+                await writer.WriteAsync(CsvSeparator);
+                // Payload
+                if (!string.IsNullOrEmpty(log.PayloadJson))
+                {
+                    await writer.WriteAsync(CsvQuote);
+                    await writer.WriteAsync(log.PayloadJson.Replace(CsvQuote, CsvQuote + CsvQuote));
+                    await writer.WriteAsync(CsvQuote);
+                }
 
                 await writer.WriteLineAsync();
             }

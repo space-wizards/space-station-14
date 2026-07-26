@@ -2,6 +2,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Content.Server.Administration.AuditLog;
+using Content.Server.Administration.AuditLog.Payloads;
 using Content.Server.Administration.Managers;
 using Content.Server.Database;
 using Content.Server.EUI;
@@ -162,12 +163,9 @@ namespace Content.Server.Administration.UI
                 AdminAuditAction.PermissionChange,
                 AuditSeverity.Critical,
                 $"Removed admin rank {rank.Name}",
-                payload: JsonSerializer.SerializeToDocument(new
-                {
-                    change = "remove_rank",
-                    rankId = rr.Id,
-                    rankName = rank.Name
-                }));
+                payload: JsonSerializer.SerializeToDocument(
+                    new AuditPermissionsPayload(Player.UserId, "remove_rank", OldRankName: rank.Name),
+                    Logs.AdminLogJsonOptions.Minimal));
 
             _adminManager.ReloadAdminsWithRank(rr.Id);
         }
@@ -203,13 +201,9 @@ namespace Content.Server.Administration.UI
                 AdminAuditAction.PermissionChange,
                 AuditSeverity.Critical,
                 $"Updated admin rank {rank.Name}/{flagText}",
-                payload: JsonSerializer.SerializeToDocument(new
-                {
-                    change = "update_rank",
-                    rankId = ur.Id,
-                    rankName = rank.Name,
-                    flags = flagText
-                }));
+                payload: JsonSerializer.SerializeToDocument(
+                    new AuditPermissionsPayload(Player.UserId, "update_rank", NewRankName: rank.Name),
+                    Logs.AdminLogJsonOptions.Minimal));
 
             _sawmill.Info($"{Player} updated admin rank {rank.Name}/{flagText}.");
 
@@ -239,12 +233,9 @@ namespace Content.Server.Administration.UI
                 AdminAuditAction.PermissionChange,
                 AuditSeverity.Critical,
                 $"Added admin rank {rank.Name}/{flagText}",
-                payload: JsonSerializer.SerializeToDocument(new
-                {
-                    change = "add_rank",
-                    rankName = rank.Name,
-                    flags = flagText
-                }));
+                payload: JsonSerializer.SerializeToDocument(
+                    new AuditPermissionsPayload(Player.UserId, "add_rank", NewRankName: rank.Name),
+                    Logs.AdminLogJsonOptions.Minimal));
 
             _sawmill.Info($"{Player} added admin rank {rank.Name}/{flagText}.");
         }
@@ -273,12 +264,9 @@ namespace Content.Server.Administration.UI
                 AdminAuditAction.PermissionChange,
                 AuditSeverity.Critical,
                 $"Removed admin {record?.LastSeenUserName ?? ra.UserId.ToString()}",
-                payload: JsonSerializer.SerializeToDocument(new
-                {
-                    change = "remove_admin",
-                    targetUserId = ra.UserId.UserId,
-                    targetName = record?.LastSeenUserName
-                }));
+                payload: JsonSerializer.SerializeToDocument(
+                    new AuditPermissionsPayload(Player.UserId, "remove_admin"),
+                    Logs.AdminLogJsonOptions.Minimal));
 
             _sawmill.Info($"{Player} removed admin {record?.LastSeenUserName ?? ra.UserId.ToString()}");
 
@@ -331,16 +319,9 @@ namespace Content.Server.Administration.UI
                 AdminAuditAction.PermissionChange,
                 AuditSeverity.Critical,
                 $"Updated admin {name} to {title}/{rankName}/{flags}",
-                payload: JsonSerializer.SerializeToDocument(new
-                {
-                    change = "update_admin",
-                    targetUserId = ua.UserId.UserId,
-                    targetName = name,
-                    title = ua.Title,
-                    rankName,
-                    flags,
-                    suspended = ua.Suspended
-                }));
+                payload: JsonSerializer.SerializeToDocument(
+                    new AuditPermissionsPayload(Player.UserId, "update_admin", NewRankName: rankName),
+                    Logs.AdminLogJsonOptions.Minimal));
 
             _sawmill.Info($"{Player} updated admin {name} to {title}/{rankName}/{flags}");
 
@@ -422,15 +403,9 @@ namespace Content.Server.Administration.UI
                 AdminAuditAction.PermissionChange,
                 AuditSeverity.Critical,
                 $"Added admin {name} as {title}/{rankName}/{flags}",
-                payload: JsonSerializer.SerializeToDocument(new
-                {
-                    change = "add_admin",
-                    targetUserId = userId.UserId,
-                    targetName = name,
-                    title = ca.Title,
-                    rankName,
-                    flags
-                }));
+                payload: JsonSerializer.SerializeToDocument(
+                    new AuditPermissionsPayload(Player.UserId, "add_admin", NewRankName: rankName),
+                    Logs.AdminLogJsonOptions.Minimal));
 
             _sawmill.Info($"{Player} added admin {name} as {title}/{rankName}/{flags}");
 

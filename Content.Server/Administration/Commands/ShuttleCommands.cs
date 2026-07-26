@@ -1,5 +1,8 @@
-using Content.Server.RoundEnd;
+using System.Text.Json;
 using Content.Server.Administration.AuditLog;
+using Content.Server.Administration.AuditLog.Payloads;
+using Content.Server.Administration.Logs;
+using Content.Server.RoundEnd;
 using Content.Shared.Administration;
 using Content.Shared.Database;
 using Content.Shared.Localizations;
@@ -26,7 +29,10 @@ namespace Content.Server.Administration.Commands
                         shell.Player.UserId.UserId,
                         AdminAuditAction.CallShuttle,
                         AuditSeverity.Critical,
-                        $"Called emergency shuttle with custom timer {timeSpan}");
+                        $"Called emergency shuttle with custom timer {timeSpan}",
+                        payload: JsonSerializer.SerializeToDocument(
+                            new AuditRoundActionPayload(shell.Player.UserId.UserId, "CallShuttle"),
+                            AdminLogJsonOptions.Minimal));
                 }
 
                 _roundEndSystem.RequestRoundEnd(timeSpan, shell.Player?.AttachedEntity, checkCooldown: false);
@@ -43,7 +49,10 @@ namespace Content.Server.Administration.Commands
                         shell.Player.UserId.UserId,
                         AdminAuditAction.CallShuttle,
                         AuditSeverity.Critical,
-                        "Called emergency shuttle");
+                        "Called emergency shuttle",
+                        payload: JsonSerializer.SerializeToDocument(
+                            new AuditRoundActionPayload(shell.Player.UserId.UserId, "CallShuttle"),
+                            AdminLogJsonOptions.Minimal));
                 }
 
                 _roundEndSystem.RequestRoundEnd(shell.Player?.AttachedEntity, checkCooldown: false);
@@ -67,7 +76,10 @@ namespace Content.Server.Administration.Commands
                     shell.Player.UserId.UserId,
                     AdminAuditAction.RecallShuttle,
                     AuditSeverity.Critical,
-                    "Recalled emergency shuttle");
+                    "Recalled emergency shuttle",
+                    payload: JsonSerializer.SerializeToDocument(
+                        new AuditRoundActionPayload(shell.Player.UserId.UserId, "RecallShuttle"),
+                        AdminLogJsonOptions.Minimal));
             }
 
             _roundEndSystem.CancelRoundEndCountdown(shell.Player?.AttachedEntity, forceRecall: true);

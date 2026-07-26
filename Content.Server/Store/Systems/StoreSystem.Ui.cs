@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.Administration.Logs.Payloads;
 using Content.Server.Actions;
 using Content.Server.Administration.Logs;
 using Content.Server.Stack;
@@ -228,9 +229,17 @@ public sealed partial class StoreSystem
             }
         }
 
+        var costs = listing.Cost
+            .Select(kvp => new StoreCostSnapshot(kvp.Key.Id, kvp.Value.Int()))
+            .ToList();
         _adminLogger.Add(LogType.StorePurchase,
             logImpact,
-            $"{buyer:player} purchased listing \"{ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listing, ProtoMan)}\" from {uid}{logExtraInfo}.");
+            $"{buyer:player} purchased \"{ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listing, ProtoMan)}\" from {uid}{logExtraInfo}",
+            new StorePurchaseLogPayload(
+                listing.ID,
+                listing.ProductEntity?.Id,
+                ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listing, ProtoMan),
+                costs));
 
         listing.PurchaseAmount++; //track how many times something has been purchased
         if (msg.SoundSource != null && GetEntity(msg.SoundSource) != null)

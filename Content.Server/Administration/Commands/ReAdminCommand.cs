@@ -1,5 +1,6 @@
 using System.Text.Json;
 using Content.Server.Administration.AuditLog;
+using Content.Server.Administration.AuditLog.Payloads;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
 using Content.Shared.Database;
@@ -37,10 +38,9 @@ namespace Content.Server.Administration.Commands
                 AdminAuditAction.ReAdmin,
                 AuditSeverity.Notable,
                 "Re-adminned self",
-                payload: JsonSerializer.SerializeToDocument(new
-                {
-                    action = "readmin_self"
-                }));
+                payload: JsonSerializer.SerializeToDocument(
+                    new AuditAdminRankPayload(player.UserId.UserId, "readmin_self"),
+                    Logs.AdminLogJsonOptions.Minimal));
         }
     }
 }

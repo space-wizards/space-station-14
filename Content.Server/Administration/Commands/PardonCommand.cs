@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using Content.Server.Administration.AuditLog;
+using Content.Server.Administration.AuditLog.Payloads;
 using Content.Server.Database;
 using Content.Shared.Administration;
 using Content.Shared.Database;
@@ -65,12 +66,9 @@ namespace Content.Server.Administration.Commands
                     AuditSeverity.Critical,
                     $"Pardoned server ban #{banId}",
                     targetPlayerUserId: targetPlayer,
-                    payload: JsonSerializer.SerializeToDocument(new
-                    {
-                        banId,
-                        banType = ban.Type.ToString(),
-                        reason = ban.Reason
-                    }));
+                    payload: JsonSerializer.SerializeToDocument(
+                        new AuditUnbanPayload(player.UserId.UserId, banId, ban.Type.ToString(), ban.Reason),
+                        Administration.Logs.AdminLogJsonOptions.Minimal));
             }
 
             shell.WriteLine(Loc.GetString($"cmd-pardon-success", ("id", banId)));

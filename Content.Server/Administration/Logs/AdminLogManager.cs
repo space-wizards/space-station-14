@@ -423,8 +423,8 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         var json = payload is JsonDocument doc
             ? doc
             : payload != null
-                ? JsonSerializer.SerializeToDocument(payload)
-                : JsonSerializer.SerializeToDocument(new { });
+                ? JsonSerializer.SerializeToDocument(payload, _jsonOptions)
+                : JsonSerializer.SerializeToDocument(new { }, _jsonOptions);
 
         var preRound = _runLevel == GameRunLevel.PreRoundLobby;
         var count = preRound ? _preRoundLogQueue.Count : _logQueue.Count;

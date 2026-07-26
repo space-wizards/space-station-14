@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Administration.Logs.Payloads;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
@@ -92,7 +93,11 @@ public sealed partial class BinSystem : EntitySystem
 
         _hands.TryPickupAnyHand(args.User, toGrab.Value);
         _adminLogger.Add(LogType.Pickup, LogImpact.Low,
-            $"{uid:player} removed {toGrab.Value} from bin {uid}.");
+            $"{args.User:user} removed {toGrab.Value:item} from bin {uid:container}",
+            new ItemTransferLogPayload(
+                MetaData(toGrab.Value).EntityPrototype?.ID,
+                MetaData(toGrab.Value).EntityName,
+                SourceContainerPrototype: MetaData(uid).EntityPrototype?.ID));
         args.Handled = true;
     }
 
@@ -124,7 +129,12 @@ public sealed partial class BinSystem : EntitySystem
         if (!TryInsertIntoBin(target, itemInHand, component))
             return;
 
-        _adminLogger.Add(LogType.Pickup, LogImpact.Low, $"{target:player} inserted {user} into bin {target}.");
+        _adminLogger.Add(LogType.Pickup, LogImpact.Low,
+            $"{user:user} inserted {itemInHand:item} into bin {target:container}",
+            new ItemTransferLogPayload(
+                MetaData(itemInHand).EntityPrototype?.ID,
+                MetaData(itemInHand).EntityName,
+                DestinationContainerPrototype: MetaData(target).EntityPrototype?.ID));
     }
 
     /// <summary>

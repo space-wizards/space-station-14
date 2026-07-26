@@ -1486,7 +1486,21 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                     entities[i] = new SharedAdminLogEntity(row.EntityUid!.Value, row.Role, dim?.PrototypeId, dim?.EntityName);
                 }
 
-                yield return new SharedAdminLog(log.Id, log.ServerId, serverName, log.Type, log.Impact, log.OccurredAt, log.Message, players, entities, playerRoles);
+                // Serialize the stored JsonDocument to a raw string
+                string? payloadJson = null;
+                if (log.Json != null)
+                {
+                    using var ms = new System.IO.MemoryStream();
+                    using var writer = new System.Text.Json.Utf8JsonWriter(ms);
+                    log.Json.WriteTo(writer);
+                    writer.Flush();
+                    var raw = System.Text.Encoding.UTF8.GetString(ms.ToArray());
+                    // Omit empty object payloads
+                    payloadJson = raw is "{}" or "{ }" ? null : raw;
+                }
+
+                var payloadLines = PayloadDisplayFormatter.FormatPayloadLines(payloadJson);
+                yield return new SharedAdminLog(log.Id, log.ServerId, serverName, log.Type, log.Impact, log.OccurredAt, log.Message, players, entities, playerRoles, payloadJson, payloadLines);
             }
         }
 
@@ -1628,22 +1642,66 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             var ct = filter.CancellationToken;
             await using var db = await GetDb(ct);
 
-            var results = await GetAuditLogsQuery(db.DbContext, filter)
+            // Fetch the main audit events.
+            var rawResults = await GetAuditLogsQuery(db.DbContext, filter)
                 .AsNoTracking()
-                .Select(log => new SharedAdminAuditLog(
+                .Select(log => new
+                {
                     log.Id,
                     log.Action,
                     log.Severity,
                     log.OccurredAt,
                     log.AdminUserId,
-                    string.Empty,
                     log.Message,
                     log.TargetPlayerUserId,
-                    null,
                     log.TargetEntityUid,
                     log.TargetEntityName,
-                    log.TargetEntityPrototype))
+                    log.TargetEntityPrototype,
+                })
                 .ToListAsync(ct);
+
+            var eventIds = rawResults.Select(r => r.Id).ToArray();
+
+            // Fetch optional JSON payloads
+            var payloadMap = eventIds.Length == 0
+                ? new Dictionary<int, JsonDocument>()
+                : await db.DbContext.AdminAuditEventPayload
+                    .AsNoTracking()
+                    .Where(p => eventIds.Contains(p.EventId))
+                    .ToDictionaryAsync(p => p.EventId, p => p.Json, ct);
+
+            var results = new List<SharedAdminAuditLog>(rawResults.Count);
+            foreach (var raw in rawResults)
+            {
+                // Convert the JsonDocument payload to a string.
+                string? payloadJson = null;
+                if (payloadMap.TryGetValue(raw.Id, out var doc))
+                {
+                    using var ms = new System.IO.MemoryStream();
+                    using var writer = new System.Text.Json.Utf8JsonWriter(ms);
+                    doc.WriteTo(writer);
+                    writer.Flush();
+                    var raw2 = System.Text.Encoding.UTF8.GetString(ms.ToArray());
+                    payloadJson = raw2 is "{}" or "{ }" ? null : raw2;
+                }
+
+                var auditPayloadLines = PayloadDisplayFormatter.FormatPayloadLines(payloadJson);
+                results.Add(new SharedAdminAuditLog(
+                    raw.Id,
+                    raw.Action,
+                    raw.Severity,
+                    raw.OccurredAt,
+                    raw.AdminUserId,
+                    string.Empty,
+                    raw.Message,
+                    raw.TargetPlayerUserId,
+                    null,
+                    raw.TargetEntityUid,
+                    raw.TargetEntityName,
+                    raw.TargetEntityPrototype,
+                    payloadJson,
+                    auditPayloadLines));
+            }
 
             var userIds = new HashSet<Guid>();
             foreach (var log in results)

@@ -7,6 +7,7 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using Content.Server.Administration.AuditLog;
+using Content.Server.Administration.AuditLog.Payloads;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.Systems;
 using Content.Server.Database;
@@ -245,9 +246,11 @@ public sealed partial class ServerApi : IPostInjectInit
             _auditLog.LogAction(
                 actor.Guid,
                 AdminAuditAction.ForcePreset,
-                AuditSeverity.Critical,
+                AuditSeverity.Notable,
                 $"Forced round preset to {body.PresetId}",
-                payload: JsonSerializer.SerializeToDocument(new { preset = body.PresetId }));
+                payload: JsonSerializer.SerializeToDocument(
+                    new AuditRoundActionPayload(actor.Guid, "ForcePreset", PresetId: body.PresetId),
+                    Logs.AdminLogJsonOptions.Minimal));
             _sawmill.Info($"Forced the game to start with preset {body.PresetId} by {FormatLogActor(actor)}.");
 
             await RespondOk(context);
@@ -292,7 +295,7 @@ public sealed partial class ServerApi : IPostInjectInit
                 payload: JsonSerializer.SerializeToDocument(new
                 {
                     gameRule = body.GameRuleId,
-                }));
+                }, Logs.AdminLogJsonOptions.Minimal));
 
             await RespondOk(context);
         });
@@ -337,7 +340,7 @@ public sealed partial class ServerApi : IPostInjectInit
                 {
                     gameRule = body.GameRuleId,
                     startedImmediately = ticker.RunLevel == GameRunLevel.InRound,
-                }));
+                }, Logs.AdminLogJsonOptions.Minimal));
 
             await RespondOk(context);
         });
@@ -448,7 +451,7 @@ public sealed partial class ServerApi : IPostInjectInit
                     targetName = player.Name,
                     targetUserId = player.UserId.UserId,
                     reason = body.Reason
-                }));
+                }, Logs.AdminLogJsonOptions.Minimal));
             await RespondOk(context);
 
             _sawmill.Info($"Kicked player {player.Name} ({player.UserId}) for {reason} by {FormatLogActor(actor)}");
@@ -500,7 +503,9 @@ public sealed partial class ServerApi : IPostInjectInit
                 AdminAuditAction.EndRound,
                 AuditSeverity.Critical,
                 "Ended round",
-                payload: JsonSerializer.SerializeToDocument(new { action = "round_end" }));
+                payload: JsonSerializer.SerializeToDocument(
+                    new AuditRoundActionPayload(actor.Guid, "EndRound"),
+                    Logs.AdminLogJsonOptions.Minimal));
             _sawmill.Info($"Forced round end by {FormatLogActor(actor)}");
             await RespondOk(context);
         });
@@ -518,7 +523,9 @@ public sealed partial class ServerApi : IPostInjectInit
                 AdminAuditAction.RestartRound,
                 AuditSeverity.Critical,
                 "Restarted round immediately",
-                payload: JsonSerializer.SerializeToDocument(new { action = "round_restart_now" }));
+                payload: JsonSerializer.SerializeToDocument(
+                    new AuditRoundActionPayload(actor.Guid, "RestartRound"),
+                    Logs.AdminLogJsonOptions.Minimal));
             _sawmill.Info($"Forced instant round restart by {FormatLogActor(actor)}");
             await RespondOk(context);
         });
