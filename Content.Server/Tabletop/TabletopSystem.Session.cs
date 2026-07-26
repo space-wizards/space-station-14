@@ -129,10 +129,13 @@ public sealed partial class TabletopSystem
     /// <returns>The UID of the camera entity.</returns>
     private EntityUid CreateCamera(TabletopGameComponent tabletop, ICommonSession player, Vector2 offset = default)
     {
-        DebugTools.Assert(tabletop.HasSession);
+        DebugTools.AssertNotNull(tabletop.Position);
+
+        if (tabletop.Position is not { } position)
+            return EntityUid.Invalid;
 
         // Spawn an empty entity at the coordinates.
-        var camera = EntityManager.SpawnEntity(null, tabletop.Position.Offset(offset));
+        var camera = EntityManager.SpawnEntity(null, position.Offset(offset));
 
         // Add an eye component and disable FOV.
         var eyeComponent = EnsureComp<EyeComponent>(camera);
