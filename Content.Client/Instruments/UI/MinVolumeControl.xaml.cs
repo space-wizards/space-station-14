@@ -16,7 +16,11 @@ public sealed partial class MinVolumeControl : Control
     public int MinVolume
     {
         get => (int)Math.Ceiling(MidiMinVolumeSlider.Value);
-        set => MidiMinVolumeSlider.Value = value;
+        set
+        {
+            MidiMinVolumeSlider.Value = value;
+            UpdateLabel();
+        }
     }
 
     public MinVolumeControl()
@@ -31,6 +35,8 @@ public sealed partial class MinVolumeControl : Control
 
     private void OnMidiMinVolumeSliderValueChanged(Robust.Client.UserInterface.Controls.Range _)
     {
+        UpdateLabel();
+
         // Do not update while still grabbed.
         if (MidiMinVolumeSlider.Grabbed)
             return;
@@ -43,6 +49,12 @@ public sealed partial class MinVolumeControl : Control
         if (args.Function != EngineKeyFunctions.UIClick)
             return;
 
+        UpdateLabel();
         MinVolumeChanged?.Invoke(MinVolume);
+    }
+
+    private void UpdateLabel()
+    {
+        MidiMinVolumeValueLabel.Text = ((int)Math.Ceiling(MidiMinVolumeSlider.Value)).ToString();
     }
 }
