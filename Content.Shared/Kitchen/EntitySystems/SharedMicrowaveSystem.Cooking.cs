@@ -31,7 +31,7 @@ public abstract partial class SharedMicrowaveSystem
             return;
 
         ent.Comp.Broken = true;
-        DirtyField(ent.Owner, ent.Comp, nameof(MicrowaveComponent.Broken));
+        DirtyField(ent.AsNullable(), nameof(MicrowaveComponent.Broken));
     }
 
     /// <summary>

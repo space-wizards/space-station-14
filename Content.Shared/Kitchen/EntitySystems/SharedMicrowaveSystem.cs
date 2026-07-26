@@ -109,7 +109,7 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
     private void OnBreak(Entity<MicrowaveComponent> ent, ref BreakageEventArgs args)
     {
         ent.Comp.Broken = true;
-        DirtyField(ent.Owner, ent.Comp, nameof(MicrowaveComponent.Broken));
+        DirtyField(ent.AsNullable(), nameof(MicrowaveComponent.Broken));
         SetAppearance(ent.AsNullable(), MicrowaveVisualState.Broken);
 
         StopCooking(ent);
