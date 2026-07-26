@@ -418,6 +418,9 @@ public sealed partial class DamageableSystem
     /// <summary>
     /// Gets the damages currently sustained by an entity.
     /// </summary>
+    /// <remarks>
+    /// You cannot always assume that dealing damage will modify this, or that this reflects anything meaningful about the entity.
+    /// </remarks>
     [Obsolete("Do not rely on the ability to determine a numerically quantifiable amount of damage")]
     public DamageSpecifier GetAllDamage(Entity<DamageableComponent?> ent)
     {
@@ -430,6 +433,9 @@ public sealed partial class DamageableSystem
     /// <summary>
     /// Gets the total amount of damage currently sustained by an entity.
     /// </summary>
+    /// <remarks>
+    /// You cannot always assume that dealing damage will modify this, or that this reflects anything meaningful about the entity.
+    /// </remarks>
     [Obsolete("Do not rely on the ability to determine a numerically quantifiable amount of damage")]
     public FixedPoint2 GetTotalDamage(Entity<DamageableComponent?> ent)
     {
@@ -442,6 +448,9 @@ public sealed partial class DamageableSystem
     /// <summary>
     /// Gets the total amount of damage currently sustained by an entity, indexed by damage group.
     /// </summary>
+    /// <remarks>
+    /// You cannot always assume that dealing damage will modify this, or that this reflects anything meaningful about the entity.
+    /// </remarks>
     [Obsolete("Do not rely on the ability to determine a numerically quantifiable amount of damage")]
     public IReadOnlyDictionary<ProtoId<DamageGroupPrototype>, FixedPoint2> GetDamagePerGroup(Entity<DamageableComponent?> ent)
     {

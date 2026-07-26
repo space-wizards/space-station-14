@@ -11,11 +11,12 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Damage.Components;
 
 /// <summary>
-///     Component that allows entities to take damage.
+///     Component that allows entities to be damaged by other entities.
 /// </summary>
 /// <remarks>
-///     The supported damage types are specified using a <see cref="DamageContainerPrototype"/>s. DamageContainers
-///     may also have resistances to certain damage types, defined via a <see cref="DamageModifierSetPrototype"/>.
+///     Needs to be paired with another component such as <see cref="InjurableComponent" /> to retain damage.
+///     Other implementors (e.g. a wounds system) may not update fields on this component at all.
+///     Incoming damage can be affected by <see cref="DamageModifierSetId" /> if set.
 /// </remarks>
 [RegisterComponent]
 [NetworkedComponent]
@@ -34,10 +35,10 @@ public sealed partial class DamageableComponent : Component
     public ProtoId<DamageModifierSetPrototype>? DamageModifierSetId;
 
     /// <summary>
-    ///     All the damage information is stored in this <see cref="DamageSpecifier"/>.
+    ///     The current amount of stored damage, for legacy API usage.
     /// </summary>
     /// <remarks>
-    ///     If this data-field is specified, this allows damageable components to be initialized with non-zero damage.
+    ///     You cannot always assume that dealing damage will modify this, or that this reflects anything meaningful about the entity.
     /// </remarks>
     [DataField]
     [Access(typeof(DamageableSystem), Other = AccessPermissions.None)]
