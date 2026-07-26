@@ -28,8 +28,6 @@ public sealed partial class RepulseAttractSystem : EntitySystem
     {
         base.Initialize();
 
-        _physicsQuery = GetEntityQuery<PhysicsComponent>();
-
         SubscribeLocalEvent<RepulseAttractComponent, MeleeHitEvent>(OnMeleeAttempt, before: [typeof(UseDelaySystem)], after: [typeof(SharedWieldableSystem)]);
         SubscribeLocalEvent<RepulseAttractComponent, RepulseAttractActionEvent>(OnRepulseAttractAction);
     }
