@@ -37,12 +37,13 @@ public sealed partial class MicrowaveMenu : FancyWindow
 
         for (var i = 1; i <= 6; i++)
         {
+            var cookTime = i * 5;
             var newButton = new MicrowaveCookTimeButton
             {
-                Text = (i * 5).ToString(),
+                Text = cookTime.ToString(),
                 TextAlign = Label.AlignMode.Center,
                 ToggleMode = true,
-                CookTime = (uint)(i * 5),
+                CookTime = (uint)cookTime,
                 Group = CookTimeButtonGroup,
                 HorizontalExpand = true,
             };
