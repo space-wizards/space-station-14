@@ -42,8 +42,5 @@
   id: Pacified #cannot attack
 
 - type: statusEffect
-  id: RatvarianLanguage #Praise him
-
-- type: statusEffect
   id: Adrenaline
   alert: Adrenaline
