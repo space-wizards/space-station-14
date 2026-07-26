@@ -17,6 +17,11 @@ public sealed partial class DefaultGameScreen : InGameScreen
         SetAnchorPreset(MainViewport, LayoutPreset.Wide);
         SetAnchorPreset(ViewportContainer, LayoutPreset.Wide);
         SetAnchorAndMarginPreset(TopLeft, LayoutPreset.TopLeft, margin: 10);
+        // `Wide` here is a workaround for an issue with the LayoutContainer.
+        // Really, we want `WideBottom`, but the LayoutContainer does not
+        // account for changes in size when we toggle visibility of child
+        // controls. Instead, BottomContainer is configured to align to the
+        // bottom of the container. Same issue in SeparatedGameScreen.
         SetAnchorAndMarginPreset(BottomContainer, LayoutPreset.Wide, margin: 5);
         SetAnchorAndMarginPreset(Inventory, LayoutPreset.BottomLeft, margin: 5);
         SetAnchorAndMarginPreset(Chat, LayoutPreset.TopRight, margin: 10);
