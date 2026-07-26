@@ -8,7 +8,6 @@ plant-component-plant-unhealthy-adjective = unhealthy
 plant-component-dead-plant-matter-message = It's full of [color=red]dead plant matter[/color].
 plant-component-pest-high-level-message = It's filled with [color=gray]tiny worms[/color]!
 
-plant-component-toxins-high-warning = The [color=red]toxicity level alert[/color] is flashing red.
 plant-component-light-improper-warning = The [color=yellow]improper light level alert[/color] is blinking.
 plant-component-heat-improper-warning = The [color=orange]improper temperature level alert[/color] is blinking.
 plant-component-pressure-improper-warning = The [color=lightblue]improper environment pressure alert[/color] is blinking.

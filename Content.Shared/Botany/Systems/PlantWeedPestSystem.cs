@@ -69,6 +69,9 @@ public sealed partial class PlantWeedPestSystem : EntitySystem
         DirtyField(ent, nameof(ent.Comp.PestTolerance));
     }
 
+    /// <summary>
+    /// Checks whether the tray's pest level exceeds the plant's tolerance.
+    /// </summary>
     [PublicAPI]
     public bool GetPestThreshold(Entity<PlantWeedPestComponent?> ent)
     {

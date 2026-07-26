@@ -19,6 +19,28 @@ public sealed partial class PlantSystem : EntitySystem
     [Dependency] private PlantHolderSystem _plantHolder = default!;
     [Dependency] private PlantWeedPestSystem _plantWeedPest = default!;
 
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var toUpdate = new List<Entity<PlantHolderComponent>>(); // Protection against plant removal during update loop.
+        var query = EntityQueryEnumerator<PlantHolderComponent>();
+        while (query.MoveNext(out var uid, out var plantHolder))
+        {
+            if (plantHolder.NextUpdate > _gameTiming.CurTime)
+                continue;
+
+            plantHolder.NextUpdate = _gameTiming.CurTime;
+            DirtyField(uid, plantHolder, nameof(plantHolder.NextUpdate));
+            toUpdate.Add((uid, plantHolder));
+        }
+
+        foreach (var ent in toUpdate)
+        {
+            UpdatePlant(ent.AsNullable());
+        }
+    }
+
     [SubscribeLocalEvent]
     private void OnMapInit(Entity<PlantComponent> ent, ref MapInitEvent args)
     {
@@ -80,75 +102,51 @@ public sealed partial class PlantSystem : EntitySystem
 
             foreach (var trait in AllComps<PlantTraitsComponent>(ent.Owner))
             {
-                if (trait.TraitState != null)
-                    args.PushMarkup(Loc.GetString(trait.TraitState.Value));
+                args.PushMarkup(Loc.GetString(trait.TraitState));
             }
         }
     }
 
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        // Protection against plant removal during update loop.
-        var toUpdate = new List<EntityUid>();
-        var query = EntityQueryEnumerator<PlantHolderComponent>();
-        while (query.MoveNext(out var uid, out var plantHolder))
-        {
-            if (plantHolder.NextUpdate > _gameTiming.CurTime)
-                continue;
-
-            plantHolder.NextUpdate = _gameTiming.CurTime;
-            DirtyField(uid, plantHolder, nameof(plantHolder.NextUpdate));
-            toUpdate.Add(uid);
-        }
-
-        foreach (var uid in toUpdate)
-        {
-            UpdatePlant(uid);
-        }
-    }
-
-    public void UpdatePlant(Entity<PlantComponent?> ent)
+    /// <summary>
+    /// Processes one plant's growth cycle and related effects.
+    /// </summary>
+    public void UpdatePlant(Entity<PlantHolderComponent?> ent)
     {
         if (!Resolve(ent.Owner, ref ent.Comp, false))
-            return;
-
-        if (!TryComp<PlantHolderComponent>(ent, out var plantHolder))
             return;
 
         var curTime = _gameTiming.CurTime;
 
         // ForceUpdate is used for external triggers like swabbing.
-        if (plantHolder.ForceUpdate)
+        if (ent.Comp.ForceUpdate)
         {
-            plantHolder.ForceUpdate = false;
-            DirtyField(ent, plantHolder, nameof(plantHolder.ForceUpdate));
+            ent.Comp.ForceUpdate = false;
+            DirtyField(ent, nameof(ent.Comp.ForceUpdate));
         }
-        else if (curTime < plantHolder.LastCycle + plantHolder.CycleDelay)
+        else if (curTime < ent.Comp.LastCycle + ent.Comp.CycleDelay)
         {
             return;
         }
 
-        plantHolder.LastCycle = curTime;
-        DirtyField(ent, plantHolder, nameof(plantHolder.LastCycle));
+        ent.Comp.LastCycle = curTime;
+        DirtyField(ent, ent.Comp, nameof(ent.Comp.LastCycle));
 
         if (_plantHolder.IsDead(ent.Owner))
             return;
 
-        TryGetTray(ent, out var trayEnt);
+        TryGetTray(ent.Owner, out var trayEnt);
         var plantGrow = new PlantGrowEvent(GetNetEntity(trayEnt.Owner));
         RaiseLocalEvent(ent.Owner, ref plantGrow);
 
         // Process mutations.
-        if (plantHolder.MutationLevel > 0)
+        if (ent.Comp.MutationLevel > 0)
         {
-            _mutation.CheckRandomMutations(ent, Math.Min(plantHolder.MutationLevel, plantHolder.MaxMutationLevel));
-            plantHolder.MutationLevel = 0;
-            DirtyField(ent, plantHolder, nameof(plantHolder.MutationLevel));
+            _mutation.CheckRandomMutations(ent.Owner, Math.Min(ent.Comp.MutationLevel, ent.Comp.MaxMutationLevel));
+            ent.Comp.MutationLevel = 0;
+            DirtyField(ent, ent.Comp, nameof(ent.Comp.MutationLevel));
         }
 
-        if (plantHolder.Health <= 0)
+        if (ent.Comp.Health <= 0)
             _plantHolder.KillPlant(ent.Owner);
     }
 
@@ -168,7 +166,7 @@ public sealed partial class PlantSystem : EntitySystem
         DirtyField(ent.Owner, plantHolder, nameof(plantHolder.ForceUpdate));
 
         _plantHolder.AdjustsSkipAging(ent.Owner, 1);
-        UpdatePlant(ent);
+        UpdatePlant(ent.Owner);
     }
 
     /// <summary>
@@ -322,7 +320,7 @@ public sealed partial class PlantSystem : EntitySystem
 
         plantHolder.Health = healthOverride ?? ent.Comp.Endurance;
         plantHolder.LastCycle = _gameTiming.CurTime;
-        Dirty(ent, plantHolder);
+        DirtyFields(ent, plantHolder, null, nameof(plantHolder.Health), nameof(plantHolder.LastCycle));
 
         _plantHarvest.ResetHarvest(ent.Owner);
     }

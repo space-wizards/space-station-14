@@ -19,8 +19,6 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-  - type: Plant
-  - type: PlantHolder
   - type: Damageable
   - type: Injurable
     damageContainer: Biological
@@ -33,10 +31,11 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: RequireProjectileTarget
+  - type: Plant
+  - type: PlantHolder
   - type: PlantHarvest
   - type: PlantChemicals
   - type: PlantToxins
-  - type: PlantTraits
   - type: PlantVisuals
   - type: PlantWeedPest
   - type: PlantAtmospheric

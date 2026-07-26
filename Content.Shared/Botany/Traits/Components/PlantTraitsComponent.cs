@@ -6,9 +6,10 @@ namespace Content.Shared.Botany.Traits.Components;
 /// Base component for plant trait components.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[Virtual]
-public partial class PlantTraitsComponent : Component
+public abstract partial class PlantTraitsComponent : Component
 {
-    [DataField]
-    public LocId? TraitState;
+    /// <summary>
+    /// Localization key describing the plant trait state.
+    /// </summary>
+    public abstract LocId TraitState { get; set; }
 }

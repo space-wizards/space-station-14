@@ -12,6 +12,10 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Botany.Systems;
 
+/// <summary>
+/// Handles plant mutations, including random mutation effects, crossbreeding, and
+/// inheritance of plant properties and traits from pollen.
+/// </summary>
 public sealed partial class MutationSystem : EntitySystem
 {
     private static readonly ProtoId<RandomPlantMutationListPrototype> RandomPlantMutations = "RandomPlantMutations";
@@ -105,6 +109,9 @@ public sealed partial class MutationSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Combines mutations from the pollen and target plants.
+    /// </summary>
     [PublicAPI]
     public void CrossMutations(EntityUid pollenPlant, EntProtoId? pollenProtoId, EntityUid targetPlant)
     {
@@ -127,6 +134,9 @@ public sealed partial class MutationSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Combines chemical properties from the pollen and target plants.
+    /// </summary>
     [PublicAPI]
     public void CrossChemicals(EntityUid uid, ref Dictionary<ProtoId<ReagentPrototype>, PlantChemQuantity> val, Dictionary<ProtoId<ReagentPrototype>, PlantChemQuantity> other)
     {
@@ -166,6 +176,9 @@ public sealed partial class MutationSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Combines gas properties from the pollen and target plants.
+    /// </summary>
     [PublicAPI]
     public void CrossGasses(EntityUid uid, ref Dictionary<Gas, float> val, Dictionary<Gas, float> other)
     {
@@ -199,24 +212,36 @@ public sealed partial class MutationSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Selects a floating value from the plant or pollen.
+    /// </summary>
     [PublicAPI]
     public void CrossFloat(EntityUid uid, ref float val, float other)
     {
         val = Random(uid, 0.5f) ? val : other;
     }
 
+    /// <summary>
+    /// Selects an integer value from the plant or pollen.
+    /// </summary>
     [PublicAPI]
     public void CrossInt(EntityUid uid, ref int val, int other)
     {
         val = Random(uid, 0.5f) ? val : other;
     }
 
+    /// <summary>
+    /// Selects a Boolean value from the plant or pollen.
+    /// </summary>
     [PublicAPI]
     public void CrossBool(EntityUid uid, ref bool val, bool other)
     {
         val = Random(uid, 0.5f) ? val : other;
     }
 
+    /// <summary>
+    /// Crosses plant trait components from pollen to the target plant.
+    /// </summary>
     [PublicAPI]
     public void CrossTrait(EntityUid val, EntityUid pollenData)
     {

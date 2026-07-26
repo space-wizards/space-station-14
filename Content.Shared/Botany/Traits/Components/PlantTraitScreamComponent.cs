@@ -15,8 +15,6 @@ public sealed partial class PlantTraitScreamComponent : PlantTraitsComponent
     [DataField, AutoNetworkedField]
     public SoundSpecifier ScreamSound = new SoundCollectionSpecifier("PlantScreams");
 
-    public PlantTraitScreamComponent()
-    {
-        TraitState = "mutation-plant-scream";
-    }
+    [DataField]
+    public override LocId TraitState { get; set; } = "mutation-plant-scream";
 }

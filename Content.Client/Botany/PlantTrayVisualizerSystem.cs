@@ -13,26 +13,52 @@ public sealed partial class PlantTrayVisualizerSystem : VisualizerSystem<PlantTr
     [Dependency] private PlantWeedPestSystem _plantWeedPest = default!;
     [Dependency] private PlantHolderSystem _plantHolder = default!;
 
+    /// <summary>
+    /// Defers appearance writes until after network state application and deduplicates multiple state events per frame.
+    /// </summary>
+    private readonly HashSet<EntityUid> _pendingTrayUpdates = [];
+
     public override void FrameUpdate(float frameTime)
     {
         base.FrameUpdate(frameTime);
 
-        var query = EntityQueryEnumerator<PlantTrayVisualsComponent, PlantTrayComponent, AppearanceComponent>();
-        while (query.MoveNext(out var uid, out _, out var tray, out var appearance))
+        foreach (var uid in _pendingTrayUpdates)
         {
-            UpdateTrayWarnings((uid, tray), appearance);
+            UpdateTrayWarnings(uid);
         }
+
+        _pendingTrayUpdates.Clear();
     }
 
-    private void UpdateTrayWarnings(Entity<PlantTrayComponent> ent, AppearanceComponent appearance)
+    [SubscribeLocalEvent]
+    private void OnComponentStartup(Entity<PlantTrayVisualsComponent> ent, ref ComponentStartup args)
     {
+        QueueTrayWarnings(ent.Owner);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnPlantTrayState(Entity<PlantTrayComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        QueueTrayWarnings(ent.Owner);
+    }
+
+    private void QueueTrayWarnings(EntityUid uid)
+    {
+        _pendingTrayUpdates.Add(uid);
+    }
+
+    public void UpdateTrayWarnings(Entity<PlantTrayComponent?> ent)
+    {
+        if (!Resolve(ent.Owner, ref ent.Comp, false))
+            return;
+
         if (!ent.Comp.DrawWarnings)
             return;
 
-        var water = _plantTray.GetWaterThreshold(ent.Owner);
-        var nutrition = _plantTray.GetNutrientThreshold(ent.Owner);
-        var alert = _plantTray.GetWeedThreshold(ent.Owner)
-                    || _plantTray.GetToxinThreshold(ent.Owner);
+        var water = _plantTray.GetWaterThreshold(ent.AsNullable());
+        var nutrition = _plantTray.GetNutrientThreshold(ent.AsNullable());
+        var alert = _plantTray.GetWeedThreshold(ent.AsNullable())
+                    || _plantTray.GetToxinThreshold(ent.AsNullable());
         var health = false;
         var harvest = false;
 
@@ -52,11 +78,11 @@ public sealed partial class PlantTrayVisualizerSystem : VisualizerSystem<PlantTr
                 harvest = plantHarvest.ReadyForHarvest;
         }
 
-        // These are appearance keys consumed by the prototype's <see cref="GenericVisualizer"/>.
-        _appearance.SetData(ent.Owner, PlantTrayVisuals.HealthLight, health, appearance);
-        _appearance.SetData(ent.Owner, PlantTrayVisuals.WaterLight, water, appearance);
-        _appearance.SetData(ent.Owner, PlantTrayVisuals.NutritionLight, nutrition, appearance);
-        _appearance.SetData(ent.Owner, PlantTrayVisuals.AlertLight, alert, appearance);
-        _appearance.SetData(ent.Owner, PlantTrayVisuals.HarvestLight, harvest, appearance);
+        // These are appearance keys consumed by the prototype's <see cref="GenericVisualizerComponent"/>.
+        _appearance.SetData(ent.Owner, PlantTrayVisuals.HealthLight, health);
+        _appearance.SetData(ent.Owner, PlantTrayVisuals.WaterLight, water);
+        _appearance.SetData(ent.Owner, PlantTrayVisuals.NutritionLight, nutrition);
+        _appearance.SetData(ent.Owner, PlantTrayVisuals.AlertLight, alert);
+        _appearance.SetData(ent.Owner, PlantTrayVisuals.HarvestLight, harvest);
     }
 }

@@ -1,5 +1,4 @@
 using Content.Shared.Destructible.Thresholds;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
 
@@ -12,8 +11,8 @@ public sealed partial class PlantChangeStat : EntityEffectBase<PlantChangeStat>
     /// <summary>
     /// The plant component that contains <see cref="TargetDataField"/>.
     /// </summary>
-    [DataField(required: true, customTypeSerializer: typeof(ComponentNameSerializer))]
-    public string TargetComponent;
+    [DataField(required: true)]
+    public CompName TargetComponent;
 
     [DataField(required: true)]
     public string TargetDataField;

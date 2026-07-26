@@ -7,7 +7,6 @@ using Content.Shared.Cloning;
 using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Random;
-using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -25,7 +24,7 @@ public sealed partial class BotanySystem : EntitySystem
     [Dependency] private SharedCloningSystem _cloning = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private SharedPvsOverrideSystem _pvs = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
     public readonly ProtoId<CloningSettingsPrototype> SettingsId = "PlantClone";
     public readonly ProtoId<CloningSettingsPrototype> LifecycleSettingsId = "PlantLifecycleClone";
@@ -45,6 +44,24 @@ public sealed partial class BotanySystem : EntitySystem
             args.PushMarkup(Loc.GetString("seed-component-description", ("seedName", name)));
             args.PushMarkup(_plant.GetPlantStateMarkup(ent.Owner, plant));
         }
+    }
+
+    [SubscribeLocalEvent]
+    private void OnSeedShutdown(Entity<SeedComponent> ent, ref ComponentShutdown args)
+    {
+        DeletePlantSnapshot(ent.Comp.PlantData);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnProduceShutdown(Entity<ProduceComponent> ent, ref ComponentShutdown args)
+    {
+        DeletePlantSnapshot(ent.Comp.PlantData);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnSwabShutdown(Entity<BotanySwabComponent> ent, ref ComponentShutdown args)
+    {
+        DeletePlantSnapshot(ent.Comp.PlantData);
     }
 
     /// <summary>
@@ -76,9 +93,10 @@ public sealed partial class BotanySystem : EntitySystem
     /// Clones a component snapshot of a plant.
     /// </summary>
     /// <param name="source">The entity to clone the snapshot from.</param>
+    /// <param name="parent">The entity that should own the snapshot, if any.</param>
     /// <param name="cloneLifecycle">If true, also clone lifecycle state into the snapshot.</param>
     [PublicAPI]
-    public EntityUid ClonePlantSnapshotData(EntityUid source, bool cloneLifecycle = false)
+    public EntityUid ClonePlantSnapshotData(EntityUid source, EntityUid? parent = null, bool cloneLifecycle = false)
     {
         var settingsId = cloneLifecycle ? LifecycleSettingsId : SettingsId;
         if (!ProtoMan.TryIndex(settingsId, out var settings))
@@ -87,7 +105,10 @@ public sealed partial class BotanySystem : EntitySystem
         var snapshot = EntityManager.CreateEntityUninitialized(null);
         _cloning.CloneComponents(source, snapshot, settings);
         EntityManager.InitializeAndStartEntity(snapshot, doMapInit: false);
-        _pvs.AddGlobalOverride(snapshot);
+
+        if (parent is { } parentUid)
+            _transform.SetParent(snapshot, parentUid);
+
         return snapshot;
     }
 
@@ -145,7 +166,7 @@ public sealed partial class BotanySystem : EntitySystem
         var seedComp = EnsureComp<SeedComponent>(seedItem);
         seedComp.PlantProtoId = plantProtoId;
         seedComp.PlantData = snapshot.HasValue
-            ? ClonePlantSnapshotData(snapshot.Value)
+            ? ClonePlantSnapshotData(snapshot.Value, parent: seedItem)
             : null;
         seedComp.HealthOverride = healthOverride;
         Dirty(seedItem, seedComp);
@@ -156,23 +177,5 @@ public sealed partial class BotanySystem : EntitySystem
 
         _hands.TryPickupAnyHand(user, seedItem);
         return seedItem;
-    }
-
-    [SubscribeLocalEvent]
-    private void OnSeedShutdown(Entity<SeedComponent> ent, ref ComponentShutdown args)
-    {
-        DeletePlantSnapshot(ent.Comp.PlantData);
-    }
-
-    [SubscribeLocalEvent]
-    private void OnProduceShutdown(Entity<ProduceComponent> ent, ref ComponentShutdown args)
-    {
-        DeletePlantSnapshot(ent.Comp.PlantData);
-    }
-
-    [SubscribeLocalEvent]
-    private void OnSwabShutdown(Entity<BotanySwabComponent> ent, ref ComponentShutdown args)
-    {
-        DeletePlantSnapshot(ent.Comp.PlantData);
     }
 }

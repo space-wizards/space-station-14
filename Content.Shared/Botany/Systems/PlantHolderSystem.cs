@@ -138,9 +138,12 @@ public sealed partial class PlantHolderSystem : EntitySystem
 
         ent.Comp.Dead = true;
         ent.Comp.Health = Math.Max(0, ent.Comp.Health);
-        Dirty(ent);
+        DirtyFields(ent, null, nameof(ent.Comp.Dead), nameof(ent.Comp.Health));
     }
 
+    /// <summary>
+    /// Checks whether the plant's health is at or below half its endurance.
+    /// </summary>
     [PublicAPI]
     public bool GetHealthThreshold(Entity<PlantHolderComponent?> ent)
     {

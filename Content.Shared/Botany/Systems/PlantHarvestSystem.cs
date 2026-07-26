@@ -88,6 +88,10 @@ public sealed partial class PlantHarvestSystem : EntitySystem
         DoHarvest(ent, plant, user);
     }
 
+    /// <summary>
+    /// Handles harvesting a plant for the specified user.
+    /// </summary>
+    [PublicAPI]
     public void TryHandleHarvest(Entity<PlantHarvestComponent> ent, Entity<PlantComponent> plant, EntityUid user)
     {
         if (plant.Comp.HarvestLogImpact != null)
@@ -99,9 +103,6 @@ public sealed partial class PlantHarvestSystem : EntitySystem
     /// <summary>
     /// Harvests the plant and produces the produce.
     /// </summary>
-    /// <param name="ent">The plant harvest component.</param>
-    /// <param name="plant">The plant component.</param>
-    /// <param name="user">The user who is harvesting the plant.</param>
     [PublicAPI]
     public void DoHarvest(Entity<PlantHarvestComponent> ent, Entity<PlantComponent> plant, EntityUid user)
     {

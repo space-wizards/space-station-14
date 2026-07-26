@@ -27,8 +27,8 @@ public sealed partial class ProduceComponent : Component
     /// <summary>
     /// Name of the solution container that holds the produce's contents.
     /// </summary>
-    [DataField("targetSolution")]
-    public string SolutionName = "food";
+    [DataField]
+    public string TargetSolution = "food";
 
     /// <summary>
     /// Divider for the nutrient bonus when composting this produce.

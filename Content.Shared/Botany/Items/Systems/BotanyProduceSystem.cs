@@ -53,7 +53,7 @@ public sealed partial class BotanyProduceSystem : EntitySystem
             Filter.PvsExcept(args.User),
             true);
 
-        if (_solutionContainer.TryGetSolution(args.Produce.Owner, args.Produce.Comp.SolutionName, out var soln2, out var solution2))
+        if (_solutionContainer.TryGetSolution(args.Produce.Owner, args.Produce.Comp.TargetSolution, out var soln2, out var solution2))
         {
             if (_solutionContainer.ResolveSolution(ent.Owner, ent.Comp.SoilSolutionName, ref ent.Comp.SoilSolution, out var solution1))
             {

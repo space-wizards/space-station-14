@@ -15,8 +15,6 @@ public sealed partial class PlantTraitUnviableComponent : PlantTraitsComponent
     [DataField, AutoNetworkedField]
     public float UnviableDamage = 6f;
 
-    public PlantTraitUnviableComponent()
-    {
-        TraitState = "mutation-plant-unviable";
-    }
+    [DataField]
+    public override LocId TraitState { get; set; } = "mutation-plant-unviable";
 }

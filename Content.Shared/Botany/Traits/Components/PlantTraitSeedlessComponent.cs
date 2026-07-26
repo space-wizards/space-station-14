@@ -8,8 +8,6 @@ namespace Content.Shared.Botany.Traits.Components;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class PlantTraitSeedlessComponent : PlantTraitsComponent
 {
-    public PlantTraitSeedlessComponent()
-    {
-        TraitState = "mutation-plant-seedless";
-    }
+    [DataField]
+    public override LocId TraitState { get; set; } = "mutation-plant-seedless";
 }

@@ -16,8 +16,6 @@ public sealed partial class PlantTraitLigneousComponent : PlantTraitsComponent
     [DataField]
     public ProtoId<ToolQualityPrototype>? HarvestToolQuality = "Sawing";
 
-    public PlantTraitLigneousComponent()
-    {
-        TraitState = "mutation-plant-ligneous";
-    }
+    [DataField]
+    public override LocId TraitState { get; set; } = "mutation-plant-ligneous";
 }

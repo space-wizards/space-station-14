@@ -46,7 +46,7 @@ public sealed partial class BotanySystem
                 _entityEffects.TryApplyEffect(ent.Owner, mutation.Effect);
         }
 
-        _solutionContainer.EnsureSolution(ent.Owner, ent.Comp.SolutionName, out var solution);
+        _solutionContainer.EnsureSolution(ent.Owner, ent.Comp.TargetSolution, out var solution);
         solution.Comp.Solution.RemoveAllSolution();
 
         foreach (var (chem, quantity) in chems.Chemicals)
@@ -76,7 +76,7 @@ public sealed partial class BotanySystem
 
         var produce = EnsureComp<ProduceComponent>(entity);
         produce.PlantProtoId = MetaData(ent.Owner).EntityPrototype!.ID;
-        produce.PlantData = ClonePlantSnapshotData(ent.Owner);
+        produce.PlantData = ClonePlantSnapshotData(ent.Owner, parent: entity);
         Dirty(entity, produce);
         ProduceGrown((entity, produce));
         _appearance.SetData(entity, ProduceVisuals.Potency, ent.Comp.Potency);

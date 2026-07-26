@@ -33,7 +33,7 @@ public sealed partial class ProduceMaterialExtractorSystem : EntitySystem
         if (!TryComp<ProduceComponent>(args.Used, out var produce))
             return;
 
-        if (!_solutionContainer.TryGetSolution(args.Used, produce.SolutionName, out var solution))
+        if (!_solutionContainer.TryGetSolution(args.Used, produce.TargetSolution, out var solution))
             return;
 
         // Can produce even have fractional amounts? Does it matter if they do?

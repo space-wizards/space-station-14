@@ -39,7 +39,7 @@ public abstract partial class SharedPlantAtmosphericSystem : EntitySystem
         if (ent.Comp.LowHeatTolerance > ent.Comp.HighHeatTolerance)
             ent.Comp.HighHeatTolerance = ent.Comp.LowHeatTolerance;
 
-        Dirty(ent);
+        DirtyFields(ent, null, nameof(ent.Comp.LowHeatTolerance), nameof(ent.Comp.HighHeatTolerance));
     }
 
     /// <summary>
@@ -55,7 +55,7 @@ public abstract partial class SharedPlantAtmosphericSystem : EntitySystem
         if (ent.Comp.HighHeatTolerance < ent.Comp.LowHeatTolerance)
             ent.Comp.LowHeatTolerance = ent.Comp.HighHeatTolerance;
 
-        Dirty(ent);
+        DirtyFields(ent, null, nameof(ent.Comp.HighHeatTolerance), nameof(ent.Comp.LowHeatTolerance));
     }
 
     /// <summary>
@@ -72,7 +72,7 @@ public abstract partial class SharedPlantAtmosphericSystem : EntitySystem
         if (ent.Comp.LowPressureTolerance > ent.Comp.HighPressureTolerance)
             ent.Comp.HighPressureTolerance = ent.Comp.LowPressureTolerance;
 
-        Dirty(ent);
+        DirtyFields(ent, null, nameof(ent.Comp.LowPressureTolerance), nameof(ent.Comp.HighPressureTolerance));
     }
 
     /// <summary>
@@ -89,6 +89,6 @@ public abstract partial class SharedPlantAtmosphericSystem : EntitySystem
         if (ent.Comp.HighPressureTolerance < ent.Comp.LowPressureTolerance)
             ent.Comp.LowPressureTolerance = ent.Comp.HighPressureTolerance;
 
-        Dirty(ent);
+        DirtyFields(ent, null, nameof(ent.Comp.HighPressureTolerance), nameof(ent.Comp.LowPressureTolerance));
     }
 }

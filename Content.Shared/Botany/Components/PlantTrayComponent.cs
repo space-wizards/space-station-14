@@ -9,7 +9,7 @@ namespace Content.Shared.Botany.Components;
 /// <summary>
 /// Component for hydroponics trays plots that hold resources and link to a plant entity.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true), AutoGenerateComponentPause]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true, raiseAfterAutoHandleState: true), AutoGenerateComponentPause]
 [Access(typeof(PlantTraySystem))]
 public sealed partial class PlantTrayComponent : Component
 {

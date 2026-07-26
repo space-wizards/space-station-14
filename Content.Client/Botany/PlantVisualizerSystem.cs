@@ -8,8 +8,9 @@ namespace Content.Client.Botany;
 
 public sealed partial class PlantVisualizerSystem : VisualizerSystem<PlantVisualsComponent>
 {
-    [Dependency] private PlantSystem _plantSystem = default!;
+    [Dependency] private PlantSystem _plant = default!;
     [Dependency] private PlantHolderSystem _plantHolder = default!;
+    [Dependency] private PlantTrayVisualizerSystem _plantTrayVisualizer = default!;
 
     [SubscribeLocalEvent]
     private void OnComponentInit(EntityUid uid, PlantVisualsComponent component, ComponentInit args)
@@ -39,12 +40,16 @@ public sealed partial class PlantVisualizerSystem : VisualizerSystem<PlantVisual
     private void OnHarvestState(Entity<PlantHarvestComponent> ent, ref AfterAutoHandleStateEvent args)
     {
         UpdateSprite(ent.Owner);
+        if (_plant.TryGetTray(ent.Owner, out var trayEnt))
+            _plantTrayVisualizer.UpdateTrayWarnings(trayEnt.AsNullable());
     }
 
     [SubscribeLocalEvent]
     private void OnHolderState(Entity<PlantHolderComponent> ent, ref AfterAutoHandleStateEvent args)
     {
         UpdateSprite(ent.Owner);
+        if (_plant.TryGetTray(ent.Owner, out var trayEnt))
+            _plantTrayVisualizer.UpdateTrayWarnings(trayEnt.AsNullable());
     }
 
     [SubscribeLocalEvent]
@@ -61,7 +66,7 @@ public sealed partial class PlantVisualizerSystem : VisualizerSystem<PlantVisual
 
         var dead = _plantHolder.IsDead(plantUid);
         var harvestReady = harvest.ReadyForHarvest;
-        var growthStage = _plantSystem.GetGrowthStageValue(plantUid);
+        var growthStage = _plant.GetGrowthStageValue(plantUid);
 
         if (dead)
             state = "dead";

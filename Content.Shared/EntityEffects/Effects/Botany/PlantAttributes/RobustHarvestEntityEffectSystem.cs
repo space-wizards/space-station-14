@@ -23,19 +23,16 @@ public sealed partial class RobustHarvestEntityEffectSystem : EntityEffectSystem
         if (_plantHolder.IsDead(entity.Owner))
             return;
 
-        if (!TryComp<PlantComponent>(entity, out var plant))
-            return;
-
-        if (plant.Potency < args.Effect.PotencyLimit)
+        if (entity.Comp.Potency < args.Effect.PotencyLimit)
         {
             // Calculates and rewrites the potency value.
-            var potency = Math.Min(plant.Potency + args.Effect.PotencyIncrease, args.Effect.PotencyLimit);
-            _plant.AdjustPotency(entity.AsNullable(), potency - plant.Potency);
+            var potency = Math.Min(entity.Comp.Potency + args.Effect.PotencyIncrease, args.Effect.PotencyLimit);
+            _plant.AdjustPotency(entity.AsNullable(), potency - entity.Comp.Potency);
 
-            if (plant.Potency > args.Effect.PotencySeedlessThreshold)
+            if (entity.Comp.Potency > args.Effect.PotencySeedlessThreshold)
                 EnsureComp<PlantTraitSeedlessComponent>(entity.Owner);
         }
-        else if (plant.Yield > 1 && SharedRandomExtensions.PredictedProb(_timing, 0.1f, GetNetEntity(entity)))
+        else if (entity.Comp.Yield > 1 && SharedRandomExtensions.PredictedProb(_timing, 0.1f, GetNetEntity(entity)))
         {
             // Too much of a good thing reduces yield.
             _plant.AdjustYield(entity.AsNullable(), -1);
