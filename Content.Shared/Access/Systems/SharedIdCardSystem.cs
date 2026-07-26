@@ -24,8 +24,8 @@ public abstract partial class SharedIdCardSystem : EntitySystem
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private InventorySystem _inventorySystem = default!;
     [Dependency] private MetaDataSystem _metaSystem = default!;
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private SharedJobStatusSystem _jobStatus = default!;
+    [Dependency] private SharedAgentIdCardSystem _agentIdCard = default!;
 
     // CCVar.
     private int _maxNameLength;
@@ -77,10 +77,8 @@ public abstract partial class SharedIdCardSystem : EntitySystem
     private void OnHandleState(Entity<IdCardComponent> ent, ref AfterAutoHandleStateEvent args)
     {
         // Try to update the job status icon of the player owning the ID, if any.
-        if (HasComp<PdaComponent>(Transform(ent).ParentUid))
-            _jobStatus.UpdateStatus(Transform(Transform(ent).ParentUid).ParentUid); //ID is inside a PDA
-        else
-            _jobStatus.UpdateStatus(Transform(ent).ParentUid); //ID is held/directly in the ID slot
+        _jobStatus.UpdateIdHolderStatus(ent);
+        _agentIdCard.UpdateUi(ent);
     }
 
     /// <summary>
@@ -138,6 +136,7 @@ public abstract partial class SharedIdCardSystem : EntitySystem
     /// If provided with a player's EntityUid to the player parameter, adds the change to the admin logs.
     /// Actually works with the LocalizedJobTitle DataField and not with JobTitle.
     /// </remarks>
+    /// <returns> True if the job title changed, false if nothing changed. </returns>
     public bool TryChangeJobTitle(EntityUid uid, string? jobTitle, IdCardComponent? id = null, EntityUid? player = null)
     {
         if (!Resolve(uid, ref id))
@@ -156,7 +155,7 @@ public abstract partial class SharedIdCardSystem : EntitySystem
         }
 
         if (id.LocalizedJobTitle == jobTitle)
-            return true;
+            return false;
         id.LocalizedJobTitle = jobTitle;
         Dirty(uid, id);
         UpdateEntityName(uid, id);
@@ -169,6 +168,7 @@ public abstract partial class SharedIdCardSystem : EntitySystem
         return true;
     }
 
+    /// <returns> True if the job icon changed, false if nothing changed. </returns>
     public bool TryChangeJobIcon(EntityUid uid, JobIconPrototype jobIcon, IdCardComponent? id = null, EntityUid? player = null)
     {
         if (!Resolve(uid, ref id))
@@ -178,7 +178,7 @@ public abstract partial class SharedIdCardSystem : EntitySystem
 
         if (id.JobIcon == jobIcon.ID)
         {
-            return true;
+            return false;
         }
 
         id.JobIcon = jobIcon.ID;
@@ -199,7 +199,7 @@ public abstract partial class SharedIdCardSystem : EntitySystem
             return false;
 
         id.JobDepartments.Clear();
-        foreach (var department in _prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
+        foreach (var department in ProtoMan.EnumeratePrototypes<DepartmentPrototype>())
         {
             if (department.Roles.Contains(job.ID))
                 id.JobDepartments.Add(department.ID);
@@ -233,6 +233,7 @@ public abstract partial class SharedIdCardSystem : EntitySystem
     /// <remarks>
     /// If provided with a player's EntityUid to the player parameter, adds the change to the admin logs.
     /// </remarks>
+    /// <returns> True if the name changed, false if nothing changed. </returns>
     public bool TryChangeFullName(EntityUid uid, string? fullName, IdCardComponent? id = null, EntityUid? player = null)
     {
         if (!Resolve(uid, ref id))
@@ -250,7 +251,7 @@ public abstract partial class SharedIdCardSystem : EntitySystem
         }
 
         if (id.FullName == fullName)
-            return true;
+            return false;
         id.FullName = fullName;
         Dirty(uid, id);
         UpdateEntityName(uid, id);
@@ -297,29 +298,24 @@ public abstract partial class SharedIdCardSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp))
             return;
         ent.Comp.ExpireTime = time;
-        Dirty(ent);
-    }
-
-    public void SetPermanent(Entity<ExpireIdCardComponent?> ent, bool val)
-    {
-        if (!Resolve(ent, ref ent.Comp))
-            return;
-        ent.Comp.Permanent = val;
+        ent.Comp.Expired = false;
         Dirty(ent);
     }
 
     /// <summary>
     /// Marks an <see cref="ExpireIdCardComponent"/> as expired, setting the accesses.
     /// </summary>
-    public virtual void ExpireId(Entity<ExpireIdCardComponent> ent)
+    public virtual bool ExpireId(Entity<ExpireIdCardComponent> ent)
     {
         if (ent.Comp.Expired)
-            return;
+            return false;
 
         _access.TrySetTags(ent, ent.Comp.ExpiredAccess);
+        var pauseTime = _metaSystem.GetPauseTime(ent.Owner);
+        ent.Comp.ExpireTime ??= _timing.CurTime - pauseTime - TimeSpan.FromTicks(1);
         ent.Comp.Expired = true;
-        ent.Comp.Permanent = false;
         Dirty(ent);
+        return true;
     }
 
     public override void Update(float frameTime)
@@ -328,10 +324,14 @@ public abstract partial class SharedIdCardSystem : EntitySystem
         var query = EntityQueryEnumerator<ExpireIdCardComponent>();
         while (query.MoveNext(out var uid, out var comp))
         {
-            if (comp.Expired || comp.Permanent)
+            if (comp.Expired || comp.ExpireTime is not { } expireTime)
                 continue;
 
-            if (_timing.CurTime < comp.ExpireTime)
+            var pauseTime = _metaSystem.GetPauseTime(uid);
+            if (expireTime > TimeSpan.MaxValue - pauseTime)
+                continue;
+
+            if (_timing.CurTime <= expireTime + pauseTime)
                 continue;
 
             ExpireId((uid, comp));

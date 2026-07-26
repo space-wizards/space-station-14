@@ -1,6 +1,6 @@
 - type: entity
   name: bat
-  parent: [ SimpleMobBase, FlyingMobBase, MobCombat, BaseSlicingRefinable ]
+  parent: [ SimpleMobBase, FlyingMobBase, MobCombat, BaseSlicingRefinable, MobNightVision ]
   id: MobBat
   description: Some cultures find them terrifying, others crunchy on the teeth.
   components:
@@ -199,7 +199,7 @@
 
 - type: entity
   name: chicken
-  parent: [SimpleMobBase, BaseSlicingRefinable]
+  parent: [SimpleMobBase, BaseSlicingRefinable, BaseMobDestructible]
   id: MobChicken
   description: Comes before an egg, and IS a dinosaur!
   components:
@@ -348,17 +348,12 @@
     lifetime: 21
 
 - type: entity
-  name: cockroach
-  parent: [SolutionFood, SolutionTiny, SimpleMobBase, BaseSlicingRefinable]
-  id: MobCockroach
-  description: This station is just crawling with bugs.
+  abstract: true
+  parent: [SolutionFood, SolutionTiny, SimpleMobBase, BaseSlicingRefinable, MobNightVision]
+  id: BaseCockroach
   components:
   - type: Sprite
     drawdepth: SmallMobs
-    sprite: Mobs/Animals/cockroach.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: cockroach
   - type: Item
     size: Tiny
   - type: HTN
@@ -385,14 +380,6 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 2.5
     baseSprintSpeed : 5
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: cockroach
-      Critical:
-        Base: cockroach_dead
-      Dead:
-        Base: cockroach_dead
   - type: Bloodstream
     bloodReferenceSolution:
       reagents:
@@ -412,7 +399,7 @@
     solution:
       reagents:
       - ReagentId: Slime
-        Quantity: 5
+        Quantity: 10
   - type: ToolRefinable
     refineResult:
     - id: FoodMeatSlime
@@ -422,15 +409,6 @@
     tags:
     - Trash
     - VimPilot
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTypeTrigger
-        damageType: Blunt
-        damage: 10
-      behaviors:
-      - !type:GibBehavior
-        recursive: false
   - type: NonSpreaderZombie
   - type: StepTrigger
     requiredTriggeredSpeed: 1
@@ -449,8 +427,37 @@
         Piercing: 0
 
 - type: entity
+  parent: BaseCockroach
+  id: MobCockroach
+  name: cockroach
+  description: This station is just crawling with bugs.
+  components:
+  - type: Sprite
+    sprite: Mobs/Animals/cockroach.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: cockroach
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: cockroach
+      Critical:
+        Base: cockroach_dead
+      Dead:
+        Base: cockroach_dead
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Blunt
+        damage: 10
+      behaviors:
+      - !type:GibBehavior
+        recursive: false
+
+- type: entity
   name: glockroach
-  parent: [MobCockroach, BaseSlicingRefinable]
+  parent: MobCockroach
   suffix: Admeme
   id: MobGlockroach
   description: This station is just crawling with bu- OH GOD THAT COCKROACH HAS A GUN!!!
@@ -476,13 +483,10 @@
   - type: NpcFactionMember
     factions:
     - SimpleHostile
-  - type: ToolRefinable
-    refineResult:
-    - id: FoodMeatSlime
 
 - type: entity
   name: mothroach
-  parent: [ BaseMobMothroach, MobCockroach, BaseSlicingRefinable ]
+  parent: [ BaseMobMothroach, BaseCockroach, BaseSlicingRefinable ]
   id: MobMothroach
   description: This is the adorable by-product of multiple attempts at genetically mixing mothpeople with cockroaches.
   components:
@@ -569,6 +573,11 @@
       types:
         Asphyxiation: -0.5
   - type: CombatMode
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Slime
+        Quantity: 20
   - type: ToolRefinable
     refineResult:
     - id: FoodMeatSlime
@@ -580,10 +589,7 @@
   - type: ZombieAccentOverride
     accent: zombieMoth
   - type: Vocal
-    sounds:
-      Male: UnisexMoth
-      Female: UnisexMoth
-      Unsexed: UnisexMoth
+    emoteSounds: UnisexMoth
     wilhelmProbability: 0.001
   - type: BodyEmotes
     soundsId: MothBodyEmotes
@@ -654,7 +660,7 @@
 
 - type: entity
   name: mallard duck #Quack
-  parent: [SimpleMobBase, BaseSlicingRefinable]
+  parent: [SimpleMobBase, BaseSlicingRefinable, BaseMobDestructible]
   id: MobDuckMallard
   description: An adorable mallard duck, it's fluffy and soft!
   components:
@@ -857,7 +863,7 @@
 
 - type: entity
   name: cow
-  parent: [ BaseMobRuminant, SimpleMobBase, BaseSlicingRefinable ]
+  parent: [ BaseMobRuminant, SimpleMobBase, BaseSlicingRefinable, BaseMobDestructible ]
   id: MobCow
   description: Moo.
   components:
@@ -948,7 +954,7 @@
 
 - type: entity
   name: crab
-  parent: [ SimpleMobBase, BaseMobHemocyanin, BaseSlicingRefinable ]
+  parent: [ SimpleMobBase, BaseMobHemocyanin, BaseSlicingRefinable, BaseMobDestructible ]
   id: MobCrab
   description: A folk legend goes around that his claw snaps spacemen out of existence over distasteful remarks. Be polite and tolerant for your own safety.
   components:
@@ -1016,7 +1022,7 @@
 
 - type: entity
   name: goat
-  parent: [ BaseMobRuminant, SimpleMobBase, BaseSlicingRefinable ]
+  parent: [ BaseMobRuminant, SimpleMobBase, BaseSlicingRefinable, BaseMobDestructible ]
   id: MobGoat
   description: Her spine consists of long sharp segments, no wonder she is so grumpy.
   components:
@@ -1088,10 +1094,7 @@
     speechSounds: Goat
     speechVerb: Goat
   - type: Vocal
-    sounds:
-      Female: Goat
-      Male: Goat
-      Unsexed: Goat
+    emoteSounds: Goat
   - type: BleatingAccent
   - type: InteractionPopup
     successChance: 0.2
@@ -1225,10 +1228,7 @@
     speechSounds: Sheep
     speechVerb: Sheep
   - type: Vocal
-    sounds:
-      Female: Sheep
-      Male: Sheep
-      Unsexed: Sheep
+    emoteSounds: Sheep
   - type: BleatingAccent
   - type: InteractionPopup
     successChance: 0.8 #SHEEP so FRIEND!!! HUG! SQUISHY! SOFT!
@@ -1290,7 +1290,7 @@
         Quantity: 25
 
 - type: entity
-  parent: [ MobSheepBase, SimpleMobBase ]
+  parent: [ MobSheepBase, SimpleMobBase, BaseMobDestructible ]
   id: MobSheep
   name: sheep
   description: An adorable genetically engineered chemical factory producing milk and cotton.
@@ -1327,7 +1327,7 @@
 # Note that we gotta make this bitch vomit someday when you feed it anthrax or sumthin. Needs to be a small item thief too and aggressive if attacked.
 - type: entity
   name: goose
-  parent: [SimpleMobBase, BaseSlicingRefinable]
+  parent: [SimpleMobBase, BaseSlicingRefinable, BaseMobDestructible]
   id: MobGoose
   description: Its stomach and mind are an enigma beyond human comprehension.
   components:
@@ -1378,7 +1378,7 @@
 
 - type: entity
   name: gorilla
-  parent: [ SimpleMobBase, MobCombat ]
+  parent: [ SimpleMobBase, MobCombat, BaseMobDestructible ]
   id: MobGorilla
   description: Smashes, roars, looks cool. Don't stand near one.
   components:
@@ -1463,6 +1463,7 @@
   - MobCombat
   - StripableInventoryBase
   - BaseSlicingRefinable
+  - BaseMobDestructible
   id: MobKangaroo
   description: A large marsupial herbivore. It has powerful hind legs, with nails that resemble long claws.
   components:
@@ -1515,8 +1516,7 @@
     rules: ghost-role-information-nonantagonist-rules
   - type: GhostTakeoverAvailable
   - type: Vocal
-    sounds:
-      Unsexed: Kangaroo
+    emoteSounds: Kangaroo
   - type: Puller
     needsHands: false
   - type: StaminaDamageOnHit
@@ -1555,7 +1555,7 @@
 - type: entity
   name: genetic ancestor
   id: MobBaseAncestor
-  parent: [BaseMobAnimal, SimpleMobBase, StripableInventoryBase]
+  parent: [BaseMobAnimal, SimpleMobBase, StripableInventoryBase, BaseMobDestructible]
   description: The genetic bipedal ancestor of... Uh... Something. Yeah, there's definitely something on the station that descended from whatever this is.
   abstract: true
   components:
@@ -1770,10 +1770,7 @@
     speechVerb: Reptilian
     allowedEmotes: ['Thump']
   - type: Vocal
-    sounds:
-      Male: MaleReptilian
-      Female: FemaleReptilian
-      Unsexed: MaleReptilian
+    emoteSounds: MaleReptilian
   - type: BodyEmotes
     soundsId: ReptilianBodyEmotes
   - type: TypingIndicator
@@ -1804,9 +1801,6 @@
       types:
         Slash: 5
         Piercing: 4
-  - type: Temperature
-    currentTemperature: 310.15
-    specificHeat: 42
   - type: TemperatureDamage
     heatDamageThreshold: 360
     coldDamageThreshold: 285
@@ -1923,7 +1917,7 @@
 
 - type: entity
   name: mouse
-  parent: [SimpleMobBase, BaseMobAnimal, SolutionVermin, BaseSlicingRefinable]
+  parent: [SimpleMobBase, BaseMobAnimal, SolutionVermin, BaseSlicingRefinable, MobNightVision]
   id: MobMouse
   description: Squeak!
   components:
@@ -2056,10 +2050,7 @@
       types:
         Blunt: 0.1
   - type: Vocal
-    sounds:
-      Male: Mouse
-      Female: Mouse
-      Unsexed: Mouse
+    emoteSounds: Mouse
     wilhelmProbability: 0.001
   # TODO: Remove CombatMode when Prototype Composition is added
   - type: CombatMode
@@ -2227,7 +2218,7 @@
 
 - type: entity
   name: lizard #Weh
-  parent: [SimpleMobBase, BaseSlicingRefinable]
+  parent: [SimpleMobBase, BaseSlicingRefinable, BaseMobDestructible]
   id: MobLizard
   description: A harmless dragon.
   components:
@@ -2284,7 +2275,7 @@
 
 - type: entity
   name: slug
-  parent: [SimpleMobBase, BaseSlicingRefinable]
+  parent: [SimpleMobBase, BaseSlicingRefinable, BaseMobDestructible]
   id: MobSlug
   description: And they called this a lizard?
   components:
@@ -2405,7 +2396,7 @@
 
 # Would be cool to have some functionality for the parrot to be able to sit on stuff
 - type: entity
-  parent: [ SimpleMobBase, FlyingMobBase, BaseSlicingRefinable ]
+  parent: [ SimpleMobBase, FlyingMobBase, BaseSlicingRefinable, BaseMobDestructible ]
   id: MobParrotBase
   name: parrot
   abstract: true
@@ -2447,8 +2438,7 @@
     speechSounds: Parrot
     speechVerb: Parrot
   - type: Vocal
-    sounds:
-      Unsexed: Parrot
+    emoteSounds: Parrot
   - type: ActiveListener
   - type: Vocalizer
   - type: RadioVocalizer
@@ -2493,7 +2483,7 @@
 
 - type: entity
   name: penguin
-  parent: [SimpleMobBase, BaseSlicingRefinable]
+  parent: [SimpleMobBase, BaseSlicingRefinable, BaseMobDestructible]
   id: MobPenguin
   description: Their lives are constant pain due to their inner-body knees.
   components:
@@ -2540,9 +2530,6 @@
   - type: NpcFactionMember
     factions:
     - Passive
-  - type: Temperature
-    currentTemperature: 310.15
-    specificHeat: 46
   - type: TemperatureDamage
     heatDamageThreshold: 335
     coldDamageThreshold: 230
@@ -2632,7 +2619,7 @@
   # I have included a snake_hiss.ogg sound file so if you want to use that be my guest
 - type: entity
   name: snake
-  parent: [SimpleMobBase, BaseSlicingRefinable]
+  parent: [SimpleMobBase, BaseSlicingRefinable, BaseMobDestructible]
   id: MobSnake
   description: Hissss! Bites aren't poisonous.
   components:
@@ -2682,7 +2669,7 @@
 # Code unique spider prototypes or combine them all into one spider and get a
 # random sprite state when you spawn it.
 - type: entity
-  parent: [ SimpleMobBase, BaseMobHemocyanin, MobCombat, BaseSlicingRefinable ]
+  parent: [ SimpleMobBase, BaseMobHemocyanin, MobCombat, BaseSlicingRefinable, MobNightVision, BaseMobDestructible ]
   id: MobSpiderBase
   abstract: true
   components:
@@ -2737,10 +2724,7 @@
     speechSounds: Arachnid
     allowedEmotes: ['Click', 'Chitter']
   - type: Vocal
-    sounds:
-      Male: UnisexArachnid
-      Female: UnisexArachnid
-      Unsexed: UnisexArachnid
+    emoteSounds: UnisexArachnid
   - type: TypingIndicator
     proto: spider
   - type: Tag
@@ -2893,6 +2877,7 @@
         reagents:
         - ReagentId: Laughter
           Quantity: 150
+
 - type: entity
   name: wizard spider
   parent: MobGiantSpider
@@ -2907,7 +2892,7 @@
 
 - type: entity
   name: possum
-  parent: [SimpleMobBase, StripableInventoryBase, BaseSlicingRefinable]
+  parent: [SimpleMobBase, StripableInventoryBase, BaseSlicingRefinable, BaseMobDestructible]
   id: MobPossum
   description: '"O Possum! My Possum!" -- Walt Whitman, 1865'
   components:
@@ -2980,7 +2965,7 @@
 
 - type: entity
   name: raccoon
-  parent: [SimpleMobBase, StripableInventoryBase, BaseSlicingRefinable]
+  parent: [SimpleMobBase, StripableInventoryBase, BaseSlicingRefinable, BaseMobDestructible]
   id: MobRaccoon
   description: Trash panda!
   components:
@@ -3033,7 +3018,7 @@
 
 - type: entity
   name: fox
-  parent: [SimpleMobBase, StripableInventoryBase, BaseSlicingRefinable]
+  parent: [SimpleMobBase, StripableInventoryBase, BaseSlicingRefinable, BaseMobDestructible]
   id: MobFox
   description: They're a fox.
   components:
@@ -3115,7 +3100,7 @@
 
 - type: entity
   abstract: true
-  parent: [SimpleMobBase, StripableInventoryBase]
+  parent: [SimpleMobBase, StripableInventoryBase, BaseMobDestructible]
   id: MobCorgiBase
   name: corgi
   description: Finally, a space corgi!
@@ -3237,9 +3222,6 @@
     damageModifierSet: Infernal
   - type: Injurable
     damageContainer: BiologicalMetaphysical
-  - type: Temperature
-    currentTemperature: 310.15
-    specificHeat: 42
   - type: TemperatureDamage
     heatDamageThreshold: 4000 #They come from hell, so..
     coldDamageThreshold: 260
@@ -3279,7 +3261,7 @@
 
 - type: entity
   name: cat
-  parent: [SimpleMobBase, StripableInventoryBase, BaseSlicingRefinable]
+  parent: [SimpleMobBase, StripableInventoryBase, BaseSlicingRefinable, BaseMobDestructible]
   id: MobCat
   description: Feline pet, very funny.
   components:
@@ -3515,7 +3497,7 @@
 
 - type: entity
   name: sloth
-  parent: [SimpleMobBase, StripableInventoryBase, BaseSlicingRefinable]
+  parent: [SimpleMobBase, StripableInventoryBase, BaseSlicingRefinable, BaseMobDestructible]
   id: MobSloth
   description: Very slow animal. For people with low energy.
   components:
@@ -3572,7 +3554,7 @@
 
 - type: entity
   name: ferret
-  parent: [SimpleMobBase, StripableInventoryBase, BaseSlicingRefinable]
+  parent: [SimpleMobBase, StripableInventoryBase, BaseSlicingRefinable, BaseMobDestructible]
   id: MobFerret
   description: Just a silly little guy!
   components:
@@ -3626,7 +3608,7 @@
 
 - type: entity
   name: hamster
-  parent: [ SimpleMobBase, MobCombat, StripableInventoryBase, BaseSlicingRefinable]
+  parent: [ SimpleMobBase, MobCombat, StripableInventoryBase, BaseSlicingRefinable, MobNightVision]
   id: MobHamster
   description: A cute, fluffy, robust hamster.
   components:
@@ -3781,7 +3763,7 @@
 
 - type: entity
   name: pig
-  parent: [SimpleMobBase, StripableInventoryBase, BaseSlicingRefinable]
+  parent: [SimpleMobBase, StripableInventoryBase, BaseSlicingRefinable, BaseMobDestructible]
   id: MobPig
   description: Oink.
   components:
@@ -3852,7 +3834,7 @@
 
 - type: entity
   name: diona nymph
-  parent: [BaseMobAnimal, SimpleMobBase, StripableInventoryBase, BaseSlicingRefinable]
+  parent: [BaseMobAnimal, SimpleMobBase, StripableInventoryBase, BaseSlicingRefinable, BaseMobDestructible]
   id: MobDionaNymph
   description: It's like a cat, only.... branch-ier.
   components:
@@ -3916,10 +3898,7 @@
     speechSounds: Alto
     allowedEmotes: ['Chirp']
   - type: Vocal
-    sounds:
-      Male: UnisexDiona
-      Female: UnisexDiona
-      Unsexed: UnisexDiona
+    emoteSounds: UnisexDiona
   - type: Tag
     tags:
     - DoorBumpOpener
@@ -3943,7 +3922,7 @@
 
 - type: entity
   name: reindeer buck
-  parent: [ SimpleMobBase, MobCombat, BaseSlicingRefinable ]
+  parent: [ SimpleMobBase, MobCombat, BaseSlicingRefinable, BaseMobDestructible ]
   id: MobReindeerBuck
   description: You think it can pull a sleigh?
   components:

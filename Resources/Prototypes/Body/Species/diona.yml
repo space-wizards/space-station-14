@@ -153,10 +153,7 @@
     speechVerb: Plant
     allowedEmotes: ['Chirp']
   - type: Vocal
-    sounds:
-      Male: UnisexDiona
-      Female: UnisexDiona
-      Unsexed: UnisexDiona
+    emoteSounds: UnisexDiona
   - type: TypingIndicator
     proto: diona
   - type: BodyEmotes
@@ -281,7 +278,16 @@
     stages: [ Digestion, Bloodstream, Metabolites ]
 
 - type: entity
-  parent: OrganDionaBrain
+  abstract: true
+  id: BaseNymphingOrgan
+  components:
+  - type: Nymph
+    blacklist:
+      components:
+      - ChangelingTransform
+
+- type: entity
+  parent: [ OrganDionaBrain, BaseNymphingOrgan ]
   suffix: "Diona, Nymphing"
   id: OrganDionaBrainNymphing
   components:
@@ -290,7 +296,7 @@
     entityPrototype: OrganDionaNymphBrain
 
 - type: entity
-  parent: OrganDionaLungs
+  parent: [ OrganDionaLungs, BaseNymphingOrgan ]
   suffix: "Diona, Nymphing"
   id: OrganDionaLungsNymphing
   components:
@@ -298,7 +304,7 @@
     entityPrototype: OrganDionaNymphLungs
 
 - type: entity
-  parent: OrganDionaStomach
+  parent: [ OrganDionaStomach, BaseNymphingOrgan ]
   suffix: "Diona, Nymphing"
   id: OrganDionaStomachNymphing
   components:
