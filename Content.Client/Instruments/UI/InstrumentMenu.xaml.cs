@@ -5,6 +5,7 @@ using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Instruments.UI;
 
@@ -79,19 +80,30 @@ public sealed partial class InstrumentMenu : FancyWindow
     /// <param name="ctrl">The control used for this configuration.</param>
     public void AddConfigurationControl(string name, Control ctrl)
     {
-        var header = new Label();
-        var styleBox = new StyleBoxFlat();
-        var panel = new PanelContainer();
+        var formatted = new FormattedMessage();
+        var styleBox = new StyleBoxFlat
+        {
+            BorderColor = Color.FromHex("#3D4059"),
+            BorderThickness = new Thickness(2),
+        };
+
+        var panel = new PanelContainer
+        {
+            PanelOverride = styleBox,
+            Margin = new Thickness(0, 0, 0, 10),
+        };
+
+        var header = new RichTextLabel
+        {
+            StyleClasses = { StyleClass.LabelKeyText },
+            Margin = new Thickness(10, 0, 0, 0),
+        };
 
         ctrl.VerticalExpand = true;
         ctrl.Margin = new Thickness(5);
-        header.Text = name;
-        header.StyleClasses.Add(StyleClass.LabelKeyText);
-        header.Margin = new Thickness(10, 0, 0, 0);
-        styleBox.BorderColor = Color.FromHex("#3D4059");
-        styleBox.BorderThickness = new Thickness(2);
-        panel.PanelOverride = styleBox;
-        panel.Margin = new Thickness(0, 0, 0, 10);
+
+        formatted.AddMarkupOrThrow($"[bold]{name}[/bold]");
+        header.SetMessage(formatted, Color.FromHex("#A88B5E"));
 
         panel.AddChild(ctrl);
 
