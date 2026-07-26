@@ -9,6 +9,7 @@ namespace Content.Shared.Mindshield;
 
 public sealed partial class MindShieldSystem : EntitySystem
 {
+    [Dependency] private INetManager _net = default!;
     /// <summary>
     /// Status icon displayed in the sec HUD.
     /// </summary>
@@ -26,12 +27,18 @@ public sealed partial class MindShieldSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnMindshieldUnequip(Entity<MindShieldComponent> ent, ref ClothingGotUnequippedEvent args)
     {
+        if (_net.ApplyingState)
+            return;
+
         RefreshMindshieldStatus(args.Wearer);
     }
 
     [SubscribeLocalEvent]
     private void OnMindshieldEquip(Entity<MindShieldComponent> ent, ref ClothingGotEquippedEvent args)
     {
+        if (_net.ApplyingState)
+            return;
+
         RefreshMindshieldStatus(args.Wearer);
     }
 
