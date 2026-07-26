@@ -16,13 +16,13 @@ public sealed class MicrowaveRecipeTest : GameTest
 {
     [SidedDependency(Side.Server)] private readonly MicrowaveSystem _microwave = null!;
 
-    private static readonly string[] FoodRecipes = GameDataScrounger.PrototypesOfKind<FoodRecipePrototype>();
+    private static readonly string[] Recipes = GameDataScrounger.PrototypesOfKind<MicrowaveMealRecipePrototype>();
     private static readonly EntProtoId MicrowavePrototype = "KitchenMicrowave";
     private const uint MaxSeconds = 30;
 
     [Test]
     [TestOf(typeof(MicrowaveSystem))]
-    [TestCaseSource(nameof(FoodRecipes))]
+    [TestCaseSource(nameof(Recipes))]
     [Description("Checks whether a microwave recipe's ingredients will create that recipe in the microwave.")]
     public async Task AllRecipeIngredientsMakeRecipe(string protoKey)
     {
@@ -38,8 +38,8 @@ public sealed class MicrowaveRecipeTest : GameTest
                 $"Microwave entity {microwaveString} lacks a {nameof(MicrowaveComponent)}!");
 
             // Get the parameters we need to make this recipe.
-            var proto = SProtoMan.Index<FoodRecipePrototype>(protoKey);
-            var maxPortions = MaxSeconds / proto.CookTime;
+            var proto = SProtoMan.Index<MicrowaveMealRecipePrototype>(protoKey);
+            var maxPortions = MaxSeconds / proto.Time;
 
             // Ensure this recipe is provided to the microwave if this is a secret recipe.
             if (proto.SecretRecipe)
@@ -57,13 +57,13 @@ public sealed class MicrowaveRecipeTest : GameTest
         });
     }
 
-    private void ValidateRecipePortions(FoodRecipePrototype prototype, uint portions, EntityUid microwave)
+    private void ValidateRecipePortions(MicrowaveMealRecipePrototype prototype, uint portions, EntityUid microwave)
     {
         var ingredients = prototype.Ingredients * portions;
-        var cookTime = prototype.CookTime * portions;
+        var cookTime = prototype.Time * portions;
         var portionedRecipe = _microwave.GetRecipe(microwave, ingredients, cookTime);
         var microwaveString = SEntMan.ToPrettyString(microwave);
-        var recipeDebugString = $"Ingredients for {nameof(FoodRecipePrototype)} {prototype.ID}";
+        var recipeDebugString = $"Ingredients for {nameof(MicrowaveMealRecipePrototype)} {prototype.ID}";
 
         using (Assert.EnterMultipleScope())
         {

@@ -17,7 +17,7 @@ public sealed partial class RecipeManager : EntitySystem
     ///     are sorted first. We make the assumption that more complex recipes are more "specific"
     ///     than less complex recipes whose requirements are also fulfilled.
     /// </remarks>
-    public List<FoodRecipePrototype> Recipes { get; private set; } = new();
+    public List<MicrowaveMealRecipePrototype> Recipes { get; private set; } = new();
 
     public override void Initialize()
     {
@@ -29,14 +29,14 @@ public sealed partial class RecipeManager : EntitySystem
 
     private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
     {
-        if (args.WasModified<FoodRecipePrototype>())
+        if (args.WasModified<MicrowaveMealRecipePrototype>())
             ReloadRecipes();
     }
 
     private void ReloadRecipes()
     {
         Recipes = ProtoMan
-            .EnumeratePrototypes<FoodRecipePrototype>()
+            .EnumeratePrototypes<MicrowaveMealRecipePrototype>()
             .Where(x => !x.SecretRecipe)
             .OrderByDescending(x => x.Priority)
             .ThenByDescending(x => x.Ingredients.Count())

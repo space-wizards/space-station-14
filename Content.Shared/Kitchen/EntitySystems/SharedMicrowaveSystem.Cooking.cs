@@ -81,7 +81,7 @@ public abstract partial class SharedMicrowaveSystem
         var curTime = _timing.CurTime;
         var cookTime = component.CurrentCookTimerTime * component.CookTimeMultiplier;
 
-        AudioSys.PlayPredicted(component.StartCookingSound, uid, user);
+        AudioSys.PlayPredicted(component.BeginCookingSound, uid, user);
 
         var activeComp = new ActiveMicrowaveComponent
         {
@@ -203,7 +203,7 @@ public abstract partial class SharedMicrowaveSystem
     /// <param name="item">The entity to burn.</param>
     private void CreateBurnedMess(Entity<MicrowaveComponent> microwave, EntityUid item)
     {
-        var entProto = microwave.Comp.BadRecipeEntityId;
+        var entProto = microwave.Comp.FailureResult;
         var coords = Transform(microwave).Coordinates;
         var junk = PredictedSpawnAtPosition(entProto, coords);
         ContainerSys.Insert(junk, microwave.Comp.Storage);

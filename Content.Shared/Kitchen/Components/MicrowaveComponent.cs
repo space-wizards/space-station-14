@@ -57,16 +57,16 @@ public sealed partial class MicrowaveComponent : Component
     /// <remarks>
     ///     The microwave will burn items that pass the <see cref="BurnWhenCookedWhitelist" />.
     /// </remarks>
-    [DataField("failureResult")]
-    public EntProtoId BadRecipeEntityId = "FoodBadRecipe";
+    [DataField]
+    public EntProtoId FailureResult = "FoodBadRecipe";
 
-    #region audio
+    #region Audio
 
     /// <summary>
     ///     A sound that is played when the microwave is activated.
     /// </summary>
-    [DataField("beginCookingSound")]
-    public SoundSpecifier StartCookingSound = new SoundPathSpecifier("/Audio/Machines/microwave_start_beep.ogg");
+    [DataField]
+    public SoundSpecifier BeginCookingSound = new SoundPathSpecifier("/Audio/Machines/microwave_start_beep.ogg");
 
     /// <summary>
     ///     A sound that is played when the microwave finishes.
@@ -90,7 +90,7 @@ public sealed partial class MicrowaveComponent : Component
     [DataField]
     public SoundSpecifier LoopingSound = new SoundPathSpecifier("/Audio/Machines/microwave_loop.ogg");
 
-    #endregion audio
+    #endregion Audio
 
     /// <summary>
     ///     An audio stream for the microwave's "cooking" hum.

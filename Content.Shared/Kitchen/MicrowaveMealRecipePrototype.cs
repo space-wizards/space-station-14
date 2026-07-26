@@ -9,8 +9,8 @@ namespace Content.Shared.Kitchen;
 /// <summary>
 ///    A microwave-based cooking recipe to produce an entity.
 /// </summary>
-[Prototype("microwaveMealRecipe")]
-public sealed partial class FoodRecipePrototype : IPrototype
+[Prototype]
+public sealed partial class MicrowaveMealRecipePrototype : IPrototype
 {
     /// <inheritdoc />
     [ViewVariables]
@@ -23,7 +23,7 @@ public sealed partial class FoodRecipePrototype : IPrototype
     /// <remarks>
     ///     This is used to sort recipes in alphabetical order in the guidebook.
     /// </remarks>
-    [DataField("name")]
+    [DataField]
     private LocId _name = string.Empty;
 
     public string Name => Loc.GetString(_name);
@@ -49,8 +49,8 @@ public sealed partial class FoodRecipePrototype : IPrototype
     /// <summary>
     ///     The cooking time of this recipe.
     /// </summary>
-    [DataField("time")]
-    public uint CookTime { get; private set; } = 5;
+    [DataField]
+    public uint Time { get; private set; } = 5;
 
     /// <summary>
     ///     Is this recipe unavailable in normal circumstances?

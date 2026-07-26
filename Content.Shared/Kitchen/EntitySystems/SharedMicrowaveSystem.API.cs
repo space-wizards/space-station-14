@@ -58,7 +58,7 @@ public abstract partial class SharedMicrowaveSystem
     /// <param name="uid">The appliance to get recipes for.</param>
     /// <returns>A complete list of usable recipe prototypes.</returns>
     [PublicAPI]
-    public IReadOnlyList<FoodRecipePrototype> GetAvailableRecipes(EntityUid uid)
+    public IReadOnlyList<MicrowaveMealRecipePrototype> GetAvailableRecipes(EntityUid uid)
     {
         var getRecipesEv = new GetSecretRecipesEvent();
         RaiseLocalEvent(uid, ref getRecipesEv);
@@ -81,14 +81,14 @@ public abstract partial class SharedMicrowaveSystem
     /// <param name="cookTime">How long we are cooking for.</param>
     /// <returns>How many portions of the recipe can be made.</returns>
     [PublicAPI]
-    public static uint GetRecipePortions(FoodRecipePrototype recipe,
+    public static uint GetRecipePortions(MicrowaveMealRecipePrototype recipe,
         CookingIngredients ingredients,
         uint cookTime)
     {
         // Our cooking time must be a multiple of the recipe's cooking time.
         // For example: If a recipe takes 10 seconds to cook, then you can't make it with a 15 second timer.
         // However, if you use a 30 second timer, you could make three of that recipe on one timer.
-        if (cookTime % recipe.CookTime != 0)
+        if (cookTime % recipe.Time != 0)
             return 0;
 
         // TODO: there's actually a kind of nasty edge case microwave economics issue here,
@@ -97,7 +97,7 @@ public abstract partial class SharedMicrowaveSystem
         // thus, recipe detection might thing you have "more" ingredients than you actually do.
         //
         // moral of the story: I hate microwaves
-        var portionCount = cookTime / recipe.CookTime;
+        var portionCount = cookTime / recipe.Time;
         var ingredientPortions = ingredients.PortionForRecipe(recipe.Ingredients);
         portionCount = Math.Min(portionCount, ingredientPortions);
 

@@ -78,13 +78,13 @@ public sealed partial class ActiveMicrowaveComponent : Component
 /// </summary>
 [Serializable, NetSerializable]
 [DataDefinition]
-public partial struct PortionedRecipe(ProtoId<FoodRecipePrototype> recipe, uint count)
+public partial struct PortionedRecipe(ProtoId<MicrowaveMealRecipePrototype> recipe, uint count)
 {
     /// <summary>
     ///     The recipe to make.
     /// </summary>
     [DataField]
-    public ProtoId<FoodRecipePrototype> Recipe = recipe;
+    public ProtoId<MicrowaveMealRecipePrototype> Recipe = recipe;
 
     /// <summary>
     ///     The number of portions to make of this recipe.

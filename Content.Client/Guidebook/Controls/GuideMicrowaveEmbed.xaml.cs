@@ -39,10 +39,10 @@ public sealed partial class GuideMicrowaveEmbed : PanelContainer, IDocumentTag, 
 
     public GuideMicrowaveEmbed(string recipe) : this()
     {
-        GenerateControl(_prototype.Index<FoodRecipePrototype>(recipe));
+        GenerateControl(_prototype.Index<MicrowaveMealRecipePrototype>(recipe));
     }
 
-    public GuideMicrowaveEmbed(FoodRecipePrototype recipe) : this()
+    public GuideMicrowaveEmbed(MicrowaveMealRecipePrototype recipe) : this()
     {
         GenerateControl(recipe);
     }
@@ -66,7 +66,7 @@ public sealed partial class GuideMicrowaveEmbed : PanelContainer, IDocumentTag, 
             return false;
         }
 
-        if (!_prototype.TryIndex<FoodRecipePrototype>(id, out var recipe))
+        if (!_prototype.TryIndex<MicrowaveMealRecipePrototype>(id, out var recipe))
         {
             _sawmill.Error($"Specified recipe prototype \"{id}\" is not a valid recipe prototype");
             return false;
@@ -78,7 +78,7 @@ public sealed partial class GuideMicrowaveEmbed : PanelContainer, IDocumentTag, 
         return true;
     }
 
-    private void GenerateHeader(FoodRecipePrototype recipe)
+    private void GenerateHeader(MicrowaveMealRecipePrototype recipe)
     {
         var entity = _prototype.Index<EntityPrototype>(recipe.Result);
 
@@ -89,7 +89,7 @@ public sealed partial class GuideMicrowaveEmbed : PanelContainer, IDocumentTag, 
         ResultDescription.SetMarkup(entity.Description);
     }
 
-    private void GenerateSolidIngredients(FoodRecipePrototype recipe)
+    private void GenerateSolidIngredients(MicrowaveMealRecipePrototype recipe)
     {
         foreach (var (product, amount) in recipe.Ingredients.Solids.OrderByDescending(p => p.Value))
         {
@@ -122,7 +122,7 @@ public sealed partial class GuideMicrowaveEmbed : PanelContainer, IDocumentTag, 
         }
     }
 
-    private void GenerateLiquidIngredients(FoodRecipePrototype recipe)
+    private void GenerateLiquidIngredients(MicrowaveMealRecipePrototype recipe)
     {
         foreach (var (product, amount) in recipe.Ingredients.Reagents.OrderByDescending(p => p.Value))
         {
@@ -165,7 +165,7 @@ public sealed partial class GuideMicrowaveEmbed : PanelContainer, IDocumentTag, 
         }
     }
 
-    private void GenerateStackIngredients(FoodRecipePrototype recipe)
+    private void GenerateStackIngredients(MicrowaveMealRecipePrototype recipe)
     {
         foreach (var (product, amount) in recipe.Ingredients.Stacks.OrderByDescending(p => p.Value))
         {
@@ -200,23 +200,23 @@ public sealed partial class GuideMicrowaveEmbed : PanelContainer, IDocumentTag, 
         }
     }
 
-    private void GenerateIngredients(FoodRecipePrototype recipe)
+    private void GenerateIngredients(MicrowaveMealRecipePrototype recipe)
     {
         GenerateLiquidIngredients(recipe);
         GenerateStackIngredients(recipe);
         GenerateSolidIngredients(recipe);
     }
 
-    private void GenerateCookTime(FoodRecipePrototype recipe)
+    private void GenerateCookTime(MicrowaveMealRecipePrototype recipe)
     {
         var msg = new FormattedMessage();
-        msg.AddMarkupOrThrow(Loc.GetString("guidebook-microwave-cook-time", ("time", recipe.CookTime)));
+        msg.AddMarkupOrThrow(Loc.GetString("guidebook-microwave-cook-time", ("time", recipe.Time)));
         msg.Pop();
 
         CookTimeLabel.SetMessage(msg);
     }
 
-    private void GenerateControl(FoodRecipePrototype recipe)
+    private void GenerateControl(MicrowaveMealRecipePrototype recipe)
     {
         GenerateHeader(recipe);
         GenerateIngredients(recipe);
