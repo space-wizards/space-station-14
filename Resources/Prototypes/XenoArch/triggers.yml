@@ -363,7 +363,7 @@
   tip: xenoarch-trigger-tip-stamp
   components:
   - type: XATInteractWith
-    interactionTime: 0.5
+    interactionTime: 1.5
     successTriggerSound:
       path: /Audio/Items/Stamp/thick_stamp_sub.ogg
       params:
