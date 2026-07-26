@@ -45,7 +45,7 @@
   suffix: Admeme
   components:
   - type: AutoRecharge
-    rechargeDuration: 1
+    rechargeDuration: 0.1
 
 - type: entity
   parent: SprayPainter
