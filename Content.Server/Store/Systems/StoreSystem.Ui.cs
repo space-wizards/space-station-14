@@ -1,7 +1,7 @@
 using System.Linq;
 using Content.Server.Actions;
 using Content.Server.Administration.Logs;
-using Content.Server.Mindshield;
+using Content.Shared.Mindshield;
 using Content.Server.Stack;
 using Content.Server.Store.Components;
 using Content.Shared.Actions;
