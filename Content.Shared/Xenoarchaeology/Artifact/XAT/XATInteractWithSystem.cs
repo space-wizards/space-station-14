@@ -50,7 +50,7 @@ public sealed partial class XATInteractWithSystem : BaseXATSystem<XATInteractWit
     }
 
     /// <summary>
-    /// Trigger the node if the entity used in interaction matches the whitelist.
+    /// Check against the whitelist, and if item is powerable make sure it is. If conditions are met, begin doafter.
     /// </summary>
     private void OnInteractUsing(Entity<XenoArtifactComponent> artifact, Entity<XATInteractWithComponent, XenoArtifactNodeComponent> node, ref InteractUsingEvent args)
     {

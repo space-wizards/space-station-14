@@ -385,3 +385,6 @@
       components:
       - Defibrillator
   - type: XATShock
+  - type: XATDamageThresholdReached
+    typesNeeded:
+      Shock: 10
