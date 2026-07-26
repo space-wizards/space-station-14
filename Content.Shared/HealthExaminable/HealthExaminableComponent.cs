@@ -10,6 +10,9 @@ public sealed partial class HealthExaminableComponent : Component
     /// <summary>
     /// Damage thresholds between examinable damage states.
     /// </summary>
+    /// <remarks>
+    /// Must be sorted from lowest to highest for correct work.
+    /// </remarks>
     [DataField]
     public FixedPoint2[] Thresholds = [
         8,

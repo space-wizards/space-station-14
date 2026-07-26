@@ -23,6 +23,8 @@ public sealed partial class HealthExaminableSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnComponentInit(Entity<HealthExaminableComponent> ent, ref ComponentInit args)
     {
+        // This catches and sorts thresholds that are unsorted in YAML.
+        // If this causes a test failure, you must sort your thresholds in YAML from lowest to highest.
         ent.Comp.Thresholds.Sort();
     }
 
