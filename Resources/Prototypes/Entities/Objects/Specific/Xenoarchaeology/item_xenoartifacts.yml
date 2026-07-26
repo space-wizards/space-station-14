@@ -90,7 +90,7 @@
       min: 0
       max: 0
     unlockStateDuration: 3
-    unlockStateRefactory: 1
+    unlockStateRefractory: 1
 
 - type: entity
   id: ArtifactFragment
