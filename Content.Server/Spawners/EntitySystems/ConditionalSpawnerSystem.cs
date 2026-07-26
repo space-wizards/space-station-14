@@ -150,7 +150,7 @@ public sealed partial class ConditionalSpawnerSystem : EntitySystem
         foreach (var protoId in spawns)
         {
             var prototype = _prototypeManager.Index(protoId);
-            if (!prototype.Components.TryGetComponent<StackComponent>(Factory, out var stack))
+            if (!prototype.TryComp<StackComponent>(out var stack, Factory))
             {
                 nonStackable.Add(protoId);
                 continue;
@@ -222,7 +222,7 @@ public sealed partial class ConditionalSpawnerSystem : EntitySystem
 
     private MapCoordinates GetRandomOffset(MapCoordinates coords, float offset)
     {
-        var vOffset = _robustRandom.NextVector2(-offset, offset);
+        var vOffset = _robustRandom.NextVector2Box(-offset, offset);
         return coords.Offset(vOffset);
     }
 }
