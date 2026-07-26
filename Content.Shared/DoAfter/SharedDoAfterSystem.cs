@@ -42,8 +42,6 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         SubscribeLocalEvent<DoAfterComponent, ComponentHandleState>(OnDoAfterHandleState);
         SubscribeLocalEvent<DoAfterComponent, EffectiveMoverChangedEvent>(OnEffectiveMoverChanged);
         SubscribeLocalEvent<GetInteractingEntitiesEvent>(OnGetInteractingEntities);
-        SubscribeLocalEvent<DoAfterComponent, SleepStateChangedEvent>(OnFellAsleep);
-        SubscribeLocalEvent<DoAfterComponent, StunnedEvent>(OnStunned);
     }
 
     private void OnEffectiveMoverChanged(EntityUid uid, DoAfterComponent comp, ref EffectiveMoverChangedEvent args)
@@ -66,6 +64,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             Dirty(uid, comp);
     }
 
+    [SubscribeLocalEvent]
     private void OnStunned(Entity<DoAfterComponent> ent, ref StunnedEvent args)
     {
         var dirty = false;
@@ -82,6 +81,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             Dirty(ent);
     }
 
+    [SubscribeLocalEvent]
     private void OnFellAsleep(Entity<DoAfterComponent> ent, ref SleepStateChangedEvent args)
     {
         if (!args.FellAsleep)
