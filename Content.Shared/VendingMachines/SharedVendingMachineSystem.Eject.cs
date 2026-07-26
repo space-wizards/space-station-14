@@ -181,7 +181,9 @@ public abstract partial class SharedVendingMachineSystem
             return;
 
         ejectComponent.DenyEnd = Timing.CurTime + ejectComponent.DenyDelay;
-        Audio.PlayPredicted(ejectComponent.SoundDeny, entity.Owner, user, AudioParams.Default.WithVolume(-2f));
+        var audioParams = ejectComponent.SoundDeny?.Params ?? AudioParams.Default;
+        audioParams = audioParams.AddVolume(-2f);
+        Audio.PlayPredicted(ejectComponent.SoundDeny, entity.Owner, user, audioParams);
         OnEjectStateChanged(entity, ejectComponent);
         Dirty(entity.Owner, ejectComponent);
     }
