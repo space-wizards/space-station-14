@@ -108,7 +108,7 @@ public sealed partial class ImmovableRodSystem : EntitySystem
             return;
         }
 
-        // dont delete/hurt self if polymoprhed into a rod
+        // Don't delete/hurt self if polymorphed into a rod
         if (TryComp<PolymorphedEntityComponent>(uid, out var polymorphed))
         {
             if (polymorphed.Parent == ent)
@@ -119,21 +119,22 @@ public sealed partial class ImmovableRodSystem : EntitySystem
         if (HasComp<BodyComponent>(ent))
         {
             component.MobCount++;
-            _popup.PopupEntity(Loc.GetString("immovable-rod-penetrated-mob", ("rod", uid), ("mob", ent)), uid, PopupType.LargeCaution);
 
-            if (!component.ShouldGib)
+            var coords = Transform(uid).Coordinates;
+
+            _adminLogger.Add(LogType.Gib, LogImpact.Medium, $"Entity {ToPrettyString(uid)} hit {ToPrettyString(ent)} at X:{coords.X} Y:{coords.Y}");
+
+            if (!component.ShouldGib || !_destructible.DestroyEntity(ent))
             {
-                if (component.Damage == null)
+                if (component.Damage is null)
                     return;
 
                 _damageable.TryChangeDamage(ent, component.Damage, ignoreResistances: true);
                 return;
             }
 
-            var coords = Transform(uid).Coordinates;
-            _adminLogger.Add(LogType.Gib, LogImpact.Low, $"Entity {ToPrettyString(uid)} gibbed {ToPrettyString(ent)} at X:{coords.X} Y:{coords.Y}");
-
             _gibbing.Gib(ent);
+            _popup.PopupEntity(Loc.GetString("immovable-rod-penetrated-mob", ("rod", uid), ("mob", ent)), uid, PopupType.LargeCaution);
             return;
         }
 
