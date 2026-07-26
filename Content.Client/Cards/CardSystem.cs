@@ -101,15 +101,15 @@ public sealed partial class CardSystem : SharedCardSystem
     /// <param name="angle">The angle of the card along the fan, in radians, where 0 is centered.</param>
     /// <param name="radius">The radius of the fan's arc.</param>
     /// <returns>The local position offset for the card. In pixel coordinates scale.</returns>
-    public static Vector2 FanPosition(double angle, float radius) =>
-        new((float)Math.Sin(angle) * radius, (float)Math.Cos(angle) * radius - radius * (3f / 4f));
+    public static Vector2 FanPosition(float angle, float radius) =>
+        new(MathF.Sin(angle) * radius, MathF.Cos(angle) * radius - radius * (3f / 4f));
 
     /// <summary>
     /// Calculates the radius of the fan arc based on the number of cards.
     /// </summary>
     /// <param name="count">The total number of cards in the fan.</param>
     /// <returns>The fan radius, or 0 if there is only one card, since a single card cannot be fanned.</returns>
-    public static float FanRadius(int count) => count <= 1 ? 0f : (float)Math.Sqrt(count / 20f);
+    public static float FanRadius(int count) => count <= 1 ? 0f : MathF.Sqrt(count / 20f);
 
     /// <summary>
     /// Calculates the position and rotation of a card at a given index within a fanned hand,
@@ -135,7 +135,7 @@ public sealed partial class CardSystem : SharedCardSystem
     public static (Vector2, Angle) GetCardPosRot(int idx, int count, float radius)
     {
         // Semi-circle from left to right
-        float angle = (idx - count / 2.0f + 0.5f) / count * (float)Math.PI;
+        float angle = (idx - count / 2.0f + 0.5f) / count * MathF.PI;
         var position = FanPosition(angle, radius);
         var rotation = new Angle(-angle);
         return (position, rotation);
