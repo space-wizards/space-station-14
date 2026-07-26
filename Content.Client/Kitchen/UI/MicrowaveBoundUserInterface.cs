@@ -9,21 +9,16 @@ using Robust.Client.UserInterface;
 namespace Content.Client.Kitchen.UI;
 
 [UsedImplicitly]
-public sealed partial class MicrowaveBoundUserInterface : BoundUserInterface
+public sealed partial class MicrowaveBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [Dependency] private SpriteSystem _sprite = default!;
-    private readonly MicrowaveSystem _microwave;
+    [Dependency] private MicrowaveSystem _microwave = default!;
 
     [ViewVariables]
     private MicrowaveMenu? _menu;
 
     [ViewVariables]
     private readonly Dictionary<int, EntityUid> _solids = new();
-
-    public MicrowaveBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-        _microwave = EntMan.System<MicrowaveSystem>();
-    }
 
     protected override void Open()
     {
