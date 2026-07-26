@@ -44,8 +44,9 @@ namespace Content.Shared.Nuke
     {
         public bool DiskInserted;
         public NukeStatus Status;
-        public int RemainingTime;
-        public int CooldownTime;
+        public TimeSpan ArmingTime;
+        public TimeSpan? RemainingTime;
+        public TimeSpan? CooldownTime;
         public bool IsAnchored;
         public int EnteredCodeLength;
         public int MaxCodeLength;
