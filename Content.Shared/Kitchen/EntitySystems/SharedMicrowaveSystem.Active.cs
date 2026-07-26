@@ -47,26 +47,6 @@ public abstract partial class SharedMicrowaveSystem
     }
 
     /// <summary>
-    ///     Adjusts a microwave's visuals, audio, and power draw when deactivated.
-    /// </summary>
-    private void DeactivateMicrowaveCycle(Entity<MicrowaveComponent> ent)
-    {
-        SetAppearance(ent.AsNullable(), MicrowaveVisualState.Idle);
-        _powerState.SetWorkingState(ent.Owner, false);
-
-        // TODO: Completely redo our Audio API and prediction because it doesn't work for VARIOUS reasons
-        // TODO: See e#6722 for some details
-        PredictedQueueDel(ent.Comp.PlayingStream);
-        ent.Comp.PlayingStream = null;
-        Dirty(ent);
-
-        foreach (var solid in GetMicrowaveContents(ent.AsNullable()))
-        {
-            RemComp<ActivelyMicrowavedComponent>(solid);
-        }
-    }
-
-    /// <summary>
     ///     Adds ActivelyMicrowavedComponent to entities inserted into an active microwave.
     /// </summary>
     [SubscribeLocalEvent]
@@ -75,8 +55,7 @@ public abstract partial class SharedMicrowaveSystem
         if (_timing.ApplyingState)
             return;
 
-        var microwavedComp = AddComp<ActivelyMicrowavedComponent>(args.Entity);
-        microwavedComp.Microwave = ent.Owner;
+        BeginActivelyMicrowaving(args.Entity, ent.Owner);
     }
 
     /// <summary>
@@ -119,5 +98,35 @@ public abstract partial class SharedMicrowaveSystem
                 return;
             }
         }
+    }
+
+    /// <summary>
+    ///     Adjusts a microwave's visuals, audio, and power draw when deactivated.
+    /// </summary>
+    private void DeactivateMicrowaveCycle(Entity<MicrowaveComponent> ent)
+    {
+        SetAppearance(ent.AsNullable(), MicrowaveVisualState.Idle);
+        _powerState.SetWorkingState(ent.Owner, false);
+
+        // TODO: Completely redo our Audio API and prediction because it doesn't work for VARIOUS reasons
+        // TODO: See e#6722 for some details
+        PredictedQueueDel(ent.Comp.PlayingStream);
+        ent.Comp.PlayingStream = null;
+        Dirty(ent);
+
+        foreach (var solid in GetMicrowaveContents(ent.AsNullable()))
+        {
+            RemComp<ActivelyMicrowavedComponent>(solid);
+        }
+    }
+
+    /// <summary>
+    ///     Add ActivelyMicrowavedComponent to items that are being actively microwaved.
+    /// </summary>
+    /// <param name="uid">The entity to add this component to.</param>
+    private void BeginActivelyMicrowaving(EntityUid uid, EntityUid? microwave)
+    {
+        var comp = new ActivelyMicrowavedComponent { Microwave = microwave };
+        AddComp(uid, comp);
     }
 }
