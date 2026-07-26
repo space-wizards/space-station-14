@@ -23,12 +23,10 @@ namespace Content.Client.Tabletop;
 [UsedImplicitly]
 public sealed partial class TabletopSystem : SharedTabletopSystem
 {
-    [Dependency] private IInputManager _inputManager = default!;
-    [Dependency] private IUserInterfaceManager _uiManager = default!;
-    [Dependency] private IPlayerManager _playerManager = default!;
     [Dependency] private IGameTiming _gameTiming = default!;
-    [Dependency] private AppearanceSystem _appearance = default!;
-    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private IInputManager _inputManager = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private IUserInterfaceManager _uiManager = default!;
     [Dependency] private SpriteSystem _sprite = default!;
 
     private EntityUid? _draggedEntity; // Entity being dragged
@@ -36,6 +34,7 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
     private BaseWindow? _window; // Current open tabletop window (only allow one at a time)
     private EntityUid? _table; // The table entity of the currently open game session
 
+    /// <inheritdoc />
     public override void Initialize()
     {
         base.Initialize();
@@ -47,13 +46,44 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
             .Register<TabletopSystem>();
     }
 
-    [SubscribeLocalEvent]
-    private void HandleDraggableRemoved(Entity<TabletopDraggableComponent> ent, ref ComponentRemove args)
+    #region Overrides
+    /// <inheritdoc />
+    protected override void CopyEntity(EntityUid target, Entity<TabletopGameComponent> ent, EntityUid user)
     {
-        if (_draggedEntity == ent)
-            StopDragging(false);
+        if (ent.Comp.Position is not { } position)
+            return;
+
+        // Delay count check - prints should happen last.
+        if (ent.Comp.Entities.Count >= MaxTabletopPieces)
+        {
+            Popup.PopupEntity(Loc.GetString("tabletop-cant-add-more"), ent, user);
+            return;
+        }
+
+        var meta = MetaData(target);
+
+        var hologram = EntityManager.PredictedSpawn(GamePiecePrototype, position.Offset(-1, 0));
+
+        // Make sure the entity can be dragged and can be removed, move it into the board game world and add it to the Entities hashmap.
+        EnsureComp<TabletopDraggableComponent>(hologram);
+        EnsureComp<TabletopHologramComponent>(hologram);
+        Meta.SetEntityName(hologram, Name(target, meta));
+
+        // Try to get existing tabletop visuals if we can (copying existing pieces), otherwise get this entity's prototype of this object.
+        if (AppearanceQuery.TryComp(target, out AppearanceComponent? appearance)
+            && Appearance.TryGetData<string>(target, TabletopItemVisuals.Prototype, out var appearProto, appearance))
+        {
+            Appearance.SetData(hologram, TabletopItemVisuals.Prototype, appearProto);
+        }
+        else if (meta.EntityPrototype is { } metaProto)
+        {
+            Appearance.SetData(hologram, TabletopItemVisuals.Prototype, metaProto.ID);
+        }
+
+        Popup.PopupEntity(Loc.GetString("tabletop-added-piece"), ent, user);
     }
 
+    /// <inheritdoc />
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -105,24 +135,18 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
         }
     }
 
-    #region Event handlers
-
-    /// <summary>
-    /// Runs when the player presses the "Play Game" verb on a tabletop game.
-    /// Opens a viewport where they can then play the game.
-    /// </summary>
-    [SubscribeNetworkEvent]
-    private void OnTabletopPlay(TabletopPlayEvent msg)
+    /// <inheritdoc />
+    protected override void OnTabletopPlay(EntityUid tableUid, EntityUid cameraUid, string title, Vector2i size)
     {
         // Close the currently opened window, if it exists
         _window?.Close();
 
-        _table = GetEntity(msg.TableUid);
+        _table = tableUid;
 
         // Get the camera entity that the server has created for us
-        var camera = GetEntity(msg.CameraUid);
+        var camera = cameraUid;
 
-        if (!TryComp<EyeComponent>(camera, out var eyeComponent))
+        if (!TryComp<EyeComponent>(cameraUid, out var eyeComponent))
         {
             // If there is no eye, print error and do not open any window
             Log.Error("Camera entity does not have eye component!");
@@ -130,16 +154,18 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
         }
 
         // Create a window to contain the viewport
-        _window = new TabletopWindow(eyeComponent.Eye, (msg.Size.X, msg.Size.Y))
+        _window = new TabletopWindow(eyeComponent.Eye, (size.X, size.Y))
         {
             MinWidth = 500,
             MinHeight = 436,
-            Title = msg.Title
+            Title = title
         };
 
         _window.OnClose += OnWindowClose;
     }
+    #endregion Overrides
 
+    #region Event handlers
     private void OnWindowClose()
     {
         if (_table != null)
@@ -151,6 +177,9 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
         _window = null;
     }
 
+    /// <summary>
+    /// Basic left click handler.
+    /// </summary>
     private bool OnUse(in PointerInputCmdArgs args)
     {
         if (!_gameTiming.IsFirstTimePredicted)
@@ -159,10 +188,14 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
         return args.State switch
         {
             BoundKeyState.Down => OnMouseDown(args),
-            BoundKeyState.Up => OnMouseUp(args),
+            BoundKeyState.Up => OnMouseUp(),
             _ => false
         };
     }
+
+    /// <summary>
+    /// Basic right click handler.
+    /// </summary>
     private bool OnUseSecondary(in PointerInputCmdArgs args)
     {
         if (_table == null || _draggedEntity != null)
@@ -174,6 +207,9 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
         return false;
     }
 
+    /// <summary>
+    /// Left click down: starts a drag.
+    /// </summary>
     private bool OnMouseDown(in PointerInputCmdArgs args)
     {
         // Return if no player entity
@@ -198,12 +234,18 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
         return true;
     }
 
-    private bool OnMouseUp(in PointerInputCmdArgs args)
+    /// <summary>
+    /// Left click up: releases a dragged piece.
+    /// </summary>
+    private bool OnMouseUp()
     {
         StopDragging();
         return false;
     }
 
+    /// <summary>
+    /// Right click down: opens a context menu if not dragging.
+    /// </summary>
     private bool OnRightMouseDown(in PointerInputCmdArgs args)
     {
         // Return if no player entity
@@ -226,6 +268,13 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
         return true;
     }
 
+    [SubscribeLocalEvent]
+    private void HandleDraggableRemoved(Entity<TabletopDraggableComponent> ent, ref ComponentRemove args)
+    {
+        if (_draggedEntity == ent)
+            StopDragging(false);
+    }
+
     /// <summary>
     /// Hologram handler: sets up the hologram to mimic another entity's sprite.
     /// </summary>
@@ -237,7 +286,7 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
 
         // TODO: maybe this can work more nicely, by maybe only having to set the item to "being dragged", and have
         //  the appearance handle the rest
-        if (_appearance.TryGetData<string>(ent, TabletopItemVisuals.Prototype, out var protoId, args.Component)
+        if (Appearance.TryGetData<string>(ent, TabletopItemVisuals.Prototype, out var protoId, args.Component)
             && ent.Comp.LastPrototype != protoId)
         {
             ent.Comp.LastPrototype = protoId;
@@ -251,10 +300,10 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
             }
 
             // Reset our scale/draw depth after copying our new sprite, if the data exists.
-            if (_appearance.TryGetData<Vector2>(ent, TabletopItemVisuals.Scale, out var scale, args.Component))
+            if (Appearance.TryGetData<Vector2>(ent, TabletopItemVisuals.Scale, out var scale, args.Component))
                 _sprite.SetScale((ent, args.Sprite), scale);
 
-            if (_appearance.TryGetData<int>(ent, TabletopItemVisuals.DrawDepth, out var drawDepth, args.Component))
+            if (Appearance.TryGetData<int>(ent, TabletopItemVisuals.DrawDepth, out var drawDepth, args.Component))
                 _sprite.SetDrawDepth((ent, args.Sprite), drawDepth);
         }
     }
@@ -267,10 +316,10 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
 
         // TODO: maybe this can work more nicely, by maybe only having to set the item to "being dragged", and have
         //  the appearance handle the rest
-        if (_appearance.TryGetData<Vector2>(ent, TabletopItemVisuals.Scale, out var scale, args.Component))
+        if (Appearance.TryGetData<Vector2>(ent, TabletopItemVisuals.Scale, out var scale, args.Component))
             _sprite.SetScale((ent, args.Sprite), scale);
 
-        if (_appearance.TryGetData<int>(ent, TabletopItemVisuals.DrawDepth, out var drawDepth, args.Component))
+        if (Appearance.TryGetData<int>(ent, TabletopItemVisuals.DrawDepth, out var drawDepth, args.Component))
             _sprite.SetDrawDepth((ent, args.Sprite), drawDepth);
     }
 
@@ -300,7 +349,7 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
         // Set the dragging player on the component to noone
         if (broadcast && _draggedEntity != null && HasComp<TabletopDraggableComponent>(_draggedEntity.Value))
         {
-            RaisePredictiveEvent(new TabletopMoveEvent(GetNetEntity(_draggedEntity.Value), _transform.GetMapCoordinates(_draggedEntity.Value), GetNetEntity(_table!.Value)));
+            RaisePredictiveEvent(new TabletopMoveEvent(GetNetEntity(_draggedEntity.Value), Xform.GetMapCoordinates(_draggedEntity.Value), GetNetEntity(_table!.Value)));
             RaisePredictiveEvent(new TabletopDraggingPlayerChangedEvent(GetNetEntity(_draggedEntity.Value), false));
         }
 

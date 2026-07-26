@@ -49,21 +49,15 @@ public sealed partial class TabletopGameComponent : Component
     public bool HasSession => Position != null;
 
     /// <summary>
-    /// The number of entities used in the session.
-    /// Useful for the client.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public int NumBoardEntities;
-
-    /// <summary>
     /// The set of players currently playing this tabletop game.
     /// </summary>
     [DataField(serverOnly: true), ViewVariables(VVAccess.ReadOnly)]
     public Dictionary<ICommonSession, TabletopSessionPlayerData> Players = [];
 
     /// <summary>
-    /// All entities bound to this session. If you create an entity for this session, you have to add it here.
+    /// All non-camera entities bound to this session. If you create an entity for this session, you have to add it here.
     /// </summary>
-    [DataField(serverOnly: true), ViewVariables(VVAccess.ReadOnly)]
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    [AutoNetworkedField]
     public HashSet<EntityUid> Entities = [];
 }

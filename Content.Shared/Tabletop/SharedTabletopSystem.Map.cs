@@ -3,9 +3,9 @@ using Content.Shared.GameTicking;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 
-namespace Content.Server.Tabletop;
+namespace Content.Shared.Tabletop;
 
-public sealed partial class TabletopSystem
+public abstract partial class SharedTabletopSystem
 {
     /// <summary>
     ///     Separation between tabletops in the tabletop map.
