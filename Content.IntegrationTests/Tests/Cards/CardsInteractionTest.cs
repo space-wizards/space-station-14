@@ -9,7 +9,7 @@ namespace Content.IntegrationTests.Cards;
 [TestFixture]
 public sealed class CardsInteractionTest : InteractionTest
 {
-    private const string CardsProtoId = "cardDeck";
+    private const string CardsProtoId = "CardDeck";
 
     [Test]
     public async Task FlipCycleOnUseInHand()
