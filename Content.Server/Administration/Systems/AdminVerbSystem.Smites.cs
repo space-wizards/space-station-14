@@ -161,7 +161,7 @@ public sealed partial class AdminVerbSystem
                 var board = Spawn("ChessBoard", xform.Coordinates);
                 var tabletopGame = Comp<TabletopGameComponent>(board);
                 _tabletopSystem.EnsureSession((board, tabletopGame));
-                _transformSystem.SetMapCoordinates(args.Target, tabletopGame.Position);
+                _transformSystem.SetMapCoordinates(args.Target, tabletopGame.Position!.Value);
                 _transformSystem.SetWorldRotationNoLerp((args.Target, xform), Angle.Zero);
             },
             Impact = LogImpact.Extreme,

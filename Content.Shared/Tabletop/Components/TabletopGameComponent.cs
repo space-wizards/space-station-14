@@ -41,12 +41,12 @@ public sealed partial class TabletopGameComponent : Component
     /// Useful for both server and client.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public MapCoordinates Position;
+    public MapCoordinates? Position;
 
     /// <summary>
     /// Convenience field, returns whether or not the game has an active session.
     /// </summary>
-    public bool HasSession => Position.MapId != MapId.Nullspace;
+    public bool HasSession => Position != null;
 
     /// <summary>
     /// The number of entities used in the session.

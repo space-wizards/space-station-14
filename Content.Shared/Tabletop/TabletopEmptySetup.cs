@@ -8,6 +8,9 @@ public sealed partial class TabletopEmptySetup : TabletopSetup
 {
     public override void SetupTabletop(TabletopGameComponent tabletop, IEntityManager entityManager)
     {
-        SpawnPiece(BoardPrototype, tabletop.Position, tabletop, entityManager);
+        if (tabletop.Position is not { } position)
+            return;
+
+        SpawnPiece(BoardPrototype, position, tabletop, entityManager);
     }
 }

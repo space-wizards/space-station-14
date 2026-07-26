@@ -26,9 +26,12 @@ public sealed partial class TabletopCheckerSetup : TabletopSetup
 
     public override void SetupTabletop(TabletopGameComponent tabletop, IEntityManager entityManager)
     {
-        SpawnPiece(BoardPrototype, tabletop.Position, tabletop, entityManager);
+        if (tabletop.Position is not { } position)
+            return;
 
-        SpawnPieces(tabletop, entityManager, tabletop.Position.Offset(-4.5f, 3.5f));
+        SpawnPiece(BoardPrototype, position, tabletop, entityManager);
+
+        SpawnPieces(tabletop, entityManager, position.Offset(-4.5f, 3.5f));
     }
 
     private void SpawnPieces(TabletopGameComponent tabletop, IEntityManager entityManager, MapCoordinates left)

@@ -12,11 +12,14 @@ public sealed partial class TabletopChessSetup : TabletopSetup
 
     public override void SetupTabletop(TabletopGameComponent tabletop, IEntityManager entityManager)
     {
-        var chessboard = entityManager.SpawnEntity(BoardPrototype, tabletop.Position);
+        if (tabletop.Position is not { } position)
+            return;
+
+        var chessboard = entityManager.SpawnEntity(BoardPrototype, position);
 
         tabletop.Entities.Add(chessboard);
 
-        SpawnPieces(tabletop, entityManager, tabletop.Position.Offset(-4.5f, 3.5f));
+        SpawnPieces(tabletop, entityManager, position.Offset(-4.5f, 3.5f));
     }
 
     private void SpawnPieces(TabletopGameComponent tabletop, IEntityManager entityManager, MapCoordinates topLeft, float separation = 1f)

@@ -128,7 +128,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
     private void CopyEntity(EntityUid target, Entity<TabletopGameComponent> ent, EntityUid user)
     {
         int entCount;
-        if (!ent.Comp.HasSession)
+        if (ent.Comp.Position is not { } position)
             return;
 
         entCount = _net.IsServer ? ent.Comp.Entities.Count : ent.Comp.NumBoardEntities;
@@ -142,7 +142,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
 
         var meta = MetaData(target);
 
-        var hologram = EntityManager.PredictedSpawn(GamePiecePrototype, ent.Comp.Position.Offset(-1, 0));
+        var hologram = EntityManager.PredictedSpawn(GamePiecePrototype, position.Offset(-1, 0));
 
         // Make sure the entity can be dragged and can be removed, move it into the board game world and add it to the Entities hashmap.
         EnsureComp<TabletopDraggableComponent>(hologram);

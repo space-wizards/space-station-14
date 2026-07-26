@@ -56,7 +56,7 @@ public sealed partial class TabletopSystem
 
         tabletop.Players.Clear();
         tabletop.Entities.Clear();
-        tabletop.Position = MapCoordinates.Nullspace;
+        tabletop.Position = null;
         Dirty(uid, tabletop);
     }
 

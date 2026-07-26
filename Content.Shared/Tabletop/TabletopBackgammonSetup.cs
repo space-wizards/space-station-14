@@ -18,7 +18,10 @@ public sealed partial class TabletopBackgammonSetup : TabletopSetup
 
     public override void SetupTabletop(TabletopGameComponent tabletop, IEntityManager entityManager)
     {
-        entityManager.SpawnEntity(BoardPrototype, tabletop.Position);
+        if (tabletop.Position is not { } position)
+            return;
+
+        entityManager.SpawnEntity(BoardPrototype, position);
 
         const float borderLengthX = 7.35f; //BORDER
         const float borderLengthY = 5.60f; //BORDER
@@ -47,7 +50,7 @@ public sealed partial class TabletopBackgammonSetup : TabletopSetup
         {
             var pieceProtoId = isBlackPiece ? BlackPiecePrototype : WhitePiecePrototype;
             for (var i = 0; i < numberOfPieces; i++)
-                SpawnPiece(pieceProtoId, tabletop.Position.Offset(GetXPosition(distanceFromSide, isLeftSide), GetYPosition(i, isTop)), tabletop, entityManager);
+                SpawnPiece(pieceProtoId, position.Offset(GetXPosition(distanceFromSide, isLeftSide), GetYPosition(i, isTop)), tabletop, entityManager);
         }
 
         // top left
