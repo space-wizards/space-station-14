@@ -9,7 +9,7 @@ namespace Content.Shared.Revolutionary.Components;
 /// <summary>
 /// Used for marking regular revs as well as storing icon prototypes so you can see fellow revs.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedRevolutionarySystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(RevolutionarySystem))]
 public sealed partial class RevolutionaryComponent : Component
 {
     /// <summary>

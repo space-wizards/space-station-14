@@ -11,7 +11,7 @@ using Content.Shared.Stunnable;
 
 namespace Content.Shared.Implants;
 
-public abstract partial class MindshieldImplantSystem : EntitySystem
+public sealed partial class MindshieldImplantSystem : EntitySystem
 {
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedStunSystem _sharedStun = default!;
@@ -36,8 +36,7 @@ public abstract partial class MindshieldImplantSystem : EntitySystem
 
         if (TryComp<RevolutionaryComponent>(uid, out var comp))
         {
-            if (_mind.TryGetMind(uid, out var mindId, out _) &&
-            _role.MindRemoveRole<RevolutionaryRoleComponent>(mindId))
+            if (_mind.TryGetMind(uid, out var mindId, out _) && _role.MindRemoveRole<RevolutionaryRoleComponent>(mindId))
                 _log.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(uid)} was deconverted due to being implanted with a Mindshield.");
 
             var name = Identity.Entity(uid, EntityManager);
@@ -46,9 +45,4 @@ public abstract partial class MindshieldImplantSystem : EntitySystem
             _popup.PopupEntity(Loc.GetString("rev-break-control", ("name", name)), uid);
         }
     }
-
-    /// <summary>
-    /// Will be implemented on the server side to log the mind that was deconverted
-    /// </summary>
-    protected abstract void TryLog(EntityUid uid);
 }

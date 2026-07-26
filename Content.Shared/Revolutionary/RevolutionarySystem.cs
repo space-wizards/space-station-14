@@ -2,25 +2,25 @@ using Content.Shared.Revolutionary.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 using Content.Shared.Antag;
+using Content.Shared.StatusIcon.Components;
 
 namespace Content.Shared.Revolutionary;
 
-public abstract partial class SharedRevolutionarySystem : EntitySystem
+public sealed partial class RevolutionarySystem : EntitySystem
 {
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<RevolutionaryComponent, ComponentGetStateAttemptEvent>(OnRevCompGetStateAttempt);
-        SubscribeLocalEvent<HeadRevolutionaryComponent, ComponentGetStateAttemptEvent>(OnRevCompGetStateAttempt);
+
         SubscribeLocalEvent<RevolutionaryComponent, ComponentStartup>(DirtyRevComps);
         SubscribeLocalEvent<HeadRevolutionaryComponent, ComponentStartup>(DirtyRevComps);
         SubscribeLocalEvent<ShowAntagIconsComponent, ComponentStartup>(DirtyRevComps);
-        SubscribeLocalEvent<RevolutionaryComponent, AttemptConvertRevolutionaryEvent>(OnAttemptConvert);
     }
 
     /// <summary>
     /// Determines if a HeadRev component should be sent to the client.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnRevCompGetStateAttempt(EntityUid uid, HeadRevolutionaryComponent comp, ref ComponentGetStateAttemptEvent args)
     {
         args.Cancelled = !CanGetState(args.Player);
@@ -29,6 +29,7 @@ public abstract partial class SharedRevolutionarySystem : EntitySystem
     /// <summary>
     /// Determines if a Rev component should be sent to the client.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnRevCompGetStateAttempt(EntityUid uid, RevolutionaryComponent comp, ref ComponentGetStateAttemptEvent args)
     {
         args.Cancelled = !CanGetState(args.Player);
@@ -73,6 +74,7 @@ public abstract partial class SharedRevolutionarySystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnAttemptConvert(Entity<RevolutionaryComponent> ent, ref AttemptConvertRevolutionaryEvent args)
     {
         args.Cancelled = true;
@@ -82,5 +84,22 @@ public abstract partial class SharedRevolutionarySystem : EntitySystem
     private void OnAttemptConvertImmune(Entity<RevolutionaryImmuneComponent> ent, ref AttemptConvertRevolutionaryEvent args)
     {
         args.Cancelled = true;
+    }
+
+    [SubscribeLocalEvent]
+    private void GetRevIcon(Entity<RevolutionaryComponent> ent, ref GetStatusIconsEvent args)
+    {
+        if (HasComp<HeadRevolutionaryComponent>(ent))
+            return;
+
+        if (ProtoMan.Resolve(ent.Comp.StatusIcon, out var iconPrototype))
+            args.StatusIcons.Add(iconPrototype);
+    }
+
+    [SubscribeLocalEvent]
+    private void GetHeadRevIcon(Entity<HeadRevolutionaryComponent> ent, ref GetStatusIconsEvent args)
+    {
+        if (ProtoMan.Resolve(ent.Comp.StatusIcon, out var iconPrototype))
+            args.StatusIcons.Add(iconPrototype);
     }
 }

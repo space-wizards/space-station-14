@@ -7,7 +7,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Mindshield;
 
-public abstract class MindShieldSystem : EntitySystem
+public sealed partial class MindShieldSystem : EntitySystem
 {
     /// <summary>
     /// Status icon displayed in the sec HUD.
@@ -21,7 +21,6 @@ public abstract class MindShieldSystem : EntitySystem
         // Mind shield status events
         SubscribeLocalEvent<MindShieldComponent, ImplantRelayEvent<GetMindShieldStatusEvent>>((e, ref k) => OnStatusQuery(e, ref k.Args));
         SubscribeLocalEvent<MindShieldComponent, InventoryRelayedEvent<GetMindShieldStatusEvent>>((e, ref k) => OnStatusQuery(e, ref k.Args));
-
     }
 
     [SubscribeLocalEvent]

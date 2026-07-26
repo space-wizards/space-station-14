@@ -6,5 +6,5 @@ namespace Content.Shared.Mindshield.Components;
 /// <summary>
 /// Component given to an entity to mark it is a mindshield implant that will unconvert revolutionaries when implanted.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedRevolutionarySystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(RevolutionarySystem))]
 public sealed partial class MindShieldImplantComponent : Component;
