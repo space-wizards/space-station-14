@@ -13,7 +13,7 @@ public sealed partial class MicrowaveMenu : FancyWindow
 {
     [Dependency] private IGameTiming _timing = default!;
 
-    public event Action<BaseButton.ButtonEventArgs, int>? OnCookTimeSelected;
+    public event Action<string, int, uint>? OnCookTimeSelected;
 
     public ButtonGroup CookTimeButtonGroup { get; }
     public bool IsBusy;
@@ -30,30 +30,25 @@ public sealed partial class MicrowaveMenu : FancyWindow
 
         CookTimeButtonGroup = new ButtonGroup();
         InstantCookButton.Group = CookTimeButtonGroup;
-        InstantCookButton.OnPressed += args =>
-        {
-            OnCookTimeSelected?.Invoke(args, 0);
-        };
+        InstantCookButton.OnCookTimeSelected += (name, cookTime) => OnCookTimeButtonPressed(name, 0, cookTime);
 
         for (var i = 1; i <= 6; i++)
         {
             var cookTime = i * 5;
             var newButton = new MicrowaveCookTimeButton
             {
-                Text = cookTime.ToString(),
-                TextAlign = Label.AlignMode.Center,
-                ToggleMode = true,
                 CookTime = (uint)cookTime,
-                Group = CookTimeButtonGroup,
-                HorizontalExpand = true,
+                Group = CookTimeButtonGroup
             };
-            newButton.StyleClasses.Add(i == 4 ? "OpenRight" : "OpenBoth");
+
+            newButton.OnCookTimeSelected += (name, cookTime) => OnCookTimeButtonPressed(name, i, cookTime);
             CookTimeButtonVbox.AddChild(newButton);
-            newButton.OnPressed += args =>
-            {
-                OnCookTimeSelected?.Invoke(args, i);
-            };
         }
+    }
+
+    private void OnCookTimeButtonPressed(string name, int index, uint cookTime)
+    {
+        OnCookTimeSelected?.Invoke(name, index, cookTime);
     }
 
     /// <summary>
@@ -119,10 +114,5 @@ public sealed partial class MicrowaveMenu : FancyWindow
         }
 
         return button != null;
-    }
-
-    public sealed class MicrowaveCookTimeButton : Button
-    {
-        public uint CookTime;
     }
 }

@@ -31,26 +31,11 @@ public sealed partial class MicrowaveBoundUserInterface(EntityUid owner, Enum ui
             SendPredictedMessage(new MicrowaveEjectSolidIndexedMessage(EntMan.GetNetEntity(_solids[args.ItemIndex])));
         };
 
-        _menu.OnCookTimeSelected += (args, _) =>
+        _menu.OnCookTimeSelected += (name, index, cookTime) =>
         {
-            var selectedCookTime = (uint)0;
-
-            if (args.Button is MicrowaveMenu.MicrowaveCookTimeButton actualButton)
-            {
-                // args.Button is a MicrowaveCookTimeButton
-                selectedCookTime = actualButton.CookTime == 0 ? 0 : actualButton.CookTime;
-                SendPredictedMessage(new MicrowaveSelectCookTimeMessage((int)selectedCookTime / 5, actualButton.CookTime));
-
-                _menu.CookTimeInfoLabel.Text = Loc.GetString("microwave-bound-user-interface-cook-time-label",
-                    ("time", selectedCookTime));
-            }
-            else
-            {
-                // args.Button is a normal button aka instant cook button
-                SendPredictedMessage(new MicrowaveSelectCookTimeMessage((int)selectedCookTime, 0));
-                _menu.CookTimeInfoLabel.Text = Loc.GetString("microwave-bound-user-interface-cook-time-label",
-                    ("time", Loc.GetString("microwave-menu-instant-button")));
-            }
+            SendPredictedMessage(new MicrowaveSelectCookTimeMessage(index, cookTime));
+            _menu.CookTimeInfoLabel.Text = Loc.GetString("microwave-bound-user-interface-cook-time-label",
+                ("time", name));
         };
     }
 
