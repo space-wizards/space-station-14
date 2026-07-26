@@ -50,7 +50,6 @@ public sealed partial class ArrivalsSystem : EntitySystem
     [Dependency] private IConfigurationManager _cfgManager = default!;
     [Dependency] private IConsoleHost _console = default!;
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private IPrototypeManager _protoManager = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private ActorSystem _actor = default!;
     [Dependency] private BiomeSystem _biomes = default!;
@@ -551,7 +550,7 @@ public sealed partial class ArrivalsSystem : EntitySystem
         if (_cfgManager.GetCVar(CCVars.ArrivalsPlanet))
         {
             var template = _random.Pick(_arrivalsBiomeOptions);
-            _biomes.EnsurePlanet(mapUid, _protoManager.Index(template));
+            _biomes.EnsurePlanet(mapUid, ProtoMan.Index(template));
             var restricted = new RestrictedRangeComponent
             {
                 Range = 32f

@@ -2,10 +2,16 @@ using Content.Shared.DeviceNetwork;
 using JetBrains.Annotations;
 using Content.Server.Buffers;
 using Content.Server.GameTicking.Events;
+using System.Buffers;
+using System.Diagnostics.CodeAnalysis;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.GameTicking;
 using Robust.Server.GameStates;
+using Content.Shared.Examine;
+using JetBrains.Annotations;
+using Robust.Shared.Random;
 
 namespace Content.Server.DeviceNetwork.Systems;
 
@@ -25,10 +31,6 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
         base.Initialize();
         DeviceArrayPool = new ServerRobustArrayPool<Device>();
         EntityArrayPool = new ServerRobustArrayPool<EntityUid?>();
-        SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
-        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnCleanup);
-        SubscribeLocalEvent<DeviceNetworkManagerComponent, MapInitEvent>(OnManagerInit);
-        SubscribeLocalEvent<DeviceNetworkComponent, ComponentShutdown>(OnNetworkShutdown);
     }
 
     private void OnRoundStart(RoundStartingEvent ev)

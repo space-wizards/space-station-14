@@ -1,152 +1,91 @@
-#bureaucracy
+# region Base
 - type: construction
+  abstract: true
+  id: BaseStorageStructure
+  category: construction-category-storage
+  placementMode: SnapgridCenter
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  abstract: true
+  parent: BaseStorageStructure
+  id: BaseShelf
+  graph: Shelf
+  canBuildInImpassable: true
+  conditions:
+  - !type:WallmountCondition
+# endregion Base
+
+# region Bureaucracy
+- type: construction
+  parent: BaseStorageStructure
   id: FilingCabinet
   graph: FilingCabinet
-  startNode: start
   targetNode: filingCabinet
-  category: construction-category-storage
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
 
 - type: construction
+  parent: FilingCabinet
   id: TallCabinet
-  graph: FilingCabinet
-  startNode: start
   targetNode: tallCabinet
-  category: construction-category-storage
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
 
 - type: construction
+  parent: FilingCabinet
   id: ChestDrawer
-  graph: FilingCabinet
-  startNode: start
   targetNode: chestDrawer
-  category: construction-category-storage
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
+# endregion Bureaucracy
 
-# ItemCabinets
+# region Item Cabinets
 - type: construction
+  parent: BaseStorageStructure
   id: ShowCase
   graph: GlassBox
-  startNode: start
   targetNode: glassBox
-  category: construction-category-storage
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
+# endregion Item Cabinets
 
-# Shelfs
-# Normals
+# region Shelves
 - type: construction
+  parent: BaseShelf
   id: ShelfWood
-  graph: Shelf
-  startNode: start
   targetNode: ShelfWood
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: true
-  conditions:
-    - !type:WallmountCondition
 
 - type: construction
+  parent: BaseShelf
   id: ShelfMetal
-  graph: Shelf
-  startNode: start
   targetNode: ShelfMetal
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: true
-  conditions:
-    - !type:WallmountCondition
 
 - type: construction
+  parent: BaseShelf
   id: ShelfGlass
-  graph: Shelf
-  startNode: start
   targetNode: ShelfGlass
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: true
-  conditions:
-    - !type:WallmountCondition
 
-# Reinforced
 - type: construction
+  parent: BaseShelf
   id: ShelfRWood
-  graph: Shelf
-  startNode: start
   targetNode: ShelfRWood
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: true
-  conditions:
-    - !type:WallmountCondition
 
 - type: construction
+  parent: BaseShelf
   id: ShelfRMetal
-  graph: Shelf
-  startNode: start
   targetNode: ShelfRMetal
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: true
-  conditions:
-    - !type:WallmountCondition
 
 - type: construction
+  parent: BaseShelf
   id: ShelfRGlass
-  graph: Shelf
-  startNode: start
   targetNode: ShelfRGlass
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: true
-  conditions:
-    - !type:WallmountCondition
 
-# Departmental
 - type: construction
+  parent: BaseShelf
   id: ShelfBar
-  graph: Shelf
-  startNode: start
   targetNode: ShelfBar
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: true
-  conditions:
-    - !type:WallmountCondition
 
 - type: construction
+  parent: BaseShelf
   id: ShelfKitchen
-  graph: Shelf
-  startNode: start
   targetNode: ShelfKitchen
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: true
-  conditions:
-    - !type:WallmountCondition
 
 - type: construction
+  parent: BaseShelf
   id: ShelfChemistry
-  graph: Shelf
-  startNode: start
   targetNode: ShelfChemistry
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: true
-  conditions:
-    - !type:WallmountCondition
+# endregion Shelves

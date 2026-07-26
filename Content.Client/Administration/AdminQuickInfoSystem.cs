@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Client.Administration.Systems;
 using Content.Client.Stylesheets;
 using Content.Shared.Administration;
@@ -39,7 +39,6 @@ internal sealed partial class AdminQuickInfoCommand : LocalizedEntityCommands
 internal sealed partial class AdminQuickInfoSystem : EntitySystem
 {
     [Dependency] private AdminSystem _adminSystem = null!;
-    [Dependency] private IPrototypeManager _prototypeManager = null!;
 
     public event Action<QuickInfoShared.SingleEntityInfo>? EntityResponseReceived;
 
@@ -60,7 +59,7 @@ internal sealed partial class AdminQuickInfoSystem : EntitySystem
 
     public void OpenPopupFor(NetEntity[] entities)
     {
-        var vBox = new VBox();
+        var vBox = new VBox() { SeparationOverride = 6 };;
         var popup = new Popup
         {
             Children =
@@ -75,9 +74,19 @@ internal sealed partial class AdminQuickInfoSystem : EntitySystem
                 },
             },
         };
-
+        var first = true;
         foreach (var entity in entities)
         {
+            if (!first)
+            {
+                vBox.AddChild(new PanelContainer
+                {
+                    StyleClasses = { StyleClass.LowDivider },
+                    HorizontalExpand = true,
+                });
+                first = false;
+            }
+
             var playerInfo = _adminSystem.PlayerList.FirstOrDefault(p => p.NetEntity == entity);
             var control = new InfoControl(this, entity, playerInfo);
             popup.OnPopupHide += () => control.Unsubscribe();
@@ -93,19 +102,21 @@ internal sealed partial class AdminQuickInfoSystem : EntitySystem
     {
         private readonly AdminQuickInfoSystem _system;
         private readonly NetEntity _entity;
-        private readonly PlayerInfo? _playerInfo;
+        private readonly bool _activeControl;
+        private PlayerInfo? _playerInfo;
         private QuickInfoShared.SingleEntityInfo? _response;
 
         private readonly RichTextLabel _contents = new();
 
         private ILocalizationManager Loc => _system.Loc;
+        private AdminSystem Admin => _system._adminSystem;
 
         public InfoControl(AdminQuickInfoSystem system, NetEntity entity, PlayerInfo? playerInfo)
         {
             _system = system;
             _entity = entity;
             _playerInfo = playerInfo;
-
+            _activeControl = (playerInfo != null);
             AddChild(_contents);
 
             system.EntityResponseReceived += OnEntityResponseReceived;
@@ -120,6 +131,7 @@ internal sealed partial class AdminQuickInfoSystem : EntitySystem
                 return;
 
             _response = ev;
+            _playerInfo ??= Admin.PlayerList.FirstOrDefault(p => p.SessionId == ev.LastPlayer);
             Rebuild();
         }
 
@@ -132,6 +144,10 @@ internal sealed partial class AdminQuickInfoSystem : EntitySystem
         private void Rebuild()
         {
             var sb = new FormattedStringBuilder();
+            if (!_activeControl)
+            {
+                sb.AppendMarkupLine(Loc.GetString("admin-quick-info-inactive"));
+            }
 
             if (_playerInfo != null)
             {
@@ -152,7 +168,7 @@ internal sealed partial class AdminQuickInfoSystem : EntitySystem
 
                 sb.AppendMarkupLine(Loc.GetString("admin-quick-info-job", ("job", _playerInfo.StartingJob)));
 
-                if (_playerInfo.RoleProto is { } roleId && _system._prototypeManager.Resolve(roleId, out var role))
+                if (_playerInfo.RoleProto is { } roleId && _system.ProtoMan.Resolve(roleId, out var role))
                 {
                     var roleColor = role.Color.ToHex();
                     var symbol = _playerInfo.Antag ? role.Symbol : "";

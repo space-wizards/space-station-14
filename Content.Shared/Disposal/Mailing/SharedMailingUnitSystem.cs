@@ -67,7 +67,7 @@ public abstract partial class SharedMailingUnitSystem : EntitySystem
             Tag = tag,
         };
 
-        _deviceNetwork.QueuePacket(uid, args.Address, payload, args.Frequency);
+        _deviceNetwork.QueuePacket(uid, args.SenderAddress, payload, args.Frequency);
     }
 
     /// <summary>

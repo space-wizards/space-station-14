@@ -8,14 +8,12 @@ using Content.Shared.SurveillanceCamera;
 using Content.Shared.SurveillanceCamera.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 using Content.Shared.DeviceNetwork.Components;
 
 namespace Content.Server.SurveillanceCamera;
 
 public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
 {
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private ViewSubscriberSystem _viewSubscriberSystem = default!;
     [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
     [Dependency] private UserInterfaceSystem _userInterface = default!;
@@ -127,8 +125,7 @@ public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraS
             return;
         }
 
-        if (!_prototypeManager.Resolve(component.AvailableNetworks[args.Network],
-                out var frequency))
+        if (!ProtoMan.Resolve(component.AvailableNetworks[args.Network], out var frequency))
         {
             return;
         }

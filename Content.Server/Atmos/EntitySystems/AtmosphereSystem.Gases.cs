@@ -5,15 +5,11 @@ using Content.Server.Atmos.Reactions;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Reactions;
 using JetBrains.Annotations;
-using Robust.Shared.Prototypes;
-using DependencyAttribute = Robust.Shared.IoC.DependencyAttribute;
 
 namespace Content.Server.Atmos.EntitySystems
 {
     public sealed partial class AtmosphereSystem
     {
-        [Dependency] private IPrototypeManager _protoMan = default!;
-
         private GasReactionPrototype[] _gasReactions = [];
 
         /// <summary>
@@ -24,8 +20,14 @@ namespace Content.Server.Atmos.EntitySystems
         public override void InitializeGases()
         {
             base.InitializeGases();
+        }
 
-            _gasReactions = _protoMan.EnumeratePrototypes<GasReactionPrototype>().ToArray();
+        /// <summary>
+        ///     Caches all gas reactions into an array ordered by priority.
+        /// </summary>
+        public void CacheGases()
+        {
+            _gasReactions = ProtoMan.EnumeratePrototypes<GasReactionPrototype>().ToArray();
             Array.Sort(_gasReactions, (a, b) => b.Priority.CompareTo(a.Priority));
         }
 

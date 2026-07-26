@@ -1,8 +1,7 @@
-#Normal windoors
 - type: entity
-  id: BaseWindoor
-  parent: [BaseDeltaPressureGlassQuarter, BaseStructure]
   abstract: true
+  parent: BaseStructure
+  id: BaseWindoorGeneric
   placement:
     mode: SnapgridCenter
   components:
@@ -16,7 +15,6 @@
         collection: GlassSmash
   - type: InteractionOutline
   - type: StationAiWhitelist
-  - type: Physics
   - type: Fixtures
     fixtures:
       fix1:
@@ -29,7 +27,6 @@
         layer:
         - GlassAirlockLayer
   - type: Sprite
-    sprite: Structures/Doors/Windoors/windoor.rsi
     layers:
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
@@ -72,11 +69,11 @@
     range: 200
   - type: DeviceLinkSink
     ports:
-      - Open
-      - Close
-      - Toggle
-      - AutoClose
-      - DoorBolt
+    - Open
+    - Close
+    - Toggle
+    - AutoClose
+    - DoorBolt
   - type: DeviceLinkSource
     ports:
     - DoorStatus
@@ -92,22 +89,6 @@
     cost: 8
     delay: 8
     fx: EffectRCDDeconstruct8
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          ShardGlass:
-            min: 1
-            max: 2
-          SheetSteel1:
-            min: 2
-            max: 4
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: ContainerFill
     containers:
       board: [ DoorElectronics ]
@@ -161,27 +142,23 @@
   - type: Airtight
     noAirWhenFullyAirBlocked: false
     airBlockedDirection:
-      - South
+    - South
   - type: Construction
     graph: Windoor
-    node: windoor
     containers:
     - board
-  - type: StaticPrice
-    price: 150
   - type: PryUnpowered
   - type: Tag
     tags:
-      - DoorRemoteWhitelist
-      # This tag is used by door remotes to allow or not a door remote to normally be able to interact with a door
+    - DoorRemoteWhitelist
+    # This tag is used by door remotes to allow or not a door remote to normally be able to interact with a door
 
 - type: entity
-  id: BaseSecureWindoor
-  parent: [BaseDeltaPressureReinforcedGlassQuarter, BaseWindoor]
   abstract: true
+  parent: BaseWindoorGeneric
+  id: BaseSecureWindoorGeneric
   components:
   - type: Sprite
-    sprite: Structures/Doors/Windoors/windoor.rsi
     layers:
     - state: secure_underlay
     - state: closed
@@ -217,6 +194,43 @@
       visible: false
   - type: Damageable
     damageModifierSet: RGlass
+  - type: StaticPrice
+    price: 150
+
+#Normal windoors
+- type: entity
+  abstract: true
+  parent: [ BaseDeltaPressureGlassQuarter, BaseWindoorGeneric ]
+  id: BaseWindoor
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Windoors/windoor.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass:
+            min: 1
+            max: 2
+          SheetSteel1:
+            min: 2
+            max: 4
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Construction
+    node: windoor
+
+- type: entity
+  abstract: true
+  parent: [ BaseDeltaPressureReinforcedGlassQuarter, BaseSecureWindoorGeneric ]
+  id: BaseSecureWindoor
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Windoors/windoor.rsi
   - type: Destructible
     thresholds:
     - trigger:
@@ -248,44 +262,12 @@
 
 #Plasma Windoors
 - type: entity
-  id: BasePlasmaWindoor
-  parent: [BaseDeltaPressurePlasmaQuarter, BaseWindoor]
   abstract: true
+  parent: [BaseDeltaPressurePlasmaQuarter, BaseWindoorGeneric]
+  id: BasePlasmaWindoor
   components:
   - type: Sprite
     sprite: Structures/Doors/Windoors/plasma.rsi
-    layers:
-    - state: closed
-      map: [ "enum.DoorVisualLayers.Base" ]
-    - state: closed_unlit
-      shader: unshaded
-      map: [ "enum.DoorVisualLayers.BaseUnlit" ]
-      visible: false
-    - state: welded
-      map: [ "enum.WeldableLayers.BaseWelded" ]
-    - state: bolted_unlit
-      shader: unshaded
-      map: [ "enum.DoorVisualLayers.BaseBolted" ]
-    - state: emergency_unlit
-      shader: unshaded
-      map: [ "enum.DoorVisualLayers.BaseEmergencyAccess" ]
-    - state: panel_open
-      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
-      visible: false
-    - state: electrified_ai
-      sprite: Interface/Misc/ai_hud.rsi
-      shader: unshaded
-      visible: false
-      map: [ "enum.ElectrifiedLayers.HUD" ]
-    - state: electrified
-      sprite: Effects/electricity.rsi
-      shader: unshaded
-      visible: false
-      map: [ "enum.ElectrifiedLayers.Sparks" ]
-    - state: sparks
-      map: ["enum.DoorVisualLayers.BaseEmagging"]
-      shader: unshaded
-      visible: false
   - type: Destructible
     thresholds:
     - trigger:
@@ -311,45 +293,12 @@
     resistance: 2
 
 - type: entity
-  id: BaseSecurePlasmaWindoor
-  parent: [BaseDeltaPressureReinforcedPlasmaQuarter, BaseSecureWindoor]
   abstract: true
+  parent: [BaseDeltaPressureReinforcedPlasmaQuarter, BaseSecureWindoorGeneric]
+  id: BaseSecurePlasmaWindoor
   components:
   - type: Sprite
     sprite: Structures/Doors/Windoors/plasma.rsi
-    layers:
-    - state: secure_underlay
-    - state: closed
-      map: [ "enum.DoorVisualLayers.Base" ]
-    - state: closed_unlit
-      shader: unshaded
-      map: [ "enum.DoorVisualLayers.BaseUnlit" ]
-      visible: false
-    - state: welded
-      map: [ "enum.WeldableLayers.BaseWelded" ]
-    - state: bolted_unlit
-      shader: unshaded
-      map: [ "enum.DoorVisualLayers.BaseBolted" ]
-    - state: emergency_unlit
-      shader: unshaded
-      map: [ "enum.DoorVisualLayers.BaseEmergencyAccess" ]
-    - state: panel_open
-      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
-      visible: false
-    - state: electrified_ai
-      sprite: Interface/Misc/ai_hud.rsi
-      shader: unshaded
-      visible: false
-      map: [ "enum.ElectrifiedLayers.HUD" ]
-    - state: electrified
-      sprite: Effects/electricity.rsi
-      shader: unshaded
-      visible: false
-      map: [ "enum.ElectrifiedLayers.Sparks" ]
-    - state: sparks
-      map: ["enum.DoorVisualLayers.BaseEmagging"]
-      shader: unshaded
-      visible: false
   - type: Destructible
     thresholds:
     - trigger:
@@ -383,44 +332,12 @@
 
 #Uranium Windoors
 - type: entity
-  id: BaseUraniumWindoor
-  parent: [BaseDeltaPressurePlasmaQuarter, BaseWindoor]
   abstract: true
+  parent: [BaseDeltaPressurePlasmaQuarter, BaseWindoorGeneric]
+  id: BaseUraniumWindoor
   components:
   - type: Sprite
     sprite: Structures/Doors/Windoors/uranium.rsi
-    layers:
-    - state: closed
-      map: [ "enum.DoorVisualLayers.Base" ]
-    - state: closed_unlit
-      shader: unshaded
-      map: [ "enum.DoorVisualLayers.BaseUnlit" ]
-      visible: false
-    - state: welded
-      map: [ "enum.WeldableLayers.BaseWelded" ]
-    - state: bolted_unlit
-      shader: unshaded
-      map: [ "enum.DoorVisualLayers.BaseBolted" ]
-    - state: emergency_unlit
-      shader: unshaded
-      map: [ "enum.DoorVisualLayers.BaseEmergencyAccess" ]
-    - state: panel_open
-      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
-      visible: false
-    - state: electrified_ai
-      sprite: Interface/Misc/ai_hud.rsi
-      shader: unshaded
-      visible: false
-      map: [ "enum.ElectrifiedLayers.HUD" ]
-    - state: electrified
-      sprite: Effects/electricity.rsi
-      shader: unshaded
-      visible: false
-      map: [ "enum.ElectrifiedLayers.Sparks" ]
-    - state: sparks
-      map: ["enum.DoorVisualLayers.BaseEmagging"]
-      shader: unshaded
-      visible: false
   - type: Destructible
     thresholds:
     - trigger:
@@ -446,45 +363,12 @@
     resistance: 3
 
 - type: entity
-  id: BaseSecureUraniumWindoor
-  parent: [BaseDeltaPressureReinforcedPlasmaQuarter, BaseSecureWindoor]
   abstract: true
+  parent: [BaseDeltaPressureReinforcedPlasmaQuarter, BaseSecureWindoorGeneric]
+  id: BaseSecureUraniumWindoor
   components:
   - type: Sprite
     sprite: Structures/Doors/Windoors/uranium.rsi
-    layers:
-    - state: secure_underlay
-    - state: closed
-      map: [ "enum.DoorVisualLayers.Base" ]
-    - state: closed_unlit
-      shader: unshaded
-      map: [ "enum.DoorVisualLayers.BaseUnlit" ]
-      visible: false
-    - state: welded
-      map: [ "enum.WeldableLayers.BaseWelded" ]
-    - state: bolted_unlit
-      shader: unshaded
-      map: [ "enum.DoorVisualLayers.BaseBolted" ]
-    - state: emergency_unlit
-      shader: unshaded
-      map: [ "enum.DoorVisualLayers.BaseEmergencyAccess" ]
-    - state: panel_open
-      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
-      visible: false
-    - state: electrified_ai
-      sprite: Interface/Misc/ai_hud.rsi
-      shader: unshaded
-      visible: false
-      map: [ "enum.ElectrifiedLayers.HUD" ]
-    - state: electrified
-      sprite: Effects/electricity.rsi
-      shader: unshaded
-      visible: false
-      map: [ "enum.ElectrifiedLayers.Sparks" ]
-    - state: sparks
-      map: ["enum.DoorVisualLayers.BaseEmagging"]
-      shader: unshaded
-      visible: false
   - type: Destructible
     thresholds:
     - trigger:
