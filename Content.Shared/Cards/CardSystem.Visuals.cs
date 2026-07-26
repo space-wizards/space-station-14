@@ -71,7 +71,6 @@ public sealed class CardListVisualState : ICloneable
     public List<CardData> CardList;
     public int Start;
     public int Count;
-
     public int MaxFanned;
 
     public CardListVisualState(List<CardData> cardList, int start, int count, int maxFanned)

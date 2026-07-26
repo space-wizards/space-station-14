@@ -22,13 +22,6 @@ public sealed class TakeCardEvent : EntityEventArgs
     /// The CardInx of the card to be taken.
     /// </summary>
     public readonly int CardInx;
-
-    public TakeCardEvent(NetEntity cards, NetEntity user, int cardInx)
-    {
-        Cards = cards;
-        User = user;
-        CardInx = cardInx;
-    }
 }
 
 /// <summary>
@@ -41,11 +34,6 @@ public sealed class FlipCardsEvent : EntityEventArgs
     /// The card deck to flip.
     /// </summary>
     public readonly NetEntity Cards;
-
-    public FlipCardsEvent(NetEntity cards)
-    {
-        Cards = cards;
-    }
 }
 
 /// <summary>
@@ -58,11 +46,6 @@ public sealed class FanCardsEvent : EntityEventArgs
     /// The card deck to fan out.
     /// </summary>
     public readonly NetEntity Cards;
-
-    public FanCardsEvent(NetEntity cards)
-    {
-        Cards = cards;
-    }
 }
 
 /// <summary>
@@ -75,9 +58,4 @@ public sealed class ShuffleCardsEvent : EntityEventArgs
     /// The card deck to shuffle.
     /// </summary>
     public readonly NetEntity Cards;
-
-    public ShuffleCardsEvent(NetEntity cards)
-    {
-        Cards = cards;
-    }
 }
