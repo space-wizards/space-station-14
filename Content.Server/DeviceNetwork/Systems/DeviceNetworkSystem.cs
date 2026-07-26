@@ -24,34 +24,12 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
 {
     [Dependency] private DeviceListSystem _deviceLists = default!;
     [Dependency] private NetworkConfiguratorSystem _configurator = default!;
-    [Dependency] private PvsOverrideSystem _pvsOverride = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         DeviceArrayPool = new ServerRobustArrayPool<Device>();
         EntityArrayPool = new ServerRobustArrayPool<EntityUid?>();
-    }
-
-    private void OnRoundStart(RoundStartingEvent ev)
-    {
-        EnsureManager();
-    }
-
-    private void OnCleanup(RoundRestartCleanupEvent ev)
-    {
-        ClearManager();
-    }
-
-    private void OnManagerInit(Entity<DeviceNetworkManagerComponent> ent, ref MapInitEvent args)
-    {
-        _pvsOverride.AddGlobalOverride(ent);
-    }
-
-    private void ClearManager()
-    {
-        if (TryGetManager(out var found))
-            Del(found);
     }
 
     /// <summary>

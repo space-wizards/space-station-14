@@ -16,7 +16,6 @@ namespace Content.Shared.DeviceLinking;
 
 public sealed partial class DeviceLinkSystem : EntitySystem
 {
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private SharedPopupSystem _popupSystem = default!;
     [Dependency] private SharedDeviceNetworkSystem _deviceNetworkSystem = default!;
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
@@ -174,7 +173,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
         var comp = EnsureComp<DeviceLinkSourceComponent>(uid);
         foreach (var port in ports)
         {
-            if (!_prototypeManager.HasIndex(port))
+            if (!ProtoMan.HasIndex(port))
                 Log.Error($"Attempted to add invalid port {port} to {ToPrettyString(uid)}");
             else
                 comp.Ports.Add(port);
@@ -193,7 +192,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
         var comp = EnsureComp<DeviceLinkSinkComponent>(uid);
         foreach (var port in ports)
         {
-            if (!_prototypeManager.HasIndex(port))
+            if (!ProtoMan.HasIndex(port))
                 Log.Error($"Attempted to add invalid port {port} to {ToPrettyString(uid)}");
             else
                 comp.Ports.Add(port);
@@ -218,7 +217,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
         var sourcePorts = new List<SourcePortPrototype>();
         foreach (var port in source.Comp.Ports)
         {
-            sourcePorts.Add(_prototypeManager.Index(port));
+            sourcePorts.Add(ProtoMan.Index(port));
         }
 
         return sourcePorts;
@@ -241,7 +240,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
         var sinkPorts = new List<SinkPortPrototype>();
         foreach (var port in sink.Comp.Ports)
         {
-            sinkPorts.Add(_prototypeManager.Index(port));
+            sinkPorts.Add(ProtoMan.Index(port));
         }
 
         return sinkPorts;
@@ -252,7 +251,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
     /// </summary>
     public string PortName<TPort>(string port) where TPort : DevicePortPrototype, IPrototype
     {
-        if (!_prototypeManager.TryIndex<TPort>(port, out var proto))
+        if (!ProtoMan.TryIndex<TPort>(port, out var proto))
             return port;
 
         return Loc.GetString(proto.Name);
@@ -326,7 +325,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
         SaveLinks(userId, source, sink, defaults);
 
         if (userId != null)
-            _popupSystem.PopupPredictedCursor(Loc.GetString("signal-linking-verb-success", ("machine", source)), userId.Value);
+            _popupSystem.PopupCursor(Loc.GetString("signal-linking-verb-success", ("machine", source)), userId.Value);
     }
 
 
@@ -346,7 +345,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
         if (!InRange(source, sink, source.Comp.Range))
         {
             if (userId != null)
-                _popupSystem.PopupPredictedCursor(Loc.GetString("signal-linker-component-out-of-range"), userId.Value);
+                _popupSystem.PopupCursor(Loc.GetString("signal-linker-component-out-of-range"), userId.Value);
 
             return;
         }
@@ -354,8 +353,8 @@ public sealed partial class DeviceLinkSystem : EntitySystem
         RemoveSinkFromSource(source, sink);
         foreach (var (sourcePort, sinkPort) in links)
         {
-            DebugTools.Assert(_prototypeManager.HasIndex<SourcePortPrototype>(sourcePort));
-            DebugTools.Assert(_prototypeManager.HasIndex<SinkPortPrototype>(sinkPort));
+            DebugTools.Assert(ProtoMan.HasIndex<SourcePortPrototype>(sourcePort));
+            DebugTools.Assert(ProtoMan.HasIndex<SinkPortPrototype>(sinkPort));
 
             if (!source.Comp.Ports.Contains(sourcePort) || !sink.Comp.Ports.Contains(sinkPort))
                 continue;
@@ -526,7 +525,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
         if (checkRange && !InRange(source, sinkUid, source.Comp.Range))
         {
             if (userId.HasValue)
-                _popupSystem.PopupPredictedCursor(Loc.GetString("signal-linker-component-out-of-range"), userId.Value);
+                _popupSystem.PopupCursor(Loc.GetString("signal-linker-component-out-of-range"), userId.Value);
 
             return false;
         }
@@ -536,14 +535,14 @@ public sealed partial class DeviceLinkSystem : EntitySystem
         RaiseLocalEvent(source, linkAttemptEvent, true);
         if (linkAttemptEvent.Cancelled && userId.HasValue)
         {
-            _popupSystem.PopupPredictedCursor(Loc.GetString("signal-linker-component-connection-refused", ("machine", sourcePort)), userId.Value);
+            _popupSystem.PopupCursor(Loc.GetString("signal-linker-component-connection-refused", ("machine", sourcePort)), userId.Value);
             return false;
         }
 
         RaiseLocalEvent(sinkUid, linkAttemptEvent, true);
         if (linkAttemptEvent.Cancelled && userId.HasValue)
         {
-            _popupSystem.PopupPredictedCursor(Loc.GetString("signal-linker-component-connection-refused", ("machine", sourcePort)), userId.Value);
+            _popupSystem.PopupCursor(Loc.GetString("signal-linker-component-connection-refused", ("machine", sourcePort)), userId.Value);
             return false;
         }
 
@@ -575,7 +574,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
 
         var locString = removed ? "signal-linker-component-unlinked-port" : "signal-linker-component-linked-port";
 
-        _popupSystem.PopupPredictedCursor(Loc.GetString(locString,
+        _popupSystem.PopupCursor(Loc.GetString(locString,
             ("machine1", sourceUid),
             ("port1", PortName<SourcePortPrototype>(source)),
             ("machine2", sinkUid),

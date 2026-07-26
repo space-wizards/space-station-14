@@ -7,7 +7,6 @@ using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.UserInterface;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map.Events;
 using Robust.Shared.Timing;
@@ -27,6 +26,7 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
     [Dependency] private SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private IGameTiming _gameTiming = default!;
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+
     [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceNetworkQuery = default!;
 
     public override void Initialize()
@@ -143,7 +143,7 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
             // the map after it being saved, are cleared upon mapinit.
             if (MetaData(target).EntityLifeStage == EntityLifeStage.MapInitialized)
             {
-                _popupSystem.PopupPredictedCursor(Loc.GetString("network-configurator-device-failed", ("device", target)),
+                _popupSystem.PopupCursor(Loc.GetString("network-configurator-device-failed", ("device", target)),
                     userUid);
                 return;
             }
@@ -153,7 +153,7 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
 
         if (configurator.Comp.Devices.ContainsValue(target))
         {
-            _popupSystem.PopupPredictedCursor(Loc.GetString("network-configurator-device-already-saved", ("device", target)), userUid);
+            _popupSystem.PopupCursor(Loc.GetString("network-configurator-device-already-saved", ("device", target)), userUid);
             return;
         }
 
@@ -162,7 +162,7 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
         DirtyField(target, nameof(DeviceNetworkComponent.Configurators));
         DirtyField(configurator, nameof(NetworkConfiguratorComponent.Devices));
 
-        _popupSystem.PopupPredictedCursor(Loc.GetString("network-configurator-device-saved", ("address", target.Comp.Address), ("device", target)),
+        _popupSystem.PopupCursor(Loc.GetString("network-configurator-device-saved", ("address", target.Comp.Address), ("device", target)),
             userUid,
             PopupType.Medium);
 
@@ -178,7 +178,7 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
 
         if (configurator.Comp.ActiveDeviceLink == target)
         {
-            _popupSystem.PopupPredicted(Loc.GetString("network-configurator-link-mode-stopped"), target.Value, user);
+            _popupSystem.PopupEntity(Loc.GetString("network-configurator-link-mode-stopped"), target.Value, user);
             configurator.Comp.ActiveDeviceLink = null;
             return;
         }
@@ -197,7 +197,7 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
             || HasComp<DeviceLinkSinkComponent>(target) && HasComp<DeviceLinkSinkComponent>(configurator.Comp.ActiveDeviceLink))
             return;
 
-        _popupSystem.PopupPredicted(Loc.GetString("network-configurator-link-mode-started", ("device", Name(target.Value))), target.Value, user);
+        _popupSystem.PopupEntity(Loc.GetString("network-configurator-link-mode-started", ("device", Name(target.Value))), target.Value, user);
         configurator.Comp.ActiveDeviceLink = target;
         DirtyField(configurator.AsNullable(), nameof(NetworkConfiguratorComponent.ActiveDeviceLink));
     }
@@ -233,8 +233,10 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
         if (_accessSystem.IsAllowed(user.Value, target, reader))
             return true;
 
-        _audioSystem.PlayPredicted(configurator.Comp.SoundNoAccess, configurator, user.Value, AudioParams.Default.WithVolume(-2f).WithPitchScale(1.2f));
-        _popupSystem.PopupPredicted(Loc.GetString("network-configurator-device-access-denied"), target, user.Value);
+        var audioParams = configurator.Comp.SoundNoAccess.Params;
+        audioParams = audioParams.AddVolume(-2f).WithPitchScale(1.2f);
+        _audioSystem.PlayPvs(configurator.Comp.SoundNoAccess, user.Value, audioParams);
+        _popupSystem.PopupEntity(Loc.GetString("network-configurator-device-access-denied"), target, user.Value);
 
         return false;
     }
@@ -290,7 +292,9 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
         _appearanceSystem.SetData(configurator.Owner, NetworkConfiguratorVisuals.Mode, configurator.Comp.LinkModeActive);
 
         var pitch = configurator.Comp.LinkModeActive ? 1 : 0.8f;
-        _audioSystem.PlayPredicted(configurator.Comp.SoundSwitchMode, configurator, userUid, AudioParams.Default.WithVolume(1.5f).WithPitchScale(pitch));
+        var audioParams = configurator.Comp.SoundSwitchMode.Params;
+        audioParams = audioParams.AddVolume(1.5f).WithPitchScale(pitch);
+        _audioSystem.PlayPvs(configurator.Comp.SoundSwitchMode, userUid, audioParams);
     }
 
     /// <summary>
