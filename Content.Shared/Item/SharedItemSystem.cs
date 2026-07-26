@@ -18,6 +18,7 @@ public abstract class SharedItemSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private   readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] protected readonly SharedContainerSystem Container = default!;
+    [Dependency] private readonly IComponentFactory _componentFactory = default!; // DS14
 
     public override void Initialize()
     {
@@ -271,4 +272,23 @@ public abstract class SharedItemSystem : EntitySystem
             }
         }
     }
+
+    // DS14-start
+    /// <summary>
+    /// Compares two entity prototypes by item size, from smallest to largest.
+    /// </summary>
+    [PublicAPI]
+    public int CompareSize(EntProtoId first, EntProtoId second)
+    {
+        var firstPrototype = _prototype.Index(first);
+        var secondPrototype = _prototype.Index(second);
+        if (!firstPrototype.TryGetComponent<ItemComponent>(out var firstItem, _componentFactory) ||
+            !secondPrototype.TryGetComponent<ItemComponent>(out var secondItem, _componentFactory))
+        {
+            return 0;
+        }
+
+        return _prototype.Index(firstItem.Size).CompareTo(_prototype.Index(secondItem.Size));
+    }
+    // DS14-end
 }

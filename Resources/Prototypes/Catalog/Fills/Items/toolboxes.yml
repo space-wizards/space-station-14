@@ -164,6 +164,7 @@
   suffix: Filled
   components:
   - type: EntityTableContainerFill
+    sort: true # DS14
     containers:
       storagebase: !type:NestedSelector
         tableId: FoolboxTable
@@ -179,7 +180,7 @@
       - id: EnergySword # ~1/1001
         weight: 0.001
     - !type:GroupSelector # Rarer clown tools
-      rolls: 2
+      rolls: 1 # DS14
       children:
       - !type:NestedSelector
         tableId: AllMiscToysTable
@@ -201,7 +202,7 @@
       - id: RubberStampCaptain # ~1/100
         weight: 0.2
     - !type:GroupSelector # Common clown consumables
-      rolls: 2
+      rolls: 1 # DS14
       children:
       - !type:NestedSelector
         tableId: SlipTable

@@ -14,6 +14,8 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Ghost;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Projectiles;
 using Content.Shared.Roles;
 using Robust.Server.GameObjects;
@@ -241,7 +243,62 @@ public sealed class RoundEndManifestStatsTests
     }
 
     [Test]
-    public async Task DeletingAllEntitiesDoesNotCreateManifestSnapshot()
+    public async Task DeathSnapshotsAreDeferredAndReplaced()
+    {
+        var settings = new PoolSettings
+        {
+            Connected = true,
+            Dirty = true,
+            DummyTicker = false
+        };
+        await using var pair = await PoolManager.GetServerClient(settings);
+        var server = pair.Server;
+        var context = GetContext(server);
+        var body = pair.Player!.AttachedEntity!.Value;
+        var mindId = pair.PlayerData!.Mind!.Value;
+        var mind = context.EntMan.GetComponent<MindComponent>(mindId);
+        context.ManifestStats.EnsureManifestEntry(mindId, mind);
+
+        await server.WaitAssertion(() =>
+        {
+            context.MobStateSystem.ChangeMobState(body, MobState.Dead);
+            Assert.That(context.ManifestStats.GetDisplaySnapshot(mindId), Is.Null);
+        });
+        await pair.RunTicksSync(1);
+
+        EntityUid? firstSnapshot = null;
+        await server.WaitAssertion(() =>
+        {
+            firstSnapshot = context.ManifestStats.GetDisplaySnapshot(mindId);
+            Assert.That(firstSnapshot, Is.Not.Null);
+            Assert.That(context.EntMan.EntityExists(firstSnapshot), Is.True);
+        });
+
+        await server.WaitAssertion(() =>
+        {
+            context.MobStateSystem.ChangeMobState(body, MobState.Alive);
+            context.MobStateSystem.ChangeMobState(body, MobState.Dead);
+            Assert.That(context.ManifestStats.GetDisplaySnapshot(mindId), Is.EqualTo(firstSnapshot));
+        });
+        await pair.RunTicksSync(1);
+
+        EntityUid? secondSnapshot = null;
+        await server.WaitAssertion(() =>
+        {
+            secondSnapshot = context.ManifestStats.GetDisplaySnapshot(mindId);
+            Assert.Multiple(() =>
+            {
+                Assert.That(secondSnapshot, Is.Not.Null);
+                Assert.That(secondSnapshot, Is.Not.EqualTo(firstSnapshot));
+                Assert.That(context.EntMan.EntityExists(firstSnapshot), Is.False);
+                Assert.That(context.EntMan.EntityExists(secondSnapshot), Is.True);
+            });
+        });
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task DeathDuringCapturedBulkDeleteDoesNotCreateManifestSnapshot()
     {
         var settings = new PoolSettings
         {
@@ -254,6 +311,42 @@ public sealed class RoundEndManifestStatsTests
         var server = pair.Server;
         var context = GetContext(server);
         var body = pair.Player!.AttachedEntity!.Value;
+        var mindId = pair.PlayerData!.Mind!.Value;
+        var mind = context.EntMan.GetComponent<MindComponent>(mindId);
+        context.ManifestStats.EnsureManifestEntry(mindId, mind);
+
+        await server.WaitPost(() =>
+        {
+            var entities = context.EntMan.GetEntities().ToArray();
+            context.MobStateSystem.ChangeMobState(body, MobState.Dead);
+
+            foreach (var entity in entities)
+                context.EntMan.DeleteEntity(entity);
+        });
+        await pair.RunTicksSync(2);
+
+        Assert.That(
+            context.EntMan.EntityCount,
+            Is.Zero,
+            string.Join(
+                Environment.NewLine,
+                context.EntMan.GetEntities().Select(uid => context.EntMan.ToPrettyString(uid).ToString())));
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task DeletingAllEntitiesDoesNotCreateManifestSnapshot()
+    {
+        var settings = new PoolSettings
+        {
+            Connected = true,
+            Destructive = true,
+            Dirty = true,
+            DummyTicker = false
+        };
+        await using var pair = await PoolManager.GetServerClient(settings);
+        var server = pair.Server;
+        var context = GetContext(server);
         var mindId = pair.PlayerData!.Mind!.Value;
         var mind = context.EntMan.GetComponent<MindComponent>(mindId);
         context.ManifestStats.EnsureManifestEntry(mindId, mind);
@@ -280,6 +373,7 @@ public sealed class RoundEndManifestStatsTests
             entMan.EntitySysManager.GetEntitySystem<SharedMindSystem>(),
             entMan.EntitySysManager.GetEntitySystem<SharedRoleSystem>(),
             entMan.EntitySysManager.GetEntitySystem<DamageableSystem>(),
+            entMan.EntitySysManager.GetEntitySystem<MobStateSystem>(),
             entMan.EntitySysManager.GetEntitySystem<RoundEndManifestStatsSystem>());
     }
 
@@ -341,5 +435,6 @@ public sealed class RoundEndManifestStatsTests
         SharedMindSystem MindSystem,
         SharedRoleSystem RoleSystem,
         DamageableSystem DamageableSystem,
+        MobStateSystem MobStateSystem,
         RoundEndManifestStatsSystem ManifestStats);
 }

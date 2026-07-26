@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Numerics;
 using Content.Shared.EntityTable;
+using Content.Shared.Item;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 
@@ -11,6 +12,7 @@ public sealed class ContainerFillSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly EntityTableSystem _entityTable = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedItemSystem _itemSystem = default!; // DS14
 
     public override void Initialize()
     {
@@ -68,7 +70,16 @@ public sealed class ContainerFillSystem : EntitySystem
                 continue;
             }
 
-            var spawns = _entityTable.GetSpawns(table);
+            // DS14-start
+            var spawns = _entityTable.GetSpawns(table).ToList();
+
+            if (ent.Comp.Sort)
+            {
+                // Insert larger items first to avoid fragmenting grid storage with smaller entries.
+                spawns.Sort((a, b) => _itemSystem.CompareSize(b, a));
+            }
+            // DS14-end
+
             foreach (var proto in spawns)
             {
                 var spawn = Spawn(proto, coords);

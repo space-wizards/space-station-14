@@ -43,6 +43,7 @@ public sealed class RoundEndManifestStatsSystem : EntitySystem
     private readonly Dictionary<EntityUid, Dictionary<EntityUid, FixedPoint2>> _damageByTarget = new();
     private readonly Dictionary<EntityUid, RoundEndManifestIdentity> _identityByMind = new();
     private readonly Dictionary<EntityUid, EntityUid> _displaySnapshotByMind = new();
+    private readonly Dictionary<EntityUid, EntityUid> _pendingDisplaySnapshotByMind = new();
     private readonly HashSet<EntityUid> _frozenDisplaySnapshots = new();
 
     public override void Initialize()
@@ -60,6 +61,20 @@ public sealed class RoundEndManifestStatsSystem : EntitySystem
         SubscribeLocalEvent<MindContainerComponent, EntityRenamedEvent>(OnMindContainerRenamed);
         SubscribeLocalEvent<MobStateComponent, DamageChangedEvent>(OnDamageChanged, before: [typeof(MobThresholdSystem)]);
         SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        if (_pendingDisplaySnapshotByMind.Count == 0)
+            return;
+
+        var pendingSnapshots = _pendingDisplaySnapshotByMind.ToArray();
+        _pendingDisplaySnapshotByMind.Clear();
+
+        foreach (var (mindId, source) in pendingSnapshots)
+            FreezeDisplaySnapshot(mindId, source);
     }
 
     public RoundEndManifestStats GetManifestStats(EntityUid mindId)
@@ -118,6 +133,7 @@ public sealed class RoundEndManifestStatsSystem : EntitySystem
         _damageByTarget.Clear();
         _identityByMind.Clear();
         _displaySnapshotByMind.Clear();
+        _pendingDisplaySnapshotByMind.Clear();
         _frozenDisplaySnapshots.Clear();
     }
 
@@ -164,11 +180,14 @@ public sealed class RoundEndManifestStatsSystem : EntitySystem
             return;
         }
 
+        _pendingDisplaySnapshotByMind.Remove(mindId);
         FreezeDisplaySnapshot(mindId, uid);
     }
 
     private void OnMindAdded(EntityUid mindId, MindComponent component, MindGotAddedEvent args)
     {
+        _pendingDisplaySnapshotByMind.Remove(mindId);
+
         var source = args.Container.Owner;
         if (!IsManifestSourceEntity(mindId, source) ||
             TryComp<MobStateComponent>(source, out var mobState) && mobState.CurrentState == MobState.Dead)
@@ -188,6 +207,7 @@ public sealed class RoundEndManifestStatsSystem : EntitySystem
             return;
         }
 
+        _pendingDisplaySnapshotByMind.Remove(mindId);
         FreezeDisplaySnapshot(mindId, uid);
     }
 
@@ -374,6 +394,7 @@ public sealed class RoundEndManifestStatsSystem : EntitySystem
             TryGetPlayerMind(uid, out var revivedMindId, out _) &&
             IsManifestSourceEntity(revivedMindId, uid))
         {
+            _pendingDisplaySnapshotByMind.Remove(revivedMindId);
             _frozenDisplaySnapshots.Remove(revivedMindId);
         }
 
@@ -383,7 +404,9 @@ public sealed class RoundEndManifestStatsSystem : EntitySystem
         if (TryGetPlayerMind(uid, out var snapshotMindId, out _) &&
             IsManifestSourceEntity(snapshotMindId, uid))
         {
-            FreezeDisplaySnapshot(snapshotMindId, uid);
+            // Bulk deletion captures its entity list before deleting it. Defer death snapshots until that
+            // synchronous teardown finishes so any clone cannot escape the captured list.
+            _pendingDisplaySnapshotByMind[snapshotMindId] = uid;
         }
 
         if (!TryGetPlayerMind(uid, out var targetMindId, out _))

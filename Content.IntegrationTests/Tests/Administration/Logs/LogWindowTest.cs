@@ -54,21 +54,30 @@ public sealed class LogWindowTest : InteractionTest
             await Client.WaitPost(() => search.Text = searchGuid.ToString());
             await ClickControl(refresh);
 
-            AdminLogLabel[] searchResult = [];
-            for (var i = 0; i < 60; i++)
+            // DS14-start
+            // The query runs outside the simulation ticks, so wait for the matching replacement instead of assuming
+            // that a fixed delay was long enough on a loaded CI runner.
+            await Pair.RunUntilSynced();
+
+            var expected = searchGuid.ToString();
+            var result = Array.Empty<AdminLogLabel>();
+            for (var i = 0; i < 120; i++)
             {
-                searchResult = cont.Children
+                await RunTicks(1);
+                result = cont.Children
                     .Where(x => x.Visible && x is AdminLogLabel)
                     .Cast<AdminLogLabel>()
                     .ToArray();
 
-                if (searchResult.Length == 1)
-                    return searchResult;
-
-                await RunTicks(1);
+                if (result.Length == 1 &&
+                    result[0].Log.Message.Contains(expected, StringComparison.Ordinal))
+                {
+                    return result;
+                }
             }
 
-            return searchResult;
+            return result;
+            // DS14-end
         }
     }
 }

@@ -10,4 +10,13 @@ public sealed partial class EntityTableContainerFillComponent : Component
 {
     [DataField]
     public Dictionary<string, EntityTableSelector> Containers = new();
+
+    // DS14-start
+    /// <summary>
+    /// Whether to sort the contents of the table by size before inserting.
+    /// Helps with fitting items into containers.
+    /// </summary>
+    [DataField]
+    public bool Sort;
+    // DS14-end
 }

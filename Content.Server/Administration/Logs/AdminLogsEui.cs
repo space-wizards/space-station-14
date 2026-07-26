@@ -108,8 +108,9 @@ public sealed class AdminLogsEui : BaseEui
                 _sawmill.Info($"Admin log request from admin with id {Player.UserId.UserId} and name {Player.Name}");
 
                 _logSendCancellation.Cancel();
+                _logSendCancellation.Dispose(); // DS14
                 _logSendCancellation = new CancellationTokenSource();
-                _filter = new LogFilter
+                var filter = new LogFilter // DS14
                 {
                     CancellationToken = _logSendCancellation.Token,
                     Round = request.RoundId,
@@ -125,18 +126,27 @@ public sealed class AdminLogsEui : BaseEui
                     LastLogId = null,
                     Limit = _clientBatchSize
                 };
+                _filter = filter; // DS14
 
-                var roundId = _filter.Round ??= CurrentRoundId;
+                var roundId = filter.Round ??= CurrentRoundId; // DS14
                 await LoadFromDb(roundId);
 
-                SendLogs(true);
+                // DS14-start
+                if (filter.CancellationToken.IsCancellationRequested)
+                    break;
+
+                await SendLogs(true, filter);
+                // DS14-end
                 break;
             }
             case NextLogsRequest:
             {
                 _sawmill.Info($"Admin log next batch request from admin with id {Player.UserId.UserId} and name {Player.Name}");
 
-                SendLogs(false);
+                // DS14-start
+                var filter = _filter;
+                await SendLogs(false, filter);
+                // DS14-end
                 break;
             }
         }
@@ -152,35 +162,59 @@ public sealed class AdminLogsEui : BaseEui
         SendMessage(message);
     }
 
-    private async void SendLogs(bool replace)
+    private async Task SendLogs(bool replace, LogFilter filter) // DS14
     {
         var stopwatch = new Stopwatch();
         stopwatch.Start();
 
-        var logs = await Task.Run(async () => await _adminLogs.All(_filter, _adminLogListPool.Get),
-            _filter.CancellationToken);
-
-        if (logs.Count > 0)
+        // DS14-start
+        List<SharedAdminLog>? logs = null;
+        List<SharedAdminLog>? pooledLogs = null;
+        try
         {
-            _filter.LogsSent += logs.Count;
-
-            var largestId = _filter.DateOrder switch
+            logs = await Task.Run(async () => await _adminLogs.All(filter, () =>
             {
-                DateOrder.Ascending => 0,
-                DateOrder.Descending => ^1,
-                _ => throw new ArgumentOutOfRangeException(nameof(_filter.DateOrder), _filter.DateOrder, null)
-            };
+                var pooled = _adminLogListPool.Get();
+                pooledLogs = pooled;
+                return pooled;
+            }), filter.CancellationToken);
 
-            _filter.LastLogId = logs[largestId].Id;
+            if (filter.CancellationToken.IsCancellationRequested || !ReferenceEquals(filter, _filter))
+                return;
+
+            if (logs.Count > 0)
+            {
+                filter.LogsSent += logs.Count;
+
+                var largestId = filter.DateOrder switch
+                {
+                    DateOrder.Ascending => 0,
+                    DateOrder.Descending => ^1,
+                    _ => throw new ArgumentOutOfRangeException(nameof(filter.DateOrder), filter.DateOrder, null)
+                };
+
+                filter.LastLogId = logs[largestId].Id;
+            }
+
+            var message = new NewLogs(logs, replace, logs.Count >= filter.Limit);
+
+            SendMessage(message);
+
+            _sawmill.Info($"Sent {logs.Count} logs to {Player.Name} in {stopwatch.Elapsed.TotalMilliseconds} ms");
         }
+        catch (OperationCanceledException) when (filter.CancellationToken.IsCancellationRequested)
+        {
+            // A newer search or a closed EUI canceled this request.
+        }
+        finally
+        {
+            if (logs != null)
+                _adminLogListPool.Return(logs);
 
-        var message = new NewLogs(logs, replace, logs.Count >= _filter.Limit);
-
-        SendMessage(message);
-
-        _sawmill.Info($"Sent {logs.Count} logs to {Player.Name} in {stopwatch.Elapsed.TotalMilliseconds} ms");
-
-        _adminLogListPool.Return(logs);
+            if (pooledLogs != null && !ReferenceEquals(logs, pooledLogs))
+                _adminLogListPool.Return(pooledLogs);
+        }
+        // DS14-end
     }
 
     public override void Closed()
