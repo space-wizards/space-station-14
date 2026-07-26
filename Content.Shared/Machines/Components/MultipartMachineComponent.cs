@@ -16,7 +16,7 @@ public sealed partial class MultipartMachineComponent : Component
 {
     /// <summary>
     /// Dictionary of Enum values to specific parts of this machine.
-    /// Each key can be specified as 'enum.EnumName.EnumValue` in Yaml.
+    /// Each key can be specified as <c>enum.EnumName.EnumValue</c> in YAML.
     /// </summary>
     [DataField, AutoNetworkedField]
     public Dictionary<Enum, MachinePart> Parts = [];
