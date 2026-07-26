@@ -29,6 +29,10 @@
         {
             "name": "lisa_head_displacement",
             "directions": 4
+        },
+        {
+            "name": "corgi_mask_displacement",
+            "directions": 4
         }
     ]
 }

@@ -3151,6 +3151,11 @@
           32:
             sprite: Mobs/Pets/displacements.rsi
             state: corgi_head_displacement
+      mask:
+        sizeMaps:
+          32:
+            sprite: Mobs/Pets/displacements.rsi
+            state: corgi_mask_displacement
   - type: InteractionPopup
     interactSuccessString: petting-success-dog
     interactFailureString: petting-failure-generic
