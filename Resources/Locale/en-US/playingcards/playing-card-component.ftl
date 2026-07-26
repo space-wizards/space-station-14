@@ -56,3 +56,6 @@ ten-of-spades = 10 of Spades
 jack-of-spades = Jack of Spades
 queen-of-spades = Queen of Spades
 king-of-spades = King of Spades
+
+deck-of-cards = Deck of Cards
+syndi-deck-of-cards = Syndicate Deck of Cards
