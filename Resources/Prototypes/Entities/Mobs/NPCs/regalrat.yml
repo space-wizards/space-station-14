@@ -349,7 +349,7 @@
   name: cancer rat servant
   id: MobRatServantCancer
   parent: [ MobCancerBase, MobRatServantBase ]
-  description: A lil cancer for you.
+  description: A lil' cancer for you.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
