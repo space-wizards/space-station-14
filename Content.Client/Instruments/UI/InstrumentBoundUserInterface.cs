@@ -1,115 +1,324 @@
+using Content.Client.Interactable;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Instruments;
 using Content.Shared.Instruments.UI;
-using Content.Shared.Interaction;
 using Robust.Client.Audio.Midi;
-using Robust.Client.Player;
 using Robust.Client.UserInterface;
+using Robust.Shared.Audio.Midi;
+using Robust.Shared.Containers;
+using Robust.Shared.Utility;
 
-namespace Content.Client.Instruments.UI
+namespace Content.Client.Instruments.UI;
+
+public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
 {
-    public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
+    private const int MaxSearchDepth = 16;
+    private const string SawmillCategory = "instrumentui";
+
+    [Dependency] private IMidiManager _midiManager = default!;
+    [Dependency] private ILocalizationManager _loc = default!;
+    [Dependency] private ILogManager _logManager = default!;
+    [Dependency] private InstrumentSystem _instruments = default!;
+    [Dependency] private ActionBlockerSystem _actionBlockerSystem = default!;
+    [Dependency] private InteractionSystem _interactionSystem = default!;
+    [Dependency] private SharedContainerSystem _sharedContainerSystem = default!;
+    private readonly ISawmill _sawmill = default!;
+
+    private readonly FileMidiSource _fileSource = new();
+    private readonly BandMidiSource _bandSource = new();
+    private readonly InputMidiSource _inputSource = new();
+
+    private readonly ChannelsControl _channelsControl = new();
+    private readonly MidiCollectionUtilsControl _midiCollectionUtilsControl = new();
+
+    private InstrumentMenu? _instrumentMenu;
+
+    public InstrumentBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
-        public IEntityManager Entities => EntMan;
-        [Dependency] public IMidiManager MidiManager = default!;
-        [Dependency] public IFileDialogManager FileDialogManager = default!;
-        [Dependency] public ILocalizationManager Loc = default!;
+        _sawmill = _logManager.GetSawmill(SawmillCategory);
+    }
 
-        public readonly InstrumentSystem Instruments;
-        public readonly ActionBlockerSystem ActionBlocker;
-        public readonly SharedInteractionSystem Interactions;
+    protected override void Open()
+    {
+        base.Open();
 
-        [ViewVariables] private InstrumentMenu? _instrumentMenu;
-        [ViewVariables] private BandMenu? _bandMenu;
-        [ViewVariables] private ChannelsMenu? _channelsMenu;
+        var instrument = EntMan.GetComponent<InstrumentComponent>(Owner);
 
-        public InstrumentBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+        instrument.OnMidiPlaybackEnded += OnMidiPlaybackEnded;
+
+        _instruments.OnChannelsUpdated += OnChannelsUpdated;
+
+        _fileSource.StartPlayingRequest += OnStartPlayingRequest;
+        _fileSource.StopPlayingRequest += OnStopPlayingRequest;
+        _fileSource.LoopingToggled += OnLoopToggledRequest;
+        _fileSource.TrackPositionChangeRequest += OnTrackPositionChangeRequest;
+        _fileSource.Instrument = (Owner, instrument);
+
+        _bandSource.RefreshBandRequest += OnRefreshBandsRequest;
+        _bandSource.JoinBandRequest += OnSetBandMasterRequest;
+
+        _inputSource.OpenInputRequest += OnOpenInputRequest;
+        _inputSource.CloseInputRequest += OnCloseInputRequest;
+
+        _channelsControl.ChannelsUpdateRequest += OnChannelsUpdateRequest;
+        _channelsControl.SwitchFilteredChannel += OnSwitchFilteredChannel;
+
+        _instrumentMenu = this.CreateWindow<InstrumentMenu>();
+
+        if (EntMan.TryGetComponent<MetaDataComponent>(Owner, out var metaData))
+            _instrumentMenu.Title = metaData.EntityName;
+
+        _instrumentMenu.SetMidiAvailability(_midiManager.IsAvailable);
+        _instrumentMenu.SetInstrument((Owner, instrument));
+
+        // Initialize sources and switch to the (probably) most used one.
+        // Add additional concrete InstrumentMidiSourceBase types here.
+        _instrumentMenu.SetupSources(_fileSource, _bandSource, _inputSource);
+        _instrumentMenu.SwitchMode(_fileSource);
+
+        // Initialize controls used to configure various system parameters.
+        // Append any additional configuration controls here.
+        _instrumentMenu.AddConfigurationControl(
+            _loc.GetString("instruments-component-menu-channels-label"),
+            _channelsControl);
+        _instrumentMenu.AddConfigurationControl(
+            _loc.GetString("instruments-component-midi-file-collection-label"),
+            _midiCollectionUtilsControl);
+    }
+
+    protected override void ReceiveMessage(BoundUserInterfaceMessage message)
+    {
+        if (message is not InstrumentBandResponseBuiMessage bandRx)
+            return;
+
+        var entities = new List<(EntityUid, string)>();
+        foreach (var netEnt in bandRx.Nearby)
         {
-            IoCManager.InjectDependencies(this);
-
-            Instruments = Entities.System<InstrumentSystem>();
-            ActionBlocker = Entities.System<ActionBlockerSystem>();
-            Interactions = Entities.System<SharedInteractionSystem>();
+            entities.Add((EntMan.GetEntity(netEnt.Item1), netEnt.Item2));
         }
 
-        protected override void ReceiveMessage(BoundUserInterfaceMessage message)
+        _bandSource.Populate(entities);
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+        if (!disposing)
+            return;
+
+        _fileSource.StartPlayingRequest -= OnStartPlayingRequest;
+        _fileSource.StopPlayingRequest -= OnStopPlayingRequest;
+        _fileSource.LoopingToggled -= OnLoopToggledRequest;
+        _fileSource.TrackPositionChangeRequest -= OnTrackPositionChangeRequest;
+
+        _bandSource.RefreshBandRequest -= OnRefreshBandsRequest;
+        _bandSource.JoinBandRequest -= OnSetBandMasterRequest;
+
+        _inputSource.OpenInputRequest -= OnOpenInputRequest;
+        _inputSource.CloseInputRequest -= OnCloseInputRequest;
+
+        if (!EntMan.TryGetComponent(Owner, out InstrumentComponent? instrument))
+            return;
+
+        _fileSource.Instrument = (Owner, instrument);
+        instrument.OnMidiPlaybackEnded -= OnMidiPlaybackEnded;
+    }
+
+    private void OnSwitchFilteredChannel(int channelIndex, bool state)
+    {
+        _instruments.SetFilteredChannel(Owner, channelIndex, !state);
+    }
+
+    private void OnChannelsUpdateRequest()
+    {
+        UpdateChannels();
+    }
+
+    private void OnChannelsUpdated()
+    {
+        UpdateChannels();
+    }
+
+    private void OnMidiPlaybackEnded()
+    {
+        _fileSource.SelectNextTrack();
+    }
+
+    private void OnSetBandMasterRequest(EntityUid ent)
+    {
+        if (!PlayCheck())
+            return;
+
+        _instruments.SetMaster(Owner, ent);
+    }
+
+    private void OnRefreshBandsRequest()
+    {
+        SendMessage(new InstrumentBandRequestBuiMessage());
+    }
+
+    private void OnLoopToggledRequest(bool toggled)
+    {
+        if (EntMan.TryGetComponent(Owner, out InstrumentComponent? instrumentComp))
         {
-            if (message is InstrumentBandResponseBuiMessage bandRx)
-                _bandMenu?.Populate(bandRx.Nearby, EntMan);
+            instrumentComp.LoopMidi = toggled;
         }
 
-        protected override void Open()
+        _instruments.UpdateRenderer(Owner);
+    }
+
+    private void OnTrackPositionChangeRequest(int value)
+    {
+        _instruments.SetPlayerTick(Owner, value);
+    }
+
+    private void OnOpenInputRequest()
+    {
+        if (!PlayCheck())
+            return;
+
+        if (!EntMan.TryGetComponent<InstrumentComponent>(Owner, out var instrument))
+            return;
+
+        _instruments.OpenInput(Owner, instrument);
+    }
+
+    private void OnCloseInputRequest()
+    {
+        if (!EntMan.TryGetComponent<InstrumentComponent>(Owner, out var instrument))
+            return;
+
+        _instruments.CloseInput(Owner, false, instrument);
+    }
+
+    private void OnStopPlayingRequest()
+    {
+        if (!EntMan.TryGetComponent<InstrumentComponent>(Owner, out var instrument))
+            return;
+
+        _instruments.CloseMidi(Owner, false, instrument);
+    }
+
+    private void OnStartPlayingRequest(byte[] trackData)
+    {
+        try
         {
-            base.Open();
-
-            _instrumentMenu = this.CreateWindow<InstrumentMenu>();
-            _instrumentMenu.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
-
-            _instrumentMenu.OnOpenBand += OpenBandMenu;
-            _instrumentMenu.OnOpenChannels += OpenChannelsMenu;
-            _instrumentMenu.OnCloseChannels += CloseChannelsMenu;
-            _instrumentMenu.OnCloseBands += CloseBandMenu;
-
-            _instrumentMenu.SetMIDI(MidiManager.IsAvailable);
-
-            if (EntMan.TryGetComponent(Owner, out InstrumentComponent? instrument))
-            {
-                _instrumentMenu.SetInstrument((Owner, instrument));
-            }
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-            if (!disposing)
+            if (!EntMan.TryGetComponent<InstrumentComponent>(Owner, out var instrument))
                 return;
 
-            if (EntMan.TryGetComponent(Owner, out InstrumentComponent? instrument))
-            {
-                _instrumentMenu?.RemoveInstrument(instrument);
-            }
+            // Close any song that is already playing.
+            if (instrument.IsMidiOpen)
+                _instruments.CloseMidi(Owner, false, instrument);
 
-            _bandMenu?.Dispose();
-            _channelsMenu?.Dispose();
+            if (!_fileSource.IsPlaying)
+                return;
+
+            if (!PlayCheck())
+                return;
+
+            if (!_instruments.OpenMidi(Owner, trackData, instrument))
+                _fileSource.IsPlaying = false;
         }
-
-        public void RefreshBands()
+        catch (Exception e)
         {
-            SendMessage(new InstrumentBandRequestBuiMessage());
-        }
-
-        public void OpenBandMenu()
-        {
-            _bandMenu ??= new BandMenu(this);
-
-            if (EntMan.TryGetComponent(Owner, out InstrumentComponent? instrument))
-            {
-                _bandMenu.Master = instrument.Master;
-            }
-
-            // Refresh cache...
-            RefreshBands();
-
-            _bandMenu.OpenCenteredLeft();
-        }
-
-        public void CloseBandMenu()
-        {
-            if(_bandMenu?.IsOpen ?? false)
-                _bandMenu.Close();
-        }
-
-        public void OpenChannelsMenu()
-        {
-            _channelsMenu ??= new ChannelsMenu(this);
-            _channelsMenu.Populate();
-            _channelsMenu.OpenCenteredRight();
-        }
-
-        public void CloseChannelsMenu()
-        {
-            if(_channelsMenu?.IsOpen ?? false)
-                _channelsMenu.Close();
+            _sawmill.Error($"Failed to play next midi track: {e.Message}");
+            _fileSource.IsPlaying = false;
         }
     }
+
+    private bool PlayCheck()
+    {
+        if (!EntMan.TryGetComponent(Owner, out InstrumentComponent? instrument))
+            return false;
+
+        var localEntity = PlayerManager.LocalEntity;
+
+        // If we don't have a player or controlled entity, we return.
+        if (localEntity == null)
+            return false;
+
+        // By default, allow an instrument to play itself and skip all other checks
+        if (localEntity == Owner)
+            return true;
+
+        // If we're a handheld instrument, we might be in a container. Get it just in case.
+        _sharedContainerSystem.TryGetContainingContainer((Owner, null, null), out var conMan);
+
+        // If the instrument is handheld, and we're not holding it, we return.
+        if (instrument.Handheld && (conMan == null || conMan.Owner != localEntity))
+            return false;
+
+        if (!_actionBlockerSystem.CanInteract(localEntity.Value, Owner))
+            return false;
+
+        if (!_interactionSystem.InRangeUnobstructed(localEntity.Value, Owner))
+            return false;
+
+        return true;
+    }
+
+    /// <summary>
+    /// Walks up the tree of instrument masters to find the truest master of them all.
+    /// </summary>
+    private ActiveInstrumentComponent? ResolveActiveInstrument(InstrumentComponent comp)
+    {
+        var instrument = new Entity<InstrumentComponent>(Owner, comp);
+
+        for (var i = 0; i < MaxSearchDepth; i++)
+        {
+            if (instrument.Comp.Master is not { } master)
+                break;
+
+            if (!EntMan.TryGetComponent<InstrumentComponent>(master, out var masterComp))
+                break;
+
+            instrument = new Entity<InstrumentComponent>(master, masterComp);
+        }
+
+        return EntMan.GetComponentOrNull<ActiveInstrumentComponent>(instrument.Owner);
+    }
+
+    private void UpdateChannels()
+    {
+        if (!EntMan.TryGetComponent<InstrumentComponent>(Owner, out var instrument))
+            return;
+
+        List<MidiChannelInfo> channelSettings = [];
+
+        var activeInstrument = ResolveActiveInstrument(instrument);
+
+        for (var i = 0; i < RobustMidiEvent.MaxChannels; i++)
+        {
+            var trackName = "";
+            var instrumentName = "";
+            var programName = "";
+            if (activeInstrument != null
+                && activeInstrument.Tracks.TryGetValue(i, out var resolvedMidiChannel)
+                && resolvedMidiChannel != null)
+            {
+                trackName = resolvedMidiChannel.TrackName ?? "";
+                instrumentName = resolvedMidiChannel.InstrumentName ?? "";
+                programName = resolvedMidiChannel.ProgramName ?? "";
+                var state = !instrument?.FilteredChannels[i] ?? false;
+                channelSettings.Add(new MidiChannelInfo(i, trackName, instrumentName, programName, state));
+            }
+        }
+
+        _channelsControl.SetChannels(channelSettings.ToArray());
+    }
 }
+
+/// <summary>
+/// Simple DTO for relaying MIDI channel information
+/// </summary>
+/// <param name="Id">MIDI channel ID</param>
+/// <param name="TrackName">MIDI channel track name</param>
+/// <param name="ProgramName">MIDI channel track name</param>
+/// <param name="InstrumentName">MIDI channel track name</param>
+/// <param name="FilterState">MIDI channel filter state</param>
+public readonly record struct MidiChannelInfo(
+    int Id,
+    string TrackName,
+    string ProgramName,
+    string InstrumentName,
+    bool FilterState);
