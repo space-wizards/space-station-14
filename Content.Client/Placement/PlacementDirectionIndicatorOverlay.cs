@@ -14,20 +14,24 @@ namespace Content.Client.Placement;
 /// Draws a directional arrow during entity placement preview for any entity prototype
 /// that has a <see cref="PlacementDirectionIndicatorComponent"/>.
 /// </summary>
-public sealed partial class PlacementDirectionIndicatorOverlay(
-    IEntityManager entMan,
-    IPlacementManager placement,
-    IPrototypeManager proto,
-    SpriteSystem sprite,
-    SharedTransformSystem xform,
-    ConstructionSystem construction) : Overlay
+public sealed partial class PlacementDirectionIndicatorOverlay : Overlay
 {
-    private readonly IEntityManager _entMan = entMan;
-    private readonly IPlacementManager _placement = placement;
-    private readonly IPrototypeManager _proto = proto;
-    private readonly SpriteSystem _sprite = sprite;
-    private readonly SharedTransformSystem _xform = xform;
-    private readonly ConstructionSystem _construction = construction;
+    [Dependency] private IEntityManager _entMan = default!;
+    [Dependency] private IPlacementManager _placement = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
+
+    private readonly SpriteSystem _sprite;
+    private readonly SharedTransformSystem _xform;
+    private readonly ConstructionSystem _construction;
+
+    public PlacementDirectionIndicatorOverlay()
+    {
+        IoCManager.InjectDependencies(this);
+
+        _sprite = _entMan.System<SpriteSystem>();
+        _xform = _entMan.System<SharedTransformSystem>();
+        _construction = _entMan.System<ConstructionSystem>();
+    }
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
@@ -46,7 +50,7 @@ public sealed partial class PlacementDirectionIndicatorOverlay(
         if (!TryGetPlacingPrototype(out var placingProto))
             return;
 
-        if (!placingProto.TryGetComponent<PlacementDirectionIndicatorComponent>(out var indicator, _entMan.ComponentFactory))
+        if (!placingProto.TryComp<PlacementDirectionIndicatorComponent>(out var indicator, _entMan.ComponentFactory))
             return;
 
         var gridRotation = _entMan.HasComponent<MapGridComponent>(mouseCoords.EntityId)
