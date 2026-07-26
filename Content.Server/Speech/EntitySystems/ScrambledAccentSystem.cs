@@ -6,13 +6,13 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Speech.EntitySystems;
 
-public sealed class ScrambledAccentSystem : RelayAccentSystem<ScrambledAccentComponent>
+public sealed partial class ScrambledAccentSystem : RelayAccentSystem<ScrambledAccentComponent>
 {
     private static readonly Regex RegexLoneI = new(@"(?<=\ )i(?=[\ \.\?]|$)");
 
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
-    protected override string AccentuateInternal(EntityUid uid, ScrambledAccentComponent comp, string message)
+    public override string Accentuate(string message, Entity<ScrambledAccentComponent>? ent = null)
     {
         var words = message.ToLower().Split();
 

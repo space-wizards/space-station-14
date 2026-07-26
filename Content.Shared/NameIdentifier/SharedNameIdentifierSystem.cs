@@ -1,15 +1,12 @@
 using Content.Shared.NameModifier.EntitySystems;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.NameIdentifier;
 
 /// <summary>
 ///     Handles unique name identifiers for entities e.g. `monkey (MK-912)`
 /// </summary>
-public abstract class SharedNameIdentifierSystem : EntitySystem
+public abstract partial class SharedNameIdentifierSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -26,7 +23,7 @@ public abstract class SharedNameIdentifierSystem : EntitySystem
         if (ent.Comp.LifeStage > ComponentLifeStage.Running)
             return;
 
-        if (!_prototypeManager.Resolve(ent.Comp.Group, out var group))
+        if (!ProtoMan.Resolve(ent.Comp.Group, out var group))
             return;
 
         var format = group.FullName ? "name-identifier-format-full" : "name-identifier-format-append";

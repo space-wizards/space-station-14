@@ -4,23 +4,23 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Speech.EntitySystems;
 
-public sealed class BarkAccentSystem : RelayAccentSystem<BarkAccentComponent>
+public sealed partial class BarkAccentSystem : RelayAccentSystem<BarkAccentComponent>
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     private static readonly IReadOnlyList<string> Barks = new List<string>{
-            " Woof!", " WOOF", " wof-wof"
-        }.AsReadOnly();
+        " Woof!", " WOOF", " wof-wof"
+    }.AsReadOnly();
 
     private static readonly IReadOnlyDictionary<string, string> SpecialWords = new Dictionary<string, string>()
-        {
-            { "ah", "arf" },
-            { "Ah", "Arf" },
-            { "oh", "oof" },
-            { "Oh", "Oof" },
-        };
+    {
+        { "ah", "arf" },
+        { "Ah", "Arf" },
+        { "oh", "oof" },
+        { "Oh", "Oof" },
+    };
 
-    protected override string AccentuateInternal(EntityUid uid, BarkAccentComponent comp, string message)
+    public override string Accentuate(string message, Entity<BarkAccentComponent>? ent = null)
     {
         foreach (var (word, repl) in SpecialWords)
         {

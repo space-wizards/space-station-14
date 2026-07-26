@@ -107,7 +107,7 @@ public sealed class EntityHealthBarOverlay : Overlay
             var yOffset = bounds.Height * EyeManager.PixelsPerMeter / 2 - 3f;
             var widthOfMob = bounds.Width * EyeManager.PixelsPerMeter;
 
-            var position = new Vector2(-widthOfMob / EyeManager.PixelsPerMeter / 2, yOffset / EyeManager.PixelsPerMeter);
+            var position = new Vector2(sprite.Offset.X - widthOfMob / EyeManager.PixelsPerMeter / 2, sprite.Offset.Y + yOffset / EyeManager.PixelsPerMeter);
             var color = GetProgressColor(deathProgress.ratio, deathProgress.inCrit);
 
             // Hardcoded width of the progress bar because it doesn't match the texture.

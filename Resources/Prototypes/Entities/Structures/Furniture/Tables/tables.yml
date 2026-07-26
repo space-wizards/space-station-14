@@ -1,7 +1,7 @@
 - type: entity
+  parent: BaseStructure
   id: TableFrame
   # BaseStructure and not BaseTable, since these shouldn't be climbable/placeable.
-  parent: BaseStructure
   name: table frame
   description: Pieces of metal that make the frame of a table.
   components:
@@ -32,12 +32,6 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 25
-      behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
         damage: 5
       behaviors:
       - !type:PlaySoundBehavior
@@ -57,8 +51,8 @@
     node: TableFrame
 
 - type: entity
-  id: CounterWoodFrame
   parent: BaseStructure
+  id: CounterWoodFrame
   name: wooden counter frame
   description: Pieces of wood that make the frame of a table.
   components:
@@ -90,12 +84,6 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
         damage: 15
       behaviors:
       - !type:PlaySoundBehavior
@@ -113,16 +101,28 @@
     node: CounterWoodFrame
 
 - type: entity
+  parent: BaseStructure
   id: CounterMetalFrame
-  parent: CounterWoodFrame
   name: metal counter frame
   description: Pieces of metal that make the frame of a table.
   components:
+  - type: SpriteFade
   - type: Sprite
     sprite: Structures/Furniture/Tables/frame.rsi
   - type: Icon
     sprite: Structures/Furniture/Tables/frame.rsi
     state: full
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 55
+        mask:
+        - TableMask
+        layer:
+        - TableLayer
   - type: Damageable
     damageModifierSet: Metallic
   - type: Injurable
@@ -132,12 +132,6 @@
     base: state_
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 125
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 25
@@ -176,12 +170,6 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 125
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
         damage: 25
       behaviors:
       - !type:PlaySoundBehavior
@@ -215,12 +203,6 @@
     sprite: Structures/Furniture/Tables/reinforced.rsi
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 150
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 75
@@ -275,15 +257,6 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 25
-      behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-        - !type:PlaySoundBehavior
-          sound:
-            collection: GlassBreak
-    - trigger:
-        !type:DamageTrigger
         damage: 5
       behaviors:
       - !type:PlaySoundBehavior
@@ -333,14 +306,6 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 45 #excess damage (nuke?). avoid computational cost of spawning entities.
-      behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-        - !type:PlaySoundBehavior
-          sound: /Audio//Weapons/pierce.ogg
-    - trigger:
-        !type:DamageTrigger
         damage: 15
       behaviors:
       - !type:PlaySoundBehavior
@@ -383,15 +348,6 @@
     tableMassLimit: 120
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: GlassBreak
     - trigger:
         !type:DamageTrigger
         damage: 20
@@ -442,15 +398,6 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 250
-      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: GlassBreak
-    - trigger:
-        !type:DamageTrigger
         damage: 50
       behaviors:
       - !type:PlaySoundBehavior
@@ -495,12 +442,6 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 125
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
         damage: 25
       behaviors:
       - !type:PlaySoundBehavior
@@ -535,15 +476,6 @@
     damageModifierSet: Wood
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WoodDestroy
     - trigger:
         !type:DamageTrigger
         damage: 15
@@ -584,15 +516,6 @@
     damageModifierSet: Wood
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WoodDestroy
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 15
@@ -724,12 +647,6 @@
     damageModifierSet: Wood
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 25
@@ -949,12 +866,6 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
         damage: 15
       behaviors:
       - !type:PlaySoundBehavior
@@ -994,12 +905,6 @@
     damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 125
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 25

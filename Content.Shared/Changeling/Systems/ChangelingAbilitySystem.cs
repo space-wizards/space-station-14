@@ -15,15 +15,15 @@ namespace Content.Shared.Changeling.Systems;
 
 public sealed partial class ChangelingAbilitySystem : EntitySystem
 {
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedCuffableSystem _cuffable = default!;
-    [Dependency] private readonly SharedEnsnareableSystem _snare = default!;
-    [Dependency] private readonly PullingSystem _pulling = default!;
-    [Dependency] private readonly SharedStunSystem _stun = default!;
-    [Dependency] private readonly SharedPuddleSystem _puddle = default!;
-    [Dependency] private readonly SharedChangelingIdentitySystem _changelingIdentity = default!;
-    [Dependency] private readonly ChangelingDevourSystem _changelingDevour = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedCuffableSystem _cuffable = default!;
+    [Dependency] private SharedEnsnareableSystem _snare = default!;
+    [Dependency] private PullingSystem _pulling = default!;
+    [Dependency] private SharedStunSystem _stun = default!;
+    [Dependency] private SharedPuddleSystem _puddle = default!;
+    [Dependency] private SharedChangelingIdentitySystem _changelingIdentity = default!;
+    [Dependency] private ChangelingDevourSystem _changelingDevour = default!;
 
     public override void Initialize()
     {
@@ -60,7 +60,7 @@ public sealed partial class ChangelingAbilitySystem : EntitySystem
         var selfPopup = Loc.TryGetString(ent.Comp.ActivatedPopupSelf, out var self, ("user", Identity.Entity(args.Performer, EntityManager)), ("restraint", toDelete.First())) ? self : null;
         var othersPopup = Loc.TryGetString(ent.Comp.ActivatedPopup, out var others, ("user", Identity.Entity(args.Performer, EntityManager)), ("restraint", toDelete.First())) ? others : null;
 
-        _popup.PopupPredicted(selfPopup, othersPopup, args.Performer, args.Performer, PopupType.LargeCaution);
+        _popup.PopupEntity(selfPopup, othersPopup, args.Performer, args.Performer, PopupType.LargeCaution);
         _audio.PlayPredicted(ent.Comp.ActivatedSound, args.Performer, args.Performer);
 
         foreach (var deleted in toDelete)
@@ -80,8 +80,7 @@ public sealed partial class ChangelingAbilitySystem : EntitySystem
         if (!_changelingDevour.CanDevour(ent.Owner, args.Target, checkDead: false, checkProtected: false))
             return;
 
-        _popup.PopupClient(Loc.GetString("changeling-sting-success", ("target", Identity.Entity(args.Target, EntityManager))), args.Target, ent.Owner, PopupType.Medium);
-        _changelingIdentity.GrantIdentity(ent, args.Target);
+        _changelingIdentity.GrantIdentity(ent.AsNullable(), args.Target);
 
         args.Handled = true;
     }

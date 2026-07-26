@@ -13,11 +13,10 @@ namespace Content.Server.Wagging;
 /// <summary>
 /// Adds an action to toggle wagging animation for tails markings that supporting this
 /// </summary>
-public sealed class WaggingSystem : EntitySystem
+public sealed partial class WaggingSystem : EntitySystem
 {
-    [Dependency] private readonly ActionsSystem _actions = default!;
-    [Dependency] private readonly SharedVisualBodySystem _visualBody = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private ActionsSystem _actions = default!;
+    [Dependency] private SharedVisualBodySystem _visualBody = default!;
 
     public override void Initialize()
     {
@@ -115,7 +114,7 @@ public sealed class WaggingSystem : EntitySystem
                     }
                 }
 
-                if (!_prototype.HasIndex<MarkingPrototype>(newMarkingId))
+                if (!ProtoMan.HasIndex<MarkingPrototype>(newMarkingId))
                 {
                     Log.Warning($"{ToPrettyString(ent):ent} tried toggling wagging but {newMarkingId} marking doesn't exist");
                     continue;

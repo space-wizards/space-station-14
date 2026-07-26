@@ -11,10 +11,9 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.GhostTypes;
 
-public sealed class StoreDamageTakenOnMindSystem : EntitySystem
+public sealed partial class StoreDamageTakenOnMindSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
 
     public override void Initialize()
     {
@@ -62,7 +61,7 @@ public sealed class StoreDamageTakenOnMindSystem : EntitySystem
         var protoDict = new Dictionary<ProtoId<DamageGroupPrototype>, FixedPoint2>();
         foreach (var stringDict in _damageable.GetDamagePerGroup((ent, damageable)))  // Translates the strings into ProtoId's before saving the Dictionary
         {
-            if (!_proto.TryIndex(stringDict.Key, out DamageGroupPrototype? proto))
+            if (!ProtoMan.TryIndex(stringDict.Key, out DamageGroupPrototype? proto))
                 continue;
             protoDict.TryAdd(proto, stringDict.Value);
         }
