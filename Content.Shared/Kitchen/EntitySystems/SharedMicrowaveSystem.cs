@@ -26,16 +26,16 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
     [Dependency] protected SharedAppearanceSystem AppearanceSys = default!;
     [Dependency] protected SharedAudioSystem AudioSys = default!;
     [Dependency] protected SharedContainerSystem ContainerSys = default!;
+    [Dependency] protected SharedPopupSystem PopupSys = default!;
+    [Dependency] protected SharedSolutionContainerSystem SolutionSys = default!;
+    [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedDeviceLinkSystem _deviceLink = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private SharedItemSystem _item = default!;
-    [Dependency] protected SharedPopupSystem PopupSys = default!;
     [Dependency] private SharedPowerReceiverSystem _power = default!;
     [Dependency] private SharedPowerStateSystem _powerState = default!;
     [Dependency] private RecipeManager _recipeManager = default!;
-    [Dependency] protected SharedSolutionContainerSystem SolutionSys = default!;
     [Dependency] private SharedStackSystem _stack = default!;
-    [Dependency] private IGameTiming _timing = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
     [Dependency] private EntityQuery<MicrowaveComponent> _microwaveQuery;
