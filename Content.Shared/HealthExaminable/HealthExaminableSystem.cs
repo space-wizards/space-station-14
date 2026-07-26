@@ -17,10 +17,10 @@ public sealed partial class HealthExaminableSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<HealthExaminableComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<HealthExaminableComponent, GetVerbsEvent<ExamineVerb>>(OnGetExamineVerbs);
     }
 
+    [SubscribeLocalEvent]
     private void OnComponentInit(Entity<HealthExaminableComponent> ent, ref ComponentInit args)
     {
         ent.Comp.Thresholds.Sort();
