@@ -13,14 +13,12 @@ using Content.Server.Pointing.Components;
 using Content.Server.Polymorph.Systems;
 using Content.Server.Popups;
 using Content.Server.Roles;
-using Content.Server.Speech.Components;
 using Content.Shared.Speech.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Server.Tabletop;
 using Content.Shared.Actions;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Components;
-using Content.Shared.Administration.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Body;
@@ -1089,10 +1087,12 @@ public sealed partial class AdminVerbSystem
                 gasMiner.SpawnAmount = 20;
                 gasMiner.ShowExamineText = false;
 
+                // Atmos device is not networked, no dirty.
                 var atmosDevice = EnsureComp<AtmosDeviceComponent>(args.Target);
                 atmosDevice.RequireAnchored = false;
 
                 _atmosDevice.JoinAtmosphere((args.Target, atmosDevice));
+                Dirty(args.Target, gasMiner);
             },
             Impact = LogImpact.Extreme,
             Message = string.Join(": ", makeStinkyName, Loc.GetString("admin-smite-make-stinky-description"))
