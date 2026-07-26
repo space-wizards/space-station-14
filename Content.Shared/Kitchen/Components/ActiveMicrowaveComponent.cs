@@ -9,7 +9,8 @@ namespace Content.Shared.Kitchen.Components;
 /// <summary>
 /// Attached to a microwave that is currently in the process of cooking
 /// </summary>
-[RegisterComponent, Access(typeof(SharedMicrowaveSystem))]
+[RegisterComponent]
+[Access(typeof(SharedMicrowaveSystem))]
 [NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true), AutoGenerateComponentPause]
 public sealed partial class ActiveMicrowaveComponent : Component
 {

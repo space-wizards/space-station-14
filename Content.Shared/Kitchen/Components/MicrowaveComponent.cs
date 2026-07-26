@@ -14,7 +14,8 @@ namespace Content.Shared.Kitchen.Components;
 ///     A component applied to microwaves, which are used to heat entities/solutions
 ///     and produce microwave recipes.
 /// </summary>
-[RegisterComponent, Access(typeof(SharedMicrowaveSystem))]
+[RegisterComponent]
+[Access(typeof(SharedMicrowaveSystem))]
 [NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true, raiseAfterAutoHandleState: true)]
 public sealed partial class MicrowaveComponent : Component
 {
@@ -117,8 +118,9 @@ public sealed partial class MicrowaveComponent : Component
     ///     The cook times for all recipes should be divisible by 5, with a minimum of 1 second.
     ///     For right now, I don't think any recipe cook time should be greater than 60 seconds.
     /// </remarks>
-    [DataField, Access(typeof(SharedMicrowaveSystem), Other = AccessPermissions.ReadExecute)]
+    [DataField]
     [AutoNetworkedField]
+    [Access(typeof(SharedMicrowaveSystem), Other = AccessPermissions.ReadExecute)]
     public uint CurrentCookTimerTime;
 
     /// <summary>
