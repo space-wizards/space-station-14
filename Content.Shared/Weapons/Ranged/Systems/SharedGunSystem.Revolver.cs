@@ -372,7 +372,7 @@ public partial class SharedGunSystem
                 if (chamber == true)
                 {
                     // Pretend it's always been there.
-                    ammoEnt = Spawn(ent.Comp.FillPrototype, args.Coordinates);
+                    ammoEnt = SpawnAtPosition(ent.Comp.FillPrototype, args.Coordinates);
 
                     if (!_netManager.IsClient)
                     {
@@ -395,7 +395,7 @@ public partial class SharedGunSystem
 
                 // Mark cartridge as spent and if it's caseless delete from the chamber slot.
                 SetCartridgeSpent(ammoEnt.Value, cartridge, true);
-                var spawned = Spawn(cartridge.Prototype, args.Coordinates);
+                var spawned = SpawnAtPosition(cartridge.Prototype, args.Coordinates);
                 args.Ammo.Add((spawned, EnsureComp<AmmoComponent>(spawned)));
 
                 if (cartridge.DeleteOnSpawn)
