@@ -64,8 +64,6 @@ public sealed partial class XATInteractWithComponent : Component
     /// </summary>
     [AutoNetworkedField]
     public int Count = 0;
-
-
 }
 
 /// <summary>

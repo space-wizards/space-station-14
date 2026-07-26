@@ -118,7 +118,6 @@ public sealed partial class XATInteractWithSystem : BaseXATSystem<XATInteractWit
             return; // insufficient, still need to add more!
         }
 
-
         Trigger(artifact, node);
         node.Comp1.Count = node.Comp1.MaxCount; //reset after successful trigger, required amount is always the same.
         Dirty(node);

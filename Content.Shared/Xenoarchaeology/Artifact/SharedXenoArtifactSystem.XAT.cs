@@ -27,6 +27,7 @@ public abstract partial class SharedXenoArtifactSystem
         XATRelayLocalEvent<LandEvent>();
         XATRelayLocalEvent<XATInteractWithDoAfterEvent>();
         XATRelayLocalEvent<ElectrocutionAttemptEvent>();
+
         // special case this one because we need to order the messages
         SubscribeLocalEvent<XenoArtifactComponent, ExaminedEvent>(OnExamined);
     }
