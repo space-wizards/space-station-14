@@ -31,7 +31,7 @@ public abstract partial class SharedMicrowaveSystem
 
         var loopSound = AudioSys.PlayPredicted(microwaveComponent.LoopingSound, ent, ent.Comp.User, audioParams);
         microwaveComponent.PlayingStream = loopSound?.Entity;
-        Dirty(ent, microwaveComponent);
+        DirtyField(ent, microwaveComponent, nameof(MicrowaveComponent.PlayingStream));
     }
 
     /// <summary>
@@ -112,7 +112,7 @@ public abstract partial class SharedMicrowaveSystem
         // TODO: See e#6722 for some details
         PredictedQueueDel(ent.Comp.PlayingStream);
         ent.Comp.PlayingStream = null;
-        Dirty(ent);
+        DirtyField(ent.AsNullable(), nameof(MicrowaveComponent.PlayingStream));
 
         foreach (var solid in GetMicrowaveContents(ent.AsNullable()))
         {
