@@ -117,6 +117,7 @@
 
 - type: stack
   id: CardsStack
+  name: deck-of-cards
   maxCount: 156
   spawn: BaseCards
   icon: { sprite: /Textures/Objects/Fun/PlayingCards/nanotrasenbasiccards.rsi, state: deck_single }
@@ -159,6 +160,7 @@
 
 - type: stack
   id: SyndicateCardsStack
-  maxCount: 52
+  name: syndi-deck-of-cards
+  maxCount: 156
   spawn: SyndiBaseCards
   icon: { sprite: /Textures/Objects/Fun/PlayingCards/nanotrasenbasiccards.rsi, state: deck_single }
