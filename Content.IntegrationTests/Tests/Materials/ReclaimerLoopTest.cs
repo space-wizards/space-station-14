@@ -21,13 +21,12 @@ public sealed class ReclaimerLoopTest : InteractionTest
 {
     //ProtoIDs we need
     private static readonly EntProtoId ApcId = "APCBasic";
-    private static readonly EntProtoId FloorTileId = "FloorTileItemSteelCheckerDark";
+    private static readonly EntProtoId FloorTileId = "FloorTileItemSteel";
 
     private static readonly string[] Reclaimers = GameDataScrounger.EntitiesWithComponent("MaterialReclaimer");
 
     [SidedDependency(Side.Server)] private readonly SharedMaterialReclaimerSystem _materialReclaimerSystem = null!;
     [SidedDependency(Side.Server)] private readonly EntityWhitelistSystem _entityWhitelistSystem = null!;
-    [SidedDependency(Side.Server)] private readonly IComponentFactory _compFactory = null!;
 
     [Test]
     [TestCaseSource(nameof(Reclaimers))]
@@ -42,42 +41,6 @@ public sealed class ReclaimerLoopTest : InteractionTest
         Assert.That(STarget, Is.Not.Null, "STarget was null, did the reclaimer spawn correctly?");
 
         var reclaimComp = Comp<MaterialReclaimerComponent>(Target);
-        //If the reclaimer can produce materials
-        var reclaimsMaterials = reclaimComp.ReclaimMaterials;
-
-        //if the reclaimer has reclaimsMaterials and is able to produce materials
-        //go through all recyclable items, compile a HashSet of producible materials
-        HashSet<ProtoId<MaterialPrototype>> producibleMaterials = []; //If reclaimMaterials is false, this will stay empty
-        if (reclaimsMaterials)
-        {
-            foreach (var proto in ProtoMan.EnumeratePrototypes<EntityPrototype>())
-            {
-                //we don't care about items that don't recycle into anything physical
-                if (!proto.HasComp<PhysicalCompositionComponent>(_compFactory))
-                    continue;
-
-                //spawners and random items mess things up quickly, avoid them too
-                if (proto.HasComp<RandomSpriteComponent>(_compFactory) || proto.HasComp<EntityTableSpawnerComponent>(_compFactory))
-                    continue;
-
-                var currentScrap = await Spawn(proto.ID);
-                var currentScrapUid = ToServer(currentScrap);
-                var currentScrapCompositionComp = Comp<PhysicalCompositionComponent>(currentScrap);
-
-                //If it's on the whitelist for the reclaimer, and not on its blacklist.
-                if (_entityWhitelistSystem.CheckBoth(currentScrapUid, reclaimComp.Blacklist, reclaimComp.Whitelist))
-                {
-                    //for each material it produces, add it to the HashSet
-                    foreach (var (mat, _) in currentScrapCompositionComp.MaterialComposition)
-                    {
-                        ProtoId<MaterialPrototype> matAsProto = ProtoMan.Index<MaterialPrototype>(mat);
-                        producibleMaterials.Add(matAsProto);
-                    }
-                }
-
-                await Delete(currentScrapUid);
-            }
-        }
 
         // Power the reclaimer
         await SpawnEntity(ApcId, SEntMan.GetCoordinates(TargetCoords));
@@ -94,10 +57,14 @@ public sealed class ReclaimerLoopTest : InteractionTest
         //put a floor tile down
         await InteractUsing(FloorTileId);
 
+        // Reclaimer can't reclaim materials?  Job's done.
+        if (!reclaimComp.ReclaimMaterials)
+            return;
+
         using (Assert.EnterMultipleScope())
         {
-            //For each producible Material, assert that it is not recyclable (and would thus cause a recycling loop)
-            foreach (ProtoId<MaterialPrototype> material in producibleMaterials)
+            //For each material, assert that it is not recyclable (and would thus cause a recycling loop)
+            foreach (ProtoId<MaterialPrototype> material in ProtoMan.EnumeratePrototypes<MaterialPrototype>())
             {
                 var matStack = ProtoMan.Index(material).StackEntity;
                 Assert.That(
