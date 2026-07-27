@@ -1,14 +1,20 @@
 - type: entity
   parent: BoxCardboardSmall
+  id: BaseBoxSurvival
+  abstract: true
+  components:
+  - type: Item
+    shape:
+  - type: Storage
+    grid:
+      - "0,0,1,2"
+
+- type: entity
+  parent: BaseBoxSurvival
   id: BoxSurvival
   name: O2 survival box
   description: A small box containing a breath mask, an emergency oxygen tank, and an emergency medipen. Standard-issue for most oxygen-breathing crew.
   components:
-  - type: Item
-    shape: 0,0,1,2
-  - type: Storage
-    grid:
-      - 0,0,1,2
   - type: EntityTableContainerFill
     containers:
       storagebase: !type:AllSelector
