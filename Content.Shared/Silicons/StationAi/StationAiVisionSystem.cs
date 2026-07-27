@@ -236,6 +236,41 @@ public sealed class StationAiVisionSystem : EntitySystem
         return Math.Abs(delta.X) + Math.Abs(delta.Y);
     }
 
+    // DS14-start
+    /// <summary>
+    /// Deterministically filters tiles for damaged vision sources.
+    /// This has to be stable across the server and clients because the same vision
+    /// calculation is used both for rendering and interaction checks.
+    /// </summary>
+    private static bool IsTileVisible(StationAiVisionComponent component, Vector2i tile, Vector2i center)
+    {
+        if (component.VisibleTileChance >= 1f)
+            return true;
+
+        if (component.VisibleTileChance <= 0f)
+            return false;
+
+        if (tile == center)
+            return true;
+
+        var delta = tile - center;
+
+        unchecked
+        {
+            var hash = (uint) component.VisibilitySeed;
+            hash ^= (uint) delta.X * 0x9E3779B9u;
+            hash ^= (uint) delta.Y * 0x85EBCA6Bu;
+            hash ^= hash >> 16;
+            hash *= 0x7FEB352Du;
+            hash ^= hash >> 15;
+            hash *= 0x846CA68Bu;
+            hash ^= hash >> 16;
+
+            return hash / (double) uint.MaxValue < component.VisibleTileChance;
+        }
+    }
+    // DS14-end
+
     /// <summary>
     /// Checks if any of a tile's neighbors are visible.
     /// </summary>
@@ -326,6 +361,7 @@ public sealed class StationAiVisionSystem : EntitySystem
         {
             var seed = Data[index];
             var seedXform = EntManager.GetComponent<TransformComponent>(seed);
+            var eyePos = Maps.GetTileRef(Grid.Owner, Grid, seedXform.Coordinates).GridIndices; // DS14
 
             // Fastpath just get tiles in range.
             // Either xray-vision or system is doing a quick-and-dirty check.
@@ -339,6 +375,9 @@ public sealed class StationAiVisionSystem : EntitySystem
                 {
                     foreach (var tile in squircles)
                     {
+                        if (!IsTileVisible(seed.Comp, tile.GridIndices, eyePos)) // DS14
+                            continue;
+
                         VisibleTiles.Add(tile.GridIndices);
                     }
                 }
@@ -364,8 +403,6 @@ public sealed class StationAiVisionSystem : EntitySystem
 
             var maxDepthMax = 0;
             var sumDepthMax = 0;
-
-            var eyePos = Maps.GetTileRef(Grid.Owner, Grid, seedXform.Coordinates).GridIndices;
 
             for (var x = Math.Floor(eyePos.X - range); x <= eyePos.X + range; x++)
             {
@@ -467,7 +504,7 @@ public sealed class StationAiVisionSystem : EntitySystem
 
                 var tileVis = vis1.GetValueOrDefault(tile, 0);
 
-                if (tileVis != 0)
+                if (tileVis != 0 && IsTileVisible(seed.Comp, tile, eyePos)) // DS14
                 {
                     // No idea if it's better to do this inside or out.
                     lock (VisibleTiles)

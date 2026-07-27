@@ -312,6 +312,15 @@
     receiveFrequencyId: CyborgControl
     transmitFrequencyId: RoboticsConsole
     savableAddress: false
+  - type: SurveillanceCamera # DS14
+    networkSet: true
+    nameSet: true
+    useEntityNameAsCameraId: true
+  - type: StationAiVision # DS14
+    range: 4
+    needsPower: false
+    needsAnchoring: false
+    occluded: true
   - type: TimerTrigger
     delay: 10
     examinable: false
@@ -345,6 +354,8 @@
     nameSet: True
     id: Xenoborg
     useEntityNameAsCameraId: true
+  - type: StationAiVision # DS14
+    enabled: false
   - type: Explosive
     explosionType: Minibomb
     deleteAfterExplosion: false # let damage threshold gib the borg

@@ -38,4 +38,19 @@ public sealed partial class StationAiVisionComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public float Range = 7.5f;
+
+    // DS14-start
+    /// <summary>
+    /// Chance for an otherwise visible tile to be provided by this vision source.
+    /// The source's own tile remains visible while the chance is above zero.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float VisibleTileChance = 1f;
+
+    /// <summary>
+    /// Seed used to make partial vision deterministic on the server and clients.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public int VisibilitySeed;
+    // DS14-end
 }
