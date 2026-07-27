@@ -66,7 +66,11 @@ public sealed partial class NameIdentifierSystem : SharedNameIdentifierSystem
     ///     Generates a new unique name/suffix for a given entity and adds it to <see cref="CurrentIds"/>
     ///     but does not set the entity's name.
     /// </summary>
-    public string GenerateUniqueName(EntityUid uid, ProtoId<NameIdentifierGroupPrototype> proto, out int randomVal)
+    /// <remarks>
+    /// This overload resolves the ProtoId of the NameIdentifierGroupPrototype first.
+    /// </remarks>
+    /// <param name="proto">A ProtoId that will be resolved and passed on.</param>
+    /// <param name="randomVal">The index value of the randomly selected modifier.</param>
     public string GenerateUniqueNameModifier(ProtoId<NameIdentifierGroupPrototype> proto, out int randomVal)
     {
         return GenerateUniqueNameModifier(ProtoMan.Index(proto), out randomVal);
@@ -76,18 +80,20 @@ public sealed partial class NameIdentifierSystem : SharedNameIdentifierSystem
     ///     Generates a new unique name/suffix for a given entity and adds it to <see cref="CurrentIds"/>
     ///     but does not set the entity's name.
     /// </summary>
-    public string GenerateUniqueName(EntityUid uid, NameIdentifierGroupPrototype proto, out int randomVal)
+    /// <param name="proto">The <see cref="NameIdentifierGroupPrototype"/> prototype to retrieve from.</param>
+    /// <param name="randomVal">The index value of the randomly selected modifier.</param>
+    /// <returns>A formatted and/or localized modifier. Empty string if invalid.</returns>
     public string GenerateUniqueNameModifier(NameIdentifierGroupPrototype proto, out int randomVal)
     {
         randomVal = -1;
         var entityName = Name(uid);
         if (!CurrentIds.TryGetValue(proto.ID, out var set))
-            return entityName;
+            return string.Empty;
 
         if (set.Count == 0)
         {
             // Oh jeez. We're outta numbers.
-            return entityName;
+            return string.Empty;
         }
 
         randomVal = set[^1];
