@@ -67,8 +67,9 @@ public sealed partial class NameIdentifierSystem : SharedNameIdentifierSystem
     ///     but does not set the entity's name.
     /// </summary>
     public string GenerateUniqueName(EntityUid uid, ProtoId<NameIdentifierGroupPrototype> proto, out int randomVal)
+    public string GenerateUniqueNameModifier(ProtoId<NameIdentifierGroupPrototype> proto, out int randomVal)
     {
-        return GenerateUniqueName(uid, ProtoMan.Index(proto), out randomVal);
+        return GenerateUniqueNameModifier(ProtoMan.Index(proto), out randomVal);
     }
 
     /// <summary>
@@ -76,6 +77,7 @@ public sealed partial class NameIdentifierSystem : SharedNameIdentifierSystem
     ///     but does not set the entity's name.
     /// </summary>
     public string GenerateUniqueName(EntityUid uid, NameIdentifierGroupPrototype proto, out int randomVal)
+    public string GenerateUniqueNameModifier(NameIdentifierGroupPrototype proto, out int randomVal)
     {
         randomVal = -1;
         var entityName = Name(uid);
@@ -138,7 +140,7 @@ public sealed partial class NameIdentifierSystem : SharedNameIdentifierSystem
         }
         else
         {
-            ent.Comp.FullIdentifier = GenerateUniqueName(ent, group, out ent.Comp.Identifier);
+            ent.Comp.FullIdentifier = GenerateUniqueNameModifier(group, out ent.Comp.Identifier);
         }
 
         Dirty(ent);
