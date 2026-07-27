@@ -11,6 +11,7 @@ using Content.Server.Roles;
 using Content.Server.RoundEnd;
 using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Systems;
+using Content.Shared.Cuffs;
 using Content.Shared.Database;
 using Content.Shared.Flash;
 using Content.Shared.GameTicking.Components;
@@ -28,7 +29,6 @@ using Content.Shared.Roles.Components;
 using Content.Shared.Stunnable;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
-using Content.Shared.Cuffs.Components;
 using Robust.Shared.Player;
 
 namespace Content.Server.GameTicking.Rules;
@@ -38,18 +38,19 @@ namespace Content.Server.GameTicking.Rules;
 /// </summary>
 public sealed partial class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleComponent>
 {
-    [Dependency] private AntagSelectionSystem _antag = default!;
-    [Dependency] private EmergencyShuttleSystem _emergencyShuttle = default!;
-    [Dependency] private EuiManager _euiMan = default!;
     [Dependency] private IAdminLogManager _adminLogManager = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private ISharedPlayerManager _player = default!;
+    [Dependency] private AntagSelectionSystem _antag = default!;
+    [Dependency] private EmergencyShuttleSystem _emergencyShuttle = default!;
+    [Dependency] private EuiManager _euiMan = default!;
     [Dependency] private MindSystem _mind = default!;
     [Dependency] private MobStateSystem _mobState = default!;
     [Dependency] private NpcFactionSystem _npcFaction = default!;
     [Dependency] private PopupSystem _popup = default!;
     [Dependency] private RoleSystem _role = default!;
     [Dependency] private RoundEndSystem _roundEnd = default!;
+    [Dependency] private SharedCuffableSystem _cuffable = default!;
     [Dependency] private SharedStunSystem _stun = default!;
     [Dependency] private StationSystem _stationSystem = default!;
 
@@ -273,7 +274,7 @@ public sealed partial class RevolutionaryRuleSystem : GameRuleSystem<Revolutiona
 
         foreach (var entity in list)
         {
-            if (TryComp<CuffableComponent>(entity, out var cuffed) && cuffed.CuffedHandCount > 0 && countCuffed)
+            if (_cuffable.IsCuffed(entity))
             {
                 gone++;
                 continue;

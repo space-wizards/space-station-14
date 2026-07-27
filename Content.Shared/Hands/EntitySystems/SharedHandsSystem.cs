@@ -100,7 +100,15 @@ public abstract partial class SharedHandsSystem
         if (ent.Comp.ActiveHandId == null)
             SetActiveHand(ent, handName);
 
-        RaiseLocalEvent(ent, new HandCountChangedEvent(ent));
+        RaiseLocalEvent(ent, new HandCountChangedEvent(ent, ent.Comp.Count));
+    }
+
+    public void RemoveActiveHand(Entity<HandsComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp, false) || ent.Comp.ActiveHandId == null)
+            return;
+
+        RemoveHand(ent, ent.Comp.ActiveHandId);
     }
 
     /// <summary>
@@ -108,6 +116,7 @@ public abstract partial class SharedHandsSystem
     /// </summary>
     public virtual void RemoveHand(Entity<HandsComponent?> ent, string handName)
     {
+        // FirstTimePredicted is here because sometimes the client doesn't play nice with container shutdowns.
         if (!Resolve(ent, ref ent.Comp, false))
             return;
 
@@ -115,7 +124,8 @@ public abstract partial class SharedHandsSystem
 
         TryDrop(ent, handName, null, false);
 
-        if (ContainerSystem.TryGetContainer(ent, handName, out var container))
+        // Don't double delete the container if we're already shutting down
+        if (MetaData(ent).EntityLifeStage < EntityLifeStage.Terminating && ContainerSystem.TryGetContainer(ent, handName, out var container))
             ContainerSystem.ShutdownContainer(container);
 
         if (!ent.Comp.Hands.Remove(handName))
@@ -125,7 +135,7 @@ public abstract partial class SharedHandsSystem
         if (ent.Comp.ActiveHandId == handName)
             TrySetActiveHand(ent, ent.Comp.SortedHands.FirstOrDefault());
 
-        RaiseLocalEvent(ent, new HandCountChangedEvent(ent));
+        RaiseLocalEvent(ent, new HandCountChangedEvent(ent, ent.Comp.Count));
         Dirty(ent);
     }
 

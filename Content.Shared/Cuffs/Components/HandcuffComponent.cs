@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Cuffs.Components;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedCuffableSystem))]
 public sealed partial class HandcuffComponent : Component
 {
@@ -45,34 +45,27 @@ public sealed partial class HandcuffComponent : Component
     public EntProtoId? BrokenPrototype;
 
     /// <summary>
-    /// Whether or not these cuffs are in the process of being removed.
-    /// Used simply to prevent spawning multiple <see cref="BrokenPrototype"/>.
-    /// </summary>
-    [DataField]
-    public bool Removing;
-
-    /// <summary>
     /// Whether the cuffs are currently being used to cuff someone.
     /// We need the extra information for when the virtual item is deleted because that can happen when you simply stop
     /// pulling them on the ground.
     /// </summary>
-    [DataField]
+    [ViewVariables]
     public bool Used;
 
     /// <summary>
     ///     The path of the RSI file used for the player cuffed overlay.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public string? CuffedRSI = "Objects/Misc/handcuffs.rsi";
 
     /// <summary>
-    ///     The iconstate used with the RSI file for the player cuffed overlay.
+    ///     Valid RSI states that this specific handcuff supports.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-    public string? BodyIconState = "body-overlay";
+    [DataField]
+    public HashSet<string> ValidStates = [];
 
     /// <summary>
-    /// An opptional color specification for <see cref="BodyIconState"/>
+    /// An optional color specification for <see cref="CuffedRSI"/>
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public Color Color = Color.White;
@@ -98,10 +91,8 @@ public sealed partial class HandcuffComponent : Component
 /// Should generate popups on the User.
 /// </summary>
 [ByRefEvent]
-public record struct UncuffAttemptEvent(EntityUid User, EntityUid Target)
+public record struct UncuffAttemptEvent(EntityUid User)
 {
-    public readonly EntityUid User = User;
-    public readonly EntityUid Target = Target;
     public bool Cancelled = false;
 }
 
