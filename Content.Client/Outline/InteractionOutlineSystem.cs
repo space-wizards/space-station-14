@@ -76,6 +76,9 @@ public sealed partial class InteractionOutlineSystem : EntitySystem
         if (!_spriteQuery.TryComp(_lastHoveredEntity, out var sprite))
             return;
 
+        if (sprite.PostShader != _shaderInRange && sprite.PostShader != _shaderOutOfRange)
+            return;
+
         sprite.PostShader = null;
     }
 
@@ -95,6 +98,9 @@ public sealed partial class InteractionOutlineSystem : EntitySystem
             return;
 
         if (!_spriteQuery.TryComp(_lastHoveredEntity, out var sprite))
+            return;
+
+        if (sprite.PostShader != _shaderInRange && sprite.PostShader != _shaderOutOfRange)
             return;
 
         sprite.PostShader = null;
@@ -152,7 +158,8 @@ public sealed partial class InteractionOutlineSystem : EntitySystem
             renderScale = _eyeManager.MainViewport.GetRenderScale();
         }
 
-        if (_lastHoveredEntity != entityToClick && _outlineQuery.HasComp(_lastHoveredEntity) && _spriteQuery.TryComp(_lastHoveredEntity, out var lastSprite))
+        if (_lastHoveredEntity != entityToClick && _outlineQuery.HasComp(_lastHoveredEntity) &&
+            _spriteQuery.TryComp(_lastHoveredEntity, out var lastSprite) && (lastSprite.PostShader == _shaderInRange || lastSprite.PostShader == _shaderOutOfRange))
             lastSprite.PostShader = null;
 
         _lastHoveredEntity = entityToClick;
@@ -164,7 +171,7 @@ public sealed partial class InteractionOutlineSystem : EntitySystem
             return;
 
         var inRange = false;
-        if (localSession.AttachedEntity != null && !Deleted(entityToClick))
+        if (localSession.AttachedEntity != null)
             inRange = _interactionSystem.InRangeUnobstructed(localSession.AttachedEntity.Value, entityToClick.Value);
 
         var shader = sprite.PostShader = inRange ? _shaderInRange : _shaderOutOfRange;
