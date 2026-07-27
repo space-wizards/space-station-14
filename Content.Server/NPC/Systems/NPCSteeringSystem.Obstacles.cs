@@ -160,7 +160,8 @@ public sealed partial class NPCSteeringSystem
             var attackResult = false;
             foreach (var ent in obstacleEnts)
             {
-                if (!_destructibleQuery.HasComponent(ent))
+                if (!_destructibleQuery.HasComponent(ent) ||
+                    !_interaction.InRangeUnobstructed(uid, ent, weaponComp.Range))
                     continue;
 
                 if (_melee.AttemptLightAttack(uid, weaponUid, weaponComp, ent))
