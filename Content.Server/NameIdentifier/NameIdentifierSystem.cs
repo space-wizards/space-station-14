@@ -78,7 +78,7 @@ public sealed partial class NameIdentifierSystem : SharedNameIdentifierSystem
     }
 
     /// <summary>
-    /// Generates a new unique name modifier for a given entity and adds its index to <see cref="CurrentIds"/>
+    /// Generates a new unique name modifier for a given entity and removes it from <see cref="CurrentIds"/>
     /// but does not set the entity's name.
     /// </summary>
     /// <param name="proto">The <see cref="NameIdentifierGroupPrototype"/> prototype to retrieve from.</param>
