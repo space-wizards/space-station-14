@@ -208,7 +208,12 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
             return;
 
         if (TryComp(uid, out InputMoverComponent? controller))
-            _mover.SetMoveInput((uid, controller), Vector2.Zero, ushort.MaxValue);
+        {
+            controller.CurTickSprintMovement = Vector2.Zero;
+
+            var ev = new NPCMoveEvent(Vector2.Zero);
+            RaiseLocalEvent(uid, ref ev);
+        }
 
         component.PathfindToken?.Cancel();
         component.PathfindToken = null;
@@ -283,7 +288,12 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
             Array.Clear(steering.Danger);
         }
 
-        _mover.SetMoveInput((uid, component), value, ushort.MaxValue);
+        component.CurTickSprintMovement = value;
+        component.LastInputTick = _timing.CurTick;
+        component.LastInputSubTick = ushort.MaxValue;
+
+        var ev = new NPCMoveEvent(value);
+        RaiseLocalEvent(uid, ref ev);
     }
 
     /// <summary>

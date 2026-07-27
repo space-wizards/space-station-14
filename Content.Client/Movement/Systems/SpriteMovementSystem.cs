@@ -14,6 +14,12 @@ public sealed partial class SpriteMovementSystem : SharedSpriteMovementSystem
     [Dependency] private EntityQuery<SpriteComponent> _spriteQuery = default!;
 
     [SubscribeLocalEvent]
+    private void AfterHandleState(Entity<SpriteMovementComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        UpdateSprite(ent);
+    }
+
+    [SubscribeLocalEvent]
     private void OnSpriteMoveInput(Entity<SpriteMovementComponent> ent, ref MoveInputEvent args)
     {
         var isMoving = args.HasDirectionalMovement && _activeInputMover.HasComp(ent);
@@ -22,10 +28,15 @@ public sealed partial class SpriteMovementSystem : SharedSpriteMovementSystem
 
         ent.Comp.IsMoving = isMoving;
 
+        UpdateSprite(ent);
+    }
+
+    private void UpdateSprite(Entity<SpriteMovementComponent> ent)
+    {
         if (!_spriteQuery.TryComp(ent, out var sprite))
             return;
 
-        var layers = isMoving ? ent.Comp.MovementLayers : ent.Comp.NoMovementLayers;
+        var layers = ent.Comp.IsMoving ? ent.Comp.MovementLayers : ent.Comp.NoMovementLayers;
         foreach (var (layer, state) in layers)
         {
             _sprite.LayerSetData((ent, sprite), layer, state);

@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using System.Numerics;
 using Content.Shared.Alert;
 using Content.Shared.CCVar;
@@ -6,7 +5,6 @@ using Content.Shared.Follower.Components;
 using Content.Shared.Input;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
-using JetBrains.Annotations;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
@@ -409,44 +407,6 @@ namespace Content.Shared.Movement.Systems
         }
 
         /// <summary>
-        /// Sets the entity's movement input from a normalized vector.
-        /// </summary>
-        /// <param name="entity">The entity for which to set the movement input.</param>
-        /// <param name="direction">The normalized vector representing the movement direction.</param>
-        /// <param name="subTick">The sub-tick value.</param>
-        /// <param name="walking">Whether the entity is walking.</param>
-        [PublicAPI]
-        public void SetMoveInput(Entity<InputMoverComponent> entity, Vector2 direction, ushort subTick, bool walking = false)
-        {
-            direction.Normalize();
-
-            var buttons = MoveButtons.None;
-
-            // Don't add buttons if movement is too small.
-            if (float.Abs(direction.X) > float.Epsilon)
-                buttons |= direction.X < 0 ? MoveButtons.Left : MoveButtons.Right;
-
-            // Ditto above.
-            if (float.Abs(direction.Y) > float.Epsilon)
-                buttons |= direction.Y < 0 ? MoveButtons.Down : MoveButtons.Up;
-
-            UpdateSubtick(entity, subTick);
-
-            if (walking)
-            {
-                buttons |= MoveButtons.Walk;
-
-                entity.Comp.CurTickWalkMovement = direction;
-            }
-            else
-            {
-                entity.Comp.CurTickSprintMovement = direction;
-            }
-
-            SetMoveInput(entity, buttons);
-        }
-
-        /// <summary>
         ///     Toggles one of the four cardinal directions. Each of the four directions are
         ///     composed into a single direction vector, <see cref="VelocityDir"/>. Enabling
         ///     opposite directions will cancel each other out, resulting in no direction.
@@ -466,27 +426,21 @@ namespace Content.Shared.Movement.Systems
 
             SetMoveInput(entity, subTick, enabled, bit);
         }
-
-        private void UpdateSubtick(InputMoverComponent comp, ushort subTick)
-        {
-            // Modifies held state of a movement button at a certain sub tick and updates current tick movement vectors.
-            ResetSubtick(comp);
-
-            if (subTick >= comp.LastInputSubTick)
-            {
-                var fraction = (subTick - comp.LastInputSubTick) / (float)ushort.MaxValue;
-
-                ref var lastMoveAmount = ref comp.Sprinting ? ref comp.CurTickSprintMovement : ref comp.CurTickWalkMovement;
-
-                lastMoveAmount += DirVecForButtons(comp.HeldMoveButtons) * fraction;
-
-                comp.LastInputSubTick = subTick;
-            }
-        }
-
         private void SetMoveInput(Entity<InputMoverComponent> entity, ushort subTick, bool enabled, MoveButtons bit)
         {
-            UpdateSubtick(entity, subTick);
+            // Modifies held state of a movement button at a certain sub tick and updates current tick movement vectors.
+            ResetSubtick(entity.Comp);
+
+            if (subTick >= entity.Comp.LastInputSubTick)
+            {
+                var fraction = (subTick - entity.Comp.LastInputSubTick) / (float)ushort.MaxValue;
+
+                ref var lastMoveAmount = ref entity.Comp.Sprinting ? ref entity.Comp.CurTickSprintMovement : ref entity.Comp.CurTickWalkMovement;
+
+                lastMoveAmount += DirVecForButtons(entity.Comp.HeldMoveButtons) * fraction;
+
+                entity.Comp.LastInputSubTick = subTick;
+            }
 
             var buttons = entity.Comp.HeldMoveButtons;
 
