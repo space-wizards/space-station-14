@@ -49,15 +49,17 @@ public sealed partial class TabletopGameComponent : Component
     public bool HasSession => Position != null;
 
     /// <summary>
-    /// The set of players currently playing this tabletop game.
-    /// </summary>
-    [DataField(serverOnly: true), ViewVariables(VVAccess.ReadOnly)]
-    public Dictionary<ICommonSession, TabletopSessionPlayerData> Players = [];
-
-    /// <summary>
     /// All non-camera entities bound to this session. If you create an entity for this session, you have to add it here.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadOnly)]
     [AutoNetworkedField]
     public HashSet<EntityUid> Entities = [];
+}
+
+/// <summary>
+/// A UI key enum for board games.
+/// </summary>
+public enum TabletopGameUiKey
+{
+    Key
 }

@@ -1,6 +1,8 @@
 ﻿<DefaultWindow xmlns="https://spacestation14.io"
             xmlns:viewport="clr-namespace:Content.Client.Viewport">
-    <viewport:ScalingViewport Name="ScalingVp" MouseFilter="Stop" RenderScaleMode="CeilInt">
+    <viewport:ScalingViewport Name="ScalingVp"
+                              MouseFilter="Stop"
+                              RenderScaleMode="CeilInt">
         <Button Name="FlipButton"
                 Text="{ Loc 'tabletop-chess-flip' }"
                 MinSize="60 30"
