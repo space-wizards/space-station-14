@@ -4,5 +4,8 @@
         HorizontalExpand="True"
         VerticalExpand="True"
         Name="Bar"
-        MinHeight="20"/>
+        MinHeight="20"
+        MediumNotchInterval="6"
+        BigNotchInterval="12"
+        BigNotchHeight="0.4"/>
 </Control>
