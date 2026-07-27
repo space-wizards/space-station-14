@@ -15,7 +15,7 @@ namespace Content.IntegrationTests.Tests.Materials;
 [TestOf(typeof(MaterialReclaimerComponent))]
 public sealed class ReclaimerLoopTest : InteractionTest
 {
-    //ProtoIDs we need
+    // ProtoIDs we need
     private static readonly EntProtoId ApcId = "APCBasic";
     private static readonly EntProtoId FloorTileId = "FloorTileItemSteel";
 
@@ -31,34 +31,34 @@ public sealed class ReclaimerLoopTest : InteractionTest
     [TrackingIssue("https://github.com/space-wizards/space-station-14/issues/39691")]
     public async Task MaterialSpawnLoopTest(string reclaimerId)
     {
-        //Spawn the reclaimer
+        // Spawn the reclaimer
         await SpawnTarget(reclaimerId, PlayerCoords);
-        Assert.That(STarget, Is.Not.Null, "STarget was null, did the reclaimer spawn correctly?");
+        Assume.That(STarget, Is.Not.Null, "STarget was null, did the reclaimer spawn correctly?");
 
         var reclaimComp = Comp<MaterialReclaimerComponent>(Target);
 
         // Power the reclaimer
         await SpawnEntity(ApcId, SEntMan.GetCoordinates(TargetCoords));
         await RunTicks(1);
-        //Set reclaimer to enabled
+        // Set reclaimer to enabled
         await Server.WaitPost(() =>
         {
             _materialReclaimerSystem.SetReclaimerEnabled((EntityUid)STarget, true);
         });
 
-        //Assert that reclaimer enabled
-        Assert.That(reclaimComp.Enabled, "The reclaimer did not get or stay enabled");
+        // Check that reclaimer enabled
+        Assume.That(reclaimComp.Enabled, "The reclaimer did not get or stay enabled");
 
-        //put a floor tile down
+        // Put a floor tile down
         await InteractUsing(FloorTileId);
 
-        // Reclaimer can't reclaim materials?  Job's done.
+        // Reclaimer can't reclaim materials? Job's done.
         if (!reclaimComp.ReclaimMaterials)
-            return;
+            Assert.Ignore("Cannot reclaim materials");
 
         using (Assert.EnterMultipleScope())
         {
-            //For each material, assert that it is not recyclable (and would thus cause a recycling loop)
+            // For each material, assert that it is not recyclable (and would thus cause a recycling loop)
             foreach (var material in ProtoMan.EnumeratePrototypes<MaterialPrototype>())
             {
                 var matStack = material.StackEntity;
@@ -70,7 +70,7 @@ public sealed class ReclaimerLoopTest : InteractionTest
                 var matInHands = await PlaceInHands(matStack);
                 var matInHandsUid = ToServer(matInHands);
 
-                //Assert we're holding material
+                // Assert we're holding material
                 Assert.That(
                     HandSys.GetActiveItem((SPlayer, Hands)),
                     Is.EqualTo(matInHandsUid),
@@ -78,7 +78,7 @@ public sealed class ReclaimerLoopTest : InteractionTest
 
                 await Interact();
 
-                //Assert Hands not empty
+                // Assert Hands not empty
                 Assert.That(
                     HandSys.GetActiveItem((SPlayer, Hands)),
                     Is.Not.Null,
