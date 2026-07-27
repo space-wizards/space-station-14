@@ -1,52 +1,72 @@
 ﻿<Control xmlns="https://spacestation14.io"
          xmlns:pllax="clr-namespace:Content.Client.Parallax"
-         xmlns:clog="clr-namespace:Content.Client.Changelog">
+         xmlns:clog="clr-namespace:Content.Client.Changelog"
+         xmlns:system="clr-namespace:System;assembly=System.Runtime">
     <pllax:ParallaxControl
-        ParallaxPrototype="TrainStation"
+        Name="BackgroundParallax"
         SpeedX="5"
         SpeedY="20"
         ScaleX="3"
-        ScaleY="3"/>
+        ScaleY="3" />
     <BoxContainer Name="VBox"
                   Orientation="Vertical"
                   HorizontalAlignment="Center"
                   VerticalAlignment="Center"
                   HorizontalExpand="True"
                   VerticalExpand="True"
-                  StyleIdentifier="mainMenuVBox"
-                  SeparationOverride="3">
+                  SeparationOverride="24">
         <TextureRect Name="Logo"
-                     Stretch="KeepCentered"/>
-        <GridContainer Columns="2">
-            <Label Text="{Loc 'main-menu-username-label'}" />
-            <LineEdit Name="UsernameBox"
-                      Access="Public"
-                      PlaceHolder="{Loc 'main-menu-username-text'}"
-                      HorizontalExpand="True" />
-            <Label Text="{Loc 'main-menu-address-label'}"/>
-            <LineEdit Name="AddressBox"
-                      Access="Public"
-                      Text="localhost"
-                      PlaceHolder="server address:port"
-                      HorizontalExpand="True" />
-        </GridContainer>
-        <Button Name="DirectConnectButton"
-                Access="Public"
-                Text="{Loc 'main-menu-direct-connect-button'}"
-                TextAlign="Center"
-                StyleIdentifier="mainMenu"/>
-        <Button Name="OptionsButton"
-                Access="Public"
-                Text="{Loc 'main-menu-options-button'}"
-                TextAlign="Center"
-                StyleIdentifier="mainMenu"/>
-        <Button Name="QuitButton"
-                Access="Public"
-                Text="{Loc 'main-menu-quit-button'}"
-                TextAlign="Center"
-                StyleIdentifier="mainMenu"/>
-        <clog:ChangelogButton
-            Name="ChangelogButton"
-            Access="Public"/>
+                     Stretch="KeepCentered" />
+        <PanelContainer StyleClasses="BackgroundPanel">
+            <BoxContainer Orientation="Vertical"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
+                          HorizontalExpand="True"
+                          VerticalExpand="True"
+                          StyleIdentifier="mainMenuVBox"
+                          MinWidth="320"
+                          Margin="0 4 0 12">
+                <GridContainer Columns="2" Margin="0 4">
+                    <Label Text="{Loc 'main-menu-username-label'}" />
+                    <LineEdit Name="UsernameBox"
+                              Access="Public"
+                              PlaceHolder="{Loc 'main-menu-username-text'}"
+                              HorizontalExpand="True" />
+                    <Label Text="{Loc 'main-menu-address-label'}" />
+                    <LineEdit Name="AddressBox"
+                              Access="Public"
+                              Text="localhost"
+                              PlaceHolder="server address:port"
+                              HorizontalExpand="True" />
+                </GridContainer>
+                <Button Name="DirectConnectButton"
+                        Access="Public"
+                        Text="{Loc 'main-menu-direct-connect-button'}"
+                        TextAlign="Center"
+                        StyleClasses="OpenLeft"
+                        StyleIdentifier="mainMenu" />
+                <clog:ChangelogButton
+                    Name="ChangelogButton"
+                    StyleIdentifier="mainMenu"
+                    StyleClasses="OpenBoth"
+                    Access="Public" />
+                <Button Name="OptionsButton"
+                        Access="Public"
+                        Text="{Loc 'main-menu-options-button'}"
+                        TextAlign="Center"
+                        StyleClasses="OpenBoth"
+                        StyleIdentifier="mainMenu" />
+                <Button Name="QuitButton"
+                        Access="Public"
+                        Text="{Loc 'main-menu-quit-button'}"
+                        TextAlign="Center"
+                        StyleIdentifier="mainMenu">
+                    <Control.StyleClasses>
+                        <system:String>negative</system:String>
+                        <system:String>OpenRight</system:String>
+                    </Control.StyleClasses>
+                </Button>
+            </BoxContainer>
+        </PanelContainer>
     </BoxContainer>
 </Control>
