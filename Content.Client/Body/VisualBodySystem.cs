@@ -293,7 +293,8 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
         if (!ent.Comp.HideableLayers.Contains(args.Args.Layer))
             return;
 
-        args.Args.Handled = true;
+        // This hurts.
+        args.Args = args.Args with { Handled = true };
 
         foreach (var markings in ent.Comp.Markings.Values)
         {

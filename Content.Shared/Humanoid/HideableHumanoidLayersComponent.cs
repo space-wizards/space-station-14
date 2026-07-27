@@ -26,8 +26,9 @@ public sealed partial class HideableHumanoidLayersComponent : Component
 /// Raised on an entity when one of its humanoid layers changes its visibility
 /// </summary>
 [ByRefEvent]
-public sealed class HumanoidLayerVisibilityChangedEvent(HumanoidVisualLayers layer, bool visible) : HandledEntityEventArgs
+public struct HumanoidLayerVisibilityChangedEvent(HumanoidVisualLayers layer, bool visible)
 {
     public readonly HumanoidVisualLayers Layer = layer;
     public readonly bool Visible = visible;
+    public bool Handled;
 }
