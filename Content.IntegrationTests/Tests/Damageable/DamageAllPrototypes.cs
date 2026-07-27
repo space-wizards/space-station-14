@@ -17,7 +17,7 @@ namespace Content.IntegrationTests.Tests.Damageable;
 /// that there at least one way of handling damage attached to entity.
 /// </summary>
 [TestFixture]
-[TestOf(typeof(DamageableComponent))]
+[TestOf(typeof(InjurableComponent))]
 [TestOf(typeof(DamageableSystem))]
 public sealed class DamageAllPrototypesTest : GameTest
 {
