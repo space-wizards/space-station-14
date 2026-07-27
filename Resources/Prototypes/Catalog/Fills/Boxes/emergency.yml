@@ -8,7 +8,7 @@
     shape: 0,0,1,2
   - type: Storage
     grid:
-      - 0,0,2,3
+      - 0,0,1,2
   - type: EntityTableContainerFill
     containers:
       storagebase: !type:AllSelector
