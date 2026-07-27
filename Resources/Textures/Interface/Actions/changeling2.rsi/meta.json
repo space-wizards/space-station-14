@@ -60,6 +60,12 @@
         },
         {
             "name": "screech"
+        },
+        {
+            "name": "camo-undies-off"
+        },
+        {
+            "name": "camo-undies-on"
         }
     ]
 }

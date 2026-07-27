@@ -1,8 +1,10 @@
+using Content.Shared.EntityEffects;
 using Content.Shared.Examine;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Stealth.Components;
 using Robust.Shared.GameStates;
+using Robust.Shared.Light;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Stealth;
@@ -25,6 +27,7 @@ public abstract partial class SharedStealthSystem : EntitySystem
         SubscribeLocalEvent<StealthComponent, ExamineAttemptEvent>(OnExamineAttempt);
         SubscribeLocalEvent<StealthComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<StealthComponent, MobStateChangedEvent>(OnMobStateChanged);
+        SubscribeLocalEvent<StealthInDarkComponent, ComponentRemove>(OnStealthInDarkRemove);
     }
 
     private void OnExamineAttempt(EntityUid uid, StealthComponent component, ExamineAttemptEvent args)
@@ -98,7 +101,7 @@ public abstract partial class SharedStealthSystem : EntitySystem
 
     private void OnStealthGetState(EntityUid uid, StealthComponent component, ref ComponentGetState args)
     {
-        args.State = new StealthComponentState(component.LastVisibility, component.LastUpdated, component.Enabled, component.ShimmerFrequency);
+        args.State = new StealthComponentState(component.LastVisibility, component.LastUpdated, component.MinVisibility, component.MaxVisibility, component.Enabled, component.ShimmerFrequency);
     }
 
     private void OnStealthHandleState(EntityUid uid, StealthComponent component, ref ComponentHandleState args)
@@ -109,6 +112,8 @@ public abstract partial class SharedStealthSystem : EntitySystem
         SetEnabled(uid, cast.Enabled, component);
         component.LastVisibility = cast.Visibility;
         component.LastUpdated = cast.LastUpdated;
+        component.MinVisibility = cast.MinVisibility;
+        component.MaxVisibility = cast.MaxVisibility;
         component.ShimmerFrequency = cast.ShimmerFrequency;
     }
 
@@ -128,6 +133,15 @@ public abstract partial class SharedStealthSystem : EntitySystem
     {
         var mod = args.SecondsSinceUpdate * component.PassiveVisibilityRate;
         args.FlatModifier += mod;
+    }
+
+    private void OnStealthInDarkRemove(Entity<StealthInDarkComponent> ent, ref ComponentRemove args)
+    {
+        if (ent.Comp.ChangedVisibility >= 0)
+            return;
+
+        if (EntityManager.HasComponent<StealthComponent>(ent))
+            ModifyVisibility(ent, -ent.Comp.ChangedVisibility);
     }
 
     /// <summary>
@@ -182,7 +196,7 @@ public abstract partial class SharedStealthSystem : EntitySystem
 
         var deltaTime = _timing.CurTime - component.LastUpdated.Value;
 
-        var ev = new GetVisibilityModifiersEvent(uid, component, (float) deltaTime.TotalSeconds, 0f);
+        var ev = new GetVisibilityModifiersEvent(uid, component, (float)deltaTime.TotalSeconds, 0f);
         RaiseLocalEvent(uid, ev, false);
 
         return Math.Clamp(component.LastVisibility + ev.FlatModifier, component.MinVisibility, component.MaxVisibility);
@@ -191,7 +205,7 @@ public abstract partial class SharedStealthSystem : EntitySystem
     /// <summary>
     ///     Used to run through any stealth effecting components on the entity.
     /// </summary>
-    private sealed class GetVisibilityModifiersEvent : EntityEventArgs
+    protected sealed class GetVisibilityModifiersEvent : EntityEventArgs
     {
         public readonly StealthComponent Stealth;
         public readonly float SecondsSinceUpdate;
