@@ -1,9 +1,9 @@
 - type: entity
-  abstract: true
-  parent: BaseStructure
   id: TableBase
+  parent: BaseStructure
   name: table
   description: A square piece of metal standing on four metal legs.
+  abstract: true
   components:
   - type: Animateable
   - type: Damageable
@@ -43,10 +43,10 @@
     - ForceFixRotations
 
 - type: entity
-  abstract: true
-  parent: TableBase
   id: CounterBase
+  parent: TableBase
   name: counter
+  abstract: true
   components:
   - type: Fixtures
     fixtures:

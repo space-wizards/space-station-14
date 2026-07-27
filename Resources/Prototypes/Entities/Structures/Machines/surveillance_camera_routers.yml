@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [ BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible  ]
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
   id: SurveillanceCameraRouterBase
   name: camera router
   description: A surveillance camera router. It routes. Perhaps.
@@ -33,14 +33,6 @@
           enum.PowerDeviceVisualLayers.Powered:
             True: { visible: true }
             False: { visible: false }
-    - type: Destructible
-      thresholds:
-      - trigger: !type:DamageTrigger
-          damage: 175
-        behaviors:
-        - !type:PlaySoundBehavior
-          sound:
-            collection: MetalBreak
     - type: Appearance
     - type: AmbientOnPowered
     - type: AmbientSound
@@ -142,7 +134,7 @@
 
 - type: entity
   abstract: true
-  parent: [ BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible ]
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
   id: SurveillanceCameraWirelessRouterBase
   name: wireless camera router
   description: A wireless surveillance camera router. It routes. Perhaps.
@@ -175,14 +167,6 @@
           enum.PowerDeviceVisualLayers.Powered:
             True: { visible: true }
             False: { visible: false }
-    - type: Destructible
-      thresholds:
-      - trigger: !type:DamageTrigger
-          damage: 175
-        behaviors:
-        - !type:PlaySoundBehavior
-          sound:
-            collection: MetalBreak
     - type: Appearance
     - type: AmbientOnPowered
     - type: AmbientSound

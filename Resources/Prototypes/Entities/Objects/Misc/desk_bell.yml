@@ -1,7 +1,8 @@
 - type: entity
-  abstract: true
-  parent: [ BaseItem, BaseItemDestructible ]
-  id: BaseDeskBell
+  parent: BaseItem
+  id: EmptyDeskBell
+  name: unfinished desk bell
+  description: An empty bell missing its noise maker.
   components:
   - type: Sprite
     sprite: Objects/Misc/desk_bell.rsi
@@ -9,15 +10,25 @@
   - type: Construction
     graph: &BellGraph BellGraph
     node: start
+  - type: Damageable
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
-    - trigger: &DamageTrigger50
+    - trigger: &DamageTrigger20
         !type:DamageTrigger
-        damage: 50
+        damage: 20
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 0
+            max: 1
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: MeleeWeapon
     wideAnimationRotation: 180
     soundHit: &BellSound
@@ -38,23 +49,7 @@
     sound: *BellSound
 
 - type: entity
-  parent: BaseDeskBell
-  id: EmptyDeskBell
-  name: unfinished desk bell
-  description: An empty bell missing its noise maker.
-  components:
-  - type: Destructible
-    thresholds:
-    - trigger: *DamageTrigger50
-      behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          SheetSteel1:
-            min: 0
-            max: 1
-
-- type: entity
-  parent: BaseDeskBell
+  parent: EmptyDeskBell
   id: DeskBell
   name: desk bell
   description: The cornerstone of any customer service job. You feel an unending urge to ring it.
@@ -69,8 +64,11 @@
     node: deskBellNode
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger50
+    - trigger: *DamageTrigger20
       behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
       - !type:SpawnEntitiesBehavior
         spawn:
           PartRodMetal1:
@@ -78,6 +76,8 @@
             max: 1
       - !type:ChangeConstructionNodeBehavior
         node: start
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: InteractionPopup
     successChance: 1
     onActivate: true
@@ -91,7 +91,7 @@
     sound: *BellSound
 
 - type: entity
-  parent: BaseDeskBell
+  parent: EmptyDeskBell
   id: DeskBuzzer
   name: desk buzzer
   description: An advanced customer service tool. You feel an unending urge to buzz it.
@@ -105,8 +105,11 @@
     node: deskBuzzerNode
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger50
+    - trigger: *DamageTrigger20
       behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
       - !type:SpawnEntitiesBehavior
         spawn:
           CableApcStack1:
@@ -114,6 +117,8 @@
             max: 2
       - !type:ChangeConstructionNodeBehavior
         node: start
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: StationAiWhitelist
   - type: InteractionPopup
     successChance: 1
@@ -139,7 +144,7 @@
     sound: *BuzzerSound
 
 - type: entity
-  parent: BaseDeskBell
+  parent: EmptyDeskBell
   id: DeskHorn
   name: desk horn
   description: The cornerstone of any clown business. You feel an unending urge to honk it.
@@ -153,8 +158,11 @@
     node: deskHornNode
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger50
+    - trigger: *DamageTrigger20
       behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
       - !type:SpawnEntitiesBehavior
         spawn:
           BikeHorn:
@@ -162,6 +170,8 @@
             max: 1
       - !type:ChangeConstructionNodeBehavior
         node: start
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: InteractionPopup
     successChance: 1
     onActivate: true

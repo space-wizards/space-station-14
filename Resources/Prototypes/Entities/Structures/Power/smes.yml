@@ -2,7 +2,7 @@
 - type: entity
   abstract: true
   id: BaseSMES
-  parent: [ BaseMachine, ConstructibleMachine, BaseConstructibleMachineDestructible ]
+  parent: [ BaseMachine, ConstructibleMachine ]
   name: SMES
   description: A high-capacity superconducting magnetic energy storage (SMES) unit.
   placement:
@@ -87,14 +87,8 @@
       mediumVoltageNode: output
     - type: Damageable
       damageModifierSet: StructuralMetallicStrong
-    - type: Destructible
-      thresholds:
-      - trigger: !type:DamageTrigger
-          damage: 175
-        behaviors:
-        - !type:PlaySoundBehavior
-          sound:
-            collection: MetalBreak
+    - type: Injurable
+      damageContainer: StructuralInorganic
     - type: BatterySensor
     - type: DeviceNetwork
       deviceNetId: AtmosDevices

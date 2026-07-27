@@ -1,6 +1,6 @@
 - type: entity
   id: PortableScrubber
-  parent: [BaseMachinePowered, SmallConstructibleMachine, StructureWheeled, BaseSmallConstructibleMachineDestructible]
+  parent: [BaseMachinePowered, SmallConstructibleMachine, StructureWheeled]
   name: portable scrubber
   description: It scrubs, portably!
   components:
@@ -69,22 +69,34 @@
     board: PortableScrubberMachineCircuitBoard
   - type: Damageable
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 300
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 3
+          SheetGlass1:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: GuideHelp
     guides:
     - PortableScrubber
 
 - type: entity
   id: SpaceHeater
-  parent: [BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible]
+  parent: [BaseMachinePowered, ConstructibleMachine]
   name: space heater
   description: A bluespace technology device that alters local temperature. Commonly referred to as a "Space Heater".
   suffix: Unanchored
@@ -143,15 +155,24 @@
     atmospheric: true
   - type: Damageable
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 175
+        damage: 300
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 3
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: GuideHelp
     guides:
     - Thermomachines

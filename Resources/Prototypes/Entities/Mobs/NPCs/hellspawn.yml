@@ -6,7 +6,6 @@
   - MobBloodstream
   - BaseMobAnimal
   - BaseSlicingRefinable
-  - BaseMobDestructible
   id: MobHellspawn
   description: An unstoppable force of carnage.
   components:

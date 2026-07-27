@@ -179,9 +179,10 @@
 # feel free to hook them into random content.
 
 - type: entity
-  abstract: true
-  id: MobBaseEmotionalSupportScurret
   name: Emotional Support Scurret
+  id: MobBaseEmotionalSupportScurret
+  parent: MobBaseScurret
+  abstract: true
   components:
     - type: Loadout
       prototypes: [ EmotionalSupportScurretGear ]

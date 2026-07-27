@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ BaseXenoborgChassis, BaseXenoborgTransponder, BaseXenoborgDestructible ]
+  parent: [ BaseXenoborgChassis, BaseXenoborgTransponder ]
   id: XenoborgEngi
   name: engi xenoborg
   suffix: with brain
@@ -148,7 +148,7 @@
         startingItem: PowerCellHigh
 
 - type: entity
-  parent: [ BaseXenoborgChassis, BaseXenoborgTransponder, BaseXenoborgDestructible ]
+  parent: [ BaseXenoborgChassis, BaseXenoborgTransponder ]
   id: XenoborgScout
   name: scout xenoborg
   suffix: with brain
@@ -203,7 +203,7 @@
         startingItem: PowerCellHigh
 
 - type: entity
-  parent: [ BaseXenoborgChassis, BaseXenoborgTransponder, BaseXenoborgDestructible ]
+  parent: [ BaseXenoborgChassis, BaseXenoborgTransponder ]
   id: XenoborgStealth
   name: stealth xenoborg
   suffix: with brain

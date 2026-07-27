@@ -1,5 +1,5 @@
 - type: entity
-  parent: StorageTankIndestructible
+  parent: StorageTank
   id: BaseBarrelChem
   abstract: true
   name: chemical barrel

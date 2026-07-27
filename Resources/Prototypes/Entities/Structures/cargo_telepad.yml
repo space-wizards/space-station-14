@@ -1,6 +1,6 @@
 - type: entity
   id: CargoTelepad
-  parent: [ BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible ]
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
   name: cargo telepad
   description: Beam in the pizzas and dig in.
   components:
@@ -31,14 +31,8 @@
       shader: unshaded
   - type: Damageable
     damageModifierSet: StructuralMetallicStrong
-  - type: Destructible
-    thresholds:
-    - trigger: !type:DamageTrigger
-        damage: 175
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice

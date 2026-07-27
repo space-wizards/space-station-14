@@ -77,7 +77,6 @@
         sound:
           collection: GlassBreak
       - !type:SpawnEntitiesBehavior
-        offset: 0
         spawn:
           StationMapBroken:
             min: 1

@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [BaseWeaponEnergyTurretIndestructible, ConstructibleMachine]
+  parent: [BaseWeaponEnergyTurret, ConstructibleMachine]
   id: WeaponEnergyTurretStationBase
   name: sentry turret
   description: A high-tech autonomous weapons system designed to keep unauthorized personnel out of sensitive areas.
@@ -87,8 +87,6 @@
     deployedDamageModifierSetId: FlimsyMetallic
   - type: Damageable
     damageModifierSet: Metallic
-  - type: Injurable
-    damageContainer: StructuralInorganic
   - type: Repairable
     doAfterDelay: 10
     allowSelfRepair: false
