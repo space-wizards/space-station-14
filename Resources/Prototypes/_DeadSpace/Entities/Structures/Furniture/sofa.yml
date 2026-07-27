@@ -136,7 +136,7 @@
   - type: Rotatable
   - type: Sprite
     sprite: _DeadSpace/Structures/Furniture/violet_sofa.rsi
-    state: sofa_right
+    state: sofa_left
   - type: Construction
     graph: Seat
     node: adtvioletsofaleft
@@ -176,7 +176,7 @@
   - type: Rotatable
   - type: Sprite
     sprite: _DeadSpace/Structures/Furniture/violet_sofa.rsi
-    state: sofa_left
+    state: sofa_right
   - type: Construction
     graph: Seat
     node: adtvioletsofaright

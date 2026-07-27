@@ -1,0 +1,9 @@
+- type: entity
+  parent: PaintingBase
+  id: PaintingCentcomm
+  name: Портрет Администратора ЦК
+  description: Портрет секторального управляющего, назначеного NanoTrasen. Кажись, вы не помните его имя.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Wallmounts/paintings.rsi
+    state: painting01
