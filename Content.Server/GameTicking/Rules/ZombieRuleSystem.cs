@@ -214,6 +214,38 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         component.NextRoundEndCheck = _timing.CurTime + component.EndCheckDelay;
     }
 
+    // DS14-start
+    protected override void AppendAdminStatus(EntityUid uid,
+        ZombieRuleComponent component,
+        GameRuleComponent gameRule,
+        CollectGameRuleAdminStatusEvent args)
+    {
+        var healthy = GetHealthyHumans(false).Count;
+        var zombies = GetZombieCount(includeOffStation: false);
+        var total = healthy + zombies;
+        var infected = total == 0 ? 0f : zombies / (float) total;
+        var shuttleStatus = component.ZombieShuttleAutoCallDisabled
+            ? "game-rule-admin-status-zombie-shuttle-disabled"
+            : component.ZombieShuttleAutoCallHandled
+                ? "game-rule-admin-status-zombie-shuttle-handled"
+                : "game-rule-admin-status-zombie-shuttle-pending";
+
+        args.AddSection(
+            Loc.GetString("game-rule-admin-status-zombie-title"),
+            new[]
+            {
+                Loc.GetString(
+                    "game-rule-admin-status-zombie-counts",
+                    ("zombies", zombies),
+                    ("healthy", healthy),
+                    ("infected", infected.ToString("P0"))),
+                Loc.GetString(
+                    "game-rule-admin-status-zombie-shuttle",
+                    ("status", Loc.GetString(shuttleStatus))),
+            });
+    }
+    // DS14-end
+
     private void OnZombifySelf(EntityUid uid, IncurableZombieComponent component, ZombifySelfActionEvent args)
     {
         _zombie.ZombifyEntity(uid);
@@ -230,17 +262,41 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     private float GetInfectedFraction(bool includeOffStation = true, bool includeDead = false)
     {
         var players = GetHealthyHumans(includeOffStation);
+        // DS14-start
+        var zombieCount = GetZombieCount(includeDead, includeOffStation);
+        var total = players.Count + zombieCount;
+
+        return total == 0 ? 0f : zombieCount / (float) total;
+    }
+
+    private int GetZombieCount(bool includeDead = false, bool includeOffStation = true)
+    {
         var zombieCount = 0;
-        var query = EntityQueryEnumerator<HumanoidAppearanceComponent, ZombieComponent, MobStateComponent>();
-        while (query.MoveNext(out _, out _, out _, out var mob))
+        var stationGrids = new HashSet<EntityUid>();
+        if (!includeOffStation)
+        {
+            foreach (var station in _station.GetStationsSet())
+            {
+                if (_station.GetLargestGrid(station) is { } grid)
+                    stationGrids.Add(grid);
+            }
+        }
+
+        var query = EntityQueryEnumerator<HumanoidAppearanceComponent, ZombieComponent, MobStateComponent, TransformComponent>();
+        while (query.MoveNext(out _, out _, out _, out var mob, out var xform))
         {
             if (!includeDead && mob.CurrentState == MobState.Dead)
                 continue;
+
+            if (!includeOffStation && !stationGrids.Contains(xform.GridUid ?? EntityUid.Invalid))
+                continue;
+
             zombieCount++;
         }
 
-        return zombieCount / (float) (players.Count + zombieCount);
+        return zombieCount;
     }
+    // DS14-end
 
     /// <summary>
     /// Gets the list of humans who are alive, not zombies, and are on a station.

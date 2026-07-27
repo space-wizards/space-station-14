@@ -42,10 +42,13 @@ using Content.Server.AlertLevel;
 using Content.Shared.DeadSpace.ERT.Prototypes;
 using Content.Server.Database;
 using Content.Server.DeadSpace.Necromorphs.Unitology;
+using Content.Server.DeadSpace.Necromorphs.Unitology.Components;
 using Content.Shared.Damage.Components;
 using Robust.Server.Player;
 using Robust.Shared.Player;
 using Content.Shared.Humanoid;
+using Content.Shared.Mind;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 
 namespace Content.Server.GameTicking.Rules;
@@ -76,6 +79,7 @@ public sealed class UnitologyRuleSystem : GameRuleSystem<UnitologyRuleComponent>
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly UnitologySubmissionConditionSystem _submissionCondition = default!;
+    [Dependency] private readonly UnitologyAssemblyConditionSystem _assemblyCondition = default!;
     private static readonly EntProtoId UnitologyRule = "Unitology";
     public static readonly ProtoId<AntagPrototype> UnitologyAntagRole = "UniHead";
     public static readonly ProtoId<AntagPrototype> RegularUnitologyAntagRole = "Uni";
@@ -239,6 +243,104 @@ public sealed class UnitologyRuleSystem : GameRuleSystem<UnitologyRuleComponent>
         }
 
         return isConditionsComplete;
+    }
+
+    protected override void AppendAdminStatus(EntityUid uid,
+        UnitologyRuleComponent component,
+        GameRuleComponent gameRule,
+        CollectGameRuleAdminStatusEvent args)
+    {
+        var heads = 0;
+        var members = 0;
+        var enslaved = 0;
+        var lines = new List<string>();
+
+        if (!TryComp<AntagSelectionComponent>(uid, out var selection))
+            return;
+
+        foreach (var mindId in _antag.GetAntagMindEntityUids((uid, selection)).ToHashSet())
+        {
+            if (!TryComp<MindComponent>(mindId, out var mind) ||
+                mind.OwnedEntity is not { } body ||
+                !_mobState.IsAlive(body))
+            {
+                continue;
+            }
+
+            if (HasComp<UnitologyEnslavedComponent>(body))
+            {
+                enslaved++;
+                continue;
+            }
+
+            if (!HasComp<UnitologyHeadComponent>(body))
+            {
+                if (HasComp<UnitologyComponent>(body))
+                    members++;
+
+                continue;
+            }
+
+            heads++;
+            foreach (var objective in mind.Objectives)
+            {
+                var progress = GetAdminObjectiveProgress(objective);
+                lines.Add(Loc.GetString("game-rule-admin-status-unitology-objective",
+                    ("head", ToPrettyString(body).Name ?? body.ToString()),
+                    ("objective", MetaData(objective).EntityName),
+                    ("progress", progress?.ToString("P0")
+                        ?? Loc.GetString("game-rule-admin-status-unknown"))));
+            }
+        }
+
+        var stage = component switch
+        {
+            { IsEndConvergence: true } => "end",
+            { IsStageConvergence: true } => "convergence",
+            { IsStageObelisk: true } => "obelisk",
+            { IsObeliskArrival: true } => "arrival",
+            _ => "objectives",
+        };
+
+        lines.Insert(0, Loc.GetString("game-rule-admin-status-unitology-summary",
+            ("stage", Loc.GetString($"game-rule-admin-status-unitology-stage-{stage}")),
+            ("heads", heads),
+            ("members", members),
+            ("enslaved", enslaved)));
+
+        if (component.IsStageObelisk || component.IsEndConvergence)
+        {
+            var remaining = component.NextStageTime - _timing.CurTime;
+            if (remaining < TimeSpan.Zero)
+                remaining = TimeSpan.Zero;
+
+            lines.Insert(1, Loc.GetString("game-rule-admin-status-unitology-countdown",
+                ("time", remaining.ToString(@"mm\:ss"))));
+        }
+
+        if (lines.Count == 1)
+            lines.Add(Loc.GetString("game-rule-admin-status-unitology-no-objectives"));
+
+        args.AddSection(Loc.GetString("game-rule-admin-status-unitology-title"), lines);
+    }
+
+    private float? GetAdminObjectiveProgress(EntityUid objective)
+    {
+        if (TryComp<UnitologySubmissionConditionComponent>(objective, out var submission))
+        {
+            return _submissionCondition.TryGetAssignedTarget(objective, out var target)
+                ? _submissionCondition.CalculateProgress(target)
+                : null;
+        }
+
+        if (TryComp<UnitologyAssemblyConditionComponent>(objective, out var assembly))
+        {
+            return _assemblyCondition.TryGetProgress(objective, out var progress, assembly)
+                ? progress
+                : null;
+        }
+
+        return null;
     }
 
     public bool AreSummoningConditionsComplete(EntityUid head)

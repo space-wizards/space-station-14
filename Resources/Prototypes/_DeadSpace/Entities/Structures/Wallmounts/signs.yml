@@ -151,3 +151,12 @@
     sprite: _DeadSpace/Structures/Wallmounts/signs.rsi
     state: lifestar
     snapCardinals: false
+
+- type: entity
+  parent: SignSecurity
+  id: SignSecurityCentComm
+  name: знак "службы безопасности"
+  description: Знак, изображающий эмблему службы безопасности. Кажется, данное подразделение является аристократами в мире Службы Безопасности...
+  components:
+  - type: Sprite
+    state: security_centcomm

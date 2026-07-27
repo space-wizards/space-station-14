@@ -149,7 +149,13 @@
         doAfter: 2
 
   - node: airlock
-    entity: AirlockShuttle
+    # DS14-start
+    entity: !type:TaggedContainerNodeEntity
+      container: board
+      tag: TaipanDoorElectronics
+      tagged: AirlockShuttleSyndicate
+      fallback: AirlockShuttle
+    # DS14-end
     edges:
     - to: skeletonSilver
       conditions:
@@ -181,7 +187,13 @@
         doAfter: 2
 
   - node: airlockGlass
-    entity: AirlockGlassShuttle
+    # DS14-start
+    entity: !type:TaggedContainerNodeEntity
+      container: board
+      tag: TaipanDoorElectronics
+      tagged: AirlockGlassShuttleSyndicate
+      fallback: AirlockGlassShuttle
+    # DS14-end
     edges:
       - to: skeletonGlass
         conditions:

@@ -402,6 +402,7 @@
   name: reagent-name-vodka
   parent: BaseAlcohol
   desc: reagent-desc-vodka
+  evaporationSpeed: 0.3 # DS14
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: vodka
   color: "#d1d1d155"

@@ -3,6 +3,7 @@
 using Content.Shared.Voting;
 using Content.Server.Administration.Logs;
 using Content.Server.Antag;
+using Content.Server.Antag.Components;
 using Content.Server.EUI;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
@@ -39,8 +40,10 @@ using Robust.Shared.Player;
 using Content.Server.AlertLevel;
 using Content.Server.Chat.Systems;
 using Content.Server.DeadSpace.ERT;
+using Content.Server.DeadSpace.Revolutionary;
 using Content.Shared.DeadSpace.ERT.Prototypes;
 using Content.Server.Database;
+using Content.Shared.Mind;
 using Content.Shared.Objectives.Systems;
 using Content.Server.Voting.Managers;
 using Content.Shared.GameTicking;
@@ -73,6 +76,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly IServerDbManager _db = default!;
     [Dependency] private readonly ErtResponseSystem _ertResponseSystem = default!; // DS14
+    [Dependency] private readonly KillCommandStaffConditionSystem _killCommandStaff = default!;
     public readonly ProtoId<ErtTeamPrototype> RevolutionarySupplyTeam = "RevSup";
     public readonly EntProtoId Objective = "KillCommandStaffObjective";
 
@@ -183,6 +187,84 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             usePresetTTS: true);
         _roundEnd.DoRoundEndBehavior(RoundEndBehavior.ShuttleCall, component.ShuttleCallTime);
         GameTicker.EndGameRule(uid, gameRule);
+    }
+
+    protected override void AppendAdminStatus(EntityUid uid,
+        RevolutionaryRuleComponent component,
+        GameRuleComponent gameRule,
+        CollectGameRuleAdminStatusEvent args)
+    {
+        var heads = 0;
+        var revolutionaries = 0;
+        var stationHeads = 0;
+        var stationRevolutionaries = 0;
+        var lines = new List<string>();
+        var healthy = GetHealthyHumanoids();
+        var healthySet = new HashSet<EntityUid>(healthy);
+
+        if (TryComp<AntagSelectionComponent>(uid, out var selection))
+        {
+            foreach (var mindId in _antag.GetAntagMindEntityUids((uid, selection)))
+            {
+                if (!TryComp<MindComponent>(mindId, out var mind) ||
+                    mind.OwnedEntity is not { } head ||
+                    !HasComp<HeadRevolutionaryComponent>(head) ||
+                    !TryComp<MobStateComponent>(head, out var mobState) ||
+                    !_mobState.IsAlive(head, mobState))
+                {
+                    continue;
+                }
+
+                heads++;
+                if (healthySet.Contains(head))
+                    stationHeads++;
+
+                foreach (var objective in mind.Objectives)
+                {
+                    var progress = _killCommandStaff.TryGetProgress(objective, out var value)
+                        ? value
+                        : (float?) null;
+                    lines.Add(Loc.GetString("game-rule-admin-status-revolution-objective",
+                        ("head", ToPrettyString(head).Name ?? head.ToString()),
+                        ("objective", MetaData(objective).EntityName),
+                        ("progress", progress?.ToString("P0")
+                            ?? Loc.GetString("game-rule-admin-status-unknown"))));
+                }
+            }
+        }
+
+        // Converted revolutionaries do not currently retain their owning rule.
+        var revQuery = EntityQueryEnumerator<RevolutionaryComponent, MobStateComponent>();
+        while (revQuery.MoveNext(out var revolutionary, out _, out var mobState))
+        {
+            if (!HasComp<HeadRevolutionaryComponent>(revolutionary) &&
+                _mobState.IsAlive(revolutionary, mobState))
+            {
+                revolutionaries++;
+                if (healthySet.Contains(revolutionary))
+                    stationRevolutionaries++;
+            }
+        }
+
+        var healthyCount = healthy.Count;
+        var fraction = healthyCount == 0
+            ? 0f
+            : Math.Clamp((stationHeads + stationRevolutionaries) / (float) healthyCount, 0f, 1f);
+        var stage = component.VoteStarted
+            ? "vote"
+            : _revolutionaryStage.ToString().ToLowerInvariant();
+
+        lines.Insert(0, Loc.GetString("game-rule-admin-status-revolution-summary",
+            ("stage", Loc.GetString($"game-rule-admin-status-revolution-stage-{stage}")),
+            ("heads", heads),
+            ("revolutionaries", revolutionaries),
+            ("healthy", healthyCount),
+            ("fraction", fraction.ToString("P0"))));
+
+        if (lines.Count == 1)
+            lines.Add(Loc.GetString("game-rule-admin-status-revolution-no-objectives"));
+
+        args.AddSection(Loc.GetString("game-rule-admin-status-revolution-title"), lines);
     }
 
     protected override void AppendRoundEndText(EntityUid uid,

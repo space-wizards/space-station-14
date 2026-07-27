@@ -1,4 +1,8 @@
 necro-transform = { CAPITALIZE(THE($target)) } стал некроморфом!
+ghost-role-information-necromorph-name = Некроморф
+ghost-role-information-necromorph-description = Похож на мутировавший труп.
+ghost-role-information-necromorph-rules = Вы антагонист. Ваша цель — найти живых и попытаться устранить их. Работайте вместе с другими некроморфами.
+ghost-role-information-necromorph-category = Некроморфы
 ghost-role-information-infector-name = Заразитель
 ghost-role-information-infector-description = Вы заразитель, разносите инфекцию по станции.
 ghost-role-information-infector-rules =

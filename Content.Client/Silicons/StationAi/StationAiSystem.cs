@@ -15,7 +15,6 @@ public sealed partial class StationAiSystem : SharedStationAiSystem
 
     private StationAiOverlay? _overlay;
     private EntityUid? _overlayOwner; // DS14
-    private (EntityUid Entity, bool WasVisible)? _hiddenRemoteEye; // DS14
 
     public override void Initialize()
     {
@@ -72,36 +71,8 @@ public sealed partial class StationAiSystem : SharedStationAiSystem
         _overlayMgr.AddOverlay(_overlay);
     }
 
-    public override void FrameUpdate(float frameTime)
-    {
-        base.FrameUpdate(frameTime);
-
-        if (_overlayOwner is not { } owner ||
-            !TryGetCore(owner, out var core) ||
-            core.Comp is not { Remote: true, RemoteEntity: { } remoteEye } ||
-            !TryComp(remoteEye, out SpriteComponent? sprite))
-        {
-            RestoreRemoteEye();
-            return;
-        }
-
-        if (_hiddenRemoteEye is { } hidden && hidden.Entity == remoteEye)
-        {
-            if (sprite.Visible)
-                _sprite.SetVisible((remoteEye, sprite), false);
-
-            return;
-        }
-
-        RestoreRemoteEye();
-        _hiddenRemoteEye = (remoteEye, sprite.Visible);
-        _sprite.SetVisible((remoteEye, sprite), false);
-    }
-
     private void RemoveOverlay()
     {
-        RestoreRemoteEye();
-
         if (_overlay == null)
         {
             _overlayOwner = null;
@@ -112,17 +83,6 @@ public sealed partial class StationAiSystem : SharedStationAiSystem
         _overlay.Dispose();
         _overlay = null;
         _overlayOwner = null;
-    }
-
-    private void RestoreRemoteEye()
-    {
-        if (_hiddenRemoteEye is not { } hidden)
-            return;
-
-        if (TryComp(hidden.Entity, out SpriteComponent? sprite))
-            _sprite.SetVisible((hidden.Entity, sprite), hidden.WasVisible);
-
-        _hiddenRemoteEye = null;
     }
     // DS14-end
 

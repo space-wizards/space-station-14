@@ -1,5 +1,6 @@
 ﻿using Content.Server.Ghost.Roles.Components;
 using Content.Server.Speech.Components;
+using Content.Server.DeadSpace.Languages;
 using Content.Shared.DeadSpace.Languages.Components; // DS14
 using Content.Shared.EntityEffects;
 using Content.Shared.EntityEffects.Effects;
@@ -25,18 +26,20 @@ public sealed partial class MakeSentientEntityEffectSystem : EntityEffectSystem<
             RemComp<ReplacementAccentComponent>(entity);
             // TODO: Make MonkeyAccent a replacement accent and remove MonkeyAccent code-smell.
             RemComp<MonkeyAccentComponent>(entity);
-        }
 
-        // DS14-Languages-start
-        if (TryComp<LanguageComponent>(entity, out var language))
-        {
-            foreach (var langId in language.CantSpeakLanguages)
-            {
-                if (language.UnlockLanguagesAfterMakeSentient.Contains(langId))
-                    language.CantSpeakLanguages.Remove(langId);
-            }
+            // DS14-Languages-start
+            var language = EnsureComp<LanguageComponent>(entity);
+            language.KnownLanguages.Add(LanguageSystem.DefaultLanguageId);
+            language.KnownLanguages.UnionWith(language.UnlockLanguagesAfterMakeSentient);
+            language.CantSpeakLanguages.ExceptWith(language.UnlockLanguagesAfterMakeSentient);
+            language.CantSpeakLanguages.Remove(LanguageSystem.DefaultLanguageId);
+
+            if (string.IsNullOrEmpty(language.SelectedLanguage))
+                language.SelectedLanguage = LanguageSystem.DefaultLanguageId;
+
+            Dirty(entity, language);
+            // DS14-Languages-end
         }
-        // DS14-Languages-end
 
         // Stops from adding a ghost role to things like people who already have a mind
         if (TryComp<MindContainerComponent>(entity, out var mindContainer) && mindContainer.HasMind || HasComp<HumanoidAppearanceComponent>(entity)) // DS14

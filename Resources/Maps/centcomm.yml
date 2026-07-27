@@ -146876,13 +146876,10 @@ entities:
       parent: 1
     - type: Fixtures
       fixtures: {}
-- proto: SignSecurity
+- proto: SignSecurityCentComm
   entities:
   - uid: 19293
     components:
-    - type: MetaData
-      desc: Знак, изображающий эмблему службы безопасности Центрального Командования.
-      name: знак "служба безопасности Центрального Командования"
     - type: Transform
       pos: 3.5,-39.5
       parent: 1
@@ -146890,9 +146887,6 @@ entities:
       fixtures: {}
   - uid: 19294
     components:
-    - type: MetaData
-      desc: Знак, изображающий эмблему службы безопасности Центрального командования.
-      name: знак "служба безопасности Центральное Командование"
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -10.5,-146.5

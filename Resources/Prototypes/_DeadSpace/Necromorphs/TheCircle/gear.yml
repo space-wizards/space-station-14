@@ -446,7 +446,7 @@
   parent: ClothingMaskGasSyndicate
   id: ClothingMaskGasUnitology
   name: модифицированный респиратор «Полнолуние»
-  description:
+  description: Плотно прилегающий тактический респиратор, который можно подключить к баллону с воздухом.
   components:
   - type: Sprite
     sprite: _DeadSpace/Necromorfs/TheCircle/Gear/accessories/gasmask.rsi

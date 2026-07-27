@@ -13,7 +13,6 @@ using Content.Server.AlertLevel;
 using Content.Shared.DeadSpace.Abilities.Egg.Components;
 using Content.Server.Communications;
 using Content.Shared.Mobs.Systems;
-using Content.Server.Chat.Managers;
 using Content.Server.DeadSpace.Spiders.SpideRoyalGuard.Components;
 using Content.Server.Voting.Managers;
 using Content.Shared.Voting;
@@ -41,7 +40,6 @@ public sealed class SpiderTerrorRuleSystem : GameRuleSystem<SpiderTerrorRuleComp
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly AlertLevelSystem _alertLevel = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IVoteManager _voteManager = default!;
     [Dependency] private readonly CargoSystem _cargoSystem = default!;
     [Dependency] private readonly ErtResponseSystem _ertResponseSystem = default!;
@@ -69,6 +67,31 @@ public sealed class SpiderTerrorRuleSystem : GameRuleSystem<SpiderTerrorRuleComp
         _voteSend = true;
         component.UpdateUtil = _timing.CurTime + component.UpdateDuration;
         component.TimeUtilStartRule = _timing.CurTime + component.DurationStartRule;
+    }
+
+    protected override void AppendAdminStatus(EntityUid uid,
+        SpiderTerrorRuleComponent component,
+        GameRuleComponent gameRule,
+        CollectGameRuleAdminStatusEvent args)
+    {
+        var lines = new List<string>
+        {
+            Loc.GetString("game-rule-admin-status-spider-kings", ("count", GetSpiderKings())),
+        };
+
+        foreach (var (station, _) in component.StationStages)
+        {
+            var (progress, spiders) = GetCaptureStationProgress(uid, station, component);
+            lines.Add(Loc.GetString(
+                "game-rule-admin-status-spider-station",
+                ("station", ToPrettyString(station).Name ?? station.ToString()),
+                ("progress", progress.ToString("P0")),
+                ("spiders", spiders),
+                ("breeding", GetActivityStatus(component.IsBreedingActive(station))),
+                ("nuclear", GetActivityStatus(component.IsNuclearCodeActive(station)))));
+        }
+
+        args.AddSection(Loc.GetString("game-rule-admin-status-spider-title"), lines);
     }
 
     protected override void ActiveTick(EntityUid uid, SpiderTerrorRuleComponent component, GameRuleComponent gameRule, float frameTime)
@@ -201,13 +224,7 @@ public sealed class SpiderTerrorRuleSystem : GameRuleSystem<SpiderTerrorRuleComp
         {
             var stationUid = kvp.Key;
 
-            var (progress, spiders) = GetCaptureStationProgress(uid, stationUid);
-            var msgProgress = "Прогресс захвата станции: " + ToPrettyString(stationUid).Name + ", " + (progress * 100).ToString() + "%";
-            var msgSpiders = "На станции: " + ToPrettyString(stationUid).Name + ", " + spiders.ToString() + " пауков.";
-            var msgSpidersKing = "На станции: " + (GetSpiderKings()).ToString() + " живых королевских пауков.";
-            _chatManager.SendAdminAnnouncement(msgProgress);
-            _chatManager.SendAdminAnnouncement(msgSpiders);
-            _chatManager.SendAdminAnnouncement(msgSpidersKing);
+            var (progress, _) = GetCaptureStationProgress(uid, stationUid);
 
             var spidersCount = GetSpiders(uid, stationUid, component);
             var peopleCount = GetPeople(uid, stationUid, component);
@@ -225,6 +242,13 @@ public sealed class SpiderTerrorRuleSystem : GameRuleSystem<SpiderTerrorRuleComp
         }
 
         component.UpdateUtil = _timing.CurTime + component.UpdateDuration;
+    }
+
+    private string GetActivityStatus(bool active)
+    {
+        return Loc.GetString(active
+            ? "game-rule-admin-status-active"
+            : "game-rule-admin-status-inactive");
     }
     private void StartRule(EntityUid uid, SpiderTerrorRuleComponent? component = null)
     {

@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Server.Administration.Managers; // DS14
 using Content.Server.AlertLevel;
 using Content.Server.Backmen.Blob.Rule;
 using Content.Server.Backmen.GameTicking.Rules.Components;
@@ -14,6 +15,7 @@ using Content.Server.RoundEnd;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Backmen.Blob.Components;
+using Content.Shared.Administration; // DS14
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.DeadSpace.ERT.Prototypes;
@@ -32,6 +34,7 @@ namespace Content.Server.Backmen.GameTicking.Rules;
 
 public sealed class BlobRuleSystem : GameRuleSystem<BlobRuleComponent>
 {
+    [Dependency] private readonly IAdminManager _admin = default!; // DS14
     [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
     [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly NukeCodeSendQueueSystem _nukeCodeQueue = default!; // DS14
@@ -46,6 +49,7 @@ public sealed class BlobRuleSystem : GameRuleSystem<BlobRuleComponent>
     private static readonly ProtoId<ErtTeamPrototype> ErtTeam = "CburnSierra";
     private static readonly ProtoId<CargoAccountPrototype> Account = "Security";
     private const int AdditionalSupport = 70000;
+    private const int BlobVictoryTiles = 1400; // DS14
     private bool _helpSended = false;
     private static readonly SoundPathSpecifier BlobDetectAudio = new SoundPathSpecifier("/Audio/_DeadSpace/Announcements/outbreak5.ogg"); // DS14-Announcements
 
@@ -92,7 +96,7 @@ public sealed class BlobRuleSystem : GameRuleSystem<BlobRuleComponent>
                 continue;
             }
 
-            if (comp.BlobTiles.Count >= 50)
+            if (component.Stage != BlobStage.TheEnd && comp.BlobTiles.Count >= 50) // DS14
             {
                 if (_roundEndSystem.ExpectedCountdownEnd != null)
                 {
@@ -113,6 +117,59 @@ public sealed class BlobRuleSystem : GameRuleSystem<BlobRuleComponent>
             CheckChangeStage((ent, comp), stationUid.Value, component);
         }
     }
+
+    // DS14-start
+    protected override void AppendAdminStatus(EntityUid uid,
+        BlobRuleComponent component,
+        GameRuleComponent gameRule,
+        CollectGameRuleAdminStatusEvent args)
+    {
+        var stage = Loc.GetString(
+            $"game-rule-admin-status-blob-stage-{component.Stage.ToString().ToLowerInvariant()}");
+        var lines = new List<string>
+        {
+            Loc.GetString(
+                "game-rule-admin-status-blob-summary",
+                ("stage", stage),
+                ("players", component.Blobs.Count)),
+        };
+
+        var cores = new List<(EntityUid? Station, int Tiles)>();
+        var query = EntityQueryEnumerator<BlobCoreComponent>();
+        while (query.MoveNext(out var core, out var coreComponent))
+        {
+            if (TerminatingOrDeleted(core))
+                continue;
+
+            cores.Add((_stationSystem.GetOwningStation(core), coreComponent.BlobTiles.Count));
+        }
+
+        foreach (var stationCores in cores.GroupBy(core => core.Station))
+        {
+            var coreCount = stationCores.Count();
+            var totalTiles = stationCores.Sum(core => core.Tiles);
+            var largestCore = stationCores.Max(core => core.Tiles);
+            var progress = Math.Clamp(largestCore / (float) BlobVictoryTiles, 0f, 1f);
+            var station = stationCores.Key is { } stationUid
+                ? ToPrettyString(stationUid).Name ?? stationUid.ToString()
+                : Loc.GetString("game-rule-admin-status-off-station");
+
+            lines.Add(Loc.GetString(
+                "game-rule-admin-status-blob-station",
+                ("station", station),
+                ("cores", coreCount),
+                ("tiles", totalTiles),
+                ("largest", largestCore),
+                ("target", BlobVictoryTiles),
+                ("progress", progress.ToString("P0"))));
+        }
+
+        if (cores.Count == 0)
+            lines.Add(Loc.GetString("game-rule-admin-status-blob-no-cores"));
+
+        args.AddSection(Loc.GetString("game-rule-admin-status-blob-title"), lines);
+    }
+    // DS14-end
 
     private bool CheckBlobInStation(EntityUid blobCore, [NotNullWhen(true)] out EntityUid? stationUid)
     {
@@ -187,10 +244,10 @@ public sealed class BlobRuleSystem : GameRuleSystem<BlobRuleComponent>
                     }, broadcast: true);
                     return;
                 }
-            case BlobStage.Critical when blobCore.Comp.BlobTiles.Count >= 1400:
+            case BlobStage.Critical when blobCore.Comp.BlobTiles.Count >= BlobVictoryTiles: // DS14
                 {
                     blobRuleComp.Stage = BlobStage.TheEnd;
-                    _roundEndSystem.EndRound();
+                    // DS14: Record the victory without forcibly ending the round.
 
                     RaiseLocalEvent(stationUid, new BlobChangeLevelEvent
                     {
@@ -198,10 +255,27 @@ public sealed class BlobRuleSystem : GameRuleSystem<BlobRuleComponent>
                         Station = stationUid,
                         Level = blobRuleComp.Stage
                     }, broadcast: true);
+
+                    if (!HasActiveRoundAdmin()) // DS14
+                        _roundEndSystem.EndRound();
+
                     return;
                 }
         }
     }
+
+    // DS14-start
+    private bool HasActiveRoundAdmin()
+    {
+        foreach (var admin in _admin.ActiveAdmins)
+        {
+            if (_admin.HasAdminFlag(admin, AdminFlags.Round))
+                return true;
+        }
+
+        return false;
+    }
+    // DS14-end
 
     protected override void AppendRoundEndText(EntityUid uid, BlobRuleComponent blob, GameRuleComponent gameRule,
         ref RoundEndTextAppendEvent ev)

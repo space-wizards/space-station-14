@@ -32,7 +32,8 @@ public sealed class UnitologySubmissionConditionSystem : EntitySystem
         if (component.Target <= 0)
             component.Target = GetTarget();
 
-        args.Progress = SubordinationOfEnslavedProgress(component, component.Target);
+        component.Progress = CalculateProgress(component.Target);
+        args.Progress = component.Progress;
     }
 
     public int GetTarget()
@@ -50,7 +51,7 @@ public sealed class UnitologySubmissionConditionSystem : EntitySystem
         return true;
     }
 
-    private float SubordinationOfEnslavedProgress(UnitologySubmissionConditionComponent component, int target)
+    public float CalculateProgress(int target)
     {
         if (target == 0)
             return 1f;
@@ -64,8 +65,6 @@ public sealed class UnitologySubmissionConditionSystem : EntitySystem
                 count++;
         }
 
-        component.Progress = MathF.Min((float)count / (float)target, 1f);
-
-        return component.Progress;
+        return MathF.Min((float)count / target, 1f);
     }
 }

@@ -28,20 +28,34 @@ public sealed class UnitologyAssemblyConditionSystem : EntitySystem
         if (ent.Comp.Target <= 0)
             ent.Comp.Target = _submissionCondition.GetTarget();
 
-        if (ent.Comp.Target == 0)
-        {
-            args.Progress = 1f;
-            return;
-        }
+        args.Progress = CalculateProgress(ent.Comp.Target, ent.Comp.Range);
+    }
+
+    public bool TryGetProgress(EntityUid objective,
+        out float progress,
+        UnitologyAssemblyConditionComponent? component = null)
+    {
+        progress = 0f;
+        if (!Resolve(objective, ref component) || component.Target <= 0)
+            return false;
+
+        progress = CalculateProgress(component.Target, component.Range);
+        return true;
+    }
+
+    private float CalculateProgress(int target, float range)
+    {
+        if (target == 0)
+            return 1f;
 
         var nearby = 0;
         var heads = AllEntityQuery<UnitologyHeadComponent>();
         while (heads.MoveNext(out var head, out _))
         {
             nearby = Math.Max(nearby,
-                _lookup.GetEntitiesInRange<UnitologyEnslavedComponent>(Transform(head).Coordinates, ent.Comp.Range).Count);
+                _lookup.GetEntitiesInRange<UnitologyEnslavedComponent>(Transform(head).Coordinates, range).Count);
         }
 
-        args.Progress = MathF.Min((float) nearby / ent.Comp.Target, 1f);
+        return MathF.Min((float) nearby / target, 1f);
     }
 }

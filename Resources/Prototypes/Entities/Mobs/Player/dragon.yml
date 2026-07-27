@@ -190,6 +190,8 @@
     jumpSound:
       collection: MantisRush
   - type: AntiRottingContainer
+  - type: NecromorfAfterInfection
+    necroPrototype: NecroBrute
   - type: GhostRoleNotifys 
     groupPrototype: Dragonping
   # DS14-end

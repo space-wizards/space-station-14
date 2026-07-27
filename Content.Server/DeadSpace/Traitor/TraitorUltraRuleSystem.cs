@@ -86,6 +86,7 @@ public sealed class TraitorUltraRuleSystem : GameRuleSystem<TraitorUltraRuleComp
     [Dependency] private readonly SharedJobSystem _jobs = default!;
     [Dependency] private readonly SharedObjectivesSystem _sharedObjectives = default!;
     [Dependency] private readonly SharedRoleSystem _roles = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedSubdermalImplantSystem _subdermalImplant = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly StoreSystem _store = default!;
@@ -715,6 +716,37 @@ public sealed class TraitorUltraRuleSystem : GameRuleSystem<TraitorUltraRuleComp
 
             UpdateExtraObjectiveOffer(uid, component, mindId, mind, state);
         }
+    }
+
+    protected override void AppendAdminStatus(EntityUid uid,
+        TraitorUltraRuleComponent component,
+        GameRuleComponent gameRule,
+        CollectGameRuleAdminStatusEvent args)
+    {
+        var ultras = 0;
+        var living = 0;
+
+        foreach (var (mindId, _) in component.Minds)
+        {
+            if (!_roles.MindHasRole<TraitorUltraRoleComponent>(mindId))
+                continue;
+
+            ultras++;
+
+            if (TryComp<MindComponent>(mindId, out var mind) &&
+                mind.OwnedEntity is { } body &&
+                _mobState.IsAlive(body))
+            {
+                living++;
+            }
+        }
+
+        args.AddSection(
+            Loc.GetString("game-rule-admin-status-traitor-ultra-title"),
+            Loc.GetString("game-rule-admin-status-traitor-ultra-summary",
+                ("candidates", component.Minds.Count),
+                ("ultras", ultras),
+                ("living", living)));
     }
 
     private void OnOpenContractAction(TraitorUltraOpenContractActionEvent args)

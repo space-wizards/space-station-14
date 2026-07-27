@@ -11,6 +11,8 @@ namespace Content.Client.Necromorphs.InfectionDead;
 public sealed class NecromorfSystem : EntitySystem
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -37,23 +39,25 @@ public sealed class NecromorfSystem : EntitySystem
         if (!TryComp<SpriteComponent>(uid, out var sprite))
             return;
 
+        // Для животных сохраняем специальную логику: их базовые слои могут восстановиться
+        // после обновления внешности, поэтому скрываем их при каждой синхронизации.
+        if (isAnimal)
+            HideOriginalLayers((uid, sprite));
+
         // Проверяем, существует ли уже слой Necromorf
-        if (sprite.LayerMapTryGet(NecromorfLayers.Necromorf, out _))
+        if (_sprite.LayerMapTryGet((uid, sprite), NecromorfLayers.Necromorf, out var necromorfLayer, false))
+        {
+            _sprite.LayerSetVisible((uid, sprite), necromorfLayer, true);
             return;
+        }
 
         var path = new ResPath(spritePath);
 
         try
         {
-            // Если объект является "животным", применяем особую логику
+            // Сохраняем особый поворот некроморфов-животных.
             if (isAnimal)
             {
-
-                for (var i = 0; i < sprite.AllLayers.Count(); i++)
-                {
-                    sprite.LayerSetColor(i, new Color(255, 255, 255, 0));
-                }
-
                 if (TryComp<RotationVisualsComponent>(uid, out var rotationVisualsComp))
                 {
                     rotationVisualsComp.DefaultRotation = Angle.FromDegrees(90);
@@ -76,6 +80,27 @@ public sealed class NecromorfSystem : EntitySystem
         catch (Exception ex)
         {
             Log.Error($"[NecromorfSystem] Failed to update sprite layer for entity {uid}. Exception: {ex.Message}\n{ex.StackTrace}");
+        }
+    }
+
+    private void HideOriginalLayers(Entity<SpriteComponent> entity)
+    {
+        var spriteEntity = entity.AsNullable();
+        var originalRsi = entity.Comp.BaseRSI;
+        var necromorfLayer = _sprite.LayerMapTryGet(spriteEntity, NecromorfLayers.Necromorf, out var index, false)
+            ? index
+            : -1;
+
+        if (originalRsi == null)
+            return;
+
+        for (var i = 0; i < entity.Comp.AllLayers.Count(); i++)
+        {
+            if (i != necromorfLayer &&
+                ReferenceEquals(_sprite.LayerGetEffectiveRsi(spriteEntity, i), originalRsi))
+            {
+                _sprite.LayerSetVisible(spriteEntity, i, false);
+            }
         }
     }
 }

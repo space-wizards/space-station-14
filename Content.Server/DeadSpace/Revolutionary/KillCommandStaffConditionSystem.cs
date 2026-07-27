@@ -1,6 +1,7 @@
 // Мёртвый Космос, Licensed under custom terms with restrictions on public hosting and commercial use, full text: https://raw.githubusercontent.com/dead-space-server/space-station-14-fobos/master/LICENSE.TXT
 
 using Content.Server.Objectives.Systems;
+using Content.Server.Objectives.Components;
 using Content.Server.Revolutionary.Components;
 using Content.Shared.Mind;
 using Content.Shared.Mobs.Systems;
@@ -26,11 +27,26 @@ public sealed class KillCommandStaffConditionSystem : EntitySystem
 
     private void OnGetProgress(EntityUid uid, KillCommandStaffConditionComponent comp, ref ObjectiveGetProgressEvent args)
     {
-        args.Progress = GetProgress(_number.GetTarget(uid));
-        Console.WriteLine(GetProgress(_number.GetTarget(uid)));
+        args.Progress = CalculateProgress(_number.GetTarget(uid));
     }
 
-    private float GetProgress(int targetPercent)
+    /// <summary>
+    /// Reads the configured target and calculates progress without raising objective events or changing objective state.
+    /// </summary>
+    public bool TryGetProgress(EntityUid objective, out float progress)
+    {
+        progress = 0f;
+        if (!HasComp<KillCommandStaffConditionComponent>(objective) ||
+            !HasComp<NumberObjectiveComponent>(objective))
+        {
+            return false;
+        }
+
+        progress = CalculateProgress(_number.GetTarget(objective));
+        return true;
+    }
+
+    public float CalculateProgress(int targetPercent)
     {
         if (targetPercent <= 0)
             return 1f;
