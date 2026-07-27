@@ -73,7 +73,7 @@ public sealed partial class MicrowaveMealRecipePrototype : IPrototype
 /// <summary>
 ///     A data value representing ingredients for an appliance recipe.
 /// </summary>
-[Serializable, DataDefinition]
+[DataDefinition]
 public partial record struct CookingIngredients
 {
     public CookingIngredients(Dictionary<EntProtoId, int> solids,
