@@ -32,8 +32,12 @@ public sealed class SprayPainterDecalsSheetlet<T> : Sheetlet<T> where T : IButto
     public override StyleRule[] GetRules(T sheet, object config)
     {
         var noBackground = new StyleBoxFlat { BackgroundColor = Color.Transparent };
-        var backgroundColor = sheet.ButtonPalette.BackgroundLight;
-        var highlighted = new OverrideModulationStyleBox(new StyleBoxFlat() { BackgroundColor = backgroundColor });
+        var highlightBase = new StyleBoxFlat() { BackgroundColor = sheet.ButtonPalette.BackgroundLight };
+
+        var highlight = new OverrideModulationStyleBox(highlightBase);
+
+        noBackground.SetContentMarginOverride(StyleBox.Margin.Horizontal, 2);
+        highlight.SetContentMarginOverride(StyleBox.Margin.Horizontal, 2);
 
         return
         [
@@ -42,8 +46,12 @@ public sealed class SprayPainterDecalsSheetlet<T> : Sheetlet<T> where T : IButto
                 .Box(noBackground),
             E<Button>()
                 .Class(SprayPainterDecals.StyleClassDecalButton)
+                .PseudoHovered()
+                .Box(noBackground),
+             E<Button>()
+                .Class(SprayPainterDecals.StyleClassDecalButton)
                 .PseudoPressed()
-                .Box(highlighted),
+                .Box(highlight),
         ];
     }
 }
