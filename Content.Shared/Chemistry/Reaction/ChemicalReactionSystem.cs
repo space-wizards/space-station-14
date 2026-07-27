@@ -11,7 +11,6 @@ using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
-
 namespace Content.Shared.Chemistry.Reaction
 {
     public sealed partial class ChemicalReactionSystem : EntitySystem
@@ -27,7 +26,6 @@ namespace Content.Shared.Chemistry.Reaction
         private const int MaxReactionIterations = 20;
 
         [Dependency] private INetManager _netMan = default!;
-        [Dependency] private IPrototypeManager _prototypeManager = default!;
         [Dependency] private ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private SharedAudioSystem _audio = default!;
         [Dependency] private SharedTransformSystem _transformSystem = default!;
@@ -37,12 +35,12 @@ namespace Content.Shared.Chemistry.Reaction
         /// A cache of all reactions indexed by at most ONE of their required reactants.
         /// I.e., even if a reaction has more than one reagent, it will only ever appear once in this dictionary.
         /// </summary>
-        private FrozenDictionary<string, List<ReactionPrototype>> _reactionsSingle = default!;
+        private FrozenDictionary<ProtoId<ReagentPrototype>, List<ReactionPrototype>> _reactionsSingle = default!;
 
         /// <summary>
         ///     A cache of all reactions indexed by one of their required reactants.
         /// </summary>
-        private FrozenDictionary<string, List<ReactionPrototype>> _reactions = default!;
+        private FrozenDictionary<ProtoId<ReagentPrototype>, List<ReactionPrototype>> _reactions = default!;
 
         public override void Initialize()
         {
@@ -58,8 +56,8 @@ namespace Content.Shared.Chemistry.Reaction
         private void InitializeReactionCache()
         {
             // Construct single-reaction dictionary.
-            var dict = new Dictionary<string, List<ReactionPrototype>>();
-            foreach (var reaction in _prototypeManager.EnumeratePrototypes<ReactionPrototype>())
+            var dict = new Dictionary<ProtoId<ReagentPrototype>, List<ReactionPrototype>>();
+            foreach (var reaction in ProtoMan.EnumeratePrototypes<ReactionPrototype>())
             {
                 // For this dictionary we only need to cache based on the first reagent.
                 var reagent = reaction.Reactants.Keys.First();
@@ -69,7 +67,7 @@ namespace Content.Shared.Chemistry.Reaction
             _reactionsSingle = dict.ToFrozenDictionary();
 
             dict.Clear();
-            foreach (var reaction in _prototypeManager.EnumeratePrototypes<ReactionPrototype>())
+            foreach (var reaction in ProtoMan.EnumeratePrototypes<ReactionPrototype>())
             {
                 foreach (var reagent in reaction.Reactants.Keys)
                 {
@@ -93,7 +91,7 @@ namespace Content.Shared.Chemistry.Reaction
         /// <summary>
         ///     Checks if a solution can undergo a specified reaction.
         /// </summary>
-        /// <param name="solution">The solution to check.</param>
+        /// <param name="soln">The solution to check.</param>
         /// <param name="reaction">The reaction to check.</param>
         /// <param name="lowestUnitReactions">How many times this reaction can occur.</param>
         /// <returns></returns>
@@ -167,12 +165,12 @@ namespace Content.Shared.Chemistry.Reaction
         ///     Perform a reaction on a solution. This assumes all reaction criteria are met.
         ///     Removes the reactants from the solution, adds products, and returns a list of products.
         /// </summary>
-        private List<string> PerformReaction(Entity<SolutionComponent> soln, ReactionPrototype reaction, FixedPoint2 unitReactions)
+        private List<ProtoId<ReagentPrototype>> PerformReaction(Entity<SolutionComponent> soln, ReactionPrototype reaction, FixedPoint2 unitReactions)
         {
             var (uid, comp) = soln;
             var solution = comp.Solution;
 
-            var energy = reaction.ConserveEnergy ? solution.GetThermalEnergy(_prototypeManager) : 0;
+            var energy = reaction.ConserveEnergy ? solution.GetThermalEnergy(ProtoMan) : 0;
 
             //Remove reactants
             foreach (var reactant in reaction.Reactants)
@@ -185,7 +183,7 @@ namespace Content.Shared.Chemistry.Reaction
             }
 
             //Create products
-            var products = new List<string>();
+            var products = new List<ProtoId<ReagentPrototype>>();
             foreach (var product in reaction.Products)
             {
                 products.Add(product.Key);
@@ -194,7 +192,7 @@ namespace Content.Shared.Chemistry.Reaction
 
             if (reaction.ConserveEnergy)
             {
-                var newCap = solution.GetHeatCapacity(_prototypeManager);
+                var newCap = solution.GetHeatCapacity(ProtoMan);
                 if (newCap > 0)
                     solution.Temperature = energy / newCap;
             }
@@ -227,7 +225,7 @@ namespace Content.Shared.Chemistry.Reaction
         /// </summary>
         private bool ProcessReactions(Entity<SolutionComponent> soln, SortedSet<ReactionPrototype> reactions, ReactionMixerComponent? mixerComponent)
         {
-            List<string>? products = null;
+            List<ProtoId<ReagentPrototype>>? products = null;
 
             // attempt to perform any applicable reaction
             foreach (var reaction in reactions)

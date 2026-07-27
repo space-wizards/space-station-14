@@ -27,7 +27,7 @@
 
 - type: entity
   id: MobGoliath
-  parent: [ BaseMobAsteroid, MobBloodstream ]
+  parent: [ BaseMobAsteroid, MobBloodstream, BaseSlicingRefinable ]
   name: goliath
   description: A massive beast that uses long tentacles to ensnare its prey, threatening them is not advised under any conditions.
   components:
@@ -86,8 +86,8 @@
     - Goliath
     - FootstepSound
   - type: NoSlip
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatGoliath
       amount: 3
     - id: MaterialGoliathHide1
@@ -189,7 +189,7 @@
 
 - type: entity
   id: MobHivelord
-  parent: [ BaseMobAsteroid, FlyingMobBase ]
+  parent: [ BaseMobAsteroid, FlyingMobBase, BaseSlicingRefinable ]
   name: hivelord
   description: A truly alien creature, it is a mass of unknown organic material, constantly fluctuating. When attacking, pieces of it split off and attack in tandem with the original.
   components:
@@ -243,8 +243,8 @@
         9
       NavSmash: !type:Bool
         true
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodHivelordRemains
 
 - type: entity
@@ -354,7 +354,7 @@
 
 - type: entity
   id: MobBasilisk
-  parent: [ BaseMobAsteroid, MobBloodstream ]
+  parent: [ BaseMobAsteroid, MobBloodstream, BaseSlicingRefinable ]
   name: basilisk
   description: A territorial beast, covered in a thick shell that absorbs energy. Its stare causes victims to freeze from the inside.
   components:
@@ -422,8 +422,8 @@
     reflectProb: 1
     reflects:
     - Energy
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: DiamondOre1
       amount: 1
       maxAmount: 3
