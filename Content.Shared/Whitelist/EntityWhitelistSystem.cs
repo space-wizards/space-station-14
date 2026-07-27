@@ -1,6 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Shared.Item;
 using Content.Shared.Tag;
+using Robust.Shared.Containers;
 
 namespace Content.Shared.Whitelist;
 
@@ -8,6 +10,7 @@ public sealed partial class EntityWhitelistSystem : EntitySystem
 {
     [Dependency] private TagSystem _tag = default!;
     [Dependency] private EntityQuery<ItemComponent> _itemQuery;
+    [Dependency] private SharedContainerSystem _container = default!;
 
     private CompName _itemComponentName = default;
     private CompName _tagComponentName = default;
@@ -35,6 +38,12 @@ public sealed partial class EntityWhitelistSystem : EntitySystem
     /// </summary>
     public bool IsValid(EntityWhitelist list, EntityUid uid)
     {
+        if (list.RecursiveContainerLookUp &&
+            _container.GetAllContainers(uid)
+                .SelectMany(container => container.ContainedEntities)
+                .Any(entity => !IsValid(list, entity)))
+            return false;
+
         list.Registrations ??= StringsToRegs(list.Components);
 
         if (list.Registrations != null)
