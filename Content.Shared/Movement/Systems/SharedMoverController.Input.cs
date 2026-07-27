@@ -426,6 +426,7 @@ namespace Content.Shared.Movement.Systems
 
             SetMoveInput(entity, subTick, enabled, bit);
         }
+
         private void SetMoveInput(Entity<InputMoverComponent> entity, ushort subTick, bool enabled, MoveButtons bit)
         {
             // Modifies held state of a movement button at a certain sub tick and updates current tick movement vectors.
@@ -433,7 +434,7 @@ namespace Content.Shared.Movement.Systems
 
             if (subTick >= entity.Comp.LastInputSubTick)
             {
-                var fraction = (subTick - entity.Comp.LastInputSubTick) / (float)ushort.MaxValue;
+                var fraction = (subTick - entity.Comp.LastInputSubTick) / (float) ushort.MaxValue;
 
                 ref var lastMoveAmount = ref entity.Comp.Sprinting ? ref entity.Comp.CurTickSprintMovement : ref entity.Comp.CurTickWalkMovement;
 
