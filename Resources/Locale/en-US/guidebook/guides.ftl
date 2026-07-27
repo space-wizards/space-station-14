@@ -134,6 +134,8 @@ guide-entry-other-recipes = Other
 guide-entry-secret-recipes = Secret
 guide-entry-lawsets = Silicon Lawsets
 
+guide-entry-crimes = Space Law Crime List
+
 guide-entry-antagonists = Antagonists
 guide-entry-nuclear-operatives = Nuclear Operatives
 guide-entry-traitors = Traitors
