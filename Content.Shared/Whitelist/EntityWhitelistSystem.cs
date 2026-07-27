@@ -38,19 +38,24 @@ public sealed partial class EntityWhitelistSystem : EntitySystem
     /// </summary>
     public bool IsValid(EntityWhitelist list, EntityUid uid)
     {
-        if (list.RecursiveContainerAny &&
-            HasComp<ContainerManagerComponent>(uid) &&
-            _container.GetAllContainers(uid)
-                .SelectMany(container => container.ContainedEntities)
-                .Any(entity => IsValid(list, entity)))
-            return true;
+        switch (list.RecursiveCheck)
+        {
+            case RecursiveContainerCondition.Any:
+                if (HasComp<ContainerManagerComponent>(uid) &&
+                    _container.GetAllContainers(uid)
+                        .SelectMany(container => container.ContainedEntities)
+                        .Any(entity => IsValid(list, entity)))
+                    return true;
+                break;
+            case RecursiveContainerCondition.All:
+                if (HasComp<ContainerManagerComponent>(uid) &&
+                    _container.GetAllContainers(uid)
+                        .SelectMany(container => container.ContainedEntities)
+                        .Any(entity => !IsValid(list, entity)))
+                    return false;
+                break;
+        }
 
-        if (list.RecursiveContainerAll &&
-            HasComp<ContainerManagerComponent>(uid) &&
-            _container.GetAllContainers(uid)
-                .SelectMany(container => container.ContainedEntities)
-                .Any(entity => !IsValid(list, entity)))
-            return false;
 
         list.Registrations ??= StringsToRegs(list.Components);
 
