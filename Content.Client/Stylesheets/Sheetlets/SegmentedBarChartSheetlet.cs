@@ -1,4 +1,5 @@
 using Content.Client.Stylesheets;
+using Content.Client.Stylesheets.Colorspace;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using static Content.Client.Stylesheets.StylesheetHelpers;
@@ -13,8 +14,8 @@ public sealed class SegmentedBarChartSheetlet : Sheetlet<PalettedStylesheet>
         return
         [
             E<SegmentedBarChart>()
-                .Prop(SegmentedBarChart.StylePropertyNotchColor, new Color(1f, 1f, 1f, 0.25f))
-                .Prop(SegmentedBarChart.StylePropertyBackgroundColor, new Color(0.1f, 0.1f, 0.1f))
+                .Prop(SegmentedBarChart.StylePropertyNotchColor, Color.White.WithAlpha(0.25f))
+                .Prop(SegmentedBarChart.StylePropertyBackgroundColor, sheet.SecondaryPalette.BackgroundDark)
                 .Prop(SegmentedBarChart.StylePropertyGap, 0f)
                 .Prop(SegmentedBarChart.StylePropertyMediumNotchInterval, 5)
                 .Prop(SegmentedBarChart.StylePropertyBigNotchInterval, 10)

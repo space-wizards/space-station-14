@@ -103,7 +103,7 @@ public sealed class SegmentedBarChart : Control
     // Most properties can either be provided by the stylesheet or overriden through a property.
     // These helper computed properties make the bulk of the code a little less ugly.
     private Color _backgroundColor => StylePropertyDefault(StylePropertyBackgroundColor, new Color(0.1f, 0.1f, 0.1f));
-    private Color _notchColor => StylePropertyDefault(StylePropertyNotchColor, new Color(0.1f, 0.1f, 0.1f));
+    private Color _notchColor => StylePropertyDefault(StylePropertyNotchColor, Color.White.WithAlpha(0.25f));
     private float _gap => Gap ?? StylePropertyDefault<float>(StylePropertyGap, 0);
     private float _minEntryWidth => MinEntryWidth ?? StylePropertyDefault<float>(StylePropertyMinEntryWidth, 0);
     private bool _animated => Animated ?? StylePropertyDefault(StylePropertyAnimated, false);
