@@ -12,6 +12,7 @@ public sealed class AntagSelectionPlayerPool
     private readonly List<ICommonSession>? _sponsorPool;
     private readonly List<ICommonSession>? _regularPool;
     private readonly List<ICommonSession>? _fallbackPool;
+    private readonly bool _strictRegularSlots;
     private int _sponsorSlotsRemaining;
     private int _regularSlotsRemaining;
 
@@ -25,11 +26,13 @@ public sealed class AntagSelectionPlayerPool
         List<ICommonSession> regularPool,
         List<ICommonSession> fallbackPool,
         int sponsorSlots,
-        int totalSlots)
+        int totalSlots,
+        bool strictRegularSlots = false)
     {
         _sponsorPool = sponsorPool;
         _regularPool = regularPool;
         _fallbackPool = fallbackPool;
+        _strictRegularSlots = strictRegularSlots;
         _orderedPools = new() { sponsorPool, regularPool, fallbackPool };
         var clampedTotalSlots = Math.Max(totalSlots, 0);
         _sponsorSlotsRemaining = Math.Clamp(sponsorSlots, 0, clampedTotalSlots);
@@ -44,6 +47,12 @@ public sealed class AntagSelectionPlayerPool
         // DS14-start
         if (_sponsorPool != null && _regularPool != null && _fallbackPool != null)
         {
+            if (_strictRegularSlots && _regularSlotsRemaining > 0)
+            {
+                _regularSlotsRemaining--;
+                return TryPickAndTake(random, out session, _regularPool);
+            }
+
             if (_sponsorSlotsRemaining > 0)
             {
                 _sponsorSlotsRemaining--;

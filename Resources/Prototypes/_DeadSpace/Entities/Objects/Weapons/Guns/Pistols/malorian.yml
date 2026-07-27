@@ -1,0 +1,43 @@
+- type: entity
+  name: малориан
+  parent: BaseItem
+  id: WeaponPistolMalorian
+  description: Культовый пистолет безымянной компании, сделанный на заказ для одной известной личности. Использует встроенный фабрикатор для восполнения патрон.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Weapons/Guns/Pistols/malorian.rsi
+    state: icon
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,1,0
+    - 0,1,0,1
+  - type: Gun
+    fireRate: 2
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/_DeadSpace/Weapons/Guns/Malorian/malorian-shot.ogg
+    soundEmpty:
+      path: /Audio/_DeadSpace/Weapons/Guns/Malorian/malorian-empty.ogg
+  - type: BasicEntityAmmoProvider
+    proto: BulletMalorian
+    capacity: 15
+    count: 15
+  - type: RechargeBasicEntityAmmo
+    rechargeCooldown: 2
+    rechargeSound:
+      path: /Audio/_DeadSpace/Weapons/Guns/Malorian/malorian-reload.ogg
+      params:
+        volume: -3
+  - type: AmmoCounter
+  - type: EmitSoundOnPickup
+    sound:
+      path: /Audio/_DeadSpace/Items/Handing/gun/ballistics/pistol/pistol_pickup.ogg
+  - type: EmitSoundOnDrop
+    sound:
+      path: /Audio/_DeadSpace/Items/Handing/gun/ballistics/pistol/pistol_drop.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_DeadSpace/Items/Handing/gun/ballistics/pistol/pistol_drop.ogg

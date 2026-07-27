@@ -1,0 +1,9 @@
+- type: entity
+  parent: BulletTrace
+  id: BulletMalorian
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Piercing: 41

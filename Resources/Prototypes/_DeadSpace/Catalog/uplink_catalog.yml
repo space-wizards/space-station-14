@@ -21,6 +21,25 @@
       - SurplusBundle
 
 - type: listing
+  id: UplinkMalorianLone
+  name: uplink-malorian-name
+  description: uplink-malorian-desc
+  productEntity: WeaponPistolMalorian
+  cost:
+    Telecrystal: 12
+  categories:
+  - UplinkWeaponry
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - LoneOpsUplink
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+      - SurplusBundle
+
+- type: listing
   id: UplinkSandevistanLone
   name: uplink-sandevistan-misanthropy-name
   description: uplink-sandevistan-misanthropy-desc

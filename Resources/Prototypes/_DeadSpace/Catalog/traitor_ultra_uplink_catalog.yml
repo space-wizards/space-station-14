@@ -1,6 +1,29 @@
 # Traitor Ultra uplink catalog. Listings are copied from the regular traitor uplink with separate ids/categories so prices can diverge.
 
 - type: listing
+  id: UplinkTraitorUltraMalorian
+  name: uplink-malorian-name
+  description: uplink-malorian-desc
+  productEntity: WeaponPistolMalorian
+  cost:
+    Telecrystal: 12
+  categories:
+  - TraitorUltraUplinkWeaponry
+  conditions:
+  - !type:BuyerAntagCondition
+    whitelist:
+    - TraitorUltra
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink
+      - LoneOpsUplink
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+      - SurplusBundle
+
+- type: listing
   id: UplinkTraitorUltraPistolViper
   name: uplink-pistol-viper-name
   description: uplink-pistol-viper-desc

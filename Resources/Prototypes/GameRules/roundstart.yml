@@ -227,6 +227,12 @@
       mindRoles:
       - MindRoleNukeops
       sponsorsPriority: true
+      # DS14-start
+      additionalSlots: 1
+      minimumNonSponsorSlots: 1
+      maximumNonSponsorSlots: 2
+      nonSponsorSlotTotalAntagRatio: 3
+      # DS14-end
   - type: DynamicRuleCost
     cost: 200
 
