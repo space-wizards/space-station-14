@@ -219,6 +219,7 @@
   components:
   - type: SecretStash
     blacklist:
+      recursiveContainerLookUp: true # to REALLY avoid infinite matryoshka stashes
       components:
       - SecretStash # Prevents being able to insert plushies inside each other (infinite plush)!
       tags:
