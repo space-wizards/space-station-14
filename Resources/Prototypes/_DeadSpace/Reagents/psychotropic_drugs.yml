@@ -1,0 +1,445 @@
+# Sentidol - Anxiolytic
+- type: reagent
+  id: Sentidol
+  name: reagent-name-sentidol
+  group: Medicine
+  desc: reagent-desc-sentidol
+  physicalDesc: reagent-physical-desc-pungent
+  flavor: medicine
+  color: "#57356a"
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.5
+      effects:
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentCondition
+          reagent: Sentidol
+          min: 2.5
+          max: 4.99
+        type: Local
+        visualType: Small
+        messages: ["sentidol-effect-melancholy"]
+        probability: 0.2
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentCondition
+          reagent: Sentidol
+          min: 5
+          max: 14.99
+        type: Local
+        visualType: Small
+        messages: ["sentidol-effect-relaxation"]
+        probability: 0.2
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentCondition
+          reagent: Sentidol
+          min: 15
+          max: 19.99
+        type: Local
+        visualType: Small
+        messages: ["sentidol-effect-sleepy"]
+        probability: 0.2
+      - !type:ModifyStatusEffect
+        conditions:
+        - !type:ReagentCondition
+          reagent: Sentidol
+          min: 15
+        effectProto: StatusEffectDrowsiness
+        time: 4
+        type: Add
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentCondition
+          reagent: Sentidol
+          min: 20
+        type: Local
+        visualType: MediumCaution
+        messages: ["sentidol-effect-overdose"]
+        probability: 0.2
+      - !type:Jitter
+        conditions:
+        - !type:ReagentCondition
+          reagent: Sentidol
+          min: 20
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Sentidol
+          min: 20
+        damage:
+          types:
+            Poison: 0.37
+
+# Gliomorphin - Neuroleptic
+- type: reagent
+  id: Gliomorphin
+  name: reagent-name-gliomorphin
+  group: Narcotics
+  desc: reagent-desc-gliomorphin
+  physicalDesc: reagent-physical-desc-acrid
+  flavor: bitter
+  color: "#FF7514"
+  metabolisms:
+    Poison:
+      metabolismRate: 0.5
+      effects:
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentCondition
+          reagent: Gliomorphin
+          min: 5
+          max: 6.99
+        type: Local
+        visualType: Small
+        messages: ["gliomorphin-effect-haze"]
+        probability: 0.2
+      - !type:GenericStatusEffect
+        conditions:
+        - !type:ReagentCondition
+          reagent: Gliomorphin
+          min: 5
+          max: 6.99
+        key: TemporaryBlindness
+        component: TemporaryBlindness
+        time: 10
+        type: Update
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentCondition
+          reagent: Gliomorphin
+          min: 7
+          max: 14.99
+        type: Local
+        visualType: Small
+        messages: ["gliomorphin-effect-numb"]
+        probability: 0.2
+      - !type:GenericStatusEffect
+        conditions:
+        - !type:ReagentCondition
+          reagent: Gliomorphin
+          min: 7
+          max: 14.99
+        key: TemporaryBlindness
+        component: TemporaryBlindness
+        time: 10
+        type: Update
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentCondition
+          reagent: Gliomorphin
+          min: 15
+          max: 15.99
+        type: Local
+        visualType: Small
+        messages: ["gliomorphin-effect-pain"]
+        probability: 0.2
+      - !type:GenericStatusEffect
+        conditions:
+        - !type:ReagentCondition
+          reagent: Gliomorphin
+          min: 15
+          max: 15.99
+        key: TemporaryBlindness
+        component: TemporaryBlindness
+        time: 15
+        type: Update
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentCondition
+          reagent: Gliomorphin
+          min: 16
+          max: 20
+        type: Local
+        visualType: MediumCaution
+        messages: ["gliomorphin-effect-rage"]
+        probability: 0.2
+      - !type:GenericStatusEffect
+        conditions:
+        - !type:ReagentCondition
+          reagent: Gliomorphin
+          min: 16
+          max: 20
+        key: TemporaryBlindness
+        component: TemporaryBlindness
+        time: 15
+        type: Update
+      - !type:Emote
+        conditions:
+        - !type:ReagentCondition
+          reagent: Gliomorphin
+          min: 16
+          max: 20
+        emote: Scream
+        showInChat: true
+        probability: 0.1
+      - !type:ModifyKnockdown
+        conditions:
+        - !type:ReagentCondition
+          reagent: Gliomorphin
+          min: 16
+          max: 20
+        time: 2
+        type: Remove
+      - !type:ModifyParalysis
+        conditions:
+        - !type:ReagentCondition
+          reagent: Gliomorphin
+          min: 16
+          max: 20
+        time: 2
+        type: Remove
+
+# Illumidol - Nootropic psychostimulant
+- type: reagent
+  id: Illumidol
+  name: reagent-name-illumidol
+  group: Narcotics
+  desc: reagent-desc-illumidol
+  physicalDesc: reagent-physical-desc-airy
+  flavor: bitter
+  color: "#7c59c2"
+  metabolisms:
+    Narcotic:
+      metabolismRate: 0.5
+      effects:
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentCondition
+          reagent: Illumidol
+          min: 5
+          max: 9.99
+        type: Local
+        visualType: Small
+        messages: ["illumidol-effect-dizzy"]
+        probability: 0.2
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentCondition
+          reagent: Illumidol
+          min: 10
+        type: Local
+        visualType: Small
+        messages: ["illumidol-effect-shake"]
+        probability: 0.2
+      - !type:Jitter
+        conditions:
+        - !type:ReagentCondition
+          reagent: Illumidol
+          min: 10
+        time: 10
+      - !type:Jitter
+        conditions:
+        - !type:ReagentCondition
+          reagent: Illumidol
+          min: 10
+        time: 10
+        amplitude: 15
+        frequency: 6
+      - !type:Vomit
+        probability: 0.3
+        conditions:
+        - !type:ReagentCondition
+          reagent: Illumidol
+          min: 10
+
+# Synaptodol - Analgesic
+- type: reagent
+  id: Synaptodol
+  name: reagent-name-synaptodol
+  group: Medicine
+  desc: reagent-desc-synaptodol
+  physicalDesc: reagent-physical-desc-wavy
+  flavor: medicine
+  color: "#b4e1c4"
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.5
+      effects:
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentCondition
+          reagent: Synaptodol
+          min: 10
+        type: Local
+        visualType: Small
+        messages: ["synaptodol-effect-headache"]
+        probability: 0.2
+      - !type:ModifyStatusEffect
+        conditions:
+        - !type:ReagentCondition
+          reagent: Synaptodol
+          min: 0.1
+        effectProto: StatusEffectPainNumbness
+        time: 2
+        type: Update
+      - !type:Jitter
+        conditions:
+        - !type:ReagentCondition
+          reagent: Synaptodol
+          min: 20
+      - !type:AdjustTemperature
+        conditions:
+        - !type:ReagentCondition
+          reagent: Synaptodol
+          min: 10
+        - !type:TemperatureCondition
+          min: 170.15
+        amount: -10000
+
+# Fragmentin - Improved Phalanximine
+- type: reagent
+  id: Fragmentin
+  name: reagent-name-fragmentin
+  group: Medicine
+  desc: reagent-desc-fragmentin
+  physicalDesc: reagent-physical-desc-sticky
+  flavor: medicine
+  color: "#73e65f"
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.5
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Cellular: -3.5
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Fragmentin
+          min: 20
+        damage:
+          types:
+            Radiation: 5
+      - !type:ModifyStatusEffect
+        conditions:
+        - !type:ReagentCondition
+          reagent: Fragmentin
+          min: 15
+        effectProto: StatusEffectSeeingRainbow
+        time: 8
+        type: Update
+
+# Actiradol - Cryogenic anti-radiation
+- type: reagent
+  id: Actiradol
+  name: reagent-name-actiradol
+  group: Medicine
+  desc: reagent-desc-actiradol
+  physicalDesc: reagent-physical-desc-rough
+  flavor: medicine
+  color: "#FF9218"
+  worksOnTheDead: true
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.5
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:TemperatureCondition
+          max: 213.0
+        - !type:MobStateCondition
+          mobstate:
+          - Dead
+        damage:
+          types:
+            Radiation: -3.5
+      - !type:Jitter
+        conditions:
+        - !type:MobStateCondition
+          mobstate:
+          - Dead
+        time: 2
+      - !type:Jitter
+        conditions:
+        - !type:MobStateCondition
+          mobstate:
+          - Dead
+        time: 2
+        amplitude: 15
+        frequency: 6
+
+# Friogeliyeva kislota (Cryogenic Acid) - Anti-burn
+- type: reagent
+  id: FriogeliyevaKislota
+  name: reagent-name-friogeliyeva-kislota
+  group: Medicine
+  desc: reagent-desc-friogeliyeva-kislota
+  physicalDesc: reagent-physical-desc-crystalline
+  flavor: medicine
+  color: "#81d4fa"
+  specificHeat: 2.9
+  boilingPoint: 100.0
+  meltingPoint: 0.0
+  worksOnTheDead: true
+  reactiveEffects:
+    Extinguish:
+      methods: [ Touch ]
+      effects:
+      - !type:Extinguish
+        minScale: 5
+      - !type:AdjustTemperature
+        minScale: 5
+        scaling: false
+        amount: -15000
+  metabolisms:
+    Poison:
+      metabolismRate: 0.5
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: FriogeliyevaKislota
+          min: 0.7
+          max: 1
+        damage:
+          types:
+            Cold: 3.7
+      - !type:AdjustTemperature
+        conditions:
+        - !type:ReagentCondition
+          reagent: FriogeliyevaKislota
+          min: 3
+        amount: -15000
+
+# Nociotoxin - Syndicate poison
+- type: reagent
+  id: Nociotoxin
+  name: reagent-name-nociotoxin
+  group: Toxins
+  desc: reagent-desc-nociotoxin
+  physicalDesc: reagent-physical-desc-infernal
+  contrabandSeverity: Syndicate
+  flavor: bitter
+  color: "#CC0605"
+  metabolisms:
+    Poison:
+      metabolismRate: 0.25
+      effects:
+      - !type:ModifyStatusEffect
+        conditions:
+        - !type:ReagentCondition
+          reagent: Nociotoxin
+          min: 1
+        effectProto: StatusEffectPainNumbness
+        time: 2
+        type: Update
+      - !type:HealthChange
+        conditions:
+        - !type:MobStateCondition
+          mobstate:
+          - Alive
+          - PreCritical
+        damage:
+          types:
+            Poison: 3.5
+      - !type:HealthChange
+        conditions:
+        - !type:MobStateCondition
+          mobstate:
+          - Critical
+        damage:
+          types:
+            Poison: 38

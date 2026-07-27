@@ -1,0 +1,127 @@
+# Sentidol - Anxiolytic
+- type: reaction
+  id: Sentidol
+  reactants:
+    Mannitol:
+      amount: 3
+    Mercury:
+      amount: 1
+    Fluorine:
+      amount: 1
+  products:
+    Sentidol: 2
+
+# Gliomorphin - Neuroleptic
+- type: reaction
+  id: Gliomorphin
+  minTemp: 340
+  reactants:
+    Synaptizine:
+      amount: 2
+    Mercury:
+      amount: 1
+    SulfuricAcid:
+      amount: 1
+      catalyst: true
+  products:
+    Gliomorphin: 1
+
+# Illumidol - Nootropic
+- type: reaction
+  id: Illumidol
+  minTemp: 328
+  reactants:
+    ChloralHydrate:
+      amount: 1
+    HeartbreakerToxin:
+      amount: 1
+    Mercury:
+      amount: 2
+  products:
+    Illumidol: 1
+
+# Synaptodol - Analgesic
+- type: reaction
+  id: Synaptodol
+  reactants:
+    Impedrezene:
+      amount: 1
+    Pax:
+      amount: 1
+    Cryptobiolin:
+      amount: 2
+  products:
+    Synaptodol: 1
+
+# Barozine - Medicine
+- type: reaction
+  id: Barozine
+  minTemp: 450
+  reactants:
+    Leporazine:
+      amount: 2
+    Kelotane:
+      amount: 1
+    Bruizine:
+      amount: 2
+  products:
+    Barozine: 1
+
+# Fragmentin - Improved Phalanximine
+- type: reaction
+  id: Fragmentin
+  minTemp: 340
+  reactants:
+    Phalanximine:
+      amount: 2
+    Ultravasculine:
+      amount: 1
+    Aluminium:
+      amount: 1
+  products:
+    Fragmentin: 1
+
+# Actiradol - Cryogenic anti-rad
+- type: reaction
+  id: Actiradol
+  minTemp: 380
+  reactants:
+    Cryoxadone:
+      amount: 2
+    Arithrazine:
+      amount: 1
+    Siderlac:
+      amount: 1
+  products:
+    Actiradol: 1
+
+# Friogeliyeva Kislota - Anti-burn cryo acid
+- type: reaction
+  id: FriogeliyevaKislota
+  reactants:
+    Insuzine:
+      amount: 1
+    Leporazine:
+      amount: 1
+    Bruizine:
+      amount: 0.9
+  products:
+    FriogeliyevaKislota: 1
+  effects:
+  - !type:AdjustSolutionThermalEnergy
+    delta: -50000
+
+# Nociotoxin - Syndicate poison
+- type: reaction
+  id: Nociotoxin
+  impact: High
+  minTemp: 367
+  reactants:
+    Vestine:
+      amount: 1
+    Toxin:
+      amount: 0.8
+    PolytrinicAcid:
+      amount: 1
+  products:
+    Nociotoxin: 1

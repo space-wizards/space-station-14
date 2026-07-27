@@ -102,3 +102,7 @@ reagent-physical-desc-arcryox = icy blue
 reagent-physical-desc-hallucinogenic-and-refreshing = hallucinogenic and refreshing
 reagent-physical-desc-psycho = psycho
 reagent-physical-desc-spike = spiky
+reagent-physical-desc-airy = airy
+reagent-physical-desc-wavy = wavy
+reagent-physical-desc-rough = rough
+reagent-physical-desc-infernal = infernal

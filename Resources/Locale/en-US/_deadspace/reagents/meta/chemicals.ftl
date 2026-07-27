@@ -1,0 +1,16 @@
+reagent-name-sentidol = sentidol
+reagent-desc-sentidol = A mild anxiolytic with a light sedative and relaxing effect on the body.
+reagent-name-gliomorphin = gliomorphin
+reagent-desc-gliomorphin = A strong antipsychotic primarily used to suppress psychosis, delusions, and aggressive behavior.
+reagent-name-illumidol = illumidol
+reagent-desc-illumidol = A nootropic psychostimulant used to restore memory in severely ill patients.
+reagent-name-synaptodol = synaptodol
+reagent-desc-synaptodol = A non-addictive analgesic that suppresses pain.
+reagent-name-fragmentin = fragmentin
+reagent-desc-fragmentin = An improved form of phalanximine designed to treat cellular damage more effectively.
+reagent-name-actiradol = actiradol
+reagent-desc-actiradol = An improved form of arithrazine adapted for cryogenic treatment and more effective at removing radiation.
+reagent-name-friogeliyeva-kislota = Friogeliyeva acid
+reagent-desc-friogeliyeva-kislota = A rapidly cooling topical treatment for burned skin.
+reagent-name-nociotoxin = nociotoxin
+reagent-desc-nociotoxin = A new Syndicate poison designed for covert murder. Nociotoxin slowly spreads through the victim's bloodstream.

@@ -17,6 +17,13 @@
       - !type:ModifyStatusEffect
         effectProto: StatusEffectWoozy
         time: 20.0
+      # DS14-start
+      - !type:PopupMessage
+        type: Local
+        visualType: Small
+        messages: ["cryptobiolin-effect-dizzy"]
+        probability: 0.05
+      # DS14-end
 
 - type: reagent
   id: Dylovene
@@ -1428,6 +1435,13 @@
         visualType: Medium
         messages: [ "mannitol-effect-enlightened" ]
         probability: 0.2
+      # DS14-start
+      - !type:PopupMessage
+        type: Local
+        visualType: Small
+        messages: ["mannitol-effect-strain-relief"]
+        probability: 0.05
+      # DS14-end
 
 - type: reagent
   id: Psicodine
@@ -1472,6 +1486,13 @@
         - "psicodine-effect-anxieties-wash-away"
         - "psicodine-effect-at-peace"
         probability: 0.2
+      # DS14-start
+      - !type:PopupMessage
+        type: Local
+        visualType: Small
+        messages: ["psicodine-effect-weight-off"]
+        probability: 0.05
+      # DS14-end
 
 - type: reagent
   id: PotassiumIodide

@@ -103,3 +103,7 @@ reagent-physical-desc-arcryox = льдисто-голубое
 reagent-physical-desc-hallucinogenic-and-refreshing = галлюциногенное и освежающе
 reagent-physical-desc-psycho = психотропное
 reagent-physical-desc-spike = колючие
+reagent-physical-desc-airy = воздушное
+reagent-physical-desc-wavy = волнистое
+reagent-physical-desc-rough = шершавое
+reagent-physical-desc-infernal = инфернальное

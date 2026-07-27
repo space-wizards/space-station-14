@@ -276,6 +276,13 @@
         - !type:ReagentCondition
           reagent: Impedrezene
           min: 8
+      # DS14-start
+      - !type:PopupMessage
+        type: Local
+        visualType: Small
+        messages: ["impedrezene-effect-loss-control"]
+        probability: 0.05
+      # DS14-end
 
 - type: reagent
   id: SpaceDrugs
@@ -292,6 +299,13 @@
         effectProto: StatusEffectSeeingRainbow
         type: Add
         time: 5
+      # DS14-start
+      - !type:PopupMessage
+        type: Local
+        visualType: Small
+        messages: ["spacedrugs-effect-eyes-burning"]
+        probability: 0.05
+      # DS14-end
 
 - type: reagent
   id: Bananadine
