@@ -1,7 +1,6 @@
 using Content.Server.Ghost;
 using Content.Server.Hands.Systems;
 using Content.Shared.Administration.Logs;
-using Content.Shared.Chat;
 using Content.Shared.Damage.Components;
 using Content.Shared.Database;
 using Content.Shared.IdentityManagement;
@@ -12,13 +11,14 @@ using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
+using Content.Shared.Suicide;
 using Content.Shared.Tag;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Chat;
+namespace Content.Server.Suicide;
 
-public sealed partial class SuicideSystem : EntitySystem
+public sealed partial class SuicideSystem : SharedSuicideSystem
 {
     [Dependency] private EntityLookupSystem _entityLookupSystem = default!;
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
@@ -27,7 +27,6 @@ public sealed partial class SuicideSystem : EntitySystem
     [Dependency] private MobStateSystem _mobState = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private GhostSystem _ghostSystem = default!;
-    [Dependency] private SharedSuicideSystem _suicide = default!;
     [Dependency] private EntityQuery<ItemComponent> _itemQuery = default!;
 
     private static readonly ProtoId<TagPrototype> CannotSuicideTag = "CannotSuicide";
@@ -83,6 +82,7 @@ public sealed partial class SuicideSystem : EntitySystem
         {
             _adminLogger.Add(LogType.Mind, $"{ToPrettyString(victim):player} suicided.");
         }
+
         return true;
     }
 
@@ -162,13 +162,13 @@ public sealed partial class SuicideSystem : EntitySystem
 
         if (args.DamageSpecifier != null)
         {
-            _suicide.ApplyLethalDamage(victim, args.DamageSpecifier);
+            ApplyLethalDamage(victim, args.DamageSpecifier);
             args.Handled = true;
             return;
         }
 
         args.DamageType ??= "Bloodloss";
-        _suicide.ApplyLethalDamage(victim, args.DamageType);
+        ApplyLethalDamage(victim, args.DamageType);
         args.Handled = true;
     }
 }
