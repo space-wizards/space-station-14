@@ -78,7 +78,7 @@
     transmitFrequencyId: SurveillanceCamera
     prefix: device-address-prefix-camera
   - type: DeviceNetworkRequiresPower
-  - type: WiredNetworkConnection
+  - type: WiredNetwork
   - type: StationAiVision
   - type: CameraActiveOnCollide
     requiresPower: false # TODO: Change this when AI can no longer see via unpowered cameras

@@ -215,7 +215,6 @@
     transmitFrequencyId: MailingUnit
   - type: WiredNetwork
   - type: DeviceNetworkRequiresPower
-  - type: WiredNetworkConnection
   - type: Configuration
     config:
       tag:
