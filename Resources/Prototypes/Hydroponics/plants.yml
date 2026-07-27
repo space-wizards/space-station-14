@@ -36,6 +36,7 @@
   - type: PlantHarvest
   - type: PlantChemicals
   - type: PlantToxins
+  - type: PlantTraits
   - type: PlantVisuals
   - type: PlantWeedPest
   - type: PlantAtmospheric

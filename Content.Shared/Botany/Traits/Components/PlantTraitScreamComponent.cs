@@ -16,5 +16,5 @@ public sealed partial class PlantTraitScreamComponent : PlantTraitsComponent
     public SoundSpecifier ScreamSound = new SoundCollectionSpecifier("PlantScreams", AudioParams.Default.AddVolume(-10));
 
     [DataField]
-    public override LocId TraitState { get; set; } = "mutation-plant-scream";
+    public override LocId? TraitState { get; set; } = "mutation-plant-scream";
 }

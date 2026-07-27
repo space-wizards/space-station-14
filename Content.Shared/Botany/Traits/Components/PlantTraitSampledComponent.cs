@@ -9,5 +9,5 @@ namespace Content.Shared.Botany.Traits.Components;
 public sealed partial class PlantTraitSampledComponent : PlantTraitsComponent
 {
     [DataField]
-    public override LocId TraitState { get; set; } = "mutation-plant-sampled";
+    public override LocId? TraitState { get; set; } = "mutation-plant-sampled";
 }

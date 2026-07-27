@@ -16,5 +16,5 @@ public sealed partial class PlantTraitUnviableComponent : PlantTraitsComponent
     public float UnviableDamage = 6f;
 
     [DataField]
-    public override LocId TraitState { get; set; } = "mutation-plant-unviable";
+    public override LocId? TraitState { get; set; } = "mutation-plant-unviable";
 }

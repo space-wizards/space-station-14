@@ -102,7 +102,8 @@ public sealed partial class PlantSystem : EntitySystem
 
             foreach (var trait in AllComps<PlantTraitsComponent>(ent.Owner))
             {
-                args.PushMarkup(Loc.GetString(trait.TraitState));
+                if (trait.TraitState is { } traitState)
+                    args.PushMarkup(Loc.GetString(traitState));
             }
         }
     }

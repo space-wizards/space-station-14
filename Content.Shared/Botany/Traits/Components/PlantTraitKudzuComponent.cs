@@ -30,5 +30,5 @@ public sealed partial class PlantTraitKudzuComponent : PlantTraitsComponent
     public float WeedGrowthAmount = 1f;
 
     [DataField]
-    public override LocId TraitState { get; set; } = "mutation-plant-kudzu";
+    public override LocId? TraitState { get; set; } = "mutation-plant-kudzu";
 }

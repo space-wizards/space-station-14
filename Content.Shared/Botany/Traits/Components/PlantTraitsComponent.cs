@@ -1,13 +1,17 @@
+using Robust.Shared.GameStates;
+
 namespace Content.Shared.Botany.Traits.Components;
 
 /// <summary>
-/// Base class for plant trait components.
+/// Base component for plant trait components.
 /// </summary>
-public abstract partial class PlantTraitsComponent : Component
+[RegisterComponent, NetworkedComponent]
+[Virtual]
+public partial class PlantTraitsComponent : Component
 {
     /// <summary>
     /// Localization key describing the plant trait state.
     /// </summary>
     [DataField]
-    public abstract LocId TraitState { get; set; }
+    public virtual LocId? TraitState { get; set; }
 }
