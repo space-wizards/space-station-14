@@ -2,7 +2,7 @@
 # Base
 
 - type: entity
-  parent: [SolutionNormal, FoodInjectableBase]
+  parent: [SolutionNormal, FoodInjectableBase, BaseStashFood]
   id: FoodCakeBase
   abstract: true
   components:
@@ -25,19 +25,6 @@
   - type: Tag
     tags:
     - Cake
-  - type: SecretStash
-    maxItemSize: "Normal"
-    secretStashName: secret-stash-cake
-    damageEatenItemInside:
-      types:
-        Slash: 7.5
-  - type: ToolOpenable
-    openToolQualityNeeded: Slicing
-    closeToolQualityNeeded: Slicing
-    verbOnly: true
-  - type: ContainerContainer
-    containers:
-      stash: !type:ContainerSlot {}
 
 - type: entity
   parent: [SolutionVeryTiny, FoodCakeBase]
@@ -64,6 +51,8 @@
     tags:
     - Cake
     - Slice
+  - type: SecretStash
+    maxItemSize: "Small" # slices are smaller than whole cakes
 
 # Custom Cake Example
 

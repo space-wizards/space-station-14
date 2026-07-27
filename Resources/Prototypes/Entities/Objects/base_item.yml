@@ -217,10 +217,7 @@
   abstract: true
   id: BaseStash
   components:
-  - type: Speech
-    speechVerb: Default # for pais (In the secret stash)
   - type: SecretStash
-    secretStashName: secret-stash-plushie
     blacklist:
       components:
       - SecretStash # Prevents being able to insert plushies inside each other (infinite plush)!
@@ -229,7 +226,32 @@
   - type: ToolOpenable
     openToolQualityNeeded: Slicing
     closeToolQualityNeeded: Slicing # Should probably be stitching or something if that gets added
-    name: secret-stash-plushie
   - type: ContainerContainer
     containers:
       stash: !type:ContainerSlot {}
+
+- type: entity
+  abstract: true
+  parent: BaseStash
+  id: BaseStashToy
+  components:
+  - type: Speech
+    speechVerb: Default # for pais (In the secret stash)
+  - type: SecretStash
+    secretStashName: secret-stash-plushie
+  - type: ToolOpenable
+    name: secret-stash-plushie
+
+- type: entity
+  abstract: true
+  parent: BaseStash
+  id: BaseStashFood
+  components:
+  - type: SecretStash
+    secretStashName: secret-stash-cake
+    maxItemSize: "Normal"
+    damageEatenItemInside:
+      types:
+        Slash: 7.5
+  - type: ToolOpenable
+    verbOnly: true
