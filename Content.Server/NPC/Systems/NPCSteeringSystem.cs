@@ -2,17 +2,14 @@ using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
-using Content.Server.Destructible;
 using Content.Server.DoAfter;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.Events;
 using Content.Server.NPC.Pathfinding;
 using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
-using Content.Shared.Climbing.Components;
 using Content.Shared.Climbing.Systems;
 using Content.Shared.CombatMode;
-using Content.Shared.Doors.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
@@ -58,6 +55,7 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
     [Dependency] private IConfigurationManager _configManager = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private AccessReaderSystem _access = default!;
     [Dependency] private ClimbSystem _climb = default!;
     [Dependency] private DoAfterSystem _doAfter = default!;
     [Dependency] private EntityLookupSystem _lookup = default!;
@@ -77,9 +75,6 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
     [Dependency] private EntityQuery<NpcFactionMemberComponent> _factionQuery = default!;
     [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
     [Dependency] private EntityQuery<TransformComponent> _xformQuery = default!;
-    [Dependency] private EntityQuery<DoorComponent> _doorQuery = default!;
-    [Dependency] private EntityQuery<ClimbableComponent> _climbableQuery = default!;
-    [Dependency] private EntityQuery<DestructibleComponent> _destructibleQuery = default!;
 
     private ObjectPool<HashSet<EntityUid>> _entSetPool =
         new DefaultObjectPool<HashSet<EntityUid>>(new SetPolicy<EntityUid>());

@@ -1,11 +1,14 @@
+using Content.Server.Destructible;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.Pathfinding;
 using Content.Shared.CombatMode;
 using Content.Shared.DoAfter;
+using Content.Shared.Doors.Components;
 using Content.Shared.NPC;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Utility;
+using ClimbableComponent = Content.Shared.Climbing.Components.ClimbableComponent;
 using ClimbingComponent = Content.Shared.Climbing.Components.ClimbingComponent;
 
 namespace Content.Server.NPC.Systems;
