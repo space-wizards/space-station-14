@@ -6,7 +6,6 @@ namespace Content.Shared.Magic.Events;
 /// <summary>
 /// Spell that uses the magic of ECS to add & remove own components. Components are first removed, then added.
 /// When reused, it removes the added components and returns the deleted ones.
-/// Please note that the components that were deleted and added after that are reset.
 /// </summary>
 public sealed partial class ChangeOwnComponentsSpellEvent : InstantActionEvent
 {

@@ -315,6 +315,7 @@ public abstract partial class SharedMagicSystem : EntitySystem
 
         if (!ev.ComponentsAdded)
         {
+            // We record the deleted and added components so that we can put everything back in place later
             ev.AddedComponents = ev.ToAdd;
             ev.RemovedComponents = GetPlayerComponents(ev.Performer, ev.ForcedAdd);
 
@@ -406,8 +407,9 @@ public abstract partial class SharedMagicSystem : EntitySystem
         foreach (var (name, entry) in comp)
         {
             var compType = entry.Component.GetType();
-            if (EntityManager.HasComponent(entity, type: compType))
-                playerComps.Add(name, entry);
+
+            if (EntityManager.TryGetComponent(entity, compType, out var component))
+                playerComps.Add(name, new EntityPrototype.ComponentRegistryEntry(component));
         }
         return playerComps;
     }
