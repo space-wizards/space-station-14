@@ -42,7 +42,6 @@ public abstract partial class SharedMicrowaveSystem
         ContainerSys.Remove(GetEntity(args.EntityId), ent.Comp.Storage);
 
         var audioParams = ent.Comp.ClickSound?.Params ?? AudioParams.Default;
-        audioParams = audioParams.AddVolume(-2);
         AudioSys.PlayPredicted(ent.Comp.ClickSound, ent, args.Actor, audioParams);
     }
 
@@ -65,9 +64,8 @@ public abstract partial class SharedMicrowaveSystem
         Dirty(ent);
 
         var audioParams = ent.Comp.ClickSound?.Params ?? AudioParams.Default;
-        audioParams = audioParams.AddVolume(-2);
         AudioSys.PlayPredicted(ent.Comp.ClickSound, ent, args.Actor, audioParams);
-        UpdateUserInterfaceState(ent.AsNullable());
+        UpdateUI(ent.AsNullable());
     }
 
     /// <summary>
@@ -75,7 +73,7 @@ public abstract partial class SharedMicrowaveSystem
     ///     and whether or not it is actively cooking.
     /// </summary>
     /// <param name="microwave">The microwave to update.</param>
-    public virtual void UpdateUserInterfaceState(Entity<MicrowaveComponent?> microwave)
+    public virtual void UpdateUI(Entity<MicrowaveComponent?> microwave)
     {
 
     }

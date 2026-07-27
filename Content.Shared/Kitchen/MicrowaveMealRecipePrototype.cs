@@ -224,6 +224,9 @@ public partial record struct CookingIngredients
         return portions;
     }
 
+    /// <summary>
+    ///     Sum the ingredient counts of two ingredient structs and return the result.
+    /// </summary>
     public static CookingIngredients operator +(CookingIngredients c1, CookingIngredients c2)
     {
         var newIngredients = c1;
@@ -246,6 +249,9 @@ public partial record struct CookingIngredients
         return newIngredients;
     }
 
+    /// <summary>
+    ///     Multiply the amount of ingredients by a scalar and return the result.
+    /// </summary>
     public static CookingIngredients operator *(CookingIngredients c1, int scalar)
     {
         var scaledSolids = c1.Solids.ToDictionary(kvp => kvp.Key,
@@ -258,6 +264,9 @@ public partial record struct CookingIngredients
         return new(scaledSolids, scaledStacks, scaledReagents);
     }
 
+    /// <summary>
+    ///     Multiply the amount of ingredients by a scalar and return the result.
+    /// </summary>
     public static CookingIngredients operator *(CookingIngredients c1, uint scalar)
     {
         return c1 * (int)scalar;

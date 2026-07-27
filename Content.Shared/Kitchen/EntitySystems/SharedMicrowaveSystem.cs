@@ -34,7 +34,7 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
     [Dependency] private SharedItemSystem _item = default!;
     [Dependency] private SharedPowerReceiverSystem _power = default!;
     [Dependency] private SharedPowerStateSystem _powerState = default!;
-    [Dependency] private RecipeManager _recipeManager = default!;
+    [Dependency] private RecipeSystem _recipes = default!;
     [Dependency] private SharedStackSystem _stack = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
@@ -114,7 +114,7 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
 
         StopCooking(ent);
         ContainerSys.EmptyContainer(ent.Comp.Storage);
-        UpdateUserInterfaceState(ent.AsNullable());
+        UpdateUI(ent.AsNullable());
     }
 
     /// <summary>
@@ -129,7 +129,7 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
             StopCooking(ent);
         }
 
-        UpdateUserInterfaceState(ent.AsNullable());
+        UpdateUI(ent.AsNullable());
     }
 
     /// <summary>
@@ -160,19 +160,17 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
     /// </summary>
     /// <param name="ent">The microwave entity.</param>
     /// <param name="state">The visual state of the microwave.</param>
-    /// <param name="appearanceComponent">The microwave's appearance component.</param>
-    private void SetAppearance(Entity<MicrowaveComponent?> ent,
-        MicrowaveVisualState state,
-        AppearanceComponent? appearanceComponent = null)
+    private void SetAppearance(Entity<MicrowaveComponent?, AppearanceComponent?> ent,
+        MicrowaveVisualState state)
     {
-        if (!Resolve(ent.Owner, ref ent.Comp, ref appearanceComponent, logMissing: false))
+        if (!Resolve(ent.Owner, ref ent.Comp1, ref ent.Comp2, logMissing: false))
             return;
 
-        var display = ent.Comp.Broken ? MicrowaveVisualState.Broken : state;
+        var display = ent.Comp1.Broken ? MicrowaveVisualState.Broken : state;
         AppearanceSys.SetData(ent.Owner,
             PowerDeviceVisuals.VisualState,
             display,
-            appearanceComponent);
+            ent.Comp2);
     }
 }
 

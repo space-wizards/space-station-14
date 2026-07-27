@@ -96,7 +96,7 @@ public abstract partial class SharedMicrowaveSystem
         };
 
         AddComp(uid, activeComp);
-        UpdateUserInterfaceState(microwave.AsNullable());
+        UpdateUI(microwave.AsNullable());
     }
 
     /// <summary>
@@ -174,7 +174,7 @@ public abstract partial class SharedMicrowaveSystem
 
         if (beingMicrowaved.Handled)
         {
-            UpdateUserInterfaceState(microwave.AsNullable());
+            UpdateUI(microwave.AsNullable());
             shouldStopMicrowave = true;
             return;
         }
@@ -221,7 +221,7 @@ public abstract partial class SharedMicrowaveSystem
         var coords = Transform(microwave).Coordinates;
         for (var i = 0; i < portionedRecipe.Count; i++)
         {
-            if (!ProtoMan.TryIndex(portionedRecipe.Recipe, out var recipe))
+            if (!ProtoMan.Resolve(portionedRecipe.Recipe, out var recipe))
                 continue;
 
             PredictedSpawnAtPosition(recipe.Result, coords);

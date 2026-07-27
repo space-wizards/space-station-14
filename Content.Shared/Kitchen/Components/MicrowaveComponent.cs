@@ -82,7 +82,10 @@ public sealed partial class MicrowaveComponent : Component
     ///     a new cooking time.
     /// </summary>
     [DataField]
-    public SoundSpecifier ClickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
+    public SoundSpecifier ClickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg")
+    {
+        Params = AudioParams.Default.AddVolume(-2),
+    };
 
     /// <summary>
     ///     The humming sound played when a microwave is actively cooking.

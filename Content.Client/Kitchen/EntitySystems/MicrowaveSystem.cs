@@ -14,13 +14,13 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
 
         Subs.BuiEvents<MicrowaveComponent>(MicrowaveUiKey.Key, subs =>
         {
-            subs.Event<BoundUIOpenedEvent>((ent, ref a) => UpdateUserInterfaceState(ent.AsNullable()));
+            subs.Event<BoundUIOpenedEvent>((ent, ref a) => UpdateUI(ent.AsNullable()));
         });
     }
 
-    public override void UpdateUserInterfaceState(Entity<MicrowaveComponent?> microwave)
+    public override void UpdateUI(Entity<MicrowaveComponent?> microwave)
     {
-        base.UpdateUserInterfaceState(microwave);
+        base.UpdateUI(microwave);
 
         if (!Resolve(microwave.Owner, ref microwave.Comp))
             return;

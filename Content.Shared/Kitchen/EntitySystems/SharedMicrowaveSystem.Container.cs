@@ -111,7 +111,7 @@ public abstract partial class SharedMicrowaveSystem
         if (component.Storage != args.Container)
             return;
 
-        UpdateUserInterfaceState((uid, component));
+        UpdateUI((uid, component));
     }
 
     /// <summary>

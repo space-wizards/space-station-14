@@ -241,7 +241,7 @@ public abstract partial class SharedMicrowaveSystem
     /// <param name="portionedRecipe">The recipe used to spend ingredients.</param>
     private void SubtractContents(Entity<MicrowaveComponent> ent, PortionedRecipe portionedRecipe)
     {
-        if (!ProtoMan.TryIndex(portionedRecipe.Recipe, out var recipe))
+        if (!ProtoMan.Resolve(portionedRecipe.Recipe, out var recipe))
             return;
 
         var ingredientsToSpend = recipe.Ingredients * portionedRecipe.Count;

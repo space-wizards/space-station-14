@@ -4,9 +4,9 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Kitchen;
 
 /// <summary>
-///     A manager that caches all available non-secret microwave recipes.
+///     A system that caches all available non-secret microwave recipes.
 /// </summary>
-public sealed partial class RecipeManager : EntitySystem
+public sealed partial class RecipeSystem : EntitySystem
 {
     /// <summary>
     ///     A list of all recipes available to the recipe manager.

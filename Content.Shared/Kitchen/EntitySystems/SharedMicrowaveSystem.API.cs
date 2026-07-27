@@ -67,7 +67,7 @@ public abstract partial class SharedMicrowaveSystem
             .OrderByDescending(recipe => recipe.Priority)
             .ThenByDescending(recipe => recipe.Ingredients.Count())
             .ToList();
-        recipes.AddRange(_recipeManager.Recipes);
+        recipes.AddRange(_recipes.Recipes);
 
         return recipes;
     }
