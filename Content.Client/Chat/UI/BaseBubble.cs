@@ -8,6 +8,8 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Chat.UI;
 
+// TODO - this control needs a lot of optimization.
+// A lot of this is predictable and can have a lot less dependency injection and less TryComps
 public abstract partial class BaseBubble : Control
 {
     [Dependency] protected IEyeManager EyeManager = default!;
