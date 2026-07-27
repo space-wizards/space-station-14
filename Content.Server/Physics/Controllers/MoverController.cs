@@ -267,7 +267,7 @@ public sealed partial class MoverController : SharedMoverController
 
         if (subTick >= pilot.LastInputSubTick)
         {
-            var fraction = (subTick - pilot.LastInputSubTick) / (float)ushort.MaxValue;
+            var fraction = (subTick - pilot.LastInputSubTick) / (float) ushort.MaxValue;
 
             ApplyTick(pilot, fraction);
             pilot.LastInputSubTick = subTick;
