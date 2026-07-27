@@ -59,7 +59,7 @@ public sealed class MarkingsViewModelTests
     [SetUp]
     public async Task SetUp()
     {
-        Pair = await PoolManager.GetServerClient();
+        Pair = await PoolManager.GetServerClient(testContext: new NUnitTestContextWrap(TestContext.CurrentContext, TestContext.Out));
         await Client.WaitPost(() =>
         {
             Model = new MarkingsViewModel();

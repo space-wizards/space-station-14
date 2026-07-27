@@ -114,19 +114,18 @@ public partial class SharedGunSystem
 
             if (freeSlots == 0)
             {
-                Popup(Loc.GetString("gun-revolver-full"), ent, user);
+                PopupSystem.PopupEntity(Loc.GetString("gun-revolver-full"), ent, user);
                 return false;
             }
 
-            var xformQuery = GetEntityQuery<TransformComponent>();
-            var xform = xformQuery.GetComponent(insertEnt);
+            var xform = Transform(insertEnt);
             var ammo = new List<(EntityUid? Entity, IShootable Shootable)>(freeSlots);
             var ev = new TakeAmmoEvent(freeSlots, ammo, xform.Coordinates, user);
             RaiseLocalEvent(insertEnt, ev);
 
             if (ev.Ammo.Count == 0)
             {
-                Popup(Loc.GetString("gun-speedloader-empty"), ent, user);
+                PopupSystem.PopupEntity(Loc.GetString("gun-speedloader-empty"), ent, user);
                 return false;
             }
 
@@ -151,7 +150,7 @@ public partial class SharedGunSystem
 
                 ent.Comp.AmmoSlots[index] = ammoEnt.Value;
                 Containers.Insert(ammoEnt.Value, ent.Comp.AmmoContainer);
-                SetChamber(ent, insertEnt, index);
+                SetChamber(ent, ammoEnt.Value, index);
 
                 if (ev.Ammo.Count == 0)
                     break;
@@ -163,7 +162,7 @@ public partial class SharedGunSystem
             Dirty(ent);
 
             Audio.PlayPredicted(ent.Comp.SoundInsert, ent, user);
-            Popup(Loc.GetString("gun-revolver-insert"), ent, user);
+            PopupSystem.PopupEntity(Loc.GetString("gun-revolver-insert"), ent, user);
             return true;
         }
 
@@ -182,14 +181,14 @@ public partial class SharedGunSystem
             Containers.Insert(insertEnt, ent.Comp.AmmoContainer);
             SetChamber(ent, insertEnt, index);
             Audio.PlayPredicted(ent.Comp.SoundInsert, ent, user);
-            Popup(Loc.GetString("gun-revolver-insert"), ent, user);
+            PopupSystem.PopupEntity(Loc.GetString("gun-revolver-insert"), ent, user);
             UpdateRevolverAppearance(ent);
             UpdateAmmoCount(ent);
             Dirty(ent);
             return true;
         }
 
-        Popup(Loc.GetString("gun-revolver-full"), ent, user);
+        PopupSystem.PopupEntity(Loc.GetString("gun-revolver-full"), ent, user);
         return false;
     }
 
@@ -346,7 +345,7 @@ public partial class SharedGunSystem
     protected virtual void SpinRevolver(Entity<RevolverAmmoProviderComponent> ent, EntityUid? user = null)
     {
         Audio.PlayPredicted(ent.Comp.SoundSpin, ent, user);
-        Popup(Loc.GetString("gun-revolver-spun"), ent, user);
+        PopupSystem.PopupEntity(Loc.GetString("gun-revolver-spun"), ent, user);
     }
 
     private void OnRevolverTakeAmmo(Entity<RevolverAmmoProviderComponent> ent, ref TakeAmmoEvent args)
@@ -373,7 +372,7 @@ public partial class SharedGunSystem
                 if (chamber == true)
                 {
                     // Pretend it's always been there.
-                    ammoEnt = Spawn(ent.Comp.FillPrototype, args.Coordinates);
+                    ammoEnt = SpawnAtPosition(ent.Comp.FillPrototype, args.Coordinates);
 
                     if (!_netManager.IsClient)
                     {
@@ -396,7 +395,7 @@ public partial class SharedGunSystem
 
                 // Mark cartridge as spent and if it's caseless delete from the chamber slot.
                 SetCartridgeSpent(ammoEnt.Value, cartridge, true);
-                var spawned = Spawn(cartridge.Prototype, args.Coordinates);
+                var spawned = SpawnAtPosition(cartridge.Prototype, args.Coordinates);
                 args.Ammo.Add((spawned, EnsureComp<AmmoComponent>(spawned)));
 
                 if (cartridge.DeleteOnSpawn)

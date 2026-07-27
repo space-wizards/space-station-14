@@ -33,8 +33,8 @@ public sealed partial class AtmosphereSystem
     /// </summary>
     private static readonly ProtoId<SoundCollectionPrototype> DefaultHotspotSounds = "AtmosHotspot";
 
-    [Dependency] private readonly DecalSystem _decalSystem = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private DecalSystem _decalSystem = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     /// <summary>
     /// Number of cycles the hotspot system must process before it can play another sound
@@ -204,7 +204,7 @@ public sealed partial class AtmosphereSystem
         if (!IsMixtureOxidizer(tile.Air))
             return;
 
-        var isFlammable = IsMixtureIgnitable(tile.Air);
+        var isFlammable = IsMixtureFuel(tile.Air);
 
         if (tile.Hotspot.Valid)
         {

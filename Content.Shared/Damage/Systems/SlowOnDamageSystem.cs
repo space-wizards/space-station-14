@@ -7,10 +7,10 @@ using Content.Shared.Movement.Systems;
 
 namespace Content.Shared.Damage.Systems;
 
-public sealed class SlowOnDamageSystem : EntitySystem
+public sealed partial class SlowOnDamageSystem : EntitySystem
 {
-    [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifierSystem = default!;
-    [Dependency] private readonly DamageableSystem _damage = default!;
+    [Dependency] private MovementSpeedModifierSystem _movementSpeedModifierSystem = default!;
+    [Dependency] private DamageableSystem _damage = default!;
 
     public override void Initialize()
     {
@@ -78,7 +78,7 @@ public sealed class SlowOnDamageSystem : EntitySystem
 
     private void OnExamined(Entity<ClothingSlowOnDamageModifierComponent> ent, ref ExaminedEvent args)
     {
-        var msg = Loc.GetString("slow-on-damage-modifier-examine", ("mod", (1 - ent.Comp.Modifier) * 100));
+        var msg = Loc.GetString("slow-on-damage-modifier-examine", ("mod", ent.Comp.Modifier * 100));
         args.PushMarkup(msg);
     }
 
@@ -94,12 +94,12 @@ public sealed class SlowOnDamageSystem : EntitySystem
 
     private void OnIgnoreStartup(Entity<IgnoreSlowOnDamageComponent> ent, ref ComponentStartup args)
     {
-        _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(ent);
+        _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(ent.Owner);
     }
 
     private void OnIgnoreShutdown(Entity<IgnoreSlowOnDamageComponent> ent, ref ComponentShutdown args)
     {
-        _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(ent);
+        _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(ent.Owner);
     }
 
     private void OnIgnoreModifySpeed(Entity<IgnoreSlowOnDamageComponent> ent, ref ModifySlowOnDamageSpeedEvent args)

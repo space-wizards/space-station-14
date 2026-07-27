@@ -1,3 +1,4 @@
+using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Utility;
 using Content.Server.DeviceLinking.Systems;
 using Content.Shared.DeviceLinking;
@@ -7,7 +8,7 @@ using Robust.Shared.Maths;
 
 namespace Content.IntegrationTests.Tests.DeviceLinking;
 
-public sealed class DeviceLinkingTest
+public sealed class DeviceLinkingTest : GameTest
 {
     private const string PortTesterProtoId = "DeviceLinkingSinkPortTester";
 
@@ -29,11 +30,10 @@ public sealed class DeviceLinkingTest
     [Description("Ensures all devices that can sink signals will not cause exceptions when signaled.")]
     public async Task DeviceLinkSinkAllPortsTest(string protoKey)
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var pair = Pair;
         var server = pair.Server;
         var protoMan = server.ProtoMan;
         var compFact = server.ResolveDependency<IComponentFactory>();
-        var mapMan = server.ResolveDependency<IMapManager>();
         var mapSys = server.System<SharedMapSystem>();
         var deviceLinkSys = server.System<DeviceLinkSystem>();
 
@@ -42,13 +42,13 @@ public sealed class DeviceLinkingTest
             using (Assert.EnterMultipleScope())
             {
                 var proto = protoMan.Index(protoKey);
-                Assert.That(proto.TryGetComponent<DeviceLinkSinkComponent>(out var protoSinkComp, compFact));
+                Assert.That(proto.TryComp<DeviceLinkSinkComponent>(out var protoSinkComp, compFact));
 
                 foreach (var port in protoSinkComp!.Ports)
                 {
                     // Create a map for each entity/port combo so they can't interfere
                     mapSys.CreateMap(out var mapId);
-                    var grid = mapMan.CreateGridEntity(mapId);
+                    var grid = mapSys.CreateGridEntity(mapId);
                     mapSys.SetTile(grid.Owner, grid.Comp, Vector2i.Zero, new Tile(1));
                     var coord = new EntityCoordinates(grid.Owner, 0, 0);
 
@@ -77,7 +77,5 @@ public sealed class DeviceLinkingTest
                 }
             }
         });
-
-        await pair.CleanReturnAsync();
     }
 }
