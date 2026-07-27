@@ -177,6 +177,7 @@
       components:
       - type: Skill
         group: ALL
+      - type: CircleDeacon
       - type: ObeliskActivateAbility
       - type: IntrinsicRadioTransmitter
         channels:
@@ -260,6 +261,7 @@
       components:
       - type: Skill
         group: ALL
+      - type: CircleDeacon
       - type: ObeliskActivateAbility
       - type: IntrinsicRadioTransmitter
         channels:

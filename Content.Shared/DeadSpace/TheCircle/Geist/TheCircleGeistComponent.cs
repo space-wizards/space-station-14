@@ -119,6 +119,12 @@ public sealed partial class TheCircleGeistComponent : Component
     [ViewVariables]
     public TimeSpan? ModeSelectionExpires;
 
+    [ViewVariables]
+    public MapId LastMapId = MapId.Nullspace;
+
+    [ViewVariables]
+    public bool StationArrivalAnnounced;
+
     [AutoNetworkedField, ViewVariables]
     public TimeSpan EscapeReadyAt;
 
@@ -158,3 +164,6 @@ public sealed class SelectGeistInvisibilityModeEvent(NetEntity geist, GeistInvis
     public NetEntity Geist = geist;
     public GeistInvisibilityMode Mode = mode;
 }
+
+[Serializable, NetSerializable]
+public sealed class GeistStationArrivalEvent : EntityEventArgs;

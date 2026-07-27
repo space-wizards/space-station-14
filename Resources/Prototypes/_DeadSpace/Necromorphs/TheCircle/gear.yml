@@ -278,9 +278,9 @@
     - NuclearOperative
 
 - type: entity
-  parent: [ SyndicateIDCard, BaseSyndicateContraband ]
+  parent: UnitologyIDCard
   id: UnitologyGeistIDCard
-  name: ID-карта Гейста
+  name: ID-карта
   categories: [ HideSpawnMenu ]
   components:
   - type: IdCard
@@ -290,13 +290,6 @@
     - Maintenance
     - SyndicateAgent
     - NuclearOperative
-  - type: Sprite
-    sprite: _DeadSpace/Necromorfs/TheCircle/Mics/etc/id.rsi
-    layers:
-    - state: circle
-  - type: Tag
-    tags:
-    - DoorBumpOpener
 
 - type: jobIcon
   parent: JobIcon
@@ -588,6 +581,7 @@
         amount: 4
       - id: TripwireStack
       - id: PinpointerNecroobelisk
+      - id: TheCircleRemoteCarController
 
 ## Мантия штурмовика
 - type: entity

@@ -102,6 +102,17 @@
 
 - type: entity
   parent: WeaponCaseHeavy
+  id: WeaponCaseHeavyFilledKS23
+  suffix: КС23
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponShotgunKS23
+      - id: BoxShotgun22MM
+        amount: 3
+
+- type: entity
+  parent: WeaponCaseHeavy
   id: WeaponCaseHeavyFilledAmmo
   suffix: Патроны, Круг
   components:

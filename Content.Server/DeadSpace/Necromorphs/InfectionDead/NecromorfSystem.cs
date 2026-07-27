@@ -256,6 +256,9 @@ public sealed partial class NecromorfSystem : SharedInfectionDeadSystem
         if (_mobThreshold.TryGetThresholdForState(uid, MobState.Dead, out var deadThreshold))
             _mobThreshold.SetMobStateThreshold(uid, deadThreshold.Value * component.StrainData.HpMulty, MobState.Dead);
 
+        if (_mobThreshold.TryGetThresholdForState(uid, MobState.PreCritical, out var preCritThreshold))
+            _mobThreshold.SetMobStateThreshold(uid, preCritThreshold.Value * component.StrainData.HpMulty, MobState.PreCritical);
+
         if (_mobThreshold.TryGetThresholdForState(uid, MobState.Critical, out var critThreshold))
             _mobThreshold.SetMobStateThreshold(uid, critThreshold.Value * component.StrainData.HpMulty, MobState.Critical);
 

@@ -14,7 +14,7 @@ public sealed class BlinkBloodTrailOverlay : Overlay
     private readonly List<ActiveTrail> _active = new();
     private readonly List<TrailPoint> _points = new();
 
-    public override OverlaySpace Space => OverlaySpace.WorldSpace;
+    public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
 
     public void Start(EntityUid user, TimeSpan duration)
     {

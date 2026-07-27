@@ -35,6 +35,14 @@ public sealed partial class MeleeThrowOnHitComponent : Component
     [DataField, AutoNetworkedField]
     public TimeSpan? StunTime;
 
+    // DS14-start
+    /// <summary>
+    /// Whether the target should keep the items in their hands when stunned.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool KeepItemsInHands;
+    // DS14-end
+
     /// <summary>
     /// Should this also work on a throw-hit?
     /// </summary>

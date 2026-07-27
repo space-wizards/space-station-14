@@ -1,14 +1,17 @@
 // Мёртвый Космос, Licensed under custom terms with restrictions on public hosting and commercial use, full text: https://raw.githubusercontent.com/dead-space-server/space-station-14-fobos/master/LICENSE.TXT
 
 using Content.Server.Stealth;
+using Content.Server.Station.Systems;
 using Content.Shared.Actions;
 using Content.Shared.CombatMode.Pacification;
 using Content.Shared.DeadSpace.Carrying;
 using Content.Shared.DeadSpace.TheCircle.Geist;
+using Content.Shared.Ghost;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Physics;
 using Content.Shared.Stealth.Components;
 using Content.Shared.Stunnable;
+using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
@@ -26,6 +29,7 @@ public sealed class TheCircleGeistSystem : EntitySystem
     [Dependency] private readonly StealthSystem _stealth = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
@@ -41,6 +45,7 @@ public sealed class TheCircleGeistSystem : EntitySystem
     private void OnMapInit(Entity<TheCircleGeistComponent> ent, ref MapInitEvent args)
     {
         _actions.AddAction(ent.Owner, ref ent.Comp.InvisibilityActionEntity, ent.Comp.InvisibilityAction, ent.Owner);
+        ent.Comp.LastMapId = Transform(ent).MapID;
     }
 
     private void OnShutdown(Entity<TheCircleGeistComponent> ent, ref ComponentShutdown args)
@@ -132,6 +137,8 @@ public sealed class TheCircleGeistSystem : EntitySystem
         var query = EntityQueryEnumerator<TheCircleGeistComponent, PhysicsComponent>();
         while (query.MoveNext(out var uid, out var component, out var physics))
         {
+            AnnounceStationArrival((uid, component));
+
             if (component.ActiveMode == GeistInvisibilityMode.Phase)
                 UpdatePhaseCollision((uid, component));
 
@@ -173,6 +180,24 @@ public sealed class TheCircleGeistSystem : EntitySystem
             if (component.EffectEnds != null && _timing.CurTime >= component.EffectEnds)
                 EndEffect((uid, component), true);
         }
+    }
+
+    private void AnnounceStationArrival(Entity<TheCircleGeistComponent> ent)
+    {
+        var mapId = Transform(ent).MapID;
+        if (mapId == ent.Comp.LastMapId)
+            return;
+
+        ent.Comp.LastMapId = mapId;
+        if (ent.Comp.StationArrivalAnnounced ||
+            mapId == MapId.Nullspace ||
+            _station.GetStationInMap(mapId) == null)
+            return;
+
+        ent.Comp.StationArrivalAnnounced = true;
+        var stationSector = Filter.BroadcastMap(mapId)
+            .RemoveWhereAttachedEntity(HasComp<GhostComponent>);
+        RaiseNetworkEvent(new GeistStationArrivalEvent(), stationSector);
     }
 
     private void SetVisibility(EntityUid uid, float value)

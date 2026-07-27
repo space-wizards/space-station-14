@@ -4,6 +4,10 @@ geist-invisibility-mode-stationary = Засада: вы стоите беско�
 
 geist-invisibility-mode-cooldown = Перезарядка: { $seconds } сек.
 
+geist-station-arrival-1 = Стало холодно...
+geist-station-arrival-2 = Руки начинают дрожать...
+geist-station-arrival-3 = Кожа начинает зудеть...
+
 geist-lethal-strike-armed = Вы готовы нанести смертельный удар.
 geist-lethal-strike-already-armed = Смертельный удар уже подготовлен.
 geist-lethal-strike-cooldown = Клинок восстановится через {$seconds} сек.

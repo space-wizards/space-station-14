@@ -532,7 +532,6 @@
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitUnitologyDreadnought
   - type: DreadnoughtLastStand
-    speedModifier: 4.3333335
   - type: Tag
     tags:
     - Hardsuit

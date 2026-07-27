@@ -971,8 +971,8 @@
 - type: entity
   id: ShieldCursedVANT
   parent: [ BaseShield, BaseMajorContraband ]
-  name: Проклятый ВАНТ
-  description: Тяжёлый штурмовой щит Круга, способный выдержать чудовищное количество урона.
+  name: проклятый ВАНТ
+  description: Тяжёлый штурмовой щит Круга, что покрыт некро волокнами.
   components:
   - type: Sprite
     sprite: _DeadSpace/Necromorfs/TheCircle/Weapon/vant/vant.rsi
@@ -983,6 +983,21 @@
   - type: ExclusiveHandUse
     blockedItems:
     - WeaponLightMachineGunRPL20
+  - type: CursedVant
+    speedModifier: 0.5
+  - type: MeleeWeapon
+    attackRate: 0.2
+    soundHit:
+      collection: MetalBreak
+    damage:
+      types:
+        Blunt: 20
+    angle: 0
+  - type: MeleeThrowOnHit
+    distance: 1
+    speed: 10
+    stunTime: 0.1
+    keepItemsInHands: true
   - type: Clothing
     sprite: _DeadSpace/Necromorfs/TheCircle/Weapon/vant/vant.rsi
     quickEquip: false

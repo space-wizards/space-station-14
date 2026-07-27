@@ -280,7 +280,7 @@ public sealed class ContinuousFlamethrowerSystem : EntitySystem
     private void ApplyFlame(EntityUid user, EntityUid weapon, List<Vector2> points)
     {
         var hit = new HashSet<EntityUid>();
-        var damage = new DamageSpecifier { DamageDict = { ["Heat"] = FixedPoint2.New(1f) } };
+        var damage = new DamageSpecifier { DamageDict = { ["Heat"] = FixedPoint2.New(3f) } };
 
         foreach (var point in points)
         {

@@ -144,14 +144,14 @@
   - UniPhoneUplinkWeaponry
   conditions:
   - !type:ListingLimitedStockCondition
-    stock: 4
+    stock: 3
 
 - type: listing
   id: UniPhoneUplinkWeaponKS23
   name: КС-23
   description: Крупнокалиберный четырёхзарядный дробовик под патроны 22MM.
   icon: { sprite: _DeadSpace/Necromorfs/TheCircle/Weapon/weapons/ks23/pump.rsi, state: icon }
-  productEntity: WeaponShotgunKS23
+  productEntity: WeaponCaseHeavyFilledKS23
   cost:
     Telecrystal: 15
   categories:
@@ -298,7 +298,6 @@
   id: UniPhoneUplinkAmmoKS23
   name: коробка патронов 22MM
   description: Коробка дробовых патронов для КС-23.
-  icon: { sprite: Objects/Weapons/Guns/Ammunition/Boxes/shotgun.rsi, state: practice }
   productEntity: BoxShotgun22MM
   cost:
     Telecrystal: 1
@@ -752,6 +751,15 @@
   name: взрывчатка C4
   productEntity: C4
   cost:
+    Telecrystal: 1
+  categories:
+  - UniPhoneGeistUplinkTraps
+
+- type: listing
+  id: UniPhoneGeistUplinkTripwireExplosiveGrenade
+  name: растяжечная граната
+  productEntity: TripwireExplosiveGrenade
+  cost:
     Telecrystal: 2
   categories:
   - UniPhoneGeistUplinkTraps
@@ -761,7 +769,7 @@
   name: капкан
   productEntity: BearTrap
   cost:
-    Telecrystal: 4
+    Telecrystal: 3
   categories:
   - UniPhoneGeistUplinkTraps
 
@@ -769,7 +777,6 @@
   id: UniPhoneGeistUplinkAmmoKS23
   name: коробка патронов 22MM
   description: Коробка дробовых патронов для КС-23.
-  icon: { sprite: Objects/Weapons/Guns/Ammunition/Boxes/shotgun.rsi, state: practice }
   productEntity: BoxShotgun22MM
   cost:
     Telecrystal: 1

@@ -173,6 +173,9 @@ public sealed partial class NecromorfSystem
         if (_mobThreshold.TryGetThresholdForState(target, MobState.Dead, out var deadThreshold))
             _mobThreshold.SetMobStateThreshold(target, deadThreshold.Value * necromorf.ThresholdMultiply, MobState.Dead);
 
+        if (_mobThreshold.TryGetThresholdForState(target, MobState.PreCritical, out var preCritThreshold))
+            _mobThreshold.SetMobStateThreshold(target, preCritThreshold.Value * necromorf.ThresholdMultiply, MobState.PreCritical);
+
         if (_mobThreshold.TryGetThresholdForState(target, MobState.Critical, out var critThreshold))
             _mobThreshold.SetMobStateThreshold(target, critThreshold.Value * necromorf.ThresholdMultiply, MobState.Critical);
 

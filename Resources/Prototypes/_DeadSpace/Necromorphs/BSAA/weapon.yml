@@ -23,16 +23,20 @@
     - type: AutoRecharge
       rechargeDuration: 30
     - type: Blocking
+      passiveBlockFraction: 0.7
+      activeBlockFraction: 0.7
       passiveBlockModifier:
         coefficients:
-          Blunt: 0.4
-          Piercing: 0.3
+          Blunt: 0.7
+          Slash: 0.7
+          Piercing: 0.7
+          Heat: 0.7
       activeBlockModifier:
         coefficients:
-          Blunt: 0.4
-          Piercing: 0.3
-        flatReductions:
-          Piercing: 1
+          Blunt: 0.8
+          Slash: 0.8
+          Piercing: 0.8
+          Heat: 0.8
     - type: ShieldDash
       damage: 
         types:

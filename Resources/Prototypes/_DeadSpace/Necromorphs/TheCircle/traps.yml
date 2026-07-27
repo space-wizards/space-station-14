@@ -29,6 +29,9 @@
     port: Pressed
     immediateTriggerKey: timer
     disarmTime: 10
+    attachTime: 1
+    attachedExplosiveFadeTime: 10
+    detachExplosiveTime: 30
   - type: TrapIgnore
     factions:
     - Necromorfs
@@ -90,6 +93,29 @@
   components:
   - type: Stack
     count: 1
+
+- type: entity
+  parent: GrenadeBase
+  id: TripwireExplosiveGrenade
+  name: разрывной заряд для растяжки
+  description: Разрывной заряд без ручного взрывателя. Срабатывает только после подключения к растяжке.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/grenade.rsi
+    layers:
+    - state: icon
+      map: ["enum.TriggerVisualLayers.Base"]
+  - type: TimerTrigger
+    examinable: false
+  - type: ExplodeOnTrigger
+    keysIn:
+    - timer
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 10
+    intensitySlope: 3
+    totalIntensity: 120
+    canCreateVacuum: false
 
 # Triggers constructed by the Circle engineer RCD.
 - type: entity

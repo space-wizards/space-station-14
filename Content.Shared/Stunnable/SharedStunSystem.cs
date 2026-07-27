@@ -199,12 +199,12 @@ public abstract partial class SharedStunSystem : EntitySystem
         return true;
     }
 
-    private void OnStunnedSuccessfully(EntityUid uid, TimeSpan? duration)
+    private void OnStunnedSuccessfully(EntityUid uid, TimeSpan? duration, bool drop = true) // DS14
     {
         var ev = new StunnedEvent(); // todo: rename event or change how it is raised - this event is raised each time duration of stun was externally changed
         RaiseLocalEvent(uid, ref ev);
 
-        if (!HasComp<WeaponRetentionComponent>(uid))
+        if (drop && !HasComp<WeaponRetentionComponent>(uid)) // DS14
         {
             var evDropHands = new DropHandItemsEvent();
             RaiseLocalEvent(uid, ref evDropHands);
@@ -354,25 +354,25 @@ public abstract partial class SharedStunSystem : EntitySystem
         }
     }
 
-    public bool TryAddParalyzeDuration(EntityUid uid, TimeSpan? duration)
+    public bool TryAddParalyzeDuration(EntityUid uid, TimeSpan? duration, bool drop = true) // DS14
     {
         if (HasComp<StunImmuneComponent>(uid))
             return false;
 
         if (duration == null)
-            return TryUpdateParalyzeDuration(uid, duration);
+            return TryUpdateParalyzeDuration(uid, duration, drop); // DS14
 
         if (!_status.TryAddStatusEffectDuration(uid, StunId, duration.Value))
             return false;
 
         // We can't exit knockdown when we're stunned, so this prevents knockdown lasting longer than the stun.
-        Knockdown(uid, null, false, true, true);
-        OnStunnedSuccessfully(uid, duration);
+        Knockdown(uid, null, false, true, drop); // DS14
+        OnStunnedSuccessfully(uid, duration, drop); // DS14
 
         return true;
     }
 
-    public bool TryUpdateParalyzeDuration(EntityUid uid, TimeSpan? duration)
+    public bool TryUpdateParalyzeDuration(EntityUid uid, TimeSpan? duration, bool drop = true) // DS14
     {
         if (HasComp<StunImmuneComponent>(uid))
             return false;
@@ -381,8 +381,8 @@ public abstract partial class SharedStunSystem : EntitySystem
             return false;
 
         // We can't exit knockdown when we're stunned, so this prevents knockdown lasting longer than the stun.
-        Knockdown(uid, null, false, true, true);
-        OnStunnedSuccessfully(uid, duration);
+        Knockdown(uid, null, false, true, drop); // DS14
+        OnStunnedSuccessfully(uid, duration, drop); // DS14
 
         return true;
     }
