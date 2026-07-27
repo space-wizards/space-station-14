@@ -1,13 +1,10 @@
-using Content.Shared.Examine;
-using Content.Shared.Mobs;
 using Content.Shared.Stealth;
 using Content.Shared.Stealth.Components;
-using Robust.Shared.GameStates;
 using Robust.Shared.Light;
 
 namespace Content.Server.Stealth;
 
-public sealed class StealthSystem : SharedStealthSystem
+public sealed partial class StealthSystem : SharedStealthSystem
 {
     [Dependency] private LightLevelSystem _lightLevelSystem = default!;
 
