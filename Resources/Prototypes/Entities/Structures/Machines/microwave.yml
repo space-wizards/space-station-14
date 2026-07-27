@@ -1,6 +1,6 @@
 - type: entity
   id: KitchenMicrowave
-  parent: [ BaseMachinePowered, SmallConstructibleMachine, BaseSmallConstructibleMachineDestructible ]
+  parent: [ BaseMachinePowered, SmallConstructibleMachine ]
   name: microwave
   description: It's magic.
   components:
@@ -80,11 +80,16 @@
     thresholds:
     - trigger: # Excess damage, don't spawn entities
         !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
         damage: 100
       behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalGlassBreak
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
   - type: Explosive
     explosionType: Default
     maxIntensity: 10

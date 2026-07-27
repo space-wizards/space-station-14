@@ -7,15 +7,19 @@
     sprite: Structures/Wallmounts/posters.rsi
   - type: Damageable
     damageModifierSet: Card
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 5
+        damage: 15
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Effects/poster_broken.ogg
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
       - !type:SpawnEntitiesBehavior
         spawn:
           PosterBroken:
@@ -47,6 +51,8 @@
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Effects/poster_broken.ogg
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: Construction
     graph: PosterGraph
     node: tornPoster

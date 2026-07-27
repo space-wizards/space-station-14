@@ -1,7 +1,7 @@
 - type: entity
-  abstract: true
-  parent: [ BaseItem, BaseItemDestructible ]
+  parent: BaseItem
   id: BaseVendingMachineRestock
+  abstract: true
   name: vending machine restock box
   description: A box for restocking vending machines with corporate goodies.
   components:
@@ -24,16 +24,20 @@
     size: Normal
   - type: Damageable
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 50
+        damage: 20
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
       - !type:DumpRestockInventory
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   parent: BaseVendingMachineRestock

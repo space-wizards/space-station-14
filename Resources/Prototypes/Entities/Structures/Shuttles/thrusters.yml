@@ -40,6 +40,21 @@
   - type: ApcPowerReceiver
     powerLoad: 1500
   - type: ExtensionCableReceiver
+  - type: Damageable
+    damageModifierSet: Electronic
+  - type: Injurable
+    damageContainer: StructuralInorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300  # Changed 100->300 because impact damage is real
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
   - type: StaticPrice
     price: 300
   - type: GuideHelp
@@ -53,15 +68,11 @@
   components:
   - type: Machine
     board: ThrusterMachineCircuitboard
-  - type: Damageable
-    damageModifierSet: Electronic
-  - type: Injurable
-    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 300  # Changed 100->300 because impact damage is real
+        damage: 300
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
@@ -103,7 +114,7 @@
 - type: entity
   id: ThrusterLarge
   name: large thruster
-  parent: BaseThruster
+  parent: [ BaseThruster]
   placement:
     mode: AlignTileAny
   components:
@@ -195,7 +206,7 @@
 
 - type: entity
   id: Gyroscope
-  parent: [ BaseThruster, ConstructibleMachine, BaseConstructibleMachineDestructible ]
+  parent: [ BaseThruster, ConstructibleMachine ]
   name: gyroscope
   description: Increases the shuttle's potential angular rotation.
   components:
@@ -236,11 +247,15 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 175
+        damage: 100
       behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
   - type: Damageable
     damageModifierSet: Electronic
   - type: Injurable

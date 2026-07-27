@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible ]
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
   id: Holopad
   name: holopad
   description: "A floor-mounted device for projecting holographic images."
@@ -94,11 +94,15 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 175
+        damage: 100
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          collection: MetalGlassBreak
+          collection: MetalBreak
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
 
 - type: entity
   name: long-range holopad

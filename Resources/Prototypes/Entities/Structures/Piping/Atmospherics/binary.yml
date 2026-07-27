@@ -496,7 +496,7 @@
       - AirVent
 
 - type: entity
-  parent: [ BaseMachine, ConstructibleMachine, BaseConstructibleMachineDestructible ]
+  parent: [ BaseMachine, ConstructibleMachine ]
   id: GasRecycler
   name: gas recycler
   description: Recycles carbon dioxide and nitrous oxide. Heater and compressor not included.
@@ -553,11 +553,15 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 175
+        damage: 100
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: Machine
     board: GasRecyclerMachineCircuitboard
   - type: AtmosMonitoringConsoleDevice

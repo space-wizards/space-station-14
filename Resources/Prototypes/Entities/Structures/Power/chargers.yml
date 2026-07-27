@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible]
+  parent: [BaseMachinePowered, ConstructibleMachine]
   id: BaseRecharger
   placement:
     mode: SnapgridCenter
@@ -21,9 +21,11 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 175
+        damage: 40
       behaviors:
       - !type:EmptyAllContainersBehaviour
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak

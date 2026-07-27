@@ -1,6 +1,6 @@
 - type: entity
   id: Wristwatch
-  parent: [ BaseItem, BaseItemDestructible ]
+  parent: BaseItem
   name: wristwatch
   description: A cheap watch for telling time. How much did you waste playing Space Station 14?
   components:
@@ -27,9 +27,15 @@
   - type: Destructible
     thresholds:
     - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
         !type:DamageGroupTrigger
         damageGroup: Brute
-        damage: 5
+        damage: 25
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Breakage" ]

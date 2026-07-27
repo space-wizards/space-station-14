@@ -1,6 +1,6 @@
 - type: entity
   id: BaseTabletopChemicalMachine
-  parent: [ BaseMachinePowered, SmallConstructibleMachine, BaseSmallConstructibleMachineDestructible ]
+  parent: [ BaseMachinePowered, SmallConstructibleMachine ]
   abstract: true
   components:
   - type: Transform
@@ -36,14 +36,6 @@
       mixer: !type:ContainerSlot
       machine_board: !type:Container
       machine_parts: !type:Container
-  - type: Destructible
-    thresholds:
-    - trigger: !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalGlassBreak
 
 - type: entity
   id: MachineElectrolysisUnit
