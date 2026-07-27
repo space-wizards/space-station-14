@@ -56,14 +56,14 @@ public sealed class NameIdentifierTest : GameTest
             group: GenericNumber
 
         - type: localizedDataset
-          id: Test
+          id: NameIdentifierTest
           values:
-            prefix: test-dataset-
+            prefix: name-identifier-test-
             count: 1
 
         - type: nameIdentifierGroup
           id: Localized
-          identifierDataset: Test
+          identifierDataset: NameIdentifierTest
 
         - type: entity
           name: {LocTestEnt}
@@ -225,7 +225,7 @@ public sealed class NameIdentifierTest : GameTest
             var single = SEntMan.SpawnEntity(LocTestEnt, MapCoordinates.Nullspace);
             Assert.That(
                 SEntMan.GetComponent<MetaDataComponent>(single).EntityName,
-                Is.EqualTo($"{LocTestEnt} test-dataset-1"),
+                Is.EqualTo($"{LocTestEnt} TestValue"),
                 "Did not create a valid localized name."
                 );
         });
