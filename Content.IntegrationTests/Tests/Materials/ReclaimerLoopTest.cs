@@ -2,13 +2,9 @@ using Content.IntegrationTests.Fixtures.Attributes;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.IntegrationTests.Utility;
 using Content.Server.Materials;
-using Content.Server.Spawners.Components;
 using Content.Shared.Materials;
-using Content.Shared.Sprite;
-using Content.Shared.Whitelist;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
-using System.Collections.Generic;
 
 namespace Content.IntegrationTests.Tests.Materials;
 
@@ -26,7 +22,6 @@ public sealed class ReclaimerLoopTest : InteractionTest
     private static readonly string[] Reclaimers = GameDataScrounger.EntitiesWithComponent("MaterialReclaimer");
 
     [SidedDependency(Side.Server)] private readonly SharedMaterialReclaimerSystem _materialReclaimerSystem = null!;
-    [SidedDependency(Side.Server)] private readonly EntityWhitelistSystem _entityWhitelistSystem = null!;
 
     [Test]
     [TestCaseSource(nameof(Reclaimers))]
