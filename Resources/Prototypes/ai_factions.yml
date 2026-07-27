@@ -85,6 +85,8 @@
   - Xeno
   - PetsNT
   - Zombie
+  - Ninja # DS14
+  - Revenant # DS14
   - Dragon
   - AllHostile
   - Wizard
@@ -109,6 +111,51 @@
   - Necromorfs # DS14
   - SpiderTerror # DS14
 # DS14-agents-faction-end
+
+## ds-14-start
+- type: npcFaction
+  id: Revenant
+  hostile:
+  - Revolutionary
+  - NanoTrasen
+  - SimpleNeutral
+  - SimpleHostile
+  - Syndicate
+  - Passive
+  - PetsNT
+  - Zombie
+  - Xeno
+  - AllHostile
+  - Ninja
+  - Wizard
+  - Dragon
+  - Xenoborg
+  - CentralCommand
+  - SpiderTerror
+  - Blob
+  - SyndicateAgent
+
+- type: npcFaction
+  id: Ninja
+  hostile:
+  - Revolutionary
+  - NanoTrasen
+  - SimpleNeutral
+  - SimpleHostile
+  - Syndicate
+  - Passive
+  - PetsNT
+  - Zombie
+  - Xeno
+  - AllHostile
+  - Wizard
+  - Dragon
+  - Xenoborg
+  - CentralCommand
+  - SpiderTerror
+  - Blob
+  - SyndicateAgent
+## ds-14-end
 
 - type: npcFaction
   id: Xeno

@@ -96,7 +96,6 @@
     - GeneralLanguage
     - DwarfLanguage
     - DogLanguage
-    - BlobLanguage
     - SlimeLanguage
     - ArachnidLanguage
     - DionaLanguage
@@ -140,7 +139,6 @@
     - GeneralLanguage
     - DwarfLanguage
     - DogLanguage
-    - BlobLanguage
     - SlimeLanguage
     - ArachnidLanguage
     - DionaLanguage

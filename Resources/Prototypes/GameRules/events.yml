@@ -317,7 +317,7 @@
       - type: SpaceNinja
       - type: NpcFactionMember
         factions:
-        - Syndicate
+        - Ninja ## ds-14
       - type: AutoImplant
         implants:
         - DeathAcidifierImplant

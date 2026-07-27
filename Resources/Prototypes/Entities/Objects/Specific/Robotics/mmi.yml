@@ -90,6 +90,27 @@
         map: ["base"]
     - type: Input
       context: human
+    ## ds-14-start
+    - type: Language
+      selectedLanguage: GeneralLanguage
+      knownLanguages:
+      - GeneralLanguage
+      - DwarfLanguage
+      - DogLanguage
+      - SlimeLanguage
+      - ArachnidLanguage
+      - DionaLanguage
+      - MothLanguage
+      - ReptilianLanguage
+      - DemonLanguage
+      - CatLanguage
+      - MachineLanguage
+      - PlafLanguage
+      - VulpkaninLanguage
+      - XenomorphLanguage
+      - MonkeyLanguage
+      - VoxLanguage
+    ## ds-14-end
     - type: ToggleableGhostRole
       examineTextMindPresent: positronic-brain-installed
       examineTextMindSearching: positronic-brain-still-searching

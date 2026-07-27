@@ -290,6 +290,11 @@
         Heat: 3 # DS14-value
   - type: BlobTile
     tileType: Normal
+  ## ds-14-start
+  - type: NpcFactionMember
+    factions:
+      - Blob
+  ## ds-14-end
   - type: Destructible
     thresholds:
       - trigger:
@@ -319,6 +324,11 @@
     damage:
       types:
         Heat: 3 # DS14-value
+  ## ds-14-start
+  - type: NpcFactionMember
+    factions:
+      - Blob
+  ## ds-14-end
   - type: Destructible
     thresholds:
     - trigger:
