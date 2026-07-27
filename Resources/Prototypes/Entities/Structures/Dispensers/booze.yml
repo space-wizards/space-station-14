@@ -15,6 +15,7 @@
     whitelist:
       tags:
       - DrinkBottle
+      - Alcohol
   - type: Transform
     noRot: false
   - type: Machine

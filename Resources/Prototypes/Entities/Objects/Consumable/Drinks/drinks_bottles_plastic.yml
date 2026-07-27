@@ -165,6 +165,22 @@
 
 - type: entity
   parent: CustomDrinkJug
+  id: DrinkJuiceLemonJug
+  name: lemon juice jug
+  suffix: For Drinks, Full
+  description: The very definiton of sour.
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: JuiceLemon
+        Quantity: 240
+  - type: Label
+    localizedLabel: reagent-name-juice-lemon
+  # TODO new sprite
+
+- type: entity
+  parent: CustomDrinkJug
   id: DrinkLemonLimeJug
   name: Smite jug
   description: A dual citrus sensation.
@@ -191,6 +207,22 @@
         Quantity: 240
   - type: Label
     localizedLabel: reagent-name-mead
+  # TODO new sprite
+
+- type: entity
+  parent: CustomDrinkJug
+  id: DrinkMilkJug
+  name: milk jug
+  suffix: For Drinks, Full
+  description: Two cartons in one!
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Milk
+        Quantity: 240
+  - type: Label
+    localizedLabel: reagent-name-milk
   # TODO new sprite
 
 - type: entity
@@ -285,6 +317,22 @@
 
 - type: entity
   parent: CustomDrinkJug
+  id: DrinkJuicePineappleJug
+  name: pineapple juice jug
+  suffix: For Drinks, Full
+  description: The very essence of a vacation.
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: JuicePineapple
+        Quantity: 240
+  - type: Label
+    localizedLabel: reagent-name-juice-pineapple
+  # TODO new sprite
+
+- type: entity
+  parent: CustomDrinkJug
   id: DrinkDrGibbJug
   name: Dr. Gibb jug
   description: 42 different flavours... in a jug!
@@ -311,6 +359,38 @@
         Quantity: 240
   - type: Label
     localizedLabel: reagent-name-root-beer
+  # TODO new sprite
+
+- type: entity
+  parent: CustomDrinkJug
+  id: DrinkSolDryJug
+  name: sol dry jug
+  suffix: For Drinks, Full
+  description: Great for treating a hangover, no wonder the bar has a jug of it.
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: SolDry
+        Quantity: 240
+  - type: Label
+    localizedLabel: reagent-name-sol-dry
+  # TODO new sprite
+
+- type: entity
+  parent: CustomDrinkJug
+  id: DrinkJuiceTomatoJug
+  name: tomato juice jug
+  suffix: For Drinks, Full
+  description: Tastes like a debatably categorized plant.
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: JuiceTomato
+        Quantity: 240
+  - type: Label
+    localizedLabel: reagent-name-juice-tomato
   # TODO new sprite
 
 - type: entity

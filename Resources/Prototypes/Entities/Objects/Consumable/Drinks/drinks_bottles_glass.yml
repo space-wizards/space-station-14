@@ -87,6 +87,9 @@
     localizedLabel: reagent-name-absinthe
   - type: Sprite
     sprite: Objects/Consumable/Drinks/absinthebottle.rsi
+  - type: Tag
+    tags:
+    - Alcohol
 
 - type: entity
   parent: DrinkBottleAbsinthe
@@ -98,6 +101,9 @@
       reagents:
       - ReagentId: Absinthe
         Quantity: 120
+  - type: Tag
+    tags:
+    - Alcohol
 
 - type: entity
   parent: [DrinkVisualsAllFilled, DrinkBottleGlassBase]
@@ -116,6 +122,10 @@
       map: ["enum.SolutionContainerLayers.Fill"]
   - type: SolutionContainerVisuals
     maxFillLevels: 6
+  - type: Tag
+    tags:
+    - Alcohol
+
 
 - type: entity
   parent: DrinkBottleAlcoClear
@@ -127,6 +137,9 @@
       reagents:
       - ReagentId: BlueCuracao
         Quantity: 120
+  - type: Tag
+    tags:
+    - Alcohol
 
 - type: entity
   parent: [DrinkVisualsOpenable, DrinkBottleGlassBaseFull]
@@ -143,6 +156,9 @@
     localizedLabel: reagent-name-nothing
   - type: Sprite
     sprite: Objects/Consumable/Drinks/bottleofnothing.rsi
+  - type: Tag
+    tags:
+    - Alcohol
 
 - type: entity
   parent: [DrinkVisualsOpenable, DrinkBottleGlassBaseFull]
@@ -163,6 +179,9 @@
     closeable: false # Champagne corks are fat. Not worth the effort.
   - type: Sealable
     examineTextUnsealed: "sealable-component-on-examine-is-unsealed-no-cork" # tell the player why it can't close
+  - type: Tag
+    tags:
+    - Alcohol
 
 - type: entity
   parent: [DrinkVisualsAllFilled, DrinkBottleGlassBase]
@@ -174,6 +193,9 @@
     localizedLabel: reagent-name-cognac
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cognacbottle.rsi
+  - type: Tag
+    tags:
+    - Alcohol
 
 - type: entity
   parent: DrinkBottleCognac
@@ -185,6 +207,9 @@
       reagents:
       - ReagentId: Cognac
         Quantity: 120
+  - type: Tag
+    tags:
+    - Alcohol
 
 - type: entity
   parent: [DrinkVisualsAllFilled, DrinkBottleGlassBaseFull]
@@ -219,6 +244,9 @@
     localizedLabel: reagent-name-gin
   - type: Sprite
     sprite: Objects/Consumable/Drinks/ginbottle.rsi
+  - type: Tag
+    tags:
+    - Alcohol
 
 - type: entity
   parent: DrinkBottleGin
@@ -230,6 +258,9 @@
       reagents:
       - ReagentId: Gin
         Quantity: 120
+  - type: Tag
+    tags:
+    - Alcohol
 
 - type: entity
   parent: [DrinkVisualsAllFilled, DrinkBottleGlassBase]
@@ -241,6 +272,9 @@
     localizedLabel: reagent-name-gildlager
   - type: Sprite
     sprite: Objects/Consumable/Drinks/gildlagerbottle.rsi
+  - type: Tag
+    tags:
+    - Alcohol
 
 - type: entity
   parent: DrinkBottleGildlager
@@ -252,6 +286,9 @@
       reagents:
       - ReagentId: Gildlager
         Quantity: 120
+  - type: Tag
+    tags:
+    - Alcohol
 
 - type: entity
   parent: [ DrinkVisualsOpenable, DrinkBottleGlassBase ]
@@ -263,6 +300,9 @@
     localizedLabel: reagent-name-coffeeliqueur
   - type: Sprite
     sprite: Objects/Consumable/Drinks/coffeeliqueurbottle.rsi
+  - type: Tag
+    tags:
+    - Alcohol
 
 - type: entity
   parent: DrinkBottleCoffeeLiqueur
@@ -274,6 +314,9 @@
       reagents:
       - ReagentId: CoffeeLiqueur
         Quantity: 120
+  - type: Tag
+    tags:
+    - Alcohol
 
 - type: entity
   parent: [DrinkVisualsAllFilled, DrinkBottleGlassBaseFull]
@@ -297,6 +340,9 @@
         map: ["enum.SolutionContainerLayers.Fill"]
   - type: SolutionContainerVisuals
     maxFillLevels: 6
+  - type: Tag
+    tags:
+    - Alcohol
 
 - type: entity
   parent: [DrinkVisualsAllFilled, DrinkBottleGlassBase]
@@ -308,6 +354,9 @@
     localizedLabel: reagent-name-patron
   - type: Sprite
     sprite: Objects/Consumable/Drinks/patronbottle.rsi
+  - type: Tag
+    tags:
+    - Alcohol
 
 - type: entity
   parent: DrinkBottlePatron
@@ -319,6 +368,9 @@
       reagents:
       - ReagentId: Patron
         Quantity: 120
+  - type: Tag
+    tags:
+    - Alcohol
 
 - type: entity
   parent: [DrinkVisualsOpenable, DrinkBottleGlassBase]
@@ -330,9 +382,10 @@
     sprite: Objects/Consumable/Drinks/pwinebottle.rsi
   - type: Tag
     tags:
-    - Wine
+    - Alcohol
     - DrinkBottle
     - Trash
+    - Wine
 
 - type: entity
   parent: DrinkBottlePoisonWine
@@ -347,8 +400,9 @@
         Quantity: 120
   - type: Tag
     tags:
-    - Wine
+    - Alcohol
     - DrinkBottle
+    - Wine
 
 - type: entity
   parent: [DrinkVisualsAllFilled, DrinkBottleGlassBase]
@@ -360,6 +414,9 @@
     localizedLabel: reagent-name-rum
   - type: Sprite
     sprite: Objects/Consumable/Drinks/rumbottle.rsi
+  - type: Tag
+    tags:
+    - Alcohol
 
 - type: entity
   parent: DrinkBottleRum
@@ -371,6 +428,9 @@
       reagents:
       - ReagentId: Rum
         Quantity: 120
+  - type: Tag
+    tags:
+    - Alcohol
 
 - type: entity
   parent: [DrinkVisualsAllFilled, DrinkBottleGlassBase]
@@ -382,6 +442,9 @@
     localizedLabel: reagent-name-tequila
   - type: Sprite
     sprite: Objects/Consumable/Drinks/tequillabottle.rsi
+  - type: Tag
+    tags:
+    - Alcohol
 
 - type: entity
   parent: DrinkBottleTequila
@@ -393,6 +456,9 @@
       reagents:
       - ReagentId: Tequila
         Quantity: 120
+  - type: Tag
+    tags:
+    - Alcohol
 
 - type: entity
   parent: [DrinkVisualsAllFilled, DrinkBottleGlassBase]
@@ -404,6 +470,9 @@
     localizedLabel: reagent-name-vermouth
   - type: Sprite
     sprite: Objects/Consumable/Drinks/vermouthbottle.rsi
+  - type: Tag
+    tags:
+    - Alcohol
 
 - type: entity
   parent: DrinkBottleVermouth
@@ -415,6 +484,9 @@
       reagents:
       - ReagentId: Vermouth
         Quantity: 120
+  - type: Tag
+    tags:
+    - Alcohol
 
 - type: entity
   parent: [DrinkVisualsAllFilled, DrinkBottleGlassBase]
@@ -426,6 +498,9 @@
     localizedLabel: reagent-name-vodka
   - type: Sprite
     sprite: Objects/Consumable/Drinks/vodkabottle.rsi
+  - type: Tag
+    tags:
+    - Alcohol
 
 - type: entity
   parent: DrinkBottleVodka
@@ -437,6 +512,9 @@
       reagents:
       - ReagentId: Vodka
         Quantity: 120
+  - type: Tag
+    tags:
+    - Alcohol
 
 - type: entity
   parent: [DrinkVisualsAllFilled, DrinkBottleGlassBase]
@@ -448,6 +526,9 @@
     localizedLabel: reagent-name-whiskey
   - type: Sprite
     sprite: Objects/Consumable/Drinks/whiskeybottle.rsi
+  - type: Tag
+    tags:
+    - Alcohol
 
 - type: entity
   parent: DrinkBottleWhiskey
@@ -459,6 +540,9 @@
       reagents:
       - ReagentId: Whiskey
         Quantity: 120
+  - type: Tag
+    tags:
+    - Alcohol
 
 - type: entity
   parent: [DrinkVisualsOpenable, DrinkBottleGlassBase]
@@ -472,9 +556,10 @@
     sprite: Objects/Consumable/Drinks/winebottle.rsi
   - type: Tag
     tags:
-    - Wine
+    - Alcohol
     - DrinkBottle
     - Trash
+    - Wine
 
 - type: entity
   parent: DrinkBottleWine
@@ -488,8 +573,9 @@
         Quantity: 120
   - type: Tag
     tags:
-    - Wine
+    - Alcohol
     - DrinkBottle
+    - Wine
 
 - type: entity
   name: nt cahors bottle
@@ -500,9 +586,10 @@
     sprite: Objects/Consumable/Drinks/ntcahors.rsi
   - type: Tag
     tags:
-    - Wine
+    - Alcohol
     - DrinkBottle
     - Trash
+    - Wine
 
 - type: entity
   name: nt cahors bottle
@@ -517,8 +604,9 @@
         Quantity: 120
   - type: Tag
     tags:
-    - Wine
+    - Alcohol
     - DrinkBottle
+    - Wine
 
 # Large bottles
 
@@ -543,6 +631,7 @@
     examineTextUnsealed: "sealable-component-on-examine-is-unsealed-crown-cap" # tell the player why it can't close
   - type: Tag
     tags:
+    - Alcohol
     - Beer
     - DrinkBottle
 
@@ -565,6 +654,9 @@
     closeable: false # sprite is just a beer bottle, but this should be removed when there's a more appropriate sprite
   - type: Sealable
     examineTextUnsealed: "sealable-component-on-examine-is-unsealed-crown-cap" # tell the player why it can't close
+  - type: Tag
+    tags:
+    - Alcohol
 
 
 # Small glass bottles
@@ -585,6 +677,7 @@
     examineTextUnsealed: "sealable-component-on-examine-is-unsealed-crown-cap" # tell the player why it can't close
   - type: Tag
     tags:
+    - Alcohol
     - Beer
 
 - type: entity
@@ -597,6 +690,9 @@
       reagents:
       - ReagentId: Beer
         Quantity: 60
+  - type: Tag
+    tags:
+    - Alcohol
 
 - type: entity
   parent: [DrinkVisualsAllFilled, DrinkBottleGlassSmallBase]
@@ -612,6 +708,9 @@
     closeable: false # can't put the cap back on
   - type: Sealable
     examineTextUnsealed: "sealable-component-on-examine-is-unsealed-crown-cap" # tell the player why it can't close
+  - type: Tag
+    tags:
+    - Alcohol
 
 - type: entity
   parent: DrinkBottleAle
@@ -623,6 +722,9 @@
       reagents:
       - ReagentId: Ale
         Quantity: 60
+  - type: Tag
+    tags:
+    - Alcohol
 
 - type: entity
   parent: [DrinkVisualsOpenable, DrinkBottleGlassSmallBaseFull]
@@ -639,3 +741,6 @@
     localizedLabel: reagent-name-sake
   - type: Sprite
     sprite: Objects/Consumable/Drinks/sakebottle.rsi
+  - type: Tag
+    tags:
+    - Alcohol
