@@ -27,7 +27,7 @@ public sealed class PreviewBubble : BaseBubble
         {
             StyleClasses = { "speechBox", "sayBox" },
             Children = { _label },
-            ModulateSelfOverride = Color.White.WithAlpha(ConfigManager.GetCVar(CCVars.SpeechBubbleBackgroundOpacity)),
+            ModulateSelfOverride = Color.White.WithAlpha(ConfigManager.GetCVar(CCVars.PreviewBubbleBackgroundOpacity)),
         };
 
         AddChild(_panel);
