@@ -1,113 +1,19 @@
 ﻿using System.Text;
 using Content.Server.Destructible;
-using Content.Server.PowerCell;
-using Content.Shared.Speech.Components;
-using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
-using Content.Shared.Speech;
+using Content.Shared.Speech.Components;
+using Content.Shared.Speech.EntitySystems;
+
 using Robust.Shared.Random;
 
 namespace Content.Server.Speech.EntitySystems;
 
-public sealed class DamagedSiliconAccentSystem : EntitySystem
+public sealed partial class DamagedSiliconAccentSystem : SharedDamagedSiliconAccentSystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly PowerCellSystem _powerCell = default!;
-    [Dependency] private readonly DestructibleSystem _destructibleSystem = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private DestructibleSystem _destructibleSystem = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-        SubscribeLocalEvent<DamagedSiliconAccentComponent, AccentGetEvent>(OnAccent, after: [typeof(ReplacementAccentSystem)]);
-    }
-
-    private void OnAccent(Entity<DamagedSiliconAccentComponent> ent, ref AccentGetEvent args)
-    {
-        var uid = ent.Owner;
-
-        if (ent.Comp.EnableChargeCorruption)
-        {
-            var currentChargeLevel = 0.0f;
-            if (ent.Comp.OverrideChargeLevel.HasValue)
-            {
-                currentChargeLevel = ent.Comp.OverrideChargeLevel.Value;
-            }
-            else if (_powerCell.TryGetBatteryFromSlot(uid, out var battery))
-            {
-                currentChargeLevel = battery.CurrentCharge / battery.MaxCharge;
-            }
-            currentChargeLevel = Math.Clamp(currentChargeLevel, 0.0f, 1.0f);
-            // Corrupt due to low power (drops characters on longer messages)
-            args.Message = CorruptPower(args.Message, currentChargeLevel, ent.Comp);
-        }
-
-        if (ent.Comp.EnableDamageCorruption)
-        {
-            var damage = FixedPoint2.Zero;
-            if (ent.Comp.OverrideTotalDamage.HasValue)
-            {
-                damage = ent.Comp.OverrideTotalDamage.Value;
-            }
-            else if (TryComp<DamageableComponent>(uid, out var damageable))
-            {
-                damage = damageable.TotalDamage;
-            }
-            // Corrupt due to damage (drop, repeat, replace with symbols)
-            args.Message = CorruptDamage(args.Message, damage, ent);
-        }
-    }
-
-    public string CorruptPower(string message, float chargeLevel, DamagedSiliconAccentComponent comp)
-    {
-        // The first idxMin characters are SAFE
-        var idxMin = comp.StartPowerCorruptionAtCharIdx;
-        // Probability will max at idxMax
-        var idxMax = comp.MaxPowerCorruptionAtCharIdx;
-
-        // Fast bails, would not have an effect
-        if (chargeLevel > comp.ChargeThresholdForPowerCorruption || message.Length < idxMin)
-        {
-            return message;
-        }
-
-        var outMsg = new StringBuilder();
-
-        var maxDropProb = comp.MaxDropProbFromPower * (1.0f - chargeLevel / comp.ChargeThresholdForPowerCorruption);
-
-        var idx = -1;
-        foreach (var letter in message)
-        {
-            idx++;
-            if (idx < idxMin) // Fast character, no effect
-            {
-                outMsg.Append(letter);
-                continue;
-            }
-
-            // use an x^2 interpolation to increase the drop probability until we hit idxMax
-            var probToDrop = idx >= idxMax
-                ? maxDropProb
-                : (float)Math.Pow(((double)idx - idxMin) / (idxMax - idxMin), 2.0) * maxDropProb;
-            // Ensure we're in the range for Prob()
-            probToDrop = Math.Clamp(probToDrop, 0.0f, 1.0f);
-
-            if (_random.Prob(probToDrop)) // Lose a character
-            {
-                // Additional chance to change to dot for flavor instead of full drop
-                if (_random.Prob(comp.ProbToCorruptDotFromPower))
-                {
-                    outMsg.Append('.');
-                }
-            }
-            else // Character is safe
-            {
-                outMsg.Append(letter);
-            }
-        }
-        return outMsg.ToString();
-    }
-
-    private string CorruptDamage(string message, FixedPoint2 totalDamage, Entity<DamagedSiliconAccentComponent> ent)
+    protected override string CorruptDamage(string message, FixedPoint2 totalDamage, Entity<DamagedSiliconAccentComponent> ent)
     {
         var outMsg = new StringBuilder();
 

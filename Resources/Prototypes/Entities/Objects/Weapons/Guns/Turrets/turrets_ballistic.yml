@@ -8,7 +8,7 @@
     - Syndicate
 
 - type: entity
-  parent: BaseWeaponBallisticTurret
+  parent: BaseWeaponBallisticTurretIndestructible
   id: WeaponTurretSyndicateDisposable
   name: disposable ballistic turret
   suffix: Syndicate, Disposable
@@ -16,14 +16,11 @@
   - type: NpcFactionMember
     factions:
     - Syndicate
+  - type: Damageable
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 600
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 100
@@ -47,7 +44,7 @@
   - type: Repairable
     qualityNeeded: "Anchoring"
     doAfterDelay: 3
-  - type: TriggerWhenEmpty
+  - type: TriggerOnEmptyGunshot
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
@@ -84,7 +81,7 @@
     - AllHostile
 
 - type: entity
-  parent: BaseWeaponBallisticTurret
+  parent: BaseWeaponBallisticTurretIndestructible
   id: WeaponTurretXeno
   name: xeno turret
   suffix: Xeno
@@ -112,6 +109,7 @@
       SoundTargetInLOS: !type:SoundPathSpecifier
         path: /Audio/Animals/snake_hiss.ogg
   - type: Damageable
+  - type: Injurable
     damageContainer: Biological
   - type: Destructible
     thresholds:

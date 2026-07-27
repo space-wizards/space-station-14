@@ -1,7 +1,6 @@
 - type: entity
-  id: HolosignWetFloor
-  name: wet floor sign
-  description: The words flicker as if they mean nothing.
+  abstract: true
+  id: BaseHoloSign
   placement:
     mode: SnapgridCenter
   components:
@@ -10,25 +9,34 @@
   - type: Physics
     bodyType: Static
     canCollide: false
+  - type: TimedDespawn
+    lifetime: 90
+  - type: Clickable
+  - type: Damageable
+  - type: Injurable
+    damageContainer: Inorganic
+
+- type: entity
+  parent: BaseHoloSign
+  id: HolosignWetFloor
+  name: wet floor sign
+  description: The words flicker as if they mean nothing.
+  components:
   - type: Sprite
     sprite: Structures/Holo/wetfloor.rsi
     state: icon
-  - type: TimedDespawn
-    lifetime: 90
-  - type: Damageable
-    damageContainer: Inorganic
   - type: Destructible
     thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 30
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 30
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
+  parent: BaseHoloSign
   id: HoloFan
-  parent: HolosignWetFloor
   name: holofan
   description: A barrier of hard light that blocks air, but nothing else.
   components:
@@ -45,15 +53,58 @@
     lifetime: 180
   - type: Airtight
     noAirWhenFullyAirBlocked: false
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 30
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
+  parent: BaseHoloSign
+  id: HoloPeel
+  name: holopeel
+  description: A banana peel made of slippery hard light, watch your step!
+  components:
+  - type: Sprite
+    sprite: Structures/Holo/peel.rsi
+    state: icon
+  - type: Physics
+    canCollide: true
+  - type: Slippery
+  - type: StepTrigger
+    intersectRatio: 0.2
+  - type: CollisionWake
+    enabled: false
+  - type: Fixtures
+    fixtures:
+      slips:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        hard: false
+        layer:
+        - SlipLayer
+  - type: TimedDespawn
+    lifetime: 30
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: BaseHoloSign
   id: HolosignSecurity
-  parent: HolosignWetFloor
   name: holographic barrier
   description: A barrier of hard light that blocks movement, but pretty weak.
   components:
     - type: Physics
-      bodyType: Static
       canCollide: true
     - type: Sprite
       sprite: Structures/Holo/security.rsi
@@ -75,16 +126,22 @@
       radius: 3
       color: red
     - type: Climbable
-    - type: Clickable
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 30
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
 
 - type: entity
+  parent: BaseHoloSign
   id: HolosignForcefield
-  parent: HolosignWetFloor
   name: holographic force field
   description: A powerful temporal containment field that doesn't let anything through, not even a tesla or singularity.
   components:
   - type: Physics
-    bodyType: Static
     canCollide: true
   - type: Sprite
     sprite: Structures/Holo/field.rsi
@@ -105,14 +162,13 @@
     enabled: true
     radius: 3
     color: blue
-  - type: Clickable
   - type: ContainmentField
     throwForce: 0
   - type: Destructible
     thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 60
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 60
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]

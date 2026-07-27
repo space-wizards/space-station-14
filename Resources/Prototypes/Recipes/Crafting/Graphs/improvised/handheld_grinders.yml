@@ -1,0 +1,80 @@
+
+# Mortar
+- type: constructionGraph
+  id: MakeshiftMortarAndPestle
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: incompleteMortarAndPestle
+      steps:
+        - material: WoodPlank
+          amount: 5
+          doAfter: 4
+
+  - node: incompleteMortarAndPestle
+    entity: IncompleteMortarAndPestle
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialWoodPlank1
+        amount: 5
+      - !type:DeleteEntity {}
+      steps:
+      - tool: Prying
+        doAfter: 1
+    - to: mortarAndPestle
+      completed:
+      - !type:AdminLog
+        message: "Construction"
+        impact: High
+      steps:
+      - tool: Slicing
+        doAfter: 4
+
+  - node: mortarAndPestle
+    entity: MortarAndPestleMakeshift
+
+# Juicer
+- type: constructionGraph
+  id: MakeshiftJuicer
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: incompleteJuicer
+      steps:
+      - material: WoodPlank
+        amount: 4
+        doAfter: 2
+      - material: Plastic
+        amount: 2
+        doAfter: 2
+
+  - node: incompleteJuicer
+    entity: IncompleteHandheldJuicer
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialWoodPlank1
+        amount: 4
+      - !type:SpawnPrototype
+        prototype: SheetPlastic1
+        amount: 2
+      - !type:DeleteEntity {}
+      steps:
+      - tool: Prying
+        doAfter: 1
+    - to: juicer
+      completed:
+      - !type:AdminLog
+        message: "Construction"
+        impact: High
+      steps:
+      - tool: Slicing
+        doAfter: 4
+
+  - node: juicer
+    entity: HandheldJuicerMakeshift

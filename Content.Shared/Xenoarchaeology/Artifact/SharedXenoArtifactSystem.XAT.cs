@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Shared.Chemistry;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Movement.Pulling.Events;
@@ -69,8 +70,9 @@ public abstract partial class SharedXenoArtifactSystem
             unlockingComp.EndTime = _timing.CurTime + ent.Comp.UnlockStateDuration;
             Log.Debug($"{ToPrettyString(ent)} entered unlocking state");
 
-            if (_net.IsServer)
-                _popup.PopupEntity(Loc.GetString("artifact-unlock-state-begin"), ent);
+            if (ent.Comp.UnlockBeginMsg != null)
+                _popup.PopupEntity(Loc.GetString(ent.Comp.UnlockBeginMsg), ent);
+
             Dirty(ent);
         }
         else if (node != null)
@@ -86,6 +88,9 @@ public abstract partial class SharedXenoArtifactSystem
                )
                 // we add time on each new trigger, if it is not going to fail us
                 unlockingComp.EndTime += ent.Comp.UnlockStateIncrementPerNode;
+
+            if (ent.Comp.UnlockContinueMsg != null)
+                _popup.PopupEntity(Loc.GetString(ent.Comp.UnlockContinueMsg), ent);
         }
 
         if (node != null && unlockingComp.TriggeredNodeIndexes.Add(GetIndex(ent, node.Value)))

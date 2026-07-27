@@ -1,13 +1,12 @@
 using System.Text.Json;
 using Content.Server.Administration.Managers;
-using Robust.Server.Player;
 
 namespace Content.Server.Administration.Logs.Converters;
 
 [AdminLogConverter]
-public sealed class EntityStringRepresentationConverter : AdminLogConverter<EntityStringRepresentation>
+public sealed partial class EntityStringRepresentationConverter : AdminLogConverter<EntityStringRepresentation>
 {
-    [Dependency] private readonly IAdminManager _adminManager = default!;
+    [Dependency] private IAdminManager _adminManager = default!;
 
     public override void Write(Utf8JsonWriter writer, EntityStringRepresentation value, JsonSerializerOptions options)
     {
@@ -24,7 +23,7 @@ public sealed class EntityStringRepresentationConverter : AdminLogConverter<Enti
         {
             writer.WriteString("player", value.Session.UserId.UserId);
 
-            if (_adminManager.IsAdmin(value.Uid))
+            if (_adminManager.IsAdmin(value.Session))
             {
                 writer.WriteBoolean("admin", true);
             }
