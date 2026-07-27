@@ -4,7 +4,6 @@ using System.Runtime.CompilerServices;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Movement.Components;
-using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Systems;
@@ -52,7 +51,7 @@ public sealed partial class MoverController : SharedMoverController
         // Become unactive [sic] if we don't have PhysicsComp.IgnorePaused
         if (PhysicsQuery.TryComp(ent, out var phys) && phys.IgnorePaused)
             return;
-        RemCompDeferred<ActiveInputMoverComponent>(ent);
+        RemComp<ActiveInputMoverComponent>(ent);
     }
 
     private void OnEntityUnpaused(Entity<InputMoverComponent> ent, ref EntityUnpausedEvent args)

@@ -13,7 +13,7 @@ namespace Content.Shared.Movement.Components;
 /// </remarks>
 /// <seealso cref="InputMoverComponent"/>
 /// <seealso cref="SharedMoverController.UpdateMoverStatus"/>
-[RegisterComponent, UnsavedComponent, Access(typeof(SharedMoverController))]
+[RegisterComponent, Access(typeof(SharedMoverController))]
 public sealed partial class ActiveInputMoverComponent : Component
 {
     /// <summary>
@@ -24,4 +24,4 @@ public sealed partial class ActiveInputMoverComponent : Component
     /// </remarks>
     [DataField, ViewVariables]
     public EntityUid? RelayedFrom;
-};
+}
