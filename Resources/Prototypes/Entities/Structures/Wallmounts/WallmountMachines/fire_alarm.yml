@@ -58,7 +58,7 @@
       Red: fire_2
       Violet: fire_1
       Yellow: fire_1
-      Delta: fire_3
+      DeltaNuke: fire_3
       # TODO: add missing alarm states
   - type: UserInterface
     interfaces:

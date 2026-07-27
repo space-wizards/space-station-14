@@ -5,7 +5,7 @@
   - type: AlertLevel
     availableAlertLevels:
     - Blue
-    - Delta
+    - DeltaNuke
     - Epsilon
     - Gamma
     - Green
