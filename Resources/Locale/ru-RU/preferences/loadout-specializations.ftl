@@ -10,6 +10,8 @@ loadout-group-botanist-specialization = Ботаник, специализаци
 loadout-group-passenger-specialization = Ассистент, специализация
 loadout-group-atmospheric-specialization = Атмосферный техник, специализация
 loadout-group-detective-specialization = Детектив, специализация
+loadout-group-psychologist-specialization = Психолог, специализация
+loadout-group-clown-specialization = Клоун, специализация
 
 
 # Шеф-повар
@@ -27,6 +29,7 @@ job-title-doctor-resuscitator = Реаниматолог
 job-title-doctor-geneticist = Генетик
 job-title-doctor-cryotherapist = Криотерапевт
 job-title-doctor-surgeon = Хирург
+job-title-doctor-nurse = Медсестра
 
 # Сервисный работник
 job-title-service-waiter = Официант
@@ -66,3 +69,11 @@ job-title-atmospheric-lifesupport = Специалист СЖО
 # Детектив
 job-title-detective-criminalist = Криминалист
 job-title-detective-operative = Оперуполномоченный
+
+# Психолог
+job-title-psychologist-psychotherapist = Психотерапевт
+job-title-psychologist-psychiatrist = Психиатр
+
+# Клоун
+job-title-clown-comedian = Комик
+job-title-clown-prankster = Пранкер

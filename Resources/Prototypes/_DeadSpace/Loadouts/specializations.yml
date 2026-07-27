@@ -175,6 +175,12 @@
     sprite: Interface/Misc/job_icons.rsi
     state: Surgeon
 
+- type: entity
+  parent: BaseLoadoutDoctorSpecialization
+  id: LoadoutDoctorNurse
+  name: Медсестра
+  description: Специализация врача на сестринском уходе.
+
 - type: loadout
   id: DoctorTitleTherapist
   dummyEntity: LoadoutDoctorTherapist
@@ -237,6 +243,18 @@
       role: JobMedicalDoctor
       time: 18000
 
+- type: loadout
+  id: DoctorTitleNurse
+  dummyEntity: LoadoutDoctorNurse
+  effects:
+  - !type:JobTitleLoadoutEffect
+    title: job-title-doctor-nurse
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobMedicalDoctor
+      time: 18000
+
 - type: loadoutGroup
   id: DoctorSpecialization
   name: loadout-group-doctor-specialization
@@ -248,6 +266,7 @@
   - DoctorTitleGeneticist
   - DoctorTitleCryotherapist
   - DoctorTitleSurgeon
+  - DoctorTitleNurse
 
 # Сервисный работник
 - type: entity
@@ -805,3 +824,113 @@
   loadouts:
   - DetectiveTitleCriminalist
   - DetectiveTitleOperative
+
+# Психолог
+- type: entity
+  abstract: true
+  id: BaseLoadoutPsychologistSpecialization
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Interface/Misc/job_icons.rsi
+    state: Psychologist
+
+- type: entity
+  parent: BaseLoadoutPsychologistSpecialization
+  id: LoadoutPsychologistPsychotherapist
+  name: Психотерапевт
+  description: Специализация психолога на психотерапии.
+
+- type: entity
+  parent: BaseLoadoutPsychologistSpecialization
+  id: LoadoutPsychologistPsychiatrist
+  name: Психиатр
+  description: Специализация психолога на психиатрии.
+
+- type: loadout
+  id: PsychologistTitlePsychotherapist
+  dummyEntity: LoadoutPsychologistPsychotherapist
+  effects:
+  - !type:JobTitleLoadoutEffect
+    title: job-title-psychologist-psychotherapist
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobPsychologist
+      time: 18000
+
+- type: loadout
+  id: PsychologistTitlePsychiatrist
+  dummyEntity: LoadoutPsychologistPsychiatrist
+  effects:
+  - !type:JobTitleLoadoutEffect
+    title: job-title-psychologist-psychiatrist
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobPsychologist
+      time: 18000
+
+- type: loadoutGroup
+  id: PsychologistSpecialization
+  name: loadout-group-psychologist-specialization
+  minLimit: 0
+  maxLimit: 1
+  loadouts:
+  - PsychologistTitlePsychotherapist
+  - PsychologistTitlePsychiatrist
+
+# Клоун
+- type: entity
+  abstract: true
+  id: BaseLoadoutClownSpecialization
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Interface/Misc/job_icons.rsi
+    state: Clown
+
+- type: entity
+  parent: BaseLoadoutClownSpecialization
+  id: LoadoutClownComedian
+  name: Комик
+  description: Специализация клоуна на юморе и выступлениях.
+
+- type: entity
+  parent: BaseLoadoutClownSpecialization
+  id: LoadoutClownPrankster
+  name: Пранкер
+  description: Специализация клоуна на розыгрышах.
+
+- type: loadout
+  id: ClownTitleComedian
+  dummyEntity: LoadoutClownComedian
+  effects:
+  - !type:JobTitleLoadoutEffect
+    title: job-title-clown-comedian
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobClown
+      time: 18000
+
+- type: loadout
+  id: ClownTitlePrankster
+  dummyEntity: LoadoutClownPrankster
+  effects:
+  - !type:JobTitleLoadoutEffect
+    title: job-title-clown-prankster
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobClown
+      time: 18000
+
+- type: loadoutGroup
+  id: ClownSpecialization
+  name: loadout-group-clown-specialization
+  minLimit: 0
+  maxLimit: 1
+  loadouts:
+  - ClownTitleComedian
+  - ClownTitlePrankster
