@@ -342,5 +342,6 @@
     containers:
       gun_magazine: !type:ContainerSlot
       gun_chamber: !type:ContainerSlot
+      finger_glove: !type:ContainerSlot
   - type: StaticPrice
     price: 1500
