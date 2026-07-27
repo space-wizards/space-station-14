@@ -59,13 +59,13 @@ id = "unknown_server_id"
 
 [events]
 # Controls if the game should run station events. (Meteors, Sleeper Syndicates, etc.)
-# enabled = true
+enabled = true
 
 [shuttle]
 # Should the emergency shuttle be allowed to launch early by command staff?
 emergency_early_launch_allowed = false
 # Time in minutes after round start to auto-call the emergency shuttle. Set to zero to disable.
-# auto_call_time = 90
+auto_call_time = 90
 
 [console]
 # If this is true, people connecting from this computer will automatically be elevated to full admin privileges.
