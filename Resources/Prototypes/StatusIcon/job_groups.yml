@@ -166,6 +166,7 @@
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Syndicate
   icons:
+  - JobIconCluwne
   - JobIconNinja
   - JobIconPirate
   - JobIconPrisoner
