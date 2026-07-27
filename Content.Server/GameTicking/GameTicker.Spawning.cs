@@ -255,6 +255,15 @@ namespace Content.Server.GameTicking
             }
 
             DoSpawn(player, character, station, jobId, silent, out var mob, out var jobPrototype, out var jobName);
+            // DS14-start
+            var arrivalJobName = jobName;
+            if (_idCard.TryFindIdCard(mob, out var arrivalCard)
+                && arrivalCard.Comp.LocalizedJobTitle is { } arrivalTitle
+                && !string.IsNullOrWhiteSpace(arrivalTitle))
+            {
+                arrivalJobName = arrivalTitle;
+            }
+            // DS14-end
 
             if (lateJoin && !silent)
             {
@@ -265,7 +274,7 @@ namespace Content.Server.GameTicking
                             ("character", MetaData(mob).EntityName),
                                 ("gender", character.Gender), // Corvax-LastnameGender
                             ("entity", mob),
-                            ("job", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(jobName))),
+                            ("job", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(arrivalJobName))), // DS14
                         Loc.GetString("latejoin-arrival-sender"),
                         playDefaultSound: false,
                         colorOverride: Color.Gold);
@@ -277,7 +286,7 @@ namespace Content.Server.GameTicking
                             ("character", MetaData(mob).EntityName),
                                 ("gender", character.Gender), // Corvax-LastnameGender
                             ("entity", mob),
-                            ("job", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(jobName))),
+                            ("job", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(arrivalJobName))), // DS14
                         Loc.GetString("latejoin-arrival-sender"),
                         playDefaultSound: false);
                 }

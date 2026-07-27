@@ -1,0 +1,807 @@
+# Шеф-Повар 
+- type: entity
+  abstract: true
+  id: BaseLoadoutChefSpecialization
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Interface/Misc/job_icons.rsi
+    state: Chef
+
+- type: entity
+  parent: BaseLoadoutChefSpecialization
+  id: LoadoutChefConfectioner
+  name: Кондитер
+  description: Специализация шеф-повара на сладостях и десертах.
+
+- type: entity
+  parent: BaseLoadoutChefSpecialization
+  id: LoadoutChefBaker
+  name: Пекарь
+  description: Специализация шеф-повара на хлебе и выпечке.
+
+- type: entity
+  parent: BaseLoadoutChefSpecialization
+  id: LoadoutChefButcher
+  name: Мясник
+  description: Специализация шеф-повара на разделке мяса.
+
+- type: entity
+  parent: BaseLoadoutChefSpecialization
+  id: LoadoutChefSousChef
+  name: Су-шеф
+  description: Правая рука Шефа на кухне.
+
+- type: loadout
+  id: ChefTitleConfectioner
+  dummyEntity: LoadoutChefConfectioner
+  effects:
+  - !type:JobTitleLoadoutEffect
+    title: job-title-chef-confectioner
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobChef
+      time: 18000 # 5 часов
+
+- type: loadout
+  id: ChefTitleBaker
+  dummyEntity: LoadoutChefBaker
+  effects:
+  - !type:JobTitleLoadoutEffect
+    title: job-title-chef-baker
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobChef
+      time: 18000
+
+- type: loadout
+  id: ChefTitleButcher
+  dummyEntity: LoadoutChefButcher
+  effects:
+  - !type:JobTitleLoadoutEffect
+    title: job-title-chef-butcher
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobChef
+      time: 18000
+
+- type: loadout
+  id: ChefTitleSousChef
+  dummyEntity: LoadoutChefSousChef
+  effects:
+  - !type:JobTitleLoadoutEffect
+    title: job-title-chef-sous-chef
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobChef
+      time: 36000 # 10 часов
+
+- type: loadoutGroup
+  id: ChefSpecialization
+  name: loadout-group-chef-specialization
+  minLimit: 0
+  maxLimit: 1
+  loadouts:
+  - ChefTitleConfectioner
+  - ChefTitleBaker
+  - ChefTitleButcher
+  - ChefTitleSousChef
+
+# Юрист
+- type: entity
+  abstract: true
+  id: BaseLoadoutLawyerSpecialization
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Interface/Misc/job_icons.rsi
+    state: Lawyer
+
+- type: entity
+  parent: BaseLoadoutLawyerSpecialization
+  id: LoadoutLawyerAdvocate
+  name: Адвокат
+  description: Специализация юриста на защите клиентов в суде.
+
+- type: loadout
+  id: LawyerTitleAdvocate
+  dummyEntity: LoadoutLawyerAdvocate
+  effects:
+  - !type:JobTitleLoadoutEffect
+    title: job-title-lawyer-advocate
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobLawyer
+      time: 18000
+
+- type: loadoutGroup
+  id: LawyerSpecialization
+  name: loadout-group-lawyer-specialization
+  minLimit: 0
+  maxLimit: 1
+  loadouts:
+  - LawyerTitleAdvocate
+
+# Врач
+- type: entity
+  abstract: true
+  id: BaseLoadoutDoctorSpecialization
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Interface/Misc/job_icons.rsi
+    state: MedicalDoctor
+
+- type: entity
+  parent: BaseLoadoutDoctorSpecialization
+  id: LoadoutDoctorTherapist
+  name: Терапевт
+  description: Специализация врача на диагностике и лечении.
+
+- type: entity
+  parent: BaseLoadoutDoctorSpecialization
+  id: LoadoutDoctorResuscitator
+  name: Реаниматолог
+  description: Специализация врача на неотложной помощи и реанимации.
+
+- type: entity
+  parent: BaseLoadoutDoctorSpecialization
+  id: LoadoutDoctorGeneticist
+  name: Генетик
+  description: Специализация врача на работе с ДНК и клонированием. # Генетика существует!
+  components:
+  - type: Sprite
+    sprite: Interface/Misc/job_icons.rsi
+    state: Geneticist
+
+- type: entity
+  parent: BaseLoadoutDoctorSpecialization
+  id: LoadoutDoctorCryotherapist
+  name: Криотерапевт
+  description: Специализация врача на лечении в криокапсулах.
+
+- type: entity
+  parent: BaseLoadoutDoctorSpecialization
+  id: LoadoutDoctorSurgeon
+  name: Хирург
+  description: Специализация врача на операциях и хирургии.
+  components:
+  - type: Sprite
+    sprite: Interface/Misc/job_icons.rsi
+    state: Surgeon
+
+- type: loadout
+  id: DoctorTitleTherapist
+  dummyEntity: LoadoutDoctorTherapist
+  effects:
+  - !type:JobTitleLoadoutEffect
+    title: job-title-doctor-therapist
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobMedicalDoctor
+      time: 18000
+
+- type: loadout
+  id: DoctorTitleResuscitator
+  dummyEntity: LoadoutDoctorResuscitator
+  effects:
+  - !type:JobTitleLoadoutEffect
+    title: job-title-doctor-resuscitator
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobMedicalDoctor
+      time: 18000
+
+- type: loadout
+  id: DoctorTitleGeneticist
+  dummyEntity: LoadoutDoctorGeneticist
+  effects:
+  - !type:JobTitleLoadoutEffect
+    title: job-title-doctor-geneticist
+    icon: JobIconGeneticist
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobMedicalDoctor
+      time: 18000
+
+- type: loadout
+  id: DoctorTitleCryotherapist
+  dummyEntity: LoadoutDoctorCryotherapist
+  effects:
+  - !type:JobTitleLoadoutEffect
+    title: job-title-doctor-cryotherapist
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobMedicalDoctor
+      time: 36000
+
+- type: loadout
+  id: DoctorTitleSurgeon
+  dummyEntity: LoadoutDoctorSurgeon
+  effects:
+  - !type:JobTitleLoadoutEffect
+    title: job-title-doctor-surgeon
+    icon: JobIconMedicalSurgeon
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobMedicalDoctor
+      time: 18000
+
+- type: loadoutGroup
+  id: DoctorSpecialization
+  name: loadout-group-doctor-specialization
+  minLimit: 0
+  maxLimit: 1
+  loadouts:
+  - DoctorTitleTherapist
+  - DoctorTitleResuscitator
+  - DoctorTitleGeneticist
+  - DoctorTitleCryotherapist
+  - DoctorTitleSurgeon
+
+# Сервисный работник
+- type: entity
+  abstract: true
+  id: BaseLoadoutServiceSpecialization
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Interface/Misc/job_icons.rsi
+    state: ServiceWorker
+
+- type: entity
+  parent: BaseLoadoutServiceSpecialization
+  id: LoadoutServiceWaiter
+  name: Официант
+  description: Специализация сервисного работника на обслуживании посетителей.
+
+- type: entity
+  parent: BaseLoadoutServiceSpecialization
+  id: LoadoutServiceActor
+  name: Актёр
+  description: Специализация сервисного работника на актёрских выступлениях.
+
+- type: loadout
+  id: ServiceTitleWaiter
+  dummyEntity: LoadoutServiceWaiter
+  effects:
+  - !type:JobTitleLoadoutEffect
+    title: job-title-service-waiter
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobServiceWorker
+      time: 18000
+
+- type: loadout
+  id: ServiceTitleActor
+  dummyEntity: LoadoutServiceActor
+  effects:
+  - !type:JobTitleLoadoutEffect
+    title: job-title-service-actor
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobServiceWorker
+      time: 18000
+
+- type: loadoutGroup
+  id: ServiceSpecialization
+  name: loadout-group-service-specialization
+  minLimit: 0
+  maxLimit: 1
+  loadouts:
+  - ServiceTitleWaiter
+  - ServiceTitleActor
+
+# Ученый
+- type: entity
+  abstract: true
+  id: BaseLoadoutScientistSpecialization
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Interface/Misc/job_icons.rsi
+    state: Scientist
+
+- type: entity
+  parent: BaseLoadoutScientistSpecialization
+  id: LoadoutScientistAnomalist
+  name: Аномалист
+  description: Специализация учёного на исследовании аномалий.
+
+- type: entity
+  parent: BaseLoadoutScientistSpecialization
+  id: LoadoutScientistXenoarchaeologist
+  name: Ксеноархеолог
+  description: Специализация учёного на исследовании инопланетных артефактов.
+
+- type: entity
+  parent: BaseLoadoutScientistSpecialization
+  id: LoadoutScientistToxicologist
+  name: Токсиколог
+  description: Специализация учёного на реагентах и токсинах.
+
+- type: entity
+  parent: BaseLoadoutScientistSpecialization
+  id: LoadoutScientistRoboticist
+  name: Робототехник
+  description: Специализация учёного на сборке и обслуживании киборгов.
+  components:
+  - type: Sprite
+    sprite: Interface/Misc/job_icons.rsi
+    state: Roboticist
+
+- type: loadout
+  id: ScientistTitleAnomalist
+  dummyEntity: LoadoutScientistAnomalist
+  effects:
+  - !type:JobTitleLoadoutEffect
+    title: job-title-scientist-anomalist
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobScientist
+      time: 18000
+
+- type: loadout
+  id: ScientistTitleXenoarchaeologist
+  dummyEntity: LoadoutScientistXenoarchaeologist
+  effects:
+  - !type:JobTitleLoadoutEffect
+    title: job-title-scientist-xenoarchaeologist
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobScientist
+      time: 18000
+
+- type: loadout
+  id: ScientistTitleToxicologist
+  dummyEntity: LoadoutScientistToxicologist
+  effects:
+  - !type:JobTitleLoadoutEffect
+    title: job-title-scientist-toxicologist
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobScientist
+      time: 18000
+
+- type: loadout
+  id: ScientistTitleRoboticist
+  dummyEntity: LoadoutScientistRoboticist
+  effects:
+  - !type:JobTitleLoadoutEffect
+    title: job-title-scientist-roboticist
+    icon: JobIconRoboticist
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobScientist
+      time: 36000 
+
+- type: loadoutGroup
+  id: ScientistSpecialization
+  name: loadout-group-scientist-specialization
+  minLimit: 0
+  maxLimit: 1
+  loadouts:
+  - ScientistTitleAnomalist
+  - ScientistTitleXenoarchaeologist
+  - ScientistTitleToxicologist
+  - ScientistTitleRoboticist
+
+# Инженер
+- type: entity
+  abstract: true
+  id: BaseLoadoutEngineerSpecialization
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Interface/Misc/job_icons.rsi
+    state: StationEngineer
+
+- type: entity
+  parent: BaseLoadoutEngineerSpecialization
+  id: LoadoutEngineerElectrician
+  name: Электрик
+  description: Специализация инженера на лектросетях и проводке.
+
+- type: entity
+  parent: BaseLoadoutEngineerSpecialization
+  id: LoadoutEngineerRepairman
+  name: Ремонтник
+  description: Специализация инженера на ремонте станции.
+
+- type: entity
+  parent: BaseLoadoutEngineerSpecialization
+  id: LoadoutEngineerMechanic
+  name: Механик
+  description: Специализация инженера на механизмах, оборудоавнии и шаттлах.
+
+- type: entity
+  parent: BaseLoadoutEngineerSpecialization
+  id: LoadoutEngineerNuclear
+  name: Ядерщик
+  description: Специализация инженера на атомной энергетике, РИТЭГах, Двигатели Сингулярности и Тесле.
+
+- type: loadout
+  id: EngineerTitleElectrician
+  dummyEntity: LoadoutEngineerElectrician
+  effects:
+  - !type:JobTitleLoadoutEffect
+    title: job-title-engineer-electrician
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobStationEngineer
+      time: 18000
+
+- type: loadout
+  id: EngineerTitleRepairman
+  dummyEntity: LoadoutEngineerRepairman
+  effects:
+  - !type:JobTitleLoadoutEffect
+    title: job-title-engineer-repairman
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobStationEngineer
+      time: 18000
+
+- type: loadout
+  id: EngineerTitleMechanic
+  dummyEntity: LoadoutEngineerMechanic
+  effects:
+  - !type:JobTitleLoadoutEffect
+    title: job-title-engineer-mechanic
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobStationEngineer
+      time: 36000
+
+- type: loadout
+  id: EngineerTitleNuclear
+  dummyEntity: LoadoutEngineerNuclear
+  effects:
+  - !type:JobTitleLoadoutEffect
+    title: job-title-engineer-nuclear
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobStationEngineer
+      time: 72000 # 20 часов
+
+- type: loadoutGroup
+  id: EngineerSpecialization
+  name: loadout-group-engineer-specialization
+  minLimit: 0
+  maxLimit: 1
+  loadouts:
+  - EngineerTitleElectrician
+  - EngineerTitleRepairman
+  - EngineerTitleMechanic
+  - EngineerTitleNuclear
+
+# Грузчик
+- type: entity
+  abstract: true
+  id: BaseLoadoutCargoSpecialization
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Interface/Misc/job_icons.rsi
+    state: CargoTechnician
+
+- type: entity
+  parent: BaseLoadoutCargoSpecialization
+  id: LoadoutCargoLogistician
+  name: Логист
+  description: Специализация грузчика на учёте и распределении грузов.
+
+- type: entity
+  parent: BaseLoadoutCargoSpecialization
+  id: LoadoutCargoPostman
+  name: Почтальон
+  description: Специализация грузчика на доставке посылок и почты.
+
+- type: loadout
+  id: CargoTitleLogistician
+  dummyEntity: LoadoutCargoLogistician
+  effects:
+  - !type:JobTitleLoadoutEffect
+    title: job-title-cargo-logistician
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobCargoTechnician
+      time: 36000
+
+- type: loadout
+  id: CargoTitlePostman
+  dummyEntity: LoadoutCargoPostman
+  effects:
+  - !type:JobTitleLoadoutEffect
+    title: job-title-cargo-postman
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobCargoTechnician
+      time: 18000
+
+- type: loadoutGroup
+  id: CargoSpecialization
+  name: loadout-group-cargo-specialization
+  minLimit: 0
+  maxLimit: 1
+  loadouts:
+  - CargoTitleLogistician
+  - CargoTitlePostman
+
+# УТилизатор
+- type: entity
+  abstract: true
+  id: BaseLoadoutSalvageSpecialization
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Interface/Misc/job_icons.rsi
+    state: ShaftMiner
+
+- type: entity
+  parent: BaseLoadoutSalvageSpecialization
+  id: LoadoutSalvageMiner
+  name: Шахтёр
+  description: Специализация утилизатора на добыче ресурсов.
+
+- type: entity
+  parent: BaseLoadoutSalvageSpecialization
+  id: LoadoutSalvageExplorer
+  name: Исследователь
+  description: Специализация утилизатора на разведке, уничтожении фауны и экспедициях.
+
+- type: loadout
+  id: SalvageTitleMiner
+  dummyEntity: LoadoutSalvageMiner
+  effects:
+  - !type:JobTitleLoadoutEffect
+    title: job-title-salvage-miner
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobSalvageSpecialist
+      time: 18000
+
+- type: loadout
+  id: SalvageTitleExplorer
+  dummyEntity: LoadoutSalvageExplorer
+  effects:
+  - !type:JobTitleLoadoutEffect
+    title: job-title-salvage-explorer
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobSalvageSpecialist
+      time: 36000
+
+- type: loadoutGroup
+  id: SalvageSpecialization
+  name: loadout-group-salvage-specialization
+  minLimit: 0
+  maxLimit: 1
+  loadouts:
+  - SalvageTitleMiner
+  - SalvageTitleExplorer
+
+# Ботаник
+- type: entity
+  abstract: true
+  id: BaseLoadoutBotanistSpecialization
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Interface/Misc/job_icons.rsi
+    state: Botanist
+
+- type: entity
+  parent: BaseLoadoutBotanistSpecialization
+  id: LoadoutBotanistAgronomist
+  name: Агроном
+  description: Специализация ботаника на агрокультурах и урожайности.
+
+- type: entity
+  parent: BaseLoadoutBotanistSpecialization
+  id: LoadoutBotanistSelectioner
+  name: Селекционер
+  description: Специализация ботаника на селекции и мутациях
+
+- type: loadout
+  id: BotanistTitleAgronomist
+  dummyEntity: LoadoutBotanistAgronomist
+  effects:
+  - !type:JobTitleLoadoutEffect
+    title: job-title-botanist-agronomist
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobBotanist
+      time: 18000
+
+- type: loadout
+  id: BotanistTitleSelectioner
+  dummyEntity: LoadoutBotanistSelectioner
+  effects:
+  - !type:JobTitleLoadoutEffect
+    title: job-title-botanist-Selectioner
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobBotanist
+      time: 36000
+
+- type: loadoutGroup
+  id: BotanistSpecialization
+  name: loadout-group-botanist-specialization
+  minLimit: 0
+  maxLimit: 1
+  loadouts:
+  - BotanistTitleAgronomist
+  - BotanistTitleSelectioner
+
+# Ассистент
+- type: entity
+  abstract: true
+  id: BaseLoadoutPassengerSpecialization
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Interface/Misc/job_icons.rsi
+    state: Passenger
+
+- type: entity
+  parent: BaseLoadoutPassengerSpecialization
+  id: LoadoutPassengerTrainee
+  name: Стажёр
+  description: Специализация ассистента для обучения на рабочем месте.
+
+- type: entity
+  parent: BaseLoadoutPassengerSpecialization
+  id: LoadoutPassengerHandyman
+  name: Разнорабочий
+  description: Специализация ассистента на помощи по мелким работам.
+
+- type: loadout
+  id: PassengerTitleTrainee
+  dummyEntity: LoadoutPassengerTrainee
+  effects:
+  - !type:JobTitleLoadoutEffect
+    title: job-title-passenger-trainee
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobPassenger
+      time: 18000
+
+- type: loadout
+  id: PassengerTitleHandyman
+  dummyEntity: LoadoutPassengerHandyman
+  effects:
+  - !type:JobTitleLoadoutEffect
+    title: job-title-passenger-handyman
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobPassenger
+      time: 18000
+
+- type: loadoutGroup
+  id: PassengerSpecialization
+  name: loadout-group-passenger-specialization
+  minLimit: 0
+  maxLimit: 1
+  loadouts:
+  - PassengerTitleTrainee
+  - PassengerTitleHandyman
+
+# Атмосферный Техник
+- type: entity
+  abstract: true
+  id: BaseLoadoutAtmosphericSpecialization
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Interface/Misc/job_icons.rsi
+    state: AtmosphericTechnician
+
+- type: entity
+  parent: BaseLoadoutAtmosphericSpecialization
+  id: LoadoutAtmosphericLifeSupport
+  name: Специалист СЖО
+  description: Специализация атмосферного техника на системах жизнеобеспечения.
+
+- type: loadout
+  id: AtmosphericTitleLifeSupport
+  dummyEntity: LoadoutAtmosphericLifeSupport
+  effects:
+  - !type:JobTitleLoadoutEffect
+    title: job-title-atmospheric-lifesupport
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobAtmosphericTechnician
+      time: 36000
+
+- type: loadoutGroup
+  id: AtmosphericSpecialization
+  name: loadout-group-atmospheric-specialization
+  minLimit: 0
+  maxLimit: 1
+  loadouts:
+  - AtmosphericTitleLifeSupport
+
+# Детектив
+- type: entity
+  abstract: true
+  id: BaseLoadoutDetectiveSpecialization
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Interface/Misc/job_icons.rsi
+    state: Detective
+
+- type: entity
+  parent: BaseLoadoutDetectiveSpecialization
+  id: LoadoutDetectiveCriminalist
+  name: Криминалист
+  description: Специализация детектива на криминалистике и экспертизах.
+
+- type: entity
+  parent: BaseLoadoutDetectiveSpecialization
+  id: LoadoutDetectiveOperative
+  name: Оперуполномоченный
+  description: Специализация детектива на оперативно-розыскной работе.
+
+- type: loadout
+  id: DetectiveTitleCriminalist
+  dummyEntity: LoadoutDetectiveCriminalist
+  effects:
+  - !type:JobTitleLoadoutEffect
+    title: job-title-detective-criminalist
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobDetective
+      time: 18000
+
+- type: loadout
+  id: DetectiveTitleOperative
+  dummyEntity: LoadoutDetectiveOperative
+  effects:
+  - !type:JobTitleLoadoutEffect
+    title: job-title-detective-operative
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobDetective
+      time: 36000
+
+- type: loadoutGroup
+  id: DetectiveSpecialization
+  name: loadout-group-detective-specialization
+  minLimit: 0
+  maxLimit: 1
+  loadouts:
+  - DetectiveTitleCriminalist
+  - DetectiveTitleOperative

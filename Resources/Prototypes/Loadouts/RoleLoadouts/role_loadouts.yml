@@ -57,6 +57,7 @@
   id: JobPassenger
   groups:
   - GroupTankHarness
+  - PassengerSpecialization # DS14
   - PassengerJumpsuit
   - CommonBackpack
   - PassengerNeck
@@ -90,6 +91,7 @@
   id: JobServiceWorker
   groups:
   - GroupTankHarness
+  - ServiceSpecialization # DS14
   - BartenderJumpsuit
   - CommonBackpack
   - Glasses
@@ -103,6 +105,7 @@
   id: JobChef
   groups:
   - GroupTankHarness
+  - ChefSpecialization # DS14
   - ChefHead
   - ChefMask
   - ChefJumpsuit
@@ -134,6 +137,7 @@
   id: JobLawyer
   groups:
   - GroupTankHarness
+  - LawyerSpecialization # DS14
   - LawyerNeck
   - LawyerJumpsuit
   - CommonBackpack
@@ -184,6 +188,7 @@
   id: JobBotanist
   groups:
   - GroupTankHarness
+  - BotanistSpecialization # DS14
   - BotanistHead
   - BotanistJumpsuit
   - BotanistBackpack
@@ -267,6 +272,7 @@
   id: JobCargoTechnician
   groups:
   - GroupTankHarness
+  - CargoSpecialization # DS14
   - CargoTechnicianHead
   - CargoTechnicianJumpsuit
   - CargoTechnicianBackpack
@@ -284,6 +290,7 @@
   id: JobSalvageSpecialist
   groups:
   - GroupTankHarness
+  - SalvageSpecialization # DS14
   - SalvageSpecialistJumpsuit
   - SalvageSpecialistBackpack
   - SalvageSpecialistOuterClothing
@@ -329,6 +336,7 @@
   id: JobStationEngineer
   groups:
   - GroupTankHarness
+  - EngineerSpecialization # DS14
   - StationEngineerHead
   - StationEngineerJumpsuit
   - StationEngineerBackpack
@@ -346,6 +354,7 @@
   id: JobAtmosphericTechnician
   groups:
   - GroupTankHarness
+  - AtmosphericSpecialization # DS14
   - AtmosphericTechnicianJumpsuit
   - AtmosphericTechnicianBackpack
   - AtmosphericTechnicianBelt # DS14
@@ -380,6 +389,7 @@
   id: JobScientist
   groups:
   - GroupTankHarness
+  - ScientistSpecialization # DS14
   - ScientistHead
   - ScientistNeck
   - ScientistJumpsuit
@@ -471,6 +481,7 @@
   id: JobDetective
   groups:
   - GroupTankHarness
+  - DetectiveSpecialization # DS14
   - DetectiveHead
   - DetectiveNeck
   - DetectiveJumpsuit

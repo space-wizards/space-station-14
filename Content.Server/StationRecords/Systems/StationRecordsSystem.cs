@@ -151,13 +151,23 @@ public sealed class StationRecordsSystem : SharedStationRecordsSystem
             SetIdKey(idUid, new StationRecordKey(id, station));
             return;
         }
+        // DS14-start
+        var jobTitle = jobPrototype.LocalizedName;
+        var jobIcon = jobPrototype.Icon;
+        if (idUid != null && _idCard.TryGetIdCard(idUid.Value, out var idCard))
+        {
+            if (idCard.Comp.LocalizedJobTitle is { } cardTitle && !string.IsNullOrWhiteSpace(cardTitle))
+                jobTitle = cardTitle;
+            jobIcon = idCard.Comp.JobIcon;
+        }
+        // DS14-end
 
         var record = new GeneralStationRecord()
         {
             Name = name,
             Age = age,
-            JobTitle = jobPrototype.LocalizedName,
-            JobIcon = jobPrototype.Icon,
+            JobTitle = jobTitle, // DS14
+            JobIcon = jobIcon, // DS14
             JobPrototype = jobId,
             Species = species,
             Gender = gender,

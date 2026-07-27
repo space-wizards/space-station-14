@@ -36,7 +36,7 @@ public sealed class PresetIdCardSystem : EntitySystem
             if (station == null || !TryComp<StationJobsComponent>(station.Value, out var jobsComp) || !jobsComp.ExtendedAccess)
                 continue;
 
-            SetupIdAccess(uid, card, true);
+            SetupIdAccess(uid, card, true, updateJobTitle: false); // DS14
             SetupIdName(uid, card);
         }
     }
@@ -66,7 +66,7 @@ public sealed class PresetIdCardSystem : EntitySystem
         _cardSystem.TryChangeFullName(uid, id.IdName);
     }
 
-    private void SetupIdAccess(EntityUid uid, PresetIdCardComponent id, bool extended)
+    private void SetupIdAccess(EntityUid uid, PresetIdCardComponent id, bool extended, bool updateJobTitle = true) // DS14
     {
         if (id.JobName == null)
             return;
@@ -78,6 +78,10 @@ public sealed class PresetIdCardSystem : EntitySystem
         }
 
         _accessSystem.SetAccessToJob(uid, job, extended);
+        // DS14-start
+        if (!updateJobTitle)
+            return;
+        // DS14-end
 
         _cardSystem.TryChangeJobTitle(uid, job.LocalizedName);
         _cardSystem.TryChangeJobDepartment(uid, job);

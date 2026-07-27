@@ -16,6 +16,7 @@ using Content.Shared.Preferences;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
 using Content.Shared.Station;
+using Content.Shared.DeadSpace.Loadouts.Effects; // DS14
 using JetBrains.Annotations;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
@@ -158,7 +159,7 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
 
         if (prototype != null && TryComp(entity.Value, out MetaDataComponent? metaData))
         {
-            SetPdaAndIdCardData(entity.Value, metaData.EntityName, prototype, station);
+            SetPdaAndIdCardData(entity.Value, metaData.EntityName, prototype, station, loadout); // DS14
         }
 
         DoJobSpecials(job, entity.Value);
@@ -184,7 +185,7 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
     /// <param name="characterName">Character name to use for the ID.</param>
     /// <param name="jobPrototype">Job prototype to use for the PDA and ID.</param>
     /// <param name="station">The station this player is being spawned on.</param>
-    public void SetPdaAndIdCardData(EntityUid entity, string characterName, JobPrototype jobPrototype, EntityUid? station)
+    public void SetPdaAndIdCardData(EntityUid entity, string characterName, JobPrototype jobPrototype, EntityUid? station, RoleLoadout? loadout = null) // DS14
     {
         if (!InventorySystem.TryGetSlotEntity(entity, "id", out var idUid))
             return;
@@ -202,6 +203,15 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
         if (_prototypeManager.Resolve(jobPrototype.Icon, out var jobIcon))
             _cardSystem.TryChangeJobIcon(cardId, jobIcon, card);
 
+        // DS14-start
+        if (loadout != null && TryGetLoadoutTitleEffect(loadout, out var titleEffect))
+        {
+            _cardSystem.TryChangeJobTitle(cardId, Loc.GetString(titleEffect.Title), card);
+            if (titleEffect.Icon is { } specIcon && _prototypeManager.Resolve(specIcon, out var specIconProto))
+                _cardSystem.TryChangeJobIcon(cardId, specIconProto, card);
+        }
+        // DS14-end
+
         var extendedAccess = false;
         if (station != null)
         {
@@ -214,6 +224,30 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
         if (pdaComponent != null)
             _pdaSystem.SetOwner(idUid.Value, pdaComponent, entity, characterName);
     }
+    // DS14-start
+    private bool TryGetLoadoutTitleEffect(RoleLoadout loadout, out JobTitleLoadoutEffect titleEffect)
+    {
+        titleEffect = default!;
+
+        foreach (var groupLoadouts in loadout.SelectedLoadouts.Values)
+        {
+            foreach (var selected in groupLoadouts)
+            {
+                if (!_prototypeManager.TryIndex(selected.Prototype, out var loadoutProto))
+                    continue;
+                foreach (var effect in loadoutProto.Effects)
+                {
+                    if (effect is JobTitleLoadoutEffect found)
+                    {
+                        titleEffect = found;
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    //DS14-end
 
 
     #endregion Player spawning helpers

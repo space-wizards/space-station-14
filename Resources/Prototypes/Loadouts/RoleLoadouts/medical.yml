@@ -23,6 +23,7 @@
   id: JobMedicalDoctor
   groups:
   - GroupTankHarness
+  - DoctorSpecialization # DS14
   - MedicalDoctorHead
   - MedicalMask
   - MedicalDoctorJumpsuit
