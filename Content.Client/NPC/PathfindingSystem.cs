@@ -558,6 +558,7 @@ namespace Content.Client.NPC
                 {
                     if (route.Message.Costs.Values.Count == 0)
                         continue;
+
                     var highestGScore = route.Message.Costs.Values.Max();
 
                     foreach (var (node, cost) in route.Message.Costs)

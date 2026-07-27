@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.Pathfinding;
 using Content.Shared.CombatMode;
@@ -73,7 +72,7 @@ public sealed partial class NPCSteeringSystem
         if (!TryComp<MapGridComponent>(poly.GraphUid, out var grid))
             return SteeringObstacleStatus.Completed;
 
-        var obstacleEnts = _mapSystem.GetLocalAnchoredEntities(poly.GraphUid, grid, poly.Box).ToHashSet();
+        var obstacleEnts = new HashSet<EntityUid>(_mapSystem.GetLocalAnchoredEntities(poly.GraphUid, grid, poly.Box));
         FilterObstacleEntities((uid, component), mask, layer, obstacleEnts);
 
         // Nothing actually near us.
@@ -83,7 +82,7 @@ public sealed partial class NPCSteeringSystem
         var isDoor = (poly.Data.Flags & PathfindingBreadcrumbFlag.Door) != 0x0;
         var isClimbable = (poly.Data.Flags & PathfindingBreadcrumbFlag.Climb) != 0x0;
 
-        // Just walk into it stupid
+        // Just walk into it stupid.
         if (isDoor)
         {
             foreach (var ent in obstacleEnts)
@@ -92,7 +91,7 @@ public sealed partial class NPCSteeringSystem
                 if (!CanHandleDoor((uid, component), poly.Data.Flags, ent, false))
                     continue;
 
-                // Interacts are bit nicer than bumps, so try interacting regardless
+                // Interacts are bit nicer than bumps, so try interacting regardless.
                 _interaction.InteractionActivate(uid, ent);
 
                 return SteeringObstacleStatus.Continuing;
@@ -111,6 +110,9 @@ public sealed partial class NPCSteeringSystem
                 // TODO: Use the verb.
                 _pryingSystem.TryPry(ent, uid, out id, uid);
 
+                if (id == null)
+                    return SteeringObstacleStatus.Failed;
+
                 component.DoAfterId = id;
                 return SteeringObstacleStatus.Continuing;
             }
@@ -127,7 +129,7 @@ public sealed partial class NPCSteeringSystem
             if (climbing.NextTransition != null)
                 return SteeringObstacleStatus.Continuing;
 
-            // Get the relevant obstacle
+            // Get the relevant obstacle.
             foreach (var ent in obstacleEnts)
             {
                 if (CanHandleClimb((uid, climbing), ent, out var climbable) &&
@@ -149,19 +151,17 @@ public sealed partial class NPCSteeringSystem
 
             _combat.SetInCombatMode(uid, true, combatMode);
 
-            // TODO: This is a hack around grilles and windows.
-            var shuffledEnts = obstacleEnts.ToList();
-            _random.Shuffle(shuffledEnts);
-
             var attackResult = false;
-            foreach (var ent in shuffledEnts)
+            foreach (var ent in obstacleEnts)
             {
-                // TODO: Validate we can damage it
                 if (!_destructibleQuery.HasComponent(ent))
                     continue;
 
-                attackResult = _melee.AttemptLightAttack(uid, weaponUid, weaponComp, ent);
-                break;
+                if (_melee.AttemptLightAttack(uid, weaponUid, weaponComp, ent))
+                {
+                    attackResult = true;
+                    break;
+                }
             }
 
             _combat.SetInCombatMode(uid, false, combatMode);

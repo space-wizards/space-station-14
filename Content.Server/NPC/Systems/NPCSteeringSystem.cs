@@ -78,7 +78,6 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
     private EntityQuery<NpcFactionMemberComponent> _factionQuery;
     private EntityQuery<PhysicsComponent> _physicsQuery;
     private EntityQuery<TransformComponent> _xformQuery;
-    // For obstacle detection:
     private EntityQuery<DoorComponent> _doorQuery;
     private EntityQuery<ClimbableComponent> _climbableQuery;
     private EntityQuery<DestructibleComponent> _destructibleQuery;
@@ -366,7 +365,6 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
         var ev = new NPCSteeringEvent(steering, xform, worldPos, offsetRot);
         RaiseLocalEvent(uid, ref ev);
         // If seek has arrived at the target node for example then immediately re-steer.
-        // Note: this seems like it's always true? Not sure when it should be false...
         var forceSteer = true;
 
         if (steering.CanSeek && !TrySeek(uid, mover, steering, body, xform, offsetRot, moveSpeed, interest, frameTime, ref forceSteer))

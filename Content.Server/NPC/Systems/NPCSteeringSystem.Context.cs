@@ -575,9 +575,9 @@ public sealed partial class NPCSteeringSystem
                          weapon.NextAttack <= _timing.CurTime;
 
 
-        foreach (var nearbyEnt in nearbyEntities)
+        nearbyEntities.RemoveWhere(nearbyEnt =>
         {
-            // Get rid of stuff we can phase through
+            // Get rid of stuff we can phase through.
             if (!_physicsQuery.TryGetComponent(nearbyEnt, out var otherBody) ||
                 !otherBody.Hard ||
                 !otherBody.CanCollide ||
@@ -585,27 +585,26 @@ public sealed partial class NPCSteeringSystem
                 (mask & otherBody.CollisionLayer) == 0x0 &&
                 (layer & otherBody.CollisionMask) == 0x0)
             {
-                nearbyEntities.Remove(nearbyEnt);
-                continue;
+                return true;
             }
 
             // If we just care about physical obstacles then this entity's checks are done.
             if (allObstacles)
-                continue;
+                return false;
 
             // If we're walking into a door we can handle...
             if (checkDoors &&
                 CanHandleDoor(ent, poly.Data.Flags, nearbyEnt))
-                nearbyEntities.Remove(nearbyEnt);
-            // Then check climbability
-            else if (checkClimbs &&
-                     CanHandleClimb((ent, climbing!), nearbyEnt, out _))
-                nearbyEntities.Remove(nearbyEnt);
+                return true;
+
+            // Then check climbability.
+            if (checkClimbs &&
+                CanHandleClimb((ent, climbing!), nearbyEnt, out _))
+                return true;
+
             // Check if we can smash. Should also check if we can even damage the entity at some point.
-            else if (checkSmash &&
-                     _destructibleQuery.HasComponent(nearbyEnt))
-                nearbyEntities.Remove(nearbyEnt);
-        }
+            return checkSmash && _destructibleQuery.HasComponent(nearbyEnt);
+        });
     }
 
     private bool CanHandleDoor(Entity<NPCSteeringComponent> ent,
@@ -623,7 +622,7 @@ public sealed partial class NPCSteeringSystem
                                !_access.IsAllowed(ent, doorUid);
         var canInteract = (ent.Comp.Flags & PathFlags.Interact) != 0x0;
 
-        // If not access locked we're fine if it can be bumped open or we can interact
+        // If not access locked we're fine if it can be bumped open or we can interact.
         if (!isAccessRequired
             && (door.BumpOpen || canInteract))
             return true;
