@@ -5,7 +5,10 @@ namespace Content.Shared.Buffers;
 /// <summary>
 /// A version of array pool that can have different implementations on server and client sides.
 /// </summary>
-public abstract class SharedRobustArrayPool<T>
+/// <remarks>
+/// TODO this should be replaced by a more performant and flexible version in RT.
+/// </remarks>
+public abstract class BaseContentArrayPool<T>
 {
     /// <summary>
     /// Takes an array from the pool that has at least the specified size.

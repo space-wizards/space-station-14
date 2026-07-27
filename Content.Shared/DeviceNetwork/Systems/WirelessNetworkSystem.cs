@@ -3,7 +3,7 @@ using Content.Shared.DeviceNetwork.Events;
 
 namespace Content.Shared.DeviceNetwork.Systems;
 
-public sealed partial class WirelessNetworkSystem : BeforeDevicePayloadSystem<WirelessNetworkComponent>
+public sealed partial class WirelessNetworkSystem : EntitySystem
 {
     [Dependency] private SharedTransformSystem _transformSystem = default!;
 
@@ -30,10 +30,5 @@ public sealed partial class WirelessNetworkSystem : BeforeDevicePayloadSystem<Wi
         {
             args.Cancelled = true;
         }
-    }
-
-    protected override void OnBeforePayload(Entity<WirelessNetworkComponent> ent, ref BeforePacketSentEvent args)
-    {
-        OnBeforePacketSent(ent, ref args);
     }
 }

@@ -24,15 +24,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
 
     [Dependency] private EntityQuery<DeviceLinkSinkComponent> _deviceLinkSinkQuery = default!;
 
-    /// <inheritdoc/>
-    public override void Initialize()
-    {
-        base.Initialize();
-        SubscribeLocalEvent<DeviceLinkSourceComponent, ComponentStartup>(OnSourceStartup);
-        SubscribeLocalEvent<DeviceLinkSourceComponent, ComponentRemove>(OnSourceRemoved);
-        SubscribeLocalEvent<DeviceLinkSinkComponent, ComponentRemove>(OnSinkRemoved);
-    }
-
+    [SubscribeLocalEvent]
     private void OnGetState(Entity<DeviceLinkSourceComponent> ent, ref ComponentGetState args)
     {
         var netOutputs = new Dictionary<ProtoId<SourcePortPrototype>, HashSet<NetEntity>>(ent.Comp.Outputs.Count);
@@ -45,6 +37,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
         args.State = new DeviceLinkSourceComponentState(netOutputs, ent.Comp.LastSignals, GetNetEntityDictionary(ent.Comp.LinkedPorts));
     }
 
+    [SubscribeLocalEvent]
     private void OnHandleState(Entity<DeviceLinkSourceComponent> ent, ref ComponentHandleState args)
     {
         if (args.Current is not DeviceLinkSourceComponentState state)
@@ -81,6 +74,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
     /// <summary>
     /// Removes invalid links where the saved sink doesn't exist/have a sink component for example
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnSourceStartup(Entity<DeviceLinkSourceComponent> source, ref ComponentStartup args)
     {
         List<EntityUid> invalidSinks = new();
@@ -130,6 +124,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
     /// <summary>
     /// Ensures that its links get deleted when a source gets removed
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnSourceRemoved(Entity<DeviceLinkSourceComponent> source, ref ComponentRemove args)
     {
         foreach (var sinkUid in source.Comp.LinkedPorts.Keys)
@@ -144,6 +139,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
     /// <summary>
     /// Ensures that its links get deleted when a sink gets removed
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnSinkRemoved(Entity<DeviceLinkSinkComponent> sink, ref ComponentRemove args)
     {
         foreach (var sourceUid in sink.Comp.LinkedSources)
@@ -676,20 +672,21 @@ public sealed partial class DeviceLinkSystem : EntitySystem
     /// Checks if the payload has a port defined and if the port is present on the sink.
     /// Raises a <see cref="SignalReceivedEvent"/> containing the payload when the check passes
     /// </summary>
-    private void OnPacketReceived(Entity<DeviceLinkSinkComponent> ent, ref DeviceNetworkPacketEvent args)
+    [SubscribeLocalEvent]
+    private void OnPacketReceived(Entity<DeviceLinkSinkComponent> ent, ref DeviceNetworkPacketEvent<SignalPayload> args)
     {
         var (uid, component) = ent;
-        if (args.Data is not SignalPayload payload
-            || !component.Ports.Contains(payload.InvokedPort))
+        if (!component.Ports.Contains(args.Data.InvokedPort))
             return;
 
-        var eventArgs = new SignalReceivedEvent(payload.InvokedPort, args.Sender, args.Data);
+        var eventArgs = new SignalReceivedEvent(args.Data.InvokedPort, args.Sender, args.Data);
         RaiseLocalEvent(uid,  ref eventArgs);
     }
 
     /// <summary>
     /// When linking from a port that currently has a signal being sent, invoke the new link with that signal.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnNewLink(Entity<DeviceLinkSourceComponent> ent, ref NewLinkEvent args)
     {
         if (args.Source != ent.Owner)

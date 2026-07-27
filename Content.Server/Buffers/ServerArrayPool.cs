@@ -3,7 +3,7 @@ using Content.Shared.Buffers;
 
 namespace Content.Server.Buffers;
 
-public sealed class ServerRobustArrayPool<T> : SharedRobustArrayPool<T>
+public sealed class ServerArrayPool<T> : BaseContentArrayPool<T>
 {
     public override T[] Rent(int minSize)
     {

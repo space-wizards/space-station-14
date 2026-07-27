@@ -2,11 +2,11 @@
 
 namespace Content.Client.Buffers;
 
-public sealed class ClientRobustArrayPool<T> : SharedRobustArrayPool<T>
+public sealed class ClientBaseContentArrayPool<T> : BaseContentArrayPool<T>
 {
-    private readonly RobustArrayPool<T> _arrayPool;
+    private readonly ContentArrayPool<T> _arrayPool;
 
-    public ClientRobustArrayPool(int startArraySize, int startBucketSize, Func<T>? factory = null, bool init = false)
+    public ClientBaseContentArrayPool(int startArraySize, int startBucketSize, Func<T>? factory = null, bool init = false)
     {
         _arrayPool = new(startArraySize, startBucketSize, factory, init);
     }

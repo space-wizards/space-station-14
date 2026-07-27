@@ -7,15 +7,9 @@ namespace Content.Shared.DeviceNetwork.Systems;
 /// <summary>
 /// This system requires the StationLimitedNetworkComponent to be on the the sending entity as well as the receiving entity
 /// </summary>
-public sealed partial class StationLimitedNetworkSystem : BeforeDevicePayloadSystem<StationLimitedNetworkComponent>
+public sealed partial class StationLimitedNetworkSystem : EntitySystem
 {
     [Dependency] private SharedStationSystem _stationSystem = default!;
-    public override void Initialize()
-    {
-        base.Initialize();
-        SubscribeLocalEvent<StationLimitedNetworkComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<StationLimitedNetworkComponent, BeforePacketSentEvent>(OnBeforePacketSent);
-    }
 
     /// <summary>
     /// Sets the station id the device is limited to.
@@ -43,6 +37,7 @@ public sealed partial class StationLimitedNetworkSystem : BeforeDevicePayloadSys
     /// <summary>
     /// Set the station id to the one the entity is on when the station limited component is added
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnMapInit(Entity<StationLimitedNetworkComponent> ent, ref MapInitEvent args)
     {
         ent.Comp.StationId = _stationSystem.GetOwningStation(ent);
@@ -51,6 +46,7 @@ public sealed partial class StationLimitedNetworkSystem : BeforeDevicePayloadSys
     /// <summary>
     /// Checks if both devices are limited to the same station
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnBeforePacketSent(Entity<StationLimitedNetworkComponent> ent, ref BeforePacketSentEvent args)
     {
         if (!ent.Comp.StationId.HasValue)
@@ -60,11 +56,6 @@ public sealed partial class StationLimitedNetworkSystem : BeforeDevicePayloadSys
         {
             args.Cancelled = true;
         }
-    }
-
-    protected override void OnBeforePayload(Entity<StationLimitedNetworkComponent> ent, ref BeforePacketSentEvent args)
-    {
-        OnBeforePacketSent(ent, ref args);
     }
 
     /// <summary>

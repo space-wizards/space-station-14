@@ -6,18 +6,10 @@ namespace Content.Client.DeviceNetwork.Systems;
 
 public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
 {
-    [Dependency] private ISharedPlayerManager _playerMan = default!;
-
     public override void Initialize()
     {
         base.Initialize();
-        DeviceArrayPool = new ClientRobustArrayPool<Device>(256, 8);
-        EntityArrayPool = new ClientRobustArrayPool<EntityUid?>(256, 8);
-        _playerMan.PlayerStatusChanged += PlayerManOnPlayerStatusChanged;
-    }
-
-    private void PlayerManOnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
-    {
-        PostInit();
+        DeviceArrayPool = new ClientBaseContentArrayPool<Device>(256, 8);
+        EntityArrayPool = new ClientBaseContentArrayPool<EntityUid?>(256, 8);
     }
 }

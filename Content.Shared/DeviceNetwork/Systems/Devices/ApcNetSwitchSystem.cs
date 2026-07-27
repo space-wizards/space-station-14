@@ -10,17 +10,11 @@ public sealed partial class ApcNetSwitchSystem : EntitySystem
 {
     [Dependency] private SharedDeviceNetworkSystem _deviceNetworkSystem = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<ApcNetSwitchComponent, InteractHandEvent>(OnInteracted);
-        SubscribeLocalEvent<ApcNetSwitchComponent, DeviceNetworkPacketEvent>(OnPackedReceived);
-    }
 
     /// <summary>
-    /// Toggles the state of the switch and sends a <see cref="TogglePayload"/>.
+    /// Toggles the state of the switch and sends a <see cref="ApcNetTogglePayload"/>.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnInteracted(Entity<ApcNetSwitchComponent> ent, ref InteractHandEvent args)
     {
         var (uid, component) = ent;
@@ -33,7 +27,7 @@ public sealed partial class ApcNetSwitchSystem : EntitySystem
         if (networkComponent.TransmitFrequency == null)
             return;
 
-        var payload = new TogglePayload
+        var payload = new ApcNetTogglePayload
         {
             Enabled = component.State,
         };
@@ -43,19 +37,17 @@ public sealed partial class ApcNetSwitchSystem : EntitySystem
     }
 
     /// <summary>
-    /// Listens to the <see cref="TogglePayload"/> of other switches to sync state.
+    /// Listens to the <see cref="ApcNetTogglePayload"/> of other switches to sync state.
     /// </summary>
-    private void OnPackedReceived(Entity<ApcNetSwitchComponent> ent, ref DeviceNetworkPacketEvent args)
+    [SubscribeLocalEvent]
+    private void OnPackedReceived(Entity<ApcNetSwitchComponent> ent, ref DeviceNetworkPacketEvent<ApcNetTogglePayload> args)
     {
         var (uid, component) = ent;
         if (!TryComp(uid, out DeviceNetworkComponent? networkComponent)
             || args.SenderAddress == networkComponent.Address)
             return;
 
-        if (args.Data is not TogglePayload toggle)
-            return;
-
-        component.State = toggle.Enabled;
+        component.State = args.Data.Enabled;
         Dirty(ent);
     }
 }

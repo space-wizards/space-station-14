@@ -7,7 +7,7 @@ namespace Content.Shared.Buffers;
 /// Automatically creates new arrays if there are not enough of them, and doesn't have a limit to store arrays.
 /// This is the most universal solution for a sandboxed <see cref="ArrayPool{T}"/>.
 /// </summary>
-public sealed class RobustArrayPool<T> : IRobustArrayPool<T>
+public sealed class ContentArrayPool<T>
 {
     public T[][] Buffer { get; set; }
 
@@ -18,7 +18,7 @@ public sealed class RobustArrayPool<T> : IRobustArrayPool<T>
 
     public Func<T>? Factory { get; set; }
 
-    public RobustArrayPool(int startArraySize, int startBucketSize, Func<T>? factory = null, bool init = false)
+    public ContentArrayPool(int startArraySize, int startBucketSize, Func<T>? factory = null, bool init = false)
     {
         Buffer = new T[startBucketSize][];
         Factory = factory;

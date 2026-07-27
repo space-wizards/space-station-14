@@ -37,7 +37,7 @@ public abstract partial class SharedDeviceNetworkSystem
 
         network ??= ent.Comp.DeviceNetId;
 
-        var packet = new DeviceNetworkPacketData(network.Value, address, frequency.Value, device.Address, ent, data);
+        var packet = new DeviceNetworkPacketData(network.Value, address, frequency.Value, ent.Comp.Address, ent, data);
         SendPacket(ref packet);
         return true;
     }
@@ -52,7 +52,7 @@ public abstract partial class SharedDeviceNetworkSystem
         if (!Resolve(ent.Owner, ref ent.Comp, false))
             return false;
 
-        if (!TryEnsureNetwork(ent.Comp.DeviceNetId, out var deviceNet))
+        if (!TryGetNetwork(ent.Comp.DeviceNetId, out var deviceNet))
             return false;
 
         var success = deviceNet.Add(ent!);
@@ -94,10 +94,10 @@ public abstract partial class SharedDeviceNetworkSystem
         if (!Resolve(ent.Owner, ref ent.Comp, false))
             return false;
 
-        if (!_networks.TryGetValue(deviceComp.DeviceNetId, out var deviceNet))
+        if (!_networks.TryGetValue(ent.Comp.DeviceNetId, out var deviceNet))
             return false;
 
-        var device = new Device(uid, deviceComp.Data);
+        var device = new Device(ent.Owner, ent.Comp.Data);
         return deviceNet.Devices.ContainsValue(device);
     }
 
@@ -135,7 +135,7 @@ public abstract partial class SharedDeviceNetworkSystem
         deviceNet.Remove(ent!);
         ent.Comp.ReceiveFrequency = frequency;
         deviceNet.Add(ent!);
-        
+
         var ev = new DeviceReceiveFrequencyChangedEvent(oldFrequency, frequency);
         RaiseLocalEvent(ent, ref ev);
 
