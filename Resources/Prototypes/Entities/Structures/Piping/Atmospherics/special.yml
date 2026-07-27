@@ -54,3 +54,42 @@
   - type: Tag
     tags:
       - SpreaderIgnore
+
+# Devices which are not portable but don't link up to anything
+- type: entity
+  id: AtmosDeviceFanTinyPowered
+  parent: AtmosDeviceFanTiny
+  name: powered tiny fan
+  description: A tiny fan, releasing a thin gust of air.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+  - type: Anchorable
+  - type: Pullable
+  - type: Physics
+    bodyType: Static
+  - type: ApcPowerReceiver
+    powerLoad: 500
+  - type: ExtensionCableReceiver
+  - type: AirtightOnPowered
+  - type: LightningTarget
+    priority: 1
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: {visible: true}
+          False: {visible: false}
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+            bounds: "-0.5,-0.5,0.5,0.5"
+  - type: Clickable
+  - type: Tag
+    tags:
+      - SpreaderIgnore
