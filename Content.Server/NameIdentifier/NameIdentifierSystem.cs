@@ -7,6 +7,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.NameIdentifier;
 
+/// <inheritdoc cref="NameIdentifierComponent"/>
 public sealed partial class NameIdentifierSystem : SharedNameIdentifierSystem
 {
     [Dependency] private IRobustRandom _robustRandom = default!;
@@ -18,6 +19,7 @@ public sealed partial class NameIdentifierSystem : SharedNameIdentifierSystem
     [ViewVariables]
     public readonly Dictionary<string, List<int>> CurrentIds = [];
 
+    /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
@@ -63,8 +65,7 @@ public sealed partial class NameIdentifierSystem : SharedNameIdentifierSystem
     }
 
     /// <summary>
-    ///     Generates a new unique name/suffix for a given entity and adds it to <see cref="CurrentIds"/>
-    ///     but does not set the entity's name.
+    /// <inheritdoc cref="GenerateUniqueNameModifier(Content.Shared.NameIdentifier.NameIdentifierGroupPrototype,out int)" path="/summary"/>
     /// </summary>
     /// <remarks>
     /// This overload resolves the ProtoId of the NameIdentifierGroupPrototype first.
@@ -77,8 +78,8 @@ public sealed partial class NameIdentifierSystem : SharedNameIdentifierSystem
     }
 
     /// <summary>
-    ///     Generates a new unique name/suffix for a given entity and adds it to <see cref="CurrentIds"/>
-    ///     but does not set the entity's name.
+    /// Generates a new unique name modifier for a given entity and adds its index to <see cref="CurrentIds"/>
+    /// but does not set the entity's name.
     /// </summary>
     /// <param name="proto">The <see cref="NameIdentifierGroupPrototype"/> prototype to retrieve from.</param>
     /// <param name="randomVal">The index value of the randomly selected modifier.</param>
@@ -86,7 +87,6 @@ public sealed partial class NameIdentifierSystem : SharedNameIdentifierSystem
     public string GenerateUniqueNameModifier(NameIdentifierGroupPrototype proto, out int randomVal)
     {
         randomVal = -1;
-        var entityName = Name(uid);
         if (!CurrentIds.TryGetValue(proto.ID, out var set))
             return string.Empty;
 
