@@ -639,3 +639,6 @@
     localizedLabel: reagent-name-sake
   - type: Sprite
     sprite: Objects/Consumable/Drinks/sakebottle.rsi
+  - type: Tag
+    tags:
+    - DrinkBottle
