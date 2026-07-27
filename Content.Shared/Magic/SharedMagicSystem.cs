@@ -408,7 +408,7 @@ public abstract partial class SharedMagicSystem : EntitySystem
         {
             var compType = entry.Component.GetType();
 
-            if (EntityManager.TryGetComponent(entity, compType, out var component))
+            if (TryComp(entity, compType, out var component))
                 playerComps.Add(name, new EntityPrototype.ComponentRegistryEntry(component));
         }
         return playerComps;

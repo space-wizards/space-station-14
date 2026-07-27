@@ -140,7 +140,7 @@ public abstract partial class SharedStealthSystem : EntitySystem
         if (ent.Comp.ChangedVisibility >= 0)
             return;
 
-        if (EntityManager.HasComponent<StealthComponent>(ent))
+        if (HasComp<StealthComponent>(ent))
             ModifyVisibility(ent, -ent.Comp.ChangedVisibility);
     }
 
