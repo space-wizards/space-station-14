@@ -7,16 +7,14 @@ namespace Content.Shared.NameIdentifier;
 /// </summary>
 public abstract partial class SharedNameIdentifierSystem : EntitySystem
 {
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<NameIdentifierComponent, RefreshNameModifiersEvent>(OnRefreshNameModifiers);
-    }
-
+    [SubscribeLocalEvent]
     private void OnRefreshNameModifiers(Entity<NameIdentifierComponent> ent, ref RefreshNameModifiersEvent args)
     {
         if (ent.Comp.Group is null)
+            return;
+
+        // Don't add whitespace
+        if (string.IsNullOrWhiteSpace(ent.Comp.FullIdentifier))
             return;
 
         // Don't apply the modifier if the component is being removed
