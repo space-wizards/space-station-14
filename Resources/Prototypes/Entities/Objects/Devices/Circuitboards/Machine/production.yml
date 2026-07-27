@@ -1367,3 +1367,18 @@
         GlassBeaker:
           amount: 2
           defaultPrototype: Beaker
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: FoodReplicatorMachineCircuitboard
+  name: food replicator machine board
+  description: A machine printed circuit board for a food replicator.
+  components:
+  - type: Sprite
+    state: service
+  - type: MachineBoard
+    prototype: FoodReplicator
+    stackRequirements:
+      Manipulator: 2
+      Cable: 2
+      Steel: 5

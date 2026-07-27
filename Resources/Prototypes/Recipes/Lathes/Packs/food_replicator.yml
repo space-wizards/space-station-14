@@ -1,0 +1,106 @@
+## Static
+
+- type: latheRecipePack
+  id: AlcoholReplicatorStatic
+  recipes:
+    ## Alcohol
+    - DrinkVodkaBottleFull
+    - DrinkWhiskeyBottleFull
+    - DrinkRumBottleFull
+    - DrinkGinBottleFull
+    - DrinkTequilaBottleFull
+    - DrinkCognacBottleFull
+    - DrinkAbsintheBottleFull
+    - DrinkSakeBottleFull
+    - DrinkWineBottleFull
+    - DrinkChampagneBottleFull
+    - DrinkBeerBottleFull
+    - DrinkBeerCan
+
+- type: latheRecipePack
+  id: FoodReplicatorStatic
+  recipes:
+    - DrinkRamen
+    - FoodSnackChowMein
+    - FoodSnackDanDanNoodles
+    - FoodBurgerPlain
+    - FoodBurgerCheese
+    - FoodBurgerTofu
+    - FoodBurgerSoy
+    - FoodMealFries
+    - FoodMealFriedegg
+    - FoodMealOmelette
+    - FoodEggBoiled
+    - FoodNoodlesBoiled
+    - FoodRiceBoiled
+    - FoodPizzaCottonSlice
+
+- type: latheRecipePack
+  id: DrinkReplicatorStatic
+  recipes:
+    ## Canned Drinks
+    - DrinkColaCan
+    - DrinkSpaceMountainWindCan
+    - DrinkSpaceUpCan
+    - DrinkRootBeerCan
+    - DrinkGrapeCan
+    - DrinkSodaWaterCan
+    - DrinkLemonLimeCan
+    - DrinkDrGibbCan
+    - DrinkEnergyDrinkCan
+    - DrinkTonicWaterCan
+    ## Drink Cartons
+    - DrinkJuiceOrangeCarton
+    - DrinkJuiceLimeCarton
+    - DrinkJuiceLemonCarton
+    - DrinkJuiceTomatoCarton
+    - DrinkJuicePineappleCarton
+    - DrinkMilkCarton
+    - DrinkSoyMilkCarton
+    - DrinkOatMilkCarton
+    - DrinkCreamCarton
+    - DrinkCoconutWaterCarton
+    ## Plastic Bottles
+    - DrinkWaterBottleFull
+    - DrinkColaBottleFull
+    - DrinkSpaceMountainWindBottleFull
+    - DrinkSpaceUpBottleFull
+    - DrinkSodaWaterBottleFull
+    ## Hot Drinks
+    - DrinkHotCoffee
+    - DrinkHotCoco
+    - DrinkGreenTea
+    - DrinkTeacup
+
+- type: latheRecipePack
+  id: TreatsReplicatorStatic
+  recipes:
+    ## Frozen Treats
+    - FoodFrozenPopsicleOrange
+    - FoodFrozenPopsicleBerry
+    - FoodFrozenPopsicleJumbo
+    - FoodFrozenSnowcone
+    - FoodFrozenSnowconeBerry
+    - FoodFrozenSnowconeFruit
+    - FoodFrozenSandwich
+    - FoodFrozenSandwichStrawberry
+    - FoodFrozenFreezy
+    - FoodFrozenCornuto
+
+- type: latheRecipePack
+  id: SnacksReplicatorStatic
+  recipes:
+    ## Packaged Snacks
+    - FoodSnackBoritos
+    - FoodSnackCnDs
+    - FoodSnackCheesie
+    - FoodSnackChips
+    - FoodSnackChocolateBar
+    - FoodSnackPopcorn
+    - FoodSnackRaisins
+    - FoodSnackPistachios
+    - FoodSnackSemki
+    - FoodSnackNutribrick
+    - FoodSnackCookieFortune
+    - FoodSnackMREBrownie
+    - FoodSnackSwirlLollipop

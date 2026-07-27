@@ -56,3 +56,10 @@ lathe-category-command = Command
 lathe-category-hats = Hats
 lathe-category-jumpsuits = Jumpsuits
 lathe-category-neck = Neck
+
+# Food Replicator
+lathe-category-drinks = Drinks
+lathe-category-snacks = Snacks
+lathe-category-treats = Treats
+lathe-category-juice = Juice
+lathe-category-alcohol = Alcohol

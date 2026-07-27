@@ -24,6 +24,7 @@ using Content.Shared.Power;
 using Content.Shared.ReagentSpeed;
 using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
+using Content.Shared.Trigger;
 using JetBrains.Annotations;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
@@ -79,7 +80,9 @@ namespace Content.Server.Lathe
             SubscribeLocalEvent<TechnologyDatabaseComponent, LatheGetRecipesEvent>(OnGetRecipes);
             SubscribeLocalEvent<EmagLatheRecipesComponent, LatheGetRecipesEvent>(GetEmagLatheRecipes);
             SubscribeLocalEvent<LatheHeatProducingComponent, LatheStartPrintingEvent>(OnHeatStartPrinting);
+            SubscribeLocalEvent<LatheComponent, VoiceTriggeredEvent>(OnLatheVoice);
         }
+
         public override void Update(float frameTime)
         {
             var query = EntityQueryEnumerator<LatheProducingComponent, LatheComponent>();
@@ -600,5 +603,124 @@ namespace Content.Server.Lathe
             FinishProducing(uid, component);
         }
         #endregion
+
+        #region Voice Activated Lathes
+        // This 100% is not a good way to do this, it breaks for a lot of different languages.
+        // Works for English and probably most Latin-ish languages.
+        private void OnLatheVoice(Entity<LatheComponent> ent, ref VoiceTriggeredEvent args)
+        {
+            if (!this.IsPowered(ent, EntityManager))
+                return;
+
+            var message = args.MessageWithoutPhrase.Trim();
+            if (string.IsNullOrEmpty(message))
+            {
+                _popup.PopupEntity(Loc.GetString("lathe-voice-recipe-not-found"), ent, args.Source);
+                return;
+            }
+
+            // Extract an optional quantity from anywhere in the message.
+            var requestTokens = new List<string>();
+            var quantity = 1;
+            var foundQuantity = false;
+            foreach (var token in message.Split(' ', StringSplitOptions.RemoveEmptyEntries))
+            {
+                if (!foundQuantity && int.TryParse(token, out var q) && q > 0)
+                {
+                    quantity = q;
+                    foundQuantity = true;
+                }
+                else
+                {
+                    requestTokens.Add(token);
+                }
+            }
+
+            var request = string.Join(' ', requestTokens).Trim();
+            if (string.IsNullOrEmpty(request))
+            {
+                _popup.PopupEntity(Loc.GetString("lathe-voice-recipe-not-found"), ent, args.Source);
+                return;
+            }
+
+            // Score each available recipe by how well its name matches the spoken request.
+            // Lower score = better match.
+            //   score 0          : exact match
+            //   score 1..N       : request contains the name; prefer longer (more specific) names
+            //                      by scoring as (request.Length - name.Length + 1), so a name
+            //                      that fills more of the request beats a short name buried in it.
+            //   score 101..M     : name contains the request; ranked last vs. the above because the
+            //                      user probably said a partial word, not the full item name.
+            LatheRecipePrototype? bestMatch = null;
+            var bestScore = int.MaxValue;
+
+            foreach (var recipeId in GetAvailableRecipes(ent, ent.Comp))
+            {
+                if (!_proto.TryIndex(recipeId, out var recipe))
+                    continue;
+                var name = GetRecipeName(recipe);
+                if (string.IsNullOrEmpty(name))
+                    continue;
+
+                int score;
+                if (name.Equals(request, StringComparison.OrdinalIgnoreCase))
+                    score = 0;
+                else if (request.Contains(name, StringComparison.OrdinalIgnoreCase))
+                    score = request.Length - name.Length + 1;
+                else if (name.Contains(request, StringComparison.OrdinalIgnoreCase))
+                    score = name.Length - request.Length + 100;
+                else
+                    continue;
+
+                if (score < bestScore)
+                {
+                    bestScore = score;
+                    bestMatch = recipe;
+                }
+            }
+
+            if (bestMatch == null)
+            {
+                _popup.PopupEntity(Loc.GetString("lathe-voice-recipe-not-found"), ent, args.Source);
+                return;
+            }
+
+            // No absurd numbers.
+            quantity = int.Min(quantity, MaxItemsPerRequest);
+
+            if (!TryAddToQueue(ent, bestMatch, quantity, ent.Comp))
+            {
+                // Find the first material we're short on and report it in sheets.
+                foreach (var (mat, amount) in bestMatch.Materials)
+                {
+                    var adjustedAmount = AdjustMaterial(amount, bestMatch.ApplyMaterialDiscount, ent.Comp.MaterialUseMultiplier);
+                    var have = _materialStorage.GetMaterialAmount(ent, mat);
+                    if (have < adjustedAmount * quantity)
+                    {
+                        var matProto = _proto.Index(mat);
+                        var sheetVol = _materialStorage.GetSheetVolume(matProto);
+                        var haveSheets = MathF.Round(have / (float) sheetVol, 1);
+                        var needSheets = MathF.Round(adjustedAmount * quantity / (float) sheetVol, 1);
+                        _popup.PopupEntity(
+                            Loc.GetString("lathe-voice-no-material",
+                                ("material", Loc.GetString(matProto.Name)),
+                                ("have", haveSheets),
+                                ("need", needSheets)),
+                            ent, args.Source);
+                        return;
+                    }
+                }
+                // TryAddToQueue failed, shouldn't hit this, warn.
+                Log.Warning($"Voice lathe {ToPrettyString(ent)} failed to queue {bestMatch.ID} for {ToPrettyString(args.Source)} with no identifiable shortage.");
+                _popup.PopupEntity(Loc.GetString("lathe-voice-unable-to-comply"), ent, args.Source);
+                return;
+            }
+
+            _popup.PopupEntity(Loc.GetString("lathe-voice-fabricating", ("item", GetRecipeName(bestMatch))), ent, args.Source);
+            TryStartProducing(ent, ent.Comp);
+        }
+
+        #endregion
+
     }
 }

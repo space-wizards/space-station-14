@@ -1,0 +1,790 @@
+## Packaged Snacks
+
+- type: latheRecipe
+  id: FoodSnackBoritos
+  result: FoodSnackBoritos
+  categories:
+  - Snacks
+  completetime: 2
+  materials:
+    Plastic: 50
+    Biomass: 4
+
+- type: latheRecipe
+  id: FoodSnackCnDs
+  result: FoodSnackCnDs
+  categories:
+  - Snacks
+  completetime: 2
+  materials:
+    Plastic: 50
+    Biomass: 4
+
+- type: latheRecipe
+  id: FoodSnackCheesie
+  result: FoodSnackCheesie
+  categories:
+  - Snacks
+  completetime: 2
+  materials:
+    Plastic: 50
+    Biomass: 4
+
+- type: latheRecipe
+  id: FoodSnackChips
+  result: FoodSnackChips
+  categories:
+  - Snacks
+  completetime: 2
+  materials:
+    Plastic: 50
+    Biomass: 4
+
+- type: latheRecipe
+  id: FoodSnackChocolateBar
+  result: FoodSnackChocolateBar
+  categories:
+  - Snacks
+  completetime: 2
+  materials:
+    Plastic: 50
+    Biomass: 5
+
+- type: latheRecipe
+  id: FoodSnackPopcorn
+  result: FoodSnackPopcorn
+  categories:
+  - Snacks
+  completetime: 2
+  materials:
+    Plastic: 50
+    Biomass: 3
+
+- type: latheRecipe
+  id: FoodSnackRaisins
+  result: FoodSnackRaisins
+  categories:
+  - Snacks
+  completetime: 2
+  materials:
+    Plastic: 50
+    Biomass: 3
+
+- type: latheRecipe
+  id: FoodSnackPistachios
+  result: FoodSnackPistachios
+  categories:
+  - Snacks
+  completetime: 2
+  materials:
+    Plastic: 50
+    Biomass: 5
+
+- type: latheRecipe
+  id: FoodSnackSemki
+  result: FoodSnackSemki
+  categories:
+  - Snacks
+  completetime: 2
+  materials:
+    Plastic: 50
+    Biomass: 3
+
+- type: latheRecipe
+  id: FoodSnackNutribrick
+  result: FoodSnackNutribrick
+  categories:
+  - Snacks
+  completetime: 2
+  materials:
+    Plastic: 50
+    Biomass: 6
+
+- type: latheRecipe
+  id: FoodSnackCookieFortune
+  result: FoodSnackCookieFortune
+  categories:
+  - Snacks
+  completetime: 2
+  materials:
+    Plastic: 25
+    Biomass: 3
+
+- type: latheRecipe
+  id: FoodSnackMREBrownie
+  result: FoodSnackMREBrownie
+  categories:
+  - Snacks
+  completetime: 2
+  materials:
+    Plastic: 50
+    Biomass: 5
+
+- type: latheRecipe
+  id: FoodSnackSwirlLollipop
+  result: FoodSnackSwirlLollipop
+  categories:
+  - Snacks
+  completetime: 2
+  materials:
+    Plastic: 25
+    Biomass: 3
+
+## Alcohol Bottles
+
+- type: latheRecipe
+  id: DrinkVodkaBottleFull
+  result: DrinkVodkaBottleFull
+  categories:
+  - Alcohol
+  completetime: 3
+  materials:
+    Glass: 100
+    Biomass: 6
+
+- type: latheRecipe
+  id: DrinkWhiskeyBottleFull
+  result: DrinkWhiskeyBottleFull
+  categories:
+  - Alcohol
+  completetime: 3
+  materials:
+    Glass: 100
+    Biomass: 6
+
+- type: latheRecipe
+  id: DrinkRumBottleFull
+  result: DrinkRumBottleFull
+  categories:
+  - Alcohol
+  completetime: 3
+  materials:
+    Glass: 100
+    Biomass: 6
+
+- type: latheRecipe
+  id: DrinkGinBottleFull
+  result: DrinkGinBottleFull
+  categories:
+  - Alcohol
+  completetime: 3
+  materials:
+    Glass: 100
+    Biomass: 6
+
+- type: latheRecipe
+  id: DrinkTequilaBottleFull
+  result: DrinkTequilaBottleFull
+  categories:
+  - Alcohol
+  completetime: 3
+  materials:
+    Glass: 100
+    Biomass: 6
+
+- type: latheRecipe
+  id: DrinkCognacBottleFull
+  result: DrinkCognacBottleFull
+  categories:
+  - Alcohol
+  completetime: 3
+  materials:
+    Glass: 100
+    Biomass: 6
+
+- type: latheRecipe
+  id: DrinkAbsintheBottleFull
+  result: DrinkAbsintheBottleFull
+  categories:
+  - Alcohol
+  completetime: 3
+  materials:
+    Glass: 100
+    Biomass: 6
+
+- type: latheRecipe
+  id: DrinkSakeBottleFull
+  result: DrinkSakeBottleFull
+  categories:
+  - Alcohol
+  completetime: 3
+  materials:
+    Glass: 100
+    Biomass: 6
+
+- type: latheRecipe
+  id: DrinkWineBottleFull
+  result: DrinkWineBottleFull
+  categories:
+  - Alcohol
+  completetime: 3
+  materials:
+    Glass: 100
+    Biomass: 5
+
+- type: latheRecipe
+  id: DrinkChampagneBottleFull
+  result: DrinkChampagneBottleFull
+  categories:
+  - Alcohol
+  completetime: 3
+  materials:
+    Glass: 100
+    Biomass: 5
+
+- type: latheRecipe
+  id: DrinkBeerBottleFull
+  result: DrinkBeerBottleFull
+  categories:
+  - Alcohol
+  completetime: 3
+  materials:
+    Glass: 100
+    Biomass: 4
+
+## Cup Noodles
+
+- type: latheRecipe
+  id: DrinkRamen
+  result: DrinkRamen
+  categories:
+  - Food
+  completetime: 3
+  materials:
+    Plastic: 75
+    Biomass: 5
+
+- type: latheRecipe
+  id: FoodSnackChowMein
+  result: FoodSnackChowMein
+  categories:
+  - Food
+  completetime: 3
+  materials:
+    Plastic: 75
+    Biomass: 5
+
+- type: latheRecipe
+  id: FoodSnackDanDanNoodles
+  result: FoodSnackDanDanNoodles
+  categories:
+  - Food
+  completetime: 3
+  materials:
+    Plastic: 75
+    Biomass: 5
+
+## Canned Drinks
+
+- type: latheRecipe
+  id: DrinkColaCan
+  result: DrinkColaCan
+  categories:
+  - Drinks
+  completetime: 2
+  materials:
+    Steel: 50
+    Biomass: 3
+
+- type: latheRecipe
+  id: DrinkSpaceMountainWindCan
+  result: DrinkSpaceMountainWindCan
+  categories:
+  - Drinks
+  completetime: 2
+  materials:
+    Steel: 50
+    Biomass: 3
+
+- type: latheRecipe
+  id: DrinkSpaceUpCan
+  result: DrinkSpaceUpCan
+  categories:
+  - Drinks
+  completetime: 2
+  materials:
+    Steel: 50
+    Biomass: 3
+
+- type: latheRecipe
+  id: DrinkRootBeerCan
+  result: DrinkRootBeerCan
+  categories:
+  - Drinks
+  completetime: 2
+  materials:
+    Steel: 50
+    Biomass: 3
+
+- type: latheRecipe
+  id: DrinkGrapeCan
+  result: DrinkGrapeCan
+  categories:
+  - Drinks
+  completetime: 2
+  materials:
+    Steel: 50
+    Biomass: 3
+
+- type: latheRecipe
+  id: DrinkSodaWaterCan
+  result: DrinkSodaWaterCan
+  categories:
+  - Drinks
+  completetime: 2
+  materials:
+    Steel: 50
+    Biomass: 2
+
+- type: latheRecipe
+  id: DrinkLemonLimeCan
+  result: DrinkLemonLimeCan
+  categories:
+  - Drinks
+  completetime: 2
+  materials:
+    Steel: 50
+    Biomass: 3
+
+- type: latheRecipe
+  id: DrinkDrGibbCan
+  result: DrinkDrGibbCan
+  categories:
+  - Drinks
+  completetime: 2
+  materials:
+    Steel: 50
+    Biomass: 3
+
+- type: latheRecipe
+  id: DrinkEnergyDrinkCan
+  result: DrinkEnergyDrinkCan
+  categories:
+  - Drinks
+  completetime: 2
+  materials:
+    Steel: 50
+    Biomass: 4
+
+- type: latheRecipe
+  id: DrinkBeerCan
+  result: DrinkBeerCan
+  categories:
+  - Drinks
+  completetime: 2
+  materials:
+    Steel: 50
+    Biomass: 4
+
+- type: latheRecipe
+  id: DrinkTonicWaterCan
+  result: DrinkTonicWaterCan
+  categories:
+  - Drinks
+  completetime: 2
+  materials:
+    Steel: 50
+    Biomass: 2
+
+## Drink Cartons
+
+- type: latheRecipe
+  id: DrinkJuiceOrangeCarton
+  result: DrinkJuiceOrangeCarton
+  categories:
+  - Juice
+  completetime: 2
+  materials:
+    Plastic: 50
+    Biomass: 4
+
+- type: latheRecipe
+  id: DrinkJuiceLimeCarton
+  result: DrinkJuiceLimeCarton
+  categories:
+  - Juice
+  completetime: 2
+  materials:
+    Plastic: 50
+    Biomass: 4
+
+- type: latheRecipe
+  id: DrinkJuiceLemonCarton
+  result: DrinkJuiceLemonCarton
+  categories:
+  - Juice
+  completetime: 2
+  materials:
+    Plastic: 50
+    Biomass: 4
+
+- type: latheRecipe
+  id: DrinkJuiceTomatoCarton
+  result: DrinkJuiceTomatoCarton
+  categories:
+  - Juice
+  completetime: 2
+  materials:
+    Plastic: 50
+    Biomass: 4
+
+- type: latheRecipe
+  id: DrinkJuicePineappleCarton
+  result: DrinkJuicePineappleCarton
+  categories:
+  - Juice
+  completetime: 2
+  materials:
+    Plastic: 50
+    Biomass: 4
+
+- type: latheRecipe
+  id: DrinkMilkCarton
+  result: DrinkMilkCarton
+  categories:
+  - Juice
+  completetime: 2
+  materials:
+    Plastic: 50
+    Biomass: 4
+
+- type: latheRecipe
+  id: DrinkSoyMilkCarton
+  result: DrinkSoyMilkCarton
+  categories:
+  - Juice
+  completetime: 2
+  materials:
+    Plastic: 50
+    Biomass: 4
+
+- type: latheRecipe
+  id: DrinkOatMilkCarton
+  result: DrinkOatMilkCarton
+  categories:
+  - Juice
+  completetime: 2
+  materials:
+    Plastic: 50
+    Biomass: 4
+
+- type: latheRecipe
+  id: DrinkCreamCarton
+  result: DrinkCreamCarton
+  categories:
+  - Juice
+  completetime: 2
+  materials:
+    Plastic: 50
+    Biomass: 4
+
+- type: latheRecipe
+  id: DrinkCoconutWaterCarton
+  result: DrinkCoconutWaterCarton
+  categories:
+  - Juice
+  completetime: 2
+  materials:
+    Plastic: 50
+    Biomass: 3
+
+## Plastic Bottles
+
+- type: latheRecipe
+  id: DrinkWaterBottleFull
+  result: DrinkWaterBottleFull
+  categories:
+  - Drinks
+  completetime: 2
+  materials:
+    Plastic: 100
+    Biomass: 2
+
+- type: latheRecipe
+  id: DrinkColaBottleFull
+  result: DrinkColaBottleFull
+  categories:
+  - Drinks
+  completetime: 2
+  materials:
+    Plastic: 100
+    Biomass: 6
+
+- type: latheRecipe
+  id: DrinkSpaceMountainWindBottleFull
+  result: DrinkSpaceMountainWindBottleFull
+  categories:
+  - Drinks
+  completetime: 2
+  materials:
+    Plastic: 100
+    Biomass: 6
+
+- type: latheRecipe
+  id: DrinkSpaceUpBottleFull
+  result: DrinkSpaceUpBottleFull
+  categories:
+  - Drinks
+  completetime: 2
+  materials:
+    Plastic: 100
+    Biomass: 6
+
+- type: latheRecipe
+  id: DrinkSodaWaterBottleFull
+  result: DrinkSodaWaterBottleFull
+  categories:
+  - Drinks
+  completetime: 2
+  materials:
+    Plastic: 100
+    Biomass: 6
+
+## Hot Drinks
+
+- type: latheRecipe
+  id: DrinkHotCoffee
+  result: DrinkHotCoffee
+  categories:
+  - Drinks
+  completetime: 3
+  materials:
+    Glass: 100
+    Biomass: 5
+
+- type: latheRecipe
+  id: DrinkHotCoco
+  result: DrinkHotCoco
+  categories:
+  - Drinks
+  completetime: 3
+  materials:
+    Glass: 100
+    Biomass: 5
+
+- type: latheRecipe
+  id: DrinkGreenTea
+  result: DrinkGreenTea
+  categories:
+  - Drinks
+  completetime: 3
+  materials:
+    Glass: 100
+    Biomass: 4
+
+- type: latheRecipe
+  id: DrinkTeacup
+  result: DrinkTeacup
+  categories:
+  - Drinks
+  completetime: 3
+  materials:
+    Glass: 100
+    Biomass: 4
+
+## Frozen Treats
+
+- type: latheRecipe
+  id: FoodFrozenPopsicleOrange
+  result: FoodFrozenPopsicleOrange
+  categories:
+  - Treats
+  completetime: 3
+  materials:
+    Plastic: 25
+    Biomass: 4
+
+- type: latheRecipe
+  id: FoodFrozenPopsicleBerry
+  result: FoodFrozenPopsicleBerry
+  categories:
+  - Treats
+  completetime: 3
+  materials:
+    Plastic: 25
+    Biomass: 4
+
+- type: latheRecipe
+  id: FoodFrozenPopsicleJumbo
+  result: FoodFrozenPopsicleJumbo
+  categories:
+  - Treats
+  completetime: 3
+  materials:
+    Plastic: 25
+    Biomass: 7
+
+- type: latheRecipe
+  id: FoodFrozenSnowcone
+  result: FoodFrozenSnowcone
+  categories:
+  - Treats
+  completetime: 3
+  materials:
+    Plastic: 25
+    Biomass: 4
+
+- type: latheRecipe
+  id: FoodFrozenSnowconeBerry
+  result: FoodFrozenSnowconeBerry
+  categories:
+  - Treats
+  completetime: 3
+  materials:
+    Plastic: 25
+    Biomass: 4
+
+- type: latheRecipe
+  id: FoodFrozenSnowconeFruit
+  result: FoodFrozenSnowconeFruit
+  categories:
+  - Treats
+  completetime: 3
+  materials:
+    Plastic: 25
+    Biomass: 4
+
+- type: latheRecipe
+  id: FoodFrozenSandwich
+  result: FoodFrozenSandwich
+  categories:
+  - Treats
+  completetime: 3
+  materials:
+    Plastic: 50
+    Biomass: 5
+
+- type: latheRecipe
+  id: FoodFrozenSandwichStrawberry
+  result: FoodFrozenSandwichStrawberry
+  categories:
+  - Treats
+  completetime: 3
+  materials:
+    Plastic: 50
+    Biomass: 5
+
+- type: latheRecipe
+  id: FoodFrozenFreezy
+  result: FoodFrozenFreezy
+  categories:
+  - Treats
+  completetime: 3
+  materials:
+    Plastic: 50
+    Biomass: 5
+
+- type: latheRecipe
+  id: FoodFrozenCornuto
+  result: FoodFrozenCornuto
+  categories:
+  - Treats
+  completetime: 3
+  materials:
+    Plastic: 25
+    Biomass: 5
+
+## Prepared Meals
+
+- type: latheRecipe
+  id: FoodBurgerPlain
+  result: FoodBurgerPlain
+  categories:
+  - Food
+  completetime: 4
+  materials:
+    Biomass: 12
+
+- type: latheRecipe
+  id: FoodBurgerCheese
+  result: FoodBurgerCheese
+  categories:
+  - Food
+  completetime: 4
+  materials:
+    Biomass: 14
+
+- type: latheRecipe
+  id: FoodBurgerTofu
+  result: FoodBurgerTofu
+  categories:
+  - Food
+  completetime: 4
+  materials:
+    Biomass: 12
+
+- type: latheRecipe
+  id: FoodBurgerSoy
+  result: FoodBurgerSoy
+  categories:
+  - Food
+  completetime: 4
+  materials:
+    Biomass: 12
+
+- type: latheRecipe
+  id: FoodMealFries
+  result: FoodMealFries
+  categories:
+  - Food
+  completetime: 4
+  materials:
+    Biomass: 11
+
+- type: latheRecipe
+  id: FoodMealFriedegg
+  result: FoodMealFriedegg
+  categories:
+  - Food
+  completetime: 4
+  materials:
+    Steel: 50
+    Biomass: 8
+
+- type: latheRecipe
+  id: FoodMealOmelette
+  result: FoodMealOmelette
+  categories:
+  - Food
+  completetime: 4
+  materials:
+    Steel: 50
+    Biomass: 8
+
+- type: latheRecipe
+  id: FoodEggBoiled
+  result: FoodEggBoiled
+  categories:
+  - Food
+  completetime: 4
+  materials:
+    Biomass: 8
+
+- type: latheRecipe
+  id: FoodNoodlesBoiled
+  result: FoodNoodlesBoiled
+  categories:
+  - Food
+  completetime: 3
+  materials:
+    Steel: 50
+    Biomass: 7
+
+- type: latheRecipe
+  id: FoodRiceBoiled
+  result: FoodRiceBoiled
+  categories:
+  - Food
+  completetime: 3
+  materials:
+    Steel: 50
+    Biomass: 7
+
+- type: latheRecipe
+  id: FoodPizzaCottonSlice
+  result: FoodPizzaCottonSlice
+  categories:
+  - Food
+  completetime: 3
+  materials:
+    Biomass: 7
