@@ -6,9 +6,9 @@ using Content.Shared.Damage.Systems;
 using Content.Shared.Mobs.Components;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Chat;
+namespace Content.Shared.Suicide;
 
-public sealed partial class SharedSuicideSystem : EntitySystem
+public abstract partial class SharedSuicideSystem : EntitySystem
 {
     private static readonly ProtoId<DamageTypePrototype> FallbackDamageType = "Blunt";
 
