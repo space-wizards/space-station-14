@@ -1,6 +1,6 @@
 ﻿using Content.Server.Chat.Systems;
-using Content.Shared.Speech.Muting;
 using Content.Shared.Mobs;
+using Content.Shared.Speech.Muting;
 
 namespace Content.Server.Mobs;
 

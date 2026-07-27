@@ -1,9 +1,9 @@
-using Content.Shared.Speech.EntitySystems;
 using Content.Shared.Abilities.Mime;
 using Content.Shared.Chat;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Popups;
 using Content.Shared.Puppet;
+using Content.Shared.Speech.EntitySystems;
 
 namespace Content.Shared.Speech.Muting;
 
