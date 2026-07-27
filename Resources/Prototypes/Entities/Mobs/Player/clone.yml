@@ -154,6 +154,7 @@
   - Sericulture # arachnids
   - MovementSpeedModifier # moths when weightless
   - JumpAbility # vulp leaping
+  - Bloodstream # blood reagents
   copyInternalStorage: false
   copyImplants: false
   raiseEntityRenamedEvent: false

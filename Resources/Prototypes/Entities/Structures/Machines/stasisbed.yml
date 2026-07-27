@@ -1,7 +1,7 @@
 - type: entity
   id: StasisBed
   name: stasis bed
-  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  parent: [ BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible ]
   description: A bed that massively slows down the patient's metabolism and prevents bodily decay, allowing more time to administer a proper treatment for stabilization.
   components:
   - type: StasisBed
@@ -31,21 +31,14 @@
   - type: ExtensionCableReceiver
   - type: Damageable
     damageModifierSet: Metallic
-  - type: Injurable
-    damageContainer: Inorganic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 75
+    - trigger: !type:DamageTrigger
+        damage: 175
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          SheetSteel1:
-            min: 1
-            max: 2
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
   - type: Strap
     position: Down
     rotation: -90
