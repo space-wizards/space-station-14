@@ -184,7 +184,6 @@
     state: Admin
   icons:
   - JobIconAdmin
-  - JobIconCluwne
   - JobIconZombie
   - JobIconSeniorEngineer
   - JobIconSeniorPhysician
