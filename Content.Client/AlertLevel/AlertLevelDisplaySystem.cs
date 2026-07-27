@@ -10,13 +10,7 @@ public sealed partial class AlertLevelDisplaySystem : EntitySystem
     [Dependency] private SpriteSystem _sprite = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<AlertLevelDisplayComponent, AppearanceChangeEvent>(OnAppearanceChange);
-    }
-
+    [SubscribeLocalEvent]
     private void OnAppearanceChange(EntityUid uid, AlertLevelDisplayComponent alertLevelDisplay, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
@@ -36,13 +30,8 @@ public sealed partial class AlertLevelDisplaySystem : EntitySystem
             return;
         }
 
-        if (alertLevelDisplay.AlertVisuals.TryGetValue(level, out var visual))
-        {
-            _sprite.LayerSetRsiState((uid, args.Sprite), layer, visual);
-        }
-        else
-        {
-            _sprite.LayerSetRsiState((uid, args.Sprite), layer, alertLevelDisplay.AlertVisuals.Values.First());
-        }
+        _sprite.LayerSetRsiState((uid, args.Sprite),
+            layer,
+            alertLevelDisplay.AlertVisuals.GetValueOrDefault(level) ?? alertLevelDisplay.AlertVisuals.Values.First());
     }
 }

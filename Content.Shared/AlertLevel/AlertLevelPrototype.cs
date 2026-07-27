@@ -1,5 +1,6 @@
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 
 namespace Content.Shared.AlertLevel;
 
@@ -7,10 +8,23 @@ namespace Content.Shared.AlertLevel;
 /// Prototype for a single alert level a station can be set to.
 /// </summary>
 [Prototype]
-public sealed partial class AlertLevelPrototype : IPrototype
+public sealed partial class AlertLevelPrototype : IPrototype, IInheritingPrototype
 {
     [IdDataField]
     public string ID { get; private set; } = default!;
+
+    [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<AlertLevelPrototype>))]
+    public string[]? Parents { get; private set; }
+
+    [NeverPushInheritance]
+    [AbstractDataField]
+    public bool Abstract { get; private set; }
+
+    [DataField(required: true)]
+    private LocId Name { get; set; }
+
+    [ViewVariables(VVAccess.ReadOnly)]
+    public string LocalizedName => Loc.GetString(Name);
 
     /// <summary>
     /// Whether this alert level is selectable from a communications console.
@@ -32,6 +46,12 @@ public sealed partial class AlertLevelPrototype : IPrototype
     /// </summary>
     [DataField]
     public LocId? Announcement;
+
+    /// <summary>
+    /// The text that is announced when this alert level is selected.
+    /// </summary>
+    [DataField]
+    public LocId? Instructions;
 
     /// <summary>
     /// The sound that will played in-game when this alert level is selected.

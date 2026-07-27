@@ -71,8 +71,6 @@ public sealed partial class SetAlertLevelCommand : LocalizedEntityCommands
             return;
         }
 
-        _alertLevelSystem.SetLevel(stationUid.Value, level,
-            force: true,
-            locked: locked);
+        _alertLevelSystem.SetLevel(stationUid.Value, level, force: true, locked: locked);
     }
 }

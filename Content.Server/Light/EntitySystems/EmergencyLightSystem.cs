@@ -11,7 +11,6 @@ using Content.Shared.Power;
 using Content.Shared.Power.Components;
 using Content.Shared.Station.Components;
 using Robust.Server.GameObjects;
-using Robust.Shared.Prototypes;
 using Color = Robust.Shared.Maths.Color;
 
 namespace Content.Server.Light.EntitySystems;
@@ -19,11 +18,11 @@ namespace Content.Server.Light.EntitySystems;
 public sealed partial class EmergencyLightSystem : SharedEmergencyLightSystem
 {
     [Dependency] private AmbientSoundSystem _ambient = default!;
+    [Dependency] private AlertLevelSystem _alert = default!;
     [Dependency] private BatterySystem _battery = default!;
     [Dependency] private PointLightSystem _pointLight = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private StationSystem _station = default!;
-    [Dependency] private IPrototypeManager _prototype = default!;
 
     public override void Initialize()
     {
@@ -59,16 +58,17 @@ public sealed partial class EmergencyLightSystem : SharedEmergencyLightSystem
                         Loc.GetString(component.BatteryStateText[component.State]))));
 
             // Show alert level on the light itself.
-            if (!TryComp<AlertLevelComponent>(_station.GetOwningStation(uid), out var alertLevelComp))
+            if (_station.GetOwningStation(uid) is not { } station)
                 return;
 
-            if (!_prototype.Resolve(alertLevelComp.CurrentAlertLevel, out var level))
+            if (!_alert.TryGetLevel(station, out var level)
+                || !ProtoMan.Resolve(level, out var proto))
                 return;
 
             args.PushMarkup(
                 Loc.GetString("emergency-light-component-on-examine-alert",
-                    ("color", level.Color.ToHex()),
-                    ("level", Loc.GetString($"alert-level-{alertLevelComp.CurrentAlertLevel}"))));
+                    ("color", proto.Color.ToHex()),
+                    ("level", proto.LocalizedName)));
         }
     }
 
@@ -91,7 +91,7 @@ public sealed partial class EmergencyLightSystem : SharedEmergencyLightSystem
 
     private void OnAlertLevelChanged(ref AlertLevelChangedEvent ev)
     {
-        if (!_prototype.Resolve(ev.AlertLevel, out var level))
+        if (!ProtoMan.Resolve(ev.AlertLevel, out var level))
             return;
 
         var query = EntityQueryEnumerator<EmergencyLightComponent, PointLightComponent, AppearanceComponent, TransformComponent>();
@@ -167,8 +167,10 @@ public sealed partial class EmergencyLightSystem : SharedEmergencyLightSystem
         if (!TryComp<ApcPowerReceiverComponent>(entity.Owner, out var receiver))
             return;
 
-        if (!TryComp<AlertLevelComponent>(_station.GetOwningStation(entity.Owner), out var alertLevelComp)
-            || !_prototype.Resolve(alertLevelComp.CurrentAlertLevel, out var level))
+        // Show alert level on the light itself.
+        if (_station.GetOwningStation(entity.Owner) is not { } station
+            || !_alert.TryGetLevel(station, out var level)
+            || !ProtoMan.Resolve(level, out var proto))
         {
             TurnOff(entity, Color.Red); // if no alert, default to off red state
             return;
@@ -177,7 +179,7 @@ public sealed partial class EmergencyLightSystem : SharedEmergencyLightSystem
         if (receiver.Powered && !entity.Comp.ForciblyEnabled) // Green alert
         {
             receiver.Load = (int)Math.Abs(entity.Comp.Wattage);
-            TurnOff(entity, level.EmergencyLightColor);
+            TurnOff(entity, proto.EmergencyLightColor);
             SetState(entity.Owner, entity.Comp, EmergencyLightState.Charging);
         }
         else if (!receiver.Powered) // If internal battery runs out it will end in off red state
@@ -187,7 +189,7 @@ public sealed partial class EmergencyLightSystem : SharedEmergencyLightSystem
         }
         else // Powered and enabled
         {
-            TurnOn(entity, level.EmergencyLightColor);
+            TurnOn(entity, proto.EmergencyLightColor);
             SetState(entity.Owner, entity.Comp, EmergencyLightState.On);
         }
     }

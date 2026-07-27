@@ -20,6 +20,11 @@ public sealed partial class AlertLevelSystem : EntitySystem
     [Dependency] private SharedChatSystem _chat = default!;
     [Dependency] private SharedStationSystem _station = default!;
 
+    private static string _fallbackAlertKey = "alert-level-unknown";
+    private static string _fallbackAlertName = $"{_fallbackAlertKey}";
+    private static string _fallbackAlertAnnouncement = $"{_fallbackAlertKey}";
+    private static string _fallbackAlertInstructions = $"{_fallbackAlertKey}";
+
     public override void Update(float time)
     {
         var query = EntityQueryEnumerator<AlertLevelComponent>();
@@ -153,15 +158,10 @@ public sealed partial class AlertLevelSystem : EntitySystem
 
         var stationName = MetaData(station.Owner).EntityName;
 
-        var name = Loc.GetString($"alert-level-{level}");
-
-        // Announcement text passed into announcementFull.
-        var announcement = string.Empty;
-        if (prototype.Announcement != null)
-            announcement = Loc.GetString(prototype.Announcement);
-
         // The full announcement to be spat out into chat.
-        var announcementFull = Loc.GetString("alert-level-announcement", ("name", name), ("announcement", announcement));
+        var announcementFull = Loc.GetString("alert-level-announcement",
+            ("name", prototype.LocalizedName),
+            ("announcement", AlertLevelAnnouncement(prototype)));
 
         var ev = new AlertLevelChangedEvent(station, level);
         RaiseLocalEvent(ref ev);
@@ -193,6 +193,122 @@ public sealed partial class AlertLevelSystem : EntitySystem
                 sender: stationName);
         }
 
+    }
+
+    /// <summary>
+    /// Returns the name, announcement, and description of this station's alert level.
+    /// </summary>
+    public (string Name, string Announcement, string Instructions) AlertLevelData(Entity<AlertLevelComponent?> station)
+    {
+        if (!TryGetDefaultLevel(station, out var level))
+        {
+            return (Loc.GetString(_fallbackAlertName),
+                Loc.GetString(_fallbackAlertAnnouncement),
+                Loc.GetString(_fallbackAlertInstructions));
+        }
+
+        return AlertLevelData(level);
+    }
+
+    /// <summary>
+    /// Returns the name, announcement, and description of the given alert level.
+    /// </summary>
+    public (string Name, string Announcement, string Instructions) AlertLevelData(ProtoId<AlertLevelPrototype>? level)
+    {
+        if (!ProtoMan.Resolve(level, out var proto))
+        {
+            return (Loc.GetString(_fallbackAlertName),
+                Loc.GetString(_fallbackAlertAnnouncement),
+                Loc.GetString(_fallbackAlertInstructions));
+        }
+
+        return AlertLevelData(proto);
+    }
+
+    /// <summary>
+    /// Returns the name, announcement, and description of the given alert level.
+    /// </summary>
+    public (string Name, string Announcement, string Instructions) AlertLevelData(AlertLevelPrototype level)
+    {
+        return (level.LocalizedName, AlertLevelAnnouncement(level), AlertLevelInstructions(level));
+    }
+
+    /// <summary>
+    /// Returns the name of this station's current alert level.
+    /// </summary>
+    /// <returns>Returns the name of the current Alert Level.</returns>
+    public string AlertLevelName(Entity<AlertLevelComponent?> station)
+    {
+        return !TryGetDefaultLevel(station, out var level)
+            ? Loc.GetString(_fallbackAlertName)
+            : AlertLevelName(level);
+    }
+
+    /// <summary>
+    /// Returns the name of the given alert level.
+    /// </summary>
+    /// <returns>Returns the name of the given Alert Level.</returns>
+    public string AlertLevelName(ProtoId<AlertLevelPrototype>? level)
+    {
+        return !ProtoMan.Resolve(level, out var proto)
+            ? Loc.GetString(_fallbackAlertName)
+            : proto.LocalizedName;
+    }
+
+    /// <summary>
+    /// Gets the announcement message for the stations' current alert level.
+    /// </summary>
+    /// <returns>Returns the description of the current Alert Level.</returns>
+    public string AlertLevelAnnouncement(Entity<AlertLevelComponent?> station)
+    {
+        return !TryGetDefaultLevel(station, out var level)
+            ? Loc.GetString(_fallbackAlertAnnouncement)
+            : AlertLevelAnnouncement(level);
+    }
+
+    /// <see cref="AlertLevelAnnouncement(AlertLevelPrototype)"/>
+    public string AlertLevelAnnouncement(ProtoId<AlertLevelPrototype>? level)
+    {
+        return !ProtoMan.Resolve(level, out var proto)
+            ? Loc.GetString(_fallbackAlertAnnouncement)
+            : AlertLevelAnnouncement(proto);
+    }
+
+    /// <summary>
+    /// Gets the announcement message for the given alert level.
+    /// </summary>
+    /// <returns>Returns the announcement for the given Alert Level.</returns>
+    public string AlertLevelAnnouncement(AlertLevelPrototype level)
+    {
+        return Loc.GetString(level.Announcement ?? _fallbackAlertAnnouncement);
+    }
+
+    /// <summary>
+    /// Gets the instructions for the station's current alert level.
+    /// </summary>
+    /// <returns>Returns the instructions for the current alert level.</returns>
+    public string AlertLevelInstructions(Entity<AlertLevelComponent?> station)
+    {
+        return !TryGetDefaultLevel(station, out var level)
+            ? Loc.GetString(_fallbackAlertInstructions)
+            : AlertLevelInstructions(level);
+    }
+
+    /// <see cref="AlertLevelInstructions(AlertLevelPrototype)"/>
+    public string AlertLevelInstructions(ProtoId<AlertLevelPrototype>? level)
+    {
+        return !ProtoMan.Resolve(level, out var proto)
+            ? Loc.GetString(_fallbackAlertInstructions)
+            : AlertLevelInstructions(proto);
+    }
+
+    /// <summary>
+    /// Gets the instructions for the given alert level.
+    /// </summary>
+    /// <returns>Returns the instructions for the given Alert Level.</returns>
+    public string AlertLevelInstructions(AlertLevelPrototype level)
+    {
+        return Loc.GetString(level.Instructions ?? _fallbackAlertInstructions);
     }
 }
 
