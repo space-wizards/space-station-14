@@ -18,24 +18,24 @@ public sealed class ReclaimerLoopTest : InteractionTest
     //ProtoIDs we need
     private static readonly EntProtoId ApcId = "APCBasic";
     private static readonly EntProtoId FloorTileId = "FloorTileItemSteel";
-    private static readonly EntProtoId Recycler = "Recycler";
+
+    private static readonly string[] Reclaimers = GameDataScrounger.EntitiesWithComponent("MaterialReclaimer");
 
     [SidedDependency(Side.Server)] private readonly SharedMaterialReclaimerSystem _materialReclaimerSystem = null!;
 
     [Test]
+    [TestCaseSource(nameof(Reclaimers))]
     [TestOf(typeof(MaterialReclaimerSystem))]
     [TestOf(typeof(MaterialReclaimerComponent))]
     [Description("For every material that a reclaimer can spawn, make sure that it cannot get stuck in a loop of spawning then recycling.")]
     [TrackingIssue("https://github.com/space-wizards/space-station-14/issues/39691")]
-    public async Task MaterialSpawnLoopTest()
+    public async Task MaterialSpawnLoopTest(string reclaimerId)
     {
         //Spawn the reclaimer
-        await SpawnTarget(Recycler, PlayerCoords);
-        Assert.That(STarget, Is.Not.Null, "STarget was null, did the recycler spawn correctly?");
+        await SpawnTarget(reclaimerId, PlayerCoords);
+        Assert.That(STarget, Is.Not.Null, "STarget was null, did the reclaimer spawn correctly?");
 
-        // Check that we can actually reclaim materials in the test.
         var reclaimComp = Comp<MaterialReclaimerComponent>(Target);
-        Assert.That(reclaimComp.ReclaimMaterials, "The recycler cannot reclaim materials!");
 
         // Power the reclaimer
         await SpawnEntity(ApcId, SEntMan.GetCoordinates(TargetCoords));
@@ -47,10 +47,14 @@ public sealed class ReclaimerLoopTest : InteractionTest
         });
 
         //Assert that reclaimer enabled
-        Assert.That(reclaimComp.Enabled, "The recycler did not get or stay enabled");
+        Assert.That(reclaimComp.Enabled, "The reclaimer did not get or stay enabled");
 
         //put a floor tile down
         await InteractUsing(FloorTileId);
+
+        // Reclaimer can't reclaim materials?  Job's done.
+        if (!reclaimComp.ReclaimMaterials)
+            return;
 
         using (Assert.EnterMultipleScope())
         {
@@ -78,7 +82,7 @@ public sealed class ReclaimerLoopTest : InteractionTest
                 Assert.That(
                     HandSys.GetActiveItem((SPlayer, Hands)),
                     Is.Not.Null,
-                    $"The material that should not have been reclaimed, {matStack}, is no longer in our hands.");
+                    $"The material that should not have been reclaimed, {matStack}, is no longer in our hands. The reclaimer was {reclaimerId}");
             }
         }
     }
