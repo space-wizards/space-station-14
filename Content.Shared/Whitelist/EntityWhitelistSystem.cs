@@ -38,7 +38,15 @@ public sealed partial class EntityWhitelistSystem : EntitySystem
     /// </summary>
     public bool IsValid(EntityWhitelist list, EntityUid uid)
     {
-        if (list.RecursiveContainerLookUp &&
+        if (list.RecursiveContainerAny &&
+            HasComp<ContainerManagerComponent>(uid) &&
+            _container.GetAllContainers(uid)
+                .SelectMany(container => container.ContainedEntities)
+                .Any(entity => IsValid(list, entity)))
+            return true;
+
+        if (list.RecursiveContainerAll &&
+            HasComp<ContainerManagerComponent>(uid) &&
             _container.GetAllContainers(uid)
                 .SelectMany(container => container.ContainedEntities)
                 .Any(entity => !IsValid(list, entity)))
