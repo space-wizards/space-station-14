@@ -584,6 +584,9 @@
   id: FirelockElectronics # ConstructionGraph: Firelock
 
 - type: Tag
+  id: FitInTeleporterConsole
+
+- type: Tag
   id: Flare # Storage whitelist: BaseClothingBeltEngineering
 
 - type: Tag
