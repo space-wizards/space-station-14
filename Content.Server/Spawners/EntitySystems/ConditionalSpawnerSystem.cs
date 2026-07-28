@@ -9,7 +9,6 @@ using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using System.Numerics;
 
 namespace Content.Server.Spawners.EntitySystems;
 
@@ -21,7 +20,6 @@ public sealed partial class ConditionalSpawnerSystem : EntitySystem
     [Dependency] private IRobustRandom _robustRandom = default!;
     [Dependency] private GameTicker _ticker = default!;
     [Dependency] private EntityTableSystem _entityTable = default!;
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private StackSystem _stack = default!;
     [Dependency] private TransformSystem _xform = default!;
 
@@ -149,7 +147,7 @@ public sealed partial class ConditionalSpawnerSystem : EntitySystem
         ValueList<EntProtoId> nonStackable = [];
         foreach (var protoId in spawns)
         {
-            var prototype = _prototypeManager.Index(protoId);
+            var prototype = ProtoMan.Index(protoId);
             if (!prototype.TryComp<StackComponent>(out var stack, Factory))
             {
                 nonStackable.Add(protoId);
