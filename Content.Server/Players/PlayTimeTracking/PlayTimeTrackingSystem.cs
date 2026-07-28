@@ -2,11 +2,11 @@ using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Administration.Managers;
 using Content.Server.Afk;
-using Content.Server.Afk.Events;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Events;
 using Content.Server.Preferences.Managers;
 using Content.Server.Station.Events;
+using Content.Shared.Afk.Events;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.Mobs;
@@ -48,8 +48,8 @@ public sealed partial class PlayTimeTrackingSystem : EntitySystem
         SubscribeLocalEvent<PlayerDetachedEvent>(OnPlayerDetached);
         SubscribeLocalEvent<RoleAddedEvent>(OnRoleEvent);
         SubscribeLocalEvent<RoleRemovedEvent>(OnRoleEvent);
-        SubscribeLocalEvent<AFKEvent>(OnAFK);
-        SubscribeLocalEvent<UnAFKEvent>(OnUnAFK);
+        SubscribeLocalEvent<AfkEvent>(OnAFK);
+        SubscribeLocalEvent<UnAfkEvent>(OnUnAFK);
         SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<PlayerJoinedLobbyEvent>(OnPlayerJoinedLobby);
         SubscribeLocalEvent<StationJobsGetCandidatesEvent>(OnStationJobsGetCandidates);
@@ -134,14 +134,16 @@ public sealed partial class PlayTimeTrackingSystem : EntitySystem
         _tracking.Save();
     }
 
-    private void OnUnAFK(ref UnAFKEvent ev)
+    private void OnUnAFK(UnAfkEvent ev)
     {
-        _tracking.QueueRefreshTrackers(ev.Session);
+        var session = _playerManager.GetSessionById(ev.UserId);
+        _tracking.QueueRefreshTrackers(session);
     }
 
-    private void OnAFK(ref AFKEvent ev)
+    private void OnAFK(AfkEvent ev)
     {
-        _tracking.QueueRefreshTrackers(ev.Session);
+        var session = _playerManager.GetSessionById(ev.UserId);
+        _tracking.QueueRefreshTrackers(session);
     }
 
     private void AdminPermsChanged(AdminPermsChangedEventArgs admin)

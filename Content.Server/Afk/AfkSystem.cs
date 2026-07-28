@@ -1,6 +1,6 @@
 using Content.Server.Administration.Managers;
-using Content.Server.Afk.Events;
 using Content.Server.GameTicking;
+using Content.Shared.Afk.Events;
 using Content.Shared.CCVar;
 using Content.Shared.Instruments;
 using Robust.Server.Player;
@@ -15,7 +15,7 @@ namespace Content.Server.Afk;
 /// <summary>
 /// Actively checks for AFK players regularly and issues an event whenever they go afk.
 /// </summary>
-public sealed partial class AFKSystem : EntitySystem
+public sealed partial class AfkSystem : EntitySystem
 {
     [Dependency] private IAdminManager _admin = default!;
     [Dependency] private IAfkManager _afkManager = default!;
@@ -115,8 +115,9 @@ public sealed partial class AFKSystem : EntitySystem
         if (!_afkPlayers.Remove(session))
             return;
 
-        var ev = new UnAFKEvent(session);
-        RaiseLocalEvent(ref ev);
+        var ev = new UnAfkEvent(session.UserId);
+        RaiseLocalEvent(ev);
+        RaiseNetworkEvent(ev, session);
     }
 
     public override void Update(float frameTime)
@@ -156,15 +157,17 @@ public sealed partial class AFKSystem : EntitySystem
 
             if (isAfk && _afkPlayers.Add(pSession))
             {
-                var ev = new AFKEvent(pSession);
-                RaiseLocalEvent(ref ev);
+                var ev = new AfkEvent(pSession.UserId);
+                RaiseLocalEvent(ev);
+                RaiseNetworkEvent(ev, pSession);
                 continue;
             }
 
             if (!isAfk && _afkPlayers.Remove(pSession))
             {
-                var ev = new UnAFKEvent(pSession);
-                RaiseLocalEvent(ref ev);
+                var ev = new UnAfkEvent(pSession.UserId);
+                RaiseLocalEvent(ev);
+                RaiseNetworkEvent(ev, pSession);
             }
         }
     }

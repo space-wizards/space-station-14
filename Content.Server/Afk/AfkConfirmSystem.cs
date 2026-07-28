@@ -1,12 +1,10 @@
-using Content.Server.Afk.Events;
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Managers;
 using Content.Server.EUI;
-using Content.Shared.Afk;
+using Content.Shared.Afk.Events;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Database;
-using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
@@ -37,7 +35,7 @@ public sealed partial class AfkConfirmSystem : EntitySystem
         base.Initialize();
 
         // Unafking does NOT clear it, require them to confirm via the window so they don't just random mash buttons.
-        SubscribeLocalEvent<AFKEvent>(OnAfk);
+        SubscribeLocalEvent<AfkEvent>(OnAfk);
         _players.PlayerStatusChanged += OnPlayerStatusChanged;
         _cfg.OnValueChanged(CCVars.AfkTime, OnAfkTimeChanged);
     }
@@ -56,9 +54,10 @@ public sealed partial class AfkConfirmSystem : EntitySystem
         _cfg.UnsubValueChanged(CCVars.AfkTime, OnAfkTimeChanged);
     }
 
-    private void OnAfk(ref AFKEvent ev)
+    private void OnAfk(AfkEvent ev)
     {
-        TryStartConfirmation(ev.Session);
+        var session = _players.GetSessionById(ev.UserId);
+        TryStartConfirmation(session);
     }
 
     /// <summary>
