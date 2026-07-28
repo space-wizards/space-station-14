@@ -134,6 +134,18 @@
             "name":"xenoborg-basic-module"
         },
         {
+            "name":"xenoborg-jump-module"
+        },
+        {
+            "name":"xenoborg-camera-computer"
+        },
+        {
+            "name":"xenoborg-control-computer"
+        },
+        {
+            "name":"xenoborg-door-remote-module"
+        },
+        {
             "name":"xenoborg-extinguisher-module"
         },
         {
@@ -155,6 +167,9 @@
             "name":"xenoborg-laser2-module"
         },
         {
+            "name":"xenoborg-module-module"
+        },
+        {
             "name":"xenoborg-projector-module"
         },
         {
@@ -165,6 +180,9 @@
         },
         {
             "name":"xenoborg-sword2-module"
+        },
+        {
+            "name":"xenoborg-tile-module"
         },
         {
             "name":"xenoborg-tool-module"

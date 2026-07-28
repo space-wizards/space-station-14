@@ -50,7 +50,7 @@ public abstract partial class SharedStationSystem
 
         var xform = ent.Comp2;
 
-        if (!_xformQuery.Resolve(ent, ref xform))
+        if (!Resolve(ent, ref xform))
             return;
 
         // Entity is in nullspace or not on a grid

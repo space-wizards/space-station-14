@@ -4,10 +4,10 @@ using Content.Shared.Gravity;
 
 namespace Content.Server.Gravity;
 
-public sealed class GravityGeneratorSystem : EntitySystem
+public sealed partial class GravityGeneratorSystem : SharedGravityGeneratorSystem
 {
-    [Dependency] private readonly GravitySystem _gravitySystem = default!;
-    [Dependency] private readonly SharedPointLightSystem _lights = default!;
+    [Dependency] private GravitySystem _gravitySystem = default!;
+    [Dependency] private SharedPointLightSystem _lights = default!;
 
     public override void Initialize()
     {
@@ -36,6 +36,7 @@ public sealed class GravityGeneratorSystem : EntitySystem
     private void OnActivated(Entity<GravityGeneratorComponent> ent, ref ChargedMachineActivatedEvent args)
     {
         ent.Comp.GravityActive = true;
+        Dirty(ent, ent.Comp);
 
         var xform = Transform(ent);
 
@@ -48,6 +49,7 @@ public sealed class GravityGeneratorSystem : EntitySystem
     private void OnDeactivated(Entity<GravityGeneratorComponent> ent, ref ChargedMachineDeactivatedEvent args)
     {
         ent.Comp.GravityActive = false;
+        Dirty(ent, ent.Comp);
 
         var xform = Transform(ent);
 

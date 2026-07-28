@@ -29,6 +29,7 @@
   parent: BaseMagazineBoxAntiMateriel
   id: MagazineBoxAntiMateriel
   name: ammunition box (.60 anti-materiel)
+  description: A cardboard box of .60 anti-materiel rounds.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeAntiMateriel
