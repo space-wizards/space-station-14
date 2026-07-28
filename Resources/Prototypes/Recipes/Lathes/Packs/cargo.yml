@@ -23,6 +23,7 @@
   - MineralScannerEmpty
   - AdvancedMineralScannerEmpty
   - OreBag # DS14
+  - WeaponPlasmaCutter #DS14
   - OreBagOfHolding
 
 - type: latheRecipePack

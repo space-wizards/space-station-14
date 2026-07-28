@@ -24,3 +24,11 @@
     Steel: 800
     Plastic: 300
     Gold: 50
+
+- type: latheRecipe
+  id: WeaponPlasmaCutter
+  result: WeaponPlasmaCutter
+  materials:
+    Plastic: 1000
+    Plasteel: 500
+    Plasma: 500
