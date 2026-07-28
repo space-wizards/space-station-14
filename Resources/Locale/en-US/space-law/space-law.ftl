@@ -30,7 +30,7 @@ crime-severity-capital-code = 5-XX
 
 crime-petty-theft-name = Petty Theft (H)
 crime-petty-theft-desc = To take non-vital or inexpensive property of another individual, organization, or common property, without consent.
-crime-petty-theft-notes = Petty theft covers the owning or possession of items that were not lawfully or consentually given to the holder. This may include departmental contraband if the contraband was not approved for the holder. Items covered by petty theft are usually easily replaceable, low-value, or low-danger.
+crime-petty-theft-notes =  Petty theft covers the possession of items that were not lawfully or consensually given to the holder. This may include departmental contraband if the contraband was not approved for the holder. Items covered by petty theft are usually easily replaceable, low-value, or low-danger.
 crime-petty-theft-code = 1-01
 
 crime-vandalism-name = Vandalism (D)
@@ -62,12 +62,12 @@ crime-disturbance-code = 1-06
 
 crime-resisting-search-name = Resisting a Lawful Search (E)
 crime-resisting-search-desc = To resist a reasonable or lawful search or seizure by a member of the security department, or an authorized head of staff.
-crime-resisting-search-notes = The search or seizure must be legal, either through a valid warrant, evidence, or alert level. The perpetrator must have made an active attempt to flee, resist restraint, or refuse to hand over contraband if applicable.
+crime-resisting-search-notes = The search or seizure must be legal, either through a valid warrant, evidence, or alert level. The perpetrator must have made an active attempt to flee, resist restraint, or, if applicable, refuse to hand over contraband.
 crime-resisting-search-code = 2-00
 
 crime-grand-theft-name = Grand Theft (H)
 crime-grand-theft-desc = To take critical or unreplaceable property of another individual or organization without consent.
-crime-grand-theft-notes = The difference between theft and grand theft is based on how crucial the stolen item is. This is mostly used for the theft of command staff items such as door remotes, hardsuits, jetpacks, and unreplaceable machine parts. Additionally, stealing anything from the armory is grand theft, including seized contraband.
+crime-grand-theft-notes = The difference between theft and grand theft is based on how crucial the stolen item is; this is mostly used for the theft of command staff items such as door remotes, hardsuits, jetpacks, and irreplaceable machine parts. Additionally, stealing anything from the armory is grand theft, including seized contraband.
 crime-grand-theft-code = 2-01
 
 crime-damage-property-name = Damage of Property (D)
@@ -77,7 +77,7 @@ crime-damage-property-code = 2-02
 
 crime-secure-trespass-name = Secure Trespass (T)
 crime-secure-trespass-desc = To enter a secured area without permission.
-crime-secure-trespass-notes = This covers places like telecomms, head offices, security zones, command areas, the vault, and the armory.
+crime-secure-trespass-notes = This covers places like telecommunications, head offices, security zones, command areas, the vault, and the armory.
 crime-secure-trespass-code = 2-03
 
 crime-assault-name = Assault (V)
@@ -86,7 +86,7 @@ crime-assault-notes = Attempted murder and assault are different; a fist fight i
 crime-assault-code = 2-04
 
 crime-gross-negligence-name = Gross Negligence (V)
-crime-gross-negligence-desc = A conscious, reckless disregard for the safety or wellbeing of others.
+crime-gross-negligence-desc = A conscious, reckless disregard for the safety or well-being of others.
 crime-gross-negligence-notes = To cause an unreasonable amount of damage to a part of the station as a result of negligence. This could be purposefully allowing anomalies to go critical, or causing an accidental but not permanent death.
 crime-gross-negligence-code = 2-05
 
@@ -109,7 +109,7 @@ crime-kidnapping-code = 3-04
 
 crime-rioting-name = Rioting (R)
 crime-rioting-desc = To take part in a large group of personnel creating an unlawful public disturbance.
-crime-rioting-notes = Leaders of a riot can be charged with all crimes that happen under their lead.
+crime-rioting-notes = Leaders of a riot can be charged with all crimes that happen under their leadership.
 crime-rioting-code = 3-06
 
 # Extreme Crimes
@@ -137,13 +137,13 @@ crime-manslaughter-code = 4-05
 # Capital Crimes
 
 crime-breach-permanent-confinement-name = Breach of Permanent Confinement (E)
-crime-breach-permanent-confinement-desc = To break someone sentenced to Permanent Confinement out of a cell or custody with the intention of escaping.
-crime-breach-permanent-confinement-notes = Includes breaking out other people sentenced to Permanent Confinement.
+crime-breach-permanent-confinement-desc = To break someone sentenced to permanent confinement out of a cell or custody with the intention of escaping.
+crime-breach-permanent-confinement-notes = Includes breaking out other people sentenced to permanent confinement.
 crime-breach-permanent-confinement-code = 5-00
 
 crime-station-destruction-name = Station-Wide Destruction (D)
 crime-station-destruction-desc = To engage in maliciously destructive actions which threaten to destroy, or successfully destroy a vessel or habitat.
-crime-station-destruction-notes = Summed up, extreme sabotage of station systems or setting off self-destruction systems. This includes any means causing the entire station to become uninhabitable, releasing an active singularity, station-wide atmospherics sabotage, and destruction of the station AI.
+crime-station-destruction-notes = Summed up, extreme sabotage of station systems or setting off self-destruction systems. This includes any means that cause the entire station to become uninhabitable, releasing an active singularity, station-wide atmospherics sabotage, and destruction of the station AI.
 crime-station-destruction-code = 5-02
 
 crime-murder-name = Murder (V)

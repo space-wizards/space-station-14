@@ -1,6 +1,6 @@
 <Document>
 # Space Law: Crime Listing
-Crime codes are colored by linked crime groups, which are classifications of crimes that are similar in nature. These classifications are useful for differentiating violent criminals from anti-authoritarian ones for example.
+Crime codes are colored by linked crime groups, which are classifications of crimes that are similar in nature. These classifications are useful for differentiating violent criminals from anti-authoritarian ones, for example.
  
 # Quick Crime Guide
 <GuideSpaceLawEmbed Tiers="MinorCrimes,ModerateCrimes,MajorCrimes,ExtremeCrimes,CapitalCrimes"/>
