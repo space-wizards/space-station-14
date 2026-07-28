@@ -75,5 +75,5 @@ public sealed partial class DiceComponent : Component
     /// </summary>
     [DataField]
     [AutoNetworkedField]
-    public int CurrentValue { get; set; } = 20;
+    public int CurrentValue = 20;
 }

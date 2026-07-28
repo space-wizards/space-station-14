@@ -90,10 +90,7 @@ public abstract partial class SharedDiceSystem : EntitySystem
                 ("die", entity),
                 ("currentSide", GetRolledValueString(entity)));
 
-        if (user == null)
-            _popup.PopupEntity(popupString, entity);
-        else
-            _popup.PopupEntity(popupString, entity, user);
+        _popup.PopupEntity(popupString, entity);
 
         _audio.PlayPredicted(entity.Comp.Sound, entity, user);
     }
