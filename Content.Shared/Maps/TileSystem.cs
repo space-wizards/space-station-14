@@ -25,7 +25,6 @@ public sealed partial class TileSystem : EntitySystem
     [Dependency] private ITileDefinitionManager _tileDefinitionManager = default!;
     [Dependency] private SharedDecalSystem _decal = default!;
     [Dependency] private SharedMapSystem _maps = default!;
-    [Dependency] private SharedTransformSystem _xform = default!;
     [Dependency] private TurfSystem _turf = default!;
     [Dependency] private IGameTiming _timing = default!;
 
