@@ -57,8 +57,6 @@
     thresholds:
     - trigger: *DamageTrigger10
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
       - !type:SpawnEntitiesBehavior
         spawn:
           FloorCarpetItemRed: &BaseCarpetSpawn
@@ -79,8 +77,6 @@
     thresholds:
     - trigger: *DamageTrigger10
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
       - !type:SpawnEntitiesBehavior
         spawn:
           FloorCarpetItemBlack: *BaseCarpetSpawn
@@ -99,8 +95,6 @@
     thresholds:
     - trigger: *DamageTrigger10
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
       - !type:SpawnEntitiesBehavior
         spawn:
           FloorCarpetItemPink: *BaseCarpetSpawn
@@ -119,8 +113,6 @@
     thresholds:
     - trigger: *DamageTrigger10
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
       - !type:SpawnEntitiesBehavior
         spawn:
           FloorCarpetItemBlue: *BaseCarpetSpawn
@@ -139,8 +131,6 @@
     thresholds:
     - trigger: *DamageTrigger10
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
       - !type:SpawnEntitiesBehavior
         spawn:
           FloorCarpetItemGreen: *BaseCarpetSpawn
@@ -159,8 +149,6 @@
     thresholds:
     - trigger: *DamageTrigger10
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
       - !type:SpawnEntitiesBehavior
         spawn:
           FloorCarpetItemOrange: *BaseCarpetSpawn
@@ -179,8 +167,6 @@
     thresholds:
     - trigger: *DamageTrigger10
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
       - !type:SpawnEntitiesBehavior
         spawn:
           FloorCarpetItemSkyBlue: *BaseCarpetSpawn
@@ -199,8 +185,6 @@
     thresholds:
     - trigger: *DamageTrigger10
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
       - !type:SpawnEntitiesBehavior
         spawn:
           FloorCarpetItemPurple: *BaseCarpetSpawn
@@ -219,8 +203,6 @@
     thresholds:
     - trigger: *DamageTrigger10
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
       - !type:SpawnEntitiesBehavior
         spawn:
           FloorCarpetItemCyan: *BaseCarpetSpawn
@@ -239,8 +221,6 @@
     thresholds:
     - trigger: *DamageTrigger10
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
       - !type:SpawnEntitiesBehavior
         spawn:
           FloorCarpetItemWhite: *BaseCarpetSpawn
