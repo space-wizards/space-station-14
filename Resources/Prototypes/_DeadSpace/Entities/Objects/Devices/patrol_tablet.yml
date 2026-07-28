@@ -7,7 +7,7 @@
   - type: Sprite
     sprite: _DeadSpace/Objects/Devices/patroltablet.rsi
     layers:
-    - state: base
+    - state: tablet
   - type: Item
     size: Normal
   - type: ActivatableUI
@@ -24,3 +24,5 @@
   - type: WirelessNetworkConnection
     range: 500
   - type: StationLimitedNetwork
+  - type: ScaleVisuals
+    scale: 0.65,0.65
