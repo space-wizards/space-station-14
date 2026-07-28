@@ -58,8 +58,8 @@ public sealed partial class NetworkConfiguratorSystem
         var defaults = _deviceLinkSystem.GetDefaults(sources);
         var sourceIds = sources.Select(s => (ProtoId<SourcePortPrototype>)s.ID).ToArray();
 
-        var sourceAddress = Resolve(source.Owner, ref source.Comp2, false) ? source.Comp2.Address : "";
-        var sinkAddress = Resolve(sink.Owner, ref sink.Comp2, false) ? sink.Comp2.Address : "";
+        var sourceAddress = Resolve(source.Owner, ref source.Comp2, false) ? source.Comp2.Data.Address : "";
+        var sinkAddress = Resolve(sink.Owner, ref sink.Comp2, false) ? sink.Comp2.Data.Address : "";
 
         var state = new DeviceLinkUserInterfaceState(sourceIds, sinks, links, sourceAddress, sinkAddress, defaults);
         _uiSystem.SetUiState(configuratorUid, NetworkConfiguratorUiKey.Link, state);

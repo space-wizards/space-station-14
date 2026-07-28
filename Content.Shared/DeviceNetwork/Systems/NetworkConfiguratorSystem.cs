@@ -129,7 +129,7 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
         if (!target.Comp.SavableAddress)
             return;
 
-        var address = target.Comp.Address;
+        var address = target.Comp.Data.Address;
         if (string.IsNullOrEmpty(address))
         {
             // This primarily checks if the entity in question is pre-map init or not.
@@ -162,7 +162,7 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
         DirtyField(target, nameof(DeviceNetworkComponent.Configurators));
         DirtyField(configurator, nameof(NetworkConfiguratorComponent.Devices));
 
-        _popupSystem.PopupCursor(Loc.GetString("network-configurator-device-saved", ("address", target.Comp.Address), ("device", target)),
+        _popupSystem.PopupCursor(Loc.GetString("network-configurator-device-saved", ("address", target.Comp.Data.Address), ("device", target)),
             userUid,
             PopupType.Medium);
 

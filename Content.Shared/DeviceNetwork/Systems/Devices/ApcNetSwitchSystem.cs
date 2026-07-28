@@ -24,7 +24,7 @@ public sealed partial class ApcNetSwitchSystem : EntitySystem
         component.State = !component.State;
         Dirty(ent);
 
-        if (networkComponent.TransmitFrequency == null)
+        if (networkComponent.Data.TransmitFrequency == null)
             return;
 
         var payload = new ApcNetTogglePayload
@@ -44,7 +44,7 @@ public sealed partial class ApcNetSwitchSystem : EntitySystem
     {
         var (uid, component) = ent;
         if (!TryComp(uid, out DeviceNetworkComponent? networkComponent)
-            || args.SenderAddress == networkComponent.Address)
+            || args.SenderAddress == networkComponent.Data.Address)
             return;
 
         component.State = args.Data.Enabled;

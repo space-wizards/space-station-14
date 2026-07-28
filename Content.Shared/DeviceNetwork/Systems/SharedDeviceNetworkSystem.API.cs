@@ -57,7 +57,7 @@ public abstract partial class SharedDeviceNetworkSystem
             return false;
 
         var success = deviceNet.Add(ent!);
-        DirtyField(ent, nameof(DeviceNetworkComponent.Address));
+        DirtyField(ent, nameof(DeviceNetworkComponent.Data));
         return success;
     }
 
@@ -140,7 +140,7 @@ public abstract partial class SharedDeviceNetworkSystem
         var ev = new DeviceReceiveFrequencyChangedEvent(oldFrequency, frequency);
         RaiseLocalEvent(ent, ref ev);
 
-        DirtyFields(ent, null, nameof(DeviceNetworkComponent.Address), nameof(DeviceNetworkComponent.ReceiveFrequency));
+        DirtyField(ent, nameof(DeviceNetworkComponent.Data));
     }
 
     /// <summary>
@@ -160,7 +160,7 @@ public abstract partial class SharedDeviceNetworkSystem
         var ev = new DeviceReceiveFrequencyChangedEvent(oldFrequency, frequency);
         RaiseLocalEvent(ent, ref ev);
 
-        DirtyFields(ent, null, nameof(DeviceNetworkComponent.TransmitFrequency));
+        DirtyField(ent, nameof(DeviceNetworkComponent.Data.TransmitFrequency));
     }
 
     /// <summary>
@@ -185,7 +185,7 @@ public abstract partial class SharedDeviceNetworkSystem
         var ev = new DeviceReceiveAllChangedEvent(receiveAll);
         RaiseLocalEvent(ent, ref ev);
 
-        DirtyFields(ent, null, nameof(DeviceNetworkComponent.ReceiveAll));
+        DirtyField(ent, nameof(DeviceNetworkComponent.Data));
     }
 
     /// <summary>
@@ -212,7 +212,7 @@ public abstract partial class SharedDeviceNetworkSystem
         var ev = new DeviceAddressChangedEvent(oldAddress, address, ent.Comp.Data.CustomAddress);
         RaiseLocalEvent(ent, ref ev);
 
-        DirtyFields(ent, null, nameof(DeviceNetworkComponent.Address), nameof(DeviceNetworkComponent.CustomAddress));
+        DirtyFields(ent, null, nameof(DeviceNetworkComponent.Data.Address), nameof(DeviceNetworkComponent.Data.CustomAddress));
     }
 
     /// <summary>
@@ -236,6 +236,6 @@ public abstract partial class SharedDeviceNetworkSystem
         var ev = new DeviceAddressChangedEvent(oldAddress, ent.Comp.Data.Address, ent.Comp.Data.CustomAddress);
         RaiseLocalEvent(ent, ref ev);
 
-        DirtyFields(ent, null, nameof(DeviceNetworkComponent.Address), nameof(DeviceNetworkComponent.CustomAddress));
+        DirtyField(ent, nameof(DeviceNetworkComponent.Data.Address));
     }
 }

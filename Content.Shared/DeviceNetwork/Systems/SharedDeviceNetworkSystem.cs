@@ -49,24 +49,24 @@ public abstract partial class SharedDeviceNetworkSystem : EntitySystem, IDeviceP
     private void OnMapInit(Entity<DeviceNetworkComponent> ent, ref MapInitEvent args)
     {
         var device = ent.Comp;
-        if (device.ReceiveFrequency == null
+        if (device.Data.ReceiveFrequency == null
             && device.ReceiveFrequencyId != null
             && _protoMan.TryIndex(device.ReceiveFrequencyId, out var receive))
         {
-            device.ReceiveFrequency = receive.Frequency;
+            device.Data.ReceiveFrequency = receive.Frequency;
         }
 
-        if (device.TransmitFrequency == null
+        if (device.Data.TransmitFrequency == null
             && device.TransmitFrequencyId != null
             && _protoMan.TryIndex(device.TransmitFrequencyId, out var xmit))
         {
-            device.TransmitFrequency = xmit.Frequency;
+            device.Data.TransmitFrequency = xmit.Frequency;
         }
 
         if (ent.Comp.AutoConnect)
             ConnectDevice(ent.AsNullable());
 
-        DirtyFields(ent.AsNullable(), null, nameof(DeviceNetworkComponent.ReceiveFrequency), nameof(DeviceNetworkComponent.TransmitFrequency));
+        DirtyField(ent.AsNullable(), nameof(DeviceNetworkComponent.Data));
     }
 
     [SubscribeLocalEvent]
