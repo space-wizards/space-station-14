@@ -78,6 +78,40 @@
       - Hands
 
 - type: entity
+  parent: BaseImplantOnlyImplanterSyndi
+  id: MonowireImplanter
+  name: имплантер
+  suffix: моноструна
+  components:
+  - type: Implanter
+    implant: MonowireImplant
+  - type: Item
+    sprite: _DeadSpace/Objects/Specific/Medical/monowire_implanter.rsi
+    heldPrefix: implanter
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Specific/Medical/monowire_implanter.rsi
+    state: implanter1
+    layers:
+    - state: implanter0
+      map: [ "implantFull" ]
+      visible: true
+    - state: implanter1
+      map: [ "implantOnly" ]
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: MonowireImplant
+  name: военный имплант
+  description: Нелегальный военный имплант, производимый корпорацией Cybersun. Устанавливает в руки моноструну с держателями.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+    implantAction: ActionRetractableItemMonowireImplant
+    whitelist:
+      components:
+      - Hands
+
+- type: entity
   parent: BaseSubdermalImplant
   id: DeathRattleImplantTaipan
   name: предсмертный хрип

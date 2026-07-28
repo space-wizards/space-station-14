@@ -287,6 +287,9 @@
   id: MantisBlades
 
 - type: Tag
+  id: Monowire
+
+- type: Tag
   id: MeatAnomalyCooked
 
 - type: Tag

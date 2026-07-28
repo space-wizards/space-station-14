@@ -39,6 +39,29 @@
 
 - type: entity
   parent: BaseAction
+  id: ActionRetractableItemMonowireImplant
+  name: "[color=red]Переключить моноструну[/color]"
+  description: Распилите их пополам.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    useDelay: 1
+    raiseOnAction: true
+    itemIconStyle: BigAction
+    icon:
+      sprite: _DeadSpace/Actions/monowire_actions.rsi
+      state: monowire-toggle
+  - type: InstantAction
+    event: !type:OnRetractableItemActionEvent
+  - type: RetractableItemAction
+    spawnedPrototype: MonowireSyndicate
+    summonSounds:
+      collection: MonowireExtend
+    retractSounds:
+      collection: MonowireRetract
+
+- type: entity
+  parent: BaseAction
   id: ActionMantisJump
   name: "[color=red]Рывок богомола[/color]"
   description: Набросьтесь на врага со всей ненавистью.

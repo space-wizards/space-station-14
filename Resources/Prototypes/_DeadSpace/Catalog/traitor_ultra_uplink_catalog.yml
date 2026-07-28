@@ -2968,6 +2968,26 @@
           - SurplusBundle
 
 - type: listing
+  id: UplinkTraitorUltraMonowireBundle
+  name: uplink-monowire-name
+  description: uplink-monowire-desc
+  icon: { sprite: _DeadSpace/Objects/Weapons/Melee/monowire.rsi, state: icon }
+  productEntity: MonowireImplanter
+  cost:
+    Telecrystal: 20
+  categories:
+  - TraitorUltraUplinkWeaponry
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
+    - !type:BuyerWhitelistCondition
+      blacklist:
+        components:
+          - SurplusBundle
+
+- type: listing
   id: UplinkTraitorUltraSyndieSabre
   name: uplink-syndiesabre-name
   description: uplink-syndiesabre-desc

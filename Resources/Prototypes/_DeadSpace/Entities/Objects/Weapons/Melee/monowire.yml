@@ -1,0 +1,61 @@
+- type: entity
+  parent: [ BaseItem, BaseSyndicateContraband ]
+  id: MonowireSyndicate
+  name: моноструна
+  description: Она тонкая. А еще способна разрезать пополам нерадивого корпоративного гада.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Weapons/Melee/monowire.rsi
+    scale: 0.9, 0.9
+    layers:
+    - state: icon
+    - state: icon-animated
+      visible: true
+      map: [ "empty-icon" ]
+  - type: Item
+    sprite: _DeadSpace/Objects/Weapons/Melee/monowire.rsi
+    size: Large
+  - type: Wieldable
+    useDelayOnWield: true
+    wieldSound:
+      collection: MonowireAttack
+    unwieldSound:
+      collection: MonowireAttack
+  - type: UseDelay
+    delay: 1.5
+  - type: ComponentToggler
+    components:
+    - type: PointLight
+      color: "#ffa420"
+      radius: 1
+      energy: 0.5
+  - type: MeleeRequiresWield
+  - type: ItemToggle
+    onUse: false
+    onActivate: false
+  - type: MeleeWeapon
+
+    range: 1.8
+    attackRate: 1.5
+    autoAttack: true
+    damage:
+      types:
+        Slash: 17
+    wideAnimationRotation: 180        
+    animation: WeaponMonowirePrecise
+    wideAnimation: WeaponMonowireWide
+    soundHit:
+      collection: MonowireAttack
+    soundNoDamage:
+      collection: MonowireAttack
+    soundSwing:
+      collection: MonowireAttack
+  - type: SandevistanMeleeAttackRate
+    modifier: 1.2
+  - type: Sharp
+  - type: Execution
+    doAfterDuration: 4.0
+  - type: Tag
+    tags:
+      - MantisBlades

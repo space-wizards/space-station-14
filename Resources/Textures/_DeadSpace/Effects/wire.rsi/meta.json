@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-4.0",
+  "copyright": "state 'monowire-precise' by trefasv for Space Station 14 server Мёртвый Космос, state 'monowire-wide' by hq._.dishka (discord) (discord) for Space Station 14 server Мёртвый Космос",
+  "size": {
+      "x": 32,
+      "y": 32
+  },
+  "states": [
+    {
+      "name": "monowire-precise",
+      "delays": [
+          [ 0.1, 0.1, 0.1, 0.1 ]
+      ]
+    },
+    {
+      "name": "monowire-wide"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+- type: entity
+  id: WeaponMonowirePrecise
+  parent: WeaponArcStatic
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: WeaponArcVisuals
+      fadeOut: false
+    - type: Sprite
+      sprite: _DeadSpace/Effects/wire.rsi
+      state: monowire-precise
+      drawdepth: Effects
+    - type: TimedDespawn
+      lifetime: 0.399
+
+- type: entity
+  id: WeaponMonowireWide
+  parent: WeaponArcStatic
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Effects/wire.rsi
+      state: monowire-wide
+      drawdepth: Effects
+

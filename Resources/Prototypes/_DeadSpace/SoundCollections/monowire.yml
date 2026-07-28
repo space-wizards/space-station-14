@@ -1,0 +1,17 @@
+- type: soundCollection
+  id: MonowireExtend
+  files:
+    - /Audio/_DeadSpace/Weapons/Melee/Monowire/extend.ogg
+
+- type: soundCollection
+  id: MonowireRetract
+  files:
+    - /Audio/_DeadSpace/Weapons/Melee/Monowire/retract.ogg
+
+- type: soundCollection
+  id: MonowireAttack
+  files:
+    - /Audio/_DeadSpace/Weapons/Melee/Monowire/attack1.ogg
+    - /Audio/_DeadSpace/Weapons/Melee/Monowire/attack2.ogg
+    - /Audio/_DeadSpace/Weapons/Melee/Monowire/attack3.ogg
+
