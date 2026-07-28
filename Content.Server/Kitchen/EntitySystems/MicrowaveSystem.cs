@@ -1,44 +1,42 @@
+using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Construction;
+using Content.Server.Construction.Components;
+using Content.Server.DeviceLinking.Systems;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Hands.Systems;
 using Content.Server.Kitchen.Components;
+using Content.Server.Lightning;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Temperature.Systems;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Construction.EntitySystems;
+using Content.Shared.Damage.Components;
 using Content.Shared.Database;
-using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Destructible;
+using Content.Shared.DeviceLinking.Events;
 using Content.Shared.FixedPoint;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
-using Robust.Shared.Random;
-using Robust.Shared.Audio;
-using Content.Server.Lightning;
 using Content.Shared.Item;
 using Content.Shared.Kitchen;
 using Content.Shared.Kitchen.Components;
 using Content.Shared.Popups;
 using Content.Shared.Power;
+using Content.Shared.Power.EntitySystems;
+using Content.Shared.Stacks;
+using Content.Shared.Suicide;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
-using Robust.Shared.Player;
-using System.Linq;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using Content.Shared.Stacks;
-using Content.Server.Construction.Components;
-using Content.Shared.Chat;
-using Content.Shared.Damage.Components;
-using Content.Shared.DeviceLinking;
-using Content.Shared.Power.EntitySystems;
-using Content.Shared.Temperature.Components;
-using Content.Shared.IdentityManagement;
 
 namespace Content.Server.Kitchen.EntitySystems
 {
@@ -178,8 +176,7 @@ namespace Content.Server.Kitchen.EntitySystems
             var heatToAdd = time * component.BaseHeatMultiplier;
             foreach (var entity in component.Storage.ContainedEntities)
             {
-                if (TryComp<TemperatureComponent>(entity, out var tempComp))
-                    _temperature.ChangeHeat(entity, heatToAdd * component.ObjectHeatMultiplier, false, tempComp);
+                _temperature.ChangeHeat(entity, heatToAdd * component.ObjectHeatMultiplier, false);
 
                 foreach (var (_, soln) in _solutionContainer.EnumerateSolutions(entity))
                 {

@@ -8,6 +8,7 @@ namespace Content.Shared.DeviceNetwork.Systems;
 public sealed partial class DeviceListSystem : EntitySystem
 {
     [Dependency] private NetworkConfiguratorSystem _configurator = default!;
+
     [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceNetworkQuery = default!;
 
     public override void Initialize()
@@ -64,7 +65,7 @@ public sealed partial class DeviceListSystem : EntitySystem
                 continue;
 
             var address = MetaData(deviceUid).EntityLifeStage == EntityLifeStage.MapInitialized
-                ? deviceNet.Address
+                ? deviceNet.Data.Address
                 : $"UID: {deviceUid.ToString()}";
 
             devices.Add(address, deviceUid);

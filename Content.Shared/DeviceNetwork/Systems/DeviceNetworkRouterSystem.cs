@@ -11,6 +11,7 @@ namespace Content.Shared.DeviceNetwork.Systems;
 public sealed partial class DeviceNetworkRouterSystem : EntitySystem
 {
     [Dependency] private SharedDeviceNetworkSystem _deviceNetworkSystem = default!;
+
     [Dependency] private EntityQuery<DeviceNetworkComponent> _query = default!;
 
     [SubscribeLocalEvent]
@@ -24,7 +25,7 @@ public sealed partial class DeviceNetworkRouterSystem : EntitySystem
             ent.Owner,
             payload.TargetAddress,
             payload.Payload,
-            payload.OverrideFrequency ?? deviceComp.TransmitFrequency,
+            payload.OverrideFrequency ?? deviceComp.Data.TransmitFrequency,
             payload.OverrideNetwork ?? deviceComp.DeviceNetId);
     }
 
@@ -65,7 +66,7 @@ public sealed partial class DeviceNetworkRouterSystem : EntitySystem
         if (!_query.Resolve(ref ent) || ent.Comp == null)
             return;
 
-        data.SenderAddress = ent.Comp.Address;
+        data.SenderAddress = ent.Comp.Data.Address;
         data.Sender = ent.Owner;
         var payload = new RoutedNetworkPayload
         {

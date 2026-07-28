@@ -219,7 +219,7 @@ public sealed partial class EmergencyShuttleSystem : SharedEmergencyShuttleSyste
                 SourceTime = ftlTime,
                 DestinationTime = ftlTime,
             };
-            _deviceNetworkSystem.QueuePacket(uid, null, payload, netComp.TransmitFrequency);
+            _deviceNetworkSystem.QueuePacket(uid, null, payload, netComp.Data.TransmitFrequency);
         }
     }
 
@@ -252,7 +252,7 @@ public sealed partial class EmergencyShuttleSystem : SharedEmergencyShuttleSyste
             else
                 payload.OverrideText = ShuttleTimerMasks.Bye;
 
-            _deviceNetworkSystem.QueuePacket(shuttle, null, payload, net.TransmitFrequency);
+            _deviceNetworkSystem.QueuePacket(shuttle, null, payload, net.Data.TransmitFrequency);
         }
     }
 
@@ -387,7 +387,7 @@ public sealed partial class EmergencyShuttleSystem : SharedEmergencyShuttleSyste
                 DestinationTime = time + TimeSpan.FromSeconds(TransitTime),
                 Docked = true,
             };
-            _deviceNetworkSystem.QueuePacket(shuttle.Value, null, payload, netComp.TransmitFrequency);
+            _deviceNetworkSystem.QueuePacket(shuttle.Value, null, payload, netComp.Data.TransmitFrequency);
         }
 
         // Play announcement audio.

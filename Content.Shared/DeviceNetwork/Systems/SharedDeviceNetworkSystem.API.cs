@@ -27,17 +27,18 @@ public abstract partial class SharedDeviceNetworkSystem
         if (!Resolve(ent.Owner, ref ent.Comp, false))
             return false;
 
-        if (ent.Comp.Address == string.Empty)
+        var device = ent.Comp;
+        if (device.Data.Address == string.Empty)
             return false;
 
-        frequency ??= ent.Comp.TransmitFrequency;
+        frequency ??= device.Data.TransmitFrequency;
 
         if (frequency == null)
             return false;
 
         network ??= ent.Comp.DeviceNetId;
 
-        var packet = new DeviceNetworkPacketData(network.Value, address, frequency.Value, ent.Comp.Address, ent, data);
+        var packet = new DeviceNetworkPacketData(network.Value, address, frequency.Value, device.Data.Address, ent, data);
         SendPacket(ref packet);
         return true;
     }
@@ -125,15 +126,15 @@ public abstract partial class SharedDeviceNetworkSystem
         if (!Resolve(ent.Owner, ref ent.Comp, false))
             return;
 
-        if (ent.Comp.ReceiveFrequency == frequency)
+        if (ent.Comp.Data.ReceiveFrequency == frequency)
             return;
 
         if (!TryGetNetwork(ent.Comp.DeviceNetId, out var deviceNet))
             return;
 
-        var oldFrequency = ent.Comp.ReceiveFrequency;
+        var oldFrequency = ent.Comp.Data.ReceiveFrequency;
         deviceNet.Remove(ent!);
-        ent.Comp.ReceiveFrequency = frequency;
+        ent.Comp.Data.ReceiveFrequency = frequency;
         deviceNet.Add(ent!);
 
         var ev = new DeviceReceiveFrequencyChangedEvent(oldFrequency, frequency);
@@ -153,8 +154,8 @@ public abstract partial class SharedDeviceNetworkSystem
         if (!Resolve(ent.Owner, ref ent.Comp, false))
             return;
 
-        var oldFrequency = ent.Comp.TransmitFrequency;
-        ent.Comp.TransmitFrequency = frequency;
+        var oldFrequency = ent.Comp.Data.TransmitFrequency;
+        ent.Comp.Data.TransmitFrequency = frequency;
 
         var ev = new DeviceReceiveFrequencyChangedEvent(oldFrequency, frequency);
         RaiseLocalEvent(ent, ref ev);
@@ -171,14 +172,14 @@ public abstract partial class SharedDeviceNetworkSystem
         if (!Resolve(ent.Owner, ref ent.Comp, false))
             return;
 
-        if (ent.Comp.ReceiveAll == receiveAll)
+        if (ent.Comp.Data.ReceiveAll == receiveAll)
             return;
 
         if (!TryGetNetwork(ent.Comp.DeviceNetId, out var deviceNet))
             return;
 
         deviceNet.Remove(ent!);
-        ent.Comp.ReceiveAll = receiveAll;
+        ent.Comp.Data.ReceiveAll = receiveAll;
         deviceNet.Add(ent!);
 
         var ev = new DeviceReceiveAllChangedEvent(receiveAll);
@@ -196,19 +197,19 @@ public abstract partial class SharedDeviceNetworkSystem
         if (!Resolve(ent.Owner, ref ent.Comp, false))
             return;
 
-        if (ent.Comp.Address == address && ent.Comp.CustomAddress)
+        if (ent.Comp.Data.Address == address && ent.Comp.Data.CustomAddress)
             return;
 
         if (!TryGetNetwork(ent.Comp.DeviceNetId, out var deviceNet))
             return;
 
-        var oldAddress = ent.Comp.Address;
+        var oldAddress = ent.Comp.Data.Address;
         deviceNet.Remove(ent!);
-        ent.Comp.CustomAddress = true;
-        ent.Comp.Address = address;
+        ent.Comp.Data.CustomAddress = true;
+        ent.Comp.Data.Address = address;
         deviceNet.Add(ent!);
 
-        var ev = new DeviceAddressChangedEvent(oldAddress, address, ent.Comp.CustomAddress);
+        var ev = new DeviceAddressChangedEvent(oldAddress, address, ent.Comp.Data.CustomAddress);
         RaiseLocalEvent(ent, ref ev);
 
         DirtyFields(ent, null, nameof(DeviceNetworkComponent.Address), nameof(DeviceNetworkComponent.CustomAddress));
@@ -226,13 +227,13 @@ public abstract partial class SharedDeviceNetworkSystem
         if (!TryGetNetwork(ent.Comp.DeviceNetId, out var deviceNet))
             return;
 
-        var oldAddress = ent.Comp.Address;
+        var oldAddress = ent.Comp.Data.Address;
         deviceNet.Remove(ent!);
-        ent.Comp.CustomAddress = false;
-        ent.Comp.Address = "";
+        ent.Comp.Data.CustomAddress = false;
+        ent.Comp.Data.Address = "";
         deviceNet.Add(ent!);
 
-        var ev = new DeviceAddressChangedEvent(oldAddress, ent.Comp.Address, ent.Comp.CustomAddress);
+        var ev = new DeviceAddressChangedEvent(oldAddress, ent.Comp.Data.Address, ent.Comp.Data.CustomAddress);
         RaiseLocalEvent(ent, ref ev);
 
         DirtyFields(ent, null, nameof(DeviceNetworkComponent.Address), nameof(DeviceNetworkComponent.CustomAddress));

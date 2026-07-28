@@ -120,13 +120,6 @@
     - type: StationEmergencyShuttle
 
 - type: entity
-  id: BaseStationAlertLevels
-  abstract: true
-  components:
-    - type: AlertLevel
-      alertLevelPrototype: stationAlerts
-
-- type: entity
   id: BaseStationExpeditions
   abstract: true
   components:

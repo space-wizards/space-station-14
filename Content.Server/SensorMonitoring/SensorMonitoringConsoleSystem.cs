@@ -269,7 +269,7 @@ public sealed partial class SensorMonitoringConsoleSystem : EntitySystem
             }
 
             var address = _deviceNetworkQuery.GetComponent(ent);
-            _deviceNetwork.QueuePacket(uid, address.Address, payload);
+            _deviceNetwork.QueuePacket(uid, address.Data.Address, payload);
         }
     }
 
@@ -290,7 +290,7 @@ public sealed partial class SensorMonitoringConsoleSystem : EntitySystem
             }
 
             var address = _deviceNetworkQuery.GetComponent(ent);
-            _deviceNetwork.QueuePacket(uid, address.Address, payload);
+            _deviceNetwork.QueuePacket(uid, address.Data.Address, payload);
         }
     }
 }

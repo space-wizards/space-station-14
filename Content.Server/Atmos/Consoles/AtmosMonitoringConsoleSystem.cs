@@ -212,7 +212,7 @@ public sealed partial class AtmosMonitoringConsoleSystem : SharedAtmosMonitoring
 
         // Otherwise use its base name and network address
         else if (TryComp<DeviceNetworkComponent>(uid, out var deviceNet))
-            address = deviceNet.Address;
+            address = deviceNet.Data.Address;
 
         // Entry for unpowered devices
         if (TryComp<ApcPowerReceiverComponent>(uid, out var apcPowerReceiver) && !apcPowerReceiver.Powered)

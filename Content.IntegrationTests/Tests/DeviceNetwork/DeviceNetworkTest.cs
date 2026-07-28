@@ -78,8 +78,8 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                 Assert.That(entityManager.TryGetComponent(device1, out networkComponent1), Is.True);
                 Assert.Multiple(() =>
                 {
-                    Assert.That(networkComponent1.ReceiveFrequency, Is.Not.Null);
-                    Assert.That(networkComponent1.Address, Is.Not.EqualTo(string.Empty));
+                    Assert.That(networkComponent1.Data.ReceiveFrequency, Is.Not.Null);
+                    Assert.That(networkComponent1.Data.Address, Is.Not.EqualTo(string.Empty));
                 });
 
                 device2 = entityManager.SpawnEntity("DummyNetworkDevice", MapCoordinates.Nullspace);
@@ -87,13 +87,13 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                 Assert.That(entityManager.TryGetComponent(device2, out networkComponent2), Is.True);
                 Assert.Multiple(() =>
                 {
-                    Assert.That(networkComponent1.ReceiveFrequency, Is.Not.Null);
-                    Assert.That(networkComponent2.Address, Is.Not.EqualTo(string.Empty));
+                    Assert.That(networkComponent1.Data.ReceiveFrequency, Is.Not.Null);
+                    Assert.That(networkComponent2.Data.Address, Is.Not.EqualTo(string.Empty));
 
-                    Assert.That(networkComponent1.Address, Is.Not.EqualTo(networkComponent2.Address));
+                    Assert.That(networkComponent1.Data.Address, Is.Not.EqualTo(networkComponent2.Data.Address));
                 });
 
-                deviceNetSystem.QueuePacket(device1, networkComponent2.Address, payload, networkComponent2.ReceiveFrequency.Value);
+                deviceNetSystem.QueuePacket(device1, networkComponent2.Data.Address, payload, networkComponent2.Data.ReceiveFrequency.Value);
             });
 
             await server.WaitRunTicks(2);
@@ -142,8 +142,8 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                 });
                 Assert.Multiple(() =>
                 {
-                    Assert.That(networkComponent1.ReceiveFrequency, Is.Not.Null);
-                    Assert.That(networkComponent1.Address, Is.Not.EqualTo(string.Empty));
+                    Assert.That(networkComponent1.Data.ReceiveFrequency, Is.Not.Null);
+                    Assert.That(networkComponent1.Data.Address, Is.Not.EqualTo(string.Empty));
                 });
 
                 device2 = entityManager.SpawnEntity("WirelessNetworkDeviceDummy", new MapCoordinates(new Vector2(0, 50), testMap.MapId));
@@ -151,14 +151,14 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                 Assert.That(entityManager.TryGetComponent(device2, out networkComponent2), Is.True);
                 Assert.Multiple(() =>
                 {
-                    Assert.That(networkComponent2.ReceiveFrequency, Is.Not.Null);
-                    Assert.That(networkComponent2.Address, Is.Not.EqualTo(string.Empty));
+                    Assert.That(networkComponent2.Data.ReceiveFrequency, Is.Not.Null);
+                    Assert.That(networkComponent2.Data.Address, Is.Not.EqualTo(string.Empty));
 
-                    Assert.That(networkComponent1.Address, Is.Not.EqualTo(networkComponent2.Address));
+                    Assert.That(networkComponent1.Data.Address, Is.Not.EqualTo(networkComponent2.Data.Address));
                 });
 
 
-                deviceNetSystem.QueuePacket(device1, networkComponent2.Address, payload, networkComponent2.ReceiveFrequency.Value);
+                deviceNetSystem.QueuePacket(device1, networkComponent2.Data.Address, payload, networkComponent2.Data.ReceiveFrequency.Value);
             });
 
             await server.WaitRunTicks(2);
@@ -172,7 +172,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
 
                 wirelessNetworkComponent.Range = 0;
 
-                deviceNetSystem.QueuePacket(device1, networkComponent2.Address, secondPayload, networkComponent2.ReceiveFrequency.Value);
+                deviceNetSystem.QueuePacket(device1, networkComponent2.Data.Address, secondPayload, networkComponent2.Data.ReceiveFrequency.Value);
             });
 
             await server.WaitRunTicks(1);
@@ -225,8 +225,8 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                 });
                 Assert.Multiple(() =>
                 {
-                    Assert.That(networkComponent1.ReceiveFrequency, Is.Not.Null);
-                    Assert.That(networkComponent1.Address, Is.Not.EqualTo(string.Empty));
+                    Assert.That(networkComponent1.Data.ReceiveFrequency, Is.Not.Null);
+                    Assert.That(networkComponent1.Data.Address, Is.Not.EqualTo(string.Empty));
                 });
 
                 device2 = entityManager.SpawnEntity("DummyWiredNetworkDevice", coordinates);
@@ -234,13 +234,13 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                 Assert.That(entityManager.TryGetComponent(device2, out networkComponent2), Is.True);
                 Assert.Multiple(() =>
                 {
-                    Assert.That(networkComponent2.ReceiveFrequency, Is.Not.Null);
-                    Assert.That(networkComponent2.Address, Is.Not.EqualTo(string.Empty));
+                    Assert.That(networkComponent2.Data.ReceiveFrequency, Is.Not.Null);
+                    Assert.That(networkComponent2.Data.Address, Is.Not.EqualTo(string.Empty));
 
-                    Assert.That(networkComponent1.Address, Is.Not.EqualTo(networkComponent2.Address));
+                    Assert.That(networkComponent1.Data.Address, Is.Not.EqualTo(networkComponent2.Data.Address));
                 });
 
-                deviceNetSystem.QueuePacket(device1, networkComponent2.Address, payload, networkComponent2.ReceiveFrequency.Value);
+                deviceNetSystem.QueuePacket(device1, networkComponent2.Data.Address, payload, networkComponent2.Data.ReceiveFrequency.Value);
             });
 
             await server.WaitRunTicks(1);
@@ -252,7 +252,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
 
                 entityManager.SpawnEntity("CableApcExtension", coordinates);
 
-                deviceNetSystem.QueuePacket(device1, networkComponent2.Address, payload, networkComponent2.ReceiveFrequency.Value);
+                deviceNetSystem.QueuePacket(device1, networkComponent2.Data.Address, payload, networkComponent2.Data.ReceiveFrequency.Value);
             });
 
             await server.WaitRunTicks(1);
