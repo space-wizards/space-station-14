@@ -43,34 +43,32 @@ public sealed partial class CardSystem : SharedCardSystem
             flipped = false;
         }
 
+        var numCards = Math.Abs(visualState.Count);
+
         // Delete all layers which are not used here
         // Assumes that all layers will have the card before it have a layer
         // If it runs into a layer which doesn't exists it assumes no more later layers will exists
         // Might run into problems if the MaxFanned changes frequently
-        for (var i = visualState.Count; i < visualState.MaxFanned; i++)
+        for (var i = 0; i < visualState.MaxFanned; i++)
         {
-            var card = visualState.CardList[visualState.Start + (flipped ? i : -i - 1)];
-            if (card.CardId.Id == null || !PrototypeManager.TryIndex(card.CardId, out var prototype))
-                continue;
-            var cardLayers = CardLayers(i, prototype.Layers.Count);
-            if (!_sprite.LayerExists((uid, sprite), cardLayers[0]))
-                break;
+            // don't like this magic number
+            var cardLayers = CardLayers(i, 10);
             foreach (var layer in cardLayers)
-                _sprite.RemoveLayer((uid, sprite), layer, true);
+            {
+                _sprite.RemoveLayer((uid, sprite), layer, false);
+            }
         }
 
-        var radius = FanRadius(visualState.Count);
-        for (var i = 0; i < visualState.Count; i++)
+        var radius = FanRadius(numCards);
+        for (var i = 0; i < numCards; i++)
         {
             // If flipped counts from the back
-            var card = visualState.CardList[visualState.Start + (flipped ? i : -i - 1)];
+            var card = visualState.CardList[visualState.Start + i * Math.Sign(visualState.Count)];
             if (card.CardId.Id == null || !PrototypeManager.TryIndex(card.CardId, out var prototype))
                 continue;
-            Log.Info($"{prototype.Sprite}");
-            Log.Info($"{prototype.Color}");
             var cardLayers = CardLayers(i, prototype.Layers.Count);
 
-            var (position, rotation) = GetCardPosRot(i, visualState.Count, radius);
+            var (position, rotation) = GetCardPosRot(i, numCards, radius);
 
             foreach (var layer in cardLayers)
                 _sprite.LayerMapReserve((uid, sprite), layer);
@@ -156,7 +154,7 @@ public sealed partial class CardSystem : SharedCardSystem
         list.Add($"card_{index}_base");
         for (var i = 0; i < layerCount; i++)
         {
-            list.Add($"card_{index}_{layerCount}");
+            list.Add($"card_{index}_{i}");
         }
         return list;
     }
