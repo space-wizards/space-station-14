@@ -690,11 +690,7 @@
   parent: BaseStationEvent
   id: SuddenNukeArm
   components:
-#  - type: StationEvent
-#    weight: 4
-#    minimumPlayers: 15
-  - type: StationEvent # for testing, temporary. to see if the event is run by scheduler. try in traitors/secret gamemode.
-    weight: 20
-    earliestStart: 2
-    minimumPlayers: 0
+  - type: StationEvent
+    weight: 4
+    minimumPlayers: 15
   - type: SuddenNukeArmRule
