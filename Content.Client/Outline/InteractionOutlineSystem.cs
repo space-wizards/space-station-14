@@ -73,7 +73,6 @@ public sealed partial class InteractionOutlineSystem : EntitySystem
             return false;
 
         sprite.PostShader = null;
-        _lastHoveredEntity = null;
 
         return true;
     }
