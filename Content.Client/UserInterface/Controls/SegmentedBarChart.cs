@@ -13,6 +13,14 @@ using Robust.Shared.Utility;
 namespace Content.Client.UserInterface.Controls;
 
 
+/// <summary>
+/// A horizontal bar consisting of several colored segments side-by-side. This is used (at time of writing) for the UI
+/// of gas analyzers, mops and cryo pods. Entries are animated by default.
+/// </summary>
+/// <remarks>
+/// To supply data to the chart, first call <see cref="Clear"/> to get rid of old entries and then call
+/// <see cref="SetEntry"/> for each item to be added. Note that the order of <see cref="SetEntry"/> calls matters.
+/// </remarks>
 public sealed class SegmentedBarChart : Control
 {
     private sealed class Entry
@@ -134,6 +142,82 @@ public sealed class SegmentedBarChart : Control
         TooltipSupplier = SupplyTooltip;
     }
 
+    protected override void Draw(DrawingHandleScreen handle)
+    {
+        if (_showBackground)
+            handle.DrawRect(PixelSizeBox, _backgroundColor);
+
+        // Draw the entry backgrounds
+        foreach (var (entry, xMinUI, xMaxUI) in EntryRanges(Width))
+        {
+            var xMin = UIScale * xMinUI;
+            var xMax = UIScale * xMaxUI;
+            if (xMin != xMax)
+                handle.DrawRect(new(xMin, 0, xMax, PixelHeight), entry.Color);
+        }
+
+        // Draw the ruler
+        if (_showRuler)
+        {
+            // These computed properties are used in the loop. Compute them only once.
+            var bigNotchInterval = _bigNotchInterval;
+            var mediumNotchInterval = _mediumNotchInterval;
+            var bigNotchHeight = _bigNotchHeight;
+            var mediumNotchHeight = _mediumNotchHeight;
+            var smallNotchHeight = _smallNotchHeight;
+            var notchColor = _notchColor;
+
+            var capacity = GetCapacity();
+            var unitWidth = PixelWidth / capacity;
+
+            // This math ensures the distance between notches is not less than `MinSmallNotchScreenDistance`.
+            // We make sure that `unitsPerNotch` is always a power of ten (normally 1, 10 or 100).
+            var maxNotches = Width / _minSmallNotchScreenDistance;
+            var exp = MathF.Floor(MathF.Log10(maxNotches / capacity));
+            var unitsPerNotch = 1f / MathF.Min(1, MathF.Pow(10, exp));
+
+            var notchCount = (int)MathF.Floor(capacity / unitsPerNotch);
+            var notchDistance = unitWidth * unitsPerNotch;
+
+            for (int i = 0; i <= notchCount; i++)
+            {
+                var x = i * notchDistance;
+                var height = (i % bigNotchInterval    == 0 ? bigNotchHeight :
+                              i % mediumNotchInterval == 0 ? mediumNotchHeight :
+                                                             smallNotchHeight) * PixelHeight;
+                var start = new Vector2(x, PixelHeight);
+                var end = new Vector2(x, PixelHeight - height);
+                handle.DrawLine(start, end, notchColor);
+            }
+        }
+    }
+
+    protected override Vector2 ArrangeOverride(Vector2 finalSize)
+    {
+        // Some features (Gap, MinEntryWidth) depend on the Control's Width. Once the Width is set and before the
+        // first draw, make sure that the entries get an opportunity to update their width properly.
+        if (!_hasHadNonZeroWidth && finalSize.X > 0)
+            UpdateEntries(finalSize.X, 0);
+
+        foreach (var (entry, xMin, xMax) in EntryRanges(finalSize.X))
+        {
+            entry.Label.Arrange(new((int)xMin, 0, (int)xMax, (int)finalSize.Y));
+        }
+
+        return finalSize;
+    }
+
+    protected override void FrameUpdate(FrameEventArgs args)
+    {
+        UpdateEntries(Width, args.DeltaSeconds);
+    }
+
+    protected override void MouseMove(GUIMouseMoveEventArgs args)
+    {
+        HideTooltip();
+    }
+
+
     /// <summary>
     /// Makes the current entries disappear (usually in an animated way, so it takes a while for them to be gone).
     /// An entry won't disappear if a SetEntry call (after the Clear) gives the entry a non-zero `amount`.
@@ -150,6 +234,8 @@ public sealed class SegmentedBarChart : Control
 
     /// <summary>
     /// Either adds a new entry to the chart if the UID doesn't appear yet, or updates the amount of an existing entry.
+    /// Entries are drawn in the order of the SetEntry calls, with the first entry on the left and the last on the
+    /// right.
     /// </summary>
     public void SetEntry(
         string uid,
@@ -201,6 +287,23 @@ public sealed class SegmentedBarChart : Control
         _nextUpdateableEntry += 1;
     }
 
+
+    private Control? SupplyTooltip(Control sender)
+    {
+        var globalMousePos = UserInterfaceManager.MousePositionScaled.Position;
+        var mousePos = globalMousePos - GlobalPosition;
+
+        if (!TryFindEntry(mousePos.X, Width, out var entry) || entry.Tooltip == null)
+            return null;
+
+        var msg = new FormattedMessage();
+        msg.AddText(entry.Tooltip);
+
+        var tooltip = new Tooltip();
+        tooltip.SetMessage(msg);
+        return tooltip;
+    }
+
     private bool TryFindUpdateableEntry(string uid, out int index)
     {
         for (int i = _nextUpdateableEntry; i < _entries.Count; i++)
@@ -249,35 +352,6 @@ public sealed class SegmentedBarChart : Control
 
         entry = null;
         return false;
-    }
-
-    private float GetCapacity()
-    {
-        // Constant capacity.
-        if (Capacity > 0)
-            return Capacity;
-
-        // Flexible capacity.
-        var amountSum = _entries.Aggregate(0f, (sum, entry) => sum + entry.TargetAmount);
-        return MathF.Max(0.001f, amountSum);  // Make sure it's not zero (it's often used as denominator)
-    }
-
-    private float GetTotalGapsWidthFraction(float chartWidth)
-    {
-        if (_showRuler)
-            return 0;  // ShowRuler is incompatible with Gap.
-
-        var gapsWidth = (_entries.Count - 1) * _gap;
-        var gapsFraction = gapsWidth / MathF.Max(chartWidth, 1f);
-
-        // We limit the gaps to cover max 25% of the chart, to make sure there's always space for entries no matter
-        // how many entries you add.
-        return MathF.Min(gapsFraction, 0.25f);
-    }
-
-    protected override void FrameUpdate(FrameEventArgs args)
-    {
-        UpdateEntries(Width, args.DeltaSeconds);
     }
 
     private void UpdateEntries(float chartWidth, float deltaSeconds)
@@ -384,89 +458,27 @@ public sealed class SegmentedBarChart : Control
         _entries.RemoveAll(entry => entry.WidthFraction == 0 && entry.TargetAmount == 0);
     }
 
-    protected override void MouseMove(GUIMouseMoveEventArgs args)
+    private float GetCapacity()
     {
-        HideTooltip();
+        // Constant capacity.
+        if (Capacity > 0)
+            return Capacity;
+
+        // Flexible capacity.
+        var amountSum = _entries.Aggregate(0f, (sum, entry) => sum + entry.TargetAmount);
+        return MathF.Max(0.001f, amountSum);  // Make sure it's not zero (it's often used as denominator)
     }
 
-    protected override void Draw(DrawingHandleScreen handle)
+    private float GetTotalGapsWidthFraction(float chartWidth)
     {
-        if (_showBackground)
-            handle.DrawRect(PixelSizeBox, _backgroundColor);
-
-        // Draw the entry backgrounds
-        foreach (var (entry, xMinUI, xMaxUI) in EntryRanges(Width))
-        {
-            var xMin = UIScale * xMinUI;
-            var xMax = UIScale * xMaxUI;
-            if (xMin != xMax)
-                handle.DrawRect(new(xMin, 0, xMax, PixelHeight), entry.Color);
-        }
-
-        // Draw the ruler
         if (_showRuler)
-        {
-            // These computed properties are used in the loop. Compute them only once.
-            var bigNotchInterval = _bigNotchInterval;
-            var mediumNotchInterval = _mediumNotchInterval;
-            var bigNotchHeight = _bigNotchHeight;
-            var mediumNotchHeight = _mediumNotchHeight;
-            var smallNotchHeight = _smallNotchHeight;
-            var notchColor = _notchColor;
+            return 0;  // ShowRuler is incompatible with Gap.
 
-            var capacity = GetCapacity();
-            var unitWidth = PixelWidth / capacity;
+        var gapsWidth = (_entries.Count - 1) * _gap;
+        var gapsFraction = gapsWidth / MathF.Max(chartWidth, 1f);
 
-            // This math ensures the distance between notches is not less than `MinSmallNotchScreenDistance`.
-            // We make sure that `unitsPerNotch` is always a power of ten (normally 1, 10 or 100).
-            var maxNotches = Width / _minSmallNotchScreenDistance;
-            var exp = MathF.Floor(MathF.Log10(maxNotches / capacity));
-            var unitsPerNotch = 1f / MathF.Min(1, MathF.Pow(10, exp));
-
-            var notchCount = (int)MathF.Floor(capacity / unitsPerNotch);
-            var notchDistance = unitWidth * unitsPerNotch;
-
-            for (int i = 0; i <= notchCount; i++)
-            {
-                var x = i * notchDistance;
-                var height = (i % bigNotchInterval    == 0 ? bigNotchHeight :
-                              i % mediumNotchInterval == 0 ? mediumNotchHeight :
-                                                             smallNotchHeight) * PixelHeight;
-                var start = new Vector2(x, PixelHeight);
-                var end = new Vector2(x, PixelHeight - height);
-                handle.DrawLine(start, end, notchColor);
-            }
-        }
-    }
-
-    protected override Vector2 ArrangeOverride(Vector2 finalSize)
-    {
-        // Some features (Gap, MinEntryWidth) depend on the Control's Width. Once the Width is set and before the
-        // first draw, make sure that the entries get an opportunity to update their width properly.
-        if (!_hasHadNonZeroWidth && finalSize.X > 0)
-            UpdateEntries(finalSize.X, 0);
-
-        foreach (var (entry, xMin, xMax) in EntryRanges(finalSize.X))
-        {
-            entry.Label.Arrange(new((int)xMin, 0, (int)xMax, (int)finalSize.Y));
-        }
-
-        return finalSize;
-    }
-
-    private Control? SupplyTooltip(Control sender)
-    {
-        var globalMousePos = UserInterfaceManager.MousePositionScaled.Position;
-        var mousePos = globalMousePos - GlobalPosition;
-
-        if (!TryFindEntry(mousePos.X, Width, out var entry) || entry.Tooltip == null)
-            return null;
-
-        var msg = new FormattedMessage();
-        msg.AddText(entry.Tooltip);
-
-        var tooltip = new Tooltip();
-        tooltip.SetMessage(msg);
-        return tooltip;
+        // We limit the gaps to cover max 25% of the chart, to make sure there's always space for entries no matter
+        // how many entries you add.
+        return MathF.Min(gapsFraction, 0.25f);
     }
 }
