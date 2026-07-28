@@ -595,20 +595,22 @@ public sealed partial class RCDSystem : EntitySystem
                 break;
 
             case RcdMode.ConstructObject:
-                var ent = Spawn(prototype.Prototype, _mapSystem.GridTileToLocal(gridUid, mapGrid, position));
-
+                Angle rotation;
                 switch (prototype.Rotation)
                 {
                     case RcdRotation.Fixed:
-                        _transform.SetLocalRotationNoLerp(ent, Angle.Zero);
+                        rotation = Angle.Zero;
                         break;
                     case RcdRotation.Camera:
-                        _transform.SetLocalRotationNoLerp(ent, Transform(uid).LocalRotation);
+                        rotation = Transform(uid).LocalRotation;
                         break;
                     case RcdRotation.User:
-                        _transform.SetLocalRotationNoLerp(ent, direction.ToAngle());
+                    default:
+                        rotation = direction.ToAngle();
                         break;
                 }
+
+                var ent = SpawnAttachedTo(prototype.Prototype, _mapSystem.GridTileToLocal(gridUid, mapGrid, position), rotation: rotation);
 
                 _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(user):user} used RCD to spawn {ToPrettyString(ent)} at {position} on grid {gridUid}");
                 break;

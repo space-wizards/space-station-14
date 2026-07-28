@@ -313,8 +313,7 @@ public sealed partial class TileSystem : EntitySystem
         if (spawnItem && tileDef.ItemDropPrototypeName != null)
         {
             //Actually spawn the relevant tile item at the right position and give it some random offset.
-            var tileItem = Spawn(tileDef.ItemDropPrototypeName, coordinates);
-            _xform.SetLocalRotationNoLerp(tileItem, _robustRandom.NextAngle());
+            SpawnAttachedTo(tileDef.ItemDropPrototypeName, coordinates, rotation: _robustRandom.NextAngle());
         }
 
         //Destroy any decals on the tile

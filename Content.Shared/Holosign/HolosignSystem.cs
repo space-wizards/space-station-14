@@ -8,9 +8,9 @@ namespace Content.Shared.Holosign;
 
 public sealed partial class HolosignSystem : EntitySystem
 {
+    [Dependency] private INetManager _net = default!;
     [Dependency] private PowerCellSystem _powerCell = default!;
     [Dependency] private SharedTransformSystem _xform = default!;
-    [Dependency] private INetManager _net = default!;
 
     public override void Initialize()
     {
@@ -50,8 +50,8 @@ public sealed partial class HolosignSystem : EntitySystem
         // overlapping of the same holo on one tile remains allowed to allow holofan refreshes
         if (ent.Comp.PredictedSpawn || _net.IsServer)
         {
-            var holosign = PredictedSpawnAtPosition(ent.Comp.SignProto, args.ClickLocation);
-            _xform.SetLocalRotationNoLerp(holosign, Angle.Zero);
+            // TODO: make a proxy for this method.
+            EntityManager.PredictedSpawnAtPosition(ent.Comp.SignProto, args.ClickLocation, Angle.Zero);
         }
 
         args.Handled = true;

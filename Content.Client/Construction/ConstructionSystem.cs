@@ -290,11 +290,10 @@ namespace Content.Client.Construction
             if (!CheckConstructionConditions(prototype, loc, dir, user, showPopup: true))
                 return false;
 
-            ghost = Spawn("constructionghost", loc);
+            ghost = SpawnAttachedTo("constructionghost", loc, rotation: dir.ToAngle());
             var comp = Comp<ConstructionGhostComponent>(ghost.Value);
             comp.Prototype = prototype;
             comp.GhostId = ghost.GetHashCode();
-            TransformSystem.SetLocalRotationNoLerp(ghost.Value, dir.ToAngle());
             _ghosts.Add(comp.GhostId, ghost.Value);
 
             var sprite = Comp<SpriteComponent>(ghost.Value);
