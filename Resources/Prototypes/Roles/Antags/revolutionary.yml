@@ -3,6 +3,7 @@
   name: roles-antag-rev-head-name
   antagonist: true
   setPreference: true
+  revertTraits: true
   objective: roles-antag-rev-head-objective
   guides: [ Revolutionaries ]
   requirements:
@@ -42,7 +43,6 @@
   name: roles-antag-rev-name
   antagonist: true
   setPreference: false
-  revertTraits: false
   objective: roles-antag-rev-objective
   guides: [ Revolutionaries ]
 

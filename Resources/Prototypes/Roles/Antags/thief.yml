@@ -3,6 +3,7 @@
   name: roles-antag-thief-name
   antagonist: true
   setPreference: true
+  revertTraits: true
   objective: roles-antag-thief-objective
   guides: [ Thieves ]
   requirements:

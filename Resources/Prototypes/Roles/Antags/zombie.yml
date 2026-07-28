@@ -3,6 +3,7 @@
   name: roles-antag-initial-infected-name
   antagonist: true
   setPreference: true
+  revertTraits: true
   objective: roles-antag-initial-infected-objective
   guides: [ Zombies ]
   requirements:
@@ -39,5 +40,4 @@
   antagonist: true
   setPreference: false
   objective: roles-antag-zombie-objective
-  revertTraits: false
   guides: [ Zombies ]

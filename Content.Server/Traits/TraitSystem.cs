@@ -89,7 +89,7 @@ public sealed partial class TraitSystem : EntitySystem
 
         foreach (var trait in traitSet)
         {
-            if (!trait.Revertable)
+            if (!trait.Revertible)
                 continue;
 
             if (!ProtoMan.Resolve(trait.Trait, out var traitPrototype))

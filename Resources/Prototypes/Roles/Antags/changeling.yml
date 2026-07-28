@@ -3,6 +3,7 @@
   name: roles-antag-changeling-name
   antagonist: true
   setPreference: false # TODO: set this to true once Changeling exits WIP status
+  revertTraits: true
   objective: roles-antag-changeling-objective
 
 - type: antagSpecifier

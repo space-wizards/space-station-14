@@ -3,7 +3,6 @@
   name: roles-antag-paradox-clone-name
   antagonist: true
   objective: roles-antag-paradox-clone-objective
-  revertTraits: false
   setPreference: false
 
 - type: antagSpecifier
