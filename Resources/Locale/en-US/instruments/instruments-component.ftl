@@ -45,6 +45,7 @@ instruments-component-midi-file-collection-size-label = {$count} MIDI files load
 instruments-component-midi-file-collection-open-dir-button = Open Folder
 instruments-component-midi-file-collection-reload-button = Reload Collection
 instruments-component-midi-file-collection-delete-all-button = Clear Collection
+instruments-component-menu-midi-min-volume-slider-label = MIDI Input Min Volume
 
 
 # SwappableInstrumentComponent
