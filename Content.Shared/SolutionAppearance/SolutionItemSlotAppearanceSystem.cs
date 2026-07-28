@@ -63,10 +63,10 @@ public sealed partial class SolutionItemSlotAppearanceSystem : EntitySystem
         if (!_entityWhitelist.CheckBoth(container.Owner, ent.Comp.Blacklist, ent.Comp.Whitelist))
             return;
 
-        if (solutionComp == null && !TryComp<SolutionComponent>(ent.Owner, out solutionComp))
+        if (solutionComp == null && !Resolve(ent.Owner, ref solutionComp))
             return;
 
-        _solutionContainer.UpdateAppearance(container.Owner, (ent.Owner, solutionComp!));
+        _solutionContainer.UpdateAppearance(container.Owner, (ent.Owner, solutionComp));
     }
 
     private bool IsValidSolutionContainer(EntityUid owner, string containerId)
