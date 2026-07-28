@@ -38,12 +38,12 @@
   - type: SolutionContainerManager
     solutions:
       tank:
-        maxVol: 1000
+        maxVol: 1500
         reagents:
         - ReagentId: Phlogiston
-          Quantity: 100
+          Quantity: 150
         - ReagentId: Napalm
-          Quantity: 900
+          Quantity: 1350
 
 - type: entity
   parent: ClothingBackpack

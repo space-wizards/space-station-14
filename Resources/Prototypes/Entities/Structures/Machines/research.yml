@@ -41,13 +41,13 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 600
+        damage: 6000 # DS14
       behaviors:
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
-        damage: 300
+        damage: 3000 # DS14
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]

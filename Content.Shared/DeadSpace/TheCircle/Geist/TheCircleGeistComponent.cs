@@ -86,6 +86,12 @@ public sealed partial class TheCircleGeistComponent : Component
     [DataField]
     public float MovementThreshold = 0.05f;
 
+    [DataField]
+    public float NearbyAlertRange = 5f;
+
+    [DataField]
+    public TimeSpan NearbyAlertInterval = TimeSpan.FromSeconds(15);
+
     [AutoNetworkedField, ViewVariables]
     public GeistInvisibilityMode? ActiveMode;
 
@@ -124,6 +130,9 @@ public sealed partial class TheCircleGeistComponent : Component
 
     [ViewVariables]
     public bool StationArrivalAnnounced;
+
+    [ViewVariables]
+    public TimeSpan NextNearbyAlert;
 
     [AutoNetworkedField, ViewVariables]
     public TimeSpan EscapeReadyAt;

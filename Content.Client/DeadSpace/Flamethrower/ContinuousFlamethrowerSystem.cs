@@ -1,5 +1,6 @@
 using Content.Client.CombatMode;
 using Content.Client.Hands.Systems;
+using Content.Shared.ActionBlocker;
 using Content.Shared.DeadSpace.Flamethrower;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -15,6 +16,7 @@ namespace Content.Client.DeadSpace.Flamethrower;
 public sealed class ContinuousFlamethrowerSystem : EntitySystem
 {
     [Dependency] private readonly IEyeManager _eye = default!;
+    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly CombatModeSystem _combatMode = default!;
     [Dependency] private readonly HandsSystem _hands = default!;
     [Dependency] private readonly IInputManager _input = default!;
@@ -72,7 +74,9 @@ public sealed class ContinuousFlamethrowerSystem : EntitySystem
         if (weapon == null || !HasComp<ContinuousFlamethrowerComponent>(weapon.Value))
             return false;
 
-        if (args.State != BoundKeyState.Down || !_combatMode.IsInCombatMode())
+        if (args.State != BoundKeyState.Down ||
+            !_combatMode.IsInCombatMode() ||
+            !_actionBlocker.CanAttack(args.Session.AttachedEntity.Value))
             return false;
 
         _firing = true;

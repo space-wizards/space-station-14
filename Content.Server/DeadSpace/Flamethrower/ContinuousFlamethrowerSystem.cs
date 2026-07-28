@@ -2,6 +2,7 @@ using System.Numerics;
 using System.Linq;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Spreader;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Chemistry.Components;
@@ -37,6 +38,7 @@ public sealed class ContinuousFlamethrowerSystem : EntitySystem
     private static readonly ReagentId Napalm = new("Napalm", null);
 
     [Dependency] private readonly DamageableSystem _damage = default!;
+    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
     [Dependency] private readonly FlammableSystem _flammable = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
@@ -119,6 +121,7 @@ public sealed class ContinuousFlamethrowerSystem : EntitySystem
         }
 
         if (!_combatMode.IsInCombatMode(user) ||
+            !_actionBlocker.CanAttack(user) ||
             !HasComp<ContinuousFlamethrowerComponent>(weapon) ||
             !_hands.IsHolding(user, weapon))
             return;
@@ -163,6 +166,7 @@ public sealed class ContinuousFlamethrowerSystem : EntitySystem
         foreach (var (user, flame) in _active.ToArray())
         {
             if (!_combatMode.IsInCombatMode(user) ||
+                !_actionBlocker.CanAttack(user) ||
                 !TryComp<ContinuousFlamethrowerComponent>(flame.Weapon, out var comp) ||
                 !_hands.IsHolding(user, flame.Weapon))
             {

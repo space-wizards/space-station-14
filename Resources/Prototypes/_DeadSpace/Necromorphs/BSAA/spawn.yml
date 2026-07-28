@@ -309,6 +309,13 @@
       prototypes: [ BSAALeaderGear ]
     - type: GhostRoleNotifys 
       groupPrototype: BSAAGroup
+    - type: AutoImplant
+      implants:
+      - MindShieldImplant
+      - TrackingImplant
+      - RadioImplantSOC
+      - DeathRattleImplantSOD
+      - RezervImplant
 
 - type: randomHumanoidSettings
   id: BSAAFighter
@@ -333,6 +340,13 @@
       prototypes: [ BSAAFighterGear ]
     - type: GhostRoleNotifys 
       groupPrototype: BSAAGroup
+    - type: AutoImplant
+      implants:
+      - MindShieldImplant
+      - TrackingImplant
+      - RadioImplantSOC
+      - DeathRattleImplantSOD
+      - RezervImplant
 
 - type: randomHumanoidSettings
   id: BSAAMedic
@@ -357,6 +371,13 @@
       prototypes: [ BSAAMedicGear ]
     - type: GhostRoleNotifys 
       groupPrototype: BSAAGroup
+    - type: AutoImplant
+      implants:
+      - MindShieldImplant
+      - TrackingImplant
+      - RadioImplantSOC
+      - DeathRattleImplantSOD
+      - RezervImplant
 
 - type: randomHumanoidSettings
   id: BSAASpecialist
@@ -415,6 +436,13 @@
     prototypes: [ BSAAFlamerGear ]
   - type: GhostRoleNotifys
     groupPrototype: BSAAGroup
+  - type: AutoImplant
+    implants:
+    - MindShieldImplant
+    - TrackingImplant
+    - RadioImplantSOC
+    - DeathRattleImplantSOD
+    - RezervImplant
 
 # Названия ролей
 
