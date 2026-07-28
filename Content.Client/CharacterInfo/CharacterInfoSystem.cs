@@ -31,8 +31,10 @@ public sealed partial class CharacterInfoSystem : EntitySystem
 
     private void OnCharacterInfoEvent(CharacterInfoEvent msg, EntitySessionEventArgs args)
     {
-        var entity = GetEntity(msg.NetEntity);
-        var data = new CharacterData(entity, msg.JobTitle, msg.Objectives, msg.Briefing, Name(entity));
+        if (!TryGetEntity(msg.NetEntity, out var entity))
+            return;
+
+        var data = new CharacterData(entity.Value, msg.JobTitle, msg.Objectives, msg.Briefing, Name(entity.Value));
 
         OnCharacterUpdate?.Invoke(data);
     }

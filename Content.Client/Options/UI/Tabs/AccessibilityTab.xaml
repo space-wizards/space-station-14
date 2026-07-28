@@ -4,8 +4,8 @@
     <BoxContainer Orientation="Vertical">
         <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
             <BoxContainer Orientation="Vertical" Margin="8">
-                <Label Text="{Loc 'ui-options-accessibility-header-reduced-motion'}"
-                       StyleClasses="LabelKeyText"/>
+                <!-- Visuals -->
+                <Label Text="{Loc 'ui-options-accessibility-header-reduced-motion'}" StyleClasses="LabelKeyText"/>
                 <CheckBox Name="ReducedMotionCheckBox"
                     Text="{Loc 'ui-options-reduced-motion'}"
                     ToolTip="{Loc 'ui-options-reduced-motion-tooltip'}" />
@@ -44,13 +44,22 @@
                 <ui:OptionSlider Name="SpeechBubbleTextOpacitySlider" Title="{Loc 'ui-options-speech-bubble-text-opacity'}" />
                 <ui:OptionSlider Name="SpeechBubbleSpeakerOpacitySlider" Title="{Loc 'ui-options-speech-bubble-speaker-opacity'}" />
                 <ui:OptionSlider Name="SpeechBubbleBackgroundOpacitySlider" Title="{Loc 'ui-options-speech-bubble-background-opacity'}" />
+
+                <!-- Content -->
+                <Label Text="{Loc 'ui-options-accessibility-header-content'}" StyleClasses="LabelKeyText"/>
+                <CheckBox Name="CensorNudityCheckBox" Text="{Loc 'ui-options-censor-nudity'}" />
+
+                <!-- Chat Highlights -->
+                <Label Text="{Loc 'ui-options-accessibility-header-highlights'}" StyleClasses="LabelKeyText"/>
+                <Label Text="{Loc 'ui-options-highlights-persistent'}"/>
+                <PanelContainer StyleClasses="BackgroundPanel">
+                    <TextEdit Name="PersistentHighlightEdit" MinHeight="80" Margin="5 5"/>
+                </PanelContainer>
+                <CheckBox Name="PerServerHighlightsCheckBox" Text="{Loc 'ui-options-per-server-highlights'}" />
                 <CheckBox Name="AutoFillHighlightsCheckBox" Text="{Loc 'ui-options-auto-fill-highlights'}" />
                 <ui:OptionColorSlider Name="HighlightsColorSlider"
                     Title="{Loc 'ui-options-highlights-color'}"
                     Example="{Loc 'ui-options-highlights-color-example'}"/>
-                <Label Text="{Loc 'ui-options-accessibility-header-content'}"
-                       StyleClasses="LabelKeyText"/>
-                <CheckBox Name="CensorNudityCheckBox" Text="{Loc 'ui-options-censor-nudity'}" />
             </BoxContainer>
         </ScrollContainer>
         <ui:OptionsTabControlRow Name="Control" Access="Public" />

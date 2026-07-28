@@ -49,10 +49,6 @@ ui-options-quality-label = Quality
 ui-options-misc-label = Misc
 ui-options-interface-label = Interface
 
-
-ui-options-auto-fill-highlights = Automatically set the highlights list based on your character's name and job
-ui-options-highlights-color = Highlights color:
-ui-options-highlights-color-example = This is highlighted text.
 ui-options-show-held-item = Show held item next to cursor
 ui-options-show-combat-mode-indicators = Show combat mode indicators with cursor
 ui-options-opaque-storage-window = Opaque storage window
@@ -366,6 +362,7 @@ cmd-options-help = Usage: options [tab]
 ui-options-accessibility-header-reduced-motion = Reduced Motion
 ui-options-accessibility-header-visuals = Visuals
 ui-options-accessibility-header-content = Content
+ui-options-accessibility-header-highlights = Chat highlights
 
 ui-options-enable-color-name = Add colors to character names
 ui-options-colorblind-friendly = Colorblind friendly mode
@@ -400,6 +397,12 @@ ui-options-speech-bubble-speaker-opacity = Speech bubble speaker opacity
 ui-options-speech-bubble-background-opacity = Speech bubble background opacity
 
 ui-options-censor-nudity = Censor character nudity
+
+ui-options-auto-fill-highlights = Automatically supplement the highlights list based on your character's name and job
+ui-options-per-server-highlights = Save unique persistent highlights for each server
+ui-options-highlights-color = Highlights color:
+ui-options-highlights-color-example = This is highlighted text.
+ui-options-highlights-persistent = Persistent highlights:
 
 ## Admin menu
 

@@ -106,9 +106,9 @@ public partial class ChatBox : UIWidget
         }
     }
 
-    private void OnNewHighlights(string highlighs)
+    private void OnNewHighlights(string highlights)
     {
-        _controller.UpdateHighlights(highlighs);
+        _controller.UpdateHighlights(highlights);
     }
 
     public void AddLine(string message, Color color)

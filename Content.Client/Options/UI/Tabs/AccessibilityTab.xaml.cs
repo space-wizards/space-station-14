@@ -30,10 +30,21 @@ public sealed partial class AccessibilityTab : Control
         Control.AddOptionPercentSlider(CCVars.SpeechBubbleTextOpacity, SpeechBubbleTextOpacitySlider);
         Control.AddOptionPercentSlider(CCVars.SpeechBubbleSpeakerOpacity, SpeechBubbleSpeakerOpacitySlider);
         Control.AddOptionPercentSlider(CCVars.SpeechBubbleBackgroundOpacity, SpeechBubbleBackgroundOpacitySlider);
-        Control.AddOptionCheckBox(CCVars.ChatAutoFillHighlights, AutoFillHighlightsCheckBox);
-        Control.AddOptionColorSlider(CCVars.ChatHighlightsColor, HighlightsColorSlider);
 
         Control.AddOptionCheckBox(CCVars.AccessibilityClientCensorNudity, CensorNudityCheckBox);
+
+        var persistentHighlights = Control.AddOptionString(CCVars.ChatPersistentHighlights, PersistentHighlightEdit);
+        var perServerHighlights = Control.AddOptionCheckBox(CCVars.ChatPerServerHighlights, PerServerHighlightsCheckBox);
+
+        // This is a bit of a hack to ensure that the persistent highlights TextEdit is responsive to changes
+        perServerHighlights.ImmediateValueChanged += _ =>
+        {
+            perServerHighlights.SaveValue();
+            persistentHighlights.LoadValue();
+        };
+
+        Control.AddOptionCheckBox(CCVars.ChatAutoFillHighlights, AutoFillHighlightsCheckBox);
+        Control.AddOptionColorSlider(CCVars.ChatHighlightsColor, HighlightsColorSlider);
 
         Control.Initialize();
     }
