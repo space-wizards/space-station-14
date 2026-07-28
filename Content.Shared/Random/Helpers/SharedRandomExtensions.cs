@@ -46,6 +46,28 @@ public static class SharedRandomExtensions
         throw new InvalidOperationException($"Invalid weighted pick for {prototype.ID}!");
     }
 
+    [Obsolete("Use the engine's RandomExtensions version of this method.")]
+    public static T Pick<T>(Dictionary<T, float> weights, IRobustRandom random)
+            where T : notnull
+        {
+            var sum = weights.Values.Sum();
+            var accumulated = 0f;
+
+            var rand = random.NextFloat() * sum;
+
+            foreach (var (key, weight) in weights)
+            {
+                accumulated += weight;
+
+                if (accumulated >= rand)
+                {
+                    return key;
+                }
+            }
+
+            throw new InvalidOperationException("Invalid weighted pick");
+        }
+
     public static (string reagent, FixedPoint2 quantity) Pick(this WeightedRandomFillSolutionPrototype prototype, IRobustRandom? random = null)
     {
         var randomFill = prototype.PickRandomFill(random);
@@ -102,6 +124,34 @@ public static class SharedRandomExtensions
         throw new InvalidOperationException($"Invalid weighted pick for {prototype.ID}!");
     }
 
+    /// <inheritdoc cref="HashCodeCombine(IReadOnlyCollection{int})"/>
+    [Obsolete("Use the engine's RandomExtensions version of this method.")]
+    public static int HashCodeCombine(params int[] values)
+    {
+        return HashCodeCombine((IReadOnlyCollection<int>)values);
+    }
+
+    /// <summary>
+    /// A very simple, deterministic djb2 hash function for generating a combined seed for the random number generator.
+    /// We can't use HashCode.Combine because that is initialized with a random value, creating different results on the server and client.
+    /// </summary>
+    /// <example>
+    /// Combine the current game tick with a NetEntity Id in order to not get the same random result if this is called multiple times in the same tick.
+    /// <code>
+    /// var seed = SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, GetNetEntity(ent).Id);
+    /// </code>
+    /// </example>
+    [Obsolete("Use the engine's RandomExtensions version of this method.")]
+    public static int HashCodeCombine(IReadOnlyCollection<int> values)
+    {
+        int hash = 5381;
+        foreach (var value in values)
+        {
+            hash = (hash << 5) + hash + value;
+        }
+        return hash;
+    }
+
     // TODO: REPLACE ALL OF THIS WITH PREDICTED RANDOM WHEN ENGINE PR IS MERGED
     /// <summary>
     /// Creates an instance of IRobustRandom that will be the same for both the server and client.
@@ -117,7 +167,7 @@ public static class SharedRandomExtensions
     /// This entity should not be the same entity as <see cref="netEnt"/>.</param>
     public static IRobustRandom PredictedRandom(IGameTiming timing, NetEntity netEnt, NetEntity? netEnt2 = null)
     {
-        var seed = HashCodeCombine((int)timing.CurTick.Value, netEnt.Id, netEnt2?.Id ?? 0);
+        var seed = RandomExtensions.HashCodeCombine((int)timing.CurTick.Value, netEnt.Id, netEnt2?.Id ?? 0);
         var random = new RobustRandom();
         random.SetSeed(seed);
         return random;
