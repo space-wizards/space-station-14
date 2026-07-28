@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Numerics;
 using Content.Shared.Cards;
 using Content.Shared.Mobs.Components;
@@ -5,6 +6,7 @@ using Content.Shared.Stacks;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Cards;
 
@@ -47,12 +49,14 @@ public sealed partial class CardSystem : SharedCardSystem
         // Might run into problems if the MaxFanned changes frequently
         for (var i = visualState.Count; i < visualState.MaxFanned; i++)
         {
-            var (baseLayer, layerOne, layerTwo) = CardLayers(i);
-            if (!_sprite.LayerExists((uid, sprite), baseLayer))
+            var card = visualState.CardList[visualState.Start + (flipped ? i : -i - 1)];
+            if (card.CardId.Id == null || !PrototypeManager.TryIndex(card.CardId, out var prototype))
+                continue;
+            var cardLayers = CardLayers(i, prototype.Layers.Count);
+            if (!_sprite.LayerExists((uid, sprite), cardLayers[0]))
                 break;
-            _sprite.RemoveLayer((uid, sprite), baseLayer, true);
-            _sprite.RemoveLayer((uid, sprite), layerOne, true);
-            _sprite.RemoveLayer((uid, sprite), layerTwo, true);
+            foreach (var layer in cardLayers)
+                _sprite.RemoveLayer((uid, sprite), layer, true);
         }
 
         var radius = FanRadius(visualState.Count);
@@ -60,35 +64,35 @@ public sealed partial class CardSystem : SharedCardSystem
         {
             // If flipped counts from the back
             var card = visualState.CardList[visualState.Start + (flipped ? i : -i - 1)];
-            var (baseLayer, layerOne, layerTwo) = CardLayers(i);
-
             if (card.CardId.Id == null || !PrototypeManager.TryIndex(card.CardId, out var prototype))
                 continue;
+            Log.Info($"{prototype.Sprite}");
+            Log.Info($"{prototype.Color}");
+            var cardLayers = CardLayers(i, prototype.Layers.Count);
 
             var (position, rotation) = GetCardPosRot(i, visualState.Count, radius);
 
-            // Creates layers if not already present.
-            _sprite.LayerMapReserve((uid, sprite), baseLayer);
-            _sprite.LayerMapReserve((uid, sprite), layerOne);
-            _sprite.LayerMapReserve((uid, sprite), layerTwo);
+            foreach (var layer in cardLayers)
+                _sprite.LayerMapReserve((uid, sprite), layer);
 
             if (flipped)
             {
                 // Creates card and moves
-                BuildCard(prototype, baseLayer, card.BaseState, layerOne, layerTwo, (uid, sprite));
-                TransformLayer(layerOne, position, rotation, (uid, sprite));
-                TransformLayer(layerTwo, position, rotation, (uid, sprite));
+                BuildCard(prototype, cardLayers, card.BaseState, (uid, sprite));
+                foreach (var layer in cardLayers)
+                    TransformLayer(layer, position, rotation, (uid, sprite));
             }
             else
             {
                 // Uses the base layer for the back side
-                BuildLayer(baseLayer, card.CardBack, null, (uid, sprite));
-                _sprite.LayerSetVisible((uid, sprite), layerOne, false);
-                _sprite.LayerSetVisible((uid, sprite), layerTwo, false);
+                BuildLayer(cardLayers[0], prototype.Sprite, card.CardBack, null, (uid, sprite));
+                TransformLayer(cardLayers[0], position, rotation, (uid, sprite));
+                foreach (var layer in cardLayers)
+                {
+                    _sprite.LayerSetVisible((uid, sprite), layer, false);
+                }
+                _sprite.LayerSetVisible((uid, sprite), cardLayers[0], true);
             }
-            // Moves the shared layer
-            TransformLayer(baseLayer, position, rotation, (uid, sprite));
-
             // Moves the stack texture below the left most card
             if (i == 0)
                 TransformLayer("base", position, rotation, (uid, sprite));
@@ -146,28 +150,38 @@ public sealed partial class CardSystem : SharedCardSystem
     /// </summary>
     /// <param name="idx">The index of the card of those to be fanned.</param>
     /// <returns>The three layer names</returns>
-    private static (string Base, string LayerOne, string LayerTwo) CardLayers(int idx) =>
-        ($"card_{idx}_base", $"card_{idx}_layerOne", $"card_{idx}_layerTwo");
+    private static List<string> CardLayers(int index, int layerCount)
+    {
+        List<string> list = new();
+        list.Add($"card_{index}_base");
+        for (var i = 0; i < layerCount; i++)
+        {
+            list.Add($"card_{index}_{layerCount}");
+        }
+        return list;
+    }
 
     // Adds sprites to sprite layers and colours them.
     private void BuildCard(
         CardPrototype prototype,
-        string baseLayer,
+        List<string> cardLayers,
         string baseSprite,
-        string layerOne,
-        string layerTwo,
         Entity<SpriteComponent?> sprite
     )
     {
-        BuildLayer(baseLayer, baseSprite, null, sprite);
-        BuildLayer(layerOne, prototype.LayerOneState, prototype.LayerOneColor, sprite);
-        BuildLayer(layerTwo, prototype.LayerTwoState, prototype.LayerTwoColor, sprite);
+        BuildLayer(cardLayers[0], prototype.Sprite, baseSprite, null, sprite);
+        var i = 1;
+        foreach (var card in prototype.Layers)
+        {
+            BuildLayer(cardLayers[i], prototype.Sprite, card.State, card.Color ?? prototype.Color, sprite);
+            i++;
+        }
     }
 
-    private void BuildLayer(string layer, string? layerState, Color? layerColor, Entity<SpriteComponent?> sprite)
+    private void BuildLayer(string layer, string rsi, string layerState, Color? layerColor, Entity<SpriteComponent?> sprite)
     {
         _sprite.LayerSetVisible(sprite, layer, true);
-        _sprite.LayerSetRsiState(sprite, layer, layerState);
+        _sprite.LayerSetSprite(sprite, layer, new SpriteSpecifier.Rsi(new ResPath(rsi), layerState));
         if (layerColor != null)
             _sprite.LayerSetColor(sprite, layer, layerColor.Value);
     }

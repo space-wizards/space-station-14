@@ -1,4 +1,6 @@
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Cards;
 
@@ -6,45 +8,68 @@ namespace Content.Shared.Cards;
 /// Defines the visuals for a card.
 /// </summary>
 [Prototype]
-public sealed partial class CardPrototype : IPrototype
+public sealed partial class CardPrototype : IPrototype, IInheritingPrototype
 {
     /// <inheritdoc/>
     [IdDataField]
-    public string ID { get; private set; } = string.Empty;
+    public string ID { get; private set; } = default!;
+
+    /// <inheritdoc/>
+    [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<CardPrototype>))]
+    public string[]? Parents { get; private set; }
+
+    /// <inheritdoc/>
+    [NeverPushInheritance]
+    [AbstractDataField]
+    public bool Abstract { get; private set; }
 
     /// <summary>
-    /// First layer sprite, will be below layer two but above base layer
-    /// <summary>
-    [DataField]
-    public string? LayerOneState { get; private set; }
+    /// The RSI path used for this card's layers.
+    /// </summary>
+    [DataField(required: true)]
+    public string Sprite;
 
     /// <summary>
-    /// First layer colour. If left unused sprite will have no colour change applied
-    /// <summary>
+    /// Colour applied to any layer that doesn't specify its own colour override.
+    /// </summary>
     [DataField]
-    public Color? LayerOneColor { get; private set; }
+    public Color? Color;
 
     /// <summary>
-    /// Second layer sprite, will be highest layer
-    /// <summary>
+    /// Layers making up the card's face, drawn in list order (later entries render on top).
+    /// </summary>
     [DataField]
-    public string? LayerTwoState { get; private set; }
-
-    /// <summary>
-    /// Second layer colour. If left unused sprite will have no colour change applied
-    /// <summary>
-    [DataField]
-    public Color? LayerTwoColor { get; private set; }
+    public List<CardLayerData> Layers = new();
 
     /// <summary>
     /// The sprite for the background of the card. Will override any base state set by a deck of cards.
     /// <summary>
     [DataField]
-    public string? BaseState { get; private set; }
+    public string? BaseState;
 
     /// <summary>
-    /// The sprite for the back of the card. Will override any back sprite set by a deck of cards.
-    /// <summary>
+    /// The sprite state for the back of the card. Will override any back sprite set by a deck of cards.
+    /// </summary>
     [DataField]
-    public string? CardBack { get; private set; }
+    public string? CardBack;
+}
+
+/// <summary>
+/// A single visual layer on a card.
+/// </summary>
+[DataDefinition]
+public sealed partial class CardLayerData
+{
+    /// <summary>
+    /// The sprite state for this layer.
+    /// </summary>
+    [DataField(required: true)]
+    public string State = default!;
+
+    /// <summary>
+    /// This layer's colour. If unset, falls back to the owning prototype's <see cref="CardPrototype.Color"/>.
+    /// If both unset, no colour change will be applied.
+    /// </summary>
+    [DataField]
+    public Color? Color;
 }

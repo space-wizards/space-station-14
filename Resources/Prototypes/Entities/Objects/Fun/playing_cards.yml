@@ -93,7 +93,7 @@
         - king_of_spades
 
 - type: entity
-  parent: [BaseStandardDeck, BaseCards]
+  parent: [ BaseStandardDeck, BaseCards ]
   id: CardDeck
   name: deck of cards
   components:
@@ -103,7 +103,7 @@
       state: deck_nanotrasen_full
 
 - type: entity
-  parent: [BaseStandardDeck, BaseCards]
+  parent: [ BaseStandardDeck, BaseCards ]
   id: RedCardDeck
   name: red deck of cards
   components:
@@ -151,7 +151,7 @@
     - type: LandAtCursor
 
 - type: entity
-  parent: [BaseStandardDeck, SyndiBaseCards]
+  parent: [ BaseStandardDeck, SyndiBaseCards ]
   id: SyndiCards
   name: syndicate deck of cards
   components:

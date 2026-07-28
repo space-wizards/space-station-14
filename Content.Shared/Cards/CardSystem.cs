@@ -33,12 +33,12 @@ public abstract partial class SharedCardSystem : EntitySystem
             // A card will only have a whitespace BaseState on initialization.
             if (
                 !card.BaseState.IsWhiteSpace()
-                || !PrototypeManager.TryIndex<CardPrototype>(card.CardId, out var prototype)
+                || !PrototypeManager.Resolve(card.CardId, out var prototype)
             )
                 continue;
             // Sets the card sprites to either the sprites set by the card or by the deck.
-            card.BaseState = prototype.BaseState == null ? ent.Comp.BaseState : prototype.BaseState;
-            card.CardBack = prototype.CardBack == null ? ent.Comp.CardBack : prototype.CardBack;
+            card.BaseState = prototype.BaseState ?? ent.Comp.BaseState;
+            card.CardBack = prototype.CardBack ?? ent.Comp.CardBack;
             ent.Comp.Cards[i] = card;
         }
     }
