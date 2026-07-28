@@ -13,6 +13,6 @@ public sealed partial class ContainerVehicleComponent : Component
     /// <summary>
     /// The ID of the container for the operator.
     /// </summary>
-    [DataField(required: true, readOnly: true)]
+    [DataField(required: true)]
     public string ContainerId;
 }
