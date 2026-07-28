@@ -320,7 +320,7 @@ public sealed partial class PullingSystem : EntitySystem
     private void OnPullableCollisionChange(EntityUid uid, PullableComponent component, ref CollisionChangeEvent args)
     {
         // IDK what this is supposed to be.
-        if (!_timing.ApplyingState && component.PullJointId != null && !args.CanCollide)
+        if (component.PullJointId != null && !args.CanCollide)
         {
             _joints.RemoveJoint(uid, component.PullJointId);
         }
@@ -352,19 +352,16 @@ public sealed partial class PullingSystem : EntitySystem
         if (pullableComp.Puller == null)
             return;
 
-        if (!_timing.ApplyingState)
+        // Joint shutdown
+        if (pullableComp.PullJointId != null)
         {
-            // Joint shutdown
-            if (pullableComp.PullJointId != null)
-            {
-                _joints.RemoveJoint(pullableUid, pullableComp.PullJointId);
-                pullableComp.PullJointId = null;
-            }
+            _joints.RemoveJoint(pullableUid, pullableComp.PullJointId);
+            pullableComp.PullJointId = null;
+        }
 
-            if (TryComp<PhysicsComponent>(pullableUid, out var pullablePhysics))
-            {
-                _physics.SetFixedRotation(pullableUid, pullableComp.PrevFixedRotation, body: pullablePhysics);
-            }
+        if (TryComp<PhysicsComponent>(pullableUid, out var pullablePhysics))
+        {
+            _physics.SetFixedRotation(pullableUid, pullableComp.PrevFixedRotation, body: pullablePhysics);
         }
 
         var oldPuller = pullableComp.Puller;
@@ -557,25 +554,21 @@ public sealed partial class PullingSystem : EntitySystem
         // store the pulled entity's physics FixedRotation setting in case we change it
         pullableComp.PrevFixedRotation = pullablePhysics.FixedRotation;
 
-        // joint state handling will manage its own state
-        if (!_timing.ApplyingState)
-        {
-            var joint = _joints.CreateDistanceJoint(pullableUid, pullerUid,
-                    pullablePhysics.LocalCenter, pullerPhysics.LocalCenter,
-                    id: pullableComp.PullJointId);
-            joint.CollideConnected = false;
-            // This maximum has to be there because if the object is constrained too closely, the clamping goes backwards and asserts.
-            // Internally, the joint length has been set to the distance between the pivots.
-            // Add an additional 15cm (pretty arbitrary) to the maximum length for the hard limit.
-            joint.MaxLength = joint.Length + 0.15f;
-            joint.MinLength = 0f;
-            // Set the spring stiffness to zero. The joint won't have any effect provided
-            // the current length is beteen MinLength and MaxLength. At those limits, the
-            // joint will have infinite stiffness.
-            joint.Stiffness = 0f;
+        var joint = _joints.CreateDistanceJoint(pullableUid, pullerUid,
+                pullablePhysics.LocalCenter, pullerPhysics.LocalCenter,
+                id: pullableComp.PullJointId);
+        joint.CollideConnected = false;
+        // This maximum has to be there because if the object is constrained too closely, the clamping goes backwards and asserts.
+        // Internally, the joint length has been set to the distance between the pivots.
+        // Add an additional 15cm (pretty arbitrary) to the maximum length for the hard limit.
+        joint.MaxLength = joint.Length + 0.15f;
+        joint.MinLength = 0f;
+        // Set the spring stiffness to zero. The joint won't have any effect provided
+        // the current length is beteen MinLength and MaxLength. At those limits, the
+        // joint will have infinite stiffness.
+        joint.Stiffness = 0f;
 
-            _physics.SetFixedRotation(pullableUid, pullableComp.FixedRotationOnPull, body: pullablePhysics);
-        }
+        _physics.SetFixedRotation(pullableUid, pullableComp.FixedRotationOnPull, body: pullablePhysics);
 
         // Messaging
         var message = new PullStartedMessage(pullerUid, pullableUid);
