@@ -20,24 +20,6 @@ public sealed partial class ComputerVisualizerSystem : VisualizerSystem<Computer
         _unshadedShader = ProtoMan.Index(SpriteSystem.UnshadedId).Instance();
     }
 
-    /// <summary>
-    /// Sets the base sprite to this layer. Exists to reduce computer sprite boilerplate.
-    /// </summary>
-    [SubscribeLocalEvent]
-    private void OnComponentInit(Entity<ComputerVisualsComponent> ent, ref ComponentInit args)
-    {
-        if (!TryComp<SpriteComponent>(ent, out var sprite))
-            return;
-
-        Entity<SpriteComponent?> spriteEnt = (ent, sprite);
-
-        TrySetLayerState(spriteEnt, ComputerVisualLayers.Frame, ent.Comp.StateFrame);
-        TrySetLayerState(spriteEnt, ComputerVisualLayers.Keyboard, ent.Comp.StateKeyboard);
-        TrySetLayerState(spriteEnt, ComputerVisualLayers.Keys, ent.Comp.StateKeys);
-        TrySetLayerState(spriteEnt, ComputerVisualLayers.Screen, ent.Comp.StateScreen);
-        TrySetLayerState(spriteEnt, WiresVisualLayers.MaintenancePanel, ent.Comp.StatePanel);
-    }
-
     protected override void OnAppearanceChange(EntityUid uid,
         ComputerVisualsComponent comp,
         ref AppearanceChangeEvent args)
@@ -59,6 +41,24 @@ public sealed partial class ComputerVisualizerSystem : VisualizerSystem<Computer
         }
     }
 
+    /// <summary>
+    /// Sets the base sprite to this layer. Exists to reduce computer sprite boilerplate.
+    /// </summary>
+    [SubscribeLocalEvent]
+    private void OnComponentInit(Entity<ComputerVisualsComponent> ent, ref ComponentInit args)
+    {
+        if (!TryComp<SpriteComponent>(ent, out var sprite))
+            return;
+
+        Entity<SpriteComponent?> spriteEnt = (ent, sprite);
+
+        TrySetLayerState(spriteEnt, ComputerVisualLayers.Frame, ent.Comp.StateFrame);
+        TrySetLayerState(spriteEnt, ComputerVisualLayers.Keyboard, ent.Comp.StateKeyboard);
+        TrySetLayerState(spriteEnt, ComputerVisualLayers.Keys, ent.Comp.StateKeys);
+        TrySetLayerState(spriteEnt, ComputerVisualLayers.Screen, ent.Comp.StateScreen);
+        TrySetLayerState(spriteEnt, WiresVisualLayers.MaintenancePanel, ent.Comp.StatePanel);
+    }
+
     private void TrySetLayerState(Entity<SpriteComponent?> ent, Enum key, string? state)
     {
         if (SpriteSystem.LayerMapTryGet(ent, key, out var layer, logMissing: false))
@@ -72,7 +72,7 @@ public sealed partial class ComputerVisualizerSystem : VisualizerSystem<Computer
 public enum ComputerVisualLayers : byte
 {
     Frame,
-    Keys,
     Keyboard,
+    Keys,
     Screen
 }
