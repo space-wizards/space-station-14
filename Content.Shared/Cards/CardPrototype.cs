@@ -39,6 +39,7 @@ public sealed partial class CardPrototype : IPrototype, IInheritingPrototype
     /// Layers making up the card's face, drawn in list order (later entries render on top).
     /// </summary>
     [DataField]
+    [AlwaysPushInheritance]
     public List<CardLayerData> Layers = new();
 
     /// <summary>
