@@ -4,6 +4,7 @@ using Content.Server.Explosion.EntitySystems;
 using Content.Server.Pinpointer;
 using Content.Server.Popups;
 using Content.Server.Station.Systems;
+using Content.Server.StationEvents.Components;
 using Content.Shared.Audio;
 using Content.Shared.AlertLevel;
 using Content.Shared.Containers.ItemSlots;
@@ -145,6 +146,17 @@ public sealed partial class NukeSystem : EntitySystem
     private void OnRemove(EntityUid uid, NukeComponent component, ComponentRemove args)
     {
         _itemSlots.RemoveItemSlot(uid, component.DiskSlot);
+
+        var query = EntityQueryEnumerator<SuddenNukeArmRuleComponent>();
+
+        while (query.MoveNext(out _, out var suddenNukeArmRuleComponent))
+        {
+            if (suddenNukeArmRuleComponent.PickedNuke == uid)
+            {
+                suddenNukeArmRuleComponent.PickedNuke = null;
+                break;
+            }
+        }
     }
 
     private void OnItemSlotChanged(EntityUid uid, NukeComponent component, ContainerModifiedMessage args)
