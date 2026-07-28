@@ -10,14 +10,15 @@ using Content.Shared.FixedPoint;
 namespace Content.IntegrationTests.Tests.Damageable;
 
 /// <summary>
-/// Major part of why we need this test is to check that entities marked as 'Damageable' have 'Injurable' sister component,
-/// because they work in pairs with current damage system. Please be careful when modifying test for special cases
+/// Major part of why we need this test is to check that entities marked as 'Injurable' have 'Damageable' sister component,
+/// because they work in pairs within current damage system. Please be careful when modifying test for special cases
 /// of having 'Damageable' without proper 'Injurable'. In future updates, when there will be entities that
 /// have damage model not relying on our simple 'Injurable' implementation, test must be improved to validate
 /// that there at least one way of handling damage attached to entity.
 /// </summary>
 [TestFixture]
 [TestOf(typeof(InjurableComponent))]
+[TestOf(typeof(DamageableComponent))]
 [TestOf(typeof(DamageableSystem))]
 public sealed class DamageAllPrototypesTest : GameTest
 {
@@ -26,15 +27,15 @@ public sealed class DamageAllPrototypesTest : GameTest
     [Test]
     [TestOf(typeof(DamageableSystem))]
     [Description("Ensures all Entity Prototypes with damageable can be damaged.")]
-    public async Task TestDamageableComponents()
+    public async Task TestInjurableComponentOwnersCanTakeDamage()
     {
         var map = await Pair.CreateTestMap();
 
         try
         {
-            foreach (var damageable in GameDataScrounger.EntitiesWithComponent("Injurable"))
+            foreach (var injurable in GameDataScrounger.EntitiesWithComponent("Injurable"))
             {
-                var entity = await SpawnAtPosition(damageable, map.GridCoords);
+                var entity = await SpawnAtPosition(injurable, map.GridCoords);
 
                 try
                 {
@@ -59,14 +60,14 @@ public sealed class DamageAllPrototypesTest : GameTest
                             Assert.That(
                                 _damageableSystem.GetTotalDamage(entity),
                                 Is.EqualTo(FixedPoint2.Epsilon + previousDamage),
-                                $"{damageable} should take {type.ID} damage.");
+                                $"{injurable} should take {type.ID} damage.");
 
                             _damageableSystem.ClearAllDamage(entity);
                         });
                     }
 
                     // Ensure that this entity can actually be damaged.
-                    Assert.That(canBeDamaged, Is.True, $"{damageable} cannot be damaged by any damage type.");
+                    Assert.That(canBeDamaged, Is.True, $"{injurable} cannot be damaged by any damage type.");
                 }
                 finally
                 {
