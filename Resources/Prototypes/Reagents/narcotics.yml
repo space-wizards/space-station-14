@@ -517,12 +517,6 @@
   physicalDesc: reagent-physical-desc-soothing
   flavor: tingly
   color: "#EE35FF"
-  tileReactions:
-  - !type:CreateEntityTileReaction
-    entity: GiantSporeSpawner
-    usage: 2
-    maxOnTile: 2
-    randomOffsetMax: 0.3
   metabolisms:
     Bloodstream:
       effects:
@@ -532,5 +526,29 @@
         conditions:
         - !type:ReagentCondition
           reagent: Fungalin
-          min: 10
+          min: 5
         probability: 0.2
+      - !type:SpawnEntity
+        entity: GiantSpore
+        probability: 0.1
+        conditions:
+        - !type:ReagentCondition
+          reagent: Fungalin
+          min: 25
+    Respiration:
+      effects:
+      - !type:Emote
+        emote: Cough
+        showInChat: true
+        conditions:
+        - !type:ReagentCondition
+          reagent: Fungalin
+          min: 5
+        probability: 0.2
+      - !type:SpawnEntity
+        entity: GiantSpore
+        probability: 0.1
+        conditions:
+        - !type:ReagentCondition
+          reagent: Fungalin
+          min: 25

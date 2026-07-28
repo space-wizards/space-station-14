@@ -1,16 +1,23 @@
 - type: entity
-  abstract: true
-  id: BaseGiantSpore
-  parent: [ SimpleSpaceMobBase, FlyingMobBase ]
+  id: GiantSpore
+  parent: [ BaseSimpleMob, FlyingMobBase ]
+  name: giant spore
   components:
   - type: Sprite
     sprite: Mobs/Plants/Mushrooms/giant_spore.rsi
-    state: icon
-  - type: PointLight
-    enabled: true
-    color: "#000000"
-    radius: 2
-    energy: 2
+    layers:
+    - state: icon
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: RandomSprite
+    available:
+    - enum.DamageStateVisualLayers.Base:
+        icon: Rainbow
+  - type: NpcFactionMember
+    factions:
+    - SimpleNeutral
+  - type: HTN
+    rootTask:
+      task: IdleCompound
   - type: Item
     size: Normal
   - type: Fixtures
@@ -51,89 +58,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
 
-## Colors
-- type: entity
-  id: RedGiantSpore
-  parent: BaseGiantSpore
-  name: red giant spore
-  components:
-  - type: Sprite
-    color: "#ff001e"
-  - type: PointLight
-    color: "#ff001e"
-
-- type: entity
-  id: OrangeGiantSpore
-  parent: BaseGiantSpore
-  name: orange giant spore
-  components:
-  - type: Sprite
-    color: "#f77800"
-  - type: PointLight
-    color: "#f77800"
-
-- type: entity
-  id: YellowGiantSpore
-  parent: BaseGiantSpore
-  name: yellow giant spore
-  components:
-  - type: Sprite
-    color: "#fffb00"
-  - type: PointLight
-    color: "#fffb00"
-
-- type: entity
-  id: PurpleGiantSpore
-  parent: BaseGiantSpore
-  name: purple giant spore
-  components:
-  - type: Sprite
-    color: "#6a00ff"
-  - type: PointLight
-    color: "#6a00ff"
-
-- type: entity
-  id: GreenGiantSpore
-  parent: BaseGiantSpore
-  name: green giant spore
-  components:
-  - type: Sprite
-    color: "#22ff00"
-  - type: PointLight
-    color: "#22ff00"
-
-- type: entity
-  id: PinkGiantSpore
-  parent: BaseGiantSpore
-  name: pink giant spore
-  components:
-  - type: Sprite
-    color: "#ff00ea"
-  - type: PointLight
-    color: "#ff00ea"
-
 ## Spawners
-
-- type: entity
-  id: GiantSporeSpawner
-  name: giant spore spawner
-  components:
-  - type: EntityTableSpawner
-    table: !type:NestedSelector
-      tableId: GiantSporeSpawnerTable
-
-- type: entityTable
-  id: GiantSporeSpawnerTable
-  offset: 0.5
-  table: !type:GroupSelector
-    children:
-    - id: RedGiantSpore
-    - id: OrangeGiantSpore
-    - id: YellowGiantSpore
-    - id: GreenGiantSpore
-    - id: PurpleGiantSpore
-    - id: PinkGiantSpore
-
 - type: entity
   id: GiantMushroomSpawner
   name: giant mushroom spawner
