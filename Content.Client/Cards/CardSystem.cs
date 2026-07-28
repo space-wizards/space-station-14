@@ -53,43 +53,45 @@ public sealed partial class CardSystem : SharedCardSystem
         {
             // don't like this magic number
             var cardLayers = CardLayers(i, 10);
+            if (!_sprite.LayerExists((uid, sprite), cardLayers[0]))
+                break;
+
             foreach (var layer in cardLayers)
             {
-                _sprite.RemoveLayer((uid, sprite), layer, false);
+                if (!_sprite.LayerExists((uid, sprite), layer))
+                    break;
+
+                _sprite.RemoveLayer((uid, sprite), layer);
             }
         }
 
         var radius = FanRadius(numCards);
         for (var i = 0; i < numCards; i++)
         {
-            // If flipped counts from the back
             var card = visualState.CardList[visualState.Start + i * Math.Sign(visualState.Count)];
-            if (card.CardId.Id == null || !PrototypeManager.TryIndex(card.CardId, out var prototype))
+            if (!PrototypeManager.Resolve(card.CardId, out var prototype))
                 continue;
+
             var cardLayers = CardLayers(i, prototype.Layers.Count);
-
             var (position, rotation) = GetCardPosRot(i, numCards, radius);
-
-            foreach (var layer in cardLayers)
-                _sprite.LayerMapReserve((uid, sprite), layer);
 
             if (flipped)
             {
+                foreach (var layer in cardLayers)
+                    _sprite.LayerMapReserve((uid, sprite), layer);
+
                 // Creates card and moves
                 BuildCard(prototype, cardLayers, card.BaseState, (uid, sprite));
                 foreach (var layer in cardLayers)
                     TransformLayer(layer, position, rotation, (uid, sprite));
+
             }
             else
             {
+                _sprite.LayerMapReserve((uid, sprite), cardLayers[0]);
                 // Uses the base layer for the back side
                 BuildLayer(cardLayers[0], prototype.Sprite, card.CardBack, null, (uid, sprite));
                 TransformLayer(cardLayers[0], position, rotation, (uid, sprite));
-                foreach (var layer in cardLayers)
-                {
-                    _sprite.LayerSetVisible((uid, sprite), layer, false);
-                }
-                _sprite.LayerSetVisible((uid, sprite), cardLayers[0], true);
             }
             // Moves the stack texture below the left most card
             if (i == 0)
