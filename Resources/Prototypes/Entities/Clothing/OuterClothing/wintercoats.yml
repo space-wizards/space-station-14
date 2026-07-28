@@ -8,11 +8,6 @@
     sprite: Clothing/OuterClothing/WinterCoats/coat/wintercoat.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coat/wintercoat.rsi
-  - type: TemperatureProtection
-    heatingCoefficient: 1.1
-    coolingCoefficient: 0.1
-  - type: Item
-    size: Normal
   - type: Armor
     modifiers:
       coefficients:
