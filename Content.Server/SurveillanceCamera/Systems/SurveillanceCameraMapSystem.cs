@@ -1,5 +1,5 @@
 using System.Numerics;
-using Content.Server.DeviceNetwork.Systems;
+using Content.Shared.DeviceNetwork.Systems;
 using Content.Server.Power.Components;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.SurveillanceCamera.Components;

@@ -1,7 +1,7 @@
 using Content.Server.Administration;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
-using Content.Server.DeviceNetwork.Systems;
+using Content.Shared.DeviceNetwork.Systems;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Tools;

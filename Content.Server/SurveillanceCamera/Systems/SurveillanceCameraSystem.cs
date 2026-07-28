@@ -1,5 +1,5 @@
 using Content.Server.Administration.Logs;
-using Content.Server.DeviceNetwork.Systems;
+using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Database;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Power;

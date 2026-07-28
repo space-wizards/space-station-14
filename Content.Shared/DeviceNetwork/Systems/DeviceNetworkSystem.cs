@@ -1,10 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Shared.Buffers;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Examine;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.DeviceNetwork.Systems;
 
@@ -13,16 +13,13 @@ namespace Content.Shared.DeviceNetwork.Systems;
 ///     Device networking allows machines and devices to communicate with each other
 ///     while adhering to restrictions like range or being connected to the same power network.
 /// </summary>
-public abstract partial class SharedDeviceNetworkSystem : EntitySystem, IDevicePayloadRaiser
+public sealed partial class DeviceNetworkSystem : EntitySystem, IDevicePayloadRaiser
 {
     [Dependency] private IPrototypeManager _protoMan = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SharedTransformSystem _transformSystem = default!;
     [Dependency] private DeviceListSystem _deviceLists = default!;
     [Dependency] private NetworkConfiguratorSystem _configurator = default!;
-
-    protected BaseContentArrayPool<Device> DeviceArrayPool = default!;
-    protected BaseContentArrayPool<EntityUid?> EntityArrayPool = default!;
 
     // Basically a cache of devices to connect them together faster.
     // TODO make DeviceNets smarter and make them entities
@@ -143,6 +140,8 @@ public abstract partial class SharedDeviceNetworkSystem : EntitySystem, IDeviceP
         return true;
     }
 
+    private Device[] _deviceCache = [];
+
     private void SendPacket(ref DeviceNetworkPacketData packet)
     {
         if (!TryEnsureNetwork(packet.NetId, out var network))
@@ -153,10 +152,9 @@ public abstract partial class SharedDeviceNetworkSystem : EntitySystem, IDeviceP
             // Broadcast to all listening devices
             if (network.ListeningDevices.TryGetValue(packet.Frequency, out var devices) && CheckRecipientsList(packet, ref devices))
             {
-                var deviceCopy = DeviceArrayPool.Rent(devices.Count);
-                devices.CopyTo(deviceCopy);
-                SendToConnections(deviceCopy.AsSpan(0, devices.Count), packet);
-                DeviceArrayPool.Return(deviceCopy);
+                Extensions.EnsureLength(ref _deviceCache, devices.Count);
+                devices.CopyTo(_deviceCache);
+                SendToConnections(_deviceCache.AsSpan(0, devices.Count), packet);
             }
         }
         else
@@ -177,17 +175,17 @@ public abstract partial class SharedDeviceNetworkSystem : EntitySystem, IDeviceP
                 totalDevices += 1;
                 hasTargetedDevice = true;
             }
-            var deviceCopy = DeviceArrayPool.Rent(totalDevices);
+
+            Extensions.EnsureLength(ref _deviceCache, totalDevices);
             if (devices != null)
             {
-                devices.CopyTo(deviceCopy);
+                devices.CopyTo(_deviceCache);
             }
             if (hasTargetedDevice)
             {
-                deviceCopy[totalDevices - 1] = device.Value;
+                _deviceCache[totalDevices - 1] = device.Value;
             }
-            SendToConnections(deviceCopy.AsSpan(0, totalDevices), packet);
-            DeviceArrayPool.Return(deviceCopy);
+            SendToConnections(_deviceCache.AsSpan(0, totalDevices), packet);
         }
     }
 

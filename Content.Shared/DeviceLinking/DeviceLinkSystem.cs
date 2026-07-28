@@ -17,7 +17,7 @@ namespace Content.Shared.DeviceLinking;
 public sealed partial class DeviceLinkSystem : EntitySystem
 {
     [Dependency] private SharedPopupSystem _popupSystem = default!;
-    [Dependency] private SharedDeviceNetworkSystem _deviceNetworkSystem = default!;
+    [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private IGameTiming _gameTiming = default!;

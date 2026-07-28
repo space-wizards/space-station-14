@@ -1,5 +1,5 @@
 using Content.Server.Administration.Logs;
-using Content.Server.DeviceNetwork.Systems;
+using Content.Shared.DeviceNetwork.Systems;
 using Content.Server.Radio.EntitySystems;
 using Content.Shared.Lock;
 using Content.Shared.Database;

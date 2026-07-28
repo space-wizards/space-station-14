@@ -8,7 +8,7 @@ namespace Content.Shared.DeviceNetwork.Systems.Devices;
 
 public sealed partial class ApcNetSwitchSystem : EntitySystem
 {
-    [Dependency] private SharedDeviceNetworkSystem _deviceNetworkSystem = default!;
+    [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
 
 
     /// <summary>

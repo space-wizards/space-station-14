@@ -1,6 +1,6 @@
 ﻿using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.Monitor.Payloads;
-using Content.Server.DeviceNetwork.Systems;
+using Content.Shared.DeviceNetwork.Systems;
 using Content.Server.Power.Generation.Teg;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Monitor;

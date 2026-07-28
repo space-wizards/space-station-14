@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 
 namespace Content.Shared.DeviceNetwork.Systems;
 
-public abstract partial class SharedDeviceNetworkSystem
+public sealed partial class DeviceNetworkSystem
 {
     /// <summary>
     /// Sends the given payload as a device network packet to the entity with the given address and frequency.

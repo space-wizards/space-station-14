@@ -5,7 +5,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.DeviceNetwork.Components;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
-[Access(typeof(SharedDeviceNetworkSystem), typeof(DeviceNet))]
+[Access(typeof(DeviceNetworkSystem), typeof(DeviceNet))]
 public sealed partial class DeviceNetworkComponent : Component
 {
     /// <summary>

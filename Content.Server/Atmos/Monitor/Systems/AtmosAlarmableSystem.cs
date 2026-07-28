@@ -2,7 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.Monitor.Payloads;
-using Content.Server.DeviceNetwork.Systems;
+using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Power;

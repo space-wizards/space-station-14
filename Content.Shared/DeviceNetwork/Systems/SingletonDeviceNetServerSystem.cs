@@ -11,7 +11,7 @@ namespace Content.Shared.DeviceNetwork.Systems;
 /// </summary>
 public sealed partial class SingletonDeviceNetServerSystem : EntitySystem
 {
-    [Dependency] private SharedDeviceNetworkSystem _deviceNetworkSystem = default!;
+    [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
     [Dependency] private SharedStationSystem _stationSystem = default!;
 
     public override void Initialize()

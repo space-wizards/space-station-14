@@ -1,5 +1,5 @@
 using Content.Server.Atmos.Monitor.Components;
-using Content.Server.DeviceNetwork.Systems;
+using Content.Shared.DeviceNetwork.Systems;
 using Content.Server.Popups;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Access.Components;

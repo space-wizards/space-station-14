@@ -10,7 +10,7 @@ namespace Content.Shared.DeviceNetwork.Systems;
 /// </summary>
 public sealed partial class DeviceNetworkRouterSystem : EntitySystem
 {
-    [Dependency] private SharedDeviceNetworkSystem _deviceNetworkSystem = default!;
+    [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
 
     [Dependency] private EntityQuery<DeviceNetworkComponent> _query = default!;
 
