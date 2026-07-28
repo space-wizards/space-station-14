@@ -61,6 +61,23 @@ public sealed partial class InteractionOutlineSystem : EntitySystem
         UpdatesAfter.Add(typeof(SharedEyeSystem));
     }
 
+    private bool TryClearShader(EntityUid? uid)
+    {
+        if (!_outlineQuery.HasComp(uid))
+            return false;
+
+        if (!_spriteQuery.TryComp(uid, out var sprite))
+            return false;
+
+        if (sprite.PostShader != _shaderInRange && sprite.PostShader != _shaderOutOfRange)
+            return false;
+
+        sprite.PostShader = null;
+        _lastHoveredEntity = null;
+
+        return true;
+    }
+
     public void SetCvarEnabled(bool cvarEnabled)
     {
         _cvarEnabled = cvarEnabled;
@@ -70,16 +87,8 @@ public sealed partial class InteractionOutlineSystem : EntitySystem
         if (_cvarEnabled)
             return;
 
-        if (!_outlineQuery.HasComp(_lastHoveredEntity))
-            return;
-
-        if (!_spriteQuery.TryComp(_lastHoveredEntity, out var sprite))
-            return;
-
-        if (sprite.PostShader != _shaderInRange && sprite.PostShader != _shaderOutOfRange)
-            return;
-
-        sprite.PostShader = null;
+        TryClearShader(_lastHoveredEntity);
+        _lastHoveredEntity = null;
     }
 
     public void SetEnabled(bool enabled)
@@ -94,16 +103,8 @@ public sealed partial class InteractionOutlineSystem : EntitySystem
         if (enabled)
             return;
 
-        if (!_outlineQuery.HasComp(_lastHoveredEntity))
-            return;
-
-        if (!_spriteQuery.TryComp(_lastHoveredEntity, out var sprite))
-            return;
-
-        if (sprite.PostShader != _shaderInRange && sprite.PostShader != _shaderOutOfRange)
-            return;
-
-        sprite.PostShader = null;
+        TryClearShader(_lastHoveredEntity);
+        _lastHoveredEntity = null;
     }
 
     public override void FrameUpdate(float frameTime)
@@ -158,9 +159,8 @@ public sealed partial class InteractionOutlineSystem : EntitySystem
             renderScale = _eyeManager.MainViewport.GetRenderScale();
         }
 
-        if (_lastHoveredEntity != entityToClick && _outlineQuery.HasComp(_lastHoveredEntity) &&
-            _spriteQuery.TryComp(_lastHoveredEntity, out var lastSprite) && (lastSprite.PostShader == _shaderInRange || lastSprite.PostShader == _shaderOutOfRange))
-            lastSprite.PostShader = null;
+        if (_lastHoveredEntity != entityToClick)
+            TryClearShader(_lastHoveredEntity);
 
         _lastHoveredEntity = entityToClick;
 
