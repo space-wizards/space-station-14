@@ -25,7 +25,7 @@
             ChiefEngineer: [ 1, 1 ]
             ResearchDirector: [ 1, 1 ]
             Quartermaster: [ 1, 1 ]
-            #service (8-10)
+            #service (7-9)
             Bartender: [ 1, 1 ]
             Botanist: [ 2, 2 ]
             Chef: [ 1, 1 ]
@@ -33,7 +33,6 @@
             Chaplain: [ 1, 1 ]
             Librarian: [ 0, 1 ]
             ServiceWorker: [ 1, 2 ]
-            Reporter: [ 1, 1 ]
             #engineering (6-8)
             AtmosphericTechnician: [ 2, 2 ]
             StationEngineer: [ 4, 4 ]
