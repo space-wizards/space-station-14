@@ -109,7 +109,7 @@ public sealed class NameIdentifierTest : GameTest
         await Server.WaitAssertion(() =>
         {
             // Create an entity that will draw a modifier from the pool
-            var single = SEntMan.Spawn(NameTest);
+            var single = SSpawn(NameTest);
 
             Assert.That(_nameModifier.CurrentIds[NumberTestGroup],
                 Has.Count.EqualTo(MaxIdsInt - 1),
@@ -135,7 +135,7 @@ public sealed class NameIdentifierTest : GameTest
         {
             // Spawn as many entities as the pool should hold.
             for (var i = 0; i <= MaxIdsInt; i++)
-                entList.Add(SEntMan.Spawn(NameTest));
+                entList.Add(SSpawn(NameTest));
 
             using (Assert.EnterMultipleScope())
             {
@@ -170,7 +170,7 @@ public sealed class NameIdentifierTest : GameTest
         {
             // Spawn as many entities as the pool should hold.
             for (var i = 0; i < MaxIdsInt; i++)
-                entList.Add(SEntMan.Spawn(NameTest));
+                entList.Add(SSpawn(NameTest));
 
             var nameList = entList
                 .Select(p => SEntMan.GetComponent<MetaDataComponent>(p).EntityName)
@@ -191,7 +191,7 @@ public sealed class NameIdentifierTest : GameTest
     {
         await Server.WaitAssertion(() =>
         {
-            var single = SEntMan.Spawn(ParenTestEnt);
+            var single = SSpawn(ParenTestEnt);
             Assert.That(
                 SEntMan.GetComponent<MetaDataComponent>(single).EntityName,
                 Does.Match($@"{ParenTestEnt} \(\d+\)$"),
@@ -208,9 +208,9 @@ public sealed class NameIdentifierTest : GameTest
         {
             // Spawn as many entities as the pool should hold.
             for (var i = 0; i < MaxIdsInt; i++)
-                SEntMan.Spawn(NameTest);
+                SSpawn(NameTest);
 
-            var emptyDraw = SEntMan.Spawn(NameTest);
+            var emptyDraw = SSpawn(NameTest);
             var name = SEntMan.GetComponent<MetaDataComponent>(emptyDraw).EntityName;
             Assert.That(name, Is.EqualTo(NameTest), "Created an invalid name.");
         });
@@ -222,7 +222,7 @@ public sealed class NameIdentifierTest : GameTest
     {
         await Server.WaitAssertion(() =>
         {
-            var single = SEntMan.Spawn(LocTestEnt);
+            var single = SSpawn(LocTestEnt);
             Assert.That(
                 SEntMan.GetComponent<MetaDataComponent>(single).EntityName,
                 Is.EqualTo($"{LocTestEnt} TestValue"),
@@ -237,7 +237,7 @@ public sealed class NameIdentifierTest : GameTest
     {
         await Server.WaitAssertion(() =>
         {
-            var single = SEntMan.Spawn(PrefixTest);
+            var single = SSpawn(PrefixTest);
             Assert.That(
                 SEntMan.GetComponent<MetaDataComponent>(single).EntityName,
                 Does.Match(@"^\d+"),
