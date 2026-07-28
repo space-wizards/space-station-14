@@ -8,10 +8,10 @@ namespace Content.Server.DeviceNetwork.Systems;
 public sealed partial class DeviceNetworkSystem
 {
     [PublicAPI]
-    public override bool QueuePacket(
+    public override bool QueuePacket<T>(
         Entity<DeviceNetworkComponent?> ent,
         string? address,
-        INetworkPayload data,
+        ref T data,
         uint? frequency = null,
         int? network = null)
     {
@@ -29,7 +29,7 @@ public sealed partial class DeviceNetworkSystem
 
         network ??= device.DeviceNetId;
 
-        var packet = new DeviceNetworkPacketData(network.Value, address, frequency.Value, device.Data.Address, ent, data);
+        var packet = new DeviceNetworkPacketEvent<T>(network.Value, address, frequency.Value, device.Data.Address, ent.Owner, data);
         SendPacket(ref packet);
         return true;
     }

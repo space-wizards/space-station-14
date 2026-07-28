@@ -93,7 +93,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                     Assert.That(networkComponent1.Data.Address, Is.Not.EqualTo(networkComponent2.Data.Address));
                 });
 
-                deviceNetSystem.QueuePacket(device1, networkComponent2.Data.Address, payload, networkComponent2.Data.ReceiveFrequency.Value);
+                deviceNetSystem.QueuePacket(device1, networkComponent2.Data.Address, ref payload, networkComponent2.Data.ReceiveFrequency.Value);
             });
 
             await server.WaitRunTicks(2);
@@ -158,13 +158,18 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                 });
 
 
-                deviceNetSystem.QueuePacket(device1, networkComponent2.Data.Address, payload, networkComponent2.Data.ReceiveFrequency.Value);
+                deviceNetSystem.QueuePacket(device1, networkComponent2.Data.Address, ref payload, networkComponent2.Data.ReceiveFrequency.Value);
             });
 
             await server.WaitRunTicks(2);
             await server.WaitIdleAsync();
 
-            var secondPayload = new SecondTestPayload();
+            var secondPayload = new SecondTestPayload
+            {
+                TestString = testValue,
+                TestNumber = 1,
+                TestBool = true
+            };
 
             await server.WaitAssertion(() =>
             {
@@ -172,7 +177,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
 
                 wirelessNetworkComponent.Range = 0;
 
-                deviceNetSystem.QueuePacket(device1, networkComponent2.Data.Address, secondPayload, networkComponent2.Data.ReceiveFrequency.Value);
+                deviceNetSystem.QueuePacket(device1, networkComponent2.Data.Address, ref secondPayload, networkComponent2.Data.ReceiveFrequency.Value);
             });
 
             await server.WaitRunTicks(1);
@@ -180,7 +185,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
 
             await server.WaitAssertion(() =>
             {
-                Assert.That(secondPayload, Is.Not.EqualTo(deviceNetTestSystem.LastPayload));
+                Assert.That(secondPayload, Is.EqualTo(deviceNetTestSystem.LastPayloadSecond));
             });
         }
 
@@ -240,7 +245,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                     Assert.That(networkComponent1.Data.Address, Is.Not.EqualTo(networkComponent2.Data.Address));
                 });
 
-                deviceNetSystem.QueuePacket(device1, networkComponent2.Data.Address, payload, networkComponent2.Data.ReceiveFrequency.Value);
+                deviceNetSystem.QueuePacket(device1, networkComponent2.Data.Address, ref payload, networkComponent2.Data.ReceiveFrequency.Value);
             });
 
             await server.WaitRunTicks(1);
@@ -252,7 +257,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
 
                 entityManager.SpawnEntity("CableApcExtension", coordinates);
 
-                deviceNetSystem.QueuePacket(device1, networkComponent2.Data.Address, payload, networkComponent2.Data.ReceiveFrequency.Value);
+                deviceNetSystem.QueuePacket(device1, networkComponent2.Data.Address, ref payload, networkComponent2.Data.ReceiveFrequency.Value);
             });
 
             await server.WaitRunTicks(1);

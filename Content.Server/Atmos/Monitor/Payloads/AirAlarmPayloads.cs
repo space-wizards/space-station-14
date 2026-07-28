@@ -7,7 +7,7 @@ namespace Content.Server.Atmos.Monitor.Payloads;
 /// <summary>
 /// A network payload sent to an air alarm to set its mode.
 /// </summary>
-public sealed partial class AirAlarmSetModePayload : NetworkPayloadBase<AirAlarmSetModePayload>
+public partial record struct AirAlarmSetModePayload : INetworkPayload
 {
     [DataField]
     public AirAlarmMode Mode;
@@ -16,7 +16,7 @@ public sealed partial class AirAlarmSetModePayload : NetworkPayloadBase<AirAlarm
 /// <summary>
 /// A network payload sent from an atmos device to an air alarm to update its UI.
 /// </summary>
-public sealed partial class AirAlarmSetDataPayload : NetworkPayloadBase<AirAlarmSetDataPayload>
+public partial record struct AirAlarmSetDataPayload : INetworkPayload
 {
     [DataField]
     public IAtmosDeviceData Payload;

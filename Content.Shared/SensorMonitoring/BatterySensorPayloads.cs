@@ -5,7 +5,7 @@ namespace Content.Shared.SensorMonitoring;
 /// <summary>
 /// Data about a battery sent to the power monitoring console.
 /// </summary>
-public sealed partial class BatterySensorDataPayload : NetworkPayloadBase<BatterySensorDataPayload>
+public partial record struct BatterySensorDataPayload : INetworkPayload
 {
     [DataField]
     public BatterySensorData Data;
@@ -14,7 +14,7 @@ public sealed partial class BatterySensorDataPayload : NetworkPayloadBase<Batter
 /// <summary>
 /// A request for <see cref="BatterySensorDataPayload"/>.
 /// </summary>
-public sealed partial class BatterySensorSyncPayload : NetworkPayloadBase<BatterySensorSyncPayload>;
+public partial record struct BatterySensorSyncPayload : INetworkPayload;
 
 /// <summary>
 /// Device network data sent by a <see cref="BatterySensorComponent"/>.

@@ -70,7 +70,7 @@ public sealed class DeviceLinkingTest : GameTest
                         sinkComp);
 
                     // Send a signal to the port
-                    Assert.DoesNotThrow(() => { deviceLinkSys.InvokePort(sourceEnt, "Output", null, sourceComp); },
+                    Assert.DoesNotThrow(() => { deviceLinkSys.InvokePort(sourceEnt, "Output", sourceComp); },
                         $"Exception thrown while triggering port {port.Id} of the sink device.");
 
                     mapSys.DeleteMap(mapId);

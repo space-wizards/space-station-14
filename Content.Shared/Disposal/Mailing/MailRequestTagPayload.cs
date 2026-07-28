@@ -5,18 +5,18 @@ namespace Content.Shared.Disposal.Mailing;
 /// <summary>
 /// Request to get all available target mailing units.
 /// </summary>
-public sealed partial class MailRequestTagPayload : NetworkPayloadBase<MailRequestTagPayload>;
+public partial record struct MailRequestTagPayload : INetworkPayload;
 
 /// <summary>
 /// Sent as response to <see cref="MailRequestTagPayload"/>, contains tag of the sender.
 /// </summary>
-public sealed partial class MailTagPayload : NetworkPayloadBase<MailTagPayload>
+public partial record struct MailTagPayload : INetworkPayload
 {
     [DataField]
     public string Tag;
 }
 
-public sealed partial class MailSendPayload : NetworkPayloadBase<MailSendPayload>
+public partial record struct MailSendPayload : INetworkPayload
 {
     [DataField]
     public string Tag;

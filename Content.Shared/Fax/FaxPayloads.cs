@@ -6,7 +6,7 @@ namespace Content.Shared.Fax;
 /// <summary>
 /// Broadcasted from one fax to all other available faxes.
 /// </summary>
-public sealed partial class FaxPingPayload : NetworkPayloadBase<FaxPingPayload>
+public partial record struct FaxPingPayload : INetworkPayload
 {
     // TODO this should probably be made a more general system in the future
     [DataField]
@@ -16,7 +16,7 @@ public sealed partial class FaxPingPayload : NetworkPayloadBase<FaxPingPayload>
 /// <summary>
 /// Sent as a response to <see cref="FaxPingPayload"/>.
 /// </summary>
-public sealed partial class FaxPongPayload : NetworkPayloadBase<FaxPongPayload>
+public partial record struct FaxPongPayload : INetworkPayload
 {
     [DataField]
     public string FaxName;
@@ -25,7 +25,7 @@ public sealed partial class FaxPongPayload : NetworkPayloadBase<FaxPongPayload>
 /// <summary>
 /// Payload to print a paper on the receiver fax.
 /// </summary>
-public sealed partial class FaxPrintPayload : NetworkPayloadBase<FaxPrintPayload>
+public partial record struct FaxPrintPayload : INetworkPayload
 {
     [DataField]
     public FaxPrintout Data;

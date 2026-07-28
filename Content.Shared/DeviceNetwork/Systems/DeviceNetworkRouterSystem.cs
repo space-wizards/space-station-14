@@ -1,11 +1,12 @@
 ﻿using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.DeviceNetwork.Payloads;
+using Content.Shared.SurveillanceCamera;
 
 namespace Content.Shared.DeviceNetwork.Systems;
 
 /// <summary>
-/// A system for re-routing <see cref="RoutableNetworkPayload{T}"/>
+/// A system for re-routing <see cref="IRoutableNetworkPayload"/>s
 /// through an entity with <see cref="DeviceNetworkRouterComponent"/>.
 /// </summary>
 public sealed partial class DeviceNetworkRouterSystem : EntitySystem
@@ -14,19 +15,33 @@ public sealed partial class DeviceNetworkRouterSystem : EntitySystem
 
     [Dependency] private EntityQuery<DeviceNetworkComponent> _query = default!;
 
-    [SubscribeLocalEvent]
-    private void OnRoutePayload(Entity<DeviceNetworkRouterComponent> ent, ref DeviceNetworkPacketEvent<RoutedNetworkPayload> args)
+    // TODO: make an engine PR to allow for auto-generated relay subscriptions
+    // Should be doable by using reflection on marker interfaces and then adding them to the auto-generated subscriptions
+    // I know it looks absolutely hilarious and horrible, but uuuhhhh anything to not make boxing allocations!!!!!!!! :godo:
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        // Surveillance cameras
+        SubscribeLocalEvent<DeviceNetworkRouterComponent, DeviceNetworkPacketEvent<RoutedNetworkPayload<SurveillanceCameraConnectPayload>>>((ent, ref args) => OnRoutePayload(ent, ref args));
+        SubscribeLocalEvent<DeviceNetworkRouterComponent, DeviceNetworkPacketEvent<RoutedNetworkPayload<SurveillanceCameraConnectRequestPayload>>>((ent, ref args) => OnRoutePayload(ent, ref args));
+        SubscribeLocalEvent<DeviceNetworkRouterComponent, DeviceNetworkPacketEvent<RoutedNetworkPayload<SurveillanceCameraHeartbeatRequestPayload>>>((ent, ref args) => OnRoutePayload(ent, ref args));
+        SubscribeLocalEvent<DeviceNetworkRouterComponent, DeviceNetworkPacketEvent<RoutedNetworkPayload<SurveillanceCameraHeartbeatPayload>>>((ent, ref args) => OnRoutePayload(ent, ref args));
+        SubscribeLocalEvent<DeviceNetworkRouterComponent, DeviceNetworkPacketEvent<RoutedNetworkPayload<SurveillanceCameraPingPayload>>>((ent, ref args) => OnRoutePayload(ent, ref args));
+        SubscribeLocalEvent<DeviceNetworkRouterComponent, DeviceNetworkPacketEvent<RoutedNetworkPayload<SurveillanceCameraDataPayload>>>((ent, ref args) => OnRoutePayload(ent, ref args));
+    }
+
+    private void OnRoutePayload<T>(Entity<DeviceNetworkRouterComponent> ent, ref DeviceNetworkPacketEvent<T> args) where T : IRoutedNetworkPayload
     {
         var payload = args.Data;
         if (!_query.TryComp(ent, out var deviceComp))
             return;
 
-        _deviceNetworkSystem.QueuePacket(
-            ent.Owner,
+        args.Data.Reroute(ent.Owner,
             payload.TargetAddress,
-            payload.Payload,
             payload.OverrideFrequency ?? deviceComp.Data.TransmitFrequency,
-            payload.OverrideNetwork ?? deviceComp.DeviceNetId);
+            payload.OverrideNetwork ?? deviceComp.DeviceNetId,
+            _deviceNetworkSystem);
     }
 
     /// <summary>
@@ -53,22 +68,23 @@ public sealed partial class DeviceNetworkRouterSystem : EntitySystem
     /// <param name="network">The network to send on to the router.</param>
     /// <param name="overrideNetwork">If specified, will use this network when re-routing the packet.</param>
     /// <returns>Returns true when the packet was successfully enqueued.</returns>
-    public void QueuePacketRouted(
+    public void QueuePacketRouted<T>(
         Entity<DeviceNetworkComponent?> ent,
-        IRoutableNetworkPayload data,
+        ref T data,
         string? routerAddress,
         string? targetAddress,
         uint? overrideFrequency = null,
         uint? frequency = null,
         int? overrideNetwork = null,
         int? network = null)
+        where T : IRoutableNetworkPayload
     {
         if (!_query.Resolve(ref ent) || ent.Comp == null)
             return;
 
         data.SenderAddress = ent.Comp.Data.Address;
         data.Sender = ent.Owner;
-        var payload = new RoutedNetworkPayload
+        var payload = new RoutedNetworkPayload<T>
         {
             Payload = data,
             OverrideFrequency = overrideFrequency,
@@ -76,6 +92,6 @@ public sealed partial class DeviceNetworkRouterSystem : EntitySystem
             TargetAddress = targetAddress,
         };
 
-        _deviceNetworkSystem.QueuePacket(ent.Owner, routerAddress, payload, frequency, network);
+        _deviceNetworkSystem.QueuePacket(ent.Owner, routerAddress, ref payload, frequency, network);
     }
 }

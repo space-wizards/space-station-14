@@ -5,7 +5,7 @@ namespace Content.Shared.Turrets;
 /// <summary>
 /// A wrapper for <see cref="DeployableTurretState"/>.
 /// </summary>
-public sealed partial class TurretStatePayload : NetworkPayloadBase<TurretStatePayload>
+public partial record struct TurretStatePayload : INetworkPayload
 {
     [DataField]
     public DeployableTurretState State;

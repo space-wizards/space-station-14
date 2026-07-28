@@ -33,7 +33,7 @@ namespace Content.Server.DeviceNetwork.Systems.Devices
                 Enabled = component.State,
             };
 
-            _deviceNetworkSystem.QueuePacket(uid, null, payload);
+            _deviceNetworkSystem.QueuePacket(uid, null, ref payload);
 
             args.Handled = true;
         }

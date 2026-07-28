@@ -1,20 +1,18 @@
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.DeviceNetwork;
+using Content.Shared.DeviceNetwork.Systems;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.Piping.Unary.Components;
 
-[DataDefinition, Serializable, NetSerializable]
-public sealed partial class GasVentPumpData : IAtmosDeviceData
+[Serializable, NetSerializable]
+public sealed partial class GasVentPumpData : BaseAtmosDeviceData
 {
-    public NetworkPayload GetPayload()
+    public override void RaisePayload(EntityUid uid, string address, SharedDeviceNetworkSystem deviceNetSys)
     {
-        return new GasVentPumpSetDataPayload { Data = this };
+        var payload = new GasVentPumpSetDataPayload { Data = this };
+        deviceNetSys.QueuePacket(uid, address, ref payload);
     }
-
-    public bool Enabled { get; set; }
-    public bool Dirty { get; set; }
-    public bool IgnoreAlarms { get; set; }
 
     public VentPumpDirection PumpDirection { get; set; } = VentPumpDirection.Releasing;
     public VentPressureBound PressureChecks { get; set; } = VentPressureBound.ExternalBound;
@@ -72,7 +70,7 @@ public sealed partial class GasVentPumpData : IAtmosDeviceData
 /// <summary>
 /// Used to set <see cref="GasVentPumpData"/>.
 /// </summary>
-public sealed partial class GasVentPumpSetDataPayload : NetworkPayloadBase<GasVentPumpSetDataPayload>
+public partial record struct GasVentPumpSetDataPayload : INetworkPayload
 {
     [DataField]
     public GasVentPumpData Data;

@@ -123,7 +123,7 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
         return true;
     }
 
-    private void SendPacket(ref DeviceNetworkPacketData packet)
+    private void SendPacket<T>(ref DeviceNetworkPacketEvent<T> packet) where T : INetworkPayload
     {
         if (!TryEnsureNetwork(packet.NetId, out var network))
             return;
@@ -176,7 +176,7 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
     /// The recipients is set to the modified recipient list.
     /// </summary>
     /// <returns>false if the broadcast was canceled</returns>
-    private bool CheckRecipientsList(DeviceNetworkPacketData packet, ref HashSet<Device> recipients)
+    private bool CheckRecipientsList<T>(DeviceNetworkPacketEvent<T> packet, ref HashSet<Device> recipients) where T : INetworkPayload
     {
         if (!_networks.TryGetValue(packet.NetId, out var net)
             || !net.Devices.TryGetValue(packet.SenderAddress, out var device))
@@ -196,7 +196,7 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
         return true;
     }
 
-    private void SendToConnections(ReadOnlySpan<Device> connections, DeviceNetworkPacketData packet)
+    private void SendToConnections<T>(ReadOnlySpan<Device> connections, DeviceNetworkPacketEvent<T> packet) where T : INetworkPayload
     {
         if (Deleted(packet.Sender))
         {
@@ -224,7 +224,7 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
             if (beforeEv.Cancelled)
                 continue;
 
-            packet.Data.RaiseEvent(connection.Owner, this, ref packet);
+            RaiseLocalEvent(connection.Owner, ref packet);
         }
     }
 }

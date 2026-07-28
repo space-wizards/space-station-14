@@ -46,7 +46,7 @@ public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraS
             return;
 
         var responsePayload = new SurveillanceCameraConnectPayload();
-        _deviceNetworkRouter.QueuePacketRouted(ent.Owner, responsePayload, args.SenderAddress, payload.SenderAddress);
+        _deviceNetworkRouter.QueuePacketRouted(ent.Owner, ref responsePayload, args.SenderAddress, payload.SenderAddress);
     }
 
     [SubscribeLocalEvent]
@@ -57,7 +57,7 @@ public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraS
             return;
 
         var responsePayload = new SurveillanceCameraHeartbeatPayload();
-        _deviceNetworkRouter.QueuePacketRouted(ent.Owner, responsePayload, args.SenderAddress, payload.SenderAddress);
+        _deviceNetworkRouter.QueuePacketRouted(ent.Owner, ref responsePayload, args.SenderAddress, payload.SenderAddress);
     }
 
     [SubscribeLocalEvent]
@@ -78,7 +78,7 @@ public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraS
         {
             Name = name,
         };
-        _deviceNetworkRouter.QueuePacketRouted(ent.Owner, responsePayload, args.SenderAddress, payload.SenderAddress);
+        _deviceNetworkRouter.QueuePacketRouted(ent.Owner, ref responsePayload, args.SenderAddress, payload.SenderAddress);
     }
 
     private void OnPowerChanged(EntityUid camera, SurveillanceCameraComponent component, ref PowerChangedEvent args)

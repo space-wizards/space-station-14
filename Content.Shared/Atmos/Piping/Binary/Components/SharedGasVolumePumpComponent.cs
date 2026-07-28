@@ -6,7 +6,7 @@ namespace Content.Shared.Atmos.Piping.Binary.Components;
 /// <summary>
 /// Contains data about a <see cref="GasVolumePumpComponent"/>.
 /// </summary>
-public sealed partial class GasVolumePumpDataPayload : NetworkPayloadBase<GasVolumePumpDataPayload>
+public partial record struct GasVolumePumpDataPayload : INetworkPayload
 {
     [DataField]
     public float LastMolesTransferred;

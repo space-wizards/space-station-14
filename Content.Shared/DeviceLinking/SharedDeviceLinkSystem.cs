@@ -540,10 +540,23 @@ public abstract partial class SharedDeviceLinkSystem : EntitySystem
     /// </summary>
     /// <param name="uid">The source uid that invokes the port</param>
     /// <param name="port">The port to invoke</param>
+    /// <param name="sourceComponent"></param>
+    public virtual void InvokePort(EntityUid uid, string port,
+        DeviceLinkSourceComponent? sourceComponent = null)
+    {
+        // NOOP on client for the moment.
+    }
+
+    /// <summary>
+    /// Sends a network payload directed at the sink entity.
+    /// Just raises a <see cref="SignalReceivedEvent"/> without data if the source or the sink doesn't have a <see cref="DeviceNetworkComponent"/>
+    /// </summary>
+    /// <param name="uid">The source uid that invokes the port</param>
+    /// <param name="port">The port to invoke</param>
     /// <param name="data">Optional data to send along</param>
     /// <param name="sourceComponent"></param>
-    public virtual void InvokePort(EntityUid uid, string port, NetworkPayload? data = null,
-        DeviceLinkSourceComponent? sourceComponent = null)
+    public virtual void InvokePort<T>(EntityUid uid, string port, ref T data,
+        DeviceLinkSourceComponent? sourceComponent = null) where T : ISignalNetworkPayload
     {
         // NOOP on client for the moment.
     }

@@ -1,4 +1,5 @@
 using Content.Shared.DeviceNetwork;
+using Content.Shared.DeviceNetwork.Systems;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.Monitor;
@@ -6,23 +7,20 @@ namespace Content.Shared.Atmos.Monitor;
 /// <summary>
 /// Contains <see cref="AtmosMonitorData"/>.
 /// </summary>
-public sealed partial class AtmosMonitorDataPayload : NetworkPayloadBase<AtmosMonitorDataPayload>
+public partial record struct AtmosMonitorDataPayload : INetworkPayload
 {
     [DataField]
     public AtmosMonitorData Data;
 }
 
-[DataDefinition, Serializable, NetSerializable]
-public sealed partial class AtmosMonitorData : IAtmosDeviceData
+[Serializable, NetSerializable]
+public sealed partial class AtmosMonitorData : BaseAtmosDeviceData
 {
-    public NetworkPayload GetPayload()
+    public override void RaisePayload(EntityUid uid, string address, SharedDeviceNetworkSystem deviceNetSys)
     {
-        return new AtmosMonitorDataPayload { Data = this };
+        var payload = new AtmosMonitorDataPayload { Data = this };
+        deviceNetSys.QueuePacket(uid, address, ref payload);
     }
-
-    public bool Enabled { get; set; }
-    public bool Dirty { get; set; }
-    public bool IgnoreAlarms { get; set; }
 
     public AtmosMonitorData(float pressure, float temperature, float totalMoles, AtmosAlarmType alarmState, Dictionary<Gas, float> gases, AtmosAlarmThreshold pressureThreshold, AtmosAlarmThreshold temperatureThreshold, Dictionary<Gas, AtmosAlarmThreshold> gasThresholds)
     {

@@ -45,8 +45,19 @@ public sealed partial class MemoryCellSystem : EntitySystem
     private void OnSignalReceived(Entity<MemoryCellComponent> ent, ref SignalReceivedEvent args)
     {
         var state = SignalState.Momentary;
-        if (args.Data is LogicStatePayload payload)
-            state = payload.State;
+
+        if (args.Port == ent.Comp.InputPort)
+            ent.Comp.InputState = state;
+        else if (args.Port == ent.Comp.EnablePort)
+            ent.Comp.EnableState = state;
+
+        UpdateOutput(ent);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnSignalReceived(Entity<MemoryCellComponent> ent, ref SignalReceivedEvent<LogicStatePayload> args)
+    {
+        var state = args.Data.State;
 
         if (args.Port == ent.Comp.InputPort)
             ent.Comp.InputState = state;

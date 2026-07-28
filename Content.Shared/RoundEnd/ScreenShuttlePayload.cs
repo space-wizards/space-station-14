@@ -5,7 +5,7 @@ namespace Content.Shared.RoundEnd;
 /// <summary>
 /// A network payload to broadcast data to shuttle screens.
 /// </summary>
-public sealed partial class ScreenShuttlePayload : NetworkPayloadBase<ScreenShuttlePayload>
+public partial record struct ScreenShuttlePayload : INetworkPayload
 {
     [DataField]
     public EntityUid? Shuttle;

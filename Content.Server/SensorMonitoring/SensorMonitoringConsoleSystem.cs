@@ -254,7 +254,7 @@ public sealed partial class SensorMonitoringConsoleSystem : EntitySystem
         foreach (var (ent, data) in comp.Sensors)
         {
             // Send network requests for new data!
-            NetworkPayload payload;
+            INetworkPayload payload;
             switch (data.DeviceType)
             {
                 case SensorDeviceType.Teg:
@@ -269,7 +269,7 @@ public sealed partial class SensorMonitoringConsoleSystem : EntitySystem
             }
 
             var address = _deviceNetworkQuery.GetComponent(ent);
-            _deviceNetwork.QueuePacket(uid, address.Data.Address, payload);
+            _deviceNetwork.QueuePacket(uid, address.Data.Address, ref payload);
         }
     }
 
@@ -278,7 +278,7 @@ public sealed partial class SensorMonitoringConsoleSystem : EntitySystem
         foreach (var (ent, data) in comp.Sensors)
         {
             // Send network requests for new data!
-            NetworkPayload payload;
+            INetworkPayload payload;
             switch (data.DeviceType)
             {
                 case SensorDeviceType.Battery:
@@ -290,7 +290,7 @@ public sealed partial class SensorMonitoringConsoleSystem : EntitySystem
             }
 
             var address = _deviceNetworkQuery.GetComponent(ent);
-            _deviceNetwork.QueuePacket(uid, address.Data.Address, payload);
+            _deviceNetwork.QueuePacket(uid, address.Data.Address, ref payload);
         }
     }
 }

@@ -372,7 +372,7 @@ public sealed partial class TegSystem : EntitySystem
             RampPosition = ent.Comp.RampPosition,
         };
 
-        _deviceNetwork.QueuePacket(ent.Owner, args.SenderAddress, dataPayload);
+        _deviceNetwork.QueuePacket(ent.Owner, args.SenderAddress, ref dataPayload);
     }
 
     private Circulator GetCirculatorSensorData(EntityUid circulator)

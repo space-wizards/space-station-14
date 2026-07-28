@@ -111,7 +111,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 LastMolesTransferred = ent.Comp.LastMolesTransferred,
             };
 
-            _deviceNetwork.QueuePacket(ent.Owner, args.SenderAddress, data);
+            _deviceNetwork.QueuePacket(ent.Owner, args.SenderAddress, ref data);
         }
     }
 }
