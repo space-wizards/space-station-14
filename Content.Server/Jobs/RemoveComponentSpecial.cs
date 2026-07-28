@@ -13,4 +13,10 @@ public sealed partial class RemoveComponentSpecial : JobSpecial
         var entMan = IoCManager.Resolve<IEntityManager>();
         entMan.RemoveComponents(mob, Components);
     }
+
+    public override void AfterUnequip(EntityUid mob)
+    {
+        var entMan = IoCManager.Resolve<IEntityManager>();
+        entMan.AddComponents(mob, Components);
+    }
 }

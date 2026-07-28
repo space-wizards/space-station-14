@@ -8,6 +8,14 @@ namespace Content.Shared.Roles
     [ImplicitDataDefinitionForInheritors]
     public abstract partial class JobSpecial
     {
+        /// <summary>
+        /// Applies the effect upon the entity being spawned.
+        /// </summary>
         public abstract void AfterEquip(EntityUid mob);
+
+        /// <summary>
+        /// Reverts the effect of the <see cref="AfterEquip"/>.
+        /// </summary>
+        public abstract void AfterUnequip(EntityUid mob);
     }
 }

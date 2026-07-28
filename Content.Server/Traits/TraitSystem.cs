@@ -1,13 +1,9 @@
-using System.Linq;
 using Content.Server.Preferences.Managers;
 using Content.Shared.GameTicking;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Preferences;
 using Content.Shared.Roles;
-using Content.Shared.Traits;
 using Content.Shared.Whitelist;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Traits;
 
@@ -44,11 +40,8 @@ public sealed partial class TraitSystem : EntitySystem
 
         foreach (var traitId in args.Profile.TraitPreferences)
         {
-            if (!ProtoMan.TryIndex<TraitPrototype>(traitId, out var traitPrototype))
-            {
-                Log.Error($"No trait found with ID {traitId}!");
+            if (!ProtoMan.Resolve(traitId, out var traitPrototype))
                 return;
-            }
 
             if (_whitelistSystem.IsWhitelistFail(traitPrototype.Whitelist, args.Mob) ||
                 _whitelistSystem.IsWhitelistPass(traitPrototype.Blacklist, args.Mob))
@@ -89,7 +82,7 @@ public sealed partial class TraitSystem : EntitySystem
             return;
 
         if (!TryComp<TraitsComponent>(args.MindEntity.Comp.OwnedEntity, out var traitsComp) ||
-            !ProtoMan.TryIndex(args.MindRoleEntity.Comp.AntagPrototype, out var antag) || !antag.RevertTraits)
+            !ProtoMan.Resolve(args.MindRoleEntity.Comp.AntagPrototype, out var antag) || !antag.RevertTraits)
             return;
 
         var traitSet = traitsComp.AppliedTraits;
@@ -99,16 +92,20 @@ public sealed partial class TraitSystem : EntitySystem
             if (!trait.Revertable)
                 continue;
 
-            if (!ProtoMan.TryIndex(trait.Trait, out var traitPrototype))
-            {
-                Log.Warning($"No trait found with ID {trait.Trait}!");
+            if (!ProtoMan.Resolve(trait.Trait, out var traitPrototype))
                 return;
-            }
 
-            if (_whitelistSystem.CheckBoth(args.MindEntity.Comp.OwnedEntity.Value, traitPrototype.Blacklist, traitPrototype.Whitelist))
+            if (!_whitelistSystem.CheckBoth(args.MindEntity.Comp.OwnedEntity.Value, traitPrototype.Blacklist, traitPrototype.Whitelist))
                 continue;
 
-            EntityManager.RemoveComponents(args.MindEntity.Comp.OwnedEntity.Value, traitPrototype.Components);
+            if (traitPrototype.Components.Count > 0)
+                EntityManager.RemoveComponents(args.MindEntity.Comp.OwnedEntity.Value, traitPrototype.Components);
+
+            foreach (var special in traitPrototype.Specials)
+            {
+                special.AfterUnequip(args.MindEntity.Comp.OwnedEntity.Value);
+            }
+
             traitsComp.AppliedTraits.Remove(trait);
         }
     }
