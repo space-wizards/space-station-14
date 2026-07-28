@@ -5,9 +5,11 @@ uniform highp float[10] waveSpeeds;
 uniform highp float[10] downScales;
 uniform highp float[10] fades;
 uniform highp float[10] times;
+
 // variables that are the same for everyone
 uniform lowp int count;
 uniform sampler2D SCREEN_TEXTURE;
+uniform highp vec2 renderScale;
 
 void fragment()
 {
@@ -24,8 +26,8 @@ void fragment()
         WaveCentre.y *= ratio;
 
         // calculate the distortion itself
-        highp float dist = distance(vec2(st.x, st.y * ratio), WaveCentre) * downScales[i];
-        highp vec2 delta = vec2(st.x, st.y * ratio) - WaveCentre;
+        highp float dist = distance(vec2(st.x, st.y * ratio) / renderScale, WaveCentre / renderScale) * downScales[i];
+        highp vec2 delta = (vec2(st.x, st.y * ratio) - WaveCentre) / renderScale;
         highp float angle = atan(delta.y/delta.x);
         highp float sinf = sin(angle*60.0)/80.0;
 
