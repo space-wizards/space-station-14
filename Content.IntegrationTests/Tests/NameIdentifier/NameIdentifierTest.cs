@@ -109,7 +109,7 @@ public sealed class NameIdentifierTest : GameTest
         await Server.WaitAssertion(() =>
         {
             // Create an entity that will draw a modifier from the pool
-            var single = SEntMan.SpawnEntity(NameTest, MapCoordinates.Nullspace);
+            var single = SEntMan.Spawn(NameTest);
 
             Assert.That(_nameModifier.CurrentIds[NumberTestGroup],
                 Has.Count.EqualTo(MaxIdsInt - 1),
@@ -135,7 +135,7 @@ public sealed class NameIdentifierTest : GameTest
         {
             // Spawn as many entities as the pool should hold.
             for (var i = 0; i <= MaxIdsInt; i++)
-                entList.Add(SEntMan.SpawnEntity(NameTest, MapCoordinates.Nullspace));
+                entList.Add(SEntMan.Spawn(NameTest));
 
             using (Assert.EnterMultipleScope())
             {
@@ -170,7 +170,7 @@ public sealed class NameIdentifierTest : GameTest
         {
             // Spawn as many entities as the pool should hold.
             for (var i = 0; i < MaxIdsInt; i++)
-                entList.Add(SEntMan.SpawnEntity(NameTest, MapCoordinates.Nullspace));
+                entList.Add(SEntMan.Spawn(NameTest));
 
             var nameList = entList
                 .Select(p => SEntMan.GetComponent<MetaDataComponent>(p).EntityName)
@@ -191,7 +191,7 @@ public sealed class NameIdentifierTest : GameTest
     {
         await Server.WaitAssertion(() =>
         {
-            var single = SEntMan.SpawnEntity(ParenTestEnt, MapCoordinates.Nullspace);
+            var single = SEntMan.Spawn(ParenTestEnt);
             Assert.That(
                 SEntMan.GetComponent<MetaDataComponent>(single).EntityName,
                 Does.Match($@"{ParenTestEnt} \(\d+\)$"),
@@ -208,9 +208,9 @@ public sealed class NameIdentifierTest : GameTest
         {
             // Spawn as many entities as the pool should hold.
             for (var i = 0; i < MaxIdsInt; i++)
-                SEntMan.SpawnEntity(NameTest, MapCoordinates.Nullspace);
+                SEntMan.Spawn(NameTest);
 
-            var emptyDraw = SEntMan.SpawnEntity(NameTest, MapCoordinates.Nullspace);
+            var emptyDraw = SEntMan.Spawn(NameTest);
             var name = SEntMan.GetComponent<MetaDataComponent>(emptyDraw).EntityName;
             Assert.That(name, Is.EqualTo(NameTest), "Created an invalid name.");
         });
@@ -222,7 +222,7 @@ public sealed class NameIdentifierTest : GameTest
     {
         await Server.WaitAssertion(() =>
         {
-            var single = SEntMan.SpawnEntity(LocTestEnt, MapCoordinates.Nullspace);
+            var single = SEntMan.Spawn(LocTestEnt);
             Assert.That(
                 SEntMan.GetComponent<MetaDataComponent>(single).EntityName,
                 Is.EqualTo($"{LocTestEnt} TestValue"),
@@ -237,7 +237,7 @@ public sealed class NameIdentifierTest : GameTest
     {
         await Server.WaitAssertion(() =>
         {
-            var single = SEntMan.SpawnEntity(PrefixTest, MapCoordinates.Nullspace);
+            var single = SEntMan.Spawn(PrefixTest);
             Assert.That(
                 SEntMan.GetComponent<MetaDataComponent>(single).EntityName,
                 Does.Match(@"^\d+"),
