@@ -69,6 +69,7 @@ public abstract partial class SharedCardSystem
         var user = args.User;
 
         // Verbs here have low priority so they are always below the stack split verbs
+        var priority = -20;
 
         // Flip verb
         args.Verbs.Add(
@@ -76,7 +77,7 @@ public abstract partial class SharedCardSystem
             {
                 Text = Loc.GetString("comp-cards-flip"),
                 Act = () => TryFlipCards(ent),
-                Priority = -98,
+                Priority = priority--,
             }
         );
 
@@ -86,7 +87,7 @@ public abstract partial class SharedCardSystem
             {
                 Text = Loc.GetString("comp-cards-shuffle"),
                 Act = () => TryShuffleCards(ent),
-                Priority = -99,
+                Priority = priority--,
             }
         );
 
@@ -101,10 +102,9 @@ public abstract partial class SharedCardSystem
                 {
                     Text = Loc.GetString("comp-cards-fan"),
                     Act = () => TryFanCards(ent),
-                    Priority = -100,
+                    Priority = priority--,
                 }
             );
-        var priority = -200;
 
         // Take card verbs
         // Can only take card when fanned
@@ -137,7 +137,7 @@ public abstract partial class SharedCardSystem
                 {
                     Text = Loc.GetString("comp-cards-random-card"),
                     Act = () => TryTakeCard(ent, user, ent.Comp.Cards[randomIndex].CardIndex, out _),
-                    Priority = -200,
+                    Priority = priority--,
                 }
             );
         }
