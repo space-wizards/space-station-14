@@ -53,7 +53,7 @@ public abstract partial class SharedDeviceNetworkSystem
         if (!Resolve(ent.Owner, ref ent.Comp, false))
             return false;
 
-        if (!TryGetNetwork(ent.Comp.DeviceNetId, out var deviceNet))
+        if (!TryEnsureNetwork(ent.Comp.DeviceNetId, out var deviceNet))
             return false;
 
         var success = deviceNet.Add(ent!);
@@ -160,7 +160,7 @@ public abstract partial class SharedDeviceNetworkSystem
         var ev = new DeviceReceiveFrequencyChangedEvent(oldFrequency, frequency);
         RaiseLocalEvent(ent, ref ev);
 
-        DirtyField(ent, nameof(DeviceNetworkComponent.Data.TransmitFrequency));
+        DirtyField(ent, nameof(DeviceNetworkComponent.Data));
     }
 
     /// <summary>
@@ -212,7 +212,7 @@ public abstract partial class SharedDeviceNetworkSystem
         var ev = new DeviceAddressChangedEvent(oldAddress, address, ent.Comp.Data.CustomAddress);
         RaiseLocalEvent(ent, ref ev);
 
-        DirtyFields(ent, null, nameof(DeviceNetworkComponent.Data.Address), nameof(DeviceNetworkComponent.Data.CustomAddress));
+        DirtyField(ent, nameof(DeviceNetworkComponent.Data));
     }
 
     /// <summary>
@@ -236,6 +236,6 @@ public abstract partial class SharedDeviceNetworkSystem
         var ev = new DeviceAddressChangedEvent(oldAddress, ent.Comp.Data.Address, ent.Comp.Data.CustomAddress);
         RaiseLocalEvent(ent, ref ev);
 
-        DirtyField(ent, nameof(DeviceNetworkComponent.Data.Address));
+        DirtyField(ent, nameof(DeviceNetworkComponent.Data));
     }
 }
