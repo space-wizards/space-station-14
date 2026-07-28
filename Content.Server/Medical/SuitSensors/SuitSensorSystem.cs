@@ -21,7 +21,7 @@ public sealed partial class SuitSensorSystem : SharedSuitSensorSystem
 
         while (sensors.MoveNext(out var uid, out var sensor, out var device))
         {
-            if (device.TransmitFrequency is null)
+            if (device.Data.TransmitFrequency is null)
                 continue;
 
             // check if sensor is ready to update

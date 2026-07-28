@@ -75,7 +75,7 @@ public sealed partial class DeviceLinkSystem : SharedDeviceLinkSystem
 
         // force using wireless network so things like atmos devices are able to send signals
         var network = (int) DeviceNetIdDefaults.Wireless;
-        _deviceNetworkSystem.QueuePacket(source.Owner, sinkNetwork.Address, payload, sinkNetwork.ReceiveFrequency, network);
+        _deviceNetworkSystem.QueuePacket(source.Owner, sinkNetwork.Data.Address, payload, sinkNetwork.Data.ReceiveFrequency, network);
     }
 
     /// <summary>

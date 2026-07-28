@@ -253,13 +253,13 @@ public sealed partial class AtmosAlertsComputerSystem : SharedAtmosAlertsCompute
             // Create entry
             var netEnt = GetNetEntity(ent);
 
-            var entry = new AtmosAlertsComputerEntry
-                (netEnt,
+            var entry = new AtmosAlertsComputerEntry(
+                netEnt,
                 GetNetCoordinates(entXform.Coordinates),
                 entDevice.Group,
                 alarmState,
                 MetaData(ent).EntityName,
-                entDeviceNetwork.Address);
+                entDeviceNetwork.Data.Address);
 
             // Get the list of sensors attached to the alarm
             var sensorList = TryComp<DeviceListComponent>(ent, out var entDeviceList) ? _deviceListSystem.GetDeviceList(ent, entDeviceList) : null;

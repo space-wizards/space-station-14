@@ -9,11 +9,6 @@ namespace Content.Shared.DeviceNetwork;
 [DataDefinition, Serializable, NetSerializable]
 public partial record struct DeviceData
 {
-    [DataField("deviceNetId")]
-    public DeviceNetIdDefaults NetIdEnum { get; set; }
-
-    public int DeviceNetId => (int) NetIdEnum;
-
     /// <summary>
     ///     The frequency that this device is listening on.
     /// </summary>

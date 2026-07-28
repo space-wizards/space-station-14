@@ -1,5 +1,4 @@
 using Content.Server.DeviceNetwork.Components.Devices;
-using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Interaction;
 using Content.Shared.DeviceNetwork.Components;
@@ -26,7 +25,7 @@ namespace Content.Server.DeviceNetwork.Systems.Devices
 
             component.State = !component.State;
 
-            if (networkComponent.TransmitFrequency == null)
+            if (networkComponent.Data.TransmitFrequency == null)
                 return;
 
             var payload = new ApcNetTogglePayload
@@ -44,7 +43,7 @@ namespace Content.Server.DeviceNetwork.Systems.Devices
         {
             var (uid, component) = ent;
             if (!TryComp(uid, out DeviceNetworkComponent? networkComponent)
-                || args.SenderAddress == networkComponent.Address)
+                || args.SenderAddress == networkComponent.Data.Address)
                 return;
 
             component.State = args.Data.Enabled;

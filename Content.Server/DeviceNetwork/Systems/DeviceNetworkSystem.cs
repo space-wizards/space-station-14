@@ -28,18 +28,18 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
     private void OnMapInit(Entity<DeviceNetworkComponent> ent, ref MapInitEvent args)
     {
         var device = ent.Comp;
-        if (device.ReceiveFrequency == null
+        if (device.Data.ReceiveFrequency == null
             && device.ReceiveFrequencyId != null
             && ProtoMan.TryIndex(device.ReceiveFrequencyId, out var receive))
         {
-            device.ReceiveFrequency = receive.Frequency;
+            device.Data.ReceiveFrequency = receive.Frequency;
         }
 
-        if (device.TransmitFrequency == null
+        if (device.Data.TransmitFrequency == null
             && device.TransmitFrequencyId != null
             && ProtoMan.TryIndex(device.TransmitFrequencyId, out var xmit))
         {
-            device.TransmitFrequency = xmit.Frequency;
+            device.Data.TransmitFrequency = xmit.Frequency;
         }
 
         if (device.AutoConnect)

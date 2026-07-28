@@ -21,6 +21,7 @@ public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraS
     [Dependency] private IAdminLogManager _adminLogger = default!;
     [Dependency] private SurveillanceCameraMapSystem _cameraMapSystem = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
+
     [Dependency] private EntityQuery<SurveillanceCameraRouterComponent> _routerQuery = default!;
 
     public const int CameraNameLimit = 32;
@@ -170,7 +171,7 @@ public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraS
 
         var name = camera.UseEntityNameAsCameraId ? MetaData(uid).EntityName : camera.CameraId;
         var state = new SurveillanceCameraSetupBoundUiState(name,
-            deviceNet.ReceiveFrequency ?? 0,
+            deviceNet.Data.ReceiveFrequency ?? 0,
             camera.AvailableNetworks,
             camera.NameSet,
             camera.NetworkSet);
