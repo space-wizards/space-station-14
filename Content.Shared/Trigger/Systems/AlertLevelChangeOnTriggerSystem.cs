@@ -1,14 +1,13 @@
-using Content.Server.AlertLevel;
-using Content.Shared.Trigger;
+using Content.Shared.AlertLevel;
 using Content.Shared.Trigger.Components.Effects;
-using Content.Server.Station.Systems;
+using Content.Shared.Station;
 
-namespace Content.Server.Trigger.Systems;
+namespace Content.Shared.Trigger.Systems;
 
 public sealed partial class AlertLevelChangeOnTriggerSystem : EntitySystem
 {
-    [Dependency] private AlertLevelSystem _alertLevelSystem = default!;
-    [Dependency] private StationSystem _station = default!;
+    [Dependency] private AlertLevelSystem _alertLevel = default!;
+    [Dependency] private SharedStationSystem _station = default!;
 
     public override void Initialize()
     {
@@ -26,7 +25,13 @@ public sealed partial class AlertLevelChangeOnTriggerSystem : EntitySystem
         if (stationUid == null)
             return;
 
-        _alertLevelSystem.SetLevel(stationUid.Value, ent.Comp.Level, ent.Comp.PlaySound, ent.Comp.Announce, ent.Comp.Force);
+        _alertLevel.SetLevel(
+            stationUid.Value,
+            ent.Comp.Level,
+            playSound: ent.Comp.PlaySound,
+            announce: ent.Comp.Announce,
+            force: ent.Comp.Force);
+
         args.Handled = true;
     }
 }
