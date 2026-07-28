@@ -13,7 +13,7 @@ public sealed partial class CardsComponent : Component
     /// <summary>
     /// The list of cards currently in this deck, in order.
     /// </summary>
-    [DataField(required: true, customTypeSerializer: typeof(CardDataSerializer)), AutoNetworkedField]
+    [DataField(customTypeSerializer: typeof(CardDataSerializer)), AutoNetworkedField]
     public List<CardData> Cards = new();
 
     /// <summary>

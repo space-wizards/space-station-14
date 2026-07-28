@@ -5,7 +5,6 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Cards
-    cards: []
   - type: Stack
     stackType: CardsStack
     baseLayer: base
