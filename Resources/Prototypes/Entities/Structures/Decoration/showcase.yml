@@ -5,6 +5,8 @@
   name: security robot showcase
   description: A non-functional replica of an old security robot.
   components:
+  - type: Sprite
+    noRot: true
   - type: Anchorable
   - type: Damageable
     damageModifierSet: Metallic
