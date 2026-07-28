@@ -24,7 +24,6 @@ public sealed partial class InteractionOutlineSystem : EntitySystem
     [Dependency] private IPlayerManager _playerManager = default!;
     [Dependency] private IStateManager _stateManager = default!;
     [Dependency] private IUserInterfaceManager _uiManager = default!;
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private SharedInteractionSystem _interactionSystem = default!;
 
     [Dependency] private EntityQuery<InteractionOutlineComponent> _outlineQuery = default!;
@@ -54,27 +53,28 @@ public sealed partial class InteractionOutlineSystem : EntitySystem
     {
         base.Initialize();
 
-        _shaderInRange = _prototypeManager.Index(ShaderInRange).InstanceUnique();
-        _shaderOutOfRange = _prototypeManager.Index(ShaderOutOfRange).InstanceUnique();
+        _shaderInRange = ProtoMan.Index(ShaderInRange).InstanceUnique();
+        _shaderOutOfRange = ProtoMan.Index(ShaderOutOfRange).InstanceUnique();
 
         Subs.CVar(_configManager, CCVars.OutlineEnabled, SetCvarEnabled);
         UpdatesAfter.Add(typeof(SharedEyeSystem));
     }
 
-    private bool TryClearShader(EntityUid? uid)
+    private void CleanupLastHoveredShader()
     {
+        var uid = _lastHoveredEntity;
+        _lastHoveredEntity = null;
+
         if (!_outlineQuery.HasComp(uid))
-            return false;
+            return;
 
         if (!_spriteQuery.TryComp(uid, out var sprite))
-            return false;
+            return;
 
         if (sprite.PostShader != _shaderInRange && sprite.PostShader != _shaderOutOfRange)
-            return false;
+            return;
 
         sprite.PostShader = null;
-
-        return true;
     }
 
     public void SetCvarEnabled(bool cvarEnabled)
@@ -86,8 +86,7 @@ public sealed partial class InteractionOutlineSystem : EntitySystem
         if (_cvarEnabled)
             return;
 
-        TryClearShader(_lastHoveredEntity);
-        _lastHoveredEntity = null;
+        CleanupLastHoveredShader();
     }
 
     public void SetEnabled(bool enabled)
@@ -102,8 +101,7 @@ public sealed partial class InteractionOutlineSystem : EntitySystem
         if (enabled)
             return;
 
-        TryClearShader(_lastHoveredEntity);
-        _lastHoveredEntity = null;
+        CleanupLastHoveredShader();
     }
 
     public override void FrameUpdate(float frameTime)
@@ -159,9 +157,11 @@ public sealed partial class InteractionOutlineSystem : EntitySystem
         }
 
         if (_lastHoveredEntity != entityToClick)
-            TryClearShader(_lastHoveredEntity);
+        {
+            CleanupLastHoveredShader();
 
-        _lastHoveredEntity = entityToClick;
+            _lastHoveredEntity = entityToClick;
+        }
 
         if (!_outlineQuery.HasComp(entityToClick))
             return;
