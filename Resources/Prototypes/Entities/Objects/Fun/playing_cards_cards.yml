@@ -7,7 +7,7 @@
   abstract: true
   id: Clubs
   parent: [ BaseCard ]
-  color: black
+  color: darkgreen
 
 - type: card
   abstract: true
@@ -20,7 +20,7 @@
   abstract: true
   id: Diamonds
   parent: [ BaseCard ]
-  color: red
+  color: firebrick
 
 - type: card
   abstract: true
@@ -33,7 +33,7 @@
   abstract: true
   id: Hearts
   parent: [ BaseCard ]
-  color: red
+  color: maroon
 
 - type: card
   abstract: true
@@ -46,7 +46,7 @@
   abstract: true
   id: Spades
   parent: [ BaseCard ]
-  color: black
+  color: midnightblue
 
 - type: card
   abstract: true
