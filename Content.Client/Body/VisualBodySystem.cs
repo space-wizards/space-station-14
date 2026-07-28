@@ -314,7 +314,8 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
 
                     var layerId = $"{proto.ID}-{rsi.RsiState}";
 
-                    if (!_sprite.LayerMapTryGet(args.Body.Owner, layerId, out var index, true))
+                    // Not logging, can be called on initialization before the body's sprites are setup!
+                    if (!_sprite.LayerMapTryGet(args.Body.Owner, layerId, out var index, logMissing: false))
                         continue;
 
                     _sprite.LayerSetVisible(args.Body.Owner, index, args.Args.Visible);

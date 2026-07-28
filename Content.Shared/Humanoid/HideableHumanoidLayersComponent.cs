@@ -16,10 +16,10 @@ public sealed partial class HideableHumanoidLayersComponent : Component
     public Dictionary<HumanoidVisualLayers, SlotFlags> HiddenLayers = new();
 
     /// <summary>
-    ///     Client only - which layers were last hidden
+    ///     Client only - which layers were last actually hidden.
     /// </summary>
     [ViewVariables]
-    public HashSet<HumanoidVisualLayers> LastHiddenLayers = new();
+    public List<HumanoidVisualLayers> LastHiddenLayers = new();
 }
 
 /// <summary>

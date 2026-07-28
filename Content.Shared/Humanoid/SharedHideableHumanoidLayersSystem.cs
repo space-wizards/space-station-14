@@ -4,6 +4,9 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Humanoid;
 
+/// <summary>
+/// A system to configurably hide layers on humanoid sprites (e.g. hiding your facial features when you put on a helmet)
+/// </summary>
 public abstract partial class SharedHideableHumanoidLayersSystem : EntitySystem
 {
     /// <summary>
