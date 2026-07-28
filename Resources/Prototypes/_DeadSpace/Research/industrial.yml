@@ -44,6 +44,20 @@
     - VehicleQuadBikeFlatpack
     - VehicleKeyUniversal
 
+- type: technology
+  id: HoldingBags
+  name: research-technology-holding-bags
+  icon:
+    sprite: _DeadSpace/Objects/Specific/Hydroponics/plant_bag.rsi
+    state: icon
+  discipline: Industrial
+  tier: 2
+  cost: 10000
+  recipeUnlocks:
+  - ChemBagOfHolding
+  - PlantBagOfHolding
+
+
 # Tier 3
 
 - type: technology

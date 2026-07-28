@@ -1,0 +1,5 @@
+- type: latheRecipePack
+  id: HoldingBags
+  recipes:
+  - ChemBagOfHolding
+  - PlantBagOfHolding

@@ -70,3 +70,4 @@ research-technology-quad-bike = Четыре ноги прогресса
 research-technology-defibrillator-syndicate = Дефибриллятор Синдиката
 research-technology-photon-laser-weaponry = Фотонный арсенал
 research-technology-compact-defibrillator = Компактный дефибриллятор
+research-technology-holding-bags = Объёмное хранилище

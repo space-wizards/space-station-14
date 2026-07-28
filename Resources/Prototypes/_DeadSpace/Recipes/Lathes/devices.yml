@@ -1,0 +1,13 @@
+## Dynamic
+
+# Сумка для химикатов
+- type: latheRecipe
+  parent: ClothingBackpackHolding
+  id: ChemBagOfHolding
+  result: ChemBagOfHolding
+
+# Сумка для растений
+- type: latheRecipe
+  parent: ClothingBackpackHolding
+  id: PlantBagOfHolding
+  result: PlantBagOfHolding

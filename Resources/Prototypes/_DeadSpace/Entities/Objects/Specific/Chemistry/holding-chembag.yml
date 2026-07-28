@@ -1,0 +1,16 @@
+- type: entity
+  id: ChemBagOfHolding
+  parent: [ ContentsExplosionResistanceBase, ChemBag ]
+  name: бездонная сумка для химикатов
+  description: Бездонная и прочная сумка для хранения различной химии, например, таблеток, баночек, бутылочек и шприцов, и само собой кувшинов.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Specific/Chemistry/chem_bag.rsi
+    state: icon
+  - type: Clothing
+    sprite: _DeadSpace/Objects/Specific/Chemistry/chem_bag.rsi
+  - type: Storage
+    grid:
+    - 0,0,19,9
+  - type: ExplosionResistance
+    damageCoefficient: 0.1
