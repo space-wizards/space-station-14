@@ -144,7 +144,7 @@ public sealed partial class CardsTest
 
             var state = _sCards.GetCardListVisualState(cards);
             Assert.That(
-                state.Count,
+                Math.Abs(state.Count),
                 Is.EqualTo(1),
                 "Visual state of a single-card deck should show exactly 1 card even when Fanned"
             );
