@@ -40,7 +40,6 @@ namespace Content.Shared.Movement.Pulling.Systems;
 /// </summary>
 public sealed partial class PullingSystem : EntitySystem
 {
-    [Dependency] private IGameTiming _timing = default!;
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private ActionBlockerSystem _blocker = default!;
     [Dependency] private AlertsSystem _alertsSystem = default!;
@@ -332,8 +331,7 @@ public sealed partial class PullingSystem : EntitySystem
 
         // Not relevant / pullable state handle it.
         if (component.Puller != args.OtherEntity ||
-            args.Joint.ID != component.PullJointId ||
-            _timing.ApplyingState)
+            args.Joint.ID != component.PullJointId)
         {
             return;
         }
