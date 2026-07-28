@@ -627,7 +627,6 @@ namespace Content.IntegrationTests.Tests.Power
             var gameTiming = server.ResolveDependency<IGameTiming>();
             var batterySys = entityManager.System<BatterySystem>();
             var mapSys = entityManager.System<SharedMapSystem>();
-            var xformSys = entityManager.System<SharedTransformSystem>();
             EntityUid batteryEnt = default!;
             EntityUid supplyEnt = default!;
             EntityUid consumerEnt = default!;
@@ -706,7 +705,6 @@ namespace Content.IntegrationTests.Tests.Power
             var gameTiming = server.ResolveDependency<IGameTiming>();
             var batterySys = entityManager.System<BatterySystem>();
             var mapSys = entityManager.System<SharedMapSystem>();
-            var xformSys = entityManager.System<SharedTransformSystem>();
             EntityUid batteryEnt = default!;
             EntityUid supplyEnt = default!;
             EntityUid consumerEnt = default!;
@@ -727,9 +725,7 @@ namespace Content.IntegrationTests.Tests.Power
                     entityManager.SpawnAttachedTo("CableHV", grid.Owner.ToCoordinates(0, i));
                 }
 
-                var terminal = entityManager.SpawnAttachedTo("CableTerminal", grid.Owner.ToCoordinates(0, 1));
-
-                xformSys.SetLocalRotationNoLerp(terminal, Angle.FromDegrees(180));
+                var terminal = entityManager.SpawnAttachedTo("CableTerminal", grid.Owner.ToCoordinates(0, 1), rotation: Angle.FromDegrees(180));
 
                 batteryEnt = entityManager.SpawnAttachedTo("FullBatteryDummy", grid.Owner.ToCoordinates(0, 2));
                 supplyEnt = entityManager.SpawnAttachedTo("GeneratorDummy", grid.Owner.ToCoordinates(0, 0));
@@ -786,7 +782,6 @@ namespace Content.IntegrationTests.Tests.Power
             var entityManager = server.ResolveDependency<IEntityManager>();
             var batterySys = entityManager.System<BatterySystem>();
             var mapSys = entityManager.System<SharedMapSystem>();
-            var xformSys = entityManager.System<SharedTransformSystem>();
             PowerConsumerComponent consumer1 = default!;
             PowerConsumerComponent consumer2 = default!;
             PowerSupplierComponent supplier = default!;
@@ -976,7 +971,6 @@ namespace Content.IntegrationTests.Tests.Power
             var entityManager = server.ResolveDependency<IEntityManager>();
             var batterySys = entityManager.System<BatterySystem>();
             var mapSys = entityManager.System<SharedMapSystem>();
-            var xformSys = entityManager.System<SharedTransformSystem>();
             PowerConsumerComponent consumer1 = default!;
             PowerConsumerComponent consumer2 = default!;
             PowerSupplierComponent supplier = default!;
@@ -1061,7 +1055,6 @@ namespace Content.IntegrationTests.Tests.Power
             var entityManager = server.ResolveDependency<IEntityManager>();
             var batterySys = entityManager.System<BatterySystem>();
             var mapSys = entityManager.System<SharedMapSystem>();
-            var xformSys = entityManager.System<SharedTransformSystem>();
             PowerConsumerComponent consumer = default!;
             PowerSupplierComponent supplier = default!;
             PowerNetworkBatteryComponent netBattery = default!;
@@ -1143,7 +1136,6 @@ namespace Content.IntegrationTests.Tests.Power
             var entityManager = server.ResolveDependency<IEntityManager>();
             var nodeContainer = entityManager.System<NodeContainerSystem>();
             var mapSys = entityManager.System<SharedMapSystem>();
-            var xformSys = entityManager.System<SharedTransformSystem>();
             CableNode leftNode = default!;
             CableNode rightNode = default!;
             Node batteryInput = default!;
@@ -1165,8 +1157,7 @@ namespace Content.IntegrationTests.Tests.Power
                 entityManager.SpawnAttachedTo("CableHV", grid.Owner.ToCoordinates(0, 2));
                 var rightEnt = entityManager.SpawnAttachedTo("CableHV", grid.Owner.ToCoordinates(0, 3));
 
-                var terminal = entityManager.SpawnAttachedTo("CableTerminal", grid.Owner.ToCoordinates(0, 1));
-                xformSys.SetLocalRotationNoLerp(terminal, Angle.FromDegrees(180));
+                var terminal = entityManager.SpawnAttachedTo("CableTerminal", grid.Owner.ToCoordinates(0, 1), rotation: Angle.FromDegrees(180));
 
                 var battery = entityManager.SpawnAttachedTo("FullBatteryDummy", grid.Owner.ToCoordinates(0, 2));
                 var batteryNodeContainer = entityManager.GetComponent<NodeContainerComponent>(battery);

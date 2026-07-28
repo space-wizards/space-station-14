@@ -23,7 +23,6 @@ public sealed partial class MultipartMachineSystem : SharedMultipartMachineSyste
     [Dependency] private SpriteSystem _sprite = default!;
     [Dependency] private MetaDataSystem _metaData = default!;
     [Dependency] private ISerializationManager _serialization = default!;
-    [Dependency] private TransformSystem _xform = default!;
 
     public override void Initialize()
     {

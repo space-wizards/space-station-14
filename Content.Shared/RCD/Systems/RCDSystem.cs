@@ -605,9 +605,10 @@ public sealed partial class RCDSystem : EntitySystem
                         rotation = Transform(uid).LocalRotation;
                         break;
                     case RcdRotation.User:
-                    default:
                         rotation = direction.ToAngle();
                         break;
+                    default:
+                        throw new NotImplementedException($"Rotation type {prototype.Rotation} in RCD prototype {prototype.ID} does not have a direction conversion.");
                 }
 
                 var ent = SpawnAttachedTo(prototype.Prototype, _mapSystem.GridTileToLocal(gridUid, mapGrid, position), rotation: rotation);
