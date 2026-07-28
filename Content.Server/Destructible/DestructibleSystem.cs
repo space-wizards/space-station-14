@@ -135,9 +135,6 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
     /// </summary>
     public bool Triggered(DamageThreshold threshold, Entity<Shared.Damage.Components.DamageableComponent> owner)
     {
-        if (threshold.Trigger == null)
-            return false;
-
         if (threshold.Triggered && threshold.TriggersOnce)
             return false;
 
