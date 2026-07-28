@@ -46,6 +46,7 @@ job-title-engineer-electrician = Электрик
 job-title-engineer-repairman = Ремонтник
 job-title-engineer-mechanic = Механик
 job-title-engineer-nuclear = Ядерщик
+job-title-engineer-welder = Сварщик
 
 # Грузчик
 job-title-cargo-logistician = Логист
