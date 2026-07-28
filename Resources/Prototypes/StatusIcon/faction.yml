@@ -26,10 +26,7 @@
   id: RevolutionaryFaction
   isShaded: true
   priority: 11
-  showTo:
-    components:
-      - ShowAntagIcons
-      - Revolutionary
+  # DS14: visibility is supplied by the private revolutionary roster instead of prototype showTo.
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Revolutionary
@@ -38,10 +35,7 @@
   id: HeadRevolutionaryFaction
   isShaded: true
   priority: 11
-  showTo:
-    components:
-      - ShowAntagIcons
-      - Revolutionary
+  # DS14: visibility is supplied by the private revolutionary roster instead of prototype showTo.
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: HeadRevolutionary

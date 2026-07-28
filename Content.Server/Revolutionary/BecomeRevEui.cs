@@ -10,6 +10,7 @@ public sealed class BecomeRevEui : BaseEui
     private readonly EntityUid _headRevUid;
     private readonly EntityUid _targetUid;
     private readonly RevolutionaryRuleSystem _revolutionaryRuleSystem;
+    private bool _handled; // DS14
 
     public BecomeRevEui(EntityUid headRevUid, EntityUid targetUid, RevolutionaryRuleSystem revolutionaryRuleSystem)
     {
@@ -22,8 +23,13 @@ public sealed class BecomeRevEui : BaseEui
     {
         base.HandleMessage(msg);
 
-        if (msg is not BecomeRevChoiceMessage choice ||
-            choice.Button == BecomeRevUiButton.Deny)
+        // DS14-start
+        if (_handled || msg is not BecomeRevChoiceMessage choice)
+            return;
+
+        _handled = true;
+        if (choice.Button == BecomeRevUiButton.Deny)
+        // DS14-end
         {
             Close();
             return;

@@ -1,13 +1,9 @@
-using Content.Server.Administration.Logs;
-using Content.Server.Mind;
+using Content.Server.GameTicking.Rules;
 using Content.Server.Popups;
-using Content.Server.Roles;
-using Content.Shared.Database;
 using Content.Shared.DeadSpace.Necromorphs.Unitology;
 using Content.Shared.Implants;
 using Content.Shared.Mindshield.Components;
 using Content.Shared.Revolutionary.Components;
-using Content.Shared.Roles.Components;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Mindshield;
@@ -18,18 +14,41 @@ namespace Content.Server.Mindshield;
 /// </summary>
 public sealed class MindShieldSystem : EntitySystem
 {
-    [Dependency] private readonly IAdminLogManager _adminLogManager = default!;
-    [Dependency] private readonly RoleSystem _roleSystem = default!;
-    [Dependency] private readonly MindSystem _mindSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly RevolutionaryRuleSystem _revolutionary = default!; // DS14
 
     public override void Initialize()
     {
         base.Initialize();
 
+        SubscribeLocalEvent<MindShieldComponent, MapInitEvent>(OnMindShieldMapInit); // DS14
         SubscribeLocalEvent<MindShieldImplantComponent, ImplantImplantedEvent>(OnImplantImplanted);
         SubscribeLocalEvent<MindShieldImplantComponent, ImplantRemovedEvent>(OnImplantRemoved);
     }
+
+    // DS14-start
+    private void OnMindShieldMapInit(
+        EntityUid uid,
+        MindShieldComponent component,
+        MapInitEvent args)
+    {
+        if (HasComp<HeadRevolutionaryComponent>(uid))
+        {
+            RemCompDeferred<MindShieldComponent>(uid);
+            return;
+        }
+
+        if (HasComp<RevolutionaryComponent>(uid))
+        {
+            _revolutionary.Deconvert(
+                uid,
+                stun: true,
+                showPopup: true,
+                showEui: false,
+                "Mindshield component added");
+        }
+    }
+    // DS14-end
 
     private void OnImplantImplanted(Entity<MindShieldImplantComponent> ent, ref ImplantImplantedEvent ev)
     {
@@ -47,15 +66,19 @@ public sealed class MindShieldSystem : EntitySystem
         if (HasComp<HeadRevolutionaryComponent>(implanted))
         {
             _popupSystem.PopupEntity(Loc.GetString("head-rev-break-mindshield"), implanted);
+            RemComp<MindShieldComponent>(implanted); // DS14
             QueueDel(implant);
             return;
         }
 
-        if (_mindSystem.TryGetMind(implanted, out var mindId, out _) &&
-            _roleSystem.MindRemoveRole<RevolutionaryRoleComponent>(mindId))
-        {
-            _adminLogManager.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(implanted)} was deconverted due to being implanted with a Mindshield.");
-        }
+        // DS14-start
+        _revolutionary.Deconvert(
+            implanted,
+            stun: true,
+            showPopup: true,
+            showEui: false,
+            "implanted with a Mindshield");
+        // DS14-end
     }
 
     private void OnImplantRemoved(Entity<MindShieldImplantComponent> ent, ref ImplantRemovedEvent args)

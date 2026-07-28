@@ -1,3 +1,4 @@
+using System.Threading;
 using Content.Client.Eui;
 using Content.Shared.Revolutionary;
 using JetBrains.Annotations;
@@ -10,26 +11,26 @@ namespace Content.Client.Revolutionary.UI;
 public sealed class BecomeRevEui : BaseEui
 {
     private readonly BecomeRevWindow _window;
+    // DS14-start
+    private readonly CancellationTokenSource _timeoutCancellation = new();
+    private bool _choiceSent;
+    // DS14-end
 
     public BecomeRevEui()
     {
         _window = new BecomeRevWindow();
 
-        _window.DenyButton.OnPressed += _ =>
+        // DS14-start
+        _window.DenyButton.OnPressed += _ => Submit(BecomeRevUiButton.Deny);
+        _window.AcceptButton.OnPressed += _ => Submit(BecomeRevUiButton.Accept);
+        _window.OnClose += () =>
         {
-            SendMessage(new BecomeRevChoiceMessage(BecomeRevUiButton.Deny));
-            _window.Close();
+            if (!_choiceSent)
+                Submit(BecomeRevUiButton.Deny);
         };
 
-        _window.OnClose += () => SendMessage(new BecomeRevChoiceMessage(BecomeRevUiButton.Deny));
-
-        _window.AcceptButton.OnPressed += _ =>
-        {
-            SendMessage(new BecomeRevChoiceMessage(BecomeRevUiButton.Accept));
-            _window.Close();
-        };
-
-        Timer.Spawn(10000, () => SendMessage(new BecomeRevChoiceMessage(BecomeRevUiButton.Deny)));
+        Timer.Spawn(10000, () => Submit(BecomeRevUiButton.Deny), _timeoutCancellation.Token);
+        // DS14-end
     }
 
     public override void Opened()
@@ -40,7 +41,23 @@ public sealed class BecomeRevEui : BaseEui
 
     public override void Closed()
     {
+        // DS14-start
+        _choiceSent = true;
+        _timeoutCancellation.Cancel();
+        // DS14-end
         _window.Close();
     }
 
+    // DS14-start
+    private void Submit(BecomeRevUiButton choice)
+    {
+        if (_choiceSent)
+            return;
+
+        _choiceSent = true;
+        _timeoutCancellation.Cancel();
+        SendMessage(new BecomeRevChoiceMessage(choice));
+        _window.Close();
+    }
+    // DS14-end
 }

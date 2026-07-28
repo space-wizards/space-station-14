@@ -1,7 +1,6 @@
-using Content.Shared.Antag;
-using Robust.Shared.GameStates;
 using Content.Shared.StatusIcon;
 using Robust.Shared.Prototypes;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Revolutionary.Components;
@@ -9,13 +8,13 @@ namespace Content.Shared.Revolutionary.Components;
 /// <summary>
 /// Component used for marking a Head Rev for conversion and winning/losing.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedRevolutionarySystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(SharedRevolutionarySystem))] // DS14: networked for replay state only.
 public sealed partial class HeadRevolutionaryComponent : Component
 {
     /// <summary>
     /// The status icon corresponding to the head revolutionary.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadOnly)] // DS14: configure through YAML; live roster updates are event-driven.
     public ProtoId<FactionIconPrototype> StatusIcon { get; set; } = "HeadRevolutionaryFaction";
 
     /// <summary>
