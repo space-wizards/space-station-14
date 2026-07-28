@@ -27,6 +27,10 @@
     TriggerThrow: 1
     TriggerDeath: 1
     TriggerMagnet: 1
+    TriggerAttackParticleEngine: 0.25
+    TriggerAttackParticleAnomaly: 1
+    TriggerAttackStaminaDamage: 1
+    TriggerAttackLaser: 1
 
 - type: xenoArchTrigger
   id: TriggerMusic
@@ -265,3 +269,42 @@
   tip: xenoarch-trigger-tip-magnet
   components:
   - type: XATMagnet
+
+- type: xenoArchTrigger
+  id: TriggerAttackParticleEngine
+  tip: xenoarch-trigger-tip-particle
+  components:
+  - type: XATInteractAttack
+    whitelist:
+      components:
+      - ParticleProjectile
+
+- type: xenoArchTrigger
+  id: TriggerAttackParticleAnomaly
+  tip: xenoarch-trigger-tip-anomparticle
+  components:
+  - type: XATInteractAttack
+    whitelist:
+      components:
+      - AnomalousParticle
+
+- type: xenoArchTrigger
+  id: TriggerAttackStaminaDamage
+  tip: xenoarch-trigger-tip-stamina-damage
+  components:
+  - type: XATInteractAttack
+    whitelist:
+      components:
+      - StaminaDamageOnCollide
+      - StaminaDamageOnHit
+
+- type: xenoArchTrigger
+  id: TriggerAttackLaser
+  tip: xenoarch-trigger-tip-laser
+  components:
+  - type: XATInteractAttack
+    whitelist:
+      components:
+      - HitscanBasicDamage
+      tags:
+      - EmitterBolt

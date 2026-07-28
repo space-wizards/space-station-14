@@ -68,6 +68,10 @@ xenoarch-trigger-tip-blood = Blood
 xenoarch-trigger-tip-throw = Being thrown
 xenoarch-trigger-tip-death = Death
 xenoarch-trigger-tip-magnet = Magnetic waves
+xenoarch-trigger-tip-particle = Singularity-Effecting Particles
+xenoarch-trigger-tip-anomparticle = Anomaly-Effecting Particles
+xenoarch-trigger-tip-stamina-damage = Organic Exhaustion
+xenoarch-trigger-tip-laser = High-Intensity photon impacts
 
 ### Description hints
 xenoarch-trigger-examine-wrenching = There's a loose bit spinning around.

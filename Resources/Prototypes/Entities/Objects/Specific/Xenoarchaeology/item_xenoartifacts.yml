@@ -72,6 +72,27 @@
       max: 13
 
 - type: entity
+  parent: BaseXenoArtifactItem
+  id: DebugXenoArtifactItem
+  suffix: Hand-Sized, DEBUG
+  components:
+  - type: XenoArtifact
+    nodeCount:
+      min: 1
+      max: 1
+    segmentSize:
+      min: 1
+      max: 1
+    nodesPerSegmentLayer:
+      min: 1
+      max: 1
+    scatterPerLayer:
+      min: 0
+      max: 0
+    unlockStateDuration: 3
+    unlockStateRefractory: 1
+
+- type: entity
   id: ArtifactFragment
   parent: BaseItem
   name: artifact fragment
