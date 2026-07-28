@@ -8,385 +8,333 @@
   id: Clubs
   parent: [ BaseCard ]
   color: black
+  layers:
+    - state: sc_Clubs
 
 - type: card
   abstract: true
   id: Diamonds
   parent: [ BaseCard ]
   color: red
+  layers:
+    - state: sc_Diamonds
 
 - type: card
   abstract: true
   id: Hearts
   parent: [ BaseCard ]
   color: red
+  layers:
+    - state: sc_Hearts
 
 - type: card
   abstract: true
   id: Spades
   parent: [ BaseCard ]
   color: black
+  layers:
+    - state: sc_Spades
+
+- type: card
+  abstract: true
+  id: CardRank2
+  parent: [ BaseCard ]
+  layers:
+    - state: sc_2
+
+- type: card
+  abstract: true
+  id: CardRank3
+  parent: [ BaseCard ]
+  layers:
+    - state: sc_3
+
+- type: card
+  abstract: true
+  id: CardRank4
+  parent: [ BaseCard ]
+  layers:
+    - state: sc_4
+
+- type: card
+  abstract: true
+  id: CardRank5
+  parent: [ BaseCard ]
+  layers:
+    - state: sc_5
+
+- type: card
+  abstract: true
+  id: CardRank6
+  parent: [ BaseCard ]
+  layers:
+    - state: sc_6
+
+- type: card
+  abstract: true
+  id: CardRank7
+  parent: [ BaseCard ]
+  layers:
+    - state: sc_7
+
+- type: card
+  abstract: true
+  id: CardRank8
+  parent: [ BaseCard ]
+  layers:
+    - state: sc_8
+
+- type: card
+  abstract: true
+  id: CardRank9
+  parent: [ BaseCard ]
+  layers:
+    - state: sc_9
+
+- type: card
+  abstract: true
+  id: CardRank10
+  parent: [ BaseCard ]
+  layers:
+    - state: sc_10
+
+- type: card
+  abstract: true
+  id: CardRankJ
+  parent: [ BaseCard ]
+  layers:
+    - state: sc_Jack
+
+- type: card
+  abstract: true
+  id: CardRankQ
+  parent: [ BaseCard ]
+  layers:
+    - state: sc_Queen
+
+- type: card
+  abstract: true
+  id: CardRankK
+  parent: [ BaseCard ]
+  layers:
+    - state: sc_King
 
 # Clubs
 - type: card
   id: ace_of_clubs
-  parent: [ Clubs ]
+  parent: [ BaseCard ]
   layers:
     - state: sc_Ace_of_Clubs
 
 - type: card
   id: two_of_clubs
-  parent: [ Clubs ]
-  layers:
-    - state: sc_Clubs
-    - state: sc_2
+  parent: [ Clubs , CardRank2 ]
 
 - type: card
   id: three_of_clubs
-  parent: [ Clubs ]
-  layers:
-    - state: sc_Clubs
-    - state: sc_3
+  parent: [ Clubs , CardRank3 ]
 
 - type: card
   id: four_of_clubs
-  parent: [ Clubs ]
-  layers:
-    - state: sc_Clubs
-    - state: sc_4
+  parent: [ Clubs , CardRank4 ]
 
 - type: card
   id: five_of_clubs
-  parent: [ Clubs ]
-  layers:
-    - state: sc_Clubs
-    - state: sc_5
+  parent: [ Clubs , CardRank5 ]
 
 - type: card
   id: six_of_clubs
-  parent: [ Clubs ]
-  layers:
-    - state: sc_Clubs
-    - state: sc_6
+  parent: [ Clubs , CardRank6 ]
 
 - type: card
   id: seven_of_clubs
-  parent: [ Clubs ]
-  layers:
-    - state: sc_Clubs
-    - state: sc_7
+  parent: [ Clubs , CardRank7 ]
 
 - type: card
   id: eight_of_clubs
-  parent: [ Clubs ]
-  layers:
-    - state: sc_Clubs
-    - state: sc_8
+  parent: [ Clubs , CardRank8 ]
 
 - type: card
   id: nine_of_clubs
-  parent: [ Clubs ]
-  layers:
-    - state: sc_Clubs
-    - state: sc_9
+  parent: [ Clubs , CardRank9 ]
 
 - type: card
   id: ten_of_clubs
-  parent: [ Clubs ]
-  layers:
-    - state: sc_Clubs
-    - state: sc_10
+  parent: [ Clubs , CardRank10 ]
 
 - type: card
   id: jack_of_clubs
-  parent: [ Clubs ]
-  layers:
-    - state: sc_Clubs
-    - state: sc_Jack
+  parent: [ Clubs , CardRankJ ]
 
 - type: card
   id: queen_of_clubs
-  parent: [ Clubs ]
-  layers:
-    - state: sc_Clubs
-    - state: sc_Queen
+  parent: [ Clubs , CardRankQ ]
 
 - type: card
   id: king_of_clubs
-  parent: [ Clubs ]
-  layers:
-    - state: sc_Clubs
-    - state: sc_King
+  parent: [ Clubs , CardRankK ]
 
 # Diamonds
 - type: card
   id: ace_of_diamonds
-  parent: [ Diamonds ]
+  parent: [ BaseCard ]
   layers:
     - state: sc_Ace_of_Diamonds
 
 - type: card
   id: two_of_diamonds
-  parent: [ Diamonds ]
-  layers:
-    - state: sc_Diamonds
-    - state: sc_2
+  parent: [ Diamonds , CardRank2 ]
 
 - type: card
   id: three_of_diamonds
-  parent: [ Diamonds ]
-  layers:
-    - state: sc_Diamonds
-    - state: sc_3
+  parent: [ Diamonds , CardRank3 ]
 
 - type: card
   id: four_of_diamonds
-  parent: [ Diamonds ]
-  layers:
-    - state: sc_Diamonds
-    - state: sc_4
+  parent: [ Diamonds , CardRank4 ]
 
 - type: card
   id: five_of_diamonds
-  parent: [ Diamonds ]
-  layers:
-    - state: sc_Diamonds
-    - state: sc_5
+  parent: [ Diamonds , CardRank5 ]
 
 - type: card
   id: six_of_diamonds
-  parent: [ Diamonds ]
-  layers:
-    - state: sc_Diamonds
-    - state: sc_6
+  parent: [ Diamonds , CardRank6 ]
 
 - type: card
   id: seven_of_diamonds
-  parent: [ Diamonds ]
-  layers:
-    - state: sc_Diamonds
-    - state: sc_7
+  parent: [ Diamonds , CardRank7 ]
 
 - type: card
   id: eight_of_diamonds
-  parent: [ Diamonds ]
-  layers:
-    - state: sc_Diamonds
-    - state: sc_8
+  parent: [ Diamonds , CardRank8 ]
 
 - type: card
   id: nine_of_diamonds
-  parent: [ Diamonds ]
-  layers:
-    - state: sc_Diamonds
-    - state: sc_9
+  parent: [ Diamonds , CardRank9 ]
 
 - type: card
   id: ten_of_diamonds
-  parent: [ Diamonds ]
-  layers:
-    - state: sc_Diamonds
-    - state: sc_10
+  parent: [ Diamonds , CardRank10 ]
 
 - type: card
   id: jack_of_diamonds
-  parent: [ Diamonds ]
-  layers:
-    - state: sc_Diamonds
-    - state: sc_Jack
+  parent: [ Diamonds , CardRankJ ]
 
 - type: card
   id: queen_of_diamonds
-  parent: [ Diamonds ]
-  layers:
-    - state: sc_Diamonds
-    - state: sc_Queen
+  parent: [ Diamonds , CardRankQ ]
 
 - type: card
   id: king_of_diamonds
-  parent: [ Diamonds ]
-  layers:
-    - state: sc_Diamonds
-    - state: sc_King
+  parent: [ Diamonds , CardRankK ]
 
 # Hearts
 - type: card
   id: ace_of_hearts
-  parent: [ Hearts ]
+  parent: [ BaseCard ]
   layers:
     - state: sc_Ace_of_Hearts
 
 - type: card
   id: two_of_hearts
-  parent: [ Hearts ]
-  layers:
-    - state: sc_Hearts
-    - state: sc_2
+  parent: [ Hearts , CardRank2 ]
 
 - type: card
   id: three_of_hearts
-  parent: [ Hearts ]
-  layers:
-    - state: sc_Hearts
-    - state: sc_3
+  parent: [ Hearts , CardRank3 ]
 
 - type: card
   id: four_of_hearts
-  parent: [ Hearts ]
-  layers:
-    - state: sc_Hearts
-    - state: sc_4
+  parent: [ Hearts , CardRank4 ]
 
 - type: card
   id: five_of_hearts
-  parent: [ Hearts ]
-  layers:
-    - state: sc_Hearts
-    - state: sc_5
+  parent: [ Hearts , CardRank5 ]
 
 - type: card
   id: six_of_hearts
-  parent: [ Hearts ]
-  layers:
-    - state: sc_Hearts
-    - state: sc_6
+  parent: [ Hearts , CardRank6 ]
 
 - type: card
   id: seven_of_hearts
-  parent: [ Hearts ]
-  layers:
-    - state: sc_Hearts
-    - state: sc_7
+  parent: [ Hearts , CardRank7 ]
 
 - type: card
   id: eight_of_hearts
-  parent: [ Hearts ]
-  layers:
-    - state: sc_Hearts
-    - state: sc_8
+  parent: [ Hearts , CardRank8 ]
 
 - type: card
   id: nine_of_hearts
-  parent: [ Hearts ]
-  layers:
-    - state: sc_Hearts
-    - state: sc_9
+  parent: [ Hearts , CardRank9 ]
 
 - type: card
   id: ten_of_hearts
-  parent: [ Hearts ]
-  layers:
-    - state: sc_Hearts
-    - state: sc_10
+  parent: [ Hearts , CardRank10 ]
 
 - type: card
   id: jack_of_hearts
-  parent: [ Hearts ]
-  layers:
-    - state: sc_Hearts
-    - state: sc_Jack
+  parent: [ Hearts , CardRankJ ]
 
 - type: card
   id: queen_of_hearts
-  parent: [ Hearts ]
-  layers:
-    - state: sc_Hearts
-    - state: sc_Queen
+  parent: [ Hearts , CardRankQ ]
 
 - type: card
   id: king_of_hearts
-  parent: [ Hearts ]
-  layers:
-    - state: sc_Hearts
-    - state: sc_King
+  parent: [ Hearts , CardRankK ]
 
 # Spades
 - type: card
   id: ace_of_spades
-  parent: [ Spades ]
+  parent: [ BaseCard ]
   layers:
     - state: sc_Ace_of_Spades
 
 - type: card
   id: two_of_spades
-  parent: [ Spades ]
-  layers:
-    - state: sc_Spades
-    - state: sc_2
+  parent: [ Spades , CardRank2 ]
 
 - type: card
   id: three_of_spades
-  parent: [ Spades ]
-  layers:
-    - state: sc_Spades
-    - state: sc_3
+  parent: [ Spades , CardRank3 ]
 
 - type: card
   id: four_of_spades
-  parent: [ Spades ]
-  layers:
-    - state: sc_Spades
-    - state: sc_4
+  parent: [ Spades , CardRank4 ]
 
 - type: card
   id: five_of_spades
-  parent: [ Spades ]
-  layers:
-    - state: sc_Spades
-    - state: sc_5
+  parent: [ Spades , CardRank5 ]
 
 - type: card
   id: six_of_spades
-  parent: [ Spades ]
-  layers:
-    - state: sc_Spades
-    - state: sc_6
+  parent: [ Spades , CardRank6 ]
 
 - type: card
   id: seven_of_spades
-  parent: [ Spades ]
-  layers:
-    - state: sc_Spades
-    - state: sc_7
+  parent: [ Spades , CardRank7 ]
 
 - type: card
   id: eight_of_spades
-  parent: [ Spades ]
-  layers:
-    - state: sc_Spades
-    - state: sc_8
+  parent: [ Spades , CardRank8 ]
 
 - type: card
   id: nine_of_spades
-  parent: [ Spades ]
-  layers:
-    - state: sc_Spades
-    - state: sc_9
+  parent: [ Spades , CardRank9 ]
 
 - type: card
   id: ten_of_spades
-  parent: [ Spades ]
-  layers:
-    - state: sc_Spades
-    - state: sc_10
+  parent: [ Spades , CardRank10 ]
 
 - type: card
   id: jack_of_spades
-  parent: [ Spades ]
-  layers:
-    - state: sc_Spades
-    - state: sc_Jack
+  parent: [ Spades , CardRankJ ]
 
 - type: card
   id: queen_of_spades
-  parent: [ Spades ]
-  layers:
-    - state: sc_Spades
-    - state: sc_Queen
+  parent: [ Spades , CardRankQ ]
 
 - type: card
   id: king_of_spades
-  parent: [ Spades ]
-  layers:
-    - state: sc_Spades
-    - state: sc_King
+  parent: [ Spades , CardRankK ]
