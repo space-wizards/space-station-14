@@ -1,7 +1,7 @@
 - type: entity
-  id: BaseTarget
-  parent: BaseStructureDynamic
   abstract: true
+  parent: BaseStructureDynamic
+  id: BaseTargetIndestructible
   components:
   - type: Sprite
     sprite: Objects/Specific/Security/target.rsi
@@ -27,6 +27,12 @@
   - type: Damageable
   - type: Injurable
     damageContainer: Inorganic
+
+- type: entity
+  abstract: true
+  parent: BaseTargetIndestructible
+  id: BaseTarget
+  components:
   - type: Destructible
     thresholds:
     - trigger:
@@ -44,10 +50,11 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
 
+
 - type: entity
-  name: human target
-  id: TargetHuman
   parent: BaseTarget
+  id: TargetHuman
+  name: human target
   description: A shooting target. This one is a human.
   components:
   - type: Sprite
@@ -55,9 +62,9 @@
     state: target_h
 
 - type: entity
-  name: syndicate target
-  id: TargetSyndicate
   parent: BaseTarget
+  id: TargetSyndicate
+  name: syndicate target
   description: A shooting target. This one is a syndicate agent.
   components:
   - type: Sprite
@@ -65,9 +72,9 @@
     state: target_s
 
 - type: entity
-  name: clown target
-  id: TargetClown
   parent: BaseTarget
+  id: TargetClown
+  name: clown target
   description: A shooting target. This one is a clown.
   components:
   - type: Sprite
@@ -76,27 +83,11 @@
 
 # put it on a salvage or something
 - type: entity
-  name: strange target
+  parent: BaseTargetIndestructible
   id: TargetStrange
-  parent: BaseTarget
+  name: strange target
   description: A shooting target. You aren't quite sure what this one is, but it seems to be extra robust.
   components:
   - type: Sprite
     sprite: Objects/Specific/Security/target.rsi
     state: target_f
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 2000
-      behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          SheetSteel:
-            min: 10
-            max: 10
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]

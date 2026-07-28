@@ -1,7 +1,7 @@
 - type: entity
+  parent: BaseStructure
   id: TableFrame
   # BaseStructure and not BaseTable, since these shouldn't be climbable/placeable.
-  parent: BaseStructure
   name: table frame
   description: Pieces of metal that make the frame of a table.
   components:
@@ -51,8 +51,8 @@
     node: TableFrame
 
 - type: entity
-  id: CounterWoodFrame
   parent: BaseStructure
+  id: CounterWoodFrame
   name: wooden counter frame
   description: Pieces of wood that make the frame of a table.
   components:
@@ -101,16 +101,28 @@
     node: CounterWoodFrame
 
 - type: entity
+  parent: BaseStructure
   id: CounterMetalFrame
-  parent: CounterWoodFrame
   name: metal counter frame
   description: Pieces of metal that make the frame of a table.
   components:
+  - type: SpriteFade
   - type: Sprite
     sprite: Structures/Furniture/Tables/frame.rsi
   - type: Icon
     sprite: Structures/Furniture/Tables/frame.rsi
     state: full
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 55
+        mask:
+        - TableMask
+        layer:
+        - TableLayer
   - type: Damageable
     damageModifierSet: Metallic
   - type: Injurable
