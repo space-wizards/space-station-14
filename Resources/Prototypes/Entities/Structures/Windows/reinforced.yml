@@ -1,13 +1,13 @@
 - type: entity
+  parent: [BaseDeltaPressureReinforcedGlass, BaseWindowStructure]
   id: ReinforcedWindow
   name: reinforced window
-  parent: [BaseDeltaPressureReinforcedGlass, Window]
   components:
   - type: Sprite
-    drawdepth: WallTops
     sprite: Structures/Windows/reinforced_window.rsi
   - type: Icon
     sprite: Structures/Windows/reinforced_window.rsi
+    state: full
   - type: Repairable
     fuelCost: 10
     doAfterDelay: 2
@@ -49,14 +49,9 @@
       sprite: Structures/Windows/cracks.rsi
 
 - type: entity
+  parent: [BaseDeltaPressureReinforcedGlassQuarter, BaseWindowStructureDirectional]
   id: WindowReinforcedDirectional
-  parent: [BaseDeltaPressureReinforcedGlassQuarter, WindowDirectional]
   name: directional reinforced window
-  description: Don't smudge up the glass down there.
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Window
   components:
   - type: Sprite
     sprite: Structures/Windows/directional.rsi
@@ -76,6 +71,8 @@
       sprite: Structures/Windows/cracks_directional.rsi
   - type: Damageable
     damageModifierSet: RGlass
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: RCDDeconstructable
     cost: 4
     delay: 4

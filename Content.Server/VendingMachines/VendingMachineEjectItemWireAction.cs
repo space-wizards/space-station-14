@@ -11,7 +11,7 @@ public sealed partial class VendingMachineEjectItemWireAction : ComponentWireAct
     public override Color Color { get; set; } = Color.Red;
     public override string Name { get; set; } = "wire-name-vending-eject";
 
-    public override object? StatusKey { get; } = EjectWireKey.StatusKey;
+    public override object StatusKey => EjectWireKey.StatusKey;
 
     public override StatusLightState? GetLightState(Wire wire, VendingMachineComponent comp)
         => comp.CanShoot ? StatusLightState.BlinkingFast : StatusLightState.On;

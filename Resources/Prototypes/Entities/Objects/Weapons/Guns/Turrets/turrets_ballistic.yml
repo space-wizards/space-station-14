@@ -8,7 +8,7 @@
     - Syndicate
 
 - type: entity
-  parent: BaseWeaponBallisticTurret
+  parent: BaseWeaponBallisticTurretIndestructible
   id: WeaponTurretSyndicateDisposable
   name: disposable ballistic turret
   suffix: Syndicate, Disposable
@@ -16,6 +16,9 @@
   - type: NpcFactionMember
     factions:
     - Syndicate
+  - type: Damageable
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -78,7 +81,7 @@
     - AllHostile
 
 - type: entity
-  parent: BaseWeaponBallisticTurret
+  parent: BaseWeaponBallisticTurretIndestructible
   id: WeaponTurretXeno
   name: xeno turret
   suffix: Xeno

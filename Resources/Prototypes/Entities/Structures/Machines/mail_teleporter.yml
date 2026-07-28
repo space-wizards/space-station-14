@@ -1,6 +1,6 @@
 - type: entity
   id: CargoMailTeleporter
-  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  parent: [ BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible ]
   name: mail teleporter
   description: Periodically teleports in mail to deliver across the station.
   components:
@@ -29,8 +29,6 @@
       map: [ "enum.PowerDeviceVisualLayers.Powered" ]
   - type: Damageable
     damageModifierSet: StructuralMetallicStrong
-  - type: Injurable
-    damageContainer: StructuralInorganic
   - type: ApcPowerReceiver
     powerLoad: 1000
   - type: Appearance

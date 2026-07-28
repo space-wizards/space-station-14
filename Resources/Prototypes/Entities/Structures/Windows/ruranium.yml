@@ -1,13 +1,13 @@
 - type: entity
+  parent: [BaseDeltaPressureReinforcedPlasma, BaseWindowStructure, BaseRCDResistant]
   id: ReinforcedUraniumWindow
   name: reinforced uranium window
-  parent: [BaseDeltaPressureReinforcedPlasma, WindowRCDResistant]
   components:
   - type: Sprite
-    drawdepth: WallTops
     sprite: Structures/Windows/reinforced_uranium_window.rsi
   - type: Icon
     sprite: Structures/Windows/reinforced_uranium_window.rsi
+    state: full
   - type: Damageable
     damageModifierSet: RGlass
   - type: Injurable
@@ -49,14 +49,9 @@
     resistance: 5
 
 - type: entity
+  parent: [BaseDeltaPressureReinforcedPlasmaQuarter, BaseWindowStructureDirectional, BaseRCDResistant]
   id: UraniumReinforcedWindowDirectional
-  parent: [BaseDeltaPressureReinforcedPlasmaQuarter, WindowDirectionalRCDResistant]
   name: directional reinforced uranium window
-  description: Don't smudge up the glass down there.
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Window
   components:
   - type: Sprite
     sprite: Structures/Windows/directional.rsi
@@ -76,6 +71,8 @@
       sprite: Structures/Windows/cracks_directional.rsi
   - type: Damageable
     damageModifierSet: RGlass
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:

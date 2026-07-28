@@ -35,14 +35,6 @@
     intensitySlope: 3
     totalIntensity: 120 # about a ~4 tile radius
   - type: ExplodeOnTrigger
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 50
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
 
 - type: entity
   name: chemical payload

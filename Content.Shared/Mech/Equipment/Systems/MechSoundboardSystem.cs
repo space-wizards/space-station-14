@@ -1,7 +1,8 @@
-using System.Linq;
 using Content.Shared.Mech.Equipment.Components;
 using Content.Shared.Timing;
+using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Mech.Equipment.Systems;
 
@@ -23,12 +24,18 @@ public sealed partial class MechSoundboardSystem : EntitySystem
 
     private void OnUiStateReady(EntityUid uid, MechSoundboardComponent comp, MechEquipmentUiStateReadyEvent args)
     {
-        // you have to specify a collection so it must exist probably
-        var sounds = comp.Sounds.Select(sound => sound.Collection!);
+        // TODO: Allocs
         var state = new MechSoundboardUiState
         {
-            Sounds = sounds.ToList()
+            Sounds = new List<ProtoId<SoundCollectionPrototype>>(comp.Sounds.Count)
         };
+
+        foreach (var sound in comp.Sounds)
+        {
+            if (sound.Collection is { } collection)
+                state.Sounds.Add(collection);
+        }
+
         args.States.Add(GetNetEntity(uid), state);
     }
 

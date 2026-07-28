@@ -52,9 +52,9 @@
     noRot: false
   - type: Sprite
     drawdepth: Doors
-    sprite: Structures/Machines/recycling.rsi
+    sprite: Structures/Machines/recycler.rsi
     layers:
-    - state: grinder-o0
+    - state: recycler-o0
       map: ["enum.RecyclerVisualLayers.Main"]
   - type: Appearance
   - type: RecyclerVisuals

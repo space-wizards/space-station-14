@@ -107,13 +107,13 @@ public sealed partial class ExplosionPrototype : IPrototype
 /// Secondary sound that will be projected farther than normal sound.
 /// </summary>
     [DataField("soundFar")]
-    public SoundSpecifier SoundFar = new SoundCollectionSpecifier("ExplosionFar", AudioParams.Default.WithVolume(2f));
+    public SoundSpecifier SoundFar = new SoundCollectionSpecifier("ExplosionFar", AudioParams.Default.AddVolume(2f));
 
     /// <summary>
     /// Secondary sound that will be projected farther than normal sound for a small explosion.
     /// </summary>
     [DataField("smallSoundFar")]
-    public SoundSpecifier SmallSoundFar = new SoundCollectionSpecifier("ExplosionSmallFar", AudioParams.Default.WithVolume(2f));
+    public SoundSpecifier SmallSoundFar = new SoundCollectionSpecifier("ExplosionSmallFar", AudioParams.Default.AddVolume(2f));
 
     /// <summary>
     /// The texture of the explosion.

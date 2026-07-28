@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseItem
+  parent: [ BaseItem, BaseItemDestructible ]
   id: BaseHandheldStationMap
   name: station map
   description: Displays a readout of the current station.
@@ -19,14 +19,6 @@
     - type: Damageable
     - type: Injurable
       damageContainer: Inorganic
-    - type: Destructible
-      thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 100
-        behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
     - type: UserInterface
       interfaces:
         enum.StationMapUiKey.Key:

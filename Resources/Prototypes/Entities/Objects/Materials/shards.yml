@@ -56,16 +56,6 @@
   - type: SpaceGarbage
   - type: Damageable
     damageModifierSet: Glass
-  - type: Injurable
-    damageContainer: Inorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: StepTrigger
     intersectRatio: 0.2
   - type: PreventableStepTrigger

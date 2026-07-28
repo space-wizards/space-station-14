@@ -16,7 +16,7 @@ public sealed partial class AdjustTemperatureEntityEffectSystem : EntityEffectSy
     {
         var amount = args.Effect.Amount * args.Scale;
 
-        _temperature.ChangeHeat(entity, amount, true, entity.Comp);
+        _temperature.ChangeHeat(entity.AsNullable(), amount, true);
     }
 }
 

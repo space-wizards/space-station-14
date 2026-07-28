@@ -28,9 +28,8 @@ public sealed class GenpopSystem : SharedGenpopSystem
             id.SentenceDuration = TimeSpan.FromMinutes(sentence);
             Dirty(uid, id);
         }
-        if (sentence <= 0)
-            IdCard.SetPermanent(uid, true);
-        IdCard.SetExpireTime(uid, TimeSpan.FromMinutes(sentence) + Timing.CurTime);
+        if (sentence > 0)
+            IdCard.SetExpireTime(uid, TimeSpan.FromMinutes(sentence) + Timing.CurTime);
 
         var metaData = MetaData(ent);
         MetaDataSystem.SetEntityName(ent, Loc.GetString("genpop-locker-name-used", ("name", name)), metaData);

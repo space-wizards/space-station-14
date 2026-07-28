@@ -233,6 +233,7 @@
         whitelist:
           tags:
           - TrashBag
+          - TrashBagHolding
         priority: 3 # Higher than drinking priority
   - type: Fixtures
     fixtures:
@@ -286,22 +287,14 @@
         whitelist:
           tags:
           - GoldenPlunger
-      cart_mop:
-        whitelist:
-          tags:
-          - MopBasic
-      cart_advmop:
-        whitelist:
-          tags:
-          - MopAdv
       cart_garbage:
         whitelist:
           tags:
           - TrashBag
-      cart_garbage_blue:
+      cart_garbage_holding:
         whitelist:
           tags:
-          - TrashBagBlue
+          - TrashBagHolding
       cart_replacer:
         whitelist:
           components:
@@ -334,6 +327,14 @@
         whitelist:
           tags:
           - Bucket
+      cart_mop:
+        whitelist:
+          tags:
+          - MopBasic
+      cart_advmop:
+        whitelist:
+          tags:
+          - MopAdv
     sprite: Objects/Specific/Janitorial/janitorial_cart.rsi
   - type: Appearance
   - type: SolutionContainerVisuals

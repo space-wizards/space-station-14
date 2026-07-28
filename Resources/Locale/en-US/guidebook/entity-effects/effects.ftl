@@ -536,3 +536,9 @@ entity-effect-guidebook-add-reagent-to-bloodstream =
         [1] Injects
         *[other] inject
     } {$quantity} of {$reagent} directly into the bloodstream
+
+entity-effect-disarm =
+    { $chance ->
+        [1] Disarms
+        *[other] disarms
+    } the entity

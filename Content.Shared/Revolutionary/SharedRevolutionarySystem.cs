@@ -106,4 +106,10 @@ public abstract partial class SharedRevolutionarySystem : EntitySystem
     {
         args.Cancelled = true;
     }
+
+    [SubscribeLocalEvent]
+    private void OnAttemptConvertImmune(Entity<RevolutionaryImmuneComponent> ent, ref AttemptConvertRevolutionaryEvent args)
+    {
+        args.Cancelled = true;
+    }
 }

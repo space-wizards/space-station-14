@@ -13,6 +13,7 @@ public abstract partial class SharedChangelingLastResortSystem : EntitySystem
     [Dependency] private GibbingSystem _gibbing = default!;
     [Dependency] private SharedMindSystem _mind = default!;
     [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private DestructionResistanceSystem _destructionResistance = default!;
     [Dependency] protected SharedAudioSystem Audio = default!;
 
     [SubscribeLocalEvent]
@@ -44,6 +45,9 @@ public abstract partial class SharedChangelingLastResortSystem : EntitySystem
 
         var slug = PredictedSpawnAtPosition(ent.Comp.SlugPrototype, Transform(args.Performer).Coordinates);
         _mind.TransferTo(mindId, slug, mind: mind);
+
+        _destructionResistance.SetEnabled(args.Performer, false);
+
         _gibbing.Gib(args.Performer);
     }
 }

@@ -1883,5 +1883,12 @@ Entries:
   id: 231
   time: '2026-07-16T15:31:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44552
+- author: n1-nbt
+  changes:
+  - message: Silicon laws are now admin logged.
+    type: Add
+  id: 232
+  time: '2026-07-18T06:40:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44238
 Name: Admin
 Order: 3

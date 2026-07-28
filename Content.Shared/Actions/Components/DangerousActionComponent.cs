@@ -10,5 +10,5 @@ namespace Content.Shared.Actions.Components;
 public sealed partial class DangerousActionComponent : Component
 {
     [DataField]
-    public string PacificationMessage { get; set; } = "dangerous-action-popup";
+    public LocId PacificationMessage = "dangerous-action-popup";
 }

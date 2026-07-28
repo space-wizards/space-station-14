@@ -41,7 +41,7 @@ public partial class SharedGunSystem
 
     protected virtual (EntityUid Entity, IShootable) GetSolutionShot(Entity<SolutionAmmoProviderComponent> ent, EntityCoordinates position)
     {
-        var shot = Spawn(ent.Comp.Prototype, position);
+        var shot = SpawnAtPosition(ent.Comp.Prototype, position);
         return (shot, EnsureShootable(shot));
     }
 

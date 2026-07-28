@@ -169,7 +169,11 @@ public abstract partial class SharedGenpopSystem : EntitySystem
             Disabled = !hasAccess,
         });
 
-        var servedTime = 1 - (expire.ExpireTime - Timing.CurTime).TotalSeconds / genpopId.SentenceDuration.TotalSeconds;
+        if (expire.ExpireTime is not { } expireTime)
+            return;
+
+        var remaining = GetRemainingSentenceTime((ent.Comp.LinkedId.Value, expire), expireTime);
+        var servedTime = 1 - remaining.TotalSeconds / genpopId.SentenceDuration.TotalSeconds;
 
         // Can't reset it after its expired.
         if (expire.Expired)
@@ -179,7 +183,8 @@ public abstract partial class SharedGenpopSystem : EntitySystem
         {
             Act = () =>
             {
-                IdCard.SetExpireTime((ent.Comp.LinkedId.Value, expire), Timing.CurTime + genpopId.SentenceDuration);
+                var pauseTime = MetaDataSystem.GetPauseTime(ent.Comp.LinkedId.Value);
+                IdCard.SetExpireTime((ent.Comp.LinkedId.Value, expire), Timing.CurTime - pauseTime + genpopId.SentenceDuration);
             },
             Priority = 11,
             Text = Loc.GetString("genpop-locker-action-reset-sentence", ("percent", Math.Clamp(servedTime, 0, 1) * 100)),
@@ -228,8 +233,11 @@ public abstract partial class SharedGenpopSystem : EntitySystem
             }
             else
             {
+                if (expireIdCard.ExpireTime is not { } expireTime)
+                    return;
+
                 var sentence = ent.Comp.SentenceDuration;
-                var served = ent.Comp.SentenceDuration - (expireIdCard.ExpireTime - Timing.CurTime);
+                var served = ent.Comp.SentenceDuration - GetRemainingSentenceTime((ent.Owner, expireIdCard), expireTime);
 
                 args.PushText(Loc.GetString("genpop-prisoner-id-examine-wait",
                     ("minutes", served.Minutes),
@@ -238,6 +246,11 @@ public abstract partial class SharedGenpopSystem : EntitySystem
                     ("crime", ent.Comp.Crime)));
             }
         }
+    }
+
+    private TimeSpan GetRemainingSentenceTime(Entity<ExpireIdCardComponent> ent, TimeSpan expireTime)
+    {
+        return expireTime + MetaDataSystem.GetPauseTime(ent.Owner) - Timing.CurTime;
     }
 
     protected virtual void CreateId(Entity<GenpopLockerComponent> ent, string name, float sentence, string crime)

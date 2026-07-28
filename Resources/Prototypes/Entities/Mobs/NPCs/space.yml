@@ -74,7 +74,7 @@
 - type: entity
   name: space bear
   id: MobBearSpace
-  parent: [MobSpaceBasic, BaseSlicingRefinable]
+  parent: [MobSpaceBasic, BaseSlicingRefinable, BaseMobDestructible]
   description: It looks friendly. Why don't you give it a hug?
   components:
   - type: Sprite
@@ -123,7 +123,7 @@
 - type: entity
   name: space kangaroo
   id: MobKangarooSpace
-  parent: [MobSpaceBasic, StripableInventoryBase, BaseSlicingRefinable]
+  parent: [MobSpaceBasic, StripableInventoryBase, BaseSlicingRefinable, BaseMobDestructible]
   description: It looks friendly. Why don't you give it a hug?
   components:
   - type: Sprite
@@ -184,7 +184,7 @@
 - type: entity
   name: space spider
   id: MobSpiderSpace
-  parent: [MobSpaceBasic, BaseSlicingRefinable]
+  parent: [MobSpaceBasic, BaseSlicingRefinable, BaseMobDestructible]
   description: It's so glowing, it looks dangerous.
   components:
   - type: Sprite
@@ -289,7 +289,7 @@
 - type: entity
   name: space cobra
   id: MobCobraSpace
-  parent: [MobSpaceBasic, BaseSlicingRefinable]
+  parent: [MobSpaceBasic, BaseSlicingRefinable, BaseMobDestructible]
   description: Long fangs and a glowing hood, and the alluring look begs to come closer.
   components:
     - type: Sprite
@@ -394,7 +394,7 @@
     - type: SalvageMobRestrictions
 
 - type: entity
-  parent: [ SimpleSpaceMobBase, FlyingMobBase, MobSheepBase ]
+  parent: [ SimpleSpaceMobBase, FlyingMobBase, MobSheepBase, BaseMobDestructible ]
   id: MobSheepSpace
   name: space sheep
   description: A sheep... in space!

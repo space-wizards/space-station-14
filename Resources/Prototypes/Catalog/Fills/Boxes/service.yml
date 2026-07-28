@@ -15,6 +15,22 @@
       - state: flashbang
 
 - type: entity
+  name: mousetrap box
+  parent: BoxCardboard
+  id: BoxMousetrap
+  description: This box is filled with mousetraps. Try not to get your hand stuck in one.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: Mousetrap
+        amount: 4
+  - type: Sprite
+    layers:
+      - state: box
+      - state: mousetraps
+
+- type: entity
   name: NT "AgriChem Is Fun" kit
   parent: BoxCardboard
   id: BoxAgrichem

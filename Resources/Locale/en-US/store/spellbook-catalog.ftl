@@ -50,6 +50,9 @@ spellbook-slip-desc = Learn the ancient ways of the Janitor and curse your targe
 spellbook-item-recall-name = Item Recall
 spellbook-item-recall-description = Mark a held item and summon it back at any time with just a snap of your fingers!
 
+spellbook-guardian-deck-name = Tarot Deck
+spellbook-guardian-deck-description = A bizarre deck of card that grants you a spectral guardian when used.
+
 # Equipment
 
 spellbook-wand-polymorph-door-name = Wand of Entrance

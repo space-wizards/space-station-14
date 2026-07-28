@@ -14,7 +14,6 @@
         # Please alphabetize <3
         - id: ClosetMaintenanceFilledRandom
           weight: 3
-        - id: CrateEngineeringMiniJetpack
         - id: CratePermaEscapeBureaucracy
         - id: CratePermaEscapeComs
           weight: 2
@@ -31,6 +30,7 @@
           weight: 2
         - id: CrateTrashCartFilled
         - id: CrateServiceCustomSmokable
+        - id: CrateSpaceMiniJetpack
     offset: 0.0
 
 - type: entity

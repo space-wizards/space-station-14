@@ -1,6 +1,6 @@
 - type: entity
   id: MachineAnomalyVessel
-  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  parent: [ BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible ]
   name: anomaly vessel
   description: A container able to harness a scan of an anomaly and turn it into research data.
   components:
@@ -73,10 +73,8 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 150
+        damage: 175
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak
@@ -113,7 +111,7 @@
 
 - type: entity
   id: MachineAPE
-  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  parent: [ BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible ]
   name: A.P.E.
   description: An Anomalous Particle Emitter, capable of shooting out unstable particles which can interface with anomalies.
   components:
@@ -148,6 +146,14 @@
         - MachineMask
         layer:
         - MachineLayer
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 175
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
   - type: Rotatable
     rotateWhileAnchored: true
   - type: Machine

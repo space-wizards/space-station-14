@@ -159,3 +159,18 @@
   - !type:ListingLimitedStockCondition
     stock: 1
   productComponents: ChangelingNightVisionDummy
+
+- type: listing
+  id: ChangelingScreech
+  name: changeling-catalog-screech-name
+  description: changeling-catalog-screech-desc
+  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: screech }
+  applyToMob: true
+  cost:
+    ChangelingDNA: 20
+  categories:
+  - ChangelingStoreCombat
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  productAction: ActionChangelingScreech

@@ -186,7 +186,7 @@
     entity: WrappedParcel
     containerId: contents
   cost: 1500
-  category: cargoproduct-category-name-engineering
+  category: cargoproduct-category-name-cargo
   group: market
 
 - type: cargoProduct

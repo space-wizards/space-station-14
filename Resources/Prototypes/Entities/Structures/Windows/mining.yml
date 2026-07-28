@@ -1,13 +1,13 @@
 - type: entity
+  parent: [BaseWindowStructure, BaseRCDResistant]
   id: MiningWindow
   name: mining window
-  parent: WindowRCDResistant
   components:
   - type: Sprite
-    drawdepth: WallTops
     sprite: Structures/Windows/mining.rsi
   - type: Icon
     sprite: Structures/Windows/mining.rsi
+    state: full
   - type: Repairable
     fuelCost: 15
     doAfterDelay: 3
@@ -36,13 +36,8 @@
         acts: [ "Destruction" ]
   - type: IconSmooth
     base: mwindow
-  - type: Appearance
   - type: DamageVisuals
-    thresholds: [5, 10, 20]
     damageDivisor: 4
-    trackAllDamage: true
-    damageOverlay:
-      sprite: Structures/Windows/cracks.rsi
   - type: StaticPrice
     price: 100
 

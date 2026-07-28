@@ -17,11 +17,12 @@
   components:
   - type: Action
     useDelay: 0.5
-    icon:
-      sprite: Objects/Weapons/Throwable/throwing_star.rsi
-      state: icon
     itemIconStyle: NoItem
     priority: -10
+  - type: Sprite
+    sprite: Objects/Weapons/Throwable/throwing_star.rsi
+    layers:
+    - state: icon
   - type: InstantAction
     event: !type:CreateItemEvent {}
 
@@ -33,11 +34,12 @@
   components:
   - type: Action
     useDelay: 1
-    icon:
-      sprite: Objects/Weapons/Melee/energykatana.rsi
-      state: icon
     itemIconStyle: NoItem
     priority: -11
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/energykatana.rsi
+    layers:
+    - state: icon
   - type: InstantAction
     event: !type:RecallKatanaEvent {}
 
@@ -48,11 +50,12 @@
   description: Disable any nearby technology with an electro-magnetic pulse.
   components:
   - type: Action
-    icon:
-      sprite: Objects/Weapons/Grenades/empgrenade.rsi
-      state: icon
     itemIconStyle: BigAction
     priority: -13
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/empgrenade.rsi
+    layers:
+    - state: icon
   - type: InstantAction
     event: !type:NinjaEmpEvent {}
 
@@ -77,15 +80,16 @@
   description: Teleport to anywhere you can see, if your Energy Katana is in your hand.
   components:
   - type: Action
-    icon:
-      sprite: Objects/Magic/magicactions.rsi
-      state: blink
     itemIconStyle: NoItem
     sound:
       path: /Audio/Magic/blink.ogg
       params:
         volume: 5
     priority: -12
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: blink
   - type: TargetAction
     checkCanAccess: false
     range: 0

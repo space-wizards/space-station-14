@@ -91,8 +91,6 @@
           CableHVStack1:
             min: 1
             max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: CableVisualizer
     statePrefix: hvcable_
   # TODO make this change on power
@@ -145,8 +143,6 @@
           CableMVStack1:
             min: 1
             max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: CableVisualizer
     statePrefix: mvcable_
     extraLayerPrefix: mvstripes_
@@ -194,8 +190,6 @@
           CableApcStack1:
             min: 1
             max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: CableVisualizer
     statePrefix: lvcable_
 

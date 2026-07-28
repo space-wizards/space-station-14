@@ -13,6 +13,7 @@ using Content.Shared.Fluids;
 using Content.Shared.Forensics.Components;
 using Content.Shared.Gibbing;
 using Content.Shared.HealthExaminable;
+using Content.Shared.Metabolism;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
@@ -39,6 +40,7 @@ public abstract partial class SharedBloodstreamSystem : EntitySystem
     [Dependency] private AlertsSystem _alertsSystem = default!;
     [Dependency] private MobStateSystem _mobStateSystem = default!;
     [Dependency] private DamageableSystem _damageableSystem = default!;
+    [Dependency] private MetabolizerSystem _metabolizer = default!;
 
     public override void Initialize()
     {
@@ -613,5 +615,44 @@ public abstract partial class SharedBloodstreamSystem : EntitySystem
 
         bloodData.Add(dnaData);
         return bloodData;
+    }
+
+    /// <summary>
+    /// Copies the values in <see cref="BloodstreamComponent"/> of one entity to another.
+    /// If the component isn't on the target entity, it is added.
+    /// </summary>
+    /// <param name="source">The entity who's component to use.</param>
+    /// <param name="target">The target to clone the component onto.</param>
+    public void CopyComponent(Entity<BloodstreamComponent?> source, EntityUid target)
+    {
+        if (!Resolve(source, ref source.Comp))
+            return;
+
+        // We don't create the component before adding it here.
+        // This is because it causes the initialization to get a bit fucky together with ChangeBloodReagent.
+        // The reagents won't actually change unless we do it this way.
+        // The DNA and stuff is updated by themselves anyway.
+        // BleedAmount is excluded on purpose. There is no point in cloning how much someone is bleeding at the moment.
+        var cloneComp = EnsureComp<BloodstreamComponent>(target);
+        cloneComp.UpdateInterval = source.Comp.UpdateInterval;
+        cloneComp.UpdateIntervalMultiplier = source.Comp.UpdateIntervalMultiplier;
+        cloneComp.BleedReductionAmount = source.Comp.BleedReductionAmount;
+        cloneComp.MaxBleedAmount = source.Comp.MaxBleedAmount;
+        cloneComp.BloodlossThreshold = source.Comp.BloodlossThreshold;
+        cloneComp.BloodlossDamage = new DamageSpecifier(source.Comp.BloodlossDamage);
+        cloneComp.BloodlossHealDamage = new DamageSpecifier(source.Comp.BloodlossHealDamage);
+        cloneComp.BloodRefreshAmount =  source.Comp.BloodRefreshAmount;
+        cloneComp.BleedPuddleThreshold = source.Comp.BleedPuddleThreshold;
+        cloneComp.DamageBleedModifiers = source.Comp.DamageBleedModifiers;
+        cloneComp.MaxVolumeModifier = source.Comp.MaxVolumeModifier;
+        cloneComp.InstantBloodSound = source.Comp.InstantBloodSound;
+        cloneComp.BloodHealedSound = source.Comp.BloodHealedSound;
+        cloneComp.BloodHealedSoundThreshold = source.Comp.BloodHealedSoundThreshold;
+
+        Dirty(target, cloneComp);
+
+        // ChangeBloodReagents dirties the values it changes by itself.
+        ChangeBloodReagents((target, cloneComp), source.Comp.BloodReferenceSolution);
+        _metabolizer.UpdateMetabolicMultiplier(target);
     }
 }

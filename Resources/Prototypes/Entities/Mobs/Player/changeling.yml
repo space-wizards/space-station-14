@@ -7,6 +7,9 @@
   - type: ChangelingDevour
   - type: ChangelingIdentity
   - type: ChangelingTransform
+  - type: DestructionResistance
+  - type: RevolutionaryImmune
+  - type: ZombieImmune
   - type: ActionGrant
     actions:
     - ActionChangelingStore
@@ -15,7 +18,7 @@
       ChangelingDNA: 60
 
 - type: entity
-  parent: [ SimpleSpaceMobBase, MobNightVision ]
+  parent: [ SimpleSpaceMobBase, MobNightVision, BaseMobDestructible ]
   id: MobHeadSlug
   name: headslug
   description: A small, slug-like creature with a large, gaping maw. It's covered in a thick, slimy mucus.

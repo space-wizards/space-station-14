@@ -19,6 +19,11 @@
     tags:
     - Trash
     - CentrifugeCompatible # unique feature of vials
+  - type: DamageOnLand
+    ignoreResistances: true
+    damage:
+      types:
+        Blunt: 3 # can be thrown once without breaking
 
 ## Entities
 
@@ -43,20 +48,14 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 15 # stronger than base
+        damage: 5
       behaviors:
-      - &SoundGlassBreak !type:PlaySoundBehavior
-        sound:
-          collection: GlassBreak
-      - !type:SpillBehavior { }
       - !type:SpawnEntitiesBehavior
         spawn:
-          ShardGlass: # less glass than base
+          ShardGlass:
             min: 0
             max: 1
         transferForensics: true
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
 
 - type: entity
   parent: [SolutionVeryTiny, BaseChemistryVial]
@@ -78,16 +77,6 @@
   - type: PhysicalComposition
     materialComposition:
       Glass: 10
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 5 # smaller so weaker
-      behaviors: # remove glass shard spawn
-      - *SoundGlassBreak
-      - !type:SpillBehavior { }
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
 
 ## Reagent filled
 

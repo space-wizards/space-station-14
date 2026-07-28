@@ -1,13 +1,13 @@
 - type: entity
+  parent: [BaseDeltaPressureReinforcedGlass, BaseWindowStructure, BaseRCDResistant]
   id: ShuttleWindow
   name: shuttle window
-  parent: [BaseDeltaPressureReinforcedGlass, WindowRCDResistant]
   components:
   - type: Sprite
-    drawdepth: WallTops
     sprite: Structures/Windows/shuttle_window.rsi
   - type: Icon
     sprite: Structures/Windows/shuttle_window.rsi
+    state: full
   - type: Repairable
     fuelCost: 15
     doAfterDelay: 3

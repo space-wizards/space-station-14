@@ -1,14 +1,14 @@
 - type: entity
+  parent: BaseWindowStructure
   id: ClockworkWindow
   name: clockwork window
   description: Don't smudge up the brass down there.
-  parent: Window
   components:
   - type: Sprite
-    drawdepth: WallTops
     sprite: Structures/Windows/clockwork_window.rsi
   - type: Icon
     sprite: Structures/Windows/clockwork_window.rsi
+    state: full
   - type: Repairable
     fuelCost: 10
     doAfterDelay: 2
@@ -37,23 +37,14 @@
   - type: Construction
     graph: Window
     node: clockworkWindow
-  - type: Appearance
   - type: DamageVisuals
-    thresholds: [5, 10, 20]
     damageDivisor: 3
-    trackAllDamage: true
-    damageOverlay:
-      sprite: Structures/Windows/cracks.rsi
 
 - type: entity
+  parent: BaseWindowStructureDirectional
   id: WindowClockworkDirectional
-  parent: WindowDirectional
   name: directional clockwork window
   description: Don't smudge up the brass down there.
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Window
   components:
   - type: Sprite
     sprite: Structures/Windows/directional.rsi
@@ -64,13 +55,10 @@
   - type: Construction
     graph: WindowDirectional
     node: windowClockworkDirectional
-  - type: Appearance
   - type: DamageVisuals
-    thresholds: [5, 10, 20]
     damageDivisor: 1.5
-    trackAllDamage: true
-    damageOverlay:
-      sprite: Structures/Windows/cracks_directional.rsi
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Damageable
     damageModifierSet: RGlass
   - type: Destructible

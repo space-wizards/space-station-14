@@ -63,6 +63,10 @@
     attackRate: 10
   - type: Item
     size: Ginormous
+    shape:
+    - 0,0,3,3
+    - 1,4,2,6
+    storedRotation: -45
     sprite: Objects/Weapons/Melee/Throngler-in-hand.rsi
   - type: FoodSequenceElement
     entries:
