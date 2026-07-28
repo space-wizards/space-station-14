@@ -39,7 +39,6 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
     [Dependency] public PuddleSystem PuddleSystem = default!;
     [Dependency] public SharedContainerSystem ContainerSystem = default!;
     [Dependency] public SharedSolutionContainerSystem SolutionContainerSystem = default!;
-    [Dependency] public SharedTransformSystem TransformSystem = default!;
     [Dependency] public StackSystem StackSystem = default!;
     [Dependency] public TriggerSystem TriggerSystem = default!;
 

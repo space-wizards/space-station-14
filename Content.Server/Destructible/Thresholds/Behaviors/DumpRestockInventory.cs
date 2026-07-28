@@ -40,7 +40,8 @@ public sealed partial class DumpRestockInventory : IThresholdBehavior
 
             if (toSpawn == 0) continue;
 
-            if (EntityPrototypeHelpers.HasComponent<StackComponent>(entityId, system.PrototypeManager, system.EntityManager.ComponentFactory))
+            if (system.PrototypeManager.TryIndex(entityId, out var entProto)
+                && entProto.HasComp<StackComponent>(system.EntityManager.ComponentFactory))
             {
                 var spawned = system.EntityManager.SpawnAttachedTo(entityId, xform.Coordinates.Offset(system.Random.NextVector2(-Offset, Offset)), rotation: system.Random.NextAngle());
                 system.StackSystem.SetCount((spawned, null), toSpawn);

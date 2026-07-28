@@ -10,7 +10,6 @@ public sealed partial class HolosignSystem : EntitySystem
 {
     [Dependency] private INetManager _net = default!;
     [Dependency] private PowerCellSystem _powerCell = default!;
-    [Dependency] private SharedTransformSystem _xform = default!;
 
     public override void Initialize()
     {
