@@ -2,6 +2,7 @@
 using Content.Shared.Random.Helpers;
 using Content.Shared.StationRecords.Components;
 using Content.Shared.StationRecords.Events;
+using JetBrains.Annotations;
 using Robust.Shared.Random;
 
 namespace Content.Shared.StationRecords.Systems;
@@ -11,6 +12,7 @@ public sealed partial class StationRecordsSystem
     /// <summary>
     /// Set the station records key for an id/pda.
     /// </summary>
+    [PublicAPI]
     public void SetIdKey(EntityUid? uid, StationRecordKey key)
     {
         if (uid is not {} idUid)
@@ -31,6 +33,7 @@ public sealed partial class StationRecordsSystem
     /// <param name="key">The station and key to remove.</param>
     /// <param name="records">Station records component.</param>
     /// <returns>True if the record was removed, false otherwise.</returns>
+    [PublicAPI]
     public bool RemoveRecord(StationRecordKey key, StationRecordsComponent? records = null)
     {
         if (!_recordsQuery.Resolve(key.OriginStation, ref records))
@@ -51,9 +54,12 @@ public sealed partial class StationRecordsSystem
     /// </summary>
     /// <param name="ent">The EntityId of the station from which you want to get the record.</param>
     /// <param name="entry">The resulting entry.</param>
+    /// <param name="seedEntity">An optional entity to use as a seed (see remarks).</param>
     /// <typeparam name="T">Type to get from the record set.</typeparam>
     /// <returns>True if a record was obtained. False otherwise.</returns>
-    public bool TryGetRandomRecord<T>(Entity<StationRecordsComponent?> ent, [NotNullWhen(true)] out T? entry) where T : StationRecord
+    /// <remarks><see cref="seedEntity"/> should be used where possible with predicted randomness to prevent repeated values within a tick.</remarks>
+    [PublicAPI]
+    public bool TryGetRandomRecord<T>(Entity<StationRecordsComponent?> ent, [NotNullWhen(true)] out T? entry, EntityUid? seedEntity = null) where T : StationRecord
     {
         entry = default;
 
@@ -63,7 +69,7 @@ public sealed partial class StationRecordsSystem
         if (ent.Comp.Records.Keys.Count == 0)
             return false;
 
-        var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent.Owner));
+        var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(seedEntity ?? ent.Owner));
         var key = random.Pick(ent.Comp.Records.Keys);
 
         return ent.Comp.Records.TryGetRecordEntry(key, out entry);
@@ -72,6 +78,7 @@ public sealed partial class StationRecordsSystem
     /// <summary>
     /// Get the name for a record, or an empty string if it has no record.
     /// </summary>
+    [PublicAPI]
     public string RecordName(StationRecordKey key)
     {
         return !TryGetRecord<GeneralStationRecord>(key, out var record) ? string.Empty : record.Name;
@@ -83,6 +90,7 @@ public sealed partial class StationRecordsSystem
     /// <param name="station">The station to add the record to.</param>
     /// <param name="record">The record to add.</param>
     /// <typeparam name="T">The type of record to add.</typeparam>
+    [PublicAPI]
     public StationRecordKey AddRecordEntry<T>(Entity<StationRecordsComponent?> station, T record) where T : StationRecord
     {
         if (!_recordsQuery.Resolve(station, ref station.Comp))
@@ -100,6 +108,7 @@ public sealed partial class StationRecordsSystem
     /// <param name="record">The record to add.</param>
     /// <param name="records">Station records component.</param>
     /// <typeparam name="T">The type of record to add.</typeparam>
+    [PublicAPI]
     public void AddRecordEntry<T>(StationRecordKey key,
         T record,
         StationRecordsComponent? records = null) where T : StationRecord
@@ -115,6 +124,7 @@ public sealed partial class StationRecordsSystem
     ///     Synchronizes a station's records with any systems that need it.
     /// </summary>
     /// <param name="station">The station to synchronize any recently accessed records with.</param>
+    [PublicAPI]
     public void Synchronize(Entity<StationRecordsComponent?> station)
     {
         if (!_recordsQuery.Resolve(station, ref station.Comp))
@@ -135,6 +145,7 @@ public sealed partial class StationRecordsSystem
     /// </summary>
     /// <param name="key">The station and id of the record</param>
     /// <param name="records">Station records component.</param>
+    [PublicAPI]
     public void Synchronize(StationRecordKey key, StationRecordsComponent? records = null)
     {
         if (!_recordsQuery.Resolve(key.OriginStation, ref records))
@@ -157,6 +168,7 @@ public sealed partial class StationRecordsSystem
     /// <param name="records">Station record component.</param>
     /// <typeparam name="T">Type to get from the record set.</typeparam>
     /// <returns>True if the record was obtained, false otherwise. Always false on client.</returns>
+    [PublicAPI]
     public bool TryGetRecord<T>(StationRecordKey key, [NotNullWhen(true)] out T? entry, StationRecordsComponent? records = null) where T : StationRecord
     {
         entry = null;
@@ -172,6 +184,7 @@ public sealed partial class StationRecordsSystem
     /// <param name="station">The station to get the records from.</param>
     /// <typeparam name="T">Type of record to fetch</typeparam>
     /// <returns>Enumerable of pairs with a station record key, and the entry in question of type T. Always empty on client.</returns>
+    [PublicAPI]
     public IEnumerable<(uint, T)> GetRecordsOfType<T>(Entity<StationRecordsComponent?> station)
     {
         if (!_recordsQuery.Resolve(station, ref station.Comp))
@@ -187,6 +200,7 @@ public sealed partial class StationRecordsSystem
     /// Linear search so O(n) time complexity.
     /// </remarks>
     /// <returns>Returns a station record id. Always null on client.</returns>
+    [PublicAPI]
     public uint? GetRecordByName(Entity<StationRecordsComponent?> station, string name)
     {
         if (!_recordsQuery.Resolve(station, ref station.Comp, false))

@@ -1,9 +1,8 @@
 using Content.Server.Chat;
 using Content.Server.Chat.Systems;
-using Content.Server.Emoting.Systems;
 using Content.Server.Clothing.Systems;
+using Content.Server.Emoting.Systems;
 using Content.Server.Popups;
-using Content.Server.Speech.EntitySystems;
 using Content.Shared.Chat;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Clumsy;
@@ -13,6 +12,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Mobs;
 using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Popups;
+using Content.Shared.Speech.EntitySystems;
 using Content.Shared.Stunnable;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
