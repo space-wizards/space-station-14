@@ -13,19 +13,19 @@ public abstract partial class SharedInstrumentComponent : Component
     [ViewVariables]
     public bool Playing { get; set; }
 
-    [DataField("program"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("program")]
     public byte InstrumentProgram { get; set; }
 
-    [DataField("bank"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("bank")]
     public byte InstrumentBank { get; set; }
 
-    [DataField("allowPercussion"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public bool AllowPercussion { get; set; }
 
-    [DataField("allowProgramChange"), ViewVariables(VVAccess.ReadWrite)]
-    public bool AllowProgramChange { get ; set; }
+    [DataField]
+    public bool AllowProgramChange { get; set; }
 
-    [DataField("respectMidiLimits"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public bool RespectMidiLimits { get; set; } = true;
 
     [ViewVariables(VVAccess.ReadWrite)]
@@ -222,7 +222,7 @@ public sealed class MidiTrack
 
     private const string Postfix = "…";
     // TODO: Make a general method to use in RT? idk if we have that.
-    private string Truncate(string input, int limit)
+    private static string Truncate(string input, int limit)
     {
         if (string.IsNullOrEmpty(input) || limit <= 0 || input.Length <= limit)
             return input;

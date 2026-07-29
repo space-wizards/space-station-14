@@ -1,20 +1,20 @@
 using Content.Server.Cargo.Components;
 using Content.Server.DeviceLinking.Systems;
 using Content.Server.Popups;
+using Content.Server.Radio.EntitySystems;
 using Content.Server.Stack;
 using Content.Server.Station.Systems;
 using Content.Shared.Access.Systems;
 using Content.Shared.Administration.Logs;
-using Content.Server.Radio.EntitySystems;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Paper;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Cargo.Systems;
@@ -22,7 +22,6 @@ namespace Content.Server.Cargo.Systems;
 public sealed partial class CargoSystem : SharedCargoSystem
 {
     [Dependency] private IConfigurationManager _cfg = default!;
-    [Dependency] private IPrototypeManager _protoMan = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private AccessReaderSystem _accessReaderSystem = default!;
@@ -39,11 +38,11 @@ public sealed partial class CargoSystem : SharedCargoSystem
     [Dependency] private UserInterfaceSystem _uiSystem = default!;
     [Dependency] private MetaDataSystem _metaSystem = default!;
     [Dependency] private RadioSystem _radio = default!;
+    [Dependency] private IdentitySystem _identity = default!;
 
-    private EntityQuery<TransformComponent> _xformQuery;
-    private EntityQuery<CargoSellBlacklistComponent> _blacklistQuery;
-    private EntityQuery<MobStateComponent> _mobQuery;
-    private EntityQuery<TradeStationComponent> _tradeQuery;
+    [Dependency] private EntityQuery<CargoSellBlacklistComponent> _cargoSellBlacklistQuery = default!;
+    [Dependency] private EntityQuery<MobStateComponent> _mobStateQuery = default!;
+    [Dependency] private EntityQuery<TradeStationComponent> _tradeStationQuery = default!;
 
     private HashSet<EntityUid> _setEnts = new();
     private List<EntityUid> _listEnts = new();
@@ -52,12 +51,6 @@ public sealed partial class CargoSystem : SharedCargoSystem
     public override void Initialize()
     {
         base.Initialize();
-
-        _xformQuery = GetEntityQuery<TransformComponent>();
-        _blacklistQuery = GetEntityQuery<CargoSellBlacklistComponent>();
-        _mobQuery = GetEntityQuery<MobStateComponent>();
-        _tradeQuery = GetEntityQuery<TradeStationComponent>();
-
         InitializeConsole();
         InitializeShuttle();
         InitializeTelepad();

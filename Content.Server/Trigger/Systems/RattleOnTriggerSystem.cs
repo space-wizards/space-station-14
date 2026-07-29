@@ -10,7 +10,6 @@ namespace Content.Server.Trigger.Systems;
 
 public sealed partial class RattleOnTriggerSystem : EntitySystem
 {
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private RadioSystem _radio = default!;
     [Dependency] private NavMapSystem _navMap = default!;
 
@@ -44,6 +43,6 @@ public sealed partial class RattleOnTriggerSystem : EntitySystem
 
         var message = Loc.GetString(messageId, ("user", target.Value), ("position", posText));
         // Sends a message to the radio channel specified by the implant
-        _radio.SendRadioMessage(ent.Owner, message, _prototypeManager.Index(ent.Comp.RadioChannel), ent.Owner);
+        _radio.SendRadioMessage(ent.Owner, message, ProtoMan.Index(ent.Comp.RadioChannel), ent.Owner);
     }
 }
