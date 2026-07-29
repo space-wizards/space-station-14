@@ -1,4 +1,5 @@
 using Content.Server.Animals.Systems;
+using Content.Shared.Animals;
 using Content.Shared.Storage;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
@@ -6,10 +7,9 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Animals.Components;
 
 /// <summary>
-///     This component handles animals which lay eggs (or some other item) on a timer, using up hunger to do so.
-///     It also grants an action to players who are controlling these entities, allowing them to do it manually.
+/// Defines the product, sound, and player action for an egg-laying entity.
+/// Timing and hunger consumption are configured by <see cref="HungerProductionComponent"/>.
 /// </summary>
-
 [RegisterComponent, Access(typeof(EggLayerSystem))]
 public sealed partial class EggLayerComponent : Component
 {
@@ -28,5 +28,6 @@ public sealed partial class EggLayerComponent : Component
     [DataField]
     public SoundSpecifier EggLaySound = new SoundPathSpecifier("/Audio/Effects/pop.ogg");
 
-    [DataField] public EntityUid? Action;
+    [DataField]
+    public EntityUid? Action;
 }

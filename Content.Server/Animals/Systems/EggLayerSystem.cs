@@ -11,8 +11,7 @@ using Robust.Shared.Random;
 namespace Content.Server.Animals.Systems;
 
 /// <summary>
-///     Gives the ability to lay eggs/other things;
-///     produces endlessly if the owner does not have a HungerComponent.
+/// Handles egg production and the player action that triggers it.
 /// </summary>
 public sealed partial class EggLayerSystem : EntitySystem
 {
@@ -23,18 +22,18 @@ public sealed partial class EggLayerSystem : EntitySystem
     [Dependency] private PopupSystem _popup = default!;
 
     [SubscribeLocalEvent]
-    private void OnMapInit(EntityUid uid, EggLayerComponent component, MapInitEvent args)
+    private void OnMapInit(Entity<EggLayerComponent> ent, ref MapInitEvent args)
     {
-        _actions.AddAction(uid, ref component.Action, component.EggLayAction);
+        _actions.AddAction(ent.Owner, ref ent.Comp.Action, ent.Comp.EggLayAction);
     }
 
     [SubscribeLocalEvent]
-    private void OnEggLayAction(EntityUid uid, EggLayerComponent egglayer, EggLayInstantActionEvent args)
+    private void OnEggLayAction(Entity<EggLayerComponent> ent, ref EggLayInstantActionEvent args)
     {
-        // Cooldown is handeled by ActionAnimalLayEgg in types.yml.
-        args.Handled = _hungerProduction.TryProduce(uid, out var failure);
+        // Cooldown is handled by ActionAnimalLayEgg in types.yml.
+        args.Handled = _hungerProduction.TryProduce(ent.Owner, out var failure);
         if (failure == HungerProductionFailure.Hungry)
-            _popup.PopupEntity(Loc.GetString("action-popup-lay-egg-too-hungry"), uid, uid);
+            _popup.PopupEntity(Loc.GetString("action-popup-lay-egg-too-hungry"), ent.Owner, ent.Owner);
     }
 
     [SubscribeLocalEvent]

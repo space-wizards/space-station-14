@@ -15,14 +15,7 @@ public sealed partial class HarvestableSolutionSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<HarvestableSolutionComponent, GetVerbsEvent<AlternativeVerb>>(AddHarvestVerb);
-        SubscribeLocalEvent<HarvestableSolutionComponent, HarvestableSolutionDoAfterEvent>(OnDoAfter);
-    }
-
+    [SubscribeLocalEvent]
     private void AddHarvestVerb(Entity<HarvestableSolutionComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
         if (args.Using is not { } container ||
@@ -42,6 +35,7 @@ public sealed partial class HarvestableSolutionSystem : EntitySystem
         });
     }
 
+    [SubscribeLocalEvent]
     private void OnDoAfter(Entity<HarvestableSolutionComponent> ent, ref HarvestableSolutionDoAfterEvent args)
     {
         if (args.Cancelled || args.Handled || args.Args.Used is not { } container)
@@ -112,7 +106,9 @@ public sealed partial class HarvestableSolutionSystem : EntitySystem
             return false;
         }
 
-        if (target.AvailableVolume > 0) return true;
+        if (target.AvailableVolume > 0)
+            return true;
+
         if (popup)
         {
             _popup.PopupEntity(
@@ -122,7 +118,6 @@ public sealed partial class HarvestableSolutionSystem : EntitySystem
         }
 
         return false;
-
     }
 
     /// <summary>

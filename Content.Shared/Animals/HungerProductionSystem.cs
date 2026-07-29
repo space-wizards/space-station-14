@@ -63,16 +63,11 @@ public sealed partial class HungerProductionSystem : EntitySystem
             return false;
         }
 
-        if (TryComp(owner, out HungerComponent? hunger))
+        if (TryComp(owner, out HungerComponent? hunger) &&
+            !HasEnoughHunger(ent.Comp, hunger))
         {
-            if (ent.Comp.MinimumHungerThreshold is { } threshold &&
-                _hunger.GetHungerThreshold(hunger) < threshold ||
-                ent.Comp.MinimumHunger is { } minimum &&
-                _hunger.GetHunger(hunger) < minimum)
-            {
-                failure = HungerProductionFailure.Hungry;
-                return false;
-            }
+            failure = HungerProductionFailure.Hungry;
+            return false;
         }
 
         var ev = new HungerProductionEvent(owner);
@@ -85,6 +80,18 @@ public sealed partial class HungerProductionSystem : EntitySystem
 
         failure = HungerProductionFailure.None;
         return true;
+    }
+
+    private bool HasEnoughHunger(HungerProductionComponent component, HungerComponent hunger)
+    {
+        if (component.MinimumHungerThreshold is { } threshold &&
+            _hunger.GetHungerThreshold(hunger) < threshold)
+        {
+            return false;
+        }
+
+        return component.MinimumHunger is not { } minimum ||
+               _hunger.GetHunger(hunger) >= minimum;
     }
 
     private EntityUid GetOwner(Entity<HungerProductionComponent> ent)
