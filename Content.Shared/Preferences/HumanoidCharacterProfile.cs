@@ -132,7 +132,7 @@ namespace Content.Shared.Preferences
         /// <summary>
         /// <see cref="_antagDisableTraitPreferences"/>
         /// </summary>
-        public IReadOnlySet<ProtoId<TraitPrototype>> AntagDisableTraitPreferences => _antagDisableTraitPreferences;
+        public HashSet<ProtoId<TraitPrototype>> AntagDisableTraitPreferences => _antagDisableTraitPreferences;
 
         /// <summary>
         /// If we're unable to get one of our preferred jobs do we spawn as a fallback job or do we stay in lobby.

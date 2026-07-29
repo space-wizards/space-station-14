@@ -919,16 +919,6 @@ namespace Content.Client.Stylesheets
                     new StyleProperty(BoxContainer.StylePropertySeparation, 10),
                 }),
 
-                new StyleRule(new SelectorChild(new SelectorChild(new SelectorElement(typeof(CheckBox), null, null, new [] { ContainerButton.StylePseudoClassDisabled }), new SelectorElement(typeof(BoxContainer), null, null, null)), new SelectorElement(typeof(Label), null, null, null)), new[]
-                {
-                    new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#9d9d9d")),
-                }),
-
-                new StyleRule(new SelectorChild(new SelectorChild(new SelectorElement(typeof(CheckBox), null, null, new [] { ContainerButton.StylePseudoClassDisabled }), new SelectorElement(typeof(BoxContainer), null, null, null)), new SelectorElement(typeof(TextureRect), null, null, null)), new[]
-                {
-                    new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#9d9d9d")),
-                }),
-
                 // Tooltip
                 new StyleRule(new SelectorElement(typeof(Tooltip), null, null, null), new[]
                 {

@@ -5,6 +5,7 @@
   name: trait-pacifist-name
   description: trait-pacifist-desc
   category: Quirks
+  allowAntagDisable: true
   blacklist:
     components:
     - Thieving # Blacklisted to prevent thieves losing pacifism when gaining an antag role.
@@ -16,6 +17,7 @@
   name: trait-lightweight-name
   description: trait-lightweight-desc
   category: Quirks
+  allowAntagDisable: true
   components:
   - type: LightweightDrunk
     boozeStrengthMultiplier: 2
@@ -25,5 +27,6 @@
   name: trait-snoring-name
   description: trait-snoring-desc
   category: Quirks
+  allowAntagDisable: true
   components:
   - type: Snoring

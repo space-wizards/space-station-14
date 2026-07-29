@@ -56,10 +56,11 @@ public sealed partial class HumanoidProfileEditor
         {
             Text = Loc.GetString("humanoid-profile-editor-antag-disable-trait"),
             Margin = new Thickness(0, 10, 0, 0),
+            VAlign = Label.VAlignMode.Bottom,
+            FontColorOverride = Color.Gray,
             SizeFlagsStretchRatio = 3,
             HorizontalExpand = true,
         };
-
 
         // Create UI view from model
         foreach (var (categoryId, categoryTraits) in traitGroups)
@@ -76,6 +77,8 @@ public sealed partial class HumanoidProfileEditor
                     Text = Loc.GetString(category.Name),
                     Margin = new Thickness(0, 10, 0, 0),
                     StyleClasses = { StyleClass.LabelHeading },
+                    SizeFlagsStretchRatio = 3,
+                    HorizontalExpand = true,
                 });
 
                 if (!firstCategory)
