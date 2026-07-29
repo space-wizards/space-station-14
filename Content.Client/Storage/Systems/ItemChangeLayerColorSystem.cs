@@ -1,14 +1,14 @@
 using Content.Shared.Storage;
-using Content.Shared.Storage.Components;
 using Content.Shared.Storage.EntitySystems;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Storage.Systems;
 
 /// <inheritdoc/>
-public sealed class ItemChangeLayerColorSystem : SharedItemChangeLayerColorSystem
+public sealed partial class ItemChangeLayerColorSystem : SharedItemChangeLayerColorSystem
 {
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SpriteSystem _spriteSystem = default!;
 
     public override void Initialize()
     {
@@ -42,7 +42,7 @@ public sealed class ItemChangeLayerColorSystem : SharedItemChangeLayerColorSyste
         foreach (var nc in wrapper.LayersColors)
         {
             layerColorComponent.SpriteLayers.Add(nc.LayerName);
-            spriteComponent.LayerSetColor(nc.LayerName, nc.Color);
+            _spriteSystem.LayerSetColor((owner, spriteComponent), nc.LayerName, nc.Color);
         }
     }
 
@@ -62,7 +62,7 @@ public sealed class ItemChangeLayerColorSystem : SharedItemChangeLayerColorSyste
             {
                 if (nc.LayerName == layerName)
                 {
-                    spriteComponent.LayerSetColor(layerName, nc.Color);
+                    _spriteSystem.LayerSetColor((owner, spriteComponent), layerName, nc.Color);
                     break;
                 }
             }

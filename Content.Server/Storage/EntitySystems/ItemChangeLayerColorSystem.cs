@@ -5,4 +5,4 @@ namespace Content.Server.Storage.EntitySystems;
 
 /// <inheritdoc/>
 [UsedImplicitly]
-public sealed class ItemChangeLayerColorSystem : SharedItemChangeLayerColorSystem { }
+public sealed partial class ItemChangeLayerColorSystem : SharedItemChangeLayerColorSystem;
