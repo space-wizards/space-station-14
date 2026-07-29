@@ -86,7 +86,7 @@
     alert: VowOfSilence
   - type: MutedStatusEffect
     speakPopup: mime-cant-speak
-    screamPopup: mime-cant-speak
+    actionPopup: mime-cant-speak
 
 - type: entity
   parent: MutedStatusEffectBase

@@ -1,13 +1,10 @@
-using Content.Server.Speech.EntitySystems;
 using Content.Shared.Chat;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Popups;
-using Content.Shared.Speech;
-using Content.Shared.Speech.Muting;
 using Content.Shared.StatusEffectNew;
 using Content.Shared.StatusEffectNew.Components;
 
-namespace Content.Server.Speech.Muting;
+namespace Content.Shared.Speech.Muting;
 
 /// <summary>
 /// Handles the speech restrictions imposed by <see cref="MutedStatusEffectComponent"/>.
@@ -20,8 +17,8 @@ public sealed partial class MutedStatusEffectSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<MutedStatusEffectComponent, StatusEffectRelayedEvent<SpeakAttemptEvent>>(OnSpeakAttempt);
-        SubscribeLocalEvent<MutedStatusEffectComponent, StatusEffectRelayedEvent<EmoteEvent>>(OnEmote, before: new[] { typeof(VocalSystem), typeof(MumbleAccentSystem) });
-        SubscribeLocalEvent<MutedStatusEffectComponent, StatusEffectRelayedEvent<ScreamActionEvent>>(OnScreamAction, before: new[] { typeof(VocalSystem) });
+        SubscribeLocalEvent<MutedStatusEffectComponent, StatusEffectRelayedEvent<EmoteEvent>>(OnEmote);
+        SubscribeLocalEvent<MutedStatusEffectComponent, StatusEffectRelayedEvent<EmoteActionEvent>>(OnEmoteAction);
     }
 
     private void OnEmote(Entity<MutedStatusEffectComponent> ent, ref StatusEffectRelayedEvent<EmoteEvent> args)
@@ -36,7 +33,7 @@ public sealed partial class MutedStatusEffectSystem : EntitySystem
         }
     }
 
-    private void OnScreamAction(Entity<MutedStatusEffectComponent> ent, ref StatusEffectRelayedEvent<ScreamActionEvent> args)
+    private void OnEmoteAction(Entity<MutedStatusEffectComponent> ent, ref StatusEffectRelayedEvent<EmoteActionEvent> args)
     {
         if (args.Args.Handled)
             return;
@@ -47,7 +44,7 @@ public sealed partial class MutedStatusEffectSystem : EntitySystem
         if (statusEffect.AppliedTo is not { } target)
             return;
 
-        _popup.PopupEntity(Loc.GetString(ent.Comp.ScreamPopup), target, target);
+        _popup.PopupEntity(Loc.GetString(ent.Comp.ActionPopup), target, target);
         args.Args.Handled = true;
     }
 

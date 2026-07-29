@@ -33,7 +33,7 @@ public sealed partial class VentriloquistPuppetSystem : SharedVentriloquistPuppe
         // TODO disable dummy when the user dies or cannot interact.
         // Then again, this is all quite cursed code, so maybe its a cursed ventriloquist puppet.
 
-        if (!_statusEffects.TryRemoveStatusEffect(uid, MutedEffect))
+        if (!_statusEffects.TryRemoveStatusEffect(ent, MutedEffect))
         {
             _popupSystem.PopupEntity(Loc.GetString("ventriloquist-puppet-remove-hand"), ent, args.User);
             MuteDummy(ent);
@@ -62,7 +62,7 @@ public sealed partial class VentriloquistPuppetSystem : SharedVentriloquistPuppe
     [SubscribeLocalEvent]
     private void OnDropped(Entity<VentriloquistPuppetComponent> ent, ref DroppedEvent args)
     {
-        if (_statusEffects.HasStatusEffect(uid, MutedEffect))
+        if (_statusEffects.HasStatusEffect(ent, MutedEffect))
             return;
 
         _popupSystem.PopupEntity(Loc.GetString("ventriloquist-puppet-remove-hand"), ent, args.User);
@@ -75,7 +75,7 @@ public sealed partial class VentriloquistPuppetSystem : SharedVentriloquistPuppe
     [SubscribeLocalEvent]
     private void OnUnequippedHand(Entity<VentriloquistPuppetComponent> ent, ref GotUnequippedHandEvent args)
     {
-        if (_statusEffects.HasStatusEffect(uid, MutedEffect))
+        if (_statusEffects.HasStatusEffect(ent, MutedEffect))
             return;
 
         _popupSystem.PopupEntity(Loc.GetString("ventriloquist-puppet-remove-hand"), ent, args.User);
@@ -88,7 +88,7 @@ public sealed partial class VentriloquistPuppetSystem : SharedVentriloquistPuppe
     private void MuteDummy(Entity<VentriloquistPuppetComponent> ent)
     {
         _popupSystem.PopupEntity(Loc.GetString("ventriloquist-puppet-removed-hand"), ent, ent);
-        _statusEffects.TrySetStatusEffectDuration(uid, MutedEffect);
+        _statusEffects.TrySetStatusEffectDuration(ent, MutedEffect);
         RemComp<CombatModeComponent>(ent);
         RemComp<GhostTakeoverAvailableComponent>(ent);
     }

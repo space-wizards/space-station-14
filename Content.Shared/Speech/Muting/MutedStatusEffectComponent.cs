@@ -18,5 +18,5 @@ public sealed partial class MutedStatusEffectComponent : Component
     /// Popup shown when screaming is blocked.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public LocId ScreamPopup = "speech-muted";
+    public LocId ActionPopup = "speech-muted";
 }
