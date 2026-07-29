@@ -200,7 +200,7 @@ public abstract partial class SharedCardSystem : EntitySystem
         var cards = GetEntity(args.Cards);
         var user = GetEntity(args.User);
         if (TryComp<CardsComponent>(cards, out var comp))
-            TryTakeCard((cards, comp), (user, Transform(user)), args.CardInx, out _);
+            TryTakeCard((cards, comp), (user, Transform(user)), args.CardIndex, out _);
     }
 
     /// <summary>

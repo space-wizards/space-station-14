@@ -19,9 +19,9 @@ public sealed class TakeCardEvent : EntityEventArgs
     public readonly NetEntity User;
 
     /// <summary>
-    /// The CardInx of the card to be taken.
+    /// The CardIndex of the card to be taken.
     /// </summary>
-    public readonly int CardInx;
+    public readonly int CardIndex;
 }
 
 /// <summary>
