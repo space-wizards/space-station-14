@@ -7,7 +7,6 @@
     shape:
       - 0,0,1,2
   - type: Storage
-    sortStyle: Size
     grid:
       - "0,0,1,2"
 
