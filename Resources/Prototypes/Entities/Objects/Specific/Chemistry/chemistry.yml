@@ -329,6 +329,19 @@
     maxFillLevels: 0
 
 - type: entity
+  name: Syndicate bluespace beaker
+  parent: [SolutionLarge, BaseBeakerMetallic, BaseSyndicateContraband]
+  description: An illegal reagent container that violates the laws of physics.
+  id: SyndicateBluespaceBeaker
+  components:
+  - type: Spillable
+    solution: beaker
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/beaker_syndicate_bluespace.rsi
+    layers:
+      - state: beakersyndicatebluespace
+
+- type: entity
   name: dropper
   parent: [SolutionInjector, SolutionToolTiny, BaseItem]
   description: Used to transfer small amounts of chemical solution between containers.
