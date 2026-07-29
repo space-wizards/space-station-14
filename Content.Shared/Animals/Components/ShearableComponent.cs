@@ -7,7 +7,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.Animals;
+namespace Content.Shared.Animals.Components;
 
 /// <summary>
 ///     Lets an entity be sheared by a tool to consume a reagent to spawn an amount of an item.
@@ -132,11 +132,11 @@ public sealed partial class ShearableComponent : Component
 [Serializable, NetSerializable]
 public enum ShearableVisuals
 {
-    Shearable,
+    Shearable
 }
 
 /// <summary>
 ///     Thrown whenever an animal is sheared.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class ShearingDoAfterEvent : SimpleDoAfterEvent { }
+public sealed partial class ShearingDoAfterEvent : SimpleDoAfterEvent;
