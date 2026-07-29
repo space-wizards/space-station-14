@@ -30,7 +30,7 @@
     TriggerAttackParticleEngine: 0.25
     TriggerAttackParticleAnomaly: 1
     TriggerAttackStaminaDamage: 1
-    TriggerAttackLaser: 1
+    TriggerAttackLaser: 0.5
 
 - type: xenoArchTrigger
   id: TriggerMusic
@@ -275,6 +275,8 @@
   tip: xenoarch-trigger-tip-particle
   components:
   - type: XATInteractAttack
+    interactionCount:
+      max: 1 #Accel/Decell shoot quite slowly
     whitelist:
       components:
       - ParticleProjectile
@@ -284,6 +286,8 @@
   tip: xenoarch-trigger-tip-anomparticle
   components:
   - type: XATInteractAttack
+    interactionCount:
+      max: 1 #A.P.E shoots quite slowly
     whitelist:
       components:
       - AnomalousParticle

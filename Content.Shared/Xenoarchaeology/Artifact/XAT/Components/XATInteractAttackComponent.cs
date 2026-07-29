@@ -21,7 +21,7 @@ public sealed partial class XATInteractAttackComponent : Component
     /// Number of interactions required to trigger.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public MinMax InteractionCount = new(1, 3);
+    public MinMax InteractionCount = new(1, 4);
 
     /// <summary>
     /// Number of interactions required to trigger, set after initiation

@@ -4,7 +4,6 @@ using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Whitelist;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Content.Shared.Xenoarchaeology.Artifact.XAT.Components;
-using Robust.Shared.Network;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Random;
 
@@ -16,7 +15,6 @@ namespace Content.Shared.Xenoarchaeology.Artifact.XAT;
 /// </summary>
 public sealed partial class XATInteractAttackSystem : BaseXATSystem<XATInteractAttackComponent>
 {
-    [Dependency] private INetManager _net = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
     public override void Initialize()
@@ -37,7 +35,6 @@ public sealed partial class XATInteractAttackSystem : BaseXATSystem<XATInteractA
         ent.Comp.MaxCount = ent.Comp.InteractionCount.Next(_random); //randomly decide count to decrement.
         ent.Comp.Count = ent.Comp.MaxCount; //define count amount.
         Dirty(ent);
-        Log.Debug($"{ent.Comp.MaxCount}");
     }
 
     /// <summary>
@@ -54,7 +51,7 @@ public sealed partial class XATInteractAttackSystem : BaseXATSystem<XATInteractA
     /// </summary>
     private void OnStartCollide(Entity<XenoArtifactComponent> artifact, Entity<XATInteractAttackComponent, XenoArtifactNodeComponent> node, ref StartCollideEvent args)
     {
-        if (_whitelistSystem.IsWhitelistPassOrNull(node.Comp1.Whitelist, args.OtherEntity) && TriggerCountdown(node) == true) //liable to mispredict and ignore the whitelist client side so server only.
+        if (_whitelistSystem.IsWhitelistPassOrNull(node.Comp1.Whitelist, args.OtherEntity) && TriggerCountdown(node) == true)
             Trigger(artifact, node);
     }
 
@@ -66,7 +63,7 @@ public sealed partial class XATInteractAttackSystem : BaseXATSystem<XATInteractA
         if (!TryComp<BatteryAmmoProviderComponent>(args.SourceItem, out var batteryComp))
             return;
 
-        if (_whitelistSystem.IsWhitelistPassOrNull(node.Comp1.Whitelist, batteryComp.Prototype) && TriggerCountdown(node) == true)
+        if (_whitelistSystem.IsWhitelistPassOrNull(node.Comp1.Whitelist, batteryComp.Prototype) && TriggerCountdown(node))
             Trigger(artifact, node);
     }
 
@@ -75,17 +72,16 @@ public sealed partial class XATInteractAttackSystem : BaseXATSystem<XATInteractA
     /// <returns>true if enough interactions have been made, false if not</returns>
     private bool TriggerCountdown(Entity<XATInteractAttackComponent> node)
     {
-        Log.Debug($"{node.Comp.Count}");
         if (node.Comp.Count <= 1)
         {
             node.Comp.Count = node.Comp.MaxCount;
-            DirtyField(node, node.Comp, nameof(XATInteractAttackComponent.Count));
+            Dirty(node);
             return true;
         }
         else
         {
-            node.Comp.Count -= 1;
-            DirtyField(node, node.Comp, nameof(XATInteractAttackComponent.Count));
+            node.Comp.Count--;
+            Dirty(node);
             return false;
         }
     }
