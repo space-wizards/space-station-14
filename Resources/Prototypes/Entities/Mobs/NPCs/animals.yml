@@ -911,6 +911,11 @@
     reagentId: Milk
     quantityPerUpdate: 25
     growthDelay: 30
+  - type: HarvestableSolution
+    solutionName: udder
+    verbText: udder-system-verb-milk
+    emptyMessage: udder-system-dry
+    successMessage: udder-system-success
   - type: ExaminableHunger
   - type: ToolRefinable
     refineResult:
@@ -1073,6 +1078,11 @@
     reagentId: MilkGoat
     quantityPerUpdate: 25
     growthDelay: 20
+  - type: HarvestableSolution
+    solutionName: udder
+    verbText: udder-system-verb-milk
+    emptyMessage: udder-system-dry
+    successMessage: udder-system-success
   - type: ExaminableHunger
   - type: Wooly
   - type: Edible
@@ -1203,6 +1213,11 @@
     reagentId: MilkSheep
     quantityPerUpdate: 25
     growthDelay: 20
+  - type: HarvestableSolution
+    solutionName: udder
+    verbText: udder-system-verb-milk
+    emptyMessage: udder-system-dry
+    successMessage: udder-system-success
   - type: ExaminableHunger
   - type: Wooly
   - type: Shearable
