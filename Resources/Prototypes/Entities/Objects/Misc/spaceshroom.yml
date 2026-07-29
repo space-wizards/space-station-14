@@ -33,12 +33,12 @@
       damageContainer: StructuralInorganic
     - type: Destructible
       thresholds:
-        - trigger:
-            !type:DamageTrigger
-            damage: 150
-          behaviors:
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 150
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
 
 - type: entity
   name: spaceshroom
@@ -87,12 +87,11 @@
     defaultTarget: cooked spaceshroom
   - type: AtmosExposed
   - type: Temperature
-    currentTemperature: 290
+    thermalConductivity: 1
+    temperature: 293.15
+    heatCapacity: 750
   - type: TemperatureDamage
   - type: InternalTemperature
-    thickness: 0.02
-    area: 0.02
-    conductivity: 0.43
   - type: Tag
     tags:
     - Mushroom

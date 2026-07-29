@@ -101,49 +101,6 @@
   - type: Appearance
 
 - type: entity
-  name: M90 GL
-  parent: [BaseWeaponRifle, BaseSyndicateContraband]
-  id: WeaponRifleM90GrenadeLauncher
-  description: "An older bullpup carbine model, with an attached underbarrel grenade launcher.\nFeeds from .20 rifle magazines."
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Rifles/carbine.rsi
-    layers:
-      - state: base
-        map: ["enum.GunVisualLayers.Base"]
-      - state: mag-0
-        map: ["enum.GunVisualLayers.Mag"]
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Rifles/carbine.rsi
-  - type: ItemSlots
-    slots:
-      gun_magazine:
-        name: Magazine
-        startingItem: MagazineRifle
-        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
-        ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
-        priority: 2
-        whitelist:
-          tags:
-            - MagazineRifle
-        whitelistFailPopup: gun-magazine-whitelist-fail
-      gun_chamber:
-        name: Chamber
-        priority: 1
-        whitelist:
-          tags:
-            - CartridgeRifle
-  - type: ContainerContainer
-    containers:
-      gun_magazine: !type:ContainerSlot
-      gun_chamber: !type:ContainerSlot
-  - type: MagazineVisuals
-    magState: mag
-    steps: 1
-    zeroVisible: true
-  - type: Appearance
-
-- type: entity
   name: Lecter
   parent: [BaseWeaponRifle, BaseSecurityContraband]
   id: WeaponRifleLecter

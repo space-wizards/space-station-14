@@ -49,7 +49,6 @@ public sealed partial class ArrivalsSystem : EntitySystem
     [Dependency] private IConfigurationManager _cfgManager = default!;
     [Dependency] private IConsoleHost _console = default!;
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private IPrototypeManager _protoManager = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private ActorSystem _actor = default!;
     [Dependency] private BiomeSystem _biomes = default!;
@@ -64,9 +63,9 @@ public sealed partial class ArrivalsSystem : EntitySystem
     [Dependency] private StationSystem _station = default!;
     [Dependency] private AntagSelectionSystem _antag = default!;
 
-    private EntityQuery<PendingClockInComponent> _pendingQuery;
-    private EntityQuery<ArrivalsBlacklistComponent> _blacklistQuery;
-    private EntityQuery<MobStateComponent> _mobQuery;
+    [Dependency] private EntityQuery<PendingClockInComponent> _pendingQuery = default!;
+    [Dependency] private EntityQuery<ArrivalsBlacklistComponent> _blacklistQuery = default!;
+    [Dependency] private EntityQuery<MobStateComponent> _mobQuery = default!;
 
     /// <summary>
     /// If enabled then spawns players on an alternate map so they can take a shuttle to the station.
@@ -106,10 +105,6 @@ public sealed partial class ArrivalsSystem : EntitySystem
         SubscribeLocalEvent<ArrivalsShuttleComponent, FTLCompletedEvent>(OnArrivalsDocked);
 
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(SendDirections);
-
-        _pendingQuery = GetEntityQuery<PendingClockInComponent>();
-        _blacklistQuery = GetEntityQuery<ArrivalsBlacklistComponent>();
-        _mobQuery = GetEntityQuery<MobStateComponent>();
 
         // Don't invoke immediately as it will get set in the natural course of things.
         Enabled = _cfgManager.GetCVar(CCVars.ArrivalsShuttles);
@@ -554,7 +549,7 @@ public sealed partial class ArrivalsSystem : EntitySystem
         if (_cfgManager.GetCVar(CCVars.ArrivalsPlanet))
         {
             var template = _random.Pick(_arrivalsBiomeOptions);
-            _biomes.EnsurePlanet(mapUid, _protoManager.Index(template));
+            _biomes.EnsurePlanet(mapUid, ProtoMan.Index(template));
             var restricted = new RestrictedRangeComponent
             {
                 Range = 32f

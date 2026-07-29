@@ -5,26 +5,23 @@ using Content.Shared.StatusEffectNew;
 
 namespace Content.Server.Mobs;
 
-/// <see cref="DeathgaspComponent"/>
+/// <summary>
+/// A system that handles death gasps, an emote a character makes when they die.
+/// </summary>
+/// <seealso cref="DeathgaspComponent"/>
 public sealed partial class DeathgaspSystem : EntitySystem
 {
     [Dependency] private ChatSystem _chat = default!;
     [Dependency] private StatusEffectsSystem _statusEffects = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<DeathgaspComponent, MobStateChangedEvent>(OnMobStateChanged);
-    }
-
-    private void OnMobStateChanged(EntityUid uid, DeathgaspComponent component, MobStateChangedEvent args)
+    [SubscribeLocalEvent]
+    private void OnMobStateChanged(Entity<DeathgaspComponent> ent, ref MobStateChangedEvent args)
     {
         // don't deathgasp if they arent going straight from crit to dead
         if (args.NewMobState != MobState.Dead || args.OldMobState != MobState.Critical)
             return;
 
-        Deathgasp(uid, component);
+        Deathgasp(ent, ent.Comp);
     }
 
     /// <summary>
