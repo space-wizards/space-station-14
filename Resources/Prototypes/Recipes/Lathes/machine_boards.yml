@@ -261,7 +261,7 @@
   parent: [BaseCircuitboardRecipe]
   id: SmartFridgeCircuitboard
   result: SmartFridgeCircuitboard
-  
+
 # Bar
 - type: latheRecipe
   parent: [ BaseCircuitboardRecipe, BaseServiceMachineRecipeCategory ]
@@ -327,6 +327,11 @@
   parent: [ BaseCircuitboardRecipe, BaseSupplyMachineRecipeCategory ]
   id: GyroscopeMachineCircuitboard
   result: GyroscopeMachineCircuitboard
+
+- type: latheRecipe
+  parent: [ BaseCircuitboardRecipe, BaseSupplyMachineRecipeCategory ]
+  id: GyroscopeFloorMachineCircuitboard
+  result: GyroscopeFloorMachineCircuitboard
 
 - type: latheRecipe
   parent: [ BaseGoldCircuitboardRecipe, BaseSupplyMachineRecipeCategory ]
