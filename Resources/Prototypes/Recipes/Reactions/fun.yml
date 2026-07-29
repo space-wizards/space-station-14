@@ -219,18 +219,6 @@
     tileBreakScale: 0.00001
 
 - type: reaction
-  id: CorgiJuice
-  reactants:
-    UncookedAnimalProteins:
-      amount: 1
-    JuiceThatMakesYouWeh:
-      amount: 1
-    Happiness:
-      amount: 1
-  products:
-    CorgiJuice: 2
-
-- type: reaction
   id: Felinase
   reactants:
     Haloperidol:

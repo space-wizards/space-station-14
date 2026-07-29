@@ -31,6 +31,12 @@
         Slash: 10
         Structural: 40
   - type: Item
+    shape:
+    - 1,0,2,5
+    - 0,0,0,2
+    storedSprite:
+      state: storage
+      sprite: Objects/Weapons/Melee/fireaxe.rsi
     size: Ginormous
   - type: Clothing
     sprite: Objects/Weapons/Melee/fireaxe.rsi
@@ -61,6 +67,14 @@
   - type: MeleeWeapon
     wideAnimationRotation: 135
     swingLeft: true
+  - type: Item
+    shape:
+    - 1,0,2,5
+    - 0,0,0,2
+    storedSprite:
+      state: storage
+      sprite: Objects/Weapons/Melee/fireaxeflaming.rsi
+    size: Ginormous
   - type: IgniteOnMeleeHit
     fireStacks: 1
   - type: Sprite

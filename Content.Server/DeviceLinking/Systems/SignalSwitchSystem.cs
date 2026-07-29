@@ -43,7 +43,9 @@ public sealed partial class SignalSwitchSystem : EntitySystem
             _deviceLink.SendSignal(uid, comp.StatusPort, comp.State);
         }
 
-        _audio.PlayPvs(comp.ClickSound, uid, AudioParams.Default.WithVariation(0.125f).WithVolume(8f));
+        var audioParams = comp.ClickSound?.Params ?? AudioParams.Default;
+        audioParams = audioParams.WithVariation(0.125f).AddVolume(8f);
+        _audio.PlayPvs(comp.ClickSound, uid, audioParams);
 
         args.Handled = true;
     }
