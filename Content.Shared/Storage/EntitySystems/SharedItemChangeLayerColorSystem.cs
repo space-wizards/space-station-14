@@ -15,10 +15,10 @@ namespace Content.Shared.Storage.EntitySystems;
 /// <see cref="ItemLayersColorComponent"/>, where the appropriate layer is selected
 /// based on whitelist checks.
 /// </remarks>
-public abstract class SharedItemChangeLayerColorSystem : EntitySystem
+public abstract partial class SharedItemChangeLayerColorSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
 
     public override void Initialize()
     {
