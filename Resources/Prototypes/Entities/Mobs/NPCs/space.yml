@@ -475,14 +475,28 @@
         variation: 0.05
   - type: MobPrice
     price: 600
-  - type: Wooly
-    quantity: 10
-    growthDelay: 120 #2 minutes
+  - type: SolutionManager
+    solutions:
+    - SolutionUdderSheep
+    - SolutionWoolSpaceSheep
   - type: Speech
     speechSounds: SheepSpace
     speechVerb: Sheep
   - type: Vocal
     emoteSounds: SheepSpace
+
+- type: entity
+  parent: SolutionWool
+  id: SolutionWoolSpaceSheep
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HungerProduction
+    delay: 120
+  - type: SolutionProducer
+    generated:
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 10
 
 - type: entity
   parent: [SimpleSpaceMobBase, BaseMobAnimal, SolutionVermin, MobNightVision]
