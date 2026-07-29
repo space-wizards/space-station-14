@@ -23,12 +23,17 @@ public sealed partial class HideableHumanoidLayersComponent : Component
 }
 
 /// <summary>
-/// Raised on an entity when one of its humanoid layers changes its visibility
+/// Raised on an entity before one of its humanoid layers changes its visibility.
+/// If <paramref name="visible"/> is false, this event is a request to hide the layer.
+/// If true, the layer will be shown again regardless.
 /// </summary>
 [ByRefEvent]
 public struct HumanoidLayerVisibilityChangedEvent(HumanoidVisualLayers layer, bool visible)
 {
+    /// <summary>The layer whose visibility will change.</summary>
     public readonly HumanoidVisualLayers Layer = layer;
+    /// <summary>The new visibility of the layer.</summary>
     public readonly bool Visible = visible;
-    public bool Handled;
+    /// <summary>When Visible is true, set this true to allow the layer to be hidden.</summary>
+    public bool ShouldHide;
 }

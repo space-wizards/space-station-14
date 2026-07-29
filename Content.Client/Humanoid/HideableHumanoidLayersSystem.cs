@@ -53,6 +53,7 @@ public sealed partial class HideableHumanoidLayersSystem : SharedHideableHumanoi
 
     private void UpdateSprite(Entity<HideableHumanoidLayersComponent> ent)
     {
+        // Reset old hidden layers if they aren't in our new set.
         foreach (var item in ent.Comp.LastHiddenLayers)
         {
             if (ent.Comp.HiddenLayers.ContainsKey(item))
@@ -61,13 +62,16 @@ public sealed partial class HideableHumanoidLayersSystem : SharedHideableHumanoi
             var evt = new HumanoidLayerVisibilityChangedEvent(item, true);
             RaiseLocalEvent(ent, ref evt);
 
-            if (!evt.Handled || !_sprite.LayerMapTryGet(ent.Owner, item, out var index, true))
+            if (!_sprite.LayerMapTryGet(ent.Owner, item, out var index, true))
                 continue;
 
             _sprite.LayerSetVisible(ent.Owner, index, true);
         }
 
+        // Accumulate new hidden set in here.
         var actualHiddenLayers = new List<HumanoidVisualLayers>(ent.Comp.HiddenLayers.Count);
+
+        // Handle hiding our new layers - handlers must set ShouldHide true to hide the layer.
         foreach (var item in ent.Comp.HiddenLayers.Keys)
         {
             if (ent.Comp.LastHiddenLayers.Contains(item))
@@ -79,7 +83,7 @@ public sealed partial class HideableHumanoidLayersSystem : SharedHideableHumanoi
             var evt = new HumanoidLayerVisibilityChangedEvent(item, false);
             RaiseLocalEvent(ent, ref evt);
 
-            if (!evt.Handled || !_sprite.LayerMapTryGet(ent.Owner, item, out var index, true))
+            if (!evt.ShouldHide || !_sprite.LayerMapTryGet(ent.Owner, item, out var index, true))
                 continue;
 
             _sprite.LayerSetVisible(ent.Owner, index, false);

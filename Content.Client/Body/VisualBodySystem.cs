@@ -294,7 +294,7 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
             return;
 
         // This hurts.
-        args.Args = args.Args with { Handled = true };
+        args.Args = args.Args with { ShouldHide = true };
 
         foreach (var markings in ent.Comp.Markings.Values)
         {
