@@ -32,7 +32,6 @@ public abstract partial class SharedImplanterSystem : EntitySystem
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedContainerSystem _container = default!;
-    [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedUserInterfaceSystem _ui = default!;
@@ -69,7 +68,11 @@ public abstract partial class SharedImplanterSystem : EntitySystem
 
     private void OnMapInit(Entity<ImplanterComponent> ent, ref MapInitEvent args)
     {
-        UpdateImplantList(ent, ent.Comp);
+        ent.Comp.ImplantsList = _proto.EnumeratePrototypes<EntityPrototype>()
+            .Where(proto => _whitelist.IsValid(ent.Comp.DeimplantWhitelist, proto))
+            .OrderBy(proto => proto.Name)
+            .Select(proto => new EntProtoId(proto.ID))
+            .ToList();
 
         ent.Comp.DeimplantChosen ??= ent.Comp.ImplantsList.FirstOrNull();
         Dirty(ent);
@@ -94,15 +97,6 @@ public abstract partial class SharedImplanterSystem : EntitySystem
             return;
 
         args.PushMarkup(Loc.GetString("implanter-contained-implant-text", ("desc", ent.Comp.ImplantData.Item2)));
-    }
-
-    private void UpdateImplantList(EntityUid uid, ImplanterComponent component)
-    {
-        component.ImplantsList = _proto.EnumeratePrototypes<EntityPrototype>()
-            .Where(proto => _whitelist.IsValid(component.DeimplantWhitelist, proto))
-            .OrderBy(proto => proto.Name)
-            .Select(proto => new EntProtoId(proto.ID))
-            .ToList();
     }
 
     private void OnImplanterAfterInteract(Entity<ImplanterComponent> ent, ref AfterInteractEvent args)
