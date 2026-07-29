@@ -398,6 +398,13 @@ public sealed partial class NukeSystem : EntitySystem
             case NukeStatus.AWAIT_ARM:
                 // do nothing, wait for arm button to be pressed
                 break;
+            case NukeStatus.ARMED:
+                if (component.DiskSlot.HasItem)
+                {
+                    _itemSlots.SetLock(uid, component.DiskSlot, true);
+                }
+
+                break;
         }
     }
 
@@ -518,6 +525,11 @@ public sealed partial class NukeSystem : EntitySystem
         // enable the navmap beacon for people to find it
         _navMap.SetBeaconEnabled(uid, true);
 
+        if (component.DiskSlot.HasItem)
+        {
+            _itemSlots.SetLock(uid, component.DiskSlot, true);
+        }
+
         if (!nukeXform.Anchored)
         {
             // Admin command shenanigans, just make sure.
@@ -566,6 +578,7 @@ public sealed partial class NukeSystem : EntitySystem
         _navMap.SetBeaconEnabled(uid, false);
 
         // start bomb cooldown
+        _itemSlots.SetLock(uid, component.DiskSlot, false);
         component.Status = NukeStatus.COOLDOWN;
         component.CooldownTime = component.Cooldown;
 
