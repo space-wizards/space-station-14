@@ -32,6 +32,14 @@
         - ItemMask
         restitution: 0.3
         friction: 0.2
+      impact_grenade:
+        shape: !type:PhysShapeCircle
+          radius: 0.2
+        density: 20 # derived from base_item
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
 
 - type: entity # Starts fuse after taking 10 damage.
   abstract: true
@@ -62,6 +70,9 @@
   components:
   - type: TriggerOnLand
   - type: LandAtCursor
+  - type: TriggerOnCollide
+    fixtureID: impact_grenade
+    maxTriggers: 1
 
 - type: entity # Instantly detonates/activates after taking 45 damage.
   abstract: true
