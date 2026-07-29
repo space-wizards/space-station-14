@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 270.1.0
+  engineVersion: 275.2.0
   forkId: ""
   forkVersion: ""
-  time: 01/12/2026 09:57:30
-  entityCount: 2553
+  time: 05/04/2026 15:36:45
+  entityCount: 2555
 maps:
 - 1295
 grids:
@@ -6543,18 +6543,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 7.5,-3.5
       parent: 104
-- proto: Beaker
-  entities:
-  - uid: 2031
-    components:
-    - type: Transform
-      pos: 3.3130646,-11.479682
-      parent: 104
-  - uid: 2095
-    components:
-    - type: Transform
-      pos: 3.6099396,-11.479682
-      parent: 104
 - proto: Bed
   entities:
   - uid: 957
@@ -6628,7 +6616,19 @@ entities:
   - uid: 2114
     components:
     - type: Transform
-      pos: 7.223599,-12.19286
+      pos: 7.204462,-11.982122
+      parent: 104
+  - uid: 2456
+    components:
+    - type: Transform
+      pos: 7.2430506,-12.405004
+      parent: 104
+- proto: BoxBottle
+  entities:
+  - uid: 2457
+    components:
+    - type: Transform
+      pos: 7.6122036,-11.9545355
       parent: 104
 - proto: BoxFolderBlack
   entities:
@@ -12610,6 +12610,18 @@ entities:
     components:
     - type: Transform
       pos: -10.5,-19.5
+      parent: 104
+- proto: SyndicateBluespaceBeaker
+  entities:
+  - uid: 2031
+    components:
+    - type: Transform
+      pos: 3.627159,-11.4994755
+      parent: 104
+  - uid: 2095
+    components:
+    - type: Transform
+      pos: 3.2989883,-11.4994755
       parent: 104
 - proto: ReinforcedPlasmaWindow
   entities:
