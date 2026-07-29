@@ -49,7 +49,6 @@ public abstract partial class SharedImplanterSystem : EntitySystem
         SubscribeLocalEvent<ImplanterComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ImplanterComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
         SubscribeLocalEvent<ImplanterComponent, ExaminedEvent>(OnExamine);
-        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnProtoReloaded);
 
         SubscribeLocalEvent<ImplanterComponent, AfterInteractEvent>(OnImplanterAfterInteract);
         SubscribeLocalEvent<ImplanterComponent, UseInHandEvent>(OnUseInHand);
@@ -97,21 +96,8 @@ public abstract partial class SharedImplanterSystem : EntitySystem
         args.PushMarkup(Loc.GetString("implanter-contained-implant-text", ("desc", ent.Comp.ImplantData.Item2)));
     }
 
-    private void OnProtoReloaded(PrototypesReloadedEventArgs args)
-    {
-        if (!args.WasModified<EntityPrototype>())
-            return;
-
-        var implantQuery = EntityQueryEnumerator<ImplanterComponent>();
-        while (implantQuery.MoveNext(out var uid, out var comp))
-        {
-            UpdateImplantList(uid, comp);
-        }
-    }
-
     private void UpdateImplantList(EntityUid uid, ImplanterComponent component)
     {
-        //  TODO: Probably should be cached in loops
         component.ImplantsList = _proto.EnumeratePrototypes<EntityPrototype>()
             .Where(proto => _whitelist.IsValid(component.DeimplantWhitelist, proto))
             .OrderBy(proto => proto.Name)
