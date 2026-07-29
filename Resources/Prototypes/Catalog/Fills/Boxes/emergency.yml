@@ -4,10 +4,12 @@
   abstract: true
   components:
   - type: Item
-    shape: 0,0,1,2
+    shape:
+      - 0,0,2,1
   - type: Storage
     grid:
-      - "0,0,1,2"
+      - "0,0,2,1"
+    sortStyle: Size
 
 - type: entity
   parent: BaseBoxSurvival
@@ -65,7 +67,7 @@
     - state: extendedtank
 
 - type: entity
-  parent: BoxSurvivalEngineering
+  parent: BaseBoxSurvival
   id: BoxSurvivalEngineeringNitrogen
   name: extended-capacity N2 survival box
   description: A small box containing a breath mask, an extended-capacity emergency nitrogen tank, and an emergency medipen. Issued to nitrogen-breathing crew whose job responsibilities often take them to places with no atmosphere.
@@ -97,7 +99,7 @@
         - id: EmergencyMedipen
 
 - type: entity
-  parent: BoxSurvivalSecurity
+  parent: BaseBoxSurvival
   id: BoxSurvivalSecurityNitrogen
   name: security N2 survival box
   description: A small box containing a gas mask, an emergency nitrogen tank, and an emergency medipen. Issued to nitrogen-breathing members of the security staff.
@@ -129,7 +131,7 @@
         - id: EmergencyMedipen
 
 - type: entity
-  parent: BoxSurvivalMedical
+  parent: BaseBoxSurvival
   id: BoxSurvivalMedicalNitrogen
   name: medical N2 survival box
   description: A small box containing a medical mask, an emergency nitrogen tank, and an emergency medipen. Issued to nitrogen-breathing members of the medical staff.
