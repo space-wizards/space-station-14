@@ -112,7 +112,7 @@
     - id: WeaponLauncherPirateCannon
       weight: 0.1
     - id: Throngler
-      prob: 0.0001
+      weight: 0.0001
     - id: WeaponPistolCHIMP
       weight: 0.1
     - id: WeaponSniperMosin
