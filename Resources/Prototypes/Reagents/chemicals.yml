@@ -209,10 +209,9 @@
   metabolisms:
     Bloodstream:
       effects:
-      - !type:HealthChange
+      - !type:EvenHealthChange
         damage:
-          groups:
-            Brute: -4
+          Brute: -4
       - !type:GenericStatusEffect
         key: Adrenaline
         component: IgnoreSlowOnDamage

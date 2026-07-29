@@ -11,7 +11,7 @@
 - type: reaction
   id: BuzzochloricBees
   reactants:
-    Saxoite: # do you like jazz (not sorry)
+    Brass: # do you like jazz (not sorry)
       amount: 1
     Fiber: # bees are fuzzy
       amount: 1
@@ -217,18 +217,6 @@
     intensitySlope: 1
     maxTotalIntensity: 250
     tileBreakScale: 0.00001
-
-- type: reaction
-  id: CorgiJuice
-  reactants:
-    UncookedAnimalProteins:
-      amount: 1
-    JuiceThatMakesYouWeh:
-      amount: 1
-    Happiness:
-      amount: 1
-  products:
-    CorgiJuice: 2
 
 - type: reaction
   id: Felinase

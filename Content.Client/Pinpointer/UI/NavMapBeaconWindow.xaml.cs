@@ -12,7 +12,7 @@ namespace Content.Client.Pinpointer.UI;
 [GenerateTypedNameReferences]
 public sealed partial class NavMapBeaconWindow : FancyWindow
 {
-    [Dependency] private readonly IConfigurationManager _cfgManager = default!;
+    [Dependency] private IConfigurationManager _cfgManager = default!;
     private string? _defaultLabel;
     private bool _defaultEnabled;
     private Color _defaultColor;
