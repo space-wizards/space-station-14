@@ -1,3 +1,4 @@
+using Content.Server.Animals.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
@@ -5,7 +6,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
-namespace Content.Shared.Animals;
+namespace Content.Server.Animals.Systems;
 
 /// <inheritdoc cref="HungerProductionComponent"/>
 public sealed partial class HungerProductionSystem : EntitySystem

@@ -1,5 +1,4 @@
 using Content.Server.Animals.Systems;
-using Content.Shared.Animals;
 using Content.Shared.Storage;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;

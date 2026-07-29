@@ -1,6 +1,7 @@
+using Content.Server.Animals.Systems;
 using Content.Shared.Chemistry.Components;
 
-namespace Content.Shared.Animals;
+namespace Content.Server.Animals.Components;
 
 /// <summary>
 /// Adds a configured solution when production is requested.

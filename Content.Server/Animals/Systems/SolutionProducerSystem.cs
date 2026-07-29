@@ -1,8 +1,9 @@
+using Content.Server.Animals.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
 
-namespace Content.Shared.Animals;
+namespace Content.Server.Animals.Systems;
 
 /// <inheritdoc cref="SolutionProducerComponent"/>
 public sealed partial class SolutionProducerSystem : EntitySystem

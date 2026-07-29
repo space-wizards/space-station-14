@@ -1,7 +1,6 @@
 using Content.Server.Actions;
 using Content.Server.Animals.Components;
 using Content.Server.Popups;
-using Content.Shared.Animals;
 using Content.Shared.Actions.Events;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Storage;

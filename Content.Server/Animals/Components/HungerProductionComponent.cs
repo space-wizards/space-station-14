@@ -1,14 +1,14 @@
+using Content.Server.Animals.Systems;
 using Content.Shared.Nutrition.Components;
-using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Shared.Animals;
+namespace Content.Server.Animals.Components;
 
 /// <summary>
 /// Periodically attempts to produce something, consuming hunger on success.
 /// The actual product is supplied by a handler for <see cref="HungerProductionEvent"/>.
 /// </summary>
-[RegisterComponent, AutoGenerateComponentPause, AutoGenerateComponentState, NetworkedComponent]
+[RegisterComponent, AutoGenerateComponentPause]
 [Access(typeof(HungerProductionSystem))]
 public sealed partial class HungerProductionComponent : Component
 {
@@ -61,7 +61,7 @@ public sealed partial class HungerProductionComponent : Component
     public bool AutomaticForPlayers = true;
 
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    [AutoPausedField, AutoNetworkedField]
+    [AutoPausedField]
     public TimeSpan NextProductionTime;
 }
 
