@@ -8,6 +8,15 @@ using Robust.Shared.Serialization.TypeSerializers.Interfaces;
 
 namespace Content.Shared.Cards;
 
+/// <summary>
+/// Serializer for card prototypes into <see cref="CardData"/>.
+/// Required so that <see cref="CardData"/> is preset on <see cref="CardsComponent"/> init.
+/// It compares the deck back and base stack to each individual card, if the card has its own it takes priority, otherwise, the decks state is added to the card.
+/// <\summary>
+/// <remarks>
+/// This could maybe be done using a fill list on the component but that might get funky for map saving and this ends up being way cleaner.
+/// TODO: This currently might now save cards backs individually so there might be problems with saving decks, especially mixed ones.
+/// <\remarks>
 public sealed class CardDataSerializer : ITypeSerializer<List<CardData>, SequenceDataNode>
 {
     public ValidationNode Validate(
