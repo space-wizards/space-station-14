@@ -7,7 +7,7 @@ namespace Content.Shared.Atmos;
 /// Damage taken is multiplied by the final amount, but not temperature.
 /// TemperatureProtection is needed for that.
 /// </summary>
-[ByRefEvent]
+[ByRefEvent, GenericEvent]
 public sealed class GetFireProtectionEvent : EntityEventArgs, IInventoryRelayEvent
 {
     public SlotFlags TargetSlots { get; } = ~SlotFlags.POCKET;

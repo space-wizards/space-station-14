@@ -73,6 +73,7 @@ public record struct GenerateDnaEvent()
 /// <summary>
 /// An event to check if the fingerprint is accessible.
 /// </summary>
+[GenericEvent]
 public sealed class TryAccessFingerprintEvent : CancellableEntityEventArgs, IInventoryRelayEvent
 {
     SlotFlags IInventoryRelayEvent.TargetSlots => SlotFlags.WITHOUT_POCKET;

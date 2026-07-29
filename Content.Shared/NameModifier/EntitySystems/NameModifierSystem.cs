@@ -95,7 +95,7 @@ public sealed partial class NameModifierSystem : EntitySystem
 /// Raised on an entity when <see cref="NameModifierSystem.RefreshNameModifiers"/> is called.
 /// Subscribe to this event and use its methods to add modifiers to the entity's name.
 /// </summary>
-[ByRefEvent]
+[ByRefEvent, GenericEvent]
 public sealed class RefreshNameModifiersEvent : IInventoryRelayEvent
 {
     /// <summary>

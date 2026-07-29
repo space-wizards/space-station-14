@@ -6,5 +6,5 @@ namespace Content.Shared.Overlays;
 /// Makes the entity see everything with a sin city shader (everything in black and white, except red) by adding an overlay.
 /// When added to a clothing item it will also grant the wearer the same overlay.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, GenericEvent]
 public sealed partial class NoirOverlayComponent : Component;

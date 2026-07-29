@@ -31,7 +31,7 @@ public record struct GetEyePvsScaleAttemptEvent(bool Cancelled);
 ///     Raised on any equipped and in-hand items that may modify the eye offset.
 ///     Pockets and suitstorage are excluded.
 /// </summary>
-[ByRefEvent]
+[ByRefEvent, GenericEvent]
 public sealed class GetEyePvsScaleRelayedEvent : EntityEventArgs, IInventoryRelayEvent
 {
     public SlotFlags TargetSlots { get; } = ~(SlotFlags.POCKET & SlotFlags.SUITSTORAGE);

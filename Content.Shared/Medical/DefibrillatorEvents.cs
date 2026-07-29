@@ -5,6 +5,7 @@ namespace Content.Shared.Medical;
 [ByRefEvent]
 public readonly record struct TargetDefibrillatedEvent(EntityUid User, Entity<DefibrillatorComponent> Defibrillator);
 
+[GenericEvent]
 public abstract class BeforeDefibrillatorZapsEvent : CancellableEntityEventArgs, IInventoryRelayEvent
 {
     public SlotFlags TargetSlots { get; } = SlotFlags.WITHOUT_POCKET;
@@ -24,6 +25,7 @@ public abstract class BeforeDefibrillatorZapsEvent : CancellableEntityEventArgs,
 ///     This event is raised on the user using the defibrillator before is actually zaps someone.
 ///     The event is triggered on the user and all their clothing.
 /// </summary>
+[GenericEvent]
 public sealed class SelfBeforeDefibrillatorZapsEvent : BeforeDefibrillatorZapsEvent
 {
     public SelfBeforeDefibrillatorZapsEvent(EntityUid entityUsingDefib, EntityUid defib, EntityUid defibtarget) : base(entityUsingDefib, defib, defibtarget) { }
@@ -33,6 +35,7 @@ public sealed class SelfBeforeDefibrillatorZapsEvent : BeforeDefibrillatorZapsEv
 ///     This event is raised on the target before it gets zapped with the defibrillator.
 ///     The event is triggered on the target itself and all its clothing.
 /// </summary>
+[GenericEvent]
 public sealed class TargetBeforeDefibrillatorZapsEvent : BeforeDefibrillatorZapsEvent
 {
     public TargetBeforeDefibrillatorZapsEvent(EntityUid entityUsingDefib, EntityUid defib, EntityUid defibtarget) : base(entityUsingDefib, defib, defibtarget) { }

@@ -19,7 +19,7 @@ public readonly record struct ItemUnwieldedEvent(EntityUid User, bool Force);
 /// Raised directed on an user and all the items in their inventory and hands before they wield an item.
 /// If this event is cancelled wielding will not happen.
 /// </summary>
-[ByRefEvent]
+[ByRefEvent, GenericEvent]
 public record struct WieldAttemptEvent(EntityUid User, EntityUid Wielded, bool Cancelled = false) : IInventoryRelayEvent
 {
     /// <summary>
@@ -41,7 +41,7 @@ public record struct WieldAttemptEvent(EntityUid User, EntityUid Wielded, bool C
 /// <remarks>
 /// This event is not raised if the user is forced to unwield the item.
 /// </remarks>
-[ByRefEvent]
+[ByRefEvent, GenericEvent]
 public record struct UnwieldAttemptEvent(EntityUid User, EntityUid Wielded, bool Cancelled = false) : IInventoryRelayEvent
 {
     /// <summary>

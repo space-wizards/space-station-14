@@ -9,7 +9,7 @@ namespace Content.Shared.Chat;
 /// <summary>
 /// An event raised just before an emote is performed, providing systems with an opportunity to cancel the emote's performance.
 /// </summary>
-[ByRefEvent]
+[ByRefEvent, GenericEvent]
 public sealed class BeforeEmoteEvent(EntityUid source, EmotePrototype emote)
     : CancellableEntityEventArgs, IInventoryRelayEvent
 {

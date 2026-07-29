@@ -254,7 +254,7 @@ public abstract partial class SharedGravitySystem : EntitySystem
 /// </summary>
 /// <param name="IsWeightless">Whether we should be weightless</param>
 /// <param name="Handled">Whether something is trying to override our weightlessness</param>
-[ByRefEvent]
+[ByRefEvent, GenericEvent]
 public record struct IsWeightlessEvent(bool IsWeightless = false, bool Handled = false) : IInventoryRelayEvent
 {
     SlotFlags IInventoryRelayEvent.TargetSlots => ~SlotFlags.POCKET;

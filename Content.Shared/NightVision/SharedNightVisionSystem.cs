@@ -101,7 +101,7 @@ public abstract partial class SharedNightVisionSystem : EntitySystem
     protected virtual void RefreshOverlay(EntityUid entity) { }
 }
 
-[ByRefEvent]
+[ByRefEvent, GenericEvent]
 public record struct RefreshNightVisionEvent() : IInventoryRelayEvent
 {
     public SlotFlags TargetSlots => SlotFlags.WITHOUT_POCKET;

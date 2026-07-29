@@ -8,7 +8,7 @@ namespace Content.Shared.Weapons.Ranged.Events;
 /// Shot may be reflected by setting <see cref="Reflected"/> to true
 /// and changing <see cref="Direction"/> where shot will go next
 /// </summary>
-[ByRefEvent]
+[ByRefEvent, GenericEvent]
 public record struct HitScanReflectAttemptEvent(EntityUid? Shooter, EntityUid SourceItem, ReflectType Reflective, Vector2 Direction, bool Reflected) : IInventoryRelayEvent
 {
     SlotFlags IInventoryRelayEvent.TargetSlots => SlotFlags.WITHOUT_POCKET;

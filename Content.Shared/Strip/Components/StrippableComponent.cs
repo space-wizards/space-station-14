@@ -31,7 +31,7 @@ namespace Content.Shared.Strip.Components
     [NetSerializable, Serializable]
     public sealed class StrippingEnsnareButtonPressed : BoundUserInterfaceMessage;
 
-    [ByRefEvent]
+    [ByRefEvent, GenericEvent]
     public abstract class BaseBeforeStripEvent(TimeSpan initialTime, bool stealth = false) : EntityEventArgs, IInventoryRelayEvent
     {
         public readonly TimeSpan InitialTime = initialTime;
@@ -50,7 +50,7 @@ namespace Content.Shared.Strip.Components
     /// <remarks>
     ///     This is also used by some stripping related interactions, i.e., interactions with items that are currently equipped by another player.
     /// </remarks>
-    [ByRefEvent]
+    [ByRefEvent, GenericEvent]
     public sealed class BeforeItemStrippedEvent(TimeSpan initialTime, bool stealth = false) : BaseBeforeStripEvent(initialTime, stealth);
 
     /// <summary>
@@ -59,7 +59,7 @@ namespace Content.Shared.Strip.Components
     /// <remarks>
     ///     This is also used by some stripping related interactions, i.e., interactions with items that are currently equipped by another player.
     /// </remarks>
-    [ByRefEvent]
+    [ByRefEvent, GenericEvent]
     public sealed class BeforeStripEvent(TimeSpan initialTime, bool stealth = false) : BaseBeforeStripEvent(initialTime, stealth);
 
     /// <summary>
@@ -68,7 +68,7 @@ namespace Content.Shared.Strip.Components
     /// <remarks>
     ///     This is also used by some stripping related interactions, i.e., interactions with items that are currently equipped by another player.
     /// </remarks>
-    [ByRefEvent]
+    [ByRefEvent, GenericEvent]
     public sealed class BeforeGettingStrippedEvent(TimeSpan initialTime, bool stealth = false) : BaseBeforeStripEvent(initialTime, stealth);
 
     /// <summary>

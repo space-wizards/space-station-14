@@ -41,6 +41,7 @@ public record struct ArmorExamineEvent(FormattedMessage Msg);
 /// <summary>
 /// A Relayed inventory event, gets the total Armor for all Inventory slots defined by the Slotflags in TargetSlots
 /// </summary>
+[GenericEvent]
 public sealed class CoefficientQueryEvent : EntityEventArgs, IInventoryRelayEvent
 {
     /// <summary>

@@ -6,7 +6,7 @@ namespace Content.Shared.Flash;
 /// Called before a flash is used to check if the attempt is cancelled by blindness, items or FlashImmunityComponent.
 /// Raised on the target hit by the flash and their inventory items.
 /// </summary>
-[ByRefEvent]
+[ByRefEvent, GenericEvent]
 public record struct FlashAttemptEvent(EntityUid Target, EntityUid? User, EntityUid? Used, bool Cancelled = false) : IInventoryRelayEvent
 {
     SlotFlags IInventoryRelayEvent.TargetSlots => SlotFlags.HEAD | SlotFlags.EYES | SlotFlags.MASK;

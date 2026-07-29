@@ -30,6 +30,7 @@ public enum IdentityBlockerCoverage
 /// <summary>
 ///     Raised on an entity and relayed to inventory to determine if its identity should be knowable.
 /// </summary>
+[GenericEvent]
 public sealed class SeeIdentityAttemptEvent : CancellableEntityEventArgs, IInventoryRelayEvent
 {
     // i.e. masks, helmets, or glasses.

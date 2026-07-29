@@ -7,7 +7,7 @@ namespace Content.Shared.Explosion;
 ///     Raised directed at an entity to determine its explosion resistance, probably right before it is about to be
 ///     damaged by one.
 /// </summary>
-[ByRefEvent]
+[ByRefEvent, GenericEvent]
 public record struct GetExplosionResistanceEvent(string ExplosionPrototype) : IInventoryRelayEvent
 {
     /// <summary>

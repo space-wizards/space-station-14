@@ -108,7 +108,7 @@ public sealed partial class SlowOnDamageSystem : EntitySystem
     }
 }
 
-[ByRefEvent]
+[ByRefEvent, GenericEvent]
 public record struct ModifySlowOnDamageSpeedEvent(float Speed) : IInventoryRelayEvent
 {
     public SlotFlags TargetSlots => SlotFlags.WITHOUT_POCKET;

@@ -7,7 +7,7 @@ namespace Content.Shared.Speech;
 /// Handlers should modify <see cref="Message"/> in place.
 /// Relayed through inventory (e.g. voice masks) and status effects.
 /// </summary>
-[ByRefEvent]
+[ByRefEvent, GenericEvent]
 public record struct AccentGetEvent(EntityUid Entity, string Message) : IInventoryRelayEvent
 {
     public SlotFlags TargetSlots => SlotFlags.WITHOUT_POCKET;

@@ -13,6 +13,7 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Strip;
 using Content.Shared.Strip.Components;
+using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
@@ -592,6 +593,31 @@ public abstract partial class InventorySystem
             // TODO: Give me an API that can tell the difference between a virtual item and an electropak being removed.
             if (!HasComp<AttachedClothingComponent>(item))
                 args.Giblets.Add(item);
+        }
+    }
+
+    [SubscribeLocalEvent]
+    private void OnGetEquipmentVerbs(Entity<InventoryComponent> ent, ref GetVerbsEvent<EquipmentVerb> args)
+    {
+        // Automatically relay stripping related verbs to all equipped clothing.
+        var ev = new InventoryRelayedEvent<GetVerbsEvent<EquipmentVerb>>(args, ent.Owner);
+        var enumerator = new InventorySlotEnumerator(ent.Comp);
+        while (enumerator.NextItem(out var item, out var slotDef))
+        {
+            if (!_strippable.IsStripHidden(slotDef, args.User) || args.User == ent.Owner)
+                RaiseLocalEvent(item, ev);
+        }
+    }
+
+    [SubscribeLocalEvent]
+    private void OnGetInnateVerbs(Entity<InventoryComponent> ent, ref GetVerbsEvent<InnateVerb> args)
+    {
+        // Automatically relay stripping related verbs to all equipped clothing.
+        var ev = new InventoryRelayedEvent<GetVerbsEvent<InnateVerb>>(args, ent.Owner);
+        var enumerator = new InventorySlotEnumerator(ent.Comp, SlotFlags.WITHOUT_POCKET);
+        while (enumerator.NextItem(out var item))
+        {
+            RaiseLocalEvent(item, ev);
         }
     }
 }

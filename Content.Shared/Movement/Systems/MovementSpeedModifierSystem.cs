@@ -209,6 +209,7 @@ namespace Content.Shared.Movement.Systems
     ///     should hook into this event and set it then. If you want this event to be raised,
     ///     call <see cref="MovementSpeedModifierSystem.RefreshMovementSpeedModifiers"/>.
     /// </summary>
+    [GenericEvent]
     public sealed class RefreshMovementSpeedModifiersEvent : EntityEventArgs, IInventoryRelayEvent
     {
         public SlotFlags TargetSlots { get; } = ~SlotFlags.POCKET;
@@ -265,7 +266,8 @@ namespace Content.Shared.Movement.Systems
             ModifyAcceleration(modifier, modifier);
         }
     }
-    [ByRefEvent]
+
+    [ByRefEvent, GenericEvent]
     public record struct RefreshFrictionModifiersEvent : IInventoryRelayEvent
     {
         public float Friction;

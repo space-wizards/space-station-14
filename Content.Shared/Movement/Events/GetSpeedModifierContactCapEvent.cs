@@ -5,7 +5,7 @@ namespace Content.Shared.Movement.Events;
 /// <summary>
 /// Raised on an entity to check if it has a max contact slowdown.
 /// </summary>
-[ByRefEvent]
+[ByRefEvent, GenericEvent]
 public record struct GetSpeedModifierContactCapEvent() : IInventoryRelayEvent
 {
     SlotFlags IInventoryRelayEvent.TargetSlots => ~SlotFlags.POCKET;

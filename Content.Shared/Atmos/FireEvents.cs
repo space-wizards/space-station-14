@@ -11,7 +11,7 @@ namespace Content.Shared.Atmos;
 /// <remarks>
 /// This does not necessarily mean the effect is strong enough to fully extinguish the entity in one go.
 /// </remarks>
-[ByRefEvent]
+[ByRefEvent, GenericEvent]
 public struct ExtinguishEvent : IInventoryRelayEvent
 {
     /// <summary>

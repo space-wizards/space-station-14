@@ -21,6 +21,7 @@ public abstract partial class BeforeClimbEvent : CancellableEntityEventArgs
 ///     This event is raised on the the person either getting put on or going on the table.
 ///     The event is also called on their clothing as well.
 /// </summary>
+[GenericEvent]
 public sealed class SelfBeforeClimbEvent : BeforeClimbEvent, IInventoryRelayEvent
 {
     public SlotFlags TargetSlots { get; } = SlotFlags.WITHOUT_POCKET;

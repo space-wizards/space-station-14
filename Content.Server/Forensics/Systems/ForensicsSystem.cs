@@ -361,7 +361,7 @@ namespace Content.Server.Forensics
 
             RaiseLocalEvent(target, ev);
             if (!ev.Cancelled && TryComp<InventoryComponent>(target, out var inv))
-                _inventory.RelayEvent((target, inv), ev);
+                _inventory.RelayEvent((target, inv), ref ev); // TODO what even is this.
 
             blocker = ev.Blocker;
             return !ev.Cancelled;

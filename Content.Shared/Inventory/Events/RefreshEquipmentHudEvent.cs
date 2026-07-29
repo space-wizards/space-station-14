@@ -1,6 +1,6 @@
 namespace Content.Shared.Inventory.Events;
 
-[ByRefEvent]
+[ByRefEvent, GenericEvent]
 public record struct RefreshEquipmentHudEvent<T>(SlotFlags TargetSlots) : IInventoryRelayEvent
     where T : IComponent
 {

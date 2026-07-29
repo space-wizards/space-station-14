@@ -1,5 +1,3 @@
-using Content.Shared.Hands.Components;
-
 namespace Content.Shared.Inventory;
 
 public partial class InventorySystem
@@ -9,7 +7,6 @@ public partial class InventorySystem
     {
         base.Initialize();
         InitializeEquip();
-        InitializeRelay();
         InitializeSlots();
     }
 

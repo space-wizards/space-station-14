@@ -5,5 +5,5 @@ namespace Content.Shared.Overlays;
 /// <summary>
 ///     This component allows you to see the hungriness of mobs.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, GenericEvent]
 public sealed partial class ShowHungerIconsComponent : Component { }

@@ -17,6 +17,7 @@ public sealed partial class InjectorDoAfterEvent : SimpleDoAfterEvent;
 /// <param name="usedInjector">The injector being used by the user.</param>
 /// <param name="target">The target who the user is trying to inject.</param>
 /// <param name="overrideMessage">The resulting message that gets displayed per popup.</param>
+[GenericEvent]
 public abstract partial class BeforeInjectTargetEvent(EntityUid user, EntityUid usedInjector, EntityUid target, string? overrideMessage = null)
     : CancellableEntityEventArgs, IInventoryRelayEvent
 {
@@ -31,6 +32,7 @@ public abstract partial class BeforeInjectTargetEvent(EntityUid user, EntityUid 
 ///     This event is raised on the user using the injector before the injector is injected.
 ///     The event is triggered on the user and all their clothing.
 /// </summary>
+[GenericEvent]
 public sealed class SelfBeforeInjectEvent(EntityUid user, EntityUid usedInjector, EntityUid target, string? overrideMessage = null)
     : BeforeInjectTargetEvent(user, usedInjector, target, overrideMessage);
 
@@ -38,6 +40,6 @@ public sealed class SelfBeforeInjectEvent(EntityUid user, EntityUid usedInjector
 ///     This event is raised on the target before the injector is injected.
 ///     The event is triggered on the target itself and all its clothing.
 /// </summary>
-[ByRefEvent]
+[ByRefEvent, GenericEvent]
 public sealed class TargetBeforeInjectEvent(EntityUid user, EntityUid usedInjector, EntityUid target, string? overrideMessage = null)
     : BeforeInjectTargetEvent(user, usedInjector, target, overrideMessage);

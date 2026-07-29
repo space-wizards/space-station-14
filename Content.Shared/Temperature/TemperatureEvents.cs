@@ -5,7 +5,7 @@ namespace Content.Shared.Temperature;
 /// <summary>
 /// This event is raised before heat is exchanged so that the conductance of the exchange can be changed.
 /// </summary>
-[ByRefEvent]
+[ByRefEvent, GenericEvent]
 public record struct BeforeHeatExchangeEvent() : IInventoryRelayEvent
 {
     public SlotFlags TargetSlots { get; } = ~SlotFlags.POCKET;
