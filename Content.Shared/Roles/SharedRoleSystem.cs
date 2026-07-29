@@ -11,6 +11,7 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -23,6 +24,7 @@ public abstract partial class SharedRoleSystem : EntitySystem
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private INetManager _net = default!;
     [Dependency] protected ISharedPlayerManager Player = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
     [Dependency] private SharedMindSystem _minds = default!;
@@ -259,7 +261,12 @@ public abstract partial class SharedRoleSystem : EntitySystem
 
         // Update player character window
         if (Player.TryGetSessionById(comp.UserId, out var session))
-            RaiseNetworkEvent(new MindRoleTypeChangedEvent(), session.Channel);
+        {
+            // The engine will not allow the client to specify the channel, so they must not run this line.
+            // We also don't want or need the client to make this event in the first place
+            if (_net.IsServer)
+                RaiseNetworkEvent(new MindRoleTypeChangedEvent(), session.Channel);
+        }
         else
         {
             var error = $"The Character Window of {_minds.MindOwnerLoggingString(comp)} potentially did not update immediately : session error";
