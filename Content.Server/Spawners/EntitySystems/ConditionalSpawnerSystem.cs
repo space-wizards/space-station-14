@@ -199,7 +199,6 @@ public sealed partial class ConditionalSpawnerSystem : EntitySystem
             (spawner.Comp.RareChance == 1.0f || _robustRandom.Prob(spawner.Comp.RareChance)))
         {
             return spawner.Comp.RarePrototypes;
-
         }
 
         if (spawner.Comp.Prototypes.Count == 0)
@@ -208,9 +207,8 @@ public sealed partial class ConditionalSpawnerSystem : EntitySystem
             return null;
         }
 
-
         // ReSharper disable once CompareOfFloatsByEqualityOperator
-        if (spawner.Comp.Chance == 1.0f || !_robustRandom.Prob(spawner.Comp.Chance))
+        if (spawner.Comp.Chance == 1.0f || _robustRandom.Prob(spawner.Comp.Chance))
         {
             return spawner.Comp.Prototypes;
         }
