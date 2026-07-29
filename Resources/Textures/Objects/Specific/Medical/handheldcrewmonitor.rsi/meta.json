@@ -5,11 +5,10 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from tgstation https://github.com/tgstation/tgstation/commit/ab4abf318f293a701754656dd4e9261eb70f8824#diff-9ab5c8a5e47ab7cfaeadd859a23e32b05de1fe839e99ea767fd7e340b6385d67, in-hands modified by SeamLesss (github) from Objects/Misc/qm_clipboard.rsi/inhand-(left/right); icon and scanner modified by HoofedEar",
+    "copyright": "Taken from tgstation https://github.com/tgstation/tgstation/commit/ab4abf318f293a701754656dd4e9261eb70f8824#diff-9ab5c8a5e47ab7cfaeadd859a23e32b05de1fe839e99ea767fd7e340b6385d67, in-hands modified by SeamLesss (github) from Objects/Misc/qm_clipboard.rsi/inhand-(left/right); base and screen modified by HoofedEar",
     "states": [
         {
-            "name": "scanner",
-            "directions": 1,
+            "name": "screen",
             "delays": [
                 [
                     0.4,
@@ -26,8 +25,10 @@
             "directions": 4
         },
         {
-            "name": "icon",
-            "directions": 1
+            "name": "icon"
+        },
+        {
+            "name": "base"
         }
     ]
 }
