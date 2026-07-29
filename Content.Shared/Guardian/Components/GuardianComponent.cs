@@ -52,13 +52,13 @@ public sealed partial class GuardianComponent : Component
     public SoundSpecifier DeathSound = new SoundPathSpecifier("/Audio/Voice/Human/malescream_guardian.ogg", AudioParams.Default.WithVariation(0.2f));
 
     /// <summary>
-    /// The last time that the entity attacked another.
+    /// The last time that the entity received an attack popup.
     /// </summary>
     [ViewVariables]
     public TimeSpan LastAttackPopupTime;
 
     /// <summary>
-    /// The last time that the user attacked the
+    /// The delay between showing attack popups to the entity.
     /// </summary>
     [ViewVariables]
     public TimeSpan PopupDelay = TimeSpan.FromSeconds(1);
