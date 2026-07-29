@@ -1,3 +1,5 @@
+using Content.Shared.Verbs;
+
 namespace Content.Shared.Inventory;
 
 public partial class InventorySystem
@@ -18,6 +20,31 @@ public partial class InventorySystem
 
         // and now we copy it back
         args = ev.Args;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnGetEquipmentVerbs(Entity<InventoryComponent> ent, ref GetVerbsEvent<EquipmentVerb> args)
+    {
+        // Automatically relay stripping related verbs to all equipped clothing.
+        var ev = new InventoryRelayedEvent<GetVerbsEvent<EquipmentVerb>>(args, ent.Owner);
+        var enumerator = new InventorySlotEnumerator(ent.Comp);
+        while (enumerator.NextItem(out var item, out var slotDef))
+        {
+            if (!_strippable.IsStripHidden(slotDef, args.User) || args.User == ent.Owner)
+                RaiseLocalEvent(item, ev);
+        }
+    }
+
+    [SubscribeLocalEvent]
+    private void OnGetInnateVerbs(Entity<InventoryComponent> ent, ref GetVerbsEvent<InnateVerb> args)
+    {
+        // Automatically relay stripping related verbs to all equipped clothing.
+        var ev = new InventoryRelayedEvent<GetVerbsEvent<InnateVerb>>(args, ent.Owner);
+        var enumerator = new InventorySlotEnumerator(ent.Comp, SlotFlags.WITHOUT_POCKET);
+        while (enumerator.NextItem(out var item))
+        {
+            RaiseLocalEvent(item, ev);
+        }
     }
 }
 
