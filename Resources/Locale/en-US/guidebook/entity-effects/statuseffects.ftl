@@ -8,7 +8,6 @@ entity-effect-status-effect-ForcedSleep = unconsciousness
 entity-effect-status-effect-Drunk = drunkenness
 entity-effect-status-effect-PressureImmunity = pressure immunity
 entity-effect-status-effect-Pacified = combat pacification
-entity-effect-status-effect-RatvarianLanguage = ratvarian language patterns
 entity-effect-status-effect-StaminaModifier = modified stamina
 entity-effect-status-effect-RadiationProtection = radiation protection
 entity-effect-status-effect-Drowsiness = drowsiness
