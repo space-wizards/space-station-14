@@ -8,7 +8,7 @@ namespace Content.Shared.Trigger.Systems;
 
 public sealed partial class TriggerOnMobstateChangeSystem : TriggerOnXSystem
 {
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {
@@ -50,7 +50,7 @@ public sealed partial class TriggerOnMobstateChangeSystem : TriggerOnXSystem
         if (!component.PreventSuicide)
             return;
 
-        _popup.PopupClient(Loc.GetString("suicide-prevented"), args.Victim);
+        _popup.PopupEntity(Loc.GetString("suicide-prevented"), args.Victim, args.Victim);
         args.Handled = true;
     }
 
@@ -62,7 +62,7 @@ public sealed partial class TriggerOnMobstateChangeSystem : TriggerOnXSystem
         if (!component.PreventSuicide)
             return;
 
-        _popup.PopupClient(Loc.GetString("suicide-prevented"), args.Args.Victim);
+        _popup.PopupEntity(Loc.GetString("suicide-prevented"), args.Args.Victim, args.Args.Victim);
         args.Args.Handled = true;
     }
 }

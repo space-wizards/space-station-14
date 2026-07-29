@@ -8,18 +8,20 @@ using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.EntitySystems;
 
 [UsedImplicitly]
-public sealed class GasTankSystem : SharedGasTankSystem
+public sealed partial class GasTankSystem : SharedGasTankSystem
 {
-    [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedTransformSystem _xform = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly ThrowingSystem _throwing = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private AtmosphereSystem _atmosphereSystem = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedTransformSystem _xform = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private ThrowingSystem _throwing = default!;
 
     private const float MinimumSoundValvePressure = 21.3f; // Arbitrary number
 
@@ -27,6 +29,7 @@ public sealed class GasTankSystem : SharedGasTankSystem
 
     // A vector bias for throwing our gas tanks in radians. Averages about -43 degrees since the sprite is at a 45-degree angle.
     private static readonly Vector2 ThrowVector = new (-1.0f, -0.5f);
+    private static readonly TimeSpan GasDirtyInterval = TimeSpan.FromSeconds(5);
 
     public override void Initialize()
     {
@@ -50,14 +53,23 @@ public sealed class GasTankSystem : SharedGasTankSystem
             entity.Comp.CheckUser = false;
             if (Transform(entity).ParentUid != entity.Comp.User)
             {
-                DisconnectFromInternals(entity);
+                DisconnectFromInternals(entity, forced: true);
             }
         }
 
         Atmos.React(entity.Comp.Air, entity.Comp);
 
-        if ((entity.Comp.IsConnected || entity.Comp.ReleaseValveOpen) && UI.IsUiOpen(entity.Owner, SharedGasTankUiKey.Key))
-            UpdateUserInterface(entity);
+        if (entity.Comp.IsConnected || entity.Comp.ReleaseValveOpen)
+        {
+            if (entity.Comp.NextDirtyTime <= _timing.CurTime)
+            {
+                entity.Comp.NextDirtyTime = _timing.CurTime + GasDirtyInterval;
+                Dirty(entity);
+            }
+
+            if (UI.IsUiOpen(entity.Owner, SharedGasTankUiKey.Key))
+                UpdateUserInterface(entity);
+        }
     }
 
     public override void UpdateUserInterface(Entity<GasTankComponent> ent)
