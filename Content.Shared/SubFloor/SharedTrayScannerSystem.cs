@@ -12,13 +12,13 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.SubFloor;
 
-public abstract class SharedTrayScannerSystem : EntitySystem
+public abstract partial class SharedTrayScannerSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedEyeSystem _eye = default!;
-    [Dependency] private readonly UseDelaySystem _delay = default!;
-    [Dependency] private readonly INetManager _netMan = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedEyeSystem _eye = default!;
+    [Dependency] private UseDelaySystem _delay = default!;
+    [Dependency] private INetManager _netMan = default!;
 
     public const float SubfloorRevealAlpha = 0.8f;
 

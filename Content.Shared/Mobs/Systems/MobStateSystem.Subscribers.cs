@@ -1,7 +1,7 @@
-﻿using Content.Shared.Bed.Sleep;
+using Content.Shared.Actions.Events;
+using Content.Shared.Bed.Sleep;
 using Content.Shared.Buckle.Components;
 using Content.Shared.CombatMode.Pacification;
-using Content.Shared.Damage;
 using Content.Shared.Damage.ForceSay;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Emoting;
@@ -18,7 +18,8 @@ using Content.Shared.Speech;
 using Content.Shared.Standing;
 using Content.Shared.Strip.Components;
 using Content.Shared.Throwing;
-using Robust.Shared.Physics.Components;
+using Content.Shared.Tools.Systems;
+using System.Linq;
 
 namespace Content.Shared.Mobs.Systems;
 
@@ -47,8 +48,12 @@ public partial class MobStateSystem
         SubscribeLocalEvent<MobStateComponent, CombatModeShouldHandInteractEvent>(OnCombatModeShouldHandInteract);
         SubscribeLocalEvent<MobStateComponent, AttemptPacifiedAttackEvent>(OnAttemptPacifiedAttack);
         SubscribeLocalEvent<MobStateComponent, DamageModifyEvent>(OnDamageModify);
+        SubscribeLocalEvent<MobStateComponent, AttemptToolRefineEvent>(OnAttemptToolRefine);
 
         SubscribeLocalEvent<MobStateComponent, UnbuckleAttemptEvent>(OnUnbuckleAttempt);
+
+        // Actions
+        SubscribeLocalEvent<ActionRequireMobStateComponent, ActionAttemptEvent>(OnMobStateActionAttempt);
     }
 
     private void OnUnbuckleAttempt(Entity<MobStateComponent> ent, ref UnbuckleAttemptEvent args)
@@ -140,6 +145,14 @@ public partial class MobStateSystem
         }
     }
 
+    private void OnAttemptToolRefine(Entity<MobStateComponent> ent, ref AttemptToolRefineEvent args)
+    {
+        if (!IsDead(ent, ent))
+        {
+            args = args with { IsCancelled = true, BlockCause = Loc.GetString("refined-slice-verb-target-isnt-dead") };
+        }
+    }
+
     #region Event Subscribers
 
     private void OnSleepAttempt(EntityUid target, MobStateComponent component, ref TryingToSleepEvent args)
@@ -209,6 +222,23 @@ public partial class MobStateSystem
     private void OnDamageModify(Entity<MobStateComponent> ent, ref DamageModifyEvent args)
     {
         args.Damage *= _damageable.UniversalMobDamageModifier;
+    }
+
+    private void OnMobStateActionAttempt(Entity<ActionRequireMobStateComponent> ent, ref ActionAttemptEvent args)
+    {
+        if (_mobStateQuery.TryComp(args.User, out var mobState) &&
+            ent.Comp.States.Contains(mobState.CurrentState))
+        {
+            return;
+        }
+
+        if (ent.Comp.Popup is { } popup)
+        {
+            var states = string.Join(", ", ent.Comp.States.Order().Select(s => Loc.GetString($"mob-state-{s}")));
+            _popup.PopupEntity(Loc.GetString("mob-state-action-requires-state", ("states", states)), args.User, args.User, popup);
+        }
+
+        args.Cancelled = true;
     }
 
     #endregion

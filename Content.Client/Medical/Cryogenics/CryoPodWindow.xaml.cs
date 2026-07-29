@@ -17,8 +17,8 @@ namespace Content.Client.Medical.Cryogenics;
 [GenerateTypedNameReferences]
 public sealed partial class CryoPodWindow : FancyWindow
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
     private readonly SharedAtmosphereSystem _atmosphere = default!;
 
     public event Action? OnEjectPatientPressed;
@@ -81,7 +81,7 @@ public sealed partial class CryoPodWindow : FancyWindow
                                             ("gasName", localizedName),
                                             ("amount", $"{gasEntry.Amount:0.##}"),
                                             ("percentage", $"{percent:0.#}"));
-                GasMixChart.AddEntry(gasEntry.Amount, gasProto.Color, tooltip: tooltip);
+                GasMixChart.SetEntry(gasProto.Name, gasEntry.Amount, gasProto.Color, tooltip: tooltip);
             }
         }
 
@@ -108,7 +108,7 @@ public sealed partial class CryoPodWindow : FancyWindow
         var hasBeaker = (msg.Beaker != null);
 
         ChemicalsChart.Clear();
-        ChemicalsChart.Capacity = (totalBeakerCapacity < 1 ? 50 : (int)totalBeakerCapacity);
+        ChemicalsChart.Capacity = (totalBeakerCapacity == 0 ? 50 : (float)totalBeakerCapacity);
 
         var chartMaxChemsQuantity = ChemicalsChart.Capacity - injectingQuantity; // Ensure space for injection buffer
 
@@ -126,9 +126,9 @@ public sealed partial class CryoPodWindow : FancyWindow
                 var reagentProto = _prototypeManager.Index<ReagentPrototype>(reagent.Prototype);
                 ChemicalsChart.SetEntry(
                     reagent.Prototype,
-                    reagentProto.LocalizedName,
                     (float)chartQuantity,
                     reagentProto.SubstanceColor,
+                    text: reagentProto.LocalizedName,
                     tooltip: $"{quantity}u {reagentProto.LocalizedName}"
                 );
 
@@ -147,9 +147,9 @@ public sealed partial class CryoPodWindow : FancyWindow
             var injectingText = (injectingQuantity > 1 ? $"{injectingQuantity}u" : "");
             ChemicalsChart.SetEntry(
                 "injecting",
-                injectingText,
                 (float)injectingQuantity,
                 Color.MediumSpringGreen,
+                text: injectingText,
                 tooltip: Loc.GetString("cryo-pod-window-chems-injecting-tooltip",
                                        ("quantity", injectingQuantity))
             );
@@ -181,7 +181,7 @@ public sealed partial class CryoPodWindow : FancyWindow
         }
 
         // Status checklist
-        const float fallbackTemperatureRequirement = 213;
+        const float fallbackTemperatureRequirement = Atmospherics.T0C;
         var hasTemperatureCheck = (hasGas && hasCorrectTemperature
                 && (lowestTempRequirement != null || msg.GasMix.Temperature < fallbackTemperatureRequirement));
         var hasChemicals = (hasBeaker && !isBeakerEmpty);

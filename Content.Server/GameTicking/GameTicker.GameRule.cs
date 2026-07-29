@@ -1,7 +1,9 @@
 using System.Linq;
+using System.Text;
 using Content.Server.Administration;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Shared.Administration;
+using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Prototypes;
@@ -15,9 +17,21 @@ namespace Content.Server.GameTicking;
 
 public sealed partial class GameTicker
 {
+    /// <summary>
+    /// Designated game rule that spawns a fake antagonist to discourage metagaming.
+    /// Has to be a string since <see cref="EntProtoId"/> cannot be a const.
+    /// </summary>
+    public const string DummyGameRule = "DummyNonAntag";
+
     [ViewVariables] private readonly List<(TimeSpan, string)> _allPreviousGameRules = new();
 
-    [Dependency] private readonly EntityWhitelistSystem _whitelist = null!;
+    /// <summary>
+    /// List of ignored game rules, these rules won't be spawned by normal means.
+    /// This list is populated by <see cref="CCVars.GameTickerIgnoredPresets"/>
+    /// </summary>
+    [ViewVariables] private string[] _ignoredRules = [];
+
+    [Dependency] private EntityWhitelistSystem _whitelist = null!;
 
     /// <summary>
     ///     A list storing the start times of all game rules that have been started this round.
@@ -71,7 +85,7 @@ public sealed partial class GameTicker
     /// start it yet, instead waiting until the rule is actually started by other code (usually roundstart)
     /// </summary>
     /// <returns>The entity for the added gamerule</returns>
-    public EntityUid AddGameRule(string ruleId)
+    public EntityUid AddGameRule([ForbidLiteral] string ruleId)
     {
         var ruleEntity = Spawn(ruleId, MapCoordinates.Nullspace);
         _sawmill.Info($"Added game rule {ToPrettyString(ruleEntity)}");
@@ -100,10 +114,33 @@ public sealed partial class GameTicker
     }
 
     /// <summary>
+    /// Tries to add a gamerule to the current round, but ignores any <see cref="_ignoredRules"/>
+    /// </summary>
+    /// <param name="gameRule">Game rule entity that we are trying to spawn</param>
+    /// <returns>The entityUid of the spawned game rule, if it wasn't ignored.</returns>
+    public EntityUid? AddFilteredGameRule([ForbidLiteral] EntProtoId gameRule)
+    {
+        if (IsIgnored(gameRule))
+            return null;
+
+        return AddGameRule(gameRule);
+    }
+
+    /// <summary>
+    /// Checks if this GameRule should be ignored before a spawning attempt.
+    /// </summary>
+    /// <param name="gameRule">GameRule we are trying to validate</param>
+    /// <returns>True if the gamerule should be ignored and not spawned.</returns>
+    public bool IsIgnored([ForbidLiteral] EntProtoId gameRule)
+    {
+        return _ignoredRules.Contains(gameRule);
+    }
+
+    /// <summary>
     /// Game rules can be 'started' separately from being added. 'Starting' them usually
     /// happens at round start while they can be added and removed before then.
     /// </summary>
-    public bool StartGameRule(string ruleId)
+    public bool StartGameRule([ForbidLiteral] string ruleId)
     {
         return StartGameRule(ruleId, out _);
     }
@@ -112,7 +149,7 @@ public sealed partial class GameTicker
     /// Game rules can be 'started' separately from being added. 'Starting' them usually
     /// happens at round start while they can be added and removed before then.
     /// </summary>
-    public bool StartGameRule(string ruleId, out EntityUid ruleEntity)
+    public bool StartGameRule([ForbidLiteral] string ruleId, out EntityUid ruleEntity)
     {
         ruleEntity = AddGameRule(ruleId);
         return StartGameRule(ruleEntity);
@@ -226,7 +263,7 @@ public sealed partial class GameTicker
         return Resolve(ruleEntity, ref component) && !HasComp<EndedGameRuleComponent>(ruleEntity);
     }
 
-    public bool IsGameRuleAdded(string rule)
+    public bool IsGameRuleAdded([ForbidLiteral] string rule)
     {
         foreach (var ruleEntity in GetAddedGameRules())
         {
@@ -274,7 +311,7 @@ public sealed partial class GameTicker
         return Resolve(ruleEntity, ref component) && HasComp<ActiveGameRuleComponent>(ruleEntity);
     }
 
-    public bool IsGameRuleActive(string rule)
+    public bool IsGameRuleActive([ForbidLiteral] string rule)
     {
         foreach (var ruleEntity in GetActiveGameRules())
         {
@@ -365,7 +402,7 @@ public sealed partial class GameTicker
     /// </summary>
     public IEnumerable<EntityPrototype> GetAllGameRulePrototypes()
     {
-        foreach (var proto in _prototypeManager.EnumeratePrototypes<EntityPrototype>())
+        foreach (var proto in ProtoMan.EnumeratePrototypes<EntityPrototype>())
         {
             if (proto.Abstract)
                 continue;
@@ -428,7 +465,7 @@ public sealed partial class GameTicker
 
         foreach (var rule in args)
         {
-            if (!_prototypeManager.HasIndex(rule))
+            if (!ProtoMan.HasIndex(rule))
             {
                 shell.WriteError($"Invalid game rule {rule} was skipped.");
 
@@ -506,22 +543,24 @@ public sealed partial class GameTicker
         if (_allPreviousGameRules.Count > 0)
         {
             var sortedRules = _allPreviousGameRules.OrderBy(rule => rule.Item1).ToList();
-            var message = "\n";
+            var message = new StringBuilder();
+            message.AppendLine();
 
             if (!forChatWindow)
             {
                 var header = Loc.GetString("list-gamerule-admin-header");
-                message += $"\n{header}\n";
-                message += "|------------|------------------\n";
+                message.AppendLine();
+                message.AppendLine(header);
+                message.AppendLine("|------------|------------------");
             }
 
             foreach (var (time, rule) in sortedRules)
             {
                 var formattedTime = time.ToString(@"hh\:mm\:ss");
-                message += $"| {formattedTime,-10} | {rule,-16} \n";
+                message.AppendLine($"| {formattedTime,-10} | {rule,-16} ");
             }
 
-            return message;
+            return message.ToString().TrimEnd('\n');
         }
         else
         {

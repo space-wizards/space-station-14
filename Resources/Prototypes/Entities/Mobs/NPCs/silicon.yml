@@ -45,8 +45,7 @@
   - type: TypingIndicator
     proto: robot
   - type: Vocal
-    sounds:
-      Unsexed: UnisexSilicon
+    emoteSounds: UnisexSilicon
   - type: Emoting
   - type: ZombieImmune
   - type: ProtectedFromStepTriggers
@@ -127,7 +126,6 @@
     rootTask:
       task: FirebotCompound
   - type: SolutionRegeneration
-    solution: spray
     generated:
       reagents:
         - ReagentId: Water
@@ -246,8 +244,7 @@
       params:
         variation: 0.125
   - type: Vocal
-    sounds:
-      Unsexed: Cluwne
+    emoteSounds: Cluwne
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
@@ -273,13 +270,11 @@
   - type: UseDelay
     delay: 2
   - type: SolutionRegeneration
-    solution: absorbed
     generated:
       reagents:
         - ReagentId: Water
           Quantity: 10
   - type: SolutionPurge
-    solution: absorbed
     preserve:
       - Water
     quantity: 10

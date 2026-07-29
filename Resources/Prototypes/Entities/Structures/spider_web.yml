@@ -23,13 +23,7 @@
   - type: Physics
   - type: Damageable
     damageModifierSet: Wood
-  - type: Temperature
-  - type: TemperatureDamage
-    heatDamage:
-      types:
-        Heat: 5
-    coldDamage: {}
-    coldDamageThreshold: 0
+  - type: Injurable
   - type: Flammable
     fireSpread: true
     damage:
@@ -69,12 +63,6 @@
         - MidImpassable
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
-        !type:DamageTrigger
-        damage: 50
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 10

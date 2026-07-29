@@ -4,7 +4,7 @@ using Content.Client.Message;
 using Content.Client.Power.Visualizers;
 using Content.Client.Stylesheets;
 using Content.Shared.Atmos.Components;
-using Content.Shared.Disposal.Components;
+using Content.Shared.Disposal.Tube;
 using Content.Shared.Input;
 using Content.Shared.Inventory;
 using Content.Shared.SubFloor;
@@ -18,20 +18,20 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.SubFloor;
 
-public sealed class TrayScannerSystem : SharedTrayScannerSystem
+public sealed partial class TrayScannerSystem : SharedTrayScannerSystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly AnimationPlayerSystem _animation = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
-    [Dependency] private readonly TrayScanRevealSystem _trayScanReveal = default!;
-    [Dependency] private readonly IInputManager _inputManager = default!;
-    [Dependency] private readonly EntityQuery<TrayScannerComponent> _trayScannerQuery = default!;
-    [Dependency] private readonly EntityQuery<SubFloorHideComponent> _subFloorHideQuery = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IPlayerManager _player = default!;
+    [Dependency] private AnimationPlayerSystem _animation = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private TrayScanRevealSystem _trayScanReveal = default!;
+    [Dependency] private IInputManager _inputManager = default!;
+    [Dependency] private EntityQuery<TrayScannerComponent> _trayScannerQuery = default!;
+    [Dependency] private EntityQuery<SubFloorHideComponent> _subFloorHideQuery = default!;
 
     private const string TRayAnimationKey = "trays";
     private const double AnimationLength = 0.3;
@@ -185,8 +185,7 @@ public sealed class TrayScannerSystem : SharedTrayScannerSystem
         {
             TrayScannerMode.All => true,
             TrayScannerMode.Wiring => HasComp<CableVisualizerComponent>(uid),
-            // TODO: proper comp query after disposals refactor
-            TrayScannerMode.Piping => HasComp<AtmosPipeLayersComponent>(uid) || _appearance.TryGetData(uid, DisposalTubeVisuals.VisualState, out _),
+            TrayScannerMode.Piping => HasComp<AtmosPipeLayersComponent>(uid) || HasComp<DisposalTubeComponent>(uid),
             _ => false,
         };
     }
