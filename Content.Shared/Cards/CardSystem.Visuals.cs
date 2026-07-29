@@ -54,7 +54,13 @@ public abstract partial class SharedCardSystem
     {
         var count = Math.Min(cards.Fanned ? cards.MaxFanned : 1, cards.Cards.Count) * (cards.Flipped ? 1 : -1);
         var start = cards.Flipped ? cards.Cards.Count - count : -count - 1;
-        return new CardListVisualState(cards.Cards, start, count, cards.MaxFanned);
+        return new CardListVisualState
+        {
+            CardList = cards.Cards,
+            Start = start,
+            Count = count,
+            MaxFanned = cards.MaxFanned,
+        };
     }
 }
 
@@ -68,18 +74,16 @@ public enum CardVisuals : byte
 [Serializable, NetSerializable]
 public sealed class CardListVisualState : ICloneable
 {
-    public List<CardData> CardList;
+    public List<CardData> CardList = new();
     public int Start;
     public int Count;
     public int MaxFanned;
 
-    public CardListVisualState(List<CardData> cardList, int start, int count, int maxFanned)
+    public object Clone() => new CardListVisualState
     {
-        CardList = cardList;
-        Start = start;
-        Count = count;
-        MaxFanned = maxFanned;
-    }
-
-    public object Clone() => new CardListVisualState(CardList, Start, Count, MaxFanned);
+        CardList = CardList,
+        Start = Start,
+        Count = Count,
+        MaxFanned = MaxFanned,
+    };
 }

@@ -46,7 +46,7 @@ public sealed class CardDataSerializer : ITypeSerializer<List<CardData>, Sequenc
         foreach (var elem in node.Sequence)
         {
             var protoId = serializationManager.Read<ProtoId<CardPrototype>>(elem, hookCtx, context);
-            list.Add(new CardData(protoId));
+            list.Add(new CardData { CardId = protoId });
         }
 
         return list;

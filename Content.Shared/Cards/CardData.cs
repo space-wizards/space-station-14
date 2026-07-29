@@ -33,9 +33,4 @@ public partial struct CardData
     /// </summary>
     [DataField, AutoNetworkedField]
     public int CardIndex;
-
-    public CardData(ProtoId<CardPrototype> cardId)
-    {
-        CardId = cardId;
-    }
 }

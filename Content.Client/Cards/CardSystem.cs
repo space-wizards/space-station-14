@@ -26,7 +26,7 @@ public sealed partial class CardSystem : SharedCardSystem
         // Card visuals state will only have one card in it if not fanned
         // It will have a max of MaxFanned when fanned
         if (!Appearance.TryGetData<CardListVisualState>(uid, CardVisuals.CardList, out var visualState, args.Component))
-            visualState = new CardListVisualState(new List<CardData>(), 0, 0, 1);
+            visualState = new CardListVisualState();
 
         if (!TryComp<SpriteComponent>(uid, out var sprite))
             return;
