@@ -4,7 +4,7 @@
   abstract: true
   components:
   - type: Item
-    shape:
+    shape: 0,0,1,2
   - type: Storage
     grid:
       - "0,0,1,2"
@@ -29,7 +29,7 @@
     - state: emergencytank
 
 - type: entity
-  parent: BoxSurvival
+  parent: BaseBoxSurvival
   id: BoxSurvivalNitrogen
   name: N2 survival box
   description: A small box containing a breath mask, an emergency nitrogen tank, and an emergency medipen. Standard-issue for most nitrogen-breathing crew.
@@ -47,7 +47,7 @@
     - state: nitrogentank
 
 - type: entity
-  parent: BoxSurvival
+  parent: BaseBoxSurvival
   id: BoxSurvivalEngineering
   name: extended-capacity O2 survival box
   description: A small box containing a breath mask, an extended-capacity emergency oxygen tank, and an emergency medipen. Issued to oxygen-breathing crew whose job responsibilities often take them to places with no atmosphere.
@@ -83,7 +83,7 @@
     - state: nitrogentank
 
 - type: entity
-  parent: BoxSurvival
+  parent: BaseBoxSurvival
   id: BoxSurvivalSecurity
   name: security O2 survival box
   description: A small box containing a gas mask, an emergency oxygen tank, and an emergency medipen. Issued to oxygen-breathing members of the security staff.
@@ -115,7 +115,7 @@
     - state: nitrogentank
 
 - type: entity
-  parent: BoxSurvival
+  parent: BaseBoxSurvival
   id: BoxSurvivalMedical
   name: medical O2 survival box
   description: A small box containing a medical mask, an emergency oxygen tank, and an emergency medipen. Issued to oxygen-breathing members of the medical staff.
@@ -264,7 +264,7 @@
 # Uses a 2x2 box mostly just because the 3x3 boxes don't fit into already-filled ERT backpacks.
 # "Military" might be a misnomer, since NT isn't technically a government entity, but whatever.
 - type: entity
-  parent: BoxSurvival
+  parent: BaseBoxSurvival
   id: BoxSurvivalMilitaryDouble
   name: military O2 survival box
   description: A military-grade survival box containing a double-capacity emergency oxygen tank, an emergency medipen, and an emergency flare.
