@@ -88,5 +88,8 @@ namespace Content.Shared.Verbs
 
         public static readonly VerbCategory Adjust =
             new("verb-categories-adjust", "/Textures/Interface/VerbIcons/screwdriver.png");
+
+        public static readonly VerbCategory ToggleClothing =
+            new("verb-categories-toggle-clothing", "/Textures/Interface/VerbIcons/outfit.svg.192dpi.png");
     }
 }
