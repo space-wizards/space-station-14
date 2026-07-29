@@ -272,9 +272,6 @@
         Quantity: 50
   - type: Edible
     edible: Drink # slurping sounds!
-    solution: food
-    destroyOnEmpty: false
-    utensil: None
   - type: Openable
     sound:
       collection: pop
@@ -308,11 +305,6 @@
       - Mayo
   - type: Openable
     closeable: true
-  - type: Edible
-    edible: Drink # slurping sounds!
-    solution: food
-    destroyOnEmpty: false
-    utensil: None
 
 # Baking
 
