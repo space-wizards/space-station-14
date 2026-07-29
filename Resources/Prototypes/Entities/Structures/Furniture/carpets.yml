@@ -1,7 +1,7 @@
 # TODO move all of this to tiles once tile smoothing is supported
 - type: entity
-  id: CarpetBase
   parent: BaseStructure
+  id: CarpetBase
   name: carpet
   description: "Fancy walking surface."
   abstract: true
@@ -33,7 +33,7 @@
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
-    - trigger:
+    - trigger: &DamageTrigger10
         !type:DamageTrigger
         damage: 10
         behaviors:
@@ -55,15 +55,11 @@
     sprite: Structures/Furniture/Carpets/red_carpet.rsi
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 10
+    - trigger: *DamageTrigger10
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
       - !type:SpawnEntitiesBehavior
         spawn:
-          FloorCarpetItemRed:
+          FloorCarpetItemRed: &BaseCarpetSpawn
             min: 1
             max: 1
 
@@ -79,17 +75,11 @@
     sprite: Structures/Furniture/Carpets/black_carpet.rsi
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 10
+    - trigger: *DamageTrigger10
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
       - !type:SpawnEntitiesBehavior
         spawn:
-          FloorCarpetItemBlack:
-            min: 1
-            max: 1
+          FloorCarpetItemBlack: *BaseCarpetSpawn
 
 - type: entity
   id: CarpetPink
@@ -103,17 +93,11 @@
     sprite: Structures/Furniture/Carpets/pink_carpet.rsi
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 10
+    - trigger: *DamageTrigger10
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
       - !type:SpawnEntitiesBehavior
         spawn:
-          FloorCarpetItemPink:
-            min: 1
-            max: 1
+          FloorCarpetItemPink: *BaseCarpetSpawn
 
 - type: entity
   id: CarpetBlue
@@ -127,17 +111,11 @@
     sprite: Structures/Furniture/Carpets/blue_carpet.rsi
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 10
+    - trigger: *DamageTrigger10
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
       - !type:SpawnEntitiesBehavior
         spawn:
-          FloorCarpetItemBlue:
-            min: 1
-            max: 1
+          FloorCarpetItemBlue: *BaseCarpetSpawn
 
 - type: entity
   id: CarpetGreen
@@ -151,17 +129,11 @@
     sprite: Structures/Furniture/Carpets/green_carpet.rsi
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 10
+    - trigger: *DamageTrigger10
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
       - !type:SpawnEntitiesBehavior
         spawn:
-          FloorCarpetItemGreen:
-            min: 1
-            max: 1
+          FloorCarpetItemGreen: *BaseCarpetSpawn
 
 - type: entity
   id: CarpetOrange
@@ -175,17 +147,11 @@
     sprite: Structures/Furniture/Carpets/orange_carpet.rsi
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 10
+    - trigger: *DamageTrigger10
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
       - !type:SpawnEntitiesBehavior
         spawn:
-          FloorCarpetItemOrange:
-            min: 1
-            max: 1
+          FloorCarpetItemOrange: *BaseCarpetSpawn
 
 - type: entity
   id: CarpetSBlue
@@ -199,17 +165,11 @@
     sprite: Structures/Furniture/Carpets/skyblue_carpet.rsi
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 10
+    - trigger: *DamageTrigger10
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
       - !type:SpawnEntitiesBehavior
         spawn:
-          FloorCarpetItemSkyBlue:
-            min: 1
-            max: 1
+          FloorCarpetItemSkyBlue: *BaseCarpetSpawn
 
 - type: entity
   id: CarpetPurple
@@ -223,17 +183,11 @@
     sprite: Structures/Furniture/Carpets/purple_carpet.rsi
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 10
+    - trigger: *DamageTrigger10
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
       - !type:SpawnEntitiesBehavior
         spawn:
-          FloorCarpetItemPurple:
-            min: 1
-            max: 1
+          FloorCarpetItemPurple: *BaseCarpetSpawn
 
 - type: entity
   id: CarpetCyan
@@ -247,17 +201,11 @@
     sprite: Structures/Furniture/Carpets/cyan_carpet.rsi
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 10
+    - trigger: *DamageTrigger10
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
       - !type:SpawnEntitiesBehavior
         spawn:
-          FloorCarpetItemCyan:
-            min: 1
-            max: 1
+          FloorCarpetItemCyan: *BaseCarpetSpawn
 
 - type: entity
   id: CarpetWhite
@@ -271,22 +219,16 @@
     sprite: Structures/Furniture/Carpets/white_carpet.rsi
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 10
+    - trigger: *DamageTrigger10
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
       - !type:SpawnEntitiesBehavior
         spawn:
-          FloorCarpetItemWhite:
-            min: 1
-            max: 1
+          FloorCarpetItemWhite: *BaseCarpetSpawn
 
 # TODO nuke this once tiles support rotating sprites
 - type: entity
-  id: CarpetChapel
   parent: BaseStructure
+  id: CarpetChapel
   name: "chapel's carpet"
   components:
   - type: Sprite
@@ -307,9 +249,7 @@
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 10
+    - trigger: *DamageTrigger10
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
@@ -318,8 +258,8 @@
 #cardpet
 
 - type: entity
-  id: CarpetCard
   parent: BaseStructure
+  id: CarpetCard
   name: cardboard "carpet"
   description: "Even lino is better."
   components:
@@ -348,17 +288,13 @@
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 10
+    - trigger: *DamageTrigger10
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
       - !type:SpawnEntitiesBehavior
         spawn:
-          MaterialCardboard:
-            min: 1
-            max: 1
+          MaterialCardboard: *BaseCarpetSpawn
   - type: ToolRefinable
     refineResult:
     - id: MaterialCardboard1
