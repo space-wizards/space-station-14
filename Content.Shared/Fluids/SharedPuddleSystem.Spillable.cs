@@ -169,7 +169,7 @@ public abstract partial class SharedPuddleSystem
 
             Reactive.DoEntityReaction(hit, splitSolution, ReactionMethod.Touch);
 
-            Popups.PopupClient(Loc.GetString("spill-melee-hit-attacker",
+            Popups.PopupEntity(Loc.GetString("spill-melee-hit-attacker",
                     ("amount", totalSplit / hitCount),
                     ("spillable", entity.Owner),
                     ("target", Identity.Entity(hit, EntityManager, args.User))),
