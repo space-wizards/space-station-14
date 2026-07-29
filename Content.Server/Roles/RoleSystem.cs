@@ -78,8 +78,10 @@ public sealed partial class RoleSystem : SharedRoleSystem
         }
         else
         {
-            var error = $"The Character Window of {mindString} potentially did not update immediately : session error";
-            _adminLogger.Add(LogType.Mind, LogImpact.Medium, $"{error}");
+            _adminLogger.Add(
+                LogType.Mind,
+                LogImpact.Medium,
+                $"The Character Window of {mindString} potentially did not update immediately : session error");
         }
     }
 }
