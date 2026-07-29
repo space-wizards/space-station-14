@@ -403,6 +403,10 @@ public sealed partial class NukeSystem : EntitySystem
                 {
                     _itemSlots.SetLock(uid, component.DiskSlot, true);
                 }
+                else // handling case of wizard recalling disk out of armed Nuke
+                {
+                    DisarmBomb(uid, component);
+                }
 
                 break;
         }
