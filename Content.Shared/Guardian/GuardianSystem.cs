@@ -42,7 +42,7 @@ public sealed partial class GuardianSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnGuardianShutdown(Entity<GuardianComponent> ent, ref ComponentShutdown args)
     {
-        if (!TryComp<GuardianHostComponent>(ent, out var hostComponent))
+        if (!_guardianHostQuery.TryComp(ent, out GuardianHostComponent? hostComponent))
             return;
 
         _container.Remove(ent.Owner, hostComponent.GuardianContainer);
@@ -76,7 +76,7 @@ public sealed partial class GuardianSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnGuardianPlayerDetached(Entity<GuardianComponent> ent, ref PlayerDetachedEvent args)
     {
-        if (!TryComp<GuardianHostComponent>(ent.Comp.Host, out var hostComponent) ||
+        if (!_guardianHostQuery.TryComp(ent.Comp.Host, out GuardianHostComponent? hostComponent) ||
             TerminatingOrDeleted(ent.Owner))
         {
             PredictedQueueDel(ent.Owner);
@@ -92,7 +92,7 @@ public sealed partial class GuardianSystem : EntitySystem
     private void OnGuardianPlayerAttached(Entity<GuardianComponent> ent, ref PlayerAttachedEvent args)
     {
         var host = ent.Comp.Host;
-        if (!HasComp<GuardianHostComponent>(host))
+        if (!_guardianHostQuery.HasComp(host))
         {
             PredictedQueueDel(ent.Owner);
             ent.Comp.Host = null;
@@ -149,7 +149,7 @@ public sealed partial class GuardianSystem : EntitySystem
         if (args.Args.Cancelled || args.Args.Attacker != ent.Comp.HostedGuardian)
             return;
 
-        if (TryComp<GuardianComponent>(args.Args.Attacker, out var guardian))
+        if (_guardianQuery.TryComp(args.Args.Attacker, out var guardian))
         {
             if (_timing.CurTime >= guardian.LastAttackPopupTime + guardian.PopupDelay)
             {
@@ -166,7 +166,7 @@ public sealed partial class GuardianSystem : EntitySystem
     [SubscribeLocalEvent]
     private void ToggleGuardian(Entity<GuardianHostComponent> ent)
     {
-        if (!TryComp<GuardianComponent>(ent.Comp.HostedGuardian, out var guardianComponent))
+        if (!_guardianQuery.TryComp(ent.Comp.HostedGuardian, out var guardianComponent))
             return;
 
         if (guardianComponent.GuardianLoose)
@@ -217,7 +217,7 @@ public sealed partial class GuardianSystem : EntitySystem
         }
 
         // If user is already a host don't duplicate.
-        if (HasComp<GuardianHostComponent>(target))
+        if (_guardianHostQuery.HasComp(target))
         {
             _popup.PopupEntity(Loc.GetString("guardian-already-present-invalid-creation"), user, user);
             return;
@@ -243,7 +243,7 @@ public sealed partial class GuardianSystem : EntitySystem
         if (args.Handled || args.Args.Target == null || args.Cancelled || ent.Comp.Deleted || ent.Comp.Used)
             return;
 
-        if (!_hands.IsHolding(args.Args.User, ent.Owner) || HasComp<GuardianHostComponent>(args.Args.Target))
+        if (!_hands.IsHolding(args.Args.User, ent.Owner) || _guardianHostQuery.HasComp(args.Args.Target))
             return;
 
         var hostXform = Transform(args.Args.Target.Value);
@@ -255,7 +255,7 @@ public sealed partial class GuardianSystem : EntitySystem
         _container.Insert(guardian, host.GuardianContainer);
         host.HostedGuardian = guardian;
 
-        if (TryComp<GuardianComponent>(guardian, out var guardianComp))
+        if (_guardianQuery.TryComp(guardian, out GuardianComponent? guardianComp))
         {
             guardianComp.Host = args.Args.Target.Value;
             Dirty(guardian, guardianComp);
@@ -285,7 +285,7 @@ public sealed partial class GuardianSystem : EntitySystem
     private void OnHostStateChange(Entity<GuardianHostComponent> ent, ref MobStateChangedEvent args)
     {
         if (ent.Comp.HostedGuardian == null ||
-            !TryComp<GuardianComponent>(ent.Comp.HostedGuardian, out var guardianComp))
+            !_guardianQuery.TryComp(ent.Comp.HostedGuardian, out GuardianComponent? guardianComp))
             return;
 
         if (args.NewMobState == MobState.Critical)
@@ -341,7 +341,7 @@ public sealed partial class GuardianSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnHostMove(Entity<GuardianHostComponent> ent, ref MoveEvent args)
     {
-        if (!TryComp<GuardianComponent>(ent.Comp.HostedGuardian, out var guardianComponent) ||
+        if (!_guardianQuery.TryComp(ent.Comp.HostedGuardian, out GuardianComponent? guardianComponent) ||
             !guardianComponent.GuardianLoose)
         {
             return;
