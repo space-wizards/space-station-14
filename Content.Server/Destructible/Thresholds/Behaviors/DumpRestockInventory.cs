@@ -12,7 +12,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors;
 /// </summary>
 [Serializable]
 [DataDefinition]
-public sealed partial class DumpRestockInventory: IThresholdBehavior
+public sealed partial class DumpRestockInventory : IThresholdBehavior
 {
     /// <summary>
     ///     The percent of each inventory entry that will be salvaged
@@ -37,23 +37,20 @@ public sealed partial class DumpRestockInventory: IThresholdBehavior
 
         foreach (var (entityId, count) in packPrototype.StartingInventory)
         {
-            var toSpawn = (int) Math.Round(count * Percent);
+            var toSpawn = (int)Math.Round(count * Percent);
 
             if (toSpawn == 0) continue;
 
-            if (EntityPrototypeHelpers.HasComponent<StackComponent>(entityId, system.PrototypeManager, system.EntityManager.ComponentFactory))
+            if (system.PrototypeManager.TryIndex(entityId, out var entProto)
+                && entProto.HasComp<StackComponent>(system.EntityManager.ComponentFactory))
             {
-                var spawned = system.EntityManager.SpawnEntity(entityId, xform.Coordinates.Offset(system.Random.NextVector2(-Offset, Offset)));
+                var spawned = system.EntityManager.SpawnAttachedTo(entityId, xform.Coordinates.Offset(system.Random.NextVector2(-Offset, Offset)), rotation: system.Random.NextAngle());
                 system.StackSystem.SetCount((spawned, null), toSpawn);
-                system.EntityManager.GetComponent<TransformComponent>(spawned).LocalRotation = system.Random.NextAngle();
             }
             else
             {
                 for (var i = 0; i < toSpawn; i++)
-                {
-                    var spawned = system.EntityManager.SpawnEntity(entityId, xform.Coordinates.Offset(system.Random.NextVector2(-Offset, Offset)));
-                    system.EntityManager.GetComponent<TransformComponent>(spawned).LocalRotation = system.Random.NextAngle();
-                }
+                    system.EntityManager.SpawnAttachedTo(entityId, xform.Coordinates.Offset(system.Random.NextVector2(-Offset, Offset)), rotation: system.Random.NextAngle());
             }
         }
     }
