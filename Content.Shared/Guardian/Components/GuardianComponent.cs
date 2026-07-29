@@ -1,12 +1,14 @@
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Guardian.Components;
 
 /// <summary>
 /// Given to guardians to monitor their link with the host.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent]
+[AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class GuardianComponent : Component
 {
     /// <summary>
@@ -54,12 +56,12 @@ public sealed partial class GuardianComponent : Component
     /// <summary>
     /// The last time that the entity received an attack popup.
     /// </summary>
-    [ViewVariables]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan LastAttackPopupTime;
 
     /// <summary>
-    /// The delay between showing attack popups to the entity.
+    /// The delay between showing popups to the guardian when trying to attack its host.
     /// </summary>
-    [ViewVariables]
-    public TimeSpan PopupDelay = TimeSpan.FromSeconds(1);
+    [DataField]
+    public TimeSpan AttackPopupDelay = TimeSpan.FromSeconds(1);
 }

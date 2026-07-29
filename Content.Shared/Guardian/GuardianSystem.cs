@@ -133,7 +133,7 @@ public sealed partial class GuardianSystem : EntitySystem
         if (args.Cancelled || args.Target != ent.Comp.Host)
             return;
 
-        if (_timing.CurTime >= ent.Comp.LastAttackPopupTime + ent.Comp.PopupDelay)
+        if (_timing.CurTime >= ent.Comp.LastAttackPopupTime + ent.Comp.AttackPopupDelay)
         {
             _popup.PopupCursor(Loc.GetString("guardian-attack-host"), ent.Owner, PopupType.LargeCaution);
         }
@@ -151,7 +151,7 @@ public sealed partial class GuardianSystem : EntitySystem
 
         if (_guardianQuery.TryComp(args.Args.Attacker, out var guardian))
         {
-            if (_timing.CurTime >= guardian.LastAttackPopupTime + guardian.PopupDelay)
+            if (_timing.CurTime >= guardian.LastAttackPopupTime + guardian.AttackPopupDelay)
             {
                 _popup.PopupCursor(Loc.GetString("guardian-attack-host"),
                     args.Args.Attacker,
