@@ -42,6 +42,7 @@ public sealed partial class NameIdentifierGroupPrototype : IPrototype
 
     /// <summary>
     /// An optional field that will provide a list of name elements to pull from.
+    /// If non-null, <see cref="MinValue"/> and <see cref="MaxValue"/> will be ignored.
     /// </summary>
     [DataField]
     public ProtoId<LocalizedDatasetPrototype>? IdentifierDataset;
