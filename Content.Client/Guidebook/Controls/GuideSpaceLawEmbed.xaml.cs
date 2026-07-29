@@ -67,7 +67,6 @@ public sealed partial class GuideSpaceLawEmbed : Control, IDocumentTag
         {
             _logging.Error($"Failed to parse severity tier table XML for \"{tier.ID}\"");
         }
-
     }
 
     /// <summary>
