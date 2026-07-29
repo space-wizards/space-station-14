@@ -274,6 +274,12 @@
   - type: EggLayer
     eggSpawn:
     - id: FoodEgg
+  - type: HungerProduction
+    delay: 60
+    delayMax: 120
+    hungerUsage: 60
+    minimumHunger: 60
+    automaticForPlayers: false
   - type: ExaminableHunger
   - type: ReplacementAccent
     accent: chicken
@@ -725,6 +731,12 @@
   - type: EggLayer
     eggSpawn:
     - id: FoodEgg
+  - type: HungerProduction
+    delay: 60
+    delayMax: 120
+    hungerUsage: 60
+    minimumHunger: 60
+    automaticForPlayers: false
   - type: ExaminableHunger
   - type: ReplacementAccent
     accent: duck

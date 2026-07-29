@@ -1,16 +1,12 @@
 using Content.Server.Actions;
 using Content.Server.Animals.Components;
 using Content.Server.Popups;
+using Content.Shared.Animals;
 using Content.Shared.Actions.Events;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Mobs.Systems;
-using Content.Shared.Nutrition.Components;
-using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Storage;
 using Robust.Server.Audio;
-using Robust.Shared.Player;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Animals.Systems;
 
@@ -23,90 +19,39 @@ public sealed partial class EggLayerSystem : EntitySystem
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private ActionsSystem _actions = default!;
     [Dependency] private AudioSystem _audio = default!;
-    [Dependency] private HungerSystem _hunger = default!;
-    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private HungerProductionSystem _hungerProduction = default!;
     [Dependency] private PopupSystem _popup = default!;
-    [Dependency] private MobStateSystem _mobState = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<EggLayerComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<EggLayerComponent, EggLayInstantActionEvent>(OnEggLayAction);
-    }
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-        var query = EntityQueryEnumerator<EggLayerComponent>();
-        while (query.MoveNext(out var uid, out var eggLayer))
-        {
-            // Players should be using the action.
-            if (HasComp<ActorComponent>(uid))
-                continue;
-
-            if (_timing.CurTime < eggLayer.NextGrowth)
-                continue;
-
-            // Randomize next growth time for more organic egglaying.
-            eggLayer.NextGrowth += TimeSpan.FromSeconds(_random.NextFloat(eggLayer.EggLayCooldownMin, eggLayer.EggLayCooldownMax));
-
-            if (_mobState.IsDead(uid))
-                continue;
-
-            // Hungerlevel check/modification is done in TryLayEgg()
-            // so it's used for player controlled chickens as well.
-
-            TryLayEgg(uid, eggLayer);
-        }
-    }
-
+    [SubscribeLocalEvent]
     private void OnMapInit(EntityUid uid, EggLayerComponent component, MapInitEvent args)
     {
         _actions.AddAction(uid, ref component.Action, component.EggLayAction);
-        component.NextGrowth = _timing.CurTime + TimeSpan.FromSeconds(_random.NextFloat(component.EggLayCooldownMin, component.EggLayCooldownMax));
     }
 
+    [SubscribeLocalEvent]
     private void OnEggLayAction(EntityUid uid, EggLayerComponent egglayer, EggLayInstantActionEvent args)
     {
         // Cooldown is handeled by ActionAnimalLayEgg in types.yml.
-        args.Handled = TryLayEgg(uid, egglayer);
+        args.Handled = _hungerProduction.TryProduce(uid, out var failure);
+        if (failure == HungerProductionFailure.Hungry)
+            _popup.PopupEntity(Loc.GetString("action-popup-lay-egg-too-hungry"), uid, uid);
     }
 
-    public bool TryLayEgg(EntityUid uid, EggLayerComponent? egglayer)
+    [SubscribeLocalEvent]
+    private void OnProduce(Entity<EggLayerComponent> ent, ref HungerProductionEvent args)
     {
-        if (!Resolve(uid, ref egglayer))
-            return false;
-
-        if (_mobState.IsDead(uid))
-            return false;
-
-        // Allow infinitely laying eggs if they can't get hungry.
-        if (TryComp<HungerComponent>(uid, out var hunger))
+        foreach (var spawn in EntitySpawnCollection.GetSpawns(ent.Comp.EggSpawn, _random))
         {
-            if (_hunger.GetHunger(hunger) < egglayer.HungerUsage)
-            {
-                _popup.PopupEntity(Loc.GetString("action-popup-lay-egg-too-hungry"), uid, uid);
-                return false;
-            }
-
-            _hunger.ModifyHunger(uid, -egglayer.HungerUsage, hunger);
+            SpawnNextToOrDrop(spawn, args.Owner);
         }
 
-        foreach (var ent in EntitySpawnCollection.GetSpawns(egglayer.EggSpawn, _random))
-        {
-            SpawnNextToOrDrop(ent, uid);
-        }
-
-        // Sound + popups
-        _audio.PlayPvs(egglayer.EggLaySound, uid);
+        _audio.PlayPvs(ent.Comp.EggLaySound, args.Owner);
         _popup.PopupEntity(
             Loc.GetString("action-popup-lay-egg-user"),
-            Loc.GetString("action-popup-lay-egg-others", ("entity", Identity.Entity(uid, EntityManager))),
-            uid,
-            uid);
+            Loc.GetString("action-popup-lay-egg-others", ("entity", Identity.Entity(args.Owner, EntityManager))),
+            args.Owner,
+            args.Owner);
 
-        return true;
+        args.Produced = true;
     }
 }

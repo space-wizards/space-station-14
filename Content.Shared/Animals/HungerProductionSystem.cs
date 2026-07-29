@@ -1,0 +1,107 @@
+using Content.Shared.Mobs.Systems;
+using Content.Shared.Nutrition.Components;
+using Content.Shared.Nutrition.EntitySystems;
+using Robust.Shared.Player;
+using Robust.Shared.Random;
+using Robust.Shared.Timing;
+
+namespace Content.Shared.Animals;
+
+/// <inheritdoc cref="HungerProductionComponent"/>
+public sealed partial class HungerProductionSystem : EntitySystem
+{
+    [Dependency] private HungerSystem _hunger = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private IRobustRandom _random = default!;
+
+    [SubscribeLocalEvent]
+    private void OnMapInit(Entity<HungerProductionComponent> ent, ref MapInitEvent args)
+    {
+        ent.Comp.NextProductionTime = _timing.CurTime + GetDelay(ent.Comp);
+        Dirty(ent);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var query = EntityQueryEnumerator<HungerProductionComponent>();
+        while (query.MoveNext(out var uid, out var producer))
+        {
+            if (!producer.Automatic)
+                continue;
+
+            var owner = GetOwner((uid, producer));
+            if (!producer.AutomaticForPlayers && HasComp<ActorComponent>(owner))
+                continue;
+
+            if (_timing.CurTime < producer.NextProductionTime)
+                continue;
+
+            producer.NextProductionTime += GetDelay(producer);
+            Dirty(uid, producer);
+            TryProduce((uid, producer), out _);
+        }
+    }
+
+    /// <summary>
+    /// Attempts production immediately, independently of the automatic timer.
+    /// </summary>
+    public bool TryProduce(
+        Entity<HungerProductionComponent?> ent,
+        out HungerProductionFailure failure)
+    {
+        failure = HungerProductionFailure.ProductUnavailable;
+        if (!Resolve(ent, ref ent.Comp))
+            return false;
+
+        var owner = GetOwner((ent.Owner, ent.Comp));
+        if (_mobState.IsDead(owner))
+        {
+            failure = HungerProductionFailure.Dead;
+            return false;
+        }
+
+        if (TryComp(owner, out HungerComponent? hunger))
+        {
+            if (ent.Comp.MinimumHungerThreshold is { } threshold &&
+                _hunger.GetHungerThreshold(hunger) < threshold ||
+                ent.Comp.MinimumHunger is { } minimum &&
+                _hunger.GetHunger(hunger) < minimum)
+            {
+                failure = HungerProductionFailure.Hungry;
+                return false;
+            }
+        }
+
+        var ev = new HungerProductionEvent(owner);
+        RaiseLocalEvent(ent.Owner, ref ev);
+        if (!ev.Produced)
+            return false;
+
+        if (hunger != null)
+            _hunger.ModifyHunger(owner, -ent.Comp.HungerUsage, hunger);
+
+        failure = HungerProductionFailure.None;
+        return true;
+    }
+
+    private EntityUid GetOwner(Entity<HungerProductionComponent> ent)
+    {
+        return ent.Comp.OwnerEntity switch
+        {
+            HungerProductionOwner.Parent => Transform(ent).ParentUid,
+            _ => ent.Owner,
+        };
+    }
+
+    private TimeSpan GetDelay(HungerProductionComponent component)
+    {
+        if (component.DelayMax is not { } maximum)
+            return component.Delay;
+
+        var seconds = _random.NextDouble(component.Delay.TotalSeconds, maximum.TotalSeconds);
+        return TimeSpan.FromSeconds(seconds);
+    }
+}
