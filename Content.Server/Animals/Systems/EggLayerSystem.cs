@@ -2,6 +2,7 @@ using Content.Server.Actions;
 using Content.Server.Animals.Components;
 using Content.Server.Popups;
 using Content.Shared.Actions.Events;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
@@ -95,13 +96,16 @@ public sealed partial class EggLayerSystem : EntitySystem
 
         foreach (var ent in EntitySpawnCollection.GetSpawns(egglayer.EggSpawn, _random))
         {
-            Spawn(ent, Transform(uid).Coordinates);
+            SpawnNextToOrDrop(ent, uid);
         }
 
         // Sound + popups
         _audio.PlayPvs(egglayer.EggLaySound, uid);
-        _popup.PopupEntity(Loc.GetString("action-popup-lay-egg-user"), uid, uid);
-        _popup.PopupEntity(Loc.GetString("action-popup-lay-egg-others", ("entity", uid)), uid, Filter.PvsExcept(uid), true);
+        _popup.PopupEntity(
+            Loc.GetString("action-popup-lay-egg-user"),
+            Loc.GetString("action-popup-lay-egg-others", ("entity", Identity.Entity(uid, EntityManager))),
+            uid,
+            uid);
 
         return true;
     }
