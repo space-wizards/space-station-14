@@ -1,15 +1,12 @@
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.Pow3r;
-using Content.Server.StationEvents.Components;
-using Content.Server.StationEvents.Events;
 using Content.Shared.Access.Systems;
 using Content.Shared.Administration.Logs;
 using Content.Shared.APC;
 using Content.Shared.Database;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Emp;
-using Content.Shared.GameTicking.Components;
 using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.Rounding;
@@ -27,7 +24,6 @@ public sealed partial class ApcSystem : EntitySystem
     [Dependency] private IGameTiming _gameTiming = default!;
     [Dependency] private EmagSystem _emag = default!;
     [Dependency] private PopupSystem _popup = default!;
-    [Dependency] private PowerGridCheckRule _powerGridCheckRule = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
@@ -42,7 +38,6 @@ public sealed partial class ApcSystem : EntitySystem
         SubscribeLocalEvent<ApcComponent, ComponentStartup>(OnApcStartup);
         SubscribeLocalEvent<ApcComponent, ChargeChangedEvent>(OnBatteryChargeChanged);
         SubscribeLocalEvent<ApcComponent, ApcToggleMainBreakerMessage>(OnToggleMainBreaker);
-        SubscribeLocalEvent<ApcComponent, ApcToggleMainBreakerAttemptEvent>(OnApcToggleMainBreakerAttempt);
         SubscribeLocalEvent<ApcComponent, GotEmaggedEvent>(OnEmagged);
 
         SubscribeLocalEvent<ApcComponent, EmpPulseEvent>(OnEmpPulse);
@@ -101,12 +96,6 @@ public sealed partial class ApcSystem : EntitySystem
         // We cannot update immediately, as various network/battery state is not valid yet.
         // Defer until the next tick.
         component.NeedStateUpdate = true;
-
-        var query = AllEntityQuery<PowerGridCheckRuleComponent, ActiveGameRuleComponent>();
-
-        while (query.MoveNext(out var ruleUid, out var ruleComp, out var _activeGameRule))
-            if (_powerGridCheckRule.TryAddUnpoweredApc((ruleUid, ruleComp), (uid, component)))
-                component.MainBreakerEnabled = false;
     }
 
     private void OnBoundUiOpen(EntityUid uid, ApcComponent component, BoundUIOpenedEvent args)
@@ -134,15 +123,6 @@ public sealed partial class ApcSystem : EntitySystem
             _popup.PopupCursor(Loc.GetString("apc-component-insufficient-access"),
                 args.Actor, PopupType.Medium);
         }
-    }
-
-    private void OnApcToggleMainBreakerAttempt(Entity<ApcComponent> ent, ref ApcToggleMainBreakerAttemptEvent args)
-    {
-        var query = AllEntityQuery<PowerGridCheckRuleComponent, ActiveGameRuleComponent>();
-
-        while (query.MoveNext(out var ruleUid, out var ruleComp, out var _activeGameRule))
-            if (_powerGridCheckRule.ContainsUnpoweredApc((ruleUid, ruleComp), ent))
-                args.Cancelled = true;
     }
 
     /// <summary>Toggles the enabled state of the APC's main breaker.</summary>
@@ -189,9 +169,6 @@ public sealed partial class ApcSystem : EntitySystem
     {
         if (!Resolve(uid, ref apc, ref battery, false))
             return;
-
-        // May have been disabled at startup, but we had to wait to react
-        battery.CanDischarge = apc.MainBreakerEnabled;
 
         if (apc.LastChargeStateTime == null || apc.LastChargeStateTime + ApcComponent.VisualsChangeDelay < _gameTiming.CurTime)
         {

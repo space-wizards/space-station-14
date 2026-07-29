@@ -3,7 +3,6 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Station.Components;
 using Content.Server.StationEvents.Components;
-using Content.Server.GameTicking;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Station.Components;
 using JetBrains.Annotations;
@@ -19,7 +18,6 @@ namespace Content.Server.StationEvents.Events
     public sealed partial class PowerGridCheckRule : StationEventSystem<PowerGridCheckRuleComponent>
     {
         [Dependency] private ApcSystem _apcSystem = default!;
-        [Dependency] private GameTicker _gameTicker = default!;
 
         public override void Initialize()
         {
@@ -40,8 +38,16 @@ namespace Content.Server.StationEvents.Events
             var query = AllEntityQuery<ApcComponent, TransformComponent>();
             while (query.MoveNext(out var apcUid, out var apc, out var transform))
             {
-                if (apc.MainBreakerEnabled && ApcCanBeAffected((uid, component), (apcUid, apc)))
-                    component.Powered.Add(apcUid);
+                if (!apc.MainBreakerEnabled)
+                    continue;
+
+                if (!HasComp<BecomesStationComponent>(transform.GridUid))
+                    continue;
+
+                if (CompOrNull<StationMemberComponent>(transform.GridUid)?.Station != chosenStation)
+                    continue;
+
+                component.Powered.Add(apcUid);
             }
 
             RobustRandom.Shuffle(component.Powered);
@@ -159,42 +165,6 @@ namespace Content.Server.StationEvents.Events
                 }
                 component.Unpowered.Add(selected);
             }
-        }
-
-        public bool ApcCanBeAffected(Entity<PowerGridCheckRuleComponent> ent, Entity<ApcComponent> apc, TransformComponent? apcXform = null)
-        {
-            if (!_gameTicker.IsGameRuleActive(ent.Owner))
-                return false;
-
-            if (!Resolve(apc.Owner, ref apcXform))
-                return false;
-
-            if (!HasComp<BecomesStationComponent>(apcXform.GridUid))
-                return false;
-
-            return CompOrNull<StationMemberComponent>(apcXform.GridUid)?.Station == ent.Comp.AffectedStation;
-        }
-
-        public bool ContainsUnpoweredApc(Entity<PowerGridCheckRuleComponent> ent, Entity<ApcComponent> apc)
-        {
-            if (!ApcCanBeAffected(ent, apc))
-                return false;
-
-            return ent.Comp.Unpowered.Contains(apc.Owner);
-        }
-
-        public bool TryAddUnpoweredApc(Entity<PowerGridCheckRuleComponent> ent, Entity<ApcComponent> apc)
-        {
-            if (!ApcCanBeAffected(ent, apc))
-                return false;
-
-            if (ent.Comp.Powered.Contains(apc.Owner) ||
-                ent.Comp.Unpowered.Contains(apc.Owner))
-                return false;
-
-            ent.Comp.Unpowered.Add(apc.Owner);
-
-            return true;
         }
     }
 }
