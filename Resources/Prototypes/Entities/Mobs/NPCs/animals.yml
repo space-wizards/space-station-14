@@ -968,6 +968,7 @@
     owner: Parent
     delay: 30
     minimumHungerThreshold: Okay
+  # TODO: toxins from bloodstream !?
   - type: SolutionProducer
     generated:
       reagents:

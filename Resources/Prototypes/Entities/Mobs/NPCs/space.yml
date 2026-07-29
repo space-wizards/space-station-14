@@ -477,7 +477,6 @@
     price: 600
   - type: SolutionManager
     solutions:
-    - SolutionUdderSheep
     - SolutionWoolSpaceSheep
   - type: Speech
     speechSounds: SheepSpace
@@ -491,7 +490,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: HungerProduction
-    delay: 120
+    delay: 120 #2 minutes
   - type: SolutionProducer
     generated:
       reagents:

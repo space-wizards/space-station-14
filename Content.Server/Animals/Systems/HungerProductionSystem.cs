@@ -20,7 +20,6 @@ public sealed partial class HungerProductionSystem : EntitySystem
     private void OnMapInit(Entity<HungerProductionComponent> ent, ref MapInitEvent args)
     {
         ent.Comp.NextProductionTime = _timing.CurTime + GetDelay(ent.Comp);
-        Dirty(ent);
     }
 
     public override void Update(float frameTime)
@@ -41,7 +40,6 @@ public sealed partial class HungerProductionSystem : EntitySystem
                 continue;
 
             producer.NextProductionTime += GetDelay(producer);
-            Dirty(uid, producer);
             TryProduce((uid, producer), out _);
         }
     }
