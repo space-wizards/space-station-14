@@ -11,6 +11,7 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -257,14 +258,7 @@ public abstract partial class SharedRoleSystem : EntitySystem
         comp.Subtype = subtype;
         Dirty(mind, comp);
 
-        // Update player character window
-        if (Player.TryGetSessionById(comp.UserId, out var session))
-            RaiseNetworkEvent(new MindRoleTypeChangedEvent(), session.Channel);
-        else
-        {
-            var error = $"The Character Window of {_minds.MindOwnerLoggingString(comp)} potentially did not update immediately : session error";
-            _adminLogger.Add(LogType.Mind, LogImpact.Medium, $"{error}");
-        }
+        UpdateCharacterWindow(comp.UserId, _minds.MindOwnerLoggingString(comp));
 
         if (comp.OwnedEntity is null)
         {
@@ -279,6 +273,14 @@ public abstract partial class SharedRoleSystem : EntitySystem
             LogImpact.High,
             $"Role Type of {ToPrettyString(comp.OwnedEntity)} changed to {roleTypeId}, {subtype}");
     }
+
+    /// <summary>
+    /// Server only. Informs the specified player's CharacterUIController that their mind role has changed,
+    /// So that their Character window gets updated if it is currently open.
+    /// </summary>
+    /// <param name="user">The player that will be updated.</param>
+    /// <param name="mindString">The name of the mob's controlling mind. Only used for logging.</param>
+    protected virtual void UpdateCharacterWindow(NetUserId? user, MindStringRepresentation mindString) { }
 
     /// <summary>
     /// Finds and removes all mind roles of a specific type

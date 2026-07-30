@@ -69,8 +69,10 @@
     components:
       - BorgChassis
       - MimePowers # Blacklisted to prevent mimes losing mutedness when gaining an antag role.
-  components:
-    - type: Muted
+  specials:
+  - !type:ApplyStatusEffectSpecial
+    statusEffects:
+    - TraitStatusEffectMuted
 
 - type: trait
   id: Paracusia
