@@ -31,4 +31,3 @@ public sealed partial class ApcPowerReceiverComponent : SharedApcPowerReceiverCo
 
     public float PowerReceived => NetworkLoad.ReceivingPower;
 }
-
