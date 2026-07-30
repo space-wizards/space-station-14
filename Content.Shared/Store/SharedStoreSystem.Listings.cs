@@ -118,21 +118,19 @@ public abstract partial class SharedStoreSystem
 
             if (listing.Conditions != null)
             {
-                var args = new ListingConditionArgs(GetBuyerMind(buyer), storeEntity, listing, EntityManager, null);
+                var args = new ListingConditionArgs(GetBuyerMind(buyer), storeEntity, listing, EntityManager);
                 var conditionsMet = true;
 
                 foreach (var condition in listing.Conditions)
                 {
-                    if (!condition.Condition(ref args))
+                    if (!condition.Condition(args))
                     {
                         conditionsMet = false;
                         break;
                     }
                 }
 
-                listing.DisabledMessage = args.Message;
-
-                if (!conditionsMet && args.Message == null)
+                if (!conditionsMet)
                     continue;
             }
 

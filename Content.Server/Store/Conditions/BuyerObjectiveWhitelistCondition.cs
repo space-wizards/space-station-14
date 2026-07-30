@@ -23,7 +23,7 @@ public sealed partial class BuyerObjectiveWhitelistCondition : ListingCondition
     [DataField]
     public EntityWhitelist? Blacklist;
 
-    public override bool Condition(ref ListingConditionArgs args)
+    public override bool Condition(ListingConditionArgs args)
     {
         var ent = args.EntityManager;
         var whitelistSystem = ent.System<EntityWhitelistSystem>();

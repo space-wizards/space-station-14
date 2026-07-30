@@ -40,7 +40,6 @@ public partial class ListingData : IEquatable<ListingData>
         other.Categories,
         other.OriginalCost,
         other.RestockTime,
-        other.DisabledMessage,
         other.DiscountDownTo,
         other.DisableRefund,
         other.ApplyToMob
@@ -68,7 +67,6 @@ public partial class ListingData : IEquatable<ListingData>
         HashSet<ProtoId<StoreCategoryPrototype>> categories,
         IReadOnlyDictionary<ProtoId<CurrencyPrototype>, FixedPoint2> originalCost,
         TimeSpan restockTime,
-        String? disabledMessage,
         Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> dataDiscountDownTo,
         bool disableRefund,
         bool applyToMob
@@ -92,7 +90,6 @@ public partial class ListingData : IEquatable<ListingData>
         Categories = categories.ToHashSet();
         OriginalCost = originalCost;
         RestockTime = restockTime;
-        DisabledMessage = disabledMessage;
         DiscountDownTo = new Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2>(dataDiscountDownTo);
         DisableRefund = disableRefund;
         ApplyToMob = applyToMob;
@@ -210,12 +207,6 @@ public partial class ListingData : IEquatable<ListingData>
     public TimeSpan RestockTime = TimeSpan.Zero;
 
     /// <summary>
-    /// Used for conditions that display messages in the store
-    /// </summary>
-    [DataField]
-    public String? DisabledMessage = null;
-
-    /// <summary>
     /// Options for discount - from max amount down to how much item costs can be cut by discount, absolute value.
     /// </summary>
     [DataField]
@@ -329,7 +320,6 @@ public sealed partial class ListingDataWithCostModifiers : ListingData
             listingData.Categories,
             listingData.OriginalCost,
             listingData.RestockTime,
-            listingData.DisabledMessage,
             listingData.DiscountDownTo,
             listingData.DisableRefund,
             listingData.ApplyToMob

@@ -24,7 +24,7 @@ public sealed partial class BuyerAntagCondition : ListingCondition
     [DataField("blacklist", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<AntagPrototype>))]
     public HashSet<string>? Blacklist;
 
-    public override bool Condition(ref ListingConditionArgs args)
+    public override bool Condition(ListingConditionArgs args)
     {
         var ent = args.EntityManager;
 

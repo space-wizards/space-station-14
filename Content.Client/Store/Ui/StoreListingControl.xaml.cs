@@ -49,7 +49,7 @@ public sealed partial class StoreListingControl : Control
             return false;
 
         var stationTime = _timing.CurTime.Subtract(_ticker.RoundStartTimeSpan);
-        if (_data.RestockTime > stationTime || _data.DisabledMessage != null)
+        if (_data.RestockTime > stationTime)
             return false;
 
         return true;
@@ -63,8 +63,6 @@ public sealed partial class StoreListingControl : Control
             var timeLeftToBuy = stationTime - _data.RestockTime;
             StoreItemBuyButton.Text =  timeLeftToBuy.Duration().ToString(@"mm\:ss");
         }
-        else if (_data.DisabledMessage != null)
-            StoreItemBuyButton.Text = _data.DisabledMessage;
         else
         {
             DiscountSubText.Text = _discount;
