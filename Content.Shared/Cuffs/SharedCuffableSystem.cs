@@ -120,16 +120,15 @@ namespace Content.Shared.Cuffs
                     return;
                 }
 
-                // We temporarily allow interactions so the cuffable system does not block itself.
-                // It's assumed that this will always be false.
-                // Otherwise they would not be trying to uncuff themselves.
+                // We temporarily allow interactions so the cuffable system does not block itself..
+                bool oldCanStillInteract = cuffable.CanStillInteract;
                 cuffable.CanStillInteract = true;
                 Dirty(args.User, cuffable);
 
                 if (!_actionBlocker.CanInteract(args.User, args.User))
                     args.Cancelled = true;
 
-                cuffable.CanStillInteract = false;
+                cuffable.CanStillInteract = oldCanStillInteract;
                 Dirty(args.User, cuffable);
             }
             else
@@ -173,19 +172,20 @@ namespace Content.Shared.Cuffs
 
         public void UpdateCuffState(EntityUid uid, CuffableComponent component)
         {
+            if (component.CuffedHandCount == 0)
+                _alerts.ClearAlert(uid, component.CuffedAlert);
+            else
+                _alerts.ShowAlert(uid, component.CuffedAlert);
+
+            Dirty(uid, component);
+
             var canInteract = TryComp(uid, out HandsComponent? hands) && hands.Hands.Count > component.CuffedHandCount;
 
             if (canInteract == component.CanStillInteract)
                 return;
 
             component.CanStillInteract = canInteract;
-            Dirty(uid, component);
             _actionBlocker.UpdateCanMove(uid);
-
-            if (component.CanStillInteract)
-                _alerts.ClearAlert(uid, component.CuffedAlert);
-            else
-                _alerts.ShowAlert(uid, component.CuffedAlert);
 
             var ev = new CuffedStateChangeEvent();
             RaiseLocalEvent(uid, ref ev);
@@ -344,7 +344,7 @@ namespace Content.Shared.Cuffs
                 return;
             args.Handled = true;
 
-            if (!args.Cancelled && TryAddNewCuffs(target, user, uid, cuffable))
+            if (!args.Cancelled && TryAddNewCuffs((target, cuffable), user, uid))
             {
                 component.Used = true;
                 _audio.PlayPredicted(component.EndCuffSound, uid, user);
@@ -410,6 +410,9 @@ namespace Content.Shared.Cuffs
             var dirty = false;
             var handCount = CompOrNull<HandsComponent>(ent.Owner)?.Count ?? 0;
 
+            if (ent.Comp.CuffedHandCount == handCount && ent.Comp.CuffedHandCount > 0)
+                dirty = true;
+
             while (ent.Comp.CuffedHandCount > handCount && ent.Comp.CuffedHandCount > 0)
             {
                 dirty = true;
@@ -429,69 +432,64 @@ namespace Content.Shared.Cuffs
         /// <summary>
         ///     Adds virtual cuff items to the user's hands.
         /// </summary>
-        private void UpdateHeldItems(EntityUid uid, EntityUid handcuff, CuffableComponent? component = null)
+        private void UpdateHeldItems(Entity<CuffableComponent?> target, EntityUid handcuff, int handsToCuff = 2)
         {
-            if (!Resolve(uid, ref component))
+            if (!Resolve(target, ref target.Comp))
                 return;
 
             // TODO we probably don't just want to use the generic virtual-item entity, and instead
             // want to add our own item, so that use-in-hand triggers an uncuff attempt and the like.
 
-            if (!TryComp<HandsComponent>(uid, out var handsComponent))
+            Entity<HandsComponent?> hands = target.Owner;
+            if (!Resolve(hands, ref hands.Comp))
                 return;
 
-            var freeHands = 0;
-            foreach (var hand in _hands.EnumerateHands((uid, handsComponent)))
+            foreach (var hand in hands.Comp.SortedHands)
             {
-                if (!_hands.TryGetHeldItem((uid, handsComponent), hand, out var held))
+                if (_hands.TryGetHeldItem(hands, hand, out var held))
                 {
-                    freeHands++;
-                    continue;
+                    // Is this entity removable? (it might be an existing handcuff blocker)
+                    if (HasComp<UnremoveableComponent>(held))
+                        continue;
+                    _hands.DoDrop(hands, hand, true);
                 }
 
-                // Is this entity removable? (it might be an existing handcuff blocker)
-                if (HasComp<UnremoveableComponent>(held))
-                    continue;
+                if (_virtualItem.TrySpawnVirtualItemInHand(handcuff, target, out var virtItem, empty: hand))
+                    EnsureComp<UnremoveableComponent>(virtItem.Value);
 
-                _hands.DoDrop(uid, hand, true);
-                freeHands++;
-                if (freeHands == 2)
-                    break;
+                handsToCuff--;
+
+                if (handsToCuff == 0)
+                    return;
             }
-
-            if (_virtualItem.TrySpawnVirtualItemInHand(handcuff, uid, out var virtItem1))
-                EnsureComp<UnremoveableComponent>(virtItem1.Value);
-
-            if (_virtualItem.TrySpawnVirtualItemInHand(handcuff, uid, out var virtItem2))
-                EnsureComp<UnremoveableComponent>(virtItem2.Value);
         }
 
         /// <summary>
         /// Add a set of cuffs to an existing CuffedComponent.
         /// </summary>
-        public bool TryAddNewCuffs(EntityUid target, EntityUid user, EntityUid handcuff, CuffableComponent? component = null, HandcuffComponent? cuff = null)
+        public bool TryAddNewCuffs(Entity<CuffableComponent?> target, EntityUid user, EntityUid handcuff)
         {
-            if (!Resolve(target, ref component) || !Resolve(handcuff, ref cuff))
+            if (!Resolve(target, ref target.Comp) || !HasComp<HandcuffComponent>(handcuff))
                 return false;
 
-            if (!_interaction.InRangeUnobstructed(handcuff, target))
+            if (!_interaction.InRangeUnobstructed(handcuff, target.Owner))
                 return false;
 
             // if the amount of hands the target has is equal to or less than the amount of hands that are cuffed
             // don't apply the new set of cuffs
             // (how would you even end up with more cuffed hands than actual hands? either way accounting for it)
-            if (TryComp<HandsComponent>(target, out var hands) && hands.Count <= component.CuffedHandCount)
+            if (TryComp<HandsComponent>(target, out var hands) && hands.Count <= target.Comp.CuffedHandCount)
                 return false;
 
             // Success!
             _hands.TryDrop(user, handcuff);
 
-            _container.Insert(handcuff, component.Container);
+            _container.Insert(handcuff, target.Comp.Container);
 
             var ev = new TargetHandcuffedEvent();
             RaiseLocalEvent(target, ref ev);
 
-            UpdateHeldItems(target, handcuff, component);
+            UpdateHeldItems(target, handcuff);
 
             return true;
         }
