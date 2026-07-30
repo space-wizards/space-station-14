@@ -9,7 +9,7 @@ namespace Content.Shared.Revolutionary.Components;
 /// <summary>
 /// Used for marking regular revs as well as storing icon prototypes so you can see fellow revs.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedRevolutionarySystem))]
+[RegisterComponent, NetworkedComponent(StateRestriction.SessionSpecific), Access(typeof(SharedRevolutionarySystem))]
 public sealed partial class RevolutionaryComponent : Component
 {
     /// <summary>
@@ -23,6 +23,4 @@ public sealed partial class RevolutionaryComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier RevStartSound = new SoundPathSpecifier("/Audio/Ambience/Antag/headrev_start.ogg");
-
-    public override bool SessionSpecific => true;
 }
