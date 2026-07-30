@@ -9,6 +9,9 @@ namespace Content.Shared.Power.Components;
 [NetworkedComponent]
 public abstract partial class SharedApcPowerReceiverComponent : Component
 {
+    /// <summary>
+    ///     If true, this entity either doesn't need power, or is currently receiving the power it needs.
+    /// </summary>
     [ViewVariables]
     public bool Powered;
 

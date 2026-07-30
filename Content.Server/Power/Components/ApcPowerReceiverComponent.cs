@@ -14,6 +14,9 @@ public sealed partial class ApcPowerReceiverComponent : SharedApcPowerReceiverCo
         set => NetworkLoad.DesiredPower = value;
     }
 
+    /// <summary>
+    ///     The component currently providing this entity with power.
+    /// </summary>
     public ApcPowerProviderComponent? Provider = null;
 
     /// <inheritdoc />
@@ -23,11 +26,17 @@ public sealed partial class ApcPowerReceiverComponent : SharedApcPowerReceiverCo
         set => NetworkLoad.Enabled = !value;
     }
 
+    /// <summary>
+    ///     The load of the network as an object used by Pow3r.
+    /// </summary>
     [ViewVariables]
     public PowerState.Load NetworkLoad { get; } = new PowerState.Load
     {
         DesiredPower = 5
     };
 
+    /// <summary>
+    ///     The power currently being received, in watts.
+    /// </summary>
     public float PowerReceived => NetworkLoad.ReceivingPower;
 }
