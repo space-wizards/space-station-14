@@ -10,12 +10,7 @@ public sealed partial class PermanentStatusEffectsSystem : EntitySystem
 {
     [Dependency] private StatusEffectsSystem _statusEffects = default!;
 
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<PermanentStatusEffectsComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<PermanentStatusEffectsComponent, ComponentRemove>(OnRemove);
-    }
-
+    [SubscribeLocalEvent]
     private void OnMapInit(Entity<PermanentStatusEffectsComponent> ent, ref MapInitEvent args)
     {
         foreach (var effect in ent.Comp.StatusEffects)
@@ -24,6 +19,7 @@ public sealed partial class PermanentStatusEffectsSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnRemove(Entity<PermanentStatusEffectsComponent> ent, ref ComponentRemove args)
     {
         foreach (var effect in ent.Comp.StatusEffects)

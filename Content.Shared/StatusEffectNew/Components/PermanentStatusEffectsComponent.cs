@@ -13,5 +13,5 @@ public sealed partial class PermanentStatusEffectsComponent : Component
     /// The status effects to apply.
     /// </summary>
     [DataField(required: true)]
-    public HashSet<EntProtoId> StatusEffects = [];
+    public HashSet<EntProtoId> StatusEffects = []
 }
