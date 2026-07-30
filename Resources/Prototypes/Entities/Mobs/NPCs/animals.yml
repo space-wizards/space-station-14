@@ -2177,14 +2177,6 @@
     heldPrefix: 2
 
 - type: entity
-  parent: OrganAnimalLungs
-  id: OrganLikesRadiationLungs
-  suffix: Likes radiation
-  components:
-  - type: Metabolizer
-    metabolizerTypes: [ LikesRadiation ]
-
-- type: entity
   abstract: true
   id: MobCancerBase
   components:

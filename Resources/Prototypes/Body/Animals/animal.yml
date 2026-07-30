@@ -53,3 +53,11 @@
         - id: OrganAnimalStomach
         - id: OrganAnimalLiver
         - id: OrganAnimalKidneys
+
+- type: entity
+  parent: OrganAnimalLungs
+  id: OrganLikesRadiationLungs
+  suffix: Likes radiation
+  components:
+  - type: Metabolizer
+    metabolizerTypes: [ LikesRadiation ]
