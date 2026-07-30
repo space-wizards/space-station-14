@@ -153,6 +153,10 @@
     - 0,0,0,3
   - type: EnergyKatana
   - type: DashAbility
+  - type: ActionGrant
+    actions:
+    - ActionEnergyKatanaDash
+  - type: ItemActionGrant
   - type: LimitedCharges
     maxCharges: 3
   - type: AutoRecharge
