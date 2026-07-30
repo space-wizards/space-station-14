@@ -49,7 +49,7 @@ public sealed partial class ForensicPadSystem : EntitySystem
 
         if (pad.Comp.Used)
         {
-            _popupSystem.PopupClient(Loc.GetString("forensic-pad-already-used"), args.Target.Value, args.User);
+            _popupSystem.PopupEntity(Loc.GetString("forensic-pad-already-used"), args.Target.Value, args.User);
             return;
         }
 
@@ -59,7 +59,7 @@ public sealed partial class ForensicPadSystem : EntitySystem
                 ? Loc.GetString("forensic-pad-no-access-due", ("entity", Identity.Entity(item, EntityManager)))
                 : Loc.GetString("forensic-pad-no-access");
 
-            _popupSystem.PopupClient(message, args.Target.Value, args.User);
+            _popupSystem.PopupEntity(message, args.Target.Value, args.User);
             return;
         }
 
@@ -72,7 +72,7 @@ public sealed partial class ForensicPadSystem : EntitySystem
                 var targetMessage = Loc.GetString("forensic-pad-start-scan-target", ("user", Identity.Entity(args.User, EntityManager)));
 
                 skipDelay = false;
-                _popupSystem.PopupClient(userMessage, args.Target.Value, args.User);
+                _popupSystem.PopupEntity(userMessage, args.Target.Value, args.User);
                 _popupSystem.PopupEntity(targetMessage, args.Target.Value, args.Target.Value);
             }
             StartScan(pad, args.User, args.Target.Value, pad.Comp, fingerprint.Fingerprint, skipDelay);

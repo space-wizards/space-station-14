@@ -236,12 +236,9 @@ public sealed partial class SharedForensicScannerSystem : EntitySystem
         }
 
         _paperSystem.SetContent((printed, paperComp), text.ToString());
-        _audioSystem.PlayPredicted(scanner.Comp.SoundPrint, scanner, user,
-            AudioParams.Default
-                .WithVariation(0.25f)
-                .WithVolume(3f)
-                .WithRolloffFactor(2.8f)
-                .WithMaxDistance(4.5f));
+        var audioParams = scanner.Comp.SoundPrint?.Params ?? AudioParams.Default;
+        audioParams = audioParams.WithVariation(0.25f).AddVolume(3f).WithRolloffFactor(2.8f).WithMaxDistance(4.5f);
+        _audioSystem.PlayPredicted(scanner.Comp.SoundPrint, scanner, user, audioParams);
 
         scanner.Comp.PrintReadyAt = _gameTiming.CurTime + scanner.Comp.PrintCooldown;
 
