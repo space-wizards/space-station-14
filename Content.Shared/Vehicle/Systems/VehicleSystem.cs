@@ -39,6 +39,7 @@ public sealed partial class VehicleSystem : EntitySystem
     [Dependency] private EntityQuery<AppearanceComponent> _appearanceQuery;
     [Dependency] private EntityQuery<InputMoverComponent> _inputMoverQuery;
     [Dependency] private EntityQuery<HandsComponent> _handsQuery;
+    [Dependency] private EntityQuery<VehicleHandBlockerComponent> _handBlockerQuery;
 
     /// <remarks>
     /// We subscribe to BeforeDamageChangedEvent so that we can access the damage value before the container is applied.
@@ -323,9 +324,9 @@ public sealed partial class VehicleSystem : EntitySystem
         if (entity.Comp.RequiresHands && (!_handsQuery.HasComp(uid) || !_actionBlocker.CanInteract(uid, entity)))
             return false;
 
-        if (entity.Comp.BlockedHands > 0 &&
+        if (_handBlockerQuery.TryComp(entity, out var handBlocker) &&
             (!_handsQuery.TryComp(uid, out var hands) ||
-             _hands.GetHandCount((uid, hands)) < entity.Comp.BlockedHands))
+             _hands.GetHandCount((uid, hands)) < handBlocker.BlockedHands))
             return false;
 
         return _actionBlocker.CanConsciouslyPerformAction(uid);
@@ -336,13 +337,13 @@ public sealed partial class VehicleSystem : EntitySystem
     /// </summary>
     private bool TryBlockHands(Entity<VehicleComponent> vehicle, EntityUid operatorUid)
     {
-        if (vehicle.Comp.BlockedHands == 0)
+        if (!_handBlockerQuery.TryComp(vehicle, out var handBlocker))
             return true;
 
         if (_virtualItem.TrySpawnUnremoveableVirtualItemInHand(
                 vehicle.Owner,
                 operatorUid,
-                vehicle.Comp.BlockedHands,
+                handBlocker.BlockedHands,
                 dropOthers: true)) return true;
 
         UnblockHands(vehicle.Owner, operatorUid);

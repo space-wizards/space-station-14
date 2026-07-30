@@ -8,6 +8,7 @@
   - type: MechAir
   - type: Vehicle
     canAttack: true
+  - type: VehicleHandBlocker
     blockedHands: 2
   - type: ContainerVehicle
     containerId: "mech-pilot-slot"

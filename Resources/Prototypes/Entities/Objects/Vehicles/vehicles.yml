@@ -99,7 +99,7 @@
       movement:
         state: vehicle
   - type: Vehicle
-    blockedHands: 1
+  - type: VehicleHandBlocker
   - type: GenericKeyedVehicle
     containerId: key_slot
     keyWhitelist:
