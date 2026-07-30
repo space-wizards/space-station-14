@@ -1,4 +1,7 @@
 #nullable enable
+using System.Collections.Generic;
+using System.Reflection;
+using System.Threading.Tasks;
 using Content.Client.CharacterInfo;
 using Content.Client.UserInterface.Systems.Chat;
 using Content.IntegrationTests.Fixtures;
@@ -9,9 +12,6 @@ using NUnit.Framework;
 using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Threading.Tasks;
 
 namespace Content.IntegrationTests.Tests.Chat;
 
