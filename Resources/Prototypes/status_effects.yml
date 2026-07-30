@@ -31,19 +31,8 @@
   id: PressureImmunity
 
 - type: statusEffect
-  id: Muted
-  alert: Muted
-
-- type: statusEffect
   id: Corporeal
   alert: Corporeal
 
 - type: statusEffect
   id: Pacified #cannot attack
-
-- type: statusEffect
-  id: RatvarianLanguage #Praise him
-
-- type: statusEffect
-  id: Adrenaline
-  alert: Adrenaline
