@@ -422,7 +422,7 @@ public abstract partial class SharedEntityStorageSystem : EntitySystem
         if (_weldable.IsWelded(target))
         {
             if (!silent && !component.Contents.Contains(user))
-                Popup.PopupClient(Loc.GetString("entity-storage-component-welded-shut-message"), target, user);
+                Popup.PopupEntity(Loc.GetString("entity-storage-component-welded-shut-message"), target, user);
 
             return false;
         }

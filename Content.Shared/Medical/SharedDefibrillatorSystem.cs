@@ -90,7 +90,7 @@ public abstract partial class SharedDefibrillatorSystem : EntitySystem
 
         if (!_toggle.IsActivated(ent.Owner))
         {
-            _popup.PopupClient(Loc.GetString("defibrillator-not-on"), ent.Owner, user);
+            _popup.PopupEntity(Loc.GetString("defibrillator-not-on"), ent.Owner, user);
             return false;
         }
 

@@ -1,0 +1,38 @@
+<ui:FileMidiSource xmlns="https://spacestation14.io"
+                   xmlns:ui="clr-namespace:Content.Client.Instruments.UI"
+                   HorizontalExpand="True"
+                   Orientation="Vertical">
+
+    <!-- Track list -->
+    <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" Margin="0 0 0 20">
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <LineEdit Name="FilterBar" PlaceHolder="{Loc 'instruments-component-menu-files-filter'}"
+                      HorizontalExpand="True" />
+        </BoxContainer>
+        <ItemList Name="TrackList" SelectMode="Single" VerticalExpand="True" />
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <Button Name="AddButton" Text="{Loc 'instruments-component-menu-files-add-button'}" HorizontalExpand="True"
+                    StyleClasses="OpenRight" />
+            <Button Name="RemoveButton" Text="{Loc 'instruments-component-menu-files-remove-button'}" Disabled="True"
+                    HorizontalExpand="True" StyleClasses="OpenLeft" />
+        </BoxContainer>
+    </BoxContainer>
+
+    <!-- Current track label -->
+    <Label Name="CurrentTrackLabel" MinHeight="24" />
+
+    <!-- Track position -->
+    <Slider Name="PlaybackSlider" HorizontalExpand="True" />
+
+    <!-- Track controls -->
+    <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+        <Button Name="PlayButton" Text="{Loc 'instruments-component-menu-play-stop-button'}" ToggleMode="True"
+                Margin="0 0 20 0" />
+        <Button Name="LoopButton" Text="{Loc 'instruments-component-menu-loop-button'}" ToggleMode="True"
+                StyleClasses="OpenRight" />
+        <Button Name="ShuffleButton" Text="{Loc 'instruments-component-menu-shuffle-button'}" ToggleMode="True"
+                StyleClasses="OpenLeft" />
+        <BoxContainer HorizontalExpand="True" />
+        <Label Name="TimeLabel" Text="--:--/--:--" Align="Right" />
+    </BoxContainer>
+</ui:FileMidiSource>
