@@ -26,14 +26,14 @@ namespace Content.Server.Atmos.EntitySystems
 
         public override void Initialize()
         {
-            SubscribeLocalEvent<BarotraumaComponent, ComponentInit>(OnBarotraumaInit);
             SubscribeLocalEvent<PressureProtectionComponent, GotEquippedEvent>(OnPressureProtectionEquipped);
             SubscribeLocalEvent<PressureProtectionComponent, GotUnequippedEvent>(OnPressureProtectionUnequipped);
-            SubscribeLocalEvent<PressureProtectionComponent, ComponentInit>(OnUpdateResistance);
+            SubscribeLocalEvent<PressureProtectionComponent, ComponentStartup>(OnUpdateResistance);
             SubscribeLocalEvent<PressureProtectionComponent, ComponentRemove>(OnUpdateResistance);
         }
 
-        private void OnBarotraumaInit(Entity<BarotraumaComponent> ent, ref ComponentInit args)
+        [SubscribeLocalEvent]
+        private void OnBarotraumaInit(Entity<BarotraumaComponent> ent, ref MapInitEvent args)
         {
             RefreshPressureImmunity(ent, ent.Comp);
         }
