@@ -18,5 +18,6 @@ public sealed partial class NewPlayerIconComponent : Component
     public ProtoId<NewPlayerIconPrototype> StatusIcon { get; set; } = "NewPlayerIcon";
 
     // We only send these out to ShowNewPlayerIconComponent users, to avoid malicious new player detection.
+    /// <inheritdoc />
     public override bool SessionSpecific => true;
 }

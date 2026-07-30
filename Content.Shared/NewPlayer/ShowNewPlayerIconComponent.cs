@@ -10,5 +10,6 @@ namespace Content.Shared.NewPlayer;
 public sealed partial class ShowNewPlayerIconComponent : Component
 {
     // It only matters for the component owner client that they have it, so best not to share it to other clients.
+    /// <inheritdoc />
     public override bool SendOnlyToOwner => true;
 }
