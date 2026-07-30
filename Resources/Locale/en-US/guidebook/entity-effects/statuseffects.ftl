@@ -10,4 +10,3 @@ entity-effect-status-effect-Pacified = combat pacification
 entity-effect-status-effect-StaminaModifier = modified stamina
 entity-effect-status-effect-RadiationProtection = radiation protection
 entity-effect-status-effect-Drowsiness = drowsiness
-entity-effect-status-effect-Adrenaline = adrenaline
