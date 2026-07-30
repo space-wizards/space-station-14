@@ -96,11 +96,11 @@ public sealed partial class BotanySystem : EntitySystem
     /// <param name="parent">The entity that should own the snapshot, if any.</param>
     /// <param name="cloneLifecycle">If true, also clone lifecycle state into the snapshot.</param>
     [PublicAPI]
-    public EntityUid ClonePlantSnapshotData(EntityUid source, EntityUid? parent = null, bool cloneLifecycle = false)
+    public EntityUid? ClonePlantSnapshotData(EntityUid source, EntityUid? parent = null, bool cloneLifecycle = false)
     {
         var settingsId = cloneLifecycle ? LifecycleSettingsId : SettingsId;
         if (!ProtoMan.TryIndex(settingsId, out var settings))
-            return EntityUid.Invalid;
+            return null;
 
         var snapshot = EntityManager.CreateEntityUninitialized(null);
         _cloning.CloneComponents(source, snapshot, settings);

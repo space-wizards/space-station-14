@@ -8,6 +8,6 @@ namespace Content.Shared.Botany.Traits.Components;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class PlantTraitSampledComponent : PlantTraitsComponent
 {
-    [DataField]
+    /// <inheritdoc/>
     public override LocId? TraitState { get; set; } = "mutation-plant-sampled";
 }

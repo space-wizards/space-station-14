@@ -71,6 +71,9 @@ public sealed partial class MutationSystem : EntitySystem
 
         // Clone state via snapshot and apply to new plant.
         var snapshot = _botany.ClonePlantSnapshotData(oldPlant.Owner, cloneLifecycle: true);
+        if (snapshot == null)
+            return;
+
         var newPlantUid = PredictedSpawnAtPosition(newPlantProto, Transform(oldPlant.Owner).Coordinates);
         _botany.ApplyPlantSnapshotData(snapshot, newPlantUid, cloneLifecycle: true);
         _botany.DeletePlantSnapshot(snapshot);
