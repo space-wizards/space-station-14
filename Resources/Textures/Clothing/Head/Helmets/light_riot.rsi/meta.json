@@ -1,8 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Non-folded states taken from tgstation at commit https://github.com/tgstation/tgstation/commit/d90c7e5de6f6d94596c164da78dbc8d3cd35bb99 and modified by Flareguy for SS14; colors tweaked by saintmuntzer; visor-equipped-HELMET.png, visor-equipped-HELMET-vox.png, visor-icon.png, visor-inhand-left.png, visor-inhand-right.png by Astroskier"
-        ,
+    "copyright": "Non-folded states taken from tgstation at commit https://github.com/tgstation/tgstation/commit/d90c7e5de6f6d94596c164da78dbc8d3cd35bb99 and modified by Flareguy for SS14; colors tweaked by saintmuntzer; visor-equipped-HELMET.png, visor-equipped-HELMET-vox.png, visor-icon.png, visor-inhand-left.png, visor-inhand-right.png by Astroskier",
     "size": {
         "x": 32,
         "y": 32
