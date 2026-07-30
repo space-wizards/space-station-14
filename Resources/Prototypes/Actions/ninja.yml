@@ -94,10 +94,16 @@
     checkCanAccess: false
     range: 0
   - type: WorldTargetAction
-    event: !type:DashEvent
+    event: !type:TeleportActionEvent
+      stopBeingPulled: true
+      stopPulling: true
   - type: ActionUserWhitelist
     whitelist:
       components:
       - SpaceNinja
   - type: ActionProviderHeld
     popup: dash-ability-not-held
+  - type: LimitedCharges
+    maxCharges: 3
+  - type: AutoRecharge
+    rechargeDuration: 20

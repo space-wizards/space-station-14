@@ -152,15 +152,10 @@
     shape:
     - 0,0,0,3
   - type: EnergyKatana
-  - type: DashAbility
   - type: ActionGrant
     actions:
     - ActionEnergyKatanaDash
   - type: ItemActionGrant
-  - type: LimitedCharges
-    maxCharges: 3
-  - type: AutoRecharge
-    rechargeDuration: 20
   - type: Clothing
     sprite: Objects/Weapons/Melee/energykatana.rsi
     slots:
