@@ -56,7 +56,6 @@ public sealed partial class EntityWhitelistSystem : EntitySystem
                 break;
         }
 
-
         list.Registrations ??= StringsToRegs(list.Components);
 
         if (list.Registrations != null)
