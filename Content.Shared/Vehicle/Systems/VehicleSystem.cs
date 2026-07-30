@@ -257,6 +257,7 @@ public sealed partial class VehicleSystem : EntitySystem
         if (_vehicleQuery.TryComp(vehicleUid, out var vehicle))
             return TryRemoveOperator((vehicleUid.Value, vehicle));
 
+        UnblockHands(vehicleUid.Value, operatorEntity.Owner);
         ClearOperatorRelays(operatorEntity.Owner, vehicleUid.Value);
         operatorEntity.Comp.Vehicle = null;
         RemCompDeferred<VehicleOperatorComponent>(operatorEntity.Owner);
