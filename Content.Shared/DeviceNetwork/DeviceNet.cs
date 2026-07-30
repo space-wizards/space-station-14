@@ -60,7 +60,7 @@ public sealed class DeviceNet
             if (string.IsNullOrWhiteSpace(deviceComp.Data.Address) || Devices.ContainsKey(deviceComp.Data.Address))
             {
                 deviceComp.Data.Address = GenerateValidAddress(deviceComp.Data.Prefix);
-                device.DeviceData.Address = deviceComp.Data.Address;
+                device = new Device(ent.Owner, ent.Comp.Data); // Reallocate because the data had changed
             }
 
             Devices[deviceComp.Data.Address] = device;
@@ -109,121 +109,6 @@ public sealed class DeviceNet
             receiveAll.Remove(device);
             if (receiveAll.Count == 0)
                 ListeningDevices.Remove(freq);
-        }
-
-        return true;
-    }
-
-    /// <summary>
-    ///     Give an existing device a new randomly generated address. Useful if the device's address prefix was updated
-    ///     and they want a new address to reflect that, or something like that.
-    /// </summary>
-    public bool RandomizeAddress(string oldAddress, string? prefix = null)
-    {
-        if (!Devices.Remove(oldAddress, out var device))
-            return false;
-
-        device.DeviceData.Address = GenerateValidAddress(prefix ?? device.DeviceData.Prefix);
-        device.DeviceData.CustomAddress = false;
-        Devices[device.DeviceData.Address] = device;
-        return true;
-    }
-
-    /// <summary>
-    ///     Update the address of an existing device.
-    /// </summary>
-    public bool UpdateAddress(string oldAddress, string newAddress)
-    {
-        if (Devices.ContainsKey(newAddress))
-            return false;
-
-        if (!Devices.Remove(oldAddress, out var device))
-            return false;
-
-        device.DeviceData.Address = newAddress;
-        device.DeviceData.CustomAddress = true;
-        Devices[newAddress] = device;
-        return true;
-    }
-
-    /// <summary>
-    ///     Make an existing network device listen to a new frequency.
-    /// </summary>
-    public bool UpdateReceiveFrequency(string address, uint? newFrequency)
-    {
-        if (!Devices.TryGetValue(address, out var device))
-            return false;
-
-        if (device.DeviceData.ReceiveFrequency == newFrequency)
-            return true;
-
-        if (device.DeviceData.ReceiveFrequency is { } freq)
-        {
-            if (ListeningDevices.TryGetValue(freq, out var listening))
-            {
-                listening.Remove(device);
-                if (listening.Count == 0)
-                    ListeningDevices.Remove(freq);
-            }
-
-            if (device.DeviceData.ReceiveAll && ReceiveAllDevices.TryGetValue(freq, out var receiveAll))
-            {
-                receiveAll.Remove(device);
-                if (receiveAll.Count == 0)
-                    ListeningDevices.Remove(freq);
-            }
-        }
-
-        device.DeviceData.ReceiveFrequency = newFrequency;
-
-        if (newFrequency == null)
-            return true;
-
-        if (!ListeningDevices.TryGetValue(newFrequency.Value, out var devices))
-            ListeningDevices[newFrequency.Value] = devices = new();
-
-        devices.Add(device);
-
-        if (!device.DeviceData.ReceiveAll)
-            return true;
-
-        if (!ReceiveAllDevices.TryGetValue(newFrequency.Value, out var receiveAlldevices))
-            ReceiveAllDevices[newFrequency.Value] = receiveAlldevices = new();
-
-        receiveAlldevices.Add(device);
-        return true;
-    }
-
-    /// <summary>
-    ///     Make an existing network device listen to a new frequency.
-    /// </summary>
-    public bool UpdateReceiveAll(string address, bool receiveAll)
-    {
-        if (!Devices.TryGetValue(address, out var device))
-            return false;
-
-        if (device.DeviceData.ReceiveAll == receiveAll)
-            return true;
-
-        device.DeviceData.ReceiveAll = receiveAll;
-
-        if (device.DeviceData.ReceiveFrequency is not { } freq)
-            return true;
-
-        // remove or add to set of listening devices
-
-        HashSet<Device>? devices;
-        if (receiveAll)
-        {
-            if (!ReceiveAllDevices.TryGetValue(freq, out devices))
-                ReceiveAllDevices[freq] = devices = new();
-            devices.Add(device);
-        }
-        else if (ReceiveAllDevices.TryGetValue(freq, out devices))
-        {
-            devices.Remove(device);
-            if (devices.Count == 0)
-                ReceiveAllDevices.Remove(freq);
         }
 
         return true;
