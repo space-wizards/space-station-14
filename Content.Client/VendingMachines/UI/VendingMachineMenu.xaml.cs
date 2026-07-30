@@ -166,7 +166,7 @@ public sealed partial class VendingMachineMenu : FancyWindow
                 ("label", _loc.GetString(locId)));
         }
 
-        return $"{itemName} [{amount}]";
+        return $"[{amount}] {itemName}";
     }
 
     private void SetSizeAfterUpdate(int longestEntryLength, int contentCount)

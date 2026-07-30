@@ -251,7 +251,7 @@
     brokenState: broken
     normalState: normal-unshaded
     denyState: deny-unshaded
-    loopDeny: false
+    loopDenyAnimation: false
   - type: DatasetVocalizer
     dataset: BoozeOMatAds
   - type: SpeakOnUIClosed
@@ -286,7 +286,7 @@
     brokenState: broken
     normalState: normal-unshaded
     denyState: deny-unshaded
-    loopDeny: false
+    loopDenyAnimation: false
   - type: DatasetVocalizer
     dataset: BruiseOMatAds
   - type: SpeakOnUIClosed

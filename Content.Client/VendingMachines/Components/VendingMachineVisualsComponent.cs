@@ -53,6 +53,6 @@ public sealed partial class VendingMachineVisualsComponent : Component
     /// of <see cref="VendingMachineEjectComponent.DenyDelay"/>. If set to <c>false</c> will play a sprite
     /// flick animation for the state and then linger on the final frame until the end of the delay.
     /// </summary>
-    [DataField("loopDeny")]
+    [DataField]
     public bool LoopDenyAnimation = true;
 }
