@@ -8,7 +8,6 @@ using Content.Shared.SurveillanceCamera.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Content.Shared.DeviceNetwork.Components;
-using Content.Shared.DeviceNetwork.Systems;
 
 namespace Content.Server.SurveillanceCamera;
 
@@ -21,8 +20,6 @@ public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraS
     [Dependency] private IAdminLogManager _adminLogger = default!;
     [Dependency] private SurveillanceCameraMapSystem _cameraMapSystem = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
-
-    [Dependency] private EntityQuery<SurveillanceCameraRouterComponent> _routerQuery = default!;
 
     public const int CameraNameLimit = 32;
 
@@ -63,22 +60,12 @@ public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraS
     [SubscribeLocalEvent]
     private void OnPing(Entity<SurveillanceCameraComponent> ent, ref DeviceNetworkPacketEvent<SurveillanceCameraPingPayload> args)
     {
-        var payload = args.Data;
         if (!ent.Comp.Active)
             return;
 
-        if (!_routerQuery.TryComp(args.Sender, out var routerComp))
-            return;
-
-        if (routerComp.SubnetName != payload.Subnet)
-            return;
-
         var name = ent.Comp.UseEntityNameAsCameraId ? MetaData(ent).EntityName : ent.Comp.CameraId;
-        var responsePayload = new SurveillanceCameraDataPayload
-        {
-            Name = name,
-        };
-        _deviceNetworkRouter.QueuePacketRouted(ent.Owner, ref responsePayload, args.SenderAddress, payload.SenderAddress);
+        var responsePayload = new SurveillanceCameraDataPayload { Name = name };
+        _deviceNetworkRouter.QueuePacketRouted(ent.Owner, ref responsePayload, args.SenderAddress, args.Data.SenderAddress);
     }
 
     private void OnPowerChanged(EntityUid camera, SurveillanceCameraComponent component, ref PowerChangedEvent args)

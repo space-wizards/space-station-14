@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Shared.DeviceNetwork;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
@@ -40,13 +41,13 @@ public partial struct CameraMarker
     /// Network address of the camera.
     /// </summary>
     [DataField]
-    public string Address;
+    public DeviceAddress Address;
 
     /// <summary>
     /// Subnet the camera is connected to.
     /// </summary>
     [DataField]
-    public string Subnet;
+    public DeviceAddress Subnet;
 
     /// <summary>
     /// Should the camera be displayed on the camera map.

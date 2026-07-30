@@ -69,10 +69,10 @@ public sealed partial class DeviceNetworkRouterSystem : EntitySystem
     public void QueuePacketRouted<T>(
         Entity<DeviceNetworkComponent?> ent,
         ref T data,
-        string? routerAddress,
-        string? targetAddress,
-        uint? overrideFrequency = null,
-        uint? frequency = null,
+        DeviceAddress? routerAddress,
+        DeviceAddress? targetAddress,
+        DeviceFrequency? overrideFrequency = null,
+        DeviceFrequency? frequency = null,
         int? overrideNetwork = null,
         int? network = null)
         where T : IRoutableNetworkPayload
@@ -80,7 +80,7 @@ public sealed partial class DeviceNetworkRouterSystem : EntitySystem
         if (!_query.Resolve(ref ent) || ent.Comp == null)
             return;
 
-        data.SenderAddress = ent.Comp.Data.Address;
+        data.SenderAddress = ent.Comp.Data.AddressId;
         data.Sender = ent.Owner;
         var payload = new RoutedNetworkPayload<T>
         {

@@ -37,7 +37,7 @@ public sealed partial class FireAlarmSystem : EntitySystem
                 continue;
             }
 
-            _atmosDevNet.Deregister(uid, deviceNet.Data.Address);
+            _atmosDevNet.Deregister(uid, deviceNet.Data.AddressId);
         }
 
         _atmosDevNet.Register(uid, null);

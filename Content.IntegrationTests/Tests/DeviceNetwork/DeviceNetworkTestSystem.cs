@@ -24,7 +24,7 @@ public sealed class DeviceNetworkTestSystem : EntitySystem
     [SubscribeLocalEvent]
     public void SendBaselineTestEvent(EntityUid uid)
     {
-        var ev = new DeviceNetworkPacketData(0, "", 0, "", uid, new TestPayloadClass());
+        var ev = new DeviceNetworkPacketData(0, 0, 0, 0, uid, new TestPayloadClass());
         RaiseLocalEvent(uid, ref ev);
     }
 

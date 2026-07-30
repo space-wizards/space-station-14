@@ -23,7 +23,7 @@ public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
         _netConfigOverlay = EntMan.System<NetworkConfiguratorOverlaySystem>();
     }
 
-    public void OnRemoveButtonPressed(string address)
+    public void OnRemoveButtonPressed(LocDeviceAddress address)
     {
         SendPredictedMessage(new NetworkConfiguratorRemoveDeviceMessage(address));
     }
@@ -57,9 +57,9 @@ public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
                     SendPredictedMessage(new NetworkConfiguratorLinksSaveMessage(args));
                 };
 
-                _linkMenu.OnToggleLink += (left, right) =>
+                _linkMenu.OnToggleLink += link =>
                 {
-                    SendPredictedMessage(new NetworkConfiguratorToggleLinkMessage(left, right));
+                    SendPredictedMessage(new NetworkConfiguratorToggleLinkMessage(link));
                 };
 
                 _linkMenu.OnClearLinks += () =>

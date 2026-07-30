@@ -2,7 +2,6 @@ using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Access;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
-using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.TurretController;
 using Content.Shared.Turrets;
 using Robust.Server.GameObjects;
@@ -10,6 +9,7 @@ using Robust.Shared.Prototypes;
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Shared.Database;
+using Content.Shared.DeviceNetwork;
 
 namespace Content.Server.TurretController;
 
@@ -52,7 +52,7 @@ public sealed partial class DeployableTurretControllerSystem : SharedDeployableT
             if (!TryComp<DeviceNetworkComponent>(turretUid, out var turretDeviceNetwork))
                 continue;
 
-            _deviceNetwork.QueuePacket((ent.Owner, deviceNetwork), turretDeviceNetwork.Data.Address, ref payload);
+            _deviceNetwork.QueuePacket((ent.Owner, deviceNetwork), turretDeviceNetwork.Data.AddressId, ref payload);
         }
 
         // Remove newly unlinked devices
@@ -64,7 +64,7 @@ public sealed partial class DeployableTurretControllerSystem : SharedDeployableT
             if (!TryComp<DeviceNetworkComponent>(turretUid, out var turretDeviceNetwork))
                 continue;
 
-            if (ent.Comp.LinkedTurrets.Remove(turretDeviceNetwork.Data.Address))
+            if (ent.Comp.LinkedTurrets.Remove((turretDeviceNetwork.Data.AddressId, turretDeviceNetwork.Prefix)))
                 refreshUi = true;
         }
 
@@ -80,7 +80,7 @@ public sealed partial class DeployableTurretControllerSystem : SharedDeployableT
 
         // If an update was received from a turret, connect to it and update the UI
 
-        ent.Comp.LinkedTurrets[args.SenderAddress] = args.Data.State;
+        ent.Comp.LinkedTurrets[(args.SenderAddress, deviceNetwork.Prefix)] = args.Data.State;
         UpdateUIState(ent);
     }
 
@@ -131,7 +131,7 @@ public sealed partial class DeployableTurretControllerSystem : SharedDeployableT
 
     private void UpdateUIState(Entity<DeployableTurretControllerComponent> ent)
     {
-        var turretStates = new Dictionary<string, string>();
+        var turretStates = new Dictionary<LocDeviceAddress, string>();
 
         foreach (var (address, state) in ent.Comp.LinkedTurrets)
         {

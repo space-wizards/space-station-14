@@ -1,7 +1,8 @@
 using System.Numerics;
 using Content.Shared.DeviceNetwork.Systems;
-using Content.Server.Power.Components;
 using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.Power.EntitySystems;
+using Content.Shared.SurveillanceCamera;
 using Content.Shared.SurveillanceCamera.Components;
 
 namespace Content.Server.SurveillanceCamera;
@@ -9,6 +10,8 @@ namespace Content.Server.SurveillanceCamera;
 public sealed partial class SurveillanceCameraMapSystem : EntitySystem
 {
     [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SharedPowerReceiverSystem _power = default!;
+    [Dependency] private DeviceNetworkSystem _deviceSystem = default!;
 
     public override void Initialize()
     {
@@ -83,9 +86,14 @@ public sealed partial class SurveillanceCameraMapSystem : EntitySystem
         var gridMatrix = _transform.GetInvWorldMatrix(Transform(gridUid.Value));
         var localPos = Vector2.Transform(worldPos, gridMatrix);
 
-        var address = deviceNet.Data.Address;
-        var subnet = deviceNet.ReceiveFrequencyId ?? string.Empty;
-        var powered = CompOrNull<ApcPowerReceiverComponent>(uid)?.Powered ?? true;
+        var payload = new SurveillanceCameraMarkerPingSubnetPayload();
+        _deviceSystem.QueuePacket((uid, deviceNet), null, ref payload);
+        if (payload.RouterConnected == null)
+            return;
+
+        var address = deviceNet.Data.AddressId;
+        var subnet = payload.RouterConnected;
+        var powered = _power.IsPowered(uid);
         var active = comp.Active && powered;
 
         var exists = mapComp.Cameras.TryGetValue(netEntity, out var existing);
@@ -99,14 +107,14 @@ public sealed partial class SurveillanceCameraMapSystem : EntitySystem
             return;
         }
 
-        var visible = exists ? existing.Visible : true;
+        var visible = !exists || existing.Visible;
 
         mapComp.Cameras[netEntity] = new CameraMarker
         {
             Position = localPos,
             Active = active,
             Address = address,
-            Subnet = subnet,
+            Subnet = subnet.Value,
             Visible = visible
         };
         Dirty(gridUid.Value, mapComp);
@@ -125,12 +133,13 @@ public sealed partial class SurveillanceCameraMapSystem : EntitySystem
             return;
 
         var netEntity = GetNetEntity(cameraUid);
-        if (mapComp.Cameras.TryGetValue(netEntity, out var marker) && marker.Visible != visible)
-        {
-            marker.Visible = visible;
-            mapComp.Cameras[netEntity] = marker;
-            Dirty(gridUid.Value, mapComp);
-        }
+        if (!mapComp.Cameras.TryGetValue(netEntity, out var marker)
+            || marker.Visible == visible)
+            return;
+
+        marker.Visible = visible;
+        mapComp.Cameras[netEntity] = marker;
+        Dirty(gridUid.Value, mapComp);
     }
 
     /// <summary>

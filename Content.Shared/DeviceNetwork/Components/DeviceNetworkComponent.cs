@@ -76,24 +76,24 @@ public sealed partial class DeviceNetworkComponent : Component
     #region Obsolete
 
     [Obsolete("Access this field through DeviceNetworkComponent.Data instead")]
-    public uint? ReceiveFrequency
+    public DeviceFrequency? ReceiveFrequency
     {
         get => Data.ReceiveFrequency;
         set => Data.ReceiveFrequency = value;
     }
 
     [Obsolete("Access this field through DeviceNetworkComponent.Data instead")]
-    public uint? TransmitFrequency
+    public DeviceFrequency? TransmitFrequency
     {
         get => Data.TransmitFrequency;
         set => Data.TransmitFrequency = value;
     }
 
     [Obsolete("Access this field through DeviceNetworkComponent.Data instead")]
-    public string Address
+    public DeviceAddress Address
     {
-        get => Data.Address;
-        set => Data.Address = value;
+        get => Data.AddressId;
+        set => Data.AddressId = value;
     }
 
     [Obsolete("Access this field through DeviceNetworkComponent.Data instead")]

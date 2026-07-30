@@ -11,7 +11,6 @@ using Content.Shared.Atmos.Monitor.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Database;
 using Content.Shared.DeviceLinking;
-using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Power;
 using Content.Shared.Wires;
@@ -19,6 +18,7 @@ using Robust.Server.GameObjects;
 using System.Linq;
 using Content.Server.Atmos.Monitor.Payloads;
 using Content.Shared.Atmos.Components;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.DeviceNetwork.Components;
 
@@ -37,27 +37,28 @@ public sealed partial class AirAlarmSystem : EntitySystem
     [Dependency] private DeviceListSystem _deviceList = default!;
     [Dependency] private PopupSystem _popup = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
+
     [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceNetworkQuery = default!;
 
     #region Device Network API
 
     // -- API --
 
-    public void SetData(EntityUid uid, string address, GasVentPumpData payload)
+    public void SetData(EntityUid uid, DeviceAddress address, GasVentPumpData payload)
     {
         var sendPayload = new GasVentPumpSetDataPayload { Data = payload };
         _deviceNet.QueuePacket(uid, address, ref sendPayload);
         SetDeviceDataInternal(uid, address, payload);
     }
 
-    public void SetData(EntityUid uid, string address, GasVentScrubberData payload)
+    public void SetData(EntityUid uid, DeviceAddress address, GasVentScrubberData payload)
     {
         var sendPayload = new GasVentScrubberSetDataPayload { Data = payload };
         _deviceNet.QueuePacket(uid, address, ref sendPayload);
         SetDeviceDataInternal(uid, address, payload);
     }
 
-    private void SetDeviceDataInternal(EntityUid uid, string address, IAtmosDeviceData payload)
+    private void SetDeviceDataInternal(EntityUid uid, DeviceAddress address, IAtmosDeviceData payload)
     {
         var setPayload = new AirAlarmSetDataPayload { Payload = payload };
         _deviceNet.QueuePacket(uid, address, ref setPayload);
@@ -75,7 +76,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
     ///     Send a sync packet to a specific device from an air alarm.
     /// </summary>
     /// <param name="address">The address of the device.</param>
-    private void SyncDevice(EntityUid uid, string address)
+    private void SyncDevice(EntityUid uid, DeviceAddress address)
     {
         _atmosDevNet.Sync(uid, address);
     }
@@ -105,11 +106,11 @@ public sealed partial class AirAlarmSystem : EntitySystem
 
         foreach (var addr in monitor.SensorData.Keys)
         {
-            SyncDevice(uid, addr);
+            SyncDevice(uid, addr.AddressId);
         }
     }
 
-    private void SetThreshold(EntityUid uid, string address, AtmosMonitorThresholdType type,
+    private void SetThreshold(EntityUid uid, DeviceAddress address, AtmosMonitorThresholdType type,
         AtmosAlarmThreshold threshold, Gas? gas = null)
     {
         var payload = new AtmosMonitorSetThresholdPayload
@@ -124,7 +125,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
         SyncDevice(uid, address);
     }
 
-    private void SetAllThresholds(EntityUid uid, string address, AtmosMonitorData dataPayload)
+    private void SetAllThresholds(EntityUid uid, DeviceAddress address, AtmosMonitorData dataPayload)
     {
         var payload = new AtmosMonitorSetAllThresholdsPayload
         {
@@ -190,7 +191,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
                 continue;
             }
 
-            _atmosDevNet.Deregister(uid, deviceNet.Data.Address);
+            _atmosDevNet.Deregister(uid, deviceNet.Data.AddressId);
         }
 
         component.ScrubberData.Clear();
@@ -280,10 +281,10 @@ public sealed partial class AirAlarmSystem : EntitySystem
     {
         if (AccessCheck(uid, args.Actor, component))
         {
-            var addr = string.Empty;
+            var addr = DeviceAddress.Invalid;
             if (TryComp<DeviceNetworkComponent>(uid, out var netConn))
             {
-                addr = netConn.Data.Address;
+                addr = netConn.Data.AddressId;
             }
 
             _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{ToPrettyString(args.Actor)} changed {ToPrettyString(uid)} mode to {args.Mode}");
@@ -346,25 +347,25 @@ public sealed partial class AirAlarmSystem : EntitySystem
         switch (args.Data)
         {
             case GasVentPumpData ventData:
-                foreach (string addr in component.VentData.Keys)
+                foreach (var addr in component.VentData.Keys)
                 {
                     _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{ToPrettyString(args.Actor)} copied settings to vent {addr}");
-                    SetData(uid, addr, ventData);
+                    SetData(uid, addr.AddressId, ventData);
                 }
                 break;
 
             case GasVentScrubberData scrubberData:
-                foreach (string addr in component.ScrubberData.Keys)
+                foreach (var addr in component.ScrubberData.Keys)
                 {
                     _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{ToPrettyString(args.Actor)} copied settings to scrubber {addr}");
-                    SetData(uid, addr, scrubberData);
+                    SetData(uid, addr.AddressId, scrubberData);
                 }
                 break;
 
             case AtmosMonitorData sensorData:
-                foreach (string addr in component.SensorData.Keys)
+                foreach (var addr in component.SensorData.Keys)
                 {
-                    SetAllThresholds(uid, addr, sensorData);
+                    SetAllThresholds(uid, addr.AddressId, sensorData);
                 }
                 break;
         }
@@ -399,10 +400,10 @@ public sealed partial class AirAlarmSystem : EntitySystem
             SyncAllDevices(uid);
         }
 
-        var addr = string.Empty;
+        var addr = DeviceAddress.Invalid;
         if (TryComp<DeviceNetworkComponent>(uid, out var netConn))
         {
-            addr = netConn.Data.Address;
+            addr = netConn.Data.AddressId;
         }
 
         if (component.AutoMode)
@@ -451,7 +452,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
     /// <param name="origin">The origin address of this mode set. Used for network sync.</param>
     /// <param name="mode">The mode to set the alarm to.</param>
     /// <param name="uiOnly">Whether this change is for the UI only, or if it changes the air alarm's operating mode. Defaults to true.</param>
-    public void SetMode(EntityUid uid, string origin, AirAlarmMode mode, bool uiOnly = true, AirAlarmComponent? controller = null)
+    public void SetMode(EntityUid uid, DeviceAddress origin, AirAlarmMode mode, bool uiOnly = true, AirAlarmComponent? controller = null)
     {
         if (!Resolve(uid, ref controller))
         {
@@ -508,7 +509,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
     /// </summary>
     /// <param name="address">The address to send the new data to.</param>
     /// <param name="devData">The device data to be sent.</param>
-    private void SetDeviceData(EntityUid uid, string address, IAtmosDeviceData devData, AirAlarmComponent? controller = null)
+    private void SetDeviceData(EntityUid uid, DeviceAddress address, IAtmosDeviceData devData, AirAlarmComponent? controller = null)
     {
         if (!Resolve(uid, ref controller))
         {
@@ -528,25 +529,28 @@ public sealed partial class AirAlarmSystem : EntitySystem
         if (!controller.CanSync)
             return;
 
+        if (!_deviceNetworkQuery.TryComp(args.Sender, out var deviceComp))
+            return;
+
         // Save into component.
         // Sync data to interface.
         switch (args.Data.Payload)
         {
             case GasVentPumpData ventData:
-                if (!controller.VentData.TryAdd(args.SenderAddress, ventData))
-                    controller.VentData[args.SenderAddress] = ventData;
+                if (!controller.VentData.TryAdd(deviceComp, ventData))
+                    controller.VentData[deviceComp] = ventData;
                 break;
             case GasVentScrubberData scrubberData:
-                if (!controller.ScrubberData.TryAdd(args.SenderAddress, scrubberData))
-                    controller.ScrubberData[args.SenderAddress] = scrubberData;
+                if (!controller.ScrubberData.TryAdd(deviceComp, scrubberData))
+                    controller.ScrubberData[deviceComp] = scrubberData;
                 break;
             case AtmosMonitorData sensorData:
-                if (!controller.SensorData.TryAdd(args.SenderAddress, sensorData))
-                    controller.SensorData[args.SenderAddress] = sensorData;
+                if (!controller.SensorData.TryAdd(deviceComp, sensorData))
+                    controller.SensorData[deviceComp] = sensorData;
                 break;
         }
 
-        controller.KnownDevices.Add(args.SenderAddress);
+        controller.KnownDevices.Add(deviceComp);
         UpdateUI(uid, controller);
     }
 
@@ -629,7 +633,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
 
         var pressure = CalculatePressureAverage(alarm);
         var temperature = CalculateTemperatureAverage(alarm);
-        var dataToSend = new List<(string, IAtmosDeviceData)>();
+        var dataToSend = new List<(LocDeviceAddress, IAtmosDeviceData)>();
 
         foreach (var (addr, data) in alarm.VentData)
         {
@@ -655,7 +659,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
         _ui.SetUiState(
             uid,
             SharedAirAlarmInterfaceKey.Key,
-            new AirAlarmUIState(devNet.Data.Address, deviceCount, pressure, temperature, dataToSend, alarm.CurrentMode, highestAlarm.Value, alarm.AutoMode, alarm.PanicWireCut));
+            new AirAlarmUIState((devNet.Data.AddressId, devNet.Prefix), deviceCount, pressure, temperature, dataToSend, alarm.CurrentMode, highestAlarm.Value, alarm.AutoMode, alarm.PanicWireCut));
     }
 
     private const float Delay = 8f;

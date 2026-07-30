@@ -21,6 +21,8 @@ public sealed partial class DeviceNetworkSystem : EntitySystem
     [Dependency] private DeviceListSystem _deviceLists = default!;
     [Dependency] private NetworkConfiguratorSystem _configurator = default!;
 
+    [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceQuery = default!;
+
     // Basically a cache of devices to connect them together faster.
     // TODO make DeviceNets smarter and make them entities
     private readonly Dictionary<int, DeviceNet> _networks = new(4);
@@ -31,7 +33,7 @@ public sealed partial class DeviceNetworkSystem : EntitySystem
     private void OnExamine(Entity<DeviceNetworkComponent> ent, ref ExaminedEvent args)
     {
         if (ent.Comp.ExaminableAddress)
-            args.PushText(Loc.GetString("device-address-examine-message", ("address", ent.Comp.Data.Address)));
+            args.PushText(Loc.GetString("device-address-examine-message", ("address", DeviceLocalizationHelpers.GetAddressFromId(ent.Comp))));
     }
 
     [SubscribeLocalEvent]
@@ -89,13 +91,13 @@ public sealed partial class DeviceNetworkSystem : EntitySystem
         }
 
         if (TryGetNetwork(component.DeviceNetId, out var network))
-            network.Remove(ent);
+            RemoveFromNetwork(ent.AsNullable(), network);
     }
 
     /// <summary>
     ///     Try to find a device on a network using its address.
     /// </summary>
-    private bool TryGetDevice(int netId, string address, [NotNullWhen(true)] out Device? device)
+    private bool TryGetDevice(int netId, int address, [NotNullWhen(true)] out Device? device)
     {
         device = null;
         if (!TryGetNetwork(netId, out var network)
@@ -121,7 +123,7 @@ public sealed partial class DeviceNetworkSystem : EntitySystem
             return true;
         }
 
-        var newDeviceNet = new DeviceNet(netId, _random);
+        var newDeviceNet = new DeviceNet();
         _networks[netId] = newDeviceNet;
         network = newDeviceNet;
         return true;
@@ -167,7 +169,7 @@ public sealed partial class DeviceNetworkSystem : EntitySystem
                 totalDevices += devices.Count;
             }
 
-            if (!TryGetDevice(packet.NetId, packet.Address, out var device))
+            if (!TryGetDevice(packet.NetId, packet.Address.Value, out var device))
                 return;
 
             if (!device.Value.DeviceData.ReceiveAll &&
@@ -201,8 +203,7 @@ public sealed partial class DeviceNetworkSystem : EntitySystem
             || !net.Devices.TryGetValue(packet.SenderAddress, out var device))
             return false;
 
-        var senderData = device.DeviceData;
-        if (!senderData.SendBroadcastAttemptEvent)
+        if (!device.DeviceData.SendBroadcastAttemptEvent)
             return true;
 
         var beforeBroadcastAttemptEvent = new BeforeBroadcastAttemptEvent(recipients);

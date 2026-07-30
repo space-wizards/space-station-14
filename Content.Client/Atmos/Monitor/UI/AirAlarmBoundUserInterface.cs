@@ -1,6 +1,7 @@
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Monitor.Components;
+using Content.Shared.DeviceNetwork;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Atmos.Monitor.UI;
@@ -33,7 +34,7 @@ public sealed class AirAlarmBoundUserInterface : BoundUserInterface
         SendMessage(new AirAlarmResyncAllDevicesMessage());
     }
 
-    private void OnDeviceDataChanged(string address, IAtmosDeviceData dataPayload)
+    private void OnDeviceDataChanged(DeviceAddress address, IAtmosDeviceData dataPayload)
     {
         SendMessage(new AirAlarmUpdateDeviceDataMessage(address, dataPayload));
     }
@@ -53,9 +54,9 @@ public sealed class AirAlarmBoundUserInterface : BoundUserInterface
         SendMessage(new AirAlarmUpdateAutoModeMessage(enabled));
     }
 
-    private void OnThresholdChanged(string address, AtmosMonitorThresholdType type, AtmosAlarmThreshold threshold, Gas? gas = null)
+    private void OnThresholdChanged(LocDeviceAddress address, AtmosMonitorThresholdType type, AtmosAlarmThreshold threshold, Gas? gas = null)
     {
-        SendMessage(new AirAlarmUpdateAlarmThresholdMessage(address, type, threshold, gas));
+        SendMessage(new AirAlarmUpdateAlarmThresholdMessage(address.AddressId, type, threshold, gas));
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

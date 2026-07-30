@@ -42,7 +42,7 @@ public sealed partial class NetworkConfiguratorComponent : Component
     /// The list of devices stored in the configurator
     /// </summary>
     [DataField, AutoNetworkedField]
-    public Dictionary<string, EntityUid> Devices = new();
+    public Dictionary<DeviceAddress, EntityUid> Devices = new();
 
     [DataField]
     public TimeSpan UseDelay = TimeSpan.FromSeconds(0.5);

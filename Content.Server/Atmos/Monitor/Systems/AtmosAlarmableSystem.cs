@@ -4,6 +4,7 @@ using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.Monitor.Payloads;
 using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Atmos.Monitor;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Power;
 using Content.Shared.Tag;
@@ -144,7 +145,7 @@ public sealed partial class AtmosAlarmableSystem : EntitySystem
         RaiseLocalEvent(uid, new AtmosAlarmEvent(type), true);
     }
 
-    public void SyncAlertsToNetwork(EntityUid uid, string? address = null, AtmosAlarmableComponent? alarmable = null, TagComponent? tags = null)
+    public void SyncAlertsToNetwork(EntityUid uid, DeviceAddress? address = null, AtmosAlarmableComponent? alarmable = null, TagComponent? tags = null)
     {
         if (!Resolve(uid, ref alarmable, ref tags) || alarmable.ReceiveOnly)
         {
@@ -182,9 +183,9 @@ public sealed partial class AtmosAlarmableSystem : EntitySystem
             return;
         }
 
-        if (!alarmable.NetworkAlarmStates.TryAdd(devNet.Data.Address, alarmType))
+        if (!alarmable.NetworkAlarmStates.TryAdd(devNet.Data.AddressId, alarmType))
         {
-            alarmable.NetworkAlarmStates[devNet.Data.Address] = alarmType;
+            alarmable.NetworkAlarmStates[devNet.Data.AddressId] = alarmType;
         }
 
         var payload = new AtmosAlarmPayload

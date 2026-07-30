@@ -33,7 +33,7 @@ public sealed partial class AirAlarmPanicWire : ComponentWireAction<AirAlarmComp
         comp.PanicWireCut = true;
         if (EntityManager.TryGetComponent<DeviceNetworkComponent>(wire.Owner, out var devNet))
         {
-            _airAlarmSystem.SetMode(wire.Owner, devNet.Data.Address, AirAlarmMode.Panic, false);
+            _airAlarmSystem.SetMode(wire.Owner, devNet.Data.AddressId, AirAlarmMode.Panic, false);
         }
 
         return true;
@@ -45,7 +45,7 @@ public sealed partial class AirAlarmPanicWire : ComponentWireAction<AirAlarmComp
         if (EntityManager.TryGetComponent<DeviceNetworkComponent>(wire.Owner, out var devNet)
             && alarm.CurrentMode == AirAlarmMode.Panic)
         {
-            _airAlarmSystem.SetMode(wire.Owner, devNet.Data.Address, AirAlarmMode.Filtering, false, alarm);
+            _airAlarmSystem.SetMode(wire.Owner, devNet.Data.AddressId, AirAlarmMode.Filtering, false, alarm);
         }
 
         return true;
@@ -55,7 +55,7 @@ public sealed partial class AirAlarmPanicWire : ComponentWireAction<AirAlarmComp
     {
         if (EntityManager.TryGetComponent<DeviceNetworkComponent>(wire.Owner, out var devNet))
         {
-            _airAlarmSystem.SetMode(wire.Owner, devNet.Data.Address, AirAlarmMode.Panic, false);
+            _airAlarmSystem.SetMode(wire.Owner, devNet.Data.AddressId, AirAlarmMode.Panic, false);
         }
     }
 }

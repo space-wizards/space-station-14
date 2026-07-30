@@ -1,7 +1,12 @@
 ﻿namespace Content.Shared.DeviceNetwork.Events;
 
 /// <summary>
-/// Raised when the <see cref="DeviceData.Address"/> was changed.
+/// Raised when the <see cref="DeviceData.AddressId"/> was changed.
 /// </summary>
 [ByRefEvent]
-public record struct DeviceAddressChangedEvent(string OldAddress, string NewAddress, bool IsCustom);
+public readonly record struct DeviceAddressChangedEvent(
+    int OldAddress,
+    int NewAddress,
+    LocId? OldPrefix,
+    LocId? NewPrefix,
+    bool IsCustom);

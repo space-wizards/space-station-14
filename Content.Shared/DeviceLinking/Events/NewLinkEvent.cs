@@ -1,9 +1,11 @@
+using Robust.Shared.Prototypes;
+
 namespace Content.Shared.DeviceLinking.Events;
 
 [ByRefEvent]
 public readonly record struct NewLinkEvent(
     EntityUid? User,
     EntityUid Source,
-    string SourcePort,
+    ProtoId<SourcePortPrototype> SourcePort,
     EntityUid Sink,
-    string SinkPort);
+    ProtoId<SinkPortPrototype> SinkPort);

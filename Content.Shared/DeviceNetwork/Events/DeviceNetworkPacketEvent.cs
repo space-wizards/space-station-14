@@ -6,9 +6,9 @@ namespace Content.Shared.DeviceNetwork.Events;
 [ByRefEvent]
 public readonly record struct DeviceNetworkPacketEvent<T>(
     int NetId,
-    string? Address,
-    uint Frequency,
-    string SenderAddress,
+    DeviceAddress? Address,
+    DeviceFrequency Frequency,
+    DeviceAddress SenderAddress,
     EntityUid Sender,
     T Data) where T : INetworkPayload;
 
@@ -18,8 +18,8 @@ public readonly record struct DeviceNetworkPacketEvent<T>(
 [ByRefEvent]
 public record struct DeviceNetworkPacketData(
     int NetId,
-    string? Address,
-    uint Frequency,
-    string SenderAddress,
+    DeviceAddress? Address,
+    DeviceFrequency Frequency,
+    DeviceAddress SenderAddress,
     EntityUid Sender,
     INetworkPayload Data);

@@ -27,11 +27,11 @@ public sealed partial class NetworkConfiguratorLinkMenu : FancyWindow
 
     private (ButtonPosition position, string id, int index)? _selectedButton;
 
-    private List<(string left, string right)>? _defaults;
+    private List<DeviceLink>? _defaults;
 
     public event Action? OnClearLinks;
-    public event Action<string, string>? OnToggleLink;
-    public event Action<List<(string left, string right)>>? OnLinkDefaults;
+    public event Action<DeviceLink>? OnToggleLink;
+    public event Action<List<DeviceLink>>? OnLinkDefaults;
 
     public NetworkConfiguratorLinkMenu()
     {
@@ -142,7 +142,7 @@ public sealed partial class NetworkConfiguratorLinkMenu : FancyWindow
         var left = _selectedButton.Value.position == ButtonPosition.Left ? _selectedButton.Value.id : id;
         var right = _selectedButton.Value.position == ButtonPosition.Left ? id : _selectedButton.Value.id;
 
-        OnToggleLink?.Invoke(left, right);
+        OnToggleLink?.Invoke(new DeviceLink(left, right));
 
         args.Button.Pressed = false;
 
@@ -165,7 +165,7 @@ public sealed partial class NetworkConfiguratorLinkMenu : FancyWindow
     /// </summary>
     private sealed class LinksRender : Control
     {
-        public readonly List<(ProtoId<SourcePortPrototype>, ProtoId<SinkPortPrototype>)> Links = new();
+        public readonly List<DeviceLink> Links = new();
         public readonly Dictionary<string, Button> SourceButtons = new();
         public readonly Dictionary<string, Button> SinkButtons = new();
         private readonly BoxContainer _leftButtonContainer;

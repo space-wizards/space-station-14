@@ -12,6 +12,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Map.Components;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Systems;
 
 namespace Content.Server.Atmos.Monitor.Systems;
@@ -259,7 +260,7 @@ public sealed partial class AtmosAlertsComputerSystem : SharedAtmosAlertsCompute
                 entDevice.Group,
                 alarmState,
                 MetaData(ent).EntityName,
-                entDeviceNetwork.Data.Address);
+                DeviceLocalizationHelpers.GetAddressFromId(entDeviceNetwork));
 
             // Get the list of sensors attached to the alarm
             var sensorList = TryComp<DeviceListComponent>(ent, out var entDeviceList)
@@ -273,13 +274,13 @@ public sealed partial class AtmosAlertsComputerSystem : SharedAtmosAlertsCompute
                 // If valid and anchored, use the position of sensors as seeds for the region
                 foreach (var (address, sensorEnt) in sensorList)
                 {
-                    if (!sensorEnt.IsValid() || !HasComp<AtmosMonitorComponent>(sensorEnt))
+                    if (!sensorEnt.Item1.IsValid() || !HasComp<AtmosMonitorComponent>(sensorEnt.Item1))
                         continue;
 
-                    var sensorXform = Transform(sensorEnt);
+                    var sensorXform = Transform(sensorEnt.Item1);
 
                     if (sensorXform.Anchored && sensorXform.GridUid == entXform.GridUid)
-                        alarmRegionSeeds.Add(_mapSystem.CoordinatesToTile(entXform.GridUid.Value, mapGrid, _transformSystem.GetMapCoordinates(sensorEnt, sensorXform)));
+                        alarmRegionSeeds.Add(_mapSystem.CoordinatesToTile(entXform.GridUid.Value, mapGrid, _transformSystem.GetMapCoordinates(sensorEnt.Item1, sensorXform)));
                 }
 
                 var regionProperties = new SharedNavMapSystem.NavMapRegionProperties(netEnt, AtmosAlertsComputerUiKey.Key, alarmRegionSeeds);

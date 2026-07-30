@@ -45,7 +45,7 @@ public sealed partial class ApcNetSwitchSystem : EntitySystem
     {
         var (uid, component) = ent;
         if (!_query.TryComp(uid, out var networkComponent)
-            || args.SenderAddress == networkComponent.Data.Address)
+            || args.SenderAddress == networkComponent.Data.AddressId)
             return;
 
         component.State = args.Data.Enabled;

@@ -10,6 +10,7 @@ using Content.Shared.Access.Components;
 using Content.Shared.AlertLevel;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.Chat;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.Implants;
 using Content.Shared.Inventory;
@@ -341,7 +342,7 @@ namespace Content.Server.PDA
 
             if (TryComp(uid, out DeviceNetworkComponent? deviceNetworkComponent))
             {
-                address = deviceNetworkComponent.Data.Address;
+                address = DeviceLocalizationHelpers.GetAddressFromId(deviceNetworkComponent);
             }
 
             return address;

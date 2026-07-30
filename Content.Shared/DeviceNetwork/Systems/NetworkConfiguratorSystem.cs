@@ -16,6 +16,7 @@ namespace Content.Shared.DeviceNetwork.Systems;
 public sealed partial class NetworkConfiguratorSystem : EntitySystem
 {
     [Dependency] private AccessReaderSystem _accessSystem = default!;
+    [Dependency] private DeviceNetworkSystem _deviceNetwork = default!;
     [Dependency] private DeviceListSystem _deviceListSystem = default!;
     [Dependency] private DeviceLinkSystem _deviceLinkSystem = default!;
     [Dependency] private SharedPopupSystem _popupSystem = default!;
@@ -33,7 +34,7 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
     [Dependency] private EntityQuery<NetworkConfiguratorComponent> _networkConfigQuery = default!;
 
     [SubscribeLocalEvent]
-    private void OnMapSave(ref BeforeSerializationEvent ev)
+    private void OnMapSave(BeforeSerializationEvent ev)
     {
         var enumerator = AllEntityQuery<NetworkConfiguratorComponent>();
         while (enumerator.MoveNext(out var uid, out var conf))
@@ -122,8 +123,9 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
         if (!target.Comp.SavableAddress)
             return;
 
-        var address = target.Comp.Data.Address;
-        if (string.IsNullOrEmpty(address))
+        var address = _deviceNetwork.GetAddress(target);
+        var addressId = target.Comp.Data.AddressId;
+        if (target.Comp.Data.AddressId == 0)
         {
             // This primarily checks if the entity in question is pre-map init or not.
             // This is because otherwise, anything that uses DeviceNetwork will not
@@ -142,6 +144,7 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
             }
 
             address = $"UID: {target}";
+            addressId = new DeviceAddress(target.Owner.Id); // Weird but works for me.
         }
 
         if (configurator.Comp.Devices.ContainsValue(target))
@@ -151,11 +154,11 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
         }
 
         target.Comp.Configurators.Add(configurator);
-        configurator.Comp.Devices.Add(address, target);
+        configurator.Comp.Devices.Add(addressId, target);
         DirtyField(target, nameof(DeviceNetworkComponent.Configurators));
         DirtyField(configurator, nameof(NetworkConfiguratorComponent.Devices));
 
-        _popupSystem.PopupCursor(Loc.GetString("network-configurator-device-saved", ("address", target.Comp.Data.Address), ("device", target)),
+        _popupSystem.PopupCursor(Loc.GetString("network-configurator-device-saved", ("address", address), ("device", target)),
             userUid,
             PopupType.Medium);
 

@@ -12,6 +12,9 @@ public sealed partial class SurveillanceCameraRouterComponent : Component
     [ViewVariables]
     public string SubnetName = string.Empty;
 
+    [ViewVariables]
+    public DeviceAddress SubnetAddress;
+
     /// <summary>
     /// The monitors to route to. This raises an issue related to
     /// camera monitors disappearing before sending a D/C packet,
@@ -19,13 +22,13 @@ public sealed partial class SurveillanceCameraRouterComponent : Component
     /// is added or removed from active routing.
     /// </summary>
     [ViewVariables]
-    public HashSet<string> MonitorRoutes { get; } = new();
+    public HashSet<DeviceAddress> MonitorRoutes { get; } = new();
 
     /// <summary>
     /// The frequency that talks to this router's subnet.
     /// </summary>
     [ViewVariables]
-    public uint SubnetFrequency;
+    public DeviceFrequency SubnetFrequency;
 
     [DataField("subnetFrequency")]
     public ProtoId<DeviceFrequencyPrototype>? SubnetFrequencyId { get; set;  }

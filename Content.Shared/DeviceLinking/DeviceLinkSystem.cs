@@ -81,7 +81,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
     private void OnSourceStartup(Entity<DeviceLinkSourceComponent> source, ref ComponentStartup args)
     {
         ValueList<EntityUid> invalidSinks = new(source.Comp.LinkedPorts.Count);
-        ValueList<(string, string)> invalidLinks = new(source.Comp.LinkedPorts.Count);
+        ValueList<DeviceLink> invalidLinks = new(source.Comp.LinkedPorts.Count);
         foreach (var (sink, links)  in source.Comp.LinkedPorts)
         {
             if (!_deviceLinkSinkQuery.TryComp(sink, out var sinkComponent))
@@ -100,7 +100,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
 
             foreach (var link in invalidLinks)
             {
-                Log.Warning($"Device source {ToPrettyString(source)} contains invalid links to entity {ToPrettyString(sink)}: {link.Item1}->{link.Item2}");
+                Log.Warning($"Device source {ToPrettyString(source)} contains invalid links to entity {ToPrettyString(sink)}: {link.SourcePort}->{link.SinkPort}");
                 links.Remove(link);
             }
 
@@ -257,12 +257,13 @@ public sealed partial class DeviceLinkSystem : EntitySystem
     /// Returns the links of a source
     /// </summary>
     /// <returns>A list of sink and source port ids that are linked together</returns>
-    public HashSet<(ProtoId<SourcePortPrototype> source, ProtoId<SinkPortPrototype> sink)> GetLinks(Entity<DeviceLinkSourceComponent?> source, EntityUid sinkUid)
+    public HashSet<DeviceLink> GetLinks(Entity<DeviceLinkSourceComponent?> source, EntityUid sinkUid)
     {
         if (!_deviceLinkSourceQuery.Resolve(source.Owner, ref source.Comp) || !source.Comp.LinkedPorts.TryGetValue(sinkUid, out var links))
-            return new HashSet<(ProtoId<SourcePortPrototype>, ProtoId<SinkPortPrototype>)>();
+            return new HashSet<DeviceLink>();
 
-        return links;
+        // TODO fix this when DeviceLinkSourceComponent will store DeviceLinks inside
+        return links.Select(x => new DeviceLink(x.Source, x.Sink)).ToHashSet();
     }
 
     /// <summary>
@@ -281,17 +282,17 @@ public sealed partial class DeviceLinkSystem : EntitySystem
     /// </summary>
     /// <param name="sources">The list of source port prototypes to get the default links for</param>
     /// <returns>A list of sink and source port ids</returns>
-    public List<(string source, string sink)> GetDefaults(List<SourcePortPrototype> sources)
+    public List<DeviceLink> GetDefaults(List<SourcePortPrototype> sources)
     {
-        var defaults = new List<(string, string)>();
+        var defaults = new List<DeviceLink>();
         foreach (var source in sources)
         {
             if (source.DefaultLinks == null)
-                return new List<(string, string)>();
+                return [];
 
             foreach (var defaultLink in source.DefaultLinks)
             {
-                defaults.Add((source.ID, defaultLink));
+                defaults.Add(new DeviceLink(source, defaultLink));
             }
         }
 
@@ -332,7 +333,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
         EntityUid? userId,
         Entity<DeviceLinkSourceComponent?> source,
         Entity<DeviceLinkSinkComponent?> sink,
-        List<(string source, string sink)> links)
+        List<DeviceLink> links)
     {
         if (!_deviceLinkSourceQuery.Resolve(source.Owner, ref source.Comp, false)
             || !_deviceLinkSinkQuery.Resolve(sink.Owner, ref sink.Comp, false))
@@ -359,7 +360,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
                 continue;
 
             source.Comp.Outputs.GetOrNew(sourcePort).Add(sink);
-            source.Comp.LinkedPorts.GetOrNew(sink).Add((sourcePort, sinkPort));
+            source.Comp.LinkedPorts.GetOrNew(sink).Add(new DeviceLink(sourcePort, sinkPort));
 
             SendNewLinkEvent(userId, source, sourcePort, sink, sinkPort);
             Dirty(source);
@@ -455,8 +456,8 @@ public sealed partial class DeviceLinkSystem : EntitySystem
         EntityUid? userId,
         Entity<DeviceLinkSourceComponent?> source,
         Entity<DeviceLinkSinkComponent?> sink,
-        string sourcePort,
-        string sinkPort)
+        ProtoId<SourcePortPrototype> sourcePort,
+        ProtoId<SinkPortPrototype> sinkPort)
     {
         if (!_deviceLinkSourceQuery.Resolve(source.Owner, ref source.Comp)
             || !_deviceLinkSinkQuery.Resolve(sink.Owner, ref sink.Comp))
@@ -465,7 +466,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
         var outputs = source.Comp.Outputs.GetOrNew(sourcePort);
         var linkedPorts = source.Comp.LinkedPorts.GetOrNew(sink);
 
-        if (linkedPorts.Contains((sourcePort, sinkPort)))
+        if (linkedPorts.Contains(new DeviceLink(sourcePort, sinkPort)))
         {
             if (userId != null)
                 _adminLogger.Add(LogType.DeviceLinking, LogImpact.Low, $"{ToPrettyString(userId.Value):actor} unlinked {ToPrettyString(source):source} {sourcePort} and {ToPrettyString(sink):sink} {sinkPort}");
@@ -478,7 +479,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
             RaiseLocalEvent(sink, ref sinkEv);
 
             outputs.Remove(sink);
-            linkedPorts.Remove((sourcePort, sinkPort));
+            linkedPorts.Remove(new DeviceLink(sourcePort, sinkPort));
 
             if (linkedPorts.Count != 0)
                 return true;
@@ -496,7 +497,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
                 return false;
 
             outputs.Add(sink);
-            linkedPorts.Add((sourcePort, sinkPort));
+            linkedPorts.Add(new DeviceLink(sourcePort, sinkPort));
             sink.Comp.LinkedSources.Add(source);
 
             SendNewLinkEvent(userId, source, sourcePort, sink, sinkPort);
@@ -506,6 +507,19 @@ public sealed partial class DeviceLinkSystem : EntitySystem
         DirtyField(sink, nameof(DeviceLinkSinkComponent.LinkedSources));
         Dirty(source);
         return true;
+    }
+
+    /// <summary>
+    /// Adds or removes a link depending on if it's already present
+    /// </summary>
+    /// <returns>True if the link was successfully added or removed</returns>
+    public bool ToggleLink(
+        EntityUid? userId,
+        Entity<DeviceLinkSourceComponent?> source,
+        Entity<DeviceLinkSinkComponent?> sink,
+        DeviceLink link)
+    {
+        return ToggleLink(userId, source, sink, link.SourcePort, link.SinkPort);
     }
 
     /// <summary>
@@ -610,7 +624,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
             foreach (var (source, sink) in links)
             {
                 if (source == port)
-                    InvokeDirect(ent!, (sinkUid, sinkComponent), source, sink);
+                    InvokeDirect(ent!, (sinkUid, sinkComponent), sink);
             }
         }
     }
@@ -639,7 +653,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
             foreach (var (source, sink) in links)
             {
                 if (source == port)
-                    InvokeDirect(ent!, (sinkUid, sinkComponent), source, sink, ref data);
+                    InvokeDirect(ent!, (sinkUid, sinkComponent), sink, ref data);
             }
         }
     }
@@ -650,8 +664,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
     private void InvokeDirect<T>(
         Entity<DeviceLinkSourceComponent> source,
         Entity<DeviceLinkSinkComponent?> sink,
-        string sourcePort,
-        string sinkPort,
+        ProtoId<SinkPortPrototype> sinkPort,
         ref T data)
         where T : ISignalNetworkPayload
     {
@@ -686,7 +699,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
 
         // force using wireless network so things like atmos devices are able to send signals
         var network = (int) DeviceNetIdDefaults.Wireless;
-        _deviceNetworkSystem.QueuePacket(source.Owner, sinkNetwork.Data.Address, ref payload, sinkNetwork.Data.ReceiveFrequency, network);
+        _deviceNetworkSystem.QueuePacket(source.Owner, sinkNetwork.Data.AddressId, ref payload, sinkNetwork.Data.ReceiveFrequency, network);
     }
 
     /// <summary>
@@ -695,8 +708,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
     private void InvokeDirect(
         Entity<DeviceLinkSourceComponent> source,
         Entity<DeviceLinkSinkComponent?> sink,
-        string sourcePort,
-        string sinkPort)
+        ProtoId<SinkPortPrototype> sinkPort)
     {
         if (!_deviceLinkSinkQuery.Resolve(sink, ref sink.Comp))
             return;
@@ -729,7 +741,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
         // Force using wireless network so things like atmos devices are able to send signals.
         _deviceNetworkSystem.QueuePacket(
             source.Owner,
-            sinkNetwork.Data.Address,
+            sinkNetwork.Data.AddressId,
             ref payload,
             sinkNetwork.Data.ReceiveFrequency,
             (int) DeviceNetIdDefaults.Wireless);
@@ -810,7 +822,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
         {
             State = signal ? SignalState.High : SignalState.Low
         };
-        InvokeDirect(ent, args.Sink, args.SourcePort, args.SinkPort, ref payload);
+        InvokeDirect(ent, args.Sink, args.SinkPort, ref payload);
     }
     #endregion
 

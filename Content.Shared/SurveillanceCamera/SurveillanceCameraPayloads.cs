@@ -10,7 +10,7 @@ namespace Content.Shared.SurveillanceCamera;
 public partial record struct SurveillanceCameraConnectPayload : IRoutableNetworkPayload
 {
     [DataField]
-    public string? SenderAddress { get; set; }
+    public DeviceAddress? SenderAddress { get; set; }
 
     [DataField]
     public EntityUid Sender { get; set; }
@@ -22,7 +22,7 @@ public partial record struct SurveillanceCameraConnectPayload : IRoutableNetwork
 public partial record struct SurveillanceCameraConnectRequestPayload : IRoutableNetworkPayload
 {
     [DataField]
-    public string? SenderAddress { get; set; }
+    public DeviceAddress? SenderAddress { get; set; }
 
     [DataField]
     public EntityUid Sender { get; set; }
@@ -34,7 +34,7 @@ public partial record struct SurveillanceCameraConnectRequestPayload : IRoutable
 public partial record struct SurveillanceCameraHeartbeatRequestPayload : IRoutableNetworkPayload
 {
     [DataField]
-    public string? SenderAddress { get; set; }
+    public DeviceAddress? SenderAddress { get; set; }
 
     [DataField]
     public EntityUid Sender { get; set; }
@@ -46,7 +46,7 @@ public partial record struct SurveillanceCameraHeartbeatRequestPayload : IRoutab
 public partial record struct SurveillanceCameraHeartbeatPayload : IRoutableNetworkPayload
 {
     [DataField]
-    public string? SenderAddress { get; set; }
+    public DeviceAddress? SenderAddress { get; set; }
 
     [DataField]
     public EntityUid Sender { get; set; }
@@ -58,13 +58,10 @@ public partial record struct SurveillanceCameraHeartbeatPayload : IRoutableNetwo
 public partial record struct SurveillanceCameraPingPayload : IRoutableNetworkPayload
 {
     [DataField]
-    public string Subnet;
-
-    [DataField]
-    public string? SenderAddress { get; set; }
-
-    [DataField]
     public EntityUid Sender { get; set; }
+
+    [DataField]
+    public DeviceAddress? SenderAddress { get; set; }
 }
 
 /// <summary>
@@ -76,10 +73,10 @@ public partial record struct SurveillanceCameraDataPayload : IRoutableNetworkPay
     public string Name;
 
     [DataField]
-    public string Subnet;
+    public DeviceAddress Subnet;
 
     [DataField]
-    public string? SenderAddress { get; set; }
+    public DeviceAddress? SenderAddress { get; set; }
 
     [DataField]
     public EntityUid Sender { get; set; }
@@ -106,8 +103,10 @@ public partial record struct SurveillanceCameraPingSubnetPayload : INetworkPaylo
 public partial record struct SurveillanceCameraSubnetDataPayload : INetworkPayload
 {
     [DataField]
-    public string Subnet;
-
-    [DataField]
-    public uint TransmitFrequency;
+    public DeviceFrequency TransmitFrequency;
 }
+
+/// <summary>
+/// Ping payload raised from a camera when trying to update its map data.
+/// </summary>
+public partial record struct SurveillanceCameraMarkerPingSubnetPayload(DeviceAddress? RouterConnected = null) : INetworkPayload;

@@ -15,17 +15,17 @@ public sealed class SurveillanceCameraMonitorUiState : BoundUserInterfaceState
 
     // Currently available subnets. Does not send the entirety of the possible
     // cameras to view because that could be really, really large
-    public HashSet<string> Subnets { get; }
+    public Dictionary<DeviceAddress, DeviceFrequency> Subnets { get; }
 
-    public string ActiveAddress;
+    public DeviceAddress ActiveAddress;
 
     // Currently active subnet.
-    public string ActiveSubnet { get; }
+    public DeviceAddress ActiveSubnet { get; }
 
     // Known cameras, by address and name.
-    public Dictionary<string, string> Cameras { get; }
+    public Dictionary<DeviceAddress, string> Cameras { get; }
 
-    public SurveillanceCameraMonitorUiState(NetEntity? activeCamera, HashSet<string> subnets, string activeAddress, string activeSubnet, Dictionary<string, string> cameras)
+    public SurveillanceCameraMonitorUiState(NetEntity? activeCamera, Dictionary<DeviceAddress, DeviceFrequency> subnets, DeviceAddress activeAddress, DeviceAddress activeSubnet, Dictionary<DeviceAddress, string> cameras)
     {
         ActiveCamera = activeCamera;
         Subnets = subnets;
@@ -38,10 +38,10 @@ public sealed class SurveillanceCameraMonitorUiState : BoundUserInterfaceState
 [Serializable, NetSerializable]
 public sealed class SurveillanceCameraMonitorSwitchMessage : BoundUserInterfaceMessage
 {
-    public string Address { get; }
-    public string? CameraSubnet { get; }
+    public DeviceAddress Address { get; }
+    public DeviceAddress? CameraSubnet { get; }
 
-    public SurveillanceCameraMonitorSwitchMessage(string address, string? cameraSubnet = null)
+    public SurveillanceCameraMonitorSwitchMessage(DeviceAddress address, DeviceAddress? cameraSubnet = null)
     {
         Address = address;
         CameraSubnet = cameraSubnet;
@@ -51,9 +51,9 @@ public sealed class SurveillanceCameraMonitorSwitchMessage : BoundUserInterfaceM
 [Serializable, NetSerializable]
 public sealed class SurveillanceCameraMonitorSubnetRequestMessage : BoundUserInterfaceMessage
 {
-    public string Subnet { get; }
+    public DeviceAddress Subnet { get; }
 
-    public SurveillanceCameraMonitorSubnetRequestMessage(string subnet)
+    public SurveillanceCameraMonitorSubnetRequestMessage(DeviceAddress subnet)
     {
         Subnet = subnet;
     }

@@ -1,4 +1,5 @@
-﻿using Content.Shared.Medical.SuitSensors;
+﻿using Content.Shared.DeviceNetwork;
+using Content.Shared.Medical.SuitSensors;
 
 namespace Content.Server.Medical.CrewMonitoring;
 
@@ -6,11 +7,10 @@ namespace Content.Server.Medical.CrewMonitoring;
 [Access(typeof(CrewMonitoringServerSystem))]
 public sealed partial class CrewMonitoringServerComponent : Component
 {
-
     /// <summary>
     ///     List of all currently connected sensors to this server.
     /// </summary>
-    public readonly Dictionary<string, SuitSensorStatus> SensorStatus = new();
+    public readonly Dictionary<DeviceAddress, SuitSensorStatus> SensorStatus = new();
 
     /// <summary>
     ///     After what time sensor consider to be lost.

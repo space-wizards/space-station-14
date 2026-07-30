@@ -1,10 +1,5 @@
 using Content.Server.Atmos.Monitor.Payloads;
-using Content.Server.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Systems;
-using Content.Shared.Atmos.Monitor;
-using Content.Shared.Atmos.Monitor.Components;
-using Content.Shared.Atmos.Piping.Binary.Components;
-using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.DeviceNetwork;
 
 namespace Content.Server.Atmos.Monitor.Systems;
@@ -17,19 +12,19 @@ public sealed partial class AtmosDeviceNetworkSystem : EntitySystem
 {
     [Dependency] private DeviceNetworkSystem _deviceNet = default!;
 
-    public void Register(EntityUid uid, string? address)
+    public void Register(EntityUid uid, DeviceAddress? address)
     {
         var registerPayload = new AtmosMonitorRegisterDevicePayload();
         _deviceNet.QueuePacket(uid, address, ref registerPayload);
     }
 
-    public void Deregister(EntityUid uid, string? address)
+    public void Deregister(EntityUid uid, DeviceAddress? address)
     {
         var deregisterPayload = new AtmosMonitorDeregisterDevicePayload();
         _deviceNet.QueuePacket(uid, address, ref deregisterPayload);
     }
 
-    public void Sync(EntityUid uid, string? address)
+    public void Sync(EntityUid uid, DeviceAddress? address)
     {
         var payload = new AtmosSyncPayload();
         _deviceNet.QueuePacket(uid, address, ref payload);

@@ -1,3 +1,5 @@
+using Content.Shared.DeviceNetwork;
+
 namespace Content.Server.SurveillanceCamera;
 
 [RegisterComponent]
@@ -11,7 +13,7 @@ public sealed partial class SurveillanceCameraMonitorComponent : Component
     public EntityUid? ActiveCamera { get; set; }
 
     [ViewVariables]
-    public string ActiveCameraAddress { get; set; } = string.Empty;
+    public DeviceAddress ActiveCameraAddress { get; set; }
 
     /// <summary>
     /// Last time this monitor was sent a heartbeat.
@@ -30,7 +32,7 @@ public sealed partial class SurveillanceCameraMonitorComponent : Component
     /// If the monitor has connected to the camera, this should be set to null.
     /// </summary>
     [ViewVariables]
-    public string? NextCameraAddress { get; set; }
+    public DeviceAddress? NextCameraAddress { get; set; }
 
     /// <summary>
     /// Set of viewers currently looking at this monitor.
@@ -42,19 +44,19 @@ public sealed partial class SurveillanceCameraMonitorComponent : Component
     /// Current active subnet.
     /// </summary>
     [ViewVariables]
-    public string ActiveSubnet { get; set; } = default!;
+    public DeviceAddress ActiveSubnet { get; set; } = default!;
 
     /// <summary>
     /// Known cameras in this subnet by address with name values.
     /// This is cleared when the subnet is changed.
     /// </summary>
     [ViewVariables]
-    public Dictionary<string, string> KnownCameras { get; } = new();
+    public Dictionary<DeviceAddress, string> KnownCameras { get; } = new();
 
     /// <summary>
     /// The subnets known by this camera monitor.
     /// Key is a pair of router's address and transmit frequency of the subnet.
     /// </summary>
     [ViewVariables]
-    public Dictionary<string, (string Address, uint TransmitFrequency)> KnownSubnets { get; } = new();
+    public Dictionary<DeviceAddress, DeviceFrequency> KnownSubnets { get; } = new();
 }

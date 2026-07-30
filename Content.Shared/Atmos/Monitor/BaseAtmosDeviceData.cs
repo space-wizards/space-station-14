@@ -1,4 +1,5 @@
-﻿using Content.Shared.DeviceNetwork.Systems;
+﻿using Content.Shared.DeviceNetwork;
+using Content.Shared.DeviceNetwork.Systems;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.Monitor;
@@ -15,5 +16,5 @@ public abstract partial class BaseAtmosDeviceData : IAtmosDeviceData
     [DataField]
     public bool IgnoreAlarms { get; set; }
 
-    public abstract void RaisePayload(EntityUid uid, string address, DeviceNetworkSystem deviceNetSys);
+    public abstract void RaisePayload(EntityUid uid, DeviceAddress address, DeviceNetworkSystem deviceNetSys);
 }

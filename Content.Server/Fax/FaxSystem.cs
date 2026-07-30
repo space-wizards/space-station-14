@@ -8,6 +8,7 @@ using Content.Server.Tools;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Fax;
@@ -362,7 +363,7 @@ public sealed partial class FaxSystem : EntitySystem
     /// <summary>
     ///     Set fax destination address not checking if he knows it exists
     /// </summary>
-    public void SetDestination(EntityUid uid, string destAddress, FaxMachineComponent? component = null)
+    public void SetDestination(EntityUid uid, DeviceAddress destAddress, FaxMachineComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -484,7 +485,7 @@ public sealed partial class FaxSystem : EntitySystem
         if (component.DestinationFaxAddress == null)
             return;
 
-        if (!component.KnownFaxes.TryGetValue(component.DestinationFaxAddress, out var faxName))
+        if (!component.KnownFaxes.TryGetValue(component.DestinationFaxAddress.Value, out var faxName))
             return;
 
         if (!TryComp(sendEntity, out MetaDataComponent? metadata) ||
@@ -530,7 +531,7 @@ public sealed partial class FaxSystem : EntitySystem
     ///     Accepts a new message and adds it to the queue to print
     ///     If has parameter "notifyAdmins" also output a special message to admin chat.
     /// </summary>
-    public void Receive(EntityUid uid, FaxPrintout printout, string? fromAddress = null, FaxMachineComponent? component = null)
+    public void Receive(EntityUid uid, FaxPrintout printout, DeviceAddress? fromAddress = null, FaxMachineComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;

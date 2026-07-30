@@ -11,7 +11,7 @@ public partial interface IRoutableNetworkPayload : INetworkPayload
     /// <summary>
     /// Original sender address of this payload.
     /// </summary>
-    string? SenderAddress { get; set; }
+    DeviceAddress? SenderAddress { get; set; }
 
     /// <summary>
     /// Original sender entity of this payload.
@@ -24,7 +24,7 @@ public partial interface IRoutedNetworkPayload : INetworkPayload
     /// <summary>
     /// If specified, the device router will use this frequency for transmitting the <see cref="Payload"/>.
     /// </summary>
-    uint? OverrideFrequency { get; set; }
+    DeviceFrequency? OverrideFrequency { get; set; }
 
     /// <summary>
     /// If specified, the device router will use this network ID for transmitting the <see cref="Payload"/>.
@@ -34,12 +34,12 @@ public partial interface IRoutedNetworkPayload : INetworkPayload
     /// <summary>
     /// Address to re-route to when the <see cref="RoutedNetworkPayload{T}"/> is being handled.
     /// </summary>
-    string? TargetAddress { get; set; }
+    DeviceAddress? TargetAddress { get; set; }
 
     /// <summary>
     ///
     /// </summary>
-    void Reroute(EntityUid sender, string? address, uint? frequency, int? network, DeviceNetworkSystem system);
+    void Reroute(EntityUid sender, DeviceAddress? address, DeviceFrequency? frequency, int? network, DeviceNetworkSystem system);
 }
 
 /// <summary>
@@ -57,7 +57,7 @@ public partial record struct RoutedNetworkPayload<T> : IRoutedNetworkPayload whe
     /// If specified, the device router will use this frequency for transmitting the <see cref="Payload"/>.
     /// </summary>
     [DataField]
-    public uint? OverrideFrequency { get; set; }
+    public DeviceFrequency? OverrideFrequency { get; set; }
 
     /// <summary>
     /// If specified, the device router will use this network ID for transmitting the <see cref="Payload"/>.
@@ -69,11 +69,11 @@ public partial record struct RoutedNetworkPayload<T> : IRoutedNetworkPayload whe
     /// Address to re-route to when the <see cref="RoutedNetworkPayload{T}"/> is being handled.
     /// </summary>
     [DataField]
-    public string? TargetAddress { get; set; }
+    public DeviceAddress? TargetAddress { get; set; }
 
     public void Reroute(EntityUid sender,
-        string? address,
-        uint? frequency,
+        DeviceAddress? address,
+        DeviceFrequency? frequency,
         int? network,
         DeviceNetworkSystem system)
     {

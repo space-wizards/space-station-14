@@ -13,7 +13,7 @@ public sealed partial class DeviceFrequencyPrototype : IPrototype
 
     // TODO Somehow Allow per-station or some other type of named but randomized frequencies?
     [DataField(required: true)]
-    public uint Frequency;
+    public ushort Frequency;
 
     /// <summary>
     ///     Optional name for this frequency, for displaying in game.

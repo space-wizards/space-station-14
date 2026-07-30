@@ -18,7 +18,7 @@ public sealed class DeviceNet
     ///     specific frequency.
     /// </summary>
     [ViewVariables]
-    public readonly Dictionary<string, Device> Devices = new();
+    public readonly Dictionary<int, Device> Devices = new();
 
     /// <summary>
     ///     Devices listening on a given frequency.
@@ -31,102 +31,4 @@ public sealed class DeviceNet
     /// </summary>
     [ViewVariables]
     public readonly Dictionary<uint, HashSet<Device>> ReceiveAllDevices = new();
-
-    private readonly IRobustRandom _random;
-    public readonly int NetId;
-
-    public DeviceNet(int netId, IRobustRandom random)
-    {
-        _random = random;
-        NetId = netId;
-    }
-
-    /// <summary>
-    ///     Add a device to the network.
-    /// </summary>
-    public bool Add(Entity<DeviceNetworkComponent> ent)
-    {
-        var deviceComp = ent.Comp;
-        var device = new Device(ent.Owner, ent.Comp.Data);
-        if (deviceComp.Data.CustomAddress)
-        {
-            // Only add if the device's existing address is available.
-            if (!Devices.TryAdd(deviceComp.Data.Address, device))
-                return false;
-        }
-        else
-        {
-            // Randomly generate a new address if the existing random one is invalid. Otherwise, keep the existing address
-            if (string.IsNullOrWhiteSpace(deviceComp.Data.Address) || Devices.ContainsKey(deviceComp.Data.Address))
-            {
-                deviceComp.Data.Address = GenerateValidAddress(deviceComp.Prefix);
-                device = new Device(ent.Owner, ent.Comp.Data); // Reallocate because the data had changed
-            }
-
-            Devices[deviceComp.Data.Address] = device;
-        }
-
-        if (deviceComp.Data.ReceiveFrequency is not { } freq)
-            return true;
-
-        if (!ListeningDevices.TryGetValue(freq, out var devices))
-            ListeningDevices[freq] = devices = new();
-
-        devices.Add(device);
-
-        if (!deviceComp.Data.ReceiveAll)
-            return true;
-
-        if (!ReceiveAllDevices.TryGetValue(freq, out var receiveAlldevices))
-            ReceiveAllDevices[freq] = receiveAlldevices = new();
-
-        receiveAlldevices.Add(device);
-        return true;
-    }
-
-    /// <summary>
-    ///     Remove a device from the network.
-    /// </summary>
-    public bool Remove(Entity<DeviceNetworkComponent> ent)
-    {
-        var deviceComp = ent.Comp;
-        var device = new Device(ent.Owner, ent.Comp.Data);
-        if (!Devices.Remove(deviceComp.Data.Address))
-            return false;
-
-        if (deviceComp.Data.ReceiveFrequency is not { } freq)
-            return true;
-
-        if (ListeningDevices.TryGetValue(freq, out var listening))
-        {
-            listening.Remove(device);
-            if (listening.Count == 0)
-                ListeningDevices.Remove(freq);
-        }
-
-        if (deviceComp.Data.ReceiveAll && ReceiveAllDevices.TryGetValue(freq, out var receiveAll))
-        {
-            receiveAll.Remove(device);
-            if (receiveAll.Count == 0)
-                ListeningDevices.Remove(freq);
-        }
-
-        return true;
-    }
-
-    /// <summary>
-    ///     Generates a valid address by randomly generating one and checking if it already exists on the network.
-    /// </summary>
-    private string GenerateValidAddress(string? prefix)
-    {
-        prefix = string.IsNullOrWhiteSpace(prefix) ? null : Loc.GetString(prefix);
-        string address;
-        do
-        {
-            var num = _random.Next();
-            address = $"{prefix}{num >> 16:X4}-{num & 0xFFFF:X4}";
-        } while (Devices.ContainsKey(address));
-
-        return address;
-    }
 }

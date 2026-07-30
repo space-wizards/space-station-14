@@ -49,10 +49,30 @@ public sealed partial class NetworkConfiguratorSystem
         var defaults = _deviceLinkSystem.GetDefaults(sources);
         var sourceIds = sources.Select(s => (ProtoId<SourcePortPrototype>)s.ID).ToArray();
 
-        var sourceAddress = _deviceNetworkQuery.Resolve(source.Owner, ref source.Comp2, false) ? source.Comp2.Data.Address : "";
-        var sinkAddress = _deviceNetworkQuery.Resolve(sink.Owner, ref sink.Comp2, false) ? sink.Comp2.Data.Address : "";
+        var sourceAddress = string.Empty;
+        var sinkAddress = string.Empty;
+        var sourceAddressId = DeviceAddress.Invalid;
+        var sinkAddressId = DeviceAddress.Invalid;
+        if (_deviceNetworkQuery.Resolve(source.Owner, ref source.Comp2, false))
+        {
+            sourceAddress = _deviceNetwork.GetAddress((source.Owner, source.Comp2));
+            sourceAddressId = source.Comp2.Data.AddressId;
+        }
+        if (_deviceNetworkQuery.Resolve(sink.Owner, ref sink.Comp2, false))
+        {
+            sinkAddress = _deviceNetwork.GetAddress((sink.Owner, sink.Comp2));
+            sinkAddressId = sink.Comp2.Data.AddressId;
+        }
 
-        var state = new DeviceLinkUserInterfaceState(sourceIds, sinks, links, sourceAddress, sinkAddress, defaults);
+        var state = new DeviceLinkUserInterfaceState(
+            sourceIds,
+            sinks,
+            links,
+            sourceAddressId,
+            sinkAddressId,
+            sourceAddress,
+            sinkAddress,
+            defaults);
         _uiSystem.SetUiState(configurator.Owner, NetworkConfiguratorUiKey.Link, state);
     }
 
@@ -90,7 +110,7 @@ public sealed partial class NetworkConfiguratorSystem
                 NetworkConfiguratorUiKey.Configure,
                 new DeviceListUserInterfaceState(
                 _deviceListSystem.GetDeviceList(configurator.Comp.ActiveDeviceList.Value)
-                    .Select(v => (v.Key, MetaData(v.Value).EntityName))
+                    .Select(v => (v.Key, MetaData(v.Value.Item1).EntityName))
                     .ToHashSet()
             ));
         }
@@ -101,18 +121,19 @@ public sealed partial class NetworkConfiguratorSystem
     /// </summary>
     private void UpdateListUiState(Entity<NetworkConfiguratorComponent> ent)
     {
-        HashSet<(string address, string name)> devices = new();
-        HashSet<string> invalidDevices = new();
+        HashSet<(LocDeviceAddress address, string name)> devices = new();
+        HashSet<DeviceAddress> invalidDevices = new();
 
         foreach (var pair in ent.Comp.Devices)
         {
-            if (!Exists(pair.Value))
+            if (!Exists(pair.Value)
+                || !_deviceNetworkQuery.TryComp(pair.Value, out var deviceComp))
             {
                 invalidDevices.Add(pair.Key);
                 continue;
             }
 
-            devices.Add((pair.Key, Name(pair.Value)));
+            devices.Add(((pair.Key, deviceComp.Prefix), Name(pair.Value)));
         }
 
         //Remove saved entities that don't exist anymore
@@ -173,14 +194,14 @@ public sealed partial class NetworkConfiguratorSystem
     [SubscribeLocalEvent]
     private void OnRemoveDevice(Entity<NetworkConfiguratorComponent> ent, ref NetworkConfiguratorRemoveDeviceMessage args)
     {
-        if (ent.Comp.Devices.TryGetValue(args.Address, out var removedDevice))
+        if (ent.Comp.Devices.TryGetValue(args.Address.AddressId, out var removedDevice))
         {
             _adminLogger.Add(LogType.DeviceLinking,
                 LogImpact.Low,
                 $"{ToPrettyString(args.Actor):actor} removed buffered device {ToPrettyString(removedDevice):subject} from {ToPrettyString(ent):tool}");
         }
 
-        ent.Comp.Devices.Remove(args.Address);
+        ent.Comp.Devices.Remove(args.Address.AddressId);
         if (_deviceNetworkQuery.TryComp(removedDevice, out var device))
         {
             device.Configurators.Remove(ent);
@@ -266,8 +287,7 @@ public sealed partial class NetworkConfiguratorSystem
                 args.Actor,
                 (ent.Comp.ActiveDeviceLink.Value, activeSource),
                 (ent.Comp.DeviceLinkTarget.Value, targetSink),
-                args.Source,
-                args.Sink);
+                args.Link);
 
             UpdateLinkUiState(ent, (ent.Comp.ActiveDeviceLink.Value, activeSource), ent.Comp.DeviceLinkTarget.Value);
         }
@@ -278,8 +298,7 @@ public sealed partial class NetworkConfiguratorSystem
                 args.Actor,
                 (ent.Comp.DeviceLinkTarget.Value, targetSource),
                 (ent.Comp.ActiveDeviceLink.Value, activeSink),
-                args.Source,
-                args.Sink);
+                args.Link);
 
             UpdateLinkUiState(
                 ent,
@@ -369,10 +388,10 @@ public sealed partial class NetworkConfiguratorSystem
 
                 foreach (var (addr, device) in _deviceListSystem.GetDeviceList(ent.Comp.ActiveDeviceList.Value))
                 {
-                    if (!_deviceNetworkQuery.TryComp(device, out var comp))
+                    if (!_deviceNetworkQuery.TryComp(device.Item1, out var comp))
                         continue;
 
-                    ent.Comp.Devices.Add(addr, device);
+                    ent.Comp.Devices.Add(addr.AddressId, device.Item1);
                     comp.Configurators.Add(ent);
                 }
 
@@ -395,7 +414,7 @@ public sealed partial class NetworkConfiguratorSystem
             NetworkConfiguratorUiKey.Configure,
             new DeviceListUserInterfaceState(
                 _deviceListSystem.GetDeviceList(ent.Comp.ActiveDeviceList.Value)
-                    .Select(v => (v.Key, MetaData(v.Value).EntityName))
+                    .Select(v => (v.Key, MetaData(v.Value.Item1).EntityName))
                     .ToHashSet()));
     }
 

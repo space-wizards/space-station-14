@@ -1,12 +1,10 @@
 ﻿using Content.Shared.Actions;
+using Content.Shared.DeviceLinking;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.DeviceNetwork;
 
-public sealed partial class ClearAllOverlaysEvent : InstantActionEvent
-{
-}
-
+public sealed partial class ClearAllOverlaysEvent : InstantActionEvent;
 
 [Serializable, NetSerializable]
 public enum NetworkConfiguratorVisuals
@@ -46,9 +44,9 @@ public enum NetworkConfiguratorButtonKey
 [Serializable, NetSerializable]
 public sealed class NetworkConfiguratorRemoveDeviceMessage : BoundUserInterfaceMessage
 {
-    public readonly string Address;
+    public readonly LocDeviceAddress Address;
 
-    public NetworkConfiguratorRemoveDeviceMessage(string address)
+    public NetworkConfiguratorRemoveDeviceMessage(LocDeviceAddress address)
     {
         Address = address;
     }
@@ -77,22 +75,20 @@ public sealed class NetworkConfiguratorClearLinksMessage : BoundUserInterfaceMes
 [Serializable, NetSerializable]
 public sealed class NetworkConfiguratorToggleLinkMessage : BoundUserInterfaceMessage
 {
-    public readonly string Source;
-    public readonly string Sink;
+    public readonly DeviceLink Link;
 
-    public NetworkConfiguratorToggleLinkMessage(string source, string sink)
+    public NetworkConfiguratorToggleLinkMessage(DeviceLink link)
     {
-        Source = source;
-        Sink = sink;
+        Link = link;
     }
 }
 
 [Serializable, NetSerializable]
 public sealed class NetworkConfiguratorLinksSaveMessage : BoundUserInterfaceMessage
 {
-    public readonly List<(string source, string sink)> Links;
+    public readonly List<DeviceLink> Links;
 
-    public NetworkConfiguratorLinksSaveMessage(List<(string source, string sink)> links)
+    public NetworkConfiguratorLinksSaveMessage(List<DeviceLink> links)
     {
         Links = links;
     }

@@ -13,20 +13,20 @@ public partial record struct DeviceData
     ///     The frequency that this device is listening on.
     /// </summary>
     [DataField]
-    public uint? ReceiveFrequency;
+    public DeviceFrequency? ReceiveFrequency;
 
     /// <summary>
     ///     The frequency that this device going to try transmit on.
     /// </summary>
     [DataField]
-    public uint? TransmitFrequency;
+    public DeviceFrequency? TransmitFrequency;
 
     /// <summary>
-    ///     The address of the device, either on the network it is currently connected to or whatever address it
+    ///     The address ID of the device, either on the network it is currently connected to or whatever address it
     ///     most recently used.
     /// </summary>
-    [DataField]
-    public string Address = string.Empty;
+    [IncludeDataField]
+    public DeviceAddress AddressId;
 
     /// <summary>
     ///     If true, the address was customized and should be preserved across networks. If false, a randomly

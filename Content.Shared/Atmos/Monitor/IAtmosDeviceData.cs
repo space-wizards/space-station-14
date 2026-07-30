@@ -1,4 +1,5 @@
-﻿using Content.Shared.DeviceNetwork.Systems;
+﻿using Content.Shared.DeviceNetwork;
+using Content.Shared.DeviceNetwork.Systems;
 
 namespace Content.Shared.Atmos.Monitor;
 
@@ -11,5 +12,5 @@ public partial interface IAtmosDeviceData
 
     bool IgnoreAlarms { get; set; }
 
-    void RaisePayload(EntityUid uid, string address, DeviceNetworkSystem deviceNetSys);
+    void RaisePayload(EntityUid uid, DeviceAddress address, DeviceNetworkSystem deviceNetSys);
 }

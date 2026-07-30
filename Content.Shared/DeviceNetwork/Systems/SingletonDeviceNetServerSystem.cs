@@ -32,7 +32,7 @@ public sealed partial class SingletonDeviceNetServerSystem : EntitySystem
     /// <param name="address">The address of the active server if it exists</param>
     /// <typeparam name="TComp">The component type that determines what type of server you're getting the address of</typeparam>
     /// <returns>True if there is an active serve. False otherwise</returns>
-    public bool TryGetActiveServerAddress<TComp>(EntityUid stationId, [NotNullWhen(true)] out string? address) where TComp : IComponent
+    public bool TryGetActiveServerAddress<TComp>(EntityUid stationId, [NotNullWhen(true)] out DeviceAddress? address) where TComp : IComponent
     {
         var servers = EntityQueryEnumerator<
             SingletonDeviceNetServerComponent,
@@ -55,10 +55,10 @@ public sealed partial class SingletonDeviceNetServerSystem : EntitySystem
 
             last = (uid, server, device);
 
-            if (!server.Active || string.IsNullOrEmpty(device.Data.Address))
+            if (!server.Active || device.Data.AddressId == 0)
                 continue;
 
-            address = device.Data.Address;
+            address = device.Data.AddressId;
             return true;
         }
 
@@ -66,7 +66,7 @@ public sealed partial class SingletonDeviceNetServerSystem : EntitySystem
         if (last.HasValue)
         {
             ConnectServer((last.Value.id, last.Value.server, last.Value.device));
-            address = last.Value.device.Data.Address;
+            address = last.Value.device.Data.AddressId;
             return true;
         }
 

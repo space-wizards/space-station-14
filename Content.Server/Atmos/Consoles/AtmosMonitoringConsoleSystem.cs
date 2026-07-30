@@ -1,7 +1,4 @@
-using Content.Server.Atmos.Components;
 using Content.Server.Atmos.Piping.Components;
-using Content.Server.DeviceNetwork.Components;
-using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
@@ -18,6 +15,7 @@ using Robust.Shared.Timing;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Atmos.EntitySystems;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.NodeContainer;
 
@@ -212,7 +210,7 @@ public sealed partial class AtmosMonitoringConsoleSystem : SharedAtmosMonitoring
 
         // Otherwise use its base name and network address
         else if (TryComp<DeviceNetworkComponent>(uid, out var deviceNet))
-            address = deviceNet.Data.Address;
+            address = DeviceLocalizationHelpers.GetAddressFromId(deviceNet);
 
         // Entry for unpowered devices
         if (TryComp<ApcPowerReceiverComponent>(uid, out var apcPowerReceiver) && !apcPowerReceiver.Powered)

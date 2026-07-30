@@ -40,12 +40,12 @@ public sealed partial class DeviceListSystem : EntitySystem
     /// <remarks>
     /// If any entity in the device list is pre-map init, it will show the entity UID of the device instead.
     /// </remarks>
-    public Dictionary<string, EntityUid> GetDeviceList(Entity<DeviceListComponent?> ent)
+    public Dictionary<LocDeviceAddress, (EntityUid, string)> GetDeviceList(Entity<DeviceListComponent?> ent)
     {
         if (!_deviceListQuery.Resolve(ent.Owner, ref ent.Comp))
-            return new Dictionary<string, EntityUid>();
+            return new Dictionary<LocDeviceAddress, (EntityUid, string)>();
 
-        var devices = new Dictionary<string, EntityUid>(ent.Comp.Devices.Count);
+        var devices = new Dictionary<LocDeviceAddress, (EntityUid, string)>(ent.Comp.Devices.Count);
 
         foreach (var deviceUid in ent.Comp.Devices)
         {
@@ -53,10 +53,10 @@ public sealed partial class DeviceListSystem : EntitySystem
                 continue;
 
             var address = MetaData(deviceUid).EntityLifeStage == EntityLifeStage.MapInitialized
-                ? deviceNet.Data.Address
+                ? DeviceLocalizationHelpers.GetAddressFromId(deviceNet)
                 : $"UID: {deviceUid.ToString()}";
 
-            devices.Add(address, deviceUid);
+            devices.Add(new LocDeviceAddress(deviceNet.Data.AddressId, deviceNet.Prefix), (deviceUid, address));
         }
 
         return devices;
@@ -68,9 +68,9 @@ public sealed partial class DeviceListSystem : EntitySystem
     /// <param name="ent">The entity that has the device list that should be checked for the address</param>
     /// <param name="address">The address to check for</param>
     /// <returns>True if the address is present. False if not</returns>
-    public bool ExistsInDeviceList(Entity<DeviceListComponent?> ent, string address)
+    public bool ExistsInDeviceList(Entity<DeviceListComponent?> ent, DeviceAddress address)
     {
-        var addresses = GetDeviceList(ent).Keys;
+        var addresses = GetDeviceList(ent).Keys.Select(x => x.AddressId);
         return addresses.Contains(address);
     }
 
@@ -123,7 +123,7 @@ public sealed partial class DeviceListSystem : EntitySystem
     private readonly List<EntityUid> _toRemove = new();
 
     [SubscribeLocalEvent]
-    private void OnMapSave(ref BeforeSerializationEvent ev)
+    private void OnMapSave(BeforeSerializationEvent ev)
     {
         var enumerator = AllEntityQuery<DeviceListComponent, TransformComponent>();
         while (enumerator.MoveNext(out var uid, out var device, out var xform))

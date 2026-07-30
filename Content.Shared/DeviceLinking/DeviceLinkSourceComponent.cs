@@ -31,6 +31,7 @@ public sealed partial class DeviceLinkSourceComponent : Component
     /// <summary>
     /// The list of source to sink ports for each linked sink entity for easier managing of links
     /// </summary>
+    // TODO this should be using DeviceLink struct, but a custom serializer is needed for it first tp support backwards compatability.
     [DataField]
     public Dictionary<EntityUid, HashSet<(ProtoId<SourcePortPrototype> Source, ProtoId<SinkPortPrototype> Sink)>> LinkedPorts = new();
 
