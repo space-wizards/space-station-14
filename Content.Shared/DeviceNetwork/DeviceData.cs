@@ -36,13 +36,6 @@ public partial record struct DeviceData
     public bool CustomAddress = false;
 
     /// <summary>
-    ///     Prefix to prepend to any automatically generated addresses. Helps players to identify devices. This gets
-    ///     localized.
-    /// </summary>
-    [DataField]
-    public LocId? Prefix;
-
-    /// <summary>
     ///     Whether the device should listen for all device messages, regardless of the intended recipient.
     /// </summary>
     [DataField]
