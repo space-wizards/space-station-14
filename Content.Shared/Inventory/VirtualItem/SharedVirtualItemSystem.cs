@@ -149,11 +149,16 @@ public abstract partial class SharedVirtualItemSystem : EntitySystem
     }
 
     /// <summary>
-    /// Spawns an unremoveable virtual item in an empty hand.
+    /// Spawns unremoveable virtual items in empty hands.
     /// </summary>
-    public bool TrySpawnUnremoveableVirtualItemInHand(EntityUid blockingEnt, EntityUid user, bool dropOthers = false, bool silent = false)
+    public bool TrySpawnUnremoveableVirtualItemInHand(EntityUid blockingEnt, EntityUid user, int count = 1, bool dropOthers = false, bool silent = false)
     {
-        return TrySpawnUnremoveableVirtualItemInHand(blockingEnt, user, out _, dropOthers, silent: silent);
+        for (var i = 0; i < count; i++)
+        {
+            if (!TrySpawnUnremoveableVirtualItemInHand(blockingEnt, user, out _, dropOthers, silent: silent))
+                return false;
+        }
+        return true;
     }
 
     /// <inheritdoc cref="TrySpawnUnremoveableVirtualItemInHand(Robust.Shared.GameObjects.EntityUid,Robust.Shared.GameObjects.EntityUid,bool,bool)"/>

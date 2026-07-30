@@ -339,17 +339,14 @@ public sealed partial class VehicleSystem : EntitySystem
         if (vehicle.Comp.BlockedHands == 0)
             return true;
 
-        for (var i = 0; i < vehicle.Comp.BlockedHands; i++)
-        {
-            if (_virtualItem.TrySpawnUnremoveableVirtualItemInHand(
-                    vehicle.Owner,
-                    operatorUid,
-                    dropOthers: true)) continue;
- 
-            UnblockHands(vehicle.Owner, operatorUid);
-            return false;
-        }
-        return true;
+        if (_virtualItem.TrySpawnUnremoveableVirtualItemInHand(
+                vehicle.Owner,
+                operatorUid,
+                vehicle.Comp.BlockedHands,
+                dropOthers: true)) return true;
+
+        UnblockHands(vehicle.Owner, operatorUid);
+        return false;
     }
 
     /// <summary>

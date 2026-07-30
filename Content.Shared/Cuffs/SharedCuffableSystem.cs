@@ -458,9 +458,7 @@ namespace Content.Shared.Cuffs
                 if (freeHands == 2)
                     break;
             }
-
-            _virtualItem.TrySpawnUnremoveableVirtualItemInHand(handcuff, uid);
-            _virtualItem.TrySpawnUnremoveableVirtualItemInHand(handcuff, uid);
+            _virtualItem.TrySpawnUnremoveableVirtualItemInHand(handcuff, uid, count: 2);
         }
 
         /// <summary>
