@@ -1,5 +1,6 @@
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.VendingMachines.Components;
@@ -34,7 +35,7 @@ public sealed partial class VendingMachineEjectComponent : Component
     [DataField, AutoNetworkedField, AutoPausedField]
     public TimeSpan? DenyEnd;
 
-    public string? NextItemToEject;
+    public EntProtoId? NextItemToEject;
 
     public bool ThrowNextItem;
 
@@ -63,7 +64,15 @@ public sealed partial class VendingMachineEjectComponent : Component
     [DataField]
     public SoundSpecifier SoundDeny = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
 
+    /// <summary>
+    /// How much force to apply when the vending machine throws an item instead of dispensing it normally.
+    /// </summary>
+    [DataField]
     public float NonLimitedEjectForce = 7.5f;
 
+    /// <summary>
+    /// The maximum absolute X and Y values used to pick a random direction for thrown items.
+    /// </summary>
+    [DataField]
     public float NonLimitedEjectRange = 5f;
 }

@@ -1,15 +1,16 @@
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.VendingMachines;
 
 [Serializable, NetSerializable, DataDefinition]
-public sealed partial class VendingMachineInventoryEntry(InventoryType type, string id, uint amount)
+public sealed partial class VendingMachineInventoryEntry(InventoryType type, EntProtoId id, uint amount)
 {
     [DataField]
     public InventoryType Type = type;
 
     [DataField]
-    public string ID = id;
+    public EntProtoId ID = id;
 
     [DataField]
     public uint Amount = amount;

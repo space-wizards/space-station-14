@@ -1,6 +1,6 @@
 using Content.Shared.Actions;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.VendingMachines.Components;
 
@@ -10,9 +10,8 @@ public sealed partial class VendingMachineComponent : Component
     /// <summary>
     /// PrototypeID for the vending machine's inventory, see <see cref="VendingMachineInventoryPrototype"/>
     /// </summary>
-    // Okay so not using ProtoId here is load-bearing because the ProtoId serializer will log errors if the prototype doesn't exist.
-    [DataField("pack", customTypeSerializer: typeof(PrototypeIdSerializer<VendingMachineInventoryPrototype>), required: true)]
-    public string PackPrototypeId = string.Empty;
+    [DataField("pack", required: true)]
+    public ProtoId<VendingMachineInventoryPrototype> PackPrototypeId;
 
     [DataField, AutoNetworkedField]
     public Dictionary<string, VendingMachineInventoryEntry> Inventory = new();

@@ -63,7 +63,7 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
 
         if (dispenseOnHit.Cooldown != null)
         {
-            dispenseOnHit.End = Timing.CurTime + dispenseOnHit.Cooldown.Value;
+            dispenseOnHit.CooldownEnd = Timing.CurTime + dispenseOnHit.Cooldown.Value;
         }
 
         EjectRandom(uid, throwItem: true, forceEject: true, component);
@@ -156,7 +156,7 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
         var uid = entity.Owner;
         var ejectComponent = entity.Comp2;
 
-        if (string.IsNullOrEmpty(ejectComponent.NextItemToEject))
+        if (ejectComponent.NextItemToEject is not { } item)
         {
             ejectComponent.ThrowNextItem = false;
             return;
@@ -173,7 +173,7 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
             spawnCoordinates = spawnCoordinates.Offset(offset);
         }
 
-        var ent = Spawn(ejectComponent.NextItemToEject, spawnCoordinates);
+        var ent = Spawn(item, spawnCoordinates);
 
         if (ejectComponent.ThrowNextItem)
         {
@@ -194,10 +194,10 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
         var dispenseOnHitQuery = EntityQueryEnumerator<VendingMachineDispenseOnHitComponent>();
         while (dispenseOnHitQuery.MoveNext(out _, out var dispenseOnHit))
         {
-            if (dispenseOnHit.End is not { } end || curTime <= end)
+            if (dispenseOnHit.CooldownEnd is not { } end || curTime <= end)
                 continue;
 
-            dispenseOnHit.End = null;
+            dispenseOnHit.CooldownEnd = null;
         }
 
         var disabled = EntityQueryEnumerator<EmpDisabledComponent, VendingMachineComponent, VendingMachineEjectComponent>();

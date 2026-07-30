@@ -6,10 +6,13 @@ namespace Content.Server.VendingMachines.Components;
 public sealed partial class VendingMachineDispenseOnHitComponent : Component
 {
     [ViewVariables]
-    public bool CoolingDown => End != null;
+    public bool CoolingDown => CooldownEnd != null;
 
+    /// <summary>
+    /// The time at which the dispense-on-hit cooldown ends.
+    /// </summary>
     [DataField]
-    public TimeSpan? End;
+    public TimeSpan? CooldownEnd;
 
     /// <summary>
     /// The chance that a vending machine will randomly dispense an item on hit.

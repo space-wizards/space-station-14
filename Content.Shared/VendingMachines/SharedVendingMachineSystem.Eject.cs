@@ -139,7 +139,7 @@ public abstract partial class SharedVendingMachineSystem
 
         var entry = GetEntry(uid, itemId, type, vendComponent);
 
-        if (string.IsNullOrEmpty(entry?.ID))
+        if (entry == null)
         {
             Popup.PopupEntity(Loc.GetString("vending-machine-component-try-eject-invalid-item"), uid, uid);
             Deny((uid, vendComponent), ejectComponent: ejectComponent);
