@@ -281,7 +281,7 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
 
         if (cryoPodComponent.Locked)
         {
-            _popup.PopupClient(Loc.GetString("cryo-pod-locked"), uid, userId);
+            _popup.PopupEntity(Loc.GetString("cryo-pod-locked"), uid, userId);
             return;
         }
 

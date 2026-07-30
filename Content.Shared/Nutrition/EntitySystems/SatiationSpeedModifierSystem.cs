@@ -17,7 +17,7 @@ public sealed partial class SatiationSpeedModifierSystem :
 
     protected override void AfterSatiationUpdate(Entity<SatiationSpeedModifierComponent> entity)
     {
-        _movementSpeedModifier.RefreshMovementSpeedModifiers(entity);
+        _movementSpeedModifier.RefreshMovementSpeedModifiers(entity.Owner);
     }
 
     [SubscribeLocalEvent]

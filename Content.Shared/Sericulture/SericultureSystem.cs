@@ -75,7 +75,7 @@ public abstract partial class SharedSericultureSystem : EntitySystem
         if (!TryComp<SatiationComponent>(uid, out var satiationComponent) ||
             !_satiation.IsValueInRange((uid, satiationComponent), SatiationSystem.Hunger, above: comp.MinHungerThreshold, hypotheticalValueDelta: -comp.HungerCost))
         {
-            _popupSystem.PopupClient(Loc.GetString(comp.PopupText), uid, uid);
+            _popupSystem.PopupEntity(Loc.GetString(comp.PopupText), uid, uid);
             return;
         }
 
@@ -100,7 +100,7 @@ public abstract partial class SharedSericultureSystem : EntitySystem
         if (!TryComp<SatiationComponent>(uid, out var satiationComponent) ||
             !_satiation.IsValueInRange((uid, satiationComponent), SatiationSystem.Hunger, above: comp.MinHungerThreshold, hypotheticalValueDelta: -comp.HungerCost))
         {
-            _popupSystem.PopupClient(Loc.GetString(comp.PopupText), uid, uid);
+            _popupSystem.PopupEntity(Loc.GetString(comp.PopupText), uid, uid);
             return;
         }
 
@@ -108,7 +108,7 @@ public abstract partial class SharedSericultureSystem : EntitySystem
 
         if (!_netManager.IsClient) // Have to do this because spawning stuff in shared is CBT.
         {
-            var newEntity = Spawn(comp.EntityProduced, Transform(uid).Coordinates);
+            var newEntity = SpawnNextToOrDrop(comp.EntityProduced, uid);
 
             _stackSystem.TryMergeToHands(newEntity, uid);
         }

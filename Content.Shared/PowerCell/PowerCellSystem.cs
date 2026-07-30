@@ -135,8 +135,16 @@ public sealed partial class PowerCellSystem : EntitySystem
 
     private void OnDrawRefreshChargeRate(Entity<PowerCellDrawComponent> ent, ref RefreshChargeRateEvent args)
     {
-        if (ent.Comp.Enabled)
-            args.NewChargeRate -= ent.Comp.DrawRate;
+        if (!ent.Comp.Enabled)
+            return;
+
+        args.NewChargeRate -= ent.Comp.DrawRate;
+
+        // If PowerCellDraw is enabled. then it should set the charge cooldown on the self recharging battery
+        if (!TryGetBatteryFromSlot(ent.Owner, out var battery))
+            return;
+
+        _battery.TrySetChargeCooldown(battery.Value.Owner);
     }
 
     private void OnDrawStartup(Entity<PowerCellDrawComponent> ent, ref ComponentStartup args)

@@ -130,7 +130,7 @@ public abstract partial class SharedVirtualItemSystem : EntitySystem
                     continue;
 
                 if (!silent && !TerminatingOrDeleted(held))
-                    _popup.PopupClient(Loc.GetString("virtual-item-dropped-other", ("dropped", held)), user, user);
+                    _popup.PopupEntity(Loc.GetString("virtual-item-dropped-other", ("dropped", held)), user, user);
 
                 empty = hand;
                 break;
