@@ -20,7 +20,7 @@ public sealed partial class StoreWhitelistCondition : ListingCondition
     [DataField("blacklist")]
     public EntityWhitelist? Blacklist;
 
-    public override bool Condition(ListingConditionArgs args)
+    public override bool Condition(ref ListingConditionArgs args)
     {
         if (args.StoreEntity == null)
             return false;

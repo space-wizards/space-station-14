@@ -14,10 +14,12 @@ public abstract partial class ListingCondition
     /// Determines whether or not a certain entity can purchase a listing.
     /// </summary>
     /// <returns>Whether or not the listing can be purchased</returns>
-    public abstract bool Condition(ListingConditionArgs args);
+    public abstract bool Condition(ref ListingConditionArgs args);
 }
 
 /// <param name="Buyer">Either the account owner, user, or an inanimate object (e.g., surplus bundle)</param>
 /// <param name="Listing">The listing itself</param>
 /// <param name="EntityManager">An entitymanager for sane coding</param>
-public readonly record struct ListingConditionArgs(EntityUid Buyer, EntityUid? StoreEntity, ListingData Listing, IEntityManager EntityManager);
+/// <param name="Message">If this string isn't null, </param>
+public record struct ListingConditionArgs(EntityUid Buyer, EntityUid? StoreEntity, ListingData Listing, IEntityManager EntityManager, string? Message) { }
+

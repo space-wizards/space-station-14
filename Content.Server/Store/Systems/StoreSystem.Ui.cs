@@ -91,8 +91,8 @@ public sealed partial class StoreSystem
         //condition checking because why not
         if (listing.Conditions != null)
         {
-            var args = new ListingConditionArgs(component.AccountOwner ?? GetBuyerMind(buyer), uid, listing, EntityManager);
-            var conditionsMet = listing.Conditions.All(condition => condition.Condition(args));
+            var args = new ListingConditionArgs(component.AccountOwner ?? GetBuyerMind(buyer), uid, listing, EntityManager, null);
+            var conditionsMet = listing.Conditions.All(condition => condition.Condition(ref args));
 
             if (!conditionsMet)
                 return;

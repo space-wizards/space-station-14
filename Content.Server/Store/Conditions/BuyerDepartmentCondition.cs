@@ -25,7 +25,7 @@ public sealed partial class BuyerDepartmentCondition : ListingCondition
     [DataField("blacklist", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<DepartmentPrototype>))]
     public HashSet<string>? Blacklist;
 
-    public override bool Condition(ListingConditionArgs args)
+    public override bool Condition(ref ListingConditionArgs args)
     {
         var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
 

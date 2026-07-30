@@ -13,7 +13,7 @@ public sealed partial class ListingLimitedStockCondition : ListingCondition
     [DataField("stock", required: true)]
     public int Stock;
 
-    public override bool Condition(ListingConditionArgs args)
+    public override bool Condition(ref ListingConditionArgs args)
     {
         return args.Listing.PurchaseAmount < Stock;
     }

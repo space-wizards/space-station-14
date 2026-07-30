@@ -53,3 +53,10 @@ changeling-sting-success = We silently sting {THE($target)}!
 
 # other
 changeling-paused-map-name = Changeling identity storage map
+
+# listing bodycount
+bodycount-listing-condition =
+    { $count ->
+        [one] 1 devour
+        *[other] {$count} devours
+    }

@@ -143,6 +143,8 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
+  - !type:BuyerBodyCountCondition
+    count: 1 # so that you can't just spam last resort all the time
   productAction: ActionChangelingLastResort
 
 - type: listing

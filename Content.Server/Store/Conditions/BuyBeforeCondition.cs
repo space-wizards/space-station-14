@@ -18,7 +18,7 @@ public sealed partial class BuyBeforeCondition : ListingCondition
     [DataField]
     public HashSet<ProtoId<ListingPrototype>>? Blacklist;
 
-    public override bool Condition(ListingConditionArgs args)
+    public override bool Condition(ref ListingConditionArgs args)
     {
         if (!args.EntityManager.TryGetComponent<StoreComponent>(args.StoreEntity, out var storeComp))
             return false;
