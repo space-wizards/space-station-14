@@ -24,7 +24,7 @@ public sealed partial class XATInteractWithComponent : Component
     /// <summary>
     /// Whitelist of allowed interacting entities.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public EntityWhitelist? Whitelist;
 
     /// <summary>
@@ -43,7 +43,7 @@ public sealed partial class XATInteractWithComponent : Component
     /// <summary>
     /// DoAfter time of interaction.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public TimeSpan InteractionTime = TimeSpan.FromSeconds(1);
 
     /// <summary>
