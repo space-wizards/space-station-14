@@ -12,7 +12,6 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
@@ -27,7 +26,6 @@ public abstract partial class SharedImplanterSystem : EntitySystem
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private ItemSlotsSystem _itemSlots = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
@@ -45,7 +43,6 @@ public abstract partial class SharedImplanterSystem : EntitySystem
         InitializeImplanted();
 
         SubscribeLocalEvent<ImplanterComponent, ComponentInit>(OnComponentInit);
-        SubscribeLocalEvent<ImplanterComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ImplanterComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
         SubscribeLocalEvent<ImplanterComponent, ExaminedEvent>(OnExamine);
 
@@ -64,18 +61,6 @@ public abstract partial class SharedImplanterSystem : EntitySystem
             ent.Comp.ImplanterSlot.StartingItem = ent.Comp.Implant;
 
         _itemSlots.AddItemSlot(ent, ImplanterComponent.ImplanterSlotId, ent.Comp.ImplanterSlot);
-    }
-
-    private void OnMapInit(Entity<ImplanterComponent> ent, ref MapInitEvent args)
-    {
-        ent.Comp.ImplantsList = _proto.EnumeratePrototypes<EntityPrototype>()
-            .Where(proto => _whitelist.IsValid(ent.Comp.DeimplantWhitelist, proto))
-            .OrderBy(proto => proto.Name)
-            .Select(proto => new EntProtoId(proto.ID))
-            .ToList();
-
-        ent.Comp.DeimplantChosen ??= ent.Comp.ImplantsList.FirstOrNull();
-        Dirty(ent);
     }
 
     private void OnEntInserted(Entity<ImplanterComponent> ent, ref EntInsertedIntoContainerMessage args)
@@ -176,7 +161,6 @@ public abstract partial class SharedImplanterSystem : EntitySystem
             return;
 
         _ui.TryToggleUi(ent.Owner, DeimplantUiKey.Key, user);
-        ent.Comp.DeimplantChosen ??= ent.Comp.ImplantsList.FirstOrNull();
         Dirty(ent);
     }
 

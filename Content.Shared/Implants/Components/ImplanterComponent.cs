@@ -96,12 +96,6 @@ public sealed partial class ImplanterComponent : Component
     public EntityWhitelist DeimplantWhitelist = new();
 
     /// <summary>
-    /// The list of implants that may be removed via this implanter
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public List<EntProtoId> ImplantsList = new List<EntProtoId>();
-
-    /// <summary>
     /// The subdermal implants that may be removed via this implanter
     /// </summary>
     [DataField]

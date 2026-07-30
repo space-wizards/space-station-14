@@ -1,13 +1,17 @@
+using System.Linq;
 using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
+using Content.Shared.Whitelist;
 using Robust.Client.UserInterface;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Implants.UI;
 
 public sealed partial class DeimplantBoundUserInterface : BoundUserInterface
 {
     [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
     [ViewVariables]
     private DeimplantChoiceWindow? _window;
@@ -30,14 +34,23 @@ public sealed partial class DeimplantBoundUserInterface : BoundUserInterface
         if (!EntMan.TryGetComponent<ImplanterComponent>(Owner, out var implanterComp))
             return;
 
-        // TODO: Don't use protoId for deimplanting
-        // and especially not raw strings!
         Dictionary<string, string> implants = new();
-        foreach (var implant in implanterComp.ImplantsList)
+
+        var validImplanters = _proto.EnumeratePrototypes<EntityPrototype>()
+            .Where(proto => _whitelist.IsValid(implanterComp.DeimplantWhitelist, proto))
+            .OrderBy(proto => proto.Name)
+            .Select(proto => new EntProtoId(proto.ID))
+            .ToList();
+
+        implanterComp.DeimplantChosen ??= validImplanters.FirstOrNull();
+
+        foreach (var implant in validImplanters)
         {
-            if (_proto.Resolve(implant, out var proto))
+            if(_proto.Resolve(implant, out var proto))
                 implants.Add(proto.ID, proto.Name);
         }
+
+
         if (_window != null)
         {
             _window.UpdateImplantList(implants);
