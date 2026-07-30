@@ -60,6 +60,14 @@ public sealed partial class StationSystem : SharedStationSystem
     private void OnStationSplitEvent(EntityUid uid, StationMemberComponent component, ref PostGridSplitEvent args)
     {
         AddGridToStation(component.Station, args.Grid); // Add the new grid as a member.
+
+        // Propagate grid-specific event configuration.
+        if (TryComp<GridEventEligibleComponent>(args.OldGrid, out var oldGridEventEligible))
+        {
+            var newGridEventEligible = EnsureComp<GridEventEligibleComponent>(args.Grid);
+            CopyComp(args.OldGrid, args.Grid, oldGridEventEligible);
+            Dirty(args.Grid, newGridEventEligible);
+        }
     }
 
     private void OnStationGridDeleted(EntityUid uid, StationMemberComponent component, ComponentShutdown args)
