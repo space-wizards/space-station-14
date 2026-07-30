@@ -5,7 +5,10 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.VendingMachines.Components;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(raiseAfterAutoHandleState: true), AutoGenerateComponentPause]
+[RegisterComponent, NetworkedComponent]
+[AutoGenerateComponentState(raiseAfterAutoHandleState: true)]
+[AutoGenerateComponentPause]
+[Access(typeof(SharedVendingMachineSystem))]
 public sealed partial class VendingMachineEjectComponent : Component
 {
     /// <summary>
@@ -15,6 +18,9 @@ public sealed partial class VendingMachineEjectComponent : Component
     [DataField]
     public TimeSpan DenyDelay = TimeSpan.FromSeconds(2);
 
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
+    public TimeSpan? DenyEnd;
+
     /// <summary>
     /// Used by the server to determine how long the vending machine stays in the "Eject" state.
     /// The selected item is dispensed after this delay.
@@ -23,17 +29,14 @@ public sealed partial class VendingMachineEjectComponent : Component
     [DataField]
     public TimeSpan EjectDelay = TimeSpan.FromSeconds(1.2);
 
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
+    public TimeSpan? EjectEnd;
+
     [ViewVariables]
     public bool Ejecting => EjectEnd != null;
 
     [ViewVariables]
     public bool Denying => DenyEnd != null;
-
-    [DataField, AutoNetworkedField, AutoPausedField]
-    public TimeSpan? EjectEnd;
-
-    [DataField, AutoNetworkedField, AutoPausedField]
-    public TimeSpan? DenyEnd;
 
     public EntProtoId? NextItemToEject;
 
@@ -42,7 +45,7 @@ public sealed partial class VendingMachineEjectComponent : Component
     /// <summary>
     /// While disabled by EMP it randomly ejects items.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan NextEmpEject = TimeSpan.Zero;
 
     /// <summary>

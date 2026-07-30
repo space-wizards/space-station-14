@@ -4,7 +4,8 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.VendingMachines.Components;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(raiseAfterAutoHandleState: true)]
+[RegisterComponent, NetworkedComponent]
+[AutoGenerateComponentState(raiseAfterAutoHandleState: true)]
 public sealed partial class VendingMachineComponent : Component
 {
     /// <summary>

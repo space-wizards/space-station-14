@@ -61,9 +61,9 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
         if (!(args.DamageIncreased && args.DamageDelta.GetTotal() >= dispenseOnHit.Threshold) ||
             !_random.Prob(dispenseOnHit.Chance)) return;
 
-        if (dispenseOnHit.Cooldown != null)
+        if (dispenseOnHit.NextDispenseDelay != null)
         {
-            dispenseOnHit.CooldownEnd = Timing.CurTime + dispenseOnHit.Cooldown.Value;
+            dispenseOnHit.NextDispenseTime = Timing.CurTime + dispenseOnHit.NextDispenseDelay.Value;
         }
 
         EjectRandom(uid, throwItem: true, forceEject: true, component);
@@ -194,10 +194,10 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
         var dispenseOnHitQuery = EntityQueryEnumerator<VendingMachineDispenseOnHitComponent>();
         while (dispenseOnHitQuery.MoveNext(out _, out var dispenseOnHit))
         {
-            if (dispenseOnHit.CooldownEnd is not { } end || curTime <= end)
+            if (dispenseOnHit.NextDispenseTime is not { } nextDispenseTime || curTime <= nextDispenseTime)
                 continue;
 
-            dispenseOnHit.CooldownEnd = null;
+            dispenseOnHit.NextDispenseTime = null;
         }
 
         var disabled = EntityQueryEnumerator<EmpDisabledComponent, VendingMachineComponent, VendingMachineEjectComponent>();
