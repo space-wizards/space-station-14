@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Hands;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
@@ -144,6 +145,24 @@ public abstract partial class SharedVirtualItemSystem : EntitySystem
             return false;
 
         _handsSystem.DoPickup(user, empty, virtualItem.Value);
+        return true;
+    }
+
+    /// <summary>
+    /// Spawns an unremoveable virtual item in an empty hand.
+    /// </summary>
+    public bool TrySpawnUnremoveableVirtualItemInHand(EntityUid blockingEnt, EntityUid user, bool dropOthers = false, bool silent = false)
+    {
+        return TrySpawnUnremoveableVirtualItemInHand(blockingEnt, user, out _, dropOthers, silent: silent);
+    }
+
+    /// <inheritdoc cref="TrySpawnUnremoveableVirtualItemInHand(Robust.Shared.GameObjects.EntityUid,Robust.Shared.GameObjects.EntityUid,bool,bool)"/>
+    public bool TrySpawnUnremoveableVirtualItemInHand(EntityUid blockingEnt, EntityUid user, [NotNullWhen(true)] out EntityUid? virtualItem, bool dropOthers = false, string? empty = null, bool silent = false)
+    {
+        if (!TrySpawnVirtualItemInHand(blockingEnt, user, out virtualItem, dropOthers, empty, silent))
+            return false;
+
+        EnsureComp<UnremoveableComponent>(virtualItem.Value);
         return true;
     }
 
