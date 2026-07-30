@@ -23,7 +23,7 @@ public sealed partial class NewPlayerSystem : EntitySystem
     [SubscribeLocalEvent]
     private void GetNewPlayerIcon(Entity<NewPlayerIconComponent> ent, ref GetStatusIconsEvent args)
     {
-        if (ProtoMan.Resolve(ent.Comp.StatusIcon, out var iconPrototype) && _showPlayerIcons)
+        if (_showPlayerIcons && ProtoMan.Resolve(ent.Comp.StatusIcon, out var iconPrototype))
             args.StatusIcons.Add(iconPrototype);
     }
 }
