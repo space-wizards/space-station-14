@@ -6,7 +6,7 @@ namespace Content.Shared.Atmos.Piping.Unary.Components;
 /// <summary>
 /// Contains data about <see cref="GasThermoMachineComponent"/>.
 /// </summary>
-public sealed partial class GasThermoMachineDataPayload : NetworkPayloadBase<GasThermoMachineDataPayload>
+public partial record struct GasThermoMachineDataPayload : INetworkPayload
 {
     [DataField]
     public float EnergyDelta;

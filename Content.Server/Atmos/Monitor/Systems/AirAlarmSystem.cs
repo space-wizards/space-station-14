@@ -45,23 +45,22 @@ public sealed partial class AirAlarmSystem : EntitySystem
 
     public void SetData(EntityUid uid, string address, GasVentPumpData payload)
     {
-        _deviceNet.QueuePacket(uid, address, new GasVentPumpSetDataPayload { Data = payload });
+        var sendPayload = new GasVentPumpSetDataPayload { Data = payload };
+        _deviceNet.QueuePacket(uid, address, ref sendPayload);
         SetDeviceDataInternal(uid, address, payload);
     }
 
     public void SetData(EntityUid uid, string address, GasVentScrubberData payload)
     {
-        _deviceNet.QueuePacket(uid, address, new GasVentScrubberSetDataPayload { Data = payload });
+        var sendPayload = new GasVentScrubberSetDataPayload { Data = payload };
+        _deviceNet.QueuePacket(uid, address, ref sendPayload);
         SetDeviceDataInternal(uid, address, payload);
     }
 
     private void SetDeviceDataInternal(EntityUid uid, string address, IAtmosDeviceData payload)
     {
-        var setPayload = new AirAlarmSetDataPayload
-        {
-            Payload = payload,
-        };
-        _deviceNet.QueuePacket(uid, address, setPayload);
+        var setPayload = new AirAlarmSetDataPayload { Payload = payload };
+        _deviceNet.QueuePacket(uid, address, ref setPayload);
     }
 
     /// <summary>
@@ -120,7 +119,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
             Gas = gas,
         };
 
-        _deviceNet.QueuePacket(uid, address, payload);
+        _deviceNet.QueuePacket(uid, address, ref payload);
 
         SyncDevice(uid, address);
     }
@@ -132,7 +131,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
             Data = dataPayload
         };
 
-        _deviceNet.QueuePacket(uid, address, payload);
+        _deviceNet.QueuePacket(uid, address, ref payload);
 
         SyncDevice(uid, address);
     }
@@ -151,7 +150,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
             Mode = mode,
         };
 
-        _deviceNet.QueuePacket(uid, null, payload);
+        _deviceNet.QueuePacket(uid, null, ref payload);
     }
 
     #endregion
@@ -518,7 +517,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
 
         devData.Dirty = true;
 
-        _deviceNet.QueuePacket(uid, address, devData.GetPayload());
+        devData.RaisePayload(uid, address, _deviceNet);
         SetDeviceDataInternal(uid, address, devData);
     }
 

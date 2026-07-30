@@ -7,7 +7,7 @@ namespace Content.Shared.TurretController;
 /// <summary>
 /// A network payload that sets fire mode for a turret.
 /// </summary>
-public sealed partial class TurretControllerSetArmamentPayload : NetworkPayloadBase<TurretControllerSetArmamentPayload>
+public partial record struct TurretControllerSetArmamentPayload : INetworkPayload
 {
     [DataField]
     public int ArmamentState;
@@ -16,7 +16,7 @@ public sealed partial class TurretControllerSetArmamentPayload : NetworkPayloadB
 /// <summary>
 /// A network payload that sets access exemptions for a turret.
 /// </summary>
-public sealed partial class TurretControllerSetAccessPayload : NetworkPayloadBase<TurretControllerSetAccessPayload>
+public partial record struct TurretControllerSetAccessPayload : INetworkPayload
 {
     [DataField]
     public HashSet<ProtoId<AccessLevelPrototype>> AccessExemptions = new();
@@ -25,4 +25,4 @@ public sealed partial class TurretControllerSetAccessPayload : NetworkPayloadBas
 /// <summary>
 /// A network payload request to get the state of all available turrets.
 /// </summary>
-public sealed partial class TurretControllerRequestPayload : NetworkPayloadBase<TurretControllerRequestPayload>;
+public partial record struct TurretControllerRequestPayload : INetworkPayload;

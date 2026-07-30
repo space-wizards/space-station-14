@@ -8,17 +8,17 @@ namespace Content.Server.Atmos.Monitor.Payloads;
 /// <summary>
 /// Used for synchronizing the sender device and adding its address to all listeners.
 /// </summary>
-public sealed partial class AtmosMonitorRegisterDevicePayload : NetworkPayloadBase<AtmosMonitorRegisterDevicePayload>;
+public partial record struct AtmosMonitorRegisterDevicePayload : INetworkPayload;
 
 /// <summary>
 /// Removes the sender device from all listeners of this payload.
 /// </summary>
-public sealed partial class AtmosMonitorDeregisterDevicePayload : NetworkPayloadBase<AtmosMonitorDeregisterDevicePayload>;
+public partial record struct AtmosMonitorDeregisterDevicePayload : INetworkPayload;
 
 /// <summary>
 /// Sets specific threshold on the target atmos device.
 /// </summary>
-public sealed partial class AtmosMonitorSetThresholdPayload : NetworkPayloadBase<AtmosMonitorSetThresholdPayload>
+public partial record struct AtmosMonitorSetThresholdPayload : INetworkPayload
 {
     [DataField]
     public AtmosMonitorThresholdType Type;
@@ -33,7 +33,7 @@ public sealed partial class AtmosMonitorSetThresholdPayload : NetworkPayloadBase
 /// <summary>
 /// Sets thresholds on all connected devices.
 /// </summary>
-public sealed partial class AtmosMonitorSetAllThresholdsPayload : NetworkPayloadBase<AtmosMonitorSetAllThresholdsPayload>
+public partial record struct AtmosMonitorSetAllThresholdsPayload : INetworkPayload
 {
     [DataField]
     public AtmosMonitorData Data;
@@ -43,4 +43,4 @@ public sealed partial class AtmosMonitorSetAllThresholdsPayload : NetworkPayload
 /// Sets the alarm state of a <see cref="AtmosMonitorComponent"/> to Normal
 /// and broadcasts it to all listening <see cref="AtmosAlarmableComponent"/>.
 /// </summary>
-public sealed partial class AtmosMonitorResetPayload : NetworkPayloadBase<AtmosMonitorResetPayload>;
+public partial record struct AtmosMonitorResetPayload : INetworkPayload;

@@ -15,20 +15,22 @@ public sealed class DeviceNetworkTestSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<DeviceNetworkComponent, DeviceNetworkPacketData>(OnBaselinePacketReceived);
-        SubscribeLocalEvent<DeviceNetworkComponent, DeviceNetworkPacketEvent<TestPayload>>(OnTypedPacketReceived);
     }
 
-    public INetworkPayload LastPayload = default;
+    public TestPayload LastPayload = default;
+    public SecondTestPayload LastPayloadSecond = default;
+    public TestPayloadClass LastPayloadClass = default;
 
+    [SubscribeLocalEvent]
     public void SendBaselineTestEvent(EntityUid uid)
     {
-        var ev = new DeviceNetworkPacketData(0, "", 0, "", uid, new TestPayload());
+        var ev = new DeviceNetworkPacketData(0, "", 0, "", uid, new TestPayloadClass());
         RaiseLocalEvent(uid, ref ev);
     }
 
     private void OnBaselinePacketReceived(Entity<DeviceNetworkComponent> ent, ref DeviceNetworkPacketData args)
     {
-        LastPayload = args.Data;
+        LastPayloadClass = (TestPayloadClass) args.Data;
     }
 
     [SubscribeLocalEvent]
@@ -36,9 +38,19 @@ public sealed class DeviceNetworkTestSystem : EntitySystem
     {
         LastPayload = args.Data;
     }
+
+    [SubscribeLocalEvent]
+    private void OnTypedPacketReceived(Entity<DeviceNetworkComponent> ent, ref DeviceNetworkPacketEvent<SecondTestPayload> args)
+    {
+        LastPayloadSecond = args.Data;
+    }
 }
 
-public sealed partial class TestPayload : NetworkPayloadBase<TestPayload>
+public readonly partial record struct TestPayload(string TestString, int TestNumber, bool TestBool) : INetworkPayload;
+
+public readonly partial record struct SecondTestPayload(string TestString, int TestNumber, bool TestBool) : INetworkPayload;
+
+public sealed partial class TestPayloadClass : INetworkPayload
 {
     [DataField]
     public string TestString;
@@ -49,5 +61,3 @@ public sealed partial class TestPayload : NetworkPayloadBase<TestPayload>
     [DataField]
     public bool TestBool;
 }
-
-public sealed partial class SecondTestPayload : NetworkPayloadBase<SecondTestPayload>;

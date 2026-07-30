@@ -4,10 +4,28 @@ using Content.Shared.DeviceNetwork;
 namespace Content.Shared.DeviceLinking;
 
 /// <summary>
+///
+/// </summary>
+public partial interface ISignalNetworkPayload : INetworkPayload;
+
+/// <summary>
 /// A network payload that raises <see cref="SignalReceivedEvent"/> when successfully delivered.
 /// Optionally contains a <see cref="INetworkPayload"/> to provide additional data for the event.
 /// </summary>
-public sealed partial class SignalPayload : NetworkPayloadBase<SignalPayload>
+public partial record struct SignalPayload : INetworkPayload
+{
+    /// <summary>
+    /// A signal port that was invoked.
+    /// </summary>
+    [DataField]
+    public string InvokedPort;
+}
+
+/// <summary>
+/// A network payload that raises <see cref="SignalReceivedEvent"/> when successfully delivered.
+/// Optionally contains a <see cref="INetworkPayload"/> to provide additional data for the event.
+/// </summary>
+public partial record struct SignalPayload<T> : INetworkPayload where T : ISignalNetworkPayload
 {
     /// <summary>
     /// A signal port that was invoked.
@@ -19,5 +37,5 @@ public sealed partial class SignalPayload : NetworkPayloadBase<SignalPayload>
     /// Optional additional data about the signal.
     /// </summary>
     [DataField]
-    public INetworkPayload? Payload;
+    public T Payload;
 }

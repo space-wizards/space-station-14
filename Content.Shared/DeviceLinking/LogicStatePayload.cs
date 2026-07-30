@@ -1,11 +1,9 @@
-﻿using Content.Shared.DeviceNetwork;
-
-namespace Content.Shared.DeviceLinking;
+﻿namespace Content.Shared.DeviceLinking;
 
 /// <summary>
 /// Contains a logic state of a <see cref="SignalPayload"/>.
 /// </summary>
-public sealed partial class LogicStatePayload : NetworkPayloadBase<LogicStatePayload>
+public partial record struct LogicStatePayload : ISignalNetworkPayload
 {
     [DataField]
     public SignalState State;

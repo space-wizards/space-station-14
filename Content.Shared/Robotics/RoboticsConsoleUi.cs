@@ -139,17 +139,17 @@ public partial record struct CyborgControlData
 /// <summary>
 /// Disables a borg when received.
 /// </summary>
-public sealed partial class RoboticsCyborgDisablePayload : NetworkPayloadBase<RoboticsCyborgDisablePayload>;
+public partial record struct RoboticsCyborgDisablePayload : INetworkPayload;
 
 /// <summary>
 /// Destroys a borg when received.
 /// </summary>
-public sealed partial class RoboticsCyborgDestroyPayload : NetworkPayloadBase<RoboticsCyborgDestroyPayload>;
+public partial record struct RoboticsCyborgDestroyPayload : INetworkPayload;
 
 /// <summary>
 /// A wrapper for <see cref="CyborgControlData"/>
 /// </summary>
-public sealed partial class RoboticsCyborgDataPayload : NetworkPayloadBase<RoboticsCyborgDataPayload>
+public partial record struct RoboticsCyborgDataPayload : INetworkPayload
 {
     [DataField]
     public CyborgControlData Data;

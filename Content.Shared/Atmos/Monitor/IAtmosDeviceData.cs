@@ -1,12 +1,15 @@
-﻿using Content.Shared.DeviceNetwork;
+﻿using Content.Shared.DeviceNetwork.Systems;
 
 namespace Content.Shared.Atmos.Monitor;
 
-public interface IAtmosDeviceData
+[ImplicitDataDefinitionForInheritors]
+public partial interface IAtmosDeviceData
 {
     bool Enabled { get; set; }
+
     bool Dirty { get; set; }
+
     bool IgnoreAlarms { get; set; }
 
-    NetworkPayload GetPayload();
+    void RaisePayload(EntityUid uid, string address, SharedDeviceNetworkSystem deviceNetSys);
 }

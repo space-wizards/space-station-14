@@ -3,7 +3,7 @@
 /// <summary>
 /// A payload for the Apc net switch.
 /// </summary>
-public sealed partial class ApcNetTogglePayload : NetworkPayloadBase<ApcNetTogglePayload>
+public partial record struct ApcNetTogglePayload : INetworkPayload
 {
     [DataField]
     public bool Enabled;

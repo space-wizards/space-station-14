@@ -269,7 +269,7 @@ public sealed partial class FaxSystem : EntitySystem
             FaxName = ent.Comp.FaxName,
         };
 
-        _deviceNetworkSystem.QueuePacket(ent.Owner, args.SenderAddress, pong);
+        _deviceNetworkSystem.QueuePacket(ent.Owner, args.SenderAddress, ref pong);
     }
 
     [SubscribeLocalEvent]
@@ -390,7 +390,7 @@ public sealed partial class FaxSystem : EntitySystem
             IsSyndicate = _emag.CheckFlag(uid, EmagType.Interaction),
         };
 
-        _deviceNetworkSystem.QueuePacket(uid, null, payload);
+        _deviceNetworkSystem.QueuePacket(uid, null, ref payload);
     }
 
     /// <summary>
@@ -510,7 +510,7 @@ public sealed partial class FaxSystem : EntitySystem
                     paper.EditingDisabled),
         };
 
-        _deviceNetworkSystem.QueuePacket(uid, component.DestinationFaxAddress, payload);
+        _deviceNetworkSystem.QueuePacket(uid, component.DestinationFaxAddress, ref payload);
 
         _adminLogger.Add(LogType.Action,
             LogImpact.Low,

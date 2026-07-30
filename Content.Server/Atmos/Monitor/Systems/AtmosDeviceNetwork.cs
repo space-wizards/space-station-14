@@ -20,18 +20,18 @@ public sealed partial class AtmosDeviceNetworkSystem : EntitySystem
     public void Register(EntityUid uid, string? address)
     {
         var registerPayload = new AtmosMonitorRegisterDevicePayload();
-        _deviceNet.QueuePacket(uid, address, registerPayload);
+        _deviceNet.QueuePacket(uid, address, ref registerPayload);
     }
 
     public void Deregister(EntityUid uid, string? address)
     {
         var deregisterPayload = new AtmosMonitorDeregisterDevicePayload();
-        _deviceNet.QueuePacket(uid, address, deregisterPayload);
+        _deviceNet.QueuePacket(uid, address, ref deregisterPayload);
     }
 
     public void Sync(EntityUid uid, string? address)
     {
         var payload = new AtmosSyncPayload();
-        _deviceNet.QueuePacket(uid, address, payload);
+        _deviceNet.QueuePacket(uid, address, ref payload);
     }
 }

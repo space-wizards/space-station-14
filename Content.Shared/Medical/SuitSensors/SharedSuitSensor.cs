@@ -8,7 +8,7 @@ namespace Content.Shared.Medical.SuitSensors;
 /// <summary>
 /// A network payload that contains <see cref="SuitSensorStatus"/>.
 /// </summary>
-public sealed partial class SuitSensorStatusPayload : NetworkPayloadBase<SuitSensorStatusPayload>
+public partial record struct SuitSensorStatusPayload : INetworkPayload
 {
     [DataField]
     public SuitSensorStatus Data;

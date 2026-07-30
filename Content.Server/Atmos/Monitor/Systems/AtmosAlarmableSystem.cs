@@ -157,7 +157,7 @@ public sealed partial class AtmosAlarmableSystem : EntitySystem
             Source = tags.Tags,
         };
 
-        _deviceNet.QueuePacket(uid, address, payload);
+        _deviceNet.QueuePacket(uid, address, ref payload);
     }
 
     /// <summary>
@@ -193,7 +193,7 @@ public sealed partial class AtmosAlarmableSystem : EntitySystem
             Source = tags.Tags,
         };
 
-        _deviceNet.QueuePacket(uid, null, payload);
+        _deviceNet.QueuePacket(uid, null, ref payload);
     }
 
     /// <summary>
@@ -214,7 +214,7 @@ public sealed partial class AtmosAlarmableSystem : EntitySystem
         if (!alarmable.ReceiveOnly)
         {
             var payload = new AtmosMonitorResetPayload();
-            _deviceNet.QueuePacket(uid, null, payload);
+            _deviceNet.QueuePacket(uid, null, ref payload);
         }
     }
 

@@ -223,7 +223,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             {
                 Payload = data,
             };
-            _deviceNetSystem.QueuePacket(ent.Owner, args.SenderAddress, airAlarm);
+            _deviceNetSystem.QueuePacket(ent.Owner, args.SenderAddress, ref airAlarm);
         }
 
         [SubscribeLocalEvent]

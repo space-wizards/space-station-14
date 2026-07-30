@@ -575,7 +575,44 @@ public sealed partial class DeviceLinkSystem : EntitySystem
     #endregion
 
     #region Sending & Receiving
-    public void InvokePort(Entity<DeviceLinkSourceComponent?> ent, string port, NetworkPayload? data = null)
+    /// <summary>
+    /// Sends a network payload directed at the sink entity.
+    /// Just raises a <see cref="SignalReceivedEvent"/> without data if the source or the sink doesn't have a <see cref="DeviceNetworkComponent"/>
+    /// </summary>
+    /// <param name="uid">The source uid that invokes the port</param>
+    /// <param name="port">The port to invoke</param>
+    /// <param name="sourceComponent"></param>
+    public virtual void InvokePort(Entity<DeviceLinkSourceComponent?> ent, string port)
+    {
+        if (!Resolve(ent.Owner, ref ent.Comp)
+            || !ent.Comp.Outputs.TryGetValue(port, out var sinks))
+            return;
+
+        foreach (var sinkUid in sinks)
+        {
+            if (!ent.Comp.LinkedPorts.TryGetValue(sinkUid, out var links))
+                continue;
+
+            if (!TryComp<DeviceLinkSinkComponent>(sinkUid, out var sinkComponent))
+                continue;
+
+            foreach (var (source, sink) in links)
+            {
+                if (source == port)
+                    InvokeDirect(ent!, (sinkUid, sinkComponent), source, sink);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Sends a network payload directed at the sink entity.
+    /// Just raises a <see cref="SignalReceivedEvent"/> without data if the source or the sink doesn't have a <see cref="DeviceNetworkComponent"/>
+    /// </summary>
+    /// <param name="uid">The source uid that invokes the port</param>
+    /// <param name="port">The port to invoke</param>
+    /// <param name="data">Optional data to send along</param>
+    /// <param name="sourceComponent"></param>
+    public virtual void InvokePort<T>(Entity<DeviceLinkSourceComponent?> ent, string port, ref T data) where T : ISignalNetworkPayload
     {
         if (!Resolve(ent.Owner, ref ent.Comp)
             || !ent.Comp.Outputs.TryGetValue(port, out var sinks))
