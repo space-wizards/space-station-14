@@ -25,19 +25,19 @@ public sealed partial class EjectVendorItems : IThresholdBehavior
 
     public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
     {
-        if (!system.EntityManager.TryGetComponent<VendingMachineComponent>(owner, out var vendingcomp) ||
-            !system.EntityManager.TryGetComponent<TransformComponent>(owner, out var xform))
+        if (!system.EntityManager.HasComponent<VendingMachineComponent>(owner) ||
+            !system.EntityManager.HasComponent<TransformComponent>(owner))
             return;
 
         var vendingMachineSystem = system.EntityManager.System<VendingMachineSystem>();
-        var inventory = vendingMachineSystem.GetAvailableInventory(owner, vendingcomp);
+        var inventory = vendingMachineSystem.GetAvailableInventory(owner);
         if (inventory.Count <= 0)
             return;
 
         var toEject = Math.Min(inventory.Count * Percent, Max);
         for (var i = 0; i < toEject; i++)
         {
-            vendingMachineSystem.EjectRandom(owner, throwItem: true, forceEject: true, vendingcomp);
+            vendingMachineSystem.EjectRandom(owner, throwItem: true, forceEject: true);
         }
     }
 }
