@@ -47,6 +47,12 @@ public sealed partial class VehicleComponent : Component
     public bool RequiresHands = true;
 
     /// <summary>
+    /// The number of the operator's hands occupied while operating this vehicle.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public int BlockedHands;
+
+    /// <summary>
     /// Whether the operator can attack while operating this vehicle.
     /// </summary>
     [DataField, AutoNetworkedField]
