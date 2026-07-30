@@ -1,4 +1,4 @@
-using  Content.Shared.Inventory;
+using Content.Shared.Inventory;
 
 namespace Content.Shared.Actions;
 
@@ -9,17 +9,9 @@ public sealed partial class ActionGrantSystem : EntitySystem
 {
     [Dependency] private SharedActionsSystem _actions = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-        SubscribeLocalEvent<ActionGrantComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<ActionGrantComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<ItemActionGrantComponent, GetItemActionsEvent>(OnItemGet);
-    }
-
+    [SubscribeLocalEvent]
     private void OnItemGet(Entity<ItemActionGrantComponent> ent, ref GetItemActionsEvent args)
     {
-
         if (!TryComp(ent.Owner, out ActionGrantComponent? grant))
             return;
 
@@ -32,6 +24,7 @@ public sealed partial class ActionGrantSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnMapInit(Entity<ActionGrantComponent> ent, ref MapInitEvent args)
     {
         foreach (var action in ent.Comp.Actions)
@@ -44,6 +37,7 @@ public sealed partial class ActionGrantSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnShutdown(Entity<ActionGrantComponent> ent, ref ComponentShutdown args)
     {
         foreach (var actionEnt in ent.Comp.ActionEntities)
