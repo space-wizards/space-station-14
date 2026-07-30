@@ -17,7 +17,7 @@ using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 
-namespace Content.Shared.Vehicle;
+namespace Content.Shared.Vehicle.Systems;
 
 /// <summary>
 /// Handles logic relating to vehicles.
