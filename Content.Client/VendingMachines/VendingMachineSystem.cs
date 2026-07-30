@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Client.VendingMachines.Components;
 using Content.Shared.Power;
 using Content.Shared.Power.EntitySystems;
@@ -7,7 +6,6 @@ using Content.Shared.VendingMachines;
 using Content.Shared.VendingMachines.Components;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameStates;
 
 namespace Content.Client.VendingMachines;
 
@@ -19,55 +17,12 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
     [Dependency] private SpriteSystem _sprite = default!;
 
     [SubscribeLocalEvent]
-    private void OnVendingHandleState(Entity<VendingMachineComponent> entity, ref ComponentHandleState args)
+    private void OnVendingHandleState(Entity<VendingMachineComponent> entity, ref AfterAutoHandleStateEvent args)
     {
-        if (args.Current is not VendingMachineComponentState state)
-            return;
+        TryUpdateVisualState((entity.Owner, entity.Comp));
 
-        var uid = entity.Owner;
-        var component = entity.Comp;
-
-        // If all we did was update amounts, then we can leave BUI buttons in place.
-        var fullUiUpdate = !component.Inventory.Keys.SequenceEqual(state.Inventory.Keys) ||
-                           !component.EmaggedInventory.Keys.SequenceEqual(state.EmaggedInventory.Keys) ||
-                           !component.ContrabandInventory.Keys.SequenceEqual(state.ContrabandInventory.Keys) ||
-                           component.Contraband != state.Contraband;
-
-        component.Contraband = state.Contraband;
-        var brokenChanged = component.Broken != state.Broken;
-        component.Broken = state.Broken;
-
-        component.Inventory.Clear();
-        component.EmaggedInventory.Clear();
-        component.ContrabandInventory.Clear();
-
-        foreach (var entry in state.Inventory)
-        {
-            component.Inventory.Add(entry.Key, new(entry.Value));
-        }
-
-        foreach (var entry in state.EmaggedInventory)
-        {
-            component.EmaggedInventory.Add(entry.Key, new(entry.Value));
-        }
-
-        foreach (var entry in state.ContrabandInventory)
-        {
-            component.ContrabandInventory.Add(entry.Key, new(entry.Value));
-        }
-
-        if (brokenChanged)
-            TryUpdateVisualState((uid, component));
-
-        if (!TryGetOpenUi(uid, out var bui)) return;
-        if (fullUiUpdate)
-        {
+        if (TryGetOpenUi(entity.Owner, out var bui))
             bui.Refresh();
-        }
-        else
-        {
-            bui.UpdateAmounts();
-        }
     }
 
     [SubscribeLocalEvent]

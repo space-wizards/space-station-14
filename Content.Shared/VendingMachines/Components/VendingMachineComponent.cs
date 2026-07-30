@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.VendingMachines.Components;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(raiseAfterAutoHandleState: true)]
 public sealed partial class VendingMachineComponent : Component
 {
     /// <summary>
@@ -14,22 +14,22 @@ public sealed partial class VendingMachineComponent : Component
     [DataField("pack", customTypeSerializer: typeof(PrototypeIdSerializer<VendingMachineInventoryPrototype>), required: true)]
     public string PackPrototypeId = string.Empty;
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public Dictionary<string, VendingMachineInventoryEntry> Inventory = new();
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public Dictionary<string, VendingMachineInventoryEntry> EmaggedInventory = new();
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public Dictionary<string, VendingMachineInventoryEntry> ContrabandInventory = new();
 
     /// <summary>
     /// If true then unlocks the <see cref="ContrabandInventory"/>
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool Contraband;
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool Broken;
 
     /// <summary>
