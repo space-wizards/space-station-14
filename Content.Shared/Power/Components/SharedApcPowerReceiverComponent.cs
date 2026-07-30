@@ -28,7 +28,7 @@ public abstract partial class SharedApcPowerReceiverComponent : Component
     public virtual bool PowerDisabled { get; set; }
 
     /// <summary>
-    /// Amount of power this needs from an APC in watts to function.
+    /// Amount of power this needs from an APC to function, in watts.
     /// </summary>
     [DataField("powerLoad")]
     public virtual float Load { get; set; }
