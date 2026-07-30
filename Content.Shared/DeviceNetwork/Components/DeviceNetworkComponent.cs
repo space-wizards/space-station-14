@@ -42,6 +42,12 @@ public sealed partial class DeviceNetworkComponent : Component
     public bool ExaminableAddress;
 
     /// <summary>
+    /// Prefix to prepend to any automatically generated addresses. Helps players to identify devices.
+    /// </summary>
+    [DataField]
+    public LocId? Prefix;
+
+    /// <summary>
     /// Whether the device should attempt to join the network on map init.
     /// </summary>
     [DataField]
@@ -109,13 +115,6 @@ public sealed partial class DeviceNetworkComponent : Component
     {
         get => Data.SendBroadcastAttemptEvent;
         set => Data.SendBroadcastAttemptEvent = value;
-    }
-
-    [Obsolete("Access this field through DeviceNetworkComponent.Data instead")]
-    public LocId? Prefix
-    {
-        get => Data.Prefix;
-        set => Data.Prefix = value;
     }
 
     #endregion

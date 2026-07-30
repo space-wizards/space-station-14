@@ -59,7 +59,7 @@ public sealed class DeviceNet
             // Randomly generate a new address if the existing random one is invalid. Otherwise, keep the existing address
             if (string.IsNullOrWhiteSpace(deviceComp.Data.Address) || Devices.ContainsKey(deviceComp.Data.Address))
             {
-                deviceComp.Data.Address = GenerateValidAddress(deviceComp.Data.Prefix);
+                deviceComp.Data.Address = GenerateValidAddress(deviceComp.Prefix);
                 device = new Device(ent.Owner, ent.Comp.Data); // Reallocate because the data had changed
             }
 
