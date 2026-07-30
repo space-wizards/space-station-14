@@ -124,7 +124,7 @@
     sprite: Clothing/Belt/holster.rsi
   - type: Appearance
   - type: UseDelay
-    delay: 2
+    delay: 1
   - type: ContainerContainer
     containers:
       utility_slot: !type:ContainerSlot
