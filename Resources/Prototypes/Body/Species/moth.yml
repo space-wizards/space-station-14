@@ -200,7 +200,7 @@
       250: 0.7
 
 - type: entity
-  parent: OrganBaseOrganic
+  parent: OrganBase
   id: OrganMoth
   abstract: true
   suffix: Moth

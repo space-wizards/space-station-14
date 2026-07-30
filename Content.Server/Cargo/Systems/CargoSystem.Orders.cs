@@ -211,13 +211,6 @@ namespace Content.Server.Cargo.Systems
                 return;
             }
 
-            var emagged = _emag.CheckFlag(uid, EmagType.Interaction);
-
-            if (!emagged)
-            {
-                order.SetApproverData(_identity.GetIdentityShortInfo(player, uid));
-            }
-
             var ev = new FulfillCargoOrderEvent((station.Value, stationData), order, (uid, component));
             RaiseLocalEvent(ref ev);
             ev.FulfillmentEntity ??= station.Value;
@@ -230,7 +223,6 @@ namespace Content.Server.Cargo.Systems
                 {
                     ConsolePopup(args.Actor, Loc.GetString("cargo-console-unfulfilled"));
                     PlayDenySound(uid, component);
-                    order.Approver = null;
                     return;
                 }
             }
@@ -238,8 +230,10 @@ namespace Content.Server.Cargo.Systems
             order.Approved = true;
             _audio.PlayPvs(ApproveSound, uid);
 
-            if (!emagged)
+            if (!_emag.CheckFlag(uid, EmagType.Interaction))
             {
+                order.SetApproverData(_identity.GetIdentityShortInfo(player, uid));
+
                 var message = Loc.GetString("cargo-console-unlock-approved-order-broadcast",
                     ("productName", Loc.GetString(product.Name)),
                     ("orderAmount", order.OrderQuantity),
@@ -314,18 +308,13 @@ namespace Content.Server.Cargo.Systems
         {
             var station = _station.GetOwningStation(uid);
 
-            if (component.Mode == CargoOrderConsoleMode.PrintSlip)
+            if (component.Mode != CargoOrderConsoleMode.DirectOrder)
                 return;
 
             if (!TryGetOrderDatabase(station, out var orderDatabase))
                 return;
 
-            if (!TryComp<StationBankAccountComponent>(station, out var bank))
-                return;
-
-            var targetAccount = component.Mode == CargoOrderConsoleMode.SendToPrimary ? bank.PrimaryAccount : component.Account;
-
-            RemoveOrder(station.Value, targetAccount, args.OrderId, orderDatabase);
+            RemoveOrder(station.Value, component.Account, args.OrderId, orderDatabase);
         }
 
         private void OnAddOrderMessageSlipPrinter(EntityUid uid, CargoOrderConsoleComponent component, CargoConsoleAddOrderMessage args, CargoProductPrototype product)

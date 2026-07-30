@@ -1,4 +1,4 @@
 [submodule "RobustToolbox"]
 	path = RobustToolbox
-	url = https://github.com/Space-Wizards-Federation/RobustToolbox.git
+	url = https://github.com/space-wizards/RobustToolbox.git
 	branch = master

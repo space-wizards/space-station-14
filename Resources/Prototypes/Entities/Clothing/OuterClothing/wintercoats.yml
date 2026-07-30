@@ -38,7 +38,6 @@
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterDefault
     slot: head
-    verbText: toggle-clothing-verb-hood
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:ContainerSlot {}
@@ -433,7 +432,7 @@
       left:
       - state: JANI-inhand-left
       right:
-      - state: JANI-inhand-right
+      - state: CHEF-inhand-right
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
     clothingVisuals:
@@ -835,7 +834,7 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatnomi.rsi
 
 - type: entity
-  parent: [ClothingOuterWinterCoatToggleable, BaseSlicingRefinable]
+  parent: ClothingOuterWinterCoatToggleable
   id: ClothingOuterWinterWeb
   name: web winter coat
   description: Feels like the inside of a cocoon, not that this would make you less afraid of being in one.
@@ -858,8 +857,8 @@
   - type: Construction
     graph: WebObjects
     node: coat
-  - type: ToolRefinable
-    refineResult:
+  - type: Butcherable
+    spawned:
     - id: MaterialWebSilk1
       amount: 5
   - type: FlavorProfile

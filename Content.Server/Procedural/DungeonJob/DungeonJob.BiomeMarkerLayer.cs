@@ -6,7 +6,6 @@ using Content.Shared.Procedural;
 using Content.Shared.Procedural.PostGeneration;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Map;
-using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Procedural.DungeonJob;
@@ -16,7 +15,7 @@ public sealed partial class DungeonJob
     /// <summary>
     /// <see cref="BiomeMarkerLayerDunGen"/>
     /// </summary>
-    private async Task PostGen(BiomeMarkerLayerDunGen dunGen, Dungeon dungeon, HashSet<Vector2i> reservedTiles, IRobustRandom random)
+    private async Task PostGen(BiomeMarkerLayerDunGen dunGen, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
     {
         // If we're adding biome then disable it and just use for markers.
         if (_entManager.EnsureComponent(_gridUid, out BiomeComponent biomeComp))

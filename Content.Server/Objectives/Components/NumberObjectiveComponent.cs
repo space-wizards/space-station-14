@@ -16,13 +16,13 @@ public sealed partial class NumberObjectiveComponent : Component
     public int Target;
 
     /// <summary>
-    /// Minimum number for target to roll. (Inclusive)
+    /// Minimum number for target to roll.
     /// </summary>
     [DataField(required: true)]
     public int Min;
 
     /// <summary>
-    /// Maximum number for target to roll. (Inclusive)
+    /// Maximum number for target to roll.
     /// </summary>
     [DataField(required: true)]
     public int Max;

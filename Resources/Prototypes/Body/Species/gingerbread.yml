@@ -79,7 +79,7 @@
     proto: gingerbread
 
 - type: entity
-  parent: OrganBaseOrganic
+  parent: OrganBase
   id: OrganGingerbread
   abstract: true
   suffix: gingerbread

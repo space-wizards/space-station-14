@@ -148,8 +148,6 @@
         Radiation: 0.25
   - type: ToggleableClothing
     slot: head
-    verbText: toggle-clothing-verb-helmet
-    action: ActionToggleSuitPiece
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:ContainerSlot {}
@@ -210,7 +208,6 @@
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterDefault
     slot: head
-    verbText: toggle-clothing-verb-hood
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:ContainerSlot {}

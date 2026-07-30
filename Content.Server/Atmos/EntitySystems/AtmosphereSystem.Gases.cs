@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Numerics.Tensors;
 using System.Runtime.CompilerServices;
 using Content.Server.Atmos.Reactions;
 using Content.Shared.Atmos;
@@ -12,6 +11,7 @@ namespace Content.Server.Atmos.EntitySystems
 {
     public sealed partial class AtmosphereSystem
     {
+        [Dependency] private IPrototypeManager _protoMan = default!;
 
         private GasReactionPrototype[] _gasReactions = [];
 
@@ -23,14 +23,8 @@ namespace Content.Server.Atmos.EntitySystems
         public override void InitializeGases()
         {
             base.InitializeGases();
-        }
 
-        /// <summary>
-        ///     Caches all gas reactions into an array ordered by priority.
-        /// </summary>
-        public void CacheGases()
-        {
-            _gasReactions = ProtoManager.EnumeratePrototypes<GasReactionPrototype>().ToArray();
+            _gasReactions = _protoMan.EnumeratePrototypes<GasReactionPrototype>().ToArray();
             Array.Sort(_gasReactions, (a, b) => b.Priority.CompareTo(a.Priority));
         }
 
@@ -42,40 +36,40 @@ namespace Content.Server.Atmos.EntitySystems
         public override float GetMass(float[] moles)
         {
             Span<float> tmp = stackalloc float[moles.Length];
-            TensorPrimitives.Multiply(moles, GasMolarMasses, tmp);
+            NumericsHelpers.Multiply(moles, GasMolarMasses, tmp);
 
             // Conversion of grams to kilograms.
-            return TensorPrimitives.Sum(tmp) * Atmospherics.gToKg;
+            return NumericsHelpers.HorizontalAdd(tmp) * Atmospherics.gToKg;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected override float GetHeatCapacityCalculation(float[] moles, bool space)
         {
             // Little hack to make space gas mixtures have heat capacity, therefore allowing them to cool down rooms.
-            if (space && MathHelper.CloseTo(TensorPrimitives.Sum(moles), 0f))
+            if (space && MathHelper.CloseTo(NumericsHelpers.HorizontalAdd(moles), 0f))
             {
                 return Atmospherics.SpaceHeatCapacity;
             }
 
             Span<float> tmp = stackalloc float[moles.Length];
-            TensorPrimitives.Multiply(moles, GasMolarHeatCapacities, tmp);
+            NumericsHelpers.Multiply(moles, GasMolarHeatCapacities, tmp);
             // Adjust heat capacity by speedup, because this is primarily what
             // determines how quickly gases heat up/cool.
-            return MathF.Max(TensorPrimitives.Sum(tmp), Atmospherics.MinimumHeatCapacity);
+            return MathF.Max(NumericsHelpers.HorizontalAdd(tmp), Atmospherics.MinimumHeatCapacity);
         }
 
         public override bool IsMixtureFuel(GasMixture mixture, float epsilon = Atmospherics.Epsilon)
         {
             Span<float> tmp = stackalloc float[Atmospherics.AdjustedNumberOfGases];
-            TensorPrimitives.Multiply(mixture.Moles, GasFuelMask, tmp);
-            return TensorPrimitives.Sum(tmp) > epsilon;
+            NumericsHelpers.Multiply(mixture.Moles, GasFuelMask, tmp);
+            return NumericsHelpers.HorizontalAdd(tmp) > epsilon;
         }
 
         public override bool IsMixtureOxidizer(GasMixture mixture, float epsilon = Atmospherics.Epsilon)
         {
             Span<float> tmp = stackalloc float[Atmospherics.AdjustedNumberOfGases];
-            TensorPrimitives.Multiply(mixture.Moles, GasOxidizerMask, tmp);
-            return TensorPrimitives.Sum(tmp) > epsilon;
+            NumericsHelpers.Multiply(mixture.Moles, GasOxidizerMask, tmp);
+            return NumericsHelpers.HorizontalAdd(tmp) > epsilon;
         }
 
         /// <summary>
@@ -137,8 +131,8 @@ namespace Content.Server.Atmos.EntitySystems
                 }
 
                 // transfer moles
-                TensorPrimitives.Multiply(source.Moles, fraction, buffer);
-                TensorPrimitives.Add(receiver.Moles, buffer, receiver.Moles);
+                NumericsHelpers.Multiply(source.Moles, fraction, buffer);
+                NumericsHelpers.Add(receiver.Moles, buffer);
             }
         }
 
@@ -331,8 +325,13 @@ namespace Content.Server.Atmos.EntitySystems
         [PublicAPI]
         public static void AddMolsToMixture(GasMixture mixture, ReadOnlySpan<float> molsToAdd)
         {
-            TensorPrimitives.Add(mixture.Moles, molsToAdd, mixture.Moles);
-            TensorPrimitives.Max(mixture.Moles, 0f, mixture.Moles);
+            // Span length should be as long as the length of the gas array.
+            // Technically this is a redundant check because NumericsHelpers will do the same thing,
+            // but eh.
+            ArgumentOutOfRangeException.ThrowIfNotEqual(mixture.Moles.Length, molsToAdd.Length, nameof(mixture.Moles.Length));
+
+            NumericsHelpers.Add(mixture.Moles, molsToAdd);
+            NumericsHelpers.Max(mixture.Moles, 0f);
         }
 
         public enum GasCompareResult

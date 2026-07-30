@@ -99,8 +99,7 @@ public sealed partial class GatewayGeneratorSystem : EntitySystem
         const int MaxOffset = 256;
         var tiles = new List<(Vector2i Index, Tile Tile)>();
         var seed = _random.Next();
-        var random = new RobustRandom();
-        random.SetSeed(seed);
+        var random = new Random(seed);
         var mapUid = _maps.CreateMap();
 
         var gatewayName = _salvage.GetFTLName(_protoManager.Index(PlanetNames), seed);

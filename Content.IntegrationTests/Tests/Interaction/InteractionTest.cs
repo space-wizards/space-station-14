@@ -4,8 +4,7 @@ using Content.Client.Construction;
 using Content.Client.Examine;
 using Content.Client.Gameplay;
 using Content.Client.Interaction;
-using Content.IntegrationTests.Fixtures;
-using Content.IntegrationTests.Fixtures.Attributes;
+using Content.IntegrationTests.Pair;
 using Content.Server.Hands.Systems;
 using Content.Server.Stack;
 using Content.Server.Tools;
@@ -19,7 +18,6 @@ using Content.Shared.Players;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Client.Input;
 using Robust.Client.State;
-using Robust.Client.Timing;
 using Robust.Client.UserInterface;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
@@ -28,6 +26,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Robust.UnitTesting;
 
 namespace Content.IntegrationTests.Tests.Interaction;
 
@@ -40,7 +39,7 @@ namespace Content.IntegrationTests.Tests.Interaction;
 /// </summary>
 [TestFixture]
 [FixtureLifeCycle(LifeCycle.InstancePerTestCase)]
-public abstract partial class InteractionTest : GameTest
+public abstract partial class InteractionTest
 {
     /// <summary>
     /// The prototype that will be spawned for the player entity at <see cref="PlayerCoords"/>.
@@ -54,7 +53,11 @@ public abstract partial class InteractionTest : GameTest
     /// </summary>
     protected virtual ResPath? TestMapPath => null;
 
-    protected TestMapData MapData => TestMap!;
+    protected TestPair Pair = default!;
+    protected TestMapData MapData = default!;
+
+    protected RobustIntegrationTest.ServerIntegrationInstance Server => Pair.Server;
+    protected RobustIntegrationTest.ClientIntegrationInstance Client => Pair.Client;
 
     protected MapId MapId => MapData.MapId;
 
@@ -78,6 +81,7 @@ public abstract partial class InteractionTest : GameTest
     protected EntityUid CPlayer;
 
     protected ICommonSession ClientSession = default!;
+    protected ICommonSession ServerSession = default!;
 
     /// <summary>
     /// The current target entity. This is the default entity for various helper functions.
@@ -99,39 +103,39 @@ public abstract partial class InteractionTest : GameTest
     protected int ConstructionGhostId;
 
     // SERVER dependencies
-    [SidedDependency(Side.Server)] protected ITileDefinitionManager TileMan = default!;
-    [SidedDependency(Side.Server)] protected IMapManager MapMan = default!;
-    protected IPrototypeManager ProtoMan => SProtoMan;
-    protected IGameTiming STiming => SGameTiming;
-    [SidedDependency(Side.Server)] protected IComponentFactory Factory = default!;
-    [SidedDependency(Side.Server)] protected HandsSystem HandSys = default!;
-    [SidedDependency(Side.Server)] protected StackSystem Stack = default!;
-    [SidedDependency(Side.Server)] protected SharedInteractionSystem InteractSys = default!;
-    [SidedDependency(Side.Server)] protected Content.Server.Construction.ConstructionSystem SConstruction = default!;
-    [SidedDependency(Side.Server)] protected SharedDoAfterSystem DoAfterSys = default!;
-    [SidedDependency(Side.Server)] protected ToolSystem ToolSys = default!;
-    [SidedDependency(Side.Server)] protected ItemToggleSystem ItemToggleSys = default!;
-    [SidedDependency(Side.Server)] protected InteractionTestSystem STestSystem = default!;
-    [SidedDependency(Side.Server)] protected SharedTransformSystem Transform = default!;
-    [SidedDependency(Side.Server)] protected SharedMapSystem MapSystem = default!;
-    [SidedDependency(Side.Server)] protected ILogManager SLogMan = default!;
+    protected IEntityManager SEntMan = default!;
+    protected ITileDefinitionManager TileMan = default!;
+    protected IMapManager MapMan = default!;
+    protected IPrototypeManager ProtoMan = default!;
+    protected IGameTiming STiming = default!;
+    protected IComponentFactory Factory = default!;
+    protected HandsSystem HandSys = default!;
+    protected StackSystem Stack = default!;
+    protected SharedInteractionSystem InteractSys = default!;
+    protected Content.Server.Construction.ConstructionSystem SConstruction = default!;
+    protected SharedDoAfterSystem DoAfterSys = default!;
+    protected ToolSystem ToolSys = default!;
+    protected ItemToggleSystem ItemToggleSys = default!;
+    protected InteractionTestSystem STestSystem = default!;
+    protected SharedTransformSystem Transform = default!;
+    protected SharedMapSystem MapSystem = default!;
     protected ISawmill SLogger = default!;
-    [SidedDependency(Side.Server)] protected SharedUserInterfaceSystem SUiSys = default!;
-    [SidedDependency(Side.Server)] protected SharedCombatModeSystem SCombatMode = default!;
-    [SidedDependency(Side.Server)] protected SharedGunSystem SGun = default!;
+    protected SharedUserInterfaceSystem SUiSys = default!;
+    protected SharedCombatModeSystem SCombatMode = default!;
+    protected SharedGunSystem SGun = default!;
 
     // CLIENT dependencies
-    protected IClientGameTiming CTiming => CGameTiming;
-    [SidedDependency(Side.Client)] protected IUserInterfaceManager UiMan = default!;
-    [SidedDependency(Side.Client)] protected IInputManager InputManager = default!;
-    [SidedDependency(Side.Client)] protected Robust.Client.GameObjects.InputSystem InputSystem = default!;
-    [SidedDependency(Side.Client)] protected ConstructionSystem CConSys = default!;
-    [SidedDependency(Side.Client)] protected ExamineSystem ExamineSys = default!;
-    [SidedDependency(Side.Client)] protected InteractionTestSystem CTestSystem = default!;
-    [SidedDependency(Side.Client)] protected ILogManager CLogMan = default!;
+    protected IEntityManager CEntMan = default!;
+    protected IGameTiming CTiming = default!;
+    protected IUserInterfaceManager UiMan = default!;
+    protected IInputManager InputManager = default!;
+    protected Robust.Client.GameObjects.InputSystem InputSystem = default!;
+    protected ConstructionSystem CConSys = default!;
+    protected ExamineSystem ExamineSys = default!;
+    protected InteractionTestSystem CTestSystem = default!;
     protected ISawmill CLogger = default!;
-    [SidedDependency(Side.Client)] protected SharedUserInterfaceSystem CUiSys = default!;
-    [SidedDependency(Side.Client)] protected DragDropSystem CDragDropSys = default!;
+    protected SharedUserInterfaceSystem CUiSys = default!;
+    protected DragDropSystem CDragDropSys = default!;
 
     // player components
     protected HandsComponent? Hands;
@@ -165,32 +169,54 @@ public abstract partial class InteractionTest : GameTest
   - type: CombatMode
 ";
 
-    protected static PoolSettings Default => new()
-    {
-        Connected = true,
-        Dirty = true
-    };
+    protected static PoolSettings Default => new() { Connected = true, Dirty = true };
+    protected virtual PoolSettings Settings => Default;
 
-    public override PoolSettings PoolSettings => Default;
-
-    /// <summary>
-    /// This is here for backward-compatibility.
-    /// You probably should switch to <see cref="DoSetup"/>.
-    /// </summary>
+    [SetUp]
     public virtual async Task Setup()
     {
-        //
-    }
+        Pair = await PoolManager.GetServerClient(Settings, new NUnitTestContextWrap(TestContext.CurrentContext, TestContext.Out));
 
-    public override async Task DoSetup()
-    {
-        await base.DoSetup();
+        // server dependencies
+        SEntMan = Server.ResolveDependency<IEntityManager>();
+        TileMan = Server.ResolveDependency<ITileDefinitionManager>();
+        MapMan = Server.ResolveDependency<IMapManager>();
+        ProtoMan = Server.ResolveDependency<IPrototypeManager>();
+        Factory = Server.ResolveDependency<IComponentFactory>();
+        STiming = Server.ResolveDependency<IGameTiming>();
+        SLogger = Server.ResolveDependency<ILogManager>().RootSawmill;
+        HandSys = SEntMan.System<HandsSystem>();
+        InteractSys = SEntMan.System<SharedInteractionSystem>();
+        ToolSys = SEntMan.System<ToolSystem>();
+        ItemToggleSys = SEntMan.System<ItemToggleSystem>();
+        DoAfterSys = SEntMan.System<SharedDoAfterSystem>();
+        Transform = SEntMan.System<SharedTransformSystem>();
+        MapSystem = SEntMan.System<SharedMapSystem>();
+        SConstruction = SEntMan.System<Server.Construction.ConstructionSystem>();
+        STestSystem = SEntMan.System<InteractionTestSystem>();
+        Stack = SEntMan.System<StackSystem>();
+        SUiSys = SEntMan.System<SharedUserInterfaceSystem>();
+        SCombatMode = SEntMan.System<SharedCombatModeSystem>();
+        SGun = SEntMan.System<SharedGunSystem>();
+
+        // client dependencies
+        CEntMan = Client.ResolveDependency<IEntityManager>();
+        UiMan = Client.ResolveDependency<IUserInterfaceManager>();
+        CTiming = Client.ResolveDependency<IGameTiming>();
+        InputManager = Client.ResolveDependency<IInputManager>();
+        CLogger = Client.ResolveDependency<ILogManager>().RootSawmill;
+        InputSystem = CEntMan.System<Robust.Client.GameObjects.InputSystem>();
+        CTestSystem = CEntMan.System<InteractionTestSystem>();
+        CConSys = CEntMan.System<ConstructionSystem>();
+        ExamineSys = CEntMan.System<ExamineSystem>();
+        CUiSys = CEntMan.System<SharedUserInterfaceSystem>();
+        CDragDropSys = CEntMan.System<DragDropSystem>();
 
         // Setup map.
         if (TestMapPath == null)
-            await Pair.CreateTestMap();
+            MapData = await Pair.CreateTestMap();
         else
-            await Pair.LoadTestMap(TestMapPath.Value);
+            MapData = await Pair.LoadTestMap(TestMapPath.Value);
 
         PlayerCoords = SEntMan.GetNetCoordinates(Transform.WithEntityId(MapData.GridCoords.Offset(new Vector2(0.5f, 0.5f)), MapData.MapUid));
         TargetCoords = SEntMan.GetNetCoordinates(Transform.WithEntityId(MapData.GridCoords.Offset(new Vector2(1.5f, 0.5f)), MapData.MapUid));
@@ -202,9 +228,7 @@ public abstract partial class InteractionTest : GameTest
         if (Client.Session == null)
             Assert.Fail("No player");
         ClientSession = Client.Session!;
-
-        SLogger = SLogMan.RootSawmill;
-        CLogger = CLogMan.RootSawmill;
+        ServerSession = sPlayerMan.GetSessionById(ClientSession.UserId);
 
         // Spawn player entity & attach
         NetEntity? old = default;
@@ -212,7 +236,7 @@ public abstract partial class InteractionTest : GameTest
         {
             // Fuck you mind system I want an hour of my life back
             // Mind system is a time vampire
-            SEntMan.System<SharedMindSystem>().WipeMind(ServerSession!.ContentData()?.Mind);
+            SEntMan.System<SharedMindSystem>().WipeMind(ServerSession.ContentData()?.Mind);
 
             CEntMan.TryGetNetEntity(cPlayerMan.LocalEntity, out old);
             SPlayer = SEntMan.SpawnEntity(PlayerPrototype, SEntMan.GetCoordinates(PlayerCoords));
@@ -240,20 +264,19 @@ public abstract partial class InteractionTest : GameTest
 
         // Final player asserts/checks.
         await Pair.ReallyBeIdle(5);
-        using (Assert.EnterMultipleScope())
+        Assert.Multiple(() =>
         {
             Assert.That(CEntMan.GetNetEntity(cPlayerMan.LocalEntity), Is.EqualTo(Player));
             Assert.That(sPlayerMan.GetSessionById(ClientSession.UserId).AttachedEntity, Is.EqualTo(SEntMan.GetEntity(Player)));
-        }
+        });
     }
 
-    public override async Task DoTeardown()
+    [TearDown]
+    public async Task TearDownInternal()
     {
         await Server.WaitPost(() => MapSystem.DeleteMap(MapId));
-
+        await Pair.CleanReturnAsync();
         await TearDown();
-
-        await base.DoTeardown();
     }
 
     protected virtual Task TearDown()

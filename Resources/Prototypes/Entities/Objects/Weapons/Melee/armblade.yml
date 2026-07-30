@@ -18,9 +18,9 @@
     wideAnimationRotation: 90
     attackRate: 1
     damage:
-      types:
-        Slash: 11
-        Piercing: 11
+      types: # Same as energy sword, but slash/pierce instead of slash/heat
+        Slash: 15
+        Piercing: 15
         Structural: 20
   - type: Item
     size: Normal

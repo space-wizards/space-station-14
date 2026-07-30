@@ -1,6 +1,5 @@
 using Content.Shared.EntityTable.ValueSelector;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 
 namespace Content.Shared.EntityTable.EntitySelectors;
 
@@ -17,7 +16,7 @@ public sealed partial class EntSelector : EntityTableSelector
     [DataField]
     public NumberSelector Amount = new ConstantNumberSelector(1);
 
-    protected override IEnumerable<EntProtoId> GetSpawnsImplementation(IRobustRandom rand,
+    protected override IEnumerable<EntProtoId> GetSpawnsImplementation(System.Random rand,
         IEntityManager entMan,
         IPrototypeManager proto,
         EntityTableContext ctx)

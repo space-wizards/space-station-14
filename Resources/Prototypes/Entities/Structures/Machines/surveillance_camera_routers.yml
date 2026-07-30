@@ -40,7 +40,7 @@
       range: 5
       enabled: false
       sound:
-        collection: ServerFans
+        path: /Audio/Ambience/Objects/server_fans.ogg
     - type: WiresVisuals
     - type: WiresPanel
 
@@ -174,7 +174,7 @@
       range: 5
       enabled: false
       sound:
-        collection: ServerFans
+        path: /Audio/Ambience/Objects/server_fans.ogg
     - type: WiresVisuals
     - type: WiresPanel
 

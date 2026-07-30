@@ -21,8 +21,7 @@ namespace Content.Server.Entry
             "HolidayRsiSwap",
             "OptionsVisualizer",
             "AnomalyScannerScreen",
-            "MultipartMachineGhost",
-            "DirectionalArrowIndicator"
+            "MultipartMachineGhost"
         };
     }
 }

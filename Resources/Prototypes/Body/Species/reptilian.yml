@@ -172,7 +172,7 @@
   - type: Wagging
 
 - type: entity
-  parent: OrganBaseOrganic
+  parent: OrganBase
   id: OrganReptilian
   abstract: true
   suffix: Reptilian

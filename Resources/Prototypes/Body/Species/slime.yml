@@ -175,7 +175,7 @@
     maxSaturation: 15
 
 - type: entity
-  parent: OrganBaseOrganic
+  parent: OrganBase
   id: OrganSlimePerson
   abstract: true
   suffix: slime person

@@ -1,5 +1,3 @@
-using Robust.Shared.Random;
-
 namespace Content.Shared.EntityTable.ValueSelector;
 
 /// <summary>
@@ -15,7 +13,7 @@ public sealed partial class RangeNumberSelector : NumberSelector
         Range = range;
     }
 
-    public override int Get(IRobustRandom rand)
+    public override int Get(System.Random rand)
     {
         // rand.Next() is inclusive on the first number and exclusive on the second number,
         // so we add 1 to the second number.

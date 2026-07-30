@@ -172,7 +172,7 @@
   - type: Rootable
 
 - type: entity
-  parent: OrganBaseOrganic
+  parent: OrganBase
   id: OrganDiona
   abstract: true
   suffix: Diona

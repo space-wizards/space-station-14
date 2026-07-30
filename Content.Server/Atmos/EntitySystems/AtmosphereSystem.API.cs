@@ -1,6 +1,5 @@
 using System.Buffers;
 using System.Diagnostics;
-using System.Numerics.Tensors;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
@@ -367,9 +366,10 @@ public partial class AtmosphereSystem
                 mixtMoles[i] = mixture.TotalMoles;
             }
 
-            TensorPrimitives.Multiply(mixtMoles, Atmospherics.R, mixtMoles);
-            TensorPrimitives.Multiply(mixtMoles, mixtTemp, mixtMoles);
-            TensorPrimitives.Divide(mixtMoles, mixtVol, pressures);
+            // TODO NumericsHelpers need a method that substitutes NaNs with zeros. AVX-512 has one iirc but for 256/128 we need to do some masking bs
+            NumericsHelpers.Multiply(mixtMoles, Atmospherics.R);
+            NumericsHelpers.Multiply(mixtMoles, mixtTemp);
+            NumericsHelpers.Divide(mixtMoles, mixtVol, pressures);
         }
         finally
         {

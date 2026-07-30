@@ -32,6 +32,6 @@ public abstract partial class BasePlantAdjustAttribute<T> : EntityEffectBase<T> 
         Loc.GetString("entity-effect-guidebook-plant-attribute",
         ("attribute", Loc.GetString(GuidebookAttributeName)),
         ("amount", Amount.ToString("0.00")),
-        ("positive", GuidebookIsAttributePositive == Amount > 0f),
+        ("positive", GuidebookIsAttributePositive),
         ("chance", Probability));
 }

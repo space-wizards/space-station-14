@@ -17,7 +17,7 @@ public sealed partial class DungeonJob
         OreDunGen gen,
         List<Dungeon> dungeons,
         HashSet<Vector2i> reservedTiles,
-        IRobustRandom random)
+        Random random)
     {
         foreach (var dungeon in dungeons)
         {

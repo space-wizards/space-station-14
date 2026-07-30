@@ -100,12 +100,12 @@ public abstract partial class GameTest
     }
 
     /// <summary>
-    ///     Attempts to retrieve the given component from an entity on the client.
+    ///     Attempts to retrieve the given component from an entity on the server.
     /// </summary>
     public bool CTryComp<T>(EntityUid? target, [NotNullWhen(true)] out T? component)
         where T : IComponent
     {
-        return CEntMan.TryGetComponent(target, out component);
+        return SEntMan.TryGetComponent(target, out component);
     }
 
     /// <summary>

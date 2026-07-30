@@ -3,6 +3,8 @@ using Content.Shared.Humanoid;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
 namespace Content.Shared.Speech.Components;
 
@@ -21,38 +23,25 @@ public sealed partial class VocalComponent : Component
     [AutoNetworkedField]
     public Dictionary<Sex, ProtoId<EmoteSoundsPrototype>>? Sounds;
 
-    //TODO: Wilhelm scream logic needs to be more generic
-    /// <summary>
-    /// Emote ID for screaming (for whilhelm scream)
-    /// </summary>
-    [DataField]
+    [DataField("screamId", customTypeSerializer: typeof(PrototypeIdSerializer<EmotePrototype>))]
     [AutoNetworkedField]
-    public ProtoId<EmotePrototype> ScreamId = "Scream";
+    public string ScreamId = "Scream";
 
-    /// <summary>
-    /// Sound specifier for Wilhelm scream
-    /// </summary>
-    [DataField]
+    [DataField("wilhelm")]
     [AutoNetworkedField]
     public SoundSpecifier Wilhelm = new SoundPathSpecifier("/Audio/Voice/Human/wilhelm_scream.ogg");
 
-    /// <summary>
-    /// Odds that screaming will be a Wilhelm scream
-    /// </summary>
-    [DataField]
+    [DataField("wilhelmProbability")]
     [AutoNetworkedField]
     public float WilhelmProbability = 0.0002f;
 
-    /// <summary>
-    /// Default Emote Action to grant
-    /// </summary>
-    [DataField]
+    [DataField("screamAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     [AutoNetworkedField]
-    public EntProtoId? EmoteAction = "ActionScream";
+    public string? ScreamAction = "ActionScream";
 
-    [DataField]
+    [DataField("screamActionEntity")]
     [AutoNetworkedField]
-    public EntityUid? EmoteActionEntity;
+    public EntityUid? ScreamActionEntity;
 
     /// <summary>
     ///     Currently loaded emote sounds prototype, based on entity sex.

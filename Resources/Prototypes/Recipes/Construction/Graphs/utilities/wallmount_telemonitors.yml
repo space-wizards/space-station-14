@@ -41,13 +41,16 @@
               name: construction-graph-tag-surveillance-camera-monitor-board
               icon:
                 sprite: Objects/Misc/module.rsi
-                state: cpu_security
+                state: cpuboard
 
         - to: TelescreenFrame
           completed:
             - !type:GivePrototype
               prototype: CableApcStack1
               amount: 5
+            - !type:GivePrototype
+              prototype: SurveillanceCameraMonitorCircuitboard
+              amount: 1
           steps:
             - tool: Cutting
               doAfter: 2
@@ -67,8 +70,8 @@
         - to: Wired
           completed:
             - !type:GivePrototype
-              prototype: SurveillanceCameraMonitorCircuitboard
-              amount: 1
+              prototype: SheetGlass1
+              amount: 2
           steps:
             - tool: Prying
               doAfter: 2
@@ -78,15 +81,9 @@
       entity: WallmountTelescreen
       edges:
         - to: Screen
-          completed:
-            - !type:GivePrototype
-              prototype: SheetGlass1
-              amount: 2
           steps:
             - tool: Screwing
-              doAfter: 2
-            - tool: Prying
-              doAfter: 2
+              doAfter: 3
 
 # TVs
 
@@ -140,6 +137,9 @@
             - !type:GivePrototype
               prototype: CableApcStack1
               amount: 5
+            - !type:GivePrototype
+              prototype: ComputerTelevisionCircuitboard
+              amount: 1
           steps:
             - tool: Cutting
               doAfter: 2
@@ -159,8 +159,8 @@
         - to: Wired
           completed:
             - !type:GivePrototype
-              prototype: ComputerTelevisionCircuitboard
-              amount: 1
+              prototype: SheetGlass1
+              amount: 2
           steps:
             - tool: Prying
               doAfter: 2
@@ -170,13 +170,7 @@
       entity: WallmountTelevision
       edges:
         - to: Screen
-          completed:
-            - !type:GivePrototype
-              prototype: SheetGlass1
-              amount: 2
           steps:
             - tool: Screwing
-              doAfter: 2
-            - tool: Prying
-              doAfter: 2
+              doAfter: 3
 

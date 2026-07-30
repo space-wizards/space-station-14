@@ -118,7 +118,6 @@
   - type: GuideHelp
     guides:
     - Cryogenics
-  - type: AmbientMusicMarkerMedical
 
 - type: entity
   parent: SolutionSmall

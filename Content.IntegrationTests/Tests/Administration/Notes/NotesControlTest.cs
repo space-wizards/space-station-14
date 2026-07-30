@@ -15,7 +15,7 @@ namespace Content.IntegrationTests.Tests.Administration.Notes;
 /// </summary>
 public sealed class NotesControlTest : InteractionTest
 {
-    public override PoolSettings PoolSettings => new() { Connected = true, Dirty = true, AdminLogsEnabled = true, DummyTicker = false };
+    protected override PoolSettings Settings => new() {Connected = true, Dirty = true, AdminLogsEnabled = true, DummyTicker = false};
 
     [Test]
     public async Task TestNotesControl()

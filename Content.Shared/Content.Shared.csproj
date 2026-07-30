@@ -6,7 +6,6 @@
   <Import Project="../MSBuild/Content.props" />
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" PrivateAssets="All" />
-    <PackageReference Include="System.Numerics.Tensors" />
     <PackageReference Include="YamlDotNet" />
   </ItemGroup>
 

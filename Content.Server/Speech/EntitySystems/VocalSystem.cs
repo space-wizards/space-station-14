@@ -27,13 +27,13 @@ public sealed partial class VocalSystem : EntitySystem
         SubscribeLocalEvent<VocalComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<VocalComponent, SexChangedEvent>(OnSexChanged);
         SubscribeLocalEvent<VocalComponent, EmoteEvent>(OnEmote);
-        SubscribeLocalEvent<VocalComponent, EmoteActionEvent>(OnEmoteAction);
+        SubscribeLocalEvent<VocalComponent, ScreamActionEvent>(OnScreamAction);
     }
 
     /// <summary>
     /// Copy this component's datafields from one entity to another.
     /// This can't use CopyComp because of the ScreamActionEntity DataField, which should not be copied.
-    /// </summary>
+    /// <summary>
     public void CopyComponent(Entity<VocalComponent?> source, EntityUid target)
     {
         if (!Resolve(source, ref source.Comp))
@@ -52,16 +52,16 @@ public sealed partial class VocalSystem : EntitySystem
     private void OnMapInit(EntityUid uid, VocalComponent component, MapInitEvent args)
     {
         // try to add scream action when vocal comp added
-        _actions.AddAction(uid, ref component.EmoteActionEntity, component.EmoteAction);
+        _actions.AddAction(uid, ref component.ScreamActionEntity, component.ScreamAction);
         LoadSounds(uid, component);
     }
 
     private void OnShutdown(EntityUid uid, VocalComponent component, ComponentShutdown args)
     {
         // remove scream action when component removed
-        if (component.EmoteActionEntity != null)
+        if (component.ScreamActionEntity != null)
         {
-            _actions.RemoveAction(uid, component.EmoteActionEntity);
+            _actions.RemoveAction(uid, component.ScreamActionEntity);
         }
     }
 
@@ -76,7 +76,7 @@ public sealed partial class VocalSystem : EntitySystem
             return;
 
         // snowflake case for wilhelm scream easter egg
-        if (args.Emote == component.ScreamId)
+        if (args.Emote.ID == component.ScreamId)
         {
             args.Handled = TryPlayScreamSound(uid, component);
             return;
@@ -89,12 +89,12 @@ public sealed partial class VocalSystem : EntitySystem
         args.Handled = _chat.TryPlayEmoteSound(uid, _proto.Index(sounds), args.Emote);
     }
 
-    private void OnEmoteAction(EntityUid uid, VocalComponent component, EmoteActionEvent args)
+    private void OnScreamAction(EntityUid uid, VocalComponent component, ScreamActionEvent args)
     {
         if (args.Handled)
             return;
 
-        _chat.TryEmoteWithChat(uid, args.Emote);
+        _chat.TryEmoteWithChat(uid, component.ScreamId);
         args.Handled = true;
     }
 

@@ -408,8 +408,7 @@ namespace Content.Client.Parallax
             private void GenPoints(Image<Rgba32> buffer)
             {
                 var o = PointSize - 1;
-                var random = new RobustRandom();
-                random.SetSeed(Seed);
+                var random = new Random(Seed);
                 var span = buffer.GetPixelSpan();
 
                 for (var i = 0; i < PointCount; i++)
@@ -436,8 +435,7 @@ namespace Content.Client.Parallax
             private void GenPointsMasked(Image<Rgba32> buffer)
             {
                 var o = PointSize - 1;
-                var random = new RobustRandom();
-                random.SetSeed(Seed);
+                var random = new Random(Seed);
                 var noise = new FastNoiseLite((int)MaskSeed);
                 noise.SetFractalType(MaskNoiseType);
                 noise.SetFractalLacunarity(MaskLacunarity);

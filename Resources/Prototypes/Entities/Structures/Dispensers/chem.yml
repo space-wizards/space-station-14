@@ -48,7 +48,6 @@
         - MachineMask
         layer:
         - MachineLayer
-  - type: AmbientMusicMarkerMedical
 
 - type: entity
   id: ChemDispenser

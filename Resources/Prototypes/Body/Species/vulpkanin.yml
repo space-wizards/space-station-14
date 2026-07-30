@@ -213,7 +213,7 @@
       state: creampie_vulpkanin
 
 - type: entity
-  parent: OrganBaseOrganic
+  parent: OrganBase
   id: OrganVulpkanin
   abstract: true
   suffix: vulpkanin

@@ -99,7 +99,7 @@
       amount: 5
 
 - type: entity
-  parent: OrganBaseOrganic
+  parent: OrganBase
   id: OrganHuman
   abstract: true
   suffix: human
