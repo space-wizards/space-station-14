@@ -1,3 +1,4 @@
+using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Components;
@@ -42,6 +43,9 @@ public sealed partial class XATInteractAttackSystem : BaseXATSystem<XATInteractA
     /// </summary>
     private void OnAttacked(Entity<XenoArtifactComponent> artifact, Entity<XATInteractAttackComponent, XenoArtifactNodeComponent> node, ref AttackedEvent args)
     {
+        if (!TryComp<ItemToggleComponent>(args.Used, out var itemComp) || itemComp.Activated == false) //make sure it's on
+            return;
+
         if (_whitelistSystem.IsWhitelistPassOrNull(node.Comp1.Whitelist, args.Used) && TriggerCountdown(node) == true)
             Trigger(artifact, node);
     }
