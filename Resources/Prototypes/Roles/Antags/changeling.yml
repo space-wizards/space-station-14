@@ -13,10 +13,13 @@
     text: changeling-role-greeting
     color: Red
     sound: /Audio/Ambience/Antag/changeling_start.ogg
-  components:
+  components: # When updating components, remember to copy the changes over to MobLing !!!!!
   - type: ChangelingDevour
   - type: ChangelingIdentity
   - type: ChangelingTransform
+  - type: DestructionResistance
+  - type: RevolutionaryImmune
+  - type: ZombieImmune
   - type: ActionGrant
     actions:
     - ActionChangelingStore
