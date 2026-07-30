@@ -53,5 +53,6 @@ public sealed partial class HeldSpeedModifierSystem : EntitySystem
     private void OnRefreshWeightlessModifiers(Entity<HeldSpeedModifierComponent> ent, ref HeldRelayedEvent<RefreshWeightlessModifiersEvent> args)
     {
         args.Args.ModifyAcceleration(ent.Comp.WeightlessAcceleration);
+        args.Args.WeightlessModifierMod *= ent.Comp.ZeroGravityModifier;
     }
 }
