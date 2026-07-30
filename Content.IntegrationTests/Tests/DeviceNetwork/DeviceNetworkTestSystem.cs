@@ -15,13 +15,14 @@ public sealed class DeviceNetworkTestSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<DeviceNetworkComponent, DeviceNetworkPacketData>(OnBaselinePacketReceived);
+        SubscribeLocalEvent<DeviceNetworkComponent, DeviceNetworkPacketEvent<TestPayload>>(OnTypedPacketReceived);
+        SubscribeLocalEvent<DeviceNetworkComponent, DeviceNetworkPacketEvent<SecondTestPayload>>(OnTypedPacketReceived);
     }
 
     public TestPayload LastPayload = default;
     public SecondTestPayload LastPayloadSecond = default;
     public TestPayloadClass LastPayloadClass = default;
 
-    [SubscribeLocalEvent]
     public void SendBaselineTestEvent(EntityUid uid)
     {
         var ev = new DeviceNetworkPacketData(0, "", 0, "", uid, new TestPayloadClass());
@@ -33,13 +34,11 @@ public sealed class DeviceNetworkTestSystem : EntitySystem
         LastPayloadClass = (TestPayloadClass) args.Data;
     }
 
-    [SubscribeLocalEvent]
     private void OnTypedPacketReceived(Entity<DeviceNetworkComponent> ent, ref DeviceNetworkPacketEvent<TestPayload> args)
     {
         LastPayload = args.Data;
     }
 
-    [SubscribeLocalEvent]
     private void OnTypedPacketReceived(Entity<DeviceNetworkComponent> ent, ref DeviceNetworkPacketEvent<SecondTestPayload> args)
     {
         LastPayloadSecond = args.Data;
