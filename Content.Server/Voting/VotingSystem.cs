@@ -39,7 +39,7 @@ public sealed partial class VotingSystem : EntitySystem
 
     private void OnVotePlayerListRequestEvent(VotePlayerListRequestEvent msg, EntitySessionEventArgs args)
     {
-        if (CheckVotekickInitEligibility(args.SenderSession))
+        if (!CheckVotekickInitEligibility(args.SenderSession))
         {
             var deniedResponse = new VotePlayerListResponseEvent(new (NetUserId, NetEntity, string)[0], true);
             RaiseNetworkEvent(deniedResponse, args.SenderSession.Channel);
@@ -112,7 +112,7 @@ public sealed partial class VotingSystem : EntitySystem
         }
 
         // Must be whitelisted
-        if (_whitelistManager.IsConnectedWhitelisted(initiator.UserId) && _cfg.GetCVar(CCVars.VotekickInitiatorWhitelistedRequirement))
+        if (!_whitelistManager.IsConnectedWhitelisted(initiator.UserId) && _cfg.GetCVar(CCVars.VotekickInitiatorWhitelistedRequirement))
             return false;
 
         // Must be eligible to vote
