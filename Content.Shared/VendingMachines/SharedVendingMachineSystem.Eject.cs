@@ -14,28 +14,6 @@ public abstract partial class SharedVendingMachineSystem
     [Dependency] private AccessReaderSystem _accessReader = default!;
     [Dependency] private SharedSpeakOnUIClosedSystem _speakOn = default!;
 
-    private void UpdateEjectState(Entity<VendingMachineComponent, VendingMachineEjectComponent> entity, TimeSpan curTime)
-    {
-        var eject = entity.Comp2;
-        if (eject.EjectEnd is { } ejectEnd && curTime > ejectEnd)
-        {
-            eject.EjectEnd = null;
-            Dirty(entity.Owner, eject);
-
-            EjectItem((entity.Owner, entity.Comp1, eject));
-            UpdateUI((entity.Owner, entity.Comp1));
-            OnEjectStateChanged((entity.Owner, entity.Comp1), eject);
-        }
-
-        if (eject.DenyEnd is not { } denyEnd || curTime <= denyEnd)
-            return;
-
-        eject.DenyEnd = null;
-        Dirty(entity.Owner, eject);
-
-        OnEjectStateChanged((entity.Owner, entity.Comp1), eject);
-    }
-
     private void OnInventoryEjectMessage(Entity<VendingMachineComponent> entity, ref VendingMachineEjectMessage args)
     {
         if (!_receiver.IsPowered(entity.Owner) || Deleted(entity))
@@ -59,6 +37,28 @@ public abstract partial class SharedVendingMachineSystem
         args.Affected = true;
         args.Disabled = true;
         eject.NextEmpEject = Timing.CurTime;
+    }
+
+    private void UpdateEjectState(Entity<VendingMachineComponent, VendingMachineEjectComponent> entity, TimeSpan curTime)
+    {
+        var eject = entity.Comp2;
+        if (eject.EjectEnd is { } ejectEnd && curTime > ejectEnd)
+        {
+            eject.EjectEnd = null;
+            Dirty(entity.Owner, eject);
+
+            EjectItem((entity.Owner, entity.Comp1, eject));
+            UpdateUI((entity.Owner, entity.Comp1));
+            OnEjectStateChanged((entity.Owner, entity.Comp1), eject);
+        }
+
+        if (eject.DenyEnd is not { } denyEnd || curTime <= denyEnd)
+            return;
+
+        eject.DenyEnd = null;
+        Dirty(entity.Owner, eject);
+
+        OnEjectStateChanged((entity.Owner, entity.Comp1), eject);
     }
 
     protected virtual void EjectItem(Entity<VendingMachineComponent?, VendingMachineEjectComponent?> entity, bool forceEject = false) { }

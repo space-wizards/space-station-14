@@ -16,6 +16,22 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
     [Dependency] private SharedPowerReceiverSystem _receiver = default!;
     [Dependency] private SpriteSystem _sprite = default!;
 
+    protected override void UpdateUI(Entity<VendingMachineComponent?> entity)
+    {
+        if (!Resolve(entity, ref entity.Comp))
+            return;
+
+        if (TryGetOpenUi(entity.Owner, out var bui))
+        {
+            bui.UpdateAmounts();
+        }
+    }
+
+    protected override void OnEjectStateChanged(Entity<VendingMachineComponent?> entity, VendingMachineEjectComponent? ejectComponent = null)
+    {
+        TryUpdateVisualState(entity, ejectComponent);
+    }
+
     [SubscribeLocalEvent]
     private void OnVendingHandleState(Entity<VendingMachineComponent> entity, ref AfterAutoHandleStateEvent args)
     {
@@ -29,17 +45,6 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
     private void OnEjectHandleState(Entity<VendingMachineEjectComponent> entity, ref AfterAutoHandleStateEvent args)
     {
         TryUpdateVisualState(entity.Owner);
-    }
-
-    protected override void UpdateUI(Entity<VendingMachineComponent?> entity)
-    {
-        if (!Resolve(entity, ref entity.Comp))
-            return;
-
-        if (TryGetOpenUi(entity.Owner, out var bui))
-        {
-            bui.UpdateAmounts();
-        }
     }
 
     [SubscribeLocalEvent]
@@ -64,11 +69,6 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
     private void OnVisualsStartup(Entity<VendingMachineVisualsComponent> entity, ref ComponentStartup args)
     {
         TryUpdateVisualState(entity.Owner);
-    }
-
-    protected override void OnEjectStateChanged(Entity<VendingMachineComponent?> entity, VendingMachineEjectComponent? ejectComponent = null)
-    {
-        TryUpdateVisualState(entity, ejectComponent);
     }
 
     private void TryUpdateVisualState(Entity<VendingMachineComponent?> entity, VendingMachineEjectComponent? ejectComponent = null)

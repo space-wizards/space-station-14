@@ -54,6 +54,35 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
         RestockInventoryFromPrototype(uid, component, component.InitialStockQuality);
     }
 
+    [SubscribeLocalEvent]
+    private void OnEmagged(EntityUid uid, VendingMachineComponent component, ref GotEmaggedEvent args)
+    {
+        if (!_emag.CompareFlag(args.Type, EmagType.Interaction))
+            return;
+
+        if (_emag.CheckFlag(uid, EmagType.Interaction))
+            return;
+
+        // only emag if there are emag-only items
+        args.Handled = component.EmaggedInventory.Count > 0;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnActivatableUIOpenAttempt(EntityUid uid, VendingMachineComponent component, ActivatableUIOpenAttemptEvent args)
+    {
+        if (component.Broken)
+            args.Cancel();
+    }
+
+    [SubscribeLocalEvent]
+    private void OnBreak(EntityUid uid, VendingMachineComponent vendComponent, BreakageEventArgs eventArgs)
+    {
+        vendComponent.Broken = true;
+        Dirty(uid, vendComponent);
+
+        UISystem.CloseUi(uid, VendingMachineUiKey.Key);
+    }
+
     protected virtual void UpdateUI(Entity<VendingMachineComponent?> entity) { }
 
     public void RestockInventoryFromPrototype(EntityUid uid,
@@ -71,19 +100,6 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
         AddInventoryFromPrototype(uid, packPrototype.EmaggedInventory, InventoryType.Emagged, component, restockQuality);
         AddInventoryFromPrototype(uid, packPrototype.ContrabandInventory, InventoryType.Contraband, component, restockQuality);
         Dirty(uid, component);
-    }
-
-    [SubscribeLocalEvent]
-    private void OnEmagged(EntityUid uid, VendingMachineComponent component, ref GotEmaggedEvent args)
-    {
-        if (!_emag.CompareFlag(args.Type, EmagType.Interaction))
-            return;
-
-        if (_emag.CheckFlag(uid, EmagType.Interaction))
-            return;
-
-        // only emag if there are emag-only items
-        args.Handled = component.EmaggedInventory.Count > 0;
     }
 
     /// <summary>
@@ -168,19 +184,4 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
         }
     }
 
-    [SubscribeLocalEvent]
-    private void OnActivatableUIOpenAttempt(EntityUid uid, VendingMachineComponent component, ActivatableUIOpenAttemptEvent args)
-    {
-        if (component.Broken)
-            args.Cancel();
-    }
-
-    [SubscribeLocalEvent]
-    private void OnBreak(EntityUid uid, VendingMachineComponent vendComponent, BreakageEventArgs eventArgs)
-    {
-        vendComponent.Broken = true;
-        Dirty(uid, vendComponent);
-
-        UISystem.CloseUi(uid, VendingMachineUiKey.Key);
-    }
 }

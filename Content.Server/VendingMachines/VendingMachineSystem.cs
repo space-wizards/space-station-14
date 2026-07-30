@@ -23,129 +23,9 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
 
     private const float WallVendEjectDistanceFromWall = 1f;
 
-    [SubscribeLocalEvent]
-    private void OnVendingPrice(EntityUid uid, VendingMachineComponent component, ref PriceCalculationEvent args)
-    {
-        var price = 0.0;
-
-        foreach (var entry in component.Inventory.Values)
-        {
-            if (!ProtoMan.TryIndex<EntityPrototype>(entry.ID, out var proto))
-            {
-                Log.Error($"Unable to find entity prototype {entry.ID} on {ToPrettyString(uid)} vending.");
-                continue;
-            }
-
-            price += entry.Amount * _pricing.GetEstimatedPrice(proto);
-        }
-
-        args.Price += price;
-    }
-
-    [SubscribeLocalEvent]
-    private void OnDamageChanged(EntityUid uid, VendingMachineComponent component, DamageChangedEvent args)
-    {
-        if (!args.DamageIncreased && component.Broken)
-        {
-            component.Broken = false;
-            Dirty(uid, component);
-            return;
-        }
-
-        if (!TryComp<VendingMachineDispenseOnHitComponent>(uid, out var dispenseOnHit))
-            return;
-
-        if (component.Broken || dispenseOnHit.CoolingDown || args.DamageDelta == null)
-            return;
-
-        if (!(args.DamageIncreased && args.DamageDelta.GetTotal() >= dispenseOnHit.Threshold) ||
-            !_random.Prob(dispenseOnHit.Chance)) return;
-
-        if (dispenseOnHit.NextDispenseDelay != null)
-        {
-            dispenseOnHit.NextDispenseTime = Timing.CurTime + dispenseOnHit.NextDispenseDelay.Value;
-        }
-
-        EjectRandom(uid, throwItem: true, forceEject: true, component);
-    }
-
-    [SubscribeLocalEvent]
-    private void OnSelfDispense(EntityUid uid, VendingMachineComponent component, VendingMachineSelfDispenseEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        args.Handled = true;
-        EjectRandom(uid, throwItem: true, forceEject: false, component);
-    }
-
-    public void SetShooting(EntityUid uid, bool canShoot)
-    {
-        if (!HasComp<VendingMachineEjectComponent>(uid))
-            return;
-
-        if (canShoot)
-            EnsureComp<VendingMachineShootComponent>(uid);
-        else
-            RemComp<VendingMachineShootComponent>(uid);
-    }
-
     protected override bool ShouldThrowVendItem(EntityUid uid, VendingMachineEjectComponent ejectComponent)
     {
         return HasComp<VendingMachineShootComponent>(uid);
-    }
-
-    /// <summary>
-    /// Sets the <see cref="VendingMachineComponent.Contraband"/> property of the vending machine.
-    /// </summary>
-    public void SetContraband(EntityUid uid, bool contraband, VendingMachineComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return;
-
-        component.Contraband = contraband;
-        Dirty(uid, component);
-    }
-
-    /// <summary>
-    /// Ejects a random item from the available stock. Will do nothing if the vending machine is empty.
-    /// </summary>
-    /// <param name="uid"></param>
-    /// <param name="throwItem">Whether to throw the item in a random direction after dispensing it.</param>
-    /// <param name="forceEject">Whether to skip the regular ejection checks and immediately dispense the item without animation.</param>
-    /// <param name="vendComponent"></param>
-    public void EjectRandom(EntityUid uid, bool throwItem, bool forceEject = false, VendingMachineComponent? vendComponent = null)
-    {
-        if (!Resolve(uid, ref vendComponent))
-            return;
-
-        if (!TryComp<VendingMachineEjectComponent>(uid, out var ejectComponent))
-            return;
-
-        var availableItems = GetAvailableInventory(uid, vendComponent);
-        if (availableItems.Count <= 0)
-            return;
-
-        var item = _random.Pick(availableItems);
-
-        if (forceEject)
-        {
-            ejectComponent.NextItemToEject = item.ID;
-            ejectComponent.ThrowNextItem = throwItem;
-            var entry = GetEntry(uid, item.ID, item.Type, vendComponent);
-            if (entry != null)
-            {
-                entry.Amount--;
-                Dirty(uid, vendComponent);
-                UpdateUI((uid, vendComponent));
-            }
-
-            EjectItem((uid, vendComponent, ejectComponent), forceEject);
-        }
-        else
-        {
-            TryEjectVendorItem(uid, item.Type, item.ID, throwItem, user: null, vendComponent: vendComponent, ejectComponent: ejectComponent);
-        }
     }
 
     protected override void EjectItem(Entity<VendingMachineComponent?, VendingMachineEjectComponent?> entity, bool forceEject = false)
@@ -211,6 +91,62 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
     }
 
     [SubscribeLocalEvent]
+    private void OnVendingPrice(EntityUid uid, VendingMachineComponent component, ref PriceCalculationEvent args)
+    {
+        var price = 0.0;
+
+        foreach (var entry in component.Inventory.Values)
+        {
+            if (!ProtoMan.TryIndex<EntityPrototype>(entry.ID, out var proto))
+            {
+                Log.Error($"Unable to find entity prototype {entry.ID} on {ToPrettyString(uid)} vending.");
+                continue;
+            }
+
+            price += entry.Amount * _pricing.GetEstimatedPrice(proto);
+        }
+
+        args.Price += price;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnDamageChanged(EntityUid uid, VendingMachineComponent component, DamageChangedEvent args)
+    {
+        if (!args.DamageIncreased && component.Broken)
+        {
+            component.Broken = false;
+            Dirty(uid, component);
+            return;
+        }
+
+        if (!TryComp<VendingMachineDispenseOnHitComponent>(uid, out var dispenseOnHit))
+            return;
+
+        if (component.Broken || dispenseOnHit.CoolingDown || args.DamageDelta == null)
+            return;
+
+        if (!(args.DamageIncreased && args.DamageDelta.GetTotal() >= dispenseOnHit.Threshold) ||
+            !_random.Prob(dispenseOnHit.Chance)) return;
+
+        if (dispenseOnHit.NextDispenseDelay != null)
+        {
+            dispenseOnHit.NextDispenseTime = Timing.CurTime + dispenseOnHit.NextDispenseDelay.Value;
+        }
+
+        EjectRandom(uid, throwItem: true, forceEject: true, component);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnSelfDispense(EntityUid uid, VendingMachineComponent component, VendingMachineSelfDispenseEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        args.Handled = true;
+        EjectRandom(uid, throwItem: true, forceEject: false, component);
+    }
+
+    [SubscribeLocalEvent]
     private void OnPriceCalculation(EntityUid uid, VendingMachineRestockComponent component, ref PriceCalculationEvent args)
     {
         List<double> priceSets = new();
@@ -239,5 +175,69 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
     private void OnTryVocalize(Entity<VendingMachineComponent> ent, ref TryVocalizeEvent args)
     {
         args.Cancelled |= ent.Comp.Broken;
+    }
+
+    public void SetShooting(EntityUid uid, bool canShoot)
+    {
+        if (!HasComp<VendingMachineEjectComponent>(uid))
+            return;
+
+        if (canShoot)
+            EnsureComp<VendingMachineShootComponent>(uid);
+        else
+            RemComp<VendingMachineShootComponent>(uid);
+    }
+
+    /// <summary>
+    /// Sets the <see cref="VendingMachineComponent.Contraband"/> property of the vending machine.
+    /// </summary>
+    public void SetContraband(EntityUid uid, bool contraband, VendingMachineComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        component.Contraband = contraband;
+        Dirty(uid, component);
+    }
+
+    /// <summary>
+    /// Ejects a random item from the available stock. Will do nothing if the vending machine is empty.
+    /// </summary>
+    /// <param name="uid"></param>
+    /// <param name="throwItem">Whether to throw the item in a random direction after dispensing it.</param>
+    /// <param name="forceEject">Whether to skip the regular ejection checks and immediately dispense the item without animation.</param>
+    /// <param name="vendComponent"></param>
+    public void EjectRandom(EntityUid uid, bool throwItem, bool forceEject = false, VendingMachineComponent? vendComponent = null)
+    {
+        if (!Resolve(uid, ref vendComponent))
+            return;
+
+        if (!TryComp<VendingMachineEjectComponent>(uid, out var ejectComponent))
+            return;
+
+        var availableItems = GetAvailableInventory(uid, vendComponent);
+        if (availableItems.Count <= 0)
+            return;
+
+        var item = _random.Pick(availableItems);
+
+        if (forceEject)
+        {
+            ejectComponent.NextItemToEject = item.ID;
+            ejectComponent.ThrowNextItem = throwItem;
+            var entry = GetEntry(uid, item.ID, item.Type, vendComponent);
+            if (entry != null)
+            {
+                entry.Amount--;
+                Dirty(uid, vendComponent);
+                UpdateUI((uid, vendComponent));
+            }
+
+            EjectItem((uid, vendComponent, ejectComponent), forceEject);
+        }
+        else
+        {
+            TryEjectVendorItem(uid, item.Type, item.ID, throwItem, user: null, vendComponent: vendComponent, ejectComponent: ejectComponent);
+        }
     }
 }
