@@ -38,7 +38,7 @@ public sealed partial class VendingMachineContrabandWireAction : BaseToggleWireA
     {
         if (EntityManager.TryGetComponent(owner, out VendingMachineComponent? vending))
         {
-            _vendingMachineSystem.SetContraband(owner, !vending.Contraband, vending);
+            _vendingMachineSystem.SetContraband((owner, vending), !vending.Contraband);
         }
     }
 

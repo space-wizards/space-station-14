@@ -270,7 +270,7 @@ namespace Content.IntegrationTests.Tests
                 });
 
                 // Empty the inventory.
-                systemMachine.EjectRandom(machine, false, true, machineComponent);
+                systemMachine.EjectRandom((machine, machineComponent), false, true);
                 Assert.That(systemMachine.GetAvailableInventory(machine, machineComponent), Has.Count.EqualTo(0),
                     "Machine inventory is not empty after ejecting.");
 
