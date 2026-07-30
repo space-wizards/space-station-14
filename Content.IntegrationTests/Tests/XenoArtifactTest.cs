@@ -28,8 +28,7 @@ public sealed class XenoArtifactTest : GameTest
   components:
   - type: XenoArtifact
     isGenerationRequired: false
-    effectsTable: !type:NestedSelector
-      tableId: XenoArtifactEffectsDefaultTable
+    effectsWeights: XenoArtifactEffectsDefaultWeightedTable
 
 - type: entity
   id: {TestGenArtifactFlat}
@@ -47,8 +46,7 @@ public sealed class XenoArtifactTest : GameTest
     nodesPerSegmentLayer:
       min: 1
       max: 1
-    effectsTable: !type:NestedSelector
-      tableId: XenoArtifactEffectsDefaultTable
+    effectsWeights: XenoArtifactEffectsDefaultWeightedTable
 
 - type: entity
   id: {TestGenArtifactTall}
@@ -66,8 +64,7 @@ public sealed class XenoArtifactTest : GameTest
     nodesPerSegmentLayer:
       min: 1
       max: 1
-    effectsTable: !type:NestedSelector
-      tableId: XenoArtifactEffectsDefaultTable
+    effectsWeights: XenoArtifactEffectsDefaultWeightedTable
 
 - type: entity
   id: {TestGenArtifactFull}
@@ -84,8 +81,7 @@ public sealed class XenoArtifactTest : GameTest
     nodesPerSegmentLayer:
       min: 2
       max: 2
-    effectsTable: !type:NestedSelector
-      tableId: XenoArtifactEffectsDefaultTable
+    effectsWeights: XenoArtifactEffectsDefaultWeightedTable
 
 - type: entity
   id: {TestArtifactNode}
