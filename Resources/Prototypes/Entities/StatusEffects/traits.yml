@@ -28,3 +28,7 @@
   name: blink dyspraxia
   components:
   - type: BlinkDyspraxiaStatusEffect
+
+- type: entity
+  parent: [ MutedStatusEffectBase, TraitStatusEffectBase ]
+  id: TraitStatusEffectMuted
