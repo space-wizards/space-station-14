@@ -1,11 +1,9 @@
 using Content.Shared.CCVar;
-using Content.Shared.Tag;
 using Content.Shared.Wall;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Prototypes;
 
 namespace Content.Client.Wall.Systems;
 
@@ -18,12 +16,6 @@ public sealed partial class WallMountVisibilitySystem : EntitySystem
     [Dependency] private IOverlayManager _overlay = default!;
     [Dependency] private SharedMapSystem _map = default!;
     [Dependency] private SpriteSystem _sprite = default!;
-    [Dependency] private TagSystem _tag = default!;
-
-    /// <summary>
-    /// Tags that block visibility when present on the same tile.
-    /// </summary>
-    private static readonly ProtoId<TagPrototype>[] BlockingTags = ["Wall"];
 
     private WallMountVisibilityOverlay _overlayInstance = default!;
 
@@ -110,7 +102,7 @@ public sealed partial class WallMountVisibilitySystem : EntitySystem
         var enumerator = _map.GetAnchoredEntitiesEnumerator(grid.Owner, grid, tile);
         while (enumerator.MoveNext(out var anchored))
         {
-            if (!_tag.HasAnyTag(anchored.Value, BlockingTags))
+            if (!HasComp<WallComponent>(anchored.Value))
                 continue;
 
             return true;
