@@ -117,4 +117,6 @@
     actionTag: FakeMindShieldChangeling
     chameleonControllable: false
     isInnate: true
+    enabledPopup: changeling-fake-mindshield-enabled
+    disabledPopup: changeling-fake-mindshield-disabled
     action: ActionChangelingFakeMindshieldToggle
