@@ -29,6 +29,7 @@
             Librarian: [ 1, 1 ]
             ServiceWorker: [ 1, 1 ]
             Detective: [ 1, 2 ]
+            TramDriver: [ 1, 1 ]
             #engineering 9
             ChiefEngineer: [ 1, 1 ]
             AtmosphericTechnician: [ 3, 3 ]
