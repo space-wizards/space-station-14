@@ -22,14 +22,15 @@ public sealed partial class
     {
         base.Update(frameTime);
 
-        var q = EntityQueryEnumerator<SatiationDamageComponent>();
-        while (q.MoveNext(out var ent, out var comp))
+        var satiationDamageQuery = EntityQueryEnumerator<SatiationDamageComponent>();
+        while (satiationDamageQuery.MoveNext(out var ent, out var comp))
         {
             if (_mobState.IsDead(ent) ||
                 _timing.CurTime < comp.NextDamageTime)
                 continue;
 
             comp.NextDamageTime = _timing.CurTime + comp.Frequency;
+            DirtyField(ent, comp, nameof(SatiationDamageComponent.NextDamageTime));
 
             foreach (var (_, thresholds) in comp.Satiations)
             {
@@ -43,5 +44,6 @@ public sealed partial class
 
     protected override DamageSpecifier? DefaultValue() => null;
 
-    protected override Dictionary<ProtoId<SatiationTypePrototype>, SatiationThresholds<DamageSpecifier?>> GetThresholds(SatiationDamageComponent comp) => comp.Satiations;
+    protected override Dictionary<ProtoId<SatiationTypePrototype>, SatiationThresholds<DamageSpecifier?>> GetThresholds(
+        SatiationDamageComponent comp) => comp.Satiations;
 }

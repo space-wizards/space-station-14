@@ -8,7 +8,8 @@ namespace Content.Shared.Nutrition.Components;
 /// <summary>
 /// This component causes its entity to have movement speed modifiers applied based on the entity's current satiations.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(SatiationSpeedModifierSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true),
+ Access(typeof(SatiationSpeedModifierSystem))]
 public sealed partial class SatiationSpeedModifierComponent : Component
 {
     [DataField(required: true), AutoNetworkedField]

@@ -9,7 +9,7 @@ namespace Content.Shared.Nutrition.Components;
 /// A component which is basically just a collection of <see cref="Satiation"/>s keyed by their
 /// <see cref="SatiationTypePrototype"/>s.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 // Nothing should modify the dictionary once it's deserialized. Perhaps satiations can be dynamically
 // added and removed in the future, but not today.
 [Access(typeof(SatiationSystem))]

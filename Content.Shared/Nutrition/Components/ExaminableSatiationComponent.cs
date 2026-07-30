@@ -9,7 +9,7 @@ namespace Content.Shared.Nutrition.Components;
 /// Component which specifies what <see cref="ExaminableSatiationComponent"/> shows in examine descriptions.
 /// </summary>
 /// <seealso cref="ExaminableSatiationSystem"/>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 [Access(typeof(ExaminableSatiationSystem))]
 public sealed partial class ExaminableSatiationComponent : Component
 {

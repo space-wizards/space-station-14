@@ -10,7 +10,7 @@ namespace Content.Shared.Nutrition.Components;
 /// <summary>
 /// This component causes its entity to continuously take damage based on the entity's current satiation.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause,
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true), AutoGenerateComponentPause,
  Access(typeof(SatiationDamageSystem))]
 public sealed partial class SatiationDamageComponent : Component
 {

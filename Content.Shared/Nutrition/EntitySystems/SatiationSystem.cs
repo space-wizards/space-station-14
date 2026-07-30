@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared.Alert;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.Prototypes;
@@ -71,7 +70,7 @@ public sealed partial class SatiationSystem : EntitySystem
             SetAuthoritativeValue(entity, satiation, proto, value);
         }
 
-        Dirty(entity);
+        DirtyField(entity.AsNullable(), nameof(SatiationComponent.Satiations));
     }
 
     /// <summary>
@@ -185,7 +184,7 @@ public sealed partial class SatiationSystem : EntitySystem
         var updateEvent = new SatiationUpdateEvent(satiation.SatiationType);
         RaiseLocalEvent(entity, ref updateEvent);
 
-        Dirty(entity);
+        DirtyField(entity.AsNullable(), nameof(SatiationComponent.Satiations));
     }
 
     /// <remarks>
