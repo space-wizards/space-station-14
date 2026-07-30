@@ -45,16 +45,6 @@ namespace Content.Server.Power.EntitySystems
             });
         }
 
-        /// <summary>
-        /// ComponentStartup handler: force a dirty if our state doesn't match the client's default initial state.
-        /// </summary>
-        [SubscribeLocalEvent]
-        private void OnReceiverStartup(EntityUid uid, ApcPowerReceiverComponent component, ComponentStartup args)
-        {
-            if (component.NeedsPower || component.PowerDisabled)
-                Dirty(uid, component);
-        }
-
         [SubscribeLocalEvent]
         private void OnProviderShutdown(EntityUid uid, ApcPowerProviderComponent component, ComponentShutdown args)
         {

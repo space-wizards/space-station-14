@@ -2,6 +2,10 @@
 
 namespace Content.Shared.Power.Components;
 
+/// <summary>
+///     Attempts to link with a nearby <see cref="ApcPowerProviderComponent"/>s
+///     so that it can receive power from a <see cref="IApcNet"/>.
+/// </summary>
 [NetworkedComponent]
 public abstract partial class SharedApcPowerReceiverComponent : Component
 {
@@ -11,15 +15,18 @@ public abstract partial class SharedApcPowerReceiverComponent : Component
     /// <summary>
     ///     When false, causes this to appear powered even if not receiving power from an Apc.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    public virtual bool NeedsPower { get; set;}
+    [DataField]
+    public bool NeedsPower = true;
 
     /// <summary>
     ///     When true, causes this to never appear powered.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public virtual bool PowerDisabled { get; set; }
 
-    // Doesn't actually do anything on the client just here for shared code.
-    public abstract float Load { get; set; }
+    /// <summary>
+    ///     Amount of charge this needs from an APC per second to function.
+    /// </summary>
+    [DataField("powerLoad")]
+    public virtual float Load { get; set; }
 }
