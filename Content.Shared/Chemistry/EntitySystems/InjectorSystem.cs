@@ -32,7 +32,6 @@ namespace Content.Shared.Chemistry.EntitySystems;
 public sealed partial class InjectorSystem : EntitySystem
 {
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedForensicsSystem _forensics = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
@@ -56,7 +55,7 @@ public sealed partial class InjectorSystem : EntitySystem
     private void OnInjectorUse(Entity<InjectorComponent> injector, ref UseInHandEvent args)
     {
         if (args.Handled
-            || !_prototypeManager.Resolve(injector.Comp.ActiveModeProtoId, out var activeProto))
+            || !ProtoMan.Resolve(injector.Comp.ActiveModeProtoId, out var activeProto))
             return;
 
         if (activeProto.InjectOnUse) // Injectors that can't toggle transferAmounts will be used.
@@ -79,7 +78,7 @@ public sealed partial class InjectorSystem : EntitySystem
             // Are use using an injector capable of targeting a mob?
             if (injector.Comp.IgnoreMobs)
             {
-                _popup.PopupClient(Loc.GetString("injector-component-ignore-mobs"), args.Target.Value, args.User);
+                _popup.PopupEntity(Loc.GetString("injector-component-ignore-mobs"), args.Target.Value, args.User);
                 return;
             }
 
@@ -119,7 +118,7 @@ public sealed partial class InjectorSystem : EntitySystem
     private void AddVerbs(Entity<InjectorComponent> injector, ref GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract || args.Hands == null
-            || !_prototypeManager.Resolve(injector.Comp.ActiveModeProtoId, out var activeMode))
+            || !ProtoMan.Resolve(injector.Comp.ActiveModeProtoId, out var activeMode))
             return;
 
         var user = args.User;
@@ -139,7 +138,7 @@ public sealed partial class InjectorSystem : EntitySystem
                 Act = () =>
                 {
                     injector.Comp.CurrentTransferAmount = toggleAmount;
-                    _popup.PopupClient(Loc.GetString("comp-solution-transfer-set-amount", ("amount", toggleAmount)), user, user);
+                    _popup.PopupEntity(Loc.GetString("comp-solution-transfer-set-amount", ("amount", toggleAmount)), user, user);
                     Dirty(injector);
                 },
 
@@ -159,7 +158,7 @@ public sealed partial class InjectorSystem : EntitySystem
                     Act = () =>
                     {
                         injector.Comp.CurrentTransferAmount = amount;
-                        _popup.PopupClient(Loc.GetString("comp-solution-transfer-set-amount", ("amount", amount)), user, user);
+                        _popup.PopupEntity(Loc.GetString("comp-solution-transfer-set-amount", ("amount", amount)), user, user);
                         Dirty(injector);
                     },
 
@@ -214,11 +213,11 @@ public sealed partial class InjectorSystem : EntitySystem
             return true;
 
         if (!_solutionContainer.ResolveSolution(injector.Owner, injector.Comp.SolutionName, ref injector.Comp.Solution, out var injectorSolution)
-            || !_prototypeManager.Resolve(injector.Comp.ActiveModeProtoId, out var activeMode))
+            || !ProtoMan.Resolve(injector.Comp.ActiveModeProtoId, out var activeMode))
             return false;
 
         // Create a pop-up for the user.
-        _popup.PopupClient(Loc.GetString(activeMode.PopupUserAttempt), target, user);
+        _popup.PopupEntity(Loc.GetString(activeMode.PopupUserAttempt), target, user);
 
         if (user == target)
         {
@@ -270,7 +269,7 @@ public sealed partial class InjectorSystem : EntitySystem
         amount = FixedPoint2.Zero;
 
         if (!_solutionContainer.ResolveSolution(injector.Owner, injector.Comp.SolutionName, ref injector.Comp.Solution, out var injectorSolution)
-            || !_prototypeManager.Resolve(injector.Comp.ActiveModeProtoId, out var activeMode))
+            || !ProtoMan.Resolve(injector.Comp.ActiveModeProtoId, out var activeMode))
             return false;
 
         doAfterTime = activeMode.MobTime;
@@ -286,7 +285,7 @@ public sealed partial class InjectorSystem : EntitySystem
             // Check if we have anything to inject.
             if (injectorSolution.Volume == 0)
             {
-                _popup.PopupClient(Loc.GetString("injector-component-empty-message", ("injector", injector)), target, user);
+                _popup.PopupEntity(Loc.GetString("injector-component-empty-message", ("injector", injector)), target, user);
                 return false;
             }
 
@@ -339,7 +338,7 @@ public sealed partial class InjectorSystem : EntitySystem
     {
         doAfterTime = TimeSpan.Zero;
 
-        if (!_prototypeManager.Resolve(injector.Comp.ActiveModeProtoId, out var activeMode))
+        if (!ProtoMan.Resolve(injector.Comp.ActiveModeProtoId, out var activeMode))
             return false;
 
         // Check if the Injector has a draw time, but only when drawing.
@@ -349,19 +348,19 @@ public sealed partial class InjectorSystem : EntitySystem
         if (!_solutionContainer.ResolveSolution(injector.Owner, injector.Comp.SolutionName, ref injector.Comp.Solution, out var solution)
             || solution.AvailableVolume == 0)
         {
-            _popup.PopupClient(Loc.GetString("injector-component-cannot-toggle-draw-message"), user, user);
+            _popup.PopupEntity(Loc.GetString("injector-component-cannot-toggle-draw-message"), user, user);
             return false; // If already full, fail drawing.
         }
 
         if (!_solutionContainer.TryGetDrawableSolution(target, out _, out var drawableSol))
         {
-            _popup.PopupClient(Loc.GetString("injector-component-cannot-draw-message", ("target", Identity.Entity(target, EntityManager))), injector, user);
+            _popup.PopupEntity(Loc.GetString("injector-component-cannot-draw-message", ("target", Identity.Entity(target, EntityManager))), injector, user);
             return false;
         }
 
         if (drawableSol.Volume == 0)
         {
-            _popup.PopupClient(Loc.GetString("injector-component-target-is-empty-message", ("target", Identity.Entity(target, EntityManager))), injector, user);
+            _popup.PopupEntity(Loc.GetString("injector-component-target-is-empty-message", ("target", Identity.Entity(target, EntityManager))), injector, user);
             return false;
         }
 
@@ -381,7 +380,7 @@ public sealed partial class InjectorSystem : EntitySystem
     /// <exception cref="ArgumentOutOfRangeException">The injector has a different <see cref="InjectorBehavior"/>.</exception>
     private bool TryUseInjector(Entity<InjectorComponent> injector, EntityUid user, EntityUid target)
     {
-        if (!_prototypeManager.Resolve(injector.Comp.ActiveModeProtoId, out var activeMode))
+        if (!ProtoMan.Resolve(injector.Comp.ActiveModeProtoId, out var activeMode))
             return false;
 
         var isOpenOrIgnored = injector.Comp.IgnoreClosed || !_openable.IsClosed(target);
@@ -414,7 +413,7 @@ public sealed partial class InjectorSystem : EntitySystem
                     return TryDraw(injector, user, target, drawableSolution.Value);
 
                 msg = target == user ? "injector-component-cannot-draw-message-self" : "injector-component-cannot-draw-message";
-                _popup.PopupClient(Loc.GetString(msg, ("target", Identity.Entity(target, EntityManager))), injector, user);
+                _popup.PopupEntity(Loc.GetString(msg, ("target", Identity.Entity(target, EntityManager))), injector, user);
                 break;
             }
             case InjectorBehavior.Dynamic:
@@ -435,7 +434,7 @@ public sealed partial class InjectorSystem : EntitySystem
                 throw new ArgumentOutOfRangeException();
         }
 
-        _popup.PopupClient(Loc.GetString(msg, ("target", Identity.Entity(target, EntityManager))), injector, user);
+        _popup.PopupEntity(Loc.GetString(msg, ("target", Identity.Entity(target, EntityManager))), injector, user);
         return false;
     }
 
@@ -456,11 +455,11 @@ public sealed partial class InjectorSystem : EntitySystem
                 out var injectorSolution) || injectorSolution.Volume == 0)
         {
             // If empty, show a popup.
-            _popup.PopupClient(Loc.GetString("injector-component-empty-message", ("injector", injector)), user, user);
+            _popup.PopupEntity(Loc.GetString("injector-component-empty-message", ("injector", injector)), user, user);
             return false;
         }
 
-        if (!_prototypeManager.Resolve(injector.Comp.ActiveModeProtoId, out var activeMode))
+        if (!ProtoMan.Resolve(injector.Comp.ActiveModeProtoId, out var activeMode))
             return false;
 
         var selfEv = new SelfBeforeInjectEvent(user, injector, target);
@@ -470,7 +469,7 @@ public sealed partial class InjectorSystem : EntitySystem
         {
             // Clowns will now also fumble Syringes.
             if (selfEv.OverrideMessage != null)
-                _popup.PopupPredicted(selfEv.OverrideMessage, user, user);
+                _popup.PopupEntity(selfEv.OverrideMessage, user, user);
             return true;
         }
 
@@ -484,7 +483,7 @@ public sealed partial class InjectorSystem : EntitySystem
         {
             var userMessage = Loc.GetString("injector-component-blocked-user");
             var otherMessage = Loc.GetString("injector-component-blocked-other", ("target", target), ("user", user));
-            _popup.PopupPredicted(userMessage, otherMessage, target, user, PopupType.SmallCaution);
+            _popup.PopupEntity(userMessage, otherMessage, target, user, PopupType.SmallCaution);
             return true;
         }
 
@@ -495,7 +494,7 @@ public sealed partial class InjectorSystem : EntitySystem
         if (realTransferAmount <= 0)
         {
             LocId msg = target == user ? "injector-component-target-already-full-message-self" : "injector-component-target-already-full-message";
-            _popup.PopupClient(
+            _popup.PopupEntity(
                 Loc.GetString(msg,
                     ("target", Identity.Entity(target, EntityManager))),
                 injector.Owner,
@@ -524,11 +523,11 @@ public sealed partial class InjectorSystem : EntitySystem
         else if (ev.OverrideMessage != null)
             msgSuccess = ev.OverrideMessage;
 
-        _popup.PopupClient(Loc.GetString(msgSuccess, ("amount", removedSolution.Volume), ("target", Identity.Entity(target, EntityManager))), target, user);
+        _popup.PopupEntity(Loc.GetString(msgSuccess, ("amount", removedSolution.Volume), ("target", Identity.Entity(target, EntityManager))), target, user);
 
         // it is IMPERATIVE that when an injector is instant, that it has a pop-up.
         if (activeMode.InjectPopupTarget != null && target != user)
-            _popup.PopupClient(Loc.GetString(activeMode.InjectPopupTarget), target, target);
+            _popup.PopupEntity(Loc.GetString(activeMode.InjectPopupTarget), target, target);
 
         // Some injectors like hyposprays have sound, some like syringes have not.
         if (activeMode.InjectSound != null)
@@ -553,7 +552,7 @@ public sealed partial class InjectorSystem : EntitySystem
     {
         if (!_solutionContainer.ResolveSolution(injector.Owner, injector.Comp.SolutionName, ref injector.Comp.Solution, out var solution) || solution.AvailableVolume == 0)
         {
-            _popup.PopupClient("injector-component-cannot-toggle-draw-message", user, user);
+            _popup.PopupEntity("injector-component-cannot-toggle-draw-message", user, user);
             return false;
         }
 
@@ -576,7 +575,7 @@ public sealed partial class InjectorSystem : EntitySystem
         {
             LocId msg = target.Owner == user ? "injector-component-target-is-empty-message-self" : "injector-component-target-is-empty-message";
             var targetIdentity = Identity.Entity(target, EntityManager);
-            _popup.PopupClient(Loc.GetString(msg, ("target", targetIdentity)), injector.Owner, user);
+            _popup.PopupEntity(Loc.GetString(msg, ("target", targetIdentity)), injector.Owner, user);
             return false;
         }
 
@@ -600,7 +599,7 @@ public sealed partial class InjectorSystem : EntitySystem
 
         LocId msgSuccess = target.Owner == user ? "injector-component-draw-success-message-self" : "injector-component-draw-success-message";
         var targetIdentitySuccess = Identity.Entity(target, EntityManager);
-        _popup.PopupClient(
+        _popup.PopupEntity(
             Loc.GetString(msgSuccess, ("amount", removedSolution.Volume), ("target", targetIdentitySuccess)),
             target,
             user);
@@ -632,7 +631,7 @@ public sealed partial class InjectorSystem : EntitySystem
         LocId msg = target.Owner == user ? "injector-component-draw-success-message-self" : "injector-component-draw-success-message";
         var targetIdentity = Identity.Entity(target, EntityManager);
         var finalMessage = Loc.GetString(msg, ("amount", transferAmount), ("target", targetIdentity));
-        _popup.PopupClient(finalMessage, target, user);
+        _popup.PopupEntity(finalMessage, target, user);
 
         AfterDraw(injector, user, target);
     }
@@ -656,13 +655,13 @@ public sealed partial class InjectorSystem : EntitySystem
             || solution.Volume != 0)
             return;
 
-        if (!_prototypeManager.Resolve(injector.Comp.ActiveModeProtoId, out var activeMode)
+        if (!ProtoMan.Resolve(injector.Comp.ActiveModeProtoId, out var activeMode)
             || activeMode.Behavior.HasFlag(InjectorBehavior.Dynamic))
             return;
 
         foreach (var mode in injector.Comp.AllowedModes)
         {
-            if (!_prototypeManager.Resolve(mode, out var proto)
+            if (!ProtoMan.Resolve(mode, out var proto)
                 || !proto.Behavior.HasFlag(InjectorBehavior.Draw))
                 continue;
 
@@ -687,13 +686,13 @@ public sealed partial class InjectorSystem : EntitySystem
             || solution.AvailableVolume != 0)
             return;
 
-        if (!_prototypeManager.Resolve(injector.Comp.ActiveModeProtoId, out var activeMode)
+        if (!ProtoMan.Resolve(injector.Comp.ActiveModeProtoId, out var activeMode)
             || activeMode.Behavior.HasFlag(InjectorBehavior.Dynamic))
             return;
 
         foreach (var mode in injector.Comp.AllowedModes)
         {
-            if (!_prototypeManager.Resolve(mode, out var proto)
+            if (!ProtoMan.Resolve(mode, out var proto)
                 || !proto.Behavior.HasFlag(InjectorBehavior.Inject))
                 continue;
 
@@ -720,7 +719,7 @@ public sealed partial class InjectorSystem : EntitySystem
 
         injector.Comp.ActiveModeProtoId = injector.Comp.AllowedModes[index];
 
-        if (!_prototypeManager.Resolve(injector.Comp.ActiveModeProtoId, out var newMode))
+        if (!ProtoMan.Resolve(injector.Comp.ActiveModeProtoId, out var newMode))
             return;
 
         Dirty(injector);
@@ -730,7 +729,7 @@ public sealed partial class InjectorSystem : EntitySystem
 
         var modeName = Loc.GetString(newMode.Name);
         var message = Loc.GetString("injector-component-mode-changed-text", ("mode", modeName));
-        _popup.PopupClient(message, user, user);
+        _popup.PopupEntity(message, user, user);
     }
 
     /// <summary>
@@ -741,14 +740,14 @@ public sealed partial class InjectorSystem : EntitySystem
     [PublicAPI]
     public void ToggleMode(Entity<InjectorComponent> injector, EntityUid user)
     {
-        if (!_prototypeManager.Resolve(injector.Comp.ActiveModeProtoId, out var activeProto))
+        if (!ProtoMan.Resolve(injector.Comp.ActiveModeProtoId, out var activeProto))
             return;
 
         string? errorMessage = null;
 
         foreach (var allowedMode in injector.Comp.AllowedModes)
         {
-            if (!_prototypeManager.Resolve(allowedMode, out var proto)
+            if (!ProtoMan.Resolve(allowedMode, out var proto)
                 || proto.Behavior.HasFlag(activeProto.Behavior)
                 || !_solutionContainer.ResolveSolution(injector.Owner, injector.Comp.SolutionName, ref injector.Comp.Solution, out var solution))
                 continue;
@@ -769,7 +768,7 @@ public sealed partial class InjectorSystem : EntitySystem
             return;
         }
         if (errorMessage != null)
-            _popup.PopupClient(Loc.GetString(errorMessage), user, user);
+            _popup.PopupEntity(Loc.GetString(errorMessage), user, user);
     }
     #endregion Mode Toggling
 }
