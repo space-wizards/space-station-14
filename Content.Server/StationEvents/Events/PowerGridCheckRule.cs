@@ -41,7 +41,7 @@ namespace Content.Server.StationEvents.Events
                 if (!apc.MainBreakerEnabled)
                     continue;
 
-                if (!HasComp<BecomesStationComponent>(transform.GridUid))
+                if (!TryComp<GridEventEligibleComponent>(transform.GridUid, out var gridEventEligibleComp) || !gridEventEligibleComp.PowerGridChecks)
                     continue;
 
                 if (CompOrNull<StationMemberComponent>(transform.GridUid)?.Station != chosenStation)
@@ -90,7 +90,7 @@ namespace Content.Server.StationEvents.Events
                 return null;
             }
 
-            if (!HasComp<BecomesStationComponent>(xform.GridUid))
+            if (!TryComp<GridEventEligibleComponent>(xform.GridUid, out var gridEventEligibleComp) || !gridEventEligibleComp.PowerGridChecks)
             {
                 return null;
             }
