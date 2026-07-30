@@ -79,6 +79,12 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnFakeMindshieldImplantRemoved(Entity<FakeMindShieldComponent> ent, ref ImplantRemovedEvent args)
     {
+        // when we reinject the mindshield, the action will be disabled (since its a fresh action)
+        // which would cause it to be desynced with the state of the mindshield
+        // so we just disable it here
+        ent.Comp.IsEnabled = false;
+        Dirty(ent);
+
         _mindShields.RefreshMindshieldStatus(args.Implanted);
     }
 
