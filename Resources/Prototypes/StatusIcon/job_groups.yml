@@ -175,6 +175,7 @@
   - JobIconSyndicateCorpsman
   - JobIconSyndicateOperative
   - JobIconWizard
+  - JobIconSus
 
 - type: jobIconGroup
   id: AdminIconGroup
