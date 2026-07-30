@@ -369,8 +369,8 @@
 - type: Tag
   id: CoordinatesDisk # Storage whitelist: DiskCase
 
-- type: Tag # designed to let corgis wear things; at present only for SmartCorgi.  View PR 33737 on upstream for more dog wearables
-  id: CorgiWearable # Used by inventoryTemplate:SmartCorgi to whitelist clothes slots outerClothing, head, back.
+- type: Tag
+  id: CorgiWearable # inventory_template whitelist tag: lets corgis wear a clothing item with this tag in the inventory slot the tag is used in.
 
 - type: Tag #Ohioans die happy
   id: Corn  # CargoBounty: BountyCorn
@@ -585,6 +585,9 @@
 
 - type: Tag
   id: FirelockElectronics # ConstructionGraph: Firelock
+
+- type: Tag
+  id: FitInTeleporterConsole
 
 - type: Tag
   id: Flare # Storage whitelist: BaseClothingBeltEngineering
@@ -1085,8 +1088,8 @@
   id: PetOnly # Used by human, diona, arachnid InventoryTemplate to blacklist back slot items.
 
 - type: Tag
-  id: PetWearable # Used by hamster, kangaroo, pet, petAdvanced, SmartCorgi InventoryTemplate to whitelist mask slots.
-                  # SmartCorgi and petAdvanced use it for eyes slots. petAdvanced uses it for head slot.
+  id: PetWearable # Used by hamster, kangaroo, pet, petAdvanced, InventoryTemplate to whitelist mask slots.
+                  # petAdvanced uses it for eyes and head slot.
 
 - type: Tag
   id: Pickaxe # GatherableComponent whitelist on WallRock.
@@ -1521,10 +1524,6 @@
   id: VoiceTrigger # ConstructionGraph: Vim
 
 ## W ##
-
-- type: Tag
-  id: Wall # Tagged entity is a wall. Several systems and several targeting whitelists (BaseMobDragon) care about this.
-           # .cs: SharedNavMapSystem, WallmountCondition, TileWallsCommand, DungeonJob
 
 - type: Tag
   id: WallmountGeneratorAPUElectronics # ConstructionGraph: WallmountGenerator
