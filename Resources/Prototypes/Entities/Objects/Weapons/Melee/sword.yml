@@ -151,7 +151,7 @@
       sprite: Objects/Weapons/Melee/energykatana_storage_64x.rsi #Done in 64x64 because it looks way too puny in 32x32
     shape:
     - 0,0,0,3
-  - type: EnergyKatana
+  - type: BindItemOnEquip
   - type: ActionGrant
     actions:
     - ActionEnergyKatanaDash
