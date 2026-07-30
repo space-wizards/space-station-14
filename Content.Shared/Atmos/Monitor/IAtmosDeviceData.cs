@@ -11,5 +11,5 @@ public partial interface IAtmosDeviceData
 
     bool IgnoreAlarms { get; set; }
 
-    void RaisePayload(EntityUid uid, string address, SharedDeviceNetworkSystem deviceNetSys);
+    void RaisePayload(EntityUid uid, string address, DeviceNetworkSystem deviceNetSys);
 }

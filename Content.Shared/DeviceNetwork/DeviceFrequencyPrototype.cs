@@ -1,5 +1,4 @@
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.DeviceNetwork;
 
@@ -21,5 +20,4 @@ public sealed partial class DeviceFrequencyPrototype : IPrototype
     /// </summary>
     [DataField("name")]
     public string? Name;
-
 }

@@ -39,7 +39,7 @@ public partial interface IRoutedNetworkPayload : INetworkPayload
     /// <summary>
     ///
     /// </summary>
-    void Reroute(EntityUid sender, string? address, uint? frequency, int? network, SharedDeviceNetworkSystem system);
+    void Reroute(EntityUid sender, string? address, uint? frequency, int? network, DeviceNetworkSystem system);
 }
 
 /// <summary>
@@ -75,7 +75,7 @@ public partial record struct RoutedNetworkPayload<T> : IRoutedNetworkPayload whe
         string? address,
         uint? frequency,
         int? network,
-        SharedDeviceNetworkSystem system)
+        DeviceNetworkSystem system)
     {
         // Things sometimes take a **weird route** when it comes to type parameters.
         system.QueuePacket(

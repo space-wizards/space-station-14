@@ -11,12 +11,14 @@ public sealed partial class StationLimitedNetworkSystem : EntitySystem
 {
     [Dependency] private SharedStationSystem _stationSystem = default!;
 
+    [Dependency] private EntityQuery<StationLimitedNetworkComponent> _stationLimitedQuery = default!;
+
     /// <summary>
     /// Sets the station id the device is limited to.
     /// </summary>
     public void SetStation(Entity<StationLimitedNetworkComponent?> ent, EntityUid? stationId)
     {
-        if (!Resolve(ent.Owner, ref ent.Comp))
+        if (!_stationLimitedQuery.Resolve(ent.Owner, ref ent.Comp))
             return;
 
         ent.Comp.StationId = stationId;
@@ -27,7 +29,8 @@ public sealed partial class StationLimitedNetworkSystem : EntitySystem
     /// </summary>
     public bool TrySetStationId(Entity<StationLimitedNetworkComponent?> ent)
     {
-        if (!Resolve(ent.Owner, ref ent.Comp) || !Transform(ent).GridUid.HasValue)
+        if (!_stationLimitedQuery.Resolve(ent.Owner, ref ent.Comp)
+            || !Transform(ent).GridUid.HasValue)
             return false;
 
         ent.Comp.StationId = _stationSystem.GetOwningStation(ent);
@@ -68,7 +71,7 @@ public sealed partial class StationLimitedNetworkSystem : EntitySystem
         if (!receiverStationId.HasValue)
             return false;
 
-        if (!Resolve(sender.Owner, ref sender.Comp, false))
+        if (!_stationLimitedQuery.Resolve(sender.Owner, ref sender.Comp, false))
             return allowNonStationPackets;
 
         if (!sender.Comp.StationId.HasValue)

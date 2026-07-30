@@ -16,7 +16,7 @@ public partial record struct AtmosMonitorDataPayload : INetworkPayload
 [Serializable, NetSerializable]
 public sealed partial class AtmosMonitorData : BaseAtmosDeviceData
 {
-    public override void RaisePayload(EntityUid uid, string address, SharedDeviceNetworkSystem deviceNetSys)
+    public override void RaisePayload(EntityUid uid, string address, DeviceNetworkSystem deviceNetSys)
     {
         var payload = new AtmosMonitorDataPayload { Data = this };
         deviceNetSys.QueuePacket(uid, address, ref payload);

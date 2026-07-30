@@ -1,5 +1,4 @@
 ﻿using Content.Shared.Database;
-using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -10,22 +9,15 @@ namespace Content.Shared.DeviceNetwork.Systems;
 
 public sealed partial class NetworkConfiguratorSystem
 {
-    private void InitializeVerb()
-    {
-        SubscribeLocalEvent<NetworkConfiguratorComponent, AfterInteractEvent>(AfterInteract); //TODO: Replace with utility verb?
-        SubscribeLocalEvent<NetworkConfiguratorComponent, ExaminedEvent>(DoExamine);
-
-        SubscribeLocalEvent<NetworkConfiguratorComponent, GetVerbsEvent<UtilityVerb>>(OnAddInteractVerb);
-        SubscribeLocalEvent<DeviceNetworkComponent, GetVerbsEvent<AlternativeVerb>>(OnAddAlternativeSaveDeviceVerb);
-        SubscribeLocalEvent<NetworkConfiguratorComponent, GetVerbsEvent<AlternativeVerb>>(OnAddSwitchModeVerb);
-    }
-
+    [SubscribeLocalEvent]
     private void DoExamine(Entity<NetworkConfiguratorComponent> ent, ref ExaminedEvent args)
     {
         var mode = ent.Comp.LinkModeActive ? "network-configurator-examine-mode-link" : "network-configurator-examine-mode-list";
         args.PushMarkup(Loc.GetString("network-configurator-examine-current-mode", ("mode", Loc.GetString(mode))));
     }
 
+    // TODO: Replace with utility verb?
+    [SubscribeLocalEvent]
     private void AfterInteract(Entity<NetworkConfiguratorComponent> ent, ref AfterInteractEvent args)
     {
         OnUsed(ent, args.Target, args.User, args.CanReach);
@@ -47,7 +39,7 @@ public sealed partial class NetworkConfiguratorSystem
             return;
         }
 
-        if (!HasComp<DeviceListComponent>(target))
+        if (!_deviceListQuery.HasComp(target))
         {
             TryAddNetworkDevice(configurator.AsNullable(), target.Value, user);
             return;
@@ -58,12 +50,12 @@ public sealed partial class NetworkConfiguratorSystem
 
     private void DetermineMode(Entity<NetworkConfiguratorComponent> configurator, EntityUid? target, EntityUid userUid)
     {
-        var hasLinking = HasComp<DeviceLinkSinkComponent>(target) || HasComp<DeviceLinkSourceComponent>(target);
+        var hasLinking = _deviceLinkSinkQuery.HasComp(target) || _deviceLinkSourceQuery.HasComp(target);
 
-        if (hasLinking && HasComp<DeviceListComponent>(target) || hasLinking == configurator.Comp.LinkModeActive)
+        if (hasLinking && _deviceListQuery.HasComp(target) || hasLinking == configurator.Comp.LinkModeActive)
             return;
 
-        var hasNetworking = HasComp<DeviceNetworkComponent>(target);
+        var hasNetworking = _deviceNetworkQuery.HasComp(target);
         if (hasNetworking)
             SetMode(configurator, userUid, false);
         else if (hasLinking)
@@ -73,6 +65,7 @@ public sealed partial class NetworkConfiguratorSystem
     /// <summary>
     /// Adds the interaction verb which is either configuring device lists or saving a device onto the configurator
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnAddInteractVerb(Entity<NetworkConfiguratorComponent> ent, ref GetVerbsEvent<UtilityVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract || !args.Using.HasValue)
@@ -82,19 +75,19 @@ public sealed partial class NetworkConfiguratorSystem
         var verb = new UtilityVerb
         {
             Act = () => OnUsed(ent, verbArgs.Target, verbArgs.User),
-            Impact = LogImpact.Low
+            Impact = LogImpact.Low,
         };
 
-        if (ent.Comp.LinkModeActive && (HasComp<DeviceLinkSinkComponent>(args.Target) || HasComp<DeviceLinkSourceComponent>(args.Target)))
+        if (ent.Comp.LinkModeActive && (_deviceLinkSinkQuery.HasComp(args.Target) || _deviceLinkSourceQuery.HasComp(args.Target)))
         {
             var linkStarted = ent.Comp.ActiveDeviceLink.HasValue;
             verb.Text = Loc.GetString(linkStarted ? "network-configurator-link" : "network-configurator-start-link");
             verb.Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/in.svg.192dpi.png"));
             args.Verbs.Add(verb);
         }
-        else if (HasComp<DeviceNetworkComponent>(args.Target))
+        else if (_deviceNetworkQuery.HasComp(args.Target))
         {
-            var isDeviceList = HasComp<DeviceListComponent>(args.Target);
+            var isDeviceList = _deviceListQuery.HasComp(args.Target);
             verb.Text = Loc.GetString(isDeviceList ? "network-configurator-configure" : "network-configurator-save-device");
             verb.Icon = isDeviceList
                 ? new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/settings.svg.192dpi.png"))
@@ -109,14 +102,17 @@ public sealed partial class NetworkConfiguratorSystem
     /// Allows alt clicking entities with a network configurator that would otherwise trigger a different action like entities
     /// with a <see cref="DeviceListComponent"/>
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnAddAlternativeSaveDeviceVerb(Entity<DeviceNetworkComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || !args.Using.HasValue
-            || !TryComp<NetworkConfiguratorComponent>(args.Using.Value, out var configurator))
+        if (!args.CanAccess
+            || !args.CanInteract
+            || !args.Using.HasValue
+            || !_networkConfigQuery.TryComp(args.Using.Value, out var configurator))
             return;
 
         var verbArgs = args;
-        if (!configurator.LinkModeActive && HasComp<DeviceListComponent>(args.Target))
+        if (!configurator.LinkModeActive && _deviceListQuery.HasComp(args.Target))
         {
             AlternativeVerb verb = new()
             {
@@ -129,23 +125,29 @@ public sealed partial class NetworkConfiguratorSystem
             return;
         }
 
-        if (configurator is { LinkModeActive: true, ActiveDeviceLink: not null }
-            && (HasComp<DeviceLinkSinkComponent>(args.Target) || HasComp<DeviceLinkSourceComponent>(args.Target)))
+        if (configurator is not { LinkModeActive: true, ActiveDeviceLink: not null }
+            || !_deviceLinkSinkQuery.HasComp(args.Target)
+            && !_deviceLinkSourceQuery.HasComp(args.Target))
+            return;
         {
             AlternativeVerb verb = new()
             {
                 Text = Loc.GetString("network-configurator-link-defaults"),
                 Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/in.svg.192dpi.png")),
-                Act = () => TryLinkDefaults(verbArgs.Using.Value, configurator, verbArgs.Target, verbArgs.User),
+                Act = () => TryLinkDefaults((verbArgs.Using.Value, configurator), verbArgs.Target, verbArgs.User),
                 Impact = LogImpact.Low,
             };
             args.Verbs.Add(verb);
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnAddSwitchModeVerb(Entity<NetworkConfiguratorComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || !args.Using.HasValue || !HasComp<NetworkConfiguratorComponent>(args.Target))
+        if (!args.CanAccess
+            || !args.CanInteract
+            || !args.Using.HasValue
+            || !_networkConfigQuery.HasComp(args.Target))
             return;
 
         var verbArgs = args;

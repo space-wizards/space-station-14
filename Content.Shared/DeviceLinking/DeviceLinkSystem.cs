@@ -7,6 +7,7 @@ using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Popups;
+using Robust.Shared.Collections;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -23,6 +24,8 @@ public sealed partial class DeviceLinkSystem : EntitySystem
     [Dependency] private IGameTiming _gameTiming = default!;
 
     [Dependency] private EntityQuery<DeviceLinkSinkComponent> _deviceLinkSinkQuery = default!;
+    [Dependency] private EntityQuery<DeviceLinkSourceComponent> _deviceLinkSourceQuery = default!;
+    [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceNetworkQuery = default!;
 
     [SubscribeLocalEvent]
     private void OnGetState(Entity<DeviceLinkSourceComponent> ent, ref ComponentGetState args)
@@ -77,11 +80,11 @@ public sealed partial class DeviceLinkSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnSourceStartup(Entity<DeviceLinkSourceComponent> source, ref ComponentStartup args)
     {
-        List<EntityUid> invalidSinks = new();
-        List<(string, string)> invalidLinks = new();
+        ValueList<EntityUid> invalidSinks = new(source.Comp.LinkedPorts.Count);
+        ValueList<(string, string)> invalidLinks = new(source.Comp.LinkedPorts.Count);
         foreach (var (sink, links)  in source.Comp.LinkedPorts)
         {
-            if (!TryComp(sink, out DeviceLinkSinkComponent? sinkComponent))
+            if (!_deviceLinkSinkQuery.TryComp(sink, out var sinkComponent))
             {
                 invalidSinks.Add(sink);
                 continue;
@@ -117,6 +120,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
             source.Comp.LinkedPorts.Remove(sink);
             Log.Warning($"Device source {ToPrettyString(source)} contains invalid sink: {ToPrettyString(sink)}");
         }
+
         Dirty(source);
     }
     #endregion
@@ -144,7 +148,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
     {
         foreach (var sourceUid in sink.Comp.LinkedSources)
         {
-            if (TryComp(sourceUid, out DeviceLinkSourceComponent? source))
+            if (_deviceLinkSourceQuery.TryComp(sourceUid, out var source))
                 RemoveSinkFromSourceInternal((sourceUid, source), sink);
             else
                 Log.Error($"Device sink {ToPrettyString(sink)} source list contains invalid entity: {ToPrettyString(sourceUid)}");
@@ -201,7 +205,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
     /// <returns>A list of source port prototypes</returns>
     public List<SourcePortPrototype> GetSourcePorts(Entity<DeviceLinkSourceComponent?> source)
     {
-        if (!Resolve(source.Owner, ref source.Comp))
+        if (!_deviceLinkSourceQuery.Resolve(source.Owner, ref source.Comp))
             return new List<SourcePortPrototype>();
 
         var sourcePorts = new List<SourcePortPrototype>();
@@ -224,7 +228,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
     /// <returns>A list of sink port prototypes</returns>
     public List<SinkPortPrototype> GetSinkPorts(Entity<DeviceLinkSinkComponent?> sink)
     {
-        if (!Resolve(sink.Owner, ref sink.Comp))
+        if (!_deviceLinkSinkQuery.Resolve(sink.Owner, ref sink.Comp))
             return new List<SinkPortPrototype>();
 
         var sinkPorts = new List<SinkPortPrototype>();
@@ -255,7 +259,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
     /// <returns>A list of sink and source port ids that are linked together</returns>
     public HashSet<(ProtoId<SourcePortPrototype> source, ProtoId<SinkPortPrototype> sink)> GetLinks(Entity<DeviceLinkSourceComponent?> source, EntityUid sinkUid)
     {
-        if (!Resolve(source.Owner, ref source.Comp) || !source.Comp.LinkedPorts.TryGetValue(sinkUid, out var links))
+        if (!_deviceLinkSourceQuery.Resolve(source.Owner, ref source.Comp) || !source.Comp.LinkedPorts.TryGetValue(sinkUid, out var links))
             return new HashSet<(ProtoId<SourcePortPrototype>, ProtoId<SinkPortPrototype>)>();
 
         return links;
@@ -266,7 +270,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
     /// </summary>
     public HashSet<EntityUid> GetLinkedSinks(Entity<DeviceLinkSourceComponent?> source, ProtoId<SourcePortPrototype> port)
     {
-        if (!Resolve(source, ref source.Comp) || !source.Comp.Outputs.TryGetValue(port, out var linked))
+        if (!_deviceLinkSourceQuery.Resolve(source, ref source.Comp) || !source.Comp.Outputs.TryGetValue(port, out var linked))
             return new HashSet<EntityUid>(); // not a source or not linked
 
         return new HashSet<EntityUid>(linked); // clone to prevent modifying the original
@@ -302,7 +306,8 @@ public sealed partial class DeviceLinkSystem : EntitySystem
         Entity<DeviceLinkSourceComponent?> source,
         Entity<DeviceLinkSinkComponent?> sink)
     {
-        if (!Resolve(source.Owner, ref source.Comp) || !Resolve(sink.Owner, ref sink.Comp))
+        if (!_deviceLinkSourceQuery.Resolve(source.Owner, ref source.Comp, false)
+            || !_deviceLinkSinkQuery.Resolve(sink.Owner, ref sink.Comp, false))
             return;
 
         if (userId != null)
@@ -329,7 +334,8 @@ public sealed partial class DeviceLinkSystem : EntitySystem
         Entity<DeviceLinkSinkComponent?> sink,
         List<(string source, string sink)> links)
     {
-        if (!Resolve(source.Owner, ref source.Comp) || !Resolve(sink.Owner, ref sink.Comp))
+        if (!_deviceLinkSourceQuery.Resolve(source.Owner, ref source.Comp, false)
+            || !_deviceLinkSinkQuery.Resolve(sink.Owner, ref sink.Comp, false))
             return;
 
         if (!InRange(source, sink, source.Comp.Range))
@@ -370,7 +376,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
     /// </summary>
     public void RemoveAllFromSink(Entity<DeviceLinkSinkComponent?> sink)
     {
-        if (!Resolve(sink.Owner, ref sink.Comp))
+        if (!_deviceLinkSinkQuery.Resolve(sink.Owner, ref sink.Comp))
             return;
 
         foreach (var sourceUid in sink.Comp.LinkedSources)
@@ -386,7 +392,8 @@ public sealed partial class DeviceLinkSystem : EntitySystem
         Entity<DeviceLinkSourceComponent?> source,
         Entity<DeviceLinkSinkComponent?> sink)
     {
-        if (Resolve(source.Owner, ref source.Comp, false) && Resolve(sink.Owner, ref sink.Comp, false))
+        if (_deviceLinkSourceQuery.Resolve(source.Owner, ref source.Comp, false)
+            && _deviceLinkSinkQuery.Resolve(sink.Owner, ref sink.Comp, false))
         {
             RemoveSinkFromSourceInternal(source!, sink!);
             return;
@@ -422,8 +429,10 @@ public sealed partial class DeviceLinkSystem : EntitySystem
         {
             foreach (var (sourcePort, sinkPort) in ports)
             {
-                RaiseLocalEvent(source, new PortDisconnectedEvent(sourcePort));
-                RaiseLocalEvent(sink, new PortDisconnectedEvent(sinkPort));
+                var sourceEv = new PortDisconnectedEvent(sourcePort);
+                var sinkEv = new PortDisconnectedEvent(sinkPort);
+                RaiseLocalEvent(source, ref sourceEv);
+                RaiseLocalEvent(sink, ref sinkEv);
             }
         }
 
@@ -449,7 +458,8 @@ public sealed partial class DeviceLinkSystem : EntitySystem
         string sourcePort,
         string sinkPort)
     {
-        if (!Resolve(source.Owner, ref source.Comp) || !Resolve(sink.Owner, ref sink.Comp))
+        if (!_deviceLinkSourceQuery.Resolve(source.Owner, ref source.Comp)
+            || !_deviceLinkSinkQuery.Resolve(sink.Owner, ref sink.Comp))
             return false;
 
         var outputs = source.Comp.Outputs.GetOrNew(sourcePort);
@@ -462,8 +472,10 @@ public sealed partial class DeviceLinkSystem : EntitySystem
             else
                 _adminLogger.Add(LogType.DeviceLinking, LogImpact.Low, $"unlinked {ToPrettyString(source):source} {sourcePort} and {ToPrettyString(sink):sink} {sinkPort}");
 
-            RaiseLocalEvent(source, new PortDisconnectedEvent(sourcePort));
-            RaiseLocalEvent(sink, new PortDisconnectedEvent(sinkPort));
+            var sourceEv = new PortDisconnectedEvent(sourcePort);
+            var sinkEv = new PortDisconnectedEvent(sinkPort);
+            RaiseLocalEvent(source, ref sourceEv);
+            RaiseLocalEvent(sink, ref sinkEv);
 
             outputs.Remove(sink);
             linkedPorts.Remove((sourcePort, sinkPort));
@@ -509,7 +521,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
         string sinkPort,
         bool checkRange = true)
     {
-        if (!Resolve(source.Owner, ref source.Comp))
+        if (!_deviceLinkSourceQuery.Resolve(source.Owner, ref source.Comp))
             return false;
 
         if (checkRange && !InRange(source, sinkUid, source.Comp.Range))
@@ -522,14 +534,14 @@ public sealed partial class DeviceLinkSystem : EntitySystem
 
         var linkAttemptEvent = new LinkAttemptEvent(userId, source, sourcePort, sinkUid, sinkPort);
 
-        RaiseLocalEvent(source, linkAttemptEvent, true);
+        RaiseLocalEvent(source, ref linkAttemptEvent, true);
         if (linkAttemptEvent.Cancelled && userId.HasValue)
         {
             _popupSystem.PopupCursor(Loc.GetString("signal-linker-component-connection-refused", ("machine", sourcePort)), userId.Value);
             return false;
         }
 
-        RaiseLocalEvent(sinkUid, linkAttemptEvent, true);
+        RaiseLocalEvent(sinkUid, ref linkAttemptEvent, true);
         if (linkAttemptEvent.Cancelled && userId.HasValue)
         {
             _popupSystem.PopupCursor(Loc.GetString("signal-linker-component-connection-refused", ("machine", sourcePort)), userId.Value);
@@ -553,8 +565,8 @@ public sealed partial class DeviceLinkSystem : EntitySystem
             _adminLogger.Add(LogType.DeviceLinking, LogImpact.Low, $"linked {ToPrettyString(sourceUid):source} {source} and {ToPrettyString(sinkUid):sink} {sink}");
 
         var newLinkEvent = new NewLinkEvent(user, sourceUid, source, sinkUid, sink);
-        RaiseLocalEvent(sourceUid, newLinkEvent);
-        RaiseLocalEvent(sinkUid, newLinkEvent);
+        RaiseLocalEvent(sourceUid, ref newLinkEvent);
+        RaiseLocalEvent(sinkUid, ref newLinkEvent);
     }
 
     private void CreateLinkPopup(EntityUid? userId, EntityUid sourceUid, string source, EntityUid sinkUid, string sink, bool removed)
@@ -579,12 +591,11 @@ public sealed partial class DeviceLinkSystem : EntitySystem
     /// Sends a network payload directed at the sink entity.
     /// Just raises a <see cref="SignalReceivedEvent"/> without data if the source or the sink doesn't have a <see cref="DeviceNetworkComponent"/>
     /// </summary>
-    /// <param name="uid">The source uid that invokes the port</param>
+    /// <param name="ent">The source that invokes the port</param>
     /// <param name="port">The port to invoke</param>
-    /// <param name="sourceComponent"></param>
-    public virtual void InvokePort(Entity<DeviceLinkSourceComponent?> ent, string port)
+    public void InvokePort(Entity<DeviceLinkSourceComponent?> ent, string port)
     {
-        if (!Resolve(ent.Owner, ref ent.Comp)
+        if (!_deviceLinkSourceQuery.Resolve(ent.Owner, ref ent.Comp)
             || !ent.Comp.Outputs.TryGetValue(port, out var sinks))
             return;
 
@@ -593,7 +604,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
             if (!ent.Comp.LinkedPorts.TryGetValue(sinkUid, out var links))
                 continue;
 
-            if (!TryComp<DeviceLinkSinkComponent>(sinkUid, out var sinkComponent))
+            if (!_deviceLinkSinkQuery.TryComp(sinkUid, out var sinkComponent))
                 continue;
 
             foreach (var (source, sink) in links)
@@ -608,13 +619,12 @@ public sealed partial class DeviceLinkSystem : EntitySystem
     /// Sends a network payload directed at the sink entity.
     /// Just raises a <see cref="SignalReceivedEvent"/> without data if the source or the sink doesn't have a <see cref="DeviceNetworkComponent"/>
     /// </summary>
-    /// <param name="uid">The source uid that invokes the port</param>
+    /// <param name="ent">The source that invokes the port</param>
     /// <param name="port">The port to invoke</param>
     /// <param name="data">Optional data to send along</param>
-    /// <param name="sourceComponent"></param>
-    public virtual void InvokePort<T>(Entity<DeviceLinkSourceComponent?> ent, string port, ref T data) where T : ISignalNetworkPayload
+    public void InvokePort<T>(Entity<DeviceLinkSourceComponent?> ent, string port, ref T data) where T : ISignalNetworkPayload
     {
-        if (!Resolve(ent.Owner, ref ent.Comp)
+        if (!_deviceLinkSourceQuery.Resolve(ent.Owner, ref ent.Comp)
             || !ent.Comp.Outputs.TryGetValue(port, out var sinks))
             return;
 
@@ -623,13 +633,13 @@ public sealed partial class DeviceLinkSystem : EntitySystem
             if (!ent.Comp.LinkedPorts.TryGetValue(sinkUid, out var links))
                 continue;
 
-            if (!TryComp<DeviceLinkSinkComponent>(sinkUid, out var sinkComponent))
+            if (!_deviceLinkSinkQuery.TryComp(sinkUid, out var sinkComponent))
                 continue;
 
             foreach (var (source, sink) in links)
             {
                 if (source == port)
-                    InvokeDirect(ent!, (sinkUid, sinkComponent), source, sink, data);
+                    InvokeDirect(ent!, (sinkUid, sinkComponent), source, sink, ref data);
             }
         }
     }
@@ -637,9 +647,15 @@ public sealed partial class DeviceLinkSystem : EntitySystem
     /// <summary>
     /// Raises an event on or sends a network packet directly to a sink from a source.
     /// </summary>
-    private void InvokeDirect(Entity<DeviceLinkSourceComponent> source, Entity<DeviceLinkSinkComponent?> sink, string sourcePort, string sinkPort, NetworkPayload? data)
+    private void InvokeDirect<T>(
+        Entity<DeviceLinkSourceComponent> source,
+        Entity<DeviceLinkSinkComponent?> sink,
+        string sourcePort,
+        string sinkPort,
+        ref T data)
+        where T : ISignalNetworkPayload
     {
-        if (!Resolve(sink, ref sink.Comp))
+        if (!_deviceLinkSinkQuery.Resolve(sink, ref sink.Comp))
             return;
 
         var invokeCounter = GetEffectiveInvokeCounter(sink.Comp);
@@ -655,7 +671,50 @@ public sealed partial class DeviceLinkSystem : EntitySystem
         SetInvokeCounter(sink!, invokeCounter + 1);
 
         //Just skip using device networking if the source or the sink doesn't support it
-        if (!HasComp<DeviceNetworkComponent>(source) || !TryComp<DeviceNetworkComponent>(sink, out var sinkNetwork))
+        if (!_deviceNetworkQuery.HasComp(source) || !_deviceNetworkQuery.TryComp(sink, out var sinkNetwork))
+        {
+            var eventArgs = new SignalReceivedEvent(sinkPort, source);
+            RaiseLocalEvent(sink, ref eventArgs);
+            return;
+        }
+
+        var payload = new SignalPayload<T>
+        {
+            InvokedPort = sinkPort,
+            Payload = data,
+        };
+
+        // force using wireless network so things like atmos devices are able to send signals
+        var network = (int) DeviceNetIdDefaults.Wireless;
+        _deviceNetworkSystem.QueuePacket(source.Owner, sinkNetwork.Data.Address, ref payload, sinkNetwork.Data.ReceiveFrequency, network);
+    }
+
+    /// <summary>
+    /// Raises an event on or sends a network packet directly to a sink from a source.
+    /// </summary>
+    private void InvokeDirect(
+        Entity<DeviceLinkSourceComponent> source,
+        Entity<DeviceLinkSinkComponent?> sink,
+        string sourcePort,
+        string sinkPort)
+    {
+        if (!_deviceLinkSinkQuery.Resolve(sink, ref sink.Comp))
+            return;
+
+        var invokeCounter = GetEffectiveInvokeCounter(sink.Comp);
+        if (invokeCounter > sink.Comp.InvokeLimit)
+        {
+            SetInvokeCounter(sink!, 0);
+            var args = new DeviceLinkOverloadedEvent();
+            RaiseLocalEvent(sink, ref args);
+            RemoveAllFromSink(sink);
+            return;
+        }
+
+        SetInvokeCounter(sink!, invokeCounter + 1);
+
+        //Just skip using device networking if the source or the sink doesn't support it
+        if (!_deviceNetworkQuery.HasComp(source) || !_deviceNetworkQuery.TryComp(sink, out var sinkNetwork))
         {
             var eventArgs = new SignalReceivedEvent(sinkPort, source);
             RaiseLocalEvent(sink, ref eventArgs);
@@ -665,12 +724,15 @@ public sealed partial class DeviceLinkSystem : EntitySystem
         var payload = new SignalPayload
         {
             InvokedPort = sinkPort,
-            Payload = data,
         };
 
-        // force using wireless network so things like atmos devices are able to send signals
-        var network = (int) DeviceNetIdDefaults.Wireless;
-        _deviceNetworkSystem.QueuePacket(source.Owner, sinkNetwork.Data.Address, payload, sinkNetwork.Data.ReceiveFrequency, network);
+        // Force using wireless network so things like atmos devices are able to send signals.
+        _deviceNetworkSystem.QueuePacket(
+            source.Owner,
+            sinkNetwork.Data.Address,
+            ref payload,
+            sinkNetwork.Data.ReceiveFrequency,
+            (int) DeviceNetIdDefaults.Wireless);
     }
 
     /// <summary>
@@ -678,14 +740,14 @@ public sealed partial class DeviceLinkSystem : EntitySystem
     /// </summary>
     public void SendSignal(Entity<DeviceLinkSourceComponent?> ent, string port, bool signal)
     {
-        if (!Resolve(ent.Owner, ref ent.Comp))
+        if (!_deviceLinkSourceQuery.Resolve(ent.Owner, ref ent.Comp))
             return;
 
         var data = new LogicStatePayload
         {
             State = signal ? SignalState.High : SignalState.Low
         };
-        InvokePort(ent, port, data);
+        InvokePort(ent, port, ref data);
 
         ent.Comp.LastSignals[port] = signal;
         Dirty(ent);
@@ -698,7 +760,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
     /// </summary>
     public void ClearSignal(Entity<DeviceLinkSourceComponent?> ent, string port)
     {
-        if (!Resolve(ent, ref ent.Comp))
+        if (!_deviceLinkSourceQuery.Resolve(ent, ref ent.Comp))
             return;
 
         ent.Comp.LastSignals.Remove(port);
@@ -716,7 +778,18 @@ public sealed partial class DeviceLinkSystem : EntitySystem
         if (!component.Ports.Contains(args.Data.InvokedPort))
             return;
 
-        var eventArgs = new SignalReceivedEvent(args.Data.InvokedPort, args.Sender, args.Data);
+        var eventArgs = new SignalReceivedEvent(args.Data.InvokedPort, args.Sender);
+        RaiseLocalEvent(uid,  ref eventArgs);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnPacketReceived(Entity<DeviceLinkSinkComponent> ent, ref DeviceNetworkPacketEvent<SignalPayload<LogicStatePayload>> args)
+    {
+        var (uid, component) = ent;
+        if (!component.Ports.Contains(args.Data.InvokedPort))
+            return;
+
+        var eventArgs = new SignalReceivedEvent<LogicStatePayload>(args.Data.InvokedPort, args.Data.Payload, args.Sender);
         RaiseLocalEvent(uid,  ref eventArgs);
     }
 
@@ -737,7 +810,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
         {
             State = signal ? SignalState.High : SignalState.Low
         };
-        InvokeDirect(ent, args.Sink, args.SourcePort, args.SinkPort, payload);
+        InvokeDirect(ent, args.Sink, args.SourcePort, args.SinkPort, ref payload);
     }
     #endregion
 

@@ -28,7 +28,7 @@ public sealed partial class FireAlarmSystem : EntitySystem
         SubscribeLocalEvent<FireAlarmComponent, GotEmaggedEvent>(OnEmagged);
     }
 
-    private void OnDeviceListSync(EntityUid uid, FireAlarmComponent component, DeviceListUpdateEvent args)
+    private void OnDeviceListSync(EntityUid uid, FireAlarmComponent component, ref DeviceListUpdateEvent args)
     {
         foreach (var device in args.OldDevices)
         {

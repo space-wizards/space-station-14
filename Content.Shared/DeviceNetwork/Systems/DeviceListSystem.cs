@@ -10,16 +10,9 @@ public sealed partial class DeviceListSystem : EntitySystem
     [Dependency] private NetworkConfiguratorSystem _configurator = default!;
 
     [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceNetworkQuery = default!;
+    [Dependency] private EntityQuery<DeviceListComponent> _deviceListQuery = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-        SubscribeLocalEvent<DeviceListComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<DeviceListComponent, BeforeBroadcastAttemptEvent>(OnBeforeBroadcast);
-        SubscribeLocalEvent<DeviceListComponent, BeforePacketSentEvent>(OnBeforePacketSent);
-        SubscribeLocalEvent<BeforeSerializationEvent>(OnMapSave);
-    }
-
+    [SubscribeLocalEvent]
     private void OnShutdown(Entity<DeviceListComponent> ent, ref ComponentShutdown args)
     {
         foreach (var conf in ent.Comp.Configurators)
@@ -29,7 +22,7 @@ public sealed partial class DeviceListSystem : EntitySystem
 
         foreach (var device in ent.Comp.Devices)
         {
-            if (_deviceNetworkQuery.TryGetComponent(device, out var comp))
+            if (_deviceNetworkQuery.TryComp(device, out var comp))
                 comp.DeviceLists.Remove(ent);
         }
 
@@ -38,12 +31,7 @@ public sealed partial class DeviceListSystem : EntitySystem
 
     public IEnumerable<EntityUid> GetAllDevices(Entity<DeviceListComponent?> ent)
     {
-        if (!Resolve(ent.Owner, ref ent.Comp))
-        {
-            return new EntityUid[] { };
-        }
-
-        return ent.Comp.Devices;
+        return !_deviceListQuery.Resolve(ent.Owner, ref ent.Comp) ? [] : ent.Comp.Devices;
     }
 
     /// <summary>
@@ -54,14 +42,14 @@ public sealed partial class DeviceListSystem : EntitySystem
     /// </remarks>
     public Dictionary<string, EntityUid> GetDeviceList(Entity<DeviceListComponent?> ent)
     {
-        if (!Resolve(ent.Owner, ref ent.Comp))
+        if (!_deviceListQuery.Resolve(ent.Owner, ref ent.Comp))
             return new Dictionary<string, EntityUid>();
 
         var devices = new Dictionary<string, EntityUid>(ent.Comp.Devices.Count);
 
         foreach (var deviceUid in ent.Comp.Devices)
         {
-            if (!TryComp(deviceUid, out DeviceNetworkComponent? deviceNet))
+            if (!_deviceNetworkQuery.TryComp(deviceUid, out var deviceNet))
                 continue;
 
             var address = MetaData(deviceUid).EntityLifeStage == EntityLifeStage.MapInitialized
@@ -89,6 +77,7 @@ public sealed partial class DeviceListSystem : EntitySystem
     /// <summary>
     /// Filters the broadcasts recipient list against the device list as either an allow or deny list depending on the components IsAllowList field
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnBeforeBroadcast(Entity<DeviceListComponent> ent, ref BeforeBroadcastAttemptEvent args)
     {
         var component = ent.Comp;
@@ -100,7 +89,7 @@ public sealed partial class DeviceListSystem : EntitySystem
             return;
         }
 
-        HashSet<Device> filteredRecipients = new(args.Recipients.Count);
+        var filteredRecipients = new HashSet<Device>(args.Recipients.Count);
 
         foreach (var recipient in args.Recipients)
         {
@@ -114,6 +103,7 @@ public sealed partial class DeviceListSystem : EntitySystem
     /// <summary>
     /// Filters incoming packets if that is enabled <see cref="OnBeforeBroadcast"/>
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnBeforePacketSent(Entity<DeviceListComponent> ent, ref BeforePacketSentEvent args)
     {
         if (ent.Comp.HandleIncomingPackets && ent.Comp.Devices.Contains(args.Sender) != ent.Comp.IsAllowList)
@@ -123,16 +113,18 @@ public sealed partial class DeviceListSystem : EntitySystem
     public void OnDeviceShutdown(Entity<DeviceListComponent?> list, Entity<DeviceNetworkComponent> device)
     {
         device.Comp.DeviceLists.Remove(list.Owner);
-        if (!Resolve(list.Owner, ref list.Comp))
+        if (!_deviceListQuery.Resolve(list.Owner, ref list.Comp))
             return;
 
         list.Comp.Devices.Remove(device);
         Dirty(list);
     }
 
-    private void OnMapSave(BeforeSerializationEvent ev)
+    private readonly List<EntityUid> _toRemove = new();
+
+    [SubscribeLocalEvent]
+    private void OnMapSave(ref BeforeSerializationEvent ev)
     {
-        List<EntityUid> toRemove = new();
         var enumerator = AllEntityQuery<DeviceListComponent, TransformComponent>();
         while (enumerator.MoveNext(out var uid, out var device, out var xform))
         {
@@ -141,13 +133,15 @@ public sealed partial class DeviceListSystem : EntitySystem
 
             foreach (var ent in device.Devices)
             {
-                if (!TryComp(ent, out TransformComponent? linkedXform))
+                if (TerminatingOrDeleted(ent))
                 {
                     // Entity was deleted.
                     // TODO remove these on deletion instead of on-save.
-                    toRemove.Add(ent);
+                    _toRemove.Add(ent);
                     continue;
                 }
+
+                var linkedXform = Transform(ent);
 
                 // This is assuming that **all** of the map is getting saved.
                 // Which is not necessarily true.
@@ -155,7 +149,7 @@ public sealed partial class DeviceListSystem : EntitySystem
                 if (ev.MapIds.Contains(linkedXform.MapID))
                     continue;
 
-                toRemove.Add(ent);
+                _toRemove.Add(ent);
                 // TODO full game saves.
                 // when full saves are supported, this should instead add data to the BeforeSaveEvent informing the
                 // saving system that this map (or null-space entity) also needs to be included in the save.
@@ -163,14 +157,15 @@ public sealed partial class DeviceListSystem : EntitySystem
                     $"Saving a device list ({ToPrettyString(uid)}) that has a reference to an entity on another map ({ToPrettyString(ent)}). Removing entity from list.");
             }
 
-            if (toRemove.Count == 0)
+            if (_toRemove.Count == 0)
                 continue;
 
             var old = device.Devices.ToList();
-            device.Devices.ExceptWith(toRemove);
-            RaiseLocalEvent(uid, new DeviceListUpdateEvent(old, device.Devices.ToList()));
+            device.Devices.ExceptWith(_toRemove);
+            var listEv = new DeviceListUpdateEvent(old, device.Devices.ToList());
+            RaiseLocalEvent(uid, ref listEv);
             Dirty(uid, device);
-            toRemove.Clear();
+            _toRemove.Clear();
         }
     }
 
@@ -182,7 +177,7 @@ public sealed partial class DeviceListSystem : EntitySystem
     /// <param name="merge">Whether to merge or replace the devices stored.</param>
     public DeviceListUpdateResult UpdateDeviceList(Entity<DeviceListComponent?> ent, IEnumerable<EntityUid> devices, bool merge = false)
     {
-        if (!Resolve(ent.Owner, ref ent.Comp))
+        if (!_deviceListQuery.Resolve(ent.Owner, ref ent.Comp))
             return DeviceListUpdateResult.NoComponent;
 
         var list = devices.ToList();
@@ -203,13 +198,13 @@ public sealed partial class DeviceListSystem : EntitySystem
                 continue;
 
             ent.Comp.Devices.Remove(device);
-            if (_deviceNetworkQuery.TryGetComponent(device, out var comp))
+            if (_deviceNetworkQuery.TryComp(device, out var comp))
                 comp.DeviceLists.Remove(ent);
         }
 
         foreach (var device in newDevices)
         {
-            if (!_deviceNetworkQuery.TryGetComponent(device, out var comp))
+            if (!_deviceNetworkQuery.TryComp(device, out var comp))
                 continue;
 
             if (!ent.Comp.Devices.Add(device))
@@ -218,7 +213,8 @@ public sealed partial class DeviceListSystem : EntitySystem
             comp.DeviceLists.Add(ent);
         }
 
-        RaiseLocalEvent(ent, new DeviceListUpdateEvent(oldDevices, list));
+        var ev = new DeviceListUpdateEvent(oldDevices, list);
+        RaiseLocalEvent(ent, ref ev);
 
         Dirty(ent);
 

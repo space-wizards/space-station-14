@@ -15,20 +15,18 @@ public sealed partial class DeviceNetworkRouterSystem : EntitySystem
 
     [Dependency] private EntityQuery<DeviceNetworkComponent> _query = default!;
 
-    // TODO: make an engine PR to allow for auto-generated relay subscriptions
-    // Should be doable by using reflection on marker interfaces and then adding them to the auto-generated subscriptions
-    // I know it looks absolutely hilarious and horrible, but uuuhhhh anything to not make boxing allocations!!!!!!!! :godo:
+    // TODO after generic event subscriptions are supported, fix this hilarious thing
     public override void Initialize()
     {
         base.Initialize();
 
         // Surveillance cameras
-        SubscribeLocalEvent<DeviceNetworkRouterComponent, DeviceNetworkPacketEvent<RoutedNetworkPayload<SurveillanceCameraConnectPayload>>>((ent, ref args) => OnRoutePayload(ent, ref args));
-        SubscribeLocalEvent<DeviceNetworkRouterComponent, DeviceNetworkPacketEvent<RoutedNetworkPayload<SurveillanceCameraConnectRequestPayload>>>((ent, ref args) => OnRoutePayload(ent, ref args));
-        SubscribeLocalEvent<DeviceNetworkRouterComponent, DeviceNetworkPacketEvent<RoutedNetworkPayload<SurveillanceCameraHeartbeatRequestPayload>>>((ent, ref args) => OnRoutePayload(ent, ref args));
-        SubscribeLocalEvent<DeviceNetworkRouterComponent, DeviceNetworkPacketEvent<RoutedNetworkPayload<SurveillanceCameraHeartbeatPayload>>>((ent, ref args) => OnRoutePayload(ent, ref args));
-        SubscribeLocalEvent<DeviceNetworkRouterComponent, DeviceNetworkPacketEvent<RoutedNetworkPayload<SurveillanceCameraPingPayload>>>((ent, ref args) => OnRoutePayload(ent, ref args));
-        SubscribeLocalEvent<DeviceNetworkRouterComponent, DeviceNetworkPacketEvent<RoutedNetworkPayload<SurveillanceCameraDataPayload>>>((ent, ref args) => OnRoutePayload(ent, ref args));
+        SubscribeLocalEvent<DeviceNetworkRouterComponent, DeviceNetworkPacketEvent<RoutedNetworkPayload<SurveillanceCameraConnectPayload>>>(OnRoutePayload);
+        SubscribeLocalEvent<DeviceNetworkRouterComponent, DeviceNetworkPacketEvent<RoutedNetworkPayload<SurveillanceCameraConnectRequestPayload>>>(OnRoutePayload);
+        SubscribeLocalEvent<DeviceNetworkRouterComponent, DeviceNetworkPacketEvent<RoutedNetworkPayload<SurveillanceCameraHeartbeatRequestPayload>>>(OnRoutePayload);
+        SubscribeLocalEvent<DeviceNetworkRouterComponent, DeviceNetworkPacketEvent<RoutedNetworkPayload<SurveillanceCameraHeartbeatPayload>>>(OnRoutePayload);
+        SubscribeLocalEvent<DeviceNetworkRouterComponent, DeviceNetworkPacketEvent<RoutedNetworkPayload<SurveillanceCameraPingPayload>>>(OnRoutePayload);
+        SubscribeLocalEvent<DeviceNetworkRouterComponent, DeviceNetworkPacketEvent<RoutedNetworkPayload<SurveillanceCameraDataPayload>>>(OnRoutePayload);
     }
 
     private void OnRoutePayload<T>(Entity<DeviceNetworkRouterComponent> ent, ref DeviceNetworkPacketEvent<T> args) where T : IRoutedNetworkPayload

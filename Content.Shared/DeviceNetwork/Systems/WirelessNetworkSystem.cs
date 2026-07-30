@@ -7,22 +7,16 @@ public sealed partial class WirelessNetworkSystem : EntitySystem
 {
     [Dependency] private SharedTransformSystem _transformSystem = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-        SubscribeLocalEvent<WirelessNetworkComponent, BeforePacketSentEvent>(OnBeforePacketSent);
-    }
+    [Dependency] private EntityQuery<WirelessNetworkComponent> _wirelessQuery = default!;
 
-    /// <summary>
-    /// Gets the position of both the sending and receiving entity and checks if the receiver is in range of the sender.
-    /// </summary>
+    [SubscribeLocalEvent]
     private void OnBeforePacketSent(Entity<WirelessNetworkComponent> ent, ref BeforePacketSentEvent args)
     {
         var ownPosition = args.SenderPosition;
         var xform = Transform(ent);
 
         // not a wireless to wireless connection, just let it happen
-        if (!TryComp<WirelessNetworkComponent>(args.Sender, out var sendingComponent))
+        if (!_wirelessQuery.TryComp(args.Sender, out var sendingComponent))
             return;
 
         if (xform.MapID != args.SenderTransform.MapID

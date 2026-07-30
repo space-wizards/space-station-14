@@ -5,16 +5,11 @@ namespace Content.Shared.DeviceNetwork.Systems;
 
 public sealed partial class WiredNetworkSystem : EntitySystem
 {
-    /// <summary>
-    /// Checks if both devices are on the same grid
-    /// </summary>
     [SubscribeLocalEvent]
     private void OnBeforePacketSent(Entity<WiredNetworkComponent> ent, ref BeforePacketSentEvent args)
     {
         if (Transform(ent).GridUid != args.SenderTransform.GridUid)
-        {
             args.Cancelled = true;
-        }
     }
 
     //TODO Device Network, Things to do in a future PR:

@@ -23,6 +23,7 @@ public sealed partial class DeviceNetworkSystem
         ref T data,
         uint? frequency = null,
         int? network = null)
+        where T : INetworkPayload
     {
         if (!Resolve(ent.Owner, ref ent.Comp, false))
             return false;

@@ -8,7 +8,7 @@ namespace Content.Shared.Atmos.Piping.Unary.Components;
 [Serializable, NetSerializable]
 public sealed partial class GasVentPumpData : BaseAtmosDeviceData
 {
-    public override void RaisePayload(EntityUid uid, string address, SharedDeviceNetworkSystem deviceNetSys)
+    public override void RaisePayload(EntityUid uid, string address, DeviceNetworkSystem deviceNetSys)
     {
         var payload = new GasVentPumpSetDataPayload { Data = this };
         deviceNetSys.QueuePacket(uid, address, ref payload);

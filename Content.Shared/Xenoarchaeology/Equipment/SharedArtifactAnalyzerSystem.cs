@@ -90,13 +90,13 @@ public abstract partial class SharedArtifactAnalyzerSystem : EntitySystem
     private void OnLinkAttemptConsole(Entity<AnalysisConsoleComponent> ent, ref LinkAttemptEvent args)
     {
         if (ent.Comp.AnalyzerEntity != null)
-            args.Cancel(); // can only link to one device at a time
+            args.Cancelled = true; // can only link to one device at a time
     }
 
     private void OnLinkAttemptAnalyzer(Entity<ArtifactAnalyzerComponent> ent, ref LinkAttemptEvent args)
     {
         if (ent.Comp.Console != null)
-            args.Cancel(); // can only link to one device at a time
+            args.Cancelled = true; // can only link to one device at a time
     }
 
     private void OnPortDisconnectedConsole(Entity<AnalysisConsoleComponent> ent, ref PortDisconnectedEvent args)

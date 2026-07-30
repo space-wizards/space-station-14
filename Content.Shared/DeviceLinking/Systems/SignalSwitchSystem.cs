@@ -12,39 +12,33 @@ public sealed partial class SignalSwitchSystem : EntitySystem
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private LockSystem _lock = default!;
 
-    public override void Initialize()
+    [SubscribeLocalEvent]
+    private void OnInit(Entity<SignalSwitchComponent> ent, ref ComponentInit args)
     {
-        base.Initialize();
-
-        SubscribeLocalEvent<SignalSwitchComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<SignalSwitchComponent, ActivateInWorldEvent>(OnActivated);
+        _deviceLink.EnsureSourcePorts(ent.Owner, ent.Comp.OnPort, ent.Comp.OffPort, ent.Comp.StatusPort);
     }
 
-    private void OnInit(EntityUid uid, SignalSwitchComponent comp, ComponentInit args)
-    {
-        _deviceLink.EnsureSourcePorts(uid, comp.OnPort, comp.OffPort, comp.StatusPort);
-    }
-
-    private void OnActivated(EntityUid uid, SignalSwitchComponent comp, ActivateInWorldEvent args)
+    [SubscribeLocalEvent]
+    private void OnActivated(Entity<SignalSwitchComponent> ent, ref ActivateInWorldEvent args)
     {
         if (args.Handled || !args.Complex)
             return;
 
-        if (_lock.IsLocked(uid))
+        if (_lock.IsLocked(ent.Owner))
             return;
 
-        comp.State = !comp.State;
-        _deviceLink.InvokePort(uid, comp.State ? comp.OnPort : comp.OffPort);
+        ent.Comp.State = !ent.Comp.State;
+        _deviceLink.InvokePort(ent.Owner, ent.Comp.State ? ent.Comp.OnPort : ent.Comp.OffPort);
 
         // only send status if it's a toggle switch and not a button
-        if (comp.OnPort != comp.OffPort)
+        if (ent.Comp.OnPort != ent.Comp.OffPort)
         {
-            _deviceLink.SendSignal(uid, comp.StatusPort, comp.State);
+            _deviceLink.SendSignal(ent.Owner, ent.Comp.StatusPort, ent.Comp.State);
         }
 
-        var audioParams = comp.ClickSound?.Params ?? AudioParams.Default;
+        var audioParams = ent.Comp.ClickSound?.Params ?? AudioParams.Default;
         audioParams = audioParams.WithVariation(0.125f).AddVolume(8f);
-        _audio.PlayPvs(comp.ClickSound, uid, audioParams);
+        _audio.PlayPredicted(ent.Comp.ClickSound, ent.Owner, args.User, audioParams);
 
         args.Handled = true;
     }

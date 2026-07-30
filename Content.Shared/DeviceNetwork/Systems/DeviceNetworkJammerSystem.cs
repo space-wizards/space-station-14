@@ -8,13 +8,9 @@ public sealed partial class DeviceNetworkJammerSystem : EntitySystem
 {
     [Dependency] private SharedTransformSystem _transform = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<TransformComponent, BeforePacketSentEvent>(BeforePacketSent);
-    }
-
+    // TODO consider other ways to suppress the packets in the next PR
+    // Maybe EntityLookup on a loop + temporarily disconnecting the targeted devices from their network will work faster?
+    [SubscribeLocalEvent]
     private void BeforePacketSent(Entity<TransformComponent> xform, ref BeforePacketSentEvent ev)
     {
         if (ev.Cancelled)
@@ -45,7 +41,7 @@ public sealed partial class DeviceNetworkJammerSystem : EntitySystem
     public void SetRange(Entity<DeviceNetworkJammerComponent> ent, float value)
     {
         ent.Comp.Range = value;
-        Dirty(ent);
+        DirtyField(ent.AsNullable(), nameof(DeviceNetworkJammerComponent.Range));
     }
 
     /// <inheritdoc cref="SetRange"/>
@@ -72,7 +68,7 @@ public sealed partial class DeviceNetworkJammerSystem : EntitySystem
     public void AddJammableNetwork(Entity<DeviceNetworkJammerComponent> ent, int networkId)
     {
         if (ent.Comp.JammableNetworks.Add(networkId))
-            Dirty(ent);
+            DirtyField(ent.AsNullable(), nameof(DeviceNetworkJammerComponent.JammableNetworks));
     }
 
     /// <summary>
@@ -81,7 +77,7 @@ public sealed partial class DeviceNetworkJammerSystem : EntitySystem
     public void RemoveJammableNetwork(Entity<DeviceNetworkJammerComponent> ent, int networkId)
     {
         if (ent.Comp.JammableNetworks.Remove(networkId))
-            Dirty(ent);
+            DirtyField(ent.AsNullable(), nameof(DeviceNetworkJammerComponent.JammableNetworks));
     }
 
     /// <summary>
@@ -93,7 +89,7 @@ public sealed partial class DeviceNetworkJammerSystem : EntitySystem
             return;
 
         ent.Comp.JammableNetworks.Clear();
-        Dirty(ent);
+        DirtyField(ent.AsNullable(), nameof(DeviceNetworkJammerComponent.JammableNetworks));
     }
 
     /// <summary>
@@ -102,7 +98,7 @@ public sealed partial class DeviceNetworkJammerSystem : EntitySystem
     public void AddExcludedFrequency(Entity<DeviceNetworkJammerComponent> ent, uint frequency)
     {
         if (ent.Comp.FrequenciesExcluded.Add(frequency))
-            Dirty(ent);
+            DirtyField(ent.AsNullable(), nameof(DeviceNetworkJammerComponent.FrequenciesExcluded));
     }
 
     /// <summary>
@@ -111,7 +107,7 @@ public sealed partial class DeviceNetworkJammerSystem : EntitySystem
     public void RemoveExcludedFrequency(Entity<DeviceNetworkJammerComponent> ent, uint frequency)
     {
         if (ent.Comp.FrequenciesExcluded.Remove(frequency))
-            Dirty(ent);
+            DirtyField(ent.AsNullable(), nameof(DeviceNetworkJammerComponent.FrequenciesExcluded));
     }
 
     /// <summary>
@@ -123,6 +119,6 @@ public sealed partial class DeviceNetworkJammerSystem : EntitySystem
             return;
 
         ent.Comp.FrequenciesExcluded.Clear();
-        Dirty(ent);
+        DirtyField(ent.AsNullable(), nameof(DeviceNetworkJammerComponent.FrequenciesExcluded));
     }
 }

@@ -11,19 +11,13 @@ public sealed partial class RandomGateSystem : EntitySystem
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SharedUserInterfaceSystem _ui = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-        SubscribeLocalEvent<RandomGateComponent, SignalReceivedEvent>(OnSignalReceived);
-        SubscribeLocalEvent<RandomGateComponent, AfterActivatableUIOpenEvent>(OnAfterActivatableUIOpen);
-        SubscribeLocalEvent<RandomGateComponent, RandomGateProbabilityChangedMessage>(OnProbabilityChanged);
-    }
-
+    [SubscribeLocalEvent]
     private void OnAfterActivatableUIOpen(Entity<RandomGateComponent> ent, ref AfterActivatableUIOpenEvent args)
     {
         UpdateUI(ent);
     }
 
+    [SubscribeLocalEvent]
     private void OnProbabilityChanged(Entity<RandomGateComponent> ent, ref RandomGateProbabilityChangedMessage args)
     {
         ent.Comp.SuccessProbability = Math.Clamp(args.Probability, 0f, 100f) / 100f;
@@ -39,6 +33,7 @@ public sealed partial class RandomGateSystem : EntitySystem
         _ui.SetUiState(ent.Owner, RandomGateUiKey.Key, new RandomGateBoundUserInterfaceState(ent.Comp.SuccessProbability));
     }
 
+    [SubscribeLocalEvent]
     private void OnSignalReceived(Entity<RandomGateComponent> ent, ref SignalReceivedEvent args)
     {
         if (args.Port != ent.Comp.InputPort)

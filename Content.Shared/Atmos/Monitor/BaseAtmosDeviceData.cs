@@ -15,5 +15,5 @@ public abstract partial class BaseAtmosDeviceData : IAtmosDeviceData
     [DataField]
     public bool IgnoreAlarms { get; set; }
 
-    public abstract void RaisePayload(EntityUid uid, string address, SharedDeviceNetworkSystem deviceNetSys);
+    public abstract void RaisePayload(EntityUid uid, string address, DeviceNetworkSystem deviceNetSys);
 }

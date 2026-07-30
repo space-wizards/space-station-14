@@ -1,4 +1,3 @@
-using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
@@ -16,11 +15,11 @@ namespace Content.Shared.DeviceNetwork.Systems;
 
 public sealed partial class NetworkConfiguratorSystem : EntitySystem
 {
+    [Dependency] private AccessReaderSystem _accessSystem = default!;
     [Dependency] private DeviceListSystem _deviceListSystem = default!;
     [Dependency] private DeviceLinkSystem _deviceLinkSystem = default!;
     [Dependency] private SharedPopupSystem _popupSystem = default!;
     [Dependency] private SharedUserInterfaceSystem _uiSystem = default!;
-    [Dependency] private AccessReaderSystem _accessSystem = default!;
     [Dependency] private SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private SharedAudioSystem _audioSystem = default!;
     [Dependency] private SharedAppearanceSystem _appearanceSystem = default!;
@@ -28,31 +27,21 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
 
     [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceNetworkQuery = default!;
+    [Dependency] private EntityQuery<DeviceLinkSinkComponent> _deviceLinkSinkQuery = default!;
+    [Dependency] private EntityQuery<DeviceLinkSourceComponent> _deviceLinkSourceQuery = default!;
+    [Dependency] private EntityQuery<DeviceListComponent> _deviceListQuery = default!;
+    [Dependency] private EntityQuery<NetworkConfiguratorComponent> _networkConfigQuery = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<NetworkConfiguratorComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<NetworkConfiguratorComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<NetworkConfiguratorComponent, BoundUserInterfaceCheckRangeEvent>(OnUiRangeCheck);
-        SubscribeLocalEvent<NetworkConfiguratorComponent, ActivatableUIOpenAttemptEvent>(OnUiOpenAttempt);
-
-        SubscribeLocalEvent<DeviceListComponent, ComponentRemove>(OnComponentRemoved);
-
-        SubscribeLocalEvent<BeforeSerializationEvent>(OnMapSave);
-
-        InitializeVerb();
-        InitializeUI();
-    }
-
-    private void OnMapSave(BeforeSerializationEvent ev)
+    [SubscribeLocalEvent]
+    private void OnMapSave(ref BeforeSerializationEvent ev)
     {
         var enumerator = AllEntityQuery<NetworkConfiguratorComponent>();
         while (enumerator.MoveNext(out var uid, out var conf))
         {
-            if (!TryComp(conf.ActiveDeviceList, out TransformComponent? listXform))
+            if (conf.ActiveDeviceList == null || TerminatingOrDeleted(conf.ActiveDeviceList))
                 continue;
+
+            var listXform = Transform(conf.ActiveDeviceList.Value);
 
             if (!ev.MapIds.Contains(listXform.MapID))
                 continue;
@@ -84,12 +73,14 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnUiOpenAttempt(Entity<NetworkConfiguratorComponent> ent, ref ActivatableUIOpenAttemptEvent args)
     {
         if (ent.Comp.LinkModeActive)
             args.Cancel();
     }
 
+    [SubscribeLocalEvent]
     private void OnUiRangeCheck(Entity<NetworkConfiguratorComponent> ent, ref BoundUserInterfaceCheckRangeEvent args)
     {
         if (ent.Comp.ActiveDeviceList == null || args.Result == BoundUserInterfaceRangeResult.Fail)
@@ -100,17 +91,19 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
             args.Result = BoundUserInterfaceRangeResult.Fail;
     }
 
+    [SubscribeLocalEvent]
     private void OnShutdown(Entity<NetworkConfiguratorComponent> ent, ref ComponentShutdown args)
     {
         ClearDevices(ent);
 
-        if (TryComp(ent.Comp.ActiveDeviceList, out DeviceListComponent? list))
+        if (_deviceListQuery.TryComp(ent.Comp.ActiveDeviceList, out var list))
             list.Configurators.Remove(ent);
 
         ent.Comp.ActiveDeviceList = null;
         DirtyField(ent.AsNullable(), nameof(NetworkConfiguratorComponent.ActiveDeviceList));
     }
 
+    [SubscribeLocalEvent]
     private void OnMapInit(Entity<NetworkConfiguratorComponent> ent, ref MapInitEvent args)
     {
         UpdateListUiState(ent);
@@ -118,8 +111,8 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
 
     private void TryAddNetworkDevice(Entity<NetworkConfiguratorComponent?> configurator, Entity<DeviceNetworkComponent?> target, EntityUid userUid)
     {
-        if (!Resolve(configurator.Owner, ref configurator.Comp)
-            || !Resolve(target.Owner, ref target.Comp, false))
+        if (!_networkConfigQuery.Resolve(configurator.Owner, ref configurator.Comp)
+            || !_deviceNetworkQuery.Resolve(target.Owner, ref target.Comp, false))
             return;
 
         //This checks if the device is marked as having a savable address,
@@ -173,7 +166,7 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
 
     private void TryLinkDevice(Entity<NetworkConfiguratorComponent> configurator, EntityUid? target, EntityUid user)
     {
-        if (!HasComp<DeviceLinkSourceComponent>(target) && !HasComp<DeviceLinkSinkComponent>(target))
+        if (!_deviceLinkSourceQuery.HasComp(target) && !_deviceLinkSinkQuery.HasComp(target))
             return;
 
         if (configurator.Comp.ActiveDeviceLink == target)
@@ -184,17 +177,17 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
         }
 
         if (configurator.Comp.ActiveDeviceLink.HasValue
-            && (HasComp<DeviceLinkSourceComponent>(target)
-            && HasComp<DeviceLinkSinkComponent>(configurator.Comp.ActiveDeviceLink)
-            || HasComp<DeviceLinkSinkComponent>(target)
-            && HasComp<DeviceLinkSourceComponent>(configurator.Comp.ActiveDeviceLink)))
+            && (_deviceLinkSourceQuery.HasComp(target)
+                && _deviceLinkSinkQuery.HasComp(configurator.Comp.ActiveDeviceLink)
+                || _deviceLinkSinkQuery.HasComp(target)
+                && _deviceLinkSourceQuery.HasComp(configurator.Comp.ActiveDeviceLink)))
         {
             OpenDeviceLinkUi(configurator, target, user);
             return;
         }
 
-        if (HasComp<DeviceLinkSourceComponent>(target) && HasComp<DeviceLinkSourceComponent>(configurator.Comp.ActiveDeviceLink)
-            || HasComp<DeviceLinkSinkComponent>(target) && HasComp<DeviceLinkSinkComponent>(configurator.Comp.ActiveDeviceLink))
+        if (_deviceLinkSourceQuery.HasComp(target) && _deviceLinkSourceQuery.HasComp(configurator.Comp.ActiveDeviceLink)
+            || _deviceLinkSinkQuery.HasComp(target) && _deviceLinkSinkQuery.HasComp(configurator.Comp.ActiveDeviceLink))
             return;
 
         _popupSystem.PopupEntity(Loc.GetString("network-configurator-link-mode-started", ("device", Name(target.Value))), target.Value, user);
@@ -202,35 +195,37 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
         DirtyField(configurator.AsNullable(), nameof(NetworkConfiguratorComponent.ActiveDeviceLink));
     }
 
-    private void TryLinkDefaults(EntityUid _, NetworkConfiguratorComponent configurator, EntityUid? targetUid, EntityUid user)
+    private void TryLinkDefaults(Entity<NetworkConfiguratorComponent> configurator, EntityUid? targetUid, EntityUid user)
     {
-        if (!configurator.LinkModeActive || !configurator.ActiveDeviceLink.HasValue
-            || !targetUid.HasValue || configurator.ActiveDeviceLink == targetUid)
+        if (!configurator.Comp.LinkModeActive || !configurator.Comp.ActiveDeviceLink.HasValue
+            || !targetUid.HasValue || configurator.Comp.ActiveDeviceLink == targetUid)
             return;
 
-        if (!HasComp<DeviceLinkSourceComponent>(targetUid) && !HasComp<DeviceLinkSinkComponent>(targetUid))
+        if (!_deviceLinkSourceQuery.HasComp(targetUid) && !_deviceLinkSinkQuery.HasComp(targetUid))
             return;
 
-        if (TryComp(configurator.ActiveDeviceLink, out DeviceLinkSourceComponent? activeSource) && TryComp(targetUid, out DeviceLinkSinkComponent? targetSink))
+        if (_deviceLinkSourceQuery.TryComp(configurator.Comp.ActiveDeviceLink, out var activeSource)
+            && _deviceLinkSinkQuery.TryComp(targetUid, out var targetSink))
         {
             _deviceLinkSystem.LinkDefaults(user,
-                (configurator.ActiveDeviceLink.Value, activeSource),
+                (configurator.Comp.ActiveDeviceLink.Value, activeSource),
                 (targetUid.Value, targetSink));
         }
-        else if (TryComp(configurator.ActiveDeviceLink, out DeviceLinkSinkComponent? activeSink) && TryComp(targetUid, out DeviceLinkSourceComponent? targetSource))
+        else if (_deviceLinkSinkQuery.TryComp(configurator.Comp.ActiveDeviceLink, out var activeSink)
+                 && _deviceLinkSourceQuery.TryComp(targetUid, out var targetSource))
         {
             _deviceLinkSystem.LinkDefaults(user,
                 (targetUid.Value, targetSource),
-                (configurator.ActiveDeviceLink.Value, activeSink));
+                (configurator.Comp.ActiveDeviceLink.Value, activeSink));
         }
     }
 
     private bool AccessCheck(EntityUid target, EntityUid? user, Entity<NetworkConfiguratorComponent> configurator)
     {
-        if (!TryComp(target, out AccessReaderComponent? reader) || user == null)
+        if (user == null)
             return true;
 
-        if (_accessSystem.IsAllowed(user.Value, target, reader))
+        if (_accessSystem.IsAllowed(user.Value, target))
             return true;
 
         var audioParams = configurator.Comp.SoundNoAccess.Params;
@@ -241,6 +236,7 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
         return false;
     }
 
+    [SubscribeLocalEvent]
     private void OnComponentRemoved(Entity<DeviceListComponent> ent, ref ComponentRemove args)
     {
         _uiSystem.CloseUi(ent.Owner, NetworkConfiguratorUiKey.Configure);

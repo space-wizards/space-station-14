@@ -1,5 +1,4 @@
-using Content.Server.DeviceLinking.Components;
-using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceLinking.Components;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -19,17 +18,9 @@ public sealed partial class LogicGateSystem : EntitySystem
     [Dependency] private SharedToolSystem _tool = default!;
     [Dependency] private UseDelaySystem _useDelay = default!;
 
-    private readonly int GateCount = Enum.GetValues(typeof(LogicGate)).Length;
+    [Dependency] private EntityQuery<UseDelayComponent> _useDelayQuery = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<LogicGateComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<LogicGateComponent, ExaminedEvent>(OnExamined);
-        SubscribeLocalEvent<LogicGateComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<LogicGateComponent, SignalReceivedEvent>(OnSignalReceived);
-    }
+    private readonly int _gateCount = Enum.GetValues<LogicGate>().Length;
 
     public override void Update(float deltaTime)
     {
@@ -47,100 +38,104 @@ public sealed partial class LogicGateSystem : EntitySystem
             }
 
             // output most likely changed so update it
-            UpdateOutput(uid, comp);
+            UpdateOutput((uid, comp));
         }
     }
 
-    private void OnInit(EntityUid uid, LogicGateComponent comp, ComponentInit args)
+    [SubscribeLocalEvent]
+    private void OnInit(Entity<LogicGateComponent> ent, ref ComponentInit args)
     {
-        _deviceLink.EnsureSinkPorts(uid, comp.InputPortA, comp.InputPortB);
-        _deviceLink.EnsureSourcePorts(uid, comp.OutputPort);
+        _deviceLink.EnsureSinkPorts(ent.Owner, ent.Comp.InputPortA, ent.Comp.InputPortB);
+        _deviceLink.EnsureSourcePorts(ent.Owner, ent.Comp.OutputPort);
     }
 
-    private void OnExamined(EntityUid uid, LogicGateComponent comp, ExaminedEvent args)
+    [SubscribeLocalEvent]
+    private void OnExamined(Entity<LogicGateComponent> ent, ref ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)
             return;
 
-        args.PushMarkup(Loc.GetString("logic-gate-examine", ("gate", comp.Gate.ToString().ToUpper())));
+        args.PushMarkup(Loc.GetString("logic-gate-examine", ("gate", ent.Comp.Gate.ToString().ToUpper())));
     }
 
-    private void OnInteractUsing(EntityUid uid, LogicGateComponent comp, InteractUsingEvent args)
+    [SubscribeLocalEvent]
+    private void OnInteractUsing(Entity<LogicGateComponent> ent, ref InteractUsingEvent args)
     {
-        if (args.Handled || !_tool.HasQuality(args.Used, comp.CycleQuality))
+        if (args.Handled || !_tool.HasQuality(args.Used, ent.Comp.CycleQuality))
             return;
 
         // no sound spamming
-        if (TryComp<UseDelayComponent>(uid, out var useDelay)
-            && !_useDelay.TryResetDelay((uid, useDelay), true))
+        if (_useDelayQuery.TryComp(ent.Owner, out var useDelay)
+            && !_useDelay.TryResetDelay((ent.Owner, useDelay), true))
             return;
 
         // cycle through possible gates
-        var gate = (int) comp.Gate;
-        gate = ++gate % GateCount;
-        comp.Gate = (LogicGate) gate;
+        var gate = (int) ent.Comp.Gate;
+        gate = ++gate % _gateCount;
+        ent.Comp.Gate = (LogicGate) gate;
 
         // since gate changed the output probably has too, update it
-        UpdateOutput(uid, comp);
+        UpdateOutput(ent);
 
         // notify the user
-        _audio.PlayPvs(comp.CycleSound, uid);
-        var msg = Loc.GetString("logic-gate-cycle", ("gate", comp.Gate.ToString().ToUpper()));
-        _popup.PopupEntity(msg, uid, args.User);
-        _appearance.SetData(uid, LogicGateVisuals.Gate, comp.Gate);
+        _audio.PlayPvs(ent.Comp.CycleSound, ent.Owner);
+        var msg = Loc.GetString("logic-gate-cycle", ("gate", ent.Comp.Gate.ToString().ToUpper()));
+        _popup.PopupEntity(msg, ent.Owner, args.User);
+        _appearance.SetData(ent.Owner, LogicGateVisuals.Gate, ent.Comp.Gate);
     }
 
-    private void OnSignalReceived(EntityUid uid, LogicGateComponent comp, ref SignalReceivedEvent args)
+    [SubscribeLocalEvent]
+    private void OnSignalReceived(Entity<LogicGateComponent> ent, ref SignalReceivedEvent args)
     {
         // default to momentary for compatibility with non-logic signals.
         // currently only door status and logic gates have logic signal state.
 
         // update the state for the correct port
-        if (args.Port == comp.InputPortA)
+        if (args.Port == ent.Comp.InputPortA)
         {
-            comp.StateA = SignalState.Momentary;
-            _appearance.SetData(uid, LogicGateVisuals.InputA, false); //If A == High => Sets input A sprite to True
+            ent.Comp.StateA = SignalState.Momentary;
+            _appearance.SetData(ent.Owner, LogicGateVisuals.InputA, false); //If A == High => Sets input A sprite to True
         }
-        else if (args.Port == comp.InputPortB)
+        else if (args.Port == ent.Comp.InputPortB)
         {
-            comp.StateB = SignalState.Momentary;
-            _appearance.SetData(uid, LogicGateVisuals.InputB, false); //If B == High => Sets input B sprite to True
+            ent.Comp.StateB = SignalState.Momentary;
+            _appearance.SetData(ent.Owner, LogicGateVisuals.InputB, false); //If B == High => Sets input B sprite to True
         }
 
-        UpdateOutput(uid, comp);
+        UpdateOutput(ent);
     }
 
     [SubscribeLocalEvent]
-    private void OnSignalReceived(EntityUid uid, LogicGateComponent comp, ref SignalReceivedEvent<LogicStatePayload> args)
+    private void OnSignalReceived(Entity<LogicGateComponent> ent, ref SignalReceivedEvent<LogicStatePayload> args)
     {
         var state = args.Data.State;
 
         // update the state for the correct port
-        if (args.Port == comp.InputPortA)
+        if (args.Port == ent.Comp.InputPortA)
         {
-            comp.StateA = state;
-            _appearance.SetData(uid, LogicGateVisuals.InputA, state == SignalState.High); //If A == High => Sets input A sprite to True
+            ent.Comp.StateA = state;
+            _appearance.SetData(ent.Owner, LogicGateVisuals.InputA, state == SignalState.High); //If A == High => Sets input A sprite to True
         }
-        else if (args.Port == comp.InputPortB)
+        else if (args.Port == ent.Comp.InputPortB)
         {
-            comp.StateB = state;
-            _appearance.SetData(uid, LogicGateVisuals.InputB, state == SignalState.High); //If B == High => Sets input B sprite to True
+            ent.Comp.StateB = state;
+            _appearance.SetData(ent.Owner, LogicGateVisuals.InputB, state == SignalState.High); //If B == High => Sets input B sprite to True
         }
 
-        UpdateOutput(uid, comp);
+        UpdateOutput(ent);
     }
 
     /// <summary>
     /// Handle the logic for a logic gate, invoking the port if the output changed.
     /// </summary>
-    private void UpdateOutput(EntityUid uid, LogicGateComponent comp)
+    private void UpdateOutput(Entity<LogicGateComponent> ent)
     {
         // get the new output value now that it's changed
         // momentary is treated as high for the current tick, after updating it will be reset to low
-        var a = comp.StateA != SignalState.Low;
-        var b = comp.StateB != SignalState.Low;
+        var a = ent.Comp.StateA != SignalState.Low;
+        var b = ent.Comp.StateB != SignalState.Low;
         var output = false;
-        switch (comp.Gate)
+        switch (ent.Comp.Gate)
         {
             case LogicGate.Or:
                 output = a || b;
@@ -162,14 +157,14 @@ public sealed partial class LogicGateSystem : EntitySystem
                 break;
         }
 
-        _appearance.SetData(uid, LogicGateVisuals.Output, output);
+        _appearance.SetData(ent.Owner, LogicGateVisuals.Output, output);
 
         // only send a payload if it actually changed
-        if (output != comp.LastOutput)
+        if (output != ent.Comp.LastOutput)
         {
-            comp.LastOutput = output;
+            ent.Comp.LastOutput = output;
 
-            _deviceLink.SendSignal(uid, comp.OutputPort, output);
+            _deviceLink.SendSignal(ent.Owner, ent.Comp.OutputPort, output);
         }
     }
 }

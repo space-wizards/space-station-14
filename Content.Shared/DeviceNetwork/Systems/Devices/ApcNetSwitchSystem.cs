@@ -10,6 +10,7 @@ public sealed partial class ApcNetSwitchSystem : EntitySystem
 {
     [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
 
+    [Dependency] private EntityQuery<DeviceNetworkComponent> _query = default!;
 
     /// <summary>
     /// Toggles the state of the switch and sends a <see cref="ApcNetTogglePayload"/>.
@@ -18,7 +19,7 @@ public sealed partial class ApcNetSwitchSystem : EntitySystem
     private void OnInteracted(Entity<ApcNetSwitchComponent> ent, ref InteractHandEvent args)
     {
         var (uid, component) = ent;
-        if (!TryComp(uid, out DeviceNetworkComponent? networkComponent))
+        if (!_query.TryComp(uid, out var networkComponent))
             return;
 
         component.State = !component.State;
@@ -32,7 +33,7 @@ public sealed partial class ApcNetSwitchSystem : EntitySystem
             Enabled = component.State,
         };
 
-        _deviceNetworkSystem.QueuePacket(uid, null, payload);
+        _deviceNetworkSystem.QueuePacket(uid, null, ref payload);
         args.Handled = true;
     }
 
@@ -43,7 +44,7 @@ public sealed partial class ApcNetSwitchSystem : EntitySystem
     private void OnPackedReceived(Entity<ApcNetSwitchComponent> ent, ref DeviceNetworkPacketEvent<ApcNetTogglePayload> args)
     {
         var (uid, component) = ent;
-        if (!TryComp(uid, out DeviceNetworkComponent? networkComponent)
+        if (!_query.TryComp(uid, out var networkComponent)
             || args.SenderAddress == networkComponent.Data.Address)
             return;
 

@@ -7,34 +7,28 @@ public sealed partial class EdgeDetectorSystem : EntitySystem
 {
     [Dependency] private DeviceLinkSystem _deviceLink = default!;
 
-    public override void Initialize()
+    [SubscribeLocalEvent]
+    private void OnInit(Entity<EdgeDetectorComponent> ent, ref ComponentInit args)
     {
-        base.Initialize();
-
-        SubscribeLocalEvent<EdgeDetectorComponent, ComponentInit>(OnInit);
-    }
-
-    private void OnInit(EntityUid uid, EdgeDetectorComponent comp, ComponentInit args)
-    {
-        _deviceLink.EnsureSinkPorts(uid, comp.InputPort);
-        _deviceLink.EnsureSourcePorts(uid, comp.OutputHighPort, comp.OutputLowPort);
+        _deviceLink.EnsureSinkPorts(ent.Owner, ent.Comp.InputPort);
+        _deviceLink.EnsureSourcePorts(ent.Owner, ent.Comp.OutputHighPort, ent.Comp.OutputLowPort);
     }
 
     [SubscribeLocalEvent]
-    private void OnSignalReceived(EntityUid uid, EdgeDetectorComponent comp, ref SignalReceivedEvent<LogicStatePayload> args)
+    private void OnSignalReceived(Entity<EdgeDetectorComponent> ent, ref SignalReceivedEvent<LogicStatePayload> args)
     {
         var state = args.Data.State;
 
-        if (args.Port != comp.InputPort)
+        if (args.Port != ent.Comp.InputPort)
             return;
 
         // make sure the level changed, multiple devices sending the same level are treated as one spamming
-        if (comp.State == state)
+        if (ent.Comp.State == state)
             return;
 
-        comp.State = state;
+        ent.Comp.State = state;
 
-        var port = state == SignalState.High ? comp.OutputHighPort : comp.OutputLowPort;
-        _deviceLink.InvokePort(uid, port);
+        var port = state == SignalState.High ? ent.Comp.OutputHighPort : ent.Comp.OutputLowPort;
+        _deviceLink.InvokePort(ent.Owner, port);
     }
 }

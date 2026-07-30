@@ -88,7 +88,7 @@ namespace Content.Server.Cloning
             }
         }
 
-        private void OnNewLink(EntityUid uid, CloningConsoleComponent component, NewLinkEvent args)
+        private void OnNewLink(EntityUid uid, CloningConsoleComponent component, ref NewLinkEvent args)
         {
             if (TryComp<MedicalScannerComponent>(args.Sink, out var scanner) && args.SourcePort == CloningConsoleComponent.ScannerPort)
             {
@@ -104,7 +104,7 @@ namespace Content.Server.Cloning
             RecheckConnections(uid, component.CloningPod, component.GeneticScanner, component);
         }
 
-        private void OnPortDisconnected(EntityUid uid, CloningConsoleComponent component, PortDisconnectedEvent args)
+        private void OnPortDisconnected(EntityUid uid, CloningConsoleComponent component, ref PortDisconnectedEvent args)
         {
             if (args.Port == CloningConsoleComponent.ScannerPort)
                 component.GeneticScanner = null;

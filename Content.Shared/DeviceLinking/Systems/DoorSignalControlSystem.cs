@@ -13,58 +13,82 @@ public sealed partial class DoorSignalControlSystem : EntitySystem
     [Dependency] private SharedDoorSystem _doorSystem = default!;
     [Dependency] private DeviceLinkSystem _signalSystem = default!;
 
-    public override void Initialize()
+    [Dependency] private EntityQuery<DoorComponent> _doorQuery = default!;
+    [Dependency] private EntityQuery<DoorBoltComponent> _doorBoltQuery = default!;
+
+    [SubscribeLocalEvent]
+    private void OnInit(Entity<DoorSignalControlComponent> ent, ref ComponentInit args)
     {
-        base.Initialize();
-        SubscribeLocalEvent<DoorSignalControlComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<DoorSignalControlComponent, SignalReceivedEvent>(OnSignalReceived);
-        SubscribeLocalEvent<DoorSignalControlComponent, DoorStateChangedEvent>(OnStateChanged);
+        _signalSystem.EnsureSinkPorts(ent.Owner, ent.Comp.OpenPort, ent.Comp.ClosePort, ent.Comp.TogglePort);
+        _signalSystem.EnsureSourcePorts(ent.Owner, ent.Comp.OutOpen);
     }
 
-    private void OnInit(EntityUid uid, DoorSignalControlComponent component, ComponentInit args)
+    [SubscribeLocalEvent]
+    private void OnSignalReceived(Entity<DoorSignalControlComponent> ent, ref SignalReceivedEvent args)
     {
-        _signalSystem.EnsureSinkPorts(uid, component.OpenPort, component.ClosePort, component.TogglePort);
-        _signalSystem.EnsureSourcePorts(uid, component.OutOpen);
-    }
-
-    private void OnSignalReceived(EntityUid uid, DoorSignalControlComponent component, ref SignalReceivedEvent args)
-    {
-        if (!TryComp(uid, out DoorComponent? door))
+        if (!_doorQuery.TryComp(ent.Owner, out var door))
             return;
 
-        var state = SignalState.Momentary;
-        if (args.Data is LogicStatePayload statePayload)
-            state = statePayload.State;
-
-        if (args.Port == component.OpenPort)
+        if (args.Port == ent.Comp.OpenPort)
         {
-            if (state == SignalState.High || state == SignalState.Momentary)
-            {
-                if (door.State == DoorState.Closed)
-                    _doorSystem.TryOpen(uid, door);
-            }
+            if (door.State == DoorState.Closed)
+                _doorSystem.TryOpen(ent.Owner, door);
         }
-        else if (args.Port == component.ClosePort)
+        else if (args.Port == ent.Comp.ClosePort)
         {
-            if (state == SignalState.High || state == SignalState.Momentary)
-            {
-                if (door.State == DoorState.Open)
-                    _doorSystem.TryClose(uid, door);
-            }
+            if (door.State == DoorState.Open)
+                _doorSystem.TryClose(ent.Owner, door);
         }
-        else if (args.Port == component.TogglePort)
+        else if (args.Port == ent.Comp.TogglePort)
         {
-            if (state == SignalState.High || state == SignalState.Momentary)
-            {
-                _doorSystem.TryToggleDoor(uid, door);
-            }
+            _doorSystem.TryToggleDoor(ent.Owner, door);
         }
-        else if (args.Port == component.InBolt)
+        else if (args.Port == ent.Comp.InBolt)
         {
-            if (!TryComp<DoorBoltComponent>(uid, out var bolts))
+            if (!_doorBoltQuery.TryComp(ent.Owner, out var bolts))
                 return;
 
-            // if its a pulse toggle, otherwise set bolts to high/low
+            // If it's a pulse toggle, otherwise set bolts to high/low.
+            _doorSystem.SetBoltsDown((ent.Owner, bolts), !bolts.BoltsDown);
+        }
+    }
+
+    [SubscribeLocalEvent]
+    private void OnSignalReceived(Entity<DoorSignalControlComponent> ent, ref SignalReceivedEvent<LogicStatePayload> args)
+    {
+        if (!_doorQuery.TryComp(ent.Owner, out var door))
+            return;
+
+        var state = args.Data.State;
+        if (args.Port == ent.Comp.OpenPort)
+        {
+            if (state == SignalState.Low)
+                return;
+
+            if (door.State == DoorState.Closed)
+                _doorSystem.TryOpen(ent.Owner, door);
+        }
+        else if (args.Port == ent.Comp.ClosePort)
+        {
+            if (state == SignalState.Low)
+                return;
+
+            if (door.State == DoorState.Open)
+                _doorSystem.TryClose(ent.Owner, door);
+        }
+        else if (args.Port == ent.Comp.TogglePort)
+        {
+            if (state != SignalState.Low)
+            {
+                _doorSystem.TryToggleDoor(ent.Owner, door);
+            }
+        }
+        else if (args.Port == ent.Comp.InBolt)
+        {
+            if (!_doorBoltQuery.TryComp(ent.Owner, out var bolts))
+                return;
+
+            // If it's a pulse toggle, otherwise set bolts to high/low.
             bool bolt;
             if (state == SignalState.Momentary)
             {
@@ -75,24 +99,26 @@ public sealed partial class DoorSignalControlSystem : EntitySystem
                 bolt = state == SignalState.High;
             }
 
-            _doorSystem.SetBoltsDown((uid, bolts), bolt);
+            _doorSystem.SetBoltsDown((ent.Owner, bolts), bolt);
         }
     }
 
-    private void OnStateChanged(EntityUid uid, DoorSignalControlComponent door, DoorStateChangedEvent args)
+    [SubscribeLocalEvent]
+    private void OnStateChanged(Entity<DoorSignalControlComponent> ent, ref DoorStateChangedEvent args)
     {
-        if (args.State == DoorState.Closed)
+        switch (args.State)
         {
-            // only ever say the door is closed when it is completely airtight
-            _signalSystem.SendSignal(uid, door.OutOpen, false);
-        }
-        else if (args.State == DoorState.Open
-                 || args.State == DoorState.Opening
-                 || args.State == DoorState.Closing
-                 || args.State == DoorState.Emagging)
-        {
-            // say the door is open whenever it would be letting air pass
-            _signalSystem.SendSignal(uid, door.OutOpen, true);
+            case DoorState.Closed:
+                // only ever say the door is closed when it is completely airtight
+                _signalSystem.SendSignal(ent.Owner, ent.Comp.OutOpen, false);
+                break;
+            case DoorState.Open:
+            case DoorState.Opening:
+            case DoorState.Closing:
+            case DoorState.Emagging:
+                // say the door is open whenever it would be letting air pass
+                _signalSystem.SendSignal(ent.Owner, ent.Comp.OutOpen, true);
+                break;
         }
     }
 }

@@ -9,7 +9,6 @@ using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
-using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Power.Generation.Teg;
 using Content.Shared.SensorMonitoring;
 using Robust.Server.GameObjects;
@@ -84,7 +83,7 @@ public sealed partial class SensorMonitoringConsoleSystem : EntitySystem
     private void DeviceListUpdated(
         EntityUid uid,
         SensorMonitoringConsoleComponent component,
-        DeviceListUpdateEvent args)
+        ref DeviceListUpdateEvent args)
     {
         UpdateDevices(uid, component, args.Devices, args.OldDevices);
     }

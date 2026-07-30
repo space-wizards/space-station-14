@@ -13,7 +13,7 @@ namespace Content.Shared.DeviceNetwork.Systems;
 ///     Device networking allows machines and devices to communicate with each other
 ///     while adhering to restrictions like range or being connected to the same power network.
 /// </summary>
-public sealed partial class DeviceNetworkSystem : EntitySystem, IDevicePayloadRaiser
+public sealed partial class DeviceNetworkSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _protoMan = default!;
     [Dependency] private IRobustRandom _random = default!;
@@ -24,6 +24,8 @@ public sealed partial class DeviceNetworkSystem : EntitySystem, IDevicePayloadRa
     // Basically a cache of devices to connect them together faster.
     // TODO make DeviceNets smarter and make them entities
     private readonly Dictionary<int, DeviceNet> _networks = new(4);
+
+    private Device[] _deviceCache = [];
 
     [SubscribeLocalEvent]
     private void OnExamine(Entity<DeviceNetworkComponent> ent, ref ExaminedEvent args)
@@ -148,12 +150,13 @@ public sealed partial class DeviceNetworkSystem : EntitySystem, IDevicePayloadRa
         if (packet.Address == null)
         {
             // Broadcast to all listening devices
-            if (network.ListeningDevices.TryGetValue(packet.Frequency, out var devices) && CheckRecipientsList(packet, ref devices))
-            {
-                Extensions.EnsureLength(ref _deviceCache, devices.Count);
-                devices.CopyTo(_deviceCache);
-                SendToConnections(_deviceCache.AsSpan(0, devices.Count), packet);
-            }
+            if (!network.ListeningDevices.TryGetValue(packet.Frequency, out var devices)
+                || !CheckRecipientsList(packet, ref devices))
+                return;
+
+            Extensions.EnsureLength(ref _deviceCache, devices.Count);
+            devices.CopyTo(_deviceCache);
+            SendToConnections(_deviceCache.AsSpan(0, devices.Count), packet);
         }
         else
         {
@@ -214,13 +217,7 @@ public sealed partial class DeviceNetworkSystem : EntitySystem, IDevicePayloadRa
 
     private void SendToConnections<T>(ReadOnlySpan<Device> connections, DeviceNetworkPacketEvent<T> packet) where T : INetworkPayload
     {
-        if (Deleted(packet.Sender))
-        {
-            return;
-        }
-
         var xform = Transform(packet.Sender);
-
         var senderPos = _transformSystem.GetWorldPosition(xform);
 
         foreach (var connection in connections)
@@ -243,27 +240,4 @@ public sealed partial class DeviceNetworkSystem : EntitySystem, IDevicePayloadRa
             RaiseLocalEvent(connection.Owner, ref packet);
         }
     }
-
-    /// <summary>
-    /// Raises a device network packet to an entity. You should not be calling this unless you know what you're doing.
-    /// </summary>
-    public void RaisePayloadEvent<T>(EntityUid target, T payload, ref DeviceNetworkPacketData packet) where T : NetworkPayloadBase<T>
-    {
-        var ev = new DeviceNetworkPacketEvent<T>(
-            packet.NetId,
-            packet.Address,
-            packet.Frequency,
-            packet.SenderAddress,
-            packet.Sender,
-            payload);
-        RaiseLocalEvent(target, ref ev);
-    }
-}
-
-/// <summary>
-/// Used to raise an <see cref="NetworkPayload"/> without losing the type of effect.
-/// </summary>
-public interface IDevicePayloadRaiser
-{
-    void RaisePayloadEvent<T>(EntityUid target, T payload, ref DeviceNetworkPacketData packet) where T : NetworkPayloadBase<T>;
 }

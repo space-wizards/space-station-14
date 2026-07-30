@@ -181,7 +181,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
         });
     }
 
-    private void OnDeviceListUpdate(EntityUid uid, AirAlarmComponent component, DeviceListUpdateEvent args)
+    private void OnDeviceListUpdate(EntityUid uid, AirAlarmComponent component, ref DeviceListUpdateEvent args)
     {
         foreach (var device in args.OldDevices)
         {

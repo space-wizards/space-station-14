@@ -1,16 +1,7 @@
 ﻿namespace Content.Shared.DeviceNetwork.Events;
 
-public sealed class DeviceListUpdateEvent : EntityEventArgs
-{
-    public DeviceListUpdateEvent(List<EntityUid> oldDevices, List<EntityUid> devices)
-    {
-        OldDevices = oldDevices;
-        Devices = devices;
-    }
-
-    public List<EntityUid> OldDevices { get; }
-    public List<EntityUid> Devices { get; }
-}
+[ByRefEvent]
+public readonly record struct DeviceListUpdateEvent(List<EntityUid> OldDevices, List<EntityUid> Devices);
 
 public enum DeviceListUpdateResult : byte
 {

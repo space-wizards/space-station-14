@@ -14,12 +14,6 @@ public sealed partial class SingletonDeviceNetServerSystem : EntitySystem
     [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
     [Dependency] private SharedStationSystem _stationSystem = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-        SubscribeLocalEvent<SingletonDeviceNetServerComponent, PowerChangedEvent>(OnPowerChanged);
-    }
-
     /// <summary>
     /// Returns whether the given entity is an active server or not
     /// </summary>
@@ -83,6 +77,7 @@ public sealed partial class SingletonDeviceNetServerSystem : EntitySystem
     /// <summary>
     /// Disconnects the server losing power
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnPowerChanged(Entity<SingletonDeviceNetServerComponent> ent, ref PowerChangedEvent args)
     {
         ent.Comp.Available = args.Powered;

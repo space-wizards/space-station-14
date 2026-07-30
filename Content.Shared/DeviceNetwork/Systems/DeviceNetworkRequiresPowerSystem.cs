@@ -12,8 +12,6 @@ public sealed partial class DeviceNetworkRequiresPowerSystem : EntitySystem
     private void OnBeforePacketSent(Entity<DeviceNetworkRequiresPowerComponent> ent, ref BeforePacketSentEvent args)
     {
         if (!_power.IsPowered(ent.Owner))
-        {
             args.Cancelled = true;
-        }
     }
 }
