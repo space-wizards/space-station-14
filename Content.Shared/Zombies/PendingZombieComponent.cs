@@ -7,15 +7,16 @@ namespace Content.Shared.Zombies;
 /// <summary>
 /// Temporary because diseases suck.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent]
 public sealed partial class PendingZombieComponent : Component
 {
     /// <summary>
     /// Damage dealt every second to infected individuals.
     /// </summary>
-    [DataField("damage")] public DamageSpecifier Damage = new()
+    [DataField]
+    public DamageSpecifier Damage = new()
     {
-        DamageDict = new ()
+        DamageDict = new()
         {
             { "Poison", 0.3 },
         }
@@ -24,16 +25,16 @@ public sealed partial class PendingZombieComponent : Component
     /// <summary>
     /// A multiplier for <see cref="Damage"/> applied when the entity is in critical condition.
     /// </summary>
-    [DataField("critDamageMultiplier")]
+    [DataField]
     public float CritDamageMultiplier = 10f;
 
-    [DataField("nextTick", customTypeSerializer:typeof(TimeOffsetSerializer))]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan NextTick;
 
     /// <summary>
     /// The amount of time left before the infected begins to take damage.
     /// </summary>
-    [DataField("gracePeriod"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public TimeSpan GracePeriod = TimeSpan.FromMinutes(2);
 
     /// <summary>
@@ -51,13 +52,13 @@ public sealed partial class PendingZombieComponent : Component
     /// <summary>
     /// The chance each second that a warning will be shown.
     /// </summary>
-    [DataField("infectionWarningChance")]
+    [DataField]
     public float InfectionWarningChance = 0.0166f;
 
     /// <summary>
     /// Infection warnings shown as popups
     /// </summary>
-    [DataField("infectionWarnings")]
+    [DataField]
     public List<string> InfectionWarnings = new()
     {
         "zombie-infection-warning",
