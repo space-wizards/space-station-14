@@ -4,8 +4,14 @@
 public sealed partial class SuddenNukeArmRuleComponent : Component
 {
     /// <summary>
-    /// The nuke that will be picked for arming.
+    /// The nuke picked for arming.
     /// </summary>
     [DataField]
     public EntityUid? PickedNuke;
+
+    /// <summary>
+    /// The nuke that exploded.
+    /// </summary>
+    [DataField]
+    public EntityUid? ExplodedNuke;
 }

@@ -20,6 +20,22 @@ public sealed partial class SuddenNukeArmRule : StationEventSystem<SuddenNukeArm
         SubscribeLocalEvent<NukeDisarmSuccessEvent>(OnNukeDisarm);
     }
 
+    public bool IsNukePicked(out HashSet<EntityUid> pickedNukes)
+    {
+        pickedNukes = new HashSet<EntityUid>();
+
+        var query = EntityQueryEnumerator<SuddenNukeArmRuleComponent>();
+        while (query.MoveNext(out _, out var suddenNukeArmRuleComponent))
+        {
+            if (suddenNukeArmRuleComponent.PickedNuke is not null)
+            {
+                pickedNukes.Add(suddenNukeArmRuleComponent.PickedNuke.Value);
+            }
+        }
+
+        return pickedNukes.Count > 0;
+    }
+
     protected override void Started(EntityUid uid,
         SuddenNukeArmRuleComponent component,
         GameRuleComponent gameRule,
@@ -45,6 +61,12 @@ public sealed partial class SuddenNukeArmRule : StationEventSystem<SuddenNukeArm
                 continue;
             }
 
+            if (IsNukePicked(out var existingPickedNukes)
+                && existingPickedNukes.Contains(nukeUid))
+            {
+                continue;
+            }
+
             // If nuke was already armed by other causes and then disarmed,
             // start counter from beginning again to give leeway.
             _nukeSystem.SetRemainingTime(nukeUid, nukeComponent.Timer);
@@ -56,19 +78,22 @@ public sealed partial class SuddenNukeArmRule : StationEventSystem<SuddenNukeArm
         }
     }
 
+
     private void OnNukeExploded(NukeExplodedEvent ev)
     {
-        var query = EntityQueryEnumerator<SuddenNukeArmRuleComponent>();
-
-        while (query.MoveNext(out _, out var suddenNukeArmRuleComponent))
+        if (IsNukePicked(out var pickedNukes) && pickedNukes.Contains(ev.ExplodedNuke))
         {
-            if (suddenNukeArmRuleComponent.PickedNuke is null)
+            var query = EntityQueryEnumerator<SuddenNukeArmRuleComponent>();
+
+            while (query.MoveNext(out _, out var component))
             {
-                continue;
+                if (component.PickedNuke == ev.ExplodedNuke)
+                {
+                    component.ExplodedNuke = ev.ExplodedNuke;
+                }
             }
 
             _roundEndSystem.EndRound();
-            break;
         }
     }
 
@@ -78,7 +103,11 @@ public sealed partial class SuddenNukeArmRule : StationEventSystem<SuddenNukeArm
 
         while (query.MoveNext(out _, out var suddenNukeArmRuleComponent))
         {
-            suddenNukeArmRuleComponent.PickedNuke = null;
+            if (ev.DisarmedNuke == suddenNukeArmRuleComponent.PickedNuke)
+            {
+                suddenNukeArmRuleComponent.PickedNuke = null;
+                break;
+            }
         }
     }
 
@@ -89,7 +118,7 @@ public sealed partial class SuddenNukeArmRule : StationEventSystem<SuddenNukeArm
     {
         base.AppendRoundEndText(uid, component, gameRule, ref args);
 
-        if (component.PickedNuke is null)
+        if (component.ExplodedNuke is null || component.PickedNuke != component.ExplodedNuke)
         {
             return;
         }

@@ -304,7 +304,7 @@ public sealed partial class NukeSystem : EntitySystem
 
         DisarmBomb(uid, component);
 
-        var ev = new NukeDisarmSuccessEvent();
+        var ev = new NukeDisarmSuccessEvent(uid);
         RaiseLocalEvent(ev);
 
         args.Handled = true;
@@ -627,6 +627,7 @@ public sealed partial class NukeSystem : EntitySystem
         RaiseLocalEvent(new NukeExplodedEvent()
         {
             OwningStation = transform.GridUid,
+            ExplodedNuke = uid,
         });
 
         _sound.StopStationEventMusic(uid, StationEventMusicType.Nuke);
@@ -699,14 +700,15 @@ public sealed partial class NukeSystem : EntitySystem
 public sealed class NukeExplodedEvent : EntityEventArgs
 {
     public EntityUid? OwningStation;
+    public EntityUid ExplodedNuke;
 }
 
 /// <summary>
 ///     Raised directed on the nuke when its disarm doafter is successful.
 ///     So the game knows not to end.
 /// </summary>
-public sealed class NukeDisarmSuccessEvent : EntityEventArgs
+public sealed class NukeDisarmSuccessEvent(EntityUid disarmedNuke) : EntityEventArgs
 {
-
+    public EntityUid DisarmedNuke = disarmedNuke;
 }
 
