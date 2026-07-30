@@ -306,14 +306,11 @@
     event: !type:ScreechActionEvent
 
 - type: entity
-  parent: BaseAction
+  parent: FakeMindShieldToggleAction
   id: ActionChangelingFakeMindshieldToggle
   name: '[color=green]Toggle Fake Mindshield[/color]'
   description: Turn our mindshield visibility on or off.
   components:
-  - type: Action
-    useDelay: 1
-    raiseOnUser: true
   - type: Sprite
     sprite: Interface/Actions/changeling2.rsi
     layers:

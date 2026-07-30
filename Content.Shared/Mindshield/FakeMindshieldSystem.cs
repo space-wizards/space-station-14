@@ -49,8 +49,8 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
     private void ShowTogglePopup(Entity<FakeMindShieldComponent> ent, EntityUid performer)
     {
         var message = ent.Comp.IsEnabled
-            ? Loc.GetString("fake-mindshield-enabled")
-            : Loc.GetString("fake-mindshield-disabled");
+            ? Loc.GetString(ent.Comp.EnabledPopup)
+            : Loc.GetString(ent.Comp.DisabledPopup);
 
         _popups.PopupEntity(message, performer, performer);
     }

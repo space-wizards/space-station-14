@@ -42,4 +42,16 @@ public sealed partial class FakeMindShieldComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntProtoId Action = "FakeMindShieldToggleAction";
+
+    /// <summary>
+    /// Popup to show to the owner of the fake mindshield when it is enabled.
+    /// </summary>
+    [DataField]
+    public LocId EnabledPopup = "fake-mindshield-enabled";
+
+    /// <summary>
+    /// Popup to show to the owner of the fake mindshield when it is enabled.
+    /// </summary>
+    [DataField]
+    public LocId DisabledPopup = "fake-mindshield-disabled";
 }
