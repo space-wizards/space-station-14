@@ -1,4 +1,6 @@
+using Content.Shared.Actions.Components;
 using Content.Shared.Inventory;
+using Content.Shared.Whitelist;
 
 namespace Content.Shared.Actions;
 
@@ -8,6 +10,7 @@ namespace Content.Shared.Actions;
 public sealed partial class ActionGrantSystem : EntitySystem
 {
     [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
     [SubscribeLocalEvent]
     private void OnItemGet(Entity<ItemActionGrantComponent> ent, ref GetItemActionsEvent args)
@@ -20,6 +23,11 @@ public sealed partial class ActionGrantSystem : EntitySystem
 
         foreach (var action in grant.ActionEntities)
         {
+            if (TryComp<ActionUserWhitelistComponent>(action, out var whitelist) &&
+                !_whitelist.IsWhitelistPass(whitelist.Whitelist, args.User))
+            {
+                continue;
+            }
             args.AddAction(action);
         }
     }

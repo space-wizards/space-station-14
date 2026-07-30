@@ -15,10 +15,10 @@ public sealed partial class ActionRestrictionsSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnWhitelistAttempt(Entity<ActionUserWhitelistComponent> ent, ref ActionAttemptEvent args)
     {
-        if (args.Cancelled || !_whitelist.IsWhitelistFail(ent.Comp.Whitelist, args.User))
+        if (args.Cancelled || _whitelist.IsWhitelistPass(ent.Comp.Whitelist, args.User))
             return;
 
-        CancelAttempt(args.User, ent.Comp.Popup, ref args);
+        CancelAttempt(args.User, ent.Comp.OnFailPopup, ref args);
     }
 
     [SubscribeLocalEvent]
@@ -31,7 +31,7 @@ public sealed partial class ActionRestrictionsSystem : EntitySystem
         if (_hands.IsHolding(args.User, provider))
             return;
 
-        CancelAttempt(args.User, ent.Comp.Popup, ref args);
+        CancelAttempt(args.User, ent.Comp.OnFailPopup, ref args);
     }
 
     private void CancelAttempt(EntityUid user, LocId? popup, ref ActionAttemptEvent args)

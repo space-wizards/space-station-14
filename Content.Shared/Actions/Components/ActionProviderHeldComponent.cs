@@ -10,6 +10,9 @@ namespace Content.Shared.Actions.Components;
 [EntityCategory("Actions")]
 public sealed partial class ActionProviderHeldComponent : Component
 {
+    /// <summary>
+    /// Localization ID of the popup shown when the user is not holding the action provider.
+    /// </summary>
     [DataField]
-    public LocId? Popup;
+    public LocId? OnFailPopup;
 }
