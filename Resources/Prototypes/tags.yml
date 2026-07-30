@@ -1523,10 +1523,6 @@
 ## W ##
 
 - type: Tag
-  id: Wall # Tagged entity is a wall. Several systems and several targeting whitelists (BaseMobDragon) care about this.
-           # .cs: SharedNavMapSystem, WallmountCondition, TileWallsCommand, DungeonJob
-
-- type: Tag
   id: WallmountGeneratorAPUElectronics # ConstructionGraph: WallmountGenerator
 
 - type: Tag
