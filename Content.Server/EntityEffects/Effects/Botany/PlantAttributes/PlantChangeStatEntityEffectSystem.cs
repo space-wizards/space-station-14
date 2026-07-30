@@ -12,7 +12,7 @@ namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 public sealed partial class PlantChangeStatEntityEffectSystem : EntityEffectSystem<PlantHolderComponent, PlantChangeStat>
 {
     // TODO: This is awful. I do not have the strength to refactor this. I want it gone.
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     protected override void Effect(Entity<PlantHolderComponent> entity, ref EntityEffectEvent<PlantChangeStat> args)
     {

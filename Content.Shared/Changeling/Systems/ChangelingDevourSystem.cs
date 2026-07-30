@@ -19,19 +19,19 @@ using Robust.Shared.Network;
 
 namespace Content.Shared.Changeling.Systems;
 
-public sealed class ChangelingDevourSystem : EntitySystem
+public sealed partial class ChangelingDevourSystem : EntitySystem
 {
-    [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
-    [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedChangelingIdentitySystem _changelingIdentity = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedStoreSystem _store = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private INetManager _net = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private SharedActionsSystem _actionsSystem = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedChangelingIdentitySystem _changelingIdentity = default!;
+    [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private SharedPopupSystem _popupSystem = default!;
+    [Dependency] private SharedStoreSystem _store = default!;
 
     public override void Initialize()
     {
@@ -88,7 +88,7 @@ public sealed class ChangelingDevourSystem : EntitySystem
 
         var selfMessage = Loc.GetString("changeling-devour-begin-windup-self", ("user", Identity.Entity(ent.Owner, EntityManager)));
         var othersMessage = Loc.GetString("changeling-devour-begin-windup-others", ("user", Identity.Entity(ent.Owner, EntityManager)));
-        _popupSystem.PopupPredicted(
+        _popupSystem.PopupEntity(
             selfMessage,
             othersMessage,
             args.Performer,
@@ -113,7 +113,7 @@ public sealed class ChangelingDevourSystem : EntitySystem
 
         var selfMessage = Loc.GetString("changeling-devour-begin-consume-self", ("user", Identity.Entity(ent.Owner, EntityManager)));
         var othersMessage = Loc.GetString("changeling-devour-begin-consume-others", ("user", Identity.Entity(ent.Owner, EntityManager)));
-        _popupSystem.PopupPredicted(
+        _popupSystem.PopupEntity(
             selfMessage,
             othersMessage,
             ent.Owner,
@@ -160,7 +160,7 @@ public sealed class ChangelingDevourSystem : EntitySystem
 
         var selfMessage = Loc.GetString("changeling-devour-consume-complete-self", ("user", Identity.Entity(ent.Owner, EntityManager)));
         var othersMessage = Loc.GetString("changeling-devour-consume-complete-others", ("user", Identity.Entity(ent.Owner, EntityManager)));
-        _popupSystem.PopupPredicted(
+        _popupSystem.PopupEntity(
             selfMessage,
             othersMessage,
             ent.Owner,
@@ -203,42 +203,42 @@ public sealed class ChangelingDevourSystem : EntitySystem
         if (!HasComp<HumanoidProfileComponent>(victim))
         {
             if (showPopup)
-                _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-cannot-devour"), changeling.Owner, changeling.Owner, PopupType.Medium);
+                _popupSystem.PopupEntity(Loc.GetString("changeling-devour-attempt-failed-cannot-devour"), changeling.Owner, changeling.Owner, PopupType.Medium);
             return false;
         }
 
         if (HasComp<RecentlyDevouredComponent>(victim))
         {
             if (showPopup)
-                _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-devoured-recently"), changeling.Owner, changeling.Owner, PopupType.Medium);
+                _popupSystem.PopupEntity(Loc.GetString("changeling-devour-attempt-failed-devoured-recently"), changeling.Owner, changeling.Owner, PopupType.Medium);
             return false;
         }
 
         if (checkDead && !_mobState.IsDead(victim))
         {
             if (showPopup)
-                _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-not-dead"), changeling.Owner, changeling.Owner, PopupType.Medium);
+                _popupSystem.PopupEntity(Loc.GetString("changeling-devour-attempt-failed-not-dead"), changeling.Owner, changeling.Owner, PopupType.Medium);
             return false;
         }
 
         if (HasComp<RottingComponent>(victim))
         {
             if (showPopup)
-                _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-rotting"), changeling.Owner, changeling.Owner, PopupType.Medium);
+                _popupSystem.PopupEntity(Loc.GetString("changeling-devour-attempt-failed-rotting"), changeling.Owner, changeling.Owner, PopupType.Medium);
             return false;
         }
 
         if (checkProtected && IsTargetProtected(victim, changeling))
         {
             if (showPopup)
-                _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-protected"), changeling.Owner, changeling.Owner, PopupType.Medium);
+                _popupSystem.PopupEntity(Loc.GetString("changeling-devour-attempt-failed-protected"), changeling.Owner, changeling.Owner, PopupType.Medium);
             return false;
         }
 
         if (!_changelingIdentity.HasIdentity(changeling.Owner, victim) && !_changelingIdentity.HasFreeDisguiseSlot(changeling.Owner))
         {
             if (showPopup)
-                _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-no-space"), changeling.Owner, changeling.Owner, PopupType.Medium);
+                _popupSystem.PopupEntity(Loc.GetString("changeling-devour-attempt-failed-no-space"), changeling.Owner, changeling.Owner, PopupType.Medium);
             return false;
         }
 

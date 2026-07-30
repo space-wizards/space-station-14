@@ -13,6 +13,10 @@
     sprite: Clothing/Belt/sheath.rsi
   - type: Item
     size: Ginormous
+    shape:
+    - 0,0,1,2
+    storedOffset: 0,-2
+    storedRotation: 45
   - type: ItemSlots
     slots:
       item:
@@ -21,6 +25,7 @@
         ejectVerbText: sheath-eject-verb
         insertSound: /Audio/Items/sheath.ogg
         ejectSound: /Audio/Items/unsheath.ogg
+        ejectOnBreak: true
         whitelist:
           tags:
           - CaptainSabre
@@ -53,6 +58,10 @@
       tags:
       - Arrow
       - Plunger
+  - type: Item
+    size: Ginormous
+    shape:
+    - 0,0,5,2
   - type: Appearance
   - type: StorageContainerVisuals
     maxFillLevels: 3
@@ -122,6 +131,8 @@
       sidearm_slot: !type:ContainerSlot
   - type: Item
     size: Ginormous
+    shape:
+    - 0,0,4,1
   - type: ItemSlots
     slots:
       sidearm_slot:
@@ -220,6 +231,8 @@
       gun_slot: !type:ContainerSlot
   - type: Item
     size: Ginormous
+    shape:
+    - 0,0,4,2
   - type: ItemSlots
     slots:
       upgraded_sidearm_slot: # Move this in the middle of gun_slot & upgraded_utility_slot when all weapons that fit in gun_slot don't require wielding.
