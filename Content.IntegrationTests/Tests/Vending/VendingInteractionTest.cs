@@ -57,7 +57,7 @@ public sealed class VendingInteractionTest : InteractionTest
 
 - type: entity
   id: {VendingMachineProtoId}
-  parent: VendingMachine
+  parent: BaseVendingMachine
   components:
   - type: VendingMachine
     pack: InteractionTestVendingInventory

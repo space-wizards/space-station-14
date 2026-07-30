@@ -98,7 +98,7 @@ namespace Content.IntegrationTests.Tests
     - BigTestInventory
 
 - type: entity
-  parent: VendingMachine
+  parent: BaseVendingMachine
   id: VendingMachineTest
   name: Test Ramen
   components:
