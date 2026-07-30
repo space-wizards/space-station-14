@@ -151,7 +151,17 @@ public abstract partial class SharedVirtualItemSystem : EntitySystem
     /// <summary>
     /// Spawns unremoveable virtual items in empty hands.
     /// </summary>
-    public bool TrySpawnUnremoveableVirtualItemInHand(EntityUid blockingEnt, EntityUid user, int count = 1, bool dropOthers = false, bool silent = false)
+    /// <param name="blockingEnt">The entity that the virtual items will copy.</param>
+    /// <param name="user">The entity whose hands will hold the virtual items.</param>
+    /// <param name="count">The number of virtual items to spawn.</param>
+    /// <param name="dropOthers">Whether to try dropping other items to make space.</param>
+    /// <param name="silent">Whether to suppress popups when dropping other items.</param>
+    public bool TrySpawnUnremoveableVirtualItemInHand(
+        EntityUid blockingEnt,
+        EntityUid user,
+        int count = 1,
+        bool dropOthers = false,
+        bool silent = false)
     {
         for (var i = 0; i < count; i++)
         {
@@ -161,8 +171,22 @@ public abstract partial class SharedVirtualItemSystem : EntitySystem
         return true;
     }
 
-    /// <inheritdoc cref="TrySpawnUnremoveableVirtualItemInHand(Robust.Shared.GameObjects.EntityUid,Robust.Shared.GameObjects.EntityUid,bool,bool)"/>
-    public bool TrySpawnUnremoveableVirtualItemInHand(EntityUid blockingEnt, EntityUid user, [NotNullWhen(true)] out EntityUid? virtualItem, bool dropOthers = false, string? empty = null, bool silent = false)
+    /// <summary>
+    /// Spawns an unremoveable virtual item in an empty hand.
+    /// </summary>
+    /// <param name="blockingEnt">The entity that the virtual item will copy.</param>
+    /// <param name="user">The entity whose hand will hold the virtual item.</param>
+    /// <param name="virtualItem">The spawned virtual item, if successful.</param>
+    /// <param name="dropOthers">Whether to try dropping another item to make space.</param>
+    /// <param name="empty">The hand to insert the virtual item into, if known.</param>
+    /// <param name="silent">Whether to suppress the popup when dropping another item.</param>
+    public bool TrySpawnUnremoveableVirtualItemInHand(
+        EntityUid blockingEnt,
+        EntityUid user,
+        [NotNullWhen(true)] out EntityUid? virtualItem,
+        bool dropOthers = false,
+        string? empty = null,
+        bool silent = false)
     {
         if (!TrySpawnVirtualItemInHand(blockingEnt, user, out virtualItem, dropOthers, empty, silent))
             return false;
