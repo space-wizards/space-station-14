@@ -213,6 +213,7 @@ public sealed partial class MechSystem : SharedMechSystem
             _popup.PopupEntity(Loc.GetString("mech-no-enter", ("item", uid)), Identity.Entity(args.User, EntityManager));
             return;
         }
+
         TryInsert(uid, args.User, component);
         args.Handled = true;
     }
@@ -222,8 +223,10 @@ public sealed partial class MechSystem : SharedMechSystem
     {
         if (args.Cancelled || args.Handled)
             return;
+
         if (!TryEject(uid, component))
             return;
+
         args.Handled = true;
     }
 
