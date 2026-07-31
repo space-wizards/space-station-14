@@ -3,11 +3,9 @@ using Content.Shared.Chat;
 using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Electrocution;
-using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Mind;
-using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -98,7 +96,16 @@ public abstract partial class SharedDefibrillatorSystem : EntitySystem
         if (!TryComp<UseDelayComponent>(ent, out var useDelay) || _useDelay.IsDelayed((ent.Owner, useDelay), ent.Comp.DelayId))
             return false;
 
+        if (!TryComp<MobStateComponent>(target, out var mobState))
+            return false;
+
         if (!_powerCell.HasActivatableCharge(ent.Owner, user: user, predicted: true))
+            return false;
+
+        if (!targetCanBeAlive && _mobState.IsAlive(target, mobState))
+            return false;
+
+        if (!targetCanBeAlive && !ent.Comp.CanDefibCrit && _mobState.IsCritical(target, mobState))
             return false;
 
         return true;
@@ -122,8 +129,6 @@ public abstract partial class SharedDefibrillatorSystem : EntitySystem
             return false;
 
         _audio.PlayPredicted(ent.Comp.ChargeSound, ent.Owner, user);
-        _popup.PopupEntity(Loc.GetString("defibrillator-begin", ("name", Identity.Entity(user, EntityManager)), ("target", Identity.Entity(target, EntityManager))), target);
-
         return _doAfter.TryStartDoAfter(
             new DoAfterArgs(EntityManager, user, ent.Comp.DoAfterDuration, new DefibrillatorZapDoAfterEvent(),
             ent.Owner, target, ent.Owner)
@@ -164,6 +169,9 @@ public abstract partial class SharedDefibrillatorSystem : EntitySystem
         if (targetEvent.Cancelled || !CanZap(ent, target, user, true))
             return;
 
+        if (!TryComp<MobStateComponent>(target, out var targetMobState))
+            return;
+
         _audio.PlayPredicted(ent.Comp.ZapSound, ent.Owner, user);
         _electrocution.TryDoElectrocution(target, ent.Owner, ent.Comp.ZapDamage, ent.Comp.WritheDuration, true, ignoreInsulation: true);
 
@@ -196,16 +204,14 @@ public abstract partial class SharedDefibrillatorSystem : EntitySystem
         }
         else
         {
-            TryComp<MobStateComponent>(target, out var targetMobState);
+            if (_mobState.IsDead(target, targetMobState))
+                _damageable.TryChangeDamage(target, ent.Comp.ZapHeal, true, origin: user);
 
-            _damageable.TryChangeDamage(target, ent.Comp.ZapHeal, true, origin: user);
-
-            if (_mobState.IsDead(target, targetMobState) &&
-                TryComp<MobThresholdsComponent>(target, out var targetThresholds) && //do they have a threshold
+            if (TryComp<MobThresholdsComponent>(target, out var targetThresholds) &&
                 _mobThreshold.TryGetThresholdForState(target, MobState.Dead, out var threshold, targetThresholds) &&
-                _damageable.GetTotalDamage(target) < threshold) //is their current health above their death threshold
+                _damageable.GetTotalDamage(target) < threshold)
             {
-                _mobState.ChangeMobState(target, MobState.Critical, targetMobState, user); //if so revive them
+                _mobState.ChangeMobState(target, MobState.Critical, targetMobState, user);
                 failedRevive = false;
             }
 
@@ -218,9 +224,7 @@ public abstract partial class SharedDefibrillatorSystem : EntitySystem
             }
             else
             {
-                //if the target never could have had a mind in the first place don't bother informing the player about mindlessness
-                if (HasComp<MindContainerComponent>(target))
-                    _chat.TrySendInGameICMessage(ent.Owner, Loc.GetString("defibrillator-no-mind"),
+                _chat.TrySendInGameICMessage(ent.Owner, Loc.GetString("defibrillator-no-mind"),
                     InGameICChatType.Speak, true);
             }
         }

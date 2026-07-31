@@ -118,6 +118,7 @@ public sealed partial class XATInteractWithSystem : BaseXATSystem<XATInteractWit
     {
         if (ent.Comp.MaxCount == null)
             ent.Comp.MaxCount = ent.Comp.InteractionCount.Next(_random); // randomly decide count to decrement.
+
         ent.Comp.Count = ent.Comp.MaxCount.Value; // define count amount.
         Dirty(ent);
     }

@@ -24,8 +24,8 @@ public sealed partial class XATInteractWithComponent : Component
     /// <summary>
     /// Whitelist of allowed interacting entities.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public EntityWhitelist? Whitelist;
+    [DataField(required: true)]
+    public EntityWhitelist Whitelist;
 
     /// <summary>
     /// Additional Sound played on successful trigger.
@@ -50,7 +50,7 @@ public sealed partial class XATInteractWithComponent : Component
     /// Number of interactions required to trigger.
     /// Interacting with a stack counts a number of interactions equal to the stack count.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public MinMax InteractionCount = new(1, 1);
 
     /// <summary>
@@ -62,7 +62,7 @@ public sealed partial class XATInteractWithComponent : Component
     /// <summary>
     /// Number of interactions to go.
     /// </summary>
-    [AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public int? Count;
 }
 
