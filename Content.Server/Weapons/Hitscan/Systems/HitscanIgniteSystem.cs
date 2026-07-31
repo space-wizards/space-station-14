@@ -6,7 +6,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Weapons.Hitscan.Systems;
 
-public sealed class HitscanIgniteSystem : EntitySystem
+public partial sealed class HitscanIgniteSystem : EntitySystem
 {
     [Dependency] private IRobustRandom _robustRandom = default!;
     [Dependency] private FlammableSystem _flammable = default!;
