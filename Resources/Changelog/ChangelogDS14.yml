@@ -5441,3 +5441,22 @@ Entries:
       отбытия на карте Bagel. by soda640.
   - type: Fix
     message: Баги на картах Saltern, Meta, Bagel, Ishimura, Gemini.
+- id: 532
+  author: rhailrake
+  time: '2026-07-31T19:51:05.364354+00:00'
+  pr: 2046
+  changes:
+  - type: Add
+    message: Оптимизация Post-Round скриптов. (by cyberbobeks)
+  - type: Add
+    message: Оптимизация PVS.
+  - type: Add
+    message: Оптимизация Декалей.
+  - type: Add
+    message: Оптимизация Физики.
+  - type: Add
+    message: Оптимизация ArrivalsSystem.cs
+  - type: Add
+    message: Новые TTS голоса.
+  - type: Tweak
+    message: Логика формирования и прогрузки кукл персонажей в манифесте. (by cyberbobeks)
