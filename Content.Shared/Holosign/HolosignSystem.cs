@@ -10,15 +10,9 @@ public sealed partial class HolosignSystem : EntitySystem
 {
     [Dependency] private INetManager _net = default!;
     [Dependency] private PowerCellSystem _powerCell = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<HolosignProjectorComponent, BeforeRangedInteractEvent>(OnBeforeInteract);
-        SubscribeLocalEvent<HolosignProjectorComponent, ExaminedEvent>(OnExamine);
-    }
-
+    [SubscribeLocalEvent]
     private void OnExamine(Entity<HolosignProjectorComponent> ent, ref ExaminedEvent args)
     {
         // TODO: This should probably be using an itemstatus
@@ -37,6 +31,7 @@ public sealed partial class HolosignSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnBeforeInteract(Entity<HolosignProjectorComponent> ent, ref BeforeRangedInteractEvent args)
     {
         if (args.Handled
@@ -50,7 +45,8 @@ public sealed partial class HolosignSystem : EntitySystem
         if (ent.Comp.PredictedSpawn || _net.IsServer)
         {
             // TODO: make a proxy for this method.
-            EntityManager.PredictedSpawnAtPosition(ent.Comp.SignProto, args.ClickLocation, Angle.Zero);
+            var worldRotation = _transform.GetWorldRotation(args.ClickLocation.EntityId);
+            EntityManager.PredictedSpawnAtPosition(ent.Comp.SignProto, args.ClickLocation, rotation: worldRotation);
         }
 
         args.Handled = true;
