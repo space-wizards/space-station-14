@@ -249,7 +249,6 @@ public sealed partial class XenoArtifactCommand : ToolshedCommand
     {
         [Dependency] private IEntityManager _entityManager = default!;
         [Dependency] private ToolshedManager _toolshedManager = default!;
-        [Dependency] private IEntitySystemManager _entitySystemManager = default!;
 
         private XenoArtifactSystem? _artifact;
 
@@ -279,7 +278,7 @@ public sealed partial class XenoArtifactCommand : ToolshedCommand
 
             var hint = ToolshedCommand.GetArgHint(arg, typeof(Entity<XenoArtifactNodeComponent>));
 
-            _artifact ??= _entitySystemManager.GetEntitySystem<XenoArtifactSystem>();
+            _artifact ??= _entityManager.System<XenoArtifactSystem>();
             var list = _artifact.GetAllNodes(artifactEnt)
                                 .Select(
                                     node =>
@@ -324,33 +323,11 @@ public sealed partial class XenoArtifactCommand : ToolshedCommand
 /// Custom type parser for toolshed commands that will enable choosing between hand-held and
 /// stationary artifact types.
 /// </summary>
-public sealed partial class XenoArtifactTypeParser : CustomTypeParser<ProtoId<EntityPrototype>>
+public sealed partial class XenoArtifactTypeParser : CustomCompletionParser<ProtoId<EntityPrototype>>
 {
     private static readonly EntProtoId ArtifactDummyItem = "DummyArtifactItem";
     private static readonly EntProtoId ArtifactDummyStructure = "DummyArtifactStructure";
-    private static readonly EntProtoId[] Options = [ArtifactDummyItem, ArtifactDummyStructure];
 
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
-
-    public override bool TryParse(ParserContext ctx, out ProtoId<EntityPrototype> result)
-    {
-        var protoId = ctx.GetWord();
-        if (protoId == null)
-        {
-            result = default;
-            return false;
-        }
-
-        result = protoId;
-
-        if (Array.IndexOf(Options, protoId) == -1)
-            return false;
-
-        if (!_prototypeManager.TryIndex<EntityPrototype>(protoId, out _))
-            return false;
-        
-        return true;
-    }
 
     public override CompletionResult TryAutocomplete(ParserContext ctx, CommandArgument? arg)
     {
@@ -368,34 +345,11 @@ public sealed partial class XenoArtifactTypeParser : CustomTypeParser<ProtoId<En
 /// Custom type parser for toolshed commands
 /// that lets choose entity prototype of XenoArtifact effect.
 /// </summary>
-public sealed partial class XenoEffectParser : CustomTypeParser<ProtoId<EntityPrototype>>
+public sealed partial class XenoEffectParser : CustomCompletionParser<ProtoId<EntityPrototype>>
 {
-    [Dependency] private IComponentFactory _componentFactory = default!;
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private IEntitySystemManager _systemManager = default!;
 
     private XenoArtifactSystem? _artifact;
-
-    public override bool TryParse(ParserContext ctx, out ProtoId<EntityPrototype> result)
-    {
-        var protoId = ctx.GetWord();
-        if (protoId == null)
-        {
-            result = default;
-            return false;
-        }
-
-        result = protoId;
-
-        if (!_prototypeManager.TryIndex<EntityPrototype>(protoId, out var prototype))
-            return false;
-
-        if (prototype is not { Abstract: false })
-            return false;
-
-        // all effect prototypes are marked as nodes, as nodes are born from those prototypes
-        return prototype.HasComp<XenoArtifactNodeComponent>(_componentFactory);
-    }
 
     public override CompletionResult TryAutocomplete(ParserContext ctx, CommandArgument? arg)
     {
