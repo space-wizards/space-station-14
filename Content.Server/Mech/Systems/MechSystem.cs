@@ -227,6 +227,7 @@ public sealed partial class MechSystem : SharedMechSystem
         if (!TryEject(uid, component))
             return;
 
+        _ui.CloseUi(uid, MechUiKey.Key);
         args.Handled = true;
     }
 
