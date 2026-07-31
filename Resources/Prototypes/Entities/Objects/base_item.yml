@@ -233,7 +233,7 @@
 - type: entity
   abstract: true
   parent: BaseStash
-  id: BaseStashToy
+  id: BaseStashPlushie
   components:
   - type: Speech
     speechVerb: Default # for pais (In the secret stash)
@@ -244,16 +244,16 @@
 
 - type: entity
   abstract: true
-  parent: BaseStashToy
-  id: BaseStashToyNormal
+  parent: BaseStashPlushie
+  id: BaseStashPlushieNormal
   components:
   - type: SecretStash
     maxItemSize: "Small"
 
 - type: entity
   abstract: true
-  parent: BaseStashToy
-  id: BaseStashToySmall
+  parent: BaseStashPlushie
+  id: BaseStashPlushieSmall
   components:
   - type: SecretStash
     maxItemSize: "Tiny"

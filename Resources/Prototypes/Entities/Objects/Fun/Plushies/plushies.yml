@@ -4,7 +4,7 @@
 
 - type: entity
   abstract: true
-  parent: [SolutionFood, SolutionSmall, BaseItem, BaseStashToy]
+  parent: [SolutionFood, SolutionSmall, BaseItem, BaseStashPlushie]
   id: BasePlushie
   components:
   - type: EmitSoundOnUse

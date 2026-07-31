@@ -258,7 +258,7 @@
 
 - type: entity
   abstract: true
-  parent: [BaseItem, BaseStashToy]
+  parent: [BaseItem, BaseStashPlushie]
   id: BaseRubberToy
   components:
   - type: Tag
