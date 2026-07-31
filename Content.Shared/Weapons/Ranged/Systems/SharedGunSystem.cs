@@ -174,7 +174,16 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         gun.Comp.ShootCoordinates = GetCoordinates(msg.Coordinates);
         gun.Comp.Target = GetEntity(msg.Target);
-        AttemptShoot(user.Value, gun);
+        gun.Comp.PredictionId = msg.PredictionId;
+
+        try
+        {
+            AttemptShoot(user.Value, gun);
+        }
+        finally
+        {
+            gun.Comp.PredictionId = 0;
+        }
     }
 
     private void OnStopShootRequest(RequestStopShootEvent ev, EntitySessionEventArgs args)
@@ -607,6 +616,43 @@ public abstract partial class SharedGunSystem : EntitySystem
         return direction.LengthSquared() > 0.0001f;
     }
 
+    /// <summary>
+    /// Calculates recoil identically during client prediction and authoritative server simulation.
+    /// </summary>
+    protected Angle GetRecoilAngle(TimeSpan curTime, Entity<GunComponent> gun, Angle direction)
+    {
+        var component = gun.Comp;
+        var timeSinceLastFire = (curTime - component.LastFire).TotalSeconds;
+        var newTheta = MathHelper.Clamp(
+            component.CurrentAngle.Theta + component.AngleIncreaseModified.Theta - component.AngleDecayModified.Theta * timeSinceLastFire,
+            component.MinAngleModified.Theta,
+            component.MaxAngleModified.Theta);
+
+        component.CurrentAngle = new Angle(newTheta);
+        component.LastFire = component.NextFire;
+
+        if (component.PredictionId == 0)
+        {
+            var unpredictedSpread = component.CurrentAngle.Theta * Random.NextFloat(-0.5f, 0.5f);
+            return new Angle(direction.Theta + unpredictedSpread);
+        }
+
+        var seed = component.PredictionId;
+        seed ^= unchecked((uint) GetNetEntity(gun.Owner).Id) * 0x9E3779B9u;
+
+        // Integer hash gives both simulations the same random value without shared RNG state.
+        seed ^= seed >> 16;
+        seed *= 0x7FEB352Du;
+        seed ^= seed >> 15;
+        seed *= 0x846CA68Bu;
+        seed ^= seed >> 16;
+
+        var random = (seed & 0x00FFFFFFu) / 16777216f - 0.5f;
+        var spread = component.CurrentAngle.Theta * random;
+        DebugTools.Assert(Math.Abs(spread) <= component.MaxAngleModified.Theta);
+        return new Angle(direction.Theta + spread);
+    }
+
     protected void MuzzleFlash(EntityUid gun, AmmoComponent component, Angle worldAngle, EntityUid? user = null)
     {
         var attemptEv = new GunMuzzleFlashAttemptEvent();
@@ -730,6 +776,9 @@ public abstract partial class SharedGunSystem : EntitySystem
         public ExtendedSpriteSpecifier? Bullet;
         public HitscanLightVisual? BulletLight;
         public float Speed;
+        public NetEntity? Shooter;
+        public uint PredictionId;
+        public bool ParallelTraces;
         // DS14-end
     }
 

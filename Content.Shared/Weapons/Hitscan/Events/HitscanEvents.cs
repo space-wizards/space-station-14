@@ -36,6 +36,11 @@ public record struct HitscanTraceEvent
     /// </summary>
     public EntityUid? Target;
 
+    /// <summary>
+    /// Identifier used to reconcile the shooter's predicted visuals.
+    /// </summary>
+    public uint PredictionId;
+
     // DS14-start: collected visual trace segments for reflected hitscans.
     public List<HitscanTrace>? OutputTrace;
 
@@ -72,6 +77,8 @@ public record struct HitscanRaycastFiredData
     /// Target that was being aimed at (Not necessarily hit).
     /// </summary>
     public EntityUid? Target;
+
+    public uint PredictionId;
 
     // DS14-start: collected visual trace segments for reflected hitscans.
     public List<HitscanTrace>? OutputTrace;

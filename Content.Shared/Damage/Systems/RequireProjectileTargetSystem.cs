@@ -23,7 +23,7 @@ public sealed class RequireProjectileTargetSystem : EntitySystem
         if (args.Cancelled)
           return;
 
-        if (!ent.Comp.Active)
+        if (!RequiresExplicitTarget(ent))
             return;
 
         var other = args.OtherEntity;
@@ -43,6 +43,17 @@ public sealed class RequireProjectileTargetSystem : EntitySystem
             if (!_container.IsEntityOrParentInContainer(shooter.Value))
                args.Cancelled = true;
         }
+    }
+
+    /// <summary>
+    /// Uses standing state for mobs and the explicit flag for entities without one.
+    /// </summary>
+    public bool RequiresExplicitTarget(Entity<RequireProjectileTargetComponent> ent)
+    {
+        if (TryComp<StandingStateComponent>(ent, out var standing))
+            return !standing.Standing;
+
+        return ent.Comp.Active;
     }
 
     private void SetActive(Entity<RequireProjectileTargetComponent> ent, bool value)

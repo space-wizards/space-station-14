@@ -145,6 +145,13 @@ public sealed partial class GunComponent : Component
     public EntityUid? Target = null;
 
     /// <summary>
+    /// Prediction identifier of the request currently being processed.
+    /// This is transient and must not be serialized or networked as component state.
+    /// </summary>
+    [ViewVariables]
+    public uint PredictionId;
+
+    /// <summary>
     ///     The base value for how many shots to fire per burst.
     /// </summary>
     [DataField, AutoNetworkedField]

@@ -25,6 +25,12 @@ public sealed class RequestShootEvent : EntityEventArgs
     public NetEntity? Target;
 
     /// <summary>
+    /// Client-generated identifier used only to reconcile predicted shot visuals.
+    /// It never participates in hit or damage validation.
+    /// </summary>
+    public uint PredictionId;
+
+    /// <summary>
     /// If the client wants to continuously shoot.
     /// If true, the gun will continue firing until a stop event is sent from the client.
     /// </summary>

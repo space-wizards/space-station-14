@@ -60,6 +60,7 @@ public sealed class HitscanPenetrationSystem : EntitySystem
             Gun = args.Data.Gun,
             Shooter = args.Data.Shooter,
             Target = args.Data.Target,
+            PredictionId = args.Data.PredictionId,
             OutputTrace = args.Data.OutputTrace,
             IgnoredEntities = ignored,
         };

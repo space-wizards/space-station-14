@@ -135,13 +135,14 @@ public sealed partial class GunSystem : SharedGunSystem
         // I must be high because this was getting tripped even when true.
         // DebugTools.Assert(direction != Vector2.Zero);
         var shotProjectiles = new List<EntityUid>(ammo.Count);
+        ushort nextProjectileIndex = 0;
 
         foreach (var (ent, shootable) in ammo)
         {
             // pneumatic cannon doesn't shoot bullets it just throws them, ignore ammo handling
             if (throwItems && ent != null)
             {
-                ShootOrThrow(ent.Value, mapDirection, gunVelocity, gun, user);
+                FireProjectile(ent.Value, mapDirection);
                 continue;
             }
 
@@ -209,22 +210,22 @@ public sealed partial class GunSystem : SharedGunSystem
                 var spreadEvent = new GunGetAmmoSpreadEvent(ammoSpreadComp.Spread);
                 RaiseLocalEvent(gun, ref spreadEvent);
 
-                var angles = LinearSpread(mapAngle - spreadEvent.Spread / 2,
-                    mapAngle + spreadEvent.Spread / 2, ammoSpreadComp.Count);
+                var angles = LinearSpread(angle - spreadEvent.Spread / 2,
+                    angle + spreadEvent.Spread / 2, ammoSpreadComp.Count);
 
-                if (ShootOrThrow(ammoEnt, angles[0].ToVec(), gunVelocity, gun, user))
+                if (FireProjectile(ammoEnt, angles[0].ToVec()))
                     shotProjectiles.Add(ammoEnt);
 
                 for (var i = 1; i < ammoSpreadComp.Count; i++)
                 {
                     var newuid = Spawn(ammoSpreadComp.Proto, fromEnt);
-                    if (ShootOrThrow(newuid, angles[i].ToVec(), gunVelocity, gun, user))
+                    if (FireProjectile(newuid, angles[i].ToVec()))
                         shotProjectiles.Add(newuid);
                 }
             }
             else
             {
-                if (ShootOrThrow(ammoEnt, mapDirection, gunVelocity, gun, user))
+                if (FireProjectile(ammoEnt, mapDirection))
                     shotProjectiles.Add(ammoEnt);
             }
 
@@ -233,9 +234,24 @@ public sealed partial class GunSystem : SharedGunSystem
 
             Audio.PlayPredicted(gun.Comp.SoundGunshotModified, gun, user);
         }
+
+        bool FireProjectile(EntityUid projectile, Vector2 direction)
+        {
+            if (!ShootOrThrow(projectile, direction, gunVelocity, gun, user, nextProjectileIndex))
+                return false;
+
+            nextProjectileIndex++;
+            return true;
+        }
     }
 
-    private bool ShootOrThrow(EntityUid uid, Vector2 mapDirection, Vector2 gunVelocity, Entity<GunComponent> gun, EntityUid? user)
+    private bool ShootOrThrow(
+        EntityUid uid,
+        Vector2 mapDirection,
+        Vector2 gunVelocity,
+        Entity<GunComponent> gun,
+        EntityUid? user,
+        ushort projectileIndex)
     {
         ApplyExecutionShotDamage(uid, gun); // DS14
 
@@ -249,6 +265,7 @@ public sealed partial class GunSystem : SharedGunSystem
                 Gun = gun,
                 Shooter = user,
                 Target = gun.Comp.Target,
+                PredictionId = gun.Comp.PredictionId,
             };
 
             RaiseLocalEvent(uid, ref hitscanEv);
@@ -271,6 +288,15 @@ public sealed partial class GunSystem : SharedGunSystem
             // TODO: Someone can probably yeet this a billion miles so need to pre-validate input somewhere up the call stack.
             ThrowingSystem.TryThrow(uid, mapDirection, gun.Comp.ProjectileSpeedModified, user);
             return false;
+        }
+
+        if (gun.Comp.PredictionId != 0 && user != null)
+        {
+            var predicted = EnsureComp<PredictedProjectileComponent>(uid);
+            predicted.Shooter = user;
+            predicted.PredictionId = gun.Comp.PredictionId;
+            predicted.ProjectileIndex = projectileIndex;
+            Dirty(uid, predicted);
         }
 
         ShootProjectile(uid, mapDirection, gunVelocity, gun, user, gun.Comp.ProjectileSpeedModified);
@@ -315,21 +341,6 @@ public sealed partial class GunSystem : SharedGunSystem
         }
 
         return angles;
-    }
-
-    private Angle GetRecoilAngle(TimeSpan curTime, GunComponent component, Angle direction)
-    {
-        var timeSinceLastFire = (curTime - component.LastFire).TotalSeconds;
-        var newTheta = MathHelper.Clamp(component.CurrentAngle.Theta + component.AngleIncreaseModified.Theta - component.AngleDecayModified.Theta * timeSinceLastFire, component.MinAngleModified.Theta, component.MaxAngleModified.Theta);
-        component.CurrentAngle = new Angle(newTheta);
-        component.LastFire = component.NextFire;
-
-        // Convert it so angle can go either side.
-        var random = Random.NextFloat(-0.5f, 0.5f);
-        var spread = component.CurrentAngle.Theta * random;
-        var angle = new Angle(direction.Theta + component.CurrentAngle.Theta * random);
-        DebugTools.Assert(spread <= component.MaxAngleModified.Theta);
-        return angle;
     }
 
     protected override void Popup(string message, EntityUid? uid, EntityUid? user) { }

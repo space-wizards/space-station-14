@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.Weapons.Hitscan.Components;
 using Content.Shared.Weapons.Hitscan.Events;
@@ -20,6 +21,7 @@ public sealed class HitscanBasicRaycastSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly ISharedAdminLogManager _log = default!;
     [Dependency] private readonly SharedPointLightSystem _lights = default!;
+    [Dependency] private readonly RequireProjectileTargetSystem _requireTarget = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     private EntityQuery<HitscanBasicVisualsComponent> _visualsQuery;
@@ -50,7 +52,7 @@ public sealed class HitscanBasicRaycastSystem : EntitySystem
             ? rayCastResults.FirstOrNull(hit => ignored?.Contains(hit.HitEntity) != true)
             : rayCastResults.FirstOrNull(hit =>
                 ignored?.Contains(hit.HitEntity) != true &&
-                (hit.HitEntity == target || CompOrNull<RequireProjectileTargetComponent>(hit.HitEntity)?.Active != true));
+                (hit.HitEntity == target || !RequiresExplicitTarget(hit.HitEntity)));
 
         var distanceTried = result?.Distance ?? ent.Comp.MaxDistance;
 
@@ -84,6 +86,7 @@ public sealed class HitscanBasicRaycastSystem : EntitySystem
             Gun = args.Gun,
             Shooter = args.Shooter,
             Target = target,
+            PredictionId = args.PredictionId,
             HitEntity = result?.HitEntity,
             OutputTrace = args.OutputTrace,
             IgnoredEntities = ignored,
@@ -96,7 +99,7 @@ public sealed class HitscanBasicRaycastSystem : EntitySystem
         if (attemptEvent.Cancelled)
         {
             if (isRoot)
-                FireEffects(ent.Owner, args.OutputTrace);
+                FireEffects(ent.Owner, args.OutputTrace, args.Shooter, args.PredictionId);
 
             return;
         }
@@ -105,7 +108,39 @@ public sealed class HitscanBasicRaycastSystem : EntitySystem
         RaiseLocalEvent(ent, ref hitEvent);
 
         if (isRoot)
-            FireEffects(ent.Owner, args.OutputTrace);
+            FireEffects(ent.Owner, args.OutputTrace, args.Shooter, args.PredictionId);
+    }
+
+    /// <summary>
+    /// Builds one visual trace using the local physics state without raising any hit, damage, or effect events.
+    /// </summary>
+    public HitscanTrace? BuildVisualTrace(
+        Entity<HitscanBasicRaycastComponent> ent,
+        EntityCoordinates fromCoordinates,
+        Vector2 shotDirection,
+        EntityUid shooter,
+        EntityUid? target)
+    {
+        var mapCoords = _transform.ToMapCoordinates(fromCoordinates);
+        if (mapCoords.MapId == MapId.Nullspace || shotDirection.LengthSquared() <= 0.0001f)
+            return null;
+
+        var direction = shotDirection.Normalized();
+        var ray = new CollisionRay(mapCoords.Position, direction, (int) ent.Comp.CollisionMask);
+        var rayCastResults = _physics.IntersectRay(mapCoords.MapId, ray, ent.Comp.MaxDistance, shooter, false);
+        var result = _container.IsEntityOrParentInContainer(shooter)
+            ? rayCastResults.FirstOrNull()
+            : rayCastResults.FirstOrNull(hit =>
+                hit.HitEntity == target || !RequiresExplicitTarget(hit.HitEntity));
+
+        var distance = result?.Distance ?? ent.Comp.MaxDistance;
+        return GenerateTraceStep(fromCoordinates, distance, direction.ToAngle(), result?.HitEntity);
+    }
+
+    private bool RequiresExplicitTarget(EntityUid uid)
+    {
+        return TryComp<RequireProjectileTargetComponent>(uid, out var requireTarget) &&
+               _requireTarget.RequiresExplicitTarget((uid, requireTarget));
     }
 
     // DS14-start: hitscan trace visuals.
@@ -147,7 +182,7 @@ public sealed class HitscanBasicRaycastSystem : EntitySystem
         };
     }
 
-    private void FireEffects(EntityUid hitscanUid, List<HitscanTrace> traces)
+    private void FireEffects(EntityUid hitscanUid, List<HitscanTrace> traces, EntityUid? shooter, uint predictionId)
     {
         if (traces.Count == 0 || !_visualsQuery.TryComp(hitscanUid, out var vizComp))
             return;
@@ -190,6 +225,13 @@ public sealed class HitscanBasicRaycastSystem : EntitySystem
             RaiseNetworkEvent(new SharedGunSystem.HitscanEvent
             {
                 Sprites = sprites,
+                Traces = traces,
+                MuzzleFlash = vizComp.MuzzleFlash,
+                TravelFlash = vizComp.TravelFlash,
+                ImpactFlash = vizComp.ImpactFlash,
+                Speed = vizComp.Speed,
+                Shooter = GetNetEntity(shooter),
+                PredictionId = predictionId,
             }, filter);
 
             return;
@@ -204,6 +246,8 @@ public sealed class HitscanBasicRaycastSystem : EntitySystem
             Bullet = vizComp.Bullet,
             BulletLight = GetLightVisual(hitscanUid),
             Speed = vizComp.Speed,
+            Shooter = GetNetEntity(shooter),
+            PredictionId = predictionId,
         }, filter);
     }
 
