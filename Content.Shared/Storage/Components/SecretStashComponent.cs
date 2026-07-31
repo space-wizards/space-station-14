@@ -26,7 +26,7 @@ namespace Content.Shared.Storage.Components
         ///     Max item size that can be inserted into secret stash.
         /// </summary>
         [DataField("maxItemSize")]
-        public ProtoId<ItemSizePrototype> MaxItemSize = "Small";
+        public ProtoId<ItemSizePrototype>? MaxItemSize;
 
         /// <summary>
         ///     Entity blacklist for secret stashes.
