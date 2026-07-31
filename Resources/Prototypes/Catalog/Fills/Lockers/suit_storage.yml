@@ -184,8 +184,6 @@
     - id: OxygenTankFilled
     - id: ClothingShoesBootsMagSecurity #DS14
     - id: ClothingOuterHardsuitSecurity
-    - id: ClothingOuterHardsuitSecurity # DS14
-      prob: 0.5
     - id: ClothingMaskBreath
 
 #Security pilot hardsuit

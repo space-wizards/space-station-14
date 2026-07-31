@@ -20,3 +20,6 @@ construction-recipe-stairs-steel-dark = тёмные ступеньки
 construction-recipe-railing-wood-corner = деревянные перила (угол)
 construction-recipe-railing-wood-corner-small = деревянные перила (угол маленький)
 construction-recipe-railing-wood-round = деревянные перила (круглые)
+construction-recipe-railing-glass-corner = стеклянные перила (угол)
+construction-recipe-railing-glass-corner-small = стеклянные перила (угол маленький)
+construction-recipe-railing-glass-round = стеклянные перила (круглые)

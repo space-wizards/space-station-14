@@ -1,0 +1,10 @@
+- type: entity
+  parent: BaseSign
+  id: SignScienceDesk
+  name: лекционная доска
+  description: На этой доске расписано куча формул и графиков. Кажется, тут описана "Теория АМК"... Блюспейс, редспейс... Чего?
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Wallmounts/science_desk.rsi
+    state: science_desk
+    snapCardinals: false

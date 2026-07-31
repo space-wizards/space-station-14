@@ -235,3 +235,59 @@
         acts: [ "Destruction" ]
   - type: Construction
     node: railingWoodRound
+
+- type: entity
+  parent: Railing
+  id: RailingGlass
+  name: стеклянные перила
+  description: Обычные перила, предназначенные для защиты таких идиотов, как ты, от падения.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Walls/railing_glass.rsi
+  - type: Icon
+    sprite: _DeadSpace/Structures/Walls/railing_glass.rsi
+  - type: Construction
+    graph: RailingGlass
+    node: railingGlass
+
+- type: entity
+  parent: RailingCorner
+  id: RailingGlassCorner
+  name: стеклянные перила
+  description: Обычные перила, предназначенные для защиты таких идиотов, как ты, от падения.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Walls/railing_glass.rsi
+  - type: Icon
+    sprite: _DeadSpace/Structures/Walls/railing_glass.rsi
+  - type: Construction
+    graph: RailingGlass
+    node: railingGlassCorner
+
+- type: entity
+  parent: RailingCornerSmall
+  id: RailingGlassCornerSmall
+  name: стеклянные перила
+  description: Обычные перила, предназначенные для защиты таких идиотов, как ты, от падения.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Walls/railing_glass.rsi
+  - type: Icon
+    sprite: _DeadSpace/Structures/Walls/railing_glass.rsi
+  - type: Construction
+    graph: RailingGlass
+    node: railingGlassCornerSmall
+
+- type: entity
+  parent: RailingRound
+  id: RailingGlassRound
+  name: стеклянные перила
+  description: Обычные перила, предназначенные для защиты таких идиотов, как ты, от падения.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Walls/railing_glass.rsi
+  - type: Icon
+    sprite: _DeadSpace/Structures/Walls/railing_glass.rsi
+  - type: Construction
+    graph: RailingGlass
+    node: railingGlassRound

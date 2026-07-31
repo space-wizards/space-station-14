@@ -84,3 +84,114 @@
           steps:
             - tool: Screwing
               doAfter: 0.5
+
+- type: constructionGraph
+  id: RailingGlass
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: railingGlass
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: MetalRod
+              amount: 1
+              doAfter: 2
+            - material: Glass
+              amount: 1
+              doAfter: 2
+        - to: railingGlassCorner
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: MetalRod
+              amount: 2
+              doAfter: 2.5
+            - material: Glass
+              amount: 1
+              doAfter: 2
+        - to: railingGlassCornerSmall
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: MetalRod
+              amount: 1
+              doAfter: 2
+            - material: Glass
+              amount: 1
+              doAfter: 2
+        - to: railingGlassRound
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: MetalRod
+              amount: 2
+              doAfter: 2
+            - material: Glass
+              amount: 1
+              doAfter: 2
+
+    - node: railingGlass
+      entity: RailingGlass
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: PartRodMetal1
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: SheetGlass1
+              amount: 1
+            - !type:DeleteEntity
+          steps:
+            - tool: Screwing
+              doAfter: 0.25
+
+    - node: railingGlassCorner
+      entity: RailingGlassCorner
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: PartRodMetal1
+              amount: 2
+            - !type:SpawnPrototype
+              prototype: SheetGlass1
+              amount: 1
+            - !type:DeleteEntity
+          steps:
+            - tool: Screwing
+              doAfter: 0.5
+
+    - node: railingGlassCornerSmall
+      entity: RailingGlassCornerSmall
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: PartRodMetal1
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: SheetGlass1
+              amount: 1
+            - !type:DeleteEntity
+          steps:
+            - tool: Screwing
+              doAfter: 0.25
+
+    - node: railingGlassRound
+      entity: RailingGlassRound
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: PartRodMetal1
+              amount: 2
+            - !type:SpawnPrototype
+              prototype: SheetGlass1
+              amount: 1
+            - !type:DeleteEntity
+          steps:
+            - tool: Screwing
+              doAfter: 0.5

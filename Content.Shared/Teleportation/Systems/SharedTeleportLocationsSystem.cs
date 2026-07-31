@@ -2,6 +2,7 @@
 using Content.Shared.Timing;
 using Content.Shared.UserInterface;
 using Content.Shared.Warps;
+using Content.Shared.DeadSpace.Teleportation.Components; // DS14
 
 namespace Content.Shared.Teleportation.Systems;
 
@@ -35,6 +36,10 @@ public abstract partial class SharedTeleportLocationsSystem : EntitySystem
 
     protected virtual void OnTeleportToLocationRequest(Entity<TeleportLocationsComponent> ent, ref TeleportLocationDestinationMessage args)
     {
+        //DS14-start
+        if (HasComp<PortalGunComponent>(ent))
+            return;
+        //DS14-end
         if (!TryGetEntity(args.NetEnt, out var telePointEnt) || TerminatingOrDeleted(telePointEnt) || !HasComp<WarpPointComponent>(telePointEnt) || Delay.IsDelayed(ent.Owner, TeleportDelay))
             return;
 

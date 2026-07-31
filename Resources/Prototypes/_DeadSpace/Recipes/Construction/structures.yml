@@ -601,3 +601,56 @@
   canBuildInImpassable: false
   conditions:
   - !type:TileNotBlocked
+
+# Railing Glass
+
+- type: construction
+  id: RailingGlass
+  graph: RailingGlass
+  startNode: start
+  targetNode: railingGlass
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  id: RailingGlassCorner
+  name: construction-recipe-railing-glass-corner
+  graph: RailingGlass
+  startNode: start
+  targetNode: railingGlassCorner
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  id: RailingGlassCornerSmall
+  name: construction-recipe-railing-glass-corner-small
+  graph: RailingGlass
+  startNode: start
+  targetNode: railingGlassCornerSmall
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  id: RailingGlassRound
+  name: construction-recipe-railing-glass-round
+  graph: RailingGlass
+  startNode: start
+  targetNode: railingGlassRound
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked

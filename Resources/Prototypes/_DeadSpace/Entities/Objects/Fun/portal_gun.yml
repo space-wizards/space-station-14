@@ -1,0 +1,129 @@
+- type: entity
+  parent: BaseItem
+  id: WeaponPortalGunAdmeme
+  suffix: Адмемы
+  name: портальная пушка
+  description: Экспериментальное блюспейс-устройство. Может обеспечить бесконечный доступ к бесконечным мирам. РИПы от такого не отказываются.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Launchers/tether_gun.rsi
+    layers:
+    - state: base
+    - state: base-unshaded
+      shader: unshaded
+  - type: Item
+    size: Normal
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      - state: inhand-left-unshaded
+        shader: unshaded
+      right:
+      - state: inhand-right
+      - state: inhand-right-unshaded
+        shader: unshaded
+  - type: UserInterface
+    interfaces:
+      enum.TeleportLocationUiKey.Key:
+        type: TeleportLocationsBoundUserInterface
+  - type: ActivatableUI
+    key: enum.TeleportLocationUiKey.Key
+  - type: TeleportLocations
+    name: portal-gun-window-title
+  - type: PortalGun
+  - type: Gun
+    fireRate: 1
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    projectileSpeed: 15
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/Magic/staff_animation.ogg
+  - type: BasicEntityAmmoProvider
+    proto: PortalBolt
+  - type: EmitSoundOnPickup
+    sound:
+      path: /Audio/_DeadSpace/Items/Handing/gas_analyzer/gas_analyzer_pickup.ogg
+  - type: EmitSoundOnDrop
+    sound:
+      path: /Audio/_DeadSpace/Items/Handing/gas_analyzer/gas_analyzer_drop.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_DeadSpace/Items/Handing/gas_analyzer/gas_analyzer_drop.ogg
+
+- type: entity
+  parent: BaseBullet
+  id: PortalBolt
+  name: портальный заряд
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+    - state: spell
+      color: "#43d9b8"
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 0
+  - type: TriggerOnCollide
+    fixtureID: projectile
+    keyOut: openportal
+    maxTriggers: 1
+  - type: TriggerOnSpawn
+    keyOut: startclock
+  - type: TimerTrigger
+    keysIn: [ startclock ]
+    keyOut: openportal
+    delay: 0.25
+    examinable: false
+    popup: null
+  - type: PortalProjectile
+    nearPortal: PortalGunNear
+    farPortal: PortalGunFar
+
+- type: entity
+  parent: BasePortal
+  id: PortalGunNear
+  categories: [ HideSpawnMenu ]
+  name: портал
+  description: Вошли и вышли, приключение на 5 минут.
+  suffix: portal gun
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: Structures/Machines/gateway.rsi
+    color: "#39FF14"
+    layers:
+    - state: portal
+  - type: PointLight
+    color: "#39FF14"
+    radius: 3
+    energy: 1
+    netsync: false
+  - type: Portal
+    canTeleportToOtherMaps: true
+    randomTeleport: false
+
+- type: entity
+  parent: BasePortal
+  id: PortalGunFar
+  categories: [ HideSpawnMenu ]
+  name: портал
+  description: Вошли и вышли, приключение на 5 минут.
+  suffix: portal gun
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: Structures/Machines/gateway.rsi
+    color: "#39FF14"
+    layers:
+    - state: portal
+  - type: PointLight
+    color: "#39FF14"
+    radius: 3
+    energy: 1
+    netsync: false
+  - type: Portal
+    canTeleportToOtherMaps: true
+    randomTeleport: false

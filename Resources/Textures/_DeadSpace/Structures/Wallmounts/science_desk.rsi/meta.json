@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Made by pyfya (discord) for Space Station 14 server Мёртвый космос",
+    "size": {
+      "x": 64,
+      "y": 32
+    },
+  "states": [
+    {
+      "name": "science_desk"
+    }
+  ]
+}
