@@ -17,4 +17,9 @@ public sealed partial class ListingLimitedStockCondition : ListingCondition
     {
         return args.Listing.PurchaseAmount < Stock;
     }
+
+    public override bool IgnoresLock()
+    {
+        return true;
+    }
 }

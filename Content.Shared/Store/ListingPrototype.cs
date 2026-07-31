@@ -42,7 +42,8 @@ public partial class ListingData : IEquatable<ListingData>
         other.RestockTime,
         other.DiscountDownTo,
         other.DisableRefund,
-        other.ApplyToMob
+        other.ApplyToMob,
+        other.Lockable
     )
     {
 
@@ -69,7 +70,8 @@ public partial class ListingData : IEquatable<ListingData>
         TimeSpan restockTime,
         Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> dataDiscountDownTo,
         bool disableRefund,
-        bool applyToMob
+        bool applyToMob,
+        bool lockable
     )
     {
         Name = name;
@@ -93,6 +95,7 @@ public partial class ListingData : IEquatable<ListingData>
         DiscountDownTo = new Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2>(dataDiscountDownTo);
         DisableRefund = disableRefund;
         ApplyToMob = applyToMob;
+        Lockable = lockable;
     }
 
     [ViewVariables]
@@ -224,6 +227,12 @@ public partial class ListingData : IEquatable<ListingData>
     [DataField]
     public bool ApplyToMob = false;
 
+    /// <summary>
+    /// When true, the conditions failing will not hide the listing but instead display it as locked.
+    /// </summary>
+    [DataField]
+    public bool Lockable = false;
+
     public bool Equals(ListingData? listing)
     {
         if (listing == null)
@@ -299,6 +308,11 @@ public sealed partial class ListingDataWithCostModifiers : ListingData
     [DataField]
     public Dictionary<string, Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2>> CostModifiersBySourceId = new();
 
+    /// <summary>
+    /// If true, then this entry was locked.
+    /// </summary>
+    [DataField]
+    public bool Locked = false;
     /// <inheritdoc />
     public ListingDataWithCostModifiers(ListingData listingData)
         : base(
@@ -322,7 +336,8 @@ public sealed partial class ListingDataWithCostModifiers : ListingData
             listingData.RestockTime,
             listingData.DiscountDownTo,
             listingData.DisableRefund,
-            listingData.ApplyToMob
+            listingData.ApplyToMob,
+            listingData.Lockable
         )
     {
     }

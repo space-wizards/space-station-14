@@ -120,17 +120,24 @@ public abstract partial class SharedStoreSystem
             {
                 var args = new ListingConditionArgs(GetBuyerMind(buyer), storeEntity, listing, EntityManager);
                 var conditionsMet = true;
+                var ignoreLock = false;
 
                 foreach (var condition in listing.Conditions)
                 {
                     if (!condition.Condition(args))
                     {
                         conditionsMet = false;
+                        if (condition.IgnoresLock())
+                            ignoreLock = true;
+
                         break;
                     }
                 }
 
-                if (!conditionsMet)
+                if (listing.Lockable && !ignoreLock)
+                    listing.Locked = !conditionsMet;
+
+                if (!conditionsMet && (!listing.Lockable || ignoreLock))
                     continue;
             }
 

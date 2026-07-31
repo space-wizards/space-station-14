@@ -143,7 +143,10 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
+  - !type:BuyerBodyCountCondition
+    count: 1
   productAction: ActionChangelingLastResort
+  lockable: true
 
 - type: listing
   id: ChangelingNightVision

@@ -15,6 +15,15 @@ public abstract partial class ListingCondition
     /// </summary>
     /// <returns>Whether or not the listing can be purchased</returns>
     public abstract bool Condition(ListingConditionArgs args);
+
+    /// <summary>
+    /// If true, then this conidtions ignore the lockable field of <see cref="ListingData"/>.
+    /// </summary>
+    /// <returns></returns>
+    public virtual bool IgnoresLock()
+    {
+        return false;
+    }
 }
 
 /// <param name="Buyer">Either the account owner, user, or an inanimate object (e.g., surplus bundle)</param>
