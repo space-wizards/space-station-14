@@ -1,8 +1,6 @@
 using System.Numerics;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Shared.Cards;
-using Content.Shared.Interaction;
-using Content.Shared.Stacks;
 
 namespace Content.IntegrationTests.Cards;
 
@@ -58,11 +56,8 @@ public sealed class CardsInteractionTest : InteractionTest
 
         if (!SEntMan.TryGetComponent<CardsComponent>(SEntMan.GetEntity(cards), out var sCardsComp))
             Assert.Fail("Missing CardsComponent");
-        if (!SEntMan.TryGetComponent<StackComponent>(SEntMan.GetEntity(cards), out var sStackComp))
-            Assert.Fail("Missing StackComponent");
 
         var cardCountBefore = sCardsComp!.Cards.Count;
-        var stackCountBefore = sStackComp!.Count;
 
         await Pickup();
         // Flip so cards are face-up (needed for the throw-one-card behaviour)
@@ -76,11 +71,6 @@ public sealed class CardsInteractionTest : InteractionTest
             Is.EqualTo(cardCountBefore - 1),
             "Throwing one card should decrease the deck by 1"
         );
-        Assert.That(
-            sStackComp.Count,
-            Is.EqualTo(stackCountBefore - 1),
-            "StackComponent.Count should also decrease by 1 after throw"
-        );
     }
 
     [Test]
@@ -90,11 +80,8 @@ public sealed class CardsInteractionTest : InteractionTest
 
         if (!SEntMan.TryGetComponent<CardsComponent>(SEntMan.GetEntity(cards), out var sCardsComp))
             Assert.Fail($"Missing {nameof(CardsComponent)}");
-        if (!SEntMan.TryGetComponent<StackComponent>(SEntMan.GetEntity(cards), out var sStackComp))
-            Assert.Fail($"Missing {nameof(StackComponent)}");
 
         var cardCountBefore = sCardsComp!.Cards.Count;
-        var stackCountBefore = sStackComp!.Count;
 
         await Pickup();
 
@@ -112,7 +99,6 @@ public sealed class CardsInteractionTest : InteractionTest
         await ThrowItem(SEntMan.GetNetCoordinates(Transform.ToCoordinates(CPlayer, coords)));
 
         Assert.That(sCardsComp.Cards.Count, Is.EqualTo(cardCountBefore - 1));
-        Assert.That(sStackComp.Count, Is.EqualTo(stackCountBefore - 1));
         Assert.That(sCardsComp.Flipped, Is.EqualTo(true));
         Assert.That(sCardsComp.Fanned, Is.EqualTo(true));
     }

@@ -28,6 +28,8 @@ public sealed partial class CardSystem : SharedCardSystem
 
     public override EntityUid? SplitDeck(Entity<CardsComponent> ent, EntityCoordinates spawnPosition, List<int> cardIndexes = default!)
     {
+        if (cardIndexes.Count != GetCardFromIndex(ent.Comp.Cards, cardIndexes).Count)
+            return null;
         if (!ProtoMan.Resolve(ent.Comp.CardStackType, out var cardStack))
             return null;
 

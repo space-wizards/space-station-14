@@ -98,7 +98,8 @@ public abstract partial class SharedCardSystem : EntitySystem
         if (amount > 0)
             transferred = Math.Min(transferred, amount.Value);
 
-
+        if (selected != null && selected.Count != GetCardFromIndex(donor.Comp.Cards, selected).Count)
+            return false;
         MergeDecks((donor.Owner, donor.Comp), (recipient.Owner, recipient.Comp), transferred, selected: selected);
         return true;
     }
@@ -124,7 +125,7 @@ public abstract partial class SharedCardSystem : EntitySystem
         return null;
     }
 
-    protected void UserSplitDeck(Entity<CardsComponent> cards, EntityUid user, int amount)
+    public void UserSplitDeck(Entity<CardsComponent> cards, EntityUid user, int amount)
     {
         if (amount <= 0)
         {

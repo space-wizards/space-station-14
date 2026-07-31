@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Numerics;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Shared.Cards;
 using Content.Shared.Stacks;
@@ -14,9 +13,6 @@ public sealed partial class CardsTest
     private readonly SharedCardSystem _sCards = null!;
 
     [SidedDependency(Side.Server)]
-    private readonly SharedStackSystem _sStacks = null!;
-
-    [SidedDependency(Side.Server)]
     private readonly IComponentFactory _sCompFact = null!;
 
     private const string CardsProtoId = "CardDeck";
@@ -27,7 +23,7 @@ public sealed partial class CardsTest
     /// Helper to spawn a card deck.
     /// Can spawn a deck with some cards removed. Don't use <c>removed</c> in tests unless splitting is checked separately.
     /// </summary>
-    private (EntityUid uid, CardsComponent cards, StackComponent stack) SpawnDeck(
+    private (EntityUid uid, CardsComponent cards) SpawnDeck(
         EntityCoordinates coords,
         int removed = 0
     )
@@ -35,14 +31,12 @@ public sealed partial class CardsTest
         var uid = SSpawnAtPosition(CardsProtoId, coords);
         if (!SEntMan.TryGetComponent<CardsComponent>(uid, out var cards))
             Assert.Fail("Spawned cardDeck is missing CardsComponent");
-        if (!SEntMan.TryGetComponent<StackComponent>(uid, out var stack))
-            Assert.Fail("Spawned cardDeck is missing StackComponent");
         if (removed != 0)
         {
-            var splitA = _sStacks.Split((uid, stack!), removed, coords);
+            var splitA = _sCards.SplitDeck((uid, cards!), coords, _sCards.MovedCards(cards, removed));
             SQueueDel(splitA!.Value);
         }
-        return (uid, cards!, stack!);
+        return (uid, cards!);
     }
 
     [Test]
@@ -54,7 +48,7 @@ public sealed partial class CardsTest
         await Server.WaitAssertion(() =>
         {
             var player = SSpawnAtPosition(Player, coords);
-            var (uid, cards, stack) = SpawnDeck(coords);
+            var (uid, cards) = SpawnDeck(coords);
             var cardsBefore = cards.Cards.Count;
 
             if (!SEntMan.TryGetComponent<TransformComponent>(player, out var playerXform))
@@ -76,12 +70,12 @@ public sealed partial class CardsTest
 
         await Server.WaitAssertion(() =>
         {
-            var (uid, cards, stack) = SpawnDeck(coords);
+            var (uid, cards) = SpawnDeck(coords);
             Assert.That(cards.Flipped, Is.False);
 
             var originalFirstCards = cards.Cards.Take(5).Select(c => c.CardIndex).ToList();
 
-            var split = _sStacks.Split((uid, stack), 5, coords);
+            var split = _sCards.SplitDeck((uid, cards), coords, _sCards.MovedCards(cards, 5));
             Assert.That(split, Is.Not.Null);
 
             if (!SEntMan.TryGetComponent<CardsComponent>(split!.Value, out var splitCards))
@@ -104,13 +98,13 @@ public sealed partial class CardsTest
 
         await Server.WaitAssertion(() =>
         {
-            var (uid, cards, stack) = SpawnDeck(coords);
+            var (uid, cards) = SpawnDeck(coords);
             var total = cards.Cards.Count;
             var originalLastCards = cards.Cards.TakeLast(5).Select(c => c.CardIndex).ToList();
 
             _sCards.TryFlipCards((uid, cards));
 
-            var split = _sStacks.Split((uid, stack), 5, coords);
+            var split = _sCards.SplitDeck((uid, cards), coords, _sCards.MovedCards(cards, 5));
             Assert.That(split, Is.Not.Null);
 
             if (!SEntMan.TryGetComponent<CardsComponent>(split!.Value, out var splitCards))
@@ -133,12 +127,12 @@ public sealed partial class CardsTest
 
         await Server.WaitAssertion(() =>
         {
-            var (uid, cards, stack) = SpawnDeck(coords);
+            var (uid, cards) = SpawnDeck(coords);
 
-            var leaveOne = stack.Count - 1;
-            var split = _sStacks.Split((uid, stack), leaveOne, new EntityCoordinates(uid, Vector2.Zero));
+            var leaveOne = cards.Cards.Count - 1;
+            var split = _sCards.SplitDeck((uid, cards), coords, _sCards.MovedCards(cards, leaveOne));
             Assert.That(split, Is.Not.Null);
-            Assert.That(stack.Count, Is.EqualTo(1));
+            Assert.That(cards.Cards.Count, Is.EqualTo(1));
 
             _sCards.TryFanCards((uid, cards));
 
@@ -159,11 +153,11 @@ public sealed partial class CardsTest
 
         await Server.WaitAssertion(() =>
         {
-            var (_, cardsA, _) = SpawnDeck(coords);
-            var (_, cardsB, _) = SpawnDeck(coords);
-            var (_, cardsC, _) = SpawnDeck(coords);
-            var (_, cardsD, _) = SpawnDeck(coords);
-            var (_, cardsE, _) = SpawnDeck(coords);
+            var (_, cardsA) = SpawnDeck(coords);
+            var (_, cardsB) = SpawnDeck(coords);
+            var (_, cardsC) = SpawnDeck(coords);
+            var (_, cardsD) = SpawnDeck(coords);
+            var (_, cardsE) = SpawnDeck(coords);
             var allCardLists = cardsA
                 .Cards.Concat(cardsB.Cards)
                 .Concat(cardsC.Cards)
@@ -184,7 +178,7 @@ public sealed partial class CardsTest
 
         await Server.WaitAssertion(() =>
         {
-            var (uid, cards, _) = SpawnDeck(coords);
+            var (uid, cards) = SpawnDeck(coords);
             var before = cards.Cards.Select(c => c.CardIndex).OrderBy(x => x).ToList();
 
             _sCards.TryShuffleCards((uid, cards));
@@ -205,12 +199,8 @@ public sealed partial class CardsTest
             {
                 if (proto.HideSpawnMenu)
                     continue;
-                if (!proto.TryGetComponent<StackComponent>(out var stack, _sCompFact))
-                    Assert.Fail($"prototype: {proto.ID} requires a {nameof(StackComponent)}");
 
-                Assert.That(cardsComp.Cards.Count, Is.EqualTo(stack.Count));
-
-                var stackType = stack.StackTypeId;
+                var stackType = cardsComp.CardStackType;
                 if (!SProtoMan.TryIndex(stackType, out var stackProto))
                     Assert.Fail();
 
@@ -222,14 +212,8 @@ public sealed partial class CardsTest
                         $"{baseCard.ID} the spawn of {stackType} which is the stack of {proto.ID} requires a {nameof(StackComponent)}"
                     );
 
-                if (!baseCard.TryGetComponent<StackComponent>(out var baseStackComp, _sCompFact))
-                    Assert.Fail(
-                        $"{baseCard.ID} the spawn of {stackType} which is the stack of {proto.ID} requires a {nameof(StackComponent)}"
-                    );
-
                 Assert.That(baseCardComp.Cards.Count, Is.EqualTo(0));
-                Assert.That(baseStackComp.Count, Is.EqualTo(1));
-                Assert.That(baseStackComp.StackTypeId, Is.EqualTo(stack.StackTypeId));
+                Assert.That(baseCardComp.CardStackType, Is.EqualTo(cardsComp.CardStackType));
             }
         });
     }
