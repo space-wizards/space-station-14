@@ -242,22 +242,6 @@
 
 - type: entity
   abstract: true
-  parent: BaseStashPlushie
-  id: BaseStashPlushieNormal
-  components:
-  - type: SecretStash
-    maxItemSize: "Small"
-
-- type: entity
-  abstract: true
-  parent: BaseStashPlushie
-  id: BaseStashPlushieSmall
-  components:
-  - type: SecretStash
-    maxItemSize: "Tiny"
-
-- type: entity
-  abstract: true
   parent: BaseStash
   id: BaseStashCake
   components:
@@ -270,19 +254,4 @@
   - type: ToolOpenable
     verbOnly: true
 
-- type: entity
-  abstract: true
-  parent: BaseStashCake
-  id: BaseStashCakeNormal
-  components:
-  - type: SecretStash
-    maxItemSize: "Small"
-
-- type: entity
-  abstract: true
-  parent: BaseStashCake
-  id: BaseStashCakeSmall
-  components:
-  - type: SecretStash
-    maxItemSize: "Tiny"
 
