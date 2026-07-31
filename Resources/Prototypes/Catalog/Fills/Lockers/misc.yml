@@ -294,13 +294,13 @@
   table: !type:GroupSelector
     children:
     - !type:NestedSelector
-      weight: 25
-      tableId: ToiletCisternCommonToolsTable
+    - !type:NestedSelector
+      weight: 8
       tableId: ToiletCisternRareToolsTable
     - !type:NestedSelector
       weight: 5
-      weight: 3
-      tableId: ToiletCisternWeaponsTable
+      tableId: ToiletCisternUtilityTable
+    - !type:NestedSelector
     - !type:NestedSelector
       weight: 1
       tableId: ToiletCisternSyndicateTable
