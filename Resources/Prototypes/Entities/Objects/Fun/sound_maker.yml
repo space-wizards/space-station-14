@@ -258,7 +258,7 @@
 
 - type: entity
   abstract: true
-  parent: [BaseItem, BaseStashPlushie]
+  parent: BaseItem
   id: BaseRubberToy
   components:
   - type: Tag
@@ -314,7 +314,7 @@
     - ToyRubberDuck
 
 - type: entity
-  parent: BaseRubberToy
+  parent: [BaseRubberToy, BaseStashPlushie]
   id: RubberChicken
   name: rubber chicken
   description: A stress inducing parody of nature's most delectable avian.

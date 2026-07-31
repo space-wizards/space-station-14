@@ -3,7 +3,7 @@
 
 - type: entity
   parent: [SolutionNormal, FoodInjectableBase, BaseStashCake]
-  id: FoodCakeBase
+  id: FoodCakeBaseNoSecretStash
   abstract: true
   components:
   - type: FlavorProfile
@@ -27,7 +27,12 @@
     - Cake
 
 - type: entity
-  parent: [SolutionVeryTiny, FoodCakeBase]
+  abstract: true
+  parent: [FoodCakeBaseNoSecretStash, BaseStashCake]
+  id: FoodCakeBase
+
+- type: entity
+  parent: [SolutionVeryTiny, FoodCakeBaseNoSecretStash] # no secret stash since it's tiny!
   id: FoodCakeSliceBase
   abstract: true
   description: Just a slice of cake, it is enough for everyone.
