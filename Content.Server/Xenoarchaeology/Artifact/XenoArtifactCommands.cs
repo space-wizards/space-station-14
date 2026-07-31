@@ -40,7 +40,7 @@ public sealed partial class XenoArtifactCommand : ToolshedCommand
     /// <summary>
     /// Output matrix of artifact nodes and how they are connected.
     /// </summary>
-    [CommandImplementation("printMatrix")]
+    [CommandImplementation("printmatrix")]
     public string PrintMatrix([CommandArgument] Entity<XenoArtifactComponent> artifactEnt)
     {
         var nodeCount = artifactEnt.Comp.NodeVertices.Length;
@@ -80,7 +80,7 @@ public sealed partial class XenoArtifactCommand : ToolshedCommand
     }
 
     /// <summary> Output total research points artifact contains. </summary>
-    [CommandImplementation("totalResearch")]
+    [CommandImplementation("totalresearch")]
     public int TotalResearch([PipedArgument] EntityUid artifactEntityUid)
     {
         _artifact ??= EntityManager.System<XenoArtifactSystem>();
@@ -100,7 +100,7 @@ public sealed partial class XenoArtifactCommand : ToolshedCommand
     /// <summary>
     /// Spawns a bunch of artifacts and gets average total research points they can yield.
     /// </summary>
-    [CommandImplementation("averageResearch")]
+    [CommandImplementation("averageresearch")]
     public float AverageResearch()
     {
         const int n = 100;
@@ -117,7 +117,7 @@ public sealed partial class XenoArtifactCommand : ToolshedCommand
     }
 
     /// <summary> Unlocks all nodes of artifact. </summary>
-    [CommandImplementation("unlockAllNodes")]
+    [CommandImplementation("unlockallnodes")]
     public void UnlockAllNodes([PipedArgument] EntityUid artifactEntityUid)
     {
         _artifact ??= EntityManager.System<XenoArtifactSystem>();
@@ -133,7 +133,7 @@ public sealed partial class XenoArtifactCommand : ToolshedCommand
     /// <summary>
     /// Create node in artifact (new on depth 0 or attach next to existing one).
     /// </summary>
-    [CommandImplementation("createNode")]
+    [CommandImplementation("createnode")]
     public void CreateNodeNew(
         [CommandArgument] Entity<XenoArtifactComponent> artifact,
         [CommandArgument(typeof(XenoEffectParser))] ProtoId<EntityPrototype> effect,
@@ -144,7 +144,7 @@ public sealed partial class XenoArtifactCommand : ToolshedCommand
     }
 
     /// <summary> Add a new node to the given artifact. </summary>
-    [CommandImplementation("createNodeAtDepth")]
+    [CommandImplementation("createnodeatdepth")]
     public void CreateNodeAtDepth(
         [CommandArgument(typeof(XenoArtifactNodeParser))] (Entity<XenoArtifactComponent> Artifact, Entity<XenoArtifactNodeComponent> Node) tuple,
         [CommandArgument(typeof(XenoEffectParser))] ProtoId<EntityPrototype> effect,
@@ -155,7 +155,7 @@ public sealed partial class XenoArtifactCommand : ToolshedCommand
     }
 
     /// <summary> Spawns a new xeno artifact with single node with the given trigger and effect. </summary>
-    [CommandImplementation("spawnArtWithNode")]
+    [CommandImplementation("spawnartwithnode")]
     public void SpawnArtifactWithNode(
         [CommandArgument] ICommonSession target,
         [CommandArgument(typeof(XenoArtifactTypeParser))] ProtoId<EntityPrototype> artifactType,
@@ -176,7 +176,7 @@ public sealed partial class XenoArtifactCommand : ToolshedCommand
     }
 
     /// <summary> Marks a node as unlocked. </summary>
-    [CommandImplementation("unlockNode")]
+    [CommandImplementation("unlocknode")]
     public void UnlockNode(
         [CommandArgument(typeof(XenoArtifactNodeParser))]
         (Entity<XenoArtifactComponent> Artifact, Entity<XenoArtifactNodeComponent> Node) tuple
@@ -187,7 +187,7 @@ public sealed partial class XenoArtifactCommand : ToolshedCommand
     }
 
     /// <summary> Removes a node from a xeno artifact. </summary>
-    [CommandImplementation("removeNode")]
+    [CommandImplementation("removenode")]
     public void RemoveNode(
         [CommandArgument(typeof(XenoArtifactNodeParser))]
         (Entity<XenoArtifactComponent> Artifact, Entity<XenoArtifactNodeComponent> Node) tuple
@@ -198,7 +198,7 @@ public sealed partial class XenoArtifactCommand : ToolshedCommand
     }
 
     /// <summary> Adds an edge between two nodes of a xeno artifact. </summary>
-    [CommandImplementation("addEdge")]
+    [CommandImplementation("addedge")]
     public void AddEdge(
         [CommandArgument(typeof(XenoArtifactNodeParser))]
         (Entity<XenoArtifactComponent> Artifact, Entity<XenoArtifactNodeComponent> Node) from,
