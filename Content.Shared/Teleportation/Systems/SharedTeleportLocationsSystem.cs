@@ -61,6 +61,8 @@ public abstract partial class SharedTeleportLocationsSystem : EntitySystem
             // Prevent spamming effects if the target is obstructed.
             _delay.TryResetDelay(ent.Owner, true, id: TeleportFailedDelay);
 
+            HandleTeleportDestinationObstructed(originEnt);
+
             return;
         }
 
@@ -74,6 +76,13 @@ public abstract partial class SharedTeleportLocationsSystem : EntitySystem
 
         // Teleport's done, now tell the BUI to close if needed.
         _ui.CloseUi(ent.Owner, TeleportLocationUiKey.Key);
+    }
+
+    /// <summary>
+    /// Called when the destination was obstructed and the user wasn't teleported.
+    /// </summary>
+    protected virtual void HandleTeleportDestinationObstructed(EntityUid userUid)
+    {
     }
 
     /// <remarks>
