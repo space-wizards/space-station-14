@@ -244,6 +244,22 @@
 
 - type: entity
   abstract: true
+  parent: BaseStashToy
+  id: BaseStashToyNormal
+  components:
+  - type: SecretStash
+    maxItemSize: "Small"
+
+- type: entity
+  abstract: true
+  parent: BaseStashToy
+  id: BaseStashToySmall
+  components:
+  - type: SecretStash
+    maxItemSize: "Tiny"
+
+- type: entity
+  abstract: true
   parent: BaseStash
   id: BaseStashFood
   components:
