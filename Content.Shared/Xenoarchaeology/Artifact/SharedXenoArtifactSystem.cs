@@ -21,6 +21,11 @@ public abstract partial class SharedXenoArtifactSystem : EntitySystem
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
 
+    // TODO: This solution is kind of a band-aid to slip between two problems:
+    // * iterating over EntityPrototypes is slow and bad idea at runtime
+    // * having pre-cached collections of EntityPrototypes with every filter we would possibly need seems like clogging memory
+    // We should invent other way of doing this. Giving more generic and simpler API for such caches
+    // could lead to wider usage and indirectly will clog memory with overly-specific caches, so it is not advised.
     /// <summary> Cached EntProtoIds of all XenoArtifactEffect prototypes. Used for text hints. </summary>
     public readonly HashSet<string> EffectPrototypeIds = [];
 

@@ -9,7 +9,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Toolshed;
 
-namespace Content.Server.Xenoarchaeology.Artifact;
+namespace Content.Server.Xenoarchaeology.Artifact.Toolshed;
 
 /// <summary>
 /// Toolshed commands for manipulating xeno artifact.
