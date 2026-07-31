@@ -304,6 +304,5 @@
       tableId: ToiletCisternUtilityTable
     - !type:NestedSelector
       weight: 3
-      tableId: ToiletCisternWeaponsTable
-    - !type:NestedSelector
       weight: 1
+      tableId: ToiletCisternSyndicateTable
