@@ -288,8 +288,8 @@
     - id: SoapSyndie
     - id: SyndicatePersonalAI
     - id: UplinkLighterBox
-
-- type: entityTable
+  id: ToiletCisternLoot
+  table: !type:GroupSelector
     children:
     - !type:NestedSelector
       weight: 25
@@ -305,3 +305,4 @@
       tableId: ToiletCisternWeaponsTable
     - !type:NestedSelector
       weight: 1
+      tableId: ToiletCisternSyndicateTable
