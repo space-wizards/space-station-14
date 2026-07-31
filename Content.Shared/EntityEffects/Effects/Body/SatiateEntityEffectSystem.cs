@@ -16,8 +16,7 @@ public sealed partial class SatiateEntityEffectsSystem : EntityEffectSystem<Sati
 
     protected override void Effect(Entity<SatiationComponent> entity, ref EntityEffectEvent<Satiate> args)
     {
-        _satiation
-            .ModifyValue(entity, args.Effect.SatiationType, args.Effect.Factor * args.Scale);
+        _satiation.ModifyValue(entity, args.Effect.SatiationType, args.Effect.Factor * args.Scale);
     }
 }
 

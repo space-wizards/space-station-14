@@ -18,6 +18,8 @@ public sealed partial class SatiationSystem : EntitySystem
     [Dependency] private AlertsSystem _alerts = default!;
     [Dependency] private IGameTiming _timing = default!;
 
+    [Dependency] private EntityQuery<SatiationComponent> _satiationQuery;
+
     /// <summary>
     /// The ID of the <c>Hunger</c> satiation type. Provided because it is so commonly used in Content.
     /// </summary>
@@ -39,7 +41,7 @@ public sealed partial class SatiationSystem : EntitySystem
             {
                 if (_timing.CurTime >= satiation.NextAlertUpdateTime)
                 {
-                    Scrump(entity, satiation, proto);
+                    UpdateAlerts(entity, satiation, proto);
                 }
 
                 if (_timing.CurTime >= satiation.NextDecayRateModUpdateTime)
@@ -197,10 +199,10 @@ public sealed partial class SatiationSystem : EntitySystem
             !ProtoMan.Resolve(satiation.Prototype, out var proto))
             return;
 
-        Scrump(entity, satiation, proto);
+        UpdateAlerts(entity, satiation, proto);
     }
 
-    private void Scrump(
+    private void UpdateAlerts(
         Entity<SatiationComponent> entity,
         Satiation satiation,
         SatiationPrototype proto

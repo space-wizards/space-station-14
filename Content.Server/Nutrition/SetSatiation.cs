@@ -1,24 +1,28 @@
 using System.Globalization;
+using System.Linq;
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
-using Robust.Shared.Console;
-using System.Linq;
 using Content.Shared.Nutrition.Prototypes;
-using Content.Shared.Tag;
+using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Nutrition;
 
+/// <summary>
+/// Sets the running player's entity's satiation of a given type to a given value or threshold.
+/// </summary>
 [AdminCommand(AdminFlags.Debug)]
 public sealed partial class SetSatiation : LocalizedEntityCommands
 {
     [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private SatiationSystem _satiation = default!;
 
+    /// <inheritdoc/>
     public override string Command => "setsatiation";
 
+    /// <inheritdoc/>
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         var player = shell.Player;
@@ -90,6 +94,7 @@ public sealed partial class SetSatiation : LocalizedEntityCommands
         _satiation.SetValue((playerEntity, comp), type, value: valueFromKey);
     }
 
+    /// <inheritdoc/>
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         if (shell.Player?.AttachedEntity is not { } playerEntity ||

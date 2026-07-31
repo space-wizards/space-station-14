@@ -17,11 +17,14 @@ namespace Content.Shared.Nutrition.EntitySystems;
 public sealed partial class Satiation
 {
     /// <summary>
-    /// This satiation's type.
+    /// This satiation's <see cref="SatiationTypePrototype"/>.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
     public ProtoId<SatiationTypePrototype> SatiationType;
 
+    /// <summary>
+    /// This satiation's <see cref="SatiationPrototype"/>, which describes how it changes over time.
+    /// </summary>
     [DataField(required: true), ViewVariables(VVAccess.ReadOnly)]
     public ProtoId<SatiationPrototype> Prototype;
 
@@ -48,16 +51,38 @@ public sealed partial class Satiation
     [DataField, ViewVariables(VVAccess.ReadOnly)]
     public float ActualDecayRate;
 
+    /// <summary>
+    /// When <see cref="ActualDecayRate"/> is expected to change, if nothing but normal decay affects this satiation.
+    /// This is used to predict satiation updates on clients.
+    /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan? NextDecayRateModUpdateTime;
 
+    /// <summary>
+    /// <see cref="NextDecayRateModUpdateTime"/>, but for satiation alerts.
+    /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan? NextAlertUpdateTime;
 }
 
+/// <summary>
+/// A combination of configuration (<see cref="Thresholds"/>) and state (<see cref="Current"/>) which describes how a
+/// <typeparamref name="T"/> value changes related to <see cref="Satiation"/>, as well as its current value.
+/// </summary>
+/// <example>
+/// <see cref="SatiationDamageSystem"/> uses this to describe and track damage descriptors based on satiations, applying
+/// the damage regularly over time. <see cref="Thresholds"/> describes the damage to apply at various levels of
+/// satiation, and <see cref="Current"/> tracks the current damage to apply every update, meaning it doesn't need to be
+/// looked up from <see cref="Thresholds"/> on every tick.
+/// </example>
+/// <remarks>This should probably only ever be used in conjunction with <see cref="BaseSatiationEffectSystem{TComp,T}"/></remarks>
 [DataDefinition, Serializable]
 public sealed partial class SatiationThresholds<T>
 {
+    /// <summary>
+    /// The <typeparamref name="T"/> values keyed by the satiation values at or below which the T value becomes "active".
+    /// </summary>
+    /// <seealso cref="SatiationSystem.TryGetValueByThreshold"/>
     [IncludeDataField]
     public Dictionary<SatiationValue, T> Thresholds = [];
 
@@ -67,6 +92,10 @@ public sealed partial class SatiationThresholds<T>
     /// </summary>
     public TimeSpan? ProjectedThresholdChangeTime;
 
+    /// <summary>
+    /// The current <typeparamref name="T"/> value, at least when maintained by something like
+    /// <see cref="BaseSatiationEffectSystem{TComp,T}"/>
+    /// </summary>
     public T Current;
 }
 

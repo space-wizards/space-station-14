@@ -11,8 +11,8 @@ namespace Content.Shared.Nutrition.EntitySystems;
 /// <summary>
 /// This system implements the behavior of <see cref="SatiationDamageComponent"/>
 /// </summary>
-public sealed partial class
-    SatiationDamageSystem : BaseSatiationEffectSystem<SatiationDamageComponent, DamageSpecifier?>
+public sealed partial class SatiationDamageSystem :
+    BaseSatiationEffectSystem<SatiationDamageComponent, DamageSpecifier?>
 {
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private MobStateSystem _mobState = default!;
@@ -25,8 +25,8 @@ public sealed partial class
         var satiationDamageQuery = EntityQueryEnumerator<SatiationDamageComponent>();
         while (satiationDamageQuery.MoveNext(out var ent, out var comp))
         {
-            if (_mobState.IsDead(ent) ||
-                _timing.CurTime < comp.NextDamageTime)
+            if (_timing.CurTime < comp.NextDamageTime ||
+                _mobState.IsDead(ent))
                 continue;
 
             comp.NextDamageTime = _timing.CurTime + comp.Frequency;

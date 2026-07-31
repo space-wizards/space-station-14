@@ -12,6 +12,10 @@ namespace Content.Shared.Nutrition.Components;
  Access(typeof(SatiationSpeedModifierSystem))]
 public sealed partial class SatiationSpeedModifierComponent : Component
 {
+    /// <summary>
+    /// Speed modifiers, expressed as <see cref="float"/>s, contained within <see cref="SatiationThresholds{T}"/>,
+    /// keyed by the <see cref="SatiationTypePrototype">satiation types</see> they are thresholds for.
+    /// </summary>
     [DataField(required: true), AutoNetworkedField]
     public Dictionary<ProtoId<SatiationTypePrototype>, SatiationThresholds<float>> Satiations;
 }

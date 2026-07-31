@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.Prototypes;

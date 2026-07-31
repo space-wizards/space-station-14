@@ -14,6 +14,7 @@ public sealed partial class SatiationEntityConditionSystem : EntityConditionSyst
 {
     [Dependency] private SatiationSystem _satiation = default!;
 
+    /// <inheritdoc/>
     protected override void Condition(Entity<SatiationComponent> entity,
         ref EntityConditionEvent<SatiationCondition> args)
     {
@@ -61,6 +62,7 @@ public sealed partial class SatiationCondition : EntityConditionBase<SatiationCo
     [DataField(required: true)]
     public ProtoId<SatiationTypePrototype> SatiationType;
 
+    /// <inheritdoc/>
     public override string EntityConditionGuidebookText(IPrototypeManager prototype)
     {
         return Loc.GetString("entity-condition-guidebook-total-satiation",

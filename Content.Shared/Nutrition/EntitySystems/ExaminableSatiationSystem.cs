@@ -14,7 +14,8 @@ namespace Content.Shared.Nutrition.EntitySystems;
 public sealed partial class ExaminableSatiationSystem : BaseSatiationEffectSystem<ExaminableSatiationComponent, LocId?>
 {
     protected override Dictionary<ProtoId<SatiationTypePrototype>, SatiationThresholds<LocId?>> GetThresholds(
-        ExaminableSatiationComponent comp) => comp.Satiations;
+        ExaminableSatiationComponent comp
+    ) => comp.Satiations;
 
     protected override LocId? DefaultValue() => null;
 

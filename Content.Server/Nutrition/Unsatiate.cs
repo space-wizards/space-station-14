@@ -18,8 +18,10 @@ public sealed partial class Unsatiate : LocalizedEntityCommands
     [Dependency] private IPrototypeManager _protoMan = default!;
     [Dependency] private SatiationSystem _satiation = default!;
 
+    /// <inheritdoc/>
     public override string Command => "unsatiate";
 
+    /// <inheritdoc/>
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         var player = shell.Player;
@@ -86,6 +88,7 @@ public sealed partial class Unsatiate : LocalizedEntityCommands
         }
     }
 
+    /// <inheritdoc/>
     // Always suggest any satiation types which aren't already in the arg list.
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {

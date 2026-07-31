@@ -18,6 +18,7 @@ public sealed partial class ShowSatiationIconsSystem : EquipmentHudSystem<ShowSa
 
     private HashSet<ProtoId<SatiationTypePrototype>> _types = [];
 
+    /// <inheritdoc />
     protected override void UpdateInternal(RefreshEquipmentHudEvent<ShowSatiationIconsComponent> args)
     {
         base.UpdateInternal(args);
@@ -30,6 +31,7 @@ public sealed partial class ShowSatiationIconsSystem : EquipmentHudSystem<ShowSa
         }
     }
 
+    /// <inheritdoc />
     protected override void DeactivateInternal()
     {
         base.DeactivateInternal();

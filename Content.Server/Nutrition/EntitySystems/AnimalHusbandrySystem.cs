@@ -128,9 +128,9 @@ public sealed partial class AnimalHusbandrySystem : EntitySystem
             _satiation.ModifyValue((uid, satiation), SatiationSystem.Hunger, -component.HungerPerBirth);
         }
 
-        if (TryComp<SatiationComponent>(uid, out var partnerSatiation))
+        if (TryComp<SatiationComponent>(partner, out var partnerSatiation))
         {
-            _satiation.ModifyValue((uid, partnerSatiation), SatiationSystem.Hunger, -component.HungerPerBirth);
+            _satiation.ModifyValue((partner, partnerSatiation), SatiationSystem.Hunger, -component.HungerPerBirth);
         }
 
         component.GestationEndTime = _timing.CurTime + component.GestationDuration;
@@ -165,20 +165,20 @@ public sealed partial class AnimalHusbandrySystem : EntitySystem
         }
 
         // Check minimum hunger requirement
-        if (component!.MinHungerThreshold is { } minHunger &&
-            (
-                !satiation.Has(SatiationSystem.Hunger) ||
-                _satiation.IsValueInRange((uid, satiation), SatiationSystem.Hunger, below: minHunger)
-            ))
-            return false;
+        if (component!.MinHungerThreshold is { } minHunger)
+        {
+            if (!satiation.Has(SatiationSystem.Hunger) ||
+                _satiation.IsValueInRange((uid, satiation), SatiationSystem.Hunger, below: minHunger))
+                return false;
+        }
 
         // Check minimum thirst requirement
-        if (component.MinThirstThreshold is { } minThirst &&
-            (
-                !satiation.Has(SatiationSystem.Thirst) ||
-                _satiation.IsValueInRange((uid, satiation), SatiationSystem.Thirst, below: minThirst)
-            ))
-            return false;
+        if (component.MinThirstThreshold is { } minThirst)
+        {
+            if (!satiation.Has(SatiationSystem.Thirst) ||
+                _satiation.IsValueInRange((uid, satiation), SatiationSystem.Thirst, below: minThirst))
+                return false;
+        }
 
         return true;
     }

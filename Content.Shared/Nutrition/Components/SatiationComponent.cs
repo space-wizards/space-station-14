@@ -15,6 +15,9 @@ namespace Content.Shared.Nutrition.Components;
 [Access(typeof(SatiationSystem))]
 public sealed partial class SatiationComponent : Component
 {
+    /// <summary>
+    /// The actual <see cref="Satiation"/>s this entity has, keyed by their <see cref="SatiationTypePrototype">type</see>.
+    /// </summary>
     [DataField(required: true)]
     [AutoNetworkedField]
     public Dictionary<ProtoId<SatiationTypePrototype>, Satiation> Satiations = [];

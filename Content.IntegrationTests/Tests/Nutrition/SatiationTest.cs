@@ -1,9 +1,11 @@
 using System.Collections.Generic;
+using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Nutrition.Prototypes;
+using NUnit.Framework.Constraints;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -12,229 +14,14 @@ namespace Content.IntegrationTests.Tests.Nutrition;
 [TestFixture]
 [TestOf(typeof(SatiationSystem))]
 [TestOf(typeof(SatiationPrototype))]
-public sealed class SatiationTest
+public sealed class SatiationTest : GameTest
 {
-    [Test]
-    public async Task SatiationBasicTest()
-    {
-        await using var pair = await PoolManager.GetServerClient();
-        var server = pair.Server;
-        var entMan = server.ResolveDependency<IEntityManager>();
-
-        await server.WaitAssertion(() =>
-        {
-            var sys = entMan.System<SatiationSystem>();
-            var ent = entMan.Spawn(TestProto, MapCoordinates.Nullspace);
-            var entity = new Entity<SatiationComponent>(ent, server.EntMan.GetComponent<SatiationComponent>(ent));
-
-            using (Assert.EnterMultipleScope())
-            {
-                Assert.That(sys.GetValueOrNull(entity, SatType),
-                    Is.LessThanOrEqualTo(StartingMax).And.GreaterThanOrEqualTo(StartingMin));
-                Assert.That(sys.IsValueInRange(entity, SatType, above: StartingMin, below: StartingMax),
-                    Is.True);
-            }
-
-            sys.SetValue(entity, SatType, MiddleKey);
-            Assert.That(sys.GetValueOrNull(entity, SatType), Is.EqualTo(MiddleValue));
-
-            sys.ModifyValue(entity, SatType, -20);
-            Assert.That(sys.GetValueOrNull(entity, SatType), Is.EqualTo(MiddleValue - 20));
-
-            sys.ModifyValue(entity, SatType, -int.MaxValue);
-            Assert.That(sys.GetValueOrNull(entity, SatType), Is.Zero);
-
-            sys.ModifyValue(entity, SatType, int.MaxValue);
-            using (Assert.EnterMultipleScope())
-            {
-                Assert.That(sys.GetValueOrNull(entity, SatType), Is.EqualTo(MaxValue));
-                Assert.That(sys.GetValueOrNull(entity, SatType + NotRealKey), Is.Null);
-            }
-        });
-    }
-
-    [Test]
-    public async Task SatiationGetValueByThresholdTest()
-    {
-        await using var pair = await PoolManager.GetServerClient();
-        var server = pair.Server;
-        var entMan = server.ResolveDependency<IEntityManager>();
-
-        await server.WaitAssertion(() =>
-        {
-            var sys = entMan.System<SatiationSystem>();
-            var ent = entMan.Spawn(TestProto, MapCoordinates.Nullspace);
-            var entity = new Entity<SatiationComponent>(ent, server.EntMan.GetComponent<SatiationComponent>(ent));
-            var dict = new Dictionary<SatiationValue, int>
-            {
-                // Arbitrary order to test that the implementation doesn't care about order.
-                [20] = 20,
-                [0] = 0,
-                [40] = 40,
-                [80] = 80,
-                [100] = 100,
-                [60] = 60,
-            };
-
-            sys.SetValue(entity, SatType, value: 100);
-            using (Assert.EnterMultipleScope())
-            {
-                var res = sys.TryGetValueByThreshold(entity, SatType, dict, out var result, out var nextLower);
-                Assert.That(res, Is.True);
-                Assert.That(result, Is.EqualTo(100));
-                Assert.That(nextLower, Is.EqualTo(80));
-            }
-
-            sys.SetValue(entity, SatType, value: 55);
-            using (Assert.EnterMultipleScope())
-            {
-                var res = sys.TryGetValueByThreshold(entity, SatType, dict, out var result, out var nextLower);
-                Assert.That(res, Is.True);
-                Assert.That(result, Is.EqualTo(60));
-                Assert.That(nextLower, Is.EqualTo(40));
-            }
-
-            sys.SetValue(entity, SatType, value: 0);
-            using (Assert.EnterMultipleScope())
-            {
-                var res = sys.TryGetValueByThreshold(entity, SatType, dict, out var result, out var nextLower);
-                Assert.That(res, Is.True);
-                Assert.That(result, Is.Zero);
-                Assert.That(nextLower, Is.Null);
-            }
-        });
-    }
-
-    [Test]
-    public async Task SatiationGetValueByThresholdKeysTest()
-    {
-        await using var pair = await PoolManager.GetServerClient();
-        var server = pair.Server;
-        var entMan = server.ResolveDependency<IEntityManager>();
-
-        await server.WaitAssertion(() =>
-        {
-            var sys = entMan.System<SatiationSystem>();
-            var ent = entMan.Spawn(TestProto, MapCoordinates.Nullspace);
-            var entity = new Entity<SatiationComponent>(ent, server.EntMan.GetComponent<SatiationComponent>(ent));
-            var dict = new Dictionary<SatiationValue, int>
-            {
-                // Arbitrary order to test that the implementation doesn't care about order.
-                [DeadKey] = 20,
-                [MaxxedKey] = 0,
-                [MiddleKey] = 40,
-            };
-
-            sys.SetValue(entity, SatType, MaxxedKey);
-            using (Assert.EnterMultipleScope())
-            {
-                var res = sys.TryGetValueByThreshold(entity, SatType, dict, out var result, out var nextLower);
-                Assert.That(res, Is.True);
-                Assert.That(result, Is.Zero);
-                Assert.That(nextLower, Is.EqualTo(MiddleValue));
-            }
-
-            sys.ModifyValue(entity, SatType, -10);
-            using (Assert.EnterMultipleScope())
-            {
-                var res = sys.TryGetValueByThreshold(entity, SatType, dict, out var result, out var nextLower);
-                Assert.That(res, Is.True);
-                Assert.That(result, Is.Zero);
-                Assert.That(nextLower, Is.EqualTo(MiddleValue));
-            }
-
-            sys.SetValue(entity, SatType, MiddleKey);
-            using (Assert.EnterMultipleScope())
-            {
-                var res = sys.TryGetValueByThreshold(entity, SatType, dict, out var result, out var nextLower);
-                Assert.That(res, Is.True);
-                Assert.That(result, Is.EqualTo(40));
-                Assert.That(nextLower, Is.Zero);
-            }
-
-            sys.SetValue(entity, SatType, DeadKey);
-            using (Assert.EnterMultipleScope())
-            {
-                var res = sys.TryGetValueByThreshold(entity, SatType, dict, out var result, out var nextLower);
-                Assert.That(res, Is.True);
-                Assert.That(result, Is.EqualTo(20));
-                Assert.That(nextLower, Is.Null);
-            }
-        });
-    }
-
-    [Test]
-    public async Task SatiationRangeTests()
-    {
-        await using var pair = await PoolManager.GetServerClient();
-        var server = pair.Server;
-        var entMan = server.ResolveDependency<IEntityManager>();
-
-        await server.WaitAssertion(() =>
-        {
-            var sys = entMan.System<SatiationSystem>();
-            var ent = entMan.Spawn(TestProto, MapCoordinates.Nullspace);
-            var entity = new Entity<SatiationComponent>(ent, server.EntMan.GetComponent<SatiationComponent>(ent));
-
-            sys.SetValue(entity, SatType, value: 100);
-            using (Assert.EnterMultipleScope())
-            {
-                Assert.That(sys.IsValueInRange(entity, SatType, above: DeadKey), Is.True);
-                Assert.That(sys.IsValueInRange(entity, SatType, above: MaxxedKey), Is.False);
-                Assert.That(sys.IsValueInRange(entity, SatType, below: MaxxedKey, hypotheticalValueDelta: -1), Is.True);
-            }
-
-            sys.SetValue(entity, SatType, value: MiddleValue + 5);
-            using (Assert.EnterMultipleScope())
-            {
-                Assert.That(sys.IsValueInRange(entity, SatType, above: MiddleKey), Is.True);
-                Assert.That(sys.IsValueInRange(entity, SatType, above: MiddleKey, below: MaxxedKey),
-                    Is.True);
-                Assert.That(
-                    sys.IsValueInRange(entity, SatType, above: MaxxedKey, hypotheticalValueDelta: -10),
-                    Is.False);
-            }
-
-            using (Assert.EnterMultipleScope())
-            {
-                // I cannot be bothered to make these into constants.
-#pragma warning disable RA0033
-                Assert.That(sys.IsValueInRange(entity, SatType, above: 0), Is.True);
-                Assert.That(sys.IsValueInRange(entity, SatType, above: -1000), Is.True);
-                Assert.That(sys.IsValueInRange(entity, SatType, above: 100), Is.False);
-                Assert.That(() => sys.IsValueInRange(entity, SatType, below: 60, above: 70),
-#if DEBUG
-                    Throws.InstanceOf<DebugAssertException>()
-#else
-                        Is.False
-#endif
-                );
-                Assert.That(sys.IsValueInRange(entity, SatType, below: 50, hypotheticalValueDelta: -10),
-                    Is.True);
-#pragma warning restore RA0033
-            }
-
-            sys.SetValue(entity, SatType, value: 0);
-            using (Assert.EnterMultipleScope())
-            {
-                Assert.That(sys.IsValueInRange(entity, SatType, above: NotRealKey), Is.False);
-                Assert.That(() => sys.IsValueInRange(entity, SatType),
-#if DEBUG
-                    Throws.InstanceOf<DebugAssertException>()
-#else
-                        Is.True
-#endif
-                );
-            }
-        });
-    }
-
     private const string TestSatiationId = "TestSatiation";
     private const string DeadKey = "Dead";
     private const string MiddleKey = "Okay";
     private const string MaxxedKey = "Maxxed";
     private const string NotRealKey = "ashfdjkashfljkahdjskfjadshfgkjlhadsekljfhjalds";
-    private static readonly ProtoId<SatiationTypePrototype> SatType = "Hunger";
+    private static readonly ProtoId<SatiationTypePrototype> TestSatiationType = "Hunger";
     private const string TestProto = "TestSatiationDummy";
     private const int StartingMin = 30;
     private const int StartingMax = 35;
@@ -242,8 +29,7 @@ public sealed class SatiationTest
     private const int MaxValue = 100;
 
     [TestPrototypes]
-    private static readonly string SatiationPrototypes =
-        $@"
+    private static readonly string SatiationPrototypes = $@"
 - type: satiation
   id: {TestSatiationId}
   baseDecayRate: 1
@@ -267,4 +53,245 @@ public sealed class SatiationTest
       Hunger:
         prototype: {TestSatiationId}
 ";
+
+    [SidedDependency(Side.Server)]
+    private readonly SatiationSystem _satiation =
+        default!;
+
+    [Test, RunOnSide(Side.Server)]
+    [Description(
+        "Verifies the basic operations of 'SatiationSystem.SetValue', 'SatiationSystem.ModifyValue', and 'SatiationSystem.GetValueOrNull'")]
+    public void SatiationBasicTest()
+    {
+        var ent = SSpawn(TestProto);
+        var entity = new Entity<SatiationComponent>(ent, SComp<SatiationComponent>(ent));
+
+        // Verify the starting value is in the starting range.
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(_satiation.GetValueOrNull(entity, TestSatiationType),
+                Is.LessThanOrEqualTo(StartingMax).And.GreaterThanOrEqualTo(StartingMin));
+            Assert.That(_satiation.IsValueInRange(entity, TestSatiationType, above: StartingMin, below: StartingMax),
+                Is.True);
+        }
+
+        // The rest of this modifies the value and verifies the numeric value is what's expected
+
+        _satiation.SetValue(entity, TestSatiationType, MiddleKey);
+        Assert.That(_satiation.GetValueOrNull(entity, TestSatiationType), Is.EqualTo(MiddleValue));
+
+        _satiation.ModifyValue(entity, TestSatiationType, -20);
+        Assert.That(_satiation.GetValueOrNull(entity, TestSatiationType), Is.EqualTo(MiddleValue - 20));
+
+        _satiation.ModifyValue(entity, TestSatiationType, -int.MaxValue);
+        Assert.That(_satiation.GetValueOrNull(entity, TestSatiationType), Is.Zero);
+
+        _satiation.ModifyValue(entity, TestSatiationType, int.MaxValue);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(_satiation.GetValueOrNull(entity, TestSatiationType), Is.EqualTo(MaxValue));
+            Assert.That(_satiation.GetValueOrNull(entity, TestSatiationType + NotRealKey), Is.Null);
+        }
+    }
+
+    [Test, RunOnSide(Side.Server)]
+    [Description("Verifies 'SatiationSystem.TryGetValueByThreshold' when threshold keys are integers")]
+    public void SatiationGetValueByThresholdTest()
+    {
+        var ent = SSpawn(TestProto);
+        var entity = new Entity<SatiationComponent>(ent, SComp<SatiationComponent>(ent));
+        var dict = new Dictionary<SatiationValue, int>
+        {
+            // Arbitrary order to test that the implementation doesn't care about order.
+            [20] = 20,
+            [0] = 0,
+            [40] = 40,
+            [80] = 80,
+            [100] = 100,
+            [60] = 60,
+        };
+
+        // All of these work by setting a value, calling `TryGetValueByThreshold`, and verifying the exact results are
+        // what's expected.
+
+        _satiation.SetValue(entity, TestSatiationType, value: 100);
+        using (Assert.EnterMultipleScope())
+        {
+            var res = _satiation.TryGetValueByThreshold(entity,
+                TestSatiationType,
+                dict,
+                out var result,
+                out var nextLower);
+            Assert.That(res, Is.True);
+            Assert.That(result, Is.EqualTo(100));
+            Assert.That(nextLower, Is.EqualTo(80));
+        }
+
+        _satiation.SetValue(entity, TestSatiationType, value: 55);
+        using (Assert.EnterMultipleScope())
+        {
+            var res = _satiation.TryGetValueByThreshold(entity,
+                TestSatiationType,
+                dict,
+                out var result,
+                out var nextLower);
+            Assert.That(res, Is.True);
+            Assert.That(result, Is.EqualTo(60));
+            Assert.That(nextLower, Is.EqualTo(40));
+        }
+
+        _satiation.SetValue(entity, TestSatiationType, value: 0);
+        using (Assert.EnterMultipleScope())
+        {
+            var res = _satiation.TryGetValueByThreshold(entity,
+                TestSatiationType,
+                dict,
+                out var result,
+                out var nextLower);
+            Assert.That(res, Is.True);
+            Assert.That(result, Is.Zero);
+            Assert.That(nextLower, Is.Null);
+        }
+    }
+
+    [Test, RunOnSide(Side.Server)]
+    [Description("Verifies 'SatiationSystem.TryGetValueByThreshold' when threshold keys are strings")]
+    public void SatiationGetValueByThresholdKeysTest()
+    {
+        var ent = SSpawn(TestProto);
+        var entity = new Entity<SatiationComponent>(ent, SComp<SatiationComponent>(ent));
+        var dict = new Dictionary<SatiationValue, int>
+        {
+            // Arbitrary order to test that the implementation doesn't care about order.
+            [DeadKey] = 20,
+            [MaxxedKey] = 0,
+            [MiddleKey] = 40,
+        };
+
+        // All of these work by setting a value, calling `TryGetValueByThreshold`, and verifying the exact results are
+        // what's expected.
+
+        _satiation.SetValue(entity, TestSatiationType, MaxxedKey);
+        using (Assert.EnterMultipleScope())
+        {
+            var res = _satiation.TryGetValueByThreshold(entity,
+                TestSatiationType,
+                dict,
+                out var result,
+                out var nextLower);
+            Assert.That(res, Is.True);
+            Assert.That(result, Is.Zero);
+            Assert.That(nextLower, Is.EqualTo(MiddleValue));
+        }
+
+        _satiation.ModifyValue(entity, TestSatiationType, -10);
+        using (Assert.EnterMultipleScope())
+        {
+            var res = _satiation.TryGetValueByThreshold(entity,
+                TestSatiationType,
+                dict,
+                out var result,
+                out var nextLower);
+            Assert.That(res, Is.True);
+            Assert.That(result, Is.Zero);
+            Assert.That(nextLower, Is.EqualTo(MiddleValue));
+        }
+
+        _satiation.SetValue(entity, TestSatiationType, MiddleKey);
+        using (Assert.EnterMultipleScope())
+        {
+            var res = _satiation.TryGetValueByThreshold(entity,
+                TestSatiationType,
+                dict,
+                out var result,
+                out var nextLower);
+            Assert.That(res, Is.True);
+            Assert.That(result, Is.EqualTo(40));
+            Assert.That(nextLower, Is.Zero);
+        }
+
+        _satiation.SetValue(entity, TestSatiationType, DeadKey);
+        using (Assert.EnterMultipleScope())
+        {
+            var res = _satiation.TryGetValueByThreshold(entity,
+                TestSatiationType,
+                dict,
+                out var result,
+                out var nextLower);
+            Assert.That(res, Is.True);
+            Assert.That(result, Is.EqualTo(20));
+            Assert.That(nextLower, Is.Null);
+        }
+    }
+
+    [Test, RunOnSide(Side.Server)]
+    [Description("Verifies 'SatiationSystem.IsValueInRange'")]
+    public void SatiationRangeTests()
+    {
+        var ent = SSpawn(TestProto);
+        var entity = new Entity<SatiationComponent>(ent, SComp<SatiationComponent>(ent));
+
+        // All of these work by setting a value, then asserting that `IsValueInRange` for various ranges returns what's
+        // expected.
+
+        _satiation.SetValue(entity, TestSatiationType, value: 100);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(_satiation.IsValueInRange(entity, TestSatiationType, above: DeadKey), Is.True);
+            Assert.That(_satiation.IsValueInRange(entity, TestSatiationType, above: MaxxedKey), Is.False);
+            Assert.That(_satiation.IsValueInRange(entity,
+                    TestSatiationType,
+                    below: MaxxedKey,
+                    hypotheticalValueDelta: -1),
+                Is.True);
+        }
+
+        _satiation.SetValue(entity, TestSatiationType, value: MiddleValue + 5);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(_satiation.IsValueInRange(entity, TestSatiationType, above: MiddleKey), Is.True);
+            Assert.That(_satiation.IsValueInRange(entity, TestSatiationType, above: MiddleKey, below: MaxxedKey),
+                Is.True);
+            Assert.That(
+                _satiation.IsValueInRange(entity, TestSatiationType, above: MaxxedKey, hypotheticalValueDelta: -10),
+                Is.False);
+        }
+
+        using (Assert.EnterMultipleScope())
+        {
+            // Disable "ForbidLiteral" errors. Making these all into constants to be used once is unnecessary.
+#pragma warning disable RA0033
+            Assert.That(_satiation.IsValueInRange(entity, TestSatiationType, above: 0), Is.True);
+            Assert.That(_satiation.IsValueInRange(entity, TestSatiationType, above: -1000), Is.True);
+            Assert.That(_satiation.IsValueInRange(entity, TestSatiationType, above: 100), Is.False);
+            Assert.That(_satiation.IsValueInRange(entity, TestSatiationType, below: 60, above: 70), Goop(Is.False));
+            Assert.That(_satiation.IsValueInRange(entity, TestSatiationType, below: 50, hypotheticalValueDelta: -10),
+                Is.True);
+#pragma warning restore RA0033
+        }
+
+        _satiation.SetValue(entity, TestSatiationType, value: 0);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(_satiation.IsValueInRange(entity, TestSatiationType, above: NotRealKey), Is.False);
+            Assert.That(_satiation.IsValueInRange(entity, TestSatiationType), Goop(Is.True));
+        }
+    }
+
+    /// <summary>
+    /// Returns a <see cref="Constraint"/> verifying the operation throws <see cref="DebugAssertException"/> on Debug
+    /// run configuration, otherwise returns the passed in constraint. This is only separated out so that all the
+    /// preprocessor directives don't muddy tests.
+    /// </summary>
+#pragma warning disable CA1859
+// ReSharper disable once UnusedParameter.Local
+    private static Constraint Goop(Constraint nonDebugConstraint)
+#pragma warning restore CA1859
+    {
+#if DEBUG
+        return Throws.InstanceOf<DebugAssertException>();
+#else
+        return nonDebugConstraint;
+#endif
+    }
 }
