@@ -1,0 +1,7 @@
+- type: metabolizerType
+  id: CopperRestoresBlood
+  name: metabolizer-type-copper-blood
+
+- type: metabolizerType
+  id: IronRestoresBlood
+  name: metabolizer-type-iron-blood

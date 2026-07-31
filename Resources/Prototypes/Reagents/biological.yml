@@ -25,6 +25,11 @@
           - !type:MetabolizerTypeCondition
             type: [ Human ]
             inverted: true
+      - !type:SatiateThirst
+        factor: 1.0
+        conditions:
+          - !type:MetabolizerTypeCondition
+            type: [ BloodDrinker, Bloodsucker ]
       - !type:EvenHealthChange
         conditions:
         - !type:MetabolizerTypeCondition

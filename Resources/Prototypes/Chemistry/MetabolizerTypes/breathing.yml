@@ -1,0 +1,19 @@
+- type: metabolizerType
+  id: OxygenBreathing
+  name: metabolizer-type-oxygen-breathing
+
+- type: metabolizerType
+  id: NitrogenBreathing
+  name: metabolizer-type-nitrogen-breathing
+
+- type: metabolizerType
+  id: CO2Breathing
+  name: metabolizer-type-co2-breathing
+
+- type: metabolizerType
+  id: OxygenToxicated
+  name: metabolizer-type-oxygen-toxic
+
+- type: metabolizerType
+  id: AmmoniaImmune
+  name: metabolizer-type-ammonia-immune

@@ -4,7 +4,7 @@
   suffix: bloodsucker
   components:
   - type: Metabolizer
-    metabolizerTypes: [ Bloodsucker ]
+    metabolizerTypes: [ OxygenBreathing, IronRestoresBlood, Bloodsucker ]
 
 - type: entity
   id: OrganBloodsuckerStomach

@@ -412,7 +412,7 @@
       - !type:HealthChange
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [Animal] # Applying damage to the mobs with lower metabolism capabilities
+          type: [TheobromineIntolerant] # Applying damage to the mobs with lower metabolism capabilities
         damage:
           types:
             Poison: 0.4
@@ -420,7 +420,7 @@
         probability: 0.04 #Scaled for time, not metabolismrate.
         conditions:
           - !type:MetabolizerTypeCondition
-            type: [Animal]
+            type: [TheobromineIntolerant]
 
 - type: reagent
   id: Amatoxin
@@ -761,7 +761,7 @@
         factor: 1
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [Vox]
+          type: [TrashEater]
 
 - type: reagent
   id: Hemorrhinol

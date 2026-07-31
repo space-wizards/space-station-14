@@ -110,7 +110,7 @@
   abstract: true
   components:
   - type: Metabolizer
-    metabolizerTypes: [ Human ]
+    metabolizerTypes: [ OxygenBreathing, IronRestoresBlood, Human ]
 
 - type: entity
   parent: OrganHuman

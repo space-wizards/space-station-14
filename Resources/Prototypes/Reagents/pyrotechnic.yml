@@ -171,11 +171,11 @@
         factor: 1
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [Vox]
+          type: [FuelDrinker]
       - !type:HealthChange
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [Vox]
+          type: [FuelDrinker]
           inverted: true
         damage:
           types:

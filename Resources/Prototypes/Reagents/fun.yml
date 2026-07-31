@@ -348,7 +348,7 @@
         prototype: ArtifactLizard # Does the same thing as the original YML I made for this reagent.
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [Animal]
+          type: [WehImmune]
           inverted: true
         - !type:ReagentCondition
           reagent: JuiceThatMakesYouWeh
@@ -383,7 +383,7 @@
         prototype: ArtifactLizard
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Animal ]
+          type: [ WehImmune ]
           inverted: true
         - !type:ReagentCondition
           reagent: JuiceThatMakesYouHew

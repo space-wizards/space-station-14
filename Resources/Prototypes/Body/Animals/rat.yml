@@ -4,7 +4,7 @@
   suffix: Rat
   components:
   - type: Metabolizer
-    metabolizerTypes: [ Rat ]
+    metabolizerTypes: [ OxygenBreathing, IronRestoresBlood, BloodDrinker, AmmoniaImmune ]
 
 - type: entity
   id: BaseMobRat

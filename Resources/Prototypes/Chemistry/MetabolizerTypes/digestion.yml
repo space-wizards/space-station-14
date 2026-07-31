@@ -1,0 +1,19 @@
+- type: metabolizerType
+  id: FuelDrinker
+  name: metabolizer-type-fuel-drinker
+
+- type: metabolizerType
+  id: BloodDrinker
+  name: metabolizer-type-blood-drinker
+
+- type: metabolizerType
+  id: Bloodsucker
+  name: metabolizer-type-bloodsucker
+
+- type: metabolizerType
+  id: TheobromineIntolerant
+  name: metabolizer-type-theobromine-intolerant
+
+- type: metabolizerType
+  id: TrashEater
+  name: metabolizer-type-trash-eater

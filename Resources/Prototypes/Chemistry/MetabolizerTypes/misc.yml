@@ -1,0 +1,7 @@
+- type: metabolizerType
+  id: WehImmune
+  name: metabolizer-type-weh-immune
+
+- type: metabolizerType
+  id: Animal
+  name: metabolizer-type-animal

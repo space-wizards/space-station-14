@@ -174,7 +174,7 @@
   abstract: true
   components:
   - type: Metabolizer
-    metabolizerTypes: [ Dwarf ]
+    metabolizerTypes: [ OxygenBreathing, IronRestoresBlood, Dwarf ]
 
 - type: entity
   parent: [ OrganHumanTorso, OrganDwarfAppearance ]

@@ -3,7 +3,7 @@
   abstract: true
   components:
   - type: Metabolizer
-    metabolizerTypes: [ Animal ]
+    metabolizerTypes: [ OxygenBreathing, IronRestoresBlood, Animal, TheobromineIntolerant ]
 
 - type: entity
   parent: OrganBaseOrganic

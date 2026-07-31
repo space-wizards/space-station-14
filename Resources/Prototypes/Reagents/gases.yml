@@ -16,12 +16,12 @@
       - !type:Oxygenate
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Human, Animal, Rat, Plant ]
+          type: [ OxygenBreathing ]
       # Convert Oxygen into CO2.
       - !type:ModifyLungGas
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Vox ]
+          type: [ OxygenToxicated ]
           inverted: true
         ratios:
           CarbonDioxide: 1.0
@@ -29,7 +29,7 @@
       - !type:HealthChange
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Vox ]
+          type: [ OxygenToxicated ]
         ignoreResistances: true
         damage:
           types:
@@ -39,7 +39,7 @@
         minScale: 1
         conditions:
           - !type:MetabolizerTypeCondition
-            type: [ Vox ]
+            type: [ OxygenToxicated ]
         clear: true
         time: 5
     Respiration:
@@ -47,12 +47,12 @@
       - !type:Oxygenate
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Human, Animal, Rat, Plant, Arachnid, Moth ]
+          type: [ OxygenBreathing ]
       # Convert Oxygen into CO2.
       - !type:ModifyLungGas
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Vox ]
+          type: [ OxygenToxicated ]
           inverted: true
         ratios:
           CarbonDioxide: 1.0
@@ -60,7 +60,7 @@
       - !type:HealthChange
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Vox ]
+          type: [ OxygenToxicated ]
         ignoreResistances: true
         damage:
           types:
@@ -70,7 +70,7 @@
         minScale: 0.5
         conditions:
           - !type:MetabolizerTypeCondition
-            type: [ Vox ]
+            type: [ OxygenToxicated ]
         clear: true
         time: 5
 
@@ -170,7 +170,7 @@
       - !type:Oxygenate
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Plant ]
+          type: [ CO2Breathing ]
       - !type:HealthChange
         conditions:
         - !type:MetabolizerTypeCondition
@@ -184,7 +184,7 @@
       - !type:Oxygenate
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Plant ]
+          type: [ CO2Breathing ]
           inverted: true
         factor: -4
     Respiration:
@@ -192,7 +192,7 @@
       - !type:Oxygenate
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Plant ]
+          type: [ CO2Breathing ]
       - !type:HealthChange
         minScale: 0.5
         conditions:
@@ -209,7 +209,7 @@
       - !type:Oxygenate # carbon dioxide displaces oxygen from the bloodstream, causing asphyxiation
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Plant ]
+          type: [ CO2Breathing ]
           inverted: true
         factor: -4
       # We need a metabolism effect on reagent removal
@@ -237,7 +237,7 @@
       - !type:Oxygenate
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Vox, Slime ]
+          type: [ NitrogenBreathing ]
       # Converts Nitrogen into Ammonia
       - !type:ModifyLungGas
         conditions:

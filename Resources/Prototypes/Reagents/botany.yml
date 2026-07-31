@@ -223,7 +223,7 @@
       - !type:HealthChange
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Rat ]
+          type: [ AmmoniaImmune ]
           inverted: true
         - !type:ReagentCondition
           reagent: Ammonia
@@ -237,7 +237,7 @@
         probability: 0.12
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Rat, Vox ]
+          type: [ AmmoniaImmune, Vox ]
           inverted: true
         - !type:ReagentCondition
           reagent: Ammonia
@@ -254,7 +254,7 @@
       - !type:EvenHealthChange
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Rat ]
+          type: [ AmmoniaImmune ]
         - !type:ReagentCondition
           reagent: Ammonia
           min: 1
@@ -267,7 +267,7 @@
         amount: 1
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Rat ]
+          type: [ AmmoniaImmune ]
         - !type:ReagentCondition
           reagent: Ammonia
           min: 1

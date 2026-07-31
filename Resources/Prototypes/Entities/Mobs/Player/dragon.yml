@@ -112,7 +112,7 @@
   - type: Metabolizer
     solutionOnBody: false
     updateInterval: 0.25
-    metabolizerTypes: [ Dragon ]
+    metabolizerTypes: [ OxygenBreathing, AmmoniaImmune, IronRestoresBlood, Animal ]
     stages: [ Digestion, Bloodstream ]
   - type: ToolRefinable
     refineResult:

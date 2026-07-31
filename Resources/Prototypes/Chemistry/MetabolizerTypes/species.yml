@@ -2,18 +2,6 @@
 # you'll likely have to tag its metabolizers with something other than Human.
 
 - type: metabolizerType
-  id: Animal
-  name: metabolizer-type-animal
-
-- type: metabolizerType
-  id: Bloodsucker
-  name: metabolizer-type-bloodsucker
-
-- type: metabolizerType
-  id: Dragon
-  name: metabolizer-type-dragon
-
-- type: metabolizerType
   id: Human
   name: metabolizer-type-human
 
@@ -24,10 +12,6 @@
 - type: metabolizerType
   id: Vox
   name: metabolizer-type-vox
-
-- type: metabolizerType
-  id: Rat
-  name: metabolizer-type-rat
 
 - type: metabolizerType
   id: Plant
