@@ -7,10 +7,13 @@ using Robust.Shared.Toolshed.TypeParsers;
 
 namespace Content.Shared.Toolshed.TypeParsers;
 
-public sealed class StatusEffectCompletionParser : CustomCompletionParser<EntProtoId>
+public sealed partial class StatusEffectCompletionParser : CustomCompletionParser<EntProtoId>
 {
+    [Dependency] private IEntityManager _entityManager = default!;
+
     public override CompletionResult? TryAutocomplete(ParserContext ctx, CommandArgument? arg)
     {
-        return CompletionResult.FromHintOptions(IoCManager.Resolve<IEntityManager>().System<StatusEffectsSystem>().StatusEffectPrototypes, GetArgHint(arg));
+        var statusEffects = _entityManager.System<StatusEffectsSystem>();
+        return CompletionResult.FromHintOptions(statusEffects.StatusEffectPrototypes, GetArgHint(arg));
     }
 }
