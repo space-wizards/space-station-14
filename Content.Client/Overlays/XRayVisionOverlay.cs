@@ -1,7 +1,5 @@
 using System.Numerics;
 using Content.Shared.Whitelist;
-using Robust.Client.ComponentTrees;
-using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.ResourceManagement;
@@ -25,9 +23,6 @@ public sealed partial class XRayVisionOverlay : Overlay
 
     private readonly SharedTransformSystem _transform;
     private readonly SharedMapSystem _mapSys;
-    private readonly SpriteSystem _sprite;
-    private readonly SpriteTreeSystem _spriteTree;
-    private readonly EntityWhitelistSystem _whitelist;
 
     private readonly EntityQuery<OccluderComponent> _occluderQuery;
 
@@ -38,14 +33,11 @@ public sealed partial class XRayVisionOverlay : Overlay
     private const int TileSizePixels = EyeManager.PixelsPerMeter;
 
     private List<Entity<MapGridComponent>> _grids = [];
-    private readonly List<Entity<SpriteComponent, TransformComponent>> _entities = [];
 
     public Color TileOverlayColor { get; private set; } = Color.White;
     public Color EntityOverlayColor { get; private set; } = Color.White;
     public bool ShowTiles { get; private set; } = true;
     public float Scanlines { get; private set; } = 1f;
-    public EntityWhitelist? Whitelist { get; private set; }
-    public EntityWhitelist? Blacklist { get; private set; }
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
@@ -56,20 +48,14 @@ public sealed partial class XRayVisionOverlay : Overlay
         _entityShader = _prototypeManager.Index(Shader).InstanceUnique();
         _transform = _entManager.System<SharedTransformSystem>();
         _mapSys = _entManager.System<SharedMapSystem>();
-        _sprite = _entManager.System<SpriteSystem>();
-        _spriteTree = _entManager.System<SpriteTreeSystem>();
-        _whitelist = _entManager.System<EntityWhitelistSystem>();
         _occluderQuery = _entManager.GetEntityQuery<OccluderComponent>();
     }
 
-    public void SetParameters(Color tileOverlayColor, Color entityOverlayColor, bool showTiles, float scanlines, EntityWhitelist? whitelist, EntityWhitelist? blacklist)
+    public void SetParameters(Color tileOverlayColor, Color entityOverlayColor, bool showTiles, float scanlines)
     {
         TileOverlayColor = tileOverlayColor;
         EntityOverlayColor = entityOverlayColor;
-        ShowTiles = showTiles;
         Scanlines = scanlines;
-        Whitelist = whitelist;
-        Blacklist = blacklist;
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -107,9 +93,6 @@ public sealed partial class XRayVisionOverlay : Overlay
             handle.UseShader(_tileShader);
             DrawTiles(args, handle);
         }
-
-        handle.UseShader(_entityShader);
-        DrawEntities(args, handle, xformQuery);
 
         handle.UseShader(null);
         handle.SetTransform(Matrix3x2.Identity);
@@ -166,30 +149,5 @@ public sealed partial class XRayVisionOverlay : Overlay
         }
 
         return false;
-    }
-
-    private void DrawEntities(in OverlayDrawArgs args, DrawingHandleWorld handle, EntityQuery<TransformComponent> xformQuery)
-    {
-        if (Whitelist == null)
-            return;
-
-        _entities.Clear();
-        _spriteTree.QueryAabb(_entities, args.MapId, args.WorldAABB);
-
-        var eyeRotation = args.Viewport.Eye?.Rotation ?? Angle.Zero;
-        foreach (var ent in _entities)
-        {
-            var uid = ent.Owner;
-            var sprite = ent.Comp1;
-            var xform = ent.Comp2;
-
-            if (!sprite.Visible || sprite.ContainerOccluded || !_whitelist.CheckBoth(uid, Blacklist, Whitelist))
-                continue;
-
-            var (worldPos, worldRot) = _transform.GetWorldPositionRotation(xform, xformQuery);
-            _sprite.RenderSprite((uid, sprite), handle, eyeRotation, worldRot, worldPos, overrideShader: _entityShader);
-        }
-
-        handle.SetTransform(Matrix3x2.Identity);
     }
 }

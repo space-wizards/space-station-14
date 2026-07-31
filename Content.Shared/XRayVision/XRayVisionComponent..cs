@@ -65,19 +65,6 @@ public sealed partial class XRayVisionComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public float ScanlinesIntensity;
-
-    /// <summary>
-    /// Whitelist of entities to show behind walls.
-    /// If null, no entities are shown behind walls.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public EntityWhitelist? Whitelist;
-
-    /// <summary>
-    /// Blacklist of entities to never show behind walls.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public EntityWhitelist? Blacklist;
 }
 
 public sealed partial class ToggleXRayVisionEvent : InstantActionEvent;

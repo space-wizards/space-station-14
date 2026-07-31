@@ -73,7 +73,7 @@ public sealed partial class XRayVisionSystem : SharedXRayVisionSystem
             return;
         }
 
-        _overlay.SetParameters(xray.TileOverlayColor, xray.EntityOverlayColor, xray.ShowTiles, xray.ScanlinesIntensity, xray.Whitelist, xray.Blacklist);
+        _overlay.SetParameters(xray.TileOverlayColor, xray.EntityOverlayColor, xray.ShowTiles, xray.ScanlinesIntensity);
 
         if (!_overlayMan.HasOverlay<XRayVisionOverlay>())
             _overlayMan.AddOverlay(_overlay);
