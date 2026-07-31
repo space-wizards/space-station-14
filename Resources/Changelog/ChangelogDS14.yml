@@ -5389,3 +5389,14 @@ Entries:
   changes:
   - type: Add
     message: Эмоция клацанья зубами для плафеимов
+- id: 528
+  author: pepelinitsa-cell
+  time: '2026-07-31T19:20:57.345601+00:00'
+  pr: 2044
+  changes:
+  - type: Add
+    message: Атмосферным техникам добавлены перчатки
+  - type: Add
+    message: Кепто очки научного руководителя
+  - type: Tweak
+    message: Обычные солнцезащитные очки убраны из шкафа нра
