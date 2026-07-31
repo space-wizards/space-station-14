@@ -596,6 +596,9 @@
   id: Flashlight # Storage whitelist: BaseClothingBeltEngineering, ClothingBeltJanitor
 
 - type: Tag
+  id: Flask # Storage Whitelist: ClothingBeltHolster, ClothingBeltSyndieHolster. ItemMapper: ClothingBeltHolster, ClothingBeltSyndieHolster
+
+- type: Tag
   id: Flesh # Used by FleshKudzu to ignore damage contacts on tagged entities.
 
 - type: Tag
@@ -1278,6 +1281,9 @@
 
 - type: Tag
   id: Scarf # CargoBounty: BountyWarmCloth
+
+- type: Tag
+  id: Scanner # Storage Whitelist: ClothingBeltHolster, ClothingBeltSyndieHolster. ItemMapper: ClothingBeltHolster, ClothingBeltSyndieHolster
 
 - type: Tag
   id: Screwdriver # Storage whitelist: BaseClothingBeltEngineering. ItemMapper: BaseClothingBeltEngineering

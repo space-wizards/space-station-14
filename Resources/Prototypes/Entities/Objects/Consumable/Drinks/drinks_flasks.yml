@@ -13,6 +13,9 @@
     closeable: true
     closeSound:
       collection: flaskCloseSounds
+  - type: Tag
+    tags:
+    - Flask
 
 # Flasks
 

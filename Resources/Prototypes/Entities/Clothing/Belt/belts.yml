@@ -163,6 +163,8 @@
           - CigPack
           - Radio
           - Truncheon
+          - Scanner
+          - Flask
         whitelistFailPopup: clothing-holster-insert-fail
         insertSound: /Audio/Weapons/Guns/Misc/utility_insert.ogg
         ejectSound: /Audio/Weapons/Guns/Misc/utility_eject.ogg
@@ -210,6 +212,14 @@
         whitelist:
           tags:
           - Truncheon
+      icon_scanner:
+        whitelist:
+          tags:
+          - Scanner
+      icon_flask:
+        whitelist:
+          tags:
+          - Flask
 
 - type: entity
   parent: [ClothingBeltBase, ClothingSlotBase, BaseSyndicateContraband]
@@ -280,6 +290,8 @@
           - CigPack
           - Radio
           - Truncheon
+          - Scanner
+          - Flask
         whitelistFailPopup: clothing-holster-insert-fail
         insertSound: /Audio/Weapons/Guns/Misc/utility_insert.ogg
         ejectSound: /Audio/Weapons/Guns/Misc/utility_eject.ogg
@@ -340,6 +352,14 @@
         whitelist:
           tags:
           - Truncheon
+      icon_scanner:
+        whitelist:
+          tags:
+          - Scanner
+      icon_flask:
+        whitelist:
+          tags:
+          - Flask
       icon_sidearm:
         whitelist:
           tags:
