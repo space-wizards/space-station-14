@@ -46,9 +46,9 @@ public abstract partial class SharedCardSystem : EntitySystem
         }
     }
 
-    private void MergeDecks(Entity<CardsComponent> donor, Entity<CardsComponent> recipient, int amount, List<int>? selected = null)
+    private void MergeDecks(Entity<CardsComponent> donor, Entity<CardsComponent> recipient, List<CardData> selected)
     {
-        MoveCards(recipient, donor, selected ?? MovedCards(donor.Comp, amount));
+        MoveCards(recipient, donor, selected);
 
         UpdateVisualState(donor);
         UpdateVisualState(recipient);
@@ -80,13 +80,11 @@ public abstract partial class SharedCardSystem : EntitySystem
             || EntityManager.IsQueuedForDeletion(recipient))
             return false;
 
-
         // Check they're stacks of the same type
         if (!_cardsQuery.Resolve(recipient, ref recipient.Comp, false)
             || !_cardsQuery.Resolve(donor, ref donor.Comp, false)
             || recipient.Comp.CardStackType != donor.Comp.CardStackType)
             return false;
-
 
         // The most we can transfer
         transferred = Math.Min(donor.Comp.Cards.Count, GetAvailableSpace(recipient.Comp));
@@ -97,9 +95,14 @@ public abstract partial class SharedCardSystem : EntitySystem
         if (amount > 0)
             transferred = Math.Min(transferred, amount.Value);
 
-        if (selected != null && selected.Count != GetCardFromIndex(donor.Comp.Cards, selected).Count)
+        var cards = selected != null
+            ? GetCardFromIndex(donor.Comp.Cards, selected)
+            : GetCardFromIndex(donor.Comp.Cards, MovedCards(donor.Comp, transferred));
+
+        if (selected != null && selected.Count != cards.Count)
             return false;
-        MergeDecks((donor.Owner, donor.Comp), (recipient.Owner, recipient.Comp), transferred, selected: selected);
+
+        MergeDecks((donor.Owner, donor.Comp), (recipient.Owner, recipient.Comp), cards);
         return true;
     }
 
@@ -164,16 +167,17 @@ public abstract partial class SharedCardSystem : EntitySystem
             TryFanCards(ent);
     }
 
-    protected void TakeFromDeck(Entity<CardsComponent> recipient, Entity<CardsComponent> donor, int delta)
-    {
-        // Takes cards from the top or bottom of deck depending on how it is flipped
-        var selected = MovedCards(donor.Comp, delta);
-        MoveCards(recipient, donor, selected);
-    }
-
-    protected void MoveCards(Entity<CardsComponent> recipient, Entity<CardsComponent> donor, List<int> cardIndexes)
+    public bool TryMoveCards(Entity<CardsComponent> recipient, Entity<CardsComponent> donor, List<int> cardIndexes)
     {
         var selected = GetCardFromIndex(donor.Comp.Cards, cardIndexes);
+        if (cardIndexes.Count != selected.Count)
+            return false;
+        MoveCards(recipient, donor, selected);
+        return true;
+    }
+
+    protected void MoveCards(Entity<CardsComponent> recipient, Entity<CardsComponent> donor, List<CardData> selected)
+    {
         // Remove cards from source
         foreach (var item in selected)
             donor.Comp.Cards.Remove(item);

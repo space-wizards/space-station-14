@@ -14,7 +14,6 @@ namespace Content.Client.Cards;
 public sealed partial class CardSystem : SharedCardSystem
 {
     [Dependency] private SpriteSystem _sprite = default!;
-
     [Dependency] private IPlayerManager _playerManager = default!;
     [Dependency] private ItemCounterSystem _counterSystem = default!;
 
@@ -44,8 +43,8 @@ public sealed partial class CardSystem : SharedCardSystem
         }
 
         var numCards = Math.Abs(visualState.Count);
-        var hiddenCount = ent.Comp.Cards.Count - visualState.Count + 1;
 
+        var hiddenCount = ent.Comp.Cards.Count - visualState.Count + 1;
         var maxCount = GetMaxCount(ent.Comp);
         ApplyThreshold(ent.Comp.Thresholds, ref hiddenCount, ref maxCount);
         _sprite.LayerSetVisible((ent.Owner, sprite), ent.Comp.BaseLayer, true);

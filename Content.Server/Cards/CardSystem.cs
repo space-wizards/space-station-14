@@ -30,18 +30,20 @@ public sealed partial class CardSystem : SharedCardSystem
     {
         if (cardIndexes.Count != GetCardFromIndex(ent.Comp.Cards, cardIndexes).Count)
             return null;
+
         if (!ProtoMan.Resolve(ent.Comp.CardStackType, out var cardStack))
             return null;
 
         var split = SpawnAtPosition(cardStack.Spawn, spawnPosition);
 
-        if (!TryComp<CardsComponent>(split, out var splitComp))
+        if (
+            !TryComp<CardsComponent>(split, out var splitComp)
+            || !TryMoveCards((split, splitComp), ent, cardIndexes)
+        )
         {
             QueueDel(split);
             return null;
         }
-
-        MoveCards((split, splitComp), ent, cardIndexes);
         splitComp.Flipped = ent.Comp.Flipped;
         splitComp.Fanned = ent.Comp.Fanned;
 
