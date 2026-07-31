@@ -84,7 +84,7 @@ public abstract partial class SharedDefibrillatorSystem : EntitySystem
     /// <returns>
     /// Returns true if the target is valid to be defibed, false otherwise.
     /// </returns>
-    public bool CanZap(Entity<DefibrillatorComponent?> ent, EntityUid target, EntityUid? user = null, bool targetCanBeAlive = false)
+    public bool CanZap(Entity<DefibrillatorComponent?> ent, EntityUid target, EntityUid? user = null)
     {
         if (!Resolve(ent, ref ent.Comp))
             return false;
