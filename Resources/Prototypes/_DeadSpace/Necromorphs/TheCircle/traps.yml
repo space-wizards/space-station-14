@@ -179,7 +179,7 @@
   parent: BaseItem
   id: BearTrap
   name: капкан
-  description: Тяжёлый капкан, который... Стоп, а почему он полу прозрачный?
+  description: Тяжёлый капкан, который... Стоп, а почему он полупрозрачный?
   components:
   - type: Sprite
     sprite: _DeadSpace/Necromorfs/TheCircle/Weapon/traps/bear_trap.rsi

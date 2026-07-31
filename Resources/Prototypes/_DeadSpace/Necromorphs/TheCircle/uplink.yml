@@ -149,7 +149,7 @@
 - type: listing
   id: UniPhoneUplinkWeaponKS23
   name: КС-23
-  description: Крупнокалиберный четырёхзарядный дробовик под патроны 22MM.
+  description: Крупнокалиберный четырёхзарядный дробовик. Использует патроны 23х75мм.
   icon: { sprite: _DeadSpace/Necromorfs/TheCircle/Weapon/weapons/ks23/pump.rsi, state: icon }
   productEntity: WeaponCaseHeavyFilledKS23
   cost:
@@ -296,9 +296,9 @@
 
 - type: listing
   id: UniPhoneUplinkAmmoKS23
-  name: коробка патронов 22MM
-  description: Коробка дробовых патронов для КС-23.
-  productEntity: BoxShotgun22MM
+  name: коробка ружейных патронов (23х75 картечь)
+  description: Патроны для КС-23.
+  productEntity: BoxShotgun23MM
   cost:
     Telecrystal: 1
   categories:
@@ -710,7 +710,7 @@
   id: UniPhoneGeistUplink
   parent: [ BaseItem, UniPhoneGeistPresetUplink ]
   name: аплинк ловушек Гейста
-  description: Урезанный аплинк с диверсионным оснащением.
+  description: Аплинк с диверсионным оснащением.
   components:
   - type: Sprite
     sprite: _DeadSpace/Necromorfs/TheCircle/Mics/etc/uplink.rsi
@@ -748,7 +748,7 @@
 
 - type: listing
   id: UniPhoneGeistUplinkC4
-  name: взрывчатка C4
+  name: Взрывчатка C4
   productEntity: C4
   cost:
     Telecrystal: 1
@@ -757,7 +757,7 @@
 
 - type: listing
   id: UniPhoneGeistUplinkTripwireExplosiveGrenade
-  name: растяжечная граната
+  name: Граната для растяжки
   productEntity: TripwireExplosiveGrenade
   cost:
     Telecrystal: 2
@@ -766,7 +766,7 @@
 
 - type: listing
   id: UniPhoneGeistUplinkBearTrap
-  name: капкан
+  name: Капкан
   productEntity: BearTrap
   cost:
     Telecrystal: 3
@@ -775,9 +775,9 @@
 
 - type: listing
   id: UniPhoneGeistUplinkAmmoKS23
-  name: коробка патронов 22MM
-  description: Коробка дробовых патронов для КС-23.
-  productEntity: BoxShotgun22MM
+  name: Коробка ружейных патронов (23х75 картечь)
+  description: Коробка специальных патронов для КС-23.
+  productEntity: BoxShotgun23MM
   cost:
     Telecrystal: 1
   categories:
@@ -785,7 +785,7 @@
 
 - type: listing
   id: UniPhoneGeistUplinkTripwire
-  name: жгут растяжки
+  name: Жгут растяжки
   productEntity: TripwireStack
   cost:
     Telecrystal: 2
@@ -794,7 +794,7 @@
 
 - type: listing
   id: UniPhoneGeistUplinkRemoteCar
-  name: штурмовая машинка Круга
+  name: Штурмовая машинка Круга
   description: Быстрая радиоуправляемая машинка с камерой и креплением для взрывчатки.
   productEntity: MobTheCircleRemoteCar
   cost:
@@ -804,7 +804,7 @@
 
 - type: listing
   id: UniPhoneGeistUplinkRemoteCarController
-  name: пульт штурмовой машинки Круга
+  name: Пульт штурмовой машинки Круга
   description: Пульт управления машинками Круга на дистанции до ста тайлов.
   productEntity: TheCircleRemoteCarController
   cost:

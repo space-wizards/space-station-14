@@ -442,6 +442,49 @@
     accent-english-words-158-9: accent-english-words-replace-158
     accent-english-words-158-10: accent-english-words-replace-158
 
+- type: accent
+  id: karshaniil
+  wordReplacements:
+    accent-karshaniil-word-1: accent-karshaniil-replacement-1
+    accent-karshaniil-word-2: accent-karshaniil-replacement-2
+    accent-karshaniil-word-2-2: accent-karshaniil-replacement-2
+    accent-karshaniil-word-2-3: accent-karshaniil-replacement-2
+    accent-karshaniil-word-2-4: accent-karshaniil-replacement-2
+    accent-karshaniil-word-3: accent-karshaniil-replacement-3
+    accent-karshaniil-word-3-2: accent-karshaniil-replacement-3
+    accent-karshaniil-word-3-3: accent-karshaniil-replacement-3
+    accent-karshaniil-word-4: accent-karshaniil-replacement-4
+    accent-karshaniil-word-4-2: accent-karshaniil-replacement-4
+    accent-karshaniil-word-5: accent-karshaniil-replacement-5
+    accent-karshaniil-word-6: accent-karshaniil-replacement-6
+    accent-karshaniil-word-7: accent-karshaniil-replacement-7
+    accent-karshaniil-word-8: accent-karshaniil-replacement-8
+    accent-karshaniil-word-9: accent-karshaniil-replacement-9
+    accent-karshaniil-word-9-2: accent-karshaniil-replacement-9
+    accent-karshaniil-word-9-3: accent-karshaniil-replacement-9
+    accent-karshaniil-word-10: accent-karshaniil-replacement-10
+    accent-karshaniil-word-11: accent-karshaniil-replacement-11
+    accent-karshaniil-word-12: accent-karshaniil-replacement-12
+    accent-karshaniil-word-13: accent-karshaniil-replacement-13
+    accent-karshaniil-word-14: accent-karshaniil-replacement-14
+    accent-karshaniil-word-15: accent-karshaniil-replacement-15
+    accent-karshaniil-word-15-2: accent-karshaniil-replacement-15
+    accent-karshaniil-word-16: accent-karshaniil-replacement-16
+    accent-karshaniil-word-16-2: accent-karshaniil-replacement-16
+    accent-karshaniil-word-16-3: accent-karshaniil-replacement-16
+    accent-karshaniil-word-17: accent-karshaniil-replacement-17
+    accent-karshaniil-word-17-2: accent-karshaniil-replacement-17
+    accent-karshaniil-word-17-3: accent-karshaniil-replacement-17
+    accent-karshaniil-word-18: accent-karshaniil-replacement-18
+    accent-karshaniil-word-19: accent-karshaniil-replacement-19
+    accent-karshaniil-word-19-2: accent-karshaniil-replacement-19
+    accent-karshaniil-word-19-3: accent-karshaniil-replacement-19
+    accent-karshaniil-word-19-4: accent-karshaniil-replacement-19
+    accent-karshaniil-word-20: accent-karshaniil-replacement-20
+    accent-karshaniil-word-21: accent-karshaniil-replacement-21
+    accent-karshaniil-word-22: accent-karshaniil-replacement-22
+    accent-karshaniil-word-23: accent-karshaniil-replacement-23
+
 # archaic accent
 - type: accent
   id: archaic

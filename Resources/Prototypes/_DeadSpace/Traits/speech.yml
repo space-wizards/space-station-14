@@ -9,6 +9,16 @@
     accent: english
 
 - type: trait
+  id: KarshaniilAccent
+  name: trait-karshaniil-name
+  description: trait-karshaniil-desc
+  category: SpeechTraits
+  cost: 2
+  components:
+  - type: ReplacementAccent
+    accent: karshaniil
+
+- type: trait
   id: ArchaicAccent
   name: trait-archaic-name
   description: trait-archaic-desc

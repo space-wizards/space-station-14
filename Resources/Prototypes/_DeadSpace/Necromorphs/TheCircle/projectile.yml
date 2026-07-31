@@ -258,27 +258,26 @@
       types:
         Piercing: 17
 
-## Боеприпасы КС-23 калибра 22MM
+## Боеприпасы КС-23 калибра 23х75MM
 - type: entity
-  id: ShellShotgun22MM
+  id: ShellShotgun23MM
   parent: BaseShellShotgun
-  name: патрон 22MM
-  description: Крупнокалиберный патрон с пятнадцатью близко уложенными дробинами.
+  name: ружейный патрон (23х75 картечь)
   components:
   - type: Tag
     tags:
-    - ShellShotgun22MM
+    - ShellShotgun23MM
   - type: Sprite
     layers:
     - state: slug
       map: [ "enum.AmmoVisualLayers.Base" ]
   - type: CartridgeAmmo
-    proto: PelletShotgun22MMSpread
+    proto: PelletShotgun23MMSpread
   - type: SpentAmmoVisuals
     state: slug
 
 - type: entity
-  id: PelletShotgun22MM
+  id: PelletShotgun23MM
   parent: BulletTrace
   categories: [ HideSpawnMenu ]
   components:
@@ -288,26 +287,26 @@
         Piercing: 5
 
 - type: entity
-  id: PelletShotgun22MMSpread
-  parent: PelletShotgun22MM
+  id: PelletShotgun23MMSpread
+  parent: PelletShotgun23MM
   categories: [ HideSpawnMenu ]
   components:
   - type: ProjectileSpread
-    proto: PelletShotgun22MM
+    proto: PelletShotgun23MM
     count: 15
     spread: 7
 
 - type: entity
-  id: BoxShotgun22MM
+  id: BoxShotgun23MM
   parent: AmmoProviderShotgunShell
-  name: коробка патронов 22MM
+  name: коробка патронов 23MM
   description: Коробка специальных патронов для КС-23.
   components:
   - type: BallisticAmmoProvider
-    proto: ShellShotgun22MM
+    proto: ShellShotgun23MM
     whitelist:
       tags:
-      - ShellShotgun22MM
+      - ShellShotgun23MM
   - type: MagazineVisuals
     magState: mag-slug
     steps: 3

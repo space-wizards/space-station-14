@@ -692,7 +692,7 @@
   id: TheCircleRemoteCarController
   parent: AdvancedRemoteController
   name: пульт штурмовой машинки Круга
-  description: Пульт с защищённым каналом управления на дистанции до ста тайлов.
+  description: Пульт для дистанционного управления радиоустройствами до сотни тайлов.
   components:
   - type: DroneRemoteController
     isFPV: true
@@ -706,7 +706,7 @@
   id: TheCircleRemoteCarKit
   parent: ToolboxElectrical
   name: комплект штурмовой машинки Круга
-  description: Машинка с камерой и пульт управления дальнего действия.
+  description: Машинка с камерой и пульт для управления ею.
   components:
   - type: StorageFill
     contents:

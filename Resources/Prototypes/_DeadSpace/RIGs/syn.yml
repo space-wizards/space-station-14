@@ -2,7 +2,7 @@
   parent: ClothingBackpack
   id: ClothingBackpackRIGNukeOps
   name: модифицированный боевой рюкзак синдиката
-  description: БЛИН БЛИНСКИЙ, ЭТО ЖЕ ОЧЕНЬ ОПАСТНЫЙ РЮКЗАК СИНДИКАТА!!!!!
+  description: Повышенной вместительности рюкзак с функцией РИГ для конгломерата Синдикат.
   components:
   - type: Storage
     grid:
@@ -30,7 +30,7 @@
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterRIGNukeOps
   name: упрощённый скафандр синдиката
-  description: Тут должно было быть красивое описание от ex1stence, но это писалось глубоко ночью.
+  description: В нём вы похожи на смешного робота.
   components:
   - type: Sprite
     sprite: _DeadSpace/RIGs/Syndicat/Standart/outer.rsi
@@ -97,7 +97,7 @@
   parent: ClothingBackpack
   id: ClothingBackpackRIGNukeOpsElite
   name: элитный модифицированный боевой рюкзак синдиката
-  description: Элитка для бомжей.
+  description: Повышенной вместительности рюкзак с функцией РИГ для конгломерата Синдикат.
   components:
   - type: Storage
     grid:
@@ -125,7 +125,7 @@
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterRIGNukeOpsElite
   name: лёгкий элитный скафандр синдиката
-  description: Тут должно было быть красивое описание от ex1stence, тоже.
+  description: Бюджетная версия элитного кроваво-красного скафандра. Не защищает своего носителя столь же хорошо, как оригинал. 
   components:
   - type: Sprite
     sprite: _DeadSpace/RIGs/Syndicat/Elite/outer.rsi

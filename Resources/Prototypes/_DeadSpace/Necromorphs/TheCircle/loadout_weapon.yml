@@ -108,7 +108,7 @@
   - type: StorageFill
     contents:
       - id: WeaponShotgunKS23
-      - id: BoxShotgun22MM
+      - id: BoxShotgun23MM
         amount: 3
 
 - type: entity

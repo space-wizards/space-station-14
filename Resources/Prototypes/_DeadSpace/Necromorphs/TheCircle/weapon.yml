@@ -963,9 +963,9 @@
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-      - ShellShotgun22MM
+      - ShellShotgun23MM
     capacity: 4
-    proto: ShellShotgun22MM
+    proto: ShellShotgun23MM
 
 ## Проклятый ВАНТ
 - type: entity

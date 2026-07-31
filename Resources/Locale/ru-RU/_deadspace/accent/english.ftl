@@ -56,12 +56,12 @@ accent-english-words-replace-14 = hell yeah
 accent-english-words-15 = мама
 accent-english-words-15-2 = маму
 accent-english-words-15-3 = маме
-accent-english-words-replace-15 = mommy
+accent-english-words-replace-15 = mom
 
 accent-english-words-16 = папа
 accent-english-words-16-2 = папу
 accent-english-words-16-3 = папе
-accent-english-words-replace-16 = daddy
+accent-english-words-replace-16 = dad
 
 accent-english-words-17 = псих
 accent-english-words-replace-17 = freak
@@ -353,7 +353,7 @@ accent-english-words-replace-83 = bar
 accent-english-words-84 = грузчик
 accent-english-words-84-2 = грузчику
 accent-english-words-84-3 = грузчика
-accent-english-words-replace-84 = delivery boy
+accent-english-words-replace-84 = messenger
 
 accent-english-words-85 = тупой
 accent-english-words-85-2 = тупая
@@ -398,7 +398,7 @@ accent-english-words-91-6 = юниту
 accent-english-words-91-7 = борг
 accent-english-words-91-8 = борга
 accent-english-words-91-9 = боргу
-accent-english-words-replace-91 = tin can
+accent-english-words-replace-91 = unit
 
 accent-english-words-92 = идиот
 accent-english-words-92-2 = идиотка
@@ -521,9 +521,9 @@ accent-english-words-112 = досвидания
 accent-english-words-112-2 = до свидания
 accent-english-words-replace-112 = goodbye
 
-accent-english-words-113 = прощай
-accent-english-words-113-2 = прощайте
-accent-english-words-replace-113 = farewell
+accent-english-words-113 = пока
+accent-english-words-113-2 = покеда
+accent-english-words-replace-113 = bye
 
 accent-english-words-114 = навсегда
 accent-english-words-replace-114 = forever
@@ -635,10 +635,10 @@ accent-english-words-138-2 = пуль
 accent-english-words-replace-138 = bullets
 
 accent-english-words-139 = патрон
-accent-english-words-replace-139 = cartridge
+accent-english-words-replace-139 = round
 
 accent-english-words-140 = патроны
-accent-english-words-replace-140 = cartridges
+accent-english-words-replace-140 = ammo
 
 accent-english-words-141 = цвет
 accent-english-words-141-2 = цвету
@@ -697,12 +697,12 @@ accent-english-words-151 = имба
 accent-english-words-151-2 = имбу
 accent-english-words-151-3 = имбой
 accent-english-words-151-4 = имбе
-accent-english-words-replace-151 = goat
+accent-english-words-replace-151 = unfair
 
 accent-english-words-152 = имбовый
 accent-english-words-152-2 = имбовую
 accent-english-words-152-3 = имбовых
-accent-english-words-replace-152 = goated
+accent-english-words-replace-152 = unfair
 
 accent-english-words-153 = кринж
 accent-english-words-153-2 = кринжа

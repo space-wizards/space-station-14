@@ -42,9 +42,9 @@ public sealed class ServerListBox : BoxContainer
     private void AddServers(BoxContainer container)
     {
         AddServerInfo(container, "Титан", "Сервер с упором на высокий уровень РП", "ss14://f2.deadspace14.net:1213", null);
-        AddServerInfo(container, "Деймос", "Сервер с сбалансированным геймплеем", "ss14://f3.deadspace14.net:1216", null);
+        AddServerInfo(container, "Деймос", "Сервер со сбалансированным геймплеем", "ss14://f3.deadspace14.net:1216", null);
         AddServerInfo(container, "Союз-1", "Сервер в сеттинге станции СССП", "ss14://s1.deadspace14.net:1215", null);
-        AddServerInfo(container, "Фронтир", "Сервер про космические путешествия и торговлю", "ss14://ff.deadspace14.net:1214", null);
+        AddServerInfo(container, "Сектор Колосс", "Сервер про космические путешествия и войны фракций", "ss14://ff.deadspace14.net:1214", null);
     }
 
     private void AddServerInfo(BoxContainer container, string serverName, string description, string serverUrl, string? discord)

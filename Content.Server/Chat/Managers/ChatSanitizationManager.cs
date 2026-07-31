@@ -28,10 +28,11 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
         Entry("рофл", "chatsan-laughs"),
         Entry("яхз", "chatsan-shrugs"),
         Entry(":О", "chatsan-surprised"), // cyrillic о
-        Entry("кек", "chatsan-laughs"),
         Entry("T_T", "chatsan-cries"),
         Entry("Т_Т", "chatsan-cries"), // cyrillic T
         Entry("=_(", "chatsan-cries"),
+        Entry("!к", "chatsan-nods"),
+        Entry("!м", "chatsan-shaking-negatively"),
         Entry("!с", "chatsan-laughs"),
         Entry("!в", "chatsan-sighs"),
         Entry("!х", "chatsan-claps"),
