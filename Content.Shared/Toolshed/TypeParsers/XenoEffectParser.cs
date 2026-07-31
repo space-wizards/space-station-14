@@ -15,14 +15,12 @@ public sealed partial class XenoEffectParser : CustomCompletionParser<ProtoId<En
 {
     [Dependency] private IEntitySystemManager _systemManager = default!;
 
-    private SharedXenoArtifactSystem? _artifact;
-
     public override CompletionResult TryAutocomplete(ParserContext ctx, CommandArgument? arg)
     {
         var hint = ToolshedCommand.GetArgHint(arg, typeof(ProtoId<EntityPrototype>));
 
-        _artifact ??= _systemManager.GetEntitySystem<SharedXenoArtifactSystem>();
+        var artifact = _systemManager.GetEntitySystem<SharedXenoArtifactSystem>();
 
-        return CompletionResult.FromHintOptions(_artifact.EffectPrototypeIds, hint);
+        return CompletionResult.FromHintOptions(artifact.EffectPrototypeIds, hint);
     }
 }

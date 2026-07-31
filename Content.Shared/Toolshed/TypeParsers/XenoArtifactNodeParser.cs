@@ -15,8 +15,6 @@ public sealed partial class XenoArtifactNodeParser : CustomCompletionParser<(Ent
 {
     [Dependency] private IEntityManager _entityManager = default!;
 
-    private SharedXenoArtifactSystem? _artifact;
-
     /// <inheritdoc />
     public override CompletionResult? TryAutocomplete(ParserContext ctx, CommandArgument? arg)
     {
@@ -27,8 +25,8 @@ public sealed partial class XenoArtifactNodeParser : CustomCompletionParser<(Ent
 
         var hint = ToolshedCommand.GetArgHint(arg, typeof(Entity<XenoArtifactNodeComponent>));
 
-        _artifact ??= _entityManager.System<SharedXenoArtifactSystem>();
-        var list = _artifact.GetAllNodes(artifactEnt)
+        var artifact = _entityManager.System<SharedXenoArtifactSystem>();
+        var list = artifact.GetAllNodes(artifactEnt)
             .Select(
                 node =>
                 {
@@ -39,7 +37,7 @@ public sealed partial class XenoArtifactNodeParser : CustomCompletionParser<(Ent
                         Loc.GetString(
                             "command-xenoartifact-common-node-hint",
                             ("depth", node.Comp.Depth),
-                            ("nodeId", _artifact.GetNodeId(node.Owner)),
+                            ("nodeId", artifact.GetNodeId(node.Owner)),
                             ("nodeDetail", entDescription)
                         )
                     );
