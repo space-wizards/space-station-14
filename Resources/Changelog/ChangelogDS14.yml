@@ -5414,3 +5414,30 @@ Entries:
   changes:
   - type: Add
     message: Предикт стрельбы. (пж зарегай 14)
+- id: 531
+  author: RIP6100
+  time: '2026-07-31T19:39:57.861876+00:00'
+  pr: 2043
+  changes:
+  - type: Add
+    message: Новый плакат АМК.
+  - type: Add
+    message: Лекционная декоративная доска.
+  - type: Add
+    message: Стеклянные перила.
+  - type: Add
+    message: Новая Адмем портальная пушка с возможностью выбора локаций для телепортации.
+  - type: Remove
+    message: Шанс на второй скафандр в хранилище скафандров Службы Безопасности.
+  - type: Tweak
+    message: На картах Meta и Saltern добавлена вирусология и должность вирусолога.
+      by Amaliz.
+  - type: Tweak
+    message: Стандарты для Saltern и Meta. by Amaliz.
+  - type: Tweak
+    message: Обновлён шаттл для казаков-разбойников. by Amaliz.
+  - type: Tweak
+    message: Ремапп Инженерного отсека, вирусолог и вирусология, ремапп части отделов,
+      отбытия на карте Bagel. by soda640.
+  - type: Fix
+    message: Баги на картах Saltern, Meta, Bagel, Ishimura, Gemini.
