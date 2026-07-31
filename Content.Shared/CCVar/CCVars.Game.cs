@@ -6,7 +6,7 @@ namespace Content.Shared.CCVar;
 /// <summary>
 /// Controls how an unfilled round-start minimum job slot may ignore player job preferences.
 /// </summary>
-public enum MinimumJobFallback : byte
+public enum MinimumJobFallback : int // needs int backing because cvar
 {
     /// <summary>
     /// Select a player who prefers another role in the target job's primary department.
