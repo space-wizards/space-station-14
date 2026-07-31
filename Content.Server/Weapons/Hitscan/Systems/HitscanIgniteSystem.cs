@@ -9,7 +9,7 @@ namespace Content.Server.Weapons.Hitscan.Systems;
 public sealed class HitscanIgniteSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
-    [Dependency] private readonly FlammableSystem _flammable = default!;
+    [Dependency] private FlammableSystem _flammable = default!;
 
     public override void Initialize()
     {
