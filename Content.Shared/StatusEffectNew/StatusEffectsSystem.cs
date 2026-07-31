@@ -1,10 +1,11 @@
-using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Rejuvenate;
 using Content.Shared.StatusEffectNew.Components;
+using Content.Shared.Toolshed.TypeParsers;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.StatusEffectNew;
 
@@ -21,6 +22,8 @@ public sealed partial class StatusEffectsSystem : EntitySystem
     [Dependency] private EntityQuery<StatusEffectContainerComponent> _containerQuery = default!;
     [Dependency] private EntityQuery<StatusEffectComponent> _effectQuery = default!;
 
+    // TODO: https://github.com/space-wizards/space-station-14/issues/45060
+    [Access(typeof(StatusEffectCompletionParser), Other = AccessPermissions.None)]
     public readonly HashSet<string> StatusEffectPrototypes = [];
 
     public override void Initialize()
