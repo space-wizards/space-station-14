@@ -96,6 +96,9 @@ public sealed class UnitologyRuleSystem : GameRuleSystem<UnitologyRuleComponent>
 
     public bool TryGrantUnitologyRole(EntityUid target, ProtoId<AntagPrototype> role, ICommonSession? session = null, bool forceCreateRule = true)
     {
+        if (GameTicker.RunLevel == GameRunLevel.PostRound)
+            return false;
+
         if (!_mindSystem.TryGetMind(target, out var mindId, out var mind))
             return false;
 
@@ -126,8 +129,10 @@ public sealed class UnitologyRuleSystem : GameRuleSystem<UnitologyRuleComponent>
 
         if (session != null && forceCreateRule)
         {
-            var rule = _antag.ForceGetGameRuleEnt<UnitologyRuleComponent>(UnitologyRule);
-            var antagSelection = Comp<AntagSelectionComponent>(rule.Owner);
+            if (_antag.ForceGetGameRuleEnt<UnitologyRuleComponent>(UnitologyRule) is not { } rule)
+                return false;
+
+            var antagSelection = rule.Comp;
             if (!TryFindUnitologyDefinition(antagSelection, role, out var activeDefinition))
                 return false;
 

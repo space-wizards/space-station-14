@@ -163,7 +163,11 @@ namespace Content.Server.Entry
         {
 #if RELEASE
             cfg.SetCVar(CVars.TargetMinimumTickrate, 25);
-            cfg.SetCVar(CVars.VelocityIterations, 6);
+            cfg.SetCVar(CVars.VelocityIterations, 4);
+            cfg.SetCVar(CVars.PositionIterations, 2);
+            cfg.SetCVar(CVars.TimeToSleep, 0.3f);
+            cfg.SetCVar(CVars.LinearSleepTolerance, 0.012f);
+            cfg.SetCVar(CVars.AngularSleepTolerance, 0.00698f);
             cfg.SetCVar(CVars.NetTickrate, 20);
             cfg.SetCVar(CVars.NetMaxUpdateRange, 24f);
             cfg.SetCVar(CVars.NetPvsPriorityRange, 30f);

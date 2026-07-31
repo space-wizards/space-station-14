@@ -22,6 +22,10 @@ public sealed class ThrowScoreboardCommand : IConsoleCommand
             shell.WriteLine(Help);
             return;
         }
-        _e.System<GameTicker>().ShowRoundEndScoreboard();
+        // DS14-start
+        // This command may only rebroadcast the frozen snapshot, never execute end-round side effects.
+        if (!_e.System<GameTicker>().RebroadcastRoundEndScoreboard())
+            shell.WriteError("Round-end snapshot is not available yet.");
+        // DS14-end
     }
 }

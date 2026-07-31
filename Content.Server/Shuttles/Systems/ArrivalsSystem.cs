@@ -64,7 +64,6 @@ public sealed class ArrivalsSystem : EntitySystem
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
 
     private EntityQuery<PendingClockInComponent> _pendingQuery;
-    private EntityQuery<MobStateComponent> _mobQuery;
 
     private static readonly TimeSpan DepartureDelay = TimeSpan.FromSeconds(2);
     private static readonly TimeSpan EmptyReturnDelay = TimeSpan.FromSeconds(10);
@@ -99,7 +98,6 @@ public sealed class ArrivalsSystem : EntitySystem
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(SendDirections);
 
         _pendingQuery = GetEntityQuery<PendingClockInComponent>();
-        _mobQuery = GetEntityQuery<MobStateComponent>();
 
         // Don't invoke immediately as it will get set in the natural course of things.
         Enabled = _cfgManager.GetCVar(CCVars.ArrivalsShuttles);
@@ -366,7 +364,7 @@ public sealed class ArrivalsSystem : EntitySystem
 
             if (onHoldingMap)
             {
-                if (!HasPendingOnShuttle(uid) && CountActivePlayersOnShuttle(uid) == 0)
+                if (!HasPendingOnShuttle(uid) && !HasActivePlayersOnShuttle(uid))
                 {
                     comp.NextArrivalsTime = TimeSpan.Zero;
                     comp.NextTransfer = curTime + IdlePollInterval;
@@ -386,7 +384,7 @@ public sealed class ArrivalsSystem : EntitySystem
                 continue;
             }
 
-            if (CountActivePlayersOnShuttle(uid) > 0)
+            if (HasActivePlayersOnShuttle(uid))
             {
                 comp.NextTransfer = curTime + EmptyReturnDelay;
                 continue;
@@ -452,23 +450,17 @@ public sealed class ArrivalsSystem : EntitySystem
         return false;
     }
 
-    private int CountActivePlayersOnShuttle(EntityUid shuttleUid)
+    private bool HasActivePlayersOnShuttle(EntityUid shuttleUid)
     {
-        var count = 0;
-        var query = AllEntityQuery<TransformComponent>();
+        var query = AllEntityQuery<ActorComponent, MobStateComponent, TransformComponent>();
 
-        while (query.MoveNext(out var uid, out var xform))
+        while (query.MoveNext(out _, out _, out _, out var xform))
         {
-            if (uid == shuttleUid || xform.GridUid != shuttleUid)
-                continue;
-
-            if (!_mobQuery.HasComponent(uid) || !_actor.TryGetSession(uid, out var session) || session == null)
-                continue;
-
-            count++;
+            if (xform.GridUid == shuttleUid)
+                return true;
         }
 
-        return count;
+        return false;
     }
 
     private void SetShuttleDoorBolts(EntityUid shuttleUid, bool bolted)

@@ -39,6 +39,11 @@ public sealed class RespawnRuleSystem : GameRuleSystem<RespawnDeadRuleComponent>
     {
         base.Update(frameTime);
 
+        // DS14-start
+        if (GameTicker.RunLevel == GameRunLevel.PostRound)
+            return;
+        // DS14-end
+
         if (_station.GetStations().FirstOrNull() is not { } station)
             return;
 
@@ -75,6 +80,11 @@ public sealed class RespawnRuleSystem : GameRuleSystem<RespawnDeadRuleComponent>
 
     private void OnMobStateChanged(MobStateChangedEvent args)
     {
+        // DS14-start
+        if (GameTicker.RunLevel == GameRunLevel.PostRound)
+            return;
+        // DS14-end
+
         if (args.NewMobState != MobState.Dead)
             return;
 
@@ -99,6 +109,11 @@ public sealed class RespawnRuleSystem : GameRuleSystem<RespawnDeadRuleComponent>
     /// </summary>
     public bool RespawnPlayer(Entity<ActorComponent> player, Entity<RespawnTrackerComponent> respawnTracker)
     {
+        // DS14-start
+        if (GameTicker.RunLevel == GameRunLevel.PostRound)
+            return false;
+        // DS14-end
+
         if (!respawnTracker.Comp.Players.Contains(player.Comp.PlayerSession.UserId) || respawnTracker.Comp.RespawnQueue.ContainsKey(player.Comp.PlayerSession.UserId))
             return false;
 

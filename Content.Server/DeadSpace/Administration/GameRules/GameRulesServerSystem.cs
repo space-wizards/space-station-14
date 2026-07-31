@@ -3,6 +3,7 @@
 using System.Linq;
 using Content.Server.GameTicking;
 using Content.Shared.DeadSpace.Administration.GameRules;
+using Content.Shared.GameTicking;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.DeadSpace.Administration.GameRules;
@@ -18,6 +19,7 @@ public sealed class GameRulesServerSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(_ => ClearRoundData());
         SubscribeNetworkEvent<RequestGameRulesListMessage>(OnRequestGameRulesList);
         SubscribeNetworkEvent<AddGameRuleRequestMessage>(OnAddGameRuleRequest);
     }
@@ -28,6 +30,9 @@ public sealed class GameRulesServerSystem : EntitySystem
             return;
 
         var entity = _ticker.AddGameRule(msg.RuleId);
+        if (!entity.IsValid())
+            return;
+
         if (!string.IsNullOrEmpty(msg.AdminName))
             _addedByAdmin[entity] = msg.AdminName;
     }
@@ -72,5 +77,11 @@ public sealed class GameRulesServerSystem : EntitySystem
             return;
 
         _addedByAdmin[uid.Value] = adminName;
+    }
+
+    private void ClearRoundData()
+    {
+        _ruleEntities.Clear();
+        _addedByAdmin.Clear();
     }
 }

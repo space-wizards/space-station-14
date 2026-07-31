@@ -43,11 +43,14 @@ namespace Content.Server.Decals
         private readonly Dictionary<ICommonSession, Dictionary<NetEntity, HashSet<Vector2i>>> _previousSentChunks = new();
         private static readonly Vector2 _boundsMinExpansion = new(0.01f, 0.01f);
         private static readonly Vector2 _boundsMaxExpansion = new(1.01f, 1.01f);
+        private const float FullUpdateInterval = 0.25f;
 
         private UpdatePlayerJob _updateJob;
+        private UpdateDirtyPlayerJob _dirtyUpdateJob;
         private List<ICommonSession> _sessions = new();
+        private float _fullUpdateAccumulator = FullUpdateInterval;
 
-        // If this ever gets parallelised then you'll want to increase the pooled count.
+        // Per-player updates run in parallel, so keep enough pooled collections for concurrent batches.
         private ObjectPool<HashSet<Vector2i>> _chunkIndexPool =
             new DefaultObjectPool<HashSet<Vector2i>>(
                 new DefaultPooledObjectPolicy<HashSet<Vector2i>>(), 64);
@@ -61,6 +64,11 @@ namespace Content.Server.Decals
             base.Initialize();
 
             _updateJob = new UpdatePlayerJob()
+            {
+                System = this,
+                Sessions = _sessions,
+            };
+            _dirtyUpdateJob = new UpdateDirtyPlayerJob()
             {
                 System = this,
                 Sessions = _sessions,
@@ -82,13 +90,14 @@ namespace Content.Server.Decals
                 return;
 
             PvsEnabled = value;
+            _fullUpdateAccumulator = FullUpdateInterval;
 
             if (value)
                 return;
 
             foreach (var playerData in _previousSentChunks.Values)
             {
-                playerData.Clear();
+                ReturnPlayerData(playerData);
             }
 
             var query = AllEntityQuery<DecalGridComponent, MetaDataComponent>();
@@ -157,6 +166,14 @@ namespace Content.Server.Decals
             base.Shutdown();
 
             _playerManager.PlayerStatusChanged -= OnPlayerStatusChanged;
+            ClearDirtyChunks();
+
+            foreach (var playerData in _previousSentChunks.Values)
+            {
+                ReturnPlayerData(playerData);
+            }
+
+            _previousSentChunks.Clear();
         }
 
         private void OnTileChanged(ref TileChangedEvent args)
@@ -207,10 +224,15 @@ namespace Content.Server.Decals
             switch (e.NewStatus)
             {
                 case SessionStatus.InGame:
+                    if (_previousSentChunks.Remove(e.Session, out var oldPlayerData))
+                        ReturnPlayerData(oldPlayerData);
+
                     _previousSentChunks[e.Session] = new();
+                    _fullUpdateAccumulator = FullUpdateInterval;
                     break;
                 case SessionStatus.Disconnected:
-                    _previousSentChunks.Remove(e.Session);
+                    if (_previousSentChunks.Remove(e.Session, out var playerData))
+                        ReturnPlayerData(playerData);
                     break;
             }
         }
@@ -286,7 +308,7 @@ namespace Content.Server.Decals
             var id = GetNetEntity(uid);
             chunk.LastModified = _timing.CurTick;
             if(!_dirtyChunks.ContainsKey(id))
-                _dirtyChunks[id] = new HashSet<Vector2i>();
+                _dirtyChunks[id] = _chunkIndexPool.Get();
             _dirtyChunks[id].Add(chunkIndices);
         }
 
@@ -432,6 +454,7 @@ namespace Content.Server.Decals
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
+            _fullUpdateAccumulator += frameTime;
 
             foreach (var ent in _dirtyChunks.Keys)
             {
@@ -441,27 +464,36 @@ namespace Content.Server.Decals
 
             if (!PvsEnabled)
             {
-                _dirtyChunks.Clear();
+                ClearDirtyChunks();
                 return;
             }
 
-            if (PvsEnabled)
+            var fullUpdate = _fullUpdateAccumulator >= FullUpdateInterval;
+            if (!fullUpdate && _dirtyChunks.Count == 0)
+                return;
+
+            if (fullUpdate)
+                _fullUpdateAccumulator %= FullUpdateInterval;
+
+            _sessions.Clear();
+
+            foreach (var session in _playerManager.Sessions)
             {
-                _sessions.Clear();
+                if (session.Status != SessionStatus.InGame)
+                    continue;
 
-                foreach (var session in _playerManager.Sessions)
-                {
-                    if (session.Status != SessionStatus.InGame)
-                        continue;
-
-                    _sessions.Add(session);
-                }
-
-                if (_sessions.Count > 0)
-                    _parMan.ProcessNow(_updateJob, _sessions.Count);
+                _sessions.Add(session);
             }
 
-            _dirtyChunks.Clear();
+            if (_sessions.Count > 0)
+            {
+                if (fullUpdate)
+                    _parMan.ProcessNow(_updateJob, _sessions.Count);
+                else
+                    _parMan.ProcessNow(_dirtyUpdateJob, _sessions.Count);
+            }
+
+            ClearDirtyChunks();
         }
 
         public void UpdatePlayer(ICommonSession player)
@@ -553,8 +585,65 @@ namespace Content.Server.Decals
                     updatedChunks[netGrid] = newChunks;
             }
 
+            // The sets are now owned by previouslySent, but the temporary dictionary itself can be reused.
+            chunksInRange.Clear();
+            _chunkViewerPool.Return(chunksInRange);
+
             //send all gridChunks to client
             SendChunkUpdates(player, updatedChunks, staleChunks);
+        }
+
+        private void UpdateDirtyPlayer(ICommonSession player)
+        {
+            var updatedChunks = _chunkViewerPool.Get();
+            var staleChunks = _chunkViewerPool.Get();
+            var previouslySent = _previousSentChunks[player];
+
+            foreach (var (netGrid, visibleChunks) in previouslySent)
+            {
+                if (!_dirtyChunks.TryGetValue(netGrid, out var dirtyChunks) ||
+                    !TryGetEntity(netGrid, out var gridId) ||
+                    !HasComp<MapGridComponent>(gridId.Value))
+                {
+                    continue;
+                }
+
+                var visibleDirtyChunks = _chunkIndexPool.Get();
+                foreach (var chunk in dirtyChunks)
+                {
+                    if (visibleChunks.Contains(chunk))
+                        visibleDirtyChunks.Add(chunk);
+                }
+
+                if (visibleDirtyChunks.Count == 0)
+                    _chunkIndexPool.Return(visibleDirtyChunks);
+                else
+                    updatedChunks.Add(netGrid, visibleDirtyChunks);
+            }
+
+            SendChunkUpdates(player, updatedChunks, staleChunks);
+        }
+
+        private void ClearDirtyChunks()
+        {
+            foreach (var chunks in _dirtyChunks.Values)
+            {
+                chunks.Clear();
+                _chunkIndexPool.Return(chunks);
+            }
+
+            _dirtyChunks.Clear();
+        }
+
+        private void ReturnPlayerData(Dictionary<NetEntity, HashSet<Vector2i>> playerData)
+        {
+            foreach (var chunks in playerData.Values)
+            {
+                chunks.Clear();
+                _chunkIndexPool.Return(chunks);
+            }
+
+            playerData.Clear();
         }
 
         private void ReturnToPool(Dictionary<NetEntity, HashSet<Vector2i>> chunks)
@@ -617,6 +706,20 @@ namespace Content.Server.Decals
             public void Execute(int index)
             {
                 System.UpdatePlayer(Sessions[index]);
+            }
+        }
+
+        private record struct UpdateDirtyPlayerJob : IParallelRobustJob
+        {
+            public int BatchSize => 2;
+
+            public DecalSystem System;
+
+            public List<ICommonSession> Sessions;
+
+            public void Execute(int index)
+            {
+                System.UpdateDirtyPlayer(Sessions[index]);
             }
         }
 

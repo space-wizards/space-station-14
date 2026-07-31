@@ -41,7 +41,10 @@ public sealed class InactivityTimeRestartRuleSystem : GameRuleSystem<InactivityR
 
         component.TimerCancel.Cancel();
         component.TimerCancel = new CancellationTokenSource();
-        Timer.Spawn(component.InactivityMaxTime, () => TimerFired(uid, component), component.TimerCancel.Token);
+        // DS14-start
+        var roundId = GameTicker.RoundId;
+        Timer.Spawn(component.InactivityMaxTime, () => TimerFired(uid, roundId), component.TimerCancel.Token);
+        // DS14-end
     }
 
     public void StopTimer(EntityUid uid, InactivityRuleComponent? component = null)
@@ -52,16 +55,35 @@ public sealed class InactivityTimeRestartRuleSystem : GameRuleSystem<InactivityR
         component.TimerCancel.Cancel();
     }
 
-    private void TimerFired(EntityUid uid, InactivityRuleComponent? component = null)
+    private void TimerFired(EntityUid uid, int roundId) // DS14
     {
-        if (!Resolve(uid, ref component))
+        // DS14-start
+        if (!TryComp(uid, out InactivityRuleComponent? component) || !GameTicker.IsGameRuleActive(uid))
             return;
+
+        if (GameTicker.RoundId != roundId || GameTicker.RunLevel != GameRunLevel.InRound)
+            return;
+        // DS14-end
+
+        var roundEndDelay = component.RoundEndDelay; // DS14
 
         GameTicker.EndRound(Loc.GetString("rule-time-has-run-out"));
 
-        _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-restarting-in-seconds", ("seconds",(int) component.RoundEndDelay.TotalSeconds)));
+        // DS14-start
+        if (GameTicker.RoundId != roundId || GameTicker.RunLevel != GameRunLevel.PostRound)
+            return;
+        // DS14-end
 
-        Timer.Spawn(component.RoundEndDelay, () => GameTicker.RestartRound());
+        _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-restarting-in-seconds", ("seconds",(int) roundEndDelay.TotalSeconds))); // DS14
+
+        // DS14-start
+        // Once the round has ended, restarting is no longer owned by the game-rule entity.
+        Timer.Spawn(roundEndDelay, () =>
+        {
+            if (GameTicker.RoundId == roundId && GameTicker.RunLevel == GameRunLevel.PostRound)
+                GameTicker.RestartRound();
+        });
+        // DS14-end
     }
 
     private void RunLevelChanged(GameRunLevelChangedEvent args)
@@ -70,7 +92,7 @@ public sealed class InactivityTimeRestartRuleSystem : GameRuleSystem<InactivityR
         while (query.MoveNext(out var uid, out var inactivity, out var gameRule))
         {
             if (!GameTicker.IsGameRuleActive(uid, gameRule))
-                return;
+                continue; // DS14
 
             switch (args.New)
             {
@@ -91,11 +113,11 @@ public sealed class InactivityTimeRestartRuleSystem : GameRuleSystem<InactivityR
         while (query.MoveNext(out var uid, out var inactivity, out var gameRule))
         {
             if (!GameTicker.IsGameRuleActive(uid, gameRule))
-                return;
+                continue; // DS14
 
             if (GameTicker.RunLevel != GameRunLevel.InRound)
             {
-                return;
+                continue; // DS14
             }
 
             if (_playerManager.PlayerCount == 0)

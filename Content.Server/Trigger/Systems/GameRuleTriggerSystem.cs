@@ -28,6 +28,10 @@ public sealed class GameRuleTriggerSystem : EntitySystem
             return;
 
         var rule = _ticker.AddGameRule(ent.Comp.GameRule);
+        // DS14-start
+        if (!rule.IsValid())
+            return;
+        // DS14-end
 
         _adminLogger.Add(LogType.EventStarted,
             $"{ToPrettyString(args.User):entity} added a game rule [{ent.Comp.GameRule}]" +

@@ -1,7 +1,0 @@
-- type: cloningSettings
-  id: RoundEndManifestDisplayClone
-  parent: BaseClone
-  forceCloning: true
-  copyInternalStorage: false
-  copyImplants: false
-  copyStatusEffects: false

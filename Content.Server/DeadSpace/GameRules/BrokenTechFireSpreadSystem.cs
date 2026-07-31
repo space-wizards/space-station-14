@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using Content.Server.Atmos.Components;
+using Content.Server.GameTicking;
 using Content.Shared.Atmos;
 using Content.Shared.Backmen.Blob.Components;
 using Content.Shared.Chemistry;
@@ -22,6 +23,7 @@ namespace Content.Server.DeadSpace.GameRules;
 
 public sealed class BrokenTechFireSpreadSystem : EntitySystem
 {
+    [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
@@ -55,6 +57,9 @@ public sealed class BrokenTechFireSpreadSystem : EntitySystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
+
+        if (_gameTicker.RunLevel == GameRunLevel.PostRound)
+            return;
 
         var curTime = _timing.CurTime;
         var processed = 0;

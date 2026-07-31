@@ -1,3 +1,4 @@
+using Content.Shared.DeadSpace.RoundEnd;
 using Content.Shared.Roles;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
@@ -212,7 +213,7 @@ namespace Content.Shared.GameTicking
             public bool ShowInAntagManifest;
             // DS14-end
 
-            public NetEntity? PlayerNetEntity;
+            public RoundEndDollData? DollData; // DS14
 
             [DataField]
             public bool Antag;

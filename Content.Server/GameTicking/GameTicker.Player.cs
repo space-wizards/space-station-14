@@ -139,6 +139,17 @@ namespace Content.Server.GameTicking
                     break;
                 }
             }
+
+            // DS14-start
+            // Late reconnects receive the frozen result without rerunning any end-round side effect.
+            if (args.NewStatus == SessionStatus.InGame &&
+                RunLevel == GameRunLevel.PostRound &&
+                _roundEndSnapshot is { } roundEndSnapshot)
+            {
+                RaiseNetworkEvent(roundEndSnapshot, session.Channel);
+            }
+            // DS14-end
+
             //When the status of a player changes, update the server info text
             UpdateInfoText();
 

@@ -86,10 +86,10 @@ public sealed class ContentAudioSystem : SharedContentAudioSystem
 
     private void OnRoundEnd(RoundEndMessageEvent ev)
     {
-        // The lobby song is set here instead of in RestartRound,
-        // because ShowRoundEndScoreboard triggers the start of the music playing
-        // at the end of a round, and this needs to be set before RestartRound
-        // in order for the lobby song status display to be accurate.
+        // DS14-start
+        // RoundEndMessageEvent starts the end-of-round music before RestartRound, so the lobby playlist must already
+        // be selected for its status display to remain accurate.
+        // DS14-end
         _lobbyPlaylist = ShuffleLobbyPlaylist();
         RaiseNetworkEvent(new LobbyPlaylistChangedEvent(_lobbyPlaylist));
     }

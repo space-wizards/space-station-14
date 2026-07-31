@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Antag.Components;
+using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Shared.Antag;
 using Content.Shared.Chat;
@@ -371,7 +372,13 @@ public sealed partial class AntagSelectionSystem
     /// </summary>
     public void ForceMakeAntag<T>(ICommonSession? player, string defaultRule, bool forceNewRule = false) where T : Component
     {
-        var rule = ForceGetGameRuleEnt<T>(defaultRule, forceNewRule);
+        // DS14-start
+        if (GameTicker.RunLevel == GameRunLevel.PostRound ||
+            ForceGetGameRuleEnt<T>(defaultRule, forceNewRule) is not { } rule)
+        {
+            return;
+        }
+        // DS14-end
 
         if (!TryGetNextAvailableDefinition(rule, out var def))
             def = rule.Comp.Definitions.Last();
@@ -382,8 +389,13 @@ public sealed partial class AntagSelectionSystem
     /// Tries to grab one of the weird specific antag gamerule ents or starts a new one.
     /// This is gross code but also most of this is pretty gross to begin with.
     /// </summary>
-    public Entity<AntagSelectionComponent> ForceGetGameRuleEnt<T>(string id, bool forceNewRule = false) where T : Component
+    public Entity<AntagSelectionComponent>? ForceGetGameRuleEnt<T>(string id, bool forceNewRule = false) where T : Component // DS14
     {
+        // DS14-start
+        if (GameTicker.RunLevel == GameRunLevel.PostRound)
+            return null;
+        // DS14-end
+
         if (!forceNewRule)
         {
             var query = EntityQueryEnumerator<T, AntagSelectionComponent>();
@@ -400,8 +412,12 @@ public sealed partial class AntagSelectionSystem
         }
 
         var ruleEnt = GameTicker.AddGameRule(id);
+        // DS14-start
+        if (!ruleEnt.IsValid() || !TryComp(ruleEnt, out AntagSelectionComponent? antag))
+            return null;
+        // DS14-end
+
         RemComp<LoadMapRuleComponent>(ruleEnt);
-        var antag = Comp<AntagSelectionComponent>(ruleEnt);
         antag.AssignmentComplete = true; // don't do normal selection.
         GameTicker.StartGameRule(ruleEnt);
         return (ruleEnt, antag);

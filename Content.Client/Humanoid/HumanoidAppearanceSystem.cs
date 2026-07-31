@@ -1,5 +1,6 @@
 using Content.Client.DisplacementMap;
 using Content.Shared.CCVar;
+using Content.Shared.DeadSpace.RoundEnd;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
@@ -253,6 +254,37 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
 
         UpdateSprite((uid, humanoid, Comp<SpriteComponent>(uid)));
     }
+
+    // DS14-start
+    /// <summary>
+    /// Applies the compact, public round-end appearance DTO to a client-side preview entity.
+    /// </summary>
+    public void ApplyRoundEndAppearance(
+        EntityUid uid,
+        RoundEndHumanoidAppearance appearance,
+        HumanoidAppearanceComponent? humanoid = null)
+    {
+        if (!Resolve(uid, ref humanoid) || !TryComp<SpriteComponent>(uid, out var sprite))
+            return;
+
+        DebugTools.Assert(IsClientSide(uid));
+
+        humanoid.MarkingSet = new MarkingSet(appearance.Markings);
+        humanoid.PermanentlyHidden = new HashSet<HumanoidVisualLayers>(appearance.PermanentlyHidden);
+        humanoid.HiddenLayers = new Dictionary<HumanoidVisualLayers, SlotFlags>();
+        humanoid.CustomBaseLayers = new Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo>(appearance.CustomBaseLayers);
+        humanoid.Gender = appearance.Gender;
+        humanoid.Age = appearance.Age;
+        humanoid.Species = appearance.Species;
+        humanoid.SkinColor = appearance.SkinColor;
+        humanoid.Sex = appearance.Sex;
+        humanoid.EyeColor = appearance.EyeColor;
+        humanoid.HairGradientEnabled = appearance.HairGradientEnabled;
+        humanoid.HairGradientColor = appearance.HairGradientColor;
+
+        UpdateSprite((uid, humanoid, sprite));
+    }
+    // DS14-end
 
     private void ApplyMarkingSet(Entity<HumanoidAppearanceComponent, SpriteComponent> entity)
     {

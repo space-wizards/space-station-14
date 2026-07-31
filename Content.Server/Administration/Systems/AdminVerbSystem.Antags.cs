@@ -17,8 +17,8 @@ using Robust.Shared.Utility;
 using Content.Shared.DeadSpace.Events.Roles.Components;
 using Content.Shared.DeadSpace.Renegade.Roles;
 using Content.Shared.Roles.Components;
-using Content.Shared.DeadSpace.Demons.Shadowling; //DS14
-using Content.Server.DeadSpace.Hooligan.Components; //DS14
+using Content.Shared.DeadSpace.Demons.Shadowling;
+using Content.Server.DeadSpace.Hooligan.Components;
 using Content.Shared.GameTicking.Components;
 using Content.Server.GameTicking.Rules;
 
@@ -30,8 +30,10 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly ZombieSystem _zombie = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly OutfitSystem _outfit = default!;
-    [Dependency] private readonly TraitorUltraRuleSystem _traitorUltra = default!; // DS14
-    [Dependency] private readonly UnitologyRuleSystem _unitologyRule = default!; // DS14
+    // DS14-start
+    [Dependency] private readonly TraitorUltraRuleSystem _traitorUltra = default!;
+    [Dependency] private readonly UnitologyRuleSystem _unitologyRule = default!;
+    // DS14-end
 
     private static readonly EntProtoId DefaultTraitorRule = "Traitor";
     private static readonly EntProtoId DefaultInitialInfectedRule = "Zombie";
@@ -43,10 +45,12 @@ public sealed partial class AdminVerbSystem
     private static readonly EntProtoId ParadoxCloneRuleId = "ParadoxCloneSpawn";
     private static readonly EntProtoId DefaultWizardRule = "Wizard";
     private static readonly EntProtoId DefaultNinjaRule = "NinjaSpawn";
-    private static readonly EntProtoId DefaultSpiderTerrorRule = "SpiderTerror"; // DS14
-    private static readonly EntProtoId DragonSpawnRule = "DragonSpawn"; //  DS14
-    private static readonly EntProtoId RenegadeRule = "RenegadeSpawn"; // DS14
-    private static readonly EntProtoId DefaultHooliganRule = "Hooligan"; // DS14
+    // DS14-start
+    private static readonly EntProtoId DefaultSpiderTerrorRule = "SpiderTerror";
+    private static readonly EntProtoId DragonSpawnRule = "DragonSpawn";
+    private static readonly EntProtoId RenegadeRule = "RenegadeSpawn";
+    private static readonly EntProtoId DefaultHooliganRule = "Hooligan";
+    // DS14-end
     private static readonly ProtoId<StartingGearPrototype> PirateGearId = "PirateGear";
 
     // All antag verbs have names so invokeverb works.
@@ -59,6 +63,11 @@ public sealed partial class AdminVerbSystem
 
         if (!_adminManager.HasAdminFlag(player, AdminFlags.Fun))
             return;
+
+        // DS14-start
+        if (_gameTicker.RunLevel == GameRunLevel.PostRound)
+            return;
+        // DS14-end
 
         if (!HasComp<MindContainerComponent>(args.Target) || !TryComp<ActorComponent>(args.Target, out var targetActor))
             return;
@@ -147,7 +156,9 @@ public sealed partial class AdminVerbSystem
                 // DS14-start
                 if (_gameTicker.IsGameRuleActive(NukeopsRule))
                 {
-                    var rule = _antag.ForceGetGameRuleEnt<NukeopsRuleComponent>(NukeopsRule);
+                    if (_antag.ForceGetGameRuleEnt<NukeopsRuleComponent>(NukeopsRule) is not { } rule)
+                        return;
+
                     _antag.MakeAntag(rule, targetPlayer, rule.Comp.Definitions[^1]);
                     return;
                 }

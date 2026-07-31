@@ -22,7 +22,7 @@ public sealed class MaxTimeRestartRuleSystem : GameRuleSystem<MaxTimeRestartRule
         base.Started(uid, component, gameRule, args);
 
         if(GameTicker.RunLevel == GameRunLevel.InRound)
-            RestartTimer(component);
+            RestartTimer(uid, component); // DS14
     }
 
     protected override void Ended(EntityUid uid, MaxTimeRestartRuleComponent component, GameRuleComponent gameRule, GameRuleEndedEvent args)
@@ -32,12 +32,15 @@ public sealed class MaxTimeRestartRuleSystem : GameRuleSystem<MaxTimeRestartRule
         StopTimer(component);
     }
 
-    public void RestartTimer(MaxTimeRestartRuleComponent component)
+    public void RestartTimer(EntityUid uid, MaxTimeRestartRuleComponent component) // DS14
     {
         // TODO FULL GAME SAVE
         component.TimerCancel.Cancel();
         component.TimerCancel = new CancellationTokenSource();
-        Timer.Spawn(component.RoundMaxTime, () => TimerFired(component), component.TimerCancel.Token);
+        // DS14-start
+        var roundId = GameTicker.RoundId;
+        Timer.Spawn(component.RoundMaxTime, () => TimerFired(uid, roundId), component.TimerCancel.Token);
+        // DS14-end
     }
 
     public void StopTimer(MaxTimeRestartRuleComponent component)
@@ -45,14 +48,38 @@ public sealed class MaxTimeRestartRuleSystem : GameRuleSystem<MaxTimeRestartRule
         component.TimerCancel.Cancel();
     }
 
-    private void TimerFired(MaxTimeRestartRuleComponent component)
+    private void TimerFired(EntityUid uid, int roundId) // DS14
     {
+        // DS14-start
+        if (!TryComp(uid, out MaxTimeRestartRuleComponent? component) ||
+            !GameTicker.IsGameRuleActive(uid) ||
+            GameTicker.RoundId != roundId ||
+            GameTicker.RunLevel != GameRunLevel.InRound)
+        {
+            return;
+        }
+
+        var roundEndDelay = component.RoundEndDelay;
+        // DS14-end
+
         GameTicker.EndRound(Loc.GetString("rule-time-has-run-out"));
 
-        _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-restarting-in-seconds",("seconds", (int) component.RoundEndDelay.TotalSeconds)));
+        // DS14-start
+        if (GameTicker.RoundId != roundId || GameTicker.RunLevel != GameRunLevel.PostRound)
+            return;
+        // DS14-end
+
+        _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-restarting-in-seconds",("seconds", (int) roundEndDelay.TotalSeconds))); // DS14
 
         // TODO FULL GAME SAVE
-        Timer.Spawn(component.RoundEndDelay, () => GameTicker.RestartRound());
+        // DS14-start
+        // Once the round has ended, restarting is no longer owned by the game-rule entity.
+        Timer.Spawn(roundEndDelay, () =>
+        {
+            if (GameTicker.RoundId == roundId && GameTicker.RunLevel == GameRunLevel.PostRound)
+                GameTicker.RestartRound();
+        });
+        // DS14-end
     }
 
     private void RunLevelChanged(GameRunLevelChangedEvent args)
@@ -61,12 +88,12 @@ public sealed class MaxTimeRestartRuleSystem : GameRuleSystem<MaxTimeRestartRule
         while (query.MoveNext(out var uid, out var timer, out var gameRule))
         {
             if (!GameTicker.IsGameRuleActive(uid, gameRule))
-                return;
+                continue; // DS14
 
             switch (args.New)
             {
                 case GameRunLevel.InRound:
-                    RestartTimer(timer);
+                    RestartTimer(uid, timer); // DS14
                     break;
                 case GameRunLevel.PreRoundLobby:
                 case GameRunLevel.PostRound:

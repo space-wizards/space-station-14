@@ -3,6 +3,7 @@
 using System.Linq;
 using System.Numerics;
 using Content.Server.Explosion.EntitySystems;
+using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Power.Components;
@@ -37,6 +38,9 @@ public sealed class BrokenTechGameRuleSystem : GameRuleSystem<BrokenTechGameRule
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
+
+        if (GameTicker.RunLevel == GameRunLevel.PostRound)
+            return;
 
         var query = EntityQueryEnumerator<BrokenTechGameRuleComponent, GameRuleComponent>();
         while (query.MoveNext(out var uid, out var ruleComp, out var gameRule))

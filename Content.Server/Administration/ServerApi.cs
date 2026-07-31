@@ -70,10 +70,12 @@ public sealed partial class ServerApi : IPostInjectInit
         RegisterActorHandler(HttpMethod.Get, "/admin/info", InfoHandler);
         RegisterHandler(HttpMethod.Get, "/admin/game_rules", GetGameRules);
         RegisterHandler(HttpMethod.Get, "/admin/presets", GetPresets);
-        RegisterHandler(HttpMethod.Get, "/admin/players", GetPlayers); // DS14
-        RegisterHandler(HttpMethod.Get, "/admin/stats/rounds", GetRoundStats); // DS14
-        RegisterHandler(HttpMethod.Get, "/admin/playtime", GetPlaytime); // DS14
-        RegisterHandler(HttpMethod.Get, "/admin/playtime/jobs", GetPlaytimeJobs); // DS14
+        // DS14-start
+        RegisterHandler(HttpMethod.Get, "/admin/players", GetPlayers);
+        RegisterHandler(HttpMethod.Get, "/admin/stats/rounds", GetRoundStats);
+        RegisterHandler(HttpMethod.Get, "/admin/playtime", GetPlaytime);
+        RegisterHandler(HttpMethod.Get, "/admin/playtime/jobs", GetPlaytimeJobs);
+        // DS14-end
 
         // Post
         RegisterActorHandler(HttpMethod.Post, "/admin/actions/round/start", ActionRoundStart);
@@ -257,6 +259,17 @@ public sealed partial class ServerApi : IPostInjectInit
         await RunOnMainThread(async () =>
         {
             var ticker = _entitySystemManager.GetEntitySystem<GameTicker>();
+            // DS14-start
+            if (ticker.RunLevel == GameRunLevel.PostRound)
+            {
+                await RespondError(context,
+                    ErrorCode.BadRequest,
+                    HttpStatusCode.Conflict,
+                    "Game rules cannot be ended during PostRound");
+                return;
+            }
+            // DS14-end
+
             var gameRule = ticker
                 .GetActiveGameRules()
                 .FirstOrNull(rule =>
@@ -291,6 +304,17 @@ public sealed partial class ServerApi : IPostInjectInit
         await RunOnMainThread(async () =>
         {
             var ticker = _entitySystemManager.GetEntitySystem<GameTicker>();
+            // DS14-start
+            if (ticker.RunLevel == GameRunLevel.PostRound)
+            {
+                await RespondError(context,
+                    ErrorCode.BadRequest,
+                    HttpStatusCode.Conflict,
+                    "Game rules cannot be added during PostRound");
+                return;
+            }
+            // DS14-end
+
             if (!_prototypeManager.HasIndex<EntityPrototype>(body.GameRuleId))
             {
                 await RespondError(context,

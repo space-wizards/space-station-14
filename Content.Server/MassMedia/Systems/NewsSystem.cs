@@ -29,6 +29,7 @@ using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Content.Server.MassMedia.Systems;
@@ -52,6 +53,7 @@ public sealed class NewsSystem : SharedNewsSystem
     private WebhookIdentifier? _webhookId = null;
     private Color _webhookEmbedColor;
     private bool _webhookSendDuringRound;
+    private CancellationTokenSource _webhookLifecycleCancel = new(); // DS14
 
     public override void Initialize()
     {
@@ -74,6 +76,7 @@ public sealed class NewsSystem : SharedNewsSystem
 
         _cfg.OnValueChanged(CCVars.DiscordNewsWebhookSendDuringRound, value => _webhookSendDuringRound = value, true);
         SubscribeLocalEvent<RoundEndMessageEvent>(OnRoundEndMessageEvent);
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestartCleanup); // DS14
 
         // News writer
         SubscribeLocalEvent<NewsWriterComponent, MapInitEvent>(OnMapInit);
@@ -247,10 +250,15 @@ public sealed class NewsSystem : SharedNewsSystem
         return true;
     }
 
-    private async void AddNewsSendWebhook(NewsArticle article)
+    // DS14-start
+    private void AddNewsSendWebhook(NewsArticle article)
     {
-        await Task.Run(async () => await SendArticleToDiscordWebhook(article));
+        if (_webhookId == null)
+            return;
+
+        _ = SendArticleToDiscordWebhook(article, _ticker.RoundId, _webhookLifecycleCancel.Token);
     }
+    // DS14-end
 
     #endregion
 
@@ -560,30 +568,53 @@ public sealed class NewsSystem : SharedNewsSystem
 
     private void OnRoundEndMessageEvent(RoundEndMessageEvent ev)
     {
-        if (_webhookSendDuringRound)
+        // DS14-start
+        if (_webhookSendDuringRound || _webhookId == null)
             return;
 
+        var articles = new List<NewsArticle>();
         var query = EntityQueryEnumerator<StationNewsComponent>();
-
         while (query.MoveNext(out _, out var comp))
-        {
-            SendArticlesListToDiscordWebhook(comp.Articles.OrderBy(article => article.ShareTime));
-        }
+            articles.AddRange(comp.Articles);
+
+        var snapshot = articles.OrderBy(article => article.ShareTime).ToArray();
+        _ = SendArticlesListToDiscordWebhook(snapshot, ev.RoundId, _webhookLifecycleCancel.Token);
+        // DS14-end
     }
 
-    private async void SendArticlesListToDiscordWebhook(IOrderedEnumerable<NewsArticle> articles)
+    // DS14-start
+    private async Task SendArticlesListToDiscordWebhook(
+        NewsArticle[] articles,
+        int roundId,
+        CancellationToken cancellationToken)
     {
-        foreach (var article in articles)
+        try
         {
-            await Task.Delay(TimeSpan.FromSeconds(1)); // TODO: proper discord rate limit handling
-            await SendArticleToDiscordWebhook(article);
+            foreach (var article in articles)
+            {
+                await Task.Delay(TimeSpan.FromSeconds(1), cancellationToken); // TODO: proper discord rate limit handling
+                if (_ticker.RoundId != roundId)
+                    return;
+
+                await SendArticleToDiscordWebhook(article, roundId, cancellationToken);
+            }
+        }
+        catch (OperationCanceledException)
+        {
+            // Round cleanup or shutdown canceled the pending rate-limited queue.
         }
     }
+    // DS14-end
 
-    private async Task SendArticleToDiscordWebhook(NewsArticle article)
+    // DS14-start
+    private async Task SendArticleToDiscordWebhook(
+        NewsArticle article,
+        int roundId,
+        CancellationToken cancellationToken)
     {
-        if (_webhookId is null)
+        if (_webhookId is null || cancellationToken.IsCancellationRequested || _ticker.RoundId != roundId)
             return;
+        // DS14-end
 
         try
         {
@@ -597,7 +628,7 @@ public sealed class NewsSystem : SharedNewsSystem
                 {
                     Text = Loc.GetString("news-discord-footer",
                         ("server", _baseServer.ServerName),
-                        ("round", _ticker.RoundId),
+                        ("round", roundId), // DS14
                         ("author", article.Author ?? Loc.GetString("news-discord-unknown-author")),
                         ("time", article.ShareTime.ToString(@"hh\:mm\:ss")))
                 }
@@ -611,6 +642,22 @@ public sealed class NewsSystem : SharedNewsSystem
             Log.Error($"Error while sending discord news article:\n{e}");
         }
     }
+
+    // DS14-start
+    private void OnRoundRestartCleanup(RoundRestartCleanupEvent ev)
+    {
+        _webhookLifecycleCancel.Cancel();
+        _webhookLifecycleCancel.Dispose();
+        _webhookLifecycleCancel = new CancellationTokenSource();
+    }
+
+    public override void Shutdown()
+    {
+        _webhookLifecycleCancel.Cancel();
+        _webhookLifecycleCancel.Dispose();
+        base.Shutdown();
+    }
+    // DS14-end
 
     #endregion
 }

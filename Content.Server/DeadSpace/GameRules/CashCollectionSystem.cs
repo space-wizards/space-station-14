@@ -20,6 +20,11 @@ public sealed class CashCollectionSystem : GameRuleSystem<CashCollectionComponen
     {
         base.Update(frameTime);
 
+        // DS14-start
+        if (GameTicker.RunLevel == GameRunLevel.PostRound)
+            return;
+        // DS14-end
+
         var query = EntityQueryEnumerator<CashCollectionComponent, GameRuleComponent>();
         while (query.MoveNext(out var uid, out var cashCollection, out var gameRule))
         {

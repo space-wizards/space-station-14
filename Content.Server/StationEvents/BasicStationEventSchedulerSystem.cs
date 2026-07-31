@@ -43,6 +43,11 @@ namespace Content.Server.StationEvents
         {
             base.Update(frameTime);
 
+            // DS14-start
+            if (GameTicker.RunLevel == GameRunLevel.PostRound)
+                return;
+            // DS14-end
+
             if (!_event.EventsEnabled)
                 return;
 

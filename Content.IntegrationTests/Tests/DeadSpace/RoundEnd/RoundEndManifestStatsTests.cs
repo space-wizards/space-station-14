@@ -243,7 +243,7 @@ public sealed class RoundEndManifestStatsTests
     }
 
     [Test]
-    public async Task DeathSnapshotsAreDeferredAndReplaced()
+    public async Task DeathStoresDollDataWithoutManifestDisplayEntities()
     {
         var settings = new PoolSettings
         {
@@ -258,47 +258,27 @@ public sealed class RoundEndManifestStatsTests
         var mindId = pair.PlayerData!.Mind!.Value;
         var mind = context.EntMan.GetComponent<MindComponent>(mindId);
         context.ManifestStats.EnsureManifestEntry(mindId, mind);
+        var bodyPrototype = context.EntMan.GetComponent<MetaDataComponent>(body).EntityPrototype!.ID;
 
-        await server.WaitAssertion(() =>
-        {
-            context.MobStateSystem.ChangeMobState(body, MobState.Dead);
-            Assert.That(context.ManifestStats.GetDisplaySnapshot(mindId), Is.Null);
-        });
+        await server.WaitAssertion(() => context.MobStateSystem.ChangeMobState(body, MobState.Dead));
         await pair.RunTicksSync(1);
 
-        EntityUid? firstSnapshot = null;
         await server.WaitAssertion(() =>
         {
-            firstSnapshot = context.ManifestStats.GetDisplaySnapshot(mindId);
-            Assert.That(firstSnapshot, Is.Not.Null);
-            Assert.That(context.EntMan.EntityExists(firstSnapshot), Is.True);
-        });
-
-        await server.WaitAssertion(() =>
-        {
-            context.MobStateSystem.ChangeMobState(body, MobState.Alive);
-            context.MobStateSystem.ChangeMobState(body, MobState.Dead);
-            Assert.That(context.ManifestStats.GetDisplaySnapshot(mindId), Is.EqualTo(firstSnapshot));
-        });
-        await pair.RunTicksSync(1);
-
-        EntityUid? secondSnapshot = null;
-        await server.WaitAssertion(() =>
-        {
-            secondSnapshot = context.ManifestStats.GetDisplaySnapshot(mindId);
+            var doll = context.DollState.GetDollData(mindId);
             Assert.Multiple(() =>
             {
-                Assert.That(secondSnapshot, Is.Not.Null);
-                Assert.That(secondSnapshot, Is.Not.EqualTo(firstSnapshot));
-                Assert.That(context.EntMan.EntityExists(firstSnapshot), Is.False);
-                Assert.That(context.EntMan.EntityExists(secondSnapshot), Is.True);
+                Assert.That(doll, Is.Not.Null);
+                Assert.That(doll!.BodyPrototype?.Id, Is.EqualTo(bodyPrototype));
+                Assert.That(context.EntMan.EntityQuery<MetaDataComponent>()
+                    .Any(meta => meta.EntityPrototype?.ID == "RoundEndManifestDisplayClone"), Is.False);
             });
         });
         await pair.CleanReturnAsync();
     }
 
     [Test]
-    public async Task DeathDuringCapturedBulkDeleteDoesNotCreateManifestSnapshot()
+    public async Task DeathDuringCapturedBulkDeleteDoesNotLeaveEntities()
     {
         var settings = new PoolSettings
         {
@@ -335,7 +315,7 @@ public sealed class RoundEndManifestStatsTests
     }
 
     [Test]
-    public async Task DeletingAllEntitiesDoesNotCreateManifestSnapshot()
+    public async Task DeletingAllEntitiesDoesNotLeaveEntities()
     {
         var settings = new PoolSettings
         {
@@ -374,7 +354,8 @@ public sealed class RoundEndManifestStatsTests
             entMan.EntitySysManager.GetEntitySystem<SharedRoleSystem>(),
             entMan.EntitySysManager.GetEntitySystem<DamageableSystem>(),
             entMan.EntitySysManager.GetEntitySystem<MobStateSystem>(),
-            entMan.EntitySysManager.GetEntitySystem<RoundEndManifestStatsSystem>());
+            entMan.EntitySysManager.GetEntitySystem<RoundEndManifestStatsSystem>(),
+            entMan.EntitySysManager.GetEntitySystem<RoundEndDollStateSystem>());
     }
 
     private static TestMind SpawnPlayerMind(TestContextData context, bool antag)
@@ -436,5 +417,6 @@ public sealed class RoundEndManifestStatsTests
         SharedRoleSystem RoleSystem,
         DamageableSystem DamageableSystem,
         MobStateSystem MobStateSystem,
-        RoundEndManifestStatsSystem ManifestStats);
+        RoundEndManifestStatsSystem ManifestStats,
+        RoundEndDollStateSystem DollState);
 }

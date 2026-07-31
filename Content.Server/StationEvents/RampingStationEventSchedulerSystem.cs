@@ -42,6 +42,11 @@ public sealed class RampingStationEventSchedulerSystem : GameRuleSystem<RampingS
     {
         base.Update(frameTime);
 
+        // DS14-start
+        if (GameTicker.RunLevel == GameRunLevel.PostRound)
+            return;
+        // DS14-end
+
         if (!_event.EventsEnabled)
             return;
 

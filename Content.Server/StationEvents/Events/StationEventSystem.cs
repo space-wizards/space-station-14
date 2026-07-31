@@ -99,6 +99,11 @@ public abstract class StationEventSystem<T> : GameRuleSystem<T> where T : ICompo
     {
         base.Update(frameTime);
 
+        // DS14-start
+        if (GameTicker.RunLevel == GameRunLevel.PostRound)
+            return;
+        // DS14-end
+
         var query = EntityQueryEnumerator<StationEventComponent, GameRuleComponent>();
         while (query.MoveNext(out var uid, out var stationEvent, out var ruleData))
         {

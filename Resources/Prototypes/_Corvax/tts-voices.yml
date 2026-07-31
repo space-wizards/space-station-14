@@ -3685,12 +3685,6 @@
   speaker: Star_Wars_Luke_Skywalker
 
 - type: ttsVoice
-  id: Yoda
-  name: tts-voice-name-Star_Wars_Yoda
-  sex: Male
-  speaker: Star_Wars_Yoda
-
-- type: ttsVoice
   id: DarthVader
   name: tts-voice-name-Star_Wars_Darth_Vader
   sex: Male
@@ -3775,12 +3769,6 @@
   speaker: Srek_Fiona
 
 - type: ttsVoice
-  id: Donkey
-  name: tts-voice-name-Srek_Donkey
-  sex: Male
-  speaker: Srek_Donkey
-
-- type: ttsVoice
   id: FairyGodmother
   name: tts-voice-name-Srek_Fairy_Godmother
   sex: Female
@@ -3791,12 +3779,6 @@
   name: tts-voice-name-Srek_King
   sex: Male
   speaker: Srek_King
-
-- type: ttsVoice
-  id: SrekNarrator
-  name: tts-voice-name-Srek_Narrator
-  sex: Male
-  speaker: Srek_Narrator
 
 - type: ttsVoice
   id: PussInBoots
@@ -3913,12 +3895,6 @@
   speaker: X3_reunion_Betty
 
 - type: ttsVoice
-  id: Gnarl
-  name: tts-voice-name-Overlord_2_Gnarl
-  sex: Male
-  speaker: Overlord_2_Gnarl
-
-- type: ttsVoice
   id: TonyStark
   name: tts-voice-name-Marvel_Tony_Stark
   sex: Male
@@ -3971,12 +3947,6 @@
   name: tts-voice-name-Draconids_Calderax
   sex: Male
   speaker: Draconids_Calderax
-
-- type: ttsVoice
-  id: Bazentus
-  name: tts-voice-name-Draconids_Bazentus
-  sex: Male
-  speaker: Draconids_Bazentus
 
 - type: ttsVoice
   id: Kazra
@@ -4055,12 +4025,6 @@
   name: tts-voice-name-Dragons2_Neltharion_echo
   sex: Male
   speaker: Dragons2_Neltharion_echo
-
-- type: ttsVoice
-  id: WrationDeathwing
-  name: tts-voice-name-Dragons2_Wrathion_Deathwing
-  sex: Male
-  speaker: Dragons2_Wrathion_Deathwing
 
 - type: ttsVoice
   id: Neltharion
@@ -5169,3 +5133,939 @@
   name: tts-voice-name-ladyvashj-alt
   sex: Female
   speaker: lady_vashj
+
+- type: ttsVoice
+  id: KzM2
+  name: tts-voice-name-kzm2
+  sex: Male
+  speaker: "kz_M2"
+
+- type: ttsVoice
+  id: Dio
+  name: tts-voice-name-dio
+  sex: Male
+  speaker: "dio-brando/jojo/jp"
+
+- type: ttsVoice
+  id: BChe
+  name: tts-voice-name-bche
+  sex: Male
+  speaker: "b_che"
+
+- type: ttsVoice
+  id: Jotaro
+  name: tts-voice-name-jotaro
+  sex: Male
+  speaker: "jotaro-kujo/jojo/jp"
+
+- type: ttsVoice
+  id: BRu
+  name: tts-voice-name-bru
+  sex: Male
+  speaker: "b_ru"
+
+- type: ttsVoice
+  id: BUzb
+  name: tts-voice-name-buzb
+  sex: Male
+  speaker: "b_uzb"
+
+- type: ttsVoice
+  id: KzM1
+  name: tts-voice-name-kzm1
+  sex: Male
+  speaker: "kz_M1"
+
+- type: ttsVoice
+  id: BAva
+  name: tts-voice-name-bava
+  sex: Female
+  speaker: "b_ava"
+
+- type: ttsVoice
+  id: Kira
+  name: tts-voice-name-kira
+  sex: Male
+  speaker: "yoshikage-kira/jojo/jp"
+
+- type: ttsVoice
+  id: MaratTt
+  name: tts-voice-name-marattt
+  sex: Male
+  speaker: "marat_tt"
+
+- type: ttsVoice
+  id: BLez
+  name: tts-voice-name-blez
+  sex: Male
+  speaker: "b_lez"
+
+- type: ttsVoice
+  id: Fluttershy
+  name: tts-voice-name-fluttershy
+  sex: Female
+  speaker: "fluttershy/pony/en"
+
+- type: ttsVoice
+  id: Diavolo
+  name: tts-voice-name-diavolo
+  sex: Male
+  speaker: "diavolo/jojo/jp"
+
+- type: ttsVoice
+  id: BBashkir
+  name: tts-voice-name-bbashkir
+  sex: Male
+  speaker: "b_bashkir"
+
+- type: ttsVoice
+  id: Avdol
+  name: tts-voice-name-avdol
+  sex: Male
+  speaker: "muhammad-avdol/jojo/jp"
+
+- type: ttsVoice
+  id: Rainbow
+  name: tts-voice-name-rainbow
+  sex: Female
+  speaker: "rainbow/pony/en"
+
+- type: ttsVoice
+  id: Kakyoin
+  name: tts-voice-name-kakyoin
+  sex: Male
+  speaker: "noriaki-kakyoin/jojo/jp"
+
+- type: ttsVoice
+  id: CvEkaterina
+  name: tts-voice-name-cvekaterina
+  sex: Female
+  speaker: "cv_ekaterina"
+
+- type: ttsVoice
+  id: Giorno
+  name: tts-voice-name-giorno
+  sex: Female
+  speaker: "giorno-giovanna/jojo/jp"
+
+- type: ttsVoice
+  id: KzF1
+  name: tts-voice-name-kzf1
+  sex: Female
+  speaker: "kz_F1"
+
+- type: ttsVoice
+  id: Apocalypse
+  name: tts-voice-name-apocalypse
+  sex: Male
+  speaker: "apocalypse_tank/redalert/en"
+
+- type: ttsVoice
+  id: Joestar
+  name: tts-voice-name-joestar
+  sex: Male
+  speaker: "joseph-joestar/jojo/jp"
+
+- type: ttsVoice
+  id: YaeMikoJp
+  name: tts-voice-name-yaemikojp
+  sex: Female
+  speaker: "yae_miko/genshin/jp"
+
+- type: ttsVoice
+  id: BSah
+  name: tts-voice-name-bsah
+  sex: Male
+  speaker: "b_sah"
+
+- type: ttsVoice
+  id: BTat
+  name: tts-voice-name-btat
+  sex: Male
+  speaker: "b_tat"
+
+- type: ttsVoice
+  id: HuTaoJp
+  name: tts-voice-name-hutaojp
+  sex: Female
+  speaker: "hu_tao/genshin/jp"
+
+- type: ttsVoice
+  id: KzF2
+  name: tts-voice-name-kzf2
+  sex: Female
+  speaker: "kz_F2"
+
+- type: ttsVoice
+  id: KzF3
+  name: tts-voice-name-kzf3
+  sex: Female
+  speaker: "kz_F3"
+
+- type: ttsVoice
+  id: Speedwagon
+  name: tts-voice-name-speedwagon
+  sex: Male
+  speaker: "robert-e-o-speedwagon/jojo/jp"
+
+- type: ttsVoice
+  id: Kirov
+  name: tts-voice-name-kirov
+  sex: Male
+  speaker: "vkir/redalert/en"
+
+- type: ttsVoice
+  id: Polnareff
+  name: tts-voice-name-polnareff
+  sex: Male
+  speaker: "jean-pierre-polnareff/jojo/jp"
+
+- type: ttsVoice
+  id: KleeJp
+  name: tts-voice-name-kleejp
+  sex: Female
+  speaker: "klee/genshin/jp"
+
+- type: ttsVoice
+  id: ShogunJp
+  name: tts-voice-name-shogunjp
+  sex: Female
+  speaker: "raiden_shogun/genshin/jp"
+
+- type: ttsVoice
+  id: BBulb
+  name: tts-voice-name-bbulb
+  sex: Male
+  speaker: "b_bulb"
+
+- type: ttsVoice
+  id: TartagliaJp
+  name: tts-voice-name-tartagliajp
+  sex: Male
+  speaker: "tartaglia/genshin/jp"
+
+- type: ttsVoice
+  id: Twilight
+  name: tts-voice-name-twilight
+  sex: Female
+  speaker: "twilight/pony/en"
+
+- type: ttsVoice
+  id: AlbedoJp
+  name: tts-voice-name-albedojp
+  sex: Male
+  speaker: "albedo/genshin/jp"
+
+- type: ttsVoice
+  id: Applejack
+  name: tts-voice-name-applejack
+  sex: Female
+  speaker: "applejack/pony/en"
+
+- type: ttsVoice
+  id: AmberJp
+  name: tts-voice-name-amberjp
+  sex: Female
+  speaker: "amber/genshin/jp"
+
+- type: ttsVoice
+  id: Discord
+  name: tts-voice-name-discord
+  sex: Female
+  speaker: "discord/pony/en"
+
+- type: ttsVoice
+  id: XiaoJp
+  name: tts-voice-name-xiaojp
+  sex: Male
+  speaker: "xiao/genshin/jp"
+
+- type: ttsVoice
+  id: MonaJp
+  name: tts-voice-name-monajp
+  sex: Female
+  speaker: "mona/genshin/jp"
+
+- type: ttsVoice
+  id: BKrc
+  name: tts-voice-name-bkrc
+  sex: Male
+  speaker: "b_krc"
+
+- type: ttsVoice
+  id: BOss
+  name: tts-voice-name-boss
+  sex: Male
+  speaker: "b_oss"
+
+- type: ttsVoice
+  id: QiqiJp
+  name: tts-voice-name-qiqijp
+  sex: Female
+  speaker: "qiqi/genshin/jp"
+
+- type: ttsVoice
+  id: Yuri
+  name: tts-voice-name-yuri
+  sex: Male
+  speaker: "iyur/redalert/en"
+
+- type: ttsVoice
+  id: ZhongliJp
+  name: tts-voice-name-zhonglijp
+  sex: Male
+  speaker: "zhongli/genshin/jp"
+
+- type: ttsVoice
+  id: Celestia
+  name: tts-voice-name-celestia
+  sex: Female
+  speaker: "celestia/pony/en"
+
+- type: ttsVoice
+  id: BCv
+  name: tts-voice-name-bcv
+  sex: Male
+  speaker: "b_cv"
+
+- type: ttsVoice
+  id: BTyv
+  name: tts-voice-name-btyv
+  sex: Male
+  speaker: "b_tyv"
+
+- type: ttsVoice
+  id: BBulc
+  name: tts-voice-name-bbulc
+  sex: Male
+  speaker: "b_bulc"
+
+- type: ttsVoice
+  id: BKpv
+  name: tts-voice-name-bkpv
+  sex: Male
+  speaker: "b_kpv"
+
+- type: ttsVoice
+  id: VentiJp
+  name: tts-voice-name-ventijp
+  sex: Male
+  speaker: "venti/genshin/jp"
+
+- type: ttsVoice
+  id: Starlight
+  name: tts-voice-name-starlight
+  sex: Female
+  speaker: "starlight/pony/en"
+
+- type: ttsVoice
+  id: RosariaJp
+  name: tts-voice-name-rosariajp
+  sex: Female
+  speaker: "rosaria/genshin/jp"
+
+- type: ttsVoice
+  id: BMyv
+  name: tts-voice-name-bmyv
+  sex: Male
+  speaker: "b_myv"
+
+- type: ttsVoice
+  id: RazorJp
+  name: tts-voice-name-razorjp
+  sex: Male
+  speaker: "razor/genshin/jp"
+
+- type: ttsVoice
+  id: BarbaraJp
+  name: tts-voice-name-barbarajp
+  sex: Female
+  speaker: "barbara/genshin/jp"
+
+- type: ttsVoice
+  id: Tesla
+  name: tts-voice-name-tesla
+  sex: Male
+  speaker: "ites/redalert/en"
+
+- type: ttsVoice
+  id: Spike
+  name: tts-voice-name-spike
+  sex: Male
+  speaker: "spike/pony/en"
+
+- type: ttsVoice
+  id: LisaJp
+  name: tts-voice-name-lisajp
+  sex: Female
+  speaker: "lisa/genshin/jp"
+
+- type: ttsVoice
+  id: Truck
+  name: tts-voice-name-truck
+  sex: Male
+  speaker: "vdem/redalert/en"
+
+- type: ttsVoice
+  id: BUdm
+  name: tts-voice-name-budm
+  sex: Male
+  speaker: "b_udm"
+
+- type: ttsVoice
+  id: BKjh
+  name: tts-voice-name-bkjh
+  sex: Female
+  speaker: "b_kjh"
+
+- type: ttsVoice
+  id: LaylaJp
+  name: tts-voice-name-laylajp
+  sex: Female
+  speaker: "layla/genshin/jp"
+
+- type: ttsVoice
+  id: NahidaJp
+  name: tts-voice-name-nahidajp
+  sex: Female
+  speaker: "nahida/genshin/jp"
+
+- type: ttsVoice
+  id: Conscript
+  name: tts-voice-name-conscript
+  sex: Male
+  speaker: "icon/redalert/en"
+
+- type: ttsVoice
+  id: KokomiJp
+  name: tts-voice-name-kokomijp
+  sex: Female
+  speaker: "sangonomiya_kokomi/genshin/jp"
+
+- type: ttsVoice
+  id: YunJinJp
+  name: tts-voice-name-yunjinjp
+  sex: Female
+  speaker: "yun_jin/genshin/jp"
+
+- type: ttsVoice
+  id: EngineerRa
+  name: tts-voice-name-engineerra
+  sex: Male
+  speaker: "iens/redalert/en"
+
+- type: ttsVoice
+  id: MikaJp
+  name: tts-voice-name-mikajp
+  sex: Male
+  speaker: "mika/genshin/jp"
+
+- type: ttsVoice
+  id: BMrj
+  name: tts-voice-name-bmrj
+  sex: Female
+  speaker: "b_mrj"
+
+- type: ttsVoice
+  id: YaoyaoJp
+  name: tts-voice-name-yaoyaojp
+  sex: Female
+  speaker: "yaoyao/genshin/jp"
+
+- type: ttsVoice
+  id: YoimiyaJp
+  name: tts-voice-name-yoimiyajp
+  sex: Female
+  speaker: "yoimiya/genshin/jp"
+
+- type: ttsVoice
+  id: XingqiuJp
+  name: tts-voice-name-xingqiujp
+  sex: Male
+  speaker: "xingqiu/genshin/jp"
+
+- type: ttsVoice
+  id: BNog
+  name: tts-voice-name-bnog
+  sex: Female
+  speaker: "b_nog"
+
+- type: ttsVoice
+  id: YelanJp
+  name: tts-voice-name-yelanjp
+  sex: Female
+  speaker: "yelan/genshin/jp"
+
+- type: ttsVoice
+  id: XinyanJp
+  name: tts-voice-name-xinyanjp
+  sex: Female
+  speaker: "xinyan/genshin/jp"
+
+- type: ttsVoice
+  id: ShenheJp
+  name: tts-voice-name-shenhejp
+  sex: Female
+  speaker: "shenhe/genshin/jp"
+
+- type: ttsVoice
+  id: KiraraJp
+  name: tts-voice-name-kirarajp
+  sex: Female
+  speaker: "kirara/genshin/jp"
+
+- type: ttsVoice
+  id: AyakaJp
+  name: tts-voice-name-ayakajp
+  sex: Female
+  speaker: "kamisato_ayaka/genshin/jp"
+
+- type: ttsVoice
+  id: AlhaithamJp
+  name: tts-voice-name-alhaithamjp
+  sex: Male
+  speaker: "alhaitham/genshin/jp"
+
+- type: ttsVoice
+  id: KavehJp
+  name: tts-voice-name-kavehjp
+  sex: Male
+  speaker: "kaveh/genshin/jp"
+
+- type: ttsVoice
+  id: EulaJp
+  name: tts-voice-name-eulajp
+  sex: Female
+  speaker: "eula/genshin/jp"
+
+- type: ttsVoice
+  id: WandererJp
+  name: tts-voice-name-wandererjp
+  sex: Male
+  speaker: "wanderer/genshin/jp"
+
+- type: ttsVoice
+  id: BMhr
+  name: tts-voice-name-bmhr
+  sex: Male
+  speaker: "b_mhr"
+
+- type: ttsVoice
+  id: BKalmyk
+  name: tts-voice-name-bkalmyk
+  sex: Male
+  speaker: "b_kalmyk"
+
+- type: ttsVoice
+  id: CandaceJp
+  name: tts-voice-name-candacejp
+  sex: Female
+  speaker: "candace/genshin/jp"
+
+- type: ttsVoice
+  id: DilucJp
+  name: tts-voice-name-dilucjp
+  sex: Male
+  speaker: "diluc/genshin/jp"
+
+- type: ttsVoice
+  id: XianglingJp
+  name: tts-voice-name-xianglingjp
+  sex: Female
+  speaker: "xiangling/genshin/jp"
+
+- type: ttsVoice
+  id: DionaJp
+  name: tts-voice-name-dionajp
+  sex: Female
+  speaker: "diona/genshin/jp"
+
+- type: ttsVoice
+  id: GanyuJp
+  name: tts-voice-name-ganyujp
+  sex: Female
+  speaker: "ganyu/genshin/jp"
+
+- type: ttsVoice
+  id: ThomaJp
+  name: tts-voice-name-thomajp
+  sex: Male
+  speaker: "thoma/genshin/jp"
+
+- type: ttsVoice
+  id: Gi
+  name: tts-voice-name-gi
+  sex: Male
+  speaker: "igi/redalert/en"
+
+- type: ttsVoice
+  id: SayuJp
+  name: tts-voice-name-sayujp
+  sex: Female
+  speaker: "sayu/genshin/jp"
+
+- type: ttsVoice
+  id: FischlJp
+  name: tts-voice-name-fischljp
+  sex: Female
+  speaker: "fischl/genshin/jp"
+
+- type: ttsVoice
+  id: NoelleJp
+  name: tts-voice-name-noellejp
+  sex: Female
+  speaker: "noelle/genshin/jp"
+
+- type: ttsVoice
+  id: AloyJp
+  name: tts-voice-name-aloyjp
+  sex: Female
+  speaker: "aloy/genshin/jp"
+
+- type: ttsVoice
+  id: SucroseJp
+  name: tts-voice-name-sucrosejp
+  sex: Female
+  speaker: "sucrose/genshin/jp"
+
+- type: ttsVoice
+  id: JeanJp
+  name: tts-voice-name-jeanjp
+  sex: Female
+  speaker: "jean/genshin/jp"
+
+- type: ttsVoice
+  id: Scootaloo
+  name: tts-voice-name-scootaloo
+  sex: Female
+  speaker: "scootaloo/pony/en"
+
+- type: ttsVoice
+  id: AratakiIttoJp
+  name: tts-voice-name-aratakiittojp
+  sex: Male
+  speaker: "arataki_itto/genshin/jp"
+
+- type: ttsVoice
+  id: AyatoJp
+  name: tts-voice-name-ayatojp
+  sex: Male
+  speaker: "kamisato_ayato/genshin/jp"
+
+- type: ttsVoice
+  id: KaeyaJp
+  name: tts-voice-name-kaeyajp
+  sex: Male
+  speaker: "kaeya/genshin/jp"
+
+- type: ttsVoice
+  id: KazuhaJp
+  name: tts-voice-name-kazuhajp
+  sex: Male
+  speaker: "kaedehara_kazuha/genshin/jp"
+
+- type: ttsVoice
+  id: TighnariJp
+  name: tts-voice-name-tighnarijp
+  sex: Male
+  speaker: "tighnari/genshin/jp"
+
+- type: ttsVoice
+  id: YanfeiJp
+  name: tts-voice-name-yanfeijp
+  sex: Female
+  speaker: "yanfei/genshin/jp"
+
+- type: ttsVoice
+  id: CynoJp
+  name: tts-voice-name-cynojp
+  sex: Male
+  speaker: "cyno/genshin/jp"
+
+- type: ttsVoice
+  id: DoriJp
+  name: tts-voice-name-dorijp
+  sex: Female
+  speaker: "dori/genshin/jp"
+
+- type: ttsVoice
+  id: BennettJp
+  name: tts-voice-name-bennettjp
+  sex: Male
+  speaker: "bennett/genshin/jp"
+
+- type: ttsVoice
+  id: KeqingJp
+  name: tts-voice-name-keqingjp
+  sex: Female
+  speaker: "keqing/genshin/jp"
+
+- type: ttsVoice
+  id: BaizhuJp
+  name: tts-voice-name-baizhujp
+  sex: Male
+  speaker: "baizhu/genshin/jp"
+
+- type: ttsVoice
+  id: BeidouJp
+  name: tts-voice-name-beidoujp
+  sex: Female
+  speaker: "beidou/genshin/jp"
+
+- type: ttsVoice
+  id: ChongyunJp
+  name: tts-voice-name-chongyunjp
+  sex: Male
+  speaker: "chongyun/genshin/jp"
+
+- type: ttsVoice
+  id: KujouSaraJp
+  name: tts-voice-name-kujousarajp
+  sex: Female
+  speaker: "kujou_sara/genshin/jp"
+
+- type: ttsVoice
+  id: DehyaJp
+  name: tts-voice-name-dehyajp
+  sex: Female
+  speaker: "dehya/genshin/jp"
+
+- type: ttsVoice
+  id: ShinobuJp
+  name: tts-voice-name-shinobujp
+  sex: Female
+  speaker: "kuki_shinobu/genshin/jp"
+
+- type: ttsVoice
+  id: FaruzanJp
+  name: tts-voice-name-faruzanjp
+  sex: Female
+  speaker: "faruzan/genshin/jp"
+
+- type: ttsVoice
+  id: ColleiJp
+  name: tts-voice-name-colleijp
+  sex: Female
+  speaker: "collei/genshin/jp"
+
+- type: ttsVoice
+  id: NingguangJp
+  name: tts-voice-name-ningguangjp
+  sex: Female
+  speaker: "ningguang/genshin/jp"
+
+- type: ttsVoice
+  id: NilouJp
+  name: tts-voice-name-niloujp
+  sex: Female
+  speaker: "nilou/genshin/jp"
+
+- type: ttsVoice
+  id: HeizouJp
+  name: tts-voice-name-heizoujp
+  sex: Male
+  speaker: "shikanoin_heizou/genshin/jp"
+
+- type: ttsVoice
+  id: GorouJp
+  name: tts-voice-name-goroujp
+  sex: Male
+  speaker: "gorou/genshin/jp"
+
+- type: ttsVoice
+  id: AdultMale
+  name: tts-voice-name-adultmale
+  sex: Male
+  speaker: "adult_male/kingpin/ru"
+
+- type: ttsVoice
+  id: Applebloom
+  name: tts-voice-name-applebloom
+  sex: Female
+  speaker: "applebloom/pony/en"
+
+- type: ttsVoice
+  id: Braixen
+  name: tts-voice-name-braixen
+  sex: Male
+  speaker: "braixen/pokemon/jp"
+
+- type: ttsVoice
+  id: Charizard
+  name: tts-voice-name-charizard
+  sex: Male
+  speaker: "charizard/pokemon/jp"
+
+- type: ttsVoice
+  id: Droids
+  name: tts-voice-name-droids
+  sex: Male
+  speaker: "droids/star_wars/ru"
+
+- type: ttsVoice
+  id: Drunk
+  name: tts-voice-name-drunk
+  sex: Male
+  speaker: "drunk/kingpin/ru"
+
+- type: ttsVoice
+  id: Gardevoir
+  name: tts-voice-name-gardevoir
+  sex: Female
+  speaker: "gardevoir/pokemon/jp"
+
+- type: ttsVoice
+  id: Gollum2
+  name: tts-voice-name-gollum2
+  sex: Male
+  speaker: "gollum/the_lord_of_the_rings/ru"
+
+- type: ttsVoice
+  id: HAL9000
+  name: tts-voice-name-hal9000
+  sex: Male
+  speaker: "HAL9000"
+
+- type: ttsVoice
+  id: Hf2Hev
+  name: tts-voice-name-hf2hev
+  sex: Male
+  speaker: "hev_suit/halflife2/ru"
+
+- type: ttsVoice
+  id: Ilia
+  name: tts-voice-name-ilia
+  sex: Male
+  speaker: "ilia"
+
+- type: ttsVoice
+  id: Jesus
+  name: tts-voice-name-jesus
+  sex: Male
+  speaker: "jesus/kingpin/ru"
+
+- type: ttsVoice
+  id: Kingpin
+  name: tts-voice-name-kingpin
+  sex: Male
+  speaker: "kingpin/kingpin/ru"
+
+- type: ttsVoice
+  id: Lamont
+  name: tts-voice-name-lamont
+  sex: Male
+  speaker: "lamont/kingpin/ru"
+
+- type: ttsVoice
+  id: Lucario
+  name: tts-voice-name-lucario
+  sex: Male
+  speaker: "lucario/pokemon/jp"
+
+- type: ttsVoice
+  id: Magicj
+  name: tts-voice-name-magicj
+  sex: Male
+  speaker: "magicj(trador)/kingpin/ru"
+
+- type: ttsVoice
+  id: Mewtwo
+  name: tts-voice-name-mewtwo
+  sex: Male
+  speaker: "mewtwo/pokemon/jp"
+
+- type: ttsVoice
+  id: Momo
+  name: tts-voice-name-momo
+  sex: Male
+  speaker: "momo/kingpin/ru"
+
+- type: ttsVoice
+  id: MrKrabs
+  name: tts-voice-name-mrkrabs
+  sex: Male
+  speaker: "mrkrabs/spongebob/en"
+
+- type: ttsVoice
+  id: MrsPuff
+  name: tts-voice-name-mrspuff
+  sex: Female
+  speaker: "mrspuff/spongebob/en"
+
+- type: ttsVoice
+  id: CrysisSuit
+  name: tts-voice-name-crysissuit
+  sex: Male
+  speaker: "nano_muscle_suit/crysis/ru"
+
+- type: ttsVoice
+  id: NecoArc
+  name: tts-voice-name-necoarc
+  sex: Female
+  speaker: "neko_arc/fate/jp"
+
+- type: ttsVoice
+  id: Pawnomatic
+  name: tts-voice-name-pawnomatic
+  sex: Male
+  speaker: "pawnomatic(trador)/kingpin/ru"
+
+- type: ttsVoice
+  id: Pikachu
+  name: tts-voice-name-pikachu
+  sex: Male
+  speaker: "pikachu/pokemon/jp"
+
+- type: ttsVoice
+  id: Pinkie
+  name: tts-voice-name-pinkie
+  sex: Female
+  speaker: "pinkie/pony/en"
+
+- type: ttsVoice
+  id: Rarity
+  name: tts-voice-name-rarity
+  sex: Female
+  speaker: "rarity/pony/en"
+
+- type: ttsVoice
+  id: Sandy
+  name: tts-voice-name-sandy
+  sex: Female
+  speaker: "sandy/spongebob/en"
+
+- type: ttsVoice
+  id: Sceptile
+  name: tts-voice-name-sceptile
+  sex: Male
+  speaker: "sceptile/pokemon/jp"
+
+- type: ttsVoice
+  id: Sunsetshimmer
+  name: tts-voice-name-sunsetshimmer
+  sex: Female
+  speaker: "sunsetshimmer/pony/en"
+
+- type: ttsVoice
+  id: Sweetiebelle
+  name: tts-voice-name-sweetiebelle
+  sex: Female
+  speaker: "sweetiebelle/pony/en"
+
+- type: ttsVoice
+  id: Trixie
+  name: tts-voice-name-trixie
+  sex: Female
+  speaker: "trixie/pony/en"
+
+- type: ttsVoice
+  id: YoungFemale
+  name: tts-voice-name-youngfemale
+  sex: Female
+  speaker: "young_female/kingpin/ru"
+
+- type: ttsVoice
+  id: YoungMale
+  name: tts-voice-name-youngmale
+  sex: Male
+  speaker: "young_male/kingpin/ru"

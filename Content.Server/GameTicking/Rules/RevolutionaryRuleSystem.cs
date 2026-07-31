@@ -320,6 +320,9 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     {
         base.Update(frameTime);
 
+        if (GameTicker.RunLevel == GameRunLevel.PostRound)
+            return;
+
         // Defeat ends the rule immediately, so queued cleanup must continue independently of ActiveTick.
         if (_pendingCleanupRule is { } rule &&
             TryComp<RevolutionaryRuleComponent>(rule, out var component))

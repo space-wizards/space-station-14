@@ -17,6 +17,7 @@ namespace Content.Server.StationEvents;
 public sealed class SurvivalRampingStationEventSchedulerSystem : GameRuleSystem<SurvivalRampingStationEventSchedulerComponent>
 {
     private const int EventPickAttempts = 20;
+    private const float FailedEventRetryCooldown = 30f;
 
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly EventManagerSystem _event = default!;
@@ -59,6 +60,9 @@ public sealed class SurvivalRampingStationEventSchedulerSystem : GameRuleSystem<
     {
         base.Update(frameTime);
 
+        if (_gameTicker.RunLevel == GameRunLevel.PostRound)
+            return;
+
         if (!_event.EventsEnabled)
             return;
 
@@ -87,7 +91,10 @@ public sealed class SurvivalRampingStationEventSchedulerSystem : GameRuleSystem<
             // GroupSelector may pick a sub-pool that has no queueable events after
             // max occurrence / active-rule filtering, so retry a few times.
             if (!TryRunRandomEvent(scheduler, phase))
+            {
+                scheduler.TimeUntilNextEvent = FailedEventRetryCooldown;
                 continue;
+            }
 
             PickNextEventTime(scheduler);
         }
