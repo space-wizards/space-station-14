@@ -1,4 +1,4 @@
-using Content.Shared.Xenoarchaeology.Artifact;
+using System.Linq;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Toolshed;
@@ -13,14 +13,20 @@ namespace Content.Shared.Toolshed.TypeParsers.XenoArtifact;
 /// </summary>
 public sealed partial class XenoEffectParser : CustomCompletionParser<ProtoId<EntityPrototype>>
 {
-    [Dependency] private IEntityManager _entityManager = default!;
+    private static readonly ProtoId<EntityCategoryPrototype> EffectCategoryId = "XenoArtifactEffects";
+
+    [Dependency] private IPrototypeManager _prototype= default!;
 
     public override CompletionResult TryAutocomplete(ParserContext ctx, CommandArgument? arg)
     {
         var hint = ToolshedCommand.GetArgHint(arg, typeof(ProtoId<EntityPrototype>));
 
-        var artifact = _entityManager.System<SharedXenoArtifactSystem>();
+        var categories = _prototype.Categories;
+        if (!categories.TryGetValue(EffectCategoryId, out var found))
+            return CompletionResult.Empty;
 
-        return CompletionResult.FromHintOptions(artifact.EffectPrototypeIds, hint);
+        var projected = found.Select(x => x.ID);
+        return CompletionResult.FromHintOptions(projected, hint);
+
     }
 }
