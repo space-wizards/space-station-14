@@ -15,18 +15,13 @@ public sealed partial class XenoEffectParser : CustomCompletionParser<ProtoId<En
 {
     private static readonly ProtoId<EntityCategoryPrototype> EffectCategoryId = "XenoArtifactEffects";
 
-    [Dependency] private IPrototypeManager _prototype= default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
 
     public override CompletionResult TryAutocomplete(ParserContext ctx, CommandArgument? arg)
     {
         var hint = ToolshedCommand.GetArgHint(arg, typeof(ProtoId<EntityPrototype>));
-
-        var categories = _prototype.Categories;
-        if (!categories.TryGetValue(EffectCategoryId, out var found))
-            return CompletionResult.Empty;
-
-        var projected = found.Select(x => x.ID);
-        return CompletionResult.FromHintOptions(projected, hint);
+        var completionOptions = CompletionHelper.EntityPrototypes(ctx.GetWord(), EffectCategoryId, _prototype);
+        return CompletionResult.FromHintOptions(completionOptions, hint);
 
     }
 }

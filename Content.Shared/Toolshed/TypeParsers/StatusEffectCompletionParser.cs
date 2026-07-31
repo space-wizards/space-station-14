@@ -1,4 +1,3 @@
-using System.Linq;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Toolshed;
@@ -16,11 +15,7 @@ public sealed partial class StatusEffectCompletionParser : CustomCompletionParse
     public override CompletionResult? TryAutocomplete(ParserContext ctx, CommandArgument? arg)
     {
         var hint = ToolshedCommand.GetArgHint(arg, typeof(ProtoId<EntityPrototype>));
-
-        if (!_prototype.Categories.TryGetValue(StatusEffectCategoryId, out var found))
-            return CompletionResult.Empty;
-
-        var projected = found.Select(x => x.ID);
-        return CompletionResult.FromHintOptions(projected, hint);
+        var completionOptions = CompletionHelper.EntityPrototypes(ctx.GetWord(), StatusEffectCategoryId, _prototype);
+        return CompletionResult.FromHintOptions(completionOptions, hint);
     }
 }
