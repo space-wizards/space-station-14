@@ -5,21 +5,14 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Cards
-  - type: Stack
-    stackType: CardsStack
-    baseLayer: base
-    halfOnAltInteract: false
-    animatePickup: false
     layerStates:
     - deck_single
     - deck_nanotrasen_low
     - deck_nanotrasen_half
     - deck_nanotrasen_full
-    count: 1
-    throwIndividually: true
-    layerFunction: Threshold
-  - type: StackLayerThreshold
     thresholds: [2, 20, 35]
+    baseLayer: base
+    cardStackType: CardsStack
   - type: Sprite
     sprite: Objects/Fun/PlayingCards/nanotrasenbasiccards.rsi
     state: deck_single
@@ -96,8 +89,6 @@
   id: CardDeck
   name: deck of cards
   components:
-    - type: Stack
-      count: 52
     - type: Sprite
       state: deck_nanotrasen_full
 
@@ -106,15 +97,13 @@
   id: RedCardDeck
   name: red deck of cards
   components:
-    - type: Stack
-      count: 52
     - type: Cards
       cardBack: red_backside
       baseState: syndi_base
     - type: Sprite
       state: deck_nanotrasen_full
 
-- type: stack
+- type: cardStack
   id: CardsStack
   name: deck-of-cards
   maxCount: 156
@@ -130,14 +119,12 @@
     - type: Cards
       cardBack: syndi_backside
       baseState: syndi_base
-    - type: Stack
-      stackType: SyndicateCardsStack
+      cardStackType: SyndicateCardsStack
       layerStates:
       - deck_single
       - deck_syndicate_low
       - deck_syndicate_half
       - deck_syndicate_full
-      count: 1
     - type: Sprite
       state: deck_syndicate_full
     - type: DamageOtherOnHit
@@ -153,11 +140,8 @@
   parent: [ BaseStandardDeck, SyndiBaseCards ]
   id: SyndiCards
   name: syndicate deck of cards
-  components:
-    - type: Stack
-      count: 52
 
-- type: stack
+- type: cardStack
   id: SyndicateCardsStack
   name: syndi-deck-of-cards
   maxCount: 156

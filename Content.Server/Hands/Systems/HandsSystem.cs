@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Server.Stack;
 using Content.Server.Stunnable;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Cards;
 using Content.Shared.CombatMode;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Explosion;
@@ -13,6 +14,7 @@ using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Stacks;
 using Content.Shared.Standing;
 using Content.Shared.Throwing;
+using NetCord.Gateway;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
@@ -28,6 +30,7 @@ namespace Content.Server.Hands.Systems
         [Dependency] private IGameTiming _timing = default!;
         [Dependency] private IRobustRandom _random = default!;
         [Dependency] private StackSystem _stackSystem = default!;
+        [Dependency] private SharedCardSystem _cardsSystem = default!;
         [Dependency] private ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private SharedTransformSystem _transformSystem = default!;
         [Dependency] private PullingSystem _pullingSystem = default!;
@@ -128,6 +131,16 @@ namespace Content.Server.Hands.Systems
             if (TryComp(throwEnt, out StackComponent? stack) && stack.Count > 1 && stack.ThrowIndividually)
             {
                 var splitStack = _stackSystem.Split((throwEnt.Value, stack), 1, Comp<TransformComponent>(player).Coordinates);
+
+                if (splitStack is not {Valid: true})
+                    return false;
+
+                throwEnt = splitStack.Value;
+            }
+
+            if (TryComp(throwEnt, out CardsComponent? cards) && cards.Cards.Count > 1)
+            {
+                var splitStack = _cardsSystem.SplitDeck((throwEnt.Value, cards), Comp<TransformComponent>(player).Coordinates, _cardsSystem.MovedCards(cards, 1));
 
                 if (splitStack is not {Valid: true})
                     return false;

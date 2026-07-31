@@ -1,9 +1,12 @@
 using System.Linq;
+using System.Numerics;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
+using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -12,7 +15,6 @@ namespace Content.Shared.Cards;
 
 public abstract partial class SharedCardSystem : EntitySystem
 {
-    [Dependency] protected SharedStackSystem Stacks = default!;
     [Dependency] protected SharedHandsSystem Hands = default!;
     [Dependency] protected SharedPopupSystem Popup = default!;
     [Dependency] protected SharedAppearanceSystem Appearance = default!;
@@ -22,6 +24,8 @@ public abstract partial class SharedCardSystem : EntitySystem
     [Dependency] protected SharedTransformSystem TransformSystem = default!;
     [Dependency] protected IPrototypeManager PrototypeManager = default!;
     [Dependency] protected ISharedPlayerManager PlayerManager = default!;
+
+    [Dependency] private EntityQuery<CardsComponent> _cardsQuery;
 
     [SubscribeLocalEvent]
     protected virtual void OnCardsInit(Entity<CardsComponent> ent, ref ComponentInit args)
@@ -43,48 +47,112 @@ public abstract partial class SharedCardSystem : EntitySystem
         }
     }
 
-    // Whenever stacks are merged.
-    [SubscribeLocalEvent]
-    private void OnMergeEvent(Entity<CardsComponent> ent, ref StackMergeEvent args)
+    private void MergeDecks(Entity<CardsComponent> donor, Entity<CardsComponent> recipient, int amount, List<int>? selected = null)
     {
-        if (!TryComp<CardsComponent>(args.Donor, out var donorComp))
-            return;
-        // If BeingCherryPicked the merging is dealt with elsewhere
-        if (ent.Comp.BeingCherryPicked || donorComp.BeingCherryPicked)
-            return;
+        MoveCards(recipient, donor, selected ?? MovedCards(donor.Comp, amount));
 
-        TakeFromDeck(ent.Comp, donorComp, args.Amount);
-        UpdateVisualState(ent);
-        UpdateVisualState((args.Donor, donorComp));
+        UpdateVisualState(donor);
+        UpdateVisualState(recipient);
 
-        Dirty(ent.Owner, ent.Comp);
-        Dirty(args.Donor, donorComp);
+        Dirty(donor);
+        Dirty(recipient);
+
+        if (donor.Comp.Cards.Count <= 0)
+            PredictedQueueDel(donor.Owner);
     }
 
-    // Whenever stacks are split.
-    [SubscribeLocalEvent]
-    private void OnSplitEvent(Entity<CardsComponent> ent, ref StackSplitEvent args)
+    [PublicAPI]
+    public bool TryMergeDecks(
+        Entity<CardsComponent?> donor,
+        Entity<CardsComponent?> recipient,
+        out int transferred,
+        int? amount = null,
+        List<int>? selected = null
+
+    )
     {
-        if (ent.Comp.BeingCherryPicked)
+        transferred = 0;
+
+        if (donor.Owner == recipient.Owner)
+            return false;
+
+        // Recipient is being torn down, don't give it anything.
+        if (TerminatingOrDeleted(recipient)
+            || EntityManager.IsQueuedForDeletion(recipient))
+            return false;
+
+
+        // Check they're stacks of the same type
+        if (!_cardsQuery.Resolve(recipient, ref recipient.Comp, false)
+            || !_cardsQuery.Resolve(donor, ref donor.Comp, false)
+            || recipient.Comp.CardStackType != donor.Comp.CardStackType)
+            return false;
+
+
+        // The most we can transfer
+        transferred = Math.Min(donor.Comp.Cards.Count, GetAvailableSpace(recipient.Comp));
+        if (transferred <= 0)
+            return false;
+
+        // transfer only as much as we want
+        if (amount > 0)
+            transferred = Math.Min(transferred, amount.Value);
+
+
+        MergeDecks((donor.Owner, donor.Comp), (recipient.Owner, recipient.Comp), transferred, selected: selected);
+        return true;
+    }
+
+    [PublicAPI]
+    public int GetAvailableSpace(CardsComponent component)
+    {
+        return GetMaxCount(component) - component.Cards.Count;
+    }
+
+    [PublicAPI]
+    public int GetMaxCount(CardsComponent component)
+    {
+        if (component.MaxCountOverride != null)
+            return component.MaxCountOverride.Value;
+
+        var cardStackProto = ProtoMan.Index(component.CardStackType);
+        return cardStackProto.MaxCount ?? int.MaxValue;
+    }
+
+    public virtual EntityUid? SplitDeck(Entity<CardsComponent> ent, EntityCoordinates spawnPosition, List<int> cardIndexes = default!)
+    {
+        return null;
+    }
+
+    protected void UserSplitDeck(Entity<CardsComponent> cards, EntityUid user, int amount)
+    {
+        if (amount <= 0)
+        {
+            Popup.PopupCursor(Loc.GetString("comp-stack-split-too-small"), user, PopupType.Medium);
             return;
-        if (
-            !TryComp<CardsComponent>(args.NewId, out var splitComp)
-            || !TryComp<StackComponent>(args.NewId, out var splitStackComp)
-        )
+        }
+
+        // Tries to merge stack with a stack in hand.
+        if (Hands.TryGetActiveItem(user, out var merger)
+            && TryMergeDecks(cards.AsNullable(), merger.Value, out _, amount: amount))
+        {
+            Popup.PopupCursor(Loc.GetString("comp-stack-split"), user);
+            return;
+        }
+
+        // If this is effectively just picking up the stack, it just picks up the stack.
+        if (cards.Comp.Cards.Count <= amount)
+        {
+            // No AnimatePickup passed as this is a normal pickup.
+            Hands.PickupOrDrop(user, cards.Owner);
+            return;
+        }
+
+        if (SplitDeck(cards, new EntityCoordinates(user, Vector2.Zero), MovedCards(cards.Comp, amount)) is not { } split)
             return;
 
-        var delta = splitStackComp.Count;
-
-        TakeFromDeck(splitComp, ent.Comp, delta);
-        // Copy state over to new entity
-        splitComp.Flipped = ent.Comp.Flipped;
-        splitComp.Fanned = ent.Comp.Fanned;
-
-        UpdateVisualState(ent);
-        UpdateVisualState((args.NewId, splitComp));
-
-        Dirty(ent.Owner, ent.Comp);
-        Dirty(args.NewId, splitComp);
+        Hands.PickupOrDrop(user, split, animate: false);
+        Popup.PopupCursor(Loc.GetString("comp-stack-split"), user);
     }
 
     [SubscribeLocalEvent]
@@ -96,36 +164,40 @@ public abstract partial class SharedCardSystem : EntitySystem
             TryFanCards(ent);
     }
 
-    private void TakeFromDeck(CardsComponent comp1, CardsComponent comp2, int delta)
+    protected void TakeFromDeck(Entity<CardsComponent> recipient, Entity<CardsComponent> donor, int delta)
     {
         // Takes cards from the top or bottom of deck depending on how it is flipped
-        var selected = MovedCards(comp2, delta);
-        MoveCards(comp1, comp2, selected);
+        var selected = MovedCards(donor.Comp, delta);
+        MoveCards(recipient, donor, selected);
     }
 
-    private void MoveCards(CardsComponent comp1, CardsComponent comp2, List<CardData> selected)
+    protected void MoveCards(Entity<CardsComponent> recipient, Entity<CardsComponent> donor, List<int> cardIndexes)
     {
+        var selected = GetCardFromIndex(donor.Comp.Cards, cardIndexes);
         // Remove cards from source
         foreach (var item in selected)
-            comp2.Cards.Remove(item);
+            donor.Comp.Cards.Remove(item);
         // Add cards to sink
         // The cards will be added to the side which is "facing upwards"
-        if (comp1.Flipped)
-            comp1.Cards.AddRange(selected);
+        if (recipient.Comp.Flipped)
+            recipient.Comp.Cards.AddRange(selected);
         else
-            comp1.Cards.InsertRange(0, selected);
+            recipient.Comp.Cards.InsertRange(0, selected);
 
-        if (comp2.Cards.Count == 1)
-            comp2.Fanned = false;
+        if (donor.Comp.Cards.Count == 1)
+            donor.Comp.Fanned = false;
+
+        if (donor.Comp.Cards.Count <= 0)
+            PredictedQueueDel(donor.Owner);
     }
 
-    private List<CardData> MovedCards(CardsComponent comp, int delta)
+    public List<int> MovedCards(CardsComponent comp, int delta)
     {
         // Takes some number of cards from the top of the deck
         // Takes from the bottom if the deck is flipped
         if (comp.Flipped)
-            return comp.Cards.TakeLast(delta).ToList();
-        return comp.Cards.Take(delta).ToList();
+            return comp.Cards.TakeLast(delta).Select(c => c.CardIndex).ToList();
+        return comp.Cards.Take(delta).Select(c => c.CardIndex).ToList();
     }
 
     [SubscribeNetworkEvent]
@@ -223,65 +295,37 @@ public abstract partial class SharedCardSystem : EntitySystem
     )
     {
         split = null;
-        if (!Resolve(user.Owner, ref user.Comp, false) || !TryComp<StackComponent>(cards.Owner, out var stackComp))
+        if (!Resolve(user.Owner, ref user.Comp, false))
             return false;
 
-        // Card movement needs to be a specific card so this prevents the merge or split event from taking from top of deck
-        cards.Comp.BeingCherryPicked = true;
-
-        // This section is effectively SharedStackSystem.UserSplit()
         if (
             !Hands.TryGetActiveItem(user.Owner, out split)
-            || !TryComp<StackComponent>(split, out var recipientStack)
-            || !Stacks.TryMergeStacks((cards.Owner, stackComp), (split.Value, recipientStack), out _, amount: 1)
+            || !TryMergeDecks(cards.AsNullable(), (split.Value, null), out _, amount: 1, selected: new List<int> { cardIndex })
         )
         {
-            split = Stacks.Split((cards.Owner, stackComp), 1, user.Comp.Coordinates);
+            split = SplitDeck(cards, user.Comp.Coordinates, new List<int> { cardIndex });
             if (split == null)
-            {
-                cards.Comp.BeingCherryPicked = false;
                 return false;
-            }
         }
-        cards.Comp.BeingCherryPicked = false;
-
-        if (!TryComp<CardsComponent>(split, out var newCardsComp))
-        {
+        if (!TryComp<CardsComponent>(split, out var recipientStack))
             return false;
-        }
 
-        // Animation must be before cards are moved
-        var card = GetCardFromInx(cards.Comp.Cards, cardIndex);
-        if (!card.HasValue)
-        {
-            if (!Exists(cards.Owner))
-                return false;
-            if (!TryComp<StackComponent>(split, out var splitStack))
-                return false;
-            var count = splitStack.Count;
-            Stacks.SetCount((split.Value, splitStack), count - 1);
-            count = stackComp.Count;
-            Stacks.SetCount((cards.Owner, stackComp), count + 1);
-            return false;
-        }
-
-        MoveCards(newCardsComp, cards.Comp, new List<CardData> { card.Value });
         // If this is true it is a new deck so copies over the properties
         // Otherwise it doesn't change the deck the card joins
-        if (newCardsComp.Cards.Count == 1)
+        if (recipientStack.Cards.Count == 1)
         {
-            newCardsComp.Flipped = cards.Comp.Flipped;
-            newCardsComp.Fanned = cards.Comp.Fanned;
+            recipientStack.Flipped = cards.Comp.Flipped;
+            recipientStack.Fanned = cards.Comp.Fanned;
             Hands.PickupOrDrop(user.Owner, split.Value);
         }
 
         Popup.PopupCursor(Loc.GetString("comp-stack-split"), user.Owner);
 
         UpdateVisualState(cards);
-        UpdateVisualState((split.Value, newCardsComp));
+        UpdateVisualState((split.Value, recipientStack));
 
         Dirty(cards.Owner, cards.Comp);
-        Dirty(split.Value, newCardsComp);
+        Dirty(split.Value, recipientStack);
 
         return true;
     }
@@ -292,9 +336,15 @@ public abstract partial class SharedCardSystem : EntitySystem
     /// <param name="cards">The list of cards to search.</param>
     /// <param name="cardIndex">The card index to search for.</param>
     /// <returns>The matching <see cref="CardData"/>, or <c>null</c> if no card with that index exists.</returns>
-    public CardData? GetCardFromInx(List<CardData> cards, int cardIndex)
+    public CardData? GetCardFromIndex(List<CardData> cards, int cardIndex)
     {
         var card = cards.Find(c => c.CardIndex == cardIndex);
         return card.CardId.Id == null ? null : card;
     }
+
+    public List<CardData> GetCardFromIndex(List<CardData> cards, List<int> cardIndexes)
+    {
+        return cards.Where(c => cardIndexes.Contains(c.CardIndex)).ToList();
+    }
+
 }

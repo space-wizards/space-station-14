@@ -11,26 +11,8 @@ public abstract partial class SharedCardSystem
         UpdateVisualState(ent);
     }
 
-    [SubscribeLocalEvent]
-    private void OnStackCountChanged(Entity<CardsComponent> ent, ref StackCountChangedEvent args)
+    protected void UpdateVisualState(Entity<CardsComponent> ent)
     {
-        // Makes sure the sudo stack count for visuals is up to date
-        if (args.NewCount == 0)
-            return;
-        UpdateStackCount(ent);
-    }
-
-    private void UpdateStackCount(Entity<CardsComponent> ent)
-    {
-        // If the deck is fanned it changes the visual count to what ever number is below the fanned cards
-        // This means that a deck with the same number of cards as the MaxFanned will not have a stack extending of the cards
-        var visualState = GetCardListVisualState(ent.Comp);
-        Appearance.SetData(ent.Owner, StackVisuals.Actual, ent.Comp.Cards.Count - visualState.Count + 1);
-    }
-
-    private void UpdateVisualState(Entity<CardsComponent> ent)
-    {
-        UpdateStackCount(ent);
         if (TryComp<AppearanceComponent>(ent, out var appearance))
         {
             Appearance.SetData(ent, CardVisuals.CardList, GetCardListVisualState(ent.Comp), appearance);

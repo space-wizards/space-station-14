@@ -9,6 +9,8 @@ namespace Content.Shared.Cards;
 
 public abstract partial class SharedCardSystem
 {
+    public static readonly int[] DefaultSplitAmounts = { 1, 5, 10, 20, 30, 50 };
+
     // When 'E' pressed in the world
     // Flips the deck
     [SubscribeLocalEvent]
@@ -68,8 +70,34 @@ public abstract partial class SharedCardSystem
 
         var user = args.User;
 
-        // Verbs here have low priority so they are always below the stack split verbs
-        var priority = -20;
+        var priority = 0;
+        foreach (var amount in DefaultSplitAmounts)
+        {
+            if (amount > ent.Comp.Cards.Count)
+                continue;
+
+            args.Verbs.Add(
+                new AlternativeVerb
+                {
+                    Text = amount.ToString(),
+                    Category = VerbCategory.Split,
+                    Act = () => UserSplitDeck(ent, user, amount),
+                    // we want to sort by size, not alphabetically by the verb text.
+                    Priority = priority--,
+                }
+            );
+        }
+
+        var half = (ent.Comp.Cards.Count + 1) / 2;
+        args.Verbs.Add(
+            new AlternativeVerb
+            {
+                Text = Loc.GetString("comp-stack-split-halve"),
+                Category = VerbCategory.Split,
+                Act = () => UserSplitDeck(ent, user, half),
+                Priority = priority--,
+            }
+        );
 
         // Flip verb
         args.Verbs.Add(
@@ -141,5 +169,21 @@ public abstract partial class SharedCardSystem
                 }
             );
         }
+    }
+
+    [SubscribeLocalEvent]
+    private void OnCardsInteractUsing(Entity<CardsComponent> ent, ref InteractUsingEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (!TryComp<CardsComponent>(args.Used, out var recipientComp))
+            return;
+
+        // Transfer stacks from ground to hand
+        if (!TryMergeDecks(ent.AsNullable(), (args.Used, recipientComp), out var transferred))
+            return;
+
+        args.Handled = true;
     }
 }

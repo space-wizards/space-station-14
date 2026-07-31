@@ -1,6 +1,7 @@
 using System.Linq;
 using JetBrains.Annotations;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Cards;
 
@@ -15,6 +16,40 @@ public sealed partial class CardsComponent : Component
     /// </summary>
     [DataField(customTypeSerializer: typeof(CardDataSerializer)), AutoNetworkedField]
     public List<CardData> Cards = new();
+
+    /// <summary>
+    /// What stack type we are.
+    /// </summary>
+    [DataField(required: true)]
+    public ProtoId<CardStackPrototype> CardStackType = default!;
+
+    /// <summary>
+    /// Max amount of things that can be in the stack.
+    /// Overrides the max defined on the stack prototype.
+    /// </summary>
+    [DataField]
+    public int? MaxCountOverride;
+
+    /// <summary>
+    /// Sprite layers used in stack visualizer. Sprites first in layer correspond to lower stack states
+    /// e.g. <code>_spriteLayers[0]</code> is lower stack level than <code>_spriteLayers[1]</code>.
+    /// </summary>
+    [DataField]
+    public List<string> LayerStates = new();
+
+    /// <summary>
+    ///     Default IconLayer stack.
+    /// </summary>
+    [DataField]
+    public string BaseLayer = "";
+
+    /// <summary>
+    /// A list of thresholds to check against the number of things in the stack.
+    /// Each exceeded threshold will cause the next layer to be displayed.
+    /// Should be sorted in ascending order.
+    /// </summary>
+    [DataField(required: true)]
+    public List<int> Thresholds;
 
     /// <summary>
     /// Whether the deck is flipped. If <c>true</c>, the cards are face-side up.
@@ -36,12 +71,6 @@ public sealed partial class CardsComponent : Component
     /// </remarks>
     [DataField, AutoNetworkedField]
     public int MaxFanned = 10;
-
-    /// <summary>
-    /// Whether a specific card is currently being taken from this deck, stops
-    /// merge/split logic from pulling from the top or bottom of the deck instead.
-    /// </summary>
-    internal bool BeingCherryPicked;
 
     /// <summary>
     /// The base sprite state used for the whole deck. May be overridden by individual card prototypes.

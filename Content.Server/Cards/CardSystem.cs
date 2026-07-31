@@ -1,5 +1,6 @@
 using Content.Shared.Cards;
 using JetBrains.Annotations;
+using Robust.Shared.Map;
 
 namespace Content.Server.Cards;
 
@@ -23,5 +24,31 @@ public sealed partial class CardSystem : SharedCardSystem
             ent.Comp.Cards[i] = card;
         }
         Dirty(ent.Owner, ent.Comp);
+    }
+
+    public override EntityUid? SplitDeck(Entity<CardsComponent> ent, EntityCoordinates spawnPosition, List<int> cardIndexes = default!)
+    {
+        if (!ProtoMan.Resolve(ent.Comp.CardStackType, out var cardStack))
+            return null;
+
+        var split = SpawnAtPosition(cardStack.Spawn, spawnPosition);
+
+        if (!TryComp<CardsComponent>(split, out var splitComp))
+        {
+            QueueDel(split);
+            return null;
+        }
+
+        MoveCards((split, splitComp), ent, cardIndexes);
+        splitComp.Flipped = ent.Comp.Flipped;
+        splitComp.Fanned = ent.Comp.Fanned;
+
+        UpdateVisualState(ent);
+        UpdateVisualState((split, splitComp));
+
+        Dirty(ent.Owner, ent.Comp);
+        Dirty(split, splitComp);
+
+        return split;
     }
 }

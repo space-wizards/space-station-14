@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Numerics;
+using Content.Client.Storage.Systems;
 using Content.Shared.Cards;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Stacks;
@@ -17,21 +18,22 @@ public sealed partial class CardSystem : SharedCardSystem
     [Dependency] private SpriteSystem _sprite = default!;
 
     [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private ItemCounterSystem _counterSystem = default!;
 
     [SubscribeLocalEvent]
-    private void OnAppearanceChanged(EntityUid uid, CardsComponent _, ref AppearanceChangeEvent args)
+    private void OnAppearanceChanged(Entity<CardsComponent> ent, ref AppearanceChangeEvent args)
     {
-        Appearance.TryGetData<bool>(uid, CardVisuals.IsFlipped, out var flipped, args.Component);
+        Appearance.TryGetData<bool>(ent.Owner, CardVisuals.IsFlipped, out var flipped, args.Component);
 
         // Card visuals state will only have one card in it if not fanned
         // It will have a max of MaxFanned when fanned
-        if (!Appearance.TryGetData<CardListVisualState>(uid, CardVisuals.CardList, out var visualState, args.Component))
+        if (!Appearance.TryGetData<CardListVisualState>(ent.Owner, CardVisuals.CardList, out var visualState, args.Component))
             visualState = new CardListVisualState();
 
-        if (!TryComp<SpriteComponent>(uid, out var sprite))
+        if (!TryComp<SpriteComponent>(ent.Owner, out var sprite))
             return;
 
-        var xform = Transform(uid);
+        var xform = Transform(ent.Owner);
 
         // Hide in strip menu
         // TODO: This should be done in a less bad way. The strip menu system should have a method or field for setting this.
@@ -44,6 +46,20 @@ public sealed partial class CardSystem : SharedCardSystem
         }
 
         var numCards = Math.Abs(visualState.Count);
+        var hiddenCount = ent.Comp.Cards.Count - visualState.Count + 1;
+
+        var maxCount = GetMaxCount(ent.Comp);
+        ApplyThreshold(ent.Comp.Thresholds, ref hiddenCount, ref maxCount);
+        _sprite.LayerSetVisible((ent.Owner, sprite), ent.Comp.BaseLayer, true);
+        _counterSystem.ProcessOpaqueSprite(
+            ent.Owner,
+            ent.Comp.BaseLayer,
+            hiddenCount,
+            maxCount,
+            ent.Comp.LayerStates,
+            false,
+            sprite: args.Sprite
+        );
 
         // Delete all layers which are not used here
         // Assumes that all layers will have the card before it have a layer
@@ -53,15 +69,15 @@ public sealed partial class CardSystem : SharedCardSystem
         {
             // don't like this magic number
             var cardLayers = CardLayers(i, 10);
-            if (!_sprite.LayerExists((uid, sprite), cardLayers[0]))
+            if (!_sprite.LayerExists((ent.Owner, sprite), cardLayers[0]))
                 break;
 
             foreach (var layer in cardLayers)
             {
-                if (!_sprite.LayerExists((uid, sprite), layer))
+                if (!_sprite.LayerExists((ent.Owner, sprite), layer))
                     break;
 
-                _sprite.RemoveLayer((uid, sprite), layer);
+                _sprite.RemoveLayer((ent.Owner, sprite), layer);
             }
         }
 
@@ -78,24 +94,24 @@ public sealed partial class CardSystem : SharedCardSystem
             if (flipped)
             {
                 foreach (var layer in cardLayers)
-                    _sprite.LayerMapReserve((uid, sprite), layer);
+                    _sprite.LayerMapReserve((ent.Owner, sprite), layer);
 
                 // Creates card and moves
-                BuildCard(prototype, cardLayers, card.BaseState, (uid, sprite));
+                BuildCard(prototype, cardLayers, card.BaseState, (ent.Owner, sprite));
                 foreach (var layer in cardLayers)
-                    TransformLayer(layer, position, rotation, (uid, sprite));
+                    TransformLayer(layer, position, rotation, (ent.Owner, sprite));
 
             }
             else
             {
-                _sprite.LayerMapReserve((uid, sprite), cardLayers[0]);
+                _sprite.LayerMapReserve((ent.Owner, sprite), cardLayers[0]);
                 // Uses the base layer for the back side
-                BuildLayer(cardLayers[0], prototype.Sprite, card.CardBack, null, (uid, sprite));
-                TransformLayer(cardLayers[0], position, rotation, (uid, sprite));
+                BuildLayer(cardLayers[0], prototype.Sprite, card.CardBack, null, (ent.Owner, sprite));
+                TransformLayer(cardLayers[0], position, rotation, (ent.Owner, sprite));
             }
             // Moves the stack texture below the left most card
             if (i == 0)
-                TransformLayer("base", position, rotation, (uid, sprite));
+                TransformLayer(ent.Comp.BaseLayer, position, rotation, (ent.Owner, sprite));
         }
     }
 
@@ -190,5 +206,23 @@ public sealed partial class CardSystem : SharedCardSystem
     {
         _sprite.LayerSetOffset(sprite, layer, movement);
         _sprite.LayerSetRotation(sprite, layer, rotation);
+    }
+
+    private static void ApplyThreshold(List<int> thresholds, ref int actual, ref int maxCount)
+    {
+        // We must stop before we run out of thresholds or layers, whichever's smaller.
+        maxCount = Math.Min(thresholds.Count + 1, maxCount);
+        var newActual = 0;
+        foreach (var threshold in thresholds)
+        {
+            //If our value exceeds threshold, the next layer should be displayed.
+            //Note: we must ensure actual <= MaxCount.
+            if (actual >= threshold && newActual < maxCount)
+                newActual++;
+            else
+                break;
+        }
+
+        actual = newActual;
     }
 }
