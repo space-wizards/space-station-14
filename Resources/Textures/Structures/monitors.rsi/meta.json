@@ -19,7 +19,11 @@
         },
         {
             "name": "rad1",
-            "delays": [[0.1, 0.1]]
+            "delays": [
+                [
+                    0.1, 0.1
+                ]
+            ]
         },
         {
             "name": "shipalert0"

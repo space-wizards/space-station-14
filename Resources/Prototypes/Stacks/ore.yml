@@ -39,7 +39,7 @@
   parent: BaseMediumStack
   id: SpaceQuartz
   name: stack-space-quartz
-  icon: { sprite: /Textures/Objects/Materials/ore.rsi, state: spacequartz }
+  icon: { sprite: /Textures/Objects/Materials/ore-goon.rsi, state: spacequartz }
   spawn: SpaceQuartz1
 
 - type: stack

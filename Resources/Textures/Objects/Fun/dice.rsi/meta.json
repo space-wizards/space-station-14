@@ -8,10 +8,10 @@
     },
     "states": [
         {
-            "name": "percentile_10"
+            "name": "percentile_0"
         },
         {
-            "name": "percentile_0"
+            "name": "percentile_10"
         },
         {
             "name": "percentile_20"

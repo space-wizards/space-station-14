@@ -173,7 +173,10 @@
   - type: Stack
     stackType: SpaceQuartz
   - type: Sprite
+    sprite: Objects/Materials/ore-goon.rsi
     state: spacequartz
+  - type: Item
+    sprite: Objects/Materials/ore-goon.rsi
   - type: PhysicalComposition
     materialComposition:
       RawQuartz: 100

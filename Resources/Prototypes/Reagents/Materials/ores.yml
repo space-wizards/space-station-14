@@ -11,7 +11,7 @@
   stackEntity: SpaceQuartz1
   name: materials-raw-quartz
   unit: materials-unit-chunk
-  icon: { sprite: Objects/Materials/ore.rsi, state: spacequartz }
+  icon: { sprite: Objects/Materials/ore-goon.rsi, state: spacequartz }
   color: "#a8ccd7"
   price: 0.075
 
