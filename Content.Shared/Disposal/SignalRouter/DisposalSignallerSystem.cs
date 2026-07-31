@@ -1,4 +1,4 @@
-using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceLinking.Systems;
 using Content.Shared.Disposal.Tube;
 using Content.Shared.Disposal.Unit;
 

@@ -1,6 +1,6 @@
 ﻿using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
-using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceLinking.Systems;
 using Content.Shared.EntityTable;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Mind;

@@ -1,5 +1,5 @@
-using Content.Shared.DeviceNetwork.Components;
-using Content.Shared.DeviceNetwork.Systems;
+using Content.Shared.DeviceConfigurator.Components;
+using Content.Shared.DeviceConfigurator.Systems;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;

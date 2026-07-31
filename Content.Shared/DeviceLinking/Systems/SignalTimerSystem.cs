@@ -30,7 +30,7 @@ public sealed partial class SignalTimerSystem : EntitySystem
     {
         _appearanceSystem.SetData(ent.Owner, TextScreenVisuals.DefaultText, ent.Comp.Label);
         _appearanceSystem.SetData(ent.Owner, TextScreenVisuals.ScreenText, ent.Comp.Label);
-        _signalSystem.EnsureSinkPorts(ent.Owner, ent.Comp.Trigger);
+        _signalSystem.EnsureSinkPort(ent.Owner, ent.Comp.Trigger);
     }
 
     [SubscribeLocalEvent]

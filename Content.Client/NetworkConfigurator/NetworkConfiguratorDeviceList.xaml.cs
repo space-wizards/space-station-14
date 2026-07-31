@@ -10,17 +10,17 @@ public sealed partial class NetworkConfiguratorDeviceList : ScrollContainer
 {
     public event Action<LocDeviceAddress>? OnRemoveAddress;
 
-    public void UpdateState(HashSet<(LocDeviceAddress address, string name)> devices, bool ui)
+    public void UpdateState(Dictionary<DeviceAddress, (LocId? AddressPrefix, string Name)> devices, bool ui)
     {
         DeviceList.RemoveAllChildren();
 
-        foreach (var device in devices)
+        foreach (var (address, (addressPrefix, name)) in devices)
         {
-            DeviceList.AddChild(BuildDeviceListRow(device, ui));
+            DeviceList.AddChild(BuildDeviceListRow(new LocDeviceAddress(address, addressPrefix), name, ui));
         }
     }
 
-    private BoxContainer BuildDeviceListRow((LocDeviceAddress address, string name) savedDevice, bool ui)
+    private BoxContainer BuildDeviceListRow(LocDeviceAddress fullAddress, string deviceName, bool ui)
     {
         var row = new BoxContainer()
         {
@@ -30,13 +30,13 @@ public sealed partial class NetworkConfiguratorDeviceList : ScrollContainer
 
         var name = new Label()
         {
-            Text = savedDevice.name[..Math.Min(11, savedDevice.name.Length)],
+            Text = deviceName[..Math.Min(11, deviceName.Length)],
             SetWidth = 84
         };
 
         var address = new Label()
         {
-            Text = savedDevice.address.ToString(),
+            Text = fullAddress.ToString(),
             HorizontalExpand = true,
             Align = Label.AlignMode.Center
         };
@@ -54,7 +54,7 @@ public sealed partial class NetworkConfiguratorDeviceList : ScrollContainer
         if (ui)
         {
             row.AddChild(removeButton);
-            removeButton.OnPressed += _ => OnRemoveAddress?.Invoke(savedDevice.address);
+            removeButton.OnPressed += _ => OnRemoveAddress?.Invoke(fullAddress);
         }
 
         return row;

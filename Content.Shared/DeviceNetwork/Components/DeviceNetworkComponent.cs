@@ -59,20 +59,6 @@ public sealed partial class DeviceNetworkComponent : Component
     [DataField, AutoNetworkedField]
     public bool SavableAddress = true;
 
-    /// <summary>
-    /// A list of device-lists that this device is on.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    [Access(typeof(DeviceListSystem))]
-    public HashSet<EntityUid> DeviceLists = new();
-
-    /// <summary>
-    /// A list of configurators that this device is on.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    [Access(typeof(NetworkConfiguratorSystem))]
-    public HashSet<EntityUid> Configurators = new();
-
     #region Obsolete
 
     [Obsolete("Access this field through DeviceNetworkComponent.Data instead")]

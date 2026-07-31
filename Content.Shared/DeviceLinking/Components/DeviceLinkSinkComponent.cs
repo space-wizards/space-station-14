@@ -1,8 +1,9 @@
-﻿using Robust.Shared.GameStates;
+﻿using Content.Shared.DeviceLinking.Systems;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
-namespace Content.Shared.DeviceLinking;
+namespace Content.Shared.DeviceLinking.Components;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 [Access(typeof(DeviceLinkSystem))]

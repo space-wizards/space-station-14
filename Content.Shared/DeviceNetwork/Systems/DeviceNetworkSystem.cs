@@ -18,8 +18,6 @@ public sealed partial class DeviceNetworkSystem : EntitySystem
     [Dependency] private IPrototypeManager _protoMan = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SharedTransformSystem _transformSystem = default!;
-    [Dependency] private DeviceListSystem _deviceLists = default!;
-    [Dependency] private NetworkConfiguratorSystem _configurator = default!;
 
     [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceQuery = default!;
 
@@ -73,24 +71,7 @@ public sealed partial class DeviceNetworkSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnNetworkShutdown(Entity<DeviceNetworkComponent> ent, ref ComponentShutdown args)
     {
-        var component = ent.Comp;
-        foreach (var list in component.DeviceLists)
-        {
-            if (Deleted(list))
-                return;
-
-            _deviceLists.OnDeviceShutdown(list, ent);
-        }
-
-        foreach (var list in component.Configurators)
-        {
-            if (Deleted(list))
-                return;
-
-            _configurator.OnDeviceShutdown(list, ent);
-        }
-
-        if (TryGetNetwork(component.DeviceNetId, out var network))
+        if (TryGetNetwork(ent.Comp.DeviceNetId, out var network))
             RemoveFromNetwork(ent.AsNullable(), network);
     }
 

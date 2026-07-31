@@ -1,7 +1,7 @@
-﻿using Content.Shared.DeviceNetwork.Systems;
+﻿using Content.Shared.DeviceConfigurator.Systems;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.DeviceNetwork.Components;
+namespace Content.Shared.DeviceConfigurator.Components;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 [Access(typeof(DeviceListSystem))]

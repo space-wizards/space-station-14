@@ -20,7 +20,7 @@ public sealed partial class DoorSignalControlSystem : EntitySystem
     private void OnInit(Entity<DoorSignalControlComponent> ent, ref ComponentInit args)
     {
         _signalSystem.EnsureSinkPorts(ent.Owner, ent.Comp.OpenPort, ent.Comp.ClosePort, ent.Comp.TogglePort);
-        _signalSystem.EnsureSourcePorts(ent.Owner, ent.Comp.OutOpen);
+        _signalSystem.EnsureSourcePort(ent.Owner, ent.Comp.OutOpen);
     }
 
     [SubscribeLocalEvent]

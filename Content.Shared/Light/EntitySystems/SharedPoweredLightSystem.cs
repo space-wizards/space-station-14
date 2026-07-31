@@ -1,8 +1,8 @@
 using Content.Shared.Audio;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
-using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceLinking.Events;
+using Content.Shared.DeviceLinking.Systems;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.DeviceNetwork.Payloads;
 using Content.Shared.DoAfter;

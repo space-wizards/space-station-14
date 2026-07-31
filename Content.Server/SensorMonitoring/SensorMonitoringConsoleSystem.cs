@@ -6,6 +6,8 @@ using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
+using Content.Shared.DeviceConfigurator;
+using Content.Shared.DeviceConfigurator.Components;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;

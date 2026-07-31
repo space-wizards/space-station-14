@@ -1,8 +1,8 @@
-using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Disposal.Tube;
 using Content.Shared.Disposal.Unit;
 using System.Linq;
+using Content.Shared.DeviceLinking.Systems;
 
 namespace Content.Shared.Disposal.SignalRouter;
 

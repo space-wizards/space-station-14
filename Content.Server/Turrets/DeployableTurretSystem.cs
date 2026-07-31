@@ -3,6 +3,7 @@ using Content.Shared.DeviceNetwork.Systems;
 using Content.Server.NPC.HTN;
 using Content.Server.NPC.HTN.PrimitiveTasks.Operators.Combat.Ranged;
 using Content.Shared.Destructible;
+using Content.Shared.DeviceConfigurator.Components;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
@@ -97,7 +98,7 @@ public sealed partial class DeployableTurretSystem : SharedDeployableTurretSyste
 
     private void OnBeforeBroadcast(Entity<DeployableTurretComponent> ent, ref BeforeBroadcastAttemptEvent args)
     {
-        if (!TryComp<DeviceNetworkComponent>(ent, out var deviceNetwork))
+        if (!TryComp<LinkedDeviceNetworkComponent>(ent, out var deviceNetwork))
             return;
 
         var recipientDeviceNetworks = new HashSet<Device>();

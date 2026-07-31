@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceLinking.Components;
 using Content.Shared.DeviceLinking.Events;
+using Content.Shared.DeviceLinking.Systems;
 using Content.Shared.Placeable;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Xenoarchaeology.Artifact.Components;

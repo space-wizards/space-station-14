@@ -12,8 +12,9 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Map.Components;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.DeviceConfigurator.Components;
+using Content.Shared.DeviceConfigurator.Systems;
 using Content.Shared.DeviceNetwork;
-using Content.Shared.DeviceNetwork.Systems;
 
 namespace Content.Server.Atmos.Monitor.Systems;
 

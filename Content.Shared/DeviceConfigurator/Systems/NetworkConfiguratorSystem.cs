@@ -1,17 +1,23 @@
 using Content.Shared.Access.Systems;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
-using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceConfigurator.Components;
+using Content.Shared.DeviceLinking.Components;
+using Content.Shared.DeviceLinking.Systems;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Timing;
 using Content.Shared.UserInterface;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map.Events;
+using Robust.Shared.Network;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.DeviceNetwork.Systems;
+namespace Content.Shared.DeviceConfigurator.Systems;
 
 public sealed partial class NetworkConfiguratorSystem : EntitySystem
 {
@@ -19,12 +25,14 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
     [Dependency] private DeviceNetworkSystem _deviceNetwork = default!;
     [Dependency] private DeviceListSystem _deviceListSystem = default!;
     [Dependency] private DeviceLinkSystem _deviceLinkSystem = default!;
+    [Dependency] private UseDelaySystem _useDelay = default!;
     [Dependency] private SharedPopupSystem _popupSystem = default!;
     [Dependency] private SharedUserInterfaceSystem _uiSystem = default!;
     [Dependency] private SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private SharedAudioSystem _audioSystem = default!;
     [Dependency] private SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private INetManager _net = default!;
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
 
     [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceNetworkQuery = default!;
@@ -32,6 +40,7 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
     [Dependency] private EntityQuery<DeviceLinkSourceComponent> _deviceLinkSourceQuery = default!;
     [Dependency] private EntityQuery<DeviceListComponent> _deviceListQuery = default!;
     [Dependency] private EntityQuery<NetworkConfiguratorComponent> _networkConfigQuery = default!;
+    [Dependency] private EntityQuery<LinkedDeviceNetworkComponent> _linkedDeviceQuery = default!;
 
     [SubscribeLocalEvent]
     private void OnMapSave(BeforeSerializationEvent ev)
@@ -153,9 +162,10 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
             return;
         }
 
-        target.Comp.Configurators.Add(configurator);
+        var linkedDeviceComp = EnsureComp<LinkedDeviceNetworkComponent>(target.Owner);
+        linkedDeviceComp.Configurators.Add(configurator);
         configurator.Comp.Devices.Add(addressId, target);
-        DirtyField(target, nameof(DeviceNetworkComponent.Configurators));
+        DirtyField(target.Owner, linkedDeviceComp, nameof(LinkedDeviceNetworkComponent.Configurators));
         DirtyField(configurator, nameof(NetworkConfiguratorComponent.Devices));
 
         _popupSystem.PopupCursor(Loc.GetString("network-configurator-device-saved", ("address", address), ("device", target)),
@@ -231,11 +241,14 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
         if (_accessSystem.IsAllowed(user.Value, target))
             return true;
 
-        var audioParams = configurator.Comp.SoundNoAccess.Params;
-        audioParams = audioParams.AddVolume(-2f).WithPitchScale(1.2f);
-        _audioSystem.PlayPvs(configurator.Comp.SoundNoAccess, user.Value, audioParams);
         _popupSystem.PopupEntity(Loc.GetString("network-configurator-device-access-denied"), target, user.Value);
 
+        if (configurator.Comp.SoundNoAccess == null)
+            return false;
+
+        var audioParams = configurator.Comp.SoundNoAccess.Params;
+        audioParams = audioParams.AddVolume(-2f).WithPitchScale(1.2f);
+        _audioSystem.PlayPredicted(configurator.Comp.SoundNoAccess, configurator, user.Value, audioParams);
         return false;
     }
 
@@ -250,7 +263,7 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
     /// </summary>
     private void SwitchMode(EntityUid? userUid, Entity<NetworkConfiguratorComponent> configurator)
     {
-        if (Delay(configurator))
+        if (_useDelay.IsDelayed(configurator.Owner))
             return;
 
         configurator.Comp.LinkModeActive = !configurator.Comp.LinkModeActive;
@@ -287,26 +300,44 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
     /// </summary>
     private void UpdateModeAppearance(EntityUid userUid, Entity<NetworkConfiguratorComponent> configurator)
     {
-        Dirty(configurator);
         _appearanceSystem.SetData(configurator.Owner, NetworkConfiguratorVisuals.Mode, configurator.Comp.LinkModeActive);
 
         var pitch = configurator.Comp.LinkModeActive ? 1 : 0.8f;
+        if (configurator.Comp.SoundSwitchMode == null)
+            return;
+
         var audioParams = configurator.Comp.SoundSwitchMode.Params;
         audioParams = audioParams.AddVolume(1.5f).WithPitchScale(pitch);
-        _audioSystem.PlayPvs(configurator.Comp.SoundSwitchMode, userUid, audioParams);
+        _audioSystem.PlayPredicted(configurator.Comp.SoundSwitchMode, configurator, userUid, audioParams);
     }
 
-    /// <summary>
-    /// Returns true if the last time this method was called is earlier than the configurators use delay.
-    /// </summary>
-    private bool Delay(Entity<NetworkConfiguratorComponent> configurator)
-    {
-        var currentTime = _gameTiming.CurTime;
-        if (currentTime < configurator.Comp.LastUseAttempt + configurator.Comp.UseDelay)
-            return true;
+    private readonly HashSet<(DeviceAddress, EntityUid)> _invalidDevicesCache = new();
 
-        configurator.Comp.LastUseAttempt = currentTime;
-        DirtyField(configurator.AsNullable(), nameof(NetworkConfiguratorComponent.LastUseAttempt));
-        return false;
+    /// <summary>
+    /// Removes all invalid links on a network configurator and throws a debug assert if this method successes.
+    /// Normally the links should be removed automatically when the linked entity is deleted.
+    /// </summary>
+    private void ClearInvalidDevices(Entity<NetworkConfiguratorComponent> configurator)
+    {
+        // Client can't see all linked entities, so it can't clear the invalid devices correctly.
+        if (_net.IsClient)
+            return;
+
+        _invalidDevicesCache.Clear();
+        foreach (var pair in configurator.Comp.Devices)
+        {
+            if (Exists(pair.Value))
+                continue;
+
+            _invalidDevicesCache.Add((pair.Key, pair.Value));
+        }
+
+        foreach (var invalidDevice in _invalidDevicesCache)
+        {
+            configurator.Comp.Devices.Remove(invalidDevice.Item1);
+            DebugTools.Assert($"{ToPrettyString(configurator)} contained an invalid link to entity {invalidDevice}!");
+        }
+
+        DirtyField(configurator.AsNullable(), nameof(NetworkConfiguratorComponent.Devices));
     }
 }

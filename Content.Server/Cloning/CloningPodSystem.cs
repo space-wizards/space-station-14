@@ -30,7 +30,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage.Systems;
-using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceLinking.Systems;
 
 namespace Content.Server.Cloning;
 

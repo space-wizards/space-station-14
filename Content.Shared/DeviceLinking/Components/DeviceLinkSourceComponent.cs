@@ -1,8 +1,9 @@
+using Content.Shared.DeviceLinking.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.DeviceLinking;
+namespace Content.Shared.DeviceLinking.Components;
 
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(DeviceLinkSystem))]

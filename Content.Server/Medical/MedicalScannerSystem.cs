@@ -11,7 +11,7 @@ using Content.Shared.DeviceLinking.Events;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Body;
 using Content.Shared.Climbing.Systems;
-using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceLinking.Systems;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Robust.Server.Containers;

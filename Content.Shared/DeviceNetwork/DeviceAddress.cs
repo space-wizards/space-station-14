@@ -49,6 +49,11 @@ public readonly partial record struct LocDeviceAddress(DeviceAddress AddressId, 
         return new LocDeviceAddress(component.Data.AddressId, component.Prefix);
     }
 
+    public bool Equals(LocDeviceAddress? other)
+    {
+        return other != null && AddressId == other.Value.AddressId;
+    }
+
     public override string ToString()
     {
         return DeviceLocalizationHelpers.GetAddressFromId(AddressId, Prefix);

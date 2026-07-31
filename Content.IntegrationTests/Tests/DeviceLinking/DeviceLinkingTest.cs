@@ -1,6 +1,7 @@
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Utility;
-using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceLinking.Components;
+using Content.Shared.DeviceLinking.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;

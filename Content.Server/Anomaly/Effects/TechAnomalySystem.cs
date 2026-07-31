@@ -1,7 +1,8 @@
 using Content.Server.Anomaly.Components;
 using Content.Server.Beam;
 using Content.Shared.Anomaly.Components;
-using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceLinking.Components;
+using Content.Shared.DeviceLinking.Systems;
 using Content.Shared.Emag.Systems;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;

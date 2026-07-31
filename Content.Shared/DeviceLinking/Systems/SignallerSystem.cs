@@ -13,7 +13,7 @@ public sealed partial class SignallerSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnInit(Entity<SignallerComponent> ent, ref ComponentInit args)
     {
-        _link.EnsureSourcePorts(ent.Owner, ent.Comp.Port);
+        _link.EnsureSourcePort(ent.Owner, ent.Comp.Port);
     }
 
     [SubscribeLocalEvent]

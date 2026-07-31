@@ -9,6 +9,7 @@ using Robust.Shared.Prototypes;
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Shared.Database;
+using Content.Shared.DeviceConfigurator;
 using Content.Shared.DeviceNetwork;
 
 namespace Content.Server.TurretController;

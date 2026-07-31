@@ -23,10 +23,10 @@ public sealed partial class NetworkConfiguratorConfigurationMenu : FancyWindow
         };
     }
 
-    public void UpdateState(DeviceListUserInterfaceState state)
+    public void UpdateState(Dictionary<DeviceAddress, (LocId? AddressPrefix, string Name)> devices)
     {
-        DeviceList.UpdateState(state.DeviceList, false);
+        DeviceList.UpdateState(devices, false);
 
-        Count.Text = Loc.GetString("network-configurator-ui-count-label", ("count", state.DeviceList.Count));
+        Count.Text = Loc.GetString("network-configurator-ui-count-label", ("count", devices.Count));
     }
 }

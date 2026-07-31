@@ -1,11 +1,12 @@
 ﻿using Content.Shared.Database;
+using Content.Shared.DeviceConfigurator.Components;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Verbs;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.DeviceNetwork.Systems;
+namespace Content.Shared.DeviceConfigurator.Systems;
 
 public sealed partial class NetworkConfiguratorSystem
 {

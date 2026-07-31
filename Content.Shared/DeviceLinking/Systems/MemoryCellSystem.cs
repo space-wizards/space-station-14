@@ -31,7 +31,7 @@ public sealed partial class MemoryCellSystem : EntitySystem
     {
         var (uid, comp) = ent;
         _deviceLink.EnsureSinkPorts(uid, comp.InputPort, comp.EnablePort);
-        _deviceLink.EnsureSourcePorts(uid, comp.OutputPort);
+        _deviceLink.EnsureSourcePort(uid, comp.OutputPort);
     }
 
     [SubscribeLocalEvent]

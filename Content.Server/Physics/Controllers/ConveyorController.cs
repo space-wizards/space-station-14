@@ -2,7 +2,7 @@ using Content.Server.Materials;
 using Content.Shared.Conveyor;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Destructible;
-using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceLinking.Systems;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Physics.Controllers;

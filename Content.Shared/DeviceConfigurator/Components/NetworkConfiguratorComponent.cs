@@ -1,10 +1,10 @@
-using Content.Shared.DeviceLinking;
-using Content.Shared.DeviceNetwork.Systems;
+using Content.Shared.DeviceConfigurator.Systems;
+using Content.Shared.DeviceLinking.Components;
+using Content.Shared.DeviceNetwork;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Shared.DeviceNetwork.Components;
+namespace Content.Shared.DeviceConfigurator.Components;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 [Access(typeof(NetworkConfiguratorSystem))]
@@ -44,16 +44,17 @@ public sealed partial class NetworkConfiguratorComponent : Component
     [DataField, AutoNetworkedField]
     public Dictionary<DeviceAddress, EntityUid> Devices = new();
 
-    [DataField]
-    public TimeSpan UseDelay = TimeSpan.FromSeconds(0.5);
-
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    [AutoNetworkedField]
-    public TimeSpan LastUseAttempt;
-
-    [DataField]
-    public SoundSpecifier SoundNoAccess = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
+    /// <summary>
+    /// The list of localized devices stored in the configurator.
+    /// Used for instant displaying in the Network Configurator UI
+    /// instead of waiting for the server to send all names.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public Dictionary<DeviceAddress, (LocId? AddressPrefix, string Name)> NamedDevices = new();
 
     [DataField]
-    public SoundSpecifier SoundSwitchMode = new SoundPathSpecifier("/Audio/Machines/quickbeep.ogg");
+    public SoundSpecifier? SoundNoAccess = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
+
+    [DataField]
+    public SoundSpecifier? SoundSwitchMode = new SoundPathSpecifier("/Audio/Machines/quickbeep.ogg");
 }

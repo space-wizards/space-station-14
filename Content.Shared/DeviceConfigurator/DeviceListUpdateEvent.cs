@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.DeviceNetwork.Events;
+﻿namespace Content.Shared.DeviceConfigurator;
 
 [ByRefEvent]
 public readonly record struct DeviceListUpdateEvent(List<EntityUid> OldDevices, List<EntityUid> Devices);

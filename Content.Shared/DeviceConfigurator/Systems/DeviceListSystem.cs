@@ -1,14 +1,17 @@
 using System.Linq;
+using Content.Shared.DeviceConfigurator.Components;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
 using Robust.Shared.Map.Events;
 
-namespace Content.Shared.DeviceNetwork.Systems;
+namespace Content.Shared.DeviceConfigurator.Systems;
 
 public sealed partial class DeviceListSystem : EntitySystem
 {
     [Dependency] private NetworkConfiguratorSystem _configurator = default!;
 
+    [Dependency] private EntityQuery<LinkedDeviceNetworkComponent> _linkedDeviceQuery = default!;
     [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceNetworkQuery = default!;
     [Dependency] private EntityQuery<DeviceListComponent> _deviceListQuery = default!;
 
@@ -22,7 +25,7 @@ public sealed partial class DeviceListSystem : EntitySystem
 
         foreach (var device in ent.Comp.Devices)
         {
-            if (_deviceNetworkQuery.TryComp(device, out var comp))
+            if (_linkedDeviceQuery.TryComp(device, out var comp))
                 comp.DeviceLists.Remove(ent);
         }
 
@@ -110,7 +113,7 @@ public sealed partial class DeviceListSystem : EntitySystem
             args.Cancelled = true;
     }
 
-    public void OnDeviceShutdown(Entity<DeviceListComponent?> list, Entity<DeviceNetworkComponent> device)
+    public void OnDeviceShutdown(Entity<DeviceListComponent?> list, Entity<LinkedDeviceNetworkComponent> device)
     {
         device.Comp.DeviceLists.Remove(list.Owner);
         if (!_deviceListQuery.Resolve(list.Owner, ref list.Comp))
@@ -198,13 +201,13 @@ public sealed partial class DeviceListSystem : EntitySystem
                 continue;
 
             ent.Comp.Devices.Remove(device);
-            if (_deviceNetworkQuery.TryComp(device, out var comp))
+            if (_linkedDeviceQuery.TryComp(device, out var comp))
                 comp.DeviceLists.Remove(ent);
         }
 
         foreach (var device in newDevices)
         {
-            if (!_deviceNetworkQuery.TryComp(device, out var comp))
+            if (!_linkedDeviceQuery.TryComp(device, out var comp))
                 continue;
 
             if (!ent.Comp.Devices.Add(device))

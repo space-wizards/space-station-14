@@ -10,7 +10,7 @@ public sealed partial class EdgeDetectorSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnInit(Entity<EdgeDetectorComponent> ent, ref ComponentInit args)
     {
-        _deviceLink.EnsureSinkPorts(ent.Owner, ent.Comp.InputPort);
+        _deviceLink.EnsureSinkPort(ent.Owner, ent.Comp.InputPort);
         _deviceLink.EnsureSourcePorts(ent.Owner, ent.Comp.OutputHighPort, ent.Comp.OutputLowPort);
     }
 

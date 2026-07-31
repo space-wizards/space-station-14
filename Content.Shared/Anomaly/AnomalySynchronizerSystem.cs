@@ -1,6 +1,6 @@
 using System.Linq;
 using Content.Shared.Anomaly.Components;
-using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceLinking.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;

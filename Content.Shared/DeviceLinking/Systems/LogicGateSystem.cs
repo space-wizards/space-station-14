@@ -46,7 +46,7 @@ public sealed partial class LogicGateSystem : EntitySystem
     private void OnInit(Entity<LogicGateComponent> ent, ref ComponentInit args)
     {
         _deviceLink.EnsureSinkPorts(ent.Owner, ent.Comp.InputPortA, ent.Comp.InputPortB);
-        _deviceLink.EnsureSourcePorts(ent.Owner, ent.Comp.OutputPort);
+        _deviceLink.EnsureSourcePort(ent.Owner, ent.Comp.OutputPort);
     }
 
     [SubscribeLocalEvent]
