@@ -69,11 +69,12 @@ public sealed partial class SecretStashSystem : EntitySystem
         if (smallerSize == null)
         {
             RemCompDeferred(entity, entity.Comp);
-            Log.Error($"{ToPrettyString(entity)} is too small to have the SecretStash component!");
+            Log.Warning($"{ToPrettyString(entity)} is too small to have the SecretStash component!");
             return;
         }
 
         entity.Comp.MaxItemSize = smallerSize;
+        Dirty(entity);
     }
 
     private void OnDestroyed(Entity<SecretStashComponent> entity, ref DestructionEventArgs args)
