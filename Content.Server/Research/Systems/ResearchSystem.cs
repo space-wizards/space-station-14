@@ -9,6 +9,7 @@ using Content.Shared.Research.Systems;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
+using Content.Server.Power.EntitySystems; //DS14
 
 namespace Content.Server.Research.Systems
 {
@@ -22,6 +23,7 @@ namespace Content.Server.Research.Systems
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly RadioSystem _radio = default!;
+        [Dependency] private readonly PowerReceiverSystem _power = default!; //DS14
 
         public override void Initialize()
         {
@@ -52,9 +54,10 @@ namespace Content.Server.Research.Systems
                 return servers;
 
             _lookup.GetGridEntities(grid, servers);
+            servers.RemoveWhere(server => !Transform(server).Anchored || !_power.IsPowered(server.Owner));
             return servers;
-        // DS14-edit-end
         }
+        // DS14-edit-end
 
         /// <summary>
         /// Gets the names of all the servers.

@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Research.Components;
+using Content.Shared.Power; //DS14
 
 namespace Content.Server.Research.Systems;
 
@@ -11,6 +12,8 @@ public sealed partial class ResearchSystem
         SubscribeLocalEvent<ResearchServerComponent, ComponentStartup>(OnServerStartup);
         SubscribeLocalEvent<ResearchServerComponent, ComponentShutdown>(OnServerShutdown);
         SubscribeLocalEvent<ResearchServerComponent, TechnologyDatabaseModifiedEvent>(OnServerDatabaseModified);
+        SubscribeLocalEvent<ResearchServerComponent, AnchorStateChangedEvent>(OnServerAnchor); //DS14
+        SubscribeLocalEvent<ResearchServerComponent, PowerChangedEvent>(OnServerPowerChanged); //DS14
     }
 
     private void OnServerStartup(EntityUid uid, ResearchServerComponent component, ComponentStartup args)
@@ -28,6 +31,30 @@ public sealed partial class ResearchSystem
             UnregisterClient(client, uid, serverComponent: component, dirtyServer: false);
         }
     }
+
+    //DS14-start
+    private void OnServerAnchor(EntityUid uid, ResearchServerComponent component, AnchorStateChangedEvent args)
+    {
+        if (!args.Anchored)
+        {
+            foreach (var client in new List<EntityUid>(component.Clients))
+            {
+                UnregisterClient(client, uid, serverComponent: component, dirtyServer: false);
+            }
+        }
+    }
+
+    private void OnServerPowerChanged(EntityUid uid, ResearchServerComponent component, ref PowerChangedEvent args)
+    {
+        if (!args.Powered)
+        {
+            foreach (var client in new List<EntityUid>(component.Clients))
+            {
+                UnregisterClient(client, uid, serverComponent: component, dirtyServer: false);
+            }
+        }
+    }
+    //DS14-end
 
     private void OnServerDatabaseModified(EntityUid uid, ResearchServerComponent component, ref TechnologyDatabaseModifiedEvent args)
     {
