@@ -49,13 +49,18 @@ public sealed partial class SecretStashSystem : EntitySystem
     private void OnInit(Entity<SecretStashComponent> entity, ref ComponentInit args)
     {
         entity.Comp.ItemContainer = _containerSystem.EnsureContainer<ContainerSlot>(entity, "stash", out _);
+    }
 
+    [SubscribeLocalEvent]
+    private void OnMapInit(Entity<SecretStashComponent> entity, ref MapInitEvent args)
+    {
         if (entity.Comp.MaxItemSize != null)
             return;
 
         if (!TryComp<ItemComponent>(entity, out var itemComp))
         {
             RemCompDeferred(entity, entity.Comp);
+            Log.Error($"No Item component found for : {ToPrettyString(entity)}!");
             return;
         }
 
@@ -64,6 +69,7 @@ public sealed partial class SecretStashSystem : EntitySystem
         if (smallerSize == null)
         {
             RemCompDeferred(entity, entity.Comp);
+            Log.Error($"{ToPrettyString(entity)} is too small to have the SecretStash component!");
             return;
         }
 
