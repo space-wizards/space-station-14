@@ -88,8 +88,8 @@
       whitelist:
         components:
         - NukeDisk
-    alertLevelOnActivate: delta
-    alertLevelOnDeactivate: green
+    alertLevelOnActivate: DeltaNuke
+    alertLevelOnDeactivate: Green
   - type: InteractionOutline
   - type: ActivatableUI
     key: enum.NukeUiKey.Key

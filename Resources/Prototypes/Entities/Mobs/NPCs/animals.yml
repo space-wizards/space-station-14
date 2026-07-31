@@ -1801,9 +1801,6 @@
       types:
         Slash: 5
         Piercing: 4
-  - type: Temperature
-    currentTemperature: 310.15
-    specificHeat: 42
   - type: TemperatureDamage
     heatDamageThreshold: 360
     coldDamageThreshold: 285
@@ -2533,9 +2530,6 @@
   - type: NpcFactionMember
     factions:
     - Passive
-  - type: Temperature
-    currentTemperature: 310.15
-    specificHeat: 46
   - type: TemperatureDamage
     heatDamageThreshold: 335
     coldDamageThreshold: 230
@@ -3134,7 +3128,28 @@
         - MobLayer
   - type: Inventory
     speciesId: dog
-    templateId: pet
+    templateId: Corgi
+    displacements:
+      belt:
+        sizeMaps:
+          32:
+            sprite: Mobs/Pets/displacements.rsi
+            state: corgi_belt_displacement
+      ears:
+        sizeMaps:
+          32:
+            sprite: Mobs/Pets/displacements.rsi
+            state: corgi_belt_displacement
+      head:
+        sizeMaps:
+          32:
+            sprite: Mobs/Pets/displacements.rsi
+            state: corgi_head_displacement
+      mask:
+        sizeMaps:
+          32:
+            sprite: Mobs/Pets/displacements.rsi
+            state: corgi_mask_displacement
   - type: InteractionPopup
     interactSuccessString: petting-success-dog
     interactFailureString: petting-failure-generic
@@ -3228,9 +3243,6 @@
     damageModifierSet: Infernal
   - type: Injurable
     damageContainer: BiologicalMetaphysical
-  - type: Temperature
-    currentTemperature: 310.15
-    specificHeat: 42
   - type: TemperatureDamage
     heatDamageThreshold: 4000 #They come from hell, so..
     coldDamageThreshold: 260
@@ -4025,77 +4037,3 @@
         Base: reindeer_doe_dead
       Dead:
         Base: reindeer_doe_dead
-
-- type: entity
-  parent: MobCorgiBase
-  id: MobCorgiSmart
-  name: smart corgi
-  description: An unusually smart dog.
-  components:
-  # Use corgi sprite, need to add handcuff layer
-  - type: Sprite
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: corgi
-    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
-      color: "#ffffff"
-      sprite: Objects/Misc/handcuffs.rsi # Would do a custom dog handcuff sprite but unfortunately handcuffs have their overlay baked-in to the cuff itself so this is mostly filler
-      state: body-overlay-2
-      visible: false
-  - type: UserInterface
-    interfaces:
-      enum.StrippingUiKey.Key:
-        type: StrippableBoundUserInterface
-      enum.StorageUiKey.Key:
-        type: StorageBoundUserInterface
-  # Custom inventory template
-  - type: Inventory
-    speciesId: dog
-    templateId: SmartCorgi
-    displacements:
-      belt:
-        sizeMaps:
-          32:
-            sprite: Mobs/Pets/displacements.rsi
-            state: corgi_belt_displacement
-      ears:
-        sizeMaps:
-          32:
-            sprite: Mobs/Pets/displacements.rsi
-            state: corgi_belt_displacement
-      head:
-        sizeMaps:
-          32:
-            sprite: Mobs/Pets/displacements.rsi
-            state: corgi_head_displacement
-  - type: Hands # HANDS!
-    activeHandId: Right
-    hands:
-      Right:
-        location: Right
-      Left:
-        location: Left
-  - type: Puller
-  - type: Cuffable # bad dog!
-  - type: BlockWriting # dogs can't write, paws unwieldy; mouth-writing is a myth
-  - type: Stripping
-  - type: ComplexInteraction
-  # Implement custom borgi body type
-  - type: RotationVisuals
-    defaultRotation: 90
-    horizontalRotation: 180
-  - type: Grammar
-    attributes:
-      gender: epicene # Gender neutral
-      proper: true
-  - type: Tag
-    tags:
-    - VimPilot
-    - CanPilot
-    - DoorBumpOpener
-  - type: StatusIcon
-    bounds: -0.5,-0.5,0.5,0.5
-  - type: JobStatus # marks them as crew
-  - type: NpcFactionMember
-    factions:
-    - NanoTrasen

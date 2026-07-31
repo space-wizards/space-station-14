@@ -8,9 +8,10 @@
     useDelay: 2
     raiseOnAction: true
     itemIconStyle: BigAction
-    icon:
-      sprite: Interface/Actions/changeling.rsi
-      state: armblade
+  - type: Sprite
+    sprite: Interface/Actions/changeling.rsi
+    layers:
+    - state: armblade
   - type: InstantAction
     event: !type:OnRetractableItemActionEvent
   - type: RetractableItemAction
@@ -30,9 +31,10 @@
     useDelay: 60 # TODO: Short cooldown but chemical cost
     raiseOnAction: true
     checkCanInteract: false
-    icon:
-      sprite: Interface/Actions/changeling2.rsi
-      state: biodegrade
+  - type: Sprite
+    sprite: Interface/Actions/changeling2.rsi
+    layers:
+    - state: biodegrade
   - type: InstantAction
     event: !type:ChangelingBiodegradeActionEvent
   - type: ChangelingBiodegradeAbility
@@ -43,10 +45,17 @@
   description: Consume the essence of your victims and subsume their identity and mind into your own.
   components:
   - type: Action
-    icon: { sprite : Interface/Actions/changeling.rsi, state: "devour" }
-    iconOn: { sprite : Interface/Actions/changeling.rsi, state: "devour_on" }
     itemIconStyle: BigAction
     priority: 1
+  - type: Sprite
+    sprite: Interface/Actions/changeling.rsi
+    layers:
+    - state: "devour"
+      map: ["enum.ActionVisuals.Icon"]
+    - state: "devour_on"
+      map: ["enum.ActionVisuals.IconToggled"]
+      visible: false
+  - type: ActionRequireMouthUncovered
   - type: TargetAction
   - type: EntityTargetAction
     event: !type:ChangelingDevourActionEvent
@@ -57,7 +66,10 @@
   description: Transform and assume the identities of those you have devoured.
   components:
   - type: Action
-    icon: { sprite : Interface/Actions/changeling.rsi, state: "transform" }
+  - type: Sprite
+    sprite: Interface/Actions/changeling.rsi
+    layers:
+    - state: "transform"
   - type: InstantAction
     event: !type:ChangelingTransformActionEvent
 
@@ -68,7 +80,10 @@
   description: Opens the ability store.
   components:
   - type: Action
-    icon: { sprite : Interface/Actions/changeling2.rsi, state: "shop" }
+  - type: Sprite
+    sprite: Interface/Actions/changeling2.rsi
+    layers:
+    - state: "shop"
 
 - type: entity
   parent: BaseAction
@@ -78,9 +93,10 @@
   components:
   - type: Action
     itemIconStyle: BigAction
-    icon:
-      sprite: Interface/Actions/changeling2.rsi
-      state: mimicry
+  - type: Sprite
+    sprite: Interface/Actions/changeling2.rsi
+    layers:
+    - state: mimicry
   - type: InstantAction
     event: !type:VoiceMaskSetNameEvent
 
@@ -91,12 +107,18 @@
   description: Sneakily absorb the identity of unsuspecting victims. Does not grant DNA to your store or objective progress.
   components:
   - type: Action
-    icon: { sprite : Interface/Actions/changeling2.rsi, state: "extract_dna_off" }
-    iconOn: { sprite : Interface/Actions/changeling2.rsi, state: "extract_dna_on" }
     itemIconStyle: BigAction
     priority: 1
     useDelay: 90 # TODO: Chemical cost, maybe this could be a DoAfter action?
     raiseOnUser: true
+  - type: Sprite
+    sprite: Interface/Actions/changeling2.rsi
+    layers:
+    - state: "extract_dna_off"
+      map: ["enum.ActionVisuals.Icon"]
+    - state: "extract_dna_on"
+      map: ["enum.ActionVisuals.IconToggled"]
+      visible: false
   - type: TargetAction
   - type: EntityTargetAction
     canTargetSelf: false
@@ -134,9 +156,10 @@
     useDelay: 60 # TODO: Chemical cost
     raiseOnAction: true
     itemIconStyle: BigAction
-    icon:
-      sprite: Interface/Actions/changeling2.rsi
-      state: blind_sting
+  - type: Sprite
+    sprite: Interface/Actions/changeling2.rsi
+    layers:
+    - state: blind_sting
   - type: EntityEffectAction
     effects:
     - !type:AddReagentToBloodstream
@@ -153,9 +176,10 @@
     useDelay: 60 # TODO: Chemical cost
     raiseOnAction: true
     itemIconStyle: BigAction
-    icon:
-      sprite: Interface/Actions/changeling2.rsi
-      state: cryogenic_sting
+  - type: Sprite
+    sprite: Interface/Actions/changeling2.rsi
+    layers:
+    - state: cryogenic_sting
   - type: EntityEffectAction
     effects:
     - !type:AddReagentToBloodstream
@@ -172,9 +196,10 @@
     useDelay: 180 # TODO: Chemical cost
     raiseOnAction: true
     itemIconStyle: BigAction
-    icon:
-      sprite: Interface/Actions/changeling2.rsi
-      state: lethal_sting
+  - type: Sprite
+    sprite: Interface/Actions/changeling2.rsi
+    layers:
+    - state: lethal_sting
   - type: EntityEffectAction
     effects:
     - !type:AddReagentToBloodstream
@@ -191,9 +216,10 @@
     useDelay: 90 # TODO: Chemical cost
     raiseOnAction: true
     itemIconStyle: BigAction
-    icon:
-      sprite: Interface/Actions/changeling2.rsi
-      state: hallucination_sting
+  - type: Sprite
+    sprite: Interface/Actions/changeling2.rsi
+    layers:
+    - state: hallucination_sting
   - type: EntityEffectAction
     effects:
     - !type:AddReagentToBloodstream
@@ -216,9 +242,10 @@
     checkCanInteract: false # You can transform if you are killed
     checkConsciousness: false
     itemIconStyle: BigAction
-    icon:
-      sprite: Interface/Actions/changeling2.rsi
-      state: last_resort
+  - type: Sprite
+    sprite: Interface/Actions/changeling2.rsi
+    layers:
+    - state: last_resort
   - type: InstantAction
     event: !type:ChangelingLastResortActionEvent
   - type: ChangelingLastResortAbility
@@ -232,9 +259,10 @@
   - type: Action
     useDelay: 10
     itemIconStyle: BigAction
-    icon:
-      sprite: Interface/Actions/changeling2.rsi
-      state: take_over_corpse
+  - type: Sprite
+    sprite: Interface/Actions/changeling2.rsi
+    layers:
+    - state: take_over_corpse
   - type: EntityTargetAction
     event: !type:ChangelingTakeOverCorpseActionEvent
   - type: TargetAction
@@ -247,9 +275,10 @@
   components:
   - type: Action
     itemIconStyle: BigAction
-    icon:
-      sprite: Interface/Actions/changeling2.rsi
-      state: nv_on
+  - type: Sprite
+    sprite: Interface/Actions/changeling2.rsi
+    layers:
+    - state: nv_on
 
 - type: entity
   parent: BaseAction
@@ -257,12 +286,13 @@
   name: Screech
   description: We produce a deafening screech that weakens those around us.
   components:
+  - type: Sprite
+    sprite: Interface/Actions/changeling2.rsi
+    layers:
+    - state: screech
   - type: Action
     useDelay: 60 # unbalanced :godo:
     raiseOnAction: true
-    icon:
-      sprite: Interface/Actions/changeling2.rsi
-      state: screech
   - type: ScreechAction
     effects:
     - !type:MovementSpeedModifier
@@ -274,3 +304,24 @@
       probability: 0.5
   - type: InstantAction
     event: !type:ScreechActionEvent
+
+- type: entity
+  parent: FakeMindShieldToggleAction
+  id: ActionChangelingFakeMindshieldToggle
+  name: '[color=green]Toggle Fake Mindshield[/color]'
+  description: Turn our mindshield visibility on or off.
+  components:
+  - type: Sprite
+    sprite: Interface/Actions/changeling2.rsi
+    layers:
+    - state: mindshield_off
+      map: ["enum.ActionVisuals.Icon"]
+    - state: mindshield_on
+      map: ["enum.ActionVisuals.IconToggled"]
+      visible: false
+  - type: InstantAction
+    event: !type:FakeMindShieldToggleEvent
+      actionTag: FakeMindShieldChangeling
+  - type: Tag
+    tags:
+    - FakeMindShieldChangeling # used to distinguish the changeling's toggle mindshield action from the implant's
