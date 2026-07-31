@@ -104,7 +104,7 @@ namespace Content.Client.Communications.UI
             {
                 foreach (var alert in SelectableAlertLevels)
                 {
-                    var name = _protoMan.Index(CurrentAlertLevel).LocalizedName;
+                    var name = _protoMan.Index(alert).LocalizedName;
                     AlertLevelButton.AddItem(name);
                     AlertLevelButton.SetItemMetadata(AlertLevelButton.ItemCount - 1, alert);
                     if (alert == CurrentAlertLevel)
