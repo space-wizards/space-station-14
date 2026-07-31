@@ -3,6 +3,7 @@ using Content.Server.Nuke;
 using Content.Server.RoundEnd;
 using Content.Server.StationEvents.Components;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.Nuke;
 using Content.Shared.Station.Components;
 
 namespace Content.Server.StationEvents.Events;
@@ -22,7 +23,7 @@ public sealed partial class SuddenNukeArmRule : StationEventSystem<SuddenNukeArm
 
     private bool IsNukePicked(out HashSet<EntityUid> pickedNukes)
     {
-        pickedNukes = new HashSet<EntityUid>();
+        pickedNukes = [];
 
         var query = EntityQueryEnumerator<SuddenNukeArmRuleComponent>();
         while (query.MoveNext(out _, out var suddenNukeArmRuleComponent))
@@ -63,6 +64,11 @@ public sealed partial class SuddenNukeArmRule : StationEventSystem<SuddenNukeArm
 
             if (IsNukePicked(out var existingPickedNukes)
                 && existingPickedNukes.Contains(nukeUid))
+            {
+                continue;
+            }
+
+            if (nukeComponent.Status == NukeStatus.ARMED)
             {
                 continue;
             }
