@@ -176,7 +176,7 @@
   abstract: true
   components:
   - type: Metabolizer
-    metabolizerTypes: [ Animal ]
+    metabolizerTypes: [ OxygenRespirate, CarbonDioxideExhale, AnimalDiet ]
 
 - type: entity
   parent: OrganReptilian

@@ -16,20 +16,21 @@
       - !type:Oxygenate
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Human, Animal, Rat, Plant ]
+          type: [ OxygenRespirate ]
       # Convert Oxygen into CO2.
       - !type:ModifyLungGas
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Vox ]
-          inverted: true
+          type: [ OxygenRespirate ]
+        - !type:MetabolizerTypeCondition
+          type: [ CarbonDioxideExhale ]
         ratios:
           CarbonDioxide: 1.0
           Oxygen: -1.0
       - !type:HealthChange
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Vox ]
+          type: [ OxygenAllergic ]
         ignoreResistances: true
         damage:
           types:
@@ -39,7 +40,7 @@
         minScale: 1
         conditions:
           - !type:MetabolizerTypeCondition
-            type: [ Vox ]
+            type: [ OxygenAllergic ]
         clear: true
         time: 5
     Respiration:
@@ -47,20 +48,21 @@
       - !type:Oxygenate
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Human, Animal, Rat, Plant, Arachnid, Moth ]
+          type: [ OxygenRespirate ]
       # Convert Oxygen into CO2.
       - !type:ModifyLungGas
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Vox ]
-          inverted: true
+          type: [ OxygenRespirate ]
+        - !type:MetabolizerTypeCondition
+          type: [ CarbonDioxideExhale ]
         ratios:
           CarbonDioxide: 1.0
           Oxygen: -1.0
       - !type:HealthChange
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Vox ]
+          type: [ OxygenAllergic ]
         ignoreResistances: true
         damage:
           types:
@@ -70,7 +72,7 @@
         minScale: 0.5
         conditions:
           - !type:MetabolizerTypeCondition
-            type: [ Vox ]
+            type: [ OxygenAllergic ]
         clear: true
         time: 5
 
@@ -170,11 +172,13 @@
       - !type:Oxygenate
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Plant ]
+          type: [ CarbonDioxideRespirate ]
       - !type:HealthChange
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Plant, Vox ]
+          type: [ CarbonDioxideExhale ]
+        - !type:MetabolizerTypeCondition
+          type: [ CarbonDioxideRespirate ]
           inverted: true
         ignoreResistances: true
         damage:
@@ -184,7 +188,9 @@
       - !type:Oxygenate
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Plant ]
+          type: [ CarbonDioxideExhale ]
+        - !type:MetabolizerTypeCondition
+          type: [ CarbonDioxideRespirate ]
           inverted: true
         factor: -4
     Respiration:
@@ -192,12 +198,14 @@
       - !type:Oxygenate
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Plant ]
+          type: [ CarbonDioxideRespirate ]
       - !type:HealthChange
         minScale: 0.5
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Plant, Vox ]
+          type: [ CarbonDioxideExhale ]
+        - !type:MetabolizerTypeCondition
+          type: [ CarbonDioxideRespirate ]
           inverted: true
         # Don't want people to get toxin damage from the gas they just
         # exhaled, right?
@@ -209,7 +217,9 @@
       - !type:Oxygenate # carbon dioxide displaces oxygen from the bloodstream, causing asphyxiation
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Plant ]
+          type: [ CarbonDioxideExhale ]
+        - !type:MetabolizerTypeCondition
+          type: [ CarbonDioxideRespirate ]
           inverted: true
         factor: -4
       # We need a metabolism effect on reagent removal
@@ -237,19 +247,23 @@
       - !type:Oxygenate
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Vox, Slime ]
+          type: [ NitrogenRespirate ]
       # Converts Nitrogen into Ammonia
       - !type:ModifyLungGas
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Vox ]
+          type: [ NitrogenRespirate ]
+        - !type:MetabolizerTypeCondition
+          type: [ AmmoniaExhale ]
         ratios:
           Ammonia: 1.0
           Nitrogen: -1.0
       - !type:ModifyLungGas
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Slime ]
+          type: [ NitrogenRespirate ]
+        - !type:MetabolizerTypeCondition
+          type: [ NitrousOxideExhale ]
         ratios:
           NitrousOxide: 1.0
           Nitrogen: -1.0
@@ -276,7 +290,7 @@
         minScale: 0.2
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Slime ]
+          type: [ NitrousOxideExhale ]
           inverted: true
         emote: Laugh
         showInChat: true
@@ -285,7 +299,7 @@
         minScale: 0.2
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Slime ]
+          type: [ NitrousOxideExhale ]
           inverted: true
         emote: Scream
         showInChat: true
@@ -294,7 +308,7 @@
         minScale: 0.5
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Slime ]
+          type: [ NitrousOxideExhale ]
           inverted: true
         type: Local
         visualType: Medium
@@ -304,7 +318,7 @@
         minScale: 1
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Slime ]
+          type: [ NitrousOxideExhale ]
           inverted: true
         walkSpeedModifier: 0.65
         sprintSpeedModifier: 0.65
@@ -312,7 +326,7 @@
         minScale: 1.8
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Slime ]
+          type: [ NitrousOxideExhale ]
           inverted: true
         effectProto: StatusEffectForcedSleeping
         time: 3
@@ -321,7 +335,7 @@
         minScale: 3.5
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Slime ]
+          type: [ NitrousOxideExhale ]
           inverted: true
         ignoreResistances: true
         scaling: true

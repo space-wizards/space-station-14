@@ -151,7 +151,7 @@
           reagent: Ethanol
           min: 15
         - !type:MetabolizerTypeCondition
-          type: [ Dwarf ]
+          type: [ AlcoholResistant ]
           inverted: true
         damage:
           types:
@@ -163,7 +163,7 @@
           reagent: Ethanol
           min: 15
         - !type:MetabolizerTypeCondition
-          type: [ Dwarf ]
+          type: [ AlcoholResistant ]
         damage:
           types:
             Poison: 0.02
@@ -173,7 +173,7 @@
           reagent: Ethanol
           min: 15
         - !type:MetabolizerTypeCondition
-          type: [ Dwarf ]
+          type: [ AlcoholResistant ]
         damage:
           Brute: -0.1
       - !type:Vomit
@@ -184,7 +184,7 @@
           min: 12
         # dwarves immune to vomiting from alcohol
         - !type:MetabolizerTypeCondition
-          type: [ Dwarf ]
+          type: [ AlcoholResistant ]
           inverted: true
       - !type:Drunk
         boozePower: 2
@@ -2268,7 +2268,7 @@
           reagent: BacchusBlessing
           min: 6
         - !type:MetabolizerTypeCondition
-          type: [Dwarf]
+          type: [ AlcoholResistant ]
           inverted: true
         damage:
           types:
@@ -2279,7 +2279,7 @@
           reagent: BacchusBlessing
           min: 6
         - !type:MetabolizerTypeCondition
-          type: [Dwarf]
+          type: [ AlcoholResistant ]
         damage:
           types:
             Poison: 0.04 # TODO: Might increase this, even though it's just double of ethanol from 0.02 to 0.04
@@ -2290,5 +2290,5 @@
           reagent: BacchusBlessing
           min: 8
         - !type:MetabolizerTypeCondition
-          type: [Dwarf]
+          type: [ AlcoholResistant ]
           inverted: true

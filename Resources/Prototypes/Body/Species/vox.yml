@@ -239,7 +239,7 @@
   abstract: true
   components:
   - type: Metabolizer
-    metabolizerTypes: [ Vox ]
+    metabolizerTypes: [ NitrogenRespirate, AmmoniaExhale, OxygenAllergic, TrashDiet ]
 
 - type: entity
   parent: OrganVox

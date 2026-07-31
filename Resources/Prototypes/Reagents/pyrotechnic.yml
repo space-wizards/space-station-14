@@ -171,11 +171,11 @@
         factor: 1
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [Vox]
+          type: [ TrashDiet ]
       - !type:HealthChange
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [Vox]
+          type: [ TrashDiet ]
           inverted: true
         damage:
           types:

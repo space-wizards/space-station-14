@@ -271,7 +271,7 @@
       - !type:HealthChange
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [Slime]
+          type: [ PoisonResistant ]
           inverted: true
         damage:
           types:

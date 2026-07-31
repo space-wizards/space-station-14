@@ -110,7 +110,7 @@
   abstract: true
   components:
   - type: Metabolizer
-    metabolizerTypes: [ Human ]
+    metabolizerTypes: [ FerrousBlood, OxygenRespirate, CarbonDioxideExhale ]
 
 - type: entity
   parent: OrganHuman
