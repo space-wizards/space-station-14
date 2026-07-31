@@ -40,7 +40,7 @@ public sealed partial class DragonSystem : EntitySystem
     /// <summary>
     /// Minimum distance between 2 rifts allowed.
     /// </summary>
-    private const int RiftRange = 15;
+    private const int RiftRange = 5;
 
     /// <summary>
     /// Radius of tiles
@@ -161,8 +161,10 @@ public sealed partial class DragonSystem : EntitySystem
             }
         }
 
+        var position = _transform.GetWorldPosition(xform);
+
         // cant put a rift on solars
-        foreach (var tile in _map.GetTilesIntersecting(xform.GridUid.Value, grid, new Circle(_transform.GetWorldPosition(xform), RiftTileRadius), false))
+        foreach (var tile in _map.GetTilesIntersecting(xform.GridUid.Value, grid, new Circle(position, RiftTileRadius), false))
         {
             if (!_turf.IsSpace(tile))
                 continue;
@@ -171,8 +173,7 @@ public sealed partial class DragonSystem : EntitySystem
             return;
         }
 
-        var (position, rotation) = _transform.GetWorldPositionRotation(xform);
-        var carpUid = Spawn(component.RiftPrototype, new MapCoordinates(position, xform.MapID), rotation: rotation);
+        var carpUid = Spawn(component.RiftPrototype, new MapCoordinates(position, xform.MapID), rotation: Transform(xform.GridUid.Value).LocalRotation);
 
         component.Rifts.Add(carpUid);
         Comp<DragonRiftComponent>(carpUid).Dragon = uid;
