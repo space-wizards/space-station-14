@@ -30,6 +30,7 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
 
     private readonly ChannelsControl _channelsControl = new();
     private readonly MidiCollectionUtilsControl _midiCollectionUtilsControl = new();
+    private readonly MinVolumeControl _minVolumeControl = new();
 
     private InstrumentMenu? _instrumentMenu;
 
@@ -63,6 +64,9 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
         _channelsControl.ChannelsUpdateRequest += OnChannelsUpdateRequest;
         _channelsControl.SwitchFilteredChannel += OnSwitchFilteredChannel;
 
+        _minVolumeControl.MinVolumeChanged += OnMinVolumeChanged;
+        _minVolumeControl.MinVolume = instrument.MinVolume;
+
         _instrumentMenu = this.CreateWindow<InstrumentMenu>();
 
         if (EntMan.TryGetComponent<MetaDataComponent>(Owner, out var metaData))
@@ -84,6 +88,9 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
         _instrumentMenu.AddConfigurationControl(
             _loc.GetString("instruments-component-midi-file-collection-label"),
             _midiCollectionUtilsControl);
+        _instrumentMenu.AddConfigurationControl(
+            _loc.GetString("instruments-component-menu-midi-min-volume-slider-label"),
+            _minVolumeControl);
     }
 
     protected override void ReceiveMessage(BoundUserInterfaceMessage message)
@@ -137,6 +144,11 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
     private void OnChannelsUpdated()
     {
         UpdateChannels();
+    }
+
+    private void OnMinVolumeChanged(int volume)
+    {
+        _instruments.SetMinVolume(Owner, volume);
     }
 
     private void OnMidiPlaybackEnded()
