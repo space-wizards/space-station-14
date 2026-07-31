@@ -298,13 +298,12 @@
       tableId: ToiletCisternCommonToolsTable
     - !type:NestedSelector
       weight: 8
-      tableId: ToiletCisternRareToolsTable
-    - !type:NestedSelector
+      weight: 5
+      tableId: ToiletCisternUtilityTable
       weight: 5
       tableId: ToiletCisternUtilityTable
     - !type:NestedSelector
-      weight: 3
-      tableId: ToiletCisternWeaponsTable
     - !type:NestedSelector
+      tableId: ToiletCisternSyndicateTable
       weight: 1
       tableId: ToiletCisternSyndicateTable
