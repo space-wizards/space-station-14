@@ -4,12 +4,7 @@ namespace Content.Shared.Containers.ItemSlots;
 
 public sealed partial class ItemSlotsSystem
 {
-    private void InitializeLock()
-    {
-        SubscribeLocalEvent<ItemSlotsLockComponent, MapInitEvent>(OnLockMapInit);
-        SubscribeLocalEvent<ItemSlotsLockComponent, LockToggledEvent>(OnLockToggled);
-    }
-
+    [SubscribeLocalEvent]
     private void OnLockMapInit(Entity<ItemSlotsLockComponent> ent, ref MapInitEvent args)
     {
         if (!TryComp(ent.Owner, out LockComponent? lockComp))
@@ -18,6 +13,7 @@ public sealed partial class ItemSlotsSystem
         UpdateLocks(ent, lockComp.Locked);
     }
 
+    [SubscribeLocalEvent]
     private void OnLockToggled(Entity<ItemSlotsLockComponent> ent, ref LockToggledEvent args)
     {
         UpdateLocks(ent, args.Locked);

@@ -3,17 +3,18 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Destructible;
+using Content.Shared.DoAfter;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
-using Content.Shared.Materials;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Containers.ItemSlots
@@ -30,41 +31,18 @@ namespace Content.Shared.Containers.ItemSlots
         [Dependency] private ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private SharedContainerSystem _containers = default!;
+        [Dependency] private SharedDoAfterSystem _doAfter = default!;
         [Dependency] private SharedPopupSystem _popupSystem = default!;
         [Dependency] private SharedHandsSystem _handsSystem = default!;
         [Dependency] private SharedAudioSystem _audioSystem = default!;
         [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
-
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            InitializeLock();
-
-            SubscribeLocalEvent<ItemSlotsComponent, MapInitEvent>(OnMapInit);
-            SubscribeLocalEvent<ItemSlotsComponent, ComponentInit>(Oninitialize);
-
-            SubscribeLocalEvent<ItemSlotsComponent, InteractUsingEvent>(OnInteractUsing);
-            SubscribeLocalEvent<ItemSlotsComponent, InteractHandEvent>(OnInteractHand);
-            SubscribeLocalEvent<ItemSlotsComponent, UseInHandEvent>(OnUseInHand);
-
-            SubscribeLocalEvent<ItemSlotsComponent, GetVerbsEvent<AlternativeVerb>>(AddAlternativeVerbs);
-            SubscribeLocalEvent<ItemSlotsComponent, GetVerbsEvent<InteractionVerb>>(AddInteractionVerbsVerbs);
-
-            SubscribeLocalEvent<ItemSlotsComponent, BreakageEventArgs>(OnBreak);
-            SubscribeLocalEvent<ItemSlotsComponent, DestructionEventArgs>(OnBreak);
-
-            SubscribeLocalEvent<ItemSlotsComponent, ComponentGetState>(GetItemSlotsState);
-            SubscribeLocalEvent<ItemSlotsComponent, ComponentHandleState>(HandleItemSlotsState);
-
-            SubscribeLocalEvent<ItemSlotsComponent, ItemSlotButtonPressedEvent>(HandleButtonPressed);
-        }
 
         #region ComponentManagement
 
         /// <summary>
         ///     Spawn in starting items for any item slots that should have one.
         /// </summary>
+        [SubscribeLocalEvent]
         private void OnMapInit(EntityUid uid, ItemSlotsComponent itemSlots, MapInitEvent args)
         {
             foreach (var slot in itemSlots.Slots.Values)
@@ -82,7 +60,8 @@ namespace Content.Shared.Containers.ItemSlots
         /// <summary>
         ///     Ensure item slots have containers.
         /// </summary>
-        private void Oninitialize(EntityUid uid, ItemSlotsComponent itemSlots, ComponentInit args)
+        [SubscribeLocalEvent]
+        private void OnInitialize(EntityUid uid, ItemSlotsComponent itemSlots, ComponentInit args)
         {
             foreach (var (id, slot) in itemSlots.Slots)
             {
@@ -158,6 +137,7 @@ namespace Content.Shared.Containers.ItemSlots
         /// <summary>
         ///     Attempt to take an item from a slot, if any are set to EjectOnInteract.
         /// </summary>
+        [SubscribeLocalEvent]
         private void OnInteractHand(EntityUid uid, ItemSlotsComponent itemSlots, InteractHandEvent args)
         {
             if (args.Handled)
@@ -169,7 +149,7 @@ namespace Content.Shared.Containers.ItemSlots
                     continue;
 
                 args.Handled = true;
-                TryEjectToHands(uid, slot, args.User, true);
+                TryEjectToHandsWithDoAfter(uid, slot, args.User);
                 break;
             }
         }
@@ -177,6 +157,7 @@ namespace Content.Shared.Containers.ItemSlots
         /// <summary>
         ///     Attempt to eject an item from the first valid item slot.
         /// </summary>
+        [SubscribeLocalEvent]
         private void OnUseInHand(EntityUid uid, ItemSlotsComponent itemSlots, UseInHandEvent args)
         {
             if (args.Handled)
@@ -188,7 +169,7 @@ namespace Content.Shared.Containers.ItemSlots
                     continue;
 
                 args.Handled = true;
-                TryEjectToHands(uid, slot, args.User, true);
+                TryEjectToHandsWithDoAfter(uid, slot, args.User);
                 break;
             }
         }
@@ -202,6 +183,7 @@ namespace Content.Shared.Containers.ItemSlots
         ///     other interactions to still happen (e.g., open UI, or toggle-open), despite the user holding an item.
         ///     Maybe this is undesirable.
         /// </remarks>
+        [SubscribeLocalEvent]
         private void OnInteractUsing(EntityUid uid, ItemSlotsComponent itemSlots, InteractUsingEvent args)
         {
             if (args.Handled)
@@ -317,7 +299,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (slot.ContainerSlot == null)
                 return false;
 
-            if (slot.HasItem && (!swap || swap && !CanEject(uid, user, slot)))
+            if (slot.HasItem && (!swap || slot.EjectDelay > TimeSpan.Zero || !CanEject(uid, user, slot)))
                 return false;
 
             if (!CanInsertWhitelist(usedUid, slot))
@@ -623,6 +605,54 @@ namespace Content.Shared.Containers.ItemSlots
         }
 
         /// <summary>
+        /// Handles user-initiated ejection, respecting the slot's configured delay.
+        /// Forced and system-initiated ejections should use <see cref="TryEjectToHands"/> directly.
+        /// </summary>
+        private bool TryEjectToHandsWithDoAfter(EntityUid uid, ItemSlot slot, EntityUid user)
+        {
+            if (slot.EjectDelay <= TimeSpan.Zero)
+                return TryEjectToHands(uid, slot, user, true);
+
+            if (slot.ID is not { } slotId ||
+                !CanEject(uid, user, slot) ||
+                slot.Item is not { } item ||
+                !_actionBlockerSystem.CanPickup(user, item, showPopup: true))
+            {
+                return false;
+            }
+
+            return _doAfter.TryStartDoAfter(new DoAfterArgs(
+                EntityManager,
+                user,
+                slot.EjectDelay,
+                new ItemSlotEjectDoAfterEvent(slotId),
+                uid,
+                target: uid,
+                used: item)
+            {
+                BreakOnMove = true,
+                BreakOnDamage = true
+            });
+        }
+
+        /// <summary>
+        /// Finishes a delayed ejection only if the original item is still in the original slot.
+        /// </summary>
+        [SubscribeLocalEvent]
+        private void OnEjectDoAfter(Entity<ItemSlotsComponent> ent, ref ItemSlotEjectDoAfterEvent args)
+        {
+            if (args.Cancelled ||
+                args.Used is not { } item ||
+                !ent.Comp.Slots.TryGetValue(args.SlotId, out var slot) ||
+                slot.Item != item)
+            {
+                return;
+            }
+
+            TryEjectToHands(ent, slot, args.User, true);
+        }
+
+        /// <summary>
         ///     Unlocks all slots and ejects items from them on the floor.
         /// </summary>
         public void EjectFromAllSlots(Entity<ItemSlotsComponent> entity)
@@ -649,6 +679,7 @@ namespace Content.Shared.Containers.ItemSlots
 
         #region Verbs
 
+        [SubscribeLocalEvent]
         private void AddAlternativeVerbs(EntityUid uid,
             ItemSlotsComponent itemSlots,
             GetVerbsEvent<AlternativeVerb> args)
@@ -729,7 +760,7 @@ namespace Content.Shared.Containers.ItemSlots
                 AlternativeVerb verb = new()
                 {
                     IconEntity = GetNetEntity(slot.Item),
-                    Act = () => TryEjectToHands(uid, slot, args.User, excludeUserAudio: true)
+                    Act = () => TryEjectToHandsWithDoAfter(uid, slot, args.User)
                 };
 
                 if (slot.EjectVerbText == null)
@@ -747,6 +778,7 @@ namespace Content.Shared.Containers.ItemSlots
             }
         }
 
+        [SubscribeLocalEvent]
         private void AddInteractionVerbsVerbs(EntityUid uid,
             ItemSlotsComponent itemSlots,
             GetVerbsEvent<InteractionVerb> args)
@@ -770,7 +802,7 @@ namespace Content.Shared.Containers.ItemSlots
                 InteractionVerb takeVerb = new()
                 {
                     IconEntity = GetNetEntity(slot.Item),
-                    Act = () => TryEjectToHands(uid, slot, args.User, excludeUserAudio: true)
+                    Act = () => TryEjectToHandsWithDoAfter(uid, slot, args.User)
                 };
 
                 if (slot.EjectVerbText == null)
@@ -832,13 +864,14 @@ namespace Content.Shared.Containers.ItemSlots
 
         #region BUIs
 
+        [SubscribeLocalEvent]
         private void HandleButtonPressed(EntityUid uid, ItemSlotsComponent component, ItemSlotButtonPressedEvent args)
         {
             if (!component.Slots.TryGetValue(args.SlotId, out var slot))
                 return;
 
             if (args.TryEject && slot.HasItem && !slot.DisableEject)
-                TryEjectToHands(uid, slot, args.Actor, true);
+                TryEjectToHandsWithDoAfter(uid, slot, args.Actor);
             else if (args.TryInsert && !slot.HasItem)
                 TryInsertFromHand(uid, slot, args.Actor);
         }
@@ -848,9 +881,16 @@ namespace Content.Shared.Containers.ItemSlots
         /// <summary>
         ///     Eject items from (some) slots when the entity is destroyed.
         /// </summary>
-        private void OnBreak(EntityUid uid, ItemSlotsComponent component, EntityEventArgs args)
+        [SubscribeLocalEvent]
+        private void OnBreak(Entity<ItemSlotsComponent> ent, ref BreakageEventArgs args)
         {
-            EjectFromAllSlots((uid, component), slot => slot.EjectOnBreak);
+            EjectFromAllSlots(ent, slot => slot.EjectOnBreak);
+        }
+
+        [SubscribeLocalEvent]
+        private void OnBreak(Entity<ItemSlotsComponent> ent, ref DestructionEventArgs args)
+        {
+            EjectFromAllSlots(ent, slot => slot.EjectOnBreak);
         }
 
         /// <summary>
@@ -898,6 +938,7 @@ namespace Content.Shared.Containers.ItemSlots
         ///     Note that the slot's ContainerSlot performs its own networking, so we don't need to send information
         ///     about the contained entity.
         /// </remarks>
+        [SubscribeLocalEvent]
         private void HandleItemSlotsState(EntityUid uid, ItemSlotsComponent component, ref ComponentHandleState args)
         {
             if (args.Current is not ItemSlotsComponentState state)
@@ -925,9 +966,23 @@ namespace Content.Shared.Containers.ItemSlots
             }
         }
 
+        [SubscribeLocalEvent]
         private void GetItemSlotsState(EntityUid uid, ItemSlotsComponent component, ref ComponentGetState args)
         {
             args.State = new ItemSlotsComponentState(component.Slots);
+        }
+
+        [Serializable, NetSerializable]
+        private sealed partial class ItemSlotEjectDoAfterEvent : DoAfterEvent
+        {
+            public string SlotId;
+
+            public ItemSlotEjectDoAfterEvent(string slotId)
+            {
+                SlotId = slotId;
+            }
+
+            public override DoAfterEvent Clone() => this;
         }
     }
 }
