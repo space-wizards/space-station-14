@@ -17,7 +17,7 @@ public abstract partial class ListingCondition
     public abstract bool Condition(ListingConditionArgs args);
 
     /// <summary>
-    /// If true, then this conidtions ignore the lockable field of <see cref="ListingData"/>.
+    /// If true, then this conditions ignore the lockable field of <see cref="ListingData"/>.
     /// </summary>
     /// <returns></returns>
     public virtual bool IgnoresLock()
