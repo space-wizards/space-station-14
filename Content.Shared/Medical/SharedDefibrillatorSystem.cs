@@ -39,16 +39,8 @@ public abstract partial class SharedDefibrillatorSystem : EntitySystem
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedMindSystem _mind = default!;
     [Dependency] private UseDelaySystem _useDelay = default!;
-    [Dependency] private SharedInteractionSystem _interactionSystem = default!;
-
-    private readonly HashSet<EntityUid> _interacters = new();
-
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<DefibrillatorComponent, AfterInteractEvent>(OnAfterInteract);
-        SubscribeLocalEvent<DefibrillatorComponent, DefibrillatorZapDoAfterEvent>(OnDoAfter);
-    }
-
+    
+    [SubscribeLocalEvent]
     private void OnAfterInteract(Entity<DefibrillatorComponent> ent, ref AfterInteractEvent args)
     {
         if (args.Handled || args.Target is not { } target)
@@ -57,6 +49,7 @@ public abstract partial class SharedDefibrillatorSystem : EntitySystem
         args.Handled = TryStartZap(ent.AsNullable(), target, args.User);
     }
 
+    [SubscribeLocalEvent]
     private void OnDoAfter(Entity<DefibrillatorComponent> ent, ref DefibrillatorZapDoAfterEvent args)
     {
         if (args.Handled || args.Cancelled)
@@ -78,9 +71,6 @@ public abstract partial class SharedDefibrillatorSystem : EntitySystem
     /// <param name="ent">The defbrillator being used.</param>
     /// <param name="target">Uid of the target getting defibbed.</param>
     /// <param name="user">Uid of the entity using the defibrillator.</param>
-    /// <param name="targetCanBeAlive">
-    /// If true, the target can be alive. If false, the function will check if the target is alive and will return false if they are.
-    /// </param>
     /// <returns>
     /// Returns true if the target is valid to be defibed, false otherwise.
     /// </returns>
@@ -165,17 +155,7 @@ public abstract partial class SharedDefibrillatorSystem : EntitySystem
             return;
 
         _audio.PlayPredicted(ent.Comp.ZapSound, ent.Owner, user);
-        _electrocution.TryDoElectrocution(target, ent.Owner, ent.Comp.ZapDamage, ent.Comp.WritheDuration, true, ignoreInsulation: true);
-
-        _interactionSystem.GetEntitiesInteractingWithTarget(target, _interacters);
-        foreach (var other in _interacters)
-        {
-            if (other == user)
-                continue;
-
-            // Anyone else still operating on the target gets zapped too
-            _electrocution.TryDoElectrocution(other, null, ent.Comp.ZapDamage, ent.Comp.WritheDuration, true);
-        }
+        _electrocution.TryDoChainElectrocution(target, ent.Owner, user, ent.Comp.ZapDamage, ent.Comp.WritheDuration, true, ignoreInsulation: true);
 
         if (TryComp<UseDelayComponent>(ent, out var useDelay))
         {
