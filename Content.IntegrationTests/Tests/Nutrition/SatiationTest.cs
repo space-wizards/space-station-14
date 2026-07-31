@@ -1,11 +1,11 @@
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Nutrition.Prototypes;
 using NUnit.Framework.Constraints;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -54,17 +54,14 @@ public sealed class SatiationTest : GameTest
         prototype: {TestSatiationId}
 ";
 
-    [SidedDependency(Side.Server)]
-    private readonly SatiationSystem _satiation =
-        default!;
+    [SidedDependency(Side.Server)] private readonly SatiationSystem _satiation = default!;
 
     [Test, RunOnSide(Side.Server)]
     [Description(
         "Verifies the basic operations of 'SatiationSystem.SetValue', 'SatiationSystem.ModifyValue', and 'SatiationSystem.GetValueOrNull'")]
     public void SatiationBasicTest()
     {
-        var ent = SSpawn(TestProto);
-        var entity = new Entity<SatiationComponent>(ent, SComp<SatiationComponent>(ent));
+        var entity = SEntity<SatiationComponent>(SSpawn(TestProto));
 
         // Verify the starting value is in the starting range.
         using (Assert.EnterMultipleScope())
@@ -98,8 +95,7 @@ public sealed class SatiationTest : GameTest
     [Description("Verifies 'SatiationSystem.TryGetValueByThreshold' when threshold keys are integers")]
     public void SatiationGetValueByThresholdTest()
     {
-        var ent = SSpawn(TestProto);
-        var entity = new Entity<SatiationComponent>(ent, SComp<SatiationComponent>(ent));
+        var entity = SEntity<SatiationComponent>(SSpawn(TestProto));
         var dict = new Dictionary<SatiationValue, int>
         {
             // Arbitrary order to test that the implementation doesn't care about order.
@@ -158,8 +154,7 @@ public sealed class SatiationTest : GameTest
     [Description("Verifies 'SatiationSystem.TryGetValueByThreshold' when threshold keys are strings")]
     public void SatiationGetValueByThresholdKeysTest()
     {
-        var ent = SSpawn(TestProto);
-        var entity = new Entity<SatiationComponent>(ent, SComp<SatiationComponent>(ent));
+        var entity = SEntity<SatiationComponent>(SSpawn(TestProto));
         var dict = new Dictionary<SatiationValue, int>
         {
             // Arbitrary order to test that the implementation doesn't care about order.
@@ -226,10 +221,12 @@ public sealed class SatiationTest : GameTest
 
     [Test, RunOnSide(Side.Server)]
     [Description("Verifies 'SatiationSystem.IsValueInRange'")]
+    [SuppressMessage("Assertion",
+        "NUnit2057:Remove unnecessary lambda expression",
+        Justification = "Necessity of lambda depends on build configuration")]
     public void SatiationRangeTests()
     {
-        var ent = SSpawn(TestProto);
-        var entity = new Entity<SatiationComponent>(ent, SComp<SatiationComponent>(ent));
+        var entity = SEntity<SatiationComponent>(SSpawn(TestProto));
 
         // All of these work by setting a value, then asserting that `IsValueInRange` for various ranges returns what's
         // expected.
@@ -264,7 +261,8 @@ public sealed class SatiationTest : GameTest
             Assert.That(_satiation.IsValueInRange(entity, TestSatiationType, above: 0), Is.True);
             Assert.That(_satiation.IsValueInRange(entity, TestSatiationType, above: -1000), Is.True);
             Assert.That(_satiation.IsValueInRange(entity, TestSatiationType, above: 100), Is.False);
-            Assert.That(_satiation.IsValueInRange(entity, TestSatiationType, below: 60, above: 70), Goop(Is.False));
+            Assert.That(() => _satiation.IsValueInRange(entity, TestSatiationType, below: 60, above: 70),
+                Is.False.OrFailsDebugAssertInDebug());
             Assert.That(_satiation.IsValueInRange(entity, TestSatiationType, below: 50, hypotheticalValueDelta: -10),
                 Is.True);
 #pragma warning restore RA0033
@@ -274,24 +272,32 @@ public sealed class SatiationTest : GameTest
         using (Assert.EnterMultipleScope())
         {
             Assert.That(_satiation.IsValueInRange(entity, TestSatiationType, above: NotRealKey), Is.False);
-            Assert.That(_satiation.IsValueInRange(entity, TestSatiationType), Goop(Is.True));
+            Assert.That(() => _satiation.IsValueInRange(entity, TestSatiationType),
+                Is.True.OrFailsDebugAssertInDebug());
         }
     }
+}
 
-    /// <summary>
-    /// Returns a <see cref="Constraint"/> verifying the operation throws <see cref="DebugAssertException"/> on Debug
-    /// run configuration, otherwise returns the passed in constraint. This is only separated out so that all the
-    /// preprocessor directives don't muddy tests.
-    /// </summary>
-#pragma warning disable CA1859
-// ReSharper disable once UnusedParameter.Local
-    private static Constraint Goop(Constraint nonDebugConstraint)
-#pragma warning restore CA1859
-    {
+static file class ConstraintExt
+{
 #if DEBUG
-        return Throws.InstanceOf<DebugAssertException>();
+    private const bool IsDebug = true;
 #else
-        return nonDebugConstraint;
+    private const bool IsDebug = false;
 #endif
+
+    extension(Constraint constraint)
+    {
+        /// <summary>
+        /// Returns the receiver <see cref="Constraint"/> when <c>#define DEBUG</c> is false, otherwise returns a
+        /// <see cref="ThrowsConstraint"/> with exception type <see cref="DebugAssertException"/>. This is useful when
+        /// something throws in Debug, but fails gracefully otherwise.
+        /// </summary>
+        // TODO Put this somewhere else reusable https://github.com/space-wizards/space-station-14/pull/34166#discussion_r3692882923
+        public Constraint OrFailsDebugAssertInDebug() =>
+#pragma warning disable CS0162 // Unreachable code detected
+            // ReSharper disable once HeuristicUnreachableCode
+            IsDebug ? Throws.InstanceOf<DebugAssertException>() : constraint;
+#pragma warning restore CS0162 // Unreachable code detected
     }
 }
