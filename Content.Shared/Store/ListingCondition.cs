@@ -17,9 +17,9 @@ public abstract partial class ListingCondition
     public abstract bool Condition(ListingConditionArgs args);
 
     /// <summary>
-    /// If true, then this conditions ignore the lockable field of <see cref="ListingData"/>.
+    /// If true, then this conditions will be locked instead of disappearing from the shop UI.
     /// </summary>
-    /// <returns></returns>
+    [DataField]
     public bool Locks = false;
 }
 

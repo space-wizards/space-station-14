@@ -42,8 +42,7 @@ public partial class ListingData : IEquatable<ListingData>
         other.RestockTime,
         other.DiscountDownTo,
         other.DisableRefund,
-        other.ApplyToMob,
-        other.Lockable
+        other.ApplyToMob
     )
     {
 
@@ -70,8 +69,7 @@ public partial class ListingData : IEquatable<ListingData>
         TimeSpan restockTime,
         Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> dataDiscountDownTo,
         bool disableRefund,
-        bool applyToMob,
-        bool lockable
+        bool applyToMob
     )
     {
         Name = name;
@@ -95,7 +93,6 @@ public partial class ListingData : IEquatable<ListingData>
         DiscountDownTo = new Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2>(dataDiscountDownTo);
         DisableRefund = disableRefund;
         ApplyToMob = applyToMob;
-        Lockable = lockable;
     }
 
     [ViewVariables]
@@ -331,8 +328,7 @@ public ListingDataWithCostModifiers(ListingData listingData)
             listingData.RestockTime,
             listingData.DiscountDownTo,
             listingData.DisableRefund,
-            listingData.ApplyToMob,
-            listingData.Lockable
+            listingData.ApplyToMob
         )
     {
     }

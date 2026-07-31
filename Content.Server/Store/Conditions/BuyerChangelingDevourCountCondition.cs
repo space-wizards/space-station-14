@@ -8,7 +8,7 @@ namespace Content.Server.Store.Conditions;
 /// <summary>
 /// Only allows this listing being purchased when the buyer is a changeling that has devoured X (Count) unique bodies.
 /// </summary>
-public sealed partial class BuyerBodyCountCondition : ListingCondition
+public sealed partial class BuyerChangelingDevourCountCondition : ListingCondition
 {
     /// <summary>
     /// How many bodies need to have been devoured for this listing to become available.
