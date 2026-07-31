@@ -227,12 +227,6 @@ public partial class ListingData : IEquatable<ListingData>
     [DataField]
     public bool ApplyToMob = false;
 
-    /// <summary>
-    /// When true, the conditions failing will not hide the listing but instead display it as locked.
-    /// </summary>
-    [DataField]
-    public bool Lockable = false;
-
     public bool Equals(ListingData? listing)
     {
         if (listing == null)

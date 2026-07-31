@@ -20,10 +20,7 @@ public abstract partial class ListingCondition
     /// If true, then this conidtions ignore the lockable field of <see cref="ListingData"/>.
     /// </summary>
     /// <returns></returns>
-    public virtual bool IgnoresLock()
-    {
-        return false;
-    }
+    public bool Locks = false;
 }
 
 /// <param name="Buyer">Either the account owner, user, or an inanimate object (e.g., surplus bundle)</param>
