@@ -1,13 +1,13 @@
 - type: entity
   abstract: true
-  parent: BaseItem
+  parent: [ BaseItem, PowerCellSlotHighItem ]
   id: WeaponEnergyCrossbowBase
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Basic/energy_crossbow.rsi
   - type: Item
     sprite: Objects/Weapons/Guns/Basic/energy_crossbow.rsi
-    size: Small
+    size: Normal
   - type: Gun
     fireRate: 5 #high firerate innately bottlenecked by ammo regeneration speed.
     selectedMode: SemiAuto
@@ -25,14 +25,26 @@
         empty-icon:
           True: { visible: False }
           False: { visible: True }
-  - type: RechargeBasicEntityAmmo
-    rechargeCooldown: 5 #2 seconds of KD, should always have CD > KD
+  - type: BallisticAmmoSelfRefiller
+    firingPausesAutoRefill: true
+    autoRefillPauseDuration: 5 #2 seconds of KD, should always have CD > KD
+    autoRefillRate: 0
+    powerConsumption: 180
     rechargeSound:
       path: /Audio/Weapons/Guns/MagIn/energycrossbow_reload.ogg
-  - type: BasicEntityAmmoProvider
+  - type: BallisticAmmoProvider
     proto: EnergyCrossbowBolt
     capacity: 1
-    count: 1
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+        showEnts: False
+        occludes: True
+        ent: null
+      ballistic-ammo: !type:Container
+        showEnts: False
+        occludes: True
+        ents: [ ]
 
 - type: entity
   parent: [WeaponEnergyCrossbowBase, BaseSyndicateContraband]

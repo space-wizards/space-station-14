@@ -781,3 +781,33 @@
         type: Update
       - !type:ModifyBleed
         amount: 0.5
+
+- type: reagent
+  id: HardlightToxin
+  name: reagent-name-hardlight-toxin
+  group: Toxins
+  desc: reagent-desc-hardlight-toxin
+  evaporationSpeed: 100 # Dissolves basically instantly if you *somehow* spill it
+  color: "#00FF00"
+  physicalDesc: reagent-physical-desc-glowing
+  contrabandSeverity: Syndicate
+  metabolisms:
+    Bloodstream:
+      metabolismRate: 2.5 # It's basically pure energy so it metabolizes very fast
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Radiation: 1
+      - !type:StaminaDamage
+        damage: 10
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectKnockdown
+        time: 1.5
+        delay: 2.5
+      - !type:MovementSpeedModifier
+        effectProto: TaserSlowdownStatusEffect
+        time: 1.5
+        delay: 2.5
+        walkSpeedModifier: 0.5
+        sprintSpeedModifier: 0.5

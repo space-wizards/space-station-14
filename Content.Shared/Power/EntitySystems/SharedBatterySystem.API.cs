@@ -11,6 +11,25 @@ namespace Content.Shared.Power.EntitySystems;
 public abstract partial class SharedBatterySystem
 {
     /// <summary>
+    /// Changes the charge of this entity by raising the <see cref="ChangeChargeEvent"/>
+    /// in hopes of finding a battery which has charge.
+    /// Returns the amount of charge removed.
+    /// </summary>
+    /// <param name="gun">The entity we want to take charge from.</param>
+    /// <param name="amount">The amount of charge we're taking.</param>
+    [PublicAPI]
+    public float ChangeCharge(EntityUid gun, float amount)
+    {
+        if (amount == 0)
+            return 0f;
+
+        // Take charge from either the BatteryComponent or PowerCellSlotComponent.
+        var ev = new ChangeChargeEvent(amount);
+        RaiseLocalEvent(gun, ref ev);
+        return ev.Amount - ev.ResidualValue;
+    }
+
+    /// <summary>
     /// Changes the battery's charge by the given amount
     /// and resets the self-recharge cooldown if it exists.
     /// A positive value will add charge, a negative value will remove charge.
@@ -157,6 +176,14 @@ public abstract partial class SharedBatterySystem
 
         var changedEv = new BatteryStateChangedEvent(oldState, newState);
         RaiseLocalEvent(ent, ref changedEv);
+    }
+
+    [PublicAPI]
+    public (float Charge, float MaxCharge) GetCharge(EntityUid ent)
+    {
+        var ev = new GetChargeEvent();
+        RaiseLocalEvent(ent, ref ev);
+        return (ev.CurrentCharge, ev.MaxCharge);
     }
 
     /// <summary>

@@ -53,7 +53,7 @@ public sealed partial class StunbatonSystem : EntitySystem
     [SubscribeLocalEvent]
     private void TryTurnOn(Entity<StunbatonComponent> entity, ref ItemToggleActivateAttemptEvent args)
     {
-        if (_battery.GetCharge(entity.Owner) >= entity.Comp.EnergyPerUse)
+        if (_battery.GetCharge(entity.Owner).Charge >= entity.Comp.EnergyPerUse)
             return;
 
         args.Cancelled = true;
@@ -68,7 +68,7 @@ public sealed partial class StunbatonSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnChargeChanged(Entity<StunbatonComponent> entity, ref ChargeChangedEvent args)
     {
-        if (_battery.GetCharge(entity.Owner) >= entity.Comp.EnergyPerUse)
+        if (_battery.GetCharge(entity.Owner).Charge >= entity.Comp.EnergyPerUse)
             return;
 
         _itemToggle.TryDeactivate(entity.Owner);
