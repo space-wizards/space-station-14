@@ -20,7 +20,7 @@ public sealed partial class SuddenNukeArmRule : StationEventSystem<SuddenNukeArm
         SubscribeLocalEvent<NukeDisarmSuccessEvent>(OnNukeDisarm);
     }
 
-    public bool IsNukePicked(out HashSet<EntityUid> pickedNukes)
+    private bool IsNukePicked(out HashSet<EntityUid> pickedNukes)
     {
         pickedNukes = new HashSet<EntityUid>();
 
