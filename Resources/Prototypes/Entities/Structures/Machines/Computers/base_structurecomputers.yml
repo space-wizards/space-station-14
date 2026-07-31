@@ -28,7 +28,6 @@
     sprite: Structures/Machines/computers.rsi
     layers:
     - map: ["enum.ComputerVisualLayers.Frame"]
-      state: computer
     - map: ["enum.ComputerVisualLayers.Keyboard"]
     - map: ["enum.ComputerVisualLayers.Screen"]
     - map: ["enum.ComputerVisualLayers.Keys"]
