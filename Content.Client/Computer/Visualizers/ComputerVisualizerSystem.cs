@@ -45,7 +45,7 @@ public sealed partial class ComputerVisualizerSystem : VisualizerSystem<Computer
     /// Sets the base sprite to this layer. Exists to reduce computer sprite boilerplate.
     /// </summary>
     [SubscribeLocalEvent]
-    private void OnComponentInit(Entity<ComputerVisualsComponent> ent, ref ComponentInit args)
+    private void OnComponentStartup(Entity<ComputerVisualsComponent> ent, ref ComponentStartup args)
     {
         if (!TryComp<SpriteComponent>(ent, out var sprite))
             return;
