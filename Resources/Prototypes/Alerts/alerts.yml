@@ -536,3 +536,16 @@
     state: critical
   name: Debug6
   description: Debug
+
+- type: alert
+  id: DragonRiftTimer
+  icons: 
+  - sprite: /Textures/Structures/Specific/carp_rift.rsi
+    state: icon_blue
+  - sprite: /Textures/Structures/Specific/carp_rift.rsi
+    state: icon_orange #TODO: update when SpriteSpecifier supports color
+  - sprite: /Textures/Structures/Specific/carp_rift.rsi
+    state: icon_red #TODO: update when SpriteSpecifier supports color
+  name: alerts-dragon-rift-timer-name
+  description: alerts-dragon-rift-timer-desc
+  maxSeverity: 3
