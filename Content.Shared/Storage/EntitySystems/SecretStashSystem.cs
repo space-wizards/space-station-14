@@ -69,7 +69,7 @@ public sealed partial class SecretStashSystem : EntitySystem
         if (smallerSize == null)
         {
             RemCompDeferred(entity, entity.Comp);
-            Log.Warning($"{ToPrettyString(entity)} is too small to have the SecretStash component!");
+            Log.Error($"{ToPrettyString(entity)} is too small to have the SecretStash component!");
             return;
         }
 
