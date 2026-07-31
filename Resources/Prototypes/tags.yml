@@ -19,9 +19,6 @@
   id: AirSensor # Used by AtmosAlarmableComponent for syncing devices.
 
 - type: Tag
-  id: Alcohol # Storage whitelist: BoozeDispenserEmpty
-
-- type: Tag
   id: AllowBiomeLoading # Entities with this tag will load terrain, even if a ghost.
 
 - type: Tag
