@@ -2,7 +2,7 @@
 # Base
 
 - type: entity
-  parent: [SolutionNormal, FoodInjectableBase, BaseStashFood]
+  parent: [SolutionNormal, FoodInjectableBase, BaseStashCake]
   id: FoodCakeBase
   abstract: true
   components:

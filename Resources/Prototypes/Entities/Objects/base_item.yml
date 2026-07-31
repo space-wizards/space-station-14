@@ -261,7 +261,7 @@
 - type: entity
   abstract: true
   parent: BaseStash
-  id: BaseStashFood
+  id: BaseStashCake
   components:
   - type: SecretStash
     secretStashName: secret-stash-cake
