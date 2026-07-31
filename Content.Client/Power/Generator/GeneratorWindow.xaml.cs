@@ -10,8 +10,8 @@ namespace Content.Client.Power.Generator;
 [GenerateTypedNameReferences]
 public sealed partial class GeneratorWindow : FancyWindow
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly ILocalizationManager _loc = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
+    [Dependency] private ILocalizationManager _loc = default!;
 
     private EntityUid _entity;
 

@@ -13,8 +13,8 @@ namespace Content.Shared.EntityEffects.Effects;
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class SlipifyEntityEffectSystem : EntityEffectSystem<FixturesComponent, Slipify>
 {
-    [Dependency] private readonly CollisionWakeSystem _collisionWake = default!;
-    [Dependency] private readonly FixtureSystem _fixture = default!;
+    [Dependency] private CollisionWakeSystem _collisionWake = default!;
+    [Dependency] private FixtureSystem _fixture = default!;
 
     protected override void Effect(Entity<FixturesComponent> entity, ref EntityEffectEvent<Slipify> args)
     {
@@ -39,6 +39,9 @@ public sealed partial class SlipifyEntityEffectSystem : EntityEffectSystem<Fixtu
 /// <inheritdoc cref="EntityEffect"/>
 public sealed partial class Slipify : EntityEffectBase<Slipify>
 {
+    /// <summary>
+    /// The slippery properties to apply upon the target.
+    /// </summary>
     [DataField]
     public SlipperyEffectEntry Slippery = new();
 }

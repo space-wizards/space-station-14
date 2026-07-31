@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Client.Clothing;
 using Content.Client.Examine;
+using Content.Client.Pointing;
 using Content.Client.Verbs.UI;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
@@ -17,12 +18,13 @@ using Robust.Shared.Timing;
 namespace Content.Client.Inventory
 {
     [UsedImplicitly]
-    public sealed class ClientInventorySystem : InventorySystem
+    public sealed partial class ClientInventorySystem : InventorySystem
     {
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IUserInterfaceManager _ui = default!;
-        [Dependency] private readonly ClientClothingSystem _clothingVisualsSystem = default!;
-        [Dependency] private readonly ExamineSystem _examine = default!;
+        [Dependency] private IPlayerManager _playerManager = default!;
+        [Dependency] private IUserInterfaceManager _ui = default!;
+        [Dependency] private ClientClothingSystem _clothingVisualsSystem = default!;
+        [Dependency] private ExamineSystem _examine = default!;
+        [Dependency] private PointingSystem _pointing = default!;
 
         public Action<SlotData>? EntitySlotUpdate = null;
         public Action<SlotData>? OnSlotAdded = null;
@@ -73,8 +75,8 @@ namespace Content.Client.Inventory
 
         private void OnDidUnequip(InventorySlotsComponent component, DidUnequipEvent args)
         {
-            UpdateSlot(args.Equipee, component, args.Slot);
-            if (args.Equipee != _playerManager.LocalEntity)
+            UpdateSlot(args.EquipTarget, component, args.Slot);
+            if (args.EquipTarget != _playerManager.LocalEntity)
                 return;
             var update = new SlotSpriteUpdate(null, args.SlotGroup, args.Slot, false);
             OnSpriteUpdate?.Invoke(update);
@@ -82,8 +84,8 @@ namespace Content.Client.Inventory
 
         private void OnDidEquip(InventorySlotsComponent component, DidEquipEvent args)
         {
-            UpdateSlot(args.Equipee, component, args.Slot);
-            if (args.Equipee != _playerManager.LocalEntity)
+            UpdateSlot(args.EquipTarget, component, args.Slot);
+            if (args.EquipTarget != _playerManager.LocalEntity)
                 return;
             var update = new SlotSpriteUpdate(args.Equipment, args.SlotGroup, args.Slot,
                 HasComp<StorageComponent>(args.Equipment));
@@ -235,6 +237,19 @@ namespace Content.Client.Inventory
                 return;
 
             RaisePredictiveEvent(new InteractInventorySlotEvent(GetNetEntity(item.Value), altInteract: true));
+        }
+
+        /// <summary>
+        /// Points at an item in the inventory
+        /// </summary>
+        /// <param name="slot">The slot to point at</param>
+        /// <param name="uid">The inventory entity containing the slot</param>
+        public void UIInventoryPointAt(string slot, EntityUid uid)
+        {
+            if (!TryGetSlotEntity(uid, slot, out var item))
+                return;
+
+            _pointing.TryPointAtEntity(GetNetEntity(item.Value));
         }
 
         protected override void UpdateInventoryTemplate(Entity<InventoryComponent> ent)
