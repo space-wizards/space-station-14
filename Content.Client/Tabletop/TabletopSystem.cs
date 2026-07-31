@@ -31,7 +31,7 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
 
     private EntityUid? _draggedEntity; // Entity being dragged
     private ScalingViewport? _viewport; // Viewport currently being used
-    private BaseWindow? _window; // Current open tabletop window (only allow one at a time)
+    private TabletopWindow? _window; // Current open tabletop window (only allow one at a time)
     private EntityUid? _table; // The table entity of the currently open game session
 
     /// <inheritdoc />
@@ -154,12 +154,11 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
         }
 
         // Create a window to contain the viewport
-        _window = new TabletopWindow(eyeComponent.Eye, (size.X, size.Y))
+        _window = new TabletopWindow()
         {
-            MinWidth = 500,
-            MinHeight = 436,
             Title = title
         };
+        _window.SetPosition(eyeComponent.Eye, new(size.X, size.Y));
 
         _window.OnClose += OnWindowClose;
     }

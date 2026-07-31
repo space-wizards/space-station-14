@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Numerics;
 using Content.Shared.ActionBlocker;
 using Content.Shared.CCVar;
@@ -32,6 +33,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
     [Dependency] private SharedMapSystem _map = default!;
     [Dependency] protected SharedPopupSystem Popup = default!;
     [Dependency] protected SharedTransformSystem Xform = default!;
+    [Dependency] private SharedUserInterfaceSystem _userInterface = default!;
     [Dependency] private SharedViewSubscriberSystem _viewSubscriber = default!;
 
     [Dependency] protected EntityQuery<ActorComponent> ActorQuery;
@@ -50,15 +52,6 @@ public abstract partial class SharedTabletopSystem : EntitySystem
     /// The maximum number of pieces to allow placement on a table.
     /// </summary>
     protected static readonly int MaxTabletopPieces = 50;
-
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<TabletopGameComponent, GetVerbsEvent<ActivationVerb>>(AddPlayGameVerb);
-        SubscribeLocalEvent<TabletopDraggableComponent, GetVerbsEvent<AlternativeVerb>>(AddDraggableCopyVerb);
-        SubscribeLocalEvent<TabletopHologramComponent, GetVerbsEvent<Verb>>(AddHologramRemoveVerb);
-    }
 
     /// <summary>
     /// Creates a sanitized copy of an entity and sends it into a particular tabletop game.
@@ -110,6 +103,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
         OpenSessionFor(actor.PlayerSession, ent.Owner);
     }
 
+    [SubscribeLocalEvent]
     private void AddDraggableCopyVerb(Entity<TabletopDraggableComponent> entity, ref GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract)
@@ -135,6 +129,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
         args.Verbs.Add(copyVerb);
     }
 
+    [SubscribeLocalEvent]
     private void AddHologramRemoveVerb(Entity<TabletopHologramComponent> entity, ref GetVerbsEvent<Verb> args)
     {
         if (!args.CanAccess || !args.CanInteract)
@@ -142,9 +137,6 @@ public abstract partial class SharedTabletopSystem : EntitySystem
 
         if (!GamerQuery.TryComp(args.User, out var gamer)
             || !GameQuery.TryComp(gamer.Tabletop, out var game))
-            return;
-
-        if (!ActorQuery.TryComp(args.User, out var actor))
             return;
 
         // Will get closed later if CanSeeTable returns false.
@@ -155,7 +147,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
         {
             Text = Loc.GetString("tabletop-verb-remove-piece"),
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/delete.svg.192dpi.png")),
-            Act = () => RemovePiece(entity, (gamer.Tabletop, game), actor.PlayerSession),
+            Act = () => RemovePiece(entity, (gamer.Tabletop, game), user),
             Disabled = disabled,
             Priority = 1,
             Message = Loc.GetString(disabled ? "tabletop-verb-remove-piece-message-disabled" : "tabletop-verb-remove-piece-message")
@@ -167,6 +159,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
     /// <summary>
     /// Add a verb that allows the player to start playing a tabletop game.
     /// </summary>
+    [SubscribeLocalEvent]
     private void AddPlayGameVerb(Entity<TabletopGameComponent> ent, ref GetVerbsEvent<ActivationVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract)
@@ -287,19 +280,19 @@ public abstract partial class SharedTabletopSystem : EntitySystem
         return TryComp(playerEntity, out HandsComponent? hands) && hands.Hands.Count > 0;
     }
 
-    private void RemovePiece(EntityUid piece, Entity<TabletopGameComponent> table, ICommonSession userSession)
+    private void RemovePiece(EntityUid piece, Entity<TabletopGameComponent> table, EntityUid user)
     {
         if (!table.Comp.HasSession)
             return;
 
         // If this is the client, just assume it's valid
-        if (_net.IsClient || table.Comp.Players.ContainsKey(userSession))
+        if (_net.IsServer && !_userInterface.GetActors(table.Owner, TabletopGameUiKey.Key).Contains(user))
+            return;
+
+        if (table.Comp.Entities.Remove(piece))
         {
-            if (table.Comp.Entities.Remove(piece))
-            {
-                PredictedQueueDel(piece);
-                Dirty(table);
-            }
+            PredictedQueueDel(piece);
+            Dirty(table);
         }
     }
     #endregion

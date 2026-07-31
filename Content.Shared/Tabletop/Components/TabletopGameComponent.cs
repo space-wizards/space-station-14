@@ -1,7 +1,6 @@
 using System.Numerics;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
-using Robust.Shared.Player;
 
 namespace Content.Shared.Tabletop.Components;
 
@@ -51,9 +50,26 @@ public sealed partial class TabletopGameComponent : Component
     /// <summary>
     /// All non-camera entities bound to this session. If you create an entity for this session, you have to add it here.
     /// </summary>
+    /// <remarks>
+    /// These things should just be parented to the stupid object, then they can get torn down when the board itself dies.
+    /// </remarks>
     [DataField, ViewVariables(VVAccess.ReadOnly)]
     [AutoNetworkedField]
     public HashSet<EntityUid> Entities = [];
+
+    /// <summary>
+    /// The upright camera entity.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    [AutoNetworkedField]
+    public EntityUid? UprightCamera;
+
+    /// <summary>
+    /// The upside down camera entity for this board.
+    /// </remarks>
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    [AutoNetworkedField]
+    public EntityUid? UpsideDownCamera;
 }
 
 /// <summary>
