@@ -21,6 +21,7 @@
     - TabletopBoard
   - type: ActivatableUI
     key: enum.TabletopUiKey.Key
+    verbText: tabletop-verb-play-game
   - type: UserInterface
     interfaces:
       enum.TabletopUiKey.Key:

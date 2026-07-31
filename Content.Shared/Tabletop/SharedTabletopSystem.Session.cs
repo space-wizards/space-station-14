@@ -30,7 +30,7 @@ public abstract partial class SharedTabletopSystem
         ent.Comp.Setup.SetupTabletop(ent.Comp, EntityManager);
         Dirty(ent);
 
-        Log.Info($"Created tabletop session number {ent.Comp} at position {ent.Comp.Position}.");
+        Log.Info($"Created tabletop session for {ent} at position {ent.Comp.Position}.");
     }
 
     /// <summary>
@@ -70,11 +70,8 @@ public abstract partial class SharedTabletopSystem
         // Make sure we have a session, and add the player to it if not added already.
         EnsureSession((uid, tabletop));
 
-        if (_net.IsServer && tabletop.Players.ContainsKey(player))
-            return;
-
         if (TryComp(playerUid, out TabletopGamerComponent? gamer))
-            CloseSessionFor(player, gamer.Tabletop, false);
+            _userInterface.CloseUi(gamer.Tabletop, TabletopGameUiKey.Key, playerUid, true);
 
         // Set the entity as an absolute GAMER.
         EnsureComp<TabletopGamerComponent>(playerUid).Tabletop = uid;
@@ -82,11 +79,6 @@ public abstract partial class SharedTabletopSystem
         // Create a camera for the gamer to use.
         var camera = CreateCamera(tabletop, player);
         Dirty(uid, tabletop);
-
-        if (_net.IsServer)
-        {
-            tabletop.Players[player] = new TabletopSessionPlayerData { Camera = camera };
-        }
 
         // Tell the gamer to open a viewport for the tabletop game.
         OnTabletopPlay(uid, camera, Loc.GetString(tabletop.BoardName), tabletop.Size);

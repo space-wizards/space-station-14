@@ -91,13 +91,10 @@ public abstract partial class SharedTabletopSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnTabletopActivate(Entity<TabletopGameComponent> ent, ref ActivateInWorldEvent args)
+    private void OnTabletopBoundUIOpened(Entity<TabletopGameComponent> ent, ref BoundUIOpenedEvent args)
     {
-        if (args.Handled || !args.Complex)
-            return;
-
         // Check that a player is attached to the entity.
-        if (!ActorQuery.TryComp(args.User, out ActorComponent? actor))
+        if (!ActorQuery.TryComp(args.Actor, out ActorComponent? actor))
             return;
 
         OpenSessionFor(actor.PlayerSession, ent.Owner);
@@ -154,33 +151,6 @@ public abstract partial class SharedTabletopSystem : EntitySystem
         };
 
         args.Verbs.Add(removeVerb);
-    }
-
-    /// <summary>
-    /// Add a verb that allows the player to start playing a tabletop game.
-    /// </summary>
-    [SubscribeLocalEvent]
-    private void AddPlayGameVerb(Entity<TabletopGameComponent> ent, ref GetVerbsEvent<ActivationVerb> args)
-    {
-        if (!args.CanAccess || !args.CanInteract)
-            return;
-
-        if (!ActorQuery.TryComp(args.User, out ActorComponent? actor))
-            return;
-
-        // Will get closed later if CanSeeTable returns false.
-        var disabled = !CanSeeTable(args.User, ent);
-
-        var playVerb = new ActivationVerb()
-        {
-            Text = Loc.GetString("tabletop-verb-play-game"),
-            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/die.svg.192dpi.png")),
-            Act = () => OpenSessionFor(actor.PlayerSession, ent.Owner),
-            Disabled = disabled,
-            Message = Loc.GetString(disabled ? "tabletop-verb-play-game-message-disabled" : "tabletop-verb-play-game-message")
-        };
-
-        args.Verbs.Add(playVerb);
     }
 
     /// <summary>
