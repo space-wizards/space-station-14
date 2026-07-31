@@ -1,5 +1,6 @@
 using Content.Shared.Atmos.Rotting;
 using Content.Shared.Chat;
+using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Electrocution;
