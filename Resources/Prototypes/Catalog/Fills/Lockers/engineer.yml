@@ -159,6 +159,7 @@
     - id: RCD
     - id: RCDAmmo
     - id: AirGrenade
+    - id: ClothingHandsGlovesAtmos # DS14
     - id: ClothingOuterCoatAtmosWorking # DS14
       prob: 0.75
     - id: PlushieLizardJobAtmospherictechnician

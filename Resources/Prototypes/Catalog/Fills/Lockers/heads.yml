@@ -309,6 +309,7 @@
     - id: ClothingHandsGlovesColorYellow # DS14
     - id: TabletRD # DS14
     - id: LawConfigurator # DS14
+    - id: ClothingEyesGlassesCommandDr # DS14
     - id: PlushieLizardJobResearchdirector
       prob: 0.02
 

@@ -14,3 +14,35 @@
   - type: Tag
     tags:
     - WhitelistChameleon
+
+- type: entity
+  parent: [ClothingEyesBase, BaseCommandContraband]
+  id: ClothingEyesGlassesCommandDr
+  name: Кепто очки научного руководителя
+  description: Супер продвинутые очки, удивительно как в них вместилось столько всего. Воистину чудеса науки!
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Eyes/DrGlasses.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Eyes/DrGlasses.rsi
+  - type: ShowHealthBars
+    damageContainers:
+    - Biological
+    - Inorganic
+    - Silicon
+  - type: FlashImmunity
+  - type: EyeProtection
+  - type: SolutionScanner
+  - type: ActivatableUI
+    key: enum.AnomalyScannerUiKey.Key
+    requireActiveHand: false
+    inHandsOnly: false
+  - type: UserInterface
+    interfaces:
+      enum.AnomalyScannerUiKey.Key:
+        type: AnomalyScannerBoundUserInterface
+  - type: Appearance
+  - type: AnomalyScanner
+  - type: GuideHelp
+    guides:
+    - ScannersAndVessels

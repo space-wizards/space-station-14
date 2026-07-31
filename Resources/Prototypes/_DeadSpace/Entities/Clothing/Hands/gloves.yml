@@ -104,3 +104,14 @@
   - type: Fiber
     fiberMaterial: fibers-durathread
     fiberColor: fibers-regal-black
+
+- type: entity
+  parent: ClothingHandsGlovesColorYellow
+  id: ClothingHandsGlovesAtmos
+  name: Изолированные перчатки атмосферного техника
+  description: Перчатки с весьма интересным дизайном. Чёрт они пахнут тритием!
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Hands/Gloves/atmos_gloves.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Hands/Gloves/atmos_gloves.rsi
