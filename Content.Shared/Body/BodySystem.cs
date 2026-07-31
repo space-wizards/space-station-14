@@ -105,7 +105,7 @@ public sealed partial class BodySystem : EntitySystem
     [PublicAPI]
     public IEnumerable<Entity<OrganComponent,T>> EnumerateOrgans<T>(Entity<BodyComponent?> body) where T : IComponent
     {
-        if (!Resolve(body, ref body.Comp))
+        if (!Resolve(body, ref body.Comp, false))
             yield break;
 
         foreach (var organ in body.Comp.Organs?.ContainedEntities ?? [])
@@ -125,7 +125,7 @@ public sealed partial class BodySystem : EntitySystem
     [PublicAPI]
     public IEnumerable<Entity<OrganComponent, T>> EnumerateOrgans<T>(Entity<BodyComponent?> body, EntityQuery<T> query) where T : IComponent
     {
-        if (!Resolve(body, ref body.Comp))
+        if (!Resolve(body, ref body.Comp, false))
             yield break;
 
         foreach (var organ in body.Comp.Organs?.ContainedEntities ?? [])
