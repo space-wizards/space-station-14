@@ -530,9 +530,10 @@
   components:
   - type: Action
     useDelay: 2
-    icon:
-      sprite: Interface/Actions/night_vision.rsi
-      state: icon
+  - type: Sprite
+    sprite: Interface/Actions/night_vision.rsi
+    layers:
+    - state: icon
   - type: InstantAction
     event: !type:ToggleXRayVisionEvent
 
