@@ -290,8 +290,8 @@
     - id: UplinkLighterBox
 
 - type: entityTable
-  id: ToiletCisternLoot
-  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector
       weight: 25
       tableId: ToiletCisternCommonToolsTable
     - !type:NestedSelector
@@ -303,4 +303,5 @@
     - !type:NestedSelector
       weight: 3
       tableId: ToiletCisternWeaponsTable
-      tableId: ToiletCisternSyndicateTable
+    - !type:NestedSelector
+      weight: 1
