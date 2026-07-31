@@ -13,13 +13,13 @@ namespace Content.Shared.Toolshed.TypeParsers;
 /// </summary>
 public sealed partial class XenoEffectParser : CustomCompletionParser<ProtoId<EntityPrototype>>
 {
-    [Dependency] private IEntitySystemManager _systemManager = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
 
     public override CompletionResult TryAutocomplete(ParserContext ctx, CommandArgument? arg)
     {
         var hint = ToolshedCommand.GetArgHint(arg, typeof(ProtoId<EntityPrototype>));
 
-        var artifact = _systemManager.GetEntitySystem<SharedXenoArtifactSystem>();
+        var artifact = _entityManager.System<SharedXenoArtifactSystem>();
 
         return CompletionResult.FromHintOptions(artifact.EffectPrototypeIds, hint);
     }

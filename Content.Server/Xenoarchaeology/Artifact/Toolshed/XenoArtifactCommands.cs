@@ -80,8 +80,8 @@ public sealed partial class XenoArtifactCommand : ToolshedCommand
     [CommandImplementation("totalresearch")]
     public int TotalResearch([PipedArgument] EntityUid artifactEntityUid)
     {
-        _artifact ??= EntityManager.System<XenoArtifactSystem>();
-        var comp = EntityManager.GetComponent<XenoArtifactComponent>(artifactEntityUid);
+        _artifact ??= Sys<XenoArtifactSystem>();
+        var comp = Comp<XenoArtifactComponent>(artifactEntityUid);
 
         var sum = 0;
 
@@ -117,8 +117,8 @@ public sealed partial class XenoArtifactCommand : ToolshedCommand
     [CommandImplementation("unlockallnodes")]
     public void UnlockAllNodes([PipedArgument] EntityUid artifactEntityUid)
     {
-        _artifact ??= EntityManager.System<XenoArtifactSystem>();
-        var comp = EntityManager.GetComponent<XenoArtifactComponent>(artifactEntityUid);
+        _artifact ??= Sys<XenoArtifactSystem>();
+        var comp = Comp<XenoArtifactComponent>(artifactEntityUid);
 
         var nodes = _artifact.GetAllNodes((artifactEntityUid, comp));
         foreach (var node in nodes)
@@ -164,7 +164,7 @@ public sealed partial class XenoArtifactCommand : ToolshedCommand
             return;
 
         var entity = EntityManager.SpawnNextToOrDrop(artifactType, target.AttachedEntity.Value);
-        if (!EntityManager.TryGetComponent(entity, out XenoArtifactComponent? artifactComp))
+        if (!TryComp(entity, out XenoArtifactComponent? artifactComp))
         {
             return;
         }
@@ -179,7 +179,7 @@ public sealed partial class XenoArtifactCommand : ToolshedCommand
         (Entity<XenoArtifactComponent> Artifact, Entity<XenoArtifactNodeComponent> Node) tuple
     )
     {
-        _artifact ??= EntitySystemManager.GetEntitySystem<XenoArtifactSystem>();
+        _artifact ??= Sys<XenoArtifactSystem>();
         _artifact.SetNodeUnlocked(tuple.Node.AsNullable());
     }
 
@@ -190,7 +190,7 @@ public sealed partial class XenoArtifactCommand : ToolshedCommand
         (Entity<XenoArtifactComponent> Artifact, Entity<XenoArtifactNodeComponent> Node) tuple
     )
     {
-        _artifact ??= EntitySystemManager.GetEntitySystem<XenoArtifactSystem>();
+        _artifact ??= Sys<XenoArtifactSystem>();
         _artifact.RemoveNode(tuple.Artifact.AsNullable(), tuple.Node.AsNullable());
     }
 
@@ -207,7 +207,7 @@ public sealed partial class XenoArtifactCommand : ToolshedCommand
         if (from.Artifact.Owner != to.Artifact.Owner || from.Node.Owner == to.Node.Owner)
             return;
 
-        _artifact = EntitySystemManager.GetEntitySystem<XenoArtifactSystem>();
+        _artifact = Sys<XenoArtifactSystem>();
         _artifact.AddEdge(from.Artifact.AsNullable(), from.Node, to.Node);
     }
 
@@ -224,7 +224,7 @@ public sealed partial class XenoArtifactCommand : ToolshedCommand
             depth = node.Value.Comp.Depth + 1;
         }
 
-        _artifact ??= EntitySystemManager.GetEntitySystem<XenoArtifactSystem>();
+        _artifact ??= Sys<XenoArtifactSystem>();
         if (!_prototypeManager.Resolve(trigger, out var triggerPrototype))
             return;
 
