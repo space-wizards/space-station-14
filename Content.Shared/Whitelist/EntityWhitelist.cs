@@ -59,26 +59,4 @@ public sealed partial class EntityWhitelist
     /// </summary>
     [DataField]
     public bool RequireAll;
-
-    /// <summary>
-    /// Determines how the check handles entity with containers and if to check the items inside
-    /// </summary>
-    [DataField]
-    public RecursiveContainerCondition RecursiveCheck = RecursiveContainerCondition.None;
-}
-
-public enum RecursiveContainerCondition
-{
-    /// <summary>
-    /// Will not check for entities inside the entity being checked.
-    /// </summary>
-    None,
-    /// <summary>
-    /// The item being checked will be considered valid if any item inside is valid.
-    /// </summary>
-    Any,
-    /// <summary>
-    /// The item being checked will only be considered valid if all items inside are also valid
-    /// </summary>
-    All,
 }
