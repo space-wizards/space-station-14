@@ -1,7 +1,8 @@
 using System.Text;
 using Content.Server.Administration;
+using Content.Server.Xenoarchaeology.Artifact;
 using Content.Shared.Administration;
-using Content.Shared.Toolshed.TypeParsers;
+using Content.Shared.Toolshed.TypeParsers.XenoArtifact;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Content.Shared.Xenoarchaeology.Artifact.Prototypes;
 using Robust.Shared.Map;
@@ -9,7 +10,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Toolshed;
 
-namespace Content.Server.Xenoarchaeology.Artifact.Toolshed;
+namespace Content.Server.Toolshed.Commands.XenoArtifacts;
 
 /// <summary>
 /// Toolshed commands for manipulating xeno artifact.

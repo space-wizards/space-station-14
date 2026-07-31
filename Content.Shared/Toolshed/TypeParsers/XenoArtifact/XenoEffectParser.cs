@@ -5,7 +5,7 @@ using Robust.Shared.Toolshed;
 using Robust.Shared.Toolshed.Syntax;
 using Robust.Shared.Toolshed.TypeParsers;
 
-namespace Content.Shared.Toolshed.TypeParsers;
+namespace Content.Shared.Toolshed.TypeParsers.XenoArtifact;
 
 /// <summary>
 /// Custom type parser for toolshed commands

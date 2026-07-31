@@ -6,7 +6,7 @@ using Robust.Shared.Toolshed;
 using Robust.Shared.Toolshed.Syntax;
 using Robust.Shared.Toolshed.TypeParsers;
 
-namespace Content.Shared.Toolshed.TypeParsers;
+namespace Content.Shared.Toolshed.TypeParsers.XenoArtifact;
 
 /// <summary>
 /// Argument parser for toolshed commands, which should autocomplete artifact nodes that exists on artifact.
