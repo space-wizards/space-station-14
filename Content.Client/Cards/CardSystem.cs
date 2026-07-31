@@ -1,9 +1,7 @@
-using System.Linq;
 using System.Numerics;
 using Content.Client.Storage.Systems;
 using Content.Shared.Cards;
 using Content.Shared.Mobs.Components;
-using Content.Shared.Stacks;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
