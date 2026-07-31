@@ -147,7 +147,6 @@
     count: 1
     locks: true
   productAction: ActionChangelingLastResort
-  lockable: true
 
 - type: listing
   id: ChangelingNightVision
