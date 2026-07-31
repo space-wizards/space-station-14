@@ -6,7 +6,7 @@ using Content.Shared.Store;
 namespace Content.Server.Store.Conditions;
 
 /// <summary>
-/// Only allows this listing being purchased when the buyer is a changeling that has devoured an amount X (Count) of bodies.
+/// Only allows this listing being purchased when the buyer is a changeling that has devoured X (Count) unique bodies.
 /// </summary>
 public sealed partial class BuyerBodyCountCondition : ListingCondition
 {
