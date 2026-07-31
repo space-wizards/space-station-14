@@ -344,6 +344,9 @@
   id: RevolverPython
 
 - type: Tag
+  id: SharkEmotes
+
+- type: Tag
   id: ShotgunBulldog
 
 - type: Tag

@@ -1,0 +1,4 @@
+- type: soundCollection
+  id: SharkTeethClacks
+  files:
+    - /Audio/_DeadSpace/Voice/Shark/teeth_clack1.ogg
