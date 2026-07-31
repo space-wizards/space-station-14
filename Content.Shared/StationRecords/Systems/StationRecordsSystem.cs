@@ -159,6 +159,13 @@ public sealed partial class StationRecordsSystem : EntitySystem
             return;
         }
 
+        var jobWeights = TryComp<Content.Shared.Station.Components.StationDataComponent>(station, out var stationData)
+            ? stationData.JobWeights
+            : null;
+        var displayPriority = JobUIComparer.TryCreate(ProtoMan, jobWeights, out var comparer)
+            ? comparer.GetWeight(jobPrototype) ?? 0
+            : 0;
+
         var record = new GeneralStationRecord
         {
             Name = name,
@@ -168,7 +175,7 @@ public sealed partial class StationRecordsSystem : EntitySystem
             JobPrototype = jobId,
             Species = species,
             Gender = gender,
-            DisplayPriority = jobPrototype.RealDisplayWeight,
+            DisplayPriority = displayPriority,
             Fingerprint = mobFingerprint,
             DNA = dna
         };
