@@ -153,7 +153,7 @@ public abstract partial class SharedDefibrillatorSystem : EntitySystem
         target = selfEvent.DefibTarget;
 
         // Ensure thet new target is still valid.
-        if (selfEvent.Cancelled || !CanZap(ent, target, user, true))
+        if (selfEvent.Cancelled || !CanZap(ent, target, user))
             return;
 
         var targetEvent = new TargetBeforeDefibrillatorZapsEvent(user, ent.Owner, target);
@@ -161,7 +161,7 @@ public abstract partial class SharedDefibrillatorSystem : EntitySystem
 
         target = targetEvent.DefibTarget;
 
-        if (targetEvent.Cancelled || !CanZap(ent, target, user, true))
+        if (targetEvent.Cancelled || !CanZap(ent, target, user))
             return;
 
         _audio.PlayPredicted(ent.Comp.ZapSound, ent.Owner, user);
