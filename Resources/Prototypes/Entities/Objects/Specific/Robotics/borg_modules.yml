@@ -1618,7 +1618,7 @@
     hands:
     - item: WeaponBurstFireLaserXenoborg
   - type: BorgModuleIcon
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-laser2-module }
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-laser3-module }
 
 - type: entity
   parent: [ BaseXenoborgModuleScout, BaseProviderBorgModule, BaseXenoborgContraband ]
