@@ -56,14 +56,14 @@ public sealed partial class XATInteractWithComponent : Component
     /// <summary>
     /// Number of interactions required to trigger, set after initiation.
     /// </summary>
-    [AutoNetworkedField]
-    public int MaxCount = 0;
+    [DataField, AutoNetworkedField]
+    public int? MaxCount;
 
     /// <summary>
     /// Number of interactions to go.
     /// </summary>
     [AutoNetworkedField]
-    public int Count = 0;
+    public int? Count;
 }
 
 /// <summary>

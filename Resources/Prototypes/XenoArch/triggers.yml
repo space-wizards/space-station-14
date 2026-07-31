@@ -377,14 +377,7 @@
   id: TriggerInteractShock
   tip: xenoarch-trigger-tip-shock
   components:
-  - type: XATInteractWith
-    startTriggerSound: /Audio/Items/Defib/defib_charge.ogg
-    successTriggerSound: /Audio/Items/Defib/defib_zap.ogg
-    interactionTime: 3
-    whitelist:
-      components:
-      - Defibrillator
   - type: XATShock
   - type: XATDamageThresholdReached
     typesNeeded:
-      Shock: 10
+      Shock: 5

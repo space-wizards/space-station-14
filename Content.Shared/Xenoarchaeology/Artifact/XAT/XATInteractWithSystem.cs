@@ -44,9 +44,7 @@ public sealed partial class XATInteractWithSystem : BaseXATSystem<XATInteractWit
     /// </summary>
     private void OnMapInit(Entity<XATInteractWithComponent> ent, ref MapInitEvent args)
     {
-        ent.Comp.MaxCount = ent.Comp.InteractionCount.Next(_random); // randomly decide count to decrement.
-        ent.Comp.Count = ent.Comp.MaxCount; // define count amount.
-        Dirty(ent);
+        SetMaxCount(ent);
     }
 
     /// <summary>
@@ -60,12 +58,6 @@ public sealed partial class XATInteractWithSystem : BaseXATSystem<XATInteractWit
         args.Handled = true;
 
         if (!_whitelistSystem.IsWhitelistPassOrNull(node.Comp1.Whitelist, args.Used)) // must be on the whitelist.
-            return;
-
-        if (!_toggle.IsActivated(args.Used)) // if the item can be toggled on, it should be.
-            return;
-
-        if (!_powerCell.HasActivatableCharge(args.Used, user: args.User, predicted: true)) // if the item can be powered, it should be.
             return;
 
         _audio.PlayPredicted(node.Comp1.StartTriggerSound, artifact.Owner, artifact.Owner);
@@ -91,8 +83,11 @@ public sealed partial class XATInteractWithSystem : BaseXATSystem<XATInteractWit
         if (GetEntity(args.Node) != node.Owner)
             return;
 
-        if (args.Used == null || !_powerCell.TryUseActivatableCharge(args.Used.Value, user: args.User)) // try to use charge if we can.
+        if (args.Used == null)
             return;
+
+        if (node.Comp1.MaxCount == null || node.Comp1.Count == null) // if maxcount or count somehow are not set, reset them
+            SetMaxCount((node.Owner, node.Comp1));
 
         _audio.PlayPredicted(node.Comp1.SuccessTriggerSound, artifact.Owner, artifact.Owner); // play on the artifact as the interacter may be deleted.
 
@@ -101,7 +96,7 @@ public sealed partial class XATInteractWithSystem : BaseXATSystem<XATInteractWit
         if (node.Comp1.DestroyAfter == true) // artifact consumes the item.
         {
             if (HasComp<StackComponent>(args.Used) && amount > node.Comp1.Count) // _stack.ReduceCount doesn't effect non-stack items.
-                _stack.ReduceCount(args.Used.Value, node.Comp1.Count);
+                _stack.ReduceCount(args.Used.Value, node.Comp1.Count.Value);
             else
                 PredictedQueueDel(args.Used);
         }
@@ -124,4 +119,14 @@ public sealed partial class XATInteractWithSystem : BaseXATSystem<XATInteractWit
 
         args.Handled = true;
     }
+
+    private void SetMaxCount(Entity<XATInteractWithComponent> ent)
+    {
+        if (ent.Comp.MaxCount == null)
+            ent.Comp.MaxCount = ent.Comp.InteractionCount.Next(_random); // randomly decide count to decrement.
+        ent.Comp.Count = ent.Comp.MaxCount.Value; // define count amount.
+        Dirty(ent);
+    }
 }
+
+
