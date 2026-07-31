@@ -5407,3 +5407,10 @@ Entries:
   changes:
   - type: Add
     message: Теперь музыкант может взять супер синтезатор за выслугу в 50 часов
+- id: 530
+  author: rhailrake
+  time: '2026-07-31T19:35:06.042445+00:00'
+  pr: 2051
+  changes:
+  - type: Add
+    message: Предикт стрельбы. (пж зарегай 14)
