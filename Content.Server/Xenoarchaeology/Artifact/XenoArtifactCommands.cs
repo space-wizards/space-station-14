@@ -1,16 +1,13 @@
-using System.Linq;
 using System.Text;
 using Content.Server.Administration;
 using Content.Shared.Administration;
+using Content.Shared.Toolshed.TypeParsers;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Content.Shared.Xenoarchaeology.Artifact.Prototypes;
-using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Toolshed;
-using Robust.Shared.Toolshed.Syntax;
-using Robust.Shared.Toolshed.TypeParsers;
 
 namespace Content.Server.Xenoarchaeology.Artifact;
 
@@ -240,123 +237,5 @@ public sealed partial class XenoArtifactCommand : ToolshedCommand
         {
             _artifact.RebuildXenoArtifactMetaData(artifact.AsNullable());
         }
-    }
-
-    /// <summary>
-    /// Argument parser for toolshed commands, which should autocomplete artifact nodes that exists on artifact.
-    /// </summary>
-    public sealed partial class XenoArtifactNodeParser : CustomTypeParser<(Entity<XenoArtifactComponent>, Entity<XenoArtifactNodeComponent>)>
-    {
-        [Dependency] private IEntityManager _entityManager = default!;
-        [Dependency] private ToolshedManager _toolshedManager = default!;
-
-        private XenoArtifactSystem? _artifact;
-
-        /// <inheritdoc />
-        public override bool TryParse(ParserContext parser, out (Entity<XenoArtifactComponent>, Entity<XenoArtifactNodeComponent>) result)
-        {
-            result = default;
-
-            
-            if (!_toolshedManager.TryParse<Entity<XenoArtifactComponent>>(parser, out var artifactEnt))
-                return false;
-
-            if (!_toolshedManager.TryParse<Entity<XenoArtifactNodeComponent>>(parser, out var nodeEnt))
-                return false;
-
-            result = (artifactEnt, nodeEnt);
-            return true;
-        }
-
-        /// <inheritdoc />
-        public override CompletionResult? TryAutocomplete(ParserContext ctx, CommandArgument? arg)
-        {
-            if (!_toolshedManager.TryParse<Entity<XenoArtifactComponent>>(ctx, out var artifactEnt))
-            {
-                return GetHintedEntities<XenoArtifactComponent>(arg);
-            }
-
-            var hint = ToolshedCommand.GetArgHint(arg, typeof(Entity<XenoArtifactNodeComponent>));
-
-            _artifact ??= _entityManager.System<XenoArtifactSystem>();
-            var list = _artifact.GetAllNodes(artifactEnt)
-                                .Select(
-                                    node =>
-                                    {
-                                        var metadata = _entityManager.GetComponent<MetaDataComponent>(node);
-                                        var entDescription = Loc.GetString(metadata.EntityDescription);
-                                        return new CompletionOption(
-                                            node.Owner.ToString(),
-                                            Loc.GetString(
-                                                "command-xenoartifact-common-node-hint",
-                                                ("depth", node.Comp.Depth),
-                                                ("nodeId", _artifact.GetNodeId(node.Owner)),
-                                                ("nodeDetail", entDescription)
-                                            )
-                                        );
-                                    });
-
-            return CompletionResult.FromHintOptions(list, hint);
-        }
-
-        private CompletionResult? GetHintedEntities<T>(CommandArgument? arg) where T : IComponent
-        {
-            var hint = ToolshedCommand.GetArgHint(arg, typeof(NetEntity));
-
-            // Avoid dumping too many entities
-            if (_entityManager.Count<T>() > 128)
-                return CompletionResult.FromHint(hint);
-
-            var query = _entityManager.AllEntityQueryEnumerator<T, MetaDataComponent>();
-            var list = new List<CompletionOption>();
-            while (query.MoveNext(out _, out var metadata))
-            {
-                list.Add(new CompletionOption(metadata.NetEntity.ToString(), metadata.EntityName));
-            }
-
-            return CompletionResult.FromHintOptions(list, hint);
-        }
-    }
-}
-
-/// <summary>
-/// Custom type parser for toolshed commands that will enable choosing between hand-held and
-/// stationary artifact types.
-/// </summary>
-public sealed partial class XenoArtifactTypeParser : CustomCompletionParser<ProtoId<EntityPrototype>>
-{
-    private static readonly EntProtoId ArtifactDummyItem = "DummyArtifactItem";
-    private static readonly EntProtoId ArtifactDummyStructure = "DummyArtifactStructure";
-
-
-    public override CompletionResult TryAutocomplete(ParserContext ctx, CommandArgument? arg)
-    {
-        return CompletionResult.FromHintOptions(
-            [
-                new CompletionOption(ArtifactDummyItem, Loc.GetString("command-spawnartifactwithnode-spawn-artifact-item-hint")),
-                new CompletionOption(ArtifactDummyStructure, Loc.GetString("command-spawnartifactwithnode-spawn-artifact-structure-hint")),
-            ],
-            Loc.GetString("command-spawnartifactwithnode-spawn-artifact-type-hint")
-        );
-    }
-}
-
-/// <summary>
-/// Custom type parser for toolshed commands
-/// that lets choose entity prototype of XenoArtifact effect.
-/// </summary>
-public sealed partial class XenoEffectParser : CustomCompletionParser<ProtoId<EntityPrototype>>
-{
-    [Dependency] private IEntitySystemManager _systemManager = default!;
-
-    private XenoArtifactSystem? _artifact;
-
-    public override CompletionResult TryAutocomplete(ParserContext ctx, CommandArgument? arg)
-    {
-        var hint = ToolshedCommand.GetArgHint(arg, typeof(ProtoId<EntityPrototype>));
-
-        _artifact ??= _systemManager.GetEntitySystem<XenoArtifactSystem>();
-
-        return CompletionResult.FromHintOptions(_artifact.EffectPrototypeIds, hint);
     }
 }
