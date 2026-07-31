@@ -5460,3 +5460,10 @@ Entries:
     message: Новые TTS голоса.
   - type: Tweak
     message: Логика формирования и прогрузки кукл персонажей в манифесте. (by cyberbobeks)
+- id: 533
+  author: zubekkk
+  time: '2026-07-31T20:22:19.407507+00:00'
+  pr: 2049
+  changes:
+  - type: Fix
+    message: Подключение устройств к открученному или обесточенному серверу НИО
