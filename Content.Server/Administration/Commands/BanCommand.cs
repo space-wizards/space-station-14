@@ -76,16 +76,13 @@ public sealed partial class BanCommand : LocalizedCommands
             return;
         }
 
-        var targetUid = located.UserId;
-        var targetHWid = located.LastHWId;
-
         var banInfo = new CreateServerBanInfo(reason);
-        banInfo.WithBanningAdmin(player?.UserId);
-        banInfo.AddUser(targetUid, target);
-        banInfo.AddHWId(targetHWid);
+        banInfo.WithBanningAdmin(player?.UserId)
+               .AddUser(located.UserId, target)
+               .AddHWId(located.LastHWId)
+               .WithSeverity(severity);
         if (minutes > 0)
             banInfo.WithMinutes(minutes);
-        banInfo.WithSeverity(severity);
 
         _bans.CreateServerBan(banInfo);
     }
