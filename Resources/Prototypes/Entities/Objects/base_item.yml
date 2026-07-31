@@ -219,8 +219,6 @@
   components:
   - type: SecretStash
     blacklist:
-      components:
-      - SecretStash # Prevents being able to insert plushies inside each other (infinite plush)!
       tags:
       - QuantumSpinInverter # It will cause issues with the grinder...
   - type: ToolOpenable
@@ -271,3 +269,20 @@
         Slash: 7.5
   - type: ToolOpenable
     verbOnly: true
+
+- type: entity
+  abstract: true
+  parent: BaseStashCake
+  id: BaseStashCakeNormal
+  components:
+  - type: SecretStash
+    maxItemSize: "Small"
+
+- type: entity
+  abstract: true
+  parent: BaseStashCake
+  id: BaseStashCakeSmall
+  components:
+  - type: SecretStash
+    maxItemSize: "Tiny"
+
