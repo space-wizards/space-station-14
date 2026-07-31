@@ -209,7 +209,6 @@
     - id: ClosetMaintenanceFilledRandom
       prob: 0.01
 
-
 - type: entity
   id: ClosetMaintenanceFilledRandom
   suffix: Filled, Random
@@ -304,7 +303,6 @@
       weight: 5
       tableId: ToiletCisternUtilityTable
     - !type:NestedSelector
-      weight: 3
-      tableId: ToiletCisternWeaponsTable
-    - !type:NestedSelector
       weight: 1
+      tableId: ToiletCisternSyndicateTable
+    - !type:NestedSelector
