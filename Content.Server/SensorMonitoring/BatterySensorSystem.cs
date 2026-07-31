@@ -3,14 +3,16 @@ using Content.Server.Power.Components;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Power.Components;
+using Content.Shared.Power.EntitySystems;
 
 namespace Content.Server.SensorMonitoring;
 
-public sealed class BatterySensorSystem : EntitySystem
+public sealed partial class BatterySensorSystem : EntitySystem
 {
     public const string DeviceNetworkCommandSyncData = "bat_sync_data";
 
-    [Dependency] private readonly DeviceNetworkSystem _deviceNetwork = default!;
+    [Dependency] private DeviceNetworkSystem _deviceNetwork = default!;
+    [Dependency] private SharedBatterySystem _battery = default!;
 
     public override void Initialize()
     {
@@ -26,13 +28,14 @@ public sealed class BatterySensorSystem : EntitySystem
         {
             case DeviceNetworkCommandSyncData:
                 var battery = Comp<BatteryComponent>(uid);
+                var currentCharge = _battery.GetCharge((uid, battery));
                 var netBattery = Comp<PowerNetworkBatteryComponent>(uid);
 
                 var payload = new NetworkPayload
                 {
                     [DeviceNetworkConstants.Command] = DeviceNetworkCommandSyncData,
                     [DeviceNetworkCommandSyncData] = new BatterySensorData(
-                        battery.CurrentCharge,
+                        currentCharge,
                         battery.MaxCharge,
                         netBattery.CurrentReceiving,
                         netBattery.MaxChargeRate,

@@ -64,6 +64,15 @@
 
 - type: latheRecipe
   parent: BasePartRecipe
+  id: VoiceSensor
+  result: voicesensor
+  materials:
+    Steel: 100
+    Plastic: 200
+    Glass: 100
+
+- type: latheRecipe
+  parent: BasePartRecipe
   id: SignallerAdvanced
   result: RemoteSignallerAdvanced
   materials:
@@ -90,6 +99,18 @@
   materials:
     Steel: 400
     Glass: 100
+
+- type: latheRecipe
+  id: TeleporterChipBlank
+  result: TeleporterChipBlank
+  categories:
+  - Tools
+  - Research
+  completetime: 2
+  materials:
+    Steel: 50
+    Plastic: 50
+    Plasma: 25
 
 - type: latheRecipe
   parent: BaseToolRecipe
@@ -157,7 +178,7 @@
 
 - type: latheRecipe
   id: WeaponForceGun
-  result: WeaponForceGun
+  result: WeaponForceGunEmpty
   categories:
   - Tools
   completetime: 5
@@ -197,7 +218,7 @@
 
 - type: latheRecipe
   id: WeaponTetherGun
-  result: WeaponTetherGun
+  result: WeaponTetherGunEmpty
   categories:
   - Tools
   completetime: 5
@@ -220,7 +241,7 @@
 - type: latheRecipe
   id: CableDetStack1
   result: CableDetStack1
-  categories: 
+  categories:
   - Weapons
   completetime: 2
   materials:
@@ -231,7 +252,7 @@
 - type: latheRecipe
   id: EmptyDetonator
   result: EmptyDetonator
-  categories: 
+  categories:
   - Weapons
   completetime: 3
   materials:

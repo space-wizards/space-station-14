@@ -8,16 +8,13 @@
   color: white
   recognizable: true
   metabolisms:
-    Food:
+    Digestion:
+      metabolites:
+        Sugar: 0.4
+        Nutriment: 0.2
       effects:
-      - !type:AdjustReagent
-        reagent: Sugar
-        amount: 0.4
       - !type:SatiateThirst
         factor: -0.2 #its flour
-      - !type:AdjustReagent
-        reagent: Nutriment
-        amount: 0.1
 
 - type: reagent
   id: Cornmeal
@@ -28,13 +25,12 @@
   flavor: corn #so corn doesnt taste chalky
   color: tan
   metabolisms:
-    Food:
+    Digestion:
+      metabolites:
+        Nutriment: 0.2
       effects:
       - !type:SatiateThirst
         factor: -0.2 #its cornflour
-      - !type:AdjustReagent
-        reagent: Nutriment
-        amount: 0.1
 
 - type: reagent
   id: Oats
@@ -45,14 +41,10 @@
   flavor: oats
   color: tan
   metabolisms:
-    Food:
-      effects:
-      - !type:AdjustReagent
-        reagent: Sugar
-        amount: 0.2
-      - !type:AdjustReagent
-        reagent: Nutriment
-        amount: 0.3
+    Digestion:
+      metabolites:
+        Sugar: 0.4
+        Nutriment: 0.6
 
 - type: reagent
   id: Enzyme
@@ -73,11 +65,9 @@
   color: white
   recognizable: true
   metabolisms:
-    Food:
-      effects:
-      - !type:AdjustReagent
-        reagent: UncookedAnimalProteins
-        amount: 0.5
+    Digestion:
+      metabolites:
+        UncookedAnimalProteins: 1
 
 - type: reagent
   id: EggCooked
@@ -89,11 +79,9 @@
   color: white
   recognizable: true
   metabolisms:
-    Food:
-      effects:
-      - !type:AdjustReagent
-        reagent: Protein
-        amount: 1
+    Digestion:
+      metabolites:
+        Protein: 2
 
 - type: reagent
   id: Blackpepper
@@ -105,7 +93,7 @@
   color: black
   recognizable: true
   metabolisms:
-    Food:
+    Digestion:
       effects:
       - !type:Emote
         emote: Cough
@@ -134,14 +122,11 @@
   color: tan
   recognizable: true
   metabolisms:
-    Food:
+    Digestion:
+      metabolites:
+        Water: 0.8
+        Vitamin: 0.2
       effects:
-      - !type:AdjustReagent
-        reagent: Water
-        amount: 0.4
-      - !type:AdjustReagent
-        reagent: Vitamin
-        amount: 0.1
       - !type:Vomit
         probability: 0.1
         conditions:
@@ -159,14 +144,10 @@
   color: white
   recognizable: true
   metabolisms:
-    Food:
-      effects:
-      - !type:AdjustReagent
-        reagent: Sugar
-        amount: 0.4
-      - !type:AdjustReagent
-        reagent: Nutriment
-        amount: 0.1
+    Digestion:
+      metabolites:
+        Sugar: 0.8
+        Nutriment: 0.2
 
 - type: reagent
   id: OilOlive
@@ -179,11 +160,9 @@
   color: olive
   recognizable: true
   metabolisms:
-    Food:
-      effects:
-      - !type:AdjustReagent
-        reagent: Nutriment
-        amount: 0.75
+    Digestion:
+      metabolites:
+        Nutriment: 1.5
 
 - type: reagent
   id: Oil
@@ -213,27 +192,24 @@
   meltingPoint: 146
   boilingPoint: 410 # Really high boiling point compared to its melting
   metabolisms:
-    Food:
+    Digestion:
+      metabolites:
+        Nutriment: 1.5
       effects:
-      - !type:AdjustReagent
-        reagent: Nutriment #Oils enhance nutrition
-        amount: 0.75
-    Poison:
-      effects:
-        - !type:AdjustTemperature
-          amount: 250 # thermal energy, not temp
-        - !type:HealthChange
-          conditions:
-            - !type:ReagentCondition
-              reagent: CapsaicinOil
-              min: 5
-          damage:
-            types:
-              Caustic: 1
-        - !type:PopupMessage
-          type: Local
-          messages: [ "capsaicin-effect-light-burn" ]
-          probability: 0.2
+      - !type:AdjustTemperature
+        amount: 250 # thermal energy, not temp
+      - !type:HealthChange
+        conditions:
+          - !type:ReagentCondition
+            reagent: CapsaicinOil
+            min: 5
+        damage:
+          types:
+            Caustic: 1
+      - !type:PopupMessage
+        type: Local
+        messages: [ "capsaicin-effect-light-burn" ]
+        probability: 0.2
 
 - type: reagent
   id: CocoaPowder #Candy and chocolate
@@ -245,7 +221,7 @@
   color: "#800000"
   meltingPoint: 146.0
   metabolisms:
-    Food:
+    Digestion:
       effects:
       - !type:SatiateHunger
         conditions:
@@ -273,11 +249,9 @@
   boilingPoint: 100.0
   recognizable: true
   metabolisms:
-    Food:
-      effects:
-      - !type:AdjustReagent
-        reagent: Nutriment
-        amount: 0.75
+    Digestion:
+      metabolites:
+        Nutriment: 1.5
 
 - type: reagent
   id: TeaPowder
@@ -288,13 +262,12 @@
   color: "#7F8400"
   group: Foods
   metabolisms:
-    Food:
+    Digestion:
+      metabolites:
+        Nutriment: 0.2
       effects:
       - !type:SatiateThirst
         factor: -0.2
-      - !type:AdjustReagent
-        reagent: Nutriment
-        amount: 0.1
 
 - type: reagent
   id: FrostOil
@@ -305,12 +278,9 @@
   flavor: cold
   color: skyblue
   metabolisms:
-    Food:
-      effects:
-      - !type:AdjustReagent
-        reagent: Nutriment #Oils enhance nutrition
-        amount: 0.75
-    Poison:
+    Digestion:
+      metabolites:
+        Nutriment: 1.5
       effects:
       - !type:AdjustTemperature
         amount: -250 # thermal energy, not temp

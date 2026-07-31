@@ -11,9 +11,9 @@ namespace Content.Shared.EntityEffects.Effects.Transform;
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class PopupMessageEntityEffectSystem : EntityEffectSystem<TransformComponent, PopupMessage>
 {
-    [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private INetManager _net = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
 
     protected override void Effect(Entity<TransformComponent> entity, ref EntityEffectEvent<PopupMessage> args)
     {

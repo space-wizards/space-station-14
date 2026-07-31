@@ -7,11 +7,11 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Animals.Systems;
 
-public abstract class SharedParrotMemorySystem : EntitySystem
+public abstract partial class SharedParrotMemorySystem : EntitySystem
 {
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly ISharedAdminManager _admin = default!;
-    [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private ISharedAdminManager _admin = default!;
+    [Dependency] private INetManager _net = default!;
 
     public override void Initialize()
     {
@@ -36,7 +36,7 @@ public abstract class SharedParrotMemorySystem : EntitySystem
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/clear-parrot.png")),
             Act = () =>
             {
-                _popup.PopupClient(Loc.GetString("parrot-popup-memory-cleared"), entity.Owner, user);
+                _popup.PopupEntity(Loc.GetString("parrot-popup-memory-cleared"), entity.Owner, user);
 
                 if (_net.IsServer)
                     entity.Comp.SpeechMemories.Clear();
