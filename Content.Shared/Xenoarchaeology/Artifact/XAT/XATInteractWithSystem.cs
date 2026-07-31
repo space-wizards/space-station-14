@@ -1,15 +1,12 @@
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
-using Content.Shared.Item.ItemToggle;
 using Content.Shared.Popups;
-using Content.Shared.PowerCell;
 using Content.Shared.Stacks;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Content.Shared.Xenoarchaeology.Artifact.XAT.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Xenoarchaeology.Artifact.XAT;
 
@@ -21,11 +18,8 @@ public sealed partial class XATInteractWithSystem : BaseXATSystem<XATInteractWit
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
-    [Dependency] private PowerCellSystem _powerCell = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SharedStackSystem _stack = default!;
-    [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private ItemToggleSystem _toggle = default!;
     [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
 
     /// <inheritdoc/>
@@ -48,7 +42,7 @@ public sealed partial class XATInteractWithSystem : BaseXATSystem<XATInteractWit
     }
 
     /// <summary>
-    /// Check against the whitelist, and if item is powerable make sure it is. If conditions are met, begin doafter.
+    /// Check against the whitelist. If conditions are met, begin doafter.
     /// </summary>
     private void OnInteractUsing(Entity<XenoArtifactComponent> artifact, Entity<XATInteractWithComponent, XenoArtifactNodeComponent> node, ref InteractUsingEvent args)
     {

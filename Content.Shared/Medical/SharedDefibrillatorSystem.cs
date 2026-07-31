@@ -1,6 +1,5 @@
 using Content.Shared.Atmos.Rotting;
 using Content.Shared.Chat;
-using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Electrocution;
@@ -201,7 +200,7 @@ public abstract partial class SharedDefibrillatorSystem : EntitySystem
 
             _damageable.TryChangeDamage(target, ent.Comp.ZapHeal, true, origin: user);
 
-            if (_mobState.IsDead(target, targetMobState) && // is the target currently dead
+            if (_mobState.IsDead(target, targetMobState) &&
                 TryComp<MobThresholdsComponent>(target, out var targetThresholds) && //do they have a threshold
                 _mobThreshold.TryGetThresholdForState(target, MobState.Dead, out var threshold, targetThresholds) &&
                 _damageable.GetTotalDamage(target) < threshold) //is their current health above their death threshold
@@ -219,7 +218,8 @@ public abstract partial class SharedDefibrillatorSystem : EntitySystem
             }
             else
             {
-                if (HasComp<MindContainerComponent>(target)) //if the target never could have had a mind in the first place don't bother informing the player about mindlessness
+                //if the target never could have had a mind in the first place don't bother informing the player about mindlessness
+                if (HasComp<MindContainerComponent>(target))
                     _chat.TrySendInGameICMessage(ent.Owner, Loc.GetString("defibrillator-no-mind"),
                     InGameICChatType.Speak, true);
             }
