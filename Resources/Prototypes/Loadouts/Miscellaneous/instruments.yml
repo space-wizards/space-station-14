@@ -166,3 +166,17 @@
   storage:
     back:
     - BagpipeInstrument
+
+## ds-14-start
+- type: loadout
+  id: SuperSynt
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobMusician
+      time: 180000 # 50hr
+  storage:
+    back:
+    - SuperSynthesizerInstrument
+## ds-14-end
