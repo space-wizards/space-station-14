@@ -300,9 +300,8 @@
       weight: 8
       tableId: ToiletCisternRareToolsTable
     - !type:NestedSelector
-      weight: 5
-      tableId: ToiletCisternUtilityTable
     - !type:NestedSelector
+      weight: 3
+      tableId: ToiletCisternWeaponsTable
       weight: 1
       tableId: ToiletCisternSyndicateTable
-    - !type:NestedSelector
