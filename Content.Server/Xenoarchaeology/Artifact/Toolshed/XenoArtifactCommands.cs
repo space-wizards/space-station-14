@@ -21,7 +21,7 @@ public sealed partial class XenoArtifactCommand : ToolshedCommand
 
     private XenoArtifactSystem? _artifact;
     
-    public static readonly EntProtoId ArtifactPrototype = "BaseXenoArtifact";
+    public static readonly EntProtoId ArtifactPrototype = "ComplexXenoArtifactItem";
 
     /// <summary> List existing artifacts. </summary>
     [CommandImplementation("list")]
