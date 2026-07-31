@@ -1,10 +1,11 @@
-using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Rejuvenate;
 using Content.Shared.StatusEffectNew.Components;
+using Content.Shared.Toolshed.TypeParsers;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.StatusEffectNew;
 
@@ -26,6 +27,7 @@ public sealed partial class StatusEffectsSystem : EntitySystem
     // * having pre-cached collections of EntityPrototypes with every filter we would possibly need seems like clogging memory
     // We should invent other way of doing this. Giving more generic and simpler API for such caches
     // could lead to wider usage and indirectly will clog memory with overly-specific caches, so it is not advised.
+    [Access(typeof(StatusEffectCompletionParser), Other = AccessPermissions.None)]
     public readonly HashSet<string> StatusEffectPrototypes = [];
 
     public override void Initialize()

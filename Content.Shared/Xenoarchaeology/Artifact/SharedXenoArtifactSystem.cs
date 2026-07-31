@@ -1,5 +1,6 @@
 using Content.Shared.Actions;
 using Content.Shared.Popups;
+using Content.Shared.Toolshed.TypeParsers.XenoArtifact;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
@@ -27,6 +28,7 @@ public abstract partial class SharedXenoArtifactSystem : EntitySystem
     // We should invent other way of doing this. Giving more generic and simpler API for such caches
     // could lead to wider usage and indirectly will clog memory with overly-specific caches, so it is not advised.
     /// <summary> Cached EntProtoIds of all XenoArtifactEffect prototypes. Used for text hints. </summary>
+    [Access(typeof(XenoEffectParser), Other = AccessPermissions.None)]
     public readonly HashSet<string> EffectPrototypeIds = [];
 
     /// <inheritdoc/>
