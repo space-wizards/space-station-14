@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Shared.Whitelist;
+using Robust.Client.ComponentTrees;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
@@ -25,6 +26,7 @@ public sealed partial class XRayVisionOverlay : Overlay
     private readonly SharedTransformSystem _transform;
     private readonly SharedMapSystem _mapSys;
     private readonly SpriteSystem _sprite;
+    private readonly SpriteTreeSystem _spriteTree;
     private readonly EntityWhitelistSystem _whitelist;
 
     private readonly EntityQuery<OccluderComponent> _occluderQuery;
@@ -36,6 +38,7 @@ public sealed partial class XRayVisionOverlay : Overlay
     private const int TileSizePixels = EyeManager.PixelsPerMeter;
 
     private List<Entity<MapGridComponent>> _grids = [];
+    private readonly List<Entity<SpriteComponent, TransformComponent>> _entities = [];
 
     public Color TileOverlayColor { get; private set; } = Color.White;
     public Color EntityOverlayColor { get; private set; } = Color.White;
@@ -54,6 +57,7 @@ public sealed partial class XRayVisionOverlay : Overlay
         _transform = _entManager.System<SharedTransformSystem>();
         _mapSys = _entManager.System<SharedMapSystem>();
         _sprite = _entManager.System<SpriteSystem>();
+        _spriteTree = _entManager.System<SpriteTreeSystem>();
         _whitelist = _entManager.System<EntityWhitelistSystem>();
         _occluderQuery = _entManager.GetEntityQuery<OccluderComponent>();
     }
@@ -75,7 +79,10 @@ public sealed partial class XRayVisionOverlay : Overlay
             return;
 
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
-        if (!xformQuery.TryGetComponent(viewer.Value, out var viewerXform) || viewerXform.MapID != args.MapId)
+        if (!xformQuery.TryGetComponent(viewer.Value, out var viewerXform))
+            return;
+
+        if (viewerXform.MapID != args.MapId)
             return;
 
         var eye = args.Viewport.Eye;
@@ -137,8 +144,12 @@ public sealed partial class XRayVisionOverlay : Overlay
                 var subRegion = UIBox2.FromDimensions(variant * TileSizePixels, 0, TileSizePixels, TileSizePixels);
 
                 // Draw the tile in grid-local space (transform already set above).
-                var quad = Box2.FromDimensions(tileRef.GridIndices, Vector2.One);
-                handle.DrawTextureRectRegion(texture, quad, null, subRegion);
+                var tileSize = new Vector2(grid.Comp.TileSize);
+                var tilePosition = new Vector2(tileRef.GridIndices.X, tileRef.GridIndices.Y) * grid.Comp.TileSize;
+                var tileTransform = Matrix3x2.CreateTranslation(tilePosition);
+                handle.SetTransform(tileTransform * gridWorldMatrix);
+                handle.DrawTextureRectRegion(texture, new Box2(Vector2.Zero, tileSize), null, subRegion);
+                handle.SetTransform(gridWorldMatrix);
             }
         }
 
@@ -162,26 +173,21 @@ public sealed partial class XRayVisionOverlay : Overlay
         if (Whitelist == null)
             return;
 
+        _entities.Clear();
+        _spriteTree.QueryAabb(_entities, args.MapId, args.WorldAABB);
+
         var eyeRotation = args.Viewport.Eye?.Rotation ?? Angle.Zero;
-
-        var query = _entManager.AllEntityQueryEnumerator<SpriteComponent, TransformComponent>();
-        while (query.MoveNext(out var uid, out var sprite, out var xform))
+        foreach (var ent in _entities)
         {
-            if (xform.MapID != args.MapId || !sprite.Visible || sprite.ContainerOccluded)
-                continue;
+            var uid = ent.Owner;
+            var sprite = ent.Comp1;
+            var xform = ent.Comp2;
 
-            if (!_whitelist.CheckBoth(uid, Blacklist, Whitelist))
+            if (!sprite.Visible || sprite.ContainerOccluded || !_whitelist.CheckBoth(uid, Blacklist, Whitelist))
                 continue;
 
             var (worldPos, worldRot) = _transform.GetWorldPositionRotation(xform, xformQuery);
-
-            // Viewport bounds check.
-            var bounds = _sprite.GetLocalBounds((uid, sprite));
-            var worldBounds = bounds.Translated(worldPos);
-            if (!worldBounds.Intersects(args.WorldAABB))
-                continue;
-
-            _sprite.RenderSprite((uid, sprite), handle, eyeRotation, worldRot, worldPos);
+            _sprite.RenderSprite((uid, sprite), handle, eyeRotation, worldRot, worldPos, overrideShader: _entityShader);
         }
 
         handle.SetTransform(Matrix3x2.Identity);
