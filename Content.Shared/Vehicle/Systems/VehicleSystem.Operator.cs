@@ -2,7 +2,7 @@ using Content.Shared.Buckle.Components;
 using Content.Shared.Vehicle.Components;
 using Robust.Shared.Containers;
 
-namespace Content.Shared.Vehicle;
+namespace Content.Shared.Vehicle.Systems;
 
 public sealed partial class VehicleSystem
 {

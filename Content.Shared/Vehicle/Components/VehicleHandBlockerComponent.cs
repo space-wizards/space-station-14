@@ -1,18 +1,18 @@
-﻿using Content.Shared.Vehicle.Systems;
+using Content.Shared.Vehicle.Systems;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Vehicle.Components;
 
 /// <summary>
-/// Tracking component for handling the operator of a given <see cref="VehicleComponent"/>
+/// Occupies the operator's hands while they are operating a vehicle.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(VehicleSystem))]
-public sealed partial class VehicleOperatorComponent : Component
+public sealed partial class VehicleHandBlockerComponent : Component
 {
     /// <summary>
-    /// The vehicle we are currently operating.
+    /// The number of hands to occupy.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public EntityUid? Vehicle;
+    public int BlockedHands = 1;
 }

@@ -4,8 +4,10 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Components;
+using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
@@ -15,7 +17,7 @@ using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 
-namespace Content.Shared.Vehicle;
+namespace Content.Shared.Vehicle.Systems;
 
 /// <summary>
 /// Handles logic relating to vehicles.
@@ -27,7 +29,9 @@ public sealed partial class VehicleSystem : EntitySystem
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private EntityWhitelistSystem _entityWhitelist = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private SharedMoverController _mover = default!;
+    [Dependency] private SharedVirtualItemSystem _virtualItem = default!;
     [Dependency] private IGameTiming _timing = default!;
 
     [Dependency] private EntityQuery<VehicleComponent> _vehicleQuery;
@@ -35,6 +39,7 @@ public sealed partial class VehicleSystem : EntitySystem
     [Dependency] private EntityQuery<AppearanceComponent> _appearanceQuery;
     [Dependency] private EntityQuery<InputMoverComponent> _inputMoverQuery;
     [Dependency] private EntityQuery<HandsComponent> _handsQuery;
+    [Dependency] private EntityQuery<VehicleHandBlockerComponent> _handBlockerQuery;
 
     /// <remarks>
     /// We subscribe to BeforeDamageChangedEvent so that we can access the damage value before the container is applied.
@@ -146,6 +151,9 @@ public sealed partial class VehicleSystem : EntitySystem
         if (!CanOperate(entity.AsNullable(), operatorUid))
             return false;
 
+        if (!TryBlockHands(entity, operatorUid))
+            return false;
+
         entity.Comp.Operator = operatorUid;
 
         if (_operatorQuery.HasComp(operatorUid))
@@ -196,6 +204,8 @@ public sealed partial class VehicleSystem : EntitySystem
             currentOperatorComponent.Vehicle = null;
             RemCompDeferred<VehicleOperatorComponent>(currentOperator);
         }
+
+        UnblockHands(entity.Owner, currentOperator);
 
         entity.Comp.Operator = null;
         ClearOperatorRelays(currentOperator, entity);
@@ -248,6 +258,7 @@ public sealed partial class VehicleSystem : EntitySystem
         if (_vehicleQuery.TryComp(vehicleUid, out var vehicle))
             return TryRemoveOperator((vehicleUid.Value, vehicle));
 
+        UnblockHands(vehicleUid.Value, operatorEntity.Owner);
         ClearOperatorRelays(operatorEntity.Owner, vehicleUid.Value);
         operatorEntity.Comp.Vehicle = null;
         RemCompDeferred<VehicleOperatorComponent>(operatorEntity.Owner);
@@ -313,7 +324,38 @@ public sealed partial class VehicleSystem : EntitySystem
         if (entity.Comp.RequiresHands && (!_handsQuery.HasComp(uid) || !_actionBlocker.CanInteract(uid, entity)))
             return false;
 
+        if (_handBlockerQuery.TryComp(entity, out var handBlocker) &&
+            (!_handsQuery.TryComp(uid, out var hands) ||
+             _hands.GetHandCount((uid, hands)) < handBlocker.BlockedHands))
+            return false;
+
         return _actionBlocker.CanConsciouslyPerformAction(uid);
+    }
+
+    /// <summary>
+    /// Attempts to occupy the configured number of the operator's hands.
+    /// </summary>
+    private bool TryBlockHands(Entity<VehicleComponent> vehicle, EntityUid operatorUid)
+    {
+        if (!_handBlockerQuery.TryComp(vehicle, out var handBlocker))
+            return true;
+
+        if (_virtualItem.TrySpawnUnremoveableVirtualItemInHand(
+                vehicle.Owner,
+                operatorUid,
+                handBlocker.BlockedHands,
+                dropOthers: true)) return true;
+
+        UnblockHands(vehicle.Owner, operatorUid);
+        return false;
+    }
+
+    /// <summary>
+    /// Removes hand blockers owned by the specified vehicle.
+    /// </summary>
+    private void UnblockHands(EntityUid vehicleUid, EntityUid operatorUid)
+    {
+        _virtualItem.DeleteInHandsMatching(operatorUid, vehicleUid);
     }
 
     /// <summary>
