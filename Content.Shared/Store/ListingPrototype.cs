@@ -305,8 +305,8 @@ public sealed partial class ListingDataWithCostModifiers : ListingData
     [DataField]
     public bool Locked = false;
 
-/// <inheritdoc />
-public ListingDataWithCostModifiers(ListingData listingData)
+    /// <inheritdoc />
+    public ListingDataWithCostModifiers(ListingData listingData)
         : base(
             listingData.Name,
             listingData.DiscountCategory,

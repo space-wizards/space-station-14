@@ -19,7 +19,7 @@ public sealed partial class BuyerChangelingDevourCountCondition : ListingConditi
     public override bool Condition(ListingConditionArgs args)
     {
         if (!args.EntityManager.TryGetComponent<MindComponent>(args.Buyer, out var mind))
-            return true; // needed to obtain body entityuid to check for humanoid appearance
+            return false; // needs a body to be a changeling...
 
         if (!args.EntityManager.TryGetComponent<ChangelingIdentityComponent>(mind.OwnedEntity, out var comp))
             return false; // not a changeling
