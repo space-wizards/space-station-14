@@ -1,17 +1,16 @@
 ﻿using Content.Shared.Body;
 using Content.Shared.Changeling.Components;
 using Content.Shared.Metabolism;
-using Robust.Shared.Containers;
 
 namespace Content.Shared.Changeling.Systems;
 
 public sealed partial class ChangelingMetabolismSystem : EntitySystem
 {
-    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private BodySystem _body = default!;
     [Dependency] private MetabolizerSystem _metabolizer = default!;
 
     [SubscribeLocalEvent]
-    private void OnBiodegradeAction(Entity<ChangelingMetabolismComponent> ent, ref MapInitEvent args)
+    private void OnMetabolismInit(Entity<ChangelingMetabolismComponent> ent, ref MapInitEvent args)
     {
         AddMetabolizer(ent);
     }
@@ -25,15 +24,11 @@ public sealed partial class ChangelingMetabolismSystem : EntitySystem
 
     private void AddMetabolizer(Entity<ChangelingMetabolismComponent> ent)
     {
-        if (!_container.TryGetContainer(ent, BodyComponent.ContainerID, out var container))
-            return;
+        var organs = _body.EnumerateOrgans<MetabolizerComponent>(ent.Owner);
 
-        foreach (var organ in container.ContainedEntities)
+        foreach (var organ in organs)
         {
-            if (!TryComp<MetabolizerComponent>(organ, out var metabolizerComp))
-                continue;
-
-            _metabolizer.TryAddMetabolizerType((organ, metabolizerComp), ent.Comp.AddedMetabolizer);
+            _metabolizer.TryAddMetabolizerType((organ.Owner, organ.Comp2), ent.Comp.AddedMetabolizer);
         }
     }
 }
