@@ -169,8 +169,6 @@
     - id: ToolboxSyndicateFilled
     - id: BalloonSyn
     - id: WeaponSniperMosin
-    - id: MysteryLighterBox
-    - id: SpiderclanFlippo
       weight: 2
     - id: ClothingHandsKnuckleDustersSyndicate
 
