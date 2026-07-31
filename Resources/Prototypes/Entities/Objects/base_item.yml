@@ -247,7 +247,6 @@
   components:
   - type: SecretStash
     secretStashName: secret-stash-cake
-    maxItemSize: "Normal"
     damageEatenItemInside:
       types:
         Slash: 7.5
