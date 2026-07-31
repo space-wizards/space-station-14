@@ -220,7 +220,7 @@ public abstract partial class SharedDefibrillatorSystem : EntitySystem
             {
                 if (HasComp<MindContainerComponent>(target)) //if the target never could have had a mind in the first place don't bother informing the player about mindlessness
                     _chat.TrySendInGameICMessage(ent.Owner, Loc.GetString("defibrillator-no-mind"),
-                    InGameICChatType.Speak, true);
+                        InGameICChatType.Speak, true);
             }
         }
 
