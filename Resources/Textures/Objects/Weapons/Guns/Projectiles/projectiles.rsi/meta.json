@@ -344,7 +344,7 @@
       ]
     },
     {
-     "name": "impact_xeno",
+     "name": "impact_xeno_fire",
       "delays": [
         [
           0.060000002,
@@ -359,7 +359,7 @@
       ]
     },
     {
-     "name": "beam_xeno",
+     "name": "beam_xeno_fire",
       "delays": [
         [
           0.060000002,
@@ -374,7 +374,7 @@
       ]
     },
     {
-     "name": "muzzle_xeno",
+     "name": "muzzle_xeno_fire",
       "delays": [
         [
           0.060000002,

@@ -1022,5 +1022,5 @@
     angleDecay: 15
     cameraRecoilScalar: .25
   - type: BatteryAmmoProvider
-    proto: XenoborgLaser
+    proto: XenoborgFireLaser
     fireCost: 100
