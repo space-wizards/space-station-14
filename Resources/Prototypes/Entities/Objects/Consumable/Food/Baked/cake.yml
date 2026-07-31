@@ -51,8 +51,6 @@
     tags:
     - Cake
     - Slice
-  - type: SecretStash
-    maxItemSize: "Small" # slices are smaller than whole cakes
 
 # Custom Cake Example
 
