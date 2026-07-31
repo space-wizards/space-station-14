@@ -10,10 +10,10 @@ namespace Content.Client.Damage.Systems;
 
 public sealed partial class StaminaSystem : SharedStaminaSystem
 {
-    [Dependency] private readonly AnimationPlayerSystem _animation = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
-    [Dependency] private readonly StunSystem _stun = default!; // Clientside Stun System
+    [Dependency] private AnimationPlayerSystem _animation = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private StunSystem _stun = default!; // Clientside Stun System
 
     private const string StaminaAnimationKey = "stamina";
 

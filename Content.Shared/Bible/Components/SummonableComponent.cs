@@ -21,7 +21,7 @@ public sealed partial class SummonableComponent : Component
     /// Sound to play when entity is summoned.
     /// </summary>
     [DataField]
-    public SoundSpecifier SummonSound = new SoundCollectionSpecifier(DefaultSummonSound, AudioParams.Default.WithVolume(-4f));
+    public SoundSpecifier SummonSound = new SoundCollectionSpecifier(DefaultSummonSound, AudioParams.Default.AddVolume(-4f));
 
     /// <summary>
     /// Used for a special item only the Chaplain can summon. Usually a mob, but supports regular items too.

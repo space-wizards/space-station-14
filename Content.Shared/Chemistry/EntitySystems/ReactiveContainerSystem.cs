@@ -1,21 +1,23 @@
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Robust.Shared.Containers;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Chemistry.EntitySystems;
 
-public sealed class ReactiveContainerSystem : EntitySystem
+public sealed partial class ReactiveContainerSystem : EntitySystem
 {
-    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-    [Dependency] private readonly ReactiveSystem _reactiveSystem = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private SharedContainerSystem _containerSystem = default!;
+    [Dependency] private ReactiveSystem _reactiveSystem = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<ReactiveContainerComponent, EntInsertedIntoContainerMessage>(OnInserted);
-        SubscribeLocalEvent<ReactiveContainerComponent, SolutionContainerChangedEvent>(OnSolutionChange);
+        SubscribeLocalEvent<ReactiveContainerComponent, SolutionChangedEvent>(OnSolutionChange);
     }
 
     private void OnInserted(EntityUid uid, ReactiveContainerComponent comp, EntInsertedIntoContainerMessage args)
@@ -32,14 +34,18 @@ public sealed class ReactiveContainerSystem : EntitySystem
         _reactiveSystem.DoEntityReaction(args.Entity, solution, ReactionMethod.Touch);
     }
 
-    private void OnSolutionChange(EntityUid uid, ReactiveContainerComponent comp, SolutionContainerChangedEvent args)
+    private void OnSolutionChange(EntityUid uid, ReactiveContainerComponent comp, SolutionChangedEvent args)
     {
+        // The changes are already networked as part of the same game state.
+        if (_timing.ApplyingState)
+            return;
+
         if (!_solutionContainerSystem.TryGetSolution(uid, comp.Solution, out _, out var solution))
             return;
+
         if (solution.Volume == 0)
             return;
-        if (!TryComp<ContainerManagerComponent>(uid, out var manager))
-            return;
+
         if (!_containerSystem.TryGetContainer(uid, comp.Container, out var container))
             return;
 

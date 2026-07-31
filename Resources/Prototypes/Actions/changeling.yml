@@ -8,9 +8,10 @@
     useDelay: 2
     raiseOnAction: true
     itemIconStyle: BigAction
-    icon:
-      sprite: Interface/Actions/changeling.rsi
-      state: armblade
+  - type: Sprite
+    sprite: Interface/Actions/changeling.rsi
+    layers:
+    - state: armblade
   - type: InstantAction
     event: !type:OnRetractableItemActionEvent
   - type: RetractableItemAction
@@ -21,14 +22,40 @@
       collection: gib # Placeholder
 
 - type: entity
+  parent: BaseAction
+  id: ActionChangelingBiodegrade
+  name: Biodegrade
+  description: Vomit acid over your restraints, setting yourself free.
+  components:
+  - type: Action
+    useDelay: 60 # TODO: Short cooldown but chemical cost
+    raiseOnAction: true
+    checkCanInteract: false
+  - type: Sprite
+    sprite: Interface/Actions/changeling2.rsi
+    layers:
+    - state: biodegrade
+  - type: InstantAction
+    event: !type:ChangelingBiodegradeActionEvent
+  - type: ChangelingBiodegradeAbility
+
+- type: entity
   id: ActionChangelingDevour
   name: "[color=red]Devour[/color]"
   description: Consume the essence of your victims and subsume their identity and mind into your own.
   components:
   - type: Action
-    icon: { sprite : Interface/Actions/changeling.rsi, state: "devour" }
-    iconOn: { sprite : Interface/Actions/changeling.rsi, state: "devour_on" }
+    itemIconStyle: BigAction
     priority: 1
+  - type: Sprite
+    sprite: Interface/Actions/changeling.rsi
+    layers:
+    - state: "devour"
+      map: ["enum.ActionVisuals.Icon"]
+    - state: "devour_on"
+      map: ["enum.ActionVisuals.IconToggled"]
+      visible: false
+  - type: ActionRequireMouthUncovered
   - type: TargetAction
   - type: EntityTargetAction
     event: !type:ChangelingDevourActionEvent
@@ -39,7 +66,10 @@
   description: Transform and assume the identities of those you have devoured.
   components:
   - type: Action
-    icon: { sprite : Interface/Actions/changeling.rsi, state: "transform" }
+  - type: Sprite
+    sprite: Interface/Actions/changeling.rsi
+    layers:
+    - state: "transform"
   - type: InstantAction
     event: !type:ChangelingTransformActionEvent
 
@@ -48,3 +78,250 @@
   id: ActionChangelingStore
   name: DNA Store
   description: Opens the ability store.
+  components:
+  - type: Action
+  - type: Sprite
+    sprite: Interface/Actions/changeling2.rsi
+    layers:
+    - state: "shop"
+
+- type: entity
+  parent: BaseAction
+  id: ActionChangelingVoiceMimic
+  name: Voice Mimicry
+  description: Model your vocal cords to imitate the voice of someone else.
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+  - type: Sprite
+    sprite: Interface/Actions/changeling2.rsi
+    layers:
+    - state: mimicry
+  - type: InstantAction
+    event: !type:VoiceMaskSetNameEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionChangelingStingDna
+  name: Extract DNA
+  description: Sneakily absorb the identity of unsuspecting victims. Does not grant DNA to your store or objective progress.
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+    priority: 1
+    useDelay: 90 # TODO: Chemical cost, maybe this could be a DoAfter action?
+    raiseOnUser: true
+  - type: Sprite
+    sprite: Interface/Actions/changeling2.rsi
+    layers:
+    - state: "extract_dna_off"
+      map: ["enum.ActionVisuals.Icon"]
+    - state: "extract_dna_on"
+      map: ["enum.ActionVisuals.IconToggled"]
+      visible: false
+  - type: TargetAction
+  - type: EntityTargetAction
+    canTargetSelf: false
+    whitelist:
+      components:
+      - HumanoidProfile
+    event: !type:ChangelingStingDnaEvent
+  - type: PopupOnAction
+    popupType: Medium
+    selfMessage: changeling-sting-success
+
+- type: entity
+  abstract: true
+  parent: BaseAction
+  id: BaseActionChangelingSting
+  components:
+  - type: TargetAction
+    interactOnMiss: false
+  - type: EntityTargetAction
+    whitelist:
+      components:
+      - Bloodstream
+    event: !type:EntityEffectActionEvent
+  - type: PopupOnAction
+    popupType: Medium
+    selfMessage: changeling-sting-success
+
+- type: entity
+  parent: BaseActionChangelingSting
+  id: ActionChangelingStingBlind
+  name: Blind Sting
+  description: Silently sting a target and worsen their sight for a short duration.
+  components:
+  - type: Action
+    useDelay: 60 # TODO: Chemical cost
+    raiseOnAction: true
+    itemIconStyle: BigAction
+  - type: Sprite
+    sprite: Interface/Actions/changeling2.rsi
+    layers:
+    - state: blind_sting
+  - type: EntityEffectAction
+    effects:
+    - !type:AddReagentToBloodstream
+      reagent: NorepinephricAcid
+      quantity: 23
+
+- type: entity
+  parent: BaseActionChangelingSting
+  id: ActionChangelingStingCryogenic
+  name: Cryogenic Sting
+  description: Silently sting a target and slow down their movement drastically.
+  components:
+  - type: Action
+    useDelay: 60 # TODO: Chemical cost
+    raiseOnAction: true
+    itemIconStyle: BigAction
+  - type: Sprite
+    sprite: Interface/Actions/changeling2.rsi
+    layers:
+    - state: cryogenic_sting
+  - type: EntityEffectAction
+    effects:
+    - !type:AddReagentToBloodstream
+      reagent: Fresium
+      quantity: 10 # About 20 seconds of slowdown.
+
+- type: entity
+  parent: BaseActionChangelingSting
+  id: ActionChangelingStingLead
+  name: Lethal Sting
+  description: Silently sting a target and inject them with a lethal dose of a slow acting poison.
+  components:
+  - type: Action
+    useDelay: 180 # TODO: Chemical cost
+    raiseOnAction: true
+    itemIconStyle: BigAction
+  - type: Sprite
+    sprite: Interface/Actions/changeling2.rsi
+    layers:
+    - state: lethal_sting
+  - type: EntityEffectAction
+    effects:
+    - !type:AddReagentToBloodstream
+      reagent: Lead
+      quantity: 5 # Exactly 100 poison damage over 3 minutes.
+
+- type: entity
+  parent: BaseActionChangelingSting
+  id: ActionChangelingStingHallucinogenic
+  name: Hallucinogenic Sting
+  description: Silently sting a target and inject them with chemicals that slow down their higher brain functions.
+  components:
+  - type: Action
+    useDelay: 90 # TODO: Chemical cost
+    raiseOnAction: true
+    itemIconStyle: BigAction
+  - type: Sprite
+    sprite: Interface/Actions/changeling2.rsi
+    layers:
+    - state: hallucination_sting
+  - type: EntityEffectAction
+    effects:
+    - !type:AddReagentToBloodstream
+      reagent: SpaceDrugs
+      quantity: 10 # About 100s of being high
+    - !type:AddReagentToBloodstream
+      reagent: Cryptobiolin
+      quantity: 10 # About 20s of your speech being scrambled
+
+- type: entity
+  parent: BaseAction
+  id: ActionChangelingLastResort
+  name: "[color=red]Last Resort[/color]"
+  description: We sacrifice our current body in a moment of need, violently expanding to break through obstacles and reforming as a headslug.
+  components:
+  - type: ConfirmableAction
+    popup: suicide-action-popup
+  - type: Action
+    raiseOnAction: true
+    checkCanInteract: false # You can transform if you are killed
+    checkConsciousness: false
+    itemIconStyle: BigAction
+  - type: Sprite
+    sprite: Interface/Actions/changeling2.rsi
+    layers:
+    - state: last_resort
+  - type: InstantAction
+    event: !type:ChangelingLastResortActionEvent
+  - type: ChangelingLastResortAbility
+
+- type: entity
+  parent: BaseAction
+  id: ActionChangelingTakeOverCorpse
+  name: Take Over Corpse
+  description: Infest a corpse to return to your true form.
+  components:
+  - type: Action
+    useDelay: 10
+    itemIconStyle: BigAction
+  - type: Sprite
+    sprite: Interface/Actions/changeling2.rsi
+    layers:
+    - state: take_over_corpse
+  - type: EntityTargetAction
+    event: !type:ChangelingTakeOverCorpseActionEvent
+  - type: TargetAction
+
+- type: entity
+  parent: ActionToggleNightVision
+  id: ActionChangelingNightVision
+  name: Toggle Night Vision
+  description: Turns our night vision on/off.
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+  - type: Sprite
+    sprite: Interface/Actions/changeling2.rsi
+    layers:
+    - state: nv_on
+
+- type: entity
+  parent: BaseAction
+  id: ActionChangelingScreech
+  name: Screech
+  description: We produce a deafening screech that weakens those around us.
+  components:
+  - type: Sprite
+    sprite: Interface/Actions/changeling2.rsi
+    layers:
+    - state: screech
+  - type: Action
+    useDelay: 60 # unbalanced :godo:
+    raiseOnAction: true
+  - type: ScreechAction
+    effects:
+    - !type:MovementSpeedModifier
+      walkSpeedModifier: 0.5
+      sprintSpeedModifier: 0.5
+      time: 5
+    - !type:Disarm
+    - !type:ModifyKnockdown
+      probability: 0.5
+  - type: InstantAction
+    event: !type:ScreechActionEvent
+
+- type: entity
+  parent: FakeMindShieldToggleAction
+  id: ActionChangelingFakeMindshieldToggle
+  name: '[color=green]Toggle Fake Mindshield[/color]'
+  description: Turn our mindshield visibility on or off.
+  components:
+  - type: Sprite
+    sprite: Interface/Actions/changeling2.rsi
+    layers:
+    - state: mindshield_off
+      map: ["enum.ActionVisuals.Icon"]
+    - state: mindshield_on
+      map: ["enum.ActionVisuals.IconToggled"]
+      visible: false
+  - type: InstantAction
+    event: !type:FakeMindShieldToggleEvent
+      actionTag: FakeMindShieldChangeling
+  - type: Tag
+    tags:
+    - FakeMindShieldChangeling # used to distinguish the changeling's toggle mindshield action from the implant's
