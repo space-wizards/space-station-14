@@ -7,7 +7,8 @@
   - type: ChangelingDevour
   - type: ChangelingIdentity
   - type: ChangelingTransform
-  - type: ChangelingMetabolism
+  - type: AddMetabolism
+    addedMetabolizer: Changeling
   - type: DestructionResistance
   - type: RevolutionaryImmune
   - type: ZombieImmune
