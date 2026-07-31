@@ -1,24 +1,19 @@
 using System.Linq;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
-using Content.Shared.CCVar;
-using Content.Shared.Database;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
-using Content.Server.Database;
 using Robust.Shared.Console;
 
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.MassBan)]
-public sealed class BanMassCommand : LocalizedCommands
+public sealed partial class BanMassCommand : LocalizedCommands
 {
-    [Dependency] private readonly IPlayerLocator _locator = default!;
-    [Dependency] private readonly IBanManager _bans = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly ILogManager _logManager = default!;
-    [Dependency] private readonly IServerDbManager _dbManager = default!;
+    [Dependency] private IPlayerLocator _locator = default!;
+    [Dependency] private IBanManager _bans = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
 
     public override string Command => "banmass";
 
@@ -59,10 +54,14 @@ public sealed class BanMassCommand : LocalizedCommands
                 continue;
             }
 
-            var targetUid = located.UserId;
-            var targetHWid = located.LastHWId;
+            var banInfo = new CreateServerBanInfo(reason);
+            banInfo.AddUser(located.UserId, trimmedTarget)
+                .AddHWId(located.LastHWId)
+                .WithMinutes(minutes)
+                .WithBanningAdmin(player?.UserId)
+                .WithSeverity(severity);
 
-            _bans.CreateServerBan(targetUid, trimmedTarget, player?.UserId, null, targetHWid, minutes, severity, reason);
+            _bans.CreateServerBan(banInfo);
         }
     }
 

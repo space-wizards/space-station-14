@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
@@ -89,8 +90,16 @@ public interface IBanManager
     /// Gets a list of prototype IDs with the player's job bans.
     /// </summary>
     public HashSet<ProtoId<JobPrototype>>? GetJobBans(NetUserId playerUserId);
+
+    /// <summary>
+    /// Get default ban note severity.
+    /// </summary>
     public NoteSeverity GetServerBanSeverity();
-    public CompletionOption[] BanDurations { get; }
+
+    /// <summary>
+    /// Get list of default ban duration options.
+    /// </summary>
+    public ImmutableArray<CompletionOption> BanDurations { get; }
 
     /// <summary>
     /// Gets a list of prototype IDs with the player's antag bans.
