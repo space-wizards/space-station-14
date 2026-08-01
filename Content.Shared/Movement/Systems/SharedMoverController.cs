@@ -303,11 +303,6 @@ public abstract partial class SharedMoverController : VirtualController
         // If you want to slow down an entity with "friction" you shouldn't be using this system.
         if (wishDir != Vector2.Zero)
             friction = Math.Min(friction, accel);
-
-        var wishEv = new ModifyMovementTargetDirectionEvent(wishDir);
-        RaiseLocalEvent(entity, ref wishEv);
-        wishDir = wishEv.WishDir;
-
         friction = Math.Max(friction, _minDamping);
         var minimumFrictionSpeed = moveSpeedComponent?.MinimumFrictionSpeed ?? MovementSpeedModifierComponent.DefaultMinimumFrictionSpeed;
         Friction(minimumFrictionSpeed, frameTime, friction, ref velocity);
@@ -355,7 +350,7 @@ public abstract partial class SharedMoverController : VirtualController
                 var soundModifier = mover.Sprinting ? InputMoverComponent.SprintingSoundModifier : InputMoverComponent.WalkingSoundModifier;
 
                 var audioParams = sound.Params
-                    .WithVolume(sound.Params.Volume + soundModifier)
+                    .AddVolume(sound.Params.Volume + soundModifier)
                     .WithVariation(sound.Params.Variation ?? mobMover.FootstepVariation);
 
                 // If we're a relay target then predict the sound for all relays.

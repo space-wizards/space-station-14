@@ -22,7 +22,6 @@
   components:
   - type: StutteringAccent
   - type: DrunkStatusEffect
-  - type: WobblyMovementStatusEffect
 
 - type: entity
   abstract: true
@@ -58,6 +57,16 @@
   parent: [ PainNumbnessStatusEffectBase, MobStatusEffectDebuff ]
   id: StatusEffectPainNumbness
   name: pain numbness
+
+# Ignore movement slowdown from damage thresholds.
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectAdrenaline
+  name: adrenaline
+  components:
+  - type: IgnoreSlowOnDamage
+  - type: StatusEffectAlert
+    alert: Adrenaline
 
 - type: entity
   parent: MobStatusEffectBase
