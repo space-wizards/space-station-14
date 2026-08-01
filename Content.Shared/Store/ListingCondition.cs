@@ -17,7 +17,7 @@ public abstract partial class ListingCondition
     public abstract bool Condition(ListingConditionArgs args);
 
     /// <summary>
-    /// If true, then this conditions will be locked instead of disappearing from the shop UI.
+    /// If true, then this conditions will cause the listing to be locked instead of disappearing from the shop UI.
     /// </summary>
     [DataField]
     public bool Locks = false;
