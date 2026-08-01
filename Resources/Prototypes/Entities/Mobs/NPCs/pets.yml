@@ -8,7 +8,7 @@
   components:
   - type: Grammar
     attributes:
-      proper: true # Makes the pet's ingame name count as a proper noun
+      proper: true # Makes the pet's ingame name count as a proper noun (e.g, they have colored names when that accessibility setting is enabled)
   - type: NameIdentifier
     group: null # Strips the numeric identifier from the pet's ingame name
 
