@@ -302,20 +302,20 @@ public sealed partial class CargoSystem
             _random.Shuffle(tradePads);
 
             var freePads = GetFreeCargoPallets(trade, tradePads);
-            if (freePads.Count >= order.OrderQuantity) //check if the station has enough free pallets
-            {
-                foreach (var pad in freePads)
-                {
-                    var coordinates = new EntityCoordinates(trade, pad.Transform.LocalPosition);
+            if (freePads.Count < order.OrderQuantity) //check if the station has enough free pallets
+                continue;
 
-                    if (FulfillOrder(order, account, coordinates, orderDatabase.PrinterOutput))
-                    {
-                        tradeDestination = trade;
-                        order.NumDispatched++;
-                        if (order.OrderQuantity <= order.NumDispatched) //Spawn a crate on free pellets until the order is fulfilled.
-                            break;
-                    }
-                }
+            foreach (var pad in freePads)
+            {
+                var coordinates = new EntityCoordinates(trade, pad.Transform.LocalPosition);
+
+                if (!FulfillOrder(order, account, coordinates, orderDatabase.PrinterOutput))
+                    continue;
+
+                tradeDestination = trade;
+                order.NumDispatched++;
+                if (order.OrderQuantity <= order.NumDispatched) //Spawn a crate on free pellets until the order is fulfilled.
+                    break;
             }
 
             if (tradeDestination != null)
@@ -465,22 +465,20 @@ public sealed partial class CargoSystem
         if (!TryComp<StationCargoOrderDatabaseComponent>(station, out var orderDatabase))
             return;
 
-        if (_uiSystem.HasUi(consoleUid, CargoConsoleUiKey.Orders))
-        {
-            _uiSystem.SetUiState(
-                consoleUid,
+            if (!_uiSystem.HasUi(consoleUid, CargoConsoleUiKey.Orders))
+                return;
+
+            _uiSystem.SetUiState(consoleUid,
                 CargoConsoleUiKey.Orders,
                 new CargoConsoleInterfaceState(
-                    MetaData(station.Value).EntityName,
-                    GetOutstandingOrderCount((station!.Value, orderDatabase), console.Account),
-                    orderDatabase.Capacity,
-                    GetNetEntity(station.Value),
-                    RelevantOrders((station!.Value, orderDatabase), (consoleUid, console)),
-                    GetAvailableProducts((consoleUid, console))
-                )
-            );
+                MetaData(station.Value).EntityName,
+                GetOutstandingOrderCount((station!.Value, orderDatabase), console.Account),
+                orderDatabase.Capacity,
+                GetNetEntity(station.Value),
+                RelevantOrders((station!.Value, orderDatabase), (consoleUid, console)),
+                GetAvailableProducts((consoleUid, console))
+            ));
         }
-    }
 
     /// <summary>
     /// Gets orders relevant to this account, i.e. orders on the account directly or orders on behalf of the account in the primary account.
