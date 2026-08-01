@@ -358,5 +358,5 @@
     sprite: Markers/jobs.rsi
     layers:
     - state: green
-    - sprite: Clothing/Head/Hats/wizardhat.rsi
+    - sprite: Clothing/Head/Hats/wizard_blue.rsi
       state: icon
