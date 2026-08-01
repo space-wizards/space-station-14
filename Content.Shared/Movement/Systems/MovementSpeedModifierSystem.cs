@@ -78,10 +78,8 @@ namespace Content.Shared.Movement.Systems
         /// <param name="ent">The entity we're refreshing modifiers for</param>
         public void RefreshMovementModifiers(Entity<MovementSpeedModifierComponent?> ent)
         {
-            if (_gravity.IsWeightless(ent.Owner))
-                RefreshWeightlessModifiers(ent);
-            else
-                RefreshMovementSpeedModifiers(ent);
+            RefreshWeightlessModifiers(ent);
+            RefreshMovementSpeedModifiers(ent);
         }
 
         /// <summary>
