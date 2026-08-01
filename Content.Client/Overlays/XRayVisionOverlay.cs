@@ -1,5 +1,4 @@
 using System.Numerics;
-using Content.Shared.Whitelist;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.ResourceManagement;
@@ -25,10 +24,10 @@ public sealed partial class XRayVisionOverlay : Overlay
     private readonly SharedMapSystem _mapSys;
 
     private readonly EntityQuery<OccluderComponent> _occluderQuery;
+    private readonly EntityQuery<TransformComponent> _transformQuery;
 
     private static readonly ProtoId<ShaderPrototype> Shader = "XRayVision";
     private readonly ShaderInstance _tileShader;
-    private readonly ShaderInstance _entityShader;
 
     private const int TileSizePixels = EyeManager.PixelsPerMeter;
 
@@ -36,8 +35,8 @@ public sealed partial class XRayVisionOverlay : Overlay
 
     public Color TileOverlayColor { get; private set; } = Color.White;
     public Color EntityOverlayColor { get; private set; } = Color.White;
-    public bool ShowTiles { get; private set; } = true;
     public float Scanlines { get; private set; } = 1f;
+    public bool ShowTiles => true;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
@@ -45,10 +44,10 @@ public sealed partial class XRayVisionOverlay : Overlay
     {
         IoCManager.InjectDependencies(this);
         _tileShader = _prototypeManager.Index(Shader).InstanceUnique();
-        _entityShader = _prototypeManager.Index(Shader).InstanceUnique();
         _transform = _entManager.System<SharedTransformSystem>();
         _mapSys = _entManager.System<SharedMapSystem>();
         _occluderQuery = _entManager.GetEntityQuery<OccluderComponent>();
+        _transformQuery = _entManager.GetEntityQuery<TransformComponent>();
     }
 
     public void SetParameters(Color tileOverlayColor, Color entityOverlayColor, bool showTiles, float scanlines)
@@ -64,8 +63,7 @@ public sealed partial class XRayVisionOverlay : Overlay
         if (viewer == null)
             return;
 
-        var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
-        if (!xformQuery.TryGetComponent(viewer.Value, out var viewerXform))
+        if (!_transformQuery.TryGetComponent(viewer.Value, out var viewerXform))
             return;
 
         if (viewerXform.MapID != args.MapId)
@@ -82,11 +80,6 @@ public sealed partial class XRayVisionOverlay : Overlay
         _tileShader.SetParameter("FOV_CENTER", eye.Position.Position);
         _tileShader.SetParameter("OVERLAY_COLOR", TileOverlayColor);
         _tileShader.SetParameter("SCANLINES", Scanlines);
-
-        _entityShader.SetParameter("FOV_TEXTURE", args.Viewport.FovRenderTarget.Texture);
-        _entityShader.SetParameter("FOV_CENTER", eye.Position.Position);
-        _entityShader.SetParameter("OVERLAY_COLOR", EntityOverlayColor);
-        _entityShader.SetParameter("SCANLINES", Scanlines);
 
         if (ShowTiles)
         {
@@ -135,8 +128,6 @@ public sealed partial class XRayVisionOverlay : Overlay
                 handle.SetTransform(gridWorldMatrix);
             }
         }
-
-        handle.SetTransform(Matrix3x2.Identity);
     }
 
     private bool TileHasOccluder(Entity<MapGridComponent> grid, Vector2i indices)
