@@ -11,11 +11,19 @@ namespace Content.Shared.Projectiles;
 public sealed class PredictedProjectileHitEvent(
     uint predictionId,
     ushort projectileIndex,
-    HashSet<(NetEntity Entity, MapCoordinates Coordinates)> hits) : EntityEventArgs
+    HashSet<(
+        NetEntity Entity,
+        MapCoordinates TargetCoordinates,
+        MapCoordinates ProjectileCoordinates,
+        MapCoordinates ContactCoordinates)> hits) : EntityEventArgs
 {
     public readonly uint PredictionId = predictionId;
     public readonly ushort ProjectileIndex = projectileIndex;
-    public readonly HashSet<(NetEntity Entity, MapCoordinates Coordinates)> Hits = hits;
+    public readonly HashSet<(
+        NetEntity Entity,
+        MapCoordinates TargetCoordinates,
+        MapCoordinates ProjectileCoordinates,
+        MapCoordinates ContactCoordinates)> Hits = hits;
 }
 
 [Serializable, NetSerializable]

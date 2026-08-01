@@ -665,7 +665,10 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (sprite == null)
             return;
 
-        var ev = new MuzzleFlashEvent(GetNetEntity(gun), sprite, worldAngle);
+        var predictionId = TryComp(gun, out GunComponent? gunComponent)
+            ? gunComponent.PredictionId
+            : 0;
+        var ev = new MuzzleFlashEvent(GetNetEntity(gun), sprite, worldAngle, predictionId);
         CreateEffect(gun, ev, user);
     }
 

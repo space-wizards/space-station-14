@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Server.Movement.Components;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
@@ -9,7 +10,9 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
@@ -25,6 +28,7 @@ public sealed class ProjectilePredictionSystem : EntitySystem
     [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly ProjectileSystem _projectiles = default!;
+    [Dependency] private readonly RayCastSystem _rayCast = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly RequireProjectileTargetSystem _requireProjectileTarget = default!;
@@ -37,6 +41,10 @@ public sealed class ProjectilePredictionSystem : EntitySystem
     private float _coordinateDeviation;
     private float _lowestCoordinateDeviation;
     private float _aabbEnlargement;
+    private bool _checkingPreventCollide;
+
+    private const float ContactTolerance = 0.25f;
+    private const float MinimumDirectionDot = 0.95f;
 
     private EntityQuery<FixturesComponent> _fixturesQuery;
     private EntityQuery<LagCompensationComponent> _lagCompensationQuery;
@@ -107,7 +115,7 @@ public sealed class ProjectilePredictionSystem : EntitySystem
 
     private void OnPredictedPreventCollide(Entity<PredictedProjectileComponent> ent, ref PreventCollideEvent args)
     {
-        if (!_preventCollision || args.Cancelled)
+        if (!_preventCollision || _checkingPreventCollide || args.Cancelled)
             return;
 
         if (!_lagCompensationQuery.TryComp(args.OtherEntity, out var lagCompensation) ||
@@ -212,6 +220,291 @@ public sealed class ProjectilePredictionSystem : EntitySystem
         return bounds.Contains(projectilePosition);
     }
 
+    private bool TryValidateReportedHit(
+        Entity<PredictedProjectileComponent, PhysicsComponent> projectile,
+        EntityUid target,
+        FixturesComponent targetFixtures,
+        PhysicsComponent targetPhysics,
+        TransformComponent targetXform,
+        MapCoordinates reportedTargetCoordinates,
+        MapCoordinates reportedProjectileCoordinates,
+        MapCoordinates reportedContactCoordinates,
+        out EntityUid hitEntity,
+        out MapCoordinates hitCoordinates)
+    {
+        hitEntity = default;
+        hitCoordinates = default;
+
+        var origin = projectile.Comp1.Origin;
+        if (origin.MapId == MapId.Nullspace ||
+            reportedTargetCoordinates.MapId != origin.MapId ||
+            reportedProjectileCoordinates.MapId != origin.MapId ||
+            reportedContactCoordinates.MapId != origin.MapId ||
+            !_fixturesQuery.TryComp(projectile, out var projectileFixtures) ||
+            !projectileFixtures.Fixtures.TryGetValue(
+                SharedProjectileSystem.ProjectileFixture,
+                out var projectileFixture) ||
+            !TryGetValidatedTargetTransform(
+                projectile,
+                target,
+                targetXform,
+                reportedTargetCoordinates,
+                out var targetCoordinates,
+                out var targetAngle))
+        {
+            return false;
+        }
+
+        var targetTransform = new Transform(targetCoordinates.Position, targetAngle);
+        Box2? targetBounds = null;
+        foreach (var fixture in targetFixtures.Fixtures.Values)
+        {
+            if (!CanFixturesCollide(
+                    projectile,
+                    projectile.Comp2,
+                    projectileFixture,
+                    target,
+                    targetPhysics,
+                    fixture))
+            {
+                continue;
+            }
+
+            for (var i = 0; i < fixture.Shape.ChildCount; i++)
+            {
+                var fixtureBounds = fixture.Shape.ComputeAABB(targetTransform, i);
+                targetBounds = targetBounds?.Union(fixtureBounds) ?? fixtureBounds;
+            }
+        }
+
+        if (targetBounds is not { } bounds)
+            return false;
+
+        var castShape = GetCastShape(projectileFixture.Shape);
+        var projectileAngle = projectileFixture.Shape is PhysShapeAabb
+            ? Angle.Zero
+            : _transform.GetWorldRotation(projectile.Owner);
+        var reportedProjectileTransform = new Transform(reportedProjectileCoordinates.Position, projectileAngle);
+        var reportedProjectileBounds = GetShapeBounds(castShape, reportedProjectileTransform);
+        if (!bounds.Enlarged(ContactTolerance).Intersects(reportedProjectileBounds) ||
+            !bounds.Enlarged(ContactTolerance).Contains(reportedContactCoordinates.Position))
+        {
+            return false;
+        }
+
+        var translation = reportedProjectileCoordinates.Position - origin.Position;
+        var reportedDistance = translation.Length();
+        var currentCoordinates = _transform.GetMapCoordinates(projectile);
+        if (currentCoordinates.MapId != origin.MapId)
+            return false;
+
+        var velocity = _physics.GetLinearVelocity(projectile, projectile.Comp2.LocalCenter);
+        var reachableDistance = (currentCoordinates.Position - origin.Position).Length() +
+                                velocity.Length() / _timing.TickRate +
+                                _aabbEnlargement;
+        if (reportedDistance > reachableDistance)
+            return false;
+
+        if (reportedDistance > 0.001f && velocity.LengthSquared() > 0.001f &&
+            Vector2.Dot(translation / reportedDistance, Vector2.Normalize(velocity)) < MinimumDirectionDot)
+        {
+            return false;
+        }
+
+        var filter = new QueryFilter
+        {
+            LayerBits = projectileFixture.CollisionLayer,
+            MaskBits = projectileFixture.CollisionMask,
+        };
+
+        float BlockerCallback(
+            FixtureProxy proxy,
+            Vector2 point,
+            Vector2 normal,
+            float fraction,
+            ref RayResult result)
+        {
+            if (proxy.Entity == projectile.Owner ||
+                proxy.Entity == target ||
+                !CanFixturesCollide(
+                    projectile,
+                    projectile.Comp2,
+                    projectileFixture,
+                    proxy.Entity,
+                    proxy.Body,
+                    proxy.Fixture))
+            {
+                return -1f;
+            }
+
+            return RayCastSystem.RayCastClosestCallback(proxy, point, normal, fraction, ref result);
+        }
+
+        var blockers = _rayCast.CastShape(
+            origin.MapId,
+            castShape,
+            new Transform(origin.Position, projectileAngle),
+            translation,
+            filter,
+            BlockerCallback);
+
+        if (blockers.Hit)
+        {
+            var blocker = blockers.Results[0];
+            hitEntity = blocker.Entity;
+            hitCoordinates = new MapCoordinates(blocker.Point, origin.MapId);
+            return true;
+        }
+
+        hitEntity = target;
+        hitCoordinates = reportedContactCoordinates;
+        return true;
+    }
+
+    private bool TryGetValidatedTargetTransform(
+        Entity<PredictedProjectileComponent> projectile,
+        EntityUid target,
+        TransformComponent targetXform,
+        MapCoordinates reportedCoordinates,
+        out MapCoordinates targetCoordinates,
+        out Angle targetAngle)
+    {
+        targetCoordinates = _transform.GetMapCoordinates(target, targetXform);
+        targetAngle = _transform.GetWorldRotation(targetXform);
+        if (targetCoordinates.MapId != reportedCoordinates.MapId)
+            return false;
+
+        if (!_lagCompensationQuery.TryComp(target, out var lagCompensation) ||
+            lagCompensation.Positions.Count == 0)
+        {
+            return reportedCoordinates.InRange(targetCoordinates, _coordinateDeviation);
+        }
+
+        var ping = TryComp<ActorComponent>(projectile.Comp.Shooter, out var actor)
+            ? actor.PlayerSession.Channel.Ping
+            : 0;
+        var pingTime = TimeSpan.FromMilliseconds(ping);
+        var sentTime = _timing.CurTime - TimeSpan.FromMilliseconds(ping * 1.5);
+
+        (TimeSpan Time, EntityCoordinates Coordinates, Angle Angle)? baseline = null;
+        foreach (var position in lagCompensation.Positions)
+        {
+            baseline = position;
+            if (position.Item1 >= sentTime)
+                break;
+        }
+
+        if (baseline is { } expected)
+        {
+            var expectedCoordinates = _transform.ToMapCoordinates(expected.Coordinates);
+            if (expectedCoordinates.MapId == reportedCoordinates.MapId &&
+                reportedCoordinates.InRange(expectedCoordinates, _coordinateDeviation))
+            {
+                targetCoordinates = expectedCoordinates;
+                targetAngle = expected.Angle;
+                return true;
+            }
+        }
+
+        var earliest = sentTime - pingTime;
+        var latest = sentTime + pingTime;
+        var bestDistance = float.MaxValue;
+        MapCoordinates? bestCoordinates = null;
+        var bestAngle = Angle.Zero;
+        foreach (var position in lagCompensation.Positions)
+        {
+            if (position.Item1 < earliest || position.Item1 > latest)
+                continue;
+
+            var coordinates = _transform.ToMapCoordinates(position.Item2);
+            if (coordinates.MapId != reportedCoordinates.MapId)
+                continue;
+
+            var distance = (coordinates.Position - reportedCoordinates.Position).Length();
+            if (distance > _lowestCoordinateDeviation || distance >= bestDistance)
+                continue;
+
+            bestDistance = distance;
+            bestCoordinates = coordinates;
+            bestAngle = position.Item3;
+        }
+
+        if (bestCoordinates is not { } best)
+            return false;
+
+        targetCoordinates = best;
+        targetAngle = bestAngle;
+        return true;
+    }
+
+    private bool CanFixturesCollide(
+        EntityUid projectile,
+        PhysicsComponent projectilePhysics,
+        Fixture projectileFixture,
+        EntityUid target,
+        PhysicsComponent targetPhysics,
+        Fixture targetFixture)
+    {
+        if (!targetFixture.Hard ||
+            ((targetFixture.CollisionLayer & projectileFixture.CollisionMask) == 0 &&
+             (targetFixture.CollisionMask & projectileFixture.CollisionLayer) == 0))
+        {
+            return false;
+        }
+
+        _checkingPreventCollide = true;
+        try
+        {
+            var projectileEvent = new PreventCollideEvent(
+                projectile,
+                target,
+                projectilePhysics,
+                targetPhysics,
+                projectileFixture,
+                targetFixture);
+            RaiseLocalEvent(projectile, ref projectileEvent);
+            if (projectileEvent.Cancelled)
+                return false;
+
+            var targetEvent = new PreventCollideEvent(
+                target,
+                projectile,
+                targetPhysics,
+                projectilePhysics,
+                targetFixture,
+                projectileFixture);
+            RaiseLocalEvent(target, ref targetEvent);
+            return !targetEvent.Cancelled;
+        }
+        finally
+        {
+            _checkingPreventCollide = false;
+        }
+    }
+
+    private static IPhysShape GetCastShape(IPhysShape shape)
+    {
+        if (shape is PhysShapeCircle or PolygonShape)
+            return shape;
+
+        var bounds = shape.ComputeAABB(Robust.Shared.Physics.Transform.Empty, 0);
+        for (var i = 1; i < shape.ChildCount; i++)
+            bounds = bounds.Union(shape.ComputeAABB(Robust.Shared.Physics.Transform.Empty, i));
+
+        var polygon = new PolygonShape();
+        polygon.SetAsBox(bounds);
+        return polygon;
+    }
+
+    private static Box2 GetShapeBounds(IPhysShape shape, Transform transform)
+    {
+        var bounds = shape.ComputeAABB(transform, 0);
+        for (var i = 1; i < shape.ChildCount; i++)
+            bounds = bounds.Union(shape.ComputeAABB(transform, i));
+
+        return bounds;
+    }
+
     private void ProcessPredictedHit(PredictedProjectileHitEvent ev, ICommonSession player)
     {
         if (!_predicted.TryGetValue((player.UserId, ev.PredictionId, ev.ProjectileIndex), out var projectile) ||
@@ -228,11 +521,14 @@ public sealed class ProjectilePredictionSystem : EntitySystem
 
         predicted.Hit = true;
         var accepted = false;
-        foreach (var (netEntity, clientCoordinates) in ev.Hits)
+        foreach (var (
+                     netEntity,
+                     targetCoordinates,
+                     projectileCoordinates,
+                     contactCoordinates) in ev.Hits)
         {
             var target = GetEntity(netEntity);
             if (!target.Valid ||
-                !_lagCompensationQuery.TryComp(target, out var lagCompensation) ||
                 !_fixturesQuery.TryComp(target, out var fixtures) ||
                 !_physicsQuery.TryComp(target, out var physics) ||
                 !_transformQuery.TryComp(target, out var xform))
@@ -241,7 +537,9 @@ public sealed class ProjectilePredictionSystem : EntitySystem
             }
 
             if (projectileComponent.IgnoreShooter &&
-                (target == projectileComponent.Shooter || target == projectileComponent.Weapon))
+                (target == projectileComponent.Shooter || target == projectileComponent.Weapon) &&
+                (!TryComp(projectile, out TargetedProjectileComponent? ignoredTarget) ||
+                 ignoredTarget.Target != target))
             {
                 continue;
             }
@@ -253,10 +551,17 @@ public sealed class ProjectilePredictionSystem : EntitySystem
                 continue;
             }
 
-            if (!Collides(
+            if (!TryValidateReportedHit(
                     (projectile, predicted, projectilePhysics),
-                    (target, lagCompensation, fixtures, physics, xform),
-                    clientCoordinates))
+                    target,
+                    fixtures,
+                    physics,
+                    xform,
+                    targetCoordinates,
+                    projectileCoordinates,
+                    contactCoordinates,
+                    out var validatedTarget,
+                    out var validatedContact))
             {
                 if (_logHits)
                     Log.Info($"Rejected predicted hit from {player.Name} on {ToPrettyString(target)}");
@@ -266,8 +571,17 @@ public sealed class ProjectilePredictionSystem : EntitySystem
             if (_logHits)
                 Log.Info($"Accepted predicted hit from {player.Name} on {ToPrettyString(target)}");
 
-            predicted.ProcessedTargets.Add(target);
-            _projectiles.ProjectileCollide((projectile, projectileComponent, projectilePhysics), target, true);
+            var corrected = validatedTarget != target;
+            if (corrected)
+                _projectiles.ReconcilePredictedProjectile(projectile);
+
+            predicted.ProcessedTargets.Add(validatedTarget);
+            _projectiles.ProjectileCollide(
+                (projectile, projectileComponent, projectilePhysics),
+                validatedTarget,
+                true,
+                validatedContact,
+                !corrected);
             accepted = true;
             break;
         }

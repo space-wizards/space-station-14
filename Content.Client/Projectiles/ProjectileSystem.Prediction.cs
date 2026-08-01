@@ -142,16 +142,41 @@ public sealed partial class ProjectileSystem
             return;
         }
 
+        var projectileCoordinates = _transform.GetMapCoordinates(ent);
+        var contactCoordinates = GetContactCoordinates(args, projectileCoordinates);
+
         if (!_timing.IsFirstTimePredicted)
         {
-            ent.Comp.PendingCollision ??= args.OtherEntity;
+            if (ent.Comp.PendingCollision == null)
+            {
+                ent.Comp.PendingCollision = args.OtherEntity;
+                ent.Comp.PendingProjectileCoordinates = projectileCoordinates;
+                ent.Comp.PendingContactCoordinates = contactCoordinates;
+            }
             return;
         }
 
-        ProcessPredictedCollision(ent, args.OtherEntity);
+        ProcessPredictedCollision(ent, args.OtherEntity, projectileCoordinates, contactCoordinates);
     }
 
-    private void ProcessPredictedCollision(Entity<PredictedProjectileVisualComponent> ent, EntityUid target)
+    private MapCoordinates GetContactCoordinates(StartCollideEvent args, MapCoordinates fallback)
+    {
+        if (args.PointCount == 0)
+            return fallback;
+
+        var points = args.WorldPoints;
+        var contact = Vector2.Zero;
+        foreach (var point in points)
+            contact += point;
+
+        return new MapCoordinates(contact / points.Length, fallback.MapId);
+    }
+
+    private void ProcessPredictedCollision(
+        Entity<PredictedProjectileVisualComponent> ent,
+        EntityUid target,
+        MapCoordinates projectileCoordinates,
+        MapCoordinates contactCoordinates)
     {
         if (ent.Comp.HitAt != null || !CanPredictHit(ent, target))
             return;
@@ -159,7 +184,7 @@ public sealed partial class ProjectileSystem
         if (!TryComp(ent, out ProjectileComponent? projectile))
             return;
 
-        SendPredictedHit(ent, target);
+        SendPredictedHit(ent, target, projectileCoordinates, contactCoordinates);
 
         var hit = new ProjectileHitEvent(projectile.Damage, target, projectile.Shooter);
         RaiseLocalEvent(ent, ref hit);
@@ -167,14 +192,22 @@ public sealed partial class ProjectileSystem
         ReportPredictedHit(ent, new HashSet<EntityUid> { target });
     }
 
-    private void SendPredictedHit(Entity<PredictedProjectileVisualComponent> ent, EntityUid target)
+    private void SendPredictedHit(
+        Entity<PredictedProjectileVisualComponent> ent,
+        EntityUid target,
+        MapCoordinates projectileCoordinates,
+        MapCoordinates contactCoordinates)
     {
         RaiseNetworkEvent(new PredictedProjectileHitEvent(
             ent.Comp.PredictionId,
             ent.Comp.ProjectileIndex,
-            new HashSet<(NetEntity, MapCoordinates)>
+            new HashSet<(NetEntity, MapCoordinates, MapCoordinates, MapCoordinates)>
             {
-                (GetNetEntity(target), _transform.GetMapCoordinates(target)),
+                (
+                    GetNetEntity(target),
+                    _transform.GetMapCoordinates(target),
+                    projectileCoordinates,
+                    contactCoordinates),
             }));
     }
 
@@ -232,7 +265,7 @@ public sealed partial class ProjectileSystem
             return false;
 
         if (!TryComp(target, out RequireProjectileTargetComponent? requireTarget) ||
-            !_requireProjectileTarget.RequiresExplicitTargetForPrediction((target, requireTarget)))
+            !_requireProjectileTarget.RequiresExplicitTarget((target, requireTarget)))
         {
             return true;
         }
@@ -366,12 +399,23 @@ public sealed partial class ProjectileSystem
                     !TerminatingOrDeleted(pendingTarget) &&
                     CanPredictHit(uid, pendingTarget))
                 {
-                    ProcessPredictedCollision((uid, predicted), pendingTarget);
+                    ProcessPredictedCollision(
+                        (uid, predicted),
+                        pendingTarget,
+                        predicted.PendingProjectileCoordinates,
+                        predicted.PendingContactCoordinates);
                     continue;
                 }
 
                 if (TryGetPredictedContact(uid, fixtures, out var target))
-                    ProcessPredictedCollision((uid, predicted), target);
+                {
+                    var projectileCoordinates = _transform.GetMapCoordinates(uid);
+                    ProcessPredictedCollision(
+                        (uid, predicted),
+                        target,
+                        projectileCoordinates,
+                        projectileCoordinates);
+                }
             }
         }
 

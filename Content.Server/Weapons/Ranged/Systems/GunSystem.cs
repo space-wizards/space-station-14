@@ -300,6 +300,7 @@ public sealed partial class GunSystem : SharedGunSystem
             predicted.Shooter = user;
             predicted.PredictionId = gun.Comp.PredictionId;
             predicted.ProjectileIndex = projectileIndex;
+            predicted.Origin = TransformSystem.GetMapCoordinates(uid);
             Dirty(uid, predicted);
         }
 

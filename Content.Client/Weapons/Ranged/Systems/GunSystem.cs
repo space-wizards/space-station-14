@@ -89,6 +89,8 @@ public sealed partial class GunSystem : SharedGunSystem
     private uint _nextPredictionId;
     private readonly Dictionary<uint, int> _predictedHitscans = new();
     private readonly Queue<uint> _predictionOrder = new();
+    private readonly HashSet<(EntityUid Gun, uint PredictionId)> _renderedMuzzleFlashes = new();
+    private readonly Queue<(EntityUid Gun, uint PredictionId)> _muzzleFlashOrder = new();
 
     private const int MaxTrackedPredictions = 128;
 
@@ -977,7 +979,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
     protected override void CreateEffect(EntityUid gunUid, MuzzleFlashEvent message, EntityUid? tracked = null)
     {
-        if (!Timing.IsFirstTimePredicted)
+        if (!Timing.IsFirstTimePredicted || !ShouldRenderMuzzleFlash(gunUid, message.PredictionId))
             return;
 
         // EntityUid check added to stop throwing exceptions due to https://github.com/space-wizards/space-station-14/issues/28252
@@ -1008,12 +1010,9 @@ public sealed partial class GunSystem : SharedGunSystem
         var ent = Spawn(message.Prototype, coordinates);
         TransformSystem.SetWorldRotationNoLerp(ent, message.Angle);
 
-        if (tracked != null)
-        {
-            var track = EnsureComp<TrackUserComponent>(ent);
-            track.User = tracked;
-            track.Offset = Vector2.UnitX / 2f;
-        }
+        var track = EnsureComp<TrackUserComponent>(ent);
+        track.User = gunUid;
+        track.Offset = Vector2.UnitX / 2f;
 
         var lifetime = 0.4f;
 
@@ -1088,6 +1087,25 @@ public sealed partial class GunSystem : SharedGunSystem
 
         _animPlayer.Stop(gunUid, uidPlayer, "muzzle-flash-light");
         _animPlayer.Play((gunUid, uidPlayer), animTwo, "muzzle-flash-light");
+    }
+
+    private bool ShouldRenderMuzzleFlash(EntityUid gun, uint predictionId)
+    {
+        if (predictionId == 0)
+            return true;
+
+        var key = (gun, predictionId);
+        if (!_renderedMuzzleFlashes.Add(key))
+            return false;
+
+        _muzzleFlashOrder.Enqueue(key);
+        while (_muzzleFlashOrder.Count > MaxTrackedPredictions &&
+               _muzzleFlashOrder.TryDequeue(out var expired))
+        {
+            _renderedMuzzleFlashes.Remove(expired);
+        }
+
+        return true;
     }
 
     // TODO: Move RangedDamageSoundComponent to shared so this can be predicted.

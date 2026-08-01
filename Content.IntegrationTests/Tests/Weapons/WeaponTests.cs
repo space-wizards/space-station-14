@@ -1,4 +1,5 @@
 ﻿using Content.IntegrationTests.Tests.Interaction;
+using Content.Client.Animations;
 using Content.Client.Projectiles;
 using Content.Shared.Damage.Components;
 using Content.Shared.Projectiles;
@@ -13,14 +14,18 @@ using Content.Shared.Trigger.Components.Triggers;
 using Content.Shared.Weapons.Hitscan.Components;
 using Content.Shared.Weapons.Hitscan.Systems;
 using Content.Shared.Weapons.Ranged.Components;
+using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared.Wieldable.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Spawners;
+using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 
@@ -34,6 +39,8 @@ public sealed class WeaponTests : InteractionTest
     private const string HitscanAmmo = "PredictionTestHitscan";
     private const string PredictionTestGun = "PredictionTestGun";
     private const string PredictionTestProjectile = "PredictionTestProjectile";
+    private const string PredictionRegressionProjectile = "PredictionRegressionProjectile";
+    private const string PredictionRegressionTarget = "PredictionRegressionTarget";
 
     [TestPrototypes]
     private const string PredictionPrototypes = @"
@@ -78,6 +85,29 @@ public sealed class WeaponTests : InteractionTest
   - type: HitscanAmmo
   - type: HitscanBasicRaycast
   - type: HitscanBasicVisuals
+
+- type: entity
+  id: PredictionRegressionProjectile
+  parent: BaseBullet
+  components:
+  - type: Ammo
+    muzzleFlash: MuzzleFlashEffect
+
+- type: entity
+  id: PredictionRegressionTarget
+  components:
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      target:
+        shape:
+          !type:PhysShapeAabb
+          bounds: ""-0.25,-0.25,0.25,0.25""
+        hard: true
+        layer:
+        - BulletImpassable
+  - type: Damageable
 ";
 
     [Test]
@@ -387,5 +417,229 @@ public sealed class WeaponTests : InteractionTest
             CEntMan.DeleteEntity(projectile);
             CEntMan.DeleteEntity(gunUid);
         });
+    }
+
+    [Test]
+    public async Task PredictionRegression_OpenStaticTargetIsDamaged()
+    {
+        var (target, _) = await RunPredictionRegressionHit();
+
+        await Server.WaitAssertion(() =>
+        {
+            Assert.That(SEntMan.GetComponent<DamageableComponent>(target).TotalDamage.Value, Is.GreaterThan(0));
+        });
+    }
+
+    [Test]
+    public async Task PredictionRegression_WallBlocksTargetAndTakesHit()
+    {
+        var (target, blocker) = await RunPredictionRegressionHit(new Vector2(0.5f, 0f));
+
+        await Server.WaitAssertion(() =>
+        {
+            Assert.That(SEntMan.GetComponent<DamageableComponent>(target).TotalDamage.Value, Is.Zero);
+            Assert.That(blocker, Is.Not.Null);
+            Assert.That(
+                SEntMan.GetComponent<DamageableComponent>(blocker!.Value).TotalDamage.Value,
+                Is.GreaterThan(0));
+        });
+    }
+
+    [Test]
+    public async Task PredictionRegression_WallCornerBlocksTarget()
+    {
+        var (target, blocker) = await RunPredictionRegressionHit(new Vector2(0.5f, 0.45f));
+
+        await Server.WaitAssertion(() =>
+        {
+            Assert.That(SEntMan.GetComponent<DamageableComponent>(target).TotalDamage.Value, Is.Zero);
+            Assert.That(blocker, Is.Not.Null);
+            Assert.That(
+                SEntMan.GetComponent<DamageableComponent>(blocker!.Value).TotalDamage.Value,
+                Is.GreaterThan(0));
+        });
+    }
+
+    [Test]
+    public async Task PredictionRegression_MuzzleFlashIsDeduplicatedAndTracksGun()
+    {
+        const uint predictionId = 77;
+        var gunNet = await Spawn(PredictionTestGun, PlayerCoords);
+
+        await Client.WaitAssertion(() =>
+        {
+            var gun = CEntMan.GetEntity(gunNet);
+            var gunComponent = CEntMan.GetComponent<GunComponent>(gun);
+            var coordinates = CEntMan.GetCoordinates(PlayerCoords);
+            var projectileA = CEntMan.SpawnEntity(PredictionRegressionProjectile, coordinates);
+            var projectileB = CEntMan.SpawnEntity(PredictionRegressionProjectile, coordinates);
+            var gunSystem = CEntMan.System<Content.Client.Weapons.Ranged.Systems.GunSystem>();
+            var before = GetMuzzleFlashes().ToHashSet();
+
+#pragma warning disable RA0002
+            gunComponent.PredictionId = predictionId;
+#pragma warning restore RA0002
+
+            gunSystem.Shoot(
+                (gun, gunComponent),
+                [(projectileA, CEntMan.GetComponent<AmmoComponent>(projectileA))],
+                coordinates,
+                coordinates.Offset(Vector2.UnitX),
+                out _,
+                CPlayer);
+            gunSystem.Shoot(
+                (gun, gunComponent),
+                [(projectileB, CEntMan.GetComponent<AmmoComponent>(projectileB))],
+                coordinates,
+                coordinates.Offset(Vector2.UnitX),
+                out _,
+                CPlayer);
+
+            var duplicate = new MuzzleFlashEvent(
+                gunNet,
+                "MuzzleFlashEffect",
+                Angle.Zero,
+                predictionId);
+            CEntMan.EventBus.RaiseEvent(EventSource.Network, duplicate);
+            CEntMan.EventBus.RaiseEvent(EventSource.Network, duplicate);
+
+            var flashes = GetMuzzleFlashes().Where(uid => !before.Contains(uid)).ToList();
+            Assert.That(flashes, Has.Count.EqualTo(1));
+            Assert.That(CEntMan.GetComponent<TrackUserComponent>(flashes[0]).User, Is.EqualTo(gun));
+
+            CEntMan.DeleteEntity(projectileA);
+            CEntMan.DeleteEntity(projectileB);
+
+            IEnumerable<EntityUid> GetMuzzleFlashes()
+            {
+                return CEntMan.GetEntities().Where(uid =>
+                    CEntMan.TryGetComponent(uid, out MetaDataComponent metadata) &&
+                    metadata.EntityPrototype?.ID == "MuzzleFlashEffect");
+            }
+        });
+    }
+
+    [Test]
+    public async Task PredictionRegression_SelfTargetHitsProjectileAndHitscan()
+    {
+        var hitscanNet = await Spawn(HitscanAmmo, PlayerCoords);
+
+        await Server.WaitAssertion(() =>
+        {
+            var projectile = SEntMan.SpawnEntity(
+                PredictionRegressionProjectile,
+                SEntMan.GetCoordinates(PlayerCoords));
+            var projectileComponent = SEntMan.GetComponent<ProjectileComponent>(projectile);
+            var projectileBody = SEntMan.GetComponent<PhysicsComponent>(projectile);
+            var projectileFixture = SEntMan.GetComponent<FixturesComponent>(projectile)
+                .Fixtures[SharedProjectileSystem.ProjectileFixture];
+            var playerBody = SEntMan.GetComponent<PhysicsComponent>(SPlayer);
+            var playerFixture = SEntMan.GetComponent<FixturesComponent>(SPlayer).Fixtures.Values.First(f => f.Hard);
+            var targeted = SEntMan.AddComponent<TargetedProjectileComponent>(projectile);
+
+#pragma warning disable RA0002
+            projectileComponent.Shooter = SPlayer;
+            targeted.Target = SPlayer;
+#pragma warning restore RA0002
+            AssertCollisionCancelled(false);
+
+#pragma warning disable RA0002
+            targeted.Target = default;
+#pragma warning restore RA0002
+            AssertCollisionCancelled(true);
+            SEntMan.DeleteEntity(projectile);
+
+            void AssertCollisionCancelled(bool expected)
+            {
+                var collision = new PreventCollideEvent(
+                    projectile,
+                    SPlayer,
+                    projectileBody,
+                    playerBody,
+                    projectileFixture,
+                    playerFixture);
+                SEntMan.EventBus.RaiseLocalEvent(projectile, ref collision);
+                Assert.That(collision.Cancelled, Is.EqualTo(expected));
+            }
+        });
+
+        await Client.WaitAssertion(() =>
+        {
+            var hitscan = CEntMan.GetEntity(hitscanNet);
+            var raycast = CEntMan.GetComponent<HitscanBasicRaycastComponent>(hitscan);
+            var trace = CEntMan.System<HitscanBasicRaycastSystem>().BuildVisualTrace(
+                (hitscan, raycast),
+                CEntMan.GetCoordinates(PlayerCoords),
+                Vector2.UnitY,
+                CPlayer,
+                CPlayer);
+
+            Assert.That(trace, Is.Not.Null);
+            Assert.That(trace!.Value.Distance, Is.Zero);
+            Assert.That(trace.Value.ImpactedEnt, Is.EqualTo(Player));
+        });
+    }
+
+    private async Task<(EntityUid Target, EntityUid? Blocker)> RunPredictionRegressionHit(
+        Vector2? blockerOffset = null)
+    {
+        const uint predictionId = 101;
+        var targetNetCoordinates = new NetCoordinates(
+            PlayerCoords.NetEntity,
+            PlayerCoords.Position + Vector2.UnitX);
+        var targetNet = await Spawn(PredictionRegressionTarget, targetNetCoordinates);
+        NetEntity? blockerNet = null;
+        if (blockerOffset is { } offset)
+        {
+            blockerNet = await Spawn(
+                PredictionRegressionTarget,
+                new NetCoordinates(PlayerCoords.NetEntity, PlayerCoords.Position + offset));
+        }
+
+        MapCoordinates targetCoordinates = default;
+        MapCoordinates projectileCoordinates = default;
+        MapCoordinates contactCoordinates = default;
+        await Server.WaitPost(() =>
+        {
+            var target = SEntMan.GetEntity(targetNet);
+            var projectile = SEntMan.SpawnEntity(
+                PredictionRegressionProjectile,
+                SEntMan.GetCoordinates(PlayerCoords));
+            var marker = SEntMan.AddComponent<PredictedProjectileComponent>(projectile);
+            var projectileComponent = SEntMan.GetComponent<ProjectileComponent>(projectile);
+
+#pragma warning disable RA0002
+            marker.Shooter = SPlayer;
+            marker.PredictionId = predictionId;
+            marker.ProjectileIndex = 0;
+            marker.Origin = Transform.GetMapCoordinates(projectile);
+            projectileComponent.Shooter = SPlayer;
+#pragma warning restore RA0002
+
+            targetCoordinates = Transform.GetMapCoordinates(target);
+            projectileCoordinates = new MapCoordinates(
+                targetCoordinates.Position - new Vector2(0.35f, 0f),
+                targetCoordinates.MapId);
+            contactCoordinates = new MapCoordinates(
+                targetCoordinates.Position - new Vector2(0.25f, 0f),
+                targetCoordinates.MapId);
+        });
+
+        await RunTicks(1);
+        await Client.WaitPost(() =>
+        {
+            CEntMan.RaisePredictiveEvent(new PredictedProjectileHitEvent(
+                predictionId,
+                0,
+                new HashSet<(NetEntity, MapCoordinates, MapCoordinates, MapCoordinates)>
+                {
+                    (targetNet, targetCoordinates, projectileCoordinates, contactCoordinates),
+                }));
+        });
+        await RunTicks(3);
+
+        return (
+            SEntMan.GetEntity(targetNet),
+            blockerNet is { } blocker ? SEntMan.GetEntity(blocker) : null);
     }
 }

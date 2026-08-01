@@ -39,20 +39,28 @@ public sealed class HitscanBasicRaycastSystem : EntitySystem
     {
         var shooter = args.Shooter ?? args.Gun;
         var mapCords = _transform.ToMapCoordinates(args.FromCoordinates);
-        var ray = new CollisionRay(mapCords.Position, args.ShotDirection, (int) ent.Comp.CollisionMask);
-        var rayCastResults = _physics.IntersectRay(mapCords.MapId, ray, ent.Comp.MaxDistance, shooter, false);
-
         var target = args.Target;
-        // If you are in a container, use the raycast result
-        // Otherwise:
-        //  1.) Hit the first entity that you targeted.
-        //  2.) Hit the first entity that doesn't require you to aim at it specifically to be hit.
         var ignored = args.IgnoredEntities;
-        var result = _container.IsEntityOrParentInContainer(shooter)
-            ? rayCastResults.FirstOrNull(hit => ignored?.Contains(hit.HitEntity) != true)
-            : rayCastResults.FirstOrNull(hit =>
-                ignored?.Contains(hit.HitEntity) != true &&
-                (hit.HitEntity == target || !RequiresExplicitTarget(hit.HitEntity)));
+        RayCastResults? result;
+        if (target == shooter)
+        {
+            result = new RayCastResults(0f, mapCords.Position, shooter);
+        }
+        else
+        {
+            var ray = new CollisionRay(mapCords.Position, args.ShotDirection, (int) ent.Comp.CollisionMask);
+            var rayCastResults = _physics.IntersectRay(mapCords.MapId, ray, ent.Comp.MaxDistance, shooter, false);
+
+            // If you are in a container, use the raycast result
+            // Otherwise:
+            //  1.) Hit the first entity that you targeted.
+            //  2.) Hit the first entity that doesn't require you to aim at it specifically to be hit.
+            result = _container.IsEntityOrParentInContainer(shooter)
+                ? rayCastResults.FirstOrNull(hit => ignored?.Contains(hit.HitEntity) != true)
+                : rayCastResults.FirstOrNull(hit =>
+                    ignored?.Contains(hit.HitEntity) != true &&
+                    (hit.HitEntity == target || !RequiresExplicitTarget(hit.HitEntity)));
+        }
 
         var distanceTried = result?.Distance ?? ent.Comp.MaxDistance;
 
@@ -126,6 +134,9 @@ public sealed class HitscanBasicRaycastSystem : EntitySystem
             return null;
 
         var direction = shotDirection.Normalized();
+        if (target == shooter)
+            return GenerateTraceStep(fromCoordinates, 0f, direction.ToAngle(), shooter);
+
         var ray = new CollisionRay(mapCoords.Position, direction, (int) ent.Comp.CollisionMask);
         var rayCastResults = _physics.IntersectRay(mapCoords.MapId, ray, ent.Comp.MaxDistance, shooter, false);
         var result = _container.IsEntityOrParentInContainer(shooter)

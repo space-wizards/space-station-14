@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Server.Administration.Logs;
 using Content.Server.Destructible;
 using Content.Server.Effects;
@@ -11,6 +12,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Projectiles;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Map;
 using Robust.Shared.Player;
 
 namespace Content.Server.Projectiles;
@@ -44,20 +46,39 @@ public sealed class ProjectileSystem : SharedProjectileSystem
             return;
         }
 
-        ProjectileCollide((uid, component, args.OurBody), args.OtherEntity);
+        MapCoordinates? collisionCoordinates = null;
+        if (args.PointCount > 0)
+        {
+            var points = args.WorldPoints;
+            var contact = Vector2.Zero;
+            foreach (var point in points)
+                contact += point;
+
+            collisionCoordinates = new MapCoordinates(
+                contact / points.Length,
+                _transform.GetMapCoordinates(uid).MapId);
+        }
+
+        ProjectileCollide(
+            (uid, component, args.OurBody),
+            args.OtherEntity,
+            collisionCoordinates: collisionCoordinates);
     }
 
     public void ProjectileCollide(
         Entity<ProjectileComponent, PhysicsComponent> projectile,
         EntityUid target,
-        bool predicted = false)
+        bool predicted = false,
+        MapCoordinates? collisionCoordinates = null,
+        bool suppressPredictedShooterEffects = true)
     {
         var (uid, component, body) = projectile;
         if (component.ProjectileSpent)
             return;
 
         var effectFilter = Filter.Pvs(target, entityManager: EntityManager);
-        if (TryComp<PredictedProjectileComponent>(uid, out var predictedProjectile) &&
+        if (suppressPredictedShooterEffects &&
+            TryComp<PredictedProjectileComponent>(uid, out var predictedProjectile) &&
             TryComp<ActorComponent>(predictedProjectile.Shooter, out var predictedActor))
         {
             effectFilter.RemovePlayer(predictedActor.PlayerSession);
@@ -118,9 +139,14 @@ public sealed class ProjectileSystem : SharedProjectileSystem
         if (predicted && component.DeleteOnCollide && component.ProjectileSpent)
         {
             var predictedHit = EnsureComp<PredictedProjectileHitComponent>(uid);
-            predictedHit.Origin = _transform.GetMoverCoordinates(Transform(uid).Coordinates);
+            var origin = TryComp<PredictedProjectileComponent>(uid, out var prediction) &&
+                         prediction.Origin.MapId != MapId.Nullspace
+                ? prediction.Origin
+                : _transform.GetMapCoordinates(uid);
+            predictedHit.Origin = _transform.GetMoverCoordinates(_transform.ToCoordinates(origin));
 
-            var targetCoordinates = _transform.GetMoverCoordinates(target);
+            var targetCoordinates = _transform.GetMoverCoordinates(
+                _transform.ToCoordinates(collisionCoordinates ?? _transform.GetMapCoordinates(target)));
             if (predictedHit.Origin.TryDistance(EntityManager, _transform, targetCoordinates, out var distance))
                 predictedHit.Distance = distance;
 
@@ -133,7 +159,12 @@ public sealed class ProjectileSystem : SharedProjectileSystem
 
         if (component.ImpactEffect != null && TryComp(uid, out TransformComponent? xform))
         {
-            RaiseNetworkEvent(new ImpactEffectEvent(component.ImpactEffect, GetNetCoordinates(xform.Coordinates)), effectFilter);
+            var effectCoordinates = collisionCoordinates is { } contact
+                ? _transform.ToCoordinates(contact)
+                : xform.Coordinates;
+            RaiseNetworkEvent(
+                new ImpactEffectEvent(component.ImpactEffect, GetNetCoordinates(effectCoordinates)),
+                effectFilter);
         }
     }
 

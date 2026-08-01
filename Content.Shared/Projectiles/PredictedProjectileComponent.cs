@@ -1,4 +1,5 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Map;
 
 namespace Content.Shared.Projectiles;
 
@@ -16,6 +17,13 @@ public sealed partial class PredictedProjectileComponent : Component
 
     [AutoNetworkedField]
     public ushort ProjectileIndex;
+
+    /// <summary>
+    /// Authoritative map position where this projectile was fired.
+    /// Used to validate the complete path of client-reported collisions.
+    /// </summary>
+    [DataField]
+    public MapCoordinates Origin;
 
     [DataField]
     public bool Hit;

@@ -13,6 +13,8 @@ public sealed partial class PredictedProjectileVisualComponent : Component
     public float? HitDistance;
     public EntityUid? AuthoritativeProjectile;
     public EntityUid? PendingCollision;
+    public MapCoordinates PendingProjectileCoordinates;
+    public MapCoordinates PendingContactCoordinates;
     public EntityCoordinates? CoordinatesBeforePredictionReplay;
 }
 
