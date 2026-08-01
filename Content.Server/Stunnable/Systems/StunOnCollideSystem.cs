@@ -24,6 +24,9 @@ internal sealed partial class StunOnCollideSystem : EntitySystem
 
     private void TryDoCollideStun(Entity<StunOnCollideComponent> ent, EntityUid target)
     {
+        if (_entityWhitelist.IsWhitelistPass(ent.Comp.Blacklist, args.OtherEntity))
+            return;
+
         _stunSystem.TryKnockdown(target, ent.Comp.KnockdownAmount, ent.Comp.Refresh, ent.Comp.AutoStand, ent.Comp.Drop, true);
 
         if (ent.Comp.Refresh)
@@ -57,9 +60,6 @@ internal sealed partial class StunOnCollideSystem : EntitySystem
             return;
 
         TryDoCollideStun(ent, args.OtherEntity);
-
-        if (_entityWhitelist.IsWhitelistPass(ent.Comp.Blacklist, args.OtherEntity))
-            return;
     }
 
     private void HandleThrow(Entity<StunOnCollideComponent> ent, ref ThrowDoHitEvent args)
