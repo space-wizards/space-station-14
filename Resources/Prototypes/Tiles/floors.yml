@@ -24,6 +24,7 @@
   - FloorDirt
   - PlatingRCD
   - FloorHullReinforced
+  weather: false
 
 - type: tile
   id: FloorSteel
@@ -1360,7 +1361,6 @@
   isSubfloor: false
   deconstructTools: [ Cutting ]
   itemDrop: FloorTileItemMowedAstroGrass
-  weather: false
 
 - type: tile
   id: FloorJungleAstroGrass
@@ -1369,27 +1369,24 @@
   isSubfloor: false
   deconstructTools: [ Cutting ]
   itemDrop: FloorTileItemJungleAstroGrass
-  weather: false
 
 - type: tile
-  parent: FloorGrassDark
+  parent: [ BaseStationTile, FloorGrassDark ]
   id: FloorDarkAstroGrass
   name: tiles-dark-astro-grass
   baseTurf: Plating
   isSubfloor: false
   deconstructTools: [ Cutting ]
   itemDrop: FloorTileItemDarkAstroGrass
-  weather: false
 
 - type: tile
-  parent: FloorGrassLight
+  parent: [ BaseStationTile, FloorGrassLight ]
   id: FloorLightAstroGrass
   name: tiles-light-astro-grass
   baseTurf: Plating
   isSubfloor: false
   deconstructTools: [ Cutting ]
   itemDrop: FloorTileItemLightAstroGrass
-  weather: false
 
 # Ice
 - type: tile
@@ -1409,7 +1406,6 @@
   isSubfloor: false
   deconstructTools: [ Prying ]
   itemDrop: FloorTileItemAstroSnow
-  weather: false
 
 # Asteroid Sand
 - type: tile
@@ -1419,7 +1415,6 @@
   isSubfloor: false
   deconstructTools: [ Prying ]
   itemDrop: FloorTileItemAstroAsteroidSand
-  weather: false
 
 - type: tile
   id: FloorAstroAsteroidSandBorderless
@@ -1428,7 +1423,6 @@
   isSubfloor: false
   deconstructTools: [ Prying ]
   itemDrop: FloorTileItemAstroAsteroidSand
-  weather: false
 
 - type: tile
   parent: FloorDesert
