@@ -152,6 +152,15 @@
   - type: XATMicrowave
 
 - type: xenoArchTrigger
+  id: TriggerMicrowave
+  tip: xenoarch-trigger-tip-microwave #todo
+  whitelist:
+    components:
+    - Item
+  components:
+  - type: XATMicrowave
+
+- type: xenoArchTrigger
   id: TriggerPressureHigh
   tip: xenoarch-trigger-tip-pressure-high
   components:
