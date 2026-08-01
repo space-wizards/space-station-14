@@ -34,7 +34,7 @@ public sealed partial class HolopadSystem : SharedHolopadSystem
         if (ev.Id != ContentPostShaderIds.Holopad)
             return;
 
-        UpdateHologramSprite(entity, entity.Comp.LinkedEntity);
+        UpdateHologramSprite(entity, entity.Comp.LinkedEntity, ev.Shader);
     }
 
     private void OnTypingChanged(TypingChangedEvent ev, EntitySessionEventArgs args)
@@ -51,7 +51,7 @@ public sealed partial class HolopadSystem : SharedHolopadSystem
         RaiseNetworkEvent(netEv);
     }
 
-    private void UpdateHologramSprite(EntityUid hologram, EntityUid? target)
+    private void UpdateHologramSprite(EntityUid hologram, EntityUid? target, ShaderInstance? shader = null)
     {
         // Get required components
         if (!TryComp<SpriteComponent>(hologram, out var hologramSprite) ||
@@ -111,15 +111,19 @@ public sealed partial class HolopadSystem : SharedHolopadSystem
                 hologramSprite.LayerSetShader(i, "unshaded");
         }
 
-        UpdateHologramShader(hologram, hologramSprite, holopadhologram);
+        UpdateHologramShader(hologram, hologramSprite, holopadhologram, shader);
     }
 
-    private void UpdateHologramShader(EntityUid uid, SpriteComponent sprite, HolopadHologramComponent holopadHologram)
+    private void UpdateHologramShader(
+        EntityUid uid,
+        SpriteComponent sprite,
+        HolopadHologramComponent holopadHologram,
+        ShaderInstance? shader = null)
     {
         // Find the texture height of the largest layer
         float texHeight = sprite.AllLayers.Max(x => x.PixelSize.Y);
 
-        var instance = ProtoMan.Index<ShaderPrototype>(holopadHologram.ShaderName).InstanceUnique();
+        var instance = shader ?? ProtoMan.Index<ShaderPrototype>(holopadHologram.ShaderName).InstanceUnique();
         instance.SetParameter("color1", new Vector3(holopadHologram.Color1.R, holopadHologram.Color1.G, holopadHologram.Color1.B));
         instance.SetParameter("color2", new Vector3(holopadHologram.Color2.R, holopadHologram.Color2.G, holopadHologram.Color2.B));
         instance.SetParameter("alpha", holopadHologram.Alpha);
