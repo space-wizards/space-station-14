@@ -7,6 +7,11 @@
   - type: ChangelingDevour
   - type: ChangelingIdentity
   - type: ChangelingTransform
+  - type: AddMetabolism
+    addedMetabolizer: Changeling
+  - type: DestructionResistance
+  - type: RevolutionaryImmune
+  - type: ZombieImmune
   - type: ActionGrant
     actions:
     - ActionChangelingStore
@@ -105,3 +110,15 @@
     noiseMultiplier: 2
     overlayColor: "#AB0808AA"
     prioritized: false # Technically eye augments, so we want things such as NVGs to take priority if able
+
+- type: entity # dummy prototype for the store listing
+  id: ChangelingFakeMindshieldDummy
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: FakeMindShield
+    actionTag: FakeMindShieldChangeling
+    chameleonControllable: false
+    isInnate: true
+    enabledPopup: changeling-fake-mindshield-enabled
+    disabledPopup: changeling-fake-mindshield-disabled
+    action: ActionChangelingFakeMindshieldToggle

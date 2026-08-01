@@ -35,6 +35,10 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         if (TryComp(uid, out SpriteComponent? sprite)
             && proto.TryComp(out SpriteComponent? otherSprite, Factory))
         {
+            // TODO no system method to replace this with.
+            // otherSprite.Owner is Invalid here because the component is being taken from a prototype.
+            // This is very fragile because if resolves ever start checking if an entity is invalid this will throw
+            // even though this ends up calling the system, its better to leave this warning here until theres a proper method
             sprite.CopyFrom(otherSprite);
         }
 
