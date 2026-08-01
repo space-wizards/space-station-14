@@ -18,9 +18,22 @@ public abstract partial class SharedBuckleSystem
         SubscribeLocalEvent<StrapComponent, InteractHandEvent>(OnStrapInteractHand, before: [typeof(InteractionPopupSystem)]);
         SubscribeLocalEvent<StrapComponent, DragDropTargetEvent>(OnStrapDragDropTarget);
         SubscribeLocalEvent<StrapComponent, CanDropTargetEvent>(OnCanDropTarget);
+        SubscribeLocalEvent<StrapComponent, GetInteractingEntitiesEvent>(OnGetInteractingForStrap);
 
+        SubscribeLocalEvent<BuckleComponent, GetInteractingEntitiesEvent>(OnGetInteractingForBuckle);
         SubscribeLocalEvent<BuckleComponent, InteractHandEvent>(OnBuckleInteractHand, before: [typeof(InteractionPopupSystem)]);
         SubscribeLocalEvent<BuckleComponent, GetVerbsEvent<InteractionVerb>>(AddUnbuckleVerb);
+    }
+
+    private void OnGetInteractingForBuckle(Entity<BuckleComponent> ent, ref GetInteractingEntitiesEvent args)
+    {
+        if (ent.Comp.BuckledTo.HasValue)
+            args.InteractingEntities.Add(ent.Comp.BuckledTo.Value);
+    }
+
+    private void OnGetInteractingForStrap(Entity<StrapComponent> ent, ref GetInteractingEntitiesEvent args)
+    {
+        args.InteractingEntities.UnionWith(ent.Comp.BuckledEntities);
     }
 
     private void OnCanDropTarget(EntityUid uid, StrapComponent component, ref CanDropTargetEvent args)
@@ -224,4 +237,8 @@ public abstract partial class SharedBuckleSystem
         args.Verbs.Add(verb);
     }
 
+    private void OngetInteracting(Entity<BuckleComponent> ent, ref GetInteractingEntitiesEvent args)
+    {
+        throw new NotImplementedException();
+    }
 }

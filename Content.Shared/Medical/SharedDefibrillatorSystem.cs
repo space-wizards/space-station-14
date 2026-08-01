@@ -39,7 +39,10 @@ public abstract partial class SharedDefibrillatorSystem : EntitySystem
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedMindSystem _mind = default!;
     [Dependency] private UseDelaySystem _useDelay = default!;
-    
+    [Dependency] private SharedInteractionSystem _interaction = default!;
+
+    private readonly HashSet<EntityUid> _interactors = new();
+
     [SubscribeLocalEvent]
     private void OnAfterInteract(Entity<DefibrillatorComponent> ent, ref AfterInteractEvent args)
     {
@@ -154,25 +157,45 @@ public abstract partial class SharedDefibrillatorSystem : EntitySystem
         if (targetEvent.Cancelled || !CanZap(ent, target, user))
             return;
 
-        _audio.PlayPredicted(ent.Comp.ZapSound, ent.Owner, user);
-        _electrocution.TryDoChainElectrocution(target, ent.Owner, user, ent.Comp.ZapDamage, ent.Comp.WritheDuration, true, ignoreInsulation: true);
-
         if (TryComp<UseDelayComponent>(ent, out var useDelay))
         {
             _useDelay.SetLength((ent.Owner, useDelay), ent.Comp.ZapDelay, id: ent.Comp.DelayId);
             _useDelay.TryResetDelay((ent.Owner, useDelay), id: ent.Comp.DelayId);
         }
 
-        var failedRevive = true;
+        _interaction.GetEntitiesInteractingWithTarget(target, _interactors);
+
+        Entity<DefibrillatorComponent> defibEnt = (ent, ent.Comp);
+        var failedRevive = TryRevive(defibEnt, user, target, true);
+        foreach (var interactor in _interactors)
+        {
+            TryRevive(defibEnt, user, interactor, false);
+        }
+        
+        var sound = failedRevive
+            ? ent.Comp.FailureSound
+            : ent.Comp.SuccessSound;
+        _audio.PlayPredicted(sound, ent.Owner, user);
+
+        _audio.PlayPredicted(ent.Comp.ZapSound, ent, user);
+        var ev = new TargetDefibrillatedEvent(user, target, (ent.Owner, ent.Comp), _interactors);
+        RaiseLocalEvent(target, ref ev);
+
+        // if we don't have enough power left for another shot, turn it off
+        if (!_powerCell.HasActivatableCharge(ent.Owner))
+            _toggle.TryDeactivate(ent.Owner);
+    }
+
+    private bool TryRevive(Entity<DefibrillatorComponent> ent, EntityUid user, EntityUid target, bool isOriginal)
+    {
+        bool failedRevive = true;
         if (_rotting.IsRotten(target))
         {
-            _chat.TrySendInGameICMessage(ent.Owner, Loc.GetString("defibrillator-rotten"),
-                InGameICChatType.Speak, true);
+            _chat.TrySendInGameICMessage(ent.Owner, Loc.GetString("defibrillator-rotten"), InGameICChatType.Speak, true);
         }
         else if (TryComp<UnrevivableComponent>(target, out var unrevivable))
         {
-            _chat.TrySendInGameICMessage(ent.Owner, Loc.GetString(unrevivable.ReasonMessage),
-                InGameICChatType.Speak, true);
+            _chat.TrySendInGameICMessage(ent.Owner, Loc.GetString(unrevivable.ReasonMessage), InGameICChatType.Speak, true);
         }
         else
         {
@@ -198,23 +221,22 @@ public abstract partial class SharedDefibrillatorSystem : EntitySystem
             }
             else
             {
-                if (HasComp<MindContainerComponent>(target)) //if the target never could have had a mind in the first place don't bother informing the player about mindlessness
-                    _chat.TrySendInGameICMessage(ent.Owner, Loc.GetString("defibrillator-no-mind"),
-                        InGameICChatType.Speak, true);
+                //if the target never could have had a mind in the first place don't bother informing the player about mindlessness
+                if (HasComp<MindContainerComponent>(target)) 
+                    _chat.TrySendInGameICMessage(ent.Owner, Loc.GetString("defibrillator-no-mind"), InGameICChatType.Speak, true);
             }
         }
 
-        var sound = failedRevive
-            ? ent.Comp.FailureSound
-            : ent.Comp.SuccessSound;
-        _audio.PlayPredicted(sound, ent.Owner, user);
+        _electrocution.TryDoElectrocution(
+            target,
+            ent.Owner,
+            ent.Comp.ZapDamage,
+            ent.Comp.WritheDuration,
+            true,
+            ignoreInsulation: isOriginal
+        );
 
-        // if we don't have enough power left for another shot, turn it off
-        if (!_powerCell.HasActivatableCharge(ent.Owner))
-            _toggle.TryDeactivate(ent.Owner);
-
-        var ev = new TargetDefibrillatedEvent(user, (ent.Owner, ent.Comp));
-        RaiseLocalEvent(target, ref ev);
+        return failedRevive;
     }
 
     // TODO: SharedEuiManager so that we can just directly open the eui from shared.

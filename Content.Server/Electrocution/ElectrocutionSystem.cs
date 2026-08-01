@@ -1,6 +1,5 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Doors.Systems;
-using Content.Server.Interaction;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
@@ -55,13 +54,10 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
     [Dependency] private TagSystem _tag = default!;
     [Dependency] private MetaDataSystem _metaData = default!;
     [Dependency] private TurfSystem _turf = default!;
-    [Dependency] private InteractionSystem _interaction = default!;
 
     private static readonly ProtoId<StatusEffectPrototype> StatusKeyIn = "Electrocution";
     private static readonly ProtoId<DamageTypePrototype> DamageType = "Shock";
     private static readonly ProtoId<TagPrototype> WindowTag = "Window";
-
-    private readonly HashSet<EntityUid> _interacters = new();
 
     // Multiply and shift the log scale for shock damage.
     private const float RecursiveDamageMultiplier = 0.75f;
@@ -325,33 +321,6 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
 
         RaiseLocalEvent(uid, new ElectrocutedEvent(uid, sourceUid, siemensCoefficient), true);
         return true;
-    }
-
-    /// <inheritdoc/>
-    public override bool TryDoChainElectrocution(
-        EntityUid uid,
-        EntityUid? sourceUid,
-        EntityUid? exceptUid,
-        int shockDamage,
-        TimeSpan time,
-        bool refresh,
-        float siemensCoefficient = 1f,
-        StatusEffectsComponent? statusEffects = null,
-        bool ignoreInsulation = false
-    )
-    {
-        var result = TryDoElectrocution(uid, sourceUid, shockDamage, time, refresh, siemensCoefficient, statusEffects, ignoreInsulation);
-
-        _interaction.GetEntitiesInteractingWithTarget(uid, _interacters);
-        foreach (var other in _interacters)
-        {
-            if (other == exceptUid)
-                continue;
-
-            TryDoElectrocution(other, null, shockDamage, time, refresh, siemensCoefficient, null, ignoreInsulation);
-        }
-
-        return result;
     }
 
     private bool TryDoElectrocutionPowered(
