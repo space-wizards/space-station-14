@@ -1008,6 +1008,10 @@
     state: ssd
   content:
   - WeaponPistolBlueShieldUpgradeKit
+  - WeaponSubMachineGunDrozd
+  - MagazinePistolSubMachineGun
+  - MagazinePistolSubMachineGun
+  - MagazinePistolSubMachineGun
 
 ## Secondary
 ### Огнестрельное
@@ -1037,7 +1041,7 @@
   - MagazinePistolHighCapacity
   - MagazinePistolHighCapacity
   - MagazinePistolHighCapacity
-  - BulletShieldBlueShield
+  - TelescopicShield
 
 - type: thiefBackpackSet
   id: BerettaM92Set
