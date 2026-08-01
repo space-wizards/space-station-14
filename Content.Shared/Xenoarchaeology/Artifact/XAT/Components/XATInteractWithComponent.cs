@@ -15,17 +15,17 @@ namespace Content.Shared.Xenoarchaeology.Artifact.XAT.Components;
 public sealed partial class XATInteractWithComponent : Component
 {
     /// <summary>
+    /// Whitelist of allowed interacting entities.
+    /// </summary>
+    [DataField(required: true)]
+    public EntityWhitelist Whitelist;
+
+    /// <summary>
     /// Whether to destroy the interacting entity afterwards.
     /// EG: feed the artifact a pizza slice, it eats it.
     /// </summary>
     [DataField]
     public bool DestroyAfter = false;
-
-    /// <summary>
-    /// Whitelist of allowed interacting entities.
-    /// </summary>
-    [DataField(required: true)]
-    public EntityWhitelist Whitelist;
 
     /// <summary>
     /// Additional Sound played on successful trigger.
