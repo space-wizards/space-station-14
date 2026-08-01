@@ -42,7 +42,7 @@
     storedSprite:
       state: storage
       sprite: Clothing/Neck/Ties/dettie.rsi
-  - type: Tag # We do this to remove HamsterWearable because this currently lacks a sprite for it
+  - type: Tag # We redo the tag list here to remove HamsterWearable because this currently lacks a sprite for it
     tags:
     - ClothMade
     - Recyclable
@@ -63,15 +63,9 @@
     storedSprite:
       state: storage
       sprite: Clothing/Neck/Ties/scitie.rsi
-  - type: Tag
-    tags:
-    - ClothMade
-    - Recyclable
-    - HamsterWearable
-    - WhitelistChameleon
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: ClothingNeckTieBase
   id: ClothingNeckTieSerious
   name: serious tie
   description: A perfectly tied tie to get you through the working day.
@@ -84,3 +78,9 @@
     storedSprite:
       state: storage
       sprite: Clothing/Neck/Ties/serioustie.rsi
+  - type: Tag # We redo the tag list here to remove HamsterWearable because this currently lacks a sprite for it
+    tags:
+    - ClothMade
+    - Recyclable
+    - WhitelistChameleon
+    - MonkeyWearable
