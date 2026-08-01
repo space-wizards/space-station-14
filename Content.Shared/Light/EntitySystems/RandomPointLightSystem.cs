@@ -1,7 +1,6 @@
 using System.Numerics;
 using Content.Shared.Light.Components;
 using Content.Shared.Random.Helpers;
-using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Light.EntitySystems;
@@ -9,19 +8,12 @@ namespace Content.Shared.Light.EntitySystems;
 /// <summary>
 /// System for assigning random values to <see cref="SharedPointLightComponent"/> variables when given <see cref="RandomPointLightComponent"/>
 /// </summary>
-public sealed class RandomPointLightSystem : EntitySystem
+public sealed partial class RandomPointLightSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedPointLightSystem _light = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedPointLightSystem _light = default!;
 
-
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<RandomPointLightComponent, ComponentStartup>(RandomLight);
-    }
-
+    [SubscribeLocalEvent]
     private void RandomLight(Entity<RandomPointLightComponent> ent, ref ComponentStartup args)
     {
         if (_timing.ApplyingState)
@@ -29,16 +21,14 @@ public sealed class RandomPointLightSystem : EntitySystem
 
         var rpl = ent.Comp;
 
-        // TODO: Replace with RandomPredicted once the engine PR is merged
-        var seed = SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, GetNetEntity(ent).Id);
-        var rand = new System.Random(seed);
-
+        var rand = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent));
         // Keeping the V variable between 0.5 and 1.0 so that it's always bright
         var hsv = new Vector4(
             rand.NextFloat(0, 1),
             rand.NextFloat(0, 1),
             rand.NextFloat(0.5f, 1),
-            1);
+            1
+        );
 
         var color = Color.FromHsv(hsv);
 
