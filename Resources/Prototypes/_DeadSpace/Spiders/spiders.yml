@@ -592,6 +592,18 @@
     cycleable: false
     capacity: 1000
   - type: GhostTakeoverAvailable
+  - type: Devourer
+    devourAction: ActionDevourSpiderTerror
+    foodPreferenceWhitelist:
+      components:
+      - Construction
+    chemical: Omnizine
+    healRate: 1.0 # Чуть-чуть
+    whitelist:
+      components:
+      - Door
+      tags:
+      - Wall
 
 - type: entity
   name: паук уничтожитель

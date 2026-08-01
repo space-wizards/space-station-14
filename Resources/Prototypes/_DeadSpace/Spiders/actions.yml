@@ -200,3 +200,23 @@
   - type: WorldTargetAction
     event: !type:ActionGunShootEvent
   - type: EntityTargetAction
+
+- type: entity
+  parent: BaseAction
+  id: ActionDevourSpiderTerror
+  name: "[color=red]Разобрать[/color]"
+  description: Разломайте к чертям ваши преграды!
+  components:
+  - type: Action
+    icon: { sprite : Interface/Actions/devour.rsi, state: icon-on }
+    itemIconStyle: BigAction
+    priority: 1
+  - type: TargetAction
+  - type: EntityTargetAction
+    canTargetSelf: false
+    whitelist:
+      components:
+      - Door
+      tags:
+      - Wall
+    event: !type:DevourActionEvent
