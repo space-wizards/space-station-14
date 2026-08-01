@@ -25,3 +25,17 @@ public enum InventoryType : byte
     Emagged,
     Contraband
 }
+
+[Serializable, NetSerializable]
+public sealed class VendingMachineComponentState : ComponentState
+{
+    public Dictionary<string, VendingMachineInventoryEntry> Inventory = new();
+
+    public Dictionary<string, VendingMachineInventoryEntry> EmaggedInventory = new();
+
+    public Dictionary<string, VendingMachineInventoryEntry> ContrabandInventory = new();
+
+    public bool Contraband;
+
+    public bool Broken;
+}

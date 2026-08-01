@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Client.VendingMachines.Components;
 using Content.Shared.Power;
 using Content.Shared.Power.EntitySystems;
@@ -6,6 +7,7 @@ using Content.Shared.VendingMachines;
 using Content.Shared.VendingMachines.Components;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameStates;
 
 namespace Content.Client.VendingMachines;
 
@@ -33,12 +35,38 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
     }
 
     [SubscribeLocalEvent]
-    private void OnVendingHandleState(Entity<VendingMachineComponent> entity, ref AfterAutoHandleStateEvent args)
+    private void OnVendingHandleState(Entity<VendingMachineComponent> entity, ref ComponentHandleState args)
     {
-        TryUpdateVisualState((entity.Owner, entity.Comp));
+        if (args.Current is not VendingMachineComponentState state)
+            return;
 
-        if (TryGetOpenUi(entity.Owner, out var bui))
+        var uid = entity.Owner;
+        var component = entity.Comp;
+
+        // If all we did was update amounts, then we can leave BUI buttons in place.
+        var fullUiUpdate = !component.Inventory.Keys.SequenceEqual(state.Inventory.Keys) ||
+                           !component.EmaggedInventory.Keys.SequenceEqual(state.EmaggedInventory.Keys) ||
+                           !component.ContrabandInventory.Keys.SequenceEqual(state.ContrabandInventory.Keys) ||
+                           component.Contraband != state.Contraband;
+
+        component.Contraband = state.Contraband;
+        var brokenChanged = component.Broken != state.Broken;
+        component.Broken = state.Broken;
+
+        CopyInventory(state.Inventory, component.Inventory);
+        CopyInventory(state.EmaggedInventory, component.EmaggedInventory);
+        CopyInventory(state.ContrabandInventory, component.ContrabandInventory);
+
+        if (brokenChanged)
+            TryUpdateVisualState((uid, component));
+
+        if (!TryGetOpenUi(uid, out var bui))
+            return;
+
+        if (fullUiUpdate)
             bui.Refresh();
+        else
+            bui.UpdateAmounts();
     }
 
     [SubscribeLocalEvent]

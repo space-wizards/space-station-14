@@ -5,7 +5,6 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.VendingMachines.Components;
 
 [RegisterComponent, NetworkedComponent]
-[AutoGenerateComponentState(raiseAfterAutoHandleState: true)]
 public sealed partial class VendingMachineComponent : Component
 {
     /// <summary>
@@ -14,22 +13,22 @@ public sealed partial class VendingMachineComponent : Component
     [DataField("pack", required: true)]
     public ProtoId<VendingMachineInventoryPrototype> PackPrototypeId;
 
-    [DataField, AutoNetworkedField]
+    [DataField]
     public Dictionary<string, VendingMachineInventoryEntry> Inventory = new();
 
-    [DataField, AutoNetworkedField]
+    [DataField]
     public Dictionary<string, VendingMachineInventoryEntry> EmaggedInventory = new();
 
-    [DataField, AutoNetworkedField]
+    [DataField]
     public Dictionary<string, VendingMachineInventoryEntry> ContrabandInventory = new();
 
     /// <summary>
     /// If true then unlocks the <see cref="ContrabandInventory"/>
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public bool Contraband;
 
-    [DataField, AutoNetworkedField]
+    [DataField]
     public bool Broken;
 
     /// <summary>

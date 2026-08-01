@@ -8,6 +8,7 @@ using Content.Shared.Power.EntitySystems;
 using Content.Shared.UserInterface;
 using Content.Shared.VendingMachines.Components;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -33,6 +34,35 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
         {
             subs.Event<VendingMachineEjectMessage>(OnInventoryEjectMessage);
         });
+    }
+
+    [SubscribeLocalEvent]
+    private void OnVendingGetState(Entity<VendingMachineComponent> entity, ref ComponentGetState args)
+    {
+        var component = entity.Comp;
+        var state = new VendingMachineComponentState
+        {
+            Contraband = component.Contraband,
+            Broken = component.Broken,
+        };
+
+        CopyInventory(component.Inventory, state.Inventory);
+        CopyInventory(component.EmaggedInventory, state.EmaggedInventory);
+        CopyInventory(component.ContrabandInventory, state.ContrabandInventory);
+
+        args.State = state;
+    }
+
+    protected static void CopyInventory(
+        Dictionary<string, VendingMachineInventoryEntry> source,
+        Dictionary<string, VendingMachineInventoryEntry> target)
+    {
+        target.Clear();
+
+        foreach (var entry in source)
+        {
+            target.Add(entry.Key, new(entry.Value));
+        }
     }
 
     public override void Update(float frameTime)
