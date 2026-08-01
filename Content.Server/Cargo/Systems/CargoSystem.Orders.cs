@@ -465,20 +465,20 @@ public sealed partial class CargoSystem
         if (!TryComp<StationCargoOrderDatabaseComponent>(station, out var orderDatabase))
             return;
 
-            if (!_uiSystem.HasUi(consoleUid, CargoConsoleUiKey.Orders))
-                return;
+        if (!_uiSystem.HasUi(consoleUid, CargoConsoleUiKey.Orders))
+            return;
 
-            _uiSystem.SetUiState(consoleUid,
-                CargoConsoleUiKey.Orders,
-                new CargoConsoleInterfaceState(
-                MetaData(station.Value).EntityName,
-                GetOutstandingOrderCount((station!.Value, orderDatabase), console.Account),
-                orderDatabase.Capacity,
-                GetNetEntity(station.Value),
-                RelevantOrders((station!.Value, orderDatabase), (consoleUid, console)),
-                GetAvailableProducts((consoleUid, console))
-            ));
-        }
+        _uiSystem.SetUiState(consoleUid,
+            CargoConsoleUiKey.Orders,
+            new CargoConsoleInterfaceState(
+            MetaData(station.Value).EntityName,
+            GetOutstandingOrderCount((station!.Value, orderDatabase), console.Account),
+            orderDatabase.Capacity,
+            GetNetEntity(station.Value),
+            RelevantOrders((station!.Value, orderDatabase), (consoleUid, console)),
+            GetAvailableProducts((consoleUid, console))
+        ));
+    }
 
     /// <summary>
     /// Gets orders relevant to this account, i.e. orders on the account directly or orders on behalf of the account in the primary account.
