@@ -10,12 +10,14 @@ public sealed partial class GatherableSystem
     private void InitializeProjectile()
     {
         SubscribeLocalEvent<GatheringProjectileComponent, StartCollideEvent>(OnProjectileCollide);
+        SubscribeLocalEvent<GatheringProjectileComponent, ProjectileHitEvent>(OnProjectileHit);
         SubscribeLocalEvent<GatheringProjectileComponent, HitscanRaycastFiredEvent>(OnHitscanHit);
     }
 
     private void OnProjectileCollide(Entity<GatheringProjectileComponent> gathering, ref StartCollideEvent args)
     {
-        if (!args.OtherFixture.Hard ||
+        if (HasComp<ProjectileComponent>(gathering) ||
+            !args.OtherFixture.Hard ||
             args.OurFixtureId != SharedProjectileSystem.ProjectileFixture ||
             gathering.Comp.Amount <= 0 ||
             !TryComp<GatherableComponent>(args.OtherEntity, out var gatherable))
@@ -24,6 +26,21 @@ public sealed partial class GatherableSystem
         }
 
         Gather(args.OtherEntity, gathering, gatherable);
+        gathering.Comp.Amount--;
+
+        if (gathering.Comp.Amount <= 0)
+            QueueDel(gathering);
+    }
+
+    private void OnProjectileHit(Entity<GatheringProjectileComponent> gathering, ref ProjectileHitEvent args)
+    {
+        if (gathering.Comp.Amount <= 0 ||
+            !TryComp<GatherableComponent>(args.Target, out var gatherable))
+        {
+            return;
+        }
+
+        Gather(args.Target, gathering, gatherable);
         gathering.Comp.Amount--;
 
         if (gathering.Comp.Amount <= 0)

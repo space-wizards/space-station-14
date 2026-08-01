@@ -2,6 +2,7 @@ using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
+using Robust.Shared.Map;
 using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
 
 namespace Content.Client.Projectiles;
@@ -62,7 +63,7 @@ public sealed partial class ProjectileSystem : SharedProjectileSystem
         }
     }
 
-    internal void PlayPredictedImpact(EntityUid projectile)
+    internal void PlayPredictedImpact(EntityUid projectile, EntityCoordinates? coordinates = null)
     {
         if (!TryComp<ProjectileComponent>(projectile, out var component) ||
             component.ImpactEffect == null)
@@ -72,6 +73,6 @@ public sealed partial class ProjectileSystem : SharedProjectileSystem
 
         PlayImpact(new ImpactEffectEvent(
             component.ImpactEffect,
-            GetNetCoordinates(Transform(projectile).Coordinates)));
+            GetNetCoordinates(coordinates ?? Transform(projectile).Coordinates)));
     }
 }

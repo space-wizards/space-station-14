@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Content.Server.Construction;
 using Content.Shared.Construction;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.IntegrationTests.Tests.Interaction;
 
@@ -14,11 +15,20 @@ public sealed class InteractionTestSystem : EntitySystem
 {
     public Dictionary<int, NetEntity> Ghosts = new();
     public Dictionary<NetEntity, NetEntity> EntChanges = new();
+    public int PhysicsSteps;
+    public float LastPhysicsStepDuration;
 
     public override void Initialize()
     {
         SubscribeNetworkEvent<AckStructureConstructionMessage>(OnAck);
         SubscribeLocalEvent<ConstructionChangeEntityEvent>(OnEntChange);
+        SubscribeLocalEvent<PhysicsUpdateBeforeSolveEvent>(OnPhysicsUpdateBeforeSolve);
+    }
+
+    private void OnPhysicsUpdateBeforeSolve(ref PhysicsUpdateBeforeSolveEvent args)
+    {
+        PhysicsSteps++;
+        LastPhysicsStepDuration = args.DeltaTime;
     }
 
     private void OnEntChange(ConstructionChangeEntityEvent ev)

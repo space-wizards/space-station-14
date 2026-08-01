@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Lock;
 using Content.Shared.Storage.Components;
+using Content.Shared.Projectiles;
 using Content.Shared.Whitelist;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Events;
@@ -19,6 +20,7 @@ internal sealed class StoreOnCollideSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<StoreOnCollideComponent, StartCollideEvent>(OnCollide);
+        SubscribeLocalEvent<StoreOnCollideComponent, ProjectileHitEvent>(OnProjectileHit);
         SubscribeLocalEvent<StoreOnCollideComponent, StorageAfterOpenEvent>(AfterOpen);
         // TODO: Add support to stop colliding after throw, wands will need a WandComp
     }
@@ -26,8 +28,17 @@ internal sealed class StoreOnCollideSystem : EntitySystem
     // We use Collide instead of Projectile to support different types of interactions
     private void OnCollide(Entity<StoreOnCollideComponent> ent, ref StartCollideEvent args)
     {
+        if (HasComp<ProjectileComponent>(ent))
+            return;
+
         TryStoreTarget(ent, args.OtherEntity);
 
+        TryLockStorage(ent);
+    }
+
+    private void OnProjectileHit(Entity<StoreOnCollideComponent> ent, ref ProjectileHitEvent args)
+    {
+        TryStoreTarget(ent, args.Target);
         TryLockStorage(ent);
     }
 

@@ -16,6 +16,8 @@ public sealed partial class PredictedProjectileVisualComponent : Component
     public MapCoordinates PendingProjectileCoordinates;
     public MapCoordinates PendingContactCoordinates;
     public EntityCoordinates? CoordinatesBeforePredictionReplay;
+    public MapCoordinates? CoordinatesBeforePhysics;
+    public readonly Dictionary<EntityUid, MapCoordinates> TargetCoordinatesBeforePhysics = new();
 }
 
 [RegisterComponent]

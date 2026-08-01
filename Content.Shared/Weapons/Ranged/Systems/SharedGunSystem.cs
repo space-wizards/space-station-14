@@ -8,6 +8,7 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Examine;
+using Content.Shared.FixedPoint;
 using Content.Shared.Hands;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Popups;
@@ -72,7 +73,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     /// <summary>
     /// Default projectile speed
     /// </summary>
-    public const float ProjectileSpeed = 50f;
+    public const float ProjectileSpeed = 40f;
 
     /// <summary>
     ///     Name of the container slot used as the gun's chamber
@@ -501,6 +502,11 @@ public abstract partial class SharedGunSystem : EntitySystem
         Physics.SetLinearVelocity(uid, finalLinear, body: physics);
 
         var projectile = EnsureComp<ProjectileComponent>(uid);
+        // Some ammunition entities (syringes, cans, the cursed locker, etc.) can be recovered and
+        // fired again. Collision state belongs to a single launch and must not leak into the next one.
+        projectile.ProjectileSpent = false;
+        projectile.PenetrationAmount = FixedPoint2.Zero;
+        projectile.ProcessedTargets.Clear();
         projectile.Weapon = gunUid;
         var shooter = user ?? gunUid;
         if (shooter != null)

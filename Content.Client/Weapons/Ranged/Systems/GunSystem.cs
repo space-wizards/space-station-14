@@ -19,6 +19,7 @@ using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
+using Robust.Client.GameStates;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
@@ -43,6 +44,7 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private readonly AnimationPlayerSystem _animPlayer = default!;
     [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly IInputManager _inputManager = default!;
+    [Dependency] private readonly IClientGameStateManager _gameState = default!;
     [Dependency] private readonly InputSystem _inputSystem = default!;
     [Dependency] private readonly IOverlayManager _overlayManager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
@@ -555,7 +557,8 @@ public sealed partial class GunSystem : SharedGunSystem
         Log.Debug($"Sending shoot request tick {Timing.CurTick} / {Timing.CurTime}");
 
 
-        var predictionId = (_cfg.GetCVar(CCCCVars.HitscanPredictionEnabled) ||
+        var predictionId = _gameState.IsPredictionEnabled &&
+                           (_cfg.GetCVar(CCCCVars.HitscanPredictionEnabled) ||
                             _cfg.GetCVar(CCCCVars.ProjectilePredictionEnabled))
             ? NextPredictionId()
             : 0;
@@ -1013,6 +1016,12 @@ public sealed partial class GunSystem : SharedGunSystem
         var track = EnsureComp<TrackUserComponent>(ent);
         track.User = gunUid;
         track.Offset = Vector2.UnitX / 2f;
+
+        // TrackUserComponent is updated on the next render frame. Put the effect at the muzzle now as
+        // well, otherwise every flash is rendered at the gun origin for one frame and then jumps half
+        // a tile. The jump is especially visible while the shooter or its grid is moving.
+        var muzzlePosition = TransformSystem.GetWorldPosition(gunXform) + message.Angle.RotateVec(track.Offset);
+        TransformSystem.SetWorldPosition(ent, muzzlePosition);
 
         var lifetime = 0.4f;
 

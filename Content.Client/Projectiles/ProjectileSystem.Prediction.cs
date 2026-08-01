@@ -15,7 +15,9 @@ using Robust.Client.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
@@ -32,8 +34,10 @@ public sealed partial class ProjectileSystem
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPlayerManager _players = default!;
+    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly FixtureSystem _fixtures = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly RayCastSystem _rayCast = default!;
     [Dependency] private readonly SharedPointLightSystem _lights = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly RequireProjectileTargetSystem _requireProjectileTarget = default!;
@@ -43,10 +47,12 @@ public sealed partial class ProjectileSystem
 
     private readonly Dictionary<(uint Id, ushort Index), EntityUid> _predictedProjectiles = new();
     private readonly Dictionary<(uint Id, ushort Index), TimeSpan> _reconciledProjectiles = new();
+    private readonly HashSet<EntityUid> _sweepCandidates = new();
     private const float PredictionLifetime = 30f;
     private const float AuthoritativeProjectileTimeout = 2f;
     private const float RejectedPredictionHitLifetime = 1f;
     private const float DamagePitchVariation = 0.05f;
+    private const float MovingTargetLookupSpeed = 80f;
 
     public bool PredictionEnabled => _cfg.GetCVar(CCCCVars.ProjectilePredictionEnabled);
 
@@ -112,15 +118,35 @@ public sealed partial class ProjectileSystem
         var query = EntityQueryEnumerator<PredictedProjectileVisualComponent>();
         while (query.MoveNext(out var uid, out var predicted))
         {
-            if (!TerminatingOrDeleted(uid))
-                predicted.CoordinatesBeforePredictionReplay = Transform(uid).Coordinates;
+            if (TerminatingOrDeleted(uid))
+                continue;
+
+            predicted.CoordinatesBeforePredictionReplay = Transform(uid).Coordinates;
+            if (_timing.IsFirstTimePredicted && predicted.HitAt == null)
+            {
+                predicted.CoordinatesBeforePhysics = _transform.GetMapCoordinates(uid);
+                CaptureMovingTargetPositions((uid, predicted), args.DeltaTime);
+            }
         }
     }
 
     private void OnAfterSolve(ref PhysicsUpdateAfterSolveEvent args)
     {
         if (_timing.IsFirstTimePredicted)
+        {
+            var sweepQuery = EntityQueryEnumerator<PredictedProjectileVisualComponent>();
+            while (sweepQuery.MoveNext(out var uid, out var predicted))
+            {
+                var start = predicted.CoordinatesBeforePhysics;
+                predicted.CoordinatesBeforePhysics = null;
+                if (start != null && predicted.HitAt == null && !TerminatingOrDeleted(uid))
+                    SweepPredictedProjectile((uid, predicted), start.Value);
+
+                predicted.TargetCoordinatesBeforePhysics.Clear();
+            }
+
             return;
+        }
 
         var query = EntityQueryEnumerator<PredictedProjectileVisualComponent>();
         while (query.MoveNext(out var uid, out var predicted))
@@ -129,7 +155,333 @@ public sealed partial class ProjectileSystem
                 _transform.SetCoordinates(uid, coordinates);
 
             predicted.CoordinatesBeforePredictionReplay = null;
+            predicted.CoordinatesBeforePhysics = null;
         }
+    }
+
+    private void CaptureMovingTargetPositions(
+        Entity<PredictedProjectileVisualComponent> ent,
+        float deltaTime)
+    {
+        ent.Comp.TargetCoordinatesBeforePhysics.Clear();
+        if (!TryComp(ent, out PhysicsComponent? projectileBody) ||
+            !TryComp(ent, out FixturesComponent? fixtures) ||
+            !fixtures.Fixtures.TryGetValue(SharedProjectileSystem.ProjectileFixture, out var projectileFixture) ||
+            !TryComp(ent, out TransformComponent? xform))
+        {
+            return;
+        }
+
+        var start = _transform.GetMapCoordinates(ent, xform);
+        if (start.MapId == MapId.Nullspace)
+            return;
+
+        var expectedTranslation = _physics.GetMapLinearVelocity(ent, projectileBody, xform) * deltaTime;
+        if (expectedTranslation.LengthSquared() < 0.000001f)
+            return;
+
+        var castShape = GetProjectileCastShape(projectileFixture.Shape);
+        var projectileAngle = projectileFixture.Shape is PhysShapeAabb
+            ? Angle.Zero
+            : _transform.GetWorldRotation(xform);
+        var startTransform = new Robust.Shared.Physics.Transform(start.Position, projectileAngle);
+        var endTransform = new Robust.Shared.Physics.Transform(start.Position + expectedTranslation, projectileAngle);
+        var lookupBounds = castShape.ComputeAABB(startTransform, 0)
+            .Union(castShape.ComputeAABB(endTransform, 0))
+            .Enlarged(MathF.Max(0.5f, MovingTargetLookupSpeed * deltaTime));
+
+        _sweepCandidates.Clear();
+        _entityLookup.GetEntitiesIntersecting(
+            start.MapId,
+            lookupBounds,
+            _sweepCandidates,
+            LookupFlags.Dynamic | LookupFlags.Static | LookupFlags.Approximate);
+
+        foreach (var target in _sweepCandidates)
+        {
+            if (target == ent.Owner ||
+                !TryComp(target, out FixturesComponent? targetFixtures) ||
+                !HasComp<PhysicsComponent>(target) ||
+                !TryComp(target, out TransformComponent? targetXform))
+            {
+                continue;
+            }
+
+            var hasCompatibleFixture = false;
+            foreach (var targetFixture in targetFixtures.Fixtures.Values)
+            {
+                if (!targetFixture.Hard ||
+                    ((targetFixture.CollisionLayer & projectileFixture.CollisionMask) == 0 &&
+                     (targetFixture.CollisionMask & projectileFixture.CollisionLayer) == 0))
+                {
+                    continue;
+                }
+
+                hasCompatibleFixture = true;
+                break;
+            }
+
+            if (!hasCompatibleFixture)
+                continue;
+
+            var targetCoordinates = _transform.GetMapCoordinates(target, targetXform);
+            if (targetCoordinates.MapId == start.MapId)
+                ent.Comp.TargetCoordinatesBeforePhysics[target] = targetCoordinates;
+        }
+    }
+
+    /// <summary>
+    /// Client physics has no continuous collision solver, so a fast predicted projectile can move from
+    /// one side of a target to the other without producing StartCollideEvent. Cast its fixture over the
+    /// complete substep and report the first valid contact immediately.
+    /// </summary>
+    private void SweepPredictedProjectile(
+        Entity<PredictedProjectileVisualComponent> ent,
+        MapCoordinates start)
+    {
+        if (!TryComp(ent, out ProjectileComponent? projectile) ||
+            projectile.ProjectileSpent ||
+            !TryComp(ent, out PhysicsComponent? projectileBody) ||
+            !TryComp(ent, out FixturesComponent? fixtures) ||
+            !fixtures.Fixtures.TryGetValue(SharedProjectileSystem.ProjectileFixture, out var projectileFixture) ||
+            !TryComp(ent, out TransformComponent? xform))
+        {
+            return;
+        }
+
+        var end = _transform.GetMapCoordinates(ent, xform);
+        if (end.MapId != start.MapId)
+            return;
+
+        var translation = end.Position - start.Position;
+        if (translation.LengthSquared() < 0.000001f)
+            return;
+
+        var castShape = GetProjectileCastShape(projectileFixture.Shape);
+        var projectileAngle = projectileFixture.Shape is PhysShapeAabb
+            ? Angle.Zero
+            : _transform.GetWorldRotation(xform);
+        var filter = new QueryFilter
+        {
+            LayerBits = projectileFixture.CollisionLayer,
+            MaskBits = projectileFixture.CollisionMask,
+        };
+
+        bool TryGetTargetDisplacement(EntityUid target, out Vector2 displacement)
+        {
+            displacement = default;
+            if (!ent.Comp.TargetCoordinatesBeforePhysics.TryGetValue(target, out var targetStart) ||
+                !TryComp(target, out TransformComponent? targetXform))
+            {
+                return false;
+            }
+
+            var targetEnd = _transform.GetMapCoordinates(target, targetXform);
+            if (targetEnd.MapId != targetStart.MapId)
+                return false;
+
+            displacement = targetEnd.Position - targetStart.Position;
+            return displacement.LengthSquared() >= 0.000001f;
+        }
+
+        float SweepCallback(
+            FixtureProxy proxy,
+            Vector2 point,
+            Vector2 normal,
+            float fraction,
+            ref RayResult result)
+        {
+            if (proxy.Entity == ent.Owner ||
+                TryGetTargetDisplacement(proxy.Entity, out _) ||
+                !CanPredictHit(ent, proxy.Entity) ||
+                !CanFixturesCollide(
+                    ent,
+                    projectileBody,
+                    projectileFixture,
+                    proxy.Entity,
+                    proxy.Body,
+                    proxy.Fixture))
+            {
+                return -1f;
+            }
+
+            return RayCastSystem.RayCastClosestCallback(proxy, point, normal, fraction, ref result);
+        }
+
+        var result = _rayCast.CastShape(
+            start.MapId,
+            castShape,
+            new Robust.Shared.Physics.Transform(start.Position, projectileAngle),
+            translation,
+            filter,
+            SweepCallback);
+        var hits = new List<RayHit>(result.Results.Count + ent.Comp.TargetCoordinatesBeforePhysics.Count);
+        foreach (var sweepHit in result.Results)
+            hits.Add(sweepHit);
+
+        // YAML AABBs become polygons with a skin radius and Robust sends those through its known-broken
+        // GJK ray-vs-box path. Test every captured polygon blocker with swept SAT in its relative frame.
+        foreach (var (target, targetStart) in ent.Comp.TargetCoordinatesBeforePhysics)
+        {
+            if (!CanPredictHit(ent, target) ||
+                !TryComp(target, out PhysicsComponent? targetBody) ||
+                !TryComp(target, out FixturesComponent? targetFixtures) ||
+                !TryComp(target, out TransformComponent? targetXform))
+            {
+                continue;
+            }
+
+            var targetEnd = _transform.GetMapCoordinates(target, targetXform);
+            if (targetEnd.MapId != start.MapId || targetStart.MapId != start.MapId)
+                continue;
+
+            var targetDisplacement = targetEnd.Position - targetStart.Position;
+            var targetTransform = _physics.GetPhysicsTransform(target, targetXform);
+            var closestFraction = float.MaxValue;
+            var closestPoint = Vector2.Zero;
+            foreach (var targetFixture in targetFixtures.Fixtures.Values)
+            {
+                if (!CanFixturesCollide(
+                        ent,
+                        projectileBody,
+                        projectileFixture,
+                        target,
+                        targetBody,
+                        targetFixture))
+                {
+                    continue;
+                }
+
+                if (!TryCastProjectileAgainstShape(
+                        castShape,
+                        projectileAngle,
+                        start.Position + targetDisplacement,
+                        translation - targetDisplacement,
+                        targetFixture.Shape,
+                        targetTransform,
+                        out var fraction,
+                        out var contactPoint) ||
+                    fraction >= closestFraction)
+                {
+                    continue;
+                }
+
+                closestFraction = fraction;
+                closestPoint = contactPoint;
+            }
+
+            if (closestFraction == float.MaxValue)
+                continue;
+
+            closestPoint -= targetDisplacement * (1f - closestFraction);
+            hits.Add(new RayHit(target, Vector2.Zero, closestFraction)
+            {
+                Point = closestPoint,
+            });
+        }
+
+        foreach (var (target, _) in ent.Comp.TargetCoordinatesBeforePhysics)
+        {
+            if (!TryGetTargetDisplacement(target, out var targetDisplacement) ||
+                !CanPredictHit(ent, target))
+            {
+                continue;
+            }
+
+            float MovingTargetCallback(
+                FixtureProxy proxy,
+                Vector2 point,
+                Vector2 normal,
+                float fraction,
+                ref RayResult movingResult)
+            {
+                if (proxy.Entity != target ||
+                    !CanFixturesCollide(
+                        ent,
+                        projectileBody,
+                        projectileFixture,
+                        proxy.Entity,
+                        proxy.Body,
+                        proxy.Fixture))
+                {
+                    return -1f;
+                }
+
+                return RayCastSystem.RayCastClosestCallback(
+                    proxy,
+                    point,
+                    normal,
+                    fraction,
+                    ref movingResult);
+            }
+
+            var relativeResult = _rayCast.CastShape(
+                start.MapId,
+                castShape,
+                new Robust.Shared.Physics.Transform(start.Position + targetDisplacement, projectileAngle),
+                translation - targetDisplacement,
+                filter,
+                MovingTargetCallback);
+
+            foreach (var relativeHit in relativeResult.Results)
+            {
+                var correctedHit = relativeHit;
+                correctedHit.Point -= targetDisplacement * (1f - correctedHit.Fraction);
+                hits.Add(correctedHit);
+            }
+        }
+
+        if (hits.Count == 0)
+            return;
+
+        hits.Sort(static (a, b) => a.Fraction.CompareTo(b.Fraction));
+        var hit = hits[0];
+        var projectileCoordinates = new MapCoordinates(
+            start.Position + translation * hit.Fraction,
+            start.MapId);
+        _transform.SetMapCoordinates((ent.Owner, xform), projectileCoordinates);
+        ProcessPredictedCollision(
+            ent,
+            hit.Entity,
+            projectileCoordinates,
+            new MapCoordinates(hit.Point, start.MapId));
+    }
+
+    private bool CanFixturesCollide(
+        EntityUid projectile,
+        PhysicsComponent projectileBody,
+        Fixture projectileFixture,
+        EntityUid target,
+        PhysicsComponent targetBody,
+        Fixture targetFixture)
+    {
+        if (!targetFixture.Hard ||
+            ((targetFixture.CollisionLayer & projectileFixture.CollisionMask) == 0 &&
+             (targetFixture.CollisionMask & projectileFixture.CollisionLayer) == 0))
+        {
+            return false;
+        }
+
+        var projectileEvent = new PreventCollideEvent(
+            projectile,
+            target,
+            projectileBody,
+            targetBody,
+            projectileFixture,
+            targetFixture);
+        RaiseLocalEvent(projectile, ref projectileEvent);
+        if (projectileEvent.Cancelled)
+            return false;
+
+        var targetEvent = new PreventCollideEvent(
+            target,
+            projectile,
+            targetBody,
+            projectileBody,
+            targetFixture,
+            projectileFixture);
+        RaiseLocalEvent(target, ref targetEvent);
+        return !targetEvent.Cancelled;
     }
 
     private void OnPredictedStartCollide(Entity<PredictedProjectileVisualComponent> ent, ref StartCollideEvent args)
@@ -189,7 +541,11 @@ public sealed partial class ProjectileSystem
         var hit = new ProjectileHitEvent(projectile.Damage, target, projectile.Shooter);
         RaiseLocalEvent(ent, ref hit);
 
-        ReportPredictedHit(ent, new HashSet<EntityUid> { target });
+        ReportPredictedHit(
+            ent,
+            new HashSet<EntityUid> { target },
+            projectileCoordinates,
+            contactCoordinates);
     }
 
     private void SendPredictedHit(
@@ -211,17 +567,20 @@ public sealed partial class ProjectileSystem
             }));
     }
 
-    private void ReportPredictedHit(Entity<PredictedProjectileVisualComponent> ent, HashSet<EntityUid> targets)
+    private void ReportPredictedHit(
+        Entity<PredictedProjectileVisualComponent> ent,
+        HashSet<EntityUid> targets,
+        MapCoordinates projectileCoordinates,
+        MapCoordinates contactCoordinates)
     {
         if (ent.Comp.HitAt != null || targets.Count == 0)
             return;
 
         ent.Comp.HitAt = _timing.CurTime;
-        var current = _transform.GetMapCoordinates(ent);
-        if (current.MapId == ent.Comp.Origin.MapId)
-            ent.Comp.HitDistance = (current.Position - ent.Comp.Origin.Position).Length();
+        if (projectileCoordinates.MapId == ent.Comp.Origin.MapId)
+            ent.Comp.HitDistance = (projectileCoordinates.Position - ent.Comp.Origin.Position).Length();
 
-        PlayPredictedImpact(ent);
+        PlayPredictedImpact(ent, _transform.ToCoordinates(contactCoordinates));
 
         if (TryComp(ent, out ProjectileComponent? projectile))
         {

@@ -3,6 +3,7 @@ using Content.Client.Animations;
 using Content.Client.Projectiles;
 using Content.Shared.Damage.Components;
 using Content.Shared.DeadSpace.Player;
+using Content.Shared.DeadSpace.Teleportation.Components;
 using Content.Shared.Projectiles;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Mobs;
@@ -14,6 +15,7 @@ using Content.Shared.Trigger.Components;
 using Content.Shared.Trigger.Components.Triggers;
 using Content.Shared.Weapons.Hitscan.Components;
 using Content.Shared.Weapons.Hitscan.Systems;
+using Content.Shared.Weapons.Marker;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
@@ -27,6 +29,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Spawners;
 using System.Collections.Generic;
@@ -44,7 +47,14 @@ public sealed class WeaponTests : InteractionTest
     private const string PredictionTestGun = "PredictionTestGun";
     private const string PredictionTestProjectile = "PredictionTestProjectile";
     private const string PredictionRegressionProjectile = "PredictionRegressionProjectile";
+    private const string PredictionRegressionRecoverableProjectile = "PredictionRegressionRecoverableProjectile";
     private const string PredictionRegressionTarget = "PredictionRegressionTarget";
+    private const string PredictionRegressionWall = "PredictionRegressionWall";
+    private const string PredictionRegressionMovingTarget = "PredictionRegressionMovingTarget";
+    private const string PredictionRegressionTriggeredProjectile = "PredictionRegressionTriggeredProjectile";
+    private const string PredictionRegressionTriggerMarker = "PredictionRegressionTriggerMarker";
+    private const string PredictionRegressionPortalProjectile = "PredictionRegressionPortalProjectile";
+    private const string PredictionRegressionMarkerProjectile = "PredictionRegressionMarkerProjectile";
 
     [TestPrototypes]
     private const string PredictionPrototypes = @"
@@ -98,6 +108,17 @@ public sealed class WeaponTests : InteractionTest
     muzzleFlash: MuzzleFlashEffect
 
 - type: entity
+  id: PredictionRegressionRecoverableProjectile
+  parent: BaseBullet
+  components:
+  - type: Projectile
+    deleteOnCollide: false
+    onlyCollideWhenShot: true
+    damage:
+      types:
+        Piercing: 14
+
+- type: entity
   id: PredictionRegressionTarget
   components:
   - type: Physics
@@ -112,6 +133,72 @@ public sealed class WeaponTests : InteractionTest
         layer:
         - BulletImpassable
   - type: Damageable
+
+- type: entity
+  id: PredictionRegressionWall
+  components:
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      wall:
+        shape:
+          !type:PhysShapeAabb
+          bounds: ""-0.1,-0.5,0.1,0.5""
+        hard: true
+        layer:
+        - BulletImpassable
+  - type: Damageable
+
+- type: entity
+  id: PredictionRegressionMovingTarget
+  parent: PredictionRegressionTarget
+  components:
+  - type: Physics
+    bodyType: Dynamic
+    linearDamping: 0
+    angularDamping: 0
+
+- type: entity
+  id: PredictionRegressionTriggerMarker
+
+- type: entity
+  id: PredictionRegressionTriggeredProjectile
+  parent: BaseBulletTrigger
+  components:
+  - type: SpawnOnTrigger
+    proto: PredictionRegressionTriggerMarker
+    useMapCoords: true
+
+- type: entity
+  id: PredictionRegressionPortalProjectile
+  parent: BaseBullet
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 0
+  - type: TriggerOnCollide
+    fixtureID: projectile
+    keyOut: openportal
+    maxTriggers: 1
+  - type: PortalProjectile
+
+- type: entity
+  id: PredictionRegressionMarkerProjectile
+  parent: BaseBullet
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 0
+  - type: DamageMarkerOnCollide
+    whitelist:
+      components:
+      - Damageable
+    damage:
+      types:
+        Blunt: 3
 ";
 
     [Test]
@@ -493,6 +580,386 @@ public sealed class WeaponTests : InteractionTest
     }
 
     [Test]
+    public void PredictionRegression_DefaultProjectileSpeedIsForty()
+    {
+        Assert.That(SharedGunSystem.ProjectileSpeed, Is.EqualTo(40f));
+    }
+
+    [Test]
+    public async Task PredictionRegression_ReleasePhysicsFastProjectileCannotTunnelTarget()
+    {
+        await ConfigureReleasePhysicsRates();
+        var targetNet = await Spawn(
+            PredictionRegressionTarget,
+            new NetCoordinates(PlayerCoords.NetEntity, PlayerCoords.Position + new Vector2(1.5f, 0f)));
+
+        await Server.WaitPost(() =>
+        {
+            var projectile = SEntMan.SpawnEntity(
+                PredictionRegressionProjectile,
+                SEntMan.GetCoordinates(PlayerCoords));
+            SGun.ShootProjectile(projectile, Vector2.UnitX, Vector2.Zero, null, SPlayer, 40f);
+        });
+        await RunTicks(3);
+
+        await Server.WaitAssertion(() =>
+        {
+            var target = SEntMan.GetEntity(targetNet);
+            Assert.That(
+                SEntMan.GetComponent<DamageableComponent>(target).TotalDamage.Value,
+                Is.GreaterThan(0),
+                "A 40 m/s projectile tunneled through a target at the release physics rate.");
+        });
+    }
+
+    [Test]
+    public async Task PredictionRegression_UnshotRecoverableProjectileDoesNotUseBulletSweep()
+    {
+        await ConfigureReleasePhysicsRates();
+        var targetNet = await Spawn(
+            PredictionRegressionTarget,
+            new NetCoordinates(PlayerCoords.NetEntity, PlayerCoords.Position + new Vector2(1.5f, 0f)));
+
+        await Server.WaitPost(() =>
+        {
+            var projectile = SEntMan.SpawnEntity(
+                PredictionRegressionRecoverableProjectile,
+                SEntMan.GetCoordinates(PlayerCoords));
+            var body = SEntMan.GetComponent<PhysicsComponent>(projectile);
+            SEntMan.System<SharedPhysicsSystem>().SetLinearVelocity(projectile, new Vector2(40f, 0f), body: body);
+        });
+        await RunTicks(3);
+
+        await Server.WaitAssertion(() =>
+        {
+            var target = SEntMan.GetEntity(targetNet);
+            Assert.That(
+                SEntMan.GetComponent<DamageableComponent>(target).TotalDamage.Value,
+                Is.EqualTo(0),
+                "An OnlyCollideWhenShot entity was treated as a fired bullet by the continuous sweep.");
+        });
+    }
+
+    [Test]
+    public async Task PredictionRegression_RefiringClearsPerLaunchCollisionState()
+    {
+        var projectileNet = await Spawn(PredictionRegressionRecoverableProjectile, PlayerCoords);
+        var gunNet = await Spawn(PredictionTestGun, PlayerCoords);
+
+        await Server.WaitAssertion(() =>
+        {
+            var projectile = SEntMan.GetEntity(projectileNet);
+            var gun = SEntMan.GetEntity(gunNet);
+            var component = SEntMan.GetComponent<ProjectileComponent>(projectile);
+            component.ProjectileSpent = true;
+            component.PenetrationAmount = 10;
+            component.ProcessedTargets.Add(SPlayer);
+
+            SGun.ShootProjectile(projectile, Vector2.UnitX, Vector2.Zero, gun, SPlayer, 40f);
+
+            Assert.That(component.ProjectileSpent, Is.False);
+            Assert.That(component.PenetrationAmount.Value, Is.EqualTo(0));
+            Assert.That(component.ProcessedTargets, Is.Empty);
+        });
+    }
+
+    [Test]
+    public async Task PredictionRegression_ReleasePhysicsMovingTargetCannotBeTunnelled()
+    {
+        await ConfigureReleasePhysicsRates();
+        var targetNet = await Spawn(
+            PredictionRegressionMovingTarget,
+            new NetCoordinates(PlayerCoords.NetEntity, PlayerCoords.Position + new Vector2(1.5f, 0f)));
+
+        await Server.WaitPost(() =>
+        {
+            var target = SEntMan.GetEntity(targetNet);
+            var targetBody = SEntMan.GetComponent<PhysicsComponent>(target);
+            SEntMan.System<SharedPhysicsSystem>().SetLinearVelocity(
+                target,
+                new Vector2(-4f, 0f),
+                body: targetBody);
+
+            var projectile = SEntMan.SpawnEntity(
+                PredictionRegressionProjectile,
+                SEntMan.GetCoordinates(PlayerCoords));
+            SGun.ShootProjectile(projectile, Vector2.UnitX, Vector2.Zero, null, SPlayer, 40f);
+        });
+        await RunTicks(3);
+
+        await Server.WaitAssertion(() =>
+        {
+            var target = SEntMan.GetEntity(targetNet);
+            Assert.That(
+                SEntMan.GetComponent<DamageableComponent>(target).TotalDamage.Value,
+                Is.GreaterThan(0),
+                "A moving zero-gravity target passed between discrete projectile samples.");
+        });
+    }
+
+    [Test]
+    public async Task PredictionRegression_ReleasePhysicsTargetedDownedPlayerRegistersExactlyOnce()
+    {
+        await ConfigureReleasePhysicsRates();
+        var targetNet = await Spawn(
+            MobHuman,
+            new NetCoordinates(PlayerCoords.NetEntity, PlayerCoords.Position + new Vector2(1.5f, 0f)));
+
+        await Server.WaitPost(() =>
+        {
+            var target = SEntMan.GetEntity(targetNet);
+            Assert.That(
+                SEntMan.System<StandingStateSystem>().Down(
+                    target,
+                    playSound: false,
+                    dropHeldItems: false,
+                    force: true),
+                Is.True);
+
+            var targetBody = SEntMan.GetComponent<PhysicsComponent>(target);
+            SEntMan.System<SharedPhysicsSystem>().SetLinearVelocity(
+                target,
+                new Vector2(-4f, 0f),
+                body: targetBody);
+
+            var projectile = SEntMan.SpawnEntity(
+                PredictionRegressionProjectile,
+                SEntMan.GetCoordinates(PlayerCoords));
+            var targeted = SEntMan.AddComponent<TargetedProjectileComponent>(projectile);
+#pragma warning disable RA0002
+            targeted.Target = target;
+#pragma warning restore RA0002
+            SGun.ShootProjectile(projectile, Vector2.UnitX, Vector2.Zero, null, SPlayer, 40f);
+        });
+        await RunTicks(3);
+
+        await Server.WaitAssertion(() =>
+        {
+            var target = SEntMan.GetEntity(targetNet);
+            Assert.That(SEntMan.GetComponent<StandingStateComponent>(target).Standing, Is.False);
+            Assert.That(
+                SEntMan.GetComponent<DamageableComponent>(target).Damage.DamageDict["Piercing"].Value,
+                Is.EqualTo(1400),
+                "A targeted downed player was missed or damaged more than once at release physics settings.");
+        });
+    }
+
+    [Test]
+    public async Task PredictionRegression_ClientPredictionHitsDownedVisualEdgeExactlyOnce()
+    {
+        const uint predictionId = 404;
+        await ConfigureReleasePhysicsRates();
+        var targetNet = await Spawn(
+            MobHuman,
+            new NetCoordinates(PlayerCoords.NetEntity, PlayerCoords.Position + Vector2.UnitY));
+        EntityUid serverProjectile = default;
+        EntityUid clientProjectile = default;
+
+        await Server.WaitPost(() =>
+        {
+            var target = SEntMan.GetEntity(targetNet);
+            Assert.That(
+                SEntMan.System<StandingStateSystem>().Down(
+                    target,
+                    playSound: false,
+                    dropHeldItems: false,
+                    force: true),
+                Is.True);
+        });
+        await RunTicks(3);
+
+        await Task.WhenAll(
+            Server.WaitPost(() =>
+            {
+                var target = SEntMan.GetEntity(targetNet);
+                var projectile = SEntMan.SpawnEntity(
+                    PredictionRegressionProjectile,
+                    SEntMan.GetCoordinates(PlayerCoords));
+                serverProjectile = projectile;
+                var marker = SEntMan.AddComponent<PredictedProjectileComponent>(projectile);
+                var projectileComponent = SEntMan.GetComponent<ProjectileComponent>(projectile);
+                var targeted = SEntMan.AddComponent<TargetedProjectileComponent>(projectile);
+
+#pragma warning disable RA0002
+                marker.Shooter = SPlayer;
+                marker.PredictionId = predictionId;
+                marker.ProjectileIndex = 0;
+                marker.Origin = Transform.GetMapCoordinates(projectile);
+                projectileComponent.Shooter = SPlayer;
+                targeted.Target = target;
+#pragma warning restore RA0002
+                // Intentionally leave this authoritative projectile stationary. Any damage therefore proves
+                // that the locally simulated projectile reported and the server validated the hit.
+            }),
+            Client.WaitPost(() =>
+            {
+                var target = CEntMan.GetEntity(targetNet);
+                var projectile = CEntMan.SpawnEntity(
+                    PredictionRegressionProjectile,
+                    CEntMan.GetCoordinates(PlayerCoords));
+                clientProjectile = projectile;
+                var targeted = CEntMan.AddComponent<TargetedProjectileComponent>(projectile);
+#pragma warning disable RA0002
+                targeted.Target = target;
+#pragma warning restore RA0002
+
+                var projectileSystem = CEntMan.System<Content.Client.Projectiles.ProjectileSystem>();
+                projectileSystem.RegisterPredictedProjectile(projectile, predictionId, 0);
+
+                // A prone humanoid is rendered horizontally. Aim near the visible side of that sprite rather
+                // than through its exact center to cover the reported cursor-over-body failure.
+                var direction = new Vector2(0.47f, 1f).Normalized();
+                CEntMan.System<Content.Client.Weapons.Ranged.Systems.GunSystem>().ShootProjectile(
+                    projectile,
+                    direction,
+                    Vector2.Zero,
+                    null,
+                    CPlayer,
+                    40f);
+            }));
+
+        await RunTicks(6);
+        await Server.WaitAssertion(() =>
+        {
+            var target = SEntMan.GetEntity(targetNet);
+            Assert.That(
+                SEntMan.GetComponent<DamageableComponent>(target).Damage.DamageDict["Piercing"].Value,
+                Is.EqualTo(1400),
+                "The client-predicted shot over a downed sprite edge was missed or applied twice.");
+        });
+
+        await Task.WhenAll(
+            Server.WaitPost(() =>
+            {
+                if (SEntMan.EntityExists(serverProjectile))
+                    SEntMan.DeleteEntity(serverProjectile);
+            }),
+            Client.WaitPost(() =>
+            {
+                if (CEntMan.EntityExists(clientProjectile))
+                    CEntMan.DeleteEntity(clientProjectile);
+            }));
+    }
+
+    [Test]
+    public async Task PredictionRegression_ClientPredictionCannotTunnelWallAtDifferentAimPointsOrVelocity()
+    {
+        await ConfigureReleasePhysicsRates();
+        await Spawn(
+            PredictionRegressionWall,
+            new NetCoordinates(PlayerCoords.NetEntity, PlayerCoords.Position + new Vector2(1.5f, 0f)));
+        await RunTicks(3);
+
+        var shots = new (Vector2 Direction, Vector2 GunVelocity)[]
+        {
+            (new Vector2(1f, -0.28f).Normalized(), Vector2.Zero),
+            (new Vector2(1f, -0.21f).Normalized(), Vector2.Zero),
+            (new Vector2(1f, -0.14f).Normalized(), Vector2.Zero),
+            (new Vector2(1f, -0.07f).Normalized(), Vector2.Zero),
+            (Vector2.UnitX, Vector2.Zero),
+            (new Vector2(1f, 0.07f).Normalized(), Vector2.Zero),
+            (new Vector2(1f, 0.14f).Normalized(), Vector2.Zero),
+            (new Vector2(1f, 0.21f).Normalized(), Vector2.Zero),
+            (new Vector2(1f, 0.28f).Normalized(), Vector2.Zero),
+            (Vector2.UnitX, new Vector2(0f, -8f)),
+            (Vector2.UnitX, new Vector2(0f, 8f)),
+        };
+        var projectiles = new List<EntityUid>();
+
+        await Client.WaitPost(() =>
+        {
+            var projectileSystem = CEntMan.System<Content.Client.Projectiles.ProjectileSystem>();
+            var gunSystem = CEntMan.System<Content.Client.Weapons.Ranged.Systems.GunSystem>();
+
+            for (var i = 0; i < shots.Length; i++)
+            {
+                var projectile = CEntMan.SpawnEntity(
+                    PredictionRegressionProjectile,
+                    CEntMan.GetCoordinates(PlayerCoords));
+                projectiles.Add(projectile);
+                projectileSystem.RegisterPredictedProjectile(projectile, (uint) (500 + i), 0);
+                gunSystem.ShootProjectile(
+                    projectile,
+                    shots[i].Direction,
+                    shots[i].GunVelocity,
+                    null,
+                    CPlayer,
+                    40f);
+            }
+        });
+
+        try
+        {
+            await RunTicks(3);
+            await Client.WaitAssertion(() =>
+            {
+                Assert.Multiple(() =>
+                {
+                    for (var i = 0; i < projectiles.Count; i++)
+                    {
+                        if (!CEntMan.EntityExists(projectiles[i]))
+                        {
+                            Assert.Fail($"Predicted projectile {i} disappeared.");
+                            continue;
+                        }
+
+                        var position = CEntMan.System<SharedTransformSystem>()
+                            .GetMapCoordinates(projectiles[i])
+                            .Position;
+                        Assert.That(
+                            CEntMan.GetComponent<PredictedProjectileVisualComponent>(projectiles[i]).HitAt,
+                            Is.Not.Null,
+                            $"Locally predicted projectile {i} tunnelled through the wall and reached {position}.");
+                    }
+                });
+            });
+        }
+        finally
+        {
+            await Client.WaitPost(() =>
+            {
+                foreach (var projectile in projectiles)
+                {
+                    if (CEntMan.EntityExists(projectile))
+                        CEntMan.DeleteEntity(projectile);
+                }
+            });
+        }
+    }
+
+    [Test]
+    public async Task PredictionRegression_ReleasePhysicsWallBlocksFastProjectile()
+    {
+        await ConfigureReleasePhysicsRates();
+        var blockerNet = await Spawn(
+            PredictionRegressionTarget,
+            new NetCoordinates(PlayerCoords.NetEntity, PlayerCoords.Position + new Vector2(1.5f, 0f)));
+        var targetNet = await Spawn(
+            PredictionRegressionTarget,
+            new NetCoordinates(PlayerCoords.NetEntity, PlayerCoords.Position + new Vector2(3f, 0f)));
+
+        await Server.WaitPost(() =>
+        {
+            var projectile = SEntMan.SpawnEntity(
+                PredictionRegressionProjectile,
+                SEntMan.GetCoordinates(PlayerCoords));
+            SGun.ShootProjectile(projectile, Vector2.UnitX, Vector2.Zero, null, SPlayer, 40f);
+        });
+        await RunTicks(4);
+
+        await Server.WaitAssertion(() =>
+        {
+            var blocker = SEntMan.GetEntity(blockerNet);
+            var target = SEntMan.GetEntity(targetNet);
+            Assert.That(SEntMan.GetComponent<DamageableComponent>(blocker).TotalDamage.Value, Is.GreaterThan(0));
+            Assert.That(
+                SEntMan.GetComponent<DamageableComponent>(target).TotalDamage.Value,
+                Is.Zero,
+                "A swept projectile damaged a target behind the first blocking fixture.");
+        });
+    }
+
+    [Test]
     public async Task PredictionRegression_WallBlocksTargetAndTakesHit()
     {
         var (target, blocker) = await RunPredictionRegressionHit(new Vector2(0.5f, 0f));
@@ -523,10 +990,136 @@ public sealed class WeaponTests : InteractionTest
     }
 
     [Test]
+    public async Task PredictionRegression_AcceptedHitRunsCollisionTriggerEffects()
+    {
+        var before = 0;
+        await Server.WaitPost(() => before = CountServerPrototype(PredictionRegressionTriggerMarker));
+        await RunPredictionRegressionHit(projectilePrototype: PredictionRegressionTriggeredProjectile);
+
+        await Server.WaitAssertion(() =>
+        {
+            Assert.That(
+                CountServerPrototype(PredictionRegressionTriggerMarker),
+                Is.EqualTo(before + 1),
+                "A server-accepted predicted hit bypassed TriggerOnCollide effects.");
+        });
+    }
+
+    [Test]
+    public async Task PredictionRegression_AcceptedPortalHitCreatesLinkedPortals()
+    {
+        HashSet<EntityUid> nearBefore = [];
+        var farBefore = 0;
+        await Server.WaitPost(() =>
+        {
+            nearBefore = GetServerPrototypes("PortalGunNear").ToHashSet();
+            farBefore = CountServerPrototype("PortalGunFar");
+        });
+
+        var (target, _) = await RunPredictionRegressionHit(
+            projectilePrototype: PredictionRegressionPortalProjectile,
+            configureProjectile: projectile =>
+            {
+                SEntMan.GetComponent<PortalProjectileComponent>(projectile).Destination = SPlayer;
+            });
+
+        await Server.WaitAssertion(() =>
+        {
+            var newNear = GetServerPrototypes("PortalGunNear")
+                .Where(uid => !nearBefore.Contains(uid))
+                .ToList();
+            Assert.That(newNear, Has.Count.EqualTo(1));
+            Assert.That(CountServerPrototype("PortalGunFar"), Is.EqualTo(farBefore + 1));
+            Assert.That(
+                Vector2.Distance(
+                    Transform.GetWorldPosition(newNear[0]),
+                    Transform.GetWorldPosition(target)),
+                Is.LessThan(0.5f),
+                "The accepted predicted portal hit spawned at the delayed server projectile position.");
+        });
+    }
+
+    [Test]
+    public async Task PredictionRegression_AcceptedHitAppliesDamageMarkerEffect()
+    {
+        var (target, _) = await RunPredictionRegressionHit(
+            projectilePrototype: PredictionRegressionMarkerProjectile,
+            configureProjectile: projectile =>
+            {
+                SEntMan.GetComponent<ProjectileComponent>(projectile).Weapon = SPlayer;
+            });
+
+        await Server.WaitAssertion(() =>
+        {
+            var marker = SEntMan.GetComponent<DamageMarkerComponent>(target);
+            Assert.That(marker.Marker, Is.EqualTo(SPlayer));
+            Assert.That(marker.Damage.DamageDict["Blunt"].Value, Is.EqualTo(300));
+        });
+    }
+
+    [Test]
+    public async Task PredictionRegression_ReleasePhysicsEffectsRunExactlyOnce()
+    {
+        await ConfigureReleasePhysicsRates();
+        await Spawn(
+            PredictionRegressionTarget,
+            new NetCoordinates(PlayerCoords.NetEntity, PlayerCoords.Position + new Vector2(1.5f, 0f)));
+        await Spawn(
+            PredictionRegressionTarget,
+            new NetCoordinates(PlayerCoords.NetEntity, PlayerCoords.Position + new Vector2(0f, 1.5f)));
+
+        var markerBefore = 0;
+        var nearBefore = 0;
+        var farBefore = 0;
+        await Server.WaitPost(() =>
+        {
+            markerBefore = CountServerPrototype(PredictionRegressionTriggerMarker);
+            nearBefore = CountServerPrototype("PortalGunNear");
+            farBefore = CountServerPrototype("PortalGunFar");
+
+            var triggered = SEntMan.SpawnEntity(
+                PredictionRegressionTriggeredProjectile,
+                SEntMan.GetCoordinates(PlayerCoords));
+            SGun.ShootProjectile(triggered, Vector2.UnitX, Vector2.Zero, null, SPlayer, 40f);
+
+            var portal = SEntMan.SpawnEntity(
+                PredictionRegressionPortalProjectile,
+                SEntMan.GetCoordinates(PlayerCoords));
+#pragma warning disable RA0002
+            SEntMan.GetComponent<PortalProjectileComponent>(portal).Destination = SPlayer;
+#pragma warning restore RA0002
+            SGun.ShootProjectile(portal, Vector2.UnitY, Vector2.Zero, null, SPlayer, 40f);
+        });
+        await RunTicks(4);
+
+        await Server.WaitAssertion(() =>
+        {
+            Assert.That(CountServerPrototype(PredictionRegressionTriggerMarker), Is.EqualTo(markerBefore + 1));
+            Assert.That(CountServerPrototype("PortalGunNear"), Is.EqualTo(nearBefore + 1));
+            Assert.That(CountServerPrototype("PortalGunFar"), Is.EqualTo(farBefore + 1));
+        });
+    }
+
+    [Test]
+    public async Task PredictionRegression_RejectedReportDoesNotConsumeProjectileHit()
+    {
+        var (target, _) = await RunPredictionRegressionHit(reportInvalidHitFirst: true);
+
+        await Server.WaitAssertion(() =>
+        {
+            Assert.That(
+                SEntMan.GetComponent<DamageableComponent>(target).TotalDamage.Value,
+                Is.GreaterThan(0),
+                "The first rejected report permanently consumed the projectile's only hit report.");
+        });
+    }
+
+    [Test]
     public async Task PredictionRegression_MuzzleFlashIsDeduplicatedAndTracksGun()
     {
         const uint predictionId = 77;
         var gunNet = await Spawn(PredictionTestGun, PlayerCoords);
+        EntityUid flash = default;
 
         await Client.WaitAssertion(() =>
         {
@@ -568,6 +1161,15 @@ public sealed class WeaponTests : InteractionTest
             var flashes = GetMuzzleFlashes().Where(uid => !before.Contains(uid)).ToList();
             Assert.That(flashes, Has.Count.EqualTo(1));
             Assert.That(CEntMan.GetComponent<TrackUserComponent>(flashes[0]).User, Is.EqualTo(gun));
+            flash = flashes[0];
+
+            var transform = CEntMan.System<SharedTransformSystem>();
+            var expectedPosition = transform.GetWorldPosition(gun) + Vector2.UnitX / 2f;
+            var actualPosition = transform.GetWorldPosition(flash);
+            Assert.That(
+                Vector2.Distance(actualPosition, expectedPosition),
+                Is.LessThan(0.001f),
+                "The muzzle flash rendered at the gun origin for its first frame before jumping to the muzzle.");
 
             CEntMan.DeleteEntity(projectileA);
             CEntMan.DeleteEntity(projectileB);
@@ -578,6 +1180,27 @@ public sealed class WeaponTests : InteractionTest
                     CEntMan.TryGetComponent(uid, out MetaDataComponent metadata) &&
                     metadata.EntityPrototype?.ID == "MuzzleFlashEffect");
             }
+        });
+
+        await Server.WaitPost(() =>
+        {
+            var gun = SEntMan.GetEntity(gunNet);
+            var position = Transform.GetWorldPosition(gun);
+            Transform.SetWorldPosition(gun, position + new Vector2(0.25f, 0.2f));
+        });
+        await RunTicks(2);
+
+        await Client.WaitAssertion(() =>
+        {
+            var gun = CEntMan.GetEntity(gunNet);
+            var transform = CEntMan.System<SharedTransformSystem>();
+            var angle = transform.GetWorldRotation(flash);
+            var expectedPosition = transform.GetWorldPosition(gun) + angle.RotateVec(Vector2.UnitX / 2f);
+            var actualPosition = transform.GetWorldPosition(flash);
+            Assert.That(
+                Vector2.Distance(actualPosition, expectedPosition),
+                Is.LessThan(0.01f),
+                "The muzzle flash did not follow a moving gun smoothly at the muzzle offset.");
         });
     }
 
@@ -643,7 +1266,10 @@ public sealed class WeaponTests : InteractionTest
     }
 
     private async Task<(EntityUid Target, EntityUid? Blocker)> RunPredictionRegressionHit(
-        Vector2? blockerOffset = null)
+        Vector2? blockerOffset = null,
+        string projectilePrototype = PredictionRegressionProjectile,
+        Action<EntityUid> configureProjectile = null,
+        bool reportInvalidHitFirst = false)
     {
         const uint predictionId = 101;
         var targetNetCoordinates = new NetCoordinates(
@@ -665,7 +1291,7 @@ public sealed class WeaponTests : InteractionTest
         {
             var target = SEntMan.GetEntity(targetNet);
             var projectile = SEntMan.SpawnEntity(
-                PredictionRegressionProjectile,
+                projectilePrototype,
                 SEntMan.GetCoordinates(PlayerCoords));
             var marker = SEntMan.AddComponent<PredictedProjectileComponent>(projectile);
             var projectileComponent = SEntMan.GetComponent<ProjectileComponent>(projectile);
@@ -678,6 +1304,8 @@ public sealed class WeaponTests : InteractionTest
             projectileComponent.Shooter = SPlayer;
 #pragma warning restore RA0002
 
+            configureProjectile?.Invoke(projectile);
+
             targetCoordinates = Transform.GetMapCoordinates(target);
             projectileCoordinates = new MapCoordinates(
                 targetCoordinates.Position - new Vector2(0.35f, 0f),
@@ -688,20 +1316,84 @@ public sealed class WeaponTests : InteractionTest
         });
 
         await RunTicks(1);
-        await Client.WaitPost(() =>
+        if (reportInvalidHitFirst)
         {
-            CEntMan.RaisePredictiveEvent(new PredictedProjectileHitEvent(
-                predictionId,
-                0,
-                new HashSet<(NetEntity, MapCoordinates, MapCoordinates, MapCoordinates)>
-                {
-                    (targetNet, targetCoordinates, projectileCoordinates, contactCoordinates),
-                }));
-        });
+            var invalidProjectileCoordinates = projectileCoordinates.Offset(new Vector2(0f, 10f));
+            var invalidContactCoordinates = contactCoordinates.Offset(new Vector2(0f, 10f));
+            await SendHit(invalidProjectileCoordinates, invalidContactCoordinates);
+            await RunTicks(2);
+        }
+
+        await SendHit(projectileCoordinates, contactCoordinates);
         await RunTicks(3);
 
         return (
             SEntMan.GetEntity(targetNet),
             blockerNet is { } blocker ? SEntMan.GetEntity(blocker) : null);
+
+        Task SendHit(MapCoordinates reportedProjectile, MapCoordinates reportedContact)
+        {
+            return Client.WaitPost(() =>
+            {
+                CEntMan.RaisePredictiveEvent(new PredictedProjectileHitEvent(
+                    predictionId,
+                    0,
+                    new HashSet<(NetEntity, MapCoordinates, MapCoordinates, MapCoordinates)>
+                    {
+                        (targetNet, targetCoordinates, reportedProjectile, reportedContact),
+                    }));
+            });
+        }
+    }
+
+    private async Task ConfigureReleasePhysicsRates()
+    {
+        await Server.WaitPost(() =>
+        {
+            // Keep this in sync with EntryPoint.ApplyServerPerformanceDefaults() under RELEASE.
+            Server.CfgMan.SetCVar(CVars.TargetMinimumTickrate, 25);
+            Server.CfgMan.SetCVar(CVars.VelocityIterations, 4);
+            Server.CfgMan.SetCVar(CVars.PositionIterations, 2);
+            Server.CfgMan.SetCVar(CVars.TimeToSleep, 0.3f);
+            Server.CfgMan.SetCVar(CVars.LinearSleepTolerance, 0.012f);
+            Server.CfgMan.SetCVar(CVars.AngularSleepTolerance, 0.00698f);
+            Server.CfgMan.SetCVar(CVars.NetTickrate, 20);
+        });
+        await RunTicks(2);
+
+        await Server.WaitAssertion(() =>
+        {
+            Assert.That(Server.CfgMan.GetCVar(CVars.NetTickrate), Is.EqualTo(20));
+            Assert.That(Server.CfgMan.GetCVar(CVars.TargetMinimumTickrate), Is.EqualTo(25));
+            Assert.That(Server.CfgMan.GetCVar(CVars.VelocityIterations), Is.EqualTo(4));
+            Assert.That(Server.CfgMan.GetCVar(CVars.PositionIterations), Is.EqualTo(2));
+            Assert.That(Server.CfgMan.GetCVar(CVars.TimeToSleep), Is.EqualTo(0.3f));
+            Assert.That(Server.CfgMan.GetCVar(CVars.LinearSleepTolerance), Is.EqualTo(0.012f));
+            Assert.That(Server.CfgMan.GetCVar(CVars.AngularSleepTolerance), Is.EqualTo(0.00698f));
+
+            STestSystem.PhysicsSteps = 0;
+            STestSystem.LastPhysicsStepDuration = 0f;
+        });
+
+        await RunTicks(1);
+        await Server.WaitAssertion(() =>
+        {
+            Assert.That(STestSystem.PhysicsSteps, Is.EqualTo(2),
+                "Release physics must execute two substeps for every 20 TPS server tick.");
+            Assert.That(STestSystem.LastPhysicsStepDuration, Is.EqualTo(1f / 40f).Within(0.000001f),
+                "Release physics must run at an effective 40 Hz.");
+        });
+    }
+
+    private int CountServerPrototype(string prototype)
+    {
+        return GetServerPrototypes(prototype).Count();
+    }
+
+    private IEnumerable<EntityUid> GetServerPrototypes(string prototype)
+    {
+        return SEntMan.GetEntities().Where(uid =>
+            SEntMan.TryGetComponent(uid, out MetaDataComponent metadata) &&
+            metadata.EntityPrototype?.ID == prototype);
     }
 }

@@ -26,6 +26,7 @@ namespace Content.Server.Projectiles;
 public sealed class ProjectilePredictionSystem : EntitySystem
 {
     [Dependency] private readonly IConfigurationManager _config = default!;
+    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly ProjectileSystem _projectiles = default!;
     [Dependency] private readonly RayCastSystem _rayCast = default!;
@@ -35,6 +36,7 @@ public sealed class ProjectilePredictionSystem : EntitySystem
 
     private readonly Dictionary<(NetUserId User, uint Id, ushort Index), EntityUid> _predicted = new();
     private readonly List<(PredictedProjectileHitEvent Event, ICommonSession Player)> _predictedHits = new();
+    private readonly HashSet<EntityUid> _blockerCandidates = new();
 
     private bool _preventCollision;
     private bool _logHits;
@@ -73,6 +75,9 @@ public sealed class ProjectilePredictionSystem : EntitySystem
         Subs.CVar(_config, CCCCVars.ProjectilePredictionCoordinateDeviation, value => _coordinateDeviation = value, true);
         Subs.CVar(_config, CCCCVars.ProjectilePredictionLowestCoordinateDeviation, value => _lowestCoordinateDeviation = value, true);
         Subs.CVar(_config, CCCCVars.ProjectilePredictionAabbEnlargement, value => _aabbEnlargement = value, true);
+
+        // Process client hit reports before authoritative physics can resolve the same collision.
+        UpdatesBefore.Add(typeof(SharedPhysicsSystem));
     }
 
     private void OnRoundRestartCleanup(RoundRestartCleanupEvent ev)
@@ -230,9 +235,11 @@ public sealed class ProjectilePredictionSystem : EntitySystem
         MapCoordinates reportedProjectileCoordinates,
         MapCoordinates reportedContactCoordinates,
         out EntityUid hitEntity,
+        out MapCoordinates projectileCoordinates,
         out MapCoordinates hitCoordinates)
     {
         hitEntity = default;
+        projectileCoordinates = default;
         hitCoordinates = default;
 
         var origin = projectile.Comp1.Origin;
@@ -348,15 +355,79 @@ public sealed class ProjectilePredictionSystem : EntitySystem
             filter,
             BlockerCallback);
 
-        if (blockers.Hit)
+        RayHit? closestBlocker = blockers.Hit ? blockers.Results[0] : null;
+
+        // Fixture deserialization turns YAML AABBs into polygons with a skin radius. Robust routes those
+        // through its known-broken GJK ray-vs-box path, so supplement blocker validation with swept SAT.
+        var originTransform = new Transform(origin.Position, projectileAngle);
+        var endTransform = new Transform(origin.Position + translation, projectileAngle);
+        var lookupBounds = GetShapeBounds(castShape, originTransform)
+            .Union(GetShapeBounds(castShape, endTransform));
+        _blockerCandidates.Clear();
+        _entityLookup.GetEntitiesIntersecting(
+            origin.MapId,
+            lookupBounds,
+            _blockerCandidates,
+            LookupFlags.Dynamic | LookupFlags.Static | LookupFlags.Approximate);
+
+        foreach (var blockerCandidate in _blockerCandidates)
         {
-            var blocker = blockers.Results[0];
+            if (blockerCandidate == projectile.Owner ||
+                blockerCandidate == target ||
+                !_physicsQuery.TryComp(blockerCandidate, out var blockerBody) ||
+                !_fixturesQuery.TryComp(blockerCandidate, out var blockerFixtures) ||
+                !_transformQuery.TryComp(blockerCandidate, out var blockerXform))
+            {
+                continue;
+            }
+
+            var blockerTransform = _physics.GetPhysicsTransform(blockerCandidate, blockerXform);
+            foreach (var blockerFixture in blockerFixtures.Fixtures.Values)
+            {
+                if (!CanFixturesCollide(
+                        projectile,
+                        projectile.Comp2,
+                        projectileFixture,
+                        blockerCandidate,
+                        blockerBody,
+                        blockerFixture))
+                {
+                    continue;
+                }
+
+                if (!SharedProjectileSystem.TryCastProjectileAgainstShape(
+                        castShape,
+                        projectileAngle,
+                        origin.Position,
+                        translation,
+                        blockerFixture.Shape,
+                        blockerTransform,
+                        out var fraction,
+                        out var contactPoint) ||
+                    closestBlocker is { } current && fraction >= current.Fraction)
+                {
+                    continue;
+                }
+
+                closestBlocker = new RayHit(blockerCandidate, Vector2.Zero, fraction)
+                {
+                    Point = contactPoint,
+                };
+            }
+        }
+
+        if (closestBlocker is { } blocker)
+        {
             hitEntity = blocker.Entity;
+            projectileCoordinates = new MapCoordinates(
+                origin.Position + translation * blocker.Fraction,
+                origin.MapId);
             hitCoordinates = new MapCoordinates(blocker.Point, origin.MapId);
             return true;
         }
 
         hitEntity = target;
+        projectileCoordinates = reportedProjectileCoordinates;
         hitCoordinates = reportedContactCoordinates;
         return true;
     }
@@ -519,7 +590,6 @@ public sealed class ProjectilePredictionSystem : EntitySystem
         if (!TryComp<ActorComponent>(predicted.Shooter, out var shooter) || shooter.PlayerSession.UserId != player.UserId)
             return;
 
-        predicted.Hit = true;
         var accepted = false;
         foreach (var (
                      netEntity,
@@ -561,6 +631,7 @@ public sealed class ProjectilePredictionSystem : EntitySystem
                     projectileCoordinates,
                     contactCoordinates,
                     out var validatedTarget,
+                    out var validatedProjectile,
                     out var validatedContact))
             {
                 if (_logHits)
@@ -575,7 +646,11 @@ public sealed class ProjectilePredictionSystem : EntitySystem
             if (corrected)
                 _projectiles.ReconcilePredictedProjectile(projectile);
 
-            predicted.ProcessedTargets.Add(validatedTarget);
+            predicted.Hit = true;
+            // Trigger-on-hit effects (portals, spawned effects, grenades, etc.) read the projectile's
+            // transform. Move it to the validated collision pose before raising ProjectileHitEvent so
+            // those effects cannot appear at the latency-delayed authoritative position.
+            _transform.SetMapCoordinates(projectile, validatedProjectile);
             _projectiles.ProjectileCollide(
                 (projectile, projectileComponent, projectilePhysics),
                 validatedTarget,

@@ -1,4 +1,5 @@
 using Content.Server.ParticleAccelerator.Components;
+using Content.Shared.Projectiles;
 using Content.Shared.Popups;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Singularity.EntitySystems;
@@ -45,6 +46,7 @@ public sealed class SingularityGeneratorSystem : SharedSingularityGeneratorSyste
         base.Initialize();
 
         SubscribeLocalEvent<ParticleProjectileComponent, StartCollideEvent>(HandleParticleCollide);
+        SubscribeLocalEvent<ParticleProjectileComponent, ProjectileHitEvent>(HandleParticleHit);
 
         var vvHandle = _vvm.GetTypeHandler<SingularityGeneratorComponent>();
         vvHandle.AddPath(nameof(SingularityGeneratorComponent.Power), (_, comp) => comp.Power, SetPower);
@@ -164,7 +166,20 @@ public sealed class SingularityGeneratorSystem : SharedSingularityGeneratorSyste
     /// <param name="args">The state of the beginning of the collision.</param>
     private void HandleParticleCollide(EntityUid uid, ParticleProjectileComponent component, ref StartCollideEvent args)
     {
-        if (!TryComp<SingularityGeneratorComponent>(args.OtherEntity, out var generatorComp))
+        if (HasComp<ProjectileComponent>(uid))
+            return;
+
+        HandleParticleHit(uid, component, args.OtherEntity);
+    }
+
+    private void HandleParticleHit(Entity<ParticleProjectileComponent> ent, ref ProjectileHitEvent args)
+    {
+        HandleParticleHit(ent, ent.Comp, args.Target);
+    }
+
+    private void HandleParticleHit(EntityUid uid, ParticleProjectileComponent component, EntityUid target)
+    {
+        if (!TryComp<SingularityGeneratorComponent>(target, out var generatorComp))
             return;
 
         if (generatorComp.Inert ||
@@ -177,11 +192,11 @@ public sealed class SingularityGeneratorSystem : SharedSingularityGeneratorSyste
         var contained = true;
         if (!generatorComp.FailsafeDisabled)
         {
-            var transform = Transform(args.OtherEntity);
+            var transform = Transform(target);
             var directions = Enum.GetValues<Direction>().Length;
             for (var i = 0; i < directions - 1; i += 2) // Skip every other direction, checking only cardinals
             {
-                if (!CheckContainmentField((Direction)i, new Entity<SingularityGeneratorComponent>(args.OtherEntity, generatorComp), transform))
+                if (!CheckContainmentField((Direction)i, new Entity<SingularityGeneratorComponent>(target, generatorComp), transform))
                     contained = false;
             }
         }
@@ -189,12 +204,12 @@ public sealed class SingularityGeneratorSystem : SharedSingularityGeneratorSyste
         if (!contained && !generatorComp.FailsafeDisabled)
         {
             generatorComp.NextFailsafe = _timing.CurTime + generatorComp.FailsafeCooldown;
-            PopupSystem.PopupEntity(Loc.GetString("comp-generator-failsafe", ("target", args.OtherEntity)), args.OtherEntity, PopupType.LargeCaution);
+            PopupSystem.PopupEntity(Loc.GetString("comp-generator-failsafe", ("target", target)), target, PopupType.LargeCaution);
         }
         else
         {
             SetPower(
-                args.OtherEntity,
+                target,
                 generatorComp.Power + component.State switch
                 {
                     ParticleAcceleratorPowerState.Standby => 0,

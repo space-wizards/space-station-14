@@ -31,9 +31,4 @@ public sealed partial class PredictedProjectileComponent : Component
     [DataField]
     public bool Reconciled;
 
-    /// <summary>
-    /// Targets already processed through a client-reported collision.
-    /// Prevents a penetrating projectile from damaging the same target again when it catches up physically.
-    /// </summary>
-    public readonly HashSet<EntityUid> ProcessedTargets = new();
 }
