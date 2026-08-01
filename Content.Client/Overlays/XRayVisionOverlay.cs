@@ -6,6 +6,7 @@ using Robust.Client.ResourceManagement;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Profiling;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Overlays;
@@ -20,6 +21,7 @@ public sealed partial class XRayVisionOverlay : Overlay
     [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private IResourceCache _resCache = default!;
     [Dependency] private ITileDefinitionManager _tileDefManager = default!;
+    [Dependency] private ProfManager _prof = default!;
 
     private readonly SharedTransformSystem _transform;
     private readonly SharedMapSystem _mapSys;
@@ -96,6 +98,7 @@ public sealed partial class XRayVisionOverlay : Overlay
 
     private void DrawTiles(in OverlayDrawArgs args, DrawingHandleWorld handle)
     {
+        using var _ = _prof.Group("XRayVisionOverlay.DrawTiles");
         _grids.Clear();
         _mapSys.FindGridsIntersecting(args.MapId, args.WorldAABB, ref _grids);
 
