@@ -431,14 +431,19 @@ namespace Content.Client.Wires.UI
                     var t = 0f;
                     var b = tex.Height + t;
 
+                    var origHandleT = handle.GetTransform();
+                    var drawTransform = origHandleT;
+
                     if (_flip)
                     {
-                        (t, b) = (b, t);
+                        var flip = new Matrix3x2(1, 0, 0, -1, 0, b);
+                        drawTransform = Matrix3x2.Multiply(flip, drawTransform);
                     }
 
                     if (_mirror)
                     {
-                        (l, r) = (r, l);
+                        var mirror = new Matrix3x2(-1, 0, 0, 1, r, 0);
+                        drawTransform = Matrix3x2.Multiply(mirror, drawTransform);
                     }
 
                     l *= UIScale;
@@ -446,6 +451,7 @@ namespace Content.Client.Wires.UI
                     t *= UIScale;
                     b *= UIScale;
 
+                    handle.SetTransform(drawTransform);
                     var rect = new UIBox2(l, t, r, b);
                     if (_isCut)
                     {
@@ -455,6 +461,7 @@ namespace Content.Client.Wires.UI
                     }
 
                     handle.DrawTextureRect(tex, rect, colorValue);
+                    handle.SetTransform(origHandleT);
                 }
             }
         }
