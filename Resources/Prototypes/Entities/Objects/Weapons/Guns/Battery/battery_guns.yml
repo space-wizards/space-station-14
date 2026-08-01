@@ -277,6 +277,13 @@
   parent: [BaseLaserRifle, BaseGunWieldable, BaseSecurityContraband]
   id: WeaponLaserCarbine
   description: Favoured by Nanotrasen Security for being cheap and easy to use.
+  # DS14-start
+  components:
+  - type: CursorOffsetRequiresWield
+  - type: EyeCursorOffset
+    maxOffset: 4
+    pvsIncrease: 0.3
+  #DS14-end
 
 - type: entity
   name: practice laser carbine
@@ -290,6 +297,12 @@
     proto: RedLaserPractice
     fireCost: 50 # DS14-value
   - type: PacifismAllowedGun
+  #DS14-start
+  - type: CursorOffsetRequiresWield
+  - type: EyeCursorOffset
+    maxOffset: 4
+    pvsIncrease: 0.3
+  #DS14-end
 
 - type: entity
   name: pulse pistol
@@ -436,6 +449,12 @@
   - type: Tag
     tags:
     - TurretCompatibleWeapon
+  #DS14-start
+  - type: CursorOffsetRequiresWield
+  - type: EyeCursorOffset
+    maxOffset: 4
+    pvsIncrease: 0.3
+  #DS14-end
 
 - type: entity
   name: portable particle decelerator
