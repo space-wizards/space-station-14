@@ -38,14 +38,11 @@
     - FloorCave
     - FloorAsteroidIronsand
     - FloorAsteroidTile
-    - FloorAsteroidSandDug
     - FloorAsteroidSand
     - FloorDirt
-    - FloorGrassLight
     - FloorGrassDark
     - FloorGrassJungle
     - FloorGrass
-    - FloorAsphalt
     - FloorReinforced
     - FloorLino
     deleteSpawnerAfterSpawn: true
@@ -108,14 +105,11 @@
     - FloorCave
     - FloorAsteroidIronsand
     - FloorAsteroidTile
-    - FloorAsteroidSandDug
     - FloorAsteroidSand
     - FloorDirt
-    - FloorGrassLight
     - FloorGrassDark
     - FloorGrassJungle
     - FloorGrass
-    - FloorAsphalt
     - FloorReinforced
 
 - type: entity

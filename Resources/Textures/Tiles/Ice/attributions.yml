@@ -1,0 +1,27 @@
+# Attempted to keep the files in alphabetical order so its easier to audit.
+# Finding individual authors is an unfeasible task. If you can reference the author please do so.
+
+- files: ["cave.png", "ice.png", "glass.png", "planks.png", "iron_rods.png", "iron_plating.png", "brass_rods.png", "brass_plating.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Space Station 14, recolored by TheShuEd"
+  source: "https://github.com/crystallpunk-14/crystall-punk-14/"
+
+- files: ["stonebricks.png", "stonebricks_small_carved_1.png", "stonebricks_small_carved_2.png", "stonebricks_square_carved.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by Jaraten"
+  source: "https://github.com/crystallpunk-14/crystall-punk-14/"
+
+- files: ["oak_woodplanks.png", "oak_woodplanks_big.png", "oak_woodplanks_big_broken.png", "oak_woodplanks_broken.png", "oak_woodplanks_cruciform.png", "oak_woodplanks_cruciform_broken.png", "oak_woodplanks_stairways.png", "oak_woodplanks_stairways_broken.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "tgstation, Wood tiles are new tg tiles, sprited by Meowstushka and full resprited by Jaraten."
+  source: "https://github.com/tgstation/tgstation/"
+
+- files: ["woodplanks_big_burned.png", "woodplanks_burned.png", "woodplanks_cruciform_burned.png", "woodplanks_stairways_burned.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by Jaraten"
+  source: "https://github.com/crystallpunk-14/crystall-punk-14/"
+
+- files: ["roof_red.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by Omsoyk"
+  source: "https://github.com/crystallpunk-14/crystall-edge/"

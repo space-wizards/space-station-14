@@ -81,7 +81,7 @@
   description: Blast-retardant AND fire-retardant!
   components:
   - type: Sprite
-    sprite: Structures/Doors/Shutters/blastdoor.rsi
+    sprite: Structures/Doors/Airlocks/Standard/airlock-blastdoor.rsi
     state: assembly
   - type: InteractionOutline
   - type: Damageable
@@ -167,7 +167,7 @@
   description: Blast-retardant AND fire-retardant!
   components:
   - type: Sprite
-    sprite: Structures/Doors/Shutters/xeno_blastdoor.rsi
+    sprite: Structures/Doors/Airlocks/Standard/exo-blastdoor.rsi
     state: assembly
   - type: InteractionOutline
   - type: Damageable

@@ -21,12 +21,6 @@
 
 - type: stack
   parent: BaseTileStack
-  id: FloorTileDirty
-  name: stack-dirty-tile
-  spawn: FloorTileItemDirty
-
-- type: stack
-  parent: BaseTileStack
   id: FloorTileBlue
   name: stack-blue-floor-tile
   spawn: FloorTileItemBlue

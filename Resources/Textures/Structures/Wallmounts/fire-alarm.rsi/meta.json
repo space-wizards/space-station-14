@@ -1,0 +1,91 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation, modified for SS14",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "base",
+            "directions": 4
+        },
+        {
+            "name": "panel",
+            "directions": 4
+        },
+        {
+            "name": "frame1",
+            "directions": 4
+        },
+        {
+            "name": "frame2",
+            "directions": 4
+        },
+        {
+            "name": "fire_on",
+            "directions": 4
+        },
+        {
+            "name": "fire_emagged",
+            "directions": 4,
+            "delays": [
+                [
+                    0.33,
+                    0.33,
+                    0.33
+                ],
+                [
+                    0.33,
+                    0.33,
+                    0.33
+                ],
+                [
+                    0.33,
+                    0.33,
+                    0.33
+                ],
+                [
+                    0.33,
+                    0.33,
+                    0.33
+                ]
+            ]
+        },
+        {
+            "name": "fire_0",
+            "directions": 4
+        },
+        {
+            "name": "fire_1",
+            "directions": 4
+        },
+        {
+            "name": "fire_2",
+            "directions": 4,
+            "delays": [
+                [
+                    0.25,
+                    0.25
+                ],
+                [
+                    0.25,
+                    0.25
+                ],
+                [
+                    0.25,
+                    0.25
+                ],
+                [
+                    0.25,
+                    0.25
+                ]
+            ]
+        },
+        {
+            "name": "fire_3",
+            "directions": 4
+        }
+    ]
+}

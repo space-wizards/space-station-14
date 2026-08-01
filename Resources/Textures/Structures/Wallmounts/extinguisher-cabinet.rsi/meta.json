@@ -1,0 +1,47 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/d0d81185f09ca30d3b0856d476544240dba0de53",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "extinguisher_closed",
+            "directions": 4
+        },
+        {
+            "name": "extinguisher_empty",
+            "directions": 4
+        },
+        {
+            "name": "extinguisher_full",
+            "directions": 4
+        },
+        {
+            "name": "extinguisher_mini",
+            "directions": 4
+        },
+        {
+            "name": "closed",
+            "directions": 4
+        },
+        {
+            "name": "extinguisher",
+            "directions": 4
+        },
+        {
+            "name": "extinguisher-mini",
+            "directions": 4
+        },
+        {
+            "name": "frame",
+            "directions": 4
+        },
+        {
+            "name": "open",
+            "directions": 4
+        }
+    ]
+}

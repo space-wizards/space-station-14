@@ -1,0 +1,104 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-4.0",
+    "copyright": "By AftrLite.",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "rock_artifact_fragment"
+        },
+        {
+            "name": "rock_bauxite"
+        },
+        {
+            "name": "rock_carbon"
+        },
+        {
+            "name": "rock_coal"
+        },
+        {
+            "name": "rock_copper"
+        },
+        {
+            "name": "rock_diamond",
+            "delays": [
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "rock_gold"
+        },
+        {
+            "name": "rock_hematite"
+        },
+        {
+            "name": "rock_lead"
+        },
+        {
+            "name": "rock_marble"
+        },
+        {
+            "name": "rock_painite"
+        },
+        {
+            "name": "rock_phoron"
+        },
+        {
+            "name": "rock_platinum"
+        },
+        {
+            "name": "rock_quartz"
+        },
+        {
+            "name": "rock_rutile"
+        },
+        {
+            "name": "rock_silver"
+        },
+        {
+            "name": "rock_tin"
+        },
+        {
+            "name": "rock_uranium"
+        },
+        {
+            "name": "rock_verdantium"
+        },
+        {
+            "name": "rock_void_opal"
+        },
+        {
+            "name": "rock_salt"
+        },
+        {
+            "name": "gibtonite_active",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "gibtonite_inactive"
+        }
+    ]
+}

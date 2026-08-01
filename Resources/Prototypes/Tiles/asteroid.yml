@@ -1,0 +1,81 @@
+- type: tile
+  id: FloorAsteroidSandBorderless
+  name: tiles-asteroid-sand-borderless
+  sprite: /Textures/Tiles/Asteroid/asteroid.png
+  variants: 7
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Space
+  isSubfloor: true
+  footstepSounds:
+    collection: FootstepAsteroid
+  heatCapacity: 10000
+  weather: true
+
+- type: tile
+  id: FloorAsteroidSand
+  parent: FloorAsteroidSandBorderless
+  name: tiles-asteroid-sand
+  sprite: /Textures/Tiles/Asteroid/asteroid.png
+  variants: 7
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  edgeSpritePriority: 6
+  edgeSprites:
+    SouthEast: /Textures/Tiles/Asteroid/single_edge_SE.png
+    NorthEast: /Textures/Tiles/Asteroid/single_edge_NE.png
+    NorthWest: /Textures/Tiles/Asteroid/single_edge_NW.png
+    SouthWest: /Textures/Tiles/Asteroid/single_edge_SW.png
+    South: /Textures/Tiles/Asteroid/double_edge_S.png
+    East: /Textures/Tiles/Asteroid/double_edge_E.png
+    North: /Textures/Tiles/Asteroid/double_edge_N.png
+    West: /Textures/Tiles/Asteroid/double_edge_W.png
+
+- type: tile
+  id: FloorAsteroidTile
+  name: tiles-asteroid-tile
+  sprite: /Textures/Tiles/Asteroid/asteroid-tile.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepAsteroid
+  heatCapacity: 10000
+  weather: true
+
+### ASTRO TILES
+- type: tile
+  id: FloorAstroAsteroidSand
+  parent: [ BaseStationTile, FloorAsteroidSand ]
+  name: tiles-astro-asteroid-sand
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  itemDrop: FloorTileItemAstroAsteroidSand
+  weather: false
+
+- type: tile
+  id: FloorAstroAsteroidSandBorderless
+  parent: [ BaseStationTile, FloorAsteroidSandBorderless ]
+  name: tiles-astro-asteroid-sand-borderless
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  itemDrop: FloorTileItemAstroAsteroidSand
+  weather: false

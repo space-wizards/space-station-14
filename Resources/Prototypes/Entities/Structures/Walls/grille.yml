@@ -28,7 +28,7 @@
     key: grilles
   - type: IconSmooth
     index: 0
-    key: grilles
+    key: walls
     base: grille
   - type: Damageable
     damageModifierSet: PerforatedMetallic

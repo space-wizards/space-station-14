@@ -21,15 +21,6 @@
         amount: 4
         doAfter: 2
 
-    - to: assemblyClockwork
-      completed:
-      - !type:SetAnchor
-        value: false
-      steps:
-      - material: Brass
-        amount: 4
-        doAfter: 2
-
   - node: assembly
     entity: WindoorAssembly
     actions:

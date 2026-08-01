@@ -8,6 +8,7 @@
     arc: 360
   - type: StationAiWhitelist
   - type: Sprite
+    offset: 0, -0.25
     drawdepth: SmallObjects
     sprite: Structures/Wallmounts/switch.rsi
     state: on
@@ -55,6 +56,7 @@
     arc: 360
   - type: StationAiWhitelist
   - type: Sprite
+    offset: 0, -0.25
     drawdepth: SmallObjects
     sprite: Structures/Wallmounts/switch.rsi
     state: dead
@@ -100,6 +102,7 @@
   - type: WallMount
     arc: 360
   - type: Sprite
+    offset: 0, -0.25
     drawdepth: SmallObjects
     sprite: Structures/Wallmounts/switch.rsi
     state: on
@@ -431,7 +434,6 @@
   categories: [ HideSpawnMenu ]
   description: It's a frame to help distinguish switches visually.
   placement:
-    mode: SnapgridCenter
     snap:
     - Wallmount
   components:

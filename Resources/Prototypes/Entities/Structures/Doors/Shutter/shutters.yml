@@ -48,11 +48,11 @@
     bumpOpen: false
     clickOpen: false
     closeTimeOne: 0.2
-    closeTimeTwo: 1.2
-    openTimeOne: 1.2
+    closeTimeTwo: 0.8
+    openTimeOne: 0.8
     openTimeTwo: 0.2
-    openingAnimationTime: 1.4
-    closingAnimationTime: 1.4
+    openingAnimationTime: 1
+    closingAnimationTime: 1
     crushDamage:
       types:
         Blunt: 5 # getting shutters closed on you probably doesn't hurt that much
@@ -106,6 +106,9 @@
   - type: BlockWeather
   - type: PlacementReplacement
     key: shutters
+  - type: IconSmooth
+    key: walls
+    mode: NoSprite
 
 - type: entity
   id: ShuttersNormal
@@ -216,7 +219,7 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Shutters/shutters.rsi
-    state: frame
+    state: assembly
   - type: Construction
     graph: Shutters
     node: frame1

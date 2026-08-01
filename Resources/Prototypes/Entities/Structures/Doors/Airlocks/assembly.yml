@@ -81,7 +81,7 @@
   suffix: External
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/external.rsi
+    sprite: Structures/Doors/Airlocks/Standard/airlock-external.rsi
     state: "assembly"
 
 - type: entity
@@ -90,7 +90,7 @@
   suffix: External, Glass
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/external.rsi
+    sprite: Structures/Doors/Airlocks/Glass/airlock-external.rsi
     state: "assembly"
 
 #Public (Glass Airlock)
@@ -148,7 +148,7 @@
   suffix: Maintenance, Glass
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/aitlock-maints.rsi
+    sprite: Structures/Doors/Airlocks/Glass/airlock-maints.rsi
     state: "assembly"
 
 #Medical

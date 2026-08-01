@@ -1,0 +1,139 @@
+- type: tile
+  id: FloorPlanetGrass
+  parent: BaseFloorPlanet
+  name: tiles-grass-planet-floor
+  sprite: /Textures/Tiles/Grass/grass.png
+  variants: 6
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  edgeSpritePriority: 5
+  edgeSprites:
+    SouthEast: /Textures/Tiles/Grass/single_edge_SE.png
+    NorthEast: /Textures/Tiles/Grass/single_edge_NE.png
+    NorthWest: /Textures/Tiles/Grass/single_edge_NW.png
+    SouthWest: /Textures/Tiles/Grass/single_edge_SW.png
+    South: /Textures/Tiles/Grass/double_edge_S.png
+    East: /Textures/Tiles/Grass/double_edge_E.png
+    North: /Textures/Tiles/Grass/double_edge_N.png
+    West: /Textures/Tiles/Grass/double_edge_W.png
+  baseTurf: FloorPlanetDirt
+  isSubfloor: true
+  footstepSounds:
+    collection: FootstepGrass
+
+- type: tile
+  id: FloorGrass
+  name: tiles-planet-grass-floor
+  sprite: /Textures/Tiles/Grass/grass.png
+  variants: 6
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: FloorDirt
+  footstepSounds:
+    collection: FootstepGrass
+  itemDrop: FloorTileItemGrass
+  heatCapacity: 10000
+  weather: true
+
+- type: tile
+  id: FloorGrassJungle
+  name: tiles-jungle-grass-floor
+  sprite: /Textures/Tiles/GrassJungle/grass.png
+  variants: 6
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  edgeSpritePriority: 4
+  edgeSprites:
+    SouthEast: /Textures/Tiles/GrassJungle/single_edge_SE.png
+    NorthEast: /Textures/Tiles/GrassJungle/single_edge_NE.png
+    NorthWest: /Textures/Tiles/GrassJungle/single_edge_NW.png
+    SouthWest: /Textures/Tiles/GrassJungle/single_edge_SW.png
+    South: /Textures/Tiles/GrassJungle/double_edge_S.png
+    East: /Textures/Tiles/GrassJungle/double_edge_E.png
+    North: /Textures/Tiles/GrassJungle/double_edge_N.png
+    West: /Textures/Tiles/GrassJungle/double_edge_W.png
+  baseTurf: FloorDirt
+  isSubfloor: true
+  footstepSounds:
+    collection: FootstepGrass
+  itemDrop: FloorTileItemGrassJungle
+  heatCapacity: 10000
+  weather: true
+
+- type: tile
+  id: FloorGrassDark
+  name: tiles-dark-grass-floor
+  sprite: /Textures/Tiles/GrassDark/grass.png
+  variants: 6
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  edgeSpritePriority: 3
+  edgeSprites:
+    SouthEast: /Textures/Tiles/GrassDark/single_edge_SE.png
+    NorthEast: /Textures/Tiles/GrassDark/single_edge_NE.png
+    NorthWest: /Textures/Tiles/GrassDark/single_edge_NW.png
+    SouthWest: /Textures/Tiles/GrassDark/single_edge_SW.png
+    South: /Textures/Tiles/GrassDark/double_edge_S.png
+    East: /Textures/Tiles/GrassDark/double_edge_E.png
+    North: /Textures/Tiles/GrassDark/double_edge_N.png
+    West: /Textures/Tiles/GrassDark/double_edge_W.png
+  baseTurf: FloorDirt
+  isSubfloor: true
+  footstepSounds:
+    collection: FootstepGrass
+  heatCapacity: 10000
+  weather: true
+
+### ASTRO TILES
+- type: tile
+  id: FloorAstroGrass
+  parent: [ BaseStationTile, FloorPlanetGrass ]
+  name: tiles-astro-grass
+  isSubfloor: false
+  deconstructTools: [ Cutting ]
+  itemDrop: FloorTileItemAstroGrass
+
+- type: tile
+  id: FloorMowedAstroGrass
+  parent: [ BaseStationTile, FloorGrass ]
+  name: tiles-mowed-astro-grass
+  isSubfloor: false
+  deconstructTools: [ Cutting ]
+  itemDrop: FloorTileItemMowedAstroGrass
+
+- type: tile
+  id: FloorJungleAstroGrass
+  parent: [ BaseStationTile, FloorGrassJungle ]
+  name: tiles-jungle-astro-grass
+  isSubfloor: false
+  deconstructTools: [ Cutting ]
+  itemDrop: FloorTileItemJungleAstroGrass
+
+- type: tile
+  parent: FloorGrassDark
+  id: FloorDarkAstroGrass
+  name: tiles-dark-astro-grass
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Cutting ]
+  itemDrop: FloorTileItemDarkAstroGrass

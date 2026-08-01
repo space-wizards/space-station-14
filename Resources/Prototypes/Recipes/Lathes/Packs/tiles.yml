@@ -4,8 +4,6 @@
   id: FloorDarkTilesStatic
   recipes:
   - FloorTileItemDark
-  - FloorTileItemDarkDiagonalMini
-  - FloorTileItemDarkDiagonal
   - FloorTileItemDarkHerringbone
   - FloorTileItemDarkMini
   - FloorTileItemDarkMono
@@ -13,16 +11,11 @@
   - FloorTileItemDarkHorizontalSlatsBordered
   - FloorTileItemDarkPavement
   - FloorTileItemDarkPavementVertical
-  - FloorTileItemDarkOffset
-  - FloorTileItemDarkSquiggly
 
 - type: latheRecipePack
   id: FloorSteelTilesStatic
   recipes:
   - FloorTileItemSteel
-  - FloorTileItemSteelOffset
-  - FloorTileItemSteelDiagonalMini
-  - FloorTileItemSteelDiagonal
   - FloorTileItemSteelHerringbone
   - FloorTileItemSteelMini
   - FloorTileItemSteelVerticalSlatsBordered
@@ -48,7 +41,6 @@
   id: FloorMaintsTilesStatic
   recipes:
   - FloorTileItemGratingMaint
-  - FloorTileItemTechmaint
   - FloorTileItemSteelMaint
   - FloorTileItemTechmaintDark
 
@@ -71,15 +63,6 @@
   - FloorTileItemConcrete
   - FloorTileItemConcreteMono
   - FloorTileItemConcreteSmooth
-  - FloorTileItemGrayConcrete
-  - FloorTileItemGrayConcreteMono
-  - FloorTileItemGrayConcreteSmooth
-  - FloorTileItemOldConcrete
-  - FloorTileItemOldConcreteMono
-  - FloorTileItemOldConcreteSmooth
-  - FloorTileItemIronsandConcrete
-  - FloorTileItemIronsandConcreteMono
-  - FloorTileItemIronsandConcreteSmooth
 
 - type: latheRecipePack
   id: CircuitFloorsStatic
@@ -135,7 +118,6 @@
   - FauxTileMowedAstroGrass
   - FauxTileJungleAstroGrass
   - FauxTileDarkAstroGrass
-  - FauxTileLightAstroGrass
   - FauxTileAstroIce
   - FauxTileAstroSnow
   - FauxTileAstroAsteroidSand

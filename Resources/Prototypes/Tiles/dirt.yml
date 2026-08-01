@@ -1,0 +1,62 @@
+- type: tile
+  id: FloorPlanetDirt
+  parent: BaseFloorPlanet
+  name: tiles-dirt-planet-floor
+  sprite: /Textures/Tiles/Dirt/dirt.png
+  variants: 16
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  edgeSpritePriority: 1
+  edgeSprites:
+    SouthEast: /Textures/Tiles/Dirt/single_edge_SE.png
+    NorthEast: /Textures/Tiles/Dirt/single_edge_NE.png
+    NorthWest: /Textures/Tiles/Dirt/single_edge_NW.png
+    SouthWest: /Textures/Tiles/Dirt/single_edge_SW.png
+    South: /Textures/Tiles/Dirt/double_edge_S.png
+    East: /Textures/Tiles/Dirt/double_edge_E.png
+    North: /Textures/Tiles/Dirt/double_edge_N.png
+    West: /Textures/Tiles/Dirt/double_edge_W.png
+
+- type: tile
+  id: FloorDirt
+  name: tiles-dirt-floor
+  sprite: /Textures/Tiles/Dirt/dirt.png
+  variants: 16
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: true
+  footstepSounds:
+    collection: FootstepAsteroid
+  heatCapacity: 10000
+  weather: true

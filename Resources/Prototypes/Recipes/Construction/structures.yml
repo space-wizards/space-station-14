@@ -499,37 +499,32 @@
 # region Material Doors
 - type: construction
   parent: BaseStructureFullTileDirectional
-  id: MetalDoor
+  id: SilverDoor
   graph: DoorGraph
-  targetNode: metalDoor
+  targetNode: silverDoor
 
 - type: construction
-  parent: MetalDoor
+  parent: SilverDoor
   id: WoodDoor
   targetNode: woodDoor
 
 - type: construction
-  parent: MetalDoor
+  parent: SilverDoor
   id: PlasmaDoor
   targetNode: plasmaDoor
 
 - type: construction
-  parent: MetalDoor
+  parent: SilverDoor
   id: GoldDoor
   targetNode: goldDoor
 
 - type: construction
-  parent: MetalDoor
-  id: SilverDoor
-  targetNode: silverDoor
-
-- type: construction
-  parent: MetalDoor
+  parent: SilverDoor
   id: PaperDoor
   targetNode: paperDoor
 
 - type: construction
-  parent: MetalDoor
+  parent: SilverDoor
   id: CardDoor
   targetNode: cardDoor
 # endregion Material Doors
@@ -581,9 +576,9 @@
 
 - type: construction
   parent: BaseStructureFullTileDirectional
-  id: Turnstile
-  graph: Turnstile
-  targetNode: turnstile
+  id: EnergyGate
+  graph: EnergyGate
+  targetNode: energyGate
 
 - type: construction
   parent: BaseStructureFullTileDirectional
