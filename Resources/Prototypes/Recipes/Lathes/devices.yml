@@ -101,6 +101,18 @@
     Glass: 100
 
 - type: latheRecipe
+  id: TeleporterChipBlank
+  result: TeleporterChipBlank
+  categories:
+  - Tools
+  - Research
+  completetime: 2
+  materials:
+    Steel: 50
+    Plastic: 50
+    Plasma: 25
+
+- type: latheRecipe
   parent: BaseToolRecipe
   id: AnomalyScanner
   result: AnomalyScanner

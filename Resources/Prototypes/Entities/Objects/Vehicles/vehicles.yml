@@ -11,6 +11,7 @@
   - type: Physics
     bodyType: KinematicController
   - type: Vehicle
+    canAttack: true
   - type: StrapVehicle
   - type: Strap
   - type: MovementSpeedModifier
@@ -51,7 +52,6 @@
     - state: wheelchair_folded
       map: ["foldedLayer"]
       visible: false
-  - type: Appearance
   - type: Item
     size: Ginormous
   - type: Damageable
@@ -98,6 +98,8 @@
     noMovementLayers:
       movement:
         state: vehicle
+  - type: Vehicle
+  - type: VehicleHandBlocker
   - type: GenericKeyedVehicle
     containerId: key_slot
     keyWhitelist:
@@ -108,7 +110,7 @@
     enabled: false
     radius: 3.5
     softness: 2
-    mask: /Textures/Effects/LightMasks/cone.png
+    lightMask: ConeSingle
     autoRot: true
   - type: GravityAffected
   - type: Destructible
