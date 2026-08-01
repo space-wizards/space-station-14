@@ -1,0 +1,57 @@
+- type: alert
+  id: BaseGhostTeleportAlert
+  icons:
+  - sprite: /Textures/Decals/stencil.rsi
+    state: stencil_Exclaim
+  alertViewEntity: GhostAlertCounterSpriteView
+  name: ghost-alert-base-name
+  description: ghost-alert-base-desc
+  clickEvent: !type:AlertTeleportEvent
+
+- type: alert
+  id: BaseGhostRoleAlert
+  icons:
+  - sprite: /Textures/Decals/stencil.rsi
+    state: stencil_Exclaim
+  alertViewEntity: GhostAlertCounterSpriteView
+  name: ghost-alert-base-role-name
+  description: ghost-alert-base-role-desc
+  clickEvent: !type:AlertTeleportEvent
+
+- type: alert
+  id: ImmovableRod
+  icons:
+  - sprite: Objects/Fun/immovable_rod.rsi
+    state: icon
+  alertViewEntity: GhostAlertCounterSpriteView
+  name: ghost-alert-immovable-rod-name
+  description: ghost-alert-base-desc
+  clickEvent: !type:AlertTeleportEvent
+
+- type: alert
+  parents: BaseGhostRoleAlert
+  id: SpaceNinja
+  icons:
+  - sprite: Objects/Weapons/Melee/energykatana.rsi
+    state: icon
+  alertViewEntity: GhostAlertCounterSpriteView
+  name: ghost-alert-space-ninja-name
+  description: ghost-alert-base-role-desc
+  clickEvent: !type:AlertTeleportEvent
+
+- type: entity
+  id: GhostAlertCounterSpriteView
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: GenericCounterAlert
+    hideZeroAndSingleValues: true
+    centerGlyph: false
+  - type: Sprite
+    sprite: /Textures/Interface/Alerts/generic_counter.rsi
+    layers:
+    - map: [ "enum.AlertVisualLayers.Base" ]
+    - map: [ "1" ]
+      offset: 0.25, 0
+    - map: [ "10" ]
+      offset: 0.125, 0
+    - map: [ "100" ]

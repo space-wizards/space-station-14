@@ -188,6 +188,12 @@
     - MindRoleNinja
     raffle:
       settings: default
+    makeGhostAlert: true
+    ghostAlert: SpaceNinja
+    ghostAlertSound:
+      path: /Audio/Announcements/ghost-alert.ogg
+      params:
+        volume: -5
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
