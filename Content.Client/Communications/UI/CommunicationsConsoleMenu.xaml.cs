@@ -17,6 +17,7 @@ namespace Content.Client.Communications.UI
         [Dependency] private IConfigurationManager _cfg = default!;
         [Dependency] private IGameTiming _timing = default!;
         [Dependency] private ILocalizationManager _loc = default!;
+        [Dependency] private IPrototypeManager _protoMan = default!;
 
         public bool CanAnnounce;
         public bool CanBroadcast;
@@ -95,7 +96,7 @@ namespace Content.Client.Communications.UI
             if (!AlertLevelSelectable)
             {
                 // selection is locked, only show the current alert
-                var name = _loc.GetString($"alert-level-{CurrentAlertLevel}");
+                var name = _protoMan.Index(CurrentAlertLevel).LocalizedName;
                 AlertLevelButton.AddItem(name);
                 AlertLevelButton.SetItemMetadata(AlertLevelButton.ItemCount - 1, CurrentAlertLevel);
             }
@@ -103,7 +104,7 @@ namespace Content.Client.Communications.UI
             {
                 foreach (var alert in SelectableAlertLevels)
                 {
-                    var name = _loc.GetString($"alert-level-{alert}");
+                    var name = _protoMan.Index(alert).LocalizedName;
                     AlertLevelButton.AddItem(name);
                     AlertLevelButton.SetItemMetadata(AlertLevelButton.ItemCount - 1, alert);
                     if (alert == CurrentAlertLevel)
