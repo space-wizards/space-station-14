@@ -111,6 +111,9 @@
     sprite: _DeadSpace/Necromorfs/BSAA/clothing/mask.rsi
   - type: Clothing
     sprite: _DeadSpace/Necromorfs/BSAA/clothing/mask.rsi
+  - type: SpecialDeathSound
+    sound:
+      path: /Audio/_DeadSpace/Voice/Death/sec_death.ogg
   - type: HideLayerClothing
     slots:
     - Hair

@@ -50,6 +50,9 @@
     sprite: _DeadSpace/Clothing/Mask/blueshield_mask.rsi
   - type: Clothing
     sprite: _DeadSpace/Clothing/Mask/blueshield_mask.rsi
+  - type: SpecialDeathSound
+    sound:
+      path: /Audio/_DeadSpace/Voice/Death/sec_death.ogg
   - type: HideLayerClothing
-    clothingSlots: 
+    clothingSlots:
     - ears

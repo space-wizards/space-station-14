@@ -42,6 +42,11 @@
   - type: Tag
     tags:
     - HamsterWearable
+  # DS14-start
+  - type: SpecialDeathSound
+    sound:
+      path: /Audio/_DeadSpace/Voice/Death/sec_death.ogg
+  # DS14-end
 
 - type: entity
   parent: [ClothingMaskGas, BaseSyndicateContraband]
@@ -422,6 +427,11 @@
     sprite: Clothing/Mask/swat.rsi
   - type: Clothing
     sprite: Clothing/Mask/swat.rsi
+  # DS14-start
+  - type: SpecialDeathSound
+    sound:
+      path: /Audio/_DeadSpace/Voice/Death/sec_death.ogg
+  # DS14-end
   - type: Tag
     tags:
     - WhitelistChameleon
@@ -468,6 +478,11 @@
     sprite: Clothing/Mask/ert.rsi
   - type: Clothing
     sprite: Clothing/Mask/ert.rsi
+  # DS14-start
+  - type: SpecialDeathSound
+    sound:
+      path: /Audio/_DeadSpace/Voice/Death/sec_death.ogg
+  # DS14-end
   - type: Tag
     tags:
     - WhitelistChameleon
