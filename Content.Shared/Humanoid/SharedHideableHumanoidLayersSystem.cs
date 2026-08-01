@@ -10,7 +10,7 @@ namespace Content.Shared.Humanoid;
 public abstract partial class SharedHideableHumanoidLayersSystem : EntitySystem
 {
     /// <summary>
-    ///     Toggles a humanoid's sprite layer visibility.
+    /// Toggles a humanoid's sprite layer visibility.
     /// </summary>
     /// <param name="ent">Humanoid entity</param>
     /// <param name="layer">Layer to toggle visibility for</param>

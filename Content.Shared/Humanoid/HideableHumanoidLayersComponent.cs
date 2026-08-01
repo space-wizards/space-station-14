@@ -8,18 +8,18 @@ namespace Content.Shared.Humanoid;
 public sealed partial class HideableHumanoidLayersComponent : Component
 {
     /// <summary>
-    ///     A map of the visual layers currently hidden to the equipment
-    ///     slots that are currently hiding them. This will affect the base
-    ///     sprite on this humanoid layer, and any markings that sit above it.
+    /// A map of the visual layers currently hidden to the equipment
+    /// slots that are currently hiding them. This will affect the base
+    /// sprite on this humanoid layer, and any markings that sit above it.
     /// </summary>
     [DataField, AutoNetworkedField]
     public Dictionary<HumanoidVisualLayers, SlotFlags> HiddenLayers = new();
 
     /// <summary>
-    ///     Client only - which layers were last actually hidden.
+    /// Client only - which layers were last actually hidden.
     /// </summary>
     [ViewVariables]
-    public List<HumanoidVisualLayers> LastHiddenLayers = new();
+    public HashSet<HumanoidVisualLayers> LastHiddenLayers = new();
 }
 
 /// <summary>

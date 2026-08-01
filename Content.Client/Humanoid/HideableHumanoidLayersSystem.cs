@@ -69,7 +69,7 @@ public sealed partial class HideableHumanoidLayersSystem : SharedHideableHumanoi
         }
 
         // Accumulate new hidden set in here.
-        var actualHiddenLayers = new List<HumanoidVisualLayers>(ent.Comp.HiddenLayers.Count);
+        var actualHiddenLayers = new HashSet<HumanoidVisualLayers>(ent.Comp.HiddenLayers.Count);
 
         // Handle hiding our new layers - handlers must set ShouldHide true to hide the layer.
         foreach (var item in ent.Comp.HiddenLayers.Keys)
