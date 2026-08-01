@@ -94,6 +94,7 @@
   parent: RedMediumLaser
   id: XenoborgFireLaser
   name: xenoborg fire laser ray
+  categories: [ HideSpawnMenu ]
   components:
   - type: HitscanBasicDamage
     damage:
@@ -110,7 +111,7 @@
       sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
       state: impact_xeno_fire
   - type: HitscanIgnite
-    igniteChance: 1
+    igniteChance: 0.75
 
 - type: entity
   parent: BasicHitscan
