@@ -15,9 +15,9 @@ namespace Content.Shared.Weapons.Ranged.Systems;
 
 public abstract partial class SharedGunSystem
 {
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly SharedStackSystem _stack = null!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private SharedInteractionSystem _interaction = default!;
+    [Dependency] private SharedStackSystem _stack = null!;
 
     [MustCallBase]
     protected virtual void InitializeBallistic()
@@ -67,7 +67,6 @@ public abstract partial class SharedGunSystem
     {
         if (args.Handled ||
             !component.MayTransfer ||
-            !Timing.IsFirstTimePredicted ||
             args.Target == null ||
             args.Used == args.Target ||
             Deleted(args.Target) ||
@@ -100,19 +99,17 @@ public abstract partial class SharedGunSystem
 
         if (target.Entities.Count + target.UnspawnedCount == target.Capacity)
         {
-            Popup(
-                Loc.GetString("gun-ballistic-transfer-target-full",
-                    ("entity", args.Target)),
-                args.Target,
+            PopupSystem.PopupEntity(
+                Loc.GetString("gun-ballistic-transfer-target-full", ("entity", args.Target.Value)),
+                args.Target.Value,
                 args.User);
             return;
         }
 
         if (component.Entities.Count + component.UnspawnedCount == 0)
         {
-            Popup(
-                Loc.GetString("gun-ballistic-transfer-empty",
-                    ("entity", uid)),
+            PopupSystem.PopupEntity(
+                Loc.GetString("gun-ballistic-transfer-empty", ("entity", uid)),
                 uid,
                 args.User);
             return;
@@ -135,7 +132,7 @@ public abstract partial class SharedGunSystem
 
             if (_whitelistSystem.IsWhitelistFail(target.Whitelist, ent.Value))
             {
-                Popup(
+                PopupSystem.PopupEntity(
                     Loc.GetString("gun-ballistic-transfer-invalid",
                         ("ammoEntity", ent.Value),
                         ("targetEntity", args.Target.Value)),
@@ -207,7 +204,7 @@ public abstract partial class SharedGunSystem
 
         var text = Loc.GetString(shots == 0 ? "gun-ballistic-cycled-empty" : "gun-ballistic-cycled");
 
-        Popup(text, ent, user);
+        PopupSystem.PopupEntity(text, ent, user);
         UpdateBallisticAppearance(ent);
         UpdateAmmoCount(ent);
     }
@@ -356,11 +353,8 @@ public abstract partial class SharedGunSystem
 
     public void UpdateBallisticAppearance(Entity<BallisticAmmoProviderComponent> ent)
     {
-        if (!Timing.IsFirstTimePredicted || !TryComp<AppearanceComponent>(ent, out var appearance))
-            return;
-
-        Appearance.SetData(ent, AmmoVisuals.AmmoCount, GetBallisticShots(ent.Comp), appearance);
-        Appearance.SetData(ent, AmmoVisuals.AmmoMax, ent.Comp.Capacity, appearance);
+        Appearance.SetData(ent, AmmoVisuals.AmmoCount, GetBallisticShots(ent.Comp));
+        Appearance.SetData(ent, AmmoVisuals.AmmoMax, ent.Comp.Capacity);
     }
 
     public void SetBallisticUnspawned(Entity<BallisticAmmoProviderComponent> entity, int count)

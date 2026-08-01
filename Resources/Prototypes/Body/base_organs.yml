@@ -23,7 +23,30 @@
   - type: Organ
 
 - type: entity
-  parent: OrganBase
+  id: OrganBaseOrganic
+  name: organ
+  abstract: true
+  parent: [ OrganBase, SolutionFood, SolutionTiny ]
+  components:
+  - type: FlavorProfile
+    flavors:
+    - chicken # INTRODUCING OUR NEW EVERY-MEAT BURRITO, IT'S GOT EVERY MEAT!
+  - type: Edible
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: UncookedAnimalProteins
+        Quantity: 20
+  - type: Tag # I am nearing my limit of tolerance for TagComponent.
+    tags:
+    - Raw
+    - Meat
+
+- type: entity
+  parent:
+  - OrganBase
+  - OrganBaseParent
+  - OrganBaseChildExternal
   id: OrganBaseTorso
   name: torso
   abstract: true
@@ -48,7 +71,10 @@
       - Special
 
 - type: entity
-  parent: OrganBase
+  parent:
+  - OrganBase
+  - OrganBaseParent
+  - OrganBaseChildExternal
   id: OrganBaseHead
   name: head
   abstract: true
@@ -75,7 +101,10 @@
       - HeadTop
 
 - type: entity
-  parent: OrganBase
+  parent:
+  - OrganBase
+  - OrganBaseParent
+  - OrganBaseChildExternal
   id: OrganBaseArmLeft
   name: left arm
   abstract: true
@@ -94,7 +123,10 @@
       - LArm
 
 - type: entity
-  parent: OrganBase
+  parent:
+  - OrganBase
+  - OrganBaseParent
+  - OrganBaseChildExternal
   id: OrganBaseArmRight
   name: right arm
   abstract: true
@@ -113,7 +145,9 @@
       - RArm
 
 - type: entity
-  parent: OrganBase
+  parent:
+  - OrganBase
+  - OrganBaseChildExternal
   id: OrganBaseHandLeft
   name: left hand
   abstract: true
@@ -136,7 +170,9 @@
       - LHand
 
 - type: entity
-  parent: OrganBase
+  parent:
+  - OrganBase
+  - OrganBaseChildExternal
   id: OrganBaseHandRight
   name: right hand
   abstract: true
@@ -159,7 +195,10 @@
       - RHand
 
 - type: entity
-  parent: OrganBase
+  parent:
+  - OrganBase
+  - OrganBaseParent
+  - OrganBaseChildExternal
   id: OrganBaseLegLeft
   name: left leg
   abstract: true
@@ -178,7 +217,10 @@
       - LLeg
 
 - type: entity
-  parent: OrganBase
+  parent:
+  - OrganBase
+  - OrganBaseParent
+  - OrganBaseChildExternal
   id: OrganBaseLegRight
   name: right leg
   abstract: true
@@ -197,7 +239,9 @@
       - RLeg
 
 - type: entity
-  parent: OrganBase
+  parent:
+  - OrganBase
+  - OrganBaseChildExternal
   id: OrganBaseFootLeft
   name: left foot
   abstract: true
@@ -216,7 +260,9 @@
       - LFoot
 
 - type: entity
-  parent: OrganBase
+  parent:
+  - OrganBase
+  - OrganBaseChildExternal
   id: OrganBaseFootRight
   name: right foot
   abstract: true
@@ -235,7 +281,9 @@
       - RFoot
 
 - type: entity
-  parent: OrganBase
+  parent:
+  - OrganBase
+  - OrganBaseChildInternal
   id: OrganBaseBrain
   name: brain
   abstract: true
@@ -255,13 +303,22 @@
   - type: Examiner
   - type: BlockMovement
   - type: BadFood
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: UncookedAnimalProteins
+        Quantity: 15
+      - ReagentId: GreyMatter
+        Quantity: 10
   - type: FoodSequenceElement
     entries:
       Burger: Brain
       Taco: Brain
 
 - type: entity
-  parent: OrganBase
+  parent:
+  - OrganBase
+  - OrganBaseChildInternal
   id: OrganBaseEyes
   name: eyes
   abstract: true
@@ -284,7 +341,9 @@
       - Eyes
 
 - type: entity
-  parent: OrganBase
+  parent:
+  - OrganBase
+  - OrganBaseChildInternal
   id: OrganBaseTongue
   name: tongue
   abstract: true
@@ -297,7 +356,9 @@
     - state: tongue
 
 - type: entity
-  parent: OrganBase
+  parent:
+  - OrganBase
+  - OrganBaseChildInternal
   id: OrganBaseAppendix
   name: appendix
   abstract: true
@@ -310,7 +371,9 @@
     - state: appendix
 
 - type: entity
-  parent: OrganBase
+  parent:
+  - OrganBase
+  - OrganBaseChildInternal
   id: OrganBaseEars
   name: ears
   abstract: true
@@ -323,7 +386,9 @@
     - state: ears
 
 - type: entity
-  parent: OrganBase
+  parent:
+  - OrganBase
+  - OrganBaseChildInternal
   id: OrganBaseLungs
   name: lungs
   abstract: true
@@ -334,11 +399,9 @@
   - type: Lung
   - type: Metabolizer
     stages: [ Respiration ]
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      Lung:
-        maxVol: 100.0
-        canReact: false
+    - SolutionLungGas
   - type: Sprite
     layers:
     - state: lung-l
@@ -347,7 +410,20 @@
     heldPrefix: lungs
 
 - type: entity
-  parent: OrganBase
+  parent: Solution
+  id: SolutionLungGas # TODO: Metabolize directly from gasses :(
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    id: Lung
+    solution:
+      maxVol: 100.0
+      canReact: false
+
+- type: entity
+  parent:
+  - OrganBase
+  - OrganBaseChildInternal
   id: OrganBaseHeart
   name: heart
   abstract: true
@@ -363,7 +439,9 @@
     stages: [ Bloodstream ]
 
 - type: entity
-  parent: OrganBase
+  parent:
+  - OrganBase
+  - OrganBaseChildInternal
   id: OrganBaseStomach
   name: stomach
   abstract: true
@@ -372,10 +450,9 @@
   - type: Organ
     category: Stomach
   - type: Stomach
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      stomach:
-        maxVol: 50
+    - SolutionStomach
   - type: Metabolizer
     maxReagents: 3
     stages: [ Digestion ]
@@ -386,7 +463,19 @@
     heldPrefix: stomach
 
 - type: entity
-  parent: OrganBase
+  parent: Solution
+  id: SolutionStomach
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    id: stomach
+    solution:
+      maxVol: 150 # 1.25 liters which is average for a human
+
+- type: entity
+  parent:
+  - OrganBase
+  - OrganBaseChildInternal
   id: OrganBaseLiver
   name: liver
   abstract: true
@@ -404,7 +493,9 @@
     stages: [ Metabolites ]
 
 - type: entity
-  parent: OrganBase
+  parent:
+  - OrganBase
+  - OrganBaseChildInternal
   id: OrganBaseKidneys
   name: kidneys
   abstract: true
@@ -453,3 +544,26 @@
     sexStateOverrides:
       Male: torso_m
       Female: torso_f
+
+- type: entity
+  abstract: true
+  id: OrganBaseParent
+  components:
+  - type: ParentOrgan
+  - type: DetachableOrgan
+    detachedBody: DetachedBody
+
+- type: entity
+  abstract: true
+  id: OrganBaseChildExternal
+  components:
+  - type: ChildOrgan
+  - type: DetachableOrgan
+    detachedBody: DetachedBody
+
+- type: entity
+  abstract: true
+  id: OrganBaseChildInternal
+  components:
+  - type: ChildOrgan
+  - type: InternalChildOrgan

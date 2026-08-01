@@ -38,7 +38,7 @@ public sealed partial class AccessReaderComponent : Component
     /// An unmodified copy of the original list of the access groups that grant access to this reader.
     /// </summary>
     /// <remarks>
-    /// If null, the access lists of this entity have not been modified yet.
+    /// If null, entity isn't intialized yet.
     /// </remarks>
     [DataField]
     public List<HashSet<ProtoId<AccessLevelPrototype>>>? AccessListsOriginal = null;

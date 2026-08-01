@@ -126,7 +126,7 @@
     spread: 45
 
 - type: entity
-  parent: BaseBulletPractice
+  parent: [SolutionAmmo, SolutionToolVeryTiny, BaseBulletPractice]
   id: PelletShotgunTranquilizer
   categories: [ HideSpawnMenu ]
   name: pellet (.50 tranquilizer)
@@ -135,12 +135,8 @@
     damage:
       types:
         Blunt: 1
-  - type: SolutionContainerManager
-    solutions:
-      ammo:
-        maxVol: 15
   - type: SolutionInjectOnProjectileHit
-    transferAmount: 15
+    transferAmount: 7.5
     solution: ammo
 
 - type: entity
