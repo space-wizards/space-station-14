@@ -5483,3 +5483,10 @@ Entries:
       новичков.
   - type: Fix
     message: Ошибки локализации.
+- id: 535
+  author: CyberBobeks
+  time: '2026-08-01T13:18:18.514663+00:00'
+  pr: 2060
+  changes:
+  - type: Add
+    message: Дополнительная оптимизация EnititySystems.
