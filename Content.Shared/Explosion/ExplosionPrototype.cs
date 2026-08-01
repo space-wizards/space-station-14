@@ -91,20 +91,34 @@ public sealed partial class ExplosionPrototype : IPrototype
     [DataField]
     public float MaxCombineDistance = 1f;
 
+    /// <summary>
+    /// Normal sound of the explosion.
+    /// </summary>
     [DataField("sound")]
     public SoundSpecifier Sound = new SoundCollectionSpecifier("Explosion");
 
+/// <summary>
+/// Sound if the explosion is small.
+/// <seealso cref="SmallSoundIterationThreshold"/>
+/// </summary>
     [DataField("smallSound")]
     public SoundSpecifier SmallSound = new SoundCollectionSpecifier("ExplosionSmall");
 
-    [DataField("soundFar")]
-    [AllowStereo]
-    public SoundSpecifier SoundFar = new SoundCollectionSpecifier("ExplosionFar", AudioParams.Default.WithVolume(2f));
+/// <summary>
+/// Secondary sound that will be projected farther than normal sound.
+/// </summary>
+    [DataField("soundFar"), AllowStereo]
+    public SoundSpecifier SoundFar = new SoundCollectionSpecifier("ExplosionFar", AudioParams.Default.AddVolume(2f));
 
-    [DataField("smallSoundFar")]
-    [AllowStereo]
-    public SoundSpecifier SmallSoundFar = new SoundCollectionSpecifier("ExplosionSmallFar", AudioParams.Default.WithVolume(2f));
+    /// <summary>
+    /// Secondary sound that will be projected farther than normal sound for a small explosion.
+    /// </summary>
+    [DataField("smallSoundFar"), AllowStereo]
+    public SoundSpecifier SmallSoundFar = new SoundCollectionSpecifier("ExplosionSmallFar", AudioParams.Default.AddVolume(2f));
 
+    /// <summary>
+    /// The texture of the explosion.
+    /// </summary>
     [DataField("texturePath")]
     public ResPath TexturePath = new("/Textures/Effects/fire.rsi");
 
@@ -114,8 +128,11 @@ public sealed partial class ExplosionPrototype : IPrototype
     [DataField("intensityPerState")]
     public float IntensityPerState = 12;
 
-    // Theres probably a better way to do this. Currently Atmos just hard codes a constant int, so I have no one to
-    // steal code from.
+    /// <summary>
+    /// Number of states in the rsi of ResPath. To quote the original author:
+    ///  Theres probably a better way to do this. Currently Atmos just hard codes a constant int, so I have no one to
+    /// steal code from.
+    /// </summary>
     [DataField("fireStates")]
     public int FireStates = 3;
 
