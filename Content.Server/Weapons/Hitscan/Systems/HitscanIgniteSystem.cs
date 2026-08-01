@@ -11,14 +11,8 @@ public sealed partial class HitscanIgniteSystem : EntitySystem
     [Dependency] private IRobustRandom _robustRandom = default!;
     [Dependency] private FlammableSystem _flammable = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<HitscanIgniteComponent, HitscanRaycastFiredEvent>(OnHitscanHit);
-    }
-
     //The hitscan has hit the target, rolls a chance to ignite and ignite if it succeeds.
+    [SubscribeLocalEvent]
     private void OnHitscanHit(Entity<HitscanIgniteComponent> ent, ref HitscanRaycastFiredEvent args)
     {
         //If the roll succeeds, the target is set on fire.
