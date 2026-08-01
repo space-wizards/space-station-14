@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Client.Light;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.ResourceManagement;
@@ -30,6 +31,7 @@ public sealed partial class XRayVisionOverlay : Overlay
     private readonly ShaderInstance _tileShader;
 
     private const int TileSizePixels = EyeManager.PixelsPerMeter;
+    public const int ContentZIndex = BeforeLightTargetOverlay.ContentZIndex + 1;
 
     private List<Entity<MapGridComponent>> _grids = [];
 
@@ -43,6 +45,7 @@ public sealed partial class XRayVisionOverlay : Overlay
     public XRayVisionOverlay()
     {
         IoCManager.InjectDependencies(this);
+        ZIndex = ContentZIndex;
         _tileShader = _prototypeManager.Index(Shader).InstanceUnique();
         _transform = _entManager.System<SharedTransformSystem>();
         _mapSys = _entManager.System<SharedMapSystem>();
