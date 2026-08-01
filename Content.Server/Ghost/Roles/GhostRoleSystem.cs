@@ -1,26 +1,35 @@
-using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.EUI;
 using Content.Server.GameTicking.Events;
 using Content.Server.Ghost.Roles.Components;
-using Content.Shared.Ghost.Roles.Raffles;
 using Content.Server.Ghost.Roles.UI;
+using Content.Server.Popups;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Follower;
 using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
+using Content.Shared.Ghost.Components;
 using Content.Shared.Ghost.Roles;
+using Content.Shared.Ghost.Roles.Components;
+using Content.Shared.Ghost.Roles.Raffles;
+using Content.Shared.Ghost.Systems;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Players;
 using Content.Shared.Roles;
+using Content.Shared.Roles.Components;
+using Content.Shared.Teleportation.Components;
+using Content.Shared.Teleportation.Systems;
+using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
@@ -29,13 +38,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Content.Server.Popups;
-using Content.Shared.Verbs;
-using Robust.Shared.Collections;
-using Content.Shared.Ghost.Roles.Components;
-using Content.Shared.Roles.Components;
-using Content.Shared.Ghost.Systems;
-using Content.Shared.Ghost.Components;
+using System.Linq;
 
 namespace Content.Server.Ghost.Roles;
 
@@ -54,6 +57,7 @@ public sealed partial class GhostRoleSystem : EntitySystem
     [Dependency] private SharedRoleSystem _roleSystem = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private PopupSystem _popupSystem = default!;
+    [Dependency] private AlertTeleportSystem _alertTeleport = default!;
 
     private uint _nextRoleIdentifier;
     private bool _needsUpdateGhostRoleCount = true;
@@ -316,6 +320,9 @@ public sealed partial class GhostRoleSystem : EntitySystem
     {
         if (_ghostRoles.ContainsValue(role))
             return;
+
+        if (role.Comp.MakeGhostAlert)
+            _alertTeleport.MakeTeleportAlert<GhostAlertsComponent>(role, role.Comp.GhostAlert, role.Comp.GhostAlertCooldown, role.Comp.GhostAlertSound);
 
         _ghostRoles[role.Comp.Identifier = GetNextRoleIdentifier()] = role;
         UpdateAllEui();

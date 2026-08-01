@@ -92,3 +92,8 @@
   license: "CC-BY-4.0"
   copyright: "Taken from freesound, edited by ketufaispikinut(GitHub)"
   source: "https://freesound.org/people/thecheeseman/sounds/51360/"
+
+- files: ["ghost_alert.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from TG station"
+  source: "https://github.com/tgstation/tgstation/commits/197496bca0ee32b9883b09df09aca6a970ff46a7/sound/misc/prompt1.ogg"

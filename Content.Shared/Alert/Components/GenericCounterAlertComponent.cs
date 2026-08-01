@@ -29,6 +29,12 @@ public sealed partial class GenericCounterAlertComponent : Component
     public bool HideLeadingZeroes = true;
 
     /// <summary>
+    /// Whether 1 and 0 should be hidden
+    /// </summary>
+    [DataField]
+    public bool HideZeroAndSingleValues = false;
+
+    /// <summary>
     /// The size of the alert sprite.
     /// Used to calculate offsets.
     /// </summary>
