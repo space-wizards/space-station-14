@@ -41,7 +41,7 @@ public abstract partial class SharedItemSystem : EntitySystem
 
     public void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
     {
-        if (args.ByType.ContainsKey(typeof(ItemSizePrototype))
+        if (args.WasModified<ItemSizePrototype>()))
             || (args.Removed?.ContainsKey(typeof(ItemSizePrototype)) ?? false))
         {
             UpdatePrototypeCache();
