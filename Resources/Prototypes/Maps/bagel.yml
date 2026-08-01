@@ -2,8 +2,8 @@
   id: Bagel
   mapName: 'Bagel Station'
   mapPath: /Maps/bagel.yml
-  minPlayers: 35
-  maxPlayers: 80
+  minPlayers: 45 #could be 35 if roundstart bulk jobs were lowered more
+  maxPlayers: 65
   stations:
     Bagel:
       stationProto: StandardNanotrasenStation
@@ -16,7 +16,7 @@
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_lox.yml
         - type: StationJobs
-          availableJobs: # 60 jobs total w/o latejoins & interns, 77 jobs total w/ latejoins & interns
+          availableJobs: #non roundstart jobs exist so minplayers can be pushed down to 45. if you want to remove these raise the minimum to 53.
             #command (7)
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
@@ -25,41 +25,41 @@
             ChiefEngineer: [ 1, 1 ]
             ResearchDirector: [ 1, 1 ]
             Quartermaster: [ 1, 1 ]
-            #service (13 - 14)
-            Bartender: [ 1, 2 ]
+            #service (8-11)
+            Bartender: [ 1, 1 ]
             Botanist: [ 2, 2 ]
-            Chef: [ 2, 2 ]
+            Chef: [ 1, 1 ]
             Janitor: [ 2, 2 ]
             Chaplain: [ 1, 1 ]
-            Librarian: [ 1, 1 ]
-            ServiceWorker: [ 2, 2 ]
-            Reporter: [ 2, 2 ]
-            #engineering (7)
-            AtmosphericTechnician: [ 3, 3 ]
+            Librarian: [ 0, 1 ]
+            ServiceWorker: [ 1, 2 ]
+            Reporter: [ 1, 2 ]
+            #engineering (6-8)
+            AtmosphericTechnician: [ 2, 2 ]
             StationEngineer: [ 4, 4 ]
-            TechnicalAssistant: [ 4, 4 ] #intern, not counted
-            #medical (6)
+            TechnicalAssistant: [ 2, 2 ]
+            #medical (8-8)
             Chemist: [ 2, 2 ]
             MedicalDoctor: [ 3, 3 ]
             Paramedic: [ 1, 1 ]
-            MedicalIntern: [ 4, 4 ] #intern, not counted
-            #science (5)
-            Scientist: [ 5, 5 ]
-            ResearchAssistant: [ 4, 4 ] #intern, not counted
-            #security (10)
+            MedicalIntern: [ 2, 2 ]
+            #science (6-6)
+            Scientist: [ 4, 4 ]
+            ResearchAssistant: [ 2, 2 ]
+            #security (9-10)
             Warden: [ 1, 1 ]
-            SecurityOfficer: [ 6, 6 ]
+            SecurityOfficer: [ 4, 5 ]
             Detective: [ 1, 1 ]
-            SecurityCadet: [ 4, 4 ] #intern, not counted
-            Lawyer: [ 2, 2 ]
+            SecurityCadet: [ 2, 2 ]
+            Lawyer: [ 1, 1 ]
             #supply (6)
             SalvageSpecialist: [ 3, 3 ]
             CargoTechnician: [ 3, 3 ]
-            #civilian (3+)
+            #civilian (2-3 + overflow)
             Passenger: [ -1, -1 ] #infinite, not counted
             Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]
-            Musician: [ 1, 1 ]
+            Musician: [ 0, 1 ]
             #silicon (3)
             StationAi: [ 1, 1 ]
             Borg: [ 2, 2 ]

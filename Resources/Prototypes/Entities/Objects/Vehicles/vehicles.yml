@@ -98,6 +98,8 @@
     noMovementLayers:
       movement:
         state: vehicle
+  - type: Vehicle
+  - type: VehicleHandBlocker
   - type: GenericKeyedVehicle
     containerId: key_slot
     keyWhitelist:
