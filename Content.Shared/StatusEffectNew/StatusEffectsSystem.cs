@@ -1,10 +1,11 @@
-using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Rejuvenate;
 using Content.Shared.StatusEffectNew.Components;
+using Content.Shared.Toolshed.TypeParsers;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.StatusEffectNew;
 
@@ -14,15 +15,15 @@ namespace Content.Shared.StatusEffectNew;
 /// </summary>
 public sealed partial class StatusEffectsSystem : EntitySystem
 {
-    [Dependency] private IComponentFactory _factory = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
-    [Dependency] private IPrototypeManager _proto = default!;
 
     [Dependency] private EntityQuery<StatusEffectContainerComponent> _containerQuery = default!;
     [Dependency] private EntityQuery<StatusEffectComponent> _effectQuery = default!;
 
+    // TODO: https://github.com/space-wizards/space-station-14/issues/45060
+    [Access(typeof(StatusEffectCompletionParser), Other = AccessPermissions.None)]
     public readonly HashSet<string> StatusEffectPrototypes = [];
 
     public override void Initialize()
@@ -77,9 +78,9 @@ public sealed partial class StatusEffectsSystem : EntitySystem
     {
         StatusEffectPrototypes.Clear();
 
-        foreach (var ent in _proto.EnumeratePrototypes<EntityPrototype>())
+        foreach (var ent in ProtoMan.EnumeratePrototypes<EntityPrototype>())
         {
-            if (ent.TryGetComponent<StatusEffectComponent>(out _, _factory))
+            if (ent.HasComp<StatusEffectComponent>(Factory))
                 StatusEffectPrototypes.Add(ent.ID);
         }
     }
@@ -165,10 +166,10 @@ public sealed partial class StatusEffectsSystem : EntitySystem
 
     public bool CanAddStatusEffect(EntityUid uid, EntProtoId effectProto)
     {
-        if (!_proto.Resolve(effectProto, out var effectProtoData))
+        if (!ProtoMan.Resolve(effectProto, out var effectProtoData))
             return false;
 
-        if (!effectProtoData.TryGetComponent<StatusEffectComponent>(out var effectProtoComp, Factory))
+        if (!effectProtoData.TryComp<StatusEffectComponent>(out var effectProtoComp, Factory))
             return false;
 
         if (!_whitelist.CheckBoth(uid, effectProtoComp.Blacklist, effectProtoComp.Whitelist))

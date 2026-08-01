@@ -11,9 +11,10 @@
     raiseOnUser: true
     sound: !type:SoundPathSpecifier
       path: /Audio/Magic/fireball.ogg
-    icon:
-      sprite: Objects/Magic/magicactions.rsi
-      state: fireball
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: fireball
   - type: TargetAction
     range: 60
     checkCanAccess: false

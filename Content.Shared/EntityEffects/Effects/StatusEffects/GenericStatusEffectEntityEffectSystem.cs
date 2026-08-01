@@ -40,12 +40,21 @@ public sealed partial class GenericStatusEffectEntityEffectSystem : EntityEffect
 /// <inheritdoc cref="EntityEffect"/>
 public sealed partial class GenericStatusEffect : EntityEffectBase<GenericStatusEffect>
 {
+    /// <summary>
+    /// Identifier key for the status effect.
+    /// </summary>
     [DataField(required: true)]
     public string Key = default!;
 
+    /// <summary>
+    /// Name of the component reflecting this status effect.
+    /// </summary>
     [DataField]
     public string Component = String.Empty;
 
+    /// <summary>
+    /// Duraction of the effect.
+    /// </summary>
     [DataField]
     public TimeSpan Time = TimeSpan.FromSeconds(2f);
 

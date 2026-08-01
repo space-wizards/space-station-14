@@ -1,7 +1,6 @@
 using Content.Shared.GameTicking.Prototypes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Utility;
 using System.Linq;
 
 namespace Content.Server.GameTicking;
@@ -18,7 +17,7 @@ public sealed partial class GameTicker
 
     private void InitializeLobbyBackground()
     {
-        var allprotos = _prototypeManager.EnumeratePrototypes<LobbyBackgroundPrototype>().ToList();
+        var allprotos = ProtoMan.EnumeratePrototypes<LobbyBackgroundPrototype>().ToList();
         _lobbyBackgrounds ??= new List<ProtoId<LobbyBackgroundPrototype>>();
 
         //create protoids from them

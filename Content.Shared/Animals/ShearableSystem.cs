@@ -22,7 +22,6 @@ namespace Content.Shared.Animals;
 public sealed partial class SharedShearableSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
@@ -136,11 +135,11 @@ public sealed partial class SharedShearableSystem : EntitySystem
             // Failed, if the entity has no solution then show a popup.
             if (shearingSolutionToRemove <= 0)
             {
-                var shearedProduct = _proto.Index(ent.Comp.ShearedProductId);
+                var shearedProduct = ProtoMan.Index(ent.Comp.ShearedProductId);
                 var feedbackPopupString = Loc.GetString("shearable-system-no-product",
                     ("target", Identity.Entity(ent.Owner, EntityManager)),
                     ("product", shearedProduct.Name));
-                _popup.PopupClient(feedbackPopupString, ent.Owner, userUid);
+                _popup.PopupEntity(feedbackPopupString, ent.Owner, userUid);
             }
 
             // Fail
@@ -181,7 +180,7 @@ public sealed partial class SharedShearableSystem : EntitySystem
         }
 
         // Lookup some variables we need.
-        var shearedProduct = _proto.Index(ent.Comp.ShearedProductId);
+        var shearedProduct = ProtoMan.Index(ent.Comp.ShearedProductId);
 
         // Mark as handled so we don't duplicate.
         args.Handled = true;
@@ -192,7 +191,7 @@ public sealed partial class SharedShearableSystem : EntitySystem
             var feedbackPopupString = Loc.GetString("shearable-system-no-product",
                 ("target", Identity.Entity(ent.Owner, EntityManager)),
                 ("product", shearedProduct.Name));
-            _popup.PopupClient(feedbackPopupString, ent.Owner, args.Args.User);
+            _popup.PopupEntity(feedbackPopupString, ent.Owner, args.Args.User);
             return;
         }
 
@@ -216,7 +215,7 @@ public sealed partial class SharedShearableSystem : EntitySystem
         }
 
         // Success message.
-        _popup.PopupClient(Loc.GetString("shearable-system-success", ("target", Identity.Entity(ent.Owner, EntityManager)), ("product", shearedProduct.Name)), ent.Owner, args.Args.User, PopupType.Medium);
+        _popup.PopupEntity(Loc.GetString("shearable-system-success", ("target", Identity.Entity(ent.Owner, EntityManager)), ("product", shearedProduct.Name)), ent.Owner, args.Args.User, PopupType.Medium);
     }
 
     /// <summary>
@@ -276,7 +275,7 @@ public sealed partial class SharedShearableSystem : EntitySystem
         {
             // Default to empty string, if we just can't resolve the tool quality for whatever reason localisation has a blank variable.
             var toolQuality = string.Empty;
-            var toolQualityProto = _proto.Index(ent.Comp.ToolQuality);
+            var toolQualityProto = ProtoMan.Index(ent.Comp.ToolQuality);
             // If a ToolQuality has been specified set its name to toolQuality so it appears in localisation.
             if (toolQualityProto is not null)
             {
