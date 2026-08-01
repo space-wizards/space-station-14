@@ -1,8 +1,10 @@
 using Content.Shared.Actions;
 using Content.Shared.Popups;
+using Content.Shared.Toolshed.TypeParsers.XenoArtifact;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -20,9 +22,16 @@ public abstract partial class SharedXenoArtifactSystem : EntitySystem
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
 
+    // TODO: https://github.com/space-wizards/space-station-14/issues/45060
+    /// <summary> Cached EntProtoIds of all XenoArtifactEffect prototypes. Used for text hints. </summary>
+    [Access(typeof(XenoEffectParser), Other = AccessPermissions.None)]
+    public readonly HashSet<string> EffectPrototypeIds = [];
+
     /// <inheritdoc/>
     public override void Initialize()
     {
+        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
+
         SubscribeLocalEvent<XenoArtifactComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<XenoArtifactComponent, ArtifactSelfActivateEvent>(OnSelfActivate);
 
@@ -30,6 +39,28 @@ public abstract partial class SharedXenoArtifactSystem : EntitySystem
         InitializeUnlock();
         InitializeXAT();
         InitializeXAE();
+
+        ReloadEffectCache();
+    }
+
+    private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
+    {
+        if (!args.WasModified<EntityPrototype>())
+            return;
+
+        ReloadEffectCache();
+    }
+
+    private void ReloadEffectCache()
+    {
+        EffectPrototypeIds.Clear();
+
+        foreach (var entityPrototype in ProtoMan.EnumeratePrototypes<EntityPrototype>())
+        {
+            // all effect prototypes are marked as nodes, as nodes are born from those prototypes
+            if (entityPrototype.HasComp<XenoArtifactNodeComponent>(Factory) && !entityPrototype.Abstract)
+                EffectPrototypeIds.Add(entityPrototype.ID);
+        }
     }
 
     /// <inheritdoc />
