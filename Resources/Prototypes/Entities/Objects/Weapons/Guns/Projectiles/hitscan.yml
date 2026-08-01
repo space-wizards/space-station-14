@@ -93,7 +93,7 @@
 - type: entity
   parent: RedMediumLaser
   id: XenoborgFireLaser
-  name: xenoborg laser ray
+  name: xenoborg fire laser ray
   components:
   - type: HitscanBasicDamage
     damage:
