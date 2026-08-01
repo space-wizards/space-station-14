@@ -3,7 +3,8 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Light.Components;
 
 /// <summary>
-/// Gives a point light random radius, energy and color when added to an entity with a <see cref="SharedPointLightComponent"/>
+/// Gives a point light random radius, energy and color when added to an entity with a <see cref="SharedPointLightComponent"/>.
+/// Requires PointLightComponent to work properly.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed partial class RandomPointLightComponent : Component
