@@ -10,7 +10,6 @@ public sealed partial class HolosignSystem : EntitySystem
 {
     [Dependency] private INetManager _net = default!;
     [Dependency] private PowerCellSystem _powerCell = default!;
-    [Dependency] private SharedTransformSystem _transform = default!;
 
     [SubscribeLocalEvent]
     private void OnExamine(Entity<HolosignProjectorComponent> ent, ref ExaminedEvent args)
