@@ -154,10 +154,19 @@ namespace Content.Server.Cargo.Systems
             }
 
             var station = _station.GetOwningStation(uid);
+            // No station entity
+            if (station is null)
+            {
+                _popup.PopupCursor(Loc.GetString("cargo-console-station-not-found"), args.Actor);
+                PlayDenySound(uid, component);
+                return;
+            }
+
+            var stationGrid = _station.GetLargestGrid(station.Value);
 
             // No station to deduct from.
-            if (station == null ||
-                Transform(station.Value).MapID != Transform(uid).MapID ||
+            if (stationGrid == null ||
+                Transform(stationGrid.Value).MapID != Transform(uid).MapID ||
                 !TryComp(station, out StationBankAccountComponent? bank) ||
                 !TryComp(station, out StationDataComponent? stationData) ||
                 !TryGetOrderDatabase(station, out var orderDatabase))
