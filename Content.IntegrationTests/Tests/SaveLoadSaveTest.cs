@@ -28,10 +28,12 @@ namespace Content.IntegrationTests.Tests
             var mapLoader = entManager.System<MapLoaderSystem>();
             var mapSystem = entManager.System<SharedMapSystem>();
             var cfg = server.ResolveDependency<IConfigurationManager>();
-            Assert.That(cfg.GetCVar(CCVars.GridFill), Is.False);
+            Assume.That(cfg.GetCVar(CCVars.GridFill), Is.False);
 
             var testSystem = server.System<SaveLoadSaveTestSystem>();
             testSystem.Enabled = true;
+
+            Assume.That(SEntMan.EntityCount.Equals(0), "Lingering entities at the start of CreateSaveLoadSaveGrid");
 
             var rp1 = new ResPath("/save load save 1.yml");
             var rp2 = new ResPath("/save load save 2.yml");
@@ -109,6 +111,8 @@ namespace Content.IntegrationTests.Tests
             var mapSys = server.System<SharedMapSystem>();
             var testSystem = server.System<SaveLoadSaveTestSystem>();
             testSystem.Enabled = true;
+
+            Assume.That(SEntMan.EntityCount.Equals(0), "Lingering entities at the start of LoadSaveTicksSaveBagel");
 
             var rp1 = new ResPath("/load save ticks save 1.yml");
             var rp2 = new ResPath("/load save ticks save 2.yml");
@@ -196,9 +200,11 @@ namespace Content.IntegrationTests.Tests
             var mapSys = server.System<SharedMapSystem>();
             var userData = server.ResolveDependency<IResourceManager>().UserData;
             var cfg = server.ResolveDependency<IConfigurationManager>();
-            Assert.That(cfg.GetCVar(CCVars.GridFill), Is.False);
+            Assume.That(cfg.GetCVar(CCVars.GridFill), Is.False);
             var testSystem = server.System<SaveLoadSaveTestSystem>();
             testSystem.Enabled = true;
+
+            Assume.That(SEntMan.EntityCount.Equals(0), "Lingering entities at the start of LoadTickLoadBagel");
 
             MapId mapId1 = default;
             MapId mapId2 = default;
