@@ -1,60 +1,93 @@
+using System.Linq;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.Humanoid.Markings
+namespace Content.Shared.Humanoid.Markings;
+
+/// <summary>
+///     Definition of a marking, a cosmetic sprite change on a humanoid character.
+///     These are selectable in the character editor.
+/// </summary>
+[Prototype]
+public sealed partial class MarkingPrototype : IPrototype
 {
-    [Prototype]
-    public sealed partial class MarkingPrototype : IPrototype
+    [IdDataField]
+    public string ID { get; private set; } = "uwu";
+
+    public string Name { get; private set; } = default!;
+
+    /// <summary>
+    ///     The "body part" visual layer that this marking applies to.
+    /// </summary>
+
+    [DataField("bodyPart", required: true)]
+    public HumanoidVisualLayers BodyPart { get; private set; } = default!;
+
+    /// <summary>
+    ///     A list of markings groups that are able to use this marking.
+    /// </summary>
+    [DataField]
+    public List<ProtoId<MarkingsGroupPrototype>>? GroupWhitelist;
+
+    /// <summary>
+    ///     A restriction on which sexes may use this marking.
+    /// </summary>
+    [DataField("sexRestriction")]
+    public Sex? SexRestriction { get; private set; }
+
+    /// <summary>
+    ///     Whether or not this marking's colors can be manually changed by the player.
+    ///     If not, then it will be forced to use a certain color depending on <see cref="Coloring">.
+    /// </summary>
+    [DataField("forcedColoring")]
+    public bool ForcedColoring { get; private set; } = false;
+
+    /// <summary>
+    ///     Parameters for the default colors that a marking's layers will use.
+    /// </summary>
+    [DataField("coloring")]
+    public MarkingColors Coloring { get; private set; } = new();
+
+    /// <summary>
+    /// Do we need to apply any displacement maps to this marking? Set to false if your marking is incompatible
+    /// with a standard human doll, and is used for some special races with unusual shapes
+    /// </summary>
+    [DataField]
+    public bool CanBeDisplaced { get; private set; } = true;
+
+    /// <summary>
+    ///     A list of layers associated with this marking.
+    /// </summary>
+    [DataField("sprites", required: true)]
+    public List<MarkingLayerData> Sprites { get; private set; } = default!;
+
+    /// <summary>
+    /// Chance this marking will be added by appearance randomizer.
+    /// </summary>
+    /// <remarks>
+    /// Default value is 1.
+    /// </remarks>
+    [DataField]
+    public float RandomWeight = 1f;
+
+    /// <summary>
+    ///     Whether or not this marking prototype has any layers with forced coloration.
+    /// </summary>
+    public bool HasForcedColorLayer()
     {
-        [IdDataField]
-        public string ID { get; private set; } = "uwu";
+        return Sprites.Any(layer => layer.ForcedColoring);
+    }
 
-        public string Name { get; private set; } = default!;
+    /// <summary>
+    ///     Gets a number of adjustible colors associated with this marking.
+    /// </summary>
+    public int GetColorCount()
+    {
+        return Sprites.Count;
+    }
 
-        [DataField("bodyPart", required: true)]
-        public HumanoidVisualLayers BodyPart { get; private set; } = default!;
-
-        [DataField]
-        public List<ProtoId<MarkingsGroupPrototype>>? GroupWhitelist;
-
-        [DataField("sexRestriction")]
-        public Sex? SexRestriction { get; private set; }
-
-        [DataField("forcedColoring")]
-        public bool ForcedColoring { get; private set; } = false;
-
-        [DataField("coloring")]
-        public MarkingColors Coloring { get; private set; } = new();
-
-        /// <summary>
-        /// Do we need to apply any displacement maps to this marking? Set to false if your marking is incompatible
-        /// with a standard human doll, and is used for some special races with unusual shapes
-        /// </summary>
-        [DataField]
-        public bool CanBeDisplaced { get; private set; } = true;
-
-        [DataField("sprites", required: true)]
-        public List<SpriteSpecifier> Sprites { get; private set; } = default!;
-
-        /// <summary>
-        ///     Optional dictionary allowing assignment of shaders to sprite layers in a marking.
-        ///     This implementation is very messy but unfortunately Robust doesn't like shaders in SpriteSpecifiers.
-        /// </summary>
-        [DataField]
-        public Dictionary<string, string>? Shaders { get; private set; }
-
-        public Marking AsMarking()
-        {
-            return new Marking(ID, Sprites.Count);
-        }
-
-        /// <summary>
-        /// Chance this marking will be added by appearance randomizer.
-        /// </summary>
-        /// <remarks>
-        /// Default value is 1.
-        /// </remarks>
-        [DataField]
-        public float RandomWeight = 1f;
+    public Marking AsMarking()
+    {
+        return new Marking(ID, GetColorCount());
     }
 }
