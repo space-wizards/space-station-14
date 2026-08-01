@@ -63,8 +63,7 @@ public sealed class HTNSystem : EntitySystem
 
         while (query.MoveNext(out var comp))
         {
-            comp.PlanningToken?.Cancel();
-            comp.PlanningToken = null;
+            CancelPlanning(comp); // DS14
 
             if (comp.Plan != null)
             {
@@ -130,8 +129,7 @@ public sealed class HTNSystem : EntitySystem
     private void OnHTNShutdown(EntityUid uid, HTNComponent component, ComponentShutdown args)
     {
         _npc.OnNPCShutdown(uid, component, args);
-        component.PlanningToken?.Cancel();
-        component.PlanningJob = null;
+        CancelPlanning(component); // DS14
     }
 
     /// <summary>
@@ -150,8 +148,7 @@ public sealed class HTNSystem : EntitySystem
         ent.Comp.Enabled = state;
         ent.Comp.PlanAccumulator = planCooldown;
 
-        ent.Comp.PlanningToken?.Cancel();
-        ent.Comp.PlanningToken = null;
+        CancelPlanning(ent.Comp); // DS14
 
         if (ent.Comp.Plan != null)
         {
@@ -176,6 +173,16 @@ public sealed class HTNSystem : EntitySystem
         component.PlanAccumulator = 0f;
     }
 
+    // DS14-start: centralize cancellation so every sleep/disable path releases the planning job.
+    [PublicAPI]
+    public void CancelPlanning(HTNComponent component)
+    {
+        component.PlanningToken?.Cancel();
+        component.PlanningToken = null;
+        component.PlanningJob = null;
+    }
+    // DS14-end
+
     public void UpdateNPC(ref int count, int maxUpdates, float frameTime)
     {
         _planQueue.Process();
@@ -189,6 +196,8 @@ public sealed class HTNSystem : EntitySystem
             query.MoveNext(out _, out _);
         }
 
+        var visited = count; // DS14: count is a raw query cursor, not the number of executed updates.
+
         // the amount of updates we've processed during this iteration.
         var updates = 0;
         while (query.MoveNext(out var uid, out _, out var comp))
@@ -197,8 +206,11 @@ public sealed class HTNSystem : EntitySystem
             if (updates >= maxUpdates)
             {
                 // Intentional return. We don't want to go to the end logic and reset count.
+                count = visited; // DS14
                 return;
             }
+
+            visited++; // DS14
 
             if (!comp.Enabled)
                 continue;
@@ -208,8 +220,8 @@ public sealed class HTNSystem : EntitySystem
                 if (comp.PlanningJob.Exception != null)
                 {
                     Log.Fatal($"Received exception on planning job for {uid}!");
+                    var exc = comp.PlanningJob.Exception; // DS14: SleepNPC clears the planning job.
                     _npc.SleepNPC(uid);
-                    var exc = comp.PlanningJob.Exception;
                     RemComp<HTNComponent>(uid);
                     throw exc;
                 }
@@ -287,7 +299,6 @@ public sealed class HTNSystem : EntitySystem
             }
 
             Update(comp, frameTime);
-            count++;
             updates++;
         }
 

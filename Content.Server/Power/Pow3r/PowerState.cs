@@ -116,6 +116,7 @@ namespace Content.Server.Power.Pow3r
             private Slot[] _storage;
 
             public int Count { get; private set; }
+            public int Capacity => _storage.Length; // DS14
 
             public ref T this[NodeId id]
             {

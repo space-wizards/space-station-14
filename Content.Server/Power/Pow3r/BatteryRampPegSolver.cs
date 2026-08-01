@@ -256,10 +256,11 @@ namespace Content.Server.Power.Pow3r
                 battery.CurrentReceiving = supplyRatio >= 1f
                     ? battery.DesiredPower
                     : battery.DesiredPower * supplyRatio;
-                battery.SetCurrentStorage(battery.CurrentStorage + frameTime * battery.CurrentReceiving * battery.Efficiency); // DS14
-
-                DebugTools.Assert(battery.CurrentStorage <= battery.Capacity || MathHelper.CloseTo(battery.CurrentStorage, battery.Capacity, 1e-5));
-                battery.SetCurrentStorage(MathF.Min(battery.CurrentStorage, battery.Capacity)); // DS14
+                // DS14-start: clamp before notifying the owner so a boundary crossing is queued only once.
+                var updatedStorage = battery.CurrentStorage + frameTime * battery.CurrentReceiving * battery.Efficiency;
+                DebugTools.Assert(updatedStorage <= battery.Capacity || MathHelper.CloseTo(updatedStorage, battery.Capacity, 1e-5));
+                battery.SetCurrentStorage(Math.Clamp(updatedStorage, 0f, battery.Capacity));
+                // DS14-end
             }
 
             // Target output capacity for supplies
@@ -313,16 +314,18 @@ namespace Content.Server.Power.Pow3r
                 // to the same relative maximum output, the larger tolerance will mean that one will have a larger
                 // available supply. IMO this is undesirable, but I can't think of an easy fix ATM.
 
-                battery.SetCurrentStorage(battery.CurrentStorage - frameTime * battery.CurrentSupply); // DS14
+                // DS14-start: clamp before notifying the owner so a boundary crossing is queued only once.
+                var updatedStorage = battery.CurrentStorage - frameTime * battery.CurrentSupply;
 #if DEBUG
                 // Manual "MathHelper.CloseToPercent" using the subtracted value to define the relative error.
-                if (battery.CurrentStorage < 0)
+                if (updatedStorage < 0)
                 {
                     float epsilon = Math.Max(frameTime * battery.CurrentSupply, 1) * 1e-4f;
-                    DebugTools.Assert(battery.CurrentStorage > -epsilon);
+                    DebugTools.Assert(updatedStorage > -epsilon);
                 }
 #endif
-                battery.SetCurrentStorage(MathF.Max(0, battery.CurrentStorage)); // DS14
+                battery.SetCurrentStorage(Math.Clamp(updatedStorage, 0f, battery.Capacity));
+                // DS14-end
 
                 battery.SupplyRampTarget = battery.MaxEffectiveSupply * relativeTargetBatteryOutput - battery.CurrentReceiving * battery.Efficiency;
 

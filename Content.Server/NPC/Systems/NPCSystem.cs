@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.HTN;
 using Content.Shared.CCVar;
+using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
@@ -66,6 +67,7 @@ namespace Content.Server.NPC.Systems
 
             // DS14-Start: put idle NPCs to sleep when no players are nearby.
             _ghostQuery = GetEntityQuery<GhostComponent>();
+            SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestartCleanup);
             // DS14-End
         }
 
@@ -99,6 +101,11 @@ namespace Content.Server.NPC.Systems
         public void OnNPCShutdown(EntityUid uid, HTNComponent component, ComponentShutdown args)
         {
             SleepNPC(uid, component);
+
+            // DS14-start: proximity state must not retain deleted NPCs.
+            _lastPlayerNearby.Remove(uid);
+            _proximitySleeping.Remove(uid);
+            // DS14-end
         }
 
         /// <summary>
@@ -148,6 +155,8 @@ namespace Content.Server.NPC.Systems
                 return;
             }
 
+            _htn.CancelPlanning(component); // DS14: sleeping NPCs must not keep consuming the planning queue.
+
             // Don't bother with an event
             if (TryComp<HTNComponent>(uid, out var htn))
             {
@@ -183,6 +192,15 @@ namespace Content.Server.NPC.Systems
         }
 
         // DS14-Start: put idle NPCs to sleep when no players are nearby.
+        private void OnRoundRestartCleanup(RoundRestartCleanupEvent ev)
+        {
+            _playerCoordinates.Clear();
+            _lastPlayerNearby.Clear();
+            _proximitySleeping.Clear();
+            _nextProximitySleepScan = TimeSpan.Zero;
+            _count = 0;
+        }
+
         private void UpdateProximitySleep()
         {
             var curTime = _timing.CurTime;

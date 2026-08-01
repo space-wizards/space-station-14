@@ -17,8 +17,12 @@ public sealed class PowerStatCommand : LocalizedEntityCommands
         var stats = _powerNet.GetStatistics();
         shell.WriteLine(Loc.GetString("cmd-powerstat-output",
             ("networks", stats.CountNetworks),
+            ("networkCapacity", stats.CapacityNetworks), // DS14
             ("loads", stats.CountLoads),
+            ("loadCapacity", stats.CapacityLoads), // DS14
             ("supplies", stats.CountSupplies),
-            ("batteries", stats.CountBatteries)));
+            ("supplyCapacity", stats.CapacitySupplies), // DS14
+            ("batteries", stats.CountBatteries),
+            ("batteryCapacity", stats.CapacityBatteries))); // DS14
     }
 }

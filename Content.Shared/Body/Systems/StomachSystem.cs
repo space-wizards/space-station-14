@@ -6,7 +6,6 @@ using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Body.Systems
 {
@@ -55,6 +54,11 @@ namespace Content.Shared.Body.Systems
 
                 stomach.NextUpdate += stomach.AdjustedUpdateInterval;
 
+                // DS14-start
+                if (stomach.ReagentDeltas.Count == 0)
+                    continue;
+                // DS14-end
+
                 // Get our solutions
                 if (!_solutionContainerSystem.ResolveSolution((uid, sol), DefaultSolutionName, ref stomach.Solution, out var stomachSolution))
                     continue;
@@ -64,9 +68,11 @@ namespace Content.Shared.Body.Systems
 
                 var transferSolution = new Solution();
 
-                var queue = new RemQueue<StomachComponent.ReagentDelta>();
-                foreach (var delta in stomach.ReagentDeltas)
+                // DS14-start
+                var retainedCount = 0;
+                for (var i = 0; i < stomach.ReagentDeltas.Count; i++)
                 {
+                    var delta = stomach.ReagentDeltas[i];
                     delta.Increment(stomach.AdjustedUpdateInterval);
                     if (delta.Lifetime > stomach.DigestionDelay)
                     {
@@ -79,14 +85,15 @@ namespace Content.Shared.Body.Systems
                             transferSolution.AddReagent(reagent);
                         }
 
-                        queue.Add(delta);
+                        continue;
                     }
+
+                    stomach.ReagentDeltas[retainedCount++] = delta;
                 }
 
-                foreach (var item in queue)
-                {
-                    stomach.ReagentDeltas.Remove(item);
-                }
+                if (retainedCount < stomach.ReagentDeltas.Count)
+                    stomach.ReagentDeltas.RemoveRange(retainedCount, stomach.ReagentDeltas.Count - retainedCount);
+                // DS14-end
 
                 _solutionContainerSystem.UpdateChemicals(stomach.Solution.Value);
 
