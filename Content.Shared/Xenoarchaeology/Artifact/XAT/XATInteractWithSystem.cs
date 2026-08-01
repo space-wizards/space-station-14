@@ -54,7 +54,7 @@ public sealed partial class XATInteractWithSystem : BaseXATSystem<XATInteractWit
         if (!_whitelistSystem.IsWhitelistPassOrNull(node.Comp1.Whitelist, args.Used)) // must be on the whitelist.
             return;
 
-        _audio.PlayPredicted(node.Comp1.StartTriggerSound, artifact.Owner, artifact.Owner);
+        _audio.PlayPredicted(node.Comp1.StartTriggerSound, artifact.Owner, args.User);
         _doAfter.TryStartDoAfter(
             new DoAfterArgs(EntityManager, args.User, node.Comp1.InteractionTime, new XATInteractWithDoAfterEvent(GetNetEntity(node)),
             artifact.Owner, artifact.Owner, args.Used)
@@ -83,7 +83,7 @@ public sealed partial class XATInteractWithSystem : BaseXATSystem<XATInteractWit
         if (node.Comp1.MaxCount == null || node.Comp1.Count == null) // if maxcount or count somehow are not set, reset them
             SetMaxCount((node.Owner, node.Comp1));
 
-        _audio.PlayPredicted(node.Comp1.SuccessTriggerSound, artifact.Owner, artifact.Owner); // play on the artifact as the interacter may be deleted.
+        _audio.PlayPredicted(node.Comp1.SuccessTriggerSound, artifact.Owner, args.User); // play on the artifact as the interacter may be deleted.
 
         var amount = _stack.GetCount(args.Used.Value); // count how much we're interacting with, gets 1 if not a stack.
 

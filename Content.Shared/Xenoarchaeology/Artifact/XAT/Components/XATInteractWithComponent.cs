@@ -17,27 +17,27 @@ public sealed partial class XATInteractWithComponent : Component
     /// <summary>
     /// Whitelist of allowed interacting entities.
     /// </summary>
-    [DataField(required: true)]
+    [DataField(required: true), AutoNetworkedField]
     public EntityWhitelist Whitelist;
 
     /// <summary>
     /// Whether to destroy the interacting entity afterwards.
     /// EG: feed the artifact a pizza slice, it eats it.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool DestroyAfter = false;
 
     /// <summary>
     /// Additional Sound played on successful trigger.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public SoundSpecifier? SuccessTriggerSound;
 
     /// <summary>
     /// Sound played on beginning interaction.
     /// Keep this or success trigger sound silent if interaction time is zero.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public SoundSpecifier? StartTriggerSound;
 
     /// <summary>
@@ -50,7 +50,7 @@ public sealed partial class XATInteractWithComponent : Component
     /// Number of interactions required to trigger.
     /// Interacting with a stack counts a number of interactions equal to the stack count.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public MinMax InteractionCount = new(1, 1);
 
     /// <summary>
