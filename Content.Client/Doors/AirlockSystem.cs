@@ -121,17 +121,5 @@ public sealed partial class AirlockSystem : SharedAirlockSystem
                 && !boltedVisible
             );
         }
-
-        switch (state)
-        {
-            case DoorState.Open:
-                _sprite.LayerSetRsiState((uid, args.Sprite), DoorVisualLayers.BaseUnlit, comp.ClosingSpriteState);
-                _sprite.LayerSetAnimationTime((uid, args.Sprite), DoorVisualLayers.BaseUnlit, 0);
-                break;
-            case DoorState.Closed:
-                _sprite.LayerSetRsiState((uid, args.Sprite), DoorVisualLayers.BaseUnlit, comp.OpeningSpriteState);
-                _sprite.LayerSetAnimationTime((uid, args.Sprite), DoorVisualLayers.BaseUnlit, 0);
-                break;
-        }
     }
 }
