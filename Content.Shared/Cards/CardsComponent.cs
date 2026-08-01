@@ -25,26 +25,26 @@ public sealed partial class CardsComponent : Component
 
     /// <summary>
     /// Max amount of things that can be in the stack.
-    /// Overrides the max defined on the stack prototype.
+    /// Overrides the max defined on the card stack prototype.
     /// </summary>
     [DataField]
     public int? MaxCountOverride;
 
     /// <summary>
-    /// Sprite layers used in stack visualizer. Sprites first in layer correspond to lower stack states
+    /// Sprite layers used in card visualizer. Sprites first in layer correspond to lower stack states
     /// e.g. <code>_spriteLayers[0]</code> is lower stack level than <code>_spriteLayers[1]</code>.
     /// </summary>
     [DataField]
     public List<string> LayerStates = new();
 
     /// <summary>
-    ///     Default IconLayer stack.
+    ///     layer for layerStates sprite.
     /// </summary>
     [DataField]
-    public string BaseLayer = "";
+    public string BaseLayer = "base";
 
     /// <summary>
-    /// A list of thresholds to check against the number of things in the stack.
+    /// A list of thresholds to check against the number of things in the deck.
     /// Each exceeded threshold will cause the next layer to be displayed.
     /// Should be sorted in ascending order.
     /// </summary>

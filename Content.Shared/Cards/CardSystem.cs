@@ -146,7 +146,6 @@ public abstract partial class SharedCardSystem : EntitySystem
         // If this is effectively just picking up the stack, it just picks up the stack.
         if (cards.Comp.Cards.Count <= amount)
         {
-            // No AnimatePickup passed as this is a normal pickup.
             Hands.PickupOrDrop(user, cards.Owner);
             return;
         }
