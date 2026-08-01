@@ -66,6 +66,7 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
         if (Comp<OrganComponent>(ent).Body is not { } body)
             return;
 
+        RemoveVisual(ent, body);
         ApplyVisual(ent, body);
     }
 
