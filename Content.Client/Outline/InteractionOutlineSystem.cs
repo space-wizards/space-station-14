@@ -164,9 +164,7 @@ public sealed partial class InteractionOutlineSystem : EntitySystem
 
         var inRange = false;
         if (localSession.AttachedEntity != null && !Deleted(entityToClick))
-        {
             inRange = _interactionSystem.InRangeUnobstructed(localSession.AttachedEntity.Value, entityToClick.Value);
-        }
 
         InteractionOutlineComponent? outline;
 
