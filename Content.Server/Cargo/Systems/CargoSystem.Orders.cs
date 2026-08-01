@@ -544,9 +544,7 @@ public sealed partial class CargoSystem
 
         foreach (var order in station.Comp.Orders[bank.PrimaryAccount])
         {
-            if (order.Account != account)
-                continue;
-            if (!order.Approved)
+            if (order.Account != account || !order.Approved)
                 continue;
             amount += order.OrderQuantity - order.NumDispatched;
         }
