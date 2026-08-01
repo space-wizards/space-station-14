@@ -135,7 +135,7 @@
 - type: listing
   id: UniPhoneUplinkCursedVANT
   name: Проклятый ВАНТ
-  description: Щит, поглощающий девяносто процентов оружейного урона.
+  description: Щит, поглощающий восемьдесят процентов оружейного урона.
   icon: { sprite: _DeadSpace/Necromorfs/TheCircle/Weapon/vant/vant.rsi, state: icon }
   productEntity: ShieldCursedVANT
   cost:

@@ -37,21 +37,53 @@ public sealed partial class ResearchSystem
     {
         if (!args.Anchored)
         {
-            foreach (var client in new List<EntityUid>(component.Clients))
-            {
-                UnregisterClient(client, uid, serverComponent: component, dirtyServer: false);
-            }
+            DisconnectClientsAndFindReplacement(uid, component);
+            return;
         }
+
+        ConnectUnregisteredClients(uid, component);
     }
 
     private void OnServerPowerChanged(EntityUid uid, ResearchServerComponent component, ref PowerChangedEvent args)
     {
         if (!args.Powered)
         {
-            foreach (var client in new List<EntityUid>(component.Clients))
+            DisconnectClientsAndFindReplacement(uid, component);
+            return;
+        }
+
+        ConnectUnregisteredClients(uid, component);
+    }
+
+    private void DisconnectClientsAndFindReplacement(EntityUid uid, ResearchServerComponent component)
+    {
+        var clients = new List<EntityUid>(component.Clients);
+
+        foreach (var client in clients)
+        {
+            UnregisterClient(client, uid, serverComponent: component, dirtyServer: false);
+        }
+
+        foreach (var client in clients)
+        {
+            if (TryComp(client, out ResearchClientComponent? clientComponent))
+                TryConnectToAvailableServer((client, clientComponent));
+        }
+    }
+
+    private void ConnectUnregisteredClients(EntityUid server, ResearchServerComponent serverComponent)
+    {
+        var query = EntityQueryEnumerator<ResearchClientComponent>();
+        while (query.MoveNext(out var client, out var clientComponent))
+        {
+            if (clientComponent.Server is not null ||
+                clientComponent.isTaipan != serverComponent.isTaipan ||
+                !GetServers(client).Contains((server, serverComponent)))
             {
-                UnregisterClient(client, uid, serverComponent: component, dirtyServer: false);
+                continue;
             }
+
+            RegisterClient(client, server, clientComponent, serverComponent);
         }
     }
     //DS14-end

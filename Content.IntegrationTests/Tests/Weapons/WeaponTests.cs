@@ -2,6 +2,7 @@
 using Content.Client.Animations;
 using Content.Client.Projectiles;
 using Content.Shared.Damage.Components;
+using Content.Shared.DeadSpace.Player;
 using Content.Shared.Projectiles;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Mobs;
@@ -17,9 +18,12 @@ using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared.Wieldable.Components;
+using Robust.Shared;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Player;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
@@ -186,6 +190,64 @@ public sealed class WeaponTests : InteractionTest
             Assert.That(damage.TotalDamage, Is.EqualTo(before));
         });
     }
+
+    // DS14-start
+    [Test]
+    public async Task WeaponEffectPvsIncludesRemoteViewSubscribersTest()
+    {
+        var origin = new MapCoordinates(new Vector2(1000f, 1000f), MapId);
+        EntityUid remoteView = default;
+        EntityUid projectile = default;
+        NetEntity projectileNet = default;
+        var config = Server.ResolveDependency<IConfigurationManager>();
+        var previousPvs = config.GetCVar(CVars.NetPVS);
+
+        await Server.WaitPost(() => config.SetCVar(CVars.NetPVS, true));
+
+        try
+        {
+            await Server.WaitPost(() =>
+            {
+                remoteView = SEntMan.SpawnEntity(null, origin);
+                var viewSystem = SEntMan.System<SharedViewSubscriberSystem>();
+                viewSystem.AddViewSubscriber(remoteView, ServerSession);
+
+                var attachedOnly = Filter.Empty().AddPlayersByPvs(origin, entManager: SEntMan);
+                Assert.That(attachedOnly.Recipients, Does.Not.Contain(ServerSession));
+
+                attachedOnly.AddPlayersByViewSubscriptions(origin, entityManager: SEntMan);
+                Assert.That(attachedOnly.Recipients, Does.Contain(ServerSession));
+
+                projectile = SEntMan.SpawnEntity(PredictionRegressionProjectile, origin);
+                projectileNet = SEntMan.GetNetEntity(projectile);
+            });
+
+            await RunTicks(10);
+
+            await Client.WaitAssertion(() =>
+            {
+                Assert.That(CEntMan.TryGetEntity(projectileNet, out _), Is.True,
+                    "Physical projectiles should already be replicated through subscribed PVS views.");
+            });
+        }
+        finally
+        {
+            await Server.WaitPost(() =>
+            {
+                if (remoteView.IsValid() && SEntMan.EntityExists(remoteView))
+                    SEntMan.System<SharedViewSubscriberSystem>().RemoveViewSubscriber(remoteView, ServerSession);
+
+                if (projectile.IsValid() && SEntMan.EntityExists(projectile))
+                    SEntMan.DeleteEntity(projectile);
+
+                if (remoteView.IsValid() && SEntMan.EntityExists(remoteView))
+                    SEntMan.DeleteEntity(remoteView);
+
+                config.SetCVar(CVars.NetPVS, previousPvs);
+            });
+        }
+    }
+    // DS14-end
 
     [Test]
     public async Task ProjectileTargetingUsesCanonicalStandingStateTest()

@@ -8,6 +8,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
+using Content.Shared.DeadSpace.Player;
 using Content.Shared.FixedPoint;
 using Content.Shared.Projectiles;
 using Robust.Shared.Physics.Events;
@@ -76,7 +77,12 @@ public sealed class ProjectileSystem : SharedProjectileSystem
         if (component.ProjectileSpent)
             return;
 
-        var effectFilter = Filter.Pvs(target, entityManager: EntityManager);
+        // DS14-start
+        // Filter.Pvs ignores session view subscriptions used by remote eyes.
+        var effectOrigin = _transform.GetMapCoordinates(target);
+        var effectFilter = Filter.Empty().AddPlayersByPvs(effectOrigin, entManager: EntityManager)
+            .AddPlayersByViewSubscriptions(effectOrigin, entityManager: EntityManager);
+        // DS14-end
         if (suppressPredictedShooterEffects &&
             TryComp<PredictedProjectileComponent>(uid, out var predictedProjectile) &&
             TryComp<ActorComponent>(predictedProjectile.Shooter, out var predictedActor))

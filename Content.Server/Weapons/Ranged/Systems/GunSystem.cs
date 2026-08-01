@@ -6,6 +6,7 @@ using Content.Server.DeadSpace.Weapons.Ranged;
 using Content.Shared.Cargo;
 using Content.Shared.Damage;
 using Content.Shared.DeadSpace.CCCCVars;
+using Content.Shared.DeadSpace.Player;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Ranged;
@@ -352,7 +353,12 @@ public sealed partial class GunSystem : SharedGunSystem
 
     protected override void CreateEffect(EntityUid gunUid, MuzzleFlashEvent message, EntityUid? user = null)
     {
-        var filter = Filter.Pvs(gunUid, entityManager: EntityManager);
+        // DS14-start
+        // Filter.Pvs ignores session view subscriptions used by remote eyes.
+        var coordinates = TransformSystem.GetMapCoordinates(gunUid);
+        var filter = Filter.Empty().AddPlayersByPvs(coordinates, entManager: EntityManager)
+            .AddPlayersByViewSubscriptions(coordinates, entityManager: EntityManager);
+        // DS14-end
 
         if (TryComp<ActorComponent>(user, out var actor))
             filter.RemovePlayer(actor.PlayerSession);

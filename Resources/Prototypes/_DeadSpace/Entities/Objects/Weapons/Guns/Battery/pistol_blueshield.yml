@@ -56,11 +56,12 @@
   components:
   - type: Sprite
     sprite: _DeadSpace/Objects/Weapons/Guns/Projectiles/violethit.rsi
+    rotation: 90
     layers:
     - state: beam_violet
       shader: unshaded
   - type: Ammo
-    muzzleFlash: MuzzleFlashEffectVioletLaser
+    muzzleFlash: MuzzleFlashEffectHeavyLaser
   - type: Projectile
     damage:
       types:

@@ -137,6 +137,25 @@
     state: stairs_wood
     drawdepth: FloorTiles
 # DS14-start
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank1:
+            min: 2
+            max: 4
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: Construction
     graph: WoodStairs
     node: stairswood
@@ -144,7 +163,7 @@
 
 - type: entity
   id: StairStageWood
-  parent: Stairs
+  parent: StairWood # DS14
   suffix: Wood, stage
   components:
   - type: Sprite

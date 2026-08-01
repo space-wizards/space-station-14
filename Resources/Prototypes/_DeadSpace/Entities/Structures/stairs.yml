@@ -1,6 +1,6 @@
 - type: entity
   id: StairWoodRed
-  parent: Stairs
+  parent: StairWood
   components:
   - type: Sprite
     sprite: _DeadSpace/Structures/Stairs.rsi
@@ -12,7 +12,7 @@
 
 - type: entity
   id: StairStageWoodRed
-  parent: Stairs
+  parent: StairStageWood
   components:
   - type: Sprite
     sprite: _DeadSpace/Structures/Stairs.rsi
@@ -24,7 +24,7 @@
 
 - type: entity
   id: StairWoodDark
-  parent: Stairs
+  parent: StairWood
   components:
   - type: Sprite
     sprite: _DeadSpace/Structures/Stairs.rsi
@@ -36,7 +36,7 @@
 
 - type: entity
   id: StairStageWoodDark
-  parent: Stairs
+  parent: StairStageWood
   components:
   - type: Sprite
     sprite: _DeadSpace/Structures/Stairs.rsi
@@ -48,7 +48,7 @@
 
 - type: entity
   id: StairWoodBlack
-  parent: Stairs
+  parent: StairWood
   components:
   - type: Sprite
     sprite: _DeadSpace/Structures/Stairs.rsi
@@ -60,7 +60,7 @@
 
 - type: entity
   id: StairStageWoodBlack
-  parent: Stairs
+  parent: StairStageWood
   components:
   - type: Sprite
     sprite: _DeadSpace/Structures/Stairs.rsi
@@ -72,7 +72,7 @@
 
 - type: entity
   id: StairWoodLight
-  parent: Stairs
+  parent: StairWood
   components:
   - type: Sprite
     sprite: _DeadSpace/Structures/Stairs.rsi
@@ -84,7 +84,7 @@
 
 - type: entity
   id: StairStageWoodLight
-  parent: Stairs
+  parent: StairStageWood
   components:
   - type: Sprite
     sprite: _DeadSpace/Structures/Stairs.rsi

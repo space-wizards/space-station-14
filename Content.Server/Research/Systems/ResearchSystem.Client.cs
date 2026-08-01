@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Research.Components;
 using Robust.Shared.Utility;
@@ -62,25 +61,27 @@ public sealed partial class ResearchSystem
 
     private void OnClientMapInit(EntityUid uid, ResearchClientComponent component, MapInitEvent args)
     {
-        // DS14-start
-        var allServers = GetServers(uid).ToList();
-
-        foreach (var server in allServers)
-        {
-            var serverUid = server.Owner;
-            var serverComp = server.Comp;
-
-            if (!Resolve(serverUid, ref serverComp, false))
-                continue;
-
-            if (component.isTaipan != serverComp.isTaipan)
-                continue;
-
-            RegisterClient(uid, serverUid, component, serverComp);
-            break;
-        }
-        // DS14-end
+        TryConnectToAvailableServer((uid, component)); // DS14
     }
+
+    // DS14-start
+    private bool TryConnectToAvailableServer(Entity<ResearchClientComponent> client)
+    {
+        if (client.Comp.Server is not null)
+            return false;
+
+        foreach (var server in GetServers(client))
+        {
+            if (client.Comp.isTaipan != server.Comp.isTaipan)
+                continue;
+
+            RegisterClient(client, server, client, server);
+            return true;
+        }
+
+        return false;
+    }
+    // DS14-end
 
     private void OnClientShutdown(EntityUid uid, ResearchClientComponent component, ComponentShutdown args)
     {
