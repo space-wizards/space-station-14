@@ -50,14 +50,14 @@ public sealed partial class VehicleSystem
 
         if (!_container.TryGetContainer(ent.Owner, ent.Comp.ContainerId, out var container))
         {
-            args = args with { CanRun = false };
+            Log.Error($"Vehicle {ToPrettyString(ent)} has no key container {ent.Comp.ContainerId}!");
+            args.CanRun = false;
             return;
         }
 
         var hasKey = container.ContainedEntities.Any(contained =>
             _entityWhitelist.IsWhitelistPass(ent.Comp.KeyWhitelist, contained));
 
-        if (!hasKey)
-            args = args with { CanRun = false };
+        args.CanRun = hasKey;
     }
 }
