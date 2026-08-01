@@ -5490,3 +5490,16 @@ Entries:
   changes:
   - type: Add
     message: Дополнительная оптимизация EnititySystems.
+- id: 536
+  author: CyberBobeks
+  time: '2026-08-01T13:40:49.449851+00:00'
+  pr: 2061
+  changes:
+  - type: Fix
+    message: Стрельба оружия через стены.
+  - type: Fix
+    message: Дубликация выстрелов из оружия.
+  - type: Fix
+    message: Некорректное попадание пуль.
+  - type: Fix
+    message: Траектория пуль при антиоживлении при помощи оружия.
