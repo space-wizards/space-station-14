@@ -5,7 +5,7 @@
   components:
   - type: Item
     storedRotation: -90
-  - type: PredictedBattery
+  - type: Battery
     pricePerJoule: 0.15
   - type: PowerCell
   - type: Explosive
@@ -14,10 +14,9 @@
     intensitySlope: 1.5
   - type: Sprite
     sprite: Objects/Power/power_cells.rsi
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      battery:
-        maxVol: 5
+    - SolutionRiggable
   - type: InjectableSolution
     solution: battery
   - type: DrawableSolution
@@ -25,14 +24,14 @@
   - type: Extractable
     juiceSolution:
       reagents:
-        - ReagentId: Zinc
-          Quantity: 5
+      - ReagentId: Zinc
+        Quantity: 5
   - type: Tag
     tags:
       - PowerCell
   - type: Riggable
   - type: Appearance
-  - type: PredictedBatteryVisuals
+  - type: BatteryVisuals
   - type: GenericVisualizer
     visuals:
       enum.BatteryVisuals.State:
@@ -40,6 +39,16 @@
           Full: {visible: true, state: o2}
           Neither: {visible: true, state: o1}
           Empty: {visible: false}
+
+- type: entity
+  parent: Solution
+  id: SolutionRiggable
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    id: battery
+    solution:
+      maxVol: 5
 
 - type: entity
   name: potato battery
@@ -50,7 +59,7 @@
   - type: Sprite
     layers:
     - state: potato
-  - type: PredictedBattery
+  - type: Battery
     maxCharge: 70
     startingCharge: 70
   - type: Tag
@@ -74,7 +83,7 @@
     - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
       state: o2
       shader: unshaded
-  - type: PredictedBattery
+  - type: Battery
     maxCharge: 360
     startingCharge: 360
   - type: Tag
@@ -94,7 +103,7 @@
         state: o2
         shader: unshaded
         visible: false
-  - type: PredictedBattery
+  - type: Battery
     maxCharge: 360
     startingCharge: 0
 
@@ -104,9 +113,14 @@
   name: small-capacity nuclear power cell
   description: A self rechargeable power cell, designed for fast recharge rate at the expense of capacity.
   components:
-  - type: PredictedBatterySelfRecharger
+  - type: BatterySelfRecharger
     autoRechargeRate: 36 # 10 seconds to recharge
     autoRechargePauseTime: 30
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Uranium
+        Quantity: 5
 
 - type: entity
   name: medium-capacity power cell
@@ -122,9 +136,14 @@
     - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
       state: o2
       shader: unshaded
-  - type: PredictedBattery
+  - type: Battery
     maxCharge: 720
     startingCharge: 720
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Lithium
+        Quantity: 5
 
 - type: entity
   id: PowerCellMediumPrinted
@@ -139,7 +158,7 @@
         state: o2
         shader: unshaded
         visible: false
-  - type: PredictedBattery
+  - type: Battery
     maxCharge: 720
     startingCharge: 0
 
@@ -157,9 +176,14 @@
     - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
       state: o2
       shader: unshaded
-  - type: PredictedBattery
+  - type: Battery
     maxCharge: 1080
     startingCharge: 1080
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Lithium
+        Quantity: 5
 
 - type: entity
   id: PowerCellHighPrinted
@@ -174,7 +198,7 @@
         state: o2
         shader: unshaded
         visible: false
-  - type: PredictedBattery
+  - type: Battery
     maxCharge: 1080
     startingCharge: 0
 
@@ -192,9 +216,14 @@
     - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
       state: o2
       shader: unshaded
-  - type: PredictedBattery
+  - type: Battery
     maxCharge: 1800
     startingCharge: 1800
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Lithium
+        Quantity: 5
 
 - type: entity
   id: PowerCellHyperPrinted
@@ -209,7 +238,7 @@
         state: o2
         shader: unshaded
         visible: false
-  - type: PredictedBattery
+  - type: Battery
     maxCharge: 1800
     startingCharge: 0
 
@@ -227,11 +256,16 @@
     - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
       state: o2
       shader: unshaded
-  - type: PredictedBattery
+  - type: Battery
     maxCharge: 720
     startingCharge: 720
-  - type: PredictedBatterySelfRecharger
+  - type: BatterySelfRecharger
     autoRechargeRate: 12 # takes 1 minute to charge itself back to full
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Uranium
+        Quantity: 5
 
 - type: entity
   parent: PowerCellMicroreactor
@@ -246,7 +280,7 @@
       state: o2
       shader: unshaded
       visible: false
-  - type: PredictedBattery
+  - type: Battery
     startingCharge: 0
 
 - type: entity
@@ -262,11 +296,16 @@
       - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
         state: o2
         shader: unshaded
-    - type: PredictedBattery
+    - type: Battery
       maxCharge: 1200
       startingCharge: 1200
-    - type: PredictedBatterySelfRecharger
+    - type: BatterySelfRecharger
       autoRechargeRate: 40
+    - type: Extractable
+      juiceSolution:
+        reagents:
+        - ReagentId: Uranium
+          Quantity: 5
 
 # Power cage (big heavy power cell for big devices)
 
@@ -277,16 +316,21 @@
   components:
   - type: Item
     size: Ginormous
+    shape:
+    - 0,0,3,5
   - type: MultiHandedItem
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      battery:
-        maxVol: 15
+    - SolutionRiggableLarge
+  - type: Riggable
+    reagent:
+      ReagentId: Plasma
+      Quantity: 15
   - type: Extractable
     juiceSolution:
       reagents:
-        - ReagentId: Zinc
-          Quantity: 15
+      - ReagentId: Zinc
+        Quantity: 15
   - type: Tag
     tags:
       - PowerCage
@@ -294,6 +338,16 @@
     walkModifier: 0.8
     sprintModifier: 0.8
   - type: HeldSpeedModifier
+
+- type: entity
+  parent: SolutionRiggable
+  id: SolutionRiggableLarge
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    id: battery
+    solution:
+      maxVol: 15
 
 - type: entity
   id: PowerCageSmall
@@ -309,7 +363,7 @@
     - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
       state: o2
       shader: unshaded
-  - type: PredictedBattery
+  - type: Battery
     maxCharge: 1400
     startingCharge: 1400
 
@@ -327,9 +381,14 @@
     - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
       state: o2
       shader: unshaded
-  - type: PredictedBattery
+  - type: Battery
     maxCharge: 2700
     startingCharge: 2700
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Lithium
+        Quantity: 10
 
 - type: entity
   id: PowerCageHigh
@@ -345,9 +404,14 @@
     - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
       state: o2
       shader: unshaded
-  - type: PredictedBattery
+  - type: Battery
     maxCharge: 6200
     startingCharge: 6200
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Lithium
+        Quantity: 15
 
 - type: entity
   id: PowerCageSmallEmpty
@@ -363,7 +427,7 @@
       state: o2
       shader: unshaded
       visible: false
-  - type: PredictedBattery
+  - type: Battery
     maxCharge: 1400
     startingCharge: 0
 
@@ -381,7 +445,7 @@
       state: o2
       shader: unshaded
       visible: false
-  - type: PredictedBattery
+  - type: Battery
     startingCharge: 0
 
 - type: entity
@@ -398,5 +462,5 @@
       state: o2
       shader: unshaded
       visible: false
-  - type: PredictedBattery
+  - type: Battery
     startingCharge: 0

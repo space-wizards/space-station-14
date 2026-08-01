@@ -13,26 +13,24 @@ using Content.Shared.Tag;
 using Robust.Shared.Audio.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.Player;
 using Robust.Shared.Timing;
-using Content.Server.Chemistry.Containers.EntitySystems;
 using Robust.Shared.Prototypes;
 // todo: remove this stinky LINQy
 
 namespace Content.Server.Forensics
 {
-    public sealed class ForensicScannerSystem : EntitySystem
+    public sealed partial class ForensicScannerSystem : EntitySystem
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly PaperSystem _paperSystem = default!;
-        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-        [Dependency] private readonly MetaDataSystem _metaData = default!;
-        [Dependency] private readonly ForensicsSystem _forensicsSystem = default!;
-        [Dependency] private readonly TagSystem _tag = default!;
+        [Dependency] private IGameTiming _gameTiming = default!;
+        [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
+        [Dependency] private UserInterfaceSystem _uiSystem = default!;
+        [Dependency] private PopupSystem _popupSystem = default!;
+        [Dependency] private PaperSystem _paperSystem = default!;
+        [Dependency] private SharedHandsSystem _handsSystem = default!;
+        [Dependency] private SharedAudioSystem _audioSystem = default!;
+        [Dependency] private MetaDataSystem _metaData = default!;
+        [Dependency] private ForensicsSystem _forensicsSystem = default!;
+        [Dependency] private TagSystem _tag = default!;
 
         private static readonly ProtoId<TagPrototype> DNASolutionScannableTag = "DNASolutionScannable";
 
@@ -243,12 +241,9 @@ namespace Content.Server.Forensics
             }
 
             _paperSystem.SetContent((printed, paperComp), text.ToString());
-            _audioSystem.PlayPvs(component.SoundPrint, uid,
-                AudioParams.Default
-                .WithVariation(0.25f)
-                .WithVolume(3f)
-                .WithRolloffFactor(2.8f)
-                .WithMaxDistance(4.5f));
+            var audioParams = component.SoundPrint?.Params ?? AudioParams.Default;
+            audioParams = audioParams.WithVariation(0.25f).AddVolume(3f).WithRolloffFactor(2.8f).WithMaxDistance(4.5f);
+            _audioSystem.PlayPvs(component.SoundPrint, uid, audioParams);
 
             component.PrintReadyAt = _gameTiming.CurTime + component.PrintCooldown;
         }

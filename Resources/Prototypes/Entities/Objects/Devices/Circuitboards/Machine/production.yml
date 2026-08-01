@@ -19,7 +19,7 @@
   - type: MachineBoard
     prototype: AutolatheHyperConvection
     stackRequirements:
-      Manipulator: 3
+      Manipulator: 4
       Glass: 1
     tagRequirements:
       Igniter:
@@ -284,6 +284,21 @@
       Manipulator: 2
       Glass: 1
       Steel: 5
+
+- type: entity
+  id: StationTeleporterMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: teleporter machine board
+  description: A machine printed circuit board for a bluespace teleporter.
+  components:
+  - type: Sprite
+    state: science
+  - type: MachineBoard
+    prototype: StationTeleporter
+    stackRequirements:
+      Manipulator: 3
+      Cable: 5
+      PlasmaGlass: 10
 
 - type: entity
   parent: BaseMachineCircuitboard
@@ -1050,7 +1065,7 @@
 
 - type: entity
   id: SyndicateMicrowaveMachineCircuitboard
-  parent: BaseMachineCircuitboard
+  parent: [ BaseMachineCircuitboard, BaseSyndicateContraband ]
   name: donk co. microwave machine board
   components:
     - type: Sprite
@@ -1289,7 +1304,7 @@
   - type: Sprite
     state: supply
   - type: MachineBoard
-    prototype: GravityGeneratorMini
+    prototype: GravityGeneratorMiniUncharged
     stackRequirements:
       Manipulator: 7
       Steel: 5

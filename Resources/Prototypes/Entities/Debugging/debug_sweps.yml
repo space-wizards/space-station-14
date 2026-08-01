@@ -18,7 +18,7 @@
   - type: BatteryAmmoProvider
     proto: DebugLaser
     fireCost: 1
-  - type: PredictedBatterySelfRecharger
+  - type: BatterySelfRecharger
     autoRechargeRate: 1000
 
 - type: entity
@@ -145,3 +145,29 @@
     damage:
       types:
         Blunt: 200
+
+- type: entity
+  name: unbang stick
+  parent: BaseItem
+  id: MeleeDebugUnbang
+  description: hit soft ye
+  suffix: DEBUG
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/debug.rsi
+    state: icon
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 0
+  - type: Item
+    size: Tiny
+    sprite: Objects/Weapons/Melee/debug.rsi
+  - type: EntityEffectMelee
+    effects:
+    - !type:EvenHealthChange
+      damage:
+        Burn: -200
+        Toxin: -200
+        Airloss: -200
+        Brute: -200

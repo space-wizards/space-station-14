@@ -14,6 +14,7 @@
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/Magic/staff_healing.ogg
+    projectileSpeed: 25
   - type: BasicEntityAmmoProvider
     proto: ProjectileHealingBolt
     capacity: 10
@@ -34,6 +35,7 @@
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/Magic/staff_door.ogg
+    projectileSpeed: 25
   - type: BasicEntityAmmoProvider
     proto: ProjectilePolyboltDoor
     capacity: 10

@@ -35,6 +35,21 @@
         - id: EmergencyRollerBedSpawnFolded
 
 - type: entity
+  parent: ClothingBackpackDuffelSyndicateMedicalBundle
+  id: ClothingBackpackDuffelSyndicateFilledMedicine
+  name: syndicate medicine duffel bag
+  description: A large duffel bag containing essential medicinal reagents.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: JugBicaridine
+        - id: JugPunctTranex
+        - id: JugPyraDerma
+        - id: JugDexPlusSaline
+
+- type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledShotgun
   name: Bulldog bundle
@@ -121,26 +136,6 @@
           amount: 4
         - id: GrenadeFrag
           amount: 4
-
-- type: entity
-  parent: ClothingBackpackDuffelSyndicateBundle
-  id: ClothingBackpackDuffelSyndicateFilledCarbine
-  name: M-90gl bundle
-  description: "A versatile battle rifle with an attached grenade launcher, bundled with 3 magazines and 6 grenades of various capabilities."
-  components:
-  - type: EntityTableContainerFill
-    containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: WeaponRifleM90GrenadeLauncher
-        - id: MagazineRifle
-          amount: 2
-        - id: GrenadeBlast
-          amount: 2
-        - id: GrenadeFlash
-          amount: 2
-        - id: GrenadeFrag
-          amount: 2
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateAmmo
@@ -244,6 +239,27 @@
       storagebase: !type:AllSelector
         children:
         - id: ChameleonPDA
+        - id: ClothingUniformJumpsuitChameleon
+        - id: ClothingOuterChameleon
+        - id: ClothingNeckChameleon
+        - id: ClothingMaskGasChameleon
+        - id: ClothingHeadHatChameleon
+        - id: ClothingHandsChameleon
+        - id: ClothingEyesChameleon
+        - id: ClothingHeadsetChameleon
+        - id: ClothingShoesChameleon
+        - id: ChameleonControllerImplanter
+
+- type: entity
+  parent: ClothingBackpackChameleon
+  id: ClothingBackpackChameleonFillAgent
+  suffix: Fill, Chameleon, Syndie
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: ChameleonAgentPDA
         - id: ClothingUniformJumpsuitChameleon
         - id: ClothingOuterChameleon
         - id: ClothingNeckChameleon
@@ -410,11 +426,24 @@
         - id: WeaponSubMachineGunC20r
         - id: MagazinePistolSubMachineGun
           amount: 3
-        - id: MagazinePistol
+        - id: EnergySword
         - id: SyndicateJawsOfLife
         - id: C4
           amount: 2
         - id: MedkitCombatFilled
         - id: EmpImplanter
         - id: ClothingShoesBootsMagSyndie
-        - id: AgentIDCard
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
+  id: ClothingBackpackDuffelSyndicateFilledHushpup
+  name: Hushpup bundle
+  description: Contains the Hushpup, bundled with a box of buckshot. Quarter included.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: WeaponShotgunHushpup
+        - id: BoxLethalshot
+        - id: TreasureCoinIron

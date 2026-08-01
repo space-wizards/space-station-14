@@ -323,6 +323,14 @@
     state: Zookeeper
   jobName: job-name-zookeeper
 
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconTramDriver
+  icon:
+    sprite: *icon-rsi
+    state: TramDriver
+  jobName: job-name-tramdriver
+
 # Entertainer (like service, but not actually service)
 
 - type: jobIcon
@@ -376,6 +384,7 @@
     sprite: *icon-rsi
     state: Borg
   jobName: job-name-borg
+  isCrewJob: false
 
 - type: jobIcon
   parent: JobIcon
@@ -384,6 +393,7 @@
     sprite: *icon-rsi
     state: StationAi
   jobName: job-name-station-ai
+  isCrewJob: false
 
 # Bad guys
 
@@ -394,6 +404,25 @@
     sprite: *icon-rsi
     state: Cluwne
   jobName: job-name-cluwne
+  isCrewJob: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconNinja
+  icon:
+    sprite: *icon-rsi
+    state: Ninja
+  jobName: job-name-ninja
+  isCrewJob: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconPirate
+  icon:
+    sprite: *icon-rsi
+    state: Pirate
+  jobName: job-name-pirate
+  isCrewJob: false
 
 - type: jobIcon
   parent: JobIcon
@@ -402,6 +431,7 @@
     sprite: *icon-rsi
     state: Prisoner
   jobName: job-name-prisoner
+  isCrewJob: false
 
 - type: jobIcon
   parent: JobIcon
@@ -410,6 +440,43 @@
     sprite: *icon-rsi
     state: Syndicate
   jobName: job-name-syndicate
+  isCrewJob: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSyndicateCommander
+  icon:
+    sprite: *icon-rsi
+    state: SyndicateCommander
+  jobName: job-name-syndicate-commander
+  isCrewJob: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSyndicateCorpsman
+  icon:
+    sprite: *icon-rsi
+    state: SyndicateCorpsman
+  jobName: job-name-syndicate-corpsman
+  isCrewJob: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSyndicateOperative
+  icon:
+    sprite: *icon-rsi
+    state: SyndicateOperative
+  jobName: job-name-syndicate-operative
+  isCrewJob: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconWizard
+  icon:
+    sprite: *icon-rsi
+    state: Wizard
+  jobName: job-name-wizard
+  isCrewJob: false
 
 - type: jobIcon
   parent: JobIcon
@@ -418,8 +485,73 @@
     sprite: *icon-rsi
     state: Zombie
   jobName: job-name-zombie
+  isCrewJob: false
 
 # Admin
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconCBURN
+  icon:
+    sprite: *icon-rsi
+    state: CBURN
+  jobName: job-name-cburn
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconDeathSquad
+  icon:
+    sprite: *icon-rsi
+    state: DeathSquad
+  jobName: job-name-deathsquad
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconERTLeader
+  icon:
+    sprite: *icon-rsi
+    state: ERTLeader
+  jobName: job-name-ertleader
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconERTChaplain
+  icon:
+    sprite: *icon-rsi
+    state: ERTChaplain
+  jobName: job-name-ertchaplain
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconERTEngineer
+  icon:
+    sprite: *icon-rsi
+    state: ERTEngineer
+  jobName: job-name-ertengineer
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconERTSecurity
+  icon:
+    sprite: *icon-rsi
+    state: ERTSecurity
+  jobName: job-name-ertsecurity
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconERTMedic
+  icon:
+    sprite: *icon-rsi
+    state: ERTMedical
+  jobName: job-name-ertmedic
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconERTJanitor
+  icon:
+    sprite: *icon-rsi
+    state: ERTJanitor
+  jobName: job-name-ertjanitor
 
 - type: jobIcon
   parent: JobIcon
@@ -427,7 +559,7 @@
   icon:
     sprite: *icon-rsi
     state: Nanotrasen
-  jobName: job-name-centcomoff
+  jobName: job-name-centcommoff
 
 - type: jobIcon
   parent: JobIcon
@@ -435,7 +567,6 @@
   icon:
     sprite: *icon-rsi
     state: Admin
-  allowSelection: false
 
 - type: jobIcon
   parent: JobIcon
@@ -443,7 +574,6 @@
   icon:
     sprite: *icon-rsi
     state: SeniorPhysician
-  allowSelection: false
 
 - type: jobIcon
   parent: JobIcon
@@ -451,7 +581,6 @@
   icon:
     sprite: *icon-rsi
     state: SeniorOfficer
-  allowSelection: false
 
 - type: jobIcon
   parent: JobIcon
@@ -459,7 +588,6 @@
   icon:
     sprite: *icon-rsi
     state: SeniorEngineer
-  allowSelection: false
 
 - type: jobIcon
   parent: JobIcon
@@ -467,7 +595,6 @@
   icon:
     sprite: *icon-rsi
     state: SeniorResearcher
-  allowSelection: false
 
 # Other
 
@@ -478,6 +605,7 @@
     sprite: *icon-rsi
     state: NoId
   jobName: job-name-no-id
+  isCrewJob: false
 
 - type: jobIcon
   parent: JobIcon
@@ -486,3 +614,12 @@
     sprite: *icon-rsi
     state: Unknown
   jobName: job-name-unknown
+  isCrewJob: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSus
+  icon:
+    sprite: *icon-rsi
+    state: Sus
+  jobName: job-name-sus
