@@ -7,7 +7,7 @@ namespace Content.Shared.EntityTable.EntitySelectors;
 /// Gets the spawns from the entity table prototype specified.
 /// Can be used to reuse common tables.
 /// </summary>
-public sealed partial class NestedSelector : EntityTableSelector
+public sealed partial class NestedSelector : EntityTableSelectorWithNestedBase
 {
     /// <summary>
     /// The prototype from which to draw random items.

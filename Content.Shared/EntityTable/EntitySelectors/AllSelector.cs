@@ -6,7 +6,7 @@ namespace Content.Shared.EntityTable.EntitySelectors;
 /// <summary>
 /// Gets spawns from all of the child selectors
 /// </summary>
-public sealed partial class AllSelector : EntityTableSelector
+public sealed partial class AllSelector : EntityTableSelectorWithNestedBase
 {
     /// <summary>
     /// All children selectors to pick from.

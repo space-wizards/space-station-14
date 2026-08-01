@@ -1,65 +1,37 @@
-using System.Linq;
-using Content.Shared.Random.Helpers;
-using Content.Shared.Whitelist;
+using Content.Shared.EntityTable;
+using Content.Shared.EntityTable.Conditions;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
-using Content.Shared.Xenoarchaeology.Artifact.Prototypes;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using System.Linq;
 
 namespace Content.Server.Xenoarchaeology.Artifact;
 
 public sealed partial class XenoArtifactSystem
 {
-    [Dependency] private EntityWhitelistSystem _entityWhitelist = default!;
+    [Dependency] private EntityTableSystem _entityTable = default!;
 
     private void GenerateArtifactStructure(Entity<XenoArtifactComponent> ent)
     {
         var nodeCount = ent.Comp.NodeCount.Next(RobustRandom);
-        var triggerPool = CreateTriggerPool(ent, nodeCount);
+
+        var usedTriggers = new HashSet<EntProtoId>(nodeCount);
+        var entityTableContext = new EntityTableContext(new Dictionary<string, object>
+        {
+            [IsNotRepeatingCondition.UsedSpawnsKey] = usedTriggers
+        });
+
         // trigger pool could be smaller, then requested node count
-        nodeCount = triggerPool.Count;
+        var totalTriggers = _entityTable.ListSpawns(ent.Comp.TriggersTable)
+                                .Count();
+        nodeCount = int.Min(nodeCount, totalTriggers);
         ResizeNodeGraph(ent, nodeCount);
         while (nodeCount > 0)
         {
-            GenerateArtifactSegment(ent, triggerPool, ref nodeCount);
+            GenerateArtifactSegment(ent, entityTableContext, ref nodeCount);
         }
 
         RebuildXenoArtifactMetaData((ent, ent));
-    }
-
-    /// <summary>
-    /// Creates pool from all node triggers that current artifact can support.
-    /// As artifact cannot re-use triggers, pool will be growing smaller
-    /// and smaller with each node generated.
-    /// </summary>
-    /// <param name="ent">Artifact for which pool should be created.</param>
-    /// <param name="size">
-    /// Max size of pool. Resulting pool is not guaranteed to be exactly as large, but it will 100% won't be bigger.
-    /// </param>
-    private List<XenoArchTriggerPrototype> CreateTriggerPool(Entity<XenoArtifactComponent> ent, int size)
-    {
-        var triggerPool = new List<XenoArchTriggerPrototype>(size);
-        var weightsProto = ProtoMan.Index(ent.Comp.TriggerWeights);
-        var weightsByTriggersLeft = new Dictionary<string, float>(weightsProto.Weights);
-
-        while (triggerPool.Count < size)
-        {
-            // OOPS! We ran out of triggers.
-            if (weightsByTriggersLeft.Count == 0)
-            {
-                Log.Error($"Insufficient triggers for generating {ToPrettyString(ent)}! Needed {size} but had {triggerPool.Count}");
-                return triggerPool;
-            }
-
-            var triggerId = RobustRandom.Pick(weightsByTriggersLeft);
-            weightsByTriggersLeft.Remove(triggerId);
-            var trigger = ProtoMan.Index<XenoArchTriggerPrototype>(triggerId);
-            if (_entityWhitelist.IsWhitelistFail(trigger.Whitelist, ent))
-                continue;
-
-            triggerPool.Add(trigger);
-        }
-
-        return triggerPool;
     }
 
     /// <summary>
@@ -68,13 +40,13 @@ public sealed partial class XenoArtifactSystem
     /// </summary>
     private void GenerateArtifactSegment(
         Entity<XenoArtifactComponent> ent,
-        List<XenoArchTriggerPrototype> triggerPool,
+        EntityTableContext entityTableContext,
         ref int nodeCount
     )
     {
         var segmentSize = GetArtifactSegmentSize(ent, nodeCount);
         nodeCount -= segmentSize;
-        var populatedNodes = PopulateArtifactSegmentRecursive(ent, triggerPool, ref segmentSize);
+        var populatedNodes = PopulateArtifactSegmentRecursive(ent, entityTableContext, ref segmentSize);
 
         var segments = GetSegmentsFromNodes(ent, populatedNodes).ToList();
 
@@ -139,7 +111,7 @@ public sealed partial class XenoArtifactSystem
     /// </summary>
     private List<Entity<XenoArtifactNodeComponent>> PopulateArtifactSegmentRecursive(
         Entity<XenoArtifactComponent> ent,
-        List<XenoArchTriggerPrototype> triggerPool,
+        EntityTableContext entityTableContext,
         ref int segmentSize,
         int iteration = 0
     )
@@ -162,13 +134,14 @@ public sealed partial class XenoArtifactSystem
         var nodes = new List<Entity<XenoArtifactNodeComponent>>();
         for (var i = 0; i < nodeCount; i++)
         {
-            var trigger = RobustRandom.PickAndTake(triggerPool);
+            var trigger = _entityTable.GetSpawns(ent.Comp.TriggersTable, ctx: entityTableContext)
+                                      .SingleOrDefault();
             nodes.Add(CreateNode(ent, trigger, iteration));
         }
 
         var successors = PopulateArtifactSegmentRecursive(
             ent,
-            triggerPool,
+            entityTableContext,
             ref segmentSize,
             iteration: iteration + 1
         );

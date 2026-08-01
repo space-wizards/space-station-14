@@ -110,4 +110,10 @@ public sealed class EntityTableContext
         value = castValueData;
         return true;
     }
+
+    [PublicAPI]
+    public bool TryAddData<T>([ForbidLiteral] string key, T data) where T : notnull
+    {
+        return _data.TryAdd(key, data);
+    }
 }
