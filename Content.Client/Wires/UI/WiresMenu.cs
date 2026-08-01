@@ -436,13 +436,13 @@ namespace Content.Client.Wires.UI
 
                     if (_flip)
                     {
-                        var flip = new Matrix3x2(1, 0, 0, -1, 0, b);
+                        var flip = new Matrix3x2(1, 0, 0, -1, 0, b * UIScale);
                         drawTransform = Matrix3x2.Multiply(flip, drawTransform);
                     }
 
                     if (_mirror)
                     {
-                        var mirror = new Matrix3x2(-1, 0, 0, 1, r, 0);
+                        var mirror = new Matrix3x2(-1, 0, 0, 1, r * UIScale, 0);
                         drawTransform = Matrix3x2.Multiply(mirror, drawTransform);
                     }
 
