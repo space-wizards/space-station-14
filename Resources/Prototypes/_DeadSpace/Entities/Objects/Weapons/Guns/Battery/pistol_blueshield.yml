@@ -54,19 +54,16 @@
   id: VioletLaser
   categories: [ HideSpawnMenu ]
   components:
-  - type: HitscanBasicDamage
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Weapons/Guns/Projectiles/violethit.rsi
+    layers:
+    - state: beam_violet
+      shader: unshaded
+  - type: Ammo
+    muzzleFlash: MuzzleFlashEffectVioletLaser
+  - type: Projectile
     damage:
       types:
         Heat: 25
-  - type: HitscanBasicVisuals
-    muzzleFlash:
-      sprite: _DeadSpace/Objects/Weapons/Guns/Projectiles/violethit.rsi
-      state: muzzle_beam_violet
-    travelFlash:
-      sprite: _DeadSpace/Objects/Weapons/Guns/Projectiles/violethit.rsi
-      state: beam_violet
-    impactFlash:
-      sprite: _DeadSpace/Objects/Weapons/Guns/Projectiles/violethit.rsi
-      state: impact_beam_violet
-  - type: HitscanBasicEffects
-    temperature: 10
+  - type: ChangeTemperatureOnCollide
+    heat: 15000

@@ -13,7 +13,7 @@
           True: { visible: False }
           False: { visible: True }
   - type: BasicEntityAmmoProvider
-    proto: NecromorphPlasmaCutterTrace
+    proto: NecromorphPlasmaCutter
     capacity: 1
     count: 1
   - type: Gun
@@ -41,3 +41,25 @@
     rechargeCooldown: 1.8
     rechargeSound:
       path: /Audio/Weapons/Guns/MagIn/energycrossbow_reload.ogg
+
+- type: entity
+  id: NecromorphPlasmaCutter
+  parent: BaseBullet
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Weapons/Guns/Projectiles/traces.rsi
+    layers:
+    - state: pd_trace
+      shader: unshaded
+  - type: Projectile
+    damage:
+      types:
+        Heat: 1
+        Structural: 50
+    penetrationThreshold: 1008
+    penetrationDamageTypeRequirement:
+    - Structural
+    soundHit:
+      path: /Audio/Weapons/Guns/Hits/laser_sear_wall.ogg
+  - type: NecromorphPlasmaCutter

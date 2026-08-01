@@ -61,8 +61,8 @@
     visuals:
       enum.BatteryWeaponFireModeVisuals.State:
         enum.DeployableTurretVisuals.Weapon:
-          BulletEnergyTurretDisablerTrace: { state: stun }
-          BulletEnergyTurretLaserTrace: { state: lethal }
+          BulletEnergyTurretDisabler: { state: stun }
+          BulletEnergyTurretLaser: { state: lethal }
       enum.DeployableTurretVisuals.Broken:
         base:
           True: { state: destroyed }
@@ -82,13 +82,13 @@
     turretFactions: [NanoTrasen]
   # DS14-end
   - type: BatteryAmmoProvider
-    proto: BulletEnergyTurretDisablerTrace
+    proto: BulletEnergyTurretDisabler
     fireCost: 100
   - type: BatteryWeaponFireModes
     fireModes:
-    - proto: BulletEnergyTurretDisablerTrace
+    - proto: BulletEnergyTurretDisabler
       fireCost: 100
-    - proto: BulletEnergyTurretLaserTrace
+    - proto: BulletEnergyTurretLaser
       fireCost: 100
   - type: DeployableTurret
     retractedDamageModifierSetId: Metallic

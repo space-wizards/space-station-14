@@ -20,6 +20,11 @@ public sealed partial class ProjectileSystem : SharedProjectileSystem
 
     private void OnProjectileImpact(ImpactEffectEvent ev)
     {
+        PlayImpact(ev);
+    }
+
+    private void PlayImpact(ImpactEffectEvent ev)
+    {
         var coords = GetCoordinates(ev.Coordinates);
 
         if (Deleted(coords.EntityId))
@@ -55,5 +60,18 @@ public sealed partial class ProjectileSystem : SharedProjectileSystem
 
             _player.Play(ent, anim, "impact-effect");
         }
+    }
+
+    internal void PlayPredictedImpact(EntityUid projectile)
+    {
+        if (!TryComp<ProjectileComponent>(projectile, out var component) ||
+            component.ImpactEffect == null)
+        {
+            return;
+        }
+
+        PlayImpact(new ImpactEffectEvent(
+            component.ImpactEffect,
+            GetNetCoordinates(Transform(projectile).Coordinates)));
     }
 }

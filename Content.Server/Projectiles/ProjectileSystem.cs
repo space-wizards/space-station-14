@@ -10,6 +10,7 @@ using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Projectiles;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 
 namespace Content.Server.Projectiles;
@@ -22,6 +23,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
     [Dependency] private readonly DestructibleSystem _destructibleSystem = default!;
     [Dependency] private readonly GunSystem _guns = default!;
     [Dependency] private readonly SharedCameraRecoilSystem _sharedCameraRecoil = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -36,13 +38,39 @@ public sealed class ProjectileSystem : SharedProjectileSystem
             || component.ProjectileSpent || component is { Weapon: null, OnlyCollideWhenShot: true })
             return;
 
-        var target = args.OtherEntity;
+        if (TryComp(uid, out PredictedProjectileComponent? predicted) &&
+            predicted.ProcessedTargets.Contains(args.OtherEntity))
+        {
+            return;
+        }
+
+        ProjectileCollide((uid, component, args.OurBody), args.OtherEntity);
+    }
+
+    public void ProjectileCollide(
+        Entity<ProjectileComponent, PhysicsComponent> projectile,
+        EntityUid target,
+        bool predicted = false)
+    {
+        var (uid, component, body) = projectile;
+        if (component.ProjectileSpent)
+            return;
+
+        var effectFilter = Filter.Pvs(target, entityManager: EntityManager);
+        if (TryComp<PredictedProjectileComponent>(uid, out var predictedProjectile) &&
+            TryComp<ActorComponent>(predictedProjectile.Shooter, out var predictedActor))
+        {
+            effectFilter.RemovePlayer(predictedActor.PlayerSession);
+        }
+
         // it's here so this check is only done once before possible hit
         var attemptEv = new ProjectileReflectAttemptEvent(uid, component, false);
         RaiseLocalEvent(target, ref attemptEv);
         if (attemptEv.Cancelled)
         {
             SetShooter(uid, component, target);
+            if (predicted)
+                ReconcilePredictedProjectile(uid);
             return;
         }
 
@@ -62,7 +90,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
         {
             if (!deleted)
             {
-                _color.RaiseEffect(Color.Red, new List<EntityUid> { target }, Filter.Pvs(target, entityManager: EntityManager));
+                _color.RaiseEffect(Color.Red, new List<EntityUid> { target }, effectFilter);
             }
 
             _adminLogger.Add(LogType.BulletHit,
@@ -78,18 +106,49 @@ public sealed class ProjectileSystem : SharedProjectileSystem
 
         if (!deleted)
         {
-            _guns.PlayImpactSound(target, damage, component.SoundHit, component.ForceSound);
+            _guns.PlayImpactSound(target, damage, component.SoundHit, component.ForceSound, effectFilter);
 
-            if (!args.OurBody.LinearVelocity.IsLengthZero())
-                _sharedCameraRecoil.KickCamera(target, args.OurBody.LinearVelocity.Normalized());
+            if (!body.LinearVelocity.IsLengthZero())
+                _sharedCameraRecoil.KickCamera(target, body.LinearVelocity.Normalized());
         }
 
-        if (component.DeleteOnCollide && component.ProjectileSpent)
+        if (!predicted && component.DeleteOnCollide && component.ProjectileSpent)
             QueueDel(uid);
+
+        if (predicted && component.DeleteOnCollide && component.ProjectileSpent)
+        {
+            var predictedHit = EnsureComp<PredictedProjectileHitComponent>(uid);
+            predictedHit.Origin = _transform.GetMoverCoordinates(Transform(uid).Coordinates);
+
+            var targetCoordinates = _transform.GetMoverCoordinates(target);
+            if (predictedHit.Origin.TryDistance(EntityManager, _transform, targetCoordinates, out var distance))
+                predictedHit.Distance = distance;
+
+            Dirty(uid, predictedHit);
+        }
+        else if (predicted && (!component.ProjectileSpent || !component.DeleteOnCollide))
+        {
+            ReconcilePredictedProjectile(uid);
+        }
 
         if (component.ImpactEffect != null && TryComp(uid, out TransformComponent? xform))
         {
-            RaiseNetworkEvent(new ImpactEffectEvent(component.ImpactEffect, GetNetCoordinates(xform.Coordinates)), Filter.Pvs(xform.Coordinates, entityMan: EntityManager));
+            RaiseNetworkEvent(new ImpactEffectEvent(component.ImpactEffect, GetNetCoordinates(xform.Coordinates)), effectFilter);
+        }
+    }
+
+    public void ReconcilePredictedProjectile(EntityUid uid)
+    {
+        if (!TryComp(uid, out PredictedProjectileComponent? predicted) || predicted.Reconciled)
+            return;
+
+        predicted.Reconciled = true;
+
+        if (TryComp<ActorComponent>(predicted.Shooter, out var actor))
+        {
+            RaiseNetworkEvent(
+                new PredictedProjectileReconcileEvent(predicted.PredictionId, predicted.ProjectileIndex),
+                Filter.SinglePlayer(actor.PlayerSession));
         }
     }
 

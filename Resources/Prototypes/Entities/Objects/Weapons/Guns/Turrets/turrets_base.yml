@@ -122,7 +122,7 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
   - type: BatteryAmmoProvider
-    proto: BulletEnergyTurretLaserTrace
+    proto: BulletEnergyTurretLaser
     fireCost: 100
   - type: Battery
     # Very important:

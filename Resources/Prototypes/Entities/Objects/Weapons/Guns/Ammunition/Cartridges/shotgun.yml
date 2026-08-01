@@ -33,7 +33,7 @@
       - state: beanbag
         map: [ "enum.AmmoVisualLayers.Base" ]
   - type: CartridgeAmmo
-    proto: PelletShotgunBeanbagTrace
+    proto: PelletShotgunBeanbag
   - type: SpentAmmoVisuals
     state: "beanbag"
 
@@ -48,7 +48,7 @@
       - state: slug
         map: [ "enum.AmmoVisualLayers.Base" ]
   - type: CartridgeAmmo
-    proto: PelletShotgunSlugTrace
+    proto: PelletShotgunSlug
   - type: SpentAmmoVisuals
     state: "slug"
 
@@ -82,7 +82,7 @@
       - state: base
         map: [ "enum.AmmoVisualLayers.Base" ]
   - type: CartridgeAmmo
-    proto: PelletShotgunSpreadTrace
+    proto: PelletShotgunSpread
 
 - type: entity
   parent: [ BaseShellShotgun, BaseSecurityContraband ]
@@ -95,7 +95,7 @@
       - state: incendiary
         map: [ "enum.AmmoVisualLayers.Base" ]
   - type: CartridgeAmmo
-    proto: PelletShotgunIncendiarySpreadTrace
+    proto: PelletShotgunIncendiarySpread
   - type: SpentAmmoVisuals
     state: "incendiary"
 
@@ -110,7 +110,7 @@
       - state: practice
         map: [ "enum.AmmoVisualLayers.Base" ]
   - type: CartridgeAmmo
-    proto: PelletShotgunPracticeSpreadTrace
+    proto: PelletShotgunPracticeSpread
   - type: SpentAmmoVisuals
     state: "practice"
 
@@ -160,7 +160,7 @@
     graph: ImprovisedShotgunShellGraph
     node: shell
   - type: CartridgeAmmo
-    proto: PelletShotgunImprovisedSpreadTrace
+    proto: PelletShotgunImprovisedSpread
   - type: SpentAmmoVisuals
     state: "improvised"
 
@@ -175,6 +175,6 @@
         - state: depleted-uranium
           map: [ "enum.AmmoVisualLayers.Base" ]
     - type: CartridgeAmmo
-      proto: PelletShotgunUraniumSpreadTrace
+      proto: PelletShotgunUraniumSpread
     - type: SpentAmmoVisuals
       state: "depleted-uranium"

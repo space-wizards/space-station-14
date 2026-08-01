@@ -1,27 +1,23 @@
 - type: entity
   id: BulletEnergyCrossbow
   name: bullet(crossbow)
+  parent: BaseBullet
   categories: [ HideSpawnMenu ]
   components:
-  - type: HitscanAmmo
-  - type: HitscanBasicRaycast
-    collisionMask: BulletImpassable
-    maxDistance: 40
-  - type: HitscanReflect
-    reflectiveType: NonEnergy
-  - type: HitscanBasicVisuals
-    bullet:
-      sprite:
-        sprite: _DeadSpace/Objects/Weapons/Guns/Projectiles/crossbowbullet.rsi
-        state: bulletcrossbow
-    speed: 315
-  - type: HitscanBasicEffects
-    sound:
-      path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
-  - type: HitscanBasicDamage
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Weapons/Guns/Projectiles/crossbowbullet.rsi
+    layers:
+    - state: bulletcrossbow
+      shader: unshaded
+  - type: Reflective
+    reflective:
+    - NonEnergy
+  - type: Projectile
     damage:
       types:
         Poison: 10
+    soundHit:
+      path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
   - type: StaminaDamageOnCollide
     damage: 20
   - type: StunOnCollide
@@ -30,24 +26,10 @@
 - type: entity
   id: BulletEnergyCrossbowLarge
   name: bullet(crossbow large)
+  parent: BulletEnergyCrossbow
   categories: [ HideSpawnMenu ]
   components:
-  - type: HitscanAmmo
-  - type: HitscanBasicRaycast
-    collisionMask: BulletImpassable
-    maxDistance: 40
-  - type: HitscanReflect
-    reflectiveType: NonEnergy
-  - type: HitscanBasicVisuals
-    bullet:
-      sprite:
-        sprite: _DeadSpace/Objects/Weapons/Guns/Projectiles/crossbowbullet.rsi
-        state: bulletcrossbow
-    speed: 315
-  - type: HitscanBasicEffects
-    sound:
-      path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
-  - type: HitscanBasicDamage
+  - type: Projectile
     damage:
       types:
         Poison: 5

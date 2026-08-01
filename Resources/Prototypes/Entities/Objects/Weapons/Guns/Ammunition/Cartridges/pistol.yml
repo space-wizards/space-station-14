@@ -8,7 +8,7 @@
     tags:
       - CartridgePistol
   - type: CartridgeAmmo
-    proto: BulletPistolTrace
+    proto: BulletPistol
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     layers:
@@ -24,7 +24,7 @@
   description: Arguably the most popular caliber on the market, used by all manner of pistols and submachine guns. Standard kinetic ammunition is common and useful in most situations.
   components:
   - type: CartridgeAmmo
-    proto: BulletPistolTrace
+    proto: BulletPistol
 
 - type: entity
   parent: BaseCartridgePistol
@@ -33,7 +33,7 @@
   description: Arguably the most popular caliber on the market, used by all manner of pistols and submachine guns. Practice ammunition fires a chalk projectile that stings a little, but otherwise causes no lasting damage.
   components:
   - type: CartridgeAmmo
-    proto: BulletPistolPracticeTrace
+    proto: BulletPistolPractice
   -  type: Sprite
      layers:
        - state: base
@@ -49,7 +49,7 @@
   description: Arguably the most popular caliber on the market, used by all manner of pistols and submachine guns. Incendiary ammunition contains a self-igniting compound that sets targets ablaze.
   components:
   - type: CartridgeAmmo
-    proto: BulletPistolIncendiaryTrace
+    proto: BulletPistolIncendiary
   - type: Sprite
     layers:
       - state: base
@@ -65,7 +65,7 @@
   parent: BaseCartridgePistol
   components:
   - type: CartridgeAmmo
-    proto: BulletPistolUraniumTrace
+    proto: BulletPistolUranium
   - type: Sprite
     layers:
       - state: base
@@ -87,7 +87,7 @@
       map: [ "enum.AmmoVisualLayers.Base" ]
   - type: SpentAmmoVisuals
   - type: CartridgeAmmo
-    proto: BulletPistolTrace
+    proto: BulletPistol
     spent: true
   - type: Tag
     tags:

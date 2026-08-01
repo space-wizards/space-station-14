@@ -22,6 +22,21 @@ public sealed class CCCCVars
     public static readonly CVarDef<bool> ProjectilePredictionEnabled =
         CVarDef.Create("weapons.projectile_prediction", true, CVar.SERVER | CVar.REPLICATED);
 
+    public static readonly CVarDef<bool> ProjectilePredictionPreventCollision =
+        CVarDef.Create("weapons.projectile_prediction_prevent_collision", false, CVar.SERVER | CVar.REPLICATED);
+
+    public static readonly CVarDef<bool> ProjectilePredictionLogHits =
+        CVarDef.Create("weapons.projectile_prediction_log_hits", false, CVar.SERVER | CVar.REPLICATED);
+
+    public static readonly CVarDef<float> ProjectilePredictionCoordinateDeviation =
+        CVarDef.Create("weapons.projectile_prediction_coordinate_deviation", 3f, CVar.SERVER | CVar.REPLICATED);
+
+    public static readonly CVarDef<float> ProjectilePredictionLowestCoordinateDeviation =
+        CVarDef.Create("weapons.projectile_prediction_lowest_coordinate_deviation", 3f, CVar.SERVER | CVar.REPLICATED);
+
+    public static readonly CVarDef<float> ProjectilePredictionAabbEnlargement =
+        CVarDef.Create("weapons.projectile_prediction_aabb_enlargement", 1.5f, CVar.SERVER | CVar.REPLICATED);
+
     /*
 	* GCF
 	*/

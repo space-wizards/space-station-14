@@ -30,7 +30,7 @@
     rechargeSound:
       path: /Audio/Weapons/Guns/MagIn/energycrossbow_reload.ogg
   - type: BasicEntityAmmoProvider
-    proto: EnergyCrossbowBoltTrace
+    proto: EnergyCrossbowBolt
     capacity: 1
     count: 1
   #DS14-Start

@@ -261,7 +261,7 @@
       curve: !type:InverseBoolCurve
     - !type:TargetIsStunnedCon
       ownerBatteryAmmoPrototypes:
-      - BulletEnergyTurretDisablerTrace
+      - BulletEnergyTurretDisabler
       curve: !type:InverseBoolCurve
     - !type:TurretTargetingCon
       curve: !type:BoolCurve

@@ -534,7 +534,7 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
   - type: BatteryAmmoProvider
-    proto: BulletDisablerPracticeTrace
+    proto: BulletDisablerPractice
     fireCost: 62.5
   - type: Tag
     tags:
@@ -563,7 +563,7 @@
       - suitStorage
       - Belt
   - type: BatteryAmmoProvider
-    proto: BulletDisablerTrace
+    proto: BulletDisabler
     fireCost: 62.5
   - type: GuideHelp
     guides:
@@ -601,7 +601,7 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
   - type: BatteryAmmoProvider
-    proto: BulletDisablerSmgTrace
+    proto: BulletDisablerSmg
     fireCost: 25
   - type: MagazineVisuals
     magState: mag
@@ -642,7 +642,7 @@
       path: /Audio/Weapons/Guns/Gunshots/taser.ogg
     projectileSpeed: 25
   - type: BatteryAmmoProvider
-    proto: BulletTaserTrace
+    proto: BulletTaser
     fireCost: 200
   - type: MagazineVisuals
     magState: mag
@@ -665,7 +665,7 @@
       params:
         volume: -6
   - type: BatteryAmmoProvider
-    proto: BulletTaserSuperTrace
+    proto: BulletTaserSuper
     fireCost: 200
 
 - type: entity
@@ -863,13 +863,13 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: BatteryAmmoProvider
-    proto: BulletLaserSpreadNarrowTrace
+    proto: BulletLaserSpreadNarrow
     fireCost: 80
   - type: BatteryWeaponFireModes
     fireModes:
-    - proto: BulletLaserSpreadNarrowTrace
+    - proto: BulletLaserSpreadNarrow
       fireCost: 80 # DS14
-    - proto: BulletDisablerSmgSpreadTrace
+    - proto: BulletDisablerSmgSpread
       fireCost: 120 # DS14
       pacifismAllowedMode: true
   - type: Item
@@ -918,15 +918,15 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: BatteryAmmoProvider
-    proto: BulletLaserMagnumTrace
+    proto: BulletLaserMagnum
     fireCost: 50 #DS14
   - type: BatteryWeaponFireModes
     fireModes:
-    - proto: BulletLaserMagnumTrace
+    - proto: BulletLaserMagnum
       fireCost: 50 #DS14
-    - proto: BulletLaserWindowPiercingMagnumTrace
+    - proto: BulletLaserWindowPiercingMagnum
       fireCost: 75 #DS14
-    - proto: BulletDisablerTrace
+    - proto: BulletDisabler
       fireCost: 35 #DS14
       pacifismAllowedMode: true
   - type: BatterySelfRecharger

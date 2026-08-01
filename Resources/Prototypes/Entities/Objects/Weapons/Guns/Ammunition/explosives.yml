@@ -242,7 +242,7 @@
   suffix: Pirate
   components:
   - type: CartridgeAmmo
-    proto: PelletGrapeshotSpreadTrace
+    proto: PelletGrapeshotSpread
     deleteOnSpawn: true
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi

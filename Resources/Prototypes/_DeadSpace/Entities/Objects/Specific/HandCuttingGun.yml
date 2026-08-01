@@ -68,7 +68,7 @@
           volume: 1
       selectedMode: SemiAuto
     - type: BatteryAmmoProvider
-      proto: LaserRifleBulletTrace
+      proto: LaserRifleBullet
       fireCost: 40
     - type: Battery
       maxCharge: 640

@@ -1,4 +1,6 @@
 using Content.Shared.Damage.Components;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs;
 using Content.Shared.Projectiles;
 using Content.Shared.Standing;
 using Content.Shared.Weapons.Ranged.Components;
@@ -27,22 +29,22 @@ public sealed class RequireProjectileTargetSystem : EntitySystem
             return;
 
         var other = args.OtherEntity;
-        if (TryComp(other, out ProjectileComponent? projectile) &&
-            CompOrNull<TargetedProjectileComponent>(other)?.Target != ent)
+        if (!TryComp(other, out ProjectileComponent? projectile) ||
+            CompOrNull<TargetedProjectileComponent>(other)?.Target == ent)
         {
-            // Prevents shooting out of while inside of crates
-            var shooter = projectile.Shooter;
-            if (!shooter.HasValue)
-                return;
-
-            // ProjectileGrenades delete the entity that's shooting the projectile,
-            // so it's impossible to check if the entity is in a container
-            if (TerminatingOrDeleted(shooter.Value))
-                return;
-
-            if (!_container.IsEntityOrParentInContainer(shooter.Value))
-               args.Cancelled = true;
+            return;
         }
+
+        // Keep projectiles colliding with the container when firing from inside one.
+        var shooter = projectile.Shooter;
+        if (shooter is { } shooterUid &&
+            !TerminatingOrDeleted(shooterUid) &&
+            _container.IsEntityOrParentInContainer(shooterUid))
+        {
+            return;
+        }
+
+        args.Cancelled = true;
     }
 
     /// <summary>
@@ -50,10 +52,25 @@ public sealed class RequireProjectileTargetSystem : EntitySystem
     /// </summary>
     public bool RequiresExplicitTarget(Entity<RequireProjectileTargetComponent> ent)
     {
+        // Mob and standing state are networked separately. Incapacitated mobs may briefly
+        // retain a stale standing state on the client, but must still be ignored unless aimed at.
+        if (TryComp<MobStateComponent>(ent, out var mobState) &&
+            mobState.CurrentState is MobState.PreCritical or MobState.Critical or MobState.Dead)
+            return true;
+
         if (TryComp<StandingStateComponent>(ent, out var standing))
             return !standing.Standing;
 
         return ent.Comp.Active;
+    }
+
+    /// <summary>
+    /// Conservatively handles Active and Standing arriving in separate client states.
+    /// This must not be used for authoritative collision decisions.
+    /// </summary>
+    public bool RequiresExplicitTargetForPrediction(Entity<RequireProjectileTargetComponent> ent)
+    {
+        return ent.Comp.Active || RequiresExplicitTarget(ent);
     }
 
     private void SetActive(Entity<RequireProjectileTargetComponent> ent, bool value)

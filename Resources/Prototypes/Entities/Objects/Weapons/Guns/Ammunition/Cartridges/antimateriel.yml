@@ -8,7 +8,7 @@
     tags:
     - CartridgeAntiMateriel
   - type: CartridgeAmmo
-    proto: BulletAntiMaterielTrace
+    proto: BulletAntiMateriel
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Casings/large_casing.rsi
     layers:
@@ -30,7 +30,7 @@
     tags:
     - CartridgeAntiMaterielAP
   - type: CartridgeAmmo
-    proto: BulletAntiMaterielAPTrace
+    proto: BulletAntiMaterielAP
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Casings/large_casing.rsi
     layers:

@@ -3,9 +3,9 @@ using System.Linq;
 using Content.Server.Construction;
 using Content.Server.Cargo.Systems;
 using Content.Server.DeadSpace.Weapons.Ranged;
-using Content.Server.Weapons.Ranged.Components;
 using Content.Shared.Cargo;
 using Content.Shared.Damage;
+using Content.Shared.DeadSpace.CCCCVars;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Ranged;
@@ -15,6 +15,7 @@ using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared.Weapons.Hitscan.Components;
 using Content.Shared.Weapons.Hitscan.Events;
 using Robust.Shared.Audio;
+using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -26,6 +27,7 @@ public sealed partial class GunSystem : SharedGunSystem
 {
     [Dependency] private readonly PricingSystem _pricing = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly IConfigurationManager _config = default!;
 
     // DS14-start
     private readonly Dictionary<EntityUid, BallisticConstructionTransferData> _ballisticConstructionTransfers = new();
@@ -290,7 +292,9 @@ public sealed partial class GunSystem : SharedGunSystem
             return false;
         }
 
-        if (gun.Comp.PredictionId != 0 && user != null)
+        if (gun.Comp.PredictionId != 0 &&
+            user != null &&
+            _config.GetCVar(CCCCVars.ProjectilePredictionEnabled))
         {
             var predicted = EnsureComp<PredictedProjectileComponent>(uid);
             predicted.Shooter = user;
@@ -355,9 +359,15 @@ public sealed partial class GunSystem : SharedGunSystem
         RaiseNetworkEvent(message, filter);
     }
 
-    public override void PlayImpactSound(EntityUid otherEntity, DamageSpecifier? modifiedDamage, SoundSpecifier? weaponSound, bool forceWeaponSound)
+    public override void PlayImpactSound(
+        EntityUid otherEntity,
+        DamageSpecifier? modifiedDamage,
+        SoundSpecifier? weaponSound,
+        bool forceWeaponSound,
+        Filter? filter = null)
     {
         DebugTools.Assert(!Deleted(otherEntity), "Impact sound entity was deleted");
+        filter ??= Filter.Pvs(otherEntity, entityManager: EntityManager);
 
         // Like projectiles and melee,
         // 1. Entity specific sound
@@ -371,19 +381,21 @@ public sealed partial class GunSystem : SharedGunSystem
 
             if (type != null && rangedSound.SoundTypes?.TryGetValue(type, out var damageSoundType) == true)
             {
-                Audio.PlayPvs(damageSoundType, otherEntity, AudioParams.Default.WithVariation(DamagePitchVariation));
+                Audio.PlayEntity(damageSoundType, filter, otherEntity, true,
+                    AudioParams.Default.WithVariation(DamagePitchVariation));
                 playedSound = true;
             }
             else if (type != null && rangedSound.SoundGroups?.TryGetValue(type, out var damageSoundGroup) == true)
             {
-                Audio.PlayPvs(damageSoundGroup, otherEntity, AudioParams.Default.WithVariation(DamagePitchVariation));
+                Audio.PlayEntity(damageSoundGroup, filter, otherEntity, true,
+                    AudioParams.Default.WithVariation(DamagePitchVariation));
                 playedSound = true;
             }
         }
 
         if (!playedSound && weaponSound != null)
         {
-            Audio.PlayPvs(weaponSound, otherEntity);
+            Audio.PlayEntity(weaponSound, filter, otherEntity, true);
         }
     }
 }
