@@ -11,3 +11,30 @@
   description: changeling-flesh-clothing-alert-desc
   minSeverity: 0
   maxSeverity: 1
+
+- type: alert
+  id: ChangelingHorrorTime
+  icons:
+  - sprite: /Textures/Interface/Alerts/telltale_heart.rsi
+    state: telltale
+  alertViewEntity: AlertChangelingHorrorTimeView
+  name: changeling-horror-alert-time-name
+  description: changeling-horror-alert-time-desc
+
+- type: entity
+  id: AlertChangelingHorrorTimeView
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: GenericCounterAlert
+    centerGlyph: false
+    hideLeadingZeroes: false
+  - type: Sprite
+    sprite: /Textures/Interface/Alerts/essence_counter.rsi
+    state: essence0
+    layers:
+    - map: [ "enum.AlertVisualLayers.Base" ]
+    - map: [ "1" ]
+      offset: 0.25, 0
+    - map: [ "10" ]
+      offset: 0.125, 0
+    - map: [ "100" ]
