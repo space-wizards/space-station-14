@@ -3,8 +3,6 @@ using Content.Client.Actions;
 using Content.Client.Actions.UI;
 using Content.Client.Cooldown;
 using Content.Shared.Actions.Components;
-using Content.Shared.Charges.Components;
-using Content.Shared.Charges.Systems;
 using Content.Shared.Examine;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -331,35 +329,15 @@ public sealed class ActionButton : Control, IEntityControl
     {
         base.FrameUpdate(args);
 
-        Cooldown.Visible = false;
+        Cooldown.Visible = Action?.Comp.Cooldown != null;
         if (Action?.Comp is not {} action)
             return;
 
-        if (GetDisplayedCooldown(Action.Value) is {} cooldown)
+        if (action.Cooldown is {} cooldown)
             Cooldown.FromTime(cooldown.Start, cooldown.End);
 
         if (_toggled != action.Toggled)
             _toggled = action.Toggled;
-    }
-
-    private ActionCooldown? GetDisplayedCooldown(Entity<ActionComponent> action)
-    {
-        if (action.Comp.Cooldown is {} cooldown)
-            return cooldown;
-
-        if (!_entities.TryGetComponent<LimitedChargesComponent>(action, out var charges) ||
-            !_entities.TryGetComponent<AutoRechargeComponent>(action, out var recharge) ||
-            recharge.RechargeDuration <= TimeSpan.Zero ||
-            _entities.System<SharedChargesSystem>().GetCurrentCharges((action, charges, recharge)) != 0)
-        {
-            return null;
-        }
-
-        return new ActionCooldown
-        {
-            Start = charges.LastUpdate,
-            End = charges.LastUpdate + recharge.RechargeDuration,
-        };
     }
 
     protected override void MouseEntered()
