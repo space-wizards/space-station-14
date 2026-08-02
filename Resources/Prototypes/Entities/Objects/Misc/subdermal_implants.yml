@@ -380,7 +380,7 @@
 # Sec and Command implants
 
 - type: entity
-  parent: BaseSubdermalDeimplantableImplant
+  parent: BaseSubdermalImplant
   id: MindShieldImplant
   name: mindshield implant
   description: This implant will ensure loyalty to Nanotrasen and prevent mind control devices.

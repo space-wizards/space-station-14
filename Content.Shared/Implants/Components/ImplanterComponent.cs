@@ -108,6 +108,16 @@ public sealed partial class ImplanterComponent : Component
     public EntProtoId? DeimplantChosen = null;
 
     /// <summary>
+    /// Chosen target to draw implant
+    /// </summary>
+    public EntityUid? TargetToDrawImplant = null;
+
+    /// <summary>
+    /// User entity that triggers draw implant event
+    /// </summary>
+    public EntityUid? UserTrigger = null;
+
+    /// <summary>
     /// The sound to be played when an implanter catastrophically fails.
     /// </summary>
     [DataField]

@@ -8,7 +8,6 @@ using Content.Shared.Forensics;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
@@ -47,9 +46,9 @@ public abstract partial class SharedImplanterSystem : EntitySystem
         SubscribeLocalEvent<ImplanterComponent, ExaminedEvent>(OnExamine);
 
         SubscribeLocalEvent<ImplanterComponent, AfterInteractEvent>(OnImplanterAfterInteract);
-        SubscribeLocalEvent<ImplanterComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<ImplanterComponent, GetVerbsEvent<InteractionVerb>>(OnVerb);
         SubscribeLocalEvent<ImplanterComponent, DeimplantChangeVerbMessage>(OnSelected);
+        SubscribeLocalEvent<ImplanterComponent, DeimplantTargetStartVerbMessage>(TryDraw);
 
         SubscribeLocalEvent<ImplanterComponent, ImplantEvent>(OnImplant);
         SubscribeLocalEvent<ImplanterComponent, DrawEvent>(OnDraw);
@@ -96,7 +95,9 @@ public abstract partial class SharedImplanterSystem : EntitySystem
         // TODO: Rework drawing to work with implant cases when surgery is in
         if (ent.Comp.CurrentMode == ImplanterToggleMode.Draw && !ent.Comp.ImplantOnly)
         {
-            TryDraw(ent, args.User, target);
+            ent.Comp.TargetToDrawImplant = args.Target;
+            ent.Comp.UserTrigger = args.User;
+            TryOpenUi(ent.AsNullable(), args.User);
         }
         else
         {
@@ -139,12 +140,6 @@ public abstract partial class SharedImplanterSystem : EntitySystem
                 Act = () => TryOpenUi(ent.AsNullable(), user)
             });
         }
-    }
-
-    private void OnUseInHand(Entity<ImplanterComponent> ent, ref UseInHandEvent args)
-    {
-        if (ent.Comp.CurrentMode == ImplanterToggleMode.Draw)
-            TryOpenUi(ent.AsNullable(), args.User);
     }
 
     private void OnSelected(Entity<ImplanterComponent> ent, ref DeimplantChangeVerbMessage args)
@@ -204,16 +199,22 @@ public abstract partial class SharedImplanterSystem : EntitySystem
     /// Try to remove an implant and store it in an implanter
     /// </summary>
     // TODO: Remove when surgery is in
-    public void TryDraw(Entity<ImplanterComponent> ent, EntityUid user, EntityUid target)
+    public void TryDraw(Entity<ImplanterComponent> ent, ref DeimplantTargetStartVerbMessage args)
     {
-        var args = new DoAfterArgs(EntityManager, user, ent.Comp.DrawTime, new DrawEvent(), ent, target: target, used: ent)
+        if (!TryGetEntity(args.Target, out var targetUid) || (targetUid is not { } target))
+            return;
+
+        if (!TryGetEntity(args.User, out var userUid) || (userUid is not { } user))
+            return;
+
+        var doAfterArgs = new DoAfterArgs(EntityManager, user, ent.Comp.DrawTime, new DrawEvent(), ent, target: target, used: ent)
         {
             BreakOnDamage = true,
             BreakOnMove = true,
             NeedHand = true,
         };
 
-        if (!_doAfter.TryStartDoAfter(args))
+        if (!_doAfter.TryStartDoAfter(doAfterArgs))
             return;
 
         _popup.PopupEntity(Loc.GetString("injector-component-needle-injecting-user"), target, user);
@@ -539,6 +540,16 @@ public sealed class AddImplantAttemptEvent(EntityUid user, EntityUid target, Ent
 public sealed class DeimplantChangeVerbMessage(string? implant) : BoundUserInterfaceMessage
 {
     public readonly EntProtoId? Implant = implant;
+}
+
+/// <summary>
+/// Start deimplant process to target
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class DeimplantTargetStartVerbMessage(NetEntity? target, NetEntity? user) : BoundUserInterfaceMessage
+{
+    public readonly NetEntity? Target = target;
+    public readonly NetEntity? User = user;
 }
 
 [Serializable, NetSerializable]
