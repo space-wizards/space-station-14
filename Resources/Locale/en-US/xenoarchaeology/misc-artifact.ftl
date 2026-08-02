@@ -1,6 +1,6 @@
 blink-artifact-popup = The artifact disappeared in an instant!
 foam-artifact-popup = Strange foam pours out of the artifact!
-interact-actifact-more = It craves for more...
+interact-artifact-more = It craves for more...
 
 shuffle-artifact-popup = You feel yourself teleport instantly!
 charge-artifact-popup = You feel the air buzz with electricity.

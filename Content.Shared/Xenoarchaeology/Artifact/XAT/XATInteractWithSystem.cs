@@ -56,12 +56,20 @@ public sealed partial class XATInteractWithSystem : BaseXATSystem<XATInteractWit
 
         _audio.PlayPredicted(node.Comp1.StartTriggerSound, artifact.Owner, args.User);
         _doAfter.TryStartDoAfter(
-            new DoAfterArgs(EntityManager, args.User, node.Comp1.InteractionTime, new XATInteractWithDoAfterEvent(GetNetEntity(node)),
-            artifact.Owner, artifact.Owner, args.Used)
+            new DoAfterArgs(
+                EntityManager,
+                args.User,
+                node.Comp1.InteractionTime,
+                new XATInteractWithDoAfterEvent(GetNetEntity(node)),
+                artifact.Owner,
+                artifact.Owner,
+                args.Used
+            )
             {
                 NeedHand = true,
                 BreakOnMove = true
-            });
+            }
+        );
     }
 
     /// <summary>
@@ -80,16 +88,16 @@ public sealed partial class XATInteractWithSystem : BaseXATSystem<XATInteractWit
         if (args.Used == null)
             return;
 
-        if (node.Comp1.MaxCount == null || node.Comp1.Count == null) // if maxcount or count somehow are not set, reset them
+        if (node.Comp1.MaxCount == null || node.Comp1.Count == null) // if MaxCount or Count somehow are not set, reset them
             SetMaxCount((node.Owner, node.Comp1));
 
-        _audio.PlayPredicted(node.Comp1.SuccessTriggerSound, artifact.Owner, args.User); // play on the artifact as the interacter may be deleted.
+        _audio.PlayPredicted(node.Comp1.SuccessTriggerSound, artifact.Owner, args.User); // play on the artifact as the interactor may be deleted.
 
         var amount = _stack.GetCount(args.Used.Value); // count how much we're interacting with, gets 1 if not a stack.
 
-        if (node.Comp1.DestroyAfter == true) // artifact consumes the item.
+        if (node.Comp1.DestroyAfter) // artifact consumes the item.
         {
-            if (HasComp<StackComponent>(args.Used) && amount > node.Comp1.Count) // _stack.ReduceCount doesn't effect non-stack items.
+            if (HasComp<StackComponent>(args.Used) && amount > node.Comp1.Count) // _stack.ReduceCount doesn't affect non-stack items.
                 _stack.ReduceCount(args.Used.Value, node.Comp1.Count.Value);
             else
                 PredictedQueueDel(args.Used);
@@ -99,7 +107,7 @@ public sealed partial class XATInteractWithSystem : BaseXATSystem<XATInteractWit
 
         if (node.Comp1.Count > 0)
         {
-            _popup.PopupEntity(Loc.GetString("interact-actifact-more"), artifact.Owner, args.User);
+            _popup.PopupEntity(Loc.GetString("interact-artifact-more"), artifact.Owner, args.User);
             Dirty(node);
             return; // insufficient, still need to add more!
         }

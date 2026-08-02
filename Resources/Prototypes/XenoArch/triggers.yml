@@ -28,7 +28,7 @@
     TriggerDeath: 1
     TriggerMagnet: 1
     TriggerConsumeMoney: 1
-    TriggerConsumeTechdisk: 0.25
+    TriggerConsumeKnowledge: 0.25
     TriggerConsumeCarbs: 1
     TriggerConsumeMeat: 0.5
     TriggerConsumeProduce: 0.5
@@ -297,8 +297,8 @@
       - Cash
 
 - type: xenoArchTrigger
-  id: TriggerConsumeTechdisk
-  tip: xenoarch-trigger-tip-techdisk
+  id: TriggerConsumeKnowledge
+  tip: xenoarch-trigger-tip-knowledge
   components:
   - type: XATInteractWith
     destroyAfter: true
@@ -307,6 +307,8 @@
     whitelist:
       components:
       - TechnologyDisk
+      tags:
+      - Book
 
 - type: xenoArchTrigger
   id: TriggerConsumeCarbs
