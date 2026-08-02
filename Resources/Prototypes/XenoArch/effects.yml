@@ -4,7 +4,11 @@
     children:
     # hijacks use key, prevents from using artifact, sadly
     #- id: XenoArtifactEffectUniversalIntercom
-    #  weight: 10
+    #  weight: 10.0
+    - id: XenoArtifactBecomeLamp
+      weight: 10
+    - id: XenoArtifactBecomeRainbowLamp
+      weight: 1
     - id: XenoArtifactSolutionStorage
       weight: 10
     - id: XenoArtifactPhasing
@@ -165,6 +169,27 @@
       max: 0
   - type: NameIdentifier
     group: XenoArtifactNode
+
+- type: entity
+  id: XenoArtifactBecomeLamp
+  parent: BaseOneTimeXenoArtifactEffect
+  description: Emits strange light
+  components:
+  - type: XAEApplyComponents
+    components:
+    - type: PointLight
+    - type: RandomPointLight
+
+- type: entity
+  id: XenoArtifactBecomeRainbowLamp
+  parent: BaseOneTimeXenoArtifactEffect
+  description: Emits shifting light
+  components:
+  - type: XAEApplyComponents
+    components:
+    - type: PointLight
+      radius: 3
+    - type: RgbLightController
 
 - type: entity
   parent: BaseOneTimeXenoArtifactEffect
@@ -751,11 +776,12 @@
     components:
     - type: EntityTableSpawner
       deleteSpawnerAfterSpawn: false
+      autoStack: true
       table:
         id: SilverOre1
         rolls: !type:ConstantNumberSelector
           value: 6
-        prob: 0.3
+        prob: 0.7
 
 - type: entity
   parent: BaseXenoArtifactEffect
@@ -773,6 +799,7 @@
     components:
     - type: EntityTableSpawner
       deleteSpawnerAfterSpawn: false
+      autoStack: true
       table:
         id: PlasmaOre1
         rolls: !type:ConstantNumberSelector
@@ -795,6 +822,7 @@
     components:
     - type: EntityTableSpawner
       deleteSpawnerAfterSpawn: false
+      autoStack: true
       table:
         id: GoldOre1
         rolls: !type:ConstantNumberSelector
@@ -817,6 +845,7 @@
     components:
     - type: EntityTableSpawner
       deleteSpawnerAfterSpawn: false
+      autoStack: true
       table:
         id: UraniumOre1
         amount: !type:BinomialNumberSelector
@@ -1122,6 +1151,7 @@
     refreshOnReactivate: true
     components:
     - type: EntityTableSpawner
+      autoStack: true
       deleteSpawnerAfterSpawn: false
       table:
         id: SheetGlass
@@ -1136,6 +1166,7 @@
     refreshOnReactivate: true
     components:
     - type: EntityTableSpawner
+      autoStack: true
       deleteSpawnerAfterSpawn: false
       table:
         id: SheetSteel
@@ -1150,6 +1181,7 @@
     refreshOnReactivate: true
     components:
     - type: EntityTableSpawner
+      autoStack: true
       deleteSpawnerAfterSpawn: false
       table:
         id: SheetPlastic
