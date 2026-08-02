@@ -100,7 +100,6 @@ namespace Content.Server.Ghost
             SubscribeNetworkEvent<WarpToRandomFollowedRequestEvent>(OnWarpToRandomFollowedRequest);
             SubscribeNetworkEvent<WarpToRandomRequestEvent>(OnWarpToRandomRequest);
 
-            SubscribeLocalEvent<GhostComponent, BooActionEvent>(OnActionPerform);
             SubscribeLocalEvent<GhostComponent, ToggleGhostHearingActionEvent>(OnGhostHearingAction);
             SubscribeLocalEvent<GhostComponent, InsertIntoEntityStorageAttemptEvent>(OnEntityStorageInsertAttempt);
 
@@ -140,53 +139,6 @@ namespace Content.Server.Ghost
 
             Popup.PopupEntity(str, uid, uid);
             Dirty(uid, component);
-        }
-
-        /// <summary>
-        /// BooActionEvent handler. Raises BooActionEvents on nearby entities we run out of entities or we receive a response deemed sufficient.
-        /// </summary>
-        private void OnActionPerform(EntityUid uid, GhostComponent component, BooActionEvent args)
-        {
-            if (args.Handled)
-                return;
-
-            var entities = _lookup.GetEntitiesInRange(args.Performer, component.BooRadius).ToList();
-            // Shuffle the possible targets so we don't favor any particular entities
-            _random.Shuffle(entities);
-
-            // Set our desired intensity based on how many normal events the ghost wants to create.
-            var remainingIntensity = component.BooIntensity;
-            var anythingAffected = false;
-            foreach (var ent in entities)
-            {
-                GhostBooIntensity allowedIntensity = remainingIntensity > (int)GhostBooIntensity.Normal ? GhostBooIntensity.Normal : (GhostBooIntensity)remainingIntensity;
-
-                var ghostBoo = new GhostBooEvent(allowedIntensity);
-                RaiseLocalEvent(ent, ref ghostBoo, true);
-                if (ghostBoo.ResponseIntensity == GhostBooIntensity.None)
-                    continue;
-
-                // Handle our response depending on the intensity of the action.
-                anythingAffected = true;
-                switch (ghostBoo.ResponseIntensity)
-                {
-                    case GhostBooIntensity.Subtle:
-                    case GhostBooIntensity.Normal:
-                        remainingIntensity -= (int)ghostBoo.ResponseIntensity;
-                        break;
-                    default: // Out of enum, treat as though it's the highest intensity.
-                        remainingIntensity -= (int)GhostBooIntensity.Normal;
-                        break;
-                }
-
-                if (remainingIntensity <= 0)
-                    break;
-            }
-
-            if (!anythingAffected)
-                _popup.PopupEntity(Loc.GetString("ghost-component-boo-action-failed"), uid, uid);
-
-            args.Handled = true;
         }
 
         private void OnRelayMoveInput(EntityUid uid, GhostOnMoveComponent component, ref MoveInputEvent args)

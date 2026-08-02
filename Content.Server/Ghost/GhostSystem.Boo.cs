@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Systems;
 using Content.Server.Ghost.Components;
@@ -23,6 +24,55 @@ public sealed partial class GhostSystem
     [Dependency] private EntityQuery<FlammableComponent> _flammableQuery;
     [Dependency] private EntityQuery<BlinkingPoweredLightComponent> _blinkingQuery;
 
+    /// <summary>
+    /// BooActionEvent handler. Raises BooActionEvents on nearby entities we run out of entities or we receive a response deemed sufficient.
+    /// </summary>
+    [SubscribeLocalEvent]
+    private void OnActionPerform(EntityUid uid, GhostComponent component, BooActionEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        var entities = _lookup.GetEntitiesInRange(args.Performer, component.BooRadius).ToList();
+        // Shuffle the possible targets so we don't favor any particular entities
+        _random.Shuffle(entities);
+
+        // Set our desired intensity based on how many normal events the ghost wants to create.
+        var remainingIntensity = component.BooIntensity;
+        var anythingAffected = false;
+        foreach (var ent in entities)
+        {
+            GhostBooIntensity allowedIntensity = remainingIntensity > (int)GhostBooIntensity.Normal ? GhostBooIntensity.Normal : (GhostBooIntensity)remainingIntensity;
+
+            var ghostBoo = new GhostBooEvent(allowedIntensity);
+            RaiseLocalEvent(ent, ref ghostBoo, true);
+            if (ghostBoo.ResponseIntensity == GhostBooIntensity.None)
+                continue;
+
+            // Handle our response depending on the intensity of the action.
+            anythingAffected = true;
+            switch (ghostBoo.ResponseIntensity)
+            {
+                case GhostBooIntensity.Subtle:
+                case GhostBooIntensity.Normal:
+                    remainingIntensity -= (int)ghostBoo.ResponseIntensity;
+                    break;
+                default: // Out of enum, treat as though it's the highest intensity.
+                    remainingIntensity -= (int)GhostBooIntensity.Normal;
+                    break;
+            }
+
+            if (remainingIntensity <= 0)
+                break;
+        }
+
+        if (!anythingAffected)
+            _popup.PopupEntity(Loc.GetString("ghost-component-boo-action-failed"), uid, uid);
+
+        args.Handled = true;
+    }
+
+    #region Boo Handlers
     [SubscribeLocalEvent]
     private void OnSpeakerBoo(Entity<SpookySpeakerComponent> ent, ref GhostBooEvent args)
     {
@@ -77,7 +127,7 @@ public sealed partial class GhostSystem
         if (ent.Comp.ExtinguishSound != null)
             _audio.PlayPvs(ent.Comp.ExtinguishSound, ent);
 
-        args.ResponseIntensity = GhostBooIntensity.Subtle;
+        args.ResponseIntensity = ent.Comp.Intensity;
     }
 
     [SubscribeLocalEvent]
@@ -104,6 +154,7 @@ public sealed partial class GhostSystem
 
         args.ResponseIntensity = ent.Comp.BooIntensity;
     }
+    #endregion Boo Handlers
 
     private bool IsIntensityPermitted(GhostBooEvent args, GhostBooIntensity targetIntensity)
     {
