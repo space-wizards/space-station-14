@@ -79,12 +79,14 @@ public sealed partial class CargoSystem
         consoles = new();
         if (!TryComp<DeviceLinkSinkComponent>(uid, out var sinkComponent))
             return false;
+
         foreach (var linked in sinkComponent.LinkedSources)
         {
             if (!TryComp<CargoOrderConsoleComponent>(linked, out var consoleComp))
                 continue;
             consoles.Add((linked, consoleComp));
         }
+
         return consoles.Count > 0;
     }
 
