@@ -17,7 +17,6 @@
       max: 3
       playerRatio: 15
       lateJoinAdditional: true
-      multiAntagSetting: NotExclusive
       startingGear: HooliganGear
       mindRoles:
       - MindRoleHooligan
