@@ -89,7 +89,6 @@
           False: { visible: False }
   - type: AnimationPlayer
 
-# soon removed
 - type: entity
   id: ClockworkGrille
   parent: Grille
@@ -109,6 +108,8 @@
     graph: ClockGrille
     node: clockGrille
     deconstructionTarget: start
+  - type: Damageable
+    damageModifierSet: BrassMod
 
 - type: entity
   parent: [ BaseStructure, StructureHealthFurnitureWeak ]
@@ -150,7 +151,6 @@
         sound:
           path: "/Audio/Weapons/grille_hit.ogg"
 
-# soon removed
 - type: entity
   id: ClockworkGrilleBroken
   parent: GrilleBroken
@@ -167,6 +167,8 @@
   - type: Construction
     graph: ClockGrille
     node: clockGrilleBroken
+  - type: Damageable
+    damageModifierSet: BrassMod
 
 - type: entity
   parent: Grille

@@ -148,9 +148,8 @@
         spawn:
           IngotSilver1: *BaseDoorSpawn
 
-# soon removed :o(
 - type: entity
-  parent: BaseMaterialDoorNavMap
+  parent: [ BaseMaterialDoorNavMap, StructureHealthDoorWeak ]
   id: BananiumDoor
   name: bananium door
   components:
@@ -166,22 +165,15 @@
     graph: DoorGraph
     node: bananiumDoor
   - type: Damageable
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: BananiumMod
   - type: Destructible
     thresholds:
     - trigger: *DamageDoorWeak
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
+      - *SoundMetalBreak
       - !type:SpawnEntitiesBehavior
         spawn:
-          MaterialBananium1:
-            min: 1
-            max: 2
+          MaterialBananium1: *BaseDoorSpawn
 
 ### Other doors ###
 
@@ -311,9 +303,8 @@
         spawn:
           MaterialCardboard: *BaseDoorSpawn
 
-# soon removed
 - type: entity
-  parent: BaseMaterialDoorNavMap
+  parent: [ BaseMaterialDoorNavMap, StructureHealthDoorWeak ]
   id: IronstoneDoor
   name: ironstone door
   description: A mysterious door made of rune-etched stone.
@@ -328,17 +319,11 @@
   - type: RCDDeconstructable
     deconstructable: false
   - type: Damageable
-    damageModifierSet: Rock
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: RockMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 250 # A pickaxe can destroy this in two hits, since the door is rock.
-      behaviors: &IronstoneDestructionBehavior
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
+    - trigger: *DamageDoorWeak
+      behaviors:
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Effects/break_stone.ogg
@@ -346,11 +331,8 @@
             volume: -6
       - !type:SpawnEntitiesBehavior
         spawn:
-          SteelOre1:
-            min: 0
-            max: 1
+          SteelOre1: *BaseDoorSpawn
 
-# soon removed
 - type: entity
   parent: IronstoneDoor
   id: EncrustedIronstoneDoor
@@ -359,9 +341,3 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/MineralDoors/encrusted_ironstone_door.rsi
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 375
-      behaviors: *IronstoneDestructionBehavior

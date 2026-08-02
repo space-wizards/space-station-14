@@ -87,7 +87,6 @@
   - type: StaticPrice
     price: 130
 
-# soon removed
 - type: entity
   parent: [ BaseGirder, StructureHealthBarrier ]
   id: ClockworkGirder
@@ -102,6 +101,8 @@
     node: clockGirder
   - type: StaticPrice
     price: 75
+  - type: Damageable
+    damageModifierSet: BrassMod
   - type: Destructible
     thresholds:
     - trigger:

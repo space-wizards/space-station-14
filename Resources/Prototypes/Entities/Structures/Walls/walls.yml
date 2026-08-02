@@ -124,9 +124,8 @@
     key: walls
     base: brick
 
-# soon removed
 - type: entity
-  parent: BaseWall
+  parent: [ BaseWall, StructureHealthWallWeak ]
   id: WallClock
   name: clock wall
   components:
@@ -137,26 +136,28 @@
   - type: Construction
     graph: ClockworkGirder
     node: clockworkWall
+  - type: Damageable
+    damageModifierSet: BrassMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 300
+    - trigger: *DamageWallWeak
       behaviors:
+      - &SoundMetalSlam !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
+          params:
+            volume: -4
       - !type:SpawnEntitiesBehavior
         spawn:
           ClockworkGirder:
             min: 1
             max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: clock
 
-# soon removed :o(
 - type: entity
-  parent: BaseWall
+  parent: [ BaseWall, StructureHealthWallWeak ]
   id: WallClown
   name: bananium wall
   components:
@@ -171,19 +172,15 @@
     cost: 6
     delay: 8
     fx: EffectRCDDeconstruct8
+  - type: Damageable
+    damageModifierSet: BananiumMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 300
+    - trigger: *DamageWallWeak
       behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          Girder:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+      - &ChangeNodeGirder !type:ChangeConstructionNodeBehavior
+        node: girder
+      - *SoundMetalSlam
   - type: IconSmooth
     key: walls
     base: clown
@@ -198,7 +195,6 @@
         layer:
         - WallLayer
         density: 8000 # really good ramming wall, bananium is rare so it's probably fine
-
 
 - type: entity
   parent: [ BaseWall, StructureHealthWallWeak ]
@@ -224,8 +220,7 @@
     thresholds:
     - trigger: *DamageWallWeak
       behaviors:
-      - &ChangeNodeGirder !type:ChangeConstructionNodeBehavior
-        node: girder
+      - *ChangeNodeGirder
       - !type:SpawnEntitiesBehavior
         spawn:
           MaterialSheetMeat1: &BaseWallSpawn
@@ -238,9 +233,8 @@
     key: walls
     base: meat
 
-# soon removed
 - type: entity
-  parent: BaseWall
+  parent: [ BaseWall, StructureHealthWallWeak ]
   id: WallCult
   name: cult wall
   components:
@@ -250,17 +244,10 @@
     sprite: Structures/Walls/cult.rsi
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 300
+    - trigger: *DamageWallWeak
       behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          Girder:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+      - *SoundMetalSlam
+      - *SpawnGirder
   - type: IconSmooth
     key: walls
     base: cult
@@ -286,9 +273,8 @@
     key: walls
     base: debug
 
-# soon removed
 - type: entity
-  parent: BaseWall
+  parent: [ BaseWall, StructureHealthWall ]
   id: WallDiamond
   name: diamond wall
   components:
@@ -302,17 +288,12 @@
     fx: EffectRCDDeconstruct8
   - type: Destructible
     thresholds:
-    - trigger:
+    - trigger: &DamageWallNormal
         !type:DamageTrigger
-        damage: 300
+        damage: 250
       behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          Girder:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+      - *SpawnGirder
+      - *SoundBreakStone
   - type: IconSmooth
     key: walls
     base: diamond
@@ -340,11 +321,7 @@
     - trigger: *DamageWallWeak
       behaviors:
       - *ChangeNodeGirder
-      - &SoundMetalSlam !type:PlaySoundBehavior
-        sound:
-          collection: MetalSlam
-          params:
-            volume: -4
+      - *SoundMetalSlam
       - !type:SpawnEntitiesBehavior
         spawn:
           IngotGold1: *BaseWallSpawn
@@ -363,9 +340,8 @@
     key: walls
     base: gold
 
-# soon removed
 - type: entity
-  parent: BaseWall
+  parent: [ BaseWall, StructureHealthWallWeak ]
   id: WallIce
   name: ice wall
   components:
@@ -375,17 +351,10 @@
     sprite: Structures/Walls/ice.rsi
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 300
+    - trigger: *DamageWallWeak
       behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          Girder:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+      - *SpawnGirder
+      - *SoundBreakStone
   - type: IconSmooth
     key: walls
     base: ice
@@ -423,9 +392,8 @@
   - type: RadiationBlocker
     resistance: 5
 
-# soon removed :o(
 - type: entity
-  parent: BaseWall
+  parent: [ BaseWall, StructureHealthWallWeak ]
   id: WallPlastic
   name: plastic wall
   components:
@@ -440,19 +408,14 @@
     cost: 6
     delay: 8
     fx: EffectRCDDeconstruct8
+  - type: Damageable
+    damageModifierSet: PlasticMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 150
+    - trigger: *DamageWallWeak
       behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalSlam
-      - !type:ChangeConstructionNodeBehavior
-        node: girder
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
+      - *SoundMetalSlam
+      - *ChangeNodeGirder
   - type: IconSmooth
     key: walls
     base: plastic
@@ -662,9 +625,8 @@
   - type: StaticPrice
     price: 150
 
-# soon removed
 - type: entity
-  parent: BaseWall
+  parent: [ BaseWall, StructureHealthWallWeak ]
   id: WallSandstone
   name: sandstone wall
   components:
@@ -676,19 +638,14 @@
     cost: 6
     delay: 8
     fx: EffectRCDDeconstruct8
+  - type: Damageable
+    damageModifierSet: RockMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 300
+    - trigger: *DamageWallWeak
       behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          Girder:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+      - *SoundBreakStone
+      - *SpawnGirder
   - type: IconSmooth
     key: walls
     base: sandstone
@@ -852,9 +809,7 @@
     damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
-    - trigger: &DamageWallNormal
-        !type:DamageTrigger
-        damage: 250
+    - trigger: *DamageWallNormal
       behaviors:
       - *ChangeNodeGirder
       - *SoundMetalSlam
@@ -1058,7 +1013,7 @@
     damageModifierSet: WoodMod
   - type: Destructible
     thresholds:
-    - trigger:
+    - trigger: &DamageBarrierStrong
         !type:DamageTrigger
         damage: 120
       behaviors:
@@ -1097,9 +1052,6 @@
         !type:DamageTrigger
         damage: 80
       behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          MaterialWebSilk: *BaseWallSpawn
       - !type:PlaySoundBehavior
         sound:
           collection: WoodDestroy
@@ -1113,12 +1065,10 @@
     graph: WebStructures
     node: wall
 
-
 # Lavalend Walls
 
-# soon removed
 - type: entity
-  parent: BaseWall
+  parent: [ BaseWall, StructureHealthWall ]
   id: WallNecropolis
   name: stone wall
   components:
@@ -1126,14 +1076,13 @@
     sprite: Structures/Walls/necropolis.rsi
   - type: Icon
     sprite: Structures/Walls/necropolis.rsi
+  - type: Damageable
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 1000
+    - trigger: *DamageWallNormal
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+      - *SpawnGirder
   - type: IconSmooth
     key: walls
     base: necropolis
@@ -1186,9 +1135,8 @@
 
 # Vault Walls
 
-# soon removed
 - type: entity
-  parent: BaseWall
+  parent: [ WallDiagonalBase, StructureHealthWall ]
   id: WallVaultAlien
   name: alien vault wall
   description: A mysterious ornate looking wall. There may be ancient dangers inside.
@@ -1199,16 +1147,14 @@
   - type: Icon
     sprite: Structures/Walls/vault.rsi
     state: alienvault
+  - type: Damageable
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 500
+    - trigger: *DamageWallNormal
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+      - *SpawnGirder
 
-# soon removed
 - type: entity
   parent: WallVaultAlien
   id: WallVaultRock
@@ -1221,7 +1167,6 @@
     sprite: Structures/Walls/vault.rsi
     state: rockvault
 
-# soon removed
 - type: entity
   parent: WallVaultAlien
   id: WallVaultSandstone
@@ -1284,9 +1229,8 @@
     sprite: Structures/Magic/forcewall.rsi
     state: forcewall
 
-# soon removed
 - type: entity
-  parent: BaseWall
+  parent: [ BaseWall, StructureHealthBarrierStrong ]
   id: WallCobblebrick
   name: cobblestone brick wall
   description: Stone by stone, perfectly fitted together to form a wall.
@@ -1299,19 +1243,17 @@
     cost: 6
     delay: 8
     fx: EffectRCDDeconstruct8
+  - type: Damageable
+    damageModifierSet: RockMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
+    - trigger: *DamageBarrierStrong
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+      - *SoundBreakStone
   - type: IconSmooth
     key: cobblebricks
     base: cobblebrick
 
-# soon removed
 - type: entity
   parent: WallCobblebrick
   id: WallBasaltCobblebrick
@@ -1325,7 +1267,6 @@
     key: cobblebricks
     base: cobblebrick
 
-# soon removed
 - type: entity
   parent: WallCobblebrick
   id: WallSnowCobblebrick
@@ -1340,7 +1281,6 @@
     key: cobblebricks
     base: cobblebrick
 
-# soon removed
 - type: entity
   parent: WallCobblebrick
   id: WallAsteroidCobblebrick
@@ -1354,7 +1294,6 @@
     key: cobblebricks
     base: cobblebrick
 
-# soon removed
 - type: entity
   parent: WallCobblebrick
   id: WallSandCobblebrick
@@ -1368,7 +1307,6 @@
     key: cobblebricks
     base: cobblebrick
 
-# soon removed
 - type: entity
   parent: WallCobblebrick
   id: WallChromiteCobblebrick
@@ -1382,7 +1320,6 @@
     key: cobblebricks
     base: cobblebrick
 
-# soon removed
 - type: entity
   parent: WallCobblebrick
   id: WallAndesiteCobblebrick
@@ -1396,7 +1333,6 @@
     key: cobblebricks
     base: cobblebrick
 
-# soon removed
 - type: entity
   parent: WallCobblebrick
   id: WallIronsandCobblebrick
@@ -1412,22 +1348,6 @@
     base: cobblebrick
   - type: RCDDeconstructable
     deconstructable: false
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Effects/break_stone.ogg
-          params:
-            volume: -6
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          SteelOre1:
-            min: 0
-            max: 2
 
 # Cardboard
 
@@ -1457,8 +1377,6 @@
     graph: Cardwall
     node: cardwall
     deconstructionTarget: start
-  - type: Damageable
-    damageModifierSet: CardboardMod
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -1471,6 +1389,8 @@
         - FullTileMask
         layer:
         - FlimsyLayer
+  - type: Damageable
+    damageModifierSet: CardboardMod
   - type: Destructible
     thresholds:
     - trigger:

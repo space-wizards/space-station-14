@@ -80,6 +80,8 @@
   parent: BaseReplacementLight
   id: BaseLightTube
   components:
+  - type: Sprite
+    sprite: Objects/Power/light_tube.rsi
   - type: Destructible
     thresholds:
     - trigger: *DamageTrigger10
@@ -89,6 +91,8 @@
           LightTubeBroken:
             min: 1
             max: 1
+
+#region Bulbs
 
 # Lighting color values gathered from
 # https://andi-siess.de/rgb-to-color-temperature/
@@ -203,6 +207,9 @@
     tags:
     - LightBulb
     - Trash
+
+#endregion
+#region tube
 
 - type: entity
   parent: BaseLightTube
@@ -419,6 +426,8 @@
     - id: SheetGlass1
     - id: ShardCrystalGreen
 
+#endregion
+#region also bulbs
 
 - type: entity
   parent: BaseLightbulb
@@ -558,3 +567,5 @@
     refineResult:
     - id: SheetGlass1
     - id: ShardCrystalGreen
+
+#endregion
