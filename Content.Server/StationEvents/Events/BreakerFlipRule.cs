@@ -1,6 +1,7 @@
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.StationEvents.Components;
+using Content.Shared.Database;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Station.Components;
 using JetBrains.Annotations;
@@ -50,7 +51,12 @@ public sealed partial class BreakerFlipRule : StationEventSystem<BreakerFlipRule
 
         for (var i = 0; i < toDisable; i++)
         {
-            _apcSystem.ApcToggleBreaker(stationApcs[i], stationApcs[i]);
+            var apc = stationApcs[i];
+            _apcSystem.ApcToggleBreaker(apc, apc);
+
+            var stateString = apc.Comp.MainBreakerEnabled ? "Enabled" : "Disabled";
+            AdminLogManager.Add(LogType.ItemConfigure, LogImpact.Medium,
+                $"{typeof(BreakerFlipRule).Name:user} set the breaker state of {ToPrettyString(apc):entity} to {stateString:state}");
         }
     }
 }
