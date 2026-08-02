@@ -608,6 +608,20 @@ public abstract partial class SharedDoorSystem : EntitySystem
             if (!otherPhysics.Comp.CanCollide)
                 continue;
 
+            // Skip anchored static entities on adjacent tiles.
+            // The fixture-based AABB lookup may slightly overlap neighboring tiles
+            // due to PolygonRadius enlargement, picking up walls and other structures.
+            if (otherPhysics.Comp.BodyType == BodyType.Static)
+            {
+                var otherXform = Transform(otherPhysics.Owner);
+                if (otherXform.Anchored)
+                {
+                    var otherTile = _mapSystem.GetTileRef(xform.GridUid.Value, mapGridComp, otherXform.Coordinates);
+                    if (otherTile.GridIndices != tileRef.GridIndices)
+                        continue;
+                }
+            }
+
             //TODO: Make only shutters ignore these objects upon colliding instead of all airlocks
             // Excludes Glasslayer for windows, GlassAirlockLayer for windoors, TableLayer for tables
             if (otherPhysics.Comp.CollisionLayer == (int) CollisionGroup.GlassLayer || otherPhysics.Comp.CollisionLayer == (int) CollisionGroup.GlassAirlockLayer || otherPhysics.Comp.CollisionLayer == (int) CollisionGroup.TableLayer)
