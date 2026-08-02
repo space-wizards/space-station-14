@@ -69,6 +69,13 @@ xenoarch-trigger-tip-blood = Blood
 xenoarch-trigger-tip-throw = Being thrown
 xenoarch-trigger-tip-death = Death
 xenoarch-trigger-tip-magnet = Magnetic waves
+xenoarch-trigger-tip-money = Bribery
+xenoarch-trigger-tip-knowledge = Knowledge Intake
+xenoarch-trigger-tip-carbs = Carbohydrate Intake
+xenoarch-trigger-tip-meat = Protein Intake
+xenoarch-trigger-tip-produce = Healthy Produce Intake
+xenoarch-trigger-tip-stamp = Bureaucratic Approval
+xenoarch-trigger-tip-shock = Electrical Shock
 
 ### Description hints
 xenoarch-trigger-examine-wrenching = There's a loose bit spinning around.
