@@ -75,6 +75,10 @@
   - type: Construction
     graph: Computer
     node: monitorBroken
+  - type: Damageable
+    damageModifierSet: Electronic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Sprite
     sprite: Structures/Machines/computers.rsi
     drawdepth: Objects

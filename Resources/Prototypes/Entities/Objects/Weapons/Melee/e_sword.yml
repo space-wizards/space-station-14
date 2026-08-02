@@ -380,6 +380,7 @@
     walkModifier: 0.6
     sprintModifier: 0.6
     weightlessAcceleration: 0.6
+    zeroGravityModifier: 0.6
   - type: UseDelay
     delay: 1.5
   - type: Sprite

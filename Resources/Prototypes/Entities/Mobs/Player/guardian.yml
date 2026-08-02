@@ -262,7 +262,9 @@
   description: Either manifests the guardian or recalls it back into your body
   components:
   - type: Action
-    icon: Interface/Actions/manifest.png
     useDelay: 2
+  - type: Sprite
+    layers:
+    - texture: Interface/Actions/manifest.png
   - type: InstantAction
     event: !type:GuardianToggleActionEvent

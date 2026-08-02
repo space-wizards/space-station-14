@@ -7,11 +7,12 @@
     mode: SnapgridCenter
   components:
   - type: Rotatable
-    rotateWhileAnchored: true
+    rotateWhileAnchored: false
   - type: Clickable
   - type: InteractionOutline
   - type: Transform
     anchored: true
+  - type: Anchorable
   - type: Sprite
     sprite: Structures/conveyor.rsi
     state: conveyor_stopped
