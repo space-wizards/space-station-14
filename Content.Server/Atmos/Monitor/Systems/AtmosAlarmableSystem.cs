@@ -65,7 +65,10 @@ public sealed partial class AtmosAlarmableSystem : EntitySystem
             return;
 
         var (uid, component) = ent;
-        var isValid = (payload.TrippedThresholds & component.MonitorAlertTypes) != 0;
+
+        var isValid = payload.TrippedThresholds == null
+                      || component.MonitorAlertTypes == AtmosMonitorThresholdTypeFlags.None
+                      || (payload.TrippedThresholds & component.MonitorAlertTypes) != 0;
 
         if (!component.NetworkAlarmStates.ContainsKey(args.SenderAddress))
         {
