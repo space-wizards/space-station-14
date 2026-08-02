@@ -499,6 +499,21 @@
       - MobSpiderTerrorDrone
   - type: NeededBloodForEvolution # Пример
     defaultCost: 100 # Стандартная цена на не заданный результат
+  - type: Devourer
+    devourAction: ActionDevourSpiderTerror
+    foodPreferenceWhitelist:
+      components:
+      - Construction
+    stomachStorageWhitelist:
+      components:
+      - MobState
+    chemical: Omnizine
+    healRate: 1.0 # Чуть-чуть
+    whitelist:
+      components:
+      - Door
+      tags:
+      - Wall
 
 - type: entity
   name: паук дрон
