@@ -5558,3 +5558,40 @@ Entries:
   changes:
   - type: Tweak
     message: Респрайт капсул криосна за авторством Nano_jump
+- id: 543
+  author: RIP6100
+  time: '2026-08-02T09:53:06.260250+00:00'
+  pr: 2070
+  changes:
+  - type: Add
+    message: Новая специализация Шеф-повар и Гейм-мастер.
+  - type: Add
+    message: Тёмный мостик в меню крафта.
+  - type: Add
+    message: Вирусолог на картах elkridge и gate. by Amaliz.
+  - type: Add
+    message: Вирусолог на картах amber. by soda649.
+  - type: Add
+    message: Вирусолог на картах glacier. by Bogoslavv.
+  - type: Remove
+    message: Специализации для Детектива.
+  - type: Remove
+    message: Карта Reach выведена из пула Карт для ремаппа.
+  - type: Tweak
+    message: Шеф-повар стал просто Поваром.
+  - type: Tweak
+    message: Стандарты на картах elkridge, plasma и gate. Мини-ремапп некоторых частей
+      этих станций. by Amaliz.
+  - type: Tweak
+    message: Ремапп СБ и Медицинского отсека на Amber, обновлены стандарты. by soda640.
+  - type: Tweak
+    message: Стандарты на карте glacier. by Bogoslavv.
+  - type: Tweak
+    message: Стандарты на карте Pearl. by Wasd3123.
+  - type: Fix
+    message: Баги на картах elkridge, plasma и gate. by Amaliz.
+  - type: Fix
+    message: Баги на картах Amber. by soda640.
+  - type: Fix
+    message: Баги на карте glacier, в том числе и отсутствие вентиляторов под некоторыми
+      шлюзами. by Bogoslavv.
