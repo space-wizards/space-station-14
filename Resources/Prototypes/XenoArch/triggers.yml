@@ -1,8 +1,8 @@
 - type: entityTable
   id: XenoArtifactTriggerDefaultTable
-  conditionsForChildren:
-    - !type:IsNotRepeatingCondition
   table: !type:GroupSelector
+    conditionsForChildren:
+      - !type:IsNotRepeatingCondition
     children:
     - id: TriggerMusic
       weight: 1
@@ -53,6 +53,19 @@
     - id: TriggerDeath
       weight: 1
     - id: TriggerMagnet
+      weight: 1
+
+- type: entityTable
+  id: XenoArtifactHandheldOnlyTriggerTable
+  table: !type:GroupSelector
+    conditionsForChildren:
+    - !type:IsNotRepeatingCondition
+    children:
+    - !type:NestedSelector
+      tableId: XenoArtifactTriggerDefaultTable
+      weight: 23
+    - !type:NestedSelector
+      tableId: XenoArtifactTriggerHandheldOnlyTable
       weight: 1
 
 - type: entityTable

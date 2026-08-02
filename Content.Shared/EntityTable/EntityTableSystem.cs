@@ -112,8 +112,8 @@ public sealed class EntityTableContext
     }
 
     [PublicAPI]
-    public bool TryAddData<T>([ForbidLiteral] string key, T data) where T : notnull
+    public void SetData<T>([ForbidLiteral] string key, T data) where T : notnull
     {
-        return _data.TryAdd(key, data);
+        _data[key] = data;
     }
 }

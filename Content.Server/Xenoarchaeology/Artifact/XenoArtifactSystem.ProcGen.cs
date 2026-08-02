@@ -15,20 +15,16 @@ public sealed partial class XenoArtifactSystem
     {
         var nodeCount = ent.Comp.NodeCount.Next(RobustRandom);
 
-        var usedTriggers = new HashSet<EntProtoId>(nodeCount);
-        var entityTableContext = new EntityTableContext(new Dictionary<string, object>
-        {
-            [IsNotRepeatingCondition.UsedSpawnsKey] = usedTriggers
-        });
-
         // trigger pool could be smaller, then requested node count
         var totalTriggers = _entityTable.ListSpawns(ent.Comp.TriggersTable)
-                                .Count();
+                                        .Count();
         nodeCount = int.Min(nodeCount, totalTriggers);
+        var triggerPoolData = new TriggerPoolData(nodeCount);
+
         ResizeNodeGraph(ent, nodeCount);
         while (nodeCount > 0)
         {
-            GenerateArtifactSegment(ent, entityTableContext, ref nodeCount);
+            GenerateArtifactSegment(ent, triggerPoolData, ref nodeCount);
         }
 
         RebuildXenoArtifactMetaData((ent, ent));
@@ -40,13 +36,13 @@ public sealed partial class XenoArtifactSystem
     /// </summary>
     private void GenerateArtifactSegment(
         Entity<XenoArtifactComponent> ent,
-        EntityTableContext entityTableContext,
+        TriggerPoolData triggerPoolData,
         ref int nodeCount
     )
     {
         var segmentSize = GetArtifactSegmentSize(ent, nodeCount);
         nodeCount -= segmentSize;
-        var populatedNodes = PopulateArtifactSegmentRecursive(ent, entityTableContext, ref segmentSize);
+        var populatedNodes = PopulateArtifactSegmentRecursive(ent, triggerPoolData, ref segmentSize);
 
         var segments = GetSegmentsFromNodes(ent, populatedNodes).ToList();
 
@@ -111,7 +107,7 @@ public sealed partial class XenoArtifactSystem
     /// </summary>
     private List<Entity<XenoArtifactNodeComponent>> PopulateArtifactSegmentRecursive(
         Entity<XenoArtifactComponent> ent,
-        EntityTableContext entityTableContext,
+        TriggerPoolData triggerPoolData,
         ref int segmentSize,
         int iteration = 0
     )
@@ -134,14 +130,19 @@ public sealed partial class XenoArtifactSystem
         var nodes = new List<Entity<XenoArtifactNodeComponent>>();
         for (var i = 0; i < nodeCount; i++)
         {
-            var trigger = _entityTable.GetSpawns(ent.Comp.TriggersTable, ctx: entityTableContext)
-                                      .SingleOrDefault();
+            var triggers = _entityTable.GetSpawns(ent.Comp.TriggersTable, ctx: triggerPoolData.Context).ToArray();
+            var trigger = triggers.SingleOrDefault();
+            if (trigger == default)
+            {
+
+            }
+            triggerPoolData.AddTriggerAsUsed(trigger);
             nodes.Add(CreateNode(ent, trigger, iteration));
         }
 
         var successors = PopulateArtifactSegmentRecursive(
             ent,
-            entityTableContext,
+            triggerPoolData,
             ref segmentSize,
             iteration: iteration + 1
         );
@@ -188,5 +189,27 @@ public sealed partial class XenoArtifactSystem
         segmentSize = Math.Min(nodeCount, segmentSize);
 
         return segmentSize;
+    }
+
+    private sealed class TriggerPoolData
+    {
+        private readonly HashSet<EntProtoId> _usedTriggers;
+
+        public TriggerPoolData(int requestedSize)
+        {
+            _usedTriggers = new(requestedSize);
+            Context = new EntityTableContext(new Dictionary<string, object>
+            {
+                [IsNotRepeatingCondition.UsedSpawnsKey] = _usedTriggers
+            });
+        }
+
+        public readonly EntityTableContext Context;
+
+        public void AddTriggerAsUsed(EntProtoId trigger)
+        {
+            if (!_usedTriggers.Add(trigger))
+                throw new ArgumentException();
+        }
     }
 }

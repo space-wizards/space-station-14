@@ -45,7 +45,7 @@ public abstract partial class EntityTableSelector
     /// <summary>
     /// Samples an output for this selector.
     /// </summary>
-    public IEnumerable<EntProtoId> GetSpawns(IRobustRandom rand,
+    public virtual IEnumerable<EntProtoId> GetSpawns(IRobustRandom rand,
         IEntityManager entMan,
         IPrototypeManager proto,
         EntityTableContext ctx)

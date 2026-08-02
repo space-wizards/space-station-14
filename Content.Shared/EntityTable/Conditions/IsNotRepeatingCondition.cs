@@ -25,6 +25,6 @@ public sealed partial class IsNotRepeatingCondition : EntityTableCondition
         if (root is not EntSelector entSelector)
             return true;
 
-        return used.Contains(entSelector.Id);
+        return !used.Contains(entSelector.Id);
     }
 }

@@ -15,6 +15,11 @@ public sealed partial class NestedSelector : EntityTableSelectorWithNestedBase
     [DataField(required: true)]
     public ProtoId<EntityTablePrototype> TableId;
 
+    public override bool CheckConditions(IEntityManager entMan, IPrototypeManager proto, EntityTableContext ctx)
+    {
+        return base.CheckConditions(entMan, proto, ctx) &&  proto.Index(TableId).Table.CheckConditions(entMan, proto, ctx);
+    }
+
     protected override IEnumerable<EntProtoId> GetSpawnsImplementation(IRobustRandom rand,
         IEntityManager entMan,
         IPrototypeManager proto,

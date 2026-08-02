@@ -52,16 +52,8 @@
     graph: Artifact
     node: done
   - type: XenoArtifact
-    triggersTable: !type:GroupSelector
-      conditionsForChildren:
-      - !type:IsNotRepeatingCondition
-      children:
-      - !type:NestedSelector
-        tableId: XenoArtifactTriggerDefaultTable
-        weight: 23
-      - !type:NestedSelector
-        tableId: XenoArtifactTriggerHandheldOnlyTable
-        weight: 1
+    triggersTable: !type:NestedSelector
+      tableId: XenoArtifactHandheldOnlyTriggerTable
     effectsTable: !type:GroupSelector
       children:
       - !type:NestedSelector
