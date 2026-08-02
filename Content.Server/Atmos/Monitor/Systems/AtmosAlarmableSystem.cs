@@ -199,23 +199,24 @@ public sealed partial class AtmosAlarmableSystem : EntitySystem
     /// <summary>
     ///     Resets the state of this alarmable to normal.
     /// </summary>
-    /// <param name="uid"></param>
-    /// <param name="alarmable"></param>
-    public void Reset(EntityUid uid, AtmosAlarmableComponent? alarmable = null, TagComponent? tags = null)
+    public void Reset(EntityUid uid, AtmosAlarmableComponent? alarmable = null, TagComponent? tags = null, DeviceNetworkComponent? device = null)
     {
-        if (!Resolve(uid, ref alarmable, ref tags, false) || alarmable.LastAlarmState == AtmosAlarmType.Normal)
+        if (!Resolve(uid, ref alarmable, ref tags, ref device, false) || alarmable.LastAlarmState == AtmosAlarmType.Normal)
         {
             return;
         }
 
-        alarmable.NetworkAlarmStates.Clear();
-        TryUpdateAlert(uid, AtmosAlarmType.Normal, alarmable);
+        if (alarmable.NetworkAlarmStates.ContainsKey(device.Data.Address))
+            alarmable.NetworkAlarmStates[device.Data.Address] = AtmosAlarmType.Normal;
 
         if (!alarmable.ReceiveOnly)
         {
             var payload = new AtmosMonitorResetPayload();
             _deviceNet.QueuePacket(uid, null, ref payload);
         }
+
+        TryUpdateAlert(uid, AtmosAlarmType.Normal, alarmable);
+        alarmable.NetworkAlarmStates.Clear();
     }
 
     public void ResetAllOnNetwork(EntityUid uid, AtmosAlarmableComponent? alarmable = null)
