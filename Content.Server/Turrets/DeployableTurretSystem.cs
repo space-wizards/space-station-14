@@ -28,6 +28,7 @@ public sealed partial class DeployableTurretSystem : SharedDeployableTurretSyste
     [Dependency] private BatteryWeaponFireModesSystem _fireModes = default!;
     [Dependency] private TurretTargetSettingsSystem _turretTargetingSettings = default!;
     [Dependency] private IGameTiming _timing = default!;
+
     [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceQuery = default!;
 
     public override void Initialize()

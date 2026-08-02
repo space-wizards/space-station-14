@@ -18,21 +18,25 @@ public sealed partial class DeployableTurretControllerSystem : SharedDeployableT
 {
     [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
     [Dependency] private DeviceNetworkSystem _deviceNetwork = default!;
+    [Dependency] private DeviceListSystem _deviceList = default!;
     [Dependency] private IAdminLogManager _adminLogger = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<DeployableTurretControllerComponent, BoundUIOpenedEvent>(OnBUIOpened);
-        SubscribeLocalEvent<DeployableTurretControllerComponent, DeviceListUpdateEvent>(OnDeviceListUpdate);
-    }
-
+    [SubscribeLocalEvent]
     private void OnBUIOpened(Entity<DeployableTurretControllerComponent> ent, ref BoundUIOpenedEvent args)
     {
+        if (!TryComp<DeviceNetworkComponent>(ent, out var deviceNetwork))
+            return;
+
+        var payload = new TurretControllerRequestPayload();
+        foreach (var (address, _) in _deviceList.GetDeviceList(ent.Owner))
+        {
+            _deviceNetwork.QueuePacket((ent.Owner, deviceNetwork), address, ref payload);
+        }
+
         UpdateUIState(ent);
     }
 
+    [SubscribeLocalEvent]
     private void OnDeviceListUpdate(Entity<DeployableTurretControllerComponent> ent, ref DeviceListUpdateEvent args)
     {
         if (!TryComp<DeviceNetworkComponent>(ent, out var deviceNetwork))
