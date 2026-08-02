@@ -184,9 +184,9 @@
     state: icon
   - type: MeleeWeapon
     attackRate: 1.5
+    wideAnimationRotation: -135
     angle: 0
     animation: WeaponArcThrust
-    wideAnimationRotation: 90
   - type: Item
     size: Small
     sprite: Objects/Fun/Foam/foam_blade.rsi
