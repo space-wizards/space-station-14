@@ -9,4 +9,5 @@ metabolizer-type-plant = Plant
 metabolizer-type-dwarf = Dwarf
 metabolizer-type-moth = Moth
 metabolizer-type-arachnid = Arachnid
+metabolizer-type-changeling = Changeling
 metabolizer-type-likes-radiation = Likes radiation

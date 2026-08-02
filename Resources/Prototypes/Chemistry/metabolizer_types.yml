@@ -46,5 +46,9 @@
   name: metabolizer-type-arachnid
 
 - type: metabolizerType
+  id: Changeling
+  name: metabolizer-type-changeling
+
+- type: metabolizerType
   id: LikesRadiation
   name: metabolizer-type-likes-radiation
