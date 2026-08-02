@@ -5623,3 +5623,10 @@ Entries:
   changes:
   - type: Add
     message: Терминал, выдающий талончики для очереди.
+- id: 548
+  author: CyberBobeks
+  time: '2026-08-02T20:57:57.894621+00:00'
+  pr: 2072
+  changes:
+  - type: Remove
+    message: Новая система стрельбы, откат на старую систему.
