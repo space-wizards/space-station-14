@@ -594,3 +594,15 @@
     layers:
       - state: green
       - state: psychologist
+
+- type: entity
+  id: SpawnPointTramDriver
+  parent: SpawnPointJobBase
+  name: tramdriver
+  components:
+  - type: SpawnPoint
+    job_id: TramDriver
+  - type: Sprite
+    layers:
+      - state: green
+      - state: tramdriver

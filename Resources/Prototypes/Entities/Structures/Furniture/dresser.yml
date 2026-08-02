@@ -6,6 +6,7 @@
   components:
   - type: Sprite
     sprite: Structures/Furniture/furniture.rsi
+    snapCardinals: true
     state: dresser
   - type: Damageable
     damageModifierSet: Wood
@@ -41,7 +42,6 @@
     tags:
     - Wooden
   - type: Anchorable
-  - type: Rotatable
   - type: Construction
     graph: Dresser
     node: dresser
