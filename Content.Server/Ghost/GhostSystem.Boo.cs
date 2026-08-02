@@ -42,7 +42,7 @@ public sealed partial class GhostSystem
         var anythingAffected = false;
         foreach (var ent in entities)
         {
-            GhostBooIntensity allowedIntensity = remainingIntensity > (int)GhostBooIntensity.Normal ? GhostBooIntensity.Normal : (GhostBooIntensity)remainingIntensity;
+            GhostBooIntensity allowedIntensity = remainingIntensity > (int)GhostBooIntensity.Extreme ? GhostBooIntensity.Extreme : (GhostBooIntensity)remainingIntensity;
 
             var ghostBoo = new GhostBooEvent(allowedIntensity);
             RaiseLocalEvent(ent, ref ghostBoo, true);
@@ -55,6 +55,7 @@ public sealed partial class GhostSystem
             {
                 case GhostBooIntensity.Subtle:
                 case GhostBooIntensity.Normal:
+                case GhostBooIntensity.Extreme:
                     remainingIntensity -= (int)ghostBoo.ResponseIntensity;
                     break;
                 default: // Out of enum, treat as though it's the highest intensity.
