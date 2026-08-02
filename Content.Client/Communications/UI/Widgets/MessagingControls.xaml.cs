@@ -12,7 +12,6 @@ namespace Content.Client.Communications.UI.Widgets;
 [GenerateTypedNameReferences]
 public sealed partial class MessagingControls : TabContainer
 {
-    [Dependency] private ILocalizationManager _loc = default!;
     [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private IEntityManager _entMan = default!;
 
@@ -47,7 +46,7 @@ public sealed partial class MessagingControls : TabContainer
         IoCManager.InjectDependencies(this);
         RobustXamlLoader.Load(this);
 
-        RadioMessageInput.Placeholder = new Rope.Leaf(_loc.GetString("comms-console-menu-announcement-placeholder"));
+        RadioMessageInput.Placeholder = new Rope.Leaf(Loc.GetString("comms-console-menu-announcement-placeholder"));
 
         RadioMessageInput.OnTextChanged += (_) => SyncButtonState();
 
@@ -98,18 +97,18 @@ public sealed partial class MessagingControls : TabContainer
             if (RadioMessageInput.TextLength > maxAnnounceLength)
             {
                 AnnounceButton.Disabled = true;
-                AnnounceButton.ToolTip = _loc.GetString("comms-console-message-too-long");
+                AnnounceButton.ToolTip = Loc.GetString("comms-console-message-too-long");
             }
             else
             {
                 AnnounceButton.Disabled = false;
-                AnnounceButton.ToolTip = _loc.GetString("comms-console-menu-announcement-button-tooltip");
+                AnnounceButton.ToolTip = Loc.GetString("comms-console-menu-announcement-button-tooltip");
             }
         }
         else
         {
             AnnounceButton.Disabled = true;
-            AnnounceButton.ToolTip = _loc.GetString("comms-console-message-cannot-send");
+            AnnounceButton.ToolTip = Loc.GetString("comms-console-message-cannot-send");
         }
 
         BroadcastButton.Disabled = !_canScreenBroadcast;

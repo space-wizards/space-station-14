@@ -13,7 +13,7 @@ public sealed partial class AlertLevelControls : BoxContainer
     [Dependency] private IPrototypeManager _protoman = default!;
 
     private bool _alertLevelSelectable;
-    private ProtoId<AlertLevelPrototype>?_currentAlertLevel = null;
+    private ProtoId<AlertLevelPrototype>? _currentAlertLevel = null;
 
     public event Action<string>? OnAlertLevelChanged;
 
@@ -44,8 +44,7 @@ public sealed partial class AlertLevelControls : BoxContainer
     /// Updates the UI components to display the current alert level and the
     /// selectable alert levels
     /// </summary>
-    public void UpdateAlertLevels(List<ProtoId<AlertLevelPrototype>>? selectableAlertLevels,
-        ProtoId<AlertLevelPrototype> currentAlertLevel, bool alertLevelSelectable)
+    public void UpdateAlertLevels(List<ProtoId<AlertLevelPrototype>>? selectableAlertLevels, ProtoId<AlertLevelPrototype> currentAlertLevel, bool alertLevelSelectable)
     {
         _alertLevelSelectable = alertLevelSelectable;
         _currentAlertLevel = currentAlertLevel;
