@@ -5595,3 +5595,10 @@ Entries:
   - type: Fix
     message: Баги на карте glacier, в том числе и отсутствие вентиляторов под некоторыми
       шлюзами. by Bogoslavv.
+- id: 544
+  author: MTF97
+  time: '2026-08-02T10:00:07.081240+00:00'
+  pr: 2067
+  changes:
+  - type: Fix
+    message: NanoTrasen прекратило снабжать станции дырявыми диванами
