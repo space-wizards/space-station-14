@@ -308,8 +308,11 @@ namespace Content.Server.Atmos.EntitySystems
         }
 
         /// <summary>
-        /// Extinguishes an entity, returning whether or not it was extinguished.
+        /// Extinguishes an entity if it can be extinguished.
         /// </summary>
+        /// <returns>
+        /// Whether or not the given entity was extinguished.
+        /// </returns>
         public bool Extinguish(EntityUid uid, FlammableComponent? flammable = null)
         {
             if (!Resolve(uid, ref flammable))

@@ -1,7 +1,6 @@
 using System.Linq;
 using System.Numerics;
 using Content.Server.Ghost;
-using Content.Server.Ghost.Components;
 using Content.Server.Revenant.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.Bed.Sleep;
@@ -76,7 +75,10 @@ public sealed partial class RevenantSystem
 
         // Try to do something spooky first.
         if (_ghost.DoGhostBooEvent(target))
+        {
+            args.Handled = true;
             return;
+        }
 
         if (!_mobStateQuery.HasComp(target) || !HasComp<HumanoidProfileComponent>(target) || HasComp<RevenantComponent>(target))
             return;
