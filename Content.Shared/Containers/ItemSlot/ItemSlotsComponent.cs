@@ -230,7 +230,7 @@ namespace Content.Shared.Containers.ItemSlots
         public EntityUid? Item => ContainerSlot?.ContainedEntity;
 
         /// <summary>
-        ///     Priority for use with the eject & insert verbs for this slot.
+        ///     Priority for use with the eject and insert verbs for this slot.
         /// </summary>
         [DataField]
         public int Priority = 0;

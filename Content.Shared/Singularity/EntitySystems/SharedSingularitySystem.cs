@@ -225,11 +225,12 @@ public abstract partial class SharedSingularitySystem : EntitySystem
     /// <summary>
     /// Derives the proper distortion shader falloff for a singularity from its state.
     /// </summary>
-    /// <param name="singulo">A singularity.</param>
+    /// <param name="level">The current level of the singularity.</param>
     /// <returns>The distortion shader falloff the singularity should have given its state.</returns>
     public float GetFalloff(float level)
     {
-        return level switch {
+        return level switch
+        {
             0 => 9999f,
             1 => MathF.Sqrt(6.4f),
             2 => MathF.Sqrt(7.0f),
@@ -237,18 +238,19 @@ public abstract partial class SharedSingularitySystem : EntitySystem
             4 => MathF.Sqrt(10.0f),
             5 => MathF.Sqrt(12.0f),
             6 => MathF.Sqrt(12.0f),
-            _ => -1.0f
+            _ => -1.0f,
         };
     }
 
     /// <summary>
     /// Derives the proper distortion shader intensity for a singularity from its state.
     /// </summary>
-    /// <param name="singulo">A singularity.</param>
+    /// <param name="level">The current level of the singularity.</param>
     /// <returns>The distortion shader intensity the singularity should have given its state.</returns>
     public float GetIntensity(float level)
     {
-        return level switch {
+        return level switch
+        {
             0 => 0.0f,
             1 => 3645f,
             2 => 103680f,
@@ -256,7 +258,7 @@ public abstract partial class SharedSingularitySystem : EntitySystem
             4 => 16200000f,
             5 => 180000000f,
             6 => 180000000f,
-            _ => -1.0f
+            _ => -1.0f,
         };
     }
 #endregion Derivations

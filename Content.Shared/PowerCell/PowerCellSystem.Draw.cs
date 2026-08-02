@@ -27,7 +27,7 @@ public sealed partial class PowerCellSystem
     /// </summary>
     /// <param name="ent">The device with the power cell slot.</param>
     /// <param name="user">Show a popup to this user with the relevant details if specified.</param>
-    /// <param name="user">Whether to predict the popup or not.</param>
+    /// <param name="predicted">Whether to predict the popup or not.</param>
     [PublicAPI]
     public bool HasActivatableCharge(Entity<PowerCellDrawComponent?, PowerCellSlotComponent?> ent, EntityUid? user = null, bool predicted = false)
     {
@@ -43,7 +43,7 @@ public sealed partial class PowerCellSystem
     /// </summary>
     /// <param name="ent">The device with the power cell slot.</param>
     /// <param name="user">Show a popup to this user with the relevant details if specified.</param>
-    /// <param name="user">Whether to predict the popup or not.</param>
+    /// <param name="predicted">Whether to predict the popup or not.</param>
     [PublicAPI]
     public bool TryUseActivatableCharge(Entity<PowerCellDrawComponent?, PowerCellSlotComponent?> ent, EntityUid? user = null, bool predicted = false)
     {
@@ -62,7 +62,7 @@ public sealed partial class PowerCellSystem
     /// </summary>
     /// <param name="ent">The device with the power cell slot.</param>
     /// <param name="user">Show a popup to this user with the relevant details if specified.</param>
-    /// <param name="user">Whether to predict the popup or not.</param>
+    /// <param name="predicted">Whether to predict the popup or not.</param>
     [PublicAPI]
     public bool HasDrawCharge(Entity<PowerCellDrawComponent?, PowerCellSlotComponent?> ent, EntityUid? user = null, bool predicted = false)
     {

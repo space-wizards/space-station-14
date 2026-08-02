@@ -130,7 +130,7 @@ public abstract partial class SharedPopupSystem : EntitySystem
     /// <param name="othersMessage">The message to display to everyone else in PVS range.</param>
     /// <param name="uid">The entity above which to display the popup.</param>
     /// <param name="recipient">The entity whose attached player will see the recipient message.</param>
-    /// <param name="type">Used to customize how this popup should appear visually.</param
+    /// <param name="type">Used to customize how this popup should appear visually.</param>
     public void PopupEntity(string? recipientMessage,
         string? othersMessage,
         EntityUid uid,

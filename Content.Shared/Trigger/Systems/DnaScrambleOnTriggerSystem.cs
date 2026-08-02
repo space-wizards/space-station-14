@@ -55,7 +55,6 @@ public sealed partial class DnaScrambleOnTriggerSystem : XOnTriggerSystem<DnaScr
 /// Raised after an entity has been DNA Scrambled.
 /// Useful for forks that need to run their own updates here.
 /// </summary>
-/// <param name="flag">The entity that had its DNA scrambled.</param>
-
+/// <param name="Target">The entity that had its DNA scrambled.</param>
 [ByRefEvent]
 public record struct DnaScrambledEvent(EntityUid Target);

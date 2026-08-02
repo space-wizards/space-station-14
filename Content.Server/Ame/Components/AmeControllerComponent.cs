@@ -37,7 +37,7 @@ public sealed partial class AmeControllerComponent : SharedAmeControllerComponen
 
     /// <summary>
     /// How stable the reactor currently is.
-    /// When this falls to <= 0 the reactor explodes.
+    /// When this falls to less than or equal to 0 the reactor explodes.
     /// </summary>
     [DataField("stability")]
     [ViewVariables(VVAccess.ReadWrite)]

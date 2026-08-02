@@ -3,7 +3,8 @@ using JetBrains.Annotations;
 namespace Content.Shared.Interaction.Events;
 
 /// <summary>
-///     Raised when an entity is dropped from a users hands, or directly removed from a users inventory, but not when moved between hands & inventory.
+/// Raised when an entity is dropped from a users hands, or directly removed from a users inventory,
+/// but not when moved between hands and inventory.
 /// </summary>
 [PublicAPI]
 public sealed class DroppedEvent : HandledEntityEventArgs

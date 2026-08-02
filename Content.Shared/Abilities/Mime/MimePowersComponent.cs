@@ -14,7 +14,7 @@ public sealed partial class MimePowersComponent : Component
 {
     /// <summary>
     /// Whether this component is active or not.
-    /// </summarY>
+    /// </summary>
     [DataField, AutoNetworkedField]
     public bool Enabled = true;
 

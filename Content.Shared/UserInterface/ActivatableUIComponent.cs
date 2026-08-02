@@ -32,7 +32,7 @@ namespace Content.Shared.UserInterface
         ///     Whether you need to be able to do complex interactions to operate this UI.
         /// </summary>
         /// <remarks>
-        ///     This should probably be true for most machines & computers, but there will still be UIs that represent a
+        ///     This should probably be true for most machines and computers, but there will still be UIs that represent a
         ///     more generic interaction / configuration that might not require complex.
         /// </remarks>
         [ViewVariables(VVAccess.ReadWrite)]

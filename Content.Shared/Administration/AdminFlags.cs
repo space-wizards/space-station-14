@@ -55,11 +55,6 @@
         Mapping = 1 << 8,
 
         /// <summary>
-        ///     Makes you british.
-        /// </summary>
-        //Piss = 1 << 9,
-
-        /// <summary>
         ///     Lets you view admin logs.
         /// </summary>
         Logs = 1 << 9,

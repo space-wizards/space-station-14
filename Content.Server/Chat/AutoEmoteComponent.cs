@@ -20,7 +20,7 @@ public sealed partial class AutoEmoteComponent : Component
     /// <summary>
     /// A dictionary storing the time of the next emote attempt for each emote.
     /// Uses AutoEmotePrototype IDs as keys.
-    /// <summary>
+    /// </summary>
     [ViewVariables(VVAccess.ReadOnly)] //TODO: make this a datafield and (de)serialize values as time offsets when https://github.com/space-wizards/RobustToolbox/issues/3768 is fixed
     public Dictionary<string, TimeSpan> EmoteTimers = new Dictionary<string, TimeSpan>();
 

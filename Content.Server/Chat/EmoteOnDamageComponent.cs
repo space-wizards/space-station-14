@@ -26,14 +26,14 @@ public sealed partial class EmoteOnDamageComponent : Component
 
     /// <summary>
     /// Also send the emote in chat.
-    /// <summary>
+    /// </summary>
     [DataField("withChat"), ViewVariables(VVAccess.ReadWrite)]
     public bool WithChat = false;
 
     /// <summary>
     /// Hide the chat message from the chat window, only showing the popup.
     /// This does nothing if WithChat is false.
-    /// <summary>
+    /// </summary>
     [DataField("hiddenFromChatWindow")]
     public bool HiddenFromChatWindow = false;
 

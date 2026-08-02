@@ -503,7 +503,7 @@ namespace Content.Shared.Examine
 
         /// <summary>
         ///     Message group handling. Call this if you want the next set of examine messages that you're adding to have
-        ///     a consistent order with regards to each other. This is done so that client & server will always
+        ///     a consistent order with regards to each other. This is done so that client and server will always
         ///     sort messages the same as well as grouped together properly, even if subscriptions are different.
         ///     You should wrap it in a using() block so popping automatically occurs.
         /// </summary>

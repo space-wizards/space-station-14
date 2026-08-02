@@ -8,7 +8,7 @@ using Robust.Shared.Graphics.RSI;
 namespace Content.Client.Explosion;
 
 /// <summary>
-///     This system is responsible for showing the client-side explosion effects (light source & fire-overlay). The
+///     This system is responsible for showing the client-side explosion effects (light source and fire-overlay). The
 ///     fire overlay code is just a bastardized version of the atmos plasma fire overlay and uses the same texture.
 /// </summary>
 public sealed partial class ExplosionOverlaySystem : EntitySystem

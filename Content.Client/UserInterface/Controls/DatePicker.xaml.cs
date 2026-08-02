@@ -11,7 +11,7 @@ namespace Content.Client.UserInterface.Controls;
 public sealed partial class DatePicker : Control
 {
     /// <summary>
-    /// Raised when <see cref="SelectedDate"> is changed.
+    /// Raised when <see cref="SelectedDate"/> is changed.
     /// </summary>
     public event Action? OnChanged;
 

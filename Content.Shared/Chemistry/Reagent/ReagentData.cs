@@ -7,7 +7,7 @@ namespace Content.Shared.Chemistry.Reagent;
 public abstract partial class ReagentData : IEquatable<ReagentData>
 {
     /// <summary>
-    /// Convert to a string representation. This if for logging & debugging. This is not localized and should not be
+    /// Convert to a string representation. This if for logging and debugging. This is not localized and should not be
     /// shown to players.
     /// </summary>
     public virtual string ToString(string prototype, FixedPoint2 quantity)
@@ -16,7 +16,7 @@ public abstract partial class ReagentData : IEquatable<ReagentData>
     }
 
     /// <summary>
-    /// Convert to a string representation. This if for logging & debugging. This is not localized and should not be
+    /// Convert to a string representation. This if for logging and debugging. This is not localized and should not be
     /// shown to players.
     /// </summary>
     public virtual string ToString(string prototype)

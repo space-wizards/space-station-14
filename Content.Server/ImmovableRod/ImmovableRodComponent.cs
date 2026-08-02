@@ -39,7 +39,7 @@ public sealed partial class ImmovableRodComponent : Component
     public bool DestroyTiles = true;
 
     /// <summary>
-    ///     If true, this will gib & delete bodies
+    ///     If true, this will gib and delete bodies
     /// </summary>
     [DataField]
     public bool ShouldGib = true;

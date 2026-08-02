@@ -3,7 +3,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Screech;
 
 /// <summary>
-/// Protects from the effects of screeches & other loud noises when worn on the HEAD, EARS or EYES slots.
+/// Protects from the effects of screeches and other loud noises when worn on the HEAD, EARS or EYES slots.
 /// Also protects the entity which has this component.
 /// </summary>
 [RegisterComponent, NetworkedComponent]

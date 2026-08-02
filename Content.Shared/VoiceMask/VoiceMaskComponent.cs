@@ -4,8 +4,8 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.VoiceMask;
 
 /// <summary>
-///     This component is for voice mask items & voice-masking entities! Adding this component to clothing will give the voice mask UI
-///     and allow the wearer to change their voice and verb at will.
+///     This component is for voice mask items and voice-masking entities! Adding this component to clothing will
+///     give the voice mask UI and allow the wearer to change their voice and verb at will.
 ///     Having this on an entity while the IsInnate field is true will give it an innate voice masking ability.
 /// </summary>
 /// <remarks>
@@ -65,8 +65,10 @@ public sealed partial class VoiceMaskComponent : Component
 
     /// <summary>
     ///     Whether the voice mask is innate to the entity.
-    ///     When added to an entity while this field is set to true, the entity itself will gain the action & UI necessary to change its voice.
-    ///     When this field is set to false, then the entity with this component will be a provider (either through implanting or through wearing) of the voice masking abilities for another entity.
+    ///     When added to an entity while this field is set to true, the entity itself will gain the action
+    ///     and UI necessary to change its voice.
+    ///     When this field is set to false, then the entity with this component will be a provider
+    ///     (either through implanting or through wearing) of the voice masking abilities for another entity.
     /// </summary>
     [DataField]
     public bool IsInnate = false;

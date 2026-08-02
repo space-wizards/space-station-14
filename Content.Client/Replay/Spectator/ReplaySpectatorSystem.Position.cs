@@ -13,7 +13,7 @@ namespace Content.Client.Replay.Spectator;
 public sealed partial class ReplaySpectatorSystem
 {
     /// <summary>
-    /// Simple struct containing position & rotation data for maintaining a persistent view when jumping around in time.
+    /// Simple struct containing position and rotation data for maintaining a persistent view when jumping around in time.
     /// </summary>
     public struct SpectatorData
     {

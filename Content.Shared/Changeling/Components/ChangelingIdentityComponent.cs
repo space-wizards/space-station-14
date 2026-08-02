@@ -119,7 +119,7 @@ public sealed partial class ChangelingIdentityData
     public bool GrantedDna = false;
 
     /// <summary>
-    /// Convert to a string representation. This if for logging & debugging. This is not localized and should not be
+    /// Convert to a string representation. This if for logging and debugging. This is not localized and should not be
     /// shown to players.
     /// </summary>
     public override string ToString()

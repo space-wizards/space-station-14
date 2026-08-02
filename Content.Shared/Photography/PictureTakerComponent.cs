@@ -11,7 +11,7 @@ namespace Content.Shared.Photography;
 public sealed partial class PictureTakerComponent : Component
 {
     /// <summary>
-    /// The entities that will be spawned & given a PhotographComponent when the owning entity is used.
+    /// The entities that will be spawned and given a PhotographComponent when the owning entity is used.
     /// The table should only select one item at a time.
     /// </summary>
     [DataField]

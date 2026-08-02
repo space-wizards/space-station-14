@@ -10,7 +10,7 @@ using Robust.Shared.Toolshed.Commands.Values;
 namespace Content.Shared.Maps;
 
 /// <summary>
-///     This system provides various useful helper methods for turfs & tiles. Replacement for <see cref="TurfHelpers"/>
+///     This system provides various useful helper methods for turfs and tiles. Replacement for <see cref="TurfHelpers"/>
 /// </summary>
 public sealed partial class TurfSystem : EntitySystem
 {

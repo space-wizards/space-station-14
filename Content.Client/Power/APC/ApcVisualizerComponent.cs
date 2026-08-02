@@ -19,7 +19,7 @@ public sealed partial class ApcVisualsComponent : Component
 
     /// <summary>
     /// The prefix used for the sprite state suffix of the lock indicator lights.
-    /// Valid states are of the form \<BASE\>\<PREFIX\>\<IDX>\-\<STATE\>
+    /// Valid states are of the form <c>{BASE}{PREFIX}{IDX}-{STATE}</c>
     /// </summary>
     [DataField("lockIndicatorPrefix")]
     [ViewVariables(VVAccess.ReadWrite)]
@@ -27,7 +27,7 @@ public sealed partial class ApcVisualsComponent : Component
 
     /// <summary>
     /// The suffixes used for the sprite state suffix of the lock indicator lights.
-    /// Valid states are of the form \<PREFIX\>\<IDX\>-\<STATE\>
+    /// Valid states are of the form <c>{PREFIX}{IDX}-{STATE}</c>
     /// </summary>
     [DataField("lockIndicatorSuffixes")]
     [ViewVariables(VVAccess.ReadWrite)]
@@ -46,7 +46,7 @@ public sealed partial class ApcVisualsComponent : Component
 
     /// <summary>
     /// The prefix used for the sprite state suffix of the channel indicator lights.
-    /// Valid states are of the form \<BASE\>\<PREFIX\>\<IDX\>-\<STATE\>
+    /// Valid states are of the form <c>{BASE}{PREFIX}{IDX}-{STATE}</c>
     /// </summary>
     [DataField("channelIndicatorPrefix")]
     [ViewVariables(VVAccess.ReadWrite)]
@@ -54,7 +54,7 @@ public sealed partial class ApcVisualsComponent : Component
 
     /// <summary>
     /// The suffixes used for the sprite state suffix of the channel indicator lights.
-    /// Valid states are of the form \<PREFIX\>\<IDX\>-\<STATE\>
+    /// Valid states are of the form <c>{PREFIX}{IDX}-{STATE}</c>
     /// </summary>
     [DataField("channelIndicatorSuffixes")]
     [ViewVariables(VVAccess.ReadWrite)]
@@ -68,7 +68,7 @@ public sealed partial class ApcVisualsComponent : Component
 
     /// <summary>
     /// The prefix used to construct the sprite state suffix used for the screen overlay.
-    /// Valid sprite states are of the form \<PREFIX\>-\<SUFFIX\>.
+    /// Valid sprite states are of the form <c>{PREFIX}-{SUFFIX}</c>.
     /// </summary>
     [DataField("screenStatePrefix")]
     [ViewVariables(VVAccess.ReadWrite)]
@@ -76,7 +76,7 @@ public sealed partial class ApcVisualsComponent : Component
 
     /// <summary>
     /// The suffix used to construct the sprite state suffix used for the screen overlay.
-    /// Valid sprite states are of the form \<PREFIX\>-\<STATE\>.
+    /// Valid sprite states are of the form <c>{PREFIX}-{SUFFIX}</c>.
     /// </summary>
     [DataField("screenStateSuffixes")]
     [ViewVariables(VVAccess.ReadWrite)]

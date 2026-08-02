@@ -5,7 +5,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.UserInterface.Controls.FancyTree;
 
 /// <summary>
-///     This is a basic control that draws the lines connecting parents & children in a tree.
+///     This is a basic control that draws the lines connecting parents and children in a tree.
 /// </summary>
 /// <remarks>
 ///     Ideally this would just be a draw method in <see cref="TreeItem"/>, but sadly the draw override gets called BEFORE children are drawn.

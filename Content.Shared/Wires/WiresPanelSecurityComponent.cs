@@ -3,9 +3,9 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Wires;
 
 /// <summary>
-///     Allows hacking protections to a be added to an entity.
+///     Allows hacking protections to be added to an entity.
 ///     These safeguards are determined via a construction graph,
-///     so the entity requires <cref="ConstructionComponent"/> for this to function 
+///     so the entity requires <see cref="ConstructionComponent"/> for this to function
 /// </summary>
 [NetworkedComponent, RegisterComponent]
 [Access(typeof(SharedWiresSystem))]

@@ -433,8 +433,8 @@ public abstract partial class SharedMindSystem : EntitySystem
     /// </remarks>
     /// <param name="source"> mind entity of the player to copy from </param>
     /// <param name="target"> mind entity of the player to copy to </param>
-    /// <param name="except"> whitelist for objectives that should be copied </param>
-    /// <param name="except"> blacklist for objectives that should not be copied </param>
+    /// <param name="whitelist"> whitelist for objectives that should be copied </param>
+    /// <param name="blacklist"> blacklist for objectives that should not be copied </param>
     public void CopyObjectives(Entity<MindComponent?> source, Entity<MindComponent?> target, EntityWhitelist? whitelist = null, EntityWhitelist? blacklist = null)
     {
         if (!Resolve(source, ref source.Comp) || !Resolve(target, ref target.Comp))
@@ -455,7 +455,7 @@ public abstract partial class SharedMindSystem : EntitySystem
     /// </summary>
     /// <remarks>
     /// Will not work for objectives that have no prototype, or duplicate objectives with the same prototype.
-    /// <//remarks>
+    /// </remarks>
     public bool TryFindObjective(Entity<MindComponent?> mind, string prototype, [NotNullWhen(true)] out EntityUid? objective)
     {
         objective = null;

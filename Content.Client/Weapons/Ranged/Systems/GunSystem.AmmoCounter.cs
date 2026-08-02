@@ -25,8 +25,6 @@ public sealed partial class GunSystem
     /// <summary>
     /// Refreshes the control being used to show ammo. Useful if you change the AmmoProvider.
     /// </summary>
-    /// <param name="uid"></param>
-    /// <param name="component"></param>
     private void RefreshControl(Entity<AmmoCounterComponent> ent)
     {
         ent.Comp.Control?.Dispose();

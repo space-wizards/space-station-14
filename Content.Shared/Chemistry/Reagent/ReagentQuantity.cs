@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Chemistry.Reagent;
 
 /// <summary>
-/// Simple struct for storing a <see cref="ReagentId"/> & quantity tuple.
+/// Simple struct for storing a <see cref="ReagentId"/> and quantity tuple.
 /// </summary>
 [Serializable, NetSerializable]
 [DataDefinition]

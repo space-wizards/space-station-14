@@ -7,18 +7,18 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.TextScreen;
 
-/// overview:
-/// Data is passed from server to client through <see cref="SharedAppearanceSystem.SetData"/>,
-/// calling <see cref="OnAppearanceChange"/>, which calls almost everything else.
+// overview:
+// Data is passed from server to client through <see cref="SharedAppearanceSystem.SetData"/>,
+// calling <see cref="OnAppearanceChange"/>, which calls almost everything else.
 
-/// Data for the (at most one) timer is stored in <see cref="TextScreenTimerComponent"/>.
+// Data for the (at most one) timer is stored in <see cref="TextScreenTimerComponent"/>.
 
-/// All screens have <see cref="TextScreenVisualsComponent"/>, but:
-/// the update method only updates the timers, so the timercomp is added/removed by appearance changes/timing out.
+// All screens have <see cref="TextScreenVisualsComponent"/>, but:
+// the update method only updates the timers, so the timercomp is added/removed by appearance changes/timing out.
 
-/// Because the sprite component stores layers in a dict with no nesting, individual layers
-/// have to be mapped to unique ids e.g. {"textMapKey01" : <first row, second char layerstate>}
-/// in either the visuals or timer component.
+// Because the sprite component stores layers in a dict with no nesting, individual layers
+// have to be mapped to unique ids e.g. {"textMapKey01" : <b>{first row, second char layerstate}</b>}
+// in either the visuals or timer component.
 
 
 /// <summary>
@@ -240,7 +240,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
     }
 
     /// <summary>
-    ///     Populates timer.LayerStatesToDraw & the sprite component's layer dict with calculated offsets.
+    ///     Populates timer.LayerStatesToDraw and the sprite component's layer dict with calculated offsets.
     /// </summary>
     private void BuildTimerLayers(EntityUid uid, TextScreenTimerComponent timer, TextScreenVisualsComponent screen)
     {

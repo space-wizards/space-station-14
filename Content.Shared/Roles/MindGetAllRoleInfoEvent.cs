@@ -10,11 +10,10 @@ namespace Content.Shared.Roles;
 public readonly record struct MindGetAllRoleInfoEvent(List<RoleInfo> Roles);
 
 /// <summary>
-///     Returned by <see cref="MindGetAllRolesEvent"/> to give some information about a player's role.
+///     Returned by <see cref="MindGetAllRoleInfoEvent"/> to give some information about a player's role.
 /// </summary>
-/// <param name="Component">Role component associated with the mind entity id.</param>
 /// <param name="Name">Name of the role.</param>
-/// <param name="Antagonist">Whether or not this role makes this player an antagonist.</param>
+/// <param name="Antagonist">Whether this role makes this player an antagonist.</param>
 /// <param name="PlayTimeTrackerId">The <see cref="PlayTimeTrackerPrototype"/> id associated with the role.</param>
 /// <param name="Prototype">The prototype ID of the role</param>
 public readonly record struct RoleInfo(string Name, bool Antagonist, string? PlayTimeTrackerId, string Prototype);

@@ -268,7 +268,8 @@ public abstract partial class SharedIdCardSystem : EntitySystem
     /// Changes the name of the id's owner.
     /// </summary>
     /// <remarks>
-    /// If either <see cref="FullName"/> or <see cref="JobTitle"/> is empty, it's replaced by placeholders.
+    /// If either <see cref="IdCardComponent.FullName">Fullname</see> or
+    /// <see cref="IdCardComponent.JobTitle">JobTitle</see> is empty, it's replaced by placeholders.
     /// If both are empty, the original entity's name is restored.
     /// </remarks>
     private void UpdateEntityName(EntityUid uid, IdCardComponent? id = null)

@@ -24,11 +24,11 @@ public sealed class BatterySystem : SharedBatterySystem
         // have to set the charge in an update loop instead of using a <see cref="RefreshChargeRateEvent"/> subscription.
         // This is usually the case for APCs, SMES, battery powered turrets or similar.
         // For those entities you should disable net sync for the battery in your prototype, using
-        /// <code>
-        /// - type: Battery
-        ///   netSync: false
-        /// </code>
-        /// This disables networking and prediction for this battery.
+        // <code>
+        // - type: Battery
+        //   netSync: false
+        // </code>
+        // This disables networking and prediction for this battery.
         if (!ent.Comp.NetSyncEnabled)
             return;
 

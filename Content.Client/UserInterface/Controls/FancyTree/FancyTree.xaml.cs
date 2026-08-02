@@ -36,12 +36,12 @@ public sealed partial class FancyTree : Control
     private bool _rowStyleUpdateQueued = true;
 
     /// <summary>
-    ///     Whether or not to draw the lines connecting parents & children.
+    ///     Whether to draw the lines connecting parents and children.
     /// </summary>
     public bool DrawLines = true;
 
     /// <summary>
-    ///     Colour of the lines connecting parents & their child entries.
+    ///     Color of the lines connecting parents and their child entries.
     /// </summary>
     public Color LineColor = Color.White;
 
@@ -51,11 +51,11 @@ public sealed partial class FancyTree : Control
     public Color IconColor = Color.White;
 
     /// <summary>
-    ///     Width of the lines connecting parents & their child entries.
+    ///     Width of the lines connecting parents and their child entries.
     /// </summary>
     public int LineWidth = 2;
 
-    // If people ever want to customize this, this should be a style parameter/
+    // If people ever want to customize this, this should be a style parameter
     public const int Indentation = 16;
 
     public const string DefaultIconExpanded = "/Textures/Interface/Nano/inverted_triangle.svg.png";

@@ -122,7 +122,7 @@ public abstract partial class InteractionTest
     }
 
     /// <summary>
-    /// Convert an entity-uid to a matching entity specifier. Useful when doing entity lookups & checking that the
+    /// Convert an entity-uid to a matching entity specifier. Useful when doing entity lookups and checking that the
     /// right quantity of entities/materials were produced. Returns null if passed an entity with a null prototype.
     /// </summary>
     protected EntitySpecifier? ToEntitySpecifier(EntityUid uid)

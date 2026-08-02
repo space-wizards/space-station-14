@@ -543,10 +543,7 @@ public abstract partial class SharedBuckleSystem
     /// <summary>
     /// Once the do-after is complete, try to buckle target to chair/bed
     /// </summary>
-    /// <param name="args.Target"> The person being put in the chair/bed</param>
-    /// <param name="args.User"> The person putting a person in a chair/bed</param>
-    /// <param name="args.Used"> The chair/bed </param>
-
+    /// <param name="args"> The arguments for the event. </param>
     private void OnBuckleDoafter(Entity<BuckleComponent> entity, ref BuckleDoAfterEvent args)
     {
         if (args.Cancelled || args.Handled || args.Target == null || args.Used == null)
@@ -559,9 +556,7 @@ public abstract partial class SharedBuckleSystem
     /// If the target being buckled to a chair/bed goes crit or is cuffed
     /// Cancel the do-after time and try to buckle the target immediately
     /// </summary>
-    /// <param name="args.Target"> The person being put in the chair/bed</param>
-    /// <param name="args.User"> The person putting a person in a chair/bed</param>
-    /// <param name="args.Used"> The chair/bed </param>
+    /// <param name="args"> The arguments for the event. </param>
     private void BuckleDoafterEarly(Entity<BuckleComponent> entity, BuckleDoAfterEvent args, CancellableEntityEventArgs ev)
     {
         if (args.Target == null || args.Used == null)

@@ -102,6 +102,7 @@ namespace Content.Server.Kitchen.Components
 
         /// <summary>
         /// Chance of lightning occurring when we microwave a metallic object
+        /// </summary>
         [DataField, ViewVariables(VVAccess.ReadWrite)]
         public float LightningChance = .75f;
 

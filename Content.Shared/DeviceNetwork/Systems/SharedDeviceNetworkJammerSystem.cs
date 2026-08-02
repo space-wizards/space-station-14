@@ -26,6 +26,7 @@ public abstract class SharedDeviceNetworkJammerSystem : EntitySystem
 
     /// <summary>
     /// Returns the set of networks that this entity can jam.
+    /// </summary>
     public IReadOnlySet<string> GetJammableNetworks(Entity<DeviceNetworkJammerComponent> ent)
     {
         return ent.Comp.JammableNetworks;

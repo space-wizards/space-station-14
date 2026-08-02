@@ -138,8 +138,8 @@ public abstract partial class SharedBorgSystem
             if (TryComp<BorgModuleIconComponent>(module, out var moduleIconComp))
                 _actions.SetIcon(actEnt, moduleIconComp.Icon);
 
-            /// Set a custom name and description on the action. The borg module action prototypes are shared across
-            /// all modules. Extract localized names, then populate variables with the info from the module itself.
+            // Set a custom name and description on the action. The borg module action prototypes are shared across
+            // all modules. Extract localized names, then populate variables with the info from the module itself.
             var moduleName = Name(module);
             var actionMetaData = MetaData(module.Comp.ModuleSwapActionEntity.Value);
 

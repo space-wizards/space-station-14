@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Magic.Events;
 
 /// <summary>
-///     Spell that uses the magic of ECS to add & remove components. Components are first removed, then added.
+/// Spell that uses the magic of ECS to add and remove components. Components are first removed, then added.
 /// </summary>
 public sealed partial class ChangeComponentsSpellEvent : EntityTargetActionEvent
 {

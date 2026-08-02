@@ -21,7 +21,7 @@ public sealed partial class SkinColorationPrototype : IPrototype
     [DataField(required: true)]
     public ISkinColorationStrategy Strategy = default!;
 
-    //// <summary>
+    /// <summary>
     ///     If true, will randomly generate realistic hair and eye colors.
     ///     Will also crush randomly generated colors down to the skin's luminosity
     ///     so markings don't appear too bright on darker skin.
@@ -75,7 +75,7 @@ public interface ISkinColorationStrategy
     Color ClosestSkinColor(Color color);
 
     /// <summary>
-    /// Returns the input if it passes <see cref="VerifySkinColor">, otherwise returns <see cref="ClosestSkinColor" />
+    /// Returns the input if it passes <see cref="VerifySkinColor"/>, otherwise returns <see cref="ClosestSkinColor"/>
     /// </summary>
     Color EnsureVerified(Color color)
     {

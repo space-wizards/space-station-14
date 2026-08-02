@@ -72,7 +72,7 @@ namespace Content.Shared.Strip.Components
     public sealed class BeforeGettingStrippedEvent(TimeSpan initialTime, bool stealth = false) : BaseBeforeStripEvent(initialTime, stealth);
 
     /// <summary>
-    ///     Organizes the behavior of DoAfters for <see cref="StrippableSystem">.
+    ///     Organizes the behavior of DoAfters for <see cref="StrippableSystem"/>.
     /// </summary>
     [Serializable, NetSerializable]
     public sealed partial class StrippableDoAfterEvent : DoAfterEvent

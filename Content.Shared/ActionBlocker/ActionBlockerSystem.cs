@@ -67,7 +67,7 @@ namespace Content.Shared.ActionBlocker
         ///     If this is a generic interaction without a target (e.g., stop-drop-and-roll when burning), the target
         ///     may be null. Note that this is checked by <see cref="SharedInteractionSystem"/>. In the majority of
         ///     cases, systems that provide interactions will not need to check this themselves, though they may need to
-        ///     check other blockers like <see cref="CanPickup(EntityUid)"/>
+        ///     check other blockers like <see cref="CanPickup"/>
         /// </remarks>
         /// <returns></returns>
         public bool CanInteract(EntityUid user, EntityUid? target)

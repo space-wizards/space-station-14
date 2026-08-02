@@ -21,7 +21,7 @@ public abstract partial class SharedResearchStealerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Start do after for downloading techs from a r&d server.
+    /// Start do after for downloading techs from an RnD server.
     /// Will only try if there is at least 1 tech researched.
     /// </summary>
     private void OnBeforeInteractHand(EntityUid uid, ResearchStealerComponent comp, BeforeInteractHandEvent args)

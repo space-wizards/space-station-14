@@ -61,8 +61,8 @@ public sealed partial class CCVars
     /// </summary>
     /// <remarks>
     ///     This time limiting is not perfectly implemented. Firstly, a significant chunk of processing time happens
-    ///     due to queued entity deletions, which happen outside of the system update code. Secondly, explosion
-    ///     spawning cannot currently be interrupted & resumed, and may lead to exceeding this time limit.
+    ///     due to queued entity deletions, which happen outside the system update code. Secondly, explosion
+    ///     spawning cannot currently be interrupted and resumed, and may lead to exceeding this time limit.
     /// </remarks>
     public static readonly CVarDef<float> ExplosionMaxProcessingTime =
         CVarDef.Create("explosion.max_tick_time", 7f, CVar.SERVERONLY);
@@ -72,8 +72,8 @@ public sealed partial class CCVars
     ///     updating the grid tiles should be done incrementally at the end of every tick, or only once the explosion has finished processing.
     /// </summary>
     /// <remarks>
-    ///     The most notable consequence of this change is that explosions will only punch a hole in the station &
-    ///     create a vacumm once they have finished exploding. So airlocks will no longer slam shut as the explosion
+    ///     The most notable consequence of this change is that explosions will only punch a hole in the station and
+    ///     create a vacuum once they have finished exploding. So airlocks will no longer slam shut as the explosion
     ///     expands, just suddenly at the end.
     /// </remarks>
     public static readonly CVarDef<bool> ExplosionIncrementalTileBreaking =

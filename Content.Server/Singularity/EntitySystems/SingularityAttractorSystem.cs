@@ -88,8 +88,7 @@ public sealed partial class SingularityAttractorSystem : EntitySystem
     /// <summary>
     /// Resets the pulse timings of the attractor when the component starts up.
     /// </summary>
-    /// <param name="uid">The uid of the attractor to start up.</param>
-    /// <param name="comp">The state of the attractor to start up.</param>
+    /// <param name="ent">The uid of the attractor to start up.</param>
     /// <param name="args">The startup prompt arguments.</param>
     private void OnMapInit(Entity<SingularityAttractorComponent> ent, ref MapInitEvent args)
     {

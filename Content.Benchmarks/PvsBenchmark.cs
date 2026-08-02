@@ -149,7 +149,7 @@ public class PvsBenchmark
     /// This effectively provides a lower bound on "real" pvs tick time, as it is missing:
     /// - PVS chunks getting dirtied and needing to be rebuilt
     /// - Fetching component states for dirty components
-    /// - Compressing & sending network messages
+    /// - Compressing and sending network messages
     /// - Sending PVS leave messages
     /// </summary>
     [Benchmark]

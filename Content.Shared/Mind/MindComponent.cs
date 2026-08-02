@@ -20,7 +20,7 @@ namespace Content.Shared.Mind;
 ///     Getting borged, cloned, turned into a catbeast, etc... will keep it following you.
 ///
 ///     Minds are stored in null-space, and are thus generally not set to players unless that player is the owner
-///     of the mind. As a result it should be safe to network "secret" information like roles & objectives
+///     of the mind. As a result it should be safe to network "secret" information like roles and objectives
 /// </remarks>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 public sealed partial class MindComponent : Component
