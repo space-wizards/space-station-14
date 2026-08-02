@@ -247,8 +247,17 @@
   name: salt container
   description: A big container of salt. Experts debate whether it contains any iodine.
   components:
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "salt-big_open"} # open
+          False: {state: "salt-big"} # closed
   - type: Sprite
-    state: salt-big
+    layers: 
+    - state: salt-big
+      map: ["enum.OpenableVisuals.Layer"]
   - type: Solution
     solution:
       reagents:
@@ -261,8 +270,17 @@
   name: pepper container
   description: A big container of pepper. The king of spices, now in value size!
   components:
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "pepper-big_open"} # open
+          False: {state: "pepper-big"} # closed
   - type: Sprite
-    state: pepper-big
+    layers: 
+    - state: pepper-big
+      map: ["enum.OpenableVisuals.Layer"]
   - type: Solution
     solution:
       reagents:
