@@ -53,13 +53,13 @@ loadout-group-bartender-jumpsuit = Бармен, комбинезон
 loadout-group-bartender-outerclothing = Бармен, верхняя одежда
 loadout-group-bartender-underwear = Бармен, нижнее бельё
 
-loadout-group-chef-head = Шеф-повар, голова
-loadout-group-chef-mask = Шеф-повар, маска
-loadout-group-chef-jumpsuit = Шеф-повар, комбинезон
-loadout-group-chef-outerclothing = Шеф-повар, верхняя одежда
-loadout-group-chef-hand = Шеф-повар, рука
-loadout-group-chef-underwear = Шеф-повар, нижнее бельё
-loadout-group-chef-gloves = Шеф-повар, перчатки
+loadout-group-chef-head = Повар, голова
+loadout-group-chef-mask = Повар, маска
+loadout-group-chef-jumpsuit = Повар, комбинезон
+loadout-group-chef-outerclothing = Повар, верхняя одежда
+loadout-group-chef-hand = Повар, рука
+loadout-group-chef-underwear = Повар, нижнее бельё
+loadout-group-chef-gloves = Повар, перчатки
 
 loadout-group-librarian-jumpsuit = Библиотекарь, комбинезон
 loadout-group-librarian-underwear = Библиотекарь, нижнее бельё

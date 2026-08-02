@@ -33,8 +33,8 @@
   - Origin
   - Packed
   # - Plasma # broken map, needs resave
-  - Reach
+  # - Reach # removed by RIP6100 remap in progress
   # - Exo # map prototype is commented out
   - Saltern
-#  - Snowball #DS14
+  # - Snowball #DS14
   - Train

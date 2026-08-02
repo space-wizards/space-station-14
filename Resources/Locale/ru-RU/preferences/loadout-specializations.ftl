@@ -1,4 +1,4 @@
-loadout-group-chef-specialization = Шеф-повар, специализация
+loadout-group-chef-specialization = Повар, специализация
 loadout-group-lawyer-specialization = Юрист, специализация
 loadout-group-doctor-specialization = Врач, специализация
 loadout-group-service-specialization = Сервисный работник, специализация
@@ -9,16 +9,17 @@ loadout-group-salvage-specialization = Утилизатор, специализ�
 loadout-group-botanist-specialization = Ботаник, специализация
 loadout-group-passenger-specialization = Ассистент, специализация
 loadout-group-atmospheric-specialization = Атмосферный техник, специализация
-loadout-group-detective-specialization = Детектив, специализация
+loadout-group-librarian-specialization = Библиотекарь, специализация
 loadout-group-psychologist-specialization = Психолог, специализация
 loadout-group-clown-specialization = Клоун, специализация
 
 
-# Шеф-повар
+# Повар
 job-title-chef-confectioner = Кондитер
 job-title-chef-baker = Пекарь
 job-title-chef-butcher = Мясник
 job-title-chef-sous-chef = Су-шеф
+job-title-chef-chief = Шеф-повар
 
 # Юрист
 job-title-lawyer-advocate = Адвокат
@@ -45,7 +46,7 @@ job-title-scientist-roboticist = Робототехник
 job-title-engineer-electrician = Электрик
 job-title-engineer-repairman = Ремонтник
 job-title-engineer-mechanic = Механик
-job-title-engineer-nuclear = Ядерщик
+job-title-engineer-nuclear = Инженер-ядерщик
 job-title-engineer-welder = Сварщик
 
 # Грузчик
@@ -67,9 +68,8 @@ job-title-passenger-handyman = Разнорабочий
 # Атмосферный техник
 job-title-atmospheric-lifesupport = Специалист СЖО
 
-# Детектив
-job-title-detective-criminalist = Криминалист
-job-title-detective-operative = Оперуполномоченный
+# Библиотекарь
+job-title-librarian-gamemaster = Гейм-мастер
 
 # Психолог
 job-title-psychologist-psychotherapist = Психотерапевт

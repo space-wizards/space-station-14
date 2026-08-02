@@ -36,6 +36,13 @@
   name: Су-шеф
   description: Правая рука Шефа на кухне.
 
+- type: entity
+  parent: BaseLoadoutChefSpecialization
+  id: LoadoutChefChief
+  categories: [ HideSpawnMenu ]
+  name: Шеф-повар
+  description: Глава кухни. Высшая кулинарная специализация повара.
+
 - type: loadout
   id: ChefTitleConfectioner
   dummyEntity: LoadoutChefConfectioner
@@ -82,7 +89,19 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobChef
-      time: 36000 # 10 часов
+      time: 54000 # 15 часов
+
+- type: loadout
+  id: ChefTitleChief
+  dummyEntity: LoadoutChefChief
+  effects:
+  - !type:JobTitleLoadoutEffect
+    title: job-title-chef-chief
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobChef
+      time: 108000 # 30 часов как у золотого ножа
 
 - type: loadoutGroup
   id: ChefSpecialization
@@ -94,6 +113,7 @@
   - ChefTitleBaker
   - ChefTitleButcher
   - ChefTitleSousChef
+  - ChefTitleChief
 
 # Юрист
 - type: entity
@@ -820,62 +840,42 @@
   loadouts:
   - AtmosphericTitleLifeSupport
 
-# Детектив
+# Библиотекарь
 - type: entity
   abstract: true
-  id: BaseLoadoutDetectiveSpecialization
+  id: BaseLoadoutLibrarianSpecialization
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Interface/Misc/job_icons.rsi
-    state: Detective
+    state: Librarian
 
 - type: entity
-  parent: BaseLoadoutDetectiveSpecialization
-  id: LoadoutDetectiveCriminalist
+  parent: BaseLoadoutLibrarianSpecialization
+  id: LoadoutLibrarianGameMaster
   categories: [ HideSpawnMenu ]
-  name: Криминалист
-  description: Специализация детектива на криминалистике и экспертизах.
-
-- type: entity
-  parent: BaseLoadoutDetectiveSpecialization
-  id: LoadoutDetectiveOperative
-  categories: [ HideSpawnMenu ]
-  name: Оперуполномоченный
-  description: Специализация детектива на оперативно-розыскной работе.
+  name: Гейм-мастер
+  description: Специализация библиотекаря на проведении настольных ролевых игр.
 
 - type: loadout
-  id: DetectiveTitleCriminalist
-  dummyEntity: LoadoutDetectiveCriminalist
+  id: LibrarianTitleGameMaster
+  dummyEntity: LoadoutLibrarianGameMaster
   effects:
   - !type:JobTitleLoadoutEffect
-    title: job-title-detective-criminalist
+    title: job-title-librarian-gamemaster
   - !type:JobRequirementLoadoutEffect
     requirement:
       !type:RoleTimeRequirement
-      role: JobDetective
+      role: JobLibrarian
       time: 18000
 
-- type: loadout
-  id: DetectiveTitleOperative
-  dummyEntity: LoadoutDetectiveOperative
-  effects:
-  - !type:JobTitleLoadoutEffect
-    title: job-title-detective-operative
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
-      role: JobDetective
-      time: 36000
-
 - type: loadoutGroup
-  id: DetectiveSpecialization
-  name: loadout-group-detective-specialization
+  id: LibrarianSpecialization
+  name: loadout-group-librarian-specialization
   minLimit: 0
   maxLimit: 1
   loadouts:
-  - DetectiveTitleCriminalist
-  - DetectiveTitleOperative
+  - LibrarianTitleGameMaster
 
 # Психолог
 - type: entity

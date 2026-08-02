@@ -654,3 +654,19 @@
   canBuildInImpassable: false
   conditions:
   - !type:TileNotBlocked
+
+- type: construction
+  id: CatwalkDark
+  graph: CatwalkDark
+  startNode: start
+  targetNode: CatwalkDark
+  category: construction-category-structures
+  conditions:
+    - !type:TileNotBlocked
+      failIfSpace: false
+    - !type:TileType
+      targets:
+        - Lattice
+        - Plating
+  objectType: Structure
+  placementMode: SnapgridCenter
