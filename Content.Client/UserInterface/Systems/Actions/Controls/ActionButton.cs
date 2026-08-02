@@ -7,6 +7,7 @@ using Content.Shared.Charges.Components;
 using Content.Shared.Charges.Systems;
 using Content.Shared.Examine;
 using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -29,6 +30,7 @@ public sealed class ActionButton : Control, IEntityControl
     private bool _beingHovered;
     private bool _depressed;
     private bool _toggled;
+    private Texture? _slotBackground;
 
     public BoundKeyFunction? KeyBind
     {
@@ -167,6 +169,8 @@ public sealed class ActionButton : Control, IEntityControl
     {
         base.OnThemeUpdated();
         Label.FontColorOverride = Theme.ResolveColorOrSpecified("whiteText");
+        _slotBackground = Theme.ResolveTexture("SlotBackground");
+        UpdateBackground();
     }
 
     private void OnPressed(GUIBoundKeyEventArgs args)
@@ -289,7 +293,7 @@ public sealed class ActionButton : Control, IEntityControl
         if (Action != null ||
             _controller.IsDragging && GetPositionInParent() == Parent?.ChildCount - 1)
         {
-            Button.Texture = Theme.ResolveTexture("SlotBackground");
+            Button.Texture = _slotBackground;
         }
         else
         {
@@ -326,8 +330,6 @@ public sealed class ActionButton : Control, IEntityControl
     protected override void FrameUpdate(FrameEventArgs args)
     {
         base.FrameUpdate(args);
-
-        UpdateBackground();
 
         Cooldown.Visible = false;
         if (Action?.Comp is not {} action)
