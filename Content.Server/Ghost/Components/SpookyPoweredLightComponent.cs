@@ -35,5 +35,3 @@ public sealed partial class SpookyPoweredLightComponent : Component
     [DataField]
     public GhostBooIntensity BooIntensity = GhostBooIntensity.Normal;
 }
-
-
