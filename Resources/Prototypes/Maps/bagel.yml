@@ -2,8 +2,7 @@
   id: Bagel
   mapName: 'Bagel Station'
   mapPath: /Maps/bagel.yml
-  minPlayers: 45 #could be 35 if roundstart bulk jobs were lowered more
-  maxPlayers: 65
+  minPlayers: 45 #removing max players since server already has a max doesnt matter
   stations:
     Bagel:
       stationProto: StandardNanotrasenStation
@@ -16,7 +15,7 @@
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_lox.yml
         - type: StationJobs
-          availableJobs: #non roundstart jobs exist so minplayers can be pushed down to 45. if you want to remove these raise the minimum to 53.
+          availableJobs:
             #command (7)
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
@@ -31,7 +30,7 @@
             Chef: [ 1, 1 ]
             Janitor: [ 2, 2 ]
             Chaplain: [ 1, 1 ]
-            Librarian: [ 0, 1 ]
+            Librarian: [ 1, 1 ]
             ServiceWorker: [ 1, 2 ]
             Reporter: [ 1, 2 ]
             #engineering (6-8)
@@ -48,7 +47,7 @@
             ResearchAssistant: [ 2, 2 ]
             #security (9-10)
             Warden: [ 1, 1 ]
-            SecurityOfficer: [ 4, 5 ]
+            SecurityOfficer: [ 5, 5 ]
             Detective: [ 1, 1 ]
             SecurityCadet: [ 2, 2 ]
             Lawyer: [ 1, 1 ]
@@ -59,7 +58,7 @@
             Passenger: [ -1, -1 ] #infinite, not counted
             Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]
-            Musician: [ 0, 1 ]
+            Musician: [ 1, 1 ]
             #silicon (3)
             StationAi: [ 1, 1 ]
             Borg: [ 2, 2 ]

@@ -2,8 +2,8 @@
   id: Snowball
   mapName: 'Snowball Station'
   mapPath: /Maps/snowball.yml
-  minPlayers: 25
-  maxPlayers: 44
+  minPlayers: 5
+  maxPlayers: 24
   stations:
     Snowball:
       stationProto: StandardNanotrasenStation
@@ -31,26 +31,26 @@
             Chef: [ 1, 1 ]
             Janitor: [ 1, 2 ]
             Chaplain: [ 1, 1 ]
-            Librarian: [ 0, 1 ]
-            ServiceWorker: [ 1, 2 ]
+            Librarian: [ 1, 1 ]
+            ServiceWorker: [ 1, 1 ]
             #engineering 7-8
             AtmosphericTechnician: [ 2, 2 ]
-            StationEngineer: [ 3, 4 ]
+            StationEngineer: [ 3, 3 ]
             TechnicalAssistant: [ 2, 2 ]
             #medical 7-9
             Chemist: [ 2, 2 ]
-            MedicalDoctor: [ 2, 3 ]
+            MedicalDoctor: [ 3, 3 ]
             MedicalIntern: [ 2, 2 ]
             Paramedic: [ 1, 1 ]
             #science 5-6
-            Scientist: [ 3, 4 ]
+            Scientist: [ 3, 3 ]
             ResearchAssistant: [ 2, 2 ]
             #security 6-8
             Warden: [ 1, 1 ]
-            SecurityOfficer: [ 3, 4 ]
+            SecurityOfficer: [ 3, 3 ]
             Detective: [ 1, 1 ]
             SecurityCadet: [ 2, 2 ]
-            Lawyer: [ 0, 1 ]
+            Lawyer: [ 1, 1 ]
             #supply 4
             SalvageSpecialist: [ 2, 2 ]
             CargoTechnician: [ 2, 2 ]
@@ -58,7 +58,7 @@
             Passenger: [ -1, -1 ]
             Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]
-            Musician: [ 0, 1 ]
+            Musician: [ 1, 1 ]
             #silicon 3
             StationAi: [ 1, 1 ]
             Borg: [ 2, 2 ]
