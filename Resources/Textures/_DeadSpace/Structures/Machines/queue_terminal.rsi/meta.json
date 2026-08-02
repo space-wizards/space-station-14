@@ -1,0 +1,12 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken by mtf0036 (discord) from https://github.com/ss220-space/Paradise/commit/2a313a91d5b7ebeddd2b96883f08f676aa94fc82#diff-c67e3749916674543f402cb38b1bacbf8bf02e6100ce1bd2e228b81385d5dd5b for Space Station 14 server Мёртвый Космос",
+    "states": [
+        { "name": "icon", "directions": 1 }
+    ]
+}

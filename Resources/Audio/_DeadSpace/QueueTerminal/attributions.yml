@@ -1,0 +1,9 @@
+- files: ["queue_terminal_announce.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "SS220-space contributors"
+  source: "https://github.com/ss220-space/Paradise/commit/2a313a91d5b7ebeddd2b96883f08f676aa94fc82"
+
+- files: ["queue_ticket_print.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "SS220-space contributors"
+  source: "https://github.com/ss220-space/Paradise/commit/5b8e6e74966095f3af7688cd8f5458326f3d946a"

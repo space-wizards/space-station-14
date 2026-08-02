@@ -1,0 +1,19 @@
+{
+    "version": 1,
+    "size": { "x": 16, "y": 16 },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Made by mtf0036 for Space Station 14 server Мёртвый Космос.",
+    "states": [
+        { "name": "digit_0", "directions": 1 },
+        { "name": "digit_1", "directions": 1 },
+        { "name": "digit_2", "directions": 1 },
+        { "name": "digit_3", "directions": 1 },
+        { "name": "digit_4", "directions": 1 },
+        { "name": "digit_5", "directions": 1 },
+        { "name": "digit_6", "directions": 1 },
+        { "name": "digit_7", "directions": 1 },
+        { "name": "digit_8", "directions": 1 },
+        { "name": "digit_9", "directions": 1 },
+        { "name": "digit_blank", "directions": 1 }
+    ]
+}

@@ -1,0 +1,53 @@
+- type: entity
+  parent: BaseWallmountMachine
+  id: QueueTerminal
+  name: терминал электронной очереди
+  description: Настенный терминал, выдающий номерки для электронной очереди.
+  components:
+  - type: WallMount
+    arc: 360
+  - type: Appearance
+  - type: QueueTerminal
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/queue_terminal.rsi
+    layers:
+    - state: icon
+    - sprite: _DeadSpace/Digits/digits_display.rsi
+      state: digit_blank
+      map: ["enum.QueueDigitLayers.Hundreds"]
+      offset: "-0.25,0"
+    - sprite: _DeadSpace/Digits/digits_display.rsi
+      state: digit_blank
+      map: ["enum.QueueDigitLayers.Tens"]
+      offset: "0,0"
+    - sprite: _DeadSpace/Digits/digits_display.rsi
+      state: digit_blank
+      map: ["enum.QueueDigitLayers.Ones"]
+      offset: "0.25,0"
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceLinkSink
+    ports:
+    - Trigger
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 80
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 40
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+          params:
+            volume: -8

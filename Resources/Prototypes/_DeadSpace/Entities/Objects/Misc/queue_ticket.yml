@@ -1,0 +1,23 @@
+- type: entity
+  parent: BasePaper
+  id: QueueTicket
+  name: талон электронной очереди
+  description: Пластиковый талон с номером в очереди.
+  components:
+  - type: QueueTicket
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Misc/queue_ticket.rsi
+    layers:
+    - state: icon
+    - sprite: _DeadSpace/Digits/digits_ticket.rsi
+      state: digit_blank
+      map: ["enum.QueueDigitLayers.Hundreds"]
+      offset: "-0.14,0"
+    - sprite: _DeadSpace/Digits/digits_ticket.rsi
+      state: digit_blank
+      map: ["enum.QueueDigitLayers.Tens"]
+      offset: "0,0"
+    - sprite: _DeadSpace/Digits/digits_ticket.rsi
+      state: digit_blank
+      map: ["enum.QueueDigitLayers.Ones"]
+      offset: "0.14,0"
