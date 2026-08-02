@@ -71,8 +71,6 @@
       - !type:WashCreamPie
   - type: StatusEffects
     allowed:
-    - PressureImmunity
-    - Muted
     - Pacified
     - Flashed
     - Adrenaline
@@ -161,6 +159,7 @@
   - MobAtmosStandard
   - MobFlammable
   - BaseSpeciesMob
+  - BaseMobDestructible
   id: BaseSpeciesMobOrganic
   save: false
   components:
@@ -183,11 +182,9 @@
   - type: Fingerprint
   - type: Blindable
   - type: Temperature
-    currentTemperature: 310.15
-    specificHeat: 42
   - type: TemperatureDamage
     heatDamageThreshold: 325
-    coldDamageThreshold: 260
+    coldDamageThreshold: 273.15
     coldDamage:
       types:
         Cold: 0.1 #per second, scales with temperature & other constants

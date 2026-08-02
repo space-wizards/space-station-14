@@ -51,7 +51,7 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
     [Dependency] private SharedJitteringSystem _jittering = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedStunSystem _stun = default!;
-    [Dependency] private SharedStutteringSystem _stuttering = default!;
+    [Dependency] private StutteringSystem _stuttering = default!;
     [Dependency] private TagSystem _tag = default!;
     [Dependency] private MetaDataSystem _metaData = default!;
     [Dependency] private TurfSystem _turf = default!;
@@ -504,6 +504,9 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
         {
             return;
         }
-        _audio.PlayPvs(electrified.ShockNoises, targetUid, AudioParams.Default.WithVolume(electrified.ShockVolume));
+
+        var audioParams = electrified.ShockNoises?.Params ?? AudioParams.Default;
+        audioParams = audioParams.AddVolume(electrified.ShockVolume);
+        _audio.PlayPvs(electrified.ShockNoises, targetUid, audioParams);
     }
 }
