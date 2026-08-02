@@ -58,7 +58,7 @@ public sealed partial class BreakerFlipRule : StationEventSystem<BreakerFlipRule
 
             var stateString = apc.Comp.MainBreakerEnabled ? "Enabled" : "Disabled";
             AdminLogManager.Add(LogType.ItemConfigure, LogImpact.Medium,
-                $"{typeof(BreakerFlipRule).Name:user} set the main breaker state of {ToPrettyString(apc):entity} to {stateString:state}");
+                $"{ToPrettyString(uid):user} set the main breaker state of {ToPrettyString(apc):entity} to {stateString:state}");
         }
     }
 }
