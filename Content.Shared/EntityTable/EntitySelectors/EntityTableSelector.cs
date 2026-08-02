@@ -1,6 +1,8 @@
+using System.Collections;
 using Content.Shared.EntityTable.Conditions;
 using Content.Shared.EntityTable.ValueSelector;
 using JetBrains.Annotations;
+using Robust.Shared.Collections;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -69,21 +71,10 @@ public abstract partial class EntityTableSelector
     /// </summary>
     public virtual bool CheckConditions(IEntityManager entMan, IPrototypeManager proto, EntityTableContext ctx)
     {
-        if (Conditions.Count == 0 || !ctx.TryGetData<List<EntityTableCondition>>(AdditionalConditionsKey, out var additionalConditions))
-            return true;
+        var combined = GetConditions(ctx);
 
-        var success = false;
-        foreach (var condition in Conditions)
-        {
-            var res = condition.Evaluate(this, entMan, proto, ctx);
-
-            if (RequireAll && !res)
-                return false; // intentional break out of loop and function
-
-            success |= res;
-        }
-
-        foreach (var condition in additionalConditions)
+        var success = true;
+        foreach (var condition in combined)
         {
             var res = condition.Evaluate(this, entMan, proto, ctx);
 
@@ -141,4 +132,20 @@ public abstract partial class EntityTableSelector
     protected abstract IEnumerable<(EntProtoId spawn, double)> AverageSpawnsImplementation(IEntityManager entMan,
         IPrototypeManager proto,
         EntityTableContext ctx);
+
+    private IEnumerable<EntityTableCondition> GetConditions(EntityTableContext ctx)
+    {
+        foreach (var condition in Conditions)
+        {
+            yield return condition;
+        }
+
+        if(!ctx.TryGetData<List<EntityTableCondition>>(AdditionalConditionsKey, out var additionalConditions))
+            yield break;
+
+        foreach (var additionalCondition in additionalConditions)
+        {
+            yield return additionalCondition;
+        }
+    }
 }

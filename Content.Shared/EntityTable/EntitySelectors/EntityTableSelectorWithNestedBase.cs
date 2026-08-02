@@ -13,7 +13,16 @@ public abstract partial class EntityTableSelectorWithNestedBase : EntityTableSel
 
     public override bool CheckConditions(IEntityManager entMan, IPrototypeManager proto, EntityTableContext ctx)
     {
-        ctx.TryAddData(AdditionalConditionsKey, ConditionsForChildren);
+        List<EntityTableCondition> combinedConditions = new(ConditionsForChildren);
+        if (ctx.TryGetData<List<EntityTableCondition>>(AdditionalConditionsKey, out var existingConditions))
+        {
+            combinedConditions.AddRange(existingConditions);
+        }
+        else
+        {
+            ctx.TryAddData(AdditionalConditionsKey, combinedConditions);
+        }
+            
         return base.CheckConditions(entMan, proto, ctx);
     }
 }
