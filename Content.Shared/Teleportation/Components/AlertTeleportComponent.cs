@@ -21,6 +21,7 @@ public sealed partial class AlertTeleportComponent : Component
 [Serializable, NetSerializable]
 public struct AlertTeleportData
 {
+    // Not an EntityUid for fine serializable
     public List<NetEntity> Targets;
     public int Queue;
     public TimeSpan EndTime;

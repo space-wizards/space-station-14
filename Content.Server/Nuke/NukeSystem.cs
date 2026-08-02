@@ -4,12 +4,13 @@ using Content.Server.Explosion.EntitySystems;
 using Content.Server.Pinpointer;
 using Content.Server.Popups;
 using Content.Server.Station.Systems;
-using Content.Shared.Audio;
 using Content.Shared.AlertLevel;
+using Content.Shared.Audio;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
+using Content.Shared.Ghost.Systems;
 using Content.Shared.Kitchen;
 using Content.Shared.Maps;
 using Content.Shared.Nuke;
@@ -20,8 +21,8 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
-using Robust.Shared.Utility;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Nuke;
 
@@ -45,6 +46,7 @@ public sealed partial class NukeSystem : EntitySystem
     [Dependency] private AppearanceSystem _appearance = default!;
     [Dependency] private TurfSystem _turf = default!;
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private GhostAlertSystem _ghostAlert = default!;
 
     /// <summary>
     ///     Used to calculate when the nuke song should start playing for maximum kino with the nuke sfx
@@ -513,6 +515,8 @@ public sealed partial class NukeSystem : EntitySystem
         _pointLight.SetEnabled(uid, true);
         // enable the navmap beacon for people to find it
         _navMap.SetBeaconEnabled(uid, true);
+
+        _ghostAlert.MakeGhostAlert(uid, "NukeArm", TimeSpan.FromSeconds(20));
 
         _itemSlots.SetLock(uid, component.DiskSlot, true);
         if (!nukeXform.Anchored)

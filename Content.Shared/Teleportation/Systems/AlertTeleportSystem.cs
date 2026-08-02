@@ -31,6 +31,7 @@ public sealed partial class AlertTeleportSystem : EntitySystem
 
         data.Queue++;
 
+        // Just go back to the top of the list.
         if (data.Queue >= data.Targets.Count)
             data.Queue = 0;
 
@@ -42,6 +43,7 @@ public sealed partial class AlertTeleportSystem : EntitySystem
         if (targetCoords.MapId == MapId.Nullspace)
             return;
 
+        // It's a struct, baby
         ent.Comp.Targets[arg.AlertId] = data;
 
         Dirty(ent);
@@ -63,6 +65,7 @@ public sealed partial class AlertTeleportSystem : EntitySystem
 
         var targetCoords = _transform.GetMapCoordinates(target);
 
+        // Without this, the client will try to create an alert for items from the spawn menu.
         if (targetCoords.MapId == MapId.Nullspace)
             return;
 
@@ -71,6 +74,7 @@ public sealed partial class AlertTeleportSystem : EntitySystem
 
         var data = comp.Targets[alert];
 
+        // Is it bad that we clean up unnecessary objects only when needed? I don't think
         if (data.EndTime <= _timing.CurTime)
             data = default;
 

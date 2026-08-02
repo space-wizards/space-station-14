@@ -19,6 +19,56 @@
   clickEvent: !type:AlertTeleportEvent
 
 - type: alert
+  id: SpaceNinja
+  icons:
+  - sprite: Objects/Weapons/Melee/energykatana.rsi
+    state: icon
+  alertViewEntity: GhostAlertCounterSpriteView
+  name: ghost-alert-space-ninja-name
+  description: ghost-alert-base-role-desc
+  clickEvent: !type:AlertTeleportEvent
+
+- type: alert
+  id: SpaceDragon
+  icons:
+  - sprite: Objects/Fun/figurines.rsi
+    state: spacedragon
+  alertViewEntity: GhostAlertCounterSpriteView
+  name: ghost-alert-space-dragon-name
+  description: ghost-alert-base-role-desc
+  clickEvent: !type:AlertTeleportEvent
+
+- type: alert
+  id: Xenoborgs
+  icons:
+  - sprite: Markers/jobs.rsi
+    state: core-idle
+  alertViewEntity: GhostAlertCounterSpriteView
+  name: ghost-alert-mothership-core-name
+  description: ghost-alert-base-role-desc
+  clickEvent: !type:AlertTeleportEvent
+
+- type: alert
+  id: Wizard
+  icons:
+  - sprite: Clothing/Head/Hats/wizardhat.rsi
+    state: icon
+  alertViewEntity: GhostAlertCounterSpriteView
+  name: ghost-alert-wizard-name
+  description: ghost-alert-base-role-desc
+  clickEvent: !type:AlertTeleportEvent
+
+- type: alert
+  id: NukeOp
+  icons:
+  - sprite: /Textures/Objects/Weapons/Guns/SMGs/c20r.rsi
+    state: icon 
+  alertViewEntity: GhostAlertCounterSpriteView
+  name: ghost-alert-nuke-op-name
+  description: ghost-alert-base-role-desc
+  clickEvent: !type:AlertTeleportEvent
+
+- type: alert
   id: ImmovableRod
   icons:
   - sprite: Objects/Fun/immovable_rod.rsi
@@ -29,14 +79,13 @@
   clickEvent: !type:AlertTeleportEvent
 
 - type: alert
-  parents: BaseGhostRoleAlert
-  id: SpaceNinja
+  id: NukeArm
   icons:
-  - sprite: Objects/Weapons/Melee/energykatana.rsi
-    state: icon
+  - sprite: Objects/Devices/nuke.rsi
+    state: nuclearbomb_base
   alertViewEntity: GhostAlertCounterSpriteView
-  name: ghost-alert-space-ninja-name
-  description: ghost-alert-base-role-desc
+  name: ghost-alert-nuke-arm-name
+  description: ghost-alert-nuke-arm-desc
   clickEvent: !type:AlertTeleportEvent
 
 - type: entity
