@@ -96,8 +96,6 @@ public sealed partial class CargoSystem
                 continue;
             }
 
-            comp.CurrentOrders.RemoveAll(order => order.NumDispatched >= order.OrderQuantity);
-
             if (comp.CurrentOrders.Count == 0 || !TryGetLinkedConsole((uid, comp), out var console))
             {
                 comp.Accumulator += comp.Delay;
@@ -105,7 +103,11 @@ public sealed partial class CargoSystem
             }
 
             var currentOrder = comp.CurrentOrders.First();
-            if (FulfillOrder(currentOrder, currentOrder.Account, xform.Coordinates, comp.PrinterOutput))
+            if (currentOrder.NumDispatched >= currentOrder.OrderQuantity)
+            {
+                comp.CurrentOrders.Remove(currentOrder);
+            }
+            else if (FulfillOrder(currentOrder, currentOrder.Account, xform.Coordinates, comp.PrinterOutput))
             {
                 currentOrder.NumDispatched++;
                 if (currentOrder.NumDispatched >= currentOrder.OrderQuantity)
