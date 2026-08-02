@@ -263,13 +263,11 @@
   components:
   - type: Sprite
     state: pepper-big
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 60
-        reagents:
-        - ReagentId: Blackpepper
-          Quantity: 60
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Blackpepper
+        Quantity: 60
 
 # Misc
 
