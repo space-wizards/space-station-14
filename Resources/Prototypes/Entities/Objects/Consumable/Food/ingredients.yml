@@ -241,6 +241,36 @@
       - ReagentId: Sugar
         Quantity: 60
 
+- type: entity
+  parent: [ReagentPacketSmall, ItemHeftyBase]
+  id: ReagentContainerSalt
+  name: salt container
+  description: A big container of salt. Experts debate whether it contains any iodine.
+  components:
+  - type: Sprite
+    state: salt-big
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: TableSalt
+        Quantity: 60
+
+- type: entity
+  parent: [ReagentPacketSmall, ItemHeftyBase]
+  id: ReagentContainerPepper
+  name: pepper container
+  description: A big container of pepper. The king of spices, now in value size!
+  components:
+  - type: Sprite
+    state: pepper-big
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 60
+        reagents:
+        - ReagentId: Blackpepper
+          Quantity: 60
+
 # Misc
 
 - type: entity
