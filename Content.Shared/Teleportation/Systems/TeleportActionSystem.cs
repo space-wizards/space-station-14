@@ -127,9 +127,12 @@ public sealed partial class TeleportActionSystem : EntitySystem
                 var (layer, mask) = SharedPhysicsSystem.GetHardCollision(otherFixtures);
                 if ((fixture.CollisionMask & layer) != 0 ||
                     (mask & fixture.CollisionLayer) != 0)
+                {
                     return true;
+                }
             }
         }
+
         return false;
     }
 }

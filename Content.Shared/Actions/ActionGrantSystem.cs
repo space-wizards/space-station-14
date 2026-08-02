@@ -28,6 +28,7 @@ public sealed partial class ActionGrantSystem : EntitySystem
             {
                 continue;
             }
+
             args.AddAction(action);
         }
     }
