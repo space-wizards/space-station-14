@@ -1755,3 +1755,22 @@
     - item: SuperCloakingDevice
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-eye2-module }
+
+- type: entity
+  parent: [ BaseXenoborgModuleStealth, BaseXenoborgContraband ]
+  id: XenoborgModuleNightVision
+  name: xenoborg night vision module
+  description: Module that allows a xenoborg see in the dark.
+  components:
+  - type: ComponentBorgModule
+    components:
+    - type: NightVision
+      action: ActionXenoborgToggleNightVision
+      lightingColor: "#9180FF26"
+      overlayColor: "#9180FF26"
+      noiseAmount: 10
+      noiseMultiplier: 10
+  - type: Sprite
+    layers:
+    - state: xenoborg_stealth
+    - state: icon-xenoborg-night-vision

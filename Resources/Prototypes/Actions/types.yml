@@ -523,6 +523,15 @@
     event: !type:ToggleNightVisionEvent {}
 
 - type: entity
+  parent: ActionToggleNightVision
+  id: ActionXenoborgToggleNightVision
+  components:
+  - type: Action
+    icon:
+      sprite: Interface/Actions/actions_borg.rsi
+      state: xenoborg-night-vision-module
+
+- type: entity
   parent: ActionToggleWagging
   id: ActionToggleWaggingVulpkanin
   components:
