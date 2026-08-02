@@ -70,7 +70,3 @@
   heatCapacity: 10000
   mass: 200
   variants: 3
-  placementVariants:
-  - 1.0
-  - 1.0
-  - 1.0

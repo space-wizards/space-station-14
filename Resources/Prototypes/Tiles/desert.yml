@@ -4,12 +4,6 @@
   name: tiles-desert-floor
   sprite: /Textures/Tiles/Desert/desert.png
   variants: 5
-  placementVariants:
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
   edgeSpritePriority: 2
   edgeSprites:
     SouthEast: /Textures/Tiles/Desert/single_edge_SE.png
@@ -28,14 +22,6 @@
   name: tiles-desert-astro-sand
   sprite: /Textures/Tiles/Desert/desert.png
   variants: 5
-  placementVariants:
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  baseTurf: Plating
-  isSubfloor: false
-  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepAsteroid
   itemDrop: FloorTileItemDesertAstroSand
-  weather: false

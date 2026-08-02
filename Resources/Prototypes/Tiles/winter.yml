@@ -3,11 +3,6 @@
   name: tiles-ice
   sprite: /Textures/Tiles/Ice/ice.png
   variants: 4
-  placementVariants:
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
   isSubfloor: true
   friction: 0.05
   heatCapacity: 10000
@@ -21,13 +16,6 @@
   name: tiles-snow
   sprite: /Textures/Tiles/Snow/snow.png
   variants: 6
-  placementVariants:
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
   edgeSpritePriority: 8
   edgeSprites:
     SouthEast: /Textures/Tiles/Snow/single_edge_SE.png
@@ -43,25 +31,21 @@
 
 ### ASTRO TILES
 - type: tile
-  id: FloorAstroIce
   parent: BaseStationTile
+  id: FloorAstroIce
   name: tiles-astro-ice
   sprite: /Textures/Tiles/Ice/ice.png
   variants: 4
-  placementVariants:
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
   friction: 0.05
   mobFriction: 0.05
   mobAcceleration: 0.1
+  footstepSounds: null
   itemDrop: FloorTileItemAstroIce
 
 - type: tile
-  id: FloorAstroSnow
   parent: [ BaseStationTile, FloorSnow ]
+  id: FloorAstroSnow
   name: tiles-astro-snow
-  isSubfloor: false
-  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepSnow
   itemDrop: FloorTileItemAstroSnow

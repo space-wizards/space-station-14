@@ -4,13 +4,6 @@
   name: tiles-grass-planet-floor
   sprite: /Textures/Tiles/Grass/grass.png
   variants: 6
-  placementVariants:
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
   edgeSpritePriority: 5
   edgeSprites:
     SouthEast: /Textures/Tiles/Grass/single_edge_SE.png
@@ -31,13 +24,6 @@
   name: tiles-planet-grass-floor
   sprite: /Textures/Tiles/Grass/grass.png
   variants: 6
-  placementVariants:
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
   baseTurf: FloorDirt
   footstepSounds:
     collection: FootstepGrass
@@ -50,13 +36,6 @@
   name: tiles-jungle-grass-floor
   sprite: /Textures/Tiles/GrassJungle/grass.png
   variants: 6
-  placementVariants:
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
   edgeSpritePriority: 4
   edgeSprites:
     SouthEast: /Textures/Tiles/GrassJungle/single_edge_SE.png
@@ -80,13 +59,6 @@
   name: tiles-dark-grass-floor
   sprite: /Textures/Tiles/GrassDark/grass.png
   variants: 6
-  placementVariants:
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
   edgeSpritePriority: 3
   edgeSprites:
     SouthEast: /Textures/Tiles/GrassDark/single_edge_SE.png
@@ -106,34 +78,33 @@
 
 ### ASTRO TILES
 - type: tile
-  id: FloorAstroGrass
   parent: [ BaseStationTile, FloorPlanetGrass ]
+  id: FloorAstroGrass
   name: tiles-astro-grass
-  isSubfloor: false
-  deconstructTools: [ Cutting ]
+  footstepSounds:
+    collection: FootstepGrass
   itemDrop: FloorTileItemAstroGrass
 
 - type: tile
-  id: FloorMowedAstroGrass
   parent: [ BaseStationTile, FloorGrass ]
+  id: FloorMowedAstroGrass
   name: tiles-mowed-astro-grass
-  isSubfloor: false
-  deconstructTools: [ Cutting ]
+  footstepSounds:
+    collection: FootstepGrass
   itemDrop: FloorTileItemMowedAstroGrass
 
 - type: tile
-  id: FloorJungleAstroGrass
   parent: [ BaseStationTile, FloorGrassJungle ]
+  id: FloorJungleAstroGrass
   name: tiles-jungle-astro-grass
-  isSubfloor: false
-  deconstructTools: [ Cutting ]
+  footstepSounds:
+    collection: FootstepGrass
   itemDrop: FloorTileItemJungleAstroGrass
 
 - type: tile
-  parent: FloorGrassDark
+  parent: [ BaseStationTile, FloorGrassDark ]
   id: FloorDarkAstroGrass
   name: tiles-dark-astro-grass
-  baseTurf: Plating
-  isSubfloor: false
-  deconstructTools: [ Cutting ]
+  footstepSounds:
+    collection: FootstepGrass
   itemDrop: FloorTileItemDarkAstroGrass

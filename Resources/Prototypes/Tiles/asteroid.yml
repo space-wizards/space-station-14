@@ -3,14 +3,6 @@
   name: tiles-asteroid-sand-borderless
   sprite: /Textures/Tiles/Asteroid/asteroid.png
   variants: 7
-  placementVariants:
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
   baseTurf: Space
   isSubfloor: true
   footstepSounds:
@@ -24,14 +16,6 @@
   name: tiles-asteroid-sand
   sprite: /Textures/Tiles/Asteroid/asteroid.png
   variants: 7
-  placementVariants:
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
   edgeSpritePriority: 6
   edgeSprites:
     SouthEast: /Textures/Tiles/Asteroid/single_edge_SE.png
@@ -48,11 +32,6 @@
   name: tiles-asteroid-tile
   sprite: /Textures/Tiles/Asteroid/asteroid-tile.png
   variants: 4
-  placementVariants:
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
   baseTurf: Plating
   isSubfloor: false
   deconstructTools: [ Prying ]
@@ -63,19 +42,17 @@
 
 ### ASTRO TILES
 - type: tile
-  id: FloorAstroAsteroidSand
   parent: [ BaseStationTile, FloorAsteroidSand ]
+  id: FloorAstroAsteroidSand
   name: tiles-astro-asteroid-sand
-  isSubfloor: false
-  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepAsteroid
   itemDrop: FloorTileItemAstroAsteroidSand
-  weather: false
 
 - type: tile
-  id: FloorAstroAsteroidSandBorderless
   parent: [ BaseStationTile, FloorAsteroidSandBorderless ]
+  id: FloorAstroAsteroidSandBorderless
   name: tiles-astro-asteroid-sand-borderless
-  isSubfloor: false
-  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepAsteroid
   itemDrop: FloorTileItemAstroAsteroidSand
-  weather: false

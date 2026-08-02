@@ -4,10 +4,6 @@
   name: tiles-exo-viscera
   sprite: /Textures/Tiles/Exo/exo-viscera.png
   variants: 3
-  placementVariants:
-  - 1.0
-  - 1.0
-  - 1.0
   footstepSounds:
     collection: FootstepBlood
   itemDrop: FloorTileItemExoViscera

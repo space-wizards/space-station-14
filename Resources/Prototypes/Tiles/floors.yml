@@ -1,11 +1,12 @@
 - type: tile
-  id: BaseStationTile
   abstract: true
+  id: BaseStationTile
   isSubfloor: false
   deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepFloor
   heatCapacity: 10000
+  weather: false
   baseTurf: Plating
   baseWhitelist:
   - PlatingBrass
@@ -235,6 +236,38 @@
     collection: FootstepHull
   itemDrop: SheetSteel1
 
+# Circuits
+- type: tile
+  id: FloorGreenCircuit
+  parent: BaseStationTile
+  name: tiles-green-circuit-floor
+  sprite: /Textures/Tiles/Circuit/circuit-green.png
+  variants: 2
+  footstepSounds:
+    collection: FootstepHull
+  itemDrop: FloorTileItemGCircuit
+
+- type: tile
+  id: FloorBlueCircuit
+  parent: BaseStationTile
+  name: tiles-blue-circuit-floor
+  sprite: /Textures/Tiles/Circuit/circuit-blue.png
+  variants: 2
+  footstepSounds:
+    collection: FootstepHull
+  itemDrop: FloorTileItemBCircuit
+
+- type: tile
+  id: FloorRedCircuit
+  parent: BaseStationTile
+  name: tiles-red-circuit-floor
+  sprite: /Textures/Tiles/Circuit/circuit-red.png
+  variants: 2
+  footstepSounds:
+    collection: FootstepHull
+  itemDrop: FloorTileItemRCircuit
+
+# Caves
 - type: tile
   id: FloorCave
   name: tiles-cave

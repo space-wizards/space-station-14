@@ -13,9 +13,6 @@
   name: tiles-concrete-slab
   sprite: /Textures/Tiles/Concrete/concrete-mono.png
   variants: 2
-  placementVariants:
-  - 1.0
-  - 1.0
   footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemConcreteMono
@@ -26,9 +23,6 @@
   name: tiles-concrete-smooth
   sprite: /Textures/Tiles/Concrete/concrete-smooth.png
   variants: 2
-  placementVariants:
-  - 1.0
-  - 1.0
   footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemConcreteSmooth
