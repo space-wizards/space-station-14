@@ -1,9 +1,17 @@
+using Content.Shared.Implants;
+using Content.Shared.Mindshield;
 using Content.Shared.Verbs;
 
 namespace Content.Shared.Inventory;
 
 public partial class InventorySystem
 {
+    // TODO remove this when event ordering for attribute (and also generic) subscriptions is implemented
+    private void InitializeRelay()
+    {
+        SubscribeLocalEvent<InventoryComponent, GetMindShieldStatusEvent>(RelayEvent, after: [typeof(SharedSubdermalImplantSystem)]); // ordering so that things like mindshield-flipping hats can be done
+    }
+
     [SubscribeLocalEvent]
     public void RelayEvent<T>(Entity<InventoryComponent> inventory, ref T args) where T : IInventoryRelayEvent
     {
