@@ -17,7 +17,7 @@ public sealed partial class DeviceNetworkComponent : Component
     public int DeviceNetId => (int) NetIdEnum;
 
     /// <inheritdoc cref="DeviceData"/>
-    [IncludeDataField]
+    [IncludeDataField, AutoNetworkedField]
     public DeviceData Data;
 
     /// <summary>
