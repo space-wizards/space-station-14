@@ -119,16 +119,12 @@
         !type:DamageTrigger
         damage: 5
       behaviors:
-      - *SoundGlassBreak
-      - !type:SpillBehavior { }
       - !type:SpawnEntitiesBehavior
         spawn:
-          ShardGlass: # less glass than base
+          ShardGlass:
             min: 0
             max: 1
         transferForensics: true
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
 
 ## Reagent filled
 
