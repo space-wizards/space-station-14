@@ -1,6 +1,6 @@
 - type: tile
-  id: BaseStationTile
   abstract: true
+  id: BaseStationTile
   isSubfloor: false
   deconstructTools: [ Prying ]
   footstepSounds:
@@ -1333,8 +1333,8 @@
 
 # Grass
 - type: tile
-  id: FloorAstroGrass
   parent: BaseStationTile
+  id: FloorAstroGrass
   name: tiles-astro-grass
   sprite: /Textures/Tiles/Planet/Grass/grass.png
   variants: 4
@@ -1348,112 +1348,103 @@
     East: /Textures/Tiles/Planet/Grass/double_edge.png
     North: /Textures/Tiles/Planet/Grass/double_edge.png
     West: /Textures/Tiles/Planet/Grass/double_edge.png
-  deconstructTools: [ Cutting ]
   footstepSounds:
     collection: FootstepGrass
   itemDrop: FloorTileItemAstroGrass
 
 - type: tile
-  id: FloorMowedAstroGrass
   parent: [ BaseStationTile, FloorGrass ]
+  id: FloorMowedAstroGrass
   name: tiles-mowed-astro-grass
-  isSubfloor: false
-  deconstructTools: [ Cutting ]
+  footstepSounds:
+    collection: FootstepGrass
   itemDrop: FloorTileItemMowedAstroGrass
 
 - type: tile
-  id: FloorJungleAstroGrass
   parent: [ BaseStationTile, FloorGrassJungle ]
+  id: FloorJungleAstroGrass
   name: tiles-jungle-astro-grass
-  isSubfloor: false
-  deconstructTools: [ Cutting ]
+  footstepSounds:
+    collection: FootstepGrass
   itemDrop: FloorTileItemJungleAstroGrass
 
 - type: tile
-  parent: FloorGrassDark
+  parent: [ BaseStationTile, FloorGrassDark ]
   id: FloorDarkAstroGrass
   name: tiles-dark-astro-grass
-  baseTurf: Plating
-  isSubfloor: false
-  deconstructTools: [ Cutting ]
+  footstepSounds:
+    collection: FootstepGrass
   itemDrop: FloorTileItemDarkAstroGrass
 
 - type: tile
-  parent: FloorGrassLight
+  parent: [ BaseStationTile, FloorGrassLight ]
   id: FloorLightAstroGrass
   name: tiles-light-astro-grass
-  baseTurf: Plating
-  isSubfloor: false
-  deconstructTools: [ Cutting ]
+  footstepSounds:
+    collection: FootstepGrass
   itemDrop: FloorTileItemLightAstroGrass
 
 # Ice
 - type: tile
-  id: FloorAstroIce
   parent: BaseStationTile
+  id: FloorAstroIce
   name: tiles-astro-ice
   sprite: /Textures/Tiles/Planet/Snow/ice.png
   friction: 0.05
   mobFriction: 0.05
   mobAcceleration: 0.1
+  footstepSounds:
+    collection: BarestepHard
   itemDrop: FloorTileItemAstroIce
 
 - type: tile
-  id: FloorAstroSnow
   parent: [ BaseStationTile, FloorSnow ]
+  id: FloorAstroSnow
   name: tiles-astro-snow
-  isSubfloor: false
-  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepSnow
   itemDrop: FloorTileItemAstroSnow
 
 # Asteroid Sand
 - type: tile
-  id: FloorAstroAsteroidSand
   parent: [ BaseStationTile, FloorAsteroidSand ]
+  id: FloorAstroAsteroidSand
   name: tiles-astro-asteroid-sand
-  isSubfloor: false
-  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepAsteroid
   itemDrop: FloorTileItemAstroAsteroidSand
-  weather: false
 
 - type: tile
-  id: FloorAstroAsteroidSandBorderless
   parent: [ BaseStationTile, FloorAsteroidSandBorderless ]
+  id: FloorAstroAsteroidSandBorderless
   name: tiles-astro-asteroid-sand-borderless
-  isSubfloor: false
-  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepAsteroid
   itemDrop: FloorTileItemAstroAsteroidSand
-  weather: false
 
 - type: tile
-  parent: FloorDesert
+  parent: [ BaseStationTile, FloorDesert ]
   id: FloorDesertAstroSand
   name: tiles-desert-astro-sand
-  baseTurf: Plating
-  isSubfloor: false
-  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepAsteroid
   itemDrop: FloorTileItemDesertAstroSand
-  weather: false
 
 - type: tile
+  parent: [ BaseStationTile, FloorAsteroidIronsand ]
   id: FloorAstroIronsand
   name: tiles-astro-ironsand
-  parent: FloorAsteroidIronsand
-  baseTurf: Plating
-  isSubfloor: false
-  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepAsteroid
   itemDrop: FloorTileItemAstroIronsand
-  weather: false
 
 - type: tile
+  parent: [ BaseStationTile, FloorAsteroidIronsandBorderless ]
   id: FloorAstroIronsandBorderless
   name: tiles-astro-ironsand-borderless
-  parent: FloorAsteroidIronsandBorderless
-  baseTurf: Plating
-  isSubfloor: false
-  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepAsteroid
   itemDrop: FloorTileItemAstroIronsandBorderless
-  weather: false
 
 - type: tile
   id: FloorWoodLarge
