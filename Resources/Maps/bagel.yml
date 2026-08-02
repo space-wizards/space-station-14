@@ -4,8 +4,8 @@ meta:
   engineVersion: 286.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/02/2026 13:06:33
-  entityCount: 25807
+  time: 08/02/2026 13:29:59
+  entityCount: 25806
 maps:
 - 943
 grids:
@@ -122778,11 +122778,6 @@ entities:
     - type: Transform
       parent: 60
       pos: 4.5,-60.5
-  - uid: 25404
-    components:
-    - type: Transform
-      parent: 60
-      pos: -3.5,-57.5
 - proto: RandomSmokables
   entities:
   - uid: 17224
