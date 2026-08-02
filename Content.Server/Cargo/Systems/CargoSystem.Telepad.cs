@@ -39,7 +39,6 @@ public sealed partial class CargoSystem
             if (_station.GetOwningStation(uid, xform) != args.Station)
                 continue;
 
-
             if (!IsLinkedToConsole(uid, GetEntity(args.Order.ApprovingConsole)))
                 continue;
 
