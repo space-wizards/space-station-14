@@ -33,7 +33,7 @@
 
 - type: entity
   abstract: true
-  parent: ClothingNeckBase
+  parent: [ TemperatureProtectionMinimal, ClothingNeckBase ]
   id: ClothingScarfBase
   components:
   - type: Tag
