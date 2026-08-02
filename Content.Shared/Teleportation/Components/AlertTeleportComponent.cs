@@ -11,7 +11,7 @@ namespace Content.Shared.Teleportation.Components;
 [Access(typeof(AlertTeleportSystem))]
 public sealed partial class AlertTeleportComponent : Component
 {
-    [ViewVariables, AutoNetworkedField]
+    [AutoNetworkedField]
     public Dictionary<ProtoId<AlertPrototype>, AlertTeleportData> Targets = new();
 
     [DataField]
