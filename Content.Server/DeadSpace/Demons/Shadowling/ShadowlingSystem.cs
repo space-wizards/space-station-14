@@ -21,7 +21,6 @@ public sealed class ShadowlingSystem : SharedShadowlingSystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly SharedEyeSystem _eye = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     private const float ConeHalfAngle = 60f * MathF.PI / 180f;
@@ -29,17 +28,7 @@ public sealed class ShadowlingSystem : SharedShadowlingSystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<ShadowlingComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ShadowlingComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshSpeed);
-    }
-
-    private void OnMapInit(EntityUid uid, ShadowlingComponent component, MapInitEvent args)
-    {
-        if (TryComp<EyeComponent>(uid, out var eye))
-        {
-            _eye.SetDrawFov(uid, false, eye);
-            _eye.SetDrawLight(uid, true);
-        }
     }
 
     public override void Update(float frameTime)
@@ -48,12 +37,6 @@ public sealed class ShadowlingSystem : SharedShadowlingSystem
         var query = EntityQueryEnumerator<ShadowlingComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var comp, out var xform))
         {
-            if (TryComp<EyeComponent>(uid, out var eye))
-            {
-                if (eye.DrawFov) _eye.SetDrawFov(uid, false, eye);
-                if (!eye.DrawLight) _eye.SetDrawLight(uid, true);
-            }
-
             comp.Accumulator += frameTime;
             if (comp.Accumulator < comp.HealingInterval) continue;
             comp.Accumulator -= comp.HealingInterval;

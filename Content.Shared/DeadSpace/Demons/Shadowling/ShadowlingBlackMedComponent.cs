@@ -14,6 +14,8 @@ public sealed partial class ShadowlingBlackMedComponent : Component
     [DataField] public EntProtoId ActionBlackMed = "ActionShadowlingBlackMed";
     [DataField] public EntityUid? ActionBlackMedEntity;
     [DataField] public int RequiredSlaves = 18;
+    [DataField] public int MinRequiredSlaves = 12;
+    [DataField] public int MaxRequiredSlaves = 18;
     [DataField] public float Duration = 2f;
 }
 

@@ -8,6 +8,12 @@ namespace Content.Shared.DeadSpace.Demons.Shadowling;
 public sealed partial class ShadowlingRuleComponent : Component
 {
     [DataField] public int TargetSlaves = 30;
+    [DataField] public int MinTargetSlaves = 20;
+    [DataField] public int MaxTargetSlaves = 30;
+    [DataField] public int AlertThreshold = 15;
+    [DataField] public int MinAlertThreshold = 10;
+    [DataField] public int MaxAlertThreshold = 15;
+    [ViewVariables] public float Scale;
     [ViewVariables] public bool IsAscended;
     [ViewVariables] public bool AllDead;
     [ViewVariables] public bool ManifestWritten;

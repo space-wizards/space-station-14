@@ -108,7 +108,6 @@ public sealed class ShadowlingAscendanceSystem : EntitySystem
         var ruleQuery = EntityQueryEnumerator<ShadowlingRuleComponent>();
         while (ruleQuery.MoveNext(out var ruleComp))
         {
-            ruleComp.IsAscended = true;
             if (ruleComp.AscendanceAnnounced)
             {
                 alreadyAnnounced = true;
@@ -129,6 +128,10 @@ public sealed class ShadowlingAscendanceSystem : EntitySystem
                     announcementSound: new SoundCollectionSpecifier("ShadowlingAscendanceAnnouncement"));
             });
         }
+
+        var allRulesForAscended = EntityQuery<ShadowlingRuleComponent>();
+        foreach (var ruleComp in allRulesForAscended)
+            ruleComp.IsAscended = true;
 
         QueueDel(uid);
     }

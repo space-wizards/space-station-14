@@ -93,6 +93,7 @@
     - id: RenegadeSpawn
     - id: WizardSpawn
     - id: SyndicateRaid
+    - id: ShadowlingMidround
 
 - type: entityTable
   id: SurvivalLateThreatsTable
@@ -240,6 +241,7 @@
       SentientVirusEvent: 2
       LoneOpsSpawn: 2
       RenegadeSpawn: 2
+      ShadowlingMidround: 2
       WizardSpawn: 2
   - type: GameRule
     minPlayers: 15

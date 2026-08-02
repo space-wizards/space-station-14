@@ -205,3 +205,19 @@
     useDelay: 0.5
   - type: InstantAction
     event: !type:ShadowlingAscendedPhaseReturnEvent
+
+- type: entity
+  id: ActionShadowlingMindShieldBreak
+  name: Разрушение "Щита Разума"
+  description: Разрушает имплант защиты разума жертвы.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    icon: _DeadSpace/Demons/ability_icons/shadowling_mindshield_break_action.png
+    useDelay: 180
+    itemIconStyle: NoItem
+  - type: TargetAction
+    range: 1
+  - type: EntityTargetAction
+    canTargetSelf: false
+    event: !type:ShadowlingMindShieldBreakEvent

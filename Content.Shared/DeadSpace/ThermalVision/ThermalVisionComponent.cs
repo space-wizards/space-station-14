@@ -23,6 +23,9 @@ public sealed partial class ThermalVisionComponent : Component
     public bool Animation = true;
 
     [DataField, AutoNetworkedField]
+    public bool UseShader = true;
+
+    [DataField, AutoNetworkedField]
     public SoundSpecifier? ActivateSound = null;
 
     [DataField, AutoNetworkedField]

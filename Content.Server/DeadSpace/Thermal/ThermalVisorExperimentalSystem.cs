@@ -30,7 +30,8 @@ public sealed class ThermalVisorExperimentalSystem : EntitySystem
             ActivateSound = comp.ActivateSound,
             ActivateSoundOff = comp.ActivateSoundOff,
             VisorUid = entity,
-            PulseDuration = comp.PulseDuration
+            PulseDuration = comp.PulseDuration,
+            UseShader = comp.UseShader
         };
         comp.HasThermalVision = true;
 

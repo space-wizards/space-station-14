@@ -9,4 +9,10 @@ public sealed partial class ShadowlingRecruitObjectiveComponent : Component
 {
     [DataField]
     public int TargetCount = 30;
+
+    [DataField]
+    public int MinTargetCount = 20;
+
+    [DataField]
+    public int MaxTargetCount = 30;
 }

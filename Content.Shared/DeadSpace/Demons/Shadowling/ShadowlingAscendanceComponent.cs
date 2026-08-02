@@ -13,6 +13,8 @@ public sealed partial class ShadowlingAscendanceComponent : Component
     [DataField] public EntityUid? ActionAscendanceEntity;
 
     [DataField] public int RequiredSlaves = 30;
+    [DataField] public int MinRequiredSlaves = 20;
+    [DataField] public int MaxRequiredSlaves = 30;
     [DataField] public float Duration = 6.74f;
 }
 

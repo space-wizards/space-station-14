@@ -170,6 +170,10 @@ public sealed class ThermalVisionExperimentalOverlay : Overlay
     {
         if (args.Space == OverlaySpace.ScreenSpace)
         {
+            var player = IoCManager.Resolve<IPlayerManager>().LocalEntity;
+            if (player == null || !_entityManager.TryGetComponent<ThermalVisionExperimentalComponent>(player.Value, out var comp) || !comp.UseShader)
+                return;
+
             var screenHandle = (DrawingHandleScreen)args.DrawingHandle;
             screenHandle.UseShader(_vignetteShader);
             screenHandle.DrawRect(args.ViewportBounds, Color.White);
@@ -177,19 +181,19 @@ public sealed class ThermalVisionExperimentalOverlay : Overlay
             return;
         }
 
-        var player = IoCManager.Resolve<IPlayerManager>().LocalEntity;
-        if (player == null || !_entityManager.TryGetComponent<ThermalVisionExperimentalComponent>(player.Value, out var comp))
+        var player2 = IoCManager.Resolve<IPlayerManager>().LocalEntity;
+        if (player2 == null || !_entityManager.TryGetComponent<ThermalVisionExperimentalComponent>(player2.Value, out var comp2))
             return;
 
-        if (!comp.IsActive)
+        if (!comp2.IsActive)
             return;
 
         var worldHandle = (DrawingHandleWorld)args.DrawingHandle;
         var xformSys = _entityManager.System<SharedTransformSystem>();
         var eyeRot = args.Viewport.Eye?.Rotation ?? Angle.Zero;
 
-        var fadeTime = Math.Min(comp.PulseDuration, 1f);
-        var alpha = comp.CurrentPulseTime > fadeTime ? 1f : Math.Clamp(comp.CurrentPulseTime / fadeTime, 0f, 1f);
+        var fadeTime = Math.Min(comp2.PulseDuration, 1f);
+        var alpha = comp2.CurrentPulseTime > fadeTime ? 1f : Math.Clamp(comp2.CurrentPulseTime / fadeTime, 0f, 1f);
 
         var entities = _lookup.GetEntitiesIntersecting(args.MapId, args.WorldBounds.Enlarged(1f));
         foreach (var uid in entities)

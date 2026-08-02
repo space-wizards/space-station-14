@@ -29,7 +29,8 @@ public sealed class ThermalVisorSystem : EntitySystem
         {
             ActivateSound = comp.ActivateSound,
             ActivateSoundOff = comp.ActivateSoundOff,
-            Animation = comp.Animation
+            Animation = comp.Animation,
+            UseShader = comp.UseShader
         };
         comp.HasThermalVision = true;
 

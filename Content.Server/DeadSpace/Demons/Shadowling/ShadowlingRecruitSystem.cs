@@ -50,6 +50,7 @@ public sealed class ShadowlingRecruitSystem : EntitySystem
         SubscribeLocalEvent<ShadowlingFreezingVeinsComponent, ComponentStartup>(OnAbilityStartup);
         SubscribeLocalEvent<ShadowlingBlackMedComponent, ComponentStartup>(OnAbilityStartup);
         SubscribeLocalEvent<ShadowlingAscendanceComponent, ComponentStartup>(OnAbilityStartup);
+        SubscribeLocalEvent<ShadowlingMindShieldBreakComponent, ComponentStartup>(OnAbilityStartup);
         SubscribeLocalEvent<ShadowlingRecruitComponent, ComponentStartup>(OnMasterStartup);
     }
 
@@ -326,14 +327,21 @@ public sealed class ShadowlingRecruitSystem : EntitySystem
         }
         component.CurrentSlaves = count;
 
-        if (count >= 15)
+        var ruleQuery = EntityQueryEnumerator<ShadowlingRuleComponent>();
+        var alertThreshold = 15;
+        while (ruleQuery.MoveNext(out var ruleComp))
         {
-            var ruleQuery = EntityQueryEnumerator<ShadowlingRuleComponent>();
-            while (ruleQuery.MoveNext(out var ruleComp))
+            alertThreshold = ruleComp.AlertThreshold;
+        }
+
+        if (count >= alertThreshold)
+        {
+            var alertRuleQuery = EntityQueryEnumerator<ShadowlingRuleComponent>();
+            while (alertRuleQuery.MoveNext(out var alertRuleComp))
             {
-                if (!ruleComp.AlertAnnounced)
+                if (!alertRuleComp.AlertAnnounced)
                 {
-                    ruleComp.AlertAnnounced = true;
+                    alertRuleComp.AlertAnnounced = true;
                     var message = Loc.GetString("shadowling-alert-announcement");
                     var sender = Loc.GetString("shadowling-alert-sender");
                     _chat.DispatchGlobalAnnouncement(message, sender,
@@ -399,6 +407,20 @@ public sealed class ShadowlingRecruitSystem : EntitySystem
             {
                 _actions.RemoveAction(uid, med.ActionBlackMedEntity);
                 med.ActionBlackMedEntity = null;
+            }
+        }
+
+        if (TryComp<ShadowlingMindShieldBreakComponent>(uid, out var mindShieldBreak))
+        {
+            if (isAscended || count >= mindShieldBreak.RequiredSlaves)
+            {
+                if (mindShieldBreak.ActionMindShieldBreakEntity == null)
+                    _actions.AddAction(uid, ref mindShieldBreak.ActionMindShieldBreakEntity, mindShieldBreak.ActionMindShieldBreak);
+            }
+            else if (mindShieldBreak.ActionMindShieldBreakEntity != null)
+            {
+                _actions.RemoveAction(uid, mindShieldBreak.ActionMindShieldBreakEntity);
+                mindShieldBreak.ActionMindShieldBreakEntity = null;
             }
         }
     }

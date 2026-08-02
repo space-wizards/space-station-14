@@ -26,6 +26,9 @@ public sealed partial class ThermalVisionExperimentalComponent : Component
     public float CurrentPulseTime;
 
     [DataField, AutoNetworkedField]
+    public bool UseShader = true;
+
+    [DataField, AutoNetworkedField]
     public SoundSpecifier? ActivateSound = null;
 
     [DataField, AutoNetworkedField]

@@ -1,16 +1,6 @@
-- type: damageModifierSet
-  id: DemonShadowling
-  coefficients:
-    Blunt: 1
-    Slash: 1
-    Piercing: 1
-    Shock: 1
-    Cold: 0
-    Heat: 1.5
-    Holy: 1
-    Poison: 0
-    Radiation: 0
-
+#====================================================================================================================================================================
+#                                                                            Тенеморф
+#====================================================================================================================================================================
 - type: entity
   id: MobShadowling
   parent:
@@ -21,6 +11,7 @@
   suffix: Тенеморф
   description: Жуткий.
   components:
+
   - type: MovementSpeedModifier
     baseWalkSpeed: 4
     baseSprintSpeed: 4
@@ -47,6 +38,18 @@
 
   - type: Body
     prototype: Human
+
+  - type: Vocal
+    sounds:
+      Male: DemonNarSi
+      Female: DemonNarSi
+      Unsexed: DemonNarSi
+
+  - type: Stamina
+    baseCritThreshold: 200
+    decay: 20
+    cooldown: 3
+
   - type: ShowJobIcons
   - type: ShowMindShieldIcons
   - type: Hands
@@ -57,15 +60,6 @@
   - type: Strippable
   - type: NoSlip
   - type: Speech
-  - type: Vocal
-    sounds:
-      Male: DemonNarSi
-      Female: DemonNarSi
-      Unsexed: DemonNarSi
-  - type: Stamina
-    baseCritThreshold: 200
-    decay: 20
-    cooldown: 3
   - type: Emoting
   - type: ZombieImmune
   - type: ImmunitetInfectionDead
@@ -74,9 +68,23 @@
   - type: AccessReader
   - type: CanMoveInAir
   - type: MovementAlwaysTouching
+  - type: IntrinsicRadioReceiver
+  - type: ShadowlingRecruit
+  - type: ShadowlingVeil
+  - type: ShadowlingBlackMed
+  - type: ShadowlingPhase
+  - type: ShadowlingDarkMind
+  - type: ShadowlingBlink
+  - type: ShadowlingScreech
+  - type: ShadowlingFreezingVeins
+  - type: ShadowlingAscendance
+  - type: ShadowlingSmokeAction
+  - type: ShadowlingMindShieldBreak
+
   - type: Physics
     bodyType: KinematicController
     bodyStatus: OnGround
+
   - type: TTS
     voice: Abaddon
 
@@ -107,10 +115,10 @@
   - type: IntrinsicRadioTransmitter
     channels:
     - Shadowling
+
   - type: ActiveRadio
     channels:
     - Shadowling
-  - type: IntrinsicRadioReceiver
 
   - type: Eye
     visMask:
@@ -141,7 +149,7 @@
     - SimpleHostile
 
   - type: StaminaDamageOnHit
-    damage: 20
+    damage: 25
 
   - type: NightVision
     animation: true
@@ -169,6 +177,7 @@
     tags:
       - CannotSuicide
       - DoorBumpOpener
+
   - type: Language
     selectedLanguage: GeneralLanguage
     knownLanguages:
@@ -187,16 +196,12 @@
         Piercing: -1
         Holy: -0.25
 
-  - type: ShadowlingRecruit
-  - type: ShadowlingVeil
-  - type: ShadowlingBlackMed
-  - type: ShadowlingPhase
-  - type: ShadowlingDarkMind
-  - type: ShadowlingBlink
-  - type: ShadowlingScreech
-  - type: ShadowlingFreezingVeins
-  - type: ShadowlingAscendance
-  - type: ShadowlingSmokeAction
+  - type: ThermalVision
+    useShader: false
+
+#====================================================================================================================================================================
+#                                                                           Призраки
+#====================================================================================================================================================================
 
 - type: polymorph
   id: ShadowlingPhasePolymorph
@@ -266,12 +271,17 @@
   - type: Spectral
   - type: ShadowlingAscendedPhaseReturn
 
+#====================================================================================================================================================================
+#                                                                         Вознесённый
+#====================================================================================================================================================================
+
 - type: entity
   id: MobShadowlingAscended
   parent: MobShadowling
   name: Вознесенный
   description: Совершенная форма тьмы.
   components:
+
   - type: Sprite
     noRot: true
     overrideContainerOcclusion: true
@@ -325,6 +335,7 @@
         Heat: -8
         Blunt: -4
         Piercing: -4
+        Holy: -1
 
   - type: Prying
     pryPowered: true
@@ -351,13 +362,11 @@
     baseCritThreshold: 1000
     decay: 100
     cooldown: 3
+
   - type: ShadowlingAscendedPhase
   - type: ShadowlingAnnihilation
-  - type: ShadowlingScreech
-  - type: ShadowlingBlackMed
   - type: ShadowlingAbsoluteFreezingVeins
   - type: ShadowlingThunderstorm
-  - type: Emoting
 
 - type: entity
   id: WeaponArcRed
@@ -371,3 +380,16 @@
       state: red
     - type: TimedDespawn
       lifetime: 0.399
+
+- type: damageModifierSet
+  id: DemonShadowling
+  coefficients:
+    Blunt: 1
+    Slash: 1
+    Piercing: 1
+    Shock: 1
+    Cold: 0
+    Heat: 1.5
+    Holy: 1
+    Poison: 0
+    Radiation: 0

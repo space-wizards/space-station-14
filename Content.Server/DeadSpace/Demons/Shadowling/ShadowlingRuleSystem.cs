@@ -11,6 +11,7 @@ using Content.Shared.Mobs.Components;
 using Content.Server.GameTicking;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mind;
+using Robust.Server.Player;
 
 namespace Content.Server.DeadSpace.Demons.Shadowling;
 
@@ -19,6 +20,10 @@ public sealed class ShadowlingRuleSystem : GameRuleSystem<ShadowlingRuleComponen
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
+
+    private const int MinPlayers = 50;
+    private const int MaxPlayers = 75;
 
     public readonly EntProtoId ObjectiveId = "ShadowlingRecruitObjective";
 
@@ -32,6 +37,18 @@ public sealed class ShadowlingRuleSystem : GameRuleSystem<ShadowlingRuleComponen
     {
         if (!_mind.TryGetMind(uid, out var mindId, out var mind))
             return;
+
+        var playerCount = _playerManager.PlayerCount;
+        var scale = Math.Clamp((float)(playerCount - MinPlayers) / (MaxPlayers - MinPlayers), 0f, 1f);
+
+        var ruleQuery = EntityQueryEnumerator<ShadowlingRuleComponent>();
+        while (ruleQuery.MoveNext(out var ruleComp))
+        {
+            ruleComp.TargetSlaves = (int)Math.Round(MathHelper.Lerp(ruleComp.MinTargetSlaves, ruleComp.MaxTargetSlaves, scale));
+            ruleComp.AlertThreshold = (int)Math.Round(MathHelper.Lerp(ruleComp.MinAlertThreshold, ruleComp.MaxAlertThreshold, scale));
+            ruleComp.Scale = scale;
+        }
+
         _mind.TryAddObjective(mindId, mind, ObjectiveId);
     }
 

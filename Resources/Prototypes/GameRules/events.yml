@@ -58,6 +58,7 @@
     - id: PirateRaid
     - id: ZaratanaSpawn
     - id: RenegadeSpawn
+    - id: ShadowlingMidround
     - id: ShadowDemonInvasion
     - id: DemonsInvasion
     - id: BlobSpawn

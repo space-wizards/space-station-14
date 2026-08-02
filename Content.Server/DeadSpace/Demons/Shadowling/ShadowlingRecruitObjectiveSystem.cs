@@ -37,6 +37,12 @@ public sealed class ShadowlingRecruitObjectiveSystem : EntitySystem
 
     private void OnAfterAssign(EntityUid uid, ShadowlingRecruitObjectiveComponent component, ref ObjectiveAfterAssignEvent args)
     {
+        var ruleQuery = EntityQueryEnumerator<ShadowlingRuleComponent>();
+        while (ruleQuery.MoveNext(out var ruleComp))
+        {
+            component.TargetCount = (int)Math.Round(MathHelper.Lerp(component.MinTargetCount, component.MaxTargetCount, ruleComp.Scale));
+        }
+
         _metaData.SetEntityName(uid, Loc.GetString("shadowling-recruit-objective-title"), args.Meta);
 
         int count = 0;

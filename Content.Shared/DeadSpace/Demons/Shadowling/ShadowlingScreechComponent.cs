@@ -15,6 +15,8 @@ public sealed partial class ShadowlingScreechComponent : Component
     [DataField] public float Range = 5f;
     [DataField] public float StunDuration = 4f;
     [DataField] public int RequiredSlaves = 10;
+    [DataField] public int MinRequiredSlaves = 7;
+    [DataField] public int MaxRequiredSlaves = 10;
 }
 
 public sealed partial class ShadowlingScreechEvent : InstantActionEvent { }

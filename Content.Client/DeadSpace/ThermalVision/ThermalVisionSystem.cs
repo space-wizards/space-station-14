@@ -127,6 +127,10 @@ public sealed class ThermalVisionOverlay : Overlay
     {
         if (args.Space == OverlaySpace.ScreenSpace)
         {
+            var player = IoCManager.Resolve<IPlayerManager>().LocalEntity;
+            if (player == null || !_entityManager.TryGetComponent<ThermalVisionComponent>(player.Value, out var comp) || !comp.UseShader)
+                return;
+
             var screenHandle = (DrawingHandleScreen)args.DrawingHandle;
             screenHandle.UseShader(_vignetteShader);
             screenHandle.DrawRect(args.ViewportBounds, Color.White);
