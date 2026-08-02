@@ -3,7 +3,6 @@ using Content.Shared.Damage;
 using Content.Shared.Weapons.Hitscan.Components;
 using Content.Shared.Weapons.Hitscan.Events;
 using Content.Shared.Movement.Systems;
-using Content.Shared.Projectiles;
 using JetBrains.Annotations;
 using Content.Shared.Throwing;
 using Robust.Shared.Physics.Events;
@@ -21,7 +20,6 @@ internal sealed class StunOnCollideSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<StunOnCollideComponent, StartCollideEvent>(HandleCollide);
-        SubscribeLocalEvent<StunOnCollideComponent, ProjectileHitEvent>(HandleProjectileHit);
         SubscribeLocalEvent<StunOnCollideComponent, ThrowDoHitEvent>(HandleThrow);
         SubscribeLocalEvent<StunOnCollideComponent, HitscanRaycastFiredEvent>(HandleHitscan); // DS14
     }
@@ -57,15 +55,10 @@ internal sealed class StunOnCollideSystem : EntitySystem
 
     private void HandleCollide(Entity<StunOnCollideComponent> ent, ref StartCollideEvent args)
     {
-        if (HasComp<ProjectileComponent>(ent) || args.OurFixtureId != ent.Comp.FixtureID)
+        if (args.OurFixtureId != ent.Comp.FixtureID)
             return;
 
         TryDoCollideStun(ent, args.OtherEntity);
-    }
-
-    private void HandleProjectileHit(Entity<StunOnCollideComponent> ent, ref ProjectileHitEvent args)
-    {
-        TryDoCollideStun(ent, args.Target);
     }
 
     private void HandleThrow(Entity<StunOnCollideComponent> ent, ref ThrowDoHitEvent args)

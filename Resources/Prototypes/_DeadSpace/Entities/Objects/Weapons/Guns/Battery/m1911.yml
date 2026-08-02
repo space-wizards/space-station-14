@@ -28,15 +28,15 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: BatteryAmmoProvider
-    proto: LaserImpulseSMGBullet
+    proto: LaserImpulseSMGBulletTrace
     fireCost: 50 
   - type: BatteryWeaponFireModes
     fireModes:
-    - proto: LaserImpulseSMGBullet
+    - proto: LaserImpulseSMGBulletTrace
       fireCost: 50 
     - proto: MegaPulse
       fireCost: 100
-    - proto: BulletDisabler
+    - proto: BulletDisablerTrace
       fireCost: 35 
       pacifismAllowedMode: true
   - type: BatterySelfRecharger

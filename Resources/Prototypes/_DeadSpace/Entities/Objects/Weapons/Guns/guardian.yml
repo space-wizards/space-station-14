@@ -6,7 +6,7 @@
   - type: RechargeBasicEntityAmmo
     rechargeCooldown: 0.6
   - type: BasicEntityAmmoProvider
-    proto: BulletGuardianHardlight
+    proto: BulletGuardianHardlightTrace
     capacity: 1
     count: 1
   - type: Gun
@@ -16,26 +16,26 @@
     projectileSpeed: 18
 
 - type: entity
-  parent: BulletLaser
-  id: BulletGuardianHardlight
+  parent: EnergyBoltTrace
+  id: BulletGuardianHardlightTrace
   name: holoparasite hard-light bolt
   categories: [ HideSpawnMenu ]
   components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
-    color: "#40a7d7"
-    layers:
-    - state: heavylaser
-      shader: unshaded
-  - type: Ammo
-    muzzleFlash: MuzzleFlashEffectOmnilaser
-  - type: Projectile
+  - type: HitscanBasicRaycast
+    collisionMask: BulletImpassable
+    maxDistance: 13
+  - type: HitscanBasicVisuals
+    speed: 260
+    bullet:
+      sprite:
+        sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+        state: heavylaser
+      color: "#40a7d7"
+  - type: HitscanBasicDamage
     damage:
       types:
         Blunt: 20
     ignoreResistances: true
-  - type: TimedDespawn
-    lifetime: 0.73
 
 - type: entity
   categories: [ HideSpawnMenu ]

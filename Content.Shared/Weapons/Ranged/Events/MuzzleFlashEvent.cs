@@ -12,13 +12,11 @@ public sealed class MuzzleFlashEvent : EntityEventArgs
     public string Prototype;
 
     public Angle Angle;
-    public uint PredictionId;
 
-    public MuzzleFlashEvent(NetEntity uid, string prototype, Angle angle, uint predictionId)
+    public MuzzleFlashEvent(NetEntity uid, string prototype, Angle angle)
     {
         Uid = uid;
         Prototype = prototype;
         Angle = angle;
-        PredictionId = predictionId;
     }
 }

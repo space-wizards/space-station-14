@@ -9,34 +9,6 @@ namespace Content.Shared.DeadSpace.CCCCVars;
 // ReSharper disable once InconsistentNaming
 public sealed class CCCCVars
 {
-    /// <summary>
-    /// Predict hitscan traces for the shooter instead of waiting for the server visual event.
-    /// Damage and hit validation remain server authoritative.
-    /// </summary>
-    public static readonly CVarDef<bool> HitscanPredictionEnabled =
-        CVarDef.Create("weapons.hitscan_prediction", true, CVar.SERVER | CVar.REPLICATED);
-
-    /// <summary>
-    /// Predict physical projectile visuals for the shooter while keeping collision and damage server authoritative.
-    /// </summary>
-    public static readonly CVarDef<bool> ProjectilePredictionEnabled =
-        CVarDef.Create("weapons.projectile_prediction", true, CVar.SERVER | CVar.REPLICATED);
-
-    public static readonly CVarDef<bool> ProjectilePredictionPreventCollision =
-        CVarDef.Create("weapons.projectile_prediction_prevent_collision", false, CVar.SERVER | CVar.REPLICATED);
-
-    public static readonly CVarDef<bool> ProjectilePredictionLogHits =
-        CVarDef.Create("weapons.projectile_prediction_log_hits", false, CVar.SERVER | CVar.REPLICATED);
-
-    public static readonly CVarDef<float> ProjectilePredictionCoordinateDeviation =
-        CVarDef.Create("weapons.projectile_prediction_coordinate_deviation", 3f, CVar.SERVER | CVar.REPLICATED);
-
-    public static readonly CVarDef<float> ProjectilePredictionLowestCoordinateDeviation =
-        CVarDef.Create("weapons.projectile_prediction_lowest_coordinate_deviation", 3f, CVar.SERVER | CVar.REPLICATED);
-
-    public static readonly CVarDef<float> ProjectilePredictionAabbEnlargement =
-        CVarDef.Create("weapons.projectile_prediction_aabb_enlargement", 1.5f, CVar.SERVER | CVar.REPLICATED);
-
     /*
 	* GCF
 	*/

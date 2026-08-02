@@ -33,21 +33,6 @@
 
 - type: entity
   parent: MuzzleFlashEffect
-  id: MuzzleFlashEffectVioletLaser
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: Sprite
-    drawdepth: BelowMobs
-    offset: 0.15, 0
-    layers:
-    - shader: unshaded
-      map: ["enum.EffectLayers.Unshaded"]
-      sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
-      state: omnilaser_greyscale
-      color: "#c060ff"
-
-- type: entity
-  parent: MuzzleFlashEffect
   id: MuzzleFlashEffectHeavyLaser
   categories: [ HideSpawnMenu ]
   components:
@@ -78,8 +63,6 @@
       shader: unshaded
   - type: Physics
     bodyType: Dynamic
-    linearDamping: 0
-    angularDamping: 0
   - type: TileFrictionModifier
     modifier: 0
   - type: Fixtures
@@ -236,7 +219,6 @@
         - BulletImpassable
       fly-by: *flybyfixture
   - type: Ammo
-    muzzleFlash: MuzzleFlashEffectOmnilaser
   - type: Projectile
     damage:
       types:
@@ -316,7 +298,6 @@
         - BulletImpassable
       fly-by: *flybyfixture
   - type: Ammo
-    muzzleFlash: MuzzleFlashEffectOmnilaser
   - type: StaminaDamageOnCollide
     damage: 33
   - type: Projectile
@@ -359,7 +340,6 @@
         - Opaque
       fly-by: *flybyfixture
   - type: Ammo
-    muzzleFlash: MuzzleFlashEffectHeavyLaser
   - type: Projectile
     impactEffect: BulletImpactEffectLaser
     damage:
@@ -452,36 +432,19 @@
 - type: entity
   name: emitter bolt
   id: EmitterBolt
-  parent: BaseBullet
   categories: [ HideSpawnMenu ]
   components:
-  - type: Sprite
-    sprite: Structures/Power/Generation/Singularity/emitter.rsi
-    layers:
-    - state: projectile
-      shader: unshaded
-  - type: Ammo
-    muzzleFlash: null
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-      projectile:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.2,-0.2,0.2,0.2"
-        hard: false
-        mask:
-        - Opaque
-      fly-by:
-        shape: !type:PhysShapeCircle
-          radius: 1.5
-        layer:
-        - Impassable
-        - MidImpassable
-        - HighImpassable
-        - LowImpassable
-        hard: false
-  - type: Projectile
+  - type: HitscanAmmo
+  - type: HitscanBasicRaycast
+    collisionMask: Opaque
+    maxDistance: 64
+  - type: HitscanBasicVisuals
+    speed: 260
+    bullet:
+      sprite:
+        sprite: Structures/Power/Generation/Singularity/emitter.rsi
+        state: projectile
+  - type: HitscanBasicDamage
     damage:
       types:
         Heat: 14
@@ -489,8 +452,6 @@
   - type: Tag
     tags:
     - EmitterBolt
-  - type: TimedDespawn
-    lifetime: 3
 # DS14-end
 
 - type: entity
@@ -577,8 +538,10 @@
         Heat: 5
   - type: ChangeTemperatureOnCollide
     heat: 50000
-  - type: IgniteOnCollide
+#DS14-start
+  - type: HitscanBasicEffects
     fireStacks: 0.30
+#DS14-end
 
 - type: entity
   name: icewing watcher bolt
@@ -1443,9 +1406,10 @@
         hard: false
         mask:
         - Opaque
+        - Impassable
+        - BulletImpassable
       fly-by: *flybyfixture
   - type: Ammo
-    muzzleFlash: MuzzleFlashEffectHeavyLaser
   - type: Projectile
     impactEffect: BulletImpactEffectOrangeDisabler
     damage:

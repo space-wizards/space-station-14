@@ -27,15 +27,15 @@
       params:
         volume: -2
   - type: BatteryAmmoProvider
-    proto: DominatorDisabler
+    proto: DominatorDisablerTrace
     fireCost: 50
   - type: Dominator
     fireModes:
-    - proto: DominatorDisabler
+    - proto: DominatorDisablerTrace
       fireCost: 50
       switchSound:
         path: /Audio/_DeadSpace/Weapons/Guns/Dominator/nonlethal-paralyzer.ogg
-    - proto: DominatorEliminator
+    - proto: DominatorEliminatorTrace
       fireCost: 50
       switchSound:
         path: /Audio/_DeadSpace/Weapons/Guns/Dominator/lethal-eliminator.ogg
@@ -68,8 +68,6 @@
     radius: 2
     energy: 2
     color: "#f00a19"
-  - type: Ammo
-    muzzleFlash: MuzzleFlashEffectHeavyLaser
   - type: Projectile
     damage:
       types:
@@ -77,25 +75,3 @@
   - type: Reflective
     reflective:
     - Energy
-
-- type: entity
-  name: paralyzer
-  id: DominatorDisabler
-  parent: BulletDisabler
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: Fixtures
-    fixtures:
-      projectile:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.15,-0.3,0.15,0.3"
-        hard: false
-        mask:
-        - Opaque
-
-- type: entity
-  name: eliminator
-  id: DominatorEliminator
-  parent: DominatorBullet
-  categories: [ HideSpawnMenu ]

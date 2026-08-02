@@ -27,7 +27,7 @@
     - FullAuto
     - SemiAuto
   - type: BatteryAmmoProvider
-    proto: LaserRifleBullet
+    proto: LaserRifleBulletTrace
     fireCost: 40
   - type: Battery
     maxCharge: 1400

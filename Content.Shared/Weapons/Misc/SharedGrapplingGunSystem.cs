@@ -362,7 +362,9 @@ public abstract class SharedGrapplingGunSystem : VirtualController
         }
 
         var joint = _joints.CreateDistanceJoint(uid, args.Weapon.Value, id: GrapplingJoint);
+        joint.MaxLength = joint.Length + grapple.RopeMargin;
         joint.Stiffness = grapple.RopeStiffness;
+        joint.MinLength = grapple.RopeMinLength; // Length of a tile to prevent pulling yourself into / through walls
         joint.Breakpoint = grapple.RopeBreakPoint;
 
         var jointCompHook = _entities.GetComponent<JointComponent>(uid); // we use get here because if the component doesn't exist then something has fucked up bigtime
@@ -370,17 +372,6 @@ public abstract class SharedGrapplingGunSystem : VirtualController
 
         _joints.SetRelay(uid, args.Embedded, jointCompHook);
         _joints.RefreshRelay(args.Weapon.Value, jointCompGrapple);
-
-        // Relaying changes the physical joint endpoints from the hook and gun to the hit body and holder.
-        // Initialize the rope from those final endpoints so an accurately swept hit on the near face of a
-        // wall does not appear to teleport the bodies apart and immediately snap the rope.
-        var physicalHook = jointCompHook.Relay ?? uid;
-        var physicalGrapple = jointCompGrapple.Relay ?? args.Weapon.Value;
-        var relayLength = (_transform.GetWorldPosition(physicalHook) -
-                           _transform.GetWorldPosition(physicalGrapple)).Length();
-        joint.Length = relayLength;
-        joint.MaxLength = relayLength + grapple.RopeMargin;
-        joint.MinLength = grapple.RopeMinLength; // Length of a tile to prevent pulling yourself into / through walls
     }
 
     [Serializable, NetSerializable]

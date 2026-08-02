@@ -18,8 +18,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Speech.Muting;
-using Content.Shared.Projectiles;
-using Robust.Shared.Physics.Components;
+using Content.Shared.Weapons.Hitscan.Events;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Systems;
 using System.Linq;
@@ -39,10 +38,10 @@ public sealed class NecromorphPlasmaCutterSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<NecromorphPlasmaCutterComponent, ProjectileHitEvent>(OnHit);
+        SubscribeLocalEvent<NecromorphPlasmaCutterComponent, HitscanDamageDealtEvent>(OnHit);
     }
 
-    private void OnHit(Entity<NecromorphPlasmaCutterComponent> ent, ref ProjectileHitEvent args)
+    private void OnHit(Entity<NecromorphPlasmaCutterComponent> ent, ref HitscanDamageDealtEvent args)
     {
         var target = args.Target;
         if (!HasComp<NecromorfComponent>(target))
@@ -68,11 +67,7 @@ public sealed class NecromorphPlasmaCutterSystem : EntitySystem
         var oneLegWalkSpeed = movement?.BaseWalkSpeed ?? 0f;
         var oneLegSprintSpeed = movement?.BaseSprintSpeed ?? 0f;
         var oneLegAcceleration = movement?.BaseAcceleration ?? 0f;
-        var shotDirection = TryComp(ent, out PhysicsComponent? physics) && !physics.LinearVelocity.IsLengthZero()
-            ? physics.LinearVelocity.Normalized()
-            : Vector2.Zero;
-
-        if (wounds.RemovedLegs < 2 && TryDetachFirstPart(target, BodyPartType.Leg, shotDirection, ent.Comp.DetachedPartImpulse))
+        if (wounds.RemovedLegs < 2 && TryDetachFirstPart(target, BodyPartType.Leg, args.Data.ShotDirection, ent.Comp.DetachedPartImpulse))
         {
             if (wounds.RemovedLegs == 0 && movement != null)
             {
@@ -91,7 +86,7 @@ public sealed class NecromorphPlasmaCutterSystem : EntitySystem
             return;
         }
 
-        if (!TryDetachFirstPart(target, BodyPartType.Head, shotDirection, ent.Comp.DetachedPartImpulse))
+        if (!TryDetachFirstPart(target, BodyPartType.Head, args.Data.ShotDirection, ent.Comp.DetachedPartImpulse))
             return;
 
         EnsureComp<NecromorphMissingHeadComponent>(target);

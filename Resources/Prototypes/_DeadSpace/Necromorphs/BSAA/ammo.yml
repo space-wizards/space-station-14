@@ -2,7 +2,7 @@
 - type: entity
   id: BulletDragon
   name: пуля (5.56х45 мм Dragon's breath)
-  parent: BaseBulletIncendiary
+  parent: BulletIncendiaryTrace
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -11,32 +11,36 @@
     layers:
     - state: bulletb
       shader: unshaded
-  - type: Projectile
+  - type: HitscanBasicDamage
     damage:
       types:
         Piercing: 11
         Heat: 6
-  - type: IgniteOnCollide
+  - type: HitscanBasicEffects
     fireStacks: 0.30
+  - type: HitscanBasicVisuals
+    bullet:
+      sprite:
+        sprite: _DeadSpace/Necromorfs/BSAA/weapons/projectiles.rsi
+        state: bulletb
 
 - type: entity
   id: PelletShotgunDragon
   name: дробина (12х70 Dragon's breath)
-  parent: PelletShotgunIncendiary
+  parent: PelletShotgunIncendiaryTrace
   categories: [ HideSpawnMenu ]
   components:
-  - type: Sprite
-    noRot: false
-    sprite: _DeadSpace/Necromorfs/BSAA/weapons/projectiles.rsi
-    layers:
-    - state: bulletb
-      shader: unshaded
-  - type: Projectile
+  - type: HitscanBasicVisuals
+    bullet:
+      sprite:
+        sprite: _DeadSpace/Necromorfs/BSAA/weapons/projectiles.rsi
+        state: bulletb
+  - type: HitscanBasicDamage
     damage:
       types:
         Piercing: 5
         Heat: 5
-  - type: IgniteOnCollide
+  - type: HitscanBasicEffects
     fireStacks: 0.30
 
 - type: entity

@@ -28,13 +28,13 @@
       params:
         volume: -2
   - type: BatteryAmmoProvider
-    proto: BulletDisablerShotgun
+    proto: BulletDisablerShotgunTrace
     fireCost: 50
   - type: BatteryWeaponFireModes
     fireModes:
-    - proto: BulletDisablerShotgun
+    - proto: BulletDisablerShotgunTrace
       fireCost: 50
-    - proto: LaserRifleBulletSpread
+    - proto: LaserRifleBulletSpreadTrace
       fireCost: 50
   - type: UseDelay
     delay: 1.2

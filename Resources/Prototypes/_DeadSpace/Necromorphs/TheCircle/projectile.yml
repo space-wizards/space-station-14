@@ -30,37 +30,50 @@
 ### Проджектайл Застабы
 - type: entity
   id: BulletRifleZastaba
-  parent: BaseBullet
   name: патрон (5,7х39 мм)
   categories: [ HideSpawnMenu ]
   components:
-  - type: Sprite
-    sprite: _DeadSpace/Necromorfs/TheCircle/Weapon/weapons/zastaba/zastaba-projectile.rsi
-    layers:
-    - state: heavy-bullet-5.7
-      shader: unshaded
-  - type: Reflective
-    reflective:
-    - NonEnergy
-  - type: Projectile
+  - type: HitscanAmmo
+  - type: HitscanBasicRaycast
+    collisionMask: BulletImpassable
+    maxDistance: 40
+  - type: HitscanReflect
+    reflectiveType: NonEnergy
+  - type: HitscanBasicVisuals
+    muzzleFlash:
+      sprite: _DeadSpace/Objects/Weapons/Guns/Projectiles/traces.rsi
+      state: muzzle
+    travelFlash:
+      sprite: _DeadSpace/Objects/Weapons/Guns/Projectiles/traces.rsi
+      state: trace
+    impactFlash:
+      sprite: _DeadSpace/Objects/Weapons/Guns/Projectiles/traces.rsi
+      state: impact
+    bullet:
+      sprite:
+        sprite: _DeadSpace/Necromorfs/TheCircle/Weapon/weapons/zastaba/zastaba-projectile.rsi
+        state: heavy-bullet-5.7
+    speed: 315
+  - type: HitscanBasicEffects
+    sound:
+      path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
+  - type: HitscanBasicDamage
     damage:
       types:
         Piercing: 15
         Blunt: 4
-    soundHit:
-      path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
   - type: StaminaDamageOnCollide
     damage: 15
 
 ### Пуля РШ2
 - type: entity
-  parent: BaseBullet
+  parent: BulletTrace
   id: BulletRSh2
   name: патрон (12.7x55 безгильзовый)
   description: Если вы можете видеть это, вы вероятно мертвы!
   categories: [ HideSpawnMenu ]
   components:
-  - type: Projectile
+  - type: HitscanBasicDamage
     damage:
       types:
         Piercing: 28
@@ -99,10 +112,10 @@
 - type: entity
   id: BulletRPL20
   name: патрон (5.45х39 мм)
-  parent: BaseBullet
+  parent: BulletTrace
   categories: [ HideSpawnMenu ]
   components:
-  - type: Projectile
+  - type: HitscanBasicDamage
     damage:
       types:
         Piercing: 18
@@ -129,11 +142,11 @@
 ## Проджектайлы АШ12
 - type: entity
   id: BulletASh12
-  parent: BaseBullet
+  parent: BulletTrace
   name: патрон (12,7х55 мм)
   categories: [ HideSpawnMenu ]
   components:
-  - type: Projectile
+  - type: HitscanBasicDamage
     damage:
       types:
        Piercing: 30
@@ -161,11 +174,11 @@
 ## Проджектайлы Скараб
 - type: entity
   id: BulletRifleSCARAB
-  parent: BaseBullet
+  parent: BulletTrace
   name: патрон (6,8х51 мм)
   categories: [ HideSpawnMenu ]
   components:
-  - type: Projectile
+  - type: HitscanBasicDamage
     damage:
       types:
        Piercing: 14
@@ -194,11 +207,11 @@
 ## Проджектайл VSK
 - type: entity
   id: BulletVSK
-  parent: BaseBullet
+  parent: BulletTrace
   name: патрон (9.39 мм)
   categories: [ HideSpawnMenu ]
   components:
-  - type: Projectile
+  - type: HitscanBasicDamage
     damage:
       types:
        Piercing: 18
@@ -237,10 +250,10 @@
 
 - type: entity
   id: BulletWhirl
-  parent: BaseBullet
+  parent: BulletTrace
   categories: [ HideSpawnMenu ]
   components:
-  - type: Projectile
+  - type: HitscanBasicDamage
     damage:
       types:
         Piercing: 17
@@ -265,10 +278,10 @@
 
 - type: entity
   id: PelletShotgun23MM
-  parent: BaseBullet
+  parent: BulletTrace
   categories: [ HideSpawnMenu ]
   components:
-  - type: Projectile
+  - type: HitscanBasicDamage
     damage:
       types:
         Piercing: 5

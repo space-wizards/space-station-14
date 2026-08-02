@@ -27,15 +27,15 @@
       params:
         volume: -3
   - type: BatteryAmmoProvider
-    proto: BulletPulseSpread
+    proto: BulletPulseSpreadTrace
     fireCost: 150
   - type: BatteryWeaponFireModes
     fireModes:
-    - proto: BulletPulseSpread
+    - proto: BulletPulseSpreadTrace
       fireCost: 150
-    - proto: BulletPulseSpreadNarrow
+    - proto: BulletPulseSpreadNarrowTrace
       fireCost: 200
-    - proto: BulletDisablerPulseSpread
+    - proto: BulletDisablerPulseSpreadTrace
       fireCost: 250
   - type: Item
     size: Large

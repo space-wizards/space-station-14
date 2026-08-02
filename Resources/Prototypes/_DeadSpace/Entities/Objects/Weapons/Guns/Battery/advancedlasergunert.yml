@@ -69,7 +69,7 @@
     - FullAuto
     - SemiAuto
   - type: BatteryAmmoProvider
-    proto: LaserImpulseSMGBullet
+    proto: LaserImpulseSMGBulletTrace
     fireCost: 25
   - type: Battery
     maxCharge: 1400
@@ -96,8 +96,6 @@
     layers:
     - state: omnilaser
       shader: unshaded
-  - type: Ammo
-    muzzleFlash: MuzzleFlashEffectOmnilaser
   - type: PointLight
     radius: 2
     energy: 2
@@ -153,21 +151,22 @@
   id: PulseMK2
   categories: [ HideSpawnMenu ]
   components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
-    color: "#0088ff"
-    layers:
-    - state: heavylaser
-      shader: unshaded
-  - type: Ammo
-    muzzleFlash: MuzzleFlashEffectOmnilaser
-  - type: Projectile
+  - type: HitscanBasicDamage
     damage:
       types:
         Heat: 20
-  - type: ChangeTemperatureOnCollide
-    heat: 75000
-  - type: IgniteOnCollide
+  - type: HitscanBasicVisuals
+    muzzleFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: muzzle_blue
+    travelFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: beam_blue
+    impactFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: impact_blue
+  - type: HitscanBasicEffects
+    temperature: 50
     fireStacks: 2
 
 - type: entity
@@ -210,18 +209,10 @@
   name: анигилятор
   categories: [ HideSpawnMenu ]
   components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
-    color: "#00ffff"
-    layers:
-    - state: omnilaser
-      shader: unshaded
-  - type: Ammo
-    muzzleFlash: MuzzleFlashEffectOmnilaser
-  - type: Projectile
+  - type: HitscanBasicDamage
     damage:
       types:
         Heat: 25
         Radiation: 25
-  - type: ChangeTemperatureOnCollide
-    heat: 22500
+  - type: HitscanBasicEffects
+    temperature: 15

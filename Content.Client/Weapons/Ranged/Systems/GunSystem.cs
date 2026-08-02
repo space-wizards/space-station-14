@@ -2,24 +2,19 @@ using System.Numerics;
 using Content.Client.Animations;
 using Content.Client.Gameplay;
 using Content.Client.Items;
-using Content.Client.Projectiles;
 using Content.Client.Weapons.Ranged.Components;
 using Content.Shared.Camera;
 using Content.Shared.CCVar;
 using Content.Shared.CombatMode;
 using Content.Shared.Damage;
-using Content.Shared.DeadSpace.CCCCVars;
-using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Hitscan.Components;
 using Content.Shared.Weapons.Hitscan.Events;
-using Content.Shared.Weapons.Hitscan.Systems;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
-using Robust.Client.GameStates;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
@@ -31,7 +26,6 @@ using Robust.Shared.Input;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using SharedGunSystem = Content.Shared.Weapons.Ranged.Systems.SharedGunSystem;
@@ -44,7 +38,6 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private readonly AnimationPlayerSystem _animPlayer = default!;
     [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly IInputManager _inputManager = default!;
-    [Dependency] private readonly IClientGameStateManager _gameState = default!;
     [Dependency] private readonly InputSystem _inputSystem = default!;
     [Dependency] private readonly IOverlayManager _overlayManager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
@@ -54,8 +47,6 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private readonly SharedMapSystem _maps = default!;
     [Dependency] private readonly SharedTransformSystem _xform = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
-    [Dependency] private readonly HitscanBasicRaycastSystem _hitscan = default!;
-    [Dependency] private readonly ProjectileSystem _projectiles = default!;
 
     public static readonly EntProtoId HitscanProto = "HitscanEffect";
 
@@ -88,13 +79,6 @@ public sealed partial class GunSystem : SharedGunSystem
     }
 
     private bool _spreadOverlay;
-    private uint _nextPredictionId;
-    private readonly Dictionary<uint, int> _predictedHitscans = new();
-    private readonly Queue<uint> _predictionOrder = new();
-    private readonly HashSet<(EntityUid Gun, uint PredictionId)> _renderedMuzzleFlashes = new();
-    private readonly Queue<(EntityUid Gun, uint PredictionId)> _muzzleFlashOrder = new();
-
-    private const int MaxTrackedPredictions = 128;
 
     public override void Initialize()
     {
@@ -120,14 +104,6 @@ public sealed partial class GunSystem : SharedGunSystem
 
     private void OnHitscan(HitscanEvent ev)
     {
-        if (ReconcilePredictedHitscan(ev))
-            return;
-
-        RenderHitscan(ev);
-    }
-
-    private void RenderHitscan(HitscanEvent ev)
-    {
         // DS14-start: animated hitscan traces.
         if (ev.Sprites.Count != 0)
         {
@@ -135,76 +111,19 @@ public sealed partial class GunSystem : SharedGunSystem
             return;
         }
 
-        if (ev.Bullet == null)
-        {
-            RenderLegacyHitscanSprites(BuildLegacyHitscanSprites(ev));
-            return;
-        }
-
         var delay = 0f;
         foreach (var trace in ev.Traces)
         {
-            var nextDelay = FireHitscanEffect(ev, ev.ParallelTraces ? 0f : delay, trace);
-            if (!ev.ParallelTraces)
-                delay = nextDelay;
+            delay = FireHitscanEffect(ev, delay, trace);
         }
         // DS14-end
-    }
-
-    private static List<(NetCoordinates coordinates, Angle angle, SpriteSpecifier Sprite, float Distance)>
-        BuildLegacyHitscanSprites(HitscanEvent ev)
-    {
-        var sprites = new List<(NetCoordinates, Angle, SpriteSpecifier, float)>();
-        foreach (var trace in ev.Traces)
-        {
-            if (trace.Distance >= 1f)
-            {
-                if (ev.MuzzleFlash != null && trace.MuzzleCoordinates is { } muzzle)
-                    sprites.Add((muzzle, trace.Angle, ev.MuzzleFlash, 1f));
-
-                if (ev.TravelFlash != null && trace.TravelCoordinates is { } travel)
-                    sprites.Add((travel, trace.Angle, ev.TravelFlash, MathF.Max(trace.Distance - 1.5f, 0f)));
-            }
-
-            if (ev.ImpactFlash != null)
-                sprites.Add((trace.ImpactCoordinates, trace.Angle.FlipPositive(), ev.ImpactFlash, 1f));
-        }
-
-        return sprites;
-    }
-
-    private bool ReconcilePredictedHitscan(HitscanEvent ev)
-    {
-        if (ev.PredictionId == 0 ||
-            ev.Shooter == null ||
-            GetEntity(ev.Shooter) != _player.LocalEntity ||
-            !_predictedHitscans.TryGetValue(ev.PredictionId, out var remaining))
-        {
-            return false;
-        }
-
-        if (remaining <= 1)
-            _predictedHitscans.Remove(ev.PredictionId);
-        else
-            _predictedHitscans[ev.PredictionId] = remaining - 1;
-
-        // The first segment was rendered immediately. Reflections and penetration are authoritative,
-        // so retain any continuation segments without replaying the delayed muzzle segment.
-        if (ev.Traces.Count > 1)
-        {
-            ev.Sprites.Clear();
-            ev.Traces.RemoveAt(0);
-            return false;
-        }
-
-        return true;
     }
 
     // DS14-start: animated hitscan traces.
     private float FireHitscanEffect(HitscanEvent visuals, float delay, HitscanTrace trace)
     {
         var speed = MathF.Max(visuals.Speed, 1f);
-        var length = trace.Distance / speed * 1000f;
+        var length = trace.Distance / (speed / 5000f);
 
         if (trace.MuzzleCoordinates is { } muzzleCoordinates)
         {
@@ -557,29 +476,13 @@ public sealed partial class GunSystem : SharedGunSystem
         Log.Debug($"Sending shoot request tick {Timing.CurTick} / {Timing.CurTime}");
 
 
-        var predictionId = _gameState.IsPredictionEnabled &&
-                           (_cfg.GetCVar(CCCCVars.HitscanPredictionEnabled) ||
-                            _cfg.GetCVar(CCCCVars.ProjectilePredictionEnabled))
-            ? NextPredictionId()
-            : 0;
-
         RaisePredictiveEvent(new RequestShootEvent
         {
             Target = target,
             Coordinates = GetNetCoordinates(coordinates),
             Gun = GetNetEntity(gun),
             Continuous = _cfg.GetCVar(CCVars.ControlHoldToAttackRanged),
-            PredictionId = predictionId,
         });
-    }
-
-    private uint NextPredictionId()
-    {
-        _nextPredictionId++;
-        if (_nextPredictionId == 0)
-            _nextPredictionId++;
-
-        return _nextPredictionId;
     }
 
     public override void Shoot(Entity<GunComponent> gun, List<(EntityUid? Entity, IShootable Shootable)> ammo,
@@ -590,17 +493,8 @@ public sealed partial class GunSystem : SharedGunSystem
         // Rather than splitting client / server for every ammo provider it's easier
         // to just delete the spawned entities. This is for programmer sanity despite the wasted perf.
         // This also means any ammo specific stuff can be grabbed as necessary.
-        if (!TryGetShootMapDirection(fromCoordinates, toCoordinates, out _, out var shotDirection))
-        {
-            userImpulse = false;
-            return;
-        }
-
-        var direction = -shotDirection;
+        var direction = TransformSystem.ToMapCoordinates(fromCoordinates).Position - TransformSystem.ToMapCoordinates(toCoordinates).Position;
         var worldAngle = direction.ToAngle().Opposite();
-        var recoilAngle = GetRecoilAngle(Timing.CurTime, gun, shotDirection.ToAngle());
-        var gunVelocity = Physics.GetMapLinearVelocity(fromCoordinates);
-        ushort nextProjectileIndex = 0;
 
         foreach (var (ent, shootable) in ammo)
         {
@@ -621,17 +515,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     if (!cartridge.Spent)
                     {
                         SetCartridgeSpent(ent!.Value, cartridge, true);
-                        if (!PredictCartridgeShot(
-                                gun,
-                                cartridge,
-                                fromCoordinates,
-                                recoilAngle,
-                                gunVelocity,
-                                user,
-                                ref nextProjectileIndex))
-                        {
-                            MuzzleFlash(gun, cartridge, worldAngle, user);
-                        }
+                        MuzzleFlash(gun, cartridge, worldAngle, user);
                         Audio.PlayPredicted(gun.Comp.SoundGunshotModified, gun, user);
                         Recoil(user, direction, gun.Comp.CameraRecoilScalarModified);
                         // TODO: Can't predict entity deletions.
@@ -652,316 +536,17 @@ public sealed partial class GunSystem : SharedGunSystem
                     MuzzleFlash(gun, newAmmo, worldAngle, user);
                     Audio.PlayPredicted(gun.Comp.SoundGunshotModified, gun, user);
                     Recoil(user, direction, gun.Comp.CameraRecoilScalarModified);
-                    var retainedAsPrediction = ent != null && PredictAmmoShot(
-                        gun,
-                        ent.Value,
-                        fromCoordinates,
-                        recoilAngle,
-                        gunVelocity,
-                        user,
-                        ref nextProjectileIndex);
-                    if (IsClientSide(ent!.Value) && !retainedAsPrediction)
+                    if (IsClientSide(ent!.Value))
                         Del(ent.Value);
-                    else if (!retainedAsPrediction)
+                    else
                         RemoveShootable(ent.Value);
                     break;
                 case HitscanAmmoComponent:
-                    PredictHitscan(gun, ent!.Value, fromCoordinates, recoilAngle, user);
                     Audio.PlayPredicted(gun.Comp.SoundGunshotModified, gun, user);
                     Recoil(user, direction, gun.Comp.CameraRecoilScalarModified);
-                    if (IsClientSide(ent.Value))
-                        Del(ent.Value);
                     break;
             }
         }
-    }
-
-    private bool PredictCartridgeShot(
-        Entity<GunComponent> gun,
-        CartridgeAmmoComponent cartridge,
-        EntityCoordinates fromCoordinates,
-        Angle recoilAngle,
-        Vector2 gunVelocity,
-        EntityUid? user,
-        ref ushort nextProjectileIndex)
-    {
-        if (!Timing.IsFirstTimePredicted || gun.Comp.PredictionId == 0)
-            return false;
-
-        var ammo = Spawn(cartridge.Prototype, fromCoordinates);
-        var retainedAsPrediction = false;
-        try
-        {
-            if (PredictHitscan(gun, ammo, fromCoordinates, recoilAngle, user))
-                return true;
-
-            retainedAsPrediction = PredictPhysicalProjectiles(
-                gun,
-                ammo,
-                fromCoordinates,
-                recoilAngle,
-                gunVelocity,
-                user,
-                ref nextProjectileIndex);
-            return false;
-        }
-        finally
-        {
-            if (!retainedAsPrediction)
-                Del(ammo);
-        }
-    }
-
-    private bool PredictPhysicalProjectiles(
-        Entity<GunComponent> gun,
-        EntityUid ammo,
-        EntityCoordinates fromCoordinates,
-        Angle recoilAngle,
-        Vector2 gunVelocity,
-        EntityUid? user,
-        ref ushort nextProjectileIndex)
-    {
-        if (!Timing.IsFirstTimePredicted ||
-            !_projectiles.PredictionEnabled ||
-            gun.Comp.PredictionId == 0 ||
-            !HasComp<ProjectileComponent>(ammo))
-        {
-            return false;
-        }
-
-        if (!IsClientSide(ammo))
-        {
-            var projectileCount = TryComp<ProjectileSpreadComponent>(ammo, out var skippedSpread)
-                ? skippedSpread.Count
-                : 1;
-            nextProjectileIndex = checked((ushort) (nextProjectileIndex + projectileCount));
-            return false;
-        }
-
-        if (TryComp<ProjectileSpreadComponent>(ammo, out var spread))
-        {
-            var spreadEvent = new GunGetAmmoSpreadEvent(spread.Spread);
-            RaiseLocalEvent(gun, ref spreadEvent);
-            var angles = LinearSpread(
-                recoilAngle - spreadEvent.Spread / 2,
-                recoilAngle + spreadEvent.Spread / 2,
-                spread.Count);
-
-            for (var i = 0; i < angles.Length; i++)
-            {
-                var projectile = i == 0 ? ammo : Spawn(spread.Proto, fromCoordinates);
-                PredictPhysicalProjectile(
-                    gun,
-                    projectile,
-                    angles[i].ToVec(),
-                    gunVelocity,
-                    user,
-                    nextProjectileIndex++);
-            }
-
-            return true;
-        }
-
-        PredictPhysicalProjectile(
-            gun,
-            ammo,
-            recoilAngle.ToVec(),
-            gunVelocity,
-            user,
-            nextProjectileIndex++);
-        return true;
-    }
-
-    private bool PredictAmmoShot(
-        Entity<GunComponent> gun,
-        EntityUid ammo,
-        EntityCoordinates fromCoordinates,
-        Angle recoilAngle,
-        Vector2 gunVelocity,
-        EntityUid? user,
-        ref ushort nextProjectileIndex)
-    {
-        if (IsClientSide(ammo))
-        {
-            return PredictPhysicalProjectiles(
-                gun,
-                ammo,
-                fromCoordinates,
-                recoilAngle,
-                gunVelocity,
-                user,
-                ref nextProjectileIndex);
-        }
-
-        if (!Timing.IsFirstTimePredicted ||
-            MetaData(ammo).EntityPrototype?.ID is not { } prototype)
-        {
-            return false;
-        }
-
-        var visualAmmo = Spawn(prototype, fromCoordinates);
-        var retained = PredictPhysicalProjectiles(
-            gun,
-            visualAmmo,
-            fromCoordinates,
-            recoilAngle,
-            gunVelocity,
-            user,
-            ref nextProjectileIndex);
-
-        if (!retained)
-            Del(visualAmmo);
-
-        // The visual clone is retained; the provider-owned ammo entity still follows normal client cleanup.
-        return false;
-    }
-
-    private void PredictPhysicalProjectile(
-        Entity<GunComponent> gun,
-        EntityUid projectile,
-        Vector2 direction,
-        Vector2 gunVelocity,
-        EntityUid? user,
-        ushort projectileIndex)
-    {
-        if (gun.Comp.Target is { } target && !TerminatingOrDeleted(target))
-        {
-            var targeted = EnsureComp<TargetedProjectileComponent>(projectile);
-            targeted.Target = target;
-        }
-
-        _projectiles.RegisterPredictedProjectile(projectile, gun.Comp.PredictionId, projectileIndex);
-        ShootProjectile(projectile, direction, gunVelocity, gun, user, gun.Comp.ProjectileSpeedModified);
-    }
-
-    private bool PredictHitscan(
-        Entity<GunComponent> gun,
-        EntityUid ammo,
-        EntityCoordinates fromCoordinates,
-        Angle recoilAngle,
-        EntityUid? user)
-    {
-        if (!Timing.IsFirstTimePredicted ||
-            !_cfg.GetCVar(CCCCVars.HitscanPredictionEnabled) ||
-            gun.Comp.PredictionId == 0 ||
-            !TryComp<HitscanBasicRaycastComponent>(ammo, out var raycast) ||
-            !TryComp<HitscanBasicVisualsComponent>(ammo, out var visuals))
-        {
-            return false;
-        }
-
-        var traces = new List<HitscanTrace>();
-        if (TryComp<ProjectileSpreadComponent>(ammo, out var spread))
-        {
-            var spreadEvent = new GunGetAmmoSpreadEvent(spread.Spread);
-            RaiseLocalEvent(gun, ref spreadEvent);
-            var angles = LinearSpread(
-                recoilAngle - spreadEvent.Spread / 2,
-                recoilAngle + spreadEvent.Spread / 2,
-                spread.Count);
-
-            for (var i = 0; i < angles.Length; i++)
-            {
-                var traceAmmo = ammo;
-                if (i > 0)
-                    traceAmmo = Spawn(spread.Proto, fromCoordinates);
-
-                try
-                {
-                    if (TryComp<HitscanBasicRaycastComponent>(traceAmmo, out var pelletRaycast) &&
-                        _hitscan.BuildVisualTrace(
-                            (traceAmmo, pelletRaycast),
-                            fromCoordinates,
-                            angles[i].ToVec(),
-                            user ?? gun.Owner,
-                            gun.Comp.Target) is { } trace)
-                    {
-                        traces.Add(trace);
-                    }
-                }
-                finally
-                {
-                    if (i > 0)
-                        Del(traceAmmo);
-                }
-            }
-        }
-        else if (_hitscan.BuildVisualTrace(
-                     (ammo, raycast),
-                     fromCoordinates,
-                     recoilAngle.ToVec(),
-                     user ?? gun.Owner,
-                     gun.Comp.Target) is { } trace)
-        {
-            traces.Add(trace);
-        }
-
-        if (traces.Count == 0)
-            return false;
-
-        TrackPredictedHitscan(gun.Comp.PredictionId, traces.Count);
-        RenderHitscan(new HitscanEvent
-        {
-            Traces = traces,
-            MuzzleFlash = visuals.MuzzleFlash,
-            TravelFlash = visuals.TravelFlash,
-            ImpactFlash = visuals.ImpactFlash,
-            Bullet = visuals.Bullet,
-            BulletLight = GetPredictedLight(ammo),
-            Speed = visuals.Speed,
-            PredictionId = gun.Comp.PredictionId,
-            Shooter = GetNetEntity(user),
-            ParallelTraces = spread != null,
-        });
-        return true;
-    }
-
-    private void TrackPredictedHitscan(uint predictionId, int count)
-    {
-        if (predictionId == 0)
-            return;
-
-        if (_predictedHitscans.TryGetValue(predictionId, out var existing))
-        {
-            _predictedHitscans[predictionId] = existing + count;
-            return;
-        }
-
-        _predictedHitscans[predictionId] = count;
-        _predictionOrder.Enqueue(predictionId);
-
-        while (_predictionOrder.Count > MaxTrackedPredictions && _predictionOrder.TryDequeue(out var expired))
-            _predictedHitscans.Remove(expired);
-    }
-
-    private HitscanLightVisual? GetPredictedLight(EntityUid ammo)
-    {
-        if (!Lights.TryGetLight(ammo, out var light) || !light.Enabled)
-            return null;
-
-        return new HitscanLightVisual
-        {
-            Color = light.Color,
-            Radius = light.Radius,
-            Energy = light.Energy,
-            Softness = light.Softness,
-            Falloff = light.Falloff,
-            CurveFactor = light.CurveFactor,
-            CastShadows = light.CastShadows,
-            Offset = light.Offset,
-        };
-    }
-
-    private static Angle[] LinearSpread(Angle start, Angle end, int count)
-    {
-        if (count <= 1)
-            return [start];
-
-        var angles = new Angle[count];
-        for (var i = 0; i < count; i++)
-            angles[i] = start + (end - start) * i / (count - 1);
-
-        return angles;
     }
 
     private void Recoil(EntityUid? user, Vector2 recoil, float recoilScalar)
@@ -982,7 +567,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
     protected override void CreateEffect(EntityUid gunUid, MuzzleFlashEvent message, EntityUid? tracked = null)
     {
-        if (!Timing.IsFirstTimePredicted || !ShouldRenderMuzzleFlash(gunUid, message.PredictionId))
+        if (!Timing.IsFirstTimePredicted)
             return;
 
         // EntityUid check added to stop throwing exceptions due to https://github.com/space-wizards/space-station-14/issues/28252
@@ -1013,15 +598,12 @@ public sealed partial class GunSystem : SharedGunSystem
         var ent = Spawn(message.Prototype, coordinates);
         TransformSystem.SetWorldRotationNoLerp(ent, message.Angle);
 
-        var track = EnsureComp<TrackUserComponent>(ent);
-        track.User = gunUid;
-        track.Offset = Vector2.UnitX / 2f;
-
-        // TrackUserComponent is updated on the next render frame. Put the effect at the muzzle now as
-        // well, otherwise every flash is rendered at the gun origin for one frame and then jumps half
-        // a tile. The jump is especially visible while the shooter or its grid is moving.
-        var muzzlePosition = TransformSystem.GetWorldPosition(gunXform) + message.Angle.RotateVec(track.Offset);
-        TransformSystem.SetWorldPosition(ent, muzzlePosition);
+        if (tracked != null)
+        {
+            var track = EnsureComp<TrackUserComponent>(ent);
+            track.User = tracked;
+            track.Offset = Vector2.UnitX / 2f;
+        }
 
         var lifetime = 0.4f;
 
@@ -1098,30 +680,6 @@ public sealed partial class GunSystem : SharedGunSystem
         _animPlayer.Play((gunUid, uidPlayer), animTwo, "muzzle-flash-light");
     }
 
-    private bool ShouldRenderMuzzleFlash(EntityUid gun, uint predictionId)
-    {
-        if (predictionId == 0)
-            return true;
-
-        var key = (gun, predictionId);
-        if (!_renderedMuzzleFlashes.Add(key))
-            return false;
-
-        _muzzleFlashOrder.Enqueue(key);
-        while (_muzzleFlashOrder.Count > MaxTrackedPredictions &&
-               _muzzleFlashOrder.TryDequeue(out var expired))
-        {
-            _renderedMuzzleFlashes.Remove(expired);
-        }
-
-        return true;
-    }
-
     // TODO: Move RangedDamageSoundComponent to shared so this can be predicted.
-    public override void PlayImpactSound(
-        EntityUid otherEntity,
-        DamageSpecifier? modifiedDamage,
-        SoundSpecifier? weaponSound,
-        bool forceWeaponSound,
-        Filter? filter = null) { }
+    public override void PlayImpactSound(EntityUid otherEntity, DamageSpecifier? modifiedDamage, SoundSpecifier? weaponSound, bool forceWeaponSound) { }
 }

@@ -8,7 +8,7 @@
     tags:
     - CartridgeSniperRifle
   - type: CartridgeAmmo
-    proto: BulletSniperRifle
+    proto: BulletSniperRifleTrace
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     layers:
@@ -23,7 +23,7 @@
   name: патрон (.338 LM)
   components:
   - type: CartridgeAmmo
-    proto: BulletSniperRifle
+    proto: BulletSniperRifleTrace
 
 - type: entity
   parent: BaseCartridgeSniperRifle
@@ -31,7 +31,7 @@
   name: патрон (.338 LM зажигательный)
   components:
   - type: CartridgeAmmo
-    proto: BulletSniperRifleIncendiary
+    proto: BulletSniperRifleIncendiaryTrace
   - type: Sprite
     layers:
       - state: base
@@ -46,7 +46,7 @@
   name: патрон (.338 LM урановый)
   components:
   - type: CartridgeAmmo
-    proto: BulletSniperRifleUranium
+    proto: BulletSniperRifleUraniumTrace
   - type: Sprite
     layers:
       - state: base

@@ -9,8 +9,6 @@
     layers:
     - state: pulse1_bl
       shader: unshaded
-  - type: Ammo
-    muzzleFlash: MuzzleFlashEffectOmnilaser
   - type: Projectile
     impactEffect: BulletImpactEffectDisabler
     damage:
@@ -74,7 +72,7 @@
 
 - type: entity
   name: плазменный удар
-  id: LaserRifleBulletSpread
+  id: LaserRifleBulletpread
   categories: [ HideSpawnMenu ]
   parent: LaserRifleBullet
   components:

@@ -1,0 +1,481 @@
+# DS14-start: hitscan replacements for energy projectile bolts.
+- type: entity
+  id: EnergyBoltTrace
+  abstract: true
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanAmmo
+  - type: HitscanBasicRaycast
+    collisionMask: BulletImpassable
+    maxDistance: 40
+  - type: HitscanReflect
+    reflectiveType: Energy
+  - type: HitscanBasicVisuals
+    speed: 260
+    bullet:
+      sprite:
+        sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+        state: omnilaser
+  - type: HitscanBasicEffects
+
+- type: entity
+  id: BulletDisablerTrace
+  name: disabler bolt
+  parent: EnergyBoltTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanStaminaDamage
+    staminaDamage: 33
+  - type: HitscanBasicEffects
+    sound:
+      collection: WeakHit
+    forceSound: true
+
+- type: entity
+  id: DominatorDisablerTrace
+  name: paralyzer
+  parent: BulletDisablerTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicRaycast
+    collisionMask: Opaque
+    maxDistance: 40
+
+- type: entity
+  id: BulletDisablerPracticeTrace
+  name: disabler bolt practice
+  parent: BulletDisablerTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanStaminaDamage
+    staminaDamage: 1
+
+- type: entity
+  id: BulletDisablerSmgTrace
+  name: disabler bolt smg
+  parent: BulletDisablerTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanStaminaDamage
+    staminaDamage: 15
+
+- type: entity
+  id: BulletDisablerSmgSpreadTrace
+  name: disabling laser barrage
+  parent: BulletDisablerSmgTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: ProjectileSpread
+    proto: BulletDisablerSmgTrace
+    count: 3
+    spread: 9
+
+- type: entity
+  id: BulletDisablerShotgunTrace
+  name: paralyzer
+  parent: BulletDisablerTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanStaminaDamage
+    staminaDamage: 42
+
+- type: entity
+  id: BulletDisablerPulseTrace
+  name: pulse disabler bolt
+  parent: BulletDisablerSmgTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicVisuals
+    speed: 260
+    bullet:
+      sprite:
+        sprite: _DeadSpace/Objects/Weapons/Guns/Projectiles/pulse.rsi
+        state: pulse_taser
+  - type: HitscanStaminaDamage
+    staminaDamage: 30
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Heat: 5
+  - type: HitscanBasicEffects
+    sound:
+      path: "/Audio/Weapons/Guns/Hits/taser_hit.ogg"
+    forceSound: true
+
+- type: entity
+  id: BulletDisablerPulseSpreadTrace
+  name: pulse disabler barrage
+  parent: BulletDisablerPulseTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: ProjectileSpread
+    proto: BulletDisablerPulseTrace
+    count: 3
+    spread: 9
+
+- type: entity
+  id: BulletTaserTrace
+  name: taser bolt
+  parent: EnergyBoltTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicRaycast
+    collisionMask: BulletImpassable
+    maxDistance: 8
+  - type: HitscanBasicVisuals
+    speed: 260
+    bullet:
+      sprite:
+        sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+        state: spark
+      color: "#ffff33"
+  - type: StunOnCollide
+    stunAmount: 0
+    knockdownAmount: 2.5
+    drop: false
+    slowdownAmount: 2.5
+    walkSpeedModifier: 0.5
+    sprintSpeedModifier: 0.5
+  - type: HitscanBasicEffects
+    sound:
+      path: "/Audio/Weapons/Guns/Hits/taser_hit.ogg"
+    forceSound: true
+
+- type: entity
+  id: BulletTaserSuperTrace
+  name: taser bolt
+  parent: BulletTaserTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicRaycast
+    collisionMask: BulletImpassable
+    maxDistance: 25
+  - type: HitscanBasicVisuals
+    speed: 260
+    bullet:
+      sprite:
+        sprite: Structures/Power/Generation/Tesla/energy_miniball.rsi
+        state: tesla_projectile
+      color: "#ffff33"
+  - type: PointLight
+    enabled: true
+    color: "#ffff33"
+    radius: 2.0
+    energy: 7.01
+  - type: StunOnCollide
+    stunAmount: 5
+    drop: true
+    knockdownAmount: 10
+    slowdownAmount: 10
+    walkSpeedModifier: 0.5
+    sprintSpeedModifier: 0.5
+
+- type: entity
+  id: BulletLaserTrace
+  name: laser bolt
+  parent: EnergyBoltTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicRaycast
+    collisionMask: Opaque
+    maxDistance: 40
+  - type: HitscanBasicVisuals
+    speed: 260
+    bullet:
+      sprite:
+        sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+        state: heavylaser
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Heat: 13
+
+- type: entity
+  id: BulletLaserSpreadNarrowTrace
+  name: lethal laser barrage
+  parent: BulletLaserTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: ProjectileSpread
+    proto: BulletLaserTrace
+    count: 4
+    spread: 10
+
+- type: entity
+  id: BulletLaserMagnumTrace
+  name: magnum laser bolt
+  parent: BulletLaserTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicVisuals
+    speed: 260
+    bullet:
+      sprite:
+        sprite: Objects/Weapons/Guns/Projectiles/projectiles_magnum.rsi
+        state: magnum
+#DS14-start
+#   - type: PointLight
+#     enabled: true
+#     color: "#ff4300"
+#DS14-end
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Heat: 30
+
+- type: entity
+  id: BulletLaserWindowPiercingMagnumTrace
+  name: magnum window-piercing bolt
+  parent: BulletLaserMagnumTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicRaycast
+    collisionMask: Opaque
+    maxDistance: 40
+  - type: HitscanBasicVisuals
+    speed: 260
+    bullet:
+      sprite:
+        sprite: Objects/Weapons/Guns/Projectiles/projectiles_magnum.rsi
+        state: magnum_piercing
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Heat: 20
+
+- type: entity
+  id: ADTBulletLaserTrace
+  name: laser bolt
+  parent: BulletLaserTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicRaycast
+    collisionMask: Opaque
+    maxDistance: 40
+  - type: HitscanBasicVisuals
+    speed: 260
+    bullet:
+      sprite:
+        sprite: _ADT/Objects/Weapons/Guns/Projectiles/projectiles_ss.rsi
+        state: omnilaser
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Heat: 20
+  - type: HitscanBasicEffects
+    sound:
+      collection: WeakHit
+    forceSound: true
+
+- type: entity
+  id: BulletEnergyTurretLaserTrace
+  name: laser bolt
+  parent: BulletLaserTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicRaycast
+    collisionMask: Opaque
+    maxDistance: 40
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Heat: 28
+
+- type: entity
+  id: BulletEnergyTurretDisablerTrace
+  name: disabler bolt
+  parent: BulletDisablerTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicRaycast
+    collisionMask: Opaque
+    maxDistance: 40
+  - type: HitscanStaminaDamage
+    staminaDamage: 30
+
+- type: entity
+  id: DominatorBulletTrace
+  name: eliminator
+  parent: BulletLaserTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicVisuals
+    speed: 260
+    bullet:
+      sprite:
+        sprite: _DeadSpace/Objects/Weapons/Guns/Projectiles/dominator.rsi
+        state: omnilaser
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Heat: 16
+
+- type: entity
+  id: DominatorEliminatorTrace
+  name: eliminator
+  parent: DominatorBulletTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicRaycast
+    collisionMask: Opaque
+    maxDistance: 40
+
+- type: entity
+  id: LaserRifleBulletTrace
+  name: plasma charge
+  parent: DominatorBulletTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Heat: 10
+
+- type: entity
+  id: LaserImpulseSMGBulletTrace
+  name: impulse laser bolt
+  parent: DominatorBulletTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicVisuals
+    speed: 260
+    bullet:
+      sprite:
+        sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+        state: omnilaser
+      color: "#0047AB"
+      scale: 0.9, 0.9
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Heat: 15
+
+- type: entity
+  id: LaserRifleBulletSpreadTrace
+  name: plasma strike
+  parent: LaserRifleBulletTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: ProjectileSpread
+    proto: LaserRifleBulletTrace
+    count: 4
+    spread: 23
+
+- type: entity
+  id: BulletPulseTrace
+  name: pulse charge
+  parent: EnergyBoltTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicVisuals
+    speed: 260
+    bullet:
+      sprite:
+        sprite: _DeadSpace/Objects/Weapons/Guns/Projectiles/pulse.rsi
+        state: pulse1_bl
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Heat: 30
+
+- type: entity
+  id: BulletPulseSpreadTrace
+  name: wide pulse barrage
+  parent: BulletPulseTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: ProjectileSpread
+    proto: BulletPulseTrace
+    count: 5
+    spread: 30
+
+- type: entity
+  id: BulletPulseSpreadNarrowTrace
+  name: narrow pulse barrage
+  parent: BulletPulseTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: ProjectileSpread
+    proto: BulletPulseTrace
+    count: 3
+    spread: 10
+
+- type: entity
+  id: EnergyCrossbowBoltTraceBase
+  parent: EnergyBoltTrace
+  abstract: true
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanReflect
+    reflectiveType: NonEnergy
+  - type: HitscanBasicVisuals
+    speed: 260
+    bullet:
+      sprite:
+        sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+        state: crossbowbolt
+
+- type: entity
+  id: EnergyCrossbowBoltTrace
+  parent: EnergyCrossbowBoltTraceBase
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Piercing: 2
+  - type: StunOnCollide
+    stunAmount: 0
+    knockdownAmount: 2.5
+    slowdownAmount: 2.5
+    walkSpeedModifier: 0.2
+    sprintSpeedModifier: 0.2
+    drop: false
+  - type: HitscanStaminaDamage
+    staminaDamage: 45
+  - type: SolutionContainerManager
+    solutions:
+      bolt:
+        maxVol: 1.5
+        reagents:
+        - ReagentId: Toxin
+          Quantity: 1.5
+  - type: SolutionInjectOnProjectileHit
+    transferAmount: 1.5
+    solution: bolt
+
+- type: entity
+  id: BulletEnergyCrossbowTrace
+  parent: EnergyCrossbowBoltTraceBase
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicVisuals
+    speed: 260
+    bullet:
+      sprite:
+        sprite: _DeadSpace/Objects/Weapons/Guns/Projectiles/crossbowbullet.rsi
+        state: bulletcrossbow
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Poison: 10
+  - type: HitscanStaminaDamage
+    staminaDamage: 20
+  - type: StunOnCollide
+    knockdownAmount: 3
+
+- type: entity
+  id: BulletEnergyCrossbowLargeTrace
+  parent: BulletEnergyCrossbowTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Poison: 5
+        Caustic: 5
+  - type: HitscanStaminaDamage
+    staminaDamage: 15
+  - type: StunOnCollide
+    knockdownAmount: 0.5
+# DS14-end

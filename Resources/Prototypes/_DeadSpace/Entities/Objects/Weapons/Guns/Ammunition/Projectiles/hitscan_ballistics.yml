@@ -1,0 +1,646 @@
+# DS14-start: hitscan replacements for common gun projectiles.
+- type: entity
+  id: BulletTrace
+  abstract: true
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanAmmo
+  - type: HitscanBasicRaycast
+    collisionMask: BulletImpassable
+    maxDistance: 40
+  - type: HitscanReflect
+    reflectiveType: NonEnergy
+  - type: HitscanBasicVisuals
+    muzzleFlash:
+      sprite: _DeadSpace/Objects/Weapons/Guns/Projectiles/traces.rsi
+      state: muzzle
+    travelFlash:
+      sprite: _DeadSpace/Objects/Weapons/Guns/Projectiles/traces.rsi
+      state: trace
+    impactFlash:
+      sprite: _DeadSpace/Objects/Weapons/Guns/Projectiles/traces.rsi
+      state: impact
+    bullet:
+      sprite:
+        sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+        state: bullet
+    speed: 315
+  - type: HitscanBasicEffects
+    sound:
+      path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
+
+- type: entity
+  id: BulletUraniumTrace
+  parent: BulletTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicVisuals
+    bullet:
+      sprite:
+        sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+        state: uranium
+    muzzleFlash:
+      sprite: _DeadSpace/Objects/Weapons/Guns/Projectiles/traces.rsi
+      state: muzzle_uran
+    impactFlash:
+      sprite: _DeadSpace/Objects/Weapons/Guns/Projectiles/traces.rsi
+      state: impact_uran
+    travelFlash:
+      sprite: _DeadSpace/Objects/Weapons/Guns/Projectiles/traces.rsi
+      state: trace_uran
+
+- type: entity
+  id: BulletAPTrace
+  parent: BulletTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicVisuals
+    bullet:
+      sprite:
+        sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+        state: piercing
+
+- type: entity
+  id: BulletIncendiaryTrace
+  parent: BulletTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: PointLight
+    enabled: true
+    color: "#ff4300"
+    radius: 2.0
+    energy: 7.0
+  - type: HitscanBasicVisuals
+    muzzleFlash:
+      sprite: _DeadSpace/Objects/Weapons/Guns/Projectiles/traces.rsi
+      state: muzzle_in
+    travelFlash:
+      sprite: _DeadSpace/Objects/Weapons/Guns/Projectiles/traces.rsi
+      state: trace_in
+    impactFlash:
+      sprite: _DeadSpace/Objects/Weapons/Guns/Projectiles/traces.rsi
+      state: impact_in
+
+- type: entity
+  id: BulletPracticeTrace
+  parent: BulletTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicVisuals
+    bullet:
+      sprite:
+        sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+        state: practice
+
+- type: entity
+  id: BulletPistolTrace
+  parent: BulletTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Piercing: 16
+
+- type: entity
+  id: BulletPistolPracticeTrace
+  parent: BulletPracticeTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Blunt: 2
+
+- type: entity
+  id: BulletPistolIncendiaryTrace
+  parent: BulletIncendiaryTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Piercing: 12
+        Heat: 4
+  - type: HitscanBasicEffects
+    fireStacks: 0.25
+
+- type: entity
+  id: BulletPistolUraniumTrace
+  parent: BulletUraniumTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Radiation: 6
+        Piercing: 10
+
+- type: entity
+  id: BulletRifleTrace
+  parent: BulletTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Piercing: 19
+
+- type: entity
+  id: BulletRiflePracticeTrace
+  parent: BulletPracticeTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Blunt: 2
+
+- type: entity
+  id: BulletRifleIncendiaryTrace
+  parent: BulletIncendiaryTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Piercing: 12
+        Heat: 5
+  - type: HitscanBasicEffects
+    fireStacks: 0.25
+
+- type: entity
+  id: BulletRifleUraniumTrace
+  parent: BulletUraniumTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Radiation: 9
+        Piercing: 8
+
+- type: entity
+  id: BulletLightRifleTrace
+  parent: BulletTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Piercing: 21
+
+- type: entity
+  id: BulletLightRiflePracticeTrace
+  parent: BulletPracticeTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Blunt: 2
+
+- type: entity
+  id: BulletLightRifleIncendiaryTrace
+  parent: BulletIncendiaryTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Piercing: 14
+        Heat: 5
+  - type: HitscanBasicEffects
+    fireStacks: 0.25
+
+- type: entity
+  id: BulletLightRifleUraniumTrace
+  parent: BulletUraniumTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Radiation: 9
+        Piercing: 10
+
+- type: entity
+  id: BulletMagnumTrace
+  parent: BulletTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Piercing: 35
+
+- type: entity
+  id: BulletMagnumPracticeTrace
+  parent: BulletPracticeTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Blunt: 1
+
+- type: entity
+  id: BulletMagnumIncendiaryTrace
+  parent: BulletIncendiaryTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Piercing: 26
+        Heat: 9
+  - type: HitscanBasicEffects
+    fireStacks: 0.25
+
+- type: entity
+  id: BulletMagnumAPTrace
+  parent: BulletAPTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    ignoreResistances: true
+    damage:
+      types:
+        Piercing: 26
+
+- type: entity
+  id: BulletMagnumUraniumTrace
+  parent: BulletUraniumTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Radiation: 15
+        Piercing: 20
+
+- type: entity
+  id: BulletHeavyRifleTrace
+  parent: BulletTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Piercing: 19
+
+- type: entity
+  id: BulletMinigunTrace
+  parent: BulletIncendiaryTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Piercing: 2
+        Heat: 4
+  - type: HitscanBasicEffects
+    fireStacks: 0.25
+
+- type: entity
+  id: BulletCaselessRifleTrace
+  parent: BulletTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Piercing: 15
+
+- type: entity
+  id: BulletCaselessRiflePracticeTrace
+  parent: BulletPracticeTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Blunt: 2
+
+- type: entity
+  id: PelletShotgunSlugTrace
+  parent: BulletTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Piercing: 30
+        Structural: 15
+
+- type: entity
+  id: PelletShotgunBeanbagTrace
+  parent: BulletTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Blunt: 10
+  - type: HitscanStaminaDamage
+    staminaDamage: 40
+
+- type: entity
+  id: PelletShotgunTrace
+  parent: BulletTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Piercing: 10
+        Structural: 15
+
+- type: entity
+  id: PelletShotgunSpreadTrace
+  parent: PelletShotgunTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: ProjectileSpread
+    proto: PelletShotgunTrace
+    count: 6
+    spread: 15
+
+- type: entity
+  id: PelletShotgunIncendiaryTrace
+  parent: BulletIncendiaryTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Piercing: 7
+        Heat: 3
+  - type: HitscanBasicEffects
+    fireStacks: 0.25
+
+- type: entity
+  id: PelletShotgunIncendiarySpreadTrace
+  parent: PelletShotgunIncendiaryTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: ProjectileSpread
+    proto: PelletShotgunIncendiaryTrace
+    count: 6
+    spread: 15
+
+- type: entity
+  id: PelletShotgunPracticeTrace
+  parent: BulletPracticeTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Blunt: 1
+
+- type: entity
+  id: PelletShotgunPracticeSpreadTrace
+  parent: PelletShotgunPracticeTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: ProjectileSpread
+    proto: PelletShotgunPracticeTrace
+    count: 6
+    spread: 15
+
+- type: entity
+  id: PelletShotgunImprovisedTrace
+  parent: BulletTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Piercing: 3
+        Slash: 3
+
+- type: entity
+  id: PelletShotgunImprovisedSpreadTrace
+  parent: PelletShotgunImprovisedTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: ProjectileSpread
+    proto: PelletShotgunImprovisedTrace
+    count: 10
+    spread: 45
+
+- type: entity
+  id: PelletShotgunUraniumTrace
+  parent: BulletUraniumTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Radiation: 5
+        Piercing: 5
+
+- type: entity
+  id: PelletShotgunUraniumSpreadTrace
+  parent: PelletShotgunUraniumTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: ProjectileSpread
+    proto: PelletShotgunUraniumTrace
+    count: 5
+    spread: 6
+
+- type: entity
+  id: PelletGrapeshotTrace
+  parent: BulletTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Piercing: 25
+        Structural: 5
+
+- type: entity
+  id: PelletGrapeshotSpreadTrace
+  parent: PelletGrapeshotTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: ProjectileSpread
+    proto: PelletGrapeshotTrace
+    count: 5
+    spread: 40
+
+- type: entity
+  id: BulletHeavyPistolTrace
+  parent: BulletTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Piercing: 50
+
+- type: entity
+  id: BulletHeavyPistolAPTrace
+  parent: BulletAPTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    ignoreResistances: true
+    damage:
+      types:
+        Piercing: 35
+
+- type: entity
+  id: BulletSniperRifleIncendiaryTrace
+  parent: BulletIncendiaryTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicRaycast
+    collisionMask: BulletImpassable
+    maxDistance: 80
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Piercing: 25
+        Heat: 15
+        Structural: 30
+  - type: HitscanBasicEffects
+    fireStacks: 0.25
+
+- type: entity
+  id: BulletSniperRifleUraniumTrace
+  parent: BulletUraniumTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicRaycast
+    collisionMask: BulletImpassable
+    maxDistance: 80
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Piercing: 25
+        Radiation: 15
+        Structural: 30
+
+- type: entity
+  id: BulletSniperRifleTrace
+  parent: BulletTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicRaycast
+    collisionMask: BulletImpassable
+    maxDistance: 80
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Piercing: 40
+        Structural: 40
+
+- type: entity
+  id: BulletAntiMaterielTrace
+  parent: BulletTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicRaycast
+    collisionMask: BulletImpassable
+    maxDistance: 120
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Piercing: 45
+        Blunt: 25
+        Structural: 336
+  - type: HitscanStaminaDamage
+    staminaDamage: 60
+  - type: HitscanPenetration
+    penetrationThreshold: 360
+    maxPenetratedTargets: 3
+    maxDestroyedObstacles: 1
+    obstacleSearchRadius: 0.35
+    penetrationDamageTypeRequirement:
+    - Structural
+
+- type: entity
+  id: BulletAntiMaterielAPTrace
+  parent: BulletAPTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicRaycast
+    collisionMask: BulletImpassable
+    maxDistance: 120
+  - type: HitscanBasicDamage
+    ignoreResistances: true
+    damage:
+      types:
+        Piercing: 60
+        Structural: 126
+  - type: HitscanStaminaDamage
+    staminaDamage: 40
+  - type: HitscanPenetration
+    penetrationThreshold: 360
+    maxPenetratedTargets: 3
+    maxDestroyedObstacles: 1
+    obstacleSearchRadius: 0.35
+    penetrationDamageTypeRequirement:
+    - Structural
+
+- type: entity
+  id: PelletShotgunMagnumTrace
+  parent: BulletAPTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Piercing: 16
+        Structural: 15
+
+- type: entity
+  id: PelletShotgunMagnumSpreadTrace
+  parent: PelletShotgunMagnumTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: ProjectileSpread
+    proto: PelletShotgunMagnumTrace
+    count: 6
+    spread: 10
+
+- type: entity
+  id: NecromorphPlasmaCutterTrace
+  parent: BulletTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Heat: 1
+        Structural: 50
+  - type: NecromorphPlasmaCutter
+  - type: HitscanPenetration
+    penetrationThreshold: 1008
+    maxPenetratedTargets: 7
+    maxDestroyedObstacles: 3
+    obstacleSearchRadius: 1
+    penetrationDamageTypeRequirement:
+    - Structural
+  - type: HitscanBasicVisuals
+    muzzleFlash:
+      sprite: _DeadSpace/Objects/Weapons/Guns/Projectiles/traces.rsi
+      state: pd_muzzle
+    travelFlash:
+      sprite: _DeadSpace/Objects/Weapons/Guns/Projectiles/traces.rsi
+      state: pd_trace
+    impactFlash:
+      sprite: _DeadSpace/Objects/Weapons/Guns/Projectiles/traces.rsi
+      state: pd_impact
+    bullet:
+      sprite:
+        sprite: _DeadSpace/Objects/Weapons/Guns/Projectiles/traces.rsi
+        state: empty
+  - type: HitscanBasicEffects
+    sound:
+      path: /Audio/Weapons/Guns/Hits/laser_sear_wall.ogg
+# DS14-end

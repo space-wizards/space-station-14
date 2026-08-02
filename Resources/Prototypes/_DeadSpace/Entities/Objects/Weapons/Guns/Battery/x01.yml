@@ -26,15 +26,15 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: BatteryAmmoProvider
-    proto: BulletDisabler
+    proto: BulletDisablerTrace
     fireCost: 100
   - type: BatteryWeaponFireModes
     fireModes:
-    - proto: BulletDisabler
+    - proto: BulletDisablerTrace
       fireCost: 100
-    - proto: BulletTaser
+    - proto: BulletTaserTrace
       fireCost: 200
-    - proto: ADTBulletLaser
+    - proto: ADTBulletLaserTrace
       fireCost: 100
   - type: Battery
     maxCharge: 2000

@@ -23,6 +23,7 @@ using Content.Shared.Toggleable;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Timing;
 using Content.Shared.FixedPoint;
+using Content.Shared.Hands;
 using Content.Shared.Temperature.Components;
 using Robust.Server.Audio;
 using Robust.Shared.Physics.Components;
@@ -78,7 +79,6 @@ namespace Content.Server.Atmos.EntitySystems
             Subs.SubscribeWithRelay<FlammableComponent, ExtinguishEvent>(OnExtinguishEvent);
 
             SubscribeLocalEvent<IgniteOnCollideComponent, StartCollideEvent>(IgniteOnCollide);
-            SubscribeLocalEvent<IgniteOnCollideComponent, ProjectileHitEvent>(IgniteOnProjectileHit);
             SubscribeLocalEvent<IgniteOnCollideComponent, LandEvent>(OnIgniteLand);
 
             SubscribeLocalEvent<IgniteOnMeleeHitComponent, MeleeHitEvent>(OnMeleeHit);
@@ -116,29 +116,22 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void IgniteOnCollide(EntityUid uid, IgniteOnCollideComponent component, ref StartCollideEvent args)
         {
-            if (HasComp<ProjectileComponent>(uid) ||
-                !args.OtherFixture.Hard ||
-                args.OurFixtureId != component.FixtureId &&
-                args.OurFixtureId != SharedProjectileSystem.ProjectileFixture)
+            if (!args.OtherFixture.Hard || component.Count == 0)
+                return;
+
+            var otherEnt = args.OtherEntity;
+
+            if (!TryComp(otherEnt, out FlammableComponent? flammable))
+                return;
+
+            //Only ignite when the colliding fixture is projectile or ignition.
+            if (args.OurFixtureId != component.FixtureId && args.OurFixtureId != SharedProjectileSystem.ProjectileFixture)
             {
                 return;
             }
 
-            TryIgniteOnHit(uid, component, args.OtherEntity);
-        }
-
-        private void IgniteOnProjectileHit(Entity<IgniteOnCollideComponent> ent, ref ProjectileHitEvent args)
-        {
-            TryIgniteOnHit(ent, ent.Comp, args.Target);
-        }
-
-        private void TryIgniteOnHit(EntityUid uid, IgniteOnCollideComponent component, EntityUid target)
-        {
-            if (component.Count == 0 || !TryComp(target, out FlammableComponent? flammable))
-                return;
-
             flammable.FireStacks += component.FireStacks;
-            Ignite(target, uid, flammable);
+            Ignite(otherEnt, uid, flammable);
             component.Count--;
 
             if (component.Count == 0)

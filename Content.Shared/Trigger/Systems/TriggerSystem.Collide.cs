@@ -1,6 +1,5 @@
 ﻿using Content.Shared.Trigger.Components.Triggers;
 using Content.Shared.StepTrigger.Systems;
-using Content.Shared.Projectiles;
 using Robust.Shared.Physics.Events;
 
 namespace Content.Shared.Trigger.Systems;
@@ -10,7 +9,6 @@ public sealed partial class TriggerSystem
     private void InitializeCollide()
     {
         SubscribeLocalEvent<TriggerOnCollideComponent, StartCollideEvent>(OnCollide);
-        SubscribeLocalEvent<TriggerOnCollideComponent, ProjectileHitEvent>(OnProjectileHit);
         SubscribeLocalEvent<TriggerOnStepTriggerComponent, StepTriggeredOffEvent>(OnStepTriggered);
 
         SubscribeLocalEvent<TriggerOnTimedCollideComponent, StartCollideEvent>(OnTimedCollide);
@@ -20,12 +18,6 @@ public sealed partial class TriggerSystem
 
     private void OnCollide(Entity<TriggerOnCollideComponent> ent, ref StartCollideEvent args)
     {
-        // Projectile collisions are routed through ProjectileHitEvent. This keeps physical,
-        // client-reported and swept hits on the same path and prevents double triggers.
-        if (args.OurFixtureId == SharedProjectileSystem.ProjectileFixture &&
-            HasComp<ProjectileComponent>(ent))
-            return;
-
         if (
             args.OurFixtureId == ent.Comp.FixtureID
             && (!ent.Comp.IgnoreOtherNonHard || args.OtherFixture.Hard)
@@ -41,25 +33,6 @@ public sealed partial class TriggerSystem
             }
             Trigger(ent.Owner, args.OtherEntity, ent.Comp.KeyOut);
         }
-    }
-
-    private void OnProjectileHit(Entity<TriggerOnCollideComponent> ent, ref ProjectileHitEvent args)
-    {
-        if (ent.Comp.FixtureID != SharedProjectileSystem.ProjectileFixture ||
-            ent.Comp.MaxTriggers is <= 0)
-        {
-            return;
-        }
-
-        if (ent.Comp.MaxTriggers != null)
-        {
-            ent.Comp.MaxTriggers--;
-            Dirty(ent);
-            if (ent.Comp.MaxTriggers <= 0)
-                RemCompDeferred<TriggerOnCollideComponent>(ent);
-        }
-
-        Trigger(ent.Owner, args.Target, ent.Comp.KeyOut);
     }
 
     private void OnStepTriggered(Entity<TriggerOnStepTriggerComponent> ent, ref StepTriggeredOffEvent args)

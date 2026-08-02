@@ -1,19 +1,28 @@
 using Content.Shared.Damage.Prototypes;
 using Robust.Shared.Audio;
-using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
-namespace Content.Shared.Weapons.Ranged.Components;
+namespace Content.Server.Weapons.Ranged.Components;
 
 /// <summary>
-/// Plays the specified sound when a projectile deals the corresponding damage type.
+/// Plays the specified sound upon receiving damage of that type.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent]
 public sealed partial class RangedDamageSoundComponent : Component
 {
+    // TODO: Limb damage changing sound type.
+
+    /// <summary>
+    /// Specified sounds to apply when the entity takes damage with the specified group.
+    /// Will fallback to defaults if none specified.
+    /// </summary>
     [DataField(customTypeSerializer: typeof(PrototypeIdDictionarySerializer<SoundSpecifier, DamageGroupPrototype>))]
     public Dictionary<string, SoundSpecifier>? SoundGroups;
 
+    /// <summary>
+    /// Specified sounds to apply when the entity takes damage with the specified type.
+    /// Will fallback to defaults if none specified.
+    /// </summary>
     [DataField(customTypeSerializer: typeof(PrototypeIdDictionarySerializer<SoundSpecifier, DamageTypePrototype>))]
     public Dictionary<string, SoundSpecifier>? SoundTypes;
 }

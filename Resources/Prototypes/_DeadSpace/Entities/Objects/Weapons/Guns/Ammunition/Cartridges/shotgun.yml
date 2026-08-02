@@ -8,4 +8,4 @@
       - state: base
         map: [ "enum.AmmoVisualLayers.Base" ]
   - type: CartridgeAmmo
-    proto: PelletShotgunMagnumSpread
+    proto: PelletShotgunMagnumSpreadTrace

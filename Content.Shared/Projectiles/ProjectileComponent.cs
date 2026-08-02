@@ -10,13 +10,6 @@ namespace Content.Shared.Projectiles;
 public sealed partial class ProjectileComponent : Component
 {
     /// <summary>
-    /// Targets already processed by this projectile.
-    /// A swept collision can be followed by a discrete physics contact on the next substep;
-    /// keeping this set prevents the same projectile from damaging the same target twice.
-    /// </summary>
-    public readonly HashSet<EntityUid> ProcessedTargets = new();
-
-    /// <summary>
     ///     The angle of the fired projectile.
     /// </summary>
     [DataField, AutoNetworkedField]

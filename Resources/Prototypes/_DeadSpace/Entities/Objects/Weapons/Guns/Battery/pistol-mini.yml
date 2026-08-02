@@ -19,7 +19,7 @@
     soundGunshot:
       path: /Audio/_DeadSpace/Weapons/Guns/Gunshots/laser_rifle.ogg
   - type: BatteryAmmoProvider
-    proto: LaserRifleBullet
+    proto: LaserRifleBulletTrace
     fireCost: 50
   - type: MagazineVisuals
     magState: mag

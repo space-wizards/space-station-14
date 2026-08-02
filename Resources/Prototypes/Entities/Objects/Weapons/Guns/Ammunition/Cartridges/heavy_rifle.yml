@@ -8,7 +8,7 @@
     tags:
     - CartridgeHeavyRifle
   - type: CartridgeAmmo
-    proto: BulletHeavyRifle
+    proto: BulletHeavyRifleTrace
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     layers:
@@ -25,5 +25,5 @@
   name: cartridge (.10 rifle)
   components:
   - type: CartridgeAmmo
-    proto: BulletMinigun
+    proto: BulletMinigunTrace
     deleteOnSpawn: true

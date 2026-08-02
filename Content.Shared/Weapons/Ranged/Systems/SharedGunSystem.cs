@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
@@ -8,7 +9,6 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Examine;
-using Content.Shared.FixedPoint;
 using Content.Shared.Hands;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Popups;
@@ -31,7 +31,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
@@ -175,16 +174,7 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         gun.Comp.ShootCoordinates = GetCoordinates(msg.Coordinates);
         gun.Comp.Target = GetEntity(msg.Target);
-        gun.Comp.PredictionId = msg.PredictionId;
-
-        try
-        {
-            AttemptShoot(user.Value, gun);
-        }
-        finally
-        {
-            gun.Comp.PredictionId = 0;
-        }
+        AttemptShoot(user.Value, gun);
     }
 
     private void OnStopShootRequest(RequestStopShootEvent ev, EntitySessionEventArgs args)
@@ -502,17 +492,12 @@ public abstract partial class SharedGunSystem : EntitySystem
         Physics.SetLinearVelocity(uid, finalLinear, body: physics);
 
         var projectile = EnsureComp<ProjectileComponent>(uid);
-        // Some ammunition entities (syringes, cans, the cursed locker, etc.) can be recovered and
-        // fired again. Collision state belongs to a single launch and must not leak into the next one.
-        projectile.ProjectileSpent = false;
-        projectile.PenetrationAmount = FixedPoint2.Zero;
-        projectile.ProcessedTargets.Clear();
         projectile.Weapon = gunUid;
         var shooter = user ?? gunUid;
         if (shooter != null)
             Projectiles.SetShooter(uid, projectile, shooter.Value);
 
-        TransformSystem.SetWorldRotationNoLerp(uid, direction.ToWorldAngle() + projectile.Angle);
+        TransformSystem.SetWorldRotation(uid, direction.ToWorldAngle() + projectile.Angle);
     }
 
     protected abstract void Popup(string message, EntityUid? uid, EntityUid? user);
@@ -622,43 +607,6 @@ public abstract partial class SharedGunSystem : EntitySystem
         return direction.LengthSquared() > 0.0001f;
     }
 
-    /// <summary>
-    /// Calculates recoil identically during client prediction and authoritative server simulation.
-    /// </summary>
-    protected Angle GetRecoilAngle(TimeSpan curTime, Entity<GunComponent> gun, Angle direction)
-    {
-        var component = gun.Comp;
-        var timeSinceLastFire = (curTime - component.LastFire).TotalSeconds;
-        var newTheta = MathHelper.Clamp(
-            component.CurrentAngle.Theta + component.AngleIncreaseModified.Theta - component.AngleDecayModified.Theta * timeSinceLastFire,
-            component.MinAngleModified.Theta,
-            component.MaxAngleModified.Theta);
-
-        component.CurrentAngle = new Angle(newTheta);
-        component.LastFire = component.NextFire;
-
-        if (component.PredictionId == 0)
-        {
-            var unpredictedSpread = component.CurrentAngle.Theta * Random.NextFloat(-0.5f, 0.5f);
-            return new Angle(direction.Theta + unpredictedSpread);
-        }
-
-        var seed = component.PredictionId;
-        seed ^= unchecked((uint) GetNetEntity(gun.Owner).Id) * 0x9E3779B9u;
-
-        // Integer hash gives both simulations the same random value without shared RNG state.
-        seed ^= seed >> 16;
-        seed *= 0x7FEB352Du;
-        seed ^= seed >> 15;
-        seed *= 0x846CA68Bu;
-        seed ^= seed >> 16;
-
-        var random = (seed & 0x00FFFFFFu) / 16777216f - 0.5f;
-        var spread = component.CurrentAngle.Theta * random;
-        DebugTools.Assert(Math.Abs(spread) <= component.MaxAngleModified.Theta);
-        return new Angle(direction.Theta + spread);
-    }
-
     protected void MuzzleFlash(EntityUid gun, AmmoComponent component, Angle worldAngle, EntityUid? user = null)
     {
         var attemptEv = new GunMuzzleFlashAttemptEvent();
@@ -671,10 +619,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (sprite == null)
             return;
 
-        var predictionId = TryComp(gun, out GunComponent? gunComponent)
-            ? gunComponent.PredictionId
-            : 0;
-        var ev = new MuzzleFlashEvent(GetNetEntity(gun), sprite, worldAngle, predictionId);
+        var ev = new MuzzleFlashEvent(GetNetEntity(gun), sprite, worldAngle);
         CreateEffect(gun, ev, user);
     }
 
@@ -768,12 +713,7 @@ public abstract partial class SharedGunSystem : EntitySystem
 
     protected abstract void CreateEffect(EntityUid gunUid, MuzzleFlashEvent message, EntityUid? user = null);
 
-    public abstract void PlayImpactSound(
-        EntityUid otherEntity,
-        DamageSpecifier? modifiedDamage,
-        SoundSpecifier? weaponSound,
-        bool forceWeaponSound,
-        Filter? filter = null);
+    public abstract void PlayImpactSound(EntityUid otherEntity, DamageSpecifier? modifiedDamage, SoundSpecifier? weaponSound, bool forceWeaponSound);
 
     /// <summary>
     /// Used for animated effects on the client.
@@ -790,9 +730,6 @@ public abstract partial class SharedGunSystem : EntitySystem
         public ExtendedSpriteSpecifier? Bullet;
         public HitscanLightVisual? BulletLight;
         public float Speed;
-        public NetEntity? Shooter;
-        public uint PredictionId;
-        public bool ParallelTraces;
         // DS14-end
     }
 

@@ -33,7 +33,7 @@
   - type: EmpDisableBasicEntityAmmo
   # DS14-end
   - type: BasicEntityAmmoProvider
-    proto: BulletEnergyCrossbow
+    proto: BulletEnergyCrossbowTrace
     capacity: 1
     count: 1
   - type: MagazineVisuals
@@ -94,7 +94,7 @@
   - type: EmpDisableBasicEntityAmmo
   # DS14-end
   - type: BasicEntityAmmoProvider
-    proto: BulletEnergyCrossbowLarge
+    proto: BulletEnergyCrossbowLargeTrace
     capacity: 1
     count: 1
   - type: MagazineVisuals

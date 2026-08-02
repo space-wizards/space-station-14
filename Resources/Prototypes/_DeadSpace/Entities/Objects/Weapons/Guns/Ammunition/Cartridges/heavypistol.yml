@@ -8,7 +8,7 @@
     tags:
       - CartridgeHeavyPistol
   - type: CartridgeAmmo
-    proto: BulletHeavyPistol
+    proto: BulletHeavyPistolTrace
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     layers:
@@ -24,7 +24,7 @@
   description: ""
   components:
   - type: CartridgeAmmo
-    proto: BulletHeavyPistol
+    proto: BulletHeavyPistolTrace
 
 - type: entity
   parent: BaseCartridgeHeavyPistol
@@ -33,7 +33,7 @@
   description: ""
   components:
   - type: CartridgeAmmo
-    proto: BulletHeavyPistolAP
+    proto: BulletHeavyPistolAPTrace
   - type: Sprite
     layers:
       - state: base

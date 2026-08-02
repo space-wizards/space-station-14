@@ -161,7 +161,7 @@
     - type: Clothing
       sprite: _DeadSpace/Sponsor/0black_cat0/disabler.rsi
     - type: BatteryAmmoProvider
-      proto: BulletDisablerPractice
+      proto: BulletDisablerPracticeTrace
       fireCost: 100
 
 - type: entity

@@ -8,7 +8,7 @@
     tags:
       - CartridgeRifle
   - type: CartridgeAmmo
-    proto: BulletRifle
+    proto: BulletRifleTrace
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     layers:
@@ -24,7 +24,7 @@
   description: A modern intermediate cartridge for combat rifles. Standard kinetic ammunition is common and useful in most situations.
   components:
   - type: CartridgeAmmo
-    proto: BulletRifle
+    proto: BulletRifleTrace
 
 - type: entity
   parent: BaseCartridgeRifle
@@ -33,7 +33,7 @@
   description: A modern intermediate cartridge for combat rifles. Practice ammunition fires a chalk projectile that stings a little, but otherwise causes no lasting damage.
   components:
   - type: CartridgeAmmo
-    proto: BulletRiflePractice
+    proto: BulletRiflePracticeTrace
   - type: Sprite
     layers:
       - state: base
@@ -49,7 +49,7 @@
   description: A modern intermediate cartridge for combat rifles. Incendiary ammunition contains a self-igniting compound that sets targets ablaze.
   components:
   - type: CartridgeAmmo
-    proto: BulletRifleIncendiary
+    proto: BulletRifleIncendiaryTrace
   - type: Sprite
     layers:
       - state: base
@@ -65,7 +65,7 @@
   description: A modern intermediate cartridge for combat rifles. Uranium ammunition replaces the lead core of the bullet with fissile material, irradiating targets from the inside.
   components:
   - type: CartridgeAmmo
-    proto: BulletRifleUranium
+    proto: BulletRifleUraniumTrace
   - type: Sprite
     layers:
       - state: base

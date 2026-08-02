@@ -165,7 +165,7 @@ public sealed class GunExecutionSystem : EntitySystem
         bool fired;
         try
         {
-            fired = _gun.AttemptShoot(user, gun, targetCoordinates, target);
+            fired = _gun.AttemptShoot(user, gun, targetCoordinates, self ? null : target);
         }
         finally
         {
