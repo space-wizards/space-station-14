@@ -1394,8 +1394,7 @@
   friction: 0.05
   mobFriction: 0.05
   mobAcceleration: 0.1
-  footstepSounds:
-    collection: BarestepHard
+  footstepSounds: null
   itemDrop: FloorTileItemAstroIce
 
 - type: tile
