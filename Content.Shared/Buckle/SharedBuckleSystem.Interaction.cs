@@ -236,9 +236,4 @@ public abstract partial class SharedBuckleSystem
 
         args.Verbs.Add(verb);
     }
-
-    private void OngetInteracting(Entity<BuckleComponent> ent, ref GetInteractingEntitiesEvent args)
-    {
-        throw new NotImplementedException();
-    }
 }
