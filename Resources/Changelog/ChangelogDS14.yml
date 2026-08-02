@@ -5602,3 +5602,10 @@ Entries:
   changes:
   - type: Fix
     message: NanoTrasen прекратило снабжать станции дырявыми диванами
+- id: 545
+  author: GUSBOBERUS
+  time: '2026-08-02T10:11:08.296212+00:00'
+  pr: 2065
+  changes:
+  - type: Fix
+    message: Паук строитель получил возможность сносить стены и шлюзы. Дрон - лишился
