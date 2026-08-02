@@ -64,7 +64,7 @@ public sealed partial class GhostComponent : Component
     public float BooRadius = 3;
 
     /// <summary>
-    /// The maximum total intensity (sum of values from <see cref="GhostBooIntensity"/>) of a Boo action.
+    /// The maximum total intensity of a Boo action (total sum of responses, possible values in <see cref="GhostBooIntensity"/>).
     /// </summary>
     [DataField]
     public int BooIntensity = 6;
