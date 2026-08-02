@@ -55,31 +55,31 @@ public sealed partial class CargoSystem
 
     private bool IsLinkedToConsole(
         EntityUid uid,
-        EntityUid? approvingConsole,
-        [NotNullWhen(true)] List<Entity<CargoOrderConsoleComponent>>? consoles = null
+        EntityUid? approvingConsole
     )
     {
         if (approvingConsole == null)
             return false;
 
-        if (consoles == null && !TryGetLinkedConsoles(uid, out consoles))
-        {
-            consoles = null;
+        if (!TryGetLinkedConsoles(uid, out var consoles))
             return false;
-        }
 
         return consoles.Any(console => console.Owner == approvingConsole);
     }
 
     private bool TryGetLinkedConsoles(
         EntityUid uid,
-        [NotNullWhen(true)] out List<Entity<CargoOrderConsoleComponent>> consoles
+        [NotNullWhen(true)] out List<Entity<CargoOrderConsoleComponent>>? consoles
     )
     {
         consoles = new();
         if (!TryComp<DeviceLinkSinkComponent>(uid, out var sinkComponent))
+        {
+            consoles = null;
             return false;
+        }
 
+        consoles = new();
         foreach (var linked in sinkComponent.LinkedSources)
         {
             if (!TryComp<CargoOrderConsoleComponent>(linked, out var consoleComp))
@@ -89,7 +89,6 @@ public sealed partial class CargoSystem
 
         return consoles.Count > 0;
     }
-
 
     private void UpdateTelepad(float frameTime)
     {
