@@ -1,0 +1,41 @@
+{
+  "version": 1,
+    "license": "Licensed under custom terms with restrictions on public hosting and commercial use, full text: https://raw.githubusercontent.com/dead-space-server/space-station-14-fobos/master/LICENSE.TXT",
+    "copyright": "Made by sastr. (discord) for Space Station 14 server Мёртвый Космос",
+  "size": {
+    "x": 64,
+    "y": 64
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "icon-on"
+    },
+    {
+      "name": "equipped-BACKPACK",
+      "directions": 4
+    },
+    {
+      "name": "on-equipped-BACKPACK",
+      "directions": 4
+    },
+    {
+      "name": "equipped-SUITSTORAGE",
+      "directions": 4
+    },
+    {
+      "name": "on-equipped-SUITSTORAGE",
+      "directions": 4
+    },
+    {
+      "name": "on-equipped-BELT",
+      "directions": 4
+    },
+    {
+      "name": "equipped-BELT",
+      "directions": 4
+    }
+  ]
+}

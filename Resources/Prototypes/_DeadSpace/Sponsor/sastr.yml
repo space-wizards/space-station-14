@@ -349,6 +349,8 @@
     color: "#111111"
   - type: EncryptionKeyHolder
     keySlots: 5
+  - type: FlashbangProtection
+    reduction: 2
   - type: Tag
     tags: []
 

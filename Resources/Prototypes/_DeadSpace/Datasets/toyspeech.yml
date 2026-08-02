@@ -436,3 +436,9 @@
   values:
     prefix: plushies-yosuga-
     count: 6
+
+- type: localizedDataset
+  id: PlushieDrGnarAltSpeech
+  values:
+    prefix: plushies-drgnaralt-
+    count: 6

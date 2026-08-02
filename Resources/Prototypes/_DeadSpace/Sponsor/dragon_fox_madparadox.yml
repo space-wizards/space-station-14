@@ -207,7 +207,7 @@
 
 # Magboots
 - type: entity
-  parent: [ClothingShoesBootsMagBase, ClothingShoesBootsSpeed]
+  parent: ClothingShoesBootsMagBase
   id: ClothingShoesBootsMagDragonFoxMadParadox
   name: магнитные ботинки KUMA
   description: Инновационные ботинки, которые повышают скорость и комфорт передвижения.
