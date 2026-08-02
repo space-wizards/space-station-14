@@ -83,7 +83,7 @@ public sealed partial class XATInteractAttackSystem : BaseXATSystem<XATInteractA
 
         if (ent.Comp.Count > 0)
         {
-            _popup.PopupEntity(Loc.GetString("interact-actifact-more"), artifact, user);
+            _popup.PopupEntity(Loc.GetString("interact-artifact-more"), artifact, user);
             Dirty(ent);
             return false;
         }
