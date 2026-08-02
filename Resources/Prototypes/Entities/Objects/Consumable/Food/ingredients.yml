@@ -263,6 +263,10 @@
       reagents:
       - ReagentId: TableSalt
         Quantity: 60
+  - type: Openable
+    closeable: true
+    closeSound:
+      collection: packetOpenSounds
 
 - type: entity
   parent: [ReagentPacketSmall, ItemHeftyBase]
@@ -286,6 +290,10 @@
       reagents:
       - ReagentId: Blackpepper
         Quantity: 60
+  - type: Openable
+    closeable: true
+    closeSound:
+      collection: packetOpenSounds
 
 # Misc
 

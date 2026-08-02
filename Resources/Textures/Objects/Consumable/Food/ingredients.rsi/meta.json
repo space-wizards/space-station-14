@@ -14,6 +14,9 @@
             "name": "butter"
         },
         {
+            "name": "butter-slice"
+        },
+        {
             "name": "cakebatter"
         },
         {
@@ -35,6 +38,9 @@
         },
         {
             "name": "chevrelog"
+        },
+        {
+            "name": "cloth-box"
         },
         {
             "name": "cornmeal"
@@ -62,6 +68,12 @@
         },
         {
             "name": "cotton-dough-rope"
+        },
+        {
+            "name": "croissant-raw"
+        },
+        {
+            "name": "croissant-raw-cotton"
         },
         {
             "name": "dough"
@@ -161,18 +173,6 @@
         },
         {
             "name": "tortilladough-slice"
-        },
-        {
-            "name": "butter-slice"
-        },
-        {
-            "name": "croissant-raw"
-        },
-        {
-            "name": "croissant-raw-cotton"
-        },
-        {
-            "name": "cloth-box"
         }
     ]
 }
