@@ -7,6 +7,7 @@ using Content.Shared.DeviceLinking.Systems;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Systems;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Timing;
@@ -147,7 +148,8 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
             // the map after it being saved, are cleared upon mapinit.
             if (MetaData(target).EntityLifeStage == EntityLifeStage.MapInitialized)
             {
-                _popupSystem.PopupCursor(Loc.GetString("network-configurator-device-failed", ("device", target)),
+                _popupSystem.PopupEntity(Loc.GetString("network-configurator-device-failed", ("device", target)),
+                    target,
                     userUid);
                 return;
             }
@@ -162,13 +164,10 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
             return;
         }
 
-        var linkedDeviceComp = EnsureComp<LinkedDeviceNetworkComponent>(target.Owner);
-        linkedDeviceComp.Configurators.Add(configurator);
-        configurator.Comp.Devices.Add(addressId, target);
-        DirtyField(target.Owner, linkedDeviceComp, nameof(LinkedDeviceNetworkComponent.Configurators));
-        DirtyField(configurator, nameof(NetworkConfiguratorComponent.Devices));
+        AddDevice(configurator, target, addressId);
 
-        _popupSystem.PopupCursor(Loc.GetString("network-configurator-device-saved", ("address", address), ("device", target)),
+        _popupSystem.PopupEntity(Loc.GetString("network-configurator-device-saved", ("address", address), ("device", target)),
+            target,
             userUid,
             PopupType.Medium);
 
@@ -339,5 +338,28 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
         }
 
         DirtyField(configurator.AsNullable(), nameof(NetworkConfiguratorComponent.Devices));
+    }
+
+    /// <summary>
+    /// Adds the target to a network configurator, also ensuring <see cref="LinkedDeviceNetworkComponent"/>.
+    /// </summary>
+    /// <param name="configurator">Configurator to add the device to.</param>
+    /// <param name="target">Target device to add.</param>
+    /// <param name="addressId">Optional address ID to use as an override.</param>
+    private void AddDevice(Entity<NetworkConfiguratorComponent?> configurator, Entity<DeviceNetworkComponent?> target, DeviceAddress? addressId = null)
+    {
+        if (!_networkConfigQuery.Resolve(configurator.Owner, ref configurator.Comp)
+            || !_deviceNetworkQuery.Resolve(target.Owner, ref target.Comp, false))
+            return;
+
+        var name = Identity.Name(target, EntityManager, configurator);
+        addressId ??= target.Comp.Data.AddressId;
+        configurator.Comp.Devices.Add(addressId.Value, target);
+        configurator.Comp.NamedDevices.Add(addressId.Value, (target.Comp.Prefix, name));
+        DirtyFields(configurator, null, nameof(NetworkConfiguratorComponent.Devices), nameof(NetworkConfiguratorComponent.NamedDevices));
+
+        var linkedDeviceComp = EnsureComp<LinkedDeviceNetworkComponent>(target.Owner);
+        linkedDeviceComp.Configurators.Add(configurator);
+        DirtyField(target.Owner, linkedDeviceComp, nameof(LinkedDeviceNetworkComponent.Configurators));
     }
 }

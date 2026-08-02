@@ -26,6 +26,7 @@ public sealed class NetworkConfiguratorListBoundUserInterface : BoundUserInterfa
         _listMenu = this.CreateWindow<NetworkConfiguratorListMenu>();
         _listMenu.ClearButton.OnPressed += _ => OnClearButtonPressed();
         _listMenu.OnRemoveAddress += OnRemoveButtonPressed;
+        Update();
     }
 
     public override void Update()

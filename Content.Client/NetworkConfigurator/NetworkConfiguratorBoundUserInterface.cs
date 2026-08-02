@@ -37,6 +37,7 @@ public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
         _configurationMenu.Show.OnPressed += OnShowPressed;
         _configurationMenu.Show.Pressed = _netConfigOverlay.ConfiguredListIsTracked(Owner);
         _configurationMenu.OnRemoveAddress += OnRemoveButtonPressed;
+        Update();
     }
 
     private void OnShowPressed(BaseButton.ButtonEventArgs args)

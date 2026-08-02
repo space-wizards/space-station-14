@@ -36,6 +36,7 @@ public sealed partial class NetworkConfiguratorLinkBoundUserInterface : BoundUse
         _linkMenu.OnLinkDefaults += args => SendPredictedMessage(new NetworkConfiguratorLinkSaveMessage(args));
         _linkMenu.OnToggleLink += link => SendPredictedMessage(new NetworkConfiguratorLinkToggleMessage(link));
         _linkMenu.OnClearLinks += () => SendPredictedMessage(new NetworkConfiguratorLinkClearMessage());
+        Update();
     }
 
     public override void Update()

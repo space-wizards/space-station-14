@@ -339,19 +339,9 @@ public sealed partial class NetworkConfiguratorSystem
 
         ClearDevices(ent);
 
-        foreach (var (addr, device) in _deviceListSystem.GetDeviceList(ent.Comp.ActiveDeviceList.Value))
+        foreach (var (addr, (device, name)) in _deviceListSystem.GetDeviceList(ent.Comp.ActiveDeviceList.Value))
         {
-            if (!_linkedDeviceQuery.TryComp(device.Item1, out var comp)
-                || !_deviceNetworkQuery.TryComp(device.Item1, out var deviceComp))
-                continue;
-
-            var name = Identity.Name(device.Item1, EntityManager, ent);
-
-            ent.Comp.Devices.Add(addr.AddressId, device.Item1);
-            ent.Comp.NamedDevices.Add(addr.AddressId, (deviceComp.Prefix, name));
-
-            comp.Configurators.Add(ent);
-            DirtyField(device.Item1, comp, nameof(LinkedDeviceNetworkComponent.Configurators));
+            AddDevice(ent.AsNullable(), device);
         }
 
         DirtyFields(ent.AsNullable(), null, nameof(NetworkConfiguratorComponent.Devices), nameof(NetworkConfiguratorComponent.NamedDevices));
