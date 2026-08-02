@@ -14,14 +14,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/atmospherics.rsi
-    layers:
-    - state: icon
-    - state: icon-unshaded
-      shader: unshaded
-    - state: light-overlay
-      visible: false
-      shader: unshaded
-      map: [ "light" ]
   - type: HandheldLight
     addPrefix: false
   - type: ToggleableVisuals
@@ -77,14 +69,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/engineering.rsi
-    layers:
-    - state: icon
-    - state: icon-unshaded
-      shader: unshaded
-    - state: light-overlay
-      visible: false
-      shader: unshaded
-      map: [ "light" ]
   - type: HandheldLight
     addPrefix: false
   - type: ToggleableVisuals
@@ -138,14 +122,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/spatiohelm.rsi
-    layers:
-    - state: icon
-    - state: icon-unshaded
-      shader: unshaded
-    - state: light-overlay
-      visible: false
-      shader: unshaded
-      map: [ "light" ]
   - type: HandheldLight
     addPrefix: false
   - type: ToggleableVisuals
@@ -198,14 +174,44 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/salvage.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/salvage.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.525
     lowPressureMultiplier: 1000
   - type: PointLight
     radius: 7
     energy: 3
+  - type: ToggleableVisuals
+    clothingVisuals:
+      head:
+      - state: equipped-head-light
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-light-vox
+        shader: unshaded
+      head-vulpkanin:
+      - state: equipped-head-light-vulpkanin
+        shader: unshaded
+      head-reptilian:
+      - state: equipped-head-light-reptilian
+        shader: unshaded
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-head
+      - state: equipped-head-unshaded
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-vox
+      - state: equipped-head-unshaded-vox
+        shader: unshaded
+      head-vulpkanin:
+      - state: equipped-head-vulpkanin
+      - state: equipped-head-unshaded-vulpkanin
+        shader: unshaded
+      head-reptilian:
+      - state: equipped-head-reptilian
+      - state: equipped-head-unshaded-reptilian
+        shader: unshaded
   - type: Tag
     tags:
     - WhitelistChameleon
@@ -219,14 +225,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/goliathhelm.rsi
-    layers:
-    - state: icon
-    - state: icon-unshaded
-      shader: unshaded
-    - state: light-overlay
-      visible: false
-      shader: unshaded
-      map: [ "light" ]
   - type: HandheldLight
     addPrefix: false
   - type: ToggleableVisuals
@@ -274,7 +272,19 @@
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/maxim.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/maxim.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-head
+      - state: equipped-head-unshaded
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-vox
+      - state: equipped-head-unshaded-vox
+        shader: unshaded
+      head-reptilian:
+      - state: equipped-head-reptilian
+      - state: equipped-head-unshaded-reptilian
+        shader: unshaded
   - type: PressureProtection
     highPressureMultiplier: 0.08
     lowPressureMultiplier: 1000
@@ -295,10 +305,40 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/security.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/security.rsi
   - type: PointLight
     color: "#ffeead"
+  - type: ToggleableVisuals
+    clothingVisuals:
+      head:
+      - state: equipped-head-light
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-light-vox
+        shader: unshaded
+      head-vulpkanin:
+      - state: equipped-head-light-vulpkanin
+        shader: unshaded
+      head-reptilian:
+      - state: equipped-head-light-reptilian
+        shader: unshaded
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-head
+      - state: equipped-head-unshaded
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-vox
+      - state: equipped-head-unshaded-vox
+        shader: unshaded
+      head-vulpkanin:
+      - state: equipped-head-vulpkanin
+      - state: equipped-head-unshaded-vulpkanin
+        shader: unshaded
+      head-reptilian:
+      - state: equipped-head-reptilian
+      - state: equipped-head-unshaded-reptilian
+        shader: unshaded
   - type: PressureProtection
     highPressureMultiplier: 0.525
     lowPressureMultiplier: 1000
@@ -322,10 +362,19 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/brigmedic.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/brigmedic.rsi
   - type: PointLight
     color: "#00FFFF"
+  - type: ToggleableVisuals
+    clothingVisuals:
+      head:
+      - state: equipped-head-light
+        shader: unshaded
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-head
+      - state: equipped-head-unshaded
+        shader: unshaded
   - type: Armor
     modifiers:
       coefficients:
@@ -348,10 +397,40 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/security-warden.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/security-warden.rsi
   - type: PointLight
     color: "#ffeead"
+  - type: ToggleableVisuals
+    clothingVisuals:
+      head:
+      - state: equipped-head-light
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-light-vox
+        shader: unshaded
+      head-vulpkanin:
+      - state: equipped-head-light-vulpkanin
+        shader: unshaded
+      head-reptilian:
+      - state: equipped-head-light-reptilian
+        shader: unshaded
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-head
+      - state: equipped-head-unshaded
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-vox
+      - state: equipped-head-unshaded-vox
+        shader: unshaded
+      head-vulpkanin:
+      - state: equipped-head-vulpkanin
+      - state: equipped-head-unshaded-vulpkanin
+        shader: unshaded
+      head-reptilian:
+      - state: equipped-head-reptilian
+      - state: equipped-head-unshaded-reptilian
+        shader: unshaded
   - type: PressureProtection
     highPressureMultiplier: 0.525
     lowPressureMultiplier: 1000
@@ -372,8 +451,38 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/capspace.rsi
+  - type: ToggleableVisuals
+    clothingVisuals:
+      head:
+      - state: equipped-head-light
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-light-vox
+        shader: unshaded
+      head-vulpkanin:
+      - state: equipped-head-light-vulpkanin
+        shader: unshaded
+      head-reptilian:
+      - state: equipped-head-light-reptilian
+        shader: unshaded
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/capspace.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-head
+      - state: equipped-head-unshaded
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-vox
+      - state: equipped-head-unshaded-vox
+        shader: unshaded
+      head-vulpkanin:
+      - state: equipped-head-vulpkanin
+      - state: equipped-head-unshaded-vulpkanin
+        shader: unshaded
+      head-reptilian:
+      - state: equipped-head-reptilian
+      - state: equipped-head-unshaded-reptilian
+        shader: unshaded
   - type: PressureProtection
     highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000
@@ -390,14 +499,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/engineering-white.rsi
-    layers:
-    - state: icon
-    - state: icon-unshaded
-      shader: unshaded
-    - state: light-overlay
-      visible: false
-      shader: unshaded
-      map: [ "light" ]
   - type: HandheldLight
     addPrefix: false
   - type: ToggleableVisuals
@@ -453,10 +554,34 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/medical.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/medical.rsi
   - type: PointLight
     color: "#adf1ff"
+  - type: ToggleableVisuals
+    spriteLayer: light
+    clothingVisuals:
+      head:
+      - state: equipped-head-light
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-light-vox
+        shader: unshaded
+      head-vulpkanin:
+      - state: equipped-head-light-vulpkanin
+        shader: unshaded
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-head
+      - state: equipped-head-unshaded
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-vox
+      - state: equipped-head-unshaded-vox
+        shader: unshaded
+      head-vulpkanin:
+      - state: equipped-head-vulpkanin
+      - state: equipped-head-unshaded-vulpkanin
+        shader: unshaded
   - type: PressureProtection
     highPressureMultiplier: 0.6
     lowPressureMultiplier: 1000
@@ -473,10 +598,40 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/rd.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/rd.rsi
   - type: PointLight
     color: "#d6adff"
+  - type: ToggleableVisuals
+    clothingVisuals:
+      head:
+      - state: equipped-head-light
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-light-vox
+        shader: unshaded
+      head-vulpkanin:
+      - state: equipped-head-light-vulpkanin
+        shader: unshaded
+      head-reptilian:
+      - state: equipped-head-light-reptilian
+        shader: unshaded
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-head
+      - state: equipped-head-unshaded
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-vox
+      - state: equipped-head-unshaded-vox
+        shader: unshaded
+      head-vulpkanin:
+      - state: equipped-head-vulpkanin
+      - state: equipped-head-unshaded-vulpkanin
+        shader: unshaded
+      head-reptilian:
+      - state: equipped-head-reptilian
+      - state: equipped-head-unshaded-reptilian
+        shader: unshaded
   - type: PressureProtection
     highPressureMultiplier: 0.60
     lowPressureMultiplier: 1000
@@ -493,10 +648,40 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/security-red.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/security-red.rsi
   - type: PointLight
     color: "#ffeead"
+  - type: ToggleableVisuals
+    clothingVisuals:
+      head:
+      - state: equipped-head-light
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-light-vox
+        shader: unshaded
+      head-vulpkanin:
+      - state: equipped-head-light-vulpkanin
+        shader: unshaded
+      head-reptilian:
+      - state: equipped-head-light-reptilian
+        shader: unshaded
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-head
+      - state: equipped-head-unshaded
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-vox
+      - state: equipped-head-unshaded-vox
+        shader: unshaded
+      head-vulpkanin:
+      - state: equipped-head-vulpkanin
+      - state: equipped-head-unshaded-vulpkanin
+        shader: unshaded
+      head-reptilian:
+      - state: equipped-head-reptilian
+      - state: equipped-head-unshaded-reptilian
+        shader: unshaded
   - type: PressureProtection
     highPressureMultiplier: 0.45
     lowPressureMultiplier: 1000
@@ -518,14 +703,44 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/luxury.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/luxury.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.525
     lowPressureMultiplier: 1000
   - type: PointLight
     radius: 7
     energy: 3
+  - type: ToggleableVisuals
+    clothingVisuals:
+      head:
+      - state: equipped-head-light
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-light-vox
+        shader: unshaded
+      head-vulpkanin:
+      - state: equipped-head-light-vulpkanin
+        shader: unshaded
+      head-reptilian:
+      - state: equipped-head-light-reptilian
+        shader: unshaded
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-head
+      - state: equipped-head-unshaded
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-vox
+      - state: equipped-head-unshaded-vox
+        shader: unshadedExpand commentComment on lines R795 to R818Resolved
+      head-vulpkanin:
+      - state: equipped-head-vulpkanin
+      - state: equipped-head-unshaded-vulpkanin
+        shader: unshaded
+      head-reptilian:
+      - state: equipped-head-reptilian
+      - state: equipped-head-unshaded-reptilian
+        shader: unshaded
 
 #ANTAG HARDSUITS
 #Blood-red Hardsuit
@@ -537,12 +752,42 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/syndicate.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/syndicate.rsi
   - type: PointLight
     color: green
     radius: 5
     energy: 2.5
+  - type: ToggleableVisuals
+    clothingVisuals:
+      head:
+      - state: equipped-head-light
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-light-vox
+        shader: unshaded
+      head-vulpkanin:
+      - state: equipped-head-light-vulpkanin
+        shader: unshaded
+      head-reptilian:
+      - state: equipped-head-light-reptilian
+        shader: unshaded
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-head
+      - state: equipped-head-unshaded
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-vox
+      - state: equipped-head-unshaded-vox
+        shader: unshaded
+      head-vulpkanin:
+      - state: equipped-head-vulpkanin
+      - state: equipped-head-unshaded-vulpkanin
+        shader: unshaded
+      head-reptilian:
+      - state: equipped-head-reptilian
+      - state: equipped-head-unshaded-reptilian
+        shader: unshaded
   - type: PressureProtection
     highPressureMultiplier: 0.08
     lowPressureMultiplier: 1000
@@ -566,12 +811,42 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/syndiemedic.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/syndiemedic.rsi
   - type: PointLight
     color: green
     radius: 5
     energy: 2.5
+  - type: ToggleableVisuals
+    clothingVisuals:
+      head:
+      - state: equipped-head-light
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-light-vox
+        shader: unshaded
+      head-vulpkanin:
+      - state: equipped-head-light-vulpkanin
+        shader: unshaded
+      head-reptilian:
+      - state: equipped-head-light-reptilian
+        shader: unshaded
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-head
+      - state: equipped-head-unshaded
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-vox
+      - state: equipped-head-unshaded-vox
+        shader: unshaded
+      head-vulpkanin:
+      - state: equipped-head-vulpkanin
+      - state: equipped-head-unshaded-vulpkanin
+        shader: unshaded
+      head-reptilian:
+      - state: equipped-head-reptilian
+      - state: equipped-head-unshaded-reptilian
+        shader: unshaded
   - type: PressureProtection
     highPressureMultiplier: 0.08
     lowPressureMultiplier: 1000
@@ -592,12 +867,42 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/syndieelite.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/syndieelite.rsi
   - type: PointLight
     color: red
     radius: 5
     energy: 2.5
+  - type: ToggleableVisuals
+    clothingVisuals:
+      head:
+      - state: equipped-head-light
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-light-vox
+        shader: unshaded
+      head-vulpkanin:
+      - state: equipped-head-light-vulpkanin
+        shader: unshaded
+      head-reptilian:
+      - state: equipped-head-light-reptilian
+        shader: unshaded
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-head
+      - state: equipped-head-unshaded
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-vox
+      - state: equipped-head-unshaded-vox
+        shader: unshaded
+      head-vulpkanin:
+      - state: equipped-head-vulpkanin
+      - state: equipped-head-unshaded-vulpkanin
+        shader: unshaded
+      head-reptilian:
+      - state: equipped-head-reptilian
+      - state: equipped-head-unshaded-reptilian
+        shader: unshaded
   - type: PressureProtection
     highPressureMultiplier: 0.08
     lowPressureMultiplier: 1000
@@ -623,12 +928,42 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/syndiecommander.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/syndiecommander.rsi
   - type: PointLight
     color: green
     radius: 5
     energy: 2.5
+  - type: ToggleableVisuals
+    clothingVisuals:
+      head:
+      - state: equipped-head-light
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-light-vox
+        shader: unshaded
+      head-vulpkanin:
+      - state: equipped-head-light-vulpkanin
+        shader: unshaded
+      head-reptilian:
+      - state: equipped-head-light-reptilian
+        shader: unshaded
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-head
+      - state: equipped-head-unshaded
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-vox
+      - state: equipped-head-unshaded-vox
+        shader: unshaded
+      head-vulpkanin:
+      - state: equipped-head-vulpkanin
+      - state: equipped-head-unshaded-vulpkanin
+        shader: unshaded
+      head-reptilian:
+      - state: equipped-head-reptilian
+      - state: equipped-head-unshaded-reptilian
+        shader: unshaded
   - type: PressureProtection
     highPressureMultiplier: 0.08
     lowPressureMultiplier: 1000
@@ -652,12 +987,42 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/cybersun.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/cybersun.rsi
   - type: PointLight
     color: red
     radius: 5
     energy: 4
+  - type: ToggleableVisuals
+    clothingVisuals:
+      head:
+      - state: equipped-head-light
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-light-vox
+        shader: unshaded
+      head-monkey:
+      - state: equipped-head-light-monkey
+        shader: unshaded
+      head-reptilian:
+      - state: equipped-head-light-reptilian
+        shader: unshaded
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-head
+      - state: equipped-head-unshaded
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-vox
+      - state: equipped-head-unshaded-vox
+        shader: unshaded
+      head-monkey:
+      - state: equipped-head-monkey
+      - state: equipped-head-unshaded-monkey
+        shader: unshaded
+      head-reptilian:
+      - state: equipped-head-reptilian
+      - state: equipped-head-unshaded-reptilian
+        shader: unshaded
   - type: PressureProtection
     highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000
@@ -681,10 +1046,33 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/wizard.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/wizard.rsi
   - type: PointLight
     color: "#ffadfb"
+  - type: ToggleableVisuals
+    clothingVisuals:
+      head:
+      - state: equipped-head-light
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-light-vox
+        shader: unshaded
+      head-vulpkanin:
+      - state: equipped-head-light-vulpkanin
+        shader: unshaded
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-head
+      - state: equipped-head-unshaded
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-vox
+      - state: equipped-head-unshaded-vox
+        shader: unshaded
+      head-vulpkanin:
+      - state: equipped-head-vulpkanin
+      - state: equipped-head-unshaded-vulpkanin
+        shader: unshaded
   - type: PressureProtection
     highPressureMultiplier: 0.27
     lowPressureMultiplier: 1000
@@ -709,7 +1097,11 @@
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/lingspacehelmet.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/lingspacehelmet.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-head
+      - state: equipped-head-unshaded
+        shader: unshaded
   - type: PressureProtection
     highPressureMultiplier: 0.225
     lowPressureMultiplier: 1000
@@ -725,7 +1117,15 @@
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/pirateeva.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/pirateeva.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-head
+      - state: equipped-head-unshaded
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-vox
+      - state: equipped-head-unshaded-vox
+        shader: unshaded
   - type: PressureProtection
     highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000
@@ -743,28 +1143,28 @@
   - type: ToggleableVisuals
     clothingVisuals:
       head:
-      - state: equipped-HELMET-light
+      - state: equipped-head-light
         shader: unshaded
       head-vox:
-      - state: equipped-HELMET-light-vox
+      - state: equipped-head-light-vox
         shader: unshaded
       head-reptilian:
-      - state: equipped-HELMET-light-reptilian
+      - state: equipped-head-light-reptilian
         shader: unshaded
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/piratecaptainhelm.rsi
     clothingVisuals:
       head:
-      - state: equipped-HELMET
-      - state: equipped-HELMET-unshaded
+      - state: equipped-head
+      - state: equipped-head-unshaded
         shader: unshaded
       head-vox:
-      - state: equipped-HELMET-vox
-      - state: equipped-HELMET-unshaded-vox
+      - state: equipped-head-vox
+      - state: equipped-head-unshaded-vox
         shader: unshaded
       head-reptilian:
-      - state: equipped-HELMET-reptilian
-      - state: equipped-HELMET-unshaded-reptilian
+      - state: equipped-head-reptilian
+      - state: equipped-head-unshaded-reptilian
         shader: unshaded
   - type: PointLight # Color matches visor colors, radius/energy same as mining hardsuit for the big captain.
     color: "#f3ea9c"
@@ -791,10 +1191,40 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertleader.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/ERThelmets/ertleader.rsi
   - type: PointLight
     color: "#addbff"
+  - type: ToggleableVisuals
+    clothingVisuals:
+      head:
+      - state: equipped-head-light
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-light-vox
+        shader: unshaded
+      head-vulpkanin:
+      - state: equipped-head-light-vulpkanin
+        shader: unshaded
+      head-reptilian:
+      - state: equipped-head-light-reptilian
+        shader: unshaded
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-head
+      - state: equipped-head-unshaded
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-vox
+      - state: equipped-head-unshaded-vox
+        shader: unshaded
+      head-vulpkanin:
+      - state: equipped-head-vulpkanin
+      - state: equipped-head-unshaded-vulpkanin
+        shader: unshaded
+      head-reptilian:
+      - state: equipped-head-reptilian
+      - state: equipped-head-unshaded-reptilian
+        shader: unshaded
   - type: Armor
     modifiers:
       coefficients:
@@ -812,10 +1242,26 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertchaplain.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/ERThelmets/ertchaplain.rsi
   - type: PointLight
     color: "#ffffff"
+  - type: ToggleableVisuals
+    clothingVisuals:
+      head:
+      - state: equipped-head-light
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-light-vox
+        shader: unshaded
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-head
+      - state: equipped-head-unshaded
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-vox
+      - state: equipped-head-unshaded-vox
+        shader: unshaded
 
 #ERT Engineer Hardsuit
 - type: entity
@@ -826,10 +1272,40 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertengineer.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/ERThelmets/ertengineer.rsi
   - type: PointLight
     color: "#f4ffad"
+  - type: ToggleableVisuals
+    clothingVisuals:
+      head:
+      - state: equipped-head-light
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-light-vox
+        shader: unshaded
+      head-vulpkanin:
+      - state: equipped-head-light-vulpkanin
+        shader: unshaded
+      head-reptilian:
+      - state: equipped-head-light-reptilian
+        shader: unshaded
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-head
+      - state: equipped-head-unshaded
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-vox
+      - state: equipped-head-unshaded-vox
+        shader: unshaded
+      head-vulpkanin:
+      - state: equipped-head-vulpkanin
+      - state: equipped-head-unshaded-vulpkanin
+        shader: unshaded
+      head-reptilian:
+      - state: equipped-head-reptilian
+      - state: equipped-head-unshaded-reptilian
+        shader: unshaded
   - type: FireProtection
     reduction: 0.2
   - type: Armor
@@ -849,10 +1325,40 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertmedical.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/ERThelmets/ertmedical.rsi
   - type: PointLight
     color: "#adffec"
+  - type: ToggleableVisuals
+    clothingVisuals:
+      head:
+      - state: equipped-head-light
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-light-vox
+        shader: unshaded
+      head-vulpkanin:
+      - state: equipped-head-light-vulpkanin
+        shader: unshaded
+      head-reptilian:
+      - state: equipped-head-light-reptilian
+        shader: unshaded
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-head
+      - state: equipped-head-unshaded
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-vox
+      - state: equipped-head-unshaded-vox
+        shader: unshaded
+      head-vulpkanin:
+      - state: equipped-head-vulpkanin
+      - state: equipped-head-unshaded-vulpkanin
+        shader: unshaded
+      head-reptilian:
+      - state: equipped-head-reptilian
+      - state: equipped-head-unshaded-reptilian
+        shader: unshaded
 
 #ERT Security Hardsuit
 - type: entity
@@ -863,10 +1369,40 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertsecurity.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/ERThelmets/ertsecurity.rsi
   - type: PointLight
     color: "#ffadc6"
+  - type: ToggleableVisuals
+    clothingVisuals:
+      head:
+      - state: equipped-head-light
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-light-vox
+        shader: unshaded
+      head-vulpkanin:
+      - state: equipped-head-light-vulpkanin
+        shader: unshaded
+      head-reptilian:
+      - state: equipped-head-light-reptilian
+        shader: unshaded
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-head
+      - state: equipped-head-unshaded
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-vox
+      - state: equipped-head-unshaded-vox
+        shader: unshaded
+      head-vulpkanin:
+      - state: equipped-head-vulpkanin
+      - state: equipped-head-unshaded-vulpkanin
+        shader: unshaded
+      head-reptilian:
+      - state: equipped-head-reptilian
+      - state: equipped-head-unshaded-reptilian
+        shader: unshaded
   - type: Armor
     modifiers:
       coefficients:
@@ -884,10 +1420,40 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertjanitor.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/ERThelmets/ertjanitor.rsi
   - type: PointLight
     color: "#cbadff"
+  - type: ToggleableVisuals
+    clothingVisuals:
+      head:
+      - state: equipped-head-light
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-light-vox
+        shader: unshaded
+      head-vulpkanin:
+      - state: equipped-head-light-vulpkanin
+        shader: unshaded
+      head-reptilian:
+      - state: equipped-head-light-reptilian
+        shader: unshaded
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-head
+      - state: equipped-head-unshaded
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-vox
+      - state: equipped-head-unshaded-vox
+        shader: unshaded
+      head-vulpkanin:
+      - state: equipped-head-vulpkanin
+      - state: equipped-head-unshaded-vulpkanin
+        shader: unshaded
+      head-reptilian:
+      - state: equipped-head-reptilian
+      - state: equipped-head-unshaded-reptilian
+        shader: unshaded
 
 #CBURN Hardsuit
 - type: entity
@@ -898,14 +1464,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/cburn.rsi
-    layers:
-    - state: icon
-    - state: icon-unshaded
-      shader: unshaded
-    - state: light-overlay
-      visible: false
-      shader: unshaded
-      map: [ "light" ]
   - type: Clothing
     clothingVisuals:
       head:
@@ -922,6 +1480,17 @@
         shader: unshaded
   - type: PointLight
     color: orange
+  - type: ToggleableVisuals
+    clothingVisuals:
+      head:
+      - state: equipped-head-light
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-light-vox
+        shader: unshaded
+      head-reptilian:
+      - state: equipped-head-light-reptilian
+        shader: unshaded
   - type: PressureProtection
     highPressureMultiplier: 0.08
     lowPressureMultiplier: 1000
@@ -946,7 +1515,19 @@
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/deathsquad.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/deathsquad.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-head
+      - state: equipped-head-unshaded
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-vox
+      - state: equipped-head-unshaded-vox
+        shader: unshaded
+      head-vulpkanin:
+      - state: equipped-head-vulpkanin
+      - state: equipped-head-unshaded-vulpkanin
+        shader: unshaded
   - type: PressureProtection
     highPressureMultiplier: 0.08
     lowPressureMultiplier: 1000
@@ -973,10 +1554,33 @@
   - type: BreathMask
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/clown.rsi
+  - type: ToggleableVisuals
+    clothingVisuals:
+      head:
+      - state: equipped-head-light
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-light-vox
+        shader: unshaded
+      head-reptilian:
+      - state: equipped-head-light-reptilian
+        shader: unshaded
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/clown.rsi
     equipSound: /Audio/Mecha/mechmove03.ogg
     unequipSound: /Audio/Effects/Emotes/parp1.ogg
+    clothingVisuals:
+      head:
+      - state: equipped-head
+      - state: equipped-head-unshaded
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-vox
+      - state: equipped-head-unshaded-vox
+        shader: unshaded
+      head-reptilian:
+      - state: equipped-head-reptilian
+      - state: equipped-head-unshaded-reptilian
+        shader: unshaded
 
 #Mime Hardsuit
 - type: entity
@@ -988,8 +1592,24 @@
   - type: BreathMask
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/mime.rsi
+  - type: ToggleableVisuals
+    clothingVisuals:
+      head:
+      - state: equipped-head-light
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-light-vox
+        shader: unshaded
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/mime.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-head
+      - state: equipped-head-unshaded
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-vox
+      - state: equipped-head-unshaded-vox
+        shader: unshaded
 
 #Santas Hardsuit
 - type: entity
@@ -1001,9 +1621,17 @@
   - type: BreathMask
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/santahelm.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/santahelm.rsi
   - type: PointLight
     color: "#f4ffad"
     radius: 5
     energy: 2
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-head
+      - state: equipped-head-unshaded
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-vox
+      - state: equipped-head-unshaded-vox
+        shader: unshaded
