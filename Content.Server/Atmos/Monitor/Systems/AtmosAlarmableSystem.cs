@@ -118,12 +118,9 @@ public sealed partial class AtmosAlarmableSystem : EntitySystem
         }
     }
 
-    private bool CheckTags<T>(Entity<AtmosAlarmableComponent> ent, T payload) where T : IAtmosAlarmableSourcePayload
+    private static bool CheckTags<T>(Entity<AtmosAlarmableComponent> ent, T payload) where T : IAtmosAlarmableSourcePayload
     {
-        if (ent.Comp.IgnoreAlarms)
-            return false;
-
-        return payload.Source.Any(source => ent.Comp.SyncWithTags.Contains(source));
+        return !ent.Comp.IgnoreAlarms && payload.Source.Any(source => ent.Comp.SyncWithTags.Contains(source));
     }
 
     private void TryUpdateAlert(EntityUid uid, AtmosAlarmType type, AtmosAlarmableComponent alarmable, bool sync = true)
