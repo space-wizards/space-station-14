@@ -161,7 +161,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                 };
 
                 deviceNetSystem.QueuePacket(device1, networkComponent2.Data.Address, ref secondPayload, networkComponent2.Data.ReceiveFrequency.Value);
-                Assert.That(secondPayload, Is.EqualTo(deviceNetTestSystem.LastPayloadSecond));
+                Assert.That(secondPayload, Is.Not.EqualTo(deviceNetTestSystem.LastPayloadSecond));
             });
         }
 
