@@ -65,6 +65,30 @@
     Licoxide: 1
 
 - type: reaction
+  id: BrassAlloy
+  minTemp: 1358 # Melting point of copper
+  reactants:
+    Zinc:
+      amount: 3.3
+    Copper:
+      amount: 6.7
+  products:
+    Brass: 10
+
+- type: reaction
+  id: BrassBreakdown
+  minTemp: 693 # Melting point of zinc
+  source: true
+  requiredMixerCategories:
+  - Centrifuge
+  reactants:
+    Brass:
+      amount: 10
+  products:
+    Zinc: 3.3
+    Copper: 6.7
+
+- type: reaction
   id: PlasticSheet # It's here because "haha look you can get smooth beautiful sheets of plastic from small cylindric beaker" (jokes aside: i dont know where should i put it)
   impact: Low
   quantized: true
@@ -199,6 +223,19 @@
   effects:
   - !type:SpawnEntity
     entity: IngotSilver1
+
+- type: reaction
+  id: SolidifyBrass
+  impact: Low
+  quantized: true
+  reactants:
+    Brass:
+      amount: 10
+    FrostOil:
+      amount: 5
+  effects:
+  - !type:SpawnEntity
+    entity: SheetBrass1
 
 - type: reaction
   id: WehHewExplosion

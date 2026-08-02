@@ -896,6 +896,17 @@
 
 - type: entity
   parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitTramDriver
+  name: tram driver jumpsuit
+  description: Perfectly ironed, for well-prepared professionals.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/tramdriver.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/tramdriver.rsi
+
+- type: entity
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitReporter
   name: reporter suit
   description: A good reporter remains a skeptic all their life.
