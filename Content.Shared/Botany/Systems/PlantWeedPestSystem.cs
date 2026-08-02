@@ -14,7 +14,6 @@ public sealed partial class PlantWeedPestSystem : EntitySystem
     [Dependency] private BotanySystem _botany = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private MutationSystem _mutation = default!;
-    [Dependency] private PlantSystem _plant = default!;
     [Dependency] private PlantHolderSystem _plantHolder = default!;
     [Dependency] private PlantTraySystem _plantTray = default!;
 
@@ -67,18 +66,5 @@ public sealed partial class PlantWeedPestSystem : EntitySystem
 
         ent.Comp.PestTolerance = MathF.Max(0f, ent.Comp.PestTolerance + amount);
         DirtyField(ent, nameof(ent.Comp.PestTolerance));
-    }
-
-    /// <summary>
-    /// Checks whether the tray's pest level exceeds the plant's tolerance.
-    /// </summary>
-    [PublicAPI]
-    public bool GetPestThreshold(Entity<PlantWeedPestComponent?> ent)
-    {
-        if (!Resolve(ent.Owner, ref ent.Comp, false)
-            || !_plant.TryGetTray(ent.Owner, out var tray))
-            return false;
-
-        return tray.Comp.PestLevel > ent.Comp.PestTolerance;
     }
 }

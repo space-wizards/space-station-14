@@ -10,7 +10,6 @@ public sealed partial class PlantTrayVisualizerSystem : VisualizerSystem<PlantTr
 {
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private PlantTraySystem _plantTray = default!;
-    [Dependency] private PlantWeedPestSystem _plantWeedPest = default!;
     [Dependency] private PlantHolderSystem _plantHolder = default!;
 
     /// <summary>
@@ -58,7 +57,8 @@ public sealed partial class PlantTrayVisualizerSystem : VisualizerSystem<PlantTr
         var water = _plantTray.GetWaterThreshold(ent.AsNullable());
         var nutrition = _plantTray.GetNutrientThreshold(ent.AsNullable());
         var alert = _plantTray.GetWeedThreshold(ent.AsNullable())
-                    || _plantTray.GetToxinThreshold(ent.AsNullable());
+                    || _plantTray.GetToxinThreshold(ent.AsNullable())
+                    || _plantTray.GetPestThreshold(ent.AsNullable());
         var health = false;
         var harvest = false;
 
@@ -66,8 +66,7 @@ public sealed partial class PlantTrayVisualizerSystem : VisualizerSystem<PlantTr
         {
             if (TryComp<PlantHolderComponent>(plantUid, out var plantHolder))
             {
-                alert |= _plantWeedPest.GetPestThreshold(plantUid.Value)
-                         || plantHolder.ImproperHeat
+                alert |= plantHolder.ImproperHeat
                          || plantHolder.ImproperPressure
                          || plantHolder.MissingGas;
 

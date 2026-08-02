@@ -81,12 +81,6 @@ public sealed partial class PlantHolderComponent : Component
     public TimeSpan LastCycle = TimeSpan.Zero;
 
     /// <summary>
-    /// Set to true to force an update cycle regardless of timing.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool ForceUpdate;
-
-    /// <summary>
     /// True if the plant is losing health due to too high/low temperature.
     /// </summary>
     [DataField, AutoNetworkedField]

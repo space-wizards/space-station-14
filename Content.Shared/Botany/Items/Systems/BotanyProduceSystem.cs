@@ -63,7 +63,7 @@ public sealed partial class BotanyProduceSystem : EntitySystem
                 _solutionContainer.TryAddSolution(ent.Comp.SoilSolution.Value, _solutionContainer.SplitSolution(soln2.Value, fillAmount));
 
                 if (_plantTray.TryGetPlant(ent.AsNullable(), out var plantUid))
-                    _plant.ForceUpdateByExternalCause(plantUid.Value);
+                    _plant.ForceUpdate(plantUid.Value);
             }
         }
 

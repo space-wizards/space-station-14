@@ -3,10 +3,9 @@ plant-component-already-seeded-popup = The {$name} already has seeds in it!
 
 plant-component-something-already-growing-message = [color=green]{$seedName}[/color] growing here.
 plant-component-something-already-growing-low-health-message = The plant looks [color=red]{$healthState}[/color].
-plant-component-plant-old-adjective = old and wilting
-plant-component-plant-unhealthy-adjective = unhealthy
+plant-component-plant-old-adjective = [color=red]old and wilting[/color]
+plant-component-plant-unhealthy-adjective = [color=red]unhealthy[/color]
 plant-component-dead-plant-matter-message = It's full of [color=red]dead plant matter[/color].
-plant-component-pest-high-level-message = It's filled with [color=gray]tiny worms[/color]!
 
 plant-component-light-improper-warning = The [color=yellow]improper light level alert[/color] is blinking.
 plant-component-heat-improper-warning = The [color=orange]improper temperature level alert[/color] is blinking.

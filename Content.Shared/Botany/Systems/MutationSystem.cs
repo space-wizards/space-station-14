@@ -6,6 +6,7 @@ using Content.Shared.Botany.Traits.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.EntityEffects;
 using Content.Shared.Random.Helpers;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Timing;
@@ -21,6 +22,7 @@ public sealed partial class MutationSystem : EntitySystem
     private static readonly ProtoId<RandomPlantMutationListPrototype> RandomPlantMutations = "RandomPlantMutations";
     private RandomPlantMutationListPrototype _randomMutations = default!;
 
+    [Dependency] private INetManager _net = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private BotanySystem _botany = default!;
     [Dependency] private ISerializationManager _serialization = default!;
@@ -51,7 +53,10 @@ public sealed partial class MutationSystem : EntitySystem
 
                 // Stat adjustments do not persist by being an attached effect, they just change the stat.
                 if (mutation.Persists && ent.Comp.Mutations.All(m => m.Name != mutation.Name))
+                {
                     ent.Comp.Mutations.Add(mutation);
+                    DirtyField(ent, nameof(ent.Comp.Mutations));
+                }
             }
         }
     }
@@ -69,12 +74,15 @@ public sealed partial class MutationSystem : EntitySystem
         if (oldPlant.Comp.MutationPrototypes.Count == 0)
             return;
 
+        if (!_net.IsServer)
+            return;
+
         // Clone state via snapshot and apply to new plant.
         var snapshot = _botany.ClonePlantSnapshotData(oldPlant.Owner, cloneLifecycle: true);
         if (snapshot == null)
             return;
 
-        var newPlantUid = PredictedSpawnAtPosition(newPlantProto, Transform(oldPlant.Owner).Coordinates);
+        var newPlantUid = SpawnAtPosition(newPlantProto, Transform(oldPlant.Owner).Coordinates);
         _botany.ApplyPlantSnapshotData(snapshot, newPlantUid, cloneLifecycle: true);
         _botany.DeletePlantSnapshot(snapshot);
 
@@ -85,8 +93,8 @@ public sealed partial class MutationSystem : EntitySystem
         else
             _plant.PlantingPlant(newPlantUid);
 
-        PredictedQueueDel(oldPlant);
-        _plant.ForceUpdateByExternalCause(newPlantUid);
+        _plant.ForceUpdate(newPlantUid);
+        QueueDel(oldPlant);
     }
 
     private void ChemicalsSpeciesChange(EntityUid plantUid, EntProtoId plantProto)
@@ -110,6 +118,8 @@ public sealed partial class MutationSystem : EntitySystem
             if (!newPlant.ContainsKey(originalChem.Key) && originalChem.Value.Inherent)
                 oldPlant.Remove(originalChem.Key);
         }
+
+        Dirty(plantUid, oldPlantChemicals);
     }
 
     /// <summary>

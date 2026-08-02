@@ -300,7 +300,7 @@ public sealed partial class PlantTraySystem : EntitySystem
         if (!Resolve(ent.Owner, ref ent.Comp, false))
             return string.Empty;
 
-        var markup = new List<string>(3);
+        var markup = new List<string>();
         if (GetWeedThreshold(ent))
             markup.Add(Loc.GetString("tray-component-weed-high-level-warning"));
 
@@ -312,6 +312,9 @@ public sealed partial class PlantTraySystem : EntitySystem
 
         if (GetToxinThreshold(ent))
             markup.Add(Loc.GetString("tray-component-toxin-high-level-warning"));
+
+        if (GetPestThreshold(ent))
+            markup.Add(Loc.GetString("tray-component-pest-high-level-warning"));
 
         return string.Join("\n", markup);
     }
@@ -326,6 +329,18 @@ public sealed partial class PlantTraySystem : EntitySystem
             return false;
 
         return ent.Comp.WeedLevel >= ent.Comp.MaxWeedLevel * 0.5f;
+    }
+
+    /// <summary>
+    /// Checks whether the tray's pest level has reached half its maximum.
+    /// </summary>
+    [PublicAPI]
+    public bool GetPestThreshold(Entity<PlantTrayComponent?> ent)
+    {
+        if (!Resolve(ent.Owner, ref ent.Comp, false))
+            return false;
+
+        return ent.Comp.PestLevel >= ent.Comp.MaxPestLevel * 0.5f;
     }
 
     /// <summary>

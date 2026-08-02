@@ -15,9 +15,7 @@ public sealed partial class PlantSystem : EntitySystem
     [Dependency] private BotanySystem _botany = default!;
     [Dependency] private IGameTiming _gameTiming = default!;
     [Dependency] private MutationSystem _mutation = default!;
-    [Dependency] private PlantHarvestSystem _plantHarvest = default!;
     [Dependency] private PlantHolderSystem _plantHolder = default!;
-    [Dependency] private PlantWeedPestSystem _plantWeedPest = default!;
 
     public override void Update(float frameTime)
     {
@@ -85,8 +83,6 @@ public sealed partial class PlantSystem : EntitySystem
 
         using (args.PushGroup(nameof(PlantComponent)))
         {
-            args.PushMarkup(GetPlantStateMarkup(ent));
-
             if (_plantHolder.IsDead(ent.Owner))
                 args.PushMarkup(Loc.GetString("plant-component-dead-plant-matter-message"));
 
@@ -111,23 +107,15 @@ public sealed partial class PlantSystem : EntitySystem
     /// <summary>
     /// Processes one plant's growth cycle and related effects.
     /// </summary>
-    public void UpdatePlant(Entity<PlantHolderComponent?> ent)
+    public void UpdatePlant(Entity<PlantHolderComponent?> ent, bool force = false)
     {
         if (!Resolve(ent.Owner, ref ent.Comp, false))
             return;
 
         var curTime = _gameTiming.CurTime;
 
-        // ForceUpdate is used for external triggers like swabbing.
-        if (ent.Comp.ForceUpdate)
-        {
-            ent.Comp.ForceUpdate = false;
-            DirtyField(ent, nameof(ent.Comp.ForceUpdate));
-        }
-        else if (curTime < ent.Comp.LastCycle + ent.Comp.CycleDelay)
-        {
+        if (!force && curTime < ent.Comp.LastCycle + ent.Comp.CycleDelay)
             return;
-        }
 
         ent.Comp.LastCycle = curTime;
         DirtyField(ent, ent.Comp, nameof(ent.Comp.LastCycle));
@@ -155,19 +143,13 @@ public sealed partial class PlantSystem : EntitySystem
     /// Forces an update of the tray by external cause.
     /// </summary>
     [PublicAPI]
-    public void ForceUpdateByExternalCause(Entity<PlantComponent?> ent)
+    public void ForceUpdate(Entity<PlantComponent?> ent)
     {
         if (!Resolve(ent.Owner, ref ent.Comp, false))
             return;
 
-        if (!TryComp<PlantHolderComponent>(ent.Owner, out var plantHolder))
-            return;
-
-        plantHolder.ForceUpdate = true;
-        DirtyField(ent.Owner, plantHolder, nameof(plantHolder.ForceUpdate));
-
         _plantHolder.AdjustsSkipAging(ent.Owner, 1);
-        UpdatePlant(ent.Owner);
+        UpdatePlant(ent.Owner, force: true);
     }
 
     /// <summary>
@@ -320,10 +302,7 @@ public sealed partial class PlantSystem : EntitySystem
             return;
 
         plantHolder.Health = healthOverride ?? ent.Comp.Endurance;
-        plantHolder.LastCycle = _gameTiming.CurTime;
-        DirtyFields(ent, plantHolder, null, nameof(plantHolder.Health), nameof(plantHolder.LastCycle));
-
-        _plantHarvest.ResetHarvest(ent.Owner);
+        DirtyFields(ent, plantHolder, null, nameof(plantHolder.Health));
     }
 
     /// <summary>
@@ -345,9 +324,6 @@ public sealed partial class PlantSystem : EntitySystem
         if (ent.Comp.MissingGas)
             markup.Add(Loc.GetString("plant-component-gas-missing-warning"));
 
-        if (_plantWeedPest.GetPestThreshold(ent.Owner))
-            markup.Add(Loc.GetString("plant-component-pest-high-level-message"));
-
         return string.Join("\n", markup);
     }
 
@@ -360,9 +336,10 @@ public sealed partial class PlantSystem : EntitySystem
         if (component == null && !Resolve(uid, ref component, false))
             return string.Empty;
 
-        var markup = Loc.GetString("seed-component-plant-yield-text", ("seedYield", component.Yield));
-        markup += "\n" + Loc.GetString("seed-component-plant-potency-text", ("seedPotency", component.Potency));
+        var markup = new List<string>();
+        markup.Add(Loc.GetString("seed-component-plant-yield-text", ("seedYield", component.Yield)));
+        markup.Add(Loc.GetString("seed-component-plant-potency-text", ("seedPotency", component.Potency)));
 
-        return markup;
+        return string.Join("\n", markup);
     }
 }

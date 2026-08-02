@@ -55,12 +55,13 @@ public sealed partial class PlantMutateExudeGases : EntityEffectBase<PlantMutate
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class PlantMutateConsumeGasesEntityEffectSystem : EntityEffectSystem<PlantComponent, PlantMutateConsumeGases>
 {
-    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedPlantConsumeExudeGasSystem _plantConsumeExudeGas = default!;
 
     protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantMutateConsumeGases> args)
     {
-        var amount = _random.NextFloat(args.Effect.MinValue, args.Effect.MaxValue);
+        var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(entity));
+        var amount = random.NextFloat(args.Effect.MinValue, args.Effect.MaxValue);
         _plantConsumeExudeGas.MutateRandomConsumeGasses(entity.Owner, amount);
     }
 }

@@ -31,7 +31,7 @@ public sealed partial class PlantCryoxadoneEntityEffectSystem : EntityEffectSyst
             : (int)(entity.Comp.Maturation / entity.Comp.GrowthStages);
 
         _plantHarvest.AffectGrowth(entity.Owner, -deviation);
-        _plant.ForceUpdateByExternalCause(entity.AsNullable());
+        _plant.ForceUpdate(entity.AsNullable());
     }
 }
 

@@ -1,5 +1,4 @@
 using Content.Shared.Database;
-using Content.Shared.Botany.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -58,7 +57,7 @@ public sealed partial class PlantComponent : Component
     /// The mutation effects that have been applied to this plant.
     /// Server-only: mutations are applied as effects which are synced separately.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public List<RandomPlantMutation> Mutations = [];
 
     /// <summary>

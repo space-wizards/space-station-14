@@ -191,18 +191,4 @@ public sealed partial class PlantHarvestSystem : EntitySystem
 
         DirtyField(ent, nameof(ent.Comp.HarvestRepeat));
     }
-
-    /// <summary>
-    /// Resets the harvest of a plant.
-    /// </summary>
-    [PublicAPI]
-    public void ResetHarvest(Entity<PlantHarvestComponent?> ent)
-    {
-        if (!Resolve(ent, ref ent.Comp, false))
-            return;
-
-        ent.Comp.ReadyForHarvest = false;
-        ent.Comp.LastHarvest = 0;
-        Dirty(ent);
-    }
 }
