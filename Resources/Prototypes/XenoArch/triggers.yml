@@ -275,8 +275,6 @@
   tip: xenoarch-trigger-tip-particle
   components:
   - type: XATInteractAttack
-    interactionCount:
-      max: 1 #Accel/Decell shoot quite slowly
     whitelist:
       components:
       - ParticleProjectile
@@ -286,8 +284,6 @@
   tip: xenoarch-trigger-tip-anomparticle
   components:
   - type: XATInteractAttack
-    interactionCount:
-      max: 1 #A.P.E shoots quite slowly
     whitelist:
       components:
       - AnomalousParticle
@@ -297,6 +293,8 @@
   tip: xenoarch-trigger-tip-stamina-damage
   components:
   - type: XATInteractAttack
+    interactionCount:
+      max: 3
     whitelist:
       components:
       - StaminaDamageOnCollide
@@ -307,6 +305,8 @@
   tip: xenoarch-trigger-tip-laser
   components:
   - type: XATInteractAttack
+    interactionCount:
+      max: 3
     whitelist:
       components:
       - HitscanBasicDamage
