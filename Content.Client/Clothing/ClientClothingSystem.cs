@@ -115,10 +115,6 @@ public sealed partial class ClientClothingSystem : ClothingSystem
             if (!TryGetDefaultVisuals(uid, item, args.Slot, inventory.SpeciesId, out layers))
                 return;
         }
-        else
-        {
-            layers = CheckForSpeciesSpecificLayers(uid, item, layers, inventory.SpeciesId);
-        }
 
         // add each layer to the visuals
         var i = 0;
@@ -138,10 +134,10 @@ public sealed partial class ClientClothingSystem : ClothingSystem
     }
 
     /// <summary>
-    ///     If no explicit clothing visuals were specified, this attempts to populate with default values.
+    /// If no explicit clothing visuals were specified, this attempts to populate with default values.
     /// </summary>
     /// <remarks>
-    ///     Useful for lazily adding clothing sprites without modifying yaml. And for backwards compatibility.
+    /// Useful for lazily adding clothing sprites without modifying yaml. And for backwards compatibility.
     /// </remarks>
     private bool TryGetDefaultVisuals(EntityUid uid, ClothingComponent clothing, string slot, string? speciesId,
         [NotNullWhen(true)] out List<PrototypeLayerData>? layers)
@@ -187,20 +183,20 @@ public sealed partial class ClientClothingSystem : ClothingSystem
     }
 
     /// <summary>
-    ///     For each layer in the given set of prototype data, looks to see if there's a particular species-specific state and modifies it accordingly if so.
+    /// For each layer in the given set of prototype data, looks to see if there's a particular species-specific state and modifies it accordingly if so.
     /// </summary>
     /// <remarks>
-    ///     Useful for avoiding YAML redundancy with species-specific ClothingVisuals.
+    /// Useful for avoiding YAML redundancy with species-specific ClothingVisuals.
     /// </remarks>
-    private List<PrototypeLayerData> CheckForSpeciesSpecificLayers(EntityUid uid, ClothingComponent clothing, List<PrototypeLayerData> layers, string? speciesId)
+    private List<(string, PrototypeLayerData)> CheckForSpeciesSpecificLayers(EntityUid uid, ClothingComponent clothing, List<(string, PrototypeLayerData)> layers, string? speciesId)
     {
         if (string.IsNullOrEmpty(speciesId))
             return layers;
 
         // Make a copy of the layers - we need the originals intact.
-        List<PrototypeLayerData> newLayers = new(layers.Count);
+        List<(string, PrototypeLayerData)> newLayers = new(layers.Count);
         foreach (var layer in layers)
-            newLayers.Add(_serialMan.CreateCopy(layer, notNullableOverride: true));
+            newLayers.Add((layer.Item1, _serialMan.CreateCopy(layer.Item2, notNullableOverride: true)));
 
         // Find fallback RSI
         RSI? baseRSI = null;
@@ -210,8 +206,10 @@ public sealed partial class ClientClothingSystem : ClothingSystem
             baseRSI = sprite.BaseRSI;
 
         // For each layer, check that a species-specific version exists.
-        foreach (var layer in newLayers)
+        foreach (var tuple in newLayers)
         {
+            var layer = tuple.Item2;
+
             // Empty or species-specific layer, nothing to do.
             if (layer.State == null || layer.State.EndsWith(speciesId))
                 continue;
@@ -317,6 +315,8 @@ public sealed partial class ClientClothingSystem : ClothingSystem
             RaiseLocalEvent(equipment, new EquipmentVisualsUpdatedEvent(equipee, slot, revealedLayers), true);
             return;
         }
+
+        ev.Layers = CheckForSpeciesSpecificLayers(equipee, clothingComponent, ev.Layers, inventory.SpeciesId);
 
         // temporary, until layer draw depths get added. Basically: a layer with the key "slot" is being used as a
         // bookmark to determine where in the list of layers we should insert the clothing layers.
