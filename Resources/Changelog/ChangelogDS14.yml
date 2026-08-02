@@ -5616,3 +5616,10 @@ Entries:
   changes:
   - type: Fix
     message: Баг связанный с хулиганом
+- id: 547
+  author: MTF97
+  time: '2026-08-02T19:13:04.346923+00:00'
+  pr: 2066
+  changes:
+  - type: Add
+    message: Терминал, выдающий талончики для очереди.
