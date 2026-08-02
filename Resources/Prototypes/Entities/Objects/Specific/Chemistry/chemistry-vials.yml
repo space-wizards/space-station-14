@@ -195,7 +195,7 @@
   suffix: xenoborg oil
   components:
   - type: Label
-    currentLabel: reagent-name-xenoborg-oil
+    localizedLabel: reagent-name-xenoborg-oil
   - type: ThrowingAngle
     angle: 90
     angularVelocity: true
