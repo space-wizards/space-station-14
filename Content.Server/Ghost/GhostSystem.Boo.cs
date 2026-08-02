@@ -59,7 +59,7 @@ public sealed partial class GhostSystem
                     remainingIntensity -= (int)ghostBoo.ResponseIntensity;
                     break;
                 default: // Out of enum, treat as though it's the highest intensity.
-                    remainingIntensity -= (int)GhostBooIntensity.Normal;
+                    remainingIntensity -= (int)GhostBooIntensity.Extreme;
                     break;
             }
 
