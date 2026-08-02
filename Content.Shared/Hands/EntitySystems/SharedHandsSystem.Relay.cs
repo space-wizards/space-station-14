@@ -13,7 +13,7 @@ public abstract partial class SharedHandsSystem
 {
     private void InitializeRelay()
     {
-        SubscribeLocalEvent<HandsComponent, GetEyeOffsetRelayedEvent>(RelayEvent);
+        SubscribeLocalEvent<HandsComponent, GetEyeOffsetRelayedEvent>(RefRelayEvent);
         SubscribeLocalEvent<HandsComponent, GetEyePvsScaleRelayedEvent>(RelayEvent);
         SubscribeLocalEvent<HandsComponent, RefreshMovementSpeedModifiersEvent>(RelayEvent);
 
