@@ -64,11 +64,10 @@ public sealed partial class GhostComponent : Component
     public float BooRadius = 3;
 
     /// <summary>
-    /// The number of boo events (of normal intensity) that should happen at most.
-    /// There may be more handled events if the responses are subtle.
+    /// The maximum total intensity (sum of values from <see cref="GhostBooIntensity"/>) of a Boo action.
     /// </summary>
     [DataField]
-    public int BooCount = 3;
+    public int BooIntensity = 6;
 
     /// <summary>
     /// Is this ghost allowed to interact with entities?
@@ -110,11 +109,13 @@ public enum GhostVisuals : byte
 /// <summary>
 /// The intensity of a given response to a boo action.
 /// </summary>
-public enum GhostBooIntensity
+[Serializable, NetSerializable]
+public enum GhostBooIntensity : byte
 {
     None = 0, /// <summary>No response at all.</summary>
     Subtle = 1, /// <summary>A subtle response - short in duration or small in effect.</summary>
     Normal = 2, /// <summary>A normal response - moderate in duration, attention-grabbing.</summary>
+    Extreme = 6, /// <summary>An extreme response - very intense, should be the only response.  Not currently supported.</summary>
 }
 
 public sealed partial class ToggleFoVActionEvent : InstantActionEvent { }

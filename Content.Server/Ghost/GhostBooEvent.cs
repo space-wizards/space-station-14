@@ -8,7 +8,8 @@ namespace Content.Server.Ghost;
 /// <remarks>
 /// Most frequently used by ghosts to haunt an area, hence the name.
 /// </remarks>
-public sealed class GhostBooEvent(GhostBooIntensity allowedIntensity) : EntityEventArgs
+[ByRefEvent]
+public struct GhostBooEvent(GhostBooIntensity allowedIntensity)
 {
     /// <summary>
     /// The maximum level of intensity that the caller will allow.

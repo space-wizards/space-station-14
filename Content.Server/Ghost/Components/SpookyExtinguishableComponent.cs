@@ -5,11 +5,12 @@ namespace Content.Server.Ghost.Components;
 
 /// <summary>
 /// Causes an entity to react to ghost player using the "Boo!" action by
-/// extinguishing its fire stacks if it has any.
+/// extinguishing the entity.
 /// </summary>
+/// <seealso cref="FlammableComponent"/>
 /// <seealso cref="GhostBooEvent"/>
 [RegisterComponent]
-public sealed partial class SpookyExtinguishComponent : Component
+public sealed partial class SpookyExtinguishableComponent : Component
 {
     /// <summary>
     /// The likelihood that a <see cref="GhostBooEvent"/> extinguishes this entity.

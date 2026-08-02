@@ -34,7 +34,7 @@ public sealed partial class XAELightFlickerSystem : BaseXAESystem<XAELightFlicke
                 continue;
 
             //todo: extract effect from ghost system, update power system accordingly
-            _ghost.DoGhostBooEvent(light, out _);
+            _ghost.DoGhostBooEvent(light);
         }
     }
 }

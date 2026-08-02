@@ -4,6 +4,7 @@ using Content.Server.Ghost.Components;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Chat;
 using Content.Shared.Ghost;
+using Content.Shared.Light.Components;
 using Content.Shared.Random.Helpers;
 using Robust.Server.Audio;
 using Robust.Shared.Random;
@@ -20,13 +21,13 @@ public sealed partial class GhostSystem
     [Dependency] private FlammableSystem _flammable = default!;
 
     [Dependency] private EntityQuery<FlammableComponent> _flammableQuery;
+    [Dependency] private EntityQuery<BlinkingPoweredLightComponent> _blinkingQuery;
 
     [SubscribeLocalEvent]
     private void OnSpeakerBoo(Entity<SpookySpeakerComponent> ent, ref GhostBooEvent args)
     {
         // Check if already handled, or too intense.
-        if (args.ResponseIntensity != GhostBooIntensity.None
-            || args.AllowedIntensity < ent.Comp.Intensity)
+        if (!IsIntensityPermitted(args, ent.Comp.Intensity))
             return;
 
         // Only activate sometimes, so groups don't all trigger together
@@ -56,11 +57,10 @@ public sealed partial class GhostSystem
     }
 
     [SubscribeLocalEvent]
-    private void OnExtinguishBoo(Entity<SpookyExtinguishComponent> ent, ref GhostBooEvent args)
+    private void OnExtinguishBoo(Entity<SpookyExtinguishableComponent> ent, ref GhostBooEvent args)
     {
         // Check if already handled, or too intense.
-        if (args.ResponseIntensity != GhostBooIntensity.None
-            || args.AllowedIntensity < ent.Comp.Intensity)
+        if (!IsIntensityPermitted(args, ent.Comp.Intensity))
             return;
 
         // Check if we can extinguish the entity.
@@ -71,12 +71,43 @@ public sealed partial class GhostSystem
         if (!_random.Prob(ent.Comp.ExtinguishChance))
             return;
 
-        _flammable.Extinguish(ent, flammable);
+        if (!_flammable.Extinguish(ent, flammable))
+            return;
 
         if (ent.Comp.ExtinguishSound != null)
             _audio.PlayPvs(ent.Comp.ExtinguishSound, ent);
 
-        // Only set handled if we random
         args.ResponseIntensity = GhostBooIntensity.Subtle;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnPoweredLightBoo(Entity<SpookyPoweredLightComponent> ent, ref GhostBooEvent args)
+    {
+        // Already handled?
+        if (!IsIntensityPermitted(args, ent.Comp.BooIntensity))
+            return;
+
+        // Is the light already blinking?
+        if (_blinkingQuery.HasComp(ent))
+            return;
+
+        // Check cooldown first to prevent abuse.
+        var curTime = _timing.CurTime;
+        if (curTime < ent.Comp.NextGhostBlink)
+            return;
+
+        ent.Comp.NextGhostBlink = curTime + ent.Comp.GhostBlinkingCooldown;
+
+        var blinkingComp = EnsureComp<BlinkingPoweredLightComponent>(ent);
+        blinkingComp.StopBlinkingTime = curTime + ent.Comp.GhostBlinkingTime;
+        Dirty(ent, blinkingComp);
+
+        args.ResponseIntensity = ent.Comp.BooIntensity;
+    }
+
+    private bool IsIntensityPermitted(GhostBooEvent args, GhostBooIntensity targetIntensity)
+    {
+        return args.ResponseIntensity == GhostBooIntensity.None
+            && args.AllowedIntensity >= targetIntensity;
     }
 }

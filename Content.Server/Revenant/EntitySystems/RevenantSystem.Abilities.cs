@@ -50,7 +50,6 @@ public sealed partial class RevenantSystem
     [Dependency] private EntityQuery<ItemComponent> _itemQuery;
     [Dependency] private EntityQuery<MobStateComponent> _mobStateQuery;
     [Dependency] private EntityQuery<PoweredLightComponent> _poweredLightQuery;
-    [Dependency] private EntityQuery<SpookyExtinguishComponent> _extinguishQuery;
 
     private static readonly ProtoId<TagPrototype> WindowTag = "Window";
 
@@ -76,7 +75,7 @@ public sealed partial class RevenantSystem
         var target = args.Target;
 
         // Try to do something spooky first.
-        if (_ghost.DoGhostBooEvent(target, out _))
+        if (_ghost.DoGhostBooEvent(target))
             return;
 
         if (!_mobStateQuery.HasComp(target) || !HasComp<HumanoidProfileComponent>(target) || HasComp<RevenantComponent>(target))
@@ -286,7 +285,7 @@ public sealed partial class RevenantSystem
                 _throwing.TryThrow(ent, _random.NextAngle().ToWorldVec());
 
             //spooky stuff
-            _ghost.DoGhostBooEvent(ent, out _);
+            _ghost.DoGhostBooEvent(ent);
         }
     }
 

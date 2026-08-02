@@ -307,13 +307,16 @@ namespace Content.Server.Atmos.EntitySystems
             }
         }
 
-        public void Extinguish(EntityUid uid, FlammableComponent? flammable = null)
+        /// <summary>
+        /// Extinguishes an entity, returning whether or not it was extinguished.
+        /// </summary>
+        public bool Extinguish(EntityUid uid, FlammableComponent? flammable = null)
         {
             if (!Resolve(uid, ref flammable))
-                return;
+                return false;
 
             if (!flammable.OnFire || !flammable.CanExtinguish)
-                return;
+                return false;
 
             _adminLogger.Add(LogType.Flammable, $"{ToPrettyString(uid):entity} stopped being on fire damage");
             flammable.OnFire = false;
@@ -325,6 +328,7 @@ namespace Content.Server.Atmos.EntitySystems
             RaiseLocalEvent(uid, ref extinguished);
 
             UpdateAppearance(uid, flammable);
+            return true;
         }
 
         public void Ignite(EntityUid uid, EntityUid ignitionSource, FlammableComponent? flammable = null,
