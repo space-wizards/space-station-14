@@ -27,7 +27,6 @@ public sealed partial class XATInteractWithSystem : BaseXATSystem<XATInteractWit
     {
         base.Initialize();
 
-        SubscribeLocalEvent<XATInteractWithComponent, MapInitEvent>(OnMapInit);
         XATSubscribeDirectEvent<InteractUsingEvent>(OnInteractUsing);
         XATSubscribeDirectEvent<XATInteractWithDoAfterEvent>(OnInteractWithComplete);
     }
@@ -36,6 +35,7 @@ public sealed partial class XATInteractWithSystem : BaseXATSystem<XATInteractWit
     /// Define required amount of valid entities to trigger
     /// This amount stays consistent on multiple triggers
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnMapInit(Entity<XATInteractWithComponent> ent, ref MapInitEvent args)
     {
         SetMaxCount(ent);
@@ -95,15 +95,12 @@ public sealed partial class XATInteractWithSystem : BaseXATSystem<XATInteractWit
                 PredictedQueueDel(args.Used);
         }
 
-        if (amount < node.Comp1.Count) // reduce the current required count by our amount
-            node.Comp1.Count -= amount;
-        else
-            node.Comp1.Count = 0;
+        node.Comp1.Count -= amount; // reduce the current required count by our amount
 
-        Dirty(node);
         if (node.Comp1.Count > 0)
         {
             _popup.PopupEntity(Loc.GetString("interact-actifact-more"), artifact.Owner, args.User);
+            Dirty(node);
             return; // insufficient, still need to add more!
         }
 
