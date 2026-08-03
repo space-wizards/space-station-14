@@ -10,6 +10,7 @@ using Content.Shared.Flash;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
 using Content.Shared.Rejuvenate;
+using Content.Shared.Screech;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Content.Shared.Stunnable;
@@ -36,8 +37,7 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
     [Dependency] private SharedStunSystem _stuns = default!;
     [Dependency] private SharedPopupSystem _popups = default!;
     [Dependency] private SharedContainerSystem _containers = default!;
-    [Dependency] private SharedFlashSystem _flash = default!; // we have that system for the scream stun, should be swapped out eventually
-
+    [Dependency] private ScreechSystem _screech = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -171,13 +171,16 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
 
         if (TryComp<StoreComponent>(ent.Owner, out var store))
         {
-            var k = store.Balance["ChangelingDNA"];
-            // remove all DNA points from the store, since they are being converted into time
-            Dictionary<string, FixedPoint2> dico = new() {
-                {"ChangelingDNA", -k }
+            if (store.Balance.ContainsKey("ChangelingDNA"))
+            {
+                var k = store.Balance["ChangelingDNA"];
+                // remove all DNA points from the store, since they are being converted into time
+                Dictionary<string, FixedPoint2> dico = new() {
+                    {"ChangelingDNA", -k }
                 };
-            _stores.TryAddCurrency(dico, ent.Owner);
-            transformationTime = DNAToTime(k);
+                _stores.TryAddCurrency(dico, ent.Owner);
+                transformationTime = DNAToTime(k);
+            }
         }
 
         ent.Comp.TimeBudget = transformationTime;
@@ -190,17 +193,15 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
         RaiseLocalEvent(ent.Owner, new RejuvenateEvent());
 
         // Uncuff
-        if (!TryComp<CuffableComponent>(ent.Owner, out _) || !_cuffable.TryGetLastCuff(ent.Owner, out var cuff))
-            return;
-
-        _cuffable.Uncuff(ent.Owner, ent.Owner, cuff.Value);
+        if (TryComp<CuffableComponent>(ent.Owner, out _) && _cuffable.TryGetLastCuff(ent.Owner, out var cuff))
+            _cuffable.Uncuff(ent.Owner, ent.Owner, cuff.Value);
 
         // spawn an evil-ass screech VFX
         // TODO: handle stunning etc. here
-        var ett = Spawn("EffectScreech");
-        var container = _containers.EnsureContainer<ContainerSlot>(ent.Owner, "screechHolder");
-        _containers.Insert(ett, container);
-        _flash.FlashArea(ent.Owner, ent.Owner, 5f, TimeSpan.FromSeconds(2d));
+        var screechEnt = _screech.Screech(ent.Owner, ent.Comp.SpawnScreechRange, ent.Comp.SpawnScreechVfx);
+
+        if (screechEnt.HasValue)
+            MakeGlobal(screechEnt.Value);
 
         // play a spawn sound
         _audio.PlayPredicted(ent.Comp.SpawnSound, ent.Owner, null);
@@ -239,6 +240,7 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
     }
     #endregion
     #region helpers
+    protected abstract void MakeGlobal(EntityUid ent);
     /// <summary>
     /// Converts an amount of DNA currency into horror mode time
     /// </summary>

@@ -155,6 +155,13 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp))
             return;
 
+        if (HasComp<ChangelingHorrorComponent>(targetIdentity))
+        {
+            // the horror transformation is instantaneous
+            TransformIntoNow((ent.Owner, ent.Comp), targetIdentity);
+            return;
+        }
+
         var selfMessage = Loc.GetString("changeling-transform-attempt-self", ("user", Identity.Entity(ent.Owner, EntityManager)));
         var othersMessage = Loc.GetString("changeling-transform-attempt-others", ("user", Identity.Entity(ent.Owner, EntityManager)));
         _popup.PopupEntity(

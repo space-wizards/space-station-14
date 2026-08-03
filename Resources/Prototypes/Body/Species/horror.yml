@@ -228,6 +228,9 @@
 - type: entity
   parent: [ OrganBaseEyes, OrganHorrorInternal, OrganHorrorExternal ]
   id: OrganHorrorEyes
+  components:
+  - type: Sprite
+    visible: false
 
 - type: entity
   parent: [ OrganBaseTongue, OrganHorrorInternal ]

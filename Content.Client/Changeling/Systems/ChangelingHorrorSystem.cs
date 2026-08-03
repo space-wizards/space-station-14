@@ -28,4 +28,9 @@ public sealed partial class ChangelingHorrorSystem : SharedChangelingHorrorSyste
         var time = Math.Max((ent.Comp.TimeBudget - (_timing.CurTime - ent.Comp.InitialTime)).TotalSeconds, 0d);
         args.Amount = (int)time;
     }
+
+    protected override void MakeGlobal(EntityUid ent)
+    {
+        // does nothing on the client
+    }
 }

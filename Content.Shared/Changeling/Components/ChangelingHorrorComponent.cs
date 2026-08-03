@@ -47,4 +47,25 @@ public sealed partial class ChangelingHorrorComponent : Component
     /// </summary>
     [DataField]
     public ProtoId<AlertPrototype> TimeAlert = "ChangelingHorrorTime";
+
+    [DataField]
+    public EntProtoId SpawnScreechVfx = "EffectScreechChangelingHorrorSpawn";
+
+    /// <summary>
+    /// The disarming range of the spawn screech
+    /// </summary>
+    [DataField]
+    public float SpawnScreechRange = 30f;
+
+    /// <summary>
+    /// How many seconds you are given for free when transforming (so wholesome!)
+    /// </summary>
+    [DataField]
+    public double GracePeriod = 5d;
+
+    /// <summary>
+    /// How many seconds of transformation you are given for each DNA point.
+    /// </summary>
+    [DataField]
+    public double SecondPerDNA = 3d;
 }
