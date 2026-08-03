@@ -22,18 +22,7 @@ public sealed partial class ChangelingStasisSystem : EntitySystem
     [Dependency] private SharedBloodstreamSystem _bloodstream = default!;
     [Dependency] private SharedDeathgaspSystem _deathgasp = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<ChangelingStasisComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<ChangelingStasisComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<ChangelingStasisComponent, MobStateChangedEvent>(OnStateChanged);
-        SubscribeLocalEvent<ChangelingStasisComponent, ChangelingStasisActionEvent>(OnStasisUse);
-
-        SubscribeLocalEvent<ChangelingStasisComponent, GhostAttemptEvent>(OnMoveGhost);
-    }
-
+    [SubscribeLocalEvent]
     private void OnMapInit(Entity<ChangelingStasisComponent> ent, ref MapInitEvent args)
     {
         _actions.AddAction(ent, ref ent.Comp.RegenStasisActionEntity, ent.Comp.RegenStasisAction);
@@ -46,11 +35,13 @@ public sealed partial class ChangelingStasisSystem : EntitySystem
         Dirty(ent);
     }
 
+    [SubscribeLocalEvent]
     private void OnShutdown(Entity<ChangelingStasisComponent> ent, ref ComponentShutdown args)
     {
         _actions.RemoveAction(ent.Owner, ent.Comp.RegenStasisActionEntity);
     }
 
+    [SubscribeLocalEvent]
     private void OnStateChanged(Entity<ChangelingStasisComponent> ent, ref MobStateChangedEvent args)
     {
         // If we are revived cancel the stasis.
@@ -58,6 +49,7 @@ public sealed partial class ChangelingStasisSystem : EntitySystem
             CancelStasis(ent.AsNullable());
     }
 
+    [SubscribeLocalEvent]
     private void OnMoveGhost(Entity<ChangelingStasisComponent> ent, ref GhostAttemptEvent args)
     {
         if (ent.Comp.AllowGhosting || !ent.Comp.IsInStasis)
@@ -66,6 +58,7 @@ public sealed partial class ChangelingStasisSystem : EntitySystem
         args.Cancelled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnStasisUse(Entity<ChangelingStasisComponent> ent, ref ChangelingStasisActionEvent args)
     {
         if (ent.Comp.IsInStasis)
