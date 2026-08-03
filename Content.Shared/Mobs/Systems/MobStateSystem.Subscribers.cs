@@ -49,6 +49,7 @@ public partial class MobStateSystem
         SubscribeLocalEvent<MobStateComponent, AttemptPacifiedAttackEvent>(OnAttemptPacifiedAttack);
         SubscribeLocalEvent<MobStateComponent, DamageModifyEvent>(OnDamageModify);
         SubscribeLocalEvent<MobStateComponent, AttemptToolRefineEvent>(OnAttemptToolRefine);
+        SubscribeLocalEvent<MobStateComponent, AfterAutoHandleStateEvent>(OnAfterAutoHandleState);
 
         SubscribeLocalEvent<MobStateComponent, UnbuckleAttemptEvent>(OnUnbuckleAttempt);
 
@@ -154,6 +155,17 @@ public partial class MobStateSystem
     }
 
     #region Event Subscribers
+
+    private void OnAfterAutoHandleState(Entity<MobStateComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        if (ent.Comp.LastReceivedState == ent.Comp.CurrentState)
+            return;
+
+        var ev = new MobStateChangedEvent(ent, ent.Comp, ent.Comp.LastReceivedState, ent.Comp.CurrentState);
+        OnStateChanged(ent, ent.Comp, ent.Comp.LastReceivedState, ent.Comp.CurrentState);
+        RaiseLocalEvent(ent, ev, true);
+        ent.Comp.LastReceivedState = ent.Comp.CurrentState;
+    }
 
     private void OnSleepAttempt(EntityUid target, MobStateComponent component, ref TryingToSleepEvent args)
     {
