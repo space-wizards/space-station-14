@@ -6,7 +6,7 @@ namespace Content.Shared.Cards;
 /// Raised by client to take specific card from a deck.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class TakeCardEvent : EntityEventArgs
+public record struct TakeCardEvent
 {
     /// <summary>
     /// The card deck the card is being taken from.
@@ -28,7 +28,7 @@ public sealed class TakeCardEvent : EntityEventArgs
 /// Raised by client to flip a deck.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class FlipCardsEvent : EntityEventArgs
+public record struct FlipCardsEvent
 {
     /// <summary>
     /// The card deck to flip.
@@ -40,7 +40,7 @@ public sealed class FlipCardsEvent : EntityEventArgs
 /// Raised by client to fan a deck.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class FanCardsEvent : EntityEventArgs
+public record struct FanCardsEvent
 {
     /// <summary>
     /// The card deck to fan out.
@@ -52,7 +52,7 @@ public sealed class FanCardsEvent : EntityEventArgs
 /// Raised by client to shuffle a deck.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class ShuffleCardsEvent : EntityEventArgs
+public record struct ShuffleCardsEvent
 {
     /// <summary>
     /// The card deck to shuffle.
