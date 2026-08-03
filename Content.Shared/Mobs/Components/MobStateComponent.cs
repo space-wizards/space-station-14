@@ -1,6 +1,7 @@
 using Content.Shared.Damage.Components;
 using Content.Shared.Mobs.Systems;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Mobs.Components;
 
@@ -11,14 +12,13 @@ namespace Content.Shared.Mobs.Components;
 ///     (such as blur effect for unconsciousness) and managing the health HUD.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[AutoGenerateComponentState(true)]
 [Access(typeof(MobStateSystem), typeof(MobThresholdSystem))]
 public sealed partial class MobStateComponent : Component
 {
     /// <summary>
     /// The current mob state the entity is in.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public MobState CurrentState = MobState.Alive; //default mobstate is always the lowest state level
 
     /// <summary>
@@ -28,11 +28,18 @@ public sealed partial class MobStateComponent : Component
     public MobState LastReceivedState = MobState.Alive;
 
     [DataField]
-    [AutoNetworkedField]
     public HashSet<MobState> AllowedStates = new()
     {
         MobState.Alive,
         MobState.Critical,
         MobState.Dead
     };
+}
+
+[Serializable, NetSerializable]
+public sealed class MobStateComponentState : ComponentState
+{
+    public MobState CurrentState;
+
+    public HashSet<MobState> AllowedStates = new();
 }

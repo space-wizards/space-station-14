@@ -20,6 +20,7 @@ using Content.Shared.Strip.Components;
 using Content.Shared.Throwing;
 using Content.Shared.Tools.Systems;
 using System.Linq;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Mobs.Systems;
 
@@ -144,15 +145,34 @@ public partial class MobStateSystem
     #region Event Subscribers
 
     [SubscribeLocalEvent]
-    private void OnAfterAutoHandleState(Entity<MobStateComponent> ent, ref AfterAutoHandleStateEvent args)
+    private void OnMobStateHandleState(Entity<MobStateComponent> ent, ref ComponentHandleState args)
     {
-        if (ent.Comp.LastReceivedState == ent.Comp.CurrentState)
+        if (args.Current is not MobStateComponentState state)
             return;
 
-        var ev = new MobStateChangedEvent(ent, ent.Comp, ent.Comp.LastReceivedState, ent.Comp.CurrentState);
-        OnStateChanged(ent, ent.Comp, ent.Comp.LastReceivedState, ent.Comp.CurrentState);
-        RaiseLocalEvent(ent, ev, true);
-        ent.Comp.LastReceivedState = ent.Comp.CurrentState;
+        // Only raise the events and update if the state actually changed.
+        if (ent.Comp.CurrentState != state.CurrentState)
+        {
+            var lastState = ent.Comp.CurrentState;
+            ent.Comp.CurrentState = state.CurrentState;
+
+            var ev = new MobStateChangedEvent(ent, ent.Comp, lastState, ent.Comp.CurrentState);
+            OnStateChanged(ent, ent.Comp, lastState, ent.Comp.CurrentState);
+            RaiseLocalEvent(ent, ev, true);
+        }
+
+        if (!ent.Comp.AllowedStates.SetEquals(state.AllowedStates))
+            ent.Comp.AllowedStates = state.AllowedStates;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnMobStateGetState(Entity<MobStateComponent> ent, ref ComponentGetState args)
+    {
+        args.State = new MobStateComponentState
+        {
+            CurrentState = ent.Comp.CurrentState,
+            AllowedStates = ent.Comp.AllowedStates
+        };
     }
 
     [SubscribeLocalEvent]
