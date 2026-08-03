@@ -15,120 +15,122 @@ public sealed class EntityTableTest : GameTest
     [SidedDependency(Side.Server)]
     private readonly EntityTableSystem _sEntityTable = null!;
 
-    [SidedDependency(Side.Server)]
-    private readonly IPrototypeManager _sProtoMan = null!;
+    private const string EntProto1 = "EntityTableTestEnt1";
+    private const string EntProto2 = "EntityTableTestEnt2";
+    private const string EntProtoWithCost = "EntityTableTestEntWithCost";
 
     [TestPrototypes]
-    private const string Prototypes = """
-    - type: entity
-      id: EntityTableTestEnt1
-
-    - type: entity
-      id: EntityTableTestEnt2
-
-    - type: entity
-      id: EntityTableTestEntWithCost
-      components:
-      - type: DynamicRuleCost
-        cost: 10
-
-    - type: entityTable
-      id: EntityTableTestEntSelector
-      table: !type:EntSelector
-        id: EntityTableTestEnt1
-
-    - type: entityTable
-      id: EntityTableTestEntSelectorAmountRolls
-      table: !type:EntSelector
-        id: EntityTableTestEnt1
-        amount: 3
-        rolls: 2
-
-    - type: entityTable
-      id: EntityTableTestAllSelector
-      table: !type:AllSelector
-        children:
-        - id: EntityTableTestEnt1
-        - !type:NoneSelector
-        - id: EntityTableTestEnt2
-
-    - type: entityTable
-      id: EntityTableTestNoneSelector
-      table: !type:NoneSelector
-
-    - type: entityTable
-      id: EntityTableTestNestedTable
-      table: !type:GroupSelector
-        children:
-        - id: EntityTableTestEnt1
-          weight: 1
-        - id: EntityTableTestEnt2
-          weight: 2
-
-    - type: entityTable
-      id: EntityTableTestGroupAllFail
-      table: !type:GroupSelector
-        children:
-        - id: EntityTableTestEnt1
-          conditions:
-          - !type:HasBudgetCondition
-            costOverride: 100
-
-    - type: entityTable
-      id: EntityTableTestEntSelectorWithCost
-      table: !type:EntSelector
-        id: EntityTableTestEntWithCost
-        conditions:
-        - !type:HasBudgetCondition
-
-    - type: entityTable
-      id: EntityTableTestEntRequireAll
-      table: !type:EntSelector
-        id: EntityTableTestEnt1
-        requireAll: true
-        conditions:
-        - !type:HasBudgetCondition
-          costOverride: 100
-        - !type:HasBudgetCondition
-          costOverride: 0
-
-    - type: entityTable
-      id: EntityTableTestEntRequireAny
-      table: !type:EntSelector
-        id: EntityTableTestEnt1
-        requireAll: false
-        conditions:
-        - !type:HasBudgetCondition
-          costOverride: 100
-        - !type:HasBudgetCondition
-          costOverride: 0
-
-    - type: entityTable
-      id: EntityTableTestDeepComposition
-      table: !type:AllSelector
-        children:
-        - !type:GroupSelector
-          children:
-          - id: EntityTableTestEnt1
-            weight: 1
-            conditions:
-            - !type:HasBudgetCondition
-              costOverride: 100
-          - id: EntityTableTestEnt2
-            weight: 2
-        - id: EntityTableTestEnt1
-
-    - type: entityTable
-      id: EntityTableTestChainTable
-      table: !type:NestedSelector
-        tableId: EntityTableTestNestedTable
-    """;
+    private const string Prototypes =
+        $"""
+         - type: entity
+           id: {EntProto1}
+         
+         - type: entity
+           id: {EntProto2}
+         
+         - type: entity
+           id: {EntProtoWithCost}
+           components:
+           - type: DynamicRuleCost
+             cost: 10
+         
+         - type: entityTable
+           id: EntityTableTestEntSelector
+           table: !type:EntSelector
+             id: {EntProto1}
+         
+         - type: entityTable
+           id: EntityTableTestEntSelectorAmountRolls
+           table: !type:EntSelector
+             id: {EntProto1}
+             amount: 3
+             rolls: 2
+         
+         - type: entityTable
+           id: EntityTableTestAllSelector
+           table: !type:AllSelector
+             children:
+             - id: {EntProto1}
+             - !type:NoneSelector
+             - id: {EntProto2}
+         
+         - type: entityTable
+           id: EntityTableTestNoneSelector
+           table: !type:NoneSelector
+         
+         - type: entityTable
+           id: EntityTableTestNestedTable
+           table: !type:GroupSelector
+             children:
+             - id: {EntProto1}
+               weight: 1
+             - id: {EntProto2}
+               weight: 2
+         
+         - type: entityTable
+           id: EntityTableTestGroupAllFail
+           table: !type:GroupSelector
+             children:
+             - id: {EntProto1}
+               conditions:
+               - !type:HasBudgetCondition
+                 costOverride: 100
+         
+         - type: entityTable
+           id: EntityTableTestEntSelectorWithCost
+           table: !type:EntSelector
+             id: {EntProtoWithCost}
+             conditions:
+             - !type:HasBudgetCondition
+         
+         - type: entityTable
+           id: EntityTableTestEntRequireAll
+           table: !type:EntSelector
+             id: {EntProto1}
+             requireAll: true
+             conditions:
+             - !type:HasBudgetCondition
+               costOverride: 100
+             - !type:HasBudgetCondition
+               costOverride: 0
+         
+         - type: entityTable
+           id: EntityTableTestEntRequireAny
+           table: !type:EntSelector
+             id: {EntProto1}
+             requireAll: false
+             conditions:
+             - !type:HasBudgetCondition
+               costOverride: 100
+             - !type:HasBudgetCondition
+               costOverride: 0
+         
+         - type: entityTable
+           id: EntityTableTestDeepComposition
+           table: !type:AllSelector
+             children:
+             - !type:GroupSelector
+               children:
+               - id: {EntProto1}
+                 weight: 1
+                 conditions:
+                 - !type:HasBudgetCondition
+                   costOverride: 100
+               - id: {EntProto2}
+                 weight: 2
+             - id: {EntProto1}
+         
+         - type: entityTable
+           id: EntityTableTestChainTable
+           table: !type:NestedSelector
+             tableId: EntityTableTestNestedTable
+         """;
 
     [Test]
     public void EntSelector_BasicSingleSpawn()
     {
         var result = Run(Table("EntityTableTestEntSelector"));
-        Assert.That(result, Is.EquivalentTo(new []{"EntityTableTestEnt1"}));
+        Assert.That(result, Is.EquivalentTo(new [] { EntProto1 }));
     }
 
     [Test]
@@ -136,7 +138,7 @@ public sealed class EntityTableTest : GameTest
     {
         var result = Run(Table("EntityTableTestEntSelectorAmountRolls"));
         Assert.That(result, Has.Length.EqualTo(6));
-        Assert.That(result, Is.All.EqualTo("EntityTableTestEnt1"));
+        Assert.That(result, Is.All.EqualTo(EntProto1));
     }
 
     [Test]
@@ -144,7 +146,7 @@ public sealed class EntityTableTest : GameTest
     {
         var result = Run(Table("EntityTableTestAllSelector"));
         // NoneSelector contributes nothing, so we get Ent1 then Ent2.
-        Assert.That(result, Is.EqualTo(new[] { new EntProtoId("EntityTableTestEnt1"), new EntProtoId("EntityTableTestEnt2") }));
+        Assert.That(result, Is.EqualTo(new[] { new EntProtoId(EntProto1), new EntProtoId(EntProto2) }));
     }
 
     [Test]
@@ -166,11 +168,11 @@ public sealed class EntityTableTest : GameTest
         }
 
         // Ent2 has weight 2, Ent1 has weight 1, so Ent2 should dominate.
-        Assert.That(counts["EntityTableTestEnt2"], Is.GreaterThan(counts["EntityTableTestEnt1"]));
+        Assert.That(counts[EntProto2], Is.GreaterThan(counts[EntProto1]));
         Assert.Multiple(() =>
         {
-            Assert.That(counts["EntityTableTestEnt1"], Is.GreaterThan(20));
-            Assert.That(counts["EntityTableTestEnt2"], Is.GreaterThan(40));
+            Assert.That(counts[EntProto1], Is.GreaterThan(20));
+            Assert.That(counts[EntProto2], Is.GreaterThan(40));
         });
     }
 
@@ -188,7 +190,7 @@ public sealed class EntityTableTest : GameTest
         // EntityTableTestChainTable is a NestedSelector pointing at EntityTableTestNestedTable.
         var chained = Run(Table("EntityTableTestChainTable"), SeededRand(42));
         Assert.That(chained, Has.Length.EqualTo(1));
-        Assert.That(chained[0], Is.AnyOf("EntityTableTestEnt1", "EntityTableTestEnt2"));
+        Assert.That(chained[0], Is.AnyOf(EntProto1, EntProto2));
     }
 
     [Test]
@@ -202,7 +204,7 @@ public sealed class EntityTableTest : GameTest
 
         // Budget 10 => enough.
         var rich = Run(Table("EntityTableTestEntSelectorWithCost"), ctx: new EntityTableContext(new() { ["Budget"] = 10f }));
-        Assert.That(rich, Is.EquivalentTo(new[] { new EntProtoId("EntityTableTestEntWithCost") }));
+        Assert.That(rich, Is.EquivalentTo(new[] { new EntProtoId(EntProtoWithCost) }));
     }
 
     [Test]
@@ -214,7 +216,7 @@ public sealed class EntityTableTest : GameTest
 
         // RequireAll = false, one passes => spawns.
         var requireAnyResult = Run(Table("EntityTableTestEntRequireAny"), ctx: new EntityTableContext(new() { ["Budget"] = 50f }));
-        Assert.That(requireAnyResult, Is.EquivalentTo(new[] { new EntProtoId("EntityTableTestEnt1") }));
+        Assert.That(requireAnyResult, Is.EquivalentTo(new[] { new EntProtoId(EntProto1) }));
     }
 
     [Test]
@@ -223,7 +225,7 @@ public sealed class EntityTableTest : GameTest
     {
         // Ent1's condition fails (Budget 50 < CostOverride 100), so Group only has Ent2.
         var result = Run(Table("EntityTableTestDeepComposition"), SeededRand(1), new EntityTableContext(new() { ["Budget"] = 50f }));
-        Assert.That(result, Is.EqualTo(new[] { new EntProtoId("EntityTableTestEnt2"), new EntProtoId("EntityTableTestEnt1") }));
+        Assert.That(result, Is.EqualTo(new[] { new EntProtoId(EntProto2), new EntProtoId(EntProto1) }));
     }
 
     private static IRobustRandom SeededRand(int seed)
@@ -233,7 +235,7 @@ public sealed class EntityTableTest : GameTest
         return rand;
     }
 
-    private EntityTablePrototype Table(ProtoId<EntityTablePrototype> id) => _sProtoMan.Index(id);
+    private EntityTablePrototype Table(ProtoId<EntityTablePrototype> id) => SProtoMan.Index(id);
 
     private EntProtoId[] Run(EntityTablePrototype proto, IRobustRandom rand = null, EntityTableContext ctx = null)
         => _sEntityTable.GetSpawns(proto, rand, ctx)
