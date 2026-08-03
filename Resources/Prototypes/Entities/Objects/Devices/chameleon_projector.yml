@@ -27,9 +27,9 @@
       - MindContainer # no
       - Pda # PDAs currently make you invisible /!\
       - SubFloorHide # no hiding under the floor
+      - Wall # Walls make you invisible
       tags:
       - Catwalk # Catwalks make you invisible
-      - Wall # Walls make you invisible
       - Window # Windows make you invisible
     disguiseProto: ChameleonDisguise
   - type: StaticPrice

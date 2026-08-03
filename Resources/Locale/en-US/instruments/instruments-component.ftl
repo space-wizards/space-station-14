@@ -36,6 +36,7 @@ instruments-component-channels-menu = MIDI Channel Selection
 instruments-component-channels-all-button = On
 instruments-component-channels-clear-button = Off
 instruments-component-channels-all-channels-label = All Channels
+instruments-component-channels-percussion-channel-name = [Percussion]
 instruments-component-channels-name-display-selector-label = Display Name
 instruments-component-channels-name-display-selector-track-button = Track
 instruments-component-channels-name-display-selector-program-button = Program
@@ -45,6 +46,7 @@ instruments-component-midi-file-collection-size-label = {$count} MIDI files load
 instruments-component-midi-file-collection-open-dir-button = Open Folder
 instruments-component-midi-file-collection-reload-button = Reload Collection
 instruments-component-midi-file-collection-delete-all-button = Clear Collection
+instruments-component-menu-midi-min-volume-slider-label = MIDI Input Min Volume
 
 
 # SwappableInstrumentComponent
