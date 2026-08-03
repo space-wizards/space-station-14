@@ -44,7 +44,7 @@ public abstract partial class SharedMailingUnitSystem : EntitySystem
             Tag = ent.Comp.Tag,
         };
 
-        _deviceNetwork.QueuePacket(ent.Owner, args.SenderAddress, ref tagPayload, args.Frequency);
+        _deviceNetwork.SendPacket(ent.Owner, args.SenderAddress, ref tagPayload, args.Frequency);
     }
 
     [SubscribeLocalEvent]
@@ -86,7 +86,7 @@ public abstract partial class SharedMailingUnitSystem : EntitySystem
             Target = ent.Comp.Target,
         };
 
-        _deviceNetwork.QueuePacket((ent.Owner, device), null, ref payload);
+        _deviceNetwork.SendPacket((ent.Owner, device), null, ref payload);
     }
 
     /// <summary>
@@ -100,7 +100,7 @@ public abstract partial class SharedMailingUnitSystem : EntitySystem
 
         var payload = new MailRequestTagPayload();
         ent.Comp.TargetList.Clear();
-        _deviceNetwork.QueuePacket((ent.Owner, device), null, ref payload);
+        _deviceNetwork.SendPacket((ent.Owner, device), null, ref payload);
     }
 
     /// <summary>

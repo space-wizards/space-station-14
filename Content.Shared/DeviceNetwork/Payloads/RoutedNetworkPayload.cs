@@ -78,7 +78,7 @@ public partial record struct RoutedNetworkPayload<T> : IRoutedNetworkPayload whe
         SharedDeviceNetworkSystem system)
     {
         // Things sometimes take a **weird route** when it comes to type parameters.
-        system.QueuePacket(
+        system.SendPacket(
             sender,
             address,
             ref Payload,

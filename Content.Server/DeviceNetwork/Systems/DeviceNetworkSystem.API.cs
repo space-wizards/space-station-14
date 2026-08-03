@@ -8,7 +8,7 @@ namespace Content.Server.DeviceNetwork.Systems;
 public sealed partial class DeviceNetworkSystem
 {
     [PublicAPI]
-    public override bool QueuePacket<T>(
+    public override bool SendPacket<T>(
         Entity<DeviceNetworkComponent?> ent,
         string? address,
         ref T data,

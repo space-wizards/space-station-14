@@ -32,7 +32,7 @@ public abstract partial class SharedDeviceNetworkSystem : EntitySystem
     /// <param name="network">The network to send on.</param>
     /// <returns>Returns true when the packet was successfully enqueued.</returns>
     [PublicAPI]
-    public virtual bool QueuePacket<T>(
+    public virtual bool SendPacket<T>(
         Entity<DeviceNetworkComponent?> ent,
         string? address,
         ref T data,

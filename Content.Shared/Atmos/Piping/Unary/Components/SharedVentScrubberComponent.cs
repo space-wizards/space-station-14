@@ -11,7 +11,7 @@ public sealed partial class GasVentScrubberData : BaseAtmosDeviceData
     public override void RaisePayload(EntityUid uid, string address, SharedDeviceNetworkSystem deviceNetSys)
     {
         var payload = new GasVentScrubberSetDataPayload { Data = this };
-        deviceNetSys.QueuePacket(uid, address, ref payload);
+        deviceNetSys.SendPacket(uid, address, ref payload);
     }
 
     public HashSet<Gas> FilterGases { get; set; } = new(DefaultFilterGases);

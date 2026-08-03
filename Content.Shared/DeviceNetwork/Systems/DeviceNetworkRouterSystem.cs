@@ -68,7 +68,7 @@ public sealed partial class DeviceNetworkRouterSystem : EntitySystem
     /// <param name="network">The network to send on to the router.</param>
     /// <param name="overrideNetwork">If specified, will use this network when re-routing the packet.</param>
     /// <returns>Returns true when the packet was successfully enqueued.</returns>
-    public void QueuePacketRouted<T>(
+    public void SendPacketRouted<T>(
         Entity<DeviceNetworkComponent?> ent,
         ref T data,
         string? routerAddress,
@@ -92,6 +92,6 @@ public sealed partial class DeviceNetworkRouterSystem : EntitySystem
             TargetAddress = targetAddress,
         };
 
-        _deviceNetworkSystem.QueuePacket(ent.Owner, routerAddress, ref payload, frequency, network);
+        _deviceNetworkSystem.SendPacket(ent.Owner, routerAddress, ref payload, frequency, network);
     }
 }
