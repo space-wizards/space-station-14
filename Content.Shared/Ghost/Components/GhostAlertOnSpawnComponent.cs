@@ -17,5 +17,5 @@ public sealed partial class GhostAlertOnSpawnComponent : Component
     /// Lifetime of the ghost alert
     /// </summary>
     [DataField]
-    public TimeSpan Cooldown = TimeSpan.FromSeconds(20);
+    public TimeSpan AlertDelay = TimeSpan.FromSeconds(20);
 }

@@ -2,7 +2,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Ghost.Components;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 
 /// <summary>
 /// It only works with AlertTeleportComponent

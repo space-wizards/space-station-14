@@ -4,14 +4,12 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
-
 namespace Content.Shared.Teleportation.Components;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-[Access(typeof(AlertTeleportSystem))]
 public sealed partial class AlertTeleportComponent : Component
 {
-    [AutoNetworkedField, ViewVariables(VVAccess.ReadWrite), Access(typeof(AlertTeleportSystem))]
+    [AutoNetworkedField, ViewVariables]
     public Dictionary<ProtoId<AlertPrototype>, AlertTeleportData> Targets = new();
 
     [DataField]

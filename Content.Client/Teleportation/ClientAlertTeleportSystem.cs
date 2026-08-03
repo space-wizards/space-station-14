@@ -1,19 +1,12 @@
-using Content.Shared.Alert;
 using Content.Shared.Alert.Components;
 using Content.Shared.Teleportation.Components;
-using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
-namespace Content.Shared.Teleportation.Systems;
+using Content.Shared.Teleportation.Systems;
 
-public sealed partial class AlertTeleportSystem : EntitySystem
+namespace Content.Client.Teleportation.Systems;
+
+public sealed partial class ClientAlertTeleportSystem : AlertTeleportSystem
 {
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<AlertTeleportComponent, GetGenericAlertCounterAmountEvent>(OnGetCounterAmount);
-    }
-
+    [SubscribeLocalEvent]
     private void OnGetCounterAmount(Entity<AlertTeleportComponent> ent, ref GetGenericAlertCounterAmountEvent args)
     {
         if (args.Handled)

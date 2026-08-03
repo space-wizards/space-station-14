@@ -123,7 +123,7 @@ public sealed partial class GhostRoleComponent : Component
     /// Lifetime of the ghost alert
     /// </summary>
     [DataField]
-    public TimeSpan GhostAlertCooldown = TimeSpan.FromSeconds(5);
+    public TimeSpan GhostAlertDelay = TimeSpan.FromSeconds(5);
 
     /// <summary>
     /// Sound of the ghost alert

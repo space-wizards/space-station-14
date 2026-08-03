@@ -23,6 +23,7 @@ using Content.Shared.Players;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Components;
 using Content.Shared.Teleportation.Components;
+using Content.Shared.Teleportation.Systems;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -56,7 +57,7 @@ public sealed partial class GhostRoleSystem : EntitySystem
     [Dependency] private SharedRoleSystem _roleSystem = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private PopupSystem _popupSystem = default!;
-    [Dependency] private GhostAlertSystem _ghostAlert = default!;
+    [Dependency] private AlertTeleportSystem _alertTeleport = default!;
 
     private uint _nextRoleIdentifier;
     private bool _needsUpdateGhostRoleCount = true;
@@ -321,7 +322,7 @@ public sealed partial class GhostRoleSystem : EntitySystem
             return;
 
         if (role.Comp.MakeGhostAlert)
-            _ghostAlert.MakeGhostAlert(role, role.Comp.GhostAlert, role.Comp.GhostAlertCooldown, role.Comp.GhostAlertSound);
+            _alertTeleport.MakeTeleportAlert<GhostAlertsComponent>(role, role.Comp.GhostAlert, role.Comp.GhostAlertCooldown, role.Comp.GhostAlertSound);
 
         _ghostRoles[role.Comp.Identifier = GetNextRoleIdentifier()] = role;
         UpdateAllEui();

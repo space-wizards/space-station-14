@@ -1,27 +1,25 @@
 using Content.Shared.Alert;
 using Content.Shared.Alert.Components;
 using Content.Shared.Follower;
+using Content.Shared.Ghost.Components;
 using Content.Shared.Teleportation.Components;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using System.Numerics;
 namespace Content.Shared.Teleportation.Systems;
 
-public sealed partial class AlertTeleportSystem : EntitySystem
+public abstract partial class AlertTeleportSystem : EntitySystem
 {
     [Dependency] private FollowerSystem _follower = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private AlertsSystem _alerts = default!;
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedAudioSystem _audioSystem = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<AlertTeleportComponent, AlertTeleportEvent>(OnAlertTeleport);
-    }
-
+    [SubscribeLocalEvent]
     private void OnAlertTeleport(Entity<AlertTeleportComponent> ent, ref AlertTeleportEvent arg)
     {
         var data = ent.Comp.Targets[arg.AlertId];
@@ -90,5 +88,23 @@ public sealed partial class AlertTeleportSystem : EntitySystem
         Dirty(ent, comp);
 
         _alerts.ShowAlert(ent, alert, cooldown: (_timing.CurTime, _timing.CurTime + cooldown), autoRemove: true, showCooldown: false);
+    }
+
+    /// <summary>
+    /// Gives teleport alert to all entities with a specific component
+    /// </summary>
+    /// <typeparam name="T">An additional component for the entity filter</typeparam>
+    /// <param name="target">The target that the entity will teleport to when the alert is pressed</param>
+    /// <param name="alert">The alert that the entity will receive</param>
+    /// <param name="cooldown">Alert lifetime</param>
+    /// <param name="sound">The sound that the entities will receive when the alert is received</param>
+    public void MakeTeleportAlert<T>(EntityUid target, ProtoId<AlertPrototype> alert, TimeSpan cooldown, SoundSpecifier? sound = null) where T : Component
+    {
+        var query = EntityQueryEnumerator<T, AlertTeleportComponent>();
+        while (query.MoveNext(out var uid, out var _, out var alertTeleport))
+        {
+            AddAlertTeleport(uid, target, alert, cooldown);
+            _audioSystem.PlayEntity(sound, uid, uid);
+        }
     }
 }

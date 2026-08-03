@@ -8,11 +8,11 @@ namespace Content.Shared.Ghost.Systems;
 
 public sealed partial class GhostAlertOnSpawnSystem : EntitySystem
 {
-    [Dependency] private GhostAlertSystem _ghostAlert = default!;
+    [Dependency] private AlertTeleportSystem _alertTeleport = default!;
 
     [SubscribeLocalEvent]
-    private void OnSpawnInit(Entity<GhostAlertOnSpawnComponent> ent, ref MapInitEvent args)
+    private void OnMapInit(Entity<GhostAlertOnSpawnComponent> ent, ref MapInitEvent args)
     {
-        _ghostAlert.MakeGhostAlert(ent, ent.Comp.Alert, ent.Comp.Cooldown);
+        _alertTeleport.MakeTeleportAlert<GhostAlertsComponent>(ent, ent.Comp.Alert, ent.Comp.Cooldown);
     }
 }
