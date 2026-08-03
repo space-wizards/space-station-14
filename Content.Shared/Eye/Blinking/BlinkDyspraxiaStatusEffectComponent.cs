@@ -10,6 +10,7 @@ public sealed partial class BlinkDyspraxiaStatusEffectComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public TimeSpan MaxAsyncBlink = TimeSpan.FromSeconds(0.1f);
+
     /// <summary>
     /// additional delay to the <see cref="EyeBlinkingComponent.MaxAsyncOpenBlink"/> duration, in seconds.
     /// </summary>

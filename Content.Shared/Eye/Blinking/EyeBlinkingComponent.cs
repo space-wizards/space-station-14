@@ -10,7 +10,6 @@ namespace Content.Shared.Eye.Blinking;
 /// A component that handles automatic eye blinking for entities with the <see cref="HumanoidVisualLayers.Eyes"/> layer.
 /// Logic is handled by <see cref="EyeBlinkingSystem"/>.
 /// </summary>
-
 [RegisterComponent, NetworkedComponent]
 [AutoGenerateComponentState(raiseAfterAutoHandleState: true), AutoGenerateComponentPause]
 public sealed partial class EyeBlinkingComponent : Component
@@ -86,6 +85,7 @@ public sealed partial class EyeBlinkingComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public TimeSpan MaxAsyncBlink = TimeSpan.FromSeconds(0);
+
     /// <summary>
     /// Max async open blink duration, in seconds. This is used for status effects that can affect blinking, such as dyspraxia.
     /// </summary>

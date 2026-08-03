@@ -81,4 +81,4 @@ chat-emote-msg-whine = whines.
 chat-emote-msg-howl = howls.
 chat-emote-msg-growl = growls.
 chat-emote-msg-flap = flaps {POSS-ADJ($entity)} wings.
-chat-emote-msg-blink = blink.
+chat-emote-msg-blink = blinks.

@@ -11,6 +11,7 @@ using System.Linq;
 
 namespace Content.Client.Eye.Blinking;
 
+/// <inheritdoc/>
 public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 {
     [Dependency] private SpriteSystem _sprite = default!;
@@ -20,14 +21,10 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
     [Dependency] private StatusEffectsSystem _statusEffects = default!;
     [Dependency] private IGameTiming _timing = default!;
 
-
+    /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
-
-        SubscribeLocalEvent<EyeBlinkingComponent, ComponentInit>(OnComponentInit);
-        SubscribeLocalEvent<EyeBlinkingComponent, AppearanceChangeEvent>(OnApperanceChange);
-        SubscribeLocalEvent<EyeBlinkingComponent, AfterAutoHandleStateEvent>(OnAfterAutoHandleState);
 
         SubscribeNetworkEvent<BlinkEyeEvent>(OnBlinkEyes);
         SubscribeNetworkEvent<OpenEyesEvent>(OnOpenEyes);
@@ -48,6 +45,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
     /// <summary>
     /// Initial eyelid initialization for all entities that should blink.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnComponentInit(Entity<EyeBlinkingComponent> ent, ref ComponentInit args)
     {
         InitEyeBlinking(ent);
@@ -56,6 +54,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
     /// <summary>
     /// Initializes eyelids following the <see cref="ApplyOrganMarkingsEvent">, when the entity receives skin color data for its organs
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnAfterAutoHandleState(Entity<EyeBlinkingComponent> ent, ref AfterAutoHandleStateEvent args)
     {
         InitEyeBlinking(ent);
@@ -158,9 +157,13 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
     }
 
     /// <summary>
-    /// Handles the appearance change event for entities with the <see cref="EyeBlinkingComponent"/>. This method checks if the eye state has changed (open or closed) and updates the eyelid layers accordingly. If the eyes are closed or if a blink is not in progress, it changes the eye state immediately. Otherwise, it allows the blink to complete before changing the state.
+    /// Handles the appearance change event for entities with the <see cref="EyeBlinkingComponent"/>.
+    /// This method checks if the eye state has changed (open or closed) and updates the eyelid layers accordingly.
+    /// If the eyes are closed or if a blink is not in progress, it changes the eye state immediately.
+    /// Otherwise, it allows the blink to complete before changing the state.
     /// </summary>
-    private void OnApperanceChange(Entity<EyeBlinkingComponent> ent, ref AppearanceChangeEvent args)
+    [SubscribeLocalEvent]
+    private void OnAppearanceChange(Entity<EyeBlinkingComponent> ent, ref AppearanceChangeEvent args)
     {
         if (!(args.AppearanceData.TryGetValue(EyeBlinkingVisuals.EyesClosed, out var value) && value is bool eyeClosed))
             return;
@@ -174,7 +177,9 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
     }
 
     /// <summary>
-    /// Handles the blink eye event received from the network. This method retrieves the entity associated with the event and checks if it has a valid <see cref="EyeBlinkingComponent"/>. If the entity is valid and has the component, it initiates a blink action for that entity.
+    /// Handles the blink eye event received from the network.
+    /// This method retrieves the entity associated with the event and checks if it has a valid <see cref="EyeBlinkingComponent"/>.
+    /// If the entity is valid and has the component, it initiates a blink action for that entity.
     /// </summary>
     private void OnBlinkEyes(BlinkEyeEvent ev)
     {
@@ -187,10 +192,13 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
     }
 
     /// <summary>
-    /// Changes the eye state (open or closed) for the specified entity. This method updates the visibility of the eyelid layers based on the provided eye state. If the entity does not have a valid <see cref="SpriteComponent"/> or if the eyelid layer is not found, the method exits without making any changes.
+    /// Changes the eye state (open or closed) for the specified entity.
+    /// This method updates the visibility of the eyelid layers based on the provided eye state.
+    /// If the entity does not have a valid <see cref="SpriteComponent"/> or if the eyelid layer is not found,
+    /// the method exits without making any changes.
     /// </summary>
-    /// <param name="eyeClsoed">Value close eye if true, and open if false</param>
-    private void ChangeEyesState(Entity<EyeBlinkingComponent> ent, bool eyeClsoed)
+    /// <param name="eyeClosed">Value close eye if true, and open if false</param>
+    private void ChangeEyesState(Entity<EyeBlinkingComponent> ent, bool eyeClosed)
     {
         if (!TryComp<SpriteComponent>(ent.Owner, out var sprite))
             return;
@@ -202,7 +210,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
             return;
 
         foreach (var eyelidState in comp.Eyelids)
-            ChangeEyeState(ent, eyelidState, eyeClsoed);
+            ChangeEyeState(ent, eyelidState, eyeClosed);
     }
 
     /// <summary>
@@ -212,8 +220,8 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
     /// <remarks>If a blink is already in progress or the entity's eyes are closed, this method has no effect.
     /// The blink duration is determined randomly within the component's configured minimum and maximum blink
     /// durations.</remarks>
-    /// <param name="ent">The entity containing the <see cref="EyeBlinkingComponent"/> to blink. The entity's owner must be valid, and its
-    /// eyes must not already be closed.</param>
+    /// <param name="ent">The entity containing the <see cref="EyeBlinkingComponent"/> to blink.
+    /// The entity's owner must be valid, and its eyes must not already be closed.</param>
     public void Blink(Entity<EyeBlinkingComponent> ent)
     {
         if (!ent.Owner.IsValid())
@@ -264,18 +272,19 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         foreach (var eyelidState in eyelidStates)
         {
             // Schedules the close time for the eyelid, adding a random offset to create asynchronous blinking. If maxAsyncBlink is zero, the eyelids will close simultaneously.
-            var sheduleCloseTime = curTime + _random.NextDouble() * maxAsyncBlink + clientComp.PausedOffset;
+            var scheduleCloseTime = curTime + _random.NextDouble() * maxAsyncBlink + clientComp.PausedOffset;
 
             // Schedules the open time for the eyelid, adding a random offset to create asynchronous opening. If maxAsyncOpenBlink is zero, the eyelids will open simultaneously.
             // calculates the open time based on the close time, blink duration, and a random offset for asynchronous opening.
-            var sheduleOpenTime = sheduleCloseTime + blinkDuration + _random.NextDouble() * maxAsyncOpenBlink + clientComp.PausedOffset;
+            var scheduleOpenTime = scheduleCloseTime + blinkDuration + _random.NextDouble() * maxAsyncOpenBlink + clientComp.PausedOffset;
 
             // Updates the eyelid state with the scheduled close and open times.
-            eyelidState.ScheduledCloseTime = sheduleCloseTime;
-            eyelidState.ScheduledOpenTime = sheduleOpenTime;
+            eyelidState.ScheduledCloseTime = scheduleCloseTime;
+            eyelidState.ScheduledOpenTime = scheduleOpenTime;
 
             // Updates the maximum open time to ensure that the next blink is scheduled after all eyelids have completed their opening.
-            if (sheduleOpenTime > maxOpenTime) maxOpenTime = sheduleOpenTime;
+            if (scheduleOpenTime > maxOpenTime)
+                maxOpenTime = scheduleOpenTime;
         }
 
         ent.Comp.NextOpenEyesTime = maxOpenTime;
