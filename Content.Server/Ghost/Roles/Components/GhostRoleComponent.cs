@@ -117,7 +117,7 @@ public sealed partial class GhostRoleComponent : Component
     /// Creates an alert for ghosts.
     /// </summary>
     [DataField]
-    public ProtoId<AlertPrototype> GhostAlert;
+    public ProtoId<AlertPrototype>? GhostAlert = "BaseGhostRoleAlert";
 
     /// <summary>
     /// Lifetime of the ghost alert
