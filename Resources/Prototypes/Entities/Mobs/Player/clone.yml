@@ -145,7 +145,10 @@
   - TemperatureProtection
   - TypingIndicator
   - ScaleVisuals # for dwarf height
-  - ChangelingHorror # for horror form
+  # - for horror form
+  - ChangelingHorror
+  - SlowOnDamage
+  - PassiveDamage
   eventComponents:
   # these need special treatment in the event subscription
   - Inventory # arachnid pockets and diona feet

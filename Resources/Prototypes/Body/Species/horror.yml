@@ -117,11 +117,6 @@
     tags:
     - DoorBumpOpener
     - StunImmune
-  - type: MobThresholds # weaker than a dragon
-    thresholds:
-      0: Alive
-      200: Critical
-      300: Dead
   - type: SlowOnDamage
     speedModifierThresholds:
       140: 0.7
@@ -140,6 +135,7 @@
     spawnAnnouncementSound:
       path: /Audio/Animals/space_dragon_roar.ogg
   - type: FlashImmunity # please no flashing :(
+
 
 - type: entity
   parent: OrganBaseOrganic
@@ -160,7 +156,7 @@
   abstract: true
   components:
   - type: Sprite
-    sprite: Mobs/Species/Horror/organs.rsi
+    sprite: Mobs/Species/Human/organs.rsi
 
 - type: entity
   parent: OrganHorror
