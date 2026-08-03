@@ -4,6 +4,7 @@ using Content.Shared.Body.Systems;
 using Content.Shared.Changeling.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Ghost;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
@@ -124,7 +125,7 @@ public sealed partial class RegenerativeStasisSystem : EntitySystem
         // Revive.
         _mobs.ChangeMobState(target, MobState.Alive);
 
-        _popup.PopupEntity(Loc.GetString("changeling-stasis-exit"), Loc.GetString("changeling-stasis-exit-others", ("user", target)), target, target, PopupType.MediumCaution);
+        _popup.PopupEntity(Loc.GetString("changeling-stasis-exit"), Loc.GetString("changeling-stasis-exit-others", ("user", Identity.Entity(target, EntityManager))), target, target, PopupType.MediumCaution);
         _audio.PlayPredicted(ent.Comp.ExitSound, target, target);
 
         ent.Comp.IsInStasis = false;
