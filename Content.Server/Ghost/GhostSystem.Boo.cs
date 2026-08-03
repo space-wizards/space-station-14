@@ -69,7 +69,7 @@ public sealed partial class GhostSystem
     private void OnSpeakerBoo(Entity<SpookySpeakerComponent> ent, ref GhostBooEvent args)
     {
         // Check if already handled, or too intense.
-        if (!args.Handled || args.AllowedIntensity < ent.Comp.Intensity)
+        if (args.Handled || args.AllowedIntensity < ent.Comp.Intensity)
             return;
 
         // Only activate sometimes, so groups don't all trigger together
@@ -102,7 +102,7 @@ public sealed partial class GhostSystem
     private void OnExtinguishBoo(Entity<SpookyExtinguishableComponent> ent, ref GhostBooEvent args)
     {
         // Check if already handled, or too intense.
-        if (!args.Handled || args.AllowedIntensity < ent.Comp.Intensity)
+        if (args.Handled || args.AllowedIntensity < ent.Comp.Intensity)
             return;
 
         // Check if we need to extinguish this entity.
