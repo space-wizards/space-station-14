@@ -9,7 +9,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Teleportation.Systems;
 
-public partial class AlertTeleportSystem : EntitySystem
+public abstract partial class AlertTeleportSystem : EntitySystem
 {
     [Dependency] private FollowerSystem _follower = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
