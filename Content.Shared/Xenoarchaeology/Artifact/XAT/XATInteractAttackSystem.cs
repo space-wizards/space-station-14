@@ -73,7 +73,8 @@ public sealed partial class XATInteractAttackSystem : BaseXATSystem<XATInteractA
 
     /// <summary>
     /// Count down the number of interactions needed to trigger.
-    /// <returns>true if enough interactions have been made, false if not</returns>
+    /// </summary>
+    /// <returns>True if enough interactions have been made, False if not.</returns>
     private bool TriggerCountdown(Entity<XATInteractAttackComponent> ent, EntityUid artifact, EntityUid? user)
     {
         if (ent.Comp.MaxCount == null || ent.Comp.Count == null) //ensure countdown isn't null
@@ -87,19 +88,16 @@ public sealed partial class XATInteractAttackSystem : BaseXATSystem<XATInteractA
             Dirty(ent);
             return false;
         }
-        else
-        {
-            ent.Comp.Count = ent.Comp.MaxCount;
-            Dirty(ent);
-            return true;
-        }
+
+        ent.Comp.Count = ent.Comp.MaxCount;
+        Dirty(ent);
+        return true;
     }
 
     /// <summary>
-    /// Sets the maximum value to count down to a random number if not otherwise defined
-    /// Sets the count value if not defined
+    /// Sets the maximum value to count down to a random number if not otherwise defined.
+    /// Sets the count value if not defined.
     /// </summary>
-    /// <param name="ent"></param>
     private void SetMaxCount(Entity<XATInteractAttackComponent> ent)
     {
         if (ent.Comp.MaxCount == null)
