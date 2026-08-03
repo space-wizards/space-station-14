@@ -616,7 +616,7 @@ public sealed partial class BloodstreamSystem : EntitySystem
     /// <summary>
     /// Gets new blood data for this entity and caches it in <see cref="BloodstreamComponent.BloodData"/>
     /// </summary>
-    protected List<ReagentData> NewEntityBloodData(EntityUid uid)
+    private List<ReagentData> NewEntityBloodData(EntityUid uid)
     {
         var bloodData = new List<ReagentData>();
         var dnaData = new DnaData();
