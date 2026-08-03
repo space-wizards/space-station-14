@@ -27,8 +27,7 @@ public sealed partial class PlantTraitLigneousSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (!TryComp<PlantComponent>(ent.Owner, out var plant)
-            || !TryComp<PlantHarvestComponent>(ent.Owner, out var harvest))
+        if (!TryComp<PlantHarvestComponent>(ent.Owner, out var harvest))
             return;
 
         if (!harvest.ReadyForHarvest)
@@ -48,7 +47,7 @@ public sealed partial class PlantTraitLigneousSystem : EntitySystem
             return;
         }
 
-        _plantHarvest.TryHandleHarvest((ent.Owner, harvest), (ent.Owner, plant), args.User);
+        _plantHarvest.TryHandleHarvest(ent.Owner, args.User);
         args.Handled = true;
     }
 

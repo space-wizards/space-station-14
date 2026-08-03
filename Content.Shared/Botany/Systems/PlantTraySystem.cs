@@ -38,9 +38,9 @@ public sealed partial class PlantTraySystem : EntitySystem
             if (!TryGetPlant(ent.AsNullable(), out var plantUid))
             {
                 args.PushMarkup(Loc.GetString("tray-component-nothing-planted-message"));
-                if (TryComp<PlantComponent>(plantUid, out var plant))
+                if (TryComp<PlantDataComponent>(plantUid, out var plantData))
                 {
-                    var name = Loc.GetString(plant.Name);
+                    var name = Loc.GetString(plantData.Name);
                     args.PushMarkup(Loc.GetString("plant-component-something-already-growing-message", ("seedName", name)));
                 }
             }

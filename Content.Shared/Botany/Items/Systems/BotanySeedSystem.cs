@@ -52,11 +52,11 @@ public sealed partial class BotanySeedSystem : EntitySystem
         var plantUid = PredictedSpawnAtPosition(args.Seed.Comp.PlantProtoId, Transform(ent.Owner).Coordinates);
         _botany.ApplyPlantSnapshotData(args.Seed.Comp.PlantData, plantUid);
 
-        if (!TryComp<PlantComponent>(plantUid, out var plant))
+        if (!TryComp<PlantDataComponent>(plantUid, out var plantData))
             return;
 
-        var name = Loc.GetString(plant.Name);
-        var noun = Loc.GetString(plant.Noun);
+        var name = Loc.GetString(plantData.Name);
+        var noun = Loc.GetString(plantData.Noun);
         _popup.PopupCursor(Loc.GetString("plant-component-plant-success-popup",
                 ("seedName", name),
                 ("seedNoun", noun)),
@@ -69,11 +69,11 @@ public sealed partial class BotanySeedSystem : EntitySystem
         _plantTray.PlantingPlantInTray(ent.Owner, plantUid, args.Seed.Comp.HealthOverride);
         PredictedQueueDel(args.Seed);
 
-        if (plant.PlantLogImpact != null)
+        if (plantData.PlantLogImpact != null)
         {
             _adminLogger.Add(LogType.Botany,
-                plant.PlantLogImpact.Value,
-                $"{ToPrettyString(args.User):player} planted {Loc.GetString(plant.Name):seed} at Pos:{Transform(ent.Owner).Coordinates}.");
+                plantData.PlantLogImpact.Value,
+                $"{ToPrettyString(args.User):player} planted {Loc.GetString(plantData.Name):seed} at Pos:{Transform(ent.Owner).Coordinates}.");
         }
     }
 }

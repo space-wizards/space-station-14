@@ -31,7 +31,7 @@ public sealed partial class PlantHarvestSystem : EntitySystem
         if (holder.Age < plant.Maturation)
             ent.Comp.LastHarvest = holder.Age;
 
-        TryAutoHarvest(ent, (ent.Owner, plant), ent.Owner);
+        TryAutoHarvest(ent, ent.Owner);
 
         // Update whether the plant is ready for harvest.
         var timeLastHarvest = holder.Age - ent.Comp.LastHarvest;
@@ -71,61 +71,63 @@ public sealed partial class PlantHarvestSystem : EntitySystem
         if (args.Cancelled)
             return;
 
-        if (!TryComp<PlantComponent>(ent.Owner, out var plant))
-            return;
-
-        TryHandleHarvest(ent, (ent.Owner, plant), args.User);
+        TryHandleHarvest(ent, args.User);
     }
 
-    private void TryAutoHarvest(Entity<PlantHarvestComponent> ent, Entity<PlantComponent> plant, EntityUid user)
+    private void TryAutoHarvest(Entity<PlantHarvestComponent> ent, EntityUid user)
     {
         if (ent.Comp.HarvestRepeat != HarvestType.SelfHarvest)
             return;
 
-        if (plant.Comp.HarvestLogImpact != null)
-            _adminLogger.Add(LogType.Botany, plant.Comp.HarvestLogImpact.Value, $"Auto-harvested {Loc.GetString(plant.Comp.Name):seed} at Pos:{Transform(plant.Owner).Coordinates}.");
+        if (TryComp<PlantDataComponent>(ent.Owner, out var plantData) && plantData.HarvestLogImpact != null)
+            _adminLogger.Add(LogType.Botany, plantData.HarvestLogImpact.Value, $"Auto-harvested {Loc.GetString(plantData.Name):seed} at Pos:{Transform(ent.Owner).Coordinates}.");
 
-        DoHarvest(ent, plant, user);
+        DoHarvest(ent.AsNullable(), user);
     }
 
     /// <summary>
     /// Handles harvesting a plant for the specified user.
     /// </summary>
     [PublicAPI]
-    public void TryHandleHarvest(Entity<PlantHarvestComponent> ent, Entity<PlantComponent> plant, EntityUid user)
+    public void TryHandleHarvest(EntityUid plant, EntityUid user)
     {
-        if (plant.Comp.HarvestLogImpact != null)
-            _adminLogger.Add(LogType.Botany, plant.Comp.HarvestLogImpact.Value, $"Auto-harvested {Loc.GetString(plant.Comp.Name):seed} at Pos:{Transform(plant.Owner).Coordinates}.");
+        if (TryComp<PlantDataComponent>(plant, out var plantData) && plantData.HarvestLogImpact != null)
+            _adminLogger.Add(LogType.Botany, plantData.HarvestLogImpact.Value, $"Auto-harvested {Loc.GetString(plantData.Name):seed} at Pos:{Transform(plant).Coordinates}.");
 
-        DoHarvest(ent, plant, user);
+        DoHarvest(plant, user);
     }
 
     /// <summary>
     /// Harvests the plant and produces the produce.
     /// </summary>
     [PublicAPI]
-    public void DoHarvest(Entity<PlantHarvestComponent> ent, Entity<PlantComponent> plant, EntityUid user)
+    public void DoHarvest(Entity<PlantHarvestComponent?> ent, EntityUid user)
     {
-        if (!TryComp<PlantHolderComponent>(ent.Owner, out var holder))
+        if (!Resolve(ent.Owner, ref ent.Comp, false))
             return;
 
-        if (!ent.Comp.ReadyForHarvest || plant.Comp.ProductPrototypes.Count == 0 || plant.Comp.Yield == 0)
+        if (!TryComp<PlantComponent>(ent.Owner, out var plant)
+            || !TryComp<PlantDataComponent>(ent.Owner, out var plantData)
+            || !TryComp<PlantHolderComponent>(ent.Owner, out var holder))
             return;
 
-        var name = Loc.GetString(plant.Comp.Name);
+        if (!ent.Comp.ReadyForHarvest || plantData.ProductPrototypes.Count == 0 || plant.Yield == 0)
+            return;
+
+        var name = Loc.GetString(plantData.Name);
         _popup.PopupCursor(Loc.GetString("botany-harvest-success-message", ("name", name)), user, PopupType.Medium);
 
         var totalYield = 0;
-        if (plant.Comp.Yield >= 0)
+        if (plant.Yield >= 0)
         {
-            totalYield = holder.YieldMod < 0 ? plant.Comp.Yield : plant.Comp.Yield * holder.YieldMod;
+            totalYield = holder.YieldMod < 0 ? plant.Yield : plant.Yield * holder.YieldMod;
             totalYield = Math.Max(1, totalYield);
         }
 
         var position = Transform(ent.Owner).Coordinates;
         for (var i = 0; i < totalYield; i++)
         {
-            _botany.SpawnProduce(plant.Owner, position);
+            _botany.SpawnProduce(ent.Owner, position);
         }
 
         ent.Comp.ReadyForHarvest = false;
@@ -133,7 +135,7 @@ public sealed partial class PlantHarvestSystem : EntitySystem
         Dirty(ent);
 
         if (ent.Comp.HarvestRepeat == HarvestType.NoRepeat)
-            _plant.RemovePlant(plant.AsNullable());
+            _plant.RemovePlant(ent.Owner);
 
         var ev = new AfterDoHarvestEvent(user, ent.Owner);
         RaiseLocalEvent(ent.Owner, ref ev);

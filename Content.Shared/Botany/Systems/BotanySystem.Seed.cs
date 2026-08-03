@@ -35,12 +35,13 @@ public sealed partial class BotanySystem : EntitySystem
         if (!args.IsInDetailsRange)
             return;
 
-        if (!TryGetPlantComponent<PlantComponent>(ent.Comp.PlantData, ent.Comp.PlantProtoId, out var plant))
+        if (!TryGetPlantComponent<PlantComponent>(ent.Comp.PlantData, ent.Comp.PlantProtoId, out var plant)
+            || !TryGetPlantComponent<PlantDataComponent>(ent.Comp.PlantData, ent.Comp.PlantProtoId, out var plantData))
             return;
 
         using (args.PushGroup(nameof(SeedComponent), 1))
         {
-            var name = Loc.GetString(plant.Name);
+            var name = Loc.GetString(plantData.Name);
             args.PushMarkup(Loc.GetString("seed-component-description", ("seedName", name)));
             args.PushMarkup(_plant.GetPlantStateMarkup(ent.Owner, plant));
         }
@@ -146,7 +147,7 @@ public sealed partial class BotanySystem : EntitySystem
     /// <summary>
     /// Internal method to spawn a seed packet from a plant component.
     /// </summary>
-    /// <param name="plant">The plant component to spawn.</param>
+    /// <param name="plantData">The plant data component to spawn.</param>
     /// <param name="plantProtoId">The plant prototype ID to store in the seed component.</param>
     /// <param name="snapshot">The component snapshot to store in the seed component.</param>
     /// <param name="coords">The coordinates to spawn the seed packet at.</param>
@@ -155,14 +156,14 @@ public sealed partial class BotanySystem : EntitySystem
     /// <returns>The spawned seed packet entity.</returns>
     [PublicAPI]
     public EntityUid SpawnSeedPacket(
-        PlantComponent plant,
+        PlantDataComponent plantData,
         EntProtoId plantProtoId,
         EntityUid? snapshot,
         EntityCoordinates coords,
         EntityUid user,
         float? healthOverride = null)
     {
-        var seedItem = PredictedSpawnAtPosition(plant.PacketPrototype, coords);
+        var seedItem = PredictedSpawnAtPosition(plantData.PacketPrototype, coords);
         var seedComp = EnsureComp<SeedComponent>(seedItem);
         seedComp.PlantProtoId = plantProtoId;
         seedComp.PlantData = snapshot.HasValue
@@ -171,8 +172,8 @@ public sealed partial class BotanySystem : EntitySystem
         seedComp.HealthOverride = healthOverride;
         Dirty(seedItem, seedComp);
 
-        var name = Loc.GetString(plant.Name);
-        var noun = Loc.GetString(plant.Noun);
+        var name = Loc.GetString(plantData.Name);
+        var noun = Loc.GetString(plantData.Noun);
         _metaData.SetEntityName(seedItem, Loc.GetString("botany-seed-packet-name", ("seedName", name), ("seedNoun", noun)));
 
         _hands.TryPickupAnyHand(user, seedItem);

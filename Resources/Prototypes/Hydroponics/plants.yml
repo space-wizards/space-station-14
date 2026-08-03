@@ -32,6 +32,7 @@
         acts: [ "Destruction" ]
   - type: RequireProjectileTarget
   - type: Plant
+  - type: PlantData
   - type: PlantHolder
   - type: PlantHarvest
   - type: PlantChemicals
@@ -46,15 +47,16 @@
 - type: entity
   parent: BasePlant
   id: WheatPlants
-  name: wheat stalks
+  name: wheat
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/wheat.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-wheat-name
     packetPrototype: WheatSeeds
     productPrototypes: [ WheatBushel ]
     mutationPrototypes: [ MeatWheatPlants ]
+  - type: Plant
     lifespan: 25
     maturation: 6
     production: 3
@@ -76,14 +78,15 @@
 - type: entity
   parent: BasePlant
   id: MeatWheatPlants
-  name: meatwheat stalks
+  name: meatwheat
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/meatwheat.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-meatwheat-name
     packetPrototype: MeatwheatSeeds
     productPrototypes: [ MeatwheatBushel ]
+  - type: Plant
     lifespan: 25
     maturation: 6
     production: 3
@@ -105,14 +108,15 @@
 - type: entity
   parent: BasePlant
   id: OatPlants
-  name: oat stalks
+  name: oat
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/oat.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-oat-name
     packetPrototype: OatSeeds
     productPrototypes: [ OatBushel ]
+  - type: Plant
     lifespan: 25
     maturation: 6
     production: 3
@@ -134,15 +138,16 @@
 - type: entity
   parent: BasePlant
   id: BananaPlants
-  name: banana plant
+  name: banana
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/banana.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-banana-name
     packetPrototype: BananaSeeds
     productPrototypes: [ FoodBanana ]
     mutationPrototypes: [ MimanaPlants ]
+  - type: Plant
     lifespan: 50
     maturation: 6
     production: 6
@@ -168,14 +173,15 @@
 - type: entity
   parent: BasePlant
   id: MimanaPlants
-  name: mimana plant
+  name: mimana
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/mimana.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-mimana-name
     packetPrototype: MimanaSeeds
     productPrototypes: [ FoodMimana ]
+  - type: Plant
     lifespan: 50
     maturation: 6
     production: 6
@@ -201,14 +207,15 @@
 - type: entity
   parent: BasePlant
   id: CarrotPlants
-  name: carrots
+  name: carrot
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/carrot.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-carrots-name
     packetPrototype: CarrotSeeds
     productPrototypes: [ FoodCarrot ]
+  - type: Plant
     lifespan: 25
     maturation: 10
     production: 3
@@ -239,11 +246,12 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/laughin_pea.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-laughin-pea-name
     packetPrototype: LaughinPeaSeeds
     productPrototypes: [ FoodLaughinPeaPod ]
     mutationPrototypes: [ WorldPeaPlants ]
+  - type: Plant
     lifespan: 25
     growthStages: 3
     maturation: 7
@@ -273,15 +281,16 @@
 - type: entity
   parent: BasePlant
   id: LemonPlants
-  name: lemon trees
+  name: lemon
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/lemon.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-lemon-name
     packetPrototype: LemonSeeds
     productPrototypes: [ FoodLemon ]
     mutationPrototypes: [ LemoonPlants, LimePlants, OrangePlants ]
+  - type: Plant
     lifespan: 55
     maturation: 6
     production: 6
@@ -303,14 +312,15 @@
 - type: entity
   parent: BasePlant
   id: LemoonPlants
-  name: lemoon trees
+  name: lemoon
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/lemoon.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-lemoon-name
     packetPrototype: LemoonSeeds
     productPrototypes: [ FoodLemoon ]
+  - type: Plant
     lifespan: 90
     maturation: 8
     production: 6
@@ -332,15 +342,16 @@
 - type: entity
   parent: BasePlant
   id: LimePlants
-  name: lime trees
+  name: lime
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/lime.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-lime-name
     packetPrototype: LimeSeeds
     productPrototypes: [ FoodLime ]
     mutationPrototypes: [ OrangePlants, LemonPlants ]
+  - type: Plant
     lifespan: 55
     maturation: 6
     production: 6
@@ -362,15 +373,16 @@
 - type: entity
   parent: BasePlant
   id: OrangePlants
-  name: orange trees
+  name: orange
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/orange.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-orange-name
     packetPrototype: OrangeSeeds
     productPrototypes: [ FoodOrange ]
     mutationPrototypes: [ ExtradimensionalOrangePlants, LemonPlants, LimePlants ]
+  - type: Plant
     lifespan: 55
     maturation: 6
     production: 6
@@ -392,14 +404,15 @@
 - type: entity
   parent: BasePlant
   id: ExtradimensionalOrangePlants
-  name: extradimensional orange trees
+  name: extradimensional orange
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/extradimensional_orange.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-extradimensionalorange-name
     packetPrototype: ExtradimensionalOrangeSeeds
     productPrototypes: [ FoodExtradimensionalOrange ]
+  - type: Plant
     lifespan: 55
     maturation: 6
     production: 6
@@ -425,14 +438,15 @@
 - type: entity
   parent: BasePlant
   id: PineapplePlants
-  name: pineapple plant
+  name: pineapple
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/pineapple.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-pineapple-name
     packetPrototype: PineappleSeeds
     productPrototypes: [ FoodPineapple ]
+  - type: Plant
     lifespan: 55
     maturation: 6
     production: 6
@@ -459,14 +473,15 @@
 - type: entity
   parent: BasePlant
   id: PotatoPlants
-  name: potatoes
+  name: potato
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/potato.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-potato-name
     packetPrototype: PotatoSeeds
     productPrototypes: [ FoodPotato ]
+  - type: Plant
     lifespan: 30
     maturation: 10
     production: 3
@@ -489,15 +504,16 @@
 - type: entity
   parent: BasePlant
   id: SugarcanePlants
-  name: sugarcanes
+  name: sugarcane
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/sugarcane.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-sugarcane-name
     packetPrototype: SugarcaneSeeds
     productPrototypes: [ Sugarcane ]
     mutationPrototypes: [ PapercanePlants ]
+  - type: Plant
     lifespan: 60
     maturation: 6
     production: 6
@@ -519,14 +535,15 @@
 - type: entity
   parent: BasePlant
   id: TeaPlantPlants
-  name: tea plants
+  name: tea plant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/tea_plant.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-teaplant-name
     packetPrototype: TeaPlantSeeds
     productPrototypes: [ LeavesTea ]
+  - type: Plant
     lifespan: 75
     maturation: 5
     production: 3
@@ -550,14 +567,15 @@
 - type: entity
   parent: BasePlant
   id: PapercanePlants
-  name: papercanes
+  name: papercane
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/papercane.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-papercane-name
     packetPrototype: PapercaneSeeds
     productPrototypes: [ Papercane ]
+  - type: Plant
     lifespan: 60
     maturation: 6
     production: 6
@@ -573,16 +591,17 @@
 - type: entity
   parent: BasePlant
   id: TowercapPlants
-  name: tower caps
+  name: tower cap
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/towercap.rsi
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-spores
     name: seeds-towercap-name
     packetPrototype: TowercapSeeds
     productPrototypes: [ Log ]
     mutationPrototypes: [ SteelcapPlants ]
+  - type: Plant
     lifespan: 80
     maturation: 15
     production: 3
@@ -600,15 +619,16 @@
 - type: entity
   parent: BasePlant
   id: SteelcapPlants
-  name: steel caps
+  name: steel cap
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/steelcap.rsi
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-spores
     name: seeds-steelcap-name
     packetPrototype: SteelcapSeeds
     productPrototypes: [ SteelLog ]
+  - type: Plant
     lifespan: 80
     maturation: 15
     production: 3
@@ -626,15 +646,16 @@
 - type: entity
   parent: BasePlant
   id: TomatoPlants
-  name: tomato plant
+  name: tomato
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/tomato.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-tomato-name
     packetPrototype: TomatoSeeds
     productPrototypes: [ FoodTomato ]
     mutationPrototypes: [ BlueTomatoPlants, BloodTomatoPlants ]
+  - type: Plant
     lifespan: 25
     maturation: 8
     production: 6
@@ -666,14 +687,15 @@
 - type: entity
   parent: BasePlant
   id: BlueTomatoPlants
-  name: blue tomato plant
+  name: blue tomato
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/blue_tomato.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-bluetomato-name
     packetPrototype: BlueTomatoSeeds
     productPrototypes: [ FoodBlueTomato ]
+  - type: Plant
     lifespan: 25
     maturation: 8
     production: 6
@@ -705,15 +727,16 @@
 - type: entity
   parent: BasePlant
   id: BloodTomatoPlants
-  name: blood tomato plant
+  name: blood tomato
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/blood_tomato.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-bloodtomato-name
     packetPrototype: BloodTomatoSeeds
     productPrototypes: [ FoodBloodTomato ]
     mutationPrototypes: [ KillerTomatoPlants ]
+  - type: Plant
     lifespan: 60
     maturation: 8
     production: 6
@@ -741,16 +764,17 @@
 - type: entity
   parent: BasePlant
   id: KillerTomatoPlants
-  name: tomato killer plant
+  name: tomato killer
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/tomatokiller.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-killertomato-name
     plantLogImpact: High
     harvestLogImpact: High
     packetPrototype: KillerTomatoSeeds
     productPrototypes: [ MobTomatoKiller ]
+  - type: Plant
     lifespan: 25
     maturation: 15
     production: 6
@@ -779,15 +803,16 @@
 - type: entity
   parent: BasePlant
   id: EggplantPlants
-  name: eggplants
+  name: eggplant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/eggplant.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-eggplant-name
     packetPrototype: EggplantSeeds
     productPrototypes: [ FoodEggplant ]
     mutationPrototypes: [ EggyPlants ]
+  - type: Plant
     lifespan: 25
     maturation: 6
     production: 6
@@ -813,14 +838,15 @@
 - type: entity
   parent: BasePlant
   id: CabbagePlants
-  name: cabbages
+  name: cabbage
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/cabbage.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-cabbage-name
     packetPrototype: CabbageSeeds
     productPrototypes: [ FoodCabbage ]
+  - type: Plant
     lifespan: 50
     maturation: 7
     production: 5
@@ -841,14 +867,15 @@
 - type: entity
   parent: BasePlant
   id: GarlicPlants
-  name: garlic heads
+  name: garlic head
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/garlic.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-garlic-name
     packetPrototype: GarlicSeeds
     productPrototypes: [ FoodGarlic ]
+  - type: Plant
     lifespan: 25
     maturation: 8
     production: 5
@@ -873,15 +900,16 @@
 - type: entity
   parent: BasePlant
   id: ApplePlants
-  name: apple tree
+  name: apple
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/apple.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-apple-name
     packetPrototype: AppleSeeds
     productPrototypes: [ FoodApple ]
     mutationPrototypes: [ GoldenApplePlants ]
+  - type: Plant
     lifespan: 55
     maturation: 6
     production: 6
@@ -903,14 +931,15 @@
 - type: entity
   parent: BasePlant
   id: GoldenApplePlants
-  name: golden apple tree
+  name: golden apple
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/golden_apple.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-goldenapple-name
     packetPrototype: GoldenAppleSeeds
     productPrototypes: [ FoodGoldenApple ]
+  - type: Plant
     lifespan: 55
     maturation: 6
     production: 6
@@ -938,14 +967,15 @@
 - type: entity
   parent: BasePlant
   id: CornPlants
-  name: ears of corn
+  name: corn
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/corn.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-corn-name
     packetPrototype: CornSeeds
     productPrototypes: [ FoodCorn ]
+  - type: Plant
     lifespan: 25
     maturation: 8
     production: 6
@@ -971,15 +1001,16 @@
 - type: entity
   parent: BasePlant
   id: OnionPlants
-  name: onions
+  name: onion
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/onion.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-onion-name
     packetPrototype: OnionSeeds
     productPrototypes: [ FoodOnion ]
     mutationPrototypes: [ OnionRedPlants, BloonionPlants ]
+  - type: Plant
     lifespan: 25
     maturation: 10
     production: 7
@@ -1012,14 +1043,15 @@
 - type: entity
   parent: BasePlant
   id: OnionRedPlants
-  name: red onions
+  name: red onion
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/onion_red.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-onionred-name
     packetPrototype: OnionRedSeeds
     productPrototypes: [ FoodOnionRed ]
+  - type: Plant
     lifespan: 25
     maturation: 8
     production: 6
@@ -1051,15 +1083,16 @@
 - type: entity
   parent: BasePlant
   id: ChanterellePlants
-  name: chanterelle mushrooms
+  name: chanterelle
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/chanterelle.rsi
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-spores
     name: seeds-chanterelle-name
     packetPrototype: ChanterelleSeeds
     productPrototypes: [ FoodMushroom ]
+  - type: Plant
     lifespan: 35
     maturation: 10
     production: 7
@@ -1082,14 +1115,15 @@
 - type: entity
   parent: BasePlant
   id: EggyPlants
-  name: egg-plants
+  name: egg-plant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/eggy.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-eggy-name
     packetPrototype: EggySeeds
     productPrototypes: [ FoodEgg ]
+  - type: Plant
     lifespan: 75
     maturation: 6
     production: 12
@@ -1116,11 +1150,12 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/cannabis.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-cannabis-name
     packetPrototype: CannabisSeeds
     productPrototypes: [ LeavesCannabis ]
     mutationPrototypes: [ RainbowCannabisPlants ]
+  - type: Plant
     lifespan: 75
     maturation: 8
     production: 12
@@ -1146,10 +1181,11 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/rainbow_cannabis.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-rainbow-cannabis-name
     packetPrototype: RainbowCannabisSeeds
     productPrototypes: [ LeavesCannabisRainbow ]
+  - type: Plant
     lifespan: 75
     maturation: 8
     production: 12
@@ -1185,14 +1221,15 @@
 - type: entity
   parent: BasePlant
   id: TobaccoPlants
-  name: tobacco plant
+  name: tobacco
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/tobacco.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-tobacco-name
     packetPrototype: TobaccoSeeds
     productPrototypes: [ LeavesTobacco ]
+  - type: Plant
     lifespan: 75
     maturation: 5
     production: 5
@@ -1216,15 +1253,16 @@
 - type: entity
   parent: BasePlant
   id: NettlePlants
-  name: nettles
+  name: nettle
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/nettle.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-nettle-name
     packetPrototype: NettleSeeds
     productPrototypes: [ Nettle ]
     mutationPrototypes: [ DeathNettlePlants ]
+  - type: Plant
     lifespan: 25
     maturation: 8
     production: 6
@@ -1246,16 +1284,17 @@
 - type: entity
   parent: BasePlant
   id: DeathNettlePlants
-  name: death nettles
+  name: death nettle
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/death_nettle.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-deathnettle-name
     packetPrototype: DeathNettleSeeds
     productPrototypes: [ DeathNettle ]
     plantLogImpact: High
     harvestLogImpact: High
+  - type: Plant
     lifespan: 25
     maturation: 8
     production: 6
@@ -1282,15 +1321,16 @@
 - type: entity
   parent: BasePlant
   id: ChiliPlants
-  name: chili peppers
+  name: chili
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/chili.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-chili-name
     packetPrototype: ChiliSeeds
     productPrototypes: [ FoodChiliPepper ]
     mutationPrototypes: [ ChillyPlants ]
+  - type: Plant
     lifespan: 25
     maturation: 6
     production: 6
@@ -1319,14 +1359,15 @@
 - type: entity
   parent: BasePlant
   id: ChillyPlants
-  name: chilly peppers
+  name: chilly
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/chilly.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-chilly-name
     packetPrototype: ChillySeeds
     productPrototypes: [ FoodChillyPepper ]
+  - type: Plant
     lifespan: 25
     maturation: 6
     production: 6
@@ -1355,15 +1396,16 @@
 - type: entity
   parent: BasePlant
   id: PoppyPlants
-  name: poppies
+  name: poppy
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/poppy.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-poppy-name
     packetPrototype: PoppySeeds
     productPrototypes: [ FoodPoppy ]
     mutationPrototypes: [ LilyPlants ]
+  - type: Plant
     lifespan: 25
     maturation: 10
     production: 3
@@ -1390,11 +1432,12 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/lily.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-lily-name
     packetPrototype: LilySeeds
     productPrototypes: [ FoodLily ]
     mutationPrototypes: [ SpacemansTrumpetPlants ]
+  - type: Plant
     lifespan: 25
     maturation: 10
     production: 3
@@ -1421,10 +1464,11 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/aloe.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-aloe-name
     packetPrototype: AloeSeeds
     productPrototypes: [ FoodAloe ]
+  - type: Plant
     lifespan: 25
     maturation: 10
     production: 3
@@ -1451,11 +1495,12 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/lingzhi.rsi
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-spores
     name: seeds-lingzhi-name
     packetPrototype: LingzhiSeeds
     productPrototypes: [ FoodLingzhi ]
+  - type: Plant
     lifespan: 25
     maturation: 10
     production: 3
@@ -1482,11 +1527,12 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-ambrosiavulgaris-name
     packetPrototype: AmbrosiaVulgarisSeeds
     productPrototypes: [ FoodAmbrosiaVulgaris ]
     mutationPrototypes: [ AmbrosiaDeusPlants ]
+  - type: Plant
     lifespan: 25
     maturation: 10
     production: 3
@@ -1521,10 +1567,11 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/ambrosia_deus.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-ambrosiadeus-name
     packetPrototype: AmbrosiaDeusSeeds
     productPrototypes: [ FoodAmbrosiaDeus ]
+  - type: Plant
     lifespan: 25
     maturation: 10
     production: 3
@@ -1555,11 +1602,12 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/galaxythistle.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-galaxythistle-name
     packetPrototype: GalaxythistleSeeds
     productPrototypes: [ FoodGalaxythistle ]
     mutationPrototypes: [ GlasstlePlants ]
+  - type: Plant
     lifespan: 25
     maturation: 10
     production: 3
@@ -1582,10 +1630,11 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/glasstle.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-glasstle-name
     packetPrototype: GlasstleSeeds
     productPrototypes: [ FoodGlasstle ]
+  - type: Plant
     lifespan: 25
     maturation: 10
     production: 3
@@ -1610,11 +1659,12 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/fly_amanita.rsi
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-spores
     name: seeds-flyamanita-name
     packetPrototype: FlyAmanitaSeeds
     productPrototypes: [ FoodFlyAmanita ]
+  - type: Plant
     lifespan: 25
     maturation: 12
     production: 3
@@ -1638,15 +1688,16 @@
 - type: entity
   parent: BasePlant
   id: GatfruitPlants
-  name: gatfruit tree
+  name: gatfruit
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/gatfruit.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-gatfruit-name
     packetPrototype: GatfruitSeeds
     productPrototypes: [ FoodGatfruit ]
     mutationPrototypes: [ FakeCapfruitPlants, RealCapfruitPlants ]
+  - type: Plant
     lifespan: 65
     maturation: 25
     production: 25
@@ -1667,14 +1718,15 @@
 - type: entity
   parent: BasePlant
   id: FakeCapfruitPlants
-  name: capfruit tree
+  name: fake capfruit
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/capfruit.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-capfruit-name
     packetPrototype: FakeCapfruitSeeds
     productPrototypes: [ FoodFakeCapfruit ]
+  - type: Plant
     lifespan: 65
     maturation: 25
     production: 25
@@ -1695,14 +1747,15 @@
 - type: entity
   parent: BasePlant
   id: RealCapfruitPlants
-  name: capfruit tree
+  name: real capfruit
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/capfruit.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-capfruit-name
     packetPrototype: RealCapfruitSeeds
     productPrototypes: [ FoodRealCapfruit ]
+  - type: Plant
     lifespan: 65
     maturation: 25
     production: 25
@@ -1723,14 +1776,15 @@
 - type: entity
   parent: BasePlant
   id: RicePlants
-  name: rice stalks
+  name: rice
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/rice.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-rice-name
     packetPrototype: RiceSeeds
     productPrototypes: [ RiceBushel ]
+  - type: Plant
     lifespan: 25
     maturation: 6
     production: 3
@@ -1754,15 +1808,16 @@
 - type: entity
   parent: BasePlant
   id: SoybeanPlants
-  name: soy plant
+  name: soybeans
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/soybeans.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-soybeans-name
     packetPrototype: SoybeanSeeds
     productPrototypes: [ FoodSoybeans ]
     mutationPrototypes: [ KoibeanPlants ]
+  - type: Plant
     lifespan: 25
     maturation: 6
     production: 6
@@ -1781,14 +1836,15 @@
 - type: entity
   parent: BasePlant
   id: SpacemansTrumpetPlants
-  name: spaceman's trumpet plant
+  name: spaceman's trumpet
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/spacemans_trumpet.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-spacemans-trumpet-name
     packetPrototype: SpacemansTrumpetSeeds
     productPrototypes: [ FoodSpacemansTrumpet ]
+  - type: Plant
     lifespan: 20
     maturation: 14
     production: 3
@@ -1811,14 +1867,15 @@
 - type: entity
   parent: BasePlant
   id: KoibeanPlants
-  name: koibean plant
+  name: koibeans
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/koibean.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-koibean-name
     packetPrototype: KoibeanSeeds
     productPrototypes: [ FoodKoibean ]
+  - type: Plant
     lifespan: 25
     maturation: 6
     production: 6
@@ -1841,14 +1898,15 @@
 - type: entity
   parent: BasePlant
   id: GrapePlants
-  name: grape plant
+  name: grape
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/grape.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-grape-name
     packetPrototype: GrapeSeeds
     productPrototypes: [ FoodGrape ]
+  - type: Plant
     lifespan: 50
     maturation: 6
     production: 5
@@ -1869,15 +1927,16 @@
 - type: entity
   parent: BasePlant
   id: WatermelonPlants
-  name: watermelon vines
+  name: watermelon
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/watermelon.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-watermelon-name
     packetPrototype: WatermelonSeeds
     productPrototypes: [ FoodWatermelon ]
     mutationPrototypes: [ HolymelonPlants ]
+  - type: Plant
     lifespan: 55
     maturation: 12
     production: 3
@@ -1901,14 +1960,15 @@
 - type: entity
   parent: BasePlant
   id: HolymelonPlants
-  name: holymelon vines
+  name: holymelon
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/holymelon.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-holymelon-name
     packetPrototype: HolymelonSeeds
     productPrototypes: [ FoodHolymelon ]
+  - type: Plant
     lifespan: 55
     maturation: 12
     production: 3
@@ -1932,14 +1992,15 @@
 - type: entity
   parent: BasePlant
   id: CocoaPlants
-  name: cocoa plant
+  name: cocoa
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/cocoa.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-cocoa-name
     packetPrototype: CocoaSeeds
     productPrototypes: [ FoodCocoaPod ]
+  - type: Plant
     lifespan: 50
     maturation: 6
     production: 6
@@ -1966,14 +2027,15 @@
 - type: entity
   parent: BasePlant
   id: BerryPlants
-  name: berry bush
+  name: berries
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/berries.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-berries-name
     packetPrototype: BerrySeeds
     productPrototypes: [ FoodBerries ]
+  - type: Plant
     lifespan: 50
     maturation: 6
     production: 6
@@ -1996,14 +2058,15 @@
 - type: entity
   parent: BasePlant
   id: BungoPlants
-  name: bungo plant
+  name: bungo
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/bungo.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-bungo-name
     packetPrototype: BungoSeeds
     productPrototypes: [ FoodBungo ]
+  - type: Plant
     lifespan: 50
     maturation: 8
     production: 6
@@ -2031,15 +2094,16 @@
 - type: entity
   parent: BasePlant
   id: PeaPlants
-  name: pea vines
+  name: peas
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/pea.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-pea-name
     packetPrototype: PeaSeeds
     productPrototypes: [ FoodPeaPod ]
     mutationPrototypes: [ LaughinPeaPlants ]
+  - type: Plant
     lifespan: 25
     growthStages: 3
     maturation: 8
@@ -2064,14 +2128,15 @@
 - type: entity
   parent: BasePlant
   id: WorldPeaPlants
-  name: world pea vines
+  name: world peas
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/world_pea.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-worldpea-name
     packetPrototype: PeaSeeds
     productPrototypes: [ FoodWorldPeas ]
+  - type: Plant
     lifespan: 25
     growthStages: 3
     maturation: 20
@@ -2100,15 +2165,16 @@
 - type: entity
   parent: BasePlant
   id: PumpkinPlants
-  name: pumpkins
+  name: pumpkin
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/pumpkin.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-pumpkin-name
     packetPrototype: PumpkinSeeds
     productPrototypes: [ FoodPumpkin ]
     mutationPrototypes: [ BluePumpkinPlants ]
+  - type: Plant
     lifespan: 55
     maturation: 10
     production: 4
@@ -2132,14 +2198,15 @@
 - type: entity
   parent: BasePlant
   id: BluePumpkinPlants
-  name: blue pumpkins
+  name: blue pumpkin
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/blue_pumpkin.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-blue-pumpkin-name
     packetPrototype: BluePumpkinSeeds
     productPrototypes: [ FoodBluePumpkin ]
+  - type: Plant
     lifespan: 55
     maturation: 10
     production: 4
@@ -2167,15 +2234,16 @@
 - type: entity
   parent: BasePlant
   id: CottonPlants
-  name: cotton plant
+  name: cotton
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/cotton.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-cotton-name
     packetPrototype: CottonSeeds
     productPrototypes: [ CottonBol ]
     mutationPrototypes: [ PyrottonPlants ]
+  - type: Plant
     lifespan: 25
     maturation: 8
     production: 3
@@ -2194,14 +2262,15 @@
 - type: entity
   parent: BasePlant
   id: PyrottonPlants
-  name: pyrotton plant
+  name: pyrotton
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/pyrotton.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-pyrotton-name
     packetPrototype: PyrottonSeeds
     productPrototypes: [ PyrottonBol ]
+  - type: Plant
     lifespan: 25
     maturation: 8
     production: 3
@@ -2224,14 +2293,15 @@
 - type: entity
   parent: BasePlant
   id: CherryPlants
-  name: cherry tree
+  name: cherry
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/cherry.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-cherry-name
     packetPrototype: CherrySeeds
     productPrototypes: [ FoodCherry ]
+  - type: Plant
     lifespan: 55
     maturation: 6
     production: 6
@@ -2253,14 +2323,15 @@
 - type: entity
   parent: BasePlant
   id: AnomalyBerryPlants
-  name: anomaly berries
+  name: anomaly berry
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/anomaly_berry.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-anomaly-berry-name
     packetPrototype: AnomalyBerrySeeds
     productPrototypes: [ FoodAnomalyBerry ]
+  - type: Plant
     lifespan: 25
     maturation: 12
     production: 3
@@ -2288,14 +2359,15 @@
 - type: entity
   parent: BasePlant
   id: BloonionPlants
-  name: bloonion bulbs
+  name: bloonion
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/bloonion.rsi
-  - type: Plant
+  - type: PlantData
     name: seeds-bloonion-name
     packetPrototype: BloonionSeeds
     productPrototypes: [ FoodBloonion ]
+  - type: Plant
     lifespan: 25
     maturation: 15
     production: 3
