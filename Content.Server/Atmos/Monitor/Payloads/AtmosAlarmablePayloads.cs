@@ -20,7 +20,7 @@ public partial record struct AtmosAlarmPayload : IAtmosAlarmableSourcePayload
     public AtmosAlarmType Type;
 
     [DataField]
-    public AtmosMonitorThresholdTypeFlags TrippedThresholds;
+    public AtmosMonitorThresholdTypeFlags? TrippedThresholds;
 
     [DataField]
     public HashSet<ProtoId<TagPrototype>> Source { get; set; } = new();

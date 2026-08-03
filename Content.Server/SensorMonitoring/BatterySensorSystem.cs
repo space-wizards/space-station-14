@@ -30,6 +30,6 @@ public sealed partial class BatterySensorSystem : EntitySystem
                 netBattery.MaxSupply),
         };
 
-        _deviceNetwork.QueuePacket(ent.Owner, args.SenderAddress, ref dataPayload);
+        _deviceNetwork.SendPacket(ent.Owner, args.SenderAddress, ref dataPayload);
     }
 }

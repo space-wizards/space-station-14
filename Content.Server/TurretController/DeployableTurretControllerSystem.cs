@@ -19,21 +19,25 @@ public sealed partial class DeployableTurretControllerSystem : SharedDeployableT
 {
     [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
     [Dependency] private DeviceNetworkSystem _deviceNetwork = default!;
+    [Dependency] private DeviceListSystem _deviceList = default!;
     [Dependency] private IAdminLogManager _adminLogger = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<DeployableTurretControllerComponent, BoundUIOpenedEvent>(OnBUIOpened);
-        SubscribeLocalEvent<DeployableTurretControllerComponent, DeviceListUpdateEvent>(OnDeviceListUpdate);
-    }
-
+    [SubscribeLocalEvent]
     private void OnBUIOpened(Entity<DeployableTurretControllerComponent> ent, ref BoundUIOpenedEvent args)
     {
+        if (!TryComp<DeviceNetworkComponent>(ent, out var deviceNetwork))
+            return;
+
+        var payload = new TurretControllerRequestPayload();
+        foreach (var (address, _) in _deviceList.GetDeviceList(ent.Owner))
+        {
+            _deviceNetwork.SendPacket((ent.Owner, deviceNetwork), address, ref payload);
+        }
+
         UpdateUIState(ent);
     }
 
+    [SubscribeLocalEvent]
     private void OnDeviceListUpdate(Entity<DeployableTurretControllerComponent> ent, ref DeviceListUpdateEvent args)
     {
         if (!TryComp<DeviceNetworkComponent>(ent, out var deviceNetwork))
@@ -53,7 +57,7 @@ public sealed partial class DeployableTurretControllerSystem : SharedDeployableT
             if (!TryComp<DeviceNetworkComponent>(turretUid, out var turretDeviceNetwork))
                 continue;
 
-            _deviceNetwork.QueuePacket((ent.Owner, deviceNetwork), turretDeviceNetwork.Data.AddressId, ref payload);
+            _deviceNetwork.SendPacket((ent.Owner, deviceNetwork), turretDeviceNetwork.Data.Address, ref payload);
         }
 
         // Remove newly unlinked devices
@@ -100,7 +104,7 @@ public sealed partial class DeployableTurretControllerSystem : SharedDeployableT
 
         _adminLogger.Add(LogType.ItemConfigure, LogImpact.Medium, $"{ToPrettyString(user)} set {ToPrettyString(ent)} to {armamentState}");
 
-        _deviceNetwork.QueuePacket((ent.Owner, device), null, ref payload);
+        _deviceNetwork.SendPacket((ent.Owner, device), null, ref payload);
     }
 
     protected override void ChangeExemptAccessLevels(
@@ -127,7 +131,7 @@ public sealed partial class DeployableTurretControllerSystem : SharedDeployableT
             _adminLogger.Add(LogType.ItemConfigure, LogImpact.Medium, $"{ToPrettyString(user)} set {ToPrettyString(ent)} authorization of {exemption} to {enabled}");
         }
 
-        _deviceNetwork.QueuePacket((ent.Owner, device), null, ref payload);
+        _deviceNetwork.SendPacket((ent.Owner, device), null, ref payload);
     }
 
     private void UpdateUIState(Entity<DeployableTurretControllerComponent> ent)

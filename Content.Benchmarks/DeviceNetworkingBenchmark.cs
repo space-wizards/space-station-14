@@ -114,7 +114,7 @@ public class DeviceNetworkingBenchmark
                 TestNumber = 1,
                 TestBool = true,
             };
-            _deviceNetworkSystem.QueuePacket(_sourceEntity, null, ref payload, 100);
+            _deviceNetworkSystem.SendPacket(_sourceEntity, null, ref payload, 100);
         });
 
         await server.WaitRunTicks(1);
@@ -134,7 +134,7 @@ public class DeviceNetworkingBenchmark
                 TestNumber = 1,
                 TestBool = true,
             };
-            _deviceNetworkSystem.QueuePacket(_sourceWirelessEntity, null, ref payload, 100);
+            _deviceNetworkSystem.SendPacket(_sourceWirelessEntity, null, ref payload, 100);
         });
 
         await server.WaitRunTicks(1);
@@ -154,7 +154,7 @@ public class DeviceNetworkingBenchmark
                 TestNumber = 1,
                 TestBool = true,
             };
-            _deviceNetworkSystem.QueuePacket(_sourceEntity, null, ref payload, 100);
+            _deviceNetworkSystem.SendPacket(_sourceEntity, null, ref payload, 100);
         });
 
         await server.WaitRunTicks(1);
@@ -174,7 +174,7 @@ public class DeviceNetworkingBenchmark
                 TestNumber = 1,
                 TestBool = true,
             };
-            _deviceNetworkSystem.QueuePacket(_sourceWirelessEntity, null, ref payload, 100);
+            _deviceNetworkSystem.SendPacket(_sourceWirelessEntity, null, ref payload, 100);
         });
 
         await server.WaitRunTicks(1);

@@ -166,7 +166,7 @@ public sealed partial class AtmosMonitorSystem : EntitySystem
         };
 
         dataPayload.RaisePayload(ent.Owner, args.SenderAddress, _deviceNetSystem);
-        _deviceNetSystem.QueuePacket(ent.Owner, args.SenderAddress, ref airAlarm);
+        _deviceNetSystem.SendPacket(ent.Owner, args.SenderAddress, ref airAlarm);
         Alert(ent, ent.Comp.LastAlarmState);
     }
 
@@ -372,7 +372,7 @@ public sealed partial class AtmosMonitorSystem : EntitySystem
 
         foreach (var addr in monitor.RegisteredDevices)
         {
-            _deviceNetSystem.QueuePacket(owner, addr, ref payload);
+            _deviceNetSystem.SendPacket(owner, addr, ref payload);
         }
     }
 

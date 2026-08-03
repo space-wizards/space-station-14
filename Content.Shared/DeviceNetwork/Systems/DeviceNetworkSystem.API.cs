@@ -17,7 +17,7 @@ public sealed partial class DeviceNetworkSystem
     /// <param name="network">Device network override</param>
     /// <returns>Returns true when the packet was successfully enqueued.</returns>
     [PublicAPI]
-    public bool QueuePacket<T>(
+    public bool SendPacket<T>(
         Entity<DeviceNetworkComponent?> ent,
         DeviceAddress? address,
         ref T data,

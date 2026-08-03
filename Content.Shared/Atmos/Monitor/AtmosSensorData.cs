@@ -19,7 +19,7 @@ public sealed partial class AtmosMonitorData : BaseAtmosDeviceData
     public override void RaisePayload(EntityUid uid, DeviceAddress address, DeviceNetworkSystem deviceNetSys)
     {
         var payload = new AtmosMonitorDataPayload { Data = this };
-        deviceNetSys.QueuePacket(uid, address, ref payload);
+        deviceNetSys.SendPacket(uid, address, ref payload);
     }
 
     public AtmosMonitorData(float pressure, float temperature, float totalMoles, AtmosAlarmType alarmState, Dictionary<Gas, float> gases, AtmosAlarmThreshold pressureThreshold, AtmosAlarmThreshold temperatureThreshold, Dictionary<Gas, AtmosAlarmThreshold> gasThresholds)

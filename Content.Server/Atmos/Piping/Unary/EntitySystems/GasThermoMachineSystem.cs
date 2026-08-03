@@ -119,7 +119,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 EnergyDelta = ent.Comp.LastEnergyDelta,
             };
 
-            _deviceNetwork.QueuePacket(ent.Owner, args.SenderAddress, ref data);
+            _deviceNetwork.SendPacket(ent.Owner, args.SenderAddress, ref data);
         }
     }
 }

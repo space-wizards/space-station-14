@@ -61,7 +61,7 @@ public sealed partial class SurveillanceCameraRouterSystem : EntitySystem
         {
             TransmitFrequency = ent.Comp.SubnetFrequency,
         };
-        _deviceNetworkSystem.QueuePacket(ent.Owner, args.SenderAddress, ref response);
+        _deviceNetworkSystem.SendPacket(ent.Owner, args.SenderAddress, ref response);
     }
 
     private void OnPowerChanged(Entity<SurveillanceCameraRouterComponent> ent, ref PowerChangedEvent args)
@@ -166,7 +166,7 @@ public sealed partial class SurveillanceCameraRouterSystem : EntitySystem
             || !_deviceNetworkQuery.Resolve(ent.Owner, ref ent.Comp2))
             return;
 
-        var payload = new SurveillanceCameraPingPayload();
-        _deviceNetworkSystem.QueuePacket(ent.Owner, null, ref payload, ent.Comp1.SubnetFrequency);
+        var payload = new SurveillanceCameraPingPayload { Subnet = ent.Comp.SubnetName };
+        _deviceNetworkSystem.SendPacket(ent.Owner, null, ref payload, ent.Comp.SubnetFrequency);
     }
 }

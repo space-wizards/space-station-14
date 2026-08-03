@@ -25,4 +25,4 @@ public partial record struct TurretControllerSetAccessPayload : INetworkPayload
 /// <summary>
 /// A network payload request to get the state of all available turrets.
 /// </summary>
-public partial record struct TurretControllerRequestPayload : INetworkPayload;
+public readonly partial record struct TurretControllerRequestPayload : INetworkPayload;

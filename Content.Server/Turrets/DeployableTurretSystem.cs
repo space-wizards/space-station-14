@@ -29,6 +29,7 @@ public sealed partial class DeployableTurretSystem : SharedDeployableTurretSyste
     [Dependency] private BatteryWeaponFireModesSystem _fireModes = default!;
     [Dependency] private TurretTargetSettingsSystem _turretTargetingSettings = default!;
     [Dependency] private IGameTiming _timing = default!;
+
     [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceQuery = default!;
 
     public override void Initialize()
@@ -125,7 +126,7 @@ public sealed partial class DeployableTurretSystem : SharedDeployableTurretSyste
         {
             State = GetTurretState(ent),
         };
-        _deviceNetwork.QueuePacket((ent.Owner, device), null, ref payload);
+        _deviceNetwork.SendPacket((ent.Owner, device), null, ref payload);
     }
 
     protected override void SetState(Entity<DeployableTurretComponent> ent, bool enabled, EntityUid? user = null)

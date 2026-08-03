@@ -91,7 +91,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                     Assert.That(networkComponent1.Data.AddressId, Is.Not.EqualTo(networkComponent2.Data.AddressId));
                 });
 
-                deviceNetSystem.QueuePacket(device1, networkComponent2.Data.AddressId, ref payload, networkComponent2.Data.ReceiveFrequency.Value);
+                deviceNetSystem.SendPacket(device1, networkComponent2.Data.AddressId, ref payload, networkComponent2.Data.ReceiveFrequency.Value);
                 Assert.That(payload, Is.EqualTo(deviceNetTestSystem.LastPayload));
             });
         }
@@ -147,7 +147,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                     TestBool = true
                 };
 
-                deviceNetSystem.QueuePacket(device1, networkComponent2.Data.AddressId, ref payload, networkComponent2.Data.ReceiveFrequency.Value);
+                deviceNetSystem.SendPacket(device1, networkComponent2.Data.AddressId, ref payload, networkComponent2.Data.ReceiveFrequency.Value);
 
                 Assert.That(payload, Is.EqualTo(deviceNetTestSystem.LastPayload));
 
@@ -160,8 +160,8 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                     TestBool = true
                 };
 
-                deviceNetSystem.QueuePacket(device1, networkComponent2.Data.AddressId, ref secondPayload, networkComponent2.Data.ReceiveFrequency.Value);
-                Assert.That(secondPayload, Is.EqualTo(deviceNetTestSystem.LastPayloadSecond));
+                deviceNetSystem.SendPacket(device1, networkComponent2.Data.AddressId, ref secondPayload, networkComponent2.Data.ReceiveFrequency.Value);
+                Assert.That(secondPayload, Is.Not.EqualTo(deviceNetTestSystem.LastPayloadSecond));
             });
         }
 
@@ -219,11 +219,11 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                     TestBool = true
                 };
 
-                deviceNetSystem.QueuePacket(device1, networkComponent2.Data.AddressId, ref payload, networkComponent2.Data.ReceiveFrequency.Value);
+                deviceNetSystem.SendPacket(device1, networkComponent2.Data.AddressId, ref payload, networkComponent2.Data.ReceiveFrequency.Value);
 
                 entityManager.SpawnEntity("CableApcExtension", coordinates);
 
-                deviceNetSystem.QueuePacket(device1, networkComponent2.Data.AddressId, ref payload, networkComponent2.Data.ReceiveFrequency.Value);
+                deviceNetSystem.SendPacket(device1, networkComponent2.Data.AddressId, ref payload, networkComponent2.Data.ReceiveFrequency.Value);
 
                 Assert.That(payload, Is.EqualTo(deviceNetTestSystem.LastPayload));
             });

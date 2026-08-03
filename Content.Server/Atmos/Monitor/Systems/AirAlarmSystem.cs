@@ -23,6 +23,7 @@ using Content.Shared.DeviceLinking.Systems;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.UserInterface;
 
 namespace Content.Server.Atmos.Monitor.Systems;
 
@@ -49,21 +50,21 @@ public sealed partial class AirAlarmSystem : EntitySystem
     public void SetData(EntityUid uid, DeviceAddress address, GasVentPumpData payload)
     {
         var sendPayload = new GasVentPumpSetDataPayload { Data = payload };
-        _deviceNet.QueuePacket(uid, address, ref sendPayload);
+        _deviceNet.SendPacket(uid, address, ref sendPayload);
         SetDeviceDataInternal(uid, address, payload);
     }
 
     public void SetData(EntityUid uid, DeviceAddress address, GasVentScrubberData payload)
     {
         var sendPayload = new GasVentScrubberSetDataPayload { Data = payload };
-        _deviceNet.QueuePacket(uid, address, ref sendPayload);
+        _deviceNet.SendPacket(uid, address, ref sendPayload);
         SetDeviceDataInternal(uid, address, payload);
     }
 
     private void SetDeviceDataInternal(EntityUid uid, DeviceAddress address, IAtmosDeviceData payload)
     {
         var setPayload = new AirAlarmSetDataPayload { Payload = payload };
-        _deviceNet.QueuePacket(uid, address, ref setPayload);
+        _deviceNet.SendPacket(uid, address, ref setPayload);
     }
 
     /// <summary>
@@ -122,7 +123,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
             Gas = gas,
         };
 
-        _deviceNet.QueuePacket(uid, address, ref payload);
+        _deviceNet.SendPacket(uid, address, ref payload);
 
         SyncDevice(uid, address);
     }
@@ -134,7 +135,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
             Data = dataPayload
         };
 
-        _deviceNet.QueuePacket(uid, address, ref payload);
+        _deviceNet.SendPacket(uid, address, ref payload);
 
         SyncDevice(uid, address);
     }
@@ -153,7 +154,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
             Mode = mode,
         };
 
-        _deviceNet.QueuePacket(uid, null, ref payload);
+        _deviceNet.SendPacket(uid, null, ref payload);
     }
 
     #endregion
@@ -170,7 +171,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
         SubscribeLocalEvent<AirAlarmComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<AirAlarmComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<AirAlarmComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<AirAlarmComponent, ActivateInWorldEvent>(OnActivate);
+        SubscribeLocalEvent<AirAlarmComponent, AfterActivatableUIOpenEvent>(OnActivate);
 
         Subs.BuiEvents<AirAlarmComponent>(SharedAirAlarmInterfaceKey.Key, subs =>
         {
@@ -244,21 +245,8 @@ public sealed partial class AirAlarmSystem : EntitySystem
         _activeUserInterfaces.Remove(uid);
     }
 
-    private void OnActivate(EntityUid uid, AirAlarmComponent component, ActivateInWorldEvent args)
+    private void OnActivate(EntityUid uid, AirAlarmComponent component, AfterActivatableUIOpenEvent args)
     {
-        if (!args.Complex)
-            return;
-
-        if (TryComp<WiresPanelComponent>(uid, out var panel) && panel.Open)
-        {
-            args.Handled = false;
-            return;
-        }
-
-        if (!this.IsPowered(uid, EntityManager))
-            return;
-
-        _ui.OpenUi(uid, SharedAirAlarmInterfaceKey.Key, args.User);
         AddActiveInterface(uid);
         SyncAllDevices(uid);
         UpdateUI(uid, component);

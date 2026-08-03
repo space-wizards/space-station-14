@@ -66,7 +66,10 @@ public sealed partial class AtmosAlarmableSystem : EntitySystem
             return;
 
         var (uid, component) = ent;
-        var isValid = (payload.TrippedThresholds & component.MonitorAlertTypes) != 0;
+
+        var isValid = payload.TrippedThresholds == null
+                      || component.MonitorAlertTypes == AtmosMonitorThresholdTypeFlags.None
+                      || (payload.TrippedThresholds & component.MonitorAlertTypes) != 0;
 
         if (!component.NetworkAlarmStates.ContainsKey(args.SenderAddress))
         {
@@ -119,12 +122,9 @@ public sealed partial class AtmosAlarmableSystem : EntitySystem
         }
     }
 
-    private bool CheckTags<T>(Entity<AtmosAlarmableComponent> ent, T payload) where T : IAtmosAlarmableSourcePayload
+    private static bool CheckTags<T>(Entity<AtmosAlarmableComponent> ent, T payload) where T : IAtmosAlarmableSourcePayload
     {
-        if (ent.Comp.IgnoreAlarms)
-            return false;
-
-        return payload.Source.Any(source => ent.Comp.SyncWithTags.Contains(source));
+        return !ent.Comp.IgnoreAlarms && payload.Source.Any(source => ent.Comp.SyncWithTags.Contains(source));
     }
 
     private void TryUpdateAlert(EntityUid uid, AtmosAlarmType type, AtmosAlarmableComponent alarmable, bool sync = true)
@@ -158,7 +158,7 @@ public sealed partial class AtmosAlarmableSystem : EntitySystem
             Source = tags.Tags,
         };
 
-        _deviceNet.QueuePacket(uid, address, ref payload);
+        _deviceNet.SendPacket(uid, address, ref payload);
     }
 
     /// <summary>
@@ -194,29 +194,30 @@ public sealed partial class AtmosAlarmableSystem : EntitySystem
             Source = tags.Tags,
         };
 
-        _deviceNet.QueuePacket(uid, null, ref payload);
+        _deviceNet.SendPacket(uid, null, ref payload);
     }
 
     /// <summary>
     ///     Resets the state of this alarmable to normal.
     /// </summary>
-    /// <param name="uid"></param>
-    /// <param name="alarmable"></param>
-    public void Reset(EntityUid uid, AtmosAlarmableComponent? alarmable = null, TagComponent? tags = null)
+    public void Reset(EntityUid uid, AtmosAlarmableComponent? alarmable = null, TagComponent? tags = null, DeviceNetworkComponent? device = null)
     {
-        if (!Resolve(uid, ref alarmable, ref tags, false) || alarmable.LastAlarmState == AtmosAlarmType.Normal)
+        if (!Resolve(uid, ref alarmable, ref tags, ref device, false) || alarmable.LastAlarmState == AtmosAlarmType.Normal)
         {
             return;
         }
 
-        alarmable.NetworkAlarmStates.Clear();
-        TryUpdateAlert(uid, AtmosAlarmType.Normal, alarmable);
+        if (alarmable.NetworkAlarmStates.ContainsKey(device.Data.Address))
+            alarmable.NetworkAlarmStates[device.Data.Address] = AtmosAlarmType.Normal;
 
         if (!alarmable.ReceiveOnly)
         {
             var payload = new AtmosMonitorResetPayload();
-            _deviceNet.QueuePacket(uid, null, ref payload);
+            _deviceNet.SendPacket(uid, null, ref payload);
         }
+
+        TryUpdateAlert(uid, AtmosAlarmType.Normal, alarmable);
+        alarmable.NetworkAlarmStates.Clear();
     }
 
     public void ResetAllOnNetwork(EntityUid uid, AtmosAlarmableComponent? alarmable = null)
