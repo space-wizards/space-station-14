@@ -162,7 +162,7 @@ public partial class MobStateSystem
         }
 
         if (!ent.Comp.AllowedStates.SetEquals(state.AllowedStates))
-            ent.Comp.AllowedStates = state.AllowedStates;
+            ent.Comp.AllowedStates = new (state.AllowedStates);
     }
 
     [SubscribeLocalEvent]
