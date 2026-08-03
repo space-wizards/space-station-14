@@ -5,7 +5,7 @@ meta:
   forkId: dsfobos
   forkVersion: 8d3278c8a6a533b66dbbbc5ef4b1b987aca8bdae
   time: 04/13/2026 16:59:02
-  entityCount: 1212
+  entityCount: 1206
 maps: []
 grids:
 - 1
@@ -4430,12 +4430,6 @@ entities:
           - 1194
           - 1195
           - 1196
-          - 1197
-          - 1198
-          - 1199
-          - 1200
-          - 1201
-          - 1202
           - 1211
           - 1212
         paper_label: !type:ContainerSlot
@@ -5541,22 +5535,6 @@ entities:
       canCollide: False
     - type: InsideEntityStorage
       storage: 1193
-  - uid: 1197
-    components:
-    - type: Transform
-      parent: 1193
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-      storage: 1193
-  - uid: 1201
-    components:
-    - type: Transform
-      parent: 1193
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-      storage: 1193
 - proto: SheetPlasma1
   entities:
   - uid: 1211
@@ -5579,41 +5557,11 @@ entities:
       canCollide: False
     - type: InsideEntityStorage
       storage: 1193
-  - uid: 1199
-    components:
-    - type: Transform
-      parent: 1193
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-      storage: 1193
-  - uid: 1200
-    components:
-    - type: Transform
-      parent: 1193
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-      storage: 1193
+    - type: Stack
+      count: 15 # DS14
 - proto: SheetSteel
   entities:
   - uid: 1196
-    components:
-    - type: Transform
-      parent: 1193
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-      storage: 1193
-  - uid: 1198
-    components:
-    - type: Transform
-      parent: 1193
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-      storage: 1193
-  - uid: 1202
     components:
     - type: Transform
       parent: 1193
