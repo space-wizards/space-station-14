@@ -1243,4 +1243,11 @@
   id: 153
   time: '2026-07-22T07:15:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44754
+- author: Minemoder
+  changes:
+  - message: The displaced telescience ruin had its intercom changed from all channels to only common and science.
+    type: Tweak
+  id: 154
+  time: '2026-07-27T00:00:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44889
 Order: 2
