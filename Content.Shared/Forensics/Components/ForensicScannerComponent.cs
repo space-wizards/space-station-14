@@ -5,9 +5,8 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Forensics.Components;
 
-// The bool in AutoGenerateCompState is needed for AfterAutoHandleStateEvent in OnScannerUpdate to update the BoundUserInterface.
 [RegisterComponent, NetworkedComponent]
-[AutoGenerateComponentState(true), AutoGenerateComponentPause]
+[AutoGenerateComponentState(raiseAfterAutoHandleState: true), AutoGenerateComponentPause]
 public sealed partial class ForensicScannerComponent : Component
 {
     /// <summary>
