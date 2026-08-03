@@ -1,0 +1,61 @@
+- type: entity
+  parent: [ BaseItem, BaseXenoborgContraband ]
+  id: WeaponXenoborgPortalGun
+  name: xenoborg portal gun
+  description: Teleports a living target to a safe random location on its current grid.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Launchers/tether_gun.rsi
+    layers:
+    - state: base
+    - state: base-unshaded
+      shader: unshaded
+  - type: Item
+    size: Normal
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      - state: inhand-left-unshaded
+        shader: unshaded
+      right:
+      - state: inhand-right
+      - state: inhand-right-unshaded
+        shader: unshaded
+  - type: Gun
+    fireRate: 10
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    projectileSpeed: 15
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/Magic/staff_animation.ogg
+  - type: BasicEntityAmmoProvider
+    proto: XenoborgPortalBolt
+    capacity: 1
+    count: 1
+  - type: RechargeBasicEntityAmmo
+    rechargeCooldown: 0.1
+  - type: UseDelay
+    delay: 3
+  - type: UseDelayOnShoot
+  - type: XenoborgPortalGun
+
+- type: entity
+  parent: BaseBullet
+  id: XenoborgPortalBolt
+  name: xenoborg portal charge
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+    - state: spell
+      color: "#43d9b8"
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 0
+  - type: XenoborgPortalProjectile
+  - type: TimedDespawn
+    lifetime: 4

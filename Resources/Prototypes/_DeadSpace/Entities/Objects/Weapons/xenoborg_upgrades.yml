@@ -1,0 +1,21 @@
+- type: entity
+  parent: [ CyborgEnergySword, BaseXenoborgContraband ]
+  id: XenoborgEnergySwordBlue
+  name: blue xenoborg energy sword
+  description: A full-sized energy sword fixed to a blue blade.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EnergySword
+    colorOptions:
+    - "#2288ff"
+
+- type: entity
+  parent: RedHeavyLaser
+  id: RedHeavyLaserXenoborg
+  name: xenoborg red high-energy laser bolt
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Heat: 25

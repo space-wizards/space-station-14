@@ -37,3 +37,12 @@
   parent: HandheldGPSBasic
   id: BorgHandheldGPSBasic
   description: A miniaturized Global Positioning System for use in cyborg units.
+
+# DS14-start
+- type: entity
+  parent: HandheldGPSBasic
+  id: HandheldGPSXenoborg
+  components:
+  - type: LavalandGpsTracker
+    enabled: false
+# DS14-end

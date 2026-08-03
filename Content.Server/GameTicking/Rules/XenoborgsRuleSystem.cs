@@ -111,8 +111,11 @@ public sealed class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleComponent>
         xenoborgsRuleComponent.MaxNumberXenoborgs = Math.Max(xenoborgsRuleComponent.MaxNumberXenoborgs, numXenoborgs);
 
         if (xenoborgsRuleComponent.XenoborgShuttleCalled
-            || (float)numXenoborgs / (numHumans + numXenoborgs) <= xenoborgsRuleComponent.XenoborgShuttleCallPercentage
-            || _roundEnd.IsRoundEndRequested())
+            || _roundEnd.IsRoundEndRequested()
+            || !ShouldCallEmergencyShuttle(
+                numXenoborgs,
+                numHumans,
+                xenoborgsRuleComponent.XenoborgShuttleCallPercentage)) // DS14
             return;
 
         foreach (var station in _station.GetStations())
@@ -122,6 +125,16 @@ public sealed class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleComponent>
         _roundEnd.RequestRoundEnd(null, null, false, cantRecall: true);
         xenoborgsRuleComponent.XenoborgShuttleCalled = true;
     }
+
+    // DS14-start
+    internal static bool ShouldCallEmergencyShuttle(int xenoborgs, int humans, float threshold)
+    {
+        if (humans <= 0 || xenoborgs <= 0)
+            return false;
+
+        return (float) xenoborgs / (humans + xenoborgs) > threshold;
+    }
+    // DS14-end
 
     protected override void Started(EntityUid uid, XenoborgsRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
@@ -154,6 +167,11 @@ public sealed class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleComponent>
         var query = EntityQueryEnumerator<XenoborgComponent>();
         while (query.MoveNext(out var xenoborg, out _))
         {
+            // DS14-start
+            if (TerminatingOrDeleted(xenoborg) || EntityManager.IsQueuedForDeletion(xenoborg))
+                continue;
+            // DS14-end
+
             if (HasComp<MothershipCoreComponent>(xenoborg))
                 continue;
 
@@ -178,8 +196,13 @@ public sealed class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleComponent>
         var numberMothershipCores = 0;
 
         var mothershipCoreQuery = EntityQueryEnumerator<MothershipCoreComponent>();
-        while (mothershipCoreQuery.MoveNext(out _, out _))
+        while (mothershipCoreQuery.MoveNext(out var core, out _)) // DS14
         {
+            // DS14-start
+            if (TerminatingOrDeleted(core) || EntityManager.IsQueuedForDeletion(core))
+                continue;
+            // DS14-end
+
             numberMothershipCores++;
         }
 

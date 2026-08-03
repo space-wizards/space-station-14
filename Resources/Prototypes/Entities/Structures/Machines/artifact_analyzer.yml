@@ -157,12 +157,15 @@
       entity_storage: !type:Container
       output_container: !type:Container
 
-# just a resprite
 - type: entity
   parent: MachineArtifactCrusher
   id: MachineArtifactCrusherXenoborg
   name: body crusher
   description: Best not to let your head get stuck...
   components:
+  # DS14-start
+  - type: ArtifactCrusher
+    keepOnlyBrains: true
+  # DS14-end
   - type: Sprite
     sprite: Structures/Machines/body_crusher.rsi

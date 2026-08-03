@@ -1,0 +1,192 @@
+- type: entity
+  abstract: true
+  parent: BaseBorgModule
+  id: BaseXenoborgModuleMiner
+  components:
+  - type: BorgModule
+    borgFitTypes:
+    - xenoborg-type-miner
+  - type: Tag
+    tags:
+    - XenoborgModuleMiner
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: base-icon-inhand-left
+        color: "#6E9EE0"
+      - state: base-module-inhand-left
+        color: "#337dd6"
+      - state: base-part-inhand-left
+      - state: base-stripes-inhand-left
+        color: "#D6B328"
+      right:
+      - state: base-icon-inhand-right
+        color: "#6E9EE0"
+      - state: base-module-inhand-right
+        color: "#337dd6"
+      - state: base-part-inhand-right
+      - state: base-stripes-inhand-right
+        color: "#D6B328"
+
+- type: entity
+  parent: [ BaseXenoborgModuleMiner, BaseProviderBorgModule, BaseXenoborgContraband ]
+  id: XenoborgModuleMiner
+  name: miner xenoborg module
+  description: Mining equipment for the miner xenoborg.
+  components:
+  - type: Sprite
+    layers:
+    - state: xenoborg_generic
+    - state: icon-xenoborg-tools
+  - type: ItemBorgModule
+    hands:
+    - item: XenoborgMinerPickaxe
+    - item: WeaponProtoKineticAccelerator
+    - item: WeaponDisablerXenoborgMiner
+    - item: WeaponXenoborgPortalGun
+    - item: OreBag
+    - item: XenoborgJaunter
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: mining-module }
+  - type: XenoborgMinerEquipmentModule
+
+- type: entity
+  parent: [ BaseXenoborgModuleMiner, BaseProviderBorgModule, BaseXenoborgContraband ]
+  id: XenoborgModuleAdvancedMiner
+  name: advanced miner xenoborg module
+  description: Advanced mining equipment for the miner xenoborg.
+  components:
+  - type: Sprite
+    layers:
+    - state: xenoborg_generic
+    - state: icon-xenoborg-tools
+  - type: ItemBorgModule
+    hands:
+    - item: XenoborgMinerDiamondPickaxe
+    - item: WeaponProtoKineticAccelerator
+    - item: WeaponDisablerSMGXenoborgMiner
+    - item: WeaponXenoborgPortalGun
+    - item: OreBagOfHolding
+    - item: AdvancedMineralScannerUnpowered
+    - item: XenoborgJaunterAdvanced
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-mining-module }
+  - type: XenoborgMinerEquipmentModule
+
+- type: entity
+  parent: [ BaseItem, BaseXenoborgContraband ]
+  id: XenoborgMinerPickaxe
+  name: xenoborg pickaxe
+  description: A pickaxe calibrated for the miner xenoborg.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Tag
+    tags:
+    - Pickaxe
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/pickaxe.rsi
+    state: pickaxe
+  - type: MeleeWeapon
+    attackRate: 0.7
+    wideAnimationRotation: -135
+    soundHit:
+      path: /Audio/Weapons/smash.ogg
+      params:
+        volume: -3
+    damage:
+      groups:
+        Brute: 13
+      types:
+        Structural: 28
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,2,0
+    - 1,1,1,2
+    sprite: Objects/Weapons/Melee/pickaxe.rsi
+    storedRotation: -45
+  - type: UseDelay
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
+      Wood: 100
+
+- type: entity
+  parent: [ BaseItem, BaseXenoborgContraband ]
+  id: XenoborgMinerDiamondPickaxe
+  name: xenoborg diamond pickaxe
+  description: A diamond pickaxe calibrated for the miner xenoborg.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Tag
+    tags:
+    - Pickaxe
+  - type: Sprite
+    sprite: _DeadSpace/Lavaland/Objects/Specific/Mining/diamond_pickaxe.rsi
+    state: icon
+  - type: Item
+    size: Normal
+    sprite: _DeadSpace/Lavaland/Objects/Specific/Mining/diamond_pickaxe.rsi
+    storedRotation: -45
+  - type: MeleeWeapon
+    attackRate: 0.5
+    wideAnimationRotation: -135
+    soundHit:
+      path: /Audio/Weapons/smash.ogg
+      params:
+        volume: -3
+    damage:
+      groups:
+        Brute: 18
+      types:
+        Structural: 43
+  - type: LavalandMiningTool
+    yieldMultiplier: 4
+    cleaveTargets: 2
+    cleaveYieldMultiplier: 2
+  - type: UseDelay
+
+- type: entity
+  parent: [ WeaponDisabler, BaseXenoborgContraband ]
+  id: WeaponDisablerXenoborgMiner
+  name: xenoborg miner disabler
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: BatterySelfRecharger
+    autoRechargeRate: 26.6667
+
+- type: entity
+  parent: [ WeaponDisablerSMG, BaseXenoborgContraband ]
+  id: WeaponDisablerSMGXenoborgMiner
+  name: xenoborg miner disabler SMG
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: BatterySelfRecharger
+    autoRechargeRate: 32
+
+- type: entity
+  parent: BaseItem
+  id: XenoborgJaunter
+  name: xenoborg jaunter
+  description: A reusable jaunter that returns its user to the xenoborg mothership.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Lavaland/Objects/Specific/Mining/wormhole_jaunter.rsi
+    state: icon
+  - type: Item
+    size: Small
+    sprite: _DeadSpace/Lavaland/Objects/Specific/Mining/wormhole_jaunter.rsi
+    storedRotation: -90
+  - type: UseDelay
+    delay: 150
+  - type: XenoborgJaunter
+    searchRadius: 5
+
+- type: entity
+  parent: XenoborgJaunter
+  id: XenoborgJaunterAdvanced
+  name: advanced xenoborg jaunter
+  components:
+  - type: UseDelay
+    delay: 120

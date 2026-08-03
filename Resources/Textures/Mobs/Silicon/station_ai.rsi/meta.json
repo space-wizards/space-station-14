@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from vgstation at https://github.com/vgstation-coders/vgstation13/blob/e2923df112df8aa025846d0764697bad6506586a/icons/mob/AI.dmi - modified by chromiumboy, base modified by monotheonist.",
+    "copyright": "Taken from vgstation at https://github.com/vgstation-coders/vgstation13/blob/e2923df112df8aa025846d0764697bad6506586a/icons/mob/AI.dmi - modified by chromiumboy, base modified by monotheonist. xenoborg_mothership_eye recolored by CyberBobeks (Discord) for Dead Space 14.",
     "size": {
         "x": 32,
         "y": 32
@@ -185,6 +185,15 @@
         },
         {
             "name": "ai_camera",
+            "delays": [
+                [
+                    1.0,
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "xenoborg_mothership_eye",
             "delays": [
                 [
                     1.0,

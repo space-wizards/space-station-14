@@ -84,7 +84,7 @@
   - type: AntagMultipleRoleSpawner
     antagRoleToPrototypes:
       MothershipCore: [ MothershipCore ]
-      Xenoborg: [ XenoborgEngi, XenoborgHeavy, XenoborgScout, XenoborgStealth ]
+      Xenoborg: [ XenoborgEngi, XenoborgHeavy, XenoborgScout, XenoborgStealth, XenoborgMiner ] # DS14
     pickAndTake: true
   - type: AntagSelection
     selectionTime: PrePlayerSpawn
@@ -101,7 +101,9 @@
       mindRoles:
       - MindRoleXenoborg
       sponsorsPriority: true
-      min: 4
-      max: 4
+      # DS14-start
+      min: 5
+      max: 5
+      # DS14-end
   - type: DynamicRuleCost
     cost: 200

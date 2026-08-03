@@ -1,0 +1,53 @@
+- type: entity
+  parent: [ BaseXenoborgChassis, BaseXenoborgTransponder ]
+  id: XenoborgMiner
+  name: miner xenoborg
+  suffix: with brain
+  description: A miner xenoborg equipped to gather rare materials for the mothership.
+  components:
+  - type: BorgTransponder
+    name: miner xenoborg
+    sprite:
+      sprite: _DeadSpace/Mobs/Silicon/xenoborg_miner.rsi
+      state: xenoborg_miner
+  - type: Sprite
+    sprite: _DeadSpace/Mobs/Silicon/xenoborg_miner.rsi
+    layers:
+    - state: xenoborg_miner
+      map: ["movement"]
+    - state: xenoborg_miner_e
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: xenoborg_miner_l
+      map: ["light"]
+      shader: unshaded
+      visible: false
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: xenoborg_miner_moving
+    noMovementLayers:
+      movement:
+        state: xenoborg_miner
+  - type: BorgChassis
+    maxModules: 4
+    hasMindState: xenoborg_miner_e
+    noMindState: xenoborg_miner_e
+    moduleWhitelist:
+      tags:
+      - XenoborgModuleMiner
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - MMIFilled
+      borg_module:
+      - XenoborgModuleBasic
+      - XenoborgModuleTool
+      - XenoborgModuleSpaceMovement
+      - XenoborgModuleMiner
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHigh

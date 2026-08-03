@@ -8,6 +8,9 @@ namespace Content.Server.DeadSpace.GPS.Components;
 public sealed partial class LavalandGpsTrackerComponent : Component
 {
     [DataField]
+    public bool Enabled = true;
+
+    [DataField]
     public float DetectionRange = 100f;
 
     [DataField]

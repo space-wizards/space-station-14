@@ -21,6 +21,9 @@ public sealed class LavalandGpsTrackerSystem : EntitySystem
 
         while (query.MoveNext(out var uid, out var tracker))
         {
+            if (!tracker.Enabled)
+                continue;
+
             if (now < tracker.NextUpdateTime)
                 continue;
 

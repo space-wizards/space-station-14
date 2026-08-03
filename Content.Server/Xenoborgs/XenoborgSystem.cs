@@ -5,6 +5,7 @@ using Content.Server.Silicons.Borgs;
 using Content.Shared.Destructible;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Components;
 using Content.Shared.Silicons.Borgs.Components;
@@ -18,6 +19,7 @@ public sealed partial class XenoborgSystem : EntitySystem
 {
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
     [Dependency] private readonly BorgSystem _borg = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!; // DS14
     [Dependency] private readonly SharedRoleSystem _roles = default!;
     [Dependency] private readonly XenoborgsRuleSystem _xenoborgsRule = default!;
 
@@ -30,21 +32,48 @@ public sealed partial class XenoborgSystem : EntitySystem
         SubscribeLocalEvent<MothershipCoreComponent, DestructionEventArgs>(OnCoreDestroyed);
 
         SubscribeLocalEvent<XenoborgComponent, MindAddedMessage>(OnXenoborgMindAdded);
-        SubscribeLocalEvent<XenoborgComponent, MindRemovedMessage>(OnXenoborgMindRemoved);
+        SubscribeLocalEvent<XenoborgComponent, BeforeMindRemovedMessage>(OnXenoborgMindRemoved); // DS14
     }
 
     private void OnXenoborgDestroyed(EntityUid uid, XenoborgComponent component, DestructionEventArgs args)
     {
+        // DS14-start
+        // The mothership core also carries XenoborgComponent for its role briefing.
+        // Its destruction is handled separately and it must not count as a regular unit.
+        if (HasComp<MothershipCoreComponent>(uid))
+            return;
+        // DS14-end
+
         // if a xenoborg is destroyed, it will check to see if it was the last one
         var xenoborgQuery = AllEntityQuery<XenoborgComponent>(); // paused xenoborgs still count
         while (xenoborgQuery.MoveNext(out var xenoborg, out _))
         {
-            if (xenoborg != uid)
-                return;
+            // DS14-start
+            if (xenoborg == uid ||
+                HasComp<MothershipCoreComponent>(xenoborg) ||
+                TerminatingOrDeleted(xenoborg) ||
+                EntityManager.IsQueuedForDeletion(xenoborg) ||
+                !TryComp<MindContainerComponent>(xenoborg, out var mind) ||
+                !mind.HasMind ||
+                !_mobState.IsAlive(xenoborg))
+                continue;
+
+            return;
+            // DS14-end
         }
 
         var mothershipCoreQuery = AllEntityQuery<MothershipCoreComponent>(); // paused mothership cores still count
-        var mothershipCoreAlive = mothershipCoreQuery.MoveNext(out _, out _);
+        // DS14-start
+        var mothershipCoreAlive = false;
+        while (mothershipCoreQuery.MoveNext(out var core, out _))
+        {
+            if (TerminatingOrDeleted(core) || EntityManager.IsQueuedForDeletion(core))
+                continue;
+
+            mothershipCoreAlive = true;
+            break;
+        }
+        // DS14-end
 
         var xenoborgsRuleQuery = EntityQueryEnumerator<XenoborgsRuleComponent>();
         if (xenoborgsRuleQuery.MoveNext(out var xenoborgsRuleEnt, out var xenoborgsRuleComp))
@@ -59,8 +88,12 @@ public sealed partial class XenoborgSystem : EntitySystem
         {
             // if it finds a mothership core that is different from the one just destroyed,
             // it doesn't explode the xenoborgs
-            if (mothershipCoreEnt != ent)
+            // DS14-start
+            if (mothershipCoreEnt != ent &&
+                !TerminatingOrDeleted(mothershipCoreEnt) &&
+                !EntityManager.IsQueuedForDeletion(mothershipCoreEnt))
                 return;
+            // DS14-end
         }
 
         var xenoborgsRuleQuery = EntityQueryEnumerator<XenoborgsRuleComponent>();
@@ -71,8 +104,12 @@ public sealed partial class XenoborgSystem : EntitySystem
         var xenoborgQuery = AllEntityQuery<XenoborgComponent, BorgTransponderComponent>(); // paused xenoborgs still explode
         while (xenoborgQuery.MoveNext(out var xenoborgEnt, out _, out _))
         {
-            if (HasComp<MothershipCoreComponent>(xenoborgEnt))
+            // DS14-start
+            if (HasComp<MothershipCoreComponent>(xenoborgEnt) ||
+                TerminatingOrDeleted(xenoborgEnt) ||
+                EntityManager.IsQueuedForDeletion(xenoborgEnt))
                 continue;
+            // DS14-end
 
             // I got tired to trying to make this work via the device network.
             // so brute force it is...
@@ -82,7 +119,10 @@ public sealed partial class XenoborgSystem : EntitySystem
 
     private void OnXenoborgMindAdded(EntityUid ent, XenoborgComponent comp, MindAddedMessage args)
     {
-        _roles.MindAddRole(args.Mind, comp.MindRole, silent: true);
+        // DS14-start
+        if (!_roles.MindHasRole<XenoborgRoleComponent>(args.Mind))
+            _roles.MindAddRole(args.Mind, comp.MindRole, silent: true);
+        // DS14-end
 
         if (!TryComp<ActorComponent>(ent, out var actorComp))
             return;
@@ -94,7 +134,7 @@ public sealed partial class XenoborgSystem : EntitySystem
         );
     }
 
-    private void OnXenoborgMindRemoved(EntityUid ent, XenoborgComponent comp, MindRemovedMessage args)
+    private void OnXenoborgMindRemoved(EntityUid ent, XenoborgComponent comp, BeforeMindRemovedMessage args) // DS14
     {
         _roles.MindRemoveRole(args.Mind.Owner, comp.MindRole);
     }

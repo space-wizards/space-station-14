@@ -4,3 +4,7 @@ ent-ActionXenoborgControlMonitor = Xenoborgs Control Console
     .desc = View the Xenoborgs Control Console
 ent-ActionXenoborgCameraMonitor = Xenoborgs Camera Monitor
     .desc = View the Xenoborgs Camera Monitor
+ent-XenoborgMothershipEye = mothership core eye
+    .desc = The mothership core's local viewer.
+ent-ActionMothershipEye = project eye
+    .desc = Projects or recalls an eye that can move only within the xenoborg mothership.

@@ -1016,3 +1016,8 @@
     fireRate: 2
     minAngle: 1
     maxAngle: 2
+  # DS14-start
+  - type: BatteryAmmoProvider
+    proto: RedHeavyLaserXenoborg
+    fireCost: 100
+  # DS14-end

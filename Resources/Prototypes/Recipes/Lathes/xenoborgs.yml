@@ -56,8 +56,9 @@
   id: XenoborgModuleDoorControlRecipe
   result: XenoborgModuleDoorControl
   materials:
-    Steel: 1500
+    Steel: 2000 # DS14
     Glass: 1500
+    Plastic: 1000 # DS14
 
 ## heavy xenoborg modules
 
@@ -66,8 +67,13 @@
   id: XenoborgModuleHeavyLaserRecipe
   result: XenoborgModuleHeavyLaser
   materials:
-    Steel: 1500
+    Steel: 2000 # DS14
     Glass: 1500
+    # DS14-start
+    Plasma: 1000
+    Plastic: 500
+    Diamond: 25
+    # DS14-end
 
 ## scout xenoborg modules
 
@@ -77,7 +83,12 @@
   result: XenoborgModuleEnergySword
   materials:
     Steel: 1500
-    Glass: 1500
+    # DS14-start
+    Glass: 1000
+    Plasma: 1500
+    Plastic: 1000
+    Diamond: 25
+    # DS14-end
 
 ## stealth xenoborg modules
 
@@ -86,4 +97,10 @@
   id: XenoborgModuleSuperCloakDeviceRecipe
   result: XenoborgModuleSuperCloakDevice
   materials:
-    Glass: 3000
+    # DS14-start
+    Steel: 1000
+    Glass: 2000
+    Plasma: 1000
+    Plastic: 1500
+    Diamond: 25
+    # DS14-end

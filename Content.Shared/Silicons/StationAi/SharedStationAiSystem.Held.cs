@@ -4,6 +4,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
+using Content.Shared.Xenoborgs.Components; // DS14
 using Robust.Shared.Player;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -136,6 +137,27 @@ public abstract partial class SharedStationAiSystem
         if (ev.Actor == ev.Target)
             return;
 
+        // DS14-start
+        // Xenoborg airlocks deliberately disable the regular station AI whitelist.
+        // The mothership core may still operate whitelisted devices, but only on its own grid.
+        if (HasComp<MothershipCoreComponent>(ev.Actor))
+        {
+            if (!IsOnMothershipGrid(ev.Actor, ev.Target))
+            {
+                ev.Cancel();
+                return;
+            }
+
+            if (!PowerReceiver.IsPowered(ev.Target))
+            {
+                ShowDeviceNotRespondingPopup(ev.Actor);
+                ev.Cancel();
+            }
+
+            return;
+        }
+        // DS14-end
+
         if (TryComp(ev.Actor, out StationAiHeldComponent? aiComp) &&
            (!TryComp(ev.Target, out StationAiWhitelistComponent? whitelistComponent) ||
             !ValidateAi((ev.Actor, aiComp))))
@@ -159,12 +181,20 @@ public abstract partial class SharedStationAiSystem
 
     private void OnHeldInteraction(Entity<StationAiHeldComponent> ent, ref InteractionAttemptEvent args)
     {
+        var hasWhitelist = TryComp(args.Target, out StationAiWhitelistComponent? whitelistComponent);
+        // DS14-start
+        var mothershipCore = HasComp<MothershipCoreComponent>(ent.Owner);
+        var onMothershipGrid = args.Target != null && IsOnMothershipGrid(ent.Owner, args.Target.Value);
+        var allowDisabledWhitelist = mothershipCore && onMothershipGrid;
+        // DS14-end
+
         // Cancel if it's not us or something with a whitelist, or whitelist is disabled.
-        args.Cancelled = (!TryComp(args.Target, out StationAiWhitelistComponent? whitelistComponent)
-                          || !whitelistComponent.Enabled)
+        args.Cancelled = (!hasWhitelist
+                          || (whitelistComponent is { Enabled: false } && !allowDisabledWhitelist)
+                          || (mothershipCore && !onMothershipGrid))
                          && ent.Owner != args.Target
                          && args.Target != null;
-        if (whitelistComponent is { Enabled: false })
+        if (whitelistComponent is { Enabled: false } && !allowDisabledWhitelist)
         {
             ShowDeviceNotRespondingPopup(ent.Owner);
         }

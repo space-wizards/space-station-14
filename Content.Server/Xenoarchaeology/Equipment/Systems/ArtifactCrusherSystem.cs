@@ -42,12 +42,24 @@ public sealed class ArtifactCrusherSystem : SharedArtifactCrusherSystem
                 }
             }
 
-            if (!TryComp<BodyComponent>(contained, out var body))
+            // DS14-start
+            if (!HasComp<BodyComponent>(contained))
+            {
                 Del(contained);
+                continue;
+            }
 
-            var gibs = _gibbing.Gib(contained);
+            var gibs = _gibbing.Gib(contained, dropGiblets: !crusher.KeepOnlyBrains);
+            // DS14-end
             foreach (var gib in gibs)
             {
+                // DS14-start
+                if (crusher.KeepOnlyBrains && !HasComp<BrainComponent>(gib))
+                {
+                    Del(gib);
+                    continue;
+                }
+                // DS14-end
                 ContainerSystem.Insert((gib, null, null, null), crusher.OutputContainer);
             }
         }

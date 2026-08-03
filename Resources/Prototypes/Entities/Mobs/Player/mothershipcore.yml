@@ -8,6 +8,9 @@
   - type: BlockMovement # They should never be moving!
     blockInteraction: false
     blockUse: false
+  - type: Physics
+    bodyType: Static
+    canCollide: true
   - type: Appearance
   - type: WiresVisuals
   - type: Damageable
@@ -17,12 +20,14 @@
       fix1:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.4,-0.4,0.4,0.4"
-        density: 190
+          bounds: "-0.45,-0.45,0.45,0.45" # DS14
+        density: 200
+        hard: true
         mask:
         - MachineMask
         layer:
         - MachineLayer
+        - Impassable # DS14
   - type: Sprite
     sprite: Mobs/Silicon/mothership_core.rsi
     layers:
@@ -234,7 +239,7 @@
     needsHands: false
   - type: Eye
     drawFov: false
-  # - type: StationAiOverlay # removed until is no longer buggy
+  - type: StationAiHeld # DS14
   - type: IgnoreUIRange
   - type: ComplexInteraction
   - type: MindContainer
@@ -243,6 +248,7 @@
   - type: ActionGrant
     actions:
     - ActionViewLaws
+    - ActionMothershipEye # DS14
   - type: SiliconLawProvider
     laws: MothershipCoreLawset # custom laws here
     subverted: true
@@ -267,7 +273,7 @@
       enum.SurveillanceCameraMonitorUiKey.Key:
         toggleAction: ActionXenoborgCameraMonitor
   - type: ShowElectrocutionHUD
-  - type: PowerMonitoringCableNetworks
+  # DS14
   - type: RadarConsole
 
 - type: entity
@@ -297,3 +303,32 @@
     priority: -6
   - type: InstantAction
     event: !type:ToggleIntrinsicUIEvent { key: enum.SurveillanceCameraMonitorUiKey.Key }
+
+# DS14-start
+- type: entity
+  parent: StationAiHolo
+  id: XenoborgMothershipEye
+  name: xenoborg mothership eye
+  description: The mothership core's local viewer.
+  components:
+  - type: Sprite
+    sprite: Mobs/Silicon/station_ai.rsi
+    layers:
+    - state: xenoborg_mothership_eye
+      map: ["base"]
+
+- type: entity
+  parent: BaseAction
+  id: ActionMothershipEye
+  name: project mothership eye
+  description: Projects or recalls the mothership core's local eye.
+  components:
+  - type: Action
+    priority: -9
+    itemIconStyle: BigAction
+    icon:
+      sprite: Interface/Actions/actions_ai.rsi
+      state: camera
+  - type: InstantAction
+    event: !type:ToggleMothershipEyeEvent
+# DS14-end

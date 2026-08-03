@@ -50,6 +50,14 @@ public sealed partial class ArtifactCrusherComponent : Component
     [DataField]
     public EntityWhitelist CrushingWhitelist = new();
 
+    // DS14-start
+    /// <summary>
+    /// Whether crushing a body should delete all returned contents except entities with BrainComponent.
+    /// </summary>
+    [DataField]
+    public bool KeepOnlyBrains;
+    // DS14-end
+
     /// <summary>
     /// The minimum amount of fragments spawned.
     /// </summary>
