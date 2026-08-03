@@ -177,7 +177,7 @@ public abstract partial class SharedCardSystem
         if (args.Handled)
             return;
 
-        if (!TryComp<CardsComponent>(args.Used, out var recipientComp))
+        if (!_cardsQuery.TryComp(args.Used, out var recipientComp))
             return;
 
         // Transfer stacks from ground to hand

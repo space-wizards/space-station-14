@@ -207,7 +207,7 @@ public abstract partial class SharedCardSystem : EntitySystem
     private void HandleShuffleCardsEvent(ShuffleCardsEvent args)
     {
         var cards = GetEntity(args.Cards);
-        if (TryComp<CardsComponent>(cards, out var comp))
+        if (_cardsQuery.TryComp(cards, out var comp))
             TryShuffleCards((cards, comp));
     }
 
@@ -230,7 +230,7 @@ public abstract partial class SharedCardSystem : EntitySystem
     private void HandleFlipCardsEvent(FlipCardsEvent args)
     {
         var cards = GetEntity(args.Cards);
-        if (TryComp<CardsComponent>(cards, out var comp))
+        if (_cardsQuery.TryComp(cards, out var comp))
             TryFlipCards((cards, comp));
     }
 
@@ -251,7 +251,7 @@ public abstract partial class SharedCardSystem : EntitySystem
     private void HandleFanCardsEvent(FanCardsEvent args)
     {
         var cards = GetEntity(args.Cards);
-        if (TryComp<CardsComponent>(cards, out var comp))
+        if (_cardsQuery.TryComp(cards, out var comp))
             TryFanCards((cards, comp));
     }
 
@@ -274,7 +274,7 @@ public abstract partial class SharedCardSystem : EntitySystem
     {
         var cards = GetEntity(args.Cards);
         var user = GetEntity(args.User);
-        if (TryComp<CardsComponent>(cards, out var comp))
+        if (_cardsQuery.TryComp(cards, out var comp))
             TryTakeCard((cards, comp), (user, Transform(user)), args.CardIndex, out _);
     }
 
@@ -310,7 +310,7 @@ public abstract partial class SharedCardSystem : EntitySystem
             if (split == null)
                 return false;
         }
-        if (!TryComp<CardsComponent>(split, out var recipientStack))
+        if (!_cardsQuery.TryComp(split, out var recipientStack))
             return false;
 
         // If this is true it is a new deck so copies over the properties
