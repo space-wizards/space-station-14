@@ -18,7 +18,7 @@ public abstract partial class AlertTeleportSystem : EntitySystem
     [Dependency] private SharedAudioSystem _audioSystem = default!;
 
     [SubscribeLocalEvent]
-    private void OnAlertTeleport(Entity<AlertTeleportComponent> ent, ref AlertTeleportEvent arg)
+    private void OnAlertTeleport(Entity<AlertTeleportComponent> ent, ref AlertTeleportEvent args)
     {
         var data = ent.Comp.Targets[arg.AlertId];
 
