@@ -1,10 +1,10 @@
-using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Rejuvenate;
 using Content.Shared.StatusEffectNew.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.StatusEffectNew;
 
@@ -21,8 +21,6 @@ public sealed partial class StatusEffectsSystem : EntitySystem
     [Dependency] private EntityQuery<StatusEffectContainerComponent> _containerQuery = default!;
     [Dependency] private EntityQuery<StatusEffectComponent> _effectQuery = default!;
 
-    public readonly HashSet<string> StatusEffectPrototypes = [];
-
     public override void Initialize()
     {
         base.Initialize();
@@ -35,10 +33,6 @@ public sealed partial class StatusEffectsSystem : EntitySystem
         SubscribeLocalEvent<StatusEffectContainerComponent, EntRemovedFromContainerMessage>(OnEntityRemoved);
 
         SubscribeLocalEvent<RejuvenateRemovedStatusEffectComponent, StatusEffectRelayedEvent<RejuvenateEvent>>(OnRejuvenate);
-
-        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
-
-        ReloadStatusEffectsCache();
     }
 
     public override void Update(float frameTime)
@@ -60,25 +54,6 @@ public sealed partial class StatusEffectsSystem : EntitySystem
                 continue;
 
             PredictedQueueDel(ent);
-        }
-    }
-
-    private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
-    {
-        if (!args.WasModified<EntityPrototype>())
-            return;
-
-        ReloadStatusEffectsCache();
-    }
-
-    private void ReloadStatusEffectsCache()
-    {
-        StatusEffectPrototypes.Clear();
-
-        foreach (var ent in ProtoMan.EnumeratePrototypes<EntityPrototype>())
-        {
-            if (ent.HasComp<StatusEffectComponent>(Factory))
-                StatusEffectPrototypes.Add(ent.ID);
         }
     }
 
