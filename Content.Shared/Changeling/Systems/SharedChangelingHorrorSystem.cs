@@ -133,7 +133,7 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
         {
             // do fancy math to add back DNA based on remaining time
             Dictionary<string, FixedPoint2> dico = new() {
-                {"ChangelingDNA", TimeToDNA(ent.Comp.TimeBudget - (_timing.CurTime - ent.Comp.InitialTime)) }
+                {"ChangelingDNA", TimeToDNA(ent.Comp.TimeBudget - (_timing.CurTime - ent.Comp.InitialTime), ent.Comp.SecondPerDNA, ent.Comp.GracePeriod) }
                 };
             _stores.TryAddCurrency(dico, ent.Owner);
         }
@@ -167,7 +167,7 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
 
         // calculate timing
         var now = _timing.CurTime;
-        var transformationTime = TimeSpan.FromSeconds(5);// you get 5 free seconds!
+        var transformationTime = TimeSpan.FromSeconds(ent.Comp.GracePeriod);// you get 5 free seconds!
 
         if (TryComp<StoreComponent>(ent.Owner, out var store))
         {
@@ -179,7 +179,7 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
                     {"ChangelingDNA", -k }
                 };
                 _stores.TryAddCurrency(dico, ent.Owner);
-                transformationTime = DNAToTime(k);
+                transformationTime = DNAToTime(k, ent.Comp.SecondPerDNA, ent.Comp.GracePeriod);
             }
         }
 
@@ -242,20 +242,20 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
     #region helpers
     protected abstract void MakeGlobal(EntityUid ent);
     /// <summary>
-    /// Converts an amount of DNA currency into horror mode time
+    /// Converts an amount of DNA currency into horror mode time.
     /// </summary>
-    public static TimeSpan DNAToTime(FixedPoint2 dna)
+    public static TimeSpan DNAToTime(FixedPoint2 dna, double secondPerDNA, double grace)
     {
-        return TimeSpan.FromSeconds((double)dna * 3d + 5d);
+        return TimeSpan.FromSeconds((double)dna * secondPerDNA);
     }
 
     /// <summary>
     /// Returns the horror mode time to its DNA worth. Note that going inbetween conversions is lossy.
     /// </summary>
-    public static FixedPoint2 TimeToDNA(TimeSpan time)
+    public static FixedPoint2 TimeToDNA(TimeSpan time, double secondPerDNA, double grace)
     {
-        var seconds = time.TotalSeconds - 5;
-        var dna = Math.Max(0, (int)(seconds / 3d));
+        var seconds = time.TotalSeconds - grace;
+        var dna = Math.Max(0, (int)(seconds / secondPerDNA));
         return FixedPoint2.New(dna);
     }
     #endregion

@@ -62,6 +62,9 @@ public sealed partial class ChangelingTransformBoundUserInterface(EntityUid owne
             };
             buttons.Add(option);
 
+            if (EntMan.HasComponent<ChangelingUnremovableIdentityComponent>(identity.Identity))
+                continue; // the changeling horror can't be dropped
+
             // Options for dropping identities.
             var dropOption = new RadialMenuActionOption<NetEntity>(SendIdentityDrop, EntMan.GetNetEntity(identity.Identity.Value))
             {

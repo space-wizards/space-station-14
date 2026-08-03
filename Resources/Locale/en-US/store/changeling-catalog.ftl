@@ -35,3 +35,7 @@ changeling-catalog-last-resort-desc = Gib your current body and escape as a weak
 
 changeling-catalog-night-vision-name = Night Vision
 changeling-catalog-night-vision-desc = You modify your photoreceptors and heighten your senses as to become able to see in complete darkness.
+
+
+changeling-catalog-horror-form-name = Horror Form
+changeling-catalog-horror-form-desc = We reveal our true nature, transforming into a juggernaut of maw and flesh. However, this form is exhausting and cannot be maintained forever. Keeping it up burns DNA points.
