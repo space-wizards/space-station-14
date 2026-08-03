@@ -1,4 +1,3 @@
-using Content.Shared.Cards;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 using Robust.Shared.Utility;
@@ -42,7 +41,7 @@ public sealed partial class CardStackPrototype : IPrototype, IInheritingPrototyp
     /// The entity id that will be spawned by default from this deck.
     /// </summary>
     [DataField(required: true)]
-    public EntProtoId<CardsComponent> Spawn { get; private set; } = string.Empty;
+    public EntProtoId<CardsComponent> Spawn { get; private set; }
 
     [DataField]
     public int? MaxCount { get; private set; }

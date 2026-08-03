@@ -136,9 +136,10 @@ public abstract partial class SharedCardSystem
 
         // Take card verbs
         // Can only take card when fanned
-        // If face down will take a random card
         if (!ent.Comp.Fanned)
             return;
+
+        // If face down will take a random card
         if (ent.Comp.Flipped)
         {
             for (var i = 0; i < ent.Comp.Cards.Count; i++)

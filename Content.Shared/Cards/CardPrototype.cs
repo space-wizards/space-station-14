@@ -1,6 +1,5 @@
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Cards;
 
@@ -58,7 +57,7 @@ public sealed partial class CardPrototype : IPrototype, IInheritingPrototype
 /// <summary>
 /// A single visual layer on a card.
 /// </summary>
-[DataDefinition]
+[DataRecord]
 public sealed partial class CardLayerData
 {
     /// <summary>
@@ -71,6 +70,5 @@ public sealed partial class CardLayerData
     /// This layer's colour. If unset, falls back to the owning prototype's <see cref="CardPrototype.Color"/>.
     /// If both unset, no colour change will be applied.
     /// </summary>
-    [DataField]
     public Color? Color;
 }

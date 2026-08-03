@@ -5,368 +5,368 @@
 
 - type: card
   abstract: true
+  parent: BaseCard
   id: Clubs
-  parent: [ BaseCard ]
-  color: darkgreen
+  color: "#004000" # the darkest system green is too light
 
 - type: card
   abstract: true
+  parent: Clubs
   id: ClubsIcon
-  parent: [ Clubs ]
   layers:
-    - state: sc_Clubs
+  - state: sc_ClubsDiamonds
 
 - type: card
   abstract: true
+  parent: BaseCard
   id: Diamonds
-  parent: [ BaseCard ]
   color: firebrick
 
 - type: card
   abstract: true
+  parent: Diamonds
   id: DiamondsIcon
-  parent: [ Diamonds ]
   layers:
-    - state: sc_Diamonds
+  - state: sc_ClubsDiamonds
 
 - type: card
   abstract: true
+  parent: BaseCard
   id: Hearts
-  parent: [ BaseCard ]
   color: maroon
 
 - type: card
   abstract: true
+  parent: Hearts
   id: HeartsIcon
-  parent: [ Hearts ]
   layers:
-    - state: sc_Hearts
+  - state: sc_Hearts
 
 - type: card
   abstract: true
+  parent: BaseCard
   id: Spades
-  parent: [ BaseCard ]
   color: midnightblue
 
 - type: card
   abstract: true
+  parent: Spades
   id: SpadesIcon
-  parent: [ Spades ]
   layers:
-    - state: sc_Spades
+  - state: sc_Spades
 
 # Clubs
 - type: card
+  parent: Clubs
   id: ace_of_clubs
-  parent: [ Clubs ]
   layers:
-    - state: sc_Ace_of_Clubs
+  - state: sc_Ace_of_Clubs
 
 - type: card
+  parent: ClubsIcon
   id: two_of_clubs
-  parent: [ ClubsIcon ]
   layers:
-    - state: sc_2
+  - state: sc_2
 
 - type: card
+  parent: ClubsIcon
   id: three_of_clubs
-  parent: [ ClubsIcon ]
   layers:
-    - state: sc_3
+  - state: sc_3
 
 - type: card
+  parent: ClubsIcon
   id: four_of_clubs
-  parent: [ ClubsIcon ]
   layers:
-    - state: sc_4
+  - state: sc_4
 
 - type: card
+  parent: ClubsIcon
   id: five_of_clubs
-  parent: [ ClubsIcon ]
   layers:
-    - state: sc_5
+  - state: sc_5
 
 - type: card
+  parent: ClubsIcon
   id: six_of_clubs
-  parent: [ ClubsIcon ]
   layers:
-    - state: sc_6
+  - state: sc_6
 
 - type: card
+  parent: ClubsIcon
   id: seven_of_clubs
-  parent: [ ClubsIcon ]
   layers:
-    - state: sc_7
+  - state: sc_7
 
 - type: card
+  parent: ClubsIcon
   id: eight_of_clubs
-  parent: [ ClubsIcon ]
   layers:
-    - state: sc_8
+  - state: sc_8
 
 - type: card
+  parent: ClubsIcon
   id: nine_of_clubs
-  parent: [ ClubsIcon ]
   layers:
-    - state: sc_9
+  - state: sc_9
 
 - type: card
+  parent: ClubsIcon
   id: ten_of_clubs
-  parent: [ ClubsIcon ]
   layers:
-    - state: sc_10
+  - state: sc_10
 
 - type: card
+  parent: ClubsIcon
   id: jack_of_clubs
-  parent: [ ClubsIcon ]
   layers:
-    - state: sc_Jack
+  - state: sc_Jack
 
 - type: card
+  parent: ClubsIcon
   id: queen_of_clubs
-  parent: [ ClubsIcon ]
   layers:
-    - state: sc_Queen
+  - state: sc_Queen
 
 - type: card
+  parent: ClubsIcon
   id: king_of_clubs
-  parent: [ ClubsIcon ]
   layers:
-    - state: sc_King
+  - state: sc_King
 
 # Diamonds
 - type: card
+  parent: Diamonds
   id: ace_of_diamonds
-  parent: [ Diamonds ]
   layers:
-    - state: sc_Ace_of_Diamonds
+  - state: sc_Ace_of_Diamonds
 
 - type: card
+  parent: DiamondsIcon
   id: two_of_diamonds
-  parent: [ DiamondsIcon ]
   layers:
-    - state: sc_2
+  - state: sc_2
 
 - type: card
+  parent: DiamondsIcon
   id: three_of_diamonds
-  parent: [ DiamondsIcon ]
   layers:
-    - state: sc_3
+  - state: sc_3
 
 - type: card
+  parent: DiamondsIcon
   id: four_of_diamonds
-  parent: [ DiamondsIcon ]
   layers:
-    - state: sc_4
+  - state: sc_4
 
 - type: card
+  parent: DiamondsIcon
   id: five_of_diamonds
-  parent: [ DiamondsIcon ]
   layers:
-    - state: sc_5
+  - state: sc_5
 
 - type: card
+  parent: DiamondsIcon
   id: six_of_diamonds
-  parent: [ DiamondsIcon ]
   layers:
-    - state: sc_6
+  - state: sc_6
 
 - type: card
+  parent: DiamondsIcon
   id: seven_of_diamonds
-  parent: [ DiamondsIcon ]
   layers:
-    - state: sc_7
+  - state: sc_7
 
 - type: card
+  parent: DiamondsIcon
   id: eight_of_diamonds
-  parent: [ DiamondsIcon ]
   layers:
-    - state: sc_8
+  - state: sc_8
 
 - type: card
+  parent: DiamondsIcon
   id: nine_of_diamonds
-  parent: [ DiamondsIcon ]
   layers:
-    - state: sc_9
+  - state: sc_9
 
 - type: card
+  parent: DiamondsIcon
   id: ten_of_diamonds
-  parent: [ DiamondsIcon ]
   layers:
-    - state: sc_10
+  - state: sc_10
 
 - type: card
+  parent: DiamondsIcon
   id: jack_of_diamonds
-  parent: [ DiamondsIcon ]
   layers:
-    - state: sc_Jack
+  - state: sc_Jack
 
 - type: card
+  parent: DiamondsIcon
   id: queen_of_diamonds
-  parent: [ DiamondsIcon ]
   layers:
-    - state: sc_Queen
+  - state: sc_Queen
 
 - type: card
+  parent: DiamondsIcon
   id: king_of_diamonds
-  parent: [ DiamondsIcon ]
   layers:
-    - state: sc_King
+  - state: sc_King
 
 # Hearts
 - type: card
+  parent: Hearts
   id: ace_of_hearts
-  parent: [ Hearts ]
   layers:
-    - state: sc_Ace_of_Hearts
+  - state: sc_Ace_of_Hearts
 
 - type: card
+  parent: HeartsIcon
   id: two_of_hearts
-  parent: [ HeartsIcon ]
   layers:
-    - state: sc_2
+  - state: sc_2
 
 - type: card
+  parent: HeartsIcon
   id: three_of_hearts
-  parent: [ HeartsIcon ]
   layers:
-    - state: sc_3
+  - state: sc_3
 
 - type: card
+  parent: HeartsIcon
   id: four_of_hearts
-  parent: [ HeartsIcon ]
   layers:
-    - state: sc_4
+  - state: sc_4
 
 - type: card
+  parent: HeartsIcon
   id: five_of_hearts
-  parent: [ HeartsIcon ]
   layers:
-    - state: sc_5
+  - state: sc_5
 
 - type: card
+  parent: HeartsIcon
   id: six_of_hearts
-  parent: [ HeartsIcon ]
   layers:
-    - state: sc_6
+  - state: sc_6
 
 - type: card
+  parent: HeartsIcon
   id: seven_of_hearts
-  parent: [ HeartsIcon ]
   layers:
-    - state: sc_7
+  - state: sc_7
 
 - type: card
+  parent: HeartsIcon
   id: eight_of_hearts
-  parent: [ HeartsIcon ]
   layers:
-    - state: sc_8
+  - state: sc_8
 
 - type: card
+  parent: HeartsIcon
   id: nine_of_hearts
-  parent: [ HeartsIcon ]
   layers:
-    - state: sc_9
+  - state: sc_9
 
 - type: card
+  parent: HeartsIcon
   id: ten_of_hearts
-  parent: [ HeartsIcon ]
   layers:
-    - state: sc_10
+  - state: sc_10
 
 - type: card
+  parent: HeartsIcon
   id: jack_of_hearts
-  parent: [ HeartsIcon ]
   layers:
-    - state: sc_Jack
+  - state: sc_Jack
 
 - type: card
+  parent: HeartsIcon
   id: queen_of_hearts
-  parent: [ HeartsIcon ]
   layers:
-    - state: sc_Queen
+  - state: sc_Queen
 
 - type: card
+  parent: HeartsIcon
   id: king_of_hearts
-  parent: [ HeartsIcon ]
   layers:
-    - state: sc_King
+  - state: sc_King
 
 # Spades
 - type: card
+  parent: Spades
   id: ace_of_spades
-  parent: [ Spades ]
   layers:
-    - state: sc_Ace_of_Spades
+  - state: sc_Ace_of_Spades
 
 - type: card
+  parent: SpadesIcon
   id: two_of_spades
-  parent: [ SpadesIcon ]
   layers:
-    - state: sc_2
+  - state: sc_2
 
 - type: card
+  parent: SpadesIcon
   id: three_of_spades
-  parent: [ SpadesIcon ]
   layers:
-    - state: sc_3
+  - state: sc_3
 
 - type: card
+  parent: SpadesIcon
   id: four_of_spades
-  parent: [ SpadesIcon ]
   layers:
-    - state: sc_4
+  - state: sc_4
 
 - type: card
+  parent: SpadesIcon
   id: five_of_spades
-  parent: [ SpadesIcon ]
   layers:
-    - state: sc_5
+  - state: sc_5
 
 - type: card
+  parent: SpadesIcon
   id: six_of_spades
-  parent: [ SpadesIcon ]
   layers:
-    - state: sc_6
+  - state: sc_6
 
 - type: card
+  parent: SpadesIcon
   id: seven_of_spades
-  parent: [ SpadesIcon ]
   layers:
-    - state: sc_7
+  - state: sc_7
 
 - type: card
+  parent: SpadesIcon
   id: eight_of_spades
-  parent: [ SpadesIcon ]
   layers:
-    - state: sc_8
+  - state: sc_8
 
 - type: card
+  parent: SpadesIcon
   id: nine_of_spades
-  parent: [ SpadesIcon ]
   layers:
-    - state: sc_9
+  - state: sc_9
 
 - type: card
+  parent: SpadesIcon
   id: ten_of_spades
-  parent: [ SpadesIcon ]
   layers:
-    - state: sc_10
+  - state: sc_10
 
 - type: card
+  parent: SpadesIcon
   id: jack_of_spades
-  parent: [ SpadesIcon ]
   layers:
-    - state: sc_Jack
+  - state: sc_Jack
 
 - type: card
+  parent: SpadesIcon
   id: queen_of_spades
-  parent: [ SpadesIcon ]
   layers:
-    - state: sc_Queen
+  - state: sc_Queen
 
 - type: card
+  parent: SpadesIcon
   id: king_of_spades
-  parent: [ SpadesIcon ]
   layers:
-    - state: sc_King
+  - state: sc_King

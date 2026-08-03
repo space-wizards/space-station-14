@@ -13,8 +13,8 @@ namespace Content.Client.Cards;
 [UsedImplicitly]
 public sealed partial class CardSystem : SharedCardSystem
 {
-    [Dependency] private ItemCounterSystem _counterSystem = default!;
     [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private ItemCounterSystem _counterSystem = default!;
     [Dependency] private SpriteSystem _sprite = default!;
 
 
@@ -35,10 +35,8 @@ public sealed partial class CardSystem : SharedCardSystem
 
         // Hide in strip menu
         // TODO: This should be done in a less bad way. The strip menu system should have a method or field for setting this.
-        if (
-            HasComp<MobStateComponent>(xform.ParentUid)
-            && xform.ParentUid != _playerManager.LocalSession?.AttachedEntity
-        )
+        if (HasComp<MobStateComponent>(xform.ParentUid)
+            && xform.ParentUid != _playerManager.LocalSession?.AttachedEntity)
         {
             flipped = false;
         }
@@ -72,10 +70,10 @@ public sealed partial class CardSystem : SharedCardSystem
 
             foreach (var layer in cardLayers)
             {
-                if (!_sprite.LayerExists((ent.Owner, sprite), layer))
+                if (!_sprite.LayerMapTryGet((ent.Owner, sprite), layer, out var layerIndex, logMissing: false))
                     break;
 
-                _sprite.RemoveLayer((ent.Owner, sprite), layer);
+                _sprite.RemoveLayer((ent.Owner, sprite), layerIndex);
             }
         }
 
@@ -194,23 +192,23 @@ public sealed partial class CardSystem : SharedCardSystem
 
     private void BuildLayer(string layer, string? rsi, string layerState, Color? layerColor, Entity<SpriteComponent?> sprite)
     {
-        _sprite.LayerSetVisible(sprite, layer, true);
+        if (!_sprite.LayerMapTryGet(sprite, layer, out var layerIndex, logMissing: true))
+            return;
+
+        _sprite.LayerSetVisible(sprite, layerIndex, true);
+        _sprite.LayerSetColor(sprite, layerIndex, layerColor ?? Color.White);
         if (rsi == null)
-        {
-            _sprite.LayerSetRsiState(sprite, layer, layerState);
-        }
+            _sprite.LayerSetRsiState(sprite, layerIndex, layerState);
         else
-        {
             _sprite.LayerSetSprite(sprite, layer, new SpriteSpecifier.Rsi(new ResPath(rsi), layerState));
-        }
-        if (layerColor != null)
-            _sprite.LayerSetColor(sprite, layer, layerColor.Value);
     }
 
     private void TransformLayer(string layer, Vector2 movement, Angle rotation, Entity<SpriteComponent?> sprite)
     {
-        _sprite.LayerSetOffset(sprite, layer, movement);
-        _sprite.LayerSetRotation(sprite, layer, rotation);
+        if (!_sprite.LayerMapTryGet(sprite, layer, out var layerIndex, logMissing: true))
+            return;
+        _sprite.LayerSetOffset(sprite, layerIndex, movement);
+        _sprite.LayerSetRotation(sprite, layerIndex, rotation);
     }
 
     private static void ApplyThreshold(List<int> thresholds, ref int actual, ref int maxCount)
@@ -222,10 +220,10 @@ public sealed partial class CardSystem : SharedCardSystem
         {
             //If our value exceeds threshold, the next layer should be displayed.
             //Note: we must ensure actual <= MaxCount.
-            if (actual >= threshold && newActual < maxCount)
-                newActual++;
-            else
+            if (actual < threshold || newActual >= maxCount)
                 break;
+
+            newActual++;
         }
 
         actual = newActual;

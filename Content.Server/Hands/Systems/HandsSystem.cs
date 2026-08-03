@@ -14,7 +14,6 @@ using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Stacks;
 using Content.Shared.Standing;
 using Content.Shared.Throwing;
-using NetCord.Gateway;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
@@ -142,7 +141,7 @@ namespace Content.Server.Hands.Systems
             {
                 var splitStack = _cardsSystem.SplitDeck((throwEnt.Value, cards), Comp<TransformComponent>(player).Coordinates, _cardsSystem.MovedCards(cards, 1));
 
-                if (splitStack is not {Valid: true})
+                if (splitStack is not { Valid: true })
                     return false;
 
                 throwEnt = splitStack.Value;

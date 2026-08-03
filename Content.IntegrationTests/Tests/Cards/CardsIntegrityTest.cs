@@ -1,6 +1,5 @@
 using Content.IntegrationTests.Fixtures;
 using Content.Shared.Cards;
-using Content.Shared.Stacks;
 using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Cards;
@@ -25,7 +24,7 @@ public sealed partial class CardsTest : GameTest
     }
 
     [Test]
-    public async Task FlipPreservesCount()
+    public async Task FlipAndFanPreserveCount()
     {
         await Pair.CreateTestMap();
         var coords = Pair.TestMap!.GridCoords;
@@ -51,19 +50,6 @@ public sealed partial class CardsTest : GameTest
             _sCards.TryFlipCards((uid, cards));
 
             Assert.That(cards.Cards.Count, Is.EqualTo(before));
-        });
-    }
-
-    [Test]
-    public async Task FanPreservesCount()
-    {
-        await Pair.CreateTestMap();
-        var coords = Pair.TestMap!.GridCoords;
-
-        await Server.WaitAssertion(() =>
-        {
-            var (uid, cards) = SpawnDeck(coords);
-            var before = cards.Cards.Count;
 
             _sCards.TryFanCards((uid, cards));
 
