@@ -4,7 +4,7 @@ meta:
   engineVersion: 286.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/02/2026 13:29:59
+  time: 08/03/2026 11:19:08
   entityCount: 25806
 maps:
 - 943
@@ -66556,28 +66556,34 @@ entities:
     - type: Transform
       parent: 60
       pos: -50.5,8.5
-- proto: DefaultStationBeaconSolars
+- proto: DefaultStationBeaconSolarsE
   entities:
-  - uid: 24428
-    components:
-    - type: Transform
-      parent: 60
-      pos: -25.5,60.5
-  - uid: 24429
-    components:
-    - type: Transform
-      parent: 60
-      pos: -67.5,-18.5
-  - uid: 24430
-    components:
-    - type: Transform
-      parent: 60
-      pos: 31.5,-54.5
-  - uid: 24431
+  - uid: 23978
     components:
     - type: Transform
       parent: 60
       pos: 62.5,-38.5
+- proto: DefaultStationBeaconSolarsN
+  entities:
+  - uid: 23975
+    components:
+    - type: Transform
+      parent: 60
+      pos: -25.5,60.5
+- proto: DefaultStationBeaconSolarsS
+  entities:
+  - uid: 23977
+    components:
+    - type: Transform
+      parent: 60
+      pos: 31.5,-54.5
+- proto: DefaultStationBeaconSolarsW
+  entities:
+  - uid: 23976
+    components:
+    - type: Transform
+      parent: 60
+      pos: -64.5,-18.5
 - proto: DefaultStationBeaconSurgery
   entities:
   - uid: 20991
