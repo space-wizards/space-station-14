@@ -45,7 +45,7 @@
     enabled: false
     radius: 2.5
     softness: 5
-    mask: /Textures/Effects/LightMasks/cone.png
+    lightMask: ConeSingle
     autoRot: true
   - type: UnpoweredFlashlight
 
@@ -366,9 +366,7 @@
   components:
   - type: SubdermalImplant
     implantAction: FakeMindShieldToggleAction
-    implantComponents:
-    - type: FakeMindShield # TODO: put the component on the implant and use implant relay events for the status icon
-  - type: FakeMindShieldImplant
+  - type: FakeMindShield
 
 # Sec and Command implants
 
@@ -381,6 +379,7 @@
   components:
    - type: SubdermalImplant
    - type: MindShieldImplant
+   - type: MindShield
 
 # Centcomm implants
 
