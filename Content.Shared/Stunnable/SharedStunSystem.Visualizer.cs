@@ -7,8 +7,6 @@ namespace Content.Shared.Stunnable;
 
 public abstract partial class SharedStunSystem
 {
-    [Dependency] private IGameTiming _timing = default!;
-
     public void InitializeAppearance()
     {
         SubscribeLocalEvent<StunVisualsComponent, MobStateChangedEvent>(OnStunMobStateChanged);
@@ -28,7 +26,7 @@ public abstract partial class SharedStunSystem
         // The incoming state from the server raises the event as well.
         // But the changes have also been dirtied
         // so we prevent applying them twice.
-        if (_timing.ApplyingState)
+        if (GameTiming.ApplyingState)
             return;
 
         Appearance.SetData(entity, StunVisuals.SeeingStars, GetStarsData(entity));

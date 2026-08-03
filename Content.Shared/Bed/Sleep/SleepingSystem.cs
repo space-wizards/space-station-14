@@ -41,7 +41,6 @@ public sealed partial class SleepingSystem : EntitySystem
     [Dependency] private SharedEmitSoundSystem _emitSound = default!;
     [Dependency] private StatusEffectsSystem _statusEffect = default!;
     [Dependency] private SharedStunSystem _stun = default!;
-    [Dependency] private IGameTiming _timing = default!;
 
     public static readonly EntProtoId SleepActionId = "ActionSleep";
     public static readonly EntProtoId WakeActionId = "ActionWake";
@@ -120,7 +119,7 @@ public sealed partial class SleepingSystem : EntitySystem
         // The incoming state from the server raises the event as well.
         // But the changes have also been dirtied
         // so we prevent applying them twice.
-        if (_timing.ApplyingState)
+        if (_gameTiming.ApplyingState)
             return;
 
         if (args.FellAsleep)
@@ -280,7 +279,7 @@ public sealed partial class SleepingSystem : EntitySystem
         // The incoming state from the server raises the event as well.
         // But the changes have also been dirtied
         // so we prevent applying them twice.
-        if (_timing.ApplyingState)
+        if (_gameTiming.ApplyingState)
             return;
 
         if (TryComp<SpamEmitSoundComponent>(ent, out var spam))
@@ -295,7 +294,7 @@ public sealed partial class SleepingSystem : EntitySystem
         // The incoming state from the server raises the event as well.
         // But the changes have also been dirtied
         // so we prevent applying them twice.
-        if (_timing.ApplyingState)
+        if (_gameTiming.ApplyingState)
             return;
 
         if (args.Args.NewMobState == MobState.Dead || HasComp<SleepingComponent>(args.Args.Target))
