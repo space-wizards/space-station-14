@@ -1,3 +1,4 @@
+using Content.Shared.Temperature.HeatContainer;
 using Content.Shared.Whitelist;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
@@ -20,7 +21,7 @@ public sealed partial class ItemPlacerSystem : EntitySystem
 
         SubscribeLocalEvent<ItemPlacerComponent, StartCollideEvent>(OnStartCollide);
         SubscribeLocalEvent<ItemPlacerComponent, EndCollideEvent>(OnEndCollide);
-        SubscribeLocalEvent<ItemPlacerComponent, QueryForHeatContainerEvent>(QueryForHeatContainer,after:[typeof(SharedThermodynamicsSystem)]);
+        SubscribeLocalEvent<ItemPlacerComponent, QueryForHeatContainerEvent>(QueryForHeatContainer);
     }
     private void QueryForHeatContainer(EntityUid uid, ItemPlacerComponent component, QueryForHeatContainerEvent args)
     {
