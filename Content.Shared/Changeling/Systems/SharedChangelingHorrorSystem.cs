@@ -53,9 +53,6 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
         {
             // todo: check for paused maps etc.
 
-            // display the time alert
-            _alerts.ShowAlert(uid, comp.TimeAlert);
-
             // calculate the timeout
             if (_timing.CurTime - comp.InitialTime > comp.TimeBudget)
             {
