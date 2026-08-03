@@ -95,8 +95,7 @@ public sealed partial class GhostSystem
         // Set the delay for the next message
         ent.Comp.NextSpeakTime = curTime + ent.Comp.Cooldown;
 
-        args.ResponseIntensity = ent.Comp.Intensity;
-        args.Handled = true;
+        args.SetResponseIntensity(ent.Comp.Intensity);
     }
 
     [SubscribeLocalEvent]
@@ -116,8 +115,7 @@ public sealed partial class GhostSystem
         if (ent.Comp.ExtinguishSound != null)
             _audio.PlayPvs(ent.Comp.ExtinguishSound, ent);
 
-        args.ResponseIntensity = ent.Comp.Intensity;
-        args.Handled = true;
+        args.SetResponseIntensity(ent.Comp.Intensity);
     }
 
     [SubscribeLocalEvent]
@@ -142,8 +140,7 @@ public sealed partial class GhostSystem
         blinkingComp.StopBlinkingTime = curTime + ent.Comp.GhostBlinkingTime;
         Dirty(ent, blinkingComp);
 
-        args.ResponseIntensity = ent.Comp.Intensity;
-        args.Handled = true;
+        args.SetResponseIntensity(ent.Comp.Intensity);
     }
     #endregion Boo Handlers
 
