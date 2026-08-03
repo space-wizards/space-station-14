@@ -96,16 +96,14 @@
   parent: PortableGeneratorBase
   id: PortableGeneratorSwitchableBase
   components:
-  - type: VoltageToggler
+  - type: PowerSwitchable
     examineText: power-switchable-generator-examine
     switchText: power-switchable-generator-switched
-    settings:
-    - voltage: High
+    cables:
+    - voltage: HV
       node: output_hv
-      name: power-voltage-high
-    - voltage: Medium
+    - voltage: MV
       node: output_mv
-      name: power-voltage-medium
   - type: UseDelay
     delay: 1
   - type: NodeContainer

@@ -158319,8 +158319,8 @@ entities:
     - type: Physics
       canCollide: False
       bodyType: Static
-    - type: VoltageToggler
-      selectedVoltageLevel: 1
+    - type: PowerSwitchable
+      activeIndex: 1
     - type: DeviceLinkSource
       linkedPorts:
         22036:

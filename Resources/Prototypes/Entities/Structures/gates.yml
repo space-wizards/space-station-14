@@ -234,19 +234,16 @@
     - state: base
     - state: power_sensor
   - type: PowerSensor
-  - type: VoltageToggler
+  - type: PowerSwitchable
     examineText: power-sensor-voltage-examine
     switchText: power-sensor-voltage-switch
-    settings:
-    - voltage: High
+    cables:
+    - voltage: HV
       node: hv
-      name: power-voltage-high
-    - voltage: Medium
+    - voltage: MV
       node: mv
-      name: power-voltage-medium
-    - voltage: Apc
+    - voltage: LV
       node: lv
-      name: power-voltage-low
   - type: UseDelay
     delay: 1
   - type: NodeContainer

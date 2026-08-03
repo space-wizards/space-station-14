@@ -91,29 +91,9 @@
         enabled: false
   - type: PowerConsumerBatteryCharger
   - type: PowerConsumer
-    voltage: Apc
-    drawRate: 15000
-  - type: VoltageToggler
-    settings:
-    - voltage: Apc
-      node: input_lv
-      name: power-voltage-low
-    - voltage: Medium
-      node: input_mv
-      name: power-voltage-medium
-    - voltage: High
-      node: input_hv
-      name: power-voltage-high
-  - type: DrawRateVoltageToggler
-    drawRatePerVoltage:
-      Apc: 15000 # 15kW - 60 seconds to spawn one
-      Medium: 60000 # 60kW (30kW effectively) - 30 seconds to spawn one
-      High: 240000 # 240kW (60kW effectively) - 15 seconds to spawn one # sets off the rogue power consuming device alert!
-  - type: PowerConsumerEfficiencyVoltageToggler
-    efficiencyPerVoltage:
-      Apc: 1 
-      Medium: 0.5
-      High: 0.25
+    voltage: High
+    drawRate: 240000 # 240kW (60kW effectively) - 15 seconds to spawn one # sets off the rogue power consuming device alert!
+    efficiency: 0.25
   - type: Battery
     maxCharge: 900000 # 900KJ
     netsync: false

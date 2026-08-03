@@ -1,5 +1,4 @@
 ﻿using Content.Shared.DoAfter;
-using Content.Shared.Power.EntitySystems;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Power.Generator;
@@ -14,10 +13,10 @@ public abstract class SharedPortableGeneratorSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<FuelGeneratorComponent, ToggleVoltageCheckEvent>(OnToggleVoltageCheck);
+        SubscribeLocalEvent<FuelGeneratorComponent, SwitchPowerCheckEvent>(OnSwitchPowerCheck);
     }
 
-    private void OnToggleVoltageCheck(EntityUid uid, FuelGeneratorComponent comp, ref ToggleVoltageCheckEvent args)
+    private void OnSwitchPowerCheck(EntityUid uid, FuelGeneratorComponent comp, ref SwitchPowerCheckEvent args)
     {
         if (comp.On)
             args.DisableMessage = Loc.GetString("fuel-generator-verb-disable-on");
