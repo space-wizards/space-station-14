@@ -104,7 +104,7 @@ public sealed partial class CardSystem : SharedCardSystem
             {
                 _sprite.LayerMapReserve((ent.Owner, sprite), cardLayers[0]);
                 // Uses the base layer for the back side
-                BuildLayer(cardLayers[0], prototype.Sprite, card.CardBack, null, (ent.Owner, sprite));
+                BuildLayer(cardLayers[0], null, card.CardBack, null, (ent.Owner, sprite));
                 TransformLayer(cardLayers[0], position, rotation, (ent.Owner, sprite));
             }
             // Moves the stack texture below the left most card
@@ -183,7 +183,7 @@ public sealed partial class CardSystem : SharedCardSystem
         Entity<SpriteComponent?> sprite
     )
     {
-        BuildLayer(cardLayers[0], prototype.Sprite, baseSprite, null, sprite);
+        BuildLayer(cardLayers[0], null, baseSprite, null, sprite);
         var i = 1;
         foreach (var card in prototype.Layers)
         {
@@ -192,10 +192,17 @@ public sealed partial class CardSystem : SharedCardSystem
         }
     }
 
-    private void BuildLayer(string layer, string rsi, string layerState, Color? layerColor, Entity<SpriteComponent?> sprite)
+    private void BuildLayer(string layer, string? rsi, string layerState, Color? layerColor, Entity<SpriteComponent?> sprite)
     {
         _sprite.LayerSetVisible(sprite, layer, true);
-        _sprite.LayerSetSprite(sprite, layer, new SpriteSpecifier.Rsi(new ResPath(rsi), layerState));
+        if (rsi == null)
+        {
+            _sprite.LayerSetRsiState(sprite, layer, layerState);
+        }
+        else
+        {
+            _sprite.LayerSetSprite(sprite, layer, new SpriteSpecifier.Rsi(new ResPath(rsi), layerState));
+        }
         if (layerColor != null)
             _sprite.LayerSetColor(sprite, layer, layerColor.Value);
     }

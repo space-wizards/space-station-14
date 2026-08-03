@@ -1,7 +1,7 @@
 - type: card
   abstract: true
   id: BaseCard
-  sprite: /Textures/Objects/Fun/PlayingCards/nanotrasenbasiccards.rsi
+  sprite: /Textures/Objects/Fun/PlayingCards/basiccards.rsi
 
 - type: card
   abstract: true

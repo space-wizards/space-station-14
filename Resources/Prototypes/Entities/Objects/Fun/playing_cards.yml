@@ -13,13 +13,13 @@
     thresholds: [2, 20, 35]
     cardStackType: CardsStack
   - type: Sprite
-    sprite: Objects/Fun/PlayingCards/nanotrasenbasiccards.rsi
+    sprite: Objects/Fun/PlayingCards/cardbase.rsi
     state: deck_single
     layers:
     - state: deck_single
       map: ["base"]
   - type: Item
-    sprite: Objects/Fun/PlayingCards/nanotrasenbasiccards.rsi
+    sprite: Objects/Fun/PlayingCards/cardbase.rsi
     size: Normal
   - type: Appearance
 
@@ -107,7 +107,7 @@
   name: deck-of-cards
   maxCount: 156
   spawn: BaseCards
-  icon: { sprite: /Textures/Objects/Fun/PlayingCards/nanotrasenbasiccards.rsi, state: deck_single }
+  icon: { sprite: /Textures/Objects/Fun/PlayingCards/cardbase.rsi, state: deck_single }
 
 - type: entity
   parent: [ BaseCards, BaseSyndicateContraband ]
@@ -145,4 +145,4 @@
   name: syndi-deck-of-cards
   maxCount: 156
   spawn: SyndiBaseCards
-  icon: { sprite: /Textures/Objects/Fun/PlayingCards/nanotrasenbasiccards.rsi, state: deck_single }
+  icon: { sprite: /Textures/Objects/Fun/PlayingCards/cardbase.rsi, state: deck_single }
