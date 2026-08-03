@@ -31,12 +31,14 @@ public sealed partial class CardsTest
         var uid = SSpawnAtPosition(CardsProtoId, coords);
         if (!SEntMan.TryGetComponent<CardsComponent>(uid, out var cards))
             Assert.Fail("Spawned cardDeck is missing CardsComponent");
+
         if (removed != 0)
         {
-            var splitA = _sCards.SplitDeck((uid, cards!), coords, _sCards.MovedCards(cards, removed));
-            SQueueDel(splitA!.Value);
+            var splitA = _sCards.SplitDeck((uid, cards), coords, _sCards.MovedCards(cards, removed));
+            SQueueDel(splitA.Value);
         }
-        return (uid, cards!);
+
+        return (uid, cards);
     }
 
     [Test]
@@ -51,10 +53,7 @@ public sealed partial class CardsTest
             var (uid, cards) = SpawnDeck(coords);
             var cardsBefore = cards.Cards.Count;
 
-            if (!SEntMan.TryGetComponent<TransformComponent>(player, out var playerXform))
-                Assert.Fail($"Missing player {nameof(TransformComponent)}");
-
-            var result = _sCards.TryTakeCard((uid, cards), (player, playerXform), int.MaxValue, out var split);
+            var result = _sCards.TryTakeCard((uid, cards), player, int.MaxValue, out var split);
 
             Assert.That(result, Is.False);
 
@@ -66,7 +65,7 @@ public sealed partial class CardsTest
     public async Task UnflippedSplitTakesFromFront()
     {
         await Pair.CreateTestMap();
-        var coords = Pair.TestMap!.GridCoords;
+        var coords = Pair.TestMap.GridCoords;
 
         await Server.WaitAssertion(() =>
         {
@@ -78,10 +77,10 @@ public sealed partial class CardsTest
             var split = _sCards.SplitDeck((uid, cards), coords, _sCards.MovedCards(cards, 5));
             Assert.That(split, Is.Not.Null);
 
-            if (!SEntMan.TryGetComponent<CardsComponent>(split!.Value, out var splitCards))
+            if (!SEntMan.TryGetComponent<CardsComponent>(split, out var splitCards))
                 Assert.Fail($"Missing {nameof(CardsComponent)} on split");
 
-            var splitInxes = splitCards!.Cards.Select(c => c.CardIndex).ToList();
+            var splitInxes = splitCards.Cards.Select(c => c.CardIndex).ToList();
             Assert.That(
                 splitInxes,
                 Is.EquivalentTo(originalFirstCards),
@@ -94,7 +93,7 @@ public sealed partial class CardsTest
     public async Task FlippedSplitTakesFromBack()
     {
         await Pair.CreateTestMap();
-        var coords = Pair.TestMap!.GridCoords;
+        var coords = Pair.TestMap.GridCoords;
 
         await Server.WaitAssertion(() =>
         {
@@ -107,7 +106,7 @@ public sealed partial class CardsTest
             var split = _sCards.SplitDeck((uid, cards), coords, _sCards.MovedCards(cards, 5));
             Assert.That(split, Is.Not.Null);
 
-            if (!SEntMan.TryGetComponent<CardsComponent>(split!.Value, out var splitCards))
+            if (!SEntMan.TryGetComponent<CardsComponent>(split.Value, out var splitCards))
                 Assert.Fail($"Missing {nameof(CardsComponent)} on split");
 
             var splitInxes = splitCards!.Cards.Select(c => c.CardIndex).ToList();
@@ -123,7 +122,7 @@ public sealed partial class CardsTest
     public async Task SingleCardDeckDoesNotFan()
     {
         await Pair.CreateTestMap();
-        var coords = Pair.TestMap!.GridCoords;
+        var coords = Pair.TestMap.GridCoords;
 
         await Server.WaitAssertion(() =>
         {
@@ -149,7 +148,7 @@ public sealed partial class CardsTest
     public async Task CardIndexesAreUniqueAfterSpawn()
     {
         await Pair.CreateTestMap();
-        var coords = Pair.TestMap!.GridCoords;
+        var coords = Pair.TestMap.GridCoords;
 
         await Server.WaitAssertion(() =>
         {
@@ -202,12 +201,12 @@ public sealed partial class CardsTest
 
                 var stackType = cardsComp.CardStackType;
                 if (!SProtoMan.TryIndex(stackType, out var stackProto))
-                    Assert.Fail();
+                    Assert.Fail($"Card stack prototype {stackType} doesn't exist.");
 
                 if (!SProtoMan.TryIndex(stackProto.Spawn, out var baseCard))
-                    Assert.Fail();
+                    Assert.Fail($"Card stack spawn prototype {stackProto.Spawn} doesn't exist.");
 
-                if (!baseCard.TryGetComponent<CardsComponent>(out var baseCardComp, _sCompFact))
+                if (!baseCard.TryComp<CardsComponent>(out var baseCardComp, _sCompFact))
                     Assert.Fail(
                         $"{baseCard.ID} the spawn of {stackType} which is the stack of {proto.ID} requires a {nameof(StackComponent)}"
                     );

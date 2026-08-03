@@ -37,10 +37,8 @@ public sealed partial class CardSystem : SharedCardSystem
 
         var split = SpawnAtPosition(cardStack.Spawn, spawnPosition);
 
-        if (
-            !TryComp<CardsComponent>(split, out var splitComp)
-            || !TryMoveCards((split, splitComp), ent, cardIndexes)
-        )
+        if (!TryComp<CardsComponent>(split, out var splitComp)
+            || !TryMoveCards((split, splitComp), ent, cardIndexes))
         {
             QueueDel(split);
             return null;

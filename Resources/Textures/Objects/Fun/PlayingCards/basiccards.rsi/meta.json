@@ -23,13 +23,10 @@
             "name": "sc_Hearts"
         },
         {
-            "name": "sc_Clubs"
+            "name": "sc_ClubsDiamonds"
         },
         {
             "name": "sc_Spades"
-        },
-        {
-            "name": "sc_Diamonds"
         },
         {
             "name": "sc_2"

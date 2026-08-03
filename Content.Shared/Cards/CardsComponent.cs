@@ -87,13 +87,13 @@ public sealed partial class CardsComponent : Component
     /// <summary>
     /// The number of cards currently in this deck. Used for debugging only.
     /// </summary>
-    [ViewVariables(access: VVAccess.ReadOnly), UsedImplicitly]
+    [ViewVariables, UsedImplicitly]
     private int NumberOfCards => Cards.Count;
 
     /// <summary>
     /// The prototype IDs of all cards currently in this deck. Used for debugging only.
     /// </summary>
-    [ViewVariables(access: VVAccess.ReadOnly), UsedImplicitly]
+    [ViewVariables, UsedImplicitly]
     private List<string> CardPrototypes => Cards.Select(c => (string)c.CardId).ToList();
 
 }
