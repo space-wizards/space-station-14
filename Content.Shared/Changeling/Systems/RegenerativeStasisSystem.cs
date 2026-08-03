@@ -10,6 +10,7 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Changeling.Systems;
 
@@ -23,6 +24,7 @@ public sealed partial class RegenerativeStasisSystem : EntitySystem
     [Dependency] private DamageableSystem _damage = default!;
     [Dependency] private SharedBloodstreamSystem _bloodstream = default!;
     [Dependency] private SharedDeathgaspSystem _deathgasp = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     [SubscribeLocalEvent]
     private void OnMapInit(Entity<RegenerativeStasisActionComponent> ent, ref MapInitEvent args)
@@ -35,6 +37,9 @@ public sealed partial class RegenerativeStasisSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnStateChanged(Entity<RegenerativeStasisActionComponent> ent, ref ActionRelayedEvent<MobStateChangedEvent> args)
     {
+        if (_timing.ApplyingState)
+            return;
+
         // If we are revived cancel the stasis.
         if (args.Args.NewMobState == MobState.Alive && ent.Comp.IsInStasis)
             CancelStasis(ent.AsNullable());
