@@ -79,13 +79,20 @@
   name: "[color=red]Enter Stasis[/color]"
   description: Enter a regenerative stasis, faking death and allowing to regenerate all damage.
   components:
+  - type: Sprite
+    sprite: Interface/Actions/changeling.rsi
+    layers:
+    - state: "stasis_enter"
+      map: [ "enum.ActionVisuals.Icon" ]
+    - state: "stasis_exit"
+      map: [ "enum.ActionVisuals.IconToggled" ]
+      visible: false
   - type: Action
-    icon: { sprite : Interface/Actions/changeling.rsi, state: "stasis_enter" }
-    iconOn: { sprite : Interface/Actions/changeling.rsi, state: "stasis_exit" }
+    raiseOnAction: true
     useDelay: 2
-    priority: 1
     checkCanInteract: false # You can heal even if you are killed
     checkConsciousness: false
+  - type: RegenerativeStasisAction
   - type: InstantAction
     event: !type:ChangelingStasisActionEvent
 

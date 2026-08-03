@@ -7,7 +7,6 @@
   - type: ChangelingDevour
   - type: ChangelingIdentity
   - type: ChangelingTransform
-  - type: ChangelingStasis
   - type: AddMetabolism
     addedMetabolizer: Changeling
   - type: DestructionResistance
@@ -16,6 +15,7 @@
   - type: ActionGrant
     actions:
     - ActionChangelingStore
+    - ActionChangelingStasis
   - type: Store
     balance:
       ChangelingDNA: 60

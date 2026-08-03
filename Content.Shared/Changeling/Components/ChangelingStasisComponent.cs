@@ -11,7 +11,7 @@ namespace Content.Shared.Changeling.Components;
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(ChangelingStasisSystem))]
-public sealed partial class ChangelingStasisComponent : Component
+public sealed partial class RegenerativeStasisActionComponent : Component
 {
     // TODO: Will need small behaviour tweaks once we get biomass/chemicals.
 
@@ -46,18 +46,6 @@ public sealed partial class ChangelingStasisComponent : Component
     public TimeSpan BonusCooldownPerDamage = TimeSpan.FromSeconds(30d / 200d); // at 200 damage, the cooldown should be 60s
 
     /// <summary>
-    /// The action entity for the stasis action.
-    /// </summary>
-    [DataField]
-    public EntProtoId? RegenStasisAction = "ActionChangelingStasis";
-
-    /// <summary>
-    /// The EntityUid of the action given by this component.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public EntityUid? RegenStasisActionEntity;
-
-    /// <summary>
     /// The sound to play when the entity exits stasis.
     /// </summary>
     [DataField, AutoNetworkedField]
@@ -74,6 +62,4 @@ public sealed partial class ChangelingStasisComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public string? InitialDescription;
-
-    public override bool SendOnlyToOwner => true;
 }
