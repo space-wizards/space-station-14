@@ -41,7 +41,7 @@
 - type: alert
   id: Xenoborgs
   icons:
-  - sprite: Markers/jobs.rsi
+  - sprite: Mobs/Silicon/mothership_core.rsi
     state: core-idle
   alertViewEntity: GhostAlertCounterSpriteView
   name: ghost-alert-mothership-core-name
