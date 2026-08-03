@@ -4,6 +4,7 @@ using Content.Shared.Body.Systems;
 using Content.Shared.Changeling.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Ghost;
+using Content.Shared.Ghost.Systems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;

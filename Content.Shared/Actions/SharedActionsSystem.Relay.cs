@@ -1,5 +1,6 @@
 using Content.Shared.Actions.Components;
 using Content.Shared.Ghost;
+using Content.Shared.Ghost.Systems;
 using Content.Shared.Mobs;
 
 namespace Content.Shared.Actions;
