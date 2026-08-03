@@ -131,13 +131,13 @@
       visible: false
   - type: PaperVisuals
     headerImagePath: "/Textures/Interface/Paper/paper_heading_artifact_analyzer.svg.96dpi.png"
-    headerMargin: 0.0, 0.0, 0.0, 16.0
+    headerMargin: 0.0, 16.0, 0.0, 0.0
     backgroundImagePath: "/Textures/Interface/Paper/paper_background_dotmatrix.svg.96dpi.png"
     backgroundImageTile: true
     backgroundPatchMargin: 37.0, 0.0, 37.0, 0.0
     contentImagePath: "/Textures/Interface/Paper/paper_content_dotmatrix.svg.96dpi.png"
     contentImageNumLines: 2
-    contentMargin: 16.0, 16.0, 16.0, 0.0
+    contentMargin: 16.0, 0.0, 16.0, 16.0
     # Make this a wide dot-matrix printer
     maxWritableArea: 400.0, 0.0
 
@@ -165,7 +165,7 @@
     backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
     backgroundModulate: "#e6e6fa"
     backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
-    contentMargin: 32.0, 16.0, 32.0, 0.0
+    contentMargin: 32.0, 0.0, 32.0, 16.0
 
 - type: entity
   name: cargo invoice
@@ -199,7 +199,7 @@
     backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
     contentMargin: 16.0, 16.0, 16.0, 16.0
     headerImagePath: "/Textures/Interface/Paper/paper_heading_cargo_invoice.svg.96dpi.png"
-    headerMargin: 0.0, 12.0, 0.0, 0.0
+    headerMargin: 0.0, 0.0, 0.0, 12.0
 
 - type: entity
   id: PaperNanoTaskItem
@@ -228,7 +228,7 @@
   - type: PaperVisuals
     backgroundImagePath: "/Textures/Interface/Paper/paper_background_perforated.svg.96dpi.png"
     headerImagePath: "/Textures/Interface/Paper/paper_heading_nanotask.svg.96dpi.png"
-    headerMargin: 0.0, 0.0, 0.0, 6.0
+    headerMargin: 0.0, 6.0, 0.0, 0.0
     backgroundImageTile: true
     backgroundPatchMargin: 0.0, 6.0, 0.0, 6.0
     contentMargin: 12.0, 0.0, 12.0, 0.0
@@ -267,7 +267,7 @@
     backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
     contentMargin: 16.0, 16.0, 16.0, 16.0
     headerImagePath: "/Textures/Interface/Paper/paper_heading_cargo_invoice.svg.96dpi.png"
-    headerMargin: 0.0, 12.0, 0.0, 0.0
+    headerMargin: 0.0, 0.0, 0.0, 12.0
   - type: CargoBountyLabel
   - type: StaticPrice
     price: 0

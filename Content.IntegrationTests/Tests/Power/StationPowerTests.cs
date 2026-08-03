@@ -26,6 +26,7 @@ public sealed class StationPowerTests : GameTest
         "Bagel",
         "Box",
         "Elkridge",
+        "Exo",
         "Fland",
         "Marathon",
         "Oasis",
@@ -33,7 +34,8 @@ public sealed class StationPowerTests : GameTest
         "Plasma",
         "Relic",
         "Snowball",
-        "Exo",
+        "Sushi",
+        "Tram2"
     ];
 
     public override PoolSettings PoolSettings => new ()
