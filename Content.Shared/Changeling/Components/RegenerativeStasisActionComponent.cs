@@ -10,7 +10,7 @@ namespace Content.Shared.Changeling.Components;
 /// Allows the user to fake "death" and heal afterwards.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-[Access(typeof(ChangelingStasisSystem))]
+[Access(typeof(RegenerativeStasisSystem))]
 public sealed partial class RegenerativeStasisActionComponent : Component
 {
     // TODO: Will need small behaviour tweaks once we get biomass/chemicals.

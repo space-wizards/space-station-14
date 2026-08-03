@@ -11,7 +11,7 @@ using Robust.Shared.Audio.Systems;
 
 namespace Content.Shared.Changeling.Systems;
 
-public sealed partial class ChangelingStasisSystem : EntitySystem
+public sealed partial class RegenerativeStasisSystem : EntitySystem
 {
     [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
