@@ -3,38 +3,19 @@ using Content.Shared.Power.Components;
 
 namespace Content.Server.Power.EntitySystems;
 
-public sealed class PowerConsumerBatteryChargerSystem : EntitySystem
+public sealed partial class PowerConsumerBatteryChargerSystem : EntitySystem
 {
-    [Dependency] private readonly BatterySystem _battery = null!;
+    [Dependency] private BatterySystem _battery = null!;
 
-    public override void Initialize()
+    public override void Update(float frameTime)
     {
-        base.Initialize();
+        var query =
+            EntityQueryEnumerator<PowerConsumerComponent, PowerConsumerBatteryChargerComponent, BatteryComponent>();
 
-        SubscribeLocalEvent<PowerConsumerEfficiencyVoltageTogglerComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<PowerConsumerEfficiencyVoltageTogglerComponent, VoltageChangeEvent>(OnVoltageChanged);
-
-        SubscribeLocalEvent<PowerConsumerBatteryChargerComponent, PowerConsumedEvent>(OnPowerConsumed);
-    }
-
-    private void OnMapInit(Entity<PowerConsumerEfficiencyVoltageTogglerComponent> entity, ref MapInitEvent args)
-    {
-        if (!TryComp<PowerConsumerComponent>(entity, out var powerConsumer))
-            return;
-
-        powerConsumer.Efficiency = entity.Comp.EfficiencyPerVoltage[powerConsumer.Voltage];
-    }
-
-    private void OnVoltageChanged(Entity<PowerConsumerEfficiencyVoltageTogglerComponent> entity, ref VoltageChangeEvent args)
-    {
-        if (!TryComp<PowerConsumerComponent>(entity, out var powerConsumer))
-            return;
-
-        powerConsumer.Efficiency = entity.Comp.EfficiencyPerVoltage[args.NewVoltage.Voltage];
-    }
-
-    private void OnPowerConsumed(Entity<PowerConsumerBatteryChargerComponent> entity, ref PowerConsumedEvent args)
-    {
-        _battery.ChangeCharge(entity.Owner, args.EffectivePower);
+        while (query.MoveNext(out var uid, out var powerConsumer, out _, out _))
+        {
+            var powerConsumed = powerConsumer.DrawRate * frameTime;
+            _battery.ChangeCharge(uid, powerConsumed * powerConsumer.Efficiency);
+        }
     }
 }

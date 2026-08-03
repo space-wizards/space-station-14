@@ -292,7 +292,7 @@ namespace Content.Server.Power.EntitySystems
             // TODO: Instead of querying ALL power components every tick, and then checking if an event needs to be
             // raised, should probably assemble a list of entity Uids during the actual solver steps.
             UpdateApcPowerReceiver(frameTime);
-            UpdatePowerConsumer(frameTime);
+            UpdatePowerConsumer();
             UpdateNetworkBattery();
         }
 
@@ -404,19 +404,13 @@ namespace Content.Server.Power.EntitySystems
             }
         }
 
-        private void UpdatePowerConsumer(float frameTime)
+        private void UpdatePowerConsumer()
         {
             var enumerator = EntityQueryEnumerator<PowerConsumerComponent>();
             while (enumerator.MoveNext(out var uid, out var consumer))
             {
                 var newRecv = consumer.NetworkLoad.ReceivingPower;
                 ref var lastRecv = ref consumer.LastReceived;
-
-                if (newRecv > 0)
-                {
-                    var ev = new PowerConsumedEvent(newRecv * frameTime * consumer.Efficiency);
-                    RaiseLocalEvent(uid, ref ev);
-                }
 
                 if (MathHelper.CloseToPercent(lastRecv, newRecv))
                     continue;
@@ -576,15 +570,6 @@ namespace Content.Server.Power.EntitySystems
         public readonly float ReceivedPower = ReceivedPower;
         public readonly float DrawRate = DrawRate;
     }
-
-    /// <summary>
-    /// Raised every time a <see cref="PowerConsumerComponent"/> consumes power.
-    /// </summary>
-    /// <remarks>
-    /// EffectivePower is how much power from the power consumed that can be used to power devices or charge batteries
-    /// </remarks>
-    [ByRefEvent]
-    public readonly record struct PowerConsumedEvent(float EffectivePower);
 
     /// <summary>
     /// Raised whenever a <see cref="PowerNetworkBatteryComponent"/> changes from / to 0 CurrentSupply.
