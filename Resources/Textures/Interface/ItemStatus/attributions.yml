@@ -17,3 +17,8 @@
   license: "CC-BY-SA-3.0"
   copyright: "Created by Samuka-C"
   source: "https://github.com/space-wizards/space-station-14/pull/44476"
+
+- files: ["XenoborgOilAmpoule/*.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by Samuka-C"
+  source: "https://github.com/space-wizards/space-station-14/pull/44389"
