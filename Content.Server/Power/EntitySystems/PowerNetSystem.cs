@@ -411,7 +411,6 @@ namespace Content.Server.Power.EntitySystems
             {
                 var newRecv = consumer.NetworkLoad.ReceivingPower;
                 ref var lastRecv = ref consumer.LastReceived;
-
                 if (MathHelper.CloseToPercent(lastRecv, newRecv))
                     continue;
 
