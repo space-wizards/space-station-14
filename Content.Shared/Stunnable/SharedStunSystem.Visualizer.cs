@@ -1,7 +1,6 @@
 ﻿using Content.Shared.Bed.Sleep;
 using Content.Shared.Mobs;
 using Robust.Shared.Serialization;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Stunnable;
 

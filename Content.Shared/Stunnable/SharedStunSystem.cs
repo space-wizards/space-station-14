@@ -83,7 +83,7 @@ public abstract partial class SharedStunSystem : EntitySystem
         // The incoming state from the server raises the event as well.
         // But the changes have also been dirtied
         // so we prevent applying them twice.
-        if (_timing.ApplyingState)
+        if (GameTiming.ApplyingState)
             return;
 
         switch (args.NewMobState)
