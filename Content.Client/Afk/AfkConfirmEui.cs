@@ -24,8 +24,8 @@ public sealed partial class AfkConfirmEui : BaseEui
     [Dependency] private IRobustRandom _random = default!;
     private AudioSystem _audio;
     private SoundSpecifier _confirmSound;
-    private bool _confirmSoundEnabled;
     private EntityUid? _confirmSoundStream;
+    private bool _confirmSoundEnabled;
 
     private readonly AfkConfirmWindow _window = new();
 
@@ -82,6 +82,7 @@ public sealed partial class AfkConfirmEui : BaseEui
     public override void Closed()
     {
         _cfg.UnsubValueChanged(CCVars.AfkConfirmSound, OnConfirmSoundChanged);
+        _cfg.UnsubValueChanged(CCVars.AfkConfirmSoundEnabled, OnConfirmSoundEnabledChanged);
         _confirmSoundStream = _audio.Stop(_confirmSoundStream);
         _window.Close();
     }
