@@ -41,7 +41,7 @@ public sealed partial class GhostSystem
         var anythingAffected = false;
         foreach (var booUid in entities)
         {
-            GhostBooIntensity allowedIntensity = GetIntensity(remainingIntensity);
+            var allowedIntensity = GetIntensity(remainingIntensity);
             if (allowedIntensity == GhostBooIntensity.None)
                 break;
 

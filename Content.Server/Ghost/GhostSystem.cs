@@ -171,8 +171,8 @@ namespace Content.Server.Ghost
 
             if (_gameTicker.RunLevel != GameRunLevel.PostRound)
             {
-                _visibilitySystem.AddLayer((uid, visibility), (int)VisibilityFlags.Ghost, false);
-                _visibilitySystem.RemoveLayer((uid, visibility), (int)VisibilityFlags.Normal, false);
+                _visibilitySystem.AddLayer((uid, visibility), (int) VisibilityFlags.Ghost, false);
+                _visibilitySystem.RemoveLayer((uid, visibility), (int) VisibilityFlags.Normal, false);
                 _visibilitySystem.RefreshVisibility(uid, visibilityComponent: visibility);
             }
 
@@ -192,8 +192,8 @@ namespace Content.Server.Ghost
             // Entity can't be seen by ghosts anymore.
             if (TryComp(uid, out VisibilityComponent? visibility))
             {
-                _visibilitySystem.RemoveLayer((uid, visibility), (int)VisibilityFlags.Ghost, false);
-                _visibilitySystem.AddLayer((uid, visibility), (int)VisibilityFlags.Normal, false);
+                _visibilitySystem.RemoveLayer((uid, visibility), (int) VisibilityFlags.Ghost, false);
+                _visibilitySystem.AddLayer((uid, visibility), (int) VisibilityFlags.Normal, false);
                 _visibilitySystem.RefreshVisibility(uid, visibilityComponent: visibility);
             }
 
@@ -240,7 +240,7 @@ namespace Content.Server.Ghost
 
         private void OnGhostReturnToBodyRequest(GhostReturnToBodyRequest msg, EntitySessionEventArgs args)
         {
-            if (args.SenderSession.AttachedEntity is not { Valid: true } attached
+            if (args.SenderSession.AttachedEntity is not {Valid: true} attached
                 || !_ghostQuery.TryComp(attached, out var ghost)
                 || !ghost.CanReturnToBody
                 || !TryComp(attached, out ActorComponent? actor))
@@ -314,7 +314,7 @@ namespace Content.Server.Ghost
                 return;
             }
 
-            if (_followerSystem.GetMostGhostFollowed() is not { } target)
+            if (_followerSystem.GetMostGhostFollowed() is not {} target)
                 return;
 
             // If there is a ghostnado happening you almost definitely wanna join it, so we automatically follow instead of just warping.
@@ -333,7 +333,7 @@ namespace Content.Server.Ghost
             }
 
             var following = _followerQuery.CompOrNull(uid)?.Following;
-            if (_followerSystem.GetRandomGhostFollowed(except: following) is not { } target)
+            if (_followerSystem.GetRandomGhostFollowed(except:following) is not {} target)
                 return;
 
             _followerSystem.StartFollowingEntity(uid, target);
@@ -352,7 +352,7 @@ namespace Content.Server.Ghost
 
             var following = _followerQuery.CompOrNull(uid)?.Following;
             // select player warps cuz no one wants to warp to places.
-            if (GetPlayerWarps(following).ToArray() is not { } warps)
+            if (GetPlayerWarps(following).ToArray() is not {} warps)
                 return;
             if (warps.Length == 0)
                 return;
@@ -394,7 +394,7 @@ namespace Content.Server.Ghost
         {
             foreach (var player in _player.Sessions)
             {
-                if (player.AttachedEntity is not { Valid: true } attached)
+                if (player.AttachedEntity is not {Valid: true} attached)
                     continue;
 
                 if (attached == except) continue;
@@ -438,13 +438,13 @@ namespace Content.Server.Ghost
 
                 if (visible)
                 {
-                    _visibilitySystem.AddLayer((uid, vis), (int)VisibilityFlags.Normal, false);
-                    _visibilitySystem.RemoveLayer((uid, vis), (int)VisibilityFlags.Ghost, false);
+                    _visibilitySystem.AddLayer((uid, vis), (int) VisibilityFlags.Normal, false);
+                    _visibilitySystem.RemoveLayer((uid, vis), (int) VisibilityFlags.Ghost, false);
                 }
                 else
                 {
-                    _visibilitySystem.AddLayer((uid, vis), (int)VisibilityFlags.Ghost, false);
-                    _visibilitySystem.RemoveLayer((uid, vis), (int)VisibilityFlags.Normal, false);
+                    _visibilitySystem.AddLayer((uid, vis), (int) VisibilityFlags.Ghost, false);
+                    _visibilitySystem.RemoveLayer((uid, vis), (int) VisibilityFlags.Normal, false);
                 }
                 _visibilitySystem.RefreshVisibility(uid, visibilityComponent: vis);
             }
@@ -461,7 +461,7 @@ namespace Content.Server.Ghost
             var ghostBoo = new GhostBooEvent(allowedIntensity);
             RaiseLocalEvent(target, ref ghostBoo, true);
 
-            return ghostBoo.AllowedIntensity != GhostBooIntensity.None;
+            return ghostBoo.Handled;
         }
 
         public EntityUid? SpawnGhost(Entity<MindComponent?> mind, EntityUid targetEntity,
