@@ -13,9 +13,10 @@ namespace Content.Client.Cards;
 [UsedImplicitly]
 public sealed partial class CardSystem : SharedCardSystem
 {
-    [Dependency] private SpriteSystem _sprite = default!;
-    [Dependency] private IPlayerManager _playerManager = default!;
     [Dependency] private ItemCounterSystem _counterSystem = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
+
 
     [SubscribeLocalEvent]
     private void OnAppearanceChanged(Entity<CardsComponent> ent, ref AppearanceChangeEvent args)
