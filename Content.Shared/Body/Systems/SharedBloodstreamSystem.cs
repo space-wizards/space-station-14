@@ -27,7 +27,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Body.Systems;
 
-public abstract partial class SharedBloodstreamSystem : EntitySystem
+public sealed partial class SharedBloodstreamSystem : EntitySystem
 {
     public static readonly EntProtoId Bloodloss = "StatusEffectBloodloss";
 
