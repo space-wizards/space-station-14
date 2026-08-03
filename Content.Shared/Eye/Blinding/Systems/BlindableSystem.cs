@@ -126,7 +126,8 @@ public record struct BlindnessChangedEvent(bool Blind);
 [ByRefEvent]
 public record struct EyeDamageChangedEvent(int Damage);
 
-/// <summary>Raised directed at an entity to see whether the entity is currently blind or not.
+/// <summary>
+/// Raised directed at an entity to see whether the entity is currently blind or not.
 /// </summary>
 public sealed class CanSeeAttemptEvent : CancellableEntityEventArgs, IInventoryRelayEvent
 {
