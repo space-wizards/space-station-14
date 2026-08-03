@@ -129,7 +129,7 @@
         map: ["enum.PowerDeviceVisualLayers.Powered"]
         shader: unshaded
   - type: MeleeWeapon
-    attackRate: 1.7 # DS14-value
+    attackRate: 1 # DS14-value
     damage:
       types:
         Blunt: 8
@@ -146,10 +146,8 @@
     activatedDamage:
       types:
         Blunt: 5 # DS14-value
-        Shock: 6 # DS14-value
+        Shock: 15 # DS14-value
 #DS14 start
-  - type: StaminaDamageOnHit
-    damage: 12
   - type: Tag
     tags:
     - CompactDefibrillator

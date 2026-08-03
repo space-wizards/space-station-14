@@ -36,12 +36,13 @@
     onActivate: false
   - type: MeleeWeapon
 
-    range: 1.8
+    range: 3
     attackRate: 1.5
     autoAttack: true
     damage:
       types:
-        Slash: 17
+        Slash: 10
+        Shock: 10
     wideAnimationRotation: 180        
     animation: WeaponMonowirePrecise
     wideAnimation: WeaponMonowireWide
