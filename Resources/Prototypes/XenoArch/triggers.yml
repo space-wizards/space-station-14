@@ -395,10 +395,6 @@
   - type: XATDamageThresholdReached
     typesNeeded:
       Shock: 5
-  - type: XATInteractAttack
-    whitelist:
-      tags:
-      - TaserBolt
 
 - type: xenoArchTrigger
   id: TriggerAttackParticleEngine

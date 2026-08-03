@@ -1431,9 +1431,6 @@
   id: Taser # Storage whitelist: ClothingBeltSecurity
 
 - type: Tag
-  id: TaserBolt # Entity whitelist: Shock Artifact Trigger
-
-- type: Tag
   id: TeleportScrollWarp # whitelists a warp point for the wizard's teleport scroll
 
 - type: Tag
