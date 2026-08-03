@@ -307,6 +307,12 @@
   name: xenoborg extractor flatpack
   description: A flatpack used for constructing a xenoborg extractor.
   components:
+  - type: Sprite
+    layers:
+    - state: base-xenoborg
+    - state: overlay
+      color: "#452dfa"
+    - state: icon-xenoborg-extractor
   - type: Item
     size: Normal
   - type: Flatpack
