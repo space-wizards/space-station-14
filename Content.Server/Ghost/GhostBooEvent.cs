@@ -21,4 +21,9 @@ public struct GhostBooEvent(GhostBooIntensity allowedIntensity)
     /// Should only be set by handling entities if something happened.
     /// </summary>
     public GhostBooIntensity ResponseIntensity = GhostBooIntensity.None;
+
+    /// <summary>
+    /// Whether or not the event has been handled already.
+    /// </summary>
+    public bool Handled = true;
 }

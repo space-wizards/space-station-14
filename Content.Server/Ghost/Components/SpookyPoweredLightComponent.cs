@@ -33,5 +33,5 @@ public sealed partial class SpookyPoweredLightComponent : Component
     /// The intensity of this response to a <see cref="GhostBooEvent"/>.
     /// </summary>
     [DataField]
-    public GhostBooIntensity BooIntensity = GhostBooIntensity.Normal;
+    public GhostBooIntensity Intensity = GhostBooIntensity.Normal;
 }
