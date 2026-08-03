@@ -72,23 +72,13 @@
     onBump: false
     requirePower: true
     highVoltageNode: input_hv
-    mediumVoltageNode: input_mv
-    lowVoltageNode: input_lv
   - type: NodeContainer
-    examinable: false # The VoltageToggler will show the current voltage
+    examinable: true
     nodes:
-      input_lv:
-        !type:CableDeviceNode
-        nodeGroupID: Apc
-        enabled: false
-      input_mv:
-        !type:CableDeviceNode
-        nodeGroupID: MVPower
-        enabled: false
       input_hv:
         !type:CableDeviceNode
         nodeGroupID: HVPower
-        enabled: false
+        enabled: true
   - type: PowerConsumerBatteryCharger
   - type: PowerConsumer
     voltage: High
