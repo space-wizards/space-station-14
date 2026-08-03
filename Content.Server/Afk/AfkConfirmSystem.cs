@@ -32,9 +32,13 @@ public sealed partial class AfkConfirmSystem : EntitySystem
     private readonly Dictionary<ICommonSession, AfkConfirmation> _confirmations = new();
     private readonly Dictionary<ICommonSession, AfkConfirmation> _tempConfirmation = new();
 
+    private bool _afkAutomaticChecks;
+
     public override void Initialize()
     {
         base.Initialize();
+
+        _afkAutomaticChecks = _cfg.GetCVar(CCVars.AfkAutomaticChecks); // No changed listener, this CVar is config file only
 
         // Unafking does NOT clear it, require them to confirm via the window so they don't just random mash buttons.
         SubscribeLocalEvent<AFKEvent>(OnAfk);
@@ -58,6 +62,8 @@ public sealed partial class AfkConfirmSystem : EntitySystem
 
     private void OnAfk(ref AFKEvent ev)
     {
+        if (!_afkAutomaticChecks) // If no automatic checks, just don't consume the event.
+            return;
         TryStartConfirmation(ev.Session);
     }
 
