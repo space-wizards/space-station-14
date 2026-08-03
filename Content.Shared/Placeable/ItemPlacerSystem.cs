@@ -20,6 +20,19 @@ public sealed partial class ItemPlacerSystem : EntitySystem
 
         SubscribeLocalEvent<ItemPlacerComponent, StartCollideEvent>(OnStartCollide);
         SubscribeLocalEvent<ItemPlacerComponent, EndCollideEvent>(OnEndCollide);
+        SubscribeLocalEvent<ItemPlacerComponent, QueryForHeatContainerEvent>(QueryForHeatContainer,after:[typeof(SharedThermodynamicsSystem)]);
+    }
+    private void QueryForHeatContainer(EntityUid uid, ItemPlacerComponent component, QueryForHeatContainerEvent args)
+    {
+        if (args.Resolved||!args.IncludeExternal)
+            return;
+        //query placed entities, but only their "internals"
+        QueryForHeatContainerEvent subQuery = new(null);
+        foreach (var entity in component.PlacedEntities)
+        {
+            RaiseLocalEvent(entity, ref subQuery);
+        }
+        args.Responses.AddRange(subQuery.Responses);
     }
 
     private void OnStartCollide(EntityUid uid, ItemPlacerComponent comp, ref StartCollideEvent args)

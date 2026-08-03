@@ -27,7 +27,15 @@ public sealed partial class TemperatureSystem : SharedTemperatureSystem
 
         SubscribeLocalEvent<ChangeTemperatureOnCollideComponent, ProjectileHitEvent>(ChangeTemperatureOnCollide);
 
+        SubscribeLocalEvent<InternalTemperatureComponent, QueryForHeatContainerEvent>(QueryForHeatContainer);
         InitializeDamage();
+    }
+
+    private void QueryForHeatContainer(EntityUid uid, InternalTemperatureComponent component, QueryForHeatContainerEvent args)
+    {
+        if (args.Resolved)
+            return;
+        args.Responses.Add(new(uid,component,component,null));
     }
 
     protected override void OnMapInit(Entity<TemperatureComponent> entity, ref MapInitEvent args)

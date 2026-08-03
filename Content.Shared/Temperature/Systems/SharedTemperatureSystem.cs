@@ -32,6 +32,13 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
         SubscribeLocalEvent<TemperatureComponent, MassDataChangedEvent>(OnMassDataChanged);
         SubscribeLocalEvent<TemperatureSpeedComponent, TemperatureChangedEvent>(OnTemperatureChanged);
         SubscribeLocalEvent<TemperatureSpeedComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovementSpeedModifiers);
+        SubscribeLocalEvent<TemperatureComponent, QueryForHeatContainerEvent>(QueryForHeatContainer);
+    }
+    private void QueryForHeatContainer(EntityUid uid, TemperatureComponent component, QueryForHeatContainerEvent args)
+    {
+        if (args.Resolved)
+            return;
+        args.Responses.Add(new(uid, component, component,null));
     }
 
     /// <remarks>

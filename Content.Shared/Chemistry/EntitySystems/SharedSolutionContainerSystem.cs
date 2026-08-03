@@ -12,6 +12,8 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Localizations;
 using Content.Shared.Nutrition.EntitySystems;
+using Content.Shared.Temperature.HeatContainer;
+using Content.Shared.Temperature.Systems;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.ColorNaming;
@@ -93,6 +95,8 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         SubscribeLocalEvent<SolutionComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<SolutionComponent, MapInitEvent>(OnSolutionInit);
         SubscribeLocalEvent<SolutionComponent, ComponentShutdown>(OnSolutionShutdown);
+        SubscribeLocalEvent<SolutionComponent, QueryForHeatContainerEvent>(QuerySolutionForHeatContainer,after:[typeof(SharedThermodynamicsSystem)]);
+        SubscribeLocalEvent<SolutionComponent, HeatContainerChangedEvent>(OnHeatContainerChanged);
 
         SubscribeLocalEvent<ExaminableSolutionComponent, ExaminedEvent>(OnExamineSolution);
         SubscribeLocalEvent<ExaminableSolutionComponent, GetVerbsEvent<ExamineVerb>>(OnSolutionExaminableVerb);
@@ -101,6 +105,31 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         SubscribeLocalEvent<SolutionManagerComponent, ComponentShutdown>(OnManagerShutdown);
         SubscribeLocalEvent<SolutionManagerComponent, EntInsertedIntoContainerMessage>(OnSolutionAdded);
         SubscribeLocalEvent<SolutionManagerComponent, EntRemovedFromContainerMessage>(OnSolutionRemoved);
+    }
+
+    /// <summary>
+    /// TODO Remove once Solution implements IHeatContainer, because then we don't need to worry about this event.
+    /// </summary>
+    /// <param name="uid"></param>
+    /// <param name="component"></param>
+    /// <param name="args"></param>
+    private void OnHeatContainerChanged(EntityUid uid, SolutionComponent component, HeatContainerChangedEvent args)
+    {
+        if (!args.Containers.TryGetValue(component,out var containers))
+            return;
+        component.Solution.Temperature = containers[0].Temperature;
+    }
+
+    private void QuerySolutionForHeatContainer(EntityUid uid,
+        SolutionComponent component,
+        QueryForHeatContainerEvent args)
+    {
+        if (args.Resolved)
+            return;
+        args.Responses.Add(new(uid,
+            component,
+            new HeatContainer(component.Solution.GetHeatCapacity(ProtoMan), component.Solution.Temperature),
+            null));
     }
 
     private void OnSolutionGetState(Entity<SolutionComponent> ent, ref ComponentGetState args)
