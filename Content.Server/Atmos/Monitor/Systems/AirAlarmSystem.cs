@@ -22,6 +22,7 @@ using Content.Server.Atmos.Monitor.Payloads;
 using Content.Shared.Atmos.Components;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.UserInterface;
 
 namespace Content.Server.Atmos.Monitor.Systems;
 
@@ -38,6 +39,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
     [Dependency] private DeviceListSystem _deviceList = default!;
     [Dependency] private PopupSystem _popup = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
+
     [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceNetworkQuery = default!;
 
     #region Device Network API
@@ -168,7 +170,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
         SubscribeLocalEvent<AirAlarmComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<AirAlarmComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<AirAlarmComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<AirAlarmComponent, ActivateInWorldEvent>(OnActivate);
+        SubscribeLocalEvent<AirAlarmComponent, AfterActivatableUIOpenEvent>(OnActivate);
 
         Subs.BuiEvents<AirAlarmComponent>(SharedAirAlarmInterfaceKey.Key, subs =>
         {
@@ -242,21 +244,8 @@ public sealed partial class AirAlarmSystem : EntitySystem
         _activeUserInterfaces.Remove(uid);
     }
 
-    private void OnActivate(EntityUid uid, AirAlarmComponent component, ActivateInWorldEvent args)
+    private void OnActivate(EntityUid uid, AirAlarmComponent component, AfterActivatableUIOpenEvent args)
     {
-        if (!args.Complex)
-            return;
-
-        if (TryComp<WiresPanelComponent>(uid, out var panel) && panel.Open)
-        {
-            args.Handled = false;
-            return;
-        }
-
-        if (!this.IsPowered(uid, EntityManager))
-            return;
-
-        _ui.OpenUi(uid, SharedAirAlarmInterfaceKey.Key, args.User);
         AddActiveInterface(uid);
         SyncAllDevices(uid);
         UpdateUI(uid, component);
