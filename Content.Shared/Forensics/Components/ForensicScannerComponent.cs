@@ -2,11 +2,12 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Forensics.Components;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true), AutoGenerateComponentPause]
+// The bool in AutoGenerateCompState is needed for AfterAutoHandleStateEvent in OnScannerUpdate to update the BoundUserInterface.
+[RegisterComponent, NetworkedComponent]
+[AutoGenerateComponentState(true), AutoGenerateComponentPause]
 public sealed partial class ForensicScannerComponent : Component
 {
     /// <summary>
