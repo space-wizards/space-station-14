@@ -25,10 +25,7 @@
   id: Drunk
 
 - type: statusEffect
-  id: SlurredSpeech
-
-- type: statusEffect
-  id: PressureImmunity
+  id: SlurredSpeechr
 
 - type: statusEffect
   id: Corporeal
