@@ -6,19 +6,12 @@ using Robust.Shared.Network;
 
 namespace Content.Shared.Holosign;
 
-public sealed class HolosignSystem : EntitySystem
+public sealed partial class HolosignSystem : EntitySystem
 {
-    [Dependency] private readonly PowerCellSystem _powerCell = default!;
-    [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private INetManager _net = default!;
+    [Dependency] private PowerCellSystem _powerCell = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<HolosignProjectorComponent, BeforeRangedInteractEvent>(OnBeforeInteract);
-        SubscribeLocalEvent<HolosignProjectorComponent, ExaminedEvent>(OnExamine);
-    }
-
+    [SubscribeLocalEvent]
     private void OnExamine(Entity<HolosignProjectorComponent> ent, ref ExaminedEvent args)
     {
         // TODO: This should probably be using an itemstatus
@@ -37,6 +30,7 @@ public sealed class HolosignSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnBeforeInteract(Entity<HolosignProjectorComponent> ent, ref BeforeRangedInteractEvent args)
     {
         if (args.Handled

@@ -209,11 +209,9 @@
   metabolisms:
     Bloodstream:
       effects:
-      - !type:HealthChange
+      - !type:EvenHealthChange
         damage:
-          groups:
-            Brute: -4
-      - !type:GenericStatusEffect
-        key: Adrenaline
-        component: IgnoreSlowOnDamage
+          Brute: -4
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectAdrenaline
         time: 120

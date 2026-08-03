@@ -1,7 +1,8 @@
 using Content.Server.Atmos.Components;
-using Content.Server.Atmos.Piping.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.EntitySystems;
+using Content.Shared.Atmos.Piping.Components;
 using Content.Shared.Maps;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -13,7 +14,7 @@ namespace Content.Server.Atmos.EntitySystems
 {
     public sealed partial class AtmosphereSystem
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private IGameTiming _gameTiming = default!;
 
         private readonly Stopwatch _simulationStopwatch = new();
 
@@ -394,14 +395,9 @@ namespace Content.Server.Atmos.EntitySystems
             // Note: This is still processed even if space wind is turned off since this handles playing the sounds.
 
             var number = 0;
-            var bodies = GetEntityQuery<PhysicsComponent>();
-            var xforms = GetEntityQuery<TransformComponent>();
-            var metas = GetEntityQuery<MetaDataComponent>();
-            var pressureQuery = GetEntityQuery<MovedByPressureComponent>();
-
             while (atmosphere.CurrentRunTiles.TryDequeue(out var tile))
             {
-                HighPressureMovements(ent, tile, bodies, xforms, pressureQuery, metas);
+                HighPressureMovements(ent, tile);
                 tile.PressureDifference = 0f;
                 tile.LastPressureDirection = tile.PressureDirection;
                 tile.PressureDirection = AtmosDirection.Invalid;
@@ -850,20 +846,5 @@ namespace Content.Server.Atmos.EntitySystems
         /// Method is finished with the GridAtmosphere.
         /// </summary>
         Finished,
-    }
-
-    public enum AtmosphereProcessingState : byte
-    {
-        Revalidate,
-        TileEqualize,
-        ActiveTiles,
-        ExcitedGroups,
-        HighPressureDelta,
-        DeltaPressure,
-        Hotspots,
-        Superconductivity,
-        PipeNet,
-        AtmosDevices,
-        NumStates
     }
 }

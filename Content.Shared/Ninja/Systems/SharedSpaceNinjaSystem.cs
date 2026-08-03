@@ -9,18 +9,16 @@ namespace Content.Shared.Ninja.Systems;
 /// <summary>
 /// Provides shared ninja API, handles being attacked revealing ninja and stops guns from shooting.
 /// </summary>
-public abstract class SharedSpaceNinjaSystem : EntitySystem
+public abstract partial class SharedSpaceNinjaSystem : EntitySystem
 {
-    [Dependency] protected readonly SharedNinjaSuitSystem Suit = default!;
-    [Dependency] protected readonly SharedPopupSystem Popup = default!;
+    [Dependency] protected SharedNinjaSuitSystem Suit = default!;
+    [Dependency] protected SharedPopupSystem Popup = default!;
 
-    public EntityQuery<SpaceNinjaComponent> NinjaQuery;
+    [Dependency] public EntityQuery<SpaceNinjaComponent> NinjaQuery = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-
-        NinjaQuery = GetEntityQuery<SpaceNinjaComponent>();
 
         SubscribeLocalEvent<SpaceNinjaComponent, AttackedEvent>(OnNinjaAttacked);
         SubscribeLocalEvent<SpaceNinjaComponent, MeleeAttackEvent>(OnNinjaAttack);
@@ -106,7 +104,7 @@ public abstract class SharedSpaceNinjaSystem : EntitySystem
     /// </summary>
     private void OnShotAttempted(Entity<SpaceNinjaComponent> ent, ref ShotAttemptedEvent args)
     {
-        Popup.PopupClient(Loc.GetString("gun-disabled"), ent, ent);
+        Popup.PopupEntity(Loc.GetString("gun-disabled"), ent, ent);
         args.Cancel();
     }
 }

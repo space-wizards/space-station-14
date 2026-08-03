@@ -1022,133 +1022,111 @@ entities:
   - uid: 140
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: -10.5,-4.5
       parent: 374
   - uid: 141
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: -10.5,-3.5
       parent: 374
   - uid: 142
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: -10.5,-2.5
       parent: 374
   - uid: 144
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: -10.5,-0.5
       parent: 374
   - uid: 146
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: -10.5,1.5
       parent: 374
   - uid: 147
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: -10.5,2.5
       parent: 374
   - uid: 148
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: -10.5,3.5
       parent: 374
   - uid: 149
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: -9.5,-5.5
       parent: 374
   - uid: 150
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: -8.5,-5.5
       parent: 374
   - uid: 151
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: -7.5,-5.5
       parent: 374
   - uid: 153
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: -5.5,-5.5
       parent: 374
   - uid: 154
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: -4.5,-5.5
       parent: 374
   - uid: 155
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: -3.5,-5.5
       parent: 374
   - uid: 157
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: -1.5,-5.5
       parent: 374
   - uid: 158
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: -0.5,-5.5
       parent: 374
   - uid: 159
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 0.5,-5.5
       parent: 374
   - uid: 160
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 1.5,-4.5
       parent: 374
   - uid: 161
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 2.5,-2.5
       parent: 374
   - uid: 162
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 3.5,-2.5
       parent: 374
   - uid: 163
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 4.5,-2.5
       parent: 374
   - uid: 164
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 2.5,-5.5
       parent: 374
   - uid: 165
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 4.5,-5.5
       parent: 374
 - proto: GroundCannabis

@@ -7,7 +7,7 @@ namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 
 public sealed partial class PlantAdjustNutritionEntityEffectSystem : EntityEffectSystem<PlantHolderComponent, PlantAdjustNutrition>
 {
-    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
+    [Dependency] private PlantHolderSystem _plantHolder = default!;
 
     protected override void Effect(Entity<PlantHolderComponent> entity, ref EntityEffectEvent<PlantAdjustNutrition> args)
     {
