@@ -29,6 +29,7 @@ using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using JetBrains.Annotations;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -310,12 +311,26 @@ namespace Content.Server.Atmos.EntitySystems
         /// <summary>
         /// Extinguishes an entity if it can be extinguished.
         /// </summary>
-        /// <returns>
-        /// Whether or not the given entity was extinguished.
-        /// </returns>
-        public bool Extinguish(EntityUid uid, FlammableComponent? flammable = null)
+        [PublicAPI]
+        public void Extinguish(EntityUid uid, FlammableComponent? flammable = null)
         {
+            // Maintaining prior resolve behavior.
             if (!Resolve(uid, ref flammable))
+                return;
+
+            TryExtinguish(uid, flammable);
+        }
+
+        /// <summary>
+        /// Extinguishes an entity if it can be extinguished.
+        /// </summary>
+        /// <returns>
+        /// Whether or not <paramref name="uid"> was extinguished.
+        /// </returns>
+        [PublicAPI]
+        public bool TryExtinguish(EntityUid uid, FlammableComponent? flammable = null)
+        {
+            if (!Resolve(uid, ref flammable, false))
                 return false;
 
             if (!flammable.OnFire || !flammable.CanExtinguish)

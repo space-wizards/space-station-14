@@ -1,4 +1,4 @@
-using Content.Shared.Ghost;
+using Content.Shared.Ghost.Components;
 using Robust.Shared.Audio;
 
 namespace Content.Server.Ghost.Components;

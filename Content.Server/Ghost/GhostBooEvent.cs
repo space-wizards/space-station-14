@@ -1,4 +1,4 @@
-using Content.Shared.Ghost;
+using Content.Shared.Ghost.Components;
 
 namespace Content.Server.Ghost;
 

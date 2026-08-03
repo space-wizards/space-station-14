@@ -4,7 +4,7 @@ using Content.Server.Chat.Systems;
 using Content.Server.Ghost.Components;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Chat;
-using Content.Shared.Ghost;
+using Content.Shared.Ghost.Components;
 using Content.Shared.Light.Components;
 using Content.Shared.Random.Helpers;
 using Robust.Server.Audio;
@@ -28,47 +28,39 @@ public sealed partial class GhostSystem
     /// BooActionEvent handler. Raises BooActionEvents on nearby entities we run out of entities or we receive a response deemed sufficient.
     /// </summary>
     [SubscribeLocalEvent]
-    private void OnActionPerform(EntityUid uid, GhostComponent component, BooActionEvent args)
+    private void OnActionPerform(Entity<GhostComponent> ent, ref BooActionEvent args)
     {
         if (args.Handled)
             return;
 
-        var entities = _lookup.GetEntitiesInRange(args.Performer, component.BooRadius).ToList();
+        var entities = _lookup.GetEntitiesInRange(args.Performer, ent.Comp.BooRadius).ToList();
         // Shuffle the possible targets so we don't favor any particular entities
         _random.Shuffle(entities);
 
         // Set our desired intensity based on how many normal events the ghost wants to create.
-        var remainingIntensity = component.BooIntensity;
+        var remainingIntensity = ent.Comp.BooIntensity;
         var anythingAffected = false;
-        foreach (var ent in entities)
+        foreach (var booUid in entities)
         {
-            GhostBooIntensity allowedIntensity = remainingIntensity > (int)GhostBooIntensity.Extreme ? GhostBooIntensity.Extreme : (GhostBooIntensity)remainingIntensity;
+            GhostBooIntensity allowedIntensity = GetIntensity(remainingIntensity);
+            if (allowedIntensity == GhostBooIntensity.None)
+                break;
 
             var ghostBoo = new GhostBooEvent(allowedIntensity);
-            RaiseLocalEvent(ent, ref ghostBoo, true);
+            RaiseLocalEvent(booUid, ref ghostBoo);
             if (ghostBoo.ResponseIntensity == GhostBooIntensity.None)
                 continue;
 
             // Handle our response depending on the intensity of the action.
             anythingAffected = true;
-            switch (ghostBoo.ResponseIntensity)
-            {
-                case GhostBooIntensity.Subtle:
-                case GhostBooIntensity.Normal:
-                case GhostBooIntensity.Extreme:
-                    remainingIntensity -= (int)ghostBoo.ResponseIntensity;
-                    break;
-                default: // Out of enum, treat as though it's the highest intensity.
-                    remainingIntensity -= (int)GhostBooIntensity.Extreme;
-                    break;
-            }
+            remainingIntensity -= (int)ghostBoo.ResponseIntensity;
 
             if (remainingIntensity <= 0)
                 break;
         }
 
         if (!anythingAffected)
-            _popup.PopupEntity(Loc.GetString("ghost-component-boo-action-failed"), uid, uid);
+            _popup.PopupEntity(Loc.GetString("ghost-component-boo-action-failed"), ent, ent);
 
         args.Handled = true;
     }
@@ -114,15 +106,11 @@ public sealed partial class GhostSystem
         if (!IsIntensityPermitted(args, ent.Comp.Intensity))
             return;
 
-        // Check if we can extinguish the entity.
-        if (!_flammableQuery.TryComp(ent, out var flammable))
-            return;
-
         // Check if we need to extinguish this entity.
         if (!_random.Prob(ent.Comp.ExtinguishChance))
             return;
 
-        if (!_flammable.Extinguish(ent, flammable))
+        if (!_flammable.TryExtinguish(ent))
             return;
 
         if (ent.Comp.ExtinguishSound != null)
@@ -157,9 +145,27 @@ public sealed partial class GhostSystem
     }
     #endregion Boo Handlers
 
+    /// <summary>
+    /// Convenience function for
+    /// </summary>
     private bool IsIntensityPermitted(GhostBooEvent args, GhostBooIntensity targetIntensity)
     {
         return args.ResponseIntensity == GhostBooIntensity.None
             && args.AllowedIntensity >= targetIntensity;
+    }
+
+    /// <summary>
+    /// Returns the GhostBooIntensity from <paramref name="numericIntensity"/>.
+    /// </summary>
+    private GhostBooIntensity GetIntensity(int numericIntensity)
+    {
+        if (numericIntensity >= (int)GhostBooIntensity.Extreme)
+            return GhostBooIntensity.Extreme;
+        else if (numericIntensity >= (int)GhostBooIntensity.Normal)
+            return GhostBooIntensity.Normal;
+        else if (numericIntensity >= (int)GhostBooIntensity.Subtle)
+            return GhostBooIntensity.Subtle;
+        else
+            return GhostBooIntensity.None;
     }
 }

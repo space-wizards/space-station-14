@@ -116,10 +116,14 @@ public enum GhostVisuals : byte
 [Serializable, NetSerializable]
 public enum GhostBooIntensity : sbyte
 {
-    None = 0, /// <summary>No response at all.</summary>
-    Subtle = 1, /// <summary>A subtle response - short in duration or small in effect.</summary>
-    Normal = 2, /// <summary>A normal response - moderate in duration, attention-grabbing.</summary>
-    Extreme = 6, /// <summary>An extreme response - very intense, should be the only response for a typical ghost.</summary>
+    /// <summary>No response at all.</summary>
+    None = 0,
+    /// <summary>A subtle response - short in duration or small in effect.</summary>
+    Subtle = 1,
+    /// <summary>A normal response - moderate in duration, attention-grabbing.</summary>
+    Normal = 2,
+    /// <summary>An extreme response - very intense, should be the only response for a typical ghost.</summary>
+    Extreme = 6,
 }
 
 public sealed partial class ToggleFoVActionEvent : InstantActionEvent { }
