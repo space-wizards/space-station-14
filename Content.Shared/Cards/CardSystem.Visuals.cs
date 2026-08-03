@@ -52,8 +52,8 @@ public enum CardVisuals : byte
     CardList,
 }
 
-[DataRecord, Serializable, NetSerializable]
-public sealed partial class CardListVisualState : ICloneable
+[Serializable, NetSerializable]
+public sealed class CardListVisualState : ICloneable
 {
     public List<CardData> CardList = new();
     public int Start;
