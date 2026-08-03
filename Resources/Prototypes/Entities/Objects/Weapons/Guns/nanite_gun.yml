@@ -13,7 +13,7 @@
       map: ["enum.GunVisualLayers.Mag"]
   - type: AmmoCounter
   - type: Gun
-    fireRate: 0.7
+    fireRate: 0.9
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto
@@ -28,7 +28,7 @@
       path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
     cycleable: false # No synthesizing ammo
   - type: BallisticAmmoSelfRefiller
-    autoRefillRate: 6s
+    autoRefillRate: 9s
     affectedByEmp: true
   - type: StaticPrice
     price: 5000

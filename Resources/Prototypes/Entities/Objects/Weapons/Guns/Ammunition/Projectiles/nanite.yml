@@ -51,7 +51,8 @@
     impactEffect: BulletImpactEffectNanite
     damage:
       types:
-        Piercing: 8
+        Piercing: 9
+        Poison: 3
     soundHit:
       collection: NaniteBulletImpact
   - type: ComplexProjectileDamage
