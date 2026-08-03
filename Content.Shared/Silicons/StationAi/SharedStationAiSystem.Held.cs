@@ -181,20 +181,18 @@ public abstract partial class SharedStationAiSystem
 
     private void OnHeldInteraction(Entity<StationAiHeldComponent> ent, ref InteractionAttemptEvent args)
     {
-        var hasWhitelist = TryComp(args.Target, out StationAiWhitelistComponent? whitelistComponent);
         // DS14-start
-        var mothershipCore = HasComp<MothershipCoreComponent>(ent.Owner);
-        var onMothershipGrid = args.Target != null && IsOnMothershipGrid(ent.Owner, args.Target.Value);
-        var allowDisabledWhitelist = mothershipCore && onMothershipGrid;
+        // The mothership core does not use the station AI interaction whitelist.
+        if (HasComp<MothershipCoreComponent>(ent.Owner))
+            return;
         // DS14-end
 
         // Cancel if it's not us or something with a whitelist, or whitelist is disabled.
-        args.Cancelled = (!hasWhitelist
-                          || (whitelistComponent is { Enabled: false } && !allowDisabledWhitelist)
-                          || (mothershipCore && !onMothershipGrid))
+        args.Cancelled = (!TryComp(args.Target, out StationAiWhitelistComponent? whitelistComponent)
+                          || !whitelistComponent.Enabled)
                          && ent.Owner != args.Target
                          && args.Target != null;
-        if (whitelistComponent is { Enabled: false } && !allowDisabledWhitelist)
+        if (whitelistComponent is { Enabled: false })
         {
             ShowDeviceNotRespondingPopup(ent.Owner);
         }

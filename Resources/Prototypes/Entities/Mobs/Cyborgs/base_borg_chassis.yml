@@ -611,5 +611,6 @@
   - type: Damageable # DS14
     damageModifierSet: CombatBorg
   - type: Xenoborg
+  - type: LavalandChasmImmune
   - type: BypassLock
     bypassDelay: 15

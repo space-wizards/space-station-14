@@ -8,6 +8,7 @@ using Content.Server.DeadSpace.Lavaland.Components;
 using Content.Server.DeadSpace.Xenoborgs.Components;
 using Content.Server.Physics.Controllers;
 using Content.Server.Tiles;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Chasm;
 using Content.Shared.Damage;
 using Content.Shared.DeadSpace.Xenoborgs;
@@ -22,6 +23,7 @@ using Content.Shared.Silicons.Borgs;
 using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Stunnable;
 using Content.Shared.Timing;
+using Content.Shared.Tools.Components;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
@@ -64,6 +66,39 @@ public sealed class XenoborgIntegrationTest
             AssertMinerModuleExclusivity(entMan, gridUid);
             AssertJaunterBranches(entMan, transform, useDelay, awayGridUid, gridUid);
             AssertPortalGunBranches(entMan, mapSystem, turf, useDelay, gridUid);
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task XenoborgsDoNotFallIntoLavalandChasms()
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings
+        {
+            Connected = false,
+            Dirty = true,
+        });
+
+        var server = pair.Server;
+        var entMan = server.EntMan;
+        var chasmSystem = server.System<ChasmSystem>();
+        var (_, gridUid) = await CreateTestGrid(server);
+
+        await server.WaitAssertion(() =>
+        {
+            var xenoborg = entMan.SpawnEntity("XenoborgMiner", new EntityCoordinates(gridUid, CorePosition));
+            var chasm = entMan.SpawnEntity(
+                "FloorChasmEntity",
+                new EntityCoordinates(gridUid, new Vector2(2.5f, 0.5f)));
+
+            chasmSystem.StartFalling(
+                chasm,
+                entMan.GetComponent<ChasmComponent>(chasm),
+                xenoborg,
+                playSound: false);
+
+            Assert.That(entMan.HasComponent<ChasmFallingComponent>(xenoborg), Is.False);
         });
 
         await pair.CleanReturnAsync();
@@ -145,6 +180,7 @@ public sealed class XenoborgIntegrationTest
         var entMan = server.EntMan;
         var mapManager = server.ResolveDependency<IMapManager>();
         var map = server.System<SharedMapSystem>();
+        var actionBlocker = server.System<ActionBlockerSystem>();
         var interaction = server.System<SharedInteractionSystem>();
         var transform = server.System<SharedTransformSystem>();
         var (mapId, gridUid) = await CreateTestGrid(server);
@@ -157,12 +193,28 @@ public sealed class XenoborgIntegrationTest
 
         await server.WaitAssertion(() =>
         {
+            var xenoborg = entMan.SpawnEntity(
+                "XenoborgMiner",
+                new EntityCoordinates(gridUid, new Vector2(1.5f, 1.5f)));
+            var powerDrill = entMan.SpawnEntity(
+                "PowerDrill",
+                new EntityCoordinates(gridUid, CorePosition));
+            var drillState = entMan.GetComponent<MultipleToolComponent>(powerDrill).CurrentEntry;
             var airlock = entMan.SpawnEntity(
                 "AirlockXenoborgLocked",
                 new EntityCoordinates(gridUid, new Vector2(2.5f, 0.5f)));
             var button = entMan.SpawnEntity(
                 "LockableButtonLawyer",
                 new EntityCoordinates(gridUid, new Vector2(3.5f, 0.5f)));
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(actionBlocker.CanInteract(eyeState.Core, xenoborg), Is.True);
+                Assert.That(interaction.UseInHandInteraction(eyeState.Core, powerDrill), Is.True);
+                Assert.That(
+                    entMan.GetComponent<MultipleToolComponent>(powerDrill).CurrentEntry,
+                    Is.Not.EqualTo(drillState));
+            });
 
             transform.SetCoordinates(eyeState.Eye, entMan.GetComponent<TransformComponent>(airlock).Coordinates);
             Assert.That(interaction.InteractionActivate(eyeState.Core, airlock), Is.True);
@@ -178,6 +230,7 @@ public sealed class XenoborgIntegrationTest
                 new EntityCoordinates(foreignGrid.Owner, new Vector2(0.5f, 0.5f)));
             Assert.Multiple(() =>
             {
+                Assert.That(actionBlocker.CanInteract(eyeState.Core, foreignButton), Is.True);
                 Assert.That(interaction.InRangeUnobstructed(eyeState.Core, foreignButton), Is.False);
                 Assert.That(interaction.InteractionActivate(eyeState.Core, foreignButton), Is.False);
             });

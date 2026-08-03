@@ -60,9 +60,6 @@
     enabled: true
     radius: 4
     netsync: false
-  - type: Anchorable
-    flags:
-    - Anchorable
   - type: Destructible
     thresholds:
     - trigger:
