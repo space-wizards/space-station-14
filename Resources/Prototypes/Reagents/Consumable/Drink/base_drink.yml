@@ -43,7 +43,7 @@
 
 - type: reagent
   id: BaseAlcohol
-  group: Drinks
+  group: AlcoholicDrinks # DS14
   abstract: true
   slipData:
     requiredSlipSpeed: 3.5

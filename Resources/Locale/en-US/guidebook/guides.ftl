@@ -104,6 +104,8 @@ guide-entry-radio = Radio and Speech
 guide-entry-references = Tables & References
 guide-entry-chemicals = Chemicals
 guide-entry-drinks = Drinks
+guide-entry-alcoholic-drinks = Alcoholic Drinks
+guide-entry-non-alcoholic-drinks = Non-Alcoholic Drinks
 guide-entry-foodrecipes = Food Recipes
 
 guide-entry-elements = Elements

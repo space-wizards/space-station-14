@@ -3,4 +3,6 @@
   Знание изготовление напитков важно, особенно важно если это буквально Ваша работа. Вот некоторые из напитков и их рецепты:
 
   <GuideReagentGroupEmbed Group="Drinks"/>
+  
+  <GuideReagentGroupEmbed Group="AlcoholicDrinks"/> <!-- DS14 -->
 </Document>

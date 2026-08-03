@@ -15,6 +15,25 @@
   name: guide-entry-drinks
   text: "/ServerInfo/Guidebook/ReferenceTables/Drinks.xml"
   filterEnabled: True
+  # DS14-start
+  children:
+  - AlcoholicDrinks
+  - NonAlcoholicDrinks
+  # DS14-end
+
+# DS14-start
+- type: guideEntry
+  id: AlcoholicDrinks
+  name: guide-entry-alcoholic-drinks
+  text: "/ServerInfo/Guidebook/ReferenceTables/AlcoholicDrinks.xml"
+  filterEnabled: True
+
+- type: guideEntry
+  id: NonAlcoholicDrinks
+  name: guide-entry-non-alcoholic-drinks
+  text: "/ServerInfo/Guidebook/ReferenceTables/NonAlcoholicDrinks.xml"
+  filterEnabled: True
+# DS14-end
 
 - type: guideEntry
   id: FoodRecipes

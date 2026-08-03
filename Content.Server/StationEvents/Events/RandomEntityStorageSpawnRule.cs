@@ -15,8 +15,11 @@ public sealed class RandomEntityStorageSpawnRule : StationEventSystem<RandomEnti
     {
         base.Started(uid, comp, gameRule, args);
 
-        if (!TryGetRandomStation(out var station))
+        // DS14-start
+        if (!TryGetRandomStation(out var station) ||
+            StationSystem.GetLargestGrid(station.Value) is not { } stationGrid)
             return;
+        // DS14-end
 
         var validLockers = new List<(EntityUid, EntityStorageComponent)>();
         var spawn = Spawn(comp.Prototype, MapCoordinates.Nullspace);
@@ -24,8 +27,10 @@ public sealed class RandomEntityStorageSpawnRule : StationEventSystem<RandomEnti
         var query = EntityQueryEnumerator<EntityStorageComponent, TransformComponent>();
         while (query.MoveNext(out var ent, out var storage, out var xform))
         {
-            if (StationSystem.GetOwningStation(ent, xform) != station)
+            // DS14-start
+            if (xform.GridUid != stationGrid)
                 continue;
+            // DS14-end
 
             if (!_entityStorage.CanInsert(spawn, ent, storage))
                 continue;

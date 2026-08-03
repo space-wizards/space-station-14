@@ -1606,7 +1606,13 @@
   - type: Speech
     # speechSounds: Monkey # DS14
     speechVerb: Monkey
-  - type: MonkeyAccent
+  # DS14-start: trained reinforcements can coordinate in intelligible Galactic Common.
+  - type: Language
+    selectedLanguage: GeneralLanguage
+    knownLanguages:
+    - GeneralLanguage
+    - MonkeyLanguage
+  # DS14-end
   - type: NpcFactionMember
     factions:
     - Syndicate
@@ -1669,7 +1675,7 @@
   # DS14-Languages-end
   - type: Speech
     speechVerb: Reptilian
-    allowedEmotes: ['Thump']
+    allowedEmotes: ['Thump', 'Weh'] # DS14
   - type: Vocal
     sounds:
       Male: MaleReptilian

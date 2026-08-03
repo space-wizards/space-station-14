@@ -430,7 +430,7 @@
     - зу
     - че
     - ыо
-  generateTTSForLexicon: false
+  generateTTSForLexicon: true
 
 - type: language
   id: CatLanguage

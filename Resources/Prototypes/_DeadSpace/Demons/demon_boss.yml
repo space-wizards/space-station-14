@@ -136,6 +136,10 @@
     name: ghost-role-information-herald-name
     description: ghost-role-information-herald-description
     rules: ghost-role-information-herald-rules
+  - type: Language
+    selectedLanguage: DemonLanguage
+    knownLanguages:
+    - DemonLanguage
   - type: Vocal
     sounds:
       Male: Demon

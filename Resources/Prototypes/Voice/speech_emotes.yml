@@ -599,8 +599,16 @@
   id: Weh
   name: chat-emote-name-weh
   category: Vocal
-  icon: Interface/Emotes/weh.png
+  available: false # DS14
+  icon: { sprite: /Textures/Objects/Fun/Plushies/lizard.rsi, state: icon } # DS14
   chatMessages: ["chat-emote-msg-weh"]
+  # DS14-start
+  chatTriggers:
+  - weh
+  - wehs
+  - вех
+  - вехает
+  # DS14-end
 
 - type: emote
   id: Hew

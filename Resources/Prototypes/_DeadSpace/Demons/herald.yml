@@ -58,6 +58,10 @@
     actionToggleNightVision: ActionToggleNightVision
   - type: Speech
     speechVerb: Ghost
+  - type: Language
+    selectedLanguage: DemonLanguage
+    knownLanguages:
+    - DemonLanguage
   - type: HeraldGhost
   - type: GhostTakeoverAvailable
   - type: GhostRole
