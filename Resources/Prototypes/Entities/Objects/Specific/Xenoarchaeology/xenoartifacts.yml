@@ -49,6 +49,9 @@
       Flammable: [Touch]
       Extinguish: [Touch]
       Acidic: [Touch]
+  - type: LightningTarget
+    priority: 2
+    lightningExplode: false
 
 - type: entity
   parent: BaseAction
@@ -57,9 +60,10 @@
   description: Activate yourself, causing chaos to those near you.
   components:
   - type: Action
-    icon:
-      sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
-      state: ano29
     useDelay: 300
+  - type: Sprite
+    sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
+    layers:
+    - state: ano29
   - type: InstantAction
     event: !type:ArtifactSelfActivateEvent
