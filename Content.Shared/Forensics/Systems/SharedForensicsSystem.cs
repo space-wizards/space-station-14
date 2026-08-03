@@ -29,20 +29,12 @@ public sealed partial class SharedForensicsSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<HandsComponent, ContactInteractionEvent>(OnInteract);
         SubscribeLocalEvent<FingerprintComponent, MapInitEvent>(OnFingerprintInit, after: new[] { typeof(SharedBloodstreamSystem) });
         // The solution entities are spawned on MapInit as well, so we have to wait for that to be able to set the DNA in the bloodstream correctly without ResolveSolution failing
         SubscribeLocalEvent<DnaComponent, MapInitEvent>(OnDNAInit, after: new[] { typeof(SharedBloodstreamSystem) });
-
-        SubscribeLocalEvent<ForensicsComponent, GibbedBeforeDeletionEvent>(OnBeingGibbed);
-        SubscribeLocalEvent<ForensicsComponent, MeleeHitEvent>(OnMeleeHit);
-        SubscribeLocalEvent<ForensicsComponent, GotRehydratedEvent>(OnRehydrated);
-        SubscribeLocalEvent<CleansForensicsComponent, AfterInteractEvent>(OnAfterInteract, after: new[] { typeof(SharedAbsorbentSystem) });
-        SubscribeLocalEvent<ForensicsComponent, CleanForensicsDoAfterEvent>(OnCleanForensicsDoAfter);
-        SubscribeLocalEvent<DnaSubstanceTraceComponent, SolutionChangedEvent>(OnSolutionChanged);
-        SubscribeLocalEvent<CleansForensicsComponent, GetVerbsEvent<UtilityVerb>>(OnUtilityVerb);
     }
 
+    [SubscribeLocalEvent]
     private void OnSolutionChanged(Entity<DnaSubstanceTraceComponent> ent, ref SolutionChangedEvent ev)
     {
         var soln = GetSolutionsDNA(ev.Solution);
@@ -58,6 +50,7 @@ public sealed partial class SharedForensicsSystem : EntitySystem
         Dirty(ent);
     }
 
+    [SubscribeLocalEvent]
     private void OnInteract(Entity<HandsComponent> ent, ref ContactInteractionEvent args)
     {
         ApplyEvidence(ent.Owner, args.Other);
@@ -82,6 +75,7 @@ public sealed partial class SharedForensicsSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnBeingGibbed(Entity<ForensicsComponent> ent, ref GibbedBeforeDeletionEvent args)
     {
         var dna = Loc.GetString("forensics-dna-unknown");
@@ -98,6 +92,7 @@ public sealed partial class SharedForensicsSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnMeleeHit(Entity<ForensicsComponent> weapon, ref MeleeHitEvent args)
     {
         if ((!args.BaseDamage.DamageDict.TryGetValue("Blunt", out var bluntDamage) || bluntDamage.Value <= 0) &&
@@ -113,6 +108,7 @@ public sealed partial class SharedForensicsSystem : EntitySystem
         Dirty(weapon);
     }
 
+    [SubscribeLocalEvent]
     private void OnRehydrated(Entity<ForensicsComponent> ent, ref GotRehydratedEvent args)
     {
         CopyForensicsFrom(ent.Owner, args.Target);
@@ -179,6 +175,7 @@ public sealed partial class SharedForensicsSystem : EntitySystem
         return list;
     }
 
+    [SubscribeLocalEvent]
     private void OnAfterInteract(Entity<CleansForensicsComponent> cleanForensicsEntity, ref AfterInteractEvent args)
     {
         if (args.Handled || !args.CanReach || args.Target == null)
@@ -187,6 +184,7 @@ public sealed partial class SharedForensicsSystem : EntitySystem
         args.Handled = TryStartCleaning(cleanForensicsEntity, args.User, args.Target.Value);
     }
 
+    [SubscribeLocalEvent]
     private void OnUtilityVerb(Entity<CleansForensicsComponent> entity, ref GetVerbsEvent<UtilityVerb> args)
     {
         if (!args.CanInteract || !args.CanAccess)
@@ -252,6 +250,7 @@ public sealed partial class SharedForensicsSystem : EntitySystem
         return false;
     }
 
+    [SubscribeLocalEvent]
     private void OnCleanForensicsDoAfter(Entity<ForensicsComponent> component, ref CleanForensicsDoAfterEvent args)
     {
         if (args.Handled || args.Cancelled || args.Args.Target == null)

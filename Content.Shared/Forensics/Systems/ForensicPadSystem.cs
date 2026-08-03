@@ -18,14 +18,7 @@ public sealed partial class ForensicPadSystem : EntitySystem
     [Dependency] private SharedForensicsSystem _forensics = default!;
     [Dependency] private LabelSystem _label = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-        SubscribeLocalEvent<ForensicPadComponent, ExaminedEvent>(OnExamined);
-        SubscribeLocalEvent<ForensicPadComponent, AfterInteractEvent>(OnAfterInteract);
-        SubscribeLocalEvent<ForensicPadComponent, ForensicPadDoAfterEvent>(OnDoAfter);
-    }
-
+    [SubscribeLocalEvent]
     private void OnExamined(Entity<ForensicPadComponent> pad, ref ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)
@@ -40,6 +33,7 @@ public sealed partial class ForensicPadSystem : EntitySystem
         args.PushMarkup(Loc.GetString("forensic-pad-sample", ("sample", pad.Comp.Sample)));
     }
 
+    [SubscribeLocalEvent]
     private void OnAfterInteract(Entity<ForensicPadComponent> pad, ref AfterInteractEvent args)
     {
         if (!args.CanReach || args.Target == null || HasComp<ForensicScannerComponent>(args.Target))
@@ -103,6 +97,7 @@ public sealed partial class ForensicPadSystem : EntitySystem
         _doAfterSystem.TryStartDoAfter(doAfterEventArgs);
     }
 
+    [SubscribeLocalEvent]
     private void OnDoAfter(Entity<ForensicPadComponent> pad, ref ForensicPadDoAfterEvent args)
     {
         if (args.Handled || args.Cancelled)

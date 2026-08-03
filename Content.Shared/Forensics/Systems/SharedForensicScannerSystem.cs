@@ -33,20 +33,7 @@ public sealed partial class SharedForensicScannerSystem : EntitySystem
 
     private static readonly ProtoId<TagPrototype> DNASolutionScannableTag = "DNASolutionScannable";
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<ForensicScannerComponent, AfterAutoHandleStateEvent>(OnScannerUpdate);
-        SubscribeLocalEvent<ForensicScannerComponent, AfterInteractEvent>(OnAfterInteract);
-        SubscribeLocalEvent<ForensicScannerComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
-        SubscribeLocalEvent<ForensicScannerComponent, BeforeActivatableUIOpenEvent>(OnBeforeActivatableUIOpen);
-        SubscribeLocalEvent<ForensicScannerComponent, GetVerbsEvent<UtilityVerb>>(OnUtilityVerb);
-        SubscribeLocalEvent<ForensicScannerComponent, ForensicScannerPrintMessage>(OnPrint);
-        SubscribeLocalEvent<ForensicScannerComponent, ForensicScannerClearMessage>(OnClear);
-        SubscribeLocalEvent<ForensicScannerComponent, ForensicScannerDoAfterEvent>(OnDoAfter);
-    }
-
+    [SubscribeLocalEvent]
     private void OnScannerUpdate(Entity<ForensicScannerComponent> scanner, ref AfterAutoHandleStateEvent args)
     {
         UpdateUi(scanner);
@@ -60,6 +47,7 @@ public sealed partial class SharedForensicScannerSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnDoAfter(Entity<ForensicScannerComponent> scanner, ref ForensicScannerDoAfterEvent args)
     {
         if (args.Handled || args.Cancelled)
@@ -106,6 +94,7 @@ public sealed partial class SharedForensicScannerSystem : EntitySystem
         });
     }
 
+    [SubscribeLocalEvent]
     private void OnUtilityVerb(Entity<ForensicScannerComponent> scanner, ref GetVerbsEvent<UtilityVerb> args)
     {
         if (!args.CanInteract || !args.CanAccess)
@@ -126,6 +115,7 @@ public sealed partial class SharedForensicScannerSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
+    [SubscribeLocalEvent]
     private void OnAfterInteract(Entity<ForensicScannerComponent> scanner, ref AfterInteractEvent args)
     {
         if (args.Target == null || !args.CanReach)
@@ -134,6 +124,7 @@ public sealed partial class SharedForensicScannerSystem : EntitySystem
         StartScan(scanner, args.User, args.Target.Value);
     }
 
+    [SubscribeLocalEvent]
     private void OnAfterInteractUsing(Entity<ForensicScannerComponent> scanner, ref AfterInteractUsingEvent args)
     {
         if (args.Handled || !args.CanReach)
@@ -166,6 +157,7 @@ public sealed partial class SharedForensicScannerSystem : EntitySystem
         _popupSystem.PopupEntity(Loc.GetString("forensic-scanner-match-none"), scanner, args.User);
     }
 
+    [SubscribeLocalEvent]
     private void OnBeforeActivatableUIOpen(Entity<ForensicScannerComponent> scanner, ref BeforeActivatableUIOpenEvent args)
     {
         UpdateUi(scanner);
@@ -178,6 +170,7 @@ public sealed partial class SharedForensicScannerSystem : EntitySystem
         UpdateUi(scanner);
     }
 
+    [SubscribeLocalEvent]
     private void OnPrint(Entity<ForensicScannerComponent> scanner, ref ForensicScannerPrintMessage args)
     {
         var user = args.Actor;
@@ -245,6 +238,7 @@ public sealed partial class SharedForensicScannerSystem : EntitySystem
         Dirty(scanner);
     }
 
+    [SubscribeLocalEvent]
     private void OnClear(Entity<ForensicScannerComponent> scanner, ref ForensicScannerClearMessage args)
     {
         scanner.Comp.Fingerprints = [];
