@@ -21,15 +21,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
     [Dependency] private StatusEffectsSystem _statusEffects = default!;
     [Dependency] private IGameTiming _timing = default!;
 
-    /// <inheritdoc/>
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeNetworkEvent<BlinkEyeEvent>(OnBlinkEyes);
-        SubscribeNetworkEvent<OpenEyesEvent>(OnOpenEyes);
-    }
-
+    [SubscribeNetworkEvent]
     private void OnOpenEyes(OpenEyesEvent ev)
     {
         var ent = GetEntity(ev.NetEntity);
@@ -181,6 +173,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
     /// This method retrieves the entity associated with the event and checks if it has a valid <see cref="EyeBlinkingComponent"/>.
     /// If the entity is valid and has the component, it initiates a blink action for that entity.
     /// </summary>
+    [SubscribeNetworkEvent]
     private void OnBlinkEyes(BlinkEyeEvent ev)
     {
         var ent = GetEntity(ev.NetEntity);
