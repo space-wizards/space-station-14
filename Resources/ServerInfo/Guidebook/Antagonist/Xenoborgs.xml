@@ -144,16 +144,13 @@
 
   The mothership core can produce a xenoborg extractor flatpack for 10 steel.
 
-  When anchored it will start draining power from the cable corresponding to the voltage it's set to.
+  When anchored it will start draining power from the high voltage cable under it.
 
   It will produce a xenoborg crystal everytime its internal battery fills up.
 
-  Energy consumption and efficiency vary depending on the voltage.
-  - low voltage - 15kW - 1 minute to produce one xenoborg crystal.
-  - medium voltage - 60kW - 30 seconds to produce one xenoborg crystal.
-  - high voltage - 240kW - 15 seconds to produce one xenoborg crystal.
+  It consumes 240kW and it takes 15 seconds to produce one xenoborg crystal.
 
-  [bold]Attention![/bold] At the highest voltage it will trigger the rogue power consuming device alert! Anyone using the power monitor device will know something is wrong.
+  [bold]Attention![/bold] It will trigger the rogue power consuming device alert! Anyone using the power monitor device will know something is wrong.
 
   ## Preparation and Tactics
   Before FTLing near the station, make sure the IFF is off.
