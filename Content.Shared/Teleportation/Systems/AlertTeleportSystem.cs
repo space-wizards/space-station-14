@@ -1,17 +1,15 @@
 using Content.Shared.Alert;
-using Content.Shared.Alert.Components;
 using Content.Shared.Follower;
-using Content.Shared.Ghost.Components;
 using Content.Shared.Teleportation.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
-using System.Numerics;
+
 namespace Content.Shared.Teleportation.Systems;
 
-public abstract partial class AlertTeleportSystem : EntitySystem
+public partial class AlertTeleportSystem : EntitySystem
 {
     [Dependency] private FollowerSystem _follower = default!;
     [Dependency] private SharedTransformSystem _transform = default!;

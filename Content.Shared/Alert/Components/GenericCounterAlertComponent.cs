@@ -29,7 +29,8 @@ public sealed partial class GenericCounterAlertComponent : Component
     public bool HideLeadingZeroes = true;
 
     /// <summary>
-    /// Whether 1 and 0 should be hidden
+    /// If true, one and zero are not displayed.
+    /// only "000" or "001" would not display
     /// </summary>
     [DataField]
     public bool HideZeroAndSingleValues = false;

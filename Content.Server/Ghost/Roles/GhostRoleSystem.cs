@@ -322,7 +322,7 @@ public sealed partial class GhostRoleSystem : EntitySystem
             return;
 
         if (role.Comp.MakeGhostAlert)
-            _alertTeleport.MakeTeleportAlert<GhostAlertsComponent>(role, role.Comp.GhostAlert, role.Comp.GhostAlertCooldown, role.Comp.GhostAlertSound);
+            _alertTeleport.MakeTeleportAlert<GhostAlertsComponent>(role, role.Comp.GhostAlert, role.Comp.GhostAlertDelay, role.Comp.GhostAlertSound);
 
         _ghostRoles[role.Comp.Identifier = GetNextRoleIdentifier()] = role;
         UpdateAllEui();
