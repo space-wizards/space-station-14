@@ -341,7 +341,7 @@
   - type: Sprite
     sprite: Objects/Specific/Chemistry/beaker_syndicate_bluespace.rsi
     layers:
-      - state: beaker
+      - state: beakersyndicatebluespace
   - type: SolutionContainerVisuals
     maxFillLevels: 0
 
