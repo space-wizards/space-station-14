@@ -1,7 +1,7 @@
 using Content.Shared.Forensics;
 using Content.Shared.Forensics.Components;
+using JetBrains.Annotations;
 using Robust.Client.UserInterface;
-using Robust.Shared.Timing;
 
 namespace Content.Client.Forensics;
 
@@ -10,6 +10,7 @@ public sealed partial class ForensicScannerBoundUserInterface : BoundUserInterfa
     [ViewVariables]
     private ForensicScannerMenu? _window;
 
+    [UsedImplicitly]
     public ForensicScannerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
     }
