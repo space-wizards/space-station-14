@@ -1,8 +1,7 @@
 - type: entity
   parent: SolutionLarge
-  id: hydroponicsSoil
-  name: soil
-  description: A mix of organic matter and minerals creating a soil to grow your plant in space. Seems to be dry.
+  abstract: true
+  id: BaseHydroponicsSoil
   placement:
     mode: SnapgridCenter
   components:
@@ -22,21 +21,7 @@
         - FullTileMask
         layer:
         - FullTileMask
-  - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
-    damageContainer: Inorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 50
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
   - type: Sprite
-    sprite: Structures/Hydroponics/misc.rsi
-    state: soil
     noRot: true
   - type: PlantHolder
     drawWarnings: false
@@ -57,6 +42,28 @@
         solution: soil
   - type: Appearance
   - type: PlantHolderVisuals
+
+- type: entity
+  parent: BaseHydroponicsSoil
+  id: hydroponicsSoil
+  name: soil
+  description: A mix of organic matter and minerals creating a soil to grow your plant in space. Seems to be dry.
+  components:
+  - type: Damageable
+    damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Sprite
+    sprite: Structures/Hydroponics/misc.rsi
+    state: soil
 
 - type: entity
   parent: hydroponicsSoil

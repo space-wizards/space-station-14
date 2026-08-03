@@ -30,6 +30,7 @@ using Robust.Shared.Utility;
 using Robust.Shared.Map.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
+using Content.Shared.IdentityManagement;
 
 namespace Content.Server.Revenant.EntitySystems;
 
@@ -47,7 +48,6 @@ public sealed partial class RevenantSystem
     [Dependency] private SharedMapSystem _mapSystem = default!;
 
     [Dependency] private EntityQuery<TagComponent> _tagQuery = default!;
-    [Dependency] private EntityQuery<EntityStorageComponent> _entityStorageQuery = default!;
     [Dependency] private EntityQuery<ItemComponent> _itemQuery = default!;
     [Dependency] private EntityQuery<PoweredLightComponent> _poweredLightQuery = default!;
     [Dependency] private EntityQuery<MobStateComponent> _mobStateQuery = default!;
@@ -110,7 +110,11 @@ public sealed partial class RevenantSystem
         if (!_doAfter.TryStartDoAfter(searchDoAfter))
             return;
 
-        _popup.PopupEntity(Loc.GetString("revenant-soul-searching", ("target", target)), uid, uid, PopupType.Medium);
+        _popup.PopupEntity(
+            Loc.GetString("revenant-soul-searching", ("target", Identity.Entity(target, EntityManager))),
+            uid,
+            uid,
+            PopupType.Medium);
     }
 
     private void OnSoulSearch(EntityUid uid, RevenantComponent component, SoulEvent args)
@@ -135,7 +139,11 @@ public sealed partial class RevenantSystem
                 message = "revenant-soul-yield-average";
                 break;
         }
-        _popup.PopupEntity(Loc.GetString(message, ("target", args.Args.Target)), args.Args.Target.Value, uid, PopupType.Medium);
+        _popup.PopupEntity(
+            Loc.GetString(message, ("target", Identity.Entity(args.Args.Target.Value, EntityManager))),
+            args.Args.Target.Value,
+            uid,
+            PopupType.Medium);
 
         args.Handled = true;
     }
@@ -154,7 +162,7 @@ public sealed partial class RevenantSystem
             return;
         }
 
-        if(_physics.GetEntitiesIntersectingBody(uid, (int) CollisionGroup.Impassable).Count > 0)
+        if (_physics.GetEntitiesIntersectingBody(uid, (int) CollisionGroup.Impassable).Count > 0)
         {
             _popup.PopupEntity(Loc.GetString("revenant-in-solid"), uid, uid);
             return;
@@ -173,8 +181,10 @@ public sealed partial class RevenantSystem
 
         _appearance.SetData(uid, RevenantVisuals.Harvesting, true);
 
-        _popup.PopupEntity(Loc.GetString("revenant-soul-begin-harvest", ("target", target)),
-            target, PopupType.Large);
+        _popup.PopupEntity(
+            Loc.GetString("revenant-soul-begin-harvest", ("target", Identity.Entity(target, EntityManager))),
+            target,
+            PopupType.Large);
 
         TryUseAbility(uid, revenant, 0, revenant.HarvestDebuffs);
     }
@@ -195,8 +205,10 @@ public sealed partial class RevenantSystem
         if (!TryComp<EssenceComponent>(args.Args.Target, out var essence))
             return;
 
-        _popup.PopupEntity(Loc.GetString("revenant-soul-finish-harvest", ("target", args.Args.Target)),
-            args.Args.Target.Value, PopupType.LargeCaution);
+        _popup.PopupEntity(
+            Loc.GetString("revenant-soul-finish-harvest", ("target", Identity.Entity(args.Args.Target.Value, EntityManager))),
+            args.Args.Target.Value,
+            PopupType.LargeCaution);
 
         essence.Harvested = true;
         ChangeEssenceAmount(uid, essence.EssenceAmount, component);
@@ -268,8 +280,7 @@ public sealed partial class RevenantSystem
                 continue;
 
             //randomly opens some lockers and such.
-            if (_entityStorageQuery.TryGetComponent(ent, out var entstorecomp))
-                _entityStorage.OpenStorage(ent, entstorecomp);
+            _entityStorage.OpenStorage(ent, args.Performer);
 
             //chucks shit
             if (_itemQuery.HasComponent(ent) &&
