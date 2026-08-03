@@ -20,7 +20,7 @@ public abstract partial class AlertTeleportSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnAlertTeleport(Entity<AlertTeleportComponent> ent, ref AlertTeleportEvent args)
     {
-        var data = ent.Comp.Targets[arg.AlertId];
+        var data = ent.Comp.Targets[args.AlertId];
 
         if (data.Targets == null)
             return;
@@ -40,7 +40,7 @@ public abstract partial class AlertTeleportSystem : EntitySystem
             return;
 
         // It's a struct, baby
-        ent.Comp.Targets[arg.AlertId] = data;
+        ent.Comp.Targets[args.AlertId] = data;
 
         Dirty(ent);
 
@@ -54,16 +54,25 @@ public abstract partial class AlertTeleportSystem : EntitySystem
         }
     }
 
-    public void AddAlertTeleport(EntityUid ent, EntityUid target, ProtoId<AlertPrototype> alert, TimeSpan cooldown, AlertTeleportComponent? comp = null)
+    /// <summary>
+    /// Adds a teleport alert for a specific entity
+    /// </summary>
+    /// <param name="ent">The entity to which the alert will be added</param>
+    /// <param name="target">The target to which the entity will teleport when the alert is pressed</param>
+    /// <param name="alert">The alert that the entity will receive</param>
+    /// <param name="cooldown">Alert lifetime</param>
+    public void AddAlertTeleport(Entity<AlertTeleportComponent> ent, EntityUid target, ProtoId<AlertPrototype> alert, TimeSpan cooldown)
     {
-        if (!Resolve(ent, ref comp))
-            return;
-
         var targetCoords = _transform.GetMapCoordinates(target);
 
         // Without this, the client will try to create an alert for items from the spawn menu.
         if (targetCoords.MapId == MapId.Nullspace)
             return;
+
+        var comp = ent.Comp;
+
+        var curTime = _timing.CurTime;
+        var endTime = _timing.CurTime + cooldown;
 
         if (!comp.Targets.ContainsKey(alert))
             comp.Targets.Add(alert, new AlertTeleportData());
@@ -71,7 +80,7 @@ public abstract partial class AlertTeleportSystem : EntitySystem
         var data = comp.Targets[alert];
 
         // Is it bad that we clean up unnecessary objects only when needed? I don't think
-        if (data.EndTime <= _timing.CurTime)
+        if (data.EndTime <= curTime)
             data = default;
 
         if (data.Targets == null)
@@ -79,13 +88,13 @@ public abstract partial class AlertTeleportSystem : EntitySystem
 
         data.Targets.Add(GetNetEntity(target));
 
-        data.EndTime = _timing.CurTime + cooldown;
+        data.EndTime = endTime;
 
         comp.Targets[alert] = data;
 
-        Dirty(ent, comp);
+        Dirty(ent);
 
-        _alerts.ShowAlert(ent, alert, cooldown: (_timing.CurTime, _timing.CurTime + cooldown), autoRemove: true, showCooldown: false);
+        _alerts.ShowAlert(ent.Owner, alert, cooldown: (curTime, endTime), autoRemove: true, showCooldown: false);
     }
 
     /// <summary>
@@ -101,7 +110,7 @@ public abstract partial class AlertTeleportSystem : EntitySystem
         var query = EntityQueryEnumerator<T, AlertTeleportComponent>();
         while (query.MoveNext(out var uid, out var _, out var alertTeleport))
         {
-            AddAlertTeleport(uid, target, alert, cooldown);
+            AddAlertTeleport((uid, alertTeleport), target, alert, cooldown);
             _audioSystem.PlayEntity(sound, uid, uid);
         }
     }

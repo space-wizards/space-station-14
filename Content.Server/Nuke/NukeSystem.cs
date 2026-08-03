@@ -4,6 +4,7 @@ using Content.Server.Explosion.EntitySystems;
 using Content.Server.Pinpointer;
 using Content.Server.Popups;
 using Content.Server.Station.Systems;
+using Content.Shared.Alert;
 using Content.Shared.AlertLevel;
 using Content.Shared.Audio;
 using Content.Shared.Containers.ItemSlots;
@@ -22,6 +23,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -49,6 +51,11 @@ public sealed partial class NukeSystem : EntitySystem
     [Dependency] private TurfSystem _turf = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private AlertTeleportSystem _alertTeleport = default!;
+
+    /// <summary>
+    /// Gives all the ghosts this alert when the nuclear bomb was armed
+    /// </summary>
+    private static ProtoId<AlertPrototype> _nukeGhostAlert = "NukeArm";
 
     /// <summary>
     ///     Used to calculate when the nuke song should start playing for maximum kino with the nuke sfx
@@ -518,7 +525,7 @@ public sealed partial class NukeSystem : EntitySystem
         // enable the navmap beacon for people to find it
         _navMap.SetBeaconEnabled(uid, true);
 
-        _alertTeleport.MakeTeleportAlert<GhostAlertsComponent>(uid, "NukeArm", TimeSpan.FromSeconds(20));
+        _alertTeleport.MakeTeleportAlert<GhostAlertsComponent>(uid, _nukeGhostAlert, TimeSpan.FromSeconds(20));
 
         _itemSlots.SetLock(uid, component.DiskSlot, true);
         if (!nukeXform.Anchored)
