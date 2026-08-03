@@ -122,7 +122,7 @@ public sealed partial class GhostSystem
     private void OnPoweredLightBoo(Entity<SpookyPoweredLightComponent> ent, ref GhostBooEvent args)
     {
         // Already handled?
-        if (!args.Handled || args.AllowedIntensity < ent.Comp.Intensity)
+        if (args.Handled || args.AllowedIntensity < ent.Comp.Intensity)
             return;
 
         // Is the light already blinking?
