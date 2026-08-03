@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Temperature.Components;
 using Content.Shared.Atmos;
@@ -24,17 +25,20 @@ public sealed partial class TemperatureSystem : SharedTemperatureSystem
         Subs.SubscribeWithRelay<TemperatureProtectionComponent, BeforeHeatExchangeEvent>(OnBeforeHeatExchange, held: false);
 
         SubscribeLocalEvent<InternalTemperatureComponent, MapInitEvent>(OnInit);
-
         SubscribeLocalEvent<ChangeTemperatureOnCollideComponent, ProjectileHitEvent>(ChangeTemperatureOnCollide);
-
-        SubscribeLocalEvent<InternalTemperatureComponent, QueryForHeatContainerEvent>(QueryForHeatContainer);
+        SubscribeLocalEvent<InternalTemperatureComponent, QueryForHeatContainerEvent>(QueryInternalTempForHeatContainer);
         InitializeDamage();
     }
 
-    private void QueryForHeatContainer(EntityUid uid, InternalTemperatureComponent component, QueryForHeatContainerEvent args)
+    private void QueryInternalTempForHeatContainer(EntityUid uid, InternalTemperatureComponent component, QueryForHeatContainerEvent args)
     {
         if (args.Resolved)
             return;
+        //hide if we have a temperature component. -> conduction goes through that one first.
+        if (TemperatureQuery.HasComp(uid))
+        {
+            return;
+        }
         args.Responses.Add(new(uid,component,component,null));
     }
 
@@ -61,6 +65,40 @@ public sealed partial class TemperatureSystem : SharedTemperatureSystem
                 continue;
 
             ConductHeat((uid, temp), ref comp, frameTime, comp.Conductance, true);
+        }
+
+        // now process anything else currently contained by the entity.
+        var query2 = EntityQueryEnumerator<TemperatureComponent>();
+        while (query2.MoveNext(out var uid, out var comp))
+        {
+            //TODO instead of doing a query each update, just cache the slots, solutions and components in the temperature component and well use that.
+            var containerQuery = new QueryForHeatContainerEvent(comp);
+            RaiseLocalEvent(uid,ref containerQuery);
+            //this contains by elimination everything but internal temperature with a heat container.
+            var minTemp = containerQuery.Responses.Min(e => e.Container.TemperatureC);
+            var maxTemp = containerQuery.Responses.Max(e => e.Container.TemperatureC);
+            //ignore an almost equalized system.
+            if (Math.Abs(maxTemp - minTemp) < 5)//maybe instead of 5 pick 0.1 * comp.Temp basically scale the tolerance the larger the temp gets.
+            {
+                continue;
+            }
+            var noticeEvent = new HeatContainerChangedEvent(containerQuery.Responses);
+            //conduct heat between the temperature container and all touching containers.
+            foreach (var response in containerQuery.Responses)
+            {
+                var responseContainer= response.Container;
+                HeatContainerHelpers.ConductHeatQuery(ref comp,
+                    ref responseContainer,
+                    frameTime,
+                    response.Conductivity ?? comp.ThermalConductivity);
+
+            }
+            //notify changes of the containers
+            foreach (var entityUid in containerQuery.Responses.Select(e=>e.Entity).Distinct())
+            {
+                RaiseLocalEvent(entityUid,ref noticeEvent);
+            }
+
         }
 
         UpdateDamage();

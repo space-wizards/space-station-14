@@ -126,9 +126,12 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     {
         if (args.Resolved)
             return;
+        var capacity = component.Solution.GetHeatCapacity(ProtoMan);
+        if(capacity<=0)
+        return;
         args.Responses.Add(new(uid,
             component,
-            new HeatContainer(component.Solution.GetHeatCapacity(ProtoMan), component.Solution.Temperature),
+            new HeatContainer(capacity, component.Solution.Temperature),
             null));
     }
 

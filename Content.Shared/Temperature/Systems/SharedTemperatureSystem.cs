@@ -31,14 +31,17 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
         SubscribeLocalEvent<TemperatureComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<TemperatureComponent, MassDataChangedEvent>(OnMassDataChanged);
         SubscribeLocalEvent<TemperatureSpeedComponent, TemperatureChangedEvent>(OnTemperatureChanged);
-        SubscribeLocalEvent<TemperatureSpeedComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovementSpeedModifiers);
+        SubscribeLocalEvent<TemperatureSpeedComponent, RefreshMovementSpeedModifiersEvent>(
+            OnRefreshMovementSpeedModifiers);
         SubscribeLocalEvent<TemperatureComponent, QueryForHeatContainerEvent>(QueryForHeatContainer);
     }
+
+
     private void QueryForHeatContainer(EntityUid uid, TemperatureComponent component, QueryForHeatContainerEvent args)
     {
-        if (args.Resolved)
+        if (args.Resolved || args.Sender == component)
             return;
-        args.Responses.Add(new(uid, component, component,null));
+        args.Responses.Add(new(uid, component, component, null));
     }
 
     /// <remarks>
@@ -84,7 +87,8 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
         }
     }
 
-    private void OnRefreshMovementSpeedModifiers(Entity<TemperatureSpeedComponent> ent, ref RefreshMovementSpeedModifiersEvent args)
+    private void OnRefreshMovementSpeedModifiers(Entity<TemperatureSpeedComponent> ent,
+        ref RefreshMovementSpeedModifiersEvent args)
     {
         // Don't update speed and mispredict while we're compensating for lag.
         if (ent.Comp.NextSlowdownUpdate != null || ent.Comp.CurrentSpeedModifier == null)
@@ -121,7 +125,11 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
     /// <param name="heatTransferMod">An optional heat transfer modifier for this exchange</param>
     /// <param name="ignoreHeatResistance">Whether we should avoid raising an event which checks for conduction modifiers on our entity.</param>
     /// <returns>Returns the amount of heat exchanged, in Joules. A positive value means the entity lost heat energy.</returns>
-    public float ConductHeat<T>(Entity<TemperatureComponent?> entity, ref T heatContainer, float deltaT, float heatTransferMod = 1f, bool ignoreHeatResistance = false) where T : IHeatContainer
+    public float ConductHeat<T>(Entity<TemperatureComponent?> entity,
+        ref T heatContainer,
+        float deltaT,
+        float heatTransferMod = 1f,
+        bool ignoreHeatResistance = false) where T : IHeatContainer
     {
         if (!TemperatureQuery.Resolve(entity, ref entity.Comp, false)
             || MathHelper.CloseTo(entity.Comp.Temperature, heatContainer.Temperature))
@@ -152,7 +160,11 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
     /// <param name="heatTransferMod">An optional heat transfer modifier for this exchange</param>
     /// <param name="ignoreHeatResistance">Whether we should avoid raising an event which checks for conduction modifiers on our entity.</param>
     /// <returns>Returns the amount of heat exchanged, in Joules. A positive value means the entity lost heat energy.</returns>
-    public float ConductHeat(Entity<TemperatureComponent?> entity, float temperature, float deltaT, float heatTransferMod = 1f, bool ignoreHeatResistance = false)
+    public float ConductHeat(Entity<TemperatureComponent?> entity,
+        float temperature,
+        float deltaT,
+        float heatTransferMod = 1f,
+        bool ignoreHeatResistance = false)
     {
         if (!TemperatureQuery.Resolve(entity, ref entity.Comp, false)
             || MathHelper.CloseTo(entity.Comp.Temperature, temperature))
@@ -167,7 +179,7 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
         }
 
         var lastTemp = entity.Comp.Temperature;
-        var heatEx =  HeatContainerHelpers.ConductHeat(ref entity.Comp, temperature, deltaT, conductance);
+        var heatEx = HeatContainerHelpers.ConductHeat(ref entity.Comp, temperature, deltaT, conductance);
 
         var changeEv = new TemperatureChangedEvent(entity.Comp.Temperature, lastTemp);
         RaiseLocalEvent(entity, ref changeEv, broadcast: true);
@@ -189,7 +201,7 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
         if (!ignoreHeatResistance)
         {
             var ev = new BeforeHeatExchangeEvent();
-            RaiseLocalEvent(entity, ref ev );
+            RaiseLocalEvent(entity, ref ev);
             heatAmount *= ev.HeatTransferModifier;
         }
 
