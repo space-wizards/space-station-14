@@ -20,24 +20,6 @@
     tags:
     - DrinkBottle # Needed to fit in the soda dispenser, needs a better name
 
-- type: entity
-  abstract: true
-  parent: DrinkBottlePlasticBase
-  id: DrinkBottlePlasticBaseFull
-  suffix: Full
-
-- type: entity
-  abstract: true
-  parent: [SolutionSmall, DrinkBottlePlasticBaseFull]
-  id: DrinkBottlePlasticSmallBaseFull
-  components:
-  - type: Item
-    size: Small
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/waterbottle.rsi # fallback
-  - type: FitsInDispenser
-    solution: drink
-
 # Empty
 
 - type: entity
@@ -53,11 +35,25 @@
 
 - type: entity
   abstract: true
-  parent: [CustomDrinkJug, DrinkBottlePlasticBaseFull]
+  parent: CustomDrinkJug
   id: CustomDrinkJugFilled
   name: beverage jug
+  suffix: Full
 
 # Small Plastic Bottles
+
+- type: entity
+  abstract: true
+  parent: [SolutionSmall, DrinkBottlePlasticBase]
+  id: DrinkBottlePlasticSmallBaseFull
+  suffix: Full
+  components:
+  - type: Item
+    size: Small
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/waterbottle.rsi # fallback
+  - type: FitsInDispenser
+    solution: drink
 
 - type: entity
   parent: [DrinkVisualsAllFilled, DrinkBottlePlasticSmallBaseFull]
@@ -76,6 +72,12 @@
     localizedLabel: reagent-name-water
 
 # Large Plastic Bottles
+
+- type: entity
+  abstract: true
+  parent: DrinkBottlePlasticBase
+  id: DrinkBottlePlasticBaseFull
+  suffix: Full
 
 - type: entity
   parent: [DrinkVisualsAllFilled, DrinkBottlePlasticBaseFull]
