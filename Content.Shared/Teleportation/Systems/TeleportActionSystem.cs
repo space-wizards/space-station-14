@@ -7,7 +7,6 @@ using Content.Shared.Popups;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.Teleportation.Systems;
 
@@ -124,9 +123,10 @@ public sealed partial class TeleportActionSystem : EntitySystem
                     continue;
                 }
 
-                var (layer, mask) = SharedPhysicsSystem.GetHardCollision(otherFixtures);
-                if ((fixture.CollisionMask & layer) != 0 ||
-                    (mask & fixture.CollisionLayer) != 0)
+                if (otherFixtures.Fixtures.Values
+                    .Any(otherFixture => otherFixture.Hard &&
+                        ((fixture.CollisionMask & otherFixture.CollisionLayer) != 0 ||
+                         (otherFixture.CollisionMask & fixture.CollisionLayer) != 0)))
                 {
                     return true;
                 }
