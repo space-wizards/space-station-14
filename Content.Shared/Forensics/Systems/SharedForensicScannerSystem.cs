@@ -148,7 +148,7 @@ public sealed partial class SharedForensicScannerSystem : EntitySystem
                 continue;
 
             _audioSystem.PlayPredicted(scanner.Comp.SoundMatch, scanner.Owner, args.User);
-            _popupSystem.PopupPredicted(Loc.GetString("forensic-scanner-match-fiber"), scanner, args.User);
+            _popupSystem.PopupEntity(Loc.GetString("forensic-scanner-match-fiber"), scanner, args.User);
             return;
         }
 
@@ -158,12 +158,12 @@ public sealed partial class SharedForensicScannerSystem : EntitySystem
                 continue;
 
             _audioSystem.PlayPredicted(scanner.Comp.SoundMatch, scanner.Owner, args.User);
-            _popupSystem.PopupPredicted(Loc.GetString("forensic-scanner-match-fingerprint"), scanner, args.User);
+            _popupSystem.PopupEntity(Loc.GetString("forensic-scanner-match-fingerprint"), scanner, args.User);
             return;
         }
 
         _audioSystem.PlayPredicted(scanner.Comp.SoundNoMatch, scanner.Owner, args.User);
-        _popupSystem.PopupPredicted(Loc.GetString("forensic-scanner-match-none"), scanner, args.User);
+        _popupSystem.PopupEntity(Loc.GetString("forensic-scanner-match-none"), scanner, args.User);
     }
 
     private void OnBeforeActivatableUIOpen(Entity<ForensicScannerComponent> scanner, ref BeforeActivatableUIOpenEvent args)
@@ -186,7 +186,7 @@ public sealed partial class SharedForensicScannerSystem : EntitySystem
         {
             // This shouldn't occur due to the UI guarding against it, but
             // if it does, tell the user why nothing happened.
-            _popupSystem.PopupClient(Loc.GetString("forensic-scanner-printer-not-ready"), scanner, user);
+            _popupSystem.PopupEntity(Loc.GetString("forensic-scanner-printer-not-ready"), scanner, user);
             return;
         }
 
