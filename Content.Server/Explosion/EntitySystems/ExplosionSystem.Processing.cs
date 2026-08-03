@@ -1,24 +1,20 @@
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.Explosion;
 using Content.Shared.Explosion.Components;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
-using Content.Shared.Projectiles;
-using Content.Shared.Tag;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 using System.Numerics;
-using Content.Shared.Damage.Systems;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
 
 namespace Content.Server.Explosion.EntitySystems;
@@ -211,6 +207,16 @@ public sealed partial class ExplosionSystem
         var size = grid.Comp.TileSize;
         var gridBox = new Box2(tile * size, (tile + 1) * size);
 
+        /* We do this so that we don't do an extra TryComp on anchored entities, and so we don't process them twice.
+        This saves us a small amount of processing time, but in the future if we can:
+        1. Limit the lookups to only process entities that are *on* the tile that's exploding
+        2. Make it so ProcessEntity doesn't have throwing behavior
+        Then this would be a pretty massive processing time saver.
+        If you are reading this, piece by piece we can make this system optimzied.
+        */
+        _map.GetAnchoredEntities(grid, tile, _anchored);
+        processed.UnionWith(_anchored);
+
         // get the entities on a tile. Note that we cannot process them directly, or we get
         // enumerator-changed-while-enumerating errors.
         List<(EntityUid, TransformComponent)> list = new();
@@ -228,35 +234,27 @@ public sealed partial class ExplosionSystem
             ProcessEntity(uid, epicenter, damage, throwForce, id, xform, fireStacks, cause);
         }
 
-        // process anchored entities
-        var tileBlocked = false;
-        _anchored.Clear();
-        _map.GetAnchoredEntities(grid, tile, _anchored);
-        foreach (var entity in _anchored)
-        {
-            processed.Add(entity);
-            ProcessEntity(entity, epicenter, damage, throwForce, id, null, fireStacks, cause);
-        }
-
         // heat the atmosphere
         if (temperature != null)
         {
             _atmosphere.HotspotExpose(grid.Owner, tile, temperature.Value, currentIntensity, cause, true);
         }
 
+        // We process anchored entities after the AABB lookup for performance reasons.
+        // The AABB lookup cannot performantly check if each anchored entity is on this tile without a bunch of wasted CPU time
+        // To get around this, we just skip them during the first loop.
+        // This prevents us from hitting walls with a greater intensity than intended.
         // Walls and reinforced walls will break into girders. These girders will also be considered turf-blocking for
         // the purposes of destroying floors. Again, ideally the process of damaging an entity should somehow return
         // information about the entities that were spawned as a result, but without that information we just have to
-        // re-check for new anchored entities. Compared to entity spawning & deleting, this should still be relatively minor.
-        if (_anchored.Count > 0)
+        var tileBlocked = false;
+        foreach (var entity in _anchored)
         {
-            _anchored.Clear();
-            _map.GetAnchoredEntities(grid, tile, _anchored);
-            foreach (var entity in _anchored)
-            {
-                tileBlocked |= IsBlockingTurf(entity);
-            }
+            processed.Add(entity);
+            ProcessEntity(entity, epicenter, damage, throwForce, id, null, fireStacks, cause);
+            tileBlocked |= IsBlockingTurf(entity);
         }
+        _anchored.Clear();
 
         // Next, we get the intersecting entities AGAIN, but purely for throwing. This way, glass shards spawned from
         // windows will be flung outwards, and not stay where they spawned. This is however somewhat unnecessary, and a
@@ -287,7 +285,7 @@ public sealed partial class ExplosionSystem
         ref (List<(EntityUid, TransformComponent)> List, HashSet<EntityUid> Processed, EntityQuery<TransformComponent> XformQuery) state,
         in EntityUid uid)
     {
-        if (state.Processed.Add(uid) && state.XformQuery.TryGetComponent(uid, out var xform))
+        if (state.Processed.Add(uid) && state.XformQuery.TryGetComponent(uid, out var xform) && !xform.Anchored)
             state.List.Add((uid, xform));
 
         return true;
@@ -454,7 +452,7 @@ public sealed partial class ExplosionSystem
                     continue;
 
                 // TODO EXPLOSIONS turn explosions into entities, and pass the the entity in as the damage origin.
-                _damageableSystem.TryChangeDamage((entity, damageable), damage, ignoreResistances: true, ignoreGlobalModifiers: true);
+                _damageableSystem.ChangeDamage((entity, damageable), damage);
 
                 if (_actorQuery.HasComp(entity))
                 {
@@ -478,24 +476,24 @@ public sealed partial class ExplosionSystem
         }
 
         // throw
-        if (xform != null // null implies anchored or in a container
-            && !xform.Anchored
-            && throwForce > 0
-            && !EntityManager.IsQueuedForDeletion(uid)
-            && _physicsQuery.TryGetComponent(uid, out var physics)
-            && physics.BodyType == BodyType.Dynamic)
-        {
-            var pos = _transformSystem.GetWorldPosition(xform);
-            var dir = pos - epicenter.Position;
-            if (dir.IsLengthZero())
-                dir = _robustRandom.NextVector2().Normalized();
-            _throwingSystem.TryThrow(
-                uid,
-                dir,
-                physics,
-                xform,
-                throwForce);
-        }
+        if (xform == null
+            || xform.Anchored
+            || throwForce <= 0
+            || EntityManager.IsQueuedForDeletion(uid)
+            || !_physicsQuery.TryGetComponent(uid, out var physics)
+            || physics.BodyType != BodyType.Dynamic)
+            return;
+
+        var pos = _transformSystem.GetWorldPosition(xform);
+        var dir = pos - epicenter.Position;
+        if (dir.IsLengthZero())
+            dir = _robustRandom.NextVector2().Normalized();
+        _throwingSystem.TryThrow(
+            uid,
+            dir,
+            physics,
+            xform,
+            throwForce);
     }
 
     /// <summary>
@@ -576,6 +574,10 @@ public sealed partial class ExplosionSystem
         return stack[0]; // If the stack is somehow empty, this will throw, but we will have at least removed it from dict first!
     }
 
+/// <summary>
+/// Attempts to dirty the <see cref="TileHistoryComponent"/> of a given entity.
+/// </summary>
+/// <param name="grid"></param>
     public void DirtyHistory(EntityUid grid)
     {
         if (!_tileHistoryQuery.TryComp(grid, out var history))
@@ -681,13 +683,6 @@ sealed class Explosion
     /// </summary>
     private readonly Dictionary<Entity<MapGridComponent>, List<(Vector2i, Tile)>> _tileUpdateDict = new();
 
-    // Entity Queries
-    private readonly EntityQuery<TransformComponent> _xformQuery;
-    private readonly EntityQuery<PhysicsComponent> _physicsQuery;
-    private readonly EntityQuery<DamageableComponent> _damageQuery;
-    private readonly EntityQuery<ProjectileComponent> _projectileQuery;
-    private readonly EntityQuery<TagComponent> _tagQuery;
-
     /// <summary>
     ///     Total area that the explosion covers.
     /// </summary>
@@ -711,7 +706,7 @@ sealed class Explosion
     private readonly IEntityManager _entMan;
     private readonly ExplosionSystem _system;
     private readonly SharedMapSystem _mapSystem;
-    private readonly Shared.Damage.Systems.DamageableSystem _damageable;
+    private readonly DamageableSystem _damageable;
 
     public readonly EntityUid VisualEnt;
 
@@ -752,12 +747,6 @@ sealed class Explosion
         _canCreateVacuum = canCreateVacuum;
         _entMan = entMan;
         _damageable = damageable;
-
-        _xformQuery = entMan.GetEntityQuery<TransformComponent>();
-        _physicsQuery = entMan.GetEntityQuery<PhysicsComponent>();
-        _damageQuery = entMan.GetEntityQuery<DamageableComponent>();
-        _tagQuery = entMan.GetEntityQuery<TagComponent>();
-        _projectileQuery = entMan.GetEntityQuery<ProjectileComponent>();
 
         if (spaceData != null)
         {

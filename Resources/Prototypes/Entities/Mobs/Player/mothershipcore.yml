@@ -85,12 +85,11 @@
     doAfterDelay: 30 # you can heal the mothership core, but it takes a while
   - type: DamagedSiliconAccent
     enableChargeCorruption: false
-  # TODO: make it explosive again once until issue https://github.com/space-wizards/space-station-14/issues/40606 is fixed
-  # - type: Explosive
-  #   explosionType: Default
-  #   maxIntensity: 100
-  #   intensitySlope: 2
-  #   totalIntensity: 200
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 100
+    intensitySlope: 2
+    totalIntensity: 200
   - type: SurveillanceCameraSpeaker
   - type: SurveillanceCameraMonitor
   - type: RoboticsConsole
@@ -125,7 +124,7 @@
   - type: StaticPrice
     price: 800
   - type: WarpPoint
-    location: Mothership Core
+    location: location-mothership-core
     follow: true
   - type: VoiceOverride
     nameOverride: MOTHERSHIP CORE
@@ -137,8 +136,7 @@
     allowedEmotes:
     - Laugh
   - type: Vocal
-    sounds:
-      Unsexed: UnisexSiliconXenoborg
+    emoteSounds: UnisexSiliconXenoborg
     wilhelmProbability: 0
   - type: IntrinsicRadioReceiver
   - type: IntrinsicRadioTransmitter
@@ -245,10 +243,12 @@
   description: View the Xenoborgs Control Console
   components:
   - type: Action
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-control-computer }
-    iconOn: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-control-computer }
     keywords: [ "Mothership Core", "console", "interface" ]
     priority: -6
+  - type: Sprite
+    sprite: Interface/Actions/actions_borg.rsi
+    layers:
+    - state: xenoborg-control-computer
   - type: InstantAction
     event: !type:ToggleIntrinsicUIEvent { key: enum.RoboticsConsoleUiKey.Key }
 
@@ -259,9 +259,11 @@
   description: View the Xenoborgs Camera Monitor
   components:
   - type: Action
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-camera-computer }
-    iconOn: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-camera-computer }
     keywords: [ "Mothership Core", "console", "interface" ]
     priority: -6
+  - type: Sprite
+    sprite: Interface/Actions/actions_borg.rsi
+    layers:
+    - state: xenoborg-camera-computer
   - type: InstantAction
     event: !type:ToggleIntrinsicUIEvent { key: enum.SurveillanceCameraMonitorUiKey.Key }

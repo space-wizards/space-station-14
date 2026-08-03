@@ -37,6 +37,12 @@ public sealed partial class ChangelingIdentityComponent : Component
     [DataField]
     public ProtoId<CloningSettingsPrototype> IdentityCloningSettings = "ChangelingCloningSettings";
 
+    /// <summary>
+    /// Maximum number of stored disguises, including the changeling's starting identity.
+    /// </summary>
+    [DataField]
+    public int MaxStoredDisguises = 5;
+
     public override bool SendOnlyToOwner => true;
 }
 
@@ -47,14 +53,17 @@ public sealed class ChangelingIdentityComponentState : ComponentState
     public NetEntity? CurrentIdentity;
 
     public ProtoId<CloningSettingsPrototype> IdentityCloningSettings;
+    public int MaxStoredDisguises;
 
     public ChangelingIdentityComponentState(List<ChangelingNetworkedIdentityData> consumedIdentities,
         NetEntity? currentIdentity,
-        ProtoId<CloningSettingsPrototype> identityCloningSettings)
+        ProtoId<CloningSettingsPrototype> identityCloningSettings,
+        int maxStoredDisguises)
     {
         ConsumedIdentities = consumedIdentities;
         CurrentIdentity = currentIdentity;
         IdentityCloningSettings = identityCloningSettings;
+        MaxStoredDisguises = maxStoredDisguises;
     }
 }
 
@@ -104,6 +113,12 @@ public sealed partial class ChangelingIdentityData
     public bool Starting = false;
 
     /// <summary>
+    /// Whether this identity has granted DNA after devour.
+    /// </summary>
+    [DataField]
+    public bool GrantedDna = false;
+
+    /// <summary>
     /// Convert to a string representation. This if for logging & debugging. This is not localized and should not be
     /// shown to players.
     /// </summary>
@@ -117,6 +132,7 @@ public sealed partial class ChangelingIdentityData
 /// A net-serializable version of <see cref="ChangelingIdentityData"/> used for networking purposes.
 /// It needs to be like this because EntityUid cannot be networked, so we convert it to NetEntity and send it over to the client using this class.
 /// </summary>
+[DataDefinition]
 [Serializable, NetSerializable]
 public sealed partial class ChangelingNetworkedIdentityData
 {
@@ -134,4 +150,7 @@ public sealed partial class ChangelingNetworkedIdentityData
 
     [DataField]
     public bool Starting;
+
+    [DataField]
+    public bool GrantedDna;
 }

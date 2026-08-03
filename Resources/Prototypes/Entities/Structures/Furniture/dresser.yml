@@ -6,6 +6,7 @@
   components:
   - type: Sprite
     sprite: Structures/Furniture/furniture.rsi
+    snapCardinals: true
     state: dresser
   - type: Damageable
     damageModifierSet: Wood
@@ -13,12 +14,6 @@
     damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 50
@@ -47,7 +42,6 @@
     tags:
     - Wooden
   - type: Anchorable
-  - type: Rotatable
   - type: Construction
     graph: Dresser
     node: dresser

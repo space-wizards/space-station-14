@@ -9,13 +9,13 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Singularity
 {
-    public sealed class SingularityOverlay : Overlay, IEntityEventSubscriber
+    public sealed partial class SingularityOverlay : Overlay, IEntityEventSubscriber
     {
         private static readonly ProtoId<ShaderPrototype> Shader = "Singularity";
 
-        [Dependency] private readonly IEntityManager _entMan = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IConfigurationManager _configManager = default!;
+        [Dependency] private IEntityManager _entMan = default!;
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
+        [Dependency] private IConfigurationManager _configManager = default!;
         private SharedTransformSystem? _xformSystem = null;
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace Content.Client.Singularity
             _entMan.EventBus.SubscribeEvent<PixelToMapEvent>(EventSource.Local, this, OnProjectFromScreenToMap);
             ZIndex = 101; // Should be drawn after the placement overlay so admins placing items near the singularity can tell where they're going.
 
-            _configManager.OnValueChanged(CCVars.ReducedMotion, (b) => { _reducedMotion = b; }, invokeImmediately: true);
+            _configManager.OnValueChanged(CCVars.DisableSinguloWarp, (b) => { _reducedMotion = b; }, invokeImmediately: true);
         }
 
         private readonly Vector2[] _positions = new Vector2[MaxCount];

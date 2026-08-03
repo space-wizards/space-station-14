@@ -21,19 +21,19 @@ namespace Content.Server.Nutrition.EntitySystems;
 /// <summary>
 /// This handles logic and interactions related to <see cref="ReproductiveComponent"/>
 /// </summary>
-public sealed class AnimalHusbandrySystem : EntitySystem
+public sealed partial class AnimalHusbandrySystem : EntitySystem
 {
-    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
-    [Dependency] private readonly HungerSystem _hunger = default!;
-    [Dependency] private readonly IAdminLogManager _adminLog = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
-    [Dependency] private readonly NameModifierSystem _nameMod = default!;
+    [Dependency] private EntityLookupSystem _entityLookup = default!;
+    [Dependency] private HungerSystem _hunger = default!;
+    [Dependency] private IAdminLogManager _adminLog = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private NameModifierSystem _nameMod = default!;
 
     private readonly HashSet<EntityUid> _failedAttempts = new();
     private readonly HashSet<EntityUid> _birthQueue = new();
@@ -185,12 +185,13 @@ public sealed class AnimalHusbandrySystem : EntitySystem
         if (TryComp<InteractionPopupComponent>(uid, out var interactionPopup))
             _audio.PlayPvs(interactionPopup.InteractSuccessSound, uid);
 
-        var xform = Transform(uid);
+        if (!_transform.TryGetMapOrGridCoordinates(uid, out var spawnPosition))
+            return;
+
         var spawns = EntitySpawnCollection.GetSpawns(component.Offspring, _random);
         foreach (var spawn in spawns)
         {
-            var offspring = Spawn(spawn, xform.Coordinates.Offset(_random.NextVector2(0.3f)));
-            _transform.AttachToGridOrMap(offspring);
+            var offspring = Spawn(spawn, spawnPosition.Value.Offset(_random.NextVector2(0.3f)));
             if (component.MakeOffspringInfant)
             {
                 var infant = AddComp<InfantComponent>(offspring);
