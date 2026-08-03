@@ -60,6 +60,17 @@ public abstract partial class SharedCardSystem : EntitySystem
             PredictedQueueDel(donor.Owner);
     }
 
+    /// <summary>
+    /// Moves as many cards as we can from the donor to the recipient.
+    /// Cards are taken from the top of the donor and added to the top of the recipient.
+    /// The "top" is dependent on if the deck is flipped or not.
+    /// Deletes the donor if count goes to 0.
+    /// </summary>
+    /// <param name="donor">Entity which will give the amount from its deck</param>
+    /// <param name="recipient">Entity which will receive the amount to its deck</param>
+    /// <param name="transferred">How many cards where actually moved.</param>
+    /// <param name="amount">Limits amount of cards to move from the donor. Will not always be the actual amount moved</param>
+    /// <returns> True if transferred is greater than 0. </returns>
     [PublicAPI]
     public bool TryMergeDecks(
         Entity<CardsComponent?> donor,
@@ -106,14 +117,12 @@ public abstract partial class SharedCardSystem : EntitySystem
         return true;
     }
 
-    [PublicAPI]
-    public int GetAvailableSpace(CardsComponent component)
+    private int GetAvailableSpace(CardsComponent component)
     {
         return GetMaxCount(component) - component.Cards.Count;
     }
 
-    [PublicAPI]
-    public int GetMaxCount(CardsComponent component)
+    protected int GetMaxCount(CardsComponent component)
     {
         if (component.MaxCountOverride != null)
             return component.MaxCountOverride.Value;
@@ -122,11 +131,25 @@ public abstract partial class SharedCardSystem : EntitySystem
         return cardStackProto.MaxCount ?? int.MaxValue;
     }
 
+    /// <summary>
+    /// Spawns a new entity and moves an amount to it from the deck.
+    /// </summary>
+    /// <param name="ent">Entity to split in a new deck.</param>
+    /// <param name="spawnPosition">Where to spawn the new deck.</param>
+    /// <param name="cardIndexes">Card Indexes to move into the new deck</param>
+    /// <returns>Null if CardsComponent doesn't resolve, or invalid indexes to move.</returns>
     public virtual EntityUid? SplitDeck(Entity<CardsComponent> ent, EntityCoordinates spawnPosition, List<int> cardIndexes = default!)
     {
         return null;
     }
 
+    /// <summary>
+    /// Splits a deck and either mergers the deck into the hand of the user of picks it up into the hand of the user.
+    /// Takes card from the topside of the deck depending on if it is flipped or not.
+    /// </summary>
+    /// <param name="cards"> Card deck which is to be split from </param>
+    /// <param name="user"> The user who is trying to split the deck </param>
+    /// <param name="amount"> Amount to try and split the deck. Will not always be the amount moved </param>
     public void UserSplitDeck(Entity<CardsComponent> cards, EntityUid user, int amount)
     {
         if (amount <= 0)
@@ -166,6 +189,13 @@ public abstract partial class SharedCardSystem : EntitySystem
             TryFanCards(ent);
     }
 
+    /// <summary>
+    /// Tries to move cards from one deck to the top of another.
+    /// </summary>
+    /// <param name="recipient"> Card deck to take cards from </param>
+    /// <param name="donor"> Card deck to give cards to </param>
+    /// <param name="cardIndexes"> Card indexes for cards to be moved </param>
+    /// <returns>true if successful; false if invalid cardIndexes</returns>
     public bool TryMoveCards(Entity<CardsComponent> recipient, Entity<CardsComponent> donor, List<int> cardIndexes)
     {
         var selected = GetCardFromIndex(donor.Comp.Cards, cardIndexes);
@@ -194,6 +224,12 @@ public abstract partial class SharedCardSystem : EntitySystem
             PredictedQueueDel(donor.Owner);
     }
 
+    /// <summary>
+    /// Finds the card indexes of the cards that would be moved if taken from the top of the deck depending on the flipped state.
+    /// </summary>
+    /// <param name="comp"> Card deck to take cards from </param>
+    /// <param name="delta"> The amount of cards which would be taken </param>
+    /// <returns>List of CardIndexes for the cards which are on top of the deck</returns>
     public List<int> MovedCards(CardsComponent comp, int delta)
     {
         // Takes some number of cards from the top of the deck
@@ -334,7 +370,7 @@ public abstract partial class SharedCardSystem : EntitySystem
     }
 
     /// <summary>
-    /// Finds the <see cref="CardData"/> in the given list whose card index matches the specified value.
+    /// Finds the <see cref="CardData"/> in the list of cards whose card index matches the specified value.
     /// </summary>
     /// <param name="cards">The list of cards to search.</param>
     /// <param name="cardIndex">The card index to search for.</param>
@@ -345,6 +381,12 @@ public abstract partial class SharedCardSystem : EntitySystem
         return card.CardId.Id == null ? null : card;
     }
 
+    /// <summary>
+    /// Finds the list of <see cref="CardData"/> in the list of cards whose card index is in the given list.
+    /// </summary>
+    /// <param name="cards">The list of cards to search.</param>
+    /// <param name="cardIndexes">The list of card indexes to search for.</param>
+    /// <returns>List of <see cref="CardData"/> that has card indexes which are in both cardIndexes and cards</returns>
     public List<CardData> GetCardFromIndex(List<CardData> cards, List<int> cardIndexes)
     {
         return cards.Where(c => cardIndexes.Contains(c.CardIndex)).ToList();

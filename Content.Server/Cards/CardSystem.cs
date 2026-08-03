@@ -26,6 +26,7 @@ public sealed partial class CardSystem : SharedCardSystem
         Dirty(ent.Owner, ent.Comp);
     }
 
+    ///  <inheritdoc />
     public override EntityUid? SplitDeck(Entity<CardsComponent> ent, EntityCoordinates spawnPosition, List<int> cardIndexes = default!)
     {
         if (cardIndexes.Count != GetCardFromIndex(ent.Comp.Cards, cardIndexes).Count)
