@@ -9,8 +9,7 @@ public sealed partial class PowerConsumerBatteryChargerSystem : EntitySystem
 
     public override void Update(float frameTime)
     {
-        var query =
-            EntityQueryEnumerator<PowerConsumerComponent, PowerConsumerBatteryChargerComponent, BatteryComponent>();
+        var query = EntityQueryEnumerator<PowerConsumerComponent, PowerConsumerBatteryChargerComponent, BatteryComponent>();
 
         while (query.MoveNext(out var uid, out var powerConsumer, out var batteryCharger, out _))
         {
