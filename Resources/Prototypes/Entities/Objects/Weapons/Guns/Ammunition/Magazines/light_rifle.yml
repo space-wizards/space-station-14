@@ -58,8 +58,8 @@
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-        - CartridgeRifle
-    proto: CartridgeRifle 
+        - CartridgeLightRifle
+    proto: CartridgeLightRifle
     capacity: 100
   - type: Item
   - type: Sprite

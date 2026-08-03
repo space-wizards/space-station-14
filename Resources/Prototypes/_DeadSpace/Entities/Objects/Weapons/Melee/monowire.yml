@@ -44,6 +44,7 @@
         Slash: 10
         Shock: 10
     wideAnimationRotation: 180        
+    angle: 0
     animation: WeaponMonowirePrecise
     wideAnimation: WeaponMonowireWide
     soundHit:

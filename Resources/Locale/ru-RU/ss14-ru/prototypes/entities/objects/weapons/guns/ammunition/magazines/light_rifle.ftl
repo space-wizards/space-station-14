@@ -1,6 +1,6 @@
 ent-BaseMagazineLightRifle = магазин (7.62х39 мм винтовочные)
     .desc = { ent-BaseItem.desc }
-ent-MagazineLightRifleBox = короб патронов L6 SAW (5.56х45 мм)
+ent-MagazineLightRifleBox = короб патронов L6 SAW (7.62х39 мм)
     .desc = { ent-BaseMagazineLightRifle.desc }
 ent-MagazineLightRifle = магазин (7.62х39 мм винтовочные)
     .desc = { ent-BaseMagazineLightRifle.desc }
