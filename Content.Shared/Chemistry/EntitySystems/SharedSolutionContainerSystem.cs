@@ -95,7 +95,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         SubscribeLocalEvent<SolutionComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<SolutionComponent, MapInitEvent>(OnSolutionInit);
         SubscribeLocalEvent<SolutionComponent, ComponentShutdown>(OnSolutionShutdown);
-        SubscribeLocalEvent<SolutionComponent, QueryForHeatContainerEvent>(QuerySolutionForHeatContainer,after:[typeof(SharedThermodynamicsSystem)]);
+        SubscribeLocalEvent<SolutionComponent, QueryForHeatContainerEvent>(QuerySolutionForHeatContainer);
         SubscribeLocalEvent<SolutionComponent, HeatContainerChangedEvent>(OnHeatContainerChanged);
 
         SubscribeLocalEvent<ExaminableSolutionComponent, ExaminedEvent>(OnExamineSolution);
