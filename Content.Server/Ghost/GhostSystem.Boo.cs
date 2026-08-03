@@ -21,7 +21,6 @@ public sealed partial class GhostSystem
     [Dependency] private ChatSystem _chat = default!;
     [Dependency] private FlammableSystem _flammable = default!;
 
-    [Dependency] private EntityQuery<FlammableComponent> _flammableQuery;
     [Dependency] private EntityQuery<BlinkingPoweredLightComponent> _blinkingQuery;
 
     /// <summary>
