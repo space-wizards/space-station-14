@@ -261,6 +261,18 @@
         orGroup: GiftPool
       - id: PlushieYosugaMarsel
         orGroup: GiftPool
+      - id: PlushiePERedGora
+        orGroup: GiftPool
+      - id: PlushieKarasuNaomi
+        orGroup: GiftPool
+      - id: PlushieSmetanaJohnFrost
+        orGroup: GiftPool
+      - id: PlushieRavanesusDeath
+        orGroup: GiftPool
+      - id: PlushieRavanesusOperativ
+        orGroup: GiftPool
+      - id: PlushieDajidanNikita
+        orGroup: GiftPool
 
 - type: entity
   id: PresentFigurine

@@ -705,3 +705,45 @@
     back:
     -  PlushieYosugaMarsel
   groupBy: "plushie"
+
+- type: loadout
+  id:  PlushiePERedGora
+  storage:
+    back:
+    -  PlushiePERedGora
+  groupBy: "plushie"
+
+- type: loadout
+  id:  PlushieKarasuNaomi
+  storage:
+    back:
+    -  PlushieKarasuNaomi
+  groupBy: "plushie"
+
+- type: loadout
+  id:  PlushieSmetanaJohnFrost
+  storage:
+    back:
+    -  PlushieSmetanaJohnFrost
+  groupBy: "plushie"
+
+- type: loadout
+  id:  PlushieRavanesusDeath
+  storage:
+    back:
+    -  PlushieRavanesusDeath
+  groupBy: "plushie"
+
+- type: loadout
+  id:  PlushieRavanesusOperativ
+  storage:
+    back:
+    -  PlushieRavanesusOperativ
+  groupBy: "plushie"
+
+- type: loadout
+  id:  PlushieDajidanNikita
+  storage:
+    back:
+    -  PlushieDajidanNikita
+  groupBy: "plushie"

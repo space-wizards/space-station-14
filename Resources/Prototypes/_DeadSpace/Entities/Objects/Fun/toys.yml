@@ -1565,3 +1565,84 @@
     voice: Mission_control
   - type: SpeakOnTrigger
     pack: PlushieYosugaSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushiePERedGora
+  name: плюшевый Гора Андреевич
+  description: Милый плюшевый мофф.
+  components:
+  - type: Sprite
+    state: plushie_gora
+  - type: TTS
+    voice: Livsy
+  - type: SpeakOnTrigger
+    pack: PlushieGoraSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieKarasuNaomi
+  name: плюшевая Наоми
+  description: Плюшевая игрушка девушки-бестида в снаряжении... ядерных оперативников? ЦентКому вообще нечего делать? Она выглядит... мелкой. Зачем вы... От неё не пахнет, хватит нюхать игрушки. На бирке кто-то написал "Оперативник Хвостатая". Не гладь её хвост!
+  components:
+  - type: Sprite
+    state: plushie_naomi
+  - type: TTS
+    voice: Diana
+  - type: SpeakOnTrigger
+    pack: PlushieNaomiSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSmetanaJohnFrost
+  name: плюшевый Джон Фрост
+  description: Плюшевая игрушка человека в черно-красной форме, сделаной в японском стиле. На его плюшевом лице читается серьёзность намерений, а сама плюшка выполнена из куда более дорогих материалов, что вы можете себе позволить. На бирке написано - "Джон Фрост"
+  components:
+  - type: Sprite
+    state: plushie_john
+    scale: 1.1,1.1
+  - type: TTS
+    voice: CaveJohnson
+  - type: SpeakOnTrigger
+    pack: PlushieJohnSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieRavanesusDeath
+  name: плюшевый Оператор "Смерть"
+  description: Плюшевая игрушка давно снятая с производства. Имеет аромат крови и операционной.
+  components:
+  - type: Sprite
+    state: plushie_death
+    scale: 1.2,1.2
+  - type: TTS
+    voice: Officer
+  - type: SpeakOnTrigger
+    pack: PlushieDeathSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieRavanesusOperativ
+  name: плюшевый Оперативник 0-5
+  description: Плюшевая игрушка произведенная в короткой серии. Имеется бирка "ZeroTech".
+  components:
+  - type: Sprite
+    state: plushie_operativ
+    scale: 1.2,1.2
+  - type: TTS
+    voice: Officer
+  - type: SpeakOnTrigger
+    pack: PlushieOperativSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieDajidanNikita
+  name: плюшевый Никита Даджиданов
+  description: Эксклюзивная плюшевая игрушка в элитарной форме Квартирмейстера. Острые скулы, охотничий взгляд. Плюшка выглядит крайне недовольно, а пахнет от неё безграничными деньгами. На поясе виден миниатюрный планшет заявок, забитый заказами нищих глав. На бирке написано — «Сшита и одобрена шефом Алексеем Французовым».
+  components:
+  - type: Sprite
+    state: plushie_nikita
+  - type: TTS
+    voice: Stories
+  - type: SpeakOnTrigger
+    pack: PlushieNikitaSpeech

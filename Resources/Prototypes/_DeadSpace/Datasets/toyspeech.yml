@@ -116,7 +116,7 @@
   id: PlushieJonitaSpeech
   values:
     prefix: plushies-jonita-
-    count: 7
+    count: 8
 
 - type: localizedDataset
   id: PlushieColleenSpeech
@@ -358,6 +358,12 @@
     prefix: plushies-i750-
     count: 4
 
+- type: localizedDataset
+  id: PlushieDrGnarAltSpeech
+  values:
+    prefix: plushies-drgnaralt-
+    count: 6
+
 # IV класс
 - type: localizedDataset
   id: PlushieColonelSpeech
@@ -438,7 +444,37 @@
     count: 6
 
 - type: localizedDataset
-  id: PlushieDrGnarAltSpeech
+  id: PlushieGoraSpeech
   values:
-    prefix: plushies-drgnaralt-
+    prefix: plushies-gora-
+    count: 1
+
+- type: localizedDataset
+  id: PlushieNaomiSpeech
+  values:
+    prefix: plushies-naomi-
+    count: 10
+
+- type: localizedDataset
+  id: PlushieJohnSpeech
+  values:
+    prefix: plushies-john-
     count: 6
+
+- type: localizedDataset
+  id: PlushieDeathSpeech
+  values:
+    prefix: plushies-death-
+    count: 10
+
+- type: localizedDataset
+  id: PlushieOperativSpeech
+  values:
+    prefix: plushies-operativ-
+    count: 9
+
+- type: localizedDataset
+  id: PlushieNikitaSpeech
+  values:
+    prefix: plushies-nikita-
+    count: 9
