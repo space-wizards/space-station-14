@@ -9,11 +9,13 @@ namespace Content.Shared.Mobs;
 /// </summary>
 /// <see cref="DeathgaspSystem"/>
 [RegisterComponent, NetworkedComponent]
+[AutoGenerateComponentState]
 public sealed partial class DeathgaspComponent : Component
 {
     /// <summary>
     ///     The emote prototype to use.
     /// </summary>
     [DataField("prototype", customTypeSerializer:typeof(PrototypeIdSerializer<EmotePrototype>))]
+    [AutoNetworkedField]
     public string Prototype = "DefaultDeathgasp";
 }
