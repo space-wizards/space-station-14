@@ -28,7 +28,7 @@ public sealed partial class GhostSystem
     /// BooActionEvent handler. Raises BooActionEvents on nearby entities we run out of entities or we receive a response deemed sufficient.
     /// </summary>
     [SubscribeLocalEvent]
-    private void OnActionPerform(Entity<GhostComponent> ent, ref BooActionEvent args)
+    private void OnGhostBooAction(Entity<GhostComponent> ent, ref BooActionEvent args)
     {
         if (args.Handled)
             return;
@@ -48,7 +48,7 @@ public sealed partial class GhostSystem
 
             var ghostBoo = new GhostBooEvent(allowedIntensity);
             RaiseLocalEvent(booUid, ref ghostBoo);
-            if (ghostBoo.ResponseIntensity == GhostBooIntensity.None)
+            if (!ghostBoo.Handled)
                 continue;
 
             // Handle our response depending on the intensity of the action.
