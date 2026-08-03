@@ -64,6 +64,12 @@ public abstract partial class SharedStationAiSystem
 
     protected virtual void OnMobStateChanged(Entity<StationAiCustomizationComponent> ent, ref MobStateChangedEvent args)
     {
+        // The incoming state from the server raises the event as well.
+        // But the changes have also been dirtied
+        // so we prevent applying them twice.
+        if (_timing.ApplyingState)
+            return;
+
         var state = (args.NewMobState == MobState.Dead) ? StationAiState.Dead : StationAiState.Rebooting;
         SetStationAiState(ent, state);
     }

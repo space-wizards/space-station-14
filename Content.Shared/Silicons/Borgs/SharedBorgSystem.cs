@@ -281,6 +281,12 @@ public abstract partial class SharedBorgSystem : EntitySystem
 
     private void OnMobStateChanged(Entity<BorgChassisComponent> chassis, ref MobStateChangedEvent args)
     {
+        // The incoming state from the server raises the event as well.
+        // But the changes have also been dirtied
+        // so we prevent applying them twice.
+        if (_timing.ApplyingState)
+            return;
+
         if (args.NewMobState == MobState.Alive)
             TryActivate(chassis, args.Origin);
         else

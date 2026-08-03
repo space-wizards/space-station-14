@@ -141,6 +141,12 @@ public sealed partial class PullingSystem : EntitySystem
 
     private void OnStateChanged(EntityUid uid, PullerComponent component, ref MobStateChangedEvent args)
     {
+        // The incoming state from the server raises the event as well.
+        // But the changes have also been dirtied
+        // so we prevent applying them twice.
+        if (_timing.ApplyingState)
+            return;
+
         if (component.Pulling == null)
             return;
 

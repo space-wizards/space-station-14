@@ -1,11 +1,14 @@
 ﻿using Content.Shared.Bed.Sleep;
 using Content.Shared.Mobs;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Stunnable;
 
 public abstract partial class SharedStunSystem
 {
+    [Dependency] private IGameTiming _timing = default!;
+
     public void InitializeAppearance()
     {
         SubscribeLocalEvent<StunVisualsComponent, MobStateChangedEvent>(OnStunMobStateChanged);
@@ -22,6 +25,12 @@ public abstract partial class SharedStunSystem
 
     private void OnStunMobStateChanged(Entity<StunVisualsComponent> entity, ref MobStateChangedEvent args)
     {
+        // The incoming state from the server raises the event as well.
+        // But the changes have also been dirtied
+        // so we prevent applying them twice.
+        if (_timing.ApplyingState)
+            return;
+
         Appearance.SetData(entity, StunVisuals.SeeingStars, GetStarsData(entity));
     }
 

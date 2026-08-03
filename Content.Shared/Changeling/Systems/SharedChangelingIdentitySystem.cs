@@ -10,6 +10,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Changeling.Systems;
 
@@ -22,6 +23,7 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
     [Dependency] private SharedPvsOverrideSystem _pvsOverrideSystem = default!;
     [Dependency] private SharedMindSystem _mind = default!;
     [Dependency] private SharedJobSystem _job = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public MapId? PausedMapId;
 
@@ -97,6 +99,12 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
 
     private void OnRecentlyDevouredMobState(Entity<RecentlyDevouredComponent> ent, ref MobStateChangedEvent args)
     {
+        // The incoming state from the server raises the event as well.
+        // But the changes have also been dirtied
+        // so we prevent applying them twice.
+        if (_timing.ApplyingState)
+            return;
+
         // Once we are revived the body is no longer recently devoured.
         if (args.NewMobState != MobState.Alive)
             return;

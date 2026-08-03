@@ -1,6 +1,7 @@
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
 using Content.Shared.Mobs.Components;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Mobs.Systems;
 
@@ -10,6 +11,7 @@ namespace Content.Shared.Mobs.Systems;
 public sealed partial class MobStateActionsSystem : EntitySystem
 {
     [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -20,6 +22,12 @@ public sealed partial class MobStateActionsSystem : EntitySystem
 
     private void OnMobStateChanged(EntityUid uid, MobStateActionsComponent component, MobStateChangedEvent args)
     {
+        // The incoming state from the server raises the event as well.
+        // But the changes have also been dirtied
+        // so we prevent applying them twice.
+        if (_timing.ApplyingState)
+            return;
+
         ComposeActions(uid, component, args.NewMobState);
     }
 

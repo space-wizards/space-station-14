@@ -38,6 +38,7 @@ public abstract partial class SharedEmitSoundSystem : EntitySystem
     [Dependency] private SharedMapSystem _map = default!;
     [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private TurfSystem _turf = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public override void Initialize()
     {
@@ -67,6 +68,12 @@ public abstract partial class SharedEmitSoundSystem : EntitySystem
 
     private void OnMobState(Entity<SoundWhileAliveComponent> entity, ref MobStateChangedEvent args)
     {
+        // The incoming state from the server raises the event as well.
+        // But the changes have also been dirtied
+        // so we prevent applying them twice.
+        if (_timing.ApplyingState)
+            return;
+
         // Disable this component rather than removing it because it can be brought back to life.
         if (TryComp<SpamEmitSoundComponent>(entity, out var comp))
         {

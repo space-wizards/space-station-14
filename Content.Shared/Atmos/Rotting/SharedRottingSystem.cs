@@ -37,6 +37,12 @@ public abstract partial class SharedRottingSystem : EntitySystem
 
     private void OnMobStateChanged(Entity<PerishableComponent> ent, ref MobStateChangedEvent args)
     {
+        // The incoming state from the server raises the event as well.
+        // But the changes have also been dirtied
+        // so we prevent applying them twice.
+        if (_timing.ApplyingState)
+            return;
+
         if (args.NewMobState != MobState.Dead && args.OldMobState != MobState.Dead)
             return;
 
@@ -64,6 +70,12 @@ public abstract partial class SharedRottingSystem : EntitySystem
 
     private void OnRottingMobStateChanged(EntityUid uid, RottingComponent component, MobStateChangedEvent args)
     {
+        // The incoming state from the server raises the event as well.
+        // But the changes have also been dirtied
+        // so we prevent applying them twice.
+        if (_timing.ApplyingState)
+            return;
+
         if (args.NewMobState == MobState.Dead)
             return;
 

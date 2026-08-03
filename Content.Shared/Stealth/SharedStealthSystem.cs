@@ -63,6 +63,12 @@ public abstract partial class SharedStealthSystem : EntitySystem
 
     private void OnMobStateChanged(EntityUid uid, StealthComponent component, MobStateChangedEvent args)
     {
+        // The incoming state from the server raises the event as well.
+        // But the changes have also been dirtied
+        // so we prevent applying them twice.
+        if (_timing.ApplyingState)
+            return;
+
         if (args.NewMobState == MobState.Dead)
         {
             component.Enabled = component.EnabledOnDeath;

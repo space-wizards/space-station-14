@@ -5,6 +5,7 @@ using Content.Shared.Humanoid.Markings;
 using Content.Shared.Mobs;
 using Content.Shared.Toggleable;
 using JetBrains.Annotations;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Wagging;
@@ -16,6 +17,7 @@ public sealed partial class WaggingSystem : EntitySystem
 {
     [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private SharedVisualBodySystem _visualBody = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     /// <summary>
     /// Copies the component and its values to the clone.
@@ -75,6 +77,12 @@ public sealed partial class WaggingSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnMobStateChanged(Entity<WaggingComponent> ent, ref MobStateChangedEvent args)
     {
+        // The incoming state from the server raises the event as well.
+        // But the changes have also been dirtied
+        // so we prevent applying them twice.
+        if (_timing.ApplyingState)
+            return;
+
         TryToggleWagging(ent.AsNullable(), false);
     }
 

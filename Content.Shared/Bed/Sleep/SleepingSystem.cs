@@ -41,6 +41,7 @@ public sealed partial class SleepingSystem : EntitySystem
     [Dependency] private SharedEmitSoundSystem _emitSound = default!;
     [Dependency] private StatusEffectsSystem _statusEffect = default!;
     [Dependency] private SharedStunSystem _stun = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public static readonly EntProtoId SleepActionId = "ActionSleep";
     public static readonly EntProtoId WakeActionId = "ActionWake";
@@ -116,6 +117,12 @@ public sealed partial class SleepingSystem : EntitySystem
     /// </summary>
     private void OnSleepStateChanged(Entity<MobStateComponent> ent, ref SleepStateChangedEvent args)
     {
+        // The incoming state from the server raises the event as well.
+        // But the changes have also been dirtied
+        // so we prevent applying them twice.
+        if (_timing.ApplyingState)
+            return;
+
         if (args.FellAsleep)
         {
             // Just in case we're not using the sleeping status
@@ -270,6 +277,12 @@ public sealed partial class SleepingSystem : EntitySystem
     /// </summary>
     private void OnMobStateChanged(Entity<SleepingComponent> ent, ref MobStateChangedEvent args)
     {
+        // The incoming state from the server raises the event as well.
+        // But the changes have also been dirtied
+        // so we prevent applying them twice.
+        if (_timing.ApplyingState)
+            return;
+
         if (TryComp<SpamEmitSoundComponent>(ent, out var spam))
             _emitSound.SetEnabled((ent, spam), args.NewMobState == MobState.Alive);
 
@@ -279,6 +292,12 @@ public sealed partial class SleepingSystem : EntitySystem
 
     private void OnStatusMobStateChanged(Entity<ForcedSleepingStatusEffectComponent> ent, ref StatusEffectRelayedEvent<MobStateChangedEvent> args)
     {
+        // The incoming state from the server raises the event as well.
+        // But the changes have also been dirtied
+        // so we prevent applying them twice.
+        if (_timing.ApplyingState)
+            return;
+
         if (args.Args.NewMobState == MobState.Dead || HasComp<SleepingComponent>(args.Args.Target))
             return;
 

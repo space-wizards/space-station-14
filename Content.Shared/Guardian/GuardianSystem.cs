@@ -284,6 +284,12 @@ public sealed partial class GuardianSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnHostStateChange(Entity<GuardianHostComponent> ent, ref MobStateChangedEvent args)
     {
+        // The incoming state from the server raises the event as well.
+        // But the changes have also been dirtied
+        // so we prevent applying them twice.
+        if (_timing.ApplyingState)
+            return;
+
         if (ent.Comp.HostedGuardian == null ||
             !_guardianQuery.TryComp(ent.Comp.HostedGuardian, out GuardianComponent? guardianComp))
             return;

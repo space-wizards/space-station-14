@@ -1,6 +1,7 @@
 using Content.Shared.Mobs;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Content.Shared.Xenoarchaeology.Artifact.XAT.Components;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Xenoarchaeology.Artifact.XAT;
 
@@ -10,6 +11,7 @@ namespace Content.Shared.Xenoarchaeology.Artifact.XAT;
 public sealed partial class XATDeathSystem : BaseXATSystem<XATDeathComponent>
 {
     [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     [Dependency] private EntityQuery<XenoArtifactComponent> _xenoArtifactQuery = default!;
 
@@ -23,6 +25,12 @@ public sealed partial class XATDeathSystem : BaseXATSystem<XATDeathComponent>
 
     private void OnMobStateChanged(MobStateChangedEvent args)
     {
+        // The incoming state from the server raises the event as well.
+        // But the changes have also been dirtied
+        // so we prevent applying them twice.
+        if (_timing.ApplyingState)
+            return;
+
         if (args.NewMobState != MobState.Dead)
             return;
 

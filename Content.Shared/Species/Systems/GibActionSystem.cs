@@ -5,6 +5,7 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Popups;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 
 namespace Content.Shared.Species;
@@ -14,6 +15,7 @@ public sealed partial class GibActionSystem : EntitySystem
     [Dependency] private SharedActionsSystem _actionsSystem = default!;
     [Dependency] private GibbingSystem _gibbing = default!;
     [Dependency] private SharedPopupSystem _popupSystem = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public override void Initialize()
     {
@@ -25,6 +27,12 @@ public sealed partial class GibActionSystem : EntitySystem
 
     private void OnMobStateChanged(EntityUid uid, GibActionComponent comp, MobStateChangedEvent args)
     {
+        // The incoming state from the server raises the event as well.
+        // But the changes have also been dirtied
+        // so we prevent applying them twice.
+        if (_timing.ApplyingState)
+            return;
+
         // When the mob changes state, check if they're dead and give them the action if so.
         if (!TryComp<MobStateComponent>(uid, out var mobState))
             return;

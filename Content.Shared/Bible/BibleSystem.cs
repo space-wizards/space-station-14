@@ -185,6 +185,12 @@ public sealed partial class BibleSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnFamiliarDeath(Entity<FamiliarComponent> ent, ref MobStateChangedEvent args)
     {
+        // The incoming state from the server raises the event as well.
+        // But the changes have also been dirtied
+        // so we prevent applying them twice.
+        if (_timing.ApplyingState)
+            return;
+
         if (args.NewMobState != MobState.Dead || ent.Comp.Source == null)
             return;
 

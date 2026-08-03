@@ -156,6 +156,12 @@ public sealed partial class RootableSystem : EntitySystem
 
     private void OnMobStateChanged(Entity<RootableComponent> ent, ref MobStateChangedEvent args)
     {
+        // The incoming state from the server raises the event as well.
+        // But the changes have also been dirtied
+        // so we prevent applying them twice.
+        if (_timing.ApplyingState)
+            return;
+
         if (ent.Comp.Rooted)
             TryToggleRooting((ent, ent));
     }

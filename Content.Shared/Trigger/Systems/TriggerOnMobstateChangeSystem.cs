@@ -3,12 +3,14 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs;
 using Content.Shared.Popups;
 using Content.Shared.Trigger.Components.Triggers;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Trigger.Systems;
 
 public sealed partial class TriggerOnMobstateChangeSystem : TriggerOnXSystem
 {
     [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public override void Initialize()
     {
@@ -23,6 +25,12 @@ public sealed partial class TriggerOnMobstateChangeSystem : TriggerOnXSystem
 
     private void OnMobStateChanged(EntityUid uid, TriggerOnMobstateChangeComponent component, MobStateChangedEvent args)
     {
+        // The incoming state from the server raises the event as well.
+        // But the changes have also been dirtied
+        // so we prevent applying them twice.
+        if (_timing.ApplyingState)
+            return;
+
         if (!component.MobState.Contains(args.NewMobState))
             return;
 
@@ -31,6 +39,12 @@ public sealed partial class TriggerOnMobstateChangeSystem : TriggerOnXSystem
 
     private void OnMobStateRelay(EntityUid uid, TriggerOnMobstateChangeComponent component, ImplantRelayEvent<MobStateChangedEvent> args)
     {
+        // The incoming state from the server raises the event as well.
+        // But the changes have also been dirtied
+        // so we prevent applying them twice.
+        if (_timing.ApplyingState)
+            return;
+
         if (!component.MobState.Contains(args.Args.NewMobState))
             return;
 
