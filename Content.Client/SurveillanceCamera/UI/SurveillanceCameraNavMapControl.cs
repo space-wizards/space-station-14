@@ -1,3 +1,4 @@
+using System.Linq;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Map;
@@ -23,8 +24,8 @@ public sealed partial class SurveillanceCameraNavMapControl : NavMapControl
     private readonly Texture _invalidTexture;
 
     private string _activeCameraAddress = string.Empty;
-    private HashSet<string> _availableSubnets = [];
-    private (Dictionary<NetEntity, CameraMarker> Cameras, string ActiveAddress, HashSet<string> AvailableSubnets) _lastState;
+    private HashSet<(string Name, uint Frequency)> _availableSubnets = [];
+    private (Dictionary<NetEntity, CameraMarker> Cameras, string ActiveAddress, HashSet<(string Name, uint Frequency)> AvailableSubnets) _lastState;
 
     public bool EnableCameraSelection { get; set; }
 
@@ -56,7 +57,7 @@ public sealed partial class SurveillanceCameraNavMapControl : NavMapControl
         ForceNavMapUpdate();
     }
 
-    public void SetAvailableSubnets(HashSet<string> subnets)
+    public void SetAvailableSubnets(HashSet<(string Name, uint Frequency)> subnets)
     {
         if (_availableSubnets.SetEquals(subnets))
             return;
@@ -89,7 +90,7 @@ public sealed partial class SurveillanceCameraNavMapControl : NavMapControl
 
         foreach (var (netEntity, marker) in mapComp.Cameras)
         {
-            if (!marker.Visible || !_availableSubnets.Contains(marker.Subnet))
+            if (!marker.Visible || !_availableSubnets.Select(x => x.Name).Contains(marker.Subnet))
                 continue;
 
             var coords = new EntityCoordinates(MapUid.Value, marker.Position);

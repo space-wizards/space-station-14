@@ -457,7 +457,12 @@ public sealed partial class SurveillanceCameraMonitorSystem : EntitySystem
             return;
         }
 
-        var state = new SurveillanceCameraMonitorUiState(GetNetEntity(monitor.ActiveCamera), monitor.KnownSubnets.Keys.ToHashSet(), monitor.ActiveCameraAddress, monitor.ActiveSubnet, monitor.KnownCameras);
+        var state = new SurveillanceCameraMonitorUiState(
+            GetNetEntity(monitor.ActiveCamera),
+            monitor.KnownSubnets.Select(pair => (pair.Key, pair.Value.TransmitFrequency)).ToHashSet(),
+            monitor.ActiveCameraAddress,
+            monitor.ActiveSubnet,
+            monitor.KnownCameras);
         _userInterface.SetUiState(uid, SurveillanceCameraMonitorUiKey.Key, state);
     }
 }

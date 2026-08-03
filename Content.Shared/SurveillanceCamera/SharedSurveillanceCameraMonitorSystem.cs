@@ -15,7 +15,7 @@ public sealed class SurveillanceCameraMonitorUiState : BoundUserInterfaceState
 
     // Currently available subnets. Does not send the entirety of the possible
     // cameras to view because that could be really, really large
-    public HashSet<string> Subnets { get; }
+    public HashSet<(string Name, uint Frequency)> Subnets { get; }
 
     public string ActiveAddress;
 
@@ -25,7 +25,7 @@ public sealed class SurveillanceCameraMonitorUiState : BoundUserInterfaceState
     // Known cameras, by address and name.
     public Dictionary<string, string> Cameras { get; }
 
-    public SurveillanceCameraMonitorUiState(NetEntity? activeCamera, HashSet<string> subnets, string activeAddress, string activeSubnet, Dictionary<string, string> cameras)
+    public SurveillanceCameraMonitorUiState(NetEntity? activeCamera, HashSet<(string Name, uint Frequency)> subnets, string activeAddress, string activeSubnet, Dictionary<string, string> cameras)
     {
         ActiveCamera = activeCamera;
         Subnets = subnets;

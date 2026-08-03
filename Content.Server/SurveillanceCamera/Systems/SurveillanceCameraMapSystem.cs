@@ -76,6 +76,13 @@ public sealed partial class SurveillanceCameraMapSystem : EntitySystem
         if (gridUid is null)
             return;
 
+        if (deviceNet.ReceiveFrequencyId == null)
+            return;
+
+        var name = ProtoMan.Index(deviceNet.ReceiveFrequencyId.Value).Name;
+        if (name == null)
+            return;
+
         var netEntity = GetNetEntity(uid);
 
         var mapComp = EnsureComp<SurveillanceCameraMapComponent>(gridUid.Value);
@@ -84,7 +91,7 @@ public sealed partial class SurveillanceCameraMapSystem : EntitySystem
         var localPos = Vector2.Transform(worldPos, gridMatrix);
 
         var address = deviceNet.Data.Address;
-        var subnet = deviceNet.ReceiveFrequencyId ?? string.Empty;
+        var subnet = Loc.GetString(name.Value);
         var powered = CompOrNull<ApcPowerReceiverComponent>(uid)?.Powered ?? true;
         var active = comp.Active && powered;
 
