@@ -105,10 +105,8 @@
   - type: Solution
     solution:
       reagents:
-      - ReagentId: Zinc
-        Quantity: 3.3
-      - ReagentId: Copper
-        Quantity: 6.7
+      - ReagentId: Brass
+        Quantity: 10
 
 - type: entity
   parent: SheetBrass

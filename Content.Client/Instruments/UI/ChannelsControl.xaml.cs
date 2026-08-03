@@ -65,6 +65,23 @@ public sealed partial class ChannelsControl : Control
         }
     }
 
+    private void ClearChannels()
+    {
+        TrackSelectorButton.Disabled = true;
+        InstrumentSelectorButton.Disabled = true;
+        ProgramSelectorButton.Disabled = true;
+
+        foreach (var child in ChannelsContainer.Children)
+        {
+            if (child is not ChannelItem cItem)
+                return;
+
+            cItem.ChannelName = "";
+            cItem.ChannelState = false;
+            cItem.Visible = false;
+        }
+    }
+
     /// <summary>
     /// Replaces the current list of channels with the passed one.
     /// </summary>
@@ -74,26 +91,18 @@ public sealed partial class ChannelsControl : Control
     /// <param name="channels">List of channels consisting of their index, display name and state.</param>
     public void SetChannels(MidiChannelInfo[] channels)
     {
-        TrackSelectorButton.Disabled = true;
-        InstrumentSelectorButton.Disabled = true;
-        ProgramSelectorButton.Disabled = true;
+        ClearChannels();
 
-        for (var i = 0; i < RobustMidiEvent.MaxChannels; i++)
+        foreach (var channel in channels)
         {
-            if (i >= ChannelsContainer.ChildCount || i < 0)
-                return;
-
-            if (ChannelsContainer.Children[i] is not ChannelItem cItem)
-                return;
-
-            cItem.ChannelName = "";
-            cItem.ChannelState = false;
-            cItem.Visible = false;
-
-            if (i >= channels.Length)
+            if (channel.Id < 0 || channel.Id >= RobustMidiEvent.MaxChannels)
                 continue;
 
-            var channel = channels[i];
+            if (channel.Id >= ChannelsContainer.ChildCount)
+                continue;
+
+            if (ChannelsContainer.Children[channel.Id] is not ChannelItem cItem)
+                continue;
 
             if (channel.TrackName.Length > 0)
                 TrackSelectorButton.Disabled = false;
