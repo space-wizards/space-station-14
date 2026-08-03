@@ -62,11 +62,8 @@ public sealed partial class EmagSystem : EntitySystem
             return false;
 
         Entity<LimitedChargesComponent?> chargesEnt = ent.Owner;
-        if (_sharedCharges.IsEmpty(chargesEnt))
-        {
-            _popup.PopupEntity(Loc.GetString("emag-no-charges"), user, user);
+        if (!_sharedCharges.CanUseCharge(chargesEnt, user))
             return false;
-        }
 
         var typeToUse = customEmagType ?? ent.Comp.EmagType;
 

@@ -105,5 +105,6 @@
     onFailPopup: dash-ability-not-held
   - type: LimitedCharges
     maxCharges: 3
+    onFailPopup: limited-charges-no-charges
   - type: AutoRecharge
     rechargeDuration: 20

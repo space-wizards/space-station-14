@@ -1,6 +1,7 @@
 using Content.Shared.Actions.Events;
 using Content.Shared.Charges.Components;
 using Content.Shared.Examine;
+using Content.Shared.Popups;
 using Content.Shared.Rejuvenate;
 using JetBrains.Annotations;
 using Robust.Shared.Timing;
@@ -11,6 +12,7 @@ public abstract partial class SharedChargesSystem : EntitySystem
 {
     [Dependency] protected IGameTiming _timing = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
 
     /*
      * Despite what a bunch of systems do you don't need to continuously tick linear number updates and can just derive it easily.
@@ -60,12 +62,10 @@ public abstract partial class SharedChargesSystem : EntitySystem
         if (args.Cancelled)
             return;
 
-        var charges = GetCurrentCharges((ent.Owner, ent.Comp, null));
+        if (CanUseCharge((ent.Owner, ent.Comp), args.User))
+            return;
 
-        if (charges <= 0)
-        {
-            args.Cancelled = true;
-        }
+        args.Cancelled = true;
     }
 
     private void OnChargesPerformed(Entity<LimitedChargesComponent> ent, ref ActionPerformedEvent args)
@@ -103,6 +103,17 @@ public abstract partial class SharedChargesSystem : EntitySystem
         var current = GetCurrentCharges(action);
 
         return current >= charges;
+    }
+
+    public bool CanUseCharge(Entity<LimitedChargesComponent?> entity, EntityUid user)
+    {
+        if (!Resolve(entity.Owner, ref entity.Comp, false) || HasCharges(entity, 1))
+            return true;
+
+        if (entity.Comp.OnFailPopup != null)
+            _popup.PopupEntity(Loc.GetString(entity.Comp.OnFailPopup.Value), user, user);
+
+        return false;
     }
 
     /// <summary>
