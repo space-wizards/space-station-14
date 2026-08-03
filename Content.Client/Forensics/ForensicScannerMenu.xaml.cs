@@ -14,6 +14,8 @@ public sealed partial class ForensicScannerMenu : DefaultWindow
 
     private ForensicScannerComponent? _scanner;
 
+    public TimeSpan? Zero;
+
     public ForensicScannerMenu()
     {
         RobustXamlLoader.Load(this);
@@ -27,7 +29,9 @@ public sealed partial class ForensicScannerMenu : DefaultWindow
         if (_scanner == null)
             return;
 
-        Print.Disabled = (_scanner.PrintReadyAt > _gameTiming.CurTime);
+        Zero = _scanner.PrintReadyAt;
+
+        Print.Disabled = Zero > _gameTiming.CurTime;
     }
 
     public void Update(ForensicScannerComponent scanner)
