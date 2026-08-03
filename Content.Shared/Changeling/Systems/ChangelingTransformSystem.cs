@@ -17,20 +17,19 @@ namespace Content.Shared.Changeling.Systems;
 
 public sealed partial class ChangelingTransformSystem : EntitySystem
 {
-    [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedCloningSystem _cloning = default!;
-    [Dependency] private readonly SharedVisualBodySystem _visualBody = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly IdentitySystem _identity = default!;
-    [Dependency] private readonly SharedChangelingIdentitySystem _changelingIdentity = default!;
+    [Dependency] private INetManager _net = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private SharedUserInterfaceSystem _ui = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private MetaDataSystem _metaData = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedCloningSystem _cloning = default!;
+    [Dependency] private SharedVisualBodySystem _visualBody = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private IdentitySystem _identity = default!;
+    [Dependency] private SharedChangelingIdentitySystem _changelingIdentity = default!;
 
     private const string ChangelingBuiXmlGeneratedName = "ChangelingTransformBoundUserInterface";
     public override void Initialize()
@@ -114,7 +113,7 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         if (!_changelingIdentity.TryGetDataFromIdentity((ent.Owner, identity), targetIdentity.Value, out _))
             return; // this identity does not belong to this player
 
-        _popup.PopupClient(Loc.GetString("changeling-transform-bui-drop-identity-entity-popup", ("entity", targetIdentity.Value)), ent.Owner, PopupType.Large);
+        _popup.PopupEntity(Loc.GetString("changeling-transform-bui-drop-identity-entity-popup", ("entity", targetIdentity.Value)), ent.Owner, ent.Owner, PopupType.Large);
         _changelingIdentity.DropStoredIdentity(ent.Owner, targetIdentity.Value);
     }
 
@@ -130,7 +129,7 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
 
         var selfMessage = Loc.GetString("changeling-transform-attempt-self", ("user", Identity.Entity(ent.Owner, EntityManager)));
         var othersMessage = Loc.GetString("changeling-transform-attempt-others", ("user", Identity.Entity(ent.Owner, EntityManager)));
-        _popup.PopupPredicted(
+        _popup.PopupEntity(
             selfMessage,
             othersMessage,
             ent,
@@ -156,8 +155,6 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
             ent,
             target: targetIdentity)
         {
-            BreakOnMove = true,
-            BreakOnWeightlessMove = true,
             DuplicateCondition = DuplicateConditions.None,
             RequireCanInteract = false,
             DistanceThreshold = null,
@@ -168,12 +165,16 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         ref ChangelingTransformDoAfterEvent args)
     {
         args.Handled = true;
-        ent.Comp.CurrentTransformSound = _audio.Stop(ent.Comp.CurrentTransformSound);
 
         if (args.Cancelled)
+        {
+            // Only stop the sound if we finish transforming successfully.
+            ent.Comp.CurrentTransformSound = _audio.Stop(ent.Comp.CurrentTransformSound);
             return;
+        }
+        ent.Comp.CurrentTransformSound = null;
 
-        if (!_prototype.Resolve(ent.Comp.TransformCloningSettings, out var settings))
+        if (!ProtoMan.Resolve(ent.Comp.TransformCloningSettings, out var settings))
             return;
 
         if (args.Target is not { } targetIdentity)
@@ -185,12 +186,16 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         _visualBody.CopyAppearanceFrom(targetIdentity, args.User);
         _cloning.CloneComponents(targetIdentity, args.User, settings);
 
+        if (settings.CopyStatusEffects)
+            _cloning.CopyStatusEffects(targetIdentity, args.User, settings.StatusEffectWhitelist, settings.StatusEffectBlacklist);
+
         if (TryComp<ChangelingStoredIdentityComponent>(targetIdentity, out var storedIdentity) && storedIdentity.OriginalSession != null)
             _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(ent.Owner):player} successfully transformed into \"{Name(targetIdentity)}\" ({storedIdentity.OriginalSession:player})");
         else
             _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(ent.Owner):player} successfully transformed into \"{Name(targetIdentity)}\"");
 
         _metaData.SetEntityName(ent, Name(targetIdentity), raiseEvents: false); // Don't raise events because we don't want to rename the ID card.
+        _metaData.SetEntityDescription(ent, Description(targetIdentity));
         _identity.QueueIdentityUpdate(ent); // We have to manually refresh the identity because we did not raise events.
 
         Dirty(ent);
