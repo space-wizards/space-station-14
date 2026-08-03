@@ -32,7 +32,6 @@ public sealed partial class CCVars
 
     /// <summary>
     ///     Wether the server should mark people as AFK automatically at all. If disabled, AFK checks are admin-only.
-    ///     Intended to be configurable by config file only, this setting should not be changed in-game.
     /// </summary>
     public static readonly CVarDef<bool> AfkAutomaticChecks =
         CVarDef.Create("afk.automatic_checks", true, CVar.SERVERONLY);

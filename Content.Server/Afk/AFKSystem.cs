@@ -108,7 +108,6 @@ public sealed partial class AFKSystem : EntitySystem
         _playerManager.PlayerStatusChanged -= OnPlayerChange;
         _afkManager.PlayerDidActionEvent -= OnPlayerAction;
         _cfg.UnsubValueChanged(CCVars.AfkTime, OnAfkTimeChanged);
-        _cfg.UnsubValueChanged(CCVars.AdminAfkTime, OnAdminAfkTimeChanged);
     }
 
     private void OnPlayerAction(ICommonSession session)
