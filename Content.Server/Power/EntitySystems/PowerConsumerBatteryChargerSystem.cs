@@ -12,10 +12,10 @@ public sealed partial class PowerConsumerBatteryChargerSystem : EntitySystem
         var query =
             EntityQueryEnumerator<PowerConsumerComponent, PowerConsumerBatteryChargerComponent, BatteryComponent>();
 
-        while (query.MoveNext(out var uid, out var powerConsumer, out _, out _))
+        while (query.MoveNext(out var uid, out var powerConsumer, out var batteryCharger, out _))
         {
             var powerConsumed = powerConsumer.ReceivedPower * frameTime;
-            _battery.ChangeCharge(uid, powerConsumed * powerConsumer.Efficiency);
+            _battery.ChangeCharge(uid, powerConsumed * batteryCharger.Efficiency);
         }
     }
 }

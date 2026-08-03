@@ -80,10 +80,10 @@
         nodeGroupID: HVPower
         enabled: true
   - type: PowerConsumerBatteryCharger
+    efficiency: 0.25
   - type: PowerConsumer
     voltage: High
     drawRate: 240000 # 240kW (60kW effectively) - 15 seconds to spawn one # sets off the rogue power consuming device alert!
-    efficiency: 0.25
   - type: Battery
     maxCharge: 900000 # 900KJ
     netsync: false
