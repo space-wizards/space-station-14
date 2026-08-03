@@ -14,7 +14,7 @@ public sealed partial class PowerConsumerBatteryChargerSystem : EntitySystem
 
         while (query.MoveNext(out var uid, out var powerConsumer, out _, out _))
         {
-            var powerConsumed = powerConsumer.DrawRate * frameTime;
+            var powerConsumed = powerConsumer.ReceivedPower * frameTime;
             _battery.ChangeCharge(uid, powerConsumed * powerConsumer.Efficiency);
         }
     }
