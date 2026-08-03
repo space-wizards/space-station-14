@@ -24,6 +24,7 @@ public sealed partial class AfkConfirmEui : BaseEui
     [Dependency] private IRobustRandom _random = default!;
     private AudioSystem _audio;
     private SoundSpecifier _confirmSound;
+    private bool _confirmSoundEnabled;
     private EntityUid? _confirmSoundStream;
 
     private readonly AfkConfirmWindow _window = new();
@@ -33,6 +34,8 @@ public sealed partial class AfkConfirmEui : BaseEui
         _audio = _entManager.System<AudioSystem>();
         _confirmSound = new SoundPathSpecifier(_cfg.GetCVar(CCVars.AfkConfirmSound));
         _cfg.OnValueChanged(CCVars.AfkConfirmSound, OnConfirmSoundChanged);
+        _confirmSoundEnabled = _cfg.GetCVar<bool>(CCVars.AfkConfirmSoundEnabled);
+        _cfg.OnValueChanged(CCVars.AfkConfirmSoundEnabled, OnConfirmSoundEnabledChanged, true);
 
         _window.OnConfirm += () =>
         {
@@ -46,7 +49,10 @@ public sealed partial class AfkConfirmEui : BaseEui
     public override void Opened()
     {
         _clyde.RequestWindowAttention();
-        _confirmSoundStream = _audio.PlayGlobal(_confirmSound, Filter.Local(), false)?.Entity;
+        if (_confirmSoundEnabled)
+        {
+            _confirmSoundStream = _audio.PlayGlobal(_confirmSound, Filter.Local(), false)?.Entity;
+        }
 
         var screenSize = _clyde.ScreenSize;
         var screenSizeVector = new Vector2(screenSize.X, screenSize.Y);
@@ -66,6 +72,11 @@ public sealed partial class AfkConfirmEui : BaseEui
     private void OnConfirmSoundChanged(string path)
     {
         _confirmSound = new SoundPathSpecifier(path);
+    }
+
+    private void OnConfirmSoundEnabledChanged(bool enabled)
+    {
+        _confirmSoundEnabled = enabled;
     }
 
     public override void Closed()
