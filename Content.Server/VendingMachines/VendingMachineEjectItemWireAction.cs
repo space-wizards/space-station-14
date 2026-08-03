@@ -1,5 +1,7 @@
 using Content.Server.Wires;
+using Content.Server.VendingMachines.Components;
 using Content.Shared.VendingMachines;
+using Content.Shared.VendingMachines.Components;
 using Content.Shared.Wires;
 
 namespace Content.Server.VendingMachines;
@@ -11,10 +13,17 @@ public sealed partial class VendingMachineEjectItemWireAction : ComponentWireAct
     public override Color Color { get; set; } = Color.Red;
     public override string Name { get; set; } = "wire-name-vending-eject";
 
-    public override object? StatusKey { get; } = EjectWireKey.StatusKey;
+    public override object StatusKey => EjectWireKey.StatusKey;
 
     public override StatusLightState? GetLightState(Wire wire, VendingMachineComponent comp)
-        => comp.CanShoot ? StatusLightState.BlinkingFast : StatusLightState.On;
+    {
+        if (!EntityManager.HasComponent<VendingMachineEjectComponent>(wire.Owner))
+            return StatusLightState.Off;
+
+        return EntityManager.HasComponent<VendingMachineShootComponent>(wire.Owner)
+            ? StatusLightState.BlinkingFast
+            : StatusLightState.On;
+    }
 
     public override void Initialize()
     {
@@ -25,18 +34,18 @@ public sealed partial class VendingMachineEjectItemWireAction : ComponentWireAct
 
     public override bool Cut(EntityUid user, Wire wire, VendingMachineComponent vending)
     {
-        _vendingMachineSystem.SetShooting(wire.Owner, true, vending);
+        _vendingMachineSystem.SetShooting(wire.Owner, true);
         return true;
     }
 
     public override bool Mend(EntityUid user, Wire wire, VendingMachineComponent vending)
     {
-        _vendingMachineSystem.SetShooting(wire.Owner, false, vending);
+        _vendingMachineSystem.SetShooting(wire.Owner, false);
         return true;
     }
 
     public override void Pulse(EntityUid user, Wire wire, VendingMachineComponent vending)
     {
-        _vendingMachineSystem.EjectRandom(wire.Owner, true, vendComponent: vending);
+        _vendingMachineSystem.EjectRandom((wire.Owner, vending), true);
     }
 }

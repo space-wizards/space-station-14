@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Examine;
 using Content.Shared.Construction.Components;
@@ -88,17 +87,17 @@ public sealed partial class AnchorableSystem : EntitySystem
         if (!Resolve(usingUid, ref usingTool))
             return;
 
-        if (!Valid(uid, userUid, usingUid, false, out var failMessage))
+        if (!Valid(uid, userUid, usingUid, false, out var failMessage, out var actualDelay))
         {
             if (failMessage != null)
-                _popup.PopupClient(failMessage, uid, userUid);
+                _popup.PopupEntity(failMessage, uid, userUid);
             return;
         }
 
         // Log unanchor attempt (server only)
         _adminLogger.Add(LogType.Anchor, LogImpact.Low, $"{ToPrettyString(userUid):user} is trying to unanchor {ToPrettyString(uid):entity} from {transform.Coordinates:targetlocation}");
 
-        _tool.UseTool(usingUid, userUid, uid, anchorable.Delay, usingTool.Qualities, new TryUnanchorCompletedEvent());
+        _tool.UseTool(usingUid, userUid, uid, actualDelay, usingTool.Qualities, new TryUnanchorCompletedEvent());
     }
 
     private void OnInteractUsing(EntityUid uid, AnchorableComponent anchorable, InteractUsingEvent args)
@@ -139,7 +138,7 @@ public sealed partial class AnchorableSystem : EntitySystem
         _transformSystem.Unanchor(uid, xform);
         RaiseLocalEvent(uid, new UserUnanchoredEvent(args.User, used));
 
-        _popup.PopupClient(Loc.GetString("anchorable-unanchored"), uid, args.User);
+        _popup.PopupEntity(Loc.GetString("anchorable-unanchored"), uid, args.User);
 
         _adminLogger.Add(
             LogType.Unanchor,
@@ -157,13 +156,12 @@ public sealed partial class AnchorableSystem : EntitySystem
         if (TryComp<PhysicsComponent>(uid, out var anchorBody) &&
             !TileFree(xform.Coordinates, anchorBody))
         {
-            _popup.PopupClient(Loc.GetString("anchorable-occupied"), uid, args.User);
+            _popup.PopupEntity(Loc.GetString("anchorable-occupied"), uid, args.User);
             return;
         }
 
         // Snap rotation to cardinal (multiple of 90)
-        var rot = xform.LocalRotation;
-        xform.LocalRotation = Math.Round(rot / (Math.PI / 2)) * (Math.PI / 2);
+        var rot = Math.Round(xform.LocalRotation / (Math.PI / 2)) * (Math.PI / 2);
 
         if (TryComp<PullableComponent>(uid, out var pullable) && pullable.Puller != null)
         {
@@ -177,11 +175,15 @@ public sealed partial class AnchorableSystem : EntitySystem
 
             if (AnyUnstackable(uid, coordinates))
             {
-                _popup.PopupClient(Loc.GetString("construction-step-condition-no-unstackable-in-tile"), uid, args.User);
+                _popup.PopupEntity(Loc.GetString("construction-step-condition-no-unstackable-in-tile"), uid, args.User);
                 return;
             }
 
-            _transformSystem.SetCoordinates(uid, coordinates);
+            _transformSystem.SetCoordinates(uid, xform, coordinates, rotation: rot);
+        }
+        else
+        {
+            _transformSystem.SetLocalRotationNoLerp(uid, rot, xform);
         }
 
         RaiseLocalEvent(uid, new BeforeAnchoredEvent(args.User, used));
@@ -191,7 +193,7 @@ public sealed partial class AnchorableSystem : EntitySystem
 
         RaiseLocalEvent(uid, new UserAnchoredEvent(args.User, used));
 
-        _popup.PopupClient(Loc.GetString("anchorable-anchored"), uid, args.User);
+        _popup.PopupEntity(Loc.GetString("anchorable-anchored"), uid, args.User);
 
         _adminLogger.Add(
             LogType.Anchor,
@@ -243,10 +245,10 @@ public sealed partial class AnchorableSystem : EntitySystem
         if (!Resolve(usingUid, ref usingTool))
             return;
 
-        if (!Valid(uid, userUid, usingUid, true, out var failMessage, anchorable, usingTool))
+        if (!Valid(uid, userUid, usingUid, true, out var failMessage, out var actualDelay, anchorable, usingTool))
         {
             if (failMessage != null)
-                _popup.PopupClient(Loc.GetString(failMessage), uid, userUid);
+                _popup.PopupEntity(Loc.GetString(failMessage), uid, userUid);
             return;
         }
 
@@ -258,22 +260,36 @@ public sealed partial class AnchorableSystem : EntitySystem
 
         if (AnyUnstackable(uid, transform.Coordinates))
         {
-            _popup.PopupClient(Loc.GetString("construction-step-condition-no-unstackable-in-tile"), uid, userUid);
+            _popup.PopupEntity(Loc.GetString("construction-step-condition-no-unstackable-in-tile"), uid, userUid);
             return;
         }
 
-        _tool.UseTool(usingUid, userUid, uid, anchorable.Delay, usingTool.Qualities, new TryAnchorCompletedEvent());
+        _tool.UseTool(usingUid, userUid, uid, actualDelay, usingTool.Qualities, new TryAnchorCompletedEvent());
     }
 
+    /// <summary>
+    /// Checks if a given entity can be (un)anchored by a particular user and tool.
+    /// </summary>
+    /// <param name="uid">The target entity to be (un)anchored.</param>
+    /// <param name="userUid">The user attempting to anchor it.</param>
+    /// <param name="usingUid">The tool being used to (un)anchor the target entity.</param>
+    /// <param name="anchoring">True if the target will be anchored, false if unanchored.</param>
+    /// <param name="failMessage">On failure, may contain a message stating why the target could not be (un)anchored.</param>
+    /// <param name="actualDelay">On success, contains the actual delay that the entity should take to anchor, in seconds.</param>
+    /// <param name="anchorable">The AnchorableComponent of the target.</param>
+    /// <param name="usingTool">The ToolComponent of the tool.</param>
+    /// <returns>true if the target can be (un)anchored, false otherwise.</returns>
     private bool Valid(
         EntityUid uid,
         EntityUid userUid,
         EntityUid usingUid,
         bool anchoring,
         out string? failMessage,
+        out float actualDelay,
         AnchorableComponent? anchorable = null,
         ToolComponent? usingTool = null)
     {
+        actualDelay = 0f;
         failMessage = null;
 
         if (!Resolve(uid, ref anchorable))
@@ -297,7 +313,7 @@ public sealed partial class AnchorableSystem : EntitySystem
         else
             RaiseLocalEvent(uid, (UnanchorAttemptEvent)attempt);
 
-        anchorable.Delay += attempt.Delay;
+        actualDelay = anchorable.Delay + attempt.Delay;
 
         failMessage = attempt.FailMessage;
 
@@ -317,7 +333,7 @@ public sealed partial class AnchorableSystem : EntitySystem
         if (TileFree(coordinates, entity.Comp))
             return true;
 
-        _popup.PopupClient(Loc.GetString("anchorable-occupied"), entity, user);
+        _popup.PopupEntity(Loc.GetString("anchorable-occupied"), entity, user);
         return false;
     }
 
