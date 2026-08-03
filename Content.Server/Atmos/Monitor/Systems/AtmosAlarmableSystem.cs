@@ -207,8 +207,8 @@ public sealed partial class AtmosAlarmableSystem : EntitySystem
             return;
         }
 
-        if (alarmable.NetworkAlarmStates.ContainsKey(device.Data.Address))
-            alarmable.NetworkAlarmStates[device.Data.Address] = AtmosAlarmType.Normal;
+        if (alarmable.NetworkAlarmStates.ContainsKey(device.Data.AddressId))
+            alarmable.NetworkAlarmStates[device.Data.AddressId] = AtmosAlarmType.Normal;
 
         if (!alarmable.ReceiveOnly)
         {

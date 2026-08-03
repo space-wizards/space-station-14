@@ -10,6 +10,7 @@ using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.DeviceConfigurator;
+using Content.Shared.DeviceConfigurator.Systems;
 using Content.Shared.DeviceNetwork;
 
 namespace Content.Server.TurretController;
@@ -57,7 +58,7 @@ public sealed partial class DeployableTurretControllerSystem : SharedDeployableT
             if (!TryComp<DeviceNetworkComponent>(turretUid, out var turretDeviceNetwork))
                 continue;
 
-            _deviceNetwork.SendPacket((ent.Owner, deviceNetwork), turretDeviceNetwork.Data.Address, ref payload);
+            _deviceNetwork.SendPacket((ent.Owner, deviceNetwork), turretDeviceNetwork.Data.AddressId, ref payload);
         }
 
         // Remove newly unlinked devices

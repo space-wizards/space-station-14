@@ -1,4 +1,6 @@
 using System.Numerics;
+using Content.Server.Power.Components;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.Power.EntitySystems;
@@ -11,7 +13,6 @@ public sealed partial class SurveillanceCameraMapSystem : EntitySystem
 {
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private SharedPowerReceiverSystem _power = default!;
-    [Dependency] private DeviceNetworkSystem _deviceSystem = default!;
 
     public override void Initialize()
     {
@@ -82,10 +83,6 @@ public sealed partial class SurveillanceCameraMapSystem : EntitySystem
         if (deviceNet.ReceiveFrequencyId == null)
             return;
 
-        var name = ProtoMan.Index(deviceNet.ReceiveFrequencyId.Value).Name;
-        if (name == null)
-            return;
-
         var netEntity = GetNetEntity(uid);
 
         var mapComp = EnsureComp<SurveillanceCameraMapComponent>(gridUid.Value);
@@ -93,8 +90,8 @@ public sealed partial class SurveillanceCameraMapSystem : EntitySystem
         var gridMatrix = _transform.GetInvWorldMatrix(Transform(gridUid.Value));
         var localPos = Vector2.Transform(worldPos, gridMatrix);
 
-        var address = deviceNet.Data.Address;
-        var subnet = Loc.GetString(name.Value);
+        var address = deviceNet.Data.AddressId;
+        var subnet = new DeviceFrequency(ProtoMan.Index(deviceNet.ReceiveFrequencyId.Value).Frequency);
         var powered = CompOrNull<ApcPowerReceiverComponent>(uid)?.Powered ?? true;
         var active = comp.Active && powered;
 
@@ -116,8 +113,8 @@ public sealed partial class SurveillanceCameraMapSystem : EntitySystem
             Position = localPos,
             Active = active,
             Address = address,
-            Subnet = subnet.Value,
-            Visible = visible
+            Subnet = subnet,
+            Visible = visible,
         };
         Dirty(gridUid.Value, mapComp);
     }

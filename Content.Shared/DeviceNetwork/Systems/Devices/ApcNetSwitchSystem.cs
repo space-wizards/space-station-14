@@ -33,7 +33,7 @@ public sealed partial class ApcNetSwitchSystem : EntitySystem
             Enabled = component.State,
         };
 
-        _deviceNetworkSystem.QueuePacket(uid, null, ref payload);
+        _deviceNetworkSystem.SendPacket(uid, null, ref payload);
         args.Handled = true;
     }
 

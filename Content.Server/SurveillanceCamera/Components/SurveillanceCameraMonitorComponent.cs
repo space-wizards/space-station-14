@@ -59,4 +59,7 @@ public sealed partial class SurveillanceCameraMonitorComponent : Component
     /// </summary>
     [ViewVariables]
     public Dictionary<DeviceAddress, DeviceFrequency> KnownSubnets { get; } = new();
+
+    [ViewVariables]
+    public Dictionary<DeviceFrequency, DeviceAddress> KnownSubnetsFrequencies { get; } = new();
 }

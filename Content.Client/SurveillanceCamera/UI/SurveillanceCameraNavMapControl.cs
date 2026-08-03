@@ -1,4 +1,3 @@
-using System.Linq;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Map;
@@ -6,7 +5,6 @@ using Content.Client.Pinpointer.UI;
 using Content.Client.Resources;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.SurveillanceCamera.Components;
-using Robust.Shared.Utility;
 
 namespace Content.Client.SurveillanceCamera.UI;
 
@@ -25,9 +23,9 @@ public sealed partial class SurveillanceCameraNavMapControl : NavMapControl
     private readonly Texture _selectedTexture;
     private readonly Texture _invalidTexture;
 
-    private DeviceAddress _activeCameraAddress = string.Empty;
-    private HashSet<(string Name, DeviceFrequency Frequency)> _availableSubnets = [];
-    private (Dictionary<NetEntity, CameraMarker> Cameras, DeviceAddress ActiveAddress, HashSet<(string Name, DeviceFrequency Frequency)> AvailableSubnets) _lastState;
+    private DeviceAddress _activeCameraAddress = DeviceAddress.Invalid;
+    private HashSet<DeviceFrequency> _availableSubnets = [];
+    private (Dictionary<NetEntity, CameraMarker> Cameras, DeviceAddress ActiveAddress, HashSet<DeviceFrequency> AvailableSubnets) _lastState;
 
     public bool EnableCameraSelection { get; set; }
 
@@ -59,9 +57,9 @@ public sealed partial class SurveillanceCameraNavMapControl : NavMapControl
         ForceNavMapUpdate();
     }
 
-    public void SetAvailableSubnets(HashSet<(string Name, DeviceFrequency Frequency)> subnets)
+    public void SetAvailableSubnets(HashSet<DeviceFrequency> subnets)
     {
-        if (_availableSubnets.DictionaryEquals(subnets))
+        if (_availableSubnets.SetEquals(subnets))
             return;
 
         _availableSubnets = subnets;
@@ -92,7 +90,7 @@ public sealed partial class SurveillanceCameraNavMapControl : NavMapControl
 
         foreach (var (netEntity, marker) in mapComp.Cameras)
         {
-            if (!marker.Visible || !_availableSubnets.Select(x => x.Name).Contains(marker.Subnet))
+            if (!marker.Visible || !_availableSubnets.Contains(marker.Subnet))
                 continue;
 
             var coords = new EntityCoordinates(MapUid.Value, marker.Position);

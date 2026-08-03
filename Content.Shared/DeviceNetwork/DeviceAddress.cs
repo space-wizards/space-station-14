@@ -30,6 +30,14 @@ public readonly partial record struct DeviceAddress(int AddressId)
     {
         return AddressId != 0;
     }
+
+    /// <summary>
+    /// Use this carefully, it's recommended to use <see cref="LocDeviceAddress"/> in general cases.
+    /// </summary>
+    public override string ToString()
+    {
+        return DeviceLocalizationHelpers.GetAddressFromId(this, null);
+    }
 }
 
 /// <summary>

@@ -166,7 +166,7 @@ public sealed partial class SurveillanceCameraRouterSystem : EntitySystem
             || !_deviceNetworkQuery.Resolve(ent.Owner, ref ent.Comp2))
             return;
 
-        var payload = new SurveillanceCameraPingPayload { Subnet = ent.Comp.SubnetName };
-        _deviceNetworkSystem.SendPacket(ent.Owner, null, ref payload, ent.Comp.SubnetFrequency);
+        var payload = new SurveillanceCameraPingPayload();
+        _deviceNetworkSystem.SendPacket(ent.Owner, null, ref payload, ent.Comp1.SubnetFrequency);
     }
 }

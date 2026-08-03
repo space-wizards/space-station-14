@@ -107,7 +107,7 @@ public sealed partial class DeviceLinkSystem
 
         // force using wireless network so things like atmos devices are able to send signals
         var network = (int) DeviceNetIdDefaults.Wireless;
-        _deviceNetworkSystem.QueuePacket(source.Owner, sinkNetwork.Data.AddressId, ref payload, sinkNetwork.Data.ReceiveFrequency, network);
+        _deviceNetworkSystem.SendPacket(source.Owner, sinkNetwork.Data.AddressId, ref payload, sinkNetwork.Data.ReceiveFrequency, network);
     }
 
     /// <summary>
@@ -147,7 +147,7 @@ public sealed partial class DeviceLinkSystem
         };
 
         // Force using wireless network so things like atmos devices are able to send signals.
-        _deviceNetworkSystem.QueuePacket(
+        _deviceNetworkSystem.SendPacket(
             source.Owner,
             sinkNetwork.Data.AddressId,
             ref payload,

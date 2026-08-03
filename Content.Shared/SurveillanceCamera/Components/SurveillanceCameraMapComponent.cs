@@ -47,7 +47,7 @@ public partial struct CameraMarker
     /// Subnet the camera is connected to.
     /// </summary>
     [DataField]
-    public DeviceAddress Subnet;
+    public DeviceFrequency Subnet;
 
     /// <summary>
     /// Should the camera be displayed on the camera map.

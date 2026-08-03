@@ -65,7 +65,7 @@ public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraS
 
         var name = ent.Comp.UseEntityNameAsCameraId ? MetaData(ent).EntityName : ent.Comp.CameraId;
         var responsePayload = new SurveillanceCameraDataPayload { Name = name };
-        _deviceNetworkRouter.SendPacketRouted(ent.Owner, ref responsePayload, args.SenderAddress, payload.SenderAddress);
+        _deviceNetworkRouter.SendPacketRouted(ent.Owner, ref responsePayload, args.SenderAddress, args.Data.SenderAddress);
     }
 
     private void OnPowerChanged(EntityUid camera, SurveillanceCameraComponent component, ref PowerChangedEvent args)
