@@ -167,7 +167,9 @@
   - type: VentriloquistPuppet
   - type: Item
     size: Normal
-  - type: Muted
+  - type: PermanentStatusEffects
+    statusEffects:
+    - StatusEffectVentriloquistPuppetMuted
   - type: TypingIndicator
     proto: robot
   - type: Actions

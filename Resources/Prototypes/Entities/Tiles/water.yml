@@ -25,7 +25,6 @@
       - ReagentId: Water
         Quantity: 7680
   - type: SolutionRegeneration
-    solution: pool
     generated:
       reagents:
       - ReagentId: Water

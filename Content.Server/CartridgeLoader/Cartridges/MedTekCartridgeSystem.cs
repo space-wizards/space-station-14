@@ -3,9 +3,9 @@ using Content.Shared.CartridgeLoader;
 
 namespace Content.Server.CartridgeLoader.Cartridges;
 
-public sealed class MedTekCartridgeSystem : EntitySystem
+public sealed partial class MedTekCartridgeSystem : EntitySystem
 {
-    [Dependency] private readonly CartridgeLoaderSystem _cartridgeLoaderSystem = default!;
+    [Dependency] private CartridgeLoaderSystem _cartridgeLoaderSystem = default!;
 
     public override void Initialize()
     {
@@ -17,13 +17,13 @@ public sealed class MedTekCartridgeSystem : EntitySystem
 
     private void OnCartridgeAdded(Entity<MedTekCartridgeComponent> ent, ref CartridgeAddedEvent args)
     {
-        var healthAnalyzer = EnsureComp<HealthAnalyzerComponent>(args.Loader);
+        EnsureComp<HealthAnalyzerComponent>(args.Loader);
     }
 
     private void OnCartridgeRemoved(Entity<MedTekCartridgeComponent> ent, ref CartridgeRemovedEvent args)
     {
         // only remove when the program itself is removed
-        if (!_cartridgeLoaderSystem.HasProgram<MedTekCartridgeComponent>(args.Loader))
+        if (!_cartridgeLoaderSystem.HasProgram<MedTekCartridgeComponent>(args.Loader.AsNullable()))
         {
             RemComp<HealthAnalyzerComponent>(args.Loader);
         }

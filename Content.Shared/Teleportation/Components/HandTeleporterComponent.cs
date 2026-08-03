@@ -11,13 +11,13 @@ namespace Content.Shared.Teleportation.Components;
 ///     Creates portals. If two are created, both are linked together--otherwise the first teleports randomly.
 ///     Using it with both portals active deactivates both.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class HandTeleporterComponent : Component
 {
-    [ViewVariables, DataField("firstPortal")]
+    [ViewVariables, DataField, AutoNetworkedField]
     public EntityUid? FirstPortal = null;
 
-    [ViewVariables, DataField("secondPortal")]
+    [ViewVariables, DataField, AutoNetworkedField]
     public EntityUid? SecondPortal = null;
 
     /// <summary>
@@ -41,7 +41,7 @@ public sealed partial class HandTeleporterComponent : Component
     [DataField("newPortalSound")] public SoundSpecifier NewPortalSound =
         new SoundPathSpecifier("/Audio/Machines/high_tech_confirm.ogg")
         {
-            Params = AudioParams.Default.WithVolume(-2f)
+            Params = AudioParams.Default.AddVolume(-2f)
         };
 
     [DataField("clearPortalsSound")]

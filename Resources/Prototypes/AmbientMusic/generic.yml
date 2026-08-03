@@ -1,0 +1,52 @@
+## Fallback if nothing else found
+- type: ambientMusic
+  id: General
+  sound:
+    params:
+      volume: -12
+    collection: AmbienceGeneral
+
+- type: ambientMusic
+  id: SpookyFog
+  sound:
+    params:
+      volume: -12
+    collection: AmbienceSpookyFog
+  priority: 5
+  conditions:
+  - !type:NearbyEntitiesCondition
+    count: 5
+    whitelist:
+      tags:
+      - SpookyFog
+    range: 4
+
+- type: ambientMusic
+  id: Holy
+  sound:
+    params:
+      volume: -12
+    collection: AmbienceHoly
+  priority: 4
+  conditions:
+  - !type:NearbyComponentsCondition
+    anchored: true
+    components:
+    - type: Prayable
+    range: 5
+
+- type: ambientMusic
+  id: Train
+  sound:
+    params:
+      volume: -8
+    collection: AmbienceTrain
+  priority: 4
+  conditions:
+  - !type:NearbyTilesPercentCondition
+    ignoreAnchored: true
+    percent: 0.05
+    tiles:
+    - TrainLattice
+    range: 4
+
