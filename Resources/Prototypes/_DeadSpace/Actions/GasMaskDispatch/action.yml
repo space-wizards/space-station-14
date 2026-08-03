@@ -1,0 +1,17 @@
+# Действие "Запросить подкрепление", выдаётся противогазами через ItemActionGrant.
+# useDelay специально большой, чтобы нельзя было заспамить диспетчерский канал.
+- type: entity
+  id: ActionGasMaskDispatch
+  name: Запросить подкрепление
+  description: Открывает меню быстрого запроса подкрепления по защищённому радиоканалу.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    checkCanInteract: false
+    useDelay: 60
+    icon:
+      sprite: _DeadSpace/Interface/Actions/GasMaskDispatch.rsi
+      state: dispatch
+    itemIconStyle: BigAction
+  - type: InstantAction
+    event: !type:OpenGasMaskDispatchMenuEvent {}

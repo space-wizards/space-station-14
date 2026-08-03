@@ -114,6 +114,15 @@
   - type: SpecialDeathSound
     sound:
       path: /Audio/_DeadSpace/Voice/Death/sec_death.ogg
+  - type: ActionGrant
+    actions:
+    - ActionGasMaskDispatch
+  - type: ItemActionGrant
+    actions:
+    - ActionGasMaskDispatch
+    activeIfWorn: true
+  - type: GasMaskDispatch
+    channel: SOCChannel
   - type: HideLayerClothing
     slots:
     - Hair

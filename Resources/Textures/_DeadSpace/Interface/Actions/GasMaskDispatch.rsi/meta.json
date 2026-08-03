@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/ss220club/Paradise-SS220 by mtf0036 (discord) for Space Station 14 server Мёртвый Космос",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "dispatch",
+      "delays": [
+        [
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    }
+  ]
+}
