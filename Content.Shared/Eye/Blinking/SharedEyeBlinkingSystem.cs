@@ -18,13 +18,21 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnMapInit(Entity<EyeBlinkingComponent> ent, ref MapInitEvent args)
     {
-        _actionsSystem.AddAction(ent, ref ent.Comp.EyeToggleActionEntity, ent.Comp.EyeToggleAction);
+        var body = ent.Owner;
+        if (Comp<OrganComponent>(ent).Body is { } b)
+            body = b;
+
+        _actionsSystem.AddAction(body, ref ent.Comp.EyeToggleActionEntity, ent.Comp.EyeToggleAction);
     }
 
     [SubscribeLocalEvent]
     private void OnShutdown(Entity<EyeBlinkingComponent> ent, ref ComponentShutdown args)
     {
-        _actionsSystem.RemoveAction(ent.Owner, ent.Comp.EyeToggleActionEntity);
+        var body = ent.Owner;
+        if (Comp<OrganComponent>(ent).Body is { } b)
+            body = b;
+
+        _actionsSystem.RemoveAction(body, ent.Comp.EyeToggleActionEntity);
     }
 
     [SubscribeLocalEvent]
@@ -36,7 +44,10 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnApplyOrganMarking(Entity<EyeBlinkingComponent> ent, ref ApplyOrganMarkingsEvent args)
     {
-        SetEyelidsColor(ent);
+        if (TryComp<VisualOrganComponent>(ent.Owner, out var eyesVisual))
+            SetEyelidsColor(eyesVisual, ent);
+        else
+            SetEyelidsColor(ent);
     }
 
     private void SetEyelidsColor(Entity<EyeBlinkingComponent> ent)
@@ -58,16 +69,21 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
             if (visualHead != null)
                 break;
         }
-        // Gets the skin color from VisualOrganComponent, or returns pink as a fallback color if not found.
-        var skinColor = visualHead?.Profile.SkinColor ?? Color.Pink;
-        var blinkFade = ent.Comp.BlinkSkinColorMultiplier;
+
+        SetEyelidsColor(visualHead, ent);
+    }
+
+    private void SetEyelidsColor(VisualOrganComponent? visualOrgan, Entity<EyeBlinkingComponent> eyeBlinking)
+    {
+        var skinColor = visualOrgan?.Profile.SkinColor ?? Color.Pink;
+        var blinkFade = eyeBlinking.Comp.BlinkSkinColorMultiplier;
         var eyelidColor = new Color(
             skinColor.R * blinkFade,
             skinColor.G * blinkFade,
             skinColor.B * blinkFade);
 
-        ent.Comp.EyelidsColor = eyelidColor;
-        Dirty(ent);
+        eyeBlinking.Comp.EyelidsColor = eyelidColor;
+        Dirty(eyeBlinking);
     }
 
     [SubscribeLocalEvent]

@@ -116,3 +116,46 @@ public sealed partial class EyeBlinkingComponent : Component
     [DataField, AutoNetworkedField]
     public bool EyesClosed = false;
 }
+
+/// <summary>
+/// Represents the state of an eyelid layer, including whether it is closed, whether it is a complete blink,
+/// and the scheduled times for closing and opening.
+/// Can be extended in the future to include additional properties related to eyelid behavior,
+/// such as blink speed or eyelid color, or force closing the eyelid by health eye, or other factors.
+/// </summary>
+public sealed partial class EyelidState
+{
+    /// <summary>
+    /// The sprite layer associated with this eyelid state.
+    /// </summary>
+    public string LayerKey;
+
+    /// <summary>
+    /// Indicates whether the eyelid is currently closed.
+    /// </summary>
+    [ViewVariables] public bool IsClosed;
+
+    /// <summary>
+    /// Indicate if currently this eyelid is in a complete blink state, meaning it has fully closed and is scheduled to open.
+    /// </summary>
+    [ViewVariables] public bool IsCompleteBlink;
+
+    /// <summary>
+    /// The scheduled time for the eyelid to close, in seconds.
+    /// </summary>
+    [ViewVariables] public TimeSpan ScheduledCloseTime;
+
+    /// <summary>
+    /// The scheduled time for the eyelid to open, in seconds.
+    /// </summary>
+    [ViewVariables] public TimeSpan ScheduledOpenTime;
+
+    public EyelidState(string layer)
+    {
+        LayerKey = layer;
+        IsClosed = false;
+        IsCompleteBlink = false;
+        ScheduledCloseTime = default;
+        ScheduledOpenTime = default;
+    }
+}
