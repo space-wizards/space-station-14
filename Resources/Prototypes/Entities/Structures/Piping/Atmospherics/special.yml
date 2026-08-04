@@ -74,8 +74,9 @@
     - state: fan-off
     - state: fan-on
       map: ["enum.PowerDeviceVisualLayers.Powered"]
-    - state: light-on
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: light
+      shader: "unshaded"
+      visible: false
   - type: GenericVisualizer
     visuals:
       enum.PowerDeviceVisuals.Powered:
@@ -101,8 +102,9 @@
     - state: fan-off
     - state: fan-on
       map: ["enum.PowerDeviceVisualLayers.Powered"]
-    - state: light-on
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: light
+      shader: "unshaded"
+      visible: false
   - type: GenericVisualizer
     visuals:
       enum.PowerDeviceVisuals.Powered:
