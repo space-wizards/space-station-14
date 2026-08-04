@@ -15,6 +15,7 @@ public sealed partial class WirelessNetworkSystem : EntitySystem
     private void OnManagerInitialize(Entity<WirelessNetworkManagerComponent> ent, ref DeviceNetworkManagerInitializeEvent args)
     {
         ent.Comp.MapId = Transform(args.Entity).MapUid;
+        Dirty(ent);
     }
 
     [SubscribeLocalEvent]

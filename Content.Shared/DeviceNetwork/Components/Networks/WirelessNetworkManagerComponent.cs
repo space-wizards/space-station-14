@@ -2,12 +2,12 @@
 
 namespace Content.Shared.DeviceNetwork.Components.Networks;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class WirelessNetworkManagerComponent : Component
 {
     /// <summary>
     /// Map ID that this network controls.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public EntityUid? MapId;
 }

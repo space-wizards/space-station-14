@@ -21,6 +21,7 @@ public sealed partial class StationLimitedNetworkSystem : EntitySystem
     private void OnManagerInitialize(Entity<StationNetworkManagerComponent> ent, ref DeviceNetworkManagerInitializeEvent args)
     {
         ent.Comp.StationId = _stationSystem.GetOwningStation(args.Entity);
+        Dirty(ent);
     }
 
     [SubscribeLocalEvent]

@@ -79,7 +79,7 @@ public sealed partial class DeviceNetworkSystem
         if (!_deviceQuery.Resolve(ent.Owner, ref ent.Comp, false))
             return false;
 
-        if (!TryEnsureNetwork(ent, out var deviceNet))
+        if (!TryGetNetwork(ent, out var deviceNet))
             return false;
 
         if (preventAutoConnect)
@@ -105,8 +105,6 @@ public sealed partial class DeviceNetworkSystem
             return; // Client-side
 
         AddToNetwork(ent, deviceNet.Value);
-
-        // TODO ev
 
         DirtyField(ent, nameof(DeviceNetworkComponent.Data));
     }
@@ -137,13 +135,10 @@ public sealed partial class DeviceNetworkSystem
         if (!_deviceQuery.Resolve(ent.Owner, ref ent.Comp, false))
             return false;
 
-        if (address == null)
-            return false;
-
         if (!TryGetNetwork(ent, out var deviceNet))
             return false;
 
-        return deviceNet.Value.Comp.Devices.ContainsKey(address.Value);
+        return IsAddressPresent(deviceNet.Value, address);
     }
 
     /// <summary>

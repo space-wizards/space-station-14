@@ -19,6 +19,7 @@ public sealed partial class WiredNetworkSystem : EntitySystem
     private void OnManagerInitialize(Entity<WiredNetworkManagerComponent> ent, ref DeviceNetworkManagerInitializeEvent args)
     {
         ent.Comp.GridId = Transform(args.Entity).GridUid;
+        Dirty(ent);
     }
 
     [SubscribeLocalEvent]

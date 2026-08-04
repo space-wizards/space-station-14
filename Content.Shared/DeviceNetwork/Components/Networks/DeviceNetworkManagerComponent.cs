@@ -10,13 +10,13 @@ namespace Content.Shared.DeviceNetwork.Components.Networks;
 ///     This basically just makes <see cref="DeviceNetworkComponent"/> accessible via their addresses and frequencies on
 ///     some network.
 /// </remarks>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class DeviceNetworkManagerComponent : Component
 {
     /// <summary>
     /// Network ID that this entity is managing.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public ProtoId<DeviceNetworkPrototype>? DeviceNetId;
 
     /// <summary>

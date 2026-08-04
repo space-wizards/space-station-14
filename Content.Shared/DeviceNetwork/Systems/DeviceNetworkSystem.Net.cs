@@ -106,6 +106,7 @@ public sealed partial class DeviceNetworkSystem
 
         var comp = Comp<DeviceNetworkManagerComponent>(uid);
         comp.DeviceNetId = proto;
+        Dirty(uid, comp);
 
         // Purely for debug purposes
         _meta.SetEntityName(uid, $"{Name(uid)} ({Loc.GetString(ProtoMan.Index(comp.DeviceNetId).Name)})");
