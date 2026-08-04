@@ -97,26 +97,27 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         if (!_changelingIdentity.TryGetDataFromIdentity((ent.Owner, identity), targetIdentity.Value, out _))
             return; // this identity does not belong to this player
 
-        if (HasComp<ChangelingHorrorComponent>(targetIdentity))
-        {
-            // if we are trying to transform into horror form, check for DNA
-            if (TryComp<StoreComponent>(ent.Owner, out var store))
-            {
-                // the horror mode transformation will cause some slight desync but that's a problem for later
-                // since stores aren't properly networked
-                if (_net.IsClient)
-                    return;
+        // check for things which could prevent us from transforming
+        var evA = new ChangelingAttemptTransformEvent(false, null, targetIdentity.Value);
+        RaiseLocalEvent(ent.Owner, ref evA);
 
-                if (store.Balance.ContainsKey("ChangelingDNA"))
-                {
-                    var k = store.Balance["ChangelingDNA"];
-                    if (k < FixedPoint2.New(1d)) // you need at least one dna point
-                    {
-                        _popup.PopupEntity(Loc.GetString("changeling-horror-transform-fail"), ent.Owner, ent.Owner, PopupType.Large);
-                        return;
-                    }
-                }
-            }
+        if (evA.Cancelled)
+        {
+            if (evA.Reason != null)
+                _popup.PopupEntity(evA.Reason, ent.Owner, ent.Owner, PopupType.Large);
+
+            return;
+        }
+
+        var evB = new ChangelingAttemptTransformIntoEvent(false, null, ent.Owner);
+        RaiseLocalEvent(targetIdentity.Value, ref evB);
+
+        if (evB.Cancelled)
+        {
+            if (evB.Reason != null)
+                _popup.PopupEntity(evB.Reason, ent.Owner, ent.Owner, PopupType.Large);
+
+            return;
         }
 
         TransformInto(ent.AsNullable(), targetIdentity.Value);

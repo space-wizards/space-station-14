@@ -1,4 +1,5 @@
 using Content.Shared.Alert;
+using Content.Shared.EntityEffects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -58,6 +59,12 @@ public sealed partial class ChangelingHorrorComponent : Component
     public float SpawnScreechRange = 30f;
 
     /// <summary>
+    /// Entity effects that are applied to persons who heard the screech.
+    /// </summary>
+    [DataField]
+    public List<EntityEffect>? SpawnScreechEffects;
+
+    /// <summary>
     /// How many seconds you are given for free when transforming (so wholesome!)
     /// </summary>
     [DataField]
@@ -68,4 +75,10 @@ public sealed partial class ChangelingHorrorComponent : Component
     /// </summary>
     [DataField]
     public double SecondPerDNA = 3d;
+
+    /// <summary>
+    /// Effects applied to the changeling upon transforming
+    /// </summary>
+    [DataField]
+    public EntityEffect[]? SpawnEffects;
 }

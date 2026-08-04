@@ -5,6 +5,7 @@ using Content.Shared.Changeling.Components;
 using Content.Shared.Cuffs;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Effects;
+using Content.Shared.EntityEffects;
 using Content.Shared.FixedPoint;
 using Content.Shared.Flash;
 using Content.Shared.IdentityManagement;
@@ -16,6 +17,7 @@ using Content.Shared.Store.Components;
 using Content.Shared.Stunnable;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
@@ -26,6 +28,7 @@ namespace Content.Shared.Changeling.Systems;
 /// </summary>
 public abstract partial class SharedChangelingHorrorSystem : EntitySystem
 {
+    [Dependency] private INetManager _net = default!;
     [Dependency] private SharedChangelingIdentitySystem _identitySystem = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedActionsSystem _actions = default!;
@@ -38,12 +41,10 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popups = default!;
     [Dependency] private SharedContainerSystem _containers = default!;
     [Dependency] private ScreechSystem _screech = default!;
+    [Dependency] private SharedEntityEffectsSystem _effects = default!;
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<ChangelingIdentityComponent, ChangelingUnlockHorrorEvent>(OnUnlock);
-        SubscribeLocalEvent<ChangelingHorrorComponent, AfterChangelingTransformEvent>(OnAfterTransform);
-        SubscribeLocalEvent<ChangelingHorrorComponent, BeforeChangelingTransformEvent>(OnBeforeTransform);
     }
     public override void Update(float frameTime)
     {
@@ -88,9 +89,42 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
     }
 
     #region transformation
+
+    [SubscribeLocalEvent]
+    private void OnChangelingTransformIntoEvent(Entity<ChangelingHorrorComponent> ent, ref ChangelingAttemptTransformIntoEvent args)
+    {
+
+        // if we are trying to transform into horror form, check for DNA
+        if (TryComp<StoreComponent>(args.Changeling, out var store))
+        {
+            // the horror mode transformation will cause some slight desync but that's a problem for later
+            // since stores aren't properly networked
+            if (_net.IsClient)
+            {
+                // we return without a popup
+                args.Cancelled = true;
+                return;
+            }
+
+            if (store.Balance.ContainsKey("ChangelingDNA"))
+            {
+                var k = store.Balance["ChangelingDNA"];
+                if (k >= FixedPoint2.New(1d)) // you need at least one dna point
+                {
+                    return;
+                }
+            }
+        }
+
+        args.Cancelled = true;
+        args.Reason = Loc.GetString("changeling-horror-transform-fail");
+
+    }
+
     /// <summary>
     /// This function will only be executed when transforming to changeling horror to a "regular" person.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnBeforeTransform(Entity<ChangelingHorrorComponent> ent, ref BeforeChangelingTransformEvent args)
     {
         // this event fires before the transformation (but after the doafter)
@@ -139,6 +173,7 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
     /// <summary>
     /// Fired when the horror mode is unlocked.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnUnlock(Entity<ChangelingIdentityComponent> ent, ref ChangelingUnlockHorrorEvent ev)
     {
         var idEnt = Spawn("MobHorror"); // todo: make this into a generic system that unlocks identities (can be used for the lesser form etc.)
@@ -155,6 +190,7 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
     /// <summary>
     /// This fonction should only be executed when the changeling transforms into its horror form
     /// </summary>
+    [SubscribeLocalEvent]
     protected virtual void OnAfterTransform(Entity<ChangelingHorrorComponent> ent, ref AfterChangelingTransformEvent ev)
     {
         // fires after the transformation
@@ -186,16 +222,17 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
         // this alert will display the time
         _alerts.ShowAlert(ent.Owner, ent.Comp.TimeAlert);
 
-        // full heal
-        RaiseLocalEvent(ent.Owner, new RejuvenateEvent());
+        // apply effects, this should include healing
+        if (ent.Comp.SpawnEffects != null)
+            _effects.ApplyEffects(ent.Owner, ent.Comp.SpawnEffects);
 
         // Uncuff
         if (TryComp<CuffableComponent>(ent.Owner, out _) && _cuffable.TryGetLastCuff(ent.Owner, out var cuff))
             _cuffable.Uncuff(ent.Owner, ent.Owner, cuff.Value);
 
         // spawn an evil-ass screech VFX
-        // TODO: handle stunning etc. here
-        var screechEnt = _screech.Screech(ent.Owner, ent.Comp.SpawnScreechRange, ent.Comp.SpawnScreechVfx);
+        // no sound since it will be played manually
+        var screechEnt = _screech.Screech(ent.Owner, ent.Comp.SpawnScreechRange, ent.Comp.SpawnScreechVfx, null, ent.Comp.SpawnScreechEffects);
 
         if (screechEnt.HasValue)
             MakeGlobal(screechEnt.Value);

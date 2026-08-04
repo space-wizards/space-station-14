@@ -62,7 +62,7 @@ public sealed partial class ChangelingTransformBoundUserInterface(EntityUid owne
             };
             buttons.Add(option);
 
-             // the changeling horror can't be dropped, and you can't drop your current identity
+            // the changeling horror can't be dropped, and you can't drop your current identity
             var droppable = !EntMan.HasComponent<ChangelingUnremovableIdentityComponent>(identity.Identity) && currentIdentity != identity.Identity;
 
             // Options for dropping identities.
@@ -72,8 +72,8 @@ public sealed partial class ChangelingTransformBoundUserInterface(EntityUid owne
                 ToolTip = (currentIdentity == identity.Identity)
                     ? Loc.GetString("changeling-transform-bui-drop-identity-cannot-drop")
                     : Loc.GetString("changeling-transform-bui-drop-identity-entity", ("entity", identity.Identity)),
-                BackgroundColor = droppable ? DisabledOptionBackground : null, // cannot drop your current identity
-                HoverBackgroundColor = droppable ? DisabledOptionHoverBackground : null
+                BackgroundColor = droppable ? null : DisabledOptionBackground, // cannot drop your current identity
+                HoverBackgroundColor = droppable ? null : DisabledOptionHoverBackground
             };
             dropButtons.Add(dropOption);
         }
