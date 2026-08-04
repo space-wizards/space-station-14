@@ -100,7 +100,7 @@ public sealed partial class CargoSystem
             {
                 comp.CurrentOrders.Remove(currentOrder);
             }
-            else if (FulfillOrder(currentOrder, currentOrder.Account, xform.Coordinates, comp.PrinterOutput))
+            else if (FulfillOrder(currentOrder, xform.Coordinates, comp.PrinterOutput))
             {
                 currentOrder.NumDispatched++;
                 if (currentOrder.NumDispatched >= currentOrder.OrderQuantity)
@@ -146,7 +146,7 @@ public sealed partial class CargoSystem
 
         foreach (var order in ent.Comp.CurrentOrders)
         {
-            TryFulfillOrder((station, data), order.Account, order, db);
+            TryFulfillOrder((station, data), order, db);
         }
     }
 
