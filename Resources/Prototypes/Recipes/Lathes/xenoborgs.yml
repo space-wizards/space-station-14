@@ -59,6 +59,8 @@
     Steel: 1500
     Glass: 1500
 
+# TODO: XenoborgModuleOilGun
+
 ## heavy xenoborg modules
 
 - type: latheRecipe

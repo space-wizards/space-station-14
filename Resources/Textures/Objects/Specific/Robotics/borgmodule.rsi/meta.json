@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC0-1.0",
-    "copyright": "Created by EmoGarbage404 (github) for Space Station 14. icon-construction.png created by deltanedas (github). syndicateborgbomb.png created by Mangohydra (github). icon-chem.png & icon-mining-adv.png created by mubururu_ (github) icon-inflatable.png made by FungiFellow (GitHub), Xenoborg modules sprites by Samuka-C (github), icon-artistry by Kittygyat, Xenoborg Explosive sprite made by YoungThugSS14",
+    "copyright": "Created by EmoGarbage404 (github) for Space Station 14. icon-construction.png created by deltanedas (github). syndicateborgbomb.png created by Mangohydra (github). icon-chem.png & icon-mining-adv.png created by mubururu_ (github) icon-inflatable.png made by FungiFellow (GitHub), Xenoborg modules sprites by Samuka-C (github), icon-xenoborg-laser3 by august-sun(github), Xenoborg Explosive and Nanite gun module sprite made by YoungThugSS14 (Github), icon-artistry by Kittygyat",
     "size": {
         "x": 32,
         "y": 32
@@ -137,13 +137,28 @@
             "name": "icon-xenoborg-jammer"
         },
         {
+            "name": "icon-xenoborg-jump"
+        },
+        {
             "name": "icon-xenoborg-laser"
         },
         {
             "name": "icon-xenoborg-laser2"
         },
         {
+            "name": "icon-xenoborg-laser3"
+        },
+        {
+            "name": "icon-xenoborg-nanite-gun"
+        },
+        {
+            "name": "icon-xenoborg-oil"
+        },
+        {
             "name": "icon-xenoborg-projector"
+        },
+        {
+            "name": "icon-xenoborg-remote-explosive"
         },
         {
             "name": "icon-xenoborg-space-movement"
@@ -155,10 +170,10 @@
             "name": "icon-xenoborg-sword2"
         },
         {
-            "name": "icon-xenoborg-tools"
+            "name": "icon-xenoborg-tile"
         },
         {
-            "name": "icon-xenoborg-remote-explosive"
+            "name": "icon-xenoborg-tools"
         },
         {
             "name": "icon-syndicate"

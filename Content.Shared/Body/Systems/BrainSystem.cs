@@ -1,5 +1,5 @@
-﻿using Content.Shared.Body.Components;
-using Content.Shared.Ghost;
+using Content.Shared.Body.Components;
+using Content.Shared.Ghost.Components;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Components;
@@ -7,9 +7,9 @@ using Content.Shared.Pointing;
 
 namespace Content.Shared.Body.Systems;
 
-public sealed class BrainSystem : EntitySystem
+public sealed partial class BrainSystem : EntitySystem
 {
-    [Dependency] private readonly SharedMindSystem _mindSystem = default!;
+    [Dependency] private SharedMindSystem _mindSystem = default!;
 
     public override void Initialize()
     {

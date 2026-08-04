@@ -20,12 +20,11 @@ namespace Content.Client.Atmos.Overlays;
 /// <summary>
 /// Overlay responsible for rendering visible atmos gasses (like plasma for example) usin.
 /// </summary>
-public sealed class GasTileVisibleGasOverlay : Overlay
+public sealed partial class GasTileVisibleGasOverlay : Overlay
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly IResourceCache _resourceCache = default!;
-    [Dependency] private readonly IPrototypeManager _protoManager = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private IResourceCache _resourceCache = default!;
+    [Dependency] private IPrototypeManager _protoManager = default!;
 
     private static readonly ProtoId<ShaderPrototype> UnshadedShader = "unshaded";
 
@@ -72,17 +71,7 @@ public sealed class GasTileVisibleGasOverlay : Overlay
         {
             var gasPrototype = _atmosphereSystem.GetGas(_gasTileOverlaySystem.VisibleGasId[i]);
 
-            SpriteSpecifier overlay;
-
-            if (!string.IsNullOrEmpty(gasPrototype.GasOverlaySprite) &&
-                !string.IsNullOrEmpty(gasPrototype.GasOverlayState))
-                overlay = new SpriteSpecifier.Rsi(new(gasPrototype.GasOverlaySprite), gasPrototype.GasOverlayState);
-            else if (!string.IsNullOrEmpty(gasPrototype.GasOverlayTexture))
-                overlay = new SpriteSpecifier.Texture(new(gasPrototype.GasOverlayTexture));
-            else
-                continue;
-
-            switch (overlay)
+            switch (gasPrototype.GasOverlaySprite)
             {
                 case SpriteSpecifier.Rsi animated:
                     var rsi = _resourceCache.GetResource<RSIResource>(animated.RsiPath).RSI;
@@ -152,7 +141,7 @@ public sealed class GasTileVisibleGasOverlay : Overlay
             return;
 
         // TODO: WorldBounds callback.
-        _mapManager.FindGridsIntersecting(args.MapId,
+        _mapSystem.FindGridsIntersecting(args.MapId,
             args.WorldAABB,
             ref gridState,
             static (EntityUid uid,

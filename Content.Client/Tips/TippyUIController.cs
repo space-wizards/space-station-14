@@ -17,10 +17,10 @@ using static Content.Client.Tips.TippyUI;
 
 namespace Content.Client.Tips;
 
-public sealed class TippyUIController : UIController
+public sealed partial class TippyUIController : UIController
 {
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly IResourceCache _resCache = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private IResourceCache _resCache = default!;
     [UISystemDependency] private readonly AudioSystem _audio = default!;
     [UISystemDependency] private readonly SpriteSystem _sprite = default!;
 
@@ -143,7 +143,7 @@ public sealed class TippyUIController : UIController
                     paper.BackgroundImagePath = "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png";
                     paper.BackgroundPatchMargin = new(16f, 16f, 16f, 16f);
                     paper.BackgroundModulate = new(255, 255, 204);
-                    paper.FontAccentColor = new(0, 0, 0);
+                    paper.DefaultTextColor = new(0, 0, 0);
                 }
                 tippy.InitLabel(EntityManager.GetComponentOrNull<PaperVisualsComponent>(_entity), _resCache);
 
