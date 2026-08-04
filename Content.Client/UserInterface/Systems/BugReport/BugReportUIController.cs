@@ -31,6 +31,13 @@ public sealed partial class BugReportUIController : UIController, IOnStateEntere
     private static readonly ResPath Bug = new("/Textures/Interface/bug.svg.192dpi.png");
     private static readonly ResPath Splat = new("/Textures/Interface/splat.svg.192dpi.png");
 
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        _net.RegisterNetMessage<BugReportMessage>();
+    }
+
     public void OnStateEntered(GameplayState state)
     {
         SetupWindow();
@@ -57,8 +64,6 @@ public sealed partial class BugReportUIController : UIController, IOnStateEntere
     {
         if (BugReportButton == null)
             return;
-
-        _net.RegisterNetMessage<BugReportMessage>();
 
         _bugReportWindow = UIManager.CreateWindow<BugReportWindow>();
         // This is to make sure the hotbar button gets checked and unchecked when the window is opened / closed.
