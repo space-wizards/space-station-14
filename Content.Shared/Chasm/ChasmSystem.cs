@@ -16,17 +16,16 @@ namespace Content.Shared.Chasm;
 /// </summary>
 public sealed partial class ChasmSystem : EntitySystem
 {
-    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private IGameTiming _timing = default!;
     [Dependency] private ActionBlockerSystem _blocker = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedChatSystem _chat = default!;
     [Dependency] private SharedGrapplingGunSystem _grapple = default!;
-    [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
-    [Dependency] private EntityQuery<ChasmFallingComponent> _chasmFallingQuery;
     [Dependency] private EntityQuery<ChasmComponent> _chasmQuery;
+    [Dependency] private EntityQuery<ChasmFallingComponent> _chasmFallingQuery;
 
-    #region Event Handlers
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -53,6 +52,7 @@ public sealed partial class ChasmSystem : EntitySystem
         }
     }
 
+    #region Event Handlers
     [SubscribeLocalEvent]
     private void OnStepTriggered(Entity<ChasmComponent> entity, ref StepTriggeredOffEvent args)
     {
