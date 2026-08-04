@@ -150,7 +150,6 @@
   parent: PoweredlightEmpty
   id: Poweredlight
   suffix: ""
-  description: "A light fixture. Draws power and produces light when equipped with a light tube."
   components:
   - type: Sprite
     state: base
@@ -170,7 +169,6 @@
   parent: Poweredlight
   id: PoweredlightLED
   suffix: LED
-  description: "A light fixture. Draws power and produces light when equipped with a light tube."
   components:
   - type: PoweredLight
     hasLampOnSpawn: LedLightTube
@@ -201,7 +199,6 @@
   parent: Poweredlight
   id: PoweredlightExterior
   suffix: Exterior
-  description: "A light fixture. Draws power and produces light when equipped with a light tube."
   components:
   - type: PoweredLight
     hasLampOnSpawn: ExteriorLightTube
@@ -232,7 +229,6 @@
   parent: Poweredlight
   id: PoweredlightSodium
   suffix: Sodium
-  description: "A light fixture. Draws power and produces light when equipped with a light tube."
   components:
   - type: PoweredLight
     hasLampOnSpawn: SodiumLightTube
