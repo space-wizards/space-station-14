@@ -5641,3 +5641,38 @@
   id: 9947
   time: '2026-08-01T17:05:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/45077
+- author: TheGrimbeeper
+  changes:
+  - message: Microwave handheld artifacts for a new trigger.
+    type: Add
+  id: 9948
+  time: '2026-08-01T23:17:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41053
+- author: Mehnix
+  changes:
+  - message: Added several new artifact triggers themed around interacting with various objects.
+    type: Add
+  id: 9949
+  time: '2026-08-02T22:34:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44944
+- author: riccardi48
+  changes:
+  - message: The cargo telepad now shuts down when unpowered.
+    type: Fix
+  id: 9950
+  time: '2026-08-03T08:54:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44937
+- author: whatston3
+  changes:
+  - message: You can once again hear when you speak.
+    type: Fix
+  id: 9951
+  time: '2026-08-03T15:25:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/45112
+- author: whatston3
+  changes:
+  - message: Ghosts can now extinguish candles with their Boo! action.
+    type: Add
+  id: 9952
+  time: '2026-08-04T05:29:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44810
