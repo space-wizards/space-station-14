@@ -73,7 +73,7 @@ public sealed partial class BugReportUIController : UIController, IOnStateEntere
 
         _bugReportWindow.OnBugReportSubmitted += OnBugReportSubmitted;
 
-        _cfg.OnValueChanged(CCVars.EnablePlayerBugReports, UpdateButtonVisibility, true); // having sub for this does not work, PJB is sayin, need to test and investigate
+        _cfg.OnValueChanged(CCVars.EnablePlayerBugReports, UpdateButtonVisibility, true);
     }
 
     private void CleanupWindow()
