@@ -1,4 +1,5 @@
 using Content.Shared.CCVar;
+using Content.Shared.NPC;
 using Content.Shared.NPC.Systems;
 using Content.Shared.StatusEffectNew;
 using Robust.Shared.Configuration;
@@ -27,7 +28,8 @@ public sealed partial class SSDIndicatorSystem : EntitySystem
     {
         SubscribeLocalEvent<SSDIndicatorComponent, PlayerAttachedEvent>(OnPlayerAttached);
         SubscribeLocalEvent<SSDIndicatorComponent, PlayerDetachedEvent>(OnPlayerDetached);
-        SubscribeLocalEvent<SSDIndicatorComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<SSDIndicatorComponent, MapInitEvent>(OnPlayerMapInit);
+        SubscribeLocalEvent<ActiveNPCComponent, MapInitEvent>(OnNpcMapInit);
 
         _cfg.OnValueChanged(CCVars.ICSSDSleep, obj => _icSsdSleep = obj, true);
         _cfg.OnValueChanged(CCVars.ICSSDSleepTime, obj => _icSsdSleepTime = obj, true);
@@ -49,7 +51,7 @@ public sealed partial class SSDIndicatorSystem : EntitySystem
 
     private void OnPlayerDetached(EntityUid uid, SSDIndicatorComponent component, PlayerDetachedEvent args)
     {
-        if (IsNpc(uid, component))
+        if (HandleNpc(uid, component))
             return;
 
         component.IsSSD = true;
@@ -64,9 +66,9 @@ public sealed partial class SSDIndicatorSystem : EntitySystem
     }
 
     // Prevents mapped mobs to go to sleep immediately
-    private void OnMapInit(EntityUid uid, SSDIndicatorComponent component, MapInitEvent args)
+    private void OnPlayerMapInit(EntityUid uid, SSDIndicatorComponent component, MapInitEvent args)
     {
-        if (!_icSsdSleep || !component.IsSSD || IsNpc(uid, component))
+        if (!_icSsdSleep || !component.IsSSD || HandleNpc(uid, component))
             return;
 
         component.FallAsleepTime = _timing.CurTime + TimeSpan.FromSeconds(_icSsdSleepTime);
@@ -74,7 +76,16 @@ public sealed partial class SSDIndicatorSystem : EntitySystem
         Dirty(uid, component);
     }
 
-    private bool IsNpc(EntityUid uid, SSDIndicatorComponent component)
+    private void OnNpcMapInit(EntityUid uid, ActiveNPCComponent component, MapInitEvent args)
+    {
+        if (!TryComp<SSDIndicatorComponent>(uid, out var ssdComp))
+            return;
+
+        ssdComp.IsSSD = false;
+        Dirty(uid, component);
+    }
+
+    private bool HandleNpc(EntityUid uid, SSDIndicatorComponent component)
     {
         if (!_npc.IsNpc(uid))
             return false;
