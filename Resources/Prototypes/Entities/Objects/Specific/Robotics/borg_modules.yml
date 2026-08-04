@@ -1604,10 +1604,11 @@
       - state: icon-xenoborg-radioactive
   - type: ComponentBorgModule
     components:
-    - type: XenoborgVisuals
-      fallbackSprite:
-        sprite: Resources/Textures/Mobs/Silicon/chassis.rsi
+    - type: SimpleSpriteOverlay
+      overlaySprite:
+        sprite: Mobs/Silicon/chassis.rsi
         state: xenoborg_heavy_rad
+      shader: unshaded
     - type: RadiationSource
       intensity: 0.75
       slope: 0.2

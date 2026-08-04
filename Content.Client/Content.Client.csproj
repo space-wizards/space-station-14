@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Xenoborgs\" />
+    <Folder Include="Xenoborgs\Systems\" />
   </ItemGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
   <Import Project="..\RobustToolbox\MSBuild\XamlIL.targets" />
