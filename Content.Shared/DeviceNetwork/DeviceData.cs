@@ -20,7 +20,7 @@ public partial record struct DeviceData
     ///     most recently used.
     /// </summary>
     [DataField]
-    public string Address;
+    public string Address = string.Empty;
 
     /// <summary>
     ///     Whether the device should listen for all device messages, regardless of the intended recipient.
