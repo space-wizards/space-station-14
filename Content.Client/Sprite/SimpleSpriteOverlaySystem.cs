@@ -3,17 +3,11 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Sprite;
 
-public sealed class SimpleSpriteOverlaySystem : EntitySystem
+public sealed partial class SimpleSpriteOverlaySystem : EntitySystem
 {
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<SimpleSpriteOverlayComponent, AfterAutoHandleStateEvent>(OnAfterHandleState);
-        SubscribeLocalEvent<SimpleSpriteOverlayComponent, ComponentShutdown>(OnCompShutdown);
-    }
-
-
+    [SubscribeLocalEvent]
     private void OnAfterHandleState(Entity<SimpleSpriteOverlayComponent> ent, ref AfterAutoHandleStateEvent args)
     {
         var sprite = Comp<SpriteComponent>(ent);
@@ -27,6 +21,7 @@ public sealed class SimpleSpriteOverlaySystem : EntitySystem
             sprite.LayerSetShader(index, ent.Comp.Shader);
     }
 
+    [SubscribeLocalEvent]
     private void OnCompShutdown(Entity<SimpleSpriteOverlayComponent> ent, ref ComponentShutdown args)
     {
         var sprite = Comp<SpriteComponent>(ent);
