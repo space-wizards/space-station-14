@@ -52,7 +52,7 @@ namespace Content.Server.Database
 
             if (synchronous)
             {
-                // EnsureCreated means you can't later apply migrations, fine for tests
+                // EnsureCreated means you can't apply migrations later, fine for tests
                 if (snapshot)
                     prefsCtx.Database.EnsureCreated();
                 else

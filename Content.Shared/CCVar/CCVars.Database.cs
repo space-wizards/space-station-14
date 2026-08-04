@@ -77,7 +77,7 @@ public sealed partial class CCVars
 
     /// <summary>
     ///     Creates the SQLite database using EnsureCreated instead of Migrate, if using SQLite.
-    ///     Setting this to true means you cannot later apply migrations.
+    ///     Setting this to true means you cannot apply migrations later.
     ///     Meant to be used in integration tests only.
     /// </summary>
     public static readonly CVarDef<bool> DatabaseSnapshot =
