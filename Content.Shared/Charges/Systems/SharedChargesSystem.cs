@@ -59,13 +59,13 @@ public abstract partial class SharedChargesSystem : EntitySystem
 
     private void OnChargesAttempt(Entity<LimitedChargesComponent> ent, ref ActionAttemptEvent args)
     {
-        if (args.Cancelled)
-            return;
-
-        if (CanUseCharge((ent.Owner, ent.Comp), args.User))
+        if (args.Cancelled || HasCharges((ent.Owner, ent.Comp), 1))
             return;
 
         args.Cancelled = true;
+
+        if (ent.Comp.OnFailPopup is { } popup)
+            _popup.PopupEntity(Loc.GetString(popup), args.User, args.User);
     }
 
     private void OnChargesPerformed(Entity<LimitedChargesComponent> ent, ref ActionPerformedEvent args)
@@ -103,17 +103,6 @@ public abstract partial class SharedChargesSystem : EntitySystem
         var current = GetCurrentCharges(action);
 
         return current >= charges;
-    }
-
-    public bool CanUseCharge(Entity<LimitedChargesComponent?> entity, EntityUid user)
-    {
-        if (!Resolve(entity.Owner, ref entity.Comp, false) || HasCharges(entity, 1))
-            return true;
-
-        if (entity.Comp.OnFailPopup != null)
-            _popup.PopupEntity(Loc.GetString(entity.Comp.OnFailPopup.Value), user, user);
-
-        return false;
     }
 
     /// <summary>

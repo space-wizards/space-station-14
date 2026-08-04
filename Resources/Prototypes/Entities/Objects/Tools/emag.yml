@@ -19,7 +19,6 @@
   suffix: Limited
   components:
   - type: LimitedCharges
-    onFailPopup: limited-charges-no-charges
   - type: AutoRecharge
   - type: StaticPrice
     price: 2500
