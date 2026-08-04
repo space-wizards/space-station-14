@@ -277,22 +277,6 @@ public sealed partial class CargoSystem
         UpdateOrders(station.Value);
     }
 
-    /// <summary>
-    /// Tries to fulfill the next outstanding order.
-    /// </summary>
-    [PublicAPI]
-    private bool FulfillNextOrder(
-        StationCargoOrderDatabaseComponent orderDb,
-        EntityCoordinates spawn,
-        string? paperProto
-    )
-    {
-        if (!PopFrontOrder(orderDb, out var order))
-            return false;
-
-        return FulfillOrder(order, spawn, paperProto);
-    }
-
     public void RemoveOrder(
         EntityUid dbUid,
         int index,
@@ -627,29 +611,6 @@ public sealed partial class CargoSystem
         if (_paperLabelQuery.TryComp(item, out var label))
             _slots.TryInsert(item, label.LabelSlot, printed, null);
 
-        return true;
-    }
-
-    private static bool PopFrontOrder(
-        StationCargoOrderDatabaseComponent orderDb,
-        [NotNullWhen(true)] out CargoOrderData? orderOut
-    )
-    {
-        var orderIdx = orderDb.Orders.FindIndex(order => order.Approved);
-        if (orderIdx == -1)
-        {
-            orderOut = null;
-            return false;
-        }
-
-        orderOut = orderDb.Orders[orderIdx];
-        orderOut.NumDispatched++;
-
-        if (orderOut.NumDispatched >= orderOut.OrderQuantity)
-        {
-            // Order is complete. Remove from the queue.
-            orderDb.Orders.RemoveAt(orderIdx);
-        }
         return true;
     }
 
