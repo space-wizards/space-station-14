@@ -52,9 +52,10 @@
     title: objective-escape-identity-title
   - type: ChangelingEscapeIdentityCondition
   - type: PickRandomPerson
-    filters:
-    - !type:TargetObjectiveMindFilter
-      blacklist:
+    conditions:
+    - !type:ObjectiveTargetCondition
+      inverted: true
+      whitelist:
         components:
         - ChangelingRole
 
@@ -69,12 +70,26 @@
   - type: TargetObjective
     title: objective-condition-kill-maroon-title
   - type: PickRandomPerson
-    filters:
+    conditions:
     # Can't have multiple objectives to kill the same person.
-    - !type:TargetObjectiveMindFilter
-      blacklist:
+    - !type:ObjectiveTargetCondition
+      inverted: true
+      whitelist:
         components:
         - KillPersonCondition
   - type: KillPersonCondition
     requireDead: true
     requireMaroon: true
+
+- type: entity
+  parent: BaseChangelingObjective
+  id: ChangelingDevourMostObjective
+  name: Devour the most humanoids.
+  description: We must devour the most unique humanoids out of all other changelings.
+  components:
+  - type: Objective
+    difficulty: 1
+    icon:
+      sprite: Mobs/Aliens/flesh.rsi
+      state: golem
+  - type: ChangelingDevourMostCondition

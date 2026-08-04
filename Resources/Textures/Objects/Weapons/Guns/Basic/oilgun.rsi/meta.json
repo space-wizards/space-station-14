@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "created by Samuka-C (github), flame taken from Objects/Tools/welder_experimental.rsi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "flame",
+      "delays": [
+        [
+          0.2,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "mag-1"
+    },
+    {
+      "name": "mag-2"
+    },
+    {
+      "name": "mag-3"
+    },
+    {
+      "name": "mag-4"
+    },
+    {
+      "name": "mag-5"
+    },
+    {
+      "name": "reloading",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    }
+  ]
+}

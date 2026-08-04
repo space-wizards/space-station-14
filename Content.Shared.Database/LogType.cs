@@ -486,7 +486,12 @@ public enum LogType
     Connection = 104,
 
     /// <summary>
+    /// Silicon law changes.
+    /// </summary>
+    SiliconLaw = 105,
+
+    /// <summary>
     /// For anything relating to bug reports.
     /// </summary>
-    BugReport = 105,
+    BugReport = 106,
 }
