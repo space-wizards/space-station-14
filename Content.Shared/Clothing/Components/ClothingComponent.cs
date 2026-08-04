@@ -10,7 +10,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Clothing.Components;
 
 /// <summary>
-/// This handles entities which can be equipped.
+/// This handles entities that can be equipped.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 [Access(typeof(ClothingSystem), typeof(InventorySystem))]
