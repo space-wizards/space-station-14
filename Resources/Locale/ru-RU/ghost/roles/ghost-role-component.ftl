@@ -261,8 +261,6 @@ ghost-role-information-mukhtar-name = Пёс службы безопасност
 ghost-role-information-mukhtar-description = Вы - верный дрессированный пёс отдела службы безопасности. Ваши укусы наносят мало урона, но вы легко можете положить преступника на землю.
 ghost-role-information-artifact-name = Разумный артефакт
 ghost-role-information-artifact-description = Осуществляйте свои инопланетные прихоти. Принудительно активируйте свои узлы во благо или во зло.
-ghost-role-information-tomatokiller-name = Томат-убийца
-ghost-role-information-tomatokiller-description = Этот маленький помидор будет служить ботанику до конца своей жизни... то есть пару минут.
 ghost-role-information-gingerbread-name = Пряничный человечек
 ghost-role-information-gingerbread-description =
     Существо чистого праздничного духа.

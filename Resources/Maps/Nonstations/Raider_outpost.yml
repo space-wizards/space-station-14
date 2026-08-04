@@ -7745,15 +7745,6 @@ entities:
       parent: 658
     - type: Physics
       canCollide: False
-- proto: FoodMeatTomato
-  entities:
-  - uid: 1237
-    components:
-    - type: Transform
-      pos: 16.265053,-16.357336
-      parent: 658
-    - type: Physics
-      canCollide: False
 - proto: FoodPieBananaCream
   entities:
   - uid: 1238

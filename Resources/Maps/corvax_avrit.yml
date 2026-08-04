@@ -209660,15 +209660,6 @@ entities:
       parent: 2
     - type: Physics
       canCollide: False
-- proto: FoodMeatTomato
-  entities:
-  - uid: 28270
-    components:
-    - type: Transform
-      pos: 36.03636,-44.21835
-      parent: 2
-    - type: Physics
-      canCollide: False
 - proto: FoodMeatWheat
   entities:
   - uid: 28271

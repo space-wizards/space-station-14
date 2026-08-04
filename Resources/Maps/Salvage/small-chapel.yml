@@ -615,13 +615,6 @@ entities:
     - type: Transform
       pos: 6.5,5.5
       parent: 1
-- proto: KillerTomatoSeeds
-  entities:
-  - uid: 51
-    components:
-    - type: Transform
-      pos: 4.6947265,8.268279
-      parent: 1
 - proto: Lamp
   entities:
   - uid: 66

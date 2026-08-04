@@ -745,26 +745,26 @@
       right:
       - state: plain-inhand-right
 
-- type: entity
-  parent: FoodMeatBase
-  id: FoodMeatTomato
-  name: killer tomato meat
-  description: A slice from a huge tomato.
-  components:
-  - type: Sprite
-    state: tomato
-  - type: SliceableFood
-    count: 3
-    slice: FoodMeatTomatoCutlet
-  - type: StaticPrice
-    price: 100
-  - type: Item
-    storedOffset: 0,-2
-    inhandVisuals:
-      left:
-      - state: tomato-inhand-left
-      right:
-      - state: tomato-inhand-right
+# - type: entity
+#   parent: FoodMeatBase
+#   id: FoodMeatTomato
+#   name: killer tomato meat
+#   description: A slice from a huge tomato.
+#   components:
+#   - type: Sprite
+#     state: tomato
+#   - type: SliceableFood
+#     count: 3
+#     slice: FoodMeatTomatoCutlet
+#   - type: StaticPrice
+#     price: 100
+#   - type: Item
+#     storedOffset: 0,-2
+#     inhandVisuals:
+#       left:
+#       - state: tomato-inhand-left
+#       right:
+#       - state: tomato-inhand-right
 
 - type: entity
   parent: FoodMeatBase
@@ -1978,26 +1978,26 @@
       - state: generic-pink-inhand-right
         color: green
 
-- type: entity
-  parent: FoodMeatBase
-  id: FoodMeatTomatoCutlet
-  name: raw killer tomato cutlet
-  description: A cutlet from a slab of tomato.
-  components:
-  - type: Item
-    size: Tiny
-    shape:
-    - 0,0,0,0
-    storedOffset: -1,0
-  - type: Tag
-    tags:
-    - Cutlet
-    - Meat
-  - type: Sprite
-    state: salami-slice
-    color: red
-  - type: StaticPrice
-    price: 30
+# - type: entity
+#   parent: FoodMeatBase
+#   id: FoodMeatTomatoCutlet
+#   name: raw killer tomato cutlet
+#   description: A cutlet from a slab of tomato.
+#   components:
+#   - type: Item
+#     size: Tiny
+#     shape:
+#     - 0,0,0,0
+#     storedOffset: -1,0
+#   - type: Tag
+#     tags:
+#     - Cutlet
+#     - Meat
+#   - type: Sprite
+#     state: salami-slice
+#     color: red
+#   - type: StaticPrice
+#     price: 30
 
 - type: entity
   parent: FoodMeatBase

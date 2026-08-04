@@ -111710,15 +111710,6 @@ entities:
       parent: 2
     - type: Physics
       canCollide: False
-- proto: FoodMeatTomato
-  entities:
-  - uid: 15134
-    components:
-    - type: Transform
-      pos: 55.071976,-60.18121
-      parent: 2
-    - type: Physics
-      canCollide: False
 - proto: FoodMeatWheat
   entities:
   - uid: 15135
