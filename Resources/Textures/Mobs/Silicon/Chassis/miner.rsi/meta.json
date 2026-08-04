@@ -1,0 +1,75 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/faf6db214927874c19b8fa8585d26b5d40de1acc, Derelict Miner Borg sprites by _miket on Discord",
+    "states": [
+        {
+            "name": "miner",
+            "directions": 4
+        },
+        {
+            "name": "miner_moving",
+            "directions": 4,
+            "delays": [
+                [
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "miner_e",
+            "directions": 4
+        },
+        {
+            "name": "miner_e_r",
+            "directions": 4
+        },
+        {
+            "name": "miner_l",
+            "directions": 4
+        },
+        {
+            "name": "miner_derelict",
+            "directions": 4
+        },
+        {
+            "name": "miner_moving_derelict",
+            "directions": 4,
+            "delays": [
+                [
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1
+                ]
+            ]
+        }
+    ]
+}

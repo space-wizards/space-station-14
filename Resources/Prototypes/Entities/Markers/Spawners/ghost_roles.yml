@@ -244,7 +244,7 @@
     sprite: Markers/jobs.rsi
     layers:
     - state: green
-    - sprite: Mobs/Silicon/chassis.rsi
+    - sprite: Mobs/Silicon/Chassis/robot.rsi
       state: derelict_icon
 
 - type: entity
@@ -288,7 +288,7 @@
     sprite: Markers/jobs.rsi
     layers:
     - state: green
-    - sprite: Mobs/Silicon/chassis.rsi
+    - sprite: Mobs/Silicon/Chassis/xenoborg_engi.rsi
       state: xenoborg_engi
 
 - type: entity

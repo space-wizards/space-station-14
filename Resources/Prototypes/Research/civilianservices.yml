@@ -127,7 +127,7 @@
   id: MechanizedTreatment
   name: research-technology-mechanized-treatment
   icon:
-    sprite: Mobs/Silicon/chassis.rsi
+    sprite: Mobs/Silicon/Chassis/medical.rsi
     state: medical
   discipline: CivilianServices
   tier: 2

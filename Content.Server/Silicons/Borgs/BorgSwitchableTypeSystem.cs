@@ -33,7 +33,7 @@ public sealed partial class BorgSwitchableTypeSystem : SharedBorgSwitchableTypeS
         {
             _borgSystem.SetTransponderSprite(
                 (ent.Owner, transponder),
-                new SpriteSpecifier.Rsi(new ResPath("Mobs/Silicon/chassis.rsi"), prototype.SpriteBodyState));
+                new SpriteSpecifier.Rsi(new ResPath(prototype.SpriteBodyRsi), prototype.SpriteBodyState));
 
             _borgSystem.SetTransponderName(
                 (ent.Owner, transponder),

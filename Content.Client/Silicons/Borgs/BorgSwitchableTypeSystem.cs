@@ -2,6 +2,8 @@
 using Content.Shared.Silicons.Borgs;
 using Content.Shared.Silicons.Borgs.Components;
 using Robust.Client.GameObjects;
+using Robust.Client.ResourceManagement;
+using Robust.Shared.Serialization.TypeSerializers.Implementations;
 
 namespace Content.Client.Silicons.Borgs;
 
@@ -15,6 +17,7 @@ public sealed partial class BorgSwitchableTypeSystem : SharedBorgSwitchableTypeS
     [Dependency] private BorgSystem _borgSystem = default!;
     [Dependency] private AppearanceSystem _appearance = default!;
     [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private IResourceCache _rescache = default!;
 
     public override void Initialize()
     {
@@ -40,8 +43,16 @@ public sealed partial class BorgSwitchableTypeSystem : SharedBorgSwitchableTypeS
     {
         if (TryComp(entity, out SpriteComponent? sprite))
         {
-            _sprite.LayerSetRsiState((entity, sprite), BorgVisualLayers.Body, prototype.SpriteBodyState);
-            _sprite.LayerSetRsiState((entity, sprite), BorgVisualLayers.LightStatus, prototype.SpriteToggleLightState);
+            var path = SpriteSpecifierSerializer.TextureRoot / prototype.SpriteBodyRsi;
+
+            var layers = new Dictionary<Enum, string>
+            {
+                { BorgVisualLayers.Body, prototype.SpriteBodyState },
+                { BorgVisualLayers.LightStatus, prototype.SpriteToggleLightState }
+            };
+
+            if (_rescache.TryGetResource(path, out RSIResource? rsi))
+                _sprite.SetBaseRsiWithLayers((entity, sprite), rsi.RSI, ref layers);
         }
 
         if (TryComp(entity, out BorgChassisComponent? chassis))
