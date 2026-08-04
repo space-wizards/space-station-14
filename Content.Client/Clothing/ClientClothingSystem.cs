@@ -316,7 +316,7 @@ public sealed partial class ClientClothingSystem : ClothingSystem
             return;
         }
 
-        ev.Layers = CheckForSpeciesSpecificLayers(equipee, clothingComponent, ev.Layers, inventory.SpeciesId);
+        ev.Layers = CheckForSpeciesSpecificLayers(equipment, clothingComponent, ev.Layers, inventory.SpeciesId);
 
         // temporary, until layer draw depths get added. Basically: a layer with the key "slot" is being used as a
         // bookmark to determine where in the list of layers we should insert the clothing layers.

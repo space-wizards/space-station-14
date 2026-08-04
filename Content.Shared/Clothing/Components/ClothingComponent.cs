@@ -46,9 +46,15 @@ public sealed partial class ClothingComponent : Component
     [Access(typeof(ClothingSystem), typeof(InventorySystem), Other = AccessPermissions.ReadExecute)]
     public SlotFlags Slots = SlotFlags.NONE;
 
+    /// <summary>
+    /// The sound that plays when this entity is equipped.
+    /// </summary>
     [DataField]
     public SoundSpecifier? EquipSound;
 
+    /// <summary>
+    /// The sound that plays when this entity is unequipped.
+    /// </summary>
     [DataField]
     public SoundSpecifier? UnequipSound;
 
