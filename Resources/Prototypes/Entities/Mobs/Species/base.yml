@@ -315,6 +315,7 @@
   - type: StunVisuals
   - type: ExamineBlood # DS14
   - type: HumanoidDamageSequence # DS14: for coroner job
+  - type: CritHeartbeat # DS14
 
 - type: entity
   save: false

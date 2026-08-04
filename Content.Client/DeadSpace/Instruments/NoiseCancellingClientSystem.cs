@@ -1,5 +1,6 @@
 // Мёртвый Космос, Licensed under custom terms with restrictions on public hosting and commercial use, full text: https://raw.githubusercontent.com/dead-space-server/space-station-14-fobos/master/LICENSE.TXT
 
+using Content.Client.Audio;
 using Content.Client.Instruments;
 using Content.Shared.DeadSpace.Instruments;
 using Content.Shared.Inventory;
@@ -101,6 +102,9 @@ public sealed class NoiseCancellingClientSystem : EntitySystem
 
     private void OnAudioInit(EntityUid uid, AudioComponent audioComp, ComponentInit args)
     {
+        var initializeEvent = new BeforeAudioSourceInitializeEvent();
+        RaiseLocalEvent(uid, ref initializeEvent);
+
         if (!_isActive)
             return;
 

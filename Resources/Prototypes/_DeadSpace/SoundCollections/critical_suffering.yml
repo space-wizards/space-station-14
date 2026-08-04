@@ -1,0 +1,64 @@
+- type: soundCollection
+  id: CriticalSufferingMaleGasp
+  files:
+  - /Audio/_DeadSpace/Effects/CriticalSuffering/male/gasp/1.ogg
+  - /Audio/_DeadSpace/Effects/CriticalSuffering/male/gasp/2.ogg
+  - /Audio/_DeadSpace/Effects/CriticalSuffering/male/gasp/3.ogg
+  - /Audio/_DeadSpace/Effects/CriticalSuffering/male/gasp/4.ogg
+
+- type: soundCollection
+  id: CriticalSufferingFemaleGasp
+  files:
+  - /Audio/_DeadSpace/Effects/CriticalSuffering/female/gasp/1.ogg
+  - /Audio/_DeadSpace/Effects/CriticalSuffering/female/gasp/2.ogg
+  - /Audio/_DeadSpace/Effects/CriticalSuffering/female/gasp/3.ogg
+  - /Audio/_DeadSpace/Effects/CriticalSuffering/female/gasp/4.ogg
+  - /Audio/_DeadSpace/Effects/CriticalSuffering/female/gasp/5.ogg
+
+- type: soundCollection
+  id: CriticalSufferingMaleGroan
+  files:
+  - /Audio/_DeadSpace/Effects/CriticalSuffering/male/groan/1.ogg
+  - /Audio/_DeadSpace/Effects/CriticalSuffering/male/groan/2.ogg
+  - /Audio/_DeadSpace/Effects/CriticalSuffering/male/groan/3.ogg
+  - /Audio/_DeadSpace/Effects/CriticalSuffering/male/groan/4.ogg
+  - /Audio/_DeadSpace/Effects/CriticalSuffering/male/groan/5.ogg
+  - /Audio/_DeadSpace/Effects/CriticalSuffering/male/groan/6.ogg
+
+- type: soundCollection
+  id: CriticalSufferingFemaleGroan
+  files:
+  - /Audio/_DeadSpace/Effects/CriticalSuffering/female/groan/1.ogg
+  - /Audio/_DeadSpace/Effects/CriticalSuffering/female/groan/2.ogg
+  - /Audio/_DeadSpace/Effects/CriticalSuffering/female/groan/3.ogg
+  - /Audio/_DeadSpace/Effects/CriticalSuffering/female/groan/4.ogg
+  - /Audio/_DeadSpace/Effects/CriticalSuffering/female/groan/5.ogg
+
+- type: soundCollection
+  id: CriticalSufferingMaleCough
+  files:
+  - /Audio/_DeadSpace/Effects/CriticalSuffering/male/cough/1.ogg
+  - /Audio/_DeadSpace/Effects/CriticalSuffering/male/cough/2.ogg
+  - /Audio/_DeadSpace/Effects/CriticalSuffering/male/cough/3.ogg
+  - /Audio/_DeadSpace/Effects/CriticalSuffering/male/cough/4.ogg
+  - /Audio/_DeadSpace/Effects/CriticalSuffering/male/cough/5.ogg
+
+- type: soundCollection
+  id: CriticalSufferingFemaleCough
+  files:
+  - /Audio/_DeadSpace/Effects/CriticalSuffering/female/cough/1.ogg
+  - /Audio/_DeadSpace/Effects/CriticalSuffering/female/cough/2.ogg
+  - /Audio/_DeadSpace/Effects/CriticalSuffering/female/cough/3.ogg
+  - /Audio/_DeadSpace/Effects/CriticalSuffering/female/cough/4.ogg
+  - /Audio/_DeadSpace/Effects/CriticalSuffering/female/cough/5.ogg
+
+- type: soundCollection
+  id: CriticalSufferingMaleRetch
+  files:
+  - /Audio/_DeadSpace/Effects/CriticalSuffering/male/retch/1.ogg
+  - /Audio/_DeadSpace/Effects/CriticalSuffering/male/retch/2.ogg
+
+- type: soundCollection
+  id: CriticalSufferingFemaleRetch
+  files:
+  - /Audio/_DeadSpace/Effects/CriticalSuffering/female/retch/1.ogg

@@ -1,0 +1,270 @@
+light_mode unshaded;
+
+uniform sampler2D SCREEN_TEXTURE;
+uniform highp float DamageLevel;
+uniform highp float OxygenLevel;
+uniform highp float PreCriticalLevel;
+uniform highp float CriticalLevel;
+uniform highp float PreCriticalState;
+uniform highp float CriticalState;
+uniform highp float DeadState;
+uniform highp float DeathFade;
+uniform highp float Pulse;
+
+highp float simplex(highp vec2 point)
+{
+    const highp float skew = 0.366025404;
+    const highp float unskew = 0.211324865;
+    highp vec2 cell = floor(point + (point.x + point.y) * skew);
+    highp vec2 first = point - cell + (cell.x + cell.y) * unskew;
+    highp float side = step(first.y, first.x);
+    highp vec2 corner = vec2(side, 1.0 - side);
+    highp vec2 second = first - corner + unskew;
+    highp vec2 third = first - 1.0 + 2.0 * unskew;
+    highp vec3 weight = max(
+        0.5 - vec3(dot(first, first), dot(second, second), dot(third, third)),
+        0.0);
+    highp vec3 gradient = weight * weight * weight * weight * vec3(
+        dot(first, zRandom(cell)),
+        dot(second, zRandom(cell + corner)),
+        dot(third, zRandom(cell + 1.0)));
+    return dot(gradient, vec3(70.0));
+}
+
+highp float fbm(highp vec2 point)
+{
+    highp float value = simplex(point) * 0.58;
+    point = point * 2.03 + vec2(13.7, 7.9);
+    value += simplex(point) * 0.29;
+    point = point * 2.01 + vec2(5.2, 17.4);
+    value += simplex(point) * 0.13;
+    return value * 0.5 + 0.5;
+}
+
+void fragment()
+{
+    highp vec2 uv = FRAGCOORD.xy * SCREEN_PIXEL_SIZE;
+    highp vec2 resolution = vec2(1.0 / SCREEN_PIXEL_SIZE.x, 1.0 / SCREEN_PIXEL_SIZE.y);
+    highp float aspect = resolution.x / resolution.y;
+    highp vec2 centered = uv * 2.0 - 1.0;
+    highp vec2 organicUv = vec2(uv.x * aspect, uv.y);
+
+    highp float angle = atan(centered.y, centered.x);
+    highp float shapeRadius = length(centered);
+    shapeRadius += sin(angle * 3.0 + TIME * 0.12) * 0.016;
+    shapeRadius += sin(angle * 7.0 - TIME * 0.085) * 0.008;
+
+    highp float preCriticalPresence = smoothstep(0.0, 1.0, PreCriticalState);
+    highp float criticalStagePresence = smoothstep(0.0, 1.0, CriticalState);
+    highp float deadPresence = smoothstep(0.0, 1.0, DeadState);
+    highp float criticalPresence = clamp(criticalStagePresence + deadPresence, 0.0, 1.0);
+    highp float statePresence = clamp(preCriticalPresence + criticalPresence, 0.0, 1.0);
+    highp float alivePresence = 1.0 - statePresence;
+    highp float stageWeight = max(
+        alivePresence + preCriticalPresence + criticalStagePresence + deadPresence,
+        0.001);
+    highp float pulseHeat = Pulse * Pulse;
+    highp float damageThreshold = mix(1.22, 1.02, pow(DamageLevel, 0.85));
+    highp float preCriticalThreshold = mix(1.0, 0.78, PreCriticalLevel);
+    highp float criticalThreshold = mix(0.74, 0.22, CriticalLevel);
+    highp float burnThreshold = (
+        damageThreshold * alivePresence +
+        preCriticalThreshold * preCriticalPresence +
+        criticalThreshold * criticalStagePresence +
+        0.06 * deadPresence) / stageWeight;
+    burnThreshold -= Pulse * mix(0.018, 0.035, criticalPresence) * statePresence;
+
+    highp vec2 drift = vec2(TIME * 0.018, -TIME * 0.012);
+    highp vec2 warp = vec2(
+        simplex(organicUv * 1.7 + drift),
+        simplex(organicUv * 1.7 + vec2(8.4, 13.1) - drift));
+    highp vec2 warpedUv = organicUv + warp * mix(0.025, 0.075, statePresence);
+    highp float broadNoise = fbm(warpedUv * 2.6 + drift);
+    highp float detailNoise = fbm(warpedUv * 7.8 - drift * 1.4);
+    highp float distortion = (broadNoise - 0.5) * mix(0.09, 0.24, statePresence);
+    distortion += (detailNoise - 0.5) * mix(0.035, 0.085, statePresence);
+
+    highp float signedBurn = shapeRadius + distortion - burnThreshold;
+    highp float charMask = smoothstep(-0.012, 0.008, signedBurn);
+    highp float boundaryDistance = abs(signedBurn + 0.005);
+    highp float emberCore = 1.0 - smoothstep(0.0, 0.027, boundaryDistance);
+    highp float emberGlow = 1.0 - smoothstep(0.012, 0.085, boundaryDistance);
+    highp float emberBreakup = mix(0.58, 1.0, smoothstep(0.2, 0.78, detailNoise + broadNoise * 0.18));
+
+    highp float damageBurnActivation = smoothstep(0.68, 0.96, DamageLevel);
+    highp float burnActivation = mix(damageBurnActivation, 1.0, statePresence);
+    highp float damageField = shapeRadius + (broadNoise - 0.5) * 0.14 + (detailNoise - 0.5) * 0.05;
+    highp float damageVignetteThreshold = mix(1.12, 0.62, DamageLevel);
+    highp float damageMask = smoothstep(
+        damageVignetteThreshold - 0.18,
+        damageVignetteThreshold + 0.12,
+        damageField);
+    highp float damageMotion = simplex(
+        organicUv * 5.2 + vec2(TIME * 0.075, -TIME * 0.052));
+    highp float damageBreath = 0.91;
+    damageBreath += sin(TIME * 1.25 + broadNoise * 2.4) * 0.06;
+    damageBreath += damageMotion * 0.035;
+    highp float damageAlpha =
+        damageMask * pow(DamageLevel, 0.8) * mix(0.05, 0.34, DamageLevel) * damageBreath;
+    highp float ordinaryChar = mix(0.82, 0.96, DamageLevel);
+    highp float charOpacity = mix(ordinaryChar, 1.0, statePresence);
+
+    highp float emberStrength = damageBurnActivation * mix(0.12, 0.38, DamageLevel);
+    emberStrength += preCriticalPresence * mix(0.6, 0.82, PreCriticalLevel);
+    emberStrength += criticalPresence * mix(0.82, 1.0, CriticalLevel);
+    highp float emberFlicker = 0.88;
+    emberFlicker += sin(TIME * 2.25 + detailNoise * 11.0) * 0.075;
+    emberFlicker += simplex(
+        warpedUv * 9.0 + vec2(TIME * 0.11, -TIME * 0.07)) * 0.055;
+    highp float emberAlpha =
+        (emberCore * mix(0.84, 1.0, pulseHeat) + emberGlow * mix(0.14, 0.32, pulseHeat)) *
+        emberStrength * emberBreakup * clamp(emberFlicker, 0.72, 1.02);
+    emberAlpha = max(emberAlpha, emberCore * statePresence * mix(0.9, 1.0, pulseHeat));
+
+    highp float oxygenThreshold = mix(1.15, 0.45, OxygenLevel);
+    highp float oxygenMask = smoothstep(oxygenThreshold - 0.28, oxygenThreshold, shapeRadius);
+    highp float oxygenAlpha = oxygenMask * OxygenLevel;
+    highp float effectFade = mix(1.0, DeathFade, deadPresence);
+
+    highp float visualSeverity = (
+        pow(DamageLevel, 0.8) * 0.42 * alivePresence +
+        mix(0.42, 0.62, PreCriticalLevel) * preCriticalPresence +
+        mix(0.62, 0.92, CriticalLevel) * criticalStagePresence +
+        deadPresence) / stageWeight;
+    visualSeverity = clamp(visualSeverity + OxygenLevel * 0.18, 0.0, 1.0) * effectFade;
+
+    highp float refractionPixels = visualSeverity * mix(0.5, 4.6, visualSeverity);
+    refractionPixels *= 1.0 + pulseHeat * statePresence * 0.34;
+    highp vec2 sampleUv = clamp(
+        uv + warp * SCREEN_PIXEL_SIZE * refractionPixels,
+        vec2(0.0),
+        vec2(1.0));
+    highp vec4 sceneSharp = zTextureSpec(SCREEN_TEXTURE, sampleUv);
+    highp vec3 sceneColor = sceneSharp.rgb;
+
+    if (visualSeverity > 0.001)
+    {
+        highp float blurStrength = pow(visualSeverity, 0.9);
+        highp float centerFocusLoss = 1.0 - smoothstep(0.15, 1.2, shapeRadius);
+        highp float blurMix = blurStrength * mix(0.08, 0.6, blurStrength);
+        blurMix *= mix(0.86, 1.08, centerFocusLoss);
+        blurMix = clamp(
+            blurMix + pulseHeat * statePresence * 0.055,
+            0.0,
+            0.62);
+        highp float blurRadius = visualSeverity * mix(2.0, 12.0, visualSeverity);
+        blurRadius += pulseHeat * statePresence * 2.2;
+        highp vec2 blurPixel = SCREEN_PIXEL_SIZE * blurRadius;
+        highp vec2 diagonalBlur = blurPixel * 0.72;
+        highp vec3 sceneBlurred = sceneSharp.rgb * 0.18;
+        sceneBlurred += zTextureSpec(
+            SCREEN_TEXTURE,
+            clamp(sampleUv + vec2(blurPixel.x, 0.0), vec2(0.0), vec2(1.0))).rgb * 0.11;
+        sceneBlurred += zTextureSpec(
+            SCREEN_TEXTURE,
+            clamp(sampleUv - vec2(blurPixel.x, 0.0), vec2(0.0), vec2(1.0))).rgb * 0.11;
+        sceneBlurred += zTextureSpec(
+            SCREEN_TEXTURE,
+            clamp(sampleUv + vec2(0.0, blurPixel.y), vec2(0.0), vec2(1.0))).rgb * 0.11;
+        sceneBlurred += zTextureSpec(
+            SCREEN_TEXTURE,
+            clamp(sampleUv - vec2(0.0, blurPixel.y), vec2(0.0), vec2(1.0))).rgb * 0.11;
+        sceneBlurred += zTextureSpec(
+            SCREEN_TEXTURE,
+            clamp(sampleUv + diagonalBlur, vec2(0.0), vec2(1.0))).rgb * 0.095;
+        sceneBlurred += zTextureSpec(
+            SCREEN_TEXTURE,
+            clamp(sampleUv - diagonalBlur, vec2(0.0), vec2(1.0))).rgb * 0.095;
+        sceneBlurred += zTextureSpec(
+            SCREEN_TEXTURE,
+            clamp(sampleUv + vec2(diagonalBlur.x, -diagonalBlur.y), vec2(0.0), vec2(1.0))).rgb * 0.095;
+        sceneBlurred += zTextureSpec(
+            SCREEN_TEXTURE,
+            clamp(sampleUv + vec2(-diagonalBlur.x, diagonalBlur.y), vec2(0.0), vec2(1.0))).rgb * 0.095;
+        sceneColor = mix(sceneColor, sceneBlurred, blurMix);
+
+        highp float ghostDistance = mix(1.5, 7.5, visualSeverity);
+        highp vec2 ghostOffset = SCREEN_PIXEL_SIZE * ghostDistance * vec2(0.86, 0.42);
+        highp vec3 ghostA = zTextureSpec(
+            SCREEN_TEXTURE,
+            clamp(sampleUv + ghostOffset, vec2(0.0), vec2(1.0))).rgb;
+        highp vec3 ghostB = zTextureSpec(
+            SCREEN_TEXTURE,
+            clamp(sampleUv - ghostOffset * vec2(0.58, 1.12), vec2(0.0), vec2(1.0))).rgb;
+        highp float ghostMix = clamp(
+            visualSeverity * 0.07 + pulseHeat * statePresence * 0.012,
+            0.0,
+            0.09);
+        sceneColor = mix(sceneColor, ghostA * 0.54 + ghostB * 0.46, ghostMix);
+
+        highp vec3 chromaticScene = vec3(ghostA.r, sceneColor.g, ghostB.b);
+        highp float chromaticMix = pow(visualSeverity, 1.6) * 0.13;
+        chromaticMix += pulseHeat * statePresence * 0.025;
+        sceneColor = mix(sceneColor, chromaticScene, clamp(chromaticMix, 0.0, 0.15));
+
+        highp float glitchTick = floor(TIME * 2.3);
+        highp float glitchPhase = fract(TIME * 2.3);
+        highp float glitchRandom = simplex(vec2(glitchTick * 1.73, 19.4)) * 0.5 + 0.5;
+        highp float randomBurst = smoothstep(
+            mix(0.96, 0.72, visualSeverity),
+            1.0,
+            glitchRandom);
+        randomBurst *= 1.0 - smoothstep(0.08, 0.2, glitchPhase);
+        highp float bandIndex = floor(uv.y * mix(14.0, 26.0, visualSeverity));
+        highp float bandSignal = simplex(vec2(bandIndex * 0.37, glitchTick * 1.91));
+        highp float bandMask = smoothstep(0.55, 0.9, abs(bandSignal));
+        highp float glitchAmount = pow(visualSeverity, 1.55) * bandMask;
+        glitchAmount *= randomBurst + pulseHeat * statePresence * 0.18;
+        glitchAmount = clamp(glitchAmount, 0.0, 0.45);
+        highp float glitchShift = bandSignal * mix(2.0, 14.0, visualSeverity);
+        highp vec2 glitchUv = clamp(
+            sampleUv + vec2(SCREEN_PIXEL_SIZE.x * glitchShift, 0.0),
+            vec2(0.0),
+            vec2(1.0));
+        highp vec3 glitchScene = zTextureSpec(SCREEN_TEXTURE, glitchUv).rgb;
+        sceneColor = mix(sceneColor, glitchScene, glitchAmount * 0.52);
+        highp vec3 glitchColor = vec3(glitchScene.r, sceneColor.g, ghostB.b);
+        sceneColor = mix(sceneColor, glitchColor, glitchAmount * 0.44);
+        sceneColor *= 1.0 - glitchAmount * 0.08;
+    }
+
+    highp float visionHaze = visualSeverity * visualSeverity *
+        mix(0.018, 0.075, broadNoise) *
+        (0.94 + damageMotion * 0.06);
+    visionHaze += pulseHeat * statePresence * 0.012;
+    sceneColor = mix(
+        sceneColor,
+        sceneColor * vec3(0.42, 0.3, 0.28),
+        clamp(visionHaze, 0.0, 0.13));
+    highp float visionDesaturation = clamp(
+        visualSeverity * 0.24 + OxygenLevel * 0.18,
+        0.0,
+        0.3);
+    sceneColor = mix(sceneColor, vec3(zGrayscale(sceneColor)), visionDesaturation);
+    sceneColor = mix(
+        sceneColor,
+        sceneColor * vec3(1.02, 0.82, 0.78),
+        visualSeverity * 0.11);
+
+    highp float shadowAlpha = clamp(
+        1.0 - (1.0 - charMask * charOpacity * burnActivation) * (1.0 - oxygenAlpha),
+        0.0,
+        1.0) * effectFade;
+    highp float bloodAlpha = clamp(damageAlpha + emberAlpha, 0.0, 1.0) * effectFade;
+    highp float alpha = 1.0 - (1.0 - shadowAlpha) * (1.0 - bloodAlpha);
+
+    highp float ash = clamp(detailNoise * 0.74 + broadNoise * 0.26, 0.0, 1.0);
+    highp vec3 shadowColor = vec3(0.0015, 0.0005, 0.0005) + vec3(0.01, 0.0008, 0.0) * ash * charMask;
+    highp vec3 lowEmberColor = mix(
+        vec3(0.16, 0.002, 0.001),
+        vec3(0.38, 0.003, 0.001),
+        max(statePresence, damageBurnActivation));
+    highp vec3 emberColor = mix(
+        lowEmberColor,
+        vec3(0.92, 0.016, 0.003),
+        clamp(emberCore * (0.5 + pulseHeat * 0.5), 0.0, 1.0));
+    highp float bloodWeight = bloodAlpha / max(alpha, 0.001);
+    highp vec3 color = mix(shadowColor, emberColor, clamp(bloodWeight, 0.0, 1.0));
+
+    COLOR = vec4(mix(sceneColor, color, alpha), sceneSharp.a);
+}

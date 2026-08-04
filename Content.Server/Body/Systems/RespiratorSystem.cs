@@ -14,6 +14,7 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
+using Content.Shared.DeadSpace.Heartbeat;
 using Content.Shared.EntityConditions;
 using Content.Shared.EntityConditions.Conditions.Body;
 using Content.Shared.EntityEffects;
@@ -118,7 +119,9 @@ public sealed class RespiratorSystem : EntitySystem
             // end-backmen: blob zombie
             if (respirator.Saturation < respirator.SuffocationThreshold)
             {
-                if (_gameTiming.CurTime >= respirator.LastGaspEmoteTime + respirator.GaspEmoteCooldown)
+                if ((!HasComp<CritHeartbeatComponent>(uid) ||
+                     (!_mobState.IsIncapacitated(uid) && !_mobState.IsPreCritical(uid))) &&
+                    _gameTiming.CurTime >= respirator.LastGaspEmoteTime + respirator.GaspEmoteCooldown)
                 {
                     respirator.LastGaspEmoteTime = _gameTiming.CurTime;
                     _chat.TryEmoteWithChat(uid,

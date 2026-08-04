@@ -1,0 +1,38 @@
+- type: emote
+  id: CriticalSufferingGasp
+  name: dead-space-critical-suffering-name-gasp
+  available: false
+  category: Invalid
+  chatMessages:
+  - dead-space-critical-suffering-gasp-1
+  - dead-space-critical-suffering-gasp-2
+  - dead-space-critical-suffering-gasp-3
+
+- type: emote
+  id: CriticalSufferingGroan
+  name: dead-space-critical-suffering-name-groan
+  available: false
+  category: Invalid
+  chatMessages:
+  - dead-space-critical-suffering-groan-1
+  - dead-space-critical-suffering-groan-2
+  - dead-space-critical-suffering-groan-3
+
+- type: emote
+  id: CriticalSufferingCough
+  name: dead-space-critical-suffering-name-cough
+  available: false
+  category: Invalid
+  chatMessages:
+  - dead-space-critical-suffering-cough-1
+  - dead-space-critical-suffering-cough-2
+  - dead-space-critical-suffering-cough-3
+
+- type: emote
+  id: CriticalSufferingRetch
+  name: dead-space-critical-suffering-name-retch
+  available: false
+  category: Invalid
+  chatMessages:
+  - dead-space-critical-suffering-retch-1
+  - dead-space-critical-suffering-retch-2

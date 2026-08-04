@@ -7,3 +7,8 @@
   id: SandevistanOverlay
   kind: source
   path: "/Textures/_DeadSpace/Shaders/sandevistan_overlay.swsl"
+
+- type: shader
+  id: DeadSpaceDamageBurn
+  kind: source
+  path: "/Textures/_DeadSpace/Shaders/damage_burn.swsl"

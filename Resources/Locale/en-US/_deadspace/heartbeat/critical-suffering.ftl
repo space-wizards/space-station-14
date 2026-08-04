@@ -1,0 +1,15 @@
+dead-space-critical-suffering-name-gasp = Critical breathing
+dead-space-critical-suffering-name-groan = Critical groan
+dead-space-critical-suffering-name-cough = Critical cough
+dead-space-critical-suffering-name-retch = Critical retching
+dead-space-critical-suffering-gasp-1 = gasps for air
+dead-space-critical-suffering-gasp-2 = draws a ragged breath
+dead-space-critical-suffering-gasp-3 = struggles to breathe
+dead-space-critical-suffering-groan-1 = lets out a weak groan
+dead-space-critical-suffering-groan-2 = groans softly in pain
+dead-space-critical-suffering-groan-3 = gives a muffled moan
+dead-space-critical-suffering-cough-1 = breaks into a hoarse cough
+dead-space-critical-suffering-cough-2 = coughs weakly
+dead-space-critical-suffering-cough-3 = chokes on a shallow breath
+dead-space-critical-suffering-retch-1 = retches convulsively
+dead-space-critical-suffering-retch-2 = gags for breath

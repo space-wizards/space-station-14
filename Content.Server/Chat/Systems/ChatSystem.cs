@@ -36,6 +36,7 @@ using Content.Shared.Corvax.TTS;
 using Content.Shared.Dataset;
 using Content.DeadSpace.Interfaces.Server;
 using Content.Shared.DeadSpace.Languages.Components;
+using Content.Shared.DeadSpace.Heartbeat;
 using Content.Server.DeadSpace.Languages;
 using Content.Server.Audio;
 
@@ -742,29 +743,55 @@ public sealed partial class ChatSystem : SharedChatSystem
             if (MessageRangeCheck(session, data, range) != MessageRangeCheckResult.Full)
                 continue; // Won't get logged to chat, and ghosts are too far away to see the pop-up, so we just won't send it to them.
 
+            string recipientMessage;
+            string recipientWrappedMessage;
+
             // DS14-Languages-start
             if (language != null && !_language.KnowsLanguage(listener, language.SelectedLanguage))
             {
                 if (data.Range <= WhisperClearRange || data.Observer)
-                    _chatManager.ChatMessageToOne(ChatChannel.Whisper, lexiconMessage, newWrappedMessage, source, false, session.Channel);
+                    (recipientMessage, recipientWrappedMessage) = (lexiconMessage, newWrappedMessage);
                 else if (_examineSystem.InRangeUnOccluded(source, listener, WhisperMuffledRange))
-                    _chatManager.ChatMessageToOne(ChatChannel.Whisper, newObfuscatedMessage, newWrappedobfuscatedMessage, source, false, session.Channel);
+                    (recipientMessage, recipientWrappedMessage) = (newObfuscatedMessage, newWrappedobfuscatedMessage);
                 else
-                    _chatManager.ChatMessageToOne(ChatChannel.Whisper, newObfuscatedMessage, newWrappedUnknownMessage, source, false, session.Channel);
-
-                continue;
+                    (recipientMessage, recipientWrappedMessage) = (newObfuscatedMessage, newWrappedUnknownMessage);
             }
             // DS14-Languages-end
-
-            if (data.Range <= WhisperClearRange || data.Observer)
-                _chatManager.ChatMessageToOne(ChatChannel.Whisper, message, wrappedMessage, source, false, session.Channel);
-
+            else if (data.Range <= WhisperClearRange || data.Observer)
+            {
+                (recipientMessage, recipientWrappedMessage) = (message, wrappedMessage);
+            }
             //If listener is too far, they only hear fragments of the message
             else if (_examineSystem.InRangeUnOccluded(source, listener, WhisperMuffledRange))
-                _chatManager.ChatMessageToOne(ChatChannel.Whisper, obfuscatedMessage, wrappedobfuscatedMessage, source, false, session.Channel);
+            {
+                (recipientMessage, recipientWrappedMessage) = (obfuscatedMessage, wrappedobfuscatedMessage);
+            }
             //If listener is too far and has no line of sight, they can't identify the whisperer's identity
             else
-                _chatManager.ChatMessageToOne(ChatChannel.Whisper, obfuscatedMessage, wrappedUnknownMessage, source, false, session.Channel);
+            {
+                (recipientMessage, recipientWrappedMessage) = (obfuscatedMessage, wrappedUnknownMessage);
+            }
+
+            if (IsCriticalHearingBlocked(listener, ChatChannel.Whisper))
+            {
+                var hearingMessage = GetCriticalHearingMessage(listener, source);
+                _chatManager.ChatMessageToOne(
+                    ChatChannel.Whisper,
+                    hearingMessage,
+                    hearingMessage,
+                    default,
+                    false,
+                    session.Channel);
+                continue;
+            }
+
+            _chatManager.ChatMessageToOne(
+                ChatChannel.Whisper,
+                recipientMessage,
+                recipientWrappedMessage,
+                source,
+                false,
+                session.Channel);
         }
 
         _replay.RecordServerMessage(new ChatMessage(ChatChannel.Whisper, message, wrappedMessage, GetNetEntity(source), null, MessageRangeHideChatForReplay(range)));
@@ -960,10 +987,39 @@ public sealed partial class ChatSystem : SharedChatSystem
             if (entRange == MessageRangeCheckResult.Disallowed)
                 continue;
             var entHideChat = entRange == MessageRangeCheckResult.HideChat;
+            if (IsCriticalHearingBlocked(listener, channel))
+            {
+                var hearingMessage = GetCriticalHearingMessage(listener, source);
+                _chatManager.ChatMessageToOne(
+                    channel,
+                    hearingMessage,
+                    hearingMessage,
+                    default,
+                    entHideChat,
+                    session.Channel,
+                    author: author);
+                continue;
+            }
+
             _chatManager.ChatMessageToOne(channel, totalMessage, totalWrappedMessage, source, entHideChat, session.Channel, author: author);
         }
 
         _replay.RecordServerMessage(new ChatMessage(channel, message, wrappedMessage, GetNetEntity(source), null, MessageRangeHideChatForReplay(range)));
+    }
+
+    private bool IsCriticalHearingBlocked(EntityUid listener, ChatChannel channel)
+    {
+        return channel is ChatChannel.Local or ChatChannel.Whisper &&
+               HasComp<CritHeartbeatComponent>(listener) &&
+               (_mobStateSystem.IsPreCritical(listener) ||
+                _mobStateSystem.IsCritical(listener));
+    }
+
+    private string GetCriticalHearingMessage(EntityUid listener, EntityUid source)
+    {
+        return Loc.GetString(listener == source
+            ? "dead-space-critical-hearing-self"
+            : "dead-space-critical-hearing-others");
     }
 
     /// <summary>

@@ -1,0 +1,15 @@
+dead-space-critical-suffering-name-gasp = Критическое дыхание
+dead-space-critical-suffering-name-groan = Болезненный стон
+dead-space-critical-suffering-name-cough = Критический кашель
+dead-space-critical-suffering-name-retch = Рвотный позыв
+dead-space-critical-suffering-gasp-1 = хрипло втягивает воздух
+dead-space-critical-suffering-gasp-2 = делает судорожный вдох
+dead-space-critical-suffering-gasp-3 = с трудом пытается дышать
+dead-space-critical-suffering-groan-1 = издаёт слабый стон
+dead-space-critical-suffering-groan-2 = тихо стонет от боли
+dead-space-critical-suffering-groan-3 = сдавленно кряхтит
+dead-space-critical-suffering-cough-1 = заходится хриплым кашлем
+dead-space-critical-suffering-cough-2 = слабо кашляет
+dead-space-critical-suffering-cough-3 = давится неглубоким вдохом
+dead-space-critical-suffering-retch-1 = судорожно давится
+dead-space-critical-suffering-retch-2 = с трудом сдерживает рвоту
