@@ -385,7 +385,7 @@ public sealed partial class EmergencyShuttleSystem
                 DestinationTime = time + TimeSpan.FromSeconds(TransitTime),
                 Docked = true,
             };
-            _deviceNetworkSystem.SendPacket(shuttle.Value, null, ref payload, net.Data.TransmitFrequency);
+            _deviceNetworkSystem.SendPacket(shuttle.Value, null, ref payload, net.TransmitFrequency);
         }
 
         return true;

@@ -1,3 +1,5 @@
+using Content.Shared.DeviceNetwork.Components;
+
 namespace Content.Shared.DeviceNetwork.Events;
 
 /// <summary>
@@ -9,7 +11,7 @@ public readonly record struct DeviceNetworkPacketEvent<T>(
     string? Address,
     uint Frequency,
     string SenderAddress,
-    EntityUid Sender,
+    Entity<DeviceNetworkComponent> Sender,
     T Data) where T : INetworkPayload;
 
 /// <summary>

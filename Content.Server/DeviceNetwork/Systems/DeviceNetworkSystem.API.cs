@@ -22,14 +22,14 @@ public sealed partial class DeviceNetworkSystem
         if (device.Data.Address == string.Empty)
             return false;
 
-        frequency ??= device.Data.TransmitFrequency;
+        frequency ??= device.TransmitFrequency;
 
         if (frequency == null)
             return false;
 
         network ??= device.DeviceNetId;
 
-        var packet = new DeviceNetworkPacketEvent<T>(network.Value, address, frequency.Value, device.Data.Address, ent.Owner, data);
+        var packet = new DeviceNetworkPacketEvent<T>(network.Value, address, frequency.Value, device.Data.Address, ent!, data);
         SendPacket(ref packet);
         return true;
     }
@@ -147,8 +147,8 @@ public sealed partial class DeviceNetworkSystem
         if (!Resolve(ent.Owner, ref ent.Comp, false))
             return;
 
-        var oldFrequency = ent.Comp.Data.TransmitFrequency;
-        ent.Comp.Data.TransmitFrequency = frequency;
+        var oldFrequency = ent.Comp.TransmitFrequency;
+        ent.Comp.TransmitFrequency = frequency;
 
         var ev = new DeviceReceiveFrequencyChangedEvent(oldFrequency, frequency);
         RaiseLocalEvent(ent, ref ev);
@@ -188,7 +188,7 @@ public sealed partial class DeviceNetworkSystem
         if (!Resolve(ent.Owner, ref ent.Comp, false))
             return;
 
-        if (ent.Comp.Data.Address == address && ent.Comp.Data.CustomAddress)
+        if (ent.Comp.Data.Address == address && ent.Comp.CustomAddress)
             return;
 
         if (!TryGetNetwork(ent.Comp.DeviceNetId, out var deviceNet))
@@ -196,11 +196,11 @@ public sealed partial class DeviceNetworkSystem
 
         var oldAddress = ent.Comp.Data.Address;
         deviceNet.Remove(ent!);
-        ent.Comp.Data.CustomAddress = true;
+        ent.Comp.CustomAddress = true;
         ent.Comp.Data.Address = address;
         deviceNet.Add(ent!);
 
-        var ev = new DeviceAddressChangedEvent(oldAddress, address, ent.Comp.Data.CustomAddress);
+        var ev = new DeviceAddressChangedEvent(oldAddress, address, ent.Comp.CustomAddress);
         RaiseLocalEvent(ent, ref ev);
 
         Dirty(ent);
@@ -220,11 +220,11 @@ public sealed partial class DeviceNetworkSystem
 
         var oldAddress = ent.Comp.Data.Address;
         deviceNet.Remove(ent!);
-        ent.Comp.Data.CustomAddress = false;
+        ent.Comp.CustomAddress = false;
         ent.Comp.Data.Address = "";
         deviceNet.Add(ent!);
 
-        var ev = new DeviceAddressChangedEvent(oldAddress, ent.Comp.Data.Address, ent.Comp.Data.CustomAddress);
+        var ev = new DeviceAddressChangedEvent(oldAddress, ent.Comp.Data.Address, ent.Comp.CustomAddress);
         RaiseLocalEvent(ent, ref ev);
 
         Dirty(ent);

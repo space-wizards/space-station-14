@@ -25,7 +25,7 @@ namespace Content.Server.DeviceNetwork.Systems.Devices
 
             component.State = !component.State;
 
-            if (networkComponent.Data.TransmitFrequency == null)
+            if (networkComponent.TransmitFrequency == null)
                 return;
 
             var payload = new ApcNetTogglePayload

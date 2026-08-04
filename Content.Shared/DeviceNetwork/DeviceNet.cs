@@ -48,7 +48,7 @@ public sealed class DeviceNet
     {
         var deviceComp = ent.Comp;
         var device = new Device(ent.Owner, ent.Comp.Data);
-        if (deviceComp.Data.CustomAddress)
+        if (deviceComp.CustomAddress)
         {
             // Only add if the device's existing address is available.
             if (!Devices.TryAdd(deviceComp.Data.Address, device))
