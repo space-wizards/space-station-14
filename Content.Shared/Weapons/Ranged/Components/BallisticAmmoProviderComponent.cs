@@ -18,6 +18,9 @@ public sealed partial class BallisticAmmoProviderComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite), DataField]
     public EntProtoId? Proto;
+    
+    [ViewVariables(VVAccess.ReadWrite), DataField]
+    public List<EntProtoId> Protos = new();
 
     [ViewVariables(VVAccess.ReadWrite), DataField]
     public int Capacity = 30;
