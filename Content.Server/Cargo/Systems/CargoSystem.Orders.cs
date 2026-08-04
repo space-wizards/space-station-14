@@ -180,20 +180,11 @@ public sealed partial class CargoSystem
         var capacity = orderDatabase.Capacity;
 
         // Too many orders, avoid them getting spammed in the UI.
-        if (amount > capacity)
+        if (amount + order.OrderQuantity > capacity)
         {
             _popup.PopupCursor(Loc.GetString("cargo-console-too-many"), args.Actor);
             PlayDenySound(ent);
             return;
-        }
-
-        // Cap orders so someone can't spam thousands.
-        var cappedAmount = Math.Min(capacity - amount, order.OrderQuantity);
-        if (cappedAmount != order.OrderQuantity)
-        {
-            order.OrderQuantity = cappedAmount;
-            _popup.PopupCursor(Loc.GetString("cargo-console-snip-snip"), args.Actor);
-            PlayDenySound(ent);
         }
 
         var cost = product.Cost * order.OrderQuantity;
