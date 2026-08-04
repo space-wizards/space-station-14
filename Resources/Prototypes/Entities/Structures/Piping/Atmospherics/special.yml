@@ -57,11 +57,11 @@
 
 # Devices which are not portable but don't link up to anything
 - type: entity
-  id: AtmosDeviceFanTinyPowered
   parent: AtmosDeviceFanTiny
-  suffix: Debug
+  id: AtmosDeviceFanTinyPowered
   categories: [ DoNotMap ]
   name: powered tiny fan
+  suffix: Debug
   description: A tiny fan, releasing a thin gust of air. Requires power to hold its airtight seal.
   components:
   - type: ApcPowerReceiver
