@@ -5516,7 +5516,7 @@
   url: https://github.com/space-wizards/space-station-14/pull/40815
 - author: AndrewFenriz
   changes:
-  - message: Operating certain vehicles now requires free hands: one for the janicart and two for all mechs.
+  - message: 'Operating certain vehicles now requires free hands: one for the janicart and two for all mechs.'
     type: Tweak
   id: 9931
   time: '2026-07-31T18:05:43.0000000+00:00'
