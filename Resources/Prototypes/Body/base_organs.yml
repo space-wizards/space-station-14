@@ -339,7 +339,7 @@
     markingData:
       layers:
       - Eyes
-      - EyesGauze
+      - OverEyes
 
 - type: entity
   parent:

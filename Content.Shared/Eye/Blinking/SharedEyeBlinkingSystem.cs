@@ -24,7 +24,6 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnShutdown(Entity<EyeBlinkingComponent> ent, ref ComponentShutdown args)
     {
-
         _actionsSystem.RemoveAction(ent.Owner, ent.Comp.EyeToggleActionEntity);
     }
 
@@ -42,8 +41,6 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
 
     private void SetEyelidsColor(Entity<EyeBlinkingComponent> ent)
     {
-        var eyelidColor = Color.Red;
-
         if (!TryComp<BodyComponent>(ent.Owner, out var body)) return;
 
         VisualOrganComponent? visualHead = null;
@@ -64,7 +61,7 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
         // Gets the skin color from VisualOrganComponent, or returns pink as a fallback color if not found.
         var skinColor = visualHead?.Profile.SkinColor ?? Color.Pink;
         var blinkFade = ent.Comp.BlinkSkinColorMultiplier;
-        eyelidColor = new Color(
+        var eyelidColor = new Color(
             skinColor.R * blinkFade,
             skinColor.G * blinkFade,
             skinColor.B * blinkFade);
@@ -78,6 +75,10 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
     {
         if (!ent.Comp.BlinkEmoteId.Contains(args.Emote.ID))
             return;
+
+        if (args.Handled)
+            return;
+        args.Handled = true;
 
         if (!ent.Comp.Enabled)
             return;
@@ -203,6 +204,9 @@ public sealed class BlinkEyeEvent(NetEntity netEntity) : EntityEventArgs
     public readonly NetEntity NetEntity = netEntity;
 }
 
+/// <summary>
+/// Event raised when an entity toggles their eyes open or closed via the <see cref="ToggleEyesAction"/>.
+/// </summary>
 public sealed partial class ToggleEyesActionEvent : InstantActionEvent;
 
 /// <summary>

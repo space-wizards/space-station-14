@@ -21,7 +21,7 @@ namespace Content.Shared.Humanoid
         HeadTop,  // top parts (i.e., ears)
         Eyes,
         Eyelids,
-        EyesGauze,
+        OverEyes,
         RArm,
         LArm,
         RHand,
