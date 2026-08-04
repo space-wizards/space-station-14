@@ -129,11 +129,6 @@
     range: 3
     sound:
       path: /Audio/Ambience/Objects/light_hum.ogg
-  - type: DamageOnInteract
-    damage:
-      types:
-        Heat: 2
-    popupText: powered-light-component-burn-hand
 
 - type: entity
   parent: PoweredLightPostSmallEmpty
