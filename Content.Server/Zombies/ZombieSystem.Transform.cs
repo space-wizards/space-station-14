@@ -3,6 +3,7 @@ using Content.Server.Atmos.Components;
 using Content.Server.Body.Components;
 using Content.Server.Chat;
 using Content.Server.Chat.Managers;
+using Content.Server.DeadSpace.Prison;
 using Content.Server.Ghost;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Humanoid;
@@ -77,6 +78,7 @@ public sealed partial class ZombieSystem
     [Dependency] private readonly NPCSystem _npc = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly ISharedPlayerManager _player = default!;
+    [Dependency] private readonly PrisonSystem _prison = default!;
     [Dependency] private readonly VirusSystem _virus = default!; // DS14
     [Dependency] private readonly LanguageSystem _language = default!; // DS14
 
@@ -115,6 +117,9 @@ public sealed partial class ZombieSystem
     {
         //Don't zombfiy zombies
         if (HasComp<ZombieComponent>(target) || HasComp<ZombieImmuneComponent>(target))
+            return;
+
+        if (_prison.IsEntityPrisoner(target))
             return;
 
         // DS14-start

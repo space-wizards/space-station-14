@@ -1,0 +1,13 @@
+- type: entity
+  id: SpawnPointPrisoner
+  name: prisoner spawn point
+  parent: MarkerBase
+  suffix: Prison
+  components:
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+    - state: green
+    - sprite: Objects/Misc/handcuffs.rsi
+      state: handcuff
+  - type: PrisonSpawnPoint

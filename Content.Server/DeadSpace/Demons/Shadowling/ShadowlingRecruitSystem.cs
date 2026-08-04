@@ -13,6 +13,7 @@ using Content.Shared.Humanoid;
 using Content.Shared.Mobs;
 using Robust.Shared.Audio;
 using Content.Server.Antag;
+using Content.Server.DeadSpace.Prison;
 using Content.Shared.Radio.Components;
 using Content.Server.DeadSpace.Components.NightVision;
 using Content.Server.DeadSpace.Races;
@@ -31,6 +32,7 @@ public sealed class ShadowlingRecruitSystem : EntitySystem
     [Dependency] private readonly RoleSystem _role = default!;
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly PrisonSystem _prison = default!;
 
     private const string ShadowlingChannel = "Shadowling";
 
@@ -271,6 +273,9 @@ public sealed class ShadowlingRecruitSystem : EntitySystem
             _popup.PopupEntity("Это существо не обладает разумом!", uid, uid);
             return;
         }
+
+        if (_prison.IsEntityPrisoner(targetUid))
+            return;
 
         var slave = EnsureComp<ShadowlingSlaveComponent>(targetUid);
         slave.Master = uid;

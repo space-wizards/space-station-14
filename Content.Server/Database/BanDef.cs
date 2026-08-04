@@ -26,6 +26,7 @@ namespace Content.Server.Database
         public NetUserId? BanningAdmin { get; }
         public UnbanDef? Unban { get; }
         public ServerBanExemptFlags ExemptFlags { get; }
+        public bool SendToPrison { get; }
 
         public ImmutableArray<BanRoleDef>? Roles { get; }
 
@@ -44,7 +45,8 @@ namespace Content.Server.Database
             NetUserId? banningAdmin,
             UnbanDef? unban,
             ServerBanExemptFlags exemptFlags = default,
-            ImmutableArray<BanRoleDef>? roles = null)
+            ImmutableArray<BanRoleDef>? roles = null,
+            bool sendToPrison = false)
         {
             if (userIds.Length == 0 && addresses.Length == 0 && hwIds.Length == 0)
             {
@@ -78,6 +80,7 @@ namespace Content.Server.Database
             BanningAdmin = banningAdmin;
             Unban = unban;
             ExemptFlags = exemptFlags;
+            SendToPrison = sendToPrison;
 
             switch (Type)
             {
@@ -91,6 +94,8 @@ namespace Content.Server.Database
                         throw new ArgumentException("Must specify roles for server ban types", nameof(roles));
                     if (exemptFlags != 0)
                         throw new ArgumentException("Role bans cannot have exempt flags", nameof(exemptFlags));
+                    if (sendToPrison)
+                        throw new ArgumentException("Role bans cannot send players to prison", nameof(sendToPrison));
                     break;
 
                 default:

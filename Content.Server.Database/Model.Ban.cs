@@ -142,6 +142,11 @@ public sealed class Ban
     public ServerBanExemptFlags ExemptFlags { get; set; }
 
     /// <summary>
+    /// Whether a matching player serves this server ban in the prison area instead of being disconnected.
+    /// </summary>
+    public bool SendToPrison { get; set; }
+
+    /// <summary>
     /// Whether this ban should be automatically deleted from the database when it expires.
     /// </summary>
     /// <remarks>

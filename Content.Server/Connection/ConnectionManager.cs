@@ -6,6 +6,7 @@ using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
 using Content.Server.Connection.IPIntel;
 using Content.Server.Database;
+using Content.Server.DeadSpace.Prison;
 using Content.Server.GameTicking;
 using Content.Server.Preferences.Managers;
 using Content.Shared.CCVar;
@@ -254,6 +255,10 @@ namespace Content.Server.Connection
             var bans = await _db.GetBansAsync(addr, userId, hwId, modernHwid, includeUnbanned: false);
             if (bans.Count > 0)
             {
+                var prison = _entityManager.System<PrisonSystem>();
+                if (prison.RegisterPrisonerConnection(userId, bans))
+                    return null;
+
                 var firstBan = bans[0];
                 var message = firstBan.FormatBanMessage(_cfg, _loc);
                 return (ConnectionDenyReason.Ban, message, bans);

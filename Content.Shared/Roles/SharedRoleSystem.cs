@@ -145,6 +145,12 @@ public abstract class SharedRoleSystem : EntitySystem
             return;
         }
 
+        var antagonist = protoEnt.TryGetComponent<MindRoleComponent>(out var rolePrototype, Factory) && rolePrototype.Antag;
+        var attempt = new MindRoleAddAttemptEvent(mindId, mind, protoId, antagonist);
+        RaiseLocalEvent(mindId, attempt, true);
+        if (attempt.Cancelled)
+            return;
+
         //TODO don't let a prototype being added a second time
         //If that was somehow to occur, a second mindrole for that comp would be created
         //Meaning any mind role checks could return wrong results, since they just return the first match they find

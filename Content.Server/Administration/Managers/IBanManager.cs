@@ -338,9 +338,20 @@ public abstract class CreateBanInfo
 [Access(typeof(BanManager), Other = AccessPermissions.Execute)]
 public sealed class CreateServerBanInfo : CreateBanInfo
 {
+    internal bool SendToPrison = true;
+
     /// <param name="reason">The reason for the server ban.</param>
     public CreateServerBanInfo(string reason) : base(reason)
     {
+    }
+
+    /// <summary>
+    /// Controls whether this ban sends matching players to the prison area.
+    /// </summary>
+    public CreateServerBanInfo WithPrison(bool sendToPrison)
+    {
+        SendToPrison = sendToPrison;
+        return this;
     }
 }
 

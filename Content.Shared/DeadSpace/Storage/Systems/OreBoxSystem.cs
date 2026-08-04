@@ -7,6 +7,7 @@ using Content.Shared.Tag;
 using Content.Shared.Lathe;
 using Robust.Shared.Containers;
 using Content.Shared.DeadSpace.Storage.Components;
+using Content.Shared.DeadSpace.Prison;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.DeadSpace.Storage.Systems;
@@ -39,7 +40,7 @@ public sealed class OreBoxSystem : EntitySystem
     {
         if (args.Handled) return;
 
-        if (!HasComp<LatheComponent>(args.Target)) return;
+        if (!HasComp<LatheComponent>(args.Target) && !HasComp<PrisonOreProcessorComponent>(args.Target)) return;
 
         args.CanDrop = true;
         args.Handled = true;

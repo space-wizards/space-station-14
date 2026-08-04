@@ -1,0 +1,176 @@
+- type: biomeTemplate
+  id: PrisonQuarrySurface
+  layers:
+  - !type:BiomeDecalLayer
+    allowedTiles:
+    - FloorSnow
+    - FloorSnowDug
+    divisions: 2
+    threshold: -0.45
+    noise:
+      seed: 41
+      noiseType: Cellular
+      frequency: 0.65
+    decals:
+    - grasssnowa1
+    - grasssnowa2
+    - grasssnowa3
+    - grasssnowb1
+    - grasssnowb2
+    - grasssnowb3
+    - grasssnowc1
+    - grasssnowc2
+    - grasssnowc3
+
+  - !type:BiomeDecalLayer
+    allowedTiles:
+    - FloorSnow
+    - FloorSnowDug
+    divisions: 1
+    threshold: -0.28
+    noise:
+      seed: 42
+      noiseType: Cellular
+      frequency: 0.16
+      fractalType: FBm
+      octaves: 4
+      lacunarity: 2
+      cellularDistanceFunction: Euclidean
+      cellularReturnType: Distance2
+    decals:
+    - grasssnow
+    - grasssnow01
+    - grasssnow02
+    - grasssnow03
+    - grasssnow04
+    - grasssnow05
+    - grasssnow06
+    - grasssnow07
+    - grasssnow08
+    - grasssnow09
+    - grasssnow10
+    - grasssnow11
+    - grasssnow12
+    - grasssnow13
+
+  - !type:BiomeEntityLayer
+    threshold: 0.82
+    noise:
+      seed: 31
+      noiseType: OpenSimplex2
+      frequency: 0.08
+    allowedTiles:
+    - FloorSnow
+    - FloorSnowDug
+    - FloorIce
+    - FloorChromite
+    entities:
+    - FloraRockSolid
+    - FloraStalagmite
+    - FloraGreyStalagmite
+
+  - !type:BiomeEntityLayer
+    threshold: 0.74
+    noise:
+      seed: 35
+      noiseType: OpenSimplex2
+      frequency: 0.055
+      fractalType: FBm
+      octaves: 2
+      lacunarity: 2
+      gain: 0.45
+    allowedTiles:
+    - FloorSnow
+    entities:
+    - FloraTreeSnow
+
+  - !type:BiomeEntityLayer
+    threshold: 0.98
+    noise:
+      seed: 36
+      noiseType: OpenSimplex2
+      frequency: 0.055
+    allowedTiles:
+    - FloorIce
+    - FloorChromite
+    entities:
+    - CrystalBlue
+    - CrystalCyan
+
+  - !type:BiomeEntityLayer
+    allowedTiles:
+    - FloorSnow
+    - FloorSnowDug
+    - FloorIce
+    - FloorChromite
+    threshold: -0.18
+    noise:
+      seed: 32
+      noiseType: Cellular
+      frequency: 0.050
+      lacunarity: 2
+      fractalType: FBm
+      octaves: 5
+      cellularDistanceFunction: Euclidean
+      cellularReturnType: Distance2
+    entities:
+    - WallRockSnow
+    - WallRockChromite
+
+  - !type:BiomeEntityLayer
+    allowedTiles:
+    - FloorChromite
+    threshold: 0.56
+    noise:
+      seed: 37
+      noiseType: OpenSimplex2
+      frequency: 0.020
+      fractalType: Ridged
+      octaves: 2
+      lacunarity: 1.8
+      gain: 0.45
+    entities:
+    - WallRockChromite
+
+  - !type:BiomeDummyLayer
+    id: Loot
+
+  - !type:BiomeTileLayer
+    threshold: -1
+    tile: FloorSnow
+
+  - !type:BiomeTileLayer
+    threshold: 0.24
+    noise:
+      seed: 38
+      noiseType: OpenSimplex2
+      frequency: 0.026
+      fractalType: FBm
+      octaves: 3
+      lacunarity: 2
+      gain: 0.45
+    tile: FloorSnowDug
+
+  - !type:BiomeTileLayer
+    threshold: 0.30
+    noise:
+      seed: 33
+      noiseType: OpenSimplex2
+      frequency: 0.018
+      fractalType: FBm
+      octaves: 3
+      lacunarity: 2
+      gain: 0.45
+    tile: FloorIce
+
+  - !type:BiomeTileLayer
+    threshold: 0.40
+    noise:
+      seed: 34
+      noiseType: OpenSimplex2
+      frequency: 0.024
+      fractalType: Ridged
+      octaves: 2
+      lacunarity: 1.8
+      gain: 0.45
+    tile: FloorChromite

@@ -66,7 +66,8 @@ public sealed record Ban
         NoteSeverity severity,
         ProtoId<JobPrototype>[]? bannedJobs,
         ProtoId<AntagPrototype>[]? bannedAntags,
-        bool erase)
+        bool erase,
+        bool sendToPrison)
     {
         Target = target;
         IpAddress = ipAddressTuple?.Item1.ToString();
@@ -80,6 +81,7 @@ public sealed record Ban
         BannedJobs = bannedJobs;
         BannedAntags = bannedAntags;
         Erase = erase;
+        SendToPrison = sendToPrison;
     }
 
     public readonly string? Target;
@@ -94,4 +96,5 @@ public sealed record Ban
     public readonly ProtoId<JobPrototype>[]? BannedJobs;
     public readonly ProtoId<AntagPrototype>[]? BannedAntags;
     public readonly bool Erase;
+    public readonly bool SendToPrison;
 }

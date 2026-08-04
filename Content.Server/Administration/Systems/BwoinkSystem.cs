@@ -7,7 +7,9 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
 using Content.Server.Afk;
+using Content.Server.Chat.Managers;
 using Content.Server.Database;
+using Content.Server.DeadSpace.Prison;
 using Content.Server.Discord;
 using Content.Server.GameTicking;
 using Content.Server.Players.RateLimiting;
@@ -44,6 +46,8 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly IAfkManager _afkManager = default!;
         [Dependency] private readonly IServerDbManager _dbManager = default!;
         [Dependency] private readonly PlayerRateLimitManager _rateLimit = default!;
+        [Dependency] private readonly IChatManager _chat = default!;
+        [Dependency] private readonly PrisonSystem _prison = default!;
 
         [GeneratedRegex(@"^https://discord\.com/api/webhooks/(\d+)/((?!.*/).*)$")]
         private static partial Regex DiscordRegex();
@@ -633,8 +637,15 @@ namespace Content.Server.Administration.Systems
         protected override void OnBwoinkTextMessage(BwoinkTextMessage message, EntitySessionEventArgs eventArgs)
         {
             base.OnBwoinkTextMessage(message, eventArgs);
-            _activeConversations[message.UserId] = DateTime.Now;
             var senderSession = eventArgs.SenderSession;
+
+            if (_prison.IsUserPrisoner(senderSession.UserId))
+            {
+                _chat.DispatchServerMessage(senderSession, Loc.GetString("prison-bwoink-blocked"));
+                return;
+            }
+
+            _activeConversations[message.UserId] = DateTime.Now;
 
             // TODO: Sanitize text?
             // Confirm that this person is actually allowed to send a message here.

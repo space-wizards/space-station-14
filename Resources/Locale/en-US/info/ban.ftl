@@ -17,6 +17,15 @@ cmd-ban-hint-duration-4 = 1 week
 cmd-ban-hint-duration-5 = 2 week
 cmd-ban-hint-duration-6 = 1 month
 
+cmd-prison_access-desc = Change whether a server ban sends the player to prison.
+cmd-prison_access-help = Usage: prison_access <ban ID> <on|off>
+cmd-prison_access-invalid-id = '{ $id }' is not a valid ban ID.
+cmd-prison_access-invalid-mode = '{ $mode }' must be on or off.
+cmd-prison_access-not-server-ban = No server ban found with ID { $id }.
+cmd-prison_access-inactive = Server ban { $id } is no longer active.
+cmd-prison_access-success = Prison access for server ban { $id } set to { $mode }.
+cmd-prison_access-arg-mode = <on|off>
+
 # ban panel
 cmd-banpanel-desc = Opens the ban panel
 cmd-banpanel-help = Usage: banpanel [name or user guid]
@@ -78,6 +87,7 @@ ban-panel-permanent = Permanent
 ban-panel-ip-hwid-tooltip = Leave empty and check the checkbox below to use last connection's details
 ban-panel-severity = Severity:
 ban-panel-erase = Erase chat messages and player from round
+ban-panel-prison = Send to prison
 ban-panel-expiry-error = err
 
 # Ban string

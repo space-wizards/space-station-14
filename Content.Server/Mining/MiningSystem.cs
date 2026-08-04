@@ -38,7 +38,9 @@ public sealed class MiningSystem : EntitySystem
         var toSpawn = _random.Next(proto.MinOreYield, proto.MaxOreYield + 1) * Math.Max(1, component.YieldMultiplier);
         for (var i = 0; i < toSpawn; i++)
         {
-            Spawn(proto.OreEntity, coords.Offset(_random.NextVector2(0.2f)));
+            var ore = Spawn(proto.OreEntity, coords.Offset(_random.NextVector2(0.2f)));
+            var mined = new OreMinedEvent(uid, ore);
+            RaiseLocalEvent(ore, ref mined, broadcast: true);
         }
     }
 
@@ -50,3 +52,9 @@ public sealed class MiningSystem : EntitySystem
         component.CurrentOre = _proto.Index<WeightedRandomOrePrototype>(component.OreRarityPrototypeId).Pick(_random);
     }
 }
+
+/// <summary>
+/// Raised on freshly spawned ore while the source vein still exists.
+/// </summary>
+[ByRefEvent]
+public readonly record struct OreMinedEvent(EntityUid Vein, EntityUid Ore);

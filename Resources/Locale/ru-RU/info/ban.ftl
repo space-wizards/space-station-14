@@ -14,6 +14,15 @@ cmd-ban-hint-duration-2 = 1 день
 cmd-ban-hint-duration-3 = 3 дня
 cmd-ban-hint-duration-4 = 1 неделя
 cmd-ban-hint-duration-5 = 2 недели
+cmd-prison_access-desc = Изменяет, отправляет ли серверный бан игрока в исправительную зону.
+cmd-prison_access-help = Использование: prison_access <ID бана> <on|off>
+cmd-prison_access-invalid-id = '{ $id }' не является корректным ID бана.
+cmd-prison_access-invalid-mode = '{ $mode }' должен быть on или off.
+cmd-prison_access-not-server-ban = Серверный бан с ID { $id } не найден.
+cmd-prison_access-inactive = Серверный бан { $id } больше не активен.
+cmd-prison_access-success = Доступ в исправительную зону для серверного бана { $id } установлен в { $mode }.
+cmd-prison_access-arg-mode = <on|off>
+
 # ban panel
 cmd-banpanel-desc = Открыть панель банов
 cmd-banpanel-help = Использование: banpanel [имя или guid игрока]
@@ -74,6 +83,7 @@ ban-panel-templates = Шаблоны
 ban-templates-title = Шаблоны банов
 # Ban string
 server-ban-string = { $admin } created a { $severity } severity server ban that expires { $expires } for [{ $name }, { $ip }, { $hwid }], with reason: { $reason }
+ban-panel-prison = Отправить в исправительную зону
 ban-panel-expiry-error = err
 ban-panel-erase = Стереть сообщения игрока чата из раунда
 server-ban-string-never = никогда

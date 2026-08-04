@@ -1,4 +1,5 @@
 using Content.Server.Antag;
+using Content.Server.DeadSpace.Prison;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
 using Content.Server.Roles;
@@ -19,6 +20,7 @@ public sealed class SurvivorRuleSystem : GameRuleSystem<SurvivorRuleComponent>
     [Dependency] private readonly RoleSystem _role = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
+    [Dependency] private readonly PrisonSystem _prison = default!;
     [Dependency] private readonly TransformSystem _xform = default!;
     [Dependency] private readonly EmergencyShuttleSystem _eShuttle = default!;
     [Dependency] private readonly TagSystem _tag = default!;
@@ -47,6 +49,9 @@ public sealed class SurvivorRuleSystem : GameRuleSystem<SurvivorRuleComponent>
 
             var mind = humanMind.Owner;
             var ent = humanMind.Comp.OwnedEntity.Value;
+
+            if (_prison.IsMindPrisoner(mind, humanMind.Comp))
+                continue;
 
             if (HasComp<SurvivorComponent>(mind) || _tag.HasTag(mind, InvalidForSurvivorAntagTag))
                 continue;

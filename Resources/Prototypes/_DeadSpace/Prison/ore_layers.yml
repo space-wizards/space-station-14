@@ -1,0 +1,89 @@
+- type: biomeMarkerLayer
+  id: PrisonOreIron
+  entityMask:
+    WallRockChromite: WallRockChromiteTin
+    WallRockSnow: WallRockSnowTin
+  maxCount: 210
+  minGroupSize: 14
+  maxGroupSize: 26
+  radius: 6
+
+- type: biomeMarkerLayer
+  id: PrisonOreCoal
+  entityMask:
+    WallRockChromite: WallRockChromiteCoal
+    WallRockSnow: WallRockSnowCoal
+  maxCount: 190
+  minGroupSize: 12
+  maxGroupSize: 22
+  radius: 6
+
+- type: biomeMarkerLayer
+  id: PrisonOreQuartz
+  entityMask:
+    WallRockChromite: WallRockChromiteQuartz
+    WallRockSnow: WallRockSnowQuartz
+  maxCount: 170
+  minGroupSize: 12
+  maxGroupSize: 22
+  radius: 6
+
+- type: biomeMarkerLayer
+  id: PrisonOreSalt
+  entityMask:
+    WallRockChromite: WallRockChromiteSalt
+    WallRockSnow: WallRockSnowSalt
+  maxCount: 155
+  minGroupSize: 10
+  maxGroupSize: 20
+  radius: 5
+
+- type: biomeMarkerLayer
+  id: PrisonOreSilver
+  entityMask:
+    WallRockChromite: WallRockChromiteSilver
+    WallRockSnow: WallRockSnowSilver
+  maxCount: 125
+  minGroupSize: 8
+  maxGroupSize: 16
+  radius: 5
+
+- type: biomeMarkerLayer
+  id: PrisonOreGold
+  entityMask:
+    WallRockChromite: WallRockChromiteGold
+    WallRockSnow: WallRockSnowGold
+  maxCount: 115
+  minGroupSize: 8
+  maxGroupSize: 15
+  radius: 5
+
+- type: biomeMarkerLayer
+  id: PrisonOrePlasma
+  entityMask:
+    WallRockChromite: WallRockChromitePlasma
+    WallRockSnow: WallRockSnowPlasma
+  maxCount: 90
+  minGroupSize: 6
+  maxGroupSize: 13
+  radius: 5
+
+- type: biomeMarkerLayer
+  id: PrisonOreUranium
+  entityMask:
+    WallRockChromite: WallRockChromiteUranium
+    WallRockSnow: WallRockSnowUranium
+  maxCount: 75
+  minGroupSize: 6
+  maxGroupSize: 11
+  radius: 5
+
+- type: biomeMarkerLayer
+  id: PrisonOreDiamond
+  entityMask:
+    WallRockChromite: WallRockChromiteDiamond
+    WallRockSnow: WallRockSnowDiamond
+  maxCount: 34
+  minGroupSize: 2
+  maxGroupSize: 5
+  radius: 4

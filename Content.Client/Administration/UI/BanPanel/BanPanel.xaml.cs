@@ -133,6 +133,8 @@ public sealed partial class BanPanel : DefaultWindow
         HwidCheckbox.Pressed = _cfg.GetCVar(CCVars.ServerBanHwidBanDefault);
         LastConnCheckbox.Pressed = _cfg.GetCVar(CCVars.ServerBanUseLastDetails);
         EraseCheckbox.Pressed = _cfg.GetCVar(CCVars.ServerBanErasePlayer);
+        PrisonCheckbox.Pressed = true;
+        PrisonCheckbox.Visible = false;
 
         SeverityOption.AddItem(Loc.GetString("admin-note-editor-severity-none"), (int) NoteSeverity.None);
         SeverityOption.AddItem(Loc.GetString("admin-note-editor-severity-low"), (int) NoteSeverity.Minor);
@@ -511,6 +513,7 @@ public sealed partial class BanPanel : DefaultWindow
 
         TypeOption.ModulateSelfOverride = null;
         Tabs.SetTabVisible((int) TabNumbers.Roles, TypeOption.SelectedId == (int) Types.Role);
+        PrisonCheckbox.Visible = TypeOption.SelectedId == (int) Types.Server;
             NoteSeverity? newSeverity = null;
             switch (TypeOption.SelectedId)
             {
@@ -671,7 +674,8 @@ public sealed partial class BanPanel : DefaultWindow
             severity,
             jobs,
             antags,
-            erase
+            erase,
+            TypeOption.SelectedId == (int) Types.Server && PrisonCheckbox.Pressed
         );
 
         BanSubmitted?.Invoke(ban);

@@ -1,0 +1,57 @@
+- type: entity
+  parent: [ WallRockChromite, WallIndestructible ]
+  id: WallRockChromitePrisonBoundary
+  name: prison boundary rock
+  description: It looks impossible to destroy.
+  suffix: Prison Boundary, Indestructible
+
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackPrisoner
+  name: prison backpack
+  description: A rough backpack issued to prisoners for off-station survival.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/backpack.rsi
+    layers:
+    - state: icon
+      color: "#A45A22"
+- type: entity
+  id: PrisonOreProcessor
+  parent: BaseMachinePowered
+  name: prison ore intake
+  description: Sends ore mined in the correctional zone to the cargo shuttle.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/ore_processor.rsi
+    layers:
+    - state: icon
+    - state: unlit
+      shader: unshaded
+  - type: Appearance
+  - type: PrisonOreProcessor
+    pointsPerSecond: 10
+    crateMinimumUnits: 10
+    oreValues:
+      SteelOre: 1
+      Coal: 1
+      SaltOre: 1
+      PlasmaOre: 2
+      SpaceQuartz: 3
+      SilverOre: 4
+      GoldOre: 4
+      UraniumOre: 8
+      DiamondOre: 16
+
+- type: entity
+  id: CratePrisonOreShipment
+  parent: CrateGenericSteel
+  name: prison ore shipment
+  description: An ordinary cargo crate containing correctional-zone ore.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EntityStorage
+    capacity: 1000
+    deleteContentsOnDestruction: true
+  - type: StaticPrice
+    price: 0

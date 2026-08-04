@@ -1,6 +1,8 @@
 using Content.Server.Chat.Managers;
+using Content.Server.DeadSpace.Prison;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.Chat.Commands
 {
@@ -8,6 +10,7 @@ namespace Content.Server.Chat.Commands
     internal sealed class OOCCommand : LocalizedCommands
     {
         [Dependency] private readonly IChatManager _chatManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public override string Command => "ooc";
 
@@ -21,6 +24,12 @@ namespace Content.Server.Chat.Commands
 
             if (args.Length < 1)
                 return;
+
+            if (_entityManager.System<PrisonSystem>().IsUserPrisoner(player.UserId))
+            {
+                _chatManager.DispatchServerMessage(player, Loc.GetString("prison-ooc-blocked"));
+                return;
+            }
 
             var message = string.Join(" ", args).Trim();
             if (string.IsNullOrEmpty(message))

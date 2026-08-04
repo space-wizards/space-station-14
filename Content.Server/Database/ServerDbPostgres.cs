@@ -244,7 +244,8 @@ namespace Content.Server.Database
                 aUid,
                 unbanDef,
                 ban.ExemptFlags,
-                roles);
+                roles,
+                ban.SendToPrison);
         }
 
         private static UnbanDef? ConvertUnban(Unban? unban)
@@ -286,6 +287,7 @@ namespace Content.Server.Database
                     PlaytimeAtNote = ban.PlaytimeAtNote,
                     Players = [..ban.UserIds.Select(bp => new BanPlayer { UserId = bp.UserId })],
                     ExemptFlags = ban.ExemptFlags,
+                    SendToPrison = ban.SendToPrison,
                     Roles = ban.Roles == null
                         ? []
                         : ban.Roles.Value.Select(brd => new BanRole

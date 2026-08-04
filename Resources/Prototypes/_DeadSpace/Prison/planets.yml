@@ -1,0 +1,84 @@
+- type: prisonPlanet
+  id: PrisonQuarry
+  biome: PrisonQuarrySurface
+  mapName: Prison Quarry
+  lightColor: "#5A1419"
+  mapHalfSize: 250
+  boundaryEnabled: true
+  boundaryWallWidth: 6
+  boundaryTile: FloorChromite
+  boundaryWallEntity: WallRockChromitePrisonBoundary
+  landingPadRadius: 56
+  landingPadTile: FloorSnowDug
+  residenceReservationEnabled: true
+  residenceReservationSize: 52
+  residenceTile: FloorSnowDug
+  residenceGridPath: /Maps/_DeadSpace/Prison/jail.yml
+  residenceGridOffset: 8,16
+  residenceGridName: Prison Quarters
+  ftlEnabled: true
+  ftlBeaconsOnly: true
+  ftlBeaconName: Prison Landing Zone
+  ftlBeaconOffset: -112,-112
+  ftlFallbackMinOffset: 8
+  ftlFallbackMaxOffset: 40
+  markerLayers:
+  - PrisonOreIron
+  - PrisonOreCoal
+  - PrisonOreQuartz
+  - PrisonOreSalt
+  - PrisonOreSilver
+  - PrisonOreGold
+  - PrisonOrePlasma
+  - PrisonOreUranium
+  - PrisonOreDiamond
+  faunaEnabled: true
+  faunaInitialSpawnCount: 240
+  faunaInitialSpawnBatchSize: 8
+  faunaInitialSpawnInterval: 4
+  faunaSoftCap: 300
+  faunaHardCap: 340
+  faunaUpdateInterval: 70
+  faunaSpawnBatchMin: 4
+  faunaSpawnBatchMax: 8
+  faunaLowPopulationThreshold: 180
+  faunaLowPopulationBatchMax: 16
+  faunaSpawnAttempts: 420
+  faunaSpawnClearance: 1
+  faunaMapEdgePadding: 12
+  faunaMinPlayerDistance: 18
+  faunaResidenceExclusionPadding: 8
+  faunaLandingExclusionRadius: 64
+  faunaSectorSize: 32
+  faunaSectorCooldown: 360
+  faunaSpawns:
+  - prototype: MobWatcherLavaland
+    weight: 30
+    maxCount: 110
+    sentenceReductionMinutes: 1
+  - prototype: MobLavalandHivelord
+    weight: 22
+    maxCount: 80
+    sentenceReductionMinutes: 2
+  - prototype: MobLavalandBasilisk
+    weight: 18
+    maxCount: 65
+    sentenceReductionMinutes: 2
+  - prototype: MobLavalandGoliath
+    weight: 14
+    maxCount: 45
+    sentenceReductionMinutes: 3
+  - prototype: MobWatcherIcewing
+    weight: 10
+    maxCount: 32
+    sentenceReductionMinutes: 2
+  - prototype: MobLavalandLegion
+    weight: 3
+    maxCount: 16
+    sentenceReductionMinutes: 5
+  atmosphere:
+    volume: 2500
+    temperature: 293.15
+    moles:
+    - 21.1
+    - 82.9

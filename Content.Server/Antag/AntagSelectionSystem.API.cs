@@ -205,6 +205,9 @@ public sealed partial class AntagSelectionSystem
         if (session == null)
             return true;
 
+        if (_prison.IsUserPrisoner(session.UserId))
+            return false;
+
         if (roles.Count == 0)
             return false;
 

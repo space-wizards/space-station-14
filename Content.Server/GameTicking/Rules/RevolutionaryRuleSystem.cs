@@ -46,6 +46,7 @@ using Robust.Server.Player;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Content.Server.DeadSpace.Prison;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -66,6 +67,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly PrisonSystem _prison = default!;
     [Dependency] private readonly RoleSystem _role = default!;
     [Dependency] private readonly RoundEndSystem _roundEnd = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
@@ -1422,6 +1424,12 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         var hasMind = _mind.TryGetMind(targetUid, out mindId, out mind);
         if (!hasMind && !alwaysConvertible)
             return false;
+
+        if (_prison.IsEntityPrisoner(targetUid) ||
+            hasMind && mind != null && _prison.IsMindPrisoner(mindId, mind))
+        {
+            return false;
+        }
 
         if (HasComp<RevolutionaryComponent>(targetUid) ||
             HasComp<HeadRevolutionaryComponent>(targetUid) ||

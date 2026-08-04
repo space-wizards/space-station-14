@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
+using Content.Server.DeadSpace.Prison;
 using Content.Server.EUI;
 using Content.Server.GameTicking.Events;
 using Content.Server.Ghost.Roles.Components;
@@ -56,6 +57,7 @@ public sealed class GhostRoleSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly PrisonSystem _prison = default!;
 
     private uint _nextRoleIdentifier;
     private bool _needsUpdateGhostRoleCount = true;
@@ -463,6 +465,12 @@ public sealed class GhostRoleSystem : EntitySystem
     /// <param name="identifier">ID of the ghost role.</param>
     public void Request(ICommonSession player, uint identifier)
     {
+        if (_prison.IsUserPrisoner(player.UserId))
+        {
+            _popupSystem.PopupCursor(Loc.GetString("prison-ghost-role-blocked"), player);
+            return;
+        }
+
         if (!_ghostRoles.TryGetValue(identifier, out var roleEnt))
             return;
 

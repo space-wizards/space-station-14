@@ -1,4 +1,5 @@
 ﻿using Content.Server.Database;
+using Content.Server.DeadSpace.Prison;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 
@@ -8,6 +9,7 @@ namespace Content.Server.Administration.Commands
     public sealed class PardonCommand : LocalizedCommands
     {
         [Dependency] private readonly IServerDbManager _dbManager = default!;
+        [Dependency] private readonly IEntityManager _entities = default!;
 
         public override string Command => "pardon";
 
@@ -51,6 +53,7 @@ namespace Content.Server.Administration.Commands
             }
 
             await _dbManager.AddUnbanAsync(new UnbanDef(banId, player?.UserId, DateTimeOffset.Now));
+            _entities.EntitySysManager.GetEntitySystem<PrisonSystem>().RefreshPrisonBanState();
 
             shell.WriteLine(Loc.GetString($"cmd-pardon-success", ("id", banId)));
         }

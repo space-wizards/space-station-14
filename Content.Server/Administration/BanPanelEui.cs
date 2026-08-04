@@ -115,6 +115,9 @@ public sealed class BanPanelEui : BaseEui
 
         CreateBanInfo banInfo = isRoleBan ? new CreateRoleBanInfo(ban.Reason) : new CreateServerBanInfo(ban.Reason);
 
+        if (banInfo is CreateServerBanInfo serverBanInfo)
+            serverBanInfo.WithPrison(ban.SendToPrison);
+
         banInfo.WithBanningAdmin(Player.UserId);
         banInfo.WithSeverity(ban.Severity);
         if (ban.BanDurationMinutes > 0)

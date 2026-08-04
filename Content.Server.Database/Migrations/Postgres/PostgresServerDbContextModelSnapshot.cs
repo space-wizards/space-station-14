@@ -652,6 +652,10 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("text")
                         .HasColumnName("reason");
 
+                    b.Property<bool>("SendToPrison")
+                        .HasColumnType("boolean")
+                        .HasColumnName("send_to_prison");
+
                     b.Property<int>("Severity")
                         .HasColumnType("integer")
                         .HasColumnName("severity");

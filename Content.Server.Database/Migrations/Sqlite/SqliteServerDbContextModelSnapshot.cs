@@ -620,6 +620,10 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("reason");
 
+                    b.Property<bool>("SendToPrison")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("send_to_prison");
+
                     b.Property<int>("Severity")
                         .HasColumnType("INTEGER")
                         .HasColumnName("severity");

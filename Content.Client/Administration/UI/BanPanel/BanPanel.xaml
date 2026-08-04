@@ -23,6 +23,7 @@
                 </BoxContainer>
                 <CheckBox Name="LastConnCheckbox" Margin="2" Text="{Loc ban-panel-last-conn}" Pressed="True" />
                 <CheckBox Name="EraseCheckbox" Margin="2" Text="{Loc ban-panel-erase}" Pressed="False" />
+                <CheckBox Name="PrisonCheckbox" Margin="2" Text="{Loc ban-panel-prison}" Pressed="True" />
                 <BoxContainer Orientation="Horizontal" Margin="2">
                     <LineEdit Name="TimeLine" MaxWidth="150" MinWidth="70" PlaceHolder="0" />
                     <OptionButton Name="MultiplierOption" />

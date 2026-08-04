@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Chat.Managers;
 using Content.Server.Database;
+using Content.Server.DeadSpace.Prison;
 using Content.Server.GameTicking;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
@@ -197,10 +198,18 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
 
     private void KickMatchingConnectedPlayers(BanDef def, string source)
     {
+        var prison = _systems.GetEntitySystem<PrisonSystem>();
+
         foreach (var player in _playerManager.Sessions)
         {
             if (BanMatchesPlayer(player, def))
             {
+                if (prison.TrySendToPrison(player, def))
+                {
+                    _sawmill.Info($"Sent player {player.Name} ({player.UserId}) to prison through {source}");
+                    continue;
+                }
+
                 KickForBanDef(player, def);
                 _sawmill.Info($"Kicked player {player.Name} ({player.UserId}) through {source}");
             }
@@ -322,7 +331,8 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
             GetSeverityForServerBan(banInfo, CCVars.ServerBanDefaultSeverity),
             banInfo.BanningAdmin,
             null,
-            roles: roleBans), expires);
+            roles: roleBans,
+            sendToPrison: banInfo is CreateServerBanInfo serverBanInfo && serverBanInfo.SendToPrison), expires);
     }
 
     private async Task<TimeSpan> GetPlayTime(CreateBanInfo banInfo)

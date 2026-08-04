@@ -107,6 +107,11 @@ namespace Content.Server.Database
 
         Task<BanDef> AddBanAsync(BanDef ban);
         Task AddUnbanAsync(UnbanDef ban);
+        Task SetBanPrisonAccess(int id, bool sendToPrison);
+        Task<bool> TrySetActivePrisonBanExpiration(
+            int id,
+            DateTimeOffset expectedExpiration,
+            DateTimeOffset expiration);
 
         public Task EditBan(
             int id,
@@ -567,6 +572,21 @@ namespace Content.Server.Database
         {
             DbWriteOpsMetric.Inc();
             return RunDbCommand(() => _db.AddUnbanAsync(unban));
+        }
+
+        public Task SetBanPrisonAccess(int id, bool sendToPrison)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.SetBanPrisonAccess(id, sendToPrison));
+        }
+
+        public Task<bool> TrySetActivePrisonBanExpiration(
+            int id,
+            DateTimeOffset expectedExpiration,
+            DateTimeOffset expiration)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.TrySetActivePrisonBanExpiration(id, expectedExpiration, expiration));
         }
 
         public Task EditBan(int id, string reason, NoteSeverity severity, DateTimeOffset? expiration, Guid editedBy, DateTimeOffset editedAt)

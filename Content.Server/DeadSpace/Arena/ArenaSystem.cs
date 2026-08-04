@@ -3,6 +3,8 @@ using Content.Server.EUI;
 using Content.Server.Ghost;
 using Content.Server.Mind;
 using Content.Server.Preferences.Managers;
+using Content.Server.DeadSpace.Prison;
+using Content.Server.Chat.Managers;
 using Content.Shared.Body.Part;
 using Content.Shared.DeadSpace.Arena;
 using Content.Shared.Fluids.Components;
@@ -46,10 +48,17 @@ public sealed class ArenaSystem : EntitySystem
     [Dependency] private readonly IServerPreferencesManager _prefs = default!;
     [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoid = default!;
     [Dependency] private readonly SharedRoleSystem _roles = default!;
+    [Dependency] private readonly PrisonSystem _prison = default!;
+    [Dependency] private readonly IChatManager _chat = default!;
 
     private const string ArenaMapFile = "/Maps/_DeadSpace/arena.yml";
 
     public bool Enabled { get; private set; } = true;
+
+    internal bool CanJoinArena(ICommonSession session)
+    {
+        return Enabled && !_prison.IsUserPrisoner(session.UserId);
+    }
 
     public void ToggleEnabled()
     {
@@ -68,6 +77,7 @@ public sealed class ArenaSystem : EntitySystem
         SubscribeLocalEvent<MobStateChangedEvent>(OnDeath);
         SubscribeLocalEvent<PlayerDetachedEvent>(OnPlayerDetached);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
+        SubscribeLocalEvent<PrisonerRegisteredEvent>(OnPrisonerRegistered);
     }
 
     private void RefreshPresets()
@@ -81,8 +91,12 @@ public sealed class ArenaSystem : EntitySystem
     {
         var who = (ICommonSession)args.SenderSession;
 
-        if (!Enabled)
+        if (!CanJoinArena(who))
+        {
+            if (_prison.IsUserPrisoner(who.UserId))
+                _chat.DispatchServerMessage(who, Loc.GetString("prison-arena-blocked"));
             return;
+        }
 
         if (who.AttachedEntity is not { Valid: true } ghost || !HasComp<GhostComponent>(ghost))
             return;
@@ -96,6 +110,19 @@ public sealed class ArenaSystem : EntitySystem
         var eui = new ArenaLoadoutEui(this, who, ghost);
         _eui.OpenEui(eui, who);
         _activeEuis[who] = eui;
+    }
+
+    private void OnPrisonerRegistered(ref PrisonerRegisteredEvent ev)
+    {
+        if (_activeEuis.TryGetValue(ev.Session, out var eui) && !eui.IsShutDown)
+            eui.Close();
+
+        if (ev.Session.AttachedEntity is { Valid: true } body &&
+            TryComp<ArenaPlayerComponent>(body, out var arenaPlayer) &&
+            _roster.Contains(GetNetEntity(body)))
+        {
+            RestorePlayer(body, arenaPlayer);
+        }
     }
 
     private void OnLeave(ArenaLeaveEvent msg, EntitySessionEventArgs args)
@@ -202,8 +229,17 @@ public sealed class ArenaSystem : EntitySystem
 
     public bool SpawnPlayer(ArenaLoadoutEui eui, ICommonSession who, EntityUid sourceGhost, int kitIdx)
     {
-        if (!Enabled)
+        if (!CanJoinArena(who))
+        {
+            if (_prison.IsUserPrisoner(who.UserId))
+            {
+                _chat.DispatchServerMessage(who, Loc.GetString("prison-arena-blocked"));
+                if (!eui.IsShutDown)
+                    eui.Close();
+            }
+
             return false;
+        }
 
         if (!_activeEuis.TryGetValue(who, out var currentEui) ||
             !ReferenceEquals(currentEui, eui) ||

@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
 using Content.Server.DeadSpace.Lavaland.Components;
+using Content.Server.DeadSpace.Prison.Components;
 using Content.Server.DeadSpace.NoShuttleFTL;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
@@ -86,6 +87,7 @@ public sealed partial class ShuttleSystem
     private EntityQuery<BodyComponent> _bodyQuery;
     private EntityQuery<FTLSmashImmuneComponent> _immuneQuery;
     private EntityQuery<LavalandMapComponent> _lavalandMapQuery;
+    private EntityQuery<PrisonMapComponent> _prisonMapQuery;
     private EntityQuery<StatusEffectsComponent> _statusQuery;
 
     private void InitializeFTL()
@@ -96,6 +98,7 @@ public sealed partial class ShuttleSystem
         _bodyQuery = GetEntityQuery<BodyComponent>();
         _immuneQuery = GetEntityQuery<FTLSmashImmuneComponent>();
         _lavalandMapQuery = GetEntityQuery<LavalandMapComponent>();
+        _prisonMapQuery = GetEntityQuery<PrisonMapComponent>();
         _statusQuery = GetEntityQuery<StatusEffectsComponent>();
 
         _cfg.OnValueChanged(CCVars.FTLStartupTime, time => DefaultStartupTime = time, true);
@@ -1009,7 +1012,7 @@ public sealed partial class ShuttleSystem
             angle,
             mapCoordinates.Position);
 
-        if (!IsInsideLavalandPlayableArea(mapUid, shuttleBounds))
+        if (!IsInsidePlanetPlayableArea(mapUid, shuttleBounds))
             return false;
 
         if (IntersectsFTLExclusion(mapCoordinates.MapId, shuttleBounds))
@@ -1035,20 +1038,35 @@ public sealed partial class ShuttleSystem
         return true;
     }
 
-    private bool IsInsideLavalandPlayableArea(EntityUid mapUid, Box2Rotated shuttleBounds)
+    private bool IsInsidePlanetPlayableArea(EntityUid mapUid, Box2Rotated shuttleBounds)
     {
-        if (!_lavalandMapQuery.TryComp(mapUid, out var lavalandMap) ||
-            !_protoManager.TryIndex(lavalandMap.Planet, out var planet) ||
-            planet.MapHalfSize <= 0)
+        var limit = 0f;
+
+        if (_lavalandMapQuery.TryComp(mapUid, out var lavalandMap) &&
+            _protoManager.TryIndex(lavalandMap.Planet, out var lavalandPlanet) &&
+            lavalandPlanet.MapHalfSize > 0)
+        {
+            var edgePadding = 0f;
+            if (lavalandPlanet.BoundaryEnabled)
+                edgePadding += Math.Max(0, lavalandPlanet.BoundaryLavaWidth) + Math.Max(1, lavalandPlanet.BoundaryWallWidth);
+
+            limit = lavalandPlanet.MapHalfSize - edgePadding - FTLBufferRange;
+        }
+        else if (_prisonMapQuery.TryComp(mapUid, out var prisonMap) &&
+                 _protoManager.TryIndex(prisonMap.Planet, out var prisonPlanet) &&
+                 prisonPlanet.MapHalfSize > 0)
+        {
+            var edgePadding = prisonPlanet.BoundaryEnabled
+                ? Math.Max(1, prisonPlanet.BoundaryWallWidth)
+                : 0f;
+
+            limit = prisonPlanet.MapHalfSize - edgePadding - FTLBufferRange;
+        }
+        else
         {
             return true;
         }
 
-        var edgePadding = 0f;
-        if (planet.BoundaryEnabled)
-            edgePadding += Math.Max(0, planet.BoundaryLavaWidth) + Math.Max(1, planet.BoundaryWallWidth);
-
-        var limit = planet.MapHalfSize - edgePadding - FTLBufferRange;
         if (limit <= 0f)
             return false;
 

@@ -553,6 +553,54 @@ namespace Content.IntegrationTests.Tests.Preferences
             await pair.CleanReturnAsync();
         }
 
+        [Test]
+        public async Task PrisonBanExpirationUpdateIsConditional()
+        {
+            var pair = await PoolManager.GetServerClient();
+            var db = GetDb(pair.Server);
+            var user = NewUserId();
+            var now = DateTimeOffset.UtcNow;
+            var originalExpiration = now + TimeSpan.FromHours(2);
+            var reducedExpiration = originalExpiration - TimeSpan.FromMinutes(5);
+            var staleExpiration = reducedExpiration - TimeSpan.FromMinutes(5);
+
+            var ban = await db.AddBanAsync(new BanDef(
+                null,
+                BanType.Server,
+                ImmutableArray.Create(user),
+                ImmutableArray<(IPAddress address, int cidrMask)>.Empty,
+                ImmutableArray<ImmutableTypedHwid>.Empty,
+                now,
+                originalExpiration,
+                ImmutableArray<int>.Empty,
+                TimeSpan.Zero,
+                "prison reward test",
+                NoteSeverity.Minor,
+                null,
+                null,
+                sendToPrison: true));
+
+            Assert.That(ban.Id, Is.Not.Null);
+            Assert.That(
+                await db.TrySetActivePrisonBanExpiration(ban.Id.Value, originalExpiration, reducedExpiration),
+                Is.True);
+            Assert.That((await db.GetBanAsync(ban.Id.Value))!.ExpirationTime, Is.EqualTo(reducedExpiration));
+
+            Assert.That(
+                await db.TrySetActivePrisonBanExpiration(ban.Id.Value, originalExpiration, staleExpiration),
+                Is.False,
+                "A stale reward must not overwrite a concurrently changed sentence.");
+            Assert.That((await db.GetBanAsync(ban.Id.Value))!.ExpirationTime, Is.EqualTo(reducedExpiration));
+
+            await db.SetBanPrisonAccess(ban.Id.Value, false);
+            Assert.That(
+                await db.TrySetActivePrisonBanExpiration(ban.Id.Value, reducedExpiration, staleExpiration),
+                Is.False,
+                "A reward must not change a ban after prison access is revoked.");
+
+            await pair.CleanReturnAsync();
+        }
+
         private static NetUserId NewUserId()
         {
             return new(Guid.NewGuid());

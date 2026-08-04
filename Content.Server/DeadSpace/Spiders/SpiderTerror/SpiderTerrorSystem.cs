@@ -1,6 +1,7 @@
 // Мёртвый Космос, Licensed under custom terms with restrictions on public hosting and commercial use, full text: https://raw.githubusercontent.com/dead-space-server/space-station-14-fobos/master/LICENSE.TXT
 
 using Content.Server.DeadSpace.Spiders.SpiderTerror.Components;
+using Content.Server.DeadSpace.Prison;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Server.Roles;
@@ -14,6 +15,7 @@ public sealed class SpiderTerrorSystem : SharedBloodsuckerSystem
 {
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly RoleSystem _role = default!;
+    [Dependency] private readonly PrisonSystem _prison = default!;
     private ISawmill _logger = default!;
 
     public override void Initialize()
@@ -27,6 +29,9 @@ public sealed class SpiderTerrorSystem : SharedBloodsuckerSystem
 
     private void OnMindAdded(EntityUid uid, SpiderTerrorComponent component, MindAddedMessage args)
     {
+        if (_prison.IsMindPrisoner(args.Mind.Owner, args.Mind.Comp))
+            return;
+
         _role.MindAddRole(args.Mind, "MindRoleSpiderTerror");
 
         _mind.TryAddObjective(args.Mind, args.Mind.Comp, component.Proto);

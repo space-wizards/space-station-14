@@ -4,6 +4,7 @@ using Content.Server.Actions;
 using Content.Server.Backmen.Blob.Components;
 using Content.Server.Backmen.GameTicking.Rules.Components;
 using Content.Server.Chat.Managers;
+using Content.Server.DeadSpace.Prison;
 using Content.Server.Hands.Systems;
 using Content.Server.Mind;
 using Content.Server.Roles;
@@ -40,6 +41,7 @@ public sealed class BlobObserverSystem : SharedBlobObserverSystem
     [Dependency] private readonly MindSystem _mindSystem = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly RoleSystem _roleSystem = default!;
+    [Dependency] private readonly PrisonSystem _prison = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly ISharedPlayerManager _actorSystem = default!;
@@ -113,6 +115,12 @@ public sealed class BlobObserverSystem : SharedBlobObserverSystem
 
     private void OnCreateBlobObserver(EntityUid blobCoreUid, BlobCoreComponent core, CreateBlobObserverEvent args)
     {
+        if (_prison.IsUserPrisoner(args.UserId))
+        {
+            args.Cancel();
+            return;
+        }
+
         var observer = Spawn(core.ObserverBlobPrototype, Transform(blobCoreUid).Coordinates);
 
         core.Observer = observer;
