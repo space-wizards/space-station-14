@@ -1,9 +1,9 @@
 - type: entity
+  parent: BaseStructure
   id: LightPostSmall
   name: post light
-  description: "An always powered light."
   suffix: Always Powered
-  parent: BaseStructure
+  description: "An always powered light."
   components:
   - type: Sprite
     sprite: Structures/Lighting/LightPosts/small_light_post.rsi
@@ -63,11 +63,11 @@
   - type: RequireProjectileTarget
 
 - type: entity
+  parent: LightPostSmall
   id: PoweredLightPostSmallEmpty
   name: post light
-  description: "A small light post."
   suffix: Empty
-  parent: LightPostSmall
+  description: "A small light post."
   components:
   - type: Sprite
     sprite: Structures/Lighting/LightPosts/small_light_post.rsi
@@ -112,11 +112,10 @@
     popupText: powered-light-component-burn-hand
 
 - type: entity
+  parent: PoweredLightPostSmallEmpty
   id: PoweredLightPostSmall
   name: post light
-  description: "A light fixture. Draws power and produces light when equipped with a light tube."
   suffix: ""
-  parent: PoweredLightPostSmallEmpty
   components:
   - type: Sprite
     state: base
@@ -137,11 +136,10 @@
     popupText: powered-light-component-burn-hand
 
 - type: entity
+  parent: PoweredLightPostSmallEmpty
   id: PoweredLEDLightPostSmall
   name: post light
-  description: "A light fixture. Draws power and produces light when equipped with a light tube."
   suffix: LED
-  parent: PoweredLightPostSmallEmpty
   components:
   - type: Sprite
     state: base
