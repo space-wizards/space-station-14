@@ -180,7 +180,7 @@ public sealed partial class CargoSystem
         var capacity = orderDatabase.Capacity;
 
         // Too many orders, avoid them getting spammed in the UI.
-        if (amount >= capacity)
+        if (amount > capacity)
         {
             _popup.PopupCursor(Loc.GetString("cargo-console-too-many"), args.Actor);
             PlayDenySound(ent);
@@ -484,7 +484,7 @@ public sealed partial class CargoSystem
             _random.Shuffle(tradePads);
 
             var freePads = GetFreeCargoPallets(trade, tradePads);
-            if (freePads.Count < order.OrderQuantity) //check if the station has enough free pallets
+            if (freePads.Count <= order.OrderQuantity) //check if the station has enough free pallets
                 continue;
 
             foreach (var pad in freePads)
