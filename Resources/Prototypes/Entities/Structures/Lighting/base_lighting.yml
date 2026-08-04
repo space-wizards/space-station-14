@@ -474,7 +474,7 @@
 #Coloured lights
 - type: entity
   abstract: true
-  parent: PoweredLight
+  parent: Poweredlight
   id: PoweredlightColor
   components:
   - type: PointLight
@@ -595,6 +595,7 @@
   - type: PoweredLight
     hasLampOnSpawn: LightTubeCrystalBlack
   - type: PointLight
+    energy: 1
     color: "#363636"
 
 - type: entity
