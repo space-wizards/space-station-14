@@ -1,5 +1,6 @@
 using Content.Shared.Administration.Logs;
 using Content.Shared.DeviceLinking.Components;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Popups;
@@ -22,6 +23,8 @@ public sealed partial class DeviceLinkSystem : EntitySystem
     [Dependency] private EntityQuery<DeviceLinkSinkComponent> _deviceLinkSinkQuery = default!;
     [Dependency] private EntityQuery<DeviceLinkSourceComponent> _deviceLinkSourceQuery = default!;
     [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceNetworkQuery = default!;
+
+    private static readonly ProtoId<DeviceNetworkPrototype> WirelessNetwork = "Wireless";
 
     [SubscribeLocalEvent]
     private void OnGetState(Entity<DeviceLinkSourceComponent> ent, ref ComponentGetState args)

@@ -1,7 +1,9 @@
-using System.Diagnostics.CodeAnalysis;
 using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.DeviceNetwork.Components.Networks;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Examine;
+using Robust.Shared.Map.Events;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -17,13 +19,11 @@ public sealed partial class DeviceNetworkSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _protoMan = default!;
     [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private INetManager _net = default!;
     [Dependency] private SharedTransformSystem _transformSystem = default!;
+    [Dependency] private MetaDataSystem _meta = default!;
 
     [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceQuery = default!;
-
-    // Basically a cache of devices to connect them together faster.
-    // TODO make DeviceNets smarter and make them entities
-    private readonly Dictionary<int, DeviceNet> _networks = new(4);
 
     private Device[] _deviceCache = [];
 
@@ -71,70 +71,32 @@ public sealed partial class DeviceNetworkSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnNetworkShutdown(Entity<DeviceNetworkComponent> ent, ref ComponentShutdown args)
     {
-        if (TryGetNetwork(ent.Comp.DeviceNetId, out var network))
-            RemoveFromNetwork(ent.AsNullable(), network);
+        if (TryGetNetwork(ent.AsNullable(), ent.Comp.DeviceNetId, out var network))
+            RemoveFromNetwork(ent.AsNullable(), network.Value);
     }
 
-    /// <summary>
-    ///     Try to find a device on a network using its address.
-    /// </summary>
-    private bool TryGetDevice(int netId, int address, [NotNullWhen(true)] out Device? device)
+    [SubscribeLocalEvent]
+    private void OnBeforeSave(BeforeSerializationEvent ev)
     {
-        device = null;
-        if (!TryGetNetwork(netId, out var network)
-            || !network.Devices.TryGetValue(address, out var foundDevice))
-            return false;
-
-        device = foundDevice;
-        return true;
-    }
-
-    /// <summary>
-    /// Tries to get an already existing device network, and creates a new network if it doesn't exist.
-    /// </summary>
-    /// <returns>False if the manager is not initialized.</returns>
-    /// <returns></returns>
-    private bool TryEnsureNetwork(int netId, [NotNullWhen(true)] out DeviceNet? network)
-    {
-        network = null;
-
-        if (_networks.TryGetValue(netId, out var deviceNet))
+        // Device network managers are reconstructable on map-init,
+        // so saving them will just bloat the save file.
+        var query = AllEntityQuery<DeviceNetworkManagerComponent>();
+        while (query.MoveNext(out var uid, out _))
         {
-            network = deviceNet;
-            return true;
+            QueueDel(uid);
         }
-
-        var newDeviceNet = new DeviceNet();
-        _networks[netId] = newDeviceNet;
-        network = newDeviceNet;
-        return true;
-    }
-
-    /// <summary>
-    /// Tries to get an already existing network.
-    /// </summary>
-    /// <returns>False if the manager is not initialized, or the network wasn't found.</returns>
-    private bool TryGetNetwork(int netId, [NotNullWhen(true)] out DeviceNet? network)
-    {
-        network = null;
-
-        if (!_networks.TryGetValue(netId, out var deviceNet))
-            return false;
-
-        network = deviceNet;
-        return true;
     }
 
     private void SendPacket<T>(ref DeviceNetworkPacketEvent<T> packet) where T : INetworkPayload
     {
-        if (!TryEnsureNetwork(packet.NetId, out var network))
+        if (!TryEnsureNetwork(packet.Sender.AsNullable(), packet.NetId, out var network))
             return;
 
         if (packet.Address == null)
         {
             // Broadcast to all listening devices
-            if (!network.ListeningDevices.TryGetValue(packet.Frequency, out var devices)
-                || !CheckRecipientsList(packet, ref devices))
+            if (!network.Value.Comp.ListeningDevices.TryGetValue(packet.Frequency, out var devices)
+                || !CheckRecipientsList(network.Value, packet, ref devices))
                 return;
 
             Extensions.EnsureLength(ref _deviceCache, devices.Count);
@@ -145,12 +107,12 @@ public sealed partial class DeviceNetworkSystem : EntitySystem
         {
             var totalDevices = 0;
             var hasTargetedDevice = false;
-            if (network.ReceiveAllDevices.TryGetValue(packet.Frequency, out var devices))
+            if (network.Value.Comp.ReceiveAllDevices.TryGetValue(packet.Frequency, out var devices))
             {
                 totalDevices += devices.Count;
             }
 
-            if (!TryGetDevice(packet.NetId, packet.Address.Value, out var device))
+            if (!TryGetDevice(network.Value, packet.Address.Value, out var device))
                 return;
 
             if (!device.Value.DeviceData.ReceiveAll &&
@@ -161,10 +123,8 @@ public sealed partial class DeviceNetworkSystem : EntitySystem
             }
 
             Extensions.EnsureLength(ref _deviceCache, totalDevices);
-            if (devices != null)
-            {
-                devices.CopyTo(_deviceCache);
-            }
+            devices?.CopyTo(_deviceCache);
+
             if (hasTargetedDevice)
             {
                 _deviceCache[totalDevices - 1] = device.Value;
@@ -178,10 +138,9 @@ public sealed partial class DeviceNetworkSystem : EntitySystem
     /// The recipients is set to the modified recipient list.
     /// </summary>
     /// <returns>false if the broadcast was canceled</returns>
-    private bool CheckRecipientsList<T>(DeviceNetworkPacketEvent<T> packet, ref HashSet<Device> recipients) where T : INetworkPayload
+    private bool CheckRecipientsList<T>(Entity<DeviceNetworkManagerComponent> manager, DeviceNetworkPacketEvent<T> packet, ref HashSet<Device> recipients) where T : INetworkPayload
     {
-        if (!_networks.TryGetValue(packet.NetId, out var net)
-            || !net.Devices.TryGetValue(packet.SenderAddress, out var device))
+        if (!manager.Comp.Devices.TryGetValue(packet.SenderAddress, out var device))
             return false;
 
         if (!device.DeviceData.SendBroadcastAttemptEvent)

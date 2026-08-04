@@ -1,4 +1,6 @@
 using Content.Shared.DeviceNetwork.Components;
+using Robust.Shared.Prototypes;
+
 namespace Content.Shared.DeviceNetwork.Events;
 
 /// <summary>
@@ -6,7 +8,7 @@ namespace Content.Shared.DeviceNetwork.Events;
 /// </summary>
 [ByRefEvent]
 public readonly record struct DeviceNetworkPacketEvent<T>(
-    int NetId,
+    ProtoId<DeviceNetworkPrototype> NetId,
     DeviceAddress? Address,
     DeviceFrequency Frequency,
     DeviceAddress SenderAddress,
@@ -19,7 +21,7 @@ public readonly record struct DeviceNetworkPacketEvent<T>(
 /// </summary>
 [ByRefEvent]
 public record struct DeviceNetworkPacketData(
-    int NetId,
+    ProtoId<DeviceNetworkPrototype> NetId,
     DeviceAddress? Address,
     DeviceFrequency Frequency,
     DeviceAddress SenderAddress,

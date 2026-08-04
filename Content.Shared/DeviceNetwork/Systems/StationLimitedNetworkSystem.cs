@@ -1,6 +1,8 @@
 using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.DeviceNetwork.Components.Networks;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Station;
+using Content.Shared.Station.Components;
 
 namespace Content.Shared.DeviceNetwork.Systems;
 
@@ -9,19 +11,29 @@ namespace Content.Shared.DeviceNetwork.Systems;
 /// </summary>
 public sealed partial class StationLimitedNetworkSystem : EntitySystem
 {
+    [Dependency] private DeviceNetworkSystem _deviceNetwork = default!;
     [Dependency] private SharedStationSystem _stationSystem = default!;
 
     [Dependency] private EntityQuery<StationTrackerComponent> _stationTrackerQuery = default!;
     [Dependency] private EntityQuery<StationLimitedNetworkComponent> _stationLimitedQuery = default!;
 
+    [SubscribeLocalEvent]
+    private void OnManagerInitialize(Entity<StationNetworkManagerComponent> ent, ref DeviceNetworkManagerInitializeEvent args)
     {
-    }
-
-    {
+        ent.Comp.StationId = _stationSystem.GetOwningStation(args.Entity);
     }
 
     [SubscribeLocalEvent]
+    private void OnParentChanged(Entity<StationLimitedNetworkComponent> ent, ref GridUidChangedEvent args)
     {
+        _deviceNetwork.ReconnectDevice(ent.Owner);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnAttemptConnect(Entity<StationNetworkManagerComponent> ent, ref DeviceAttemptConnectEvent args)
+    {
+        if (_stationSystem.GetOwningStation(args.Entity) == ent.Comp.StationId)
+            args.Connected = true;
     }
 
     [SubscribeLocalEvent]

@@ -5,16 +5,11 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.DeviceNetwork.Components;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
-[Access(typeof(DeviceNetworkSystem), typeof(DeviceNet))]
+[Access(typeof(DeviceNetworkSystem))]
 public sealed partial class DeviceNetworkComponent : Component
 {
-    /// <summary>
-    /// Default device network ID to connect to.
-    /// </summary>
-    [DataField("deviceNetId")]
-    public DeviceNetIdDefaults NetIdEnum { get; set; }
-
-    public int DeviceNetId => (int) NetIdEnum;
+    [DataField]
+    public ProtoId<DeviceNetworkPrototype> DeviceNetId = "Private";
 
     /// <inheritdoc cref="DeviceData"/>
     [IncludeDataField, AutoNetworkedField]

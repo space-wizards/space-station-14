@@ -2,6 +2,7 @@
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.DeviceNetwork.Payloads;
 using Content.Shared.SurveillanceCamera;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.DeviceNetwork.Systems;
 
@@ -73,8 +74,8 @@ public sealed partial class DeviceNetworkRouterSystem : EntitySystem
         DeviceAddress? targetAddress,
         DeviceFrequency? overrideFrequency = null,
         DeviceFrequency? frequency = null,
-        int? overrideNetwork = null,
-        int? network = null)
+        ProtoId<DeviceNetworkPrototype>? overrideNetwork = null,
+        ProtoId<DeviceNetworkPrototype>? network = null)
         where T : IRoutableNetworkPayload
     {
         if (!_query.Resolve(ref ent) || ent.Comp == null)

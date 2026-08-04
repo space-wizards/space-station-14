@@ -1,17 +1,21 @@
 using Content.Shared.DeviceNetwork.Components;
-using Content.Shared.DeviceNetwork.Events;
-using Content.Shared.Power.EntitySystems;
+using Content.Shared.Power;
 
 namespace Content.Shared.DeviceNetwork.Systems;
 
+/// <summary>
+/// System that disconnects and reconnects devices depending on their power state.
+/// </summary>
 public sealed partial class DeviceNetworkRequiresPowerSystem : EntitySystem
 {
-    [Dependency] private SharedPowerReceiverSystem _power = default!;
+    [Dependency] private DeviceNetworkSystem _deviceNetwork = default!;
 
     [SubscribeLocalEvent]
-    private void OnBeforePacketSent(Entity<DeviceNetworkRequiresPowerComponent> ent, ref BeforePacketSentEvent args)
+    private void OnPowerChanged(Entity<DeviceNetworkRequiresPowerComponent> ent, ref PowerChangedEvent args)
     {
-        if (!_power.IsPowered(ent.Owner))
-            args.Cancelled = true;
+        if (args.Powered)
+            _deviceNetwork.ConnectDevice(ent.Owner);
+        else
+            _deviceNetwork.DisconnectDevice(ent.Owner);
     }
 }

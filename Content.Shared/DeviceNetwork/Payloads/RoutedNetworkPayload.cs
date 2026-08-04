@@ -1,5 +1,6 @@
 ﻿using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Systems;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.DeviceNetwork.Payloads;
 
@@ -29,7 +30,7 @@ public partial interface IRoutedNetworkPayload : INetworkPayload
     /// <summary>
     /// If specified, the device router will use this network ID for transmitting the <see cref="Payload"/>.
     /// </summary>
-    int? OverrideNetwork { get; set; }
+    ProtoId<DeviceNetworkPrototype>? OverrideNetwork { get; set; }
 
     /// <summary>
     /// Address to re-route to when the <see cref="RoutedNetworkPayload{T}"/> is being handled.
@@ -39,7 +40,7 @@ public partial interface IRoutedNetworkPayload : INetworkPayload
     /// <summary>
     ///
     /// </summary>
-    void Reroute(EntityUid sender, DeviceAddress? address, DeviceFrequency? frequency, int? network, DeviceNetworkSystem system);
+    void Reroute(EntityUid sender, DeviceAddress? address, DeviceFrequency? frequency, ProtoId<DeviceNetworkPrototype>? network, DeviceNetworkSystem system);
 }
 
 /// <summary>
@@ -63,7 +64,7 @@ public partial record struct RoutedNetworkPayload<T> : IRoutedNetworkPayload whe
     /// If specified, the device router will use this network ID for transmitting the <see cref="Payload"/>.
     /// </summary>
     [DataField]
-    public int? OverrideNetwork { get; set; }
+    public ProtoId<DeviceNetworkPrototype>? OverrideNetwork { get; set; }
 
     /// <summary>
     /// Address to re-route to when the <see cref="RoutedNetworkPayload{T}"/> is being handled.
@@ -74,7 +75,7 @@ public partial record struct RoutedNetworkPayload<T> : IRoutedNetworkPayload whe
     public void Reroute(EntityUid sender,
         DeviceAddress? address,
         DeviceFrequency? frequency,
-        int? network,
+        ProtoId<DeviceNetworkPrototype>? network,
         DeviceNetworkSystem system)
     {
         // Things sometimes take a **weird route** when it comes to type parameters.

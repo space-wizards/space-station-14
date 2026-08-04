@@ -8,6 +8,7 @@ using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Power;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Radio.EntitySystems;
 
@@ -16,6 +17,8 @@ public abstract partial class SharedJammerSystem : EntitySystem
     [Dependency] private ItemToggleSystem _itemToggle = default!;
     [Dependency] private DeviceNetworkJammerSystem _jammer = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
+
+    private static readonly ProtoId<DeviceNetworkPrototype> WirelessNetwork = "Wireless";
 
     public override void Initialize()
     {
@@ -34,7 +37,7 @@ public abstract partial class SharedJammerSystem : EntitySystem
             EnsureComp<ActiveRadioJammerComponent>(entity);
             EnsureComp<DeviceNetworkJammerComponent>(entity, out var jammingComp);
             _jammer.SetRange((entity, jammingComp), GetCurrentRange(entity));
-            _jammer.AddJammableNetwork((entity, jammingComp), (int) DeviceNetIdDefaults.Wireless);
+            _jammer.AddJammableNetwork((entity, jammingComp), WirelessNetwork);
 
             // Add excluded frequencies using the system method
             foreach (var freq in entity.Comp.FrequenciesExcluded)

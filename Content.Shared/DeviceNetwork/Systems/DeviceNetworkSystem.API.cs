@@ -24,7 +24,7 @@ public sealed partial class DeviceNetworkSystem
         DeviceAddress? address,
         ref T data,
         DeviceFrequency? frequency = null,
-        int? network = null)
+        ProtoId<DeviceNetworkPrototype>? network = null)
         where T : INetworkPayload
     {
         if (!_deviceQuery.Resolve(ent.Owner, ref ent.Comp, false))
@@ -56,10 +56,10 @@ public sealed partial class DeviceNetworkSystem
         if (!_deviceQuery.Resolve(ent.Owner, ref ent.Comp, false))
             return false;
 
-        if (!TryEnsureNetwork(ent.Comp.DeviceNetId, out var deviceNet))
+        if (!TryEnsureNetwork(ent, out var deviceNet))
             return false;
 
-        var success = AddToNetwork(ent, deviceNet);
+        var success = AddToNetwork(ent, deviceNet.Value);
         DirtyField(ent, nameof(DeviceNetworkComponent.Data));
         return success;
     }
@@ -79,13 +79,36 @@ public sealed partial class DeviceNetworkSystem
         if (!_deviceQuery.Resolve(ent.Owner, ref ent.Comp, false))
             return false;
 
-        if (!TryGetNetwork(ent.Comp.DeviceNetId, out var deviceNet))
+        if (!TryEnsureNetwork(ent, out var deviceNet))
             return false;
 
         if (preventAutoConnect)
             ent.Comp.AutoConnect = false;
 
-        return RemoveFromNetwork(ent, deviceNet);
+        return RemoveFromNetwork(ent, deviceNet.Value);
+    }
+
+    /// <summary>
+    /// Reconnects the device, possibly to a new device network.
+    /// This should be called when the conditions under which the device networks are formed may change for an entity.
+    /// </summary>
+    [PublicAPI]
+    public void ReconnectDevice(Entity<DeviceNetworkComponent?> ent)
+    {
+        if (!_deviceQuery.Resolve(ent.Owner, ref ent.Comp, false))
+            return;
+
+        if (TryGetNetwork(ent, out var oldDeviceNet))
+            RemoveFromNetwork(ent, oldDeviceNet.Value);
+
+        if (!TryEnsureNetwork(ent, out var deviceNet))
+            return; // Client-side
+
+        AddToNetwork(ent, deviceNet.Value);
+
+        // TODO ev
+
+        DirtyField(ent, nameof(DeviceNetworkComponent.Data));
     }
 
     /// <summary>
@@ -98,24 +121,41 @@ public sealed partial class DeviceNetworkSystem
         if (!_deviceQuery.Resolve(ent.Owner, ref ent.Comp, false))
             return false;
 
-        if (!_networks.TryGetValue(ent.Comp.DeviceNetId, out var deviceNet))
+        if (!TryGetNetwork(ent, out var deviceNet))
             return false;
 
         var device = new Device(ent.Owner, ent.Comp.Data);
-        return deviceNet.Devices.ContainsValue(device);
+        return deviceNet.Value.Comp.Devices.ContainsValue(device);
     }
 
     /// <summary>
     /// Checks if an address exists in the network with the given netId.
     /// </summary>
     [PublicAPI]
-    public bool IsAddressPresent(int netId, int? address)
+    public bool IsAddressPresent(Entity<DeviceNetworkComponent?> ent, DeviceAddress? address)
     {
-        if (address == null
-            || !_networks.TryGetValue(netId, out var network))
+        if (!_deviceQuery.Resolve(ent.Owner, ref ent.Comp, false))
             return false;
 
-        return network.Devices.ContainsKey(address.Value);
+        if (address == null)
+            return false;
+
+        if (!TryGetNetwork(ent, out var deviceNet))
+            return false;
+
+        return deviceNet.Value.Comp.Devices.ContainsKey(address.Value);
+    }
+
+    /// <summary>
+    /// Checks if an address exists in the network with the given netId.
+    /// </summary>
+    [PublicAPI]
+    public bool IsAddressPresent(Entity<DeviceNetworkManagerComponent> manager, DeviceAddress? address)
+    {
+        if (address == null)
+            return false;
+
+        return manager.Comp.Devices.ContainsKey(address.Value);
     }
 
     /// <summary>
@@ -132,13 +172,13 @@ public sealed partial class DeviceNetworkSystem
         if (ent.Comp.Data.ReceiveFrequency == frequency)
             return;
 
-        if (!TryGetNetwork(ent.Comp.DeviceNetId, out var deviceNet))
+        if (!TryEnsureNetwork(ent, out var deviceNet))
             return;
 
         var oldFrequency = ent.Comp.Data.ReceiveFrequency;
-        RemoveFromNetwork(ent, deviceNet);
+        RemoveFromNetwork(ent, deviceNet.Value);
         ent.Comp.Data.ReceiveFrequency = frequency;
-        AddToNetwork(ent, deviceNet);
+        AddToNetwork(ent, deviceNet.Value);
 
         var ev = new DeviceReceiveFrequencyChangedEvent(oldFrequency, frequency);
         RaiseLocalEvent(ent, ref ev);
@@ -178,12 +218,12 @@ public sealed partial class DeviceNetworkSystem
         if (ent.Comp.Data.ReceiveAll == receiveAll)
             return;
 
-        if (!TryGetNetwork(ent.Comp.DeviceNetId, out var deviceNet))
+        if (!TryEnsureNetwork(ent, out var deviceNet))
             return;
 
-        RemoveFromNetwork(ent, deviceNet);
+        RemoveFromNetwork(ent, deviceNet.Value);
         ent.Comp.Data.ReceiveAll = receiveAll;
-        AddToNetwork(ent, deviceNet);
+        AddToNetwork(ent, deviceNet.Value);
 
         var ev = new DeviceReceiveAllChangedEvent(receiveAll);
         RaiseLocalEvent(ent, ref ev);
@@ -203,18 +243,18 @@ public sealed partial class DeviceNetworkSystem
         if (ent.Comp.Data.AddressId == address && ent.Comp.Data.CustomAddress)
             return;
 
-        if (!TryGetNetwork(ent.Comp.DeviceNetId, out var deviceNet))
+        if (!TryEnsureNetwork(ent, out var deviceNet))
             return;
 
         var oldAddress = ent.Comp.Data.AddressId;
         var oldPrefix = ent.Comp.Prefix;
 
-        RemoveFromNetwork(ent, deviceNet);
+        RemoveFromNetwork(ent, deviceNet.Value);
         ent.Comp.Data.CustomAddress = true;
         ent.Comp.Data.AddressId = address;
         if (prefix != null)
             ent.Comp.Prefix = prefix;
-        AddToNetwork(ent, deviceNet);
+        AddToNetwork(ent, deviceNet.Value);
 
         var ev = new DeviceAddressChangedEvent(oldAddress, address, oldPrefix, ent.Comp.Prefix, ent.Comp.Data.CustomAddress);
         RaiseLocalEvent(ent, ref ev);
@@ -231,14 +271,14 @@ public sealed partial class DeviceNetworkSystem
         if (!_deviceQuery.Resolve(ent.Owner, ref ent.Comp, false))
             return;
 
-        if (!TryGetNetwork(ent.Comp.DeviceNetId, out var deviceNet))
+        if (!TryEnsureNetwork(ent, out var deviceNet))
             return;
 
         var oldAddress = ent.Comp.Data.AddressId;
-        RemoveFromNetwork(ent, deviceNet);
+        RemoveFromNetwork(ent, deviceNet.Value);
         ent.Comp.Data.CustomAddress = false;
         ent.Comp.Data.AddressId = 0;
-        AddToNetwork(ent, deviceNet);
+        AddToNetwork(ent, deviceNet.Value);
 
         var ev = new DeviceAddressChangedEvent(oldAddress, ent.Comp.Data.AddressId, ent.Comp.Prefix, ent.Comp.Prefix, ent.Comp.Data.CustomAddress);
         RaiseLocalEvent(ent, ref ev);
