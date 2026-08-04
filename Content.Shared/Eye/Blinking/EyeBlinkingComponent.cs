@@ -115,6 +115,25 @@ public sealed partial class EyeBlinkingComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool EyesClosed = false;
+
+    /// <summary>
+    /// for when the component is paused, this is the offset to apply to the next blink time and next open eyes time to account for the pause duration.
+    /// </summary>
+    [AutoPausedField]
+    public TimeSpan PausedOffset;
+
+    /// <summary>
+    /// List of all EyelidState objects for the entity. Each EyelidState represents the state of a single eyelid layer,
+    /// including whether it is closed, whether it is a complete blink, and the scheduled times for closing and opening.
+    /// </summary>
+    [ViewVariables]
+    public List<EyelidState> Eyelids = new();
+
+    /// <summary>
+    /// Body, who has SpriteComp with HumanoidVisualLayers.Eyelids layer, to apply eyelid sprite and color to.
+    /// </summary>
+    [ViewVariables]
+    public EntityUid? Body;
 }
 
 /// <summary>
