@@ -54,6 +54,12 @@ public abstract partial class AlertTeleportSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
+    private void OnClearAlertEvent(Entity<AlertTeleportComponent> ent, ref ClearAlertEvent args)
+    {
+        ent.Comp.Targets[args.AlertId].Targets.Clear();
+    }
+
     /// <summary>
     /// Adds a teleport alert for a specific entity
     /// </summary>

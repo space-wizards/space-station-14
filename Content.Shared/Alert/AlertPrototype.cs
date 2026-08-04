@@ -98,6 +98,13 @@ public sealed partial class AlertPrototype : IPrototype, IInheritingPrototype
     [DataField]
     public BaseAlertEvent? ClickEvent;
 
+    /// <summary>
+    /// Event raised on the user when they right click on this alert.
+    /// Can be null.
+    /// </summary>
+    [DataField]
+    public BaseAlertEvent? RightClickEvent;
+
     /// <param name="severity">severity level, if supported by this alert</param>
     /// <returns>the icon path to the texture for the provided severity level</returns>
     public SpriteSpecifier GetIcon(short? severity = null)

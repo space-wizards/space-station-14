@@ -7,6 +7,7 @@
   name: ghost-alert-base-name
   description: ghost-alert-base-desc
   clickEvent: !type:AlertTeleportEvent
+  rightClickEvent: !type:ClearAlertEvent
 
 - type: alert
   id: BaseGhostRoleAlert
@@ -17,6 +18,7 @@
   name: ghost-alert-base-role-name
   description: ghost-alert-base-role-desc
   clickEvent: !type:AlertTeleportEvent
+  rightClickEvent: !type:ClearAlertEvent
 
 - type: alert
   id: SpaceNinja
@@ -27,6 +29,7 @@
   name: ghost-alert-space-ninja-name
   description: ghost-alert-base-role-desc
   clickEvent: !type:AlertTeleportEvent
+  rightClickEvent: !type:ClearAlertEvent
 
 - type: alert
   id: SpaceDragon
@@ -37,6 +40,7 @@
   name: ghost-alert-space-dragon-name
   description: ghost-alert-base-role-desc
   clickEvent: !type:AlertTeleportEvent
+  rightClickEvent: !type:ClearAlertEvent
 
 - type: alert
   id: Xenoborgs
@@ -47,6 +51,7 @@
   name: ghost-alert-mothership-core-name
   description: ghost-alert-base-role-desc
   clickEvent: !type:AlertTeleportEvent
+  rightClickEvent: !type:ClearAlertEvent
 
 - type: alert
   id: Wizard
@@ -57,6 +62,7 @@
   name: ghost-alert-wizard-name
   description: ghost-alert-base-role-desc
   clickEvent: !type:AlertTeleportEvent
+  rightClickEvent: !type:ClearAlertEvent
 
 - type: alert
   id: NukeOp
@@ -67,6 +73,7 @@
   name: ghost-alert-nuke-op-name
   description: ghost-alert-base-role-desc
   clickEvent: !type:AlertTeleportEvent
+  rightClickEvent: !type:ClearAlertEvent
 
 - type: alert
   id: ImmovableRod
@@ -77,6 +84,7 @@
   name: ghost-alert-immovable-rod-name
   description: ghost-alert-base-desc
   clickEvent: !type:AlertTeleportEvent
+  rightClickEvent: !type:ClearAlertEvent
 
 - type: alert
   id: NukeArm
@@ -87,6 +95,7 @@
   name: ghost-alert-nuke-arm-name
   description: ghost-alert-nuke-arm-desc
   clickEvent: !type:AlertTeleportEvent
+  rightClickEvent: !type:ClearAlertEvent
 
 - type: entity
   id: GhostAlertCounterSpriteView
