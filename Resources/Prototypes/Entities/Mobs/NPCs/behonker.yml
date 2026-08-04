@@ -119,7 +119,7 @@
 - type: entity
   parent: BaseMobBehonker
   id: MobBehonkerPyro
-  suffix: "Pyro"
+  suffix: Pyro
   components:
   - type: PyroclasticAnomaly
   - type: TempAffectingAnomaly
@@ -133,7 +133,7 @@
 - type: entity
   parent: BaseMobBehonker
   id: MobBehonkerElectrical
-  suffix: "Electrical"
+  suffix: Electrical
   components:
   - type: ElectricityAnomaly
   - type: Electrified
@@ -141,14 +141,14 @@
 - type: entity
   parent: BaseMobBehonker
   id: MobBehonkerGrav
-  suffix: "Grav"
+  suffix: Grav
   components:
   - type: GravityAnomaly
 
 - type: entity
   parent: BaseMobBehonker
   id: MobBehonkerIce
-  suffix: "Ice"
+  suffix: Ice
   components:
   - type: Anomaly
   - type: ExplosionAnomaly
