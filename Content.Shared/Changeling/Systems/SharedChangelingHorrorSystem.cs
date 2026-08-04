@@ -57,11 +57,11 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
             // calculate the timeout
             if (_timing.CurTime - comp.InitialTime > comp.TimeBudget)
             {
-                if (comp.LastIdentity != null && identities.ConsumedIdentities.Contains(comp.LastIdentity))
+                if (comp.LastIdentity != null && identities.ConsumedIdentities.Where(k => k.Identity == comp.LastIdentity.Value).Any())
                 {
                     // we force the transformation, this will call all cleanup code in OnBeforeTransform
                     var tComp = EnsureComp<ChangelingTransformComponent>(uid);
-                    _transform.TransformIntoNow((uid, tComp), comp.LastIdentity);
+                    _transform.TransformIntoNow((uid, tComp), comp.LastIdentity.Value);
                 }
                 else
                 {
@@ -82,7 +82,7 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
                 }
                 var selfMessage = Loc.GetString("changeling-horror-force-transform-self", ("user", Identity.Entity(uid, EntityManager)));
                 var othersMessage = Loc.GetString("changeling-horror-force-transform-others", ("user", Identity.Entity(uid, EntityManager)));
-                _popups.Popup(
+                _popups.PopupPredicted(
                 selfMessage,
                 othersMessage,
                 uid,

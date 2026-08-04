@@ -30,7 +30,7 @@ public readonly record struct BeforeChangelingTransformEvent(EntityUid StoredIde
 /// <summary>
 /// Raised on a changeling after they successfully transformed into a stored identity.
 /// </summary>
-public readonly record struct AfterChangelingTransformEvent(EntityUid StoredIdentity, EntityUid PreviousIdentity)
+public readonly record struct AfterChangelingTransformEvent(EntityUid StoredIdentity, EntityUid? PreviousIdentity)
 {
     /// <summary>
     /// The stored identity the changeling transformed into.
@@ -40,7 +40,7 @@ public readonly record struct AfterChangelingTransformEvent(EntityUid StoredIden
     /// <summary>
     /// The previous identity the changeling was
     /// </summary>
-    public readonly EntityUid PreviousIdentity = PreviousIdentity;
+    public readonly EntityUid? PreviousIdentity = PreviousIdentity;
 };
 
 /// <summary>
