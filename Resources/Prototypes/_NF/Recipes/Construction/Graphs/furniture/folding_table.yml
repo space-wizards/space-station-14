@@ -1,0 +1,31 @@
+- type: constructionGraph
+  id: TableFoldingGraph
+  start: start
+  graph:
+    - node: start
+      actions:
+        - !type:DestroyEntity {}
+      edges:
+
+        - to: TableFolding
+          steps:
+            - material: Plastic
+              amount: 4
+              doAfter: 1
+            - material: MetalRod
+              amount: 4
+
+    - node: TableFolding
+      entity: TableFolding
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetPlastic1
+              amount: 4
+            - !type:SpawnPrototype
+              prototype: PartRodMetal1
+              amount: 4
+          steps:
+            - tool: Screwing
+              doAfter: 2

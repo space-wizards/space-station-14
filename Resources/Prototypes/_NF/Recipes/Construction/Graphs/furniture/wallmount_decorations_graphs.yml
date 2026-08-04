@@ -1,0 +1,71 @@
+- type: constructionGraph
+  id: PaintingGhostHangingGraph
+  start: start
+  graph:
+    - node: start
+      actions:
+        - !type:DestroyEntity { }
+      edges:
+        - to: PaintingGhostHangingNode
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: Paper
+              amount: 1
+              doAfter: 2
+
+    - node: PaintingGhostHangingNode
+      entity: PaintingGhostHanging
+      edges:
+        - to: start
+          steps:
+            - tool: Cutting
+              doAfter: 2
+
+- type: constructionGraph
+  id: PaintingBatHangingGraph
+  start: start
+  graph:
+    - node: start
+      actions:
+        - !type:DestroyEntity { }
+      edges:
+        - to: PaintingBatHangingNode
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: Paper
+              amount: 1
+              doAfter: 2
+
+    - node: PaintingBatHangingNode
+      entity: PaintingBatHanging
+      edges:
+        - to: start
+          steps:
+            - tool: Cutting
+              doAfter: 2
+
+- type: constructionGraph
+  id: PaintingPumpkinHangingGraph
+  start: start
+  graph:
+    - node: start
+      actions:
+        - !type:DestroyEntity { }
+      edges:
+        - to: PaintingPumpkinHangingNode
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: Paper
+              amount: 1
+              doAfter: 2
+
+    - node: PaintingPumpkinHangingNode
+      entity: PaintingPumpkinHanging
+      edges:
+        - to: start
+          steps:
+            - tool: Cutting
+              doAfter: 2

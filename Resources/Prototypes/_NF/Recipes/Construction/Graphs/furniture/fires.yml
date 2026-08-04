@@ -1,0 +1,49 @@
+- type: constructionGraph
+  id: FiresGraph
+  start: start
+  graph:
+    - node: start
+      actions:
+        - !type:DestroyEntity {}
+      edges:
+        - to: BonfireNode
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: WoodPlank
+              amount: 10
+              doAfter: 1
+        - to: FireplaceNode
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: WoodPlank
+              amount: 10
+              doAfter: 1
+            - material: Steel
+              amount: 10
+              doAfter: 1
+
+    - node: BonfireNode
+      entity: Bonfire
+      edges:
+        - to: start
+          completed:
+            - !type:GivePrototype
+              prototype: MaterialWoodPlank1
+              amount: 1
+          steps:
+            - tool: Prying
+              doAfter: 1
+
+    - node: FireplaceNode
+      entity: Fireplace
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 4
+          steps:
+            - tool: Prying
+              doAfter: 1

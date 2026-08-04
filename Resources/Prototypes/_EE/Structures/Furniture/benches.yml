@@ -1,0 +1,336 @@
+# Base benches
+- type: entity
+  name: bench
+  id: BenchBaseMiddle
+  suffix: Middle
+  abstract: true
+  parent: SeatBase
+  description: Multiple seats spanning a single object. Truly a marvel of science.
+  components:
+  - type: Physics
+    bodyType: Static
+  - type: Transform
+    anchored: true
+  - type: Rotatable
+  - type: Sprite
+    state: middle
+  - type: StaticPrice # Frontier
+    price: 20 # Frontier: 20
+
+# Park benches
+- type: entity
+  name: park bench
+  id: BenchParkMiddle
+  parent: BenchBaseMiddle
+  components:
+  - type: Sprite
+    sprite: _EE/Structures/Furniture/Benches/parkbench_wooden.rsi
+  - type: Construction # Frontier
+    graph: BenchesGraph # Frontier
+    node: BenchParkMiddleNode # Frontier
+  - type: StaticPrice # Frontier
+    price: 30 # Frontier: 30
+
+- type: entity
+  id: BenchParkLeft
+  suffix: Left
+  parent: BenchParkMiddle
+  components:
+  - type: Sprite
+    state: left
+  - type: Construction # Frontier
+    graph: BenchesGraph # Frontier
+    node: BenchParkLeftNode # Frontier
+
+- type: entity
+  id: BenchParkRight
+  suffix: Right
+  parent: BenchParkMiddle
+  components:
+  - type: Sprite
+    state: right
+  - type: Construction # Frontier
+    graph: BenchesGraph # Frontier
+    node: BenchParkRightNode # Frontier
+
+# Bamboo benches
+- type: entity
+  name: park bench
+  id: BenchParkBambooMiddle
+  parent: BenchBaseMiddle
+  components:
+  - type: Sprite
+    sprite: _EE/Structures/Furniture/Benches/parkbench_bamboo.rsi
+  - type: Construction # Frontier
+    graph: BenchesGraph # Frontier
+    node: BenchParkBambooMiddleNode # Frontier
+  - type: StaticPrice # Frontier
+    price: 30 # Frontier: 30
+
+- type: entity
+  id: BenchParkBambooLeft
+  suffix: Left
+  parent: BenchParkBambooMiddle
+  components:
+  - type: Sprite
+    state: left
+  - type: Construction # Frontier
+    graph: BenchesGraph # Frontier
+    node: BenchParkBambooLeftNode # Frontier
+
+- type: entity
+  id: BenchParkBambooRight
+  suffix: Right
+  parent: BenchParkBambooMiddle
+  components:
+  - type: Sprite
+    state: right
+  - type: Construction # Frontier
+    graph: BenchesGraph # Frontier
+    node: BenchParkBambooRightNode # Frontier
+
+# Pews
+- type: entity
+  name: pew
+  id: BenchPewMiddle
+  parent: BenchBaseMiddle
+  components:
+  - type: Sprite
+    sprite: _EE/Structures/Furniture/Benches/pews.rsi
+  - type: Construction # Frontier
+    graph: BenchesGraph # Frontier
+    node: BenchPewMiddleNode # Frontier
+  - type: StaticPrice # Frontier
+    price: 30 # Frontier: 30
+
+- type: entity
+  id: BenchPewLeft
+  suffix: Left
+  parent: BenchPewMiddle
+  components:
+  - type: Sprite
+    state: left
+  - type: Construction # Frontier
+    graph: BenchesGraph # Frontier
+    node: BenchPewLeftNode # Frontier
+
+- type: entity
+  id: BenchPewRight
+  suffix: Right
+  parent: BenchPewMiddle
+  components:
+  - type: Sprite
+    state: right
+  - type: Construction # Frontier
+    graph: BenchesGraph # Frontier
+    node: BenchPewRightNode # Frontier
+
+# Steel benches
+- type: entity
+  name: steel bench
+  id: BenchSteelMiddle
+  parent: BenchBaseMiddle
+  components:
+  - type: Sprite
+    sprite: _EE/Structures/Furniture/Benches/steel_bench.rsi
+  - type: Construction # Frontier
+    graph: BenchesGraph # Frontier
+    node: BenchSteelMiddleNode # Frontier
+
+- type: entity
+  id: BenchSteelLeft
+  suffix: Left
+  parent: BenchSteelMiddle
+  components:
+  - type: Sprite
+    state: left
+  - type: Construction # Frontier
+    graph: BenchesGraph # Frontier
+    node: BenchSteelLeftNode # Frontier
+
+- type: entity
+  id: BenchSteelRight
+  suffix: Right
+  parent: BenchSteelMiddle
+  components:
+  - type: Sprite
+    state: right
+  - type: Construction # Frontier
+    graph: BenchesGraph # Frontier
+    node: BenchSteelRightNode # Frontier
+
+# White steel benches
+- type: entity
+  name: white steel bench
+  id: BenchSteelWhiteMiddle
+  parent: BenchBaseMiddle
+  components:
+  - type: Sprite
+    sprite: _EE/Structures/Furniture/Benches/steel_bench_white.rsi
+  - type: Construction # Frontier
+    graph: BenchesGraph # Frontier
+    node: BenchSteelWhiteMiddleNode # Frontier
+
+- type: entity
+  id: BenchSteelWhiteLeft
+  suffix: Left
+  parent: BenchSteelWhiteMiddle
+  components:
+  - type: Sprite
+    state: left
+  - type: Construction # Frontier
+    graph: BenchesGraph # Frontier
+    node: BenchSteelWhiteLeftNode # Frontier
+
+- type: entity
+  id: BenchSteelWhiteRight
+  suffix: Right
+  parent: BenchSteelWhiteMiddle
+  components:
+  - type: Sprite
+    state: right
+  - type: Construction # Frontier
+    graph: BenchesGraph # Frontier
+    node: BenchSteelWhiteRightNode # Frontier
+
+# Standard sofa
+- type: entity
+  name: sofa
+  id: BenchSofaMiddle
+  parent: BenchBaseMiddle
+  components:
+  - type: Sprite
+    sprite: _EE/Structures/Furniture/Benches/sofa.rsi
+  - type: Construction # Frontier
+    graph: SofasGraph # Frontier
+    node: BenchSofaMiddleNode # Frontier
+  - type: StaticPrice # Frontier
+    price: 25 # Frontier: 25
+
+- type: entity
+  id: BenchSofaLeft
+  suffix: Left
+  parent: BenchSofaMiddle
+  components:
+  - type: Sprite
+    state: left
+  - type: Construction # Frontier
+    graph: SofasGraph # Frontier
+    node: BenchSofaLeftNode # Frontier
+
+- type: entity
+  id: BenchSofaRight
+  suffix: Right
+  parent: BenchSofaMiddle
+  components:
+  - type: Sprite
+    state: right
+  - type: Construction # Frontier
+    graph: SofasGraph # Frontier
+    node: BenchSofaRightNode # Frontier
+
+- type: entity
+  name: sofa
+  id: BenchSofaCorner
+  suffix: Corner
+#  parent: BenchSofaMiddle
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+  - type: Rotatable
+  - type: Sprite
+    sprite: _EE/Structures/Furniture/Benches/sofa.rsi
+    state: corner
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Pullable
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+  - type: Construction # Frontier
+    graph: SofasGraph # Frontier
+    node: BenchSofaCornerNode # Frontier
+
+# Corp sofa
+- type: entity
+  name: grey sofa
+  id: BenchSofaCorpMiddle
+  parent: BenchBaseMiddle
+  components:
+  - type: Sprite
+    sprite: _EE/Structures/Furniture/Benches/sofa_corp.rsi
+  - type: Construction # Frontier
+    graph: SofasGraph # Frontier
+    node: BenchSofaCorpMiddleNode # Frontier
+  - type: StaticPrice # Frontier
+    price: 25 # Frontier: 25
+
+- type: entity
+  id: BenchSofaCorpLeft
+  suffix: Left
+  parent: BenchSofaCorpMiddle
+  components:
+  - type: Sprite
+    state: left
+  - type: Construction # Frontier
+    graph: SofasGraph # Frontier
+    node: BenchSofaCorpLeftNode # Frontier
+
+- type: entity
+  id: BenchSofaCorpRight
+  suffix: Right
+  parent: BenchSofaCorpMiddle
+  components:
+  - type: Sprite
+    state: right
+  - type: Construction # Frontier
+    graph: SofasGraph # Frontier
+    node: BenchSofaCorpRightNode # Frontier
+
+- type: entity
+  name: grey sofa
+  id: BenchSofaCorpCorner
+  suffix: Corner
+#  parent: BenchSofaCorpMiddle
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+  - type: Rotatable
+  - type: Sprite
+    sprite: _EE/Structures/Furniture/Benches/sofa_corp.rsi
+    state: corner
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Pullable
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+  - type: Construction # Frontier
+    graph: SofasGraph # Frontier
+    node: BenchSofaCorpCornerNode # Frontier

@@ -1,0 +1,107 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Used TG Station 13 sprites as a base, edited by erhardsteinhauer (discord)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "base-gun"
+    },
+    {
+      "name": "base-gun-wall"
+    },
+    {
+      "name": "base-gun-decal"
+    },
+    {
+      "name": "base-gun-wall-decal"
+    },
+    {
+      "name": "base-melee"
+    },
+    {
+      "name": "base-melee-wall"
+    },
+    {
+      "name": "base-melee-decal"
+    },
+    {
+      "name": "base-melee-wall-decal"
+    },
+    {
+      "name": "base-pistol"
+    },
+    {
+      "name": "base-pistol-wall"
+    },
+    {
+      "name": "base-pistol-decal"
+    },
+    {
+      "name": "base-pistol-wall-decal"
+    },
+    {
+      "name": "lock"
+    },
+    {
+      "name": "locked"
+    },
+    {
+      "name": "unlocked"
+    },
+    {
+      "name": "gun-0"
+    },
+    {
+      "name": "gun-1"
+    },
+    {
+      "name": "gun-2"
+    },
+    {
+      "name": "gun-3"
+    },
+    {
+      "name": "gun-4"
+    },
+    {
+      "name": "gun-5"
+    },
+    {
+      "name": "melee-0"
+    },
+    {
+      "name": "melee-1"
+    },
+    {
+      "name": "melee-2"
+    },
+    {
+      "name": "melee-3"
+    },
+    {
+      "name": "melee-4"
+    },
+    {
+      "name": "melee-5"
+    },
+    {
+      "name": "pistol-0"
+    },
+    {
+      "name": "pistol-1"
+    },
+    {
+      "name": "pistol-2"
+    },
+    {
+      "name": "pistol-3"
+    },
+    {
+      "name": "pistol-4"
+    }
+  ]
+}

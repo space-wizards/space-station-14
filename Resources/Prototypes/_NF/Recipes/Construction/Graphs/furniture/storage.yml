@@ -1,0 +1,43 @@
+- type: constructionGraph
+  id: StorageFurnitureGraph
+  start: start
+  graph:
+    - node: start
+      actions:
+        - !type:EmptyAllContainers
+        - !type:DestroyEntity { }
+      edges:
+        - to: LockerWoodenGenericNode
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: WoodPlank
+              amount: 6
+            - material: Steel
+              amount: 2
+            - material: Cable
+              amount: 2
+              doAfter: 3
+
+    - node: LockerWoodenGenericNode
+      entity: LockerWoodenGeneric
+      edges:
+        - to: start
+          conditions:
+            - !type:StorageWelded
+              welded: false
+            - !type:Locked
+              locked: false
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 2
+            - !type:SpawnPrototype
+              prototype: CableApcStack1
+              amount: 2
+            - !type:SpawnPrototype
+              prototype: MaterialWoodPlank1
+              amount: 6
+          steps:
+            - tool: Screwing
+              doAfter: 1

@@ -1,0 +1,193 @@
+#Regal Chair
+- type: entity
+  name: regal chair
+  id: ChairRegal
+  parent: UnanchoredChairBase
+  description: A gilded chair. You think this might be paint actually.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Furniture/Chairs/regal_chair.rsi
+    state: base
+  - type: Damageable
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+    - trigger: # Excess damage, don't spawn entities
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 25
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank:
+            min: 1
+            max: 1
+  - type: Tag
+    tags:
+    - Wooden
+  - type: StaticPrice
+    price: 250
+
+#Regal Throne
+- type: entity
+  name: regal throne
+  id: ChairThrone
+  parent: ChairBase
+  description: A gaudy throne made of gold. Its too heavy to move.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Furniture/Chairs/throne.rsi
+    state: base
+
+#Sleek Office Chair
+- type: entity
+  name: sleek office chair
+  id: ChairOfficeSleek
+  parent: StoolBase
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Furniture/Chairs/sleek_office_chair.rsi
+    state: base
+# HL - add construction recipe
+  - type: Construction
+    graph: Seats
+    node: sleekOfficeChair
+
+#Comfy Chair Gray (Basic/Default)
+- type: entity
+  name: comfy chair
+  suffix: Gray
+  id: ComfyChair
+  parent: ChairBase
+  description: It looks comfy.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Furniture/Chairs/comfy_chair.rsi
+    layers:
+    - state: base
+      color: "#767e82"
+    noRot: true
+  - type: Icon
+    sprite: _Starlight/Structures/Furniture/Chairs/comfy_chair.rsi
+    state: base
+  - type: Construction
+    graph: Seats
+    node: chairComfy
+
+#Comfy Chair White
+- type: entity
+  name: comfy chair
+  suffix: White
+  id: ComfyChairWhite
+  parent: ChairBase
+  description: It looks comfy.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Furniture/Chairs/comfy_chair.rsi
+    layers:
+    - state: base
+      color: "#ebebeb"
+    noRot: true
+  - type: Icon
+    sprite: _Starlight/Structures/Furniture/Chairs/comfy_chair.rsi
+    state: base
+  - type: Construction
+    graph: Seats
+    node: chairWhite
+
+#Comfy Chair Blue
+- type: entity
+  name: comfy chair
+  suffix: Blue
+  id: ComfyChairBlue
+  parent: ChairBase
+  description: It looks comfy.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Furniture/Chairs/comfy_chair.rsi
+    layers:
+    - state: base
+      color: "#334e6d"
+    noRot: true
+  - type: Icon
+    sprite: _Starlight/Structures/Furniture/Chairs/comfy_chair.rsi
+    state: base
+  - type: Construction
+    graph: Seats
+    node: chairBlue
+
+#Comfy Chair Red
+- type: entity
+  name: comfy chair
+  suffix: Red
+  id: ComfyChairRed
+  parent: ChairBase
+  description: It looks comfy.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Furniture/Chairs/comfy_chair.rsi
+    layers:
+    - state: base
+      color: "#8c4141"
+    noRot: true
+  - type: Icon
+    sprite: _Starlight/Structures/Furniture/Chairs/comfy_chair.rsi
+    state: base
+  - type: Construction
+    graph: Seats
+    node: chairRed
+
+#Comfy Chair Green
+- type: entity
+  name: comfy chair
+  suffix: Green
+  id: ComfyChairGreen
+  parent: ChairBase
+  description: It looks comfy.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Furniture/Chairs/comfy_chair.rsi
+    layers:
+    - state: base
+      color: "#3c9950"
+    noRot: true
+  - type: Icon
+    sprite: _Starlight/Structures/Furniture/Chairs/comfy_chair.rsi
+    state: base
+  - type: Construction
+    graph: Seats
+    node: chairGreen
+
+#Comfy Chair Brown
+- type: entity
+  name: comfy chair
+  suffix: Brown
+  id: ComfyChairBrown
+  parent: ChairBase
+  description: It looks comfy.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Furniture/Chairs/comfy_chair.rsi
+    layers:
+    - state: base
+      color: "#6e594f"
+    noRot: true
+  - type: Icon
+    sprite: _Starlight/Structures/Furniture/Chairs/comfy_chair.rsi
+    state: base
+  - type: Construction
+    graph: Seats
+    node: chairBrown

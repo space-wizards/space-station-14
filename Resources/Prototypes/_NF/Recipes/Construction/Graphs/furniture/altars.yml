@@ -1,0 +1,594 @@
+- type: constructionGraph
+  id: AltarsGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: AltarFrameNode
+      completed:
+      - !type:SetAnchor
+        value: false
+      steps:
+      - material: Steel
+        amount: 4
+      - material: MetalRod
+        amount: 4
+        doAfter: 4
+
+  - node: AltarFrameNode
+    entity: AltarFrameNF
+    actions:
+    - !type:SnapToGrid {}
+    - !type:SetAnchor {}
+    edges:
+# Toolbox
+    - to: AltarToolboxNode
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - tag: Toolbox
+        name: construction-graph-tag-toolbox
+        store: altar_component
+        icon:
+          sprite: Objects/Tools/Toolboxes/toolbox_blue.rsi
+          state: icon
+      - material: Cloth
+        store: altar_cloth
+        amount: 3
+        doAfter: 2
+# Blue
+    - to: AltarConvertBlueNode
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - component: ExtinguishOnInteract # Not exclusive to candles I believe, but it's something that narrows down the list
+        name: construction-graph-component-extinguish-on-interact
+        store: altar_candle1
+        icon:
+          sprite: Objects/Misc/candles.rsi
+          state: candle-big
+      - component: ExtinguishOnInteract # Not exclusive to candles I believe, but it's something that narrows down the list
+        name: construction-graph-component-extinguish-on-interact
+        store: altar_candle2
+        icon:
+          sprite: Objects/Misc/candles.rsi
+          state: candle-big
+      - material: Cloth
+        store: altar_cloth
+        amount: 3
+        doAfter: 2
+# Red
+    - to: AltarConvertRedNode
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - component: FireExtinguisher
+        name: construction-graph-component-fire-extinguisher
+        store: altar_component
+        icon:
+          sprite: _NF/Objects/Misc/fire_extinguisher.rsi # Frontier
+          state: fire_extinguisher_closed
+      - component: ExtinguishOnInteract # Not exclusive to candles I believe, but it's something that narrows down the list
+        name: construction-graph-component-extinguish-on-interact
+        store: altar_candle1
+        icon:
+          sprite: Objects/Misc/candles.rsi
+          state: candle-big
+      - component: ExtinguishOnInteract # Not exclusive to candles I believe, but it's something that narrows down the list
+        name: construction-graph-component-extinguish-on-interact
+        store: altar_candle2
+        icon:
+          sprite: Objects/Misc/candles.rsi
+          state: candle-big
+      - material: Cloth
+        store: altar_cloth
+        amount: 3
+        doAfter: 2
+# Yellow
+    - to: AltarConvertYellowNode
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - component: PriceGun
+        name: construction-graph-component-price-gun
+        store: altar_component
+        icon:
+          sprite: Objects/Tools/appraisal-tool.rsi
+          state: icon
+      - component: ExtinguishOnInteract # Not exclusive to candles I believe, but it's something that narrows down the list
+        name: construction-graph-component-extinguish-on-interact
+        store: altar_candle1
+        icon:
+          sprite: Objects/Misc/candles.rsi
+          state: candle-big
+      - component: ExtinguishOnInteract # Not exclusive to candles I believe, but it's something that narrows down the list
+        name: construction-graph-component-extinguish-on-interact
+        store: altar_candle2
+        icon:
+          sprite: Objects/Misc/candles.rsi
+          state: candle-big
+      - material: Cloth
+        store: altar_cloth
+        amount: 3
+        doAfter: 2
+# Maint
+    - to: AltarConvertMaintNode
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - component: RandomFillSolution
+        name: construction-graph-component-random-fill-solution
+        store: altar_component
+        icon:
+          sprite: Objects/Specific/Chemistry/pills.rsi
+          state: pill1
+      - component: ExtinguishOnInteract # Not exclusive to candles I believe, but it's something that narrows down the list
+        name: construction-graph-component-extinguish-on-interact
+        store: altar_candle1
+        icon:
+          sprite: Objects/Misc/candles.rsi
+          state: candle-big
+      - component: ExtinguishOnInteract # Not exclusive to candles I believe, but it's something that narrows down the list
+        name: construction-graph-component-extinguish-on-interact
+        store: altar_candle2
+        icon:
+          sprite: Objects/Misc/candles.rsi
+          state: candle-big
+      - material: Cloth
+        store: altar_cloth
+        amount: 3
+        doAfter: 2
+# Burden
+    - to: AltarConvertBurdenNode
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - tag: Ore
+        name: construction-graph-tag-ore
+        store: altar_component
+        icon:
+          sprite: Objects/Materials/ore.rsi
+          state: iron
+      - component: ExtinguishOnInteract # Not exclusive to candles I believe, but it's something that narrows down the list
+        name: construction-graph-component-extinguish-on-interact
+        store: altar_candle1
+        icon:
+          sprite: Objects/Misc/candles.rsi
+          state: candle-big
+      - component: ExtinguishOnInteract # Not exclusive to candles I believe, but it's something that narrows down the list
+        name: construction-graph-component-extinguish-on-interact
+        store: altar_candle2
+        icon:
+          sprite: Objects/Misc/candles.rsi
+          state: candle-big
+      - material: Cloth
+        store: altar_cloth
+        amount: 3
+        doAfter: 2
+# White
+    - to: AltarConvertWhiteNode
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - component: Sharp
+        name: construction-graph-component-sharp
+        store: altar_component
+        icon:
+          sprite: Objects/Weapons/Melee/captain_sabre.rsi
+          state: icon
+      - component: ExtinguishOnInteract # Not exclusive to candles I believe, but it's something that narrows down the list
+        name: construction-graph-component-extinguish-on-interact
+        store: altar_candle1
+        icon:
+          sprite: Objects/Misc/candles.rsi
+          state: candle-big
+      - component: ExtinguishOnInteract # Not exclusive to candles I believe, but it's something that narrows down the list
+        name: construction-graph-component-extinguish-on-interact
+        store: altar_candle2
+        icon:
+          sprite: Objects/Misc/candles.rsi
+          state: candle-big
+      - material: Cloth
+        store: altar_cloth
+        amount: 3
+        doAfter: 2
+# Orange
+    - to: AltarConvertOrangeNode
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - tag: CrystalOrange
+        name: construction-graph-tag-crystal-orange
+        store: altar_component
+        icon:
+          sprite: Objects/Materials/Shards/crystal.rsi
+          state: shard1
+          color: "#ff8227"
+      - component: ExtinguishOnInteract # Not exclusive to candles I believe, but it's something that narrows down the list
+        name: construction-graph-component-extinguish-on-interact
+        store: altar_candle1
+        icon:
+          sprite: Objects/Misc/candles.rsi
+          state: candle-big
+      - component: ExtinguishOnInteract # Not exclusive to candles I believe, but it's something that narrows down the list
+        name: construction-graph-component-extinguish-on-interact
+        store: altar_candle2
+        icon:
+          sprite: Objects/Misc/candles.rsi
+          state: candle-big
+      - material: Cloth
+        store: altar_cloth
+        amount: 3
+        doAfter: 2
+# Technology
+    - to: AltarTechnologyNode
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - component: MachineBoard
+        name: construction-graph-component-machine-board
+        store: altar_component
+        icon:
+          sprite: Objects/Misc/module.rsi
+          state: generic
+      - material: Cloth
+        store: altar_cloth
+        amount: 3
+        doAfter: 2
+# Nanotrasen
+    - to: AltarNanotrasenNode
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - component: IdCard
+        name: construction-graph-component-id-card
+        store: altar_component
+        icon:
+          sprite: Objects/Misc/id_cards.rsi
+          state: default
+      - material: Cloth
+        store: altar_cloth
+        amount: 3
+        doAfter: 2
+# Chaos
+    - to: AltarChaosNode
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - component: Dice
+        name: construction-graph-component-dice
+        store: altar_component
+        icon:
+          sprite: Objects/Fun/dice.rsi
+          state: d20_20
+      - material: Cloth
+        store: altar_cloth
+        amount: 3
+        doAfter: 2
+# Druid
+    - to: AltarDruidNode
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - component: Seed
+        name: construction-graph-component-seed
+        store: altar_component
+        icon:
+          sprite: Objects/Specific/Hydroponics/seeds.rsi
+          state: seed
+      - material: Cloth
+        store: altar_cloth
+        amount: 3
+        doAfter: 2
+# Satana
+    - to: AltarSatanaNode
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - component: TabletopGame
+        name: construction-graph-component-tabletop-game
+        store: altar_component
+        icon:
+          sprite: Objects/Fun/Tabletop/Battlemaps/shipbm.rsi
+          state: icon
+      - material: Cloth
+        store: altar_cloth
+        amount: 3
+        doAfter: 2
+# Festival
+    - to: AltarConvertFestivalNode
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - component: Instrument
+        name: construction-graph-component-instrument
+        store: altar_component
+        icon:
+          sprite: Objects/Fun/Instruments/eguitar.rsi
+          state: icon
+      - material: Cloth
+        store: altar_cloth
+        amount: 3
+        doAfter: 2
+# Mail
+    - to: AltarMailNode
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - component: Mail
+        name: construction-graph-component-mail
+        store: altar_component
+        icon:
+          sprite: Nyanotrasen/Objects/Specific/Mail/mail.rsi
+          state: icon
+      - material: Cloth
+        store: altar_cloth
+        amount: 3
+        doAfter: 2
+# Space-Christian
+    - to: AltarSpaceChristianNode
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - component: Bible
+        name: construction-graph-component-bible
+        store: altar_component
+        icon:
+          sprite: Objects/Specific/Chapel/bible.rsi
+          state: icon
+      - component: ExtinguishOnInteract # Not exclusive to candles I believe, but it's something that narrows down the list
+        name: construction-graph-component-extinguish-on-interact
+        store: altar_candle1
+        icon:
+          sprite: Objects/Misc/candles.rsi
+          state: candle-big
+      - component: ExtinguishOnInteract # Not exclusive to candles I believe, but it's something that narrows down the list
+        name: construction-graph-component-extinguish-on-interact
+        store: altar_candle2
+        icon:
+          sprite: Objects/Misc/candles.rsi
+          state: candle-big
+      - material: Cloth
+        store: altar_cloth
+        amount: 3
+        doAfter: 2
+# Dismantle
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 4
+      - !type:SpawnPrototype
+        prototype: PartRodMetal
+        amount: 4
+      - !type:DeleteEntity {}
+      steps:
+      - tool: Prying
+        doAfter: 3
+# Final
+  - node: AltarToolboxNode
+    entity: AltarToolbox
+    edges:
+    - to: AltarFrameNode
+      conditions:
+      - !type:EntityAnchored {}
+      completed:
+      - !type:EmptyAllContainers
+        pickup: true
+        emptyAtUser: true
+      steps:
+      - tool: Prying
+        doAfter: 3
+
+  - node: AltarConvertMaintNode
+    entity: AltarConvertMaint
+    edges:
+    - to: AltarFrameNode
+      conditions:
+      - !type:EntityAnchored {}
+      completed:
+      - !type:EmptyAllContainers
+        pickup: true
+        emptyAtUser: true
+      steps:
+      - tool: Prying
+        doAfter: 3
+
+  - node: AltarConvertBlueNode
+    entity: AltarConvertBlue
+    edges:
+    - to: AltarFrameNode
+      conditions:
+      - !type:EntityAnchored {}
+      completed:
+      - !type:EmptyAllContainers
+        pickup: true
+        emptyAtUser: true
+      steps:
+      - tool: Prying
+        doAfter: 3
+
+  - node: AltarConvertBurdenNode
+    entity: AltarConvertBurden
+    edges:
+    - to: AltarFrameNode
+      conditions:
+      - !type:EntityAnchored {}
+      completed:
+      - !type:EmptyAllContainers
+        pickup: true
+        emptyAtUser: true
+      steps:
+      - tool: Prying
+        doAfter: 3
+
+  - node: AltarConvertRedNode
+    entity: AltarConvertRed
+    edges:
+    - to: AltarFrameNode
+      conditions:
+      - !type:EntityAnchored {}
+      completed:
+      - !type:EmptyAllContainers
+        pickup: true
+        emptyAtUser: true
+      steps:
+      - tool: Prying
+        doAfter: 3
+
+  - node: AltarConvertYellowNode
+    entity: AltarConvertYellow
+    edges:
+    - to: AltarFrameNode
+      conditions:
+      - !type:EntityAnchored {}
+      completed:
+      - !type:EmptyAllContainers
+        pickup: true
+        emptyAtUser: true
+      steps:
+      - tool: Prying
+        doAfter: 3
+
+  - node: AltarConvertWhiteNode
+    entity: AltarConvertWhite
+    edges:
+    - to: AltarFrameNode
+      conditions:
+      - !type:EntityAnchored {}
+      completed:
+      - !type:EmptyAllContainers
+        pickup: true
+        emptyAtUser: true
+      steps:
+      - tool: Prying
+        doAfter: 3
+
+  - node: AltarConvertOrangeNode
+    entity: AltarConvertOrange
+    edges:
+    - to: AltarFrameNode
+      conditions:
+      - !type:EntityAnchored {}
+      completed:
+      - !type:EmptyAllContainers
+        pickup: true
+        emptyAtUser: true
+      steps:
+      - tool: Prying
+        doAfter: 3
+
+  - node: AltarTechnologyNode
+    entity: AltarTechnology
+    edges:
+    - to: AltarFrameNode
+      conditions:
+      - !type:EntityAnchored {}
+      completed:
+      - !type:EmptyAllContainers
+        pickup: true
+        emptyAtUser: true
+      steps:
+      - tool: Prying
+        doAfter: 3
+
+  - node: AltarNanotrasenNode
+    entity: AltarNanotrasen
+    edges:
+    - to: AltarFrameNode
+      conditions:
+      - !type:EntityAnchored {}
+      completed:
+      - !type:EmptyAllContainers
+        pickup: true
+        emptyAtUser: true
+      steps:
+      - tool: Prying
+        doAfter: 3
+
+  - node: AltarChaosNode
+    entity: AltarChaos
+    edges:
+    - to: AltarFrameNode
+      conditions:
+      - !type:EntityAnchored {}
+      completed:
+      - !type:EmptyAllContainers
+        pickup: true
+        emptyAtUser: true
+      steps:
+      - tool: Prying
+        doAfter: 3
+
+  - node: AltarDruidNode
+    entity: AltarDruid
+    edges:
+    - to: AltarFrameNode
+      conditions:
+      - !type:EntityAnchored {}
+      completed:
+      - !type:EmptyAllContainers
+        pickup: true
+        emptyAtUser: true
+      steps:
+      - tool: Prying
+        doAfter: 3
+
+  - node: AltarSpaceChristianNode
+    entity: AltarSpaceChristian
+    edges:
+    - to: AltarFrameNode
+      conditions:
+      - !type:EntityAnchored {}
+      completed:
+      - !type:EmptyAllContainers
+        pickup: true
+        emptyAtUser: true
+      steps:
+      - tool: Prying
+        doAfter: 3
+
+  - node: AltarSatanaNode
+    entity: AltarSatana
+    edges:
+    - to: AltarFrameNode
+      conditions:
+      - !type:EntityAnchored {}
+      completed:
+      - !type:EmptyAllContainers
+        pickup: true
+        emptyAtUser: true
+      steps:
+      - tool: Prying
+        doAfter: 3
+
+  - node: AltarConvertFestivalNode
+    entity: AltarConvertFestival
+    edges:
+    - to: AltarFrameNode
+      conditions:
+      - !type:EntityAnchored {}
+      completed:
+      - !type:EmptyAllContainers
+        pickup: true
+        emptyAtUser: true
+      steps:
+      - tool: Prying
+        doAfter: 3
+
+  - node: AltarMailNode
+    entity: AltarMail
+    edges:
+    - to: AltarFrameNode
+      conditions:
+      - !type:EntityAnchored {}
+      completed:
+      - !type:EmptyAllContainers
+        pickup: true
+        emptyAtUser: true
+      steps:
+      - tool: Prying
+        doAfter: 3

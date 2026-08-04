@@ -1,0 +1,679 @@
+# HL - Make sofas and sofa-adjacent things craftable
+- type: constructionGraph
+  id: SLSofas
+  start: start
+  graph:
+    - node: start
+      actions:
+        - !type:DestroyEntity {}
+      edges:
+        - to: dinerLeft
+          steps:
+            - material: Plastic
+              amount: 4
+              doAfter: 2
+        - to: dinerRight
+          steps:
+            - material: Plastic
+              amount: 4
+              doAfter: 2
+        - to: dinerMiddle
+          steps:
+            - material: Plastic
+              amount: 4
+              doAfter: 2
+        - to: fancyLeft
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 2
+            - material: Cloth
+              amount: 3
+        - to: fancyRight
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 2
+            - material: Cloth
+              amount: 3
+        - to: fancyMiddle
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 2
+            - material: Cloth
+              amount: 3
+        - to: grayCorner
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 2
+            - material: Cloth
+              amount: 3
+        - to: grayLeft
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 2
+            - material: Cloth
+              amount: 3
+        - to: grayRight
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 2
+            - material: Cloth
+              amount: 3
+        - to: grayMiddle
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 2
+            - material: Cloth
+              amount: 3
+        - to: blueCorner
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 2
+            - material: Cloth
+              amount: 3
+        - to: blueLeft
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 2
+            - material: Cloth
+              amount: 3
+        - to: blueRight
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 2
+            - material: Cloth
+              amount: 3
+        - to: blueMiddle
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 2
+            - material: Cloth
+              amount: 3
+        - to: greenCorner
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 2
+            - material: Cloth
+              amount: 3
+        - to: greenLeft
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 2
+            - material: Cloth
+              amount: 3
+        - to: greenRight
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 2
+            - material: Cloth
+              amount: 3
+        - to: greenMiddle
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 2
+            - material: Cloth
+              amount: 3
+        - to: brownCorner
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 2
+            - material: Cloth
+              amount: 3
+        - to: brownLeft
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 2
+            - material: Cloth
+              amount: 3
+        - to: brownRight
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 2
+            - material: Cloth
+              amount: 3
+        - to: brownMiddle
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 2
+            - material: Cloth
+              amount: 3
+        - to: redCorner
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 2
+            - material: Cloth
+              amount: 3
+        - to: redLeft
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 2
+            - material: Cloth
+              amount: 3
+        - to: redRight
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 2
+            - material: Cloth
+              amount: 3
+        - to: redMiddle
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 2
+            - material: Cloth
+              amount: 3
+        - to: whiteCorner
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 2
+            - material: Cloth
+              amount: 3
+        - to: whiteLeft
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 2
+            - material: Cloth
+              amount: 3
+        - to: whiteRight
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 2
+            - material: Cloth
+              amount: 3
+        - to: whiteMiddle
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 2
+            - material: Cloth
+              amount: 3
+
+    - node: dinerLeft
+      entity: DinerEndLeft
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetPlastic1
+              amount: 4
+          steps:
+            - tool: Screwing
+              doAfter: 2
+    - node: dinerRight
+      entity: DinerEndRight
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetPlastic1
+              amount: 4
+          steps:
+            - tool: Screwing
+              doAfter: 2
+    - node: dinerMiddle
+      entity: DinerMiddle
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetPlastic1
+              amount: 4
+          steps:
+            - tool: Screwing
+              doAfter: 2
+    - node: fancyLeft
+      entity: SofaFancyEndLeft
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 3
+          steps:
+            - tool: Cutting
+              doAfter: 1
+            - tool: Screwing
+              doAfter: 1
+    - node: fancyRight
+      entity: SofaFancyEndRight
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 3
+          steps:
+            - tool: Cutting
+              doAfter: 1
+            - tool: Screwing
+              doAfter: 1
+    - node: fancyMiddle
+      entity: SofaFancyMiddle
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 3
+          steps:
+            - tool: Cutting
+              doAfter: 1
+            - tool: Screwing
+              doAfter: 1
+    - node: grayCorner
+      entity: SofaCorner
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 3
+          steps:
+            - tool: Cutting
+              doAfter: 1
+            - tool: Screwing
+              doAfter: 1
+    - node: grayLeft
+      entity: SofaEndLeft
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 3
+          steps:
+            - tool: Cutting
+              doAfter: 1
+            - tool: Screwing
+              doAfter: 1
+    - node: grayRight
+      entity: SofaEndRight
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 3
+          steps:
+            - tool: Cutting
+              doAfter: 1
+            - tool: Screwing
+              doAfter: 1
+    - node: grayMiddle
+      entity: SofaMiddle
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 3
+          steps:
+            - tool: Cutting
+              doAfter: 1
+            - tool: Screwing
+              doAfter: 1
+    - node: blueCorner
+      entity: SofaCornerBlue
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 3
+          steps:
+            - tool: Cutting
+              doAfter: 1
+            - tool: Screwing
+              doAfter: 1
+    - node: blueLeft
+      entity: SofaEndLeftBlue
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 3
+          steps:
+            - tool: Cutting
+              doAfter: 1
+            - tool: Screwing
+              doAfter: 1
+    - node: blueRight
+      entity: SofaEndRightBlue
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 3
+          steps:
+            - tool: Cutting
+              doAfter: 1
+            - tool: Screwing
+              doAfter: 1
+    - node: blueMiddle
+      entity: SofaMiddleBlue
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 3
+          steps:
+            - tool: Cutting
+              doAfter: 1
+            - tool: Screwing
+              doAfter: 1
+    - node: greenCorner
+      entity: SofaCornerGreen
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 3
+          steps:
+            - tool: Cutting
+              doAfter: 1
+            - tool: Screwing
+              doAfter: 1
+    - node: greenLeft
+      entity: SofaEndLeftGreen
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 3
+          steps:
+            - tool: Cutting
+              doAfter: 1
+            - tool: Screwing
+              doAfter: 1
+    - node: greenRight
+      entity: SofaEndRightGreen
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 3
+          steps:
+            - tool: Cutting
+              doAfter: 1
+            - tool: Screwing
+              doAfter: 1
+    - node: greenMiddle
+      entity: SofaMiddleGreen
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 3
+          steps:
+            - tool: Cutting
+              doAfter: 1
+            - tool: Screwing
+              doAfter: 1
+    - node: brownCorner
+      entity: SofaCornerBrown
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 3
+          steps:
+            - tool: Cutting
+              doAfter: 1
+            - tool: Screwing
+              doAfter: 1
+    - node: brownLeft
+      entity: SofaEndLeftBrown
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 3
+          steps:
+            - tool: Cutting
+              doAfter: 1
+            - tool: Screwing
+              doAfter: 1
+    - node: brownRight
+      entity: SofaEndRightBrown
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 3
+          steps:
+            - tool: Cutting
+              doAfter: 1
+            - tool: Screwing
+              doAfter: 1
+    - node: brownMiddle
+      entity: SofaMiddleBrown
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 3
+          steps:
+            - tool: Cutting
+              doAfter: 1
+            - tool: Screwing
+              doAfter: 1
+    - node: redCorner
+      entity: SofaCornerRed
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 3
+          steps:
+            - tool: Cutting
+              doAfter: 1
+            - tool: Screwing
+              doAfter: 1
+    - node: redLeft
+      entity: SofaEndLeftRed
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 3
+          steps:
+            - tool: Cutting
+              doAfter: 1
+            - tool: Screwing
+              doAfter: 1
+    - node: redRight
+      entity: SofaEndRightRed
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 3
+          steps:
+            - tool: Cutting
+              doAfter: 1
+            - tool: Screwing
+              doAfter: 1
+    - node: redMiddle
+      entity: SofaMiddleRed
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 3
+          steps:
+            - tool: Cutting
+              doAfter: 1
+            - tool: Screwing
+              doAfter: 1
+    - node: whiteCorner
+      entity: SofaCornerWhite
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 3
+          steps:
+            - tool: Cutting
+              doAfter: 1
+            - tool: Screwing
+              doAfter: 1
+    - node: whiteLeft
+      entity: SofaEndLeftWhite
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 3
+          steps:
+            - tool: Cutting
+              doAfter: 1
+            - tool: Screwing
+              doAfter: 1
+    - node: whiteRight
+      entity: SofaEndRightWhite
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 3
+          steps:
+            - tool: Cutting
+              doAfter: 1
+            - tool: Screwing
+              doAfter: 1
+    - node: whiteMiddle
+      entity: SofaMiddleWhite
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 3
+          steps:
+            - tool: Cutting
+              doAfter: 1
+            - tool: Screwing
+              doAfter: 1

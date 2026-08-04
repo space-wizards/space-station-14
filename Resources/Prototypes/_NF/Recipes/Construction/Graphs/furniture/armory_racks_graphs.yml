@@ -1,0 +1,149 @@
+- type: constructionGraph
+  id: WeaponRackConstructionGraph
+  start: start
+  graph:
+  - node: start
+    actions:
+      - !type:SpawnPrototype
+        prototype: PartRodMetal1
+        amount: 5
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 10
+      - !type:SpawnPrototype
+        prototype: CableApcStack1
+        amount: 2
+      - !type:DeleteEntity {}
+
+    edges:
+      - to: GunRackNode
+        completed:
+          - !type:SnapToGrid {}
+        steps:
+          - material: MetalRod
+            amount: 5
+            doAfter: 2
+          - material: Steel
+            amount: 10
+            doAfter: 2
+          - material: Cable
+            amount: 2
+            doAfter: 1
+
+      - to: GunRackWallmountedNode
+        completed:
+          - !type:SnapToGrid {}
+        steps:
+          - material: MetalRod
+            amount: 5
+            doAfter: 2
+          - material: Steel
+            amount: 10
+            doAfter: 2
+          - material: Cable
+            amount: 2
+            doAfter: 1
+
+      - to: MeleeRackNode
+        completed:
+          - !type:SnapToGrid {}
+        steps:
+          - material: MetalRod
+            amount: 5
+            doAfter: 2
+          - material: Steel
+            amount: 10
+            doAfter: 2
+          - material: Cable
+            amount: 2
+            doAfter: 1
+
+      - to: MeleeRackWallmountedNode
+        completed:
+          - !type:SnapToGrid {}
+        steps:
+          - material: MetalRod
+            amount: 5
+            doAfter: 2
+          - material: Steel
+            amount: 10
+            doAfter: 2
+          - material: Cable
+            amount: 2
+            doAfter: 1
+
+      - to: PistolRackNode
+        completed:
+          - !type:SnapToGrid {}
+        steps:
+          - material: MetalRod
+            amount: 4
+            doAfter: 2
+          - material: Steel
+            amount: 6
+            doAfter: 2
+          - material: Cable
+            amount: 2
+            doAfter: 1
+
+      - to: PistolRackWallmountedNode
+        completed:
+          - !type:SnapToGrid {}
+        steps:
+          - material: MetalRod
+            amount: 4
+            doAfter: 2
+          - material: Steel
+            amount: 6
+            doAfter: 2
+          - material: Cable
+            amount: 2
+            doAfter: 1
+
+  - node: GunRackNode
+    entity: StructureGunRack
+    edges:
+      - to: start
+        steps:
+          - tool: Screwing
+            doAfter: 5
+
+  - node: GunRackWallmountedNode
+    entity: StructureGunRackWallmounted
+    edges:
+      - to: start
+        steps:
+          - tool: Screwing
+            doAfter: 5
+
+  - node: MeleeRackNode
+    entity: StructureMeleeWeaponRack
+    edges:
+      - to: start
+        steps:
+          - tool: Screwing
+            doAfter: 5
+
+  - node: MeleeRackWallmountedNode
+    entity: StructureMeleeWeaponRackWallmounted
+    edges:
+      - to: start
+        steps:
+          - tool: Screwing
+            doAfter: 5
+
+  - node: PistolRackNode
+    entity: StructurePistolRack
+    edges:
+      - to: start
+        steps:
+          - tool: Screwing
+            doAfter: 5
+
+  - node: PistolRackWallmountedNode
+    entity: StructurePistolRackWallmounted
+    edges:
+      - to: start
+        steps:
+          - tool: Screwing
+            doAfter: 5

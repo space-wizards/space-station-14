@@ -1,0 +1,19 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Icebox based on sink-fill-1 and sink_wide-fill-1 made by Topy for SS14, edited by DustyLens",
+    "states": [
+        {
+            "name": "icebox",
+            "directions": 4
+        },
+        {
+            "name": "icebox_fill-1",
+            "directions": 4
+        }
+    ]
+}

@@ -1,0 +1,799 @@
+# Beds
+- type: construction
+  id: Mattres
+  graph: bedNF
+  startNode: start
+  targetNode: mattress
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: PsychBed
+  graph: bedNF
+  startNode: start
+  targetNode: PsychBed
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+# Seat
+- type: construction
+  id: BenchSofaMiddle
+  graph: SofasGraph
+  startNode: start
+  targetNode: BenchSofaMiddleNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BenchSofaLeft
+  graph: SofasGraph
+  startNode: start
+  targetNode: BenchSofaLeftNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BenchSofaRight
+  graph: SofasGraph
+  startNode: start
+  targetNode: BenchSofaRightNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BenchSofaCorner
+  graph: SofasGraph
+  startNode: start
+  targetNode: BenchSofaCornerNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BenchSofaCorpMiddle
+  graph: SofasGraph
+  startNode: start
+  targetNode: BenchSofaCorpMiddleNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BenchSofaCorpLeft
+  graph: SofasGraph
+  startNode: start
+  targetNode: BenchSofaCorpLeftNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BenchSofaCorpRight
+  graph: SofasGraph
+  startNode: start
+  targetNode: BenchSofaCorpRightNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BenchSofaCorpCorner
+  graph: SofasGraph
+  startNode: start
+  targetNode: BenchSofaCorpCornerNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BenchSteelMiddle
+  graph: BenchesGraph
+  startNode: start
+  targetNode: BenchSteelMiddleNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BenchSteelRight
+  graph: BenchesGraph
+  startNode: start
+  targetNode: BenchSteelRightNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BenchSteelLeft
+  graph: BenchesGraph
+  startNode: start
+  targetNode: BenchSteelLeftNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BenchPewMiddle
+  graph: BenchesGraph
+  startNode: start
+  targetNode: BenchPewMiddleNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BenchPewRight
+  graph: BenchesGraph
+  startNode: start
+  targetNode: BenchPewRightNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BenchPewLeft
+  graph: BenchesGraph
+  startNode: start
+  targetNode: BenchPewLeftNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BenchParkMiddle
+  graph: BenchesGraph
+  startNode: start
+  targetNode: BenchParkMiddleNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BenchParkRight
+  graph: BenchesGraph
+  startNode: start
+  targetNode: BenchParkRightNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BenchParkLeft
+  graph: BenchesGraph
+  startNode: start
+  targetNode: BenchParkLeftNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BenchSteelWhiteMiddle
+  graph: BenchesGraph
+  startNode: start
+  targetNode: BenchSteelWhiteMiddleNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BenchSteelWhiteRight
+  graph: BenchesGraph
+  startNode: start
+  targetNode: BenchSteelWhiteRightNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BenchSteelWhiteLeft
+  graph: BenchesGraph
+  startNode: start
+  targetNode: BenchSteelWhiteLeftNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BenchParkBambooMiddle
+  graph: BenchesGraph
+  startNode: start
+  targetNode: BenchParkBambooMiddleNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BenchParkBambooRight
+  graph: BenchesGraph
+  startNode: start
+  targetNode: BenchParkBambooRightNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BenchParkBambooLeft
+  graph: BenchesGraph
+  startNode: start
+  targetNode: BenchParkBambooLeftNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+# Storage
+- type: construction
+  id: LockerWoodenGeneric
+  graph: StorageFurnitureGraph
+  startNode: start
+  targetNode: LockerWoodenGenericNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+# Decorations (fireplace)
+
+- type: construction
+  id: Fireplace
+  graph: FiresGraph
+  startNode: start
+  targetNode: FireplaceNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+# Banners
+- type: construction
+  id: BannerNanotrasen
+  graph: BannersGraph
+  startNode: start
+  targetNode: BannerNanotrasenNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BannerCargo
+  graph: BannersGraph
+  startNode: start
+  targetNode: BannerCargoNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BannerEngineering
+  graph: BannersGraph
+  startNode: start
+  targetNode: BannerEngineeringNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BannerMedical
+  graph: BannersGraph
+  startNode: start
+  targetNode: BannerMedicalNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BannerScience
+  graph: BannersGraph
+  startNode: start
+  targetNode: BannerScienceNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BannerSecurity
+  graph: BannersGraph
+  startNode: start
+  targetNode: BannerSecurityNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BannerBlue
+  graph: BannersGraph
+  startNode: start
+  targetNode: BannerBlueNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BannerRed
+  graph: BannersGraph
+  startNode: start
+  targetNode: BannerRedNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BannerYellow
+  graph: BannersGraph
+  startNode: start
+  targetNode: BannerYellowNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BannerGreen
+  graph: BannersGraph
+  startNode: start
+  targetNode: BannerGreenNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BannerRevolution
+  graph: BannersGraph
+  startNode: start
+  targetNode: BannerRevolutionNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BannerSyndicate
+  graph: BannersGraph
+  startNode: start
+  targetNode: BannerSyndicateNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BannerFsb
+  graph: BannersGraph
+  startNode: start
+  targetNode: BannerFsb
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+# Altars
+- type: construction
+  id: AltarToolbox
+  graph: AltarsGraph
+  startNode: start
+  targetNode: AltarToolboxNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: AltarConvertMaint
+  graph: AltarsGraph
+  startNode: start
+  targetNode: AltarConvertMaintNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: AltarConvertBlue
+  graph: AltarsGraph
+  startNode: start
+  targetNode: AltarConvertBlueNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: AltarConvertBurden
+  graph: AltarsGraph
+  startNode: start
+  targetNode: AltarConvertBurdenNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: AltarConvertYellow
+  graph: AltarsGraph
+  startNode: start
+  targetNode: AltarConvertYellowNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: AltarConvertRed
+  graph: AltarsGraph
+  startNode: start
+  targetNode: AltarConvertRedNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: AltarConvertWhite
+  graph: AltarsGraph
+  startNode: start
+  targetNode: AltarConvertWhiteNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: AltarConvertOrange
+  graph: AltarsGraph
+  startNode: start
+  targetNode: AltarConvertOrangeNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: AltarTechnology
+  graph: AltarsGraph
+  startNode: start
+  targetNode: AltarTechnologyNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: AltarNanotrasen
+  graph: AltarsGraph
+  startNode: start
+  targetNode: AltarNanotrasenNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: AltarChaos
+  graph: AltarsGraph
+  startNode: start
+  targetNode: AltarChaosNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: AltarDruid
+  graph: AltarsGraph
+  startNode: start
+  targetNode: AltarDruidNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: AltarSpaceChristian
+  graph: AltarsGraph
+  startNode: start
+  targetNode: AltarSpaceChristianNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: AltarSatana
+  graph: AltarsGraph
+  startNode: start
+  targetNode: AltarSatanaNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: AltarConvertFestival
+  graph: AltarsGraph
+  startNode: start
+  targetNode: AltarConvertFestivalNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: AltarMail
+  graph: AltarsGraph
+  startNode: start
+  targetNode: AltarMailNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: ChairWoodFancyBlack
+  graph: Seat
+  startNode: start
+  targetNode: chairWoodFancyBlack
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: ChairWoodFancyBlue
+  graph: Seat
+  startNode: start
+  targetNode: chairWoodFancyBlue
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: ChairWoodFancyCyan
+  graph: Seat
+  startNode: start
+  targetNode: chairWoodFancyCyan
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: ChairWoodFancyGreen
+  graph: Seat
+  startNode: start
+  targetNode: chairWoodFancyGreen
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: ChairWoodFancyOrange
+  graph: Seat
+  startNode: start
+  targetNode: chairWoodFancyOrange
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: ChairWoodFancyPink
+  graph: Seat
+  startNode: start
+  targetNode: chairWoodFancyPink
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: ChairWoodFancyPurple
+  graph: Seat
+  startNode: start
+  targetNode: chairWoodFancyPurple
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: ChairWoodFancyRed
+  graph: Seat
+  startNode: start
+  targetNode: chairWoodFancyRed
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: ChairWoodFancyWhite
+  graph: Seat
+  startNode: start
+  targetNode: chairWoodFancyWhite
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+# Folding table
+- type: construction
+  id: TableFolding
+  graph: TableFoldingGraph
+  startNode: start
+  targetNode: TableFolding
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked

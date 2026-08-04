@@ -1,0 +1,330 @@
+# HL - Make Benches Craftable
+- type: construction
+  id: bluecornerbench
+  name: blue-corner-bench
+  graph: SLBenches
+  startNode: start
+  targetNode: blueCorner
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: blueleftbench
+  name: blue-left-bench
+  graph: SLBenches
+  startNode: start
+  targetNode: blueLeft
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: bluerightbench
+  name: blue-right-bench
+  graph: SLBenches
+  startNode: start
+  targetNode: blueRight
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: bluemiddlebench
+  name: blue-middle-bench
+  graph: SLBenches
+  startNode: start
+  targetNode: blueMiddle
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: bluesolobench
+  name: blue-solo-bench
+  graph: SLBenches
+  startNode: start
+  targetNode: blueSolo
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+
+- type: construction
+  id: cornerbench
+  name: comfy-corner-bench
+  graph: SLBenches
+  startNode: start
+  targetNode: comfyCorner
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: leftbench
+  name: comfy-left-bench
+  graph: SLBenches
+  startNode: start
+  targetNode: comfyLeft
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: rightbench
+  name: comfy-right-bench
+  graph: SLBenches
+  startNode: start
+  targetNode: comfyRight
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: middlebench
+  name: comfy-middle-bench
+  graph: SLBenches
+  startNode: start
+  targetNode: comfyMiddle
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: solobench
+  name: comfy-solo-bench
+  graph: SLBenches
+  startNode: start
+  targetNode: comfySolo
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+
+- type: construction
+  id: graycornerbench
+  name: gray-corner-bench
+  graph: SLBenches
+  startNode: start
+  targetNode: grayCorner
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: grayleftbench
+  name: gray-left-bench
+  graph: SLBenches
+  startNode: start
+  targetNode: grayLeft
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: grayrightbench
+  name: gray-right-bench
+  graph: SLBenches
+  startNode: start
+  targetNode: grayRight
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: graymiddlebench
+  name: gray-middle-bench
+  graph: SLBenches
+  startNode: start
+  targetNode: grayMiddle
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: graysolobench
+  name: gray-solo-bench
+  graph: SLBenches
+  startNode: start
+  targetNode: graySolo
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+
+- type: construction
+  id: redcornerbench
+  name: red-corner-bench
+  graph: SLBenches
+  startNode: start
+  targetNode: redCorner
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: redleftbench
+  name: red-left-bench
+  graph: SLBenches
+  startNode: start
+  targetNode: redLeft
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: redrightbench
+  name: red-right-bench
+  graph: SLBenches
+  startNode: start
+  targetNode: redRight
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: redmiddlebench
+  name: red-middle-bench
+  graph: SLBenches
+  startNode: start
+  targetNode: redMiddle
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: redsolobench
+  name: red-solo-bench
+  graph: SLBenches
+  startNode: start
+  targetNode: redSolo
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+
+- type: construction
+  id: greencornerbench
+  name: green-corner-bench
+  graph: SLBenches
+  startNode: start
+  targetNode: greenCorner
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: greenleftbench
+  name: green-left-bench
+  graph: SLBenches
+  startNode: start
+  targetNode: greenLeft
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: greenrightbench
+  name: green-right-bench
+  graph: SLBenches
+  startNode: start
+  targetNode: greenRight
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: greenmiddlebench
+  name: green-middle-bench
+  graph: SLBenches
+  startNode: start
+  targetNode: greenMiddle
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: greensolobench
+  name: green-solo-bench
+  graph: SLBenches
+  startNode: start
+  targetNode: greenSolo
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+

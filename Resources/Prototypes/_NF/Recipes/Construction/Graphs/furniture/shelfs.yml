@@ -1,0 +1,104 @@
+- type: constructionGraph
+  id: WallFreezer
+  start: start
+  graph:
+  - node: start
+    edges:
+# White wall freezer
+    - to: ShelfWallFreezerWhite
+      completed:
+        - !type:SnapToGrid
+      steps:
+      - material: Steel
+        amount: 5
+      - material: Glass
+        amount: 1
+        doAfter: 1
+      - material: Glass
+        amount: 1
+        doAfter: 1
+      - material: Cable
+        amount: 2
+        doAfter: 5
+      - tag: FreezerElectronics
+        name: construction-graph-tag-freezer-electronics-circuit-board
+        icon:
+          sprite: Objects/Misc/module.rsi
+          state: door_electronics
+# White wall freezer deconstructs
+  - node: ShelfWallFreezerWhite
+    entity: ShelfWallFreezerWhite
+    edges:
+    - to: start
+      steps:
+      - tool: Screwing
+        doAfter: 5
+      conditions:
+      - !type:StorageWelded
+        welded: false
+      - !type:Locked
+        locked: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 5
+      - !type:SpawnPrototype
+        prototype: CableApcStack1
+        amount: 2
+      - !type:SpawnPrototype
+        prototype: SheetGlass1
+        amount: 2
+      - !type:SpawnPrototype
+        prototype: FreezerElectronics
+        amount: 1
+      - !type:EmptyAllContainers
+      - !type:DeleteEntity
+# Dark wall freezer
+    - to: ShelfWallFreezerDark
+      completed:
+        - !type:SnapToGrid
+      steps:
+      - material: Steel
+        amount: 5
+      - material: Glass
+        amount: 1
+        doAfter: 1
+      - material: Glass
+        amount: 1
+        doAfter: 1
+      - material: Cable
+        amount: 2
+        doAfter: 5
+      - tag: FreezerElectronics
+        name: construction-graph-tag-freezer-electronics-circuit-board
+        icon:
+          sprite: Objects/Misc/module.rsi
+          state: door_electronics
+# Dark wall freezer deconstructs
+  - node: ShelfWallFreezerDark
+    entity: ShelfWallFreezerDark
+    edges:
+    - to: start
+      steps:
+      - tool: Screwing
+        doAfter: 5
+      conditions:
+      - !type:StorageWelded
+        welded: false
+      - !type:Locked
+        locked: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 5
+      - !type:SpawnPrototype
+        prototype: CableApcStack1
+        amount: 2
+      - !type:SpawnPrototype
+        prototype: SheetGlass1
+        amount: 2
+      - !type:SpawnPrototype
+        prototype: FreezerElectronics
+        amount: 1
+      - !type:EmptyAllContainers
+      - !type:DeleteEntity

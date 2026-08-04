@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Edit by Conflee, originals Taken from tgstation at commit https://github.com/tgstation/tgstation/blob/HEAD/icons/map_icons/objects.dmi.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "base",
+      "directions": 4
+    },
+    {
+      "name": "cover",
+      "directions": 4
+    },
+    {
+      "name": "full",
+      "directions": 4
+    }
+  ]
+}

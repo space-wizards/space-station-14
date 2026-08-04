@@ -1,0 +1,47 @@
+{
+    "version": 1,
+    "license": "CC-BY-NC-SA-4.0",
+    "copyright": "Content created by GhostPrince for Frontier Server",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states": [
+      {
+        "name": "wooden_fancy-black",
+        "directions": 4
+      },
+      {
+        "name": "wooden_fancy-blue",
+        "directions": 4
+      },
+      {
+        "name": "wooden_fancy-cyan",
+        "directions": 4
+      },
+      {
+        "name": "wooden_fancy-green",
+        "directions": 4
+      },
+      {
+        "name": "wooden_fancy-orange",
+        "directions": 4
+      },
+      {
+        "name": "wooden_fancy-pink",
+        "directions": 4
+      },
+      {
+        "name": "wooden_fancy-purple",
+        "directions": 4
+      },
+      {
+        "name": "wooden_fancy-red",
+        "directions": 4
+      },
+      {
+        "name": "wooden_fancy-white",
+        "directions": 4
+      }
+    ]
+  }

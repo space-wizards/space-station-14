@@ -192,29 +192,6 @@
     node: chairOfficeDark
 
 - type: entity
-  name: comfy chair
-  id: ComfyChair
-  parent: ChairBase
-  description: It looks comfy.
-  components:
-  - type: Sprite
-    state: comfy
-  - type: Construction
-    graph: Seat
-    node: chairComfy
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 50
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
-
-- type: entity
   name: pilot seat
   id: ChairPilotSeat
   parent: ChairBase

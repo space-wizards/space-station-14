@@ -1,0 +1,170 @@
+# HL - Make the sleek office chair and comfy chairs craftable
+- type: constructionGraph
+  id: Seats
+  start: start
+  graph:
+    - node: start
+      actions:
+        - !type:DestroyEntity {}
+      edges:
+        - to: sleekOfficeChair
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 1
+            - material: Cloth
+              amount: 2
+
+        - to: chairComfy
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 1
+            - material: Cloth
+              amount: 2
+
+        - to: chairWhite
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 1
+            - material: Cloth
+              amount: 2
+
+        - to: chairBlue
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 1
+            - material: Cloth
+              amount: 2
+
+        - to: chairRed
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 1
+            - material: Cloth
+              amount: 2
+
+        - to: chairGreen
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 1
+            - material: Cloth
+              amount: 2
+
+        - to: chairBrown
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 1
+            - material: Cloth
+              amount: 2
+
+
+    - node: sleekOfficeChair
+      entity: ChairOfficeSleek
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 2
+          steps:
+            - tool: Screwing
+              doAfter: 1
+
+    - node: chairComfy
+      entity: ComfyChair
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 2
+          steps:
+            - tool: Screwing
+              doAfter: 1
+
+    - node: chairWhite
+      entity: ComfyChairWhite
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 2
+          steps:
+            - tool: Screwing
+              doAfter: 1
+
+    - node: chairBlue
+      entity: ComfyChairBlue
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 2
+          steps:
+            - tool: Screwing
+              doAfter: 1
+
+    - node: chairRed
+      entity: ComfyChairRed
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 2
+          steps:
+            - tool: Screwing
+              doAfter: 1
+
+    - node: chairGreen
+      entity: ComfyChairGreen
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 2
+          steps:
+            - tool: Screwing
+              doAfter: 1
+
+    - node: chairBrown
+      entity: ComfyChairBrown
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 2
+          steps:
+            - tool: Screwing
+              doAfter: 1

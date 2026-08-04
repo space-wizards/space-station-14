@@ -1,0 +1,90 @@
+# HL - Make the sleek office chair and comfy chairs craftable
+- type: construction
+  id: SleekOfficeChair
+  graph: Seats
+  startNode: start
+  targetNode: sleekOfficeChair
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: chairComfy
+  name: chair-comfy-gray
+  graph: Seats
+  startNode: start
+  targetNode: chairComfy
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: chairComfyWhite
+  name: chair-comfy-white
+  graph: Seats
+  startNode: start
+  targetNode: chairWhite
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: chairComfyBlue
+  name: chair-comfy-blue
+  graph: Seats
+  startNode: start
+  targetNode: chairBlue
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: chairComfyRed
+  name: chair-comfy-red
+  graph: Seats
+  startNode: start
+  targetNode: chairRed
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: chairComfyGreen
+  name: chair-comfy-green
+  graph: Seats
+  startNode: start
+  targetNode: chairGreen
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: chairComfyBrown
+  name: chair-comfy-brown
+  graph: Seats
+  startNode: start
+  targetNode: chairBrown
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked

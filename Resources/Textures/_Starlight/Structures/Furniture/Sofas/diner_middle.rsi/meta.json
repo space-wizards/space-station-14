@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Edit by Conflee, originals Taken from monkestation at commit https://github.com/Monkestation/Monkestation2.0/blob/HEAD/monkestation/code/modules/get_off_my_lawn/icons/bed_chair.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "base",
+      "directions": 4
+    },
+    {
+      "name": "overlay",
+      "directions": 4
+    }
+  ]
+}

@@ -1,0 +1,390 @@
+# HL - Make sofas and sofa-adjacent things craftable
+- type: construction
+  id: SLSdinerLeft
+  name: diner-bench-left
+  graph: SLSofas
+  startNode: start
+  targetNode: dinerLeft
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: SLSdinerRight
+  name: diner-bench-right
+  graph: SLSofas
+  startNode: start
+  targetNode: dinerRight
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: SLSdinerMiddle
+  name: diner-bench-middle
+  graph: SLSofas
+  startNode: start
+  targetNode: dinerMiddle
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: SLSfancyRight
+  name: fancy-sofa-right
+  graph: SLSofas
+  startNode: start
+  targetNode: fancyRight
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: SLSfancyLeft
+  name: fancy-sofa-left
+  graph: SLSofas
+  startNode: start
+  targetNode: fancyLeft
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: SLSfancyMiddle
+  name: fancy-sofa-middle
+  graph: SLSofas
+  startNode: start
+  targetNode: fancyMiddle
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: SLSgrayCorner
+  name: sofa-gray-corner
+  graph: SLSofas
+  startNode: start
+  targetNode: grayCorner
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: SLSgrayLeft
+  name: sofa-gray-left
+  graph: SLSofas
+  startNode: start
+  targetNode: grayLeft
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: SLSgrayRight
+  name: sofa-gray-right
+  graph: SLSofas
+  startNode: start
+  targetNode: grayRight
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: SLSgrayMiddle
+  name: sofa-gray-middle
+  graph: SLSofas
+  startNode: start
+  targetNode: grayMiddle
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: SLSblueCorner
+  name: sofa-blue-corner
+  graph: SLSofas
+  startNode: start
+  targetNode: blueCorner
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: SLSblueLeft
+  name: sofa-blue-left
+  graph: SLSofas
+  startNode: start
+  targetNode: blueLeft
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: SLSblueRight
+  name: sofa-blue-right
+  graph: SLSofas
+  startNode: start
+  targetNode: blueRight
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: SLSblueMiddle
+  name: sofa-blue-middle
+  graph: SLSofas
+  startNode: start
+  targetNode: blueMiddle
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: SLSgreenCorner
+  name: sofa-green-corner
+  graph: SLSofas
+  startNode: start
+  targetNode: greenCorner
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: SLSgreenLeft
+  name: sofa-green-left
+  graph: SLSofas
+  startNode: start
+  targetNode: greenLeft
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: SLSgreenRight
+  name: sofa-green-right
+  graph: SLSofas
+  startNode: start
+  targetNode: greenRight
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: SLSgreenMiddle
+  name: sofa-green-middle
+  graph: SLSofas
+  startNode: start
+  targetNode: greenMiddle
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: SLSbrownCorner
+  name: sofa-brown-corner
+  graph: SLSofas
+  startNode: start
+  targetNode: brownCorner
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: SLSbrownLeft
+  name: sofa-brown-left
+  graph: SLSofas
+  startNode: start
+  targetNode: brownLeft
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: SLSbrownRight
+  name: sofa-brown-right
+  graph: SLSofas
+  startNode: start
+  targetNode: brownRight
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: SLSbrownMiddle
+  name: sofa-brown-middle
+  graph: SLSofas
+  startNode: start
+  targetNode: brownMiddle
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: SLSredCorner
+  name: sofa-red-corner
+  graph: SLSofas
+  startNode: start
+  targetNode: redCorner
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: SLSredLeft
+  name: sofa-red-left
+  graph: SLSofas
+  startNode: start
+  targetNode: redLeft
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: SLSredRight
+  name: sofa-red-right
+  graph: SLSofas
+  startNode: start
+  targetNode: redRight
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: SLSredMiddle
+  name: sofa-red-middle
+  graph: SLSofas
+  startNode: start
+  targetNode: redMiddle
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: SLSwhiteCorner
+  name: sofa-white-corner
+  graph: SLSofas
+  startNode: start
+  targetNode: whiteCorner
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: SLSwhiteLeft
+  name: sofa-white-left
+  graph: SLSofas
+  startNode: start
+  targetNode: whiteLeft
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: SLSwhiteRight
+  name: sofa-white-right
+  graph: SLSofas
+  startNode: start
+  targetNode: whiteRight
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: SLSwhiteMiddle
+  name: sofa-white-middle
+  graph: SLSofas
+  startNode: start
+  targetNode: whiteMiddle
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
