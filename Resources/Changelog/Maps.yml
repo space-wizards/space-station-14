@@ -1273,11 +1273,13 @@
   id: 157
   time: '2026-07-30T18:55:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44626
-- author: JiyuSoftware
+- author: SuperDicq
   changes:
-  - message: Added Sushi Station to the default map pool
+  - message: Added Sushi Station!
     type: Add
+  - message: Some more Sushi Station updates.
+    type: Tweak
   id: 158
-  time: '2026-07-30T22:31:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/45017
+  time: '2026-08-01T17:20:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/45064
 Order: 2

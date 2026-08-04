@@ -5544,3 +5544,100 @@
   id: 9934
   time: '2026-08-01T01:14:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/45066
+- author: whatston3
+  changes:
+  - message: Directional and rotating lights are once again working as expected.
+    type: Fix
+  id: 9935
+  time: '2026-08-01T03:31:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44957
+- author: mMikulas
+  changes:
+  - message: Fixed windoors being unable to close when placed adjacent to walls.
+    type: Fix
+  id: 9936
+  time: '2026-08-01T04:04:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/45058
+- author: TiniestShark
+  changes:
+  - message: Added in-hand and helmet sprites for all job plushies
+    type: Add
+  id: 9937
+  time: '2026-08-01T04:26:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43062
+- author: aada
+  changes:
+  - message: Disposals now are destructible again, and they eject their contents when destroyed.
+    type: Fix
+  id: 9938
+  time: '2026-08-01T04:38:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/45072
+- author: Hitlinemoss
+  changes:
+  - message: Station pets, rat kings, revenants, and space dragons no longer have a numeric identifier appended to their names. When "Add colors to character names" is enabled, their names are now also colorized.
+    type: Tweak
+  id: 9939
+  time: '2026-08-01T05:06:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42401
+- author: metalgearsloth
+  changes:
+  - message: Fix ghosts changing their transparency when hovering them.
+    type: Add
+  - message: Fix entity shaders not stacking, such as interactionoutline with the water shader.
+    type: Add
+  id: 9940
+  time: '2026-08-01T07:05:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44735
+- author: MissKay1994
+  changes:
+  - message: Goliath tentacles now stun for a much shorter duration
+    type: Tweak
+  id: 9941
+  time: '2026-08-01T10:10:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/45052
+- author: whatston3
+  changes:
+  - message: Vox and reptilians' tail wag now respects wearing a suit.
+    type: Fix
+  id: 9942
+  time: '2026-08-01T13:07:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44911
+- author: SnappingOpossum
+  changes:
+  - message: Tram drivers no longer start with a mind shield implanted.
+    type: Tweak
+  - message: Tram drivers can no longer start as antags or become sleeper agents.
+    type: Fix
+  - message: Tram drivers now properly start with gloves equipped when they have them selected.
+    type: Fix
+  id: 9943
+  time: '2026-08-01T14:39:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/45054
+- author: AndrewFenriz
+  changes:
+  - message: Vending machine contraband now updates immediately when its manager wire is cut or mended.
+    type: Fix
+  id: 9944
+  time: '2026-08-01T16:01:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44896
+- author: ActiveMammmoth
+  changes:
+  - message: Added an effect for artifacts that allows artifacts to emit light.
+    type: Add
+  id: 9945
+  time: '2026-08-01T16:32:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41186
+- author: Ataman
+  changes:
+  - message: Instruments that support percussion can now filter the percussion channel again.
+    type: Fix
+  id: 9946
+  time: '2026-08-01T16:50:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/45055
+- author: w3ryfrate
+  changes:
+  - message: Machine frames no longer crash the game when destroyed by a gun.
+    type: Fix
+  id: 9947
+  time: '2026-08-01T17:05:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/45077
