@@ -4,7 +4,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Sprite;
 
 /// <summary>
-/// Add a simple overlay to an entity
+/// Add a simple sprite overlay to an entity.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 public sealed partial class SimpleSpriteOverlayComponent : Component

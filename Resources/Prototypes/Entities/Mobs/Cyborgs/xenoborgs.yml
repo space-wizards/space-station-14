@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ BaseXenoborgChassis, BaseXenoborgTransponder ]
+  parent: [ BaseXenoborgChassis, BaseXenoborgTransponder, BaseXenoborgDestructible ]
   id: XenoborgEngi
   name: engi xenoborg
   suffix: with brain
@@ -90,6 +90,7 @@
     baseSprintSpeed : 2.2
   - type: MovementAlwaysTouching # it flies in space by pure will power
   - type: FlashImmunity
+    showInExamine: false
   - type: MobThresholds # tankier
     thresholds:
       0: Alive
@@ -147,7 +148,7 @@
         startingItem: PowerCellHigh
 
 - type: entity
-  parent: [ BaseXenoborgChassis, BaseXenoborgTransponder ]
+  parent: [ BaseXenoborgChassis, BaseXenoborgTransponder, BaseXenoborgDestructible ]
   id: XenoborgScout
   name: scout xenoborg
   suffix: with brain
@@ -174,6 +175,7 @@
       collection: FootstepHoverXenoborg
   - type: MovementAlwaysTouching # it flies in space with tiny thrusters
   - type: FlashImmunity
+    showInExamine: false
   - type: BorgChassis
     maxModules: 4
     hasMindState: xenoborg_scout_e
@@ -201,7 +203,7 @@
         startingItem: PowerCellHigh
 
 - type: entity
-  parent: [ BaseXenoborgChassis, BaseXenoborgTransponder ]
+  parent: [ BaseXenoborgChassis, BaseXenoborgTransponder, BaseXenoborgDestructible ]
   id: XenoborgStealth
   name: stealth xenoborg
   suffix: with brain

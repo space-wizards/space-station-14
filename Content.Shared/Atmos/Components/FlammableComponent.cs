@@ -1,16 +1,43 @@
 using Content.Shared.Alert;
 using Content.Shared.Damage;
+using Content.Shared.DisplacementMap;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Atmos.Components
 {
-    [RegisterComponent, NetworkedComponent]
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentPause] // TODO: Access restriction so that other systems have to use the API to modify fire stacks
     public sealed partial class FlammableComponent : Component
     {
+        /// <summary>
+        /// Is the mob currently resisting being on fire
+        /// (i.e. throwing themselves onto the ground to extinguish themselves)?
+        /// </summary>
+        [ViewVariables]
+        public bool Resisting => ResistCompleteTime.HasValue;
+
+        /// <summary>
+        /// The time stamp at which the active resist will be over and the mob's flame stacks will be reduced.
+        /// </summary>
+        [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+        [AutoPausedField]
+        public TimeSpan? ResistCompleteTime;
+
+        /// <summary>
+        /// Timestamp for the next update.
+        /// </summary>
+        [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+        [AutoPausedField]
+        public TimeSpan NextUpdate;
+
+        /// <summary>
+        /// The time resisting being on fire will take.
+        /// The mob will be paralyzed for this duration.
+        /// </summary>
         [DataField]
-        public bool Resisting;
+        public TimeSpan ResistTime = TimeSpan.FromSeconds(2);
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField]
@@ -83,5 +110,11 @@ namespace Content.Shared.Atmos.Components
 
         [DataField]
         public ProtoId<AlertPrototype> FireAlert = "Fire";
+
+        /// <summary>
+        /// If set, applies the displacement map associated with the <see cref="DisplacementDataPrototype"/>.
+        /// </summary>
+        [DataField]
+        public ProtoId<DisplacementDataPrototype>? Displacement;
     }
 }

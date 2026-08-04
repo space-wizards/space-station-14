@@ -1,7 +1,7 @@
 - type: entity
   abstract: true
   id: ReagentDispenserBase
-  parent: SmallConstructibleMachine
+  parent: [ SmallConstructibleMachine, BaseSmallConstructibleMachineDestructible ]
   placement:
     mode: SnapgridCenter
   components:
@@ -37,29 +37,24 @@
   - type: Anchorable
   - type: Pullable
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 400
+        damage: 100
       behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak
   - type: Storage
-    maxItemSize: Normal
+    maxItemSize: Large
     grid:
-    - 0,0,19,5
+    - 0,0,15,11
+  - type: UseDelay
+    delay: 0
   - type: ReagentDispenser
     beakerSlot:
       whitelistFailPopup: reagent-dispenser-component-cannot-put-entity-message
