@@ -1,5 +1,6 @@
 using Content.Shared.Tabletop.Components;
 using JetBrains.Annotations;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Tabletop;
@@ -23,12 +24,9 @@ public sealed partial class TabletopParchisSetup : TabletopSetup
     public EntProtoId BluePiecePrototype = "BlueTabletopPiece";
 
     /// <inheritdoc />
-    public override void SetupTabletop(TabletopGameComponent tabletop, IEntityManager entityManager)
+    public override void SetupTabletop(TabletopGameComponent tabletop, MapCoordinates coordinates, IEntityManager entityManager)
     {
-        if (tabletop.Position is not { } position)
-            return;
-
-        entityManager.SpawnEntity(BoardPrototype, position);
+        tabletop.Board = entityManager.SpawnEntity(BoardPrototype, coordinates);
 
         const float x1 = 6.25f;
         const float x2 = 4.25f;
@@ -37,27 +35,27 @@ public sealed partial class TabletopParchisSetup : TabletopSetup
         const float y2 = 4.25f;
 
         // Red pieces.
-        SpawnPiece(RedPiecePrototype, position.Offset(-x1, -y1), tabletop, entityManager);
-        SpawnPiece(RedPiecePrototype, position.Offset(-x1, -y2), tabletop, entityManager);
-        SpawnPiece(RedPiecePrototype, position.Offset(-x2, -y1), tabletop, entityManager);
-        SpawnPiece(RedPiecePrototype, position.Offset(-x2, -y2), tabletop, entityManager);
+        SpawnPiece(RedPiecePrototype, new(-x1, -y1), tabletop, entityManager);
+        SpawnPiece(RedPiecePrototype, new(-x1, -y2), tabletop, entityManager);
+        SpawnPiece(RedPiecePrototype, new(-x2, -y1), tabletop, entityManager);
+        SpawnPiece(RedPiecePrototype, new(-x2, -y2), tabletop, entityManager);
 
         // Green pieces.
-        SpawnPiece(GreenPiecePrototype, position.Offset(x1, -y1), tabletop, entityManager);
-        SpawnPiece(GreenPiecePrototype, position.Offset(x1, -y2), tabletop, entityManager);
-        SpawnPiece(GreenPiecePrototype, position.Offset(x2, -y1), tabletop, entityManager);
-        SpawnPiece(GreenPiecePrototype, position.Offset(x2, -y2), tabletop, entityManager);
+        SpawnPiece(GreenPiecePrototype, new(x1, -y1), tabletop, entityManager);
+        SpawnPiece(GreenPiecePrototype, new(x1, -y2), tabletop, entityManager);
+        SpawnPiece(GreenPiecePrototype, new(x2, -y1), tabletop, entityManager);
+        SpawnPiece(GreenPiecePrototype, new(x2, -y2), tabletop, entityManager);
 
         // Yellow pieces.
-        SpawnPiece(GreenPiecePrototype, position.Offset(x1, y1), tabletop, entityManager);
-        SpawnPiece(GreenPiecePrototype, position.Offset(x1, y2), tabletop, entityManager);
-        SpawnPiece(GreenPiecePrototype, position.Offset(x2, y1), tabletop, entityManager);
-        SpawnPiece(GreenPiecePrototype, position.Offset(x2, y2), tabletop, entityManager);
+        SpawnPiece(GreenPiecePrototype, new(x1, y1), tabletop, entityManager);
+        SpawnPiece(GreenPiecePrototype, new(x1, y2), tabletop, entityManager);
+        SpawnPiece(GreenPiecePrototype, new(x2, y1), tabletop, entityManager);
+        SpawnPiece(GreenPiecePrototype, new(x2, y2), tabletop, entityManager);
 
         // Blue pieces.
-        SpawnPiece(BluePiecePrototype, position.Offset(-x1, y1), tabletop, entityManager);
-        SpawnPiece(BluePiecePrototype, position.Offset(-x1, y2), tabletop, entityManager);
-        SpawnPiece(BluePiecePrototype, position.Offset(-x2, y1), tabletop, entityManager);
-        SpawnPiece(BluePiecePrototype, position.Offset(-x2, y2), tabletop, entityManager);
+        SpawnPiece(BluePiecePrototype, new(-x1, y1), tabletop, entityManager);
+        SpawnPiece(BluePiecePrototype, new(-x1, y2), tabletop, entityManager);
+        SpawnPiece(BluePiecePrototype, new(-x2, y1), tabletop, entityManager);
+        SpawnPiece(BluePiecePrototype, new(-x2, y2), tabletop, entityManager);
     }
 }

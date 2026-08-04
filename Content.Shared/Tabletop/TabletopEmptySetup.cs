@@ -1,16 +1,18 @@
 using Content.Shared.Tabletop.Components;
 using JetBrains.Annotations;
+using Robust.Shared.Map;
 
 namespace Content.Shared.Tabletop;
 
+/// <summary>
+///
+/// </summary>
 [UsedImplicitly]
 public sealed partial class TabletopEmptySetup : TabletopSetup
 {
-    public override void SetupTabletop(TabletopGameComponent tabletop, IEntityManager entityManager)
+    /// <inheritdoc />
+    public override void SetupTabletop(TabletopGameComponent tabletop, MapCoordinates coordinates, IEntityManager entityManager)
     {
-        if (tabletop.Position is not { } position)
-            return;
-
-        SpawnPiece(BoardPrototype, position, tabletop, entityManager);
+        tabletop.Board = entityManager.SpawnEntity(BoardPrototype, coordinates);
     }
 }

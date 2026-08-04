@@ -27,7 +27,6 @@ public abstract partial class TabletopSetup
     /// </summary>
     protected void SpawnPiece(EntProtoId piece, Vector2 position, TabletopGameComponent tabletop, IEntityManager entityManager)
     {
-        var pieceUid = entityManager.SpawnAttachedTo(piece, new(tabletop.Board!.Value, position));
-        tabletop.Entities.Add(pieceUid);
+        entityManager.SpawnAttachedTo(piece, new(tabletop.Board!.Value, position));
     }
 }
