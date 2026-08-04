@@ -44,10 +44,13 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnApplyOrganMarking(Entity<EyeBlinkingComponent> ent, ref ApplyOrganMarkingsEvent args)
     {
-        if (TryComp<VisualOrganComponent>(ent.Owner, out var eyesVisual))
-            SetEyelidsColor(eyesVisual, ent);
-        else
-            SetEyelidsColor(ent);
+        SetEyelidsColor(ent);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnApplyOrganProfile(Entity<EyeBlinkingComponent> ent, ref BodyRelayedEvent<ApplyOrganProfileDataEvent> args)
+    {
+        SetEyelidsColor(ent, args.Args.Base);
     }
 
     private void SetEyelidsColor(Entity<EyeBlinkingComponent> ent)
@@ -70,12 +73,12 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
                 break;
         }
 
-        SetEyelidsColor(visualHead, ent);
+        SetEyelidsColor(ent, visualHead?.Profile);
     }
 
-    private void SetEyelidsColor(VisualOrganComponent? visualOrgan, Entity<EyeBlinkingComponent> eyeBlinking)
+    private void SetEyelidsColor(Entity<EyeBlinkingComponent> eyeBlinking, OrganProfileData? organProfile)
     {
-        var skinColor = visualOrgan?.Profile.SkinColor ?? Color.Pink;
+        var skinColor = organProfile?.SkinColor ?? Color.Pink;
         var blinkFade = eyeBlinking.Comp.BlinkSkinColorMultiplier;
         var eyelidColor = new Color(
             skinColor.R * blinkFade,
@@ -89,12 +92,31 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnEmote(Entity<EyeBlinkingComponent> ent, ref EmoteEvent args)
     {
-        if (!ent.Comp.BlinkEmoteId.Contains(args.Emote.ID))
-            return;
-
         if (args.Handled)
             return;
         args.Handled = true;
+
+        OnEmote(ent, args.Emote.ID);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnEmote(Entity<EyeBlinkingComponent> ent, ref BodyRelayedEvent<EmoteEvent> args)
+    {
+        var emoteArgs = args.Args;
+
+        if (emoteArgs.Handled)
+            return;
+
+        emoteArgs.Handled = true;
+        args.Args = emoteArgs;
+
+        OnEmote(ent, args.Args.Emote.ID);
+    }
+
+    private void OnEmote(Entity<EyeBlinkingComponent> ent, string emoteId)
+    {
+        if (!ent.Comp.BlinkEmoteId.Contains(emoteId))
+            return;
 
         if (!ent.Comp.Enabled)
             return;
@@ -122,6 +144,14 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
+    private void OnMobStateChanged(Entity<EyeBlinkingComponent> ent, ref BodyRelayedEvent<MobStateChangedEvent> args)
+    {
+        var mobStateArgs = args.Args;
+        OnMobStateChanged(ent, ref mobStateArgs);
+        args.Args = mobStateArgs;
+    }
+
+    [SubscribeLocalEvent]
     private void OnBlindnessChanged(Entity<EyeBlinkingComponent> ent, ref BlindnessChangedEvent args)
     {
         if (ent.Comp.EyeToggleActionEntity != null)
@@ -139,6 +169,14 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
         }
 
         SetEnabled(ent, !args.Blind);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnBlindnessChanged(Entity<EyeBlinkingComponent> ent, ref BodyRelayedEvent<BlindnessChangedEvent> args)
+    {
+        var blindnessArgs = args.Args;
+        OnBlindnessChanged(ent, ref blindnessArgs);
+        args.Args = blindnessArgs;
     }
 
     private void SetEnabled(Entity<EyeBlinkingComponent> ent, bool enabled)
@@ -161,6 +199,14 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
         ent.Comp.EyesClosed = !ent.Comp.EyesClosed;
 
         _blindableSystem.UpdateIsBlind(ent.Owner);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnToggleAction(Entity<EyeBlinkingComponent> ent, ref BodyRelayedEvent<ToggleEyesActionEvent> args)
+    {
+        var toggleArgs = args.Args;
+        OnToggleAction(ent, ref toggleArgs);
+        args.Args = toggleArgs;
     }
 
     [SubscribeLocalEvent]
