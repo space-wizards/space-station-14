@@ -1259,4 +1259,25 @@
   id: 155
   time: '2026-07-29T14:47:34.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44996
+- author: Betterwithketchup
+  changes:
+  - message: Added Tram2 to the default map pool
+    type: Add
+  id: 156
+  time: '2026-07-30T03:33:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34191
+- author: ProPeperos
+  changes:
+  - message: In Dev - Added Cargo area, a Writing corner and more space in Portal room and tweaked other things
+    type: Add
+  id: 157
+  time: '2026-07-30T18:55:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44626
+- author: JiyuSoftware
+  changes:
+  - message: Added Sushi Station to the default map pool
+    type: Add
+  id: 158
+  time: '2026-07-30T22:31:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/45017
 Order: 2

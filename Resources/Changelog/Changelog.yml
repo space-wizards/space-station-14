@@ -5440,3 +5440,107 @@
   id: 9920
   time: '2026-07-29T21:25:20.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44412
+- author: Keer-Sar
+  changes:
+  - message: Added the Throngler back to the grand lottery.
+    type: Add
+  id: 9921
+  time: '2026-07-30T00:05:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/45020
+- author: Keer-Sar
+  changes:
+  - message: Re-added tip that mentions The Throngler.
+    type: Add
+  id: 9922
+  time: '2026-07-30T01:13:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/45023
+- author: jckspjf
+  changes:
+  - message: Cluwne can now be selected in Agent IDs.
+    type: Tweak
+  id: 9923
+  time: '2026-07-30T03:02:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/45024
+- author: YoungThugSS14
+  changes:
+  - message: C4 can no longer be stuck to hardsuits, allowing for an invisible bomb.
+    type: Fix
+  id: 9924
+  time: '2026-07-30T05:09:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/45004
+- author: qwerltaz
+  changes:
+  - message: Gas filters and mixer now show settings when examined
+    type: Tweak
+  id: 9925
+  time: '2026-07-30T05:59:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44756
+- author: SnappingOpossum
+  changes:
+  - message: You can now alloy brass from copper and zinc at high temperatures and break it back down in any centrifuge.
+    type: Add
+  - message: You can now solidify reagent brass using frost oil.
+    type: Add
+  - message: Brass sheets, clockwork glass sheets, and clockwork glass shards now grind directly into brass instead of copper and zinc.
+    type: Tweak
+  id: 9926
+  time: '2026-07-30T06:10:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/45033
+- author: qrwas
+  changes:
+  - message: Toggling ghost visibility now removes the text bubble output above their heads.
+    type: Fix
+  id: 9927
+  time: '2026-07-30T18:55:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/45044
+- author: B_Kirill, mirrorcult
+  changes:
+  - message: Wall-mounted entities are now only visible from the side of the wall they are attached to.
+    type: Tweak
+  id: 9928
+  time: '2026-07-30T19:55:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44801
+- author: ketufaispikinut
+  changes:
+  - message: Resprited the fake mindshield action sprites.
+    type: Tweak
+  id: 9929
+  time: '2026-07-30T22:54:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43864
+- author: opl
+  changes:
+  - message: Wizard's teleport scroll can no longer teleport its user into a wall.
+    type: Fix
+  id: 9930
+  time: '2026-07-31T18:02:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40815
+- author: AndrewFenriz
+  changes:
+  - message: Operating certain vehicles now requires free hands: one for the janicart and two for all mechs.
+    type: Tweak
+  id: 9931
+  time: '2026-07-31T18:05:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/45045
+- author: Bandirpvp
+  changes:
+  - message: Novelty lighter mystery boxes now rarely spawn inside maintenance closets, and also may contain the Spiderclan flippo.
+    type: Add
+  - message: Shadycigs contraband inventory now contains an NT Flippo.
+    type: Tweak
+  id: 9932
+  time: '2026-07-31T22:39:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/45043
+- author: Samuka-C
+  changes:
+  - message: Fixed localization in comm console alert button.
+    type: Fix
+  id: 9933
+  time: '2026-08-01T00:45:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/45065
+- author: w3ryfrate
+  changes:
+  - message: Conveyor belts can now be anchored and unanchored with a wrench. They will now only be able to rotate when not anchored.
+    type: Tweak
+  id: 9934
+  time: '2026-08-01T01:14:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/45066
