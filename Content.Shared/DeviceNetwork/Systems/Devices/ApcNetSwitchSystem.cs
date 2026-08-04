@@ -25,7 +25,7 @@ public sealed partial class ApcNetSwitchSystem : EntitySystem
         component.State = !component.State;
         Dirty(ent);
 
-        if (networkComponent.Data.TransmitFrequency == null)
+        if (networkComponent.TransmitFrequency == null)
             return;
 
         var payload = new ApcNetTogglePayload

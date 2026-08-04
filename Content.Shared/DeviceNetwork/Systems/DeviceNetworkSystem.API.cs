@@ -193,7 +193,7 @@ public sealed partial class DeviceNetworkSystem
     /// Sets the address of the target device.
     /// </summary>
     [PublicAPI]
-    public void SetAddress(Entity<DeviceNetworkComponent?> ent, int address, LocId? prefix = null)
+    public void SetAddress(Entity<DeviceNetworkComponent?> ent, DeviceAddress address)
     {
         if (!_deviceQuery.Resolve(ent.Owner, ref ent.Comp, false))
             return;
@@ -210,14 +210,25 @@ public sealed partial class DeviceNetworkSystem
         RemoveFromNetwork(ent, deviceNet);
         ent.Comp.CustomAddress = true;
         ent.Comp.Data.AddressId = address;
-        if (prefix != null)
-            ent.Comp.Prefix = prefix;
         AddToNetwork(ent, deviceNet);
 
-        var ev = new DeviceAddressChangedEvent(oldAddress, address, oldPrefix, ent.Comp.Prefix, ent.Comp.Data.CustomAddress);
+        var ev = new DeviceAddressChangedEvent(oldAddress, address, oldPrefix, ent.Comp.Prefix, ent.Comp.CustomAddress);
         RaiseLocalEvent(ent, ref ev);
 
-        DirtyFields(ent, null, nameof(DeviceNetworkComponent.Data), nameof(DeviceNetworkComponent.Prefix));
+        DirtyFields(ent, null, nameof(DeviceNetworkComponent.Data), nameof(DeviceNetworkComponent.CustomAddress));
+    }
+
+    /// <summary>
+    /// Sets the address prefix of the target device.
+    /// </summary>
+    [PublicAPI]
+    public void SetAddressPrefix(Entity<DeviceNetworkComponent?> ent, LocId? prefix)
+    {
+        if (!_deviceQuery.Resolve(ent.Owner, ref ent.Comp, false))
+            return;
+
+        ent.Comp.Prefix = prefix;
+        DirtyField(ent, nameof(DeviceNetworkComponent.Prefix));
     }
 
     /// <summary>
@@ -234,14 +245,14 @@ public sealed partial class DeviceNetworkSystem
 
         var oldAddress = ent.Comp.Data.AddressId;
         RemoveFromNetwork(ent, deviceNet);
-        ent.Comp.Data.CustomAddress = false;
-        ent.Comp.AddressId = 0;
+        ent.Comp.CustomAddress = false;
+        ent.Comp.Data.AddressId = DeviceAddress.Invalid;
         AddToNetwork(ent, deviceNet);
 
-        var ev = new DeviceAddressChangedEvent(oldAddress, ent.Comp.Data.AddressId, ent.Comp.Prefix, ent.Comp.Prefix, ent.Comp.Data.CustomAddress);
+        var ev = new DeviceAddressChangedEvent(oldAddress, ent.Comp.Data.AddressId, ent.Comp.Prefix, ent.Comp.Prefix, ent.Comp.CustomAddress);
         RaiseLocalEvent(ent, ref ev);
 
-        DirtyField(ent, nameof(DeviceNetworkComponent.Data));
+        DirtyFields(ent, null, nameof(DeviceNetworkComponent.Data), nameof(DeviceNetworkComponent.CustomAddress));
     }
 
     /// <summary>

@@ -24,7 +24,7 @@ public sealed partial class DeviceNetworkComponent : Component
     /// The frequency that this device going to try to transmit on.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public uint? TransmitFrequency;
+    public DeviceFrequency? TransmitFrequency;
 
     /// <summary>
     /// Frequency prototype, used to select a default frequency to listen to on.
