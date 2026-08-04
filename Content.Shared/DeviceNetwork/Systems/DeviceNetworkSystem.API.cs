@@ -32,7 +32,7 @@ public sealed partial class DeviceNetworkSystem
         if (device.Data.AddressId == 0)
             return false;
 
-        frequency ??= device.Data.TransmitFrequency;
+        frequency ??= device.TransmitFrequency;
 
         if (frequency == null)
             return false;
@@ -155,8 +155,8 @@ public sealed partial class DeviceNetworkSystem
         if (!_deviceQuery.Resolve(ent.Owner, ref ent.Comp, false))
             return;
 
-        var oldFrequency = ent.Comp.Data.TransmitFrequency;
-        ent.Comp.Data.TransmitFrequency = frequency;
+        var oldFrequency = ent.Comp.TransmitFrequency;
+        ent.Comp.TransmitFrequency = frequency;
 
         var ev = new DeviceReceiveFrequencyChangedEvent(oldFrequency, frequency);
         RaiseLocalEvent(ent, ref ev);
@@ -198,7 +198,7 @@ public sealed partial class DeviceNetworkSystem
         if (!_deviceQuery.Resolve(ent.Owner, ref ent.Comp, false))
             return;
 
-        if (ent.Comp.Data.AddressId == address && ent.Comp.Data.CustomAddress)
+        if (ent.Comp.Data.AddressId == address && ent.Comp.CustomAddress)
             return;
 
         if (!TryGetNetwork(ent.Comp.DeviceNetId, out var deviceNet))
@@ -208,7 +208,7 @@ public sealed partial class DeviceNetworkSystem
         var oldPrefix = ent.Comp.Prefix;
 
         RemoveFromNetwork(ent, deviceNet);
-        ent.Comp.Data.CustomAddress = true;
+        ent.Comp.CustomAddress = true;
         ent.Comp.Data.AddressId = address;
         if (prefix != null)
             ent.Comp.Prefix = prefix;
@@ -235,7 +235,7 @@ public sealed partial class DeviceNetworkSystem
         var oldAddress = ent.Comp.Data.AddressId;
         RemoveFromNetwork(ent, deviceNet);
         ent.Comp.Data.CustomAddress = false;
-        ent.Comp.Data.AddressId = 0;
+        ent.Comp.AddressId = 0;
         AddToNetwork(ent, deviceNet);
 
         var ev = new DeviceAddressChangedEvent(oldAddress, ent.Comp.Data.AddressId, ent.Comp.Prefix, ent.Comp.Prefix, ent.Comp.Data.CustomAddress);

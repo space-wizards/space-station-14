@@ -21,18 +21,28 @@ public sealed partial class DeviceNetworkComponent : Component
     public DeviceData Data;
 
     /// <summary>
-    /// Frequency prototype. Used to select a default frequency to listen to on. Used when the map is
-    /// initialized.
+    /// The frequency that this device going to try to transmit on.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public uint? TransmitFrequency;
+
+    /// <summary>
+    /// Frequency prototype, used to select a default frequency to listen to on.
     /// </summary>
     [DataField]
     public ProtoId<DeviceFrequencyPrototype>? ReceiveFrequencyId;
 
     /// <summary>
-    /// Frequency prototype. Used to select a default frequency to transmit on. Used when the map is
-    /// initialized.
+    /// Frequency prototype, used to select a default frequency to transmit on.
     /// </summary>
     [DataField]
     public ProtoId<DeviceFrequencyPrototype>? TransmitFrequencyId;
+
+    /// <summary>
+    /// Whether to send the broadcast recipients list to the sender so it can be filtered.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool SendBroadcastAttemptEvent;
 
     /// <summary>
     /// If the device should show its address upon an examine.
@@ -44,7 +54,7 @@ public sealed partial class DeviceNetworkComponent : Component
     /// <summary>
     /// Prefix to prepend to any automatically generated addresses. Helps players to identify devices.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public LocId? Prefix;
 
     /// <summary>
@@ -59,6 +69,13 @@ public sealed partial class DeviceNetworkComponent : Component
     [DataField, AutoNetworkedField]
     public bool SavableAddress = true;
 
+    /// <summary>
+    ///     If true, the address was customized and should be preserved across networks. If false, a randomly
+    ///     generated address will be created whenever this device connects to a network.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool CustomAddress;
+
     #region Obsolete
 
     [Obsolete("Access this field through DeviceNetworkComponent.Data instead")]
@@ -69,13 +86,6 @@ public sealed partial class DeviceNetworkComponent : Component
     }
 
     [Obsolete("Access this field through DeviceNetworkComponent.Data instead")]
-    public DeviceFrequency? TransmitFrequency
-    {
-        get => Data.TransmitFrequency;
-        set => Data.TransmitFrequency = value;
-    }
-
-    [Obsolete("Access this field through DeviceNetworkComponent.Data instead")]
     public DeviceAddress Address
     {
         get => Data.AddressId;
@@ -83,24 +93,10 @@ public sealed partial class DeviceNetworkComponent : Component
     }
 
     [Obsolete("Access this field through DeviceNetworkComponent.Data instead")]
-    public bool CustomAddress
-    {
-        get => Data.CustomAddress;
-        set => Data.CustomAddress = value;
-    }
-
-    [Obsolete("Access this field through DeviceNetworkComponent.Data instead")]
     public bool ReceiveAll
     {
         get => Data.ReceiveAll;
         set => Data.ReceiveAll = value;
-    }
-
-    [Obsolete("Access this field through DeviceNetworkComponent.Data instead")]
-    public bool SendBroadcastAttemptEvent
-    {
-        get => Data.SendBroadcastAttemptEvent;
-        set => Data.SendBroadcastAttemptEvent = value;
     }
 
     #endregion
