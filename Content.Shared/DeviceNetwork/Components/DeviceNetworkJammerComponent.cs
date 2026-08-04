@@ -27,5 +27,5 @@ public sealed partial class DeviceNetworkJammerComponent : Component
     /// Device networks frequencies that wont be jammed.
     /// </summary>
     [DataField]
-    public HashSet<uint> FrequenciesExcluded = [];
+    public HashSet<DeviceFrequency> FrequenciesExcluded = [];
 }

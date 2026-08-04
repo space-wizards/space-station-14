@@ -95,7 +95,7 @@ public sealed partial class DeviceNetworkJammerSystem : EntitySystem
     /// <summary>
     /// Enables this entity to stop packets with the specified frequency from being jammmed.
     /// </summary>
-    public void AddExcludedFrequency(Entity<DeviceNetworkJammerComponent> ent, uint frequency)
+    public void AddExcludedFrequency(Entity<DeviceNetworkJammerComponent> ent, DeviceFrequency frequency)
     {
         if (ent.Comp.FrequenciesExcluded.Add(frequency))
             DirtyField(ent.AsNullable(), nameof(DeviceNetworkJammerComponent.FrequenciesExcluded));
@@ -104,7 +104,7 @@ public sealed partial class DeviceNetworkJammerSystem : EntitySystem
     /// <summary>
     /// Stops this entity to stop packets with the specified frequency from being jammmed.
     /// </summary>
-    public void RemoveExcludedFrequency(Entity<DeviceNetworkJammerComponent> ent, uint frequency)
+    public void RemoveExcludedFrequency(Entity<DeviceNetworkJammerComponent> ent, DeviceFrequency frequency)
     {
         if (ent.Comp.FrequenciesExcluded.Remove(frequency))
             DirtyField(ent.AsNullable(), nameof(DeviceNetworkJammerComponent.FrequenciesExcluded));

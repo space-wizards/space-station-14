@@ -32,11 +32,14 @@ public readonly partial record struct DeviceAddress(int AddressId)
     }
 
     /// <summary>
-    /// Use this carefully, it's recommended to use <see cref="LocDeviceAddress"/> in general cases.
+    /// Converts the address into its HEX representation.
     /// </summary>
+    /// <remarks>
+    /// Use this carefully, it's recommended to use <see cref="LocDeviceAddress"/> in general cases.
+    /// </remarks>
     public override string ToString()
     {
-        return DeviceLocalizationHelpers.GetAddressFromId(this, null);
+        return $"{AddressId >> 16:X4}-{AddressId & 0xFFFF:X4}";
     }
 }
 
@@ -44,9 +47,15 @@ public readonly partial record struct DeviceAddress(int AddressId)
 /// A pair of a <see cref="DeviceAddress"/> and its locale prefix.
 /// This is enough to fully reconstruct a full string of this device.
 /// </summary>
-[DataRecord, Serializable, NetSerializable]
-public readonly partial record struct LocDeviceAddress(DeviceAddress AddressId, LocId? Prefix)
+[DataDefinition, Serializable, NetSerializable]
+public readonly partial struct LocDeviceAddress(DeviceAddress addressId, LocId? prefix) : IEquatable<DeviceAddress>, IEquatable<LocDeviceAddress>
 {
+    [DataField]
+    public readonly DeviceAddress AddressId = addressId;
+
+    [DataField]
+    public readonly LocId? Prefix = prefix;
+
     public static implicit operator LocDeviceAddress((DeviceAddress AddressId, LocId? Prefix) tuple)
     {
         return new LocDeviceAddress(tuple.AddressId, tuple.Prefix);
@@ -64,6 +73,37 @@ public readonly partial record struct LocDeviceAddress(DeviceAddress AddressId, 
 
     public override string ToString()
     {
-        return DeviceLocalizationHelpers.GetAddressFromId(AddressId, Prefix);
+        var prefix = string.IsNullOrWhiteSpace(Prefix) ? null : Loc.GetString(Prefix);
+        return $"{prefix}{AddressId.ToString()}";
+    }
+
+    public bool Equals(LocDeviceAddress other)
+    {
+        return AddressId.Equals(other.AddressId) && Nullable.Equals(Prefix, other.Prefix);
+    }
+
+    public bool Equals(DeviceAddress other)
+    {
+        return AddressId.Equals(other);
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return obj is LocDeviceAddress other && Equals(other);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(AddressId, Prefix);
+    }
+
+    public static bool operator ==(LocDeviceAddress left, LocDeviceAddress right)
+    {
+        return left.Equals(right);
+    }
+
+    public static bool operator !=(LocDeviceAddress left, LocDeviceAddress right)
+    {
+        return !left.Equals(right);
     }
 }

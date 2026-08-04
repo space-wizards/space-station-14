@@ -204,10 +204,11 @@ public sealed partial class DeviceNetworkSystem : EntitySystem
 
         foreach (var connection in connections)
         {
-            if (connection.Owner == packet.Sender)
+            if (connection.Owner == packet.Sender.Owner)
                 continue;
 
-            var beforeEv = new BeforePacketSentEvent(packet.NetId,
+            var beforeEv = new BeforePacketSentEvent(
+                packet.NetId,
                 packet.Address,
                 packet.Frequency,
                 packet.SenderAddress,

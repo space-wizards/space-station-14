@@ -5,60 +5,31 @@ using Content.Shared.Station;
 namespace Content.Shared.DeviceNetwork.Systems;
 
 /// <summary>
-/// This system requires the StationLimitedNetworkComponent to be on the the sending entity as well as the receiving entity
+/// This system requires the StationLimitedNetworkComponent to be on the sending entity as well as the receiving entity
 /// </summary>
 public sealed partial class StationLimitedNetworkSystem : EntitySystem
 {
     [Dependency] private SharedStationSystem _stationSystem = default!;
 
+    [Dependency] private EntityQuery<StationTrackerComponent> _stationTrackerQuery = default!;
     [Dependency] private EntityQuery<StationLimitedNetworkComponent> _stationLimitedQuery = default!;
 
-    /// <summary>
-    /// Sets the station id the device is limited to.
-    /// </summary>
-    public void SetStation(Entity<StationLimitedNetworkComponent?> ent, EntityUid? stationId)
     {
-        if (!_stationLimitedQuery.Resolve(ent.Owner, ref ent.Comp))
-            return;
-
-        ent.Comp.StationId = stationId;
     }
 
-    /// <summary>
-    /// Tries to set the station id to the current station if the device is currently on a station
-    /// </summary>
-    public bool TrySetStationId(Entity<StationLimitedNetworkComponent?> ent)
     {
-        if (!_stationLimitedQuery.Resolve(ent.Owner, ref ent.Comp)
-            || !Transform(ent).GridUid.HasValue)
-            return false;
-
-        ent.Comp.StationId = _stationSystem.GetOwningStation(ent);
-        return ent.Comp.StationId.HasValue;
     }
 
-    /// <summary>
-    /// Set the station id to the one the entity is on when the station limited component is added
-    /// </summary>
     [SubscribeLocalEvent]
-    private void OnMapInit(Entity<StationLimitedNetworkComponent> ent, ref MapInitEvent args)
     {
-        ent.Comp.StationId = _stationSystem.GetOwningStation(ent);
     }
 
-    /// <summary>
-    /// Checks if both devices are limited to the same station
-    /// </summary>
     [SubscribeLocalEvent]
     private void OnBeforePacketSent(Entity<StationLimitedNetworkComponent> ent, ref BeforePacketSentEvent args)
     {
-        if (!ent.Comp.StationId.HasValue)
-            TrySetStationId(ent.AsNullable());
-
-        if (!CheckStationId(args.Sender, ent.Comp.AllowNonStationPackets, ent.Comp.StationId))
-        {
+        if (_stationTrackerQuery.TryComp(ent, out var tracker)
+            && !CheckStationId(args.Sender, ent.Comp.AllowNonStationPackets, tracker.Station))
             args.Cancelled = true;
-        }
     }
 
     /// <summary>
@@ -66,17 +37,17 @@ public sealed partial class StationLimitedNetworkSystem : EntitySystem
     /// Returns false if either of them doesn't have a station ID or if their station ID isn't equal.
     /// Returns true even when the sending entity isn't tied to a station if `allowNonStationPackets` is set to true.
     /// </summary>
-    private bool CheckStationId(Entity<StationLimitedNetworkComponent?> sender, bool allowNonStationPackets, EntityUid? receiverStationId)
+    private bool CheckStationId(Entity<StationLimitedNetworkComponent?, StationTrackerComponent?> sender, bool allowNonStationPackets, EntityUid? receiverStationId)
     {
         if (!receiverStationId.HasValue)
             return false;
 
-        if (!_stationLimitedQuery.Resolve(sender.Owner, ref sender.Comp, false))
+        if (!_stationLimitedQuery.Resolve(sender.Owner, ref sender.Comp1, false))
             return allowNonStationPackets;
 
-        if (!sender.Comp.StationId.HasValue)
-            TrySetStationId(sender);
+        if (!_stationTrackerQuery.Resolve(sender.Owner, ref sender.Comp2, false))
+            return false;
 
-        return sender.Comp.StationId == receiverStationId;
+        return sender.Comp2.Station == receiverStationId;
     }
 }
