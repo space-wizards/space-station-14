@@ -23,7 +23,7 @@ public sealed partial class SurveillanceCameraNavMapControl : NavMapControl
     private readonly Texture _invalidTexture;
 
     private string _activeCameraAddress = string.Empty;
-    private HashSet<string> _availableSubnets = new();
+    private HashSet<string> _availableSubnets = [];
     private (Dictionary<NetEntity, CameraMarker> Cameras, string ActiveAddress, HashSet<string> AvailableSubnets) _lastState;
 
     public bool EnableCameraSelection { get; set; }

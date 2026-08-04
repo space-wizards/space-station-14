@@ -47,9 +47,17 @@ sealed file partial class GetSpawnsVisitor : IEntityTableVisitor<
     GetSpawnsVisitor.Args,
     IEnumerable<EntProtoId>>
 {
+    // Private constructor enforces usage of `Instance`.
     private GetSpawnsVisitor() { }
+
+    /// <summary>
+    /// Ths instance of this visitor. Because the visitor has no state, the same instance can be reused for all cases.
+    /// </summary>
     public static readonly GetSpawnsVisitor Instance = new();
 
+    /// <summary>
+    /// The arguments for visiting this visitor.
+    /// </summary>
     public record struct Args(
         IEntityManager EntMan,
         IPrototypeManager ProtoMan,
@@ -57,8 +65,10 @@ sealed file partial class GetSpawnsVisitor : IEntityTableVisitor<
         EntityTableContext Ctx
     );
 
+    /// <summary>
     /// Handles the common conditions and individual roll chances that every table uses. <paramref name="rollImpl"/> is
     /// called when a single actual roll is needed.
+    /// </summary>
     private static IEnumerable<EntProtoId> Impl(
         EntityTableSelector selector,
         Args args,
@@ -72,12 +82,15 @@ sealed file partial class GetSpawnsVisitor : IEntityTableVisitor<
             .SelectMany(_ => args.Rand.Prob(selector.Prob) ? rollImpl() : []);
     }
 
+    /// <inheritdoc/>
     public IEnumerable<EntProtoId> VisitAllSelector(AllSelector selector, Args args) =>
         Impl(selector, args, () => selector.Children.SelectMany(child => child.Accept(this, args)));
 
+    /// <inheritdoc/>
     public IEnumerable<EntProtoId> VisitEntSelector(EntSelector selector, Args args) =>
         Impl(selector, args, () => Enumerable.Repeat(selector.Id, selector.Amount.Get(args.Rand)));
 
+    /// <inheritdoc/>
     public IEnumerable<EntProtoId> VisitGroupSelector(GroupSelector selector, Args args)
     {
         var validWeightedChildren = selector.Children
@@ -97,8 +110,10 @@ sealed file partial class GetSpawnsVisitor : IEntityTableVisitor<
         );
     }
 
+    /// <inheritdoc/>
     public IEnumerable<EntProtoId> VisitNestedSelector(NestedSelector selector, Args args) =>
         Impl(selector, args, () => args.ProtoMan.Index(selector.TableId).Table.Accept(this, args));
 
+    /// <inheritdoc/>
     public IEnumerable<EntProtoId> VisitNoneSelector(NoneSelector selector, Args args) => [];
 }

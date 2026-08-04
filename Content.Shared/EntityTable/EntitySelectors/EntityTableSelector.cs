@@ -46,7 +46,7 @@ public abstract partial class EntityTableSelector
     public bool RequireAll = true;
 
     /// <summary>
-    /// Checks if this table should be rolled at all, based on <see cref="Conditions"/>.
+    /// Check if the condition for this selector are met.
     /// </summary>
     public bool CheckConditions(IEntityManager entMan, IPrototypeManager proto, EntityTableContext ctx)
     {

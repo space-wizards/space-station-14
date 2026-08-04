@@ -27,9 +27,7 @@ public sealed class EntityTableContext
 {
     private readonly Dictionary<string, object> _data = new();
 
-    public EntityTableContext()
-    {
-    }
+    public EntityTableContext() { }
 
     public EntityTableContext(Dictionary<string, object> data)
     {

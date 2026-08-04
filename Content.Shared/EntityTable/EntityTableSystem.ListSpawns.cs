@@ -28,11 +28,20 @@ sealed file partial class ListSpawnsVisitor : IEntityTableVisitor<
     IEnumerable<(EntProtoId spawn, float probability)>
 >
 {
+    // Private constructor enforces usage of `Instance`.
     private ListSpawnsVisitor() { }
+
+    /// <summary>
+    /// Ths instance of this visitor. Because the visitor has no state, the same instance can be reused for all cases.
+    /// </summary>
     public static readonly ListSpawnsVisitor Instance = new();
 
+    /// <summary>
+    /// The arguments for visiting this visitor.
+    /// </summary>
     public record struct Args(IPrototypeManager ProtoMan);
 
+    /// <inheritdoc/>
     public IEnumerable<(EntProtoId spawn, float probability)> VisitAllSelector(AllSelector selector, Args args)
     {
         var count = selector.Prob * selector.Rolls.Odds();
@@ -40,11 +49,13 @@ sealed file partial class ListSpawnsVisitor : IEntityTableVisitor<
             child.Accept(this, args).Select(t => (t.spawn, t.probability * count)));
     }
 
+    /// <inheritdoc/>
     public IEnumerable<(EntProtoId spawn, float probability)> VisitEntSelector(EntSelector selector, Args args)
     {
         yield return (selector.Id, selector.Prob * selector.Rolls.Odds());
     }
 
+    /// <inheritdoc/>
     public IEnumerable<(EntProtoId spawn, float probability)> VisitGroupSelector(
         GroupSelector selector,
         Args args
@@ -56,6 +67,7 @@ sealed file partial class ListSpawnsVisitor : IEntityTableVisitor<
             child.Accept(this, args).Select(t => (t.spawn, t.probability * child.Weight * odds)));
     }
 
+    /// <inheritdoc/>
     public IEnumerable<(EntProtoId spawn, float probability)> VisitNestedSelector(
         NestedSelector selector,
         Args args
@@ -67,5 +79,6 @@ sealed file partial class ListSpawnsVisitor : IEntityTableVisitor<
             .Select(t => (t.spawn, t.probability * count));
     }
 
+    /// <inheritdoc/>
     public IEnumerable<(EntProtoId spawn, float probability)> VisitNoneSelector(NoneSelector selector, Args args) => [];
 }
