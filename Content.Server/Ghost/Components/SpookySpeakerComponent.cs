@@ -1,6 +1,7 @@
 using Content.Shared.Dataset;
 using Content.Shared.Ghost.Components;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Ghost.Components;
 
@@ -33,7 +34,7 @@ public sealed partial class SpookySpeakerComponent : Component
     /// <summary>
     /// Time when the cooldown will have elapsed and the entity can speak again.
     /// </summary>
-    [DataField, AutoPausedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan NextSpeakTime;
 
     /// <summary>
