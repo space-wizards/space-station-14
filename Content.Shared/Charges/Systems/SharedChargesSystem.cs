@@ -59,7 +59,11 @@ public abstract partial class SharedChargesSystem : EntitySystem
 
     private void OnChargesAttempt(Entity<LimitedChargesComponent> ent, ref ActionAttemptEvent args)
     {
-        if (args.Cancelled || HasCharges((ent.Owner, ent.Comp), 1))
+        if (args.Cancelled)
+            return;
+
+        // Only block the action when it has no charges remaining.
+        if (HasCharges((ent.Owner, ent.Comp), 1))
             return;
 
         args.Cancelled = true;

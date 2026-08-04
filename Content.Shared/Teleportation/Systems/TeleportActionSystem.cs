@@ -83,6 +83,15 @@ public sealed partial class TeleportActionSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Checks whether the entity would collide with another hard, collidable entity at the target coordinates.
+    /// </summary>
+    /// <param name="user">The entity being checked.</param>
+    /// <param name="target">The map coordinates to check.</param>
+    /// <param name="xform">The entity's transform component.</param>
+    /// <param name="fixtures">The entity's fixtures component.</param>
+    /// <param name="physics">The entity's physics component.</param>
+    /// <returns>Whether the destination is blocked.</returns>
     public bool IsDestinationBlocked(
         EntityUid user,
         MapCoordinates target,
