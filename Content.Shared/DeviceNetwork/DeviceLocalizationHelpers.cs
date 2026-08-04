@@ -1,4 +1,5 @@
 using Content.Shared.DeviceNetwork.Components;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.DeviceNetwork;
 
@@ -24,11 +25,6 @@ public static class DeviceLocalizationHelpers
     /// Gets the readable device address from a <see cref="DeviceAddress"/> and an optional localized prefix.
     /// </summary>
     public static string DeviceNetIdToLocalizedName(int? id, ILocalizationManager localeMan)
-    /// <remarks>
-    /// The address gets converted into its HEX representation,
-    /// and a prefix is added in front if a prefix is specified.
-    /// </remarks>
-    public static string GetAddressFromId(DeviceAddress addressId, LocId? prefix)
     {
         if (id == null)
             return string.Empty;
@@ -40,6 +36,14 @@ public static class DeviceLocalizationHelpers
         var resultKebab = "device-net-id-" + CaseConversion.PascalToKebab(result);
 
         return !localeMan.TryGetString(resultKebab, out var name) ? result : name;
+    }
+
+    /// <remarks>
+    /// The address gets converted into its HEX representation,
+    /// and a prefix is added in front if a prefix is specified.
+    /// </remarks>
+    public static string GetAddressFromId(DeviceAddress addressId, LocId? prefix)
+    {
         return new LocDeviceAddress(addressId, prefix).ToString();
     }
 

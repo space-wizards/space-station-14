@@ -1,28 +1,13 @@
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
-using Content.Shared.Station;
+using Content.Shared.Station.Components;
 
 namespace Content.Shared.DeviceNetwork.Systems;
 
-/// <summary>
-/// This system requires the StationLimitedNetworkComponent to be on the sending entity as well as the receiving entity
-/// </summary>
 public sealed partial class StationLimitedNetworkSystem : EntitySystem
 {
-    [Dependency] private SharedStationSystem _stationSystem = default!;
-
     [Dependency] private EntityQuery<StationTrackerComponent> _stationTrackerQuery = default!;
     [Dependency] private EntityQuery<StationLimitedNetworkComponent> _stationLimitedQuery = default!;
-
-    {
-    }
-
-    {
-    }
-
-    [SubscribeLocalEvent]
-    {
-    }
 
     [SubscribeLocalEvent]
     private void OnBeforePacketSent(Entity<StationLimitedNetworkComponent> ent, ref BeforePacketSentEvent args)

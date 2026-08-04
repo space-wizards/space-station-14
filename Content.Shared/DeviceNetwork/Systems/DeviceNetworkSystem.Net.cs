@@ -86,7 +86,7 @@ public sealed partial class DeviceNetworkSystem
     /// <summary>
     /// Generates a valid address by randomly generating one and checking if it already exists on the network.
     /// </summary>
-    private DeviceAddress GenerateValidAddressId(DeviceNetworkManagerComponent network)
+    private DeviceAddress GenerateValidAddressId(DeviceNet network)
     {
         DeviceAddress addressId;
         do

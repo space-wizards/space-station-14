@@ -1,8 +1,6 @@
 ﻿using Content.Shared.DeviceNetwork.Components;
-using Content.Shared.DeviceNetwork.Components.Networks;
 using Content.Shared.DeviceNetwork.Events;
 using JetBrains.Annotations;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.DeviceNetwork.Systems;
 
