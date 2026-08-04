@@ -1250,4 +1250,13 @@
   id: 154
   time: '2026-07-27T00:00:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44889
+- author: Emisse
+  changes:
+  - message: Several job slots have been tweaked across the board to accommodate a smaller maxpop.
+    type: Tweak
+  - message: Reach has been removed from the default map pool.
+    type: Remove
+  id: 155
+  time: '2026-07-29T14:47:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44996
 Order: 2

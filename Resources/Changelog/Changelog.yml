@@ -5403,3 +5403,40 @@
   id: 9915
   time: '2026-07-29T03:22:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44640
+- author: YoungThugSS14
+  changes:
+  - message: Added a new Sus icon to chameleon change menu
+    type: Add
+  id: 9916
+  time: '2026-07-29T04:46:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44797
+- author: PAFFhassoocks
+  changes:
+  - message: All nukie hardsuit headlights are now much brighter.
+    type: Tweak
+  - message: The cybersun juggernaut suit now has a headlight.
+    type: Add
+  id: 9917
+  time: '2026-07-29T05:58:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43018
+- author: TiniestShark
+  changes:
+  - message: Updated lizard plush in-hand and helmet sprites.
+    type: Tweak
+  id: 9918
+  time: '2026-07-29T07:08:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42871
+- author: whatston3
+  changes:
+  - message: Holoparasites should no longer be spammed with popups warning them about attacking their host.
+    type: Fix
+  id: 9919
+  time: '2026-07-29T21:03:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/45013
+- author: ketufaispikinut
+  changes:
+  - message: Added a tram driver job.
+    type: Add
+  id: 9920
+  time: '2026-07-29T21:25:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44412
