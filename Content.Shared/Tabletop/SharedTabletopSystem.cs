@@ -20,6 +20,10 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Tabletop;
 
+/// <summary>
+/// System driving the behavior of tabletop games.
+/// Allows
+/// </summary>
 public abstract partial class SharedTabletopSystem : EntitySystem
 {
     [Dependency] private IConfigurationManager _cfg = default!;
@@ -33,8 +37,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
     [Dependency] private SharedMapSystem _map = default!;
     [Dependency] protected SharedPopupSystem Popup = default!;
     [Dependency] protected SharedTransformSystem Xform = default!;
-    [Dependency] private SharedUserInterfaceSystem _userInterface = default!;
-    [Dependency] private SharedViewSubscriberSystem _viewSubscriber = default!;
+    [Dependency] protected SharedUserInterfaceSystem UI = default!;
 
     [Dependency] protected EntityQuery<ActorComponent> ActorQuery;
     [Dependency] protected EntityQuery<AppearanceComponent> AppearanceQuery;
@@ -42,6 +45,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
     [Dependency] protected EntityQuery<TabletopDraggableComponent> DraggableQuery;
     [Dependency] protected EntityQuery<TabletopGameComponent> GameQuery;
     [Dependency] protected EntityQuery<TabletopGamerComponent> GamerQuery;
+    [Dependency] protected EntityQuery<UserInterfaceComponent> UIQuery;
 
     /// <summary>
     /// The prototype to use to represent items dragged into the tabletop map.
@@ -60,15 +64,6 @@ public abstract partial class SharedTabletopSystem : EntitySystem
     /// <param name="ent">The tabletop game to send the piece into.</param>
     /// <param name="user">The user to show a popup on </param>
     protected abstract void CopyEntity(EntityUid target, Entity<TabletopGameComponent> ent, EntityUid user);
-
-    /// <summary>
-    /// An event to open a window.
-    /// </summary>
-    /// <param name="tableUid">The table entity.</param>
-    /// <param name="cameraUid">The camera to follow.</param>
-    /// <param name="title">The title of the window.</param>
-    /// <param name="size">The size of the window.</param>
-    protected virtual void OnTabletopPlay(EntityUid tableUid, EntityUid cameraUid, string title, Vector2i size) { }
 
     #region Event Handlers
 
@@ -159,13 +154,22 @@ public abstract partial class SharedTabletopSystem : EntitySystem
     [EventSubscription] // Both local and networked events
     protected virtual void OnTabletopMove(TabletopMoveEvent msg, EntitySessionEventArgs args)
     {
-        if (args.SenderSession is not { AttachedEntity: { } playerEntity })
+        if (args.SenderSession is not { } playerSession || playerSession.AttachedEntity is not { } playerUid)
+            return;
+
+        var tableUid = GetEntity(msg.TableUid);
+
+        if (!GameQuery.TryComp(tableUid, out TabletopGameComponent? tabletop) || !tabletop.HasSession)
+            return;
+
+        // Check if player is actually playing at this table.
+        if (!UI.GetActors(tableUid, TabletopGameUiKey.Key).Contains(playerUid))
             return;
 
         var table = GetEntity(msg.TableUid);
         var moved = GetEntity(msg.MovedEntityUid);
 
-        if (!CanSeeTable(playerEntity, table) || !CanDrag(playerEntity, moved, out _))
+        if (!CanSeeTable(playerUid, table) || !CanDrag(playerUid, moved, out _))
             return;
 
         // Move the entity and dirty it (we use the map ID from the entity so noone can try to be funny and move the item to another map)
@@ -256,7 +260,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
             return;
 
         // If this is the client, just assume it's valid
-        if (_net.IsServer && !_userInterface.GetActors(table.Owner, TabletopGameUiKey.Key).Contains(user))
+        if (_net.IsServer && !UI.GetActors(table.Owner, TabletopGameUiKey.Key).Contains(user))
             return;
 
         if (table.Comp.Entities.Remove(piece))

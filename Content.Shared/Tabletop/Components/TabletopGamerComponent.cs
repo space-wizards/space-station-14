@@ -15,4 +15,11 @@ public sealed partial class TabletopGamerComponent : Component
     [DataField]
     [AutoNetworkedField]
     public EntityUid Tabletop = EntityUid.Invalid;
+
+    /// <summary>
+    /// If true, this entity is using the upside down camera.
+    /// </summary>
+    [DataField]
+    [AutoNetworkedField]
+    public bool UpsideDown;
 }

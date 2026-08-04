@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Tabletop.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
@@ -5,50 +6,54 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Tabletop;
 
+/// <summary>
+/// A class to set up pieces and a board for a game of chess.
+/// </summary>
 [UsedImplicitly]
 public sealed partial class TabletopChessSetup : TabletopSetup
 {
     // TODO: Un-hardcode the rest of entity prototype IDs, probably.
 
-    public override void SetupTabletop(TabletopGameComponent tabletop, IEntityManager entityManager)
+    // The coordinates of the center of the left bottom corner square.
+    public const float PieceOffsetX = -4.5f;
+    public const float PieceOffsetY = 3.5f;
+
+    /// <inheritdoc />
+    public override void SetupTabletop(TabletopGameComponent tabletop, MapCoordinates coordinates, IEntityManager entityManager)
     {
-        if (tabletop.Position is not { } position)
-            return;
+        tabletop.Board = entityManager.SpawnEntity(BoardPrototype, coordinates);
 
-        var chessboard = entityManager.SpawnEntity(BoardPrototype, position);
-
-        tabletop.Entities.Add(chessboard);
-
-        SpawnPieces(tabletop, entityManager, position.Offset(-4.5f, 3.5f));
+        SpawnPieces(tabletop, entityManager);
     }
 
-    private void SpawnPieces(TabletopGameComponent tabletop, IEntityManager entityManager, MapCoordinates topLeft, float separation = 1f)
+    private void SpawnPieces(TabletopGameComponent tabletop, IEntityManager entityManager, float separation = 1f)
     {
-        var (mapId, x, y) = topLeft;
+        var x = PieceOffsetX;
+        var y = PieceOffsetY;
 
         // Spawn all black pieces.
-        SpawnPiecesRow(tabletop, entityManager, "Black", topLeft, separation);
-        SpawnPawns(tabletop, entityManager, "Black", new MapCoordinates(x, y - separation, mapId), separation);
+        SpawnPiecesRow(tabletop, entityManager, "Black", new(x, y), separation);
+        SpawnPawns(tabletop, entityManager, "Black", new(x, y - separation), separation);
 
         // Spawn all white pieces.
-        SpawnPawns(tabletop, entityManager, "White", new MapCoordinates(x, y - 6 * separation, mapId), separation);
-        SpawnPiecesRow(tabletop, entityManager, "White", new MapCoordinates(x, y - 7 * separation, mapId), separation);
+        SpawnPawns(tabletop, entityManager, "White", new(x, y - 6 * separation), separation);
+        SpawnPiecesRow(tabletop, entityManager, "White", new(x, y - 7 * separation), separation);
 
         // Extra queens.
-        SpawnPiece("BlackQueen", new MapCoordinates(x + 9 * separation + 5f / 32, y - 3 * separation, mapId), tabletop, entityManager);
-        SpawnPiece("WhiteQueen", new MapCoordinates(x + 9 * separation + 5f / 32, y - 4 * separation, mapId), tabletop, entityManager);
+        SpawnPiece("BlackQueen", new(x + 9 * separation + 5f / 32, y - 3 * separation), tabletop, entityManager);
+        SpawnPiece("WhiteQueen", new(x + 9 * separation + 5f / 32, y - 4 * separation), tabletop, entityManager);
     }
 
     // TODO: refactor to load FEN instead
-    private void SpawnPiecesRow(TabletopGameComponent tabletop, IEntityManager entityManager, string color, MapCoordinates left, float separation = 1f)
+    private void SpawnPiecesRow(TabletopGameComponent tabletop, IEntityManager entityManager, string color, Vector2 left, float separation = 1f)
     {
         const string piecesRow = "rnbqkbnr";
 
-        var (mapId, x, y) = left;
+        var (x, y) = left;
 
         for (var i = 0; i < 8; i++)
         {
-            var coords = new MapCoordinates(x + i * separation, y, mapId);
+            var coords = new Vector2(PieceOffsetX + x + i * separation, PieceOffsetY + y);
             switch (piecesRow[i])
             {
                 case 'r':
@@ -71,13 +76,13 @@ public sealed partial class TabletopChessSetup : TabletopSetup
     }
 
     // TODO: refactor to load FEN instead
-    private void SpawnPawns(TabletopGameComponent tabletop, IEntityManager entityManager, string color, MapCoordinates left, float separation = 1f)
+    private void SpawnPawns(TabletopGameComponent tabletop, IEntityManager entityManager, string color, Vector2 left, float separation = 1f)
     {
-        var (mapId, x, y) = left;
+        var (x, y) = left;
 
         EntProtoId pawnProtoId = color + "Pawn";
 
         for (var i = 0; i < 8; i++)
-            SpawnPiece(pawnProtoId, new MapCoordinates(x + i * separation, y, mapId), tabletop, entityManager);
+            SpawnPiece(pawnProtoId, new(x + i * separation, y), tabletop, entityManager);
     }
 }

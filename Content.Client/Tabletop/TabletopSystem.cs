@@ -11,7 +11,6 @@ using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
-using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
@@ -134,48 +133,9 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
             RaisePredictiveEvent(new TabletopMoveEvent(GetNetEntity(_draggedEntity.Value), clampedCoords, GetNetEntity(_table.Value)));
         }
     }
-
-    /// <inheritdoc />
-    protected override void OnTabletopPlay(EntityUid tableUid, EntityUid cameraUid, string title, Vector2i size)
-    {
-        // Close the currently opened window, if it exists
-        _window?.Close();
-
-        _table = tableUid;
-
-        // Get the camera entity that the server has created for us
-        var camera = cameraUid;
-
-        if (!TryComp<EyeComponent>(cameraUid, out var eyeComponent))
-        {
-            // If there is no eye, print error and do not open any window
-            Log.Error("Camera entity does not have eye component!");
-            return;
-        }
-
-        // Create a window to contain the viewport
-        _window = new TabletopWindow()
-        {
-            Title = title
-        };
-        _window.SetPosition(eyeComponent.Eye, new(size.X, size.Y));
-
-        _window.OnClose += OnWindowClose;
-    }
     #endregion Overrides
 
     #region Event handlers
-    private void OnWindowClose()
-    {
-        if (_table != null)
-        {
-            RaiseNetworkEvent(new TabletopStopPlayingEvent(GetNetEntity(_table.Value)));
-        }
-
-        StopDragging();
-        _window = null;
-    }
-
     /// <summary>
     /// Basic left click handler.
     /// </summary>

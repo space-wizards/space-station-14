@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Tabletop.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -19,14 +20,14 @@ public abstract partial class TabletopSetup
     /// </summary>
     /// <param name="tabletop">The tabletop component being set up. You'll want to grab the tabletop center position here for spawning entities.</param>
     /// <param name="entityManager">Dependency that can be used for spawning entities.</param>
-    public abstract void SetupTabletop(TabletopGameComponent tabletop, IEntityManager entityManager);
+    public abstract void SetupTabletop(TabletopGameComponent tabletop, MapCoordinates position, IEntityManager entityManager);
 
     /// <summary>
     /// Convenience function: spawns a given piece at a given position and adds it to the session given.
     /// </summary>
-    protected void SpawnPiece(EntProtoId piece, MapCoordinates position, TabletopGameComponent tabletop, IEntityManager entityManager)
+    protected void SpawnPiece(EntProtoId piece, Vector2 position, TabletopGameComponent tabletop, IEntityManager entityManager)
     {
-        var pieceUid = entityManager.SpawnEntity(piece, position);
+        var pieceUid = entityManager.SpawnAttachedTo(piece, new(tabletop.Board!.Value, position));
         tabletop.Entities.Add(pieceUid);
     }
 }

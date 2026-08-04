@@ -20,11 +20,11 @@
     tags:
     - TabletopBoard
   - type: ActivatableUI
-    key: enum.TabletopUiKey.Key
+    key: enum.TabletopGameUiKey.Key
     verbText: tabletop-verb-play-game
   - type: UserInterface
     interfaces:
-      enum.TabletopUiKey.Key:
+      enum.TabletopGameUiKey.Key:
         type: TabletopGameBoundUserInterface
 
 # A draggable item for tabletop boards.

@@ -1,6 +1,7 @@
 using System.Numerics;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Tabletop.Components;
 
@@ -36,37 +37,27 @@ public sealed partial class TabletopGameComponent : Component
     public Vector2 CameraZoom { get; private set; } = Vector2.One;
 
     /// <summary>
-    /// The position of the session. If the map is invalid, this game does not have a table set up.
-    /// Useful for both server and client.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public MapCoordinates? Position;
-
-    /// <summary>
     /// Convenience field, returns whether or not the game has an active session.
     /// </summary>
-    public bool HasSession => Position != null;
+    public bool HasSession => Board != null;
 
     /// <summary>
-    /// All non-camera entities bound to this session. If you create an entity for this session, you have to add it here.
+    /// The board entity for this game.
     /// </summary>
-    /// <remarks>
-    /// These things should just be parented to the stupid object, then they can get torn down when the board itself dies.
-    /// </remarks>
     [DataField, ViewVariables(VVAccess.ReadOnly)]
     [AutoNetworkedField]
-    public HashSet<EntityUid> Entities = [];
+    public EntityUid? Board;
 
     /// <summary>
-    /// The upright camera entity.
+    /// The upright camera for this game.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadOnly)]
     [AutoNetworkedField]
     public EntityUid? UprightCamera;
 
     /// <summary>
-    /// The upside down camera entity for this board.
-    /// </remarks>
+    /// The rotated camera for this game.
+    /// </summary>
     [DataField, ViewVariables(VVAccess.ReadOnly)]
     [AutoNetworkedField]
     public EntityUid? UpsideDownCamera;
@@ -75,6 +66,7 @@ public sealed partial class TabletopGameComponent : Component
 /// <summary>
 /// A UI key enum for board games.
 /// </summary>
+[Serializable, NetSerializable]
 public enum TabletopGameUiKey
 {
     Key

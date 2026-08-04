@@ -1,14 +1,13 @@
 using JetBrains.Annotations;
-using Content.Shared.Interaction;
 using Content.Shared.Tabletop;
 using Content.Shared.Tabletop.Components;
 using Content.Shared.Tabletop.Events;
 using Robust.Shared.Enums;
 using Robust.Shared.Player;
+using System.Linq;
 
 namespace Content.Server.Tabletop;
 
-[UsedImplicitly]
 public sealed partial class TabletopSystem : SharedTabletopSystem
 {
     #region Overrides
@@ -82,20 +81,6 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
     #endregion Network Handlers
 
     #region Local Handlers
-    protected override void OnTabletopMove(TabletopMoveEvent msg, EntitySessionEventArgs args)
-    {
-        if (args.SenderSession is not { } playerSession)
-            return;
-
-        if (!GameQuery.TryComp(GetEntity(msg.TableUid), out TabletopGameComponent? tabletop) || !tabletop.HasSession)
-            return;
-
-        // Check if player is actually playing at this table.
-        if (!tabletop.Players.ContainsKey(playerSession))
-            return;
-
-        base.OnTabletopMove(msg, args);
-    }
 
     [SubscribeLocalEvent]
     private void OnGameShutdown(Entity<TabletopGameComponent> ent, ref ComponentShutdown args)
