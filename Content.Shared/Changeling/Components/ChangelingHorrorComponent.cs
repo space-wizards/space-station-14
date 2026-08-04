@@ -1,5 +1,6 @@
 using Content.Shared.Alert;
 using Content.Shared.EntityEffects;
+using Content.Shared.Tag;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -85,6 +86,12 @@ public sealed partial class ChangelingHorrorComponent : Component
     /// <summary>
     /// The identity that was used before entering the horror form
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public EntityUid? LastIdentity;
+
+    /// <summary>
+    /// Tags that will be added on transformation, then removed when transforming back
+    /// </summary>
+    [DataField]
+    public ProtoId<TagPrototype>[]? TagsToAdd;
 }

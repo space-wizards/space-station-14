@@ -15,6 +15,7 @@ using Content.Shared.Screech;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Content.Shared.Stunnable;
+using Content.Shared.Tag;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
@@ -42,6 +43,7 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
     [Dependency] private SharedContainerSystem _containers = default!;
     [Dependency] private ScreechSystem _screech = default!;
     [Dependency] private SharedEntityEffectsSystem _effects = default!;
+    [Dependency] private TagSystem _tag = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -164,6 +166,10 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
             lingActions.CreatedActions.Clear();
         }
 
+        // Remove the horror's tags
+        if (ent.Comp.TagsToAdd != null)
+            _tag.RemoveTags(ent.Owner, ent.Comp.TagsToAdd);
+
         // Remove the alert that displays time
         _alerts.ClearAlert(ent.Owner, ent.Comp.TimeAlert);
 
@@ -227,6 +233,10 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
         ent.Comp.TimeBudget = transformationTime;
         ent.Comp.InitialTime = now;
         ent.Comp.LastIdentity = ev.PreviousIdentity;
+
+        // Give the horror's tags
+        if (ent.Comp.TagsToAdd != null)
+            _tag.AddTags(ent.Owner, ent.Comp.TagsToAdd);
 
         // this alert will display the time
         _alerts.ShowAlert(ent.Owner, ent.Comp.TimeAlert);
