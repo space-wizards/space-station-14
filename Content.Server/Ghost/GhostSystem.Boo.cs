@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Systems;
 using Content.Server.Ghost.Components;
-using Content.Shared.Atmos.Components;
 using Content.Shared.Chat;
 using Content.Shared.Ghost.Components;
 using Content.Shared.Light.Components;
@@ -109,7 +108,7 @@ public sealed partial class GhostSystem
         if (!_random.Prob(ent.Comp.ExtinguishChance))
             return;
 
-        if (!_flammable.TryExtinguish(ent))
+        if (!_flammable.TryExtinguish(ent.Owner))
             return;
 
         if (ent.Comp.ExtinguishSound != null)

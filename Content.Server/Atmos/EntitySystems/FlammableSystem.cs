@@ -85,7 +85,7 @@ namespace Content.Server.Atmos.EntitySystems
         {
             // You know I'm really not sure if having AdjustFireStacks *after* Extinguish,
             // but I'm just moving this code, not questioning it.
-            Extinguish(ent, ent.Comp);
+            TryExtinguish(ent.AsNullable());
             AdjustFireStacks(ent, args.FireStacksAdjustment, ent.Comp);
         }
 
@@ -247,9 +247,9 @@ namespace Content.Server.Atmos.EntitySystems
                 _fireEvents[ent] = tempDelta;
         }
 
-        private void OnRejuvenate(EntityUid uid, FlammableComponent component, RejuvenateEvent args)
+        private void OnRejuvenate(Entity<FlammableComponent> ent, ref RejuvenateEvent args)
         {
-            Extinguish(uid, component);
+            TryExtinguish(ent.AsNullable());
         }
 
         private void OnResistFireAlert(Entity<FlammableComponent> ent, ref ResistFireAlertEvent args)
@@ -298,7 +298,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             if (flammable.FireStacks <= 0)
             {
-                Extinguish(uid, flammable);
+                TryExtinguish((uid, flammable));
             }
             else
             {
@@ -311,13 +311,14 @@ namespace Content.Server.Atmos.EntitySystems
         /// Extinguishes an entity if it can be extinguished.
         /// </summary>
         [PublicAPI]
+        [Obsolete("Use TryExtinguish(Entity<FlammableComponent>) instead.")]
         public void Extinguish(EntityUid uid, FlammableComponent? flammable = null)
         {
             // Maintaining prior resolve behavior.
             if (!Resolve(uid, ref flammable))
                 return;
 
-            TryExtinguish(uid, flammable);
+            TryExtinguish((uid, flammable));
         }
 
         /// <summary>
@@ -327,24 +328,24 @@ namespace Content.Server.Atmos.EntitySystems
         /// Whether or not <paramref name="uid"> was extinguished.
         /// </returns>
         [PublicAPI]
-        public bool TryExtinguish(EntityUid uid, FlammableComponent? flammable = null)
+        public bool TryExtinguish(Entity<FlammableComponent?> ent)
         {
-            if (!Resolve(uid, ref flammable, false))
+            if (!Resolve(ent, ref ent.Comp, false))
                 return false;
 
-            if (!flammable.OnFire || !flammable.CanExtinguish)
+            if (!ent.Comp.OnFire || !ent.Comp.CanExtinguish)
                 return false;
 
-            _adminLogger.Add(LogType.Flammable, $"{ToPrettyString(uid):entity} stopped being on fire damage");
-            flammable.OnFire = false;
-            flammable.FireStacks = 0;
+            _adminLogger.Add(LogType.Flammable, $"{ToPrettyString(ent):entity} stopped being on fire damage");
+            ent.Comp.OnFire = false;
+            ent.Comp.FireStacks = 0;
 
-            _ignitionSourceSystem.SetIgnited(uid, false);
+            _ignitionSourceSystem.SetIgnited(ent.Owner, false);
 
             var extinguished = new ExtinguishedEvent();
-            RaiseLocalEvent(uid, ref extinguished);
+            RaiseLocalEvent(ent, ref extinguished);
 
-            UpdateAppearance(uid, flammable);
+            UpdateAppearance(ent, ent.Comp);
             return true;
         }
 
@@ -467,7 +468,7 @@ namespace Content.Server.Atmos.EntitySystems
                     // If we're in an oxygenless environment, put the fire out.
                     if (air == null || air.GetMoles(Gas.Oxygen) < 1f)
                     {
-                        Extinguish(uid, flammable);
+                        TryExtinguish((uid, flammable));
                         continue;
                     }
 
@@ -489,7 +490,7 @@ namespace Content.Server.Atmos.EntitySystems
                 }
                 else
                 {
-                    Extinguish(uid, flammable);
+                    TryExtinguish((uid, flammable));
                 }
             }
         }
