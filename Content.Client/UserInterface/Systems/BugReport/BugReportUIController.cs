@@ -18,7 +18,7 @@ namespace Content.Client.UserInterface.Systems.BugReport;
 [UsedImplicitly]
 public sealed partial class BugReportUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>
 {
-    [Dependency] private IClientNetManager _net = default!;
+    [Dependency] private INetManager _net = default!;
     [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private IResourceCache _resource = default!;
 
@@ -57,6 +57,8 @@ public sealed partial class BugReportUIController : UIController, IOnStateEntere
     {
         if (BugReportButton == null)
             return;
+
+        _net.RegisterNetMessage<BugReportMessage>();
 
         _bugReportWindow = UIManager.CreateWindow<BugReportWindow>();
         // This is to make sure the hotbar button gets checked and unchecked when the window is opened / closed.
