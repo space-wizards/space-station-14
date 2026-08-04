@@ -96,6 +96,9 @@ public sealed class LavalandAshDrakeSystem : EntitySystem
                 continue;
             }
 
+            ProcessHealthPhases(uid, drake, boss, arena, arena.Grid, grid, now);
+            ProcessWhelpAttacks(drake, grid, now);
+
             if (drake.CageActive)
             {
                 ProcessCageAttack(uid, drake, arena, arena.Grid, grid, now);
@@ -256,6 +259,16 @@ public sealed class LavalandAshDrakeSystem : EntitySystem
         var targetFar = distance >= Math.Max(10, arena.Width / 4);
         var forcePressure = NeedsPressure(drake, now);
 
+        if (belowHalf &&
+            now >= drake.NextWhelpWave &&
+            _random.Prob(drake.WhelpWaveChance))
+        {
+            SpawnWhelpWave(drake, arena, gridUid, grid, now);
+            drake.NextWhelpWave = now + drake.WhelpWaveCooldown;
+            MarkPressure(drake, now, "whelp-wave", target);
+            drake.NextAttack = now + GetScaledCooldown(drake.RangedCooldown, rage);
+            return;
+        }
         if (belowHalf &&
             !forcePressure &&
             !targetFar &&
@@ -1359,6 +1372,167 @@ public sealed class LavalandAshDrakeSystem : EntitySystem
         return TimeSpan.FromSeconds(Math.Max(1.85, baseCooldown.TotalSeconds - rage * 0.04));
     }
 
+    private void ProcessHealthPhases(
+        EntityUid bossUid,
+        LavalandAshDrakeComponent drake,
+        LavalandBossComponent boss,
+        LavalandBossArenaComponent arena,
+        EntityUid gridUid,
+        MapGridComponent grid,
+        TimeSpan now)
+    {
+        if (!TryComp<DamageableComponent>(bossUid, out var damageable) || boss.MaxHealth <= 0)
+            return;
+
+        var healthFraction = Math.Clamp(1f - (float) damageable.TotalDamage / boss.MaxHealth, 0f, 1f);
+        if (!drake.WhelpPhaseTriggered && healthFraction <= drake.WhelpPhaseHealthFraction)
+        {
+            drake.WhelpPhaseTriggered = true;
+            SpawnWhelpWave(drake, arena, gridUid, grid, now);
+            drake.NextWhelpWave = now + drake.WhelpWaveCooldown;
+        }
+
+        if (!drake.LavaPhaseTriggered && healthFraction <= drake.LavaPhaseHealthFraction)
+        {
+            drake.LavaPhaseTriggered = true;
+            FillArenaPerimeter(drake, arena, gridUid, grid);
+        }
+    }
+
+    private void SpawnWhelpWave(
+        LavalandAshDrakeComponent drake,
+        LavalandBossArenaComponent arena,
+        EntityUid gridUid,
+        MapGridComponent grid,
+        TimeSpan now)
+    {
+        foreach (var participant in _participants)
+        {
+            var playerTile = GetEntityTile(participant, gridUid, grid);
+            if (playerTile == null)
+                continue;
+
+            var offset = Cardinals[_random.Next(Cardinals.Length)] * drake.WhelpSpawnDistance;
+            var spawnTile = ClampToInnerArena(arena, playerTile.Value + offset);
+            var direction = new Vector2i(
+                Math.Sign(playerTile.Value.X - spawnTile.X),
+                Math.Sign(playerTile.Value.Y - spawnTile.Y));
+            if (direction == Vector2i.Zero)
+                direction = -Cardinals[_random.Next(Cardinals.Length)];
+
+            var whelp = Spawn(drake.WhelpPrototype, _map.GridTileToLocal(gridUid, grid, spawnTile));
+            drake.PhaseEntities.Add(whelp);
+            _transform.SetLocalRotation(whelp, new Vector2(direction.X, direction.Y).ToAngle());
+            if (TryComp(whelp, out TransformComponent? whelpXform) && !whelpXform.Anchored)
+                _transform.AnchorEntity((whelp, whelpXform), (gridUid, grid), spawnTile);
+
+            var attack = new LavalandAshDrakeWhelpAttack
+            {
+                Whelp = whelp,
+                Grid = gridUid,
+                AttackAt = now + drake.WhelpAttackDelay,
+            };
+
+            var perpendicular = new Vector2i(-direction.Y, direction.X);
+            for (var step = 1; step <= drake.WhelpFireRange; step++)
+            {
+                var forward = spawnTile + direction * step;
+                AddWhelpAttackTile(attack, drake, arena, gridUid, grid, forward);
+                AddWhelpAttackTile(attack, drake, arena, gridUid, grid, forward + perpendicular);
+                AddWhelpAttackTile(attack, drake, arena, gridUid, grid, forward - perpendicular);
+            }
+
+            drake.WhelpAttacks.Add(attack);
+        }
+    }
+
+    private void AddWhelpAttackTile(
+        LavalandAshDrakeWhelpAttack attack,
+        LavalandAshDrakeComponent drake,
+        LavalandBossArenaComponent arena,
+        EntityUid gridUid,
+        MapGridComponent grid,
+        Vector2i tile)
+    {
+        if (!IsInsideInnerArena(arena, tile) || !attack.Tiles.Add(tile))
+            return;
+
+        var telegraph = SpawnAnchored(drake.WhelpTargetPrototype, gridUid, grid, tile);
+        if (telegraph != null)
+            attack.Telegraphs.Add(telegraph.Value);
+    }
+
+    private void ProcessWhelpAttacks(
+        LavalandAshDrakeComponent drake,
+        MapGridComponent grid,
+        TimeSpan now)
+    {
+        for (var i = drake.WhelpAttacks.Count - 1; i >= 0; i--)
+        {
+            var attack = drake.WhelpAttacks[i];
+            if (now < attack.AttackAt)
+                continue;
+
+            foreach (var telegraph in attack.Telegraphs)
+            {
+                if (Exists(telegraph))
+                    QueueDel(telegraph);
+            }
+
+            if (Exists(attack.Whelp))
+            {
+                if (TryComp(attack.Whelp, out TransformComponent? whelpXform) && whelpXform.Anchored)
+                    _transform.Unanchor(attack.Whelp, whelpXform);
+
+                foreach (var tile in attack.Tiles)
+                    SpawnAnchored(drake.FirePrototype, attack.Grid, grid, tile);
+
+                _audio.PlayPvs(drake.FireSound, attack.Whelp, AudioParams.Default.WithVolume(1f));
+                QueueDel(attack.Whelp);
+            }
+
+            drake.WhelpAttacks.RemoveAt(i);
+        }
+    }
+
+    private void FillArenaPerimeter(
+        LavalandAshDrakeComponent drake,
+        LavalandBossArenaComponent arena,
+        EntityUid gridUid,
+        MapGridComponent grid)
+    {
+        var (minX, maxX, minY, maxY) = GetInnerBounds(arena);
+        var depth = Math.Max(1, drake.ArenaLavaDepth);
+        var tiles = new HashSet<Vector2i>();
+        for (var layer = 0; layer < depth; layer++)
+        {
+            var left = minX + layer;
+            var right = maxX - layer;
+            var bottom = minY + layer;
+            var top = maxY - layer;
+            if (left > right || bottom > top)
+                break;
+
+            for (var x = left; x <= right; x++)
+            {
+                tiles.Add(new Vector2i(x, bottom));
+                tiles.Add(new Vector2i(x, top));
+            }
+
+            for (var y = bottom; y <= top; y++)
+            {
+                tiles.Add(new Vector2i(left, y));
+                tiles.Add(new Vector2i(right, y));
+            }
+        }
+
+        foreach (var tile in tiles)
+        {
+            var lava = SpawnAnchored(drake.CornerLavaPrototype, gridUid, grid, tile);
+            if (lava != null)
+                drake.PhaseEntities.Add(lava.Value);
+        }
+    }
     private Vector2i? GetEntityTile(EntityUid uid, EntityUid gridUid, MapGridComponent grid)
     {
         if (!uid.Valid ||
@@ -1376,16 +1550,17 @@ public sealed class LavalandAshDrakeSystem : EntitySystem
         return TryComp(uid, out MobStateComponent? mobState) && mobState.CurrentState == MobState.Dead;
     }
 
-    private void SpawnAnchored(string prototype, EntityUid gridUid, MapGridComponent grid, Vector2i index)
+    private EntityUid? SpawnAnchored(string prototype, EntityUid gridUid, MapGridComponent grid, Vector2i index)
     {
         if (string.IsNullOrWhiteSpace(prototype))
-            return;
+            return null;
 
         var uid = Spawn(prototype, _map.GridTileToLocal(gridUid, grid, index));
         if (!TryComp(uid, out TransformComponent? xform) || xform.Anchored)
-            return;
+            return uid;
 
         _transform.AnchorEntity((uid, xform), (gridUid, grid), index);
+        return uid;
     }
 
     private void ClearRuntimeState(EntityUid uid, LavalandAshDrakeComponent drake, bool restoreVisual)
@@ -1400,6 +1575,26 @@ public sealed class LavalandAshDrakeSystem : EntitySystem
         drake.CurrentPrimaryTarget = null;
         drake.LastTargetSwitchAt = TimeSpan.Zero;
         drake.LastPressureByTarget.Clear();
+        drake.NextWhelpWave = TimeSpan.Zero;
+        drake.WhelpPhaseTriggered = false;
+        drake.LavaPhaseTriggered = false;
+
+        foreach (var attack in drake.WhelpAttacks)
+        {
+            foreach (var telegraph in attack.Telegraphs)
+            {
+                if (Exists(telegraph))
+                    QueueDel(telegraph);
+            }
+        }
+        drake.WhelpAttacks.Clear();
+
+        foreach (var entity in drake.PhaseEntities)
+        {
+            if (Exists(entity))
+                QueueDel(entity);
+        }
+        drake.PhaseEntities.Clear();
 
         foreach (var entity in drake.CageBorderEntities)
         {

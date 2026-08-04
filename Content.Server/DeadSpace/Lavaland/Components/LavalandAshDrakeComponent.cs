@@ -155,6 +155,37 @@ public sealed partial class LavalandAshDrakeComponent : Component
         },
     };
 
+    [DataField]
+    public float WhelpPhaseHealthFraction = 0.5f;
+
+    [DataField]
+    public float LavaPhaseHealthFraction = 0.35f;
+
+    [DataField]
+    public string WhelpPrototype = "MobLavalandAshWhelp";
+
+    [DataField]
+    public string WhelpTargetPrototype = "LavalandAshDrakeWhelpTarget";
+
+    [DataField]
+    public float WhelpWaveChance = 0.6f;
+
+    [DataField]
+    public TimeSpan WhelpWaveCooldown = TimeSpan.FromSeconds(8);
+    [DataField]
+    public TimeSpan WhelpAttackDelay = TimeSpan.FromSeconds(2);
+
+    [DataField]
+    public int WhelpSpawnDistance = 3;
+
+    [DataField]
+    public int WhelpFireRange = 6;
+
+    [DataField]
+    public int ArenaLavaDepth = 7;
+
+    [DataField]
+    public string CornerLavaPrototype = "FloorLavaEntity";
     [ViewVariables]
     public TimeSpan NextAttack;
 
@@ -247,8 +278,31 @@ public sealed partial class LavalandAshDrakeComponent : Component
 
     [ViewVariables]
     public readonly List<EntityUid> CageInteriorEntities = new();
+
+    [ViewVariables]
+    public TimeSpan NextWhelpWave;
+
+    [ViewVariables]
+    public bool WhelpPhaseTriggered;
+
+    [ViewVariables]
+    public bool LavaPhaseTriggered;
+
+    [ViewVariables]
+    public readonly List<LavalandAshDrakeWhelpAttack> WhelpAttacks = new();
+
+    [ViewVariables]
+    public readonly List<EntityUid> PhaseEntities = new();
 }
 
+public sealed class LavalandAshDrakeWhelpAttack
+{
+    public EntityUid Whelp;
+    public EntityUid Grid;
+    public TimeSpan AttackAt;
+    public readonly HashSet<Vector2i> Tiles = new();
+    public readonly List<EntityUid> Telegraphs = new();
+}
 public sealed class LavalandAshDrakePendingTile
 {
     public EntityUid Grid;

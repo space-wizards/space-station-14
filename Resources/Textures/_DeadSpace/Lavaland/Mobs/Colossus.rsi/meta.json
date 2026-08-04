@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/tgstation/tgstation",
+  "size": {
+    "x": 96,
+    "y": 96
+  },
+  "states": [
+    {
+      "name": "colossus",
+      "directions": 4,
+      "delays": [
+        [ 1, 0.5, 0.5 ],
+        [ 1, 0.5, 0.5 ],
+        [ 1, 0.5, 0.5 ],
+        [ 1, 0.5, 0.5 ]
+      ]
+    }
+  ]
+}

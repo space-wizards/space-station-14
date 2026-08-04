@@ -598,9 +598,8 @@
     deathSound: /Audio/_DeadSpace/Lavaland/AshDrake/demon_dies.ogg
     deathRewards:
     - LavalandNecropolisChest
-    - LavalandNecropolisChestHardsuit
+    - ClothingOuterSuitAshDrake
     - LavalandSpectralBlade
-    - LavalandFireStaff
     - LavalandAshDrakeFireballSpellbookDrop
   - type: LavalandAshDrake
   - type: NpcFactionMember
@@ -1025,6 +1024,178 @@
     tags:
     - CannotSuicide
 
+# Colossus
+
+- type: lavalandBossArena
+  id: LavalandColossusArena
+  arenaName: Арена Колосса
+  bossPrototype: MobLavalandColossus
+  floorTile: FloorColossusArena
+  wallPrototype: WallColossusArena
+  lightPrototype: LavalandColossusArenaLight
+  decorations:
+  - prototype: BasaltRandom
+    count: 110
+    spawnAttempts: 130
+    minDistance: 4
+    maxDistance: 22
+    edgePadding: 2
+    minSeparation: 1
+  size: 47
+  spawnAttempts: 200
+  minDistance: 190
+  maxDistance: 335
+  mapEdgePadding: 40
+  landingExclusionRadius: 90
+  outpostExclusionRadius: 100
+  ftlBeaconExclusionRadius: 64
+  gridSeparation: 48
+  resetOnEmpty: true
+  emptyResetDelay: 10
+  emptyResetHealFraction: 5
+  emptyResetMinHeal: 450
+
+- type: tile
+  id: FloorColossusArena
+  name: lavaland-colossus-floor-name
+  parent: FloorBasalt
+  weather: false
+
+- type: entity
+  parent: WallRockBasaltLavalandBoundary
+  id: WallColossusArena
+  name: colossus arena wall
+  description: An indestructible basalt wall enclosing the colossus's domain.
+  suffix: Lavaland, Indestructible
+
+- type: entity
+  id: LavalandColossusArenaLight
+  name: colossus arena light
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Transform
+    noRot: true
+  - type: PointLight
+    radius: 29
+    energy: 1.45
+    softness: 1
+    color: "#c84b2d"
+    castShadows: false
+  - type: Tag
+    tags:
+    - HideContextMenu
+
+- type: entity
+  parent: BaseBullet
+  id: LavalandColossusDeathBolt
+  name: death bolt
+  description: A searing projectile that passes through armor as though it were not there.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    noRot: false
+    sprite: _DeadSpace/Lavaland/Effects/Colossus.rsi
+    layers:
+    - state: death_bolt
+      shader: unshaded
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 30
+        Structural: 100
+    ignoreResistances: true
+    soundHit: null
+  - type: PointLight
+    radius: 2.2
+    energy: 1.7
+    color: "#eefcff"
+  - type: TimedDespawn
+    lifetime: 8
+  - type: LavalandColossusProjectile
+
+- type: entity
+  parent: [ BaseMobAsteroid, BaseMobLavalandFauna ]
+  id: MobLavalandColossus
+  name: colossus
+  description: An ancient, monstrous creature radiating overwhelming power.
+  suffix: Lavaland, Boss
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: IgnoreKudzu
+  - type: Insulated
+  - type: StunImmune
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _DeadSpace/Lavaland/Mobs/Colossus.rsi
+    layers:
+    - state: colossus
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      3500: Dead
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Blunt
+        damage: 1000000
+      behaviors:
+      - !type:GibBehavior { }
+  - type: LavalandBoss
+    bossName: Колосс
+    maxHealth: 3500
+    music: /Audio/_DeadSpace/Lavaland/Bosses/colossus_fight.ogg
+    deathSound: /Audio/Effects/demon_dies.ogg
+    deathRewards:
+    - LavalandNecropolisChestHardsuit
+    - LavalandDarkInfusedBlade
+    - LavalandNecropolisChest
+    - LavalandFireStaff
+  - type: LavalandColossus
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+    blackboard:
+      VisionRadius: !type:Single
+        64
+      AggroVisionRadius: !type:Single
+        64
+      NavSmash: !type:Bool
+        false
+  - type: MeleeWeapon
+    resistanceBypass: true
+    soundHit:
+      path: /Audio/_DeadSpace/Lavaland/Colossus/ratvar_attack.ogg
+    angle: 0
+    attackRate: 1
+    animation: WeaponArcPunch
+    damage:
+      types:
+        Blunt: 45
+        Structural: 45
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 1.8
+    baseSprintSpeed: 2.8
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.7
+        density: 300
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: NoSlip
+  - type: RequireProjectileTarget
+  - type: Tag
+    tags:
+    - CannotSuicide
+
 - type: entity
   parent: [ BaseMobAsteroid, FlyingMobBase, BaseMobLavalandFauna ]
   id: MobLavalandBubblegumSlaughterling
@@ -1073,3 +1244,65 @@
   - type: Tag
     tags:
     - CannotSuicide
+
+- type: entity
+  parent: LavalandAshDrakeEffectBase
+  id: LavalandAshDrakeWhelpTarget
+  name: направление огня пепельного детёныша
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    noRot: true
+    drawdepth: Effects
+    sprite: _DeadSpace/Lavaland/Effects/AshDrakeTarget.rsi
+    color: "#ff6b2d"
+    layers:
+    - state: sniper_zoom
+      shader: unshaded
+  - type: TimedDespawn
+    lifetime: 2.2
+
+- type: entity
+  parent: [ BaseMobAsteroid, FlyingMobBase, BaseMobLavalandFauna ]
+  id: MobLavalandAshWhelp
+  name: пепельный детёныш
+  description: Молодой дракон, вызванный защищать пепельного владыку.
+  suffix: Lavaland
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _DeadSpace/Lavaland/Mobs/AshWhelp.rsi
+    layers:
+    - state: ash_whelp
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      100: Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.5
+    baseSprintSpeed: 3.5
+  - type: MeleeWeapon
+    angle: 0
+    attackRate: 1
+    animation: WeaponArcBite
+    damage:
+      types:
+        Slash: 8
+        Heat: 12
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+    blackboard:
+      VisionRadius: !type:Single
+        32
+      AggroVisionRadius: !type:Single
+        32
+      NavSmash: !type:Bool
+        false
+  - type: TimedDespawn
+    lifetime: 15
+  - type: NoSlip

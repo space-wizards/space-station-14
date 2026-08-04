@@ -1,0 +1,13 @@
+ent-MobLavalandColossus = colossus
+    .desc = An ancient, monstrous creature radiating overwhelming power.
+lavaland-colossus-arena-name = colossus arena
+lavaland-colossus-floor-name = colossus arena floor
+ent-WallColossusArena = colossus arena wall
+    .desc = An indestructible basalt wall enclosing the colossus's domain.
+ent-LavalandColossusArenaLight = colossus arena light
+ent-LavalandColossusDeathBolt = death bolt
+    .desc = A searing projectile that passes through armor as though it were not there.
+lavaland-colossus-speech-cannot-dodge = "You can't dodge."
+lavaland-colossus-speech-judgement = "Judgement."
+lavaland-colossus-speech-die = "Die."
+lavaland-colossus-speech-see-you = "I see you."

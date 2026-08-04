@@ -26,11 +26,14 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
+using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.DeadSpace.Lavaland;
 
 public sealed class LavalandSystem : EntitySystem
 {
+    private const int BoundaryBatchSize = 256;
     private const int StructureFootprintPadding = 96;
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly BiomeSystem _biome = default!;
@@ -183,7 +186,6 @@ public sealed class LavalandSystem : EntitySystem
         cancellation.ThrowIfCancellationRequested();
 
         SetupMetadata(mapUid, planet);
-        SetupFtl(mapUid, planet);
         var biome = SetupBiome(mapUid, planet, seed);
 
         var marker = AddComp<LavalandMapComponent>(mapUid);
@@ -194,12 +196,10 @@ public sealed class LavalandSystem : EntitySystem
         _map.InitializeMap(mapId);
         _map.SetPaused(mapUid, true);
 
-        PrepareMapBoundary(mapUid, grid, planet, random);
+        await PrepareMapBoundary(mapUid, grid, planet, random, cancellation);
         PrepareTerminalReservation(mapUid, grid, biome, planet, random);
         var terminalGrid = LoadTerminalGrid(mapId, mapUid, station, planet, planetId);
         PrepareLandingPad(mapUid, grid, biome, planet, random);
-        CreateLandingWarp(mapUid, planet);
-        CreateFtlBeacon(mapUid, planet, terminalGrid);
         PreloadLandingArea(mapUid, biome, planet);
         cancellation.ThrowIfCancellationRequested();
 
@@ -213,11 +213,15 @@ public sealed class LavalandSystem : EntitySystem
         await GenerateStructures(mapUid, grid, planet, random, placedStructures, cancellation);
         cancellation.ThrowIfCancellationRequested();
 
-        _tendrilPlacement.SetupMap(mapUid, planet);
+        await _tendrilPlacement.SetupMap(mapUid, planet, cancellation);
         LoadCustomGrids(mapId, mapUid, grid, biome, planet, random, placedStructures, cancellation);
-        _bossArena.SpawnConfiguredArenas(mapUid, grid, biome, planet, random);
-        _faunaPopulation.SetupMap(mapUid, planet);
+        await _bossArena.SpawnConfiguredArenas(mapUid, grid, biome, planet, random, cancellation);
+        await _faunaPopulation.SetupMap(mapUid, planet, cancellation);
 
+        cancellation.ThrowIfCancellationRequested();
+        CreateLandingWarp(mapUid, planet);
+        CreateFtlBeacon(mapUid, planet, terminalGrid);
+        SetupFtl(mapUid, planet);
         _map.SetPaused(mapUid, false);
         return mapUid;
     }
@@ -427,11 +431,12 @@ public sealed class LavalandSystem : EntitySystem
         _map.SetTiles(mapUid, grid, tiles);
     }
 
-    private void PrepareMapBoundary(
+    private async Task PrepareMapBoundary(
         EntityUid mapUid,
         MapGridComponent grid,
         LavalandPlanetPrototype planet,
-        Random random)
+        Random random,
+        CancellationToken cancellation)
     {
         if (!planet.BoundaryEnabled || planet.MapHalfSize <= 0)
             return;
@@ -446,43 +451,78 @@ public sealed class LavalandSystem : EntitySystem
             return;
 
         var tileDef = _tileDefinition[planet.BoundaryTile];
-        var capacity = GetSquareRingTileCount(halfSize, boundaryWidth);
-        var tiles = new List<(Vector2i Index, Tile Tile)>(capacity);
-        var lavaCapacity = GetSquareRingTileCount(halfSize, effectiveLavaWidth);
-        var lavaTiles = new List<Vector2i>(lavaCapacity);
-        var wallTiles = new List<Vector2i>(Math.Max(0, capacity - lavaCapacity));
+        var tiles = new List<(Vector2i Index, Tile Tile)>(BoundaryBatchSize);
+        var lavaTiles = new List<Vector2i>(BoundaryBatchSize);
+        var wallTiles = new List<Vector2i>(BoundaryBatchSize);
 
-        for (var x = -halfSize; x < halfSize; x++)
+        foreach (var index in EnumerateSquareRing(halfSize, boundaryWidth))
         {
-            for (var y = -halfSize; y < halfSize; y++)
-            {
-                var edgeDistance = GetDistanceToSquareEdge(x, y, halfSize);
-                if (edgeDistance >= boundaryWidth)
-                    continue;
+            cancellation.ThrowIfCancellationRequested();
 
-                var index = new Vector2i(x, y);
-                tiles.Add((index, CreateTile(tileDef, random)));
-
-                if (edgeDistance < effectiveLavaWidth)
-                {
-                    lavaTiles.Add(index);
-                    continue;
-                }
-
+            tiles.Add((index, CreateTile(tileDef, random)));
+            if (GetDistanceToSquareEdge(index.X, index.Y, halfSize) < effectiveLavaWidth)
+                lavaTiles.Add(index);
+            else
                 wallTiles.Add(index);
-            }
+
+            if (tiles.Count < BoundaryBatchSize)
+                continue;
+
+            FlushBoundaryBatch(mapUid, grid, planet, tiles, lavaTiles, wallTiles);
+            await Timer.Delay(1, cancellation);
         }
 
+        if (tiles.Count > 0)
+            FlushBoundaryBatch(mapUid, grid, planet, tiles, lavaTiles, wallTiles);
+    }
+
+    private void FlushBoundaryBatch(
+        EntityUid mapUid,
+        MapGridComponent grid,
+        LavalandPlanetPrototype planet,
+        List<(Vector2i Index, Tile Tile)> tiles,
+        List<Vector2i> lavaTiles,
+        List<Vector2i> wallTiles)
+    {
         _map.SetTiles(mapUid, grid, tiles);
 
         foreach (var tile in lavaTiles)
-        {
             SpawnAnchored(planet.BoundaryLavaEntity, mapUid, grid, tile);
-        }
 
         foreach (var tile in wallTiles)
-        {
             SpawnAnchored(planet.BoundaryWallEntity, mapUid, grid, tile);
+
+        tiles.Clear();
+        lavaTiles.Clear();
+        wallTiles.Clear();
+    }
+
+    private static IEnumerable<Vector2i> EnumerateSquareRing(int halfSize, int ringWidth)
+    {
+        var min = -halfSize;
+        var max = halfSize;
+        var innerMin = min + ringWidth;
+        var innerMax = max - ringWidth;
+
+        for (var x = min; x < max; x++)
+        {
+            for (var y = min; y < innerMin; y++)
+                yield return new Vector2i(x, y);
+
+            for (var y = innerMax; y < max; y++)
+            {
+                if (y >= innerMin)
+                    yield return new Vector2i(x, y);
+            }
+        }
+
+        for (var y = innerMin; y < innerMax; y++)
+        {
+            for (var x = min; x < innerMin; x++)
+                yield return new Vector2i(x, y);
+
+            for (var x = innerMax; x < max; x++)
+                yield return new Vector2i(x, y);
         }
     }
 
@@ -508,16 +548,6 @@ public sealed class LavalandSystem : EntitySystem
         var top = halfSize - 1 - y;
 
         return Math.Min(Math.Min(left, right), Math.Min(bottom, top));
-    }
-
-    private static int GetSquareRingTileCount(int halfSize, int ringWidth)
-    {
-        if (ringWidth <= 0 || halfSize <= 0)
-            return 0;
-
-        var size = halfSize * 2;
-        var innerSize = Math.Max(0, size - ringWidth * 2);
-        return size * size - innerSize * innerSize;
     }
 
     private void PrepareTerminalReservation(

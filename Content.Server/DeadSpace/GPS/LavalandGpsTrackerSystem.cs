@@ -2,6 +2,7 @@
 
 using Content.Server.DeadSpace.GPS.Components;
 using Content.Server.DeadSpace.Lavaland.Components;
+using Content.Shared.Interaction.Events;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
 using Robust.Shared.Map;
@@ -14,6 +15,25 @@ public sealed class LavalandGpsTrackerSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<LavalandGpsTrackerComponent, UseInHandEvent>(OnUseInHand);
+    }
+
+    private void OnUseInHand(EntityUid uid, LavalandGpsTrackerComponent tracker, UseInHandEvent args)
+    {
+        if (!tracker.Enabled)
+            return;
+
+        tracker.Active = !tracker.Active;
+        if (!tracker.Active)
+            return;
+
+        tracker.NextUpdateTime = TimeSpan.Zero;
+        _audio.PlayPvs(tracker.BeepSound, args.User);
+    }
+
     public override void Update(float frameTime)
     {
         var now = _timing.CurTime;
@@ -24,7 +44,7 @@ public sealed class LavalandGpsTrackerSystem : EntitySystem
             if (!tracker.Enabled)
                 continue;
 
-            if (now < tracker.NextUpdateTime)
+            if (!tracker.Active || now < tracker.NextUpdateTime)
                 continue;
 
             tracker.NextUpdateTime = now + TimeSpan.FromSeconds(MathF.Max(0.1f, tracker.ScanInterval));

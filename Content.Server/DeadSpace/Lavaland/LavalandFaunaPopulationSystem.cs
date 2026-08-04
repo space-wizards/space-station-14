@@ -1,4 +1,6 @@
 using System.Numerics;
+using System.Threading;
+using System.Threading.Tasks;
 using Content.Server.DeadSpace.Lavaland.Components;
 using Content.Server.Parallax;
 using Content.Server.Tiles;
@@ -17,11 +19,13 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.DeadSpace.Lavaland;
 
 public sealed class LavalandFaunaPopulationSystem : EntitySystem
 {
+    private const int InitialSpawnBatchSize = 6;
     private const float FtlLandingAreaPadding = 16f;
 
     private const CollisionGroup SpawnBlockerMask =
@@ -104,7 +108,7 @@ public sealed class LavalandFaunaPopulationSystem : EntitySystem
         }
     }
 
-    public void SetupMap(EntityUid mapUid, LavalandPlanetPrototype planet)
+    public async Task SetupMap(EntityUid mapUid, LavalandPlanetPrototype planet, CancellationToken cancellation)
     {
         if (!planet.FaunaEnabled || planet.FaunaSpawns.Count == 0)
             return;
@@ -113,16 +117,25 @@ public sealed class LavalandFaunaPopulationSystem : EntitySystem
         population.SectorCooldowns.Clear();
         population.NextSpawnTime = _timing.CurTime + GetUpdateInterval(planet);
 
-        if (planet.FaunaInitialSpawnCount > 0)
+        var requested = Math.Min(planet.FaunaInitialSpawnCount, planet.FaunaHardCap);
+        var attempted = 0;
+        var spawned = 0;
+        while (attempted < requested)
         {
-            var requested = Math.Min(planet.FaunaInitialSpawnCount, planet.FaunaHardCap);
-            var spawned = SpawnFauna(mapUid, population, planet, requested);
+            cancellation.ThrowIfCancellationRequested();
+            var batch = Math.Min(InitialSpawnBatchSize, requested - attempted);
+            var placed = SpawnFauna(mapUid, population, planet, batch);
+            attempted += batch;
+            spawned += placed;
 
-            Log.Info($"Lavaland fauna initial spawn placed {spawned}/{requested} mobs.");
-
-            if (spawned < requested)
-                Log.Warning($"Lavaland fauna initial spawn only placed {spawned}/{requested} mobs.");
+            if (attempted < requested)
+                await Timer.Delay(1, cancellation);
         }
+
+        Log.Info($"Lavaland fauna initial spawn placed {spawned}/{requested} mobs.");
+
+        if (spawned < requested)
+            Log.Warning($"Lavaland fauna initial spawn only placed {spawned}/{requested} mobs.");
     }
 
     private void OnSpawnedFaunaMobStateChanged(Entity<LavalandSpawnedFaunaComponent> ent, ref MobStateChangedEvent args)

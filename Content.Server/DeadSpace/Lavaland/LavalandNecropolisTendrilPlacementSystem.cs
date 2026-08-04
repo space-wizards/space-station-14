@@ -1,4 +1,6 @@
 using System.Numerics;
+using System.Threading;
+using System.Threading.Tasks;
 using Content.Server.DeadSpace.Lavaland.Components;
 using Content.Server.Parallax;
 using Content.Server.Tiles;
@@ -13,11 +15,13 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.DeadSpace.Lavaland;
 
 public sealed class LavalandNecropolisTendrilPlacementSystem : EntitySystem
 {
+    private const int InitialSpawnBatchSize = 2;
     private const float FtlLandingAreaPadding = 16f;
 
     private const CollisionGroup SpawnBlockerMask =
@@ -89,7 +93,7 @@ public sealed class LavalandNecropolisTendrilPlacementSystem : EntitySystem
         }
     }
 
-    public void SetupMap(EntityUid mapUid, LavalandPlanetPrototype planet)
+    public async Task SetupMap(EntityUid mapUid, LavalandPlanetPrototype planet, CancellationToken cancellation)
     {
         if (!planet.TendrilsEnabled ||
             planet.TendrilSpawnCount <= 0 ||
@@ -107,7 +111,19 @@ public sealed class LavalandNecropolisTendrilPlacementSystem : EntitySystem
         _counts.Clear();
         _placed.Clear();
 
-        var spawned = SpawnTendrils(mapUid, planet, planet.TendrilSpawnCount);
+        var attempted = 0;
+        var spawned = 0;
+        while (attempted < planet.TendrilSpawnCount)
+        {
+            cancellation.ThrowIfCancellationRequested();
+            var batch = Math.Min(InitialSpawnBatchSize, planet.TendrilSpawnCount - attempted);
+            var placed = SpawnTendrils(mapUid, planet, batch);
+            attempted += batch;
+            spawned += placed;
+
+            if (attempted < planet.TendrilSpawnCount)
+                await Timer.Delay(1, cancellation);
+        }
 
         Log.Info($"Lavaland necropolis tendrils placed {spawned}/{planet.TendrilSpawnCount}.");
 

@@ -694,3 +694,123 @@
     radius: 1.5
     energy: 0.8
     color: "#7de8ff"
+
+- type: entity
+  parent: BaseKnife
+  id: LavalandDarkInfusedBlade
+  name: насыщенный тёмный клинок
+  description: Клинок выпускает режущее облако тёмного пламени, укрывающее своего владельца.
+  suffix: Lavaland
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Lavaland/Objects/Weapons/Melee/dark_blade_infused.rsi
+    state: icon
+  - type: Item
+    sprite: _DeadSpace/Lavaland/Objects/Weapons/Melee/dark_blade_infused.rsi
+  - type: MeleeWeapon
+    attackRate: 1.1
+    wideAnimationRotation: -135
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+    damage:
+      types:
+        Slash: 18
+  - type: ActionGrant
+    actions:
+    - ActionSmokeBlade
+  - type: ItemActionGrant
+    actions:
+    - ActionSmokeBlade
+
+- type: entity
+  parent: BaseAction
+  id: ActionSmokeBlade
+  name: дым тёмного клинка
+  description: На 5 секунд заполняет доступную область 5×5 режущим дымом. Владелец неуязвим, пока остаётся внутри.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    useDelay: 60
+    icon:
+      sprite: _DeadSpace/Lavaland/Objects/Weapons/Melee/dark_blade_infused.rsi
+      state: icon
+  - type: InstantAction
+    event: !type:SmokeBladeActionEvent
+      radius: 2
+      duration: 5
+      tickInterval: 0.1
+      ambientSound:
+        path: /Audio/Effects/burning.ogg
+      visualPrototype: LavalandBloodBladeSmokeVisual
+
+- type: entity
+  id: LavalandBloodBladeSmokeVisual
+  name: blood-red smoke
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TimedDespawn
+    lifetime: 6
+  - type: Sprite
+    drawdepth: Effects
+    sprite: Effects/chemsmoke.rsi
+    state: chemsmoke
+    color: "#8b001177"
+    scale: 1.25, 1.25
+  - type: Tag
+    tags:
+    - HideContextMenu
+    
+- type: explosion
+  id: LavalandPkaVisual
+  damagePerIntensity:
+    types: {}
+  tileBreakChance: [0]
+  tileBreakIntensity: [0]
+  lightColor: Orange
+  texturePath: /Textures/Effects/fire.rsi
+  fireStates: 3
+  temperature: 0
+
+- type: entity
+  id: PKAUpgradeExplosiveLavaland
+  parent: BasePKAUpgrade
+  name: модкит ПКУ (взрывной заряд)
+  description: Превращает выстрелы ПКУ во взрывные заряды. Почти безвреден для гуманоидов, но сокрушителен для фауны, некроморфов и боссов.
+  suffix: Lavaland
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: overlay-1
+      color: "#ff8b24"
+    - state: overlay-2
+      color: "#4d0505"
+    - state: overlay-3
+      color: "#ff2700"
+  - type: GunUpgrade
+    tags: [ GunUpgradeExplosiveLavaland ]
+    examineText: gun-upgrade-examine-text-damage
+  - type: ExplosivePkaUpgrade
+    radius: 2.5
+    maxRange: 8
+    explosionIntensity: 3
+    explosionSlope: 1
+    explosionMaxIntensity: 2
+    bulletDamage:
+      types:
+        Blunt: 20
+        Structural: 25
+    humanDamage:
+      types:
+        Blunt: 0.5
+    creatureDamage:
+      types:
+        Blunt: 80
+        Structural: 50
+    bossDamage:
+      types:
+        Blunt: 50
+        Structural: 75
+
+- type: Tag
+  id: GunUpgradeExplosiveLavaland

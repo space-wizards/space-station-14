@@ -51,6 +51,7 @@
     LavalandHierophantArena: 1
     LavalandAshDrakeArena: 1
     LavalandBubblegumArena: 1
+    LavalandColossusArena: 1
   markerLayers:
   - LavalandOreIron
   - LavalandOreCoal

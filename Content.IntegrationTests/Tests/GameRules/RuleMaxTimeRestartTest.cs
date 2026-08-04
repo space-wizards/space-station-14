@@ -14,7 +14,11 @@ namespace Content.IntegrationTests.Tests.GameRules
         [Test]
         public async Task RestartTest()
         {
-            await using var pair = await PoolManager.GetServerClient(new PoolSettings { InLobby = true });
+            await using var pair = await PoolManager.GetServerClient(new PoolSettings
+            {
+                InLobby = true,
+                Dirty = true,
+            });
             var server = pair.Server;
 
             Assert.That(server.EntMan.Count<GameRuleComponent>(), Is.Zero);

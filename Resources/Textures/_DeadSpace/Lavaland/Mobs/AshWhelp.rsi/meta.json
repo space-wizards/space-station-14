@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "license": "CC-BY-3.0",
+  "copyright": "https://github.com/tgstation/tgstation/blob/37199d7f7fead421df1352f3d2ed876949db1c4d/icons/mob/simple/lavaland/lavaland_monsters.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "ash_whelp",
+      "directions": 4
+    }
+  ]
+}

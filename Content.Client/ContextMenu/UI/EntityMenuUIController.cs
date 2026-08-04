@@ -291,9 +291,16 @@ namespace Content.Client.ContextMenu.UI
         private void AddEntityToMenu(EntityUid entity, ContextMenuPopup menu)
         {
             var element = new EntityMenuElement(entity);
-            element.SubMenu = new ContextMenuPopup(_context, element);
-            element.SubMenu.OnPopupOpen += () => _verb.OpenVerbMenu(entity, popup: element.SubMenu);
-            element.SubMenu.OnPopupHide += element.SubMenu.MenuBody.RemoveAllChildren;
+            var subMenu = new ContextMenuPopup(_context, element);
+            element.SubMenu = subMenu;
+            subMenu.OnPopupOpen += () => _verb.OpenVerbMenu(entity, popup: subMenu);
+            subMenu.OnPopupHide += () =>
+            {
+                // Disposal removes the popup children before it is removed from the modal stack.
+                // Modal removal still raises OnPopupHide, so do not touch the disposed menu body.
+                if (!subMenu.MenuBody.Disposed)
+                    subMenu.MenuBody.RemoveAllChildren();
+            };
             _context.AddElement(menu, element);
             Elements.TryAdd(entity, element);
         }

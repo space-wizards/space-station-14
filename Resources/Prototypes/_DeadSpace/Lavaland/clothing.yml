@@ -307,3 +307,246 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
+
+- type: polymorph
+  id: LavalandDrakeArmorDrake
+  configuration:
+    entity: MobLavalandAshDrakePlayer
+    forced: true
+    duration: 30
+    inventory: None
+    transferName: true
+    transferDamage: false
+    revertOnCrit: true
+    revertOnDeath: true
+    allowRepeatedMorphs: true
+
+- type: polymorph
+  id: LavalandDrakeArmorSkeleton
+  configuration:
+    entity: MobSkeletonPerson
+    forced: true
+    inventory: Transfer
+    transferName: true
+    transferDamage: true
+    revertOnCrit: false
+    revertOnDeath: false
+    revertOnDelete: false
+    allowRepeatedMorphs: true
+
+- type: entity
+  parent: [ BaseMobAsteroid, BaseMobLavalandFauna ]
+  id: MobLavalandAshDrakePlayer
+  name: пепельный дрейк
+  description: Временное воплощение могучего хранителя некрополя.
+  suffix: Lavaland, Player
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _DeadSpace/Lavaland/Mobs/AshDrake.rsi
+    layers:
+    - state: dragon
+      map: ["enum.LavalandAshDrakeVisualLayers.Base"]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.LavalandAshDrakeVisuals.State:
+        enum.LavalandAshDrakeVisualLayers.Base:
+          Dragon: { state: dragon }
+          Shadow: { state: shadow }
+          Swoop: { state: swoop }
+          Dead: { state: dragon_dead }
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      550: Dead
+  - type: MeleeWeapon
+    angle: 0
+    attackRate: 0.8
+    animation: WeaponArcBite
+    soundHit:
+      path: /Audio/_DeadSpace/Lavaland/AshDrake/demon_attack1.ogg
+    damage:
+      types:
+        Slash: 30
+        Structural: 30
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2
+    baseSprintSpeed: 3.5
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.65
+        density: 300
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: NoSlip
+  - type: ActionGrant
+    actions:
+    - ActionDrakeFireBreath
+    - ActionDrakeFireRain
+    - ActionDrakeSwoop
+
+- type: entity
+  parent: BaseAction
+  id: ActionDrakeFireBreath
+  name: огненное дыхание
+  description: Выпускает перед дрейком прямую полосу пламени.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    useDelay: 7
+    icon:
+      sprite: _DeadSpace/Lavaland/Effects/AshDrakeFireball.rsi
+      state: fireball
+  - type: TargetAction
+    range: 6
+    checkCanAccess: false
+  - type: WorldTargetAction
+    event: !type:DrakeFireBreathActionEvent
+      range: 6
+      stepDelay: 0.075
+      sound:
+        path: /Audio/_DeadSpace/Lavaland/AshDrake/fireball.ogg
+
+- type: entity
+  parent: BaseAction
+  id: ActionDrakeFireRain
+  name: огненный дождь
+  description: Покрывает квадрат 5×5 клеток пламенем.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    useDelay: 7
+    icon:
+      sprite: _DeadSpace/Lavaland/Effects/AshDrakeFire.rsi
+      state: fire
+  - type: TargetAction
+    range: 7
+    checkCanAccess: false
+  - type: WorldTargetAction
+    event: !type:DrakeFireRainActionEvent
+      radius: 2
+      targetPrototype: LavalandAshDrakeTarget
+      delay: 0.9
+      sound:
+        path: /Audio/_DeadSpace/Lavaland/AshDrake/fleshtostone.ogg
+
+- type: entity
+  parent: BaseAction
+  id: ActionDrakeSwoop
+  name: пикирование
+  description: Перелетает в выбранную точку и обрушивается на окружающих.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    useDelay: 7
+    icon:
+      sprite: _DeadSpace/Lavaland/Mobs/AshDrake.rsi
+      state: swoop
+  - type: TargetAction
+    range: 8
+    checkCanAccess: false
+  - type: WorldTargetAction
+    event: !type:DrakeSwoopActionEvent
+      maxRange: 8
+      stepDelay: 0.085
+      windup: 0.6
+      recover: 0.35
+      windupSound:
+        path: /Audio/_DeadSpace/Lavaland/AshDrake/fireball.ogg
+      impactSound:
+        path: /Audio/_DeadSpace/Lavaland/AshDrake/meteorimpact.ogg
+
+- type: entity
+  parent: ClothingOuterBaseToggleable
+  id: ClothingOuterSuitAshDrake
+  name: доспех пепельного дрейка
+  description: Тяжёлая броня из пепельной чешуи. Её сила может на время возвысить владельца до силы хранитиля некрополя - или сорвать с него плоть...
+  suffix: Lavaland
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Lavaland/Clothing/OuterClothing/Suits/ash.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Lavaland/Clothing/OuterClothing/Suits/ash.rsi
+  - type: Item
+    size: Huge
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatHoodAshDrake
+    slot: head
+  - type: LavalandWeatherImmune
+  - type: PressureProtection
+    lowPressureModifier: 14
+  - type: TemperatureProtection
+    heatingCoefficient: 0.001
+    coolingCoefficient: 0.001
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.45
+        Slash: 0.4
+        Piercing: 0.5
+        Heat: 0.4
+        Cold: 0.5
+        Radiation: 0.5
+        Caustic: 0.6
+  - type: FireProtection
+    reduction: 0.7
+  - type: StaminaResistance
+    damageCoefficient: 0.60
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: ActionGrant
+    actions:
+    - ActionDrakeArmorTransform
+  - type: ItemActionGrant
+    actions:
+    - ActionDrakeArmorTransform
+    activeIfWorn: true
+  - type: DamageOnInteractProtection
+    damageProtection:
+      flatReductions:
+        Heat: 12
+    slots: OUTERCLOTHING
+  - type: GroupExamine
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatHoodAshDrake
+  name: капюшон пепельного дрейка
+  description: Капюшон из огнеупорной драконьей шкуры.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Lavaland/Clothing/Head/Hoods/ash.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Lavaland/Clothing/Head/Hoods/ash.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.85
+        Slash: 0.85
+        Piercing: 0.85
+        Heat: 0.85
+  - type: LavalandWeatherImmune
+
+- type: entity
+  parent: BaseAction
+  id: ActionDrakeArmorTransform
+  name: проклятие пепельного дрейка
+  description: С вероятностью 50% превращает владельца в дрейка на 30 секунд. Иначе навсегда сдирает с него кожу.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    useDelay: 300
+    icon:
+      sprite: _DeadSpace/Lavaland/Clothing/OuterClothing/Suits/ash.rsi
+      state: icon
+  - type: InstantAction
+    event: !type:DrakeArmorTransformActionEvent
+      drakeChance: 0.5
+      skeletonStunDuration: 10

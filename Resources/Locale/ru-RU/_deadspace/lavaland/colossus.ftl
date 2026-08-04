@@ -1,0 +1,13 @@
+ent-MobLavalandColossus = колосс
+    .desc = Древнее чудовищное создание, источающее подавляющую мощь.
+lavaland-colossus-arena-name = арена колосса
+lavaland-colossus-floor-name = пол арены колосса
+ent-WallColossusArena = стена арены колосса
+    .desc = Неразрушимая базальтовая стена, окружающая владения колосса.
+ent-LavalandColossusArenaLight = свет арены колосса
+ent-LavalandColossusDeathBolt = болт смерти
+    .desc = Опаляющий снаряд, проходящий сквозь броню так, словно её нет.
+lavaland-colossus-speech-cannot-dodge = «Тебе не увернуться.»
+lavaland-colossus-speech-judgement = «Суд.»
+lavaland-colossus-speech-die = «Умри.»
+lavaland-colossus-speech-see-you = «Я вижу тебя.»
