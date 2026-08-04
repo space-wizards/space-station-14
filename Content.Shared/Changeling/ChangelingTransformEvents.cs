@@ -30,12 +30,17 @@ public readonly record struct BeforeChangelingTransformEvent(EntityUid StoredIde
 /// <summary>
 /// Raised on a changeling after they successfully transformed into a stored identity.
 /// </summary>
-public readonly record struct AfterChangelingTransformEvent(EntityUid StoredIdentity)
+public readonly record struct AfterChangelingTransformEvent(EntityUid StoredIdentity, EntityUid PreviousIdentity)
 {
     /// <summary>
     /// The stored identity the changeling transformed into.
     /// </summary>
     public readonly EntityUid StoredIdentity = StoredIdentity;
+
+    /// <summary>
+    /// The previous identity the changeling was
+    /// </summary>
+    public readonly EntityUid PreviousIdentity = PreviousIdentity;
 };
 
 /// <summary>
@@ -48,10 +53,12 @@ public record struct ChangelingAttemptTransformEvent(bool Cancelled, string? Rea
     /// If the attempt goes through.
     /// </summary>
     public bool Cancelled = Cancelled;
+
     /// <summary>
     /// If the attempt is cancelled, this reason will be displayed in an alert
     /// </summary>
     public string? Reason = Reason;
+
     /// <summary>
     /// The identity we are transforming into
     /// </summary>
@@ -68,10 +75,12 @@ public record struct ChangelingAttemptTransformIntoEvent(bool Cancelled, string?
     /// If the attempt goes through.
     /// </summary>
     public bool Cancelled = Cancelled;
+
     /// <summary>
     /// If the attempt is cancelled, this reason will be displayed in an alert
     /// </summary>
     public string? Reason = Reason;
+
     /// <summary>
     /// The changeling which is transforming
     /// </summary>

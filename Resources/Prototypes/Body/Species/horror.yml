@@ -58,6 +58,8 @@
   categories: [ HideSpawnMenu ]
   name: horror appearance
   components:
+  - type: Inventory
+    templateId: horror
   - type: InitialBody
     organs:
       Torso: OrganHorrorTorso

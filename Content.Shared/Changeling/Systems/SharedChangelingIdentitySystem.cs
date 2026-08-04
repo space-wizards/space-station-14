@@ -245,6 +245,9 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
         if (!HasComp<ChangelingStoredIdentityComponent>(identity))
             return; // Not a stored identity.
 
+        if (HasComp<ChangelingHorrorComponent>(ent.Owner) && ent.Comp.ConsumedIdentities.Count() <= 2)
+            return; // Cant be left with only the horror form
+
         var toDrop = ent.Comp.ConsumedIdentities.Where(data => data.Identity == identity && !HasComp<ChangelingUnremovableIdentityComponent>(data.Identity)).ToList();
 
         foreach (var dropped in toDrop)

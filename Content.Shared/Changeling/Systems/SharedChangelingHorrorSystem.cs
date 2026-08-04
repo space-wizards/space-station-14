@@ -57,24 +57,32 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
             // calculate the timeout
             if (_timing.CurTime - comp.InitialTime > comp.TimeBudget)
             {
-                // we try to find a non-horror identity
-                var id = identities.ConsumedIdentities.Where(k => !HasComp<ChangelingHorrorComponent>(k.Identity));
+                if (comp.LastIdentity != null && identities.ConsumedIdentities.Contains(comp.LastIdentity))
+                {
+                    // we force the transformation, this will call all cleanup code in OnBeforeTransform
+                    var tComp = EnsureComp<ChangelingTransformComponent>(uid);
+                    _transform.TransformIntoNow((uid, tComp), comp.LastIdentity);
+                }
+                else
+                {
+                    // we try to find a non-horror identity
+                    var id = identities.ConsumedIdentities.Where(k => !HasComp<ChangelingHorrorComponent>(k.Identity));
 
-                if (!id.Any())
-                    continue;
+                    if (!id.Any())
+                        continue;
 
-                var identity = id.First();
+                    var identity = id.First();
 
-                if (!identity.Identity.HasValue)
-                    return;
+                    if (!identity.Identity.HasValue)
+                        return;
 
-                // we force the transformation, this will call all cleanup code in OnBeforeTransform
-                var tComp = EnsureComp<ChangelingTransformComponent>(uid);
-                _transform.TransformIntoNow((uid, tComp), identity.Identity.Value);
-
+                    // we force the transformation, this will call all cleanup code in OnBeforeTransform
+                    var tComp = EnsureComp<ChangelingTransformComponent>(uid);
+                    _transform.TransformIntoNow((uid, tComp), identity.Identity.Value);
+                }
                 var selfMessage = Loc.GetString("changeling-horror-force-transform-self", ("user", Identity.Entity(uid, EntityManager)));
                 var othersMessage = Loc.GetString("changeling-horror-force-transform-others", ("user", Identity.Entity(uid, EntityManager)));
-                _popups.PopupPredicted(
+                _popups.Popup(
                 selfMessage,
                 othersMessage,
                 uid,
@@ -218,6 +226,7 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
 
         ent.Comp.TimeBudget = transformationTime;
         ent.Comp.InitialTime = now;
+        ent.Comp.LastIdentity = ev.PreviousIdentity;
 
         // this alert will display the time
         _alerts.ShowAlert(ent.Owner, ent.Comp.TimeAlert);

@@ -247,13 +247,15 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
 
         Dirty(ent);
 
+        var oldIdentity = identity.CurrentIdentity;
+
         if (TryComp<ChangelingIdentityComponent>(ent, out var identity)) // in case we ever get changelings that don't store identities
         {
             identity.CurrentIdentity = targetIdentity;
             Dirty(ent.Owner, identity);
         }
 
-        var afterTransformEvent = new AfterChangelingTransformEvent(targetIdentity);
+        var afterTransformEvent = new AfterChangelingTransformEvent(targetIdentity, oldIdentity);
         RaiseLocalEvent(ent.Owner, afterTransformEvent);
     }
 

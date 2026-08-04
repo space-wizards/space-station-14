@@ -81,4 +81,10 @@ public sealed partial class ChangelingHorrorComponent : Component
     /// </summary>
     [DataField]
     public EntityEffect[]? SpawnEffects;
+
+    /// <summary>
+    /// The identity that was used before entering the horror form
+    /// </summary>
+    [DataField]
+    public EntityUid? LastIdentity;
 }

@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Client.Stylesheets.Palette;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Changeling.Components;
@@ -46,6 +47,8 @@ public sealed partial class ChangelingTransformBoundUserInterface(EntityUid owne
     {
         var buttons = new List<RadialMenuOptionBase>();
         var dropButtons = new List<RadialMenuOptionBase>();
+        // To prevent dropping identities while in horror form & only having one other identity
+        var hasDropOption = !(identities.Count() <= 2 && EntMan.HasComponent<ChangelingHorrorComponent>(currentIdentity));
 
         foreach (var identity in identities)
         {
@@ -62,6 +65,9 @@ public sealed partial class ChangelingTransformBoundUserInterface(EntityUid owne
             };
             buttons.Add(option);
 
+            if (!hasDropOption)
+                continue;
+
             // the changeling horror can't be dropped, and you can't drop your current identity
             var droppable = !EntMan.HasComponent<ChangelingUnremovableIdentityComponent>(identity.Identity) && currentIdentity != identity.Identity;
 
@@ -77,6 +83,9 @@ public sealed partial class ChangelingTransformBoundUserInterface(EntityUid owne
             };
             dropButtons.Add(dropOption);
         }
+
+        if (!hasDropOption)
+            return buttons;
 
         // Menu category for dropping identities.
         var dropMenuButton = new RadialMenuNestedLayerOption(dropButtons)
