@@ -1,5 +1,5 @@
-using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
+using Content.Shared.Random.Helpers;
 using Content.Shared.Whitelist;
 using Content.Shared.Xenoarchaeology.Artifact.XAE.Components;
 using Robust.Shared.Random;
@@ -12,7 +12,6 @@ namespace Content.Shared.Xenoarchaeology.Artifact.XAE;
 /// </summary>
 public sealed partial class XAEDamageInAreaSystem : BaseXAESystem<XAEDamageInAreaComponent>
 {
-    [Dependency] private IRobustRandom _random = default!;
     [Dependency] private EntityLookupSystem _lookup = default!;
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
@@ -24,15 +23,13 @@ public sealed partial class XAEDamageInAreaSystem : BaseXAESystem<XAEDamageInAre
     /// <inheritdoc />
     protected override void OnActivated(Entity<XAEDamageInAreaComponent> ent, ref XenoArtifactNodeActivatedEvent args)
     {
-        if (!_timing.IsFirstTimePredicted)
-            return;
-
+        var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent));
         var damageInAreaComponent = ent.Comp;
         _entitiesInRange.Clear();
         _lookup.GetEntitiesInRange(ent.Owner, damageInAreaComponent.Radius, _entitiesInRange);
         foreach (var entityInRange in _entitiesInRange)
         {
-            if (!_random.Prob(damageInAreaComponent.DamageChance))
+            if (!random.Prob(damageInAreaComponent.DamageChance))
                 continue;
 
             if (_whitelistSystem.IsWhitelistFail(damageInAreaComponent.Whitelist, entityInRange))
