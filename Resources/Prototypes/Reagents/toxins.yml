@@ -332,8 +332,9 @@
       effects:
       - !type:HealthChange
         damage:
-          groups:
-            Airloss: 10
+          types:
+            Asphyxiation: 5
+            Bloodloss: 5
 
 - type: reagent
   id: MindbreakerToxin
@@ -368,8 +369,8 @@
       - !type:HealthChange
         probability: 0.1
         damage:
-          groups:
-            Brute: 2
+          types:
+            Blunt: 2
       # todo: cough, sneeze
       - !type:HealthChange
         conditions:
@@ -377,10 +378,9 @@
           reagent: Histamine
           min: 45
         damage:
-          groups:
-            Brute: 2
-            Airloss: 2
           types:
+            Blunt: 2
+            Asphyxiation: 2
             Poison: 2
       - !type:PopupMessage
         type: Local
@@ -483,7 +483,7 @@
   flavor: bitter
   color: "#FFFFE5"
   metabolisms:
-    Digestion:
+    Bloodstream:
       effects:
       - !type:PopupMessage
         conditions:
@@ -660,8 +660,9 @@
         sprintSpeedModifier: 0.8
       - !type:HealthChange
         damage:
-          groups:
-            Airloss: 2
+          types:
+            Asphyxiation: 1
+            Bloodloss: 1
 
 - type: reagent
   id: Tazinide
@@ -780,3 +781,52 @@
         type: Update
       - !type:ModifyBleed
         amount: 0.5
+
+- type: reagent
+  id: Hivarol
+  name: reagent-name-hivarol
+  group: Toxins
+  desc: reagent-desc-hivarol
+  physicalDesc: reagent-physical-desc-sickly
+  flavor: sharp
+  color: "#96424f"
+  metabolisms:
+    Bloodstream:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Hivarol
+          min: 4
+        - !type:MetabolizerTypeCondition
+          type: [ Changeling ]
+        damage:
+          types:
+            Shock: 3
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentCondition
+          reagent: Hivarol
+          min: 4
+        - !type:MetabolizerTypeCondition
+          type: [ Changeling ]
+        type: Local
+        visualType: Large
+        messages: [ "generic-reagent-effect-burning-insides" ]
+        probability: 0.33
+      - !type:Emote
+        conditions:
+        - !type:ReagentCondition
+          reagent: Hivarol
+          min: 4
+        - !type:MetabolizerTypeCondition
+          type: [ Changeling ]
+        emote: Scream
+        probability: 0.5
+      - !type:Jitter
+        conditions:
+        - !type:ReagentCondition
+          reagent: Hivarol
+          min: 4
+        - !type:MetabolizerTypeCondition
+          type: [ Changeling ]

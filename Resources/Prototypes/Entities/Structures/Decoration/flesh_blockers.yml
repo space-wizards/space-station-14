@@ -29,11 +29,12 @@
           ajar: ""
           open: ""
   - type: Damageable
+  - type: Injurable
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
         damage: 25
       behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]

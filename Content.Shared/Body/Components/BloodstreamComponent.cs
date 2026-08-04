@@ -126,14 +126,14 @@ public sealed partial class BloodstreamComponent : Component
     /// <summary>
     /// The sound to be played when some damage actually heals bleeding rather than starting it.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public SoundSpecifier BloodHealedSound = new SoundPathSpecifier("/Audio/Effects/lightburn.ogg");
 
     /// <summary>
     /// The minimum amount damage reduction needed to play the healing sound/popup.
     /// This prevents tiny amounts of heat damage from spamming the sound, e.g. spacing.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float BloodHealedSoundThreshold = -0.1f;
 
     // TODO probably damage bleed thresholds.
@@ -148,10 +148,10 @@ public sealed partial class BloodstreamComponent : Component
     /// Defines which reagents are considered as 'blood' and how much of it is normal.
     /// </summary>
     /// <remarks>
-    /// Slime-people might use slime as their blood or something like that.
+    /// Default is human blood at 5 liters (600u) of blood.
     /// </remarks>
     [DataField, AutoNetworkedField]
-    public Solution BloodReferenceSolution = new([new("Blood", 300)]);
+    public Solution BloodReferenceSolution = new([new("Blood", 600)]);
 
     /// <summary>
     /// Caches the blood data of an entity.
