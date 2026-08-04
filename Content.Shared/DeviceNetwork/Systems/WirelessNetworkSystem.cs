@@ -20,7 +20,8 @@ public sealed partial class WirelessNetworkSystem : EntitySystem
             return;
 
         if (xform.MapID != args.SenderTransform.MapID
-            || (ownPosition - _transformSystem.GetWorldPosition(xform)).Length() > sendingComponent.Range)
+            || sendingComponent.Range != null
+            && (ownPosition - _transformSystem.GetWorldPosition(xform)).Length() > sendingComponent.Range)
         {
             args.Cancelled = true;
         }

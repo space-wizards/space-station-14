@@ -39,7 +39,7 @@ public abstract partial class SharedJammerSystem : EntitySystem
             // Add excluded frequencies using the system method
             foreach (var freq in entity.Comp.FrequenciesExcluded)
             {
-                _jammer.AddExcludedFrequency((entity, jammingComp), (uint)freq);
+                _jammer.AddExcludedFrequency((entity, jammingComp), freq);
             }
         }
         else

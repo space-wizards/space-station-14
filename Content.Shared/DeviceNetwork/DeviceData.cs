@@ -25,7 +25,7 @@ public partial record struct DeviceData
     ///     The address ID of the device, either on the network it is currently connected to or whatever address it
     ///     most recently used.
     /// </summary>
-    [IncludeDataField]
+    [DataField]
     public DeviceAddress AddressId;
 
     /// <summary>

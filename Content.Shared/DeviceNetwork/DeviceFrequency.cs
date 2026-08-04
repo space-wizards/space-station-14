@@ -8,6 +8,15 @@ namespace Content.Shared.DeviceNetwork;
 [DataRecord, Serializable, NetSerializable]
 public readonly partial record struct DeviceFrequency(ushort FrequencyId)
 {
+    public override string ToString()
+    {
+        var result = FrequencyId.ToString();
+        if (result.Length <= 2)
+            return result + ".0";
+
+        return result.Insert(result.Length - 1, ".");
+    }
+
     public static implicit operator ushort(DeviceFrequency frequency)
     {
         return frequency.FrequencyId;

@@ -86,13 +86,15 @@ public sealed partial class DeviceNetworkSystem
     /// <summary>
     /// Generates a valid address by randomly generating one and checking if it already exists on the network.
     /// </summary>
-    private int GenerateValidAddressId(DeviceNet network)
+    private DeviceAddress GenerateValidAddressId(DeviceNetworkManagerComponent network)
     {
-        int addressId;
+        DeviceAddress addressId;
         do
         {
+            // There is a 1 in 2 billion chance to roll a 0.
+            // Would be funny for this to stay as a super-gamble test fail, but I am evil no fun on my evil Space Station
             addressId = _random.Next();
-        } while (network.Devices.ContainsKey(addressId));
+        } while (network.Devices.ContainsKey(addressId) || addressId == DeviceAddress.Invalid);
 
         return addressId;
     }
