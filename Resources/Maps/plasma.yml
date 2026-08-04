@@ -4,8 +4,8 @@ meta:
   engineVersion: 286.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/03/2026 19:42:44
-  entityCount: 27032
+  time: 08/04/2026 13:04:00
+  entityCount: 27041
 maps:
 - 1
 grids:
@@ -7562,16 +7562,6 @@ entities:
           moles:
             Oxygen: 21.824879
             Nitrogen: 82.10312
-        - temperature: 293.15
-          volume: 2500
-          moles:
-            Oxygen: 23.57087
-            Nitrogen: 88.67137
-        - temperature: 293.1495
-          volume: 2500
-          moles:
-            Oxygen: 21.824879
-            Nitrogen: 82.10312
         - temperature: 235
           volume: 2500
           moles:
@@ -7644,8 +7634,7 @@ entities:
           -5,2:
             2: 13098
           -4,4:
-            3: 1
-            2: 1906
+            2: 1907
           -3,0:
             2: 13105
           -3,1:
@@ -7939,8 +7928,7 @@ entities:
           -13,-2:
             2: 65535
           -12,-2:
-            2: 61380
-            4: 32
+            2: 61412
           -13,-1:
             2: 65473
           -11,-4:
@@ -7996,11 +7984,11 @@ entities:
           -22,3:
             2: 65357
           -22,0:
-            5: 3822
+            3: 3822
           -22,4:
             2: 65535
           -22,-1:
-            5: 20479
+            3: 20479
           -21,1:
             2: 35071
           -21,2:
@@ -8012,7 +8000,7 @@ entities:
             2: 36044
           -21,-1:
             2: 34952
-            5: 819
+            3: 819
           -20,0:
             2: 4565
           -20,1:
@@ -8097,7 +8085,7 @@ entities:
             2: 21969
           -21,-2:
             2: 34955
-            5: 13056
+            3: 13056
           -20,-1:
             2: 21845
           -19,-4:
@@ -8153,15 +8141,15 @@ entities:
             2: 36864
           -23,-2:
             2: 409
-            5: 34816
+            3: 34816
           -23,-1:
-            5: 2184
+            3: 2184
           -22,-4:
             2: 65520
           -22,-3:
             2: 65092
           -22,-2:
-            5: 65280
+            3: 65280
             2: 14
           -24,-15:
             2: 65280
@@ -8223,17 +8211,17 @@ entities:
             2: 48056
           -12,-8:
             2: 15
-            5: 30464
+            3: 30464
           -12,-9:
             2: 62702
           -13,-8:
             2: 13
-            5: 60928
+            3: 60928
           -12,-7:
-            5: 127
+            3: 127
             2: 28672
           -13,-7:
-            5: 1263
+            3: 1263
             2: 28672
           -12,-6:
             2: 30711
@@ -8900,7 +8888,7 @@ entities:
             2: 30711
           -28,0:
             1: 20592
-            6: 9984
+            4: 9984
           -28,1:
             0: 112
             1: 28800
@@ -9072,19 +9060,19 @@ entities:
           -33,1:
             1: 53713
           -32,2:
-            7: 16
-            8: 4096
+            5: 16
+            6: 4096
             0: 17476
           -33,2:
-            7: 192
-            8: 49152
+            5: 192
+            6: 49152
             1: 4369
           -32,3:
-            9: 16
+            7: 16
             1: 29696
             0: 68
           -33,3:
-            9: 192
+            7: 192
             1: 61713
           -32,4:
             2: 228
@@ -9157,12 +9145,12 @@ entities:
             0: 2048
           -25,9:
             0: 7440
-            2: 8736
+            1: 8736
           -24,10:
             0: 30583
           -25,10:
             0: 13
-            2: 34
+            1: 34
           -24,11:
             0: 30071
           -23,9:
@@ -9210,11 +9198,11 @@ entities:
           -27,9:
             2: 8
           -26,9:
-            2: 34819
-            1: 204
+            2: 3
+            1: 35020
             0: 1024
           -26,10:
-            2: 136
+            1: 136
           -28,-19:
             0: 17487
           -28,-18:
@@ -14330,7 +14318,7 @@ entities:
       pos: -131.5,-45.5
     - type: Door
       state: Opening
-      secondsUntilStateChange: -75598.055
+      secondsUntilStateChange: -76831.22
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True
@@ -23355,6 +23343,11 @@ entities:
     - type: Transform
       parent: 2
       pos: -129.5,7.5
+  - uid: 4575
+    components:
+    - type: Transform
+      parent: 2
+      pos: -98.5,38.5
   - uid: 5047
     components:
     - type: Transform
@@ -23425,11 +23418,41 @@ entities:
     - type: Transform
       parent: 2
       pos: -125.5,15.5
+  - uid: 11641
+    components:
+    - type: Transform
+      parent: 2
+      pos: -98.5,41.5
+  - uid: 11649
+    components:
+    - type: Transform
+      parent: 2
+      pos: -98.5,40.5
+  - uid: 11720
+    components:
+    - type: Transform
+      parent: 2
+      pos: -98.5,39.5
+  - uid: 11723
+    components:
+    - type: Transform
+      parent: 2
+      pos: -98.5,37.5
   - uid: 14492
     components:
     - type: Transform
       parent: 2
       pos: -126.5,15.5
+  - uid: 14873
+    components:
+    - type: Transform
+      parent: 2
+      pos: -100.5,39.5
+  - uid: 15308
+    components:
+    - type: Transform
+      parent: 2
+      pos: -100.5,40.5
   - uid: 16093
     components:
     - type: Transform
@@ -23440,6 +23463,11 @@ entities:
     - type: Transform
       parent: 2
       pos: -128.5,15.5
+  - uid: 20287
+    components:
+    - type: Transform
+      parent: 2
+      pos: -100.5,38.5
   - uid: 20846
     components:
     - type: Transform
@@ -23565,6 +23593,11 @@ entities:
     - type: Transform
       parent: 2
       pos: -131.5,15.5
+  - uid: 25544
+    components:
+    - type: Transform
+      parent: 2
+      pos: -100.5,41.5
   - uid: 26505
     components:
     - type: Transform
@@ -68966,155 +68999,149 @@ entities:
       pos: -98.5,-25.5
 - proto: ConveyorBelt
   entities:
+  - uid: 1357
+    components:
+    - type: Transform
+      parent: 2
+      pos: -98.5,41.5
   - uid: 1576
     components:
     - type: Transform
       parent: 2
-      rot: 3.141592653589793 rad
-      pos: -98.5,36.5
+      rot: 1.5707963267948966 rad
+      pos: -97.5,16.5
   - uid: 2600
     components:
     - type: Transform
       parent: 2
-      rot: -1.5707963267948966 rad
-      pos: -100.5,16.5
+      pos: -98.5,34.5
   - uid: 4367
     components:
     - type: Transform
       parent: 2
-      rot: 3.141592653589793 rad
-      pos: -98.5,25.5
+      pos: -98.5,39.5
   - uid: 4368
     components:
     - type: Transform
       parent: 2
-      rot: 3.141592653589793 rad
-      pos: -98.5,28.5
+      pos: -98.5,32.5
   - uid: 4369
     components:
     - type: Transform
       parent: 2
-      rot: 3.141592653589793 rad
-      pos: -98.5,29.5
+      pos: -98.5,38.5
   - uid: 4370
     components:
     - type: Transform
       parent: 2
-      rot: 3.141592653589793 rad
-      pos: -98.5,26.5
-  - uid: 4575
-    components:
-    - type: Transform
-      parent: 2
-      rot: 3.141592653589793 rad
-      pos: -98.5,32.5
+      pos: -98.5,30.5
   - uid: 4582
     components:
     - type: Transform
       parent: 2
-      rot: 3.141592653589793 rad
-      pos: -100.5,35.5
+      rot: 1.5707963267948966 rad
+      pos: -105.5,18.5
   - uid: 5820
     components:
     - type: Transform
       parent: 2
-      rot: -1.5707963267948966 rad
-      pos: -101.5,18.5
+      rot: 1.5707963267948966 rad
+      pos: -107.5,18.5
   - uid: 5850
     components:
     - type: Transform
       parent: 2
-      rot: -1.5707963267948966 rad
-      pos: -99.5,18.5
+      rot: 1.5707963267948966 rad
+      pos: -98.5,18.5
   - uid: 6000
     components:
     - type: Transform
       parent: 2
-      rot: -1.5707963267948966 rad
-      pos: -110.5,18.5
+      rot: 1.5707963267948966 rad
+      pos: -101.5,18.5
   - uid: 6054
     components:
     - type: Transform
       parent: 2
-      rot: -1.5707963267948966 rad
-      pos: -107.5,18.5
+      rot: 1.5707963267948966 rad
+      pos: -106.5,18.5
   - uid: 6507
     components:
     - type: Transform
       parent: 2
-      rot: -1.5707963267948966 rad
-      pos: -100.5,18.5
+      rot: 1.5707963267948966 rad
+      pos: -103.5,18.5
   - uid: 6524
     components:
     - type: Transform
       parent: 2
-      rot: -1.5707963267948966 rad
-      pos: -104.5,18.5
+      rot: 1.5707963267948966 rad
+      pos: -102.5,18.5
   - uid: 6525
     components:
     - type: Transform
       parent: 2
-      rot: -1.5707963267948966 rad
-      pos: -105.5,18.5
+      rot: 1.5707963267948966 rad
+      pos: -111.5,18.5
   - uid: 6577
     components:
     - type: Transform
       parent: 2
-      rot: -1.5707963267948966 rad
-      pos: -103.5,18.5
+      rot: 1.5707963267948966 rad
+      pos: -112.5,18.5
   - uid: 6587
     components:
     - type: Transform
       parent: 2
-      rot: -1.5707963267948966 rad
-      pos: -106.5,18.5
+      rot: 1.5707963267948966 rad
+      pos: -100.5,16.5
   - uid: 6610
     components:
     - type: Transform
       parent: 2
-      rot: -1.5707963267948966 rad
-      pos: -97.5,16.5
+      rot: 1.5707963267948966 rad
+      pos: -96.5,18.5
   - uid: 6612
     components:
     - type: Transform
       parent: 2
-      rot: -1.5707963267948966 rad
-      pos: -96.5,16.5
+      rot: 1.5707963267948966 rad
+      pos: -97.5,18.5
   - uid: 6679
     components:
     - type: Transform
       parent: 2
-      rot: -1.5707963267948966 rad
-      pos: -112.5,18.5
+      rot: 1.5707963267948966 rad
+      pos: -100.5,18.5
   - uid: 6743
     components:
     - type: Transform
       parent: 2
-      rot: -1.5707963267948966 rad
-      pos: -111.5,18.5
+      rot: 1.5707963267948966 rad
+      pos: -99.5,18.5
   - uid: 6790
     components:
     - type: Transform
       parent: 2
-      rot: -1.5707963267948966 rad
-      pos: -108.5,18.5
+      rot: 1.5707963267948966 rad
+      pos: -101.5,20.5
   - uid: 6794
     components:
     - type: Transform
       parent: 2
-      rot: -1.5707963267948966 rad
-      pos: -109.5,18.5
+      rot: 1.5707963267948966 rad
+      pos: -97.5,20.5
   - uid: 6813
     components:
     - type: Transform
       parent: 2
-      rot: -1.5707963267948966 rad
-      pos: -96.5,20.5
+      rot: 1.5707963267948966 rad
+      pos: -100.5,20.5
   - uid: 6815
     components:
     - type: Transform
       parent: 2
-      rot: -1.5707963267948966 rad
+      rot: 1.5707963267948966 rad
       pos: -102.5,20.5
   - uid: 6926
     components:
@@ -69125,62 +69152,60 @@ entities:
     components:
     - type: Transform
       parent: 2
-      rot: -1.5707963267948966 rad
-      pos: -98.5,20.5
+      rot: 1.5707963267948966 rad
+      pos: -104.5,18.5
   - uid: 6968
     components:
     - type: Transform
       parent: 2
-      rot: -1.5707963267948966 rad
-      pos: -100.5,20.5
+      pos: -98.5,33.5
   - uid: 7077
     components:
     - type: Transform
       parent: 2
-      rot: -1.5707963267948966 rad
+      rot: 1.5707963267948966 rad
       pos: -81.5,17.5
   - uid: 7080
     components:
     - type: Transform
       parent: 2
-      rot: -1.5707963267948966 rad
-      pos: -102.5,18.5
+      pos: -98.5,35.5
   - uid: 7262
     components:
     - type: Transform
       parent: 2
-      rot: 3.141592653589793 rad
-      pos: -98.5,27.5
+      rot: 1.5707963267948966 rad
+      pos: -110.5,18.5
   - uid: 7264
     components:
     - type: Transform
       parent: 2
-      rot: -1.5707963267948966 rad
-      pos: -98.5,24.5
+      rot: 1.5707963267948966 rad
+      pos: -96.5,20.5
   - uid: 7304
     components:
     - type: Transform
       parent: 2
-      rot: -1.5707963267948966 rad
-      pos: -97.5,18.5
+      rot: 1.5707963267948966 rad
+      pos: -109.5,18.5
   - uid: 7315
     components:
     - type: Transform
       parent: 2
-      rot: -1.5707963267948966 rad
-      pos: -104.5,20.5
+      rot: 1.5707963267948966 rad
+      pos: -103.5,20.5
   - uid: 7336
     components:
     - type: Transform
       parent: 2
-      rot: -1.5707963267948966 rad
-      pos: -96.5,18.5
+      rot: 1.5707963267948966 rad
+      pos: -108.5,18.5
   - uid: 7343
     components:
     - type: Transform
       parent: 2
-      rot: -1.5707963267948966 rad
-      pos: -103.5,20.5
+      rot: 1.5707963267948966 rad
+      pos: -99.5,20.5
   - uid: 7344
     components:
     - type: Transform
@@ -69191,14 +69216,14 @@ entities:
     components:
     - type: Transform
       parent: 2
-      rot: -1.5707963267948966 rad
-      pos: -85.5,17.5
+      rot: 1.5707963267948966 rad
+      pos: -83.5,17.5
   - uid: 7539
     components:
     - type: Transform
       parent: 2
-      rot: -1.5707963267948966 rad
-      pos: -82.5,17.5
+      rot: 1.5707963267948966 rad
+      pos: -85.5,17.5
   - uid: 7548
     components:
     - type: Transform
@@ -69209,20 +69234,18 @@ entities:
     components:
     - type: Transform
       parent: 2
-      rot: -1.5707963267948966 rad
-      pos: -98.5,18.5
+      rot: 1.5707963267948966 rad
+      pos: -98.5,20.5
   - uid: 7553
     components:
     - type: Transform
       parent: 2
-      rot: -1.5707963267948966 rad
-      pos: -99.5,20.5
+      pos: -98.5,28.5
   - uid: 7559
     components:
     - type: Transform
       parent: 2
-      rot: -1.5707963267948966 rad
-      pos: -101.5,20.5
+      pos: -98.5,26.5
   - uid: 7579
     components:
     - type: Transform
@@ -69245,182 +69268,128 @@ entities:
     components:
     - type: Transform
       parent: 2
-      rot: -1.5707963267948966 rad
+      rot: 1.5707963267948966 rad
       pos: -84.5,17.5
   - uid: 7586
     components:
     - type: Transform
       parent: 2
-      rot: -1.5707963267948966 rad
-      pos: -83.5,17.5
+      rot: 1.5707963267948966 rad
+      pos: -82.5,17.5
   - uid: 8421
     components:
     - type: Transform
       parent: 2
-      rot: 3.141592653589793 rad
-      pos: -98.5,34.5
+      pos: -98.5,25.5
   - uid: 8422
     components:
     - type: Transform
       parent: 2
-      rot: 3.141592653589793 rad
-      pos: -98.5,37.5
+      pos: -98.5,31.5
   - uid: 8449
     components:
     - type: Transform
       parent: 2
-      rot: 3.141592653589793 rad
-      pos: -98.5,38.5
+      pos: -100.5,24.5
   - uid: 8476
     components:
     - type: Transform
       parent: 2
-      rot: 3.141592653589793 rad
-      pos: -98.5,30.5
+      pos: -100.5,31.5
   - uid: 10569
     components:
     - type: Transform
       parent: 2
-      rot: 3.141592653589793 rad
-      pos: -100.5,33.5
+      rot: 1.5707963267948966 rad
+      pos: -104.5,20.5
   - uid: 10621
     components:
     - type: Transform
       parent: 2
-      rot: 3.141592653589793 rad
-      pos: -100.5,26.5
+      pos: -98.5,36.5
   - uid: 11064
     components:
     - type: Transform
       parent: 2
-      rot: -1.5707963267948966 rad
-      pos: -97.5,20.5
+      pos: -98.5,37.5
   - uid: 11082
     components:
     - type: Transform
       parent: 2
-      rot: -1.5707963267948966 rad
-      pos: -96.5,24.5
+      pos: -100.5,32.5
   - uid: 11280
     components:
     - type: Transform
       parent: 2
-      rot: -1.5707963267948966 rad
-      pos: -97.5,24.5
-  - uid: 11641
-    components:
-    - type: Transform
-      parent: 2
-      rot: 3.141592653589793 rad
-      pos: -100.5,25.5
-  - uid: 11649
-    components:
-    - type: Transform
-      parent: 2
-      rot: 3.141592653589793 rad
-      pos: -100.5,27.5
-  - uid: 11720
-    components:
-    - type: Transform
-      parent: 2
-      rot: 3.141592653589793 rad
-      pos: -100.5,38.5
-  - uid: 11723
-    components:
-    - type: Transform
-      parent: 2
-      rot: 3.141592653589793 rad
-      pos: -100.5,37.5
+      pos: -100.5,30.5
   - uid: 11726
     components:
     - type: Transform
       parent: 2
-      rot: 3.141592653589793 rad
-      pos: -100.5,36.5
+      pos: -100.5,26.5
   - uid: 11739
     components:
     - type: Transform
       parent: 2
-      rot: 3.141592653589793 rad
-      pos: -100.5,34.5
+      pos: -100.5,25.5
   - uid: 11744
     components:
     - type: Transform
       parent: 2
-      rot: 3.141592653589793 rad
-      pos: -100.5,32.5
+      pos: -100.5,28.5
   - uid: 11745
     components:
     - type: Transform
       parent: 2
-      rot: 3.141592653589793 rad
-      pos: -100.5,31.5
+      pos: -100.5,29.5
   - uid: 11757
     components:
     - type: Transform
       parent: 2
-      rot: 3.141592653589793 rad
-      pos: -100.5,29.5
+      pos: -100.5,27.5
   - uid: 11764
     components:
     - type: Transform
       parent: 2
-      rot: 3.141592653589793 rad
-      pos: -100.5,28.5
+      pos: -98.5,27.5
   - uid: 11768
     components:
     - type: Transform
       parent: 2
-      rot: 3.141592653589793 rad
-      pos: -100.5,30.5
+      pos: -100.5,33.5
   - uid: 12463
     components:
     - type: Transform
       parent: 2
-      rot: 3.141592653589793 rad
-      pos: -98.5,35.5
+      pos: -98.5,29.5
   - uid: 14781
     components:
     - type: Transform
       parent: 2
-      rot: 3.141592653589793 rad
       pos: -100.5,23.5
-  - uid: 14873
-    components:
-    - type: Transform
-      parent: 2
-      rot: 3.141592653589793 rad
-      pos: -98.5,33.5
-  - uid: 15308
-    components:
-    - type: Transform
-      parent: 2
-      rot: 3.141592653589793 rad
-      pos: -100.5,24.5
   - uid: 18870
     components:
     - type: Transform
       parent: 2
-      rot: 3.141592653589793 rad
-      pos: -100.5,40.5
+      rot: 1.5707963267948966 rad
+      pos: -99.5,16.5
   - uid: 18938
     components:
     - type: Transform
       parent: 2
-      rot: 3.141592653589793 rad
-      pos: -100.5,39.5
+      pos: -98.5,40.5
   - uid: 19511
     components:
     - type: Transform
       parent: 2
-      rot: -1.5707963267948966 rad
-      pos: -98.5,16.5
+      rot: 1.5707963267948966 rad
+      pos: -97.5,24.5
   - uid: 19736
     components:
     - type: Transform
       parent: 2
-      rot: 3.141592653589793 rad
-      pos: -98.5,31.5
+      rot: 1.5707963267948966 rad
+      pos: -98.5,24.5
   - uid: 22196
     components:
     - type: Transform
@@ -69473,32 +69442,14 @@ entities:
     components:
     - type: Transform
       parent: 2
-      rot: 3.141592653589793 rad
-      pos: -98.5,40.5
+      rot: 1.5707963267948966 rad
+      pos: -96.5,24.5
   - uid: 23479
     components:
     - type: Transform
       parent: 2
-      rot: 3.141592653589793 rad
-      pos: -98.5,39.5
-  - uid: 24819
-    components:
-    - type: Transform
-      parent: 2
-      rot: 3.141592653589793 rad
-      pos: -100.5,41.5
-  - uid: 24821
-    components:
-    - type: Transform
-      parent: 2
-      rot: 3.141592653589793 rad
-      pos: -98.5,41.5
-  - uid: 25544
-    components:
-    - type: Transform
-      parent: 2
-      rot: -1.5707963267948966 rad
-      pos: -99.5,16.5
+      rot: 1.5707963267948966 rad
+      pos: -98.5,16.5
   - uid: 25545
     components:
     - type: Transform
@@ -69509,6 +69460,52 @@ entities:
     - type: Transform
       parent: 2
       pos: -102.5,13.5
+  - uid: 27033
+    components:
+    - type: Transform
+      parent: 2
+      pos: -100.5,34.5
+  - uid: 27034
+    components:
+    - type: Transform
+      parent: 2
+      pos: -100.5,35.5
+  - uid: 27035
+    components:
+    - type: Transform
+      parent: 2
+      pos: -100.5,36.5
+  - uid: 27036
+    components:
+    - type: Transform
+      parent: 2
+      pos: -100.5,37.5
+  - uid: 27037
+    components:
+    - type: Transform
+      parent: 2
+      pos: -100.5,39.5
+  - uid: 27038
+    components:
+    - type: Transform
+      parent: 2
+      pos: -100.5,40.5
+  - uid: 27039
+    components:
+    - type: Transform
+      parent: 2
+      pos: -100.5,41.5
+  - uid: 27040
+    components:
+    - type: Transform
+      parent: 2
+      pos: -100.5,38.5
+  - uid: 27041
+    components:
+    - type: Transform
+      parent: 2
+      rot: 1.5707963267948966 rad
+      pos: -96.5,16.5
 - proto: CorporateCircuitBoard
   entities:
   - uid: 24940
@@ -138836,17 +138833,16 @@ entities:
       pos: -124.36489,-16.22523
 - proto: Recycler
   entities:
-  - uid: 1357
+  - uid: 24819
     components:
     - type: Transform
       parent: 2
-      rot: 3.141592653589793 rad
       pos: -98.5,28.5
-  - uid: 20287
+  - uid: 24821
     components:
     - type: Transform
       parent: 2
-      rot: -1.5707963267948966 rad
+      rot: 1.5707963267948966 rad
       pos: -100.5,20.5
 - proto: ReinforcedPlasmaWindow
   entities:
@@ -154361,39 +154357,39 @@ entities:
       pos: -96.5,17.5
     - type: DeviceLinkSource
       linkedPorts:
-        6610:
+        6587:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
-        6612:
+        18870:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
-        19511:
+        23479:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
-        25544:
+        1576:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
-        2600:
+        27041:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
         25555:
@@ -154420,151 +154416,151 @@ entities:
       pos: -96.5,28.5
     - type: DeviceLinkSource
       linkedPorts:
-        1357:
+        23417:
         - - Left
-          - Forward
-        - - Right
           - Reverse
-        - - Middle
-          - Off
-        4369:
-        - - Left
-          - Forward
         - - Right
-          - Reverse
-        - - Middle
-          - Off
-        8476:
-        - - Left
           - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
-        4368:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
-        7262:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
-        4370:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
-        4367:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
-        7264:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
-        11280:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
-        11082:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
-        19736:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
-        14873:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
-        8421:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
-        12463:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
         - - Middle
           - Off
         8422:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
-        1576:
+        4368:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
-        8449:
+        8421:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
-        23479:
+        4370:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
-        23417:
+        7559:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
-        24821:
+        12463:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
-        4575:
+        7553:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        11764:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        24819:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        19736:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        2600:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        7080:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        10621:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        11064:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        19511:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        4369:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        4367:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        18938:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        1357:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        6968:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
     - type: Label
@@ -154580,74 +154576,74 @@ entities:
       pos: -100.5,21.5
     - type: DeviceLinkSource
       linkedPorts:
-        7553:
+        24821:
         - - Left
-          - Forward
-        - - Right
           - Reverse
-        - - Middle
-          - Off
-        6968:
-        - - Left
-          - Forward
         - - Right
-          - Reverse
-        - - Middle
-          - Off
-        20287:
-        - - Left
           - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
-        7315:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
-        7559:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
-        7343:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
-        6964:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
-        11064:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
-        6813:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
         - - Middle
           - Off
         6815:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        7264:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        6794:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        7343:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        7315:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        6813:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        10569:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        6790:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        7549:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
     - type: Label
@@ -154665,37 +154661,37 @@ entities:
       linkedPorts:
         7584:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
         7586:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
         7418:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
         7539:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
         7077:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
     - type: Label
@@ -154713,37 +154709,37 @@ entities:
       linkedPorts:
         7548:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
         7582:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
         7583:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
         7579:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
         7344:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
     - type: Label
@@ -154759,58 +154755,58 @@ entities:
       linkedPorts:
         22196:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
         22197:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
         22198:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
         22199:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
         22200:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
         22201:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
         22203:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
         22202:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
   - uid: 23513
@@ -154822,11 +154818,11 @@ entities:
       pos: -107.5,17.5
     - type: DeviceLinkSource
       linkedPorts:
-        7080:
+        6964:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
         23169:
@@ -154843,74 +154839,74 @@ entities:
           - Open
         - - Middle
           - Close
-        6525:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
         6524:
         - - Left
-          - Forward
-        - - Right
           - Reverse
-        - - Middle
-          - Off
-        6587:
-        - - Left
-          - Forward
         - - Right
-          - Reverse
-        - - Middle
-          - Off
-        6577:
-        - - Left
           - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
-        5820:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
         - - Middle
           - Off
         6507:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
-        5850:
+        6577:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
-        7549:
+        6525:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
-        7304:
+        4582:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        6054:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        5820:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
         7336:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        7262:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        7304:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
         18079:
@@ -154920,46 +154916,46 @@ entities:
           - Open
         - - Middle
           - Close
-        6054:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
-        6790:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
-        6794:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
         6000:
         - - Left
-          - Forward
-        - - Right
           - Reverse
-        - - Middle
-          - Off
-        6743:
-        - - Left
-          - Forward
         - - Right
-          - Reverse
+          - Forward
         - - Middle
           - Off
         6679:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        6743:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        5850:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        6612:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        6610:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
     - type: Label
@@ -154977,23 +154973,23 @@ entities:
       linkedPorts:
         25546:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
         25545:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
         6926:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
         11109:
@@ -155020,137 +155016,130 @@ entities:
       pos: -102.5,29.5
     - type: DeviceLinkSource
       linkedPorts:
+        27039:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        27038:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        27040:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        27036:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        27035:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        27034:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        27033:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
         14781:
         - - Left
-          - Forward
-        - - Right
           - Reverse
-        - - Middle
-          - Off
-        15308:
-        - - Left
-          - Forward
         - - Right
-          - Reverse
-        - - Middle
-          - Off
-        11641:
-        - - Left
           - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
-        10621:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
-        11649:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
-        11764:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
-        11757:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
         - - Middle
           - Off
         11768:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        11082:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        11280:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        8476:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
         11745:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
         11744:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
-        10569:
+        11757:
         - - Left
-          - Forward
-        - - Right
           - Reverse
-        - - Middle
-          - Off
-        4582:
-        - - Left
-          - Forward
         - - Right
-          - Reverse
-        - - Middle
-          - Off
-        11739:
-        - - Left
           - Forward
-        - - Right
-          - Reverse
         - - Middle
           - Off
         11726:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
-        11723:
+        11739:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
-        11720:
+        8449:
         - - Left
-          - Forward
-        - - Right
           - Reverse
-        - - Middle
-          - Off
-        18938:
-        - - Left
-          - Forward
         - - Right
-          - Reverse
-        - - Middle
-          - Off
-        18870:
-        - - Left
           - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
-        24819:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
         - - Middle
           - Off
     - type: Label
@@ -172267,7 +172256,7 @@ entities:
         DoorStatus: True
     - type: Door
       state: Opening
-      secondsUntilStateChange: -275704.84
+      secondsUntilStateChange: -276938.03
     - type: Airlock
       autoClose: False
   - uid: 23283
