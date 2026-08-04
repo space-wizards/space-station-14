@@ -418,7 +418,7 @@ namespace Content.Server.Power.EntitySystems
                 var msg = new PowerConsumerReceivedChanged(newRecv, consumer.DrawRate);
                 RaiseLocalEvent(uid, ref msg);
 
-                _appearance.SetData(uid, PowerDeviceVisuals.Powered, newRecv > 0);
+                _appearance.SetData(uid, PowerConsumerVisuals.Consuming, newRecv > 0);
             }
         }
 
