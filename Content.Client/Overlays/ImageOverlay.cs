@@ -15,6 +15,7 @@ public sealed partial class ImageOverlay : Overlay
     [Dependency] private IResourceCache _resourceCache = default!;
     [Dependency] private IEyeManager _eyeManager = default!;
 
+    /// <inheritdoc/>
     public override OverlaySpace Space => OverlaySpace.ScreenSpace;
 
     private readonly List<(ResPath Path, Color Color)> _texturesToDraw = new();
@@ -47,7 +48,7 @@ public sealed partial class ImageOverlay : Overlay
             _texturesToDraw.Remove(overlayPair);
     }
 
-
+    /// <inheritdoc />
     protected override void Draw(in OverlayDrawArgs args)
     {
         var zoomFactor = _eyeManager.CurrentEye.Zoom.X;

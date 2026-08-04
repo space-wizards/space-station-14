@@ -5,9 +5,8 @@ using Robust.Client.Graphics;
 
 namespace Content.Client.Overlays;
 
-
 /// <summary>
-/// Adds image overlay when wearing item with ImageOverlayComponent
+/// Adds image overlay when wearing item with <see cref="ImageOverlayComponent"/>
 /// </summary>
 public sealed partial class ImageOverlaySystem : EquipmentHudSystem<ImageOverlayComponent>
 {
@@ -15,6 +14,7 @@ public sealed partial class ImageOverlaySystem : EquipmentHudSystem<ImageOverlay
 
     private ImageOverlay _overlay = default!;
 
+    /// <inheritdoc />
     public override void Initialize()
     {
         base.Initialize();
@@ -27,6 +27,7 @@ public sealed partial class ImageOverlaySystem : EquipmentHudSystem<ImageOverlay
         _overlay.OverlayActivate(ent.Comp, !args.Mask.Comp.IsToggled);
     }
 
+    /// <inheritdoc />
     protected override void UpdateInternal(RefreshEquipmentHudEvent<ImageOverlayComponent> component)
     {
         base.UpdateInternal(component);
@@ -43,6 +44,7 @@ public sealed partial class ImageOverlaySystem : EquipmentHudSystem<ImageOverlay
         }
     }
 
+    /// <inheritdoc />
     protected override void DeactivateInternal()
     {
         base.DeactivateInternal();

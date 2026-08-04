@@ -10,13 +10,13 @@ namespace Content.Shared.Overlays;
 public sealed partial class ImageOverlayComponent : Component
 {
     /// <summary>
-    /// Path to image overlayed on the screen.
+    /// Path to image overlaid on the screen.
     /// </summary>
     [DataField(required: true), AutoNetworkedField]
     public ResPath PathToOverlayImage = default!;
 
     /// <summary>
-    /// The additional Color that can be overlayed over whole screen.
+    /// The additional Color that can be overlaid over whole screen.
     /// </summary>
     [DataField, AutoNetworkedField]
     public Color AdditionalColorOverlay = new(0, 0, 0, 0);
