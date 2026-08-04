@@ -473,12 +473,10 @@ public sealed partial class CargoSystem
     )
     {
         // No slots at the trade station
-        _listEnts.Clear();
-        GetTradeStations(stationData, ref _listEnts);
         EntityUid? tradeDestination = null;
 
         // Try to fulfill from any station where possible, if the pad is not occupied.
-        foreach (var trade in _listEnts)
+        foreach (var trade in GetTradeStations(stationData))
         {
             var tradePads = GetCargoPallets(trade, BuySellType.Buy);
             _random.Shuffle(tradePads);
@@ -693,14 +691,14 @@ public sealed partial class CargoSystem
         return _orderQuery.TryComp(stationUid, out dbComp);
     }
 
-    private void GetTradeStations(StationDataComponent data, ref List<EntityUid> ents)
+    private IEnumerable<EntityUid> GetTradeStations(StationDataComponent data)
     {
         foreach (var gridUid in data.Grids)
         {
             if (!_tradeStationQuery.HasComponent(gridUid))
                 continue;
 
-            ents.Add(gridUid);
+            yield return gridUid;
         }
     }
 
