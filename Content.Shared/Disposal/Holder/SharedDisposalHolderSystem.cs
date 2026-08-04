@@ -81,11 +81,8 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnDisposedRemovedFromContainer(Entity<BeingDisposedComponent> ent, ref EntGotRemovedFromContainerMessage args)
     {
-        if (args.Container.Owner != ent.Comp.Holder)
-            return;
-
-        // Freedom.
-        DetachEntity(ent);
+        if (args.Container.Owner == ent.Comp.Holder)
+            DetachEntity(ent);
     }
 
     /// <summary>
