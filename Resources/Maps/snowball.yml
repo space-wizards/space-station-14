@@ -4,7 +4,7 @@ meta:
   engineVersion: 286.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/04/2026 02:24:01
+  time: 08/04/2026 04:59:55
   entityCount: 18988
 maps:
 - 1793
@@ -468,7 +468,6 @@ entities:
             2912: 34,55
             2913: 34,58
             2914: 35,58
-            3899: 55,15
             5076: 43,101
             5078: 45,101
             5096: 70,76
@@ -704,7 +703,6 @@ entities:
             4434: 53,20
             4436: 57,15
             4437: 53,15
-            4438: 55,15
             4439: 52,17
             4440: 58,17
             4441: 58,16
@@ -102880,12 +102878,12 @@ entities:
         - - Middle
           - Off
         7857:
+        - - Left
+          - Forward
         - - Right
           - Reverse
         - - Middle
           - Off
-        - - Left
-          - Forward
   - uid: 16095
     components:
     - type: Transform
