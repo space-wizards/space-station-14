@@ -79,6 +79,7 @@ namespace Content.Server.Entry
         [Dependency] private ServerInfoManager _serverInfo = default!;
         [Dependency] private ServerUpdateManager _updateManager = default!;
         [Dependency] private ServerFeedbackManager _feedbackManager = null!;
+        [Dependency] private IBugReportManager _bugReportManager = null!;
 
         public override void PreInit()
         {
@@ -173,6 +174,7 @@ namespace Content.Server.Entry
             _multiServerKick.Initialize();
             _cvarCtrl.Initialize();
             _feedbackManager.Initialize();
+            _bugReportManager.Initialize();
         }
 
         public override void Update(ModUpdateLevel level, FrameEventArgs frameEventArgs)
@@ -212,7 +214,7 @@ namespace Content.Server.Entry
             _ = _discordLink.Shutdown();
             _discordChatLink.Shutdown();
 
-            IoCManager.Resolve<IBugReportManager>().Shutdown();
+            _bugReportManager.Shutdown();
         }
 
         private static void LoadConfigPresets(IConfigurationManager cfg, IResourceManager res, ISawmill sawmill)
