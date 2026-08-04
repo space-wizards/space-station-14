@@ -8,20 +8,13 @@ public sealed partial class InsulatedSystem : EntitySystem
 {
     [Dependency] private ExamineSystemShared _examine = default!;
 
-    /// <inheritdoc />
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<InsulatedComponent, GetVerbsEvent<ExamineVerb>>(OnDetailedExamine);
-    }
-
+    [SubscribeLocalEvent]
     private void OnDetailedExamine(EntityUid ent, InsulatedComponent component, ref GetVerbsEvent<ExamineVerb> args)
     {
         if (!HasComp<ClothingComponent>(ent))
             return;
 
-        var iconTexture = "/Textures/Interface/VerbIcons/zap.svg.192dpi.png";
+        const string iconTexture = "/Textures/Interface/VerbIcons/zap.svg.192dpi.png";
 
         _examine.AddHoverExamineVerb(args,
             component,

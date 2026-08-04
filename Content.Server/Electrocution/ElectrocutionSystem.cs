@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Doors.Systems;
 using Content.Server.NodeContainer.EntitySystems;
@@ -10,17 +11,19 @@ using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.Electrocution;
+using Content.Shared.Electrocution.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Jittering;
 using Content.Shared.Light.Components;
 using Content.Shared.Maps;
+using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.NodeContainer;
 using Content.Shared.NodeContainer.NodeGroups;
 using Content.Shared.Popups;
 using Content.Shared.Speech.EntitySystems;
-using Content.Shared.StatusEffect;
+using Content.Shared.StatusEffectNew;
 using Content.Shared.Stunnable;
 using Content.Shared.Tag;
 using Content.Shared.Weapons.Melee.Events;
@@ -30,8 +33,6 @@ using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using PullableComponent = Content.Shared.Movement.Pulling.Components.PullableComponent;
-using PullerComponent = Content.Shared.Movement.Pulling.Components.PullerComponent;
 
 namespace Content.Server.Electrocution;
 
@@ -55,7 +56,6 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
     [Dependency] private MetaDataSystem _metaData = default!;
     [Dependency] private TurfSystem _turf = default!;
 
-    private static readonly ProtoId<StatusEffectPrototype> StatusKeyIn = "Electrocution";
     private static readonly ProtoId<DamageTypePrototype> DamageType = "Shock";
     private static readonly ProtoId<TagPrototype> WindowTag = "Window";
 
@@ -75,14 +75,7 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ElectrifiedComponent, StartCollideEvent>(OnElectrifiedStartCollide);
-        SubscribeLocalEvent<ElectrifiedComponent, AttackedEvent>(OnElectrifiedAttacked);
-        SubscribeLocalEvent<ElectrifiedComponent, InteractHandEvent>(OnElectrifiedHandInteract);
-        SubscribeLocalEvent<ElectrifiedComponent, InteractUsingEvent>(OnElectrifiedInteractUsing);
         SubscribeLocalEvent<ElectrifiedComponent, ActivateInWorldEvent>(OnElectrifiedActivateInWorld, before: [typeof(AirlockSystem), typeof(DoorSystem)]);
-
-        SubscribeLocalEvent<RandomInsulationComponent, MapInitEvent>(OnRandomInsulationMapInit);
-        SubscribeLocalEvent<PoweredLightComponent, AttackedEvent>(OnLightAttacked);
 
         UpdatesAfter.Add(typeof(PowerNetSystem));
     }
@@ -118,11 +111,9 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
         while (query.MoveNext(out var uid, out var activated, out var electrified, out var transform))
         {
             activated.TimeLeft -= frameTime;
-            if (activated.TimeLeft <= 0 || !IsPowered(uid, electrified, transform))
-            {
-                _appearance.SetData(uid, ElectrifiedVisuals.ShowSparks, false);
-                RemComp<ActivatedElectrifiedComponent>(uid);
-            }
+            if (!(activated.TimeLeft <= 0) && IsPowered(uid, electrified, transform)) continue;
+            _appearance.SetData(uid, ElectrifiedVisuals.ShowSparks, false);
+            RemComp<ActivatedElectrifiedComponent>(uid);
         }
     }
 
@@ -136,10 +127,10 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
 
             if (tileRef != null)
             {
-                foreach (var entity in _entityLookup.GetLocalEntitiesIntersecting(tileRef.Value, flags: LookupFlags.StaticSundries))
+                if (_entityLookup.GetLocalEntitiesIntersecting(tileRef.Value, flags: LookupFlags.StaticSundries)
+                .Any(entity => _tag.HasTag(entity, WindowTag)))
                 {
-                    if (_tag.HasTag(entity, WindowTag))
-                        return false;
+                    return false;
                 }
             }
         }
@@ -154,12 +145,14 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
         return true;
     }
 
+    [SubscribeLocalEvent]
     private void OnElectrifiedStartCollide(EntityUid uid, ElectrifiedComponent electrified, ref StartCollideEvent args)
     {
         if (electrified.OnBump)
             TryDoElectrifiedAct(uid, args.OtherEntity, 1, electrified);
     }
 
+    [SubscribeLocalEvent]
     private void OnElectrifiedAttacked(EntityUid uid, ElectrifiedComponent electrified, AttackedEvent args)
     {
         if (!electrified.OnAttacked)
@@ -171,12 +164,14 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
         TryDoElectrifiedAct(uid, args.User, 1, electrified);
     }
 
+    [SubscribeLocalEvent]
     private void OnElectrifiedHandInteract(EntityUid uid, ElectrifiedComponent electrified, InteractHandEvent args)
     {
         if (electrified.OnHandInteract)
             TryDoElectrifiedAct(uid, args.User, 1, electrified);
     }
 
+    [SubscribeLocalEvent]
     private void OnLightAttacked(EntityUid uid, PoweredLightComponent component, AttackedEvent args)
     {
         if (!component.CurrentLit || args.Used != args.User)
@@ -188,6 +183,7 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
         TryDoElectrocution(args.User, uid, component.UnarmedHitShock, component.UnarmedHitStun, false);
     }
 
+    [SubscribeLocalEvent]
     private void OnElectrifiedInteractUsing(EntityUid uid, ElectrifiedComponent electrified, InteractUsingEvent args)
     {
         if (!electrified.OnInteractUsing)
@@ -313,10 +309,10 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
     /// <inheritdoc/>
     public override bool TryDoElectrocution(
         EntityUid uid, EntityUid? sourceUid, int shockDamage, TimeSpan time, bool refresh, float siemensCoefficient = 1f,
-        StatusEffectsComponent? statusEffects = null, bool ignoreInsulation = false)
+        bool ignoreInsulation = false)
     {
         if (!DoCommonElectrocutionAttempt(uid, sourceUid, ref siemensCoefficient, ignoreInsulation)
-            || !DoCommonElectrocution(uid, sourceUid, shockDamage, time, refresh, siemensCoefficient, statusEffects))
+            || !DoCommonElectrocution(uid, sourceUid, shockDamage, time, refresh, siemensCoefficient))
             return false;
 
         RaiseLocalEvent(uid, new ElectrocutedEvent(uid, sourceUid, siemensCoefficient), true);
@@ -331,13 +327,12 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
         TimeSpan time,
         bool refresh,
         float siemensCoefficient = 1f,
-        StatusEffectsComponent? statusEffects = null,
         TransformComponent? sourceTransform = null)
     {
         if (!DoCommonElectrocutionAttempt(uid, sourceUid, ref siemensCoefficient))
             return false;
 
-        if (!DoCommonElectrocution(uid, sourceUid, shockDamage, time, refresh, siemensCoefficient, statusEffects))
+        if (!DoCommonElectrocution(uid, sourceUid, shockDamage, time, refresh, siemensCoefficient))
             return false;
 
         // Coefficient needs to be higher than this to do a powered electrocution!
@@ -390,8 +385,7 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
     }
 
     private bool DoCommonElectrocution(EntityUid uid, EntityUid? sourceUid,
-        int? shockDamage, TimeSpan time, bool refresh, float siemensCoefficient = 1f,
-        StatusEffectsComponent? statusEffects = null)
+        int? shockDamage, TimeSpan time, bool refresh, float siemensCoefficient = 1f)
     {
         if (siemensCoefficient <= 0)
             return false;
@@ -404,13 +398,15 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
                 return false;
         }
 
-        if (!Resolve(uid, ref statusEffects, false) ||
-            !_statusEffects.CanApplyEffect(uid, StatusKeyIn, statusEffects))
+        if (!refresh)
         {
-            return false;
+            if (!_statusEffects.CanAddStatusEffect(uid, ElectrocutionId))
+                return false;
         }
 
-        if (!_statusEffects.TryAddStatusEffect<ElectrocutedComponent>(uid, StatusKeyIn, time, refresh, statusEffects))
+        if (refresh
+            ? !_statusEffects.TryUpdateStatusEffectDuration(uid, ElectrocutionId, time)
+            : !_statusEffects.TryAddStatusEffectDuration(uid, ElectrocutionId, time))
             return false;
 
         var shouldStun = siemensCoefficient > 0.5f;
@@ -435,7 +431,7 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
         }
 
         _stuttering.DoStutter(uid, time * StutteringTimeMultiplier, refresh);
-        _jittering.DoJitter(uid, time * JitterTimeMultiplier, refresh, JitterAmplitude, JitterFrequency, true, statusEffects);
+        _jittering.DoJitter(uid, time * JitterTimeMultiplier, refresh, JitterAmplitude, JitterFrequency, true);
 
         _popup.PopupEntity(Loc.GetString("electrocuted-component-mob-shocked-popup-player"), uid, uid);
 
@@ -489,6 +485,7 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnRandomInsulationMapInit(EntityUid uid, RandomInsulationComponent randomInsulation,
         MapInitEvent args)
     {

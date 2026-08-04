@@ -161,3 +161,11 @@
       - Blindable
       requireAll: true
   - type: FlashedStatusEffect
+
+# Caused by electric shocks
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectElectrocuted
+  name: electrocuted
+  components:
+  - type: ElectrocutedStatusEffect

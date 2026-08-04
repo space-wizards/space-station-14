@@ -1,4 +1,4 @@
-namespace Content.Shared.Electrocution;
+namespace Content.Shared.Electrocution.Components;
 
 /// <summary>
 /// Handles toggling sprite layers for the electrocution HUD to show if an entity with the ElectrifiedComponent is electrified.

@@ -1,4 +1,5 @@
 using Content.Shared.Electrocution;
+using Content.Shared.Electrocution.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Shared.Player;
@@ -12,26 +13,19 @@ public sealed partial class ElectrocutionHUDVisualizerSystem : VisualizerSystem<
 {
     [Dependency] private IPlayerManager _playerMan = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<ShowElectrocutionHUDComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<ShowElectrocutionHUDComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<ShowElectrocutionHUDComponent, LocalPlayerAttachedEvent>(OnPlayerAttached);
-        SubscribeLocalEvent<ShowElectrocutionHUDComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);
-    }
-
+    [SubscribeLocalEvent]
     private void OnPlayerAttached(Entity<ShowElectrocutionHUDComponent> ent, ref LocalPlayerAttachedEvent args)
     {
         ShowHUD();
     }
 
+    [SubscribeLocalEvent]
     private void OnPlayerDetached(Entity<ShowElectrocutionHUDComponent> ent, ref LocalPlayerDetachedEvent args)
     {
         RemoveHUD();
     }
 
+    [SubscribeLocalEvent]
     private void OnInit(Entity<ShowElectrocutionHUDComponent> ent, ref ComponentInit args)
     {
         if (_playerMan.LocalEntity == ent)
@@ -40,6 +34,7 @@ public sealed partial class ElectrocutionHUDVisualizerSystem : VisualizerSystem<
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnShutdown(Entity<ShowElectrocutionHUDComponent> ent, ref ComponentShutdown args)
     {
         if (_playerMan.LocalEntity == ent)

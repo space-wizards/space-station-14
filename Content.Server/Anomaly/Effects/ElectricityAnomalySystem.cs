@@ -3,7 +3,6 @@ using Content.Server.Emp;
 using Content.Server.Lightning;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Effects.Components;
-using Content.Shared.StatusEffect;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -19,22 +18,17 @@ public sealed partial class ElectricityAnomalySystem : EntitySystem
     [Dependency] private EmpSystem _emp = default!;
     [Dependency] private EntityLookupSystem _lookup = default!;
 
-    /// <inheritdoc/>
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<ElectricityAnomalyComponent, AnomalyPulseEvent>(OnPulse);
-        SubscribeLocalEvent<ElectricityAnomalyComponent, AnomalySupercriticalEvent>(OnSupercritical);
-    }
-
+    [SubscribeLocalEvent]
     private void OnPulse(Entity<ElectricityAnomalyComponent> anomaly, ref AnomalyPulseEvent args)
     {
         var range = anomaly.Comp.MaxElectrocuteRange * args.Stability * args.PowerModifier;
 
-        int boltCount = (int)MathF.Floor(MathHelper.Lerp((float)anomaly.Comp.MinBoltCount, (float)anomaly.Comp.MaxBoltCount, args.Severity));
+        int boltCount = (int)MathF.Floor(MathHelper.Lerp(anomaly.Comp.MinBoltCount, anomaly.Comp.MaxBoltCount, args.Severity));
 
         _lightning.ShootRandomLightnings(anomaly, range, boltCount);
     }
 
+    [SubscribeLocalEvent]
     private void OnSupercritical(Entity<ElectricityAnomalyComponent> anomaly, ref AnomalySupercriticalEvent args)
     {
         var range = anomaly.Comp.MaxElectrocuteRange * 3 * args.PowerModifier;
@@ -61,9 +55,9 @@ public sealed partial class ElectricityAnomalySystem : EntitySystem
             var damage = (int) (elec.MaxElectrocuteDamage * anom.Severity);
             var duration = elec.MaxElectrocuteDuration * anom.Severity;
 
-            foreach (var (ent, comp) in _lookup.GetEntitiesInRange<StatusEffectsComponent>(_transform.GetMapCoordinates(uid, xform), range))
+            foreach (var ent in _lookup.GetEntitiesInRange(_transform.GetMapCoordinates(uid, xform), range))
             {
-                _electrocution.TryDoElectrocution(ent, uid, damage, duration, true, statusEffects: comp, ignoreInsulation: true);
+                _electrocution.TryDoElectrocution(ent, uid, damage, duration, true, ignoreInsulation: true);
             }
         }
     }

@@ -71,7 +71,6 @@
       - !type:WashCreamPie
   - type: StatusEffects
     allowed:
-    - Electrocution
     - Pacified
     - Flashed
     - Adrenaline

@@ -10,18 +10,18 @@ public sealed partial class ElectrocutionComponent : Component
     /// <summary>
     /// The entity being electrocuted.
     /// </summary>
-    [DataField("electrocuting")]
+    [DataField]
     public EntityUid Electrocuting;
 
-/// <summary>
-/// The entity causing the electrocution.
-/// </summary>
-    [DataField("source")]
+    /// <summary>
+    /// The entity causing the electrocution.
+    /// </summary>
+    [DataField]
     public EntityUid Source;
 
-/// <summary>
-/// Remaining duration of the electrocution.
-/// </summary>
-    [DataField("timeLeft")]
+    /// <summary>
+    /// Remaining duration of the electrocution.
+    /// </summary>
+    [DataField]
     public float TimeLeft;
 }

@@ -13,9 +13,6 @@
     baseWalkSpeed : 2
     baseSprintSpeed : 3
   - type: MovedByPressure
-  - type: StatusEffects
-    allowed:
-    - Electrocution
   - type: Pullable
   - type: Tag
     tags:
@@ -354,9 +351,6 @@
       reagents:
       - ReagentId: Water
         Quantity: 100
-  - type: StatusEffects
-    allowed:
-    - Electrocution
   - type: MeleeWeapon
     soundHit:
       collection: AlienClaw

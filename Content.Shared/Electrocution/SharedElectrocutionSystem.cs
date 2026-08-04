@@ -1,87 +1,82 @@
+using Content.Shared.Electrocution.Components;
 using Content.Shared.Inventory;
-using Content.Shared.StatusEffect;
+using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Electrocution
+namespace Content.Shared.Electrocution;
+
+public abstract partial class SharedElectrocutionSystem : EntitySystem
 {
-    public abstract partial class SharedElectrocutionSystem : EntitySystem
+    public static readonly EntProtoId ElectrocutionId = "StatusEffectElectrocuted";
+
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+
+    protected void SetInsulatedSiemensCoefficient(EntityUid uid, float siemensCoefficient, InsulatedComponent? insulated = null)
     {
-        [Dependency] private SharedAppearanceSystem _appearance = default!;
+        if (!Resolve(uid, ref insulated))
+            return;
 
-        public override void Initialize()
-        {
-            base.Initialize();
+        insulated.Coefficient = siemensCoefficient;
+        Dirty(uid, insulated);
+    }
 
-            SubscribeLocalEvent<InsulatedComponent, ElectrocutionAttemptEvent>(OnInsulatedElectrocutionAttempt);
-            // as long as legally distinct electric-mice are never added, this should be fine (otherwise a mouse-hat will transfer it's power to the wearer).
-            SubscribeLocalEvent<InsulatedComponent, InventoryRelayedEvent<ElectrocutionAttemptEvent>>((e, c, ev) => OnInsulatedElectrocutionAttempt(e, c, ev.Args));
-        }
+    /// <summary>
+    ///     Sets electrified value of component and marks dirty if required.
+    /// </summary>
+    public void SetElectrified(Entity<ElectrifiedComponent> ent, bool value)
+    {
+        if (ent.Comp.Enabled == value)
+            return;
 
-        /// <summary>
-        /// Tries to set Siemens Coefficient on an entity's insulated component.
-        /// </summary>
-        public void SetInsulatedSiemensCoefficient(EntityUid uid, float siemensCoefficient, InsulatedComponent? insulated = null)
-        {
-            if (!Resolve(uid, ref insulated))
-                return;
+        ent.Comp.Enabled = value;
+        Dirty(ent, ent.Comp);
 
-            insulated.Coefficient = siemensCoefficient;
-            Dirty(uid, insulated);
-        }
+        _appearance.SetData(ent.Owner, ElectrifiedVisuals.IsElectrified, value);
+    }
 
-        /// <summary>
-        /// Sets electrified value of component and marks dirty if required.
-        /// </summary>
-        public void SetElectrified(Entity<ElectrifiedComponent> ent, bool value)
-        {
-            if (ent.Comp.Enabled == value)
-            {
-                return;
-            }
+    /// <summary>
+    ///     Set a wire's cut state.
+    /// </summary>
+    public void SetElectrifiedWireCut(Entity<ElectrifiedComponent> ent, bool value)
+    {
+        if (ent.Comp.IsWireCut == value)
+            return;
 
-            ent.Comp.Enabled = value;
-            Dirty(ent, ent.Comp);
+        ent.Comp.IsWireCut = value;
+        Dirty(ent);
+    }
 
-            _appearance.SetData(ent.Owner, ElectrifiedVisuals.IsElectrified, value);
-        }
+    /// <param name="uid">Entity being electrocuted.</param>
+    /// <param name="sourceUid">Source entity of the electrocution.</param>
+    /// <param name="shockDamage">How much shock damage the entity takes.</param>
+    /// <param name="time">How long the entity will be stunned.</param>
+    /// <param name="refresh">Should <paramref name="time"/> be refreshed instead of accumulated if the entity is already electrocuted?</param>
+    /// <param name="siemensCoefficient">How insulated the entity is from the shock. 0 means completely insulated, and 1 means no insulation.</param>
+    /// <param name="ignoreInsulation">Should the electrocution bypass the Insulated component?</param>
+    /// <returns>Whether the entity <see cref="uid"/> was stunned by the shock.</returns>
+    public virtual bool TryDoElectrocution(
+        EntityUid uid,
+        EntityUid? sourceUid,
+        int shockDamage,
+        TimeSpan time,
+        bool refresh,
+        float siemensCoefficient = 1f,
+        bool ignoreInsulation = false)
+    {
+        // Only done server side.
+        return false;
+    }
 
-        /// <summary>
-        /// Set a wire's cut state.
-        /// </summary>
-        public void SetElectrifiedWireCut(Entity<ElectrifiedComponent> ent, bool value)
-        {
-            if (ent.Comp.IsWireCut == value)
-            {
-                return;
-            }
+    [SubscribeLocalEvent]
+    private static void OnInsulatedElectrocutionAttempt(EntityUid uid, InsulatedComponent insulated, ElectrocutionAttemptEvent args)
+    {
+        args.SiemensCoefficient *= insulated.Coefficient;
+    }
 
-            ent.Comp.IsWireCut = value;
-            Dirty(ent);
-        }
-
-        /// <summary>
-        /// Attempts to electrocute an entity interacting with electrified components.
-        /// Only call server side.
-        /// </summary>
-        /// <param name="uid">Entity being electrocuted.</param>
-        /// <param name="sourceUid">Source entity of the electrocution.</param>
-        /// <param name="shockDamage">How much shock damage the entity takes.</param>
-        /// <param name="time">How long the entity will be stunned.</param>
-        /// <param name="refresh">Should <paramref>time</paramref> be refreshed (instead of accumilated) if the entity is already electrocuted?</param>
-        /// <param name="siemensCoefficient">How insulated the entity is from the shock. 0 means completely insulated, and 1 means no insulation.</param>
-        /// <param name="statusEffects">Status effects to apply to the entity.</param>
-        /// <param name="ignoreInsulation">Should the electrocution bypass the Insulated component?</param>
-        /// <returns>Whether the entity <see cref="uid"/> was stunned by the shock.</returns>
-        public virtual bool TryDoElectrocution(
-            EntityUid uid, EntityUid? sourceUid, int shockDamage, TimeSpan time, bool refresh, float siemensCoefficient = 1f,
-            StatusEffectsComponent? statusEffects = null, bool ignoreInsulation = false)
-        {
-            // only done serverside
-            return false;
-        }
-
-        private void OnInsulatedElectrocutionAttempt(EntityUid uid, InsulatedComponent insulated, ElectrocutionAttemptEvent args)
-        {
-            args.SiemensCoefficient *= insulated.Coefficient;
-        }
+    [SubscribeLocalEvent]
+    private static void OnInventoryRelayedElectrocutionAttempt(EntityUid uid, InsulatedComponent insulated, InventoryRelayedEvent<ElectrocutionAttemptEvent> args)
+    {
+        // As long as legally distinct electric-mice are never added, this should be fine
+        // otherwise a mouse-hat will transfer its power to the wearer.
+        OnInsulatedElectrocutionAttempt(uid, insulated, args.Args);
     }
 }

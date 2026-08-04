@@ -1,20 +1,18 @@
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Electrocution
+namespace Content.Shared.Electrocution;
+/// <summary>
+/// This component protects an entity from being electrocuted.
+/// </summary>
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[Access(typeof(SharedElectrocutionSystem))]
+public sealed partial class InsulatedComponent : Component
 {
+    // Technically, people could cheat and figure out which budget insulated gloves are gud and which ones are bad.
+    // We might want to rethink this a little bit.
     /// <summary>
-    /// This component protects an entity from being electrocuted.
+    ///     Siemens coefficient. Zero means completely insulated.
     /// </summary>
-    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-    [Access(typeof(SharedElectrocutionSystem))]
-    public sealed partial class InsulatedComponent : Component
-    {
-        // Technically, people could cheat and figure out which budget insulated gloves are gud and which ones are bad.
-        // We might want to rethink this a little bit.
-        /// <summary>
-        ///     Siemens coefficient. Zero means completely insulated.
-        /// </summary>
-        [DataField, AutoNetworkedField]
-        public float Coefficient { get; set; } = 0f;
-    }
+    [DataField, AutoNetworkedField]
+    public float Coefficient { get; set; } = 0f;
 }
