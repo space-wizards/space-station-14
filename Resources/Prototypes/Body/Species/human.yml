@@ -193,6 +193,7 @@
       sprite: Mobs/Customization/eyes.rsi
   - type: EyeBlinking
     eyelidsSprite: /Textures/Mobs/Species/Human/eyelids.rsi
+  - type: Appearance
 
 - type: entity
   parent: [ OrganBaseTongue, OrganHumanInternal ]

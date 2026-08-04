@@ -101,7 +101,7 @@ public sealed partial class EyeBlinkingComponent : Component
     /// <summary>
     /// The prototype to grant to enable eye-toggling action.
     /// </summary>
-    [DataField("eyeToggleAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string EyeToggleAction = "ActionToggleEyes";
 
     /// <summary>
@@ -132,7 +132,7 @@ public sealed partial class EyeBlinkingComponent : Component
     /// <summary>
     /// Body, who has SpriteComp with HumanoidVisualLayers.Eyelids layer, to apply eyelid sprite and color to.
     /// </summary>
-    [ViewVariables]
+    [ViewVariables, AutoNetworkedField]
     public EntityUid? Body;
 }
 

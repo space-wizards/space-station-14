@@ -79,7 +79,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         ResetBlink(ent);
 
         // Apply the initial eye state (open or closed).
-        if (!(_apperance.TryGetData(body, EyeBlinkingVisuals.EyesClosed, out var value) && value is bool eyeClosed))
+        if (!(_apperance.TryGetData(ent.Owner, EyeBlinkingVisuals.EyesClosed, out var value) && value is bool eyeClosed))
         {
             ChangeEyesState(ent, false);
             return;
@@ -200,7 +200,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         if (!TryComp<SpriteComponent>(ent.Comp.Body, out var sprite))
             return;
 
-        if (!_sprite.TryGetLayer(ent.Owner, HumanoidVisualLayers.Eyelids, out var layer, false))
+        if (!_sprite.TryGetLayer(ent.Comp.Body.Value, HumanoidVisualLayers.Eyelids, out var layer, false))
             return;
 
         foreach (var eyelidState in ent.Comp.Eyelids)
