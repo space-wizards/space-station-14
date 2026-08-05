@@ -993,8 +993,11 @@
   id: WeaponLaserCannonXenoborg
   name: xenoborg laser cannon
   components:
+  - type: BatteryAmmoProvider
+    proto: XenoborgHeavyLaser
+    fireCost: 100
   - type: BatterySelfRecharger
-    autoRechargeRate: 30
+    autoRechargeRate: 50
   # "remove" wield bonus and penalty so borgs can use it
   - type: GunWieldBonus
     minAngle: 0
