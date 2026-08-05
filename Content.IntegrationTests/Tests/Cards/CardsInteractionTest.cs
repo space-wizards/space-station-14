@@ -72,11 +72,16 @@ public sealed class CardsInteractionTest : InteractionTest
             "Throwing one card should decrease the deck by 1"
         );
 
-        var cardsQuery = SEntMan.EntityQueryEnumerator<CardsComponent>();
-        while (cardsQuery.MoveNext(out var uid, out _))
-        {
-            SDeleteNow(uid);
-        }
+        await Server.WaitPost(() =>
+            {
+                var cardsQuery = SEntMan.EntityQueryEnumerator<CardsComponent>();
+                while (cardsQuery.MoveNext(out var uid, out _))
+                {
+                    SQueueDel(uid);
+                }
+
+                Server.RunTicks(1);
+            });
     }
 
     [Test]
@@ -108,10 +113,15 @@ public sealed class CardsInteractionTest : InteractionTest
         Assert.That(sCardsComp.Flipped, Is.True);
         Assert.That(sCardsComp.Fanned, Is.True);
 
-        var cardsQuery = SEntMan.EntityQueryEnumerator<CardsComponent>();
-        while (cardsQuery.MoveNext(out var uid, out _))
-        {
-            SDeleteNow(uid);
-        }
+        await Server.WaitPost(() =>
+            {
+                var cardsQuery = SEntMan.EntityQueryEnumerator<CardsComponent>();
+                while (cardsQuery.MoveNext(out var uid, out _))
+                {
+                    SQueueDel(uid);
+                }
+
+                Server.RunTicks(1);
+            });
     }
 }
