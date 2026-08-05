@@ -167,7 +167,6 @@
   - type: Reflect
     reflectProb: 1
   - type: Climbable
-  - type: Clickable
 
 - type: entity
   parent: BaseHoloSign
