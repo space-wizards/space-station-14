@@ -38,7 +38,7 @@ jobs:
         dotnet tool install --global SpaceWizards.ChangelogTool --version 1.0.2
         ss14-changelog -- update -d Resources/Changelog
       env:
-        REPO: ${{ vars.GITHUB_REPOSITORY }}
+        REPO: ${{ github.repository }}
         BRANCH: master
         CHANGELOG_REPO_PATH: Resources/Changelog
         EXTRA_CATEGORIES: Admin,Maps,Rules
