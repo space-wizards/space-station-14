@@ -29,7 +29,7 @@ public sealed partial class TabletopCheckersSetup : TabletopSetup
     public const float PieceOffsetX = -4.5f;
     public const float PieceOffsetY = 3.5f;
 
-    public override void SetupTabletop(TabletopGameComponent tabletop, MapCoordinates coordinates, IEntityManager entityManager)
+    public override void SetupTabletop(TabletopGameComponent tabletop, MapCoordinates coordinates, EntityManager entityManager)
     {
         tabletop.Board = entityManager.Spawn(BoardPrototype, coordinates);
 

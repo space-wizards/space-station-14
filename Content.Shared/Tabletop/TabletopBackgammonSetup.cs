@@ -20,7 +20,7 @@ public sealed partial class TabletopBackgammonSetup : TabletopSetup
     /// <summary>
     /// Sets up a game of backgammon at the coordinates given.
     /// </summary>
-    public override void SetupTabletop(TabletopGameComponent tabletop, MapCoordinates coordinates, IEntityManager entityManager)
+    public override void SetupTabletop(TabletopGameComponent tabletop, MapCoordinates coordinates, EntityManager entityManager)
     {
         tabletop.Board = entityManager.Spawn(BoardPrototype, coordinates);
 

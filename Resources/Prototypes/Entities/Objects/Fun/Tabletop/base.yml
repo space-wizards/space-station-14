@@ -14,8 +14,6 @@
     sprite: Objects/Fun/Tabletop/boards.rsi
   - type: TabletopGame
     size: 256, 256
-    setup: !type:TabletopEmptySetup
-      boardPrototype: Crowbar
   - type: Tag
     tags:
     - TabletopBoard

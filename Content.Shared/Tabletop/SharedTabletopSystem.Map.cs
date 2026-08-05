@@ -6,6 +6,7 @@ using Robust.Shared.Map.Components;
 
 namespace Content.Shared.Tabletop;
 
+// A collection of methods for managing tabletop positions
 public abstract partial class SharedTabletopSystem
 {
     /// <summary>
@@ -16,7 +17,7 @@ public abstract partial class SharedTabletopSystem
     /// <summary>
     /// Map where all tabletops reside.
     /// </summary>
-    public MapId TabletopMap { get; private set; } = MapId.Nullspace;
+    public MapId TabletopMap { get; private set; }
 
     /// <summary>
     /// The number of tabletops created in the map.
@@ -28,11 +29,12 @@ public abstract partial class SharedTabletopSystem
     [SubscribeLocalEvent]
     private void OnRoundRestart(RoundRestartCleanupEvent _)
     {
+        // This will usually *not* be the case, but better make sure.
         if (TabletopMap == MapId.Nullspace || !_map.MapExists(TabletopMap))
             return;
 
-        // This will usually *not* be the case, but better make sure.
         _map.DeleteMap(TabletopMap);
+        TabletopMap = MapId.Nullspace;
 
         // Reset tabletop count.
         _tabletops = 0;

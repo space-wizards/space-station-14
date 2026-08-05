@@ -5,13 +5,13 @@ using Robust.Shared.Map;
 namespace Content.Shared.Tabletop;
 
 /// <summary>
-///
+/// A class to set up an empty board at a given position.
 /// </summary>
 [UsedImplicitly]
 public sealed partial class TabletopEmptySetup : TabletopSetup
 {
     /// <inheritdoc />
-    public override void SetupTabletop(TabletopGameComponent tabletop, MapCoordinates coordinates, IEntityManager entityManager)
+    public override void SetupTabletop(TabletopGameComponent tabletop, MapCoordinates coordinates, EntityManager entityManager)
     {
         tabletop.Board = entityManager.SpawnEntity(BoardPrototype, coordinates);
     }

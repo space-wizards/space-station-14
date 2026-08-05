@@ -19,7 +19,7 @@ public sealed partial class TabletopChessSetup : TabletopSetup
     public const float PieceOffsetY = 3.5f;
 
     /// <inheritdoc />
-    public override void SetupTabletop(TabletopGameComponent tabletop, MapCoordinates coordinates, IEntityManager entityManager)
+    public override void SetupTabletop(TabletopGameComponent tabletop, MapCoordinates coordinates, EntityManager entityManager)
     {
         tabletop.Board = entityManager.SpawnEntity(BoardPrototype, coordinates);
 

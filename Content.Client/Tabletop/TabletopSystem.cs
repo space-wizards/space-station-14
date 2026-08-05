@@ -46,41 +46,6 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
     }
 
     #region Overrides
-    /// <inheritdoc />
-    protected override void CopyEntity(EntityUid target, Entity<TabletopGameComponent> ent, EntityUid user)
-    {
-        if (ent.Comp.Position is not { } position)
-            return;
-
-        // Delay count check - prints should happen last.
-        if (ent.Comp.Entities.Count >= MaxTabletopPieces)
-        {
-            Popup.PopupEntity(Loc.GetString("tabletop-cant-add-more"), ent, user);
-            return;
-        }
-
-        var meta = MetaData(target);
-
-        var hologram = EntityManager.PredictedSpawn(GamePiecePrototype, position.Offset(-1, 0));
-
-        // Make sure the entity can be dragged and can be removed, move it into the board game world and add it to the Entities hashmap.
-        EnsureComp<TabletopDraggableComponent>(hologram);
-        EnsureComp<TabletopHologramComponent>(hologram);
-        Meta.SetEntityName(hologram, Name(target, meta));
-
-        // Try to get existing tabletop visuals if we can (copying existing pieces), otherwise get this entity's prototype of this object.
-        if (AppearanceQuery.TryComp(target, out AppearanceComponent? appearance)
-            && Appearance.TryGetData<string>(target, TabletopItemVisuals.Prototype, out var appearProto, appearance))
-        {
-            Appearance.SetData(hologram, TabletopItemVisuals.Prototype, appearProto);
-        }
-        else if (meta.EntityPrototype is { } metaProto)
-        {
-            Appearance.SetData(hologram, TabletopItemVisuals.Prototype, metaProto.ID);
-        }
-
-        Popup.PopupEntity(Loc.GetString("tabletop-added-piece"), ent, user);
-    }
 
     /// <inheritdoc />
     public override void Update(float frameTime)

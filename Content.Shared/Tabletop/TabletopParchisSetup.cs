@@ -24,7 +24,7 @@ public sealed partial class TabletopParchisSetup : TabletopSetup
     public EntProtoId BluePiecePrototype = "BlueTabletopPiece";
 
     /// <inheritdoc />
-    public override void SetupTabletop(TabletopGameComponent tabletop, MapCoordinates coordinates, IEntityManager entityManager)
+    public override void SetupTabletop(TabletopGameComponent tabletop, MapCoordinates coordinates, EntityManager entityManager)
     {
         tabletop.Board = entityManager.SpawnEntity(BoardPrototype, coordinates);
 

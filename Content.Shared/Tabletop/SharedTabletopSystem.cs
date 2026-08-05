@@ -39,8 +39,8 @@ public abstract partial class SharedTabletopSystem : EntitySystem
     [Dependency] protected SharedTransformSystem Xform = default!;
     [Dependency] protected SharedUserInterfaceSystem UI = default!;
 
+    [Dependency] private EntityQuery<AppearanceComponent> _appearanceQuery;
     [Dependency] protected EntityQuery<ActorComponent> ActorQuery;
-    [Dependency] protected EntityQuery<AppearanceComponent> AppearanceQuery;
     [Dependency] protected EntityQuery<TabletopBackgroundComponent> BackgroundQuery;
     [Dependency] protected EntityQuery<TabletopDraggableComponent> DraggableQuery;
     [Dependency] protected EntityQuery<TabletopGameComponent> GameQuery;
@@ -56,14 +56,6 @@ public abstract partial class SharedTabletopSystem : EntitySystem
     /// The maximum number of pieces to allow placement on a table.
     /// </summary>
     protected static readonly int MaxTabletopPieces = 50;
-
-    /// <summary>
-    /// Creates a sanitized copy of an entity and sends it into a particular tabletop game.
-    /// </summary>
-    /// <param name="target">The entity to copy.</param>
-    /// <param name="ent">The tabletop game to send the piece into.</param>
-    /// <param name="user">The user to show a popup on </param>
-    protected abstract void CopyEntity(EntityUid target, Entity<TabletopGameComponent> ent, EntityUid user);
 
     #region Event Handlers
 
@@ -93,6 +85,12 @@ public abstract partial class SharedTabletopSystem : EntitySystem
             return;
 
         OpenSessionFor(actor.PlayerSession, ent.Owner);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnGameShutdown(Entity<TabletopGameComponent> ent, ref ComponentShutdown args)
+    {
+        TeardownBoard(ent.Owner);
     }
 
     [SubscribeLocalEvent]
@@ -218,10 +216,28 @@ public abstract partial class SharedTabletopSystem : EntitySystem
         args.Handled = true;
     }
 
-    [Serializable, NetSerializable]
-    public sealed class TabletopDraggableComponentState(NetUserId? draggingPlayer) : ComponentState
+
+    [SubscribeLocalEvent]
+    private void OnPlayerDetached(Entity<TabletopGamerComponent> ent, ref PlayerDetachedEvent args)
     {
-        public NetUserId? DraggingPlayer = draggingPlayer;
+        if (ent.Comp.Tabletop.IsValid())
+            CloseSessionFor(args.Player, ent.Comp.Tabletop);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnGamerShutdown(Entity<TabletopGamerComponent> ent, ref ComponentShutdown args)
+    {
+        if (!ActorQuery.TryComp(ent.Owner, out ActorComponent? actor))
+            return;
+
+        if (ent.Comp.Tabletop.IsValid())
+            CloseSessionFor(actor.PlayerSession, ent.Comp.Tabletop);
+    }
+
+    [EventSubscription]
+    private void OnStopPlaying(TabletopStopPlayingEvent msg, EntitySessionEventArgs args)
+    {
+        CloseSessionFor(args.SenderSession, GetEntity(msg.TableUid));
     }
     #endregion Event Handlers
 
@@ -263,11 +279,51 @@ public abstract partial class SharedTabletopSystem : EntitySystem
         if (_net.IsServer && !UI.GetActors(table.Owner, TabletopGameUiKey.Key).Contains(user))
             return;
 
-        if (table.Comp.Entities.Remove(piece))
-        {
+        if (table.Comp.Board == table)
             PredictedQueueDel(piece);
-            Dirty(table);
+    }
+
+    /// <summary>
+    /// Creates a sanitized copy of an entity and sends it into a particular tabletop game.
+    /// </summary>
+    /// <param name="target">The entity to copy.</param>
+    /// <param name="ent">The tabletop game to send the piece into.</param>
+    /// <param name="user">The user to show a popup on </param>
+    protected void CopyEntity(EntityUid target, Entity<TabletopGameComponent> ent, EntityUid user)
+    {
+        if (ent.Comp.Board is not { } board)
+            return;
+
+        var boardXform = Transform(board);
+
+        // Delay count check - prints should happen last.
+        if (boardXform.ChildCount >= MaxTabletopPieces)
+        {
+            Popup.PopupEntity(Loc.GetString("tabletop-cant-add-more"), ent, user);
+            return;
         }
+
+        var meta = MetaData(target);
+
+        var hologram = PredictedSpawnAttachedTo(GamePiecePrototype, new(board, -Vector2.UnitX));
+
+        // Make sure the entity can be dragged and can be removed, move it into the board game world and add it to the Entities hashmap.
+        EnsureComp<TabletopDraggableComponent>(hologram);
+        EnsureComp<TabletopHologramComponent>(hologram);
+        Meta.SetEntityName(hologram, Name(target, meta));
+
+        // Try to get existing tabletop visuals if we can (copying existing pieces), otherwise get this entity's prototype of this object.
+        if (_appearanceQuery.TryComp(target, out AppearanceComponent? appearance)
+            && Appearance.TryGetData<string>(target, TabletopItemVisuals.Prototype, out var appearProto, appearance))
+        {
+            Appearance.SetData(hologram, TabletopItemVisuals.Prototype, appearProto);
+        }
+        else if (meta.EntityPrototype is { } metaProto)
+        {
+            Appearance.SetData(hologram, TabletopItemVisuals.Prototype, metaProto.ID);
+        }
+
+        Popup.PopupEntity(Loc.GetString("tabletop-added-piece"), ent, user);
     }
     #endregion
 }

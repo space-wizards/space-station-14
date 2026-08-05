@@ -13,6 +13,9 @@ public sealed class TabletopGameBoundUserInterface : BoundUserInterface
     [ViewVariables]
     private TabletopWindow? _window;
 
+    [ViewVariables]
+    private EntityUid? _camera;
+
     public TabletopGameBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
     }
@@ -22,10 +25,15 @@ public sealed class TabletopGameBoundUserInterface : BoundUserInterface
         base.Open();
 
         _window = this.CreateWindow<TabletopWindow>();
-        if (EntMan.TryGetComponent<TabletopGameComponent>(Owner, out var tabletop)
-            && EntMan.TryGetComponent<EyeComponent>(tabletop.UprightCamera, out var eye))
+        if (EntMan.TryGetComponent<TabletopGameComponent>(Owner, out var tabletop))
         {
-            _window.SetPosition(eye.Eye, tabletop.Size);
+            if (EntMan.TryGetComponent<EyeComponent>(tabletop.UprightCamera, out var eye))
+            {
+                _camera = tabletop.UprightCamera;
+                _window.SetPosition(eye.Eye, tabletop.Size);
+            }
+
+            _window.SetBoard(tabletop.Board);
         }
     }
 }

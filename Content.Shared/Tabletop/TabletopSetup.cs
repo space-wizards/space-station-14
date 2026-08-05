@@ -5,11 +5,15 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Tabletop;
 
+/// <summary>
+/// A class to set up a board for some tabletop game, like chess.
+/// This should be responsible for spawning pieces in a known configuration at a given position.
+/// </summary>
 [ImplicitDataDefinitionForInheritors]
 public abstract partial class TabletopSetup
 {
     /// <summary>
-    /// The prototype to spawn in for the board.
+    /// The entity prototype to spawn in for the board.
     /// </summary>
     [DataField]
     public EntProtoId BoardPrototype;
@@ -20,13 +24,13 @@ public abstract partial class TabletopSetup
     /// </summary>
     /// <param name="tabletop">The tabletop component being set up. You'll want to grab the tabletop center position here for spawning entities.</param>
     /// <param name="entityManager">Dependency that can be used for spawning entities.</param>
-    public abstract void SetupTabletop(TabletopGameComponent tabletop, MapCoordinates position, IEntityManager entityManager);
+    public abstract void SetupTabletop(TabletopGameComponent tabletop, MapCoordinates position, EntityManager entityManager);
 
     /// <summary>
     /// Convenience function: spawns a given piece at a given position and adds it to the session given.
     /// </summary>
-    protected void SpawnPiece(EntProtoId piece, Vector2 position, TabletopGameComponent tabletop, IEntityManager entityManager)
+    protected void SpawnPiece(EntProtoId piece, Vector2 position, TabletopGameComponent tabletop, EntityManager entityManager)
     {
-        entityManager.SpawnAttachedTo(piece, new(tabletop.Board!.Value, position));
+        entityManager.PredictedSpawnAttachedTo(piece, new(tabletop.Board!.Value, position));
     }
 }
