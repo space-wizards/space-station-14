@@ -277,12 +277,12 @@ public abstract partial class AlertsSystem : EntitySystem
     /// <summary>
     /// Invoked after showing an alert prior to dirtying the component
     /// </summary>
-    protected virtual void AfterShowAlert(Entity<AlertsComponent> ent) { }
+    protected virtual void AfterShowAlert(Entity<AlertsComponent> alerts) { }
 
     /// <summary>
     /// Invoked after clearing an alert prior to dirtying the component
     /// </summary>
-    protected virtual void AfterClearAlert(Entity<AlertsComponent> ent) { }
+    protected virtual void AfterClearAlert(Entity<AlertsComponent> alerts) { }
 
     private void OnAutoRemoveUnPaused(Entity<AlertAutoRemoveComponent> entity, ref EntityUnpausedEvent args)
     {
