@@ -57,11 +57,11 @@ public sealed partial class DeviceNetworkSystem : EntitySystem
             device.Data.ReceiveFrequency = receive.Frequency;
         }
 
-        if (device.Data.TransmitFrequency == null
+        if (device.TransmitFrequency == null
             && device.TransmitFrequencyId != null
             && _protoMan.TryIndex(device.TransmitFrequencyId, out var xmit))
         {
-            device.Data.TransmitFrequency = xmit.Frequency;
+            device.TransmitFrequency = xmit.Frequency;
         }
 
         if (ent.Comp.AutoConnect)
@@ -148,10 +148,7 @@ public sealed partial class DeviceNetworkSystem : EntitySystem
     /// <returns>false if the broadcast was canceled</returns>
     private bool CheckRecipientsList<T>(Entity<DeviceNetworkManagerComponent> manager, DeviceNetworkPacketEvent<T> packet, ref HashSet<Device> recipients) where T : INetworkPayload
     {
-        if (!manager.Comp.Devices.TryGetValue(packet.SenderAddress, out var device))
-            return false;
-
-        if (!device.DeviceData.SendBroadcastAttemptEvent)
+        if (!packet.Sender.Comp.SendBroadcastAttemptEvent)
             return true;
 
         var beforeBroadcastAttemptEvent = new BeforeBroadcastAttemptEvent(recipients);

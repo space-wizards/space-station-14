@@ -38,7 +38,7 @@ public sealed partial class DeviceNetworkRouterSystem : EntitySystem
 
         args.Data.Reroute(ent.Owner,
             payload.TargetAddress,
-            payload.OverrideFrequency ?? deviceComp.Data.TransmitFrequency,
+            payload.OverrideFrequency ?? deviceComp.TransmitFrequency,
             payload.OverrideNetwork ?? deviceComp.DeviceNetId,
             _deviceNetworkSystem);
     }

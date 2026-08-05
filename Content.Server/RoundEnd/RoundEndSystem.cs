@@ -231,7 +231,7 @@ namespace Content.Server.RoundEnd
                     SourceTime = countdownTime + TimeSpan.FromSeconds(_shuttle.TransitTime + _cfg.GetCVar(CCVars.EmergencyShuttleDockTime)),
                     DestinationTime = countdownTime,
                 };
-                _deviceNetworkSystem.SendPacket(shuttle.Value, null, ref payload, net.Data.TransmitFrequency);
+                _deviceNetworkSystem.SendPacket(shuttle.Value, null, ref payload, net.TransmitFrequency);
             }
         }
 
@@ -279,7 +279,7 @@ namespace Content.Server.RoundEnd
                     SourceTime = zero,
                     DestinationTime = zero,
                 };
-                _deviceNetworkSystem.SendPacket(shuttle.Value, null, ref payload, net.Data.TransmitFrequency);
+                _deviceNetworkSystem.SendPacket(shuttle.Value, null, ref payload, net.TransmitFrequency);
             }
         }
 

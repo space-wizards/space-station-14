@@ -34,7 +34,7 @@ public sealed partial class DeviceNetworkSystem
         if (device.Data.AddressId == 0)
             return false;
 
-        frequency ??= device.Data.TransmitFrequency;
+        frequency ??= device.TransmitFrequency;
 
         if (frequency == null)
             return false;
@@ -192,8 +192,8 @@ public sealed partial class DeviceNetworkSystem
         if (!_deviceQuery.Resolve(ent.Owner, ref ent.Comp, false))
             return;
 
-        var oldFrequency = ent.Comp.Data.TransmitFrequency;
-        ent.Comp.Data.TransmitFrequency = frequency;
+        var oldFrequency = ent.Comp.TransmitFrequency;
+        ent.Comp.TransmitFrequency = frequency;
 
         var ev = new DeviceReceiveFrequencyChangedEvent(oldFrequency, frequency);
         RaiseLocalEvent(ent, ref ev);
@@ -230,12 +230,12 @@ public sealed partial class DeviceNetworkSystem
     /// Sets the address of the target device.
     /// </summary>
     [PublicAPI]
-    public void SetAddress(Entity<DeviceNetworkComponent?> ent, int address, LocId? prefix = null)
+    public void SetAddress(Entity<DeviceNetworkComponent?> ent, DeviceAddress address)
     {
         if (!_deviceQuery.Resolve(ent.Owner, ref ent.Comp, false))
             return;
 
-        if (ent.Comp.Data.AddressId == address && ent.Comp.Data.CustomAddress)
+        if (ent.Comp.Data.AddressId == address && ent.Comp.CustomAddress)
             return;
 
         if (!TryEnsureNetwork(ent, out var deviceNet))
@@ -245,16 +245,29 @@ public sealed partial class DeviceNetworkSystem
         var oldPrefix = ent.Comp.Prefix;
 
         RemoveFromNetwork(ent, deviceNet.Value);
-        ent.Comp.Data.CustomAddress = true;
+        ent.Comp.CustomAddress = true;
         ent.Comp.Data.AddressId = address;
         if (prefix != null)
             ent.Comp.Prefix = prefix;
         AddToNetwork(ent, deviceNet.Value);
 
-        var ev = new DeviceAddressChangedEvent(oldAddress, address, oldPrefix, ent.Comp.Prefix, ent.Comp.Data.CustomAddress);
+        var ev = new DeviceAddressChangedEvent(oldAddress, address, oldPrefix, ent.Comp.Prefix, ent.Comp.CustomAddress);
         RaiseLocalEvent(ent, ref ev);
 
-        DirtyFields(ent, null, nameof(DeviceNetworkComponent.Data), nameof(DeviceNetworkComponent.Prefix));
+        DirtyFields(ent, null, nameof(DeviceNetworkComponent.Data), nameof(DeviceNetworkComponent.CustomAddress));
+    }
+
+    /// <summary>
+    /// Sets the address prefix of the target device.
+    /// </summary>
+    [PublicAPI]
+    public void SetAddressPrefix(Entity<DeviceNetworkComponent?> ent, LocId? prefix)
+    {
+        if (!_deviceQuery.Resolve(ent.Owner, ref ent.Comp, false))
+            return;
+
+        ent.Comp.Prefix = prefix;
+        DirtyField(ent, nameof(DeviceNetworkComponent.Prefix));
     }
 
     /// <summary>
@@ -271,14 +284,14 @@ public sealed partial class DeviceNetworkSystem
 
         var oldAddress = ent.Comp.Data.AddressId;
         RemoveFromNetwork(ent, deviceNet.Value);
-        ent.Comp.Data.CustomAddress = false;
+        ent.Comp.CustomAddress = false;
         ent.Comp.Data.AddressId = 0;
         AddToNetwork(ent, deviceNet.Value);
 
-        var ev = new DeviceAddressChangedEvent(oldAddress, ent.Comp.Data.AddressId, ent.Comp.Prefix, ent.Comp.Prefix, ent.Comp.Data.CustomAddress);
+        var ev = new DeviceAddressChangedEvent(oldAddress, ent.Comp.Data.AddressId, ent.Comp.Prefix, ent.Comp.Prefix, ent.Comp.CustomAddress);
         RaiseLocalEvent(ent, ref ev);
 
-        DirtyField(ent, nameof(DeviceNetworkComponent.Data));
+        DirtyFields(ent, null, nameof(DeviceNetworkComponent.Data), nameof(DeviceNetworkComponent.CustomAddress));
     }
 
     /// <summary>
