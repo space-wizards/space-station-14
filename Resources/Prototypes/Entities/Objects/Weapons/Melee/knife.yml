@@ -189,6 +189,35 @@
     storedSprite: null
 
 - type: entity
+  parent: [ CombatKnife, BaseXenoborgContraband ]
+  id: XenoborgBioKnife
+  name: bio knife
+  description: Melds itself to specific metabolizers and will deal extra damage to those targets!
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/bioknife.rsi
+    state: icon
+  - type: MeleeWeapon
+    attackRate: 1.0
+    damage:
+      types:
+        Slash: 10
+  - type: Item
+    sprite: Objects/Weapons/Melee/bioknife.rsi
+    storedSprite: null
+  - type: BonusDamageOnMetabolism
+    selectedMetabolizer: Human
+    excludedMetabolizers:
+    - Vox # Their biology is resistant to this!
+    # The rest of these are just so we don't clog up the menu with useless items.
+    - Bloodsucker
+    - Dragon
+    - Changeling
+    damage:
+      types:
+        Poison: 10
+
+- type: entity
   parent: [ClothingHeadHatGreyFlatcap, BaseMinorContraband]
   id: BladedFlatcapGrey
   name: grey flatcap
