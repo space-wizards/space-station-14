@@ -12,8 +12,6 @@ public sealed partial class ForensicScannerMenu : DefaultWindow
 {
     [Dependency] private IGameTiming _gameTiming = default!;
 
-    private ForensicScannerComponent? _scanner;
-
     public TimeSpan? Zero;
 
     public ForensicScannerMenu()
@@ -26,10 +24,8 @@ public sealed partial class ForensicScannerMenu : DefaultWindow
     {
         base.FrameUpdate(args);
 
-        if (_scanner == null)
+        if (string.IsNullOrEmpty(NameLabel.Text))
             return;
-
-        Zero = _scanner.PrintReadyAt;
 
         Print.Disabled = Zero > _gameTiming.CurTime;
     }
@@ -38,7 +34,6 @@ public sealed partial class ForensicScannerMenu : DefaultWindow
     {
         if (string.IsNullOrEmpty(scanner.LastScannedName))
         {
-            _scanner = null;
             Print.Disabled = true;
             Clear.Disabled = true;
             NameLabel.Text = string.Empty;
@@ -46,7 +41,7 @@ public sealed partial class ForensicScannerMenu : DefaultWindow
             return;
         }
 
-        _scanner = scanner;
+        Zero = scanner.PrintReadyAt;
         Clear.Disabled = false;
 
         NameLabel.Text = scanner.LastScannedName;

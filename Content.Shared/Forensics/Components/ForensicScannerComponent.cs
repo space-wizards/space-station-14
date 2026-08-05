@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Shared.Forensics.Components;
 
 [RegisterComponent, NetworkedComponent]
-[AutoGenerateComponentState(raiseAfterAutoHandleState: true), AutoGenerateComponentPause]
+[AutoGenerateComponentState(raiseAfterAutoHandleState: true, fieldDeltas: true), AutoGenerateComponentPause]
 public sealed partial class ForensicScannerComponent : Component
 {
     /// <summary>
@@ -63,7 +63,7 @@ public sealed partial class ForensicScannerComponent : Component
     /// <summary>
     /// How often can the scanner print out reports?
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public TimeSpan PrintCooldown = TimeSpan.FromSeconds(5);
 
     /// <summary>

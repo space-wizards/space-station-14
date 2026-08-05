@@ -5,7 +5,7 @@ namespace Content.Shared.Forensics.Components;
 /// <summary>
 /// Leaves evidence on entities for <see cref="ForensicScannerComponent"/> to find.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 public sealed partial class ForensicsComponent : Component
 {
     /// <summary>

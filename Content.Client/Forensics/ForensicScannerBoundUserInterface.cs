@@ -5,15 +5,10 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.Forensics;
 
-public sealed partial class ForensicScannerBoundUserInterface : BoundUserInterface
+public sealed partial class ForensicScannerBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [ViewVariables]
     private ForensicScannerMenu? _window;
-
-    [UsedImplicitly]
-    public ForensicScannerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-    }
 
     protected override void Open()
     {

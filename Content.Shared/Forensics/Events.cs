@@ -35,23 +35,17 @@ public sealed partial class CleanForensicsDoAfterEvent : SimpleDoAfterEvent;
 /// Raised on an entity when its DNA has been changed.
 /// </summary>
 [ByRefEvent]
-public record struct GenerateDnaEvent
+public record struct GenerateDnaEvent(EntityUid Owner, string DNA)
 {
     /// <summary>
     /// The entity getting new DNA.
     /// </summary>
-    public EntityUid Owner;
+    public EntityUid Owner = Owner;
 
     /// <summary>
     /// The generated DNA.
     /// </summary>
-    public string DNA;
-
-    public GenerateDnaEvent(EntityUid owner, string dna)
-    {
-        Owner = owner;
-        DNA = dna;
-    }
+    public string DNA = DNA;
 }
 
 /// <summary>

@@ -17,6 +17,9 @@ public sealed partial class ForensicPadComponent : Component
     [AutoNetworkedField]
     public bool Used;
 
+    /// <summary>
+    /// The information acquired from using the forensic pad.
+    /// </summary>
     [AutoNetworkedField]
     public String Sample = string.Empty;
 }

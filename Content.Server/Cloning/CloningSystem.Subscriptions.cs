@@ -96,7 +96,7 @@ public sealed partial class CloningSystem
     private void OnCloneItemForensics(Entity<ForensicsComponent> ent, ref CloningItemEvent args)
     {
         // copy any forensics to the cloned item
-        _forensics.CopyForensicsFrom(ent.Owner, args.CloneUid);
+        _forensics.CopyForensicsFrom(ent.AsNullable(), args.CloneUid);
     }
 
     private void OnCloneItemStore(Entity<StoreComponent> ent, ref CloningItemEvent args)
