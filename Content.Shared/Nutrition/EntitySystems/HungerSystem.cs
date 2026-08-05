@@ -22,9 +22,9 @@ public sealed partial class HungerSystem : EntitySystem
     [Dependency] private MovementSpeedModifierSystem _movementSpeedModifier = default!;
     [Dependency] private SharedJetpackSystem _jetpack = default!;
 
-    private static readonly ProtoId<SatiationIconPrototype> HungerIconOverfedId = "HungerIconOverfed";
-    private static readonly ProtoId<SatiationIconPrototype> HungerIconPeckishId = "HungerIconPeckish";
-    private static readonly ProtoId<SatiationIconPrototype> HungerIconStarvingId = "HungerIconStarving";
+    private static readonly ProtoId<StatusIconPrototype> HungerIconOverfedId = "HungerIconOverfed";
+    private static readonly ProtoId<StatusIconPrototype> HungerIconPeckishId = "HungerIconPeckish";
+    private static readonly ProtoId<StatusIconPrototype> HungerIconStarvingId = "HungerIconStarving";
 
     public override void Initialize()
     {
@@ -229,7 +229,7 @@ public sealed partial class HungerSystem : EntitySystem
         }
     }
 
-    public bool TryGetStatusIconPrototype(HungerComponent component, [NotNullWhen(true)] out SatiationIconPrototype? prototype)
+    public bool TryGetStatusIconPrototype(HungerComponent component, [NotNullWhen(true)] out StatusIconPrototype? prototype)
     {
         switch (component.CurrentThreshold)
         {

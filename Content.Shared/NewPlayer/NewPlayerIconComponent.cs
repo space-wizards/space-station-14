@@ -15,7 +15,7 @@ public sealed partial class NewPlayerIconComponent : Component
     /// The status icon corresponding to the new player icon.
     /// </summary>
     [DataField]
-    public ProtoId<NewPlayerIconPrototype> StatusIcon { get; set; } = "NewPlayerIcon";
+    public ProtoId<StatusIconPrototype> StatusIcon { get; set; } = "NewPlayerIcon";
 
     // We only send these out to ShowNewPlayerIconComponent users, to avoid malicious new player detection.
     /// <inheritdoc />

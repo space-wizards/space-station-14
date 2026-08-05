@@ -11,8 +11,8 @@ public sealed partial class JobStatusSystem : SharedJobStatusSystem
     [Dependency] private ShowJobIconsSystem _showJobIcons = default!;
     [Dependency] private ShowCrewIconsSystem _showCrewIcons = default!;
 
-    private static readonly ProtoId<SecurityIconPrototype> CrewBorderIcon = "CrewBorderIcon";
-    private static readonly ProtoId<SecurityIconPrototype> CrewUncertainBorderIcon = "CrewUncertainBorderIcon";
+    private static readonly ProtoId<StatusIconPrototype> CrewBorderIcon = "CrewBorderIcon";
+    private static readonly ProtoId<StatusIconPrototype> CrewUncertainBorderIcon = "CrewUncertainBorderIcon";
 
     public override void Initialize()
     {

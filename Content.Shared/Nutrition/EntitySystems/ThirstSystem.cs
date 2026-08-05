@@ -21,9 +21,9 @@ public sealed partial class ThirstSystem : EntitySystem
     [Dependency] private MovementSpeedModifierSystem _movement = default!;
     [Dependency] private SharedJetpackSystem _jetpack = default!;
 
-    private static readonly ProtoId<SatiationIconPrototype> ThirstIconOverhydratedId = "ThirstIconOverhydrated";
-    private static readonly ProtoId<SatiationIconPrototype> ThirstIconThirstyId = "ThirstIconThirsty";
-    private static readonly ProtoId<SatiationIconPrototype> ThirstIconParchedId = "ThirstIconParched";
+    private static readonly ProtoId<StatusIconPrototype> ThirstIconOverhydratedId = "ThirstIconOverhydrated";
+    private static readonly ProtoId<StatusIconPrototype> ThirstIconThirstyId = "ThirstIconThirsty";
+    private static readonly ProtoId<StatusIconPrototype> ThirstIconParchedId = "ThirstIconParched";
 
     public override void Initialize()
     {
@@ -119,7 +119,7 @@ public sealed partial class ThirstSystem : EntitySystem
         }
     }
 
-    public bool TryGetStatusIconPrototype(ThirstComponent component, [NotNullWhen(true)] out SatiationIconPrototype? prototype)
+    public bool TryGetStatusIconPrototype(ThirstComponent component, [NotNullWhen(true)] out StatusIconPrototype? prototype)
     {
         switch (component.CurrentThirstThreshold)
         {

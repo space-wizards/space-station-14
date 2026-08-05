@@ -1,5 +1,6 @@
 ﻿using Content.Server.Database;
 using Content.Server.Players.PlayTimeTracking;
+using Content.Server.Players.Whitelist;
 using Content.Shared.CCVar;
 using Content.Shared.NewPlayer;
 using Content.Shared.GameTicking;
@@ -15,7 +16,7 @@ public sealed partial class NewPlayerSystem : EntitySystem
 {
     [Dependency] private IConfigurationManager _config = default!;
     [Dependency] private PlayTimeTrackingManager _playtimeManager = default!;
-    [Dependency] private IServerDbManager _dbManager = default!;
+    [Dependency] private WhitelistManager _whitelistManager = default!;
 
     private TimeSpan _newPlayerTimeTotal;
 
@@ -50,7 +51,7 @@ public sealed partial class NewPlayerSystem : EntitySystem
     [SubscribeLocalEvent]
     private async void OnPlayerSpawnComplete(PlayerSpawnCompleteEvent ev)
     {
-        if (await _dbManager.GetWhitelistStatusAsync(ev.Player.UserId))
+        if (_whitelistManager.IsConnectedWhitelisted(ev.Player))
             EnsureComp<ShowNewPlayerIconComponent>(ev.Mob);
 
         try

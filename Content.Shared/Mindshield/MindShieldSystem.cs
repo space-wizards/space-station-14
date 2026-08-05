@@ -14,7 +14,7 @@ public sealed partial class MindShieldSystem : EntitySystem
     /// <summary>
     /// Status icon displayed in the sec HUD.
     /// </summary>
-    public static ProtoId<SecurityIconPrototype> StatusIcon = "MindShieldIcon";
+    public static ProtoId<StatusIconPrototype> StatusIcon = "MindShieldIcon";
 
     public override void Initialize()
     {
