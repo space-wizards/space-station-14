@@ -343,7 +343,7 @@
     Oxygen:
       amount: 2
   products:
-    Stimulants: 2o9i
+    Stimulants: 2
 
 - type: reaction
   id: StrawberryIce
