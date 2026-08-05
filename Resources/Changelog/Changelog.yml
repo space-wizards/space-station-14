@@ -5676,3 +5676,17 @@
   id: 9952
   time: '2026-08-04T05:29:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44810
+- author: whatston3
+  changes:
+  - message: All grass astro-tiles now need a crowbar to be pried off the floor.
+    type: Tweak
+  id: 9953
+  time: '2026-08-04T21:46:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/45088
+- author: NopeOfAllNopes
+  changes:
+  - message: Impact grenades now explode when hitting a wall, making them usable in zero-G.
+    type: Fix
+  id: 9954
+  time: '2026-08-05T07:29:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/45006
