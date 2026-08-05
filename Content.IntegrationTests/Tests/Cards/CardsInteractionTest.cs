@@ -75,7 +75,7 @@ public sealed class CardsInteractionTest : InteractionTest
         var cardsQuery = SEntMan.EntityQueryEnumerator<CardsComponent>();
         while (cardsQuery.MoveNext(out var uid, out _))
         {
-            SQueueDel(uid);
+            SDeleteNow(uid);
         }
     }
 
@@ -111,7 +111,7 @@ public sealed class CardsInteractionTest : InteractionTest
         var cardsQuery = SEntMan.EntityQueryEnumerator<CardsComponent>();
         while (cardsQuery.MoveNext(out var uid, out _))
         {
-            SQueueDel(uid);
+            SDeleteNow(uid);
         }
     }
 }
