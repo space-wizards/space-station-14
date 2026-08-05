@@ -67,7 +67,7 @@
   id: PoweredLightPostSmallEmpty
   name: post light
   suffix: Empty
-  description: "A small light post."
+  description: "A small light post. Draws power and produces light when equipped with a light tube."
   components:
   - type: Sprite
     sprite: Structures/Lighting/LightPosts/small_light_post.rsi

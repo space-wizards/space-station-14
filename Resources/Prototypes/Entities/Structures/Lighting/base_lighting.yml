@@ -604,6 +604,7 @@
   suffix: Always Powered, Black
   components:
   - type: PointLight
+    energy: 1
     color: "#363636"
 
 - type: entity
