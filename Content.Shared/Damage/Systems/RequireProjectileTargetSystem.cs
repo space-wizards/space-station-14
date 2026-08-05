@@ -1,4 +1,5 @@
 using Content.Shared.Damage.Components;
+using Content.Shared.DeadSpace.Lavaland;
 using Content.Shared.Projectiles;
 using Content.Shared.Standing;
 using Content.Shared.Weapons.Ranged.Components;
@@ -28,6 +29,7 @@ public sealed class RequireProjectileTargetSystem : EntitySystem
 
         var other = args.OtherEntity;
         if (TryComp(other, out ProjectileComponent? projectile) &&
+            !HasComp<LavalandColossusProjectileComponent>(other) &&
             CompOrNull<TargetedProjectileComponent>(other)?.Target != ent)
         {
             // Prevents shooting out of while inside of crates

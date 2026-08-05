@@ -94,10 +94,3 @@ public sealed class LavalandColossusPendingShot
     public TimeSpan FireAt;
     public bool PlaySound;
 }
-
-[RegisterComponent]
-public sealed partial class LavalandColossusProjectileComponent : Component
-{
-    [ViewVariables]
-    public EntityUid Boss;
-}
