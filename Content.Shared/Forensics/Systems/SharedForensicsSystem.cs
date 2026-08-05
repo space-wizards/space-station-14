@@ -306,13 +306,14 @@ public sealed partial class SharedForensicsSystem : EntitySystem
             if (TryComp<FiberComponent>(gloves, out var fiber) && !string.IsNullOrEmpty(fiber.FiberMaterial))
                 component.Fibers.Add(string.IsNullOrEmpty(fiber.FiberColor) ? Loc.GetString("forensic-fibers", ("material", fiber.FiberMaterial)) : Loc.GetString("forensic-fibers-colored", ("color", fiber.FiberColor), ("material", fiber.FiberMaterial)));
 
-            DirtyField(target, component, nameof(ForensicsComponent.Fibers));
+            //DirtyField(target, component, nameof(ForensicsComponent.Fibers));
         }
 
         if (TryComp<FingerprintComponent>(user, out var fingerprint) && CanAccessFingerprint(user, out _))
             component.Fingerprints.Add(fingerprint.Fingerprint ?? "");
 
-        DirtyField(target, component, nameof(ForensicsComponent.Fingerprints));
+        Dirty(target, component);
+        //DirtyField(target, component, nameof(ForensicsComponent.Fingerprints));
     }
 
     #region PublicAPI
