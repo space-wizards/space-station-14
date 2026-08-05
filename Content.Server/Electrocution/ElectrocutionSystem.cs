@@ -251,10 +251,9 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
                     true,
                     electrified.SiemensCoefficient
                 );
-
-                if (lastRet)
-                    electrified.NextShock = _timing.CurTime + electrified.ShockDelay;
             }
+            if (lastRet)
+                electrified.NextShock = _timing.CurTime + electrified.ShockDelay;
             return lastRet;
         }
 
