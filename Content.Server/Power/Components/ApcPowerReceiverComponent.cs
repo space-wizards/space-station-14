@@ -1,62 +1,42 @@
-using Content.Server.Power.NodeGroups;
 using Content.Server.Power.Pow3r;
 using Content.Shared.Power.Components;
 
-namespace Content.Server.Power.Components
+namespace Content.Server.Power.Components;
+
+/// <inheritdoc />
+[RegisterComponent]
+public sealed partial class ApcPowerReceiverComponent : SharedApcPowerReceiverComponent
 {
-    /// <summary>
-    ///     Attempts to link with a nearby <see cref="ApcPowerProviderComponent"/>s
-    ///     so that it can receive power from a <see cref="IApcNet"/>.
-    /// </summary>
-    [RegisterComponent]
-    public sealed partial class ApcPowerReceiverComponent : SharedApcPowerReceiverComponent
+    /// <inheritdoc />
+    public override float Load
     {
-        /// <summary>
-        ///     Amount of charge this needs from an APC per second to function.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("powerLoad")]
-        public float Load { get => NetworkLoad.DesiredPower; set => NetworkLoad.DesiredPower = value; }
-
-        public ApcPowerProviderComponent? Provider = null;
-
-        /// <summary>
-        ///     When false, causes this to appear powered even if not receiving power from an Apc.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public override bool NeedsPower
-        {
-            get => _needsPower;
-            set
-            {
-                _needsPower = value;
-                // Reset this so next tick will do a power update.
-                Recalculate = true;
-            }
-        }
-
-        [DataField("needsPower")]
-        private bool _needsPower = true;
-
-        /// <summary>
-        ///     When true, causes this to never appear powered.
-        /// </summary>
-        [DataField("powerDisabled")]
-        public override bool PowerDisabled
-        {
-            get => !NetworkLoad.Enabled;
-            set => NetworkLoad.Enabled = !value;
-        }
-
-        // TODO Is this needed? It forces a PowerChangedEvent when NeedsPower is toggled even if it changes to the same state.
-        public bool Recalculate;
-
-        [ViewVariables]
-        public PowerState.Load NetworkLoad { get; } = new PowerState.Load
-        {
-            DesiredPower = 5
-        };
-
-        public float PowerReceived => NetworkLoad.ReceivingPower;
+        get => NetworkLoad.DesiredPower;
+        set => NetworkLoad.DesiredPower = value;
     }
+
+    /// <summary>
+    /// The component currently providing this entity with power.
+    /// </summary>
+    public ApcPowerProviderComponent? Provider = null;
+
+    /// <inheritdoc />
+    public override bool PowerDisabled
+    {
+        get => !NetworkLoad.Enabled;
+        set => NetworkLoad.Enabled = !value;
+    }
+
+    /// <summary>
+    /// The load of the network as an object used by Pow3r.
+    /// </summary>
+    [ViewVariables]
+    public PowerState.Load NetworkLoad { get; } = new PowerState.Load
+    {
+        DesiredPower = 5
+    };
+
+    /// <summary>
+    /// The power currently being received, in watts.
+    /// </summary>
+    public float PowerReceived => NetworkLoad.ReceivingPower;
 }

@@ -11,11 +11,13 @@
 /Resources/Prototypes/Maps/** @Emisse @ArtisticRoomba
 /Resources/Maps/** @Emisse @ArtisticRoomba
 
-/Resources/Prototypes/Body/ @DrSmugleaf # suffering
+/Resources/Prototypes/Body/ @DrSmugleaf @sowelipililimute # suffering
 /Resources/Prototypes/Entities/Mobs/Player/ @DrSmugleaf
 /Resources/Prototypes/Entities/Mobs/Species/ @DrSmugleaf
 /Resources/Prototypes/Guidebook/rules.yml @crazybrain23
-/Content.*/Body/ @DrSmugleaf
+/Content.*/Body/ @DrSmugleaf @sowelipililimute
+/Content.*/Humanoid/ @sowelipililimute
+/Content.Client/Lobby/UI/Humanoid* @sowelipililimute
 /Content.YAMLLinter @DrSmugleaf
 /Content.Shared/Damage/ @DrSmugleaf
 
@@ -24,16 +26,16 @@
 
 /Content.*/Forensics/ @ficcialfaint
 
+/Content.*/HeatContainer/ @slarticodefast
+
+/Content.*/Stunnable/ @Princess-Cheeseballs
+/Content.*/Nutrition/ @Princess-Cheeseballs
+/Content.*/EntityEffects @Princess-Cheeseballs @sowelipililimute
+
 # SKREEEE
-/Content.*.Database/ @PJB3005 @DrSmugleaf
-/Content.Shared.Database/Log*.cs @PJB3005 @DrSmugleaf @crazybrain23
-/Pow3r/ @PJB3005
-/Content.Server/Power/Pow3r/ @PJB3005
+/Content.*.Database/ @DrSmugleaf
+/Content.Shared.Database/Log*.cs @DrSmugleaf @crazybrain23
 
+/Content.Server/Discord/ @Simyon264
 
-# Sloth
-/Content.*/Audio @metalgearsloth
-/Content.*/Movement @metalgearsloth
-/Content.*/NPC @metalgearsloth
-/Content.*/Shuttles @metalgearsloth
-/Content.*/Weapons @metalgearsloth
+/Content.*/Atmos/** @ArtisticRoomba

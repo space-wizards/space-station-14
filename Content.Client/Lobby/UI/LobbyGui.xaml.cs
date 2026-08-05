@@ -10,7 +10,7 @@ namespace Content.Client.Lobby.UI
     [GenerateTypedNameReferences]
     public sealed partial class LobbyGui : UIScreen
     {
-        [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
+        [Dependency] private IClientConsoleHost _consoleHost = default!;
 
         public LobbyGui()
         {

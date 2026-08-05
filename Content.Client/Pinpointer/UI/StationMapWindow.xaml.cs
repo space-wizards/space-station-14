@@ -10,7 +10,7 @@ namespace Content.Client.Pinpointer.UI;
 [GenerateTypedNameReferences]
 public sealed partial class StationMapWindow : FancyWindow
 {
-    [Dependency] private readonly IEntityManager _entMan = default!;
+    [Dependency] private IEntityManager _entMan = default!;
 
     private readonly List<StationMapBeaconControl> _buttons = new();
 

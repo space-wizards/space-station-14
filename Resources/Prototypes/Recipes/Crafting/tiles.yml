@@ -1,65 +1,59 @@
-# These should be lathe recipes but lathe code sucks so hard rn so they'll be crafted by hand.
+# TODO: should these be removed, relying on the lathe instead?
 
+# region Base
 - type: construction
+  abstract: true
+  id: BaseTile
+  category: construction-category-tiles
+  objectType: Item
+# endregion Base
+
+# region Tiles
+- type: construction
+  parent: BaseTile
   id: TileSteel
   graph: TileSteel
-  startNode: start
   targetNode: steeltile
-  category: construction-category-tiles
-  objectType: Item
 
 - type: construction
+  parent: BaseTile
   id: TileWood
   graph: TileWood
-  startNode: start
   targetNode: woodtile
-  category: construction-category-tiles
-  objectType: Item
 
 - type: construction
+  parent: BaseTile
   id: TileBrassFilled
   graph: TilesBrass
-  startNode: start
   targetNode: filledPlate
-  category: construction-category-tiles
-  objectType: Item
 
 - type: construction
+  parent: BaseTile
   id: TileBrassReebe
   graph: TilesBrass
-  startNode: start
   targetNode: reebe
-  category: construction-category-tiles
-  objectType: Item
 
 - type: construction
+  parent: BaseTile
   id: TileWhite
   graph: TileWhite
-  startNode: start
   targetNode: whitetile
-  category: construction-category-tiles
-  objectType: Item
 
 - type: construction
+  parent: BaseTile
   id: TileDark
   graph: TileDark
-  startNode: start
   targetNode: darktile
-  category: construction-category-tiles
-  objectType: Item
 
 - type: construction
+  parent: BaseTile
   id: TileFlesh
   graph: TileFlesh
-  startNode: start
   targetNode: fleshTile
-  category: construction-category-tiles
-  objectType: Item
 
 - type: construction
+  parent: BaseTile
   id: TileWoodLarge
   graph: TileWoodLarge
-  startNode: start
   targetNode: woodtilelarge
-  category: construction-category-tiles
-  objectType: Item
+# endregion Tiles

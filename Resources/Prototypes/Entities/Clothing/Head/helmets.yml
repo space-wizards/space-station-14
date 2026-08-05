@@ -27,21 +27,34 @@
         Piercing: 0.9
         Heat: 0.9
 
-#Basic Helmet (Security Helmet)
+#Security Helmet
 - type: entity
-  parent: [ClothingHeadHelmetArmoredBase, BaseSecurityContraband]
+  parent: [ClothingHeadHelmetArmoredBase, BaseFoldable, BaseSecurityContraband]
   id: ClothingHeadHelmetBasic
-  name: helmet
-  description: Standard security gear. Protects the head from impacts.
+  name: security helmet
+  description: Standard security gear. Protects the head from impacts, and comes with a visor which can be lowered to protect the eyes.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/security.rsi
+    layers:
+    - state: icon
+      map: [ "unfoldedLayer" ]
+    - state: icon-visor
+      map: [ "foldedLayer" ]
+      visible: false
   - type: Clothing
     sprite: Clothing/Head/Helmets/security.rsi
   - type: Tag
     tags:
     - WhitelistChameleon
     - SecurityHelmet
+  - type: Foldable
+    canFoldInsideContainer: true
+    unfoldVerbText: fold-raise-visor-verb
+    foldVerbText: fold-lower-visor-verb
+  - type: FoldableClothing
+    foldedEquippedPrefix: visor
+    foldedHeldPrefix: visor
   - type: HideLayerClothing
     layers:
       Hair: HEAD
@@ -191,7 +204,7 @@
 
 #Space Ninja Helmet
 - type: entity
-  parent: [ClothingHeadEVAHelmetBase, BaseMajorContraband]
+  parent: [ClothingHeadEVAHelmetBase, BaseHighlyIllegalContraband]
   id: ClothingHeadHelmetSpaceNinja
   name: space ninja helmet
   description: What may appear to be a simple black garment is in fact a highly sophisticated nano-weave helmet. Standard issue ninja gear.
@@ -221,6 +234,8 @@
     sprite: Clothing/Head/Helmets/templar.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/templar.rsi
+  - type: Item
+    storedRotation: 0
   - type: IngestionBlocker
   - type: IdentityBlocker
   - type: HideLayerClothing
@@ -261,7 +276,7 @@
 
 #Fire Helmet
 - type: entity
-  parent: ClothingHeadLightBase
+  parent: [ClothingHeadLightBase, TemperatureProtection]
   id: ClothingHeadHelmetFire
   name: fire helmet
   description: An atmos tech's best friend. Provides some heat resistance and looks cool.
@@ -272,11 +287,13 @@
     sprite: Clothing/Head/Helmets/firehelmet.rsi
     quickEquip: true
   - type: IngestionBlocker
-  - type: TemperatureProtection
-    heatingCoefficient: 0.01
-    coolingCoefficient: 0.2
   - type: FireProtection
     reduction: 0.15 # not fully sealed so less protection
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellSmall
   - type: IdentityBlocker
   - type: Tag
     tags:
@@ -289,7 +306,7 @@
 
 #Atmos Fire Helmet
 - type: entity
-  parent: [ClothingHeadLightBase, BaseEngineeringContraband]
+  parent: [ClothingHeadLightBase, TemperatureProtection, BaseEngineeringContraband]
   id: ClothingHeadHelmetAtmosFire
   name: atmos fire helmet
   description: An atmos fire helmet, able to keep the user cool in any situation.
@@ -300,9 +317,6 @@
     sprite: Clothing/Head/Helmets/atmos_firehelmet.rsi
     quickEquip: true
   - type: IngestionBlocker
-  - type: TemperatureProtection
-    heatingCoefficient: 0.01
-    coolingCoefficient: 0.2
   - type: FireProtection
     reduction: 0.2
   - type: PressureProtection
@@ -313,7 +327,6 @@
     tags:
     - WhitelistChameleon
     - FireHelmet
-    - CorgiWearable
   - type: HideLayerClothing
     layers:
       Hair: HEAD
@@ -472,7 +485,7 @@
 
 #Justice Helmet
 - type: entity
-  parent: ClothingHeadHelmetBasic
+  parent: [ClothingHeadHelmetArmoredBase, BaseSecurityContraband]
   id: ClothingHeadHelmetJustice
   name: justice helm
   description: Advanced security gear. Protects the station from ne'er-do-wells.
@@ -518,10 +531,10 @@
   - type: PointLight
     enabled: false
     radius: 1.4
-    energy: 1.4
+    energy: 2.5
     color: red
     netsync: false
-    mask: /Textures/Effects/LightMasks/double_cone.png
+    lightMask: ConeDouble
   - type: RotatingLight
     speed: 360
   - type: PowerCellSlot
@@ -543,6 +556,10 @@
   - type: HideLayerClothing
     layers:
       Hair: HEAD
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+    - SecurityHelmet
 
 - type: entity
   parent: ClothingHeadHelmetJustice
@@ -568,3 +585,23 @@
     itemIconStyle: BigItem
   - type: InstantAction
     event: !type:ToggleActionEvent
+
+#card helmet
+- type: entity
+  parent: ClothingHeadHelmetBase
+  id: CardHelmet
+  name: cardboard helmet
+  description: A medieval helmet built from cardboard.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/card_helmet.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/card_helmet.rsi
+  - type: IngestionBlocker
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+  - type: Construction
+    graph: cardHelmet
+    node: cardhelmet

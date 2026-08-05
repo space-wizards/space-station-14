@@ -21,8 +21,6 @@ internal sealed partial class ToolshedVisualizeWindow : DefaultWindow
         RobustXamlLoader.Load(this);
     }
 
-    protected override Vector2 ContentsMinimumSize => new(500, 700);
-
     public void Update((string name, NetEntity entity)[] entities)
     {
         StatusLabel.Text = _loc.GetString("ui-bql-results-status", ("count", entities.Length));

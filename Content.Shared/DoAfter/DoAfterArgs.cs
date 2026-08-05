@@ -85,6 +85,12 @@ public sealed partial class DoAfterArgs
     public bool NeedHand;
 
     /// <summary>
+    /// Whether or not this do after requires your active hand to be empty,
+    /// </summary>
+    [DataField]
+    public bool NeedFreeHand;
+
+    /// <summary>
     ///     Whether we need to keep our active hand as is (i.e. can't change hand or change item). This also covers
     ///     requiring the hand to be free (if applicable). This does nothing if <see cref="NeedHand"/> is false.
     /// </summary>
@@ -122,7 +128,7 @@ public sealed partial class DoAfterArgs
     ///     Threshold for distance user from the used OR target entities.
     /// </summary>
     [DataField]
-    public float? DistanceThreshold;
+    public float? DistanceThreshold = 1.5f;
 
     /// <summary>
     ///     Whether damage will cancel the DoAfter. See also <see cref="DamageThreshold"/>.
@@ -251,6 +257,7 @@ public sealed partial class DoAfterArgs
         EventTarget = other.EventTarget;
         Broadcast = other.Broadcast;
         NeedHand = other.NeedHand;
+        NeedFreeHand = other.NeedFreeHand;
         BreakOnHandChange = other.BreakOnHandChange;
         BreakOnDropItem = other.BreakOnDropItem;
         BreakOnMove = other.BreakOnMove;
@@ -319,6 +326,7 @@ public enum DuplicateConditions : byte
     All = SameTool | SameTarget | SameEvent,
 }
 
+[Serializable, NetSerializable]
 public enum AttemptFrequency : byte
 {
     /// <summary>

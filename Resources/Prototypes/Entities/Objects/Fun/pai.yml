@@ -9,8 +9,8 @@
   - type: Instrument
     allowPercussion: false
     handheld: false
-    bank: 1
     program: 2
+    bank: 100 # Defined in space-station-14.sf2
   - type: UserInterface
     interfaces:
       enum.StoreUiKey.Key:
@@ -58,6 +58,9 @@
     - Common
   - type: DoAfter
   - type: Actions
+  - type: ActionGrant
+    actions:
+    - ActionPAIOpenShop
   - type: Store
     categories:
     - PAIAbilities
@@ -94,8 +97,7 @@
         - SecretStash
         - WrappedParcel
   - type: Vocal
-    sounds:
-      Unsexed: UnisexSilicon
+    emoteSounds: UnisexSilicon
   - type: Tag
     tags:
     - SiliconEmotes
@@ -136,8 +138,7 @@
   - type: StaticPrice
     price: 500
   - type: Vocal
-    sounds:
-      Unsexed: UnisexSiliconSyndicate
+    emoteSounds: UnisexSiliconSyndicate
 
 - type: entity
   parent: PersonalAI
@@ -153,8 +154,6 @@
       shader: unshaded
       map: ["screen"]
   - type: Appearance
-  - type: StaticPrice
-    price: 5000
 
 - type: entity
   parent: PersonalAI
@@ -187,16 +186,13 @@
     graph: PotatoAI
     node: potatoai
 
+# PAI Actions
+
 - type: entity
-  parent: BaseMentalAction
+  parent: ActionIntrinsicStore
   id: ActionPAIOpenShop
   name: Software Catalog
   description: Install new software to assist your owner.
-  components:
-  - type: Action
-    icon: Interface/Actions/shop.png
-  - type: InstantAction
-    event: !type:PAIShopActionEvent
 
 - type: entity
   parent: BaseMentalAction
@@ -205,8 +201,11 @@
   description: View a mass scanner interface.
   components:
   - type: Action
-    icon: { sprite: Interface/Actions/actions_ai.rsi, state: mass_scanner }
     itemIconStyle: NoItem
+  - type: Sprite
+    sprite: Interface/Actions/actions_ai.rsi
+    layers:
+    - state: mass_scanner
   - type: InstantAction
     event: !type:OpenUiActionEvent
       key: enum.RadarConsoleUiKey.Key
@@ -218,8 +217,10 @@
   description: Open your portable MIDI interface to soothe your owner.
   components:
   - type: Action
-    icon: Interface/Actions/pai-midi.png
     itemIconStyle: NoItem
+  - type: Sprite
+    layers:
+    - texture: Interface/Actions/pai-midi.png
   - type: InstantAction
     event: !type:OpenUiActionEvent
       key: enum.InstrumentUiKey.Key
@@ -231,8 +232,11 @@
   description: Open your map interface and guide your owner.
   components:
   - type: Action
-    icon: { sprite: Interface/Actions/pai-map.rsi, state: icon }
     itemIconStyle: NoItem
+  - type: Sprite
+    sprite: Interface/Actions/pai-map.rsi
+    layers:
+    - state: icon
   - type: InstantAction
     event: !type:OpenUiActionEvent
       key: enum.StationMapUiKey.Key

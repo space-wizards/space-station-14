@@ -5,12 +5,20 @@
     - node: start
       edges:
         - to: grilleDiagonal
+          completed:
+            - !type:AdminLog
+              message: "Construction"
+              impact: High
           steps:
             - material: MetalRod
               amount: 2
               doAfter: 1
               
         - to: clockworkGrilleDiagonal
+          completed:
+            - !type:AdminLog
+              message: "Construction"
+              impact: High
           steps:
             - material: MetalRod
               amount: 2
