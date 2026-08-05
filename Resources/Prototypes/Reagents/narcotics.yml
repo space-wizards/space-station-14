@@ -552,37 +552,6 @@
         messages: [ "You feel a need for fizzy pink flavor" ]
         probability: 0.15
 
-- type: reaction
-  id: StrawberryIce
-  impact: Medium
-  minTemp: 370
-  reactants:
-    Desoxyephedrine:
-      amount: 1
-    UnstableMutagen:
-      amount: 1
-    Benzene:
-      amount: 1
-    SodiumPolyacrylate:
-      amount: 1
-    Ice:
-      amount: 1
-  products:
-    StrawberryIce: 4
-
-- type: entity
-  parent: MiniSyringe
-  id: SamukaStrawberryIceMiniSyringe
-  suffix: StrawberryIce
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      injector:
-        maxVol: 5
-        reagents:
-        - ReagentId: StrawberryIce
-          Quantity: 5
-
 - type: reagent
   id: Happiness
   name: reagent-name-happiness
