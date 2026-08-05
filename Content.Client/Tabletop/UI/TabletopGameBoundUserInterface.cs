@@ -13,7 +13,7 @@ public sealed class TabletopGameBoundUserInterface : BoundUserInterface
     private TabletopWindow? _window;
 
     [ViewVariables]
-    private EntityUid? _camera;
+    private bool _upright;
 
     public TabletopGameBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
@@ -24,15 +24,33 @@ public sealed class TabletopGameBoundUserInterface : BoundUserInterface
         base.Open();
 
         _window = this.CreateWindow<TabletopWindow>();
-        if (EntMan.TryGetComponent<TabletopGameComponent>(Owner, out var tabletop))
-        {
-            if (EntMan.TryGetComponent<EyeComponent>(tabletop.UprightCamera, out var eye))
-            {
-                _camera = tabletop.UprightCamera;
-                _window.SetPosition(eye.Eye, tabletop.Size);
-            }
 
-            _window.SetBoard(tabletop.Board);
+        if (!EntMan.TryGetComponent<TabletopGameComponent>(Owner, out var tabletop))
+            return;
+
+        if (EntMan.TryGetComponent<EyeComponent>(tabletop.UprightCamera, out var eye))
+        {
+            _window.SetPosition(eye.Eye, tabletop.Size);
         }
+
+        _window.FlipPressed += FlipCamera;
+        _window.SetBoard(tabletop.Board);
+        _upright = true;
+    }
+
+    private void FlipCamera()
+    {
+        if (_window is null)
+            return;
+
+        if (!EntMan.TryGetComponent<TabletopGameComponent>(Owner, out var tabletop))
+            return;
+
+        var targetCamera = _upright ? tabletop.UpsideDownCamera : tabletop.UprightCamera;
+        if (!EntMan.TryGetComponent<EyeComponent>(targetCamera, out var eye))
+            return;
+
+        _window.SetPosition(eye.Eye, tabletop.Size);
+        _upright = !_upright;
     }
 }
