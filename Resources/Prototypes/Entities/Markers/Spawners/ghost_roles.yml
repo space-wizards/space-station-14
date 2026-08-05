@@ -199,10 +199,7 @@
       settings: default
     makeGhostAlert: true
     ghostAlert: SpaceNinja
-    ghostAlertSound:
-      path: /Audio/Misc/ghost_alert.ogg
-      params:
-        volume: -5
+    ghostAlertSound: *BaseGhostAlertSound
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
