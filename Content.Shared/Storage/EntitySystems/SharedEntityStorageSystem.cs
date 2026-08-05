@@ -343,7 +343,6 @@ public abstract class SharedEntityStorageSystem : EntitySystem
 
         RemComp<InsideEntityStorageComponent>(toRemove);
 
-        // Afterlight
         if (!TryComp(toRemove, out TransformComponent? toRemoveTransform) ||
             !toRemoveTransform.ParentUid.IsValid() ||
             toRemoveTransform.MapUid == null)
