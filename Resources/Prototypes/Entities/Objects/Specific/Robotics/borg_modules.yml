@@ -1576,7 +1576,7 @@
   parent: [ BaseXenoborgModuleEngi, BaseXenoborgContraband ]
   id: XenoborgModuleZap
   name: zap xenoborg module
-  description: Module that disables the grounding of the xenoborg, making them electrified. shocking!
+  description: Module that disables the grounding of the xenoborg, making them electrified. Shocking!
   components:
   - type: Sprite
     layers:
