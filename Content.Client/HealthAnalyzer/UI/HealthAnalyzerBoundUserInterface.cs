@@ -1,6 +1,7 @@
 ﻿using Content.Shared.MedicalScanner;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
+using Content.Shared.DeadSpace.Medical; //DS14
 
 namespace Content.Client.HealthAnalyzer.UI
 {
@@ -21,6 +22,13 @@ namespace Content.Client.HealthAnalyzer.UI
             _window = this.CreateWindow<HealthAnalyzerWindow>();
 
             _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
+
+            // DS14-start
+            _window.OnPrintButtonPressed += () =>
+            {
+                SendMessage(new HealthAnalyzerPrintUiMessage());
+            };
+            // DS14-end
         }
 
         protected override void ReceiveMessage(BoundUserInterfaceMessage message)

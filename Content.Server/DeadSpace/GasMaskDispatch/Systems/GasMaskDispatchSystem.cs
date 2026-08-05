@@ -79,6 +79,8 @@ public sealed class GasMaskDispatchSystem : EntitySystem
         var senderMap = Transform(sender).MapID;
         var notified = new HashSet<EntityUid>();
 
+        var audioParams = sound.Params.WithVolume(-8f);
+
         var query = EntityQueryEnumerator<ActiveRadioComponent, TransformComponent>();
         while (query.MoveNext(out var receiver, out var radio, out var transform))
         {
@@ -88,11 +90,20 @@ public sealed class GasMaskDispatchSystem : EntitySystem
             if (!channel.LongRange && transform.MapID != senderMap)
                 continue;
 
-            if (notified.Add(receiver))
-                _audio.PlayPvs(sound, receiver);
+            var player = receiver;
+            while (player.IsValid() && !HasComp<ActorComponent>(player))
+            {
+                var parent = Transform(player).ParentUid;
+                if (!parent.IsValid() || parent == player)
+                    break;
+                player = parent;
+            }
+
+            if (notified.Add(player))
+                _audio.PlayGlobal(sound, player, audioParams);
         }
 
         if (notified.Add(sender))
-            _audio.PlayPvs(sound, sender);
+            _audio.PlayGlobal(sound, sender, audioParams);
     }
 }

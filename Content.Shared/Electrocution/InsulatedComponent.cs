@@ -19,7 +19,10 @@ namespace Content.Shared.Electrocution
         public bool ShowInExamine = true;
 
         [DataField, AutoNetworkedField]
-        public float LightningProtectionChance = 0.65f;
+        public float LightningProtectionChance = 0f;
+
+        [DataField, AutoNetworkedField]
+        public TimeSpan StunReduction = TimeSpan.FromSeconds(1);
         // DS14-end
     }
 }

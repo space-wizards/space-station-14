@@ -31,6 +31,7 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
     private readonly SpriteSystem _spriteSystem;
     private readonly IPrototypeManager _prototypes;
     private readonly IResourceCache _cache;
+    public Action? OnPrintButtonPressed; //DS14
 
     public HealthAnalyzerControl()
     {
@@ -41,6 +42,7 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
         _spriteSystem = _entityManager.System<SpriteSystem>();
         _prototypes = dependencies.Resolve<IPrototypeManager>();
         _cache = dependencies.Resolve<IResourceCache>();
+        PrintButton.OnPressed += _ => OnPrintButtonPressed?.Invoke(); //DS14
     }
 
     public void Populate(HealthAnalyzerUiState state)

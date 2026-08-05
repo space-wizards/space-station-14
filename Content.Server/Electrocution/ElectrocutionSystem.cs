@@ -45,6 +45,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly MeleeWeaponSystem _meleeWeapon = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!; // DS14
+    [Dependency] private readonly InventorySystem _inventory = default!; // DS14
     [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
     [Dependency] private readonly NodeGroupSystem _nodeGroup = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -414,9 +415,20 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
 
         if (shouldStun)
         {
-            _ = refresh
-                ? _stun.TryUpdateParalyzeDuration(uid, time * ParalyzeTimeMultiplier)
-                : _stun.TryAddParalyzeDuration(uid, time * ParalyzeTimeMultiplier);
+            //DS14-start
+            var stunTime = time * ParalyzeTimeMultiplier;
+
+            if (_inventory.TryGetSlotEntity(uid, "gloves", out var gloves) &&
+                TryComp<InsulatedComponent>(gloves, out var insulated))
+            {
+                stunTime -= insulated.StunReduction;
+            }
+
+            if (stunTime > TimeSpan.Zero)
+            {
+                _ = refresh ? _stun.TryUpdateParalyzeDuration(uid, stunTime) : _stun.TryAddParalyzeDuration(uid, stunTime);
+            }
+            //DS14-end
         }
 
 

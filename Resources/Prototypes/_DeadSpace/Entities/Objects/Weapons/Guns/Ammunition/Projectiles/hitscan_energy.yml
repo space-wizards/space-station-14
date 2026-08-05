@@ -131,8 +131,8 @@
       color: "#ffff33"
   - type: StunOnCollide
     stunAmount: 0
-    knockdownAmount: 2.5
-    drop: false
+    knockdownAmount: 0.1
+    drop: true
     slowdownAmount: 2.5
     walkSpeedModifier: 0.5
     sprintSpeedModifier: 0.5

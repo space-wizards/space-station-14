@@ -1,5 +1,7 @@
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Content.Shared.MedicalScanner; //DS14
+using Content.Shared.FixedPoint; //DS14
 
 namespace Content.Server.Medical.Components;
 
@@ -9,6 +11,16 @@ namespace Content.Server.Medical.Components;
 /// <remarks>
 /// Requires <c>ItemToggleComponent</c>.
 /// </remarks>
+
+//DS14-start
+public record HealthAnalyzerData(
+    string PatientName,
+    Dictionary<string, FixedPoint2>? DamageDict,
+    FixedPoint2 TotalDamage,
+    List<HealthAnalyzerReagentEntry>? Reagents
+);
+//DS14-end
+
 [RegisterComponent, AutoGenerateComponentPause]
 [Access(typeof(HealthAnalyzerSystem), typeof(CryoPodSystem))]
 public sealed partial class HealthAnalyzerComponent : Component
@@ -67,4 +79,22 @@ public sealed partial class HealthAnalyzerComponent : Component
     /// </summary>
     [DataField]
     public bool Silent;
+
+    //DS14-start
+    [DataField]
+    public TimeSpan PrintDelay = TimeSpan.FromSeconds(3);
+
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [AutoPausedField]
+    public TimeSpan NextPrintAllowed = TimeSpan.Zero;
+
+    [DataField("printSound")]
+    public SoundSpecifier PrintSound = new SoundPathSpecifier("/Audio/Machines/printer.ogg");
+
+    public HealthAnalyzerUiState? LastScannedState;
+
+    public string? LastScannedName;
+
+    public HealthAnalyzerData? LastScanData;
+    //DS14-end
 }

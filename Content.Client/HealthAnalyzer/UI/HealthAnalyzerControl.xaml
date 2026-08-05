@@ -59,6 +59,8 @@
         Margin="0 5 0 0"
         Orientation="Vertical">
     </BoxContainer>
+
+    <Button Name="PrintButton" Text="Печать отчета" Margin="0 5 0 0" />
     <!-- DS14-end -->
 
 </BoxContainer>

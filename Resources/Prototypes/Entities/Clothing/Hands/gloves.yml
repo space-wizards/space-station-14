@@ -332,6 +332,7 @@
   - type: Clothing
     sprite: Clothing/Hands/Gloves/combat.rsi
   - type: Insulated
+    stunReduction: 2 #DS14
   - type: Fiber
     fiberMaterial: fibers-insulative
     fiberColor: fibers-black

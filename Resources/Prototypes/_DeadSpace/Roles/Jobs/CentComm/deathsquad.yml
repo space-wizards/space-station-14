@@ -35,6 +35,7 @@
     - CelestinMedipen
     - CelestinMedipen
     - NukeCodePaper
+    - BluespaceHandHeldMassScanner
 
 - type: entity
   parent: ClothingBeltSecurityWebbing

@@ -8,6 +8,11 @@ using Content.Shared.EntityConditions.Conditions;
 using Content.Shared.EntityEffects.Effects.Damage;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
+using Content.Shared.Paper;
+using Content.Shared.Hands.EntitySystems;
+using Content.Shared.DeadSpace.Medical;
+using System.Text;
+using Content.Shared.Damage.Prototypes;
 // DS14-end
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Damage.Components;
@@ -43,7 +48,13 @@ public sealed class HealthAnalyzerSystem : EntitySystem
     [Dependency] private readonly TransformSystem _transformSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!; // DS14
+
+    // DS14-start
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly PaperSystem _paperSystem = default!;
+    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+    // DS14-end
 
     public override void Initialize()
     {
@@ -52,6 +63,7 @@ public sealed class HealthAnalyzerSystem : EntitySystem
         SubscribeLocalEvent<HealthAnalyzerComponent, EntGotInsertedIntoContainerMessage>(OnInsertedIntoContainer);
         SubscribeLocalEvent<HealthAnalyzerComponent, ItemToggledEvent>(OnToggled);
         SubscribeLocalEvent<HealthAnalyzerComponent, DroppedEvent>(OnDropped);
+        SubscribeLocalEvent<HealthAnalyzerComponent, HealthAnalyzerPrintUiMessage>(OnPrint); // DS14
     }
 
     public override void Update(float frameTime)
@@ -63,7 +75,7 @@ public sealed class HealthAnalyzerSystem : EntitySystem
             if (component.NextUpdate > _timing.CurTime)
                 continue;
 
-            if (component.ScannedEntity is not {} patient)
+            if (component.ScannedEntity is not { } patient)
                 continue;
 
             if (Deleted(patient))
@@ -190,7 +202,6 @@ public sealed class HealthAnalyzerSystem : EntitySystem
         UpdateScannedUser(healthAnalyzer, target, false);
     }
 
-
     /// <summary>
     /// If the scanner is active, sends one last update and sets it to inactive.
     /// </summary>
@@ -219,6 +230,27 @@ public sealed class HealthAnalyzerSystem : EntitySystem
 
         var uiState = GetHealthAnalyzerUiState(target);
         uiState.ScanMode = scanMode;
+
+        //DS14-start
+        if (TryComp<HealthAnalyzerComponent>(healthAnalyzer, out var analyzerComp))
+        {
+            Dictionary<string, FixedPoint2>? damageDict = null;
+            FixedPoint2 totalDamage = FixedPoint2.Zero;
+
+            if (TryComp<DamageableComponent>(target, out var damageable))
+            {
+                damageDict = new Dictionary<string, FixedPoint2>(damageable.Damage.DamageDict);
+                totalDamage = damageable.TotalDamage;
+            }
+
+            analyzerComp.LastScanData = new HealthAnalyzerData(
+                Name(target),
+                damageDict,
+                totalDamage,
+                uiState.Reagents
+            );
+        }
+        //DS14-end
 
         _uiSystem.ServerSendUiMessage(
             healthAnalyzer,
@@ -267,15 +299,15 @@ public sealed class HealthAnalyzerSystem : EntitySystem
         // DS14-end
 
         return new HealthAnalyzerUiState(
-            GetNetEntity(entity),
-            bodyTemperature,
-            bloodAmount,
-            null,
-            bleeding,
-            unrevivable,
-            unclonable, // DS14
-            reagents // DS14
-        );
+                    GetNetEntity(entity),
+                    bodyTemperature,
+                    bloodAmount,
+                    null,
+                    bleeding,
+                    unrevivable,
+                    unclonable, // DS14
+                    reagents // DS14
+                );
     }
 
     // DS14-start
@@ -350,5 +382,103 @@ public sealed class HealthAnalyzerSystem : EntitySystem
 
         return false;
     }
-    // DS14-end
+    private void OnPrint(Entity<HealthAnalyzerComponent> entity, ref HealthAnalyzerPrintUiMessage args)
+    {
+        if (_timing.CurTime < entity.Comp.NextPrintAllowed)
+            return;
+
+        if (entity.Comp.LastScanData is not { } data)
+            return;
+
+        entity.Comp.NextPrintAllowed = _timing.CurTime + entity.Comp.PrintDelay;
+
+
+
+        var sb = new StringBuilder();
+        sb.AppendLine($"[bold]Пациент:[/bold] {data.PatientName}");
+        sb.AppendLine($"[bold]Время смены:[/bold] {_timing.CurTime.ToString(@"hh\:mm\:ss")}");
+        sb.AppendLine("-----------------------------------");
+        sb.AppendLine("[bold]Повреждения:[/bold]");
+        sb.AppendLine($"[bold]Общие повреждения:[/bold] [color=darkred]{data.TotalDamage}[/color]");
+        if (data.DamageDict == null || data.DamageDict.Count == 0 || data.TotalDamage == 0)
+        {
+            sb.AppendLine("[color=green]• Повреждений не обнаружено[/color]");
+        }
+        else
+        {
+            var processedTypes = new HashSet<string>();
+
+            foreach (var groupProto in _prototype.EnumeratePrototypes<DamageGroupPrototype>())
+            {
+                FixedPoint2 groupTotal = FixedPoint2.Zero;
+                var subTypes = new List<(string TypeName, FixedPoint2 Amount)>();
+
+                foreach (var typeId in groupProto.DamageTypes)
+                {
+                    var typeIdStr = typeId.ToString();
+
+                    if (data.DamageDict.TryGetValue(typeIdStr, out var amount) && amount > 0)
+                    {
+                        groupTotal += amount;
+
+                        var locTypeKey = $"damage-type-{typeIdStr.ToLowerInvariant()}";
+                        var typeName = Loc.HasString(locTypeKey) ? Loc.GetString(locTypeKey) : typeIdStr;
+
+                        subTypes.Add((typeName, amount));
+                        processedTypes.Add(typeIdStr);
+                    }
+                }
+
+                if (groupTotal > 0)
+                {
+                    var groupIdStr = groupProto.ID.ToString();
+                    var groupLocKey = $"damage-group-{groupIdStr.ToLowerInvariant()}";
+                    var groupName = Loc.HasString(groupLocKey) ? Loc.GetString(groupLocKey) : groupProto.LocalizedName;
+
+                    sb.AppendLine($"[bold]• {groupName}:[/bold] [color=red]{groupTotal}[/color]");
+
+                    foreach (var (typeName, amount) in subTypes)
+                    {
+                        sb.AppendLine($"  - {typeName}: {amount}");
+                    }
+                }
+            }
+
+            foreach (var (type, amount) in data.DamageDict)
+            {
+                if (amount <= 0 || processedTypes.Contains(type))
+                    continue;
+
+                var locKey = $"damage-type-{type.ToLowerInvariant()}";
+                var typeName = Loc.HasString(locKey) ? Loc.GetString(locKey) : type;
+
+                sb.AppendLine($"• {typeName}: [color=red]{amount}[/color]");
+            }
+        }
+
+        if (data.Reagents != null && data.Reagents.Count > 0)
+        {
+            sb.AppendLine("-----------------------------------");
+            sb.AppendLine("[bold]Реагенты в крови:[/bold]");
+            foreach (var entry in data.Reagents)
+            {
+                var reagentName = entry.ReagentId;
+                if (_prototype.TryIndex<ReagentPrototype>(entry.ReagentId, out var reagentProto))
+                {
+                    reagentName = reagentProto.LocalizedName;
+                }
+
+                sb.AppendLine($"• {reagentName}: {entry.Quantity}u");
+            }
+        }
+
+        var paperUid = Spawn("PaperMedicalItem", _transformSystem.GetMapCoordinates(entity.Owner));
+
+        _audio.PlayPvs(entity.Comp.PrintSound, entity);
+
+        _paperSystem.SetContent(paperUid, sb.ToString());
+        _metaData.SetEntityName(paperUid, $"медицинский отчет ({data.PatientName})");
+        _handsSystem.TryPickupAnyHand(args.Actor, paperUid);
+    }
+    //DS14-end
 }

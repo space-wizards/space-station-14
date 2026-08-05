@@ -1267,7 +1267,7 @@
         Blunt: 0.3 #best armor in the game # DS-14
         Slash: 0.3 # DS-14
         Poison: 0.1 # DS14-value: what is poison?
-        Piercing: 0.3 # DS-14
+        Piercing: 0.15 # DS-14
         Heat: 0.1
         Cold: 0.1
         Shock: 0.1
@@ -1292,6 +1292,8 @@
     reflectProb: 0.10
   - type: StaminaResistance
     damageCoefficient: 0.05
+  - type: VirusResistance
+    virusResistanceCoefficient: 0
 # DS14-end
   - type: HardsuitIdentification # DS14
     canEmag: false
