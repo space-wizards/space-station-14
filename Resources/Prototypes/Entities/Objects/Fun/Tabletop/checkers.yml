@@ -10,14 +10,14 @@
   - type: TabletopGame
     boardName: tabletop-checkers-board-name
     size: 338, 274
-    setup: !type:TabletopCheckerSetup
+    setup: !type:TabletopCheckersSetup
       boardPrototype: ChessBoardTabletop
 
 # The pieces
 - type: entity
   parent: BaseTabletopPiece
-  id: CheckerPieceRed
-  name: red checkers piece
+  id: CheckersPieceRed
+  name: red piece
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -29,8 +29,8 @@
 
 - type: entity
   parent: BaseTabletopPiece
-  id: CheckerCrownRed
-  name: red checkers king
+  id: CheckersKingRed
+  name: red king
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -43,8 +43,8 @@
 
 - type: entity
   parent: BaseTabletopPiece
-  id: CheckerPieceBlack
-  name: black checkers piece
+  id: CheckersPieceBlack
+  name: black piece
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -56,8 +56,8 @@
 
 - type: entity
   parent: BaseTabletopPiece
-  id: CheckerCrownBlack
-  name: black checkers king
+  id: CheckersKingBlack
+  name: black king
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite

@@ -11,7 +11,6 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Graphics;
 using Robust.Shared.Input;
-using Robust.Shared.Physics;
 
 namespace Content.Client.Tabletop.UI;
 
@@ -21,8 +20,6 @@ public sealed partial class TabletopWindow : DefaultWindow
     [Dependency] private IEntityManager _entMan = default!;
     [Dependency] private IStateManager _stateMan = default!;
     [Dependency] private IUserInterfaceManager _uiMan = default!;
-    [Dependency] private SharedTransformSystem _transform = default!;
-    [Dependency] private SharedViewSubscriberSystem _viewSubscriber = default!;
 
     // Is the mouse currently inside the window?
     private bool _mouseInWindow;
@@ -93,7 +90,6 @@ public sealed partial class TabletopWindow : DefaultWindow
                 return;
 
             _draggedPiece = uid;
-            _lastDraggedScreenPosition = args.PointerLocation.Position;
         }
         else if (args.Function == EngineKeyFunctions.UIRightClick)
         {

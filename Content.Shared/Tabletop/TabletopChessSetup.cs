@@ -26,7 +26,7 @@ public sealed partial class TabletopChessSetup : TabletopSetup
         SpawnPieces(tabletop, entityManager);
     }
 
-    private void SpawnPieces(TabletopGameComponent tabletop, IEntityManager entityManager, float separation = 1f)
+    private void SpawnPieces(TabletopGameComponent tabletop, EntityManager entityManager, float separation = 1f)
     {
         var x = PieceOffsetX;
         var y = PieceOffsetY;
@@ -45,7 +45,7 @@ public sealed partial class TabletopChessSetup : TabletopSetup
     }
 
     // TODO: refactor to load FEN instead
-    private void SpawnPiecesRow(TabletopGameComponent tabletop, IEntityManager entityManager, string color, Vector2 left, float separation = 1f)
+    private void SpawnPiecesRow(TabletopGameComponent tabletop, EntityManager entityManager, string color, Vector2 left, float separation = 1f)
     {
         const string piecesRow = "rnbqkbnr";
 
@@ -53,7 +53,7 @@ public sealed partial class TabletopChessSetup : TabletopSetup
 
         for (var i = 0; i < 8; i++)
         {
-            var coords = new Vector2(PieceOffsetX + x + i * separation, PieceOffsetY + y);
+            var coords = new Vector2(x + i * separation, y);
             switch (piecesRow[i])
             {
                 case 'r':
@@ -76,7 +76,7 @@ public sealed partial class TabletopChessSetup : TabletopSetup
     }
 
     // TODO: refactor to load FEN instead
-    private void SpawnPawns(TabletopGameComponent tabletop, IEntityManager entityManager, string color, Vector2 left, float separation = 1f)
+    private void SpawnPawns(TabletopGameComponent tabletop, EntityManager entityManager, string color, Vector2 left, float separation = 1f)
     {
         var (x, y) = left;
 

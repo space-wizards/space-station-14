@@ -1,8 +1,7 @@
-using Content.Client.Tabletop.UI;
 using Content.Shared.Tabletop.Components;
 using Robust.Client.UserInterface;
 
-namespace Content.Client.SurveillanceCamera.UI;
+namespace Content.Client.Tabletop.UI;
 
 /// <summary>
 /// A bound UI for tabletop games.

@@ -14,16 +14,16 @@ namespace Content.Shared.Tabletop;
 public sealed partial class TabletopCheckersSetup : TabletopSetup
 {
     [DataField]
-    public EntProtoId PrototypePieceWhite = "CheckerPieceRed";
+    public EntProtoId PrototypePieceRed = "CheckersPieceRed";
 
     [DataField]
-    public EntProtoId PrototypeCrownWhite = "CheckerCrownRed";
+    public EntProtoId PrototypeKingRed = "CheckersKingRed";
 
     [DataField]
-    public EntProtoId PrototypePieceBlack = "CheckerPieceBlack";
+    public EntProtoId PrototypePieceBlack = "CheckersPieceBlack";
 
     [DataField]
-    public EntProtoId PrototypeCrownBlack = "CheckerCrownBlack";
+    public EntProtoId PrototypeKingBlack = "CheckersKingBlack";
 
     // The coordinates of the center of the left bottom corner square.
     public const float PieceOffsetX = -4.5f;
@@ -36,7 +36,7 @@ public sealed partial class TabletopCheckersSetup : TabletopSetup
         SpawnPieces(tabletop, entityManager);
     }
 
-    private void SpawnPieces(TabletopGameComponent tabletop, IEntityManager entityManager)
+    private void SpawnPieces(TabletopGameComponent tabletop, EntityManager entityManager)
     {
         Vector2 left = new(PieceOffsetX, PieceOffsetY);
         // Pieces.
@@ -48,7 +48,7 @@ public sealed partial class TabletopCheckersSetup : TabletopSetup
             for (var offsetX = 0; offsetX < 8 - checker; offsetX += 2)
             {
                 SpawnPiece(PrototypePieceBlack, new(left.X + offsetX + (1 - checker), left.Y - offsetY), tabletop, entityManager);
-                SpawnPiece(PrototypePieceWhite, new(left.X + offsetX + checker, left.Y + offsetY - 7), tabletop, entityManager);
+                SpawnPiece(PrototypePieceRed, new(left.X + offsetX + checker, left.Y + offsetY - 7), tabletop, entityManager);
             }
         }
 
@@ -62,16 +62,16 @@ public sealed partial class TabletopCheckersSetup : TabletopSetup
         for (var i = 0; i < numKings; i++)
         {
             var step = -(overlap * i);
-            SpawnPiece(PrototypeCrownBlack, new(left.X + xOffsetBlack, left.Y + step), tabletop, entityManager);
-            SpawnPiece(PrototypeCrownWhite, new(left.X + xOffsetWhite, left.Y + step), tabletop, entityManager);
+            SpawnPiece(PrototypeKingBlack, new(left.X + xOffsetBlack, left.Y + step), tabletop, entityManager);
+            SpawnPiece(PrototypeKingRed, new(left.X + xOffsetWhite, left.Y + step), tabletop, entityManager);
         }
 
         // Spares.
         for (var i = 0; i < numSpares; i++)
         {
             var step = -(overlap * (numKings + 2) + overlap * i);
-            SpawnPiece(PrototypeCrownBlack, new(left.X + xOffsetBlack, left.Y + step), tabletop, entityManager);
-            SpawnPiece(PrototypeCrownWhite, new(left.X + xOffsetWhite, left.Y + step), tabletop, entityManager);
+            SpawnPiece(PrototypePieceBlack, new(left.X + xOffsetBlack, left.Y + step), tabletop, entityManager);
+            SpawnPiece(PrototypePieceRed, new(left.X + xOffsetWhite, left.Y + step), tabletop, entityManager);
         }
     }
 }

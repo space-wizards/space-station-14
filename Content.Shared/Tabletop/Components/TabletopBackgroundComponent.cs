@@ -8,6 +8,4 @@ namespace Content.Shared.Tabletop.Components;
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedTabletopSystem))]
-public sealed partial class TabletopBackgroundComponent : Component
-{
-}
+public sealed partial class TabletopBackgroundComponent : Component;

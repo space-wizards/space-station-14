@@ -81,11 +81,15 @@ public abstract partial class SharedTabletopSystem
         EnsureBoard(ent);
 
         // Close the session of the other window we have open.
-        if (GamerQuery.TryComp(playerUid, out TabletopGamerComponent? gamer))
-            UI.CloseUi(gamer.Tabletop, TabletopGameUiKey.Key, playerUid, true);
+        if (GamerQuery.TryComp(playerUid, out TabletopGamerComponent? gamer)
+            && gamer.Tabletop != ent.Owner)
+        {
+            UI.CloseUi(gamer.Tabletop, TabletopGameUiKey.Key, playerUid);
+        }
 
         // Set the entity as an ABSOLUTE GAMER.
         EnsureComp<TabletopGamerComponent>(playerUid).Tabletop = ent;
+        _viewSubscriber.AddViewSubscriber(ent.Comp.Board!.Value, player);
     }
 
     /// <summary>
@@ -107,7 +111,8 @@ public abstract partial class SharedTabletopSystem
             gamer.Tabletop = EntityUid.Invalid;
 
             // You stop being a gamer.......
-            RemComp<TabletopGamerComponent>(attachedEntity);
+            RemCompDeferred<TabletopGamerComponent>(attachedEntity);
         }
+        _viewSubscriber.RemoveViewSubscriber(ent.Comp.Board!.Value, player);
     }
 }

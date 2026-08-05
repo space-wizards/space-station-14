@@ -158,8 +158,8 @@ public sealed partial class AdminVerbSystem
                     Filter.PvsExcept(args.Target), true, PopupType.MediumCaution);
                 var board = Spawn("ChessBoard", xform.Coordinates);
                 var tabletopGame = Comp<TabletopGameComponent>(board);
-                _tabletopSystem.EnsureSession((board, tabletopGame));
-                _transformSystem.SetMapCoordinates(args.Target, tabletopGame.Position!.Value);
+                _tabletopSystem.EnsureBoard((board, tabletopGame));
+                _transformSystem.SetParent(args.Target, tabletopGame.Board!.Value);
                 _transformSystem.SetWorldRotationNoLerp((args.Target, xform), Angle.Zero);
             },
             Impact = LogImpact.Extreme,

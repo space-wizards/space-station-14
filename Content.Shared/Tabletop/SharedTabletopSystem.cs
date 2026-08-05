@@ -38,6 +38,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
     [Dependency] protected SharedPopupSystem Popup = default!;
     [Dependency] protected SharedTransformSystem Xform = default!;
     [Dependency] protected SharedUserInterfaceSystem UI = default!;
+    [Dependency] private SharedViewSubscriberSystem _viewSubscriber = default!;
 
     [Dependency] private EntityQuery<AppearanceComponent> _appearanceQuery;
     [Dependency] protected EntityQuery<ActorComponent> ActorQuery;
@@ -88,7 +89,17 @@ public abstract partial class SharedTabletopSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnGameShutdown(Entity<TabletopGameComponent> ent, ref ComponentShutdown args)
+    private void OnTabletopBoundUIClosed(Entity<TabletopGameComponent> ent, ref BoundUIClosedEvent args)
+    {
+        // Check that a player is attached to the entity.
+        if (!ActorQuery.TryComp(args.Actor, out ActorComponent? actor))
+            return;
+
+        CloseSessionFor(actor.PlayerSession, ent.Owner);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnGameRemove(Entity<TabletopGameComponent> ent, ref ComponentRemove args)
     {
         TeardownBoard(ent.Owner);
     }
@@ -232,12 +243,6 @@ public abstract partial class SharedTabletopSystem : EntitySystem
 
         if (ent.Comp.Tabletop.IsValid())
             CloseSessionFor(actor.PlayerSession, ent.Comp.Tabletop);
-    }
-
-    [EventSubscription]
-    private void OnStopPlaying(TabletopStopPlayingEvent msg, EntitySessionEventArgs args)
-    {
-        CloseSessionFor(args.SenderSession, GetEntity(msg.TableUid));
     }
     #endregion Event Handlers
 
