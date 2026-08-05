@@ -1,3 +1,5 @@
+#todo these need a common parent
+
 - type: entity
   parent: [ BaseWallmountMetallic, StructureHealthMachineFlimsy ]
   id: SignalSwitch

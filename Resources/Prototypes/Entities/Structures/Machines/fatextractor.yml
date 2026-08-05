@@ -89,6 +89,7 @@
   - type: WiresVisuals
   - type: Speech
     speechVerb: Robotic
+  - type: Appearance
   - type: Vocalizer
     hideChat: true
   - type: VocalizerRequiresPower

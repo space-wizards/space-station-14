@@ -86,7 +86,8 @@
     delay: 1
   - type: Destructible
     thresholds:
-    - trigger: !type:DamageTrigger
+    - trigger:
+        !type:DamageTrigger
         damage: 175
       behaviors:
       - !type:PlaySoundBehavior

@@ -23,7 +23,8 @@
   description: It's a window and a sliding door. Huh? Oh, and it's green!
 
 # TODO remove these with parameterized prototypes/whatever we end up doing
-# Windoors (alphabetical)
+# Please sort these alphabetically
+#region Windoor (Normal)
 
 - type: entity
   parent: Windoor
@@ -211,6 +212,15 @@
     layoutId: AirlockMedical
 
 - type: entity
+  parent: Windoor
+  id: WindoorNukeopLocked
+  suffix: Nukeop, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsNukeop ]
+
+- type: entity
   parent: WindoorCommandLocked
   id: WindoorResearchDirectorLocked
   suffix: ResearchDirector, Locked
@@ -271,6 +281,15 @@
     layoutId: AirlockService
 
 - type: entity
+  parent: Windoor
+  id: WindoorSyndicateLocked
+  suffix: Syndicate, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsSyndicateAgent ]
+
+- type: entity
   parent: WindoorServiceLocked
   id: WindoorTheatreLocked
   suffix: Theatre, Locked
@@ -279,7 +298,8 @@
     containers:
       board: [ DoorElectronicsTheatre ]
 
-# Plasma
+#endregion
+#region Windoor (Plasma)
 
 - type: entity
   parent: WindoorPlasma
@@ -358,14 +378,12 @@
 
 - type: entity
   parent: WindoorPlasma
-  id: PlasmaWindoorSecurityLocked
-  suffix: Security, Locked, Plasma
+  id: PlasmaWindoorNukeopLocked
+  suffix: Nukeop, Locked, Plasma
   components:
   - type: ContainerFill
     containers:
-      board: [ DoorElectronicsSecurity ]
-  - type: Wires
-    layoutId: AirlockSecurity
+      board: [ DoorElectronicsNukeop ]
 
 - type: entity
   parent: WindoorPlasma
@@ -378,7 +396,28 @@
   - type: Wires
     layoutId: AirlockScience
 
-# Uranium
+- type: entity
+  parent: WindoorPlasma
+  id: PlasmaWindoorSecurityLocked
+  suffix: Security, Locked, Plasma
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsSecurity ]
+  - type: Wires
+    layoutId: AirlockSecurity
+
+- type: entity
+  parent: WindoorPlasma
+  id: PlasmaWindoorSyndicateLocked
+  suffix: Syndicate, Locked, Plasma
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsSyndicateAgent ]
+
+#endregion
+#region Windoor (Uranium)
 
 - type: entity
   parent: WindoorUranium
@@ -404,25 +443,14 @@
   - type: Wires
     layoutId: AirlockEngineering
 
-# Syndicate
-
 - type: entity
-  parent: Windoor
-  id: WindoorSyndicateLocked
-  suffix: Syndicate, Locked
+  parent: WindoorUranium
+  id: UraniumWindoorNukeopLocked
+  suffix: Nukeop, Locked, Uranium
   components:
   - type: ContainerFill
     containers:
-      board: [ DoorElectronicsSyndicateAgent ]
-
-- type: entity
-  parent: WindoorPlasma
-  id: PlasmaWindoorSyndicateLocked
-  suffix: Syndicate, Locked, Plasma
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsSyndicateAgent ]
+      board: [ DoorElectronicsNukeop ]
 
 - type: entity
   parent: WindoorUranium
@@ -433,29 +461,4 @@
     containers:
       board: [ DoorElectronicsSyndicateAgent ]
 
-- type: entity
-  parent: Windoor
-  id: WindoorNukeopLocked
-  suffix: Nukeop, Locked
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsNukeop ]
-
-- type: entity
-  parent: WindoorPlasma
-  id: PlasmaWindoorNukeopLocked
-  suffix: Nukeop, Locked, Plasma
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsNukeop ]
-
-- type: entity
-  parent: WindoorUranium
-  id: UraniumWindoorNukeopLocked
-  suffix: Nukeop, Locked, Uranium
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsNukeop ]
+#endregion

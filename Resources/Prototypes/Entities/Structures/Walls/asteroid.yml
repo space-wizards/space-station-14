@@ -4,6 +4,7 @@
 # See WallRock variants for the remappings.
 
 - type: entity
+  abstract: true
   parent: BaseWall
   id: BaseAsteroidRock
   name: asteroid rock

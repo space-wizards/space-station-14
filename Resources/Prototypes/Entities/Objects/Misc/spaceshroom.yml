@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ BaseStructure, StructureHealthFurnitureStrong ]
+  parent: [ BaseStructure, StructureHealthFurniture ]
   id: Spaceshroom
   name: spaceshroom
   suffix: Structure
@@ -35,12 +35,13 @@
       thresholds:
       - trigger:
           !type:DamageTrigger
-          damage: 80
+          damage: 40
         behaviors:
         - !type:PlaySoundBehavior
           sound:
             path: /Audio/Effects/tree_fell.ogg
             params:
+              volume: -5
               variation: 0.05
         - !type:SpawnEntitiesBehavior
           spawn:

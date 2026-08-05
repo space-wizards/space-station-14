@@ -194,8 +194,8 @@
 #Plasma Windoors
 - type: entity
   abstract: true
-  id: BasePlasmaWindoor
   parent: [BaseDeltaPressurePlasmaQuarter, BaseWindoorGeneric]
+  id: BasePlasmaWindoor
   components:
   - type: Sprite
     sprite: Structures/Doors/Windoors/plasma.rsi

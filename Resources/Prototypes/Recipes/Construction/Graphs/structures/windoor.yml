@@ -419,8 +419,7 @@
         doAfter: 4
 
   #endregion
-
-#Security Panels
+  #region Security Panels
   - node: medSecurityUnfinished
     actions:
     - !type:SetWiresPanelSecurity
@@ -485,3 +484,5 @@
       steps:
       - tool: Welding
         doAfter: 10
+
+  #endregion

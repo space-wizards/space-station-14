@@ -116,11 +116,9 @@
         !type:DamageTrigger
         damage: 175
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Breakage"]
       - !type:PlaySoundBehavior
         sound:
-          collection: MetalBreak
+          collection: MetalCrunch
   - type: InteractionPopup
     successChance: 1.0
     interactSuccessString: petting-success-recycler

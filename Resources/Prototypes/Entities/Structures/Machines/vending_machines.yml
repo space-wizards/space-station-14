@@ -1,11 +1,11 @@
 ﻿# base
 
 - type: entity
-  id: BaseVendingMachine
+  abstract: true
   parent: [ BaseMachinePowered, BaseMachineDestructible ]
+  id: BaseVendingMachine
   name: vending machine
   description: Just add capitalism!
-  abstract: true
   components:
   - type: ActionGrant
     actions:

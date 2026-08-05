@@ -168,7 +168,7 @@
     damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
-    - trigger: &DamageMachineWeak
+    - trigger: &DamageMachineFlimsy
         !type:DamageTrigger
         damage: 50
       behaviors:
@@ -197,7 +197,7 @@
     damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
-    - trigger: *DamageMachineWeak
+    - trigger: *DamageMachineFlimsy
       behaviors:
       - *SoundGlassBreak
       - *ChangeNodeAssembly
@@ -223,7 +223,7 @@
     damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
-    - trigger: *DamageMachineWeak
+    - trigger: *DamageMachineFlimsy
       behaviors:
       - *SoundGlassBreak
       - *ChangeNodeAssembly
@@ -237,7 +237,7 @@
     node: solarpaneluranium_broken
 
 - type: entity
-  parent: StructureHealthMachineWeak
+  parent: StructureHealthMachineFlimsy
   id: SolarAssembly
   name: solar assembly
   description: A solar assembly. Anchor to a wire to start building a solar panel.
@@ -269,7 +269,7 @@
     damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
-    - trigger: *DamageMachineWeak
+    - trigger: *DamageMachineFlimsy
       behaviors:
       - !type:PlaySoundBehavior
         sound:

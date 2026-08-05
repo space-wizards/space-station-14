@@ -427,7 +427,8 @@
     - id: ShardCrystalGreen
 
 #endregion
-#region also bulbs
+#region crystal bulbs
+#todo move these to the bulbs region
 
 - type: entity
   parent: BaseLightbulb
