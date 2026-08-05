@@ -3,7 +3,6 @@ using Content.Shared.DeviceNetwork.Components.Networks;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Examine;
 using Robust.Shared.GameStates;
-using Robust.Shared.Map.Events;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -81,18 +80,6 @@ public sealed partial class DeviceNetworkSystem : EntitySystem
     private void OnManagerInit(Entity<DeviceNetworkManagerComponent> ent, ref ComponentInit args)
     {
         _pvs.AddGlobalOverride(ent.Owner);
-    }
-
-    [SubscribeLocalEvent]
-    private void OnBeforeSave(BeforeSerializationEvent ev)
-    {
-        // Device network managers are reconstructable on map-init,
-        // so saving them will just bloat the save file.
-        var query = AllEntityQuery<DeviceNetworkManagerComponent>();
-        while (query.MoveNext(out var uid, out _))
-        {
-            Del(uid);
-        }
     }
 
     private void SendPacket<T>(ref DeviceNetworkPacketEvent<T> packet) where T : INetworkPayload
