@@ -55,7 +55,7 @@ public sealed partial class NukeSystem : EntitySystem
     /// <summary>
     /// Gives all the ghosts this alert when the nuclear bomb was armed
     /// </summary>
-    private static ProtoId<AlertPrototype> _nukeGhostAlert = "NukeArm";
+    private static readonly ProtoId<AlertPrototype> _nukeGhostAlert = "NukeArm";
 
     /// <summary>
     ///     Used to calculate when the nuke song should start playing for maximum kino with the nuke sfx
