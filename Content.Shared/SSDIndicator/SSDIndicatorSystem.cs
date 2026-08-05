@@ -81,8 +81,7 @@ public sealed partial class SSDIndicatorSystem : EntitySystem
         if (!TryComp<SSDIndicatorComponent>(uid, out var ssdComp))
             return;
 
-        ssdComp.IsSSD = false;
-        Dirty(uid, component);
+        HandleNpc(uid, ssdComp);
     }
 
     private bool HandleNpc(EntityUid uid, SSDIndicatorComponent component)
