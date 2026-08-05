@@ -409,7 +409,7 @@
 
 - type: xenoArchTrigger
   id: TriggerEmoteDistress
-  tip: xenoarch-trigger-distress
+  tip: xenoarch-trigger-tip-distress
   components:
   - type: XATEmote #no deathgasp to avoid mixing with death trigger
     emotes:
@@ -420,7 +420,7 @@
 
 - type: xenoArchTrigger
   id: TriggerEmoteHumor
-  tip: xenoarch-trigger-humor
+  tip: xenoarch-trigger-tip-humor
   components:
   - type: XATEmote
     emotes:
