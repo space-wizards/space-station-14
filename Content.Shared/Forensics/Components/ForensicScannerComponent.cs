@@ -63,7 +63,7 @@ public sealed partial class ForensicScannerComponent : Component
     /// <summary>
     /// How often can the scanner print out reports?
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public TimeSpan PrintCooldown = TimeSpan.FromSeconds(5);
 
     /// <summary>
