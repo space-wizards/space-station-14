@@ -27,7 +27,10 @@ public sealed class CriticalHearingSystem : EntitySystem
                 return;
             }
 
-            var parent = Transform(listener).ParentUid;
+            if (!TryComp<TransformComponent>(listener, out var transform))
+                return;
+
+            var parent = transform.ParentUid;
             if (parent == listener)
                 return;
 
