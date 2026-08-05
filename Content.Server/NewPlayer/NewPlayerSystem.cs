@@ -49,7 +49,7 @@ public sealed partial class NewPlayerSystem : EntitySystem
 
     // Async because it needs to run GetWhitelistStatusAsync. Seems to work!
     [SubscribeLocalEvent]
-    private async void OnPlayerSpawnComplete(PlayerSpawnCompleteEvent ev)
+    private void OnPlayerSpawnComplete(PlayerSpawnCompleteEvent ev)
     {
         if (_whitelistManager.IsConnectedWhitelisted(ev.Player))
             EnsureComp<ShowNewPlayerIconComponent>(ev.Mob);
