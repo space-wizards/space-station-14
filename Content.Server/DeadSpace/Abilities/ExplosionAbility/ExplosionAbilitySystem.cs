@@ -41,14 +41,13 @@ public sealed class ExplosionAbilitySystem : EntitySystem
         _explosion.QueueExplosion(uid, comp.TypeId, comp.TotalIntensity, 1f, comp.MaxTileIntensity, 1f, int.MaxValue, true, null, true);
 
         comp.Explosions++;
+        args.Handled = true;
 
         if (comp.NumberExplosions == 0)
             return;
 
         if (comp.NumberExplosions <= comp.Explosions)
             _actionsSystem.RemoveAction(uid, comp.ExplosionAbilityActionEntity);
-
-        args.Handled = true;
     }
 
 

@@ -138,6 +138,7 @@
     knownLanguages:
     - NecromorfLanguage
   - type: ExplosionAbility
+    explosionAbilityAction: ActionNecroBoomerExplosion
     totalIntensity: 50
     maxTileIntensity: 5
   - type: Vocal

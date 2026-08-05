@@ -452,5 +452,5 @@
     - id: DiamondOre1
       amount: 1
       maxAmount: 3
-    - id: PKAUpgradeFireRateUp #DS14
+    - id: PKAUpgradeExplosiveLavaland #DS14
       prob: 0.01

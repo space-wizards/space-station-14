@@ -793,7 +793,7 @@
   - type: ExplosivePkaUpgrade
     radius: 2.5
     maxRange: 8
-    explosionIntensity: 3
+    explosionIntensity: 27.23 # Visual explosion radius: 3 tiles
     explosionSlope: 1
     explosionMaxIntensity: 2
     bulletDamage:

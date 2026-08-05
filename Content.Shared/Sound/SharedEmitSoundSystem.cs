@@ -5,7 +5,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Maps;
 using Content.Shared.Mobs;
 using Content.Shared.Popups;
-using Content.Shared.DeadSpace.Sound.Components;
+using Content.Shared.DeadSpace.Sound.Systems;
 using Content.Shared.Sound.Components;
 using Content.Shared.Throwing;
 using Content.Shared.UserInterface;
@@ -34,6 +34,7 @@ public abstract class SharedEmitSoundSystem : EntitySystem
     [Dependency] protected readonly IRobustRandom Random = default!;
     [Dependency] private   readonly SharedAmbientSoundSystem _ambient = default!;
     [Dependency] private   readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly AdjustableAudioSystem _adjustableAudio = default!; // DS14
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
@@ -190,24 +191,7 @@ public abstract class SharedEmitSoundSystem : EntitySystem
     // DS14-start
     private void MarkItemSoundAudio((EntityUid Entity, AudioComponent Component)? audio)
     {
-        if (audio == null)
-            return;
-
-        var (audioUid, audioComponent) = audio.Value;
-        if (!TryComp<ItemSoundAudioComponent>(audioUid, out var itemSound))
-        {
-            itemSound = new ItemSoundAudioComponent
-            {
-                BaseVolume = audioComponent.Params.Volume,
-            };
-            AddComp(audioUid, itemSound);
-        }
-        else
-        {
-            itemSound.BaseVolume = audioComponent.Params.Volume;
-        }
-
-        Dirty(audioUid, itemSound);
+        _adjustableAudio.Mark(audio);
     }
     // DS14-end
 

@@ -159,7 +159,7 @@ public sealed class ContinuousFlamethrowerSystem : EntitySystem
             _lights.SetRadius(entity, 2.35f, light);
             _lights.SetEnergy(entity, 3.2f, light);
             _lights.SetSoftness(entity, 0.85f, light);
-            _lights.SetCastShadows(entity, false, light);
+            _lights.SetCastShadows(entity, true, light);
             _lights.SetEnabled(entity, true, light);
             _flameLights.Add(new FlameLight(entity));
         }

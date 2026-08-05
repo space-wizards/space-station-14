@@ -5,6 +5,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.Doors.Components;
+using Content.Shared.DeadSpace.Sound.Systems;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Physics;
@@ -38,6 +39,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
     [Dependency] private readonly SharedStunSystem _stunSystem = default!;
     [Dependency] protected readonly TagSystem Tags = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
+    [Dependency] protected readonly AdjustableAudioSystem AdjustableAudio = default!; // DS14
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] protected readonly SharedAppearanceSystem AppearanceSystem = default!;
     [Dependency] private readonly OccluderSystem _occluder = default!;
@@ -284,9 +286,9 @@ public abstract partial class SharedDoorSystem : EntitySystem
             return;
 
         if (predicted)
-            Audio.PlayPredicted(door.DenySound, uid, user, AudioParams.Default.WithVolume(-3));
+            AdjustableAudio.Mark(Audio.PlayPredicted(door.DenySound, uid, user, AudioParams.Default.WithVolume(-3)));
         else if (_net.IsServer)
-            Audio.PlayPvs(door.DenySound, uid, AudioParams.Default.WithVolume(-3));
+            AdjustableAudio.Mark(Audio.PlayPvs(door.DenySound, uid, AudioParams.Default.WithVolume(-3)));
     }
 
     public bool TryToggleDoor(EntityUid uid, DoorComponent? door = null, EntityUid? user = null, bool predicted = false)
@@ -364,9 +366,9 @@ public abstract partial class SharedDoorSystem : EntitySystem
             return;
 
         if (predicted)
-            Audio.PlayPredicted(door.OpenSound, uid, user, AudioParams.Default.WithVolume(-5));
+            AdjustableAudio.Mark(Audio.PlayPredicted(door.OpenSound, uid, user, AudioParams.Default.WithVolume(-5)));
         else if (_net.IsServer)
-            Audio.PlayPvs(door.OpenSound, uid, AudioParams.Default.WithVolume(-5));
+            AdjustableAudio.Mark(Audio.PlayPvs(door.OpenSound, uid, AudioParams.Default.WithVolume(-5)));
 
         if (lastState == DoorState.Emagging && TryComp<DoorBoltComponent>(uid, out var doorBoltComponent))
             SetBoltsDown((uid, doorBoltComponent), true, user, true);
@@ -457,9 +459,9 @@ public abstract partial class SharedDoorSystem : EntitySystem
             return;
 
         if (predicted)
-            Audio.PlayPredicted(door.CloseSound, uid, user, AudioParams.Default.WithVolume(-5));
+            AdjustableAudio.Mark(Audio.PlayPredicted(door.CloseSound, uid, user, AudioParams.Default.WithVolume(-5)));
         else if (_net.IsServer)
-            Audio.PlayPvs(door.CloseSound, uid, AudioParams.Default.WithVolume(-5));
+            AdjustableAudio.Mark(Audio.PlayPvs(door.CloseSound, uid, AudioParams.Default.WithVolume(-5)));
     }
 
     /// <summary>

@@ -468,7 +468,7 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
     layers:
-    - state: omnilaser
+    - state: heavylaser #DS14
       shader: unshaded
   - type: Ammo
     muzzleFlash: MuzzleFlashEffectOmnilaser
@@ -589,7 +589,8 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
     layers:
-    - state: ice
+    - state: omnilaser_greyscale
+      color: "#ff2020"
       shader: unshaded
   - type: Ammo
     muzzleFlash: null

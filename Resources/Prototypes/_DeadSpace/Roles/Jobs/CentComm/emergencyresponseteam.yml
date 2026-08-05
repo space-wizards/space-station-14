@@ -11,13 +11,15 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 36000 # 10 hours
+      time: 144000 # 40 hours
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 72000 # 20 hours
+      time: 288000 # 80 hours
     - !type:DepartmentTimeRequirement
       department: Command
-      time: 36000 # 10 hours
+      time: 144000 # 40 hours
+    - !type:OverallPlaytimeRequirement
+      time: 3096000 # 860 hours
   startingGear: ERTLeaderGearAmber
   icon: "JobIconERTLeader"
   supervisors: job-supervisors-centcom
@@ -77,13 +79,15 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 36000 # 10 hours
+      time: 144000 # 40 hours
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 72000 # 20 hours
+      time: 288000 # 80 hours
     - !type:DepartmentTimeRequirement
       department: Command
-      time: 36000 # 10 hours
+      time: 144000 # 40 hours
+    - !type:OverallPlaytimeRequirement
+      time: 3096000 # 860 hours
   startingGear: ERTLeaderGearRed
   icon: "JobIconERTLeader"
   supervisors: job-supervisors-centcom
@@ -142,13 +146,15 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 36000 # 10 hours
+      time: 144000 # 40 hours
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 72000 # 20 hours
+      time: 288000 # 80 hours
     - !type:DepartmentTimeRequirement
       department: Command
-      time: 36000 # 10 hours
+      time: 144000 # 40 hours
+    - !type:OverallPlaytimeRequirement
+      time: 3096000 # 860 hours
   startingGear: ERTLeaderGearGamma
   icon: "JobIconERTLeader"
   supervisors: job-supervisors-centcom
@@ -208,10 +214,12 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 14400 # 4 hours
+      time: 57600 # 16 hours
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 72000 # 20 hours
+      time: 288000 # 80 hours
+    - !type:OverallPlaytimeRequirement
+      time: 3096000 # 860 hours
   startingGear: ERTSecurityGearAmber
   icon: "JobIconERT"
   supervisors: job-supervisors-centcom
@@ -272,10 +280,12 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 14400 # 4 hours
+      time: 57600 # 16 hours
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 72000 # 20 hours
+      time: 288000 # 80 hours
+    - !type:OverallPlaytimeRequirement
+      time: 3096000 # 860 hours
   startingGear: ERTSecurityGearRed
   icon: "JobIconERT"
   supervisors: job-supervisors-centcom
@@ -331,10 +341,12 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 14400 # 4 hours
+      time: 57600 # 16 hours
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 72000 # 20 hours
+      time: 288000 # 80 hours
+    - !type:OverallPlaytimeRequirement
+      time: 3096000 # 860 hours
   startingGear: ERTSecurityGearGamma
   icon: "JobIconERT"
   supervisors: job-supervisors-centcom
@@ -391,10 +403,12 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 36000 # 10 hours
+      time: 144000 # 40 hours
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 36000 # 10 hours
+      time: 144000 # 40 hours
+    - !type:OverallPlaytimeRequirement
+      time: 3096000 # 860 hours
   startingGear: ERTMedicalGearAmber
   icon: "JobIconERTMedical"
   supervisors: job-supervisors-centcom
@@ -457,10 +471,12 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 36000 # 10 hours
+      time: 144000 # 40 hours
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 36000 # 10 hours
+      time: 144000 # 40 hours
+    - !type:OverallPlaytimeRequirement
+      time: 3096000 # 860 hours
   startingGear: ERTMedicalGearRed
   icon: "JobIconERTMedical"
   supervisors: job-supervisors-centcom
@@ -521,10 +537,12 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 36000 # 10 hours
+      time: 144000 # 40 hours
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 36000 # 10 hours
+      time: 144000 # 40 hours
+    - !type:OverallPlaytimeRequirement
+      time: 3096000 # 860 hours
   startingGear: ERTMedicalGearGamma
   icon: "JobIconERTMedical"
   supervisors: job-supervisors-centcom
@@ -583,10 +601,12 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Engineering
-      time: 36000 # 10 hours
+      time: 144000 # 40 hours
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 36000 # 10 hours
+      time: 144000 # 40 hours
+    - !type:OverallPlaytimeRequirement
+      time: 3096000 # 860 hours
   startingGear: ERTEngineerGearAmber
   icon: "JobIconERTEngineer"
   supervisors: job-supervisors-centcom
@@ -649,10 +669,12 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Engineering
-      time: 36000 # 10 hours
+      time: 144000 # 40 hours
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 36000 # 10 hours
+      time: 144000 # 40 hours
+    - !type:OverallPlaytimeRequirement
+      time: 3096000 # 860 hours
   startingGear: ERTEngineerGearRed
   icon: "JobIconERTEngineer"
   supervisors: job-supervisors-centcom
@@ -709,10 +731,12 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Engineering
-      time: 36000 # 10 hours
+      time: 144000 # 40 hours
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 36000 # 10 hours
+      time: 144000 # 40 hours
+    - !type:OverallPlaytimeRequirement
+      time: 3096000 # 860 hours
   startingGear: ERTEngineerGearGamma
   icon: "JobIconERTEngineer"
   supervisors: job-supervisors-centcom
@@ -772,7 +796,9 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 36000 # 10 hours
+      time: 144000 # 40 hours
+    - !type:OverallPlaytimeRequirement
+      time: 3096000 # 860 hours
   startingGear: ERTJanitorGearAmber
   icon: "JobIconERTJanitor"
   supervisors: job-supervisors-centcom
@@ -831,7 +857,9 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 36000 # 10 hours
+      time: 144000 # 40 hours
+    - !type:OverallPlaytimeRequirement
+      time: 3096000 # 860 hours
   startingGear: ERTJanitorGearRed
   icon: "JobIconERTJanitor"
   supervisors: job-supervisors-centcom
@@ -889,7 +917,9 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 36000 # 10 hours
+      time: 144000 # 40 hours
+    - !type:OverallPlaytimeRequirement
+      time: 3096000 # 860 hours
   startingGear: ERTJanitorGearGamma
   icon: "JobIconERTJanitor"
   supervisors: job-supervisors-centcom

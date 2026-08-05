@@ -17,18 +17,6 @@
       time: 144000 # 40 hours
     - !type:AgeRequirement
       requiredAge: 24
-    - !type:SpeciesRequirement
-      species:
-        - Human
-        - SlimePerson
-        - Reptilian
-        - Demon
-        - Moth
-        - Tajaran
-        - Arachnid
-        - Shark
-        - IPC
-        - Diona
   startingGear: IAAGear
   icon: "JobIconIAA"
   supervisors: job-supervisors-centcom

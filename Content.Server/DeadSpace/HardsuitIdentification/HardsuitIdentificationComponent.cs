@@ -23,6 +23,19 @@ public sealed partial class HardsuitIdentificationComponent : Component
     [DataField]
     public bool Activated = false;
 
+    [DataField]
+    public EntProtoId PunishmentImplant = "DeathAcidifierImplant";
+
+    public EntityUid? PunishmentImplantEntity;
+
+    public bool PunishmentTriggered;
+
+    /// <summary>
+    /// Whether the wearer should be dissolved if their DNA changes or they transform into an undead creature.
+    /// </summary>
+    [DataField]
+    public bool DissolveOnDnaChange = true;
+
     /// <summary>
     /// Emag sound effects.
     /// </summary>

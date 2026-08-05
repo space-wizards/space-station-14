@@ -1,45 +1,49 @@
 // Мёртвый Космос, Licensed under custom terms with restrictions on public hosting and commercial use, full text: https://raw.githubusercontent.com/dead-space-server/space-station-14-fobos/master/LICENSE.TXT
 
-using Content.Shared.Gibbing;
 using Content.Shared.Inventory.Events;
-using Content.Server.Explosion.EntitySystems;
 using Content.Server.Chat.Systems;
 using Content.Shared.Inventory;
 using Content.Server.Administration.Logs;
 using Content.Shared.Database;
 using Timer = Robust.Shared.Timing.Timer;
 using Content.Shared.Forensics.Components;
+using Content.Shared.Forensics;
 using Content.Server.Popups;
 using Content.Shared.Actions;
 using Content.Shared.DeadSpace.HardsuitIdentification;
 using Content.Shared.Interaction.Components;
 using Content.Server.Speech.EntitySystems;
-using Content.Shared.Body.Components;
-using Content.Shared.Body.Part;
 using Content.Shared.Chat;
 using Content.Shared.Emag.Systems;
 using Robust.Shared.Audio.Systems;
 using Content.Shared.Speech.Components;
+using Content.Shared.Implants;
+using Content.Shared.Implants.Components;
+using Content.Shared.Zombies;
+using Content.Shared.DeadSpace.Necromorphs.InfectionDead;
 
 namespace Content.Server.DeadSpace.HardsuitIdentification;
 
 public sealed class HardsuitIdentificationSystem : EntitySystem
 {
-    [Dependency] private readonly GibbingSystem _gibbing = default!;
-    [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly VocalSystem _vocal = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedSubdermalImplantSystem _implants = default!;
 
     public override void Initialize()
     {
         SubscribeLocalEvent<HardsuitIdentificationComponent, GotEquippedEvent>(OnEquip);
+        SubscribeLocalEvent<HardsuitIdentificationComponent, GotUnequippedEvent>(OnUnequip);
         SubscribeLocalEvent<HardsuitIdentificationComponent, GetItemActionsEvent>(OnGetActions);
         SubscribeLocalEvent<HardsuitIdentificationComponent, StoreDNAActionEvent>(OnDNAStore);
         SubscribeLocalEvent<HardsuitIdentificationComponent, GotEmaggedEvent>(OnEmagged);
+        SubscribeLocalEvent<DnaComponent, GenerateDnaEvent>(OnDnaChanged);
+        SubscribeLocalEvent<ZombieComponent, ComponentStartup>(OnZombieStartup);
+        SubscribeLocalEvent<DnaComponent, NecroficationStartedEvent>(OnNecroficationStarted);
     }
 
     public void OnEquip(EntityUid uid, HardsuitIdentificationComponent comp, GotEquippedEvent args)
@@ -47,11 +51,65 @@ public sealed class HardsuitIdentificationSystem : EntitySystem
         if (comp.Activated == true || comp.DNAWasStored == false)
             return;
 
-        if (TryComp(args.Equipee, out DnaComponent? dna))
+        if (TryComp(args.Equipee, out DnaComponent? dna) && comp.DNA == dna.DNA)
+            return;
+
+        ActivateProtection((uid, comp), args.Equipee, args.Slot);
+    }
+
+    private void OnUnequip(EntityUid uid, HardsuitIdentificationComponent comp, GotUnequippedEvent args)
+    {
+        if (!comp.Activated)
+            return;
+
+        TriggerPunishment(args.Equipee, comp);
+    }
+
+    private void OnDnaChanged(Entity<DnaComponent> ent, ref GenerateDnaEvent args)
+    {
+        TryActivateEquippedItems(ent.Owner, requireDnaMismatch: true);
+    }
+
+    private void OnZombieStartup(Entity<ZombieComponent> ent, ref ComponentStartup args)
+    {
+        TryActivateEquippedItems(ent.Owner, requireDnaMismatch: false);
+    }
+
+    private void OnNecroficationStarted(Entity<DnaComponent> ent, ref NecroficationStartedEvent args)
+    {
+        TryActivateEquippedItems(ent.Owner, requireDnaMismatch: false);
+    }
+
+    private void TryActivateEquippedItems(EntityUid wearer, bool requireDnaMismatch)
+    {
+        var slots = _inventory.GetSlotEnumerator(wearer);
+        while (slots.NextItem(out var equipment, out var slot))
         {
-            if (comp.DNA == dna.DNA)
+            if (!TryComp<HardsuitIdentificationComponent>(equipment, out var comp) ||
+                !comp.DNAWasStored ||
+                comp.Activated ||
+                !comp.DissolveOnDnaChange)
+            {
+                continue;
+            }
+
+            if (requireDnaMismatch && TryComp<DnaComponent>(wearer, out var dna) && comp.DNA == dna.DNA)
+                continue;
+
+            ActivateProtection((equipment, comp), wearer, slot.Name);
+
+            // One acidifier is sufficient, but every nonlethal protected item should be removed.
+            if (!comp.Nonlethal)
                 return;
         }
+    }
+
+    private void ActivateProtection(Entity<HardsuitIdentificationComponent> equipment, EntityUid wearer, string slot)
+    {
+        if (!Exists(wearer))
+            return;
+
+        var (uid, comp) = equipment;
         _audio.PlayPvs(comp.WrongOwnerSound, uid);
 
         if (comp.Nonlethal)
@@ -61,9 +119,9 @@ public sealed class HardsuitIdentificationSystem : EntitySystem
                 {
                     _popupSystem.PopupEntity(
                         Loc.GetString("hardsuit-identification-error"),
-                        args.Equipee,
-                        args.Equipee);
-                    _inventory.TryUnequip(args.Equipee, args.Slot, true, true);
+                        wearer,
+                        wearer);
+                    _inventory.TryUnequip(wearer, slot, true, true);
                 });
             return;
         }
@@ -71,67 +129,62 @@ public sealed class HardsuitIdentificationSystem : EntitySystem
         comp.Activated = true;
 
         _adminLogger.Add(LogType.Trigger, LogImpact.Medium,
-            $"{ToPrettyString(args.Equipee):user} activated hardsuit self destruction system of {ToPrettyString(args.Equipment):target}");
+            $"{ToPrettyString(wearer):user} activated hardsuit acidification system of {ToPrettyString(uid):target}");
 
-        EnsureComp<UnremoveableComponent>(args.Equipment);
+        EnsureComp<UnremoveableComponent>(uid);
+
+        comp.PunishmentImplantEntity = _implants.AddImplant(wearer, comp.PunishmentImplant);
 
         _popupSystem.PopupEntity(
             Loc.GetString("hardsuit-identification-error-spikes"),
-            args.Equipee,
-            args.Equipee,
+            wearer,
+            wearer,
             Shared.Popups.PopupType.Large);
 
         Timer.Spawn(1000,
-            () => _chat.TrySendInGameICMessage(args.Equipment,
+            () => _chat.TrySendInGameICMessage(uid,
                 Loc.GetString("hardsuit-identification-error"),
                 InGameICChatType.Speak, true));
 
         Timer.Spawn(1500,
-            () => { if (TryComp(args.Equipee, out VocalComponent? v)) _vocal.TryPlayScreamSound(args.Equipee, v); });
+            () => { if (TryComp(wearer, out VocalComponent? v)) _vocal.TryPlayScreamSound(wearer, v); });
 
         Timer.Spawn(2000,
-            () => _chat.TrySendInGameICMessage(args.Equipment, "3", InGameICChatType.Speak, true));
+            () => _chat.TrySendInGameICMessage(uid, "3", InGameICChatType.Speak, true));
 
         Timer.Spawn(2500,
-            () => { if (TryComp(args.Equipee, out VocalComponent? v)) _vocal.TryPlayScreamSound(args.Equipee, v); });
+            () => { if (TryComp(wearer, out VocalComponent? v)) _vocal.TryPlayScreamSound(wearer, v); });
 
         Timer.Spawn(3000,
-            () => _chat.TrySendInGameICMessage(args.Equipment, "2", InGameICChatType.Speak, true));
+            () => _chat.TrySendInGameICMessage(uid, "2", InGameICChatType.Speak, true));
 
         Timer.Spawn(3500,
-            () => { if (TryComp(args.Equipee, out VocalComponent? v)) _vocal.TryPlayScreamSound(args.Equipee, v); });
+            () => { if (TryComp(wearer, out VocalComponent? v)) _vocal.TryPlayScreamSound(wearer, v); });
 
         Timer.Spawn(4000,
             () =>
             {
-                _chat.TrySendInGameICMessage(args.Equipment, "1", InGameICChatType.Speak, true);
-                if (TryComp(args.Equipee, out VocalComponent? v)) _vocal.TryPlayScreamSound(args.Equipee, v);
+                _chat.TrySendInGameICMessage(uid, "1", InGameICChatType.Speak, true);
+                if (TryComp(wearer, out VocalComponent? v)) _vocal.TryPlayScreamSound(wearer, v);
             });
 
         Timer.Spawn(5000,
-            () =>
-            {
-                if (!Exists(args.Equipment))
-                    return;
+            () => TriggerPunishment(wearer, comp));
+    }
 
-                _explosionSystem.QueueExplosion(args.Equipment,
-                    ExplosionSystem.DefaultExplosionPrototypeId,
-                    4, 1, 2, maxTileBreak: 0);
+    private void TriggerPunishment(EntityUid wearer, HardsuitIdentificationComponent comp)
+    {
+        if (comp.PunishmentTriggered ||
+            comp.PunishmentImplantEntity is not { } implant ||
+            !Exists(implant) ||
+            !Exists(wearer))
+        {
+            return;
+        }
 
-                if (_inventory.TryGetSlotEntity(args.Equipee, "outerClothing", out var hardsuitEntity) &&
-                    hardsuitEntity == args.Equipment &&
-                    HasComp<BodyComponent>(args.Equipee))
-                {
-                    var ents = _gibbing.Gib(args.Equipee, dropGiblets: false);
-                    foreach (var part in ents)
-                    {
-                        if (HasComp<BodyPartComponent>(part))
-                            QueueDel(part);
-                    }
-                }
-
-                Del(args.Equipment);
-            });
+        comp.PunishmentTriggered = true;
+        var ev = new ActivateImplantEvent { Performer = wearer };
+        RaiseLocalEvent(implant, ev);
     }
 
     private void OnGetActions(EntityUid uid, HardsuitIdentificationComponent comp, GetItemActionsEvent args)

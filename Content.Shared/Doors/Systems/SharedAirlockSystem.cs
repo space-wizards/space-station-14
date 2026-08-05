@@ -1,4 +1,5 @@
 using Content.Shared.Doors.Components;
+using Content.Shared.DeadSpace.Sound.Systems;
 using Robust.Shared.Audio.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Prying.Components;
@@ -12,6 +13,7 @@ public abstract class SharedAirlockSystem : EntitySystem
     [Dependency] private   readonly IGameTiming _timing = default!;
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
+    [Dependency] private readonly AdjustableAudioSystem _adjustableAudio = default!; // DS14
     [Dependency] protected readonly SharedDoorSystem DoorSystem = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
     [Dependency] private   readonly SharedWiresSystem _wiresSystem = default!;
@@ -156,9 +158,9 @@ public abstract class SharedAirlockSystem : EntitySystem
 
         var sound = ent.Comp.EmergencyAccess ? ent.Comp.EmergencyOnSound : ent.Comp.EmergencyOffSound;
         if (predicted)
-            Audio.PlayPredicted(sound, ent, user: user);
+            _adjustableAudio.Mark(Audio.PlayPredicted(sound, ent, user: user));
         else
-            Audio.PlayPvs(sound, ent);
+            _adjustableAudio.Mark(Audio.PlayPvs(sound, ent));
     }
 
     public void SetAutoCloseDelayModifier(AirlockComponent component, float value)

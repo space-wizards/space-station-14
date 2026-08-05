@@ -102,9 +102,9 @@ public abstract partial class SharedDoorSystem
 
         var sound = value ? ent.Comp.BoltDownSound : ent.Comp.BoltUpSound;
         if (predicted)
-            Audio.PlayPredicted(sound, ent, user: user);
+            AdjustableAudio.Mark(Audio.PlayPredicted(sound, ent, user: user));
         else
-            Audio.PlayPvs(sound, ent);
+            AdjustableAudio.Mark(Audio.PlayPvs(sound, ent));
         return true;
     }
 

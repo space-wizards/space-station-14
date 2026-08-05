@@ -8,6 +8,7 @@ using Content.Server.DeadSpace.MonkeyKing.Components;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Humanoid;
 using Content.Server.Inventory;
+using Content.Shared.DeadSpace.Necromorphs.InfectionDead;
 using Content.Server.Mind;
 using Content.Server.NPC;
 using Content.Shared.DeadSpace.Necromorphs.InfectionDead.Components;
@@ -107,6 +108,9 @@ public sealed partial class NecromorfSystem
         var necromorfComp = new NecromorfComponent(strainData);
 
         AddComp(target, necromorfComp);
+
+        var necroficationStarted = new NecroficationStartedEvent();
+        RaiseLocalEvent(target, ref necroficationStarted);
 
         NecromorfLayerComponent necromorfLayercomp = new NecromorfLayerComponent(necromorf.Sprite, necromorf.State, necromorf.IsAnimal);
 

@@ -5,7 +5,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
-    useDelay: 60
+    useDelay: 0
     icon:
       sprite: Actions/Implants/implants.rsi
       state: explosive

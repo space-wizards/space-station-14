@@ -249,3 +249,17 @@
   - type: InstantAction
     event: !type:RatKingOrderActionEvent
       type: Loose
+
+- type: entity
+  id: ActionNecroBoomerExplosion
+  name: Взрыв
+  description: Взорваться.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    useDelay: 1
+    icon:
+      sprite: Actions/Implants/implants.rsi
+      state: explosive
+  - type: InstantAction
+    event: !type:ExplosionAbilityActionEvent

@@ -232,7 +232,7 @@ public sealed partial class GunSystem : SharedGunSystem
             if (ammoComp != null && !firedHitscan)
                 MuzzleFlash(gun, ammoComp, mapDirection.ToAngle(), user);
 
-            Audio.PlayPredicted(gun.Comp.SoundGunshotModified, gun, user);
+            EntityManager.System<Content.Shared.DeadSpace.Sound.Systems.AdjustableAudioSystem>().Mark(Audio.PlayPredicted(gun.Comp.SoundGunshotModified, gun, user)); // DS14
         }
     }
 

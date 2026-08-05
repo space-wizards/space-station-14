@@ -3,7 +3,7 @@
   entity: ClothingBackpackPrometheus3
   sponsorOnly: true
 
-# РЮКЗАК
+# BACKPACK
 - type: entity
   parent: ClothingBackpack
   id: ClothingBackpackPrometheus3
@@ -57,18 +57,30 @@
   description: Экстренная помощь, возвращающая с того света.
   categories: [ HideSpawnMenu ]
   components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Prometheus3/medkit.rsi
+    state: firstaid
+  - type: Item
+    sprite: _DeadSpace/Sponsor/Prometheus3/medkit.rsi
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
   - type: Storage
     maxItemSize: Normal
     grid:
-    - 0,0,5,1
+    - 0,0,6,1
   - type: StorageFill
     contents:
     - id: MedicatedSuture
+      amount: 2
     - id: RegenerativeMesh
     - id: Bloodpack
     - id: DefibrillatorPrometheus3
     - id: HypoPrometheus3
 
+# DEFIBRILLATOR
 - type: entity
   parent: DefibrillatorCompact
   name: компактный дефибриллятор «BlackOps»
@@ -80,7 +92,8 @@
     sprite: Objects/Specific/Medical/defibsyndi.rsi
   - type: Item
     sprite: Objects/Specific/Medical/defibsyndi.rsi
-# ГИПОСПРЕЙ
+
+# HYPOSPRAY
 - type: entity
   parent: BaseItem
   id: HypoPrometheus3
@@ -129,9 +142,28 @@
   - type: UseDelay
     delay: 0.5
 
-# ПОЯС
+# PEN
 - type: entity
-  parent: ClothingBeltStorageBase
+  parent: Pen
+  id: PenPrometheus3
+  name: ручка Cybersun
+  description: Высокотехнологичная ручка из юридического отдела Cybersun. Алмазный наконечник повреждён. Она больше не переписывает документы, но теперь преломляет свет так, что коллегам становится неловко смотреть.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: overpriced_pen
+  - type: Item
+    heldPrefix: overpriced_pen
+  - type: UseDelay
+    delay: 0.5
+  - type: Tag
+    tags:
+    - Write
+    - Pen
+
+# BELT
+- type: entity
+  parent: [ ClothingBeltStorageBase, ContentsExplosionResistanceBase ]
   id: ClothingBeltPrometheus3
   name: тактический РПС «BlackOps»
   description: Расширенные карманы для хранения. Пахнет порохом.
@@ -151,7 +183,9 @@
   - type: Storage
     maxItemSize: Normal
     grid:
-    - 0,0,7,1
+    - 0,0,8,1
+  - type: ExplosionResistance
+    damageCoefficient: 0.1
   - type: StorageFill
     contents:
     - id: SyndicatePowerDrill
@@ -162,7 +196,7 @@
   - type: Tag
     tags: [ ] # ignore "WhitelistChameleon" tag
 
-# ДУБИНКА
+# BATON
 - type: entity
   parent: BaseItem
   id: ESwordPrometheus3
@@ -251,7 +285,7 @@
       params:
         variation: 0.125
 
-# ПРОТИВОГАЗ
+# MASK
 - type: entity
   parent: ClothingMaskGasSyndicate
   id: ClothingMaskGasPrometheus3
@@ -268,6 +302,10 @@
     sprite: _DeadSpace/Sponsor/Prometheus3/mask.rsi
   - type: TypingIndicatorClothing
     proto: TypingIndicatorPrometheus3
+  - type: ZombificationResistance
+    zombificationResistanceCoefficient: 0.9
+  - type: VirusResistance
+    virusResistanceCoefficient: 0.1
   - type: EyeProtection
   - type: Tag
     tags: [ ] # ignore "WhitelistChameleon" tag
@@ -278,7 +316,7 @@
   idleState: syndibot3
   offset: 0.05, 0.125
 
-# ПЕРЧАТКИ
+# GLOVES
 - type: entity
   parent: ClothingHandsGlovesCombat
   id: ClothingCombatGlovesPrometheus3
@@ -293,7 +331,7 @@
   - type: Tag
     tags: [ ] # ignore "WhitelistChameleon" tag
 
-# КПК
+# PDA
 - type: entity
   parent: BasePDA
   id: PDAPrometheus3
@@ -313,7 +351,7 @@
         pda
   - type: Pda
     penSlot:
-      startingItem: PenPrometheusAlt
+      startingItem: PenPrometheus3
       priority: -1
       whitelist:
         tags:
@@ -343,24 +381,42 @@
   - type: Tag
     tags: [ ] # ignore "WhitelistChameleon" tag
 
-# РУЧКА
+# JawsOfLife
 - type: entity
-  parent: Pen
-  id: PenPrometheus3
-  name: ручка Cybersun
-  description: Высокотехнологичная ручка из юридического отдела Cybersun. Алмазный наконечник повреждён. Она больше не переписывает документы, но теперь преломляет свет так, что коллегам становится неловко смотреть.
+  parent: JawsOfLife
+  id: JawsOfLifePrometheus3
+  name: кроваво-красные челюсти жизни
+  description: Набор челюстей жизни, скомпонованных при помощи магии науки..
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    state: overpriced_pen
+    sprite: Objects/Tools/jaws_of_life.rsi
+    state: syn_jaws_pry
   - type: Item
-    heldPrefix: overpriced_pen
-  - type: Tag
-    tags:
-    - Write
-    - Pen
+    inhandVisuals:
+      left:
+      - state: syn_inhand-left
+      right:
+      - state: syn_inhand-right
+    size: Normal
+  - type: MultipleTool
+    entries:
+      - behavior: Prying
+        sprite:
+          sprite: Objects/Tools/jaws_of_life.rsi
+          state: syn_jaws_pry
+        useSound: /Audio/Items/jaws_pry.ogg
+        changeSound: /Audio/Items/change_jaws.ogg
+      - behavior: Cutting
+        sprite:
+          sprite: Objects/Tools/jaws_of_life.rsi
+          state: syn_jaws_cutter
+        useSound: /Audio/Items/jaws_cut.ogg
+        changeSound: /Audio/Items/change_jaws.ogg
+  - type: Prying
+    speedModifier: 3.0
 
-# МЕДИПЕН
+# MEDIPEN
 - type: entity
   parent: EmergencyMedipen
   id: EmergencyMedipenPrometheus3
@@ -388,6 +444,12 @@
           Quantity: 24
         - ReagentId: TranexamicAcid
           Quantity: 6
+  - type: Injector
+    solutionName: pen
+    currentTransferAmount: 15
+    activeModeProtoId: HyposprayInjectMode
+    allowedModes:
+    - HyposprayInjectMode
   - type: Item
     sprite: _DeadSpace/Sponsor/Prometheus3/medipen.rsi
     inhandVisuals:
@@ -402,7 +464,7 @@
         color: "#439822"
       - state: base-colorB-inhand-right
 
-# АВАРИЙНЫЙ ЗАПАС
+# EMERGENCYBOX
 - type: entity
   parent: BoxCardboard
   id: EmergencyBoxPrometheus3
@@ -410,6 +472,26 @@
   description: Коробка с продвинутым набором для выживания. Не умрите!
   categories: [ HideSpawnMenu ]
   components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Prometheus3/pouch.rsi
+    layers:
+    - state: icon
+      map: [ base ]
+  - type: GenericVisualizer
+    visuals:
+      enum.StorageVisuals.Open:
+        base:
+          True: { state: icon-open }
+          False: { state: icon }
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#ca4545"
+      right:
+      - state: inhand-right
+        color: "#ca4545"
+  - type: Appearance
   - type: StorageFill
     contents:
     - id: ClothingMaskGasPrometheus3
@@ -417,13 +499,8 @@
     - id: EmergencyMedipenPrometheus3
     - id: FoodSnackNutribrick
     - id: DrinkMREFlask
-  - type: Sprite
-    sprite: _DeadSpace/Sponsor/Prometheus3/boxes.rsi
-    layers:
-    - state: box
-    - state: syndi
 
-# ГАРНИТУРА
+# HEADSET
 - type: entity
   parent: ClothingHeadsetAltSyndicate
   name: кроваво-красная гарнитура
@@ -459,19 +536,27 @@
   - type: Item
     size: Huge
   - type: PressureProtection
-    highPressureMultiplier: 0.05
+    highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
-  - type: ExplosionResistance
-    damageCoefficient: 0.5
+  - type: TemperatureProtection
+    heatingCoefficient: 0.001
+    coolingCoefficient: 0.001
   - type: Armor
     modifiers:
       coefficients:
         Blunt: 0.5
         Slash: 0.5
-        Piercing: 0.6
+        Piercing: 0.55
         Heat: 0.5
+        Cold: 0.5
         Radiation: 0.5
         Caustic: 0.5
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: FireProtection
+    reduction: 0.5
+  - type: StaminaResistance
+    damageCoefficient: 0.55
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.9
@@ -480,9 +565,9 @@
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitPrometheus3
   - type: ZombificationResistance
-    zombificationResistanceCoefficient: 0.5
+    zombificationResistanceCoefficient: 0.7
   - type: VirusResistance
-    virusResistanceCoefficient: 0.5
+    virusResistanceCoefficient: 0.3
   - type: Tag
     tags:
     - Hardsuit
@@ -507,6 +592,9 @@
     sprite: _DeadSpace/Sponsor/Prometheus3/helmet.rsi
   - type: PointLight
     color: green
+    enabled: false
+    radius: 4
+    energy: 2
   - type: ToggleableVisuals
     spriteLayer: light
     clothingVisuals:
@@ -514,12 +602,16 @@
       - state: on-equipped-HELMET
       - state: on-unshaded
         shader: unshaded
+  - type: ZombificationResistance
+    zombificationResistanceCoefficient: 0.9
+  - type: VirusResistance
+    virusResistanceCoefficient: 0.1
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
 
-# ОЧКИ
+# GLASSES
 - type: entity
-  parent: [ ClothingEyesGlassesMeson, ShowSecurityIcons ]
+  parent: [ ClothingEyesGlassesMeson, ClothingEyesPNVAdv ]
   id: ClothingVisorPrometheus3
   name: визор «BlackOps»
   description: Улучшенный визор с несколькими встроенными сканерами. X-ray отсутствует.
@@ -539,39 +631,7 @@
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
 
-# JawsOfLife
-- type: entity
-  parent: JawsOfLife
-  id: JawsOfLifePrometheus3
-  name: кроваво-красные челюсти жизни
-  description: Набор челюстей жизни, скомпонованных при помощи магии науки...
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: Sprite
-    sprite: _DeadSpace/Sponsor/Prometheus3/jaws_of_life.rsi
-    state: jaws_pry
-  - type: Item
-    inhandVisuals:
-      left:
-      - state: inhand-left
-      right:
-      - state: inhand-right
-  - type: MultipleTool
-    entries:
-    - behavior: Prying
-      sprite:
-        sprite: _DeadSpace/Sponsor/Prometheus3/jaws_of_life.rsi
-        state: jaws_pry
-      useSound: /Audio/Items/jaws_pry.ogg
-      changeSound: /Audio/Items/change_jaws.ogg
-    - behavior: Cutting
-      sprite:
-        sprite: _DeadSpace/Sponsor/Prometheus3/jaws_of_life.rsi
-        state: jaws_cutter
-      useSound: /Audio/Items/jaws_cut.ogg
-      changeSound: /Audio/Items/change_jaws.ogg
-
-# ДЖЕТПАК
+# JETPACK
 - type: entity
   parent: JetpackVoidFilled
   id: JetpackVoidPrometheus3
@@ -623,7 +683,7 @@
     coolingCoefficient: 0.1
   - type: Appearance
 
-# СИГАРА
+# CIGAR
 - type: entity
   parent: BaseItem
   id: HoloCigarPrometheus3
@@ -662,7 +722,7 @@
     activeSound:
       path: /Audio/_DeadSpace/Sponsor/Prometheus3/invisibingle.ogg
       params:
-        volume: -10
+        volume: -6
         maxDistance: 7
         rolloffFactor: 1.75
         referenceDistance: 1
@@ -684,14 +744,12 @@
         enum.ToggleableVisuals.Layer:
           True: {state: lit-icon}
           False: {state: icon}
-  - type: VirusResistance
-    virusResistanceCoefficient: 0.1
   - type: UseDelay
     delay: 5
 
-# МАГНИТКИ
+# MAGBOOTS
 - type: entity
-  parent: ClothingShoesBootsMag
+  parent: ClothingShoesBootsMagAdv
   id: ClothingShoesBootsMagPrometheus3
   name: боевые ботинки «BlackOps»
   description: Оснащены магнитной подошвой, чтобы крепко стоять на ногах.
@@ -701,9 +759,6 @@
     sprite: _DeadSpace/Sponsor/Prometheus3/boots.rsi
   - type: Clothing
     sprite: _DeadSpace/Sponsor/Prometheus3/boots.rsi
-  - type: ClothingSpeedModifier
-    walkModifier: 1
-    sprintModifier: 1
   - type: Matchbox
   - type: ContainerContainer
     containers:
@@ -720,10 +775,12 @@
   - type: TemperatureProtection
     heatingCoefficient: 1.025
     coolingCoefficient: 0.5
+  - type: ClothingSlowOnDamageModifier
+    modifier: 0.5
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
 
-# БОКСЕРЫ
+# BOXERS
 - type: entity
   parent: ClothingUnderwearBottomBoxersNuclearOperative
   id: ClothingUnderwearBottomBoxersNuclearOperativePrometheus3
@@ -736,7 +793,7 @@
       coefficients:
         Blunt: 0.99
 
-# ГИТАРА
+# GUITAR
 - type: entity
   parent: BaseHandheldInstrument
   id: RockGuitarPrometheus3
@@ -767,7 +824,7 @@
     soundHit:
       collection: SoundCollectionRockHitPrometheus3
       params:
-        volume: -7
+        volume: -2
         maxDistance: 10
   - type: Wieldable
   - type: IncreaseDamageOnWield

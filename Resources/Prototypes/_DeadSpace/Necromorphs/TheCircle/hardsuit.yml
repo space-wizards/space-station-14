@@ -46,6 +46,7 @@
     - Hardsuit
     - WhitelistChameleon
   - type: HardsuitIdentification
+    dissolveOnDnaChange: false
   - type: Speech
   - type: TTS
     voice: Overwatch

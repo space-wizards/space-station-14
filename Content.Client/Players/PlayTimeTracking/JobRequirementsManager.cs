@@ -162,8 +162,8 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
         // DS14-blueshield-disabilities-disallow-start
 
         // DS14-sponsors-start
-        if (_sponsorsManager?.TryGetInfo(out var sponsorInfo) == true && (sponsorInfo.AllowJob || sponsorInfo.AllowedMarkings.Contains(job.ID)))
-            return true;
+        var bypassNonSpeciesRequirements = _sponsorsManager?.TryGetInfo(out var sponsorInfo) == true
+            && (sponsorInfo.AllowJob || sponsorInfo.AllowedMarkings.Contains(job.ID));
 
         if (_sponsorsManager != null && job.SponsorOnly)
         {
@@ -174,7 +174,7 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
 
         // Check other role requirements
         var reqs = _entManager.System<SharedRoleSystem>().GetRoleRequirements(job);
-        return CheckRoleRequirements(reqs, profile, out reason);
+        return CheckRoleRequirements(reqs, profile, out reason, bypassNonSpeciesRequirements);
     }
 
     /// <summary>
@@ -202,21 +202,26 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
     }
 
     // This must be private so code paths can't accidentally skip requirement overrides. Call this through IsAllowed()
-    private bool CheckRoleRequirements(HashSet<JobRequirement>? requirements, HumanoidCharacterProfile? profile, [NotNullWhen(false)] out FormattedMessage? reason)
+    private bool CheckRoleRequirements(
+        HashSet<JobRequirement>? requirements,
+        HumanoidCharacterProfile? profile,
+        [NotNullWhen(false)] out FormattedMessage? reason,
+        bool bypassNonSpeciesRequirements = false)
     {
         reason = null;
 
         if (requirements == null || !_cfg.GetCVar(CCVars.GameRoleTimers))
             return true;
 
-        // DS14-meteor-sponsor-start
-        if (_sponsorsManager?.TryGetInfo(out var sponsorInfo) == true && sponsorInfo.AllowJob == true)
-            return true;
-        // DS14-meteor-sponsor-end
-
         var reasons = new List<string>();
         foreach (var requirement in requirements)
         {
+            // DS14-start
+            // Sponsor access bypasses progression gates, but never species restrictions.
+            if (bypassNonSpeciesRequirements && requirement is not SpeciesRequirement)
+                continue;
+            // DS14-end
+
             if (requirement.Check(_entManager, _prototypes, profile, _roles, out var jobReason))
                 continue;
 

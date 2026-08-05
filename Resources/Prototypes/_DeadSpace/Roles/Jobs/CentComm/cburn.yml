@@ -11,13 +11,15 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 36000 # 10 hours
+      time: 144000 # 40 hours
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 72000 # 20 hours
+      time: 288000 # 80 hours
     - !type:DepartmentTimeRequirement
       department: Command
-      time: 36000 # 10 hours
+      time: 144000 # 40 hours
+    - !type:OverallPlaytimeRequirement
+      time: 3096000 # 860 hours
   startingGear: CBURNLeaderGear
   icon: "JobIconERTLeader"
   supervisors: job-supervisors-centcom
@@ -60,13 +62,15 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 36000 # 10 hours
+      time: 144000 # 40 hours
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 72000 # 20 hours
+      time: 288000 # 80 hours
     - !type:DepartmentTimeRequirement
       department: Command
-      time: 36000 # 10 hours
+      time: 144000 # 40 hours
+    - !type:OverallPlaytimeRequirement
+      time: 3096000 # 860 hours
   startingGear: SCSTLeaderGear
   icon: "JobIconERTLeader"
   supervisors: job-supervisors-centcom
@@ -109,13 +113,15 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 36000 # 10 hours
+      time: 144000 # 40 hours
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 72000 # 20 hours
+      time: 288000 # 80 hours
     - !type:DepartmentTimeRequirement
       department: Command
-      time: 36000 # 10 hours
+      time: 144000 # 40 hours
+    - !type:OverallPlaytimeRequirement
+      time: 3096000 # 860 hours
   startingGear: SCNTLeaderGear
   icon: "JobIconERTLeader"
   supervisors: job-supervisors-centcom
@@ -157,13 +163,15 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 36000 # 10 hours
+      time: 144000 # 40 hours
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 72000 # 20 hours
+      time: 288000 # 80 hours
     - !type:DepartmentTimeRequirement
       department: Command
-      time: 36000 # 10 hours
+      time: 144000 # 40 hours
+    - !type:OverallPlaytimeRequirement
+      time: 3096000 # 860 hours
   startingGear: SierraLeaderGear
   icon: "JobIconERTLeader"
   supervisors: job-supervisors-centcom
@@ -207,10 +215,12 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 14400 # 4 hours
+      time: 57600 # 16 hours
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 50400 # 14 hours
+      time: 201600 # 56 hours
+    - !type:OverallPlaytimeRequirement
+      time: 3096000 # 860 hours
   startingGear: CBURNAgentGear
   icon: "JobIconERT"
   supervisors: job-supervisors-centcom
@@ -250,10 +260,12 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 14400 # 4 hours
+      time: 57600 # 16 hours
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 50400 # 14 hours
+      time: 201600 # 56 hours
+    - !type:OverallPlaytimeRequirement
+      time: 3096000 # 860 hours
   startingGear: CBURNAgentGear
   icon: "JobIconERT"
   supervisors: job-supervisors-centcom
@@ -293,10 +305,12 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 14400 # 4 hours
+      time: 57600 # 16 hours
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 50400 # 14 hours
+      time: 201600 # 56 hours
+    - !type:OverallPlaytimeRequirement
+      time: 3096000 # 860 hours
   startingGear: SCNTAgentGear
   icon: "JobIconERT"
   supervisors: job-supervisors-centcom
@@ -336,10 +350,12 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 14400 # 4 hours
+      time: 57600 # 16 hours
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 50400 # 14 hours
+      time: 201600 # 56 hours
+    - !type:OverallPlaytimeRequirement
+      time: 3096000 # 860 hours
   startingGear: SierraAgentGear
   icon: "JobIconERT"
   supervisors: job-supervisors-centcom

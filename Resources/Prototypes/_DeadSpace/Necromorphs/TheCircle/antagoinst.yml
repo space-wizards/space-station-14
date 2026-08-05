@@ -11,7 +11,7 @@
   objective: roles-antag-thecircle-light-objective
   requirements:
     - !type:OverallPlaytimeRequirement
-      time: 1296000 # 360 hours
+      time: 1944000 # 540 hours
     - !type:DepartmentTimeRequirement
       department: Medical
       time: 25h
@@ -28,7 +28,7 @@
   objective: roles-antag-thecircle-heavy-objective
   requirements:
     - !type:OverallPlaytimeRequirement
-      time: 1296000 # 360 hours
+      time: 1944000 # 540 hours
     - !type:DepartmentTimeRequirement
       department: Medical
       time: 25h
@@ -45,7 +45,7 @@
   objective: roles-antag-thecircle-medic-objective
   requirements:
     - !type:OverallPlaytimeRequirement
-      time: 1296000 # 360 hours
+      time: 1944000 # 540 hours
     - !type:DepartmentTimeRequirement
       department: Medical
       time: 60h
@@ -65,7 +65,7 @@
   objective: roles-antag-thecircle-engineer-objective
   requirements:
     - !type:OverallPlaytimeRequirement
-      time: 1296000 # 360 hours
+      time: 1944000 # 540 hours
     - !type:DepartmentTimeRequirement
       department: Medical
       time: 10h
@@ -88,7 +88,7 @@
   objective: roles-antag-thecircle-geist-objective
   requirements:
     - !type:OverallPlaytimeRequirement
-      time: 1296000 # 360 hours
+      time: 1944000 # 540 hours
     - !type:DepartmentTimeRequirement
       department: Security
       time: 60h
@@ -108,7 +108,7 @@
   objective: roles-antag-thecircle-commander-objective
   requirements:
     - !type:OverallPlaytimeRequirement
-      time: 1296000 # 360 hours
+      time: 1944000 # 540 hours
     - !type:DepartmentTimeRequirement
       department: Medical
       time: 40h

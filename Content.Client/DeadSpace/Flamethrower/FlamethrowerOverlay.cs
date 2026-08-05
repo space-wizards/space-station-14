@@ -19,7 +19,7 @@ public sealed class FlamethrowerOverlay : Overlay
     private readonly Texture _smokeTexture;
     private readonly Texture _emberTexture;
 
-    public override OverlaySpace Space => OverlaySpace.WorldSpace;
+    public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
 
     public FlamethrowerOverlay(IRobustRandom random, IResourceCache resources)
     {

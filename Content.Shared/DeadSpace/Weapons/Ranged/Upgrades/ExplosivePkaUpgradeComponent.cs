@@ -2,6 +2,7 @@
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
+using Robust.Shared.Map;
 
 namespace Content.Shared.DeadSpace.Weapons.Ranged.Upgrades;
 
@@ -50,6 +51,8 @@ public sealed partial class ExplosivePkaUpgradeComponent : Component
 [RegisterComponent]
 public sealed partial class ExplosivePkaProjectileComponent : Component
 {
+    public MapCoordinates? DetonationTarget;
+
     [DataField]
     public float Radius = 2.5f;
 

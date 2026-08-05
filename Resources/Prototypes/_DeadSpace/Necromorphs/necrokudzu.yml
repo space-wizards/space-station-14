@@ -54,6 +54,13 @@
     damage:
       types:
         Heat: 2
+  - type: Reactive
+    reactions:
+    - reagents: [PolytrinicAcid]
+      methods: [Touch]
+      effects:
+      - !type:DestructibleAct
+        acts: Destruction
   - type: GrowingKudzu
   - type: AtmosExposed
   - type: EdgeSpreader
@@ -63,15 +70,15 @@
   - type: DamageContacts
     damage:
       types:
-        Slash: 1
-        Piercing: 1
+        Slash: 0.5
+        Piercing: 0.5
     ignoreWhitelist:
       components:
       - IgnoreKudzu
       - Necromorf
   - type: SpeedModifierContacts
-    walkSpeedModifier: 0.2
-    sprintSpeedModifier: 0.2
+    walkSpeedModifier: 0.5
+    sprintSpeedModifier: 0.5
     ignoreWhitelist:
       components:
       - Necromorf
