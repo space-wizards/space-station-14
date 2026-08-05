@@ -177,10 +177,7 @@
     - MindRoleDragon
     makeGhostAlert: true
     ghostAlert: SpaceDragon
-    ghostAlertSound:
-      path: /Audio/Misc/ghost_alert.ogg
-      params:
-        volume: -5
+    ghostAlertSound: *BaseGhostAlertSound
   - type: Sprite
     layers:
     - state: green
