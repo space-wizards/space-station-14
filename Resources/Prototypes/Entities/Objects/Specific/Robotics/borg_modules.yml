@@ -1710,12 +1710,9 @@
     - state: icon-xenoborg-armor
   - type: Armor
     modifiers:
-      coefficients:
-        Slash: 0.9
-        Piercing: 0.9
       flatReductions:
-        Slash: 1
-        Piercing: 1
+        Slash: 2.5
+        Piercing: 2.5
   - type: ComponentBorgModule
     components:
     - type: SimpleSpriteOverlay
