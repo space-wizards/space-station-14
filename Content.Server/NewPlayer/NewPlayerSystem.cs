@@ -47,7 +47,6 @@ public sealed partial class NewPlayerSystem : EntitySystem
         }
     }
 
-    // Async because it needs to run GetWhitelistStatusAsync. Seems to work!
     [SubscribeLocalEvent]
     private void OnPlayerSpawnComplete(PlayerSpawnCompleteEvent ev)
     {
