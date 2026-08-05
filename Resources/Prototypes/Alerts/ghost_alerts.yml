@@ -11,91 +11,65 @@
 
 - type: alert
   id: BaseGhostRoleAlert
-  icons:
-  - sprite: /Textures/Decals/stencil.rsi
-    state: stencil_Exclaim
-  alertViewEntity: GhostAlertCounterSpriteView
+  parent: BaseGhostTeleportAlert
   name: ghost-alert-base-role-name
   description: ghost-alert-base-role-desc
-  clickEvent: !type:AlertTeleportEvent
-  rightClickEvent: !type:ClearAlertEvent
 
 - type: alert
   id: SpaceNinja
+  parent: BaseGhostRoleAlert
   icons:
   - sprite: Objects/Weapons/Melee/energykatana.rsi
     state: icon
-  alertViewEntity: GhostAlertCounterSpriteView
   name: ghost-alert-space-ninja-name
-  description: ghost-alert-base-role-desc
-  clickEvent: !type:AlertTeleportEvent
-  rightClickEvent: !type:ClearAlertEvent
 
 - type: alert
   id: SpaceDragon
+  parent: BaseGhostRoleAlert
   icons:
   - sprite: Objects/Fun/figurines.rsi
     state: spacedragon
-  alertViewEntity: GhostAlertCounterSpriteView
   name: ghost-alert-space-dragon-name
-  description: ghost-alert-base-role-desc
-  clickEvent: !type:AlertTeleportEvent
-  rightClickEvent: !type:ClearAlertEvent
 
 - type: alert
   id: Xenoborgs
+  parent: BaseGhostRoleAlert
   icons:
   - sprite: Mobs/Silicon/mothership_core.rsi
     state: core-idle
-  alertViewEntity: GhostAlertCounterSpriteView
   name: ghost-alert-mothership-core-name
-  description: ghost-alert-base-role-desc
-  clickEvent: !type:AlertTeleportEvent
-  rightClickEvent: !type:ClearAlertEvent
 
 - type: alert
   id: Wizard
+  parent: BaseGhostRoleAlert
   icons:
   - sprite: Clothing/Head/Hats/wizardhat.rsi
     state: icon
-  alertViewEntity: GhostAlertCounterSpriteView
   name: ghost-alert-wizard-name
-  description: ghost-alert-base-role-desc
-  clickEvent: !type:AlertTeleportEvent
-  rightClickEvent: !type:ClearAlertEvent
 
 - type: alert
   id: NukeOp
+  parent: BaseGhostRoleAlert
   icons:
   - sprite: /Textures/Objects/Weapons/Guns/SMGs/c20r.rsi
-    state: icon 
-  alertViewEntity: GhostAlertCounterSpriteView
+    state: icon
   name: ghost-alert-nuke-op-name
-  description: ghost-alert-base-role-desc
-  clickEvent: !type:AlertTeleportEvent
-  rightClickEvent: !type:ClearAlertEvent
 
 - type: alert
   id: ImmovableRod
+  parent: BaseGhostTeleportAlert
   icons:
   - sprite: Objects/Fun/immovable_rod.rsi
     state: icon
-  alertViewEntity: GhostAlertCounterSpriteView
   name: ghost-alert-immovable-rod-name
-  description: ghost-alert-base-desc
-  clickEvent: !type:AlertTeleportEvent
-  rightClickEvent: !type:ClearAlertEvent
 
 - type: alert
   id: NukeArm
+  parent: BaseGhostTeleportAlert
   icons:
   - sprite: Objects/Devices/nuke.rsi
     state: nuclearbomb_base
-  alertViewEntity: GhostAlertCounterSpriteView
   name: ghost-alert-nuke-arm-name
-  description: ghost-alert-nuke-arm-desc
-  clickEvent: !type:AlertTeleportEvent
-  rightClickEvent: !type:ClearAlertEvent
 
 - type: entity
   id: GhostAlertCounterSpriteView
