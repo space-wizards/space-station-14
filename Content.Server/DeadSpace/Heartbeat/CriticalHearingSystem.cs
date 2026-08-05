@@ -27,7 +27,9 @@ public sealed class CriticalHearingSystem : EntitySystem
                 return;
             }
 
+#pragma warning disable RA0030 // The receiver can be EntityUid.Invalid; the UID transform helper would throw.
             if (!TryComp<TransformComponent>(listener, out var transform))
+#pragma warning restore RA0030
                 return;
 
             var parent = transform.ParentUid;
