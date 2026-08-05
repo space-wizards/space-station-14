@@ -456,9 +456,9 @@
 
 - type: reagent
   id: StrawberryIce
-  name: "Methylenedioxystraquinone"
+  name: reagent-name-StrawberryIce
   group: Narcotics
-  desc: "A special drug designed to be even stronger than Desoxyephedrine, it can cause addiction and comes with withdrawal, also known as Strawberry Ice or Girl Ice given its color and flavor."
+  desc: reagent-desc-StrawberryIce
   physicalDesc: reagent-physical-desc-fizzy
   flavor: bitter
   color: "#FF36AE"
@@ -512,9 +512,9 @@
 
 - type: reagent
   id: Hydroxysomnolene
-  name: "Hydroxysomnolene"
+  name: reagent-name-Hydroxysomnolene
   group: Toxins
-  desc: "Byproduct of Methylenedioxystraquinone (aka Strawberry Ice) when metabolized, it binds to the newly vacant neuroreceptors in the brain after Methylenedioxystraquinone is flushed out of the system causing slowness and drowsiness."
+  desc: reagent-desc-Hydroxysomnolene
   physicalDesc: reagent-physical-desc-gloopy
   flavor: bitter
   color: "#b51472"
