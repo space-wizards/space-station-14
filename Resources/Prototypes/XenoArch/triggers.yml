@@ -34,7 +34,7 @@
     TriggerConsumeProduce: 0.5
     TriggerInteractStamp: 1
     TriggerInteractShock: 1
-    TriggerAttackParticleEngine: 0.25
+    TriggerAttackParticleEngine: 0.1
     TriggerAttackParticleAnomaly: 1
     TriggerAttackStaminaDamage: 1
     TriggerAttackLaser: 0.5
