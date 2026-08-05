@@ -92,6 +92,27 @@
 
 - type: entity
   parent: BasicHitscan
+  id: XenoborgHeavyLaser
+  name: blue high-energy laser ray
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Heat: 25
+  - type: HitscanBasicVisuals
+    muzzleFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: muzzle_beam_xenoborg_heavy
+    travelFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: beam_xenoborg_heavy
+    impactFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: impact_beam_xenoborg_heavy
+
+- type: entity
+  parent: BasicHitscan
   id: RedLaserPractice
   name: red practice laser ray
   categories: [ HideSpawnMenu ]
