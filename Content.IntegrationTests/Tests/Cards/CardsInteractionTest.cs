@@ -71,6 +71,12 @@ public sealed class CardsInteractionTest : InteractionTest
             Is.EqualTo(cardCountBefore - 1),
             "Throwing one card should decrease the deck by 1"
         );
+
+        var cardsQuery = SEntMan.EntityQueryEnumerator<CardsComponent>();
+        while (cardsQuery.MoveNext(out var uid, out _))
+        {
+            SQueueDel(uid);
+        }
     }
 
     [Test]
@@ -101,5 +107,11 @@ public sealed class CardsInteractionTest : InteractionTest
         Assert.That(sCardsComp.Cards.Count, Is.EqualTo(cardCountBefore - 1));
         Assert.That(sCardsComp.Flipped, Is.True);
         Assert.That(sCardsComp.Fanned, Is.True);
+
+        var cardsQuery = SEntMan.EntityQueryEnumerator<CardsComponent>();
+        while (cardsQuery.MoveNext(out var uid, out _))
+        {
+            SQueueDel(uid);
+        }
     }
 }
