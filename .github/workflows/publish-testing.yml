@@ -42,7 +42,7 @@ jobs:
         BRANCH: master
         CHANGELOG_REPO_PATH: Resources/Changelog
         EXTRA_CATEGORIES: Admin,Maps,Rules
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.CL_ACCESS_TOKEN }}
 
     - name: Build Packaging
       run: dotnet build Content.Packaging --configuration Release --no-restore /m
