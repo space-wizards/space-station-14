@@ -2,8 +2,6 @@
   abstract: true
   id: BasePlasticExplosiveTrigger
   components:
-  - type: TriggerOnActivate
-  - type: TriggerOnSignal
   - type: TriggerOnStuck
     keyOut: stuck
   - type: ToggleTriggerCondition # for toggling the start on stuck ability
@@ -76,6 +74,8 @@
   name: composition C-4
   description: Used to put holes in specific areas without too much extra hole. A saboteur's favorite.
   components:
+  - type: TriggerOnActivate
+  - type: TriggerOnSignal
   - type: Sprite
     sprite: Objects/Weapons/Bombs/c4.rsi
     state: icon
@@ -105,6 +105,8 @@
   name: seismic charge
   description: Concussion based explosive designed to destroy large amounts of rock.
   components:
+  - type: TriggerOnActivate
+  - type: TriggerOnSignal
   - type: Sprite
     sprite: Objects/Weapons/Bombs/seismic.rsi
     state: icon
@@ -131,6 +133,7 @@
   parent: [BasePlasticExplosive, BaseXenoborgContraband]
   id: XenoC4
   components:
+  - type: TriggerOnSignal
   - type: Sprite
     sprite: Objects/Weapons/Bombs/xenoc4.rsi
     state: icon

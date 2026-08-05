@@ -18,4 +18,3 @@ borg-slot-inflatable-door-empty = Inflatable Door
 borg-slot-inflatable-wall-empty = Inflatable Wall
 
 borg-slot-xenoborg-explosives-empty = Xenoborg Remote Explosive
-
