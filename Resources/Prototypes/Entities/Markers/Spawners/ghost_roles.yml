@@ -115,7 +115,6 @@
     rules: ghost-role-information-loneop-rules
     mindRoles:
     - MindRoleLoneops
-    makeGhostAlert: true
     ghostAlert: NukeOp
     ghostAlertSound: &BaseGhostAlertSound
       path: /Audio/Misc/ghost_alert.ogg
@@ -175,7 +174,6 @@
     rules: ghost-role-information-space-dragon-rules
     mindRoles:
     - MindRoleDragon
-    makeGhostAlert: true
     ghostAlert: SpaceDragon
     ghostAlertSound: *BaseGhostAlertSound
   - type: Sprite
@@ -197,7 +195,6 @@
     - MindRoleNinja
     raffle:
       settings: default
-    makeGhostAlert: true
     ghostAlert: SpaceNinja
     ghostAlertSound: *BaseGhostAlertSound
   - type: Sprite
@@ -274,7 +271,6 @@
     rules: ghost-role-information-silicon-rules
     mindRoles:
     - MindRoleMothershipCore
-    makeGhostAlert: true
     ghostAlert: Xenoborgs
     ghostAlertSound: *BaseGhostAlertSound
   - type: Sprite
@@ -369,7 +365,6 @@
     - MindRoleWizard
     raffle:
       settings: default
-    makeGhostAlert: true
     ghostAlert: Wizard
     ghostAlertSound: *BaseGhostAlertSound
   - type: Sprite

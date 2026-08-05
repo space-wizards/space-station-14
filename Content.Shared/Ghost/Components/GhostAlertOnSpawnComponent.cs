@@ -4,6 +4,9 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Ghost.Components;
 
+/// <summary>
+/// Creates an alert for ghosts on spawn.
+/// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed partial class GhostAlertOnSpawnComponent : Component
 {
@@ -17,5 +20,5 @@ public sealed partial class GhostAlertOnSpawnComponent : Component
     /// Lifetime of the ghost alert
     /// </summary>
     [DataField]
-    public TimeSpan AlertDelay = TimeSpan.FromSeconds(20);
+    public TimeSpan AlertDuration = TimeSpan.FromSeconds(20);
 }

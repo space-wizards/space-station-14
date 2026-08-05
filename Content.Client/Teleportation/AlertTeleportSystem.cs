@@ -4,7 +4,7 @@ using Content.Shared.Teleportation.Systems;
 
 namespace Content.Client.Teleportation.Systems;
 
-public sealed partial class ClientAlertTeleportSystem : AlertTeleportSystem
+public sealed partial class AlertTeleportSystem : SharedAlertTeleportSystem
 {
     [SubscribeLocalEvent]
     private void OnGetCounterAmount(Entity<AlertTeleportComponent> ent, ref GetGenericAlertCounterAmountEvent args)

@@ -57,7 +57,7 @@ public sealed partial class GhostRoleSystem : EntitySystem
     [Dependency] private SharedRoleSystem _roleSystem = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private PopupSystem _popupSystem = default!;
-    [Dependency] private AlertTeleportSystem _alertTeleport = default!;
+    [Dependency] private SharedAlertTeleportSystem _alertTeleport = default!;
 
     private uint _nextRoleIdentifier;
     private bool _needsUpdateGhostRoleCount = true;
@@ -321,8 +321,8 @@ public sealed partial class GhostRoleSystem : EntitySystem
         if (_ghostRoles.ContainsValue(role))
             return;
 
-        if (role.Comp.MakeGhostAlert && role.Comp.GhostAlert != null)
-            _alertTeleport.MakeTeleportAlert<GhostAlertsComponent>(role, role.Comp.GhostAlert.Value, role.Comp.GhostAlertDelay, role.Comp.GhostAlertSound);
+        if (role.Comp.GhostAlert != null)
+            _alertTeleport.MakeTeleportAlert<GhostAlertsComponent>(role, role.Comp.GhostAlert.Value, role.Comp.GhostAlertDuration, role.Comp.GhostAlertSound);
 
         _ghostRoles[role.Comp.Identifier = GetNextRoleIdentifier()] = role;
         UpdateAllEui();

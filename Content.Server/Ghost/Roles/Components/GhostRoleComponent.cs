@@ -108,22 +108,17 @@ public sealed partial class GhostRoleComponent : Component
     public ProtoId<JobPrototype>? JobProto = null;
 
     /// <summary>
-    /// Creates a Ghost alert when available to ghosts
-    /// </summary>
-    [DataField]
-    public bool MakeGhostAlert = false;
-
-    /// <summary>
     /// Creates an alert for ghosts.
+    /// can be null
     /// </summary>
     [DataField]
-    public ProtoId<AlertPrototype>? GhostAlert = "BaseGhostRoleAlert";
+    public ProtoId<AlertPrototype>? GhostAlert;
 
     /// <summary>
     /// Lifetime of the ghost alert
     /// </summary>
     [DataField]
-    public TimeSpan GhostAlertDelay = TimeSpan.FromSeconds(5);
+    public TimeSpan GhostAlertDuration = TimeSpan.FromSeconds(5);
 
     /// <summary>
     /// Sound of the ghost alert

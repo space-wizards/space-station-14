@@ -6,6 +6,9 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Teleportation.Components;
 
+/// <summary>
+/// Allows you to receive alerts with the ability to teleport to a specific entity.
+/// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class AlertTeleportComponent : Component
 {

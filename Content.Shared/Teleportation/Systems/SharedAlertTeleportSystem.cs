@@ -9,13 +9,35 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Teleportation.Systems;
 
-public abstract partial class AlertTeleportSystem : EntitySystem
+/// <summary>
+/// Allows you to create alerts with the ability to teleport to a specific entity in the presence of an <see cref="AlertTeleportEvent"/>.
+/// </summary>
+public abstract partial class SharedAlertTeleportSystem : EntitySystem
 {
     [Dependency] private FollowerSystem _follower = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private AlertsSystem _alerts = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedAudioSystem _audioSystem = default!;
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var query = EntityQueryEnumerator<AlertTeleportComponent>();
+        var curTime = _timing.CurTime;
+
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            foreach (var (alert, data) in comp.Targets)
+            {
+                if (data.EndTime <= curTime)
+                {
+                    comp.Targets.Remove(alert);
+                }
+            }
+        }
+    }
 
     [SubscribeLocalEvent]
     private void OnAlertTeleport(Entity<AlertTeleportComponent> ent, ref AlertTeleportEvent args)
@@ -55,9 +77,9 @@ public abstract partial class AlertTeleportSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnClearAlertEvent(Entity<AlertTeleportComponent> ent, ref ClearAlertEvent args)
+    private void OnAfterClearAlertEvent(Entity<AlertTeleportComponent> ent, ref ClearAlertEvent args)
     {
-        ent.Comp.Targets[args.AlertId].Targets.Clear();
+        ent.Comp.Targets.Remove(args.AlertId);
     }
 
     /// <summary>
@@ -84,10 +106,6 @@ public abstract partial class AlertTeleportSystem : EntitySystem
             comp.Targets.Add(alert, new AlertTeleportData());
 
         var data = comp.Targets[alert];
-
-        // Is it bad that we clean up unnecessary objects only when needed? I don't think
-        if (data.EndTime <= curTime)
-            data = default;
 
         if (data.Targets == null)
             data.Targets = new();

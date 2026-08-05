@@ -50,7 +50,7 @@ public sealed partial class NukeSystem : EntitySystem
     [Dependency] private AppearanceSystem _appearance = default!;
     [Dependency] private TurfSystem _turf = default!;
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private AlertTeleportSystem _alertTeleport = default!;
+    [Dependency] private SharedAlertTeleportSystem _alertTeleport = default!;
 
     /// <summary>
     /// Gives all the ghosts this alert when the nuclear bomb was armed

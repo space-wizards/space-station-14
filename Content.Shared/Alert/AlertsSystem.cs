@@ -277,12 +277,12 @@ public abstract partial class AlertsSystem : EntitySystem
     /// <summary>
     /// Invoked after showing an alert prior to dirtying the component
     /// </summary>
-    protected virtual void AfterShowAlert(Entity<AlertsComponent> alerts) { }
+    protected virtual void AfterShowAlert(Entity<AlertsComponent> ent) { }
 
     /// <summary>
     /// Invoked after clearing an alert prior to dirtying the component
     /// </summary>
-    protected virtual void AfterClearAlert(Entity<AlertsComponent> alerts) { }
+    protected virtual void AfterClearAlert(Entity<AlertsComponent> ent) { }
 
     private void OnAutoRemoveUnPaused(Entity<AlertAutoRemoveComponent> entity, ref EntityUnpausedEvent args)
     {
@@ -379,9 +379,7 @@ public abstract partial class AlertsSystem : EntitySystem
             return;
         }
 
-        var alertEvent = rightClick ? alert.RightClickEvent : alert.ClickEvent;
-
-        if (ActivateAlert(player.Value, alert, alertEvent) && _timing.IsFirstTimePredicted)
+        if (ActivateAlert(player.Value, alert, rightClick) && _timing.IsFirstTimePredicted)
         {
             HandledAlert();
         }
@@ -392,8 +390,9 @@ public abstract partial class AlertsSystem : EntitySystem
 
     }
 
-    public bool ActivateAlert(EntityUid user, AlertPrototype alert, BaseAlertEvent? alertEvent)
+    private bool ActivateAlert(EntityUid user, AlertPrototype alert, bool rightClick = false)
     {
+        var alertEvent = rightClick ? alert.RightClickEvent : alert.ClickEvent;
         if (alertEvent is not { } clickEvent)
             return false;
 
