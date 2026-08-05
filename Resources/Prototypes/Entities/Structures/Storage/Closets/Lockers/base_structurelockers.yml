@@ -25,24 +25,6 @@
       sprite: Structures/Storage/closet_labels.rsi
       offset: "-0.065,0"
       map: ["enum.PaperLabelVisuals.Layer"]
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 50
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
-          params:
-            volume: -6
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          SheetSteel1:
-            min: 1
-            max: 2
   - type: Construction
     graph: ClosetSteelSecure
     node: done
@@ -50,12 +32,6 @@
     - entity_storage
   - type: Paintable
     group: Locker
-
-- type: entity
-  id: LockerBaseSecure
-  parent: LockerBase
-  abstract: true
-  components:
   - type: Damageable
     damageModifierSet: StructuralMetallic
   - type: Injurable

@@ -1,9 +1,9 @@
 - type: entity
+  abstract: true
   parent: BaseStructure
   id: BaseFenceWood
   name: wooden fence
   description: Wooden piece of fencing. I hope there is babushka's garden behind it.
-  abstract: true
   components:
   - type: MeleeSound
     soundGroups:
@@ -28,6 +28,15 @@
     cost: 2
     delay: 2
     fx: EffectRCDDeconstruct2
+  - type: Climbable
+    delay: 5.0
+  - type: Appearance
+
+- type: entity
+  abstract: true
+  parent: BaseFenceWood
+  id: BaseFenceWoodHigh
+  components:
   - type: Destructible
     thresholds:
     - trigger:
@@ -44,16 +53,13 @@
             max: 2
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: Climbable
-    delay: 5.0
-  - type: Appearance
 
 - type: entity
+  abstract: true
   parent: BaseFenceWood
   id: BaseFenceWoodSmall
   name: small wooden fence
   description: Wooden piece of small fence. The best protection for the fencing of a private territory!
-  abstract: true
   components:
   - type: Destructible
     thresholds:
@@ -75,9 +81,9 @@
     delay: 2.5
   - type: RequireProjectileTarget
 
-#High
+#region High
 - type: entity
-  parent: BaseFenceWood
+  parent: BaseFenceWoodHigh
   id: FenceWoodHighStraight
   suffix: Straight
   components:
@@ -106,7 +112,7 @@
     node: straight
 
 - type: entity
-  parent: BaseFenceWood
+  parent: BaseFenceWoodHigh
   id: FenceWoodHighEnd
   suffix: End
   components:
@@ -135,7 +141,7 @@
     node: end
 
 - type: entity
-  parent: BaseFenceWood
+  parent: BaseFenceWoodHigh
   id: FenceWoodHighCorner
   suffix: Corner
   components:
@@ -173,7 +179,7 @@
     node: corner
 
 - type: entity
-  parent: BaseFenceWood
+  parent: BaseFenceWoodHigh
   id: FenceWoodHighTJunction
   suffix: T-Junction
   components:
@@ -211,7 +217,7 @@
     node: tjunction
 
 - type: entity
-  parent: BaseFenceWood
+  parent: BaseFenceWoodHigh
   id: FenceWoodHighGate
   name: wooden fence gate
   description: Do you have any idea what awaits you behind these gates? It can be either a toilet or a luxurious mansion. But you continue to love your emo boys.
@@ -258,7 +264,9 @@
     graph: FenceWood
     node: gate
 
-#Small
+#endregion
+#region Small
+
 - type: entity
   parent: BaseFenceWoodSmall
   id: FenceWoodSmallStraight
@@ -435,3 +443,5 @@
   - type: Construction
     graph: FenceWood
     node: gate_small
+
+#endregion

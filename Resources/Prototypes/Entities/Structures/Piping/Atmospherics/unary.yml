@@ -217,7 +217,7 @@
     - type: NodeCrawlVentAccess
 
 - type: entity
-  parent: [ BaseMachinePowered, ConstructibleMachine, CrawlablePipeNode ]
+  parent: [ BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible, CrawlablePipeNode ]
   id: BaseGasThermoMachine
   name: thermomachine
   abstract: true
@@ -392,7 +392,7 @@
     board: HellfireHeaterMachineCircuitBoard
 
 - type: entity
-  parent: [ SolutionTank, SolutionHuge, BaseMachinePowered, SmallConstructibleMachine, CrawlablePipeNode ]
+  parent: [ SolutionTank, SolutionHuge, BaseMachinePowered, SmallConstructibleMachine, BaseSmallConstructibleMachineDestructible, CrawlablePipeNode ]
   id: BaseGasCondenser
   name: condenser
   description: Condenses gases into liquids. Now we just need some plumbing.
@@ -449,8 +449,6 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
       - !type:SpillBehavior
         solution: tank
       - !type:PlaySoundBehavior

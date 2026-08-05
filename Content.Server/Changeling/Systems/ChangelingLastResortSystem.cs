@@ -5,6 +5,7 @@ using Content.Shared.Changeling.Components;
 using Content.Shared.Changeling.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Humanoid;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Mind;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
@@ -36,7 +37,7 @@ public sealed partial class ChangelingLastResortSystem : SharedChangelingLastRes
         args.Handled = true;
 
         Audio.PlayPvs(ent.Comp.Sound, ent.Owner);
-        _popup.PopupEntity(Loc.GetString("changeling-takeover-start-others", ("user", ent.Owner)),
+        _popup.PopupEntity(Loc.GetString("changeling-takeover-start-others", ("user", Identity.Entity(ent.Owner, EntityManager))),
             ent.Owner,
             PopupType.MediumCaution);
 

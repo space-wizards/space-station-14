@@ -249,9 +249,9 @@ namespace Content.Shared.Containers.ItemSlots
                 //
                 // doing a check to make sure that they're all the same or something is probably frivolous
                 if (lockedFailPopup != null)
-                    _popupSystem.PopupClient(Loc.GetString(lockedFailPopup), uid, args.User);
+                    _popupSystem.PopupEntity(Loc.GetString(lockedFailPopup), uid, args.User);
                 else if (whitelistFailPopup != null)
-                    _popupSystem.PopupClient(Loc.GetString(whitelistFailPopup), uid, args.User);
+                    _popupSystem.PopupEntity(Loc.GetString(whitelistFailPopup), uid, args.User);
                 return;
             }
 
@@ -269,7 +269,7 @@ namespace Content.Shared.Containers.ItemSlots
                 Insert(uid, slot, args.Used, args.User, excludeUserAudio: true);
 
                 if (slot.InsertSuccessPopup.HasValue)
-                    _popupSystem.PopupClient(Loc.GetString(slot.InsertSuccessPopup), uid, args.User);
+                    _popupSystem.PopupEntity(Loc.GetString(slot.InsertSuccessPopup), uid, args.User);
 
                 args.Handled = true;
                 return;
@@ -519,7 +519,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (slot.Locked)
             {
                 if (popup.HasValue && slot.LockedFailPopup.HasValue)
-                    _popupSystem.PopupClient(Loc.GetString(slot.LockedFailPopup), uid, popup.Value);
+                    _popupSystem.PopupEntity(Loc.GetString(slot.LockedFailPopup), uid, popup.Value);
                 return false;
             }
 
