@@ -39,27 +39,17 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
             var getRandomVector = () => new Vector2(system.Random.NextFloat(-Offset, Offset), system.Random.NextFloat(-Offset, Offset));
 
             BaseContainer? containingContainer = null;
-            StorageComponent? containingStorage = null;
             ItemStorageLocation? storageLocation = null;
             if (SpawnInContainer && SpawnAfter <= 0)
             {
                 var containerSystem = system.EntityManager.System<SharedContainerSystem>();
                 if (containerSystem.TryGetContainingContainer((owner, null, null), out var container))
                 {
-                    if (container.ID == StorageComponent.ContainerId &&
-                        system.EntityManager.HasComponent<StorageComponent>(container.Owner))
+                    // Removing the entity clears this location, so save it first.
+                    if (system.EntityManager.System<SharedStorageSystem>()
+                        .TryGetStorageLocation((owner, null), out _, out _, out var location))
                     {
-                        var storageSystem = system.EntityManager.System<SharedStorageSystem>();
-                        // Removing the entity clears this location, so save it first.
-                        if (storageSystem.TryGetStorageLocation(
-                                (owner, null),
-                                out _,
-                                out var storage,
-                                out var location))
-                        {
-                            containingStorage = storage;
-                            storageLocation = location;
-                        }
+                        storageLocation = location;
                     }
 
                     if (containerSystem.Remove(owner, container, force: true))
@@ -81,10 +71,9 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                     containingContainer.ID);
 
                 if (storageLocation is { } location &&
-                    containingStorage != null &&
                     system.EntityManager.System<SharedStorageSystem>().TrySetItemStorageLocation(
                         (spawned, null),
-                        (containingContainer.Owner, containingStorage),
+                        (containingContainer.Owner, null),
                         location))
                 {
                     // Only one replacement can occupy the destroyed entity's old location.
