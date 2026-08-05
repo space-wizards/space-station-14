@@ -247,8 +247,6 @@ public sealed partial class DeviceNetworkSystem
         RemoveFromNetwork(ent, deviceNet.Value);
         ent.Comp.CustomAddress = true;
         ent.Comp.Data.AddressId = address;
-        if (prefix != null)
-            ent.Comp.Prefix = prefix;
         AddToNetwork(ent, deviceNet.Value);
 
         var ev = new DeviceAddressChangedEvent(oldAddress, address, oldPrefix, ent.Comp.Prefix, ent.Comp.CustomAddress);
