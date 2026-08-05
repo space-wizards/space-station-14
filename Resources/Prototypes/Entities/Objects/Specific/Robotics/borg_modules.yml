@@ -1570,9 +1570,9 @@
     components:
     - type: Electrified
       requirePower: false
-      shockDamage: 10
-      shockDelay: 10
-      shockTime: 1.5
+      shockDamage: 15
+      shockDelay: 12
+      shockTime: 0.25
 
 - type: entity
   parent: [ BaseXenoborgModuleHeavy, BaseProviderBorgModule, BaseXenoborgContraband ]
