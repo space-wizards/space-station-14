@@ -117,7 +117,7 @@
     - MindRoleLoneops
     makeGhostAlert: true
     ghostAlert: NukeOp
-    ghostAlertSound:
+    ghostAlertSound: &BaseGhostAlertSound
       path: /Audio/Misc/ghost_alert.ogg
       params:
         volume: -5
