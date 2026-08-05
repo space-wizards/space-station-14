@@ -14,7 +14,7 @@ public sealed partial class XATEmoteComponent : Component
     /// List of accepted emotes.
     /// </summary>
     [DataField(required: true), AutoNetworkedField]
-    public List<ProtoId<EmotePrototype>> Emotes;
+    public List<ProtoId<EmotePrototype>> Emotes = new();
 
     /// <summary>
     /// Range within which artifact reacts to emote events.
