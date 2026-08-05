@@ -34,7 +34,13 @@ public abstract partial class SharedMoverController
     protected virtual void OnInputMoverCanMoveUpdated(Entity<InputMoverComponent> ent, ref CanMoveUpdatedEvent args)
     {
         if (!args.CanMove)
-            SetMoveInput(ent, MoveButtons.None);
+        {
+            // Remove from active mover query when entity cannot move
+            RemCompDeferred<ActiveInputMoverComponent>(ent);
+            return;
+        }
+
+        UpdateMoverStatus((ent, ent.Comp));
     }
 
     /// <summary>
@@ -122,17 +128,17 @@ public abstract partial class SharedMoverController
         PhysicsSystem.UpdateIsPredicted(entity.Owner);
         PhysicsSystem.UpdateIsPredicted(entity.Comp.Source);
 
-        if (Timing.ApplyingState)
-            return;
-
         if (MoverQuery.TryComp(entity.Owner, out var inputMover))
             SetMoveInput((entity.Owner, inputMover), MoveButtons.None);
 
-        if (RelayQuery.TryComp(entity.Comp.Source, out var relay) && relay.LifeStage <= ComponentLifeStage.Running)
-        {
-            RemComp(entity.Comp.Source, relay);
-            RaiseEffectiveMoverChanged(entity.Comp.Source, entity.Owner, entity.Comp.Source);
-        }
+        if (Timing.ApplyingState)
+            return;
+
+        if (!RelayQuery.TryComp(entity.Comp.Source, out var relay) ||
+            relay.LifeStage > ComponentLifeStage.Running) return;
+
+        RemComp(entity.Comp.Source, relay);
+        RaiseEffectiveMoverChanged(entity.Comp.Source, entity.Owner, entity.Comp.Source);
     }
 
     protected virtual void UpdateMoverStatus(Entity<InputMoverComponent?, MovementRelayTargetComponent?> ent) { }

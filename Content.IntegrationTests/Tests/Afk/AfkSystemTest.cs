@@ -77,9 +77,11 @@ public sealed class AfkSystemTest : GameTest
         await Server.WaitAssertion(() =>
         {
             session = GetSession();
-            _cfg.SetCVar(CCVars.AfkConfirmTimeout, 0.01f);
 
-            Assert.That(_afkConfirm.TryStartConfirmation(session), Is.True);
+            _afkConfirm.AddConfirmationForTest(session, TimeSpan.Zero);
+            Assert.That(_afkConfirm.HasConfirmation(session), Is.True);
+
+            _afkConfirm.Update(0);
         });
 
         await RunTicksSync(5);
