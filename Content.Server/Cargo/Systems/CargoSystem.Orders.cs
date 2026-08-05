@@ -154,19 +154,9 @@ namespace Content.Server.Cargo.Systems
             }
 
             var station = _station.GetOwningStation(uid);
-            // No station entity
-            if (station is null)
-            {
-                _popup.PopupCursor(Loc.GetString("cargo-console-station-not-found"), args.Actor);
-                PlayDenySound(uid, component);
-                return;
-            }
-
-            var stationGrid = _station.GetLargestGrid(station.Value);
 
             // No station to deduct from.
-            if (stationGrid == null ||
-                Transform(stationGrid.Value).MapID != Transform(uid).MapID ||
+            if (!OnSameMap(uid, station) ||
                 !TryComp(station, out StationBankAccountComponent? bank) ||
                 !TryComp(station, out StationDataComponent? stationData) ||
                 !TryGetOrderDatabase(station, out var orderDatabase))
@@ -273,6 +263,16 @@ namespace Content.Server.Cargo.Systems
             UpdateBankAccount((station.Value, bank), -cost, order.Account);
             UpdateOrders(station.Value);
         }
+
+        private bool OnSameMap(EntityUid uid, EntityUid? station)
+        {
+            if (station is null ||
+                _station.GetLargestGrid(station.Value) is not { } stationGrid)
+                return false;
+
+            return Transform(stationGrid).MapID == Transform(uid).MapID;
+        }
+
 
         private EntityUid? TryFulfillOrder(Entity<StationDataComponent> stationData, ProtoId<CargoAccountPrototype> account, CargoOrderData order, StationCargoOrderDatabaseComponent orderDatabase)
         {
