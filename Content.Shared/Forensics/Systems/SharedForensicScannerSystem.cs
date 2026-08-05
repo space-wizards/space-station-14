@@ -77,14 +77,13 @@ public sealed partial class SharedForensicScannerSystem : EntitySystem
 
             scanner.Comp.LastScannedName = Identity.Name(args.Args.Target.Value, EntityManager, args.Args.User);
 
-            Dirty(scanner);
-            //DirtyFields(scanner.AsNullable(),
-                //null,
-                //nameof(ForensicScannerComponent.Fingerprints),
-                //nameof(ForensicScannerComponent.Fibers),
-                //nameof(ForensicScannerComponent.DNAs),
-                //nameof(ForensicScannerComponent.Residues),
-                //nameof(ForensicScannerComponent.LastScannedName));
+            DirtyFields(scanner.AsNullable(),
+                null,
+                nameof(ForensicScannerComponent.Fingerprints),
+                nameof(ForensicScannerComponent.Fibers),
+                nameof(ForensicScannerComponent.DNAs),
+                nameof(ForensicScannerComponent.Residues),
+                nameof(ForensicScannerComponent.LastScannedName));
         }
 
         OpenUserInterface(args.Args.User, scanner);
@@ -243,18 +242,17 @@ public sealed partial class SharedForensicScannerSystem : EntitySystem
 
         scanner.Comp.PrintReadyAt = _gameTiming.CurTime + scanner.Comp.PrintCooldown;
 
-        UpdateUi(scanner);
+        DirtyFields(scanner.AsNullable(),
+            null,
+            nameof(ForensicScannerComponent.PrintReadyAt),
+            nameof(ForensicScannerComponent.LastScannedName),
+            nameof(ForensicScannerComponent.Fibers),
+            nameof(ForensicScannerComponent.Fingerprints),
+            nameof(ForensicScannerComponent.DNAs),
+            nameof(ForensicScannerComponent.SolutionDNAs),
+            nameof(ForensicScannerComponent.Residues));
 
-        Dirty(scanner);
-        //DirtyFields(scanner.AsNullable(),
-            //null,
-            //nameof(ForensicScannerComponent.PrintReadyAt),
-            //nameof(ForensicScannerComponent.LastScannedName),
-            //nameof(ForensicScannerComponent.Fibers),
-            //nameof(ForensicScannerComponent.Fingerprints),
-            //nameof(ForensicScannerComponent.DNAs),
-            //nameof(ForensicScannerComponent.SolutionDNAs),
-            //nameof(ForensicScannerComponent.Residues));
+        UpdateUi(scanner);
     }
 
     [SubscribeLocalEvent]
@@ -266,14 +264,13 @@ public sealed partial class SharedForensicScannerSystem : EntitySystem
         scanner.Comp.SolutionDNAs = new();
         scanner.Comp.LastScannedName = string.Empty;
 
-        Dirty(scanner);
-        //DirtyFields(scanner.AsNullable(),
-            //null,
-            //nameof(ForensicScannerComponent.Fingerprints),
-            //nameof(ForensicScannerComponent.Fibers),
-            //nameof(ForensicScannerComponent.DNAs),
-            //nameof(ForensicScannerComponent.SolutionDNAs),
-            //nameof(ForensicScannerComponent.LastScannedName));
+        DirtyFields(scanner.AsNullable(),
+            null,
+            nameof(ForensicScannerComponent.Fingerprints),
+            nameof(ForensicScannerComponent.Fibers),
+            nameof(ForensicScannerComponent.DNAs),
+            nameof(ForensicScannerComponent.SolutionDNAs),
+            nameof(ForensicScannerComponent.LastScannedName));
 
         UpdateUi(scanner);
     }
