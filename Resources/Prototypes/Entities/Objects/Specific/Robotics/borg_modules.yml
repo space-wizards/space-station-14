@@ -1699,6 +1699,35 @@
         path: /Audio/Ambience/Objects/xenoborg_radioactive.ogg
 
 - type: entity
+  parent: [ BaseXenoborgModuleEngi, BaseXenoborgContraband ]
+  id: XenoborgModuleEngiArmor
+  name: armor xenoborg module
+  description: Up armor! Installs some flexible armor
+  components:
+  - type: Sprite
+    layers:
+    - state: xenoborg_engi
+    - state: icon-xenoborg-armor
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.9
+        Piercing: 0.9
+      flatReductions:
+        Slash: 1
+        Piercing: 1
+  - type: ComponentBorgModule
+    components:
+    - type: SimpleSpriteOverlay
+      overlaySprite:
+        sprite: Mobs/Silicon/chassis.rsi
+        state: xenoborg_engi_armor
+    - type: Reflect
+      reflects:
+      - NonEnergy
+      reflectProb: 0.20
+
+- type: entity
   parent: [ BaseXenoborgModuleScout, BaseProviderBorgModule, BaseXenoborgContraband ]
   id: XenoborgModuleSpaceMovement
   name: space movement xenoborg module

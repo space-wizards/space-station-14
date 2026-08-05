@@ -530,6 +530,10 @@
             "directions": 4
         },
         {
+            "name": "xenoborg_engi_armor",
+            "directions": 4
+        },
+        {
             "name": "xenoborg_scout",
             "directions": 4
         },
