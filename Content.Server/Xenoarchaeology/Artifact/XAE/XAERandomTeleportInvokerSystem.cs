@@ -1,10 +1,12 @@
+using Content.Server.Xenoarchaeology.Artifact.XAE.Components;
 using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
-using Content.Shared.Xenoarchaeology.Artifact.XAE.Components;
-using Robust.Shared.Timing;
+using Content.Shared.Xenoarchaeology.Artifact;
+using Content.Shared.Xenoarchaeology.Artifact.XAE;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Timing;
 
-namespace Content.Shared.Xenoarchaeology.Artifact.XAE;
+namespace Content.Server.Xenoarchaeology.Artifact.XAE;
 
 /// <summary>
 /// System for teleporting artifact activator into random position.
@@ -21,6 +23,7 @@ public sealed partial class XAERandomTeleportInvokerSystem : BaseXAESystem<XAERa
     {
         var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent));
 
+        // todo: for prediction we need to have delay between activation and make a viewersub at a target spot
         // todo: teleport person who activated artifact with artifact itself
         var component = ent.Comp;
 
