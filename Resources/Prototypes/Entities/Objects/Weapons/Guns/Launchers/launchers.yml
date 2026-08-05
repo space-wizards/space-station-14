@@ -6,8 +6,6 @@
   description: A rooty tooty point and shooty.
   components:
   - type: Sprite
-  - type: Item
-    size: Ginormous
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
@@ -17,6 +15,10 @@
     quickEquip: false
     slots:
     - Back
+  - type: Item
+    size: Ginormous
+    shape:
+      - 0,0,6,3
   - type: StaticPrice
     price: 500
   - type: Gun
@@ -227,13 +229,13 @@
   - type: GrapplingGun
   - type: Gun
     soundGunshot: /Audio/Weapons/Guns/Gunshots/harpoon.ogg
-    fireRate: 0.5
+    fireRate: 1
     clumsyProof: true
   - type: BasicEntityAmmoProvider
     proto: GrapplingHook
     capacity: 1
   - type: UseDelay
-    delay: 1.5
+    delay: 0.5
   - type: Appearance
   - type: GenericVisualizer
     visuals:

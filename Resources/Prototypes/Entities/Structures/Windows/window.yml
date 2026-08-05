@@ -1,6 +1,7 @@
 - type: entity
-  id: Window
+  abstract: true
   parent: [BaseDeltaPressureGlass, BaseStructure]
+  id: BaseWindowStructure
   name: window
   description: Don't smudge up the glass down there.
   placement:
@@ -20,14 +21,10 @@
     arc: 360 # interact despite grilles
   - type: Tag
     tags:
-      - ForceFixRotations
-      - Window
+    - ForceFixRotations
+    - Window
   - type: Sprite
     drawdepth: WallTops
-    sprite: Structures/Windows/window.rsi
-  - type: Icon
-    sprite: Structures/Windows/window.rsi
-    state: full
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -39,10 +36,6 @@
         - FullTileMask
         layer:
         - GlassLayer
-  - type: Damageable
-    damageModifierSet: Glass
-  - type: Injurable
-    damageContainer: StructuralInorganic
   - type: ExaminableDamage
     messages: WindowMessages
   - type: Repairable
@@ -50,22 +43,6 @@
     cost: 6
     delay: 4
     fx: EffectRCDDeconstruct4
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 50
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WindowShatter
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          ShardGlass:
-            min: 1
-            max: 2
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: Airtight
   - type: IconSmooth
     key: windows
@@ -90,6 +67,36 @@
   - type: BlockWeather
 
 - type: entity
+  parent: BaseWindowStructure
+  id: Window
+  components:
+  - type: Sprite
+    sprite: Structures/Windows/window.rsi
+  - type: Icon
+    sprite: Structures/Windows/window.rsi
+    state: full
+  - type: Damageable
+    damageModifierSet: Glass
+  - type: Injurable
+    damageContainer: StructuralInorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WindowShatter
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
   parent: Window
   id: TintedWindow
   name: tinted window
@@ -109,16 +116,21 @@
     price: 70
 
 - type: entity
-  id: WindowRCDResistant
-  parent: Window
   abstract: true
+  id: BaseRCDResistant
   components:
   - type: RCDDeconstructable
     deconstructable: false
 
 - type: entity
-  id: WindowDirectional
+  abstract: true
+  parent: [Window, BaseRCDResistant]
+  id: WindowRCDResistant
+
+- type: entity
+  abstract: true
   parent: [BaseDeltaPressureGlassQuarter, BaseStructure]
+  id: BaseWindowStructureDirectional
   name: directional window
   description: Don't smudge up the glass down there.
   placement:
@@ -130,18 +142,13 @@
     arc: 360 # interact despite grilles
   - type: Tag
     tags:
-      - Window
+    - Window
   - type: MeleeSound
     soundGroups:
       Brute:
         collection: GlassSmack
   - type: Sprite
     drawdepth: Mobs
-    sprite: Structures/Windows/directional.rsi
-    state: window
-  - type: Icon
-    sprite: Structures/Windows/directional.rsi
-    state: window
   - type: InteractionPopup
     interactSuccessString: comp-window-knock
     messagePerceivedByOthers: comp-window-knock
@@ -160,16 +167,42 @@
         layer:
         - GlassLayer
   - type: Repairable
-  - type: Damageable
-    damageModifierSet: Glass
-  - type: Injurable
-    damageContainer: StructuralInorganic
   - type: ExaminableDamage
     messages: WindowMessages
   - type: RCDDeconstructable
     cost: 4
     delay: 2
     fx: EffectRCDDeconstruct2
+  - type: Airtight
+    noAirWhenFullyAirBlocked: false
+    airBlockedDirection:
+    - South
+  - type: Appearance
+  - type: DamageVisuals
+    thresholds: [5, 10, 20]
+    trackAllDamage: true
+    damageOverlay:
+      sprite: Structures/Windows/cracks_directional.rsi
+  - type: StaticPrice
+    price: 15
+  - type: Construction
+    graph: WindowDirectional
+    node: windowDirectional
+
+- type: entity
+  parent: BaseWindowStructureDirectional
+  id: WindowDirectional
+  components:
+  - type: Sprite
+    sprite: Structures/Windows/directional.rsi
+    state: window
+  - type: Icon
+    sprite: Structures/Windows/directional.rsi
+    state: window
+  - type: Damageable
+    damageModifierSet: Glass
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -186,29 +219,11 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: Airtight
-    noAirWhenFullyAirBlocked: false
-    airBlockedDirection:
-    - South
-  - type: Construction
-    graph: WindowDirectional
-    node: windowDirectional
-  - type: Appearance
-  - type: DamageVisuals
-    thresholds: [5, 10, 20]
-    trackAllDamage: true
-    damageOverlay:
-      sprite: Structures/Windows/cracks_directional.rsi
-  - type: StaticPrice
-    price: 15
 
 - type: entity
-  id: WindowDirectionalRCDResistant
-  parent: WindowDirectional
   abstract: true
-  components:
-  - type: RCDDeconstructable
-    deconstructable: false
+  parent: [WindowDirectional, BaseRCDResistant]
+  id: WindowDirectionalRCDResistant
 
 - type: entity
   id: WindowFrostedDirectional

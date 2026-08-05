@@ -880,10 +880,11 @@ public sealed partial class ChatUIController : UIController
                 break;
 
             case ChatChannel.Dead:
-                if (_ghost is not {IsGhost: true})
+                if (_ghost is not { IsGhost: true})
                     break;
 
-                AddSpeechBubble(msg, SpeechBubble.SpeechType.Say);
+                if (_ghost.GhostVisibility)
+                    AddSpeechBubble(msg, SpeechBubble.SpeechType.Say);
                 break;
 
             case ChatChannel.Emotes:

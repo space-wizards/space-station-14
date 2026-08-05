@@ -12,7 +12,7 @@ namespace Content.Shared.Tools.Components;
 /// Used for something that can be refined by welder.
 /// For example, glass shard can be refined to glass sheet.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(ToolRefinablSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(ToolRefinableSystem))]
 public sealed partial class ToolRefinableComponent : Component
 {
     /// <summary>
