@@ -149,10 +149,10 @@ public partial class MobStateSystem
         if (ent.Comp.LastReceivedState == ent.Comp.CurrentState)
             return;
 
-        var ev = new MobStateChangedEvent(ent, ent.Comp, ent.Comp.LastReceivedState, ent.Comp.CurrentState);
+        /*var ev = new MobStateChangedEvent(ent, ent.Comp, ent.Comp.LastReceivedState, ent.Comp.CurrentState);
         OnStateChanged(ent, ent.Comp, ent.Comp.LastReceivedState, ent.Comp.CurrentState);
         RaiseLocalEvent(ent, ev, true);
-        ent.Comp.LastReceivedState = ent.Comp.CurrentState;
+        ent.Comp.LastReceivedState = ent.Comp.CurrentState;*/
     }
 
     [SubscribeLocalEvent]
