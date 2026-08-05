@@ -8,19 +8,14 @@ namespace Content.Shared.NodeCrawl;
 /// </summary>
 public sealed partial class NodeCrawlCrawlerSystem : EntitySystem
 {
-    public override void Initialize()
-    {
-        base.Initialize();
-        SubscribeLocalEvent<NodeCrawlerComponent, CanNodeCrawlEvent>(OnCanNodeCrawl);
-        SubscribeLocalEvent<NodeCrawlerComponent, InventoryRelayedEvent<CanNodeCrawlEvent>>(OnCanNodeCrawlInventory);
-    }
-
+    [SubscribeLocalEvent]
     private void OnCanNodeCrawl(Entity<NodeCrawlerComponent> ent, ref CanNodeCrawlEvent args)
     {
         args.User = ent.Owner;
         args.Crawler = ent;
     }
 
+    [SubscribeLocalEvent]
     private void OnCanNodeCrawlInventory(Entity<NodeCrawlerComponent> ent, ref InventoryRelayedEvent<CanNodeCrawlEvent> args)
     {
         if (!ent.Comp.Relay)

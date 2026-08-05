@@ -25,11 +25,66 @@ public sealed partial class NodeCrawlSystem : SharedNodeCrawlSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<CrawlableNodeComponent, NodeGroupsRebuilt>(OnNodeGroupsRebuilt);
-
         SubscribeLocalEvent<NodeCrawlerComponent, InhaleLocationEvent>(OnInhaleLocation, after: [typeof(InternalsSystem)]);
-        SubscribeLocalEvent<NodeCrawlerComponent, ExhaleLocationEvent>(OnExhaleLocation);
-        SubscribeLocalEvent<NodeCrawlerComponent, AtmosExposedGetAirEvent>(OnGetAir);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnExhaleLocation(Entity<NodeCrawlerComponent> ent, ref ExhaleLocationEvent args)
+    {
+        if (GetAir(ent) is not { } air)
+            return;
+
+        args.Gas = air;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnGetAir(Entity<NodeCrawlerComponent> ent, ref AtmosExposedGetAirEvent args)
+    {
+        if (args.Handled || GetAir(ent) is not { } air)
+            return;
+
+        args.Gas = air;
+        args.Handled = true;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnNodeGroupsRebuilt(Entity<CrawlableNodeComponent> ent, ref NodeGroupsRebuilt args)
+    {
+        if (!TryComp<NodeContainerComponent>(ent, out var nodeContainer))
+            return;
+
+        // TODO ugly workaround for https://github.com/space-wizards/RobustToolbox/issues/6694 not letting List<Type>
+        // get serialized properly
+        var possibleTypes = ent.Comp.ReachableNodeTypes.Select(it => _reflection.GetType(it)).ToList();
+
+        ent.Comp.DeadEnd = false;
+        var reachableNodes = new List<EntityUid>();
+        foreach (var node in nodeContainer.Nodes.Values)
+        {
+            foreach (var reachable in node.ReachableNodes)
+            {
+                if (possibleTypes.Count != 0 && !possibleTypes.Any(type => type?.IsInstanceOfType(reachable) == true))
+                {
+                    continue;
+                }
+
+                DebugTools.Assert(HasComp<CrawlableNodeComponent>(reachable.Owner),
+                    $"Node {ToPrettyString(reachable.Owner)} reachable from {ToPrettyString(ent)} should be a crawlable node, but wasn't");
+
+                if (!reachableNodes.Contains(reachable.Owner))
+                    reachableNodes.Add(reachable.Owner);
+            }
+
+            if (node is PipeNode pipeNode &&
+                node.ReachableNodes.Count < BitOperations.PopCount((uint)pipeNode.CurrentPipeDirection))
+            {
+                ent.Comp.DeadEnd = true;
+            }
+        }
+
+        ent.Comp.DeadEnd |= reachableNodes.Count == 0;
+        ent.Comp.ReachableNodes = reachableNodes;
+        Dirty(ent);
     }
 
     /// <summary>
@@ -167,58 +222,5 @@ public sealed partial class NodeCrawlSystem : SharedNodeCrawlSystem
             return;
 
         args.Gas = air;
-    }
-
-    private void OnExhaleLocation(Entity<NodeCrawlerComponent> ent, ref ExhaleLocationEvent args)
-    {
-        if (GetAir(ent) is not { } air)
-            return;
-
-        args.Gas = air;
-    }
-
-    private void OnGetAir(Entity<NodeCrawlerComponent> ent, ref AtmosExposedGetAirEvent args)
-    {
-        if (args.Handled || GetAir(ent) is not { } air)
-            return;
-
-        args.Gas = air;
-        args.Handled = true;
-    }
-
-    private void OnNodeGroupsRebuilt(Entity<CrawlableNodeComponent> ent, ref NodeGroupsRebuilt args)
-    {
-        if (!TryComp<NodeContainerComponent>(ent, out var nodeContainer))
-            return;
-
-        // TODO ugly workaround for https://github.com/space-wizards/RobustToolbox/issues/6694 not letting List<Type>
-        // get serialized properly
-        var possibleTypes = ent.Comp.ReachableNodeTypes.Select(it => _reflection.GetType(it)).ToList();
-
-        ent.Comp.DeadEnd = false;
-        var set = new HashSet<EntityUid>();
-        foreach (var node in nodeContainer.Nodes.Values)
-        {
-            foreach (var reachable in node.ReachableNodes)
-            {
-                if (possibleTypes.Count != 0 && !possibleTypes.TrueForAll(type => reachable.GetType() == type))
-                {
-                    continue;
-                }
-
-                DebugTools.Assert(HasComp<CrawlableNodeComponent>(reachable.Owner), $"Node {ToPrettyString(reachable.Owner)} reachable from {ToPrettyString(ent)} should be a crawlable node, but wasn't");
-
-                set.Add(reachable.Owner);
-            }
-
-            if (node is PipeNode pipeNode &&
-                node.ReachableNodes.Count < BitOperations.PopCount((uint)pipeNode.CurrentPipeDirection))
-            {
-                ent.Comp.DeadEnd = true;
-            }
-        }
-
-        ent.Comp.ReachableNodes = set;
-        Dirty(ent);
     }
 }

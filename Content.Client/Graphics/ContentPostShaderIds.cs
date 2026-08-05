@@ -8,6 +8,7 @@ public static class ContentPostShaderIds
     public const string InteractionOutline = "interaction-outline";
     public const string TargetOutline = "target-outline";
     public const string DragDropOutline = "drag-drop-outline";
+    public const string NodeCrawlOutline = "node-crawl-outline";
 
     public static readonly string[] BeforeOutlines =
     {

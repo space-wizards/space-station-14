@@ -12,7 +12,7 @@ namespace Content.Shared.NodeCrawl;
 /// This is used for entities that enter vents themselves (such as mice).
 /// If you want to see the entity movement is relayed to check <see cref="NodeCrawlerMovementComponent"/>
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(raiseAfterAutoHandleState: true, fieldDeltas: true)]
 [Access(typeof(SharedNodeCrawlSystem))]
 public sealed partial class NodeCrawlerComponent : Component
 {

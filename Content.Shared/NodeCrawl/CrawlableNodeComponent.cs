@@ -5,7 +5,7 @@ namespace Content.Shared.NodeCrawl;
 /// <summary>
 /// Represents an entity in a node network that can be crawled in
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(raiseAfterAutoHandleState: true, fieldDeltas: true)]
 [Access(typeof(SharedNodeCrawlSystem), typeof(NodeCrawlerMovementSystem))]
 public sealed partial class CrawlableNodeComponent : Component
 {
@@ -19,7 +19,7 @@ public sealed partial class CrawlableNodeComponent : Component
     /// Other entities with <see cref="CrawlableNodeComponent" /> that can be reached from this one
     /// </summary>
     [ViewVariables, AutoNetworkedField]
-    public HashSet<EntityUid> ReachableNodes = [];
+    public List<EntityUid> ReachableNodes = [];
 
     /// <summary>
     /// Whether this node has an unconnected node and should be exited from on movement

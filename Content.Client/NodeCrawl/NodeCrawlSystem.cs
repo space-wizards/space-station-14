@@ -26,13 +26,6 @@ public sealed partial class NodeCrawlSystem : SharedNodeCrawlSystem
 
     public override void Initialize()
     {
-        base.Initialize();
-
-        SubscribeLocalEvent<NodeCrawlerComponent, LocalPlayerAttachedEvent>(OnAttached);
-        SubscribeLocalEvent<NodeCrawlerComponent, LocalPlayerDetachedEvent>(OnDetached);
-        SubscribeLocalEvent<NodeCrawlerComponent, AfterAutoHandleStateEvent>(OnAfterAutoHandleState);
-        SubscribeLocalEvent<CrawlableNodeComponent, GetSubFloorRevealEvent>(OnGetSubFloorReveal);
-
         var outlineShader = _prototypeManager.Index(new ProtoId<ShaderPrototype>(OutlineShaderId)).InstanceUnique();
         _pipeOverlay = new NodeCrawlPipeOverlay(EntityManager, this, outlineShader);
     }
@@ -62,16 +55,22 @@ public sealed partial class NodeCrawlSystem : SharedNodeCrawlSystem
         QueueAppearanceUpdates(_reachableNodes);
     }
 
+    [SubscribeLocalEvent]
     private void OnAttached(Entity<NodeCrawlerComponent> ent, ref LocalPlayerAttachedEvent args)
     {
         UpdateSubfloor(ent.Comp.Mover is not null);
     }
 
+    [SubscribeLocalEvent]
     private void OnDetached(Entity<NodeCrawlerComponent> ent, ref LocalPlayerDetachedEvent args)
     {
+        var old = _reachableNodes;
         _reachableNodes = null;
+        QueueAppearanceUpdates(old);
+        _pipeOverlay?.RemoveOutline();
     }
 
+    [SubscribeLocalEvent]
     private void OnAfterAutoHandleState(Entity<NodeCrawlerComponent> ent, ref AfterAutoHandleStateEvent args)
     {
         if (_player.LocalEntity is not { } player
@@ -82,6 +81,7 @@ public sealed partial class NodeCrawlSystem : SharedNodeCrawlSystem
         UpdateSubfloor(ent.Comp.Mover is not null);
     }
 
+    [SubscribeLocalEvent]
     private void OnGetSubFloorReveal(Entity<CrawlableNodeComponent> ent, ref GetSubFloorRevealEvent args)
     {
         args.Revealed |= _reachableNodes?.Contains(ent.Owner) == true;

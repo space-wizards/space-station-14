@@ -9,7 +9,7 @@ namespace Content.Shared.NodeCrawl;
 /// Handles node-confined movement for an entity.
 /// This is the entity movement is relayed to inside a node.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true), AutoGenerateComponentPause]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(raiseAfterAutoHandleState: true, fieldDeltas: true), AutoGenerateComponentPause]
 [Access(typeof(NodeCrawlerMovementSystem))]
 public sealed partial class NodeCrawlerMovementComponent : Component
 {

@@ -1,3 +1,4 @@
+using Content.Client.Graphics;
 using Content.Shared.NodeCrawl;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -17,9 +18,8 @@ public sealed class NodeCrawlPipeOverlay : Overlay
     private readonly IPlayerManager _playerManager;
     private readonly ShaderInstance _outlineShader;
 
-    private SpriteComponent? _previousOutlined;
-
-    private static readonly Color NodeBaseColor = new(1f, 1f, 1f, 0.45f);
+    private static readonly Color NodeBaseColor = new(1f, 1f, 1f, 0.5f);
+    private EntityUid? _previousOutlined;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
@@ -27,12 +27,12 @@ public sealed class NodeCrawlPipeOverlay : Overlay
     {
         _entityManager = entityManager;
         _nodeCrawl = nodeCrawl;
+        _outlineShader = outlineShader;
         _crawler = entityManager.System<NodeCrawlCrawlerSystem>();
         _spriteSystem = entityManager.System<SpriteSystem>();
         _lookup = entityManager.System<EntityLookupSystem>();
         _transform = entityManager.System<SharedTransformSystem>();
         _playerManager = IoCManager.Resolve<IPlayerManager>();
-        _outlineShader = outlineShader;
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -48,21 +48,6 @@ public sealed class NodeCrawlPipeOverlay : Overlay
             _entityManager.TryGetComponent<NodeCrawlerMovementComponent>(mover, out var movement))
         {
             current = movement.Node;
-        }
-
-        // Clear outline from the previous current node
-        if (_previousOutlined != null)
-        {
-            if (_previousOutlined.PostShader == _outlineShader)
-                _previousOutlined.PostShader = null;
-            _previousOutlined = null;
-        }
-
-        // Apply outline to the current node via PostShader
-        if (current != null && _entityManager.TryGetComponent<SpriteComponent>(current.Value, out var currentSprite))
-        {
-            currentSprite.PostShader = _outlineShader;
-            _previousOutlined = currentSprite;
         }
 
         var entities = _lookup.GetEntitiesIntersecting(args.MapId, args.WorldBounds, LookupFlags.Uncontained);
@@ -85,12 +70,34 @@ public sealed class NodeCrawlPipeOverlay : Overlay
             _spriteSystem.RenderSprite((uid, sprite), worldHandle, eyeRotation, worldRot, worldPos);
             _spriteSystem.SetColor((uid, sprite), oldColor);
         }
+
+        SetOutline(current);
     }
 
     public void RemoveOutline()
     {
-        if (_previousOutlined != null && _previousOutlined.PostShader == _outlineShader)
-            _previousOutlined.PostShader = null;
+        SetOutline(null);
+    }
+
+    private void SetOutline(EntityUid? current)
+    {
+        if (_previousOutlined == current)
+            return;
+
+        if (_previousOutlined is { } previous && _entityManager.TryGetComponent<SpriteComponent>(previous, out var previousSprite))
+            _spriteSystem.RemovePostShader((previous, previousSprite), ContentPostShaderIds.NodeCrawlOutline);
+
         _previousOutlined = null;
+
+        if (current is not { } uid || !_entityManager.TryGetComponent<SpriteComponent>(uid, out var currentSprite))
+            return;
+
+        _spriteSystem.SetPostShader((uid, currentSprite), new SpriteComponent.PostShaderArgs(
+            ContentPostShaderIds.NodeCrawlOutline,
+            _outlineShader)
+        {
+            After = ContentPostShaderIds.AfterBaseEffects,
+        });
+        _previousOutlined = uid;
     }
 }
