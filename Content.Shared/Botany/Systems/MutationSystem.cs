@@ -53,10 +53,7 @@ public sealed partial class MutationSystem : EntitySystem
 
                 // Stat adjustments do not persist by being an attached effect, they just change the stat.
                 if (mutation.Persists && ent.Comp.Mutations.All(m => m.Name != mutation.Name))
-                {
                     ent.Comp.Mutations.Add(mutation);
-                    DirtyField(ent, nameof(ent.Comp.Mutations));
-                }
             }
         }
     }

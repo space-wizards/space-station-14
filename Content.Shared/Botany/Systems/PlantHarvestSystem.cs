@@ -19,6 +19,23 @@ public sealed partial class PlantHarvestSystem : EntitySystem
     [Dependency] private PlantSystem _plant = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private PlantHolderSystem _plantHolder = default!;
+    [Dependency] private PlantTraySystem _plantTray = default!;
+
+    [SubscribeLocalEvent]
+    private void OnInteractHand(Entity<PlantTrayComponent> ent, ref InteractHandEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (!_plantTray.TryGetPlant(ent.AsNullable(), out var plantUid)
+            || !TryComp<PlantHarvestComponent>(plantUid, out var harvest)
+            || !harvest.ReadyForHarvest)
+            return;
+
+        // TODO: Remove this once trays have a proper UI.
+        TryHandleHarvest(plantUid.Value, args.User);
+        args.Handled = true;
+    }
 
     [SubscribeLocalEvent]
     private void OnPlantGrow(Entity<PlantHarvestComponent> ent, ref PlantGrowEvent args)
