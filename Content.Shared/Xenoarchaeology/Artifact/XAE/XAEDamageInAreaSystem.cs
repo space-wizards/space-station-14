@@ -23,16 +23,16 @@ public sealed partial class XAEDamageInAreaSystem : BaseXAESystem<XAEDamageInAre
     /// <inheritdoc />
     protected override void OnActivated(Entity<XAEDamageInAreaComponent> ent, ref XenoArtifactNodeActivatedEvent args)
     {
-        var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent));
         var damageInAreaComponent = ent.Comp;
         _entitiesInRange.Clear();
         _lookup.GetEntitiesInRange(ent.Owner, damageInAreaComponent.Radius, _entitiesInRange);
         foreach (var entityInRange in _entitiesInRange)
         {
-            if (!random.Prob(damageInAreaComponent.DamageChance))
+            if (_whitelistSystem.IsWhitelistFail(damageInAreaComponent.Whitelist, entityInRange))
                 continue;
 
-            if (_whitelistSystem.IsWhitelistFail(damageInAreaComponent.Whitelist, entityInRange))
+            var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(entityInRange));
+            if (!random.Prob(damageInAreaComponent.DamageChance))
                 continue;
 
             _damageable.TryChangeDamage(entityInRange, damageInAreaComponent.Damage, damageInAreaComponent.IgnoreResistances);
