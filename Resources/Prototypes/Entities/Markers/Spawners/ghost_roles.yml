@@ -377,10 +377,7 @@
       settings: default
     makeGhostAlert: true
     ghostAlert: Wizard
-    ghostAlertSound:
-      path: /Audio/Misc/ghost_alert.ogg
-      params:
-        volume: -5
+    ghostAlertSound: *BaseGhostAlertSound
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
