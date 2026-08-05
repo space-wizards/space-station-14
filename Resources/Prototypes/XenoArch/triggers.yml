@@ -418,13 +418,8 @@
   id: TriggerAttackStaminaDamage
   tip: xenoarch-trigger-tip-stamina-damage
   components:
-  - type: XATInteractAttack
-    interactionCount:
-      max: 3
-    whitelist:
-      components:
-      - StaminaDamageOnCollide
-      - StaminaDamageOnHit
+  - type: XATStaminaDamageThresholdReached
+    damageNeeded: 8 # half a practice disabler capacity
 
 - type: xenoArchTrigger
   id: TriggerAttackLaser

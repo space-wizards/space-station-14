@@ -1,7 +1,8 @@
+using Content.Shared.Damage.Systems;
 using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Popups;
+using Content.Shared.Weapons.Hitscan.Events;
 using Content.Shared.Weapons.Melee.Events;
-using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Whitelist;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
@@ -20,13 +21,14 @@ public sealed partial class XATInteractAttackSystem : BaseXATSystem<XATInteractA
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
+
     public override void Initialize()
     {
         base.Initialize();
 
-        XATSubscribeDirectEvent<StartCollideEvent>(OnStartCollide);
         XATSubscribeDirectEvent<AttackedEvent>(OnAttacked);
-        XATSubscribeDirectEvent<HitScanReflectAttemptEvent>(OnHitscan);
+        XATSubscribeDirectEvent<StartCollideEvent>(OnStartCollide);
+        XATSubscribeDirectEvent<AttemptHitscanRaycastStrikeEvent>(OnHitscan);
     }
 
     /// <summary>
@@ -43,10 +45,7 @@ public sealed partial class XATInteractAttackSystem : BaseXATSystem<XATInteractA
     /// </summary>
     private void OnAttacked(Entity<XenoArtifactComponent> artifact, Entity<XATInteractAttackComponent, XenoArtifactNodeComponent> node, ref AttackedEvent args)
     {
-        if (!TryComp<ItemToggleComponent>(args.Used, out var itemComp) || !itemComp.Activated) //make sure it's on
-            return;
-
-        if (_whitelistSystem.IsWhitelistPassOrNull(node.Comp1.Whitelist, args.Used) && TriggerCountdown(node, artifact.Owner, args.User))
+        if (_whitelistSystem.IsWhitelistPassOrNull(node.Comp1.Whitelist, args.Used) && DoTriggerCountdown(node, artifact.Owner, args.User))
             Trigger(artifact, node);
     }
 
@@ -55,19 +54,16 @@ public sealed partial class XATInteractAttackSystem : BaseXATSystem<XATInteractA
     /// </summary>
     private void OnStartCollide(Entity<XenoArtifactComponent> artifact, Entity<XATInteractAttackComponent, XenoArtifactNodeComponent> node, ref StartCollideEvent args)
     {
-        if (_whitelistSystem.IsWhitelistPassOrNull(node.Comp1.Whitelist, args.OtherEntity) && TriggerCountdown(node, artifact.Owner, args.OtherEntity))
+        if (_whitelistSystem.IsWhitelistPassOrNull(node.Comp1.Whitelist, args.OtherEntity) && DoTriggerCountdown(node, artifact.Owner, args.OtherEntity))
             Trigger(artifact, node);
     }
 
     /// <summary>
-    /// Trigger the node if the colliding entity matches the whitelist.
+    /// Trigger the node if the striking hitscan matches the whitelist.
     /// </summary>
-    private void OnHitscan(Entity<XenoArtifactComponent> artifact, Entity<XATInteractAttackComponent, XenoArtifactNodeComponent> node, ref HitScanReflectAttemptEvent args)
+    private void OnHitscan(Entity<XenoArtifactComponent> artifact, Entity<XATInteractAttackComponent, XenoArtifactNodeComponent> node, ref AttemptHitscanRaycastStrikeEvent args)
     {
-        if (!TryComp<BatteryAmmoProviderComponent>(args.SourceItem, out var batteryComp))
-            return;
-
-        if (_whitelistSystem.IsWhitelistPassOrNull(node.Comp1.Whitelist, batteryComp.Prototype) && TriggerCountdown(node, artifact.Owner, args.Shooter))
+        if (_whitelistSystem.IsWhitelistPassOrNull(node.Comp1.Whitelist, args.Data.Hitscan) && DoTriggerCountdown(node, artifact.Owner, args.Data.Shooter))
             Trigger(artifact, node);
     }
 
@@ -75,7 +71,7 @@ public sealed partial class XATInteractAttackSystem : BaseXATSystem<XATInteractA
     /// Count down the number of interactions needed to trigger.
     /// </summary>
     /// <returns>True if enough interactions have been made, False if not.</returns>
-    private bool TriggerCountdown(Entity<XATInteractAttackComponent> ent, EntityUid artifact, EntityUid? user)
+    private bool DoTriggerCountdown(Entity<XATInteractAttackComponent> ent, EntityUid artifact, EntityUid? user)
     {
         if (ent.Comp.MaxCount == null || ent.Comp.Count == null) //ensure countdown isn't null
             SetMaxCount(ent);
@@ -84,7 +80,9 @@ public sealed partial class XATInteractAttackSystem : BaseXATSystem<XATInteractA
 
         if (ent.Comp.Count > 0)
         {
-            _popup.PopupEntity(Loc.GetString("interact-artifact-more"), artifact, user);
+            if (ent.Comp.InsufficientString != null)
+                _popup.PopupEntity(Loc.GetString(ent.Comp.InsufficientString), artifact, user); //tell user they need to interact in the same way more times
+
             Dirty(ent);
             return false;
         }

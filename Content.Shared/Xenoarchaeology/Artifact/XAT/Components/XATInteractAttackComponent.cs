@@ -34,4 +34,10 @@ public sealed partial class XATInteractAttackComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public int? Count;
+
+    /// <summary>
+    /// What to say if more interactions are needed
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public LocId? InsufficientString = "interact-artifact-more";
 }
