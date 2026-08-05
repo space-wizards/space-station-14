@@ -603,7 +603,6 @@
       - state: uranium_generator_fuel_tank
   - type: Item
     sprite: Objects/Materials/Scrap/generator.rsi
-    size: Medium
     heldPrefix: "fuel"
   - type: PhysicalComposition
     materialComposition:
