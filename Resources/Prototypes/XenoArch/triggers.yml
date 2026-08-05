@@ -22,6 +22,7 @@
     TriggerPrying: 0.5
     TriggerScrewing: 0.5
     TriggerPulsing: 0.5
+    TriggerHonking: 0.25
     TriggerTimer: 0.25
     TriggerBlood: 1
     TriggerThrow: 1
@@ -34,6 +35,8 @@
     TriggerConsumeProduce: 0.5
     TriggerInteractStamp: 1
     TriggerInteractShock: 1
+    TriggerEmoteDistress: 1
+    TriggerEmoteHumor: 1
 
 - type: xenoArchTrigger
   id: TriggerMusic
@@ -237,6 +240,18 @@
     examineText: xenoarch-trigger-examine-pulsing
 
 - type: xenoArchTrigger
+  id: TriggerHonking
+  tip: xenoarch-trigger-tip-honking
+  components:
+  - type: XATToolUse
+    requiredTool: Honking
+  - type: XATEmote
+    emotes:
+    - Honk
+  - type: XATExaminableText
+    examineText: xenoarch-trigger-examine-honking
+
+- type: xenoArchTrigger
   id: TriggerTimer
   tip: xenoarch-trigger-tip-timer
   components:
@@ -391,3 +406,23 @@
   - type: XATDamageThresholdReached
     typesNeeded:
       Shock: 5
+
+- type: xenoArchTrigger
+  id: TriggerEmoteDistress
+  tip: xenoarch-trigger-distress
+  components:
+  - type: XATEmote #no deathgasp to avoid mixing with death trigger
+    emotes:
+    - Scream
+    - Gasp
+    - Crying
+    - Whine
+
+- type: xenoArchTrigger
+  id: TriggerEmoteHumor
+  tip: xenoarch-trigger-humor
+  components:
+  - type: XATEmote
+    emotes:
+    - Laugh
+    - Clap
