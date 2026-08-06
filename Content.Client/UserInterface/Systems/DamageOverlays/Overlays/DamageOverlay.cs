@@ -6,7 +6,7 @@ using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
-namespace Content.Client.DamageOverlay;
+namespace Content.Client.UserInterface.Systems.DamageOverlays.Overlays;
 
 public sealed partial class DamageOverlay : Overlay
 {

@@ -71,7 +71,6 @@
   - type: Damageable
   - type: Injurable
     damageContainer: Biological
-  - type: DamageOverlay
   - type: RadiationReceiver
   - type: Stamina
   - type: StunVisuals

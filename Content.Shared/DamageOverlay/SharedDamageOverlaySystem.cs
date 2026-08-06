@@ -19,24 +19,17 @@ public abstract partial class SharedDamageOverlaySystem : EntitySystem
     private void OnInit(Entity<DamageOverlayComponent> entity, ref ComponentInit args)
     {
         UpdateOverlays(entity);
-        RefreshOverlay(entity);
     }
 
     [SubscribeLocalEvent]
     private void OnMobStateChanged(Entity<DamageOverlayComponent> entity, ref MobStateChangedEvent args)
     {
-        if (entity.Comp.Locked)
-            return;
-
         UpdateOverlays(entity, args.Component);
     }
 
     [SubscribeLocalEvent]
     private void OnThresholdCheck(Entity<DamageOverlayComponent> entity, ref MobThresholdChecked args)
     {
-        if (entity.Comp.Locked)
-            return;
-
         UpdateOverlays(entity, args.MobState, args.Damageable, args.Threshold);
     }
 
@@ -129,16 +122,9 @@ public abstract partial class SharedDamageOverlaySystem : EntitySystem
             }
         }
 
-        if (!entity.Comp.Locked)
-        {
-            Dirty(entity);
-            RefreshOverlay(entity);
-        }
+        Dirty(entity);
+        RefreshOverlay(entity);
     }
 
-    /// <summary>
-    /// Refreshes the overlay, updating it to the new values stored in the component.
-    /// </summary>
-    /// <param name="entity">The affected entity.</param>
     protected virtual void RefreshOverlay(Entity<DamageOverlayComponent> entity) { }
 }

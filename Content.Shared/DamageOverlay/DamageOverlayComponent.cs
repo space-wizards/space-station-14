@@ -1,45 +1,28 @@
+using Content.Shared.Changeling.Systems;
+using Content.Shared.DamageOverlay;
 using Content.Shared.Mobs;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.DamageOverlay;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SharedDamageOverlaySystem))]
 public sealed partial class DamageOverlayComponent : Component
 {
-    /// <summary>
-    /// The mobstate the overlay currently shows.
-    /// </summary>
     [DataField, AutoNetworkedField]
     public MobState State = MobState.Alive;
 
-    /// <summary>
-    /// Controls the red vignette around the screen, which closes in as you take damage.
-    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float DeadLevel = 0f;
+
+    [DataField, AutoNetworkedField]
+    public float CritLevel = 0f;
+
     [DataField, AutoNetworkedField]
     public float PainLevel = 0f;
 
-    /// <summary>
-    /// Controls the white vignette around the screen, which closes the closer you are to death.
-    /// </summary>
     [DataField, AutoNetworkedField]
-    public float CritLevel;
-
-    /// <summary>
-    /// Used for lerping the white overlay from <see cref="CritLevel"/> when the entity dies.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public float DeadLevel;
-
-    /// <summary>
-    /// Darkens your screen around the edges based on how much asphyxiation damage you have.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public float OxygenLevel;
-
-    /// <summary>
-    /// Prevents updates to the overlay from being done by events.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool Locked; // For debugging :)
+    public float OxygenLevel = 0f;
 }
