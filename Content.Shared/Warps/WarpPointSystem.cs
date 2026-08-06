@@ -1,5 +1,5 @@
 using Content.Shared.Examine;
-using Content.Shared.Ghost;
+using Content.Shared.Ghost.Components;
 
 namespace Content.Shared.Warps;
 
