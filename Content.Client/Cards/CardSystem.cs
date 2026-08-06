@@ -16,7 +16,6 @@ namespace Content.Client.Cards;
 public sealed partial class CardSystem : SharedCardSystem
 {
     [Dependency] private IPlayerManager _playerManager = default!;
-    [Dependency] private ItemCounterSystem _counter = default!;
     [Dependency] private SpriteSystem _sprite = default!;
 
     [SubscribeLocalEvent]
