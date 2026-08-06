@@ -15,7 +15,7 @@
   - type: Sprite
     sprite: Objects/Fun/PlayingCards/cardbase.rsi
     layers:
-    - state: null
+    - state: deck_nanotrasen_full
       map: ["enum.CardVisualLayers.Base"]
   - type: Item
     sprite: Objects/Fun/PlayingCards/cardbase.rsi
