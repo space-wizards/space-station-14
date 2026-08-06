@@ -1,5 +1,7 @@
 using Content.Shared.Tabletop.Components;
+using Content.Shared.Tabletop.Events;
 using Robust.Client.UserInterface;
+using Robust.Shared.Map;
 
 namespace Content.Client.Tabletop.UI;
 
@@ -29,11 +31,12 @@ public sealed class TabletopGameBoundUserInterface : BoundUserInterface
             return;
 
         if (EntMan.TryGetComponent<EyeComponent>(tabletop.UprightCamera, out var eye))
-        {
             _window.SetPosition(eye.Eye, tabletop.Size);
-        }
 
         _window.FlipPressed += FlipCamera;
+        _window.DragStarted += OnDragStarted;
+        _window.DragMoved += OnDragMoved;
+        _window.DragFinished += OnDragFinished;
         _window.SetBoard(tabletop.Board);
         _upright = true;
     }
@@ -52,5 +55,24 @@ public sealed class TabletopGameBoundUserInterface : BoundUserInterface
 
         _window.SetPosition(eye.Eye, tabletop.Size);
         _upright = !_upright;
+    }
+
+    private void OnDragStarted(EntityUid piece)
+    {
+        var netPiece = EntMan.GetNetEntity(piece);
+        EntMan.RaisePredictiveEvent(new TabletopDraggingPlayerChangedEvent(netPiece, true));
+    }
+
+    private void OnDragMoved(EntityUid piece, EntityCoordinates coordinates)
+    {
+        var netPiece = EntMan.GetNetEntity(piece);
+        var netTable = EntMan.GetNetEntity(Owner);
+        EntMan.RaisePredictiveEvent(new TabletopMoveEvent(netPiece, coordinates.Position, netTable));
+    }
+
+    private void OnDragFinished(EntityUid piece)
+    {
+        var netPiece = EntMan.GetNetEntity(piece);
+        EntMan.RaisePredictiveEvent(new TabletopDraggingPlayerChangedEvent(netPiece, false));
     }
 }

@@ -10,6 +10,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Graphics;
 using Robust.Shared.Input;
+using Robust.Shared.Map;
 
 namespace Content.Client.Tabletop.UI;
 
@@ -19,6 +20,7 @@ public sealed partial class TabletopWindow : DefaultWindow
     [Dependency] private IEntityManager _entMan = default!;
     [Dependency] private IStateManager _stateMan = default!;
     [Dependency] private IUserInterfaceManager _uiMan = default!;
+    private SharedTransformSystem _xform;
 
     // Is the mouse currently inside the window?
     private bool _mouseInWindow;
@@ -29,23 +31,37 @@ public sealed partial class TabletopWindow : DefaultWindow
     private EntityUid? _board;
 
     public Action? FlipPressed;
+    public Action<EntityUid>? DragStarted;
+    public Action<EntityUid, EntityCoordinates>? DragMoved;
+    public Action<EntityUid>? DragFinished;
 
     public TabletopWindow()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
-        OnMouseEntered += OnMouseEnter;
-        OnMouseExited += OnMouseExit;
+        _xform = _entMan.System<SharedTransformSystem>();
+
+        OnMouseEntered += OnViewportMouseEnter;
+        OnMouseExited += OnViewportMouseExit;
+        OnKeyBindDown += OnViewportKeyBindDown;
+        OnKeyBindUp += OnViewportKeyBindUp;
 
         FlipButton.OnButtonUp += (_) => FlipPressed?.Invoke();
     }
 
+    /// <summary>
+    /// Sets the board entity (on the tabletop map) for this window.
+    /// All piece movement and drag coordinates will be taken with respect to this piece.
+    /// </summary>
     public void SetBoard(EntityUid? board)
     {
         _board = board;
     }
 
+    /// <summary>
+    /// Sets up the parameters of the viewport.
+    /// </summary>
     public void SetPosition(IEye? eye, Vector2i size)
     {
         ScalingVp.Eye = eye;
@@ -53,21 +69,19 @@ public sealed partial class TabletopWindow : DefaultWindow
     }
 
     // Mouse hover events: ignore dragging outside of the window.
-    private void OnMouseEnter(GUIMouseHoverEventArgs args)
+    private void OnViewportMouseEnter(GUIMouseHoverEventArgs args)
     {
         _mouseInWindow = true;
     }
 
-    private void OnMouseExit(GUIMouseHoverEventArgs args)
+    private void OnViewportMouseExit(GUIMouseHoverEventArgs args)
     {
         _mouseInWindow = false;
     }
 
     // Key down/up events: try to drag pieces if we can.
-    protected override void KeyBindDown(GUIBoundKeyEventArgs args)
+    private void OnViewportKeyBindDown(GUIBoundKeyEventArgs args)
     {
-        base.KeyBindDown(args);
-
         if (!_mouseInWindow || _draggedPiece != null)
             return;
 
@@ -78,6 +92,7 @@ public sealed partial class TabletopWindow : DefaultWindow
                 return;
 
             _draggedPiece = uid;
+            DragStarted?.Invoke(_draggedPiece.Value);
         }
         else if (args.Function == EngineKeyFunctions.UIRightClick)
         {
@@ -89,17 +104,23 @@ public sealed partial class TabletopWindow : DefaultWindow
         }
     }
 
-    protected override void KeyBindUp(GUIBoundKeyEventArgs args)
+    private void OnViewportKeyBindUp(GUIBoundKeyEventArgs args)
     {
-        base.KeyBindUp(args);
-
         if (args.Function != EngineKeyFunctions.UIClick)
             return;
 
         if (_draggedPiece is null)
             return;
 
-        // TODO: possibly send a
+        if (_mouseInWindow
+            && _board != null
+            && DragMoved != null)
+        {
+            var boardCoords = GetBoardPosition(args.PointerLocation.Position);
+            DragMoved.Invoke(_draggedPiece.Value, boardCoords);
+        }
+
+        DragFinished?.Invoke(_draggedPiece.Value);
 
         _draggedPiece = null;
     }
@@ -109,10 +130,21 @@ public sealed partial class TabletopWindow : DefaultWindow
     {
         base.MouseMove(args);
 
-        if (_draggedPiece == null)
+        if (!_mouseInWindow
+            || _draggedPiece == null
+            || _board == null
+            || DragMoved == null)
             return;
 
-        RaiseLocalEvent();
+        // Get coordinates with respect to the board.
+        var boardCoords = GetBoardPosition(args.GlobalPosition);
+        DragMoved.Invoke(_draggedPiece.Value, boardCoords);
+    }
+
+    private EntityCoordinates GetBoardPosition(Vector2 screenPosition)
+    {
+        var mapCoords = ScalingVp.ScreenToMap(screenPosition);
+        return _xform.ToCoordinates(_board!.Value, mapCoords);
     }
 
     private bool GetClickedEntity(Vector2 screenPosition, [NotNullWhen(true)] out EntityUid? uid, bool checkDraggable = true)
@@ -123,9 +155,6 @@ public sealed partial class TabletopWindow : DefaultWindow
             return false;
 
         // Find piece under cursor - both left/right click functions depend on it.
-        if (!_entMan.TryGetComponent(_board, out TransformComponent? xform))
-            return false;
-
         var mapCoords = ScalingVp.ScreenToMap(screenPosition);
 
         var clicked = screen.GetClickedEntity(mapCoords);

@@ -32,11 +32,12 @@ public abstract partial class SharedTabletopSystem
         {
             var coords = new EntityCoordinates(board, Vector2.Zero);
 
-            ent.Comp.UprightCamera = PredictedSpawnAttachedTo(null, coords, rotation: Angle.Zero);
+            ent.Comp.UprightCamera = PredictedSpawnAttachedTo(null, coords);
             EnsureComp<EyeComponent>(ent.Comp.UprightCamera.Value);
 
-            ent.Comp.UpsideDownCamera = PredictedSpawnAttachedTo(null, coords, rotation: Angle.FromDegrees(180));
-            EnsureComp<EyeComponent>(ent.Comp.UpsideDownCamera.Value);
+            ent.Comp.UpsideDownCamera = PredictedSpawnAttachedTo(null, coords);
+            var upsideDownEye = EnsureComp<EyeComponent>(ent.Comp.UpsideDownCamera.Value);
+            _eye.SetRotation(ent.Comp.UpsideDownCamera.Value, Angle.FromDegrees(180), upsideDownEye);
         }
         Dirty(ent);
 

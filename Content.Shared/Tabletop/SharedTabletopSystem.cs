@@ -15,7 +15,6 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Tabletop;
@@ -114,6 +113,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
             || !GameQuery.TryComp(gamer.Tabletop, out var game))
             return;
 
+        // TODO: change this out for a UI check
         // Will get closed later if CanSeeTable returns false.
         var disabled = !CanSeeTable(args.User, gamer.Tabletop);
         var user = args.User;
@@ -140,6 +140,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
             || !GameQuery.TryComp(gamer.Tabletop, out var game))
             return;
 
+        // TODO: change this out for a UI check
         // Will get closed later if CanSeeTable returns false.
         var disabled = !CanSeeTable(args.User, gamer.Tabletop);
         var user = args.User;
@@ -178,13 +179,12 @@ public abstract partial class SharedTabletopSystem : EntitySystem
         var table = GetEntity(msg.TableUid);
         var moved = GetEntity(msg.MovedEntityUid);
 
-        if (!CanSeeTable(playerUid, table) || !CanDrag(playerUid, moved, out _))
+        if (!CanDrag(playerUid, moved, out _))
             return;
 
-        // Move the entity and dirty it (we use the map ID from the entity so noone can try to be funny and move the item to another map)
+        // Move the entity and dirty it (should stay parented to the board it was created from)
         var transform = Comp<TransformComponent>(moved);
-        Xform.SetParent(moved, transform, transform.MapUid ?? EntityUid.Invalid);
-        Xform.SetLocalPosition(moved, msg.Coordinates.Position, transform);
+        Xform.SetLocalPosition(moved, msg.Position, transform);
     }
 
     [EventSubscription] // Both local and networked events
