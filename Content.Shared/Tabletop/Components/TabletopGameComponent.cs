@@ -15,19 +15,25 @@ public sealed partial class TabletopGameComponent : Component
     /// The localized name of the board. Shown in the UI.
     /// </summary>
     [DataField]
-    public LocId BoardName { get; private set; } = "tabletop-default-board-name";
+    public LocId BoardName = "tabletop-default-board-name";
 
     /// <summary>
     /// The type of method used to set up a tabletop.
     /// </summary>
     [DataField(required: true)]
-    public TabletopSetup Setup { get; private set; } = new TabletopChessSetup();
+    public TabletopSetup Setup = new TabletopChessSetup();
 
     /// <summary>
     /// The size of the viewport being opened. Must match the board dimensions otherwise you'll get the space parallax (unless that's what you want).
     /// </summary>
     [DataField]
-    public Vector2i Size { get; private set; } = (300, 300);
+    public Vector2i Size;
+
+    /// <summary>
+    /// The offset, from the center of the board, that hologram pieces should be spawned in at.
+    /// </summary>
+    [DataField]
+    public Vector2 SpawnOffset;
 
     /// <summary>
     /// The zoom of the viewport camera.

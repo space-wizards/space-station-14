@@ -48,7 +48,7 @@ public abstract partial class SharedTabletopSystem
         if (!Resolve(ent, ref ent.Comp))
             return;
 
-        UI.CloseUis(ent.Owner);
+        _ui.CloseUis(ent.Owner);
 
         PredictedQueueDel(ent.Comp.Board);
         ent.Comp.Board = null;
@@ -71,10 +71,10 @@ public abstract partial class SharedTabletopSystem
         EnsureBoard(ent);
 
         // Close the session of the other window we have open.
-        if (GamerQuery.TryComp(playerUid, out TabletopGamerComponent? gamer)
+        if (_gamerQuery.TryComp(playerUid, out TabletopGamerComponent? gamer)
             && gamer.Tabletop != ent.Owner)
         {
-            UI.CloseUi(gamer.Tabletop, TabletopGameUiKey.Key, playerUid);
+            _ui.CloseUi(gamer.Tabletop, TabletopGameUiKey.Key, playerUid);
         }
 
         // Set the entity as an ABSOLUTE GAMER.
@@ -95,7 +95,7 @@ public abstract partial class SharedTabletopSystem
             return;
 
         if (removeGamerComponent && player.AttachedEntity is { } attachedEntity
-            && GamerQuery.TryComp(attachedEntity, out TabletopGamerComponent? gamer))
+            && _gamerQuery.TryComp(attachedEntity, out TabletopGamerComponent? gamer))
         {
             // We invalidate this to prevent an infinite feedback from removing the component.
             gamer.Tabletop = EntityUid.Invalid;

@@ -1,7 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
+using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
+using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
@@ -23,24 +25,25 @@ namespace Content.Shared.Tabletop;
 /// </summary>
 public abstract partial class SharedTabletopSystem : EntitySystem
 {
+    [Dependency] private ISharedAdminLogManager _adminLog = default!;
     [Dependency] private IConfigurationManager _cfg = default!;
-    [Dependency] protected MetaDataSystem Meta = default!;
+    [Dependency] private MetaDataSystem _meta = default!;
     [Dependency] protected SharedAppearanceSystem Appearance = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
-    [Dependency] private SharedInteractionSystem _interaction = default!;
     [Dependency] private SharedMapSystem _map = default!;
-    [Dependency] protected SharedPopupSystem Popup = default!;
-    [Dependency] protected SharedTransformSystem Xform = default!;
-    [Dependency] protected SharedUserInterfaceSystem UI = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedTransformSystem _xform = default!;
+    [Dependency] private SharedUserInterfaceSystem _ui = default!;
     [Dependency] private SharedViewSubscriberSystem _viewSubscriber = default!;
 
     [Dependency] private EntityQuery<AppearanceComponent> _appearanceQuery;
-    [Dependency] protected EntityQuery<ActorComponent> ActorQuery;
-    [Dependency] protected EntityQuery<TabletopBackgroundComponent> BackgroundQuery;
+    [Dependency] private EntityQuery<ActorComponent> _actorQuery;
+    [Dependency] private EntityQuery<TabletopBackgroundComponent> _backgroundQuery;
     [Dependency] protected EntityQuery<TabletopDraggableComponent> DraggableQuery;
-    [Dependency] protected EntityQuery<TabletopGameComponent> GameQuery;
-    [Dependency] protected EntityQuery<TabletopGamerComponent> GamerQuery;
-    [Dependency] protected EntityQuery<UserInterfaceComponent> UIQuery;
+    [Dependency] private EntityQuery<TabletopGameComponent> _gameQuery;
+    [Dependency] private EntityQuery<TabletopGamerComponent> _gamerQuery;
+    [Dependency] private EntityQuery<TabletopHologramComponent> _hologramQuery;
+    [Dependency] private EntityQuery<UserInterfaceComponent> _uiQuery;
 
     /// <summary>
     /// The prototype to use to represent items dragged into the tabletop map.
@@ -51,6 +54,11 @@ public abstract partial class SharedTabletopSystem : EntitySystem
     /// The maximum number of pieces to allow placement on a table.
     /// </summary>
     protected static readonly int MaxTabletopPieces = 50;
+
+    /// <summary>
+    /// A handler for drag/drop handling, useful on the client.
+    /// </summary>
+    protected virtual void DragUpdated(Entity<TabletopDraggableComponent> ent) { }
 
     #region Event Handlers
 
@@ -76,7 +84,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
     private void OnTabletopBoundUIOpened(Entity<TabletopGameComponent> ent, ref BoundUIOpenedEvent args)
     {
         // Check that a player is attached to the entity.
-        if (!ActorQuery.TryComp(args.Actor, out ActorComponent? actor))
+        if (!_actorQuery.TryComp(args.Actor, out ActorComponent? actor))
             return;
 
         OpenSessionFor(actor.PlayerSession, ent.Owner);
@@ -86,7 +94,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
     private void OnTabletopBoundUIClosed(Entity<TabletopGameComponent> ent, ref BoundUIClosedEvent args)
     {
         // Check that a player is attached to the entity.
-        if (!ActorQuery.TryComp(args.Actor, out ActorComponent? actor))
+        if (!_actorQuery.TryComp(args.Actor, out ActorComponent? actor))
             return;
 
         CloseSessionFor(actor.PlayerSession, ent.Owner);
@@ -104,8 +112,8 @@ public abstract partial class SharedTabletopSystem : EntitySystem
         if (!args.CanAccess || !args.CanInteract)
             return;
 
-        if (!GamerQuery.TryComp(args.User, out var gamer)
-            || !GameQuery.TryComp(gamer.Tabletop, out var game))
+        if (!_gamerQuery.TryComp(args.User, out var gamer)
+            || !_gameQuery.TryComp(gamer.Tabletop, out var game))
             return;
 
         // Will get closed later if IsPlaying returns false.
@@ -130,8 +138,8 @@ public abstract partial class SharedTabletopSystem : EntitySystem
         if (!args.CanAccess || !args.CanInteract)
             return;
 
-        if (!GamerQuery.TryComp(args.User, out var gamer)
-            || !GameQuery.TryComp(gamer.Tabletop, out var game))
+        if (!_gamerQuery.TryComp(args.User, out var gamer)
+            || !_gameQuery.TryComp(gamer.Tabletop, out var game))
             return;
 
         // TODO: change this out for a UI check
@@ -163,7 +171,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
 
         var tableUid = GetEntity(msg.TableUid);
 
-        if (!GameQuery.TryComp(tableUid, out TabletopGameComponent? tabletop) || !tabletop.HasSession)
+        if (!_gameQuery.TryComp(tableUid, out TabletopGameComponent? tabletop) || !tabletop.HasSession)
             return;
 
         // Check if player is actually playing at this table.
@@ -177,7 +185,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
 
         // Move the entity and dirty it (should stay parented to the board it was created from)
         var transform = Comp<TransformComponent>(moved);
-        Xform.SetLocalPosition(moved, msg.Position, transform);
+        _xform.SetLocalPosition(moved, msg.Position, transform);
     }
 
     [EventSubscription] // Both local and networked events
@@ -185,25 +193,13 @@ public abstract partial class SharedTabletopSystem : EntitySystem
     {
         var dragged = GetEntity(msg.DraggedEntityUid);
 
-        if (!DraggableQuery.TryComp(dragged, out TabletopDraggableComponent? draggableComponent))
+        if (!DraggableQuery.TryComp(dragged, out TabletopDraggableComponent? draggable))
             return;
 
-        draggableComponent.DraggingPlayer = msg.IsDragging ? args.SenderSession.UserId : null;
-        Dirty(dragged, draggableComponent);
+        draggable.DraggingPlayer = msg.IsDragging ? args.SenderSession.UserId : null;
+        Dirty(dragged, draggable);
 
-        if (!TryComp(dragged, out AppearanceComponent? appearance))
-            return;
-
-        if (draggableComponent.DraggingPlayer != null)
-        {
-            Appearance.SetData(dragged, TabletopItemVisuals.Scale, new Vector2(1.25f, 1.25f), appearance);
-            Appearance.SetData(dragged, TabletopItemVisuals.DrawDepth, (int)DrawDepth.DrawDepth.Items + 1, appearance);
-        }
-        else
-        {
-            Appearance.SetData(dragged, TabletopItemVisuals.Scale, Vector2.One, appearance);
-            Appearance.SetData(dragged, TabletopItemVisuals.DrawDepth, (int)DrawDepth.DrawDepth.Items, appearance);
-        }
+        DragUpdated((dragged, draggable));
     }
 
     [SubscribeLocalEvent]
@@ -212,7 +208,8 @@ public abstract partial class SharedTabletopSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (!DraggableQuery.HasComp(args.Target) && !BackgroundQuery.HasComp(args.Target))
+        if (!DraggableQuery.HasComp(args.Target)
+            && !_backgroundQuery.HasComp(args.Target))
             return;
 
         // Assume that this can be dragged.
@@ -231,7 +228,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnGamerShutdown(Entity<TabletopGamerComponent> ent, ref ComponentShutdown args)
     {
-        if (!ActorQuery.TryComp(ent.Owner, out ActorComponent? actor))
+        if (!_actorQuery.TryComp(ent.Owner, out ActorComponent? actor))
             return;
 
         if (ent.Comp.Tabletop.IsValid())
@@ -245,7 +242,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
     /// </summary>
     protected bool IsPlaying(EntityUid playerEntity, EntityUid table)
     {
-        return UI.GetActors(table, TabletopGameUiKey.Key).Contains(playerEntity);
+        return _ui.GetActors(table, TabletopGameUiKey.Key).Contains(playerEntity);
     }
 
     protected bool CanDrag(EntityUid playerEntity, EntityUid target, [NotNullWhen(true)] out TabletopDraggableComponent? draggable)
@@ -266,9 +263,16 @@ public abstract partial class SharedTabletopSystem : EntitySystem
         if (!IsPlaying(user, table))
             return;
 
-        if (DraggableQuery.TryComp(piece, out var draggable)
-            && draggable.Table == table.Owner)
-            PredictedQueueDel(piece);
+        // Only holograms are
+        if (!_hologramQuery.TryComp(piece, out var hologram)
+            || hologram.Table != table.Owner)
+            return;
+
+        _adminLog.Add(LogType.Action, $"{user:player} removed piece {ToPrettyString(piece)}, from board {ToPrettyString(table)}");
+
+        _popup.PopupCoordinates(Loc.GetString("tabletop-removed-piece-on-board"), Transform(piece).Coordinates, PopupType.Medium);
+
+        PredictedQueueDel(piece);
     }
 
     /// <summary>
@@ -287,21 +291,22 @@ public abstract partial class SharedTabletopSystem : EntitySystem
         // Delay count check - prints should happen last.
         if (boardXform.ChildCount >= MaxTabletopPieces)
         {
-            Popup.PopupEntity(Loc.GetString("tabletop-cant-add-more"), ent, user);
+            _popup.PopupEntity(Loc.GetString("tabletop-cant-add-more"), ent, user);
             return;
         }
 
         var meta = MetaData(target);
 
-        var hologram = PredictedSpawnAttachedTo(GamePiecePrototype, new(board, -Vector2.UnitX));
+        var hologram = PredictedSpawnAttachedTo(GamePiecePrototype, new(board, ent.Comp.SpawnOffset));
 
-        // Make sure the entity can be dragged and can be removed, move it into the board game world and add it to the Entities hashmap.
-        var draggable = EnsureComp<TabletopDraggableComponent>(hologram);
-        draggable.Table = ent;
-        Dirty(hologram, draggable);
+        // Make sure the entity can be dragged and removed, move it into the board game world and add it to the Entities hashmap.
+        EnsureComp<TabletopDraggableComponent>(hologram);
 
-        EnsureComp<TabletopHologramComponent>(hologram);
-        Meta.SetEntityName(hologram, Name(target, meta));
+        var hologramComp = EnsureComp<TabletopHologramComponent>(hologram);
+        hologramComp.Table = ent;
+        Dirty(hologram, hologramComp);
+
+        _meta.SetEntityName(hologram, Name(target, meta));
 
         // Try to get existing tabletop visuals if we can (copying existing pieces), otherwise get this entity's prototype from its metadata.
         if (_appearanceQuery.TryComp(target, out AppearanceComponent? appearance)
@@ -314,7 +319,12 @@ public abstract partial class SharedTabletopSystem : EntitySystem
             Appearance.SetData(hologram, TabletopItemVisuals.Prototype, metaProto.ID);
         }
 
-        Popup.PopupEntity(Loc.GetString("tabletop-added-piece"), ent, user);
+        _adminLog.Add(LogType.Action, $"{user:player} created piece {ToPrettyString(hologram)}, copying {target:subject} onto board {ToPrettyString(ent)}");
+
+        // Display a message to the user telling them the piece was added.
+        _popup.PopupEntity(Loc.GetString("tabletop-added-piece"), ent, user);
+        // Display a message above the piece telling anyone playing that it showed up.
+        _popup.PopupEntity(Loc.GetString("tabletop-added-piece-on-board"), hologram, PopupType.Medium);
     }
     #endregion
 }

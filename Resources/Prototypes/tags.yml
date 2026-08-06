@@ -1422,9 +1422,6 @@
 ## T ##
 
 - type: Tag
-  id: TabletopBoard # Storage whitelist: BooksBag, BorgModuleService
-
-- type: Tag
   id: Taco # Food sequence key
 
 - type: Tag

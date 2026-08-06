@@ -2,7 +2,7 @@
 
 # Note: all board game pieces should be marked as HideSpawnMenu, they lack most of the physical components for practical use.
 
-# The actual item that players can pick up, or throw when they lose
+# The actual item that players can pick up, or throw when they lose.
 - type: entity
   abstract: true
   parent: BaseItem
@@ -14,9 +14,6 @@
     sprite: Objects/Fun/Tabletop/boards.rsi
   - type: TabletopGame
     size: 256, 256
-  - type: Tag
-    tags:
-    - TabletopBoard
   - type: ActivatableUI
     key: enum.TabletopGameUiKey.Key
     verbText: tabletop-verb-play-game
@@ -40,7 +37,7 @@
   - type: Clickable
   - type: InteractionOutline
 
-# Entity which acts as the background sprite in the tabletop game
+# Entity that acts as the background sprite in tabletop games.
 - type: entity
   abstract: true
   id: BaseBoardTabletop

@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Shared.Tabletop;
 using Content.Shared.Tabletop.Components;
 using JetBrains.Annotations;
@@ -10,6 +9,13 @@ namespace Content.Client.Tabletop;
 public sealed partial class TabletopSystem : SharedTabletopSystem
 {
     [Dependency] private SpriteSystem _sprite = default!;
+
+    [Dependency] private EntityQuery<SpriteComponent> _spriteQuery;
+
+    protected override void DragUpdated(Entity<TabletopDraggableComponent> ent)
+    {
+        UpdateDraggableAppearance(ent);
+    }
 
     #region Event handlers
     /// <summary>
@@ -37,27 +43,31 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
             outSprite.NoRotation = true;
         }
 
-        // Reset our scale/draw depth after copying our new sprite, if the data exists.
-        if (Appearance.TryGetData<Vector2>(ent, TabletopItemVisuals.Scale, out var scale, args.Component))
-            _sprite.SetScale((ent, args.Sprite), scale);
+        if (!DraggableQuery.TryComp(ent, out var draggable))
+            return;
 
-        if (Appearance.TryGetData<int>(ent, TabletopItemVisuals.DrawDepth, out var drawDepth, args.Component))
-            _sprite.SetDrawDepth((ent, args.Sprite), drawDepth);
+        UpdateDraggableAppearance((ent, draggable), args.Sprite);
     }
 
     [SubscribeLocalEvent]
-    private void OnAppearanceChange(Entity<TabletopDraggableComponent> ent, ref AppearanceChangeEvent args)
+    private void OnDraggableStartup(Entity<TabletopDraggableComponent> ent, ref ComponentStartup _)
     {
-        if (args.Sprite == null)
+        UpdateDraggableAppearance(ent);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnDraggableAfterAutoHandleState(Entity<TabletopDraggableComponent> ent, ref AfterAutoHandleStateEvent _)
+    {
+        UpdateDraggableAppearance(ent);
+    }
+
+    private void UpdateDraggableAppearance(Entity<TabletopDraggableComponent> ent, SpriteComponent? sprite = null)
+    {
+        if (sprite == null && !_spriteQuery.TryComp(ent, out sprite))
             return;
 
-        // TODO: maybe this can work more nicely, by maybe only having to set the item to "being dragged", and have
-        //  the appearance handle the rest
-        if (Appearance.TryGetData<Vector2>(ent, TabletopItemVisuals.Scale, out var scale, args.Component))
-            _sprite.SetScale((ent, args.Sprite), scale);
-
-        if (Appearance.TryGetData<int>(ent, TabletopItemVisuals.DrawDepth, out var drawDepth, args.Component))
-            _sprite.SetDrawDepth((ent, args.Sprite), drawDepth);
+        _sprite.SetScale((ent, sprite), ent.Comp.DraggingPlayer == null ? ent.Comp.NormalScale : ent.Comp.DraggedScale);
+        _sprite.SetDrawDepth((ent, sprite), ent.Comp.DraggingPlayer == null ? ent.Comp.NormalDrawDepth : ent.Comp.DraggedDrawDepth);
     }
     #endregion
 }

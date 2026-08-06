@@ -1,6 +1,6 @@
 # Uses the chessboard and generic pieces
 - type: entity
-  parent: BaseBoardEntity
+  parent: ChessBoard
   id: CheckerBoard
   name: checkerboard
   description: A checkerboard. Pieces included!
@@ -9,9 +9,6 @@
     state: checkers
   - type: TabletopGame
     boardName: tabletop-checkers-board-name
-    size: 338, 274
-    setup: !type:TabletopCheckersSetup
-      boardPrototype: ChessBoardTabletop
 
 # The pieces
 - type: entity

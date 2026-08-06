@@ -32,8 +32,6 @@ public abstract partial class TabletopSetup
     protected void SpawnPiece(EntProtoId piece, Vector2 position, Entity<TabletopGameComponent> tabletop, EntityManager entityManager)
     {
         var pieceUid = entityManager.PredictedSpawnAttachedTo(piece, new(tabletop.Comp.Board!.Value, position));
-        var draggable = entityManager.EnsureComponent<TabletopDraggableComponent>(pieceUid);
-        draggable.Table = tabletop;
-        entityManager.Dirty(pieceUid, draggable);
+        entityManager.EnsureComponent<TabletopDraggableComponent>(pieceUid);
     }
 }

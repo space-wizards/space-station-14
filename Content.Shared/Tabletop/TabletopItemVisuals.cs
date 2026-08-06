@@ -8,10 +8,6 @@ namespace Content.Shared.Tabletop;
 [Serializable, NetSerializable]
 public enum TabletopItemVisuals : byte
 {
-    /// <summary>The scale this piece's sprite should be.</summary>
-    Scale,
     /// <summary>The prototype that this piece should mimic, if any.</summary>
     Prototype,
-    /// <summary>The depth this piece should be drawn at.</summary>
-    DrawDepth
 }

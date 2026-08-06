@@ -17,6 +17,8 @@ tabletop-default-board-name = Board Game
 
 tabletop-error-remove-non-hologram = You can't remove a standard piece!
 tabletop-added-piece = The board shimmers brightly!
+tabletop-added-piece-on-board = {INDEFINITE($piece)} {$piece} shimmers brightly!
+tabletop-removed-piece-on-board = {INDEFINITE($piece)} {$piece} fades from existence.
 tabletop-cant-add-more = Can't add any more pieces!
 
 ## Chess

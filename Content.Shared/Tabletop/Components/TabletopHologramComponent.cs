@@ -4,9 +4,9 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Tabletop.Components;
 
 /// <summary>
-/// This is used for tracking pieces that are simply "holograms" shown on the tabletop
+/// A component used to track tabletop pieces copied from other entities.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class TabletopHologramComponent : Component
 {
     /// <summary>
@@ -15,4 +15,10 @@ public sealed partial class TabletopHologramComponent : Component
     /// </summary>
     [DataField]
     public EntProtoId? LastPrototype;
+
+    /// <summary>
+    /// The table this piece belongs to.
+    /// </summary>
+    [ViewVariables, AutoNetworkedField]
+    public EntityUid? Table;
 }
