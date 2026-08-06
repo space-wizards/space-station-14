@@ -496,7 +496,7 @@
         time: 10
       - !type:ModifyStatusEffect
         effectProto: StatusEffectDrowsiness
-        time: 3000
+        time: null
         type: Remove
       - !type:ResetNarcolepsy
         conditions:
