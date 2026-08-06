@@ -93,7 +93,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnGameRemove(Entity<TabletopGameComponent> ent, ref ComponentRemove args)
+    private void OnGameShutdown(Entity<TabletopGameComponent> ent, ref ComponentShutdown args)
     {
         TeardownBoard(ent.AsNullable());
     }
