@@ -24,7 +24,7 @@
     <GuideEntityEmbed Entity="BaseUplinkRadio" Caption="Uplink Implant"/>
   </Box>
 
-  [bold]Make sure to lock your PDA uplink to prevent anyone else from seeing it.[/bold] You don't want [color=#cb0000]Security[/color] to notice you have it and confiscate it from you!
+  Make sure to lock your PDA uplink when around other crew members to prevent anyone else from seeing it. [bold]It is recommended you lock your PDA immediately after completing your purchases from the uplink.[/bold] You don't want [color=#cb0000]Security[/color] to notice you have it and confiscate it from you!
 
   Implanted uplinks are not normally accessible to other people, so they do not have any security measures. They can, however, be removed from you with an empty implanter.
 
@@ -123,12 +123,12 @@
   Objectives are randomized tasks you are given to complete as a traitor, but they also act as suggestions for how you should play your role. You may be required to harm, kill, steal, or cause other issues for the station and its crew. You may also be required to help other traitors with their objectives. Sometimes you may have to complete your objectives whi
   Your objectives may require you to [italic][color=cyan]make it to CentComm without being killed or captured.[/color][/italic] Don't let [color=#cb0000]Security[/color] stop you, complete your other objectives and [bold]come back alive.[/bold]
 
-  Alternatively, your objectives may require you to [italic][color=cyan]die a glorious death[/color][/italic]. It is up to you for deciding how you will die, meaning that mass-murder, station destruction, etc, are permitted. However, [bold]make sure you don't come back from the dead,[/bold] or else, you may wake up in cuffs.
+  Alternatively, your objectives may require you to [italic][color=cyan]die a glorious death[/color][/italic]. It is up to you to decide how you will die, meaning that mass murder, station destruction, etc, are permitted. However, [bold]make sure you don't come back from the dead,[/bold] or else you may wake up in cuffs.
 
   ## Appropriation
   More often than not, you'll have to [italic][color=cyan]steal a possession of a department head.[/color][/italic]
 
-  The target may be in their office, or on their person. It may become necessary to kill whoever is carrying it.
+  The target may be in their office, or on their person. It may become necessary to attack or kill whoever is carrying it.
 
   Some of the things you may be tasked with include:
   - Stealing the [color=yellow]Captain[/color]'s [bold]ID Card[/bold], [bold]antique laser pistol[/bold], [bold]jetpack[/bold], or [bold]nuclear authentication disk[/bold].
