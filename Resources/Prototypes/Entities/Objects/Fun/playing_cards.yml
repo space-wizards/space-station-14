@@ -101,7 +101,6 @@
   name: deck-of-cards
   maxCount: 156
   spawn: BaseCards
-  icon: { sprite: /Textures/Objects/Fun/PlayingCards/cardbase.rsi, state: null }
 
 - type: entity
   parent: [ BaseCards, BaseSyndicateContraband ]
@@ -137,4 +136,3 @@
   name: syndi-deck-of-cards
   maxCount: 156
   spawn: SyndiBaseCards
-  icon: { sprite: /Textures/Objects/Fun/PlayingCards/cardbase.rsi, state: null }

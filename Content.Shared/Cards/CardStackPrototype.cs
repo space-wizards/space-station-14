@@ -32,12 +32,6 @@ public sealed partial class CardStackPrototype : IPrototype, IInheritingPrototyp
     public LocId Name { get; private set; } = string.Empty;
 
     /// <summary>
-    /// An icon that will be used to represent this stack type.
-    /// </summary>
-    [DataField]
-    public SpriteSpecifier? Icon { get; private set; }
-
-    /// <summary>
     /// The entity id that will be spawned by default from this deck.
     /// </summary>
     [DataField(required: true)]
