@@ -6,10 +6,10 @@ using Content.Shared.StatusEffect;
 
 namespace Content.Server.Drunk;
 
-public sealed class DrunkSystem : SharedDrunkSystem
+public sealed partial class DrunkSystem : SharedDrunkSystem
 {
-    [Dependency] private readonly SharedMindSystem _mind = default!;
-    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
+    [Dependency] private SharedMindSystem _mind = default!;
+    [Dependency] private EntityLookupSystem _entityLookup = default!;
 
     public const float DrunkInBarRange = 1.5f;
 
@@ -22,10 +22,7 @@ public sealed class DrunkSystem : SharedDrunkSystem
         _drunkInBarTargetQuery = GetEntityQuery<DrunkInBarTargetComponent>();
     }
 
-    public override void TryApplyDrunkenness(EntityUid uid,
-        float boozePower,
-        bool applySlur = true,
-        StatusEffectsComponent? status = null)
+    public override void TryApplyDrunkenness(EntityUid uid, TimeSpan boozePower)
     {
         if (_mind.TryGetObjectiveComp<DrunkInBarConditionComponent>(uid, out var objective))
         {

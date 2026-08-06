@@ -11,38 +11,41 @@ namespace Content.Server.Objectives.Systems;
 /// <summary>
 /// Conditions that are closely tied to the Tourist ghostrole.
 /// </summary>
-public sealed class TouristConditionsSystem : EntitySystem
+public sealed partial class TouristConditionsSystem : EntitySystem
 {
-    [Dependency] private readonly NumberObjectiveSystem _number = default!;
-    [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private NumberObjectiveSystem _number = default!;
+    [Dependency] private SharedMindSystem _mind = default!;
 
-    private EntityQuery<ContainerManagerComponent> _containerQuery;
+    [Dependency] private EntityQuery<ContainerManagerComponent> _containerQuery = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        _containerQuery = GetEntityQuery<ContainerManagerComponent>();
-
-        SubscribeLocalEvent<StampedPapersConditionComponent, ObjectiveGetProgressEvent>(OnStampedPapersGetProgress);
-        SubscribeLocalEvent<DrunkInBarConditionComponent, ObjectiveGetProgressEvent>(OnDrunkInBarGetProgress);
-        SubscribeLocalEvent<PetStationPetsConditionComponent, ObjectiveGetProgressEvent>(OnPetStationPetsGetProgress);
-        SubscribeLocalEvent<PetStationPetsTargetComponent, InteractionSuccessEvent>(OnPetInteractionSuccessEvent);
-    }
-
+    [SubscribeLocalEvent]
     private void OnStampedPapersGetProgress(Entity<StampedPapersConditionComponent> entity, ref ObjectiveGetProgressEvent args)
     {
         args.Progress = StampedPapersProgress((args.MindId, args.Mind), entity.Comp, _number.GetTarget(entity));
     }
 
+    [SubscribeLocalEvent]
     private void OnDrunkInBarGetProgress(Entity<DrunkInBarConditionComponent> entity, ref ObjectiveGetProgressEvent args)
     {
         args.Progress = entity.Comp.Completed ? 1 : 0;
     }
 
+    [SubscribeLocalEvent]
     private void OnPetStationPetsGetProgress(Entity<PetStationPetsConditionComponent> entity, ref ObjectiveGetProgressEvent args)
     {
         args.Progress = PetStationPetsProgress(entity, _number.GetTarget(entity));
+    }
+
+    [SubscribeLocalEvent]
+    private void OnPetInteractionSuccessEvent(Entity<PetStationPetsTargetComponent> entity, ref InteractionSuccessEvent args)
+    {
+        if (_mind.TryGetObjectiveEntities<PetStationPetsConditionComponent>(args.User, out var objectives))
+        {
+            foreach (var objective in objectives)
+            {
+                objective.Comp.PettedPets.Add(entity.Owner); // It's a hashset, so it checks for duplicates for free.
+            }
+        }
     }
 
     // Stamps!
@@ -84,16 +87,5 @@ public sealed class TouristConditionsSystem : EntitySystem
             return 1f;
 
         return MathF.Min(comp.PettedPets.Count / (float) target, 1f);
-    }
-
-    private void OnPetInteractionSuccessEvent(Entity<PetStationPetsTargetComponent> entity, ref InteractionSuccessEvent args)
-    {
-        if (_mind.TryGetObjectiveEntities<PetStationPetsConditionComponent>(args.User, out var objectives))
-        {
-            foreach (var objective in objectives)
-            {
-                objective.Comp.PettedPets.Add(entity.Owner); // It's a hashset, so it checks for duplicates for free.
-            }
-        }
     }
 }

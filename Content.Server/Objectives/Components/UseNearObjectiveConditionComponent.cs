@@ -58,22 +58,39 @@ public sealed partial class UseNearObjectiveConditionComponent : Component
     /// </summary>
     [DataField]
     public LocId? Name;
-    [DataField]
+
+    /// <summary>
+    /// Stored localized name of the entity. Set upon objective assignment.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
     public string LocalizedName = string.Empty;
+
+    /// <summary>
+    /// Sprite for the objective.
+    /// </summary>
     [DataField]
     public SpriteSpecifier? Sprite;
+
+    /// <summary>
+    /// Title text for the objective. <see cref="LocalizedName"/> is inserted as {itemName}.
+    /// </summary>
     [DataField]
     public LocId? TitleText;
+
+    /// <summary>
+    /// The description text for the objective. <see cref="LocalizedName"/> is inserted as {itemName}.
+    /// </summary>
     [DataField]
     public LocId? DescriptionText;
+
     /// <summary>
-    /// Description text when the entity has been deleted.
+    /// Description text when the entity has been deleted. <see cref="LocalizedName"/> is inserted as {itemName}.
     /// </summary>
     [DataField]
     public LocId? DescriptionTextDeleted;
 
     /// <summary>
-    /// Keeps track on if the objective has been completed.
+    /// Keeps track on if the objective has been completed; necessary in the event the target has been destroyed.
     /// </summary>
     [DataField]
     public bool ObjectiveCompleted;

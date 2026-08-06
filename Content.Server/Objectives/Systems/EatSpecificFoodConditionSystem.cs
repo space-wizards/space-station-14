@@ -9,20 +9,13 @@ namespace Content.Server.Objectives.Systems;
 /// <summary>
 /// Test system until I can break them out into their own systems
 /// </summary>
-public sealed class EatSpecificFoodConditionSystem : EntitySystem
+public sealed partial class EatSpecificFoodConditionSystem : EntitySystem
 {
-    [Dependency] private readonly NumberObjectiveSystem _number = default!;
-    [Dependency] private readonly SharedObjectivesSystem _objectives = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private NumberObjectiveSystem _number = default!;
+    [Dependency] private SharedObjectivesSystem _objectives = default!;
+    [Dependency] private MetaDataSystem _metaData = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<EatSpecificFoodConditionComponent, ObjectiveGetProgressEvent>(OnEatSpecificFoodGetProgress);
-        SubscribeLocalEvent<EatSpecificFoodConditionComponent, ObjectiveAfterAssignEvent>(OnEatSpecificFoodAfterAssign);
-    }
-
+    [SubscribeLocalEvent]
     private void OnEatSpecificFoodGetProgress(Entity<EatSpecificFoodConditionComponent> entity, ref ObjectiveGetProgressEvent args)
     {
         args.Progress = EatSpecificFoodProgress(entity, _number.GetTarget(entity));
@@ -31,6 +24,7 @@ public sealed class EatSpecificFoodConditionSystem : EntitySystem
     /// <summary>
     /// Sets the name, description and icon for the objective.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnEatSpecificFoodAfterAssign(Entity<EatSpecificFoodConditionComponent> condition, ref ObjectiveAfterAssignEvent args)
     {
         var count = _number.GetTarget(condition.Owner);

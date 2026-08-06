@@ -15,15 +15,33 @@ public sealed partial class EatSpecificFoodConditionComponent : Component
     [DataField(required: true)]
     public EntityWhitelist Whitelist;
 
-    /// Text and sprites for the condition.
+    /// <summary>
+    /// Name of the food being eaten.
+    /// </summary>
     [DataField]
     public LocId Name = string.Empty;
+
+    /// <summary>
+    /// Sprite to use for the condition.
+    /// </summary>
     [DataField]
     public SpriteSpecifier Sprite { get; private set; } = SpriteSpecifier.Invalid;
+
+    /// <summary>
+    /// Title string to use. <see cref="Name"/> is inserted as {itemName}.
+    /// </summary>
     [DataField]
     public LocId TitleText = string.Empty;
+
+    /// <summary>
+    /// Description text for a singular entity needing to be consumed.
+    /// </summary>
     [DataField]
     public LocId DescriptionText = string.Empty;
+
+    /// <summary>
+    /// Description text for a multiple entities needing to be consumed.
+    /// </summary>
     [DataField]
     public LocId DescriptionTextMultiple = string.Empty;
 

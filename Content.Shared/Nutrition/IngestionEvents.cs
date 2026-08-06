@@ -168,12 +168,29 @@ public record struct IngestedEvent(EntityUid User, EntityUid Target, Solution Sp
 /// Raised directed at the food after finishing eating it and before it's deleted.
 /// </summary>
 [ByRefEvent]
-public readonly record struct FullyEatenEvent(EntityUid User)
+public readonly record struct FullyEatenEvent(EntityUid User, EntityUid Target)
 {
+    /// <summary>
+    /// The entity that made eating the food happen.
+    /// </summary>
+    public readonly EntityUid User = User;
+
     /// <summary>
     /// The entity that ate the food.
     /// </summary>
-    public readonly EntityUid User = User;
+    public readonly EntityUid Target = Target;
+}
+
+/// <summary>
+/// Raised directed at the user having finished eating a food before it's deleted.
+/// </summary>
+[ByRefEvent]
+public readonly record struct FullyAteEvent(EntityUid Food)
+{
+    /// <summary>
+    /// The food that got eaten.
+    /// </summary>
+    public readonly EntityUid Food = Food;
 }
 
 /// <summary>

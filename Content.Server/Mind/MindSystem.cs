@@ -14,6 +14,7 @@ using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Objectives.Components;
 using Content.Shared.Nutrition;
+using Content.Shared.Stacks;
 using Content.Shared.Whitelist;
 
 namespace Content.Server.Mind;
@@ -28,15 +29,7 @@ public sealed partial class MindSystem : SharedMindSystem
     [Dependency] private PvsOverrideSystem _pvsOverride = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<MindContainerComponent, EntityTerminatingEvent>(OnMindContainerTerminating);
-        SubscribeLocalEvent<MindComponent, ComponentShutdown>(OnMindShutdown);
-        SubscribeLocalEvent<MindContainerComponent, SuccessfulConsumptionEvent>(OnSuccessfulConsumption);
-    }
-
+    [SubscribeLocalEvent]
     private void OnMindShutdown(EntityUid uid, MindComponent mind, ComponentShutdown args)
     {
         if (mind.UserId is {} user)
@@ -53,6 +46,7 @@ public sealed partial class MindSystem : SharedMindSystem
         mind.OwnedEntity = null;
     }
 
+    [SubscribeLocalEvent]
     private void OnMindContainerTerminating(EntityUid uid, MindContainerComponent component, ref EntityTerminatingEvent args)
     {
         if (!TryGetMind(uid, out var mindId, out var mind, component))
@@ -85,17 +79,29 @@ public sealed partial class MindSystem : SharedMindSystem
             Log.Warning($"Entity \"{ToPrettyString(uid)}\" for {mind.CharacterName} was deleted, and no applicable spawn location is available.");
     }
 
-    /// <summary>
-    /// Updates any objectives related to consuming food entities.
-    /// Runs before any deletion.
-    /// </summary>
-    private void OnSuccessfulConsumption(Entity<MindContainerComponent> entity, ref SuccessfulConsumptionEvent args)
+    // Updates any objectives related to consuming food entities.
+    // Gotta check for stack component, as consuming a stack food is considered the same as eating part of a single-item food.
+    [SubscribeLocalEvent]
+    private void OnFullyAte(Entity<MindContainerComponent> entity, ref FullyAteEvent args)
     {
-        if (args.FullConsumption && TryGetObjectiveEntities<EatSpecificFoodConditionComponent>(entity, out var objectives))
+        if (!HasComp<StackComponent>(args.Food))
+            CheckEatFoodObjectives(entity, args.Food);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnIngesting(Entity<MindContainerComponent> entity, ref IngestingEvent args)
+    {
+        if (HasComp<StackComponent>(args.Food))
+            CheckEatFoodObjectives(entity, args.Food);
+    }
+
+    private void CheckEatFoodObjectives(Entity<MindContainerComponent> entity, EntityUid food)
+    {
+        if (TryGetObjectiveEntities<EatSpecificFoodConditionComponent>(entity, out var objectives))
         {
             foreach (var objective in objectives)
             {
-                if (_whitelist.IsWhitelistPass(objective.Comp.Whitelist, args.ConsumedEntity))
+                if (_whitelist.IsWhitelistPass(objective.Comp.Whitelist, food))
                     objective.Comp.FoodEaten++;
             }
         }

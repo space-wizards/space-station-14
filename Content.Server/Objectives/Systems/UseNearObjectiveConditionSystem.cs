@@ -18,34 +18,31 @@ namespace Content.Server.Objectives.Systems;
 /// Condition system for objectives that require the use of an item near some sort of entity.
 /// This could be a player character, some sort of item or a warp location.
 /// </summary>
-public sealed class UseNearObjectiveConditionSystem : EntitySystem
+public sealed partial class UseNearObjectiveConditionSystem : EntitySystem
 {
-    [Dependency] private readonly SharedObjectivesSystem _objectives = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedMindSystem _mind = default!;
-    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly ExamineSystemShared _examine = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly SharedStrippableSystem _strippable = default!;
+    [Dependency] private SharedObjectivesSystem _objectives = default!;
+    [Dependency] private MetaDataSystem _metaData = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedMindSystem _mind = default!;
+    [Dependency] private EntityLookupSystem _entityLookup = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private ExamineSystemShared _examine = default!;
+    [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private SharedStrippableSystem _strippable = default!;
 
-    private EntityQuery<UseNearObjectiveTargetComponent> _useNearObjectiveTargetQuery;
+    [Dependency] private EntityQuery<UseNearObjectiveTargetComponent> _useNearObjectiveTargetQuery = default!;
 
+    /// <inheritdoc />
     public override void Initialize()
     {
         base.Initialize();
 
-        _useNearObjectiveTargetQuery = GetEntityQuery<UseNearObjectiveTargetComponent>();
-
-        SubscribeLocalEvent<UseNearObjectiveConditionComponent, ObjectiveGetProgressEvent>(OnUseNearEntityGetProgress);
         SubscribeLocalEvent<UseNearObjectiveConditionComponent, ObjectiveAssignedEvent>(OnUseNearEntityRequirementCheck, after: new[] { typeof(PickObjectiveTargetSystem) });
-        SubscribeLocalEvent<UseNearObjectiveConditionComponent, ObjectiveAfterAssignEvent>(OnUseNearAfterAssign);
-        SubscribeLocalEvent<UseNearObjectiveTriggerComponent, UseInHandEvent>(OnTriggerUseInHand);
     }
 
+    [SubscribeLocalEvent]
     private void OnUseNearEntityGetProgress(Entity<UseNearObjectiveConditionComponent> entity, ref ObjectiveGetProgressEvent args)
     {
         args.Progress = entity.Comp.ObjectiveCompleted ? 1 : 0;
@@ -111,6 +108,9 @@ public sealed class UseNearObjectiveConditionSystem : EntitySystem
             entity.Comp.TargetEntity = _random.Pick(eligibleTargets);
     }
 
+    // TODO: Make a generic Use activation system for stuff like melee attacks.
+    // Right now stuff like photography cameras make use of the flash system when really it should be generic.
+    [SubscribeLocalEvent]
     private void OnTriggerUseInHand(Entity<UseNearObjectiveTriggerComponent> entity, ref UseInHandEvent args)
     {
         if (_mind.TryGetObjectiveEntities<UseNearObjectiveConditionComponent>(args.User, out var objectives))
@@ -158,35 +158,9 @@ public sealed class UseNearObjectiveConditionSystem : EntitySystem
     }
 
     /// <summary>
-    /// Checks if an entity is visible to another entity IC; includes items worn by other players.
-    /// </summary>
-    private bool VisibleInRange(EntityUid viewer, EntityUid target, float range)
-    {
-        if (Deleted(target))
-            return false;
-
-        if (_examine.InRangeUnOccluded(viewer, target, range) && _container.IsInSameOrTransparentContainer((viewer, Transform(viewer)), (viewer, Transform(target))))
-            return true;
-
-        if (!_container.TryGetContainingContainer(target, out var container))
-            return false;
-
-        var wearer = container.Owner;
-        if (!_inventory.TryGetSlot(wearer, container.ID, out var slotDef) && !_hands.IsHolding(wearer, target))
-            return false;
-
-        if (slotDef != null && _strippable.IsStripHidden(slotDef, viewer))
-            return false;
-
-        if (_examine.InRangeUnOccluded(viewer, wearer, range))
-            return false;
-
-        return true;
-    }
-
-    /// <summary>
     /// Sets the name, description and icon for the objective.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnUseNearAfterAssign(Entity<UseNearObjectiveConditionComponent> condition, ref ObjectiveAfterAssignEvent args)
     {
         // Get the name of the objective target.
@@ -215,5 +189,32 @@ public sealed class UseNearObjectiveConditionSystem : EntitySystem
 
         if (condition.Comp.Sprite != null)
             _objectives.SetIcon(condition.Owner, condition.Comp.Sprite, args.Objective);
+    }
+
+    /// <summary>
+    /// Checks if an entity is visible to another entity IC; includes items worn by other players.
+    /// </summary>
+    private bool VisibleInRange(EntityUid viewer, EntityUid target, float range)
+    {
+        if (Deleted(target))
+            return false;
+
+        if (_examine.InRangeUnOccluded(viewer, target, range) && _container.IsInSameOrTransparentContainer(viewer, target))
+            return true;
+
+        if (!_container.TryGetContainingContainer(target, out var container))
+            return false;
+
+        var wearer = container.Owner;
+        if (!_inventory.TryGetSlot(wearer, container.ID, out var slotDef) && !_hands.IsHolding(wearer, target))
+            return false;
+
+        if (slotDef != null && _strippable.IsStripHidden(slotDef, viewer))
+            return false;
+
+        if (_examine.InRangeUnOccluded(viewer, wearer, range))
+            return false;
+
+        return true;
     }
 }

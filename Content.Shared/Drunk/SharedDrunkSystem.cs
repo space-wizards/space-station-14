@@ -15,7 +15,7 @@ public abstract partial class SharedDrunkSystem : EntitySystem
         SubscribeLocalEvent<LightweightDrunkComponent, DrunkEvent>(OnLightweightDrinking);
     }
 
-    public void TryApplyDrunkenness(EntityUid uid, TimeSpan boozePower)
+    public virtual void TryApplyDrunkenness(EntityUid uid, TimeSpan boozePower)
     {
         var ev = new DrunkEvent(boozePower);
         RaiseLocalEvent(uid, ref ev);

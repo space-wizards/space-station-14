@@ -8,7 +8,7 @@
   - type: Objective
     # difficulty isn't used since all objectives are picked
     difficulty: 1.5
-    issuer: objective-issuer-tourist
+    issuer: Tourist
 
 - type: entity
   abstract: true
@@ -40,6 +40,7 @@
     - Arachnid
     - Vox
     - Diona
+    - Vulpkanin
 
 - type: entity
   abstract: true
@@ -55,6 +56,7 @@
     - Arachnid
     - Vox
     - Diona
+    - Vulpkanin
 
 - type: entity
   abstract: true
@@ -64,23 +66,6 @@
   - type: SpeciesRequirement
     allowedSpecies:
     - Moth
-
-- type: entity
-  abstract: true # Abstract, to fill in the targetWhitelist for UseNearObjectiveCondition
-  parent: BaseTouristObjective
-  id: BasePhotographObjectObjective
-  components:
-  - type: Objective
-    icon:
-      sprite: Objects/Weapons/Melee/flash.rsi
-      state: flash
-  - type: UseNearObjectiveCondition
-    useWhitelist:
-      components:
-      - Flash # Replace this with the polaroid camera once that's in
-    titleText: photograph-object-condition-title
-    descriptionText: photograph-object-condition-description
-    descriptionTextDeleted: photograph-object-condition-description-deleted
 
 # Photography objective
 
@@ -99,7 +84,7 @@
       - NavMapBeacon
     useWhitelist:
       components:
-      - Flash # Replace this with the polaroid camera once that's in
+      - PictureTaker
     titleText: photograph-location-condition-title
     descriptionText: photograph-location-condition-description
     descriptionTextDeleted: photograph-location-condition-description-deleted
@@ -114,13 +99,18 @@
       state: flash
   - type: TargetObjective
     title: photograph-person-condition-title
-  - type: PickRandomHead
+  - type: PickRandomPerson
+    conditions:
+    - !type:BodyWhitelistCondition
+      whitelist:
+        components:
+        - CommandStaff
   - type: UseNearObjectiveCondition
     targetSingleEntity: true
     preventOcclusion: true
     useWhitelist:
       components:
-      - Flash # Replace this with the polaroid camera once that's in
+      - PictureTaker
     descriptionText: photograph-person-condition-description
     descriptionTextDeleted: photograph-person-condition-description-deleted
 

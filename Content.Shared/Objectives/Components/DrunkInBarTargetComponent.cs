@@ -8,4 +8,5 @@ namespace Content.Shared.Objectives.Components;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class DrunkInBarTargetComponent : Component
 {
+
 }

@@ -8,17 +8,11 @@ namespace Content.Server.Objectives.Systems;
 /// <summary>
 /// Requires that at least one of a list of jobs have been taken on the station.
 /// </summary>
-public sealed class JobExistsRequirementSystem : EntitySystem
+public sealed partial class JobExistsRequirementSystem : EntitySystem
 {
-    [Dependency] private readonly SharedJobSystem _jobs = default!;
+    [Dependency] private SharedJobSystem _jobs = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<JobExistsRequirementComponent, RequirementCheckEvent>(OnCheck);
-    }
-
+    [SubscribeLocalEvent]
     private void OnCheck(EntityUid uid, JobExistsRequirementComponent comp, ref RequirementCheckEvent args)
     {
         if (args.Cancelled)
