@@ -1,9 +1,6 @@
-using System;
 using Robust.Client;
 using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -128,6 +125,17 @@ namespace Content.Client.Launcher
             }
             return false;
         }
+
+        // public void Redirect() //TODO:ERRANT
+        // {
+            // _audio.PlayGlobal("/Audio/Announcements/shuttlecalled.ogg", Filter.Broadcast(), true);
+
+            // _sawmill.Info("Redial request received");
+            // _gameController.Redial("152.53.83.10");
+
+            // _clientNetManager.Reset("");
+            // _baseClient.ConnectToServer("152.53.83.10", _baseClient.DefaultPort);
+        // }
 
         public void Exit()
         {

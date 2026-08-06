@@ -54,6 +54,19 @@
                 </Control>
                 <Label Name="ConnectingAddress" StyleClasses="LabelSubText" HorizontalAlignment="Center" />
             </BoxContainer>
+
+            <!-- TODO:ERRANT -->
+            <BoxContainer Orientation="Vertical" VerticalExpand="True" Margin="4 4 4 0">
+                <BoxContainer Orientation="Horizontal" VerticalExpand="True" Margin="4 4 4 0">
+                    <Label Name="Vulture" StyleClasses="LabelSubText" HorizontalAlignment="Center" />
+                    <Button Name="RedirectButton"
+                            Text="{Loc 'connecting-available'}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            StyleClasses="Open"/>
+                </BoxContainer>
+            </BoxContainer>
+
             <PanelContainer>
                 <PanelContainer.PanelOverride>
                     <gfx:StyleBoxFlat BackgroundColor="#444" ContentMarginTopOverride="2" />

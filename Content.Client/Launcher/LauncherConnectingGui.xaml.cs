@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Client.Stylesheets;
 using Content.Shared.CCVar;
 using Content.Shared.Dataset;
@@ -7,7 +6,6 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Configuration;
-using Robust.Shared.IoC;
 using Robust.Shared.Timing;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
@@ -30,6 +28,8 @@ namespace Content.Client.Launcher
         private readonly IConfigurationManager _cfg;
         private readonly IClipboardManager _clipboard;
 
+        private bool _redirect;
+
         public LauncherConnectingGui(LauncherConnecting state, IRobustRandom random,
             IPrototypeManager prototype, IConfigurationManager config, IClipboardManager clipboard)
         {
@@ -38,6 +38,8 @@ namespace Content.Client.Launcher
             _prototype = prototype;
             _cfg = config;
             _clipboard = clipboard;
+
+            _cfg.OnValueChanged(CCVars.ServerFullRedirect, b => { _redirect = b; }, true); //TODO:ERRANT does not update. Why?
 
             RobustXamlLoader.Load(this);
 
@@ -48,6 +50,7 @@ namespace Content.Client.Launcher
             ChangeLoginTip();
             RetryButton.OnPressed += ReconnectButtonPressed;
             ReconnectButton.OnPressed += ReconnectButtonPressed;
+            // RedirectButton.OnPressed += RedirectButtonPressed; //TODO:ERRANT
 
             CopyButton.OnPressed += CopyButtonPressed;
             CopyButtonDisconnected.OnPressed += CopyButtonDisconnectedPressed;
@@ -82,6 +85,15 @@ namespace Content.Client.Launcher
 
             _state.RetryConnect();
         }
+
+        // private void RedirectButtonPressed(BaseButton.ButtonEventArgs args) //TODO:ERRANT
+        // {
+            // Open a UI?
+
+            // List options?
+
+            // _state.Redirect();
+        // }
 
         private void CopyButtonPressed(BaseButton.ButtonEventArgs args)
         {
@@ -162,6 +174,8 @@ namespace Content.Client.Launcher
         protected override void FrameUpdate(FrameEventArgs args)
         {
             base.FrameUpdate(args);
+
+            // RedirectButton.Visible = _redirect; //TODO:ERRANT
 
             var button = _state.CurrentPage == LauncherConnecting.Page.ConnectFailed
                 ? RetryButton
