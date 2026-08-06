@@ -6,17 +6,19 @@ namespace Content.Shared.NodeCrawl;
 
 public partial class NodeCrawlerMovementSystem
 {
+    [Dependency] private EntityQuery<GasPipeManifoldComponent> _manifoldQuery;
+
     [SubscribeLocalEvent]
     private void OnCanTraverse(Entity<AtmosPipeLayersComponent> ent, ref NodeCrawlCanTraverseEvent args)
     {
-        if (!HasComp<GasPipeManifoldComponent>(ent) && args.Movement.Comp.CurrentLayer != (int) ent.Comp.CurrentPipeLayer)
+        if (!_manifoldQuery.HasComponent(ent) && args.Movement.Comp.CurrentLayer != (int) ent.Comp.CurrentPipeLayer)
             args.Cancelled = true;
     }
 
     [SubscribeLocalEvent]
     private void OnArrived(Entity<AtmosPipeLayersComponent> ent, ref NodeCrawlerArrivedAtNodeEvent args)
     {
-        if (HasComp<GasPipeManifoldComponent>(ent))
+        if (_manifoldQuery.HasComponent(ent))
             return;
 
         args.Movement.Comp.CurrentLayer = (int) ent.Comp.CurrentPipeLayer;

@@ -17,6 +17,10 @@ public sealed partial class NodeCrawlerMovementSystem : EntitySystem
     [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private SharedNodeCrawlSystem _nodeCrawl = default!;
 
+    [Dependency] private EntityQuery<MovementRelayTargetComponent> _movementRelayQuery;
+    [Dependency] private EntityQuery<InputMoverComponent> _inputMoverQuery;
+    [Dependency] private EntityQuery<CrawlableNodeComponent> _crawlableQuery;
+
     [SubscribeLocalEvent]
     private void OnMoveInput(Entity<NodeCrawlerMovementComponent> ent, ref MoveInputEvent args)
     {
@@ -104,7 +108,7 @@ public sealed partial class NodeCrawlerMovementSystem : EntitySystem
             mover.Comp.TargetNode = null;
             DirtyField(mover, mover.Comp, nameof(NodeCrawlerMovementComponent.TargetNode));
 
-            if (TryComp<MovementRelayTargetComponent>(mover, out var movementTarget))
+            if (_movementRelayQuery.TryGetComponent(mover, out var movementTarget))
             {
                 var ev = new NodeCrawlerArrivedAtNodeEvent(target, (mover.Owner, mover.Comp));
                 RaiseLocalEvent(movementTarget.Source, ref ev);
@@ -127,7 +131,7 @@ public sealed partial class NodeCrawlerMovementSystem : EntitySystem
 
     private float MoveSpeed(EntityUid mover)
     {
-        if (!TryComp<InputMoverComponent>(mover, out var inputMover))
+        if (!_inputMoverQuery.TryGetComponent(mover, out var inputMover))
             return 0f;
 
         var moveSpeed = CompOrNull<MovementSpeedModifierComponent>(mover);
@@ -152,11 +156,11 @@ public sealed partial class NodeCrawlerMovementSystem : EntitySystem
         if (moveVector == Vector2.Zero)
             return null;
 
-        if (!TryComp<InputMoverComponent>(ent, out var inputMover))
+        if (!_inputMoverQuery.TryGetComponent(ent, out var inputMover))
             return null;
 
         var target = _mover.GetParentGridAngle(inputMover).RotateVec(moveVector);
-        if (ent.Comp.Node is not { } node || !Exists(node) || !TryComp<CrawlableNodeComponent>(node, out var nodeCrawl))
+        if (ent.Comp.Node is not { } node || !Exists(node) || !_crawlableQuery.TryGetComponent(node, out var nodeCrawl))
             return null;
 
         var nodeXform = Transform(node);

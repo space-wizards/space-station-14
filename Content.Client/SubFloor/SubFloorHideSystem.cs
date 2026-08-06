@@ -128,7 +128,7 @@ public sealed partial class SubFloorHideSystem : SharedSubFloorHideSystem
 /// Raised on a subfloor-hidden entity to let client systems reveal it locally.
 /// </summary>
 [ByRefEvent]
-public sealed class GetSubFloorRevealEvent : EntityEventArgs
+public record struct GetSubFloorRevealEvent
 {
     /// <summary>
     /// Whether the entity should be shown even if covered by a floor tile.

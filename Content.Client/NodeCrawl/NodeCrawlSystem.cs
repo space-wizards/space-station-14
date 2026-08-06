@@ -1,6 +1,5 @@
 using Content.Client.SubFloor;
 using Content.Shared.NodeCrawl;
-using Content.Shared.SubFloor;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Player;
@@ -19,21 +18,41 @@ public sealed partial class NodeCrawlSystem : SharedNodeCrawlSystem
     [Dependency] private NodeCrawlCrawlerSystem _crawler = default!;
     [Dependency] private IPrototypeManager _prototypeManager = default!;
 
+    [Dependency] private EntityQuery<NodeCrawlerMovementComponent> _movementQuery;
+    [Dependency] private EntityQuery<CrawlableNodeComponent> _crawlableQuery;
+    [Dependency] private EntityQuery<AppearanceComponent> _appearanceQuery;
+
     private NodeCrawlPipeOverlay? _pipeOverlay;
     private HashSet<EntityUid>? _reachableNodes;
+    private readonly Queue<EntityUid> _pendingNodes = new();
 
     public IReadOnlySet<EntityUid>? ReachableNodes => _reachableNodes;
 
     public override void Initialize()
     {
+        base.Initialize();
+        _prototypeManager.PrototypesReloaded += OnPrototypesReloaded;
         var outlineShader = _prototypeManager.Index(new ProtoId<ShaderPrototype>(OutlineShaderId)).InstanceUnique();
         _pipeOverlay = new NodeCrawlPipeOverlay(EntityManager, this, outlineShader);
+    }
+
+    public override void Shutdown()
+    {
+        _prototypeManager.PrototypesReloaded -= OnPrototypesReloaded;
+        base.Shutdown();
+    }
+
+    private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
+    {
+        if (args.WasModified<ShaderPrototype>())
+            _pipeOverlay?.SetShader(_prototypeManager.Index(new ProtoId<ShaderPrototype>(OutlineShaderId)).InstanceUnique());
     }
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
+        QueueAppearanceUpdates(_reachableNodes);
         var reachable = GetLocalReachableNodes();
         if (_pipeOverlay != null && _overlayManager.HasOverlay<NodeCrawlPipeOverlay>() != (reachable != null))
         {
@@ -46,12 +65,7 @@ public sealed partial class NodeCrawlSystem : SharedNodeCrawlSystem
             }
         }
 
-        if (SameNodes(reachable))
-            return;
-
-        var old = _reachableNodes;
         _reachableNodes = reachable;
-        QueueAppearanceUpdates(old);
         QueueAppearanceUpdates(_reachableNodes);
     }
 
@@ -94,16 +108,18 @@ public sealed partial class NodeCrawlSystem : SharedNodeCrawlSystem
             || crawler.Comp.Mover is not { } mover)
             return null;
 
-        if (!TryComp<NodeCrawlerMovementComponent>(mover, out var movement) || movement.Node is not { } node)
+        if (!_movementQuery.TryGetComponent(mover, out var movement) || movement.Node is not { } node)
             return null;
 
-        var reachable = new HashSet<EntityUid> { node };
-        var pending = new Queue<EntityUid>();
-        pending.Enqueue(node);
+        var reachable = _reachableNodes ??= [];
+        reachable.Clear();
+        _pendingNodes.Clear();
+        reachable.Add(node);
+        _pendingNodes.Enqueue(node);
 
-        while (pending.TryDequeue(out var current))
+        while (_pendingNodes.TryDequeue(out var current))
         {
-            if (!TryComp<CrawlableNodeComponent>(current, out var currentComponent))
+            if (!_crawlableQuery.TryGetComponent(current, out var currentComponent))
                 continue;
 
             foreach (var connected in currentComponent.ReachableNodes)
@@ -112,7 +128,7 @@ public sealed partial class NodeCrawlSystem : SharedNodeCrawlSystem
                     continue;
 
                 if (reachable.Add(connected))
-                    pending.Enqueue(connected);
+                    _pendingNodes.Enqueue(connected);
             }
         }
 
@@ -126,7 +142,7 @@ public sealed partial class NodeCrawlSystem : SharedNodeCrawlSystem
 
         foreach (var node in _reachableNodes ?? [])
         {
-            if (TryComp<AppearanceComponent>(node, out var appearance))
+            if (_appearanceQuery.TryGetComponent(node, out var appearance))
                 _appearance.QueueUpdate(node, appearance);
         }
     }
@@ -138,16 +154,8 @@ public sealed partial class NodeCrawlSystem : SharedNodeCrawlSystem
 
         foreach (var node in nodes)
         {
-            if (TryComp<AppearanceComponent>(node, out var appearance))
+            if (_appearanceQuery.TryGetComponent(node, out var appearance))
                 _appearance.QueueUpdate(node, appearance);
         }
-    }
-
-    private bool SameNodes(HashSet<EntityUid>? nodes)
-    {
-        if (_reachableNodes == null || nodes == null)
-            return _reachableNodes == null && nodes == null;
-
-        return _reachableNodes.SetEquals(nodes);
     }
 }

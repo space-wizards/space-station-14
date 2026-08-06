@@ -18,6 +18,10 @@ public abstract partial class SharedNodeCrawlSystem : EntitySystem
     [Dependency] private NodeCrawlerMovementSystem _nodeCrawler = default!;
     [Dependency] private NodeCrawlCrawlerSystem _crawler = default!;
 
+    [Dependency] private EntityQuery<CrawlableNodeComponent> _crawlableQuery;
+    [Dependency] private EntityQuery<NodeCrawlerComponent> _crawlerQuery;
+    [Dependency] private EntityQuery<NodeCrawlerMovementComponent> _movementQuery;
+
     public static readonly string MoverContainer = "mover-container";
 
     [SubscribeLocalEvent]
@@ -112,7 +116,7 @@ public abstract partial class SharedNodeCrawlSystem : EntitySystem
     public void EnterNodeCrawl(EntityUid uid, EntityUid target)
     {
         if (!Exists(target) ||
-            !HasComp<CrawlableNodeComponent>(target) ||
+            !_crawlableQuery.HasComponent(target) ||
             !_crawler.TryGetNodeCrawler(uid, out var ent, out var user) ||
             ent.Comp.Mover != null)
             return;
@@ -173,7 +177,7 @@ public abstract partial class SharedNodeCrawlSystem : EntitySystem
 
         foreach (var other in _container.EmptyContainer(container))
         {
-            if (!TryComp<NodeCrawlerComponent>(other, out var otherCrawler))
+            if (!_crawlerQuery.TryGetComponent(other, out var otherCrawler))
                 continue;
 
             otherCrawler.Mover = null;
@@ -183,7 +187,7 @@ public abstract partial class SharedNodeCrawlSystem : EntitySystem
         _mover.RemoveRelay(user);
         if (!TerminatingOrDeleted(mover))
         {
-            if (TryComp<NodeCrawlerMovementComponent>(mover, out var movement))
+            if (_movementQuery.TryGetComponent(mover, out var movement))
                 EjectAir((mover, movement));
 
             PredictedDel(mover);

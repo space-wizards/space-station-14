@@ -18,6 +18,8 @@ public sealed partial class NodeCrawlEntrySystem : EntitySystem
     [Dependency] private EntityWhitelistSystem _entityWhitelist = default!;
     [Dependency] private WeldableSystem _weldable = default!;
 
+    [Dependency] private EntityQuery<NodeCrawlerMovementComponent> _movementQuery;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -36,7 +38,7 @@ public sealed partial class NodeCrawlEntrySystem : EntitySystem
             return;
 
         if (crawler.Comp.Mover is { } mover
-            && TryComp<NodeCrawlerMovementComponent>(mover, out var movement) && movement.Node == ent.Owner)
+            && _movementQuery.TryGetComponent(mover, out var movement) && movement.Node == ent.Owner)
         {
             args.Verbs.Add(new AlternativeVerb { Act = () => TryExit(ent.Owner, user, crawler.Comp.ExitDelay), Text = Loc.GetString("node-crawl-exit", ("target", ent.Owner)) }) ;
             return;

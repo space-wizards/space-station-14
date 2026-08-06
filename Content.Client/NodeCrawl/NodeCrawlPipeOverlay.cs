@@ -9,14 +9,19 @@ namespace Content.Client.NodeCrawl;
 
 public sealed class NodeCrawlPipeOverlay : Overlay
 {
-    private readonly IEntityManager _entityManager;
     private readonly NodeCrawlSystem _nodeCrawl;
     private readonly NodeCrawlCrawlerSystem _crawler;
     private readonly SpriteSystem _spriteSystem;
     private readonly EntityLookupSystem _lookup;
     private readonly SharedTransformSystem _transform;
     private readonly IPlayerManager _playerManager;
-    private readonly ShaderInstance _outlineShader;
+    private ShaderInstance _outlineShader;
+
+    private readonly EntityQuery<NodeCrawlerMovementComponent> _movementQuery;
+    private readonly EntityQuery<SpriteComponent> _spriteQuery;
+    private readonly EntityQuery<EyeComponent> _eyeQuery;
+    private readonly EntityQuery<TransformComponent> _transformQuery;
+    private readonly HashSet<EntityUid> _entities = [];
 
     private static readonly Color NodeBaseColor = new(1f, 1f, 1f, 0.5f);
     private EntityUid? _previousOutlined;
@@ -25,9 +30,12 @@ public sealed class NodeCrawlPipeOverlay : Overlay
 
     public NodeCrawlPipeOverlay(IEntityManager entityManager, NodeCrawlSystem nodeCrawl, ShaderInstance outlineShader)
     {
-        _entityManager = entityManager;
         _nodeCrawl = nodeCrawl;
         _outlineShader = outlineShader;
+        _movementQuery = entityManager.GetEntityQuery<NodeCrawlerMovementComponent>();
+        _spriteQuery = entityManager.GetEntityQuery<SpriteComponent>();
+        _eyeQuery = entityManager.GetEntityQuery<EyeComponent>();
+        _transformQuery = entityManager.GetEntityQuery<TransformComponent>();
         _crawler = entityManager.System<NodeCrawlCrawlerSystem>();
         _spriteSystem = entityManager.System<SpriteSystem>();
         _lookup = entityManager.System<EntityLookupSystem>();
@@ -45,25 +53,25 @@ public sealed class NodeCrawlPipeOverlay : Overlay
         EntityUid? current = null;
         if (_crawler.TryGetNodeCrawler(player.Value, out var crawler) &&
             crawler.Comp.Mover is { } mover &&
-            _entityManager.TryGetComponent<NodeCrawlerMovementComponent>(mover, out var movement))
+            _movementQuery.TryGetComponent(mover, out var movement))
         {
             current = movement.Node;
         }
 
-        var entities = _lookup.GetEntitiesIntersecting(args.MapId, args.WorldBounds, LookupFlags.Uncontained);
+        _entities.Clear();
+        _lookup.GetEntitiesIntersecting(args.MapId, args.WorldBounds.CalcBoundingBox(), _entities, LookupFlags.Uncontained);
         var worldHandle = args.WorldHandle;
-        var eyeRotation = _entityManager.TryGetComponent<EyeComponent>(player, out var eye)
+        var eyeRotation = _eyeQuery.TryGetComponent(player, out var eye)
             ? eye.Rotation
             : Angle.Zero;
 
         worldHandle.UseShader(null);
-        foreach (var uid in entities)
+        foreach (var uid in _entities)
         {
-            if (!reachable.Contains(uid) || !_entityManager.TryGetComponent<SpriteComponent>(uid, out var sprite) || !sprite.Visible)
+            if (!reachable.Contains(uid) || !_spriteQuery.TryGetComponent(uid, out var sprite) || !sprite.Visible)
                 continue;
 
-            var worldPos = _transform.GetWorldPosition(uid);
-            var worldRot = _transform.GetWorldRotation(uid);
+            var (worldPos, worldRot) = _transform.GetWorldPositionRotation(_transformQuery.GetComponent(uid), _transformQuery);
             var oldColor = sprite.Color;
 
             _spriteSystem.SetColor((uid, sprite), NodeBaseColor);
@@ -72,6 +80,14 @@ public sealed class NodeCrawlPipeOverlay : Overlay
         }
 
         SetOutline(current);
+    }
+
+    public void SetShader(ShaderInstance shader)
+    {
+        var outlined = _previousOutlined;
+        RemoveOutline();
+        _outlineShader = shader;
+        SetOutline(outlined);
     }
 
     public void RemoveOutline()
@@ -84,15 +100,16 @@ public sealed class NodeCrawlPipeOverlay : Overlay
         if (_previousOutlined == current)
             return;
 
-        if (_previousOutlined is { } previous && _entityManager.TryGetComponent<SpriteComponent>(previous, out var previousSprite))
+        if (_previousOutlined is { } previous && _spriteQuery.TryGetComponent(previous, out var previousSprite))
             _spriteSystem.RemovePostShader((previous, previousSprite), ContentPostShaderIds.NodeCrawlOutline);
 
         _previousOutlined = null;
 
-        if (current is not { } uid || !_entityManager.TryGetComponent<SpriteComponent>(uid, out var currentSprite))
+        if (current is not { } uid || !_spriteQuery.TryGetComponent(uid, out var currentSprite))
             return;
 
-        _spriteSystem.SetPostShader((uid, currentSprite), new SpriteComponent.PostShaderArgs(
+        _spriteSystem.SetPostShader((uid, currentSprite),
+            new SpriteComponent.PostShaderArgs(
             ContentPostShaderIds.NodeCrawlOutline,
             _outlineShader)
         {

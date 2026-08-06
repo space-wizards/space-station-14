@@ -21,6 +21,12 @@ public sealed partial class NodeCrawlSystem : SharedNodeCrawlSystem
     [Dependency] private IReflectionManager _reflection = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
 
+    [Dependency] private EntityQuery<NodeContainerComponent> _nodeContainerQuery;
+    [Dependency] private EntityQuery<CrawlableNodeComponent> _crawlableQuery;
+    [Dependency] private EntityQuery<BarotraumaComponent> _barotraumaQuery;
+    [Dependency] private EntityQuery<NodeCrawlerMovementComponent> _movementQuery;
+    [Dependency] private EntityQuery<InternalsComponent> _internalsQuery;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -50,7 +56,7 @@ public sealed partial class NodeCrawlSystem : SharedNodeCrawlSystem
     [SubscribeLocalEvent]
     private void OnNodeGroupsRebuilt(Entity<CrawlableNodeComponent> ent, ref NodeGroupsRebuilt args)
     {
-        if (!TryComp<NodeContainerComponent>(ent, out var nodeContainer))
+        if (!_nodeContainerQuery.TryGetComponent(ent, out var nodeContainer))
             return;
 
         // TODO ugly workaround for https://github.com/space-wizards/RobustToolbox/issues/6694 not letting List<Type>
@@ -63,12 +69,12 @@ public sealed partial class NodeCrawlSystem : SharedNodeCrawlSystem
         {
             foreach (var reachable in node.ReachableNodes)
             {
-                if (possibleTypes.Count != 0 && !possibleTypes.Any(type => type?.IsInstanceOfType(reachable) == true))
+                if (possibleTypes.Count != 0 && possibleTypes.All(type => type?.IsInstanceOfType(reachable) != true))
                 {
                     continue;
                 }
 
-                DebugTools.Assert(HasComp<CrawlableNodeComponent>(reachable.Owner),
+                DebugTools.Assert(_crawlableQuery.HasComponent(reachable.Owner),
                     $"Node {ToPrettyString(reachable.Owner)} reachable from {ToPrettyString(ent)} should be a crawlable node, but wasn't");
 
                 if (!reachableNodes.Contains(reachable.Owner))
@@ -96,7 +102,7 @@ public sealed partial class NodeCrawlSystem : SharedNodeCrawlSystem
         if (movement.Comp.Node is not { } node)
             return null;
 
-        if (!TryComp<NodeContainerComponent>(node, out var nodeContainer))
+        if (!_nodeContainerQuery.TryGetComponent(node, out var nodeContainer))
             return null;
 
         foreach (var containedNode in nodeContainer.Nodes.Values)
@@ -115,7 +121,7 @@ public sealed partial class NodeCrawlSystem : SharedNodeCrawlSystem
         base.SetupAir(movement);
 
         if (movement.Comp.HeldCrawler is not { } heldCrawler ||
-            !TryComp<BarotraumaComponent>(heldCrawler, out var barotrauma))
+            !_barotraumaQuery.TryGetComponent(heldCrawler, out var barotrauma))
         {
             return;
         }
@@ -154,7 +160,7 @@ public sealed partial class NodeCrawlSystem : SharedNodeCrawlSystem
 
     private Entity<NodeCrawlerMovementComponent>? GetMovement(Entity<NodeCrawlerComponent> crawler)
     {
-        if (!TryComp<NodeCrawlerMovementComponent>(crawler.Comp.Mover, out var mover))
+        if (!_movementQuery.TryGetComponent(crawler.Comp.Mover, out var mover))
             return null;
 
         return new(crawler.Comp.Mover.Value, mover);
@@ -182,7 +188,7 @@ public sealed partial class NodeCrawlSystem : SharedNodeCrawlSystem
         if (GetMovement(crawler) is not { } mover || mover.Comp.Node is not { } node)
             return null;
 
-        if (!TryComp<NodeContainerComponent>(node, out var nodeContainer))
+        if (!_nodeContainerQuery.TryGetComponent(node, out var nodeContainer))
             return null;
 
         return (node, nodeContainer);
@@ -218,7 +224,7 @@ public sealed partial class NodeCrawlSystem : SharedNodeCrawlSystem
         if (GetAir(ent) is not { } air)
             return;
 
-        if (TryComp<InternalsComponent>(ent, out var internals) && internals.GasTankEntity != null)
+        if (_internalsQuery.TryGetComponent(ent, out var internals) && internals.GasTankEntity != null)
             return;
 
         args.Gas = air;
