@@ -22,13 +22,13 @@ public sealed partial class XATReactiveSpecificComponent : Component
     /// Single random reagent that is required in quantity <see cref="MinQuantity"/> to activate trigger
     /// If this specific reagent is present in required amount - activation will be triggered.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField(required: true), AutoNetworkedField]
     public HashSet<ProtoId<ReagentPrototype>> Reagents = new();
 
     /// <summary>
     /// Reagents that are required in quantity <see cref="MinQuantity"/> to activate trigger.
     /// If any of them are present in required amount - activation will be triggered.
-    /// If this is left empty, it will be filled by a randomly chosen value from the Reagents DataField.
+    /// this will be filled by a randomly chosen value from the Reagents DataField.
     /// </summary>
     [DataField, AutoNetworkedField]
     public ProtoId<ReagentPrototype>? Reagent;
