@@ -1,6 +1,6 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Managers;
-using Content.Shared.Ghost;
+using Content.Shared.Ghost.Components;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
