@@ -20,7 +20,7 @@
       quickInsert: true
       areaInsert: true
       whitelist:
-        compoennts:
+        components:
         - TabletopGame
         tags:
         - Book
