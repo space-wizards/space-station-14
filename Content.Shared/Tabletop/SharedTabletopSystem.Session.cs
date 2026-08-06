@@ -52,13 +52,7 @@ public abstract partial class SharedTabletopSystem
         UI.CloseUis(ent.Owner);
 
         PredictedQueueDel(ent.Comp.Board);
-        // These should be parented to the board, but just in case.
-        PredictedQueueDel(ent.Comp.UprightCamera);
-        PredictedQueueDel(ent.Comp.UpsideDownCamera);
-
         ent.Comp.Board = null;
-        ent.Comp.UprightCamera = null;
-        ent.Comp.UpsideDownCamera = null;
 
         Dirty(ent);
     }
