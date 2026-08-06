@@ -31,6 +31,9 @@ public sealed partial class CardSystem : SharedCardSystem
 
         Entity<SpriteComponent?> sprite = (ent.Owner, args.Sprite);
 
+        if (!Resolve(sprite.Owner, ref sprite.Comp))
+            return;
+
         var xform = Transform(ent.Owner);
 
         // Hide in strip menu
