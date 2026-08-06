@@ -35,9 +35,6 @@
       0: Alive
       60: Critical
       125: Dead
-  - type: Temperature
-    currentTemperature: 310.15
-    specificHeat: 42
   - type: TemperatureDamage
     heatDamageThreshold: 360
     coldDamageThreshold: 285
@@ -48,10 +45,7 @@
       amount: 4
   # They wawa!
   - type: Vocal
-    sounds:
-      Male: Scurret
-      Female: Scurret
-      Unsexed: Scurret
+    emoteSounds: Scurret
     wilhelmProbability: 0.01 # the scug, it screams like a man
   - type: Speech
     speechVerb: Wawa
@@ -185,10 +179,9 @@
 # feel free to hook them into random content.
 
 - type: entity
-  name: Emotional Support Scurret
-  id: MobBaseEmotionalSupportScurret
-  parent: MobBaseScurret
   abstract: true
+  id: MobBaseEmotionalSupportScurret
+  name: Emotional Support Scurret
   components:
     - type: Loadout
       prototypes: [ EmotionalSupportScurretGear ]

@@ -23,6 +23,7 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
     [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private IResourceCache _resourceCache = default!;
     [Dependency] private IEntityManager _entityManager = default!;
+    [Dependency] private IEntityNetworkManager _entityNetManager = default!;
 
     /// <summary>
     /// Triggered when a camera is selected.
@@ -224,6 +225,6 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
         if (!string.IsNullOrEmpty(marker.Address))
             CameraSelected?.Invoke(marker.Address, marker.Subnet);
         else
-            _entityManager.RaisePredictiveEvent(new RequestCameraMarkerUpdateMessage(netEntity));
+            _entityNetManager.SendSystemNetworkMessage(new RequestCameraMarkerUpdateMessage(netEntity));
     }
 }
