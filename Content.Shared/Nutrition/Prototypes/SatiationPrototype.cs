@@ -52,14 +52,13 @@ public sealed partial class SatiationPrototype : IPrototype, IInheritingPrototyp
     [DataField(customTypeSerializer: typeof(DictionarySerializer<string, int>))]
     public Dictionary<string, int> Thresholds = [];
 
-    public IEnumerable<string> AllThresholdKeys => Thresholds.Keys;
-
     /// <summary>
     /// The lowest possible value this satiation can be initialized to.
     /// </summary>
     [DataField("startingValueMinimum", required: true)]
     private SatiationValue _startingValueMinimum = default!;
 
+    /// <inheritdoc cref="_startingValueMinimum" />
     public int StartingValueMinimum => GetValueOrNull(_startingValueMinimum) ?? 0;
 
     /// <summary>
@@ -68,6 +67,7 @@ public sealed partial class SatiationPrototype : IPrototype, IInheritingPrototyp
     [DataField("startingValueMaximum", required: true)]
     private SatiationValue _startingValueMaximum = default!;
 
+    /// <inheritdoc cref="_startingValueMaximum" />
     public int StartingValueMaximum => GetValueOrNull(_startingValueMaximum) ?? MaximumValue;
 
     /// <summary>

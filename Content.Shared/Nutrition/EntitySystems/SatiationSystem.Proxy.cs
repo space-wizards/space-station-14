@@ -240,7 +240,7 @@ public sealed partial class SatiationSystem
         [ForbidLiteral] ProtoId<SatiationTypePrototype> type
     )
     {
-        return GetAndResolveSatiationOfType(entity, type)?.Proto.AllThresholdKeys ?? [];
+        return GetAndResolveSatiationOfType(entity, type)?.Proto.Thresholds.Keys ?? Enumerable.Empty<string>();
     }
 
     /// <summary>
