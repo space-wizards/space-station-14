@@ -11,7 +11,7 @@ namespace Content.Shared.Mobs.Components;
 ///     (such as blur effect for unconsciousness) and managing the health HUD.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[AutoGenerateComponentState(true)]
+[AutoGenerateComponentState]
 [Access(typeof(MobStateSystem), typeof(MobThresholdSystem))]
 public sealed partial class MobStateComponent : Component
 {
