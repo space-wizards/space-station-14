@@ -27,7 +27,6 @@ public sealed partial class GridStencilSystem : EntitySystem
     private readonly OverlayResourceCache<CachedResources> _resources = new();
     private List<Entity<MapGridComponent>> _grids = new();
     private readonly List<WorldRect> _rects = new();
-    private readonly List<Box2> _tileBounds = new();
 
     /// <summary>
     /// Returns a viewport-sized texture where non-space grid tiles are white and everything else is transparent.
@@ -85,17 +84,17 @@ public sealed partial class GridStencilSystem : EntitySystem
 
                 foreach (var grid in _grids)
                 {
-                    var invGridMatrix = _xform.GetInvWorldMatrix(grid.Owner);
-                    var localBounds = invGridMatrix.TransformBox(worldBounds);
-                    _tileBounds.Clear();
-                    _map.GetLocalTileBounds(grid.Owner, grid, localBounds, _tileBounds, predicate);
-
                     var worldToTextureMatrix = Matrix3x2.Multiply(_xform.GetWorldMatrix(grid.Owner), invMatrix);
+                    var tiles = _map.GetTilesEnumerator(grid.Owner, grid, worldBounds);
                     worldHandle.SetTransform(worldToTextureMatrix);
                     _rects.Clear();
 
-                    foreach (var bounds in _tileBounds)
+                    while (tiles.MoveNext(out var tileRef))
                     {
+                        if (!predicate(tileRef.Tile))
+                            continue;
+
+                        var bounds = _lookup.GetLocalBounds(tileRef, grid.Comp.TileSize);
                         _rects.Add(new WorldRect(bounds, Color.White));
                     }
 
