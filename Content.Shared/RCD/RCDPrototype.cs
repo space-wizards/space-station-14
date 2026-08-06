@@ -25,6 +25,9 @@ public sealed partial class RCDPrototype : IPrototype
     /// If null, uses the prototype's name, if it exists.
     /// Defaults to the rcd-unknown LocId otherwise.
     /// </summary>
+    /// <remarks>
+    /// Use <see cref="RcdSystem.GetPrototypeName"/> instead of using this directly.
+    /// </remarks>
     [DataField("name"), ViewVariables(VVAccess.ReadOnly)]
     public LocId? SetName { get; private set; }
 
