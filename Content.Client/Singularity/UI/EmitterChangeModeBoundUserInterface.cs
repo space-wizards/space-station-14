@@ -20,6 +20,12 @@ public sealed partial class EmitterChangeModeBoundUserInterface(EntityUid owner,
         if (!EntMan.TryGetComponent(Owner, out EmitterComponent? emitter))
             return options;
 
+        if (options.Count == 1)
+        {
+            HandleSendToggle();
+            return []; // returning empty will auto-close
+        }
+
         RadialMenuActionOption<int> option;
         if (emitter.IsOn)
         {

@@ -23,14 +23,16 @@ public partial class BatteryWeaponFireModesBoundUserInterface(EntityUid owner, E
     /// <inheritdoc />
     protected override void Open()
     {
-        base.Open();
-
         if (!EntMan.TryGetComponent(Owner, out BatteryWeaponFireModesComponent? fireModes))
             return;
 
         var models = CreateButtons(fireModes);
         if (models.Count <= 1)
-            Close();
+        {
+            return;
+        }
+
+        base.Open();
 
         _menu = this.CreateWindow<SimpleRadialMenu>();
         _menu.SetButtons(models);
