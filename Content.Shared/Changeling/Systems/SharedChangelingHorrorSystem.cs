@@ -146,11 +146,6 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
         {
             if (TryComp<ChangelingHorrorDisableComponent>(action.Owner, out var comp))
             {
-                if (comp.ToggleOff)
-                {
-                    _actions.SetToggled((action.Owner, action.Comp), comp.OldToggleStatus);
-                }
-
                 _actions.SetEnabled((action.Owner, action.Comp), true);
             }
         }
@@ -266,7 +261,12 @@ public abstract partial class SharedChangelingHorrorSystem : EntitySystem
             {
                 if (comp.ToggleOff)
                 {
-                    comp.OldToggleStatus = action.Comp.Toggled;
+                    if (action.Comp.Toggled)
+                    {   // we perform the action. lets really hope this toggles it off, okay?
+                        _actions.PerformAction((ent.Owner, null), (action.Owner, action.Comp));
+                    }
+
+                    // we force it, just in case
                     _actions.SetToggled((action.Owner, action.Comp), false);
                 }
 

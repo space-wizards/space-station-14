@@ -13,10 +13,4 @@ public sealed partial class ChangelingHorrorDisableComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool ToggleOff = false;
-
-    /// <summary>
-    /// Used to keep track of the disable status before the horror form
-    /// </summary>
-    [AutoNetworkedField]
-    public bool OldToggleStatus = false;
 }
