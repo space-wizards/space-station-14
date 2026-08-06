@@ -1,5 +1,4 @@
-﻿using Content.Server.StatusEffectNew;
-using Content.Shared.Bed.Sleep;
+﻿using Content.Shared.Bed.Sleep;
 using Content.Shared.Drowsiness;
 using Content.Shared.StatusEffectNew;
 using Content.Shared.StatusEffectNew.Components;
@@ -8,11 +7,11 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Drowsiness;
 
-public sealed class DrowsinessSystem : SharedDrowsinessSystem
+public sealed partial class DrowsinessSystem : SharedDrowsinessSystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private StatusEffectsSystem _statusEffects = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -47,7 +46,7 @@ public sealed class DrowsinessSystem : SharedDrowsinessSystem
             // Make sure the sleep time doesn't cut into the time to next incident.
             drowsiness.NextIncidentTime += duration;
 
-            _statusEffects.TryAddStatusEffect(statusEffect.AppliedTo.Value, SleepingSystem.StatusEffectForcedSleeping, duration);
+            _statusEffects.TryAddStatusEffectDuration(statusEffect.AppliedTo.Value, SleepingSystem.StatusEffectForcedSleeping, duration);
         }
     }
 }

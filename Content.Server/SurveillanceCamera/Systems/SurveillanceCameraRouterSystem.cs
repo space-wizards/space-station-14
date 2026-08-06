@@ -6,17 +6,15 @@ using Content.Shared.Power;
 using Content.Shared.SurveillanceCamera;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
-using Robust.Shared.Prototypes;
 using Content.Shared.DeviceNetwork.Components;
 
 namespace Content.Server.SurveillanceCamera;
 
-public sealed class SurveillanceCameraRouterSystem : EntitySystem
+public sealed partial class SurveillanceCameraRouterSystem : EntitySystem
 {
-    [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
-    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
+    [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
+    [Dependency] private ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] private UserInterfaceSystem _userInterface = default!;
     public override void Initialize()
     {
         SubscribeLocalEvent<SurveillanceCameraRouterComponent, ComponentInit>(OnInitialize);
@@ -29,7 +27,7 @@ public sealed class SurveillanceCameraRouterSystem : EntitySystem
     private void OnInitialize(EntityUid uid, SurveillanceCameraRouterComponent router, ComponentInit args)
     {
         if (router.SubnetFrequencyId == null ||
-            !_prototypeManager.TryIndex(router.SubnetFrequencyId, out DeviceFrequencyPrototype? subnetFrequency))
+            !ProtoMan.TryIndex(router.SubnetFrequencyId, out DeviceFrequencyPrototype? subnetFrequency))
         {
             return;
         }
@@ -121,7 +119,7 @@ public sealed class SurveillanceCameraRouterSystem : EntitySystem
             return;
         }
 
-        if (!_prototypeManager.TryIndex<DeviceFrequencyPrototype>(component.AvailableNetworks[args.Network],
+        if (!ProtoMan.Resolve<DeviceFrequencyPrototype>(component.AvailableNetworks[args.Network],
                 out var frequency))
         {
             return;

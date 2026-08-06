@@ -223,6 +223,11 @@
   id: ClothingUniformJumpsuitClown
   result: ClothingUniformJumpsuitClown
 
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtClown
+  result: ClothingUniformJumpskirtClown
+
 ## CMO
 
 - type: latheRecipe
@@ -385,6 +390,11 @@
   parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpsuitLawyerBlack
   result: ClothingUniformJumpsuitLawyerBlack
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtLawyerBlack
+  result: ClothingUniformJumpskirtLawyerBlack
 
 ## Librarian
 
@@ -606,6 +616,22 @@
   parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpskirtWarden
   result: ClothingUniformJumpskirtWarden
+
+## Tram Driver
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpsuitTramDriver
+  result: ClothingUniformJumpsuitTramDriver
+
+- type: latheRecipe
+  parent: BaseCoatRecipe
+  id: ClothingOuterSuitTramDriver
+  result: ClothingOuterSuitTramDriver
+
+- type: latheRecipe
+  parent: BaseHatRecipe
+  id: ClothingHeadHatTramDriver
+  result: ClothingHeadHatTramDriver
 
 # Command winter coats
 - type: latheRecipe
@@ -912,6 +938,11 @@
   parent: BaseNeckClothingRecipe
   id: ClothingNeckTieSci
   result: ClothingNeckTieSci
+
+- type: latheRecipe
+  parent: BaseNeckClothingRecipe
+  id: ClothingNeckTieSerious
+  result: ClothingNeckTieSerious
 
 # Scarfs
 - type: latheRecipe

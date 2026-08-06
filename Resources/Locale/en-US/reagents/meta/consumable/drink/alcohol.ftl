@@ -95,7 +95,7 @@ reagent-name-banana-honk = Banana Honk
 reagent-desc-banana-honk = A drink from Clown Heaven.
 
 reagent-name-barefoot = barefoot
-reagent-desc-barefoot = Barefoot and pregnant.
+reagent-desc-barefoot = A cassis milkshake, made from cream, fruit juice, and vermouth wine.
 
 reagent-name-beepsky-smash = Beepsky smash
 reagent-desc-beepsky-smash = Deny drinking this and prepare for THE LAW.
@@ -192,9 +192,6 @@ reagent-desc-jungle-bird = Despite the name, it’s not exceptionally popular am
 
 reagent-name-kalimotxo = kalimotxo
 reagent-desc-kalimotxo = A high-class Cuba Libre, for the discerning alcoholic.
-
-reagent-name-kira-special = Kira special
-reagent-desc-kira-special = Long live the guy who everyone had mistaken for a girl. Baka!
 
 reagent-name-tortuga = Tortuga
 reagent-desc-tortuga = Perfect for pirates who’ve been selected as the designated driver. Yarr!

@@ -40,7 +40,8 @@ public sealed partial class StampCollection : Container
 
     protected override Vector2 ArrangeOverride(Vector2 finalSize)
     {
-        var random = new Random(PlacementSeed);
+        var random = new RobustRandom();
+        random.SetSeed(PlacementSeed);
         var r = (finalSize * 0.5f).Length();
         var dtheta = -MathHelper.DegreesToRadians(90);
         var theta0 = random.Next(0, 3) * dtheta;
@@ -69,6 +70,7 @@ public sealed partial class StampCollection : Container
             var s = childHeLocal * MathF.Abs(MathF.Sin(stampOrientation));
             var childHePage = new Vector2(c.X + s.Y, s.X + c.Y);
             var controlBox = new UIBox2(PixelSizeBox.TopLeft, PixelSizeBox.TopLeft + finalSize * UIScale);
+            childHePage = Vector2.Min(childHePage, controlBox.Size * 0.5f);
             var clampedCenter = Clamp(Shrink(controlBox, childHePage), childCenterOnCircle);
             var finalPosition = clampedCenter - childHePage;
             var finalPositionAsInt = new Vector2i((int)finalPosition.X, (int)finalPosition.Y);

@@ -1,18 +1,16 @@
 using System.Numerics;
-using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
-using Content.Shared.Mobs.Components;
 using Content.Shared.Throwing;
+using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Serialization;
@@ -24,12 +22,12 @@ public abstract partial class SharedProjectileSystem : EntitySystem
 {
     public const string ProjectileFixture = "projectile";
 
-    [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = null!;
 
     public override void Initialize()
     {
@@ -43,6 +41,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         SubscribeLocalEvent<EmbeddableProjectileComponent, ComponentShutdown>(OnEmbeddableCompShutdown);
 
         SubscribeLocalEvent<EmbeddedContainerComponent, EntityTerminatingEvent>(OnEmbeddableTermination);
+        SubscribeLocalEvent<ComplexProjectileDamageComponent, BeforeProjectileHitEvent>(OnBeforeComplexProjectileHit);
     }
 
     private void OnEmbedActivate(Entity<EmbeddableProjectileComponent> embeddable, ref ActivateInWorldEvent args)
@@ -94,11 +93,11 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         EmbedAttach(embeddable, args.Target, args.Shooter, embeddable.Comp);
 
         // Raise a specific event for projectiles.
-        if (TryComp(embeddable, out ProjectileComponent? projectile))
-        {
-            var ev = new ProjectileEmbedEvent(projectile.Shooter!.Value, projectile.Weapon!.Value, args.Target);
-            RaiseLocalEvent(embeddable, ref ev);
-        }
+        if (!TryComp<ProjectileComponent>(embeddable, out var projectile))
+            return;
+
+        var ev = new ProjectileEmbedEvent(projectile.Shooter, projectile.Weapon, args.Target);
+        RaiseLocalEvent(embeddable, ref ev);
     }
 
     private void EmbedAttach(EntityUid uid, EntityUid target, EntityUid? user, EmbeddableProjectileComponent component)
@@ -136,20 +135,22 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        if (component.EmbeddedIntoUid is not null)
+        if (component.EmbeddedIntoUid == null)
+            return; // the entity is not embedded, so do nothing
+
+        var embeddedInto = component.EmbeddedIntoUid;
+
+        if (TryComp<EmbeddedContainerComponent>(component.EmbeddedIntoUid.Value, out var embeddedContainer))
         {
-            if (TryComp<EmbeddedContainerComponent>(component.EmbeddedIntoUid.Value, out var embeddedContainer))
-            {
-                embeddedContainer.EmbeddedObjects.Remove(uid);
-                Dirty(component.EmbeddedIntoUid.Value, embeddedContainer);
-                if (embeddedContainer.EmbeddedObjects.Count == 0)
-                    RemCompDeferred<EmbeddedContainerComponent>(component.EmbeddedIntoUid.Value);
-            }
+            embeddedContainer.EmbeddedObjects.Remove(uid);
+            Dirty(component.EmbeddedIntoUid.Value, embeddedContainer);
+            if (embeddedContainer.EmbeddedObjects.Count == 0)
+                RemCompDeferred<EmbeddedContainerComponent>(component.EmbeddedIntoUid.Value);
         }
 
-        if (component.DeleteOnRemove && _net.IsServer)
+        if (component.DeleteOnRemove)
         {
-            QueueDel(uid);
+            PredictedQueueDel(uid);
             return;
         }
 
@@ -172,6 +173,9 @@ public abstract partial class SharedProjectileSystem : EntitySystem
             Dirty(uid, projectile);
         }
 
+        var ev = new EmbedDetachEvent(user, embeddedInto.Value);
+        RaiseLocalEvent(uid, ref ev);
+
         if (user != null)
         {
             // Land it just coz uhhh yeah
@@ -187,6 +191,17 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         DetachAllEmbedded(container);
     }
 
+    private void OnBeforeComplexProjectileHit(Entity<ComplexProjectileDamageComponent> ent, ref BeforeProjectileHitEvent args)
+    {
+        foreach (var option in ent.Comp.DamageOptions)
+        {
+            if (!_whitelist.CheckBoth(args.Target, option.Blacklist, option.Whitelist))
+                continue;
+            args.Damage = option.Damage;
+            return;
+        }
+    }
+    
     public void DetachAllEmbedded(Entity<EmbeddedContainerComponent> container)
     {
         foreach (var embedded in container.Comp.EmbeddedObjects)
@@ -249,3 +264,9 @@ public record struct ProjectileReflectAttemptEvent(EntityUid ProjUid, Projectile
 /// </summary>
 [ByRefEvent]
 public record struct ProjectileHitEvent(DamageSpecifier Damage, EntityUid Target, EntityUid? Shooter = null);
+
+/// <summary>
+/// Raised before a projectile hits an entity
+/// </summary>
+[ByRefEvent]
+public record struct BeforeProjectileHitEvent(DamageSpecifier Damage, EntityUid Target, EntityUid? Shooter = null);

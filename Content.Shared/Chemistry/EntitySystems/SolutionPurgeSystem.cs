@@ -1,0 +1,46 @@
+using System.Linq;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Robust.Shared.Timing;
+
+namespace Content.Shared.Chemistry.EntitySystems;
+
+public sealed partial class SolutionPurgeSystem : EntitySystem
+{
+    [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private IGameTiming _timing = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<SolutionPurgeComponent, MapInitEvent>(OnMapInit);
+    }
+
+    private void OnMapInit(Entity<SolutionPurgeComponent> ent, ref MapInitEvent args)
+    {
+        ent.Comp.NextPurgeTime = _timing.CurTime + ent.Comp.Duration;
+        Dirty(ent);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var query = EntityQueryEnumerator<SolutionPurgeComponent, SolutionComponent>();
+        while (query.MoveNext(out var uid, out var purge, out var solution))
+        {
+            if (_timing.CurTime < purge.NextPurgeTime)
+                continue;
+
+            // timer ignores if it's empty, it's just a fixed cycle
+            purge.NextPurgeTime += purge.Duration;
+            // Needs to be networked and dirtied so that the client can reroll it during prediction
+            Dirty(uid, purge);
+
+            _solutionContainer.SplitSolutionWithout((uid, solution),
+                purge.Quantity,
+                purge.Preserve.ToArray());
+        }
+    }
+}

@@ -49,6 +49,16 @@
     Plastic: 100
 
 - type: latheRecipe
+  id: TrashBagHolding
+  result: TrashBagHolding
+  completetime: 5
+  materials:
+    Plastic: 1500
+    Silver: 300
+    Plasma: 1000
+    Uranium: 100
+
+- type: latheRecipe
   id: LightReplacer
   result: LightReplacerEmpty
   completetime: 2.4
@@ -104,3 +114,11 @@
   materials:
     Steel: 250
     Glass: 1000
+
+- type: latheRecipe
+  id: WireBrush
+  result: WireBrush
+  completetime: 2
+  materials:
+    Steel: 100
+    Plastic: 100

@@ -1,21 +1,20 @@
 using Content.Server.Administration.Logs;
-using Content.Server.Light.Components;
-using Content.Server.NodeContainer;
+using Content.Server.Doors.Systems;
 using Content.Server.NodeContainer.EntitySystems;
-using Content.Server.NodeContainer.NodeGroups;
-using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Power.NodeGroups;
 using Content.Server.Weapons.Melee;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.Electrocution;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Jittering;
+using Content.Shared.Light.Components;
 using Content.Shared.Maps;
 using Content.Shared.NodeContainer;
 using Content.Shared.NodeContainer.NodeGroups;
@@ -27,44 +26,39 @@ using Content.Shared.Tag;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Map;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 using PullableComponent = Content.Shared.Movement.Pulling.Components.PullableComponent;
 using PullerComponent = Content.Shared.Movement.Pulling.Components.PullerComponent;
 
 namespace Content.Server.Electrocution;
 
-public sealed class ElectrocutionSystem : SharedElectrocutionSystem
+public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
 {
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
-    [Dependency] private readonly MeleeWeaponSystem _meleeWeapon = default!;
-    [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
-    [Dependency] private readonly NodeGroupSystem _nodeGroup = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
-    [Dependency] private readonly SharedJitteringSystem _jittering = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedStunSystem _stun = default!;
-    [Dependency] private readonly SharedStutteringSystem _stuttering = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
-    [Dependency] private readonly TurfSystem _turf = default!;
+    [Dependency] private IAdminLogManager _adminLogger = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private EntityLookupSystem _entityLookup = default!;
+    [Dependency] private MeleeWeaponSystem _meleeWeapon = default!;
+    [Dependency] private NodeContainerSystem _nodeContainer = default!;
+    [Dependency] private NodeGroupSystem _nodeGroup = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private SharedJitteringSystem _jittering = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedStunSystem _stun = default!;
+    [Dependency] private StutteringSystem _stuttering = default!;
+    [Dependency] private TagSystem _tag = default!;
+    [Dependency] private MetaDataSystem _metaData = default!;
+    [Dependency] private TurfSystem _turf = default!;
 
-    [ValidatePrototypeId<StatusEffectPrototype>]
-    private const string StatusEffectKey = "Electrocution";
-
-    [ValidatePrototypeId<DamageTypePrototype>]
-    private const string DamageType = "Shock";
-
+    private static readonly ProtoId<StatusEffectPrototype> StatusKeyIn = "Electrocution";
+    private static readonly ProtoId<DamageTypePrototype> DamageType = "Shock";
     private static readonly ProtoId<TagPrototype> WindowTag = "Window";
 
     // Multiply and shift the log scale for shock damage.
@@ -87,6 +81,8 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         SubscribeLocalEvent<ElectrifiedComponent, AttackedEvent>(OnElectrifiedAttacked);
         SubscribeLocalEvent<ElectrifiedComponent, InteractHandEvent>(OnElectrifiedHandInteract);
         SubscribeLocalEvent<ElectrifiedComponent, InteractUsingEvent>(OnElectrifiedInteractUsing);
+        SubscribeLocalEvent<ElectrifiedComponent, ActivateInWorldEvent>(OnElectrifiedActivateInWorld, before: [typeof(AirlockSystem), typeof(DoorSystem)]);
+
         SubscribeLocalEvent<RandomInsulationComponent, MapInitEvent>(OnRandomInsulationMapInit);
         SubscribeLocalEvent<PoweredLightComponent, AttackedEvent>(OnLightAttacked);
 
@@ -206,7 +202,27 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         TryDoElectrifiedAct(uid, args.User, siemens, electrified);
     }
 
-    public bool TryDoElectrifiedAct(EntityUid uid, EntityUid targetUid,
+    private void OnElectrifiedActivateInWorld(EntityUid uid, ElectrifiedComponent electrified, ActivateInWorldEvent args)
+    {
+        if (!electrified.OnActivateInWorld || args.Handled)
+            return;
+
+        if (TryDoElectrifiedAct(uid, args.User, 1, electrified))
+            args.Handled = true;
+    }
+
+    /// <summary>
+    /// Attempt to trigger an electrocution via an entity interacting with the electrified entity. Checks what type of electrocution to apply and handles daisy-chaining.
+    /// </summary>
+    /// <param name="uid">The entity emitting electricity.</param>
+    /// <param name="targetUid">The entity interacting.</param>
+    /// <param name="siemens">The electric conductance. 0 means no electricity can pass through, 1 means full force.</param>
+    /// <param name="electrified">The electrified component of uid entity.</param>
+    /// <param name="nodeContainer">The node container of uid entity.</param>
+    /// <param name="transform">The transform of the uid entity.</param>
+    /// <returns>If the attempt caused an electrocution.</returns>
+    public bool TryDoElectrifiedAct(EntityUid uid,
+        EntityUid targetUid,
         float siemens = 1,
         ElectrifiedComponent? electrified = null,
         NodeContainerComponent? nodeContainer = null,
@@ -219,6 +235,9 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
             return false;
 
         if (!_random.Prob(electrified.Probability))
+            return false;
+
+        if (electrified.ShockDelay != null && electrified.NextShock > _timing.CurTime)
             return false;
 
         EnsureComp<ActivatedElectrifiedComponent>(uid);
@@ -245,6 +264,8 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
                     electrified.SiemensCoefficient
                 );
             }
+            if (lastRet)
+                electrified.NextShock = _timing.CurTime + electrified.ShockDelay;
             return lastRet;
         }
 
@@ -391,34 +412,36 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         }
 
         if (!Resolve(uid, ref statusEffects, false) ||
-            !_statusEffects.CanApplyEffect(uid, StatusEffectKey, statusEffects))
+            !_statusEffects.CanApplyEffect(uid, StatusKeyIn, statusEffects))
         {
             return false;
         }
 
-        if (!_statusEffects.TryAddStatusEffect<ElectrocutedComponent>(uid, StatusEffectKey, time, refresh, statusEffects))
+        if (!_statusEffects.TryAddStatusEffect<ElectrocutedComponent>(uid, StatusKeyIn, time, refresh, statusEffects))
             return false;
 
         var shouldStun = siemensCoefficient > 0.5f;
 
         if (shouldStun)
-            _stun.TryParalyze(uid, time * ParalyzeTimeMultiplier, refresh, statusEffects);
+        {
+            _ = refresh
+                ? _stun.TryUpdateParalyzeDuration(uid, time * ParalyzeTimeMultiplier)
+                : _stun.TryAddParalyzeDuration(uid, time * ParalyzeTimeMultiplier);
+        }
+
 
         // TODO: Sparks here.
 
         if (shockDamage is { } dmg)
         {
-            var actual = _damageable.TryChangeDamage(uid,
-                new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>(DamageType), dmg), origin: sourceUid);
-
-            if (actual != null)
+            if (_damageable.TryChangeDamage(uid, new DamageSpecifier(ProtoMan.Index(DamageType), dmg), out var damage, origin: sourceUid))
             {
                 _adminLogger.Add(LogType.Electrocution,
-                    $"{ToPrettyString(uid):entity} received {actual.GetTotal():damage} powered electrocution damage{(sourceUid != null ? " from " + ToPrettyString(sourceUid.Value) : ""):source}");
+                    $"{ToPrettyString(uid):entity} received {damage:damage} powered electrocution damage{(sourceUid != null ? " from " + ToPrettyString(sourceUid.Value) : ""):source}");
             }
         }
 
-        _stuttering.DoStutter(uid, time * StutteringTimeMultiplier, refresh, statusEffects);
+        _stuttering.DoStutter(uid, time * StutteringTimeMultiplier, refresh);
         _jittering.DoJitter(uid, time * JitterTimeMultiplier, refresh, JitterAmplitude, JitterFrequency, true, statusEffects);
 
         _popup.PopupEntity(Loc.GetString("electrocuted-component-mob-shocked-popup-player"), uid, uid);
@@ -491,6 +514,9 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         {
             return;
         }
-        _audio.PlayPvs(electrified.ShockNoises, targetUid, AudioParams.Default.WithVolume(electrified.ShockVolume));
+
+        var audioParams = electrified.ShockNoises?.Params ?? AudioParams.Default;
+        audioParams = audioParams.AddVolume(electrified.ShockVolume);
+        _audio.PlayPvs(electrified.ShockNoises, targetUid, audioParams);
     }
 }

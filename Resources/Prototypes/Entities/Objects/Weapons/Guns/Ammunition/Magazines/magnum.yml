@@ -1,8 +1,8 @@
 - type: entity
+  abstract: true
+  parent: [ BaseMagazinePistol, BaseSecurityContraband ]
   id: BaseMagazineMagnum
   name: pistol magazine (.45 magnum)
-  parent: [ BaseMagazinePistol, BaseSecurityContraband ]
-  abstract: true
   components:
   - type: Tag
     tags:
@@ -15,44 +15,11 @@
     capacity: 7
 
 - type: entity
-  id: BaseMagazineMagnumSubMachineGun
-  name: SMG magazine (.45 magnum)
-  parent: BaseItem
-  abstract: true
-  components:
-  - type: Tag
-    tags:
-      - MagazineMagnumSubMachineGun
-  - type: BallisticAmmoProvider
-    mayTransfer: true
-    whitelist:
-      tags:
-        - CartridgeMagnum
-    capacity: 25
-  - type: Item
-    size: Small
-  - type: ContainerContainer
-    containers:
-      ballistic-ammo: !type:Container
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_smg_mag.rsi
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-  - type: MagazineVisuals
-    magState: mag
-    steps: 2
-    zeroVisible: false
-  - type: Appearance
-
-- type: entity
+  parent: BaseMagazineMagnum
   id: MagazineMagnumEmpty
   name: pistol magazine (.45 magnum any)
   suffix: empty
-  parent: BaseMagazineMagnum
-  description: 7-round single stack pistol magazine.
+  description: 7-round single stack magazine for large-caliber pistols.
   components:
   - type: BallisticAmmoProvider
     proto: null
@@ -70,10 +37,10 @@
       - state: inhand-right-mag
 
 - type: entity
+  parent: BaseMagazineMagnum
   id: MagazineMagnum
   name: pistol magazine (.45 magnum)
-  parent: BaseMagazineMagnum
-  description: 7-round single stack pistol magazine. Intended to hold general-purpose kinetic ammunition.
+  description: 7-round single stack magazine for large-caliber pistols. Intended to hold general-purpose kinetic ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnum
@@ -91,10 +58,10 @@
       - state: inhand-right-mag
 
 - type: entity
+  parent: BaseMagazineMagnum
   id: MagazineMagnumPractice
   name: pistol magazine (.45 magnum practice)
-  parent: BaseMagazineMagnum
-  description: 7-round single stack pistol magazine. Intended to hold non-harmful chalk ammunition.
+  description: 7-round single stack magazine for large-caliber pistols. Intended to hold harmless practice ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumPractice
@@ -118,10 +85,10 @@
         color: "#dbdbdb"
 
 - type: entity
+  parent: BaseMagazineMagnum
   id: MagazineMagnumUranium
   name: pistol magazine (.45 magnum uranium)
-  parent: BaseMagazineMagnum
-  description: 7-round single stack pistol magazine. Intended to hold exotic uranium-core ammunition.
+  description: 7-round single stack magazine for large-caliber pistols. Intended to hold exotic uranium-core ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumUranium
@@ -145,129 +112,10 @@
         color: "#00cd42"
 
 - type: entity
+  parent: BaseMagazineMagnum
   id: MagazineMagnumAP
   name: pistol magazine (.45 magnum armor-piercing)
-  parent: BaseMagazineMagnum
-  description: 7-round single stack pistol magazine. Intended to hold rare armor-piercing ammunition.
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeMagnumAP
-  - type: Sprite
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-    - state: stripe
-      color: "#540000"
-  - type: Item
-    inhandVisuals:
-      left:
-      - state: inhand-left-mag
-      - state: inhand-left-stripe
-        color: "#540000"
-      right:
-      - state: inhand-right-mag
-      - state: inhand-right-stripe
-        color: "#540000"
-
-- type: entity
-  id: MagazineMagnumSubMachineGunEmpty
-  name: SMG magazine (.45 magnum any)
-  suffix: empty
-  parent: BaseMagazineMagnumSubMachineGun
-  components:
-  - type: BallisticAmmoProvider
-    proto: null
-  - type: Sprite
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-  - type: Item
-    inhandVisuals:
-      left:
-      - state: inhand-left-mag
-      right:
-      - state: inhand-right-mag
-
-- type: entity
-  id: MagazineMagnumSubMachineGun
-  name: SMG magazine (.45 magnum)
-  parent: BaseMagazineMagnumSubMachineGun
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeMagnum
-  - type: Sprite
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-  - type: Item
-    inhandVisuals:
-      left:
-      - state: inhand-left-mag
-      right:
-      - state: inhand-right-mag
-
-- type: entity
-  id: MagazineMagnumSubMachineGunPractice
-  name: SMG magazine (.45 magnum practice)
-  parent: BaseMagazineMagnumSubMachineGun
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeMagnumPractice
-  - type: Sprite
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-    - state: stripe
-      color: "#dbdbdb"
-  - type: Item
-    inhandVisuals:
-      left:
-      - state: inhand-left-mag
-      - state: inhand-left-stripe
-        color: "#dbdbdb"
-      right:
-      - state: inhand-right-mag
-      - state: inhand-right-stripe
-        color: "#dbdbdb"
-
-- type: entity
-  id: MagazineMagnumSubMachineGunUranium
-  name: SMG magazine (.45 magnum uranium)
-  parent: BaseMagazineMagnumSubMachineGun
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeMagnumUranium
-  - type: Sprite
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-    - state: stripe
-      color: "#00cd42"
-  - type: Item
-    inhandVisuals:
-      left:
-      - state: inhand-left-mag
-      - state: inhand-left-stripe
-        color: "#00cd42"
-      right:
-      - state: inhand-right-mag
-      - state: inhand-right-stripe
-        color: "#00cd42"
-
-- type: entity
-  id: MagazineMagnumSubMachineGunPiercing
-  name: SMG magazine (.45 magnum armour-piercing)
-  parent: BaseMagazineMagnumSubMachineGun
+  description: 7-round single stack magazine for large-caliber pistols. Intended to hold specialized armor-piercing ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumAP

@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Hands;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
@@ -22,16 +23,15 @@ namespace Content.Shared.Inventory.VirtualItem;
 /// and <see cref="InventoryUiController"/>, see the <see cref="VirtualItemComponent"/>
 /// references there for more information
 /// </remarks>
-public abstract class SharedVirtualItemSystem : EntitySystem
+public abstract partial class SharedVirtualItemSystem : EntitySystem
 {
-    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-    [Dependency] private readonly SharedItemSystem _itemSystem = default!;
-    [Dependency] private readonly InventorySystem _inventorySystem = default!;
-    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private SharedContainerSystem _containerSystem = default!;
+    [Dependency] private SharedItemSystem _itemSystem = default!;
+    [Dependency] private InventorySystem _inventorySystem = default!;
+    [Dependency] private SharedHandsSystem _handsSystem = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
 
-    [ValidatePrototypeId<EntityPrototype>]
-    private const string VirtualItem = "VirtualItem";
+    private static readonly EntProtoId VirtualItem = "VirtualItem";
 
     public override void Initialize()
     {
@@ -104,13 +104,14 @@ public abstract class SharedVirtualItemSystem : EntitySystem
     /// <param name="blockingEnt">The entity we will make a virtual entity copy of</param>
     /// <param name="user">The entity that we want to insert the virtual entity</param>
     /// <param name="dropOthers">Whether or not to try and drop other items to make space</param>
-    public bool TrySpawnVirtualItemInHand(EntityUid blockingEnt, EntityUid user, bool dropOthers = false)
+    /// <param name="silent">If true this won't show a popup when dropping other items</param>
+    public bool TrySpawnVirtualItemInHand(EntityUid blockingEnt, EntityUid user, bool dropOthers = false, bool silent = false)
     {
-        return TrySpawnVirtualItemInHand(blockingEnt, user, out _, dropOthers);
+        return TrySpawnVirtualItemInHand(blockingEnt, user, out _, dropOthers, silent: silent);
     }
 
     /// <inheritdoc cref="TrySpawnVirtualItemInHand(Robust.Shared.GameObjects.EntityUid,Robust.Shared.GameObjects.EntityUid,bool)"/>
-    public bool TrySpawnVirtualItemInHand(EntityUid blockingEnt, EntityUid user, [NotNullWhen(true)] out EntityUid? virtualItem, bool dropOthers = false, string? empty = null)
+    public bool TrySpawnVirtualItemInHand(EntityUid blockingEnt, EntityUid user, [NotNullWhen(true)] out EntityUid? virtualItem, bool dropOthers = false, string? empty = null, bool silent = false)
     {
         virtualItem = null;
         if (empty == null && !_handsSystem.TryGetEmptyHand(user, out empty))
@@ -129,8 +130,8 @@ public abstract class SharedVirtualItemSystem : EntitySystem
                 if (!_handsSystem.TryDrop(user, hand))
                     continue;
 
-                if (!TerminatingOrDeleted(held))
-                    _popup.PopupClient(Loc.GetString("virtual-item-dropped-other", ("dropped", held)), user, user);
+                if (!silent && !TerminatingOrDeleted(held))
+                    _popup.PopupEntity(Loc.GetString("virtual-item-dropped-other", ("dropped", held)), user, user);
 
                 empty = hand;
                 break;
@@ -144,6 +145,53 @@ public abstract class SharedVirtualItemSystem : EntitySystem
             return false;
 
         _handsSystem.DoPickup(user, empty, virtualItem.Value);
+        return true;
+    }
+
+    /// <summary>
+    /// Spawns unremoveable virtual items in empty hands.
+    /// </summary>
+    /// <param name="blockingEnt">The entity that the virtual items will copy.</param>
+    /// <param name="user">The entity whose hands will hold the virtual items.</param>
+    /// <param name="count">The number of virtual items to spawn.</param>
+    /// <param name="dropOthers">Whether to try dropping other items to make space.</param>
+    /// <param name="silent">Whether to suppress popups when dropping other items.</param>
+    public bool TrySpawnUnremoveableVirtualItemInHand(
+        EntityUid blockingEnt,
+        EntityUid user,
+        int count = 1,
+        bool dropOthers = false,
+        bool silent = false)
+    {
+        for (var i = 0; i < count; i++)
+        {
+            if (!TrySpawnUnremoveableVirtualItemInHand(blockingEnt, user, out _, dropOthers, silent: silent))
+                return false;
+        }
+        return true;
+    }
+
+    /// <summary>
+    /// Spawns an unremoveable virtual item in an empty hand.
+    /// </summary>
+    /// <param name="blockingEnt">The entity that the virtual item will copy.</param>
+    /// <param name="user">The entity whose hand will hold the virtual item.</param>
+    /// <param name="virtualItem">The spawned virtual item, if successful.</param>
+    /// <param name="dropOthers">Whether to try dropping another item to make space.</param>
+    /// <param name="empty">The hand to insert the virtual item into, if known.</param>
+    /// <param name="silent">Whether to suppress the popup when dropping another item.</param>
+    public bool TrySpawnUnremoveableVirtualItemInHand(
+        EntityUid blockingEnt,
+        EntityUid user,
+        [NotNullWhen(true)] out EntityUid? virtualItem,
+        bool dropOthers = false,
+        string? empty = null,
+        bool silent = false)
+    {
+        if (!TrySpawnVirtualItemInHand(blockingEnt, user, out virtualItem, dropOthers, empty, silent))
+            return false;
+
+        EnsureComp<UnremoveableComponent>(virtualItem.Value);
         return true;
     }
 

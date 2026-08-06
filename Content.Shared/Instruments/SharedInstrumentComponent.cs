@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Text;
 using Robust.Shared.Audio.Midi;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -12,20 +13,23 @@ public abstract partial class SharedInstrumentComponent : Component
     [ViewVariables]
     public bool Playing { get; set; }
 
-    [DataField("program"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("program")]
     public byte InstrumentProgram { get; set; }
 
-    [DataField("bank"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("bank")]
     public byte InstrumentBank { get; set; }
 
-    [DataField("allowPercussion"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public bool AllowPercussion { get; set; }
 
-    [DataField("allowProgramChange"), ViewVariables(VVAccess.ReadWrite)]
-    public bool AllowProgramChange { get ; set; }
+    [DataField]
+    public bool AllowProgramChange { get; set; }
 
-    [DataField("respectMidiLimits"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public bool RespectMidiLimits { get; set; } = true;
+
+    [DataField]
+    public byte MinVolume { get; set; }
 
     [ViewVariables(VVAccess.ReadWrite)]
     public EntityUid? Master { get; set; } = null;
@@ -62,10 +66,26 @@ public sealed class InstrumentComponentState : ComponentState
     public bool RespectMidiLimits;
 
     public NetEntity? Master;
+    public byte MinVolume;
 
     public BitArray FilteredChannels = default!;
 }
 
+/// <summary>
+///     This message is sent to the client to update midi min volume.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class InstrumentSetMidiMinVolumeEvent : EntityEventArgs
+{
+    public NetEntity Uid { get; }
+    public byte MinVolume { get; set; }
+
+    public InstrumentSetMidiMinVolumeEvent(NetEntity uid, byte minVolume)
+    {
+        Uid = uid;
+        MinVolume = minVolume;
+    }
+}
 
 /// <summary>
 ///     This message is sent to the client to completely stop midi input and midi playback.
@@ -207,9 +227,21 @@ public sealed class MidiTrack
             ProgramName = Truncate(ProgramName, limit);
     }
 
+    public void SanitizeFields()
+    {
+        if (InstrumentName != null)
+            InstrumentName = Sanitize(InstrumentName);
+
+        if (TrackName != null)
+            TrackName = Sanitize(TrackName);
+
+        if (ProgramName != null)
+            ProgramName = Sanitize(ProgramName);
+    }
+
     private const string Postfix = "…";
     // TODO: Make a general method to use in RT? idk if we have that.
-    private string Truncate(string input, int limit)
+    private static string Truncate(string input, int limit)
     {
         if (string.IsNullOrEmpty(input) || limit <= 0 || input.Length <= limit)
             return input;
@@ -217,5 +249,18 @@ public sealed class MidiTrack
         var truncatedLength = limit - Postfix.Length;
 
         return input.Substring(0, truncatedLength) + Postfix;
+    }
+
+    private static string Sanitize(string input)
+    {
+        var sanitized = new StringBuilder(input.Length);
+
+        foreach (char c in input)
+        {
+            if (!char.IsControl(c) && c <= 127) // no control characters, only ASCII
+                sanitized.Append(c);
+        }
+
+        return sanitized.ToString();
     }
 }

@@ -3,11 +3,11 @@ using System.Linq;
 using Content.Server.Cargo.Components;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
-using Content.Server.Station.Components;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.Components;
 using Content.Shared.DeviceLinking;
 using Content.Shared.Power;
+using Content.Shared.Station.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -82,8 +82,6 @@ public sealed partial class CargoSystem
 
             if (comp.CurrentState == CargoTelepadState.Unpowered)
             {
-                comp.CurrentState = CargoTelepadState.Idle;
-                _appearance.SetData(uid, CargoTelepadVisuals.State, CargoTelepadState.Idle, appearance);
                 comp.Accumulator = comp.Delay;
                 continue;
             }
@@ -105,9 +103,12 @@ public sealed partial class CargoSystem
             }
 
             var currentOrder = comp.CurrentOrders.First();
-            if (FulfillOrder(currentOrder, console.Value.Comp.Account, xform.Coordinates, comp.PrinterOutput))
+            if (FulfillOrder(currentOrder, currentOrder.Account, xform.Coordinates, comp.PrinterOutput))
             {
-                _audio.PlayPvs(_audio.ResolveSound(comp.TeleportSound), uid, AudioParams.Default.WithVolume(-8f));
+                var teleportSound = comp.TeleportSound;
+                var audioParams = teleportSound?.Params ?? AudioParams.Default;
+                audioParams = audioParams.AddVolume(-8f);
+                _audio.PlayPvs(_audio.ResolveSound(comp.TeleportSound), uid, audioParams);
 
                 if (_station.GetOwningStation(uid) is { } station)
                     UpdateOrders(station);
@@ -161,13 +162,15 @@ public sealed partial class CargoSystem
 
         var disabled = !receiver.Powered || !xform.Anchored;
 
-        // Setting idle state should be handled by Update();
+        // Turn off if disabled
+        // Only change to Idle if off
+        // don't overwrite teleporting state
         if (disabled)
-            return;
+            component.CurrentState = CargoTelepadState.Unpowered;
+        else if (component.CurrentState == CargoTelepadState.Unpowered)
+            component.CurrentState = CargoTelepadState.Idle;
 
-        TryComp<AppearanceComponent>(uid, out var appearance);
-        component.CurrentState = CargoTelepadState.Unpowered;
-        _appearance.SetData(uid, CargoTelepadVisuals.State, CargoTelepadState.Unpowered, appearance);
+        _appearance.SetData(uid, CargoTelepadVisuals.State, component.CurrentState);
     }
 
     private void OnTelepadPowerChange(EntityUid uid, CargoTelepadComponent component, ref PowerChangedEvent args)

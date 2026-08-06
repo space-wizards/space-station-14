@@ -16,13 +16,13 @@ namespace Content.Shared.Storage.EntitySystems;
 /// <summary>
 /// This handles <see cref="BinComponent"/>
 /// </summary>
-public sealed class BinSystem : EntitySystem
+public sealed partial class BinSystem : EntitySystem
 {
-    [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly ISharedAdminLogManager _admin = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private INetManager _net = default!;
+    [Dependency] private ISharedAdminLogManager _admin = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -67,12 +67,18 @@ public sealed class BinSystem : EntitySystem
 
     private void OnEntInserted(Entity<BinComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
+        if (args.Container.ID != ent.Comp.ContainerId)
+            return;
+
         ent.Comp.Items.Add(args.Entity);
     }
 
-    private void OnEntRemoved(EntityUid uid, BinComponent component, EntRemovedFromContainerMessage args)
+    private void OnEntRemoved(Entity<BinComponent> ent, ref EntRemovedFromContainerMessage args)
     {
-        component.Items.Remove(args.Entity);
+        if (args.Container.ID != ent.Comp.ContainerId)
+            return;
+
+        ent.Comp.Items.Remove(args.Entity);
     }
 
     private void OnInteractHand(EntityUid uid, BinComponent component, InteractHandEvent args)

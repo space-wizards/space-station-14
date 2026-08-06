@@ -1,11 +1,9 @@
 using Content.Server.Construction.Components;
-using Content.Server.Containers;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
 using Content.Shared.Containers;
 using Content.Shared.Database;
-using Robust.Server.Containers;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using System.Linq;
@@ -50,7 +48,7 @@ namespace Content.Server.Construction
 
             // If the set graph prototype does not exist, also return null. This could be due to admemes changing values
             // in ViewVariables, so even though the construction state is invalid, just return null.
-            return PrototypeManager.TryIndex(construction.Graph, out ConstructionGraphPrototype? graph) ? graph : null;
+            return ProtoMan.TryIndex(construction.Graph, out ConstructionGraphPrototype? graph) ? graph : null;
         }
 
         /// <summary>
@@ -302,7 +300,7 @@ namespace Content.Server.Construction
             }
 
             // Exit if the new entity's prototype is the same as the original, or the prototype is invalid
-            if (newEntity == metaData.EntityPrototype?.ID || !PrototypeManager.HasIndex<EntityPrototype>(newEntity))
+            if (newEntity == metaData.EntityPrototype?.ID || !ProtoMan.HasIndex<EntityPrototype>(newEntity))
                 return null;
 
             // [Optional] Exit if the new entity's prototype is a parent of the original
@@ -312,7 +310,7 @@ namespace Content.Server.Construction
             if (GetCurrentNode(uid, construction)?.DoNotReplaceInheritingEntities == true &&
                 metaData.EntityPrototype?.ID != null)
             {
-                var parents = PrototypeManager.EnumerateParents<EntityPrototype>(metaData.EntityPrototype.ID)?.ToList();
+                var parents = ProtoMan.EnumerateParents<EntityPrototype>(metaData.EntityPrototype.ID)?.ToList();
 
                 if (parents != null && parents.Any(x => x.ID == newEntity))
                     return null;
@@ -322,10 +320,10 @@ namespace Content.Server.Construction
             Resolve(uid, ref containerManager, false);
 
             // We create the new entity.
-            var newUid = EntityManager.CreateEntityUninitialized(newEntity, transform.Coordinates);
+            var newUid = EntityManager.CreateEntityUninitialized(newEntity, transform.Coordinates, rotation: transform.LocalRotation);
 
             // Construction transferring.
-            var newConstruction = EntityManager.EnsureComponent<ConstructionComponent>(newUid);
+            var newConstruction = EnsureComp<ConstructionComponent>(newUid);
 
             // Transfer all construction-owned containers.
             newConstruction.Containers.UnionWith(construction.Containers);
@@ -365,14 +363,15 @@ namespace Content.Server.Construction
             // Transform transferring.
             var newTransform = Transform(newUid);
             TransformSystem.AttachToGridOrMap(newUid, newTransform); // in case in hands or a container
-            newTransform.LocalRotation = transform.LocalRotation;
+#pragma warning disable CS0618 // Setting anchored state directly, AnchorEntity/Unanchor requires an initialized entity.
             newTransform.Anchored = transform.Anchored;
+#pragma warning restore CS0618
 
             // Container transferring.
             if (containerManager != null)
             {
                 // Ensure the new entity has a container manager. Also for resolve goodness.
-                var newContainerManager = EntityManager.EnsureComponent<ContainerManagerComponent>(newUid);
+                var newContainerManager = EnsureComp<ContainerManagerComponent>(newUid);
 
                 // Transfer all construction-owned containers from the old entity to the new one.
                 foreach (var container in construction.Containers)
@@ -434,7 +433,7 @@ namespace Content.Server.Construction
             if (!Resolve(uid, ref construction))
                 return false;
 
-            if (!PrototypeManager.TryIndex<ConstructionGraphPrototype>(graphId, out var graph))
+            if (!ProtoMan.TryIndex<ConstructionGraphPrototype>(graphId, out var graph))
                 return false;
 
             if (GetNodeFromGraph(graph, nodeId) is not { })

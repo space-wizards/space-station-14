@@ -15,21 +15,22 @@ using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
+using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Hands.Systems
 {
     [UsedImplicitly]
-    public sealed class HandsSystem : SharedHandsSystem
+    public sealed partial class HandsSystem : SharedHandsSystem
     {
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IUserInterfaceManager _ui = default!;
+        [Dependency] private IPlayerManager _playerManager = default!;
+        [Dependency] private IUserInterfaceManager _ui = default!;
 
-        [Dependency] private readonly StrippableSystem _stripSys = default!;
-        [Dependency] private readonly SpriteSystem _sprite = default!;
-        [Dependency] private readonly ExamineSystem _examine = default!;
-        [Dependency] private readonly DisplacementMapSystem _displacement = default!;
+        [Dependency] private StrippableSystem _stripSys = default!;
+        [Dependency] private SpriteSystem _sprite = default!;
+        [Dependency] private ExamineSystem _examine = default!;
+        [Dependency] private DisplacementMapSystem _displacement = default!;
 
         public event Action<string?>? OnPlayerSetActiveHand;
         public event Action<Entity<HandsComponent>>? OnPlayerHandsAdded;
@@ -92,9 +93,11 @@ namespace Content.Client.Hands.Systems
         public override void DoDrop(Entity<HandsComponent?> ent,
             string handId,
             bool doDropInteraction = true,
-            bool log = true)
+            bool log = true,
+            EntityCoordinates? targetDropLocation = null
+        )
         {
-            base.DoDrop(ent, handId, doDropInteraction, log);
+            base.DoDrop(ent, handId, doDropInteraction, log, targetDropLocation);
 
             if (TryGetHeldItem(ent, handId, out var held) && TryComp(held, out SpriteComponent? sprite))
                 sprite.RenderOrder = EntityManager.CurrentTick.Value;
@@ -135,28 +138,28 @@ namespace Content.Client.Hands.Systems
             {
                 // use item in hand
                 // it will always be attack_self() in my heart.
-                EntityManager.RaisePredictiveEvent(new RequestUseInHandEvent());
+                RaisePredictiveEvent(new RequestUseInHandEvent());
                 return;
             }
 
             if (handName != hands.ActiveHandId && pressedEntity == null)
             {
                 // change active hand
-                EntityManager.RaisePredictiveEvent(new RequestSetHandEvent(handName));
+                RaisePredictiveEvent(new RequestSetHandEvent(handName));
                 return;
             }
 
             if (handName != hands.ActiveHandId && pressedEntity != null && activeEntity != null)
             {
                 // use active item on held item
-                EntityManager.RaisePredictiveEvent(new RequestHandInteractUsingEvent(handName));
+                RaisePredictiveEvent(new RequestHandInteractUsingEvent(handName));
                 return;
             }
 
             if (handName != hands.ActiveHandId && pressedEntity != null && activeEntity == null)
             {
                 // move the item to the active hand
-                EntityManager.RaisePredictiveEvent(new RequestMoveHandItemEvent(handName));
+                RaisePredictiveEvent(new RequestMoveHandItemEvent(handName));
             }
         }
 
@@ -166,7 +169,7 @@ namespace Content.Client.Hands.Systems
         /// </summary>
         public void UIHandActivate(string handName)
         {
-            EntityManager.RaisePredictiveEvent(new RequestActivateInHandEvent(handName));
+            RaisePredictiveEvent(new RequestActivateInHandEvent(handName));
         }
 
         public void UIInventoryExamine(string handName)
