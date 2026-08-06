@@ -89,11 +89,11 @@
     - Networking
   - type: Destructible
     thresholds:
-    - trigger:
+    - trigger: &DamageMachineFlimsy
         !type:DamageTrigger
         damage: 50
       behaviors:
-      - !type:PlaySoundBehavior
+      - &SoundMetalGlassBreak !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak
           params:
@@ -125,15 +125,9 @@
     damageModifierSet: PlasticMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 50
+    - trigger: *DamageMachineFlimsy
       behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalGlassBreak
-          params:
-            volume: -4
+      - *SoundMetalGlassBreak
 
 - type: entity
   id: FireAlarmXeno
