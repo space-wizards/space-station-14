@@ -50,7 +50,7 @@ namespace Content.Client.Launcher
             ChangeLoginTip();
             RetryButton.OnPressed += ReconnectButtonPressed;
             ReconnectButton.OnPressed += ReconnectButtonPressed;
-            // RedirectButton.OnPressed += RedirectButtonPressed; //TODO:ERRANT
+            RedirectButton.OnPressed += RedirectButtonPressed;
 
             CopyButton.OnPressed += CopyButtonPressed;
             CopyButtonDisconnected.OnPressed += CopyButtonDisconnectedPressed;
@@ -86,14 +86,14 @@ namespace Content.Client.Launcher
             _state.RetryConnect();
         }
 
-        // private void RedirectButtonPressed(BaseButton.ButtonEventArgs args) //TODO:ERRANT
-        // {
-            // Open a UI?
+        private void RedirectButtonPressed(BaseButton.ButtonEventArgs args)
+        {
+            // Open a UI? //TODO:ERRANT clean up
 
             // List options?
 
-            // _state.Redirect();
-        // }
+            _state.Redirect();
+        }
 
         private void CopyButtonPressed(BaseButton.ButtonEventArgs args)
         {
@@ -175,7 +175,7 @@ namespace Content.Client.Launcher
         {
             base.FrameUpdate(args);
 
-            // RedirectButton.Visible = _redirect; //TODO:ERRANT
+            RedirectButton.Visible = _redirect;
 
             var button = _state.CurrentPage == LauncherConnecting.Page.ConnectFailed
                 ? RetryButton

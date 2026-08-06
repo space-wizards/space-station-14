@@ -126,16 +126,15 @@ namespace Content.Client.Launcher
             return false;
         }
 
-        // public void Redirect() //TODO:ERRANT
-        // {
-            // _audio.PlayGlobal("/Audio/Announcements/shuttlecalled.ogg", Filter.Broadcast(), true);
+        public void Redirect()
+        {
+            _sawmill.Info("Redial request received"); //TODO:ERRANT remove
 
-            // _sawmill.Info("Redial request received");
             // _gameController.Redial("152.53.83.10");
 
             // _clientNetManager.Reset("");
             // _baseClient.ConnectToServer("152.53.83.10", _baseClient.DefaultPort);
-        // }
+        }
 
         public void Exit()
         {
