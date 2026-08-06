@@ -33,15 +33,10 @@ public sealed partial class CardsComponent : Component
     /// <summary>
     /// Sprite layers used in card visualizer. Sprites first in layer correspond to lower stack states
     /// e.g. <code>_spriteLayers[0]</code> is lower stack level than <code>_spriteLayers[1]</code>.
+    /// States will be written into the <see cref="CardVisualLayers.Base"/> layer.
     /// </summary>
     [DataField]
-    public List<string> LayerStates = new();
-
-    /// <summary>
-    ///     layer for layerStates sprite.
-    /// </summary>
-    [DataField]
-    public string BaseLayer = "base";
+    public List<string?> LayerStates = new();
 
     /// <summary>
     /// A list of thresholds to check against the number of things in the deck.

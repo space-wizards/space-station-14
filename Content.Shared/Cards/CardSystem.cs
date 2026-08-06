@@ -12,6 +12,9 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Cards;
 
+/// <summary>
+/// A system to simulate decks of playing cards.
+/// </summary>
 public abstract partial class SharedCardSystem : EntitySystem
 {
     [Dependency] protected IGameTiming Timing = default!;
@@ -332,7 +335,7 @@ public abstract partial class SharedCardSystem : EntitySystem
     )
     {
         split = null;
-        if (!Resolve(user.Owner, ref user.Comp, false))
+        if (!Resolve(user.Owner, ref user.Comp, logMissing: false))
             return false;
 
         if (!Hands.TryGetActiveItem(user.Owner, out split)

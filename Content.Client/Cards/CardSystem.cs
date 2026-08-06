@@ -1,7 +1,9 @@
+using System.Linq;
 using System.Numerics;
 using Content.Client.Storage.Systems;
 using Content.Shared.Cards;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Rounding;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
@@ -28,8 +30,7 @@ public sealed partial class CardSystem : SharedCardSystem
         if (!Appearance.TryGetData<CardListVisualState>(ent.Owner, CardVisuals.CardList, out var visualState, args.Component))
             visualState = new CardListVisualState();
 
-        if (!TryComp<SpriteComponent>(ent.Owner, out var sprite))
-            return;
+        Entity<SpriteComponent?> sprite = (ent.Owner, args.Sprite);
 
         var xform = Transform(ent.Owner);
 
@@ -46,16 +47,14 @@ public sealed partial class CardSystem : SharedCardSystem
         var hiddenCount = ent.Comp.Cards.Count - visualState.Count + 1;
         var maxCount = GetMaxCount(ent.Comp);
         ApplyThreshold(ent.Comp.Thresholds, ref hiddenCount, ref maxCount);
-        _sprite.LayerSetVisible((ent.Owner, sprite), ent.Comp.BaseLayer, true);
-        _counter.ProcessOpaqueSprite(
-            ent.Owner,
-            ent.Comp.BaseLayer,
-            hiddenCount,
-            maxCount,
-            ent.Comp.LayerStates,
-            false,
-            sprite: args.Sprite
-        );
+
+        // FIXME: ItemCounterSystem.ProcessOpaqueSprite doesn't support nullable layers.
+        if (_sprite.LayerMapTryGet(sprite, CardVisualLayers.Base, out var layerIndex, logMissing: true))
+        {
+            var activeState = ContentHelpers.RoundToEqualLevels(hiddenCount, maxCount, ent.Comp.LayerStates.Count);
+            _sprite.LayerSetRsiState(sprite, layerIndex, ent.Comp.LayerStates[activeState]);
+            _sprite.LayerSetVisible(sprite, layerIndex, true);
+        }
 
         // Delete all layers which are not used here
         // Assumes that all layers will have the card before it have a layer
@@ -65,15 +64,15 @@ public sealed partial class CardSystem : SharedCardSystem
         {
             // don't like this magic number
             var cardLayers = CardLayers(i, 10);
-            if (!_sprite.LayerExists((ent.Owner, sprite), cardLayers[0]))
+            if (!_sprite.LayerExists(sprite, cardLayers[0]))
                 break;
 
             foreach (var layer in cardLayers)
             {
-                if (!_sprite.LayerMapTryGet((ent.Owner, sprite), layer, out var layerIndex, logMissing: false))
+                if (!_sprite.LayerMapTryGet(sprite, layer, out layerIndex, logMissing: false))
                     break;
 
-                _sprite.RemoveLayer((ent.Owner, sprite), layerIndex);
+                _sprite.RemoveLayer(sprite, layerIndex);
             }
         }
 
@@ -90,24 +89,24 @@ public sealed partial class CardSystem : SharedCardSystem
             if (flipped)
             {
                 foreach (var layer in cardLayers)
-                    _sprite.LayerMapReserve((ent.Owner, sprite), layer);
+                    _sprite.LayerMapReserve(sprite, layer);
 
                 // Creates card and moves
-                BuildCard(prototype, cardLayers, card.BaseState, (ent.Owner, sprite));
+                BuildCard(prototype, cardLayers, card.BaseState, sprite);
                 foreach (var layer in cardLayers)
-                    TransformLayer(layer, position, rotation, (ent.Owner, sprite));
+                    TransformLayer(layer, position, rotation, sprite);
 
             }
             else
             {
-                _sprite.LayerMapReserve((ent.Owner, sprite), cardLayers[0]);
+                _sprite.LayerMapReserve(sprite, cardLayers[0]);
                 // Uses the base layer for the back side
-                BuildLayer(cardLayers[0], null, card.CardBack, null, (ent.Owner, sprite));
-                TransformLayer(cardLayers[0], position, rotation, (ent.Owner, sprite));
+                BuildLayer(cardLayers[0], null, card.CardBack, null, sprite);
+                TransformLayer(cardLayers[0], position, rotation, sprite);
             }
             // Moves the stack texture below the left most card
             if (i == 0)
-                TransformLayer(ent.Comp.BaseLayer, position, rotation, (ent.Owner, sprite));
+                TransformLayer(CardVisualLayers.Base, position, rotation, sprite);
         }
     }
 
@@ -207,6 +206,16 @@ public sealed partial class CardSystem : SharedCardSystem
     {
         if (!_sprite.LayerMapTryGet(sprite, layer, out var layerIndex, logMissing: true))
             return;
+
+        _sprite.LayerSetOffset(sprite, layerIndex, movement);
+        _sprite.LayerSetRotation(sprite, layerIndex, rotation);
+    }
+
+    private void TransformLayer(Enum layer, Vector2 movement, Angle rotation, Entity<SpriteComponent?> sprite)
+    {
+        if (!_sprite.LayerMapTryGet(sprite, layer, out var layerIndex, logMissing: true))
+            return;
+
         _sprite.LayerSetOffset(sprite, layerIndex, movement);
         _sprite.LayerSetRotation(sprite, layerIndex, rotation);
     }

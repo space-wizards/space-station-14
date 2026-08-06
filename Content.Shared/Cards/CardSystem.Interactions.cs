@@ -7,6 +7,7 @@ using Content.Shared.Verbs;
 
 namespace Content.Shared.Cards;
 
+// Event handlers for in-game interaction.
 public abstract partial class SharedCardSystem
 {
     public static readonly int[] DefaultSplitAmounts = { 1, 5, 10, 20, 30, 50 };
@@ -121,10 +122,9 @@ public abstract partial class SharedCardSystem
 
         // Fan verb
         // Can only fan when not inside a container
-        if (
-            !Container.TryGetContainingContainer(ent.Owner, out var container)
-            || Hands.EnumerateHands(container.Owner).Contains(container.ID)
-        )
+        if (!Container.TryGetContainingContainer(ent.Owner, out var container)
+            || Hands.EnumerateHands(container.Owner).Contains(container.ID))
+        {
             args.Verbs.Add(
                 new AlternativeVerb
                 {
@@ -133,6 +133,7 @@ public abstract partial class SharedCardSystem
                     Priority = priority--,
                 }
             );
+        }
 
         // Take card verbs
         // Can only take card when fanned

@@ -2,6 +2,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Cards;
 
+// Event handlers for appearance updates.
 public abstract partial class SharedCardSystem
 {
     [SubscribeLocalEvent]
@@ -45,6 +46,9 @@ public abstract partial class SharedCardSystem
     }
 }
 
+/// <summary>
+/// AppearanceData keys for playing card data.
+/// </summary>
 [Serializable, NetSerializable]
 public enum CardVisuals : byte
 {
@@ -52,6 +56,18 @@ public enum CardVisuals : byte
     CardList,
 }
 
+/// <summary>
+/// Visual layers for playing card data.
+/// </summary>
+[Serializable, NetSerializable]
+public enum CardVisualLayers : byte
+{
+    Base
+}
+
+/// <summary>
+/// Appearance data structure stored at <see cref="CardVisuals.CardList"/>.
+/// </summary>
 [Serializable, NetSerializable]
 public sealed class CardListVisualState : ICloneable
 {
