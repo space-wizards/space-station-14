@@ -6,16 +6,19 @@ using Content.Server.Roles;
 using Content.Shared.Administration.Components;
 using Content.Shared.Database;
 using Content.Shared.Hands;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Madden;
 using Content.Shared.Mind;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Components;
+using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.Player;
 
 namespace Content.Server.Madden;
 
 /// <summary>
-/// This handles...
+/// This handles items that give the Maddened antag status such as Thronglers, giving the status when picked up and lost when dropped.
 /// </summary>
 public sealed partial class MaddenSystem : EntitySystem
 {
@@ -25,79 +28,122 @@ public sealed partial class MaddenSystem : EntitySystem
     [Dependency] private IAdminLogManager _adminLog = default!;
     [Dependency] private IAdminManager _admin = default!;
     [Dependency] private ChatSystem _chatSystem = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
 
+    #region Subscriptions
 
-    /// <inheritdoc/>
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<MaddeningComponent, GotEquippedHandEvent>(OnEquip);
-        SubscribeLocalEvent<MaddeningComponent, GotUnequippedHandEvent>(OnUnequip);
-        SubscribeLocalEvent<MaddeningComponent, ComponentRemove>(OnComponentRemove);
-        SubscribeLocalEvent<MaddenedRoleComponent, GetBriefingEvent>(OnBriefing);
-    }
-
+    [SubscribeLocalEvent]
     private void OnEquip(Entity<MaddeningComponent> ent, ref GotEquippedHandEvent args)
     {
-        Enmadden(args.User, ent);
+        HandleMaddeningItemMove(ent);
     }
 
-    private void OnUnequip(Entity<MaddeningComponent> ent, ref GotUnequippedHandEvent args)
+    [SubscribeLocalEvent]
+    private void OnUnequip(Entity<MaddeningComponent> ent, ref DroppedEvent args)
     {
-        Unmadden(args.User);
-
-        ent.Comp.MaddenedEntity = null;
+        HandleMaddeningItemMove(ent);
     }
 
+    [SubscribeLocalEvent]
     private void OnComponentRemove(Entity<MaddeningComponent> ent, ref ComponentRemove args)
     {
-        if (ent.Comp.MaddenedEntity is null)
-            return;
-
-        Unmadden(ent.Comp.MaddenedEntity.Value);
-
+        Unmadden(ent.Comp.MaddenedEntity);
         ent.Comp.MaddenedEntity = null;
     }
 
+    [SubscribeLocalEvent]
     private void OnBriefing(Entity<MaddenedRoleComponent> ent, ref GetBriefingEvent args)
     {
         args.Briefing = (Loc.GetString("maddened-role-greeting"));
     }
 
-    private void Enmadden(EntityUid victim, Entity<MaddeningComponent> maddenEnt)
+    [SubscribeLocalEvent]
+    private void OnMapInit(Entity<MaddeningComponent> ent, ref MapInitEvent args)
+    {
+        var containers = _container.GetContainingContainers((ent, Transform(ent.Owner)));
+
+        foreach (var container in containers)
+        {
+            if (_mind.TryGetMind(container.Owner, out var mind, out _))
+            {
+                Enmadden(container.Owner, ent);
+                break;
+            }
+        }
+    }
+
+    #endregion
+
+    private void HandleMaddeningItemMove(Entity<MaddeningComponent> ent)
+    {
+        var newVictim = EntityUid.Invalid;
+
+        if (_container.TryGetOuterContainer(ent.Owner, Transform(ent), out var container) &&
+            _mind.TryGetMind(container.Owner, out _, out _))
+            newVictim = container.Owner;
+
+        if (newVictim != ent.Comp.MaddenedEntity)
+        {
+            Unmadden(ent.Comp.MaddenedEntity);
+            ent.Comp.MaddenedEntity = null;
+            Enmadden(newVictim, ent);
+        }
+    }
+
+    public void Enmadden(EntityUid victim, Entity<MaddeningComponent> maddeningEnt)
+    {
+        var comp = maddeningEnt.Comp;
+        Enmadden(victim, comp.Stinger, comp.AnnouncementText, comp.AnnouncementSender, maddeningEnt);
+    }
+
+    public void Enmadden(EntityUid victim,
+        SoundSpecifier? stinger = null,
+        string? announcementText = null,
+        string? announcementSender = null,
+        Entity<MaddeningComponent>? maddeningEnt = null)
     {
         if (!_mind.TryGetMind(victim, out var mind, out _) || !TryComp<ActorComponent>(victim, out var actor))
             return;
 
-        if (HasComp<MaddenedComponent>(mind) || _admin.IsAdmin(actor.PlayerSession))
+        if (_admin.IsAdmin(actor.PlayerSession))
             return;
+
+        if (HasComp<MaddenedComponent>(mind))
+        {
+            maddeningEnt?.Comp.MaddenedEntity = victim;
+            return;
+        }
 
         EnsureComp<KillSignComponent>(victim);
 
         EnsureComp<MaddenedComponent>(mind);
         _role.MindAddRole(mind, "MindRoleMaddened");
-        _antag.SendBriefing(victim, Loc.GetString("maddened-role-greeting"), Color.Silver, maddenEnt.Comp.Stinger);
+        _antag.SendBriefing(victim, Loc.GetString("maddened-role-greeting"), Color.Silver, stinger);
         _adminLog.Add(LogType.AntagSelection,
             LogImpact.Extreme,
-            $"{ToPrettyString(victim):player} was maddened by {ToPrettyString(maddenEnt):entity}");
+            $"{ToPrettyString(victim):player} was maddened by {ToPrettyString(maddeningEnt):entity}");
 
-        if (maddenEnt.Comp.AnnouncementText is null || maddenEnt.Comp.AnnouncementSender is null)
+        maddeningEnt?.Comp.MaddenedEntity = victim;
+
+        if (announcementText is null || announcementSender is null)
             return;
 
-        _chatSystem.DispatchGlobalAnnouncement(Loc.GetString(maddenEnt.Comp.AnnouncementText),
-            Loc.GetString(maddenEnt.Comp.AnnouncementSender),
+        _chatSystem.DispatchGlobalAnnouncement(Loc.GetString(announcementText),
+            Loc.GetString(announcementSender),
             false,
             colorOverride: Color.DarkGray);
     }
 
-    private void Unmadden(EntityUid maddenedEnt)
+    public void Unmadden(EntityUid? maddenedEnt)
     {
-        if (!_mind.TryGetMind(maddenedEnt, out var mind, out _))
+        if (maddenedEnt is null || !_mind.TryGetMind(maddenedEnt.Value, out var mind, out _))
             return;
 
-        RemCompDeferred<KillSignComponent>(maddenedEnt);
+        RemCompDeferred<KillSignComponent>(maddenedEnt.Value);
         RemCompDeferred<MaddenedComponent>(mind);
         _role.MindRemoveRole(mind, "MindRoleMaddened");
+        _adminLog.Add(LogType.AntagSelection,
+            LogImpact.High,
+            $"{ToPrettyString(maddenedEnt):player} lost their maddened status.");
     }
 }

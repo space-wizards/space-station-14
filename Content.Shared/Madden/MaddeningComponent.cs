@@ -3,7 +3,7 @@ using Robust.Shared.Audio;
 namespace Content.Shared.Madden;
 
 /// <summary>
-/// Used to mark entities that will "madden" players - turn them into "maddened" DAGD antagonists
+/// Used to mark entities that will "madden" players - turn them into "maddened" DAGD antagonists when the item is picked up.
 /// </summary>
 [RegisterComponent]
 public sealed partial class MaddeningComponent : Component

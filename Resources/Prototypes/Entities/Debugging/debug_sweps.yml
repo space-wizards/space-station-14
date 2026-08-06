@@ -125,7 +125,9 @@
   - type: Item
     size: Tiny
     sprite: Objects/Weapons/Melee/debug.rsi
-
+  - type: Maddening
+    announcementText: maddened-announcement-text
+    announcementSender: maddened-announcement-sender
 - type: entity
   name: bang stick 100dmg
   parent: MeleeDebugGib
