@@ -64,17 +64,15 @@ public sealed partial class CardSystem : SharedCardSystem
         // Might run into problems if the MaxFanned changes frequently
         for (var i = 0; i < visualState.MaxFanned; i++)
         {
-            // Gets the base layer name and checks if it exists
-            var cardLayers = CardLayers(i, 0);
-            if (!_sprite.LayerExists(sprite, cardLayers.ToList()[0]))
+            if (!_sprite.LayerMapTryGet(sprite, CardBaseLayer(i), out layerIndex, logMissing: false))
                 break;
 
-            cardLayers = CardLayers(i, int.MaxValue);
+            _sprite.RemoveLayer(sprite, layerIndex);
 
             // Cycle though every possible layer name until there isn't one the exists and delete them.
-            foreach (var layer in cardLayers)
+            for (var j = 0; ; j++)
             {
-                if (!_sprite.LayerMapTryGet(sprite, layer, out layerIndex, logMissing: false))
+                if (!_sprite.LayerMapTryGet(sprite, CardSubLayer(i, j), out layerIndex, logMissing: false))
                     break;
 
                 _sprite.RemoveLayer(sprite, layerIndex);
@@ -88,7 +86,7 @@ public sealed partial class CardSystem : SharedCardSystem
             if (!PrototypeManager.Resolve(card.CardId, out var prototype))
                 continue;
 
-            var cardLayers = CardLayers(i, prototype.Layers.Count).ToList();
+            var cardLayers = CardLayers(i, prototype.Layers.Count);
             var (position, rotation) = GetCardPosRot(i, numCards, radius);
 
             if (flipped)
@@ -162,15 +160,29 @@ public sealed partial class CardSystem : SharedCardSystem
     }
 
     /// <summary>
-    /// Gets the layer names for the 3 layers sprite layers used for a card.
+    /// Gets the base layer name for a card index
     /// </summary>
-    /// <param name="idx">The index of the card of those to be fanned.</param>
-    /// <returns>The three layer names</returns>
-    private static IEnumerable<string> CardLayers(int index, int layerCount)
+    private static string CardBaseLayer(int index) => $"card_{index}_base";
+
+    /// <summary>
+    /// Gets a specific non base layer name for a card index
+    /// </summary>
+    private static string CardSubLayer(int index, int layer) => $"card_{index}_{layer}";
+
+    /// <summary>
+    /// Gets the layer names for the sprite layers used for a card.
+    /// </summary>
+    /// <param name="index">The index of the card of those to be fanned.</param>
+    /// <returns> List of layer names</returns>
+    private static List<string> CardLayers(int index, int layerCount)
     {
-        yield return $"card_{index}_base";
+        List<string> list = new();
+        list.Add(CardBaseLayer(index));
         for (var i = 0; i < layerCount; i++)
-            yield return $"card_{index}_{i}";
+        {
+            list.Add(CardSubLayer(index, i));
+        }
+        return list;
     }
 
     // Adds sprites to sprite layers and colours them.
