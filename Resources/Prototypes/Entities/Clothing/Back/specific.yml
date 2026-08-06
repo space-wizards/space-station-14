@@ -38,6 +38,7 @@
     slots: BACK
     sprite: Clothing/Back/Backpacks/waterbackpack.rsi
   - type: ItemSlots
+    allowSmartEquip: true
     slots:
       item:
         priority: 2

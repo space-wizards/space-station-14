@@ -38,6 +38,13 @@ namespace Content.Shared.Containers.ItemSlots
         // datafield. This means that if your system/component dynamically changes the item slot (e.g., updating
         // whitelist or whatever), you should use #1. Alternatively: split the Slots dictionary here into two: one
         // datafield, one that is actually used by the ItemSlotsSystem for keeping track of slots.
+
+        /// <summary>
+        /// Whether to allow the smart-equip feature to work with this item's slots.
+        /// Defaults to false as so many ItemSlots entities do NOT want the smart-equip functionality.
+        /// </summary>
+        [DataField]
+        public bool AllowSmartEquip;
     }
 
     [Serializable, NetSerializable]

@@ -18,6 +18,7 @@
     storedOffset: 0,-2
     storedRotation: 45
   - type: ItemSlots
+    allowSmartEquip: true
     slots:
       item:
         name: Sabre
