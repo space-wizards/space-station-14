@@ -482,8 +482,8 @@
 
       # Main effects
       - !type:MovementSpeedModifier
-        walkSpeedModifier: 1.75
-        sprintSpeedModifier: 1.75
+        walkSpeedModifier: 1.50
+        sprintSpeedModifier: 1.50
       - !type:ModifyStatusEffect
         effectProto: StatusEffectDesoxyStamina # You are on Ice. You keep going.
         time: 10
@@ -520,7 +520,7 @@
   color: "#b51472"
   metabolisms:
     Bloodstream:
-      metabolismRate: 0.08
+      metabolismRate: 0.5
       effects:
       # Slow
       - !type:MovementSpeedModifier
