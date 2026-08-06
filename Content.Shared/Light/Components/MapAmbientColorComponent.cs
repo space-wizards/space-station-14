@@ -1,3 +1,4 @@
+using Content.Shared.CCVar;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Light.Components;
@@ -12,5 +13,5 @@ public sealed partial class MapAmbientColorComponent : Component
     /// Color used by ambient occlusion on this map.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public Color Color = Color.FromHex("#04080FAA");
+    public Color Color = CCVars.DefaultAmbientOcclusionColor;
 }

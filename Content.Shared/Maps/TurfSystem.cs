@@ -33,9 +33,9 @@ public sealed partial class TurfSystem : EntitySystem
 
         RegisterTileDefinitions();
         RebuildTileAtmosphereCache();
-        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
     }
 
+    [SubscribeLocalEvent]
     private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
     {
         if (!args.WasModified<ContentTileDefinition>())
