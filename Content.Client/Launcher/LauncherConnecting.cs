@@ -128,12 +128,7 @@ namespace Content.Client.Launcher
 
         public void Redirect()
         {
-            _sawmill.Info("Redial request received"); //TODO:ERRANT remove
-
-            // _gameController.Redial("152.53.83.10");
-
-            // _clientNetManager.Reset("");
-            // _baseClient.ConnectToServer("152.53.83.10", _baseClient.DefaultPort);
+            _gameController.Redial("ss14s://vulture.spacestation14.com");
         }
 
         public void Exit()

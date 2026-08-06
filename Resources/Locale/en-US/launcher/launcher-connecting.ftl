@@ -6,6 +6,7 @@ connecting-retry = Retry
 connecting-reconnect = Reconnect
 connecting-copy = Copy Message
 connecting-redial = Relaunch
+connecting-available = Servers Available!
 connecting-redial-wait = Please wait: { TOSTRING($time, "G3") }
 connecting-in-progress = Connecting to server...
 connecting-disconnected = Disconnected from server:
