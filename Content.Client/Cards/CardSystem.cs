@@ -64,12 +64,14 @@ public sealed partial class CardSystem : SharedCardSystem
         // Might run into problems if the MaxFanned changes frequently
         for (var i = 0; i < visualState.MaxFanned; i++)
         {
+            // Gets the base layer name and checks if it exists
             var cardLayers = CardLayers(i, 0);
             if (!_sprite.LayerExists(sprite, cardLayers.ToList()[0]))
                 break;
 
             cardLayers = CardLayers(i, int.MaxValue);
 
+            // Cycle though every possible layer name until there isn't one the exists and delete them.
             foreach (var layer in cardLayers)
             {
                 if (!_sprite.LayerMapTryGet(sprite, layer, out layerIndex, logMissing: false))
