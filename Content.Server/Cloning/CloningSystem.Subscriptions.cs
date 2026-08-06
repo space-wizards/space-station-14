@@ -1,4 +1,6 @@
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Forensics;
+using Content.Shared.Atmos.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.Cloning.Events;
@@ -12,6 +14,8 @@ using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Nutrition.Components;
+using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Paper;
 using Content.Shared.Speech.Components;
 using Content.Shared.Speech.EntitySystems;
@@ -41,6 +45,8 @@ public sealed partial class CloningSystem
     [Dependency] private SharedChameleonClothingSystem _chameleonClothing = default!;
     [Dependency] private PullingSystem _pulling = default!;
     [Dependency] private SharedBloodstreamSystem _bloodstream = default!;
+    [Dependency] private SharedCreamPieSystem _creampie = default!;
+    [Dependency] private FlammableSystem _flammable = default!;
 
     public override void Initialize()
     {
@@ -66,6 +72,8 @@ public sealed partial class CloningSystem
         SubscribeLocalEvent<MovementSpeedModifierComponent, CloningEvent>(OnCloneMovementSpeedModifier);
         SubscribeLocalEvent<PullerComponent, CloningEvent>(OnClonePuller);
         SubscribeLocalEvent<BloodstreamComponent, CloningEvent>(OnCloneBloodstream);
+        SubscribeLocalEvent<CreamPiedComponent, CloningEvent>(OnCloneCreamPied);
+        SubscribeLocalEvent<FlammableComponent, CloningEvent>(OnCloneFlammable);
     }
 
     private void OnCloneItemStack(Entity<StackComponent> ent, ref CloningItemEvent args)
@@ -160,5 +168,21 @@ public sealed partial class CloningSystem
             return;
 
         _bloodstream.CopyComponent(ent.AsNullable(), args.CloneUid);
+    }
+
+    private void OnCloneCreamPied(Entity<CreamPiedComponent> ent, ref CloningEvent args)
+    {
+        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
+            return;
+
+        _creampie.CopyComponent(ent.AsNullable(), args.CloneUid);
+    }
+
+    private void OnCloneFlammable(Entity<FlammableComponent> ent, ref CloningEvent args)
+    {
+        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
+            return;
+
+        _flammable.CopyComponent(ent.AsNullable(), args.CloneUid);
     }
 }

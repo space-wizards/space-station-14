@@ -86,6 +86,11 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
                 ent.Comp.Layer,
                 out _);
         }
+
+        if (displacement == null)
+        {
+            _displacement.EnsureDisplacementIsNotOnSprite((target, Comp<SpriteComponent>(target)), ent.Comp.Layer, index);
+        }
     }
 
     private void RemoveVisual(Entity<VisualOrganComponent> ent, EntityUid target)
@@ -95,7 +100,7 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
 
         _sprite.LayerSetRsiState(target, index, RSI.StateId.Invalid);
 
-        _displacement.EnsureDisplacementIsNotOnSprite((target, Comp<SpriteComponent>(target)), ent.Comp.Layer);
+        _displacement.EnsureDisplacementIsNotOnSprite((target, Comp<SpriteComponent>(target)), ent.Comp.Layer, index);
     }
 
     private void OnMarkingsGotInserted(Entity<VisualOrganMarkingsComponent> ent, ref OrganGotInsertedEvent args)

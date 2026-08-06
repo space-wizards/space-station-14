@@ -119,12 +119,16 @@ public sealed partial class DisplacementMapSystem : EntitySystem
     /// </summary>
     /// <param name="sprite">The sprite to remove the displacement layer from.</param>
     /// <param name="key">The key of the layer that is referenced by the displacement layer we want to remove.</param>
+    /// <param name="index">The index of the layer that had the displacement layer applied to it. Used to reset the shader.</param>
     /// <returns>Returns true if the displacement existed and was removed.</returns>
-    public bool EnsureDisplacementIsNotOnSprite(Entity<SpriteComponent> sprite, object key)
+    public bool EnsureDisplacementIsNotOnSprite(Entity<SpriteComponent> sprite, object key, int? index = null)
     {
         var displacementLayerKey = BuildDisplacementLayerKey(key);
         if (displacementLayerKey is null)
             return false;
+
+        if (index != null)
+            sprite.Comp.LayerSetShader(index.Value, null, null);
 
         return _sprite.RemoveLayer(sprite.AsNullable(), displacementLayerKey, false);
     }
