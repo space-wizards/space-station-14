@@ -24,20 +24,20 @@ public sealed partial class TabletopDraggableComponent : Component
     public Vector2 DraggedScale = new(1.25f, 1.25f);
 
     /// <summary>
-    /// The scale of the piece when dragged.
+    /// The normal scale of the piece.
     /// </summary>
     [DataField]
     public Vector2 NormalScale = Vector2.One;
 
     /// <summary>
-    /// The scale of the piece when dragged.
+    /// The draw depth of the piece when dragged.
     /// </summary>
     [DataField]
-    public int DraggedDrawDepth = (int)DrawDepthTag.Objects + 1;
+    public int DraggedDrawDepth = (int)DrawDepthTag.Items + 1;
 
     /// <summary>
-    /// The scale of the piece when dragged.
+    /// The normal draw depth of the piece.
     /// </summary>
     [DataField]
-    public int NormalDrawDepth = (int)DrawDepthTag.Objects;
+    public int NormalDrawDepth = (int)DrawDepthTag.Items;
 }
