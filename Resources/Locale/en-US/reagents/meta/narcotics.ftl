@@ -43,5 +43,5 @@ reagent-desc-happiness = Fills you with ecstatic numbness and causes minor brain
 reagent-name-Hydroxysomnolene = Hydroxysomnolene
 reagent-desc-Hydroxysomnolene = Byproduct of Methylenedioxystraquinone (aka Strawberry Ice) when metabolized, it binds to the newly vacant neuroreceptors in the brain after Methylenedioxystraquinone is flushed out of the system causing slowness and drowsiness.The only way to get rid of this metabolite is to either wait it out, or keep taking that strawberry goodness...
 
-reagent-name-StrawberryIce = StrawberryIce
+reagent-name-StrawberryIce = Methylenedioxystraquinone
 reagent-desc-StrawberryIce = A special drug designed to be even stronger than Desoxyephedrine, it can cause addiction and comes with withdrawal, also known as Strawberry Ice or Girl Ice given its color and flavor. But while the highs are higher and users report flying in rainbows through space, Eternal horror awaits if you cease taking it
