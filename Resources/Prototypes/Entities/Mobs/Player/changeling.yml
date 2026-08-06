@@ -7,6 +7,8 @@
   - type: ChangelingDevour
   - type: ChangelingIdentity
   - type: ChangelingTransform
+  - type: AddMetabolism
+    addedMetabolizer: Changeling
   - type: DestructionResistance
   - type: RevolutionaryImmune
   - type: ZombieImmune
@@ -119,3 +121,15 @@
     - ActionChangelingScreech
     #- ActionChangelingTestA
     #- ActionChangelingTestB
+
+- type: entity # dummy prototype for the store listing
+  id: ChangelingFakeMindshieldDummy
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: FakeMindShield
+    actionTag: FakeMindShieldChangeling
+    chameleonControllable: false
+    isInnate: true
+    enabledPopup: changeling-fake-mindshield-enabled
+    disabledPopup: changeling-fake-mindshield-disabled
+    action: ActionChangelingFakeMindshieldToggle

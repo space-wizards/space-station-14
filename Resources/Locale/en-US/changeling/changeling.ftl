@@ -51,6 +51,10 @@ changeling-takeover-success-self = We have successfully infested the body and as
 # stings
 changeling-sting-success = We silently sting {THE($target)}!
 
+# mindshield
+changeling-fake-mindshield-enabled = We emit fake mindshield waves.
+changeling-fake-mindshield-disabled = We stop emitting fake mindshield waves.
+
 # other
 changeling-paused-map-name = Changeling identity storage map
 

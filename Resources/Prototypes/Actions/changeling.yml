@@ -306,3 +306,24 @@
       probability: 0.5
   - type: InstantAction
     event: !type:ScreechActionEvent
+
+- type: entity
+  parent: FakeMindShieldToggleAction
+  id: ActionChangelingFakeMindshieldToggle
+  name: '[color=green]Toggle Fake Mindshield[/color]'
+  description: Turn our mindshield visibility on or off.
+  components:
+  - type: Sprite
+    sprite: Interface/Actions/changeling2.rsi
+    layers:
+    - state: mindshield_off
+      map: ["enum.ActionVisuals.Icon"]
+    - state: mindshield_on
+      map: ["enum.ActionVisuals.IconToggled"]
+      visible: false
+  - type: InstantAction
+    event: !type:FakeMindShieldToggleEvent
+      actionTag: FakeMindShieldChangeling
+  - type: Tag
+    tags:
+    - FakeMindShieldChangeling # used to distinguish the changeling's toggle mindshield action from the implant's
