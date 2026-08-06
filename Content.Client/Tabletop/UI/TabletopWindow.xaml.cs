@@ -34,9 +34,19 @@ public sealed partial class TabletopWindow : DefaultWindow
 
     private EntityUid? _board;
 
-    public Action? FlipPressed;
+    /// <summary>
+    /// An action invoked when the player starts dragging a piece.
+    /// </summary>
     public Action<EntityUid>? DragStarted;
+
+    /// <summary>
+    /// An action invoked when the player drags the piece to a new position.
+    /// </summary>
+    // TODO: don't send events from miniscule changes to coordinates.
     public Action<EntityUid, EntityCoordinates>? DragMoved;
+    /// <summary>
+    /// An action invoked when the player lets go of a piece.
+    /// </summary>
     public Action<EntityUid>? DragFinished;
 
     /// <inheritdoc cref="TabletopWindow"/>
@@ -94,7 +104,7 @@ public sealed partial class TabletopWindow : DefaultWindow
         if (args.Function == EngineKeyFunctions.UIClick)
         {
             // Check if piece under cursor, if true, set dragged piece to that.
-            if (!GetClickedEntity(args.PointerLocation.Position, out var uid))
+            if (!TryGetClickedPiece(args.PointerLocation.Position, out var uid))
                 return;
 
             _draggedPiece = uid;
@@ -103,7 +113,7 @@ public sealed partial class TabletopWindow : DefaultWindow
         else if (args.Function == EngineKeyFunctions.UIRightClick)
         {
             // Spawn a context menu on the piece we're looking at.
-            if (!GetClickedEntity(args.PointerLocation.Position, out var uid, checkDraggable: false))
+            if (!TryGetClickedPiece(args.PointerLocation.Position, out var uid, checkDraggable: false))
                 return;
 
             _uiMan.GetUIController<VerbMenuUIController>().OpenVerbMenu(uid.Value, force: true);
@@ -147,13 +157,23 @@ public sealed partial class TabletopWindow : DefaultWindow
         DragMoved.Invoke(_draggedPiece.Value, boardCoords);
     }
 
+    /// <summary>
+    /// Convenience function to convert screen coordinates into board-local coordinates.
+    /// </summary>
     private EntityCoordinates GetBoardPosition(Vector2 screenPosition)
     {
         var mapCoords = ScalingVp.ScreenToMap(screenPosition);
         return _xform.ToCoordinates(_board!.Value, mapCoords);
     }
 
-    private bool GetClickedEntity(Vector2 screenPosition, [NotNullWhen(true)] out EntityUid? uid, bool checkDraggable = true)
+    /// <summary>
+    /// Attempts to find a piece at a given set of screen coordinates.
+    /// </summary>
+    /// <param name="screenPosition">The position, in screen coordinates, to look for entities.</param>
+    /// <param name="uid">An output parameter for the entity clicked.  Set to null if nothing was found.</param>
+    /// <param name="checkDraggable">Whether or not to check for draggable pieces.</param>
+    /// <returns>Whether or not an piece was found under the cursor.</returns>
+    private bool TryGetClickedPiece(Vector2 screenPosition, [NotNullWhen(true)] out EntityUid? uid, bool checkDraggable = true)
     {
         uid = null;
 

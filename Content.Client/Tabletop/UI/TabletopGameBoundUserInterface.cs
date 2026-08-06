@@ -7,20 +7,19 @@ namespace Content.Client.Tabletop.UI;
 
 /// <summary>
 /// A bound UI for tabletop games.
-/// Sets up the viewer eye and handles rotation, and that's about it!
+/// Sets up the window into the game and handles rotation and drag events.
 /// </summary>
 public sealed partial class TabletopGameBoundUserInterface : BoundUserInterface
 {
     [ViewVariables]
     private TabletopWindow? _window;
 
-    [ViewVariables]
-    private EntityUid? _board;
-
+    /// <inheritdoc cref="TabletopGameBoundUserInterface"/>
     public TabletopGameBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
     }
 
+    /// <inheritdoc />
     protected override void Open()
     {
         base.Open();
