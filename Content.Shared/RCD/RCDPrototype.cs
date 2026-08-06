@@ -21,10 +21,12 @@ public sealed partial class RCDPrototype : IPrototype
     public RcdMode Mode { get; private set; } = RcdMode.Invalid;
 
     /// <summary>
-    /// The name associated with the prototype
+    /// The name associated with the prototype.
+    /// If null, uses the prototype's name, if it exists.
+    /// Defaults to the rcd-unknown LocId otherwise.
     /// </summary>
     [DataField("name"), ViewVariables(VVAccess.ReadOnly)]
-    public string SetName { get; private set; } = "Unknown";
+    public LocId? SetName { get; private set; }
 
     /// <summary>
     /// The name of the radial container that this prototype will be listed under on the RCD menu
