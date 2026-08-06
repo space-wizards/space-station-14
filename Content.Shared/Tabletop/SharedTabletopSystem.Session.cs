@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Shared.Tabletop.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Player;

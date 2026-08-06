@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
-using Content.Shared.ActionBlocker;
 using Content.Shared.CCVar;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -12,7 +11,6 @@ using Content.Shared.Tabletop.Components;
 using Content.Shared.Tabletop.Events;
 using Content.Shared.Verbs;
 using Robust.Shared.Configuration;
-using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -26,11 +24,8 @@ namespace Content.Shared.Tabletop;
 public abstract partial class SharedTabletopSystem : EntitySystem
 {
     [Dependency] private IConfigurationManager _cfg = default!;
-    [Dependency] private INetManager _net = default!;
-    [Dependency] private ActionBlockerSystem _actionBlocker = default!;
     [Dependency] protected MetaDataSystem Meta = default!;
     [Dependency] protected SharedAppearanceSystem Appearance = default!;
-    [Dependency] private SharedEyeSystem _eye = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private SharedInteractionSystem _interaction = default!;
     [Dependency] private SharedMapSystem _map = default!;
