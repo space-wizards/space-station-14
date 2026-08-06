@@ -19,7 +19,6 @@ public sealed partial class CardSystem : SharedCardSystem
     [Dependency] private ItemCounterSystem _counter = default!;
     [Dependency] private SpriteSystem _sprite = default!;
 
-
     [SubscribeLocalEvent]
     private void OnAppearanceChanged(Entity<CardsComponent> ent, ref AppearanceChangeEvent args)
     {
@@ -62,10 +61,11 @@ public sealed partial class CardSystem : SharedCardSystem
         // Might run into problems if the MaxFanned changes frequently
         for (var i = 0; i < visualState.MaxFanned; i++)
         {
-            // don't like this magic number
-            var cardLayers = CardLayers(i, 10);
-            if (!_sprite.LayerExists(sprite, cardLayers[0]))
+            var cardLayers = CardLayers(i, 0);
+            if (!_sprite.LayerExists(sprite, cardLayers.ToList()[0]))
                 break;
+
+            cardLayers = CardLayers(i, int.MaxValue);
 
             foreach (var layer in cardLayers)
             {
@@ -83,7 +83,7 @@ public sealed partial class CardSystem : SharedCardSystem
             if (!PrototypeManager.Resolve(card.CardId, out var prototype))
                 continue;
 
-            var cardLayers = CardLayers(i, prototype.Layers.Count);
+            var cardLayers = CardLayers(i, prototype.Layers.Count).ToList();
             var (position, rotation) = GetCardPosRot(i, numCards, radius);
 
             if (flipped)
@@ -161,15 +161,11 @@ public sealed partial class CardSystem : SharedCardSystem
     /// </summary>
     /// <param name="idx">The index of the card of those to be fanned.</param>
     /// <returns>The three layer names</returns>
-    private static List<string> CardLayers(int index, int layerCount)
+    private static IEnumerable<string> CardLayers(int index, int layerCount)
     {
-        List<string> list = new();
-        list.Add($"card_{index}_base");
+        yield return $"card_{index}_base";
         for (var i = 0; i < layerCount; i++)
-        {
-            list.Add($"card_{index}_{i}");
-        }
-        return list;
+            yield return $"card_{index}_{i}";
     }
 
     // Adds sprites to sprite layers and colours them.
