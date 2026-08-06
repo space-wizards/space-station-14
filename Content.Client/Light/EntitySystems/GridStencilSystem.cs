@@ -19,27 +19,15 @@ public sealed partial class GridStencilSystem : EntitySystem
 
     [Dependency] private IClyde _clyde = default!;
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private IMapManager _mapManager = default!;
-
-    private EntityLookupSystem _lookup = default!;
-    private SharedMapSystem _map = default!;
-    private SharedTransformSystem _xform = default!;
-    private TurfSystem _turf = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private SharedMapSystem _map = default!;
+    [Dependency] private SharedTransformSystem _xform = default!;
+    [Dependency] private TurfSystem _turf = default!;
 
     private readonly OverlayResourceCache<CachedResources> _resources = new();
     private List<Entity<MapGridComponent>> _grids = new();
     private readonly List<WorldRect> _rects = new();
     private readonly List<Box2> _tileBounds = new();
-
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        _lookup = EntityManager.System<EntityLookupSystem>();
-        _map = EntityManager.System<SharedMapSystem>();
-        _xform = EntityManager.System<SharedTransformSystem>();
-        _turf = EntityManager.System<TurfSystem>();
-    }
 
     /// <summary>
     /// Returns a viewport-sized texture where non-space grid tiles are white and everything else is transparent.
@@ -93,7 +81,7 @@ public sealed partial class GridStencilSystem : EntitySystem
             () =>
             {
                 _grids.Clear();
-                _mapManager.FindGridsIntersecting(mapId, worldBounds, ref _grids);
+                _map.FindGridsIntersecting(mapId, worldBounds, ref _grids);
 
                 foreach (var grid in _grids)
                 {
@@ -162,7 +150,7 @@ public sealed partial class GridStencilSystem : EntitySystem
             () =>
             {
                 _grids.Clear();
-                _mapManager.FindGridsIntersecting(mapId, worldBounds, ref _grids);
+                _map.FindGridsIntersecting(mapId, worldBounds, ref _grids);
 
                 foreach (var grid in _grids)
                 {
@@ -220,7 +208,7 @@ public sealed partial class GridStencilSystem : EntitySystem
         }
     }
 
-    private sealed class CachedTarget
+    private sealed record CachedTarget
     {
         public IRenderTexture? Target;
         public uint LastFrame;

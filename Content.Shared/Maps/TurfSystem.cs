@@ -18,7 +18,6 @@ namespace Content.Shared.Maps;
 /// </summary>
 public sealed partial class TurfSystem : EntitySystem
 {
-    [Dependency] private IMapManager _mapManager = default!;
     [Dependency] private EntityLookupSystem _entityLookup = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private SharedMapSystem _mapSystem = default!;
@@ -57,6 +56,7 @@ public sealed partial class TurfSystem : EntitySystem
 
         ArrayPool<bool>.Shared.Return(_tileHasMapAtmosphere);
         var cache = ArrayPool<bool>.Shared.Rent(maxTileId + 1);
+        Array.Clear(cache);
 
         foreach (var tileDef in _tileDefinitions)
         {
@@ -67,6 +67,14 @@ public sealed partial class TurfSystem : EntitySystem
         }
 
         _tileHasMapAtmosphere = cache;
+    }
+
+    public override void Shutdown()
+    {
+        base.Shutdown();
+
+        ArrayPool<bool>.Shared.Return(_tileHasMapAtmosphere);
+        _tileHasMapAtmosphere = [];
     }
 
     /// <summary>
@@ -80,7 +88,7 @@ public sealed partial class TurfSystem : EntitySystem
             return null;
 
         var pos = _transform.ToMapCoordinates(coordinates);
-        if (!_mapManager.TryFindGridAt(pos, out var gridUid, out var gridComp))
+        if (!_mapSystem.TryFindGridAt(pos, out var gridUid, out var gridComp))
             return null;
 
         if (!_mapSystem.TryGetTileRef(gridUid, gridComp, coordinates, out var tile))

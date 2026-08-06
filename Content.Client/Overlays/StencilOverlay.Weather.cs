@@ -25,8 +25,9 @@ public sealed partial class StencilOverlay
             "weather-blocked-grid-stencil",
             (grid, tile) =>
             {
+                _entManager.TryGetComponent(grid.Owner, out RoofComponent? roofComp);
                 // Ignored tiles for stencil.
-                return !_weather.CanWeatherAffect((grid.Owner, grid.Comp, null), tile);
+                return !_weather.CanWeatherAffect((grid.Owner, grid.Comp, roofComp), tile);
             });
 
         worldHandle.SetTransform(Matrix3x2.Identity);

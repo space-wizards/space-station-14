@@ -9,13 +9,6 @@
 ## Technical details
 <!-- Summary of code changes for easier review. -->
 
-#### Link to space-wizards Pull Request
-<!-- If you are resubmitting a Pull Request originally from the space-wizards repository,
-please uncomment the line below and replace [PR NUMBER] with that PR's number. If not, skip this section. -->
-<!--
-space-wizards URL: https://github.com/space-wizards/space-station-14/pull/[PR NUMBER]
--->
-
 ## Test plan
 <!--
 Describe how you tested the pull request, and how someone reviewing this PR can test it themselves.

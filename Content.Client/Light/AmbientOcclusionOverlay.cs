@@ -7,7 +7,7 @@ using Content.Shared.Light.Components;
 using Robust.Client.Graphics;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
-using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -27,6 +27,8 @@ public sealed partial class AmbientOcclusionOverlay : Overlay
     [Dependency] private IConfigurationManager _cfgManager = default!;
     [Dependency] private IEntityManager _entManager = default!;
     [Dependency] private IPrototypeManager _proto = default!;
+
+    private List<Entity<MapGridComponent>> _cachedGrids = new();
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowEntities;
 
