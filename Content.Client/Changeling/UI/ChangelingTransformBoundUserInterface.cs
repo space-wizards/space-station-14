@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Client.Stylesheets.Palette;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Changeling.Components;
@@ -46,6 +47,8 @@ public sealed partial class ChangelingTransformBoundUserInterface(EntityUid owne
     {
         var buttons = new List<RadialMenuOptionBase>();
         var dropButtons = new List<RadialMenuOptionBase>();
+        // To prevent dropping identities while in horror form & only having one other identity
+        var hasDropOption = !(identities.Count() <= 2 && EntMan.HasComponent<ChangelingHorrorComponent>(currentIdentity));
 
         foreach (var identity in identities)
         {
@@ -62,6 +65,12 @@ public sealed partial class ChangelingTransformBoundUserInterface(EntityUid owne
             };
             buttons.Add(option);
 
+            if (!hasDropOption)
+                continue;
+
+            // the changeling horror can't be dropped, and you can't drop your current identity
+            var droppable = !EntMan.HasComponent<ChangelingUnremovableIdentityComponent>(identity.Identity) && currentIdentity != identity.Identity;
+
             // Options for dropping identities.
             var dropOption = new RadialMenuActionOption<NetEntity>(SendIdentityDrop, EntMan.GetNetEntity(identity.Identity.Value))
             {
@@ -69,11 +78,14 @@ public sealed partial class ChangelingTransformBoundUserInterface(EntityUid owne
                 ToolTip = (currentIdentity == identity.Identity)
                     ? Loc.GetString("changeling-transform-bui-drop-identity-cannot-drop")
                     : Loc.GetString("changeling-transform-bui-drop-identity-entity", ("entity", identity.Identity)),
-                BackgroundColor = (currentIdentity == identity.Identity) ? DisabledOptionBackground : null, // cannot drop your current identity
-                HoverBackgroundColor = (currentIdentity == identity.Identity) ? DisabledOptionHoverBackground : null
+                BackgroundColor = droppable ? null : DisabledOptionBackground, // cannot drop your current identity
+                HoverBackgroundColor = droppable ? null : DisabledOptionHoverBackground
             };
             dropButtons.Add(dropOption);
         }
+
+        if (!hasDropOption)
+            return buttons;
 
         // Menu category for dropping identities.
         var dropMenuButton = new RadialMenuNestedLayerOption(dropButtons)

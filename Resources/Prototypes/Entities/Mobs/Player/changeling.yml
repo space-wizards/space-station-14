@@ -111,6 +111,17 @@
     overlayColor: "#AB0808AA"
     prioritized: false # Technically eye augments, so we want things such as NVGs to take priority if able
 
+
+- type: entity # dummy prototype for base changeling horror actions
+  id: ChangelingHorrorDummy
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: ChangelingHorrorActionStorage
+    actions:
+    - ActionChangelingScreech
+    #- ActionChangelingTestA
+    #- ActionChangelingTestB
+
 - type: entity # dummy prototype for the store listing
   id: ChangelingFakeMindshieldDummy
   categories: [ HideSpawnMenu ]

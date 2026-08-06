@@ -57,3 +57,13 @@ changeling-fake-mindshield-disabled = We stop emitting fake mindshield waves.
 
 # other
 changeling-paused-map-name = Changeling identity storage map
+
+# horror transformation
+changeling-transform-horror-attempt-self = Our flesh rapidly expands as we reveal our otherwordly mouth bare.
+changeling-transform-horror-attempt-others = { CAPITALIZE(POSS-ADJ($user)) } flesh rapidly expands, exposing a terrifying mouth.
+changeling-horror-cc-announcement = Long range sensors signal the presence of biohazardous alien biomass on the station. Security level elevated.
+changeling-horror-alert-time-name = Remaining time
+changeling-horror-alert-time-desc = When this counter reaches 0, we will have exhausted our strength.
+changeling-horror-force-transform-self = Our energy depleted, we cannot maintain this form anymore.
+changeling-horror-force-transform-others = { CAPITALIZE(POSS-ADJ($user)) } flesh rapidly shrivels away and dies.
+changeling-horror-transform-fail = We do not have enough DNA stored to reveal ourselves.

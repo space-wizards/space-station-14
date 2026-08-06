@@ -20,6 +20,8 @@
       collection: gib # Placeholder
     retractSounds:
       collection: gib # Placeholder
+  - type: ChangelingHorrorDisable
+    toggleOff: true
 
 - type: entity
   parent: BaseAction

@@ -144,6 +144,10 @@
   - TemperatureProtection
   - TypingIndicator
   - ScaleVisuals # for dwarf height
+  # - for horror form
+  - ChangelingHorror
+  - SlowOnDamage
+  - PassiveDamage
   eventComponents:
   # these need special treatment in the event subscription
   - Inventory # arachnid pockets and diona feet
@@ -154,6 +158,7 @@
   - MovementSpeedModifier # moths when weightless
   - JumpAbility # vulp leaping
   - Bloodstream # blood reagents
+  - Damageable # for horror form
   copyInternalStorage: false
   copyImplants: false
   raiseEntityRenamedEvent: false

@@ -175,6 +175,24 @@
     stock: 1
   productAction: ActionChangelingScreech
 
+
+- type: listing
+  id: ChangelingHorrorForm
+  name: changeling-catalog-horror-form-name
+  description: changeling-catalog-horror-form-desc
+  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: horror_shop }
+  applyToMob: true
+  cost:
+    ChangelingDNA: 1
+  categories:
+  - ChangelingStoreCombat
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  productEvent: !type:ChangelingUnlockHorrorEvent
+  productComponents: ChangelingHorrorDummy
+  raiseProductEventOnUser: true
+
 - type: listing
   id: ChangelingFakeMindshield
   name: changeling-catalog-voice-mindshield-name

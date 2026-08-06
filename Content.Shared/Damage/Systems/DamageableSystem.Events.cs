@@ -1,4 +1,5 @@
 using Content.Shared.CCVar;
+using Content.Shared.Cloning.Events;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
@@ -119,6 +120,17 @@ public sealed partial class DamageableSystem
             value => UniversalMobDamageModifier = value,
             true
         );
+    }
+
+    [SubscribeLocalEvent]
+    private void OnClone(Entity<DamageableComponent> ent, ref CloningEvent args)
+    {
+        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
+            return;
+
+        var cloneComp = Factory.GetComponent<DamageableComponent>();
+        cloneComp.DamageModifierSetId = ent.Comp.DamageModifierSetId;
+        AddComp(args.CloneUid, cloneComp, true);
     }
 
     private void OnPrototypesReloaded(PrototypesReloadedEventArgs ev)
