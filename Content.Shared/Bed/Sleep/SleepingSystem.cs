@@ -165,10 +165,7 @@ public sealed partial class SleepingSystem : EntitySystem
     private void OnSpeakAttempt(Entity<SleepingComponent> ent, ref SpeakAttemptEvent args)
     {
         if (HasComp<AllowNextCritSpeechComponent>(ent))
-        {
-            RemCompDeferred<AllowNextCritSpeechComponent>(ent);
             return;
-        }
 
         args.Cancel();
     }

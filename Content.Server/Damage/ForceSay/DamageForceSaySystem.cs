@@ -1,4 +1,5 @@
 using Content.Shared.Bed.Sleep;
+using Content.Shared.Chat;
 using Content.Shared.Damage.Events;
 using Content.Shared.Damage.ForceSay;
 using Content.Shared.Damage.Systems;
@@ -31,6 +32,7 @@ public sealed partial class DamageForceSaySystem : EntitySystem
         // (this won't double raise, because of the cooldown)
         SubscribeLocalEvent<DamageForceSayComponent, DamageChangedEvent>(OnDamageChanged, after: new []{ typeof(MobThresholdSystem)} );
         SubscribeLocalEvent<DamageForceSayComponent, SleepStateChangedEvent>(OnSleep);
+        SubscribeLocalEvent<AllowNextCritSpeechComponent, CheckIgnoreSpeechBlockerEvent>(OnCheckIgnoreSpeechBlocker);
     }
 
     public override void Update(float frameTime)
@@ -130,5 +132,14 @@ public sealed partial class DamageForceSaySystem : EntitySystem
         // LING IN MAI-
         TryForceSay(uid, component, false);
         AllowNextSpeech(uid);
+    }
+
+    private void OnCheckIgnoreSpeechBlocker(EntityUid uid, AllowNextCritSpeechComponent component, CheckIgnoreSpeechBlockerEvent args)
+    {
+        if (HasComp<AllowNextCritSpeechComponent>(uid))
+        {
+            args.IgnoreBlocker = true;
+            RemCompDeferred<AllowNextCritSpeechComponent>(uid);
+        }
     }
 }
