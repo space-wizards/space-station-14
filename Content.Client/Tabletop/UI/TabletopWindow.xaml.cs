@@ -96,8 +96,10 @@ public sealed partial class TabletopWindow : DefaultWindow
         if (args.Function != EngineKeyFunctions.UIClick)
             return;
 
-        if (_draggedPiece is null || _board is null)
+        if (_draggedPiece is null)
             return;
+
+        // TODO: possibly send a
 
         _draggedPiece = null;
     }
@@ -110,7 +112,7 @@ public sealed partial class TabletopWindow : DefaultWindow
         if (_draggedPiece == null)
             return;
 
-
+        RaiseLocalEvent();
     }
 
     private bool GetClickedEntity(Vector2 screenPosition, [NotNullWhen(true)] out EntityUid? uid, bool checkDraggable = true)
