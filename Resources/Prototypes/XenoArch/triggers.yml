@@ -34,6 +34,11 @@
     TriggerConsumeProduce: 0.5
     TriggerInteractStamp: 1
     TriggerInteractShock: 1
+    TriggerReactiveEnergyDrink: 1
+    TriggerReactiveDrinkHard: 0.5
+    TriggerReactiveReagentEasy: 1
+    TriggerReactiveReagentHard: 0.5
+    TriggerReactiveReagentObscure: 0.5
 
 - type: xenoArchTrigger
   id: TriggerMusic
@@ -391,3 +396,136 @@
   - type: XATDamageThresholdReached
     typesNeeded:
       Shock: 5
+
+- type: xenoArchTrigger
+  id: TriggerReactiveEnergyDrink
+  tip: xenoarch-trigger-tip-energy-drink
+  components:
+  - type: XATReactive
+    reagents: # Drinks available round start from a vending machine
+    - Cola
+    - ChangelingSting
+    - DrGibb
+    - EnergyDrink
+    - FourteenLoko
+    - GrapeSoda
+    - LemonLime
+    - LemonLimeCranberry
+    - NuclearCola
+    - PwrGame
+    - ShamblersJuice
+    - SodaWater
+    - SolDry
+    - SpaceMountainWind
+    - SpaceUp
+    - Starkist
+
+- type: xenoArchTrigger
+  id: TriggerReactiveDrinkHard
+  tip: xenoarch-trigger-tip-reactive-specific # should get overwritten
+  components:
+  - type: XATReactiveSpecific
+    reagents: #list of drinks someone that hasn't played bartender before could reasonably guess is a drink
+    - AlliesCocktail #drinks shouldn't be *too* hard to make, if no bartender is present you should be able to make it without access
+    - CogChamp
+    - BlackRussian
+    - BloodyMary
+    - CoconutRum
+    - CubaLibre
+    - GargleBlaster
+    - GinTonic
+    - Grog
+    - LongIslandIcedTea
+    - ManlyDorf
+    - Margarita
+    - Martini
+    - Moonshine
+    - PinaColada
+    - WhiskeyCola
+    - WhiteRussian
+    - ArnoldPalmer
+    - CafeLatte
+    - CreamOfCoconut
+    - IceCream
+    - IcedCoffee
+    - IcedGreenTea
+    - IcedTea
+    - OrangeLimeSoda
+    - Lemonade
+    - SoyLatte
+    - Pilk
+
+- type: xenoArchTrigger
+  id: TriggerReactiveReagentEasy
+  tip: xenoarch-trigger-tip-reactive-specific # should get overwritten
+  components:
+  - type: XATReactiveSpecific
+    reagents: #things medical probably already has
+    - Arithrazine
+    - Dylovene
+    - Bicaridine
+    - Cryoxadone
+    - Dermaline
+    - Dexalin
+    - Inaprovaline
+    - Tricordrazine
+    - Saline
+    - Lacerinol
+    - Puncturase
+    - Bruizine
+    - Arcryox
+    - PotassiumIodide
+    - Charcoal
+
+- type: xenoArchTrigger
+  id: TriggerReactiveReagentHard
+  tip: xenoarch-trigger-tip-reactive-specific # should get overwritten
+  components:
+  - type: XATReactiveSpecific
+    reagents: #things medical probably hasn't made already, not neccisarily hard for them to make
+    - Cryptobiolin #good reagents
+    - Doxarubixadone
+    - Ethylredoxrazine
+    - Haloperidol
+    - Lipozine
+    - Mannitol
+    - SpaceDrugs
+    - Synaptizine
+    - TranexamicAcid
+    - Phalanximine
+    - Psicodine
+    - Oculine
+    - Bleach  #evil reagents
+    - ChloralHydrate
+    - ChlorineTrifluoride
+    - HeartbreakerToxin
+    - Hemorrhinol
+    - Impedrezene
+    - Licoxide
+    - Lipolicide
+    - MindbreakerToxin
+    - Napalm
+    - Razorium
+    - Thermite
+    - UnstableMutagen
+
+- type: xenoArchTrigger
+  id: TriggerReactiveReagentObscure
+  tip: xenoarch-trigger-tip-reactive-specific # should get overwritten
+  components:
+  - type: XATReactiveSpecific
+    reagents: #uncommon reagents (but still not super annoying to make)
+    - Ash #many of these can be acquired without assistance from a chemist
+    - Fiber
+    - JuiceThatMakesYouWeh
+    - Lye
+    - Nutriment
+    - PestKiller
+    - SpaceLube
+    - SpaceGlue
+    - SpaceCleaner
+    - Sugar
+    - TableSalt
+    - Vitamin
+    - WeedKiller
+    - WeldingFuel

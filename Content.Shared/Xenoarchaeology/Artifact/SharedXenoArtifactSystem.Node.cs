@@ -10,7 +10,7 @@ namespace Content.Shared.Xenoarchaeology.Artifact;
 
 public abstract partial class SharedXenoArtifactSystem
 {
-    [Dependency] private EntityTableSystem _entityTable =  default!;
+    [Dependency] private EntityTableSystem _entityTable = default!;
 
     [Dependency] private EntityQuery<XenoArtifactComponent> _xenoArtifactQuery = default!;
     [Dependency] private EntityQuery<XenoArtifactNodeComponent> _nodeQuery = default!;
@@ -395,5 +395,13 @@ public abstract partial class SharedXenoArtifactSystem
 
         var predecessorNodes = GetPredecessorNodes((artifact, artifact), node);
         nodeComponent.ResearchValue = (int)(Math.Pow(1.25, Math.Pow(predecessorNodes.Count, 1.5f)) * nodeComponent.BasePointValue * durabilityMultiplier);
+    }
+
+    /// <summary>
+    /// Set the trigger tip of a node
+    /// </summary>
+    public void SetNodeTip(XenoArtifactNodeComponent node, LocId tip)
+    {
+        node.TriggerTip = tip;
     }
 }
