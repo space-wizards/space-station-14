@@ -182,7 +182,6 @@ public sealed partial class SmartEquipSystem : EntitySystem
         // case 3 (itemslot item):
         if (TryComp<ItemSlotsComponent>(slotItem, out var slots) && slots.AllowSmartEquip)
         {
-
             if (handItem == null)
             {
                 ItemSlot? toEjectFrom = null;
