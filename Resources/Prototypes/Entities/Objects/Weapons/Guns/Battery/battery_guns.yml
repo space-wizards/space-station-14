@@ -980,6 +980,8 @@
   id: WeaponLaserGunXenoborg
   name: xenoborg laser gun
   components:
+  - type: BatteryAmmoProvider
+    proto: XenoborgLaser
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/xenoborg_laser_gun.rsi
     layers:
