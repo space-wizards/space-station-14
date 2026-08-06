@@ -1,6 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Numerics;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
@@ -43,7 +42,6 @@ public abstract partial class SharedTabletopSystem : EntitySystem
     [Dependency] private EntityQuery<TabletopGameComponent> _gameQuery;
     [Dependency] private EntityQuery<TabletopGamerComponent> _gamerQuery;
     [Dependency] private EntityQuery<TabletopHologramComponent> _hologramQuery;
-    [Dependency] private EntityQuery<UserInterfaceComponent> _uiQuery;
 
     /// <summary>
     /// The prototype to use to represent items dragged into the tabletop map.
@@ -270,8 +268,6 @@ public abstract partial class SharedTabletopSystem : EntitySystem
 
         _adminLog.Add(LogType.Action, $"{user:player} removed piece {ToPrettyString(piece)}, from board {ToPrettyString(table)}");
 
-        _popup.PopupCoordinates(Loc.GetString("tabletop-removed-piece-on-board"), Transform(piece).Coordinates, PopupType.Medium);
-
         PredictedQueueDel(piece);
     }
 
@@ -323,8 +319,6 @@ public abstract partial class SharedTabletopSystem : EntitySystem
 
         // Display a message to the user telling them the piece was added.
         _popup.PopupEntity(Loc.GetString("tabletop-added-piece"), ent, user);
-        // Display a message above the piece telling anyone playing that it showed up.
-        _popup.PopupEntity(Loc.GetString("tabletop-added-piece-on-board"), hologram, PopupType.Medium);
     }
     #endregion
 }

@@ -9,7 +9,7 @@
   - type: TabletopGame
     boardName: tabletop-chess-board-name
     size: 338, 274
-    centerOffset: -1, 0
+    spawnOffset: -1, 0
     setup: !type:TabletopChessSetup
       boardPrototype: ChessBoardTabletop
 
