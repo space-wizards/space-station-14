@@ -31,7 +31,6 @@ public sealed class CritHeartbeatSystem : EntitySystem
     private TimeSpan _nextRinging;
 
     public float VisualPulse { get; private set; }
-    public bool CreatingInternalAudio { get; private set; }
 
     public override void Initialize()
     {
@@ -122,7 +121,7 @@ public sealed class CritHeartbeatSystem : EntitySystem
             return new HeartbeatBeat(
                 heartbeat.PreCriticalSound,
                 MathHelper.Lerp(112f, 144f, progress),
-                MathHelper.Lerp(-12f, -8f, progress),
+                MathHelper.Lerp(-10f, -6f, progress),
                 MathHelper.Lerp(1.05f, 1.16f, progress),
                 MathHelper.Lerp(0.45f, 0.7f, progress));
         }
@@ -137,7 +136,7 @@ public sealed class CritHeartbeatSystem : EntitySystem
         return new HeartbeatBeat(
             heartbeat.CriticalSound,
             MathHelper.Lerp(78f, 36f, criticalProgress),
-            MathHelper.Lerp(-11f, -7f, criticalProgress),
+            MathHelper.Lerp(-9f, -5f, criticalProgress),
             MathHelper.Lerp(0.9f, 0.72f, criticalProgress),
             MathHelper.Lerp(0.75f, 1f, criticalProgress));
     }
@@ -170,7 +169,7 @@ public sealed class CritHeartbeatSystem : EntitySystem
         var audioParams = sound.Params
             .WithVolume(sound.Params.Volume + volume)
             .WithPitchScale(pitch);
-        _currentStream = PlayInternalSound(sound, audioParams);
+        _currentStream = _audio.PlayGlobal(sound, Filter.Local(), false, audioParams)?.Entity;
 
         VisualPulse = MathF.Max(VisualPulse, visualIntensity);
     }
@@ -183,32 +182,17 @@ public sealed class CritHeartbeatSystem : EntitySystem
         StopRinging();
 
         var volume = state == MobState.PreCritical
-            ? _random.NextFloat(-20f, -17f)
-            : _random.NextFloat(-18f, -15f);
+            ? _random.NextFloat(-18f, -15f)
+            : _random.NextFloat(-16f, -13f);
         var audioParams = heartbeat.EarRingingSound.Params
             .WithVolume(heartbeat.EarRingingSound.Params.Volume + volume)
             .WithPitchScale(_random.NextFloat(0.96f, 1.04f));
-        _ringingStream = PlayInternalSound(heartbeat.EarRingingSound, audioParams);
+        _ringingStream = _audio.PlayGlobal(
+            heartbeat.EarRingingSound,
+            Filter.Local(),
+            false,
+            audioParams)?.Entity;
         ScheduleRinging(state);
-    }
-
-    private EntityUid? PlayInternalSound(SoundSpecifier sound, AudioParams audioParams)
-    {
-        EntityUid? stream;
-        CreatingInternalAudio = true;
-        try
-        {
-            stream = _audio.PlayGlobal(sound, Filter.Local(), false, audioParams)?.Entity;
-        }
-        finally
-        {
-            CreatingInternalAudio = false;
-        }
-
-        if (stream is { } uid)
-            EnsureComp<CriticalInternalAudioComponent>(uid);
-
-        return stream;
     }
 
     private void ScheduleRinging(MobState state)
@@ -244,7 +228,6 @@ public sealed class CritHeartbeatSystem : EntitySystem
         _nextBeat = TimeSpan.Zero;
         _nextRinging = TimeSpan.Zero;
         VisualPulse = 0f;
-        CreatingInternalAudio = false;
     }
 
     private readonly record struct HeartbeatBeat(
