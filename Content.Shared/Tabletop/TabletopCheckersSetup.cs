@@ -29,14 +29,14 @@ public sealed partial class TabletopCheckersSetup : TabletopSetup
     public const float PieceOffsetX = -4.5f;
     public const float PieceOffsetY = 3.5f;
 
-    public override void SetupTabletop(TabletopGameComponent tabletop, MapCoordinates coordinates, EntityManager entityManager)
+    public override void SetupTabletop(Entity<TabletopGameComponent> tabletop, MapCoordinates coordinates, EntityManager entityManager)
     {
-        tabletop.Board = entityManager.Spawn(BoardPrototype, coordinates);
+        tabletop.Comp.Board = entityManager.Spawn(BoardPrototype, coordinates);
 
         SpawnPieces(tabletop, entityManager);
     }
 
-    private void SpawnPieces(TabletopGameComponent tabletop, EntityManager entityManager)
+    private void SpawnPieces(Entity<TabletopGameComponent> tabletop, EntityManager entityManager)
     {
         Vector2 left = new(PieceOffsetX, PieceOffsetY);
         // Pieces.

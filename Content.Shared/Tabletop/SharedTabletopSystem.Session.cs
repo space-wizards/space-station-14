@@ -5,11 +5,12 @@ using Robust.Shared.Player;
 
 namespace Content.Shared.Tabletop;
 
+// An API for setting up tabletop sessions.
 public abstract partial class SharedTabletopSystem
 {
     /// <summary>
-    /// Ensures that the <see cref="TabletopGameComponent"/> in the entity passed has a valid session.
-    /// Creates it and sets it up if it doesn't.
+    /// Ensures that the <see cref="TabletopGameComponent"/> in the entity passed has a valid board and pieces.
+    /// Will create a board if one doesn't exist.
     /// </summary>
     /// <param name="tabletop">The tabletop game in question.</param>
     public void EnsureBoard(Entity<TabletopGameComponent?> ent)
@@ -26,19 +27,11 @@ public abstract partial class SharedTabletopSystem
         var position = new MapCoordinates(GetNextTabletopPosition(), TabletopMap);
 
         // Since this is the first time opening this session, set up the game.
-        ent.Comp.Setup.SetupTabletop(ent.Comp, position, EntityManager);
+        ent.Comp.Setup.SetupTabletop((ent, ent.Comp), position, EntityManager);
 
         if (ent.Comp.Board is { } board)
-        {
-            var coords = new EntityCoordinates(board, Vector2.Zero);
+            EnsureComp<EyeComponent>(board);
 
-            ent.Comp.UprightCamera = PredictedSpawnAttachedTo(null, coords);
-            EnsureComp<EyeComponent>(ent.Comp.UprightCamera.Value);
-
-            ent.Comp.UpsideDownCamera = PredictedSpawnAttachedTo(null, coords);
-            var upsideDownEye = EnsureComp<EyeComponent>(ent.Comp.UpsideDownCamera.Value);
-            _eye.SetRotation(ent.Comp.UpsideDownCamera.Value, Angle.FromDegrees(180), upsideDownEye);
-        }
         Dirty(ent);
 
         Log.Info($"Created tabletop board for {ent} at position {position}.");
@@ -48,6 +41,9 @@ public abstract partial class SharedTabletopSystem
     /// Cleans up a tabletop game session, deleting every entity in it.
     /// </summary>
     /// <param name="ent">The tabletop game to tear down.</param>
+    /// <remarks>
+    /// All pieces are expected to be parented to the board itself, and should be torn down along with it.
+    /// </remarks>
     public void TeardownBoard(Entity<TabletopGameComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp))

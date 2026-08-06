@@ -24,13 +24,16 @@ public abstract partial class TabletopSetup
     /// </summary>
     /// <param name="tabletop">The tabletop component being set up. You'll want to grab the tabletop center position here for spawning entities.</param>
     /// <param name="entityManager">Dependency that can be used for spawning entities.</param>
-    public abstract void SetupTabletop(TabletopGameComponent tabletop, MapCoordinates position, EntityManager entityManager);
+    public abstract void SetupTabletop(Entity<TabletopGameComponent> tabletop, MapCoordinates position, EntityManager entityManager);
 
     /// <summary>
     /// Convenience function: spawns a given piece at a given position and adds it to the session given.
     /// </summary>
-    protected void SpawnPiece(EntProtoId piece, Vector2 position, TabletopGameComponent tabletop, EntityManager entityManager)
+    protected void SpawnPiece(EntProtoId piece, Vector2 position, Entity<TabletopGameComponent> tabletop, EntityManager entityManager)
     {
-        entityManager.PredictedSpawnAttachedTo(piece, new(tabletop.Board!.Value, position));
+        var pieceUid = entityManager.PredictedSpawnAttachedTo(piece, new(tabletop.Comp.Board!.Value, position));
+        var draggable = entityManager.EnsureComponent<TabletopDraggableComponent>(pieceUid);
+        draggable.Table = tabletop;
+        entityManager.Dirty(pieceUid, draggable);
     }
 }

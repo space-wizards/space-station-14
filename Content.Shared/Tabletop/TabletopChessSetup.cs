@@ -19,14 +19,14 @@ public sealed partial class TabletopChessSetup : TabletopSetup
     public const float PieceOffsetY = 3.5f;
 
     /// <inheritdoc />
-    public override void SetupTabletop(TabletopGameComponent tabletop, MapCoordinates coordinates, EntityManager entityManager)
+    public override void SetupTabletop(Entity<TabletopGameComponent> tabletop, MapCoordinates coordinates, EntityManager entityManager)
     {
-        tabletop.Board = entityManager.SpawnEntity(BoardPrototype, coordinates);
+        tabletop.Comp.Board = entityManager.SpawnEntity(BoardPrototype, coordinates);
 
         SpawnPieces(tabletop, entityManager);
     }
 
-    private void SpawnPieces(TabletopGameComponent tabletop, EntityManager entityManager, float separation = 1f)
+    private void SpawnPieces(Entity<TabletopGameComponent> tabletop, EntityManager entityManager, float separation = 1f)
     {
         var x = PieceOffsetX;
         var y = PieceOffsetY;
@@ -45,7 +45,7 @@ public sealed partial class TabletopChessSetup : TabletopSetup
     }
 
     // TODO: refactor to load FEN instead
-    private void SpawnPiecesRow(TabletopGameComponent tabletop, EntityManager entityManager, string color, Vector2 left, float separation = 1f)
+    private void SpawnPiecesRow(Entity<TabletopGameComponent> tabletop, EntityManager entityManager, string color, Vector2 left, float separation = 1f)
     {
         const string piecesRow = "rnbqkbnr";
 
@@ -76,7 +76,7 @@ public sealed partial class TabletopChessSetup : TabletopSetup
     }
 
     // TODO: refactor to load FEN instead
-    private void SpawnPawns(TabletopGameComponent tabletop, EntityManager entityManager, string color, Vector2 left, float separation = 1f)
+    private void SpawnPawns(Entity<TabletopGameComponent> tabletop, EntityManager entityManager, string color, Vector2 left, float separation = 1f)
     {
         var (x, y) = left;
 

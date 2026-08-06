@@ -113,9 +113,8 @@ public abstract partial class SharedTabletopSystem : EntitySystem
             || !GameQuery.TryComp(gamer.Tabletop, out var game))
             return;
 
-        // TODO: change this out for a UI check
-        // Will get closed later if CanSeeTable returns false.
-        var disabled = !CanSeeTable(args.User, gamer.Tabletop);
+        // Will get closed later if IsPlaying returns false.
+        var disabled = !IsPlaying(args.User, gamer.Tabletop);
         var user = args.User;
 
         var copyVerb = new AlternativeVerb()
@@ -141,8 +140,8 @@ public abstract partial class SharedTabletopSystem : EntitySystem
             return;
 
         // TODO: change this out for a UI check
-        // Will get closed later if CanSeeTable returns false.
-        var disabled = !CanSeeTable(args.User, gamer.Tabletop);
+        // Will get closed later if IsPlaying returns false.
+        var disabled = !IsPlaying(args.User, gamer.Tabletop);
         var user = args.User;
 
         var removeVerb = new Verb()
@@ -173,10 +172,9 @@ public abstract partial class SharedTabletopSystem : EntitySystem
             return;
 
         // Check if player is actually playing at this table.
-        if (!UI.GetActors(tableUid, TabletopGameUiKey.Key).Contains(playerUid))
+        if (!IsPlaying(playerUid, tableUid))
             return;
 
-        var table = GetEntity(msg.TableUid);
         var moved = GetEntity(msg.MovedEntityUid);
 
         if (!CanDrag(playerUid, moved, out _))
@@ -248,21 +246,11 @@ public abstract partial class SharedTabletopSystem : EntitySystem
 
     #region Utility
     /// <summary>
-    /// Whether the table exists, and the player can interact with it.
+    /// Checks and returns whether <paramref name="playerEntity"/> is playing on <paramref name="table"/>.
     /// </summary>
-    /// <param name="playerEntity">The player entity to check.</param>
-    /// <param name="table">The table entity to check.</param>
-    protected bool CanSeeTable(EntityUid playerEntity, EntityUid? table)
+    protected bool IsPlaying(EntityUid playerEntity, EntityUid table)
     {
-        // Table may have been deleted, hence TryComp.
-        if (!TryComp(table, out MetaDataComponent? meta)
-            || meta.EntityLifeStage >= EntityLifeStage.Terminating
-            || (meta.Flags & MetaDataFlags.InContainer) == MetaDataFlags.InContainer)
-        {
-            return false;
-        }
-
-        return _interaction.InRangeUnobstructed(playerEntity, table.Value) && _actionBlocker.CanInteract(playerEntity, table);
+        return UI.GetActors(table, TabletopGameUiKey.Key).Contains(playerEntity);
     }
 
     protected bool CanDrag(EntityUid playerEntity, EntityUid target, [NotNullWhen(true)] out TabletopDraggableComponent? draggable)
@@ -270,8 +258,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
         if (!DraggableQuery.TryComp(target, out draggable))
             return false;
 
-        // CanSeeTable checks interaction action blockers. So no need to check them here.
-        // If this ever changes, so that ghosts can spectate games, then the check needs to be moved here.
+        // We currently only check that the playing needs hands
         return TryComp(playerEntity, out HandsComponent? hands) && hands.Hands.Count > 0;
     }
 
@@ -281,10 +268,11 @@ public abstract partial class SharedTabletopSystem : EntitySystem
             return;
 
         // If this is the client, just assume it's valid
-        if (_net.IsServer && !UI.GetActors(table.Owner, TabletopGameUiKey.Key).Contains(user))
+        if (!IsPlaying(user, table))
             return;
 
-        if (table.Comp.Board == table)
+        if (DraggableQuery.TryComp(piece, out var draggable)
+            && draggable.Table == table.Owner)
             PredictedQueueDel(piece);
     }
 
@@ -313,11 +301,14 @@ public abstract partial class SharedTabletopSystem : EntitySystem
         var hologram = PredictedSpawnAttachedTo(GamePiecePrototype, new(board, -Vector2.UnitX));
 
         // Make sure the entity can be dragged and can be removed, move it into the board game world and add it to the Entities hashmap.
-        EnsureComp<TabletopDraggableComponent>(hologram);
+        var draggable = EnsureComp<TabletopDraggableComponent>(hologram);
+        draggable.Table = ent;
+        Dirty(hologram, draggable);
+
         EnsureComp<TabletopHologramComponent>(hologram);
         Meta.SetEntityName(hologram, Name(target, meta));
 
-        // Try to get existing tabletop visuals if we can (copying existing pieces), otherwise get this entity's prototype of this object.
+        // Try to get existing tabletop visuals if we can (copying existing pieces), otherwise get this entity's prototype from its metadata.
         if (_appearanceQuery.TryComp(target, out AppearanceComponent? appearance)
             && Appearance.TryGetData<string>(target, TabletopItemVisuals.Prototype, out var appearProto, appearance))
         {

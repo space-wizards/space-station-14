@@ -14,12 +14,16 @@ using Robust.Shared.Map;
 
 namespace Content.Client.Tabletop.UI;
 
+/// <summary>
+/// A window for a board game.  Has a viewport into the board game, and a button to rotate the camera.
+/// </summary>
 [GenerateTypedNameReferences]
 public sealed partial class TabletopWindow : DefaultWindow
 {
     [Dependency] private IEntityManager _entMan = default!;
     [Dependency] private IStateManager _stateMan = default!;
     [Dependency] private IUserInterfaceManager _uiMan = default!;
+    private SharedEyeSystem _eye;
     private SharedTransformSystem _xform;
 
     // Is the mouse currently inside the window?
@@ -35,19 +39,21 @@ public sealed partial class TabletopWindow : DefaultWindow
     public Action<EntityUid, EntityCoordinates>? DragMoved;
     public Action<EntityUid>? DragFinished;
 
+    /// <inheritdoc cref="TabletopWindow"/>
     public TabletopWindow()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
+        _eye = _entMan.System<SharedEyeSystem>();
         _xform = _entMan.System<SharedTransformSystem>();
 
-        OnMouseEntered += OnViewportMouseEnter;
-        OnMouseExited += OnViewportMouseExit;
-        OnKeyBindDown += OnViewportKeyBindDown;
-        OnKeyBindUp += OnViewportKeyBindUp;
+        ScalingVp.OnMouseEntered += OnViewportMouseEnter;
+        ScalingVp.OnMouseExited += OnViewportMouseExit;
+        ScalingVp.OnKeyBindDown += OnViewportKeyBindDown;
+        ScalingVp.OnKeyBindUp += OnViewportKeyBindUp;
 
-        FlipButton.OnButtonUp += (_) => FlipPressed?.Invoke();
+        FlipButton.OnButtonUp += _ => FlipCamera();
     }
 
     /// <summary>
@@ -125,7 +131,7 @@ public sealed partial class TabletopWindow : DefaultWindow
         _draggedPiece = null;
     }
 
-    // Move events:
+    // Move event
     protected override void MouseMove(GUIMouseMoveEventArgs args)
     {
         base.MouseMove(args);
@@ -137,7 +143,7 @@ public sealed partial class TabletopWindow : DefaultWindow
             return;
 
         // Get coordinates with respect to the board.
-        var boardCoords = GetBoardPosition(args.GlobalPosition);
+        var boardCoords = GetBoardPosition(args.GlobalPixelPosition.Position);
         DragMoved.Invoke(_draggedPiece.Value, boardCoords);
     }
 
@@ -167,5 +173,15 @@ public sealed partial class TabletopWindow : DefaultWindow
 
         uid = clickedUid;
         return true;
+    }
+
+    // NOTE: if eye rotation ever gets networked, this must change.
+    private void FlipCamera()
+    {
+        if (!_entMan.TryGetComponent<EyeComponent>(_board, out var eye))
+            return;
+
+        var newAngle = (eye.Rotation + Angle.FromDegrees(180)).Reduced();
+        _eye.SetRotation(_board.Value, newAngle, eye);
     }
 }

@@ -4,7 +4,7 @@
             MinHeight="436"
             Title="{ Loc 'tabletop-default-board-name' }">
     <viewport:ScalingViewport Name="ScalingVp"
-                              MouseFilter="Ignore"
+                              MouseFilter="Pass"
                               RenderScaleMode="CeilInt">
         <Button Name="FlipButton"
                 Text="{ Loc 'tabletop-chess-flip' }"

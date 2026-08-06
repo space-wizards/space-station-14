@@ -11,8 +11,8 @@ namespace Content.Shared.Tabletop;
 public sealed partial class TabletopEmptySetup : TabletopSetup
 {
     /// <inheritdoc />
-    public override void SetupTabletop(TabletopGameComponent tabletop, MapCoordinates coordinates, EntityManager entityManager)
+    public override void SetupTabletop(Entity<TabletopGameComponent> tabletop, MapCoordinates coordinates, EntityManager entityManager)
     {
-        tabletop.Board = entityManager.SpawnEntity(BoardPrototype, coordinates);
+        tabletop.Comp.Board = entityManager.SpawnEntity(BoardPrototype, coordinates);
     }
 }

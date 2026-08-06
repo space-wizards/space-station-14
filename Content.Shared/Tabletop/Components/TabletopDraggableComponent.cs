@@ -14,4 +14,10 @@ public sealed partial class TabletopDraggableComponent : Component
     /// </summary>
     [ViewVariables, AutoNetworkedField]
     public NetUserId? DraggingPlayer;
+
+    /// <summary>
+    /// The table this piece belongs to.
+    /// </summary>
+    [ViewVariables, AutoNetworkedField]
+    public EntityUid? Table;
 }

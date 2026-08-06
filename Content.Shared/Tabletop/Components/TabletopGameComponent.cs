@@ -1,6 +1,5 @@
 using System.Numerics;
 using Robust.Shared.GameStates;
-using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Tabletop.Components;
@@ -42,25 +41,11 @@ public sealed partial class TabletopGameComponent : Component
     public bool HasSession => Board != null;
 
     /// <summary>
-    /// The board entity for this game.
+    /// The board entity for this game. Also functions as the camera.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadOnly)]
     [AutoNetworkedField]
     public EntityUid? Board;
-
-    /// <summary>
-    /// The upright camera for this game.
-    /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
-    [AutoNetworkedField]
-    public EntityUid? UprightCamera;
-
-    /// <summary>
-    /// The rotated camera for this game.
-    /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
-    [AutoNetworkedField]
-    public EntityUid? UpsideDownCamera;
 }
 
 /// <summary>
