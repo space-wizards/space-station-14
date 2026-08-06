@@ -19,8 +19,9 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Tabletop;
 
 /// <summary>
-/// System driving the behavior of tabletop games.
-/// Allows
+/// System for simulating tabletop games.
+/// Works using a dedicated map for board game boards.
+/// All tabletop windows have views into this map, where pieces can be dragged about by anyone playing the game.
 /// </summary>
 public abstract partial class SharedTabletopSystem : EntitySystem
 {
@@ -178,7 +179,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
 
         var moved = GetEntity(msg.MovedEntityUid);
 
-        if (!CanDrag(playerUid, moved, out _))
+        if (!DraggableQuery.HasComp(moved))
             return;
 
         // Move the entity and dirty it (should stay parented to the board it was created from)
@@ -241,15 +242,6 @@ public abstract partial class SharedTabletopSystem : EntitySystem
     protected bool IsPlaying(EntityUid playerEntity, EntityUid table)
     {
         return _ui.GetActors(table, TabletopGameUiKey.Key).Contains(playerEntity);
-    }
-
-    protected bool CanDrag(EntityUid playerEntity, EntityUid target, [NotNullWhen(true)] out TabletopDraggableComponent? draggable)
-    {
-        if (!DraggableQuery.TryComp(target, out draggable))
-            return false;
-
-        // We currently only check that the playing needs hands
-        return TryComp(playerEntity, out HandsComponent? hands) && hands.Hands.Count > 0;
     }
 
     private void RemovePiece(EntityUid piece, Entity<TabletopGameComponent> table, EntityUid user)
