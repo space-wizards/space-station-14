@@ -1,7 +1,9 @@
 using Content.Shared.Examine;
+using Content.Shared.Interaction;
 using Content.Shared.Lock;
 using Content.Shared.Popups;
 using Content.Shared.Singularity.Components;
+using Content.Shared.UserInterface;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -12,6 +14,11 @@ public abstract partial class SharedEmitterSystem : EntitySystem
 {
     [Dependency] protected BatteryWeaponFireModesSystem FireMode = default!;
     [Dependency] protected SharedPopupSystem Popup = default!;
+
+    public override void Initialize()
+    {
+        SubscribeLocalEvent<EmitterComponent, ActivateInWorldEvent>(OnActivate, after: [typeof(ActivatableUISystem)]);
+    }
 
     [SubscribeLocalEvent]
     private void OnToggleActive(Entity<EmitterComponent> ent, ref EmitterToggleActiveMessage message)
@@ -34,6 +41,15 @@ public abstract partial class SharedEmitterSystem : EntitySystem
 
         var proto = ProtoMan.Index<EntityPrototype>(fireMode.Prototype);
         args.PushMarkup(Loc.GetString("emitter-component-current-type", ("type", proto.Name)));
+    }
+
+    private void OnActivate(Entity<EmitterComponent> ent, ref ActivateInWorldEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        ToggleActive(ent, args.User);
+        args.Handled = true;
     }
 
     protected virtual void ToggleActive(Entity<EmitterComponent> ent, EntityUid user)

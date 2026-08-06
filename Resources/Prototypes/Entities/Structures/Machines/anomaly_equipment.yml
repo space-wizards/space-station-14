@@ -177,6 +177,9 @@
   - type: ActivatableUI
     singleUser: true
     key: enum.EmitterModesUiKey.Key
+  - type: UIRequiresLock
+    userInterfaceKeys:
+    - enum.EmitterModesUiKey.Key
   - type: UserInterface
     interfaces:
       enum.EmitterModesUiKey.Key:
