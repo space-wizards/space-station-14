@@ -6,6 +6,8 @@ using Content.Shared.Body.Systems;
 using Content.Shared.Cloning.Events;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
+using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
 using Content.Shared.Labels.Components;
@@ -47,6 +49,7 @@ public sealed partial class CloningSystem
     [Dependency] private SharedBloodstreamSystem _bloodstream = default!;
     [Dependency] private SharedCreamPieSystem _creampie = default!;
     [Dependency] private FlammableSystem _flammable = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
 
     public override void Initialize()
     {
@@ -74,6 +77,7 @@ public sealed partial class CloningSystem
         SubscribeLocalEvent<BloodstreamComponent, CloningEvent>(OnCloneBloodstream);
         SubscribeLocalEvent<CreamPiedComponent, CloningEvent>(OnCloneCreamPied);
         SubscribeLocalEvent<FlammableComponent, CloningEvent>(OnCloneFlammable);
+        SubscribeLocalEvent<DamageableComponent, CloningEvent>(OnCloneDamageable);
     }
 
     private void OnCloneItemStack(Entity<StackComponent> ent, ref CloningItemEvent args)
@@ -184,5 +188,13 @@ public sealed partial class CloningSystem
             return;
 
         _flammable.CopyComponent(ent.AsNullable(), args.CloneUid);
+    }
+
+    private void OnCloneDamageable(Entity<DamageableComponent> ent, ref CloningEvent args)
+    {
+        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
+            return;
+
+        _damageable.CopyComponent(ent.AsNullable(), args.CloneUid);
     }
 }

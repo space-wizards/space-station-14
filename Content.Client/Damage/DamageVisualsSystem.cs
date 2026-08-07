@@ -750,7 +750,7 @@ public sealed partial class DamageVisualsSystem : VisualizerSystem<DamageVisuals
             }
             else
             {
-                _displacement.EnsureDisplacementIsNotOnSprite(spriteEnt, layerKey);
+                _displacement.EnsureDisplacementIsNotOnSprite(spriteEnt, layerKey, spriteLayer);
             }
         }
     }
