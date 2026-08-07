@@ -16,14 +16,6 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
     [Dependency] private SharedActionsSystem _actionsSystem = default!;
 
     [SubscribeLocalEvent]
-    private void OnComponentStartup(Entity<EyeBlinkingComponent> ent, ref ComponentStartup args)
-    {
-        if (ent.Comp.Body == null)
-            return;
-        _actionsSystem.AddAction(ent.Comp.Body.Value, ref ent.Comp.EyeToggleActionEntity, ent.Comp.EyeToggleAction);
-    }
-
-    [SubscribeLocalEvent]
     private void OnShutdown(Entity<EyeBlinkingComponent> ent, ref ComponentShutdown args)
     {
         if (ent.Comp.Body == null)
@@ -55,6 +47,8 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
     private void OnApplyOrganProfile(Entity<EyeBlinkingComponent> ent, ref BodyRelayedEvent<ApplyOrganProfileDataEvent> args)
     {
         SetEyelidsColor(ent, args.Args.Base);
+
+        _actionsSystem.AddAction(args.Body.Owner, ref ent.Comp.EyeToggleActionEntity, ent.Comp.EyeToggleAction);
     }
 
     private void SetEyelidsColor(Entity<EyeBlinkingComponent> ent)
@@ -133,17 +127,18 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
     private void OnMobStateChanged(Entity<EyeBlinkingComponent> ent, ref MobStateChangedEvent args)
     {
         SetEnabled(ent, args.NewMobState != MobState.Dead);
+
         // Remove action if entity dead.
         if (args.NewMobState == MobState.Dead)
         {
             if (ent.Comp.EyeToggleActionEntity != null)
             {
-                _actionsSystem.RemoveAction(ent.Owner, ent.Comp.EyeToggleActionEntity);
+                _actionsSystem.RemoveAction(args.Target, ent.Comp.EyeToggleActionEntity);
             }
         }
         if (ent.Comp.EyeToggleActionEntity == null)
         {
-            _actionsSystem.AddAction(ent, ref ent.Comp.EyeToggleActionEntity, ent.Comp.EyeToggleAction);
+            _actionsSystem.AddAction(args.Target, ref ent.Comp.EyeToggleActionEntity, ent.Comp.EyeToggleAction);
         }
     }
 
@@ -195,6 +190,9 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnToggleAction(Entity<EyeBlinkingComponent> ent, ref ToggleEyesActionEvent args)
     {
+        if (!ent.Comp.Enabled)
+            return;
+
         if (args.Handled)
             return;
 
@@ -202,7 +200,7 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
 
         ent.Comp.EyesClosed = !ent.Comp.EyesClosed;
 
-        _blindableSystem.UpdateIsBlind(ent.Owner);
+        _blindableSystem.UpdateIsBlind(args.Performer);
     }
 
     [SubscribeLocalEvent]
