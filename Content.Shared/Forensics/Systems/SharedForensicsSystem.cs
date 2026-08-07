@@ -24,17 +24,16 @@ public abstract partial class SharedForensicsSystem : EntitySystem
         SubscribeLocalEvent<CleansForensicsComponent, AfterInteractEvent>(OnAfterInteract, before: [typeof(IngestionSystem)], after: [typeof(SharedAbsorbentSystem)]);
     }
 
-    [SubscribeLocalEvent]
-    private void OnAfterInteract(Entity<CleansForensicsComponent> cleanForensicsEntity, ref AfterInteractEvent args)
+    private void OnAfterInteract(Entity<CleansForensicsComponent> cleaner, ref AfterInteractEvent args)
     {
         if (args.Handled || !args.CanReach || args.Target == null)
             return;
 
-        args.Handled = TryStartCleaning(cleanForensicsEntity, args.User, args.Target.Value);
+        args.Handled = TryStartCleaning(cleaner, args.User, args.Target.Value);
     }
 
     [SubscribeLocalEvent]
-    private void OnUtilityVerb(Entity<CleansForensicsComponent> entity, ref GetVerbsEvent<UtilityVerb> args)
+    private void OnUtilityVerb(Entity<CleansForensicsComponent> cleaner, ref GetVerbsEvent<UtilityVerb> args)
     {
         if (!args.CanInteract || !args.CanAccess)
             return;
@@ -50,7 +49,7 @@ public abstract partial class SharedForensicsSystem : EntitySystem
 
         var verb = new UtilityVerb
         {
-            Act = () => TryStartCleaning(entity, user, target),
+            Act = () => TryStartCleaning(cleaner, user, target),
             Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/bubbles.svg.192dpi.png")),
             Text = Loc.GetString("forensics-verb-text"),
             Disabled = !canBeCleaned,
@@ -65,11 +64,11 @@ public abstract partial class SharedForensicsSystem : EntitySystem
     /// <summary>
     /// Attempts to clean the given item with the given CleansForensics entity.
     /// </summary>
-    /// <param name="cleanForensicsEntity">The entity that is being used to clean the target.</param>
+    /// <param name="cleaner">The entity that is being used to clean the target.</param>
     /// <param name="user">The user that is using the cleanForensicsEntity.</param>
     /// <param name="target">The target of the forensics clean.</param>
     /// <returns>True if the target can be cleaned and has some sort of DNA or fingerprints / fibers and false otherwise.</returns>
-    public bool TryStartCleaning(Entity<CleansForensicsComponent> cleanForensicsEntity, EntityUid user, EntityUid target)
+    public bool TryStartCleaning(Entity<CleansForensicsComponent> cleaner, EntityUid user, EntityUid target)
     {
         if (!_forensicsQuery.TryComp(target, out var forensicsComp))
         {
@@ -79,8 +78,8 @@ public abstract partial class SharedForensicsSystem : EntitySystem
 
         if (forensicsComp.IsDirty)
         {
-            var cleanDelay = cleanForensicsEntity.Comp.CleanDelay;
-            var doAfterArgs = new DoAfterArgs(EntityManager, user, cleanDelay, new CleanForensicsDoAfterEvent(), cleanForensicsEntity, target: target, used: cleanForensicsEntity)
+            var cleanDelay = cleaner.Comp.CleanDelay;
+            var doAfterArgs = new DoAfterArgs(EntityManager, user, cleanDelay, new CleanForensicsDoAfterEvent(), cleaner, target: target, used: cleaner)
             {
                 NeedHand = true,
                 BreakOnDamage = true,
