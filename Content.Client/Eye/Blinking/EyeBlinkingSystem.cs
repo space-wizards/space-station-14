@@ -52,10 +52,26 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
     [SubscribeLocalEvent]
     private void OnAfterAutoHandleState(Entity<EyeBlinkingComponent> ent, ref AfterAutoHandleStateEvent args)
     {
+        if (ent.Comp.Init)
+            return;
+
+        ent.Comp.Init = ent.Comp.Body != null;
+
         if (Comp<OrganComponent>(ent).Body is { } body)
             InitEyeBlinking(ent, body);
         else
             InitEyeBlinking(ent, ent.Owner);
+    }
+
+    [SubscribeNetworkEvent]
+    private void OnInitEyes(InitEyesEvent ev)
+    {
+        var ent = GetEntity(ev.NetEntity);
+
+        if (!ent.IsValid() || !TryComp<EyeBlinkingComponent>(ent, out var blinkingComp))
+            return;
+        blinkingComp.Init = false;
+        blinkingComp.Body = null;
     }
 
     /// <summary>
@@ -65,6 +81,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
     /// <param name="body"></param>
     private void InitEyeBlinking(Entity<EyeBlinkingComponent> ent, EntityUid body)
     {
+        Logger.Info($"EyeBlinkingSystem: Initializing eyelids for entity {ent.Owner} with body {body}");
         if (!TryComp<SpriteComponent>(body, out var sprite))
             return;
 

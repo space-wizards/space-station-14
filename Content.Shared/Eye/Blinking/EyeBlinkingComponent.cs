@@ -132,8 +132,11 @@ public sealed partial class EyeBlinkingComponent : Component
     /// <summary>
     /// Body, who has SpriteComp with HumanoidVisualLayers.Eyelids layer, to apply eyelid sprite and color to.
     /// </summary>
-    [ViewVariables, AutoNetworkedField]
+    [ViewVariables]
     public EntityUid? Body;
+
+    [ViewVariables]
+    public bool Init = false;
 }
 
 /// <summary>
@@ -147,7 +150,7 @@ public sealed partial class EyelidState
     /// <summary>
     /// The sprite layer associated with this eyelid state.
     /// </summary>
-    public string LayerKey;
+    [ViewVariables] public string LayerKey;
 
     /// <summary>
     /// Indicates whether the eyelid is currently closed.

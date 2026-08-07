@@ -20,7 +20,7 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
     {
         if (ent.Comp.Body == null)
             return;
-        _actionsSystem.RemoveAction(ent.Comp.Body.Value, ent.Comp.EyeToggleActionEntity);
+        RemoveAction(ent);
     }
 
     [SubscribeLocalEvent]
@@ -41,16 +41,23 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
     private void OnApplyOrganMarking(Entity<EyeBlinkingComponent> ent, ref ApplyOrganProfileDataEvent args)
     {
         SetEyelidsColor(ent, args.Base);
-
-        _actionsSystem.AddAction(ent.Owner, ref ent.Comp.EyeToggleActionEntity, ent.Comp.EyeToggleAction);
+        AddAction(ent);
     }
 
     [SubscribeLocalEvent]
     private void OnApplyOrganProfile(Entity<EyeBlinkingComponent> ent, ref BodyRelayedEvent<ApplyOrganProfileDataEvent> args)
     {
         SetEyelidsColor(ent, args.Args.Base);
+        AddAction(ent);
+    }
 
-        _actionsSystem.AddAction(args.Body.Owner, ref ent.Comp.EyeToggleActionEntity, ent.Comp.EyeToggleAction);
+    [SubscribeLocalEvent]
+    private void OnOrganCopyAppearance(Entity<EyeBlinkingComponent> ent, ref BodyRelayedEvent<OrganCopyAppearanceEvent> args)
+    {
+        if (!TryComp<VisualOrganComponent>(args.Args.Organ, out var visualOrgan))
+            return;
+        SetEyelidsColor(ent, visualOrgan.Profile);
+        AddAction(ent);
     }
 
     private void SetEyelidsColor(Entity<EyeBlinkingComponent> ent)
@@ -76,6 +83,25 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
         SetEyelidsColor(ent, visualHead?.Profile);
     }
 
+    private void AddAction(Entity<EyeBlinkingComponent> ent)
+    {
+        if (ent.Comp.Body == null)
+            return;
+
+        if (ent.Comp.EyeToggleActionEntity != null)
+            return;
+        _actionsSystem.AddAction(ent.Comp.Body.Value, ref ent.Comp.EyeToggleActionEntity, ent.Comp.EyeToggleAction);
+    }
+
+    private void RemoveAction(Entity<EyeBlinkingComponent> ent)
+    {
+        if (ent.Comp.Body == null)
+            return;
+        if (ent.Comp.EyeToggleActionEntity == null)
+            return;
+        _actionsSystem.RemoveAction(ent.Comp.Body.Value, ent.Comp.EyeToggleActionEntity);
+    }
+
     private void SetEyelidsColor(Entity<EyeBlinkingComponent> eyeBlinking, OrganProfileData? organProfile)
     {
         var skinColor = organProfile?.SkinColor ?? Color.Pink;
@@ -86,6 +112,8 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
             skinColor.B * blinkFade);
 
         eyeBlinking.Comp.EyelidsColor = eyelidColor;
+        var ev = new InitEyesEvent(GetNetEntity(eyeBlinking.Owner), eyelidColor);
+        RaiseNetworkEvent(ev);
         Dirty(eyeBlinking);
     }
 
@@ -133,15 +161,10 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
         // Remove action if entity dead.
         if (args.NewMobState == MobState.Dead)
         {
-            if (ent.Comp.EyeToggleActionEntity != null)
-            {
-                _actionsSystem.RemoveAction(args.Target, ent.Comp.EyeToggleActionEntity);
-            }
+            RemoveAction(ent);
+            return;
         }
-        if (ent.Comp.EyeToggleActionEntity == null)
-        {
-            _actionsSystem.AddAction(args.Target, ref ent.Comp.EyeToggleActionEntity, ent.Comp.EyeToggleAction);
-        }
+        AddAction(ent);
     }
 
     [SubscribeLocalEvent]
@@ -248,8 +271,6 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
         cloneComp.MinBlinkDuration = ent.Comp.MinBlinkDuration;
         cloneComp.MinBlinkInterval = ent.Comp.MinBlinkInterval;
 
-        cloneComp.Body = args.CloneUid;
-
         cloneComp.BlinkSkinColorMultiplier = ent.Comp.BlinkSkinColorMultiplier;
         AddComp(args.CloneUid, cloneComp, true);
         _blindableSystem.UpdateIsBlind(args.CloneUid);
@@ -276,8 +297,6 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
 
         cloneComp.MinBlinkDuration = ent.Comp.MinBlinkDuration;
         cloneComp.MinBlinkInterval = ent.Comp.MinBlinkInterval;
-
-        cloneComp.Body = args.Args.CloneUid;
 
         cloneComp.BlinkSkinColorMultiplier = ent.Comp.BlinkSkinColorMultiplier;
         AddComp(eyes, cloneComp, true);
@@ -321,4 +340,20 @@ public sealed partial class OpenEyesEvent(NetEntity netEntity) : EntityEventArgs
     /// The entity performing the open Eye.
     /// </summary>
     public readonly NetEntity NetEntity = netEntity;
+}
+
+/// <summary>
+/// Open Eyes after remove EyeClosing from appearanceData
+/// </summary>
+[Serializable, NetSerializable]
+public sealed partial class InitEyesEvent(NetEntity netEntity, Color eyelidsColor) : EntityEventArgs
+{
+    /// <summary>
+    /// The entity performing init eyes.
+    /// </summary>
+    public readonly NetEntity NetEntity = netEntity;
+    /// <summary>
+    /// Eyelids color of the entity performing the init eyes.
+    /// </summary>
+    public readonly Color EyelidsColor = eyelidsColor;
 }
