@@ -306,7 +306,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         var maxAsyncOpenBlink = ent.Comp.MaxAsyncOpenBlink;
 
         // Checks for any status effects that may modify the maximum asynchronous blink and open blink durations.
-        if (_statusEffects.TryEffectsWithComp<BlinkDyspraxiaStatusEffectComponent>(ent.Owner, out var effects))
+        if (_statusEffects.TryEffectsWithComp<BlinkDyspraxiaStatusEffectComponent>(ent.Comp.Body, out var effects))
         {
             foreach (var effect in effects)
             {
