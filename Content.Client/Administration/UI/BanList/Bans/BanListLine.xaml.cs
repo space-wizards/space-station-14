@@ -7,13 +7,13 @@ using static Robust.Client.UserInterface.Controls.BaseButton;
 namespace Content.Client.Administration.UI.BanList.Bans;
 
 [GenerateTypedNameReferences]
-public sealed partial class BanListLine : BoxContainer, IBanListLine<SharedServerBan>
+public sealed partial class BanListLine : BoxContainer, IBanListLine<SharedBan>
 {
-    public SharedServerBan Ban { get; }
+    public SharedBan Ban { get; }
 
     public event Action<BanListLine>? IdsClicked;
 
-    public BanListLine(SharedServerBan ban)
+    public BanListLine(SharedBan ban)
     {
         RobustXamlLoader.Load(this);
 

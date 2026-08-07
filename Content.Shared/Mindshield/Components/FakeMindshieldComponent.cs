@@ -1,22 +1,57 @@
-﻿using Content.Shared.StatusIcon;
+﻿using Content.Shared.Tag;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Mindshield.Components;
 
+/// <summary>
+/// A toggleable fake mindshield that only produces mindshield visuals, but does not protect against anything.
+/// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[Access(typeof(MindShieldSystem), typeof(FakeMindShieldSystem))]
 public sealed partial class FakeMindShieldComponent : Component
 {
-
     /// <summary>
     /// The state of the Fake mindshield, if true the owning entity will display a mindshield effect on their job icon
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool IsEnabled { get; set; } = false;
+    public bool IsEnabled;
 
     /// <summary>
-    /// The Security status icon displayed to the security officer. Should be a duplicate of the one the mindshield uses since it's spoofing that
+    /// This tag should be placed on the fake mindshield action so there is a way to easily identify which action goes with which fake mindshield. Of course, this implies that no two similar fake mindshields should be on the same entity at the same time.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public ProtoId<SecurityIconPrototype> MindShieldStatusIcon = "MindShieldIcon";
+    public ProtoId<TagPrototype> ActionTag = "FakeMindShieldImplant";
+
+    /// <summary>
+    /// Makes it so chameleon implants affect this fake mindshield.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool ChameleonControllable = true;
+
+    /// <summary>
+    /// Whether the fake mindshield is innate to the entity.
+    /// When added to an entity while this field is set to true, the entity itself will gain the action & UI necessary to toggle its fake mindshield.
+    /// When this field is set to false, then the entity with this component will be a provider (either through implanting or through wearing) of the fake mindshield abilities for another entity.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool IsInnate;
+
+    /// <summary>
+    /// Action linked to the fake mindshield, used for innate components
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public EntProtoId Action = "FakeMindShieldToggleAction";
+
+    /// <summary>
+    /// Popup to show to the owner of the fake mindshield when it is enabled.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public LocId EnabledPopup = "fake-mindshield-enabled";
+
+    /// <summary>
+    /// Popup to show to the owner of the fake mindshield when it is enabled.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public LocId DisabledPopup = "fake-mindshield-disabled";
 }

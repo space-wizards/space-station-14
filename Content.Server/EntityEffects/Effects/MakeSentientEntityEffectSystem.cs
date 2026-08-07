@@ -1,9 +1,9 @@
 ﻿using Content.Server.Ghost.Roles.Components;
 using Content.Server.RuntimeFun;
-using Content.Server.Speech.Components;
 using Content.Shared.EntityEffects;
 using Content.Shared.EntityEffects.Effects;
 using Content.Shared.Mind.Components;
+using Content.Shared.Speech.Components;
 
 namespace Content.Server.EntityEffects.Effects;
 

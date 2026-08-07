@@ -11,7 +11,9 @@ using Content.Shared.EntityEffects.Effects.Solution;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids;
 using Content.Shared.Forensics.Components;
+using Content.Shared.Gibbing;
 using Content.Shared.HealthExaminable;
+using Content.Shared.Metabolism;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
@@ -25,20 +27,20 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Body.Systems;
 
-public abstract class SharedBloodstreamSystem : EntitySystem
+public abstract partial class SharedBloodstreamSystem : EntitySystem
 {
     public static readonly EntProtoId Bloodloss = "StatusEffectBloodloss";
 
-    [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
-    [Dependency] protected readonly SharedSolutionContainerSystem SolutionContainer = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedPuddleSystem _puddle = default!;
-    [Dependency] private readonly StatusEffectsSystem _status = default!;
-    [Dependency] private readonly AlertsSystem _alertsSystem = default!;
-    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
-    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+    [Dependency] protected SharedSolutionContainerSystem SolutionContainer = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedPuddleSystem _puddle = default!;
+    [Dependency] private StatusEffectsSystem _status = default!;
+    [Dependency] private AlertsSystem _alertsSystem = default!;
+    [Dependency] private MobStateSystem _mobStateSystem = default!;
+    [Dependency] private DamageableSystem _damageableSystem = default!;
+    [Dependency] private MetabolizerSystem _metabolizer = default!;
 
     public override void Initialize()
     {
@@ -50,7 +52,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         SubscribeLocalEvent<BloodstreamComponent, SolutionRelayEvent<ReactionAttemptEvent>>(OnReactionAttempt);
         SubscribeLocalEvent<BloodstreamComponent, DamageChangedEvent>(OnDamageChanged);
         SubscribeLocalEvent<BloodstreamComponent, HealthBeingExaminedEvent>(OnHealthBeingExamined);
-        SubscribeLocalEvent<BloodstreamComponent, BeingGibbedEvent>(OnBeingGibbed);
+        SubscribeLocalEvent<BloodstreamComponent, GibbedBeforeDeletionEvent>(OnBeingGibbed);
         SubscribeLocalEvent<BloodstreamComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
         SubscribeLocalEvent<BloodstreamComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<BloodstreamComponent, MetabolismExclusionEvent>(OnMetabolismExclusion);
@@ -109,10 +111,25 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         }
     }
 
-    private void OnMapInit(Entity<BloodstreamComponent> ent, ref MapInitEvent args)
+    private void OnMapInit(Entity<BloodstreamComponent> entity, ref MapInitEvent args)
     {
-        ent.Comp.NextUpdate = _timing.CurTime + ent.Comp.AdjustedUpdateInterval;
-        DirtyField(ent, ent.Comp, nameof(BloodstreamComponent.NextUpdate));
+        entity.Comp.NextUpdate = _timing.CurTime + entity.Comp.AdjustedUpdateInterval;
+        DirtyField(entity, entity.Comp, nameof(BloodstreamComponent.NextUpdate));
+
+        SolutionContainer.EnsureSolution(entity.Owner, entity.Comp.BloodSolutionName, out var bloodSolution);
+        SolutionContainer.EnsureSolution(entity.Owner, entity.Comp.BloodTemporarySolutionName, out var tempSolution);
+        SolutionContainer.EnsureSolution(entity.Owner, entity.Comp.MetabolitesSolutionName, out var metabolitesSolution);
+
+        bloodSolution.Comp.Solution.MaxVolume = entity.Comp.BloodReferenceSolution.Volume * entity.Comp.MaxVolumeModifier;
+        metabolitesSolution.Comp.Solution.MaxVolume = bloodSolution.Comp.Solution.MaxVolume;
+        tempSolution.Comp.Solution.MaxVolume = entity.Comp.BleedPuddleThreshold * 4; // give some leeway, for chemstream as well
+        entity.Comp.BloodReferenceSolution.SetReagentData(GetEntityBloodData((entity, entity.Comp)));
+
+        // Fill blood solution with BLOOD
+        // The DNA string might not be initialized yet, but the reagent data gets updated in the GenerateDnaEvent subscription
+        var solution = entity.Comp.BloodReferenceSolution.Clone();
+        solution.ScaleTo(entity.Comp.BloodReferenceSolution.Volume - bloodSolution.Comp.Solution.Volume);
+        bloodSolution.Comp.Solution.AddSolution(solution, ProtoMan);
     }
 
     // prevent the infamous UdderSystem debug assert, see https://github.com/space-wizards/space-station-14/pull/35314
@@ -156,8 +173,8 @@ public abstract class SharedBloodstreamSystem : EntitySystem
 
     private void OnReactionAttempt(Entity<BloodstreamComponent> ent, ref SolutionRelayEvent<ReactionAttemptEvent> args)
     {
-        if (args.Name != ent.Comp.BloodSolutionName
-            && args.Name != ent.Comp.BloodTemporarySolutionName)
+        if (args.Solution.Comp.Id != ent.Comp.BloodSolutionName
+            && args.Solution.Comp.Id != ent.Comp.BloodTemporarySolutionName)
         {
             return;
         }
@@ -179,7 +196,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         }
 
         // TODO probably cache this or something. humans get hurt a lot
-        if (!PrototypeManager.Resolve(ent.Comp.DamageBleedModifiers, out var modifiers))
+        if (!ProtoMan.Resolve(ent.Comp.DamageBleedModifiers, out var modifiers))
             return;
 
         // some reagents may deal and heal different damage types in the same tick, which means DamageIncreased will be true
@@ -196,16 +213,13 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         var totalFloat = total.Float();
         TryModifyBleedAmount(ent.AsNullable(), totalFloat);
 
-        /// Critical hit. Causes target to lose blood, using the bleed rate modifier of the weapon, currently divided by 5
-        /// The crit chance is currently the bleed rate modifier divided by 25.
-        /// Higher damage weapons have a higher chance to crit!
+        // Critical hit. Causes target to lose blood, using the bleed rate modifier of the weapon, currently divided by 5
+        // The crit chance is currently the bleed rate modifier divided by 25.
+        // Higher damage weapons have a higher chance to crit!
 
-        // TODO: Replace with RandomPredicted once the engine PR is merged
         // Use both the receiver and the damage causing entity for the seed so that we have different results for multiple attacks in the same tick
-        var seed = SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, GetNetEntity(ent).Id, GetNetEntity(args.Origin)?.Id ?? 0 );
-        var rand = new System.Random(seed);
         var prob = Math.Clamp(totalFloat / 25, 0, 1);
-        if (totalFloat > 0 && rand.Prob(prob))
+        if (totalFloat > 0 && SharedRandomExtensions.PredictedProb(_timing, prob, GetNetEntity(ent), GetNetEntity(args.Origin)))
         {
             TryBleedOut(ent.AsNullable(), total / 5);
             _audio.PlayPredicted(ent.Comp.InstantBloodSound, ent, args.Origin);
@@ -218,8 +232,8 @@ public abstract class SharedBloodstreamSystem : EntitySystem
             // because it's burn damage that cauterized their wounds.
 
             // We'll play a special sound and popup for feedback.
-            _popup.PopupEntity(Loc.GetString("bloodstream-component-wounds-cauterized"), ent,
-                    ent, PopupType.Medium); // only the burned entity can see this
+            // Only the burned entity can see the popup.
+            _popup.PopupEntity(Loc.GetString("bloodstream-component-wounds-cauterized"), ent, ent, PopupType.Medium);
             _audio.PlayPredicted(ent.Comp.BloodHealedSound, ent, args.Origin);
         }
     }
@@ -262,7 +276,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         }
     }
 
-    private void OnBeingGibbed(Entity<BloodstreamComponent> ent, ref BeingGibbedEvent args)
+    private void OnBeingGibbed(Entity<BloodstreamComponent> ent, ref GibbedBeforeDeletionEvent args)
     {
         SpillAllSolutions(ent.AsNullable());
     }
@@ -280,7 +294,8 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         if (SolutionContainer.ResolveSolution(ent.Owner, ent.Comp.BloodSolutionName, ref ent.Comp.BloodSolution))
         {
             SolutionContainer.RemoveAllSolution(ent.Comp.BloodSolution.Value);
-            TryModifyBloodLevel(ent.AsNullable(), ent.Comp.BloodReferenceSolution.Volume);
+            // TODO: Use Solutions API for this when it exists
+            TryRegulateBloodLevel(ent.AsNullable(), ent.Comp.BloodReferenceSolution.Volume);
         }
     }
 
@@ -405,12 +420,15 @@ public abstract class SharedBloodstreamSystem : EntitySystem
             || amount == 0)
             return false;
 
+        // TODO: Either make this percentage based regeneration and pre-pass the percentage.
+        // TODO: Solution regulation API that doesn't result in very minor FixedPoint2 errors (Currently gingerbreadman only regenerates 0.99u instead of 1.00u)
         referenceFactor = Math.Clamp(referenceFactor, 0f, ent.Comp.MaxVolumeModifier);
+        var ratio = (float)amount / (float)ent.Comp.BloodReferenceSolution.Volume;
 
         foreach (var (referenceReagent, referenceQuantity) in ent.Comp.BloodReferenceSolution)
         {
             var error = referenceQuantity * referenceFactor - bloodSolution.GetTotalPrototypeQuantity(referenceReagent.Prototype);
-            var adjustedAmount = amount * referenceQuantity / ent.Comp.BloodReferenceSolution.Volume;
+            var adjustedAmount = referenceQuantity * ratio;
 
             if (error > 0)
             {
@@ -462,7 +480,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         if (!SolutionContainer.ResolveSolution(ent.Owner, ent.Comp.BloodTemporarySolutionName, ref ent.Comp.TemporarySolution, out var tempSolution))
             return true;
 
-        tempSolution.AddSolution(leakedBlood, PrototypeManager);
+        tempSolution.AddSolution(leakedBlood, ProtoMan);
 
         if (tempSolution.Volume > ent.Comp.BleedPuddleThreshold)
         {
@@ -514,14 +532,14 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         if (SolutionContainer.ResolveSolution(ent.Owner, ent.Comp.BloodSolutionName, ref ent.Comp.BloodSolution, out var bloodSolution))
         {
             tempSol.MaxVolume += bloodSolution.MaxVolume;
-            tempSol.AddSolution(bloodSolution, PrototypeManager);
+            tempSol.AddSolution(bloodSolution, ProtoMan);
             SolutionContainer.RemoveAllSolution(ent.Comp.BloodSolution.Value);
         }
 
         if (SolutionContainer.ResolveSolution(ent.Owner, ent.Comp.BloodTemporarySolutionName, ref ent.Comp.TemporarySolution, out var tempSolution))
         {
             tempSol.MaxVolume += tempSolution.MaxVolume;
-            tempSol.AddSolution(tempSolution, PrototypeManager);
+            tempSol.AddSolution(tempSolution, ProtoMan);
             SolutionContainer.RemoveAllSolution(ent.Comp.TemporarySolution.Value);
         }
 
@@ -597,5 +615,44 @@ public abstract class SharedBloodstreamSystem : EntitySystem
 
         bloodData.Add(dnaData);
         return bloodData;
+    }
+
+    /// <summary>
+    /// Copies the values in <see cref="BloodstreamComponent"/> of one entity to another.
+    /// If the component isn't on the target entity, it is added.
+    /// </summary>
+    /// <param name="source">The entity who's component to use.</param>
+    /// <param name="target">The target to clone the component onto.</param>
+    public void CopyComponent(Entity<BloodstreamComponent?> source, EntityUid target)
+    {
+        if (!Resolve(source, ref source.Comp))
+            return;
+
+        // We don't create the component before adding it here.
+        // This is because it causes the initialization to get a bit fucky together with ChangeBloodReagent.
+        // The reagents won't actually change unless we do it this way.
+        // The DNA and stuff is updated by themselves anyway.
+        // BleedAmount is excluded on purpose. There is no point in cloning how much someone is bleeding at the moment.
+        var cloneComp = EnsureComp<BloodstreamComponent>(target);
+        cloneComp.UpdateInterval = source.Comp.UpdateInterval;
+        cloneComp.UpdateIntervalMultiplier = source.Comp.UpdateIntervalMultiplier;
+        cloneComp.BleedReductionAmount = source.Comp.BleedReductionAmount;
+        cloneComp.MaxBleedAmount = source.Comp.MaxBleedAmount;
+        cloneComp.BloodlossThreshold = source.Comp.BloodlossThreshold;
+        cloneComp.BloodlossDamage = new DamageSpecifier(source.Comp.BloodlossDamage);
+        cloneComp.BloodlossHealDamage = new DamageSpecifier(source.Comp.BloodlossHealDamage);
+        cloneComp.BloodRefreshAmount =  source.Comp.BloodRefreshAmount;
+        cloneComp.BleedPuddleThreshold = source.Comp.BleedPuddleThreshold;
+        cloneComp.DamageBleedModifiers = source.Comp.DamageBleedModifiers;
+        cloneComp.MaxVolumeModifier = source.Comp.MaxVolumeModifier;
+        cloneComp.InstantBloodSound = source.Comp.InstantBloodSound;
+        cloneComp.BloodHealedSound = source.Comp.BloodHealedSound;
+        cloneComp.BloodHealedSoundThreshold = source.Comp.BloodHealedSoundThreshold;
+
+        Dirty(target, cloneComp);
+
+        // ChangeBloodReagents dirties the values it changes by itself.
+        ChangeBloodReagents((target, cloneComp), source.Comp.BloodReferenceSolution);
+        _metabolizer.UpdateMetabolicMultiplier(target);
     }
 }
