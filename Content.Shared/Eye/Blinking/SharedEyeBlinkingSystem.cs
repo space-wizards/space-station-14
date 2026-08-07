@@ -38,9 +38,11 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnApplyOrganMarking(Entity<EyeBlinkingComponent> ent, ref ApplyOrganMarkingsEvent args)
+    private void OnApplyOrganMarking(Entity<EyeBlinkingComponent> ent, ref ApplyOrganProfileDataEvent args)
     {
-        SetEyelidsColor(ent);
+        SetEyelidsColor(ent, args.Args.Base);
+
+        _actionsSystem.AddAction(ent.Owner, ref ent.Comp.EyeToggleActionEntity, ent.Comp.EyeToggleAction);
     }
 
     [SubscribeLocalEvent]
@@ -190,9 +192,6 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnToggleAction(Entity<EyeBlinkingComponent> ent, ref ToggleEyesActionEvent args)
     {
-        if (!ent.Comp.Enabled)
-            return;
-
         if (args.Handled)
             return;
 
@@ -249,6 +248,7 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
         cloneComp.MinBlinkDuration = ent.Comp.MinBlinkDuration;
         cloneComp.MinBlinkInterval = ent.Comp.MinBlinkInterval;
 
+        cloneComp.Body = args.CloneUid;
 
         cloneComp.BlinkSkinColorMultiplier = ent.Comp.BlinkSkinColorMultiplier;
         AddComp(args.CloneUid, cloneComp, true);
@@ -258,9 +258,30 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnCloning(Entity<EyeBlinkingComponent> ent, ref BodyRelayedEvent<CloningEvent> args)
     {
-        var cloningArgs = args.Args;
-        OnCloning(ent, ref cloningArgs);
-        args.Args = cloningArgs;
+        if (!args.Args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
+            return;
+        var eyes = ent.Owner;
+        // Make sure to set the datafields before adding the component so that the correct action gets spawned on map init.
+        var cloneComp = Factory.GetComponent<EyeBlinkingComponent>();
+        cloneComp.EyeToggleAction = ent.Comp.EyeToggleAction;
+
+        cloneComp.Enabled = true;
+        cloneComp.EyesClosed = false;
+
+        cloneComp.EyelidsSprite = ent.Comp.EyelidsSprite;
+        cloneComp.EyelidsColor = ent.Comp.EyelidsColor;
+
+        cloneComp.MaxAsyncBlink = ent.Comp.MaxAsyncBlink;
+        cloneComp.MaxAsyncOpenBlink = ent.Comp.MaxAsyncOpenBlink;
+
+        cloneComp.MinBlinkDuration = ent.Comp.MinBlinkDuration;
+        cloneComp.MinBlinkInterval = ent.Comp.MinBlinkInterval;
+
+        cloneComp.Body = args.Args.CloneUid;
+
+        cloneComp.BlinkSkinColorMultiplier = ent.Comp.BlinkSkinColorMultiplier;
+        AddComp(eyes, cloneComp, true);
+        _blindableSystem.UpdateIsBlind(args.Args.CloneUid);
     }
 }
 
