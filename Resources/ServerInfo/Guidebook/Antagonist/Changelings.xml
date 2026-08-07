@@ -2,33 +2,39 @@
   # Changelings
 
   <Box>
-    [color=#999999][italic]"Uh...THE HEAD OF SECURITY IS A CHANGE-" *BZZZZZRT* *CRUNCH* "Nevermind, everything's OK. Go back to work."[/italic][/color]
+    [color=#999999][italic]"Uh...THE HEAD OF SECURITY IS A CHANGE-" *BZZZZZRT* *CRUNCH* "Never mind, everything's OK. Go back to work."[/italic][/color]
   </Box>
+
   <Box>
     <GuideEntityEmbed Entity="MobHeadSlug" Caption="Who are you?"/>
   </Box>
-  A Changeling is an alien creature who assumed the appearance of a regular crewmember. They are a master of disguise, allowing them to assume the identity of any unfortunate victim who has come across one in a secluded area.
-  While their weaknesses imitate those of the identity they took over, they possess the ability to produce [bold]deadly toxins[/bold] within their glands, as well as [bold]shape their body and flesh[/bold] for defensive and offensive purposes.
+
+  A Changeling is an alien creature who assumed the appearance of a regular crewmember. They are a master of disguise, allowing them to assume the identity of any unfortunate victim who has come across one in a secluded area. While their weaknesses imitate those of the identity they took over, they possess the ability to produce [bold]deadly toxins[/bold] within their glands, as well as [bold]shape their body and flesh[/bold] for defensive and offensive purposes.
 
   Changelings are solitary by nature, being generally hostile towards one another and competing over their hunting grounds in attempts to secure as much sustenance as possible.
 
-
   ## The Hunger Never Stops
-  So you are a Changeling that has crawled its way onto the station. What now?
-  As a shapeshifting lifeform, there are a few basic concepts you must understand before you start seeking dinner.
+
+  So you are a Changeling that has crawled its way onto the station. What now? As a shapeshifting lifeform, there are a few basic concepts you must understand before you start seeking dinner.
 
   ### Assuming Identities
-  Your primary goal as a Changeling is to remain hidden and snack on those delicious so-called "coworkers". Thankfully both of those things should be second nature to you... right?
+
+  Your primary goal as a Changeling is to remain hidden and snack on those delicious so-called "coworkers". Thankfully, both of those things should be second nature to you... right?
 
   Identities can be obtained in two ways:
+
   - [bold]DNA Extraction Sting[/bold], which is completely silent and instantly grants you the identity of the victim.
   - [bold]Devouring[/bold] the victim, which is loud, messy, but [bold]grants you DNA[/bold] for further evolution.
 
-  Keep in mind! A changeling can only have [bold]5 identities[/bold] stored at a time! You cannot devour or extract while at this limit and must purge one of the identities via your transformation menu.
+  Keep in mind! A changeling can only have [bold]5 identities[/bold] stored at a time! You cannot devour or extract while at this limit and must purge one of the identities via your transformation menu. Dead victims must also be unarmored before they can be devoured.
 
   ### Evolution
-  Being a scary monster who changes identities is a neat thing, however it is not enough to survive the dangers of space.
-  Thankfully, all those pesky security officers you snacked on will be useful for something. Every time you devour a new crewmember, you obtain a small amount of DNA to spend in the [bold]Evolution Store[/bold]. Here you can buy things like additional abilities to become even more of a threat.
+
+  Being a scary monster who changes identities is neat; however, it is not enough to survive the dangers of space. Thankfully, all those pesky security officers you snacked on will be useful for something. Every time you devour a new crewmember, you obtain 10 DNA to spend in the [bold]Evolution Store[/bold]. Here you can buy things like additional abilities to become even more of a threat.
+
+  - [bold]Utility[/bold] abilities are useful for deception. They can also give you short-term or lasting benefits, often making the behaviour of your prey more predictable.
+  - [bold]Stealth[/bold] abilities can help keep your true identity hidden and lower crew suspicion.
+  - [bold]Combat[/bold] abilities let you pack quite a punch when trying to set up an ambush for single targets, but are not sustainable for prolonged use or open combat.
 
   Some of the more interesting picks might include:
   - [bold]The Armblade[/bold], allowing you to slice up the crew with style.
@@ -36,19 +42,36 @@
   - [bold]Horror Form[/bold], a temporary transformation that will allow you to turn the station upside down.
 
   ### Resilience
-  Changelings are known for their durability. They [bold]cannot be gibbed or destroyed by any means short of cremation or ashing[/bold].
 
-  This by itself wouldn't be so bad, however issues arise when they enter [bold]Regenerative Stasis[/bold].
+  Changelings are known for their durability. They [bold]cannot be disposed of by any means short of cremation or ashing[/bold].
+  This by itself wouldn't be so bad; however, issues arise when they enter [bold]Regenerative Stasis[/bold].
 
-  In this state, they appear completely dead to the outside world, while in reality preparing to jolt back awake with all their injuries gone.
-  Thankfully, the stasis lasts a considerable duration, which further scales based on the amount of damage sustained. Make sure to act quickly when you are in possession of a corpse, or it may get up and stab you in the back.
+  In this state, they appear completely dead to the outside world, while in reality preparing to jolt back awake with all their injuries gone. Thankfully, the stasis lasts a considerable duration, which further scales based on the amount of damage sustained. Make sure to act quickly when you are in possession of a corpse, or it may get up and stab you in the back.
 
+  ## Getting Caught
 
-  ## Is my coworker a flesh monster?
-  Changelings are vicious creatures, so vicious in fact they leave a huge mess when eating. [bold]They leave small amounts of their viscera when devouring.[/bold]
-  Now, these remains cannot be used by itself for anything, but with help from your chemistry department you can synthesize a chemical that irritates Changelings, causing them to shake and yell out upon injection.
+  Remember, you do not [bold]ever[/bold] want to be caught.
+  Unfortunately, as a changeling, no matter how cautious you are, might still be noticed while devouring a crew member or through other means.
+  This usually will lead to being reported on a radio channel, attacked, or perhaps bolted in the area you are in. The crew will know there is a changeling onboard, but that does not mean it’s over for you.
+
+  ### Retreating
+
+  There are times you are caught, but can escape, allowing for another chance to hide who you are. If you've devoured anyone, you can transform and assume their identity at any time. This can make it harder for crew members to pinpoint who you are.
+  If you have access to the Arm Blade ability, you can use it to pry open airlocks regardless of whether they are powered. If you are creative enough, this could open other opportunities.
+
+  ### Fighting it Out
+
+  You are durable [italic]to an extent[/italic], so do not fool yourself into thinking no one can take you down. However, this doesn’t mean you can’t come out on top during a surprise encounter.
+  It’s not recommended to rely entirely on your abilities for fighting. Consider other weaponry or forms of protection to help you in fending off attackers.
+  If you must use your abilities, try combining them with each other. Armblades and Chemical Stings can give you a combat advantage if used in time, but remember, they are not great for fighting more than one attacker.
+
+  ## Identifying Changelings
+
+  Remember, Changelings can physically transform their body. For example, if you see a Changeling transform their appearance, devour someone, or have their clothing fall apart into fleshy remains, that quickly gives away who they truly are.
+
+  Changelings are vicious creatures, so vicious in fact they leave a huge mess when eating. [bold]They leave small amounts of their tissue when devouring.[/bold] Now, these remains cannot be used by themselves for anything, but with help from your chemistry department, you can synthesize a chemical that irritates Changelings, causing them to shake and yell out upon injection.
 
   Alternatively, if you don't care about having your boss eaten by a scary flesh monster, it can be repurposed into chemicals that can [bold]reverse rotting[/bold] on the corpse you just found!
+  Note. The availability of the tissue is [bold]greatly limited[/bold]. Use what you manage to gather wisely!
 
-  Note. The availability of the tissue is [bold]greatly limited[/bold] due to the small amounts produced by live changelings. Use what you manage to gather wisely!
 </Document>
