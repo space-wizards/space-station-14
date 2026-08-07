@@ -1,7 +1,8 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "By AftrLite",
+    "copyright": "By Twaticus (GitHub), modified extensively by AftrLite (GitHub)",
+    "source": "https://github.com/wall-nerds/wallening/blob/9cc72b5b68aba36399b6e74b23aab10d6d031a9d/icons/obj/doors/blastdoor.dmi",
     "size": {
         "x": 32,
         "y": 32

@@ -5,9 +5,9 @@
   parent: [BaseDeltaPressureReinforcedGlass, Window]
   components:
   - type: Sprite
-    sprite: Structures/Windows/malign.rsi
+    sprite: Structures/Windows/window-malign.rsi
   - type: Icon
-    sprite: Structures/Windows/malign.rsi
+    sprite: Structures/Windows/window-malign.rsi
   - type: Damageable
     damageModifierSet: RGlass
   - type: Injurable
@@ -30,9 +30,9 @@
   - type: IconSmooth
     base: malign
   - type: Appearance
-#  - type: DamageVisuals
-#    thresholds: [5, 10, 20]
-#    damageDivisor: 3
-#    trackAllDamage: true
-#    damageOverlay:
-#      sprite: Structures/Windows/cracks.rsi
+  - type: DamageVisuals
+    thresholds: [5, 10, 20]
+    damageDivisor: 3
+    trackAllDamage: true
+    damageOverlay:
+      sprite: Structures/Windows/cracks.rsi

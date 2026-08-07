@@ -13,5 +13,14 @@
   id: FloorBasalt
   name: tiles-basalt-floor
   parent: BaseFloorPlanet
-  sprite: /Textures/Tiles/cave.png
-  variants: 7
+  sprite: /Textures/Tiles/Cave/cave.png
+  edgeSpritePriority: 5
+  edgeSprites:
+    SouthEast: /Textures/Tiles/Cave/single_edge_SE.png
+    NorthEast: /Textures/Tiles/Cave/single_edge_NE.png
+    NorthWest: /Textures/Tiles/Cave/single_edge_NW.png
+    SouthWest: /Textures/Tiles/Cave/single_edge_SW.png
+    South: /Textures/Tiles/Cave/double_edge_S.png
+    East: /Textures/Tiles/Cave/double_edge_E.png
+    North: /Textures/Tiles/Cave/double_edge_N.png
+    West: /Textures/Tiles/Cave/double_edge_W.png

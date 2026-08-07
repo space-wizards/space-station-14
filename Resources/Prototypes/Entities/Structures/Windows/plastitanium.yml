@@ -56,9 +56,9 @@
   components:
   - type: Sprite
     drawdepth: WallTops
-    sprite: Structures/Windows/plastitanium_window.rsi
+    sprite: Structures/Windows/window-plastitanium.rsi
   - type: Icon
-    sprite: Structures/Windows/plastitanium_window.rsi
+    sprite: Structures/Windows/window-plastitanium.rsi
     state: full
   - type: IconSmooth
     key: walls
@@ -130,14 +130,14 @@
   components:
   - type: Sprite
     drawdepth: WallTops
-    sprite: Structures/Windows/plastitanium_window-diagonal.rsi
+    sprite: Structures/Windows/window-diagonal-plastitanium.rsi
     state: state0
   - type: Tag
     tags:
     - Diagonal
     - Window
   - type: Icon
-    sprite: Structures/Windows/plastitanium_window-diagonal.rsi
+    sprite: Structures/Windows/window-diagonal-plastitanium.rsi
     state: state0
   - type: IconSmooth
     mode: Diagonal

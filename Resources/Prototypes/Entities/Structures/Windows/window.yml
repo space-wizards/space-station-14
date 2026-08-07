@@ -24,9 +24,9 @@
     - ForceFixRotations
     - Window
   - type: Sprite
-    sprite: Structures/Windows/window.rsi
+    sprite: Structures/Windows/window-base.rsi
   - type: Icon
-    sprite: Structures/Windows/window.rsi
+    sprite: Structures/Windows/window-base.rsi
     state: full
   - type: Physics
     bodyType: Static
@@ -76,9 +76,9 @@
   id: Window
   components:
   - type: Sprite
-    sprite: Structures/Windows/window.rsi
+    sprite: Structures/Windows/window-base.rsi
   - type: Icon
-    sprite: Structures/Windows/window.rsi
+    sprite: Structures/Windows/window-base.rsi
     state: full
   - type: Damageable
     damageModifierSet: Glass
@@ -107,9 +107,9 @@
   name: tinted window
   components:
   - type: Sprite
-    sprite: Structures/Windows/tinted_window.rsi
+    sprite: Structures/Windows/window-tinted.rsi
   - type: Icon
-    sprite: Structures/Windows/tinted_window.rsi
+    sprite: Structures/Windows/window-tinted.rsi
   - type: IconSmooth
     base: twindow
   - type: Construction
@@ -258,7 +258,7 @@
     - Window
   components:
   - type: Sprite
-    sprite: Structures/Windows/window-diagonal.rsi
+    sprite: Structures/Windows/window-base-diagonal.rsi
     state: state0
   - type: Tag
     tags:
@@ -269,7 +269,7 @@
     key: walls
     base: state
   - type: Icon
-    sprite: Structures/Windows/window-diagonal.rsi
+    sprite: Structures/Windows/window-base-diagonal.rsi
     state: state0
   - type: Fixtures
     fixtures:

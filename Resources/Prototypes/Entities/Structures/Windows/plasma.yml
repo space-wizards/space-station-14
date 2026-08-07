@@ -4,9 +4,9 @@
   parent: [BaseDeltaPressurePlasma, BaseWindowStructure, BaseRCDResistant]
   components:
   - type: Sprite
-    sprite: Structures/Windows/plasma_window.rsi
+    sprite: Structures/Windows/window-plasma.rsi
   - type: Icon
-    sprite: Structures/Windows/plasma_window.rsi
+    sprite: Structures/Windows/window-plasma.rsi
     state: full
   - type: Damageable
     damageModifierSet: Glass
@@ -103,7 +103,7 @@
   components:
   - type: Sprite
     drawdepth: WallTops
-    sprite: Structures/Windows/plasma-diagonal.rsi
+    sprite: Structures/Windows/window-diagonal-plasma.rsi
     state: state0
   - type: Tag
     tags:
@@ -114,7 +114,7 @@
     key: walls
     base: state
   - type: Icon
-    sprite: Structures/Windows/plasma-diagonal.rsi
+    sprite: Structures/Windows/window-diagonal-plasma.rsi
     state: state0
   - type: Fixtures
     fixtures:

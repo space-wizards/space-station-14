@@ -5,9 +5,9 @@
   components:
   - type: Sprite
     drawdepth: WallTops
-    sprite: Structures/Windows/xenoborg.rsi
+    sprite: Structures/Windows/exo-resin-borg.rsi
   - type: Icon
-    sprite: Structures/Windows/xenoborg.rsi
+    sprite: Structures/Windows/exo-resin-borg.rsi
     state: full
   - type: IconSmooth
     key: walls

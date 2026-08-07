@@ -113,9 +113,9 @@
   description: An air alarm. Doesn't look like it'll be alarming air any time soon.
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/air_monitors.rsi
+    sprite: Structures/Wallmounts/air-alarm.rsi
     layers:
-    - state: alarm_b1
+    - state: panel
       map: [ "enum.ConstructionVisuals.Layer" ]
   - type: Appearance
   - type: GenericVisualizer

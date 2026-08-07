@@ -1,7 +1,8 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/d0d81185f09ca30d3b0856d476544240dba0de53",
+    "copyright": "By MattFright, modified extensively AftrLite (GitHub)",
+    "source": "https://github.com/QuantumBlueSS14/Quantum-Blue-New/tree/7408d3a02f6c4ead1dfeb900840918c2c773368a/Resources/Textures/_QB/Structures/Wallmounts/intercom.rsi",
     "size": {
         "x": 32,
         "y": 32

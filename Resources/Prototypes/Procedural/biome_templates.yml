@@ -489,7 +489,7 @@
         lacunarity: 2
         gain: 0.4
       entities:
-      - FloorChromiteChasm
+      - FloorChasmEntity
     - !type:BiomeDummyLayer
       id: Loot
     # Fill chromite

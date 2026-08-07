@@ -42,13 +42,6 @@
   indestructible: true
 
 - type: tile
-  id: PlatingDamaged
-  parent: BasePlating
-  name: tiles-plating
-  sprite: /Textures/Tiles/plating_damaged.png
-  variants: 3
-
-- type: tile
   id: PlatingAsteroid
   parent: BasePlating
   name: tiles-asteroid-plating

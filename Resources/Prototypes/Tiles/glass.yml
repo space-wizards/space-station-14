@@ -20,7 +20,7 @@
   id: FloorGlassPlasma
   parent: BaseStationTile
   name: tiles-plasma-glass-floor
-  sprite: /Textures/Tiles/Glass/plasma.png
+  sprite: /Textures/Tiles/Glass/glass-plasma.png
   footstepSounds:
     collection: FootstepTile
   itemDrop: SheetPlasma1
@@ -29,7 +29,7 @@
   id: FloorGlassUranium
   parent: BaseStationTile
   name: tiles-uranium-glass-floor
-  sprite: /Textures/Tiles/Glass/uranium.png
+  sprite: /Textures/Tiles/Glass/glass-uranium.png
   footstepSounds:
     collection: FootstepTile
   itemDrop: SheetUranium1
@@ -38,7 +38,7 @@
   id: FloorGlassPlastitanium
   parent: BaseStationTile
   name: tiles-plastitanium-glass-floor
-  sprite: /Textures/Tiles/Glass/plastitanium.png
+  sprite: /Textures/Tiles/Glass/glass-plastitanium.png
   footstepSounds:
     collection: FootstepTile
   itemDrop: SheetPlasma1

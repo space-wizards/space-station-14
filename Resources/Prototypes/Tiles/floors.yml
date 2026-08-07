@@ -235,52 +235,20 @@
     collection: FootstepHull
   itemDrop: SheetSteel1
 
-# Circuits
-- type: tile
-  id: FloorGreenCircuit
-  parent: BaseStationTile
-  name: tiles-green-circuit-floor
-  sprite: /Textures/Tiles/Circuit/circuit-green.png
-  variants: 2
-  placementVariants:
-  - 1.0
-  - 1.0
-  footstepSounds:
-    collection: FootstepHull
-  itemDrop: FloorTileItemGCircuit
-
-- type: tile
-  id: FloorBlueCircuit
-  parent: BaseStationTile
-  name: tiles-blue-circuit-floor
-  sprite: /Textures/Tiles/Circuit/circuit-blue.png
-  variants: 2
-  placementVariants:
-  - 1.0
-  - 1.0
-  footstepSounds:
-    collection: FootstepHull
-  itemDrop: FloorTileItemBCircuit
-
-- type: tile
-  id: FloorRedCircuit
-  parent: BaseStationTile
-  name: tiles-red-circuit-floor
-  sprite: /Textures/Tiles/Circuit/circuit-red.png
-  variants: 2
-  placementVariants:
-  - 1.0
-  - 1.0
-  footstepSounds:
-    collection: FootstepHull
-  itemDrop: FloorTileItemRCircuit
-
-# Caves
 - type: tile
   id: FloorCave
   name: tiles-cave
-  sprite: /Textures/Tiles/cave.png
-  variants: 7
+  sprite: /Textures/Tiles/Cave/cave.png
+  edgeSpritePriority: 5
+  edgeSprites:
+    SouthEast: /Textures/Tiles/Cave/single_edge_SE.png
+    NorthEast: /Textures/Tiles/Cave/single_edge_NE.png
+    NorthWest: /Textures/Tiles/Cave/single_edge_NW.png
+    SouthWest: /Textures/Tiles/Cave/single_edge_SW.png
+    South: /Textures/Tiles/Cave/double_edge_S.png
+    East: /Textures/Tiles/Cave/double_edge_E.png
+    North: /Textures/Tiles/Cave/double_edge_N.png
+    West: /Textures/Tiles/Cave/double_edge_W.png
   baseTurf: Space
   isSubfloor: true
   footstepSounds:
@@ -355,8 +323,17 @@
 - type: tile
   id: FloorChromite
   name: tiles-chromite
-  sprite: /Textures/Tiles/chromite.png
-  variants: 7
+  sprite: /Textures/Tiles/Chromite/chromite.png
+  edgeSpritePriority: 5
+  edgeSprites:
+    SouthEast: /Textures/Tiles/Chromite/single_edge_SE.png
+    NorthEast: /Textures/Tiles/Chromite/single_edge_NE.png
+    NorthWest: /Textures/Tiles/Chromite/single_edge_NW.png
+    SouthWest: /Textures/Tiles/Chromite/single_edge_SW.png
+    South: /Textures/Tiles/Chromite/double_edge_S.png
+    East: /Textures/Tiles/Chromite/double_edge_E.png
+    North: /Textures/Tiles/Chromite/double_edge_N.png
+    West: /Textures/Tiles/Chromite/double_edge_W.png
   baseTurf: Space
   isSubfloor: true
   footstepSounds:

@@ -1045,3 +1045,8 @@ FloorTileItemXenoSteelCorner: FloorTileItemExoCornerSW
 FloorTileItemXenoMaint: FloorTileItemExoTechmaint
 FloorTileItemXenoborg: FloorTileItemExoBorg
 FloorTileItemDarkSquiggly: FloorTileItemExoHorizontal
+
+# 2026-08-04
+FloorSnowChasm: FloorChasmEntity
+FloorDesertChasm: FloorChasmEntity
+FloorChromiteChasm: FloorChasmEntity

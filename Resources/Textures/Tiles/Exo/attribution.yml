@@ -1,11 +1,13 @@
 - files:
+  - exo-borg.png
+  - exo-hull.png
   - exo-NE.png
   - exo-SE.png
   - exo-NW.png
   - exo-SW.png
   - exo-maint.png
-  - exo-viscera.png
   - exo-vertical.png
   - exo-horizontal.png
-  license: "CC-BY-SA-3.0"
-  copyright: "Created by AftrLite"
+  - exo-viscera.png
+  license: "CC-BY-SA-4.0"
+  copyright: "By AftrLite (GitHub)."
