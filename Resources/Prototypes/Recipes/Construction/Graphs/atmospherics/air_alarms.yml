@@ -155,3 +155,159 @@
       steps:
       - tool: Prying
         doAfter: 1
+
+- type: constructionGraph
+  id: AirlockController
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: assembly
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 2.0
+
+  - node: assembly
+    entity: AirlockControllerAssembly
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: wired
+      steps:
+      - material: Cable
+        amount: 2
+        doAfter: 1
+    - to: start
+      completed:
+      - !type:GivePrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity {}
+      steps:
+      - tool: Welding
+        doAfter: 2
+
+  - node: wired
+    entity: AirlockControllerAssembly
+    edges:
+    - to: electronics
+      steps:
+      - tag: AirlockControllerElectronics
+        store: board
+        name: construction-graph-tag-airlock-controller-electronics
+        icon:
+          sprite: "Objects/Misc/module.rsi"
+          state: "door_electronics"
+        doAfter: 1
+    - to: assembly
+      completed:
+      - !type:GivePrototype
+        prototype: CableApcStack1
+        amount: 2
+      steps:
+      - tool: Cutting
+        doAfter: 1
+
+  - node: electronics
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: airlock_controller
+      steps:
+      - tool: Screwing
+        doAfter: 2
+
+  - node: airlock_controller
+    entity: AirlockController
+    edges:
+    - to: wired
+      conditions:
+      - !type:AllWiresCut {}
+      - !type:WirePanel {}
+      - !type:ContainerNotEmpty
+        container: board
+      completed:
+      - !type:EmptyAllContainers
+        pickup: true
+        emptyAtUser: true
+      steps:
+      - tool: Prying
+        doAfter: 1
+
+- type: constructionGraph
+  id: AirlockCycler
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: assembly
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 2.0
+
+  - node: assembly
+    entity: AirlockCyclerAssembly
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: wired
+      steps:
+      - material: Cable
+        amount: 2
+        doAfter: 1
+    - to: start
+      completed:
+      - !type:GivePrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity {}
+      steps:
+      - tool: Welding
+        doAfter: 2
+
+  - node: wired
+    entity: AirlockCyclerAssembly
+    edges:
+    - to: electronics
+      steps:
+      - tag: AirlockCyclerElectronics
+        store: board
+        name: construction-graph-tag-airlock-cycler-electronics
+        icon:
+          sprite: "Objects/Misc/module.rsi"
+          state: "door_electronics"
+        doAfter: 1
+    - to: assembly
+      completed:
+      - !type:GivePrototype
+        prototype: CableApcStack1
+        amount: 2
+      steps:
+      - tool: Cutting
+        doAfter: 1
+
+  - node: electronics
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: airlock_cycler
+      steps:
+      - tool: Screwing
+        doAfter: 2
+
+  - node: airlock_cycler
+    entity: AirlockCycler
+    edges:
+    - to: wired
+      conditions:
+      - !type:ContainerNotEmpty
+        container: board
+      completed:
+      - !type:EmptyAllContainers
+        pickup: true
+        emptyAtUser: true
+      steps:
+      - tool: Prying
+        doAfter: 1

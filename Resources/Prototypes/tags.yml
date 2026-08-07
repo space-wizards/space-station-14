@@ -13,6 +13,12 @@
   id: AirAlarmElectronics # ConstructionGraph: AirAlarm
 
 - type: Tag
+  id: AirlockControllerElectronics # ConstructionGraph: AirlockController
+
+- type: Tag
+  id: AirlockCyclerElectronics # ConstructionGraph: AirlockCycler
+
+- type: Tag
   id: Airlock # Used in ConstructionGraph "Airlock" to navigate between regular, glass, and highsec airlocks.
 
 - type: Tag

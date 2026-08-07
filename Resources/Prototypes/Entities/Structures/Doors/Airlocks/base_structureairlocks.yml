@@ -111,9 +111,12 @@
     boardName: wires-board-name-airlock
     layoutId: Airlock
   - type: DoorSignalControl
+  - type: DoorDeviceControl
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
+    prefix: device-address-prefix-door
+    examinableAddress: true
   - type: WirelessNetworkConnection
     range: 200
   - type: DeviceLinkSink
