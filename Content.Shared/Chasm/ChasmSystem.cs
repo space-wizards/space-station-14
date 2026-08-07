@@ -150,6 +150,7 @@ public sealed partial class ChasmSystem : EntitySystem
 
     #endregion Public API
 
+    [SubscribeLocalEvent]
     private static void OnUpdateCanMove(Entity<ChasmFallingComponent> entity, ref UpdateCanMoveEvent args)
     {
         args.Cancel();
