@@ -16,7 +16,7 @@ public sealed partial class StealthSystem : SharedStealthSystem
         while (query.MoveNext(out var uid, out var stealth, out var darkStealth))
         {
             if (!_lightLevelSystem.TryCalculateLightLevel(uid, out var lightLevel))
-                return;
+                continue;
 
             if (darkStealth.ActivatedLightLevel > lightLevel)
             {
