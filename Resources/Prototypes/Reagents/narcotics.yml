@@ -478,7 +478,7 @@
       # Bad effect
       - !type:AdjustReagent
         reagent: Hydroxysomnolene
-        amount: +2
+        amount: 2
 
       # Main effects
       - !type:MovementSpeedModifier
