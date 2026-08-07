@@ -513,16 +513,15 @@
   - type: RadiationBlocker
     resistance: 5
 
-# Riveting
 - type: entity
   parent: BaseWall
-  id: WallRiveted
-  name: riveted wall
+  id: WallMarble
+  name: marble wall
   components:
   - type: Sprite
-    sprite: Structures/Walls/riveted.rsi
+    sprite: Structures/Walls/marble.rsi
   - type: Icon
-    sprite: Structures/Walls/riveted.rsi
+    sprite: Structures/Walls/marble.rsi
   - type: Damageable
     damageModifierSet: StructuralMetallicStrong
   - type: Injurable
@@ -542,9 +541,40 @@
         acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
-    base: riveted
+    base: wall
   - type: StaticPrice
     price: 150
+
+- type: entity
+  parent: BaseWall
+  id: WallMarbleIndestructible
+  name: marble wall
+  suffix: indestructible
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/marble.rsi
+  - type: Icon
+    sprite: Structures/Walls/marble.rsi
+  - type: IconSmooth
+    key: walls
+    base: wall
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+        density: 4000
+  - type: Damageable
+    damageModifierSet: StructuralMetallicStrong
+  - type: Injurable
+    damageContainer: StructuralInorganic
+  - type: RadiationBlocker
+    resistance: 5
 
 - type: entity
   parent: BaseWall

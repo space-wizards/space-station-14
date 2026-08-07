@@ -1050,3 +1050,6 @@ FloorTileItemDarkSquiggly: FloorTileItemExoHorizontal
 FloorSnowChasm: FloorChasmEntity
 FloorDesertChasm: FloorChasmEntity
 FloorChromiteChasm: FloorChasmEntity
+
+# 2026-08-06
+WallRiveted: WallMarble
