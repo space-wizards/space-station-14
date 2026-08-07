@@ -92,7 +92,7 @@ public sealed partial class CloningSettingsPrototype : IPrototype, IInheritingPr
     /// Components to copy from the original to the clone using CopyComp.
     /// This makes a deepcopy of all datafields, including information the clone might not own!
     /// If you need to exclude data or do additional component initialization, then subscribe to CloningEvent instead!
-    /// D
+    /// Components in this list that the original does not have will be removed from the clone.
     /// </summary>
     [DataField]
     [AlwaysPushInheritance]

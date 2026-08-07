@@ -65,7 +65,6 @@ namespace Content.Server.Zombies
 
             SubscribeLocalEvent<ZombieComponent, MeleeHitEvent>(OnMeleeHit);
             SubscribeLocalEvent<ZombieComponent, MobStateChangedEvent>(OnMobState);
-            SubscribeLocalEvent<ZombieComponent, CloningEvent>(OnZombieCloning);
             SubscribeLocalEvent<ZombieComponent, TryingToSleepEvent>(OnSleepAttempt);
             SubscribeLocalEvent<ZombieComponent, GetCharactedDeadIcEvent>(OnGetCharacterDeadIC);
             SubscribeLocalEvent<ZombieComponent, GetCharacterUnrevivableIcEvent>(OnGetCharacterUnrevivableIC);
@@ -302,11 +301,6 @@ namespace Content.Server.Zombies
             _bloodstream.ChangeBloodReagents(target, zombiecomp.BeforeZombifiedBloodReagents);
 
             return true;
-        }
-
-        private void OnZombieCloning(Entity<ZombieComponent> ent, ref CloningEvent args)
-        {
-            UnZombify(ent.Owner, args.CloneUid, ent.Comp);
         }
 
         // Make sure players that enter a zombie (for example via a ghost role or the mind swap spell) count as an antagonist.
