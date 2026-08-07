@@ -96,8 +96,25 @@ public sealed partial class ChasingWalkSystem : VirtualController
         var pos1 = _transform.GetWorldPosition(uid);
         var pos2 = _transform.GetWorldPosition(component.ChasingEntity.Value);
 
-        var delta = pos2 - pos1;
-        var speed = delta.Length() > 0 ? delta.Normalized() * component.Speed : Vector2.Zero;
+        var currentDirection = _physics.GetLinearVelocity(uid, Vector2.Zero);
+
+        var targetVector = pos2 - pos1;
+
+        var angleToChange = targetVector.ToAngle() - currentDirection.ToAngle();
+
+        // Make sure we rotate to the smallest direction
+        if (angleToChange > Angle.FromDegrees(180))
+            angleToChange -= Angle.FromDegrees(360);
+        else if (angleToChange < Angle.FromDegrees(-180))
+            angleToChange += Angle.FromDegrees(360);
+
+        angleToChange = Math.Clamp(angleToChange,
+            -component.MaxAngleVectorChangePerImpulse,
+            component.MaxAngleVectorChangePerImpulse);
+
+        var newDirection = currentDirection.ToAngle() + angleToChange;
+
+        var speed = targetVector.Length() > 0 ? newDirection.ToVec() * component.Speed : Vector2.Zero;
 
         _physics.SetLinearVelocity(uid, speed);
         _physics.SetBodyStatus(uid, physics, BodyStatus.InAir); //If this is not done, from the explosion up close, the tesla will "Fall" to the ground, and almost stop moving.

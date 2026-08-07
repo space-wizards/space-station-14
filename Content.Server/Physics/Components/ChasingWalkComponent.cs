@@ -1,6 +1,7 @@
 
 using Content.Server.Administration.Systems;
 using Content.Server.Physics.Controllers;
+using Content.Server.Weapons.Ranged.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
@@ -9,7 +10,7 @@ namespace Content.Server.Physics.Components;
 /// <summary>
 /// A component which makes its entity chasing entity with selected component.
 /// </summary>
-[RegisterComponent, Access(typeof(ChasingWalkSystem), typeof(AdminVerbSystem)), AutoGenerateComponentPause]
+[RegisterComponent, Access(typeof(ChasingWalkSystem), typeof(AdminVerbSystem), typeof(GunSystem)), AutoGenerateComponentPause]
 public sealed partial class ChasingWalkComponent : Component
 {
     /// <summary>
@@ -24,6 +25,12 @@ public sealed partial class ChasingWalkComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float ImpulseInterval = 2f;
+
+    /// <summary>
+    /// The max angle the entity can turn each impulse
+    /// </summary>
+    [DataField]
+    public Angle MaxAngleVectorChangePerImpulse = Angle.FromDegrees(180);
 
     /// <summary>
     /// The minimum speed at which this entity will move.
@@ -65,7 +72,7 @@ public sealed partial class ChasingWalkComponent : Component
     /// <summary>
     /// The component that the entity is chasing
     /// </summary>
-    [DataField(required: true)]
+    [DataField]
     public ComponentRegistry ChasingComponent = [];
 
     /// <summary>
