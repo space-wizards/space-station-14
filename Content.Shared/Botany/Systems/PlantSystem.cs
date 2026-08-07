@@ -1,3 +1,4 @@
+using System.Linq;
 using JetBrains.Annotations;
 using Content.Shared.Botany.Components;
 using Content.Shared.Botany.Events;
@@ -14,7 +15,7 @@ public sealed partial class PlantSystem : EntitySystem
 {
     [Dependency] private BotanySystem _botany = default!;
     [Dependency] private IGameTiming _gameTiming = default!;
-    [Dependency] private MutationSystem _mutation = default!;
+    [Dependency] private PlantMutationSystem _mutation = default!;
     [Dependency] private PlantHolderSystem _plantHolder = default!;
 
     public override void Update(float frameTime)
@@ -52,12 +53,12 @@ public sealed partial class PlantSystem : EntitySystem
             return;
 
         _mutation.CrossInt(ent, ref ent.Comp.Yield, pollenData.Yield);
-        _mutation.CrossInt(ent, ref ent.Comp.GrowthStages, pollenData.GrowthStages);
         _mutation.CrossFloat(ent, ref ent.Comp.Endurance, pollenData.Endurance);
         _mutation.CrossFloat(ent, ref ent.Comp.Lifespan, pollenData.Lifespan);
         _mutation.CrossFloat(ent, ref ent.Comp.Maturation, pollenData.Maturation);
         _mutation.CrossFloat(ent, ref ent.Comp.Production, pollenData.Production);
         _mutation.CrossFloat(ent, ref ent.Comp.Potency, pollenData.Potency);
+        _mutation.CrossTrait(ent.Owner, args.PollenData);
         Dirty(ent);
     }
 
@@ -96,7 +97,8 @@ public sealed partial class PlantSystem : EntitySystem
                             : "plant-component-plant-unhealthy-adjective"))));
             }
 
-            foreach (var trait in AllComps<PlantTraitsComponent>(ent.Owner))
+            foreach (var trait in AllComps<PlantTraitsComponent>(ent.Owner)
+                         .OrderBy(trait => trait.GetType().FullName))
             {
                 if (trait.TraitState is { } traitState)
                     args.PushMarkup(Loc.GetString(traitState));

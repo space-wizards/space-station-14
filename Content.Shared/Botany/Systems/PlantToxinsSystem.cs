@@ -11,7 +11,7 @@ namespace Content.Shared.Botany.Systems;
 public sealed partial class PlantToxinsSystem : EntitySystem
 {
     [Dependency] private BotanySystem _botany = default!;
-    [Dependency] private MutationSystem _mutation = default!;
+    [Dependency] private PlantMutationSystem _mutation = default!;
     [Dependency] private PlantHolderSystem _plantHolder = default!;
     [Dependency] private PlantTraySystem _plantTray = default!;
 

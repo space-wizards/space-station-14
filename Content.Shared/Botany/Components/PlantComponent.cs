@@ -7,7 +7,7 @@ namespace Content.Shared.Botany.Components;
 /// Component for storing plant growth data.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true, raiseAfterAutoHandleState: true)]
-[Access(typeof(PlantSystem), typeof(MutationSystem))]
+[Access(typeof(PlantSystem), typeof(PlantMutationSystem))]
 public sealed partial class PlantComponent : Component
 {
     /// <summary>

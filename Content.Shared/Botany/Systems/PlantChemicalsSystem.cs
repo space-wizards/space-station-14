@@ -14,7 +14,7 @@ namespace Content.Shared.Botany.Systems;
 public sealed partial class PlantChemicalsSystem : EntitySystem
 {
     [Dependency] private BotanySystem _botany = default!;
-    [Dependency] private MutationSystem _mutation = default!;
+    [Dependency] private PlantMutationSystem _mutation = default!;
     [Dependency] private IGameTiming _timing = default!;
 
     public override void Initialize()

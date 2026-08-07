@@ -14,7 +14,7 @@ namespace Content.Shared.EntityEffects.Effects.Botany;
 public sealed partial class PlantMutateSpeciesChangeEntityEffectSystem : EntityEffectSystem<PlantDataComponent, PlantMutateSpeciesChange>
 {
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private MutationSystem _mutation = default!;
+    [Dependency] private PlantMutationSystem _mutation = default!;
 
     protected override void Effect(Entity<PlantDataComponent> entity, ref EntityEffectEvent<PlantMutateSpeciesChange> args)
     {

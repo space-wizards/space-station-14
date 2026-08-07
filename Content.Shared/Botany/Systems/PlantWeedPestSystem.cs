@@ -13,7 +13,7 @@ public sealed partial class PlantWeedPestSystem : EntitySystem
 {
     [Dependency] private BotanySystem _botany = default!;
     [Dependency] private IRobustRandom _random = default!;
-    [Dependency] private MutationSystem _mutation = default!;
+    [Dependency] private PlantMutationSystem _mutation = default!;
     [Dependency] private PlantHolderSystem _plantHolder = default!;
     [Dependency] private PlantTraySystem _plantTray = default!;
 

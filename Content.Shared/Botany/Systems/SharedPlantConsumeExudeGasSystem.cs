@@ -16,7 +16,7 @@ public abstract partial class SharedPlantConsumeExudeGasSystem : EntitySystem
 {
     [Dependency] private BotanySystem _botany = default!;
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private MutationSystem _mutation = default!;
+    [Dependency] private PlantMutationSystem _mutation = default!;
 
     [SubscribeLocalEvent]
     private void OnCrossPollinate(Entity<PlantConsumeExudeGasComponent> ent, ref PlantCrossPollinateEvent args)

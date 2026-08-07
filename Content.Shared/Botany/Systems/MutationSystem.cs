@@ -17,7 +17,7 @@ namespace Content.Shared.Botany.Systems;
 /// Handles plant mutations, including random mutation effects, crossbreeding, and
 /// inheritance of plant properties and traits from pollen.
 /// </summary>
-public sealed partial class MutationSystem : EntitySystem
+public sealed partial class PlantMutationSystem : EntitySystem
 {
     private static readonly ProtoId<RandomPlantMutationListPrototype> RandomPlantMutations = "RandomPlantMutations";
     private RandomPlantMutationListPrototype _randomMutations = default!;

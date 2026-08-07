@@ -11,7 +11,7 @@ namespace Content.Shared.Botany.Systems;
 public abstract partial class SharedPlantAtmosphericSystem : EntitySystem
 {
     [Dependency] private BotanySystem _botany = default!;
-    [Dependency] private MutationSystem _mutation = default!;
+    [Dependency] private PlantMutationSystem _mutation = default!;
 
     [SubscribeLocalEvent]
     private void OnCrossPollinate(Entity<PlantAtmosphericComponent> ent, ref PlantCrossPollinateEvent args)

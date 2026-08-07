@@ -13,7 +13,7 @@ namespace Content.Shared.Botany.Items.Systems;
 public sealed partial class BotanySwabSystem : EntitySystem
 {
     [Dependency] private BotanySystem _botany = default!;
-    [Dependency] private MutationSystem _mutation = default!;
+    [Dependency] private PlantMutationSystem _mutation = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
 
