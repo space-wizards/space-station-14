@@ -850,6 +850,31 @@
     energy: 0.5
 
 - type: entity
+  parent: BulletRocket
+  id: BulletGuidedXenoborgMissile
+  name: guided xenoborg missile
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite # TODO: ADD NEW SPRITE HERE
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+      - state: grenade
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default
+    totalIntensity: 50
+    intensitySlope: 1
+    maxIntensity: 5
+    canCreateVacuum: false
+  - type: TimedDespawn
+    lifetime: 1000 # TODO: REMOVE THIS
+  - type: ChasingWalk
+    speed: 5
+    impulseInterval: 0.1
+    maxAngleVectorChangePerImpulse: 10
+    rotateWithImpulse: true
+
+- type: entity
   id: BulletGrenadeBaton
   name: baton grenade
   parent: BaseBullet

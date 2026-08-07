@@ -141,6 +141,31 @@
   - type: Appearance
 
 - type: entity
+  parent: [ BaseWeaponLauncher, BaseXenoborgContraband ]
+  id: WeaponXenoborgGuidedMissileLauncher
+  name: XB GML-78
+  description: A guided missile launcher.
+  components:
+  - type: Sprite # TODO: ADD NEW SPRITE HERE
+    sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
+    layers:
+    - state: base
+      map: [ "enum.GunVisualLayers.Base" ]
+    - state: mag-0
+      map: [ "enum.GunVisualLayers.Mag" ]
+  - type: Gun
+    fireRate: 0.5
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/rpgfire.ogg
+  - type: BallisticAmmoProvider
+    proto: BulletGuidedXenoborgMissile
+    capacity: 100 # TODO: CHANGE LATER
+  - type: TargetAssign
+  - type: DeviceLinkSink
+    ports:
+    - TargetReceiver
+
+- type: entity
   parent: BaseWeaponLauncher
   id: WeaponLauncherMultipleRocket
   name: multiple rocket launcher

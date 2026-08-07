@@ -49,6 +49,24 @@
 
 - type: entity
   parent: BasicHitscan
+  id: RangeLaser
+  name: red light laser
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TargetFinderHitscan
+  - type: HitscanBasicVisuals # TODO: ADD NEW SPRITE HERE
+    muzzleFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: muzzle_debug
+    travelFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: debug
+    impactFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: impact_debug
+
+- type: entity
+  parent: BasicHitscan
   id: RedLaser
   name: red laser ray
   categories: [ HideSpawnMenu ]
