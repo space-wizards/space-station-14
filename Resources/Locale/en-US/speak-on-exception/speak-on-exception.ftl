@@ -1,7 +1,7 @@
 exception-censored-1 = called `Option::unwrap()` on a `None` value`
 exception-censored-2 = SyntaxError: invalid syntax
 exception-censored-3 = java.lang.NullPointerException: Cannot invoke "com.spacestation14.ss14.Cat.meow(java.lang.String)" because the return value of "com.spacestation14.robusttoolbox.Utils.getCatSound()" is null
-exception-censored-4 = Error: Can't open display: :3
+exception-censored-4 = Error: Can't open display: x3
 exception-censored-5 = Segmentation fault (core dumped)
 exception-censored-6 = cat-speech-dataset-120
 exception-censored-7 = Can't resolve "Robust.Shared.GameObjects.MetaDataComponent" on entity 5233063!
