@@ -147,7 +147,7 @@ public sealed partial class CloningSystem : SharedCloningSystem
             if (TryComp(original, componentRegistration.Type, out var sourceComp)) // Does the original have this component?
             {
                 // The CloningContext here handles any oddball fields that shouldn't be copied.
-                CopyComp(original, clone, sourceComp, _context);
+                CopyComp((original, sourceComp), clone, _context);
             }
         }
     }

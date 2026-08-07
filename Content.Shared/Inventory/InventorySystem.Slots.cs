@@ -65,7 +65,7 @@ public partial class InventorySystem : EntitySystem
         UpdateInventoryTemplate(ent);
     }
 
-    public virtual void UpdateInventoryTemplate(Entity<InventoryComponent> ent)
+    protected virtual void UpdateInventoryTemplate(Entity<InventoryComponent> ent)
     {
         if (!ProtoMan.Resolve(ent.Comp.TemplateId, out var invTemplate))
             return;
