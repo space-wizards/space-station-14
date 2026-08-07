@@ -223,7 +223,6 @@ public sealed partial class SharedForensicScannerSystem : EntitySystem
         }
         foreach (var dna in scanner.Comp.SolutionDNAs)
         {
-            Log.Debug(dna);
             if (scanner.Comp.DNAs.Contains(dna))
                 continue;
             text.AppendLine(dna);
@@ -242,15 +241,7 @@ public sealed partial class SharedForensicScannerSystem : EntitySystem
 
         scanner.Comp.PrintReadyAt = _gameTiming.CurTime + scanner.Comp.PrintCooldown;
 
-        DirtyFields(scanner.AsNullable(),
-            null,
-            nameof(ForensicScannerComponent.PrintReadyAt),
-            nameof(ForensicScannerComponent.LastScannedName),
-            nameof(ForensicScannerComponent.Fibers),
-            nameof(ForensicScannerComponent.Fingerprints),
-            nameof(ForensicScannerComponent.DNAs),
-            nameof(ForensicScannerComponent.SolutionDNAs),
-            nameof(ForensicScannerComponent.Residues));
+        DirtyField(scanner.AsNullable(), nameof(ForensicScannerComponent.PrintReadyAt));
 
         UpdateUi(scanner);
     }
