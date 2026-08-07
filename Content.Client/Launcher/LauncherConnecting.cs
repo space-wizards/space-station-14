@@ -126,9 +126,9 @@ namespace Content.Client.Launcher
             return false;
         }
 
-        public void Redirect()
+        public void Redirect(string target)
         {
-            _gameController.Redial("ss14s://vulture.spacestation14.com");
+            _gameController.Redial(target, "Switching server"); //TODO:ERRANT use locale?
         }
 
         public void Exit()

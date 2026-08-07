@@ -28,7 +28,14 @@ namespace Content.Client.Launcher
         private readonly IConfigurationManager _cfg;
         private readonly IClipboardManager _clipboard;
 
-        private bool _redirect;
+        // Unfortunately these can't be configured via cvar,
+        // because the client does not have the server's cvars yet, when we would need them
+        private const bool RedirectEnabled = true;
+        private readonly List<string> _redirectOptions = new()
+        {
+            "ss14s://vulture.spacestation14.com",
+            "ss14s://leviathan.spacestation14.com",
+        };
 
         public LauncherConnectingGui(LauncherConnecting state, IRobustRandom random,
             IPrototypeManager prototype, IConfigurationManager config, IClipboardManager clipboard)
@@ -39,7 +46,8 @@ namespace Content.Client.Launcher
             _cfg = config;
             _clipboard = clipboard;
 
-            _cfg.OnValueChanged(CCVars.ServerFullRedirect, b => { _redirect = b; }, true); //TODO:ERRANT does not update. Why?
+            // if (RedirectEnabled) //TODO:ERRANT this crashes. Why?
+            //     CreateRedirectUi();
 
             RobustXamlLoader.Load(this);
 
@@ -50,7 +58,9 @@ namespace Content.Client.Launcher
             ChangeLoginTip();
             RetryButton.OnPressed += ReconnectButtonPressed;
             ReconnectButton.OnPressed += ReconnectButtonPressed;
-            RedirectButton.OnPressed += RedirectButtonPressed;
+
+            RedirectButton.OnPressed += RedirectButtonPressed; //TODO:ERRANT pass the target through from the button
+            RedirectButton2.OnPressed += RedirectButtonPressed;
 
             CopyButton.OnPressed += CopyButtonPressed;
             CopyButtonDisconnected.OnPressed += CopyButtonDisconnectedPressed;
@@ -73,6 +83,22 @@ namespace Content.Client.Launcher
             LastNetDisconnectedArgsChanged(edim.LastNetDisconnectedArgs);
         }
 
+        /// <summary>
+        /// Creates the Server Redirect info/buttons, if the feature is enabled;
+        /// </summary>
+        private void CreateRedirectUi()
+        {
+            if (_redirectOptions.Count <= 0)
+                return;
+
+            // TODO:ERRANT generate buttons and info
+
+            // check/gather options
+
+            RedirectBox.Visible = true;
+
+        }
+
         // Just button, there's only one at once anyways :)
         private void ReconnectButtonPressed(BaseButton.ButtonEventArgs args)
         {
@@ -88,11 +114,8 @@ namespace Content.Client.Launcher
 
         private void RedirectButtonPressed(BaseButton.ButtonEventArgs args)
         {
-            // Open a UI? //TODO:ERRANT clean up
-
-            // List options?
-
-            _state.Redirect();
+            var target ="ss14s://vulture.spacestation14.com"; //TODO:ERRANT read this from button
+            _state.Redirect(target);
         }
 
         private void CopyButtonPressed(BaseButton.ButtonEventArgs args)
@@ -174,8 +197,6 @@ namespace Content.Client.Launcher
         protected override void FrameUpdate(FrameEventArgs args)
         {
             base.FrameUpdate(args);
-
-            RedirectButton.Visible = _redirect;
 
             var button = _state.CurrentPage == LauncherConnecting.Page.ConnectFailed
                 ? RetryButton

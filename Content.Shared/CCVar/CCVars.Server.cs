@@ -59,10 +59,4 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<bool> ForceClientHudVersionWatermark =
         CVarDef.Create("server.force_client_hud_version_watermark", false, CVar.REPLICATED | CVar.SERVER);
-
-    /// <summary>
-    ///
-    /// </summary>
-    public static readonly CVarDef<bool> ServerFullRedirect =
-        CVarDef.Create("server.full_redirect", true, CVar.REPLICATED | CVar.SERVER);
 }
