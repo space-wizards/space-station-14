@@ -477,6 +477,10 @@
             Poison: 1.5
 
       # Bad effect
+      - !type:HealthChange
+        damage:
+          types:
+            Cellular: 0.05
       - !type:AdjustReagent
         reagent: Hydroxysomnolene
         amount: 1
@@ -488,9 +492,8 @@
       - !type:ModifyStatusEffect
         effectProto: StatusEffectDesoxyStamina # You are on Ice. You keep going.
         time: 10
-      - !type:GenericStatusEffect
-        key: Adrenaline
-        component: IgnoreSlowOnDamage
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectAdrenaline
         time: 10
       - !type:ModifyStatusEffect
         effectProto: StatusEffectPainNumbness
@@ -506,7 +509,6 @@
           min: 10
       - !type:ModifyStatusEffect
         effectProto: StatusEffectSeeingRainbow
-        type: Add
         time: 10
 
       # Side effects
@@ -514,10 +516,6 @@
         key: Stutter
         component: StutteringAccent
       - !type:Jitter
-      - !type:HealthChange
-        damage:
-          types:
-            Cellular: 0.05
 
 - type: reagent
   id: Hydroxysomnolene
@@ -547,7 +545,7 @@
           reagent: StrawberryIce
           max: 0.1
         effectProto: StatusEffectDrowsiness
-        time: 1.5
+        time: 2
         type: Add
 
       # Needs more strawberry Ice!
