@@ -331,7 +331,3 @@
 - type: tileAlias
   id: FloorAsphalt
   target: FloorConcrete
-
-- type: tileAlias
-  id: PlatingDamaged
-  target: Plating
