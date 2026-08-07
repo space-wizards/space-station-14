@@ -20,7 +20,7 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
     {
         if (ent.Comp.Body == null)
             return;
-        RemoveAction(ent);
+        _actionsSystem.RemoveAction(ent.Comp.Body.Value, ent.Comp.EyeToggleActionEntity);
     }
 
     [SubscribeLocalEvent]
@@ -41,14 +41,16 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
     private void OnApplyOrganMarking(Entity<EyeBlinkingComponent> ent, ref ApplyOrganProfileDataEvent args)
     {
         SetEyelidsColor(ent, args.Base);
-        AddAction(ent);
+
+        _actionsSystem.AddAction(ent.Owner, ref ent.Comp.EyeToggleActionEntity, ent.Comp.EyeToggleAction);
     }
 
     [SubscribeLocalEvent]
     private void OnApplyOrganProfile(Entity<EyeBlinkingComponent> ent, ref BodyRelayedEvent<ApplyOrganProfileDataEvent> args)
     {
         SetEyelidsColor(ent, args.Args.Base);
-        AddAction(ent);
+
+        _actionsSystem.AddAction(args.Body.Owner, ref ent.Comp.EyeToggleActionEntity, ent.Comp.EyeToggleAction);
     }
 
     [SubscribeLocalEvent]
@@ -57,7 +59,9 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
         if (!TryComp<VisualOrganComponent>(args.Args.Organ, out var visualOrgan))
             return;
         SetEyelidsColor(ent, visualOrgan.Profile);
-        AddAction(ent);
+
+
+        _actionsSystem.AddAction(args.Body.Owner, ref ent.Comp.EyeToggleActionEntity, ent.Comp.EyeToggleAction);
     }
 
     private void SetEyelidsColor(Entity<EyeBlinkingComponent> ent)
@@ -81,25 +85,6 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
         }
 
         SetEyelidsColor(ent, visualHead?.Profile);
-    }
-
-    private void AddAction(Entity<EyeBlinkingComponent> ent)
-    {
-        if (ent.Comp.Body == null)
-            return;
-
-        if (ent.Comp.EyeToggleActionEntity != null)
-            return;
-        _actionsSystem.AddAction(ent.Comp.Body.Value, ref ent.Comp.EyeToggleActionEntity, ent.Comp.EyeToggleAction);
-    }
-
-    private void RemoveAction(Entity<EyeBlinkingComponent> ent)
-    {
-        if (ent.Comp.Body == null)
-            return;
-        if (ent.Comp.EyeToggleActionEntity == null)
-            return;
-        _actionsSystem.RemoveAction(ent.Comp.Body.Value, ent.Comp.EyeToggleActionEntity);
     }
 
     private void SetEyelidsColor(Entity<EyeBlinkingComponent> eyeBlinking, OrganProfileData? organProfile)
@@ -161,10 +146,16 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
         // Remove action if entity dead.
         if (args.NewMobState == MobState.Dead)
         {
-            RemoveAction(ent);
+            if (ent.Comp.EyeToggleActionEntity != null)
+            {
+                _actionsSystem.RemoveAction(args.Target, ent.Comp.EyeToggleActionEntity);
+            }
             return;
         }
-        AddAction(ent);
+        if (ent.Comp.EyeToggleActionEntity == null)
+        {
+            _actionsSystem.AddAction(args.Target, ref ent.Comp.EyeToggleActionEntity, ent.Comp.EyeToggleAction);
+        }
     }
 
     [SubscribeLocalEvent]
