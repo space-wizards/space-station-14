@@ -74,8 +74,6 @@
       Lungs: OrganSlimePersonLungs
   - type: HumanoidProfile
     species: SlimePerson
-  - type: EyeBlinking
-    eyelidsSprite: /Textures/Mobs/Species/Human/eyelids.rsi
 
 - type: entity
   parent:
@@ -271,6 +269,9 @@
   - type: VisualOrgan
     data:
       sprite: Mobs/Customization/eyes.rsi
+  - type: EyeBlinking
+    eyelidsSprite: /Textures/Mobs/Species/Human/eyelids.rsi
+  - type: Appearance
 
 - type: entity
   parent: [ OrganBaseLungs, OrganSlimePersonInternal, OrganSlimePersonMetabolizer ]

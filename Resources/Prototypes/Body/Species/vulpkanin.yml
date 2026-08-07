@@ -90,8 +90,6 @@
       Kidneys: OrganVulpkaninKidneys
   - type: HumanoidProfile
     species: Vulpkanin
-  - type: EyeBlinking
-    eyelidsSprite: /Textures/Mobs/Species/Vulpkanin/eyelids.rsi
   - type: Inventory
     speciesId: vulpkanin
     displacements:
@@ -310,6 +308,10 @@
 - type: entity
   parent: [ OrganVulpkaninVisual, OrganBaseEyes, OrganVulpkaninInternal ]
   id: OrganVulpkaninEyes
+  components:
+  - type: EyeBlinking
+    eyelidsSprite: /Textures/Mobs/Species/Vulpkanin/eyelids.rsi
+  - type: Appearance
 
 - type: entity
   parent: [ OrganBaseTongue, OrganVulpkaninInternal ]

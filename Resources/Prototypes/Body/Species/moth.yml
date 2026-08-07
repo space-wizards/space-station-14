@@ -132,8 +132,6 @@
       Kidneys: OrganMothKidneys
   - type: HumanoidProfile
     species: Moth
-  - type: EyeBlinking
-    eyelidsSprite: /Textures/Mobs/Species/Moth/eyelids.rsi
 
 - type: entity
   parent:
@@ -286,6 +284,10 @@
 - type: entity
   parent: [ OrganMothVisual, OrganBaseEyes, OrganMothInternal ]
   id: OrganMothEyes
+  components:
+  - type: EyeBlinking
+    eyelidsSprite: /Textures/Mobs/Species/Moth/eyelids.rsi
+  - type: Appearance
 
 - type: entity
   parent: [ OrganBaseTongue, OrganMothInternal ]
