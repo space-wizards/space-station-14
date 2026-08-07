@@ -6,6 +6,7 @@ using Content.Shared.Popups;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.Teleportation.Systems;
 
@@ -16,12 +17,14 @@ namespace Content.Shared.Teleportation.Systems;
 public sealed partial class TeleportActionSystem : EntitySystem
 {
     [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private ExamineSystemShared _examine = default!;
     [Dependency] private SharedMapSystem _map = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private PullingSystem _pulling = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
-    [Dependency] private EntityQuery<FixturesComponent> _fixturesQuery;
+
+    private readonly HashSet<Entity<PhysicsComponent>> _intersecting = new();
 
     [SubscribeLocalEvent]
     private void OnTeleportAction(TeleportActionEvent args)
@@ -46,16 +49,18 @@ public sealed partial class TeleportActionSystem : EntitySystem
             return false;
 
         var xform = Transform(user);
-        var mapTarget = _transform.ToMapCoordinates(target);
-        if (xform.MapID != mapTarget.MapId ||
+        var mapId = _transform.GetMapId(target);
+        if (xform.MapID != mapId ||
             !_examine.InRangeUnOccluded(user, target, SharedInteractionSystem.MaxRaycastRange))
         {
             _popup.PopupEntity(Loc.GetString("teleport-action-popup-cant-see"), user, user);
             return false;
         }
 
-        var rotation = _transform.GetWorldRotation(xform);
-        if (IsDestinationBlocked(user, mapTarget, rotation))
+        var mapTarget = _transform.GetWorldPositionRotation(target.EntityId);
+        var targetMapCoordinates = new MapCoordinates(mapTarget.WorldPosition + target.Position, mapId);
+
+        if (IsDestinationBlocked(user, targetMapCoordinates, mapTarget.WorldRotation))
         {
             _popup.PopupEntity(Loc.GetString("teleport-action-popup-blocked"), user, user);
             return false;
@@ -75,9 +80,9 @@ public sealed partial class TeleportActionSystem : EntitySystem
             _pulling.TryStopPull(puller.Pulling.Value, pulled);
         }
 
-        var destination = _map.TryFindGridAt(mapTarget, out var grid, out _)
-            ? _map.MapToGrid(grid, mapTarget)
-            : _transform.ToCoordinates(mapTarget);
+        var destination = _map.TryFindGridAt(targetMapCoordinates, out var grid, out _)
+            ? _map.MapToGrid(grid, targetMapCoordinates)
+            : _transform.ToCoordinates(targetMapCoordinates);
 
         _transform.SetCoordinates(user, xform, destination);
         return true;
@@ -97,7 +102,8 @@ public sealed partial class TeleportActionSystem : EntitySystem
         MapCoordinates target,
         Angle rotation,
         FixturesComponent? fixtures = null,
-        PhysicsComponent? physics = null)
+        PhysicsComponent? physics = null
+    )
     {
         if (!Resolve(user, ref fixtures, ref physics, false) ||
             !physics.CanCollide ||
@@ -107,41 +113,29 @@ public sealed partial class TeleportActionSystem : EntitySystem
         }
 
         var destinationTransform = new Transform(target.Position, rotation);
-        var intersecting = new HashSet<Entity<PhysicsComponent>>();
 
         foreach (var fixture in fixtures.Fixtures.Values)
         {
             if (!fixture.Hard)
                 continue;
 
-            intersecting.Clear();
+            _intersecting.Clear();
             _lookup.GetEntitiesIntersecting(
                 target.MapId,
                 fixture.Shape,
                 destinationTransform,
-                intersecting,
-                LookupFlags.Dynamic | LookupFlags.Static);
+                _intersecting,
+                LookupFlags.Dynamic | LookupFlags.Static
+            );
 
-            foreach (var other in intersecting)
+            foreach (var other in _intersecting)
             {
-                if (other.Owner == user ||
-                    !other.Comp.CanCollide ||
-                    !other.Comp.Hard ||
-                    !_fixturesQuery.TryComp(other, out var otherFixtures))
-                {
+                if (other.Owner == user)
                     continue;
-                }
 
-                foreach (var otherFixture in otherFixtures.Fixtures.Values)
+                if (_physics.IsCurrentlyHardCollidable((other.Owner, null, other.Comp), (user, fixtures, physics)))
                 {
-                    if (!otherFixture.Hard)
-                        continue;
-
-                    if ((fixture.CollisionMask & otherFixture.CollisionLayer) != 0 ||
-                        (otherFixture.CollisionMask & fixture.CollisionLayer) != 0)
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
         }
