@@ -36,7 +36,7 @@ public sealed partial class EggLayerSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnProduce(Entity<EggLayerComponent> ent, ref HungerProductionEvent args)
+    private void OnProduce(Entity<EggLayerComponent> ent, ref ProductionAttemptEvent args)
     {
         foreach (var spawn in EntitySpawnCollection.GetSpawns(ent.Comp.EggSpawn, _random))
         {

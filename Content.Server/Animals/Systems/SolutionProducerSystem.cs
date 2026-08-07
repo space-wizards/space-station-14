@@ -11,7 +11,7 @@ public sealed partial class SolutionProducerSystem : EntitySystem
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
 
     [SubscribeLocalEvent]
-    private void OnProduce(Entity<SolutionProducerComponent> ent, ref HungerProductionEvent args)
+    private void OnProduce(Entity<SolutionProducerComponent> ent, ref ProductionAttemptEvent args)
     {
         if (!TryComp(ent, out SolutionComponent? solution))
             return;

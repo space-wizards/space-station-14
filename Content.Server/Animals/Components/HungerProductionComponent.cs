@@ -6,7 +6,7 @@ namespace Content.Server.Animals.Components;
 
 /// <summary>
 /// Periodically attempts to produce something, consuming hunger on success.
-/// The actual product is supplied by a handler for <see cref="HungerProductionEvent"/>.
+/// The actual product is supplied by a handler for <see cref="ProductionAttemptEvent"/>.
 /// </summary>
 [RegisterComponent, AutoGenerateComponentPause]
 [Access(typeof(HungerProductionSystem))]
@@ -83,7 +83,7 @@ public enum HungerProductionFailure : byte
 /// Raised on the entity with <see cref="HungerProductionComponent"/> when production is attempted.
 /// </summary>
 [ByRefEvent]
-public record struct HungerProductionEvent(EntityUid Owner)
+public record struct ProductionAttemptEvent(EntityUid Owner)
 {
     public bool Produced;
 }

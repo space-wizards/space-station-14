@@ -69,7 +69,7 @@ public sealed partial class HungerProductionSystem : EntitySystem
             return false;
         }
 
-        var ev = new HungerProductionEvent(owner);
+        var ev = new ProductionAttemptEvent(owner);
         RaiseLocalEvent(ent.Owner, ref ev);
         if (!ev.Produced)
             return false;
