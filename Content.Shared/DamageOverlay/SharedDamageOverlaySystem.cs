@@ -90,7 +90,6 @@ public abstract partial class SharedDamageOverlaySystem : EntitySystem
                 {
                     foreach (var painDamageType in injurable.PainDamageGroups)
                     {
-
                         damagePerGroup.TryGetValue(painDamageType, out var painDamage);
                         painLevel += painDamage;
                     }
