@@ -4,6 +4,7 @@
 rcd-component-examine-mode-details = It's currently set to '{$mode}' mode.
 rcd-component-examine-build-details = It's currently set to build {MAKEPLURAL($name)}.
 
+
 ### Interaction Messages
 
 # Mode change
