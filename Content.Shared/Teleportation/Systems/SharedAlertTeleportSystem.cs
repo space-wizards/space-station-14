@@ -27,7 +27,7 @@ public abstract partial class SharedAlertTeleportSystem : EntitySystem
         var query = EntityQueryEnumerator<AlertTeleportComponent>();
         var curTime = _timing.CurTime;
 
-        while (query.MoveNext(out var uid, out var comp))
+        while (query.MoveNext(out var _, out var comp))
         {
             foreach (var (alert, data) in comp.Targets)
             {
