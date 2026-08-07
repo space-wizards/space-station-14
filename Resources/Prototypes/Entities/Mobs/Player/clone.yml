@@ -177,7 +177,6 @@
   components:
   - Plant
   - PlantChemicals
-  - PlantTraits
   - PlantGrowth
   - PlantAtmospheric
   - PlantConsumeExudeGas
