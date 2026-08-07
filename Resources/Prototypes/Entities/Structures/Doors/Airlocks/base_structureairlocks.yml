@@ -152,7 +152,11 @@
   - type: RadiationBlocker
     resistance: 3
   - type: Occluder
-    boundingBox: "-0.5,-0.470,0.5,0.470"
+    polygon:
+    - "-0.5, 0.5"
+    - "0.5, 0.5"
+    - "0.5, -0.5"
+    - "-0.5, -0.5"
   - type: Damageable
     damageModifierSet: StrongMetallic
   - type: Injurable

@@ -115,7 +115,7 @@
       visible: false
   - type: Icon
     sprite: Structures/Walls/grille-diagonal.rsi
-    state: grille_diagonal
+    state: state0
   - type: IconSmooth
     index: 0
     mode: Diagonal

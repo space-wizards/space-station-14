@@ -342,8 +342,8 @@
   description: A rocky asteroid.
   components:
   - type: Icon
-    sprite: Structures/Walls/stone.rsi
-    state: ironrock
+    sprite: Structures/Walls/stone-ironrock.rsi
+    state: full
   - type: Sprite
     sprite: Structures/Walls/stone-ironrock.rsi
 

@@ -4,9 +4,6 @@
   name: tiles-green-circuit-floor
   sprite: /Textures/Tiles/Circuit/circuit-green.png
   variants: 2
-  placementVariants:
-  - 1.0
-  - 1.0
   footstepSounds:
     collection: FootstepHull
   itemDrop: FloorTileItemGCircuit
@@ -17,9 +14,6 @@
   name: tiles-blue-circuit-floor
   sprite: /Textures/Tiles/Circuit/circuit-blue.png
   variants: 2
-  placementVariants:
-  - 1.0
-  - 1.0
   footstepSounds:
     collection: FootstepHull
   itemDrop: FloorTileItemBCircuit
@@ -30,9 +24,6 @@
   name: tiles-red-circuit-floor
   sprite: /Textures/Tiles/Circuit/circuit-red.png
   variants: 2
-  placementVariants:
-  - 1.0
-  - 1.0
   footstepSounds:
     collection: FootstepHull
   itemDrop: FloorTileItemRCircuit

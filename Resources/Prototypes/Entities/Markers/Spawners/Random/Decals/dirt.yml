@@ -33,8 +33,6 @@
     - FloorAstroSnow
     - FloorAstroAsteroidSand
     - FloorFlesh
-    - FloorAsteroidSandUnvariantized
-    - FloorAsteroidIronsandUnvariantized
     - FloorCave
     - FloorAsteroidIronsand
     - FloorAsteroidTile
@@ -100,8 +98,6 @@
     - FloorAstroSnow
     - FloorAstroAsteroidSand
     - FloorFlesh
-    - FloorAsteroidSandUnvariantized
-    - FloorAsteroidIronsandUnvariantized
     - FloorCave
     - FloorAsteroidIronsand
     - FloorAsteroidTile

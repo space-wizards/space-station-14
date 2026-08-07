@@ -9,12 +9,6 @@
 
 - type: stack
   parent: BaseTileStack
-  id: FloorTileHydro
-  name: stack-hydro-tile
-  spawn: FloorTileItemHydro
-
-- type: stack
-  parent: BaseTileStack
   id: FloorTileLime
   name: stack-lime-tile
   spawn: FloorTileItemLime

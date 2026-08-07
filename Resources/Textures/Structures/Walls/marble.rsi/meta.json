@@ -41,6 +41,38 @@
         {
             "name": "wall7",
             "directions": 4
+        },
+        {
+            "name": "wall-border0",
+            "directions": 4
+        },
+        {
+            "name": "wall-border1",
+            "directions": 4
+        },
+        {
+            "name": "wall-border2",
+            "directions": 4
+        },
+        {
+            "name": "wall-border3",
+            "directions": 4
+        },
+        {
+            "name": "wall-border4",
+            "directions": 4
+        },
+        {
+            "name": "wall-border5",
+            "directions": 4
+        },
+        {
+            "name": "wall-border6",
+            "directions": 4
+        },
+        {
+            "name": "wall-border7",
+            "directions": 4
         }
     ]
 }

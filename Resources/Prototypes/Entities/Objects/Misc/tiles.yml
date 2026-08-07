@@ -526,22 +526,6 @@
     stackType: FloorTileFreezer
 
 - type: entity
-  name: hydro tile
-  parent: FloorTileItemBase
-  id: FloorTileItemHydro
-  components:
-  - type: Sprite
-    state: hydro
-  - type: Item
-    heldPrefix: hydro
-  - type: FloorTile
-    outputs:
-      - Plating
-      - FloorHydro
-  - type: Stack
-    stackType: FloorTileHydro
-
-- type: entity
   name: bar tile
   parent: FloorTileItemBase
   id: FloorTileItemBar

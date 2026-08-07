@@ -1052,4 +1052,7 @@ FloorDesertChasm: FloorChasmEntity
 FloorChromiteChasm: FloorChasmEntity
 
 # 2026-08-06
+FloorTileItemHydro: null
 WallRiveted: WallMarble
+WallSpawnAsteroidBananium: null
+WallSpawnAsteroidBananiumCrab: null
