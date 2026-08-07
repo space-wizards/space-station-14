@@ -9,9 +9,10 @@
     itemIconStyle: BigAction
     sound: !type:SoundPathSpecifier
       path: /Audio/Magic/blink.ogg
-    icon:
-      sprite: Objects/Magic/magicactions.rsi
-      state: blink
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: blink
   - type: TargetAction
     range: 16 # default examine-range.
     # ^ should probably add better validation that the clicked location is on the users screen somewhere,
@@ -31,9 +32,10 @@
     useDelay: 15
     sound: !type:SoundPathSpecifier
       path: /Audio/Magic/Eldritch/voidblink.ogg
-    icon:
-      sprite: Objects/Magic/Eldritch/eldritch_actions.rsi
-      state: voidblink
+  - type: Sprite
+    sprite: Objects/Magic/Eldritch/eldritch_actions.rsi
+    layers:
+    - state: voidblink
   - type: TargetAction
     accessMask:
     - Opaque

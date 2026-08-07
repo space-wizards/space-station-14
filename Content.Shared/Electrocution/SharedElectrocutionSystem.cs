@@ -1,11 +1,13 @@
 using Content.Shared.Inventory;
 using Content.Shared.StatusEffect;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Electrocution
 {
     public abstract partial class SharedElectrocutionSystem : EntitySystem
     {
         [Dependency] private SharedAppearanceSystem _appearance = default!;
+        [Dependency] private IGameTiming _timing = default!;
 
         public override void Initialize()
         {
@@ -14,6 +16,8 @@ namespace Content.Shared.Electrocution
             SubscribeLocalEvent<InsulatedComponent, ElectrocutionAttemptEvent>(OnInsulatedElectrocutionAttempt);
             // as long as legally distinct electric-mice are never added, this should be fine (otherwise a mouse-hat will transfer it's power to the wearer).
             SubscribeLocalEvent<InsulatedComponent, InventoryRelayedEvent<ElectrocutionAttemptEvent>>((e, c, ev) => OnInsulatedElectrocutionAttempt(e, c, ev.Args));
+
+            SubscribeLocalEvent<ElectrifiedComponent, MapInitEvent>(OnInit);
         }
 
         /// <summary>
@@ -82,6 +86,12 @@ namespace Content.Shared.Electrocution
         private void OnInsulatedElectrocutionAttempt(EntityUid uid, InsulatedComponent insulated, ElectrocutionAttemptEvent args)
         {
             args.SiemensCoefficient *= insulated.Coefficient;
+        }
+
+        private void OnInit(Entity<ElectrifiedComponent> entity, ref MapInitEvent args)
+        {
+            entity.Comp.NextShock = _timing.CurTime;
+            Dirty(entity);
         }
     }
 }
