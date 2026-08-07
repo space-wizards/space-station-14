@@ -42,7 +42,8 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
     {
         SetEyelidsColor(ent, args.Base);
 
-        _actionsSystem.AddAction(ent.Owner, ref ent.Comp.EyeToggleActionEntity, ent.Comp.EyeToggleAction);
+        if (ent.Comp.EyeToggleActionEntity == null)
+            _actionsSystem.AddAction(ent.Owner, ref ent.Comp.EyeToggleActionEntity, ent.Comp.EyeToggleAction);
     }
 
     [SubscribeLocalEvent]
@@ -50,7 +51,8 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
     {
         SetEyelidsColor(ent, args.Args.Base);
 
-        _actionsSystem.AddAction(args.Body.Owner, ref ent.Comp.EyeToggleActionEntity, ent.Comp.EyeToggleAction);
+        if (ent.Comp.EyeToggleActionEntity == null)
+            _actionsSystem.AddAction(args.Body.Owner, ref ent.Comp.EyeToggleActionEntity, ent.Comp.EyeToggleAction);
     }
 
     [SubscribeLocalEvent]
@@ -60,8 +62,8 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
             return;
         SetEyelidsColor(ent, visualOrgan.Profile);
 
-
-        _actionsSystem.AddAction(args.Body.Owner, ref ent.Comp.EyeToggleActionEntity, ent.Comp.EyeToggleAction);
+        if (ent.Comp.EyeToggleActionEntity == null)
+            _actionsSystem.AddAction(args.Body.Owner, ref ent.Comp.EyeToggleActionEntity, ent.Comp.EyeToggleAction);
     }
 
     private void SetEyelidsColor(Entity<EyeBlinkingComponent> ent)
