@@ -1,4 +1,6 @@
+using Content.Client.DisplacementMap;
 using Content.Shared.Body;
+using Content.Shared.DisplacementMap;
 using Content.Shared.Eye.Blinking;
 using Content.Shared.Humanoid;
 using Content.Shared.StatusEffectNew;
@@ -20,6 +22,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
     [Dependency] private StatusEffectsSystem _statusEffects = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private DisplacementMapSystem _displacement = default!;
 
     [SubscribeNetworkEvent]
     private void OnOpenEyes(OpenEyesEvent ev)
@@ -77,7 +80,6 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         if (!_timing.IsFirstTimePredicted)
             return;
 
-        Logger.Info($"EyeBlinkingSystem: Received InitEyesEvent for entity {ev.NetEntity} with eyelid color {ev.EyelidsColor}");
         var ent = GetEntity(ev.NetEntity);
 
         if (!ent.IsValid() || !TryComp<EyeBlinkingComponent>(ent, out var blinkingComp))
@@ -102,7 +104,6 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
     /// <param name="body"></param>
     private void InitEyeBlinking(Entity<EyeBlinkingComponent> ent, EntityUid body)
     {
-        Logger.Info($"EyeBlinkingSystem: Initializing eyelids for entity {ent.Owner} with body {body}");
         if (!TryComp<SpriteComponent>(body, out var sprite))
             return;
 
@@ -112,7 +113,6 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         ent.Comp.Init = true;
 
         ent.Comp.Body = body;
-        Logger.Info($"ent comp set body to {body} : {ent.Comp.Body}");
 
         InitEyelidsLayers(ent, body);
 
@@ -171,6 +171,16 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         var rsiCollection = rsiRes.RSI;
         int i = 0;
 
+        DisplacementDataPrototype? displacementProto = null;
+
+        if (TryComp<VisualOrganComponent>(ent.Owner, out var visualOrgan))
+        {
+            if (visualOrgan.Displacement != null)
+            {
+                ProtoMan.Resolve<DisplacementDataPrototype>(visualOrgan.Displacement, out displacementProto);
+            }
+        }
+
         // Creates a new layer for each eyelid state defined in the RSI.
         foreach (var state in rsiCollection)
         {
@@ -186,6 +196,11 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
             _sprite.LayerSetSprite((body, comp), layerId, specifier);
             _sprite.LayerSetColor((body, comp), layerId, eyelidColor);
             _sprite.LayerSetVisible((body, comp), layerId, false);
+
+            if (displacementProto != null)
+            {
+                _displacement.TryAddDisplacement(displacementProto.Displacement, (body, comp), targetLayer + i + 1, layerId, out _);
+            }
 
             ent.Comp.Eyelids.Add(new EyelidState(layerId));
 
