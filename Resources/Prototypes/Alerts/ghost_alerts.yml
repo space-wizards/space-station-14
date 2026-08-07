@@ -10,62 +10,62 @@
   rightClickEvent: !type:ClearAlertEvent
 
 - type: alert
-  id: BaseGhostRoleAlert
   parent: BaseGhostTeleportAlert
+  id: BaseGhostRoleAlert
   name: ghost-alert-base-role-name
   description: ghost-alert-base-role-desc
 
 - type: alert
-  id: SpaceNinja
   parent: BaseGhostRoleAlert
+  id: SpaceNinja
   icons:
   - sprite: Objects/Weapons/Melee/energykatana.rsi
     state: icon
   name: ghost-alert-space-ninja-name
 
 - type: alert
-  id: SpaceDragon
   parent: BaseGhostRoleAlert
+  id: SpaceDragon
   icons:
   - sprite: Objects/Fun/figurines.rsi
     state: spacedragon
   name: ghost-alert-space-dragon-name
 
 - type: alert
-  id: Xenoborgs
   parent: BaseGhostRoleAlert
+  id: Xenoborgs
   icons:
   - sprite: Mobs/Silicon/mothership_core.rsi
     state: core-idle
   name: ghost-alert-mothership-core-name
 
 - type: alert
-  id: Wizard
   parent: BaseGhostRoleAlert
+  id: Wizard
   icons:
   - sprite: Clothing/Head/Hats/wizardhat.rsi
     state: icon
   name: ghost-alert-wizard-name
 
 - type: alert
-  id: NukeOp
   parent: BaseGhostRoleAlert
+  id: NukeOp
   icons:
   - sprite: /Textures/Objects/Weapons/Guns/SMGs/c20r.rsi
     state: icon
   name: ghost-alert-nuke-op-name
 
 - type: alert
-  id: ImmovableRod
   parent: BaseGhostTeleportAlert
+  id: ImmovableRod
   icons:
   - sprite: Objects/Fun/immovable_rod.rsi
     state: icon
   name: ghost-alert-immovable-rod-name
 
 - type: alert
-  id: NukeArm
   parent: BaseGhostTeleportAlert
+  id: NukeArm
   icons:
   - sprite: Objects/Devices/nuke.rsi
     state: nuclearbomb_base
