@@ -146,12 +146,9 @@ public sealed partial class CloningSystem : SharedCloningSystem
             RemComp(clone, componentRegistration.Type);
             if (TryComp(original, componentRegistration.Type, out var sourceComp)) // Does the original have this component?
             {
-                CopyComp(original, clone, sourceComp, );
+                CopyComp(original, clone, sourceComp, _context);
             }
         }
-
-        var cloningEv = new CloningEvent(settings, clone);
-        RaiseLocalEvent(original, ref cloningEv); // used for datafields that cannot be directly copied using CopyComp
     }
 
     public override void CopyEquipment(
