@@ -155,6 +155,7 @@
       map: [ "enum.GunVisualLayers.Mag" ]
   - type: Gun
     fireRate: 0.5
+    projectileSpeed: 5 # needs to be the same as the speed of the chasing walk component of the projectile
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/rpgfire.ogg
   - type: BallisticAmmoProvider
