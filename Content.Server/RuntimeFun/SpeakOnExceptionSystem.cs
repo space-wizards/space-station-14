@@ -1,6 +1,6 @@
 using Content.Server.Chat.Systems;
-using Content.Server.Speech;
 using Content.Shared.Chat;
+using Content.Shared.Speech.EntitySystems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -12,13 +12,13 @@ namespace Content.Server.RuntimeFun;
 ///     System for the <see cref="SpeakOnExceptionComponent"/>. Deals with getting the latest error log and making
 ///     entities with that component speak.
 /// </summary>
-public sealed class SpeakOnExceptionSystem : EntitySystem
+public sealed partial class SpeakOnExceptionSystem : EntitySystem
 {
-    [Dependency] private readonly ILogManager _log = default!;
-    [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private ILogManager _log = default!;
+    [Dependency] private ChatSystem _chat = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private  IPrototypeManager _proto = default!;
 
     // Special log handler that just saves the latest error.
     private SpeakOnExceptionLogHandler _logHandler = default!;
