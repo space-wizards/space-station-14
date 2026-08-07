@@ -161,3 +161,23 @@
       - Blindable
       requireAll: true
   - type: FlashedStatusEffect
+
+# Every clumsy status for the silly monkey and the station clown :o)
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectSuperClumsy
+  name: clumsy
+  components:
+  - type: ClumsyCatchStatusEffect
+    failDamage:
+      types:
+        Blunt: 1
+  - type: ClumsyDefibStatusEffect
+  - type: ClumsyGunStatusEffect
+    failDamage:
+      types: # Arbitrary values from old ClumsyComponent
+        Blunt: 5
+        Piercing: 4
+        Heat: 3
+  - type: ClumsyInjectorStatusEffect
+  - type: ClumsyVaultStatusEffect

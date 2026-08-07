@@ -28,6 +28,7 @@ public sealed partial class ClumsyGunStatusEffectComponent : Component
     /// <summary>
     /// Noise to play after failing to shoot a gun. Boom!
     /// </summary>
+    /// <remarks>This should probably be on the gun itself, but that's a tall order.</remarks>
     [DataField]
     public SoundSpecifier? GunShootFailSound = new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/bang.ogg");
 

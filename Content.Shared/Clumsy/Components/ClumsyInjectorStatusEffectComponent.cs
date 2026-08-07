@@ -5,12 +5,12 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Clumsy.Components;
 
 /// <summary>
-/// Afflicted entity will occasionally use hyposprays on themselves instead of their target.
+/// Afflicted entity will occasionally use syringes on themselves instead of their target.
 /// </summary>
 /// <seealso cref="InjectorComponent"/>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(ClumsyStatusEffectSystem))]
-public sealed partial class ClumsyHypoStatusEffectComponent : Component
+public sealed partial class ClumsyInjectorStatusEffectComponent : Component
 {
     /// <summary>
     /// How often to fail.
