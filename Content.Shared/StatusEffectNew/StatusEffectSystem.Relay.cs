@@ -68,8 +68,11 @@ public sealed partial class StatusEffectsSystem
     public void RelayEvent<T>(Entity<StatusEffectContainerComponent> statusEffect, ref T args) where T : struct
     {
         // this copies the by-ref event if it is a struct
-        var ev = new StatusEffectRelayedEvent<T>(args);
-        foreach (var activeEffect in statusEffect.Comp.ActiveStatusEffects?.ContainedEntities ?? [])
+        var ev = new StatusEffectRelayedEvent<T>(args, statusEffect);
+
+        // Prevent a collection modified enumeration error by copying the list in case a status adds another status
+        var list = new List<EntityUid>(statusEffect.Comp.ActiveStatusEffects?.ContainedEntities ?? []);
+        foreach (var activeEffect in list)
         {
             RaiseLocalEvent(activeEffect, ref ev);
         }
@@ -80,8 +83,11 @@ public sealed partial class StatusEffectsSystem
     public void RelayEvent<T>(Entity<StatusEffectContainerComponent> statusEffect, T args) where T : class
     {
         // this copies the by-ref event if it is a struct
-        var ev = new StatusEffectRelayedEvent<T>(args);
-        foreach (var activeEffect in statusEffect.Comp.ActiveStatusEffects?.ContainedEntities ?? [])
+        var ev = new StatusEffectRelayedEvent<T>(args, statusEffect);
+
+        // Prevent a collection modified enumeration error by copying the list in case a status adds another status
+        var list = new List<EntityUid>(statusEffect.Comp.ActiveStatusEffects?.ContainedEntities ?? []);
+        foreach (var activeEffect in list)
         {
             RaiseLocalEvent(activeEffect, ref ev);
         }
@@ -92,4 +98,4 @@ public sealed partial class StatusEffectsSystem
 /// Event wrapper for relayed events.
 /// </summary>
 [ByRefEvent]
-public record struct StatusEffectRelayedEvent<TEvent>(TEvent Args);
+public record struct StatusEffectRelayedEvent<TEvent>(TEvent Args, EntityUid AppliedTo);
