@@ -88,7 +88,9 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
 
         ent.Comp.BlinkSkinColorMultiplier = cloneEyes.BlinkSkinColorMultiplier;
 
-        SetEyelidsColor(ent, ent.Comp.EyelidsColor);
+        Dirty(ent);
+        var ev = new InitEyesEvent(GetNetEntity(ent.Owner), ent.Comp.EyelidsColor ?? Color.Red); // Use red as a fallback color if EyelidsColor is null. This not should happen, but just in case.
+        RaiseNetworkEvent(ev);
 
         if (ent.Comp.EyeToggleActionEntity == null)
             _actionsSystem.AddAction(args.Body.Owner, ref ent.Comp.EyeToggleActionEntity, ent.Comp.EyeToggleAction);
