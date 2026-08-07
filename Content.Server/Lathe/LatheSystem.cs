@@ -283,9 +283,9 @@ namespace Content.Server.Lathe
                     producing = node.Value.Recipe;
             }
 
-            var recipies = ((updateWhat & LatheUpdateState.UpdateWhat.Recipes) != 0) ? GetAvailableRecipes(uid, component) : null;
-            var queue = ((updateWhat & LatheUpdateState.UpdateWhat.ProductionQueue) != 0) ? component.Queue.ToArray() : null;
-            var state = new LatheUpdateState(updateWhat, recipies, queue, producing);
+            var recipes = (updateWhat & LatheUpdateState.UpdateWhat.Recipes) != 0 ? GetAvailableRecipes(uid, component) : null;
+            var queue = (updateWhat & LatheUpdateState.UpdateWhat.ProductionQueue) != 0 ? component.Queue.ToArray() : null;
+            var state = new LatheUpdateState(updateWhat, recipes, queue, producing);
             _uiSys.SetUiState(uid, LatheUiKey.Key, state);
         }
 

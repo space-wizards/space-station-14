@@ -53,9 +53,9 @@ namespace Content.Client.Lathe.UI
 
                     if ((msg.UpdateFlags & LatheUpdateState.UpdateWhat.ProductionQueue) != 0)
                     {
-                        if (msg.Queue != null)
+                        if (msg.Queue is { } queue)
                         {
-                            _menu?.PopulateQueueList(msg.Queue);
+                            _menu?.PopulateQueueList(queue);
                         }
                         _menu?.SetQueueInfo(msg.CurrentlyProducing);
                     }

@@ -11,8 +11,8 @@ public sealed class LatheUpdateState : BoundUserInterfaceState
     public enum UpdateWhat
     {
         Recipes = 1 << 0,
-        ProductionQueue = 1 << 2,
-        Materials = 1 << 3,
+        ProductionQueue = 1 << 1,
+        Materials = 1 << 2,
         All = Recipes | ProductionQueue | Materials
     }
 
