@@ -86,8 +86,8 @@ public abstract partial class SharedAlertTeleportSystem : EntitySystem
     /// Adds a teleport alert for a specific entity
     /// </summary>
     /// <param name="ent">The entity to which the alert will be added</param>
-    /// <param name="target">The target to which the entity will teleport when the alert is pressed</param>
-    /// <param name="alert">The alert that the entity will receive</param>
+    /// <param name="target">The target to which <c>ent</c> will teleport when the alert is pressed</param>
+    /// <param name="alert">The alert that <c>ent</c> will receive</param>
     /// <param name="cooldown">Alert lifetime</param>
     public void AddAlertTeleport(Entity<AlertTeleportComponent> ent, EntityUid target, ProtoId<AlertPrototype> alert, TimeSpan cooldown)
     {
