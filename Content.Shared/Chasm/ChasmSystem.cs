@@ -26,6 +26,7 @@ public sealed partial class ChasmSystem : EntitySystem
     [Dependency] private EntityQuery<ChasmComponent> _chasmQuery;
     [Dependency] private EntityQuery<ChasmFallingComponent> _chasmFallingQuery;
 
+    /// <inheritdoc />
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -102,6 +103,12 @@ public sealed partial class ChasmSystem : EntitySystem
             RemCompDeferred<ChasmFallingComponent>(fallingEnt);
         }
     }
+
+    [SubscribeLocalEvent]
+    private static void OnUpdateCanMove(Entity<ChasmFallingComponent> entity, ref UpdateCanMoveEvent args)
+    {
+        args.Cancel();
+    }
     #endregion Event Handlers
 
     #region Public API
@@ -149,10 +156,4 @@ public sealed partial class ChasmSystem : EntitySystem
     }
 
     #endregion Public API
-
-    [SubscribeLocalEvent]
-    private static void OnUpdateCanMove(Entity<ChasmFallingComponent> entity, ref UpdateCanMoveEvent args)
-    {
-        args.Cancel();
-    }
 }
