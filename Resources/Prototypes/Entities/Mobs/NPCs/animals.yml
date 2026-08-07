@@ -272,14 +272,15 @@
       - ReagentId: Blood
         Quantity: 100
   - type: EggLayer
-    eggSpawn:
-    - id: FoodEgg
   - type: HungerProduction
     delay: 60
     delayMax: 120
     hungerUsage: 60
     minimumHunger: 60
     automaticForPlayers: false
+  - type: EntityProducer
+    spawns:
+    - id: FoodEgg
   - type: ExaminableHunger
   - type: ReplacementAccent
     accent: chicken
@@ -729,14 +730,15 @@
       - ReagentId: Blood
         Quantity: 100
   - type: EggLayer
-    eggSpawn:
-    - id: FoodEgg
   - type: HungerProduction
     delay: 60
     delayMax: 120
     hungerUsage: 60
     minimumHunger: 60
     automaticForPlayers: false
+  - type: EntityProducer
+    spawns:
+    - id: FoodEgg
   - type: ExaminableHunger
   - type: ReplacementAccent
     accent: duck

@@ -3,18 +3,15 @@ using Content.Server.Animals.Components;
 using Content.Server.Popups;
 using Content.Shared.Actions.Events;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Storage;
 using Robust.Server.Audio;
-using Robust.Shared.Random;
 
 namespace Content.Server.Animals.Systems;
 
 /// <summary>
-/// Handles egg production and the player action that triggers it.
+/// Handles the egg-laying action and feedback after eggs are produced.
 /// </summary>
 public sealed partial class EggLayerSystem : EntitySystem
 {
-    [Dependency] private IRobustRandom _random = default!;
     [Dependency] private ActionsSystem _actions = default!;
     [Dependency] private AudioSystem _audio = default!;
     [Dependency] private HungerProductionSystem _hungerProduction = default!;
@@ -36,20 +33,13 @@ public sealed partial class EggLayerSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnProduce(Entity<EggLayerComponent> ent, ref ProductionAttemptEvent args)
+    private void OnEntitiesProduced(Entity<EggLayerComponent> ent, ref EntitiesProducedEvent args)
     {
-        foreach (var spawn in EntitySpawnCollection.GetSpawns(ent.Comp.EggSpawn, _random))
-        {
-            SpawnNextToOrDrop(spawn, args.Owner);
-        }
-
         _audio.PlayPvs(ent.Comp.EggLaySound, args.Owner);
         _popup.PopupEntity(
             Loc.GetString("action-popup-lay-egg-user"),
             Loc.GetString("action-popup-lay-egg-others", ("entity", Identity.Entity(args.Owner, EntityManager))),
             args.Owner,
             args.Owner);
-
-        args.Produced = true;
     }
 }
