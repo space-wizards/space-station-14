@@ -13,8 +13,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
 
-// todo: remove this stinky LINQy
-
 namespace Content.Shared.Forensics.Systems;
 
 public abstract partial class SharedForensicScannerSystem : EntitySystem
@@ -27,18 +25,6 @@ public abstract partial class SharedForensicScannerSystem : EntitySystem
     [Dependency] private PaperSystem _paperSystem = default!;
     [Dependency] private SharedPopupSystem _popupSystem = default!;
     [Dependency] private SharedUserInterfaceSystem _ui = default!;
-
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<ForensicScannerComponent, AfterInteractEvent>(OnAfterInteract);
-        SubscribeLocalEvent<ForensicScannerComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
-        SubscribeLocalEvent<ForensicScannerComponent, BeforeActivatableUIOpenEvent>(OnBeforeActivatableUIOpen);
-        SubscribeLocalEvent<ForensicScannerComponent, GetVerbsEvent<UtilityVerb>>(OnUtilityVerb);
-
-        SubscribeLocalEvent<ForensicScannerComponent, ForensicScannerDoAfterEvent>(OnDoAfter);
-        SubscribeLocalEvent<ForensicScannerComponent, ForensicScannerPrintMessage>(OnPrint);
-        SubscribeLocalEvent<ForensicScannerComponent, ForensicScannerClearMessage>(OnClear);
-    }
 
     /// <remarks>
     /// Hosts logic common between OnUtilityVerb and OnAfterInteract.
@@ -57,6 +43,7 @@ public abstract partial class SharedForensicScannerSystem : EntitySystem
         });
     }
 
+    [SubscribeLocalEvent]
     private void OnUtilityVerb(Entity<ForensicScannerComponent> scanner, ref GetVerbsEvent<UtilityVerb> args)
     {
         if (!args.CanInteract || !args.CanAccess)
@@ -77,6 +64,7 @@ public abstract partial class SharedForensicScannerSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
+    [SubscribeLocalEvent]
     private void OnAfterInteract(Entity<ForensicScannerComponent> scanner, ref AfterInteractEvent args)
     {
         if (args.Target == null || !args.CanReach)
@@ -85,6 +73,7 @@ public abstract partial class SharedForensicScannerSystem : EntitySystem
         StartScan(scanner, args.User, args.Target.Value);
     }
 
+    [SubscribeLocalEvent]
     private void OnAfterInteractUsing(Entity<ForensicScannerComponent> scanner, ref AfterInteractUsingEvent args)
     {
         if (args.Handled || !args.CanReach)
@@ -101,7 +90,7 @@ public abstract partial class SharedForensicScannerSystem : EntitySystem
                 continue;
 
             _audioSystem.PlayPredicted(component.SoundMatch, scanner.Owner, args.User);
-            _popupSystem.PopupPredicted(Loc.GetString("forensic-scanner-match-fiber"), scanner, args.User);
+            _popupSystem.PopupEntity(Loc.GetString("forensic-scanner-match-fiber"), scanner, args.User);
             return;
         }
 
@@ -111,12 +100,12 @@ public abstract partial class SharedForensicScannerSystem : EntitySystem
                 continue;
 
             _audioSystem.PlayPredicted(component.SoundMatch, scanner.Owner, args.User);
-            _popupSystem.PopupPredicted(Loc.GetString("forensic-scanner-match-fingerprint"), scanner, args.User);
+            _popupSystem.PopupEntity(Loc.GetString("forensic-scanner-match-fingerprint"), scanner, args.User);
             return;
         }
 
         _audioSystem.PlayPredicted(component.SoundNoMatch, scanner.Owner, args.User);
-        _popupSystem.PopupPredicted(Loc.GetString("forensic-scanner-match-none"), scanner, args.User);
+        _popupSystem.PopupEntity(Loc.GetString("forensic-scanner-match-none"), scanner, args.User);
     }
 
     protected void OpenUi(EntityUid user, Entity<ForensicScannerComponent> scanner)
@@ -125,6 +114,7 @@ public abstract partial class SharedForensicScannerSystem : EntitySystem
         UpdateUi(scanner);
     }
 
+    [SubscribeLocalEvent]
     private void OnDoAfter(Entity<ForensicScannerComponent> scanner, ref ForensicScannerDoAfterEvent args)
     {
         if (args.Handled || args.Cancelled)
@@ -136,6 +126,7 @@ public abstract partial class SharedForensicScannerSystem : EntitySystem
         OpenUi(args.Args.User, scanner);
     }
 
+    [SubscribeLocalEvent]
     private void OnPrint(Entity<ForensicScannerComponent> scanner, ref ForensicScannerPrintMessage args)
     {
         var user = args.Actor;
@@ -188,17 +179,15 @@ public abstract partial class SharedForensicScannerSystem : EntitySystem
         }
 
         _paperSystem.SetContent((printed, paperComp), text.ToString());
-        _audioSystem.PlayPredicted(component.SoundPrint, scanner, user,
-            AudioParams.Default
-                .WithVariation(0.25f)
-                .WithVolume(3f)
-                .WithRolloffFactor(2.8f)
-                .WithMaxDistance(4.5f));
+        var audioParams = component.SoundPrint?.Params ?? AudioParams.Default;
+        audioParams = audioParams.WithVariation(0.25f).AddVolume(3f).WithRolloffFactor(2.8f).WithMaxDistance(4.5f);
+        _audioSystem.PlayPvs(component.SoundPrint, scanner, audioParams);
 
         component.PrintReadyAt = _gameTiming.CurTime + component.PrintCooldown;
         DirtyField(scanner.AsNullable(), nameof(component.PrintReadyAt));
     }
 
+    [SubscribeLocalEvent]
     private void OnClear(Entity<ForensicScannerComponent> scanner, ref ForensicScannerClearMessage args)
     {
         var component = scanner.Comp;
@@ -212,6 +201,7 @@ public abstract partial class SharedForensicScannerSystem : EntitySystem
         UpdateUi(scanner);
     }
 
+    [SubscribeLocalEvent]
     private void OnBeforeActivatableUIOpen(Entity<ForensicScannerComponent> scanner, ref BeforeActivatableUIOpenEvent args)
     {
         UpdateUi(scanner);

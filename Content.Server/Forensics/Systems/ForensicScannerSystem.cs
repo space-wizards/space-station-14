@@ -6,6 +6,8 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Forensics.Systems;
 
+// todo: remove this stinky LINQy
+
 public sealed partial class ForensicScannerSystem : SharedForensicScannerSystem
 {
     [Dependency] private ForensicsSystem _forensicsSystem = default!;
