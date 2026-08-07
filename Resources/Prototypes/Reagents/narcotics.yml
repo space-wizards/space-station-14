@@ -464,6 +464,7 @@
   color: "#FF36AE"
   metabolisms:
     Bloodstream:
+      metabolismRate: 1.0
       effects:
       # OD
       - !type:HealthChange
@@ -475,13 +476,12 @@
           types:
             Cellular: 1.5
             Poison: 1.5
-
       # Bad effect
       - !type:HealthChange
         damage:
           types:
             Cellular: 0.05
-      - !type:AdjustReagent
+      - !type:AdjustReagent # TODO: MAKE THIS USE METABOLITES INSTEAD!!!
         reagent: Hydroxysomnolene
         amount: 1
 
@@ -510,7 +510,6 @@
       - !type:ModifyStatusEffect
         effectProto: StatusEffectSeeingRainbow
         time: 10
-
       # Side effects
       - !type:GenericStatusEffect
         key: Stutter
@@ -526,8 +525,7 @@
   flavor: bitter
   color: "#b51472"
   metabolisms:
-    Bloodstream:
-      metabolismRate: 0.5
+    Bloodstream: # TODO: Make this metabolize as a metabolite!
       effects:
       # Slow
       - !type:MovementSpeedModifier
