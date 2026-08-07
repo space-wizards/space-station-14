@@ -3,7 +3,6 @@ using System.Linq;
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server.Stack;
-using Content.Shared.Stacks;
 using Robust.Shared.GameObjects;
 using static Content.IntegrationTests.Tests.Stacks.StackTestPrototypes;
 
@@ -16,7 +15,7 @@ public sealed class StackTest : GameTest
     [SidedDependency(Side.Server)] private readonly StackSystem _sStackSystem = default!;
 
     [Test]
-    [Description("Tests for SharedStackSystem.SetCount .")]
+    [Description("Tests for SharedStackSystem.SetCount.")]
     public async Task SetTest()
     {
         var stack = await Spawn(StackEnt1);
@@ -26,15 +25,15 @@ public sealed class StackTest : GameTest
         Assert.That(_sStackSystem.GetCount(stack), Is.EqualTo(2));
 
         // Lowering the count
-        await Server.WaitPost(() =>_sStackSystem.SetCount((stack, null), 1));
+        await Server.WaitPost(() => _sStackSystem.SetCount((stack, null), 1));
         Assert.That(_sStackSystem.GetCount(stack), Is.EqualTo(1));
 
         // Setting above the max count clamps to max
-        await Server.WaitPost(() =>_sStackSystem.SetCount((stack, null), 31));
+        await Server.WaitPost(() => _sStackSystem.SetCount((stack, null), 31));
         Assert.That(_sStackSystem.GetCount(stack), Is.EqualTo(30));
 
         // Setting to 0 deletes the stack
-        await Server.WaitPost(() =>_sStackSystem.SetCount((stack, null), 0));
+        await Server.WaitPost(() => _sStackSystem.SetCount((stack, null), 0));
         await Server.WaitRunTicks(1);
         Assert.That(SEntMan.EntityCount, Is.Zero);
     }
@@ -79,12 +78,12 @@ public sealed class StackTest : GameTest
 
         await Server.WaitPost(() =>
         {
-             stacks =
-             [
-                 SSpawn(StackEnt1),
-                 SSpawn(StackEnt2),
-                 SSpawn(StackEnt30),
-             ];
+            stacks =
+            [
+                SSpawn(StackEnt1),
+                SSpawn(StackEnt2),
+                SSpawn(StackEnt30),
+            ];
 
             _sStackSystem.MergeStacks(ref stacks);
         });
@@ -124,7 +123,7 @@ public sealed class StackTest : GameTest
         var donor = await SpawnAtPosition(StackEnt1, map.GridCoords);
         var receiver = await SpawnAtPosition(StackEnt1, map.GridCoords);
 
-        _sStackSystem.TryMergeToContacts(donor);
+        await Server.WaitPost(() => _sStackSystem.TryMergeToContacts(donor));
 
         // Wait for queue deletion
         await Server.WaitRunTicks(1);
