@@ -3,6 +3,9 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.DamageOverlay;
 
+/// <summary>
+/// A component to add overlays to the screen of the controlling player depending on the damage the entity has taken.
+/// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 [Access(typeof(SharedDamageOverlaySystem))]
 public sealed partial class DamageOverlayComponent : Component
@@ -17,7 +20,7 @@ public sealed partial class DamageOverlayComponent : Component
     /// Controls the red vignette around the screen, which closes in as you take damage.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float PainLevel = 0f;
+    public float PainLevel;
 
     /// <summary>
     /// Controls the white vignette around the screen, which closes the closer you are to death.

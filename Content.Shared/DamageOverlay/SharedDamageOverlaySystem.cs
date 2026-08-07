@@ -9,6 +9,9 @@ using Content.Shared.Traits.Assorted;
 
 namespace Content.Shared.DamageOverlay;
 
+/// <summary>
+/// A system that updates the damage overlay when a player's damage changes.
+/// </summary>
 public abstract partial class SharedDamageOverlaySystem : EntitySystem
 {
     [Dependency] private MobThresholdSystem _mobThresholdSystem = default!;
@@ -16,7 +19,7 @@ public abstract partial class SharedDamageOverlaySystem : EntitySystem
     [Dependency] private StatusEffectsSystem _statusEffects = default!;
 
     [SubscribeLocalEvent]
-    private void OnInit(Entity<DamageOverlayComponent> entity, ref ComponentInit args)
+    private void OnStartup(Entity<DamageOverlayComponent> entity, ref ComponentStartup args)
     {
         UpdateOverlays(entity);
         RefreshOverlay(entity);

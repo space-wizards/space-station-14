@@ -8,6 +8,9 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.DamageOverlay;
 
+/// <summary>
+/// The overlay used to display how damaged a player's attached character is.
+/// </summary>
 public sealed partial class DamageOverlay : Overlay
 {
     private static readonly ProtoId<ShaderPrototype> CircleMaskShader = "GradientCircleMask";

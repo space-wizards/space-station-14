@@ -5,6 +5,7 @@ using Robust.Shared.Player;
 
 namespace Content.Client.DamageOverlay;
 
+/// <inheritdoc />
 public sealed partial class DamageOverlaySystem : SharedDamageOverlaySystem
 {
     [Dependency] private IOverlayManager _overlayManager = default!;
@@ -12,6 +13,7 @@ public sealed partial class DamageOverlaySystem : SharedDamageOverlaySystem
 
     private DamageOverlay _overlay = default!;
 
+    /// <inheritdoc />
     public override void Initialize()
     {
         base.Initialize();
@@ -36,17 +38,18 @@ public sealed partial class DamageOverlaySystem : SharedDamageOverlaySystem
     }
 
     [SubscribeLocalEvent]
-    public void OnPlayerDetached(LocalPlayerDetachedEvent args)
+    private void OnPlayerDetached(LocalPlayerDetachedEvent args)
     {
         _overlayManager.RemoveOverlay(_overlay);
     }
 
     [SubscribeLocalEvent]
-    public void OnAfterState(Entity<DamageOverlayComponent> ent, ref AfterAutoHandleStateEvent args)
+    private void OnAfterState(Entity<DamageOverlayComponent> ent, ref AfterAutoHandleStateEvent args)
     {
         RefreshOverlay(ent);
     }
 
+    /// <inheritdoc />
     protected override void RefreshOverlay(Entity<DamageOverlayComponent> entity)
     {
         base.RefreshOverlay(entity);
