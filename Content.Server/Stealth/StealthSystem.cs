@@ -28,7 +28,7 @@ public sealed partial class StealthSystem : SharedStealthSystem
             else
             {
                 if (darkStealth.ChangedVisibility > 0)
-                    return;
+                    continue;
 
                 ModifyVisibility(uid, darkStealth.LightVisibilityRate);
                 darkStealth.ChangedVisibility += darkStealth.LightVisibilityRate;
