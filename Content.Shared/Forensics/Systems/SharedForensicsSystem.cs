@@ -22,11 +22,9 @@ public abstract partial class SharedForensicsSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<CleansForensicsComponent, AfterInteractEvent>(OnAfterInteract, before: [typeof(IngestionSystem)], after: [typeof(SharedAbsorbentSystem)]);
-        SubscribeLocalEvent<CleansForensicsComponent, GetVerbsEvent<UtilityVerb>>(OnUtilityVerb);
-
-        SubscribeLocalEvent<FingerprintComponent, TryAccessFingerprintEvent>(OnFingerprintAccessAttempt);
     }
 
+    [SubscribeLocalEvent]
     private void OnAfterInteract(Entity<CleansForensicsComponent> cleanForensicsEntity, ref AfterInteractEvent args)
     {
         if (args.Handled || !args.CanReach || args.Target == null)
@@ -35,6 +33,7 @@ public abstract partial class SharedForensicsSystem : EntitySystem
         args.Handled = TryStartCleaning(cleanForensicsEntity, args.User, args.Target.Value);
     }
 
+    [SubscribeLocalEvent]
     private void OnUtilityVerb(Entity<CleansForensicsComponent> entity, ref GetVerbsEvent<UtilityVerb> args)
     {
         if (!args.CanInteract || !args.CanAccess)
@@ -103,6 +102,7 @@ public abstract partial class SharedForensicsSystem : EntitySystem
         return false;
     }
 
+    [SubscribeLocalEvent]
     private void OnFingerprintAccessAttempt(Entity<FingerprintComponent> ent, ref TryAccessFingerprintEvent args)
     {
         args.Fingerprint = ent.Comp.Fingerprint;

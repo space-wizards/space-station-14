@@ -24,18 +24,12 @@ public sealed partial class ForensicsSystem : SharedForensicsSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<HandsComponent, ContactInteractionEvent>(OnInteract);
         SubscribeLocalEvent<FingerprintComponent, MapInitEvent>(OnFingerprintInit, after: [typeof(SharedBloodstreamSystem),]);
         // The solution entities are spawned on MapInit as well, so we have to wait for that to be able to set the DNA in the bloodstream correctly without ResolveSolution failing
         SubscribeLocalEvent<DnaComponent, MapInitEvent>(OnDNAInit, after: [typeof(SharedBloodstreamSystem)]);
-
-        SubscribeLocalEvent<ForensicsComponent, GibbedBeforeDeletionEvent>(OnBeingGibbed);
-        SubscribeLocalEvent<ForensicsComponent, MeleeHitEvent>(OnMeleeHit);
-        SubscribeLocalEvent<ForensicsComponent, GotRehydratedEvent>(OnRehydrated);
-        SubscribeLocalEvent<ForensicsComponent, CleanForensicsDoAfterEvent>(OnCleanForensicsDoAfter);
-        SubscribeLocalEvent<DnaSubstanceTraceComponent, SolutionChangedEvent>(OnSolutionChanged);
     }
 
+    [SubscribeLocalEvent]
     private void OnSolutionChanged(Entity<DnaSubstanceTraceComponent> puddle, ref SolutionChangedEvent ev)
     {
         var soln = GetSolutionsDNA(ev.Solution);
@@ -50,6 +44,7 @@ public sealed partial class ForensicsSystem : SharedForensicsSystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnInteract(Entity<HandsComponent> hands, ref ContactInteractionEvent args)
     {
         ApplyEvidence(hands.Owner, args.Other);
@@ -73,6 +68,7 @@ public sealed partial class ForensicsSystem : SharedForensicsSystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnBeingGibbed(Entity<ForensicsComponent> mob, ref GibbedBeforeDeletionEvent args)
     {
         foreach (var part in args.Giblets)
@@ -81,6 +77,7 @@ public sealed partial class ForensicsSystem : SharedForensicsSystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnMeleeHit(Entity<ForensicsComponent> weapon, ref MeleeHitEvent args)
     {
         if ((!args.BaseDamage.DamageDict.TryGetValue("Blunt", out var bluntDamage) || bluntDamage.Value <= 0) &&
@@ -94,11 +91,13 @@ public sealed partial class ForensicsSystem : SharedForensicsSystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnRehydrated(Entity<ForensicsComponent> ent, ref GotRehydratedEvent args)
     {
         CopyForensicsFrom(ent.Comp, args.Target);
     }
 
+    [SubscribeLocalEvent]
     private void OnCleanForensicsDoAfter(Entity<ForensicsComponent> component, ref CleanForensicsDoAfterEvent args)
     {
         if (args.Handled || args.Cancelled || args.Target == null)
