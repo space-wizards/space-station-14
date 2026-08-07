@@ -463,7 +463,7 @@
   flavor: bitter
   color: "#FF36AE"
   metabolisms:
-    Bloodstream:
+    Digestion:
       metabolismRate: 1.0
       effects:
       # OD
@@ -525,7 +525,7 @@
   flavor: bitter
   color: "#b51472"
   metabolisms:
-    Bloodstream: # TODO: Make this metabolize as a metabolite!
+    Digestion: # TODO: Make this metabolize as a metabolite!
       effects:
       # Slow
       - !type:MovementSpeedModifier
