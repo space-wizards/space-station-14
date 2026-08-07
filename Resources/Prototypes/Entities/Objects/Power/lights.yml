@@ -80,6 +80,8 @@
   parent: BaseReplacementLight
   id: BaseLightTube
   components:
+  - type: Sprite
+    sprite: Objects/Power/light_tube.rsi
   - type: Destructible
     thresholds:
     - trigger: *DamageTrigger10
