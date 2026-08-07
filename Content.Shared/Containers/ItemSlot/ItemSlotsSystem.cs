@@ -90,19 +90,22 @@ namespace Content.Shared.Containers.ItemSlots
             if (!TryComp<ItemSlotVisualsComponent>(uid, out var visuals) || !TryComp<AppearanceComponent>(uid, out _))
                 return;
 
-            var contains = false;
-
-            // For the items that have one ItemSlot and the rest.
-            if (string.IsNullOrEmpty(visuals.SlotName))
+            foreach (var visual in visuals.SlotVisuals.Values)
             {
-                contains = itemSlots.Slots.Values.Any(slot => slot.HasItem);
-            }
-            else if (itemSlots.Slots.TryGetValue(visuals.SlotName, out var slot))
-            {
-                contains = slot.HasItem;
-            }
+                var contains = false;
 
-            _appearance.SetData(uid, visuals.Layer, contains);
+                // For the items that have one ItemSlot and the rest.
+                if (string.IsNullOrEmpty(visual.SlotName))
+                {
+                    contains = itemSlots.Slots.Values.Any(slot => slot.HasItem);
+                }
+                else if (itemSlots.Slots.TryGetValue(visual.SlotName, out var slot))
+                {
+                    contains = slot.HasItem;
+                }
+
+                _appearance.SetData(uid, visual.Layer, contains);
+            }
         }
 
         /// <summary>

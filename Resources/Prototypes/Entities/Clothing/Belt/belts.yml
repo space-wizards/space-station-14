@@ -33,9 +33,11 @@
           tags:
           - CaptainSabre
   - type: ItemSlotVisuals
-    fillBaseName: sheath-sabre
-    inHandsFillBaseName: -sabre
-    equippedFillBaseName: -sabre
+    slotVisuals:
+      item:
+        fillBaseName: sheath-sabre
+        inHandsFillBaseName: -sabre
+        equippedFillBaseName: -sabre
   - type: Appearance
 
 - type: entity
