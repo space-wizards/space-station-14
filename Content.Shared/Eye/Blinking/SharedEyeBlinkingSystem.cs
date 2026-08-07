@@ -18,9 +18,13 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnShutdown(Entity<EyeBlinkingComponent> ent, ref ComponentShutdown args)
     {
-        if (ent.Comp.Body == null)
+        if (ent.Comp.EyeToggleActionEntity == null)
             return;
-        _actionsSystem.RemoveAction(ent.Comp.Body.Value, ent.Comp.EyeToggleActionEntity);
+
+        if (Comp<OrganComponent>(ent).Body is { } body)
+            _actionsSystem.RemoveAction(body, ent.Comp.EyeToggleActionEntity);
+        else
+            _actionsSystem.RemoveAction(ent.Owner, ent.Comp.EyeToggleActionEntity);
     }
 
     [SubscribeLocalEvent]
@@ -38,7 +42,7 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnApplyOrganMarking(Entity<EyeBlinkingComponent> ent, ref ApplyOrganProfileDataEvent args)
+    private void OnApplyOrganProfileData(Entity<EyeBlinkingComponent> ent, ref ApplyOrganProfileDataEvent args)
     {
         SetEyelidsColor(ent, args.Base);
 
@@ -47,7 +51,7 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnApplyOrganProfile(Entity<EyeBlinkingComponent> ent, ref BodyRelayedEvent<ApplyOrganProfileDataEvent> args)
+    private void OnApplyOrganProfileData(Entity<EyeBlinkingComponent> ent, ref BodyRelayedEvent<ApplyOrganProfileDataEvent> args)
     {
         SetEyelidsColor(ent, args.Args.Base);
 
@@ -66,29 +70,6 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
             _actionsSystem.AddAction(args.Body.Owner, ref ent.Comp.EyeToggleActionEntity, ent.Comp.EyeToggleAction);
     }
 
-    private void SetEyelidsColor(Entity<EyeBlinkingComponent> ent)
-    {
-        if (!TryComp<BodyComponent>(ent.Owner, out var body)) return;
-
-        VisualOrganComponent? visualHead = null;
-
-        // Obtains the "head" organ component in order to retrieve the character's skin color from it.
-        foreach (var organ in body.Organs?.ContainedEntities ?? Array.Empty<EntityUid>())
-        {
-            if (!TryComp<OrganComponent>(organ, out var organComp))
-                continue;
-
-            if (organComp.Category != "Head")
-                continue;
-
-            visualHead = CompOrNull<VisualOrganComponent>(organ);
-            if (visualHead != null)
-                break;
-        }
-
-        SetEyelidsColor(ent, visualHead?.Profile);
-    }
-
     private void SetEyelidsColor(Entity<EyeBlinkingComponent> eyeBlinking, OrganProfileData? organProfile)
     {
         var skinColor = organProfile?.SkinColor ?? Color.Pink;
@@ -99,9 +80,9 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
             skinColor.B * blinkFade);
 
         eyeBlinking.Comp.EyelidsColor = eyelidColor;
+        Dirty(eyeBlinking);
         var ev = new InitEyesEvent(GetNetEntity(eyeBlinking.Owner), eyelidColor);
         RaiseNetworkEvent(ev);
-        Dirty(eyeBlinking);
     }
 
     [SubscribeLocalEvent]
@@ -267,6 +248,9 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
         cloneComp.BlinkSkinColorMultiplier = ent.Comp.BlinkSkinColorMultiplier;
         AddComp(args.CloneUid, cloneComp, true);
         _blindableSystem.UpdateIsBlind(args.CloneUid);
+
+        var ev = new InitEyesEvent(GetNetEntity(ent.Owner), ent.Comp.EyelidsColor ?? Color.White);
+        RaiseNetworkEvent(ev);
     }
 
     [SubscribeLocalEvent]
@@ -294,6 +278,9 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
         cloneComp.BlinkSkinColorMultiplier = ent.Comp.BlinkSkinColorMultiplier;
         AddComp(eyes, cloneComp, true);
         _blindableSystem.UpdateIsBlind(args.Args.CloneUid);
+
+        var ev = new InitEyesEvent(GetNetEntity(ent.Owner), ent.Comp.EyelidsColor ?? Color.White);
+        RaiseNetworkEvent(ev);
     }
 }
 

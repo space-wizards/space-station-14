@@ -66,8 +66,6 @@
       Kidneys: OrganArachnidKidneys
   - type: HumanoidProfile
     species: Arachnid
-  - type: EyeBlinking
-    eyelidsSprite: /Textures/Mobs/Species/Arachnid/eyelids.rsi
 
 - type: entity
   parent:
@@ -229,6 +227,9 @@
 - type: entity
   parent: [ OrganArachnidVisual, OrganBaseEyes, OrganArachnidInternal ]
   id: OrganArachnidEyes
+  components:
+  - type: EyeBlinking
+    eyelidsSprite: /Textures/Mobs/Species/Arachnid/eyelids.rsi
 
 - type: entity
   parent: [ OrganBaseTongue, OrganArachnidInternal ]

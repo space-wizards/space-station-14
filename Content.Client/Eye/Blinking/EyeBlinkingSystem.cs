@@ -16,10 +16,10 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 {
     [Dependency] private SpriteSystem _sprite = default!;
     [Dependency] private IRobustRandom _random = default!;
-    [Dependency] private SharedAppearanceSystem _apperance = default!;
     [Dependency] private IResourceCache _resCache = default!;
     [Dependency] private StatusEffectsSystem _statusEffects = default!;
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
 
     [SubscribeNetworkEvent]
     private void OnOpenEyes(OpenEyesEvent ev)
@@ -55,7 +55,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         if (ent.Comp.Init)
             return;
 
-        ent.Comp.Init = ent.Comp.Body != null;
+        ent.Comp.Init = true;
 
         if (Comp<OrganComponent>(ent).Body is { } body)
             InitEyeBlinking(ent, body);
@@ -66,12 +66,19 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
     [SubscribeNetworkEvent]
     private void OnInitEyes(InitEyesEvent ev)
     {
+        Logger.Info($"EyeBlinkingSystem: Received InitEyesEvent for entity {ev.NetEntity} with eyelid color {ev.EyelidsColor}");
         var ent = GetEntity(ev.NetEntity);
 
         if (!ent.IsValid() || !TryComp<EyeBlinkingComponent>(ent, out var blinkingComp))
             return;
         blinkingComp.Init = false;
-        blinkingComp.Body = null;
+
+        if (Comp<OrganComponent>(ent).Body is { } body)
+            InitEyeBlinking((ent, blinkingComp), body);
+        else
+            InitEyeBlinking((ent, blinkingComp), ent);
+
+        blinkingComp.Init = true;
     }
 
     /// <summary>
@@ -89,6 +96,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
             return;
 
         ent.Comp.Body = body;
+        Logger.Info($"ent comp set body to {body} : {ent.Comp.Body}");
 
         InitEyelidsLayers(ent, body);
 
@@ -96,7 +104,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         ResetBlink(ent);
 
         // Apply the initial eye state (open or closed).
-        if (!(_apperance.TryGetData(ent.Owner, EyeBlinkingVisuals.EyesClosed, out var value) && value is bool eyeClosed))
+        if (!(_appearance.TryGetData(ent.Owner, EyeBlinkingVisuals.EyesClosed, out var value) && value is bool eyeClosed))
         {
             ChangeEyesState(ent, false);
             return;
@@ -178,7 +186,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
     [SubscribeLocalEvent]
     private void OnAppearanceChange(Entity<EyeBlinkingComponent> ent, ref AppearanceChangeEvent args)
     {
-        if (!(args.AppearanceData.TryGetValue(EyeBlinkingVisuals.EyesClosed, out var value) && value is bool eyeClosed))
+        if (!_appearance.TryGetData(ent.Owner, EyeBlinkingVisuals.EyesClosed, out var value) || !(value is bool eyeClosed))
             return;
 
         if ((eyeClosed == false && ent.Comp.BlinkInProgress == false) ||
