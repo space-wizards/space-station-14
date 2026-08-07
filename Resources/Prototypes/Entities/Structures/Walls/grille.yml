@@ -87,6 +87,9 @@
         node: grilleBroken
       - !type:DoActsBehavior
         acts: ["Breakage"]
+  - type: Construction
+    graph: Grille
+    node: grille
 
 ### DIAGONAL
 - type: entity
@@ -183,6 +186,9 @@
         node: grilleBroken
       - !type:DoActsBehavior
         acts: ["Breakage"]
+  - type: Construction
+    graph: GrilleDiagonal
+    node: grilleDiagonal
 
 ### BROKEN
 - type: entity

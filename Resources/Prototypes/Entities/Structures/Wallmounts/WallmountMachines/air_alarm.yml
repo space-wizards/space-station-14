@@ -122,8 +122,8 @@
     visuals:
       enum.ConstructionVisuals.Key:
         enum.ConstructionVisuals.Layer:
-          assembly: { state: alarm_b1 }
-          electronics: { state: alarm_b1 }
+          assembly: { state: panel }
+          electronics: { state: panel }
   - type: Construction
     graph: AirAlarm
     node: assembly
