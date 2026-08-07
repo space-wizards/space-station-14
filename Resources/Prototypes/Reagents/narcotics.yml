@@ -473,12 +473,13 @@
           min: 20
         damage:
           types:
-            Cellular: 3
+            Cellular: 1.5
+            Poison: 1.5
 
       # Bad effect
       - !type:AdjustReagent
         reagent: Hydroxysomnolene
-        amount: 2
+        amount: 1
 
       # Main effects
       - !type:MovementSpeedModifier
@@ -503,12 +504,20 @@
         - !type:ReagentCondition
           reagent: StrawberryIce
           min: 10
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectSeeingRainbow
+        type: Add
+        time: 10
 
       # Side effects
       - !type:GenericStatusEffect
         key: Stutter
         component: StutteringAccent
       - !type:Jitter
+      - !type:HealthChange
+        damage:
+          types:
+            Cellular: 0.05
 
 - type: reagent
   id: Hydroxysomnolene
@@ -538,7 +547,7 @@
           reagent: StrawberryIce
           max: 0.1
         effectProto: StatusEffectDrowsiness
-        time: 10
+        time: 1.5
         type: Add
 
       # Needs more strawberry Ice!
