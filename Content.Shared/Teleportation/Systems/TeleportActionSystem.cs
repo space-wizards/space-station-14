@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Movement.Pulling.Components;
@@ -55,7 +54,8 @@ public sealed partial class TeleportActionSystem : EntitySystem
             return false;
         }
 
-        if (IsDestinationBlocked(user, mapTarget, xform))
+        var rotation = _transform.GetWorldRotation(xform);
+        if (IsDestinationBlocked(user, mapTarget, rotation))
         {
             _popup.PopupEntity(Loc.GetString("teleport-action-popup-blocked"), user, user);
             return false;
@@ -88,32 +88,32 @@ public sealed partial class TeleportActionSystem : EntitySystem
     /// </summary>
     /// <param name="user">The entity being checked.</param>
     /// <param name="target">The map coordinates to check.</param>
-    /// <param name="xform">The entity's transform component.</param>
+    /// <param name="rotation">The rotation of the entity at the target coordinates.</param>
     /// <param name="fixtures">The entity's fixtures component.</param>
     /// <param name="physics">The entity's physics component.</param>
     /// <returns>Whether the destination is blocked.</returns>
     public bool IsDestinationBlocked(
         EntityUid user,
         MapCoordinates target,
-        TransformComponent? xform = null,
+        Angle rotation,
         FixturesComponent? fixtures = null,
         PhysicsComponent? physics = null)
     {
-        if (!Resolve(user, ref xform, ref fixtures, ref physics, false) ||
+        if (!Resolve(user, ref fixtures, ref physics, false) ||
             !physics.CanCollide ||
             !physics.Hard)
         {
             return false;
         }
 
-        var destinationTransform = new Transform(
-            target.Position,
-            _transform.GetWorldRotation(xform));
-
+        var destinationTransform = new Transform(target.Position, rotation);
         var intersecting = new HashSet<Entity<PhysicsComponent>>();
 
-        foreach (var fixture in fixtures.Fixtures.Values.Where(fixture => fixture.Hard))
+        foreach (var fixture in fixtures.Fixtures.Values)
         {
+            if (!fixture.Hard)
+                continue;
+
             intersecting.Clear();
             _lookup.GetEntitiesIntersecting(
                 target.MapId,
@@ -132,12 +132,16 @@ public sealed partial class TeleportActionSystem : EntitySystem
                     continue;
                 }
 
-                if (otherFixtures.Fixtures.Values
-                    .Any(otherFixture => otherFixture.Hard &&
-                        ((fixture.CollisionMask & otherFixture.CollisionLayer) != 0 ||
-                         (otherFixture.CollisionMask & fixture.CollisionLayer) != 0)))
+                foreach (var otherFixture in otherFixtures.Fixtures.Values)
                 {
-                    return true;
+                    if (!otherFixture.Hard)
+                        continue;
+
+                    if ((fixture.CollisionMask & otherFixture.CollisionLayer) != 0 ||
+                        (otherFixture.CollisionMask & fixture.CollisionLayer) != 0)
+                    {
+                        return true;
+                    }
                 }
             }
         }
