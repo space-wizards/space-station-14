@@ -57,21 +57,6 @@ namespace Content.Shared.Movement.Systems
         }
 
         /// <summary>
-        /// Copy this component's datafields from one entity to another.
-        /// This needs to refresh the modifiers after using CopyComp.
-        /// </summary>
-        public void CopyComponent(Entity<MovementSpeedModifierComponent?> source, EntityUid target)
-        {
-            if (!Resolve(source, ref source.Comp))
-                return;
-
-            CopyComp(source, target, source.Comp);
-            RefreshWeightlessModifiers(target);
-            RefreshMovementSpeedModifiers(target);
-            RefreshFrictionModifiers(target);
-        }
-
-        /// <summary>
         /// This API method refreshes the movement modifiers for both being weightless and grounded.
         /// </summary>
         /// <param name="ent">The entity we're refreshing modifiers for.</param>

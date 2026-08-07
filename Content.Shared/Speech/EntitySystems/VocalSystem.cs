@@ -4,7 +4,6 @@ using Content.Shared.Chat.Prototypes;
 using Content.Shared.Humanoid;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Speech.Components;
-using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
@@ -24,6 +23,7 @@ public sealed partial class VocalSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnMapInit(Entity<VocalComponent> ent, ref MapInitEvent args)
     {
+        LoadSounds(ent);
         // try to add scream action when vocal comp added
         _actions.AddAction(ent.Owner, ref ent.Comp.EmoteActionEntity, ent.Comp.EmoteAction);
         Dirty(ent);
@@ -71,25 +71,6 @@ public sealed partial class VocalSystem : EntitySystem
 
         _chat.TryEmoteWithChat(ent.Owner, args.Emote);
         args.Handled = true;
-    }
-
-    /// <summary>
-    /// Copy this component's datafields from one entity to another.
-    /// This can't use CopyComp because of the ScreamActionEntity DataField, which should not be copied.
-    /// </summary>
-    [PublicAPI]
-    public void CopyComponent(Entity<VocalComponent?> source, EntityUid target)
-    {
-        if (!Resolve(source, ref source.Comp))
-            return;
-
-        var targetComp = EnsureComp<VocalComponent>(target);
-        targetComp.ScreamId = source.Comp.ScreamId;
-        targetComp.Wilhelm = source.Comp.Wilhelm;
-        targetComp.WilhelmProbability = source.Comp.WilhelmProbability;
-        LoadSounds((target, targetComp));
-
-        Dirty(target, targetComp);
     }
 
     private bool TryPlayScreamSound(Entity<VocalComponent> ent, EntityUid user)

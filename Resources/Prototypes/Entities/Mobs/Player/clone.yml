@@ -73,7 +73,6 @@
   - SouthernAccent
   - SpanishAccent
   - StutteringAccent
-  eventComponents:
   - Puller
   - Vocal # voice sounds
 
@@ -144,8 +143,6 @@
   - TemperatureProtection
   - TypingIndicator
   - ScaleVisuals # for dwarf height
-  eventComponents:
-  # these need special treatment in the event subscription
   - Inventory # arachnid pockets and diona feet
   - Wagging # lizard tails
   - Storage # slime storage

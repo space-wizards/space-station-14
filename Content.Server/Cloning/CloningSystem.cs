@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body;
 using Content.Shared.Cloning;
@@ -16,8 +18,7 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
+using Robust.Shared.Serialization.Manager;
 
 namespace Content.Server.Cloning;
 
@@ -27,6 +28,8 @@ namespace Content.Server.Cloning;
 /// </summary>
 public sealed partial class CloningSystem : SharedCloningSystem
 {
+    [Dependency] private IDependencyCollection _deps = default!;
+    [Dependency] private ISerializationManager _seriMan = default!;
     [Dependency] private InventorySystem _inventory = default!;
     [Dependency] private MetaDataSystem _metaData = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
@@ -37,6 +40,17 @@ public sealed partial class CloningSystem : SharedCloningSystem
     [Dependency] private SharedVisualBodySystem _visualBody = default!;
     [Dependency] private NameModifierSystem _nameMod = default!;
     [Dependency] private IdentitySystem _identity = default!;
+
+    // A serialization context for cloning components.
+    private CloningContext _context = default!;
+
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        _context = new(_deps, _seriMan);
+    }
 
     public override bool TryCloning(
         EntityUid original,
@@ -112,14 +126,12 @@ public sealed partial class CloningSystem : SharedCloningSystem
         CloningSettingsPrototype settings)
     {
         var componentsToCopy = settings.Components;
-        var componentsToEvent = settings.EventComponents;
 
         // don't make status effects permanent
         if (TryComp<StatusEffectsComponent>(original, out var statusComp))
         {
             var statusComps = statusComp.ActiveEffects.Values.Select(s => s.RelevantComponent).Where(s => s != null).ToList();
             componentsToCopy.ExceptWith(statusComps!);
-            componentsToEvent.ExceptWith(statusComps!);
         }
 
         foreach (var componentName in componentsToCopy)
@@ -134,21 +146,8 @@ public sealed partial class CloningSystem : SharedCloningSystem
             RemComp(clone, componentRegistration.Type);
             if (TryComp(original, componentRegistration.Type, out var sourceComp)) // Does the original have this component?
             {
-                CopyComp(original, clone, sourceComp);
+                CopyComp(original, clone, sourceComp, );
             }
-        }
-
-        foreach (var componentName in componentsToEvent)
-        {
-            if (!Factory.TryGetRegistration(componentName, out var componentRegistration))
-            {
-                Log.Error($"Tried to use invalid component registration for cloning: {componentName}");
-                continue;
-            }
-
-            // If the original does not have the component, then the clone shouldn't have it either.
-            if (!HasComp(original, componentRegistration.Type))
-                RemComp(clone, componentRegistration.Type);
         }
 
         var cloningEv = new CloningEvent(settings, clone);
