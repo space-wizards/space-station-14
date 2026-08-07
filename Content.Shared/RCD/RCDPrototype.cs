@@ -23,7 +23,7 @@ public sealed partial class RCDPrototype : IPrototype
     /// <summary>
     /// The name associated with the prototype.
     /// If null, uses the prototype's name, if it exists.
-    /// Defaults to the <c>rcd-unknown</c> LocId otherwise.
+    /// Defaults to the <c>generic-unknown-title</c> LocId otherwise.
     /// </summary>
     /// <remarks>
     /// Use <see cref="RCDSystem.GetPrototypeName"/> instead of using this directly.
