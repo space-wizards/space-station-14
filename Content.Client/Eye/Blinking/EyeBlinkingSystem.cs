@@ -40,10 +40,15 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
     [SubscribeLocalEvent]
     private void OnComponentInit(Entity<EyeBlinkingComponent> ent, ref ComponentInit args)
     {
-        if (Comp<OrganComponent>(ent).Body is { } body)
-            InitEyeBlinking(ent, body);
+        if (TryComp<OrganComponent>(ent, out var organComp))
+        {
+            if (organComp.Body is { } body)
+                InitEyeBlinking(ent, body);
+        }
         else
-            InitEyeBlinking(ent, ent.Owner);
+        {
+            InitEyeBlinking(ent, ent);
+        }
     }
 
     /// <summary>
@@ -69,6 +74,9 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
     [SubscribeNetworkEvent]
     private void OnInitEyes(InitEyesEvent ev)
     {
+        if (!_timing.IsFirstTimePredicted)
+            return;
+
         Logger.Info($"EyeBlinkingSystem: Received InitEyesEvent for entity {ev.NetEntity} with eyelid color {ev.EyelidsColor}");
         var ent = GetEntity(ev.NetEntity);
 

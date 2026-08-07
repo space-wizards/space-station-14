@@ -49,7 +49,7 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnApplyOrganProfileData(Entity<EyeBlinkingComponent> ent, ref ApplyOrganProfileDataEvent args)
     {
-        SetEyelidsColor(ent, args.Base);
+        SetEyelidsColor(ent, args.Base?.SkinColor);
 
         if (ent.Comp.EyeToggleActionEntity == null)
             _actionsSystem.AddAction(ent.Owner, ref ent.Comp.EyeToggleActionEntity, ent.Comp.EyeToggleAction);
@@ -58,7 +58,7 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnApplyOrganProfileData(Entity<EyeBlinkingComponent> ent, ref BodyRelayedEvent<ApplyOrganProfileDataEvent> args)
     {
-        SetEyelidsColor(ent, args.Args.Base);
+        SetEyelidsColor(ent, args.Args.Base?.SkinColor);
 
         if (ent.Comp.EyeToggleActionEntity == null)
             _actionsSystem.AddAction(args.Body.Owner, ref ent.Comp.EyeToggleActionEntity, ent.Comp.EyeToggleAction);
@@ -69,15 +69,34 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
     {
         if (!TryComp<VisualOrganComponent>(args.Args.Organ, out var visualOrgan))
             return;
-        SetEyelidsColor(ent, visualOrgan.Profile);
+        if (!TryComp<EyeBlinkingComponent>(args.Args.Organ, out var cloneEyes))
+            return;
+
+        ent.Comp.EyeToggleAction = cloneEyes.EyeToggleAction;
+
+        ent.Comp.Enabled = true;
+        ent.Comp.EyesClosed = false;
+
+        ent.Comp.EyelidsSprite = cloneEyes.EyelidsSprite;
+        ent.Comp.EyelidsColor = cloneEyes.EyelidsColor;
+
+        ent.Comp.MaxAsyncBlink = cloneEyes.MaxAsyncBlink;
+        ent.Comp.MaxAsyncOpenBlink = cloneEyes.MaxAsyncOpenBlink;
+
+        ent.Comp.MinBlinkDuration = cloneEyes.MinBlinkDuration;
+        ent.Comp.MinBlinkInterval = cloneEyes.MinBlinkInterval;
+
+        ent.Comp.BlinkSkinColorMultiplier = cloneEyes.BlinkSkinColorMultiplier;
+
+        SetEyelidsColor(ent, ent.Comp.EyelidsColor);
 
         if (ent.Comp.EyeToggleActionEntity == null)
             _actionsSystem.AddAction(args.Body.Owner, ref ent.Comp.EyeToggleActionEntity, ent.Comp.EyeToggleAction);
     }
 
-    private void SetEyelidsColor(Entity<EyeBlinkingComponent> eyeBlinking, OrganProfileData? organProfile)
+    private void SetEyelidsColor(Entity<EyeBlinkingComponent> eyeBlinking, Color? bodyColor)
     {
-        var skinColor = organProfile?.SkinColor ?? Color.Pink;
+        var skinColor = bodyColor ?? Color.Pink;
         var blinkFade = eyeBlinking.Comp.BlinkSkinColorMultiplier;
         var eyelidColor = new Color(
             skinColor.R * blinkFade,
@@ -256,6 +275,9 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
 
         var ev = new InitEyesEvent(GetNetEntity(ent.Owner), ent.Comp.EyelidsColor ?? Color.White);
         RaiseNetworkEvent(ev);
+
+        if (cloneComp.EyeToggleActionEntity == null)
+            _actionsSystem.AddAction(ent.Owner, ref cloneComp.EyeToggleActionEntity, cloneComp.EyeToggleAction);
     }
 
     [SubscribeLocalEvent]
@@ -263,29 +285,7 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
     {
         if (!args.Args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
             return;
-        var eyes = ent.Owner;
-        // Make sure to set the datafields before adding the component so that the correct action gets spawned on map init.
-        var cloneComp = Factory.GetComponent<EyeBlinkingComponent>();
-        cloneComp.EyeToggleAction = ent.Comp.EyeToggleAction;
-
-        cloneComp.Enabled = true;
-        cloneComp.EyesClosed = false;
-
-        cloneComp.EyelidsSprite = ent.Comp.EyelidsSprite;
-        cloneComp.EyelidsColor = ent.Comp.EyelidsColor;
-
-        cloneComp.MaxAsyncBlink = ent.Comp.MaxAsyncBlink;
-        cloneComp.MaxAsyncOpenBlink = ent.Comp.MaxAsyncOpenBlink;
-
-        cloneComp.MinBlinkDuration = ent.Comp.MinBlinkDuration;
-        cloneComp.MinBlinkInterval = ent.Comp.MinBlinkInterval;
-
-        cloneComp.BlinkSkinColorMultiplier = ent.Comp.BlinkSkinColorMultiplier;
-        AddComp(eyes, cloneComp, true);
         _blindableSystem.UpdateIsBlind(args.Args.CloneUid);
-
-        var ev = new InitEyesEvent(GetNetEntity(ent.Owner), ent.Comp.EyelidsColor ?? Color.White);
-        RaiseNetworkEvent(ev);
     }
 }
 
