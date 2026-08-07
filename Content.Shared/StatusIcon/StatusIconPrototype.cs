@@ -121,12 +121,6 @@ public sealed partial class JobIconPrototype : StatusIconPrototype, IInheritingP
     public string LocalizedJobName => Loc.GetString(JobName);
 
     /// <summary>
-    /// Should the agent ID or ID card console be able to use this job icon?
-    /// </summary>
-    [DataField]
-    public bool AllowSelection = true;
-
-    /// <summary>
     /// Should this job icon be considered a crew job for silicons?
     /// </summary>
     [DataField]
