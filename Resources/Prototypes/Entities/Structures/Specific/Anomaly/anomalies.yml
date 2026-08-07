@@ -39,6 +39,7 @@
   - type: Clickable
   - type: Appearance
   - type: AnimationPlayer
+  - type: Damageable
   - type: GuideHelp
     guides:
     - AnomalousResearch

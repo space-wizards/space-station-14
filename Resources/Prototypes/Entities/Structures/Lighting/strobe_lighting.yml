@@ -32,7 +32,7 @@
       shader: unshaded
     state: base
   - type: PointLight
-    mask: /Textures/Effects/LightMasks/double_cone.png
+    lightMask: ConeDouble
     color: "#FFE4CE"
     energy: 5
     radius: 10
@@ -96,6 +96,7 @@
   - type: PoweredLight
     bulb: Bulb
     on: false
+  - type: SpookyPoweredLight
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: DeviceNetwork
