@@ -80,7 +80,7 @@ public enum HungerProductionFailure : byte
 }
 
 /// <summary>
-/// Raised on the entity with <see cref="HungerProductionComponent"/> when production is attempted.
+/// Raised on an entity producer after one or more entities have been produced.
 /// </summary>
 [ByRefEvent]
 public record struct ProductionAttemptEvent(EntityUid Owner)
