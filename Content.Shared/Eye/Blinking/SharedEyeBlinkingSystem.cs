@@ -330,7 +330,7 @@ public sealed partial class OpenEyesEvent(NetEntity netEntity) : EntityEventArgs
 }
 
 /// <summary>
-/// Open Eyes after remove EyeClosing from appearanceData
+/// Force Init eyelids layer
 /// </summary>
 [Serializable, NetSerializable]
 public sealed partial class InitEyesEvent(NetEntity netEntity, Color eyelidsColor) : EntityEventArgs
