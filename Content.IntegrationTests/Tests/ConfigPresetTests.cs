@@ -19,7 +19,6 @@ public sealed class ConfigPresetTests : GameTest
 
         var resources = server.ResolveDependency<IResourceManager>();
         var config = server.ResolveDependency<IConfigurationManager>();
-        var prototypes = server.ResolveDependency<IPrototypeManager>();
 
         await server.WaitPost(() =>
         {
@@ -41,7 +40,7 @@ public sealed class ConfigPresetTests : GameTest
                 {
                     var stream = resources.ContentFileRead(preset);
                     Assert.DoesNotThrow(() => config.LoadDefaultsFromTomlStream(stream));
-                    Assert.That(prototypes.ValidateCVars(), Is.Empty);
+                    Assert.That(SProtoMan.ValidateCVars(), Is.Empty);
                 }
             });
 
