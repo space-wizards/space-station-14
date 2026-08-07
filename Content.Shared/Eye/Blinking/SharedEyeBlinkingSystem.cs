@@ -40,7 +40,7 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnApplyOrganMarking(Entity<EyeBlinkingComponent> ent, ref ApplyOrganProfileDataEvent args)
     {
-        SetEyelidsColor(ent, args.Args.Base);
+        SetEyelidsColor(ent, args.Base);
 
         _actionsSystem.AddAction(ent.Owner, ref ent.Comp.EyeToggleActionEntity, ent.Comp.EyeToggleAction);
     }
