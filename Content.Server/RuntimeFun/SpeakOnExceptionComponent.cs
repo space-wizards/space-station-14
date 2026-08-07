@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Server.RuntimeFun;
 
 /// <summary>
-/// Entities with this component will speak everytime an error occurs. They will say the exception
+/// Entities with this component will speak from a dataset everytime an error occurs in an interval.
 /// </summary>
 [RegisterComponent, AutoGenerateComponentPause]
 public sealed partial class SpeakOnExceptionComponent : Component
@@ -23,7 +23,7 @@ public sealed partial class SpeakOnExceptionComponent : Component
     public float ChanceSpeakNoAccent = 0.005f;
 
     /// <summary>
-    /// Localized dataset used when speaking
+    /// Localized dataset used when speaking.
     /// </summary>
     [DataField]
     public ProtoId<LocalizedDatasetPrototype> Dataset = "ExceptionSpeechDataset";

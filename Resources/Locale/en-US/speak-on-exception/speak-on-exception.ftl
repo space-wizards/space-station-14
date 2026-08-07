@@ -9,3 +9,6 @@ exception-censored-8 = Uncaught ReferenceError: meow is not defined
 exception-censored-9 = TabError: inconsistent use of tabs and spaces in indentation
 exception-censored-10 = code.dm:3:error: meow: undefined proc
 exception-censored-11 = Failed to wipe mind: Exception
+exception-censored-12 = Guru Meditation: #0000000F.0000ACA7
+exception-censored-13 = Unexpected token 'w'
+exception-censored-14 = Operation timed out: AwaitNap()
