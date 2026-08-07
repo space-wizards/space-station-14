@@ -493,7 +493,8 @@ namespace Content.Server.Lathe
                 component.CurrentRecipe = null;
             }
             RemCompDeferred<LatheProducingComponent>(uid);
-            UpdateUserInterfaceState(uid, LatheUpdateState.UpdateWhat.ProductionQueue, component);
+            var toUpdate = LatheUpdateState.UpdateWhat.ProductionQueue | LatheUpdateState.UpdateWhat.Materials;
+            UpdateUserInterfaceState(uid, toUpdate, component);
             UpdateRunningAppearance(uid, false);
         }
 
@@ -511,7 +512,8 @@ namespace Content.Server.Lathe
                 }
             }
             TryStartProducing(uid, component);
-            UpdateUserInterfaceState(uid, LatheUpdateState.UpdateWhat.ProductionQueue, component);
+            var toUpdate = LatheUpdateState.UpdateWhat.ProductionQueue | LatheUpdateState.UpdateWhat.Materials;
+            UpdateUserInterfaceState(uid, toUpdate, component);
         }
 
         private void OnLatheSyncRequestMessage(EntityUid uid, LatheComponent component, LatheSyncRequestMessage args)
@@ -546,7 +548,8 @@ namespace Content.Server.Lathe
 
             RefundBatch(uid, component, batch);
             component.Queue.Remove(node);
-            UpdateUserInterfaceState(uid, LatheUpdateState.UpdateWhat.ProductionQueue, component);
+            var toUpdate = LatheUpdateState.UpdateWhat.ProductionQueue | LatheUpdateState.UpdateWhat.Materials;
+            UpdateUserInterfaceState(uid, toUpdate, component);
         }
 
         public void OnLatheMoveRequestMessage(EntityUid uid, LatheComponent component, ref LatheMoveRequestMessage args)
@@ -606,6 +609,10 @@ namespace Content.Server.Lathe
             RefundCurrentRecipe(uid, component);
             component.CurrentRecipe = null;
             FinishProducing(uid, component);
+            // FinishProducing() *may* send a ProductionQueue update, but we need to update both
+            // Materials and ProductionQueue here
+            var toUpdate = LatheUpdateState.UpdateWhat.ProductionQueue | LatheUpdateState.UpdateWhat.Materials;
+            UpdateUserInterfaceState(uid, toUpdate, component);
         }
         #endregion
     }
