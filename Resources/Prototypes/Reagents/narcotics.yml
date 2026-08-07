@@ -460,7 +460,7 @@
   group: Narcotics
   desc: reagent-desc-StrawberryIce
   physicalDesc: reagent-physical-desc-fizzy
-  flavor: bitter
+  flavor: fizzy
   color: "#FF36AE"
   metabolisms:
     Digestion:
