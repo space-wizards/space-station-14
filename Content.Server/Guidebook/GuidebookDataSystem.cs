@@ -13,7 +13,6 @@ namespace Content.Server.Guidebook;
 /// </summary>
 public sealed partial class GuidebookDataSystem : EntitySystem
 {
-    [Dependency] private IComponentFactory _compFactory = default!;
     [Dependency] private IReflectionManager _reflection = default!;
 
     private GuidebookData _cachedData = new();
@@ -57,7 +56,7 @@ public sealed partial class GuidebookDataSystem : EntitySystem
         var prototypeCount = 0;
         var components = _reflection
             .GetAllChildren<IGuidebookData>()
-            .Select(t => _compFactory.GetComponentName(t))
+            .Select(t => EntityManager.ComponentFactory.GetComponentName(t))
             .ToHashSet();
 
         // Scan component registrations to find members tagged for extraction
