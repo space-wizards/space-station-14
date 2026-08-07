@@ -19,11 +19,7 @@ public abstract partial class SharedForensicsSystem : EntitySystem
 
     [Dependency] private EntityQuery<ForensicsComponent> _forensicsQuery = default!;
 
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<CleansForensicsComponent, AfterInteractEvent>(OnAfterInteract, before: [typeof(IngestionSystem)], after: [typeof(SharedAbsorbentSystem)]);
-    }
-
+    [SubscribeLocalEvent(before: [typeof(IngestionSystem)], after: [typeof(SharedAbsorbentSystem)])]
     private void OnAfterInteract(Entity<CleansForensicsComponent> cleaner, ref AfterInteractEvent args)
     {
         if (args.Handled || !args.CanReach || args.Target == null)

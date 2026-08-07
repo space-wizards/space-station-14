@@ -20,15 +20,6 @@ public sealed partial class ForensicsSystem : SharedForensicsSystem
     [Dependency] private InventorySystem _inventory = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<FingerprintComponent, MapInitEvent>(OnFingerprintInit, after: [typeof(SharedBloodstreamSystem),]);
-        // The solution entities are spawned on MapInit as well, so we have to wait for that to be able to set the DNA in the bloodstream correctly without ResolveSolution failing
-        SubscribeLocalEvent<DnaComponent, MapInitEvent>(OnDNAInit, after: [typeof(SharedBloodstreamSystem)]);
-    }
-
     [SubscribeLocalEvent]
     private void OnSolutionChanged(Entity<DnaSubstanceTraceComponent> puddle, ref SolutionChangedEvent ev)
     {
@@ -50,12 +41,14 @@ public sealed partial class ForensicsSystem : SharedForensicsSystem
         ApplyEvidence(hands.Owner, args.Other);
     }
 
+    [SubscribeLocalEvent(after: [typeof(SharedBloodstreamSystem)])]
     private void OnFingerprintInit(Entity<FingerprintComponent> fingerPrint, ref MapInitEvent args)
     {
         if (fingerPrint.Comp.Fingerprint == null)
             RandomizeFingerprint((fingerPrint.Owner, fingerPrint.Comp));
     }
 
+    [SubscribeLocalEvent(after: [typeof(SharedBloodstreamSystem)])]
     private void OnDNAInit(Entity<DnaComponent> dna, ref MapInitEvent args)
     {
         if (dna.Comp.DNA == null)
