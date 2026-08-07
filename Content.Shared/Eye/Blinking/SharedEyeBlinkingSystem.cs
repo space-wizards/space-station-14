@@ -21,10 +21,15 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
         if (ent.Comp.EyeToggleActionEntity == null)
             return;
 
-        if (Comp<OrganComponent>(ent).Body is { } body)
-            _actionsSystem.RemoveAction(body, ent.Comp.EyeToggleActionEntity);
+        if (TryComp<OrganComponent>(ent, out var organComp))
+        {
+            if (organComp.Body is { } body)
+                _actionsSystem.RemoveAction(body, ent.Comp.EyeToggleActionEntity);
+        }
         else
+        {
             _actionsSystem.RemoveAction(ent.Owner, ent.Comp.EyeToggleActionEntity);
+        }
     }
 
     [SubscribeLocalEvent]

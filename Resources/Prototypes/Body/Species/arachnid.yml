@@ -228,6 +228,7 @@
   parent: [ OrganArachnidVisual, OrganBaseEyes, OrganArachnidInternal ]
   id: OrganArachnidEyes
   components:
+  - type: Appearance
   - type: EyeBlinking
     eyelidsSprite: /Textures/Mobs/Species/Arachnid/eyelids.rsi
 

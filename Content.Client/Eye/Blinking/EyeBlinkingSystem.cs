@@ -55,12 +55,15 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         if (ent.Comp.Init)
             return;
 
-        ent.Comp.Init = true;
-
-        if (Comp<OrganComponent>(ent).Body is { } body)
-            InitEyeBlinking(ent, body);
+        if (TryComp<OrganComponent>(ent, out var organComp))
+        {
+            if (organComp.Body is { } body)
+                InitEyeBlinking(ent, body);
+        }
         else
+        {
             InitEyeBlinking(ent, ent.Owner);
+        }
     }
 
     [SubscribeNetworkEvent]
@@ -73,12 +76,15 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
             return;
         blinkingComp.Init = false;
 
-        if (Comp<OrganComponent>(ent).Body is { } body)
-            InitEyeBlinking((ent, blinkingComp), body);
+        if (TryComp<OrganComponent>(ent, out var organComp))
+        {
+            if (organComp.Body is { } body)
+                InitEyeBlinking((ent, blinkingComp), body);
+        }
         else
+        {
             InitEyeBlinking((ent, blinkingComp), ent);
-
-        blinkingComp.Init = true;
+        }
     }
 
     /// <summary>
@@ -94,6 +100,8 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 
         if (!_sprite.TryGetLayer(body, HumanoidVisualLayers.Eyelids, out var eyelids, false))
             return;
+
+        ent.Comp.Init = true;
 
         ent.Comp.Body = body;
         Logger.Info($"ent comp set body to {body} : {ent.Comp.Body}");
