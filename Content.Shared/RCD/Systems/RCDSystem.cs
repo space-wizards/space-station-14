@@ -49,7 +49,7 @@ public sealed partial class RCDSystem : EntitySystem
     private readonly ProtoId<RCDPrototype> _deconstructTileProto = "DeconstructTile";
     private readonly ProtoId<RCDPrototype> _deconstructLatticeProto = "DeconstructLattice";
     private static readonly ProtoId<TagPrototype> CatwalkTag = "Catwalk";
-    private static readonly LocId DefaultRecipeLocId = "rcd-unknown";
+    private static readonly LocId DefaultPrototypeNameLocId = "rcd-unknown";
 
     private HashSet<EntityUid> _intersectingEntities = new();
 
@@ -76,7 +76,7 @@ public sealed partial class RCDSystem : EntitySystem
         else if (prototype.Prototype != null)
             return ProtoMan.Index(prototype.Prototype).Name; // already localized
         else
-            return Loc.GetString(DefaultRecipeLocId);
+            return Loc.GetString(DefaultPrototypeNameLocId);
     }
 
     #region Event handling
