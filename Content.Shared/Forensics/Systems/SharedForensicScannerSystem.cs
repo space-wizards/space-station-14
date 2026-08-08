@@ -221,12 +221,6 @@ public sealed partial class SharedForensicScannerSystem : EntitySystem
         {
             text.AppendLine(dna);
         }
-        foreach (var dna in scanner.Comp.SolutionDNAs)
-        {
-            if (scanner.Comp.DNAs.Contains(dna))
-                continue;
-            text.AppendLine(dna);
-        }
         text.AppendLine();
         text.AppendLine(Loc.GetString("forensic-scanner-interface-residues"));
         foreach (var residue in scanner.Comp.Residues)
@@ -252,7 +246,6 @@ public sealed partial class SharedForensicScannerSystem : EntitySystem
         scanner.Comp.Fingerprints = [];
         scanner.Comp.Fibers = [];
         scanner.Comp.DNAs = [];
-        scanner.Comp.SolutionDNAs = new();
         scanner.Comp.LastScannedName = string.Empty;
 
         DirtyFields(scanner.AsNullable(),
@@ -260,7 +253,6 @@ public sealed partial class SharedForensicScannerSystem : EntitySystem
             nameof(ForensicScannerComponent.Fingerprints),
             nameof(ForensicScannerComponent.Fibers),
             nameof(ForensicScannerComponent.DNAs),
-            nameof(ForensicScannerComponent.SolutionDNAs),
             nameof(ForensicScannerComponent.LastScannedName));
 
         UpdateUi(scanner);

@@ -28,12 +28,6 @@ public sealed partial class ForensicScannerComponent : Component
     public List<string> DNAs = [];
 
     /// <summary>
-    /// DNA that the forensic scanner found from the solution containers in an entity.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public List<string> SolutionDNAs = new();
-
-    /// <summary>
     /// Residue that the forensic scanner found from the <see cref="ForensicsComponent"/> on an entity.
     /// </summary>
     [DataField, AutoNetworkedField]

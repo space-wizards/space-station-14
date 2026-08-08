@@ -65,12 +65,6 @@ public sealed partial class ForensicScannerMenu : DefaultWindow
         {
             text.AppendLine(dna);
         }
-        foreach (var dna in scanner.SolutionDNAs)
-        {
-            if (scanner.DNAs.Contains(dna))
-                continue;
-            text.AppendLine(dna);
-        }
         text.AppendLine();
         text.AppendLine(Loc.GetString("forensic-scanner-interface-residues"));
         foreach (var residue in scanner.Residues)
