@@ -1052,6 +1052,8 @@
   - type: DeviceLinkSource
     ports:
     - TargetSource
+  - type: AutoLinkTransmitter
+    channel: XenoborgGuidedMissileLauncher
   - type: Sprite # TODO: ADD NEW SPRITE HERE
     sprite: Objects/Weapons/Guns/Battery/xenoborg_laser_gun.rsi
     layers:

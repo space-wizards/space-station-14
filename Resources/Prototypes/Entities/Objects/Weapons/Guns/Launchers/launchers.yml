@@ -165,6 +165,8 @@
   - type: DeviceLinkSink
     ports:
     - TargetReceiver
+  - type: AutoLinkReceiver
+    channel: XenoborgGuidedMissileLauncher
 
 - type: entity
   parent: BaseWeaponLauncher
