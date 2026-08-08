@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Crated by sastr. resprited for nuke by girlhell1998 for deadspace14",
+    "size": {
+        "x": 64,
+        "y": 64
+    },
+    "states": [
+        {
+            "name": "storage"
+        }
+    ]
+}

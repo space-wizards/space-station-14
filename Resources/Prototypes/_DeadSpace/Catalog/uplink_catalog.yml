@@ -1246,3 +1246,13 @@
   - !type:ListingLimitedStockCondition
     stock: 1
 
+- type: listing
+  id: UplinkSynKatana
+  name: Катана Синдиката
+  description: Альтернатива энергетическому мечу в виде стальной катаны. Не обладает структурным уроном.
+  productEntity: SynKatana
+  icon: { sprite: /Textures/_DeadSpace/Objects/Weapons/Melee/synkatana.rsi, state: icon }
+  cost:
+    Telecrystal: 8
+  categories:
+  - UplinkWeaponry

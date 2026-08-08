@@ -3181,7 +3181,7 @@
 - type: ttsVoice
   id: Wywern
   name: tts-voice-name-wywern
-  sex: Male
+  sex: Female
   speaker: wywern
 
 - type: ttsVoice

@@ -1,0 +1,30 @@
+- type: entity
+  name: элитная катана
+  parent: Katana
+  id: SynKatana
+  description: Этот современный вариант знаменитого меча поможет вам прорубить дорогу к любой цели. Можно посоветовать носить его с осторожностью, но вы всё равно не послушаетесь, верно?
+  components:
+  - type: Contraband
+    severity: HighlyIllegal
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Weapons/Melee/synkatana.rsi
+  - type: MeleeWeapon
+    wideAnimationRotation: -60
+    damage:
+      types:
+        Slash: 30
+  - type: Item
+    storedSprite:
+      state: storage
+      sprite: _DeadSpace/Objects/Weapons/Melee/synkatana_storage_64x.rsi
+    shape:
+    - 0,0,0,3
+  - type: Clothing
+    sprite: _DeadSpace/Objects/Weapons/Melee/synkatana.rsi
+    slots:
+    - Back
+    - Belt
+    - suitStorage
+  - type: Reflect
+    slotFlags:
+    - NONE
