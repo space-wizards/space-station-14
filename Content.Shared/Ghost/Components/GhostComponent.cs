@@ -1,9 +1,10 @@
 using Content.Shared.Actions;
+using Content.Shared.Ghost.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Ghost;
+namespace Content.Shared.Ghost.Components;
 
 /// <summary>
 /// Represents an observer ghost.
@@ -64,10 +65,10 @@ public sealed partial class GhostComponent : Component
     public float BooRadius = 3;
 
     /// <summary>
-    /// Maximum number of entities that can affected by the Boo action.
+    /// The maximum total intensity of a Boo action (total sum of responses, possible values in <see cref="GhostBooIntensity"/>).
     /// </summary>
     [DataField]
-    public int BooMaxTargets = 3;
+    public int BooIntensity = 6;
 
     /// <summary>
     /// Is this ghost allowed to interact with entities?
@@ -104,6 +105,25 @@ public sealed partial class GhostComponent : Component
 public enum GhostVisuals : byte
 {
     Damage
+}
+
+/// <summary>
+/// The intensity of a given response to a boo action.
+/// </summary>
+/// <remarks>
+/// Using sbyte to avoid subtraction underflow issues.
+/// </remarks>
+[Serializable, NetSerializable]
+public enum GhostBooIntensity : sbyte
+{
+    /// <summary>No response at all.</summary>
+    None = 0,
+    /// <summary>A subtle response - short in duration or small in effect.</summary>
+    Subtle = 1,
+    /// <summary>A normal response - moderate in duration, attention-grabbing.</summary>
+    Normal = 2,
+    /// <summary>An extreme response - very intense, should be the only response for a typical ghost.</summary>
+    Extreme = 6,
 }
 
 public sealed partial class ToggleFoVActionEvent : InstantActionEvent { }
