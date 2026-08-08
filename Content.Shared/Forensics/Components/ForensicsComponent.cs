@@ -5,15 +5,27 @@ namespace Content.Shared.Forensics.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ForensicsComponent : Component
 {
+    /// <summary>
+    /// The fingerprint strings.
+    /// </summary>
     [DataField]
     public HashSet<string> Fingerprints = [];
 
+    /// <summary>
+    /// The fiber strings from stuff like gloves.
+    /// </summary>
     [DataField]
     public HashSet<string> Fibers = [];
 
+    /// <summary>
+    /// The DNA strings from blood or when someone is struck by something.
+    /// </summary>
     [DataField]
     public HashSet<string> DNAs = [];
 
+    /// <summary>
+    /// Residues like soap when cleaning an item.
+    /// </summary>
     [DataField]
     public HashSet<string> Residues = [];
 

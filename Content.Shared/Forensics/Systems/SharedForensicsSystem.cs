@@ -68,7 +68,7 @@ public abstract partial class SharedForensicsSystem : EntitySystem
     {
         if (!_forensicsQuery.TryComp(target, out var forensicsComp))
         {
-            _popupSystem.PopupClient(Loc.GetString("forensics-cleaning-cannot-clean", ("target", Identity.Entity(target, EntityManager))), user, user, PopupType.MediumCaution);
+            _popupSystem.PopupEntity(Loc.GetString("forensics-cleaning-cannot-clean", ("target", Identity.Entity(target, EntityManager))), user, user, PopupType.MediumCaution);
             return false;
         }
 
@@ -88,12 +88,12 @@ public abstract partial class SharedForensicsSystem : EntitySystem
 
             var userPopupText = Loc.GetString("forensics-cleaning-user", ("target", Identity.Entity(target, EntityManager)));
             var othersPopupText = Loc.GetString("forensics-cleaning-others", ("user", Identity.Entity(user, EntityManager)), ("target", Identity.Entity(target, EntityManager)));
-            _popupSystem.PopupPredicted(userPopupText, othersPopupText, user, user);
+            _popupSystem.PopupEntity(userPopupText, othersPopupText, user, user);
 
             return true;
         }
 
-        _popupSystem.PopupClient(Loc.GetString("forensics-cleaning-cannot-clean", ("target", Identity.Entity(target, EntityManager))), user, user, PopupType.MediumCaution);
+        _popupSystem.PopupEntity(Loc.GetString("forensics-cleaning-cannot-clean", ("target", Identity.Entity(target, EntityManager))), user, user, PopupType.MediumCaution);
         return false;
     }
 
