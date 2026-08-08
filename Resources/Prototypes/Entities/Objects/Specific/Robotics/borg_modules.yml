@@ -910,7 +910,7 @@
   - type: ItemBorgModule
     hands:
     - item: HandheldHealthAnalyzer
-    - item: AdvancedJetInjector
+    # - item: AdvancedJetInjector #DS14
     - item: Gauze
       hand:
         emptyLabel: borg-slot-topicals-empty
@@ -975,14 +975,17 @@
   - type: ItemBorgModule
     hands:
     - item: HandLabeler
-    - item: Syringe
-      hand:
-        emptyLabel: borg-slot-injector-dropper-empty
-        emptyRepresentative: Syringe
-        whitelist:
-          tags:
-          - Dropper
-          - Syringe
+    #DS14-start
+    - item: AdvancedJetInjector
+    #- item: Syringe
+    #  hand:
+    #    emptyLabel: borg-slot-injector-dropper-empty
+    #    emptyRepresentative: Syringe
+    #    whitelist:
+    #      tags:
+    #      - Dropper
+    #      - Syringe
+    #DS14-end
     - item: PillCanister
       hand:
         emptyLabel: borg-slot-small-containers-empty
