@@ -90,14 +90,20 @@ public sealed partial class ForensicsSystem : SharedForensicsSystem
         CopyForensicsFrom(ent.Comp, args.Target);
     }
 
-    [SubscribeLocalEvent]
-    private void OnCleanForensicsDoAfter(Entity<ForensicsComponent> component, ref CleanForensicsDoAfterEvent args)
+    /// <summary>
+    /// The server needs to reset the forensics component data and leave some residue on a successful clean.
+    /// It'll also set the prediction boolean "IsDirty" to false, so prediction for cleaning the item works.
+    /// </summary>
+    protected override void OnCleanForensicsDoAfter(Entity<ForensicsComponent> component, ref CleanForensicsDoAfterEvent args)
     {
-        if (args.Handled || args.Cancelled || args.Target == null)
+        if (args.Handled
+            || args.Cancelled
+            || args.Target == null
+            || !TryComp<ForensicsComponent>(args.Target, out var targetComp))
             return;
 
-        if (!TryComp<ForensicsComponent>(args.Target, out var targetComp))
-            return;
+        targetComp.IsDirty = false;
+        Dirty(args.Target.Value, targetComp);
 
         targetComp.Fibers = [];
         targetComp.Fingerprints = [];
@@ -111,9 +117,6 @@ public sealed partial class ForensicsSystem : SharedForensicsSystem
 
         if (TryComp<ResidueComponent>(args.Used, out var residue))
             targetComp.Residues.Add(string.IsNullOrEmpty(residue.ResidueColor) ? Loc.GetString("forensic-residue", ("adjective", residue.ResidueAdjective)) : Loc.GetString("forensic-residue-colored", ("color", residue.ResidueColor), ("adjective", residue.ResidueAdjective)));
-
-        targetComp.IsDirty = false;
-        Dirty(args.Target.Value, targetComp);
     }
 
     private void ApplyEvidence(EntityUid user, EntityUid target)

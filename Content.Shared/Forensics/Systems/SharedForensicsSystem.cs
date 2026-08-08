@@ -58,6 +58,13 @@ public abstract partial class SharedForensicsSystem : EntitySystem
     }
 
     /// <summary>
+    /// The forensicsComponent isn't predicted except the "IsDirty" field.
+    /// Client needs its own method to set it to false after cleaning, and server needs to clear the forensics component.
+    /// </summary>
+    [SubscribeLocalEvent]
+    protected abstract void OnCleanForensicsDoAfter(Entity<ForensicsComponent> component, ref CleanForensicsDoAfterEvent args);
+
+    /// <summary>
     /// Attempts to clean the given item with the given CleansForensics entity.
     /// </summary>
     /// <param name="cleaner">The entity that is being used to clean the target.</param>

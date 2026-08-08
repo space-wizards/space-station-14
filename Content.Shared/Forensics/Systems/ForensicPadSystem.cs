@@ -60,6 +60,11 @@ public sealed partial class ForensicPadSystem : EntitySystem
                 _popup.PopupEntity(userMessage, args.Target.Value, args.User);
                 _popup.PopupEntity(targetMessage, args.Target.Value, args.Target.Value);
             }
+            else
+            {
+                var userMessage = Loc.GetString("forensic-pad-take-own-prints");
+                _popup.PopupEntity(userMessage, args.Target.Value, args.User);
+            }
             StartScan(pad, args.User, args.Target.Value, pad.Comp, fingerprint, skipDelay);
             return;
         }
@@ -69,6 +74,9 @@ public sealed partial class ForensicPadSystem : EntitySystem
             var fiberString = string.IsNullOrEmpty(fiber.FiberColor)
                 ? Loc.GetString("forensic-fibers", ("material", fiber.FiberMaterial))
                 : Loc.GetString("forensic-fibers-colored", ("color", fiber.FiberColor), ("material", fiber.FiberMaterial));
+
+            var userMessage = Loc.GetString("forensic-pad-take-fiber-sample", ("item", args.Target.Value));
+            _popup.PopupEntity(userMessage, args.Target.Value, args.User);
 
             StartScan(pad, args.User, args.Target.Value, pad.Comp, fiberString, true);
             return;
