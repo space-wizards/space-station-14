@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Text;
+using JetBrains.Annotations;
 using Robust.Shared.Audio.Midi;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -190,6 +191,7 @@ public sealed class InstrumentSetChannelsEvent : EntityEventArgs
 /// <summary>
 /// Represents a single midi track with the track name, instrument name and bank instrument name extracted.
 /// </summary>
+[Obsolete("Use MidiInfo instead.")]
 [Serializable, NetSerializable]
 public sealed class MidiTrack
 {
@@ -263,4 +265,39 @@ public sealed class MidiTrack
 
         return sanitized.ToString();
     }
+}
+
+// TODO: XML Docs
+[Serializable, NetSerializable]
+public sealed class MidiHeaderInfo
+{
+    public ushort Format;
+    public ushort NumTracks;
+    public bool IsSmpte;
+    public int TimeBase;
+}
+
+// TODO: XML Docs
+[Serializable, NetSerializable]
+public sealed class MidiTrackInfo
+{
+    public uint Length;
+    // TODO: Sanitize
+    public string? Text;
+    public string? Copyright;
+    public string? TrackName;
+    public string? InstrumentName;
+    public BitArray UsedChannels = new(16, false);
+    public long TotalTicks = 0;
+    public Dictionary<long, int> TempoMap = [];
+}
+
+// TODO: XML Docs
+[Serializable, NetSerializable]
+public sealed class MidiInfo
+{
+    public MidiHeaderInfo? Header;
+    public MidiTrackInfo[] Tracks = [];
+    public BitArray UsedChannels = new(16, false);
+    public double TotalLengthMinutes;
 }

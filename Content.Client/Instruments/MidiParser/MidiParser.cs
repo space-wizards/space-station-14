@@ -1,12 +1,129 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Collections;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using Content.Shared.Instruments;
 
 namespace Content.Client.Instruments.MidiParser;
 
-public static class MidiParser
+public static partial class MidiParser
 {
+    private const int DefaultTempoMicroseconds = 500_000;
+    private const int OneMinuteInMicroseconds = 60_000_000;
+
+    private static MidiHeaderInfo? ReadHeaderChunk(MidiStreamWrapper stream)
+    {
+        if (stream.ReadString(4) != "MThd")
+            return null;
+
+        var length = stream.ReadUInt32();
+        var format = stream.ReadUInt16(); // format
+        var trackCount = stream.ReadUInt16();
+        var timebase = stream.ReadUInt16(); // format
+
+        // Let's hope we don't get any of those.
+        var isSmpte = (timebase & 0x8000) == 1;
+
+        // Skip additional header nonsense
+        stream.Skip((int)(length - 6));
+
+        return new MidiHeaderInfo { Format = format, NumTracks = trackCount, IsSmpte = isSmpte, TimeBase = timebase };
+    }
+
+    private static MidiTrackInfo? ReadTrackChunk(MidiStreamWrapper stream)
+    {
+        var id = stream.ReadString(4);
+        var length = stream.ReadUInt32();
+
+        // Skip non-sense chunk
+        if (id == "MTrk")
+            return ReadTrack(stream, length);
+
+        stream.Skip((int)length);
+        return null;
+    }
+
+    private static MidiTrackInfo? ReadTrack(MidiStreamWrapper stream, uint length)
+    {
+        var trackInfo = new MidiTrackInfo();
+        var trackEnd = stream.StreamPosition + length;
+        long currentTick = 0;
+        byte? lastStatusByte = null;
+
+        while (stream.StreamPosition < trackEnd)
+        {
+            long deltaTime = stream.ReadVariableLengthQuantity();
+            currentTick += deltaTime;
+
+            var firstByte = stream.ReadByte();
+
+            if (firstByte >= 0x80)
+            {
+                lastStatusByte = firstByte;
+            }
+            else
+            {
+                // Running status: push byte back for reading as data
+                stream.Skip(-1);
+            }
+
+            // Return on invalid data
+            if (lastStatusByte == null)
+                return null;
+
+            var eventType = (byte)(lastStatusByte & 0xF0);
+            var eventChannel = (byte)(lastStatusByte & 0x0F);
+
+            switch (lastStatusByte)
+            {
+                case 0xFF:
+                {
+                    // Meta-Event
+                    var metaType = stream.ReadByte();
+                    var metaLength = stream.ReadVariableLengthQuantity();
+
+                    if (!MidiMetaEventHandlers.TryGetValue(metaType, out var midiMetaEventHandler))
+                    {
+                        stream.Skip((int)metaLength);
+                        continue;
+                    }
+
+                    midiMetaEventHandler.Invoke(stream, (int)metaLength, currentTick, trackInfo);
+                    break;
+                }
+
+                case 0xF0 or 0xF7:
+                {
+                    var sysexLength = stream.ReadVariableLengthQuantity();
+                    stream.Skip((int)sysexLength);
+                    // Sysex events and meta-events cancel any running status which was in effect.
+                    // Running status does not apply to and may not be used for these messages.
+                    lastStatusByte = null;
+                    break;
+                }
+
+                default:
+                    // Abort on invalid MIDI event
+                    if (!MidiEventHandlers.TryGetValue(eventType, out var midiEventhandler))
+                        return null;
+
+                    midiEventhandler.Invoke(stream, eventChannel, currentTick, trackInfo);
+                    break;
+            }
+        }
+
+        trackInfo.TotalTicks = currentTick;
+        return trackInfo;
+    }
+
+    private static double TickDeltaToMinutes(long timeBase, long tickDelta, long tempoMicroseconds)
+    {
+        var bpm = (double)OneMinuteInMicroseconds / tempoMicroseconds;
+        var quarterNotesCount = (double)tickDelta / timeBase;
+        return quarterNotesCount / bpm;
+    }
+
     // Thanks again to http://www.somascape.org/midi/tech/mfile.html
+    [Obsolete("Use MidiParser.TryParseMidi instead and access its Tracks property.")]
     public static bool TryGetMidiTracks(
         byte[] data,
         [NotNullWhen(true)] out MidiTrack[]? tracks,
@@ -142,8 +259,11 @@ public static class MidiParser
                                 if (track.ProgramName == null)
                                 {
                                     if (programNumber < Enum.GetValues<MidiInstrument>().Length)
-                                        track.ProgramName = Loc.GetString($"instruments-component-menu-midi-channel-{((MidiInstrument)programNumber).GetStringRep()}");
+                                        track.ProgramName =
+                                            Loc.GetString(
+                                                $"instruments-component-menu-midi-channel-{((MidiInstrument)programNumber).GetStringRep()}");
                                 }
+
                                 break;
                             }
 
@@ -170,6 +290,7 @@ public static class MidiParser
                                 tracks = null;
                                 return false;
                         }
+
                         break;
                 }
             }
@@ -180,6 +301,109 @@ public static class MidiParser
         }
 
         tracks = parsedTracks.ToArray();
+
+        return true;
+    }
+
+    /// <summary>
+    /// Parses MIDI and returns a DTO containing the parsed information about it.
+    /// </summary>
+    /// <param name="data">The MIDI data to parse in binary.</param>
+    /// <param name="info">MidiInfo output containing the result.</param>
+    /// <param name="error">String output containing the error on fail.</param>
+    /// <returns>True on success</returns>
+    public static bool TryParseMidi(
+        byte[] data,
+        [NotNullWhen(true)] out MidiInfo? info,
+        [NotNullWhen(false)] out string? error)
+    {
+        error = "";
+        info = null;
+        var stream = new MidiStreamWrapper(data);
+        var headerChunk = ReadHeaderChunk(stream);
+
+        if (headerChunk == null)
+        {
+            error = "Invalid MIDI header";
+            return false;
+        }
+
+        if (headerChunk.Format == 2)
+        {
+            error = "MIDI tempo format not supported";
+            return false;
+        }
+
+        List<MidiTrackInfo> parsedTracks = [];
+        var usedChannels = new BitArray(16, false);
+        long mostTicksOnTrack = 0;
+
+        for (var i = 0; i < headerChunk.NumTracks; i++)
+        {
+            var trackChunk = ReadTrackChunk(stream);
+            if (trackChunk == null)
+                continue;
+
+            parsedTracks.Add(trackChunk);
+            usedChannels.Or(trackChunk.UsedChannels);
+            if (mostTicksOnTrack < trackChunk.TotalTicks)
+                mostTicksOnTrack = trackChunk.TotalTicks;
+        }
+
+        double totalLengthMinutes = 0f;
+
+        // https://midimusic.github.io/tech/midispec.html#BM2_2
+        switch (headerChunk.Format)
+        {
+            // For a format 0 file, the tempo will be scattered through the track and the tempo map reader should ignore the intervening events.
+            case 0:
+            // For a format 1 file, the tempo map must be stored as the first track.
+            case 1:
+            {
+                // Both formats (0 & 1) store the TempoMap inside the first track.
+                if (parsedTracks.Count > 0 && parsedTracks[0].TempoMap.Count > 0)
+                {
+                    long currentTick = 0;
+                    var currentTempo = DefaultTempoMicroseconds;
+                    // Tempo changes parsed, calculate using TempoMap
+                    foreach (var kv in parsedTracks[0].TempoMap)
+                    {
+                        // Calculate the passed ticks using the previous tempo.
+                        var delta = kv.Key - currentTick;
+                        var lengthMinutes = TickDeltaToMinutes(headerChunk.TimeBase, delta, currentTempo);
+                        totalLengthMinutes += lengthMinutes;
+                        // Update the current tempo
+                        currentTempo = kv.Value;
+                        currentTick += delta;
+                    }
+
+                    // Take longest tick length and add remaining delta with last tempo entry.
+                    var remainingDelta = mostTicksOnTrack - currentTick;
+                    totalLengthMinutes += TickDeltaToMinutes(headerChunk.TimeBase, remainingDelta, currentTempo);
+                }
+                else
+                {
+                    // No tempo changes, simply calculate using standard values and total ticks (Tempo = 500'000)
+                    totalLengthMinutes = TickDeltaToMinutes(headerChunk.TimeBase,
+                        mostTicksOnTrack,
+                        DefaultTempoMicroseconds);
+                }
+
+                break;
+            }
+
+            default:
+                error = "Invalid Format";
+                return false;
+        }
+
+        info = new MidiInfo
+        {
+            Header = headerChunk,
+            Tracks = parsedTracks.ToArray(),
+            UsedChannels = usedChannels,
+            TotalLengthMinutes = totalLengthMinutes,
+        };
 
         return true;
     }
