@@ -34,12 +34,23 @@ public sealed partial class ClumsyCatchStatusEffectComponent : Component
     /// <summary>
     /// Popup played to the afflicted when they fail.
     /// </summary>
+    /// <value> Parameters passed in:
+    /// <list type="bullet">
+    ///     <item><c>item</c> - The item failed to be caught.</item>
+    /// </list>
+    /// </value>
     [DataField]
     public LocId? SelfFailedMessage = "clumsy-catch-fail-message-user";
 
     /// <summary>
     /// Popup played to others when the afflicted fails.
     /// </summary>
+    /// <value> Parameters passed in:
+    /// <list type="bullet">
+    ///     <item><c>item</c> - The item failed to be caught.</item>
+    ///     <item><c>catcher</c> - The entity failing the catch.</item>
+    /// </list>
+    /// </value>
     [DataField]
     public LocId? OtherFailedMessage = "clumsy-catch-fail-message-others";
 }

@@ -23,16 +23,4 @@ public sealed partial class ClumsyDefibStatusEffectComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier? ClumsySound = new SoundPathSpecifier("/Audio/Items/bikehorn.ogg");
-
-    /// <summary>
-    /// Popup played to the afflicted when they fail.
-    /// </summary>
-    [DataField]
-    public LocId? SelfFailedMessage; //todo
-
-    /// <summary>
-    /// Popup played to others when the afflicted fails.
-    /// </summary>
-    [DataField]
-    public LocId? OtherFailedMessage; //todo
 }

@@ -27,18 +27,36 @@ public sealed partial class ClumsyVaultStatusEffectComponent : Component
     /// <summary>
     /// Popup played to the afflicted when they fail.
     /// </summary>
+    /// <value> Parameters passed in:
+    /// <list type="bullet">
+    ///     <item><c>bonkable</c> - The table being climbed on.</item>
+    /// </list>
+    /// </value>
     [DataField]
     public LocId? SelfFailedMessage = "clumsy-vaulting-fail-message-user";
 
     /// <summary>
     /// Popup played to others when the afflicted fails.
     /// </summary>
+    /// <value> Parameters passed in:
+    /// <list type="bullet">
+    ///     <item><c>bonkable</c> - The table being climbed on.</item>
+    ///     <item><c>victim</c> - The climber of the table.</item>
+    /// </list>
+    /// </value>
     [DataField]
     public LocId? OtherFailedMessage = "clumsy-vaulting-fail-message-others";
 
     /// <summary>
     /// Popup played when this entity is forced to vault and fails.
     /// </summary>
+    /// <value> Parameters passed in:
+    /// <list type="bullet">
+    ///     <item><c>bonkable</c> - The table being climbed on.</item>
+    ///     <item><c>victim</c> - The vaulter of the table.</item>
+    ///     <item><c>bonker</c> - The entity forcing the vault.</item>
+    /// </list>
+    /// </value>
     [DataField]
     public LocId? ForcedMessage = "clumsy-vaulting-fail-forced-message";
 }

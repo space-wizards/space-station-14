@@ -47,12 +47,11 @@ public sealed partial class ClumsyGunStatusEffectComponent : Component
     /// <summary>
     /// Popup played to the afflicted when they fail.
     /// </summary>
+    /// <value> Parameters passed in:
+    /// <list type="bullet">
+    ///     <item><c>gun</c> - The gun the blows up.</item>
+    /// </list>
+    /// </value>
     [DataField]
-    public LocId? SelfFailedMessage = "clumsy-gun-fail-message"; //todo
-
-    /// <summary>
-    /// Popup played to others when the afflicted fails.
-    /// </summary>
-    [DataField]
-    public LocId? OtherFailedMessage = "clumsy-gun-fail-message"; //todo
+    public LocId? FailedMessage = "clumsy-gun-fail-message";
 }

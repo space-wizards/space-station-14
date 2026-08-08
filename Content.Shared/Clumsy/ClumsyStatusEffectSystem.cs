@@ -40,9 +40,8 @@ public sealed partial class ClumsyStatusEffectSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnCatchAttemptEvent(Entity<ClumsyCatchStatusEffectComponent> status, ref StatusEffectRelayedEvent<CatchAttemptEvent> args)
     {
-        var ent = args.AppliedTo;
-
-        if (!SharedRandomExtensions.PredictedProb(_timing, status.Comp.ClumsyChance, GetNetEntity(status), GetNetEntity(ent)))
+        if (args.Args.Cancelled
+            || !SharedRandomExtensions.PredictedProb(_timing, status.Comp.ClumsyChance, GetNetEntity(status), GetNetEntity(args.AppliedTo)))
             return;
 
         // fail to catch
@@ -50,7 +49,7 @@ public sealed partial class ClumsyStatusEffectSystem : EntitySystem
         ev.Cancelled = true;
 
         if (status.Comp.FailDamage != null)
-            _damageable.ChangeDamage(ent, status.Comp.FailDamage, origin: args.Args.Item);
+            _damageable.ChangeDamage(args.AppliedTo, status.Comp.FailDamage, origin: args.Args.Item);
 
         // todo double check this
         // Collisions don't work properly with PlayPredicted.
@@ -58,69 +57,61 @@ public sealed partial class ClumsyStatusEffectSystem : EntitySystem
         if (_net.IsClient)
             return;
 
-        _audio.PlayPvs(status.Comp.ClumsySound, ent);
+        var identity = Identity.Entity(args.AppliedTo, EntityManager);
 
-        // todo clean
-        var identity = Identity.Entity(ent, EntityManager);
         var selfMessage = status.Comp.SelfFailedMessage == null
             ? null
-            : Loc.GetString(status.Comp.SelfFailedMessage, ("item", status.Owner), ("catcher", identity));
+            : Loc.GetString(status.Comp.SelfFailedMessage, ("item", args.Args.Item));
         var othersMessage = status.Comp.OtherFailedMessage == null
             ? null
-            :  Loc.GetString(status.Comp.OtherFailedMessage, ("item", status.Owner), ("catcher", identity));
+            :  Loc.GetString(status.Comp.OtherFailedMessage, ("item", args.Args.Item), ("catcher", identity));
 
-        _popup.PopupEntity(selfMessage, othersMessage, ent, ent);
+        _popup.PopupEntity(selfMessage, othersMessage, args.AppliedTo, args.AppliedTo);
+        _audio.PlayPredicted(status.Comp.ClumsySound, args.AppliedTo, args.AppliedTo);
     }
 
     // Clumsy people shock themselves with defibrillators!
     [SubscribeLocalEvent]
     private void OnBeforeDefibrillatorZapsEvent(Entity<ClumsyDefibStatusEffectComponent> status, ref StatusEffectRelayedEvent<SelfBeforeDefibrillatorZapsEvent> args)
     {
-        var ent = args.AppliedTo;
-
-        if (!SharedRandomExtensions.PredictedProb(_timing, status.Comp.ClumsyChance, GetNetEntity(status), GetNetEntity(ent)))
+        if (!SharedRandomExtensions.PredictedProb(_timing, status.Comp.ClumsyChance, GetNetEntity(status), GetNetEntity(args.AppliedTo)))
             return;
 
         var ev = args.Args;
         ev.DefibTarget = ev.EntityUsingDefib;
 
-        _audio.PlayPvs(status.Comp.ClumsySound, ent);
-
-        //todo loc
+        _audio.PlayPredicted(status.Comp.ClumsySound, args.AppliedTo, args.AppliedTo);
     }
 
     // Clumsy people can't be trusted with guns!
     [SubscribeLocalEvent]
     private void OnBeforeGunShotEvent(Entity<ClumsyGunStatusEffectComponent> status, ref StatusEffectRelayedEvent<SelfBeforeGunShotEvent> args)
     {
-        var ent = args.AppliedTo;
-
-        if (args.Args.Gun.Comp.ClumsyProof
-            || !SharedRandomExtensions.PredictedProb(_timing, status.Comp.ClumsyChance, GetNetEntity(status), GetNetEntity(ent)))
+        if (args.Args.Cancelled
+            || args.Args.Gun.Comp.ClumsyProof
+            || !SharedRandomExtensions.PredictedProb(_timing, status.Comp.ClumsyChance, GetNetEntity(status), GetNetEntity(args.AppliedTo)))
             return;
 
-        if (status.Comp.FailDamage != null)
-            _damageable.ChangeDamage(ent, status.Comp.FailDamage, origin: args.Args.Gun);
+        args.Args.Cancel();
 
-        _stun.TryUpdateParalyzeDuration(ent, status.Comp.StunDuration);
+        if (status.Comp.FailDamage != null)
+            _damageable.ChangeDamage(args.AppliedTo, status.Comp.FailDamage, origin: args.Args.Gun);
+
+        _stun.TryUpdateParalyzeDuration(args.AppliedTo, status.Comp.StunDuration);
+
+        if (status.Comp.FailedMessage != null)
+            _popup.PopupEntity(Loc.GetString(status.Comp.FailedMessage, ("gun", args.Args.Gun)), args.AppliedTo, args.AppliedTo);
 
         // Apply salt to the wound ("Honk!") (No idea what this comment means) (I do :o))
-        _audio.PlayPvs(status.Comp.GunShootFailSound, ent);
-        _audio.PlayPvs(status.Comp.ClumsySound, ent);
-
-        // todo
-        if (status.Comp.SelfFailedMessage != null)
-            _popup.PopupEntity(Loc.GetString(status.Comp.SelfFailedMessage), ent, ent);
-        args.Args.Cancel();
+        _audio.PlayPredicted(status.Comp.GunShootFailSound, args.Args.Gun, args.AppliedTo);
+        _audio.PlayPredicted(status.Comp.ClumsySound, args.AppliedTo, args.AppliedTo);
     }
 
     // Clumsy people sometimes inject themselves!
     [SubscribeLocalEvent]
     private void OnBeforeInjectEvent(Entity<ClumsyInjectorStatusEffectComponent> status, ref StatusEffectRelayedEvent<SelfBeforeInjectEvent> args)
     {
-        var ent = args.AppliedTo;
-
-        if (!SharedRandomExtensions.PredictedProb(_timing, status.Comp.ClumsyChance, GetNetEntity(status), GetNetEntity(ent)))
+        if (!SharedRandomExtensions.PredictedProb(_timing, status.Comp.ClumsyChance, GetNetEntity(status), GetNetEntity(args.AppliedTo)))
             return;
 
         var ev = args.Args;
@@ -129,27 +120,26 @@ public sealed partial class ClumsyStatusEffectSystem : EntitySystem
         if (status.Comp.FailedMessage != null)
             ev.OverrideMessage = Loc.GetString(status.Comp.FailedMessage);
 
-        _audio.PlayPredicted(status.Comp.ClumsySound, ent, ent);
+        _audio.PlayPredicted(status.Comp.ClumsySound, args.AppliedTo, args.AppliedTo);
     }
 
     // Clumsy people have a blood feud with tables!
     [SubscribeLocalEvent]
     private void OnBeforeClimbEvent(Entity<ClumsyVaultStatusEffectComponent> status, ref StatusEffectRelayedEvent<SelfBeforeClimbEvent> args)
     {
-        var ent = args.AppliedTo;
-
-        if (!_cfg.GetCVar(CCVars.GameTableBonk)
-            && !SharedRandomExtensions.PredictedProb(_timing, status.Comp.ClumsyChance, GetNetEntity(status), GetNetEntity(ent)))
+        if (args.Args.Cancelled
+            || !_cfg.GetCVar(CCVars.GameTableBonk)
+            || !SharedRandomExtensions.PredictedProb(_timing, status.Comp.ClumsyChance, GetNetEntity(status), GetNetEntity(args.AppliedTo)))
             return;
+
+        args.Args.Cancel();
 
         _climb.Bonk(args.Args.BeingClimbedOn.Owner, args.Args.GettingPutOnTable);
 
-        _audio.PlayPredicted(status.Comp.ClumsySound, status, status);
+        var putOnTable = Identity.Entity(args.Args.GettingPutOnTable, EntityManager);
+        var puttingOnTable = Identity.Entity(args.Args.PuttingOnTable, EntityManager);
 
-        var gettingPutOnTableName = Identity.Entity(args.Args.GettingPutOnTable, EntityManager);
-        var puttingOnTableName = Identity.Entity(args.Args.PuttingOnTable, EntityManager);
-
-        if (args.Args.PuttingOnTable == ent)
+        if (args.Args.PuttingOnTable == args.Args.GettingPutOnTable)
         {
             // You are slamming yourself onto the table.
 
@@ -158,9 +148,9 @@ public sealed partial class ClumsyStatusEffectSystem : EntitySystem
                 : Loc.GetString(status.Comp.SelfFailedMessage, ("bonkable", args.Args.BeingClimbedOn));
             var othersMessage = status.Comp.OtherFailedMessage == null
                 ? null
-                :  Loc.GetString(status.Comp.OtherFailedMessage, ("victim", gettingPutOnTableName), ("bonkable", args.Args.BeingClimbedOn));
+                :  Loc.GetString(status.Comp.OtherFailedMessage, ("victim", putOnTable), ("bonkable", args.Args.BeingClimbedOn));
 
-            _popup.PopupEntity(selfMessage, othersMessage, ent, ent);
+            _popup.PopupEntity(selfMessage, othersMessage, args.AppliedTo, args.AppliedTo);
         }
         else
         {
@@ -170,14 +160,14 @@ public sealed partial class ClumsyStatusEffectSystem : EntitySystem
             var message = status.Comp.ForcedMessage == null
                 ? null
                 : Loc.GetString(status.Comp.ForcedMessage,
-                    ("bonker", puttingOnTableName),
-                    ("victim", gettingPutOnTableName),
+                    ("bonker", puttingOnTable),
+                    ("victim", putOnTable),
                     ("bonkable", args.Args.BeingClimbedOn));
 
-            _popup.PopupEntity(message, ent);
+            _popup.PopupEntity(message, args.AppliedTo);
         }
 
-        args.Args.Cancel();
+        _audio.PlayPredicted(status.Comp.ClumsySound, args.Args.GettingPutOnTable, args.Args.GettingPutOnTable);
     }
 
     #endregion

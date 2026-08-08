@@ -17,6 +17,6 @@ public sealed partial class ClimbSystem
             _damageableSystem.ChangeDamage(victim, table.Comp.BonkDamage, true);
 
         _stunSystem.TryUpdateParalyzeDuration(victim, table.Comp.BonkTime);
-        _audio.PlayPvs(table.Comp.BonkSound, table);
+        _audio.PlayPredicted(table.Comp.BonkSound, table, victim);
     }
 }
