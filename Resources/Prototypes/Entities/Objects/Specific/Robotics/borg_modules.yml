@@ -1672,6 +1672,31 @@
 
 - type: entity
   parent: [ BaseXenoborgModuleHeavy, BaseProviderBorgModule, BaseXenoborgContraband ]
+  id: XenoborgModuleGuidedMissileLauncher
+  name: guided missile launcher xenoborg module
+  description: Module with guided missile launcher and a range finder to set targets.
+  components:
+  - type: Sprite
+    layers:
+    - state: xenoborg_heavy
+    - state: icon-xenoborg-laser2
+  - type: ComponentBorgModule
+    components:
+    - type: ShowTargetOverlay
+    - type: DeviceLinkSink
+      ports:
+      - TargetReceiver
+    - type: AutoLinkReceiver
+      channel: XenoborgGuidedMissileLauncher
+  - type: ItemBorgModule
+    hands:
+    - item: WeaponXenoborgGuidedMissileLauncher
+    - item: WeaponRangeFinderXenoborg
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-laser2-module }
+
+- type: entity
+  parent: [ BaseXenoborgModuleHeavy, BaseProviderBorgModule, BaseXenoborgContraband ]
   id: XenoborgModuleBurstFireLaser
   name: burst fire laser xenoborg module
   description: Module with a burst fire incendiary laser.
