@@ -34,17 +34,38 @@
     radius: 3
     lightMask: ConeDouble
     castShadows: false
-  - type: AirlockControllerVisuals
-    stateSprites:
-      Idle: state_idle
-      Sealing: state_sealing
-      Evacuating: state_evacuating
-      Filling: state_filling
-      Unsealing: state_unsealing
-    displaySprites:
-      SideA: side_a
-      SideB: side_b
-      Maintenance: maintenance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.AirlockControllerVisualLayers.State:
+          True: { visible: true }
+          False: { visible: false }
+        enum.AirlockControllerVisualLayers.Display:
+          True: { visible: true }
+          False: { visible: false }
+        enum.AirlockControllerVisualLayers.Light:
+          True: { visible: true }
+          False: { visible: false }
+      enum.AirlockControllerVisuals.State:
+        enum.AirlockControllerVisualLayers.State:
+          Idle: { state: state_idle }
+          Sealing: { state: state_sealing }
+          Evacuating: { state: state_evacuating }
+          Filling: { state: state_filling }
+          Unsealing: { state: state_unsealing }
+      enum.AirlockControllerVisuals.Display:
+        enum.AirlockControllerVisualLayers.Display:
+          SideA: { state: side_a }
+          SideB: { state: side_b }
+          Maintenance: { state: maintenance }
+      enum.AirlockControllerVisuals.Error:
+        enum.AirlockControllerVisualLayers.Error:
+          True: { visible: true }
+          False: { visible: false }
+      enum.AirlockControllerVisuals.Cycling:
+        enum.AirlockControllerVisualLayers.Light:
+          True: { state: light_on }
+          False: { state: light_off }
   - type: Damageable
     damageModifierSet: Metallic
   - type: Injurable

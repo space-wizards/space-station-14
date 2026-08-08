@@ -1,13 +1,9 @@
-#region
-
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.DeviceLinking;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-
-#endregion
 
 namespace Content.Shared.Atmos.AirlockController;
 

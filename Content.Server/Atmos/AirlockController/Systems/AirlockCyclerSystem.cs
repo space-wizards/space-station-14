@@ -1,13 +1,9 @@
-﻿#region
-
-using Content.Server.Atmos.AirlockController.Components;
+﻿using Content.Server.Atmos.AirlockController.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Atmos.AirlockController;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Robust.Shared.Timing;
-
-#endregion
 
 namespace Content.Server.Atmos.AirlockController.Systems;
 

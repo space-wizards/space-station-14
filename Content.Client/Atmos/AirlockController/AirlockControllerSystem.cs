@@ -1,8 +1,4 @@
-#region
-
 using Content.Shared.Atmos.AirlockController;
-
-#endregion
 
 namespace Content.Client.Atmos.AirlockController;
 

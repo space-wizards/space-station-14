@@ -1,5 +1,3 @@
-#region
-
 using System.Linq;
 using Content.Server.Atmos.AirlockController.Components;
 using Content.Server.Atmos.Monitor.Components;
@@ -10,8 +8,6 @@ using Content.Shared.Atmos.AirlockController;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.Doors;
 using Content.Shared.Interaction;
-
-#endregion
 
 namespace Content.Server.Atmos.AirlockController.Systems;
 
