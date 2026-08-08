@@ -28,3 +28,43 @@
     sprite: _DeadSpace/Clothing/Head/Helmets/blueshieldhelmet.rsi
   - type: Clothing
     sprite: _DeadSpace/Clothing/Head/Helmets/blueshieldhelmet.rsi
+
+- type: entity
+  parent: ClothingHeadHelmetHardsuitSecurityRed
+  id: ClothingHeadHelmetHardsuitRedSword
+  categories: [ HideSpawnMenu, DoNotMap ]
+  name: шлем скафандра офицера "Красный Меч"
+  description: Предназначен для спасателя.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Head/Hardsuits/redsword.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Head/Hardsuits/redsword.rsi
+  - type: PointLight
+    color: '#ff2400'
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
+    - HeadTop
+    - HeadSide
+    
+- type: entity
+  parent: ClothingHeadHelmetHardsuitSecurityRed
+  id: ClothingHeadHelmetHardsuitGreenBeret
+  categories: [ HideSpawnMenu, DoNotMap ]
+  name: шлем скафандра офицера "Зелёный Берет"
+  description: Предназначен для спасателя.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Head/Hardsuits/greenberet.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Head/Hardsuits/greenberet.rsi
+  - type: PointLight
+    color: '#339900'
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
+    - HeadTop
+    - HeadSide

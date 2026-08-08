@@ -32,6 +32,28 @@
     sprite: _DeadSpace/Clothing/Neck/blueshieldmantle_shoulder.rsi
 
 - type: entity
+  parent: [ClothingNeckBase, BaseCommandContraband]
+  id: ClothingNeckMantleRedSwordhoulder
+  name: наплечная мантия офицера "Красный Меч"
+  description: Эта мантия является символом спасения высокопоставленных лиц.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Neck/redsword_mantle_shoulder.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Neck/redsword_mantle_shoulder.rsi
+
+- type: entity
+  parent: [ClothingNeckBase, BaseCommandContraband]
+  id: ClothingNeckMantleGreenBerethoulder
+  name: наплечная мантия офицера "Зелёный Берет"
+  description: Яркая зелёная мантия элитных Офицеров, что пугает вас своим видом...
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Neck/greenberet_mantle_shoulder.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Neck/greenberet_mantle_shoulder.rsi
+
+- type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakCommunicationsOfficer
   name: наплечная мантия офицера телекоммуникаций

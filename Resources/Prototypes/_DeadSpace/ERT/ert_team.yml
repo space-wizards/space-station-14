@@ -49,7 +49,7 @@
     Специализированный Отряд Против Пауков Ужаса NanoTrasen. 
     Предназначен для ликвидации и локализации угрозы Пауков Ужаса,
     а также эвакуации персонала в условиях заражения.
-    6 бойцов ОППУ и 1 лидер прибывают на шаттле ОППУ, который оснащён
+    8 бойцов ОППУ и 1 лидер прибывают на шаттле ОППУ, который оснащён
     всем необходимым оборудованием для выполнения их миссии.
     Время прибытия отряда от 10 до 15 минут.
   sender: ert-response-cso-sender
@@ -69,7 +69,7 @@
     - id: RandomHumanoidSpawnerSCSTLeader
       amount: 1
     - id: RandomHumanoidSpawnerSCSTAgent
-      amount: 6
+      amount: 8
 
 - type: ertTeam
   id: SCNT
@@ -85,7 +85,7 @@
     Специализированный Отряд Против Некро Угрозы NanoTrasen. 
     Предназначен для ликвидации и локализации очагов Некро Угрозы,
     а также эвакуации персонала в условиях заражения.
-    6 бойцов ОПНУ и 1 лидер прибывают на шаттле ОПНУ, который оснащён
+    8 бойцов ОПНУ и 1 лидер прибывают на шаттле ОПНУ, который оснащён
     всем необходимым оборудованием для выполнения их миссии.
     Время прибытия отряда от 10 до 15 минут.
   sender: ert-response-cso-sender
@@ -105,7 +105,7 @@
     - id: RandomHumanoidSpawnerSCNTLeader
       amount: 1
     - id: RandomHumanoidSpawnerSCNTAgent
-      amount: 6
+      amount: 8
 
 - type: ertTeam
   id: CburnSierra
@@ -350,7 +350,7 @@
   description: 
     Представитель Центрального Командования NanoTrasen, прибывающий на станцию
     для решения возникших проблем, которые не могут быть решены обычным способом.
-    Представитель Центрального Командования и 3 офицера Синий Щит прибывают
+    Представитель Центрального Командования и 3 офицера Зелёный Берет прибывают
     на шаттле, который оснащён всем необходимым оборудованием
     для выполнения их миссии.
     Время прибытия от 5 до 7 минут.
@@ -375,7 +375,7 @@
   - gamma
   special: CustomizableSpawnerCentralCommandOfficial
   spawns:
-    - id: CustomizableSpawnerCentralCommandBlueShieldOfficer
+    - id: CustomizableSpawnerCentralCommandGreenBeretOfficer
       amount: 3
 
 
@@ -470,8 +470,8 @@
   description: 
     Протокол «Смерть Вестника» - протокол, который активируется после 
     смерти члена Центрального Командования на активе NanoTrasen.
-    За телом немедленно вылетает ОБР кода "Гамма", вместе с 
-    Полевым Офицером место Командира ОБР. После прибытия ОБР
+    За телом немедленно вылетает Корпус "Красный Меч", вместе с 
+    Полевым Офицером как командир. После прибытия отряда
     арестовывает всех виновных и эвакуирует тело.
   notification: ert-response-caused-messager-fo-death-messenger
   rule: SpawnFODeathMessengerShuttle
@@ -490,7 +490,5 @@
   spawns:
     - id: RandomHumanoidSpawnerERTEngineerGamma
       amount: 1
-    - id: RandomHumanoidSpawnerERTSecurityGamma
-      amount: 5
-    - id: RandomHumanoidSpawnerERTMedicalGamma
-      amount: 2
+    - id: CustomizableSpawnerCentralCommandRedSwordOfficer
+      amount: 7

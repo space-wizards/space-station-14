@@ -1,0 +1,21 @@
+- type: entity
+  parent: [ClothingNeckBase, AccessoryTieBase]
+  id: ClothingNeckMantileCentcomBlack
+  name: наплечная мантия Полевого Офицера
+  description: Прости, она слишком крута для такого человека вроде тебя.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Neck/mantie_centcom_officer_black.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Neck/mantie_centcom_officer_black.rsi
+
+- type: entity
+  parent: [ClothingNeckBase, BaseCommandContraband]
+  id: ClothingNeckMantleCentCommAdministrator
+  name: наплечная мантия Центкома
+  description: Дорогая мантия, обшитая мехом и настоящим золотом. Выглядит очень парадно. Явно для высокопоставленных сотрудников ЦК.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Neck/centcom_mantle_administrator.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Neck/centcom_mantle_administrator.rsi

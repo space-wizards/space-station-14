@@ -15,7 +15,7 @@
   - ErtTeamLeader
   special:
   - !type:AddImplantSpecial
-    implants: [ MindShieldImplant, TrackingImplant, DeathRattleImplantCentcomm, DeathAcidifierImplant ]
+    implants: [ MindShieldImplant, TrackingImplant, DeathRattleImplantCentcomm ]
   - !type:AddComponentSpecial
     components:
     - type: AntagImmune
@@ -53,6 +53,7 @@
 - type: entity
   parent: ClothingBackpackSatchelOfficial
   id: ClothingBackpackSatchelAdministratorFilled
+  suffix: АЦК
   components:
   - type: StorageFill
     contents:
@@ -61,8 +62,8 @@
         - id: BoxFolderCentComEmpty
         - id: RubberStampAdministratorCC
         - id: RubberStampApproved
-        - id: MagazineCaselessRifle
-        - id: MagazineCaselessRifle
+        - id: MagazineEagleGold
+        - id: MagazineEagleGold
 
 - type: chameleonOutfit
   id: CentcomGearChameleonOutfit

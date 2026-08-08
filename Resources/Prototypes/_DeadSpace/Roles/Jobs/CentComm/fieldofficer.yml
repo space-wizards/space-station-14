@@ -16,7 +16,7 @@
   - ErtTeamLeader
   special:
   - !type:AddImplantSpecial
-    implants: [ MindShieldImplant, TrackingImplant, DeathRattleImplantCentcomm, RezervImplant ]
+    implants: [ MindShieldImplant, TrackingImplant, DeathRattleImplantCentcomm, RezervImplant, MonowireImplant ]
   - !type:AddComponentSpecial
     components:
     - type: AntagImmune

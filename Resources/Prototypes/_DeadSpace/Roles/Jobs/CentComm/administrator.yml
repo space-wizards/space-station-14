@@ -34,9 +34,9 @@
     outerClothing: ClothingOuterArmorCentcommCarapace
     id: CentcomAdministratorPDA
     ears: ClothingHeadsetAltCentCom
-    neck: ClothingNeckCloakCentcom
+    neck: ClothingNeckMantleCentCommAdministrator
     belt: ADTClothingBeltSupremeSheathFilled
-    pocket1: WeaponTochmash
+    pocket1: WeaponPistolGoldDesertEagle
     pocket2: DoorRemoteAll
 
 - type: chameleonOutfit

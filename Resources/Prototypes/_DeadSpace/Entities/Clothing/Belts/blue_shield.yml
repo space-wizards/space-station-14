@@ -26,3 +26,43 @@
     sprite: _DeadSpace/Clothing/Belt/webbing_blueshield.rsi
   - type: Clothing
     sprite: _DeadSpace/Clothing/Belt/webbing_blueshield.rsi
+
+- type: entity
+  id: ClothingBeltMilitaryWebbingBlueShieldCentComFilled
+  parent: ClothingBeltMilitaryWebbingBlueShieldFilled
+  name: РПС офицера "Синий Щит"
+  description: РПС, которую носят офицеры "Синий Щит"
+  suffix: Заполненный, ЦентКом
+  components:
+  - type: StorageFill
+    contents:
+      - id: JawsOfLife
+      - id: PowerDrill
+      - id: WelderExperimental
+      - id: CombatHypoBlueShield
+      - id: ChemistryBottleEphedrine
+      - id: ChemistryBottleOmnizine
+      - id: ChemistryBottleOmnizine
+      - id: ChemistryBottleBicaridine
+      - id: ChemistryBottleDexalinPlus
+      - id: ChemistryBottleDermaline
+
+- type: entity
+  id: ClothingBeltMilitaryWebbingRedSwordCentComFilled
+  parent: ClothingBeltMilitaryWebbingBlueShieldFilled
+  name: РПС офицера "Красный Меч"
+  description: РПС, которую носят офицеры "Красный Меч"
+  suffix: Заполненный, ЦентКом
+  components:
+  - type: StorageFill
+    contents:
+      - id: JawsOfLife
+      - id: PowerDrill
+      - id: WelderExperimental
+      - id: ADTCombatHypo
+      - id: ChemistryBottleCelestin
+      - id: ChemistryBottleCelestin
+      - id: ChemistryBottleOmnizine
+      - id: ChemistryBottleBicaridine
+      - id: ChemistryBottleDexalinPlus
+      - id: ChemistryBottleDermaline

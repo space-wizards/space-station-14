@@ -82,7 +82,6 @@
         ents: []
   - type: StorageFill
     contents:
-        - id: ERTloadoutGammaPrimary
         - id: BoxCardboardERT
         - id: JawsOfLifeSpecialOperationsOfficer
         - id: BSAACombatKitFilled

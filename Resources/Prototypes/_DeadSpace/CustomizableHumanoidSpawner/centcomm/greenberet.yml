@@ -1,0 +1,53 @@
+- type: entity
+  parent: CustomizableSpawnerBase
+  id: CustomizableSpawnerCentralCommandGreenBeretOfficer
+  name: Офицер "Зелёный Берет" 
+  suffix: ОЗБ, Призрачная роль, Кастомизируемый персонаж
+  components:
+  - type: Sprite
+    layers:
+    - state: timed
+    - sprite: Markers/jobs.rsi
+      state: blueshield-low
+  - type: CustomizableHumanoidSpawner
+    jobPrototype: CentralCommandGreenBeretOfficer
+    allowedSpecies:
+    - Human
+    - Shark
+    - Demon
+    - Reptilian
+    - Arachnid
+    - SlimePerson
+    - Tajaran
+    - Vulpkanin
+    randomNameFirstDataset: CustomizableSpawnerCentralCommandBlueShieldOfficerFirstName
+    randomNameSecondLocalized: NamesLastERT
+  - type: GhostRole
+    name: ghost-role-information-greenberetofficer-name
+    description: ghost-role-information-greenberetofficer-description
+    rules: ghost-role-information-centcom-personal-rules
+    category: ghost-role-information-centcomm-category
+    job: CentralCommandGreenBeretOfficer
+    raffle:
+      settings: short
+
+- type: roleLoadout
+  id: JobCentralCommandGreenBeretOfficer
+  groups:
+  # - GroupTankHarness # outerClothing slot occupied by startingGear
+  - CentralCommandGreenBeretOfficerLoadout
+  - GroupSpeciesBreathTool
+  - BlueShieldOfficerUnderwear
+
+- type: loadoutGroup
+  id: CentralCommandGreenBeretOfficerLoadout
+  name: spawner-loadout-blueshield
+  hidden: true
+  loadouts:
+  - CentralCommandGreenBeretOfficerLoadout
+
+- type: loadout
+  id: CentralCommandGreenBeretOfficerLoadout
+  equipment:
+    back: ClothingBackpackSatchelBig
+    socks: ClothingUnderwearSocksBlueShieldOfficer

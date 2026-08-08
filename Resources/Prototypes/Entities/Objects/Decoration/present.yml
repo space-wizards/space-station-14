@@ -197,6 +197,8 @@
         orGroup: GiftPool
       - id: PlushieHqdishka
         orGroup: GiftPool
+      - id: PlushieDrGnarAlt
+        orGroup: GiftPool
       - id: PlushieWillie
         orGroup: GiftPool
       - id: PlushieAinnete

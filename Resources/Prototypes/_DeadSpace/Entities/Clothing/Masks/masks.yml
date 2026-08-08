@@ -56,3 +56,34 @@
   - type: HideLayerClothing
     clothingSlots:
     - ears
+
+- type: entity
+  parent: ClothingMaskGas
+  id: WhiteNoiseMaskUnknown
+  name: "!^~&$*@"
+  description: Вы недостойны смотреть ему в глаза.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Mask/unknown.rsi
+    scale: "0.5, 0.5"
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Mask/unknown.rsi
+    clothingVisuals:
+      mask:
+      - state: equipped-MASK
+      - state: equipped-MASK-unshaded
+        shader: unshaded
+  - type: FlashImmunity
+  - type: EyeProtection
+  - type: SpecialDeathSound
+    sound:
+      path: /Audio/_DeadSpace/Voice/Death/sec_death.ogg
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+  - type: Tag
+    tags: []

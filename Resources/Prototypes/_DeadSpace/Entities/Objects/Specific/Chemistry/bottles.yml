@@ -1,0 +1,12 @@
+- type: entity
+  id: ChemistryBottleCelestin
+  suffix: Целестин
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Celestin
+          Quantity: 30

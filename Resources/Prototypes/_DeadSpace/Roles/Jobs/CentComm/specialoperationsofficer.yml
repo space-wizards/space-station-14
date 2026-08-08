@@ -34,12 +34,13 @@
     shoes: ClothingShoesCentcomBlack
     head: ClothingHeadCapCentcomBlack
     eyes: ClothingEyesGlassesSecurity
+    mask: WhiteNoiseMaskUnknown
     gloves: ClothingHandsGlovesCombat
     neck: ClothingNeckCloakCentcomBlack
     belt: WeaponRevolverMateba
     id: CentcomSpecialOperationsOfficerPDA
     ears: ClothingHeadsetSpecialOperationsOfficer
-    pocket1: WeaponEnergyM1911
+    pocket1: ADTObjectsWeaponsMeleeFoldingKnife
     pocket2: DoorRemoteAll
   #   underwearb: ClothingUnderwearBottomBoxersWhite # DS14-Underwear
   # underweart: ClothingUnderwearTopBraWhite # DS14-Underwear

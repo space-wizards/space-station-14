@@ -1,8 +1,9 @@
+# Зелёный Берет
 - type: job
-  id: CentralCommandBlueShieldOfficer
-  name: job-name-blue-shield-officer
-  description: job-description-blue-shield-officer
-  playTimeTracker: JobCentralCommandBlueShieldOfficer
+  id: CentralCommandGreenBeretOfficer
+  name: job-name-green-beret-officer
+  description: job-description-green-beret-officer
+  playTimeTracker: JobCentralCommandGreenBeretOfficer
   setPreference: false
   requirements:
     - !type:OverallPlaytimeRequirement
@@ -13,8 +14,8 @@
     - !type:DepartmentTimeRequirement
       department: Medical
       time: 36000 # 10 hours
-  startingGear: CentcomBlueShieldGear
-  icon: "JobIconBlueShieldOfficer"
+  startingGear: CentcomGreenBeretGear
+  icon: "JobIconGreenBeretOfficer"
   supervisors: job-supervisors-centcom-administrator
   canBeAntag: false
   accessGroups:
@@ -33,72 +34,190 @@
       - CentralCommand
 
 - type: entity
-  parent: ClothingBackpackBlueShield
-  id: ClothingBackpackBlueShieldCentComFilled
-  name: модифицированный рюкзак офицера "Синий Щит"
-  description: Рюкзак офицера "Синий Щит" с функцией РИГ.
-  suffix: Заполненный, ЦентКом
+  parent: BasePDA
+  id: GreenBeretOfficerPDA
   components:
-  - type: StorageFill
-    contents:
-      - id: BoxMRE
-      - id: ERTloadoutBlueShieldPrimary
-      - id: ADTtelescopicBaton
-      - id: TelescopicShield
-      - id: MedkitCombatFilled
-        amount: 2 
-      - id: HandheldCrewMonitor
-      - id: Zipties
-        amount: 2
-      - id: CelestinMedipen
-        amount: 2
+  - type: Pda
+    id: GreenBeretOfficerIDCard
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-ert
+  - type: PdaBorderColor
+    borderColor: "#12445b"
+    accentHColor: "#772d32"
+    accentVColor: "#772d32"
+  - type: Icon
+    state: pda-ert
+  - type: HealthAnalyzer
+    scanDelay: 1
+  - type: ErtTrackerPda
+    allowedDepartments:
+    - SpecialOperationsCorps
+    allowedJobs:
+    - BlueShieldOfficer
+    - CentralCommandGreenBeretOfficer
+    - CentralCommandSpecialOperationsOfficer
 
 - type: entity
-  id: ClothingBeltMilitaryWebbingBlueShieldCentComFilled
-  parent: ClothingBeltMilitaryWebbingBlueShieldFilled
-  name: РПС офицера "Синий Щит"
-  description: РПС, которую носят офицеры "Синий Щит"
-  suffix: Заполненный, ЦентКом
+  parent: IDCardStandard
+  id: GreenBeretOfficerIDCard
   components:
-  - type: StorageFill
-    contents:
-      - id: JawsOfLife
-      - id: PowerDrill
-      - id: WelderExperimental
-      - id: CombatHypoBlueShield
-      - id: ChemistryBottleEphedrine
-      - id: ChemistryBottleOmnizine
-      - id: ChemistryBottleOmnizine
-      - id: ChemistryBottleBicaridine
-      - id: ChemistryBottleDexalinPlus
-      - id: ChemistryBottleDermaline
+    - type: Sprite
+      layers:
+        - state: default
+        - state: ert_security
+    - type: PresetIdCard
+      job: CentralCommandGreenBeretOfficer
 
 - type: startingGear
-  id: CentcomBlueShieldGear
+  id: CentcomGreenBeretGear
   equipment:
-    head: ClothingHeadHatBeretBlueShield
-    jumpsuit: ClothingUniformJumpsuitBlueShield
-    # back: ClothingBackpackBlueShieldCentComFilled
-    mask: ClothingMaskGasBlueShield
-    eyes: ClothingEyesHudBlueShield
+    jumpsuit: ClothingUniformTurtleneckTactic
+    # back: ClothingBackpackSatchelBig
+    neck: ClothingNeckMantleGreenBerethoulder
+    eyes: ClothingEyesHudERT
     ears: ClothingHeadsetAltCentCom
-    gloves: ClothingHandsGlovesBlueShield
-    outerClothing: ClothingOuterArmorBasicBlueShield
-    shoes: ClothingShoesBootsBlueShield
-    id: BlueShieldOfficerPDA
-    pocket1: PistolBlueShield
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitGreenBeret
+    shoes: ADTClothingShoesBootsMagERT
+    suitstorage: JetpackBlackFilled
+    id: GreenBeretOfficerPDA
+    pocket1: FlashlightSeclite
     pocket2: WeaponDisabler
-    belt: ClothingBeltMilitaryWebbingBlueShieldCentComFilled
+    belt: ClothingBeltMilitaryWebbingRedSwordCentComFilled
   storage:
-    outerClothing:
-    - ClothingEyesGlassesMeson
-    - DoubleEmergencyOxygenTankFilled
-    - PinpointerUniversal
-
+    back:
+    - BoxCardboardERT
+    - ERTloadoutBlueShieldPrimary
+    - ADTtelescopicBaton
+    - TelescopicShield
+    - MedkitCombatFilled
+    - MedkitCombatFilled
+    - HandheldCrewMonitor
+    - Zipties
+    - Zipties
+    - Zipties
+    - CelestinMedipen
+    - CelestinMedipen
+    - CelestinMedipen
+    - CelestinMedipen
 
 - type: chameleonOutfit
-  id: CentralCommandBlueShieldOfficerChameleonOutfit
-  job: CentralCommandBlueShieldOfficer
+  id: CentcomGreenBeretGearChameleonOutfit
+  job: CentralCommandGreenBeretOfficer
+  equipment:
+    head: ClothingHeadHatBeretBlueShield
+    mask: ClothingMaskGasSecurity
+    eyes: ClothingEyesGlassesSecurity
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterArmorBasicBlueShield
+    shoes: ClothingShoesBootsJack
+    belt: ClothingBeltMilitaryWebbingMed
+
+# Красный Меч
+- type: job
+  id: CentralCommandRedSwordOfficer
+  name: job-name-red-sword-officer
+  description: job-description-red-sword-officer
+  playTimeTracker: JobCentralCommandRedSwordOfficer
+  setPreference: false
+  requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 252000 # 70 hours
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 72000 # 20 hours
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 36000 # 10 hours
+  startingGear: CentcomRedSwordGear
+  icon: "JobIconRedSwordOfficer"
+  supervisors: job-supervisors-centcom-administrator
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
+  access:
+  - CentralCommand
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant, TrackingImplant, DeathRattleImplantCentcomm ]
+  - !type:AddComponentSpecial
+    components:
+    - type: AntagImmune
+    - type: ZombieImmune
+    - type: NpcFactionMember
+      factions:
+      - CentralCommand
+
+- type: entity
+  parent: BasePDA
+  id: RedSwordOfficerPDA
+  components:
+  - type: Pda
+    id: RedSwordOfficerIDCard
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-ert
+  - type: PdaBorderColor
+    borderColor: "#12445b"
+    accentHColor: "#772d32"
+    accentVColor: "#772d32"
+  - type: Icon
+    state: pda-ert
+  - type: HealthAnalyzer
+    scanDelay: 1
+  - type: ErtTrackerPda
+    allowedDepartments:
+    - SpecialOperationsCorps
+    allowedJobs:
+    - BlueShieldOfficer
+    - CentralCommandGreenBeretOfficer
+    - CentralCommandSpecialOperationsOfficer
+    - CentralCommandRedSwordOfficer
+
+- type: entity
+  parent: IDCardStandard
+  id: RedSwordOfficerIDCard
+  components:
+    - type: Sprite
+      layers:
+        - state: default
+        - state: ert_security
+    - type: PresetIdCard
+      job: CentralCommandRedSwordOfficer
+
+- type: startingGear
+  id: CentcomRedSwordGear
+  equipment:
+    jumpsuit: ClothingUniformTurtleneckTactic
+    # back: ClothingBackpackSatchelBig
+    neck: ClothingNeckMantleRedSwordhoulder
+    eyes: ClothingEyesHudERTGamma
+    ears: ClothingHeadsetAltCentCom
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitRedSword
+    shoes: ADTClothingShoesBootsMagERT
+    id: RedSwordOfficerPDA
+    pocket1: FlashlightSeclite
+    pocket2: WeaponDisabler
+    belt: ClothingBeltMilitaryWebbingRedSwordCentComFilled
+  storage:
+    back:
+    - BoxCardboardERT
+    - ERTloadoutGammaPrimary
+    - BSAACombatKitFilled
+    - PinpointerNuclear
+    - InjectorCaseERTFilled
+    - TelescopicShield
+    - TelescopicShield
+
+- type: chameleonOutfit
+  id: CentcomRedSwordGearChameleonOutfit
+  job: CentralCommandRedSwordOfficer
   equipment:
     head: ClothingHeadHatBeretBlueShield
     mask: ClothingMaskGasSecurity

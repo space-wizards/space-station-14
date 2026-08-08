@@ -493,7 +493,6 @@
   parent: BasePlushieDeadSpaceMisc
   id: PlushieDrGnarAlt
   name: Плюшевая Моллер 
-  categories: [ HideSpawnMenu ]
   description: Плюшевая игрушка маленькой мольки в костюме бригмедика. Она точно никак не связана с ядерными оперативниками. От игрушки исходит лёгкий миндально-вишневый аромат.
   components:
   - type: Sprite

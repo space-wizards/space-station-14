@@ -41,7 +41,10 @@
   id: JobCentralCommandFieldOfficer
 
 - type: playTimeTracker
-  id: JobCentralCommandBlueShieldOfficer
+  id: JobCentralCommandRedSwordOfficer
+
+- type: playTimeTracker
+  id: JobCentralCommandGreenBeretOfficer
 
 - type: playTimeTracker
   id: JobCentralCommandOfficer

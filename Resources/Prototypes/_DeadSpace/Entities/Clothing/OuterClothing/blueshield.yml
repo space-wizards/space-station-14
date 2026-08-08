@@ -46,3 +46,78 @@
     sprite: _DeadSpace/Clothing/OuterClothing/Armor/blueshield_armor.rsi
   - type: Clothing
     sprite: _DeadSpace/Clothing/OuterClothing/Armor/blueshield_armor.rsi
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitRedSword
+  name: скафандр офицера "Красный Меч"
+  description: Скафандр предназначенный для спасителя.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/OuterClothing/Hardsuits/redsword.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/OuterClothing/Hardsuits/redsword.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.45
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.4
+        Heat: 0.5
+        Radiation: 0.5
+        Caustic: 0.5
+  - type: StaminaResistance
+    damageCoefficient: 0.7
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 1.1
+  - type: HideLayerClothing
+    clothingSlots: 
+    - jumpsuit
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitRedSword
+  - type: Item
+    size: Huge
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitGreenBeret
+  name: скафандр офицера "Зелёный Берет"
+  description: Скафандр предназначенный для защитника важных шишек.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/OuterClothing/Hardsuits/greenberet.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/OuterClothing/Hardsuits/greenberet.rsi
+    equipSound: /Audio/_DeadSpace/Misc/rig_equip.ogg
+  - type: PressureProtection
+    highPressureMultiplier: 0.45
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.4
+        Slash: 0.4
+        Piercing: 0.4
+        Heat: 0.4
+        Radiation: 0.5
+        Caustic: 0.4
+  - type: StaminaResistance
+    damageCoefficient: 0.7
+  - type: ClothingSpeedModifier
+    walkModifier: 0.7
+    sprintModifier: 0.7
+  - type: HideLayerClothing
+    clothingSlots: 
+    - jumpsuit
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitGreenBeret
+  - type: Item
+    size: Huge

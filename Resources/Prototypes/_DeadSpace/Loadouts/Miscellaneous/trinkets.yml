@@ -614,6 +614,13 @@
     - PlushieMoth3eiladoBlue
   groupBy: "plushie"
 
+- type: loadout
+  id:  PlushieDrGnarAlt
+  storage:
+    back:
+    -  PlushieDrGnarAlt
+  groupBy: "plushie"
+
 # IV класс
 - type: loadout
   id: PlushieMagicColonel

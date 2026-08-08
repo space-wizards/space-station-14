@@ -105,7 +105,6 @@
     - SpecialOperationsCorps
     allowedJobs:
     - BlueShieldOfficer
-    - CentralCommandBlueShieldOfficer
     - CentralCommandSpecialOperationsOfficer
 
 - type: entity

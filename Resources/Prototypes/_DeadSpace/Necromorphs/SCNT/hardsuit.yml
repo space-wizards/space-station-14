@@ -146,7 +146,8 @@
       coefficients:
         Blunt: 0.6
         Slash: 0.6
-        Piercing: 0.5
+        Piercing: 0.6
+        Poison: 0.6
         Heat: 0.1
         Cold: 0.1
         Shock: 0.1

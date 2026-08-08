@@ -164,9 +164,9 @@
 
 - type: entity
   parent: DesertEagleBase
-  id: WeaponPistolGoldDesertEagleSOD
-  name: золотой пустынный орёл «Джонита»
-  description: крутое описание от ex1stenz.
+  id: WeaponPistolGoldDesertEagle
+  name: золотой пустынный орёл
+  description:  Позолочённый корпус из 18-каратного золота ложится очень хорошо, сочетая в себе элегантность и удобства. Убей своих врагов со стилем!
   components:
   - type: Sprite
     sprite: _DeadSpace/Objects/Weapons/Guns/Pistols/golddeserteagle.rsi
@@ -183,5 +183,40 @@
   - type: Tag
     tags:
     - PistolDesertEagle
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineEagleGold
+        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineEagle
+            - MagazineEagleAP
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeHeavyPistol
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeHeavyPistol
   - type: StaticPrice
     price: 198400
+
+- type: entity
+  parent: BaseMagazineEagle
+  id: MagazineEagleGold
+  name: позолоченый пистолетный магазин пустынного орла (.50 AE)
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeHeavyPistol
+  - type: Sprite
+    scale: 1.1, 1.1 # DS-14
+    sprite: _DeadSpace/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/magazinedeserteaglegold.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]

@@ -59,8 +59,8 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.6
-        Slash: 0.6
+        Blunt: 0.4
+        Slash: 0.4
         Poison: 0.6
         Piercing: 0.5
         Heat: 0.1
@@ -69,8 +69,8 @@
         Radiation: 0.1
         Caustic: 0.6
   - type: ClothingSpeedModifier
-    walkModifier: 0.9
-    sprintModifier: 0.9
+    walkModifier: 1
+    sprintModifier: 1
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetCBURNSCSTLeader
   - type: AutoInjectReagentClothingOnAllowedState # Автоиньектор при смене состояния сущности
@@ -144,8 +144,8 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.4
-        Slash: 0.4
+        Blunt: 0.6
+        Slash: 0.6
         Poison: 0.6
         Piercing: 0.5
         Heat: 0.1
@@ -154,8 +154,8 @@
         Radiation: 0.1
         Caustic: 0.6
   - type: ClothingSpeedModifier
-    walkModifier: 1.1
-    sprintModifier: 1.1
+    walkModifier: 0.9
+    sprintModifier: 0.9
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetCBURNSCSTSoldier

@@ -1,0 +1,65 @@
+- type: entity
+  parent: CustomizableSpawnerBase
+  id: CustomizableSpawnerCentralCommandRedSwordOfficer
+  name: Офицер "Красный Меч" 
+  suffix: ОКМ, Призрачная роль, Кастомизируемый персонаж
+  components:
+  - type: Sprite
+    layers:
+    - state: timed
+    - sprite: Markers/jobs.rsi
+      state: blueshield-low
+  - type: CustomizableHumanoidSpawner
+    jobPrototype: CentralCommandRedSwordOfficer
+    allowedSpecies:
+    - Human
+    - Shark
+    - Demon
+    - Reptilian
+    - Arachnid
+    - SlimePerson
+    - Tajaran
+    - Vulpkanin
+    randomNameFirstDataset: CustomizableSpawnerCentralCommandBlueShieldOfficerFirstName
+    randomNameSecondLocalized: NamesLastERT
+  - type: GhostRole
+    name: ghost-role-information-redswordofficer-name
+    description: ghost-role-information-redswordofficer-description
+    rules: ghost-role-information-centcom-personal-rules
+    category: ghost-role-information-centcomm-category
+    job: CentralCommandRedSwordOfficer
+    raffle:
+      settings: short
+
+- type: roleLoadout
+  id: JobCentralCommandRedSwordOfficer
+  groups:
+  # - GroupTankHarness # outerClothing slot occupied by startingGear
+  - CentralCommandRedSwordOfficerLoadout
+  - GroupSpeciesBreathTool
+  - BlueShieldOfficerUnderwear
+
+- type: loadoutGroup
+  id: CentralCommandRedSwordOfficerLoadout
+  name: spawner-loadout-blueshield
+  hidden: true
+  loadouts:
+  - CentralCommandRedSwordOfficerLoadout
+
+- type: loadout
+  id: CentralCommandRedSwordOfficerLoadout
+  equipment:
+    back: ClothingBackpackSatchelBig
+    socks: ClothingUnderwearSocksBlueShieldOfficer
+
+- type: entity
+  parent: ClothingBackpackSatchelHoS
+  id: ClothingBackpackSatchelBig
+  name: чёрная сумка с подсумками
+  description: Стильная чёрная кожаная сумка.
+  components:
+  - type: Storage
+    grid:
+    - 0,0,2,4
+    - 4,0,7,4
+    - 9,0,11,4

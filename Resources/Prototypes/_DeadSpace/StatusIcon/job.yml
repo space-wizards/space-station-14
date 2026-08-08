@@ -8,6 +8,20 @@
 
 - type: jobIcon
   parent: JobIcon
+  id: JobIconRedSwordOfficer
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: RedSword
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconGreenBeretOfficer
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: GreenBeret
+
+- type: jobIcon
+  parent: JobIcon
   id: JobIconCoroner
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi

@@ -1233,7 +1233,6 @@
     - SpecialOperationsCorps # DS14
     allowedJobs:
     - BlueShieldOfficer
-    - CentralCommandBlueShieldOfficer
     - CentralCommandSpecialOperationsOfficer
   - type: Appearance
     appearanceDataInit:
