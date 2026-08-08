@@ -863,6 +863,10 @@
       shader: unshaded
     - state: fire
       shader: unshaded
+  - type: PointLight
+    radius: 3.5
+    color: magenta
+    energy: 0.5
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
