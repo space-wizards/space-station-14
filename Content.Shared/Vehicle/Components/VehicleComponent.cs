@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Damage;
+using Content.Shared.Vehicle.Systems;
 using Content.Shared.Whitelist;
 using JetBrains.Annotations;
 using Robust.Shared.GameStates;
@@ -85,4 +86,4 @@ public readonly record struct VehicleOperatorSetEvent(EntityUid? NewOperator, En
 /// Event raised on a vehicle to check if it can run/move around.
 /// </summary>
 [ByRefEvent, UsedImplicitly]
-public readonly record struct VehicleCanRunEvent(Entity<VehicleComponent> Vehicle, bool CanRun = true);
+public record struct VehicleCanRunEvent(Entity<VehicleComponent> Vehicle, bool CanRun = true);
