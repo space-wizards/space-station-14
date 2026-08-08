@@ -29,6 +29,9 @@ public sealed partial class AmbientOcclusionOverlay : Overlay
     [Dependency] private IPrototypeManager _proto = default!;
 
     private List<Entity<MapGridComponent>> _cachedGrids = new();
+    private readonly List<Entity<OccluderComponent, TransformComponent>> _cachedOccluders = new();
+    private readonly List<Vector2> _aoVertices = new(4096);
+    private readonly List<ushort> _aoIndices = new(6144);
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowEntities;
 
@@ -71,7 +74,6 @@ public sealed partial class AmbientOcclusionOverlay : Overlay
         var worldHandle = args.WorldHandle;
         var distance = _cfgManager.GetCVar(CCVars.AmbientOcclusionDistance);
         var resolutionScale = Math.Clamp(_cfgManager.GetCVar(CCVars.AmbientOcclusionResolutionScale), 0.1f, 1f);
-        //var color = Color.Red;
         var target = viewport.RenderTarget;
         var aoSize = new Vector2i(
             Math.Max(1, (int) MathF.Ceiling(target.Size.X * resolutionScale)),
@@ -107,7 +109,7 @@ public sealed partial class AmbientOcclusionOverlay : Overlay
                 {
                     DebugTools.Assert(entry.Component.Enabled);
                     var matrix = _xformSystem.GetWorldMatrix(entry.Transform);
-                    var bounds = entry.Component.BoundingBox;
+                    var bounds = entry.Component.LocalBounds;
                     AddOccluderQuad(matrix, bounds.Enlarged(aoPadding));
                 }
 
@@ -163,6 +165,48 @@ public sealed partial class AmbientOcclusionOverlay : Overlay
         _resources.Dispose();
 
         base.DisposeBehavior();
+    }
+
+    private void AppendAmbientOcclusionPolygon(
+        DrawingHandleWorld worldHandle,
+        ReadOnlySpan<Vector2> polygon,
+        Matrix3x2 localToTargetMatrix)
+    {
+        if (polygon.Length < 3)
+            return;
+
+        // Keep indices representable as ushort for DrawingHandleBase.DrawPrimitives().
+        if (_aoVertices.Count + polygon.Length > ushort.MaxValue)
+            FlushAmbientOcclusionPolygons(worldHandle);
+
+        var indexBase = (ushort) _aoVertices.Count;
+
+        for (var i = 0; i < polygon.Length; i++)
+        {
+            _aoVertices.Add(Vector2.Transform(polygon[i], localToTargetMatrix));
+        }
+
+        for (var i = 1; i < polygon.Length - 1; i++)
+        {
+            _aoIndices.Add(indexBase);
+            _aoIndices.Add((ushort) (indexBase + i));
+            _aoIndices.Add((ushort) (indexBase + i + 1));
+        }
+    }
+
+    private void FlushAmbientOcclusionPolygons(DrawingHandleWorld worldHandle)
+    {
+        if (_aoVertices.Count == 0)
+            return;
+
+        worldHandle.DrawPrimitives(
+            DrawPrimitiveTopology.TriangleList,
+            CollectionsMarshal.AsSpan(_aoIndices),
+            CollectionsMarshal.AsSpan(_aoVertices),
+            Color.White);
+
+        _aoVertices.Clear();
+        _aoIndices.Clear();
     }
 
     private sealed class CachedResources : IDisposable
