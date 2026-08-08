@@ -1,0 +1,93 @@
+# Every clumsy status for the clown :o)
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectClumsyClown
+  name: clumsy
+  components:
+  - type: ClumsyCatchStatusEffect
+    failDamage:
+      types:
+        Blunt: 1
+  - type: ClumsyDefibStatusEffect
+  - type: ClumsyGunStatusEffect
+    failDamage:
+      types: # Arbitrary values from old ClumsyComponent
+        Blunt: 5
+        Piercing: 4
+        Heat: 3
+  - type: ClumsyInjectorStatusEffect
+  - type: ClumsyVaultStatusEffect
+
+# A terrible fate
+- type: entity
+  parent: [ StatusEffectClumsyClown, MobStatusEffectDebuff ]
+  id: StatusEffectClumsyCluwne
+  components:
+  - type: ClumsyCatchStatusEffect
+    clumsyChance: &ChanceCluwne 0.8 # Even worse at everything >:o(
+    clumsySound: &SoundCluwneHorn
+      collection: CluwneHorn
+  - type: ClumsyDefibStatusEffect
+    clumsyChance: *ChanceCluwne
+    clumsySound: *SoundCluwneHorn
+  - type: ClumsyGunStatusEffect
+    clumsyChance: *ChanceCluwne
+    clumsySound: *SoundCluwneHorn
+  - type: ClumsyInjectorStatusEffect
+    clumsyChance: *ChanceCluwne
+    clumsySound: *SoundCluwneHorn
+  - type: ClumsyVaultStatusEffect
+    clumsyChance: *ChanceCluwne
+    clumsySound: *SoundCluwneHorn
+
+# =^_^= nya!
+- type: entity
+  parent: [ StatusEffectClumsyClown, MobStatusEffectDebuff ]
+  id: StatusEffectClumsyMaid
+  components:
+  - type: ClumsyCatchStatusEffect
+    clumsySound: &SoundCatMeow
+      collection: CatMeows
+  - type: ClumsyDefibStatusEffect
+    clumsySound: *SoundCatMeow
+  - type: ClumsyGunStatusEffect
+    clumsySound: *SoundCatMeow
+  - type: ClumsyInjectorStatusEffect
+    clumsySound: *SoundCatMeow
+  - type: ClumsyVaultStatusEffect
+    clumsySound: *SoundCatMeow
+
+# Monkeys are small clowns
+- type: entity
+  parent: StatusEffectClumsyClown
+  id: StatusEffectClumsyMonkey
+  components:
+  - type: ClumsyCatchStatusEffect
+    clumsySound: &SoundMonkeyScream
+      path: /Audio/Animals/monkey_scream.ogg
+  - type: ClumsyDefibStatusEffect
+    clumsySound: *SoundMonkeyScream
+  - type: ClumsyGunStatusEffect
+    clumsySound: *SoundMonkeyScream
+  - type: ClumsyInjectorStatusEffect
+    clumsySound: *SoundMonkeyScream
+  - type: ClumsyVaultStatusEffect
+    clumsyChance: 0.3 # Climbing proficiency
+    clumsySound: *SoundMonkeyScream
+
+# Kobolds are naked monkeys
+- type: entity
+  parent: StatusEffectClumsyClown
+  id: StatusEffectClumsyKobold
+  components:
+  - type: ClumsyCatchStatusEffect
+    clumsySound: &SoundReptileScream
+      path: /Audio/Voice/Reptilian/reptilian_scream.ogg
+  - type: ClumsyDefibStatusEffect
+    clumsySound: *SoundReptileScream
+  - type: ClumsyGunStatusEffect
+    clumsySound: *SoundReptileScream
+  - type: ClumsyInjectorStatusEffect
+    clumsySound: *SoundReptileScream
+  - type: ClumsyVaultStatusEffect
+    clumsySound: *SoundReptileScream

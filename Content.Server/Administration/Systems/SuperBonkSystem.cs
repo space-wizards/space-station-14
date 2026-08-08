@@ -1,11 +1,9 @@
 using Content.Server.Administration.Components;
 using Content.Shared.Climbing.Components;
 using Content.Shared.Climbing.Systems;
-using Content.Shared.Clumsy;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using JetBrains.Annotations;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Administration.Systems;
