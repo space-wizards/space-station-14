@@ -18,15 +18,7 @@ public sealed partial class DoorDeviceControlSystem : EntitySystem
     [Dependency] private DeviceNetworkSystem _deviceNetwork = default!;
     [Dependency] private DoorSystem _doors = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<DoorDeviceControlComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
-        SubscribeLocalEvent<DoorDeviceControlComponent, DoorStateChangedEvent>(OnStateChanged);
-        SubscribeLocalEvent<DoorDeviceControlComponent, DoorBoltsChangedEvent>(OnBoltsChanged);
-    }
-
+    [SubscribeLocalEvent]
     private void OnPacketReceived(Entity<DoorDeviceControlComponent> ent, ref DeviceNetworkPacketEvent args)
     {
         // Device-link traffic doesn't have commands so we ignore those
@@ -61,11 +53,13 @@ public sealed partial class DoorDeviceControlSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnStateChanged(Entity<DoorDeviceControlComponent> ent, ref DoorStateChangedEvent args)
     {
         PushStatus(ent);
     }
 
+    [SubscribeLocalEvent]
     private void OnBoltsChanged(Entity<DoorDeviceControlComponent> ent, ref DoorBoltsChangedEvent args)
     {
         PushStatus(ent);

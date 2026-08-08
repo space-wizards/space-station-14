@@ -25,9 +25,6 @@ public sealed partial class AirlockCyclerSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<AirlockCyclerComponent, ActivateInWorldEvent>(OnActivate);
-        SubscribeLocalEvent<AirlockCyclerComponent, ExaminedEvent>(OnExamine);
-
         Subs.BuiEvents<AirlockCyclerComponent>(AirlockControllerUiKey.Key,
             subs =>
         {
@@ -71,6 +68,7 @@ public sealed partial class AirlockCyclerSystem : EntitySystem
         return new AirlockCycleStatus(AirlockCycleState.Idle, side, null, true, false);
     }
 
+    [SubscribeLocalEvent]
     private void OnActivate(Entity<AirlockCyclerComponent> ent, ref ActivateInWorldEvent args)
     {
         if (!args.Complex || args.Handled || !this.IsPowered(ent, EntityManager))
@@ -89,6 +87,7 @@ public sealed partial class AirlockCyclerSystem : EntitySystem
         UpdateUi(ent);
     }
 
+    [SubscribeLocalEvent]
     private void OnExamine(Entity<AirlockCyclerComponent> ent, ref ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)

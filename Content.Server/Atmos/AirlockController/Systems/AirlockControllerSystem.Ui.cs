@@ -19,7 +19,6 @@ public sealed partial class AirlockControllerSystem
 {
     private void InitializeUi()
     {
-        SubscribeLocalEvent<AirlockControllerComponent, ActivateInWorldEvent>(OnActivate);
 
         Subs.BuiEvents<AirlockControllerComponent>(AirlockControllerUiKey.Key,
             subs =>
@@ -124,6 +123,7 @@ public sealed partial class AirlockControllerSystem
 
     #endregion
 
+    [SubscribeLocalEvent]
     private void OnActivate(Entity<AirlockControllerComponent> ent, ref ActivateInWorldEvent args)
     {
         if (!args.Complex || args.Handled)

@@ -47,14 +47,10 @@ public sealed partial class AirlockControllerSystem : SharedAirlockControllerSys
     {
         base.Initialize();
 
-        SubscribeLocalEvent<AirlockControllerComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<AirlockControllerComponent, DeviceNetworkPacketEvent>(OnPacketRecv);
-        SubscribeLocalEvent<AirlockControllerComponent, DeviceListUpdateEvent>(OnDeviceListUpdate);
-        SubscribeLocalEvent<AirlockControllerComponent, ExaminedEvent>(OnExamine);
-
         InitializeUi();
     }
 
+    [SubscribeLocalEvent]
     private void OnInit(Entity<AirlockControllerComponent> ent, ref ComponentInit args)
     {
         var comp = ent.Comp;
@@ -62,6 +58,7 @@ public sealed partial class AirlockControllerSystem : SharedAirlockControllerSys
         _signal.EnsureSourcePorts(ent, comp.StateAPort, comp.StateBPort, comp.CyclingPort);
     }
 
+    [SubscribeLocalEvent]
     private void OnExamine(Entity<AirlockControllerComponent> ent, ref ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)
@@ -72,6 +69,7 @@ public sealed partial class AirlockControllerSystem : SharedAirlockControllerSys
 
     #region Device network
 
+    [SubscribeLocalEvent]
     private void OnDeviceListUpdate(Entity<AirlockControllerComponent> ent, ref DeviceListUpdateEvent args)
     {
         var comp = ent.Comp;
@@ -101,6 +99,7 @@ public sealed partial class AirlockControllerSystem : SharedAirlockControllerSys
         _atmosDevNet.Sync(ent, null);
     }
 
+    [SubscribeLocalEvent]
     private void OnPacketRecv(Entity<AirlockControllerComponent> ent, ref DeviceNetworkPacketEvent args)
     {
         var comp = ent.Comp;

@@ -2,15 +2,9 @@ using Content.Shared.Atmos.AirlockController;
 
 namespace Content.Client.Atmos.AirlockController;
 
-public sealed class AirlockControllerSystem : SharedAirlockControllerSystem
+public sealed partial class AirlockControllerSystem : SharedAirlockControllerSystem
 {
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<AirlockControllerComponent, AfterAutoHandleStateEvent>(OnConfigChanged);
-    }
-
+    [SubscribeLocalEvent]
     private void OnConfigChanged(Entity<AirlockControllerComponent> ent, ref AfterAutoHandleStateEvent args)
     {
         UpdateUi(ent);
