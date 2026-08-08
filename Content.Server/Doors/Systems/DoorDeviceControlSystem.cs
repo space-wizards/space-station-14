@@ -18,6 +18,19 @@ public sealed partial class DoorDeviceControlSystem : EntitySystem
     [Dependency] private DeviceNetworkSystem _deviceNetwork = default!;
     [Dependency] private DoorSystem _doors = default!;
 
+    private EntityQuery<DoorComponent> _doorQuery;
+    private EntityQuery<DoorBoltComponent> _boltQuery;
+    private EntityQuery<DeviceNetworkComponent> _netQuery;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        _doorQuery = GetEntityQuery<DoorComponent>();
+        _boltQuery = GetEntityQuery<DoorBoltComponent>();
+        _netQuery = GetEntityQuery<DeviceNetworkComponent>();
+    }
+
     [SubscribeLocalEvent]
     private void OnPacketReceived(Entity<DoorDeviceControlComponent> ent, ref DeviceNetworkPacketEvent args)
     {
@@ -32,22 +45,22 @@ public sealed partial class DoorDeviceControlSystem : EntitySystem
                 break;
 
             case DoorNetworkCommands.Open:
-                if (TryComp<DoorComponent>(ent, out var toOpen) && toOpen.State == DoorState.Closed)
+                if (_doorQuery.TryComp(ent, out var toOpen) && toOpen.State == DoorState.Closed)
                     _doors.TryOpen(ent, toOpen);
                 break;
 
             case DoorNetworkCommands.Close:
-                if (TryComp<DoorComponent>(ent, out var toClose) && toClose.State == DoorState.Open)
+                if (_doorQuery.TryComp(ent, out var toClose) && toClose.State == DoorState.Open)
                     _doors.TryClose(ent, toClose);
                 break;
 
             case DoorNetworkCommands.Bolt:
-                if (TryComp<DoorBoltComponent>(ent, out var toBolt))
+                if (_boltQuery.TryComp(ent, out var toBolt))
                     _doors.SetBoltsDown((ent, toBolt), true);
                 break;
 
             case DoorNetworkCommands.Unbolt:
-                if (TryComp<DoorBoltComponent>(ent, out var toUnbolt))
+                if (_boltQuery.TryComp(ent, out var toUnbolt))
                     _doors.SetBoltsDown((ent, toUnbolt), false);
                 break;
         }
@@ -70,14 +83,14 @@ public sealed partial class DoorDeviceControlSystem : EntitySystem
     /// </summary>
     private void PushStatus(EntityUid uid)
     {
-        if (!TryComp<DeviceNetworkComponent>(uid, out var net) || net.DeviceLists.Count == 0)
+        if (!_netQuery.TryComp(uid, out var net) || net.DeviceLists.Count == 0)
             return;
 
         var payload = Status(uid);
 
         foreach (var list in net.DeviceLists)
         {
-            if (TryComp<DeviceNetworkComponent>(list, out var listener) && listener.ReceiveFrequency != null)
+            if (_netQuery.TryComp(list, out var listener) && listener.ReceiveFrequency != null)
                 _deviceNetwork.QueuePacket(uid, listener.Address, payload, listener.ReceiveFrequency.Value, listener.DeviceNetId);
         }
     }
@@ -95,12 +108,12 @@ public sealed partial class DoorDeviceControlSystem : EntitySystem
 
     private NetworkPayload Status(EntityUid uid)
     {
-        var boltable = TryComp<DoorBoltComponent>(uid, out var bolts);
+        var boltable = _boltQuery.TryComp(uid, out var bolts);
 
         return new NetworkPayload
         {
             [DeviceNetworkConstants.Command] = DoorNetworkCommands.Status,
-            [DoorNetworkCommands.StatusOpen] = !TryComp<DoorComponent>(uid, out var door) || door.State != DoorState.Closed,
+            [DoorNetworkCommands.StatusOpen] = !_doorQuery.TryComp(uid, out var door) || door.State != DoorState.Closed,
             [DoorNetworkCommands.StatusBolted] = boltable && bolts!.BoltsDown,
             [DoorNetworkCommands.StatusBoltable] = boltable,
         };

@@ -77,10 +77,10 @@ public sealed partial class AirlockControllerSystem
 
         return kind switch
         {
-            AirlockDeviceKind.Vent => HasComp<GasVentPumpComponent>(device) || HasComp<GasVentScrubberComponent>(device),
-            AirlockDeviceKind.Door => HasComp<DoorDeviceControlComponent>(device) && CanCommandDoor(ent, device, actor),
-            AirlockDeviceKind.Sensor => HasComp<AtmosMonitorComponent>(device),
-            AirlockDeviceKind.Cycler => HasComp<AirlockCyclerComponent>(device),
+            AirlockDeviceKind.Vent => _ventQuery.HasComp(device) || _scrubberQuery.HasComp(device),
+            AirlockDeviceKind.Door => _doorQuery.HasComp(device) && CanCommandDoor(ent, device, actor),
+            AirlockDeviceKind.Sensor => _sensorQuery.HasComp(device),
+            AirlockDeviceKind.Cycler => _cyclerQuery.HasComp(device),
             _ => false,
         };
     }
@@ -99,20 +99,20 @@ public sealed partial class AirlockControllerSystem
 
     protected override void OnDoorAssigned(Entity<AirlockControllerComponent> ent, EntityUid door)
     {
-        if (TryComp<DeviceNetworkComponent>(door, out var net) && !string.IsNullOrEmpty(net.Address))
+        if (_netQuery.TryComp(door, out var net) && !string.IsNullOrEmpty(net.Address))
             SendDoorCommand(ent, door, net.Address, DoorNetworkCommands.Sync);
     }
 
     protected override void OnDoorUnassigned(Entity<AirlockControllerComponent> ent, EntityUid door)
     {
-        if (TryComp<DeviceNetworkComponent>(door, out var net))
+        if (_netQuery.TryComp(door, out var net))
             ent.Comp.DoorReports.Remove(net.Address);
     }
 
     protected override void OnCyclerUnassigned(Entity<AirlockControllerComponent> ent, EntityUid cycler)
     {
         // The panel gets display from here
-        if (TryComp<AirlockCyclerComponent>(cycler, out var panel))
+        if (_cyclerQuery.TryComp(cycler, out var panel))
             panel.Controller = null;
     }
 
@@ -210,11 +210,11 @@ public sealed partial class AirlockControllerSystem
                 Address = address,
                 Name = Name(uid),
                 // Components because if we go for addresses saving and such breaks, thanks NetworkDevicebama
-                IsVent = HasComp<GasVentPumpComponent>(uid),
-                IsScrubber = HasComp<GasVentScrubberComponent>(uid),
-                IsSensor = HasComp<AtmosMonitorComponent>(uid),
-                IsDoor = HasComp<DoorDeviceControlComponent>(uid),
-                IsCycler = HasComp<AirlockCyclerComponent>(uid),
+                IsVent = _ventQuery.HasComp(uid),
+                IsScrubber = _scrubberQuery.HasComp(uid),
+                IsSensor = _sensorQuery.HasComp(uid),
+                IsDoor = _doorQuery.HasComp(uid),
+                IsCycler = _cyclerQuery.HasComp(uid),
             };
 
             // Vents inherently always inside
@@ -245,7 +245,7 @@ public sealed partial class AirlockControllerSystem
         UserInterfaceSystem.SetUiState(ent.Owner, AirlockControllerUiKey.Config, new AirlockControllerConfigUiState
         {
             Devices = entries,
-            Address = CompOrNull<DeviceNetworkComponent>(ent)?.Address ?? string.Empty,
+            Address = _netQuery.CompOrNull(ent)?.Address ?? string.Empty,
             DoorCount = BoundDoors(ent).Count,
             ChamberSensorCount = chamberSensors,
             CurrentSide = comp.CurrentSide,
@@ -278,7 +278,7 @@ public sealed partial class AirlockControllerSystem
     private float? SensorReading(AirlockControllerComponent comp, AirlockSide side)
     {
         return comp.TargetSensors.TryGetValue(side, out var sensor)
-               && TryComp<DeviceNetworkComponent>(sensor, out var net)
+               && _netQuery.TryComp(sensor, out var net)
                && comp.SensorData.TryGetValue(net.Address, out var data)
             ? data.Pressure
             : null;

@@ -23,6 +23,15 @@ public sealed partial class AirlockCycleStatusSystem : EntitySystem
     [Dependency] private PowerReceiverSystem _power = default!;
     [Dependency] private IGameTiming _timing = default!;
 
+    private EntityQuery<SpamEmitSoundComponent> _alarmQuery;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        _alarmQuery = GetEntityQuery<SpamEmitSoundComponent>();
+    }
+
     public void Apply(EntityUid uid, AirlockCycleStatus status)
     {
         var display = status.Maintenance
@@ -39,7 +48,7 @@ public sealed partial class AirlockCycleStatusSystem : EntitySystem
 
         _pointLight.SetEnabled(uid, status.Warning);
 
-        if (!TryComp<SpamEmitSoundComponent>(uid, out var alarm) || alarm.Enabled == status.Warning)
+        if (!_alarmQuery.TryComp(uid, out var alarm) || alarm.Enabled == status.Warning)
             return;
 
         _emitSound.SetEnabled((uid, alarm), status.Warning);

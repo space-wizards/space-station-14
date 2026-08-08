@@ -11,12 +11,16 @@ public abstract partial class SharedAirlockControllerSystem : EntitySystem
     [Dependency] protected AccessReaderSystem Access = default!;
     [Dependency] protected SharedUserInterfaceSystem UserInterfaceSystem = default!;
 
+    protected EntityQuery<AccessReaderComponent> AccessQuery;
+
     private const AirlockVentRole AllVentRoles =
         AirlockVentRole.VentA | AirlockVentRole.SiphonA | AirlockVentRole.VentB | AirlockVentRole.SiphonB;
 
     public override void Initialize()
     {
         base.Initialize();
+
+        AccessQuery = GetEntityQuery<AccessReaderComponent>();
 
         Subs.BuiEvents<AirlockControllerComponent>(AirlockControllerUiKey.Config,
             subs =>
@@ -96,7 +100,7 @@ public abstract partial class SharedAirlockControllerSystem : EntitySystem
     /// </summary>
     public bool IsAllowedQuiet(EntityUid user, EntityUid target)
     {
-        if (!TryComp<AccessReaderComponent>(target, out var reader))
+        if (!AccessQuery.TryComp(target, out var reader))
             return true;
 
         var sources = Access.FindPotentialAccessItems(user);
