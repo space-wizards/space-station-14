@@ -9,11 +9,18 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Eye.Blinking;
 
+/// <summary>
+/// A system to control entities blinking their eyes.
+/// </summary>
 public abstract partial class SharedEyeBlinkingSystem : EntitySystem
 {
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private BlindableSystem _blindableSystem = default!;
     [Dependency] private SharedActionsSystem _actionsSystem = default!;
+
+    [Dependency] protected EntityQuery<EyeBlinkingComponent> EyeBlinkingQuery;
+    [Dependency] protected EntityQuery<OrganComponent> OrganQuery;
+    [Dependency] protected EntityQuery<VisualOrganComponent> VisualOrganQuery;
 
     [SubscribeLocalEvent]
     private void OnShutdown(Entity<EyeBlinkingComponent> ent, ref ComponentShutdown args)
@@ -21,15 +28,7 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
         if (ent.Comp.EyeToggleActionEntity == null)
             return;
 
-        if (TryComp<OrganComponent>(ent, out var organComp))
-        {
-            if (organComp.Body is { } body)
-                _actionsSystem.RemoveAction(body, ent.Comp.EyeToggleActionEntity);
-        }
-        else
-        {
-            _actionsSystem.RemoveAction(ent.Owner, ent.Comp.EyeToggleActionEntity);
-        }
+        _actionsSystem.RemoveAction(GetActiveEntity(ent));
     }
 
     [SubscribeLocalEvent]
@@ -67,9 +66,8 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnOrganCopyAppearance(Entity<EyeBlinkingComponent> ent, ref BodyRelayedEvent<OrganCopyAppearanceEvent> args)
     {
-        if (!TryComp<VisualOrganComponent>(args.Args.Organ, out var visualOrgan))
-            return;
-        if (!TryComp<EyeBlinkingComponent>(args.Args.Organ, out var cloneEyes))
+        if (!VisualOrganQuery.HasComp(args.Args.Organ)
+            || !EyeBlinkingQuery.TryComp(args.Args.Organ, out EyeBlinkingComponent? cloneEyes))
             return;
 
         ent.Comp.EyeToggleAction = cloneEyes.EyeToggleAction;
@@ -89,8 +87,6 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
         ent.Comp.BlinkSkinColorMultiplier = cloneEyes.BlinkSkinColorMultiplier;
 
         Dirty(ent);
-        var ev = new InitEyesEvent(GetNetEntity(ent.Owner), ent.Comp.EyelidsColor ?? Color.Red); // Use red as a fallback color if EyelidsColor is null. This not should happen, but just in case.
-        RaiseNetworkEvent(ev);
 
         if (ent.Comp.EyeToggleActionEntity == null)
             _actionsSystem.AddAction(args.Body.Owner, ref ent.Comp.EyeToggleActionEntity, ent.Comp.EyeToggleAction);
@@ -107,8 +103,6 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
 
         eyeBlinking.Comp.EyelidsColor = eyelidColor;
         Dirty(eyeBlinking);
-        var ev = new InitEyesEvent(GetNetEntity(eyeBlinking.Owner), eyelidColor);
-        RaiseNetworkEvent(ev);
     }
 
     [SubscribeLocalEvent]
@@ -156,13 +150,11 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
         if (args.NewMobState == MobState.Dead)
         {
             if (ent.Comp.EyeToggleActionEntity != null)
-            {
                 _actionsSystem.RemoveAction(args.Target, ent.Comp.EyeToggleActionEntity);
-            }
-            return;
         }
-        if (ent.Comp.EyeToggleActionEntity == null)
+        else if (ent.Comp.EyeToggleActionEntity == null)
         {
+            // Not dead, no action, add another.
             _actionsSystem.AddAction(args.Target, ref ent.Comp.EyeToggleActionEntity, ent.Comp.EyeToggleAction);
         }
     }
@@ -184,8 +176,8 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
         if (!args.Blind)
         {
             _appearance.RemoveData(ent.Owner, EyeBlinkingVisuals.EyesClosed);
-            var ev = new OpenEyesEvent(GetNetEntity(ent.Owner));
-            RaiseNetworkEvent(ev);
+            var ev = new OpenEyesEvent();
+            RaiseLocalEvent(ent, ref ev);
         }
         else
         {
@@ -275,9 +267,6 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
         AddComp(args.CloneUid, cloneComp, true);
         _blindableSystem.UpdateIsBlind(args.CloneUid);
 
-        var ev = new InitEyesEvent(GetNetEntity(ent.Owner), ent.Comp.EyelidsColor ?? Color.White);
-        RaiseNetworkEvent(ev);
-
         if (cloneComp.EyeToggleActionEntity == null)
             _actionsSystem.AddAction(ent.Owner, ref cloneComp.EyeToggleActionEntity, cloneComp.EyeToggleAction);
     }
@@ -289,6 +278,20 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
             return;
         _blindableSystem.UpdateIsBlind(args.Args.CloneUid);
     }
+
+    /// <summary>
+    /// Returns the entity that should be used for the eyes.
+    /// For mobs that may have this component, this should be the entity proper.
+    /// For organs, it should be the body of the eyes.
+    /// </summary>
+    protected EntityUid GetActiveEntity(EntityUid eyes)
+    {
+        if (OrganQuery.TryComp(eyes, out OrganComponent? organComp)
+            && organComp.Body is { } body)
+            return body;
+
+        return eyes;
+    }
 }
 
 /// <summary>
@@ -297,7 +300,7 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
 [Serializable, NetSerializable]
 public enum EyeBlinkingVisuals : byte
 {
-    EyesClosed,
+    EyesClosed
 }
 
 /// <summary>
@@ -320,27 +323,5 @@ public sealed partial class ToggleEyesActionEvent : InstantActionEvent;
 /// <summary>
 /// Open Eyes after remove EyeClosing from appearanceData
 /// </summary>
-[Serializable, NetSerializable]
-public sealed partial class OpenEyesEvent(NetEntity netEntity) : EntityEventArgs
-{
-    /// <summary>
-    /// The entity performing the open Eye.
-    /// </summary>
-    public readonly NetEntity NetEntity = netEntity;
-}
-
-/// <summary>
-/// Force Init eyelids layer
-/// </summary>
-[Serializable, NetSerializable]
-public sealed partial class InitEyesEvent(NetEntity netEntity, Color eyelidsColor) : EntityEventArgs
-{
-    /// <summary>
-    /// The entity performing init eyes.
-    /// </summary>
-    public readonly NetEntity NetEntity = netEntity;
-    /// <summary>
-    /// Eyelids color of the entity performing the init eyes.
-    /// </summary>
-    public readonly Color EyelidsColor = eyelidsColor;
-}
+[ByRefEvent]
+public partial record struct OpenEyesEvent;

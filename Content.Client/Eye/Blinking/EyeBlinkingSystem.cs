@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Client.DisplacementMap;
 using Content.Shared.Body;
 using Content.Shared.DisplacementMap;
@@ -9,32 +10,28 @@ using Robust.Client.ResourceManagement;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using System.Linq;
 
 namespace Content.Client.Eye.Blinking;
 
 /// <inheritdoc/>
 public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 {
-    [Dependency] private SpriteSystem _sprite = default!;
-    [Dependency] private IRobustRandom _random = default!;
-    [Dependency] private IResourceCache _resCache = default!;
-    [Dependency] private StatusEffectsSystem _statusEffects = default!;
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private IResourceCache _resCache = default!;
+    [Dependency] private IRobustRandom _random = default!;
     [Dependency] private DisplacementMapSystem _displacement = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private StatusEffectsSystem _statusEffects = default!;
 
-    [SubscribeNetworkEvent]
-    private void OnOpenEyes(OpenEyesEvent ev)
+    [Dependency] private EntityQuery<SpriteComponent> _spriteQuery;
+
+    #region Event Handlers
+    [SubscribeLocalEvent]
+    private void OnOpenEyes(Entity<EyeBlinkingComponent> ent, ref OpenEyesEvent args)
     {
-        var ent = GetEntity(ev.NetEntity);
-
-        if (!ent.IsValid() || !TryComp<EyeBlinkingComponent>(ent, out var blinkingComp))
-            return;
-
-        var entComp = (ent, blinkingComp);
-        ChangeEyesState(entComp, false);
-        ResetBlink(entComp);
+        ChangeEyesState(ent, false);
+        ResetBlink(ent);
     }
 
     /// <summary>
@@ -43,15 +40,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
     [SubscribeLocalEvent]
     private void OnComponentInit(Entity<EyeBlinkingComponent> ent, ref ComponentInit args)
     {
-        if (TryComp<OrganComponent>(ent, out var organComp))
-        {
-            if (organComp.Body is { } body)
-                InitEyeBlinking(ent, body);
-        }
-        else
-        {
-            InitEyeBlinking(ent, ent);
-        }
+        InitEyeBlinking(ent, GetActiveEntity(ent));
     }
 
     /// <summary>
@@ -60,40 +49,28 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
     [SubscribeLocalEvent]
     private void OnAfterAutoHandleState(Entity<EyeBlinkingComponent> ent, ref AfterAutoHandleStateEvent args)
     {
-        if (ent.Comp.Init)
-            return;
+        if (!ent.Comp.Init)
+            InitEyeBlinking(ent, GetActiveEntity(ent));
 
-        if (TryComp<OrganComponent>(ent, out var organComp))
+        if (ent.Comp.LastEyelidsColor != ent.Comp.EyelidsColor)
         {
-            if (organComp.Body is { } body)
-                InitEyeBlinking(ent, body);
-        }
-        else
-        {
-            InitEyeBlinking(ent, ent.Owner);
+            // TODO: update eyelid color
+            ent.Comp.LastEyelidsColor = ent.Comp.EyelidsColor;
         }
     }
 
-    [SubscribeNetworkEvent]
-    private void OnInitEyes(InitEyesEvent ev)
+    /// <summary>
+    /// Handles pause accumulation for eye blinking.
+    /// </summary>
+    [SubscribeLocalEvent]
+    private void OnUnpaused(Entity<EyeBlinkingComponent> ent, ref EntityUnpausedEvent args)
     {
-        if (!_timing.IsFirstTimePredicted)
-            return;
-
-        var ent = GetEntity(ev.NetEntity);
-
-        if (!ent.IsValid() || !TryComp<EyeBlinkingComponent>(ent, out var blinkingComp))
-            return;
-        blinkingComp.Init = false;
-
-        if (TryComp<OrganComponent>(ent, out var organComp))
+        ent.Comp.NextOpenEyesTime += args.PausedTime;
+        ent.Comp.NextBlinkingTime += args.PausedTime;
+        foreach (var eyelid in ent.Comp.Eyelids)
         {
-            if (organComp.Body is { } body)
-                InitEyeBlinking((ent, blinkingComp), body);
-        }
-        else
-        {
-            InitEyeBlinking((ent, blinkingComp), ent);
+            eyelid.ScheduledCloseTime += args.PausedTime;
+            eyelid.ScheduledOpenTime += args.PausedTime;
         }
     }
 
@@ -104,10 +81,10 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
     /// <param name="body"></param>
     private void InitEyeBlinking(Entity<EyeBlinkingComponent> ent, EntityUid body)
     {
-        if (!TryComp<SpriteComponent>(body, out var sprite))
+        if (!_spriteQuery.TryComp(body, out SpriteComponent? sprite))
             return;
 
-        if (!_sprite.TryGetLayer(body, HumanoidVisualLayers.Eyelids, out var eyelids, false))
+        if (!_sprite.TryGetLayer((body, sprite), HumanoidVisualLayers.Eyelids, out var eyelids, false))
             return;
 
         ent.Comp.Init = true;
@@ -131,7 +108,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 
     private void InitEyelidsLayers(Entity<EyeBlinkingComponent> ent, EntityUid body)
     {
-        if (!TryComp<SpriteComponent>(body, out var comp))
+        if (!_spriteQuery.TryComp(body, out SpriteComponent? comp))
             return;
 
         // Removes existing eyelid layers.
@@ -160,25 +137,18 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         if (!_sprite.LayerMapTryGet((body, comp), HumanoidVisualLayers.Eyelids, out var targetLayer, false))
             return;
 
-        var eyelidColor = Color.White;
-
         // If the entity has a specific eyelid color defined after organData init, use that color instead of the default white.
-        if (ent.Comp.EyelidsColor != null)
-        {
-            eyelidColor = ent.Comp.EyelidsColor.Value;
-        }
+        var eyelidColor = ent.Comp.EyelidsColor ?? Color.White;
 
         var rsiCollection = rsiRes.RSI;
         int i = 0;
 
         DisplacementDataPrototype? displacementProto = null;
 
-        if (TryComp<VisualOrganComponent>(ent.Owner, out var visualOrgan))
+        if (TryComp<VisualOrganComponent>(ent.Owner, out var visualOrgan)
+            && visualOrgan.Displacement != null)
         {
-            if (visualOrgan.Displacement != null)
-            {
-                ProtoMan.Resolve<DisplacementDataPrototype>(visualOrgan.Displacement, out displacementProto);
-            }
+            ProtoMan.Resolve(visualOrgan.Displacement, out displacementProto);
         }
 
         // Creates a new layer for each eyelid state defined in the RSI.
@@ -217,11 +187,11 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
     [SubscribeLocalEvent]
     private void OnAppearanceChange(Entity<EyeBlinkingComponent> ent, ref AppearanceChangeEvent args)
     {
-        if (!_appearance.TryGetData(ent.Owner, EyeBlinkingVisuals.EyesClosed, out var value) || !(value is bool eyeClosed))
+        if (!_appearance.TryGetData<bool>(ent.Owner, EyeBlinkingVisuals.EyesClosed, out var eyeClosed))
             return;
 
-        if ((eyeClosed == false && ent.Comp.BlinkInProgress == false) ||
-            eyeClosed)
+        if (eyeClosed
+            || ent.Comp.BlinkInProgress == false)
         {
             ChangeEyesState(ent, eyeClosed);
             return;
@@ -243,26 +213,9 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 
         Blink((ent, blinkingComp));
     }
+    #endregion Event Handlers
 
-    /// <summary>
-    /// Changes the eye state (open or closed) for the specified entity.
-    /// This method updates the visibility of the eyelid layers based on the provided eye state.
-    /// If the entity does not have a valid <see cref="SpriteComponent"/> or if the eyelid layer is not found,
-    /// the method exits without making any changes.
-    /// </summary>
-    /// <param name="eyeClosed">Value close eye if true, and open if false</param>
-    private void ChangeEyesState(Entity<EyeBlinkingComponent> ent, bool eyeClosed)
-    {
-        if (!TryComp<SpriteComponent>(ent.Comp.Body, out var sprite))
-            return;
-
-        if (!_sprite.TryGetLayer(ent.Comp.Body.Value, HumanoidVisualLayers.Eyelids, out var layer, false))
-            return;
-
-        foreach (var eyelidState in ent.Comp.Eyelids)
-            ChangeEyeState((ent.Comp.Body.Value, sprite), eyelidState, eyeClosed);
-    }
-
+    #region Public API
     /// <summary>
     /// Initiates a blink action for the specified entity if its eyes are currently open and no blink is already in
     /// progress.
@@ -296,7 +249,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         // Randomly determines the duration of the blink within the configured range.
         var minDuration = ent.Comp.MinBlinkDuration;
         var maxDuration = ent.Comp.MaxBlinkDuration;
-        var blinkDuration = minDuration + (_random.NextDouble() * (maxDuration - minDuration));
+        var blinkDuration = _random.Next(minDuration, maxDuration);
 
         // Retrieves the eyelid states from the client component to schedule the blink timings for each eyelid.
         var eyelidStates = ent.Comp.Eyelids;
@@ -319,11 +272,11 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         foreach (var eyelidState in eyelidStates)
         {
             // Schedules the close time for the eyelid, adding a random offset to create asynchronous blinking. If maxAsyncBlink is zero, the eyelids will close simultaneously.
-            var scheduleCloseTime = curTime + _random.NextDouble() * maxAsyncBlink + ent.Comp.PausedOffset;
+            var scheduleCloseTime = curTime + _random.Next(maxAsyncBlink);
 
             // Schedules the open time for the eyelid, adding a random offset to create asynchronous opening. If maxAsyncOpenBlink is zero, the eyelids will open simultaneously.
             // calculates the open time based on the close time, blink duration, and a random offset for asynchronous opening.
-            var scheduleOpenTime = scheduleCloseTime + blinkDuration + _random.NextDouble() * maxAsyncOpenBlink + ent.Comp.PausedOffset;
+            var scheduleOpenTime = scheduleCloseTime + blinkDuration + _random.Next(maxAsyncOpenBlink);
 
             // Updates the eyelid state with the scheduled close and open times.
             eyelidState.ScheduledCloseTime = scheduleCloseTime;
@@ -339,14 +292,6 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         ResetBlink(ent);
     }
 
-    private void ChangeEyeState(Entity<SpriteComponent?> ent, EyelidState state, bool eyeClosed)
-    {
-        var layer = state.LayerKey;
-        state.IsClosed = eyeClosed;
-        state.IsCompleteBlink = !eyeClosed;
-        _sprite.LayerSetVisible(ent, layer, eyeClosed);
-    }
-
     /// <summary>
     /// Resets the blink timer for the specified entity, scheduling the next blink within the entity's configured
     /// interval range.
@@ -359,62 +304,39 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
     {
         var minInterval = ent.Comp.MinBlinkInterval;
         var maxInterval = ent.Comp.MaxBlinkInterval;
-        var randomBlinkInterval = minInterval + (_random.NextDouble() * (maxInterval - minInterval));
+        var randomBlinkInterval = _random.Next(minInterval, maxInterval);
 
         // Schedules the next blink time based on the last open eye time and the randomly determined interval.
         ent.Comp.NextBlinkingTime = ent.Comp.NextOpenEyesTime + randomBlinkInterval;
     }
+    #endregion Public API
+
+    #region Internal
+    private void ChangeEyeState(Entity<SpriteComponent?> ent, EyelidState state, bool eyeClosed)
+    {
+        var layer = state.LayerKey;
+        state.IsClosed = eyeClosed;
+        state.IsCompleteBlink = !eyeClosed;
+        _sprite.LayerSetVisible(ent, layer, eyeClosed);
+    }
 
     /// <summary>
-    /// Updates blinking logic for all entities with active blinking components.
-    /// Handles the timing for closing/opening eyelids during an active blink and schedules the next random blink.
+    /// Changes the eye state (open or closed) for the specified entity.
+    /// This method updates the visibility of the eyelid layers based on the provided eye state.
+    /// If the entity does not have a valid <see cref="SpriteComponent"/> or if the eyelid layer is not found,
+    /// the method exits without making any changes.
     /// </summary>
-    public override void Update(float frameTime)
+    /// <param name="eyeClosed">Value close eye if true, and open if false</param>
+    private void ChangeEyesState(Entity<EyeBlinkingComponent> ent, bool eyeClosed)
     {
-        base.Update(frameTime);
+        if (!TryComp<SpriteComponent>(ent.Comp.Body, out var sprite))
+            return;
 
-        var curTime = _timing.CurTime;
+        if (!_sprite.TryGetLayer(ent.Comp.Body.Value, HumanoidVisualLayers.Eyelids, out var layer, false))
+            return;
 
-        var query = EntityQueryEnumerator<EyeBlinkingComponent>();
-        while (query.MoveNext(out var uid, out var comp))
-        {
-            if (!comp.Enabled)
-                continue;
-
-            if (!TryComp<SpriteComponent>(comp.Body, out var spriteComp))
-                continue;
-
-            // If a blink is currently in progress, check the scheduled times for each eyelid and update their states accordingly.
-            if (comp.BlinkInProgress)
-            {
-                foreach (var eyelidState in comp.Eyelids)
-                {
-                    // If the eyelid is not closed and the current time has reached or passed the scheduled close time, close the eyelid.
-                    if (!eyelidState.IsClosed && curTime >= eyelidState.ScheduledCloseTime && eyelidState.IsCompleteBlink == false)
-                    {
-                        ChangeEyeState((comp.Body.Value, spriteComp), eyelidState, true);
-                    }
-                    // If the eyelid is closed and the current time has reached or passed the scheduled open time, open the eyelid.
-                    else if (eyelidState.IsClosed && curTime >= eyelidState.ScheduledOpenTime)
-                    {
-                        ChangeEyeState((comp.Body.Value, spriteComp), eyelidState, false);
-                    }
-                }
-
-                // If all eyelids have completed their blink (i.e., they are all open), reset the blink state and schedule the next blink.
-                if (comp.Eyelids.All(e => e.IsCompleteBlink))
-                {
-                    comp.Eyelids.ForEach(e => e.IsCompleteBlink = false);
-                    comp.BlinkInProgress = false;
-                    ResetBlink((uid, comp));
-                    continue;
-                }
-            }
-
-            if (comp.NextBlinkingTime > curTime)
-                continue;
-
-            Blink((uid, comp));
-        }
+        foreach (var eyelidState in ent.Comp.Eyelids)
+            ChangeEyeState((ent.Comp.Body.Value, sprite), eyelidState, eyeClosed);
     }
+    #endregion Internal
 }
