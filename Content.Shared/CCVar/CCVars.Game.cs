@@ -3,28 +3,6 @@ using Robust.Shared.Configuration;
 
 namespace Content.Shared.CCVar;
 
-/// <summary>
-/// Controls how an unfilled round-start minimum job slot may ignore player job preferences.
-/// </summary>
-public enum MinimumJobFallback : int // needs int backing because cvar
-{
-    /// <summary>
-    /// Select a player who prefers another role in the target job's primary department.
-    /// </summary>
-    SameDepartment = 1,
-
-    /// <summary>
-    /// First select a player who prefers another role in the target job's primary department,
-    /// then select any player who otherwise qualifies for the target job.
-    /// </summary>
-    AnyEligiblePlayer = 2,
-
-    /// <summary>
-    /// Leave the minimum slot empty when no player prefers the target job.
-    /// </summary>
-    None = 3,
-}
-
 public sealed partial class CCVars
 {
     /// <summary>
