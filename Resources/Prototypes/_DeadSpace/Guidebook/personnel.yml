@@ -1,0 +1,6 @@
+# Мёртвый Космос, Licensed under custom terms with restrictions on public hosting and commercial use, full text: https://raw.githubusercontent.com/dead-space-server/space-station-14-fobos/master/LICENSE.TXT
+
+- type: guideEntry
+  id: PersonnelRecords
+  name: guide-entry-personnel-records
+  text: "/ServerInfo/Guidebook/PersonnelRecords.xml"

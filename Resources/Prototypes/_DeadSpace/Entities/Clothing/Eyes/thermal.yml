@@ -29,6 +29,7 @@
   - type: ShowJobIcons
   - type: ShowMindShieldIcons
   - type: ShowCriminalRecordIcons
+  - type: ShowPersonnelRecordIcons
   - type: ShowSyndicateIcons
   - type: EmitSoundOnPickup
     sound:
@@ -76,6 +77,7 @@
   - type: ShowJobIcons
   - type: ShowMindShieldIcons
   - type: ShowCriminalRecordIcons
+  - type: ShowPersonnelRecordIcons
   - type: EmitSoundOnPickup
     sound:
       path: /Audio/_DeadSpace/Items/Handing/glasses/goggles_pickup.ogg

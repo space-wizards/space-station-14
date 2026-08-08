@@ -1,0 +1,14 @@
+# Мёртвый Космос, Licensed under custom terms with restrictions on public hosting and commercial use, full text: https://raw.githubusercontent.com/dead-space-server/space-station-14-fobos/master/LICENSE.TXT
+#
+# NB: ни CriminalRecordsComputerCircuitboard, ни StationRecordsComputerCircuitboard (их платы -
+# ближайший образец для этой консоли) не имеют рецепта на лате вообще, а BaseGeneralComputerRecipeCategory
+# (использован ниже, за неимением отдельной категории под Command) ни в один staticPacks/dynamicPacks
+# существующих станков (CircuitImprinter и т.д.) не входит - похоже, консоли учёта записей в этом
+# форке штатно не печатаются, а ставятся на карте/выдаются. Рецепт всё равно даём, как просил
+# документ ("плата + рецепт на лате"); если нужно, чтобы плата реально появилась в станке -
+# понадобится добавить PersonnelRecordsComputerCircuitboard в конкретный staticPacks/dynamicPacks.
+
+- type: latheRecipe
+  parent: [ BaseCircuitboardRecipe, BaseGeneralComputerRecipeCategory ]
+  id: PersonnelRecordsComputerCircuitboard
+  result: PersonnelRecordsComputerCircuitboard

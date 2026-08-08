@@ -353,14 +353,10 @@ public sealed class PhotocopierSystem : EntitySystem
 
         string text = _resourceManager.ContentFileReadText(formPrototype.Text).ReadToEnd();
 
-        text = text.Replace("DOCUMENT NAME", Loc.GetString(formPrototype.Name));
-        text = text.Replace("{{HOUR.MINUTE.SECOND}}", _gameTicker.RoundDuration().ToString("hh\\:mm\\:ss"));
-        text = text.Replace("{{DAY.MONTH.YEAR}}", DateTime.UtcNow.AddHours(3).ToString("dd.MM") + ".2710");
-
-        if (_station.GetOwningStation(uid) is { } station)
-        {
-            text = text.Replace("STATION XX-00", Name(station));
-        }
+        // DS14: 4-substitution logic moved to the shared PaperworkTextSubstitutions.ApplyBase,
+        // also used by PersonnelPrintingSystem - behavior here is unchanged.
+        var stationName = _station.GetOwningStation(uid) is { } station ? Name(station) : null;
+        text = PaperworkTextSubstitutions.ApplyBase(text, Loc.GetString(formPrototype.Name), _gameTicker.RoundDuration(), stationName);
 
         var printout = new PhotocopierPrintout(text, "Распечатанный документ", formPrototype.PaperPrototype, null, null);
 

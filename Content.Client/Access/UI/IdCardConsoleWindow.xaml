@@ -1,4 +1,5 @@
 <DefaultWindow xmlns="https://spacestation14.io"
+            xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
             MinSize="650 290">
     <BoxContainer Orientation="Vertical">
         <!-- Privileged and target IDs, crew manifest button. -->
@@ -44,6 +45,11 @@
         <BoxContainer Margin="0 4 0 4">
             <Button Name="BasicAccessButton" Access="Public" Text="{Loc 'id-card-console-window-basic-access'}" />
             <Button Name="ExtendedAccessButton" Access="Public" Text="{Loc 'id-card-console-window-extended-access'}" />
+        </BoxContainer>
+        <BoxContainer Margin="0 0 0 4">
+            <controls:ConfirmButton Name="DismissButton" Access="Public" Visible="False"
+                                     Text="{Loc 'personnel-dismissal-button'}"
+                                     ConfirmationText="{Loc 'personnel-dismissal-confirm'}" />
         </BoxContainer>
         <!-- DS14-End -->
         <!-- Individual access buttons -->

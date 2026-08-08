@@ -98,4 +98,35 @@ public enum PhotocopierFormCategory // Ideally, it should be its own FormCategor
     NTOperator,
     Syndicate,
     Nukeops,
+    // DS14-start
+    // Deliberately not added to any photocopier's AllowedFormCategories - the discipline order
+    // form is only reachable through the Personnel Records console's print button, which fills in
+    // placeholders (author/target/sanction/reason) that PhotocopierSystem.PrintForm doesn't know
+    // about. Printing it from a regular photocopier would produce a paper with those tokens still
+    // literally in the text.
+    NTPersonnel,
+    // DS14-end
 }
+
+// DS14-start
+/// <summary>
+/// The four placeholder substitutions every printed paperwork form gets, regardless of who prints
+/// it: document title, time-in-shift, in-universe date, station name. Extracted out of
+/// <c>PhotocopierSystem.PrintForm</c> so <c>PersonnelPrintingSystem</c> (which needs the same four
+/// plus its own set) can't drift out of sync with it after a future date-format change.
+/// </summary>
+public static class PaperworkTextSubstitutions
+{
+    public static string ApplyBase(string text, string documentName, TimeSpan roundDuration, string? stationName)
+    {
+        text = text.Replace("DOCUMENT NAME", documentName);
+        text = text.Replace("{{HOUR.MINUTE.SECOND}}", roundDuration.ToString("hh\\:mm\\:ss"));
+        text = text.Replace("{{DAY.MONTH.YEAR}}", DateTime.UtcNow.AddHours(3).ToString("dd.MM") + ".2710");
+
+        if (stationName != null)
+            text = text.Replace("STATION XX-00", stationName);
+
+        return text;
+    }
+}
+// DS14-end

@@ -1,0 +1,21 @@
+# Мёртвый Космос, Licensed under custom terms with restrictions on public hosting and commercial use, full text: https://raw.githubusercontent.com/dead-space-server/space-station-14-fobos/master/LICENSE.TXT
+#
+# Профессия "Разжалован" - назначается консолью ID-карт при исполнении приказа об увольнении
+# (Content.Server/DeadSpace/PersonnelRecords/Systems/PersonnelDismissalSystem.cs). Не выбираема
+# ни в лобби, ни в меню персонажа (setPreference: false), не имеет слотов в конфигурации станций,
+# поэтому не может появиться при найме иначе как через саму механику увольнения.
+#
+# playTimeTracker обязан быть уникальным на профессию (SharedJobSystem строит обратный словарь
+# tracker -> job и падает на дубликате ключа) - переиспользовать JobPassenger нельзя, даже
+# несмотря на то, что Разжалован в остальном ведёт себя как ассистент.
+
+- type: job
+  id: Dismissed
+  name: job-name-dismissed
+  description: job-description-dismissed
+  playTimeTracker: JobDismissed
+  icon: "JobIconDismissed"
+  setPreference: false
+  canBeAntag: false
+  overrideConsoleVisibility: true # чтобы ГП мог выбрать профессию вручную в списке консоли ID-карт
+  supervisors: job-supervisors-everyone

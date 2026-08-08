@@ -1,0 +1,31 @@
+# Мёртвый Космос, Licensed under custom terms with restrictions on public hosting and commercial use, full text: https://raw.githubusercontent.com/dead-space-server/space-station-14-fobos/master/LICENSE.TXT
+
+- type: securityIcon
+  id: PersonnelIcon
+  abstract: true
+  priority: 3
+  offset: 0
+  locationPreference: Right
+  isShaded: true
+
+- type: securityIcon
+  parent: PersonnelIcon
+  id: PersonnelIconDemotion
+  icon:
+    sprite: /Textures/_DeadSpace/Interface/Misc/personnel_icons.rsi
+    state: hud_demotion
+
+- type: securityIcon
+  parent: PersonnelIcon
+  id: PersonnelIconDismissal
+  icon:
+    sprite: /Textures/_DeadSpace/Interface/Misc/personnel_icons.rsi
+    state: hud_dismissal
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconDismissed
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Dismissed
+  jobName: job-name-dismissed

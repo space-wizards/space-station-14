@@ -33,6 +33,7 @@
   - ServiceWorker
   - ClownSponsor
   - SeniorAdministrator
+  - Dismissed # DS14
   accountNumber: 1316 #backmen: currency
 
 - type: department

@@ -45,7 +45,8 @@ namespace Content.Client.Access.UI
             List<ProtoId<AccessLevelPrototype>> accessLevels,
             List<ProtoId<AccessLevelPrototype>> basicAccessLevels,
             List<ProtoId<AccessLevelPrototype>> extendedAccessLevels,
-            bool isTaipan) // DS14
+            bool isTaipan, // DS14
+            bool hasDismissal) // DS14
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
@@ -117,6 +118,7 @@ namespace Content.Client.Access.UI
             ExtendedAccessButton.Visible = _extendedAccessLevels.Count > 0;
             BasicAccessButton.OnPressed += _ => SetAccessPreset(_basicAccessLevels);
             ExtendedAccessButton.OnPressed += _ => SetAccessPreset(_extendedAccessLevels);
+            DismissButton.Visible = hasDismissal;
             // DS14-End
         }
 
@@ -212,6 +214,10 @@ namespace Content.Client.Access.UI
             // DS14-start
             BasicAccessButton.Disabled = !interfaceEnabled;
             ExtendedAccessButton.Disabled = !interfaceEnabled;
+            // Don't clobber ConfirmButton's own transient disabled state while it's mid-"are you
+            // sure" cooldown - only force it here outside of that window.
+            if (!DismissButton.IsConfirming)
+                DismissButton.Disabled = !interfaceEnabled;
             // DS14-end
 
             _accessButtons.UpdateState(state.TargetIdAccessList?.ToList() ??

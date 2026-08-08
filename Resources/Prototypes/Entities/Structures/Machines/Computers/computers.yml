@@ -666,6 +666,7 @@
       whitelist:
         components:
         - IdCard
+  - type: PersonnelDismissal # DS14
   - type: ActivatableUI
     key: enum.IdCardConsoleUiKey.Key
   - type: UserInterface

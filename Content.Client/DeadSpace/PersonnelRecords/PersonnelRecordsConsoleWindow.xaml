@@ -1,0 +1,151 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      Title="{Loc 'personnel-records-console-window-title'}"
+                      MinSize="720 460">
+    <BoxContainer Orientation="Vertical">
+        <BoxContainer Name="AllList"
+                      Orientation="Vertical"
+                      VerticalExpand="True"
+                      HorizontalExpand="True"
+                      Margin="8">
+            <!-- Record search bar -->
+            <BoxContainer Margin="5 5 5 10"
+                          HorizontalExpand="true"
+                          VerticalAlignment="Center">
+                <OptionButton Name="FilterType"
+                              MinWidth="220"
+                              Margin="0 0 10 0" />
+                <!-- Populated in constructor -->
+                <LineEdit Name="FilterText"
+                          PlaceHolder="{Loc 'personnel-records-filter-placeholder'}"
+                          HorizontalExpand="True" />
+            </BoxContainer>
+            <BoxContainer Orientation="Horizontal"
+                          VerticalExpand="True">
+                <!-- Record listing -->
+                <BoxContainer Orientation="Vertical"
+                              Margin="10 10"
+                              MinWidth="230"
+                              MaxWidth="230">
+                    <Label Name="RecordListingTitle"
+                           Text="{Loc 'personnel-records-console-records-list-title'}"
+                           HorizontalExpand="True"
+                           Align="Center" />
+                    <Label Name="NoRecords"
+                           Text="{Loc 'personnel-records-console-no-records'}"
+                           HorizontalExpand="True"
+                           Align="Center"
+                           FontColorOverride="DarkGray" />
+                    <Label Name="NoDepartmentLabel"
+                           Text="{Loc 'personnel-records-console-no-department'}"
+                           HorizontalExpand="True"
+                           Align="Center"
+                           FontColorOverride="DarkGray"
+                           Visible="False" />
+                    <ScrollContainer VerticalExpand="True">
+                        <ItemList Name="RecordListing" />
+                        <!-- Populated when loading state -->
+                    </ScrollContainer>
+                </BoxContainer>
+                <Label Name="RecordUnselected"
+                       Text="{Loc 'personnel-records-console-select-record-info'}"
+                       HorizontalExpand="True"
+                       Align="Center"
+                       FontColorOverride="DarkGray" />
+                <!-- Selected record info -->
+                <BoxContainer Name="PersonContainer"
+                        Orientation="Vertical"
+                        VerticalExpand="True"
+                        HorizontalExpand="True"
+                        Margin="5"
+                        Visible="False">
+                    <Label Name="PersonName"
+                           Margin="0 0 0 5"
+                           StyleClasses="LabelBig" />
+                    <BoxContainer Orientation="Horizontal"
+                                  Margin="0 0 0 5">
+                        <Label Text="{Loc 'crew-monitoring-ui-job-label'}"
+                               FontColorOverride="DarkGray" />
+                        <TextureRect Name="PersonJobIcon"
+                                     TextureScale="2 2"
+                                     Margin="6 0"
+                                     VerticalAlignment="Center" />
+                        <Label Name="PersonJob" />
+                    </BoxContainer>
+                    <Label Name="PersonDepartment"
+                           Margin="0 0 0 5"
+                           FontColorOverride="DarkGray" />
+                    <Label Name="PersonAge"
+                           Margin="0 0 0 5"
+                           FontColorOverride="DarkGray" />
+                    <Label Name="PersonSpecies"
+                           Margin="0 0 0 5"
+                           FontColorOverride="DarkGray" />
+                    <PanelContainer StyleClasses="LowDivider"
+                                    Margin="0 5 0 5" />
+                    <!-- Employment status -->
+                    <BoxContainer Orientation="Horizontal"
+                                  Margin="0 5 0 5">
+                        <Label Text="{Loc 'personnel-records-console-status'}"
+                               FontColorOverride="DarkGray" />
+                        <Label Text=":"
+                               Margin="0 0 6 0"
+                               FontColorOverride="DarkGray" />
+                        <Label Name="PersonStatus" />
+                    </BoxContainer>
+                    <RichTextLabel Name="PersonReason"
+                                   Visible="False"
+                                   MaxWidth="460"
+                                   Margin="0 0 0 3" />
+                    <RichTextLabel Name="PersonInitiator"
+                                   Visible="False"
+                                   MaxWidth="460"
+                                   Margin="0 0 0 5" />
+                    <BoxContainer Orientation="Horizontal"
+                                  Margin="0 0 0 5">
+                        <Button Name="ReprimandButton"
+                                Text="{Loc 'personnel-records-console-reprimand-button'}" />
+                        <Button Name="DemoteButton"
+                                Text="{Loc 'personnel-records-console-demote-button'}"
+                                Margin="6 0 0 0" />
+                        <Button Name="DismissButton"
+                                Text="{Loc 'personnel-records-console-dismiss-button'}"
+                                Margin="6 0 0 0" />
+                        <Button Name="AnnulButton"
+                                Text="{Loc 'personnel-records-console-annul-button'}"
+                                Margin="6 0 0 0" />
+                    </BoxContainer>
+                    <BoxContainer Orientation="Horizontal"
+                                  Margin="0 0 0 5">
+                        <Button Name="PrintButton"
+                                Text="{Loc 'personnel-records-console-print-button'}" />
+                        <Button Name="HistoryButton"
+                                Text="{Loc 'personnel-records-console-history-button'}"
+                                Margin="6 0 0 0" />
+                    </BoxContainer>
+                    <PanelContainer StyleClasses="LowDivider"
+                                    Margin="0 5 0 5" />
+                    <!-- Criminal status, read-only -->
+                    <BoxContainer Orientation="Horizontal"
+                                  Margin="0 0 0 5">
+                        <Label Text="{Loc 'personnel-records-console-criminal-status'}"
+                               FontColorOverride="DarkGray" />
+                        <Label Text=":"
+                               Margin="0 0 6 0"
+                               FontColorOverride="DarkGray" />
+                        <Label Name="PersonCriminalStatus" />
+                    </BoxContainer>
+                    <Button Name="DeclareWantedButton"
+                            Text="{Loc 'personnel-records-console-declare-wanted-button'}" />
+                </BoxContainer>
+            </BoxContainer>
+            <BoxContainer Orientation="Horizontal"
+                          Margin="0 0 0 5">
+                <OptionButton
+                    Name="CrewListFilter"
+                    MinWidth="220"
+                    Margin="10 0 10 0" />
+            </BoxContainer>
+        </BoxContainer>
+    </BoxContainer>
+</controls:FancyWindow>

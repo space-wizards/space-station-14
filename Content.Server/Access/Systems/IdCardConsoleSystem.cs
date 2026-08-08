@@ -143,26 +143,52 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         if (component.TargetIdSlot.Item is not { Valid: true } targetId || !PrivilegedIdIsAuthorized(uid, component, out var privilegedId))
             return;
 
-        _idCard.TryChangeFullName(targetId, newFullName, player: player);
-        _idCard.TryChangeJobTitle(targetId, newJobTitle, player: player);
-
+        // DS14-start: validate and authorize a requested job before mutating any part of the ID.
         JobPrototype? job = null;
-        if (!string.IsNullOrEmpty(newJobProto.Id)
-            && _prototype.Resolve(newJobProto, out job)
-            && _prototype.Resolve(job.Icon, out var jobIcon))
+        var jobChanged = false;
+        if (!string.IsNullOrEmpty(newJobProto.Id))
         {
+            // The client only lists console-visible jobs, but the server must enforce the same rule
+            // so a modified client cannot assign hidden prototypes such as Dismissed.
+            if (!_prototype.Resolve(newJobProto, out job)
+                || !job.OverrideConsoleVisibility.GetValueOrDefault(job.SetPreference)
+                || !_prototype.Resolve(job.Icon, out var jobIcon))
+            {
+                return;
+            }
+
+            jobChanged = GetCurrentJob(targetId) != newJobProto;
+            if (jobChanged)
+            {
+                var jobAttempt = new IdCardJobAssignmentAttemptEvent(player, targetId, newJobProto);
+                RaiseLocalEvent(jobAttempt);
+
+                if (jobAttempt.Cancelled)
+                    return;
+            }
+
             _idCard.TryChangeJobIcon(targetId, jobIcon, player: player);
             _idCard.TryChangeJobDepartment(targetId, job);
         }
+        // DS14-end
+
+        _idCard.TryChangeFullName(targetId, newFullName, player: player);
+        _idCard.TryChangeJobTitle(targetId, newJobTitle, player: player);
 
         UpdateStationRecord(uid, targetId, newFullName, newJobTitle, job);
         if ((!TryComp<StationRecordKeyStorageComponent>(targetId, out var keyStorage)
             || keyStorage.Key is not { } key
             || !_record.TryGetRecord<GeneralStationRecord>(key, out _))
-            && newJobProto != string.Empty)
+            && job != null)
         {
-            Comp<IdCardComponent>(targetId).JobPrototype = newJobProto;
+            Comp<IdCardComponent>(targetId).JobPrototype = job.ID;
         }
+
+        // DS14-start: only a confirmed, real transition may consume a vacancy slot. A generic
+        // RecordModifiedEvent cannot distinguish a job assignment from a name/status edit.
+        if (jobChanged)
+            RaiseLocalEvent(new IdCardJobAssignedEvent(player, targetId, newJobProto));
+        // DS14-end
 
         if (!newAccessList.TrueForAll(x => component.AccessLevels.Contains(x)))
         {
@@ -216,6 +242,22 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
 
         return _accessReader.IsAllowed(id.Value, uid, reader);
     }
+
+    // DS14-start
+    private ProtoId<JobPrototype>? GetCurrentJob(EntityUid targetId)
+    {
+        if (TryComp<StationRecordKeyStorageComponent>(targetId, out var keyStorage)
+            && keyStorage.Key is { } key
+            && _record.TryGetRecord<GeneralStationRecord>(key, out var record))
+        {
+            return record.JobPrototype;
+        }
+
+        return TryComp<IdCardComponent>(targetId, out var idCard)
+            ? idCard.JobPrototype
+            : null;
+    }
+    // DS14-end
 
     private void UpdateStationRecord(EntityUid uid, EntityUid targetId, string newFullName, ProtoId<AccessLevelPrototype> newJobTitle, JobPrototype? newJobProto)
     {

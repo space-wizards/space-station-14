@@ -4,6 +4,8 @@ using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.CrewManifest;
+using Content.Shared.DeadSpace.PersonnelRecords; // DS14
+using Content.Shared.DeadSpace.PersonnelRecords.Components; // DS14
 using Content.Shared.Roles;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
@@ -60,7 +62,9 @@ namespace Content.Client.Access.UI
                 _idCardConsoleSystem.Log.Error($"No IdCardConsole component found for {EntMan.ToPrettyString(Owner)}!");
             }
 
-            _window = new IdCardConsoleWindow(this, _prototypeManager, accessLevels, basicAccessLevels, extendedAccessLevels, isTaipan) // DS14
+            var hasDismissal = EntMan.HasComponent<PersonnelDismissalComponent>(Owner); // DS14
+
+            _window = new IdCardConsoleWindow(this, _prototypeManager, accessLevels, basicAccessLevels, extendedAccessLevels, isTaipan, hasDismissal) // DS14
             {
                 Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName
             };
@@ -68,6 +72,7 @@ namespace Content.Client.Access.UI
             _window.CrewManifestButton.OnPressed += _ => SendMessage(new CrewManifestOpenUiMessage());
             _window.PrivilegedIdButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(PrivilegedIdCardSlotId));
             _window.TargetIdButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(TargetIdCardSlotId));
+            _window.DismissButton.OnPressed += _ => SendMessage(new PersonnelDismissMessage()); // DS14
 
             _window.OnClose += Close;
             _window.OpenCentered();

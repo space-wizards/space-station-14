@@ -1,0 +1,13 @@
+# Мёртвый Космос, Licensed under custom terms with restrictions on public hosting and commercial use, full text: https://raw.githubusercontent.com/dead-space-server/space-station-14-fobos/master/LICENSE.TXT
+#
+# category: NTPersonnel - намеренно не входит ни в один AllowedFormCategories обычного ксерокса,
+# см. комментарий у enum PhotocopierFormCategory.NTPersonnel. Печатается только кнопкой консоли
+# кадровых записей (PersonnelPrintingSystem), которая одна умеет подставлять {{AUTHOR.*}} /
+# {{TARGET.*}} / {{SANCTION}} / {{REASON}}.
+
+- type: paperworkForm
+  id: PersonnelDiscipline
+  category: NTPersonnel
+  name: paperwork-form-title-personnel-discipline
+  text: "/Paperwork/Command/discipline.xml"
+  paperPrototype: PaperPrintedCommand

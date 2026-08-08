@@ -1,0 +1,57 @@
+# Мёртвый Космос, Licensed under custom terms with restrictions on public hosting and commercial use, full text: https://raw.githubusercontent.com/dead-space-server/space-station-14-fobos/master/LICENSE.TXT
+#
+# Один прототип, одна плата, один рецепт, один спрайт (§2.9) - эта же сущность ставится и на
+# мостике, и в кабинете ГП, и в кабинетах глав отделов. Область видимости определяется картой
+# открывшего, а не тем, где стоит консоль - см. PersonnelRecordsConsoleSystem.
+
+- type: entity
+  parent: BaseComputerAiAccess
+  id: ComputerPersonnelRecords
+  name: personnel records computer
+  description: This can be used to check and manage personnel records - reprimands, demotions and dismissals. Only department heads can modify them.
+  components:
+  - type: PersonnelRecordsConsole
+  - type: UserInterface
+    interfaces:
+      enum.PersonnelRecordsConsoleKey.Key:
+        type: PersonnelRecordsConsoleBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: ActivatableUI
+    key: enum.PersonnelRecordsConsoleKey.Key
+    singleUser: true # без этого два главы, открывшие консоль одновременно, увидят чужой отдел
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: personnel_records
+    - map: ["computerLayerKeys"]
+      state: generic_keys
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      visible: false
+      state: generic_panel_open
+  - type: PointLight
+    radius: 1.5
+    energy: 4.0
+    color: "#3c5eb5"
+  - type: Computer
+    board: PersonnelRecordsComputerCircuitboard
+  - type: AccessReader
+    access: [[ "Command" ]]
+  - type: GuideHelp
+    guides:
+    - PersonnelRecords
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: PersonnelRecordsComputerCircuitboard
+  name: personnel records computer board
+  description: A computer printed circuit board for a personnel records computer.
+  components:
+    - type: Sprite
+      state: cpu_command
+    - type: ComputerBoard
+      prototype: ComputerPersonnelRecords
