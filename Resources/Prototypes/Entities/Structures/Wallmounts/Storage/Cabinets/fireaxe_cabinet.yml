@@ -10,12 +10,6 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 300
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
         damage: 200 #20ish crowbar hits
       behaviors:
       - !type:EmptyAllContainersBehaviour
@@ -33,6 +27,9 @@
       visible: true
     - state: glass
       map: ["enum.OpenableVisuals.Layer"]
+    - state: locked
+      shader: unshaded
+      map: ["enum.LockVisualLayers.Lock"]
   - type: ItemSlots
     slots:
       ItemCabinet:

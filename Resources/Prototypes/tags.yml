@@ -25,6 +25,9 @@
   id: AllowGhostShownByEvent # Used by GhostSystem to show tagged ghosts (usually at round end).
 
 - type: Tag
+  id: AllowPortalTraversal # Used by PortalSystem to allow traversing a portal by verb.
+
+- type: Tag
   id: Ambrosia # ConstructionGraph: flowerwreath
 
 - type: Tag
@@ -203,6 +206,9 @@
 - type: Tag
   id: BypassInteractionRangeChecks # Tagged entities don't care about distance or walls when touching things (Aghost).
 
+- type: Tag
+  id: BypassOpenStorageLimit # Tagged entities can open several storage UIs at once (Aghost).
+
 ## C ##
 
 - type: Tag
@@ -363,8 +369,8 @@
 - type: Tag
   id: CoordinatesDisk # Storage whitelist: DiskCase
 
-- type: Tag # designed to let corgis wear things; at present only for SmartCorgi.  View PR 33737 on upstream for more dog wearables
-  id: CorgiWearable # Used by inventoryTemplate:SmartCorgi to whitelist clothes slots outerClothing, head, back.
+- type: Tag
+  id: CorgiWearable # inventory_template whitelist tag: lets corgis wear a clothing item with this tag in the inventory slot the tag is used in.
 
 - type: Tag #Ohioans die happy
   id: Corn  # CargoBounty: BountyCorn
@@ -553,6 +559,9 @@
 - type: Tag
   id: FakeMindShieldImplant # Used by FakeMindShieldSystem to toggle the tagged action when a chameleon outfit is selected.
 
+- type: Tag # Also used by FakeMindShieldSystem, but only for changelings
+  id: FakeMindShieldChangeling
+
 - type: Tag
   id: FakeNukeDisk # Exists so that the fake nuke disk can be blacklisted by storages that blacklist the real disk.
 
@@ -576,6 +585,9 @@
 
 - type: Tag
   id: FirelockElectronics # ConstructionGraph: Firelock
+
+- type: Tag
+  id: FitInTeleporterConsole
 
 - type: Tag
   id: Flare # Storage whitelist: BaseClothingBeltEngineering
@@ -629,10 +641,6 @@
 
 - type: Tag
   id: GeigerCounter # Storage whitelist: BaseClothingBeltEngineering
-
-# Used for warps
-- type: Tag
-  id: GhostOnlyWarp
 
 - type: Tag
   id: GenderPin #  Chameleon key for ClothingGenderPinBase.
@@ -828,6 +836,9 @@
 - type: Tag
   id: JawsOfLife # Storage whitelist: BaseClothingBeltEngineering. ItemMapper: BaseClothingBeltEngineering
 
+- type: Tag
+  id: JanicartKeys # Uses for GenericKeyedVehicle of Janicart
+
 ## K ##
 
 - type: Tag
@@ -907,7 +918,7 @@
   id: MagazinePistolSubMachineGunTopMounted # WeaponSubMachineGunWt550
 
 - type: Tag
-  id: MagazineRifle # WeaponRifleLecter, WeaponRifleEstoc, WeaponRifleM90GrenadeLauncher
+  id: MagazineRifle # WeaponRifleLecter, WeaponRifleEstoc
 
 - type: Tag
   id: MagazineShotgun # WeaponShotgunBulldog
@@ -996,8 +1007,12 @@
   id: Mushroom  # ConstructionGraph: Soil
 
 ## N ##
+
 - type: Tag
-  id: NinjaBombingTargetBlocker # Ninjas will not target this warp point
+  id: NinjaBombingTarget # Ninjas will target this warp point
+
+- type: Tag
+  id: NinjaBombingTargetBlacklist # Ninjas will not target this warp point
 
 - type: Tag
   id: NoConsoleSound # Blacklist on BaseComputer, StationMap. Tagged entity will not make sound when opening the UI.
@@ -1073,8 +1088,8 @@
   id: PetOnly # Used by human, diona, arachnid InventoryTemplate to blacklist back slot items.
 
 - type: Tag
-  id: PetWearable # Used by hamster, kangaroo, pet, petAdvanced, SmartCorgi InventoryTemplate to whitelist mask slots.
-                  # SmartCorgi and petAdvanced use it for eyes slots. petAdvanced uses it for head slot.
+  id: PetWearable # Used by hamster, kangaroo, pet, petAdvanced, InventoryTemplate to whitelist mask slots.
+                  # petAdvanced uses it for eyes and head slot.
 
 - type: Tag
   id: Pickaxe # GatherableComponent whitelist on WallRock.
@@ -1166,6 +1181,9 @@
 
 - type: Tag
   id: PreventAccessLogging # Tagged entities (aghost) will not be added to a device's log. Used by AccessReaderSystem.
+
+- type: Tag
+  id: PreventPortalCollision # Used by PortalSystem to prevent portal traversal on collision.
 
 - type: Tag
   id: PrisonUniform # CargoBounty: BountyPrisonUniform
@@ -1270,6 +1288,9 @@
 
 - type: Tag
   id: SecurityHelmet # ConstructionGraph: HelmetJustice
+
+- type: Tag
+  id: Sheep # Reproductive partner key
 
 - type: Tag
   id: Sheet # MaterialStorage whitelist for many machines and lathes. Storage whitelist: MaterialBag
@@ -1410,6 +1431,12 @@
   id: Taser # Storage whitelist: ClothingBeltSecurity
 
 - type: Tag
+  id: TeleportScrollWarp # whitelists a warp point for the wizard's teleport scroll
+
+- type: Tag
+  id: TeleportScrollWarpBlacklist # blacklists a warp point for the wizard's teleport scroll
+
+- type: Tag
   id: TheaterBagel # used for Bagel Station's randomized theater
 
 - type: Tag
@@ -1443,6 +1470,9 @@
   id: ToySidearm # Storage whitelist: ClothingShoesClownBase
 
 - type: Tag
+  id: ToyKnife # Storage whitelist: ClothingShoesClownBase
+
+- type: Tag
   id: Trash # Tagged entities are generic garbage. They fit inside TrashBag and are destroyed by Recycler.
             # CargoBounty: BountyTrash. SpecialDigestible: OrganVoxStomach
 
@@ -1450,7 +1480,7 @@
   id: TrashBag # Storage whitelist: BoxTrashbag, ClothingBeltJanitor, JanitorialTrolley. ItemMapper: JanitorialTrolley
 
 - type: Tag
-  id: TrashBagBlue # Storage whitelist: BoxTrashbag, ClothingBeltJanitor, JanitorialTrolley. ItemMapper: JanitorialTrolley
+  id: TrashBagHolding # Storage whitelist: BoxTrashbag, ClothingBeltJanitor, JanitorialTrolley. ItemMapper: JanitorialTrolley
 
 - type: Tag
   id: Truncheon # Storage whitelist: ClothingBeltSecurity
@@ -1494,10 +1524,6 @@
   id: VoiceTrigger # ConstructionGraph: Vim
 
 ## W ##
-
-- type: Tag
-  id: Wall # Tagged entity is a wall. Several systems and several targeting whitelists (BaseMobDragon) care about this.
-           # .cs: SharedNavMapSystem, WallmountCondition, TileWallsCommand, DungeonJob
 
 - type: Tag
   id: WallmountGeneratorAPUElectronics # ConstructionGraph: WallmountGenerator

@@ -281,7 +281,7 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
 
         if (cryoPodComponent.Locked)
         {
-            _popup.PopupClient(Loc.GetString("cryo-pod-locked"), uid, userId);
+            _popup.PopupEntity(Loc.GetString("cryo-pod-locked"), uid, userId);
             return;
         }
 
@@ -441,11 +441,8 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
         }
     }
 
-    protected void OnEmagged(EntityUid uid, CryoPodComponent? cryoPodComponent, ref GotEmaggedEvent args)
+    protected void OnEmagged(EntityUid uid, CryoPodComponent cryoPodComponent, ref GotEmaggedEvent args)
     {
-        if (!Resolve(uid, ref cryoPodComponent))
-            return;
-
         if (!_emag.CompareFlag(args.Type, EmagType.Interaction))
             return;
 

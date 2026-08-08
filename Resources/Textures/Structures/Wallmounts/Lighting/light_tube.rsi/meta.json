@@ -8,24 +8,19 @@
   },
   "states": [
     {
-      "name": "broken",
-      "directions": 4
+      "name": "broken"
     },
     {
-      "name": "burned",
-      "directions": 4
+      "name": "burned"
     },
     {
-      "name": "base",
-      "directions": 4
+      "name": "base"
     },
     {
-      "name": "empty",
-      "directions": 4
+      "name": "empty"
     },
 	{
-      "name": "glow",
-      "directions": 4
+      "name": "glow"
     }
   ]
 }
