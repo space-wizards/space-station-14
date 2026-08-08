@@ -6,6 +6,7 @@ using Content.Server.Ghost.Roles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Atmos;
+using Content.Shared.Ghost.Components;
 using Content.Shared.Decals;
 using Content.Shared.Ghost;
 using Content.Shared.Gravity;
