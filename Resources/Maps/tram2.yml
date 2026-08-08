@@ -4,8 +4,8 @@ meta:
   engineVersion: 287.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/08/2026 01:05:41
-  entityCount: 26206
+  time: 08/08/2026 01:57:30
+  entityCount: 26214
 maps:
 - 1
 grids:
@@ -8039,13 +8039,6 @@ entities:
     - type: Transform
       parent: 15
       pos: 0.5,-53.5
-- proto: AirlockCommand
-  entities:
-  - uid: 2210
-    components:
-    - type: Transform
-      parent: 15
-      pos: -45.5,-4.5
 - proto: AirlockCommandGlassLocked
   entities:
   - uid: 489
@@ -8090,6 +8083,11 @@ entities:
       pos: -39.5,-7.5
 - proto: AirlockCommandLocked
   entities:
+  - uid: 2210
+    components:
+    - type: Transform
+      parent: 15
+      pos: -45.5,-4.5
   - uid: 3950
     components:
     - type: Transform
@@ -14311,6 +14309,11 @@ entities:
     - type: Transform
       parent: 15
       pos: -14.5,-44.5
+  - uid: 26214
+    components:
+    - type: Transform
+      parent: 15
+      pos: 71.5,-22.5
 - proto: AtmosFixFreezerMarker
   entities:
   - uid: 14
@@ -30325,6 +30328,36 @@ entities:
     - type: Transform
       parent: 15
       pos: 7.5,-62.5
+  - uid: 26208
+    components:
+    - type: Transform
+      parent: 15
+      pos: -57.5,-6.5
+  - uid: 26209
+    components:
+    - type: Transform
+      parent: 15
+      pos: -58.5,-6.5
+  - uid: 26210
+    components:
+    - type: Transform
+      parent: 15
+      pos: -64.5,-8.5
+  - uid: 26211
+    components:
+    - type: Transform
+      parent: 15
+      pos: 21.5,-32.5
+  - uid: 26212
+    components:
+    - type: Transform
+      parent: 15
+      pos: 20.5,-32.5
+  - uid: 26213
+    components:
+    - type: Transform
+      parent: 15
+      pos: 19.5,-32.5
 - proto: CableApcStack
   entities:
   - uid: 4902
@@ -59870,7 +59903,7 @@ entities:
       pos: -78.5,-6.5
     - type: Door
       state: Opening
-      secondsUntilStateChange: -507157.66
+      secondsUntilStateChange: -507849.97
 - proto: CurtainsPurpleOpen
   entities:
   - uid: 2426
@@ -114671,6 +114704,8 @@ entities:
     - type: Transform
       parent: 15
       pos: 34.5,-59.5
+    - type: TimedSpawner
+      chance: 0.2
   - uid: 23914
     components:
     - type: Transform
@@ -114683,6 +114718,8 @@ entities:
     - type: Transform
       parent: 15
       pos: 74.5,-47.5
+    - type: TimedSpawner
+      chance: 0.2
   - uid: 25008
     components:
     - type: Transform
@@ -115067,6 +115104,116 @@ entities:
       pos: -0.52655697,9.51132
     - type: Paper
       content: the game
+  - uid: 25092
+    components:
+    - type: Transform
+      parent: 15
+      pos: -45.541164,-62.46833
+    - type: Paper
+      content: >-
+        We're no strangers to love
+
+        You know the rules and so do I
+
+        A full commitment's what I'm thinkin' of
+
+        You wouldn't get this from any other guy
+
+
+        I just wanna tell you how I'm feeling
+
+        Gotta make you understand
+
+
+        Never gonna give you up, never gonna let you down
+
+        Never gonna run around and desert you
+
+        Never gonna make you cry, never gonna say goodbye
+
+        Never gonna tell a lie and hurt you
+
+
+        We've known each other for so long
+
+        Your heart's been aching, but you're too shy to say it
+
+        Inside, we both know what's been going on
+
+        We know the game and we're gonna play it
+
+
+        And if you ask me how I'm feeling
+
+        Don't tell me you're too blind to see
+
+
+        Never gonna give you up, never gonna let you down
+
+        Never gonna run around and desert you
+
+        Never gonna make you cry, never gonna say goodbye
+
+        Never gonna tell a lie and hurt you
+
+
+        Never gonna give you up, never gonna let you down
+
+        Never gonna run around and desert you
+
+        Never gonna make you cry, never gonna say goodbye
+
+        Never gonna tell a lie and hurt you
+
+
+        (Ooh, give you up)
+
+        (Ooh, give you up)
+
+        (Ooh) never gonna give, never gonna give (give you up)
+
+        (Ooh) never gonna give, never gonna give (give you up)
+
+
+        We've known each other for so long
+
+        Your heart's been aching, but you're too shy to say it
+
+        Inside, we both know what's been going on
+
+        We know the game and we're gonna play it
+
+
+        I just wanna tell you how I'm feeling
+
+        Gotta make you understand
+
+
+        Never gonna give you up, never gonna let you down
+
+        Never gonna run around and desert you
+
+        Never gonna make you cry, never gonna say goodbye
+
+        Never gonna tell a lie and hurt you
+
+
+        Never gonna give you up, never gonna let you down
+
+        Never gonna run around and desert you
+
+        Never gonna make you cry, never gonna say goodbye
+
+        Never gonna tell a lie and hurt you
+
+
+        Never gonna give you up, never gonna let you down
+
+        Never gonna run around and desert you
+
+        Never gonna make you cry, never gonna say goodbye
+
+        Never gonna tell a lie and hurt you
 - proto: ParticleAcceleratorControlBoxUnfinished
   entities:
   - uid: 19423
@@ -137298,7 +137445,7 @@ entities:
     components:
     - type: Transform
       parent: 15
-      pos: -44.548805,-62.50867
+      pos: -44.589073,-62.474842
   - uid: 23030
     components:
     - type: Transform
@@ -156116,8 +156263,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13406
-      configurators:
-      - invalid
   - uid: 11944
     components:
     - type: Transform
@@ -156126,8 +156271,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13406
-      configurators:
-      - invalid
   - uid: 11945
     components:
     - type: Transform
@@ -156172,8 +156315,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13406
-      configurators:
-      - invalid
 - proto: WeaponEnergyTurretAIControlPanel
   entities:
   - uid: 13406
