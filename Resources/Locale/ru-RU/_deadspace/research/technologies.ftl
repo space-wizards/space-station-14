@@ -24,6 +24,8 @@ research-technology-quadbike = Гонка в техах
 research-technology-hoverbike = Ходьба по вакуму
 research-technology-vehicle-janicart = Погоня за крысами
 research-technology-bola = Ограничители передвижения
+research-technology-smg-drum-ammo = Огонь на подавление
+research-technology-rifle-drum-ammo = Свинцовый шторм
 
 research-discipline-mechworks = Механика
 research-discipline-weaponry = Вооружение

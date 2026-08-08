@@ -488,6 +488,14 @@
 
 # DS14-start
 - type: Tag
+  id: SMGDrumMagazine # Whitelist
+
+- type: Tag
+  id: RifleDrumMagazine # Whitelist
+# DS14-end
+
+# DS14-start
+- type: Tag
   id: TaipanDoorElectronics
 # DS14-end
 

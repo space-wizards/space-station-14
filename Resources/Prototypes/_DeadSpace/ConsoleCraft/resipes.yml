@@ -399,6 +399,7 @@
   - RateOfFireDrozdAdvanced
   - MassSkope
   - SpeedBullet
+  - DrozdExtendedAmmoMag
 
 - type: consoleCraft
   id: PistolMk58

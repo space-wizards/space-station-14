@@ -148,6 +148,7 @@
     - RateOfFireLecterModuleItemAdv
     - LecterExtendedAmmoMagModuleItem
     - RateOfFireDrozdModuleItemAdv
+    - AllowDrumsDrozdModuleItemAdv
     - RateOfFireMKModuleItemAdv
     - AvailableModesMKModuleItem
     - BallisticAmmoShotgunsModuleItem

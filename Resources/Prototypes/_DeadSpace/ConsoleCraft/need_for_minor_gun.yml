@@ -41,8 +41,8 @@
 - type: entity
   parent: BaseItem
   id: LecterExtendedAmmoMagModuleItem
-  name: модуль Лектера - расширенный магазин
-  description: Поддержка расширенных магазинов для вашего Лектера.
+  name: модуль Лектера - барабанные магазины
+  description: Поддержка барабанов для вашего Лектера.
   components:
   - type: Sprite
     sprite: Objects/Misc/stock_parts.rsi
@@ -68,6 +68,25 @@
   - type: Sprite
     sprite: Objects/Misc/stock_parts.rsi
     state: micro_laser
+  - type: EmitSoundOnPickup
+    sound:
+      path: /Audio/_DeadSpace/Items/Handing/component_pickup.ogg
+  - type: EmitSoundOnDrop
+    sound:
+      path: /Audio/_DeadSpace/Items/Handing/component_drop.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_DeadSpace/Items/Handing/component_drop.ogg
+
+- type: entity
+  parent: BaseItem
+  id: DrozdExtendedAmmoMagModuleItem
+  name: модуль Дрозд - барабанные магазины
+  description: Поддержка барабанов для вашего Дрозда. РА-ТА-ТА-ТА!!!
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/stock_parts.rsi
+    state: advanced_matter_bin
   - type: EmitSoundOnPickup
     sound:
       path: /Audio/_DeadSpace/Items/Handing/component_pickup.ogg

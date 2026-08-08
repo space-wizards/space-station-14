@@ -570,6 +570,12 @@
     Steel: 1250
 
 - type: latheRecipe
+  id: AllowDrumsDrozdModuleItemAdv
+  result: DrozdExtendedAmmoMagModuleItem
+  materials:
+    Steel: 1250
+
+- type: latheRecipe
   id: RateOfFireMKModuleItemAdv
   result: RateOfFireMKModuleItemAdv
   materials:

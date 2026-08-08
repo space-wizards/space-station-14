@@ -78,6 +78,7 @@
   - RateOfFireLecterModuleItemAdv
   - LecterExtendedAmmoMagModuleItem
   - RateOfFireDrozdModuleItemAdv
+  - AllowDrumsDrozdModuleItemAdv
   - RateOfFireMKModuleItemAdv
   - AvailableModesMKModuleItem
   - BallisticAmmoShotgunsModuleItem
@@ -101,6 +102,11 @@
   recipeUnlocks:
   - ADTExtMagazineRifle
   - MagazinePistolHighCapacity
+  - MagazinePistolHighCapacityEmpty
+  - MagazinePistolHighCapacityPractice
+  - MagazinePistolSubMachineGunExtended
+  - MagazinePistolSubMachineGunExtendedPractice
+  - MagazinePistolSubMachineGunExtendedEmpty
   - ADTMagazineShotgunXL
 
 - type: technology
@@ -217,3 +223,35 @@
   cost: 10000
   recipeUnlocks:
   - ClothingEyesGlassesThermalVisorExperimental
+
+- type: technology
+  id: SMGDrumMagazines
+  name: research-technology-smg-drum-ammo
+  icon:
+    sprite: _DeadSpace/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_drum.rsi
+    state: base-icon
+  discipline: Arsenal
+  tier: 3
+  cost: 10000
+  recipeUnlocks:
+  - DrumPistolSubMachineGun
+  - DrumPistolSubMachineGunEmpty
+  - DrumPistolSubMachineGunPractice
+  - DrumPistolSubMachineGunIncendiary
+  - DrumPistolSubMachineGunUranium
+
+- type: technology
+  id: RifleDrumMagazines
+  name: research-technology-rifle-drum-ammo
+  icon:
+    sprite: _DeadSpace/Objects/Weapons/Guns/Ammunition/Magazine/LightRifle_drum.rsi
+    state: base-icon
+  discipline: Arsenal
+  tier: 3
+  cost: 10000
+  recipeUnlocks:
+  - DrumRifle
+  - DrumRifleEmpty
+  - DrumRiflePractice
+  - DrumRifleIncendiary
+  - DrumRifleUranium

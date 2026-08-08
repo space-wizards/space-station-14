@@ -126,3 +126,101 @@
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
     - state: practice
+
+- type: entity
+  parent: BaseMagazineRifle
+  id: DrumRifle
+  name: барабанный магазин (5.56х45 мм)
+  description: Огромный магазин с двумя барабанами под патрон 5.56х45 мм. С этой штукой будет явно сложно управляться с оружием.
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeRifle
+    capacity: 65
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Weapons/Guns/Ammunition/Magazine/LightRifle_drum.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Tag
+    tags:
+      - RifleDrumMagazine
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-mag
+      right:
+      - state: inhand-right-mag
+    size: Normal
+  
+- type: entity
+  parent: DrumRifle
+  id: DrumRifleEmpty
+  name: барабанный магазин (5.56х45 мм любые)
+  description: Огромный магазин с двумя барабанами под патрон 5.56х45 мм. С этой штукой будет явно сложно управляться с оружием. Имеет особую конструкцию, из-за чего, не помещается в стандартные шахты для магазинов.
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
+    capacity: 65
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Weapons/Guns/Ammunition/Magazine/LightRifle_drum.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  parent: DrumRifle
+  id: DrumRiflePractice
+  name: барабанный магазин (5.56х45 мм тренировочные)
+  description: Огромный магазин с двумя барабанами под патрон 5.56х45 мм. С этой штукой будет явно сложно управляться с оружием. Имеет особую конструкцию, из-за чего, не помещается в стандартные шахты для магазинов. Имеется пометка о содержании тренировочных боеприпасов.
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeRiflePractice
+    capacity: 65
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Weapons/Guns/Ammunition/Magazine/LightRifle_drum.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: practice
+
+- type: entity
+  parent: DrumRifle
+  id: DrumRifleIncendiary
+  name: барабанный магазин (5.56х45 мм зажигательные)
+  description: Огромный магазин с двумя барабанами под патрон 5.56х45 мм. Имеет особую конструкцию, из-за чего, не помещается в стандартные шахты для магазинов. С этой штукой будет явно сложно управляться с оружием. Имеется пометка о содержании зажигательных боеприпасов.
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeRifleIncendiary
+    capacity: 65
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Weapons/Guns/Ammunition/Magazine/LightRifle_drum.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: incendiary
+
+- type: entity
+  parent: DrumRifle
+  id: DrumRifleUranium
+  name: барабанный магазин (5.56х45 мм урановые)
+  description: Огромный магазин с двумя барабанами под патрон 5.56х45 мм. Имеет особую конструкцию, из-за чего, не помещается в стандартные шахты для магазинов. С этой штукой будет явно сложно управляться с оружием. Имеется пометка о содержании урановых боеприпасов.
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeRifleUranium
+    capacity: 65
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Weapons/Guns/Ammunition/Magazine/LightRifle_drum.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: uranium

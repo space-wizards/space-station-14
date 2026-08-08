@@ -150,10 +150,31 @@
   - SpeedLoaderMagnumIncendiary
   - SpeedLoaderMagnumUranium
   - MagazineBox357Incendiary # ADT
-  - MagazinePistolHighCapacity #DS14
-  - ADTMagazineShotgunXL # DS14
-  - BoxLethalshotMagnum # DS14
-  - ADTExtMagazineRifle # DS14
+# DS14-start
+  - MagazinePistolHighCapacity
+  - MagazinePistolHighCapacityincendiary
+  - MagazinePistolHighCapacityUranium
+  - MagazinePistolHighCapacityPractice
+  - MagazinePistolHighCapacityEmpty
+  - ADTMagazineShotgunXL
+  - BoxLethalshotMagnum
+  - ADTExtMagazineRifle
+  - DrumRifle
+  - DrumRifleEmpty
+  - DrumRiflePractice
+  - DrumRifleIncendiary
+  - DrumRifleUranium
+  - DrumPistolSubMachineGun
+  - DrumPistolSubMachineGunEmpty
+  - DrumPistolSubMachineGunPractice
+  - DrumPistolSubMachineGunIncendiary
+  - DrumPistolSubMachineGunUranium
+  - MagazinePistolSubMachineGunExtendedIncendiary
+  - MagazinePistolSubMachineGunExtendedUranium
+  - MagazinePistolSubMachineGunExtendedPractice
+  - MagazinePistolSubMachineGunExtended
+  - MagazinePistolSubMachineGunExtendedEmpty
+# DS14-end
 
 - type: latheRecipePack
   id: SecurityWeapons

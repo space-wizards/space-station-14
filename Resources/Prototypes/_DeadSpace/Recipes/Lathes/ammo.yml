@@ -31,7 +31,76 @@
   id: MagazinePistolHighCapacity
   result: MagazinePistolHighCapacity
   materials:
-    Steel: 500
+    Steel: 300
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazinePistolHighCapacityincendiary
+  result: MagazinePistolHighCapacityincendiary
+  materials:
+    Steel: 100
+    Plastic: 240
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazinePistolHighCapacityUranium
+  result: MagazinePistolHighCapacityUranium
+  materials:
+    Steel: 50
+    Plastic: 130
+    Uranium: 240
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazinePistolHighCapacityPractice
+  result: MagazinePistolHighCapacityPractice
+  materials:
+    Steel: 190
+
+- type: latheRecipe
+  parent: BaseEmptyAmmoRecipe
+  id: MagazinePistolHighCapacityEmpty
+  result: MagazinePistolHighCapacityEmpty
+  materials:
+    Steel: 50
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazinePistolSubMachineGunExtended
+  result: MagazinePistolSubMachineGunExtended
+  materials:
+    Steel: 400
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazinePistolSubMachineGunExtendedIncendiary
+  result: MagazinePistolSubMachineGunExtendedIncendiary
+  materials:
+    Steel: 120
+    Plastic: 240
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazinePistolSubMachineGunExtendedUranium
+  result: MagazinePistolSubMachineGunExtendedUranium
+  materials:
+    Steel: 80
+    Plastic: 130
+    Uranium: 240
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazinePistolSubMachineGunExtendedPractice
+  result: MagazinePistolSubMachineGunExtendedPractice
+  materials:
+    Steel: 190
+
+- type: latheRecipe
+  parent: BaseEmptyAmmoRecipe
+  id: MagazinePistolSubMachineGunExtendedEmpty
+  result: MagazinePistolSubMachineGunExtendedEmpty
+  materials:
+    Steel: 160
 
 - type: latheRecipe
   parent: BaseAmmoRecipe
@@ -60,3 +129,84 @@
   result: MagazineCarbineSKSEmpty
   materials:
     Steel: 25
+
+# Drums
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: DrumRifle
+  result: DrumRifle
+  materials:
+    Steel: 2000
+
+- type: latheRecipe
+  parent: BaseEmptyAmmoRecipe
+  id: DrumRifleEmpty
+  result: DrumRifleEmpty
+  materials:
+    Steel: 200
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: DrumRiflePractice
+  result: DrumRiflePractice
+  materials:
+    Steel: 1000
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: DrumRifleIncendiary
+  result: DrumRifleIncendiary
+  materials:
+    Plastic: 2000
+    Steel: 200
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: DrumRifleUranium
+  result: DrumRifleUranium
+  materials:
+    Plastic: 1000
+    Steel: 200
+    Uranium: 1500
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: DrumPistolSubMachineGun
+  result: DrumPistolSubMachineGun
+  materials:
+    Steel: 1500
+    Plastic: 100
+
+- type: latheRecipe
+  parent: BaseEmptyAmmoRecipe
+  id: DrumPistolSubMachineGunEmpty
+  result: DrumPistolSubMachineGunEmpty
+  materials:
+    Steel: 200
+    Plastic: 100
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: DrumPistolSubMachineGunPractice
+  result: DrumPistolSubMachineGunPractice
+  materials:
+    Steel: 1000
+    Plastic: 100
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: DrumPistolSubMachineGunIncendiary
+  result: DrumPistolSubMachineGunIncendiary
+  materials:
+    Plastic: 1500
+    Steel: 200
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: DrumPistolSubMachineGunUranium
+  result: DrumPistolSubMachineGunUranium
+  materials:
+    Plastic: 1000
+    Steel: 200
+    Uranium: 1500

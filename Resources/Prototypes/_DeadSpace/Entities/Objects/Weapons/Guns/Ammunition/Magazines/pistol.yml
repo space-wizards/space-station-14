@@ -6,7 +6,7 @@
   - type: BallisticAmmoProvider
     proto: CartridgePistolIncendiary
   - type: Sprite
-    scale: 1.2, 1.2 # DS-14
+    scale: 1.2, 1.2
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
@@ -28,7 +28,7 @@
   - type: BallisticAmmoProvider
     proto: CartridgePistolUranium
   - type: Sprite
-    scale: 1.2, 1.2 # DS-14
+    scale: 1.2, 1.2
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
@@ -44,9 +44,104 @@
 
 - type: entity
   parent: BaseMagazinePistolSubMachineGun
+  id: MagazinePistolSubMachineGunExtended
+  name: магазин ПП (Расширенный, 9х19 мм)
+  description: Магазин для пистолетов-пулемётов на 45 патронов калибра 9х19мм.
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistol
+    capacity: 45
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_mag_ext.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-mag
+      right:
+      - state: inhand-right-mag
+  - type: MagazineVisuals
+    magState: mag
+    steps: 10
+    zeroVisible: false
+
+- type: entity
+  parent: MagazinePistolSubMachineGunExtended
+  id: MagazinePistolSubMachineGunExtendedEmpty
+  name: магазин ПП (Расширенный, 9х19 мм любые)
+  description: Магазин для пистолетов-пулемётов на 45 патронов калибра 9х19мм.
+  suffix: Пустой
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
+    capacity: 45
+
+- type: entity
+  parent: MagazinePistolSubMachineGunExtended
+  id: MagazinePistolSubMachineGunExtendedIncendiary
+  name: магазин ПП (Расширенный, 9х19 мм зажигательные)
+  description: Магазин для пистолетов-пулемётов на 45 патронов калибра 9х19мм. Имеется пометка о содержании зажигательных боеприпасов.
+  suffix: Зажигательные
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolIncendiary
+    capacity: 45
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_mag_ext.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: incendiary
+
+- type: entity
+  parent: MagazinePistolSubMachineGunExtended
+  id: MagazinePistolSubMachineGunExtendedUranium
+  name: магазин ПП (Расширенный, 9х19 мм урановые)
+  description: Магазин для пистолетов-пулемётов на 45 патронов калибра 9х19мм. Имеется пометка о содержании урановых боеприпасов.
+  suffix: Урановые
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolUranium
+    capacity: 45
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_mag_ext.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: uranium
+
+- type: entity
+  parent: MagazinePistolSubMachineGunExtended
+  id: MagazinePistolSubMachineGunExtendedPractice
+  name: магазин ПП (Расширенный, 9х19 мм учебные)
+  description: Магазин для пистолетов-пулемётов на 45 патронов калибра 9х19мм. Имеется пометка о содержании учебных боеприпасов.
+  suffix: Учебные
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolPractice
+    capacity: 45
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_mag_ext.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: practice
+
+- type: entity
+  parent: BaseMagazinePistolSubMachineGun
   id: DrumPistolSubMachineGun
   name: барабанный магазин ПП (9х19 мм)
-  description: Магазин барабанного типа на 60 патронов калибра 9х19 мм.
+  description: Магазин барабанного типа на 60 патронов калибра 9х19 мм с особой конструкцией, из-за которой, не помещается в обычные шахты магазинов.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistol
@@ -74,12 +169,15 @@
     magState: mag
     steps: 2
     zeroVisible: false
+  - type: Tag
+    tags:
+      - SMGDrumMagazine
   
 - type: entity
   parent: DrumPistolSubMachineGun
   id: DrumPistolSubMachineGunEmpty
   name: барабанный магазин ПП (9х19 мм любые)
-  description: Магазин барабанного типа на 60 патронов калибра 9х19 мм.
+  description: Магазин барабанного типа на 60 патронов калибра 9х19 мм с особой конструкцией, из-за которой, не помещается в обычные шахты магазинов.
   suffix: Пустой
   components:
   - type: BallisticAmmoProvider
@@ -96,7 +194,7 @@
   parent: DrumPistolSubMachineGun
   id: DrumPistolSubMachineGunPractice
   name: барабанный магазин ПП (9х19 мм учебные)
-  description: Магазин барабанного типа на 60 патронов калибра 9х19 мм. Имеется пометка о содержании учебных боеприпасов.
+  description: Магазин барабанного типа на 60 патронов калибра 9х19 мм с особой конструкцией, из-за которой, не помещается в обычные шахты магазинов. Имеется пометка о содержании учебных боеприпасов.
   suffix: Учебные
   components:
   - type: BallisticAmmoProvider
@@ -114,7 +212,7 @@
   parent: DrumPistolSubMachineGun
   id: DrumPistolSubMachineGunIncendiary
   name: барабанный магазин ПП (9х19 мм зажигательные)
-  description: Магазин барабанного типа на 60 патронов калибра 9х19 мм. Имеется пометка о содержании зажигательных боеприпасов.
+  description: Магазин барабанного типа на 60 патронов калибра 9х19 мм с особой конструкцией, из-за которой, не помещается в обычные шахты магазинов. Имеется пометка о содержании зажигательных боеприпасов.
   suffix: Зажигательные
   components:
   - type: BallisticAmmoProvider
@@ -130,9 +228,9 @@
 
 - type: entity
   parent: DrumPistolSubMachineGun
-  id: DrumPistolSubMachineGunuranium
+  id: DrumPistolSubMachineGunUranium
   name: барабанный магазин ПП (9х19 мм урановые)
-  description: Магазин барабанного типа на 60 патронов калибра 9х19 мм. Имеется пометка о содержании урановых боеприпасов.
+  description: Магазин барабанного типа на 60 патронов калибра 9х19 мм с особой конструкцией, из-за которой, не помещается в обычные шахты магазинов. Имеется пометка о содержании урановых боеприпасов.
   suffix: Урановые
   components:
   - type: BallisticAmmoProvider

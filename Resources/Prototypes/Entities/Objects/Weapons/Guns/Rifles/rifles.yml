@@ -136,6 +136,7 @@
         priority: 2
         whitelist:
           tags:
+            - ADTExtMagazineRifle #DS14
             - MagazineRifle
         whitelistFailPopup: gun-magazine-whitelist-fail
       gun_chamber:
@@ -182,6 +183,7 @@
         priority: 2
         whitelist:
           tags:
+            - ADTExtMagazineRifle #DS14
             - MagazineRifle
         whitelistFailPopup: gun-magazine-whitelist-fail
       gun_chamber:
@@ -276,6 +278,7 @@
         priority: 2
         whitelist:
           tags:
+          - ADTExtMagazineRifle #DS14
           - MagazineRifle
         whitelistFailPopup: gun-magazine-whitelist-fail
       gun_chamber:
