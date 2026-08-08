@@ -4,6 +4,7 @@ namespace Content.Shared.CCVar;
 
 public sealed partial class CCVars
 {
+    // SS13 uses #8589fa but it can come off as more harsh so we muted it a bit more.
     public const string DefaultSpaceLightColor = "#8487db";
 
     /// <summary>
