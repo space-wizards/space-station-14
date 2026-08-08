@@ -1688,6 +1688,10 @@
       - TargetReceiver
     - type: AutoLinkReceiver
       channel: XenoborgGuidedMissileLauncher
+    - type: SimpleSpriteOverlay
+      overlaySprite:
+        sprite: Mobs/Silicon/chassis.rsi
+        state: xenoborg_heavy_missile_launcher
   - type: ItemBorgModule
     hands:
     - item: WeaponXenoborgGuidedMissileLauncher
