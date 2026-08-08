@@ -1,5 +1,3 @@
-ent-ADTClothingHandsSupremeCommanderBoots = ботинки высшего главнокомандующего
-    .desc = Я сама скорость! Чао :)
 ent-ADTClothingRedjiShoes = стильные туфли
     .desc = Пара потрёпаных временем, тем не менее, стильных туфель.
 ent-ADTClothingSandals = сандали

@@ -158,10 +158,6 @@
       enum.MagicMirrorUiKey.Key:
         toggleAction: HairstyleAction
   # DS14-end
-  # - type: FootPrints # Backmen-footsteps
-    # leftBarePrint: "footprint-left-bare-slime"
-    # rightBarePrint: "footprint-right-bare-slime"
-
 
 - type: entity
   parent: MobHumanDummy

@@ -13,7 +13,6 @@
     - HeadSide
     - Tail # DS14
     - Hair # DS14, just in case
-    # undergarmentBottom: UndergarmentBottomBoxersReptilian
   - type: Hunger
   - type: Puller
     needsHands: false
@@ -125,7 +124,6 @@
     - HeadSide
     - Tail # DS14
     - Hair # DS14, just in case
-    # undergarmentBottom: UndergarmentBottomBoxersReptilian
   - type: Inventory
     speciesId: reptilian
     femaleDisplacements:

@@ -1,5 +1,3 @@
-ent-ADTClothingUniformSupremeCommanderJumpsuit = форма высшего главнокомандующего
-    .desc = Подходит для встреч галактического масштаба.
 ent-ADTClothingUniformBlackWeddingSuit = чёрный свадебный костюм
     .desc = Сделано в СССП.
 ent-ADTClothingUniformBlueWeddingSuit = синий свадебный костюм
@@ -28,11 +26,3 @@ ent-ADTClothingUniformAbibasBlueSuit = синий спортивный кост�
     .desc = Спортивка для блатных пацанов.
 ent-ADTClothingUniformInvestigatorSuit = форма следователя службы безопасности
     .desc = Одежда для того, кто намерен докопаться до сути всех тайн.
-ent-ADTClothingUniformWhiteShorts = белые шорты
-    .desc = Белые шорты для отдыха. Пожалуйста, не пролейте на них ничего.
-ent-ADTClothingUniformBlackShorts = чёрные шорты
-    .desc = Чёрные шорты для отдыха.
-ent-ADTClothingUniformWhiteBreeches = белые бриджи
-    .desc = Белые бриджи для отдыха. Пожалуйста, не пролейте на них ничего.
-ent-ADTClothingUniformBlackBreeches = чёрные бриджи
-    .desc = Чёрные бриджи для отдыха.

@@ -40,11 +40,7 @@ BoxMagazinePistolHighCapacityHighVelocity: BoxMagazinePistolHighCapacity
 BoxMagazinePistolHighVelocity: BoxMagazinePistol
 BoxMagazinePistolSubMachineGunHighVelocity: BoxMagazinePistolSubMachineGun
 BoxMagazineRifleHighVelocity: BoxMagazineRifle
-BulletCaselessRifleHighVelocity: BulletCaselessRifle
-BulletLightRifleHighVelocity: BulletLightRifle
-BulletMagnumHighVelocity: BulletMagnum
 BulletPistolHighVelocity: BulletPistol
-BulletRifleHighVelocity: BulletRifle
 CartridgeCaselessRifleHighVelocity: CartridgeCaselessRifle
 CartridgeLightRifleHighVelocity: CartridgeLightRifle
 CartridgeMagnumHighVelocity: CartridgeMagnum
@@ -298,10 +294,6 @@ BodyBag_Folded: BodyBagFolded
 # 2024-04-26
 BaseBulletRubber: null
 BulletPistolRubber: BulletPistol
-BulletMagnumRubber: BulletMagnum
-BulletLightRifleRubber: BulletLightRifle
-BulletRifleRubber: BulletRifle
-BulletCaselessRifleRubber: BulletCaselessRifle
 CartridgePistolRubber: CartridgePistol
 CartridgeMagnumRubber: CartridgeMagnum
 CartridgeLightRifleRubber: CartridgeLightRifle
@@ -434,7 +426,6 @@ DisasterVictimSpawner: CommandVisitorSpawner
 LostCargoTechnicianSpawner: VisitorCargoTechnicianSpawner
 ClownTroupeSpawner: VisitorClownSpawner
 TravelingChefSpawner: VisitorChefSpawner
-SyndieDisasterVictimSpawner: SyndieVisitorSpawner
 
 # 2024-06-09 - DS14
 ClothingBackpackSatchelClownFilled: ClothingBackpackSatchelClown
@@ -796,9 +787,7 @@ LeadChemistryBottle: ChemistryBottleLead
 ToxinChemistryBottle: ChemistryBottleToxin
 
 # 2025-04-02 - DS14
-DrinkMoscowMuleGlass: DrinkMoscowMule
 DrinkEspressoMartiniGlass: DrinkEspressoMartini
-DrinkDaiquiriGlass: DrinkDaiquiri
 
 # 2025-04-04 - DS14
 CBURNSierraPDA: null

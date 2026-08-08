@@ -14,7 +14,12 @@ public sealed class NicotineDeprivationEffectsSystem : EntitySystem
 
     private const float ScreenKick = 0.12f;
     private const float EyeNudge = 0.04f;
+    private const float EffectInterval = 0.1f;
+    private const float EyeSmoothingSpeed = 12f;
+
     private Vector2 _eyeNudge;
+    private Vector2 _eyeNudgeTarget;
+    private float _effectAccumulator = EffectInterval;
 
     public override void Initialize()
     {
@@ -30,14 +35,23 @@ public sealed class NicotineDeprivationEffectsSystem : EntitySystem
         if (local == null || !TryComp<NicotineAddictionComponent>(local, out var c) || !c.DeprivationShakeActive)
         {
             _eyeNudge = Vector2.Zero;
+            _eyeNudgeTarget = Vector2.Zero;
+            _effectAccumulator = EffectInterval;
             return;
         }
 
-        _cameraRecoil.KickCamera(local.Value,
-            new Vector2(_random.NextFloat(-1f, 1f), _random.NextFloat(-1f, 1f)) * ScreenKick);
+        _effectAccumulator += frameTime;
+        if (_effectAccumulator >= EffectInterval)
+        {
+            _effectAccumulator %= EffectInterval;
+            _cameraRecoil.KickCamera(local.Value,
+                new Vector2(_random.NextFloat(-1f, 1f), _random.NextFloat(-1f, 1f)) * ScreenKick);
 
-        var t = new Vector2(_random.NextFloat(-1f, 1f), _random.NextFloat(-1f, 1f)) * EyeNudge;
-        _eyeNudge = Vector2.Lerp(_eyeNudge, t, 0.35f);
+            _eyeNudgeTarget = new Vector2(_random.NextFloat(-1f, 1f), _random.NextFloat(-1f, 1f)) * EyeNudge;
+        }
+
+        var smoothing = Math.Clamp(frameTime * EyeSmoothingSpeed, 0f, 1f);
+        _eyeNudge = Vector2.Lerp(_eyeNudge, _eyeNudgeTarget, smoothing);
     }
 
     private void OnEyeOffset(EntityUid uid, NicotineAddictionComponent comp, ref GetEyeOffsetEvent args)

@@ -90,9 +90,6 @@
     baseSprintSpeed: 4.9
   - type: Stamina
   - type: Sanity # DS14
-  # - type: FootPrints
-    # leftBarePrint: "footprint-left-bare-lizard"
-    # rightBarePrint: "footprint-right-bare-lizard"
   - type: Language
     selectedLanguage: GeneralLanguage
     knownLanguages:

@@ -1,20 +1,4 @@
 - type: entity
-  parent: MobHuman
-  id: TestVirusMobHuman
-  name: больной
-  suffix: Кашель
-  components:
-  - type: Virus
-    data:
-      strainId: TestVirus
-      activeSymptom:
-      - CoughSymptom
-      bodyWhitelist:
-      - Human
-      mutationPoints: 10000
-      
-
-- type: entity
   parent: MarkerBase
   id: SpawnTestVirusMobHuman
   name: спавнер больной
@@ -27,7 +11,7 @@
       state: full
   - type: ConditionalSpawner
     prototypes:
-    - TestVirusMobHuman
+    - TestVirusMobHuman2
 
 - type: entity
   parent: MobHuman

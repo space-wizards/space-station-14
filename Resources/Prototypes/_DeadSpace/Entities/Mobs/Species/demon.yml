@@ -48,7 +48,6 @@
     knownLanguages:
     - DemonLanguage
     - GeneralLanguage
-  # - type: FootPrints
 
 - type: entity
   parent: BaseSpeciesDummy

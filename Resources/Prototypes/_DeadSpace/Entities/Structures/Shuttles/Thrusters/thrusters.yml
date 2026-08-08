@@ -50,17 +50,6 @@
     thrust: 500
     
 - type: entity
-  id: DebugThrusterMedium
-  parent: ThrusterMedium
-  suffix: DEBUG
-  components:
-  - type: ApcPowerReceiver
-    needsPower: false
-    powerLoad: 0
-  - type: Thruster
-    requireSpace: false
-
-- type: entity
   id: ThrusterMediumUnanchored
   parent: ThrusterMedium
   suffix: Незакреплённый
@@ -151,17 +140,6 @@
         density: 90
   - type: Thruster
     thrust: 1000
-
-- type: entity
-  id: DebugThrusterLarge
-  parent: ThrusterLarge
-  suffix: DEBUG
-  components:
-  - type: ApcPowerReceiver
-    needsPower: false
-    powerLoad: 0
-  - type: Thruster
-    requireSpace: false
 
 - type: entity
   id: ThrusterLargeUnanchored

@@ -82,21 +82,6 @@
     event: !type:SuckBloodActionEvent
 
 - type: entity
-  id: ActionChainAbility
-  name: Заплести
-  description: Заплести цель паутиной.
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: Action
-    useDelay: 3
-    icon:
-      sprite: Objects/Misc/handcuffs.rsi
-      state: handcuff
-  - type: TargetAction
-  - type: EntityTargetAction
-    event: !type:ChainAbilityActionEvent
-
-- type: entity
   id: ActionAutoInjectReagent
   name: Выделить вещества
   description: Выделяет вещества и впрыскивает их в ваше тело.
@@ -151,23 +136,6 @@
     checkCanAccess: false
   - type: EntityTargetAction
     event: !type:LockCocoonEvent
-
-- type: entity
-  id: ActionSpiderInfector
-  name: Впрыснуть яйца
-  description: Помещает в существо паучье яйца.
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: Action
-    useDelay: 10
-    icon:
-      sprite: /Textures/_DeadSpace/Interface/Misc/antag_icons.rsi
-      state: Egg
-  - type: TargetAction
-    range: 2
-    checkCanAccess: false
-  - type: EntityTargetAction
-    event: !type:SpiderInfectorActionEvent
 
 - type: entity
   id: ActionHatch

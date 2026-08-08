@@ -744,14 +744,3 @@
   - type: Store
     balance:
       SpaceCash: 25000
-
-- type: entity
-  parent: BasePirateUplink
-  id: BasePirateUplinkDebug
-  name: чёрный рынок пиратов
-  description: Устройство, дающее доступ к нелегальному космическому рынку.
-  suffix: ДЕБАГ
-  components:
-  - type: Store
-    balance:
-      SpaceCash: 1000000

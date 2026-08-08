@@ -1,35 +1,5 @@
 - type: entity
   parent: [ClothingBeltBase, ClothingSlotBase]
-  id: ADTClothingBeltSupremeCommanderSheath
-  name: ножны высшего главнокомандующего
-  description: Где моя прелесть?
-  components:
-  - type: Sprite
-    sprite: _ADT/Clothing/Belt/supreme-commander-sheath.rsi
-    state: sheath
-  - type: Clothing
-    sprite: _ADT/Clothing/Belt/supreme-commander-sheath.rsi
-  - type: ItemSlots
-    slots:
-      item:
-        name: Sabre
-        insertVerbText: sheath-insert-verb
-        ejectVerbText: sheath-eject-verb
-        insertSound: /Audio/Items/sheath.ogg
-        ejectSound: /Audio/Items/unsheath.ogg
-        whitelist:
-          tags:
-          - SupremeCommanderSabre
-  - type: ItemMapper
-    mapLayers:
-      sheath-sabre:
-        whitelist:
-          tags:
-          - SupremeCommanderSabre
-  - type: Appearance
-
-- type: entity
-  parent: [ClothingBeltBase, ClothingSlotBase]
   id: ADTClothingBeltSupremeSheath
   name: хризолитовые ножны
   description: Где моя прелесть?

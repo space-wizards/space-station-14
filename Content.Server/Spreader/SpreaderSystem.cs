@@ -159,7 +159,7 @@ public sealed class SpreaderSystem : EntitySystem
 
     private void Spread(EntityUid uid, TransformComponent xform, ProtoId<EdgeSpreaderPrototype> prototype, ref int updates)
     {
-        GetNeighbors(uid, xform, prototype, out var freeTiles, out _, out var neighbors);
+        GetNeighbors(uid, xform, prototype, out var freeTiles, out var neighbors);
 
         var ev = new SpreadNeighborsEvent()
         {
@@ -175,12 +175,11 @@ public sealed class SpreaderSystem : EntitySystem
     /// <summary>
     /// Gets the neighboring node data for the specified entity and the specified node group.
     /// </summary>
-    public void GetNeighbors(EntityUid uid, TransformComponent comp, ProtoId<EdgeSpreaderPrototype> prototype, out ValueList<(MapGridComponent, TileRef)> freeTiles, out ValueList<Vector2i> occupiedTiles, out ValueList<EntityUid> neighbors)
+    public void GetNeighbors(EntityUid uid, TransformComponent comp, ProtoId<EdgeSpreaderPrototype> prototype,
+        out ValueList<(MapGridComponent, TileRef)> freeTiles, out ValueList<EntityUid> neighbors)
     {
         freeTiles = [];
-        occupiedTiles = [];
         neighbors = [];
-        // TODO remove occupiedTiles -- its currently unused and just slows this method down.
         if (!_prototype.Resolve(prototype, out var spreaderPrototype))
             return;
 
@@ -270,7 +269,7 @@ public sealed class SpreaderSystem : EntitySystem
             if (occupied)
                 continue;
 
-            var oldCount = occupiedTiles.Count;
+            var hasNeighbor = false;
             directionEnumerator = _map.GetAnchoredEntitiesEnumerator(neighborEnt, neighborGrid, neighborPos);
 
             while (directionEnumerator.MoveNext(out var ent))
@@ -282,11 +281,11 @@ public sealed class SpreaderSystem : EntitySystem
                     continue;
 
                 neighbors.Add(ent.Value);
-                occupiedTiles.Add(neighborPos);
+                hasNeighbor = true;
                 break;
             }
 
-            if (oldCount == occupiedTiles.Count)
+            if (!hasNeighbor)
                 freeTiles.Add((neighborGrid, tileRef));
         }
     }

@@ -30,15 +30,3 @@
     damage:
       groups:
         Burn: 40
-
-- type: entity
-  id: Bullet357AP
-  name: bullet (.357 magnum armor-piercing)
-  parent: BaseBulletAP
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: Projectile
-    damage:
-      types:
-        Piercing: 33 # 40% decrease
-    ignoreResistances: true

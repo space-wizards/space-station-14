@@ -122,10 +122,6 @@
     - GeneralLanguage
     - DionaLanguage
   # DS14-Languages-end
-  # - type: FootPrints # Backmen-footsteps
-    # leftBarePrint: "footprint-left-bare-diona"
-    # rightBarePrint: "footprint-right-bare-diona"
-
 
 - type: entity
   parent: BaseSpeciesDummy

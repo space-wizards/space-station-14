@@ -66,18 +66,6 @@
 
 - type: entity
   parent: BaseMentalAction
-  id: OwOVoice
-  name: Change speech
-  components:
-  - type: Action
-    checkCanInteract: false
-    icon: Interface/Actions/owo-button.png
-    iconOn: Interface/Actions/owo-button-on.png
-  - type: InstantAction
-    event: !type:OwOAccentActionEvent
-
-- type: entity
-  parent: BaseMentalAction
   id: ActionTurnUndead
   name: Turn Undead
   description: Succumb to your infection and become a zombie.

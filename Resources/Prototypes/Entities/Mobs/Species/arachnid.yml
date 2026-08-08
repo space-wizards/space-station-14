@@ -94,8 +94,6 @@
       - map: [ "enum.HumanoidVisualLayers.LLeg" ]
       - map: [ "underwearb" ] # Sirena-Underwear
       - map: [ "underweart" ] # Sirena-Underwear
-      # - map: [ "enum.HumanoidVisualLayers.UndergarmentBottom" ]
-      # - map: [ "enum.HumanoidVisualLayers.UndergarmentTop" ]
       # - map: ["jumpsuit"]
       - map: ["enum.HumanoidVisualLayers.LFoot"]
       - map: ["enum.HumanoidVisualLayers.RFoot"]
@@ -142,10 +140,6 @@
     - GeneralLanguage
     - ArachnidLanguage
   # DS14-Languages-end
-  # - type: FootPrints # Backmen-footsteps
-    # leftBarePrint: "footprint-left-bare-spider"
-    # rightBarePrint: "footprint-right-bare-spider"
-
 
 - type: entity
   parent: BaseSpeciesDummy

@@ -1,10 +1,2 @@
-ent-BulletLightRifle = пуля (5.56х45 мм)
-    .desc = { ent-BaseBullet.desc }
-ent-BulletLightRiflePractice = пуля (5.56х45 мм учебная)
-    .desc = { ent-BaseBulletPractice.desc }
 ent-BulletLightRifleRubber = пуля (5.56х45 мм резиновая)
     .desc = { ent-BaseBulletRubber.desc }
-ent-BulletLightRifleIncendiary = пуля (5.56х45 мм зажигательная)
-    .desc = { ent-BaseBulletIncendiary.desc }
-ent-BulletLightRifleUranium = пуля (5.56х45 мм урановая)
-    .desc = { ent-BaseBulletUranium.desc }

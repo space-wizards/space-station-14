@@ -1,14 +1,5 @@
 - type: entity
   parent: ClothingNeckBase
-  id: ADTClothingNeckSupremeCommanderCloak
-  name: плащ высшего главнокомандующего
-  description: Не дайте ему запачкаться, сделан из супер-технологичного блюспейс шитья, такой носит только один человек, и это - вы.
-  components:
-  - type: Sprite
-    sprite: _ADT/Clothing/Neck/Cloaks/supreme_commander_cloak.rsi
-
-- type: entity
-  parent: ClothingNeckBase
   id: ADTClothingNeckKnightCloak
   name: плащ рыцаря
   description: Шёлковый и внушительный рыцарский плащ. За честь короны!

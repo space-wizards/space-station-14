@@ -62,13 +62,6 @@ public sealed partial class WhiteJukeboxComponent : Component
     public PlayingSongData? PlayingSongData { get; set; }
 }
 
-public sealed partial class TapeContainerComponent : Component
-{
-    public int MaxTapeCount = 1;
-
-    public Container TapeContainer { get; set; } = new();
-}
-
 [Serializable, NetSerializable]
 public sealed class PlayingSongData
 {

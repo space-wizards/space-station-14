@@ -31,30 +31,46 @@ public sealed class BearTrapSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
+    private readonly List<EntityUid> _activeToRemove = new();
+
     public override void Initialize()
     {
         SubscribeLocalEvent<BearTrapComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
         SubscribeLocalEvent<BearTrapComponent, StartCollideEvent>(OnCollide);
+        SubscribeLocalEvent<BearTrapComponent, EndCollideEvent>(OnEndCollide);
         SubscribeLocalEvent<BearTrapComponent, BearTrapDisarmDoAfterEvent>(OnDisarmed);
     }
 
     public override void Update(float frameTime)
     {
-        var query = EntityQueryEnumerator<BearTrapComponent>();
-        while (query.MoveNext(out var uid, out var trap))
+        _activeToRemove.Clear();
+        var query = EntityQueryEnumerator<BearTrapComponent, ActiveBearTrapComponent>();
+        while (query.MoveNext(out var uid, out var trap, out _))
         {
-            if (!trap.Arming && !trap.Armed &&
-                TryComp<EnsnaringComponent>(uid, out var inactive) && inactive.Ensnared == null)
+            if (!trap.Arming)
             {
-                RemComp<EnsnaringComponent>(uid);
+                if (!trap.Armed)
+                {
+                    if (!TryComp<EnsnaringComponent>(uid, out var inactive))
+                    {
+                        _activeToRemove.Add(uid);
+                    }
+                    else if (inactive.Ensnared == null)
+                    {
+                        RemComp<EnsnaringComponent>(uid);
+                        _activeToRemove.Add(uid);
+                    }
+                }
+
                 continue;
             }
 
-            if (trap.Armed && CheckCurrentOverlaps((uid, trap)))
+            if (trap.ArmsAt == null)
+            {
+                trap.Arming = false;
+                _activeToRemove.Add(uid);
                 continue;
-
-            if (!trap.Arming || trap.ArmsAt == null)
-                continue;
+            }
 
             var left = trap.ArmsAt.Value - _timing.CurTime;
             var progress = 1f - Math.Clamp((float) (left.TotalSeconds / trap.ArmingTime.TotalSeconds), 0f, 1f);
@@ -70,8 +86,17 @@ public sealed class BearTrapSystem : EntitySystem
             trap.Arming = false;
             trap.Opacity = trap.MinimumOpacity;
             trap.ArmsAt = null;
-            _appearance.SetData(uid, BearTrapVisuals.Armed, true);
+            var caught = CheckCurrentOverlaps((uid, trap));
+
+            if (!caught)
+                _activeToRemove.Add(uid);
+
             Dirty(uid, trap);
+        }
+
+        foreach (var uid in _activeToRemove)
+        {
+            RemComp<ActiveBearTrapComponent>(uid);
         }
     }
 
@@ -127,6 +152,7 @@ public sealed class BearTrapSystem : EntitySystem
         ent.Comp.Installer = null;
         ent.Comp.Opacity = 1f;
         _appearance.SetData(ent, BearTrapVisuals.Armed, false);
+        RemCompDeferred<ActiveBearTrapComponent>(ent);
         if (TryComp<EnsnaringComponent>(ent, out var ensnaring) && ensnaring.Ensnared == null)
             RemComp<EnsnaringComponent>(ent);
         _transform.Unanchor(ent);
@@ -137,15 +163,18 @@ public sealed class BearTrapSystem : EntitySystem
     private void Arm(Entity<BearTrapComponent> ent, EntityUid user)
     {
         ent.Comp.Arming = true;
-        ent.Comp.Armed = true;
         ent.Comp.ArmsAt = _timing.CurTime + ent.Comp.ArmingTime;
-        ent.Comp.Installer = user;
         _appearance.SetData(ent, BearTrapVisuals.Armed, true);
         _transform.AnchorEntity(ent);
         _transform.SetLocalRotation(ent, Angle.Zero);
         ConfigureEnsnaring(ent);
+        EnsureComp<ActiveBearTrapComponent>(ent);
+        ent.Comp.Installer = user;
+        ent.Comp.Armed = true;
         ent.Comp.Opacity = 1f;
         Dirty(ent);
+
+        CheckCurrentOverlaps(ent);
     }
 
     private void OnCollide(Entity<BearTrapComponent> ent, ref StartCollideEvent args)
@@ -155,6 +184,30 @@ public sealed class BearTrapSystem : EntitySystem
             return;
 
         TryCatch(ent, target);
+    }
+
+    private void OnEndCollide(Entity<BearTrapComponent> ent, ref EndCollideEvent args)
+    {
+        if (args.OtherEntity != ent.Comp.Installer)
+            return;
+
+        foreach (var contact in args.OurFixture.Contacts.Values)
+        {
+            if (!contact.IsTouching)
+                continue;
+
+            var otherEnt = contact.OtherEnt(ent.Owner);
+            var (otherFixtureId, _) = contact.OtherFixture(ent.Owner);
+
+            // The ending contact can still be marked as touching while the event is handled.
+            if (args.OtherEntity == otherEnt && args.OtherFixtureId == otherFixtureId)
+                continue;
+
+            if (otherEnt == ent.Comp.Installer)
+                return;
+        }
+
+        ent.Comp.Installer = null;
     }
 
     private bool CheckCurrentOverlaps(Entity<BearTrapComponent> ent)
@@ -199,6 +252,7 @@ public sealed class BearTrapSystem : EntitySystem
         ent.Comp.ArmsAt = null;
         ent.Comp.Opacity = 1f;
         _appearance.SetData(ent, BearTrapVisuals.Armed, false);
+        EnsureComp<ActiveBearTrapComponent>(ent);
         _transform.SetLocalRotation(ent, Angle.Zero);
         Dirty(ent);
         _damage.TryChangeDamage(target, ent.Comp.Damage, origin: ent);

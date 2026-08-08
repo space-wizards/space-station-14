@@ -12,19 +12,13 @@ public sealed class VehiclePushbackSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var toRemove = new List<EntityUid>();
         var query = EntityQueryEnumerator<VehiclePushbackComponent, PhysicsComponent>();
         while (query.MoveNext(out var uid, out var push, out var body))
         {
             _physics.ApplyLinearImpulse(uid, push.ImpulsePerTick, body: body);
             push.TicksLeft--;
             if (push.TicksLeft <= 0)
-                toRemove.Add(uid);
-        }
-
-        foreach (var uid in toRemove)
-        {
-            RemCompDeferred<VehiclePushbackComponent>(uid);
+                RemCompDeferred<VehiclePushbackComponent>(uid);
         }
     }
 }

@@ -51,17 +51,6 @@
 
 - type: entity
   parent: ClothingUniformBase
-  id: ADTClothingUniformWhiteShortWeddingDress
-  name: белое короткое свадебное платье
-  description: Белое платье с золотыми блёстками. Для тех, кто устал от длинных подолов!
-  components:
-  - type: Sprite
-    sprite: _ADT/Clothing/Uniforms/Jumpsuit/white_short_wedding_dress.rsi
-  - type: Clothing
-    sprite: _ADT/Clothing/Uniforms/Jumpsuit/white_short_wedding_dress.rsi
-
-- type: entity
-  parent: ClothingUniformBase
   id: ADTClothingUniformWhiteWeddingWomenSuit
   name: белый свадебный женский костюм
   description: Это женский костюм. Для тех, кто устал от платьев. Выглядит сексуально.
@@ -81,28 +70,6 @@
     sprite: _ADT/Clothing/Uniforms/Jumpsuit/black_wedding_women_suit.rsi
   - type: Clothing
     sprite: _ADT/Clothing/Uniforms/Jumpsuit/black_wedding_women_suit.rsi
-
-- type: entity
-  parent: ClothingUniformBase
-  id: ADTClothingUniformRedCocktailDress
-  name: красное коктейльное платье
-  description: Девочка, это платье создано для вечеринки! Порви танцпол!
-  components:
-  - type: Sprite
-    sprite: _ADT/Clothing/Uniforms/Jumpsuit/red_cocktail_dress.rsi
-  - type: Clothing
-    sprite: _ADT/Clothing/Uniforms/Jumpsuit/red_cocktail_dress.rsi
-
-- type: entity
-  parent: ClothingUniformBase
-  id: ADTClothingUniformBlackElegantDress
-  name: чёрное элегантное платье
-  description: Оно не слишком короткое? Мой зад не видно?
-  components:
-  - type: Sprite
-    sprite: _ADT/Clothing/Uniforms/Jumpsuit/black_elegant_dress.rsi
-  - type: Clothing
-    sprite: _ADT/Clothing/Uniforms/Jumpsuit/black_elegant_dress.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -136,28 +103,6 @@
     sprite: _ADT/Clothing/Uniforms/Jumpskirt/lilit_black_dress.rsi
   - type: Clothing
     sprite: _ADT/Clothing/Uniforms/Jumpskirt/lilit_black_dress.rsi
-
-- type: entity
-  parent: ClothingUniformBase
-  id: ADTClothingUniformBlueLatexDress
-  name: голубое латексное платье
-  description: Где-то я такое уже видел... Это из сериала?
-  components:
-  - type: Sprite
-    sprite: _ADT/Clothing/Uniforms/Jumpskirt/blue_latex_dress.rsi
-  - type: Clothing
-    sprite: _ADT/Clothing/Uniforms/Jumpskirt/blue_latex_dress.rsi
-
-- type: entity
-  parent: ClothingUniformBase
-  id: ADTClothingUniformLeopardDress
-  name: леопардовое платье
-  description: Детка, в этом платье ты просто супер кошечка! Мррау!
-  components:
-  - type: Sprite
-    sprite: _ADT/Clothing/Uniforms/Jumpskirt/leopard_dress.rsi
-  - type: Clothing
-    sprite: _ADT/Clothing/Uniforms/Jumpskirt/leopard_dress.rsi
 
 - type: entity
   parent: ClothingUniformBase

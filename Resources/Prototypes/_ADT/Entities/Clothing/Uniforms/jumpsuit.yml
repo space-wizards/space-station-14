@@ -1,16 +1,5 @@
 - type: entity
   parent: ClothingUniformBase
-  id: ADTClothingUniformSupremeCommanderJumpsuit
-  name: форма высшего главнокомандующего
-  description: Подходит для встреч галактического масштаба.
-  components:
-  - type: Sprite
-    sprite: _ADT/Clothing/Uniforms/Jumpsuit/supreme-commander-uniform.rsi
-  - type: Clothing
-    sprite: _ADT/Clothing/Uniforms/Jumpsuit/supreme-commander-uniform.rsi
-
-- type: entity
-  parent: ClothingUniformBase
   id: ADTClothingUniformBlackWeddingSuit
   name: чёрный свадебный костюм
   description: Сделано в СССП.
@@ -158,47 +147,3 @@
     sprite: _ADT/Clothing/Uniforms/Jumpsuit/investigator_suit.rsi
   - type: Clothing
     sprite: _ADT/Clothing/Uniforms/Jumpsuit/investigator_suit.rsi
-
-- type: entity
-  parent: ClothingUniformBase
-  id: ADTClothingUniformWhiteShorts
-  name: белые шорты
-  description: Белые шорты для отдыха. Пожалуйста, не пролейте на них ничего.
-  components:
-  - type: Sprite
-    sprite: _ADT/Clothing/Uniforms/Jumpsuit/white_shorts.rsi
-  - type: Clothing
-    sprite: _ADT/Clothing/Uniforms/Jumpsuit/white_shorts.rsi
-
-- type: entity
-  parent: ClothingUniformBase
-  id: ADTClothingUniformBlackShorts
-  name: чёрные шорты
-  description: Чёрные шорты для отдыха.
-  components:
-  - type: Sprite
-    sprite: _ADT/Clothing/Uniforms/Jumpsuit/black_shorts.rsi
-  - type: Clothing
-    sprite: _ADT/Clothing/Uniforms/Jumpsuit/black_shorts.rsi
-
-- type: entity
-  parent: ClothingUniformBase
-  id: ADTClothingUniformWhiteBreeches
-  name: белые бриджи
-  description: Белые бриджи для отдыха. Пожалуйста, не пролейте на них ничего.
-  components:
-  - type: Sprite
-    sprite: _ADT/Clothing/Uniforms/Jumpsuit/white_breeches.rsi
-  - type: Clothing
-    sprite: _ADT/Clothing/Uniforms/Jumpsuit/white_breeches.rsi
-
-- type: entity
-  parent: ClothingUniformBase
-  id: ADTClothingUniformBlackBreeches
-  name: чёрные бриджи
-  description: Чёрные бриджи для отдыха.
-  components:
-  - type: Sprite
-    sprite: _ADT/Clothing/Uniforms/Jumpsuit/black_breeches.rsi
-  - type: Clothing
-    sprite: _ADT/Clothing/Uniforms/Jumpsuit/black_breeches.rsi

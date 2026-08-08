@@ -76,7 +76,6 @@
     knownLanguages:
     - CatLanguage
     - GeneralLanguage
-  # - type: FootPrints
   - type: NightVision
     animation: false
     duration: 30

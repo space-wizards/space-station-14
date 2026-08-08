@@ -70,13 +70,6 @@
 
 - type: entity
   parent: BaseGameRule
-  id: SpawnJanitorsShuttle
-  components:
-  - type: ErtSpawnRule
-    shuttle: JanitorsShuttle
-
-- type: entity
-  parent: BaseGameRule
   id: SpawnEngineersShuttle
   components:
   - type: ErtSpawnRule

@@ -9,21 +9,30 @@ namespace Content.Server.DeadSpace.NicotineAddiction;
 public sealed class NicotineAddictionSystem : EntitySystem
 {
     private const string NicotineReagentId = "Nicotine";
+    private const float UpdateInterval = 1f;
 
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
 
+    private float _updateAccumulator;
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
+        _updateAccumulator += frameTime;
+        if (_updateAccumulator < UpdateInterval)
+            return;
+
+        _updateAccumulator %= UpdateInterval;
+        var now = _timing.CurTime;
         var query = EntityQueryEnumerator<NicotineAddictionComponent>();
         while (query.MoveNext(out var uid, out var comp))
         {
             if (HasNicotine(uid, comp))
             {
-                comp.LastNicotineInBloodTime = _timing.CurTime;
+                comp.LastNicotineInBloodTime = now;
                 if (comp.DeprivationPopupShown || comp.DeprivationShakeActive)
                 {
                     comp.DeprivationPopupShown = false;
@@ -36,11 +45,11 @@ public sealed class NicotineAddictionSystem : EntitySystem
 
             if (comp.LastNicotineInBloodTime == TimeSpan.Zero)
             {
-                comp.LastNicotineInBloodTime = _timing.CurTime;
+                comp.LastNicotineInBloodTime = now;
                 continue;
             }
 
-            var dt = _timing.CurTime - comp.LastNicotineInBloodTime;
+            var dt = now - comp.LastNicotineInBloodTime;
 
             if (dt >= comp.DeprivationPopupDelay && !comp.DeprivationPopupShown)
             {
@@ -50,12 +59,12 @@ public sealed class NicotineAddictionSystem : EntitySystem
                     uid,
                     PopupType.SmallCaution);
                 comp.DeprivationPopupShown = true;
-                comp.DeprivationPopupShownAt = _timing.CurTime;
+                comp.DeprivationPopupShownAt = now;
             }
 
             if (comp.DeprivationPopupShown
                 && !comp.DeprivationShakeActive
-                && _timing.CurTime >= comp.DeprivationPopupShownAt + comp.PopupToShakeDelay)
+                && now >= comp.DeprivationPopupShownAt + comp.PopupToShakeDelay)
             {
                 comp.DeprivationShakeActive = true;
                 Dirty(uid, comp);

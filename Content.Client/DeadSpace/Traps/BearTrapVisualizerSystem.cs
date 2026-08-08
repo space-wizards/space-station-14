@@ -2,6 +2,7 @@
 
 using Content.Shared.DeadSpace.Traps;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameStates;
 
 namespace Content.Client.DeadSpace.Traps;
 
@@ -9,13 +10,29 @@ public sealed class BearTrapVisualizerSystem : EntitySystem
 {
     [Dependency] private readonly SpriteSystem _sprites = default!;
 
-    public override void Update(float frameTime)
+    public override void Initialize()
     {
-        var query = EntityQueryEnumerator<BearTrapComponent, SpriteComponent>();
-        while (query.MoveNext(out var uid, out var trap, out var sprite))
-        {
-            if (!MathHelper.CloseTo(sprite.Color.A, trap.Opacity))
-                _sprites.SetColor((uid, sprite), sprite.Color.WithAlpha(trap.Opacity));
-        }
+        base.Initialize();
+
+        SubscribeLocalEvent<BearTrapComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<BearTrapComponent, AfterAutoHandleStateEvent>(OnAfterHandleState);
+    }
+
+    private void OnStartup(Entity<BearTrapComponent> ent, ref ComponentStartup args)
+    {
+        UpdateOpacity(ent);
+    }
+
+    private void OnAfterHandleState(Entity<BearTrapComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        UpdateOpacity(ent);
+    }
+
+    private void UpdateOpacity(Entity<BearTrapComponent> ent)
+    {
+        if (!TryComp<SpriteComponent>(ent, out var sprite) || MathHelper.CloseTo(sprite.Color.A, ent.Comp.Opacity))
+            return;
+
+        _sprites.SetColor((ent, sprite), sprite.Color.WithAlpha(ent.Comp.Opacity));
     }
 }

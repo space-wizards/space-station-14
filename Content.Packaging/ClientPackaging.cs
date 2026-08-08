@@ -137,6 +137,7 @@ public static class ClientPackaging
     {
         var ignoreSet = RobustClientPackaging.ClientIgnoredResources
             .Union(RobustSharedPackaging.SharedIgnoredResources)
+            .Union(SharedPackaging.AdditionalIgnoredResources)
             .Union(ContentClientIgnoredResources).ToHashSet();
 
         await RobustSharedPackaging.DoResourceCopy(Path.Combine(contentDir, "Resources"), pass, ignoreSet, cancel: cancel);

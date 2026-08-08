@@ -127,7 +127,7 @@ public sealed class SpawnAgainstSystem : EntitySystem
         }
 
         bool contains = false;
-        _spreader.GetNeighbors(uid, xform, "Kudzu", out var freeTiles, out _, out _);
+        _spreader.GetNeighbors(uid, xform, "Kudzu", out var freeTiles, out _);
 
         foreach (var (grid, tileRef) in freeTiles)
         {

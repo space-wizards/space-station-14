@@ -64,11 +64,6 @@
   dockTag: DockCentcommERTOfficialShuttle
 
 - type: ertShuttle
-  id: JanitorsShuttle
-  path: /Maps/Shuttles/ERT/janitors.yml
-  dockTag: DockCentcommERTJanitorsShuttle
-
-- type: ertShuttle
   id: EngineersShuttle
   path: /Maps/Shuttles/ERT/engineers.yml
   dockTag: DockCentcommERTEngineersShuttle
