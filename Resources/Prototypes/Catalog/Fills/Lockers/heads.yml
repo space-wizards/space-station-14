@@ -244,9 +244,9 @@
     - id: HandheldCrewMonitor
     - id: Hypospray
     - id: MedTekCartridge
+    - id: BeakerCMO # DS14
     - id: NitrogenTankFilled # DS14
     - id: ADTtelescopicBaton # ADT
-    - id: DrinkShakerCMO # DS14
     # Standard command gear
     - id: RubberStampCMO
     - id: ClothingHeadsetAltMedical

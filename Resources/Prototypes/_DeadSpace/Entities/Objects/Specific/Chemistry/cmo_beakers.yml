@@ -1,0 +1,40 @@
+- type: entity
+  parent: BaseBeakerMetallic
+  id: BeakerCMO
+  name: качественная мензурка
+  description: Мензурка высшего качества для удобной варки препаратов.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Specific/Chemistry/cmo_beaker.rsi
+    layers:
+    - state: base
+    - state: beaker1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+  - type: Item
+    sprite: _DeadSpace/Objects/Specific/Chemistry/cmo_beaker.rsi
+    shape:
+    - 0,0,1,1
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: beaker
+    inHandsMaxFillLevels: 3
+    inHandsFillBaseName: -fill-
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 200
+        canReact: true
+  - type: Spillable
+    solution: beaker
+  - type: ExplosionResistance
+    damageCoefficient: 0
+  - type: EmitSoundOnPickup
+    sound:
+      path: /Audio/_DeadSpace/Items/Handing/beaker_pickup.ogg
+  - type: EmitSoundOnDrop
+    sound:
+      path: /Audio/_DeadSpace/Items/Handing/beaker_drop.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_DeadSpace/Items/Handing/beaker_drop.ogg
