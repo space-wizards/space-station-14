@@ -5,6 +5,7 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Tabletop;
 
+/// <inheritdoc />
 [UsedImplicitly]
 public sealed partial class TabletopSystem : SharedTabletopSystem
 {
@@ -27,8 +28,7 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
         if (args.Sprite == null)
             return;
 
-        // TODO: maybe this can work more nicely, by maybe only having to set the item to "being dragged", and have
-        //  the appearance handle the rest
+        // Do we have a new prototype to copy?
         if (!Appearance.TryGetData<string>(ent, TabletopItemVisuals.Prototype, out var protoId, args.Component)
             || ent.Comp.LastPrototype == protoId)
             return;

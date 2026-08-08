@@ -119,6 +119,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
     [SubscribeLocalEvent]
     private void AddDraggableCopyVerb(Entity<TabletopDraggableComponent> entity, ref GetVerbsEvent<AlternativeVerb> args)
     {
+        // Is this a piece from a board game that we can interact with?
         if (!args.CanAccess || !args.CanInteract)
             return;
 
@@ -126,7 +127,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
             || !_gameQuery.TryComp(gamer.Tabletop, out var game))
             return;
 
-        // Will get closed later if IsPlaying returns false.
+        // A user has to be playing a game to drag a piece.
         var disabled = !IsPlaying(args.User, gamer.Tabletop);
         var user = args.User;
 
@@ -145,6 +146,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
     [SubscribeLocalEvent]
     private void AddHologramRemoveVerb(Entity<TabletopHologramComponent> entity, ref GetVerbsEvent<Verb> args)
     {
+        // Is this a piece from a board game that we can interact with?
         if (!args.CanAccess || !args.CanInteract)
             return;
 
@@ -152,8 +154,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
             || !_gameQuery.TryComp(gamer.Tabletop, out var game))
             return;
 
-        // TODO: change this out for a UI check
-        // Will get closed later if IsPlaying returns false.
+        // A user has to be playing a game to remove a piece.
         var disabled = !IsPlaying(args.User, gamer.Tabletop);
         var user = args.User;
 
@@ -230,7 +231,6 @@ public abstract partial class SharedTabletopSystem : EntitySystem
         args.InRange = true;
         args.Handled = true;
     }
-
 
     [SubscribeLocalEvent]
     private void OnPlayerDetached(Entity<TabletopGamerComponent> ent, ref PlayerDetachedEvent args)

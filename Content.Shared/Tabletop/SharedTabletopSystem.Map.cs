@@ -6,7 +6,7 @@ using Robust.Shared.Map.Components;
 
 namespace Content.Shared.Tabletop;
 
-// A collection of methods for managing tabletop positions
+// A collection of methods for creating board game entities on a dedicated map.
 public abstract partial class SharedTabletopSystem
 {
     /// <summary>
