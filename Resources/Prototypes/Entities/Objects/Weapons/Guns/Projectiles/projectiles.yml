@@ -855,10 +855,14 @@
   name: guided xenoborg missile
   categories: [ HideSpawnMenu ]
   components:
-  - type: Sprite # TODO: ADD NEW SPRITE HERE
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/xenoborg_guided_missile.rsi
     layers:
-      - state: grenade
+    - state: base
+    - state: tip
+      shader: unshaded
+    - state: fire
+      shader: unshaded
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
@@ -866,8 +870,6 @@
     intensitySlope: 1
     maxIntensity: 5
     canCreateVacuum: false
-  - type: TimedDespawn
-    lifetime: 1000 # TODO: REMOVE THIS
   - type: ChasingWalk
     speed: 5
     impulseInterval: 0.1
