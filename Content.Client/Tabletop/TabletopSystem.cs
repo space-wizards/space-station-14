@@ -69,5 +69,12 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
         _sprite.SetScale((ent, sprite), ent.Comp.DraggingPlayer == null ? ent.Comp.NormalScale : ent.Comp.DraggedScale);
         _sprite.SetDrawDepth((ent, sprite), ent.Comp.DraggingPlayer == null ? ent.Comp.NormalDrawDepth : ent.Comp.DraggedDrawDepth);
     }
+
+    [SubscribeLocalEvent]
+    private void OnGameAutoHandleState(Entity<TabletopGameComponent> ent, ref AfterAutoHandleStateEvent _)
+    {
+        if (UI.TryGetOpenUi(ent.Owner, TabletopGameUiKey.Key, out var bui))
+            bui.Update();
+    }
     #endregion
 }

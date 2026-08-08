@@ -1,9 +1,8 @@
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Numerics;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
-using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
@@ -11,9 +10,11 @@ using Content.Shared.Popups;
 using Content.Shared.Tabletop.Components;
 using Content.Shared.Tabletop.Events;
 using Content.Shared.Verbs;
+using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Tabletop;
@@ -25,19 +26,21 @@ namespace Content.Shared.Tabletop;
 /// </summary>
 public abstract partial class SharedTabletopSystem : EntitySystem
 {
-    [Dependency] private ISharedAdminLogManager _adminLog = default!;
     [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private ISharedAdminLogManager _adminLog = default!;
     [Dependency] private MetaDataSystem _meta = default!;
     [Dependency] protected SharedAppearanceSystem Appearance = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private SharedMapSystem _map = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedTransformSystem _xform = default!;
-    [Dependency] private SharedUserInterfaceSystem _ui = default!;
+    [Dependency] protected SharedUserInterfaceSystem UI = default!;
     [Dependency] private SharedViewSubscriberSystem _viewSubscriber = default!;
 
     [Dependency] private EntityQuery<AppearanceComponent> _appearanceQuery;
     [Dependency] private EntityQuery<ActorComponent> _actorQuery;
+    [Dependency] private EntityQuery<ItemComponent> _itemQuery;
     [Dependency] private EntityQuery<TabletopBackgroundComponent> _backgroundQuery;
     [Dependency] protected EntityQuery<TabletopDraggableComponent> DraggableQuery;
     [Dependency] private EntityQuery<TabletopGameComponent> _gameQuery;
@@ -52,7 +55,15 @@ public abstract partial class SharedTabletopSystem : EntitySystem
     /// <summary>
     /// The maximum number of pieces to allow placement on a table.
     /// </summary>
-    protected static readonly int MaxTabletopPieces = 50;
+    protected const int MaxTabletopPieces = 50;
+
+    /// <summary>
+    /// The number of pixels per meter, used to determine board bounds.
+    /// </summary>
+    /// <remarks>
+    /// Yes this is disgusting but specifying "board size" off of a texture makes no sense in meters.
+    /// </remarks>
+    protected const float PixelsPerMeter = 32f;
 
     /// <summary>
     /// A handler for drag/drop handling, useful on the client.
@@ -67,13 +78,13 @@ public abstract partial class SharedTabletopSystem : EntitySystem
         if (!_cfg.GetCVar(CCVars.GameTabletopPlace))
             return;
 
-        if (!ent.Comp.HasSession)
+        if (ent.Comp.Board is null)
             return;
 
         if (!_hands.TryGetActiveItem(args.User, out var maybeHandEnt) || maybeHandEnt is not { } handEnt)
             return;
 
-        if (!HasComp<ItemComponent>(handEnt))
+        if (!_itemQuery.HasComp(handEnt))
             return;
 
         CopyEntity(handEnt, ent, args.User);
@@ -160,9 +171,11 @@ public abstract partial class SharedTabletopSystem : EntitySystem
     }
 
     /// <summary>
-    /// Move an entity which is dragged by the user, but check if they are allowed to do so and to these coordinates.
+    /// Move an entity which is dragged by the user,
+    /// first checking if they're allowed to,
+    /// and clamping the coordinates to the board.
     /// </summary>
-    [EventSubscription] // Both local and networked events
+    [EventSubscription] // Both local events (for clients) and networked events (for the server)
     protected virtual void OnTabletopMove(TabletopMoveEvent msg, EntitySessionEventArgs args)
     {
         if (args.SenderSession is not { } playerSession || playerSession.AttachedEntity is not { } playerUid)
@@ -170,7 +183,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
 
         var tableUid = GetEntity(msg.TableUid);
 
-        if (!_gameQuery.TryComp(tableUid, out TabletopGameComponent? tabletop) || !tabletop.HasSession)
+        if (!_gameQuery.TryComp(tableUid, out TabletopGameComponent? tabletop) || tabletop.Board is null)
             return;
 
         // Check if player is actually playing at this table.
@@ -182,12 +195,14 @@ public abstract partial class SharedTabletopSystem : EntitySystem
         if (!DraggableQuery.HasComp(moved))
             return;
 
-        // Move the entity and dirty it (should stay parented to the board it was created from)
-        var transform = Comp<TransformComponent>(moved);
-        _xform.SetLocalPosition(moved, msg.Position, transform);
+        // Move the entity, making sure to keep it on the board!
+        var transform = Transform(moved);
+        var bounds = tabletop.Size / (2 * PixelsPerMeter);
+        var clampedPosition = Vector2.Clamp(msg.Position, -bounds, bounds);
+        _xform.SetLocalPosition(moved, clampedPosition, transform);
     }
 
-    [EventSubscription] // Both local and networked events
+    [EventSubscription] // Both local events (for clients) and networked events (for the server)
     private void OnDraggingPlayerChanged(TabletopDraggingPlayerChangedEvent msg, EntitySessionEventArgs args)
     {
         var dragged = GetEntity(msg.DraggedEntityUid);
@@ -241,12 +256,12 @@ public abstract partial class SharedTabletopSystem : EntitySystem
     /// </summary>
     protected bool IsPlaying(EntityUid playerEntity, EntityUid table)
     {
-        return _ui.GetActors(table, TabletopGameUiKey.Key).Contains(playerEntity);
+        return UI.GetActors(table, TabletopGameUiKey.Key).Contains(playerEntity);
     }
 
     private void RemovePiece(EntityUid piece, Entity<TabletopGameComponent> table, EntityUid user)
     {
-        if (!table.Comp.HasSession)
+        if (table.Comp.Board is null)
             return;
 
         // If this is the client, just assume it's valid

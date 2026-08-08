@@ -16,7 +16,7 @@ public abstract partial class SharedTabletopSystem
     {
         // We already have a session, nothing to do.
         if (!Resolve(ent, ref ent.Comp)
-            || ent.Comp.HasSession)
+            || ent.Comp.Board != null)
             return;
 
         // We make sure that the tabletop map exists before continuing.
@@ -48,7 +48,7 @@ public abstract partial class SharedTabletopSystem
         if (!Resolve(ent, ref ent.Comp))
             return;
 
-        _ui.CloseUis(ent.Owner);
+        UI.CloseUis(ent.Owner);
 
         PredictedQueueDel(ent.Comp.Board);
         ent.Comp.Board = null;
@@ -63,6 +63,9 @@ public abstract partial class SharedTabletopSystem
     /// <param name="ent">The tabletop game to open a session in.</param>
     public void OpenSessionFor(ICommonSession player, Entity<TabletopGameComponent?> ent)
     {
+        if (!_timing.IsFirstTimePredicted)
+            return;
+
         if (!Resolve(ent, ref ent.Comp)
             || player.AttachedEntity is not { Valid: true } playerUid)
             return;
@@ -74,7 +77,7 @@ public abstract partial class SharedTabletopSystem
         if (_gamerQuery.TryComp(playerUid, out TabletopGamerComponent? gamer)
             && gamer.Tabletop != ent.Owner)
         {
-            _ui.CloseUi(gamer.Tabletop, TabletopGameUiKey.Key, playerUid);
+            UI.CloseUi(gamer.Tabletop, TabletopGameUiKey.Key, playerUid);
         }
 
         // Set the entity as an ABSOLUTE GAMER.
@@ -90,8 +93,11 @@ public abstract partial class SharedTabletopSystem
     /// <param name="removeGamerComponent">Whether to remove the <see cref="TabletopGamerComponent"/> from the player's attached entity.</param>
     protected void CloseSessionFor(ICommonSession player, Entity<TabletopGameComponent?> ent, bool removeGamerComponent = true)
     {
+        if (!_timing.IsFirstTimePredicted)
+            return;
+
         if (!Resolve(ent, ref ent.Comp)
-            || !ent.Comp.HasSession)
+            || ent.Comp.Board is null)
             return;
 
         if (removeGamerComponent && player.AttachedEntity is { } attachedEntity

@@ -5,12 +5,18 @@
             Title="{ Loc 'tabletop-default-board-name' }">
     <viewport:ScalingViewport Name="ScalingVp"
                               MouseFilter="Pass"
-                              RenderScaleMode="CeilInt">
+                              RenderScaleMode="CeilInt"
+                              Visible="False">
         <Button Name="FlipButton"
                 Text="{ Loc 'tabletop-chess-flip' }"
                 MinSize="60 30"
                 MaxSize="60 30"
                 HorizontalAlignment="Right"
-                VerticalAlignment="Top" />
+                VerticalAlignment="Top"
+                Visible="False" />
+        <Label Name="LoadingLabel"
+                Text="{ Loc 'tabletop-loading' }"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center" />
     </viewport:ScalingViewport>
 </DefaultWindow>

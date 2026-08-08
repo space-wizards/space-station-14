@@ -13,11 +13,15 @@ tabletop-verb-remove-piece-message-disabled = You have to have the board placed 
 
 tabletop-verb-dump-pieces = Dump Pieces
 
-tabletop-default-board-name = Board Game
-
 tabletop-error-remove-non-hologram = You can't remove a standard piece!
 tabletop-added-piece = The board shimmers brightly!
 tabletop-cant-add-more = Can't add any more pieces!
+
+
+# UI
+
+tabletop-default-board-name = Board Game
+tabletop-loading = Loading ...
 
 ## Chess
 tabletop-chess-board-name = Chess

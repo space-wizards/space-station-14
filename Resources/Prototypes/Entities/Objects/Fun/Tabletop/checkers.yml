@@ -9,6 +9,8 @@
     state: checkers
   - type: TabletopGame
     boardName: tabletop-checkers-board-name
+    setup: !type:TabletopCheckersSetup
+      boardPrototype: ChessBoardTabletop
 
 # The pieces
 - type: entity

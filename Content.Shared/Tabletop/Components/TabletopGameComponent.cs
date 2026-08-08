@@ -7,7 +7,7 @@ namespace Content.Shared.Tabletop.Components;
 /// <summary>
 /// A component that makes an object playable as a tabletop game.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 [Access(typeof(SharedTabletopSystem), typeof(TabletopSetup))]
 public sealed partial class TabletopGameComponent : Component
 {
@@ -40,11 +40,6 @@ public sealed partial class TabletopGameComponent : Component
     /// </summary>
     [DataField]
     public Vector2 CameraZoom { get; private set; } = Vector2.One;
-
-    /// <summary>
-    /// Convenience field, returns whether or not the game has an active session.
-    /// </summary>
-    public bool HasSession => Board != null;
 
     /// <summary>
     /// The board entity for this game. Also functions as the camera.
