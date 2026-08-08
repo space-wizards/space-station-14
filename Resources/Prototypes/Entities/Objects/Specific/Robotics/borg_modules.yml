@@ -1682,12 +1682,6 @@
     - state: icon-xenoborg-laser2
   - type: ComponentBorgModule
     components:
-    - type: ShowTargetOverlay
-    - type: DeviceLinkSink
-      ports:
-      - TargetReceiver
-    - type: AutoLinkReceiver
-      channel: XenoborgGuidedMissileLauncher
     - type: SimpleSpriteOverlay
       overlaySprite:
         sprite: Mobs/Silicon/chassis.rsi
