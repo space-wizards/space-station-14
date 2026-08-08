@@ -57,7 +57,8 @@
             <!-- Server Redirect Panel -->
             <BoxContainer Name="RedirectBox" Visible="False" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" Margin="4 4 4 0">
                 <controls:StripeBack />
-                <!-- Entries are filled in programatically -->
+                <Label Name="UnavailableLabel" Access="Public" HorizontalAlignment="Center" Margin="0 4"/>
+                <!-- Server entries are filled in by code -->
             </BoxContainer>
             <!-- Bottom edge -->
             <PanelContainer>

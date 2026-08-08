@@ -11,13 +11,11 @@
                     VerticalAlignment="Center"
                     Access="Public"
                     Margin="0,4,0,0" />
-                    <!-- StyleClasses="Open" -->
-                    <!--  -->
         </BoxContainer>
         <!-- Details line-->
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True" Margin="4 0 4 4">
-            <Label Name="Playercount" Text="Pop: 0/666" StyleClasses="LabelSubText" HorizontalAlignment="Left" Margin="4 0 30 4"/>
-            <Label Name="Ping" Text="Ping: 999" StyleClasses="LabelSubText" HorizontalAlignment="Right" Margin="4 0 4 4"/>
+            <Label Name="PlayersLabel" Access="Public" StyleClasses="LabelSubText" HorizontalAlignment="Left" Margin="4 0 30 4"/>
+            <Label Name="PingLabel" Access="Public" StyleClasses="LabelSubText" HorizontalAlignment="Right" Margin="4 0 4 4"/>
         </BoxContainer>
     </BoxContainer>
 </Control>

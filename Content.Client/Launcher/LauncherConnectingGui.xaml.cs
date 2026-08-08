@@ -39,11 +39,12 @@ namespace Content.Client.Launcher
         /// <summary>
         /// The list of connect options which will be shown to the player when their connection fails due to the server being full
         /// </summary>
-        private readonly List<(string Name,string url)> _redirectOptions = new()
+        private readonly List<(string Name, string url)> _redirectOptions = new()
         {
-            ("Vulture [US East 2]","ss14s://vulture.spacestation14.com"),
-            ("Leviathan [US East 1]","ss14s://leviathan.spacestation14.com"),
+            ("Vulture [US East 2]", "ss14s://vulture.spacestation14.com"),
+            ("Leviathan [US East 1]", "ss14s://leviathan.spacestation14.com"),
         };
+        private List<RedirectTargetControl> _redirectControls = new();
 
         public LauncherConnectingGui(LauncherConnecting state, IRobustRandom random,
             IPrototypeManager prototype, IConfigurationManager config, IClipboardManager clipboard)
@@ -99,7 +100,32 @@ namespace Content.Client.Launcher
                 option.ServerName.Text = name;
                 option.RedirectButton.OnButtonDown += args => OnRedirectButtonPressed(args, target);
                 RedirectBox.AddChild(option);
+                _redirectControls.Add(option);
             }
+
+            UpdateRedirectServerInfo();
+        }
+
+        private void UpdateRedirectServerInfo()
+        {
+            var available = false;
+
+            foreach (var control in _redirectControls)
+            {
+                //TODO:ERRANT get actual numbers from the hub
+                var players = _random.Next(0,80);
+                var maxPlayers = 20;
+                var ping= _random.Next(20,150);
+
+                control.PlayersLabel.Text = Loc.GetString("connecting-available-player-count",("players", players),("maxPlayers", maxPlayers));
+                control.PingLabel.Text = Loc.GetString("connecting-available-ping",("ping", ping));
+                control.Visible = players < maxPlayers;
+
+                available |= control.Visible;
+            }
+
+            var loc = available ? "connecting-available-label" : "connecting-available-label-unavailable";
+            UnavailableLabel.Text = Loc.GetString(loc);
         }
 
         // Just button, there's only one at once anyways :)
@@ -117,7 +143,7 @@ namespace Content.Client.Launcher
 
         private void OnRedirectButtonPressed(BaseButton.ButtonEventArgs args, string target)
         {
-            _state.Redirect(target, Loc.GetString("server-redirect"));
+            _state.Redirect(target, Loc.GetString("connecting-switching",("target",target)));
         }
 
         private void CopyButtonPressed(BaseButton.ButtonEventArgs args)
@@ -222,7 +248,7 @@ namespace Content.Client.Launcher
             else
             {
                 button.Disabled = true;
-                button.Text = Loc.GetString("connecting-redial-wait", ("time", _waitTime.ToString("00.000")));
+                button.Text = Loc.GetString("connecting-redial-wait", ("time", _waitTime.ToString("00")));
             }
         }
 
