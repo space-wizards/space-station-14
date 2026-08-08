@@ -65,6 +65,7 @@
   - Thermomachines
   - GasCondensing
   - GasRecycling
+  - LiquidVaporisation
 
 - type: guideEntry
   id: Pipes
@@ -169,6 +170,11 @@
   id: GasCondensing
   name: guide-entry-gascondensing
   text: "/ServerInfo/Guidebook/Engineering/GasCondensing.xml"
+
+- type: guideEntry
+  id: LiquidVaporisation
+  name: guide-entry-liquidvaporisation
+  text: "/ServerInfo/Guidebook/Engineering/LiquidVaporisation.xml"
 
 - type: guideEntry
   id: GasRecycling

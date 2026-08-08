@@ -1,0 +1,16 @@
+<Document>
+  # Liquid Vaporisation
+  Liquid Vaporizers take liquids (reagents) and heat them up until they turn into gases.
+
+  <Box>
+    <GuideEntityEmbed Entity="BaseLiquidVaporizer"/>
+  </Box>
+
+  This is the opposite of Gas condensation. A vaporizer can be loaded with any container holding liquid and has a single output pipe. The internal pump will work up to 9000 bar, so make sure to use a pump to free up space in the pipe if necessary.
+  Due to standard issue pipe regulation, not every chemical can be injected into pipes. It is advised to avoid doing so, since the emergency release valve of the vaporizer might otherwise hurt bystanders with heated materials turning to smoke.
+
+  While the atmospherics department should always have a set of gas miners to supply the station with breathable air, should that department be lost, with the help of the chemistry department, an improvised replacement source can be devised.
+
+
+
+</Document>

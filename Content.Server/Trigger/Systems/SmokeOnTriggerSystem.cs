@@ -1,12 +1,14 @@
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Spreader;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Coordinates.Helpers;
+
 using Content.Shared.Maps;
 using Content.Shared.Trigger;
 using Content.Shared.Trigger.Components.Effects;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
+
 
 namespace Content.Server.Trigger.Systems;
 
@@ -15,6 +17,7 @@ namespace Content.Server.Trigger.Systems;
 /// </summary>
 public sealed partial class SmokeOnTriggerSystem : EntitySystem
 {
+
     [Dependency] private MapSystem _map = default!;
     [Dependency] private SmokeSystem _smoke = default!;
     [Dependency] private TransformSystem _transform = default!;
@@ -35,32 +38,9 @@ public sealed partial class SmokeOnTriggerSystem : EntitySystem
 
         var target = ent.Comp.TargetUser ? args.User : ent.Owner;
 
-        if (target == null)
+        if (!_smoke.TrySpawnSmoke(target, ent.Comp.SmokePrototype, out var smoke))
             return;
-
-        // TODO: move all of this into an API function in SmokeSystem
-        var xform = Transform(target.Value);
-        var mapCoords = _transform.GetMapCoordinates(target.Value, xform);
-        if (!_map.TryFindGridAt(mapCoords, out var gridUid, out var gridComp) ||
-            !_map.TryGetTileRef(gridUid, gridComp, xform.Coordinates, out var tileRef) ||
-            tileRef.Tile.IsEmpty)
-        {
-            return;
-        }
-
-        if (_spreader.RequiresFloorToSpread(ent.Comp.SmokePrototype.ToString()) && _turf.IsSpace(tileRef))
-            return;
-
-        var coords = _map.MapToGrid(gridUid, mapCoords);
-        var smoke = Spawn(ent.Comp.SmokePrototype, coords.SnapToGrid());
-        if (!TryComp<SmokeComponent>(smoke, out var smokeComp))
-        {
-            Log.Error($"Smoke prototype {ent.Comp.SmokePrototype} was missing SmokeComponent");
-            Del(smoke);
-            return;
-        }
-
-        _smoke.StartSmoke(smoke, ent.Comp.Solution, (float)ent.Comp.Duration.TotalSeconds, ent.Comp.SpreadAmount, smokeComp);
+        _smoke.StartSmoke(smoke.Value, ent.Comp.Solution, (float)ent.Comp.Duration.TotalSeconds, ent.Comp.SpreadAmount, smoke.Value.Comp);
 
         args.Handled = true;
     }
