@@ -5850,3 +5850,14 @@ Entries:
   changes:
   - type: Fix
     message: Клинки ТЕПЕРЬ ТОЧНО работают как челюсти🥹
+- id: 564
+  author: RIP6100
+  time: '2026-08-08T11:10:52.390399+00:00'
+  pr: 2096
+  changes:
+  - type: Add
+    message: Вирусология теперь есть НА ВСЕХ картах в пуле карт. by Amaliz.
+  - type: Tweak
+    message: 'На всех картах теперь есть: Крио в перме и Оружейный Детальфаб. by Amaliz.'
+  - type: Fix
+    message: Известные баги на всех большинстве карт. by Amaliz.
