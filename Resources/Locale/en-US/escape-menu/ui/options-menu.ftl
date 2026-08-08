@@ -40,6 +40,8 @@ ui-options-event-music = Event Music
 ui-options-admin-sounds = Play Admin Sounds
 ui-options-bwoink-sound = Play AHelp Notification Sound
 ui-options-mute-unfocused = Mute audio when unfocused
+ui-options-audio-device = Output device:
+ui-options-audio-device-default = System default
 ui-options-audio-hrtf = Enable HRTF Audio Processing (Requires Restart)
 ui-options-volume-label = Volume
 
