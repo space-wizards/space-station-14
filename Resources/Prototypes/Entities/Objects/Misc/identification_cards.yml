@@ -801,6 +801,24 @@
       offset: *icon-offset
       state: Zookeeper
 
+- type: entity
+  parent: IDCardStandard
+  id: TramDriverIDCard
+  name: tram driver ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: stripe_top
+      color: "#ffc500"
+    - state: stripe_bottom
+      color: "#454a50"
+    - sprite: *icon-rsi
+      offset: *icon-offset
+      state: TramDriver
+  - type: PresetIdCard
+    job: TramDriver
+
 #Supply
 
 - type: entity
@@ -944,6 +962,20 @@
     - Maintenance
     - SyndicateAgent
   - type: AgentIDCard
+    iconGroups:
+    - CommandIconGroup
+    - SecurityIconGroup
+    - ResearchIconGroup
+    - CargoIconGroup
+    - EngineeringIconGroup
+    - MedicalIconGroup
+    - ServiceIconGroup
+    - CivilianIconGroup
+    - EntertainerIconGroup
+    - SiliconIconGroup
+    - BlankIconGroup
+    - ThreatIconGroup
+    - CentCommIconGroup
   - type: UIRequiresLock
   - type: ActivatableUI
     key: enum.AgentIDCardUiKey.Key
@@ -1342,9 +1374,24 @@
     tags:
     - DoorBumpOpener
   - type: AgentIDCard
+    iconGroups:
+    - CommandIconGroup
+    - SecurityIconGroup
+    - ResearchIconGroup
+    - CargoIconGroup
+    - EngineeringIconGroup
+    - MedicalIconGroup
+    - ServiceIconGroup
+    - CivilianIconGroup
+    - EntertainerIconGroup
+    - SiliconIconGroup
+    - BlankIconGroup
+    - ThreatIconGroup
+    - CentCommIconGroup
+    - AdminIconGroup
   - type: ActivatableUI
     key: enum.AgentIDCardUiKey.Key
-    inHandsOnly: true
+    verbText: agent-id-open-ui-verb
   - type: UserInterface
     interfaces:
       enum.AgentIDCardUiKey.Key:
