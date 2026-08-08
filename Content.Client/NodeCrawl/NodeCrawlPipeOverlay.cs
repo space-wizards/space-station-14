@@ -4,34 +4,40 @@ using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Enums;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.NodeCrawl;
 
-public sealed class NodeCrawlPipeOverlay : Overlay
+public sealed partial class NodeCrawlPipeOverlay : Overlay
 {
+    public static readonly ProtoId<ShaderPrototype> OutlineShader = "NodeCrawlOutline";
+
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+
     private readonly NodeCrawlSystem _nodeCrawl;
     private readonly NodeCrawlCrawlerSystem _crawler;
     private readonly SpriteSystem _spriteSystem;
     private readonly EntityLookupSystem _lookup;
     private readonly SharedTransformSystem _transform;
-    private readonly IPlayerManager _playerManager;
-    private ShaderInstance _outlineShader;
 
     private readonly EntityQuery<NodeCrawlerMovementComponent> _movementQuery;
     private readonly EntityQuery<SpriteComponent> _spriteQuery;
     private readonly EntityQuery<EyeComponent> _eyeQuery;
     private readonly EntityQuery<TransformComponent> _transformQuery;
-    private readonly HashSet<EntityUid> _entities = [];
 
     private static readonly Color NodeBaseColor = new(1f, 1f, 1f, 0.5f);
     private EntityUid? _previousOutlined;
+    private ShaderInstance _outlineShader;
+    private readonly HashSet<EntityUid> _entities = [];
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
-    public NodeCrawlPipeOverlay(IEntityManager entityManager, NodeCrawlSystem nodeCrawl, ShaderInstance outlineShader)
+    public NodeCrawlPipeOverlay(IEntityManager entityManager, NodeCrawlSystem nodeCrawl)
     {
+        IoCManager.InjectDependencies(this);
+        _outlineShader = _prototypeManager.Index(OutlineShader).InstanceUnique();
         _nodeCrawl = nodeCrawl;
-        _outlineShader = outlineShader;
         _movementQuery = entityManager.GetEntityQuery<NodeCrawlerMovementComponent>();
         _spriteQuery = entityManager.GetEntityQuery<SpriteComponent>();
         _eyeQuery = entityManager.GetEntityQuery<EyeComponent>();
@@ -40,7 +46,6 @@ public sealed class NodeCrawlPipeOverlay : Overlay
         _spriteSystem = entityManager.System<SpriteSystem>();
         _lookup = entityManager.System<EntityLookupSystem>();
         _transform = entityManager.System<SharedTransformSystem>();
-        _playerManager = IoCManager.Resolve<IPlayerManager>();
     }
 
     protected override void Draw(in OverlayDrawArgs args)

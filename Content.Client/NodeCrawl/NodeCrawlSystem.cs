@@ -9,8 +9,6 @@ namespace Content.Client.NodeCrawl;
 
 public sealed partial class NodeCrawlSystem : SharedNodeCrawlSystem
 {
-    private const string OutlineShaderId = "NodeCrawlOutline";
-
     [Dependency] private IOverlayManager _overlayManager = default!;
     [Dependency] private IPlayerManager _player = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
@@ -32,8 +30,7 @@ public sealed partial class NodeCrawlSystem : SharedNodeCrawlSystem
     {
         base.Initialize();
         _prototypeManager.PrototypesReloaded += OnPrototypesReloaded;
-        var outlineShader = _prototypeManager.Index(new ProtoId<ShaderPrototype>(OutlineShaderId)).InstanceUnique();
-        _pipeOverlay = new NodeCrawlPipeOverlay(EntityManager, this, outlineShader);
+        _pipeOverlay = new NodeCrawlPipeOverlay(EntityManager, this);
     }
 
     public override void Shutdown()
@@ -45,7 +42,7 @@ public sealed partial class NodeCrawlSystem : SharedNodeCrawlSystem
     private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
     {
         if (args.WasModified<ShaderPrototype>())
-            _pipeOverlay?.SetShader(_prototypeManager.Index(new ProtoId<ShaderPrototype>(OutlineShaderId)).InstanceUnique());
+            _pipeOverlay?.SetShader(_prototypeManager.Index(NodeCrawlPipeOverlay.OutlineShader).InstanceUnique());
     }
 
     public override void Update(float frameTime)
