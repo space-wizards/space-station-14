@@ -31,14 +31,14 @@
   id: MagazinePistolHighCapacity
   result: MagazinePistolHighCapacity
   materials:
-    Steel: 1500
+    Steel: 500
 
 - type: latheRecipe
   parent: BaseAmmoRecipe
   id: ADTMagazineShotgunXL
   result: ADTMagazineShotgunXL
   materials:
-    Steel: 1500
+    Steel: 600
 
 - type: latheRecipe
   parent: BaseAmmoRecipe
