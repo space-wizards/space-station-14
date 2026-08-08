@@ -1,19 +1,13 @@
-using Content.Server.Buckle.Systems;
+using Content.Shared.Buckle;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Combat;
 
 public sealed partial class UnbuckleOperator : HTNOperator
 {
-    private BuckleSystem _buckle = default!;
+    [Dependency] private SharedBuckleSystem _buckle = default!;
 
     [DataField("shutdownState")]
     public HTNPlanState ShutdownState { get; private set; } = HTNPlanState.TaskFinished;
-
-    public override void Initialize(IEntitySystemManager sysManager)
-    {
-        base.Initialize(sysManager);
-        _buckle = sysManager.GetEntitySystem<BuckleSystem>();
-    }
 
     public override void Startup(NPCBlackboard blackboard)
     {

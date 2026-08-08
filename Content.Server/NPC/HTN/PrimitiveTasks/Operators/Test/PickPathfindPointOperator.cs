@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.NPC.Components;
@@ -25,7 +24,7 @@ public sealed partial class PickPathfindPointOperator : HTNOperator
 
         var points = new List<TransformComponent>();
 
-        foreach (var (point, pointXform) in _entManager.EntityQuery<NPCPathfindPointComponent, TransformComponent>(true))
+        foreach (var (_, pointXform) in _entManager.EntityQuery<NPCPathfindPointComponent, TransformComponent>(true))
         {
             if (gridUid != pointXform.GridUid)
                 continue;

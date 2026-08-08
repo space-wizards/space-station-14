@@ -10,7 +10,8 @@ public sealed partial class WaitOperator : HTNOperator
     /// <summary>
     /// Blackboard key for the time we'll wait for.
     /// </summary>
-    [DataField("key", required: true)] public string Key = string.Empty;
+    [DataField("key", required: true)]
+    public string Key = string.Empty;
 
     public override HTNOperatorStatus Update(NPCBlackboard blackboard, float frameTime)
     {

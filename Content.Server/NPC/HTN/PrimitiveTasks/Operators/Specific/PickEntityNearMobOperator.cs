@@ -5,6 +5,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Whitelist;
+using Robust.Server.Containers;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Specific;
 
@@ -14,9 +15,10 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Specific;
 public sealed partial class PickEntityNearMobOperator : HTNOperator
 {
     [Dependency] private IEntityManager _entManager = default!;
-    private EntityLookupSystem _lookup = default!;
-    private PathfindingSystem _pathfinding = default!;
-    private EntityWhitelistSystem _entityWhitelist = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private PathfindingSystem _pathfinding = default!;
+    [Dependency] private ContainerSystem _container = default!;
+    [Dependency] private EntityWhitelistSystem _entityWhitelist = default!;
 
     /// <summary>
     /// Range to search for entities
@@ -65,14 +67,6 @@ public sealed partial class PickEntityNearMobOperator : HTNOperator
     /// </summary>
     [DataField]
     public MobState? MobState;
-
-    public override void Initialize(IEntitySystemManager sysManager)
-    {
-        base.Initialize(sysManager);
-        _lookup = sysManager.GetEntitySystem<EntityLookupSystem>();
-        _pathfinding = sysManager.GetEntitySystem<PathfindingSystem>();
-        _entityWhitelist = sysManager.GetEntitySystem<EntityWhitelistSystem>();
-    }
 
     public override async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard,
         CancellationToken cancelToken)
