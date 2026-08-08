@@ -24,7 +24,7 @@ public sealed partial class ForensicScannerMenu : DefaultWindow
     {
         base.FrameUpdate(args);
 
-        if (_printReady == null)
+        if (string.IsNullOrEmpty(NameLabel.Text))
             return;
 
         Print.Disabled = _printReady > _gameTiming.CurTime;
