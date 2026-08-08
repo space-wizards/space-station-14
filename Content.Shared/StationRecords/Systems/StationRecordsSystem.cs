@@ -6,6 +6,7 @@ using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using Content.Shared.Station.Components;
 using Content.Shared.StationRecords.Components;
 using Content.Shared.StationRecords.Events;
 using Robust.Shared.Enums;
@@ -159,7 +160,7 @@ public sealed partial class StationRecordsSystem : EntitySystem
             return;
         }
 
-        var jobWeights = TryComp<Content.Shared.Station.Components.StationDataComponent>(station, out var stationData)
+        var jobWeights = TryComp<StationDataComponent>(station, out var stationData)
             ? stationData.JobWeights
             : null;
         var displayPriority = JobUIComparer.TryCreate(ProtoMan, jobWeights, out var comparer)

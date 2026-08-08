@@ -114,77 +114,6 @@ public sealed partial class StationJobsSystem
         var jobCandidates = GetJobCandidates(profiles);
         var playerCandidates = GetPlayerCandidates(jobCandidates);
 
-        void RemovePlayerFromCandidates(NetUserId player)
-        {
-            foreach (var priorities in jobCandidates.Values)
-            {
-                foreach (var players in priorities.Values)
-                {
-                    players.Remove(player);
-                }
-            }
-
-            playerCandidates.Remove(player);
-        }
-
-        bool TryPickCandidate(ProtoId<JobPrototype> job, out NetUserId player)
-        {
-            if (!jobCandidates.TryGetValue(job, out var candidates))
-            {
-                player = default;
-                return false;
-            }
-
-            for (var priority = JobPriority.High; priority > JobPriority.Never; priority--)
-            {
-                if (!candidates.TryGetValue(priority, out var players) || players.Count == 0)
-                    continue;
-
-                player = _random.Pick(players);
-                return true;
-            }
-
-            player = default;
-            return false;
-        }
-
-        bool TryPickJob(NetUserId player, EntityUid station, out ProtoId<JobPrototype> job)
-        {
-            if (!playerCandidates.TryGetValue(player, out var candidates))
-            {
-                job = default;
-                return false;
-            }
-
-            for (var priority = JobPriority.High; priority > JobPriority.Never; priority--)
-            {
-                if (!candidates.TryGetValue(priority, out var jobs))
-                    continue;
-
-                var availableJobs = jobs
-                    .Where(jobId => stationJobs[station].TryGetValue(jobId, out var slots) && slots is null or > 0)
-                    .ToList();
-                if (availableJobs.Count == 0)
-                    continue;
-
-                job = _random.Pick(availableJobs);
-                return true;
-            }
-
-            job = default;
-            return false;
-        }
-
-        void AssignPlayer(NetUserId player, ProtoId<JobPrototype> job, EntityUid station)
-        {
-            if (stationJobs[station][job] is { } slots)
-                stationJobs[station][job] = slots - 1;
-
-            RemovePlayerFromCandidates(player);
-            profiles.Remove(player);
-            assigned.Add(player, (job, station));
-        }
-
         // Phase one: complete every required role on a station before considering the next station.
         // Within a station, job priority win over player preference; player preference breaks ties between candidates.
         var jobFallback = _configurationManager.GetCVar(CCVars.GameMinimumJobFallback);
@@ -204,14 +133,14 @@ public sealed partial class StationJobsSystem
                     if (stationJobs[station][job] is <= 0)
                         break;
 
-                    if (!TryPickCandidate(job, out var player) &&
+                    if (!TryPickCandidate(job, jobCandidates, out var player) &&
                         !TryPickMinimumJobFallbackCandidate(
                             job, profiles, jobFallback, out player))
                     {
                         break;
                     }
 
-                    AssignPlayer(player, job, station);
+                    AssignPlayer(player, job, station, stationJobs, jobCandidates, playerCandidates, profiles, assigned);
                 }
             }
         }
@@ -225,12 +154,102 @@ public sealed partial class StationJobsSystem
 
             foreach (var player in players)
             {
-                if (TryPickJob(player, station, out var job))
-                    AssignPlayer(player, job, station);
+                if (TryPickJob(player, station, stationJobs, playerCandidates, out var job))
+                    AssignPlayer(player, job, station, stationJobs, jobCandidates, playerCandidates, profiles, assigned);
             }
         }
 
         return assigned;
+    }
+
+    private void RemovePlayerFromCandidates(
+        NetUserId player,
+        Dictionary<ProtoId<JobPrototype>, Dictionary<JobPriority, HashSet<NetUserId>>> jobCandidates,
+        Dictionary<NetUserId, Dictionary<JobPriority, List<ProtoId<JobPrototype>>>> playerCandidates)
+    {
+        foreach (var priorities in jobCandidates.Values)
+        {
+            foreach (var players in priorities.Values)
+            {
+                players.Remove(player);
+            }
+        }
+
+        playerCandidates.Remove(player);
+    }
+
+    private bool TryPickCandidate(
+        ProtoId<JobPrototype> job,
+        Dictionary<ProtoId<JobPrototype>, Dictionary<JobPriority, HashSet<NetUserId>>> jobCandidates,
+        out NetUserId player)
+    {
+        if (!jobCandidates.TryGetValue(job, out var candidates))
+        {
+            player = default;
+            return false;
+        }
+
+        for (var priority = JobPriority.High; priority > JobPriority.Never; priority--)
+        {
+            if (!candidates.TryGetValue(priority, out var players) || players.Count == 0)
+                continue;
+
+            player = _random.Pick(players);
+            return true;
+        }
+
+        player = default;
+        return false;
+    }
+
+    private bool TryPickJob(
+        NetUserId player,
+        EntityUid station,
+        Dictionary<EntityUid, Dictionary<ProtoId<JobPrototype>, int?>> stationJobs,
+        Dictionary<NetUserId, Dictionary<JobPriority, List<ProtoId<JobPrototype>>>> playerCandidates,
+        out ProtoId<JobPrototype> job)
+    {
+        if (!playerCandidates.TryGetValue(player, out var candidates))
+        {
+            job = default;
+            return false;
+        }
+
+        for (var priority = JobPriority.High; priority > JobPriority.Never; priority--)
+        {
+            if (!candidates.TryGetValue(priority, out var jobs))
+                continue;
+
+            var availableJobs = jobs
+                .Where(jobId => stationJobs[station].TryGetValue(jobId, out var slots) && slots is null or > 0)
+                .ToList();
+            if (availableJobs.Count == 0)
+                continue;
+
+            job = _random.Pick(availableJobs);
+            return true;
+        }
+
+        job = default;
+        return false;
+    }
+
+    private void AssignPlayer(
+        NetUserId player,
+        ProtoId<JobPrototype> job,
+        EntityUid station,
+        Dictionary<EntityUid, Dictionary<ProtoId<JobPrototype>, int?>> stationJobs,
+        Dictionary<ProtoId<JobPrototype>, Dictionary<JobPriority, HashSet<NetUserId>>> jobCandidates,
+        Dictionary<NetUserId, Dictionary<JobPriority, List<ProtoId<JobPrototype>>>> playerCandidates,
+        Dictionary<NetUserId, HumanoidCharacterProfile> profiles,
+        Dictionary<NetUserId, (ProtoId<JobPrototype>?, EntityUid)> assigned)
+    {
+        if (stationJobs[station][job] is { } slots)
+            stationJobs[station][job] = slots - 1;
+
+        RemovePlayerFromCandidates(player, jobCandidates, playerCandidates);
+        profiles.Remove(player);
+        assigned.Add(player, (job, station));
     }
 
     /// <summary>

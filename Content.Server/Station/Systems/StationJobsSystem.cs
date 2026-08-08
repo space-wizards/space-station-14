@@ -34,7 +34,6 @@ public sealed partial class StationJobsSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<StationInitializedEvent>(OnStationInitialized);
-        SubscribeLocalEvent<StationPostInitEvent>(OnStationPostInit);
         SubscribeLocalEvent<StationJobsComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<StationJobsComponent, StationRenamedEvent>(OnStationRenamed);
         SubscribeLocalEvent<StationJobsComponent, ComponentShutdown>(OnStationDeletion);
@@ -83,6 +82,7 @@ public sealed partial class StationJobsSystem : EntitySystem
         UpdateJobsAvailable();
     }
 
+    [SubscribeLocalEvent]
     private void OnStationPostInit(ref StationPostInitEvent ev)
     {
         // Station data receives the game map's job-weight profile during station initialization.
