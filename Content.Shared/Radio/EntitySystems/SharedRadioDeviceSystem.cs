@@ -9,7 +9,6 @@ public abstract partial class SharedRadioDeviceSystem : EntitySystem
 {
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
-    [Dependency] protected IPrototypeManager _protoMan = default!;
 
     public override void Initialize()
     {
@@ -65,7 +64,7 @@ public abstract partial class SharedRadioDeviceSystem : EntitySystem
         if (!args.IsInDetailsRange)
             return;
 
-        var proto = _protoMan.Index(ent.Comp.BroadcastChannel);
+        var proto = ProtoMan.Index(ent.Comp.BroadcastChannel);
 
         using (args.PushGroup(nameof(RadioMicrophoneComponent)))
         {

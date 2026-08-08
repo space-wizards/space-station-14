@@ -239,7 +239,7 @@ public sealed partial class RadioDeviceSystem : SharedRadioDeviceSystem
 
             else
             {
-                speaker.Channels = new() { channel.Value };
+                speaker.Channels = [channel.Value];
                 Dirty(ent, speaker);
             }
         }
