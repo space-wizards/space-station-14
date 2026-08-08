@@ -22,6 +22,8 @@ public sealed partial class BotanySeedSystem : EntitySystem
     [Dependency] private PlantTraySystem _plantTray = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
 
+    [Dependency] private EntityQuery<PlantDataComponent> _dataQuery = default!;
+
     [SubscribeLocalEvent]
     private void OnAfterInteract(Entity<SeedComponent> ent, ref AfterInteractEvent args)
     {
@@ -52,7 +54,7 @@ public sealed partial class BotanySeedSystem : EntitySystem
         var plantUid = PredictedSpawnAtPosition(args.Seed.Comp.PlantProtoId, Transform(ent.Owner).Coordinates);
         _botany.ApplyPlantSnapshotData(args.Seed.Comp.PlantData, plantUid);
 
-        if (!TryComp<PlantDataComponent>(plantUid, out var plantData))
+        if (!_dataQuery.TryComp(plantUid, out var plantData))
             return;
 
         var name = Loc.GetString(plantData.Name);

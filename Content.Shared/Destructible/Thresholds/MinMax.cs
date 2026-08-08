@@ -19,7 +19,7 @@ public partial struct MinMax
 
     public readonly int Next(IRobustRandom random)
     {
-        return random.Next((int) Min, (int) Max + 1);
+        return random.Next((int)Min, (int)Max + 1);
     }
 
     public readonly float NextFloat(IRobustRandom random)

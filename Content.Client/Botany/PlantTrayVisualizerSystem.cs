@@ -8,7 +8,6 @@ namespace Content.Client.Botany;
 
 public sealed partial class PlantTrayVisualizerSystem : VisualizerSystem<PlantTrayVisualsComponent>
 {
-    [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private PlantTraySystem _plantTray = default!;
     [Dependency] private PlantHolderSystem _plantHolder = default!;
 
@@ -78,10 +77,10 @@ public sealed partial class PlantTrayVisualizerSystem : VisualizerSystem<PlantTr
         }
 
         // These are appearance keys consumed by the prototype's <see cref="GenericVisualizerComponent"/>.
-        _appearance.SetData(ent.Owner, PlantTrayVisuals.HealthLight, health);
-        _appearance.SetData(ent.Owner, PlantTrayVisuals.WaterLight, water);
-        _appearance.SetData(ent.Owner, PlantTrayVisuals.NutritionLight, nutrition);
-        _appearance.SetData(ent.Owner, PlantTrayVisuals.AlertLight, alert);
-        _appearance.SetData(ent.Owner, PlantTrayVisuals.HarvestLight, harvest);
+        AppearanceSystem.SetData(ent.Owner, PlantTrayVisuals.HealthLight, health);
+        AppearanceSystem.SetData(ent.Owner, PlantTrayVisuals.WaterLight, water);
+        AppearanceSystem.SetData(ent.Owner, PlantTrayVisuals.NutritionLight, nutrition);
+        AppearanceSystem.SetData(ent.Owner, PlantTrayVisuals.AlertLight, alert);
+        AppearanceSystem.SetData(ent.Owner, PlantTrayVisuals.HarvestLight, harvest);
     }
 }

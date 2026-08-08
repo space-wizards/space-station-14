@@ -20,6 +20,9 @@ public sealed partial class PlantGrowthSystem : EntitySystem
     [Dependency] private PlantHolderSystem _plantHolder = default!;
     [Dependency] private PlantTraySystem _plantTray = default!;
 
+    [Dependency] private EntityQuery<PlantHolderComponent> _holderQuery = default!;
+    [Dependency] private EntityQuery<PlantTrayComponent> _trayQuery = default!;
+
     [SubscribeLocalEvent]
     private void OnCrossPollinate(Entity<PlantGrowthComponent> ent, ref PlantCrossPollinateEvent args)
     {
@@ -37,10 +40,10 @@ public sealed partial class PlantGrowthSystem : EntitySystem
         var (plantUid, plantComp) = ent;
         var trayUid = GetEntity(args.Tray);
 
-        if (!TryComp<PlantTrayComponent>(trayUid, out var trayComp))
+        if (!_trayQuery.TryComp(trayUid, out var trayComp))
             return;
 
-        if (!TryComp<PlantHolderComponent>(plantUid, out var holder))
+        if (!_holderQuery.TryComp(plantUid, out var holder))
             return;
 
         var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(plantUid));
@@ -48,42 +51,36 @@ public sealed partial class PlantGrowthSystem : EntitySystem
         // TODO: There are too many magic numbers that don't really make sense to add to the component. Balance needs to be reworked
         // Advance plant age here.
         if (holder.SkipAging > 0)
-            _plantHolder.AdjustsSkipAging(plantUid, -1);
+            _plantHolder.AdjustsSkipAging((plantUid, holder), -1);
         else if (random.Prob(0.8f))
-            _plantHolder.AdjustsAge(plantUid, 1);
+            _plantHolder.AdjustsAge((plantUid, holder), 1);
 
         if (plantComp.WaterConsumption > 0 && trayComp.WaterLevel > 0 && random.Prob(0.75f))
-        {
-            _plantTray.AdjustWater(trayUid,-MathF.Max(0f, plantComp.WaterConsumption * trayComp.TrayConsumptionMultiplier));
-        }
+            _plantTray.AdjustWater((trayUid, trayComp), -MathF.Max(0f, plantComp.WaterConsumption * trayComp.TrayConsumptionMultiplier));
 
         if (plantComp.NutrientConsumption > 0 && trayComp.NutritionLevel > 0 && random.Prob(0.75f))
-        {
-            _plantTray.AdjustNutrient(trayUid,  -MathF.Max(0f, plantComp.NutrientConsumption * trayComp.TrayConsumptionMultiplier));
-        }
+            _plantTray.AdjustNutrient((trayUid, trayComp), -MathF.Max(0f, plantComp.NutrientConsumption * trayComp.TrayConsumptionMultiplier));
 
         var healthMod = random.Next(1, 3);
         if (holder.SkipAging < 10)
         {
             // Make sure the plant is not thirsty.
             if (trayComp.WaterLevel > 10)
-            {
-                _plantHolder.AdjustsHealth(plantUid, (random.Prob(0.35f) ? 1 : 0) * healthMod);
-            }
+                _plantHolder.AdjustsHealth((plantUid, holder), (random.Prob(0.35f) ? 1 : 0) * healthMod);
             else
             {
                 _plantHarvest.AffectGrowth(plantUid, -1);
-                _plantHolder.AdjustsHealth(plantUid, -healthMod);
+                _plantHolder.AdjustsHealth((plantUid, holder), -healthMod);
             }
 
             if (trayComp.NutritionLevel > 5)
             {
-                _plantHolder.AdjustsHealth(plantUid, (random.Prob(0.35f) ? 1 : 0) * healthMod);
+                _plantHolder.AdjustsHealth((plantUid, holder), (random.Prob(0.35f) ? 1 : 0) * healthMod);
             }
             else
             {
                 _plantHarvest.AffectGrowth(plantUid, -1);
-                _plantHolder.AdjustsHealth(plantUid, -healthMod);
+                _plantHolder.AdjustsHealth((plantUid, holder), -healthMod);
             }
         }
     }

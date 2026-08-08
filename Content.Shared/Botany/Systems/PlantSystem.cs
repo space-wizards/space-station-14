@@ -18,11 +18,13 @@ public sealed partial class PlantSystem : EntitySystem
     [Dependency] private PlantMutationSystem _mutation = default!;
     [Dependency] private PlantHolderSystem _plantHolder = default!;
 
+    private readonly List<Entity<PlantHolderComponent>> _holdersToUpdate = [];
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        var toUpdate = new List<Entity<PlantHolderComponent>>(); // Protection against plant removal during update loop.
+        _holdersToUpdate.Clear();
         var query = EntityQueryEnumerator<PlantHolderComponent>();
         while (query.MoveNext(out var uid, out var plantHolder))
         {
@@ -31,10 +33,10 @@ public sealed partial class PlantSystem : EntitySystem
 
             plantHolder.NextUpdate = _gameTiming.CurTime;
             DirtyField(uid, plantHolder, nameof(plantHolder.NextUpdate));
-            toUpdate.Add((uid, plantHolder));
+            _holdersToUpdate.Add((uid, plantHolder));
         }
 
-        foreach (var ent in toUpdate)
+        foreach (var ent in _holdersToUpdate)
         {
             UpdatePlant(ent.AsNullable());
         }

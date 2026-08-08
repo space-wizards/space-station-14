@@ -22,6 +22,10 @@ public sealed partial class BotanySampleTakerSystem : EntitySystem
     [Dependency] private PlantSystem _plant = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
 
+    [Dependency] private EntityQuery<PlantHolderComponent> _holderQuery = default!;
+    [Dependency] private EntityQuery<PlantDataComponent> _dataQuery = default!;
+    [Dependency] private EntityQuery<PlantHarvestComponent> _harvestQuery = default!;
+
     [SubscribeLocalEvent]
     private void OnAfterInteract(Entity<BotanySampleTakerComponent> ent, ref AfterInteractEvent args)
     {
@@ -40,12 +44,12 @@ public sealed partial class BotanySampleTakerSystem : EntitySystem
         if (args.Cancelled)
             return;
 
-        if (!TryComp<PlantHolderComponent>(ent.Owner, out var holder)
-            || !TryComp<PlantDataComponent>(ent.Owner, out var plantData)
-            || !TryComp<PlantHarvestComponent>(ent.Owner, out var harvest))
+        if (!_holderQuery.TryComp(ent.Owner, out var holder)
+            || !_dataQuery.TryComp(ent.Owner, out var plantData)
+            || !_harvestQuery.TryComp(ent.Owner, out var harvest))
             return;
 
-        if (_plantHolder.IsDead(ent.Owner))
+        if (_plantHolder.IsDead((ent.Owner, holder)))
         {
             _popup.PopupCursor(Loc.GetString("plant-sample-component-dead-plant-popup"), args.User);
             return;
@@ -62,7 +66,7 @@ public sealed partial class BotanySampleTakerSystem : EntitySystem
         var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent));
 
         // Damage the plant.
-        _plantHolder.AdjustsHealth(ent.Owner, -random.NextFloat(args.Sample.Comp.SampleDamage.Min, args.Sample.Comp.SampleDamage.Max));
+        _plantHolder.AdjustsHealth((ent.Owner, holder), -random.NextFloat(args.Sample.Comp.SampleDamage.Min, args.Sample.Comp.SampleDamage.Max));
 
         // Produce a seed packet snapshot.
         float? healthOverride = harvest.ReadyForHarvest ? null : holder.Health;

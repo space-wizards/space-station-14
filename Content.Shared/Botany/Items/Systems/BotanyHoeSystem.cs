@@ -18,6 +18,8 @@ public sealed partial class BotanyHoeSystem : EntitySystem
     [Dependency] private PlantSystem _plant = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
 
+    [Dependency] private EntityQuery<PlantComponent> _plantQuery = default!;
+
     [SubscribeLocalEvent]
     private void OnAfterInteract(Entity<BotanyHoeComponent> ent, ref AfterInteractEvent args)
     {
@@ -26,17 +28,15 @@ public sealed partial class BotanyHoeSystem : EntitySystem
 
         // Allow interacting with either the plant or the tray.
         var target = args.Target.Value;
-        if (HasComp<PlantComponent>(target))
+        if (_plantQuery.TryComp(target, out var targetPlant))
         {
-            if (!_plant.TryGetTray(target, out var tray))
+            if (!_plant.TryGetTray((target, targetPlant), out var tray))
                 return;
 
             target = tray.Owner;
         }
         else if (!HasComp<PlantTrayComponent>(target))
-        {
             return;
-        }
 
         var ev = new TrayHoeAttemptEvent(ent, args.User);
         RaiseLocalEvent(target, ref ev);

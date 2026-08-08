@@ -45,12 +45,12 @@ public sealed partial class PlantTraySystem : EntitySystem
                 }
             }
 
-            args.PushMarkup(GetTrayWarningsMarkup(ent.AsNullable()));
             args.PushMarkup(Loc.GetString("tray-component-water-level-message",
                 ("waterLevel", (int)ent.Comp.WaterLevel)));
             args.PushMarkup(Loc.GetString("tray-component-nutrient-level-message",
                 ("nutritionLevel", (int)ent.Comp.NutritionLevel)));
 
+            args.PushMarkup(GetTrayWarningsMarkup(ent.AsNullable()));
             if (plantUid != null && ent.Comp.DrawWarnings)
                 args.PushMarkup(_plant.GetPlantWarningsMarkup(plantUid.Value));
         }

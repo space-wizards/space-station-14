@@ -34,9 +34,7 @@ public sealed partial class BotanyShovelSystem : EntitySystem
             target = tray.Owner;
         }
         else if (!HasComp<PlantTrayComponent>(target))
-        {
             return;
-        }
 
         var ev = new TrayShovelAttemptEvent(ent, args.User);
         RaiseLocalEvent(target, ref ev);
@@ -72,4 +70,3 @@ public sealed partial class BotanyShovelSystem : EntitySystem
         _plant.RemovePlant(plantUid.Value);
     }
 }
-

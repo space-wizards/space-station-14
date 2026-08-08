@@ -17,11 +17,7 @@ public sealed partial class PlantChemicalsSystem : EntitySystem
     [Dependency] private PlantMutationSystem _mutation = default!;
     [Dependency] private IGameTiming _timing = default!;
 
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<PlantChemicalsComponent, PlantCrossPollinateEvent>(OnCrossPollinate);
-    }
-
+    [SubscribeLocalEvent]
     private void OnCrossPollinate(Entity<PlantChemicalsComponent> ent, ref PlantCrossPollinateEvent args)
     {
         if (!_botany.TryGetPlantComponent<PlantChemicalsComponent>(args.PollenData, args.PollenProtoId, out var pollenData))

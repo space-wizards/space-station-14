@@ -11,33 +11,31 @@ public sealed partial class PlantAtmosphericSystem : SharedPlantAtmosphericSyste
     [Dependency] private AtmosphereSystem _atmosphere = default!;
     [Dependency] private PlantHolderSystem _plantHolder = default!;
 
+    [Dependency] private EntityQuery<PlantHolderComponent> _holderQuery = default!;
+
     [SubscribeLocalEvent]
     private void OnPlantGrow(Entity<PlantAtmosphericComponent> ent, ref PlantGrowEvent args)
     {
-        if (!TryComp<PlantHolderComponent>(ent.Owner, out var holder))
+        if (!_holderQuery.TryComp(ent.Owner, out var holder))
             return;
 
         var environment = _atmosphere.GetContainingMixture(ent.Owner, true, true) ?? GasMixture.SpaceGas;
         if (environment.Temperature < ent.Comp.LowHeatTolerance || environment.Temperature > ent.Comp.HighHeatTolerance)
         {
-            _plantHolder.AdjustsHealth(ent.Owner, -ent.Comp.HeatToleranceDamage);
+            _plantHolder.AdjustsHealth((ent.Owner, holder), -ent.Comp.HeatToleranceDamage);
             holder.ImproperHeat = true;
         }
         else
-        {
             holder.ImproperHeat = false;
-        }
 
         var pressure = environment.Pressure;
         if (pressure < ent.Comp.LowPressureTolerance || pressure > ent.Comp.HighPressureTolerance)
         {
-            _plantHolder.AdjustsHealth(ent.Owner, -ent.Comp.PressureToleranceDamage);
+            _plantHolder.AdjustsHealth((ent.Owner, holder), -ent.Comp.PressureToleranceDamage);
             holder.ImproperPressure = true;
         }
         else
-        {
             holder.ImproperPressure = false;
-        }
 
         Dirty(ent);
     }

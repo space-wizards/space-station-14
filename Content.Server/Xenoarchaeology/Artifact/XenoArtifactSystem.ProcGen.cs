@@ -148,7 +148,7 @@ public sealed partial class XenoArtifactSystem
             return new();
 
         // Try and get larger as we create more layers. Prevents excessive layers.
-        var mod = RobustRandom.Next((int) (iteration / 1.5f), iteration + 1);
+        var mod = RobustRandom.Next((int)(iteration / 1.5f), iteration + 1);
 
         var layerMin = Math.Min(ent.Comp.NodesPerSegmentLayer.Min + mod, segmentSize);
         var layerMax = Math.Min(ent.Comp.NodesPerSegmentLayer.Max + mod, segmentSize);
@@ -156,7 +156,7 @@ public sealed partial class XenoArtifactSystem
         // Default to one node if we had shenanigans and ended up with weird layer counts.
         var nodeCount = 1;
         if (layerMax >= layerMin)
-            nodeCount = RobustRandom.Next((int) layerMin, (int) layerMax + 1); // account for non-inclusive max
+            nodeCount = RobustRandom.Next((int)layerMin, (int)layerMax + 1); // account for non-inclusive max
 
         segmentSize -= nodeCount;
         var nodes = new List<Entity<XenoArtifactNodeComponent>>();
@@ -204,7 +204,7 @@ public sealed partial class XenoArtifactSystem
         var segmentMin = ent.Comp.SegmentSize.Min;
         var segmentMax = Math.Min(ent.Comp.SegmentSize.Max, Math.Max(nodeCount / 2, segmentMin));
 
-        var segmentSize = RobustRandom.Next((int) segmentMin, (int) segmentMax + 1); // account for non-inclusive max
+        var segmentSize = RobustRandom.Next((int)segmentMin, (int)segmentMax + 1); // account for non-inclusive max
         var remainder = nodeCount - segmentSize;
 
         // If our next segment is going to be undersized, then we just absorb it into this segment.
