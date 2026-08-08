@@ -25,6 +25,7 @@ verb-categories-channel-select = Channels
 verb-categories-set-sensor = Sensor
 verb-categories-timer = Set Delay
 verb-categories-lever = Lever
+verb-categories-ping-select = Select Type
 verb-categories-select-type = Select Type
 verb-categories-fax = Set Destination
 verb-categories-power-level = Power Level

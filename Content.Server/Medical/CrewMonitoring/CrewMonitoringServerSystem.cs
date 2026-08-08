@@ -1,10 +1,10 @@
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Medical.SuitSensors;
 using Content.Shared.DeviceNetwork;
+using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Medical.SuitSensor;
 using Robust.Shared.Timing;
-using Content.Shared.DeviceNetwork.Components;
 
 namespace Content.Server.Medical.CrewMonitoring;
 
@@ -57,9 +57,67 @@ public sealed class CrewMonitoringServerSystem : EntitySystem
         if (sensorStatus == null)
             return;
 
+        // DS14-start
+        if (NeedPing(sensorStatus,
+                component.SensorStatus.GetValueOrDefault(args.SenderAddress),
+                out var pingMode))
+        {
+            Send(uid, pingMode);
+        }
+        // DS14-end
+
         sensorStatus.Timestamp = _gameTiming.CurTime;
         component.SensorStatus[args.SenderAddress] = sensorStatus;
     }
+
+    // DS14-start
+    internal static bool NeedPing(
+        SuitSensorStatus newSensor,
+        SuitSensorStatus? oldSensor,
+        out CrewMonitoringConsolePingMode pingMode)
+    {
+        pingMode = default;
+
+        if (!newSensor.IsAlive)
+        {
+            if (oldSensor is { IsAlive: false })
+                return false;
+
+            pingMode = CrewMonitoringConsolePingMode.Dead;
+            return true;
+        }
+
+        if (newSensor.DamagePercentage is not { } newDamage)
+            return false;
+
+        var oldDamage = oldSensor is { IsAlive: true }
+            ? oldSensor.DamagePercentage
+            : null;
+
+        if (newDamage >= 1f && (oldDamage == null || oldDamage < 1f))
+        {
+            pingMode = CrewMonitoringConsolePingMode.Critical;
+            return true;
+        }
+
+        if (newDamage >= 0.6f && (oldDamage == null || oldDamage < 0.6f))
+        {
+            pingMode = CrewMonitoringConsolePingMode.Severe;
+            return true;
+        }
+
+        return false;
+    }
+
+    private void Send(EntityUid uid, CrewMonitoringConsolePingMode pingMode)
+    {
+        var payload = new NetworkPayload
+        {
+            ["PingMode"] = pingMode,
+        };
+        _deviceNetworkSystem.QueuePacket(uid, null, payload);
+    }
+    // DS14-end
 
     /// <summary>
     /// Clears the servers sensor status list

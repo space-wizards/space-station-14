@@ -10,3 +10,11 @@ crew-monitoring-ui-camera-button = [CAM]
 crew-monitoring-ui-camera-button-tooltip = Переместить око ИИ к сотруднику, если он виден через камеры.
 crew-monitoring-ui-flavor-left-label = В экстренной ситуации немедленно свяжитесь с медперсоналом станции
 crew-monitoring-ui-flavor-right-label = v1.7
+
+crew-monitoring-console-ping = { $monitor } издаёт сигнал.
+crew-monitoring-console-ping-mode-set = Порог оповещения: { $mode }.
+crew-monitoring-console-ping-mode-severe = тяжёлое состояние
+crew-monitoring-console-ping-mode-critical = критическое состояние
+crew-monitoring-console-ping-mode-dead = смерть
+crew-monitoring-console-ping-mode-disabled = отключено
+crew-monitoring-console-ping-mode-unknown = неизвестно
