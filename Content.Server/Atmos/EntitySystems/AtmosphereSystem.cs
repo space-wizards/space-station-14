@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
+using Content.Server.Atmos.Reactions;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Shared.Atmos;
@@ -27,7 +28,6 @@ namespace Content.Server.Atmos.EntitySystems;
 [UsedImplicitly]
 public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
 {
-    [Dependency] private IMapManager _mapManager = default!;
     [Dependency] private ITileDefinitionManager _tileDefinitionManager = default!;
     [Dependency] private IAdminLogManager _adminLog = default!;
     [Dependency] private IParallelManager _parallel = default!;
@@ -42,13 +42,14 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
     [Dependency] public PuddleSystem Puddle = default!;
     [Dependency] private DamageableSystem _damage = default!;
 
+    [Dependency] private EntityQuery<GridAtmosphereComponent> _gridAtmosQuery = default!;
+    [Dependency] private EntityQuery<MapAtmosphereComponent> _mapAtmosQuery = default!;
+    [Dependency] private EntityQuery<AirtightComponent> _airtightQuery = default!;
+    [Dependency] private EntityQuery<FirelockComponent> _firelockQuery = default!;
+
     private const float ExposedUpdateDelay = 1f;
     private float _exposedTimer = 0f;
 
-    private EntityQuery<GridAtmosphereComponent> _atmosQuery;
-    private EntityQuery<MapAtmosphereComponent> _mapAtmosQuery;
-    private EntityQuery<AirtightComponent> _airtightQuery;
-    private EntityQuery<FirelockComponent> _firelockQuery;
     private HashSet<EntityUid> _entSet = new();
 
     private string[] _burntDecals = [];
@@ -65,15 +66,11 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
         InitializeGridAtmosphere();
         InitializeMap();
 
-        _atmosQuery = GetEntityQuery<GridAtmosphereComponent>();
-        _mapAtmosQuery = GetEntityQuery<MapAtmosphereComponent>();
-        _airtightQuery = GetEntityQuery<AirtightComponent>();
-        _firelockQuery = GetEntityQuery<FirelockComponent>();
-
         SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
 
         CacheDecals();
+        CacheGases();
     }
 
     public override void Shutdown()
@@ -95,6 +92,8 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
     {
         if (ev.WasModified<DecalPrototype>())
             CacheDecals();
+        if (ev.WasModified<GasReactionPrototype>())
+            CacheGases();
     }
 
     public override void Update(float frameTime)

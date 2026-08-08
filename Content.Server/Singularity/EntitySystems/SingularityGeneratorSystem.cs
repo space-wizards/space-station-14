@@ -17,6 +17,7 @@ public sealed partial class SingularityGeneratorSystem : SharedSingularityGenera
     [Dependency] private SharedTransformSystem _transformSystem = default!;
     [Dependency] private PhysicsSystem _physics = default!;
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private EntityQuery<ContainmentFieldComponent> _containmentFieldQuery = default!;
     #endregion Dependencies
 
     public override void Initialize()
@@ -173,13 +174,12 @@ public sealed partial class SingularityGeneratorSystem : SharedSingularityGenera
 
         var ray = new CollisionRay(worldPosition, dirRad.ToVec(), component.CollisionMask);
         var rayCastResults = _physics.IntersectRay(transform.MapID, ray, component.FailsafeDistance, generator, false);
-        var genQuery = GetEntityQuery<ContainmentFieldComponent>();
 
         RayCastResults? closestResult = null;
 
         foreach (var result in rayCastResults)
         {
-            if (!genQuery.HasComponent(result.HitEntity))
+            if (!_containmentFieldQuery.HasComponent(result.HitEntity))
                 continue;
 
             closestResult = result;

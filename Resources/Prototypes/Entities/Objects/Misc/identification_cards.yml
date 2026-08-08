@@ -822,6 +822,22 @@
     job: CargoTechnician
 
 - type: entity
+  parent: CargoIDCard
+  id: SeniorCourierIDCard
+  name: senior courier ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: stripe_top
+      color: *color-supply-top
+    - state: stripe_bottom
+      color: *color-supply-bottom
+    - sprite: *icon-rsi
+      offset: *icon-offset
+      state: SeniorCourier
+
+- type: entity
   parent: IDCardStandard
   id: SalvageIDCard
   name: salvage ID card
@@ -928,6 +944,20 @@
     - Maintenance
     - SyndicateAgent
   - type: AgentIDCard
+    iconGroups:
+    - CommandIconGroup
+    - SecurityIconGroup
+    - ResearchIconGroup
+    - CargoIconGroup
+    - EngineeringIconGroup
+    - MedicalIconGroup
+    - ServiceIconGroup
+    - CivilianIconGroup
+    - EntertainerIconGroup
+    - SiliconIconGroup
+    - BlankIconGroup
+    - ThreatIconGroup
+    - CentCommIconGroup
   - type: UIRequiresLock
   - type: ActivatableUI
     key: enum.AgentIDCardUiKey.Key
@@ -1326,9 +1356,24 @@
     tags:
     - DoorBumpOpener
   - type: AgentIDCard
+    iconGroups:
+    - CommandIconGroup
+    - SecurityIconGroup
+    - ResearchIconGroup
+    - CargoIconGroup
+    - EngineeringIconGroup
+    - MedicalIconGroup
+    - ServiceIconGroup
+    - CivilianIconGroup
+    - EntertainerIconGroup
+    - SiliconIconGroup
+    - BlankIconGroup
+    - ThreatIconGroup
+    - CentCommIconGroup
+    - AdminIconGroup
   - type: ActivatableUI
     key: enum.AgentIDCardUiKey.Key
-    inHandsOnly: true
+    verbText: agent-id-open-ui-verb
   - type: UserInterface
     interfaces:
       enum.AgentIDCardUiKey.Key:

@@ -132,14 +132,12 @@ public sealed partial class RadioDeviceSystem : SharedRadioDeviceSystem
 
     #endregion
 
-
-
     private void OnListen(EntityUid uid, RadioMicrophoneComponent component, ListenEvent args)
     {
         if (HasComp<RadioSpeakerComponent>(args.Source))
             return; // no feedback loops please.
 
-        var channel = _protoMan.Index<RadioChannelPrototype>(component.BroadcastChannel)!;
+        var channel = ProtoMan.Index<RadioChannelPrototype>(component.BroadcastChannel)!;
         if (_recentlySent.Add((args.Message, args.Source, channel)))
             _radio.SendRadioMessage(args.Source, args.Message, channel, uid);
     }
@@ -205,7 +203,7 @@ public sealed partial class RadioDeviceSystem : SharedRadioDeviceSystem
         if (ent.Comp.RequiresPower && !this.IsPowered(ent, EntityManager))
             return;
 
-        if (!_protoMan.HasIndex<RadioChannelPrototype>(args.Channel) || !ent.Comp.SupportedChannels.Contains(args.Channel))
+        if (!ProtoMan.HasIndex<RadioChannelPrototype>(args.Channel) || !ent.Comp.SupportedChannels.Contains(args.Channel))
             return;
 
         SetIntercomChannel(ent, args.Channel);
