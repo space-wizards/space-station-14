@@ -207,7 +207,7 @@ public sealed partial class GridStencilSystem : EntitySystem
         }
     }
 
-    private record struct CachedTarget
+    private sealed class CachedTarget
     {
         public IRenderTexture? Target;
         public uint LastFrame;

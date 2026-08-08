@@ -25,5 +25,5 @@ public sealed partial class CCVars
     /// Distance in world-pixels of ambient occlusion.
     /// </summary>
     public static readonly CVarDef<float> AmbientOcclusionDistance =
-        CVarDef.Create("light.ambient_occlusion_distance", 2f, CVar.CLIENTONLY);
+        CVarDef.Create("light.ambient_occlusion_distance", 4f, CVar.CLIENTONLY);
 }
