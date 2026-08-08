@@ -495,12 +495,6 @@ entity-effect-guidebook-plant-phalanximine =
         *[other] restore
     } viability to a plant rendered nonviable by a mutation
 
-entity-effect-guidebook-plant-remove-kudzu =
-    { $chance ->
-        [1] Removes
-        *[other] remove
-    } kudzu weed growth from a plant
-
 entity-effect-guidebook-plant-diethylamine =
     { $chance ->
         [1] Increases
@@ -524,6 +518,18 @@ entity-effect-guidebook-plant-seeds-remove =
         [1] Removes the
         *[other] remove the
     } seeds of the plant
+
+entity-effect-guidebook-plant-mutate-exude-gasses =
+    { $chance ->
+        [1] Mutates
+        *[other] mutate
+    } the plant to exude gases between {$minValue} and {$maxValue} moles
+
+entity-effect-guidebook-plant-mutate-consume-gasses =
+    { $chance ->
+        [1] Mutates
+        *[other] mutate
+    } the plant to consume gases between {$minValue} and {$maxValue} moles
 
 entity-effect-guidebook-plant-mutate-chemicals =
     { $chance ->
