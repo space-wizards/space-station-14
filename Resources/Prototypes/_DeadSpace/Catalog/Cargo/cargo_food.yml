@@ -37,3 +37,13 @@
   cost: 3200
   category: cargoproduct-category-name-food
   group: service # DS14
+
+- type: cargoProduct
+  id: FoodWaterCooler
+  icon:
+    sprite: Structures/Storage/tanks.rsi
+    state: watercooler-2
+  product: CrateWaterCooler
+  cost: 600
+  category: cargoproduct-category-name-food
+  group: service # DS14

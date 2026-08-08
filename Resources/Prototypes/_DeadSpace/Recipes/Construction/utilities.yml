@@ -15,3 +15,12 @@
   category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
+
+- type: construction
+  id: WaterCoolerEmpty
+  graph: WaterCoolerGraph
+  startNode: start
+  targetNode: finished
+  category: construction-category-utilities
+  objectType: Structure
+  placementMode: SnapgridCenter

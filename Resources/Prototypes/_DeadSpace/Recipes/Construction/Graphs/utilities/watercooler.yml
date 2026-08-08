@@ -1,0 +1,65 @@
+- type: constructionGraph
+  id: WaterCoolerGraph
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: frame
+          steps:
+            - material: Steel
+              amount: 5
+              doAfter: 3
+          completed:
+            - !type:PlaySound
+              sound:
+                path: /Audio/Items/crowbar.ogg
+
+    - node: frame
+      entity: WaterCoolerFrame
+      edges:
+        - to: wired
+          steps:
+            - material: Cable
+              amount: 2
+              doAfter: 2
+          completed:
+            - !type:PlaySound
+              sound:
+                path: /Audio/Items/wirecutter.ogg
+
+    - node: wired
+      entity: WaterCoolerFrame
+      edges:
+        - to: glass
+          steps:
+            - material: Glass
+              amount: 2
+              doAfter: 2
+          completed:
+            - !type:PlaySound
+              sound:
+                path: /Audio/Items/crowbar.ogg
+
+    - node: glass
+      entity: WaterCoolerFrame
+      edges:
+        - to: plastic
+          steps:
+            - material: Plastic
+              amount: 2
+              doAfter: 2
+          completed:
+            - !type:PlaySound
+              sound:
+                path: /Audio/Items/wirecutter.ogg
+
+    - node: plastic
+      entity: WaterCoolerFrame
+      edges:
+        - to: finished
+          steps:
+            - tool: Screwing
+              doAfter: 2
+
+    - node: finished
+      entity: WaterCoolerEmpty

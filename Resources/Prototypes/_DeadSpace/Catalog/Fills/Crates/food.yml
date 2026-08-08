@@ -35,3 +35,14 @@
       amount: 2
     - id: DrinkDurfBottleFull
       amount: 4
+
+- type: entity
+  parent: CratePlastic
+  id: CrateWaterCooler
+  name: ящик с кулером
+  description: Содержит упаковку, при помощи которой можно создать кулер для жидкостей.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: WaterCoolerFlatpack

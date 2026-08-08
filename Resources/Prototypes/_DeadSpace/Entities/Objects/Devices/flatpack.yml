@@ -144,3 +144,18 @@
     - state: icon-default
   - type: Flatpack
     entity: SMObelisk
+
+- type: entity
+  parent: BaseFlatpack
+  id: WaterCoolerFlatpack
+  name: упаковка кулера для жидкостей
+  description: Универсально-сборная упаковка, используемая для сборки кулера.
+  components:
+  - type: Flatpack
+    entity: WaterCoolerEmpty
+  - type: Sprite
+    layers:
+    - state: base
+    - state: overlay
+      color: "#9b59b6"
+    - state: icon-default

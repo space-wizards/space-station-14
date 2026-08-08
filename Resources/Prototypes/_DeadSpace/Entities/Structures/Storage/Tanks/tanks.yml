@@ -55,3 +55,109 @@
         reagents:
         - ReagentId: Beer
           Quantity: 1500
+
+- type: entity
+  parent: StorageTank
+  id: WaterCoolerTransfer
+  suffix: Пополняемый
+  name: water cooler
+  description: Seems like a good place to stand and waste time. It has a stock of paper cups on the side.
+  components:
+  - type: Construction
+    graph: WaterCoolerGraph
+    node: finished
+  - type: ToggleableSolutionTransfer
+    solution: tank
+  - type: Sprite
+    sprite: Structures/Storage/tanks.rsi
+    layers:
+      - state: watercooler-2
+      - state: watercooler-2-1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 4
+    fillBaseName: watercooler-2-
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        reagents:
+        - ReagentId: Water
+          Quantity: 500
+  - type: ContainerContainer
+    containers:
+      bin-container: !type:Container
+  - type: Bin
+    initialContents:
+    - DrinkWaterCup
+    - DrinkWaterCup
+    - DrinkWaterCup
+    - DrinkWaterCup
+    - DrinkWaterCup
+    - DrinkWaterCup
+    - DrinkWaterCup
+    - DrinkWaterCup
+    - DrinkWaterCup
+    - DrinkWaterCup
+    whitelist:
+      requireAll: true
+      components:
+      - FitsInDispenser
+      tags:
+      - Trash
+  - type: ExaminableSolution
+    solution: tank
+  - type: StaticPrice
+    price: 500
+
+- type: entity
+  parent: WaterCoolerTransfer
+  id: WaterCoolerEmpty
+  suffix: Пустой
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        reagents: []
+        maxVol: 500
+
+- type: entity
+  parent: BaseStructure
+  id: WaterCoolerFrame
+  name: water cooler frame
+  description: A partially constructed water cooler. It needs more work.
+  categories: [ HideSpawnMenu ]
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/tanks.rsi
+    state: watercoolerempty-2
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        density: 155
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+        - InteractImpassable
+  - type: Construction
+    graph: WaterCoolerGraph
+    node: frame
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
