@@ -84,4 +84,5 @@
       - MantisBlades
   - type: Prying
     force: true
-    speedModifier: 3.0
+    speedModifier: 4.0
+    pryPowered: true
