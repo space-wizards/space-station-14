@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.Reactions;
@@ -8,7 +7,6 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Damage.Systems;
-using Content.Shared.Decals;
 using Content.Shared.Doors.Components;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
@@ -51,8 +49,6 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
 
     private HashSet<EntityUid> _entSet = new();
 
-    private string[] _burntDecals = [];
-
     public override void Initialize()
     {
         base.Initialize();
@@ -68,7 +64,6 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
         SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
 
-        CacheDecals();
         CacheGases();
     }
 
@@ -89,8 +84,6 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
 
     private void OnPrototypesReloaded(PrototypesReloadedEventArgs ev)
     {
-        if (ev.WasModified<DecalPrototype>())
-            CacheDecals();
         if (ev.WasModified<GasReactionPrototype>())
             CacheGases();
     }
@@ -119,10 +112,5 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
             RaiseLocalEvent(uid, ref updateEvent);
             exposed.LastExposure = _gameTiming.CurTime;
         }
-    }
-
-    private void CacheDecals()
-    {
-        _burntDecals = ProtoMan.EnumeratePrototypes<DecalPrototype>().Where(x => x.Tags.Contains("burnt")).Select(x => x.ID).ToArray();
     }
 }
