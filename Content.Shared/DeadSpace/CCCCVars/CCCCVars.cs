@@ -66,7 +66,7 @@ public sealed class CCCCVars
         CVarDef.Create("jukebox.volume", 1f, CVar.CLIENTONLY | CVar.ARCHIVE);
 
     public static readonly CVarDef<float> JukeboxAutoVolume =
-        CVarDef.Create("jukebox.auto_volume", 0.5f, CVar.CLIENTONLY | CVar.ARCHIVE);
+        CVarDef.Create("jukebox.auto_volume", 1f, CVar.CLIENTONLY | CVar.ARCHIVE);
 
     /*
      * Alert Level
