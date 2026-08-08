@@ -101,7 +101,10 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
         if (args.NewMobState == MobState.Dead)
         {
             if (ent.Comp.EyeToggleActionEntity != null)
+            {
                 _actionsSystem.RemoveAction(args.Target, ent.Comp.EyeToggleActionEntity);
+                ent.Comp.EyeToggleActionEntity = null;
+            }
         }
         else if (ent.Comp.EyeToggleActionEntity == null)
             _actionsSystem.AddAction(args.Target, ref ent.Comp.EyeToggleActionEntity, ent.Comp.EyeToggleAction);
