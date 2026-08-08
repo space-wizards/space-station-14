@@ -6,6 +6,8 @@
             <Label Text="{Loc 'ui-options-volume-label'}"
                    StyleClasses="LabelKeyText"/>
             <BoxContainer Orientation="Vertical" Margin="0 3 0 0">
+                <ui:OptionDropDown Name="DropDownAudioDevice" Title="{Loc 'ui-options-audio-device'}"
+                                   Margin="0 0 0 8" />
                 <ui:OptionSlider Name="SliderVolumeMaster" Title="{Loc 'ui-options-master-volume'}"
                                  Margin="0 0 0 8" />
                 <ui:OptionSlider Name="SliderVolumeMidi" Title="{Loc 'ui-options-midi-volume'}" />
