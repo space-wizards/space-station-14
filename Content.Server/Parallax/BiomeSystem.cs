@@ -7,6 +7,8 @@ using Content.Server.Shuttles.Events;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Ghost.Components;
+using Content.Shared.Decals;
+using Content.Shared.Ghost;
 using Content.Shared.Gravity;
 using Content.Shared.Light.Components;
 using Content.Shared.Parallax.Biomes;
@@ -829,7 +831,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         }
 
         // Decals
-        var loadedDecals = new Dictionary<uint, Vector2i>();
+        var loadedDecals = new Dictionary<DecalIndex, Vector2i>();
         component.LoadedDecals.Add(chunk, loadedDecals);
 
         for (var x = 0; x < ChunkSize; x++)
