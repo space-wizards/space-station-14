@@ -4,8 +4,8 @@ meta:
   engineVersion: 287.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/08/2026 00:26:54
-  entityCount: 26200
+  time: 08/08/2026 01:05:41
+  entityCount: 26206
 maps:
 - 1
 grids:
@@ -57559,6 +57559,13 @@ entities:
     - type: Transform
       parent: 15
       pos: -65.67817,-33.211254
+- proto: ClothingHandsGlovesLatex
+  entities:
+  - uid: 26205
+    components:
+    - type: Transform
+      parent: 15
+      pos: 6.447962,-44.342625
 - proto: ClothingHandsGlovesRobohands
   entities:
   - uid: 24887
@@ -57580,11 +57587,6 @@ entities:
     - type: Transform
       parent: 15
       pos: 53.42176,-15.277803
-  - uid: 25092
-    components:
-    - type: Transform
-      parent: 17588
-      pos: -37.453384,-22.103474
 - proto: ClothingHeadHatGreensoft
   entities:
   - uid: 22821
@@ -57944,6 +57946,11 @@ entities:
     - type: Transform
       parent: 15
       pos: 6.5,-42.5
+  - uid: 25136
+    components:
+    - type: Transform
+      parent: 15
+      pos: 8.458379,-43.52956
 - proto: ClothingOuterStraightjacket
   entities:
   - uid: 22215
@@ -59863,7 +59870,7 @@ entities:
       pos: -78.5,-6.5
     - type: Door
       state: Opening
-      secondsUntilStateChange: -505858.12
+      secondsUntilStateChange: -507157.66
 - proto: CurtainsPurpleOpen
   entities:
   - uid: 2426
@@ -114940,7 +114947,7 @@ entities:
         To NT Tram operators,
 
 
-        Welcome to brand new NT job experience! Some notes that will help you have a smooth an uneventful ride:
+        Welcome to a brand new NT job experience! Some notes that will help you have a smooth an uneventful ride:
 
 
         1: Anchor the generator, switch to HV and set to the lowest power setting that still meets the power demands.
@@ -114953,6 +114960,7 @@ entities:
 
 
         4: DO NOT EXIT THE TRAM WHEN IN MOTION
+
 
 
         Have a safe and pleasant shift!
@@ -122579,6 +122587,16 @@ entities:
     - type: Transform
       parent: 15
       pos: 71.5,-26.5
+  - uid: 26206
+    components:
+    - type: Transform
+      parent: 15
+      pos: -38.5,11.5
+  - uid: 26207
+    components:
+    - type: Transform
+      parent: 15
+      pos: -45.5,13.5
 - proto: RandomSpawner100
   entities:
   - uid: 4124
@@ -131284,7 +131302,6 @@ entities:
     components:
     - type: Transform
       parent: 15
-      rot: 1.5707963267948966 rad
       pos: 78.5,-24.5
   - uid: 19033
     components:
@@ -137669,6 +137686,23 @@ entities:
     - type: Transform
       parent: 15
       pos: 20.5,-52.5
+- proto: VehicleWheelchair
+  entities:
+  - uid: 21770
+    components:
+    - type: Transform
+      parent: 15
+      pos: 14.497904,-34.45852
+  - uid: 21771
+    components:
+    - type: Transform
+      parent: 15
+      pos: 9.5010395,-29.429733
+  - uid: 25009
+    components:
+    - type: Transform
+      parent: 15
+      pos: 9.531296,-39.405144
 - proto: VendingBarDrobe
   entities:
   - uid: 9734
@@ -156082,6 +156116,8 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13406
+      configurators:
+      - invalid
   - uid: 11944
     components:
     - type: Transform
@@ -156090,6 +156126,8 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13406
+      configurators:
+      - invalid
   - uid: 11945
     components:
     - type: Transform
@@ -156134,8 +156172,21 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13406
+      configurators:
+      - invalid
 - proto: WeaponEnergyTurretAIControlPanel
   entities:
+  - uid: 13406
+    components:
+    - type: Transform
+      parent: 15
+      rot: -1.5707963267948966 rad
+      pos: 32.5,-13.5
+    - type: DeviceList
+      devices:
+      - 11944
+      - 11942
+      - 15404
   - uid: 15397
     components:
     - type: Transform
@@ -156188,17 +156239,6 @@ entities:
       - 24414
 - proto: WeaponEnergyTurretSecurityControlPanel
   entities:
-  - uid: 13406
-    components:
-    - type: Transform
-      parent: 15
-      rot: -1.5707963267948966 rad
-      pos: 32.5,-13.5
-    - type: DeviceList
-      devices:
-      - 11944
-      - 11942
-      - 15404
   - uid: 24414
     components:
     - type: Transform
