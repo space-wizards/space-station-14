@@ -8,7 +8,8 @@
     },
     "states": [
         {
-            "name": "eyelid-all"
+            "name": "eyelid-all",
+            "directions": 4
         },
         {
             "name": "icon-0"

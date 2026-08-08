@@ -1,6 +1,7 @@
 using Content.Shared.Chat.Prototypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Utility;
 
@@ -14,6 +15,7 @@ namespace Content.Shared.Eye.Blinking;
 [AutoGenerateComponentState(raiseAfterAutoHandleState: true)]
 public sealed partial class EyeBlinkingComponent : Component
 {
+    #region Blink Timing
     /// <summary>
     /// The minimum duration of a single blink, in seconds.
     /// </summary>
@@ -45,10 +47,16 @@ public sealed partial class EyeBlinkingComponent : Component
     public TimeSpan MaxBlinkInterval = TimeSpan.FromSeconds(10f);
 
     /// <summary>
-    /// The multiplier applied to the skin color to calculate the eyelid shading.
+    /// Max async blink duration, in seconds. This is used for status effects that can affect blinking, such as dyspraxia.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float BlinkSkinColorMultiplier = 0.9f;
+    public TimeSpan MaxAsyncBlink;
+
+    /// <summary>
+    /// Max async open blink duration, in seconds. This is used for status effects that can affect blinking, such as dyspraxia.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public TimeSpan MaxAsyncOpenBlink;
 
     /// <summary>
     /// The timestamp for the next blink event.
@@ -57,10 +65,25 @@ public sealed partial class EyeBlinkingComponent : Component
     public TimeSpan NextBlinkingTime;
 
     /// <summary>
-    /// Whether the blinking logic is currently active.
+    /// Indicates whether a blink is currently in progress.
+    /// </summary>
+    [DataField]
+    public bool BlinkInProgress;
+    #endregion Blink Timing
+
+    /// <summary>
+    /// The blink status of this entity.
+    /// If Normal, this entity can blink.
+    /// Otherwise, its eyes should be closed.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool Enabled = true;
+    public BlinkStatus Status = BlinkStatus.Normal;
+
+    /// <summary>
+    /// The last received blink status.
+    /// </summary>
+    [ViewVariables]
+    public BlinkStatus LastStatus = BlinkStatus.Normal;
 
     /// <summary>
     /// The prototype ID of the emote that triggers a forced blink.
@@ -69,10 +92,16 @@ public sealed partial class EyeBlinkingComponent : Component
     public List<ProtoId<EmotePrototype>> BlinkEmoteId = new() { "Blink" };
 
     /// <summary>
-    /// Indicates whether a blink is currently in progress.
+    /// The state prefix to use to search for eyelid states.
     /// </summary>
     [DataField]
-    public bool BlinkInProgress;
+    public string StatePrefix = "eyelid";
+
+    /// <summary>
+    /// The multiplier applied to the skin color to calculate the eyelid shading.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float BlinkSkinColorMultiplier = 0.9f;
 
     /// <summary>
     /// The color of the eyelids.
@@ -85,18 +114,6 @@ public sealed partial class EyeBlinkingComponent : Component
     /// </summary>
     [ViewVariables]
     public Color? LastEyelidsColor;
-
-    /// <summary>
-    /// Max async blink duration, in seconds. This is used for status effects that can affect blinking, such as dyspraxia.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public TimeSpan MaxAsyncBlink;
-
-    /// <summary>
-    /// Max async open blink duration, in seconds. This is used for status effects that can affect blinking, such as dyspraxia.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public TimeSpan MaxAsyncOpenBlink;
 
     /// <summary>
     /// Path to the entity's eyelid RSI. Eyelids must include the 'eyelids-' prefix followed by anything, but ideally, there should be left and right eyelids (like eyelids-left-0, eyelids-right-0) to easily add winking in the future.
@@ -117,12 +134,6 @@ public sealed partial class EyeBlinkingComponent : Component
     public EntityUid? EyeToggleActionEntity;
 
     /// <summary>
-    /// Whether the entity's eyes are currently closed. This is used to determine if the entity can see or not.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool EyesClosed = false;
-
-    /// <summary>
     /// List of all EyelidState objects for the entity. Each EyelidState represents the state of a single eyelid layer,
     /// including whether it is closed, whether it is a complete blink, and the scheduled times for closing and opening.
     /// </summary>
@@ -134,12 +145,34 @@ public sealed partial class EyeBlinkingComponent : Component
     /// </summary>
     [ViewVariables]
     public EntityUid? Body;
+}
 
+/// <summary>
+/// The status of this blinking entity.
+/// </summary>
+[Flags, Serializable, NetSerializable]
+public enum BlinkStatus : byte
+{
     /// <summary>
-    /// Whether or not the eyes have been initialized.
+    /// The entity is blinking as usual.
     /// </summary>
-    [ViewVariables]
-    public bool Init = false;
+    Normal = 0,
+    /// <summary>
+    /// The entity is sleeping.
+    /// </summary>
+    Sleeping = 1,
+    /// <summary>
+    /// The entity is dead.
+    /// </summary>
+    Dead = 2,
+    /// <summary>
+    /// The entity has forced its eyes shut via an action.
+    /// </summary>
+    EyesClosed = 4,
+    /// <summary>
+    /// The entity is blinded.
+    /// </summary>
+    Blind = 8,
 }
 
 /// <summary>
