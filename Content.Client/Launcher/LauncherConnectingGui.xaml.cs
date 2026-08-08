@@ -30,11 +30,19 @@ namespace Content.Client.Launcher
 
         // Unfortunately these can't be configured via cvar,
         // because the client does not have the server's cvars yet, when we would need them
+        //TODO Check when the client gets server cvars during connect,
+        // and see if we can move it earlier without any side effects?
+        /// <summary>
+        /// Enables the server redirect buttons on the "server is full" window
+        /// </summary>
         private const bool RedirectEnabled = true;
-        private readonly List<string> _redirectOptions = new()
+        /// <summary>
+        /// The list of connect options which will be shown to the player when their connection fails due to the server being full
+        /// </summary>
+        private readonly List<(string Name,string url)> _redirectOptions = new()
         {
-            "ss14s://vulture.spacestation14.com",
-            "ss14s://leviathan.spacestation14.com",
+            ("Vulture [US East 2]","ss14s://vulture.spacestation14.com"),
+            ("Leviathan [US East 1]","ss14s://leviathan.spacestation14.com"),
         };
 
         public LauncherConnectingGui(LauncherConnecting state, IRobustRandom random,
@@ -46,9 +54,6 @@ namespace Content.Client.Launcher
             _cfg = config;
             _clipboard = clipboard;
 
-            // if (RedirectEnabled) //TODO:ERRANT this crashes. Why?
-            //     CreateRedirectUi();
-
             RobustXamlLoader.Load(this);
 
             LayoutContainer.SetAnchorPreset(this, LayoutContainer.LayoutPreset.Wide);
@@ -58,9 +63,6 @@ namespace Content.Client.Launcher
             ChangeLoginTip();
             RetryButton.OnPressed += ReconnectButtonPressed;
             ReconnectButton.OnPressed += ReconnectButtonPressed;
-
-            RedirectButton.OnPressed += RedirectButtonPressed; //TODO:ERRANT pass the target through from the button
-            RedirectButton2.OnPressed += RedirectButtonPressed;
 
             CopyButton.OnPressed += CopyButtonPressed;
             CopyButtonDisconnected.OnPressed += CopyButtonDisconnectedPressed;
@@ -81,22 +83,23 @@ namespace Content.Client.Launcher
             var edim = IoCManager.Resolve<ExtendedDisconnectInformationManager>();
             edim.LastNetDisconnectedArgsChanged += LastNetDisconnectedArgsChanged;
             LastNetDisconnectedArgsChanged(edim.LastNetDisconnectedArgs);
+
+            if (RedirectEnabled)
+                CreateRedirectGui();
         }
 
         /// <summary>
-        /// Creates the Server Redirect info/buttons, if the feature is enabled;
+        /// Creates the Server Redirect info/buttons
         /// </summary>
-        private void CreateRedirectUi()
+        private void CreateRedirectGui()
         {
-            if (_redirectOptions.Count <= 0)
-                return;
-
-            // TODO:ERRANT generate buttons and info
-
-            // check/gather options
-
-            RedirectBox.Visible = true;
-
+            foreach (var (name, target) in _redirectOptions)
+            {
+                var option = new RedirectTargetControl(name, target);
+                option.ServerName.Text = name;
+                option.RedirectButton.OnButtonDown += args => OnRedirectButtonPressed(args, target);
+                RedirectBox.AddChild(option);
+            }
         }
 
         // Just button, there's only one at once anyways :)
@@ -112,10 +115,9 @@ namespace Content.Client.Launcher
             _state.RetryConnect();
         }
 
-        private void RedirectButtonPressed(BaseButton.ButtonEventArgs args)
+        private void OnRedirectButtonPressed(BaseButton.ButtonEventArgs args, string target)
         {
-            var target ="ss14s://vulture.spacestation14.com"; //TODO:ERRANT read this from button
-            _state.Redirect(target);
+            _state.Redirect(target, Loc.GetString("server-redirect"));
         }
 
         private void CopyButtonPressed(BaseButton.ButtonEventArgs args)
@@ -141,6 +143,9 @@ namespace Content.Client.Launcher
             ConnectFailReason.SetMessage(reason == null
                 ? ""
                 : Loc.GetString("connecting-fail-reason", ("reason", reason)));
+
+            //TODO only make it visible if the fail reason was that the server is full
+            RedirectBox.Visible = RedirectEnabled;
         }
 
         private void LastNetDisconnectedArgsChanged(NetDisconnectedArgs? args)

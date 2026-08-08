@@ -1,0 +1,23 @@
+<Control xmlns="https://spacestation14.io">
+    <BoxContainer Orientation="Vertical">
+        <!-- Main entry -->
+        <BoxContainer Orientation="Horizontal">
+            <Label Name="ServerName" Text="weh" Access="Public" HorizontalExpand="True" />
+            <Button Name="RedirectButton"
+                    Text="Connect"
+                    MinWidth="48"
+                    MaxHeight="48"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Access="Public"
+                    Margin="0,4,0,0" />
+                    <!-- StyleClasses="Open" -->
+                    <!--  -->
+        </BoxContainer>
+        <!-- Details line-->
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True" Margin="4 0 4 4">
+            <Label Name="Playercount" Text="Pop: 0/666" StyleClasses="LabelSubText" HorizontalAlignment="Left" Margin="4 0 30 4"/>
+            <Label Name="Ping" Text="Ping: 999" StyleClasses="LabelSubText" HorizontalAlignment="Right" Margin="4 0 4 4"/>
+        </BoxContainer>
+    </BoxContainer>
+</Control>

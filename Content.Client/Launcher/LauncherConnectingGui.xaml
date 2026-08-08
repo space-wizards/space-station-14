@@ -55,37 +55,9 @@
                 <Label Name="ConnectingAddress" StyleClasses="LabelSubText" HorizontalAlignment="Center" />
             </BoxContainer>
             <!-- Server Redirect Panel -->
-            <BoxContainer Name="RedirectBox" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" Margin="4 4 4 0">
+            <BoxContainer Name="RedirectBox" Visible="False" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" Margin="4 4 4 0">
                 <controls:StripeBack />
-                <!-- TODO add servers via code, (from cvar array?) -->
-                <BoxContainer Orientation="Vertical" HorizontalExpand="True">
-                    <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="4 4 4 0">
-                        <Label Text="Vulture" HorizontalAlignment="Left" />
-                        <Button Name="RedirectButton"
-                                Text="{Loc 'connecting-available-recommended'}"
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Center"
-                                StyleClasses="Open"/>
-                    </BoxContainer>
-                    <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True" Margin="4 0 4 4">
-                        <Label Text="Pop: 10/67" StyleClasses="LabelSubText" HorizontalAlignment="Left" Margin="4 0 30 4"/>
-                        <Label Text="Ping: 23" StyleClasses="LabelSubText" HorizontalAlignment="Right" Margin="4 0 4 4"/>
-                    </BoxContainer>
-                </BoxContainer>
-                <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="4 4 4 0">
-                    <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="4 4 4 0">
-                        <Label Text="Leviathan" HorizontalAlignment="Left" />
-                        <Button Name="RedirectButton2"
-                                Text="{Loc 'connecting-available'}"
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Center"
-                                StyleClasses="Open"/>
-                    </BoxContainer>
-                    <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True" Margin="4 0 4 4">
-                        <Label Text="Pop: 0/65" StyleClasses="LabelSubText" HorizontalAlignment="Left" Margin="4 0 30 4"/>
-                        <Label Text="Ping: 11" StyleClasses="LabelSubText" HorizontalAlignment="Right" Margin="4 0 4 4"/>
-                    </BoxContainer>
-                </BoxContainer>
+                <!-- Entries are filled in programatically -->
             </BoxContainer>
             <!-- Bottom edge -->
             <PanelContainer>

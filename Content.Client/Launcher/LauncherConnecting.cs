@@ -126,9 +126,9 @@ namespace Content.Client.Launcher
             return false;
         }
 
-        public void Redirect(string target)
+        public void Redirect(string target, string? text)
         {
-            _gameController.Redial(target, "Switching server"); //TODO:ERRANT use locale?
+            _gameController.Redial(target, text);
         }
 
         public void Exit()
