@@ -209,12 +209,12 @@ public sealed partial class RadioDeviceSystem : SharedRadioDeviceSystem
         SetIntercomChannel(ent, args.Channel);
     }
 
-    private void SetIntercomChannel(Entity<IntercomComponent> ent, ProtoId<RadioChannelPrototype>? channel, RadioMicrophoneComponent? mic = null, RadioSpeakerComponent? speaker = null)
+    private void SetIntercomChannel(Entity<IntercomComponent> ent, ProtoId<RadioChannelPrototype>? channel)
     {
         ent.Comp.CurrentChannel = channel;
         Dirty(ent);
 
-        if (Resolve(ent, ref mic))
+        if (TryComp<RadioMicrophoneComponent>(ent, out var mic))
         {
             if (channel == null)
             {
@@ -229,7 +229,7 @@ public sealed partial class RadioDeviceSystem : SharedRadioDeviceSystem
             }
         }
 
-        if (Resolve(ent, ref speaker))
+        if (TryComp<RadioSpeakerComponent>(ent, out var speaker))
         {
             if (channel == null)
             {
@@ -239,7 +239,7 @@ public sealed partial class RadioDeviceSystem : SharedRadioDeviceSystem
 
             else
             {
-                speaker.Channels = [channel.Value];
+                speaker.Channels = new() { channel.Value };
                 Dirty(ent, speaker);
             }
         }
