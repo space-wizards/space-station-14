@@ -111,6 +111,8 @@ public sealed partial class ParcelWrappingSystem
         if (_net.IsClient)
             return; // Predicted spawns can't be interacted with yet.
 
+        _buckle.Unbuckle(target, user); // DS14: Avoid parenting the parcel to a strap through the target's local coordinates.
+
         EntityUid spawned;
         var targetTransform = Transform(target);
         // Check if the target has a pre-defined parcel type to be used.

@@ -11,6 +11,13 @@
 - [color=tan]\[head=n\]\[\/head\][/color] — где [italic]n[/italic] уровень (размер) заголовка (1 – 3)
 - [color=tan]\[bullet\/\][/color] — для вставки маркера списка (удобно для списков)
 - [color=tan][bold]\[bold\]\[\/bold\][/bold][/color], [color=tan][italic]\[italic\]\[\/italic\][/italic][/color] — чтобы выделить текст
+<!-- DS14-start -->
+- [color=tan]\[shift\]\[\/shift\][/color] — чтобы убрать дополнительный межстрочный интервал внутри блока
+- [color=tan]\[small=n\]\[\/small\][/color] — где [italic]n[/italic] степень уменьшения текста (1 – 6; минимальный размер 6 пикселей)
+- [color=tan]\[conf=n\]\[\/conf\][/color] — где [italic]n[/italic] сила неровного торопливого почерка (1 – 10; рисунок одинаков для всех)
+- [color=tan]\[cut\]\[\/cut\][/color] — чтобы перечеркнуть текст сплошной линией
+- [color=tan]\[uline\]\[\/uline\][/color] — чтобы подчеркнуть текст сплошной линией
+<!-- DS14-end -->
 
 Вы можете комбинировать теги [bold][italic]bold и italic[/italic][/bold], или использовать сокращения [color=tan][bolditalic]\[bolditalic\][/bolditalic][/color].
 

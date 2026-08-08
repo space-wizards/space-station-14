@@ -1,9 +1,31 @@
 # Commands
 ## Delay shuttle round end
-cmd-delayroundend-desc = Stops the timer that ends the round when the emergency shuttle exits hyperspace.
-cmd-delayroundend-help = Usage: delayroundend
-emergency-shuttle-command-round-yes = Round delayed.
-emergency-shuttle-command-round-no = Unable to delay round end.
+cmd-delayroundend-desc = Pauses or adjusts the timer until the round ends, or until it restarts after the manifest.
+cmd-delayroundend-help =
+    Usage: delayroundend [seconds]
+    Positive values add time and negative values subtract it. With no argument, pauses or resumes the timer.
+cmd-delayroundend-invalid-seconds = {$value} isn't a valid amount of seconds.
+cmd-delayroundend-paused =
+    { $restart ->
+        [true] Round restart paused.
+       *[false] Round end paused.
+    }
+cmd-delayroundend-resumed =
+    { $restart ->
+        [true] Round restart resumed.
+       *[false] Round end resumed.
+    }
+cmd-delayroundend-extended =
+    { $restart ->
+        [true] Round restart delayed by {$seconds} seconds.
+       *[false] Round end extended by {$seconds} seconds.
+    }
+cmd-delayroundend-shortened =
+    { $restart ->
+        [true] Round restart moved forward by {$seconds} seconds.
+       *[false] Round end shortened by {$seconds} seconds.
+    }
+cmd-delayroundend-no-timer = There is no round end or restart timer to adjust.
 
 ## Dock emergency shuttle
 cmd-dockemergencyshuttle-desc = Calls the emergency shuttle and docks it to the station... if it can.

@@ -2,10 +2,32 @@
 
 ## Delay shuttle round end
 
-cmd-delayroundend-desc = Останавливает таймер окончания раунда, когда эвакуационный шаттл покидает гиперпространство.
-cmd-delayroundend-help = Использование: delayroundend
-emergency-shuttle-command-round-yes = Раунд продлён.
-emergency-shuttle-command-round-no = Невозможно продлить окончание раунда.
+cmd-delayroundend-desc = Приостанавливает или изменяет таймер до завершения раунда, а после манифеста — до перезапуска.
+cmd-delayroundend-help =
+    Использование: delayroundend [секунды]
+    Положительное значение добавляет время, отрицательное — убавляет. Без аргумента приостанавливает или возобновляет таймер.
+cmd-delayroundend-invalid-seconds = { $value } не является допустимым количеством секунд.
+cmd-delayroundend-paused =
+    { $restart ->
+        [true] Перезапуск раунда приостановлен.
+       *[false] Конец раунда приостановлен.
+    }
+cmd-delayroundend-resumed =
+    { $restart ->
+        [true] Перезапуск раунда возобновлён.
+       *[false] Конец раунда возобновлён.
+    }
+cmd-delayroundend-extended =
+    { $restart ->
+        [true] Перезапуск раунда отложен на { $seconds } секунд.
+       *[false] Конец раунда продлён на { $seconds } секунд.
+    }
+cmd-delayroundend-shortened =
+    { $restart ->
+        [true] Перезапуск раунда приближен на { $seconds } секунд.
+       *[false] Конец раунда сокращён на { $seconds } секунд.
+    }
+cmd-delayroundend-no-timer = Нет активного таймера завершения или перезапуска раунда.
 
 ## Dock emergency shuttle
 

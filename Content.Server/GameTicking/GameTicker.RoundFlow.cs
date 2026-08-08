@@ -1147,7 +1147,10 @@ namespace Content.Server.GameTicking
 
             RaiseNetworkEvent(new TickerLobbyCountdownEvent(_roundStartTime, Paused));
 
-            _chatManager.DispatchServerAnnouncement(Loc.GetString("game-ticker-delay-start", ("seconds", time.TotalSeconds)));
+            _chatManager.DispatchServerAnnouncement(Loc.GetString(
+                "game-ticker-delay-start",
+                ("seconds", Math.Abs(time.TotalSeconds)),
+                ("shortened", time < TimeSpan.Zero))); // DS14
 
             return true;
         }

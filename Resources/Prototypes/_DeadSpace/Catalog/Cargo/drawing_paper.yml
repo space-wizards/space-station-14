@@ -1,0 +1,31 @@
+- type: entity
+  parent: Paper
+  id: PaperDrawing
+  name: drawing paper
+  description: A sheet of A3 paper for large drawings and posters.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Paper
+    contentSize: 30000
+
+- type: entity
+  parent: CrateGenericSteel
+  id: CrateFunDrawingPaper
+  name: drawing paper crate
+  description: Contains three sheets of A3 paper. It seems artists like this paper?
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: StorageFill
+    contents:
+    - id: PaperDrawing
+      amount: 3
+
+- type: cargoProduct
+  id: FunDrawingPaper
+  icon:
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: paper
+  product: CrateFunDrawingPaper
+  cost: 1500
+  category: cargoproduct-category-name-fun
+  group: service

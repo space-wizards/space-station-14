@@ -29,7 +29,7 @@ namespace Content.Server.RoundEnd
     /// Handles ending rounds normally and also via requesting it (e.g. via comms console)
     /// If you request a round end then an escape shuttle will be used.
     /// </summary>
-    public sealed class RoundEndSystem : EntitySystem
+    public sealed partial class RoundEndSystem : EntitySystem // DS14
     {
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
@@ -84,6 +84,7 @@ namespace Content.Server.RoundEnd
                 _countdownTokenSource.Cancel();
                 _countdownTokenSource = null;
             }
+            ResetRoundTransitionTimer(); // DS14
 
             if (_cooldownTokenSource != null)
             {
@@ -306,7 +307,7 @@ namespace Content.Server.RoundEnd
             RaiseLocalEvent(RoundEndSystemChangedEvent.Default);
             _gameTicker.EndRound();
             _countdownTokenSource?.Cancel();
-            _countdownTokenSource = new();
+            _countdownTokenSource = null; // DS14
 
             countdownTime ??= TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.RoundRestartTime));
             int time;
@@ -326,7 +327,7 @@ namespace Content.Server.RoundEnd
                     "round-end-system-round-restart-eta-announcement",
                     ("time", time),
                     ("units", Loc.GetString(unitsLocString))));
-            Timer.Spawn(countdownTime.Value, AfterEndRoundRestart, _countdownTokenSource.Token);
+            StartRoundRestartTimer(countdownTime.Value); // DS14
 
             _chatManager.DispatchServerAnnouncement(Loc.GetString("round-end-system-rules-reminder-announcement")); // DS14
         }

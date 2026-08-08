@@ -1,4 +1,3 @@
-using System.Threading;
 using Content.Server.DeadSpace.Traitor;
 using Content.Server.DeadSpace.Traitor.Objectives;
 using Content.Server.GameTicking.Rules.Components;
@@ -26,7 +25,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -75,7 +73,7 @@ public sealed partial class EmergencyShuttleSystem
     /// </summary>
     private float _authorizeTime;
 
-    private CancellationTokenSource? _roundEndCancelToken;
+    // private CancellationTokenSource? _roundEndCancelToken; // DS14
 
     // DS14-start
     private const string TraitorUltraRaiderOutpostRule = "SyndicateRaid";
@@ -267,7 +265,7 @@ public sealed partial class EmergencyShuttleSystem
             ShuttlesLeft = true;
             _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("emergency-shuttle-left", ("transitTime", $"{TransitTime:0}")));
 
-            Timer.Spawn((int)(TransitTime * 1000) + _bufferTime.Milliseconds, () => _roundEnd.EndRound(), _roundEndCancelToken?.Token ?? default);
+            _roundEnd.StartRoundEndTimer(TimeSpan.FromMilliseconds((int)(TransitTime * 1000) + _bufferTime.Milliseconds)); // DS14
         }
 
         // All the others.
@@ -785,11 +783,6 @@ public sealed partial class EmergencyShuttleSystem
 
     public bool DelayEmergencyRoundEnd()
     {
-        if (_roundEndCancelToken == null)
-            return false;
-
-        _roundEndCancelToken?.Cancel();
-        _roundEndCancelToken = null;
-        return true;
+        return _roundEnd.PauseRoundTransitionTimer(); // DS14
     }
 }

@@ -1,6 +1,5 @@
 using System.Linq;
 using System.Numerics;
-using System.Threading;
 using Content.Server.Access.Systems;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
@@ -86,7 +85,7 @@ public sealed partial class EmergencyShuttleSystem : SharedEmergencyShuttleSyste
         Subs.CVar(ConfigManager, CCVars.EmergencyShuttleEnabled, SetEmergencyShuttleEnabled);
 
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
-        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundCleanup);
+        // SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundCleanup); // DS14
         SubscribeLocalEvent<StationEmergencyShuttleComponent, StationPostInitEvent>(OnStationStartup);
         SubscribeLocalEvent<StationCentcommComponent, ComponentShutdown>(OnCentcommShutdown);
         SubscribeLocalEvent<StationCentcommComponent, MapInitEvent>(OnStationInit);
@@ -100,13 +99,6 @@ public sealed partial class EmergencyShuttleSystem : SharedEmergencyShuttleSyste
     private void OnRoundStart(RoundStartingEvent ev)
     {
         CleanupEmergencyConsole();
-        _roundEndCancelToken = new CancellationTokenSource();
-    }
-
-    private void OnRoundCleanup(RoundRestartCleanupEvent ev)
-    {
-        _roundEndCancelToken?.Cancel();
-        _roundEndCancelToken = null;
     }
 
     private void OnCentcommShutdown(EntityUid uid, StationCentcommComponent component, ComponentShutdown args)

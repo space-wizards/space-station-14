@@ -3842,7 +3842,7 @@
   name: uplink-gorlex-hypospray-name
   description: uplink-gorlex-hypospray-desc
   icon: { sprite: /Textures/Objects/Specific/Medical/syndihypo.rsi, state: hypo }
-  productEntity: ADTCyberHypospray
+  productEntity: SyndiHypo
   cost:
     Telecrystal: 12
   categories:

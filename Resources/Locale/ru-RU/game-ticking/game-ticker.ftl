@@ -4,7 +4,11 @@ game-ticker-start-round-cannot-start-game-mode-fallback = Не удалось з
 game-ticker-start-round-cannot-start-game-mode-restart = Не удалось запустить режим { $failedGameMode }! Перезапуск раунда...
 game-ticker-start-round-invalid-map = Выбранная карта { $map } не подходит для игрового режима { $mode }. Игровой режим может не функционировать как задумано...
 game-ticker-unknown-role = Неизвестный
-game-ticker-delay-start = Начало раунда было отложено на { $seconds } секунд.
+game-ticker-delay-start =
+    { $shortened ->
+        [true] Начало раунда приближено на { $seconds } секунд.
+       *[false] Начало раунда отложено на { $seconds } секунд.
+    }
 game-ticker-pause-start = Начало раунда было приостановлено.
 game-ticker-pause-start-resumed = Отсчёт начала раунда возобновлён.
 game-ticker-player-join-game-message = Добро пожаловать на Космическую Станцию 14! Если вы играете впервые, обязательно нажмите ESC на клавиатуре и прочитайте правила игры, а также не бойтесь просить помощи в "Админ помощь".

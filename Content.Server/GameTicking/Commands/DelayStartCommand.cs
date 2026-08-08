@@ -32,7 +32,7 @@ public sealed class DelayStartCommand : LocalizedEntityCommands
                 return;
         }
 
-        if (!uint.TryParse(args[0], out var seconds) || seconds == 0)
+        if (!int.TryParse(args[0], out var seconds) || seconds == 0)
         {
             shell.WriteLine(Loc.GetString("cmd-delaystart-invalid-seconds", ("value", args[0])));
             return;
