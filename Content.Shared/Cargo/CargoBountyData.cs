@@ -23,9 +23,19 @@ public readonly partial record struct CargoBountyData
     [DataField(required: true)]
     public ProtoId<CargoBountyPrototype> Bounty { get; init; } = string.Empty;
 
-    public CargoBountyData(CargoBountyPrototype bounty, int uniqueIdentifier)
+    /// <summary>
+    /// Character names of players who printed labels for this bounty.
+    /// </summary>
+    [DataField]
+    public List<string> ClaimedBy { get; init; } = new();
+
+    [DataField]
+    public ProtoId<CargoBountyStatusPrototype> Status { get; init; } = string.Empty;
+
+    public CargoBountyData(CargoBountyPrototype bounty, CargoBountyStatusPrototype bountyStatus, int uniqueIdentifier)
     {
         Bounty = bounty.ID;
         Id = $"{bounty.IdPrefix}{uniqueIdentifier:D3}";
+        Status = bountyStatus.ID;
     }
 }

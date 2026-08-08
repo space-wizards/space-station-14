@@ -1,0 +1,13 @@
+- type: cargoBountyStatus
+  id: Undelivered
+  index: 0
+
+- type: cargoBountyStatus
+  id: Waiting
+  index: 1
+
+- type: cargoBountyStatus
+  id: OnShuttle
+  index: 2
+
+

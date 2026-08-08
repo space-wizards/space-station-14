@@ -30,6 +30,16 @@ public sealed class CargoBountyConsoleBoundUserInterface : BoundUserInterface
         {
             SendMessage(new BountySkipMessage(id));
         };
+
+        _menu.OnClaimButtonPressed += id =>
+        {
+            SendMessage(new BountyClaimedMessage(id));
+        };
+
+        _menu.OnStatusOptionSelected += (id, status) =>
+        {
+            SendMessage(new BountySetStatusMessage(id, status));
+        };
     }
 
     protected override void UpdateState(BoundUserInterfaceState message)
