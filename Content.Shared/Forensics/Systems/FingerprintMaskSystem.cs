@@ -3,15 +3,9 @@ using Content.Shared.Inventory;
 
 namespace Content.Shared.Forensics.Systems;
 
-public sealed class FingerprintMaskSystem : EntitySystem
+public sealed partial class FingerprintMaskSystem : EntitySystem
 {
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<FingerprintMaskComponent, InventoryRelayedEvent<TryAccessFingerprintEvent>>(OnTryAccessFingerprint);
-    }
-
+    [SubscribeLocalEvent]
     private void OnTryAccessFingerprint(Entity<FingerprintMaskComponent> gloves, ref InventoryRelayedEvent<TryAccessFingerprintEvent> args)
     {
         if (args.Args.Cancelled)

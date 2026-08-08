@@ -13,6 +13,7 @@ using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Content.Shared.Gibbing;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -26,13 +27,6 @@ public sealed partial class SharedForensicsSystem : EntitySystem
     [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private SharedPopupSystem _popupSystem = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainerSystem = default!;
-
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<FingerprintComponent, MapInitEvent>(OnFingerprintInit, after: new[] { typeof(BloodstreamSystem) });
-        // The solution entities are spawned on MapInit as well, so we have to wait for that to be able to set the DNA in the bloodstream correctly without ResolveSolution failing
-        SubscribeLocalEvent<DnaComponent, MapInitEvent>(OnDNAInit, after: new[] { typeof(BloodstreamSystem) });
-    }
 
     [SubscribeLocalEvent]
     private void OnSolutionChanged(Entity<DnaSubstanceTraceComponent> ent, ref SolutionChangedEvent ev)
@@ -56,12 +50,14 @@ public sealed partial class SharedForensicsSystem : EntitySystem
         ApplyEvidence(ent.Owner, args.Other);
     }
 
+    [SubscribeLocalEvent(after: [typeof(BloodstreamSystem)])]
     private void OnFingerprintInit(Entity<FingerprintComponent> ent, ref MapInitEvent args)
     {
         if (ent.Comp.Fingerprint == null)
             RandomizeFingerprint((ent.Owner, ent.Comp));
     }
 
+    [SubscribeLocalEvent(after: [typeof(BloodstreamSystem)])]
     private void OnDNAInit(Entity<DnaComponent> ent, ref MapInitEvent args)
     {
         if (ent.Comp.DNA == null)
@@ -175,7 +171,8 @@ public sealed partial class SharedForensicsSystem : EntitySystem
         return list;
     }
 
-    [SubscribeLocalEvent]
+    // IngestionSystem is for stopping the player from feeding soap when trying to clean someone.
+    [SubscribeLocalEvent(before: [typeof(IngestionSystem)], after: [typeof(SharedAbsorbentSystem)])]
     private void OnAfterInteract(Entity<CleansForensicsComponent> cleanForensicsEntity, ref AfterInteractEvent args)
     {
         if (args.Handled || !args.CanReach || args.Target == null)
