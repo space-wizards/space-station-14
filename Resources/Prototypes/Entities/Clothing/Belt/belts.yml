@@ -12,6 +12,8 @@
     - state: sheath
     - state: sheath-sabre
       map: [ "enum.ItemSlotVisualLayers.Fill" ]
+    #- state: sheath-son
+      #map: [ "enum.ItemSlotVisualLayers.Fill" ]
   - type: Clothing
     sprite: Clothing/Belt/sheath.rsi
   - type: Item
@@ -32,12 +34,28 @@
         whitelist:
           tags:
           - CaptainSabre
+      #item1:
+        #name: Son
+        #insertVerbText: sheath-insert-verb
+        #ejectVerbText: sheath-eject-verb
+        #insertSound: /Audio/Items/sheath.ogg
+        #ejectSound: /Audio/Items/unsheath.ogg
+        #ejectOnBreak: true
+        #whitelist:
+          #tags:
+          #- Sidearm
   - type: ItemSlotVisuals
     slotVisuals:
       item:
         fillBaseName: sheath-sabre
         inHandsFillBaseName: -sabre
         equippedFillBaseName: -sabre
+        slotName: item
+      #item1:
+        #fillBaseName: sheath-son
+        #inHandsFillBaseName: -son
+        #equippedFillBaseName: -son
+        #slotName: item1
   - type: Appearance
 
 - type: entity

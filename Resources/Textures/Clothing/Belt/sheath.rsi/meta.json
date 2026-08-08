@@ -15,9 +15,16 @@
         "name": "equipped-belt-sabre",
         "directions": 4
     },
+      {
+          "name": "equipped-belt-son",
+          "directions": 4
+      },
     {
         "name": "sheath-sabre"
     },
+      {
+          "name": "sheath-son"
+      },
     {
         "name": "sheath"
     },
@@ -29,6 +36,10 @@
         "name": "inhand-left-sabre",
         "directions": 4
     },
+      {
+          "name": "inhand-left-son",
+          "directions": 4
+      },
     {
         "name": "inhand-right",
         "directions": 4
@@ -36,6 +47,10 @@
     {
         "name": "inhand-right-sabre",
         "directions": 4
-    }
+    },
+      {
+          "name": "inhand-right-son",
+          "directions": 4
+      }
   ]
 }
