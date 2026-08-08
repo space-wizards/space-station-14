@@ -76,7 +76,7 @@
     sprite: _DeadSpace/Clothing/Head/Hats/beret_chemist.rsi
 
 - type: entity
-  parent: ClothingHeadHelmetBasic
+  parent: ClothingHeadBase
   id: ClothingHeadHatUshankaHOS
   name: бронеушанка главы службы безопасности
   description: Ушанка с кевларовой вставкой для дополнительной защиты.
@@ -92,6 +92,15 @@
         reagents:
         - ReagentId: Fiber
           Quantity: 10
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+  - type: FlashbangProtection
+    reduction: 1
 
 # Taipan
 - type: entity

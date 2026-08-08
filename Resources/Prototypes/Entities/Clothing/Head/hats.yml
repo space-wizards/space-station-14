@@ -172,6 +172,17 @@
     - Recyclable
     - HamsterWearable
     - WhitelistChameleon
+  # DS14-Start
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+  - type: FlashbangProtection
+    reduction: 1
+  # DS14-End
 
 - type: entity
   parent: ClothingHeadBase
@@ -187,6 +198,17 @@
     tags:
     - PetWearable
     - CorgiWearable
+  # DS14-Start
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+  - type: FlashbangProtection
+    reduction: 1
+  # DS14-End
 
 - type: entity
   parent: ClothingHeadBase
@@ -441,6 +463,17 @@
     - Recyclable
     - HamsterWearable
     - WhitelistChameleon
+  # DS14-Start
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+  - type: FlashbangProtection
+    reduction: 1
+  # DS14-End
 
 - type: entity
   parent: ClothingHeadBase
@@ -764,6 +797,17 @@
     tags:
     - PetWearable
     - CorgiWearable
+  # DS14-Start
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+  - type: FlashbangProtection
+    reduction: 1
+  # DS14-End
 
 - type: entity
   parent: ClothingHeadBase
