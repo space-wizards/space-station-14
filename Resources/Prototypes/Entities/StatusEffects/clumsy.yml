@@ -1,7 +1,7 @@
-# Every clumsy status for the clown :o)
+# All clumsy status effects in one convenient package
 - type: entity
-  parent: MobStatusEffectBase
-  id: StatusEffectClumsyClown
+  parent: StatusEffectBase
+  id: StatusEffectClumsyAll
   name: clumsy
   components:
   - type: ClumsyCatchStatusEffect
@@ -18,9 +18,54 @@
   - type: ClumsyInjectorStatusEffect
   - type: ClumsyVaultStatusEffect
 
+#region Permanent Statuses
+
+# :o)
+- type: entity
+  parent: [ StatusEffectClumsyAll, MobStatusEffectBase ]
+  id: StatusEffectClumsyClown
+
+# Monkeys are small clowns
+- type: entity
+  parent: [ StatusEffectClumsyAll, MobStatusEffectBase ]
+  id: StatusEffectClumsyMonkey
+  components:
+  - type: ClumsyCatchStatusEffect
+    clumsySound: &SoundMonkeyScream
+      path: /Audio/Animals/monkey_scream.ogg
+  - type: ClumsyDefibStatusEffect
+    clumsySound: *SoundMonkeyScream
+  - type: ClumsyGunStatusEffect
+    clumsySound: *SoundMonkeyScream
+  - type: ClumsyInjectorStatusEffect
+    clumsySound: *SoundMonkeyScream
+  - type: ClumsyVaultStatusEffect
+    clumsyChance: 0.2 # Climbing proficiency
+    clumsySound: *SoundMonkeyScream
+
+# Kobolds are naked monkeys
+- type: entity
+  parent: [ StatusEffectClumsyAll, MobStatusEffectBase ]
+  id: StatusEffectClumsyKobold
+  components:
+  - type: ClumsyCatchStatusEffect
+    clumsySound: &SoundReptileScream
+      path: /Audio/Voice/Reptilian/reptilian_scream.ogg
+  - type: ClumsyDefibStatusEffect
+    clumsySound: *SoundReptileScream
+  - type: ClumsyGunStatusEffect
+    clumsySound: *SoundReptileScream
+  - type: ClumsyInjectorStatusEffect
+    clumsySound: *SoundReptileScream
+  - type: ClumsyVaultStatusEffect
+    clumsySound: *SoundReptileScream
+
+#endregion
+#region Debuffs
+
 # A terrible fate
 - type: entity
-  parent: [ StatusEffectClumsyClown, MobStatusEffectDebuff ]
+  parent: [ StatusEffectClumsyAll, MobStatusEffectDebuff ]
   id: StatusEffectClumsyCluwne
   components:
   - type: ClumsyCatchStatusEffect
@@ -42,7 +87,7 @@
 
 # =^_^= nya!
 - type: entity
-  parent: [ StatusEffectClumsyClown, MobStatusEffectDebuff ]
+  parent: [ StatusEffectClumsyAll, MobStatusEffectDebuff ]
   id: StatusEffectClumsyMaid
   components:
   - type: ClumsyCatchStatusEffect
@@ -57,37 +102,4 @@
   - type: ClumsyVaultStatusEffect
     clumsySound: *SoundCatMeow
 
-# Monkeys are small clowns
-- type: entity
-  parent: StatusEffectClumsyClown
-  id: StatusEffectClumsyMonkey
-  components:
-  - type: ClumsyCatchStatusEffect
-    clumsySound: &SoundMonkeyScream
-      path: /Audio/Animals/monkey_scream.ogg
-  - type: ClumsyDefibStatusEffect
-    clumsySound: *SoundMonkeyScream
-  - type: ClumsyGunStatusEffect
-    clumsySound: *SoundMonkeyScream
-  - type: ClumsyInjectorStatusEffect
-    clumsySound: *SoundMonkeyScream
-  - type: ClumsyVaultStatusEffect
-    clumsyChance: 0.3 # Climbing proficiency
-    clumsySound: *SoundMonkeyScream
-
-# Kobolds are naked monkeys
-- type: entity
-  parent: StatusEffectClumsyClown
-  id: StatusEffectClumsyKobold
-  components:
-  - type: ClumsyCatchStatusEffect
-    clumsySound: &SoundReptileScream
-      path: /Audio/Voice/Reptilian/reptilian_scream.ogg
-  - type: ClumsyDefibStatusEffect
-    clumsySound: *SoundReptileScream
-  - type: ClumsyGunStatusEffect
-    clumsySound: *SoundReptileScream
-  - type: ClumsyInjectorStatusEffect
-    clumsySound: *SoundReptileScream
-  - type: ClumsyVaultStatusEffect
-    clumsySound: *SoundReptileScream
+#endregion

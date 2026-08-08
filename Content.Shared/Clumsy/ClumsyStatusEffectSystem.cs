@@ -177,7 +177,7 @@ public sealed partial class ClumsyStatusEffectSystem : EntitySystem
             _popup.PopupEntity(message, ent);
         }
 
-        //args.Args.Cancel();
+        args.Args.Cancel();
     }
 
     #endregion

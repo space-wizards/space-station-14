@@ -65,7 +65,6 @@ public sealed partial class CluwneSystem : EntitySystem
         if (ent.Comp.EmoteSoundsId == null)
             return;
 
-
         if (ent.Comp.RandomEmote && ent.Comp.AutoEmoteId != null)
         {
             EnsureComp<AutoEmoteComponent>(ent.Owner);
