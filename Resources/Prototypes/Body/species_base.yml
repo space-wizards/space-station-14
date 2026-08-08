@@ -184,7 +184,7 @@
   - type: Blindable
   - type: Temperature
   - type: TemperatureDamage
-    heatDamageThreshold: 325
+    heatDamageThreshold: 316.15
     coldDamageThreshold: 273.15
     coldDamage:
       types:
