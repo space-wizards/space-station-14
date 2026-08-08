@@ -1,16 +1,20 @@
-﻿using Content.Server.Atmos.AirlockController.Components;
+﻿#region
+
+using Content.Server.Atmos.AirlockController.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Atmos.AirlockController;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Robust.Shared.Timing;
 
+#endregion
+
 namespace Content.Server.Atmos.AirlockController.Systems;
 
 /// <summary>
 ///     Panels are dumb devices. The controller writes their state, and they send back requests to cycle
 /// </summary>
-public sealed class AirlockCyclerSystem : EntitySystem
+public sealed partial class AirlockCyclerSystem : EntitySystem
 {
     [Dependency] private AirlockControllerSystem _controller = default!;
     [Dependency] private AirlockCycleStatusSystem _status = default!;

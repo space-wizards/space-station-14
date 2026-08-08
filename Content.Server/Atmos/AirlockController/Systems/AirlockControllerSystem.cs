@@ -1,3 +1,5 @@
+#region
+
 using Content.Server.Atmos.AirlockController.Components;
 using Content.Server.Atmos.Monitor.Systems;
 using Content.Server.DeviceLinking.Systems;
@@ -10,7 +12,6 @@ using Content.Shared.Atmos.AirlockController;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Monitor.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
-using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
@@ -19,10 +20,11 @@ using Content.Shared.Doors;
 using Content.Shared.Examine;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+
+#endregion
 
 namespace Content.Server.Atmos.AirlockController.Systems;
 
@@ -296,7 +298,7 @@ public sealed partial class AirlockControllerSystem : SharedAirlockControllerSys
         // Check access on the side. Source so it pops error on cycler or panel
         if (user != null && !CanUseSide(ent, side, user.Value))
         {
-            DenyAccess(source ?? ent.Owner, user.Value);
+            DenyAccess(ent, user.Value, source);
             return false;
         }
 
@@ -336,13 +338,13 @@ public sealed partial class AirlockControllerSystem : SharedAirlockControllerSys
 
     private static readonly ProtoId<TagPrototype> PreventAccessLoggingTag = "PreventAccessLogging";
 
-    private void DenyAccess(EntityUid uid, EntityUid user)
+    private void DenyAccess(Entity<AirlockControllerComponent> ent, EntityUid user, EntityUid? source = null)
     {
-        _popup.PopupEntity(Loc.GetString("airlock-controller-access-denied"), uid, user);
-        _audio.PlayPvs(DenySound, uid);
-    }
+        var target = source ?? ent.Owner;
 
-    private static readonly SoundSpecifier DenySound = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
+        _popup.PopupEntity(Loc.GetString("airlock-controller-access-denied"), target, user);
+        _audio.PlayPvs(ent.Comp.DenySound, target);
+    }
 
     private bool CanUseSide(Entity<AirlockControllerComponent> ent, AirlockSide side, EntityUid user)
     {

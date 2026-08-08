@@ -1,10 +1,14 @@
+#region
+
 using Content.Shared.Atmos.AirlockController;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 
+#endregion
+
 namespace Content.Client.Atmos.AirlockController.UI;
 
-public sealed class AirlockControllerBoundUserInterface : BoundUserInterface
+public sealed partial class AirlockControllerBoundUserInterface : BoundUserInterface
 {
     [Dependency] private IPlayerManager _player = default!;
     [Dependency] private AirlockControllerSystem _controller = default!;

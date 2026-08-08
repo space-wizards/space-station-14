@@ -1,7 +1,11 @@
+#region
+
 using Content.Shared.Atmos.AirlockController;
 using Content.Shared.Power;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
+
+#endregion
 
 namespace Content.Client.Atmos.AirlockController;
 

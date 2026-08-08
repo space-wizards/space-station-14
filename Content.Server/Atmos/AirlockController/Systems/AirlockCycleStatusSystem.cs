@@ -1,8 +1,12 @@
+#region
+
 using Content.Shared.Atmos.AirlockController;
 using Content.Shared.Examine;
 using Content.Shared.Sound;
 using Content.Shared.Sound.Components;
 using Robust.Shared.Timing;
+
+#endregion
 
 namespace Content.Server.Atmos.AirlockController.Systems;
 

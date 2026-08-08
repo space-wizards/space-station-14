@@ -1,4 +1,8 @@
+#region
+
 using Robust.Shared.Serialization;
+
+#endregion
 
 namespace Content.Shared.Atmos.AirlockController;
 

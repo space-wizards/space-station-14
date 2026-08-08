@@ -1,5 +1,5 @@
-using Content.Server.Doors.Components;
 using Content.Server.DeviceNetwork.Systems;
+using Content.Server.Doors.Components;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;

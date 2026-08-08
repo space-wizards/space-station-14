@@ -1,4 +1,8 @@
+#region
+
 using Robust.Shared.Serialization;
+
+#endregion
 
 namespace Content.Shared.Atmos.AirlockController;
 
@@ -107,14 +111,9 @@ public sealed class AirlockCyclerCycleMessage : BoundUserInterfaceMessage
 }
 
 [Serializable, NetSerializable]
-public sealed class AirlockControllerCycleMessage : BoundUserInterfaceMessage
+public sealed class AirlockControllerCycleMessage(AirlockSide side) : BoundUserInterfaceMessage
 {
-    public AirlockSide Side;
-
-    public AirlockControllerCycleMessage(AirlockSide side)
-    {
-        Side = side;
-    }
+    public AirlockSide Side = side;
 }
 
 [Serializable, NetSerializable]
@@ -128,91 +127,51 @@ public sealed class AirlockControllerOpenConfigMessage : BoundUserInterfaceMessa
 }
 
 [Serializable, NetSerializable]
-public sealed class AirlockControllerSetVentRolesMessage : BoundUserInterfaceMessage
+public sealed class AirlockControllerSetVentRolesMessage(NetEntity device, AirlockVentRole roles) : BoundUserInterfaceMessage
 {
-    public NetEntity Device;
-    public AirlockVentRole Roles;
-
-    public AirlockControllerSetVentRolesMessage(NetEntity device, AirlockVentRole roles)
-    {
-        Device = device;
-        Roles = roles;
-    }
+    public NetEntity Device = device;
+    public AirlockVentRole Roles = roles;
 }
 
 [Serializable, NetSerializable]
-public sealed class AirlockControllerSetDoorSideMessage : BoundUserInterfaceMessage
+public sealed class AirlockControllerSetDoorSideMessage(NetEntity device, AirlockSide? side) : BoundUserInterfaceMessage
 {
-    public NetEntity Device;
+    public NetEntity Device = device;
 
-    public AirlockSide? Side;
-
-    public AirlockControllerSetDoorSideMessage(NetEntity device, AirlockSide? side)
-    {
-        Device = device;
-        Side = side;
-    }
+    public AirlockSide? Side = side;
 }
 
 [Serializable, NetSerializable]
-public sealed class AirlockControllerSetCyclerSideMessage : BoundUserInterfaceMessage
+public sealed class AirlockControllerSetCyclerSideMessage(NetEntity device, AirlockSide? side) : BoundUserInterfaceMessage
 {
-    public NetEntity Device;
+    public NetEntity Device = device;
 
-    public AirlockSide? Side;
-
-    public AirlockControllerSetCyclerSideMessage(NetEntity device, AirlockSide? side)
-    {
-        Device = device;
-        Side = side;
-    }
+    public AirlockSide? Side = side;
 }
 
 [Serializable, NetSerializable]
-public sealed class AirlockControllerSetTargetSensorMessage : BoundUserInterfaceMessage
+public sealed class AirlockControllerSetTargetSensorMessage(AirlockSide side, NetEntity? device) : BoundUserInterfaceMessage
 {
-    public AirlockSide Side;
+    public AirlockSide Side = side;
 
-    public NetEntity? Device;
-
-    public AirlockControllerSetTargetSensorMessage(AirlockSide side, NetEntity? device)
-    {
-        Side = side;
-        Device = device;
-    }
+    public NetEntity? Device = device;
 }
 
 [Serializable, NetSerializable]
-public sealed class AirlockControllerSetPresetMessage : BoundUserInterfaceMessage
+public sealed class AirlockControllerSetPresetMessage(AirlockSide side, float pressure) : BoundUserInterfaceMessage
 {
-    public AirlockSide Side;
-    public float Pressure;
-
-    public AirlockControllerSetPresetMessage(AirlockSide side, float pressure)
-    {
-        Side = side;
-        Pressure = pressure;
-    }
+    public AirlockSide Side = side;
+    public float Pressure = pressure;
 }
 
 [Serializable, NetSerializable]
-public sealed class AirlockControllerSetMaintenanceMessage : BoundUserInterfaceMessage
+public sealed class AirlockControllerSetMaintenanceMessage(bool enabled) : BoundUserInterfaceMessage
 {
-    public bool Enabled;
-
-    public AirlockControllerSetMaintenanceMessage(bool enabled)
-    {
-        Enabled = enabled;
-    }
+    public bool Enabled = enabled;
 }
 
 [Serializable, NetSerializable]
-public sealed class AirlockControllerForceSideMessage : BoundUserInterfaceMessage
+public sealed class AirlockControllerForceSideMessage(AirlockSide side) : BoundUserInterfaceMessage
 {
-    public AirlockSide Side;
-
-    public AirlockControllerForceSideMessage(AirlockSide side)
-    {
-        Side = side;
-    }
+    public AirlockSide Side = side;
 }

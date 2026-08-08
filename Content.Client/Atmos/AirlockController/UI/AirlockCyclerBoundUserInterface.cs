@@ -1,5 +1,9 @@
+#region
+
 using Content.Shared.Atmos.AirlockController;
 using Robust.Client.UserInterface;
+
+#endregion
 
 namespace Content.Client.Atmos.AirlockController.UI;
 

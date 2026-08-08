@@ -1,7 +1,11 @@
+#region
+
 using Content.Server.Atmos.AirlockController.Systems;
 using Content.Server.Wires;
 using Content.Shared.Atmos.AirlockController;
 using Content.Shared.Wires;
+
+#endregion
 
 namespace Content.Server.Atmos.AirlockController.WireActions;
 
