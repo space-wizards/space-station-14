@@ -46,8 +46,12 @@ namespace Content.Client.Launcher
         };
         private List<RedirectTargetControl> _redirectControls = new();
 
-        public LauncherConnectingGui(LauncherConnecting state, IRobustRandom random,
-            IPrototypeManager prototype, IConfigurationManager config, IClipboardManager clipboard)
+        public LauncherConnectingGui(
+            LauncherConnecting state,
+            IRobustRandom random,
+            IPrototypeManager prototype,
+            IConfigurationManager config,
+            IClipboardManager clipboard)
         {
             _state = state;
             _random = random;
@@ -114,7 +118,7 @@ namespace Content.Client.Launcher
             {
                 //TODO:ERRANT get actual numbers from the hub
                 var players = _random.Next(0,80);
-                var maxPlayers = 20;
+                var maxPlayers = 33;
                 var ping= _random.Next(20,150);
 
                 control.PlayersLabel.Text = Loc.GetString("connecting-available-player-count",("players", players),("maxPlayers", maxPlayers));
@@ -166,12 +170,25 @@ namespace Content.Client.Launcher
 
         private void ConnectFailReasonChanged(string? reason)
         {
+            //TODO implement a more proper way of sending/determining the failure reason
+            // this will be necessary for a theoretical queue system or "overpop tracker", anyway
+            var serverFull = reason == "Connect denied: " + Loc.GetString("soft-player-cap-full");
+
             ConnectFailReason.SetMessage(reason == null
                 ? ""
                 : Loc.GetString("connecting-fail-reason", ("reason", reason)));
 
-            //TODO only make it visible if the fail reason was that the server is full
-            RedirectBox.Visible = RedirectEnabled;
+            // We only want to present the fallback servers if we can reasonably expect the player
+            // to be able to connect to them - ie they are not banned or having some sort of connection issue
+            // (which is more likely to be general than server-specific)
+            if (serverFull)
+            {
+                RedirectBox.Visible = RedirectEnabled;
+            }
+            else
+            {
+                RedirectBox.Visible = false;
+            }
         }
 
         private void LastNetDisconnectedArgsChanged(NetDisconnectedArgs? args)
