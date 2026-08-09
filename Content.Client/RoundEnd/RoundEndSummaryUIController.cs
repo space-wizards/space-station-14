@@ -21,12 +21,17 @@ public sealed partial class RoundEndSummaryUIController : UIController,
     /// </summary>
     public event Action<bool>? OnWindowToggled;
 
+    private RoundEndMessageInfo? _lastRoundInfo = null;
     private RoundEndSummaryWindow? _window;
 
-    public void ToggleScoreboardWindow(ICommonSession? session = null)
+    public void ToggleRoundEndSummaryWindow(ICommonSession? session = null)
     {
         if (_window == null)
+        {
+            if (_lastRoundInfo != null)
+                OpenRoundEndSummaryWindow(_lastRoundInfo);
             return;
+        }
 
         if (_window.IsOpen)
         {
@@ -41,14 +46,14 @@ public sealed partial class RoundEndSummaryUIController : UIController,
         OnWindowToggled?.Invoke(_window.IsOpen);
     }
 
-    public void OpenRoundEndSummaryWindow(RoundEndMessageEvent message)
+    public void OpenRoundEndSummaryWindow(RoundEndMessageInfo roundInfo)
     {
         // Don't open duplicate windows (mainly for replays).
-        if (_window?.RoundId == message.RoundId)
+        if (_window?.RoundId == roundInfo.RoundId)
             return;
 
-        _window = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundEndText,
-            message.RoundDuration, message.RoundId, message.AllPlayersEndInfo);
+        _lastRoundInfo = roundInfo;
+        _window = new RoundEndSummaryWindow(roundInfo);
         _window.OnClose += () => OnWindowToggled?.Invoke(false);
 
         _window.OpenCenteredRight();
@@ -59,7 +64,12 @@ public sealed partial class RoundEndSummaryUIController : UIController,
     public void OnSystemLoaded(ClientGameTicker system)
     {
         _input.SetInputCommand(ContentKeyFunctions.ToggleRoundEndSummaryWindow,
-            InputCmdHandler.FromDelegate(ToggleScoreboardWindow));
+            InputCmdHandler.FromDelegate(ToggleRoundEndSummaryWindow));
+    }
+
+    public void UpdateRoundInfo(RoundEndMessageInfo roundInfo)
+    {
+        _lastRoundInfo = roundInfo;
     }
 
     /// <summary>
@@ -67,6 +77,6 @@ public sealed partial class RoundEndSummaryUIController : UIController,
     /// </summary>
     public bool IsSummaryValid()
     {
-        return _window != null;
+        return _lastRoundInfo != null;
     }
 }

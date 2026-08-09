@@ -1,7 +1,7 @@
 using System.Linq;
 using System.Numerics;
 using Content.Client.Message;
-using RoundEndPlayerInfo = Content.Shared.GameTicking.RoundEndMessageEvent.RoundEndPlayerInfo;
+using Content.Shared.GameTicking;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
@@ -34,10 +34,10 @@ public sealed partial class RoundEndSummaryWindow : DefaultWindow
     private SortField _currentSortField = SortField.PlayerType;
     private bool _sortDescending;
 
-    public RoundEndSummaryWindow(string gm, string roundEnd, TimeSpan roundTimeSpan, int roundId, RoundEndPlayerInfo[] info)
+    public RoundEndSummaryWindow(RoundEndMessageInfo roundInfo)
     {
         IoCManager.InjectDependencies(this);
-        _playersInfo = info;
+        _playersInfo = roundInfo.AllPlayersEndInfo;
 
         MinSize = SetSize = new Vector2(720, 580);
 
@@ -49,9 +49,9 @@ public sealed partial class RoundEndSummaryWindow : DefaultWindow
         // "clown slipped the crew x times.", "x shots were fired this round.", etc.
         // Also, good for serious info.
 
-        RoundId = roundId;
+        RoundId = roundInfo.RoundId;
         var roundEndTabs = new TabContainer();
-        roundEndTabs.AddChild(MakeRoundEndSummaryTab(gm, roundEnd, roundTimeSpan, roundId));
+        roundEndTabs.AddChild(MakeRoundEndSummaryTab(roundInfo.GamemodeTitle, roundInfo.RoundEndText, roundInfo.RoundDuration, RoundId));
         roundEndTabs.AddChild(MakePlayerManifestTab());
 
         ContentsContainer.AddChild(roundEndTabs);
