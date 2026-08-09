@@ -183,11 +183,25 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         if (!args.IsInDetailsRange)
             return;
 
+        var msg = new FormattedMessage();
+        var examined = new List<string>();
+
         foreach (var doAfter in ent.Comp.DoAfters.Values)
         {
-            if (doAfter.Args.ExamineText is not null)
-                args.PushMarkup(Loc.GetString(doAfter.Args.ExamineText), -5);
+            if (doAfter.Args.ExamineText is not null &&
+                !examined.Contains(doAfter.Args.ExamineText))
+            {
+                examined.Add(doAfter.Args.ExamineText);
+            }
         }
+
+        foreach (var entry in examined)
+        {
+            msg.AddMarkupOrThrow(entry);
+            msg.PushNewline();
+        }
+
+        args.PushMessage(msg, -5);
     }
 
     #region Creation
