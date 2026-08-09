@@ -16,14 +16,6 @@ public sealed partial class StorageContainerVisualsSystem : VisualizerSystem<Sto
 {
     [Dependency] private ItemSystem _itemSystem = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-        // Have these systems go first & add their visuals, then after that, we add our own. No more conflicting visuals!
-        SubscribeLocalEvent<StorageContainerVisualsComponent, GetInhandVisualsEvent>(OnGetHeldVisuals, after: new[] { typeof(ItemSystem) });
-        SubscribeLocalEvent<StorageContainerVisualsComponent, GetEquipmentVisualsEvent>(OnGetClothingVisuals, after: new[] { typeof(ClothingSystem) });
-    }
-
     protected override void OnAppearanceChange(EntityUid uid, StorageContainerVisualsComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
@@ -59,6 +51,8 @@ public sealed partial class StorageContainerVisualsSystem : VisualizerSystem<Sto
         _itemSystem.VisualsChanged(uid);
     }
 
+    // // Have these systems go first & add their visuals, then after that, we add our own. No more conflicting visuals!
+    [SubscribeLocalEvent(after: [typeof(ItemSystem)])]
     private void OnGetHeldVisuals(Entity<StorageContainerVisualsComponent> ent, ref GetInhandVisualsEvent args)
     {
         if (ent.Comp.InHandsFillBaseName == null)
@@ -76,6 +70,7 @@ public sealed partial class StorageContainerVisualsSystem : VisualizerSystem<Sto
         args.Layers.Add(layer);
     }
 
+    [SubscribeLocalEvent(after: [typeof(ClothingSystem)])]
     private void OnGetClothingVisuals(Entity<StorageContainerVisualsComponent> ent, ref GetEquipmentVisualsEvent args)
     {
         if (ent.Comp.EquippedFillBaseName == null)
