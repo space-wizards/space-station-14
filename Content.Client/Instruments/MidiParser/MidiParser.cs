@@ -115,11 +115,17 @@ public static partial class MidiParser
         return trackInfo;
     }
 
-    private static double TickDeltaToMinutes(long timeBase, long tickDelta, long tempoMicroseconds)
+    private static double TickDeltaToMinutes(long timebase, long tickDelta, long tempoMicroseconds)
     {
         var bpm = (double)OneMinuteInMicroseconds / tempoMicroseconds;
-        var quarterNotesCount = (double)tickDelta / timeBase;
+        var quarterNotesCount = (double)tickDelta / timebase;
         return quarterNotesCount / bpm;
+    }
+
+    private static long MinutesDeltaToTicks(long timebase, double minutesDelta, long tempoMicroseconds)
+    {
+        var bpm = (float)OneMinuteInMicroseconds / tempoMicroseconds;
+        return (long)Math.Floor(timebase * minutesDelta * bpm);
     }
 
     // Thanks again to http://www.somascape.org/midi/tech/mfile.html
@@ -305,6 +311,68 @@ public static partial class MidiParser
         return true;
     }
 
+    public static long CalculateTickPositionFromMinutes(
+        int timebase,
+        double minutes,
+        IReadOnlyDictionary<long, int> tempoMap)
+    {
+        var currentMinutes = 0.0;
+        var currentTempo = DefaultTempoMicroseconds;
+        long currentTick = 0;
+
+        // Return simple delta if there aren't any tempo changes.
+        if (tempoMap.Count == 0)
+            return MinutesDeltaToTicks(timebase, minutes, currentTempo);
+
+        foreach (var kv in tempoMap)
+        {
+            var minutesDeltaToKey = TickDeltaToMinutes(timebase, kv.Key - currentTick, currentTempo);
+
+            // Return remainder if next key is outside our position.
+            if (currentMinutes + minutesDeltaToKey > minutes)
+                return currentTick + MinutesDeltaToTicks(timebase, minutes - currentMinutes, currentTempo);
+
+            // Calculate the passed ticks using the previous tempo.
+            currentTick += MinutesDeltaToTicks(timebase, minutesDeltaToKey, currentTempo);
+            currentMinutes += minutesDeltaToKey;
+            currentTempo = kv.Value;
+        }
+
+        // Add remaining delta with last tempo entry.
+        return currentTick + MinutesDeltaToTicks(timebase, minutes - currentMinutes, currentTempo);
+    }
+
+    public static double CalculateMinutePositionFromTicks(
+        int timebase,
+        long ticks,
+        IReadOnlyDictionary<long, int> tempoMap)
+    {
+        var currentMinutes = 0.0;
+        var currentTempo = DefaultTempoMicroseconds;
+        long currentTick = 0;
+
+        // Return simple delta if there aren't any tempo changes.
+        if (tempoMap.Count == 0)
+            return TickDeltaToMinutes(timebase, ticks, currentTempo);
+
+        foreach (var kv in tempoMap)
+        {
+            var ticksDeltaToKey = kv.Key - currentTick;
+
+            // Return remainder if next key is outside our position.
+            if (kv.Key > ticks)
+                return currentMinutes + TickDeltaToMinutes(timebase, ticks - currentTick, currentTempo);
+
+            // Calculate the passed ticks using the previous tempo.
+            currentTick += ticksDeltaToKey;
+            currentMinutes += TickDeltaToMinutes(timebase, ticksDeltaToKey, currentTempo);
+            currentTempo = kv.Value;
+        }
+
+        // Add remaining delta with last tempo entry.
+        return currentMinutes + TickDeltaToMinutes(timebase, ticks - currentTick, currentTempo);
+    }
+
     /// <summary>
     /// Parses MIDI and returns a DTO containing the parsed information about it.
     /// </summary>
@@ -318,7 +386,7 @@ public static partial class MidiParser
         [NotNullWhen(false)] out string? error)
     {
         error = "";
-        info = null;
+        info = new MidiFileInfo();
         var stream = new MidiStreamWrapper(data);
         var headerChunk = ReadHeaderChunk(stream);
 
@@ -327,6 +395,8 @@ public static partial class MidiParser
             error = "Invalid MIDI header";
             return false;
         }
+
+        info.Header = headerChunk;
 
         if (headerChunk.Format == 2)
         {
@@ -350,7 +420,15 @@ public static partial class MidiParser
                 mostTicksOnTrack = trackChunk.TotalTicks;
         }
 
-        double totalLengthMinutes = 0f;
+        if (parsedTracks.Count == 0)
+        {
+            error = "No valid tracks found";
+            return false;
+        }
+
+        info.Tracks = parsedTracks.ToArray();
+        info.UsedChannels = usedChannels;
+        info.TotalTicks = mostTicksOnTrack;
 
         // https://midimusic.github.io/tech/midispec.html#BM2_2
         switch (headerChunk.Format)
@@ -360,50 +438,24 @@ public static partial class MidiParser
             // For a format 1 file, the tempo map must be stored as the first track.
             case 1:
             {
-                // Both formats (0 & 1) store the TempoMap inside the first track.
-                if (parsedTracks.Count > 0 && parsedTracks[0].TempoMap.Count > 0)
-                {
-                    long currentTick = 0;
-                    var currentTempo = DefaultTempoMicroseconds;
-                    // Tempo changes parsed, calculate using TempoMap
-                    foreach (var kv in parsedTracks[0].TempoMap)
-                    {
-                        // Calculate the passed ticks using the previous tempo.
-                        var delta = kv.Key - currentTick;
-                        var lengthMinutes = TickDeltaToMinutes(headerChunk.TimeBase, delta, currentTempo);
-                        totalLengthMinutes += lengthMinutes;
-                        // Update the current tempo
-                        currentTempo = kv.Value;
-                        currentTick += delta;
-                    }
-
-                    // Take longest tick length and add remaining delta with last tempo entry.
-                    var remainingDelta = mostTicksOnTrack - currentTick;
-                    totalLengthMinutes += TickDeltaToMinutes(headerChunk.TimeBase, remainingDelta, currentTempo);
-                }
-                else
-                {
-                    // No tempo changes, simply calculate using standard values and total ticks (Tempo = 500'000)
-                    totalLengthMinutes = TickDeltaToMinutes(headerChunk.TimeBase,
-                        mostTicksOnTrack,
-                        DefaultTempoMicroseconds);
-                }
+                info.PlayTimeMinutes =
+                    CalculateMinutePositionFromTicks(info.Header.TimeBase, info.TotalTicks, info.Tracks[0].TempoMap);
 
                 break;
             }
 
-            default:
-                error = "Invalid Format";
+            case 2:
+            {
+                error = "SMPTE format not supported";
                 return false;
-        }
+            }
 
-        info = new MidiFileInfo
-        {
-            Header = headerChunk,
-            Tracks = parsedTracks.ToArray(),
-            UsedChannels = usedChannels,
-            PlayTimeMinutes = totalLengthMinutes,
-        };
+            default:
+            {
+                error = "Invalid format";
+                return false;
+            }
+        }
 
         return true;
     }

@@ -440,4 +440,9 @@ public sealed class MidiFileInfo
     /// Calculated playtime of the complete MIDI file taking into account time base and tempo changes.
     /// </summary>
     public double PlayTimeMinutes;
+
+    /// <summary>
+    /// Song tick count measured across all tracks.
+    /// </summary>
+    public long TotalTicks;
 }
