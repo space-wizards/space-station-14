@@ -19,6 +19,7 @@ using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Doors;
 using Content.Shared.Examine;
 using Content.Shared.Popups;
+using Content.Shared.Power;
 using Content.Shared.Tag;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
@@ -46,6 +47,7 @@ public sealed partial class AirlockControllerSystem : SharedAirlockControllerSys
     [Dependency] private IGameTiming _timing = default!;
 
     private EntityQuery<DeviceNetworkComponent> _netQuery;
+    private EntityQuery<DeviceListComponent> _listQuery;
     private EntityQuery<AirlockCyclerComponent> _cyclerQuery;
     private EntityQuery<GasVentPumpComponent> _ventQuery;
     private EntityQuery<GasVentScrubberComponent> _scrubberQuery;
@@ -57,6 +59,7 @@ public sealed partial class AirlockControllerSystem : SharedAirlockControllerSys
         base.Initialize();
 
         _netQuery = GetEntityQuery<DeviceNetworkComponent>();
+        _listQuery = GetEntityQuery<DeviceListComponent>();
         _cyclerQuery = GetEntityQuery<AirlockCyclerComponent>();
         _ventQuery = GetEntityQuery<GasVentPumpComponent>();
         _scrubberQuery = GetEntityQuery<GasVentScrubberComponent>();
@@ -72,6 +75,28 @@ public sealed partial class AirlockControllerSystem : SharedAirlockControllerSys
         var comp = ent.Comp;
 
         _signal.EnsureSourcePorts(ent, comp.StateAPort, comp.StateBPort, comp.CyclingPort);
+    }
+
+    /// <summary>
+    ///     Flush our device info on power on, and ask them to update us, so we don't work on stale data.
+    /// </summary>
+    [SubscribeLocalEvent]
+    private void OnPowerChanged(Entity<AirlockControllerComponent> ent, ref PowerChangedEvent args)
+    {
+        var comp = ent.Comp;
+
+        // Whatever we knew is from before the outage
+        if (!args.Powered)
+        {
+            comp.VentData.Clear();
+            comp.ScrubberData.Clear();
+            comp.SensorData.Clear();
+            comp.DoorReports.Clear();
+            return;
+        }
+
+        _atmosDevNet.Register(ent, null);
+        _atmosDevNet.Sync(ent, null);
     }
 
     [SubscribeLocalEvent]
@@ -153,10 +178,20 @@ public sealed partial class AirlockControllerSystem : SharedAirlockControllerSys
         switch (data)
         {
             case GasVentPumpData ventData:
+                var newVent = !comp.VentData.ContainsKey(args.SenderAddress);
                 comp.VentData[args.SenderAddress] = ventData;
+
+                if (newVent)
+                    SetDeviceForState(ent, args.SenderAddress, args.Sender);
+
                 break;
             case GasVentScrubberData scrubberData:
+                var newScrubber = !comp.ScrubberData.ContainsKey(args.SenderAddress);
                 comp.ScrubberData[args.SenderAddress] = scrubberData;
+
+                if (newScrubber)
+                    SetDeviceForState(ent, args.SenderAddress, args.Sender);
+
                 break;
             case AtmosSensorData sensorData:
                 comp.SensorData[args.SenderAddress] = sensorData;
@@ -458,6 +493,7 @@ public sealed partial class AirlockControllerSystem : SharedAirlockControllerSys
     private void UpdateAtmosPace(Entity<AirlockControllerComponent> ent, TimeSpan now, bool cycling, bool restoring)
     {
         PruneCaches(ent);
+        SyncSilentDevices(ent);
         _status.Apply(ent, GetStatus(ent));
         UpdateCyclers(ent);
 
@@ -915,20 +951,6 @@ public sealed partial class AirlockControllerSystem : SharedAirlockControllerSys
     /// </summary>
     private void ApplyVents(Entity<AirlockControllerComponent> ent, bool siphon)
     {
-        var comp = ent.Comp;
-
-        // We want the other side air: Evacuating siphons towards current side, filling comes from target side
-        var side = siphon ? comp.CurrentSide : comp.TargetSide;
-
-        var wanted = (siphon, side) switch
-        {
-            (true, AirlockSide.A) => AirlockVentRole.SiphonA,
-            (true, AirlockSide.B) => AirlockVentRole.SiphonB,
-            (false, AirlockSide.A) => AirlockVentRole.VentA,
-            _ => AirlockVentRole.VentB,
-        };
-
-        var target = siphon ? 0f : GetTargetPressure(ent, side);
         var used = false;
 
         // Everything registered gets a command, assigned or not
@@ -937,39 +959,117 @@ public sealed partial class AirlockControllerSystem : SharedAirlockControllerSys
             if (!_power.IsPowered(device))
                 continue;
 
-            comp.VentRoles.TryGetValue(device, out var roles);
-
-            var wants = (roles & wanted) != 0;
-
-            if (comp.VentData.ContainsKey(address))
-            {
-                SetVent(ent, address, wants && !siphon
-                    ? Vent(true, VentPumpDirection.Releasing, target)
-                    : Vent(wants, VentPumpDirection.Siphoning));
-
-                used |= wants;
-            }
-            else if (comp.ScrubberData.ContainsKey(address))
-            {
-                // Scrubbers can only siphon
-                var useScrubber = wants && siphon;
-                SetScrubber(ent, address, Scrubber(useScrubber));
-                used |= useScrubber;
-            }
+            used |= SetDevice(ent, address, device, siphon);
         }
 
-        comp.StallReason = used ? null : AirlockStallReason.NoUsableVent;
+        ent.Comp.StallReason = used ? null : AirlockStallReason.NoUsableVent;
+    }
+
+    /// <summary>
+    ///    Assign the correct job for the device, if possible, based on the current state
+    /// </summary>
+    private bool SetDevice(Entity<AirlockControllerComponent> ent, string address, EntityUid device, bool siphon)
+    {
+        var comp = ent.Comp;
+
+        // We want the other side air: Evacuating siphons towards current side, filling comes from target side
+        var side = siphon ? comp.CurrentSide : comp.TargetSide;
+
+
+        // Work out which job we need doing: emptying the chamber, or filling it from a particular side.
+        var wanted = (siphon, side) switch
+        {
+            (true, AirlockSide.A) => AirlockVentRole.SiphonA,
+            (true, AirlockSide.B) => AirlockVentRole.SiphonB,
+            (false, AirlockSide.A) => AirlockVentRole.VentA,
+            _ => AirlockVentRole.VentB,
+        };
+
+        comp.VentRoles.TryGetValue(device, out var roles);
+
+        var wants = (roles & wanted) != 0;
+
+        // Check whether this device was ticked for that job in the config.
+
+        if (comp.VentData.ContainsKey(address))
+        {
+            SetVent(ent, address, wants && !siphon
+                ? Vent(true, VentPumpDirection.Releasing, GetTargetPressure(ent, side))
+                : Vent(wants, VentPumpDirection.Siphoning));
+
+            return wants;
+        }
+
+        if (comp.ScrubberData.ContainsKey(address))
+        {
+            // Scrubbers can only siphon
+            var useScrubber = wants && siphon;
+            SetScrubber(ent, address, Scrubber(useScrubber));
+            return useScrubber;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    ///     Vent with no power drops packets, so we keep syncing until they have power
+    /// </summary>
+    private void SyncSilentDevices(Entity<AirlockControllerComponent> ent)
+    {
+        var comp = ent.Comp;
+
+        // No point asking when it would drop us
+        if (!_power.IsPowered(ent) || !_listQuery.TryComp(ent, out var list))
+            return;
+
+        foreach (var device in list.Devices)
+        {
+            if (!_netQuery.TryComp(device, out var net) || net.Address == string.Empty)
+                continue;
+
+            if (comp.VentData.ContainsKey(net.Address) || comp.ScrubberData.ContainsKey(net.Address))
+                continue;
+
+            if (_ventQuery.HasComp(device) || _scrubberQuery.HasComp(device))
+                _atmosDevNet.Sync(ent, net.Address);
+        }
+    }
+
+    /// <summary>
+    ///     A device we just heard from for the first time gets our current state
+    /// </summary>
+    private void SetDeviceForState(Entity<AirlockControllerComponent> ent, string address, EntityUid device)
+    {
+        switch (ent.Comp.State)
+        {
+            case AirlockCycleState.Evacuating:
+                SetDevice(ent, address, device, siphon: true);
+                break;
+
+            case AirlockCycleState.Filling:
+                SetDevice(ent, address, device, siphon: false);
+                break;
+
+            default:
+                StopDevice(ent, address);
+                break;
+        }
     }
 
     private void StopVents(Entity<AirlockControllerComponent> ent)
     {
         foreach (var (address, _) in _deviceList.GetDeviceList(ent.Owner))
         {
-            if (ent.Comp.VentData.ContainsKey(address))
-                SetVent(ent, address, Vent(false, VentPumpDirection.Siphoning));
-            else if (ent.Comp.ScrubberData.ContainsKey(address))
-                SetScrubber(ent, address, Scrubber(false));
+            StopDevice(ent, address);
         }
+    }
+
+    private void StopDevice(Entity<AirlockControllerComponent> ent, string address)
+    {
+        if (ent.Comp.VentData.ContainsKey(address))
+            SetVent(ent, address, Vent(false, VentPumpDirection.Siphoning));
+        else if (ent.Comp.ScrubberData.ContainsKey(address))
+            SetScrubber(ent, address, Scrubber(false));
     }
 
     private void SetScrubber(Entity<AirlockControllerComponent> ent, string address, GasVentScrubberData data)
