@@ -86,21 +86,23 @@ public sealed partial class RCDMenuBoundUserInterface : BoundUserInterface
             list.Add(actionOption);
         }
 
-        var models = new List<RadialMenuOptionBase>(buttonsByCategory.Count + topLevelActions.Count);
+        var models = new RadialMenuOptionBase[buttonsByCategory.Count + topLevelActions.Count];
+        var i = 0;
         foreach (var (key, list) in buttonsByCategory)
         {
             var groupInfo = PrototypesGroupingInfo[key];
-            var groupingOption = new RadialMenuNestedLayerOption(list)
+            models[i] = new RadialMenuNestedLayerOption(list)
             {
                 IconSpecifier = RadialMenuIconSpecifier.With(groupInfo.Sprite),
                 ToolTip = Loc.GetString(groupInfo.Tooltip)
             };
-            models.Add(groupingOption);
+            i++;
         }
 
         foreach (var action in topLevelActions)
         {
-            models.Add(action);
+            models[i] = action;
+            i++;
         }
 
         return models;
