@@ -36,6 +36,8 @@ public sealed partial class InventoryUIController : UIController, IOnStateEntere
     [UISystemDependency] private readonly ContainerSystem _container = default!;
     [UISystemDependency] private readonly SpriteSystem _sprite = default!;
 
+    [Dependency] private EntityQuery<VirtualItemComponent> _virtualItemQuery = default!;
+
     private EntityUid? _playerUid;
     private InventorySlotsComponent? _playerInventory;
     private readonly Dictionary<string, ItemSlotButtonContainer> _slotGroups = new();
@@ -97,7 +99,7 @@ public sealed partial class InventoryUIController : UIController, IOnStateEntere
         button.Pressed += ItemPressed;
         button.StoragePressed += StoragePressed;
         button.Hover += SlotButtonHovered;
-        button.Blocked = _entities.HasComponent<VirtualItemComponent>(data.HeldEntity) || data.IsBlocked();
+        button.Blocked = _virtualItemQuery.HasComp(data.HeldEntity) || data.IsBlocked();
         button.UpdateBlockers(data.Blockers);
 
         return button;
@@ -431,7 +433,7 @@ public sealed partial class InventoryUIController : UIController, IOnStateEntere
 
     private void EntitySlotUpdate(SlotData data)
     {
-        var blocked = _entities.HasComponent<VirtualItemComponent>(data.HeldEntity) || data.IsBlocked();
+        var blocked = _virtualItemQuery.HasComp(data.HeldEntity) || data.IsBlocked();
 
         if (_strippingWindow?.InventoryButtons.GetButton(data.SlotName) is { } inventoryButton)
         {
@@ -461,7 +463,7 @@ public sealed partial class InventoryUIController : UIController, IOnStateEntere
         if (_slotGroups.GetValueOrDefault(group)?.GetButton(name) is not { } button)
             return;
 
-        if (_entities.TryGetComponent(entity, out VirtualItemComponent? virtb))
+        if (_virtualItemQuery.TryComp(entity, out var virtb))
         {
             button.SetEntity(virtb.BlockingEntity);
         }

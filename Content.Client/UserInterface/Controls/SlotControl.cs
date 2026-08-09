@@ -279,7 +279,7 @@ namespace Content.Client.UserInterface.Controls
             // Delete blockers previews if there's more then needed
             while (BlockersContainer.ChildCount > blockers.Count)
             {
-                BlockersContainer.RemoveChild(BlockersContainer.GetChild(BlockersContainer.ChildCount - 1));
+                BlockersContainer.RemoveChild(0);
             }
 
             // Add new blockers previews or update existing ones

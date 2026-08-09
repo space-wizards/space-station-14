@@ -4,10 +4,13 @@ namespace Content.Client.UserInterface.Controls
 {
     public sealed class SlotButton : SlotControl
     {
+        public readonly SlotData? SlotData;
+
         public SlotButton() { }
 
         public SlotButton(SlotData slotData)
         {
+            SlotData = slotData;
             ButtonTexturePath = slotData.TextureName;
             FullButtonTexturePath = slotData.FullTextureName;
             Blocked = slotData.Blocked;

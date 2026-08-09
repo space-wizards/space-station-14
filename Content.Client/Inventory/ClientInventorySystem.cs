@@ -26,6 +26,8 @@ namespace Content.Client.Inventory
         [Dependency] private ExamineSystem _examine = default!;
         [Dependency] private PointingSystem _pointing = default!;
 
+        [Dependency] private EntityQuery<InventorySlotBlockComponent> _slotBlockQuery = default!;
+
         public Action<SlotData>? EntitySlotUpdate = null;
         public Action<SlotData>? OnSlotAdded = null;
         public Action<SlotData>? OnSlotRemoved = null;
@@ -120,7 +122,7 @@ namespace Content.Client.Inventory
             var enumerator = GetSlotEnumerator(uid);
             while (enumerator.NextItem(out var item))
             {
-                if (!TryComp<InventorySlotBlockComponent>(item, out var comp))
+                if (!_slotBlockQuery.TryComp(item, out var comp))
                     continue;
 
                 var blockedSlots = GetSlotEnumerator(uid, comp.Slots);
