@@ -41,6 +41,15 @@ public sealed partial class VoiceMaskSystem : EntitySystem
 
     public override void Initialize()
     {
+        base.Initialize();
+
+        // Voice mask transform things
+        SubscribeLocalEvent<VoiceMaskComponent, InventoryRelayedEvent<VoiceMaskToggledEvent>>((ent, ref ev) =>
+            OnVoiceMaskToggledEvent(ent, ref ev.Args));
+        SubscribeLocalEvent<VoiceMaskComponent, ImplantRelayEvent<VoiceMaskToggledEvent>>((ent, ref ev) =>
+            OnVoiceMaskToggledEvent(ent, ref ev.Args));
+        SubscribeLocalEvent<VoiceMaskComponent, VoiceMaskToggledEvent>(OnVoiceMaskToggledEvent);
+
         Subs.CVar(_cfgManager, CCVars.MaxNameLength, value => _maxNameLength = value, true);
     }
 
@@ -68,7 +77,6 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     /// <summary>
     ///  Toggles this mask off it it isn't the mask turned on
     /// </summary>
-    [SubscribeLocalEvent]
     private void OnVoiceMaskToggledEvent(Entity<VoiceMaskComponent> ent, ref VoiceMaskToggledEvent args)
     {
         // we only toggle when the other mask turns on
