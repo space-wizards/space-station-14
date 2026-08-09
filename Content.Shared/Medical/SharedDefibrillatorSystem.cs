@@ -115,7 +115,7 @@ public abstract partial class SharedDefibrillatorSystem : EntitySystem
             return false;
 
         _audio.PlayPredicted(ent.Comp.ChargeSound, ent.Owner, user);
-        _popup.PopupEntity(Loc.GetString("defibrillator-begin", ("name", Identity.Entity(user, EntityManager)), ("target", Identity.Entity(target, EntityManager))), target);
+        _popup.PopupEntity(Loc.GetString("defibrillator-begin", ("name", Identity.Entity(user, EntityManager)), ("target", Identity.Entity(target, EntityManager))), target, PopupType.SmallCaution);
 
         return _doAfter.TryStartDoAfter(
             new DoAfterArgs(EntityManager, user, ent.Comp.DoAfterDuration, new DefibrillatorZapDoAfterEvent(),
@@ -171,12 +171,11 @@ public abstract partial class SharedDefibrillatorSystem : EntitySystem
         {
             TryRevive(defibEnt, user, interactor, false);
         }
-        
+
         var sound = failedRevive
             ? ent.Comp.FailureSound
             : ent.Comp.SuccessSound;
         _audio.PlayPredicted(sound, ent.Owner, user);
-
         _audio.PlayPredicted(ent.Comp.ZapSound, ent, user);
         var ev = new TargetDefibrillatedEvent(user, target, (ent.Owner, ent.Comp), _interactors);
         RaiseLocalEvent(target, ref ev);
@@ -221,9 +220,10 @@ public abstract partial class SharedDefibrillatorSystem : EntitySystem
             }
             else
             {
-                //if the target never could have had a mind in the first place don't bother informing the player about mindlessness
-                if (HasComp<MindContainerComponent>(target)) 
-                    _chat.TrySendInGameICMessage(ent.Owner, Loc.GetString("defibrillator-no-mind"), InGameICChatType.Speak, true);
+                if (HasComp<MindContainerComponent>(target))
+                    _chat.TrySendInGameICMessage(ent.Owner, Loc.GetString("defibrillator-no-mind"), InGameICChatType.Speak, true); //target can host a mind but doesn't
+                else
+                    _chat.TrySendInGameICMessage(ent.Owner, Loc.GetString("defibrillator-not-living"), InGameICChatType.Speak, true); //target couldn't have hosted a mind
             }
         }
 
