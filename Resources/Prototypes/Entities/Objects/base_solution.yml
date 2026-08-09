@@ -52,11 +52,6 @@
   components:
   - type: Solution
     id: food
-  - type: Heatable
-    exposedContainers:
-    - type: HeatContainerAddress
-      addressType: Solution
-      targetName: food
 
 - type: entity
   abstract: true
