@@ -17,9 +17,10 @@
     itemIconStyle: BigAction
     sound: !type:SoundPathSpecifier
       path: /Audio/Magic/repulse.ogg
-    icon:
-      sprite: Objects/Magic/magicactions.rsi
-      state: repulse
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: repulse
   - type: InstantAction
     event: !type:RepulseAttractActionEvent
   - type: SpeakOnAction
