@@ -25,7 +25,7 @@
   parent: BaseAction
   id: ActionChangelingBiodegrade
   name: Biodegrade
-  description: "Vomit acid over your restraints, setting yourself free. \n\nRequires 25 Chemicals."
+  description: "Vomit acid over your restraints, setting yourself free. \n\nRequires 20 Chemicals."
   components:
   - type: Action
     useDelay: 10
@@ -37,7 +37,7 @@
     - state: biodegrade
   - type: ActionRequireSatiation
     satiation: Chemicals
-    amount: 25
+    amount: 20
     failReason: changeling-not-enough-chemicals
   - type: InstantAction
     event: !type:ChangelingBiodegradeActionEvent
