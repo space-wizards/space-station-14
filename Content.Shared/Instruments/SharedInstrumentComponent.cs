@@ -190,7 +190,7 @@ public sealed class InstrumentSetChannelsEvent : EntityEventArgs
 /// <summary>
 /// Represents a single midi track with the track name, instrument name and bank instrument name extracted.
 /// </summary>
-[Obsolete("Use MidiInfo instead.")]
+[Obsolete("Use MidiTrackInfo instead.")]
 [Serializable, NetSerializable]
 public sealed class MidiTrack
 {
