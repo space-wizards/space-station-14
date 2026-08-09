@@ -112,9 +112,9 @@ public sealed partial class SimpleRadialMenu : RadialMenu
             Visible = false
         };
 
-        model.Nested.Sort(CompareByTooltip);
+        var sorted = SortOptions(model.Nested);
 
-        foreach (var nested in model.Nested)
+        foreach (var nested in sorted)
         {
             if (nested is RadialMenuNestedLayerOption nestedMenuModel)
             {
@@ -386,13 +386,13 @@ public sealed class RadialMenuActionOption<T>(Action<T> onPressed, T data) : Rad
 /// </summary>
 /// <param name="nested">List of button models for next layer of menu.</param>
 /// <param name="containerRadius">Radius for radial menu buttons of next layer.</param>
-public sealed class RadialMenuNestedLayerOption(List<RadialMenuOptionBase> nested, float containerRadius = 100) : RadialMenuOptionBase
+public sealed class RadialMenuNestedLayerOption(IReadOnlyCollection<RadialMenuOptionBase> nested, float containerRadius = 100) : RadialMenuOptionBase
 {
     /// <summary> Radius for radial menu buttons of next layer. </summary>
     public float? ContainerRadius { get; } = containerRadius;
 
     /// <summary> List of button models for next layer of menu. </summary>
-    public List<RadialMenuOptionBase> Nested { get; } = nested;
+    public IReadOnlyCollection<RadialMenuOptionBase> Nested { get; } = nested;
 }
 
 /// <summary>
