@@ -11,7 +11,7 @@ namespace Content.Server.Animals.Systems;
 /// <inheritdoc cref="HungerProductionComponent"/>
 public sealed partial class HungerProductionSystem : EntitySystem
 {
-    [Dependency] private HungerSystem _hunger = default!;
+    [Dependency] private SatiationSystem _satiation = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private MobStateSystem _mobState = default!;
     [Dependency] private IRobustRandom _random = default!;
@@ -62,8 +62,9 @@ public sealed partial class HungerProductionSystem : EntitySystem
             return false;
         }
 
-        if (TryComp(owner, out HungerComponent? hunger) &&
-            !HasEnoughHunger(ent.Comp, hunger))
+        if (TryComp(owner, out SatiationComponent? satiation) &&
+            satiation.Has(SatiationSystem.Hunger) &&
+            !HasEnoughHunger(ent.Comp, (owner, satiation)))
         {
             failure = HungerProductionFailure.Hungry;
             return false;
@@ -74,23 +75,29 @@ public sealed partial class HungerProductionSystem : EntitySystem
         if (!ev.Produced)
             return false;
 
-        if (hunger != null)
-            _hunger.ModifyHunger(owner, -ent.Comp.HungerUsage, hunger);
+        if (satiation != null)
+            _satiation.ModifyValue((owner, satiation), SatiationSystem.Hunger, -ent.Comp.HungerUsage);
 
         failure = HungerProductionFailure.None;
         return true;
     }
 
-    private bool HasEnoughHunger(HungerProductionComponent component, HungerComponent hunger)
+    private bool HasEnoughHunger(
+        HungerProductionComponent component,
+        Entity<SatiationComponent> satiation)
     {
         if (component.MinimumHungerThreshold is { } threshold &&
-            _hunger.GetHungerThreshold(hunger) < threshold)
+            !_satiation.IsValueInRange(
+                satiation,
+                SatiationSystem.Hunger,
+                above: threshold,
+                hypotheticalValueDelta: -component.HungerUsage))
         {
             return false;
         }
 
         return component.MinimumHunger is not { } minimum ||
-               _hunger.GetHunger(hunger) >= minimum;
+               _satiation.GetValueOrNull(satiation, SatiationSystem.Hunger) >= minimum;
     }
 
     private EntityUid GetOwner(Entity<HungerProductionComponent> ent)

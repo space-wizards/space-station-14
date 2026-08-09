@@ -1,5 +1,5 @@
 using Content.Server.Animals.Systems;
-using Content.Shared.Nutrition.Components;
+using Content.Shared.Nutrition.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Animals.Components;
@@ -37,13 +37,13 @@ public sealed partial class HungerProductionComponent : Component
     public float HungerUsage = 10f;
 
     /// <summary>
-    /// Optional hunger threshold required before production.
+    /// Optional hunger satiation threshold which must remain exceeded after production.
     /// </summary>
     [DataField]
-    public HungerThreshold? MinimumHungerThreshold;
+    public SatiationValue? MinimumHungerThreshold;
 
     /// <summary>
-    /// If set, entities with a HungerComponent must have at least this much hunger.
+    /// If set, entities with hunger satiation must have at least this much hunger.
     /// </summary>
     [DataField]
     public float? MinimumHunger;

@@ -1,12 +1,14 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 using Content.Client.Graphics;
+using Content.Client.Light.EntitySystems;
 using Content.Shared.CCVar;
-using Content.Shared.Maps;
+using Content.Shared.Light.Components;
+using Robust.Shared.ComponentTrees;
 using Robust.Client.Graphics;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
-using Robust.Shared.Map.Components;
+using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -20,32 +22,42 @@ public sealed partial class AmbientOcclusionOverlay : Overlay
     private static readonly ProtoId<ShaderPrototype> UnshadedShader = "unshaded";
     private static readonly ProtoId<ShaderPrototype> StencilMaskShader = "StencilMask";
     private static readonly ProtoId<ShaderPrototype> StencilEqualDrawShader = "StencilEqualDraw";
+    private const float BlurMultiplier = 7f;
 
     [Dependency] private IClyde _clyde = default!;
     [Dependency] private IConfigurationManager _cfgManager = default!;
     [Dependency] private IEntityManager _entManager = default!;
     [Dependency] private IPrototypeManager _proto = default!;
 
-    private List<Entity<MapGridComponent>> _cachedGrids = new();
-    private readonly List<Entity<OccluderComponent, TransformComponent>> _cachedOccluders = new();
     private readonly List<Vector2> _aoVertices = new(4096);
     private readonly List<ushort> _aoIndices = new(6144);
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowEntities;
 
     private readonly OverlayResourceCache<CachedResources> _resources = new ();
+    private readonly OccluderSystem _occluders;
+    private readonly GridStencilSystem _gridStencil;
+    private readonly SharedTransformSystem _xformSystem;
+
+    private Color _color;
 
     public AmbientOcclusionOverlay()
     {
         IoCManager.InjectDependencies(this);
         ZIndex = AfterLightTargetOverlay.ContentZIndex + 1;
+
+        _occluders = _entManager.System<OccluderSystem>();
+        _gridStencil = _entManager.System<GridStencilSystem>();
+        _xformSystem = _entManager.System<SharedTransformSystem>();
+
+        _cfgManager.OnValueChanged(CCVars.AmbientOcclusionColor, OnColorChanged, true);
     }
 
     protected override void Draw(in OverlayDrawArgs args)
     {
         /*
          * tl;dr
-         * - we draw a black square on each "ambient occlusion" entity.
+         * - we draw each occluder's polygon to an AO source texture.
          * - we blur this.
          * - We apply it to the viewport.
          *
@@ -58,36 +70,29 @@ public sealed partial class AmbientOcclusionOverlay : Overlay
         var mapId = args.MapId;
         var worldBounds = args.WorldBounds;
         var worldHandle = args.WorldHandle;
-        var color = Color.FromHex(_cfgManager.GetCVar(CCVars.AmbientOcclusionColor));
-        //var color = Color.Red;
+        var distance = _cfgManager.GetCVar(CCVars.AmbientOcclusionDistance);
+        var resolutionScale = Math.Clamp(_cfgManager.GetCVar(CCVars.AmbientOcclusionResolutionScale), 0.1f, 1f);
         var target = viewport.RenderTarget;
-        var lightScale = target.Size / (Vector2) viewport.Size;
+        var aoSize = new Vector2i(
+            Math.Max(1, (int) MathF.Ceiling(target.Size.X * resolutionScale)),
+            Math.Max(1, (int) MathF.Ceiling(target.Size.Y * resolutionScale)));
+        var lightScale = aoSize / (Vector2) viewport.Size;
         var scale = viewport.RenderScale / (Vector2.One / lightScale);
-        var maps = _entManager.System<SharedMapSystem>();
-        var lookups = _entManager.System<EntityLookupSystem>();
-        var query = _entManager.System<OccluderSystem>();
-        var xformSystem = _entManager.System<SharedTransformSystem>();
-        var turfSystem = _entManager.System<TurfSystem>();
-        var invMatrix = args.Viewport.GetWorldToLocalMatrix();
+        var expandedBounds = worldBounds.Enlarged(GetBlurMargin(viewport, distance));
+        var polygonExpansion = distance / EyeManager.PixelsPerMeter;
 
         var res = _resources.GetForViewport(args.Viewport, static _ => new CachedResources());
 
-        if (res.AOTarget?.Texture.Size != target.Size)
+        if (res.AOTarget?.Texture.Size != aoSize)
         {
             res.AOTarget?.Dispose();
-            res.AOTarget = _clyde.CreateRenderTarget(target.Size, new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "ambient-occlusion-target");
+            res.AOTarget = _clyde.CreateRenderTarget(aoSize, new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "ambient-occlusion-target");
         }
 
-        if (res.AOBlurBuffer?.Texture.Size != target.Size)
+        if (res.AOBlurBuffer?.Texture.Size != aoSize)
         {
             res.AOBlurBuffer?.Dispose();
-            res.AOBlurBuffer = _clyde.CreateRenderTarget(target.Size, new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "ambient-occlusion-blur-target");
-        }
-
-        if (res.AOStencilTarget?.Texture.Size != target.Size)
-        {
-            res.AOStencilTarget?.Dispose();
-            res.AOStencilTarget = _clyde.CreateRenderTarget(target.Size, new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "ambient-occlusion-stencil-target");
+            res.AOBlurBuffer = _clyde.CreateRenderTarget(aoSize, new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "ambient-occlusion-blur-target");
         }
 
         // Draw the texture data to the texture.
@@ -97,56 +102,29 @@ public sealed partial class AmbientOcclusionOverlay : Overlay
                 worldHandle.UseShader(_proto.Index(UnshadedShader).Instance());
                 worldHandle.SetTransform(Matrix3x2.Identity);
                 var worldToTargetMatrix = res.AOTarget.GetWorldToLocalMatrix(viewport.Eye!, scale);
+                var state = new AmbientOcclusionQueryState(this, worldHandle, worldToTargetMatrix, polygonExpansion);
 
-                _cachedOccluders.Clear();
-                query.QueryAabb(_cachedOccluders, mapId, worldBounds);
-
-                foreach (var entry in _cachedOccluders)
+                _occluders.QueryAabb(ref state, static (ref AmbientOcclusionQueryState state, in ComponentTreeEntry<OccluderComponent> entry) =>
                 {
-                    DebugTools.Assert(entry.Comp1.Enabled);
-                    var matrix = xformSystem.GetWorldMatrix(entry.Comp2);
-                    var localToTargetMatrix = Matrix3x2.Multiply(matrix, worldToTargetMatrix);
-                    AppendAmbientOcclusionPolygon(worldHandle, entry.Comp1.Polygon, localToTargetMatrix);
-                }
+                    state.Overlay.AppendAmbientOcclusionPolygon(entry, ref state);
+                    return true;
+                }, mapId, expandedBounds);
 
                 FlushAmbientOcclusionPolygons(worldHandle);
             }, Color.Transparent);
 
-        _clyde.BlurRenderTarget(viewport, res.AOTarget, res.AOBlurBuffer, viewport.Eye!, 14f);
-
-        // Need to do stencilling after blur as it will nuke it.
-        // Draw stencil for the grid so we don't draw in space.
-        args.WorldHandle.RenderInRenderTarget(res.AOStencilTarget,
-            () =>
-            {
-                // Don't want lighting affecting it.
-                worldHandle.UseShader(_proto.Index(UnshadedShader).Instance());
-
-                _cachedGrids.Clear();
-                maps.FindGridsIntersecting(mapId, worldBounds, ref _cachedGrids);
-                foreach (var grid in _cachedGrids)
-                {
-                    var transform = xformSystem.GetWorldMatrix(grid.Owner);
-                    var worldToTextureMatrix = Matrix3x2.Multiply(transform, invMatrix);
-                    var tiles = maps.GetTilesEnumerator(grid.Owner, grid, worldBounds);
-                    worldHandle.SetTransform(worldToTextureMatrix);
-                    while (tiles.MoveNext(out var tileRef))
-                    {
-                        if (turfSystem.IsSpace(tileRef))
-                            continue;
-
-                        var bounds = lookups.GetLocalBounds(tileRef, grid.Comp.TileSize);
-                        worldHandle.DrawRect(bounds, Color.White);
-                    }
-                }
-
-            }, Color.Transparent);
+        _clyde.BlurRenderTarget(viewport, res.AOTarget, res.AOBlurBuffer, viewport.Eye!, BlurMultiplier);
 
         // Draw the stencil texture to depth buffer.
+        var stencil = _gridStencil.GetNonSpaceStencil(args);
         worldHandle.UseShader(_proto.Index(StencilMaskShader).Instance());
-        worldHandle.DrawTextureRect(res.AOStencilTarget!.Texture, worldBounds);
+        worldHandle.DrawTextureRect(stencil.Texture, worldBounds);
 
         // Draw the Blurred AO texture finally.
+        var color = _entManager.TryGetComponent(args.MapUid, out MapAmbientColorComponent? mapAmbient)
+            ? mapAmbient.Color
+            : _color;
+
         worldHandle.UseShader(_proto.Index(StencilEqualDrawShader).Instance());
         worldHandle.DrawTextureRect(res.AOTarget!.Texture, worldBounds, color);
 
@@ -154,17 +132,72 @@ public sealed partial class AmbientOcclusionOverlay : Overlay
         args.WorldHandle.UseShader(null);
     }
 
+    private void OnColorChanged(string value)
+    {
+        _color = Color.FromHex(value);
+    }
+
+    private static float GetBlurMargin(IClydeViewport viewport, float distance)
+    {
+        if (viewport.Eye == null)
+            return distance / EyeManager.PixelsPerMeter;
+
+        var cameraSize = viewport.Eye.Zoom.Y * viewport.Size.Y * (1 / viewport.RenderScale.Y) / EyeManager.PixelsPerMeter;
+
+        // Matches Clyde's BlurRenderTarget radius calculation closely enough to include off-screen AO contributors.
+        return distance / EyeManager.PixelsPerMeter + BlurMultiplier / cameraSize;
+    }
+
     protected override void DisposeBehavior()
     {
+        _cfgManager.UnsubValueChanged(CCVars.AmbientOcclusionColor, OnColorChanged);
         _resources.Dispose();
 
         base.DisposeBehavior();
     }
 
     private void AppendAmbientOcclusionPolygon(
+        in ComponentTreeEntry<OccluderComponent> entry,
+        ref AmbientOcclusionQueryState state)
+    {
+        DebugTools.Assert(entry.Component.Enabled);
+
+        var localToTargetMatrix = GetLocalToTargetMatrix(entry, ref state);
+
+        AppendAmbientOcclusionPolygon(
+            state.WorldHandle,
+            entry.Component.Polygon,
+            localToTargetMatrix,
+            state.Expansion);
+    }
+
+    private Matrix3x2 GetLocalToTargetMatrix(
+        in ComponentTreeEntry<OccluderComponent> entry,
+        ref AmbientOcclusionQueryState state)
+    {
+        // OccluderSystem's tree invariant is that occluders are parented directly to their map/grid tree.
+        // In that case LocalMatrix is already local-to-tree, so avoid resolving a recursive world matrix per occluder.
+        if (entry.Transform.ParentUid == entry.Component.TreeUid)
+        {
+            if (state.TreeUid != entry.Transform.ParentUid)
+            {
+                state.TreeUid = entry.Transform.ParentUid;
+                state.TreeToTargetMatrix = Matrix3x2.Multiply(
+                    _xformSystem.GetWorldMatrix(entry.Transform.ParentUid),
+                    state.WorldToTargetMatrix);
+            }
+
+            return Matrix3x2.Multiply(entry.Transform.LocalMatrix, state.TreeToTargetMatrix);
+        }
+
+        return Matrix3x2.Multiply(_xformSystem.GetWorldMatrix(entry.Transform), state.WorldToTargetMatrix);
+    }
+
+    private void AppendAmbientOcclusionPolygon(
         DrawingHandleWorld worldHandle,
         ReadOnlySpan<Vector2> polygon,
-        Matrix3x2 localToTargetMatrix)
+        Matrix3x2 localToTargetMatrix,
+        float expansion)
     {
         if (polygon.Length < 3)
             return;
@@ -174,10 +207,27 @@ public sealed partial class AmbientOcclusionOverlay : Overlay
             FlushAmbientOcclusionPolygons(worldHandle);
 
         var indexBase = (ushort) _aoVertices.Count;
+        var center = Vector2.Zero;
 
         for (var i = 0; i < polygon.Length; i++)
         {
-            _aoVertices.Add(Vector2.Transform(polygon[i], localToTargetMatrix));
+            center += polygon[i];
+        }
+
+        center /= polygon.Length;
+
+        for (var i = 0; i < polygon.Length; i++)
+        {
+            var vertex = polygon[i];
+
+            if (expansion > 0f)
+            {
+                var offset = vertex - center;
+                if (offset.LengthSquared() > 0f)
+                    vertex += Vector2.Normalize(offset) * expansion;
+            }
+
+            _aoVertices.Add(Vector2.Transform(vertex, localToTargetMatrix));
         }
 
         for (var i = 1; i < polygon.Length - 1; i++)
@@ -203,19 +253,40 @@ public sealed partial class AmbientOcclusionOverlay : Overlay
         _aoIndices.Clear();
     }
 
+    private struct AmbientOcclusionQueryState
+    {
+        public AmbientOcclusionOverlay Overlay;
+        public DrawingHandleWorld WorldHandle;
+        public Matrix3x2 WorldToTargetMatrix;
+        public float Expansion;
+        public EntityUid? TreeUid;
+        public Matrix3x2 TreeToTargetMatrix;
+
+        public AmbientOcclusionQueryState(
+            AmbientOcclusionOverlay overlay,
+            DrawingHandleWorld worldHandle,
+            Matrix3x2 worldToTargetMatrix,
+            float expansion)
+        {
+            Overlay = overlay;
+            WorldHandle = worldHandle;
+            WorldToTargetMatrix = worldToTargetMatrix;
+            Expansion = expansion;
+            TreeUid = null;
+            TreeToTargetMatrix = Matrix3x2.Identity;
+        }
+    }
+
     private sealed class CachedResources : IDisposable
     {
         public IRenderTexture? AOTarget;
         public IRenderTexture? AOBlurBuffer;
 
-        // Couldn't figure out a way to avoid this so if you can then please do.
-        public IRenderTexture? AOStencilTarget;
-
         public void Dispose()
         {
             AOTarget?.Dispose();
             AOBlurBuffer?.Dispose();
-            AOStencilTarget?.Dispose();
         }
     }
 }
+
