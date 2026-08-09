@@ -145,6 +145,7 @@
   name: department-Theatre
   description: department-Theatre-description
   color: "#6F56B8"
+  weight: -15 # so it displays "after" the rest of the Service roles
   roles:
   - Clown
   - Mime
