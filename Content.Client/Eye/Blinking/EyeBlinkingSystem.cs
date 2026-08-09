@@ -259,13 +259,13 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
             return;
 
         // Remove existing eyelid layers by their expected mapping
-        var i = 0;
 
-        for (var j = comp.AllLayers.Count() - 1; j >= 0; j--)
+        foreach (var state in ent.Comp.Eyelids)
         {
-            if (comp[j].RsiState.Name?.Contains("eyelid-") == true)
+            if (_sprite.LayerMapTryGet((body, comp), state.LayerKey, out var layerIndex, false))
             {
-                _sprite.RemoveLayer(body, j);
+                _sprite.RemoveLayer((body, comp), layerIndex);
+                _sprite.LayerMapRemove((body, comp), state.LayerKey);
             }
         }
 
@@ -296,7 +296,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         }
 
         // Creates a new layer for each eyelid state defined in the RSI.
-        i = 0;
+        var i = 0;
         foreach (var state in rsiCollection)
         {
             if (state.StateId.Name is not { } name
