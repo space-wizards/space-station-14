@@ -146,21 +146,28 @@
   name: XB GML-78
   description: A guided missile launcher.
   components:
-  - type: Sprite # TODO: ADD NEW SPRITE HERE
-    sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Launchers/xenoborg_guided_missile_launcher.rsi
     layers:
     - state: base
       map: [ "enum.GunVisualLayers.Base" ]
     - state: mag-0
       map: [ "enum.GunVisualLayers.Mag" ]
+  - type: Appearance
+  - type: MagazineVisuals
+    magState: mag
+    steps: 3
+    zeroVisible: false
   - type: Gun
-    fireRate: 0.5
+    fireRate: 2
     projectileSpeed: 5 # needs to be the same as the speed of the chasing walk component of the projectile
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/rpgfire.ogg
   - type: BallisticAmmoProvider
     proto: BulletGuidedXenoborgMissile
-    capacity: 100 # TODO: CHANGE LATER
+    capacity: 5
+  - type: BallisticAmmoSelfRefiller
+    autoRefillRate: 30s # takes a while to get a new one
   - type: TargetAssign
   - type: DeviceLinkSink
     ports:
