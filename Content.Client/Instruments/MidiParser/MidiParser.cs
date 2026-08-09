@@ -314,7 +314,7 @@ public static partial class MidiParser
     /// <returns>True on success</returns>
     public static bool TryParseMidi(
         byte[] data,
-        [NotNullWhen(true)] out MidiInfo? info,
+        [NotNullWhen(true)] out MidiFileInfo? info,
         [NotNullWhen(false)] out string? error)
     {
         error = "";
@@ -397,12 +397,12 @@ public static partial class MidiParser
                 return false;
         }
 
-        info = new MidiInfo
+        info = new MidiFileInfo
         {
             Header = headerChunk,
             Tracks = parsedTracks.ToArray(),
             UsedChannels = usedChannels,
-            TotalLengthMinutes = totalLengthMinutes,
+            PlayTimeMinutes = totalLengthMinutes,
         };
 
         return true;
