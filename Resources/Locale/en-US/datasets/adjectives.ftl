@@ -419,3 +419,4 @@ adjectives-dataset-418 = suspicious
 adjectives-dataset-419 = sussy
 adjectives-dataset-420 = blazed
 adjectives-dataset-421 = curmudgeonly
+adjectives-dataset-422 = pudgy
