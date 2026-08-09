@@ -19,7 +19,7 @@ public sealed partial class ShowSyndicateIconsSystem : EquipmentHudSystem<ShowSy
         if (!IsActive)
             return;
 
-        if (ProtoMan.TryIndex<StatusIconPrototype>(component.SyndStatusIcon, out var iconPrototype))
+        if (ProtoMan.TryIndex(component.SyndStatusIcon, out var iconPrototype))
             ev.StatusIcons.Add(iconPrototype);
     }
 }

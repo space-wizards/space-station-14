@@ -8,13 +8,13 @@ namespace Content.Shared.NewPlayer;
 /// Players with this component can be seen by players with <see cref="ShowNewPlayerIconComponent"/>.
 /// It is used to indicate a player is new to the game.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class NewPlayerIconComponent : Component
 {
     /// <summary>
     /// The status icon corresponding to the new player icon.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public ProtoId<StatusIconPrototype> StatusIcon { get; set; } = "NewPlayerIcon";
 
     // We only send these out to ShowNewPlayerIconComponent users, to avoid malicious new player detection.

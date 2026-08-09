@@ -18,18 +18,21 @@ public sealed partial class NewPlayerSystem : EntitySystem
     [Dependency] private PlayTimeTrackingManager _playtimeManager = default!;
     [Dependency] private WhitelistManager _whitelistManager = default!;
 
+    [Dependency] private EntityQuery<ShowNewPlayerIconComponent> _showPlayerIconQuery = default!;
+
     private TimeSpan _newPlayerTimeTotal;
 
     /// <inheritdoc />
     public override void Initialize()
     {
+        base.Initialize();
         Subs.CVar(_config, CCVars.NewPlayerTimeTotalHours, v => _newPlayerTimeTotal = TimeSpan.FromHours(v), true);
     }
 
     [SubscribeLocalEvent]
     private void OnNewPlayerGetStateAttempt(Entity<NewPlayerIconComponent> entity, ref ComponentGetStateAttemptEvent args)
     {
-        args.Cancelled = !(args.Player?.AttachedEntity is not { } uid || HasComp<ShowNewPlayerIconComponent>(uid));
+        args.Cancelled = !(args.Player?.AttachedEntity is not { } uid || _showPlayerIconQuery.HasComp(uid));
     }
 
     /// <summary>
