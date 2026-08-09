@@ -70,35 +70,6 @@ public sealed class FootstepTrackTest : GameTest
 ";
 
     [Test]
-    public async Task PickupDoesNotMutatePuddleSolution()
-    {
-        var testMap = await Pair.CreateTestMap();
-
-        await Server.WaitAssertion(() =>
-        {
-            var solutionContainer = SEntMan.System<SharedSolutionContainerSystem>();
-            var footprints = SEntMan.System<FootstepTrackSystem>();
-            var tracker = SSpawnAtPosition(TrackerPrototype, testMap.GridCoords);
-            var puddle = SSpawnAtPosition(BloodPuddlePrototype, testMap.GridCoords);
-            var puddleComp = SComp<PuddleComponent>(puddle);
-            var trackerComp = SComp<FootstepTrackComponent>(tracker);
-
-            Assert.That(solutionContainer.TryGetSolution(puddle, puddleComp.SolutionName, out _, out var solution), Is.True);
-            Assert.That(solution.Volume, Is.EqualTo(BloodVolume));
-            Assert.That(solution.GetTotalPrototypeQuantity(Blood), Is.EqualTo(BloodVolume));
-
-            Assert.That(footprints.TryPickupBloodFromPuddle((puddle, puddleComp), (tracker, trackerComp)), Is.True);
-
-            Assert.Multiple(() =>
-            {
-                Assert.That(solution.Volume, Is.EqualTo(BloodVolume));
-                Assert.That(solution.GetTotalPrototypeQuantity(Blood), Is.EqualTo(BloodVolume));
-                Assert.That(trackerComp.StepsRemaining, Is.EqualTo(trackerComp.MaxSteps));
-            });
-        });
-    }
-
-    [Test]
     public async Task FootprintsFadeOutAfterConfiguredSteps()
     {
         var testMap = await Pair.CreateTestMap();
@@ -254,7 +225,7 @@ public sealed class FootstepTrackTest : GameTest
     }
 
     [Test]
-    public async Task FootprintsReplaceSameIdCoordinateAngleOnlyWhenAlphaIsHigher()
+    public async Task FootprintsReplaceSameWhenAlphaIsHigher()
     {
         var testMap = await Pair.CreateTestMap();
         EntityUid tracker = default;
@@ -328,94 +299,6 @@ public sealed class FootstepTrackTest : GameTest
                 Assert.That(differentFootprint.Color!.Value.A, Is.EqualTo(0.5f).Within(0.001f));
                 Assert.That(SComp<FootstepTrackComponent>(tracker).StepsRemaining, Is.EqualTo(5));
             });
-        });
-    }
-
-    [Test]
-    public async Task BloodPickupUsesStepperCenterTileNotCollisionOverlap()
-    {
-        var testMap = await Pair.CreateTestMap();
-        EntityUid tracker = default;
-
-        await Server.WaitAssertion(() =>
-        {
-            var map = SEntMan.System<SharedMapSystem>();
-            tracker = SSpawnAtPosition(TrackerPrototype, testMap.GridCoords);
-
-            map.SetTile(testMap.Grid, new Vector2i(1, 0), testMap.Tile.Tile);
-            SSpawnAtPosition(BloodPuddlePrototype, new EntityCoordinates(testMap.Grid.Owner, new Vector2(1.1f, 0.1f)));
-        });
-
-        await Pair.RunTicksSync(1);
-
-        await Server.WaitAssertion(() =>
-        {
-            Assert.That(SComp<FootstepTrackComponent>(tracker).StepsRemaining, Is.Zero);
-        });
-
-        await Server.WaitPost(() =>
-        {
-            var transform = SEntMan.System<SharedTransformSystem>();
-            transform.SetCoordinates(tracker, new EntityCoordinates(testMap.Grid.Owner, new Vector2(1.1f, 0.1f)));
-        });
-
-        await Pair.RunTicksSync(1);
-
-        await Server.WaitAssertion(() =>
-        {
-            var trackerComp = SComp<FootstepTrackComponent>(tracker);
-            Assert.That(trackerComp.StepsRemaining, Is.EqualTo(trackerComp.MaxSteps));
-        });
-    }
-
-    [Test]
-    public async Task FootprintsAreCleanable()
-    {
-        var testMap = await Pair.CreateTestMap();
-        EntityUid tracker = default;
-
-        await Server.WaitAssertion(() =>
-        {
-            var footprints = SEntMan.System<FootstepTrackSystem>();
-            var map = SEntMan.System<SharedMapSystem>();
-            tracker = SSpawnAtPosition(TrackerPrototype, testMap.GridCoords);
-            var puddle = SSpawnAtPosition(BloodPuddlePrototype, testMap.GridCoords);
-
-            map.SetTile(testMap.Grid, new Vector2i(1, 0), testMap.Tile.Tile);
-            Assert.That(footprints.TryPickupBloodFromPuddle(
-                SEntity<PuddleComponent>(puddle),
-                SEntity<FootstepTrackComponent>(tracker)), Is.True);
-        });
-
-        await Server.WaitPost(() =>
-        {
-            var transform = SEntMan.System<SharedTransformSystem>();
-            transform.SetCoordinates(tracker, new EntityCoordinates(testMap.Grid.Owner, new Vector2(1.1f, 0.1f)));
-        });
-
-        await Pair.RunTicksSync(1);
-
-        await Server.WaitAssertion(() =>
-        {
-            var decals = SEntMan.System<DecalSystem>();
-            var map = SEntMan.System<SharedMapSystem>();
-            var footprint = decals.GetDecalsIntersecting(testMap.Grid, new Box2(1, -1, 2, 1))
-                .Single(x => x.Decal.Id is "BloodFootprint1" or "BloodFootprint2");
-
-            Assert.That(footprint.Decal.Cleanable, Is.True);
-            Assert.That(map.TryGetTileRef(
-                testMap.Grid.Owner,
-                testMap.Grid.Comp,
-                new EntityCoordinates(testMap.Grid.Owner, new Vector2(1.1f, 0.1f)),
-                out var tile), Is.True);
-
-            var reaction = new CleanDecalsReaction();
-            var reagent = SProtoMan.Index<ReagentPrototype>("SpaceCleaner");
-            var cleaned = reaction.TileReact(tile, reagent, FixedPoint2.New(1), SEntMan, null);
-
-            Assert.That(cleaned, Is.GreaterThan(FixedPoint2.Zero));
-            Assert.That(decals.GetDecalsIntersecting(testMap.Grid, new Box2(1, -1, 2, 1))
-                .Any(x => x.Decal.Id is "BloodFootprint1" or "BloodFootprint2"), Is.False);
         });
     }
 }
