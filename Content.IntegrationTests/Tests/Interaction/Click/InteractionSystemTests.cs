@@ -17,7 +17,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
 {
     [TestFixture]
     [TestOf(typeof(InteractionSystem))]
-    public sealed class InteractionSystemTests : GameTest
+    public sealed partial class InteractionSystemTests : GameTest
     {
         [TestPrototypes]
         private const string Prototypes = @"

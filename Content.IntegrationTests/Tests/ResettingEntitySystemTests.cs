@@ -8,7 +8,7 @@ namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
     [TestOf(typeof(RoundRestartCleanupEvent))]
-    public sealed class ResettingEntitySystemTests : GameTest
+    public sealed partial class ResettingEntitySystemTests : GameTest
     {
         public sealed partial class TestRoundRestartCleanupEvent : EntitySystem
         {

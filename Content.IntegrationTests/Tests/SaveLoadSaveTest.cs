@@ -17,7 +17,7 @@ namespace Content.IntegrationTests.Tests
     ///     Tests that a grid's yaml does not change when saved consecutively.
     /// </summary>
     [TestFixture]
-    public sealed class SaveLoadSaveTest : GameTest
+    public sealed partial class SaveLoadSaveTest : GameTest
     {
         [Test]
         public async Task CreateSaveLoadSaveGrid()
