@@ -47,10 +47,10 @@ public sealed partial class DoAfterArgs
     public bool Hidden;
 
     /// <summary>
-    ///     LocId of the text that will be added to the examine window of the entity.
+    ///     String that will be added to the examine window of the entity.
     /// </summary>
     [DataField]
-    public LocId? ExamineText;
+    public string? ExamineText;
 
     #region Event options
     /// <summary>

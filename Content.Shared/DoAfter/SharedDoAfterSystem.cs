@@ -186,7 +186,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         foreach (var doAfter in ent.Comp.DoAfters.Values)
         {
             if (doAfter.Args.ExamineText is not null)
-                args.PushMarkup(Loc.GetString(doAfter.Args.ExamineText));
+                args.PushMarkup(Loc.GetString(doAfter.Args.ExamineText), -5);
         }
     }
 
