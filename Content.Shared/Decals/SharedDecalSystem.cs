@@ -96,11 +96,7 @@ namespace Content.Shared.Decals
         /// <summary>
         /// Adds a decal.
         /// </summary>
-        public virtual bool TryAddDecal(Decal decal, EntityCoordinates coordinates, out DecalIndex decalId)
-        {
-            decalId = default;
-            return false;
-        }
+        public abstract bool TryAddDecal(Decal decal, EntityCoordinates coordinates, out DecalIndex decalId);
 
         private static void RebuildFreeDecalIds(DecalChunkComponent component)
         {
