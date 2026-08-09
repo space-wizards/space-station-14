@@ -36,7 +36,7 @@ public sealed partial class InventoryUIController : UIController, IOnStateEntere
     [UISystemDependency] private readonly ContainerSystem _container = default!;
     [UISystemDependency] private readonly SpriteSystem _sprite = default!;
 
-    [Dependency] private EntityQuery<VirtualItemComponent> _virtualItemQuery = default!;
+    private EntityQuery<VirtualItemComponent> _virtualItemQuery = default!;
 
     private EntityUid? _playerUid;
     private InventorySlotsComponent? _playerInventory;
@@ -54,6 +54,8 @@ public sealed partial class InventoryUIController : UIController, IOnStateEntere
 
         var gameplayStateLoad = UIManager.GetUIController<GameplayStateLoadController>();
         gameplayStateLoad.OnScreenLoad += OnScreenLoad;
+
+        _virtualItemQuery = _entities.GetEntityQuery<VirtualItemComponent>();
     }
 
     private void OnScreenLoad()
