@@ -123,6 +123,12 @@ public sealed partial class EyeBlinkingComponent : Component
     public ResPath? EyelidsSprite;
 
     /// <summary>
+    /// The last received eyelid sprites.  Used client-side to detect when to update.
+    /// </summary>
+    [ViewVariables]
+    public ResPath? LastEyelidsSprite;
+
+    /// <summary>
     /// The prototype to grant to enable eye-toggling action.
     /// </summary>
     [DataField]

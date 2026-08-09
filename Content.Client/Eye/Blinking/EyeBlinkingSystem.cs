@@ -46,11 +46,15 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
     [SubscribeLocalEvent]
     private void OnAfterAutoHandleState(Entity<EyeBlinkingComponent> ent, ref AfterAutoHandleStateEvent args)
     {
-        if (ent.Comp.LastEyelidsColor != ent.Comp.EyelidsColor)
+        if (ent.Comp.LastEyelidsSprite != ent.Comp.EyelidsSprite)
+        {
+            ent.Comp.LastEyelidsSprite = ent.Comp.EyelidsSprite;
+            InitEyeBlinking(ent, GetActiveEntity(ent));
+        }
+        else if (ent.Comp.LastEyelidsColor != ent.Comp.EyelidsColor)
         {
             ent.Comp.LastEyelidsColor = ent.Comp.EyelidsColor;
-            if (ent.Comp.Body is { } body)
-                UpdateEyelidsColor(ent, body);
+            UpdateEyelidsColor(ent, GetActiveEntity(ent));
         }
 
         if (ent.Comp.Status != ent.Comp.LastStatus)
