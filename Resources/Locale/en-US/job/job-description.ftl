@@ -2,7 +2,7 @@
 job-description-captain = Manage the resources and personnel of the entire station. Work alongside the other heads of staff to ensure the station's crew remain content and productive.
 job-description-ce = Manage the resources and personnel of the Engineering department to ensure the station remains intact, functional, and habitable.
 job-description-cmo = Manage the resources and personnel of the Medical department to ensure the station's crew remain alive and in good health.
-job-description-hop = Manage the resources and personnel of the Service department, and perform general administrative duties. Handle paperwork, perform job transfers, and keep your pet corgi safe.
+job-description-hop = Manage the resources and personnel of the Service and Theatre departments, and perform general administrative duties. Handle paperwork, perform job transfers, and keep your pet corgi safe.
 job-description-hos = Manage the resources and personnel of the Security department to ensure the station's crew remain safe and law-abiding.
 job-description-qm = Manage the resources and personnel of the Cargo department to ensure the station remains well-supplied and the money keeps flowing.
 job-description-rd = Manage the resources and personnel of the Science department to ensure that research progresses smoothly and the station's silicons function properly.
