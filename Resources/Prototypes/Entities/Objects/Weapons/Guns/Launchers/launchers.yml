@@ -156,7 +156,7 @@
   - type: Appearance
   - type: MagazineVisuals
     magState: mag
-    steps: 3
+    steps: 4
     zeroVisible: false
   - type: Gun
     fireRate: 2
@@ -168,6 +168,7 @@
     capacity: 5
   - type: BallisticAmmoSelfRefiller
     autoRefillRate: 30s # takes a while to get a new one
+    proto: BulletGuidedXenoborgMissile
   - type: TargetAssign
   - type: DeviceLinkSink
     ports:
