@@ -1,4 +1,3 @@
-using Content.Shared.Access.Components;
 using Content.Shared.DoAfter;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
@@ -17,9 +16,8 @@ public sealed partial class LockComponent : Component
     /// <summary>
     /// Whether or not the lock is locked.
     /// </summary>
-    [DataField("locked"), ViewVariables(VVAccess.ReadWrite)]
-    [AutoNetworkedField]
-    public bool Locked  = true;
+    [DataField, AutoNetworkedField]
+    public bool Locked = true;
 
     /// <summary>
     /// If true, will show verbs to lock and unlock the item. Otherwise, it will not.
@@ -36,8 +34,7 @@ public sealed partial class LockComponent : Component
     /// <summary>
     /// Whether or not the lock is locked by simply clicking.
     /// </summary>
-    [DataField("lockOnClick"), ViewVariables(VVAccess.ReadWrite)]
-    [AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public bool LockOnClick;
 
     /// <summary>
@@ -47,27 +44,53 @@ public sealed partial class LockComponent : Component
     public bool UnlockOnClick = true;
 
     /// <summary>
-    /// Whether the lock requires access validation through <see cref="AccessReaderComponent"/>
+    /// Whether or not the lock is locked when used it hand.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool LockInHand;
+
+    /// <summary>
+    /// Whether or not the lock is unlocked when used in hand.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool UnlockInHand;
+
+    /// <summary>
+    /// Whether access requirements should be checked for this lock.
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool UseAccess = true;
 
     /// <summary>
+    /// What readers should be checked to determine if an entity has access.
+    /// If null, all possible readers are checked.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public LockTypes? CheckedLocks;
+
+    /// <summary>
+    /// Whether any reader needs to be accessed to operate this lock.
+    /// By default, all readers need to be able to be accessed.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool CheckForAnyReaders;
+
+    /// <summary>
     /// The sound played when unlocked.
     /// </summary>
-    [DataField("unlockingSound"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("unlockingSound")]
     public SoundSpecifier? UnlockSound = new SoundPathSpecifier("/Audio/Machines/door_lock_off.ogg")
     {
-        Params = AudioParams.Default.WithVolume(-5f),
+        Params = AudioParams.Default.AddVolume(-5f),
     };
 
     /// <summary>
     /// The sound played when locked.
     /// </summary>
-    [DataField("lockingSound"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("lockingSound")]
     public SoundSpecifier? LockSound = new SoundPathSpecifier("/Audio/Machines/door_lock_on.ogg")
     {
-        Params = AudioParams.Default.WithVolume(-5f)
+        Params = AudioParams.Default.AddVolume(-5f)
     };
 
     /// <summary>
@@ -96,6 +119,12 @@ public sealed partial class LockComponent : Component
     [DataField]
     [AutoNetworkedField]
     public TimeSpan UnlockTime;
+
+    /// <summary>
+    /// Whether this lock can be locked again after being unlocked.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool AllowRepeatedLocking = true;
 }
 
 /// <summary>

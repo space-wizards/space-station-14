@@ -1,8 +1,7 @@
-#Normal windoors
 - type: entity
-  id: BaseWindoor
-  parent: [BaseDeltaPressureGlassQuarter, BaseStructure]
   abstract: true
+  parent: BaseStructure
+  id: BaseWindoorGeneric
   placement:
     mode: SnapgridCenter
   components:
@@ -16,7 +15,6 @@
         collection: GlassSmash
   - type: InteractionOutline
   - type: StationAiWhitelist
-  - type: Physics
   - type: Fixtures
     fixtures:
       fix1:
@@ -29,7 +27,6 @@
         layer:
         - GlassAirlockLayer
   - type: Sprite
-    sprite: Structures/Doors/Windoors/windoor.rsi
     layers:
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
@@ -57,6 +54,10 @@
       shader: unshaded
       visible: false
       map: ["enum.ElectrifiedLayers.Sparks"]
+    - state: sparks
+      map: ["enum.DoorVisualLayers.BaseEmagging"]
+      shader: unshaded
+      visible: false
   - type: AnimationPlayer
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
@@ -68,47 +69,26 @@
     range: 200
   - type: DeviceLinkSink
     ports:
-      - Open
-      - Close
-      - Toggle
-      - AutoClose
-      - DoorBolt
+    - Open
+    - Close
+    - Toggle
+    - AutoClose
+    - DoorBolt
   - type: DeviceLinkSource
     ports:
     - DoorStatus
     lastSignals:
       DoorStatus: false
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: Glass
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: ExaminableDamage
     messages: WindowMessages
   - type: RCDDeconstructable
     cost: 8
     delay: 8
     fx: EffectRCDDeconstruct8
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 400
-      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          ShardGlass:
-            min: 1
-            max: 2
-          SheetSteel1:
-            min: 2
-            max: 4
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: ContainerFill
     containers:
       board: [ DoorElectronics ]
@@ -127,14 +107,16 @@
       path: /Audio/Machines/windoor_open.ogg
     denySound:
       path: /Audio/Machines/airlock_deny.ogg
+    checkFixtureCollision: true
+    allowMachineLayer: true
   - type: Airlock
     keepOpenIfClicked: true
     openPanelVisible: true
     denyAnimationTime: 0.4
     animatePanel: false
     openUnlitVisible: true
-    # needed so that windoors will close regardless of whether there are people in it; it doesn't crush after all
-    safety: false
+    # needed so that windoors loop between closing and reopening less often even though they don't crush
+    safety: true
   - type: NavMapDoor
   - type: DoorBolt
   - type: Electrified
@@ -162,23 +144,23 @@
   - type: Airtight
     noAirWhenFullyAirBlocked: false
     airBlockedDirection:
-      - South
+    - South
   - type: Construction
     graph: Windoor
-    node: windoor
     containers:
     - board
-  - type: StaticPrice
-    price: 150
   - type: PryUnpowered
+  - type: Tag
+    tags:
+    - DoorRemoteWhitelist
+    # This tag is used by door remotes to allow or not a door remote to normally be able to interact with a door
 
 - type: entity
-  id: BaseSecureWindoor
-  parent: [BaseDeltaPressureReinforcedGlassQuarter, BaseWindoor]
   abstract: true
+  parent: BaseWindoorGeneric
+  id: BaseSecureWindoorGeneric
   components:
   - type: Sprite
-    sprite: Structures/Doors/Windoors/windoor.rsi
     layers:
     - state: secure_underlay
     - state: closed
@@ -208,16 +190,51 @@
       shader: unshaded
       visible: false
       map: [ "enum.ElectrifiedLayers.Sparks" ]
+    - state: sparks
+      map: ["enum.DoorVisualLayers.BaseEmagging"]
+      shader: unshaded
+      visible: false
   - type: Damageable
     damageModifierSet: RGlass
+  - type: StaticPrice
+    price: 150
+
+#Normal windoors
+- type: entity
+  abstract: true
+  parent: [ BaseDeltaPressureGlassQuarter, BaseWindoorGeneric ]
+  id: BaseWindoor
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Windoors/windoor.rsi
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 600
-      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
+        damage: 200
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass:
+            min: 1
+            max: 2
+          SheetSteel1:
+            min: 2
+            max: 4
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Construction
+    node: windoor
+
+- type: entity
+  abstract: true
+  parent: [ BaseDeltaPressureReinforcedGlassQuarter, BaseSecureWindoorGeneric ]
+  id: BaseSecureWindoor
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Windoors/windoor.rsi
+  - type: Destructible
+    thresholds:
     - trigger:
         !type:DamageTrigger
         damage: 400
@@ -241,52 +258,20 @@
     tags:
       - SecureWindoor
       # This tag is used to nagivate the Airlock construction graph. It's needed because the construction graph is shared between Airlock, AirlockGlass, and HighSecDoor
+      - DoorRemoteWhitelist
+      # This tag is used by door remotes to allow or not a door remote to normally be able to interact with a door
 
 
 #Plasma Windoors
 - type: entity
-  id: BasePlasmaWindoor
-  parent: [BaseDeltaPressurePlasmaQuarter, BaseWindoor]
   abstract: true
+  parent: [BaseDeltaPressurePlasmaQuarter, BaseWindoorGeneric]
+  id: BasePlasmaWindoor
   components:
   - type: Sprite
     sprite: Structures/Doors/Windoors/plasma.rsi
-    layers:
-    - state: closed
-      map: [ "enum.DoorVisualLayers.Base" ]
-    - state: closed_unlit
-      shader: unshaded
-      map: [ "enum.DoorVisualLayers.BaseUnlit" ]
-      visible: false
-    - state: welded
-      map: [ "enum.WeldableLayers.BaseWelded" ]
-    - state: bolted_unlit
-      shader: unshaded
-      map: [ "enum.DoorVisualLayers.BaseBolted" ]
-    - state: emergency_unlit
-      shader: unshaded
-      map: [ "enum.DoorVisualLayers.BaseEmergencyAccess" ]
-    - state: panel_open
-      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
-      visible: false
-    - state: electrified_ai
-      sprite: Interface/Misc/ai_hud.rsi
-      shader: unshaded
-      visible: false
-      map: [ "enum.ElectrifiedLayers.HUD" ]
-    - state: electrified
-      sprite: Effects/electricity.rsi
-      shader: unshaded
-      visible: false
-      map: [ "enum.ElectrifiedLayers.Sparks" ]
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 480
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 240
@@ -310,49 +295,14 @@
     resistance: 2
 
 - type: entity
-  id: BaseSecurePlasmaWindoor
-  parent: [BaseDeltaPressureReinforcedPlasmaQuarter, BaseSecureWindoor]
   abstract: true
+  parent: [BaseDeltaPressureReinforcedPlasmaQuarter, BaseSecureWindoorGeneric]
+  id: BaseSecurePlasmaWindoor
   components:
   - type: Sprite
     sprite: Structures/Doors/Windoors/plasma.rsi
-    layers:
-    - state: secure_underlay
-    - state: closed
-      map: [ "enum.DoorVisualLayers.Base" ]
-    - state: closed_unlit
-      shader: unshaded
-      map: [ "enum.DoorVisualLayers.BaseUnlit" ]
-      visible: false
-    - state: welded
-      map: [ "enum.WeldableLayers.BaseWelded" ]
-    - state: bolted_unlit
-      shader: unshaded
-      map: [ "enum.DoorVisualLayers.BaseBolted" ]
-    - state: emergency_unlit
-      shader: unshaded
-      map: [ "enum.DoorVisualLayers.BaseEmergencyAccess" ]
-    - state: panel_open
-      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
-      visible: false
-    - state: electrified_ai
-      sprite: Interface/Misc/ai_hud.rsi
-      shader: unshaded
-      visible: false
-      map: [ "enum.ElectrifiedLayers.HUD" ]
-    - state: electrified
-      sprite: Effects/electricity.rsi
-      shader: unshaded
-      visible: false
-      map: [ "enum.ElectrifiedLayers.Sparks" ]
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 800
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 530
@@ -378,52 +328,20 @@
     tags:
       - SecurePlasmaWindoor
       # This tag is used to nagivate the Airlock construction graph. It's needed because the construction graph is shared between Airlock, AirlockGlass, and HighSecDoor
+      - DoorRemoteWhitelist
+      # This tag is used by door remotes to allow or not a door remote to normally be able to interact with a door
 
 
 #Uranium Windoors
 - type: entity
-  id: BaseUraniumWindoor
-  parent: [BaseDeltaPressurePlasmaQuarter, BaseWindoor]
   abstract: true
+  parent: [BaseDeltaPressurePlasmaQuarter, BaseWindoorGeneric]
+  id: BaseUraniumWindoor
   components:
   - type: Sprite
     sprite: Structures/Doors/Windoors/uranium.rsi
-    layers:
-    - state: closed
-      map: [ "enum.DoorVisualLayers.Base" ]
-    - state: closed_unlit
-      shader: unshaded
-      map: [ "enum.DoorVisualLayers.BaseUnlit" ]
-      visible: false
-    - state: welded
-      map: [ "enum.WeldableLayers.BaseWelded" ]
-    - state: bolted_unlit
-      shader: unshaded
-      map: [ "enum.DoorVisualLayers.BaseBolted" ]
-    - state: emergency_unlit
-      shader: unshaded
-      map: [ "enum.DoorVisualLayers.BaseEmergencyAccess" ]
-    - state: panel_open
-      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
-      visible: false
-    - state: electrified_ai
-      sprite: Interface/Misc/ai_hud.rsi
-      shader: unshaded
-      visible: false
-      map: [ "enum.ElectrifiedLayers.HUD" ]
-    - state: electrified
-      sprite: Effects/electricity.rsi
-      shader: unshaded
-      visible: false
-      map: [ "enum.ElectrifiedLayers.Sparks" ]
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 400
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 240
@@ -447,49 +365,14 @@
     resistance: 3
 
 - type: entity
-  id: BaseSecureUraniumWindoor
-  parent: [BaseDeltaPressureReinforcedPlasmaQuarter, BaseSecureWindoor]
   abstract: true
+  parent: [BaseDeltaPressureReinforcedPlasmaQuarter, BaseSecureWindoorGeneric]
+  id: BaseSecureUraniumWindoor
   components:
   - type: Sprite
     sprite: Structures/Doors/Windoors/uranium.rsi
-    layers:
-    - state: secure_underlay
-    - state: closed
-      map: [ "enum.DoorVisualLayers.Base" ]
-    - state: closed_unlit
-      shader: unshaded
-      map: [ "enum.DoorVisualLayers.BaseUnlit" ]
-      visible: false
-    - state: welded
-      map: [ "enum.WeldableLayers.BaseWelded" ]
-    - state: bolted_unlit
-      shader: unshaded
-      map: [ "enum.DoorVisualLayers.BaseBolted" ]
-    - state: emergency_unlit
-      shader: unshaded
-      map: [ "enum.DoorVisualLayers.BaseEmergencyAccess" ]
-    - state: panel_open
-      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
-      visible: false
-    - state: electrified_ai
-      sprite: Interface/Misc/ai_hud.rsi
-      shader: unshaded
-      visible: false
-      map: [ "enum.ElectrifiedLayers.HUD" ]
-    - state: electrified
-      sprite: Effects/electricity.rsi
-      shader: unshaded
-      visible: false
-      map: [ "enum.ElectrifiedLayers.Sparks" ]
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 1200
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 400
@@ -515,3 +398,5 @@
     tags:
       - SecureUraniumWindoor
       # This tag is used to nagivate the Airlock construction graph. It's needed because the construction graph is shared between Airlock, AirlockGlass, and HighSecDoor
+      - DoorRemoteWhitelist
+      # This tag is used by door remotes to allow or not a door remote to normally be able to interact with a door

@@ -9,7 +9,6 @@
       path: /Audio/Items/wirecutter_drop.ogg
   - type: Tag
     tags:
-    - PlantSampleTaker
     - Wirecutter
   - type: Sprite
     sprite: Objects/Tools/wirecutters.rsi
@@ -28,6 +27,7 @@
   - type: Tool
     qualities:
       - Cutting
+      - Shearing
     useSound:
       path: /Audio/Items/wirecutter.ogg
   - type: RandomSprite
@@ -43,6 +43,7 @@
       Steel: 100
   - type: StaticPrice
     price: 30
+  - type: BotanySampleTaker
 
 - type: entity
   name: screwdriver
@@ -256,7 +257,10 @@
     qualities:
       - Screwing
     speedModifier: 1.5
-    useSound: /Audio/Items/drill_use.ogg
+    useSound: !type:SoundPathSpecifier
+      path: /Audio/Items/drill_use.ogg
+      params:
+        volume: -2.5
   - type: MultipleTool
     statusShowBehavior: true
     entries:
@@ -264,18 +268,26 @@
         sprite:
           sprite: Objects/Tools/drill.rsi
           state: drill_screw
-        useSound:
+        useSound: !type:SoundPathSpecifier
           path: /Audio/Items/drill_use.ogg
-        changeSound:
+          params:
+            volume: -2.5
+        changeSound: !type:SoundPathSpecifier
           path: /Audio/Items/change_drill.ogg
+          params:
+            volume: -5
       - behavior: Anchoring
         sprite:
           sprite: Objects/Tools/drill.rsi
           state: drill_bolt
-        useSound:
+        useSound: !type:SoundPathSpecifier
           path: /Audio/Items/drill_use.ogg
-        changeSound:
+          params:
+            volume: -2.5
+        changeSound: !type:SoundPathSpecifier
           path: /Audio/Items/change_drill.ogg
+          params:
+            volume: -5
   - type: PhysicalComposition
     materialComposition:
       Steel: 300
@@ -499,6 +511,7 @@
   - type: Item
     sprite: Objects/Tools/rolling_pin.rsi
     size: Small
+    storedRotation: -45
   - type: Clothing
     sprite: Objects/Tools/rolling_pin.rsi
     quickEquip: false

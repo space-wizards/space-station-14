@@ -20,7 +20,7 @@ ui-vote-map-tie = Tie for map vote! Picking... { $picked }
 ui-vote-map-win = { $winner } won the map vote!
 ui-vote-map-notlobby = Voting for maps is only valid in the pre-round lobby!
 ui-vote-map-notlobby-time = Voting for maps is only valid in the pre-round lobby with { $time } remaining!
-
+ui-vote-map-invalid = { $winner } became invalid after the map vote! It will not be selected!
 
 # Votekick votes
 ui-vote-votekick-unknown-initiator = A player

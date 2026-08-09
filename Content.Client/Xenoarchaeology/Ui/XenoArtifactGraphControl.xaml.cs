@@ -15,7 +15,7 @@ namespace Content.Client.Xenoarchaeology.Ui;
 [GenerateTypedNameReferences]
 public sealed partial class XenoArtifactGraphControl : BoxContainer
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
 
     private readonly XenoArtifactSystem _artifactSystem;
 

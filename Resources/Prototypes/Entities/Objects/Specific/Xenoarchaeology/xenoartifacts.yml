@@ -4,7 +4,6 @@
   name: artifact
   description: A strange artifact from time unknown. Looks like a good time.
   abstract: true
-  noSpawn: true
   components:
   # Visual
   - type: Appearance
@@ -27,9 +26,10 @@
     effectsTable: !type:NestedSelector
       tableId: XenoArtifactEffectsDefaultTable
   - type: Damageable
+  - type: Injurable
   - type: Actions
   - type: Physics
-    bodyType: Dynamic
+    bodyType: KinematicController
   - type: MovementSpeedModifier
     baseWalkSpeed: 0.25
     baseSprintSpeed: 0.5
@@ -49,6 +49,9 @@
       Flammable: [Touch]
       Extinguish: [Touch]
       Acidic: [Touch]
+  - type: LightningTarget
+    priority: 2
+    lightningExplode: false
 
 - type: entity
   parent: BaseAction
@@ -57,9 +60,10 @@
   description: Activate yourself, causing chaos to those near you.
   components:
   - type: Action
-    icon:
-      sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
-      state: ano29
     useDelay: 300
+  - type: Sprite
+    sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
+    layers:
+    - state: ano29
   - type: InstantAction
     event: !type:ArtifactSelfActivateEvent

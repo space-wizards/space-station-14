@@ -33,6 +33,20 @@
   icon:
     sprite: /Textures/Interface/Misc/security_icons.rsi
     state: hud_suspected
+  
+- type: securityIcon
+  parent: SecurityIcon
+  id: SecurityIconHostile
+  icon:
+    sprite: /Textures/Interface/Misc/security_icons.rsi
+    state: hud_hostile
+
+- type: securityIcon
+  parent: SecurityIcon
+  id: SecurityIconEliminated
+  icon:
+    sprite: /Textures/Interface/Misc/security_icons.rsi
+    state: hud_eliminated
 
 - type: securityIcon
   parent: SecurityIcon
@@ -50,3 +64,27 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: MindShield
+
+- type: securityIcon
+  id: CrewBorderIcon
+  priority: 2
+  offset: -4
+  offsetHorizontal: 4
+  locationPreference: Right
+  layer: Mod
+  isShaded: true
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons_borders.rsi
+    state: CrewBorder
+
+- type: securityIcon
+  id: CrewUncertainBorderIcon
+  priority: 2
+  offset: -4
+  offsetHorizontal: 4
+  locationPreference: Right
+  layer: Mod
+  isShaded: true
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons_borders.rsi
+    state: CrewUncertainBorder

@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using Content.IntegrationTests;
 using Content.IntegrationTests.Pair;
-using Content.Server.Maps;
+using Content.Shared.Maps;
 using Robust.Shared;
 using Robust.Shared.Analyzers;
 using Robust.Shared.EntitySerialization.Systems;
@@ -29,7 +30,7 @@ public class MapLoadBenchmark
         ProgramShared.PathOffset = "../../../../";
         PoolManager.Startup();
 
-        _pair = PoolManager.GetServerClient().GetAwaiter().GetResult();
+        _pair = PoolManager.GetServerClient(testContext: new ExternalTestContext("Benchmark", StreamWriter.Null)).GetAwaiter().GetResult();
         var server = _pair.Server;
 
         Paths = server.ResolveDependency<IPrototypeManager>()
@@ -47,7 +48,23 @@ public class MapLoadBenchmark
         PoolManager.Shutdown();
     }
 
-    public static string[] MapsSource { get; } = { "Empty", "Saltern", "Box", "Bagel", "Dev", "CentComm", "Core", "TestTeg", "Packed", "Omega", "Reach", "Meta", "Marathon", "MeteorArena", "Fland", "Oasis", "Convex"};
+    public static string[] MapsSource { get; } = {
+        "Bagel",
+        "Box",
+        "CentComm",
+        "Dev",
+        "Empty",
+        "Fland",
+        "Marathon",
+        "MeteorArena",
+        "Oasis",
+        "Packed",
+        "Saltern",
+        "Sushi",
+        "TestTeg",
+        "Tram2",
+        "Snowball"
+    };
 
     [ParamsSource(nameof(MapsSource))]
     public string Map;

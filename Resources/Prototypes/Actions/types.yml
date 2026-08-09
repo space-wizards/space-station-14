@@ -6,6 +6,26 @@
   id: BaseAction
   components:
   - type: Action
+  - type: Sprite
+    layers:
+    - map: ["enum.ActionVisuals.Icon"]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ActionState.Toggled:
+        enum.ActionVisuals.Icon:
+          True: { visible: false }
+          False: { visible: true }
+        enum.ActionVisuals.IconToggled:
+          True: { visible: true }
+          False: { visible: false }
+      enum.LimitedChargesState.HasCharges:
+        enum.ActionVisuals.Icon:
+          True: { color: White }
+          False: { color: DimGray }
+        enum.ActionVisuals.IconToggled:
+          True: { color: White }
+          False: { color: DimGray }
 
 # base proto for an action that requires a DoAfter
 - type: entity
@@ -59,10 +79,13 @@
   components:
   - type: Action
     useDelay: 10
-    icon: Interface/Actions/scream.png
     checkCanInteract: false
+  - type: Sprite
+    layers:
+    - texture: Interface/Actions/scream.png
   - type: InstantAction
-    event: !type:ScreamActionEvent
+    event: !type:EmoteActionEvent
+      emote: Scream
 
 - type: entity
   parent: BaseMentalAction
@@ -71,7 +94,9 @@
   description: Succumb to your infection and become a zombie.
   components:
   - type: Action
-    icon: Interface/Actions/zombie-turn.png
+  - type: Sprite
+    layers:
+    - texture: Interface/Actions/zombie-turn.png
   - type: InstantAction
     event: !type:ZombifySelfActionEvent
 
@@ -83,8 +108,14 @@
   components:
   - type: Action
     useDelay: 1
-    icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
-    iconOn: { sprite: Objects/Tools/flashlight.rsi, state: flashlight-on }
+  - type: Sprite
+    sprite: Objects/Tools/flashlight.rsi
+    layers:
+    - state: flashlight
+      map: ["enum.ActionVisuals.Icon"]
+    - state: flashlight-on
+      map: ["enum.ActionVisuals.IconToggled"]
+      visible: false
 
 - type: entity
   parent: BaseAction
@@ -95,10 +126,11 @@
   - type: Action
     itemIconStyle: BigAction
     priority: -20
-    icon:
-      sprite: Clothing/Back/Backpacks/backpack.rsi
-      state: icon
     useDelay: 1
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/backpack.rsi
+    layers:
+    - state: icon
   - type: InstantAction
     event: !type:OpenStorageImplantEvent
 
@@ -108,12 +140,14 @@
   name: Activate Microbomb
   description: Activates your internal microbomb, completely destroying you and your equipment
   components:
+  - type: DangerousAction
   - type: Action
     itemIconStyle: BigAction
     priority: -20
-    icon:
-      sprite: Actions/Implants/implants.rsi
-      state: explosive
+  - type: Sprite
+    sprite: Actions/Implants/implants.rsi
+    layers:
+    - state: explosive
 
 - type: entity
   parent: [BaseSuicideAction, BaseImplantAction]
@@ -124,9 +158,10 @@
   - type: Action
     itemIconStyle: BigAction
     priority: -20
-    icon:
-      sprite: Objects/Magic/magicactions.rsi
-      state: gib
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: gib
 
 - type: entity
   parent: BaseImplantAction
@@ -140,9 +175,11 @@
     checkCanInteract: false
     itemIconStyle: BigAction
     priority: -20
-    icon:
-      sprite: Actions/Implants/implants.rsi
-      state: freedom
+  - type: Sprite
+    sprite: Actions/Implants/implants.rsi
+    layers:
+    - state: freedom
+      map: ["enum.ActionVisuals.Icon"]
 
 - type: entity
   parent: BaseAction
@@ -153,9 +190,10 @@
   - type: Action
     itemIconStyle: BigAction
     priority: -20
-    icon:
-      sprite: Objects/Devices/communication.rsi
-      state: old-radio
+  - type: Sprite
+    sprite: Objects/Devices/communication.rsi
+    layers:
+    - state: old-radio
   - type: InstantAction
     event: !type:OpenUplinkImplantEvent
 
@@ -172,9 +210,11 @@
     useDelay: 5
     itemIconStyle: BigAction
     priority: -20
-    icon:
-      sprite: Objects/Weapons/Grenades/empgrenade.rsi
-      state: icon
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/empgrenade.rsi
+    layers:
+    - state: icon
+      map: ["enum.ActionVisuals.Icon"]
 
 - type: entity
   parent: BaseImplantAction
@@ -189,9 +229,11 @@
     useDelay: 5
     itemIconStyle: BigAction
     priority: -20
-    icon:
-      sprite: Structures/Specific/anomaly.rsi
-      state: anom4
+  - type: Sprite
+    sprite: Structures/Specific/anomaly.rsi
+    layers:
+    - state: anom4
+      map: ["enum.ActionVisuals.Icon"]
 
 - type: entity
   parent: BaseImplantAction
@@ -206,9 +248,11 @@
   - type: Action
     itemIconStyle: BigAction
     priority: -20
-    icon:
-      sprite: Clothing/OuterClothing/Hardsuits/lingspacesuit.rsi
-      state: icon
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/lingspacesuit.rsi
+    layers:
+    - state: icon
+      map: ["enum.ActionVisuals.Icon"]
 
 - type: entity
   parent: BaseAction
@@ -229,9 +273,14 @@
   description: Enter combat mode
   components:
   - type: Action
-    icon: Interface/Actions/harmOff.png
-    iconOn: Interface/Actions/harm.png
     priority: -100
+  - type: Sprite
+    layers:
+    - texture: Interface/Actions/harmOff.png
+      map: ["enum.ActionVisuals.Icon"]
+    - texture: Interface/Actions/harm.png
+      map: ["enum.ActionVisuals.IconToggled"]
+      visible: false
   - type: InstantAction
     event: !type:ToggleCombatActionEvent
 
@@ -250,9 +299,26 @@
   description: Change the name others hear to something else.
   components:
   - type: Action
-    icon: { sprite: Interface/Actions/voice-mask.rsi, state: icon }
+  - type: Sprite
+    sprite: Interface/Actions/voice-mask.rsi
+    layers:
+    - state: icon
   - type: InstantAction
     event: !type:VoiceMaskSetNameEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionShootWater
+  name: Spray water!
+  description: Spray water towards your enemies.
+  components:
+  - type: Action
+  - type: Sprite
+    sprite: Clothing/Neck/Misc/pins.rsi
+    layers:
+    - state: flower
+  - type: InstantAction
+    event: !type:SprayLiquidEvent
 
 - type: entity
   parent: BaseAction
@@ -272,8 +338,14 @@
   description: Raise or lower your shield.
   components:
   - type: Action
-    icon: { sprite: Objects/Weapons/Melee/shields.rsi, state: teleriot-icon }
-    iconOn: { sprite: Objects/Weapons/Melee/shields.rsi, state: teleriot-on }
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/shields.rsi
+    layers:
+    - state: teleriot-icon
+      map: ["enum.ActionVisuals.Icon"]
+    - state: teleriot-on
+      map: ["enum.ActionVisuals.IconToggled"]
+      visible: false
 
 - type: entity
   parent: BaseMentalAction
@@ -284,7 +356,10 @@
   - type: Action
     clientExclusive: true
     temporary: true
-    icon: { sprite: Objects/Tools/multitool.rsi, state: icon }
+  - type: Sprite
+    sprite: Objects/Tools/multitool.rsi
+    layers:
+    - state: icon
   - type: InstantAction
     event: !type:ClearAllOverlaysEvent
 
@@ -295,8 +370,11 @@
   description: Uses hunger to lay an egg.
   components:
   - type: Action
-    icon: { sprite: Objects/Consumable/Food/egg.rsi, state: icon }
     useDelay: 60
+  - type: Sprite
+    sprite: Objects/Consumable/Food/egg.rsi
+    layers:
+    - state: icon
   - type: InstantAction
     event: !type:EggLayInstantActionEvent
 
@@ -307,7 +385,10 @@
   description: Go to sleep.
   components:
   - type: Action
-    icon: { sprite: Clothing/Head/Hats/pyjamasyndicatered.rsi, state: icon }
+  - type: Sprite
+    sprite: Clothing/Head/Hats/pyjamasyndicatered.rsi
+    layers:
+    - state: icon
   - type: InstantAction
     event: !type:SleepActionEvent
 
@@ -320,7 +401,10 @@
   - type: Action
     startDelay: true
     useDelay: 2
-    icon: { sprite: Clothing/Head/Hats/pyjamasyndicatered.rsi, state: icon }
+  - type: Sprite
+    sprite: Clothing/Head/Hats/pyjamasyndicatered.rsi
+    layers:
+    - state: icon
   - type: InstantAction
     event: !type:WakeActionEvent
 
@@ -331,8 +415,11 @@
   description: Activates your honking implant, which will produce the signature sound of the clown.
   components:
   - type: Action
-    icon: { sprite: Objects/Fun/bikehorn.rsi, state: icon }
     useDelay: 1
+  - type: Sprite
+    sprite: Objects/Fun/bikehorn.rsi
+    layers:
+    - state: icon
 
 - type: entity
   parent: BaseAction
@@ -343,7 +430,9 @@
   - type: Action
     priority: -1
     useDelay: 30
-    icon: Interface/Actions/firestarter.png
+  - type: Sprite
+    layers:
+    - texture: Interface/Actions/firestarter.png
   - type: InstantAction
     event: !type:FireStarterActionEvent
 
@@ -354,9 +443,14 @@
   description: Close your eyes to protect your peepers, or open your eyes to enjoy the pretty lights.
   components:
   - type: Action
-    icon: Interface/Actions/eyeopen.png
-    iconOn: Interface/Actions/eyeclose.png
     useDelay: 1 # so u cant give yourself and observers eyestrain by rapidly spamming the action
+  - type: Sprite
+    layers:
+    - texture: Interface/Actions/eyeopen.png
+      map: ["enum.ActionVisuals.Icon"]
+    - texture: Interface/Actions/eyeclose.png
+      map: ["enum.ActionVisuals.IconToggled"]
+      visible: false
   - type: InstantAction
     event: !type:ToggleEyesActionEvent
 
@@ -367,11 +461,13 @@
   description: Start or stop wagging your tail.
   components:
   - type: Action
-    icon: { sprite: Mobs/Customization/reptilian_parts.rsi, state: tail_smooth_behind }
-    iconOn: { sprite: Mobs/Customization/reptilian_parts.rsi, state: tail_smooth_behind }
     itemIconStyle: NoItem
     useDelay: 1 # emote spam
     checkCanInteract: false
+  - type: Sprite
+    sprite: Mobs/Customization/reptilian_parts.rsi
+    layers:
+    - state: tail_smooth_behind
 
 - type: entity
   parent: BaseAction
@@ -380,11 +476,17 @@
   description: Turn the Fake Mindshield implant's transmission on/off
   components:
   - type: Action
-    icon: { sprite: Interface/Actions/actions_fakemindshield.rsi, state: icon }
-    iconOn: { sprite: Interface/Actions/actions_fakemindshield.rsi, state: icon-on }
     itemIconStyle: NoItem
     useDelay: 1
     raiseOnUser: true
+  - type: Sprite
+    sprite: Interface/Actions/actions_fakemindshield.rsi
+    layers:
+    - state: icon
+      map: ["enum.ActionVisuals.Icon"]
+    - state: icon-on
+      map: ["enum.ActionVisuals.IconToggled"]
+      visible: false
   - type: InstantAction
     event: !type:FakeMindShieldToggleEvent
   - type: Tag
@@ -398,22 +500,39 @@
   description: Toggles the paramedic siren on and off.
   components:
   - type: Action
-    icon:
-      sprite: Clothing/OuterClothing/Hardsuits/paramed.rsi
-      state: icon-siren
     useDelay: 1
     itemIconStyle: BigAction
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/paramed.rsi
+    layers:
+    - state: icon-siren
 
-#  TODO: Add back once we have animated tails again. Were removed due to the sprite rework, causing all of them to not fit anymore.
-# - type: entity
-#   parent: ActionToggleWagging
-#   id: ActionToggleWaggingVulpkanin
-#   components:
-#   - type: Action
-#     icon: { sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi, state: tail-wag-icon }
-#     iconOn: { sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi, state: tail-wag-icon }
-#     itemIconStyle: NoItem
-#     useDelay: 1 # Prevents Emote Spam
+- type: entity
+  parent: BaseAction
+  id: ActionToggleNightVision
+  name: Toggle night vision
+  description: Toggles the night vision on and off.
+  components:
+  - type: Action
+    useDelay: 2
+  - type: Sprite
+    sprite: Interface/Actions/night_vision.rsi
+    layers:
+    - state: icon
+  - type: InstantAction
+    event: !type:ToggleNightVisionEvent {}
+
+- type: entity
+  parent: ActionToggleWagging
+  id: ActionToggleWaggingVulpkanin
+  components:
+  - type: Action
+    itemIconStyle: NoItem
+    useDelay: 1 # Prevents Emote Spam
+  - type: Sprite
+    sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
+    layers:
+    - state: tail-wag-icon
 
 - type: entity
   parent: BaseAction
@@ -423,11 +542,24 @@
   components:
   - type: Action
     useDelay: 8
-    icon:
-      sprite: Interface/Actions/jump.rsi
-      state: icon
+  - type: Sprite
+    sprite: Interface/Actions/jump.rsi
+    layers:
+    - state: icon
   - type: InstantAction
     event: !type:GravityJumpEvent {}
+
+- type: entity
+  parent: ActionGravityJump
+  id: ActionJumpBoost
+  name: Jump boost
+  components:
+  - type: Action
+    useDelay: 16
+  - type: Sprite
+    sprite: Interface/Actions/actions_borg.rsi
+    layers:
+    - state: xenoborg-jump-module
 
 - type: entity
   parent: BaseAction
@@ -437,9 +569,10 @@
   components:
   - type: Action
     useDelay: 12
-    icon:
-      sprite: Interface/Actions/jump.rsi
-      state: icon
+  - type: Sprite
+    sprite: Interface/Actions/jump.rsi
+    layers:
+    - state: icon
   - type: InstantAction
     event: !type:GravityJumpEvent {}
 
@@ -450,10 +583,11 @@
   description: Begin or stop being rooted to the floor.
   components:
   - type: Action
-    icon: Interface/Actions/rooting.png
-    iconOn: Interface/Actions/rooting.png
     itemIconStyle: NoItem
     useDelay: 1
+  - type: Sprite
+    layers:
+    - texture: Interface/Actions/rooting.png
 
 - type: entity
   id: ActionChameleonController
@@ -462,7 +596,34 @@
   components:
   - type: Action
     priority: -20
-    icon: { sprite: Actions/Implants/implants.rsi, state: chameleon }
     itemIconStyle: BigAction
+  - type: Sprite
+    sprite: Actions/Implants/implants.rsi
+    layers:
+    - state: chameleon
   - type: InstantAction
     event: !type:ChameleonControllerOpenMenuEvent
+
+- type: entity
+  parent: BaseMentalAction
+  id: ActionIntrinsicStore
+  name: Store
+  description: Opens the store
+  components:
+  - type: Action
+  - type: Sprite
+    layers:
+    - texture: Interface/Actions/shop.png
+  - type: InstantAction
+    event: !type:IntrinsicStoreActionEvent
+
+- type: entity
+  parent: ActionChangeVoiceMask
+  id: ActionChangeVoiceMaskImplant
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+  - type: Sprite
+    sprite: Interface/Actions/voice-mask.rsi
+    layers:
+    - state: icon
