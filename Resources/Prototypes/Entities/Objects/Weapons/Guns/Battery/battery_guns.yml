@@ -1047,7 +1047,10 @@
     autoRechargeRate: 1.5
   - type: BatteryAmmoProvider
     proto: RangeLaser
-    fireCost: 1
+    fireCost: 1 # you are shooting a laser pointer, the fire cost is gonna be low
+  - type: EyeCursorOffset
+    maxOffset: 3
+    pvsIncrease: 0.3
   - type: TargetFinder
   - type: DeviceLinkSource
     ports:
