@@ -100,7 +100,6 @@ public sealed class HumanoidProfileTests : GameTest
             LoadDependencies(out var body, out var humanoidComponent);
 
             var proto = SProtoMan.Index<SpeciesPrototype>(species);
-
             var profile = HumanoidCharacterProfile.RandomWithSpecies(species);
             _humanoidProfile.ApplyProfileTo(body, profile);
             _visualBody.ApplyProfileTo(body, profile);
