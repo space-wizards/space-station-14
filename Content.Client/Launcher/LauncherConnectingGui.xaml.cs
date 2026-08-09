@@ -34,12 +34,12 @@ namespace Content.Client.Launcher
         /// <remarks>
         /// The dictionary keys are the server urls, so the same server can't be added twice
         /// </remarks>
-        private Dictionary<string, FallbackControl> _fallbackControls = new ();
+        private readonly Dictionary<string, FallbackControl> _fallbackControls = new ();
 
         /// <summary>
         /// An easy-to-access list of the visibility status for each Fallback control on the GUI
         /// </summary>
-        private Dictionary<string, bool> _visibleFallbacks = new();
+        private readonly Dictionary<string, bool> _visibleFallbacks = new();
 
         public LauncherConnectingGui(
             LauncherConnecting state,
@@ -90,9 +90,9 @@ namespace Content.Client.Launcher
         /// </summary>
         private void CreateFallbackGui(string name, string url, int players, int maxPlayers, bool visible)
         {
-            var option = new FallbackControl(name, url);
+            var option = new FallbackControl();
             option.ServerName.Text = name;
-            option.FallbackButton.OnButtonDown += args => OnFallbackButtonPressed(args, url);
+            option.FallbackButton.OnButtonDown += _ => OnFallbackButtonPressed(url);
             FallbackBox.AddChild(option);
             _fallbackControls.Add(url, option);
             _visibleFallbacks.Add(url, visible);
@@ -127,7 +127,7 @@ namespace Content.Client.Launcher
         /// <summary>
         /// Connects the client to a different server
         /// </summary>
-        private void OnFallbackButtonPressed(BaseButton.ButtonEventArgs args, string target)
+        private void OnFallbackButtonPressed(string target)
         {
             _state.Redial(target, Loc.GetString("connecting-switching",("target",target)));
         }

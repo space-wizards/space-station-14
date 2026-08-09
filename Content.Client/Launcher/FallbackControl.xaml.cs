@@ -7,7 +7,7 @@ namespace Content.Client.Launcher;
 [GenerateTypedNameReferences]
 public sealed partial class FallbackControl : Control
 {
-    public FallbackControl(string name, string url)
+    public FallbackControl()
     {
         RobustXamlLoader.Load(this);
     }
