@@ -23,6 +23,11 @@
   components:
   - type: Solution
     id: beaker
+  - type: Heatable
+    exposedContainers:
+    - type: HeatContainerAddress
+      addressType: Solution
+      targetName: beaker
 
 - type: entity
   abstract: true
@@ -47,6 +52,11 @@
   components:
   - type: Solution
     id: food
+  - type: Heatable
+    exposedContainers:
+    - type: HeatContainerAddress
+      addressType: Solution
+      targetName: food
 
 - type: entity
   abstract: true
@@ -55,6 +65,11 @@
   components:
   - type: Solution
     id: drink
+  - type: Heatable
+    exposedContainers:
+    - type: HeatContainerAddress
+      addressType: Solution
+      targetName: drink
 
 - type: entity
   abstract: true

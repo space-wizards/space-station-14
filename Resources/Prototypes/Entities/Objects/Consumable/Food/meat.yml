@@ -47,7 +47,7 @@
   - type: Material
   - type: PhysicalComposition
     materialComposition:
-      Meaterial: 300
+      Material: 300
 
 - type: entity
   parent: FoodMeatBase
