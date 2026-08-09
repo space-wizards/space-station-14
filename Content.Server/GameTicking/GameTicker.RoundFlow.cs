@@ -52,9 +52,7 @@ namespace Content.Server.GameTicking
         [ViewVariables]
         private GameRunLevel _runLevel;
 
-        private RoundEndPlayerInfo[]? _replayRoundPlayerInfo;
-
-        private string? _replayRoundText;
+        private RoundEndMessageInfo? _lastRoundInfo = null;
 
         [ViewVariables]
         public GameRunLevel RunLevel
@@ -589,19 +587,16 @@ namespace Content.Server.GameTicking
             var listOfPlayerInfoFinal = listOfPlayerInfo.OrderBy(pi => pi.PlayerOOCName).ToArray();
             var sound = RoundEndSoundCollection == null ? null : _audio.ResolveSound(new SoundCollectionSpecifier(RoundEndSoundCollection));
 
-            var roundInfo = new RoundEndMessageInfo(
+            _lastRoundInfo = new RoundEndMessageInfo(
                 gamemodeTitle,
                 roundEndText,
                 roundDuration,
                 RoundId,
                 listOfPlayerInfoFinal.Length,
                 listOfPlayerInfoFinal);
-            var roundEndMessageEvent = new RoundEndMessageEvent(roundInfo, sound);
+            var roundEndMessageEvent = new RoundEndMessageEvent(_lastRoundInfo, sound);
             RaiseNetworkEvent(roundEndMessageEvent);
             RaiseLocalEvent(roundEndMessageEvent);
-
-            _replayRoundPlayerInfo = listOfPlayerInfoFinal;
-            _replayRoundText = roundEndText;
         }
 
         private async void SendRoundEndDiscordMessage()

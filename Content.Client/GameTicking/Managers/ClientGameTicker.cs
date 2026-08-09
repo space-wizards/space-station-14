@@ -56,6 +56,7 @@ namespace Content.Client.GameTicking.Managers
             SubscribeNetworkEvent<TickerLobbyInfoEvent>(LobbyInfo);
             SubscribeNetworkEvent<TickerLobbyCountdownEvent>(LobbyCountdown);
             SubscribeNetworkEvent<RoundEndMessageEvent>(RoundEnd);
+            SubscribeNetworkEvent<PreviousRoundInfoMessageEvent>(PreviousRoundInfoUpdated);
             SubscribeNetworkEvent<RequestWindowAttentionEvent>(OnAttentionRequest);
             SubscribeNetworkEvent<TickerLateJoinStatusEvent>(LateJoinStatus);
             SubscribeNetworkEvent<TickerJobsAvailableEvent>(UpdateJobsAvailable);
@@ -154,7 +155,14 @@ namespace Content.Client.GameTicking.Managers
             // Force an update in the event of this song being the same as the last.
             RestartSound = message.RestartSound;
 
-            _userInterfaceManager.GetUIController<RoundEndSummaryUIController>().OpenRoundEndSummaryWindow(message);
+            var controller = _userInterfaceManager.GetUIController<RoundEndSummaryUIController>();
+            controller.OpenRoundEndSummaryWindow(message.RoundInfo);
+        }
+
+        private void PreviousRoundInfoUpdated(PreviousRoundInfoMessageEvent message)
+        {
+            var controller = _userInterfaceManager.GetUIController<RoundEndSummaryUIController>();
+            controller.UpdateRoundInfo(message.RoundInfo);
         }
     }
 }

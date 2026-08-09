@@ -21,12 +21,17 @@ public sealed partial class RoundEndSummaryUIController : UIController,
     /// </summary>
     public event Action<bool>? OnWindowToggled;
 
+    private RoundEndMessageInfo? _lastRoundInfo = null;
     private RoundEndSummaryWindow? _window;
 
     public void ToggleScoreboardWindow(ICommonSession? session = null)
     {
         if (_window == null)
+        {
+            if (_lastRoundInfo != null)
+                OpenRoundEndSummaryWindow(_lastRoundInfo);
             return;
+        }
 
         if (_window.IsOpen)
         {
@@ -41,13 +46,14 @@ public sealed partial class RoundEndSummaryUIController : UIController,
         OnWindowToggled?.Invoke(_window.IsOpen);
     }
 
-    public void OpenRoundEndSummaryWindow(RoundEndMessageEvent message)
+    public void OpenRoundEndSummaryWindow(RoundEndMessageInfo roundInfo)
     {
         // Don't open duplicate windows (mainly for replays).
-        if (_window?.RoundId == message.RoundInfo.RoundId)
+        if (_window?.RoundId == roundInfo.RoundId)
             return;
 
-        _window = new RoundEndSummaryWindow(message.RoundInfo);
+        _lastRoundInfo = roundInfo;
+        _window = new RoundEndSummaryWindow(roundInfo);
         _window.OnClose += () => OnWindowToggled?.Invoke(false);
 
         _window.OpenCenteredRight();
@@ -61,11 +67,16 @@ public sealed partial class RoundEndSummaryUIController : UIController,
             InputCmdHandler.FromDelegate(ToggleScoreboardWindow));
     }
 
+    public void UpdateRoundInfo(RoundEndMessageInfo roundInfo)
+    {
+        _lastRoundInfo = roundInfo;
+    }
+
     /// <summary>
     /// Returns true if we have the information to open the round summary window
     /// </summary>
     public bool IsSummaryValid()
     {
-        return _window != null;
+        return _lastRoundInfo != null;
     }
 }

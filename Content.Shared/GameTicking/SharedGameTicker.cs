@@ -239,6 +239,20 @@ namespace Content.Shared.GameTicking
         }
     }
 
+    [Serializable, NetSerializable, DataDefinition]
+    public sealed partial class PreviousRoundInfoMessageEvent : EntityEventArgs
+    {
+        /// <summary>
+        /// Information describing the previous round
+        /// </summary>
+        public RoundEndMessageInfo RoundInfo { get; private set; }
+
+        public PreviousRoundInfoMessageEvent(RoundEndMessageInfo info)
+        {
+            RoundInfo = info;
+        }
+    }
+
     [Serializable, NetSerializable]
     public enum PlayerGameStatus : sbyte
     {
