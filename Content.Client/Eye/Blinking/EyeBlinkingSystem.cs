@@ -49,6 +49,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         if (ent.Comp.LastEyelidsSprite != ent.Comp.EyelidsSprite)
         {
             ent.Comp.LastEyelidsSprite = ent.Comp.EyelidsSprite;
+            ent.Comp.LastEyelidsColor = ent.Comp.EyelidsColor;
             InitEyeBlinking(ent, GetActiveEntity(ent));
         }
         else if (ent.Comp.LastEyelidsColor != ent.Comp.EyelidsColor)
@@ -259,11 +260,10 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 
         // Remove existing eyelid layers by their expected mapping
         var i = 0;
-        while (_sprite.LayerMapRemove((body, comp), $"{LayerPrefix}-{i}"))
+        while (_sprite.RemoveLayer((body, comp), $"{LayerPrefix}-{i}"))
         {
             i++;
         }
-
         // Clears eyelid states from the client component, if it already exists.
         ent.Comp.Eyelids.Clear();
 
