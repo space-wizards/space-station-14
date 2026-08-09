@@ -111,7 +111,8 @@ public interface ISkinColorationStrategy
                 return true;
             }
 
-            firstReason ??= internalReason;
+            if (firstReason == string.Empty)
+                firstReason = internalReason;
         }
 
         reason = firstReason;
