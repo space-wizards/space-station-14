@@ -132,7 +132,7 @@ public sealed partial class EmotesUIController : UIController, IOnStateChanged<G
         _menu = null;
     }
 
-    private List<RadialMenuOptionBase> ConvertToButtons(IEnumerable<EmotePrototype> emotePrototypes)
+    private IEnumerable<RadialMenuOptionBase> ConvertToButtons(IEnumerable<EmotePrototype> emotePrototypes)
     {
         var whitelistSystem = EntitySystemManager.GetEntitySystem<EntityWhitelistSystem>();
         var player = _playerManager.LocalSession?.AttachedEntity;
@@ -169,17 +169,18 @@ public sealed partial class EmotesUIController : UIController, IOnStateChanged<G
             list.Add(actionOption);
         }
 
-        var models = new List<RadialMenuOptionBase>(emotesByCategory.Count);
+        var models = new RadialMenuOptionBase[emotesByCategory.Count];
+        var i = 0;
         foreach (var (key, list) in emotesByCategory)
         {
             var tuple = EmoteGroupingInfo[key];
 
-            var option = new RadialMenuNestedLayerOption(list)
+            models[i] = new RadialMenuNestedLayerOption(list)
             {
                 IconSpecifier = RadialMenuIconSpecifier.With(tuple.Sprite),
                 ToolTip = Loc.GetString(tuple.Tooltip)
             };
-            models.Add(option);
+            i++;
         }
 
         return models;
