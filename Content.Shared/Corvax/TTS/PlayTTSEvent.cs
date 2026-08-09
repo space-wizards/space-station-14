@@ -13,7 +13,8 @@ public sealed class PlayTTSEvent : EntityEventArgs
     public bool IsRadio { get; }
     public bool IsLexiconSound { get; } // DS14-Language
     public string LanguageId { get; } // DS14-Language
-    public PlayTTSEvent(byte[] data, NetEntity? sourceUid = null, bool isWhisper = false, bool isRadio = false, bool isSoundLexicon = false, string languageId = "")
+    public float? DistanceOverride { get; } // DS14: remote microphones provide their own listening distance.
+    public PlayTTSEvent(byte[] data, NetEntity? sourceUid = null, bool isWhisper = false, bool isRadio = false, bool isSoundLexicon = false, string languageId = "", float? distanceOverride = null) // DS14: per-recipient microphone attenuation.
     {
         Data = data;
         SourceUid = sourceUid;
@@ -21,5 +22,6 @@ public sealed class PlayTTSEvent : EntityEventArgs
         IsRadio = isRadio;
         IsLexiconSound = isSoundLexicon; // DS14-Language
         LanguageId = languageId; // DS14-Language
+        DistanceOverride = distanceOverride; // DS14
     }
 }

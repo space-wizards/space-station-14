@@ -1,8 +1,12 @@
 ent-BulletDisablerTrace = станнер
+ent-BulletDisablerSmgSpreadTrace = оглушающий лазерный залп
 ent-BulletDisablerShotgunTrace = парализатор
+ent-BulletTaserTrace = электрошоковый разряд
 ent-BulletLaserTrace = лазерный заряд
+ent-BulletLaserSpreadNarrowTrace = боевой лазерный залп
 ent-BulletLaserMagnumTrace = лазерный заряд
-ent-BulletLaserWindowPiercingMagnumTrace = структурный заряд
+ent-BulletLaserWindowPiercingMagnumTrace = пронзающий заряд
+ent-ADTBulletLaserTrace = лазерный заряд
 ent-DominatorBulletTrace = лазерный заряд
 ent-DominatorDisablerTrace = парализатор
 ent-DominatorEliminatorTrace = лазерный заряд

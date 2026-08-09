@@ -17,5 +17,6 @@
   - type: MindRole
     antagPrototype: Blob
     exclusiveAntag: true
+    roleType: TeamAntagonist # DS14: blob cores are a team antagonist, including ghost-role takeovers.
     subtype: role-subtype-blob
   - type: BlobRole

@@ -32,10 +32,15 @@ public sealed class TTSSystem : EntitySystem
     private static bool _rootRegistered;
     private static readonly ResPath Prefix = ResPath.Root / "TTS";
 
+    // DS14-start
     /// <summary>
-    /// Reducing the volume of the TTS when whispering. Will be converted to logarithm.
+    /// Gain multiplier for whispered TTS relative to normal local TTS.
     /// </summary>
-    private const float WhisperFade = 3f;
+    internal const float WhisperVolumeMultiplier = 0.5f;
+
+    // A remote microphone supplies attenuation itself, so the listener's movable AI eye must not clip the stream.
+    private const float RemoteMicrophonePlaybackRange = 64f;
+    // DS14-end
 
     /// <summary>
     /// The volume at which the TTS sound will not be heard.
@@ -120,9 +125,24 @@ public sealed class TTSSystem : EntitySystem
         AudioResource? audioResource = null;
         ResPath? filePath = null;
 
+        var maxDistance = AdjustDistance(ev.IsWhisper);
         var audioParams = AudioParams.Default
             .WithVolume(AdjustVolume(ev.IsWhisper, ev.IsRadio))
-            .WithMaxDistance(AdjustDistance(ev.IsWhisper));
+            .WithMaxDistance(maxDistance);
+
+        // DS14-start: attenuate camera audio by speaker-to-device distance, not speaker-to-AI-eye distance.
+        if (ev.DistanceOverride is { } distance)
+        {
+            var gain = CalculateDistanceGain(distance, maxDistance);
+            if (gain <= 0f)
+                return;
+
+            audioParams = audioParams
+                .AddVolume(SharedAudioSystem.GainToVolume(gain))
+                .WithRolloffFactor(0f)
+                .WithMaxDistance(RemoteMicrophonePlaybackRange);
+        }
+        // DS14-end
 
         // Если есть обычные данные TTS — готовим ресурс
         if (hasData)
@@ -165,7 +185,7 @@ public sealed class TTSSystem : EntitySystem
 
         if (isWhisper && !isRadio)
         {
-            volume -= SharedAudioSystem.GainToVolume(WhisperFade);
+            volume += SharedAudioSystem.GainToVolume(WhisperVolumeMultiplier); // DS14: exactly half normal gain.
         }
         else if (isRadio)
         {
@@ -179,4 +199,20 @@ public sealed class TTSSystem : EntitySystem
     {
         return isWhisper ? SharedChatSystem.WhisperMuffledRange : SharedChatSystem.VoiceRange;
     }
+
+    // DS14-start
+    internal static float CalculateDistanceGain(float distance, float maxDistance)
+    {
+        var referenceDistance = AudioParams.Default.ReferenceDistance;
+        if (maxDistance <= referenceDistance)
+            return distance <= referenceDistance ? 1f : 0f;
+
+        var clampedDistance = Math.Clamp(distance, referenceDistance, maxDistance);
+        return Math.Clamp(
+            1f - AudioParams.Default.RolloffFactor *
+            (clampedDistance - referenceDistance) / (maxDistance - referenceDistance),
+            0f,
+            1f);
+    }
+    // DS14-end
 }

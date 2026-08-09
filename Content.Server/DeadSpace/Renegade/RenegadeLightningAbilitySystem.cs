@@ -7,11 +7,9 @@ using Content.Server.Beam;
 using Content.Server.DeadSpace.Renegade.Components;
 using Content.Shared.DeadSpace.Renegade.Components;
 using Content.Shared.Silicons.Borgs.Components;
-using Content.Shared.Stunnable;
 using Content.Shared.DeadSpace.Renegade;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
-using Content.Shared.StatusEffect;
 using Content.Server.Electrocution;
 
 namespace Content.Server.DeadSpace.Renegade;
@@ -23,7 +21,6 @@ public sealed class RenegadeLightningAbilitySystem : EntitySystem
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly BeamSystem _beam = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly StatusEffectsSystem _statusEffect = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly ElectrocutionSystem _electrocution = default!;
@@ -73,8 +70,6 @@ public sealed class RenegadeLightningAbilitySystem : EntitySystem
         args.Handled = true;
 
         var targets = _lookup.GetEntitiesInRange<MobStateComponent>(_transform.GetMapCoordinates(target, xform), component.Range);
-
-        _statusEffect.TryAddStatusEffect<StunnedComponent>(uid, "Stun", TimeSpan.FromSeconds(2f), true);
 
         foreach (var (entity, mobStateComponent) in targets)
         {

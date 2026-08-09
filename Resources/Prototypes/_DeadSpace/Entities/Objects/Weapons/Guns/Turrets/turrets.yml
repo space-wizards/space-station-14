@@ -8,6 +8,11 @@
   - type: NpcFactionMember
     factions:
     - Taipan
+  - type: TurretTargetSettings
+    turretFactions: [Taipan, SyndicateAssault]
+    exemptAccessLevels:
+    - Borg
+    - BasicSilicon
 
 - type: entity
   parent: WeaponEnergyTurretStationBase
@@ -22,7 +27,7 @@
     access: [["StationAi"], ["TaipanResearchDirector"]]
   - type: StationAiTurret
   - type: TurretTargetSettings
-    turretFactions: [Taipan]
+    turretFactions: [Taipan, SyndicateAssault]
     exemptAccessLevels:
     - Borg
     - BasicSilicon
@@ -44,7 +49,7 @@
   - type: AccessReader
     access: [["StationAi"], ["TaipanProtection"]]
   - type: TurretTargetSettings
-    turretFactions: [Taipan]
+    turretFactions: [Taipan, SyndicateAssault]
     exemptAccessLevels:
     - TaipanProtection
     - Borg
@@ -67,7 +72,7 @@
   - type: AccessReader
     access: [["StationAi"], ["TaipanCommand"]]
   - type: TurretTargetSettings
-    turretFactions: [Taipan]
+    turretFactions: [Taipan, SyndicateAssault]
     exemptAccessLevels:
     - TaipanCommand
     - Borg

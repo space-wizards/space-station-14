@@ -35,6 +35,7 @@ using Robust.Server.Containers;
 using Robust.Shared.Containers;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
+using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 using static Content.Server.Chat.Systems.ChatSystem;
 
@@ -54,12 +55,14 @@ public sealed class StationAiSystem : SharedStationAiSystem
     [Dependency] private readonly DestructibleSystem _destructible = default!;
     [Dependency] private readonly SharedBatterySystem _battery = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private readonly SharedPowerReceiverSystem _power = default!; // DS14
     [Dependency] private readonly SharedPopupSystem _popups = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly StationJobsSystem _stationJobs = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly StationAiVisionSystem _vision = default!; // DS14
 
     private readonly HashSet<Entity<StationAiCoreComponent>> _stationAiCores = new();
 
@@ -355,13 +358,9 @@ public sealed class StationAiSystem : SharedStationAiSystem
 
     private void OnExpandICChatRecipients(ExpandICChatRecipientsEvent ev)
     {
-        var xformQuery = GetEntityQuery<TransformComponent>();
-        var sourceXform = Transform(ev.Source);
-        var sourcePos = _xforms.GetWorldPosition(sourceXform, xformQuery);
-
         // Let the AI hear speech around the entity it is currently viewing from.
-        var query = EntityQueryEnumerator<StationAiCoreComponent, TransformComponent>();
-        while (query.MoveNext(out var ent, out var entStationAiCore, out var entXform))
+        var query = EntityQueryEnumerator<StationAiCoreComponent>();
+        while (query.MoveNext(out var ent, out var entStationAiCore))
         {
             var stationAiCore = new Entity<StationAiCoreComponent?>(ent, entStationAiCore);
 
@@ -371,18 +370,77 @@ public sealed class StationAiSystem : SharedStationAiSystem
             if (stationAiCore.Comp?.RemoteEntity == null)
                 continue;
 
-            var xform = Transform(stationAiCore.Comp.RemoteEntity.Value);
-
-            var range = (xform.MapID != sourceXform.MapID)
-                ? -1
-                : (sourcePos - _xforms.GetWorldPosition(xform, xformQuery)).Length();
-
-            if (range < 0 || range > ev.VoiceRange)
+            // DS14-start: use the closest powered vision device while requiring StationAiVision coverage at the AI eye.
+            if (!TryGetCameraHearingPath(stationAiCore.Comp.RemoteEntity.Value, ev.Source, out var device, out var range) ||
+                range > ev.VoiceRange)
+            {
+                ev.Recipients.Remove(actor.PlayerSession);
                 continue;
+            }
 
-            ev.Recipients.TryAdd(actor.PlayerSession, new ICChatRecipientData(range, false));
+            ev.Recipients[actor.PlayerSession] = ev.Recipients.TryGetValue(actor.PlayerSession, out var existing)
+                ? existing with { Range = range, AudioRangeOverride = range, AudioSourceOverride = device }
+                : new ICChatRecipientData(range, false, AudioRangeOverride: range, AudioSourceOverride: device);
+            // DS14-end
         }
     }
+
+    // DS14-start: AI hearing originates from the physical vision device covering its remote eye.
+    internal bool TryGetCameraHearingPath(EntityUid eye, EntityUid source, out EntityUid hearingDevice, out float range)
+    {
+        hearingDevice = EntityUid.Invalid;
+        range = float.PositiveInfinity;
+
+        var xformQuery = GetEntityQuery<TransformComponent>();
+        if (!xformQuery.TryGetComponent(eye, out var eyeXform) ||
+            !xformQuery.TryGetComponent(source, out var sourceXform) ||
+            eyeXform.MapID != sourceXform.MapID ||
+            eyeXform.GridUid is not { } gridUid ||
+            !TryComp<BroadphaseComponent>(gridUid, out var broadphase) ||
+            !TryComp<MapGridComponent>(gridUid, out var grid))
+        {
+            return false;
+        }
+
+        var eyePosition = _xforms.GetWorldPosition(eyeXform, xformQuery);
+        var sourcePosition = _xforms.GetWorldPosition(sourceXform, xformQuery);
+        var eyeTile = Maps.LocalToTile(gridUid, grid, eyeXform.Coordinates);
+        var query = EntityQueryEnumerator<StationAiVisionComponent, TransformComponent>();
+
+        while (query.MoveNext(out var device, out var vision, out var deviceXform))
+        {
+            if (deviceXform.GridUid != gridUid ||
+                !vision.Enabled ||
+                !_power.IsPowered(device) ||
+                vision.NeedsAnchoring && !deviceXform.Anchored)
+            {
+                continue;
+            }
+
+            var devicePosition = _xforms.GetWorldPosition(deviceXform, xformQuery);
+            if ((devicePosition - eyePosition).LengthSquared() > vision.Range * vision.Range)
+                continue;
+
+            if (!_vision.IsAccessible(
+                    (gridUid, broadphase, grid),
+                    eyeTile,
+                    expansionSize: vision.Range + 1f,
+                    requirePoweredSource: true))
+            {
+                continue;
+            }
+
+            var deviceRange = (devicePosition - sourcePosition).Length();
+            if (deviceRange >= range)
+                continue;
+
+            hearingDevice = device;
+            range = deviceRange;
+        }
+
+        return hearingDevice != EntityUid.Invalid;
+    }
+    // DS14-end
 
     private void OnAmmoShot(Entity<StationAiTurretComponent> ent, ref AmmoShotEvent args)
     {

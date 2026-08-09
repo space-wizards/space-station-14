@@ -357,18 +357,19 @@ namespace Content.Client.Actions
             if (args.Handled)
                 return;
 
-            args.Handled = true;
-
-            if (args.Input.EntityUid is not { Valid: true } entity)
-                return;
-
-            // let world target component handle it
             var (uid, comp) = ent;
             if (comp.Event is not {} ev)
             {
                 DebugTools.Assert(HasComp<WorldTargetActionComponent>(ent), $"Action {ToPrettyString(ent)} requires WorldTargetActionComponent for entity-world targeting");
                 return;
             }
+
+            // DS14-start
+            args.Handled = true;
+
+            if (args.Input.EntityUid is not { Valid: true } entity)
+                return;
+            // DS14-end
 
             var action = args.Action;
             var user = args.User;

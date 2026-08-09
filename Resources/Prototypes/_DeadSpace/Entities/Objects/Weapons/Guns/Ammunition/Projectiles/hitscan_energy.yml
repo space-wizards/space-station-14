@@ -207,6 +207,9 @@
   parent: BulletLaserTrace
   categories: [ HideSpawnMenu ]
   components:
+  - type: HitscanBasicRaycast
+    collisionMask: BulletImpassable
+    maxDistance: 40
   - type: HitscanBasicVisuals
     speed: 260
     bullet:

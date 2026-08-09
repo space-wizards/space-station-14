@@ -38,7 +38,7 @@ public sealed class ErtTrackingSystem : EntitySystem
         _transformQuery = GetEntityQuery<TransformComponent>();
 
         SubscribeLocalEvent<ErtTrackerPdaComponent, AfterInteractEvent>(OnAfterInteract);
-        SubscribeLocalEvent<ErtTrackerPdaComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAlternativeVerbs);
+        SubscribeLocalEvent<ErtTrackerPdaComponent, GetVerbsEvent<Verb>>(OnGetVerbs);
         SubscribeLocalEvent<ErtTrackingComponent, ComponentShutdown>(OnTrackingShutdown);
     }
 
@@ -81,7 +81,7 @@ public sealed class ErtTrackingSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void OnGetAlternativeVerbs(Entity<ErtTrackerPdaComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
+    private void OnGetVerbs(Entity<ErtTrackerPdaComponent> ent, ref GetVerbsEvent<Verb> args)
     {
         if (!args.CanAccess || !args.CanInteract ||
             !TryComp(args.User, out ErtTrackingComponent? tracking) ||
@@ -91,7 +91,7 @@ public sealed class ErtTrackingSystem : EntitySystem
         }
 
         var user = args.User;
-        args.Verbs.Add(new AlternativeVerb
+        args.Verbs.Add(new Verb
         {
             Text = Loc.GetString("ert-tracking-unbind-verb"),
             Act = () => UnbindTarget(user, ent.Owner),

@@ -105,10 +105,7 @@ public sealed class AiEyeSystem : EntitySystem
             if (transformComponent.GridUid != eyeGrid)
                 continue;
 
-            if (!camera.Active)
-                continue;
-
-            if (TryComp<StationAiVisionComponent>(camUid, out var vision) && !vision.Enabled)
+            if (!IsCameraAvailableForVision(camUid, camera)) // DS14: unpowered cameras still provide video.
                 continue;
 
             ent.Comp.Cameras.Add((GetNetEntity(camUid), GetNetCoordinates(transformComponent.Coordinates)));
@@ -128,13 +125,7 @@ public sealed class AiEyeSystem : EntitySystem
         if (!TryComp<SurveillanceCameraComponent>(camera, out var cameraComp))
             return;
 
-        if (!cameraComp.Active)
-        {
-            PopupToAi(ent.Owner, Loc.GetString("station-ai-camera-not-working"));
-            return;
-        }
-
-        if (TryComp<StationAiVisionComponent>(camera, out var vision) && !vision.Enabled)
+        if (!IsCameraAvailableForVision(camera.Value, cameraComp)) // DS14: allow jumps to unpowered cameras.
         {
             PopupToAi(ent.Owner, Loc.GetString("station-ai-camera-not-working"));
             return;
@@ -148,6 +139,19 @@ public sealed class AiEyeSystem : EntitySystem
 
         TryMoveEye(ent.Owner, coordinates);
     }
+
+    // DS14-start
+    private bool IsCameraAvailableForVision(EntityUid camera, SurveillanceCameraComponent cameraComp)
+    {
+        if (!TryComp<StationAiVisionComponent>(camera, out var vision))
+            return cameraComp.Active;
+
+        if (!vision.Enabled)
+            return false;
+
+        return !vision.NeedsAnchoring || Transform(camera).Anchored;
+    }
+    // DS14-end
 
     private void OnSearchRequest(Entity<AiEyeComponent> ent, ref AiCameraSearchRequestMessage args)
     {

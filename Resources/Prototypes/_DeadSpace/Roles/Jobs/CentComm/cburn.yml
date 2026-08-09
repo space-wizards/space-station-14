@@ -55,7 +55,7 @@
 ### SCST
 - type: job
   id: SCSTLeader
-  name: job-name-cburn-leader
+  name: job-name-scst-leader
   description: job-description-cburnleader
   playTimeTracker: JobSCSTLeader
   setPreference: false
@@ -106,7 +106,7 @@
 ### SCNT
 - type: job
   id: SCNTLeader
-  name: job-name-cburn-leader
+  name: job-name-scnt-leader
   description: job-description-cburnleader
   playTimeTracker: JobSCNTLeader
   setPreference: false
@@ -156,7 +156,7 @@
 ### Sierra
 - type: job
   id: SierraLeader
-  name: job-name-cburn-leader
+  name: job-name-sierra-leader
   description: job-description-cburnleader
   playTimeTracker: JobSierraLeader
   setPreference: false
@@ -253,7 +253,7 @@
 ### SCST
 - type: job
   id: SCSTAgent
-  name: job-name-cburn-agent
+  name: job-name-scst-agent
   description: job-description-cburnagent
   playTimeTracker: JobSCSTAgent
   setPreference: false
@@ -298,7 +298,7 @@
 ### SCNT
 - type: job
   id: SCNTAgent
-  name: job-name-cburn-agent
+  name: job-name-scnt-agent
   description: job-description-cburnagent
   playTimeTracker: JobSCNTAgent
   setPreference: false
@@ -343,7 +343,7 @@
 ### Sierra
 - type: job
   id: SierraAgent
-  name: job-name-cburn-agent
+  name: job-name-sierra-agent
   description: job-description-cburnagent
   playTimeTracker: JobSierraAgent
   setPreference: false

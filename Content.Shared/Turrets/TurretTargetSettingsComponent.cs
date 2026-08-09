@@ -20,7 +20,7 @@ public sealed partial class TurretTargetSettingsComponent : Component
 
     // DS14-start
     /// <summary>
-    /// Factions used to determine whether another turret is friendly.
+    /// Factions used to determine whether another entity is friendly to the turret.
     /// Falls back to the turret's NPC factions when empty.
     /// </summary>
     [DataField, AutoNetworkedField]

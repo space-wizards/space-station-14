@@ -44,6 +44,15 @@
             - tool: Screwing
               doAfter: 2
         - to: parts
+          # DS14-start: return the materials consumed by this construction stage.
+          completed:
+            - !type:GivePrototype
+              prototype: SheetPlastic1
+              amount: 1
+            - !type:GivePrototype
+              prototype: CableApcStack1
+              amount: 1
+          # DS14-end
           steps:
             - tool: Screwing
               doAfter: 2
@@ -52,6 +61,12 @@
       entity: ATM
       edges:
         - to: wired
+          # DS14-start: return the plastic consumed by this construction stage.
+          completed:
+            - !type:GivePrototype
+              prototype: SheetPlastic1
+              amount: 1
+          # DS14-end
           steps:
             - tool: Prying
               doAfter: 60

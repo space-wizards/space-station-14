@@ -87,6 +87,12 @@
   name: syndicate assault cyborg
   description: A lean, mean killing machine with access to a variety of deadly modules.
   components:
+    # DS14-start: marker faction used by Taipan turret targeting without changing global Syndicate relations.
+    - type: NpcFactionMember
+      factions:
+        - Syndicate
+        - SyndicateAssault
+    # DS14-end
     - type: Sprite
       layers:
         - state: synd_sec

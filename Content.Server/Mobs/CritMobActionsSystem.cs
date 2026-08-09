@@ -1,7 +1,6 @@
 ﻿using Content.Server.Administration;
 using Content.Server.Chat.Systems;
 using Content.Server.Popups;
-using Content.Shared.Chat;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -80,7 +79,7 @@ public sealed class CritMobActionsSystem : EntitySystem
                 }
                 lastWords += "...";
 
-                _chat.TrySendInGameICMessage(uid, lastWords, InGameICChatType.Whisper, ChatTransmitRange.Normal, checkRadioPrefix: false, ignoreActionBlocker: true);
+                _chat.SendCriticalLastWords(uid, lastWords); // DS14: do not hide the speaker's last words behind critical hearing suppression.
                 _host.ExecuteCommand(actor.PlayerSession, "ghost");
             });
 

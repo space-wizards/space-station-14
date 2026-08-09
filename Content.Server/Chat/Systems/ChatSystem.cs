@@ -68,6 +68,9 @@ public sealed partial class ChatSystem : SharedChatSystem
     [Dependency] private readonly ServerGlobalSoundSystem _sound = default!; // DS14
     private IServerChatFilter? _chatFilter; // DS14-chat-filter
 
+    // DS14: last words must remain visible to their speaker despite critical hearing suppression.
+    private readonly HashSet<EntityUid> _criticalHearingSelfBypass = new();
+
     private bool _loocEnabled = true;
     private bool _deadLoocEnabled;
     private bool _critLoocEnabled;
@@ -252,6 +255,33 @@ public sealed partial class ChatSystem : SharedChatSystem
                 break;
         }
     }
+
+    // DS14-start
+    /// <summary>
+    /// Sends the critical last-words whisper while only bypassing hearing suppression for the speaker themself.
+    /// Other critical listeners still hear the normal suppressed message.
+    /// </summary>
+    public void SendCriticalLastWords(EntityUid source, string message)
+    {
+        var added = _criticalHearingSelfBypass.Add(source);
+
+        try
+        {
+            TrySendInGameICMessage(
+                source,
+                message,
+                InGameICChatType.Whisper,
+                ChatTransmitRange.Normal,
+                checkRadioPrefix: false,
+                ignoreActionBlocker: true);
+        }
+        finally
+        {
+            if (added)
+                _criticalHearingSelfBypass.Remove(source);
+        }
+    }
+    // DS14-end
 
     /// <inheritdoc />
     public override void TrySendInGameOOCMessage(
@@ -772,7 +802,7 @@ public sealed partial class ChatSystem : SharedChatSystem
                 (recipientMessage, recipientWrappedMessage) = (obfuscatedMessage, wrappedUnknownMessage);
             }
 
-            if (IsCriticalHearingBlocked(listener, ChatChannel.Whisper))
+            if (IsCriticalHearingBlocked(listener, source, ChatChannel.Whisper)) // DS14: last words may bypass suppression for their speaker.
             {
                 var hearingMessage = GetCriticalHearingMessage(listener, source);
                 _chatManager.ChatMessageToOne(
@@ -987,7 +1017,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             if (entRange == MessageRangeCheckResult.Disallowed)
                 continue;
             var entHideChat = entRange == MessageRangeCheckResult.HideChat;
-            if (IsCriticalHearingBlocked(listener, channel))
+            if (IsCriticalHearingBlocked(listener, source, channel)) // DS14: pass the speaker into the targeted bypass check.
             {
                 var hearingMessage = GetCriticalHearingMessage(listener, source);
                 _chatManager.ChatMessageToOne(
@@ -1007,8 +1037,11 @@ public sealed partial class ChatSystem : SharedChatSystem
         _replay.RecordServerMessage(new ChatMessage(channel, message, wrappedMessage, GetNetEntity(source), null, MessageRangeHideChatForReplay(range)));
     }
 
-    private bool IsCriticalHearingBlocked(EntityUid listener, ChatChannel channel)
+    private bool IsCriticalHearingBlocked(EntityUid listener, EntityUid source, ChatChannel channel)
     {
+        if (listener == source && _criticalHearingSelfBypass.Contains(source)) // DS14: preserve feedback for last words.
+            return false;
+
         return channel is ChatChannel.Local or ChatChannel.Whisper &&
                HasComp<CritHeartbeatComponent>(listener) &&
                (_mobStateSystem.IsPreCritical(listener) ||
@@ -1174,7 +1207,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         return recipients;
     }
 
-    public readonly record struct ICChatRecipientData(float Range, bool Observer, bool? HideChatOverride = null)
+    public readonly record struct ICChatRecipientData(float Range, bool Observer, bool? HideChatOverride = null, float? AudioRangeOverride = null, EntityUid? AudioSourceOverride = null) // DS14: remote hearing paths can override positional audio range and source.
     {
     }
 

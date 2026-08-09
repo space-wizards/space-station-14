@@ -252,7 +252,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
         lock (_vision)
         {
-            if (_vision.IsAccessible((targetXform.GridUid.Value, broadphase, grid), targetTile, fastPath: true))
+            if (_vision.IsAccessible((targetXform.GridUid.Value, broadphase, grid), targetTile, fastPath: true, requirePoweredSource: true)) // DS14: unpowered cameras provide vision, but not interaction.
             {
                 args.Result = BoundUserInterfaceRangeResult.Pass;
             }
@@ -279,7 +279,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
         var targetTile = Maps.LocalToTile(targetXform.GridUid.Value, grid, targetXform.Coordinates);
 
-        args.InRange = _vision.IsAccessible((targetXform.GridUid.Value, broadphase, grid), targetTile);
+        args.InRange = _vision.IsAccessible((targetXform.GridUid.Value, broadphase, grid), targetTile, requirePoweredSource: true); // DS14: unpowered cameras provide vision, but not interaction.
     }
 
 

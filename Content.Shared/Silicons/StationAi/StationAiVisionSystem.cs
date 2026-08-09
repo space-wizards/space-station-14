@@ -64,7 +64,7 @@ public sealed class StationAiVisionSystem : EntitySystem
     /// <summary>
     /// Returns whether a tile is accessible based on vision.
     /// </summary>
-    public bool IsAccessible(Entity<BroadphaseComponent, MapGridComponent> grid, Vector2i tile, float expansionSize = 8.5f, bool fastPath = false)
+    public bool IsAccessible(Entity<BroadphaseComponent, MapGridComponent> grid, Vector2i tile, float expansionSize = 8.5f, bool fastPath = false, bool requirePoweredSource = false) // DS14: interaction can require power without disabling vision.
     {
         _viewportTiles.Clear();
         _opaque.Clear();
@@ -84,7 +84,7 @@ public sealed class StationAiVisionSystem : EntitySystem
             if (!seed.Comp.Enabled)
                 continue;
 
-            if (seed.Comp.NeedsPower && !_power.IsPowered(seed.Owner))
+            if ((seed.Comp.NeedsPower || requirePoweredSource) && !_power.IsPowered(seed.Owner)) // DS14
                 continue;
 
             if (seed.Comp.NeedsAnchoring && !Transform(seed.Owner).Anchored)
