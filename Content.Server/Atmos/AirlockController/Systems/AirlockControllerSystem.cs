@@ -494,8 +494,7 @@ public sealed partial class AirlockControllerSystem : SharedAirlockControllerSys
     {
         PruneCaches(ent);
         SyncSilentDevices(ent);
-        _status.Apply(ent, GetStatus(ent));
-        UpdateCyclers(ent);
+        UpdateStatus(ent);
 
         var uiOpen = UserInterfaceSystem.IsUiOpen(ent.Owner, AirlockControllerUiKey.Key)
                      || UserInterfaceSystem.IsUiOpen(ent.Owner, AirlockControllerUiKey.Config);
@@ -1126,8 +1125,7 @@ public sealed partial class AirlockControllerSystem : SharedAirlockControllerSys
         _signal.SendSignal(ent, comp.StateAPort, idle && comp.CurrentSide == AirlockSide.A);
         _signal.SendSignal(ent, comp.StateBPort, idle && comp.CurrentSide == AirlockSide.B);
 
-        _status.Apply(ent, GetStatus(ent));
-        UpdateCyclers(ent);
+        UpdateStatus(ent);
     }
 
     private static AirlockCycleStatus GetStatus(Entity<AirlockControllerComponent> ent)
@@ -1145,7 +1143,18 @@ public sealed partial class AirlockControllerSystem : SharedAirlockControllerSys
     /// <summary>
     ///     Pushes our state to the panels, and binds them
     /// </summary>
-    private void UpdateCyclers(Entity<AirlockControllerComponent> ent)
+    /// <summary>
+    ///     The controller and its panels always show the same thing.
+    /// </summary>
+    private void UpdateStatus(Entity<AirlockControllerComponent> ent)
+    {
+        var status = GetStatus(ent);
+
+        _status.Apply(ent, status);
+        UpdateCyclers(ent, status);
+    }
+
+    private void UpdateCyclers(Entity<AirlockControllerComponent> ent, AirlockCycleStatus status)
     {
         var comp = ent.Comp;
 
@@ -1153,15 +1162,11 @@ public sealed partial class AirlockControllerSystem : SharedAirlockControllerSys
             return;
 
         var pressure = TryGetChamberPressure(ent, out var reading) ? reading.Mean : (float?)null;
-        var status = GetStatus(ent);
 
-        foreach (var device in _deviceList.GetDeviceList(ent.Owner).Values)
+        foreach (var (device, side) in comp.CyclerRoles)
         {
-            if (!comp.CyclerRoles.TryGetValue(device, out var side)
-                || !_cyclerQuery.TryComp(device, out var panel))
-            {
+            if (!_cyclerQuery.TryComp(device, out var panel))
                 continue;
-            }
 
             panel.Controller = ent.Owner;
             panel.Side = side;
