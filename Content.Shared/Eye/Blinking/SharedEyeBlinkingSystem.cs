@@ -28,7 +28,7 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
         if (ent.Comp.EyeToggleActionEntity == null)
             return;
 
-        _actionsSystem.RemoveAction(GetActiveEntity(ent));
+        _actionsSystem.RemoveAction(ent.Comp.EyeToggleActionEntity);
     }
 
     [SubscribeLocalEvent]
@@ -71,8 +71,6 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
             return;
 
         ent.Comp.EyeToggleAction = cloneEyes.EyeToggleAction;
-
-        ent.Comp.Status = cloneEyes.Status;
 
         ent.Comp.EyelidsSprite = cloneEyes.EyelidsSprite;
         ent.Comp.EyelidsColor = cloneEyes.EyelidsColor;
@@ -183,8 +181,6 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
         // Make sure to set the datafields before adding the component so that the correct action gets spawned on map init.
         var cloneComp = Factory.GetComponent<EyeBlinkingComponent>();
         cloneComp.EyeToggleAction = ent.Comp.EyeToggleAction;
-
-        cloneComp.Status = BlinkStatus.Normal; // Clone could be dead.  We start anew.
 
         cloneComp.EyelidsSprite = ent.Comp.EyelidsSprite;
         cloneComp.EyelidsColor = ent.Comp.EyelidsColor;
