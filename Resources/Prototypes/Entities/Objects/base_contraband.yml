@@ -109,14 +109,6 @@
     allowedDepartments: [ Medical ]
 
 - type: entity
-  id: BaseTheatreContraband
-  parent: BaseRestrictedContraband
-  abstract: true
-  components:
-  - type: Contraband
-    allowedDepartments: [ Theatre ]
-
-- type: entity
   id: BaseCivilianContraband
   parent: BaseRestrictedContraband
   abstract: true

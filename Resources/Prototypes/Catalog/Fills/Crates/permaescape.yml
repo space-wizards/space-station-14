@@ -290,7 +290,6 @@
           - id: ClothingHeadsetGrey
           - id: ClothingHeadsetScience
           - id: ClothingHeadsetService
-          - id: ClothingHeadsetTheatre
           - id: ClothingHeadsetEngineering
           - id: ClothingHeadsetMedical
         - id: EncryptionKeyCargo
@@ -298,8 +297,6 @@
         - id: EncryptionKeyScience
           prob: 0.05
         - id: EncryptionKeyService
-          prob: 0.05
-        - id: EncryptionKeyTheatre
           prob: 0.05
         - id: EncryptionKeyMedical
           prob: 0.05

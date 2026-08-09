@@ -424,17 +424,6 @@
         amount: 4
 
 - type: entity
-  name: theatre encryption key box
-  parent: BoxEncryptionKeyPassenger
-  id: BoxEncryptionKeyTheatre
-  components:
-  - type: EntityTableContainerFill
-    containers:
-      storagebase:
-        id: EncryptionKeyTheatre
-        amount: 4
-
-- type: entity
   name: syndicate encryption key box
   parent: [BoxEncryptionKeyPassenger, BaseSyndicateContraband]
   id: BoxEncryptionKeySyndie

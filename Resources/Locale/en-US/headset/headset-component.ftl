@@ -13,7 +13,6 @@ chat-radio-science = Science
 chat-radio-security = Security
 chat-radio-service = Service
 chat-radio-supply = Supply
-chat-radio-theatre = Theatre
 chat-radio-syndicate = Syndicate
 chat-radio-freelance = Freelance
 

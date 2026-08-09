@@ -63,13 +63,6 @@
   color: "#b48b57"
 
 - type: radioChannel
-  id: Theatre
-  name: chat-radio-theatre
-  keycode: 'q'
-  frequency: 1345
-  color: "#6f56b8"
-
-- type: radioChannel
   id: Syndicate
   name: chat-radio-syndicate
   keycode: 't'

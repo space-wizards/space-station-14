@@ -32,8 +32,6 @@
       map: ["variant-sec"]
     - state: variant-service
       map: ["variant-service"]
-    - state: variant-theatre
-      map: ["variant-theatre"]
     - state: variant-command
       map: ["variant-command"]
     - state: variant-multiple
@@ -81,10 +79,6 @@
         whitelist:
           tags:
           - EncryptionService
-      variant-theatre:
-        whitelist:
-          tags:
-          - EncryptionTheatre
       variant-command:
         whitelist:
           tags:
@@ -126,9 +120,6 @@
           True: { shader: unshaded }
           False: { shader: shaded }
         variant-service:
-          True: { shader: unshaded }
-          False: { shader: shaded }
-        variant-theatre:
           True: { shader: unshaded }
           False: { shader: shaded }
         variant-command:
@@ -204,7 +195,6 @@
       - EncryptionKeyScience
       - EncryptionKeySecurity
       - EncryptionKeyService
-      - EncryptionKeyTheatre
       - EncryptionKeyCommand
 
 - type: entity
@@ -266,16 +256,6 @@
     containers:
       key_slots:
       - EncryptionKeySecurity
-
-- type: entity
-  parent: TelecomServer
-  id: TelecomServerFilledTheatre
-  suffix: Theatre
-  components:
-  - type: ContainerFill
-    containers:
-      key_slots:
-      - EncryptionKeyTheatre
 
 - type: entity
   parent: TelecomServer
