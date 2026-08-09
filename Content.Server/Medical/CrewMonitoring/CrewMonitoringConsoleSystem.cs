@@ -77,7 +77,8 @@ public sealed class CrewMonitoringConsoleSystem : EntitySystem
 
         if (HasComp<PowerCellDrawComponent>(ent.Owner))
         {
-            if (!_cell.TryUseActivatableCharge(ent.Owner))
+            //6.6f это примерно 2% у маленькой батареи. При обычном (20f) 6% маленькой батареи
+            if (!_cell.TryUseCharge(ent.Owner, 6.6f))
                 return;
         }
         else if (!_power.IsPowered(ent.Owner))

@@ -78,6 +78,11 @@ public sealed class CrewMonitoringServerSystem : EntitySystem
     {
         pingMode = default;
 
+        if (newSensor is { Coordinates: null })
+        {
+            return false;
+        }
+
         if (!newSensor.IsAlive)
         {
             if (oldSensor is { IsAlive: false })
@@ -90,7 +95,7 @@ public sealed class CrewMonitoringServerSystem : EntitySystem
         if (newSensor.DamagePercentage is not { } newDamage)
             return false;
 
-        var oldDamage = oldSensor is { IsAlive: true }
+        var oldDamage = oldSensor != null
             ? oldSensor.DamagePercentage
             : null;
 
