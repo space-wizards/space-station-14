@@ -35,4 +35,3 @@ public enum WiresVisualLayers : byte
 {
     MaintenancePanel
 }
-
