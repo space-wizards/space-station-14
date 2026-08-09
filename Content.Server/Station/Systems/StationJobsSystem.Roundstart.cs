@@ -411,7 +411,7 @@ public sealed partial class StationJobsSystem
         IReadOnlyDictionary<NetUserId, HumanoidCharacterProfile> profiles,
         out NetUserId player)
     {
-        if (!_jobs.TryGetPrimaryDepartment(job.Id, out var department))
+        if (!_jobs.TryGetPrimaryDepartment(job.Id, out var department) || department.IgnoreForDepartmentFallback)
         {
             player = default;
             return false;
