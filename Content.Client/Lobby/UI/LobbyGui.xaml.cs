@@ -26,7 +26,7 @@ namespace Content.Client.Lobby.UI
             OptionsButton.OnPressed += _ => UserInterfaceManager.GetUIController<OptionsUIController>().ToggleWindow();
 
             var roundSummaryController = UserInterfaceManager.GetUIController<RoundEndSummaryUIController>();
-            RoundSummaryButton.OnToggled += _ => roundSummaryController.ToggleScoreboardWindow();
+            RoundSummaryButton.OnToggled += _ => roundSummaryController.ToggleRoundEndSummaryWindow();
             ConfigureRoundSummaryButton();
             roundSummaryController.OnWindowToggled += isOpen => RoundSummaryButton.Pressed = isOpen;
 

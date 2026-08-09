@@ -24,7 +24,7 @@ public sealed partial class RoundEndSummaryUIController : UIController,
     private RoundEndMessageInfo? _lastRoundInfo = null;
     private RoundEndSummaryWindow? _window;
 
-    public void ToggleScoreboardWindow(ICommonSession? session = null)
+    public void ToggleRoundEndSummaryWindow(ICommonSession? session = null)
     {
         if (_window == null)
         {
@@ -64,7 +64,7 @@ public sealed partial class RoundEndSummaryUIController : UIController,
     public void OnSystemLoaded(ClientGameTicker system)
     {
         _input.SetInputCommand(ContentKeyFunctions.ToggleRoundEndSummaryWindow,
-            InputCmdHandler.FromDelegate(ToggleScoreboardWindow));
+            InputCmdHandler.FromDelegate(ToggleRoundEndSummaryWindow));
     }
 
     public void UpdateRoundInfo(RoundEndMessageInfo roundInfo)
