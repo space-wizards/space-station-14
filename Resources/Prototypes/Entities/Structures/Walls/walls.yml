@@ -22,9 +22,7 @@
       Heat:
         collection:
           MetalLaserImpact
-  - type: Tag
-    tags:
-    - Wall
+  - type: Wall
   - type: IsRoof
   - type: Sprite
     drawdepth: Walls
@@ -72,7 +70,6 @@
   components:
   - type: Tag
     tags:
-    - Wall
     - Diagonal
   - type: IconSmooth
     mode: Diagonal
@@ -83,6 +80,11 @@
     airBlockedDirection:
     - South
     - East
+  - type: Occluder
+    polygon:
+    - "-0.5,-0.5"
+    - "0.5,0.5"
+    - "0.5,-0.5"
   - type: Fixtures
     fixtures:
       fix1:
@@ -208,7 +210,6 @@
   components:
   - type: Tag
     tags:
-    - Wall
     - Structure
   - type: Sprite
     sprite: Structures/Walls/meat.rsi
@@ -266,9 +267,6 @@
   name: debug wall
   suffix: DEBUG
   components:
-  - type: Tag
-    tags:
-    - Wall
   - type: Sprite
     sprite: Structures/Walls/debug.rsi
   - type: Icon
@@ -975,9 +973,6 @@
   id: WallSolidChitin
   name: solid chitin
   components:
-  - type: Tag
-    tags:
-    - Wall
   - type: Destructible
     thresholds:
     - trigger:
@@ -1334,9 +1329,7 @@
   components:
   - type: TimedDespawn
     lifetime: 15
-  - type: Tag
-    tags:
-    - Wall
+  - type: Wall
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -1357,9 +1350,7 @@
   components:
   - type: TimedDespawn
     lifetime: 10
-  - type: Tag
-    tags:
-    - Wall
+  - type: Wall
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -1534,9 +1525,7 @@
       Brute:
         path:
           "/Audio/Weapons/pierce.ogg"
-  - type: Tag
-    tags:
-    - Wall
+  - type: Wall
   - type: Sprite
     drawdepth: SmallObjects #so bullets pass 'through'
     sprite: Structures/Walls/card.rsi

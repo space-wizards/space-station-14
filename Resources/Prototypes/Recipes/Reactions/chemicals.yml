@@ -346,6 +346,24 @@
     Stimulants: 2
 
 - type: reaction
+  id: StrawberryIce
+  impact: Medium
+  minTemp: 370
+  reactants:
+    Desoxyephedrine:
+      amount: 1
+    UnstableMutagen:
+      amount: 1
+    Benzene:
+      amount: 1
+    SodiumPolyacrylate:
+      amount: 1
+    Ice:
+      amount: 1
+  products:
+    StrawberryIce: 4
+
+- type: reaction
   id: Ephedrine
   impact: Medium
   reactants:
