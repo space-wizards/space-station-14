@@ -44,18 +44,11 @@ public sealed partial class ClumsyStatusEffectSystem : EntitySystem
             || !SharedRandomExtensions.PredictedProb(_timing, status.Comp.ClumsyChance, GetNetEntity(status), GetNetEntity(args.AppliedTo)))
             return;
 
-        // fail to catch
         var ev = args.Args;
         ev.Cancelled = true;
 
         if (status.Comp.FailDamage != null)
             _damageable.ChangeDamage(args.AppliedTo, status.Comp.FailDamage, origin: args.Args.Item);
-
-        // todo double check this
-        // Collisions don't work properly with PlayPredicted.
-        // So we make this server only.
-        if (_net.IsClient)
-            return;
 
         var identity = Identity.Entity(args.AppliedTo, EntityManager);
 
@@ -67,7 +60,13 @@ public sealed partial class ClumsyStatusEffectSystem : EntitySystem
             :  Loc.GetString(status.Comp.OtherFailedMessage, ("item", args.Args.Item), ("catcher", identity));
 
         _popup.PopupEntity(selfMessage, othersMessage, args.AppliedTo, args.AppliedTo);
-        _audio.PlayPredicted(status.Comp.ClumsySound, args.AppliedTo, args.AppliedTo);
+
+        // _audio.PlayPredicted doesn't play nice with collision events so we need PlayPvs
+        // exit early for clients so the sound doesn't play twice
+        if (_net.IsClient)
+            return;
+
+        _audio.PlayPvs(status.Comp.ClumsySound, args.AppliedTo);
     }
 
     // Clumsy people shock themselves with defibrillators!
@@ -79,6 +78,9 @@ public sealed partial class ClumsyStatusEffectSystem : EntitySystem
 
         var ev = args.Args;
         ev.DefibTarget = ev.EntityUsingDefib;
+
+        if (status.Comp.FailedMessage != null)
+            _popup.PopupEntity(Loc.GetString(status.Comp.FailedMessage), args.AppliedTo, args.AppliedTo);
 
         _audio.PlayPredicted(status.Comp.ClumsySound, args.AppliedTo, args.AppliedTo);
     }
@@ -102,9 +104,13 @@ public sealed partial class ClumsyStatusEffectSystem : EntitySystem
         if (status.Comp.FailedMessage != null)
             _popup.PopupEntity(Loc.GetString(status.Comp.FailedMessage, ("gun", args.Args.Gun)), args.AppliedTo, args.AppliedTo);
 
-        // Apply salt to the wound ("Honk!") (No idea what this comment means) (I do :o))
-        _audio.PlayPredicted(status.Comp.GunShootFailSound, args.Args.Gun, args.AppliedTo);
-        _audio.PlayPredicted(status.Comp.ClumsySound, args.AppliedTo, args.AppliedTo);
+        // SelfBeforeGunShotEvent is raised on server so _audio.PlayPredicted fails to play locally
+        if (_net.IsClient)
+            return;
+
+        // Apply salt to the wound ("Honk!") (No idea what this comment means) :o)
+        _audio.PlayPvs(status.Comp.GunShootFailSound, args.Args.Gun);
+        _audio.PlayPvs(status.Comp.ClumsySound, args.AppliedTo);
     }
 
     // Clumsy people sometimes inject themselves!
