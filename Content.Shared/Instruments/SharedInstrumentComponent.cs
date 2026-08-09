@@ -47,7 +47,7 @@ public sealed partial class ActiveInstrumentComponent : Component
 {
     [DataField]
     [AutoNetworkedField]
-    public MidiTrack?[] Tracks = [];
+    public BitArray UsedChannels = new(16, false);
 }
 
 [Serializable, NetSerializable]
@@ -178,12 +178,12 @@ public enum InstrumentUiKey
 public sealed class InstrumentSetChannelsEvent : EntityEventArgs
 {
     public NetEntity Uid { get; }
-    public MidiTrack?[] Tracks { get; set; }
+    public BitArray Channels { get; set; }
 
-    public InstrumentSetChannelsEvent(NetEntity uid, MidiTrack?[] tracks)
+    public InstrumentSetChannelsEvent(NetEntity uid, BitArray channels)
     {
         Uid = uid;
-        Tracks = tracks;
+        Channels = channels;
     }
 }
 
@@ -269,7 +269,7 @@ public sealed class MidiTrack
 /// <summary>
 /// Contains the header information from a MIDI file.
 /// </summary>
-[Serializable] [NetSerializable]
+[Serializable, NetSerializable]
 public sealed class MidiHeaderInfo
 {
     /// <summary>
@@ -305,7 +305,7 @@ public sealed class MidiHeaderInfo
 /// <summary>
 /// Contains information about a single track inside a MIDI file.
 /// </summary>
-[Serializable] [NetSerializable]
+[Serializable, NetSerializable]
 public sealed class MidiTrackInfo
 {
     private const string Postfix = "…";
