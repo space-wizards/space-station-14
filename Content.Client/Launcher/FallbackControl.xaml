@@ -2,9 +2,9 @@
     <BoxContainer Orientation="Vertical">
         <!-- Main entry -->
         <BoxContainer Orientation="Horizontal">
-            <Label Name="ServerName" Text="weh" Access="Public" HorizontalExpand="True" />
+            <Label Name="ServerName" Access="Public" HorizontalExpand="True" />
             <Button Name="FallbackButton"
-                    Text="Connect"
+                    Text="{Loc 'connecting-fallback-connect'}"
                     MinWidth="48"
                     MaxHeight="48"
                     HorizontalAlignment="Center"

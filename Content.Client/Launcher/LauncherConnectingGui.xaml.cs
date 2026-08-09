@@ -29,15 +29,17 @@ namespace Content.Client.Launcher
         private readonly IClipboardManager _clipboard;
 
         /// <summary>
-        /// The list of connect options which will be shown to the player when their connection fails due to the server being full
-        /// This is populated from the data sent by the server along with the disconnect event
-        /// </summary>
-        private List<(string Name, string url, int players, int max)> _fallbackServers = new();
-
-        /// <summary>
         /// The server redirect controls that have been created on the GUI
         /// </summary>
-        private List<FallbackControl> _fallbackControls = new();
+        /// <remarks>
+        /// The dictionary keys are the server urls, so the same server can't be added twice
+        /// </remarks>
+        private Dictionary<string, FallbackControl> _fallbackControls = new ();
+
+        /// <summary>
+        /// An easy-to-access list of the visibility status for each Fallback control on the GUI
+        /// </summary>
+        private Dictionary<string, bool> _visibleFallbacks = new();
 
         public LauncherConnectingGui(
             LauncherConnecting state,
@@ -84,32 +86,28 @@ namespace Content.Client.Launcher
         }
 
         /// <summary>
-        /// Creates the Server Redirect info/buttons
+        /// Creates a server fallback button, along with its related GUI elements
         /// </summary>
-        private void CreateFallbackGui()
+        private void CreateFallbackGui(string name, string url, int players, int maxPlayers, bool visible)
         {
-            foreach (var control in _fallbackControls)
-            {
-                // TODO:ERRANT delete current controls? Better to update them
-            }
+            var option = new FallbackControl(name, url);
+            option.ServerName.Text = name;
+            option.FallbackButton.OnButtonDown += args => OnFallbackButtonPressed(args, url);
+            FallbackBox.AddChild(option);
+            _fallbackControls.Add(url, option);
+            _visibleFallbacks.Add(url, visible);
 
-            var available = false;
+            option.PlayersLabel.Text = Loc.GetString("connecting-fallback-players",("players", players),("maxPlayers", maxPlayers));
+            option.Visible = visible;
+        }
 
-            foreach (var (name, target,players ,maxPlayers) in _fallbackServers)
-            {
-                var option = new FallbackControl(name, target);
-                option.ServerName.Text = name;
-                option.FallbackButton.OnButtonDown += args => OnFallbackButtonPressed(args, target);
-                FallbackBox.AddChild(option);
-                _fallbackControls.Add(option);
-
-                option.PlayersLabel.Text = Loc.GetString("connecting-fallback-players",("players", players),("maxPlayers", maxPlayers));
-                option.Visible = players < maxPlayers;
-
-                available |= option.Visible;
-            }
-
-            var loc = available ? "connecting-fallback-label" : "connecting-fallback-label-full";
+        /// <summary>
+        /// Checks if any Fallback buttons are visible after the last update, and adjusts FallbackLabel as appropriate
+        /// (Buttons can be hidden after updates, if their player count exceeds their capacity)
+        /// </summary>
+        private void UpdateFallbackLabel()
+        {
+            var loc = _visibleFallbacks.ContainsValue(true) ? "connecting-fallback-label" : "connecting-fallback-label-full";
             FallbackLabel.Text = Loc.GetString(loc);
         }
 
@@ -126,9 +124,12 @@ namespace Content.Client.Launcher
             _state.RetryConnect();
         }
 
+        /// <summary>
+        /// Connects the client to a different server
+        /// </summary>
         private void OnFallbackButtonPressed(BaseButton.ButtonEventArgs args, string target)
         {
-            _state.Redirect(target, Loc.GetString("connecting-switching",("target",target)));
+            _state.Redial(target, Loc.GetString("connecting-switching",("target",target)));
         }
 
         private void CopyButtonPressed(BaseButton.ButtonEventArgs args)
@@ -181,44 +182,55 @@ namespace Content.Client.Launcher
                     _waitTime = RedialWaitTimeSeconds;
                 }
 
-                FallbackBox.Visible = false;
+                HandleFallbacks(reason);
+            }
+        }
 
-                // List of fallback servers sent by the current server
-                if (reason.Message.StringOf("fallbackServers") is { } fallback)
+        /// <summary>
+        /// Reads the fallback string sent by the server, and creates or updates fallback buttons on the GUI
+        /// </summary>
+        private void HandleFallbacks(INetStructuredReason reason)
+        {
+            // List of fallback servers sent by the current server
+            if (reason.Message.StringOf("fallbackServers") is not { } fallback)
+                return;
+
+            // The string separates servers by ; and data fields about each server by ,
+            foreach (var server in fallback.Split(";", StringSplitOptions.RemoveEmptyEntries))
+            {
+                // Each server must have a name, url, playercount and max playercount
+                var members = server.Split(",", StringSplitOptions.RemoveEmptyEntries);
+                if (members.Length != 4)
                 {
-                    _fallbackServers = [];
+                    Log.Warning($"Fallback server info contained malformed element: '{server}'");
+                    continue;
+                }
 
-                    // The string separates servers by ; and data fields about each server by ,
-                    foreach (var server in fallback.Split(";", StringSplitOptions.RemoveEmptyEntries))
-                    {
-                        // Each server must have a name, url, playercount and max playercount
-                        if (server.Split(",", StringSplitOptions.RemoveEmptyEntries).Length != 4)
-                        {
-                            // TODO log cvar content error
-                            continue;
-                        }
+                var name = members[0].Trim();
+                var url = members[1].Trim();
 
-                        var i = 0;
-                        var members = new string[4]; //TODO:ERRANT This is UGLY!
-                        foreach (var element in server.Split(",", StringSplitOptions.RemoveEmptyEntries))
-                        {
-                            members[i] = element;
-                            i++;
-                        }
+                if (!int.TryParse(members[2].Trim(), out var players) || !int.TryParse(members[3].Trim(), out var max))
+                {
+                    Log.Info($"Fallback server info contained invalid player count data: '{server}'");
+                    continue;
+                }
 
-                        if(i!=4 || !int.TryParse(members[2], out var players) || !int.TryParse(members[3], out var max))
-                            continue;
-
-                        _fallbackServers.Add((members[0], members[1], players, max));
-                    }
-
-                    if (_fallbackServers.Count == 0)
-                        return;
-
+                // Since the list is sent by the server on every reconnect attempt, we must check that
+                // we are not adding the same servers multiple times
+                if (_fallbackControls.TryGetValue(url, out var control))
+                {
+                    control.PlayersLabel.Text = Loc.GetString("connecting-fallback-players",("players", players),("maxPlayers", max));
+                    control.Visible = players < max;
+                    _visibleFallbacks[url]= players < max;
+                }
+                else
+                {
                     FallbackBox.Visible = true;
-                    CreateFallbackGui();
+                    CreateFallbackGui(name, url, players, max, players < max);
                 }
             }
+
+            UpdateFallbackLabel();
         }
 
         private void ChangeLoginTip()

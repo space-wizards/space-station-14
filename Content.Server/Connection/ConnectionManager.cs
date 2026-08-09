@@ -204,7 +204,8 @@ namespace Content.Server.Connection
                 var url = serverRaw[(i+1)..];
 
                 //TODO:ERRANT Actually get server pops
-                var pop = _random.Next(0,110);
+                // don't forget to remove _random too
+                var pop = _random.Next(60,110);
                 var max = 75;
 
                 fallbacks += serverRaw + "," + pop + "," + max + ";";

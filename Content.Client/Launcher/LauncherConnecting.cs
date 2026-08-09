@@ -105,11 +105,16 @@ namespace Content.Client.Launcher
             }
         }
 
-        public bool Redial()
+        public bool Redial(string? url = null, string? infoText = null)
         {
             try
             {
-                if (_gameController.LaunchState.Ss14Address != null)
+                if (url is not null)
+                {
+                    _gameController.Redial(url, infoText);
+
+                }
+                else if (_gameController.LaunchState.Ss14Address != null)
                 {
                     _gameController.Redial(_gameController.LaunchState.Ss14Address);
                     return true;
@@ -124,11 +129,6 @@ namespace Content.Client.Launcher
                 _sawmill.Error($"Redial exception: {ex}");
             }
             return false;
-        }
-
-        public void Redirect(string target, string? text)
-        {
-            _gameController.Redial(target, text);
         }
 
         public void Exit()
