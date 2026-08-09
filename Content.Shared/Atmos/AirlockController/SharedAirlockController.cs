@@ -1,3 +1,4 @@
+using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.AirlockController;
@@ -125,7 +126,7 @@ public readonly record struct AirlockCycleStatus(
 /// </summary>
 public static class AirlockControllerLocale
 {
-    public static string StateKey(AirlockCycleState state) => state switch
+    public static LocId StateKey(AirlockCycleState state) => state switch
     {
         AirlockCycleState.Sealing => "airlock-controller-state-sealing",
         AirlockCycleState.Evacuating => "airlock-controller-state-evacuating",
@@ -134,11 +135,11 @@ public static class AirlockControllerLocale
         _ => "airlock-controller-state-idle",
     };
 
-    public static string SideKey(AirlockSide side) => side == AirlockSide.B
+    public static LocId SideKey(AirlockSide side) => side == AirlockSide.B
         ? "airlock-controller-side-b"
         : "airlock-controller-side-a";
 
-    public static string StallKey(AirlockStallReason reason) => reason switch
+    public static LocId StallKey(AirlockStallReason reason) => reason switch
     {
         AirlockStallReason.NoUsableVent => "airlock-controller-stall-no-vent",
         AirlockStallReason.NoSensors => "airlock-controller-stall-no-sensors",
@@ -149,14 +150,14 @@ public static class AirlockControllerLocale
         _ => "airlock-controller-stall-not-progressing",
     };
 
-    public static string CycleKey(AirlockSide side) => side == AirlockSide.B
+    public static LocId CycleKey(AirlockSide side) => side == AirlockSide.B
         ? "airlock-controller-ui-cycle-b"
         : "airlock-controller-ui-cycle-a";
 
     /// <summary>
     ///     A cancel already asked for becomes the emergency release.
     /// </summary>
-    public static string CancelKey(bool cancelRequested) => cancelRequested
+    public static LocId CancelKey(bool cancelRequested) => cancelRequested
         ? "airlock-controller-ui-cancel-emergency"
         : "airlock-controller-ui-cancel";
 }
