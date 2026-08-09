@@ -141,7 +141,8 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
                 _currentMidiFileInfo.Tracks[0].TempoMap);
 
             var minutesPerSliderStep = _currentMidiFileInfo.PlayTimeMinutes / PositionSliderSteps;
-            var currentTrackPositionInSliderSteps = (int)Math.Floor(currentTrackPositionInMinutes / minutesPerSliderStep);
+            var currentTrackPositionInSliderSteps =
+                (int)Math.Floor(currentTrackPositionInMinutes / minutesPerSliderStep);
 
             PlaybackSlider.Disabled = false;
             PlaybackSlider.MaxValue = PositionSliderSteps;
@@ -310,7 +311,7 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
             minutesPerSliderStep * sliderValue,
             _currentMidiFileInfo.Tracks[0].TempoMap);
 
-        TrackPositionChangeRequest?.Invoke((int)currentTrackPositionInTicks);
+        TrackPositionChangeRequest?.Invoke(currentTrackPositionInTicks);
     }
 
     private Tooltip? SupplyFileManagementTooltip(Control? sender)
@@ -366,10 +367,10 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
         _timeSinceLastRecoverAttempt = 0;
         var midiData = _midiCollection.GetMidiData(resPath);
         StartPlayingRequest?.Invoke(midiData);
-        if (MidiParser.MidiParser.TryParseMidi(midiData, out MidiFileInfo? info, out var _))
+        if (MidiParser.MidiParser.TryParseMidi(midiData, out var info, out _))
         {
             _currentMidiFileInfo = info;
-            // TODO: There is some info that might be nice to display somehow. (Format, Track list, etc.)
+            // There is some more info that might be nice to display somehow. (Format, Track list, etc.)
         }
 
         CurrentTrackLabel.Text = item.Text;

@@ -406,7 +406,7 @@ public static partial class MidiParser
 
         List<MidiTrackInfo> parsedTracks = [];
         var usedChannels = new BitArray(16, false);
-        int mostTicksOnTrack = 0;
+        var mostTicksOnTrack = 0;
 
         for (var i = 0; i < headerChunk.NumTracks; i++)
         {
