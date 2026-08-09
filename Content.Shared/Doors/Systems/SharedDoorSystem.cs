@@ -571,7 +571,6 @@ public abstract partial class SharedDoorSystem : EntitySystem
 
             _stunSystem.TryUpdateParalyzeDuration(entity, stunTime);
         }
-        _tempSet.Clear();
 
         if (door.CurrentlyCrushing.Count == 0)
             return;
