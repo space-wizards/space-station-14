@@ -298,6 +298,7 @@ public sealed partial class FootstepTrackSystem : EntitySystem
         return true;
     }
 
+    // TODO: Decals moment, I really wish they were centered.
     private bool TryGetTile(EntityUid stepper, out TileRef tile, out EntityCoordinates corner, out MapGridComponent grid)
     {
         tile = default;
@@ -323,13 +324,12 @@ public sealed partial class FootstepTrackSystem : EntitySystem
         Entity<FootstepTrackComponent> tracker,
         EntityUid stepper)
     {
-        var anchored = _map.GetAnchoredEntities(tile.GridUid, grid, tile.GridIndices);
-        while (anchored.MoveNext(out var ent))
+        foreach (var ent in _map.GetAnchoredEntities(tile.GridUid, grid, tile.GridIndices))
         {
-            if (!_puddleQuery.TryComp(ent.Value, out var puddle))
+            if (!_puddleQuery.TryComp(ent, out var puddle))
                 continue;
 
-            if (TryPickupBloodFromPuddle((ent.Value, puddle), tracker, stepper))
+            if (TryPickupBloodFromPuddle((ent, puddle), tracker, stepper))
                 return true;
         }
 
@@ -338,10 +338,9 @@ public sealed partial class FootstepTrackSystem : EntitySystem
 
     private bool HasPuddle(TileRef tile, MapGridComponent grid)
     {
-        var anchored = _map.GetAnchoredEntities(tile.GridUid, grid, tile.GridIndices);
-        while (anchored.MoveNext(out var ent))
+        foreach (var ent in _map.GetAnchoredEntities(tile.GridUid, grid, tile.GridIndices))
         {
-            if (_puddleQuery.HasComp(ent.Value))
+            if (_puddleQuery.HasComp(ent))
                 return true;
         }
 
