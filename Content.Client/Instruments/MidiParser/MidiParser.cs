@@ -265,11 +265,8 @@ public static partial class MidiParser
                                 if (track.ProgramName == null)
                                 {
                                     if (programNumber < Enum.GetValues<MidiInstrument>().Length)
-                                        track.ProgramName =
-                                            Loc.GetString(
-                                                $"instruments-component-menu-midi-channel-{((MidiInstrument)programNumber).GetStringRep()}");
+                                        track.ProgramName = Loc.GetString($"instruments-component-menu-midi-channel-{((MidiInstrument)programNumber).GetStringRep()}");
                                 }
-
                                 break;
                             }
 
@@ -296,7 +293,6 @@ public static partial class MidiParser
                                 tracks = null;
                                 return false;
                         }
-
                         break;
                 }
             }
