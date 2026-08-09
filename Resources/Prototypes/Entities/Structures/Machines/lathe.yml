@@ -410,6 +410,8 @@
   - type: OreSiloClient
   - type: LatheAnnouncing
     channels: [Security]
+  - type: StealTarget
+    stealGroup: SecurityTechFabCircuitboard
 
 - type: entity
   id: AmmoTechFab

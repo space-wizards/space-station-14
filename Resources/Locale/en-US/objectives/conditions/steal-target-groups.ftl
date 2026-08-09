@@ -30,8 +30,7 @@ steal-target-groups-huds = HUD
 # Thief single item
 steal-target-groups-forensic-scanner = forensic scanner
 steal-target-groups-flippo-engraved-lighter = detective's Flippo engraved lighter
-steal-target-groups-ammo-tech-fab-circuitboard = ammo techfab circuit board
-steal-target-groups-clothing-head-hat-warden = warden's cap
+steal-target-groups-security-tech-fab-circuitboard = security techfab circuit board
 steal-target-groups-clothing-outer-hardsuit-void-paramed = paramedic void suit
 steal-target-groups-medical-tech-fab-circuitboard = medical techfab machine board
 steal-target-groups-clothing-headset-alt-medical = chief medical officer's over-ear headset
@@ -39,6 +38,7 @@ steal-target-groups-research-and-development-server-machine-circuitboard = R&D s
 steal-target-groups-fire-axe = fireaxe
 steal-target-groups-ame-part-flatpack =  AME flatpack
 steal-target-groups-salvage-expeditions-computer-circuitboard = salvage expeditions computer board
+steal-target-groups-salvage-magnet-machine-circuitboard = salvage magnet machine board
 steal-target-groups-cargo-shuttle-console-circuitboard = cargo shuttle console board
 steal-target-groups-bible = bible
 steal-target-groups-clothing-neck-goldmedal = gold medal of crewmanship
@@ -49,13 +49,10 @@ steal-target-groups-captain-sword = captain's sabre
 
 # Thief structures
 steal-target-groups-teg = teg generator part
-steal-target-groups-freezer-heater = freezer or heater
 steal-target-groups-altar-nanotrasen = nanotrasen altar (any)
 
 steal-target-groups-nuclear-bomb = nuclear fission explosive
 steal-target-groups-fax-machine-captain = captain long range fax machine
-steal-target-groups-chem-dispenser = chemical dispenser
-steal-target-groups-xeno-artifact = alien artifact
 steal-target-groups-booze-dispenser = booze dispenser
 steal-target-groups-plant-rd = "RD's potted plant"
 steal-target-groups-toilet-golden-dirty-water = golden toilet
