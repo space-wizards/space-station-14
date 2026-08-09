@@ -349,6 +349,44 @@ public abstract partial class SharedStorageSystem : EntitySystem
     }
 
     /// <summary>
+    /// Copy this component's datafields from one entity to another.
+    /// This can't use CopyComp because we don't want to copy the references to the items inside the storage.
+    /// <summary>
+    public void CopyComponent(Entity<StorageComponent?> source, EntityUid target)
+    {
+        if (!Resolve(source, ref source.Comp))
+            return;
+
+        var targetComp = EnsureComp<StorageComponent>(target);
+        targetComp.Grid = new List<Box2i>(source.Comp.Grid);
+        targetComp.MaxItemSize = source.Comp.MaxItemSize;
+        targetComp.QuickInsert = source.Comp.QuickInsert;
+        targetComp.QuickInsertCooldown = source.Comp.QuickInsertCooldown;
+        targetComp.OpenUiCooldown = source.Comp.OpenUiCooldown;
+        targetComp.ClickInsert = source.Comp.ClickInsert;
+        targetComp.OpenOnActivate = source.Comp.OpenOnActivate;
+        targetComp.AreaInsert = source.Comp.AreaInsert;
+        targetComp.AreaInsertRadius = source.Comp.AreaInsertRadius;
+        targetComp.Whitelist = source.Comp.Whitelist;
+        targetComp.Blacklist = source.Comp.Blacklist;
+        targetComp.StorageInsertSound = source.Comp.StorageInsertSound;
+        targetComp.StorageRemoveSound = source.Comp.StorageRemoveSound;
+        targetComp.StorageOpenSound = source.Comp.StorageOpenSound;
+        targetComp.StorageCloseSound = source.Comp.StorageCloseSound;
+        targetComp.DefaultStorageOrientation = source.Comp.DefaultStorageOrientation;
+        targetComp.HideStackVisualsWhenClosed = source.Comp.HideStackVisualsWhenClosed;
+        targetComp.SilentStorageUserTag = source.Comp.SilentStorageUserTag;
+        targetComp.ShowVerb = source.Comp.ShowVerb;
+
+        UpdateOccupied((target, targetComp));
+        Dirty(target, targetComp);
+
+        var targetUI = EnsureComp<UserInterfaceComponent>(target);
+
+        UI.SetUi((target, targetUI), StorageComponent.StorageUiKey.Key, new InterfaceData("StorageBoundUserInterface"));
+    }
+
+    /// <summary>
     /// Tries to get the storage location of an item.
     /// </summary>
     public bool TryGetStorageLocation(Entity<ItemComponent?> itemEnt, [NotNullWhen(true)] out BaseContainer? container, [NotNullWhen(true)] out StorageComponent? storage, out ItemStorageLocation loc)

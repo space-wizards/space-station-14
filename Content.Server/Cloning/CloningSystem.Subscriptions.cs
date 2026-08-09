@@ -10,6 +10,7 @@ using Content.Shared.Labels.Components;
 using Content.Shared.Labels.EntitySystems;
 using Content.Shared.Paper;
 using Content.Shared.Stacks;
+using Content.Shared.Storage;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Robust.Shared.Prototypes;
@@ -51,6 +52,7 @@ public sealed partial class CloningSystem
         // These are for cloning components that cannot be cloned using CopyComp.
         // Put them into CloningSettingsPrototype.EventComponents to have them be applied to the clone.
         SubscribeLocalEvent<BloodstreamComponent, CloningEvent>(OnCloneBloodstream);
+        SubscribeLocalEvent<StorageComponent, CloningEvent>(OnCloneStorage);
     }
 
     private void OnCloneItemStack(Entity<StackComponent> ent, ref CloningItemEvent args)
@@ -105,5 +107,13 @@ public sealed partial class CloningSystem
             return;
 
         _bloodstream.CopyComponent(ent.AsNullable(), args.CloneUid);
+    }
+
+    private void OnCloneStorage(Entity<StorageComponent> ent, ref CloningEvent args)
+    {
+        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
+            return;
+
+        _storage.CopyComponent(ent.AsNullable(), args.CloneUid);
     }
 }

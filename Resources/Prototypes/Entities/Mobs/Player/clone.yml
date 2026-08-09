@@ -153,13 +153,13 @@
   - ScaleVisuals # for dwarf height
   - Inventory # arachnid pockets and diona feet
   - Wagging # lizard tails
-  - Storage # slime storage
   - Rootable # diona
   - Sericulture # arachnids
   - MovementSpeedModifier # moths when weightless
   - JumpAbility # vulp leaping
   eventComponents:
   # these need special treatment in the event subscription
+  - Storage # slime storage
   - Bloodstream # blood reagents
   copyInternalStorage: false
   copyImplants: false
