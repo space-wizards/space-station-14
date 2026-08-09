@@ -305,6 +305,9 @@ public abstract partial class SatiationSystem
         if (!entity.Comp.Satiations.Remove(type))
             return false;
 
+        if (GetAndResolveSatiationOfType(entity.Comp, type) is { } satiation)
+            _alerts.ClearAlertCategory(entity.Owner, satiation.Proto.AlertCategory);
+
         DirtyField(entity, entity.Comp, nameof(SatiationComponent.Satiations));
 
         return true;
