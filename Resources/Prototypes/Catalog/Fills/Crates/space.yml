@@ -1,5 +1,5 @@
 - type: entity
-  parent: CrateCommandSecure
+  parent: CrateEVASecure
   id: CrateEvaKit
   name: EVA kit
   description: A set consisting of two prestigious EVA suits and helmets. Requires Command access to open.

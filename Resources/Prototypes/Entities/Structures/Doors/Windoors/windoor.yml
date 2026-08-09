@@ -82,6 +82,28 @@
       board: [ DoorElectronicsChapel ]
 
 - type: entity
+  parent: Windoor
+  id: WindoorCommandLocked
+  suffix: Command, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsCommand ]
+  - type: WiresPanelSecurity
+    securityLevel: medSecurity
+  - type: Wires
+    layoutId: AirlockCommand
+
+- type: entity
+  parent: WindoorCommandLocked
+  id: WindoorEVALocked
+  suffix: EVA, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsEVA ]
+
+- type: entity
   parent: WindoorServiceLocked
   id: WindoorHydroponicsLocked
   suffix: Hydroponics, Locked

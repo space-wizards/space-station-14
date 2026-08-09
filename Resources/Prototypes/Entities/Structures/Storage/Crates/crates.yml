@@ -331,6 +331,18 @@
 
 - type: entity
   parent: CrateBaseSecure
+  id: CrateEVASecure
+  name: EVA crate
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/command.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/command.rsi
+  - type: AccessReader
+    access: [["Command"], ["External"]]
+
+- type: entity
+  parent: CrateBaseSecure
   id: CrateSyndicateSecure
   name: secure syndicate crate
   description: A dark steel crate with red bands and a letter S embossed on the front.

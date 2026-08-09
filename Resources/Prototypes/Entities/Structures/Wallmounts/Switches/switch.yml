@@ -231,6 +231,16 @@
   - type: AccessReader
     access: [["Command"]]
 
+# Primarily intended to be mapped in EVA Storage rooms so Command can easily allow crew in during an emergency (though the text is generic enough that it can be placed elsewhere too).
+# We make this its own prototype since we don't want to require mappers to manually set the name/desc on every new map.
+# If it ever becomes possible to wire buttons to set airlocks to "emergency access" mode, that'd be preferable to bolting doors open, so the description here should be changed.
+- type: entity
+  parent: LockableButtonCommand
+  id: LockableButtonCommandEmergency
+  name: emergency door release button
+  suffix: Command
+  description: This button bolts open the room's airlocks.
+
 - type: entity
   parent: LockableButton
   id: LockableButtonCryogenics
