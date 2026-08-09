@@ -325,7 +325,7 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
             }
 
             if (channelUsed)
-                channelSettings.Add(new MidiChannelInfo(i, "","",channelLabel, state));
+                channelSettings.Add(new MidiChannelInfo(i,channelLabel, state));
         }
 
         _channelsControl.SetChannels(channelSettings.ToArray());
@@ -342,7 +342,5 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
 /// <param name="FilterState">MIDI channel filter state</param>
 public readonly record struct MidiChannelInfo(
     int Id,
-    string TrackName,
-    string InstrumentName,
-    string ProgramName,
+    string Label,
     bool FilterState);
