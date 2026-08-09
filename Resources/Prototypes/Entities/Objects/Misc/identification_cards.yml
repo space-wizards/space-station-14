@@ -970,8 +970,8 @@
     - EngineeringIconGroup
     - MedicalIconGroup
     - ServiceIconGroup
+    - TheatreIconGroup
     - CivilianIconGroup
-    - EntertainerIconGroup
     - SiliconIconGroup
     - BlankIconGroup
     - ThreatIconGroup
@@ -1382,8 +1382,8 @@
     - EngineeringIconGroup
     - MedicalIconGroup
     - ServiceIconGroup
+    - TheatreIconGroup
     - CivilianIconGroup
-    - EntertainerIconGroup
     - SiliconIconGroup
     - BlankIconGroup
     - ThreatIconGroup
