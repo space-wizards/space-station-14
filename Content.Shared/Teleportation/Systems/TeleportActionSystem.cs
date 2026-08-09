@@ -39,6 +39,14 @@ public sealed partial class TeleportActionSystem : EntitySystem
             args.StopPulling);
     }
 
+    /// <summary>
+    /// Attempts to teleport user entity to target coordinates. Stops pulling or being pulled if requested.
+    /// </summary>
+    /// <param name="user">Entity to teleport.</param>
+    /// <param name="target">Target coordinates.</param>
+    /// <param name="stopBeingPulled">Should <see cref="user"/> stop being used in pulling interaction?</param>
+    /// <param name="stopPulling">Should <see cref="user"/> stop pulling interaction on any entity he is currently pulling?</param>
+    /// <returns></returns>
     public bool TryTeleport(
         EntityUid user,
         EntityCoordinates target,
