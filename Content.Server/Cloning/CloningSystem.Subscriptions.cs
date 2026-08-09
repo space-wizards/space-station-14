@@ -62,11 +62,7 @@ public sealed partial class CloningSystem
 
         // These are for cloning components that cannot be cloned using CopyComp.
         // Put them into CloningSettingsPrototype.EventComponents to have them be applied to the clone.
-        SubscribeLocalEvent<VocalComponent, CloningEvent>(OnCloneVocal);
-        SubscribeLocalEvent<StorageComponent, CloningEvent>(OnCloneStorage);
-        SubscribeLocalEvent<InventoryComponent, CloningEvent>(OnCloneInventory);
         SubscribeLocalEvent<MovementSpeedModifierComponent, CloningEvent>(OnCloneMovementSpeedModifier);
-        SubscribeLocalEvent<PullerComponent, CloningEvent>(OnClonePuller);
         SubscribeLocalEvent<BloodstreamComponent, CloningEvent>(OnCloneBloodstream);
     }
 
@@ -116,44 +112,12 @@ public sealed partial class CloningSystem
         _chameleonClothing.SetSelectedPrototype(args.CloneUid, ent.Comp.Default);
     }
 
-    private void OnCloneVocal(Entity<VocalComponent> ent, ref CloningEvent args)
-    {
-        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
-            return;
-
-        _vocal.CopyComponent(ent.AsNullable(), args.CloneUid);
-    }
-
-    private void OnCloneStorage(Entity<StorageComponent> ent, ref CloningEvent args)
-    {
-        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
-            return;
-
-        _storage.CopyComponent(ent.AsNullable(), args.CloneUid);
-    }
-
-    private void OnCloneInventory(Entity<InventoryComponent> ent, ref CloningEvent args)
-    {
-        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
-            return;
-
-        _inventory.CopyComponent(ent.AsNullable(), args.CloneUid);
-    }
-
     private void OnCloneMovementSpeedModifier(Entity<MovementSpeedModifierComponent> ent, ref CloningEvent args)
     {
         if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
             return;
 
         _movementSpeedModifier.CopyComponent(ent.AsNullable(), args.CloneUid);
-    }
-
-    private void OnClonePuller(Entity<PullerComponent> ent, ref CloningEvent args)
-    {
-        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
-            return;
-
-        _pulling.CopyPullerComponent(ent.AsNullable(), args.CloneUid);
     }
 
     private void OnCloneBloodstream(Entity<BloodstreamComponent> ent, ref CloningEvent args)

@@ -2,6 +2,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
 using Content.Shared.Buckle.Components;
+using Content.Shared.Cloning.Events;
 using Content.Shared.Cuffs;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Database;
@@ -615,20 +616,10 @@ public sealed partial class PullingSystem : EntitySystem
         return true;
     }
 
-    /// <summary>
-    /// Copies compatible datafields of <see cref="PullerComponent"/> onto the target entity.
-    /// </summary>
-    /// <param name="source">The entity who's component will be taken.</param>
-    /// <param name="target">The entity to apply it to.</param>
-    public void CopyPullerComponent(Entity<PullerComponent?> source, EntityUid target)
+    [SubscribeLocalEvent]
+    private void OnCloneComponent(Entity<PullerComponent> ent, ref CloningComponentEvent args)
     {
-        if (!Resolve(source, ref source.Comp))
-            return;
-
-        var targetComp = EnsureComp<PullerComponent>(target);
-        targetComp.ThrowCooldown = source.Comp.ThrowCooldown;
-        targetComp.NeedsHands = source.Comp.NeedsHands;
-        targetComp.PullingAlert = source.Comp.PullingAlert;
-        Dirty(target, targetComp);
+        if (args.Component is PullerComponent cloneComp)
+            cloneComp.Pulling = null;
     }
 }

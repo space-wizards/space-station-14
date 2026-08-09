@@ -27,36 +27,17 @@ public abstract partial class SharedSericultureSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popupSystem = default!;
     [Dependency] private SharedStackSystem _stackSystem = default!;
 
-    public override void Initialize()
+    [SubscribeLocalEvent]
+    private void OnCloneComponent(Entity<SericultureComponent> ent, ref CloningComponentEvent args)
     {
-        base.Initialize();
-
-        SubscribeLocalEvent<SericultureComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<SericultureComponent, ComponentShutdown>(OnCompRemove);
-        SubscribeLocalEvent<SericultureComponent, SericultureActionEvent>(OnSericultureStart);
-        SubscribeLocalEvent<SericultureComponent, SericultureDoAfterEvent>(OnSericultureDoAfter);
-        SubscribeLocalEvent<SericultureComponent, CloningEvent>(OnClone);
-    }
-
-    private void OnClone(Entity<SericultureComponent> ent, ref CloningEvent args)
-    {
-        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
-            return;
-
-        // Make sure to set the datafields before adding the component so that the correct action gets spawned on map init.
-        var cloneComp = Factory.GetComponent<SericultureComponent>();
-        cloneComp.PopupText = ent.Comp.PopupText;
-        cloneComp.EntityProduced = ent.Comp.EntityProduced;
-        cloneComp.Action = ent.Comp.Action;
-        cloneComp.ProductionLength = ent.Comp.ProductionLength;
-        cloneComp.HungerCost = ent.Comp.HungerCost;
-        cloneComp.MinHungerThreshold = ent.Comp.MinHungerThreshold;
-        AddComp(args.CloneUid, cloneComp, true);
+        if (args.Component is SericultureComponent cloneComp)
+            cloneComp.ActionEntity = null;
     }
 
     /// <summary>
     /// Giveths the action to preform sericulture on the entity
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnMapInit(EntityUid uid, SericultureComponent comp, MapInitEvent args)
     {
         _actionsSystem.AddAction(uid, ref comp.ActionEntity, comp.Action);
@@ -65,11 +46,13 @@ public abstract partial class SharedSericultureSystem : EntitySystem
     /// <summary>
     /// Takeths away the action to preform sericulture from the entity.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnCompRemove(EntityUid uid, SericultureComponent comp, ComponentShutdown args)
     {
         _actionsSystem.RemoveAction(uid, comp.ActionEntity);
     }
 
+    [SubscribeLocalEvent]
     private void OnSericultureStart(EntityUid uid, SericultureComponent comp, SericultureActionEvent args)
     {
         if (!TryComp<SatiationComponent>(uid, out var satiationComponent) ||
@@ -91,6 +74,7 @@ public abstract partial class SharedSericultureSystem : EntitySystem
         _doAfterSystem.TryStartDoAfter(doAfter);
     }
 
+    [SubscribeLocalEvent]
     private void OnSericultureDoAfter(EntityUid uid, SericultureComponent comp, SericultureDoAfterEvent args)
     {
         if (args.Cancelled || args.Handled || comp.Deleted)
