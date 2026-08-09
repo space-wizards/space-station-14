@@ -28,22 +28,15 @@ namespace Content.Client.Launcher
         private readonly IConfigurationManager _cfg;
         private readonly IClipboardManager _clipboard;
 
-        // Unfortunately these can't be configured via cvar,
-        // because the client does not have the server's cvars yet, when we would need them
-        //TODO Check when the client gets server cvars during connect,
-        // and see if we can move it earlier without any side effects?
-        /// <summary>
-        /// Enables the server redirect buttons on the "server is full" window
-        /// </summary>
-        private const bool RedirectEnabled = true;
         /// <summary>
         /// The list of connect options which will be shown to the player when their connection fails due to the server being full
+        /// This is populated from the data sent by the server along with the disconnect event
         /// </summary>
-        private readonly List<(string Name, string url)> _redirectOptions = new()
-        {
-            ("Vulture [US East 2]", "ss14s://vulture.spacestation14.com"),
-            ("Leviathan [US East 1]", "ss14s://leviathan.spacestation14.com"),
-        };
+        private List<(string Name, string url, int players, int max)> _redirectOptions = new();
+
+        /// <summary>
+        /// The server redirect controls that have been created
+        /// </summary>
         private List<RedirectTargetControl> _redirectControls = new();
 
         public LauncherConnectingGui(
@@ -88,9 +81,6 @@ namespace Content.Client.Launcher
             var edim = IoCManager.Resolve<ExtendedDisconnectInformationManager>();
             edim.LastNetDisconnectedArgsChanged += LastNetDisconnectedArgsChanged;
             LastNetDisconnectedArgsChanged(edim.LastNetDisconnectedArgs);
-
-            if (RedirectEnabled)
-                CreateRedirectGui();
         }
 
         /// <summary>
@@ -98,7 +88,9 @@ namespace Content.Client.Launcher
         /// </summary>
         private void CreateRedirectGui()
         {
-            foreach (var (name, target) in _redirectOptions)
+            // TODO:ERRANT delete current controls? Better to update them
+
+            foreach (var (name, target,_ ,_) in _redirectOptions)
             {
                 var option = new RedirectTargetControl(name, target);
                 option.ServerName.Text = name;
@@ -107,7 +99,7 @@ namespace Content.Client.Launcher
                 _redirectControls.Add(option);
             }
 
-            UpdateRedirectServerInfo();
+            UpdateRedirectServerInfo(); //TODO:ERRANT devour this
         }
 
         private void UpdateRedirectServerInfo()
@@ -116,9 +108,8 @@ namespace Content.Client.Launcher
 
             foreach (var control in _redirectControls)
             {
-                //TODO:ERRANT get actual numbers from the hub
-                var players = _random.Next(0,80);
-                var maxPlayers = 33;
+                var players = _random.Next(0,110);
+                var maxPlayers = 75;
                 var ping= _random.Next(20,150);
 
                 control.PlayersLabel.Text = Loc.GetString("connecting-available-player-count",("players", players),("maxPlayers", maxPlayers));
@@ -170,25 +161,9 @@ namespace Content.Client.Launcher
 
         private void ConnectFailReasonChanged(string? reason)
         {
-            //TODO implement a more proper way of sending/determining the failure reason
-            // this will be necessary for a theoretical queue system or "overpop tracker", anyway
-            var serverFull = reason == "Connect denied: " + Loc.GetString("soft-player-cap-full");
-
             ConnectFailReason.SetMessage(reason == null
                 ? ""
                 : Loc.GetString("connecting-fail-reason", ("reason", reason)));
-
-            // We only want to present the fallback servers if we can reasonably expect the player
-            // to be able to connect to them - ie they are not banned or having some sort of connection issue
-            // (which is more likely to be general than server-specific)
-            if (serverFull)
-            {
-                RedirectBox.Visible = RedirectEnabled;
-            }
-            else
-            {
-                RedirectBox.Visible = false;
-            }
         }
 
         private void LastNetDisconnectedArgsChanged(NetDisconnectedArgs? args)
@@ -216,6 +191,44 @@ namespace Content.Client.Launcher
                     _waitTime = RedialWaitTimeSeconds;
                 }
 
+                RedirectBox.Visible = false;
+
+                // List of fallback servers sent by the current server
+                if (reason.Message.StringOf("fallbackServers") is { } fallback)
+                {
+                    // _redirectOptions = []; // TODO:ERRANT this might crash the game. Then try the next one
+                    _redirectOptions = new();
+
+                    // The string separates servers by ; and data fields about each server by ,
+                    foreach (var server in fallback.Split(";", StringSplitOptions.RemoveEmptyEntries))
+                    {
+                        // Each server must have a name, url, playercount and max playercount
+                        if (server.Split(",", StringSplitOptions.RemoveEmptyEntries).Length != 4)
+                        {
+                            // TODO log cvar content error
+                            continue;
+                        }
+
+                        var i = 0;
+                        var members = new string[4]; //TODO:ERRANT This is UGLY!
+                        foreach (var element in server.Split(",", StringSplitOptions.RemoveEmptyEntries))
+                        {
+                            members[i] = element;
+                            i++;
+                        }
+
+                        if(i!=4 || !int.TryParse(members[2], out var players) || !int.TryParse(members[3], out var max))
+                            continue;
+
+                        _redirectOptions.Add((members[0], members[1], players, max));
+                    }
+
+                    if (_redirectOptions.Count == 0)
+                        return;
+
+                    RedirectBox.Visible = true;
+                    CreateRedirectGui();
+                }
             }
         }
 
@@ -266,6 +279,7 @@ namespace Content.Client.Launcher
             {
                 button.Disabled = true;
                 button.Text = Loc.GetString("connecting-redial-wait", ("time", _waitTime.ToString("00")));
+                //TODO:ERRANT check if the width of the xaml should be fixed
             }
         }
 

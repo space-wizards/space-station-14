@@ -152,7 +152,12 @@ namespace Content.Server.Connection
 
                 var properties = new Dictionary<string, object>();
                 if (reason == ConnectionDenyReason.Full)
+                {
                     properties["delay"] = _cfg.GetCVar(CCVars.GameServerFullReconnectDelay);
+
+                    if(GetFallbackServers(out var fallbacks))
+                        properties["fallbackServers"] = fallbacks;
+                }
 
                 e.Deny(new NetDenyReason(msg, properties));
             }
@@ -165,6 +170,47 @@ namespace Content.Server.Connection
 
                 await _db.UpdatePlayerRecordAsync(userId, e.UserName, addr, hwid);
             }
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="fallbacks">A comma-separated string listing each fallback server's name, url, current player count and max player count</param>
+        /// <returns>
+        /// Returns true if a valid fallback list was generated
+        /// </returns>
+        private bool GetFallbackServers(out string fallbacks)
+        {
+            fallbacks = string.Empty;
+
+            var fallbackServersRaw = _cfg.GetCVar(CCVars.ServerFallbacks);
+
+            // More complicated processing would be possible here, such as ordering servers by pop,
+            // or having a large list of fallback servers and only presenting the one with the highest pop
+            // But for now, we simply send the list as provided
+
+            //TODO:ERRANT note in the logs if there is an issue
+
+            var j = 0;
+            foreach (var serverRaw in fallbackServersRaw.Split(";", StringSplitOptions.RemoveEmptyEntries))
+            {
+                if (serverRaw.Split(",", StringSplitOptions.RemoveEmptyEntries).Length != 2)
+                {
+                    // TODO log cvar content error
+                    continue;
+                }
+
+                var i = serverRaw.IndexOf(",", StringComparison.Ordinal);
+                var url = serverRaw[(i+1)..];
+
+                //TODO:ERRANT Actually get server pops
+                var pop = url.Length;
+                var max = 75;
+
+                fallbacks += serverRaw + "," + pop + "," + max + ";";
+            }
+
+            return !string.IsNullOrEmpty(fallbacks);
         }
 
         private async void PlayerStatusChanged(object? sender, SessionStatusEventArgs args)
