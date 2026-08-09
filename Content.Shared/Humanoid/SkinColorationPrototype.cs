@@ -75,16 +75,46 @@ public interface ISkinColorationStrategy
     Color ClosestSkinColor(Color color);
 
     /// <summary>
-    /// Returns the input if it passes <see cref="VerifySkinColor">, otherwise returns <see cref="ClosestSkinColor" />
+    /// Returns the input if it passes <see cref="VerifyClampedSkinColor">, otherwise returns <see cref="ClosestSkinColor" />
     /// </summary>
     Color EnsureVerified(Color color)
     {
-        if (VerifySkinColor(color, out _))
+        if (VerifyClampedSkinColor(color, out _))
         {
             return color;
         }
 
         return ClosestSkinColor(color);
+    }
+
+    /// <summary>
+    /// Returns if the color was valid after running a clamp.
+    /// Due to RGB truncation, clamped colours near a threshold may be out of spec.
+    /// </summary>
+    bool VerifyClampedSkinColor(Color color, [NotNullWhen(false)] out string? reason)
+    {
+        string firstReason = string.Empty;
+        for (int i = 0; i < 8; i++)
+        {
+            Color testColor = color;
+            if ((i & 1) != 0)
+                color.R = Math.Min(color.R + SkinColorationUtils.Epsilon, 1.0f);
+            if ((i & 2) != 0)
+                color.G = Math.Min(color.G + SkinColorationUtils.Epsilon, 1.0f);
+            if ((i & 4) != 0)
+                color.B = Math.Min(color.B + SkinColorationUtils.Epsilon, 1.0f);
+
+            if (VerifySkinColor(testColor, out var internalReason))
+            {
+                reason = null;
+                return true;
+            }
+
+            firstReason ??= internalReason;
+        }
+
+        reason = firstReason;
+        return false;
     }
 
     /// <summary>
@@ -383,7 +413,7 @@ public sealed partial class HueNodeClampedHsvColoration : ISkinColorationStrateg
 
         // Clamp the hue between the first and last node.
         // We don't want anything going outside of these values.
-        var hue = SkinColorationUtils.ClampHue(hsv.X, Nodes.First().Hue,  Nodes.Last().Hue);
+        var hue = SkinColorationUtils.ClampHue(hsv.X, Nodes.First().Hue, Nodes.Last().Hue);
 
         var range = GetNodeValuesForHue(hue);
 
@@ -417,7 +447,7 @@ public sealed partial class HueNodeClampedHsvColoration : ISkinColorationStrateg
         var hsv = Color.ToHsv(color);
 
         // Clamp within specified nodes.
-        hsv.X = SkinColorationUtils.ClampHue(hsv.X, Nodes.First().Hue,  Nodes.Last().Hue);
+        hsv.X = SkinColorationUtils.ClampHue(hsv.X, Nodes.First().Hue, Nodes.Last().Hue);
 
         var range = GetNodeValuesForHue(hsv.X);
         if (range == null)
@@ -538,10 +568,10 @@ internal static class SkinColorationUtils
     public const float EpsilonHue = 0.00277f;
 
     /// <summary>
-    /// A value derived by dividing 1 by 256.
+    /// A value derived by dividing 1 by 255.
     /// Due to the way these values are stored and deconstructed we can't expect much more precision than this..
     /// </summary>
-    public const float Epsilon = 0.00390625f;
+    public const float Epsilon = 0.003921568627451f;
 
     /// <summary>
     /// Checks if a hue value is within a specified range, correctly handling ranges that wrap around 1.0 (e.g., reds).
