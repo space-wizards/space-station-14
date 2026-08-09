@@ -160,39 +160,39 @@ namespace Content.Shared.GameTicking
     }
 
     [Serializable, NetSerializable, DataDefinition]
-    public sealed partial class RoundEndMessageEvent : EntityEventArgs
+    public partial struct RoundEndPlayerInfo
     {
-        [Serializable, NetSerializable, DataDefinition]
-        public partial struct RoundEndPlayerInfo
-        {
-            [DataField]
-            public string PlayerOOCName;
+        [DataField]
+        public string PlayerOOCName;
 
-            [DataField]
-            public string? PlayerICName;
+        [DataField]
+        public string? PlayerICName;
 
-            [DataField, NonSerialized]
-            public NetUserId? PlayerGuid;
+        [DataField, NonSerialized]
+        public NetUserId? PlayerGuid;
 
-            public string Role;
+        public string Role;
 
-            [DataField, NonSerialized]
-            public string[] JobPrototypes;
+        [DataField, NonSerialized]
+        public string[] JobPrototypes;
 
-            [DataField, NonSerialized]
-            public string[] AntagPrototypes;
+        [DataField, NonSerialized]
+        public string[] AntagPrototypes;
 
-            public NetEntity? PlayerNetEntity;
+        public NetEntity? PlayerNetEntity;
 
-            [DataField]
-            public bool Antag;
+        [DataField]
+        public bool Antag;
 
-            [DataField]
-            public bool Observer;
+        [DataField]
+        public bool Observer;
 
-            public bool Connected;
-        }
+        public bool Connected;
+    }
 
+    [Serializable, NetSerializable, DataDefinition]
+    public sealed partial class RoundEndMessageInfo
+    {
         public string GamemodeTitle { get; }
         public string RoundEndText { get; }
         public TimeSpan RoundDuration { get; }
@@ -200,19 +200,13 @@ namespace Content.Shared.GameTicking
         public int PlayerCount { get; }
         public RoundEndPlayerInfo[] AllPlayersEndInfo { get; }
 
-        /// <summary>
-        /// Sound gets networked due to how entity lifecycle works between client / server and to avoid clipping.
-        /// </summary>
-        public ResolvedSoundSpecifier? RestartSound;
-
-        public RoundEndMessageEvent(
+        public RoundEndMessageInfo(
             string gamemodeTitle,
             string roundEndText,
             TimeSpan roundDuration,
             int roundId,
             int playerCount,
-            RoundEndPlayerInfo[] allPlayersEndInfo,
-            ResolvedSoundSpecifier? restartSound)
+            RoundEndPlayerInfo[] allPlayersEndInfo)
         {
             GamemodeTitle = gamemodeTitle;
             RoundEndText = roundEndText;
@@ -220,6 +214,27 @@ namespace Content.Shared.GameTicking
             RoundId = roundId;
             PlayerCount = playerCount;
             AllPlayersEndInfo = allPlayersEndInfo;
+        }
+    }
+
+    [Serializable, NetSerializable, DataDefinition]
+    public sealed partial class RoundEndMessageEvent : EntityEventArgs
+    {
+        /// <summary>
+        /// Information describing the round
+        /// </summary>
+        public RoundEndMessageInfo RoundInfo { get; private set; }
+
+        /// <summary>
+        /// Sound gets networked due to how entity lifecycle works between client / server and to avoid clipping.
+        /// </summary>
+        public ResolvedSoundSpecifier? RestartSound;
+
+        public RoundEndMessageEvent(
+            RoundEndMessageInfo roundInfo,
+            ResolvedSoundSpecifier? restartSound)
+        {
+            RoundInfo = roundInfo;
             RestartSound = restartSound;
         }
     }

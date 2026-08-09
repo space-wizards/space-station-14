@@ -44,11 +44,10 @@ public sealed partial class RoundEndSummaryUIController : UIController,
     public void OpenRoundEndSummaryWindow(RoundEndMessageEvent message)
     {
         // Don't open duplicate windows (mainly for replays).
-        if (_window?.RoundId == message.RoundId)
+        if (_window?.RoundId == message.RoundInfo.RoundId)
             return;
 
-        _window = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundEndText,
-            message.RoundDuration, message.RoundId, message.AllPlayersEndInfo);
+        _window = new RoundEndSummaryWindow(message.RoundInfo);
         _window.OnClose += () => OnWindowToggled?.Invoke(false);
 
         _window.OpenCenteredRight();
