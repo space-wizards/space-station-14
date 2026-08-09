@@ -286,7 +286,7 @@
   id: OrganMothEyes
   components:
   - type: EyeBlinking
-    eyelidsSprite: /Textures/Mobs/Species/Moth/eyelids.rsi
+    eyelidsSprite: /Textures/Mobs/Species/Moth/parts.rsi
   - type: Appearance
 
 - type: entity

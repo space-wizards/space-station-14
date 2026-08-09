@@ -310,7 +310,7 @@
   id: OrganVulpkaninEyes
   components:
   - type: EyeBlinking
-    eyelidsSprite: /Textures/Mobs/Species/Vulpkanin/eyelids.rsi
+    eyelidsSprite: /Textures/Mobs/Species/Vulpkanin/parts.rsi
   - type: Appearance
 
 - type: entity

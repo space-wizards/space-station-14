@@ -270,7 +270,7 @@
     data:
       sprite: Mobs/Customization/eyes.rsi
   - type: EyeBlinking
-    eyelidsSprite: /Textures/Mobs/Species/Human/eyelids.rsi
+    eyelidsSprite: /Textures/Mobs/Species/Human/parts.rsi
   - type: Appearance
 
 - type: entity
