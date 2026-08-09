@@ -175,12 +175,9 @@ namespace Content.Server.Connection
         }
 
         /// <summary>
-        ///
+        /// Reads the fallback servers from cvar, and gets their current and maximum player numbers,
+        /// packing it all back into a single string for transfer
         /// </summary>
-        /// <param name="fallbacks">A comma-separated string listing each fallback server's name, url, current player count and max player count</param>
-        /// <returns>
-        /// Returns true if a valid fallback list was generated
-        /// </returns>
         private bool GetFallbackServers(out string fallbacks)
         {
             fallbacks = string.Empty;
@@ -191,7 +188,6 @@ namespace Content.Server.Connection
             // or having a large list of fallback servers and only presenting the one with the highest pop
             // But for now, we simply send the list as provided
 
-            var j = 0;
             foreach (var serverRaw in fallbackServersRaw.Split(";", StringSplitOptions.RemoveEmptyEntries))
             {
                 if (serverRaw.Split(",", StringSplitOptions.RemoveEmptyEntries).Length != 2)
@@ -199,9 +195,6 @@ namespace Content.Server.Connection
                     _sawmill.Warning($"FallbackServers cvar is malformed - too many commas in '{serverRaw}'");
                     continue;
                 }
-
-                var i = serverRaw.IndexOf(",", StringComparison.Ordinal);
-                var url = serverRaw[(i+1)..];
 
                 //TODO:ERRANT Actually get server pops
                 // don't forget to remove _random too
