@@ -86,7 +86,6 @@
   - MindShield
   - SpaceNinja
   - Thieving
-  eventComponents:
   - ActionGrant
   - MimePowers
   - Store
@@ -101,7 +100,6 @@
   - NukeOperative
   # Changeling
   - ChangelingFleshClothingAbility
-  eventComponents:
   - ChangelingDevour
   - ChangelingIdentity
   - ChangelingTransform

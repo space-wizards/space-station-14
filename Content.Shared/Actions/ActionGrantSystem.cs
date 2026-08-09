@@ -1,8 +1,4 @@
-using Content.Shared.Cloning.Events;
-using Content.Shared.Inventory;
-using Robust.Shared.Prototypes;
-using Content.Shared.Actions.Components;
-using Content.Shared.Whitelist;
+using  Content.Shared.Inventory;
 
 namespace Content.Shared.Actions;
 
@@ -12,11 +8,18 @@ namespace Content.Shared.Actions;
 public sealed partial class ActionGrantSystem : EntitySystem
 {
     [Dependency] private SharedActionsSystem _actions = default!;
-    [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
-    [SubscribeLocalEvent]
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<ActionGrantComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<ActionGrantComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<ItemActionGrantComponent, GetItemActionsEvent>(OnItemGet);
+    }
+
     private void OnItemGet(Entity<ItemActionGrantComponent> ent, ref GetItemActionsEvent args)
     {
+
         if (!TryComp(ent.Owner, out ActionGrantComponent? grant))
             return;
 
@@ -25,17 +28,10 @@ public sealed partial class ActionGrantSystem : EntitySystem
 
         foreach (var action in grant.ActionEntities)
         {
-            if (TryComp<ActionUserWhitelistComponent>(action, out var whitelist) &&
-                !_whitelist.IsWhitelistPass(whitelist.Whitelist, args.User))
-            {
-                continue;
-            }
-
             args.AddAction(action);
         }
     }
 
-    [SubscribeLocalEvent]
     private void OnMapInit(Entity<ActionGrantComponent> ent, ref MapInitEvent args)
     {
         foreach (var action in ent.Comp.Actions)
@@ -48,18 +44,6 @@ public sealed partial class ActionGrantSystem : EntitySystem
         }
     }
 
-    [SubscribeLocalEvent]
-    private void OnClone(Entity<ActionGrantComponent> ent, ref CloningEvent args)
-    {
-        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
-            return;
-
-        var cloneComp = Factory.GetComponent<ActionGrantComponent>();
-        cloneComp.Actions = new List<EntProtoId>(ent.Comp.Actions);
-        AddComp(args.CloneUid, cloneComp, true);
-    }
-
-    [SubscribeLocalEvent]
     private void OnShutdown(Entity<ActionGrantComponent> ent, ref ComponentShutdown args)
     {
         foreach (var actionEnt in ent.Comp.ActionEntities)

@@ -16,6 +16,7 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.Manager;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
@@ -28,6 +29,7 @@ namespace Content.Server.Cloning;
 public sealed partial class CloningSystem : SharedCloningSystem
 {
     [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private ISerializationManager _serialization = default!;
     [Dependency] private MetaDataSystem _metaData = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
@@ -134,7 +136,12 @@ public sealed partial class CloningSystem : SharedCloningSystem
             RemComp(clone, componentRegistration.Type);
             if (TryComp(original, componentRegistration.Type, out var sourceComp)) // Does the original have this component?
             {
-                CopyComp(original, clone, sourceComp);
+                var targetComp = Factory.GetComponent(componentRegistration.Type);
+                _serialization.CopyTo(sourceComp, ref targetComp, notNullableOverride: true);
+
+                var componentEv = new CloningComponentEvent(settings, clone, targetComp);
+                RaiseLocalEvent(original, ref componentEv);
+                AddComp(clone, targetComp);
             }
         }
 

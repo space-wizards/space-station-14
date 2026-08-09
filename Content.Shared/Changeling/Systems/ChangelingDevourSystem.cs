@@ -4,7 +4,6 @@ using Content.Shared.Armor;
 using Content.Shared.Atmos.Rotting;
 using Content.Shared.Changeling.Components;
 using Content.Shared.Cloning.Events;
-using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
@@ -19,7 +18,6 @@ using Content.Shared.Store.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Changeling.Systems;
 
@@ -38,42 +36,13 @@ public sealed partial class ChangelingDevourSystem : EntitySystem
     [Dependency] private SharedStoreSystem _store = default!;
     [Dependency] private SharedPuddleSystem _puddle = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<ChangelingDevourComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<ChangelingDevourComponent, ChangelingDevourActionEvent>(OnDevourAction);
-        SubscribeLocalEvent<ChangelingDevourComponent, ChangelingDevourWindupDoAfterEvent>(OnDevourWindup);
-        SubscribeLocalEvent<ChangelingDevourComponent, ChangelingDevourConsumeDoAfterEvent>(OnDevourConsume);
-        SubscribeLocalEvent<ChangelingDevourComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<ChangelingDevourComponent, CloningEvent>(OnClone);
-    }
-
+    [SubscribeLocalEvent]
     private void OnMapInit(Entity<ChangelingDevourComponent> ent, ref MapInitEvent args)
     {
         _actionsSystem.AddAction(ent, ref ent.Comp.ChangelingDevourActionEntity, ent.Comp.ChangelingDevourAction);
     }
 
-    private void OnClone(Entity<ChangelingDevourComponent> ent, ref CloningEvent args)
-    {
-        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
-            return;
-
-        var cloneComp = Factory.GetComponent<ChangelingDevourComponent>();
-        cloneComp.ChangelingDevourAction = ent.Comp.ChangelingDevourAction;
-        cloneComp.Whitelist = ent.Comp.Whitelist;
-        cloneComp.ConsumeNoise = ent.Comp.ConsumeNoise;
-        cloneComp.DevourWindupNoise = ent.Comp.DevourWindupNoise;
-        cloneComp.DevourWindupTime = ent.Comp.DevourWindupTime;
-        cloneComp.DevourConsumeTime = ent.Comp.DevourConsumeTime;
-        cloneComp.WindupDamage = ent.Comp.WindupDamage;
-        cloneComp.DevourDamage = ent.Comp.DevourDamage;
-        cloneComp.ProtectiveDamageTypes = new List<ProtoId<DamageTypePrototype>>(ent.Comp.ProtectiveDamageTypes);
-        cloneComp.DevourPreventionPercentageThreshold = ent.Comp.DevourPreventionPercentageThreshold;
-        AddComp(args.CloneUid, cloneComp, true);
-    }
-
+    [SubscribeLocalEvent]
     private void OnShutdown(Entity<ChangelingDevourComponent> ent, ref ComponentShutdown args)
     {
         if (ent.Comp.ChangelingDevourActionEntity != null)
@@ -82,8 +51,16 @@ public sealed partial class ChangelingDevourSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
+    private void OnCloneComponent(Entity<ChangelingDevourComponent> ent, ref CloningComponentEvent args)
+    {
+        if (args.Component is ChangelingDevourComponent cloneComp)
+            cloneComp.ChangelingDevourActionEntity = null;
+    }
+
     // The action was used.
     // Start the first doafter for the windup.
+    [SubscribeLocalEvent]
     private void OnDevourAction(Entity<ChangelingDevourComponent> ent, ref ChangelingDevourActionEvent args)
     {
         if (args.Handled
@@ -123,6 +100,7 @@ public sealed partial class ChangelingDevourSystem : EntitySystem
 
     // First doafter finished.
     // Start the second doafter for the actual consumption and deal a small amount of damage.
+    [SubscribeLocalEvent]
     private void OnDevourWindup(Entity<ChangelingDevourComponent> ent, ref ChangelingDevourWindupDoAfterEvent args)
     {
         args.Handled = true;
@@ -166,6 +144,7 @@ public sealed partial class ChangelingDevourSystem : EntitySystem
 
     // Second doafter finished.
     // Save the identity and deal more damage.
+    [SubscribeLocalEvent]
     private void OnDevourConsume(Entity<ChangelingDevourComponent> ent, ref ChangelingDevourConsumeDoAfterEvent args)
     {
         args.Handled = true;

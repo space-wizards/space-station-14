@@ -27,19 +27,6 @@ public sealed partial class MimePowersSystem : EntitySystem
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private IGameTiming _timing = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<MimePowersComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<MimePowersComponent, ComponentShutdown>(OnComponentShutdown);
-        SubscribeLocalEvent<MimePowersComponent, InvisibleWallActionEvent>(OnInvisibleWall);
-
-        SubscribeLocalEvent<MimePowersComponent, BreakVowAlertEvent>(OnBreakVowAlert);
-        SubscribeLocalEvent<MimePowersComponent, RetakeVowAlertEvent>(OnRetakeVowAlert);
-        SubscribeLocalEvent<MimePowersComponent, CloningEvent>(OnClone);
-    }
-
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -60,6 +47,7 @@ public sealed partial class MimePowersSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnMapInit(Entity<MimePowersComponent> ent, ref MapInitEvent args)
     {
         if (!ent.Comp.VowBroken)
@@ -75,25 +63,14 @@ public sealed partial class MimePowersSystem : EntitySystem
         _actionsSystem.AddAction(ent, ref ent.Comp.InvisibleWallActionEntity, ent.Comp.InvisibleWallAction);
     }
 
-    private void OnClone(Entity<MimePowersComponent> ent, ref CloningEvent args)
+    [SubscribeLocalEvent]
+    private void OnCloneComponent(Entity<MimePowersComponent> ent, ref CloningComponentEvent args)
     {
-        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
-            return;
-
-        var cloneComp = Factory.GetComponent<MimePowersComponent>();
-        cloneComp.Enabled = ent.Comp.Enabled;
-        cloneComp.WallPrototype = ent.Comp.WallPrototype;
-        cloneComp.InvisibleWallAction = ent.Comp.InvisibleWallAction;
-        cloneComp.VowBroken = ent.Comp.VowBroken;
-        cloneComp.ReadyToRepent = ent.Comp.ReadyToRepent;
-        cloneComp.VowRepentTime = ent.Comp.VowRepentTime;
-        cloneComp.VowCooldown = ent.Comp.VowCooldown;
-        cloneComp.VowBrokenAlert = ent.Comp.VowBrokenAlert;
-        cloneComp.PreventWriting = ent.Comp.PreventWriting;
-        cloneComp.FailWriteMessage = ent.Comp.FailWriteMessage;
-        AddComp(args.CloneUid, cloneComp, true);
+        if (args.Component is MimePowersComponent cloneComp)
+            cloneComp.InvisibleWallActionEntity = null;
     }
 
+    [SubscribeLocalEvent]
     private void OnComponentShutdown(Entity<MimePowersComponent> ent, ref ComponentShutdown args)
     {
         _statusEffects.TryRemoveStatusEffect(ent, MutedEffect);
@@ -103,6 +80,7 @@ public sealed partial class MimePowersSystem : EntitySystem
     /// <summary>
     /// Creates an invisible wall in a free space after some checks.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnInvisibleWall(Entity<MimePowersComponent> ent, ref InvisibleWallActionEvent args)
     {
         if (!ent.Comp.Enabled)
@@ -136,6 +114,7 @@ public sealed partial class MimePowersSystem : EntitySystem
         args.Handled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnBreakVowAlert(Entity<MimePowersComponent> ent, ref BreakVowAlertEvent args)
     {
         if (args.Handled)
@@ -145,6 +124,7 @@ public sealed partial class MimePowersSystem : EntitySystem
         args.Handled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnRetakeVowAlert(Entity<MimePowersComponent> ent, ref RetakeVowAlertEvent args)
     {
         if (args.Handled)

@@ -2,7 +2,6 @@
 using System.Linq;
 using Content.Shared.Changeling.Components;
 using Content.Shared.Cloning;
-using Content.Shared.Cloning.Events;
 using Content.Shared.Mind;
 using Content.Shared.Mobs;
 using Content.Shared.Roles.Jobs;
@@ -35,7 +34,6 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
         SubscribeLocalEvent<ChangelingIdentityComponent, PlayerAttachedEvent>(OnPlayerAttached);
         SubscribeLocalEvent<ChangelingIdentityComponent, PlayerDetachedEvent>(OnPlayerDetached);
         SubscribeLocalEvent<ChangelingIdentityComponent, ChangelingDevouredEvent>(OnDevouredEntity);
-        SubscribeLocalEvent<ChangelingIdentityComponent, CloningEvent>(OnClone);
         SubscribeLocalEvent<ChangelingStoredIdentityComponent, ComponentRemove>(OnStoredRemove);
 
         SubscribeLocalEvent<ChangelingDevouredComponent, ComponentShutdown>(OnDevouredShutdown);
@@ -67,9 +65,6 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
 
     private void OnMapInit(Entity<ChangelingIdentityComponent> ent, ref MapInitEvent args)
     {
-        if (ent.Comp.ConsumedIdentities.Count > 0)
-            return;
-
         // Make a backup of our current identity so we can transform back.
         GrantIdentity(ent.Owner, ent.Owner);
 
@@ -77,61 +72,6 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
             return;
 
         ent.Comp.CurrentIdentity = data.Identity;
-    }
-
-    private void OnClone(Entity<ChangelingIdentityComponent> ent, ref CloningEvent args)
-    {
-        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
-            return;
-
-        var cloneComp = Factory.GetComponent<ChangelingIdentityComponent>();
-        cloneComp.IdentityCloningSettings = ent.Comp.IdentityCloningSettings;
-
-        foreach (var identity in ent.Comp.ConsumedIdentities)
-        {
-            EntityUid? clonedIdentity = null;
-            var identitySource = identity.Identity;
-
-            if (identitySource != null)
-                clonedIdentity = CloneIdentitySnapshot(identity, identitySource.Value, cloneComp.IdentityCloningSettings);
-
-            cloneComp.ConsumedIdentities.Add(new ChangelingIdentityData
-            {
-                Identity = clonedIdentity,
-                Original = identity.Original,
-                OriginalMind = identity.OriginalMind,
-                OriginalJob = identity.OriginalJob,
-                OriginalName = identity.OriginalName,
-                Starting = identity.Starting,
-            });
-
-            if (identity.Identity != null && identity.Identity == ent.Comp.CurrentIdentity)
-                cloneComp.CurrentIdentity = clonedIdentity;
-        }
-
-        AddComp(args.CloneUid, cloneComp, true);
-    }
-
-    private EntityUid? CloneIdentitySnapshot(
-        ChangelingIdentityData identity,
-        EntityUid source,
-        ProtoId<CloningSettingsPrototype> settings)
-    {
-        var clone = CloneToPausedMap(settings, source);
-
-        if (clone == null)
-            return null;
-
-        var storedIdentity = EnsureComp<ChangelingStoredIdentityComponent>(clone.Value);
-        storedIdentity.OriginalEntity = identity.Original ?? source;
-
-        if (identity.Identity != null &&
-            TryComp<ChangelingStoredIdentityComponent>(identity.Identity.Value, out var originalStoredIdentity))
-        {
-            storedIdentity.OriginalSession = originalStoredIdentity.OriginalSession;
-        }
-
-        return clone;
     }
 
     private void OnShutdown(Entity<ChangelingIdentityComponent> ent, ref ComponentShutdown args)
