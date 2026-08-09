@@ -156,10 +156,10 @@
   - Storage # slime storage
   - Rootable # diona
   - Sericulture # arachnids
+  - MovementSpeedModifier # moths when weightless
   - JumpAbility # vulp leaping
   eventComponents:
   # these need special treatment in the event subscription
-  - MovementSpeedModifier # moths when weightless
   - Bloodstream # blood reagents
   copyInternalStorage: false
   copyImplants: false

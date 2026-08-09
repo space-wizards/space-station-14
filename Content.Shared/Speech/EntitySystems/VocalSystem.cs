@@ -1,6 +1,7 @@
 using Content.Shared.Actions;
 using Content.Shared.Chat;
 using Content.Shared.Chat.Prototypes;
+using Content.Shared.Cloning.Events;
 using Content.Shared.Humanoid;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Speech.Components;
@@ -71,6 +72,13 @@ public sealed partial class VocalSystem : EntitySystem
 
         _chat.TryEmoteWithChat(ent.Owner, args.Emote);
         args.Handled = true;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnCloneComponent(Entity<VocalComponent> ent, ref CloningComponentEvent args)
+    {
+        if (args.Component is VocalComponent cloneComp)
+            cloneComp.EmoteActionEntity = null;
     }
 
     private bool TryPlayScreamSound(Entity<VocalComponent> ent, EntityUid user)

@@ -1,24 +1,15 @@
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
-using Content.Server.Speech.EntitySystems;
 using Content.Shared.Cloning.Events;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Forensics.Components;
 using Content.Shared.Forensics.Systems;
-using Content.Shared.Inventory;
 using Content.Shared.Labels.Components;
 using Content.Shared.Labels.EntitySystems;
-using Content.Shared.Movement.Components;
-using Content.Shared.Movement.Pulling.Components;
-using Content.Shared.Movement.Pulling.Systems;
-using Content.Shared.Movement.Systems;
 using Content.Shared.Paper;
-using Content.Shared.Speech.Components;
-using Content.Shared.Speech.EntitySystems;
 using Content.Shared.Stacks;
-using Content.Shared.Storage;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Robust.Shared.Prototypes;
@@ -37,10 +28,7 @@ public sealed partial class CloningSystem
     [Dependency] private SharedStackSystem _stack = default!;
     [Dependency] private LabelSystem _label = default!;
     [Dependency] private PaperSystem _paper = default!;
-    [Dependency] private VocalSystem _vocal = default!;
-    [Dependency] private MovementSpeedModifierSystem _movementSpeedModifier = default!;
     [Dependency] private SharedChameleonClothingSystem _chameleonClothing = default!;
-    [Dependency] private PullingSystem _pulling = default!;
     [Dependency] private BloodstreamSystem _bloodstream = default!;
     [Dependency] private SharedForensicsSystem _forensics = default!;
 
@@ -62,7 +50,6 @@ public sealed partial class CloningSystem
 
         // These are for cloning components that cannot be cloned using CopyComp.
         // Put them into CloningSettingsPrototype.EventComponents to have them be applied to the clone.
-        SubscribeLocalEvent<MovementSpeedModifierComponent, CloningEvent>(OnCloneMovementSpeedModifier);
         SubscribeLocalEvent<BloodstreamComponent, CloningEvent>(OnCloneBloodstream);
     }
 
@@ -110,14 +97,6 @@ public sealed partial class CloningSystem
     {
         // copy the prototype the original is mimicing
         _chameleonClothing.SetSelectedPrototype(args.CloneUid, ent.Comp.Default);
-    }
-
-    private void OnCloneMovementSpeedModifier(Entity<MovementSpeedModifierComponent> ent, ref CloningEvent args)
-    {
-        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
-            return;
-
-        _movementSpeedModifier.CopyComponent(ent.AsNullable(), args.CloneUid);
     }
 
     private void OnCloneBloodstream(Entity<BloodstreamComponent> ent, ref CloningEvent args)
