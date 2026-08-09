@@ -3,7 +3,7 @@
         <!-- Main entry -->
         <BoxContainer Orientation="Horizontal">
             <Label Name="ServerName" Text="weh" Access="Public" HorizontalExpand="True" />
-            <Button Name="RedirectButton"
+            <Button Name="FallbackButton"
                     Text="Connect"
                     MinWidth="48"
                     MaxHeight="48"
@@ -15,7 +15,6 @@
         <!-- Details line-->
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True" Margin="4 0 4 4">
             <Label Name="PlayersLabel" Access="Public" StyleClasses="LabelSubText" HorizontalAlignment="Left" Margin="4 0 30 4"/>
-            <Label Name="PingLabel" Access="Public" StyleClasses="LabelSubText" HorizontalAlignment="Right" Margin="4 0 4 4"/>
         </BoxContainer>
     </BoxContainer>
 </Control>

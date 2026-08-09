@@ -32,12 +32,12 @@ namespace Content.Client.Launcher
         /// The list of connect options which will be shown to the player when their connection fails due to the server being full
         /// This is populated from the data sent by the server along with the disconnect event
         /// </summary>
-        private List<(string Name, string url, int players, int max)> _redirectOptions = new();
+        private List<(string Name, string url, int players, int max)> _fallbackServers = new();
 
         /// <summary>
-        /// The server redirect controls that have been created
+        /// The server redirect controls that have been created on the GUI
         /// </summary>
-        private List<RedirectTargetControl> _redirectControls = new();
+        private List<FallbackControl> _fallbackControls = new();
 
         public LauncherConnectingGui(
             LauncherConnecting state,
@@ -86,41 +86,31 @@ namespace Content.Client.Launcher
         /// <summary>
         /// Creates the Server Redirect info/buttons
         /// </summary>
-        private void CreateRedirectGui()
+        private void CreateFallbackGui()
         {
-            // TODO:ERRANT delete current controls? Better to update them
-
-            foreach (var (name, target,_ ,_) in _redirectOptions)
+            foreach (var control in _fallbackControls)
             {
-                var option = new RedirectTargetControl(name, target);
-                option.ServerName.Text = name;
-                option.RedirectButton.OnButtonDown += args => OnRedirectButtonPressed(args, target);
-                RedirectBox.AddChild(option);
-                _redirectControls.Add(option);
+                // TODO:ERRANT delete current controls? Better to update them
             }
 
-            UpdateRedirectServerInfo(); //TODO:ERRANT devour this
-        }
-
-        private void UpdateRedirectServerInfo()
-        {
             var available = false;
 
-            foreach (var control in _redirectControls)
+            foreach (var (name, target,players ,maxPlayers) in _fallbackServers)
             {
-                var players = _random.Next(0,110);
-                var maxPlayers = 75;
-                var ping= _random.Next(20,150);
+                var option = new FallbackControl(name, target);
+                option.ServerName.Text = name;
+                option.FallbackButton.OnButtonDown += args => OnFallbackButtonPressed(args, target);
+                FallbackBox.AddChild(option);
+                _fallbackControls.Add(option);
 
-                control.PlayersLabel.Text = Loc.GetString("connecting-available-player-count",("players", players),("maxPlayers", maxPlayers));
-                control.PingLabel.Text = Loc.GetString("connecting-available-ping",("ping", ping));
-                control.Visible = players < maxPlayers;
+                option.PlayersLabel.Text = Loc.GetString("connecting-fallback-players",("players", players),("maxPlayers", maxPlayers));
+                option.Visible = players < maxPlayers;
 
-                available |= control.Visible;
+                available |= option.Visible;
             }
 
-            var loc = available ? "connecting-available-label" : "connecting-available-label-unavailable";
-            UnavailableLabel.Text = Loc.GetString(loc);
+            var loc = available ? "connecting-fallback-label" : "connecting-fallback-label-full";
+            FallbackLabel.Text = Loc.GetString(loc);
         }
 
         // Just button, there's only one at once anyways :)
@@ -136,7 +126,7 @@ namespace Content.Client.Launcher
             _state.RetryConnect();
         }
 
-        private void OnRedirectButtonPressed(BaseButton.ButtonEventArgs args, string target)
+        private void OnFallbackButtonPressed(BaseButton.ButtonEventArgs args, string target)
         {
             _state.Redirect(target, Loc.GetString("connecting-switching",("target",target)));
         }
@@ -191,13 +181,12 @@ namespace Content.Client.Launcher
                     _waitTime = RedialWaitTimeSeconds;
                 }
 
-                RedirectBox.Visible = false;
+                FallbackBox.Visible = false;
 
                 // List of fallback servers sent by the current server
                 if (reason.Message.StringOf("fallbackServers") is { } fallback)
                 {
-                    // _redirectOptions = []; // TODO:ERRANT this might crash the game. Then try the next one
-                    _redirectOptions = new();
+                    _fallbackServers = [];
 
                     // The string separates servers by ; and data fields about each server by ,
                     foreach (var server in fallback.Split(";", StringSplitOptions.RemoveEmptyEntries))
@@ -220,14 +209,14 @@ namespace Content.Client.Launcher
                         if(i!=4 || !int.TryParse(members[2], out var players) || !int.TryParse(members[3], out var max))
                             continue;
 
-                        _redirectOptions.Add((members[0], members[1], players, max));
+                        _fallbackServers.Add((members[0], members[1], players, max));
                     }
 
-                    if (_redirectOptions.Count == 0)
+                    if (_fallbackServers.Count == 0)
                         return;
 
-                    RedirectBox.Visible = true;
-                    CreateRedirectGui();
+                    FallbackBox.Visible = true;
+                    CreateFallbackGui();
                 }
             }
         }
@@ -279,7 +268,6 @@ namespace Content.Client.Launcher
             {
                 button.Disabled = true;
                 button.Text = Loc.GetString("connecting-redial-wait", ("time", _waitTime.ToString("00")));
-                //TODO:ERRANT check if the width of the xaml should be fixed
             }
         }
 

@@ -54,11 +54,11 @@
                 </Control>
                 <Label Name="ConnectingAddress" StyleClasses="LabelSubText" HorizontalAlignment="Center" />
             </BoxContainer>
-            <!-- Server Redirect Panel -->
-            <BoxContainer Name="RedirectBox" Visible="False" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" Margin="4 4 4 0">
+            <!-- Server Fallback Panel -->
+            <BoxContainer Name="FallbackBox" Visible="False" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" Margin="4 4 4 0">
                 <controls:StripeBack />
-                <Label Name="UnavailableLabel" Access="Public" HorizontalAlignment="Center" Margin="0 4"/>
-                <!-- Server entries are filled in by code -->
+                <Label Name="FallbackLabel" Access="Public" StyleClasses="LabelSubText" HorizontalAlignment="Center" Margin="0 4"/>
+                <!-- Individual server entries are filled in by code -->
             </BoxContainer>
             <!-- Bottom edge -->
             <PanelContainer>

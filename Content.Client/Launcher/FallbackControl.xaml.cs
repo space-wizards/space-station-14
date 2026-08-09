@@ -5,9 +5,9 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.Launcher;
 
 [GenerateTypedNameReferences]
-public sealed partial class RedirectTargetControl : Control
+public sealed partial class FallbackControl : Control
 {
-    public RedirectTargetControl(string name, string url)
+    public FallbackControl(string name, string url)
     {
         RobustXamlLoader.Load(this);
     }

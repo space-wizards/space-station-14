@@ -17,6 +17,7 @@ using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Player;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 /*
@@ -63,6 +64,7 @@ namespace Content.Server.Connection
         [Dependency] private IHttpClientHolder _http = default!;
         [Dependency] private IAdminManager _adminManager = default!;
         [Dependency] private IEntityManager _entityManager = default!;
+        [Dependency] private IRobustRandom _random = default!;
 
         private GameTicker? _ticker;
 
@@ -183,20 +185,18 @@ namespace Content.Server.Connection
         {
             fallbacks = string.Empty;
 
-            var fallbackServersRaw = _cfg.GetCVar(CCVars.ServerFallbacks);
+            var fallbackServersRaw = _cfg.GetCVar(CCVars.FallbackServers);
 
             // More complicated processing would be possible here, such as ordering servers by pop,
             // or having a large list of fallback servers and only presenting the one with the highest pop
             // But for now, we simply send the list as provided
-
-            //TODO:ERRANT note in the logs if there is an issue
 
             var j = 0;
             foreach (var serverRaw in fallbackServersRaw.Split(";", StringSplitOptions.RemoveEmptyEntries))
             {
                 if (serverRaw.Split(",", StringSplitOptions.RemoveEmptyEntries).Length != 2)
                 {
-                    // TODO log cvar content error
+                    _sawmill.Warning($"FallbackServers cvar is malformed - too many commas in '{serverRaw}'");
                     continue;
                 }
 
@@ -204,7 +204,7 @@ namespace Content.Server.Connection
                 var url = serverRaw[(i+1)..];
 
                 //TODO:ERRANT Actually get server pops
-                var pop = url.Length;
+                var pop = _random.Next(0,110);
                 var max = 75;
 
                 fallbacks += serverRaw + "," + pop + "," + max + ";";
