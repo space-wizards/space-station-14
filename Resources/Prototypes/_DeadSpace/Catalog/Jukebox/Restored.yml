@@ -1,0 +1,47 @@
+- type: jukebox
+  id: RestoredMonument
+  name: Six Umbrellas - Monument
+  path:
+    path: /Audio/_DeadSpace/Jukebox/Monument.ogg
+
+- type: jukebox
+  id: RestoredMarhaba
+  name: Ian Alex Mac - Marhaba
+  path:
+    path: /Audio/_DeadSpace/Jukebox/Marhaba.ogg
+
+- type: jukebox
+  id: RestoredEndlessSpace
+  name: SolusLunes - Endless Space
+  path:
+    path: /Audio/_DeadSpace/Jukebox/endless_space.ogg
+
+- type: jukebox
+  id: RestoredLasersRipApartTheBulkhead
+  name: Sunbeamstress - Lasers Rip Apart the Bulkhead
+  path:
+    path: /Audio/_DeadSpace/Jukebox/lasers_rip_apart_the_bulkhead.ogg
+
+- type: jukebox
+  id: RestoredEveryLightIsBlinkingAtOnce
+  name: Sunbeamstress - Every Light Is Blinking at Once
+  path:
+    path: /Audio/_DeadSpace/Jukebox/every_light_is_blinking_at_once.ogg
+
+- type: jukebox
+  id: RestoredAbsconditus
+  name: ZhayTee - Absconditus
+  path:
+    path: /Audio/_DeadSpace/Jukebox/absconditus.ogg
+
+- type: jukebox
+  id: RestoredSinguloose
+  name: Janis Schiedková - Singuloose
+  path:
+    path: /Audio/_DeadSpace/Jukebox/singuloose.ogg
+
+- type: jukebox
+  id: RestoredSpaceAsshole
+  name: Chris Remo - Space Asshole
+  path:
+    path: /Audio/_DeadSpace/Jukebox/space_asshole.ogg
