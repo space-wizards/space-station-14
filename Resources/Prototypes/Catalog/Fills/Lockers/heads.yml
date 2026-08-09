@@ -117,6 +117,7 @@
     - id: AccessConfigurator
     - id: BoxEncryptionKeyPassenger
     - id: BoxEncryptionKeyService
+    - id: BoxEncryptionKeyTheatre
     - id: BoxHeadset
     - id: BoxHoPCircuitboards
     - id: BoxHoPStamps

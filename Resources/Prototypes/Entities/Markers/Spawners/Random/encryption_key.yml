@@ -22,6 +22,7 @@
         - id: EncryptionKeyEngineering
         - id: EncryptionKeyScience
         - id: EncryptionKeyService
+        - id: EncryptionKeyTheatre
         - id: EncryptionKeyMedical
         - id: EncryptionKeyCargo
       - !type:GroupSelector

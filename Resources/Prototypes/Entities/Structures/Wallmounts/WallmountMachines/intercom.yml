@@ -315,6 +315,19 @@
       - EncryptionKeyCargo
 
 - type: entity
+  id: IntercomTheatre
+  parent: Intercom
+  suffix: Theatre
+  components:
+  - type: ContainerFill
+    containers:
+      board:
+      - IntercomElectronics
+      key_slots:
+      - EncryptionKeyCommon
+      - EncryptionKeyTheatre
+
+- type: entity
   id: IntercomAll
   parent: Intercom
   suffix: All
