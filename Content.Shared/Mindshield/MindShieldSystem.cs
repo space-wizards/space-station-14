@@ -123,8 +123,8 @@ public sealed partial class MindShieldSystem : EntitySystem
 /// <summary>
 /// Raised in order to get whether an entity is mindshielded visually, mechanically or both.
 /// </summary>
-[ByRefEvent]
-public sealed class GetMindShieldStatusEvent : EntityEventArgs, IInventoryRelayEvent
+[ByRefEvent, GenericEvent]
+public sealed class GetMindShieldStatusEvent : EntityEventArgs, IInventoryRelayEvent, IInventoryRelayAfterImplantEvent
 {
     public SlotFlags TargetSlots => SlotFlags.WITHOUT_POCKET;
     /// <summary>

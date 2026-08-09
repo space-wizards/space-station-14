@@ -7,7 +7,7 @@ namespace Content.Shared.Overlays;
 /// <summary>
 /// This component allows the owner to see the satiation of mobs.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, GenericEvent]
 public sealed partial class ShowSatiationIconsComponent : Component
 {
     /// <summary>

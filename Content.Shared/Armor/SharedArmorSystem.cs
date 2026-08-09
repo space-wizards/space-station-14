@@ -43,7 +43,7 @@ public abstract partial class SharedArmorSystem : EntitySystem
         }
     }
 
-    private void OnDamageModify(EntityUid uid, ArmorComponent component, InventoryRelayedEvent<DamageModifyEvent> args)
+    private void OnDamageModify(EntityUid uid, ArmorComponent component, ref InventoryRelayedEvent<DamageModifyEvent> args)
     {
         if (TryComp<MaskComponent>(uid, out var mask) && mask.IsToggled)
             return;

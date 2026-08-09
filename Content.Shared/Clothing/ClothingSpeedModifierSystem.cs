@@ -54,7 +54,7 @@ public sealed partial class ClothingSpeedModifierSystem : EntitySystem
         }
     }
 
-    private void OnRefreshMoveSpeed(EntityUid uid, ClothingSpeedModifierComponent component, InventoryRelayedEvent<RefreshMovementSpeedModifiersEvent> args)
+    private void OnRefreshMoveSpeed(EntityUid uid, ClothingSpeedModifierComponent component, ref InventoryRelayedEvent<RefreshMovementSpeedModifiersEvent> args)
     {
         if (component.RequireActivated && !_toggle.IsActivated(uid))
             return;

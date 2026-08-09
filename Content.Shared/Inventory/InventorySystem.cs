@@ -8,7 +8,6 @@ public partial class InventorySystem
         base.Initialize();
         InitializeEquip();
         InitializeSlots();
-        InitializeRelay();
     }
 
     public override void Shutdown()

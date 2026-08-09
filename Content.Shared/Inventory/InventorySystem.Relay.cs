@@ -6,28 +6,24 @@ namespace Content.Shared.Inventory;
 
 public partial class InventorySystem
 {
-    // TODO remove this when event ordering for attribute (and also generic) subscriptions is implemented
-    private void InitializeRelay()
-    {
-        SubscribeLocalEvent<InventoryComponent, GetMindShieldStatusEvent>(RelayEvent, after: [typeof(SharedSubdermalImplantSystem)]); // ordering so that things like mindshield-flipping hats can be done
-    }
-
     [SubscribeLocalEvent]
     public void RelayEvent<T>(Entity<InventoryComponent> inventory, ref T args) where T : IInventoryRelayEvent
     {
         if (args.TargetSlots == SlotFlags.NONE)
             return;
 
-        // this copies the by-ref event if it is a struct
         var ev = new InventoryRelayedEvent<T>(args, inventory.Owner);
         var enumerator = new InventorySlotEnumerator(inventory, args.TargetSlots);
         while (enumerator.NextItem(out var item))
         {
-            RaiseLocalEvent(item, ev);
+            RaiseLocalEvent(item, ref ev);
         }
+    }
 
-        // and now we copy it back
-        args = ev.Args;
+    [SubscribeLocalEvent(after: [typeof(SharedSubdermalImplantSystem)])]
+    private void RelayEventAfterImplant<T>(Entity<InventoryComponent> inventory, ref T args) where T : IInventoryRelayEvent, IInventoryRelayAfterImplantEvent
+    {
+        RelayEvent(inventory, ref args);
     }
 
     [SubscribeLocalEvent]
@@ -39,7 +35,7 @@ public partial class InventorySystem
         while (enumerator.NextItem(out var item, out var slotDef))
         {
             if (!_strippable.IsStripHidden(slotDef, args.User) || args.User == ent.Owner)
-                RaiseLocalEvent(item, ev);
+                RaiseLocalEvent(item, ref ev);
         }
     }
 
@@ -51,7 +47,7 @@ public partial class InventorySystem
         var enumerator = new InventorySlotEnumerator(ent.Comp, SlotFlags.WITHOUT_POCKET);
         while (enumerator.NextItem(out var item))
         {
-            RaiseLocalEvent(item, ev);
+            RaiseLocalEvent(item, ref ev);
         }
     }
 }
@@ -65,17 +61,12 @@ public partial class InventorySystem
 ///      happens to be a dead mouse. Clothing that wishes to modify movement speed must subscribe to
 ///      InventoryRelayedEvent&lt;RefreshMovementSpeedModifiersEvent&gt;
 /// </remarks>
-public sealed class InventoryRelayedEvent<TEvent> : EntityEventArgs
+[ByRefEvent]
+public record struct InventoryRelayedEvent<TEvent>(TEvent Args, EntityUid Owner)
 {
-    public TEvent Args;
+    public TEvent Args = Args;
 
-    public EntityUid Owner;
-
-    public InventoryRelayedEvent(TEvent args, EntityUid owner)
-    {
-        Args = args;
-        Owner = owner;
-    }
+    public EntityUid Owner = Owner;
 }
 
 public interface IClothingSlots
@@ -97,3 +88,8 @@ public interface IInventoryRelayEvent
     /// </remarks>
     public SlotFlags TargetSlots { get; }
 }
+
+/// <summary>
+/// Marker interface added to events that should run after <see cref="SharedSubdermalImplantSystem"/>.
+/// </summary>
+public interface IInventoryRelayAfterImplantEvent;
