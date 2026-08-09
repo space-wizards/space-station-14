@@ -178,7 +178,8 @@
   metabolisms:
     Bloodstream:
       effects:
-      - !type:SatiateThirst
+      - !type:Satiate
+        satiationType: Thirst
         factor: -1.5
       - !type:HealthChange
         ignoreResistances: true
@@ -696,12 +697,14 @@
       effects:
       - !type:HealthChange
         conditions:
-        - !type:HungerCondition
+        - !type:SatiationCondition
+          satiationType: Hunger
           max: 50
         damage:
           types:
             Poison: 2
-      - !type:SatiateHunger
+      - !type:Satiate
+        satiationType: Hunger
         factor: -6
 
 # inspired by the spider neurotoxin GsMtx-4
@@ -757,7 +760,8 @@
   metabolisms:
     Digestion:
       effects:
-      - !type:SatiateHunger
+      - !type:Satiate
+        satiationType: Hunger
         factor: 1
         conditions:
         - !type:MetabolizerTypeCondition
@@ -781,3 +785,52 @@
         type: Update
       - !type:ModifyBleed
         amount: 0.5
+
+- type: reagent
+  id: Hivarol
+  name: reagent-name-hivarol
+  group: Toxins
+  desc: reagent-desc-hivarol
+  physicalDesc: reagent-physical-desc-sickly
+  flavor: sharp
+  color: "#96424f"
+  metabolisms:
+    Bloodstream:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Hivarol
+          min: 4
+        - !type:MetabolizerTypeCondition
+          type: [ Changeling ]
+        damage:
+          types:
+            Shock: 3
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentCondition
+          reagent: Hivarol
+          min: 4
+        - !type:MetabolizerTypeCondition
+          type: [ Changeling ]
+        type: Local
+        visualType: Large
+        messages: [ "generic-reagent-effect-burning-insides" ]
+        probability: 0.33
+      - !type:Emote
+        conditions:
+        - !type:ReagentCondition
+          reagent: Hivarol
+          min: 4
+        - !type:MetabolizerTypeCondition
+          type: [ Changeling ]
+        emote: Scream
+        probability: 0.5
+      - !type:Jitter
+        conditions:
+        - !type:ReagentCondition
+          reagent: Hivarol
+          min: 4
+        - !type:MetabolizerTypeCondition
+          type: [ Changeling ]

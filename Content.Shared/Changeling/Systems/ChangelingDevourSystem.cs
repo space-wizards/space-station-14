@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Armor;
@@ -9,6 +8,7 @@ using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
+using Content.Shared.Fluids;
 using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
@@ -23,19 +23,20 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Changeling.Systems;
 
-public sealed class ChangelingDevourSystem : EntitySystem
+public sealed partial class ChangelingDevourSystem : EntitySystem
 {
-    [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
-    [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedChangelingIdentitySystem _changelingIdentitySystem = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedStoreSystem _store = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private INetManager _net = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private SharedActionsSystem _actionsSystem = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedChangelingIdentitySystem _changelingIdentity = default!;
+    [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private SharedPopupSystem _popupSystem = default!;
+    [Dependency] private SharedStoreSystem _store = default!;
+    [Dependency] private SharedPuddleSystem _puddle = default!;
 
     public override void Initialize()
     {
@@ -112,7 +113,7 @@ public sealed class ChangelingDevourSystem : EntitySystem
 
         var selfMessage = Loc.GetString("changeling-devour-begin-windup-self", ("user", Identity.Entity(ent.Owner, EntityManager)));
         var othersMessage = Loc.GetString("changeling-devour-begin-windup-others", ("user", Identity.Entity(ent.Owner, EntityManager)));
-        _popupSystem.PopupPredicted(
+        _popupSystem.PopupEntity(
             selfMessage,
             othersMessage,
             args.Performer,
@@ -137,7 +138,7 @@ public sealed class ChangelingDevourSystem : EntitySystem
 
         var selfMessage = Loc.GetString("changeling-devour-begin-consume-self", ("user", Identity.Entity(ent.Owner, EntityManager)));
         var othersMessage = Loc.GetString("changeling-devour-begin-consume-others", ("user", Identity.Entity(ent.Owner, EntityManager)));
-        _popupSystem.PopupPredicted(
+        _popupSystem.PopupEntity(
             selfMessage,
             othersMessage,
             ent.Owner,
@@ -184,7 +185,7 @@ public sealed class ChangelingDevourSystem : EntitySystem
 
         var selfMessage = Loc.GetString("changeling-devour-consume-complete-self", ("user", Identity.Entity(ent.Owner, EntityManager)));
         var othersMessage = Loc.GetString("changeling-devour-consume-complete-others", ("user", Identity.Entity(ent.Owner, EntityManager)));
-        _popupSystem.PopupPredicted(
+        _popupSystem.PopupEntity(
             selfMessage,
             othersMessage,
             ent.Owner,
@@ -198,7 +199,7 @@ public sealed class ChangelingDevourSystem : EntitySystem
         var willGrantDna = WillDevourGrantDna(ent.Owner, target);
 
         // Even if not unique, target is supposed to give us an identity if it is not currently in our identity list.
-        var becomesIdentity = !HasIdentity(ent.Owner, target);
+        var becomesIdentity = !_changelingIdentity.HasIdentity(ent.Owner, target);
 
         var ev = new ChangelingDevouredEvent(ent.Owner, target, becomesIdentity, uniqueIdentity, willGrantDna);
         RaiseLocalEvent(ent, ref ev, true); // We broadcast the event to allow relevant objectives to update.
@@ -208,26 +209,18 @@ public sealed class ChangelingDevourSystem : EntitySystem
 
         EnsureComp<RecentlyDevouredComponent>(target);
 
+        if (ent.Comp.DevourSpill != null)
+            _puddle.TrySpillAt(target, ent.Comp.DevourSpill, out _, false);
+
         // Grants the DNA reward associated with a successful unique devour.
         if (willGrantDna && TryComp<StoreComponent>(ent, out var store))
             _store.TryAddCurrency(ent.Comp.DevourDnaReward, ent.Owner, store);
     }
 
     /// <summary>
-    /// Whether the given changeling has a valid identity of the given entity.
-    /// </summary>
-    public bool HasIdentity(Entity<ChangelingIdentityComponent?> changeling, EntityUid devoured)
-    {
-        if (!Resolve(changeling, ref changeling.Comp, false))
-            return false;
-
-        return changeling.Comp.ConsumedIdentities.FirstOrDefault(data => data.Original == devoured && data.Identity != null) != null;
-    }
-
-    /// <summary>
     /// Can the given changeling devour the given victim?
     /// </summary>
-    public bool CanDevour(Entity<ChangelingDevourComponent?> changeling, EntityUid victim, bool showPopup = true)
+    public bool CanDevour(Entity<ChangelingDevourComponent?> changeling, EntityUid victim, bool checkDead = true, bool checkProtected = true, bool showPopup = true)
     {
         if (!Resolve(changeling, ref changeling.Comp))
             return false;
@@ -238,42 +231,42 @@ public sealed class ChangelingDevourSystem : EntitySystem
         if (!HasComp<HumanoidProfileComponent>(victim))
         {
             if (showPopup)
-                _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-cannot-devour"), changeling.Owner, changeling.Owner, PopupType.Medium);
+                _popupSystem.PopupEntity(Loc.GetString("changeling-devour-attempt-failed-cannot-devour"), changeling.Owner, changeling.Owner, PopupType.Medium);
             return false;
         }
 
         if (HasComp<RecentlyDevouredComponent>(victim))
         {
             if (showPopup)
-                _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-devoured-recently"), changeling.Owner, changeling.Owner, PopupType.Medium);
+                _popupSystem.PopupEntity(Loc.GetString("changeling-devour-attempt-failed-devoured-recently"), changeling.Owner, changeling.Owner, PopupType.Medium);
             return false;
         }
 
-        if (!_mobState.IsDead(victim))
+        if (checkDead && !_mobState.IsDead(victim))
         {
             if (showPopup)
-                _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-not-dead"), changeling.Owner, changeling.Owner, PopupType.Medium);
+                _popupSystem.PopupEntity(Loc.GetString("changeling-devour-attempt-failed-not-dead"), changeling.Owner, changeling.Owner, PopupType.Medium);
             return false;
         }
 
         if (HasComp<RottingComponent>(victim))
         {
             if (showPopup)
-                _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-rotting"), changeling.Owner, changeling.Owner, PopupType.Medium);
+                _popupSystem.PopupEntity(Loc.GetString("changeling-devour-attempt-failed-rotting"), changeling.Owner, changeling.Owner, PopupType.Medium);
             return false;
         }
 
-        if (IsTargetProtected(victim, changeling!))
+        if (checkProtected && IsTargetProtected(victim, changeling))
         {
             if (showPopup)
-                _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-protected"), changeling.Owner, changeling.Owner, PopupType.Medium);
+                _popupSystem.PopupEntity(Loc.GetString("changeling-devour-attempt-failed-protected"), changeling.Owner, changeling.Owner, PopupType.Medium);
             return false;
         }
 
-        if (!HasIdentity(changeling.Owner, victim) && !_changelingIdentitySystem.HasFreeDisguiseSlot(changeling.Owner))
+        if (!_changelingIdentity.HasIdentity(changeling.Owner, victim) && !_changelingIdentity.HasFreeDisguiseSlot(changeling.Owner))
         {
             if (showPopup)
-                _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-no-space"), changeling.Owner, changeling.Owner, PopupType.Medium);
+                _popupSystem.PopupEntity(Loc.GetString("changeling-devour-attempt-failed-no-space"), changeling.Owner, changeling.Owner, PopupType.Medium);
             return false;
         }
 
@@ -286,8 +279,11 @@ public sealed class ChangelingDevourSystem : EntitySystem
     /// <param name="target">The Targeted entity</param>
     /// <param name="ent">Changelings Devour Component</param>
     /// <returns>Is the target Protected from the attack</returns>
-    private bool IsTargetProtected(EntityUid target, Entity<ChangelingDevourComponent> ent)
+    public bool IsTargetProtected(EntityUid target, Entity<ChangelingDevourComponent?> ent)
     {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return false;
+
         var ev = new CoefficientQueryEvent(SlotFlags.OUTERCLOTHING);
 
         RaiseLocalEvent(target, ev);
@@ -314,7 +310,7 @@ public sealed class ChangelingDevourSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp, false))
             return false;
 
-        return !_changelingIdentitySystem.TryGetDataFromOriginal(ent, devoured, out _);
+        return !_changelingIdentity.TryGetDataFromOriginal(ent, devoured, out _);
     }
 
     /// <summary>
@@ -329,7 +325,7 @@ public sealed class ChangelingDevourSystem : EntitySystem
             return false;
 
         // This target was never devoured, so obviously it can grant us DNA.
-        if (!_changelingIdentitySystem.TryGetDataFromOriginal(ent, devoured, out var data))
+        if (!_changelingIdentity.TryGetDataFromOriginal(ent, devoured, out var data))
             return true;
 
         // If the entity was Devoured, it means it already granted DNA, so we return False.

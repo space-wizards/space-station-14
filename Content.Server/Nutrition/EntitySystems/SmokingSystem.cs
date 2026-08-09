@@ -1,12 +1,15 @@
+using Content.Shared.Atmos;
 using Content.Server.Atmos.EntitySystems;
+using Robust.Shared.Audio.Systems;
 using Content.Server.Body.Systems;
-using Content.Shared.Chemistry.EntitySystems;
-using Content.Server.Forensics;
 using Content.Shared.Body.Components;
+using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.FixedPoint;
+using Content.Shared.Forensics.Systems;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
@@ -14,26 +17,24 @@ using Content.Shared.Nutrition.Components;
 using Content.Shared.Smoking;
 using Content.Shared.Temperature;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
-using Content.Shared.Atmos;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
     public sealed partial class SmokingSystem : EntitySystem
     {
-        [Dependency] private readonly ReactiveSystem _reactiveSystem = default!;
-        [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
-        [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
-        [Dependency] private readonly AtmosphereSystem _atmos = default!;
-        [Dependency] private readonly TransformSystem _transformSystem = default!;
-        [Dependency] private readonly InventorySystem _inventorySystem = default!;
-        [Dependency] private readonly ClothingSystem _clothing = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
-        [Dependency] private readonly SharedItemSystem _items = default!;
-        [Dependency] private readonly SharedContainerSystem _container = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly ForensicsSystem _forensics = default!;
+        [Dependency] private ReactiveSystem _reactiveSystem = default!;
+        [Dependency] private SharedSolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private BloodstreamSystem _bloodstreamSystem = default!;
+        [Dependency] private AtmosphereSystem _atmos = default!;
+        [Dependency] private TransformSystem _transformSystem = default!;
+        [Dependency] private InventorySystem _inventorySystem = default!;
+        [Dependency] private ClothingSystem _clothing = default!;
+        [Dependency] private SharedAudioSystem _audio = default!;
+        [Dependency] private SharedItemSystem _items = default!;
+        [Dependency] private SharedContainerSystem _container = default!;
+        [Dependency] private SharedAppearanceSystem _appearance = default!;
+        [Dependency] private SharedForensicsSystem _forensics = default!;
 
         private const float UpdateTimer = 3f;
 

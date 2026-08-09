@@ -45,12 +45,6 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 200
-      behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
         damage: 100
       behaviors:
       - !type:DoActsBehavior
@@ -82,6 +76,7 @@
     enabled: false
   - type: PoweredLight
     bulb: Tube
+  - type: SpookyPoweredLight
   - type: ContainerContainer
     containers:
       light_bulb: !type:ContainerSlot

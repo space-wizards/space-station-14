@@ -14,15 +14,15 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Changeling.Systems;
 
-public abstract class SharedChangelingIdentitySystem : EntitySystem
+public abstract partial class SharedChangelingIdentitySystem : EntitySystem
 {
-    [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly MetaDataSystem _metaSystem = default!;
-    [Dependency] private readonly SharedCloningSystem _cloningSystem = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
-    [Dependency] private readonly SharedPvsOverrideSystem _pvsOverrideSystem = default!;
-    [Dependency] private readonly SharedMindSystem _mind = default!;
-    [Dependency] private readonly SharedJobSystem _job = default!;
+    [Dependency] private INetManager _net = default!;
+    [Dependency] private MetaDataSystem _metaSystem = default!;
+    [Dependency] private SharedCloningSystem _cloningSystem = default!;
+    [Dependency] private SharedMapSystem _map = default!;
+    [Dependency] private SharedPvsOverrideSystem _pvsOverrideSystem = default!;
+    [Dependency] private SharedMindSystem _mind = default!;
+    [Dependency] private SharedJobSystem _job = default!;
 
     public MapId? PausedMapId;
 
@@ -46,8 +46,7 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
     {
         if (args.ObtainedIdentity)
         {
-            CloneToPausedMap(ent, args.Devoured);
-            AddDevouredReference(ent, args.Devoured);
+            GrantIdentity(ent.Owner, args.Devoured, true);
         }
 
         if (args.GrantedDna && TryGetDataFromOriginal(ent.AsNullable(), args.Devoured, out var data))
@@ -72,13 +71,10 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
             return;
 
         // Make a backup of our current identity so we can transform back.
-        CloneToPausedMap(ent, ent.Owner);
+        GrantIdentity(ent.Owner, ent.Owner);
 
         if (!TryGetDataFromOriginal(ent.AsNullable(), ent, out var data))
             return;
-
-        data.Starting = true;
-        data.GrantedDna = true; // I have no idea how you're supposed to ever get DNA from yourself, but just in case.
 
         ent.Comp.CurrentIdentity = data.Identity;
     }
@@ -257,12 +253,18 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
     /// </summary>
     /// <param name="ent">The Changeling.</param>
     /// <param name="target">The target to clone.</param>
-    public EntityUid? CloneToPausedMap(Entity<ChangelingIdentityComponent> ent, EntityUid target)
+    /// <param name="devoured">Whether this identity was granted via devouring, aka granted DNA to the changeling.</param>
+    public EntityUid? GrantIdentity(Entity<ChangelingIdentityComponent?> ent, EntityUid target, bool devoured = false)
     {
+        if (!Resolve(ent.Owner, ref ent.Comp))
+            return null;
+
         var clone = CloneToPausedMap(ent.Comp.IdentityCloningSettings, target);
 
         if (clone == null)
             return null;
+
+        var isNew = false;
 
         // We see if we already have a identity slot for this entity.
         // This can happen if we devoured them before, but then dropped their stored identity.
@@ -270,9 +272,23 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
         {
             newIdentity = new ChangelingIdentityData();
             ent.Comp.ConsumedIdentities.Add(newIdentity);
+            isNew = true; // Data didn't exist before so its not an update.
         }
 
         UpdateIdentityData(newIdentity, clone.Value, target);
+        AddDevouredReference(ent!, target);
+
+        newIdentity.GrantedDna = devoured;
+
+        if (newIdentity.Original == ent)
+        {
+            // This is an identity of us, we don't wanna count it for objectives n stuff.
+            newIdentity.Starting = true;
+            newIdentity.GrantedDna = true;
+        }
+
+        var ev = new ChangelingGainedOrUpdatedIdentityEvent(ent, newIdentity, isNew);
+        RaiseLocalEvent(ent, ref ev, true); // Broadcast it to allow the mind tracker to update.
 
         HandlePvsOverride(ent, clone.Value);
         Dirty(ent);
@@ -380,6 +396,17 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
     }
 
     /// <summary>
+    /// Whether the given changeling has a valid identity of the given entity.
+    /// </summary>
+    public bool HasIdentity(Entity<ChangelingIdentityComponent?> changeling, EntityUid devoured)
+    {
+        if (!Resolve(changeling, ref changeling.Comp, false))
+            return false;
+
+        return changeling.Comp.ConsumedIdentities.FirstOrDefault(data => data.Original == devoured && data.Identity != null) != null;
+    }
+
+    /// <summary>
     /// Create a paused map for storing devoured identities as a clone of the player.
     /// </summary>
     private void EnsurePausedMap()
@@ -461,6 +488,26 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
             return false;
 
         identityData = ent.Comp.ConsumedIdentities.FirstOrDefault(data => data.Original == original);
+
+        return identityData != null;
+    }
+
+    /// <summary>
+    /// Fetches the <see cref="ChangelingIdentityData"/> from an entity's <see cref="ChangelingIdentityComponent"/> based on the identity they are currently using.
+    /// </summary>
+    /// <param name="ent">The changeling entity.</param>
+    /// <param name="identityData">The returned <see cref="ChangelingIdentityData"/> for the current identity if one is found.</param>
+    /// <returns>True if identity data is found, otherwise False.</returns>
+    public bool TryGetCurrentIdentityData(Entity<ChangelingIdentityComponent?> ent, [NotNullWhen(true)] out ChangelingIdentityData? identityData)
+    {
+        identityData = null;
+        if (!Resolve(ent, ref ent.Comp, false))
+            return false;
+
+        if (ent.Comp.CurrentIdentity == null)
+            return false;
+
+        identityData = ent.Comp.ConsumedIdentities.FirstOrDefault(data => data.Identity == ent.Comp.CurrentIdentity);
 
         return identityData != null;
     }

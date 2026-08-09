@@ -14,12 +14,12 @@
   - tasks:
     - !type:HTNPrimitiveTask
       operator: !type:PickEntityNearMobOperator
-        rangeKey: VisionRadius
+        rangeKey: InteractRange
         targetKey: FlushableTarget
         nearbyEntityTargetKey: DisposalBinTarget
         targetMoveKey: TargetCoordinates
         mobState: Critical
-        mobRangeKey: InteractRange
+        mobRangeKey: VisionRadius
         whitelist:
           components:
           - DisposalUnit

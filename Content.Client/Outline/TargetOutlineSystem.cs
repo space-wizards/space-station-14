@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Client.Graphics;
 using Content.Shared.Interaction;
 using Content.Shared.Whitelist;
 using Robust.Client.GameObjects;
@@ -13,21 +14,21 @@ namespace Content.Client.Outline;
 /// <summary>
 ///     System used to indicate whether an entity is a valid target based on some criteria.
 /// </summary>
-public sealed class TargetOutlineSystem : EntitySystem
+public sealed partial class TargetOutlineSystem : EntitySystem
 {
     private static readonly ProtoId<ShaderPrototype> ShaderTargetValid = "SelectionOutlineInrange";
     private static readonly ProtoId<ShaderPrototype> ShaderTargetInvalid = "SelectionOutline";
 
-    [Dependency] private readonly IEyeManager _eyeManager = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly IInputManager _inputManager = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
-    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
-    [Dependency] private readonly EntityQuery<SpriteComponent> _spriteQuery = default!;
+    [Dependency] private IEyeManager _eyeManager = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private IInputManager _inputManager = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private SharedTransformSystem _transformSystem = default!;
+    [Dependency] private EntityQuery<SpriteComponent> _spriteQuery = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
     private bool _enabled = false;
 
@@ -83,8 +84,8 @@ public sealed class TargetOutlineSystem : EntitySystem
     {
         base.Initialize();
 
-        _shaderTargetValid = _prototypeManager.Index(ShaderTargetValid).InstanceUnique();
-        _shaderTargetInvalid = _prototypeManager.Index(ShaderTargetInvalid).InstanceUnique();
+        _shaderTargetValid = ProtoMan.Index(ShaderTargetValid).InstanceUnique();
+        _shaderTargetInvalid = ProtoMan.Index(ShaderTargetInvalid).InstanceUnique();
     }
 
     public void Disable()
@@ -155,9 +156,9 @@ public sealed class TargetOutlineSystem : EntitySystem
             if (!valid)
             {
                 // was this previously valid?
-                if (_highlightedSprites.Remove(sprite) && (sprite.PostShader == _shaderTargetValid || sprite.PostShader == _shaderTargetInvalid))
+                if (_highlightedSprites.Remove(sprite))
                 {
-                    sprite.PostShader = null;
+                    _sprite.RemovePostShader(sprite, ContentPostShaderIds.TargetOutline);
                     sprite.RenderOrder = 0;
                 }
 
@@ -174,13 +175,11 @@ public sealed class TargetOutlineSystem : EntitySystem
                 valid = (origin - target).LengthSquared() <= Range;
             }
 
-            if (sprite.PostShader != null &&
-                sprite.PostShader != _shaderTargetValid &&
-                sprite.PostShader != _shaderTargetInvalid)
-                return;
-
             // highlight depending on whether its in or out of range
-            sprite.PostShader = valid ? _shaderTargetValid : _shaderTargetInvalid;
+            _sprite.SetPostShader(sprite, new SpriteComponent.PostShaderArgs(ContentPostShaderIds.TargetOutline, valid ? _shaderTargetValid! : _shaderTargetInvalid!)
+            {
+                After = ContentPostShaderIds.AfterBaseEffects,
+            });
             sprite.RenderOrder = EntityManager.CurrentTick.Value;
             _highlightedSprites.Add(sprite);
         }
@@ -190,10 +189,7 @@ public sealed class TargetOutlineSystem : EntitySystem
     {
         foreach (var sprite in _highlightedSprites)
         {
-            if (sprite.PostShader != _shaderTargetValid && sprite.PostShader != _shaderTargetInvalid)
-                continue;
-
-            sprite.PostShader = null;
+            _sprite.RemovePostShader(sprite, ContentPostShaderIds.TargetOutline);
             sprite.RenderOrder = 0;
         }
 
