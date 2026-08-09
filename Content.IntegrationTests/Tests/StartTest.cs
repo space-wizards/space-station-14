@@ -12,7 +12,6 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task TestClientStart()
         {
-            return;
             var pair = Pair;
             var client = pair.Client;
             Assert.That(client.IsAlive);
