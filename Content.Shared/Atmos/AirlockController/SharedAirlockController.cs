@@ -148,6 +148,17 @@ public static class AirlockControllerLocale
         AirlockStallReason.NotOpening => "airlock-controller-stall-not-opening",
         _ => "airlock-controller-stall-not-progressing",
     };
+
+    public static string CycleKey(AirlockSide side) => side == AirlockSide.B
+        ? "airlock-controller-ui-cycle-b"
+        : "airlock-controller-ui-cycle-a";
+
+    /// <summary>
+    ///     A cancel already asked for becomes the emergency release.
+    /// </summary>
+    public static string CancelKey(bool cancelRequested) => cancelRequested
+        ? "airlock-controller-ui-cancel-emergency"
+        : "airlock-controller-ui-cancel";
 }
 
 /// <summary>

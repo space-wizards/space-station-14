@@ -3,6 +3,7 @@ using Content.Server.Power.EntitySystems;
 using Content.Shared.Atmos.AirlockController;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Verbs;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.AirlockController.Systems;
@@ -89,6 +90,37 @@ public sealed partial class AirlockCyclerSystem : EntitySystem
             _controller.TryRequestCycleFrom((controller, comp), ent.Owner, args.Actor);
 
         UpdateUi(ent);
+    }
+
+    /// <summary>
+    ///     Alt use calls the airlock without going through the window.
+    /// </summary>
+    [SubscribeLocalEvent]
+    private void OnGetAltVerbs(Entity<AirlockCyclerComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract || !this.IsPowered(ent, EntityManager))
+            return;
+
+        if (ent.Comp.Controller is not { } controller || !_controllerQuery.TryComp(controller, out var comp))
+            return;
+
+        // Same conditions that grey out the panel's button
+        var status = ent.Comp.Status;
+
+        if (status.Maintenance || status.State != AirlockCycleState.Idle || status.Side == ent.Comp.Side)
+            return;
+
+        var user = args.User;
+
+        args.Verbs.Add(new AlternativeVerb
+        {
+            Text = Loc.GetString(AirlockControllerLocale.CycleKey(ent.Comp.Side)),
+            Act = () =>
+            {
+                _controller.TryRequestCycleFrom((controller, comp), ent.Owner, user);
+                UpdateUi(ent);
+            },
+        });
     }
 
     [SubscribeLocalEvent]

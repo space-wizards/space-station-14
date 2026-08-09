@@ -35,8 +35,6 @@ public sealed partial class AirlockCyclerWindow : FancyWindow
                                 || status.Maintenance
                                 || status.Side == state.Side;
 
-        CCycleButton.Text = Loc.GetString(state.Side == AirlockSide.A
-            ? "airlock-controller-ui-cycle-a"
-            : "airlock-controller-ui-cycle-b");
+        CCycleButton.Text = Loc.GetString(AirlockControllerLocale.CycleKey(state.Side));
     }
 }

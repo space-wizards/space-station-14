@@ -8,6 +8,7 @@ using Content.Shared.Atmos.AirlockController;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.Doors;
 using Content.Shared.Interaction;
+using Content.Shared.Verbs;
 
 namespace Content.Server.Atmos.AirlockController.Systems;
 
@@ -144,6 +145,43 @@ public sealed partial class AirlockControllerSystem
         UserInterfaceSystem.OpenUi(ent.Owner, AirlockControllerUiKey.Key, args.User);
         UpdateUi(ent);
         args.Handled = true;
+    }
+
+    /// <summary>
+    ///     Alt use starts a cycle when idle, otherwise cancels.
+    /// </summary>
+    [SubscribeLocalEvent]
+    private void OnGetAltVerbs(Entity<AirlockControllerComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
+    {
+        var comp = ent.Comp;
+
+        if (!args.CanAccess || !args.CanInteract || comp.MaintenanceMode || !this.IsPowered(ent, EntityManager))
+            return;
+
+        var user = args.User;
+
+        if (comp.State == AirlockCycleState.Idle)
+        {
+            var side = comp.CurrentSide == AirlockSide.A ? AirlockSide.B : AirlockSide.A;
+
+            args.Verbs.Add(new AlternativeVerb
+            {
+                Text = Loc.GetString(AirlockControllerLocale.CycleKey(side)),
+                Act = () => TryRequestCycle(ent, side, user),
+            });
+
+            return;
+        }
+
+        args.Verbs.Add(new AlternativeVerb
+        {
+            Text = Loc.GetString(AirlockControllerLocale.CancelKey(comp.CancelRequested)),
+            Act = () =>
+            {
+                RequestCancel(ent);
+                UpdateUi(ent);
+            },
+        });
     }
 
     #region Status window
