@@ -1,6 +1,6 @@
+using Content.Shared.FixedPoint;
 using Robust.Shared.Serialization;
 using Robust.Shared.GameStates;
-using Content.Shared.FixedPoint;
 
 namespace Content.Shared.Radio.Components;
 

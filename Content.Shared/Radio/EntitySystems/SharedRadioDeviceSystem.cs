@@ -101,10 +101,12 @@ public abstract partial class SharedRadioDeviceSystem : EntitySystem
     /// <param name="user">The entity toggling the microphone, if any.</param>
     /// <param name="enabled">Whether the microphone should be enabled.</param>
     /// <param name="quiet">Whether to suppress the user-facing popup.</param>
-    public void SetMicrophoneEnabled(Entity<RadioMicrophoneComponent?> ent,
+    public void SetMicrophoneEnabled(
+        Entity<RadioMicrophoneComponent?> ent,
         EntityUid? user,
         bool enabled,
-        bool quiet = false)
+        bool quiet = false
+    )
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return;
@@ -141,9 +143,11 @@ public abstract partial class SharedRadioDeviceSystem : EntitySystem
     /// <param name="ent">The entity with the microphone.</param>
     /// <param name="user">The entity toggling the microphone.</param>
     /// <param name="quiet">Whether to suppress the user-facing popup.</param>
-    public void ToggleRadioMicrophone(Entity<RadioMicrophoneComponent?> ent,
+    public void ToggleRadioMicrophone(
+        Entity<RadioMicrophoneComponent?> ent,
         EntityUid user,
-        bool quiet = false)
+        bool quiet = false
+    )
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return;
@@ -157,9 +161,11 @@ public abstract partial class SharedRadioDeviceSystem : EntitySystem
     /// <param name="ent">The entity with the speaker.</param>
     /// <param name="user">The entity toggling the speaker.</param>
     /// <param name="quiet">Whether to suppress the user-facing popup.</param>
-    public void ToggleRadioSpeaker(Entity<RadioSpeakerComponent?> ent,
+    public void ToggleRadioSpeaker(
+        Entity<RadioSpeakerComponent?> ent,
         EntityUid user,
-        bool quiet = false)
+        bool quiet = false
+    )
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return;
@@ -174,10 +180,12 @@ public abstract partial class SharedRadioDeviceSystem : EntitySystem
     /// <param name="user">The entity toggling the speaker, if any.</param>
     /// <param name="enabled">Whether the speaker should be enabled.</param>
     /// <param name="quiet">Whether to suppress the user-facing popup.</param>
-    public void SetSpeakerEnabled(Entity<RadioSpeakerComponent?> ent,
+    public void SetSpeakerEnabled(
+        Entity<RadioSpeakerComponent?> ent,
         EntityUid? user,
         bool enabled,
-        bool quiet = false)
+        bool quiet = false
+    )
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return;
@@ -264,8 +272,10 @@ public abstract partial class SharedRadioDeviceSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnIntercomEncryptionChannelsChanged(Entity<IntercomComponent> ent,
-        ref EncryptionChannelsChangedEvent args)
+    private void OnIntercomEncryptionChannelsChanged(
+        Entity<IntercomComponent> ent,
+        ref EncryptionChannelsChangedEvent args
+    )
     {
         ent.Comp.SupportedChannels =
             args.Component.Channels.Select(p => new ProtoId<RadioChannelPrototype>(p)).ToList();
@@ -339,7 +349,7 @@ public abstract partial class SharedRadioDeviceSystem : EntitySystem
             }
             else
             {
-                speaker.Channels = new() { channel.Value };
+                speaker.Channels = [channel.Value];
                 Dirty(ent, speaker);
             }
         }

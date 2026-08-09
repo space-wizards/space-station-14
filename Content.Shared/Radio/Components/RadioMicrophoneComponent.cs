@@ -6,10 +6,9 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Radio.Components;
 
 /// <summary>
-/// Listens for local chat messages and relays them to some radio frequency
+/// Listens for local chat messages and relays them to some radio frequency.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
-[AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SharedRadioDeviceSystem))]
 public sealed partial class RadioMicrophoneComponent : Component
 {
@@ -38,15 +37,13 @@ public sealed partial class RadioMicrophoneComponent : Component
     public bool PowerRequired;
 
     /// <summary>
-    /// Whether or not interacting with this entity
-    /// toggles it on or off.
+    /// Whether interacting with this entity toggles it on/off, or not.
     /// </summary>
     [DataField]
     public bool ToggleOnInteract = true;
 
     /// <summary>
-    /// Whether or not the speaker must have an
-    /// unobstructed path to the radio to speak
+    /// Whether the speaker must have an unobstructed path to the radio to speak, or now.
     /// </summary>
     [DataField]
     public bool UnobstructedRequired;

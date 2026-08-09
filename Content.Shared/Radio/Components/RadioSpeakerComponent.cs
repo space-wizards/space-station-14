@@ -13,8 +13,7 @@ namespace Content.Shared.Radio.Components;
 public sealed partial class RadioSpeakerComponent : Component
 {
     /// <summary>
-    /// Whether or not interacting with this entity
-    /// toggles it on or off.
+    /// Whether interacting with this entity toggles it on/off, or not.
     /// </summary>
     [DataField]
     public bool ToggleOnInteract = true;
