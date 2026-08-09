@@ -12,8 +12,11 @@ namespace Content.Shared.Damage.Systems;
 
 public sealed partial class DamageableSystem
 {
+    private bool _initializing = true;
+
     public override void Initialize()
     {
+        _initializing = true;
         RebuildContainerCache();
 
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
@@ -32,8 +35,12 @@ public sealed partial class DamageableSystem
             value =>
             {
                 UniversalAllDamageModifier = value;
-                _chemistryGuideData.ReloadAllReagentPrototypes();
-                _explosion.ReloadMap();
+
+                if (!_initializing)
+                {
+                    _chemistryGuideData.ReloadAllReagentPrototypes();
+                    _explosion.ReloadMap();
+                }
             },
             true
         );
@@ -43,7 +50,9 @@ public sealed partial class DamageableSystem
             value =>
             {
                 UniversalAllHealModifier = value;
-                _chemistryGuideData.ReloadAllReagentPrototypes();
+
+                if (!_initializing)
+                    _chemistryGuideData.ReloadAllReagentPrototypes();
             },
             true
         );
@@ -77,7 +86,9 @@ public sealed partial class DamageableSystem
             value =>
             {
                 UniversalReagentDamageModifier = value;
-                _chemistryGuideData.ReloadAllReagentPrototypes();
+
+                if (!_initializing)
+                    _chemistryGuideData.ReloadAllReagentPrototypes();
             },
             true
         );
@@ -87,7 +98,9 @@ public sealed partial class DamageableSystem
             value =>
             {
                 UniversalReagentHealModifier = value;
-                _chemistryGuideData.ReloadAllReagentPrototypes();
+
+                if (!_initializing)
+                    _chemistryGuideData.ReloadAllReagentPrototypes();
             },
             true
         );
@@ -119,6 +132,10 @@ public sealed partial class DamageableSystem
             value => UniversalMobDamageModifier = value,
             true
         );
+
+        _initializing = false;
+        _chemistryGuideData.ReloadAllReagentPrototypes();
+        _explosion.ReloadMap();
     }
 
     private void OnPrototypesReloaded(PrototypesReloadedEventArgs ev)
