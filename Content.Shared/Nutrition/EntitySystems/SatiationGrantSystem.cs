@@ -14,7 +14,7 @@ public sealed partial class SatiationGrantSystem : EntitySystem
     {
         foreach (var satiation in ent.Comp.Satiation)
         {
-            _satiation.TryAddSatiation(ent.Owner, satiation.Key, satiation.Value);
+            _satiation.AddSatiation(ent.Owner, satiation.Key, satiation.Value);
         }
     }
 
@@ -26,7 +26,7 @@ public sealed partial class SatiationGrantSystem : EntitySystem
 
         foreach (var satiation in ent.Comp.Satiation)
         {
-            _satiation.TryRemoveSatiationType(ent.Owner, satiation.Key);
+            _satiation.RemoveSatiationType(ent.Owner, satiation.Key);
         }
     }
 }

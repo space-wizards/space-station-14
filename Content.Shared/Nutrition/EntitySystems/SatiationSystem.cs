@@ -1,7 +1,6 @@
 using Content.Shared.Alert;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.Prototypes;
-using Content.Shared.Random.Helpers;
 using Content.Shared.Rejuvenate;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -60,7 +59,7 @@ public abstract partial class SatiationSystem : EntitySystem
     {
         foreach (var (type, satiation) in entity.Comp.Satiations)
         {
-            TryAddSatiation(entity.AsNullable(), type, satiation);
+            AddSatiation(entity.AsNullable(), type, satiation);
         }
     }
 
