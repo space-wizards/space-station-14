@@ -17,7 +17,7 @@ public abstract partial class SharedHealthAnalyzerSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
-    [Dependency] private SharedBloodstreamSystem _bloodstream = default!;
+    [Dependency] private BloodstreamSystem _bloodstream = default!;
     [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainerSystem = default!;
