@@ -173,7 +173,7 @@
         - id: ClothingMaskClown
         - id: BikeHorn
         - id: ClownPDA
-        - id: ClothingHeadsetTheatre
+        - id: ClothingHeadsetService
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle

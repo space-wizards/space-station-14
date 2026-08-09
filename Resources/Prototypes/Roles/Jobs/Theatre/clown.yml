@@ -34,7 +34,7 @@
     pocket1: BikeHorn
     pocket2: ClownRecorder
     id: ClownPDA
-    ears: ClothingHeadsetTheatre
+    ears: ClothingHeadsetService
   inhand:
   - FoolboxFilled
   storage:

@@ -20,7 +20,7 @@
     eyes: ClothingEyesGlassesSunglasses
     shoes: ClothingShoesBootsLaceup
     id: MusicianPDA
-    ears: ClothingHeadsetTheatre
+    ears: ClothingHeadsetService
   #storage:
     #back:
     #- Stuff

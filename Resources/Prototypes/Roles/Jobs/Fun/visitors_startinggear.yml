@@ -1074,7 +1074,7 @@
     shoes: ClothingShoesClown
     id: VisitorPDA
     back: ClothingBackpackClown
-    ears: ClothingHeadsetTheatre
+    ears: ClothingHeadsetService
     mask: ClothingMaskClown
     pocket1: BikeHorn
     pocket2: ClownRecorder
@@ -1249,7 +1249,7 @@
     id: VisitorPDA
     back: ClothingBackpackSatchelLeather
     eyes: ClothingEyesGlassesCheapSunglasses
-    ears: ClothingHeadsetTheatre
+    ears: ClothingHeadsetService
     pocket1: DrinkGrapeCan
     pocket2: FoodSnackBoritos
   inhand:
@@ -1263,7 +1263,7 @@
     id: VisitorPDA
     back: ClothingBackpackSatchelLeather
     eyes: ClothingEyesGlassesCheapSunglasses
-    ears: ClothingHeadsetTheatre
+    ears: ClothingHeadsetService
     pocket1: FoodSnackCheesie
     pocket2: DrinkShamblersJuiceCan
   inhand:
@@ -1277,7 +1277,7 @@
     id: VisitorPDA
     back: ClothingBackpackSatchelLeather
     eyes: ClothingEyesGlassesCheapSunglasses
-    ears: ClothingHeadsetTheatre
+    ears: ClothingHeadsetService
     pocket1: FoodSnackPistachios
     pocket2: DrinkNukieCan
   inhand:
@@ -1291,7 +1291,7 @@
     id: VisitorPDA
     back: ClothingBackpackSatchelLeather
     eyes: ClothingEyesGlassesCheapSunglasses
-    ears: ClothingHeadsetTheatre
+    ears: ClothingHeadsetService
     pocket1: DrinkSolDryCan
     pocket2: FoodSnackBoritos
   inhand:
@@ -1305,7 +1305,7 @@
     id: VisitorPDA
     back: ClothingBackpackSatchelLeather
     eyes: ClothingEyesGlassesCheapSunglasses
-    ears: ClothingHeadsetTheatre
+    ears: ClothingHeadsetService
     pocket1: DrinkEnergyDrinkCan
     pocket2: FoodSnackRaisins
   inhand:
@@ -1319,7 +1319,7 @@
     id: VisitorPDA
     back: ClothingBackpackSatchelLeather
     eyes: ClothingEyesGlassesCheapSunglasses
-    ears: ClothingHeadsetTheatre
+    ears: ClothingHeadsetService
     pocket1: FoodSnackSus
     pocket2: DrinkFourteenLokoCan
   inhand:
@@ -1333,7 +1333,7 @@
     id: VisitorPDA
     back: ClothingBackpackSatchelLeather
     eyes: ClothingEyesGlassesCheapSunglasses
-    ears: ClothingHeadsetTheatre
+    ears: ClothingHeadsetService
     pocket1: FoodSnackCnDs
     pocket2: DrinkDrGibbCan
   inhand:
@@ -1347,7 +1347,7 @@
     id: VisitorPDA
     back: ClothingBackpackSatchelLeather
     eyes: ClothingEyesGlassesCheapSunglasses
-    ears: ClothingHeadsetTheatre
+    ears: ClothingHeadsetService
     pocket1: FoodSnackChips
     pocket2: DrinkRootBeerCan
   inhand:
@@ -1361,7 +1361,7 @@
     id: VisitorPDA
     back: ClothingBackpackDuffel
     eyes: ClothingEyesGlassesCheapSunglasses
-    ears: ClothingHeadsetTheatre
+    ears: ClothingHeadsetService
     pocket1: BluntRainbow
     pocket2: DrinkGrapeCan
   inhand:
@@ -1375,7 +1375,7 @@
     id: VisitorPDA
     back: ClothingBackpackSatchel
     eyes: ClothingEyesGlassesCheapSunglasses
-    ears: ClothingHeadsetTheatre
+    ears: ClothingHeadsetService
     pocket1: BluntRainbow
     pocket2: DrinkNukieCan
   inhand:
@@ -1389,7 +1389,7 @@
     id: VisitorPDA
     back: ClothingBackpack
     eyes: ClothingEyesGlassesCheapSunglasses
-    ears: ClothingHeadsetTheatre
+    ears: ClothingHeadsetService
     pocket1: BluntRainbow
     pocket2: FoodSnackCheesie
   inhand:
@@ -1403,7 +1403,7 @@
     id: VisitorPDA
     back: ClothingBackpackDuffel
     eyes: ClothingEyesGlassesCheapSunglasses
-    ears: ClothingHeadsetTheatre
+    ears: ClothingHeadsetService
     pocket1: BluntRainbow
     pocket2: FoodSnackPistachios
   inhand:
@@ -1417,7 +1417,7 @@
     id: VisitorPDA
     back: ClothingBackpackDuffel
     eyes: ClothingEyesGlassesCheapSunglasses
-    ears: ClothingHeadsetTheatre
+    ears: ClothingHeadsetService
     pocket1: BluntRainbow
     pocket2: DrinkEnergyDrinkCan
   inhand:
@@ -1430,7 +1430,7 @@
     shoes: ClothingShoesBootsLaceup
     id: VisitorPDA
     eyes: ClothingEyesGlassesCheapSunglasses
-    ears: ClothingHeadsetTheatre
+    ears: ClothingHeadsetService
     pocket1: BluntRainbow
     pocket2: FoodSnackSus
   inhand:
@@ -1445,7 +1445,7 @@
     id: VisitorPDA
     back: ClothingBackpackSatchel
     eyes: ClothingEyesGlassesCheapSunglasses
-    ears: ClothingHeadsetTheatre
+    ears: ClothingHeadsetService
     pocket1: BluntRainbow
     pocket2: FoodSnackSus
   inhand:
@@ -1460,7 +1460,7 @@
     id: VisitorPDA
     back: ClothingBackpackSatchel
     eyes: ClothingEyesGlassesCheapSunglasses
-    ears: ClothingHeadsetTheatre
+    ears: ClothingHeadsetService
     outerClothing: ClothingOuterPoncho
     pocket1: BluntRainbow
     pocket2: FoodSnackSus
@@ -1478,7 +1478,7 @@
     id: VisitorPDA
     back: ClothingBackpackMime
     eyes: ClothingEyesGlassesCheapSunglasses
-    ears: ClothingHeadsetTheatre
+    ears: ClothingHeadsetService
     pocket1: CrayonMime
     pocket2: RubberStampMime
 
@@ -1493,7 +1493,7 @@
     id: VisitorPDA
     back: ClothingBackpackMime
     eyes: ClothingEyesGlassesCheapSunglasses
-    ears: ClothingHeadsetTheatre
+    ears: ClothingHeadsetService
     outerClothing: ClothingOuterWinterMime
     pocket1: CrayonMime
     pocket2: RubberStampMime
