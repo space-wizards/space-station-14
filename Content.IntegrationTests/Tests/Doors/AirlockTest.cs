@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Numerics;
 using Content.IntegrationTests.Fixtures;
 using Content.Server.Doors.Systems;
@@ -51,6 +52,134 @@ namespace Content.IntegrationTests.Tests.Doors
             bounds: ""-0.49,-0.49,0.49,0.49""
         mask:
         - Impassable
+
+- type: entity
+  name: DoorCollisionTestAirlock
+  id: DoorCollisionTestAirlock
+  components:
+  - type: Door
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+            bounds: ""-0.49,-0.49,0.49,0.49""
+        mask:
+        - FullTileMask
+        layer:
+        - AirlockLayer
+
+- type: entity
+  name: DoorCollisionTestWindoor
+  id: DoorCollisionTestWindoor
+  components:
+  - type: Door
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+            bounds: ""-0.49,-0.49,0.49,-0.36""
+        mask:
+        - TabletopMachineMask
+        layer:
+        - HighImpassable
+        - BulletImpassable
+        - InteractImpassable
+
+- type: entity
+  name: DoorCollisionTestTable
+  id: DoorCollisionTestTable
+  components:
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+            bounds: ""-0.45,-0.45,0.45,0.45""
+        mask:
+        - TableMask
+        layer:
+        - TableLayer
+
+- type: entity
+  name: DoorCollisionTestConveyor
+  id: DoorCollisionTestConveyor
+  components:
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      conveyor:
+        shape:
+          !type:PhysShapeAabb
+            bounds: ""-0.50,-0.50,0.50,0.50""
+        layer:
+        - ConveyorMask
+        hard: false
+
+- type: entity
+  name: DoorCollisionTestWall
+  id: DoorCollisionTestWall
+  components:
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+            bounds: ""-0.5,-0.5,0.5,0.5""
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+
+- type: entity
+  name: DoorCollisionTestMob
+  id: DoorCollisionTestMob
+  components:
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+            radius: 0.35
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+
+- type: entity
+  name: DoorCollisionTestMouse
+  id: DoorCollisionTestMouse
+  components:
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+            radius: 0.2
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
 ";
         [Test]
         public async Task OpenCloseDestroyTest()
@@ -175,6 +304,160 @@ namespace Content.IntegrationTests.Tests.Doors
             {
                 Assert.That(Math.Abs(xformSystem.GetWorldPosition(airlockPhysicsDummy).X - 1), Is.GreaterThan(0.01f));
             });
+        }
+
+        [Test]
+        public async Task WindoorCanCloseOverTable()
+        {
+            var (_, doors, door, _) = await SpawnDoorCollisionScenario(
+                "DoorCollisionTestWindoor",
+                ("DoorCollisionTestTable", Vector2.Zero));
+
+            await Pair.Server.WaitAssertion(() =>
+            {
+                Assert.That(doors.CanClose(door), Is.True);
+            });
+        }
+
+        [Test]
+        public async Task AirlockCanCloseOverConveyor()
+        {
+            var (_, doors, door, _) = await SpawnDoorCollisionScenario(
+                "DoorCollisionTestAirlock",
+                ("DoorCollisionTestConveyor", Vector2.Zero));
+
+            await Pair.Server.WaitAssertion(() =>
+            {
+                Assert.That(doors.CanClose(door), Is.True);
+            });
+        }
+
+        [Test]
+        public async Task NeighboringFullTileWallsDoNotBlockDoor()
+        {
+            var (_, doors, door, _) = await SpawnDoorCollisionScenario(
+                "DoorCollisionTestAirlock",
+                ("DoorCollisionTestWall", new Vector2(1, 0)),
+                ("DoorCollisionTestWall", new Vector2(-1, 0)),
+                ("DoorCollisionTestWall", new Vector2(0, 1)),
+                ("DoorCollisionTestWall", new Vector2(0, -1)));
+
+            await Pair.Server.WaitAssertion(() =>
+            {
+                Assert.That(doors.CanClose(door), Is.True);
+            });
+        }
+
+        [Test]
+        public async Task GetCollidingReturnsBlockingMobButNotMouse()
+        {
+            var (_, doors, door, obstacles) = await SpawnDoorCollisionScenario(
+                "DoorCollisionTestAirlock",
+                ("DoorCollisionTestMob", Vector2.Zero),
+                ("DoorCollisionTestMouse", Vector2.Zero));
+
+            var mob = obstacles[0];
+            var mouse = obstacles[1];
+
+            await Pair.Server.WaitAssertion(() =>
+            {
+                var colliding = new HashSet<EntityUid>();
+                doors.GetColliding(door, colliding);
+
+                Assert.Multiple(() =>
+                {
+                    Assert.That(colliding, Does.Contain(mob));
+                    Assert.That(colliding, Does.Not.Contain(mouse));
+                    Assert.That(doors.CanClose(door), Is.False);
+                });
+            });
+        }
+
+        [Test]
+        public async Task BlockedPartialCloseReversesThroughOpeningBeforeRetrying()
+        {
+            var (entityManager, doors, door, _) = await SpawnDoorCollisionScenario("DoorCollisionTestAirlock");
+            var server = Pair.Server;
+            EntityUid mob = default;
+            DoorComponent doorComponent = default!;
+            bool partialCloseResult = true;
+
+            await server.WaitPost(() =>
+            {
+                Assert.That(entityManager.TryGetComponent(door, out doorComponent), Is.True);
+                Assert.That(doors.TryClose(door), Is.True);
+                Assert.That(doorComponent.State, Is.EqualTo(DoorState.Closing));
+
+                var coordinates = entityManager.GetComponent<TransformComponent>(door).Coordinates;
+                mob = entityManager.SpawnEntity("DoorCollisionTestMob", coordinates);
+            });
+
+            await server.WaitRunTicks(1);
+            await server.WaitIdleAsync();
+
+            await server.WaitPost(() =>
+            {
+                partialCloseResult = doors.OnPartialClose(door);
+            });
+
+            await server.WaitAssertion(() =>
+            {
+                Assert.Multiple(() =>
+                {
+                    Assert.That(partialCloseResult, Is.False);
+                    Assert.That(doorComponent.State, Is.EqualTo(DoorState.Opening));
+                    Assert.That(doorComponent.Partial, Is.True);
+                    Assert.That(doorComponent.NextStateChange, Is.Not.Null);
+                });
+            });
+
+            await PoolManager.WaitUntil(server, () => doorComponent.State == DoorState.Open);
+
+            await server.WaitAssertion(() =>
+            {
+                Assert.Multiple(() =>
+                {
+                    Assert.That(doorComponent.State, Is.EqualTo(DoorState.Open));
+                    Assert.That(doorComponent.Partial, Is.False);
+                    Assert.That(doorComponent.NextStateChange, Is.Not.Null);
+                    Assert.That(entityManager.Deleted(mob), Is.False);
+                });
+            });
+        }
+
+        private async Task<(IEntityManager EntityManager, DoorSystem Doors, EntityUid Door, List<EntityUid> Obstacles)> SpawnDoorCollisionScenario(
+            string doorPrototype,
+            params (string Prototype, Vector2 Position)[] obstacles)
+        {
+            var pair = Pair;
+            var server = pair.Server;
+            var map = await pair.CreateTestMap();
+
+            var entityManager = server.ResolveDependency<IEntityManager>();
+            var doors = entityManager.System<DoorSystem>();
+            var mapSystem = entityManager.System<SharedMapSystem>();
+            var obstacleEntities = new List<EntityUid>();
+            EntityUid door = default;
+
+            await server.WaitPost(() =>
+            {
+                mapSystem.SetTile(map.Grid, new Vector2i(1, 0), map.Tile.Tile);
+                door = entityManager.SpawnEntity(doorPrototype, new EntityCoordinates(map.Grid.Owner, Vector2.Zero));
+
+                foreach (var obstacle in obstacles)
+                {
+                    obstacleEntities.Add(entityManager.SpawnEntity(
+                        obstacle.Prototype,
+                        new EntityCoordinates(map.Grid.Owner, obstacle.Position)));
+                }
+
+                doors.SetState(door, DoorState.Open);
+            });
+
+            await server.WaitRunTicks(1);
+            await server.WaitIdleAsync();
+
+            return (entityManager, doors, door, obstacleEntities);
         }
     }
 }
