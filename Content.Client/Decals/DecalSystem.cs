@@ -22,23 +22,18 @@ namespace Content.Client.Decals
 
         private DecalOverlay? _overlay;
 
-        /*
-         * Client predicts entities from top of the chunk index down while server goes bottom-up.
-         * This way we can minimise chances of overlap and be non-destructive to server states.
-         */
-        private ushort _nextPredictedDecal = ushort.MaxValue;
-        private int _predictedDecalCount;
-
-        private readonly List<ushort> _tempIds = new();
-
         public override void Initialize()
         {
             base.Initialize();
 
             _overlay = new DecalOverlay(_sprites, EntityManager, ProtoMan);
             _overlayManager.AddOverlay(_overlay);
+        }
 
-            SubscribeLocalEvent<DecalChunkComponent, AfterAutoHandleStateEvent>(OnDecalChunkHandleState);
+        [SubscribeLocalEvent]
+        private void OnDecalAfterState(EntityUid uid, DecalChunkComponent component, ref AfterAutoHandleStateEvent args)
+        {
+            component.NextPredictedDecal = ushort.MaxValue;
         }
 
         protected override void OnDecalPlacementRequest(RequestDecalPlacementEvent ev, EntitySessionEventArgs eventArgs)
@@ -47,11 +42,13 @@ namespace Content.Client.Decals
             if (!coordinates.IsValid(EntityManager))
                 return;
 
-            AddPredictedDecal(ev.Decal, coordinates);
+            TryAddDecal(ev.Decal, coordinates, out _);
         }
 
-        private bool AddPredictedDecal(Decal decal, EntityCoordinates coordinates)
+        public override bool TryAddDecal(Decal decal, EntityCoordinates coordinates, out DecalIndex decalId)
         {
+            decalId = default;
+
             if (!ProtoMan.HasIndex<DecalPrototype>(decal.Id))
                 return false;
 
@@ -62,13 +59,14 @@ namespace Content.Client.Decals
             if (_turf.IsSpace(_mapSystem.GetTileRef(gridUid.Value, grid, coordinates)))
                 return false;
 
-            if (!TryAllocatePredictedDecalId(gridUid.Value, out var decalId))
-                return false;
-
             var chunk = ChunkEntities.GetOrCreateChunk(gridUid.Value, ChunkEntitySystem.GetChunkIndices(decal.Coordinates));
             var decals = EnsureComp<DecalChunkComponent>(chunk.Owner);
-            decals.Decals[decalId] = decal;
-            _predictedDecalCount++;
+
+            if (!TryAllocatePredictedDecalId(decals, out var predictedDecalId))
+                return false;
+
+            decals.Decals[predictedDecalId] = decal;
+            decalId = new DecalIndex(ChunkEntitySystem.GetChunkIndices(decal.Coordinates), predictedDecalId);
             return true;
         }
 
@@ -88,45 +86,17 @@ namespace Content.Client.Decals
             }
         }
 
-        private void OnDecalChunkHandleState(Entity<DecalChunkComponent> ent, ref AfterAutoHandleStateEvent args)
+        private bool TryAllocatePredictedDecalId(DecalChunkComponent decals, out ushort decalId)
         {
-            var removed = 0;
-            _tempIds.Clear();
-            _tempIds.AddRange(ent.Comp.Decals.Keys);
-
-            foreach (var id in _tempIds)
-            {
-                if (id < DecalChunkComponent.MinPredictedDecalId)
-                    continue;
-
-                ent.Comp.Decals.Remove(id);
-                removed++;
-            }
-
-            if (removed == 0)
-                return;
-
-            _predictedDecalCount = Math.Max(0, _predictedDecalCount - removed);
-            if (_predictedDecalCount == 0)
-                _nextPredictedDecal = ushort.MaxValue;
-        }
-
-        private bool TryAllocatePredictedDecalId(EntityUid gridUid, out ushort decalId)
-        {
-            if (_predictedDecalCount >= DecalChunkComponent.PredictedDecalCount)
-            {
-                decalId = default;
-                return false;
-            }
-
+            // Iterate top-down to find next free index.
             for (var i = 0; i < DecalChunkComponent.PredictedDecalCount; i++)
             {
-                var next = _nextPredictedDecal;
-                _nextPredictedDecal = next == DecalChunkComponent.MinPredictedDecalId
+                var next = decals.NextPredictedDecal;
+                decals.NextPredictedDecal = next == DecalChunkComponent.MinPredictedDecalId
                     ? ushort.MaxValue
                     : (ushort) (next - 1);
 
-                if (PredictedDecalIdExists(gridUid, next))
+                if (decals.Decals.ContainsKey(next))
                     continue;
 
                 decalId = next;
@@ -137,20 +107,6 @@ namespace Content.Client.Decals
             return false;
         }
 
-        private bool PredictedDecalIdExists(EntityUid gridUid, ushort decalId)
-        {
-            foreach (var chunkEnt in ChunkEntities.GetChunks(gridUid))
-            {
-                if (!DecalChunkQuery.TryComp(chunkEnt.Owner, out var decals))
-                    continue;
-
-                if (decals.Decals.ContainsKey(decalId))
-                    return true;
-            }
-
-            return false;
-        }
-
         public override bool RemoveDecal(EntityUid gridId, DecalIndex decal)
         {
             if (!ChunkEntities.TryGetChunk(gridId, decal.Chunk, out var chunkEnt) ||
@@ -158,13 +114,6 @@ namespace Content.Client.Decals
                 !decals.Decals.Remove(decal.Id))
             {
                 return false;
-            }
-
-            if (decal.Id >= DecalChunkComponent.MinPredictedDecalId)
-            {
-                _predictedDecalCount = Math.Max(0, _predictedDecalCount - 1);
-                if (_predictedDecalCount == 0)
-                    _nextPredictedDecal = ushort.MaxValue;
             }
 
             return true;
