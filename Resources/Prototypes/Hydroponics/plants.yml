@@ -2418,7 +2418,7 @@
     nutrientConsumption: 0.5
   - type: PlantChemicals
     chemicals:
-      Aluminum:
+      Aluminium:
         min: 1
         max: 5
         potencyDivisor: 10

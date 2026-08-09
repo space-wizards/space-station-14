@@ -764,6 +764,6 @@
   id: SunionSeeds
   components:
   - type: Seed
-    seedId: SunionPlants
+    plantId: SunionPlants
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/sunion.rsi
