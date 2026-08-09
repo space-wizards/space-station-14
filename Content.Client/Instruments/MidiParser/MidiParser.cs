@@ -46,12 +46,12 @@ public static partial class MidiParser
     {
         var trackInfo = new MidiTrackInfo();
         var trackEnd = stream.StreamPosition + length;
-        long currentTick = 0;
+        var currentTick = 0;
         byte? lastStatusByte = null;
 
         while (stream.StreamPosition < trackEnd)
         {
-            long deltaTime = stream.ReadVariableLengthQuantity();
+            var deltaTime = (int)stream.ReadVariableLengthQuantity();
             currentTick += deltaTime;
 
             var firstByte = stream.ReadByte();
@@ -115,17 +115,17 @@ public static partial class MidiParser
         return trackInfo;
     }
 
-    private static double TickDeltaToMinutes(long timebase, long tickDelta, long tempoMicroseconds)
+    private static double TickDeltaToMinutes(int timebase, int tickDelta, int tempoMicroseconds)
     {
         var bpm = (double)OneMinuteInMicroseconds / tempoMicroseconds;
         var quarterNotesCount = (double)tickDelta / timebase;
         return quarterNotesCount / bpm;
     }
 
-    private static long MinutesDeltaToTicks(long timebase, double minutesDelta, long tempoMicroseconds)
+    private static int MinutesDeltaToTicks(int timebase, double minutesDelta, int tempoMicroseconds)
     {
         var bpm = (float)OneMinuteInMicroseconds / tempoMicroseconds;
-        return (long)Math.Floor(timebase * minutesDelta * bpm);
+        return (int)Math.Floor(timebase * minutesDelta * bpm);
     }
 
     // Thanks again to http://www.somascape.org/midi/tech/mfile.html
@@ -311,14 +311,14 @@ public static partial class MidiParser
         return true;
     }
 
-    public static long CalculateTickPositionFromMinutes(
+    public static int CalculateTickPositionFromMinutes(
         int timebase,
         double minutes,
-        IReadOnlyDictionary<long, int> tempoMap)
+        IReadOnlyDictionary<int, int> tempoMap)
     {
         var currentMinutes = 0.0;
         var currentTempo = DefaultTempoMicroseconds;
-        long currentTick = 0;
+        var currentTick = 0;
 
         // Return simple delta if there aren't any tempo changes.
         if (tempoMap.Count == 0)
@@ -344,12 +344,12 @@ public static partial class MidiParser
 
     public static double CalculateMinutePositionFromTicks(
         int timebase,
-        long ticks,
-        IReadOnlyDictionary<long, int> tempoMap)
+        int ticks,
+        IReadOnlyDictionary<int, int> tempoMap)
     {
         var currentMinutes = 0.0;
         var currentTempo = DefaultTempoMicroseconds;
-        long currentTick = 0;
+        var currentTick = 0;
 
         // Return simple delta if there aren't any tempo changes.
         if (tempoMap.Count == 0)
@@ -406,7 +406,7 @@ public static partial class MidiParser
 
         List<MidiTrackInfo> parsedTracks = [];
         var usedChannels = new BitArray(16, false);
-        long mostTicksOnTrack = 0;
+        int mostTicksOnTrack = 0;
 
         for (var i = 0; i < headerChunk.NumTracks; i++)
         {

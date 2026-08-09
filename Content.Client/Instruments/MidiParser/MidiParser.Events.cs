@@ -6,7 +6,7 @@ namespace Content.Client.Instruments.MidiParser;
 public static partial class MidiParser
 {
     // Parser methods called for meta-events (Status = 0xFF)
-    private static readonly Dictionary<ushort, Action<MidiStreamWrapper, int, long, MidiTrackInfo>> MidiMetaEventHandlers = new()
+    private static readonly Dictionary<ushort, Action<MidiStreamWrapper, int, int, MidiTrackInfo>> MidiMetaEventHandlers = new()
     {
         { 0x00, ReadNotImplementedEvent }, // Sequence Number
         { 0x01, ReadTextMetaEvent }, // Text
@@ -29,7 +29,7 @@ public static partial class MidiParser
     };
 
     // Parser methods called for midi-events (Status = 0x80 to 0xE0)
-    private static readonly Dictionary<ushort, Action<MidiStreamWrapper, int, long, MidiTrackInfo>> MidiEventHandlers = new()
+    private static readonly Dictionary<ushort, Action<MidiStreamWrapper, int, int, MidiTrackInfo>> MidiEventHandlers = new()
     {
         { 0x80, ReadGenericDoubleByteMidiEvent }, // Note Off
         { 0x90, ReadGenericDoubleByteMidiEvent }, // Note On
@@ -41,45 +41,45 @@ public static partial class MidiParser
     };
 
     // Meta-Event methods
-    private static void ReadTextMetaEvent(MidiStreamWrapper stream, int eventLength, long currentTick, MidiTrackInfo trackInfo)
+    private static void ReadTextMetaEvent(MidiStreamWrapper stream, int eventLength, int currentTick, MidiTrackInfo trackInfo)
     {
         trackInfo.Text = stream.ReadString(eventLength);
     }
 
-    private static void ReadCopyrightMetaEvent(MidiStreamWrapper stream, int eventLength, long currentTick, MidiTrackInfo trackInfo)
+    private static void ReadCopyrightMetaEvent(MidiStreamWrapper stream, int eventLength, int currentTick, MidiTrackInfo trackInfo)
     {
         trackInfo.Copyright = stream.ReadString(eventLength);
     }
 
-    private static void ReadTrackNameMetaEvent(MidiStreamWrapper stream, int eventLength, long currentTick, MidiTrackInfo trackInfo)
+    private static void ReadTrackNameMetaEvent(MidiStreamWrapper stream, int eventLength, int currentTick, MidiTrackInfo trackInfo)
     {
         trackInfo.TrackName = stream.ReadString(eventLength);
     }
 
-    private static void ReadInstrumentNameMetaEvent(MidiStreamWrapper stream, int eventLength, long currentTick, MidiTrackInfo trackInfo)
+    private static void ReadInstrumentNameMetaEvent(MidiStreamWrapper stream, int eventLength, int currentTick, MidiTrackInfo trackInfo)
     {
         trackInfo.InstrumentName = stream.ReadString(eventLength);
     }
 
-    private static void ReadTempoMetaEvent(MidiStreamWrapper stream, int eventLength, long currentTick, MidiTrackInfo trackInfo)
+    private static void ReadTempoMetaEvent(MidiStreamWrapper stream, int eventLength, int currentTick, MidiTrackInfo trackInfo)
     {
         var newTempo = stream.ReadUInt24();
         trackInfo.TempoMap[currentTick] = (int)newTempo;
     }
 
-    private static void ReadEndOfTrackEvent(MidiStreamWrapper stream, int eventLength, long currentTick, MidiTrackInfo trackInfo)
+    private static void ReadEndOfTrackEvent(MidiStreamWrapper stream, int eventLength, int currentTick, MidiTrackInfo trackInfo)
     {
         if (trackInfo.TempoMap.Count > 0)
             trackInfo.TempoMap[currentTick] = trackInfo.TempoMap.Last().Value;
     }
 
-    private static void ReadNotImplementedEvent(MidiStreamWrapper stream, int eventLength, long currentTick, MidiTrackInfo trackInfo)
+    private static void ReadNotImplementedEvent(MidiStreamWrapper stream, int eventLength, int currentTick, MidiTrackInfo trackInfo)
     {
         stream.Skip(eventLength);
     }
 
     // Midi-Event methods
-    private static void ReadProgramChangeEvent(MidiStreamWrapper stream, int channel, long currentTick, MidiTrackInfo trackInfo)
+    private static void ReadProgramChangeEvent(MidiStreamWrapper stream, int channel, int currentTick, MidiTrackInfo trackInfo)
     {
         trackInfo.UsedChannels[channel] = true;
 
@@ -87,13 +87,13 @@ public static partial class MidiParser
         stream.Skip(1);
     }
 
-    private static void ReadGenericSingleByteMidiEvent(MidiStreamWrapper stream, int channel, long currentTick, MidiTrackInfo trackInfo)
+    private static void ReadGenericSingleByteMidiEvent(MidiStreamWrapper stream, int channel, int currentTick, MidiTrackInfo trackInfo)
     {
         trackInfo.UsedChannels[channel] = true;
         stream.Skip(1);
     }
 
-    private static void ReadGenericDoubleByteMidiEvent(MidiStreamWrapper stream, int channel, long currentTick, MidiTrackInfo trackInfo)
+    private static void ReadGenericDoubleByteMidiEvent(MidiStreamWrapper stream, int channel, int currentTick, MidiTrackInfo trackInfo)
     {
         trackInfo.UsedChannels[channel] = true;
         stream.Skip(2);

@@ -281,12 +281,12 @@ public sealed class MidiHeaderInfo
     /// Tempo data must be stored in the first track.
     /// 2: Data stored across multiple independent tracks with their own starting points and tempos. (Rarely used)
     /// </remarks>
-    public ushort Format;
+    public int Format;
 
     /// <summary>
     /// Amount of tracks detected inside the file (including invalid ones).
     /// </summary>
-    public ushort NumTracks;
+    public int NumTracks;
 
     /// <summary>
     /// Set to true if the MIDI files uses SMPTE timing instead of the more common ticks / quarter note
@@ -313,9 +313,8 @@ public sealed class MidiTrackInfo
     /// <summary>
     /// Track length in bytes.
     /// </summary>
-    public uint Length;
+    public int Length;
 
-    // TODO: Sanitize
     /// <summary>
     /// The parsed text field of track (if used)
     /// </summary>
@@ -344,12 +343,12 @@ public sealed class MidiTrackInfo
     /// <summary>
     /// Total length of this track in ticks.
     /// </summary>
-    public long TotalTicks = 0;
+    public int TotalTicks = 0;
 
     /// <summary>
     /// Contains all detected tempos as TickPosition, Tempo(microseconds per quarter note).
     /// </summary>
-    public Dictionary<long, int> TempoMap = [];
+    public Dictionary<int, int> TempoMap = [];
 
     public override string ToString()
     {
@@ -444,5 +443,5 @@ public sealed class MidiFileInfo
     /// <summary>
     /// Song tick count measured across all tracks.
     /// </summary>
-    public long TotalTicks;
+    public int TotalTicks;
 }
