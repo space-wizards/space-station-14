@@ -1410,6 +1410,11 @@
   description: flavor-complex-paper
 
 - type: flavor
+  id: cotton
+  flavorType: Complex
+  description: flavor-complex-cotton
+
+- type: flavor
   id: compressed-meat
   flavorType: Complex
   description: flavor-complex-compressed-meat

@@ -40,7 +40,7 @@ public sealed partial class ScoopableSolutionSystem : EntitySystem
         if (scooped == 0)
             return false;
 
-        _popup.PopupClient(Loc.GetString(ent.Comp.Popup, ("scooped", ent.Owner), ("beaker", beaker)), user, user);
+        _popup.PopupEntity(Loc.GetString(ent.Comp.Popup, ("scooped", ent.Owner), ("beaker", beaker)), user, user);
 
         if (srcSolution.Volume == 0 && ent.Comp.Delete)
         {
