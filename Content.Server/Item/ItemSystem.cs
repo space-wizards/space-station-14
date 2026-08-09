@@ -2,6 +2,6 @@
 
 namespace Content.Server.Item;
 
-public sealed class ItemSystem : SharedItemSystem
+public sealed partial class ItemSystem : SharedItemSystem
 {
 }

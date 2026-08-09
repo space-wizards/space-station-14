@@ -3,7 +3,7 @@
 namespace Content.Client.RatKing;
 
 /// <inheritdoc/>
-public sealed class RatKingSystem : SharedRatKingSystem
+public sealed partial class RatKingSystem : SharedRatKingSystem
 {
 
 }

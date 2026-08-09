@@ -2,6 +2,6 @@
 
 namespace Content.Server.Drunk;
 
-public sealed class DrunkSystem : SharedDrunkSystem
+public sealed partial class DrunkSystem : SharedDrunkSystem
 {
 }

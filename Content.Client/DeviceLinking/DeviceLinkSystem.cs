@@ -2,7 +2,7 @@ using Content.Shared.DeviceLinking;
 
 namespace Content.Client.DeviceLinking;
 
-public sealed class DeviceLinkSystem : SharedDeviceLinkSystem
+public sealed partial class DeviceLinkSystem : SharedDeviceLinkSystem
 {
 
 }

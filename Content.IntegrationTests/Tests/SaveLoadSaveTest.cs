@@ -245,7 +245,7 @@ namespace Content.IntegrationTests.Tests
         /// Simple system that modifies the data saved to a yaml file by removing the timestamp.
         /// Required by some tests that validate that re-saving a map does not modify it.
         /// </summary>
-        private sealed class SaveLoadSaveTestSystem : EntitySystem
+        private sealed partial class SaveLoadSaveTestSystem : EntitySystem
         {
             public bool Enabled;
             public override void Initialize()

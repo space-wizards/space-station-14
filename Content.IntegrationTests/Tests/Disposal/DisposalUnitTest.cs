@@ -19,7 +19,7 @@ namespace Content.IntegrationTests.Tests.Disposal
     public sealed class DisposalUnitTest : GameTest
     {
         [Reflect(false)]
-        private sealed class DisposalUnitTestSystem : EntitySystem
+        private sealed partial class DisposalUnitTestSystem : EntitySystem
         {
 
         }

@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Content.Server.Database;
 using Content.Shared.CCVar;
 using Robust.Server.Upload;
@@ -18,7 +19,7 @@ public sealed partial class ContentNetworkResourceManager
     public void Initialize()
     {
         _cfgManager.OnValueChanged(CCVars.ResourceUploadingStoreEnabled, value => StoreUploaded = value, true);
-        AutoDelete(_cfgManager.GetCVar(CCVars.ResourceUploadingStoreDeletionDays));
+        Task.Run(() => AutoDelete(_cfgManager.GetCVar(CCVars.ResourceUploadingStoreDeletionDays)));
         _netRes.OnResourceUploaded += OnUploadResource;
     }
 
