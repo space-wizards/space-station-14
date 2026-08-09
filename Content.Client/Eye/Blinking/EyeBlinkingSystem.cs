@@ -260,10 +260,15 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 
         // Remove existing eyelid layers by their expected mapping
         var i = 0;
-        while (_sprite.RemoveLayer((body, comp), $"{LayerPrefix}-{i}"))
+
+        for (var j = comp.AllLayers.Count() - 1; j >= 0; j--)
         {
-            i++;
+            if (comp[j].RsiState.Name?.Contains("eyelid-") == true)
+            {
+                _sprite.RemoveLayer(body, j);
+            }
         }
+
         // Clears eyelid states from the client component, if it already exists.
         ent.Comp.Eyelids.Clear();
 
