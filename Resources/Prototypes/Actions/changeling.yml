@@ -200,6 +200,9 @@
     sprite: Interface/Actions/changeling2.rsi
     layers:
     - state: lethal_sting
+  - type: ActionRequireSatiation
+    satiation: Chemicals
+    amount: 50
   - type: EntityEffectAction
     effects:
     - !type:AddReagentToBloodstream
