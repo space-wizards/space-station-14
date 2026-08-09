@@ -1679,7 +1679,7 @@
   - type: Sprite
     layers:
     - state: xenoborg_heavy
-    - state: icon-xenoborg-laser2
+    - state: icon-xenoborg-guided-missile
   - type: ComponentBorgModule
     components:
     - type: SimpleSpriteOverlay
@@ -1691,7 +1691,7 @@
     - item: WeaponXenoborgGuidedMissileLauncher
     - item: WeaponRangeFinderXenoborg
   - type: BorgModuleIcon
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-laser2-module }
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-guided-missile-module }
 
 - type: entity
   parent: [ BaseXenoborgModuleHeavy, BaseProviderBorgModule, BaseXenoborgContraband ]
