@@ -26,7 +26,7 @@
     shoes: ClothingShoesColorWhite
     id: MimePDA
     pocket1: CrayonMime
-    ears: ClothingHeadsetService
+    ears: ClothingHeadsetTheatre
   storage:
     back:
     - RubberStampMime
