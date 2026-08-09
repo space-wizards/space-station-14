@@ -1,3 +1,4 @@
+using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.Prototypes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -11,8 +12,14 @@ using Robust.Shared.Serialization.TypeSerializers.Interfaces;
 namespace Content.Shared.Nutrition.EntitySystems;
 
 /// <summary>
-/// A need whose value decays over time. Examples include Thirst and Hunger.
+/// A need whose value changes over time. Examples include Thirst and Hunger.
 /// </summary>
+/// <remarks>
+/// While public, this type should not be used in <see cref="SatiationSystem"/> API methods. Instead, pass
+/// <see cref="SatiationComponent"/> and a <see cref="SatiationTypePrototype"/> (or its <see cref="ProtoId{T}"/>).
+/// This is to allow people unfamiliar with the internals of satiation to work with a component and a prototype,
+/// concepts which should be familiar to anyone working in Robust C#.
+/// </remarks>
 [DataDefinition, Serializable, NetSerializable, Access(typeof(SatiationSystem))]
 public sealed partial class Satiation
 {
@@ -45,21 +52,21 @@ public sealed partial class Satiation
     public TimeSpan LastAuthoritativeChangeTime;
 
     /// <summary>
-    /// The rate at which this satiation value is expected to decay. It is a combination of
-    /// <see cref="SatiationPrototype.BaseDecayRate"/> and modifiers.
+    /// The rate at which this satiation value is expected to. It is a combination of
+    /// <see cref="SatiationPrototype.BaseChangeRate"/> and modifiers.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadOnly)]
-    public float ActualDecayRate;
+    public float ActualChangeRate;
 
     /// <summary>
-    /// When <see cref="ActualDecayRate"/> is expected to change, if nothing but normal decay affects this satiation.
-    /// This is used to predict satiation updates on clients.
+    /// When <see cref="ActualChangeRate"/> is expected to change, if nothing but normal linear evolution affects this
+    /// satiation. This is used to predict satiation updates on clients.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    public TimeSpan? NextDecayRateModUpdateTime;
+    public TimeSpan? NextChangeRateModUpdateTime;
 
     /// <summary>
-    /// <see cref="NextDecayRateModUpdateTime"/>, but for satiation alerts.
+    /// <see cref="NextChangeRateModUpdateTime"/>, but for satiation alerts.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan? NextAlertUpdateTime;
@@ -87,8 +94,8 @@ public sealed partial class SatiationThresholds<T>
     public Dictionary<SatiationValue, T> Thresholds = [];
 
     /// <summary>
-    /// When this satiation is expected to decay from its current threshold to the next lower threshold. This
-    /// is null when there is no lower threshold to decay to.
+    /// When this satiation is expected to change from its current threshold to a different one. This is null when the
+    /// current linear change is zero or there is no threshold in the direction of the expected change.
     /// </summary>
     public TimeSpan? ProjectedThresholdChangeTime;
 

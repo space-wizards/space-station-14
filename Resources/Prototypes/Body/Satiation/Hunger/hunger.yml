@@ -1,6 +1,6 @@
 - type: satiation
   id: NormalSatiationHunger
-  baseDecayRate: 0.01666666666
+  baseChangeRate: -0.01666666666
   maximumValue: 200
   thresholds:
     Overfed: 200
@@ -10,7 +10,7 @@
     Dead: 0
   startingValueMinimum: Peckish
   startingValueMaximum: Okay
-  decayModifiers:
+  changeModifiers:
     Overfed: 1.2
     Okay: 1.0
     Peckish: 0.8
@@ -33,7 +33,7 @@
     Okay: 50
     Peckish: 25
     Starving: 10
-  baseDecayRate: 0.00925925925926 # it is okay for animals to eat and drink less than humans, but more frequently
+  baseChangeRate: -0.00925925925926 # it is okay for animals to eat and drink less than humans, but more frequently
   maximumValue: 100
 
 - type: satiation
@@ -44,13 +44,13 @@
     Okay: 25
     Peckish: 15
     Starving: 10
-  baseDecayRate: 0.1
+  baseChangeRate: -0.1
   maximumValue: 35
 
 - type: satiation
   id: CockroachHunger
   parent: SimpleMobBaseHunger
-  baseDecayRate: 0.25
+  baseChangeRate: -0.25
 
 - type: satiation
   id: MouseHunger
@@ -60,18 +60,18 @@
     Okay: 25
     Peckish: 15
     Starving: 10
-  baseDecayRate: 0.5 # I'm very hungry! Give me. The cheese.
+  baseChangeRate: -0.5 # I'm very hungry! Give me. The cheese.
   maximumValue: 35
 
 - type: satiation
   id: MouseAdmemeHunger
   parent: MouseHunger
-  baseDecayRate: 10 # always hungry
+  baseChangeRate: -10 # always hungry
 
 - type: satiation
   id: HamsterHunger
   parent: SimpleMobBaseHunger
-  baseDecayRate: 0.3
+  baseChangeRate: -0.3
 
 - type: satiation
   id: RegalRatHunger
@@ -81,18 +81,18 @@
     Okay: 150
     Peckish: 100
     Starving: 50
-  baseDecayRate: 0.01666666666
+  baseChangeRate: -0.01666666666
   maximumValue: 200
 
 - type: satiation
   id: ScurretHunger
   parent: SimpleMobBaseHunger
-  baseDecayRate: 0.05 # They get a lil' hungy
+  baseChangeRate: -0.05 # They get a lil' hungy
 
 - type: satiation
   id: DionaHunger
   parent: NormalSatiationHunger
-  baseDecayRate: 0.0083
+  baseChangeRate: -0.0083
 
 - type: entity
   abstract: true
