@@ -180,8 +180,8 @@ namespace Content.Client.IconSmoothing
             {
                 DirtyEntities(_mapSystem.GetAnchoredEntities(entityUid, grid, pos + Vector2i.UpRight));
                 DirtyEntities(_mapSystem.GetAnchoredEntities(entityUid, grid, pos + Vector2i.DownLeft));
-                DirtyEntities(_mapSystem.GetAnchoredEntities(entityUid, grid, pos + Vector2i.DownRight));
                 DirtyEntities(_mapSystem.GetAnchoredEntities(entityUid, grid, pos + Vector2i.UpLeft));
+                DirtyEntities(_mapSystem.GetAnchoredEntities(entityUid, grid, pos + Vector2i.DownRight));
             }
         }
 
