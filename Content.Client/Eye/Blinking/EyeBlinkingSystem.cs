@@ -262,11 +262,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 
         foreach (var state in ent.Comp.Eyelids)
         {
-            if (_sprite.LayerMapTryGet((body, comp), state.LayerKey, out var layerIndex, false))
-            {
-                _sprite.RemoveLayer((body, comp), layerIndex);
-                _sprite.LayerMapRemove((body, comp), state.LayerKey);
-            }
+            _sprite.RemoveLayer((body, comp), state.LayerKey, false);
         }
 
         // Clears eyelid states from the client component, if it already exists.
