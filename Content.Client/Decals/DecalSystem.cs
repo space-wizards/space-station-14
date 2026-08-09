@@ -22,22 +22,18 @@ namespace Content.Client.Decals
 
         private DecalOverlay? _overlay;
 
-        /*
-         * Client predicts entities from top of the chunk index down while server goes bottom-up.
-         * This way we can minimise chances of overlap and be non-destructive to server states.
-         */
-        private ushort _nextPredictedDecal = ushort.MaxValue;
-
-        private readonly List<ushort> _tempIds = new();
-
         public override void Initialize()
         {
             base.Initialize();
 
             _overlay = new DecalOverlay(_sprites, EntityManager, ProtoMan);
             _overlayManager.AddOverlay(_overlay);
+        }
 
-            SubscribeLocalEvent<DecalChunkComponent, AfterAutoHandleStateEvent>(OnDecalChunkHandleState);
+        [SubscribeLocalEvent]
+        private void OnDecalAfterState(EntityUid uid, DecalChunkComponent component, ref AfterAutoHandleStateEvent args)
+        {
+            component.NextPredictedDecal = ushort.MaxValue;
         }
 
         protected override void OnDecalPlacementRequest(RequestDecalPlacementEvent ev, EntitySessionEventArgs eventArgs)
@@ -90,26 +86,13 @@ namespace Content.Client.Decals
             }
         }
 
-        private void OnDecalChunkHandleState(Entity<DecalChunkComponent> ent, ref AfterAutoHandleStateEvent args)
-        {
-            _tempIds.Clear();
-            _tempIds.AddRange(ent.Comp.Decals.Keys);
-
-            foreach (var id in _tempIds)
-            {
-                if (id < DecalChunkComponent.MinPredictedDecalId)
-                    continue;
-
-                ent.Comp.Decals.Remove(id);
-            }
-        }
-
         private bool TryAllocatePredictedDecalId(DecalChunkComponent decals, out ushort decalId)
         {
+            // Iterate top-down to find next free index.
             for (var i = 0; i < DecalChunkComponent.PredictedDecalCount; i++)
             {
-                var next = _nextPredictedDecal;
-                _nextPredictedDecal = next == DecalChunkComponent.MinPredictedDecalId
+                var next = decals.NextPredictedDecal;
+                decals.NextPredictedDecal = next == DecalChunkComponent.MinPredictedDecalId
                     ? ushort.MaxValue
                     : (ushort) (next - 1);
 
