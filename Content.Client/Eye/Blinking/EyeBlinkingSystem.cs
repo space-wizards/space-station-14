@@ -236,7 +236,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         if (ent.Comp.EyelidsColor is not { } eyelidsColor)
             return;
 
-        if (!_spriteQuery.TryComp(ent, out var sprite))
+        if (!_spriteQuery.TryComp(body, out var sprite))
             return;
 
         // Update all existing eyelid layers.
