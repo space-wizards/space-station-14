@@ -49,6 +49,10 @@
         {
             "name": "torso",
             "directions": 4
+        },
+        {
+          "name": "eyelid-all",
+          "directions": 4
         }
     ]
 }
