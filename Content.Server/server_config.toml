@@ -63,7 +63,7 @@ enabled = true
 
 [light]
 # Default ambient space light color for maps in hex
-space_light_color = "#223344"
+space_light_color = "#404343"
 
 [shuttle]
 # Should the emergency shuttle be allowed to launch early by command staff?
