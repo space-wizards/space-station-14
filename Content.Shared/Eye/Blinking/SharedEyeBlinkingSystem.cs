@@ -184,7 +184,7 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
         var cloneComp = Factory.GetComponent<EyeBlinkingComponent>();
         cloneComp.EyeToggleAction = ent.Comp.EyeToggleAction;
 
-        cloneComp.Status = ent.Comp.Status;
+        cloneComp.Status = BlinkStatus.Normal; // Clone could be dead.  We start anew.
 
         cloneComp.EyelidsSprite = ent.Comp.EyelidsSprite;
         cloneComp.EyelidsColor = ent.Comp.EyelidsColor;
@@ -228,7 +228,7 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
     #endregion Event Handlers
 
     #region Internal
-    private void SetEyelidsColor(Entity<EyeBlinkingComponent> eyeBlinking, Color? bodyColor)
+    protected void SetEyelidsColor(Entity<EyeBlinkingComponent> eyeBlinking, Color? bodyColor)
     {
         var skinColor = bodyColor ?? Color.Pink;
         var blinkFade = eyeBlinking.Comp.BlinkSkinColorMultiplier;
@@ -241,7 +241,7 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
         Dirty(eyeBlinking);
     }
 
-    private void SetStatusFlag(Entity<EyeBlinkingComponent> ent, BlinkStatus flag, bool set)
+    protected void SetStatusFlag(Entity<EyeBlinkingComponent> ent, BlinkStatus flag, bool set)
     {
         var prevStatus = ent.Comp.Status;
 
@@ -251,7 +251,10 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
             ent.Comp.Status &= ~flag;
 
         if (ent.Comp.Status != prevStatus)
+        {
+            StatusChanged(ent, prevStatus);
             Dirty(ent);
+        }
     }
 
     /// <summary>
@@ -267,6 +270,8 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
 
         return eyes;
     }
+
+    protected virtual void StatusChanged(Entity<EyeBlinkingComponent> ent, BlinkStatus oldValue) { }
     #endregion Internal
 }
 

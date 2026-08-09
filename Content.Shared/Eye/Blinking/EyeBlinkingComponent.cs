@@ -80,7 +80,8 @@ public sealed partial class EyeBlinkingComponent : Component
     public BlinkStatus Status = BlinkStatus.Normal;
 
     /// <summary>
-    /// The last received blink status.
+    /// The last received blink status from the server.
+    /// Useful on the client for keeping track of authoritative blink state.
     /// </summary>
     [ViewVariables]
     public BlinkStatus LastStatus = BlinkStatus.Normal;

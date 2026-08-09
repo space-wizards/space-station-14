@@ -261,7 +261,7 @@
       sprite: Mobs/Customization/eyes.rsi
       state: diona
   - type: EyeBlinking
-    eyelidsSprite: /Textures/Mobs/Species/Diona/eyelids.rsi
+    eyelidsSprite: /Textures/Mobs/Species/Diona/parts.rsi
   - type: Appearance
 
 - type: entity

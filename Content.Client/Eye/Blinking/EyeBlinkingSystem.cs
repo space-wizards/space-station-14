@@ -25,6 +25,9 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 
     [Dependency] private EntityQuery<SpriteComponent> _spriteQuery;
 
+    /// <summary>
+    /// A prefix added to the eyelid layers added to body sprites.
+    /// </summary>
     public const string LayerPrefix = "eyelid_extra";
 
     #region Event Handlers
@@ -43,26 +46,16 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
     [SubscribeLocalEvent]
     private void OnAfterAutoHandleState(Entity<EyeBlinkingComponent> ent, ref AfterAutoHandleStateEvent args)
     {
-        // TODO: update blink status
         if (ent.Comp.LastEyelidsColor != ent.Comp.EyelidsColor)
         {
-            // TODO: update eyelid color
             ent.Comp.LastEyelidsColor = ent.Comp.EyelidsColor;
+            if (ent.Comp.Body is { } body)
+                UpdateEyelidsColor(ent, body);
         }
 
         if (ent.Comp.Status != ent.Comp.LastStatus)
         {
-            if (ent.Comp.Status == BlinkStatus.Normal)
-            {
-                // We can see again! Open our eyes and restart the cycle.
-                ChangeEyesState(ent, false);
-                ResetBlink(ent);
-            }
-            else if (ent.Comp.LastStatus == BlinkStatus.Normal)
-            {
-                // Eyes need to close now.
-                ChangeEyesState(ent, true);
-            }
+            StatusChanged(ent, ent.Comp.LastStatus);
 
             ent.Comp.LastStatus = ent.Comp.Status;
         }
@@ -223,12 +216,12 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         if (!_spriteQuery.TryComp(body, out SpriteComponent? sprite))
             return;
 
-        if (!_sprite.TryGetLayer((body, sprite), HumanoidVisualLayers.Eyelids, out var eyelids, false))
+        if (!_sprite.LayerMapTryGet((body, sprite), HumanoidVisualLayers.Eyelids, out var targetLayer, false))
             return;
 
         ent.Comp.Body = body;
 
-        InitEyelidsLayers(ent, body);
+        InitEyelidsLayers(ent, body, targetLayer);
 
         // Initialize and randomize the blink timer.
         ResetBlink(ent);
@@ -238,7 +231,24 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         ent.Comp.LastStatus = ent.Comp.Status;
     }
 
-    private void InitEyelidsLayers(Entity<EyeBlinkingComponent> ent, EntityUid body)
+    private void UpdateEyelidsColor(Entity<EyeBlinkingComponent> ent, EntityUid body)
+    {
+        if (ent.Comp.EyelidsColor is not { } eyelidsColor)
+            return;
+
+        if (!_spriteQuery.TryComp(ent, out var sprite))
+            return;
+
+        // Update all existing eyelid layers.
+        var i = 0;
+        while (_sprite.LayerMapTryGet((body, sprite), $"{LayerPrefix}-{i}", out var layerIndex, logMissing: false))
+        {
+            _sprite.LayerSetColor((body, sprite), layerIndex, eyelidsColor);
+            i++;
+        }
+    }
+
+    private void InitEyelidsLayers(Entity<EyeBlinkingComponent> ent, EntityUid body, int eyelidsLayer)
     {
         if (!_spriteQuery.TryComp(body, out SpriteComponent? comp))
             return;
@@ -262,10 +272,6 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
             Log.Error($"EyeBlinkingSystem: can't find RSI '{rsiPath}'");
             return;
         }
-
-        // Checks if the eyelid layer is present.
-        if (!_sprite.LayerMapTryGet((body, comp), HumanoidVisualLayers.Eyelids, out var targetLayer, false))
-            return;
 
         // If the entity has a specific eyelid color defined after organData init, use that color instead of the default white.
         var eyelidColor = ent.Comp.EyelidsColor ?? Color.White;
@@ -292,7 +298,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
             var layerId = $"{LayerPrefix}-{i}";
             if (!_sprite.LayerMapTryGet((body, comp), layerId, out var layerIndex, false))
             {
-                layerIndex = _sprite.AddLayer((body, comp), specifier, targetLayer + i + 1);
+                layerIndex = _sprite.AddLayer((body, comp), specifier, eyelidsLayer + i + 1);
                 _sprite.LayerMapSet((body, comp), layerId, layerIndex);
             }
             _sprite.LayerSetSprite((body, comp), layerIndex, specifier);
@@ -358,6 +364,26 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
                 continue;
 
             Blink((uid, comp));
+        }
+    }
+
+    /// <summary>
+    /// Client-side state updates: force eye visibility to change.
+    /// Works for both prediction (all shared code, based off of the immediate predicted values as they happen)
+    /// and for authoritative state (based off of last state from the server in AfterAutoHandleState)
+    /// </summary>
+    protected override void StatusChanged(Entity<EyeBlinkingComponent> ent, BlinkStatus oldValue)
+    {
+        if (ent.Comp.Status == BlinkStatus.Normal)
+        {
+            // We can see again! Open our eyes and restart the cycle.
+            ChangeEyesState(ent, false);
+            ResetBlink(ent);
+        }
+        else if (oldValue == BlinkStatus.Normal && !ent.Comp.Status.HasFlag(BlinkStatus.Dead))
+        {
+            // Eyes need to close (unless we're dead!)
+            ChangeEyesState(ent, true);
         }
     }
 }
