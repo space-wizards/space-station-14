@@ -114,6 +114,7 @@
         - CannotSuicide
         - StunImmune
         - SlowImmune
+    - type: CargoSellBlacklist
 
 # From the uplink injector
 - type: entity

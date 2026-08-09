@@ -40,6 +40,7 @@
         acts: [ "Destruction" ]
   - type: ZombieImmune
   - type: ProtectedFromStepTriggers
+  - type: CargoSellBlacklist
   - type: StunVisuals
 
 - type: entity
