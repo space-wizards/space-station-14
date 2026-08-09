@@ -1,0 +1,19 @@
+- type: parallax
+  id: SnowballStation
+  layers:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Parallaxes/SnowballParallaxBG.png"
+      slowness: 0.98
+      scale: "1, 1"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Parallaxes/SnowballParallaxStars.png"
+      slowness: 0.97
+      scale: "1, 1"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Parallaxes/SnowballParallaxSun.png"
+      slowness: 0.95
+      scale: "1, 1"
+      tiled: false

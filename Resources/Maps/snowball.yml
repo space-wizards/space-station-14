@@ -6852,6 +6852,8 @@ entities:
     - type: Transform
     - type: Map
       mapPaused: True
+    - type: Parallax
+      parallax: SnowballStation
     - type: GridTree
     - type: Broadphase
     - type: OccluderTree
