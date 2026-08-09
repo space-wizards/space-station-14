@@ -13,6 +13,7 @@
   - type: RevolutionaryImmune
   - type: ZombieImmune
   - type: ActionGrant
+    removeOnShutdown: false
     actions:
     - ActionChangelingStore
   - type: Store

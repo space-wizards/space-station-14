@@ -13,7 +13,7 @@ namespace Content.Shared.Nutrition.EntitySystems;
 /// satiations in <see cref="Update"/>, and external changes to satiations through accessors like
 /// <see cref="ModifyValue"/>.
 /// </summary>
-public sealed partial class SatiationSystem : EntitySystem
+public abstract partial class SatiationSystem : EntitySystem
 {
     [Dependency] private AlertsSystem _alerts = default!;
     [Dependency] private IGameTiming _timing = default!;
@@ -60,19 +60,8 @@ public sealed partial class SatiationSystem : EntitySystem
     {
         foreach (var (type, satiation) in entity.Comp.Satiations)
         {
-            if (!ProtoMan.Resolve(satiation.Prototype, out var proto))
-                continue;
-
-            satiation.SatiationType = type;
-
-            // TODO: Replace with RandomPredicted once the engine PR is merged
-            var rand = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(entity));
-            var value = rand.NextFloat(proto.StartingValueMinimum, proto.StartingValueMaximum);
-
-            SetAuthoritativeValue(entity, satiation, proto, value);
+            TryAddSatiation(entity.AsNullable(), type, satiation);
         }
-
-        DirtyField(entity.AsNullable(), nameof(SatiationComponent.Satiations));
     }
 
     /// <summary>

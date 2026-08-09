@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.Prototypes;
+using Content.Shared.Random.Helpers;
 using Content.Shared.StatusIcon;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -8,7 +9,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Nutrition.EntitySystems;
 
 // This part provides functions for use in other systems.
-public sealed partial class SatiationSystem
+public abstract partial class SatiationSystem
 {
     /// <summary>
     /// Gets <paramref name="entity"/>'s current value of the satiation of <paramref name="type"/>. If this entity does
@@ -257,4 +258,55 @@ public sealed partial class SatiationSystem
     ) => GetAndResolveSatiationOfType(entity, type)?.Proto.MaximumValue;
 
     #endregion
+
+    /// <summary>
+    /// Adds a new <see cref="Satiation"/> of a given <see cref="SatiationTypePrototype"/> to the entity.
+    /// </summary>
+    /// <param name="entity">The entity to add the satiation to.</param>
+    /// <param name="type">The type of satiation to add.</param>
+    /// <param name="satiation">The satiation of that type to be added.</param>
+    /// <returns>True if the satiation was added, otherwise False.</returns>
+    public bool TryAddSatiation(Entity<SatiationComponent?> entity, ProtoId<SatiationTypePrototype> type, Satiation satiation)
+    {
+        if (!Resolve(entity, ref entity.Comp))
+            return false;
+
+        if (!ProtoMan.Resolve(satiation.Prototype, out var proto))
+            return false;
+
+        satiation.SatiationType = type;
+
+        if (!entity.Comp.Satiations.TryAdd(type, satiation))
+            return false;
+
+        // TODO: Replace with RandomPredicted once the engine PR is merged
+        var rand = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(entity));
+        var value = rand.NextFloat(proto.StartingValueMinimum, proto.StartingValueMaximum);
+
+        SetAuthoritativeValue((entity, entity.Comp), satiation, proto, value);
+
+        DirtyField(entity, entity.Comp, nameof(SatiationComponent.Satiations));
+
+        return true;
+    }
+
+    /// <summary>
+    /// Adds a new <see cref="Satiation"/> of a given <see cref="SatiationTypePrototype"/> to the entity.
+    /// </summary>
+    /// <param name="entity">The entity to add the satiation to.</param>
+    /// <param name="type">The type of satiation to add.</param>
+    /// <param name="satiation">The satiation of that type to be added.</param>
+    /// <returns>True if the satiation was added, otherwise False.</returns>
+    public bool TryRemoveSatiationType(Entity<SatiationComponent?> entity, ProtoId<SatiationTypePrototype> type)
+    {
+        if (!Resolve(entity, ref entity.Comp))
+            return false;
+
+        if (!entity.Comp.Satiations.Remove(type))
+            return false;
+
+        DirtyField(entity, entity.Comp, nameof(SatiationComponent.Satiations));
+
+        return true;
+    }
 }
