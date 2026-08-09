@@ -1,6 +1,6 @@
 using System;
 using System.Numerics;
-using Content.Shared.Humanoid.SkinColoration;
+using Content.Shared.Humanoid;
 using NUnit.Framework;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;

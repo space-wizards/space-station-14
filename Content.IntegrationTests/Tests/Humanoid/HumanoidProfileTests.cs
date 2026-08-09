@@ -79,11 +79,14 @@ public sealed class HumanoidProfileTests : GameTest
         {
             LoadDependencies(out var body, out var humanoidComponent);
 
-            var profile = HumanoidCharacterProfile.Random();
-            _humanoidProfile.ApplyProfileTo(body, profile);
-            _visualBody.ApplyProfileTo(body, profile);
+            for (int i = 0; i < 10000; i++)
+            {
+                var profile = HumanoidCharacterProfile.Random();
+                _humanoidProfile.ApplyProfileTo(body, profile);
+                _visualBody.ApplyProfileTo(body, profile);
 
-            AssertValidProfile((body, humanoidComponent), profile);
+                AssertValidProfile((body, humanoidComponent), profile);
+            }
         });
     }
 
@@ -100,18 +103,22 @@ public sealed class HumanoidProfileTests : GameTest
             LoadDependencies(out var body, out var humanoidComponent);
 
             var proto = SProtoMan.Index<SpeciesPrototype>(species);
-            var profile = HumanoidCharacterProfile.RandomWithSpecies(species);
-            _humanoidProfile.ApplyProfileTo(body, profile);
-            _visualBody.ApplyProfileTo(body, profile);
 
-            Assert.That(humanoidComponent.Age, Is.LessThanOrEqualTo(proto.MaxAge), $"Expected age is above the maximum age limit! Current: {humanoidComponent.Age} Max: {proto.MaxAge}");
-            Assert.That(humanoidComponent.Age, Is.GreaterThanOrEqualTo(proto.MinAge), $"Expected age is below the minimum age limit! Current: {humanoidComponent.Age} Min: {proto.MinAge}");
-            Assert.That(proto.Sexes.Contains(humanoidComponent.Sex), Is.True, $"Character has sex not found in the species prototype! Current: {humanoidComponent.Sex}");
-            Assert.That(humanoidComponent.Species, Is.EqualTo(species), $"Species does not match! Expected: {species} Current: {humanoidComponent.Species}");
-            var strategy = Server.ProtoMan.Index(proto.SkinColoration).Strategy;
-            Assert.That(strategy.VerifyClampedSkinColor(profile.Appearance.SkinColor, out var reason), Is.True, $"Failed to verify the skin color ({profile.Appearance.SkinColor}) from strategy {strategy}. Reason: {reason}");
+            for (int i = 0; i < 10000; i++)
+            {
+                var profile = HumanoidCharacterProfile.RandomWithSpecies(species);
+                _humanoidProfile.ApplyProfileTo(body, profile);
+                _visualBody.ApplyProfileTo(body, profile);
 
-            AssertValidProfile((body, humanoidComponent), profile);
+                Assert.That(humanoidComponent.Age, Is.LessThanOrEqualTo(proto.MaxAge), $"Expected age is above the maximum age limit! Current: {humanoidComponent.Age} Max: {proto.MaxAge}");
+                Assert.That(humanoidComponent.Age, Is.GreaterThanOrEqualTo(proto.MinAge), $"Expected age is below the minimum age limit! Current: {humanoidComponent.Age} Min: {proto.MinAge}");
+                Assert.That(proto.Sexes.Contains(humanoidComponent.Sex), Is.True, $"Character has sex not found in the species prototype! Current: {humanoidComponent.Sex}");
+                Assert.That(humanoidComponent.Species, Is.EqualTo(species), $"Species does not match! Expected: {species} Current: {humanoidComponent.Species}");
+                var strategy = Server.ProtoMan.Index(proto.SkinColoration).Strategy;
+                Assert.That(strategy.VerifyClampedSkinColor(profile.Appearance.SkinColor, out var reason), Is.True, $"Failed to verify the skin color ({profile.Appearance.SkinColor}) from strategy {strategy}. Reason: {reason}");
+
+                AssertValidProfile((body, humanoidComponent), profile);
+            }
         });
     }
 

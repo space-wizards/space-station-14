@@ -4,7 +4,6 @@ using Content.Shared.Chat.Prototypes;
 using Content.Shared.Guidebook;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
-using Content.Shared.Humanoid.SkinColoration;
 using Content.Shared.Preferences;
 using Content.Shared.Speech.Components;
 using Robust.Client.UserInterface.Controls;
