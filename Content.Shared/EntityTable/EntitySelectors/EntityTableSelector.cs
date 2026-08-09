@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared.EntityTable.Conditions;
 using Content.Shared.EntityTable.ValueSelector;
 using JetBrains.Annotations;
@@ -10,6 +9,11 @@ namespace Content.Shared.EntityTable.EntitySelectors;
 [ImplicitDataDefinitionForInheritors, UsedImplicitly(ImplicitUseTargetFlags.WithInheritors)]
 public abstract partial class EntityTableSelector
 {
+    /// <summary>
+    /// Key for <see cref="EntityTableContext"/>, under which additional scoped conditions should be stored.
+    /// </summary>
+    public const string AdditionalConditionsKey = "AdditionalConditions";
+
     /// <summary>
     /// The number of times this selector is run
     /// </summary>
@@ -44,7 +48,8 @@ public abstract partial class EntityTableSelector
     /// <summary>
     /// Samples an output for this selector.
     /// </summary>
-    public IEnumerable<EntProtoId> GetSpawns(IRobustRandom rand,
+    public virtual IEnumerable<EntProtoId> GetSpawns(
+        IRobustRandom rand,
         IEntityManager entMan,
         IPrototypeManager proto,
         EntityTableContext ctx)
@@ -68,13 +73,12 @@ public abstract partial class EntityTableSelector
     /// <summary>
     /// Check if the condition for this selector are met.
     /// </summary>
-    public bool CheckConditions(IEntityManager entMan, IPrototypeManager proto, EntityTableContext ctx)
+    public virtual bool CheckConditions(IEntityManager entMan, IPrototypeManager proto, EntityTableContext ctx)
     {
-        if (Conditions.Count == 0)
-            return true;
+        var combined = GetConditions(ctx);
 
-        var success = false;
-        foreach (var condition in Conditions)
+        var success = true;
+        foreach (var condition in combined)
         {
             var res = condition.Evaluate(this, entMan, proto, ctx);
 
@@ -130,4 +134,23 @@ public abstract partial class EntityTableSelector
     protected abstract IEnumerable<(EntProtoId spawn, double)> AverageSpawnsImplementation(IEntityManager entMan,
         IPrototypeManager proto,
         EntityTableContext ctx);
+
+    /// <summary>
+    /// Gets list of conditions for this selector, respecting conditions provided by context.
+    /// </summary>
+    private IEnumerable<EntityTableCondition> GetConditions(EntityTableContext ctx)
+    {
+        foreach (var condition in Conditions)
+        {
+            yield return condition;
+        }
+
+        if (!ctx.TryGetData<List<EntityTableCondition>>(AdditionalConditionsKey, out var additionalConditions))
+            yield break;
+
+        foreach (var additionalCondition in additionalConditions)
+        {
+            yield return additionalCondition;
+        }
+    }
 }

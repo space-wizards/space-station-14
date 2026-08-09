@@ -8,14 +8,8 @@ namespace Content.Shared.EntityTable.EntitySelectors;
 /// <summary>
 /// Gets the spawns from one of the child selectors, based on the weight of the children
 /// </summary>
-public sealed partial class GroupSelector : EntityTableSelector
+public sealed partial class GroupSelector : EntityTableSelectorWithChildrenBase
 {
-    /// <summary>
-    /// The child entries of this selector.
-    /// </summary>
-    [DataField(required: true)]
-    public List<EntityTableSelector> Children = new();
-
     protected override IEnumerable<EntProtoId> GetSpawnsImplementation(IRobustRandom rand,
         IEntityManager entMan,
         IPrototypeManager proto,

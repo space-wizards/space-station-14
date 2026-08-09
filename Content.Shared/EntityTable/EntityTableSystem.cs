@@ -110,4 +110,13 @@ public sealed class EntityTableContext
         value = castValueData;
         return true;
     }
+
+    /// <summary>
+    /// Sets data into context using provided key.
+    /// </summary>
+    [PublicAPI]
+    public void SetData<T>([ForbidLiteral] string key, T data) where T : notnull
+    {
+        _data[key] = data;
+    }
 }
