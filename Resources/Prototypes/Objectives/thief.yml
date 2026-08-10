@@ -249,12 +249,14 @@
 
 - type: entity
   parent: BaseThiefStealObjective
-  id: ClothingHeadsetAltMedicalStealObjective
+  id: HeadsetAltStealObjective
   components:
   - type: NotJobRequirement
-    jobs: [ ChiefMedicalOfficer ]
+    jobs: [ Captain ]
   - type: StealCondition
-    stealGroup: ClothingHeadsetAltMedical
+    stealGroup: HeadsetAlt
+    minCollectionSize: 3
+    maxCollectionSize: 5
   - type: Objective
     difficulty: 1
 

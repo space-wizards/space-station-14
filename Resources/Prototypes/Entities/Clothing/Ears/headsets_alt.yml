@@ -9,6 +9,8 @@
     state: icon_alt
   - type: Clothing
     equippedPrefix: alt
+  - type: StealTarget
+    stealGroup: HeadsetAlt
 
 - type: entity
   parent: ClothingHeadsetAlt
@@ -87,7 +89,7 @@
   - type: Clothing
     sprite: Clothing/Ears/Headsets/medical.rsi
   - type: StealTarget
-    stealGroup: ClothingHeadsetAltMedical
+    stealGroup: ClothingHeadsetAlt
 
 - type: entity
   parent: [ClothingHeadsetAlt, BaseCommandContraband]

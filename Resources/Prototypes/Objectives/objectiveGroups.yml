@@ -90,7 +90,7 @@
   weights:
     ChiefEngineerToolbeltStealObjective: 0.5             #command
     CaptainSwordStealObjective: 0.5
-    ClothingHeadsetAltMedicalStealObjective: 1
+    HeadsetAltStealObjective: 1
     ForensicScannerStealObjective: 1                    #sec
     FlippoEngravedLighterStealObjective: 0.5
     SecurityTechFabCircuitboardStealObjective: 1

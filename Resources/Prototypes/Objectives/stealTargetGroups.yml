@@ -115,6 +115,13 @@
     state: stamp-cap
 
 - type: stealTargetGroup
+  id: HeadsetAlt
+  name: steal-target-groups-heads-headsets
+  sprite:
+    sprite: Clothing/Ears/Headsets/command.rsi
+    state: icon_alt
+
+- type: stealTargetGroup
   id: DoorRemote
   name: steal-target-groups-door-remotes
   sprite:
@@ -206,13 +213,6 @@
   sprite:
     sprite: Objects/Misc/module.rsi
     state: medical
-
-- type: stealTargetGroup
-  id: ClothingHeadsetAltMedical
-  name: steal-target-groups-clothing-headset-alt-medical
-  sprite:
-    sprite: Clothing/Ears/Headsets/medical.rsi
-    state: icon_alt
 
 - type: stealTargetGroup
   id: ResearchAndDevelopmentServerMachineCircuitboard
