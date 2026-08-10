@@ -9,14 +9,14 @@ using Robust.Shared.Timing;
 namespace Content.Shared.Nutrition.EntitySystems;
 
 /// <summary>
-/// This system manages <see cref="SatiationComponent"/>. Broadly, what that means is that it handles the change of
-/// satiations in <see cref="Update"/>, and external changes to satiations through accessors like
-/// <see cref="ModifyValue"/>.
+/// This system manages <see cref="SatiationComponent"/>. It handles the change of satiations in <see cref="Update"/>
+/// and external changes to satiations through accessors like <see cref="ModifyValue"/>.
 /// </summary>
 public sealed partial class SatiationSystem : EntitySystem
 {
-    [Dependency] private AlertsSystem _alerts = default!;
     [Dependency] private IGameTiming _timing = default!;
+
+    [Dependency] private AlertsSystem _alerts = default!;
 
     /// <summary>
     /// The ID of the <c>Hunger</c> satiation type. Provided because it is so commonly used in Content.
@@ -155,7 +155,7 @@ public sealed partial class SatiationSystem : EntitySystem
     }
 
     /// <summary>
-    /// Calculates when <paramref name="satiation"/>'s value reach either <paramref name="upperBound"/> or
+    /// Calculates when <paramref name="satiation"/>'s value will reach either <paramref name="upperBound"/> or
     /// <paramref name="lowerBound"/>, or <c>null</c> if neither will happen based on the current expected linear
     /// evolution of the satiation value. A null bound is treated as unreachable, so if both bounds are null, this
     /// this function returns null.
@@ -261,15 +261,14 @@ public sealed partial class SatiationSystem : EntitySystem
             nextHigherThreshold,
             nextLowerThreshold
         );
+        DirtyField(entity.AsNullable(), nameof(SatiationComponent.Satiations));
     }
 }
 
 /// <summary>
-/// This event is raised entities with <see cref="SatiationComponent"/> when their satiation of <paramref name="Type"/>
+/// This event is raised on entities with <see cref="SatiationComponent"/> when their satiation of <paramref name="Type"/>
 /// is directly set or when the <see cref="Satiation.ActualChangeRate">rate of change</see> to that satiation is changed.
 /// </summary>
-/// <remarks>
-/// This event is raised in a best-effort manner, meaning it may be raised even when no change has occurred.
-/// </remarks>
+/// <remarks> This event may be raised even when no change has occurred.</remarks>
 [ByRefEvent]
 public readonly record struct SatiationUpdateEvent(ProtoId<SatiationTypePrototype> Type);

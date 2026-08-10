@@ -21,8 +21,9 @@ namespace Content.Shared.Nutrition.EntitySystems;
 /// <remarks>Note that this <b>is not</b> related to <see cref="EntityEffects"/></remarks>
 public abstract partial class BaseSatiationEffectSystem<TComp, T> : EntitySystem where TComp : Component
 {
-    [Dependency] private SatiationSystem _satiation = default!;
     [Dependency] private IGameTiming _timing = default!;
+
+    [Dependency] private SatiationSystem _satiation = default!;
 
     [Dependency] private EntityQuery<SatiationComponent> _satiationQuery;
 

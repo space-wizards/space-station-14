@@ -52,15 +52,15 @@ public sealed partial class Satiation
     public TimeSpan LastAuthoritativeChangeTime;
 
     /// <summary>
-    /// The rate at which this satiation value is expected to. It is a combination of
+    /// The rate at which this satiation value is expected to change. It is a combination of
     /// <see cref="SatiationPrototype.BaseChangeRate"/> and modifiers.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadOnly)]
     public float ActualChangeRate;
 
     /// <summary>
-    /// When <see cref="ActualChangeRate"/> is expected to change, if nothing but normal linear evolution affects this
-    /// satiation. This is used to predict satiation updates on clients.
+    /// When <see cref="ActualChangeRate"/> is expected to change, if nothing but time affects this satiation. This is
+    /// used to predict satiation updates on clients.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan? NextChangeRateModUpdateTime;

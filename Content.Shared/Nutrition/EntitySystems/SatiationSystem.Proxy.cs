@@ -185,8 +185,8 @@ public sealed partial class SatiationSystem
 
         if (currentValue > valuesByDescendingThreshold.Current.Item1)
         {
-            // `currentSatiation` is higher than all thresholds, so we don't have a value nor higher threshold, but we
-            // can return a next lower threshold.
+            // `currentSatiation` is higher than all thresholds, so we have neither a value nor a higher threshold, but
+            // we can return the next lower threshold.
             result = default;
             nextHigherThreshold = null;
             nextLowerThreshold = valuesByDescendingThreshold.Current.Item1;
