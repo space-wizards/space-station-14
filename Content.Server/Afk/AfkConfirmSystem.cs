@@ -56,8 +56,7 @@ public sealed partial class AfkConfirmSystem : EntitySystem
 
     private void OnAfk(AfkEvent ev)
     {
-        var session = _players.GetSessionById(ev.UserId);
-        TryStartConfirmation(session);
+        TryStartConfirmation(ev.Session);
     }
 
     /// <summary>
