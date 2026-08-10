@@ -18,7 +18,7 @@ public sealed partial class ExpendableLightComponent : Component
 
     [ViewVariables(VVAccess.ReadOnly)]
     [AutoNetworkedField]
-    public ExpendableLightState CurrentState;
+    public ExpendableLightState CurrentState = ExpendableLightState.Unlit;
 
     [DataField]
     public string TurnOnBehaviourID = string.Empty;
@@ -26,26 +26,35 @@ public sealed partial class ExpendableLightComponent : Component
     [DataField]
     public string FadeOutBehaviourID = string.Empty;
 
+    /// <summary>
+    /// How light will spend in fully glowing state
+    /// </summary>
     [DataField]
-    public TimeSpan GlowDuration = TimeSpan.FromSeconds(60 * 15f);
-
-    [DataField]
-    public TimeSpan FadeOutDuration = TimeSpan.FromSeconds(60 * 5f);
+    public TimeSpan GlowDuration = TimeSpan.FromMinutes(15);
 
     /// <summary>
-    /// Material that can be used to refuel the light
+    /// How light will spend in fading out state
+    /// </summary>
+    [DataField]
+    public TimeSpan FadeOutDuration = TimeSpan.FromMinutes(5);
+
+    /// <summary>
+    /// Material that can be used to refuel the light.
     /// </summary>
     [DataField]
     public ProtoId<StackPrototype>? RefuelMaterialID;
 
     /// <summary>
-    /// Time needed to refuel the light
+    /// How much glow time refueling is restoring.
     /// </summary>
     [DataField]
-    public TimeSpan RefuelMaterialTime = TimeSpan.FromSeconds(15f);
+    public TimeSpan RefuelMaterialTime = TimeSpan.FromMinutes(5);
 
+    /// <summary>
+    /// Maximum glow time refueld light can hold.
+    /// </summary>
     [DataField]
-    public TimeSpan RefuelMaximumDuration = TimeSpan.FromSeconds(60 * 15f * 2);
+    public TimeSpan RefuelMaximumDuration = TimeSpan.FromMinutes(20);
 
     /// <summary>
     /// Sound made by expandable light when they are lit.
@@ -107,6 +116,9 @@ public sealed partial class ExpendableLightComponent : Component
     [ViewVariables]
     public bool Activated => CurrentState is ExpendableLightState.Lit or ExpendableLightState.Fading;
 
+    /// <summary>
+    ///     Time when next change of CurrentState happens.
+    /// </summary>
     [ViewVariables]
     [AutoNetworkedField]
     public TimeSpan? StateExpiryTime;
@@ -122,7 +134,7 @@ public enum ExpendableLightVisuals
 [Serializable, NetSerializable]
 public enum ExpendableLightState
 {
-    BrandNew,
+    Unlit,
     Lit,
     Fading,
     Dead

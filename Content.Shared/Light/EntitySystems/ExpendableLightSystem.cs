@@ -1,3 +1,4 @@
+using Content.Shared.Abilities.Mime;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.IgnitionSource;
@@ -34,10 +35,8 @@ public sealed partial class ExpendableLightSystem : EntitySystem
         var query = EntityQueryEnumerator<ExpendableLightComponent>();
         while (query.MoveNext(out var uid, out var light))
         {
-            if (light.StateExpiryTime == null)
-                continue;
-
-            UpdateLight((uid, light));
+            if (light.Activated)
+                UpdateLight((uid, light));
         }
     }
 
@@ -85,7 +84,7 @@ public sealed partial class ExpendableLightSystem : EntitySystem
     public bool TryActivate(Entity<ExpendableLightComponent> ent, EntityUid? user = null)
     {
         var component = ent.Comp;
-        if (!component.Activated && component.CurrentState == ExpendableLightState.BrandNew)
+        if (!component.Activated && component.CurrentState == ExpendableLightState.Unlit)
         {
             if (TryComp<ItemComponent>(ent, out var item))
             {
@@ -112,34 +111,41 @@ public sealed partial class ExpendableLightSystem : EntitySystem
         if (args.Handled) return;
 
         if (!TryComp(args.Used, out StackComponent? stack)) return;
+
         if (stack.StackTypeId != component.RefuelMaterialID) return;
 
-        var timeLeft = component.StateExpiryTime != null ? component.StateExpiryTime.Value - _timing.CurTime : TimeSpan.Zero;
-
-        if (timeLeft + component.RefuelMaterialTime >= component.RefuelMaximumDuration)
-            return;
-
-        if (component.CurrentState is ExpendableLightState.Dead)
+        switch (component.CurrentState)
         {
-            component.CurrentState = ExpendableLightState.BrandNew;
+            case ExpendableLightState.Dead:
+                component.CurrentState = ExpendableLightState.Unlit;
 
-            component.StateExpiryTime = null;
+                component.GlowDuration = component.RefuelMaterialTime;
 
-            _nameModifier.RefreshNameModifiers(uid);
-            _stackSystem.ReduceCount((args.Used, stack), 1);
-            UpdateVisualizer((uid, component));
-            args.Handled = true;
-            return;
+                _nameModifier.RefreshNameModifiers(uid);
+                UpdateVisualizer((uid, component));
+                break;
+
+            case ExpendableLightState.Unlit:
+                if (component.GlowDuration + component.RefuelMaterialTime >= component.RefuelMaximumDuration)
+                    return;
+                component.GlowDuration += component.RefuelMaterialTime;
+                break;
+
+            default:
+                if (component.StateExpiryTime == null) return;
+
+                var timeLeft = component.StateExpiryTime.Value - _timing.CurTime;
+
+                if (timeLeft + component.RefuelMaterialTime >= component.RefuelMaximumDuration)
+                    return;
+
+                component.StateExpiryTime += component.RefuelMaterialTime;
+                Dirty(uid, component);
+                break;
         }
-
-        if (component.StateExpiryTime != null)
-        {
-            component.StateExpiryTime += component.RefuelMaterialTime;
-            Dirty(uid, component);
-        }
-
         _stackSystem.ReduceCount((args.Used, stack), 1);
         args.Handled = true;
+
     }
 
     [SubscribeLocalEvent]
@@ -214,8 +220,6 @@ public sealed partial class ExpendableLightSystem : EntitySystem
         {
             _item.SetHeldPrefix(uid, "unlit", component: item);
         }
-
-        component.CurrentState = ExpendableLightState.BrandNew;
     }
 
     [SubscribeLocalEvent]
@@ -234,7 +238,7 @@ public sealed partial class ExpendableLightSystem : EntitySystem
         if (!args.CanAccess || !args.CanInteract)
             return;
 
-        if (ent.Comp.CurrentState != ExpendableLightState.BrandNew)
+        if (ent.Comp.CurrentState != ExpendableLightState.Unlit)
             return;
 
         var user = args.User;
