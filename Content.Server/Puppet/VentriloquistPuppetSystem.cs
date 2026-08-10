@@ -4,7 +4,8 @@ using Content.Shared.CombatMode;
 using Content.Shared.Hands;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Puppet;
-using Content.Shared.Speech.Muting;
+using Content.Shared.StatusEffectNew;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Puppet;
 
@@ -13,9 +14,10 @@ namespace Content.Server.Puppet;
 /// </summary>
 public sealed partial class VentriloquistPuppetSystem : SharedVentriloquistPuppetSystem
 {
-    [Dependency] private PopupSystem _popupSystem = default!;
+    public static readonly EntProtoId MutedEffect = "StatusEffectVentriloquistPuppetMuted";
 
-    [Dependency] private EntityQuery<MutedComponent> _mutedQuery;
+    [Dependency] private PopupSystem _popupSystem = default!;
+    [Dependency] private StatusEffectsSystem _statusEffects = default!;
 
     /// <summary>
     /// When used user inserts hand into dummy and the dummy can speak, when used again the user removes hand
@@ -31,7 +33,7 @@ public sealed partial class VentriloquistPuppetSystem : SharedVentriloquistPuppe
         // TODO disable dummy when the user dies or cannot interact.
         // Then again, this is all quite cursed code, so maybe its a cursed ventriloquist puppet.
 
-        if (!RemComp<MutedComponent>(ent))
+        if (!_statusEffects.TryRemoveStatusEffect(ent, MutedEffect))
         {
             _popupSystem.PopupEntity(Loc.GetString("ventriloquist-puppet-remove-hand"), ent, args.User);
             MuteDummy(ent);
@@ -60,7 +62,7 @@ public sealed partial class VentriloquistPuppetSystem : SharedVentriloquistPuppe
     [SubscribeLocalEvent]
     private void OnDropped(Entity<VentriloquistPuppetComponent> ent, ref DroppedEvent args)
     {
-        if (_mutedQuery.HasComp(ent))
+        if (_statusEffects.HasStatusEffect(ent, MutedEffect))
             return;
 
         _popupSystem.PopupEntity(Loc.GetString("ventriloquist-puppet-remove-hand"), ent, args.User);
@@ -73,7 +75,7 @@ public sealed partial class VentriloquistPuppetSystem : SharedVentriloquistPuppe
     [SubscribeLocalEvent]
     private void OnUnequippedHand(Entity<VentriloquistPuppetComponent> ent, ref GotUnequippedHandEvent args)
     {
-        if (_mutedQuery.HasComp(ent))
+        if (_statusEffects.HasStatusEffect(ent, MutedEffect))
             return;
 
         _popupSystem.PopupEntity(Loc.GetString("ventriloquist-puppet-remove-hand"), ent, args.User);
@@ -86,7 +88,7 @@ public sealed partial class VentriloquistPuppetSystem : SharedVentriloquistPuppe
     private void MuteDummy(Entity<VentriloquistPuppetComponent> ent)
     {
         _popupSystem.PopupEntity(Loc.GetString("ventriloquist-puppet-removed-hand"), ent, ent);
-        EnsureComp<MutedComponent>(ent);
+        _statusEffects.TrySetStatusEffectDuration(ent, MutedEffect);
         RemComp<CombatModeComponent>(ent);
         RemComp<GhostTakeoverAvailableComponent>(ent);
     }
