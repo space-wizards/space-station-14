@@ -187,8 +187,9 @@ public sealed class DoAfterOverlay : Overlay
 
                 var tex = _sprite.Frame0(doAfter.Args.IconEntity);
                 var iconPosition = position with { X = position.X + 0.6f, Y = position.Y - 0.45f };
+                var iconAlpha = MathHelper.Lerp(0f, IconColorAlpha, (float)Math.Clamp(elapsed / MaxAlphaTime, 0.0, 1.0));
 
-                handle.DrawTexture(tex, iconPosition, Color.White.WithAlpha(IconColorAlpha));
+                handle.DrawTexture(tex, iconPosition, Color.White.WithAlpha(iconAlpha));
             }
         }
 
