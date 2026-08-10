@@ -31,6 +31,11 @@
     forced: true
     inventory: Drop
     ignoreAllowRepeatedMorphs: true
+    transferName: false
+    revertOnDeath: false
+    revertOnEat: false
+    revertOnCrit: false
+
 
 - type: polymorph
   id: AdminInstrumentSmite
