@@ -6071,3 +6071,10 @@ Entries:
   changes:
   - type: Add
     message: 40 структурного урона тенедемону за удар.
+- id: 584
+  author: smiler009
+  time: '2026-08-10T18:09:27.596944+00:00'
+  pr: 2118
+  changes:
+  - type: Tweak
+    message: измененна система щитов
