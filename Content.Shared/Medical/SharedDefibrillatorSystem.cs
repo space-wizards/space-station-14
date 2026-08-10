@@ -163,10 +163,11 @@ public abstract partial class SharedDefibrillatorSystem : EntitySystem
             _useDelay.TryResetDelay((ent.Owner, useDelay), id: ent.Comp.DelayId);
         }
 
-        _interaction.GetEntitiesInteractingWithTarget(target, _interactors);
-
+        _audio.PlayPredicted(ent.Comp.ZapSound, ent, user);
         Entity<DefibrillatorComponent> defibEnt = (ent, ent.Comp);
         var failedRevive = TryRevive(defibEnt, user, target, true);
+
+        _interaction.GetEntitiesInteractingWithTarget(target, _interactors);
         foreach (var interactor in _interactors)
         {
             TryRevive(defibEnt, user, interactor, false);
@@ -176,7 +177,7 @@ public abstract partial class SharedDefibrillatorSystem : EntitySystem
             ? ent.Comp.FailureSound
             : ent.Comp.SuccessSound;
         _audio.PlayPredicted(sound, ent.Owner, user);
-        _audio.PlayPredicted(ent.Comp.ZapSound, ent, user);
+
         var ev = new TargetDefibrillatedEvent(user, target, (ent.Owner, ent.Comp), _interactors);
         RaiseLocalEvent(target, ref ev);
 
