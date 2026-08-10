@@ -99,7 +99,7 @@
       price: 750
 
 - type: entity
-  parent: BaseComputerCircuitboard
+  parent: [BaseComputerCircuitboard, BaseEngineeringContraband]
   id: CargoRequestEngineeringComputerCircuitboard
   name: engineering request computer board
   description: A computer printed circuit board for an engineering request computer.
@@ -112,7 +112,7 @@
     price: 750
 
 - type: entity
-  parent: BaseComputerCircuitboard
+  parent: [BaseComputerCircuitboard, BaseMedicalContraband]
   id: CargoRequestMedicalComputerCircuitboard
   name: medical request computer board
   description: A computer printed circuit board for a medical request computer.
@@ -125,7 +125,7 @@
     price: 750
 
 - type: entity
-  parent: BaseComputerCircuitboard
+  parent: [BaseComputerCircuitboard, BaseScienceContraband]
   id: CargoRequestScienceComputerCircuitboard
   name: science request computer board
   description: A computer printed circuit board for a science request computer.
@@ -138,7 +138,7 @@
     price: 750
 
 - type: entity
-  parent: BaseComputerCircuitboard
+  parent: [BaseComputerCircuitboard, BaseSecurityContraband]
   id: CargoRequestSecurityComputerCircuitboard
   name: security request computer board
   description: A computer printed circuit board for a security request computer.
@@ -582,7 +582,7 @@
     prototype: ComputerSyndicateTeleportersControl
 
 - type: entity
-  parent: BaseComputerCircuitboard
+  parent: [BaseComputerCircuitboard, BaseScienceContraband]
   id: StationAiFixerCircuitboard
   name: AI restoration console board
   description: A computer printed circuit board for an AI restoration console console.
