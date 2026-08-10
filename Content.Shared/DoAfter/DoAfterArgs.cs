@@ -57,7 +57,7 @@ public sealed partial class DoAfterArgs
     /// </summary>
     [NonSerialized]
     [DataField]
-    public EntityUid? IconEntity;
+    public NetEntity? IconEntity;
 
     #region Event options
     /// <summary>
