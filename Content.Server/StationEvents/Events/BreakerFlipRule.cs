@@ -5,6 +5,7 @@ using Content.Shared.Cargo.Components;
 using Content.Shared.Database;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Station.Components;
+using Content.Shared.Tiles;
 using JetBrains.Annotations;
 using Robust.Shared.Random;
 
@@ -32,7 +33,7 @@ public sealed partial class BreakerFlipRule : StationEventSystem<BreakerFlipRule
         base.Started(uid, component, gameRule, args);
 
         // We take a valid station but exclude the ATS 
-        if (!TryGetRandomStation(out var chosenStation, station => !HasComp<TradeStationComponent>(station))) 
+        if (!TryGetRandomStation(out var chosenStation, uid => !HasComp<ProtectedGridComponent>(uid)))
             return;
 
         var stationApcs = new List<Entity<ApcComponent>>();
@@ -58,7 +59,7 @@ public sealed partial class BreakerFlipRule : StationEventSystem<BreakerFlipRule
 
             var stateString = apc.Comp.MainBreakerEnabled ? "Enabled" : "Disabled";
             AdminLogManager.Add(LogType.ItemConfigure, LogImpact.Medium,
-                $"{ToPrettyString(uid):user} set the main breaker state of {ToPrettyString(apc):entity} to {stateString:state}");
+                $"Station event {ToPrettyString(uid):user} set the main breaker state of {ToPrettyString(apc):entity} to {stateString:state}");
         }
     }
 }
