@@ -28,8 +28,6 @@ namespace Content.Server.Database
 
         private readonly ConcurrencySemaphore _prefsSemaphore;
 
-        private readonly Task _dbReadyTask;
-
         private int _msDelay;
 
         public ServerDbSqlite(
@@ -49,20 +47,11 @@ namespace Content.Server.Database
             var concurrency = inMemory ? 1 : cfg.GetCVar(CCVars.DatabaseSqliteConcurrency);
             _prefsSemaphore = new ConcurrencySemaphore(concurrency, synchronous);
 
-            if (synchronous)
+            DbReadyTask = Task.Run(() =>
             {
                 prefsCtx.Database.Migrate();
-                _dbReadyTask = Task.CompletedTask;
                 prefsCtx.Dispose();
-            }
-            else
-            {
-                _dbReadyTask = Task.Run(() =>
-                {
-                    prefsCtx.Database.Migrate();
-                    prefsCtx.Dispose();
-                });
-            }
+            });
 
             cfg.OnValueChanged(CCVars.DatabaseSqliteDelay, v => _msDelay = v, true);
         }
@@ -390,7 +379,7 @@ namespace Content.Server.Database
             [CallerMemberName] string? name = null)
         {
             LogDbOp(name);
-            await _dbReadyTask;
+            await DbReadyTask;
             if (_msDelay > 0)
                 await Task.Delay(_msDelay, cancel);
 
