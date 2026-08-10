@@ -227,15 +227,16 @@ public sealed partial class ClientClothingSystem : ClothingSystem
     /// <remarks>
     /// Useful for avoiding YAML redundancy with species-specific ClothingVisuals.
     /// </remarks>
-    private void CheckForSpeciesSpecificLayers(Entity<ClothingComponent> ent, SpriteComponent sprite, List<(string, PrototypeLayerData)> layers, string speciesId)
+    private void SetSpeciesSpecificLayers(Entity<ClothingComponent, SpriteComponent?> ent, string speciesId, List<(string, PrototypeLayerData)> layers)
     {
-        var clothing = ent.Comp;
+        var clothing = ent.Comp1;
+        var sprite = ent.Comp2;
         // Find fallback RSI
         RSI? baseRSI;
         if (clothing.RsiPath != null)
             baseRSI = _cache.GetResource<RSIResource>(SpriteSpecifierSerializer.TextureRoot / clothing.RsiPath).RSI;
         else
-            baseRSI = sprite.BaseRSI;
+            baseRSI = sprite?.BaseRSI;
 
         // For each layer, check that a species-specific version exists.
         foreach (var tuple in layers)
@@ -299,6 +300,9 @@ public sealed partial class ClientClothingSystem : ClothingSystem
             inventorySlots.VisualLayerKeys[slot] = revealedLayers;
         }
 
+        // Cache the clothing sprite, used later.
+        _spriteQuery.TryComp(equipment, out var clothingSprite);
+
         var ev = new GetEquipmentVisualsEvent(equipee, slot);
         RaiseLocalEvent(equipment, ev);
 
@@ -309,7 +313,7 @@ public sealed partial class ClientClothingSystem : ClothingSystem
         }
 
         if (!string.IsNullOrEmpty(inventory.SpeciesId))
-            CheckForSpeciesSpecificLayers((equipment, clothingComponent), sprite, ev.Layers, inventory.SpeciesId);
+            SetSpeciesSpecificLayers((equipment, clothingComponent, clothingSprite), inventory.SpeciesId, ev.Layers);
 
         // temporary, until layer draw depths get added. Basically: a layer with the key "slot" is being used as a
         // bookmark to determine where in the list of layers we should insert the clothing layers.
@@ -365,7 +369,7 @@ public sealed partial class ClientClothingSystem : ClothingSystem
             if (layerData.RsiPath == null
                 && layerData.TexturePath == null
                 && layer.RSI == null
-                && TryComp(equipment, out SpriteComponent? clothingSprite))
+                && clothingSprite != null)
             {
                 _sprite.LayerSetRsi(layer, clothingSprite.BaseRSI);
             }
