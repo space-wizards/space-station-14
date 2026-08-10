@@ -44,8 +44,10 @@ public sealed partial class ClumsyStatusEffectSystem : EntitySystem
             || !SharedRandomExtensions.PredictedProb(_timing, status.Comp.ClumsyChance, GetNetEntity(status), GetNetEntity(args.AppliedTo)))
             return;
 
+        // Song and dance :o|
         var ev = args.Args;
         ev.Cancelled = true;
+        args.Args = ev;
 
         if (status.Comp.FailDamage != null)
             _damageable.ChangeDamage(args.AppliedTo, status.Comp.FailDamage, origin: args.Args.Item);

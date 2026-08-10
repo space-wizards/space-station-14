@@ -40,7 +40,7 @@
   - type: ClumsyInjectorStatusEffect
     clumsySound: *SoundMonkeyScream
   - type: ClumsyVaultStatusEffect
-    clumsyChance: 0.2 # Climbing proficiency
+    clumsyChance: 0.25 # Climbing proficiency
     clumsySound: *SoundMonkeyScream
 
 # Kobolds are naked monkeys
@@ -69,7 +69,7 @@
   id: StatusEffectClumsyCluwne
   components:
   - type: ClumsyCatchStatusEffect
-    clumsyChance: &ChanceCluwne 0.8 # Even worse at everything >:o(
+    clumsyChance: &ChanceCluwne 0.75 # Even worse at everything >:o(
     clumsySound: &SoundCluwneHorn
       collection: CluwneHorn
   - type: ClumsyDefibStatusEffect
@@ -84,6 +84,22 @@
   - type: ClumsyVaultStatusEffect
     clumsyChance: *ChanceCluwne
     clumsySound: *SoundCluwneHorn
+
+# A terribler fate
+- type: entity
+  parent: [ StatusEffectClumsyAll, MobStatusEffectDebuff ]
+  id: StatusEffectClumsyGuaranteed
+  components:
+  - type: ClumsyCatchStatusEffect
+    clumsyChance: &Chance100 1
+  - type: ClumsyDefibStatusEffect
+    clumsyChance: *Chance100
+  - type: ClumsyGunStatusEffect
+    clumsyChance: *Chance100
+  - type: ClumsyInjectorStatusEffect
+    clumsyChance: *Chance100
+  - type: ClumsyVaultStatusEffect
+    clumsyChance: *Chance100
 
 # =^_^= nya!
 - type: entity

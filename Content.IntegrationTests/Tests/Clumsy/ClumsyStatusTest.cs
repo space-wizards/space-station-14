@@ -7,6 +7,7 @@ using Content.Shared.Chemistry.Events;
 using Content.Shared.Climbing.Components;
 using Content.Shared.Climbing.Events;
 using Content.Shared.Climbing.Systems;
+using Content.Shared.Clumsy;
 using Content.Shared.Medical;
 using Content.Shared.Mobs.Components;
 using Content.Shared.StatusEffectNew;
@@ -19,13 +20,14 @@ using static Content.IntegrationTests.Tests.Clumsy.ClumsyTestPrototypes;
 namespace Content.IntegrationTests.Tests.Clumsy;
 
 [TestFixture]
+[TestOf(typeof(ClumsyStatusEffectSystem))]
 public sealed class ClumsyStatusTest : InteractionTest
 {
-    public sealed class CatchListenerSystem : TestListenerSystem<CatchAttemptEvent>;
-    public sealed class ClimbListenerSystem : TestListenerSystem<SelfBeforeClimbEvent>;
-    public sealed class DefibListenerSystem : TestListenerSystem<SelfBeforeDefibrillatorZapsEvent>;
-    public sealed class GunListenerSystem : TestListenerSystem<SelfBeforeGunShotEvent>;
-    public sealed class InjectListenerSystem : TestListenerSystem<SelfBeforeInjectEvent>;
+    private sealed class CatchListenerSystem : TestListenerSystem<CatchAttemptEvent>;
+    private sealed class ClimbListenerSystem : TestListenerSystem<SelfBeforeClimbEvent>;
+    private sealed class DefibListenerSystem : TestListenerSystem<SelfBeforeDefibrillatorZapsEvent>;
+    private sealed class GunListenerSystem : TestListenerSystem<SelfBeforeGunShotEvent>;
+    private sealed class InjectListenerSystem : TestListenerSystem<SelfBeforeInjectEvent>;
 
     [SidedDependency(Side.Server)] private readonly ClimbSystem _sClimbSystem = default!;
     [SidedDependency(Side.Server)] private readonly StatusEffectsSystem _sStatusSystem = default!;
