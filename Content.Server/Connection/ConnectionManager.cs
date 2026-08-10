@@ -198,6 +198,9 @@ namespace Content.Server.Connection
 
                 //TODO:ERRANT Actually get server pops
                 // don't forget to remove _random too
+                // var i = serverRaw.IndexOf(",", StringComparison.Ordinal);
+                // var url = serverRaw[(i+1)..];
+
                 var pop = _random.Next(60,110);
                 var max = 75;
 
