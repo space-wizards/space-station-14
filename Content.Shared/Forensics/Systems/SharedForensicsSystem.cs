@@ -171,10 +171,8 @@ public sealed partial class SharedForensicsSystem : EntitySystem
         {
             foreach (var data in reagent.Reagent.EnsureReagentData())
             {
-                if (data is not DnaData dnaData)
-                    continue;
-
-                list.Add(dnaData.DNA);
+                if (data is DnaData dnaData)
+                    list.Add(dnaData.DNA);
             }
         }
         return list;
