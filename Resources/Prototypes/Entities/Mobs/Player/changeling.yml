@@ -15,6 +15,7 @@
   - type: ActionGrant
     actions:
     - ActionChangelingStore
+    - ActionChangelingStasis
   - type: Store
     balance:
       ChangelingDNA: 60

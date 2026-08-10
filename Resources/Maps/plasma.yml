@@ -77,6 +77,8 @@ entities:
     - type: GridTree
     - type: Broadphase
     - type: OccluderTree
+    - type: MapLight
+      ambientLightColor: '#543034'
     - type: Parallax
       parallax: PlasmaStation
     - type: ChunkContainer
