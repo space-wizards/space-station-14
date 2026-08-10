@@ -1,0 +1,19 @@
+- type: cargoProduct
+  id: ShuttleThrusterMedium
+  icon:
+    sprite: _DeadSpace/Structures/Shuttles/Thrusters/medium_cargo.rsi
+    state: base_cargolist
+  product: CrateEngineeringThrusterMedium
+  cost: 9000
+  category: cargoproduct-category-name-shuttle
+  group: engineering # DS14
+
+- type: cargoProduct
+  id: ShuttleThrusterLarge
+  icon:
+    sprite: _DeadSpace/Structures/Shuttles/Thrusters/large_cargo.rsi
+    state: base_cargolist
+  product: CrateEngineeringThrusterLarge
+  cost: 18000
+  category: cargoproduct-category-name-shuttle
+  group: engineering # DS14

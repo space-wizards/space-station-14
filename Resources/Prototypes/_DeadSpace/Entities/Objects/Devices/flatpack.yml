@@ -159,3 +159,33 @@
     - state: overlay
       color: "#9b59b6"
     - state: icon-default
+
+- type: entity
+  parent: BaseFlatpack
+  id: ThrusterMediumFlatpack
+  name: упаковка большого ракетного двигателя
+  description: Универсально-сборная упаковка, используемая для сборки большого ракетного двигателя.
+  components:
+  - type: Flatpack
+    entity: ThrusterMediumUnanchored
+  - type: Sprite
+    layers:
+    - state: base
+    - state: overlay
+      color: "#cec8ac"
+    - state: icon-default
+
+- type: entity
+  parent: BaseFlatpack
+  id: ThrusterLargeFlatpack
+  name: упаковка огромного ракетного двигателя
+  description: Универсально-сборная упаковка, используемая для сборки огромного ракетного двигателя.
+  components:
+  - type: Flatpack
+    entity: ThrusterLargeUnanchored
+  - type: Sprite
+    layers:
+    - state: base
+    - state: overlay
+      color: "#cec8ac"
+    - state: icon-default

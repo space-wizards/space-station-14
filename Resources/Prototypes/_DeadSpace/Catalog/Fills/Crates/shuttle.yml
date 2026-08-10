@@ -7,3 +7,25 @@
   - type: StorageFill
     contents:
     - id: GravityGenMiniFlatpack
+
+- type: entity
+  parent: CrateEngineering
+  id: CrateEngineeringThrusterMedium
+  name: ящик с большим ракетным двигателем
+  description: Содержит упаковку, при помощи которой можно создать большой ракетный двигатель.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: ThrusterMediumFlatpack
+
+- type: entity
+  parent: CrateEngineering
+  id: CrateEngineeringThrusterLarge
+  name: ящик с огромным ракетным двигателем
+  description: Содержит упаковку, при помощи которой можно создать огромный ракетный двигатель.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: ThrusterLargeFlatpack
