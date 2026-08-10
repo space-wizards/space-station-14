@@ -68,7 +68,7 @@ public abstract partial class SharedAnomalyScannerSystem : EntitySystem
         {
             DistanceThreshold = 2f,
             ExamineText = Loc.GetString(component.DoAfterExamineText, ("user", args.User)),
-            IconEntity = (new ResPath("Objects/Specific/Research/anomalyscanner.rsi"), "icon"),
+            IconEntity = new SpriteSpecifier.Rsi(new ResPath("/Textures/Objects/Specific/Research/anomalyscanner.rsi"), "icon"),
         };
         _doAfter.TryStartDoAfter(doAfterArgs);
     }

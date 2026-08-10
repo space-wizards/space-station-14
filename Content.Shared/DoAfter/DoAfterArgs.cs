@@ -56,9 +56,8 @@ public sealed partial class DoAfterArgs
     /// <summary>
     /// foo
     /// </summary>
-    [NonSerialized]
     [DataField]
-    public (ResPath?, string) IconEntity;
+    public SpriteSpecifier? IconEntity;
 
     #region Event options
     /// <summary>

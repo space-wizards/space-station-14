@@ -182,15 +182,13 @@ public sealed class DoAfterOverlay : Overlay
                 offset += _barTexture.Height / scale;
 
                 // Here starts code responsible for the transparent icon of something with that player interacts
-                if (doAfter.Args.IconEntity.Item1 is null)
+                if (doAfter.Args.IconEntity is null)
                     continue;
 
-                var fire = _resourceCache.GetResource<RSIResource>(doAfter.Args.IconEntity.Item1.Value).RSI;
+                var tex = _sprite.Frame0(doAfter.Args.IconEntity);
+                var iconPosition = position with { X = position.X + 0.6f, Y = position.Y - 0.45f };
 
-                if (!fire.TryGetState(new RSI.StateId(doAfter.Args.IconEntity.Item2), out var state))
-                    continue;
-
-                handle.DrawTexture(state.Frame0, position, Color.White.WithAlpha(IconColorAlpha));
+                handle.DrawTexture(tex, iconPosition, Color.White.WithAlpha(IconColorAlpha));
             }
         }
 
