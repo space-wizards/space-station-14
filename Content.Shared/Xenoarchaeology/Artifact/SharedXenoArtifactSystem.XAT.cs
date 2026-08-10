@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Shared.Chemistry;
-using Content.Shared.Damage;
 using Content.Shared.Damage.Events;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Electrocution;
@@ -21,7 +20,7 @@ public abstract partial class SharedXenoArtifactSystem
 {
     private void InitializeXAT()
     {
-        XATRelayLocalEvent<DamageChangedEvent>();
+        XATRelayLocalEvent<DamageDealtEvent>();
         XATRelayLocalEvent<InteractUsingEvent>();
         XATRelayLocalEvent<PullStartedMessage>();
         XATRelayLocalEvent<AttackedEvent>();
@@ -33,7 +32,7 @@ public abstract partial class SharedXenoArtifactSystem
         XATRelayLocalEvent<XATInteractWithDoAfterEvent>();
         XATRelayLocalEvent<ElectrocutionAttemptEvent>();
         XATRelayLocalEvent<StartCollideEvent>();
-        XATRelayLocalEvent<AttemptHitscanRaycastStrikeEvent>();
+        XATRelayLocalEvent<HitscanRaycastStrikeEvent>();
         XATRelayLocalEvent<BeforeStaminaDamageEvent>();
 
         // special case this one because we need to order the messages
