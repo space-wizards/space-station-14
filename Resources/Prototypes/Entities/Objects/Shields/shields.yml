@@ -14,51 +14,34 @@
       size: Ginormous
     - type: Blocking
       passiveBlockModifier:
-        coefficients:
-          Blunt: 0.9
-          Slash: 0.9
-          Piercing: 0.9
-          Heat: 0.9
-      activeBlockModifier:
-        coefficients:
-          Blunt: 0.8
-          Slash: 0.8
-          Piercing: 0.8
-          Heat: 0.8
         flatReductions:
-          Blunt: 1
-          Slash: 1
-          Piercing: 1
-          Heat: 1
+          Blunt: 10
+          Slash: 10
+          Piercing: 10
+          Heat: 10
     - type: Damageable
       damageContainer: Shield
     - type: ExaminableDamage
       messages: ShieldMessages
     - type: Destructible
       thresholds:
-#        - trigger:
-#            !type:DamageTrigger
-#            damage: 140
-#          behaviors:
-#            - !type:DoActsBehavior
-#              acts: [ "Destruction" ]
-        - trigger:
-            !type:DamageTrigger
-            damage: 220 #DS14 curse 220
-          behaviors:
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
-            - !type:PlaySoundBehavior
-              sound:
-                collection: MetalBreak
-            - !type:SpawnEntitiesBehavior
-              spawn:
-                SheetSteel:
-                  min: 2
-                  max: 2
-                SheetGlass:
-                  min: 2
-                  max: 2
+      - trigger:
+          !type:DamageTrigger
+          damage: 220 #This is probably enough damage before it breaks
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SheetSteel:
+              min: 2
+              max: 2
+            SheetGlass:
+              min: 2
+              max: 2
     - type: StaticPrice
       price: 100
     #DS14-Start
@@ -124,26 +107,21 @@
       - suitStorage
     - type: Blocking
       passiveBlockModifier:
-        coefficients:
-          Blunt: 0.7
-          Slash: 0.7
-      activeBlockModifier:
-        coefficients:
-          Blunt: 0.5
-          Slash: 0.5
         flatReductions:
-          Blunt: 1
-          Slash: 1
+          Blunt: 15
+          Slash: 15
+          Piercing: 5
+          Heat: 5
     #DS14-Start
     - type: ShieldDash
-      damage: 
+      damage:
         types:
           Blunt: 10
-      damageToShield: 
+      damageToShield:
         types:
             Blunt: 110
       staminaDamage: 60
-      staminaDamageToUser: 30   
+      staminaDamageToUser: 30
     #DS14-End
 
 - type: entity
@@ -165,13 +143,11 @@
       - suitStorage
     - type: Blocking
       passiveBlockModifier:
-        coefficients:
-          Heat: 0.7
-      activeBlockModifier:
-        coefficients:
-          Heat: 0.5
         flatReductions:
-          Heat: 1
+          Blunt: 5
+          Slash: 10
+          Piercing: 5
+          Heat: 20
 
 - type: entity
   name: ballistic shield
@@ -192,23 +168,21 @@
       - suitStorage
     - type: Blocking
       passiveBlockModifier:
-        coefficients:
-          Piercing: 0.7
-      activeBlockModifier:
-        coefficients:
-          Piercing: 0.5
         flatReductions:
-          Piercing: 1
+          Blunt: 10
+          Slash: 5
+          Piercing: 20
+          Heat: 5
     #DS14-Start
     - type: ShieldDash
-      damage: 
+      damage:
         types:
           Blunt: 10
-      damageToShield: 
+      damageToShield:
         types:
             Blunt: 110
       staminaDamage: 60
-      staminaDamageToUser: 30   
+      staminaDamageToUser: 30
     #DS14-End
 
 #Craftable shields
@@ -232,58 +206,42 @@
       - suitStorage
     - type: Blocking
       passiveBlockModifier:
-        coefficients:
-          Blunt: 0.95
-          Slash: 0.95
-          Piercing: 0.95
-          Heat: 2
-      activeBlockModifier:
-        coefficients:
-          Blunt: 0.85
-          Slash: 0.85
-          Piercing: 0.85
-          Heat: 2
         flatReductions:
-          Blunt: 1
-          Slash: 1
-          Piercing: 1
+          Blunt: 5
+          Slash: 5
+          Piercing: 5
+          Heat: 5
     - type: Construction
       graph: WoodenBuckler
       node: woodenBuckler
     - type: Destructible
       thresholds:
-        - trigger:
-            !type:DamageTrigger
-            damage: 60
-          behaviors:
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
-        - trigger:
-            !type:DamageTrigger
-            damage: 30 #Weaker shield
-          behaviors:
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
-            - !type:PlaySoundBehavior
-              sound:
-                collection: WoodDestroy
-            - !type:SpawnEntitiesBehavior
-              spawn:
-                MaterialWoodPlank:
-                  min: 5
-                  max: 5
+      - trigger:
+          !type:DamageTrigger
+          damage: 75 #Weaker shield
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:PlaySoundBehavior
+          sound:
+            collection: WoodDestroy
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            MaterialWoodPlank:
+              min: 5
+              max: 5
     - type: StaticPrice
       price: 150
     #DS14-Start
     - type: ShieldDash
-      damage: 
+      damage:
         types:
           Blunt: 5
-      damageToShield: 
+      damageToShield:
         types:
             Blunt: 30
       staminaDamage: 60
-      staminaDamageToUser: 30   
+      staminaDamageToUser: 30
     #DS14-End
 
 - type: entity
@@ -299,19 +257,11 @@
       heldPrefix: cardshield
     - type: Blocking
       passiveBlockModifier:
-        coefficients:
-          Blunt: 1
-          Slash: 2
-          Piercing: 0.6
-          Heat: 3
-      activeBlockModifier:
-        coefficients:
-          Blunt: 0.9
-          Slash: 1.8
-          Piercing: 0.5
-          Heat: 2.5
         flatReductions:
-          Blunt: 0.5
+          Blunt: 1
+          Slash: 1
+          Piercing: 1
+          Heat: 1
     - type: Construction
       graph: CardShield
       node: cardShield
@@ -319,13 +269,7 @@
       thresholds:
       - trigger:
           !type:DamageTrigger
-          damage: 25
-        behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-      - trigger:
-          !type:DamageTrigger
-          damage: 10 #Very very weak shield
+          damage: 25 #Very very weak shield
         behaviors:
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
@@ -351,59 +295,35 @@
     - type: Item
       sprite: Objects/Weapons/Melee/shields.rsi
       heldPrefix: metal
-    - type: Blocking
-      passiveBlockModifier:
-        coefficients:
-          Blunt: 0.95
-          Slash: 0.95
-          Piercing: 0.95
-          Heat: 0.9
-      activeBlockModifier:
-        coefficients:
-          Blunt: 0.85
-          Slash: 0.85
-          Piercing: 0.85
-          Heat: 0.8
-        flatReductions:
-          Blunt: 0.5
-          Slash: 0.5
-          Piercing: 0.5
-          Heat: 1
     - type: Construction
       graph: MakeshiftShield
       node: makeshiftShield
     - type: Destructible
       thresholds:
-        - trigger:
-            !type:DamageTrigger
-            damage: 40
-          behaviors:
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
-        - trigger:
-            !type:DamageTrigger
-            damage: 20 #Very weak shield
-          behaviors:
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
-            - !type:PlaySoundBehavior
-              sound:
-                collection: MetalBreak
-            - !type:SpawnEntitiesBehavior
-              spawn:
-                SheetSteel:
-                  min: 1
-                  max: 2
+      - trigger:
+          !type:DamageTrigger
+          damage: 75
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SheetSteel:
+              min: 1
+              max: 2
     #DS14-Start
     - type: ShieldDash
-      damage: 
+      damage:
         types:
           Blunt: 5
-      damageToShield: 
+      damageToShield:
         types:
             Blunt: 20
       staminaDamage: 60
-      staminaDamageToUser: 30   
+      staminaDamageToUser: 30
     #DS14-End
 
 - type: entity
@@ -420,44 +340,28 @@
       heldPrefix: icon
     - type: Blocking
       passiveBlockModifier:
-        coefficients:
-          Blunt: 0.95
-          Slash: 0.95
-          Piercing: 0.95
-      activeBlockModifier:
-        coefficients:
-          Blunt: 0.85
-          Slash: 0.85
-          Piercing: 0.85
         flatReductions:
-          Blunt: 0.5
-          Slash: 0.5
-          Piercing: 0.5
+          Blunt: 5
+          Piercing: 1 # Scar told me to.
     - type: Construction
       graph: WebObjects
       node: shield
     - type: Destructible
       thresholds:
-        - trigger:
-            !type:DamageTrigger
-            damage: 40
-          behaviors:
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
-        - trigger:
-            !type:DamageTrigger
-            damage: 20
-          behaviors:
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
-            - !type:SpawnEntitiesBehavior
-              spawn:
-                MaterialWebSilk:
-                  min: 1
-                  max: 1
-            - !type:PlaySoundBehavior
-              sound:
-                collection: WoodDestroy
+      - trigger:
+          !type:DamageTrigger
+          damage: 50
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            MaterialWebSilk:
+              min: 1
+              max: 1
+        - !type:PlaySoundBehavior
+          sound:
+            collection: WoodDestroy
 
 #Magic/Cult Shields (give these to wizard for now)
 
@@ -471,8 +375,8 @@
       sprite: Objects/Weapons/Melee/ratvarian-shield.rsi
       state: icon
     - type: Item
+      heldPrefix: ratvarian
       sprite: Objects/Weapons/Melee/ratvarian-shield.rsi
-      heldPrefix: icon
     - type: Clothing
       sprite: Objects/Weapons/Melee/ratvarian-shield.rsi
       quickEquip: false
@@ -519,11 +423,11 @@
                   min: 1
                   max: 2
     - type: ShieldDash
-      damage: 
+      damage:
         types:
           Blunt: 15
           Piercing: 5
-      damageToShield: 
+      damageToShield:
         types:
             Blunt: 25
       staminaDamage: 60
@@ -549,46 +453,40 @@
     - type: Blocking #Mirror shield reflects heat/laser, but is relatively weak to everything else.
       passiveBlockModifier:
         coefficients:
-          Blunt: 1.2
-          Slash: 1.2
-          Piercing: 1.2
-          Heat: .7
-      activeBlockModifier:
-        coefficients:
-          Blunt: 1.2
-          Slash: 1.2
-          Piercing: 1.2
-          Heat: .6
+          Heat: 0.5
         flatReductions:
-          Heat: 1
+          Blunt: 5
+          Slash: 10
+          Piercing: 5
+          Heat: 25
       blockSound: !type:SoundPathSpecifier
         path: /Audio/Effects/glass_step.ogg
     - type: Destructible
       thresholds:
-        - trigger:
-            !type:DamageTrigger
-            damage: 40
-          behaviors:
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
-            - !type:PlaySoundBehavior
-              sound:
-                collection: GlassBreak
-            - !type:SpawnEntitiesBehavior
-              spawn:
-                SheetGlass:
-                  min: 5
-                  max: 5
+      - trigger:
+          !type:DamageTrigger
+          damage: 50
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:PlaySoundBehavior
+          sound:
+            collection: GlassBreak
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SheetGlass:
+              min: 5
+              max: 5
     #DS14-Start
     - type: ShieldDash
-      damage: 
+      damage:
         types:
           Blunt: 20
-      damageToShield: 
+      damageToShield:
         types:
             Blunt: 10
       staminaDamage: 60
-      staminaDamageToUser: 30   
+      staminaDamageToUser: 30
     #DS14-End
 
 - type: entity
@@ -654,19 +552,12 @@
     - type: Blocking
       passiveBlockModifier:
         coefficients:
-          Blunt: 1.0
-          Slash: 0.9
-          Piercing: 0.85
-          Heat: 0.6
-      activeBlockModifier:
-        coefficients:
-          Blunt: 1.2
-          Slash: 0.85
-          Piercing: 0.5
-          Heat: 0.4
+          Heat: 0.5
         flatReductions:
-          Heat: 1
-          Piercing: 1
+          Blunt: 5
+          Piercing: 10
+          Slash: 5
+          Heat: 25
     - type: Appearance
     - type: Damageable
       damageContainer: Shield
@@ -674,26 +565,20 @@
       messages: EnergyShieldMessages
     - type: Destructible
       thresholds:
-#        - trigger:
-#            !type:DamageTrigger
-#            damage: 180
-#          behaviors:
-#            - !type:DoActsBehavior
-#              acts: [ "Destruction" ]
-        - trigger:
-            !type:DamageTrigger
-            damage: 260 #DS14 no curse 220((
-          behaviors:
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
-            - !type:PlaySoundBehavior
-              sound:
-                collection: GlassBreak
-            - !type:SpawnEntitiesBehavior
-              spawn:
-                BrokenEnergyShield:
-                  min: 1
-                  max: 1
+      - trigger:
+          !type:DamageTrigger
+          damage: 260
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:PlaySoundBehavior
+          sound:
+            collection: GlassBreak
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            BrokenEnergyShield:
+              min: 1
+              max: 1
     - type: StaticPrice
       price: 350
     #DS14-Start
@@ -804,11 +689,11 @@
     - type: StaticPrice
       price: 150
     - type: ShieldDash
-      damage: 
+      damage:
         types:
           Blunt: 20
-      damageToShield: 
+      damageToShield:
         types:
             Blunt: 60
       staminaDamage: 60
-      staminaDamageToUser: 30     
+      staminaDamageToUser: 30
