@@ -270,6 +270,9 @@
   - type: Fiber
     fiberColor: fibers-gunpowder-white
   - type: FingerGuns
+  - type: TransformableItem
+    prototype: WeaponFingerGunsGun
+    containerId: finger_gun
   - type: ContainerContainer
     containers:
       finger_gun: !type:ContainerSlot
@@ -284,6 +287,8 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: FingerGunsGun
+  - type: TransformableItem
+    containerId: finger_glove
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/fingerguns.rsi
     layers:
