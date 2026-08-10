@@ -99,7 +99,7 @@
       effects:
       - !type:Emote
         emote: Cough
-        showInChat: true
+        showInChat: false
         showInGuidebook: true
         probability: 0.05
   reactiveEffects:

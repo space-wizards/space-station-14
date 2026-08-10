@@ -17,7 +17,7 @@ public sealed partial class EmoteEntityEffectSystem : EntityEffectSystem<MetaDat
         if (args.Effect.ShowInChat)
             _chat.TryEmoteWithChat(entity, args.Effect.EmoteId, ChatTransmitRange.GhostRangeLimit, forceEmote: args.Effect.Force);
         else
-            _chat.TryEmoteWithoutChat(entity, args.Effect.EmoteId);
+            _chat.TryEmoteWithChat(entity, args.Effect.EmoteId, ChatTransmitRange.HideChat, forceEmote: args.Effect.Force);
     }
 }
 
