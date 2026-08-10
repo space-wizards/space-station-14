@@ -28,7 +28,7 @@
   - type: Storage
     maxItemSize: Huge
     grid:
-    - 0,0,12,6
+    - 0,0,11,6
   - type: StorageFill
     contents:
     - id: ClothingBeltPrometheus3
@@ -46,8 +46,6 @@
     - id: RockGuitarPrometheus3
     - id: MedkitCombatPrometheus3
     - id: PaperPrometheus3
-    - id: DefibrillatorPrometheus3
-    - id: HypoPrometheus3
   - type: Tag
     tags: [ ] # ignore "WhitelistChameleon" tag
 
@@ -72,13 +70,15 @@
   - type: Storage
     maxItemSize: Normal
     grid:
-    - 0,0,3,1
+    - 0,0,6,1
   - type: StorageFill
     contents:
     - id: MedicatedSuture
       amount: 2
     - id: RegenerativeMesh
     - id: Bloodpack
+    - id: DefibrillatorPrometheus3
+    - id: HypoPrometheus3
 
 # DEFIBRILLATOR
 - type: entity
@@ -183,12 +183,14 @@
   - type: Storage
     maxItemSize: Normal
     grid:
-    - 0,0,7,1
+    - 0,0,8,1
+  - type: ExplosionResistance
+    damageCoefficient: 0.1
   - type: StorageFill
     contents:
-    - id: PowerDrillPrometheus3
+    - id: SyndicatePowerDrill
     - id: JawsOfLifePrometheus3
-    - id: WelderExperimentalPrometheus3
+    - id: SyndicateWelderExperimental
     - id: Multitool
     - id: ESwordPrometheus3
   - type: Tag
@@ -249,6 +251,8 @@
       - state: inhand-right-blade
         shader: unshaded
   - type: ItemTogglePointLight
+  - type: DisarmMalus
+    malus: 0
   - type: StaminaDamageOnHit
     damage: 0
   - type: SwitchableWeapon
@@ -283,7 +287,7 @@
 
 # MASK
 - type: entity
-  parent: ClothingMaskGasSecurity
+  parent: ClothingMaskGasSyndicate
   id: ClothingMaskGasPrometheus3
   name: тактический противогаз «BlackOps»
   description: Оснащен улучшенным фильтром и дополнительной броней. Фильтрует не только воздух, но и речь.
@@ -298,8 +302,11 @@
     sprite: _DeadSpace/Sponsor/Prometheus3/mask.rsi
   - type: TypingIndicatorClothing
     proto: TypingIndicatorPrometheus3
+  - type: ZombificationResistance
+    zombificationResistanceCoefficient: 0.9
   - type: VirusResistance
     virusResistanceCoefficient: 0.1
+  - type: EyeProtection
   - type: Tag
     tags: [ ] # ignore "WhitelistChameleon" tag
 
@@ -406,52 +413,8 @@
           state: syn_jaws_cutter
         useSound: /Audio/Items/jaws_cut.ogg
         changeSound: /Audio/Items/change_jaws.ogg
-
-# tools_powerdrill.rsi
-- type: entity
-  parent: PowerDrill
-  id: PowerDrillPrometheus3
-  name: кроваво-красная дрель
-  categories: [ HideSpawnMenu ]
-  description: Простая электрическая ручная дрель.
-  components:
-  - type: Sprite
-    sprite: _DeadSpace/Objects/Tools/drill_taipan.rsi
-    state: drill_screw
-  - type: Item
-    sprite: _DeadSpace/Objects/Tools/drill_taipan.rsi
-    size: Small
-  - type: MultipleTool
-    statusShowBehavior: true
-    entries:
-      - behavior: Screwing
-        sprite:
-          sprite: _DeadSpace/Objects/Tools/drill_taipan.rsi
-          state: drill_screw
-        useSound:
-          path: /Audio/Items/drill_use.ogg
-        changeSound:
-          path: /Audio/Items/change_drill.ogg
-      - behavior: Anchoring
-        sprite:
-          sprite: _DeadSpace/Objects/Tools/drill_taipan.rsi
-          state: drill_bolt
-        useSound:
-          path: /Audio/Items/drill_use.ogg
-        changeSound:
-          path: /Audio/Items/change_drill.ogg
-
-# tools_welder.rsi
-- type: entity
-  parent: WelderExperimental
-  id: WelderExperimentalPrometheus3
-  name: кроваво-красный сварочный аппарат
-  description: Промышленная сварка с двойным топливным баком.
-  components:
-  - type: Sprite
-    sprite: _DeadSpace/Objects/Tools/welder_industrial_taipan.rsi
-  - type: Item
-    sprite: _DeadSpace/Objects/Tools/welder_industrial_taipan.rsi
+  - type: Prying
+    speedModifier: 3.0
 
 # MEDIPEN
 - type: entity
@@ -500,7 +463,6 @@
       - state: base-colorA-inhand-right
         color: "#439822"
       - state: base-colorB-inhand-right
-    size: Small
 
 # EMERGENCYBOX
 - type: entity
@@ -532,11 +494,11 @@
   - type: Appearance
   - type: StorageFill
     contents:
+    - id: ClothingMaskGasPrometheus3
     - id: DoubleEmergencyOxygenTankFilled
     - id: EmergencyMedipenPrometheus3
     - id: FoodSnackNutribrick
     - id: DrinkMREFlask
-    - id: ClothingMaskGasPrometheus3
 
 # HEADSET
 - type: entity
@@ -574,17 +536,17 @@
   - type: Item
     size: Huge
   - type: PressureProtection
-    highPressureMultiplier: 0.05
+    highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
   - type: TemperatureProtection
-    heatingCoefficient: 0.01
-    coolingCoefficient: 0.01
+    heatingCoefficient: 0.001
+    coolingCoefficient: 0.001
   - type: Armor
     modifiers:
       coefficients:
         Blunt: 0.5
         Slash: 0.5
-        Piercing: 0.6
+        Piercing: 0.55
         Heat: 0.5
         Cold: 0.5
         Radiation: 0.5
@@ -592,9 +554,9 @@
   - type: ExplosionResistance
     damageCoefficient: 0.5
   - type: FireProtection
-    reduction: 0.6
+    reduction: 0.5
   - type: StaminaResistance
-    damageCoefficient: 0.6
+    damageCoefficient: 0.55
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.9
@@ -649,7 +611,7 @@
 
 # GLASSES
 - type: entity
-  parent: ClothingEyesHudAdvanced
+  parent: [ ClothingEyesGlassesMeson, ClothingEyesPNVAdv ]
   id: ClothingVisorPrometheus3
   name: визор «BlackOps»
   description: Улучшенный визор с несколькими встроенными сканерами. X-ray отсутствует.
@@ -663,6 +625,7 @@
   - type: Clothing
     sprite: _DeadSpace/Sponsor/Prometheus3/glasses.rsi
   - type: EyeProtection
+  - type: SolutionScanner
   - type: IdentityBlocker
     coverage: EYES
   - type: Tag
@@ -715,6 +678,9 @@
     canFoldInsideContainer: true
     unfoldVerbText: unfold-verb-prometheus3
     foldVerbText: fold-verb-prometheus3
+  - type: TemperatureProtection
+    heatingCoefficient: 1.1
+    coolingCoefficient: 0.1
   - type: Appearance
 
 # CIGAR
@@ -793,6 +759,24 @@
     sprite: _DeadSpace/Sponsor/Prometheus3/boots.rsi
   - type: Clothing
     sprite: _DeadSpace/Sponsor/Prometheus3/boots.rsi
+  - type: Matchbox
+  - type: ContainerContainer
+    containers:
+      item: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      item:
+        name: clothing-boots-sidearm
+        priority: 4
+        whitelist:
+          tags:
+          - Knife
+          - Sidearm
+  - type: TemperatureProtection
+    heatingCoefficient: 1.025
+    coolingCoefficient: 0.5
+  - type: ClothingSlowOnDamageModifier
+    modifier: 0.5
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
 
@@ -803,6 +787,11 @@
   name: боксеры ядерного оперативника
   description: Армированное нижнее бельё ядерного оперативника.
   categories: [ HideSpawnMenu ]
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.99
 
 # GUITAR
 - type: entity
