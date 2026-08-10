@@ -18,9 +18,9 @@ public abstract partial class SharedSericultureSystem : EntitySystem
     [Dependency] private INetManager _netManager = default!;
 
     // Systems
+    [Dependency] private SatiationSystem _satiation = default!;
     [Dependency] private SharedActionsSystem _actionsSystem = default!;
     [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private SatiationSystem _satiation = default!;
     [Dependency] private SharedPopupSystem _popupSystem = default!;
     [Dependency] private SharedStackSystem _stackSystem = default!;
 
