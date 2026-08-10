@@ -55,7 +55,6 @@
       types:
         Heat: 7
 
-
 - type: entity
   parent: LaserHitscanBase
   id: RedLaser
