@@ -1,3 +1,4 @@
+using Content.Shared.DeviceNetwork;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Radio;
@@ -21,7 +22,7 @@ public sealed partial class RadioChannelPrototype : IPrototype
     public char KeyCode { get; private set; } = '\0';
 
     [DataField("frequency")]
-    public int Frequency { get; private set; } = 0;
+    public DeviceFrequency Frequency { get; private set; } = 1;
 
     [DataField("color")]
     public Color Color { get; private set; } = Color.Lime;

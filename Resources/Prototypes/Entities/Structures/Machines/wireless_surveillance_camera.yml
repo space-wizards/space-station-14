@@ -7,7 +7,7 @@
   components:
     - type: InteractionOutline
     - type: Eye
-    - type: WirelessNetworkConnection
+    - type: WirelessNetwork
       range: 200
     - type: Damageable
       damageModifierSet: Metallic

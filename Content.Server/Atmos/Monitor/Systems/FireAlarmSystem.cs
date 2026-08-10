@@ -3,8 +3,8 @@ using Content.Server.Power.EntitySystems;
 using Content.Shared.Access.Systems;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.CCVar;
+using Content.Shared.DeviceConfigurator;
 using Content.Shared.DeviceNetwork.Components;
-using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Emag.Systems;
 using Robust.Shared.Configuration;
@@ -28,7 +28,7 @@ public sealed partial class FireAlarmSystem : EntitySystem
         SubscribeLocalEvent<FireAlarmComponent, GotEmaggedEvent>(OnEmagged);
     }
 
-    private void OnDeviceListSync(EntityUid uid, FireAlarmComponent component, DeviceListUpdateEvent args)
+    private void OnDeviceListSync(EntityUid uid, FireAlarmComponent component, ref DeviceListUpdateEvent args)
     {
         foreach (var device in args.OldDevices)
         {
@@ -37,7 +37,7 @@ public sealed partial class FireAlarmSystem : EntitySystem
                 continue;
             }
 
-            _atmosDevNet.Deregister(uid, deviceNet.Address);
+            _atmosDevNet.Deregister(uid, deviceNet.Data.AddressId);
         }
 
         _atmosDevNet.Register(uid, null);

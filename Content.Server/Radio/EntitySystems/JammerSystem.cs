@@ -1,3 +1,4 @@
+using Content.Shared.DeviceNetwork;
 using Content.Shared.Radio.EntitySystems;
 using Content.Shared.Radio.Components;
 
@@ -27,7 +28,7 @@ public sealed partial class JammerSystem : SharedJammerSystem
             args.Cancelled = true;
     }
 
-    private bool ShouldCancel(EntityUid sourceUid, int frequency)
+    private bool ShouldCancel(EntityUid sourceUid, DeviceFrequency frequency)
     {
         var source = Transform(sourceUid).Coordinates;
         var query = EntityQueryEnumerator<ActiveRadioJammerComponent, RadioJammerComponent, TransformComponent>();
