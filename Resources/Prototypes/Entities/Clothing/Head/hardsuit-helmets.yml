@@ -732,7 +732,7 @@
       head-vox:
       - state: equipped-head-vox
       - state: equipped-head-unshaded-vox
-        shader: unshadedExpand commentComment on lines R795 to R818Resolved
+        shader: unshaded
       head-vulpkanin:
       - state: equipped-head-vulpkanin
       - state: equipped-head-unshaded-vulpkanin
