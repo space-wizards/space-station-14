@@ -184,7 +184,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             return;
 
         var msg = new FormattedMessage();
-        var examined = new HashSet<string>();
+        var examined = new HashSet<string>(ent.Comp.DoAfters.Count);
 
         foreach (var doAfter in ent.Comp.DoAfters.Values)
         {
