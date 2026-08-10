@@ -6064,3 +6064,10 @@ Entries:
   changes:
   - type: Tweak
     message: Время на гостроли АПБТ.
+- id: 583
+  author: pe4enkakris
+  time: '2026-08-10T17:39:53.097314+00:00'
+  pr: 2124
+  changes:
+  - type: Add
+    message: 40 структурного урона тенедемону за удар.
