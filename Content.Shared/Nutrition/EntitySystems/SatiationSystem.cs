@@ -36,9 +36,12 @@ public sealed partial class SatiationSystem : EntitySystem
         var query = EntityQueryEnumerator<SatiationComponent>();
         while (query.MoveNext(out var uid, out var component))
         {
-            Entity<SatiationComponent> entity = (uid, component);
-            foreach (var (satiation, proto) in GetSatiationsAndTypes(entity))
+            var entity = new Entity<SatiationComponent>(uid, component);
+            foreach (var satiation in component.Satiations.Values)
             {
+                if (!ProtoMan.Resolve(satiation.Prototype, out var proto))
+                    continue;
+
                 if (_timing.CurTime >= satiation.NextAlertUpdateTime)
                 {
                     UpdateAlerts(entity, satiation, proto);
@@ -81,8 +84,11 @@ public sealed partial class SatiationSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnShutdown(Entity<SatiationComponent> entity, ref ComponentShutdown args)
     {
-        foreach (var (_, proto) in GetSatiationsAndTypes(entity))
+        foreach (var satiation in entity.Comp.Satiations.Values)
         {
+            if (!ProtoMan.Resolve(satiation.Prototype, out var proto))
+                continue;
+
             _alerts.ClearAlertCategory(entity.Owner, proto.AlertCategory);
         }
     }
@@ -114,21 +120,6 @@ public sealed partial class SatiationSystem : EntitySystem
             return null;
 
         return (satiation, proto);
-    }
-
-    /// <summary>
-    /// Similar to <see cref="GetAndResolveSatiationOfType"/>, this helper returns all <see cref="Satiation"/>s on
-    /// <paramref name="satiations"/> along with their corresponding <see cref="SatiationPrototype"/>s.
-    /// </summary>
-    private IEnumerable<(Satiation, SatiationPrototype)> GetSatiationsAndTypes(SatiationComponent satiations)
-    {
-        foreach (var satiation in satiations.Satiations.Values)
-        {
-            if (!ProtoMan.Resolve(satiation.Prototype, out var proto))
-                continue;
-
-            yield return (satiation, proto);
-        }
     }
 
     /// <summary>
