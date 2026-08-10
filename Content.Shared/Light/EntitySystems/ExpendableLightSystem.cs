@@ -29,18 +29,6 @@ public sealed partial class ExpendableLightSystem : EntitySystem
 
     private static readonly ProtoId<TagPrototype> TrashTag = "Trash";
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<ExpendableLightComponent, ComponentInit>(OnExpLightInit);
-        SubscribeLocalEvent<ExpendableLightComponent, UseInHandEvent>(OnExpLightUse);
-        SubscribeLocalEvent<ExpendableLightComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<ExpendableLightComponent, GetVerbsEvent<ActivationVerb>>(AddIgniteVerb);
-        SubscribeLocalEvent<ExpendableLightComponent, RefreshNameModifiersEvent>(OnRefreshNameModifiers);
-        SubscribeLocalEvent<ExpendableLightComponent, ComponentShutdown>(OnLightShutdown);
-    }
-
     public override void Update(float frameTime)
     {
         var query = EntityQueryEnumerator<ExpendableLightComponent>();
@@ -118,6 +106,7 @@ public sealed partial class ExpendableLightSystem : EntitySystem
         return true;
     }
 
+    [SubscribeLocalEvent]
     private void OnInteractUsing(EntityUid uid, ExpendableLightComponent component, ref InteractUsingEvent args)
     {
         if (args.Handled) return;
@@ -152,6 +141,8 @@ public sealed partial class ExpendableLightSystem : EntitySystem
         _stackSystem.ReduceCount((args.Used, stack), 1);
         args.Handled = true;
     }
+
+    [SubscribeLocalEvent]
     private void OnRefreshNameModifiers(Entity<ExpendableLightComponent> entity, ref RefreshNameModifiersEvent args)
     {
         if (entity.Comp.CurrentState is ExpendableLightState.Dead)
@@ -216,6 +207,7 @@ public sealed partial class ExpendableLightSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnExpLightInit(EntityUid uid, ExpendableLightComponent component, ComponentInit args)
     {
         if (TryComp<ItemComponent>(uid, out var item))
@@ -226,6 +218,7 @@ public sealed partial class ExpendableLightSystem : EntitySystem
         component.CurrentState = ExpendableLightState.BrandNew;
     }
 
+    [SubscribeLocalEvent]
     private void OnExpLightUse(Entity<ExpendableLightComponent> ent, ref UseInHandEvent args)
     {
         if (args.Handled)
@@ -235,6 +228,7 @@ public sealed partial class ExpendableLightSystem : EntitySystem
             args.Handled = true;
     }
 
+    [SubscribeLocalEvent]
     private void AddIgniteVerb(Entity<ExpendableLightComponent> ent, ref GetVerbsEvent<ActivationVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract)
@@ -253,6 +247,7 @@ public sealed partial class ExpendableLightSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
+    [SubscribeLocalEvent]
     private void OnLightShutdown(EntityUid uid, ExpendableLightComponent component, ComponentShutdown args)
     {
         component.PlayingStream = _audio.Stop(component.PlayingStream);
