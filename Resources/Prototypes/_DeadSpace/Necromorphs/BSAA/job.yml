@@ -100,9 +100,12 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 201600 # 56 hours
+      time: 252000 # 70 hours
     - !type:OverallPlaytimeRequirement
-      time: 3096000 # 860 hours
+      time: 1944000 # 540 hours
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 36000 # 10 hours
   icon: "JobIconBSAAFighter"
   supervisors: job-supervisors-centcom
   canBeAntag: false
@@ -128,7 +131,7 @@
       department: Command
       time: 144000 # 40 hours
     - !type:OverallPlaytimeRequirement
-      time: 3096000 # 860 hours
+      time: 1944000 # 540 hours
   icon: "JobIconBSAALeader"
   supervisors: job-supervisors-centcom
   canBeAntag: false
@@ -146,12 +149,12 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 201600 # 56 hours
+      time: 216000 # 60 hours
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 201600 # 56 hours
+      time: 216000 # 60 hours
     - !type:OverallPlaytimeRequirement
-      time: 3096000 # 860 hours
+      time: 1944000 # 540 hours
   icon: "JobIconBSAAMedic"
   supervisors: job-supervisors-centcom
   canBeAntag: false
@@ -169,12 +172,12 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 201600 # 56 hours
+      time: 216000 # 60 hours
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 1440000 # doxuia
+      time: 360000 # 100 hours
     - !type:OverallPlaytimeRequirement
-      time: 3096000 # 860 hours
+      time: 1944000 # 540 hours
   icon: "JobIconBSAASpecialist"
   supervisors: job-supervisors-centcom
   canBeAntag: false
@@ -192,12 +195,12 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 201600 # 56 hours
+      time: 216000 # 60 hours
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 1440000 # doxuia
+      time: 252000 # 70 hours
     - !type:OverallPlaytimeRequirement
-      time: 3096000 # 860 hours
+      time: 1944000 # 540 hours
   icon: "JobIconBSAAFlamer"
   supervisors: job-supervisors-centcom
   canBeAntag: false
@@ -211,7 +214,7 @@
 
 - type: playTimeTracker
   id: JobBSAALeader
-  
+
 - type: playTimeTracker
   id: JobBSAAMedic
 
