@@ -1,5 +1,4 @@
 using Content.Shared.Actions;
-using Content.Shared.Cloning.Events;
 using Content.Shared.DoAfter;
 using Content.Shared.Nutrition.EntitySystems;
 using Robust.Shared.Serialization;
@@ -21,7 +20,7 @@ public abstract partial class SharedSericultureSystem : EntitySystem
     // Systems
     [Dependency] private SharedActionsSystem _actionsSystem = default!;
     [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private HungerSystem _hungerSystem = default!;
+    [Dependency] private SatiationSystem _satiation = default!;
     [Dependency] private SharedPopupSystem _popupSystem = default!;
     [Dependency] private SharedStackSystem _stackSystem = default!;
 
@@ -46,18 +45,16 @@ public abstract partial class SharedSericultureSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnSericultureStart(EntityUid uid, SericultureComponent comp, SericultureActionEvent args)
     {
-        if (!TryComp<HungerComponent>(uid, out var hungerComp)
-            || _hungerSystem.IsHungerBelowState(uid,
-                comp.MinHungerThreshold,
-                _hungerSystem.GetHunger(hungerComp) - comp.HungerCost,
-                hungerComp))
+        if (!TryComp<SatiationComponent>(uid, out var satiationComponent) ||
+            !_satiation.IsValueInRange((uid, satiationComponent), SatiationSystem.Hunger, above: comp.MinHungerThreshold, hypotheticalValueDelta: -comp.HungerCost))
         {
             _popupSystem.PopupEntity(Loc.GetString(comp.PopupText), uid, uid);
             return;
         }
 
         var doAfter = new DoAfterArgs(EntityManager, uid, comp.ProductionLength, new SericultureDoAfterEvent(), uid)
-        { // I'm not sure if more things should be put here, but imo ideally it should probably be set in the component/YAML. Not sure if this is currently possible.
+        {
+            // I'm not sure if more things should be put here, but imo ideally it should probably be set in the component/YAML. Not sure if this is currently possible.
             BreakOnMove = true,
             BlockDuplicate = true,
             BreakOnDamage = true,
@@ -73,18 +70,15 @@ public abstract partial class SharedSericultureSystem : EntitySystem
         if (args.Cancelled || args.Handled || comp.Deleted)
             return;
 
-        if (!TryComp<HungerComponent>(uid,
-                out var hungerComp) // A check, just incase the doafter is somehow performed when the entity is not in the right hunger state.
-            || _hungerSystem.IsHungerBelowState(uid,
-                comp.MinHungerThreshold,
-                _hungerSystem.GetHunger(hungerComp) - comp.HungerCost,
-                hungerComp))
+        // A check, just incase the doafter is somehow performed when the entity is not in the right hunger state.
+        if (!TryComp<SatiationComponent>(uid, out var satiationComponent) ||
+            !_satiation.IsValueInRange((uid, satiationComponent), SatiationSystem.Hunger, above: comp.MinHungerThreshold, hypotheticalValueDelta: -comp.HungerCost))
         {
             _popupSystem.PopupEntity(Loc.GetString(comp.PopupText), uid, uid);
             return;
         }
 
-        _hungerSystem.ModifyHunger(uid, -comp.HungerCost, hungerComp);
+        _satiation.ModifyValue((uid, satiationComponent), SatiationSystem.Hunger, -comp.HungerCost);
 
         if (!_netManager.IsClient) // Have to do this because spawning stuff in shared is CBT.
         {
@@ -107,4 +101,3 @@ public sealed partial class SericultureActionEvent : InstantActionEvent;
 /// </summary>
 [Serializable, NetSerializable]
 public sealed partial class SericultureDoAfterEvent : SimpleDoAfterEvent;
-

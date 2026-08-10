@@ -39,7 +39,7 @@ public sealed partial class RootableSystem : EntitySystem
     [Dependency] private ReactiveSystem _reactive = default!;
     [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
-    [Dependency] private SharedBloodstreamSystem _blood = default!;
+    [Dependency] private BloodstreamSystem _blood = default!;
     [Dependency] private SharedGravitySystem _gravity = default!;
     [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;

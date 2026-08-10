@@ -1,5 +1,5 @@
 using Content.Shared.Cloning;
-using Content.Shared.Nutrition.Components;
+using Content.Shared.Nutrition.Prototypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -54,9 +54,8 @@ public sealed partial class SericultureComponent : Component
     public float HungerCost = 5f;
 
     /// <summary>
-    /// The lowest hunger threshold that this mob can be in before it's allowed to spin silk.
+    /// If the entity's hunger satiation is below this value, it cannot spin web.
     /// </summary>
-    [DataField]
-    [AutoNetworkedField]
-    public HungerThreshold MinHungerThreshold = HungerThreshold.Okay;
+    [DataField(required: true), AutoNetworkedField]
+    public SatiationValue MinHungerThreshold;
 }
