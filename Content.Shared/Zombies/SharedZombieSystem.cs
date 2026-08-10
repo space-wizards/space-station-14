@@ -1,12 +1,17 @@
 ﻿using Content.Shared.Armor;
+using Content.Shared.Body;
+using Content.Shared.Body.Systems;
 using Content.Shared.Inventory;
 using Content.Shared.Movement.Systems;
 using Content.Shared.NameModifier.EntitySystems;
 
 namespace Content.Shared.Zombies;
 
-public abstract class SharedZombieSystem : EntitySystem
+public abstract partial class SharedZombieSystem : EntitySystem
 {
+    [Dependency] protected BloodstreamSystem Bloodstream = default!;
+    [Dependency] protected SharedVisualBodySystem VisualBody = default!;
+
     /// <inheritdoc/>
     public override void Initialize()
     {
@@ -43,5 +48,29 @@ public abstract class SharedZombieSystem : EntitySystem
     private void OnRefreshNameModifiers(Entity<ZombieComponent> entity, ref RefreshNameModifiersEvent args)
     {
         args.AddModifier("zombie-name-prefix");
+    }
+
+
+    /// <summary>
+    /// This is the function to call if you want to unzombify an entity.
+    /// </summary>
+    /// <param name="source">the entity having the ZombieComponent</param>
+    /// <param name="target">the entity you want to unzombify (different from source in case of cloning, for example)</param>
+    /// <param name="zombiecomp"></param>
+    /// <remarks>
+    /// this currently only restore the skin/eye color from before zombified
+    /// TODO: completely rethink how zombies are done to allow reversal.
+    /// </remarks>
+    public bool UnZombify(EntityUid source, EntityUid target, ZombieComponent? zombiecomp)
+    {
+        if (!Resolve(source, ref zombiecomp))
+            return false;
+
+        VisualBody.ApplyProfiles(target, zombiecomp.BeforeZombifiedProfiles);
+        VisualBody.ApplyMarkings(target, zombiecomp.BeforeZombifiedMarkings);
+
+        Bloodstream.ChangeBloodReagents(target, zombiecomp.BeforeZombifiedBloodReagents);
+
+        return true;
     }
 }

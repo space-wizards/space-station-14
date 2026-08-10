@@ -6,6 +6,7 @@ using Content.Shared.Rootable;
 using Content.Shared.Sericulture;
 using Content.Shared.Storage;
 using Content.Shared.Wagging;
+using Content.Shared.Zombies;
 using Robust.Shared.Containers;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager;
@@ -27,8 +28,12 @@ public sealed partial class CloningContext :
     ITypeCopier<RootableComponent>,
     ITypeCopier<SericultureComponent>,
     ITypeCopier<StorageComponent>,
-    ITypeCopier<WaggingComponent>
+    ITypeCopier<WaggingComponent>,
+    ITypeCopier<ZombieComponent>
 {
+    [Dependency] IEntityManager _entMan = default!;
+    SharedZombieSystem _zombie;
+
     /// <inheritdoc />
     public SerializationManager.SerializerProvider SerializerProvider { get; }
 
@@ -38,6 +43,7 @@ public sealed partial class CloningContext :
     public CloningContext(IDependencyCollection dependency, ISerializationManager ser)
     {
         dependency.InjectDependencies(this);
+        _zombie = _entMan.System<SharedZombieSystem>();
 
         SerializerProvider = new(ser);
         SerializerProvider.RegisterSerializer(this);
@@ -172,4 +178,18 @@ public sealed partial class CloningContext :
         target.Wagging = false;
     }
     #endregion Wagging
+
+    #region Zombie
+    public void CopyTo(
+        ISerializationManager serializationManager,
+        ZombieComponent source,
+        ref ZombieComponent target,
+        IDependencyCollection dependencies,
+        SerializationHookContext hookCtx,
+        ISerializationContext? context = null)
+    {
+        // FIXME: how do we cleanly avoid using Owner here?
+        _zombie.UnZombify(source.Owner, target.Owner, source);
+    }
+    #endregion Zombie
 }
