@@ -1058,10 +1058,8 @@
     - TargetSource
   - type: AutoLinkTransmitter
     channel: XenoborgGuidedMissileLauncher
-  - type: Sprite # TODO: ADD NEW SPRITE HERE
-    sprite: Objects/Weapons/Guns/Battery/xenoborg_laser_gun.rsi
+  - type: Sprite 
+    sprite: Objects/Weapons/Guns/Battery/xenoborg_range_finder.rsi
     layers:
-    - state: base
+    - state: icon
       map: [ "enum.GunVisualLayers.Base" ]
-    - state: mag-unshaded-4
-      map: [ "enum.GunVisualLayers.MagUnshaded" ]
