@@ -221,8 +221,8 @@ public sealed partial class ClientClothingSystem : ClothingSystem
 
     /// <summary>
     /// Checks the given Clothing for species-specific layers.
-    /// Adjusts <paramref name="layers"/> to append "-SPECIES" per layer where SPECIES is given in <paramref name="speciesId"/>
-    /// and that state exists.
+    /// Adjusts <paramref name="layers"/> to append "-SPECIES" per layer if that state exists,
+    /// where SPECIES is given in <paramref name="speciesId"/>.
     /// </summary>
     /// <remarks>
     /// Useful for avoiding YAML redundancy with species-specific ClothingVisuals.
