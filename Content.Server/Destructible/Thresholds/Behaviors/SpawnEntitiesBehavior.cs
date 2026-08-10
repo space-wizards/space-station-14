@@ -40,7 +40,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
 
             BaseContainer? containingContainer = null;
             ItemStorageLocation? storageLocation = null;
-            if (SpawnInContainer && SpawnAfter <= 0)
+            if (SpawnInContainer)
             {
                 var containerSystem = system.EntityManager.System<SharedContainerSystem>();
                 if (containerSystem.TryGetContainingContainer((owner, null, null), out var container))
@@ -48,9 +48,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                     // Removing the entity clears this location, so save it first.
                     if (system.EntityManager.System<SharedStorageSystem>()
                         .TryGetStorageLocation((owner, null), out _, out _, out var location))
-                    {
                         storageLocation = location;
-                    }
 
                     if (containerSystem.Remove(owner, container, force: true))
                         containingContainer = container;
