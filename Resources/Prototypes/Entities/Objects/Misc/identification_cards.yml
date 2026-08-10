@@ -955,7 +955,7 @@
 - type: entity
   parent: [IDCardStandard, BaseChameleon]
   id: AgentIDCard
-  name: passenger id card
+  name: passenger ID card
   suffix: Agent
   components:
   - type: Sprite
