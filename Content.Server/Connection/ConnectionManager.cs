@@ -86,6 +86,8 @@ namespace Content.Server.Connection
             _netMgr.Connecting += NetMgrOnConnecting;
             _netMgr.AssignUserIdCallback = AssignUserIdCallback;
             _plyMgr.PlayerStatusChanged += PlayerStatusChanged;
+            _cfg.OnValueChanged(CCVars.FallbackServers, ReadFallbackServers , invokeImmediately: true);
+
             // Approval-based IP bans disabled because they don't play well with Happy Eyeballs.
             // _netMgr.HandleApprovalCallback = HandleApproval;
         }
@@ -157,8 +159,8 @@ namespace Content.Server.Connection
                 {
                     properties["delay"] = _cfg.GetCVar(CCVars.GameServerFullReconnectDelay);
 
-                    if(GetFallbackServers(out var fallbacks))
-                        properties["fallbackServers"] = fallbacks;
+                    if (!string.IsNullOrEmpty(_fallbackString))
+                        properties["fallbackServers"] = _fallbackString;
                 }
 
                 e.Deny(new NetDenyReason(msg, properties));
@@ -172,42 +174,6 @@ namespace Content.Server.Connection
 
                 await _db.UpdatePlayerRecordAsync(userId, e.UserName, addr, hwid);
             }
-        }
-
-        /// <summary>
-        /// Reads the fallback servers from cvar, and gets their current and maximum player numbers,
-        /// packing it all back into a single string for transfer
-        /// </summary>
-        private bool GetFallbackServers(out string fallbacks)
-        {
-            fallbacks = string.Empty;
-
-            var fallbackServersRaw = _cfg.GetCVar(CCVars.FallbackServers);
-
-            // More complicated processing would be possible here, such as ordering servers by pop,
-            // or having a large list of fallback servers and only presenting the one with the highest pop
-            // But for now, we simply send the list as provided
-
-            foreach (var serverRaw in fallbackServersRaw.Split(";", StringSplitOptions.RemoveEmptyEntries))
-            {
-                if (serverRaw.Split(",", StringSplitOptions.RemoveEmptyEntries).Length != 2)
-                {
-                    _sawmill.Warning($"FallbackServers cvar is malformed - too many commas in '{serverRaw}'");
-                    continue;
-                }
-
-                //TODO:ERRANT Actually get server pops
-                // don't forget to remove _random too
-                // var i = serverRaw.IndexOf(",", StringComparison.Ordinal);
-                // var url = serverRaw[(i+1)..];
-
-                var pop = _random.Next(60,110);
-                var max = 75;
-
-                fallbacks += serverRaw + "," + pop + "," + max + ";";
-            }
-
-            return !string.IsNullOrEmpty(fallbacks);
         }
 
         private async void PlayerStatusChanged(object? sender, SessionStatusEventArgs args)
