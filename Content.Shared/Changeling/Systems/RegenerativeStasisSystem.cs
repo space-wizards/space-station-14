@@ -84,7 +84,7 @@ public sealed partial class RegenerativeStasisSystem : EntitySystem
         if (!_mobs.IsDead(target))
             _mobs.ChangeMobState(target, MobState.Dead);
 
-        _popup.PopupEntity(Loc.GetString("changeling-stasis-enter"), target, target, PopupType.MediumCaution);
+        _popup.PopupEntity(Loc.GetString(ent.Comp.EnterStasisPopup), target, target, PopupType.MediumCaution);
 
         ent.Comp.IsInStasis = true;
         Dirty(ent);
@@ -94,8 +94,8 @@ public sealed partial class RegenerativeStasisSystem : EntitySystem
         stasisDuration += ent.Comp.BonusCooldownPerDamage * (double)_damage.GetTotalDamage(target);
         stasisDuration = new TimeSpan(Math.Clamp(stasisDuration.Ticks, ent.Comp.MinStasisCooldown.Ticks, ent.Comp.MaxStasisCooldown.Ticks)); // No clamp method for TimeSpans
 
-        _metaData.SetEntityName(ent, Loc.GetString("changeling-stasis-active-name"));
-        _metaData.SetEntityDescription(ent, Loc.GetString("changeling-stasis-active-desc"));
+        _metaData.SetEntityName(ent, Loc.GetString(ent.Comp.ActiveName));
+        _metaData.SetEntityDescription(ent, Loc.GetString(ent.Comp.ActiveDescription));
 
         _actions.SetToggled(ent.Owner, ent.Comp.IsInStasis);
         _actions.SetCooldown(ent.Owner, stasisDuration);
@@ -126,7 +126,7 @@ public sealed partial class RegenerativeStasisSystem : EntitySystem
         // Revive.
         _mobs.ChangeMobState(target, MobState.Alive);
 
-        _popup.PopupEntity(Loc.GetString("changeling-stasis-exit"), Loc.GetString("changeling-stasis-exit-others", ("user", Identity.Entity(target, EntityManager))), target, target, PopupType.MediumCaution);
+        _popup.PopupEntity(Loc.GetString(ent.Comp.ExitStasisPopup), Loc.GetString(ent.Comp.ExitStasisPopupOthers, ("user", Identity.Entity(target, EntityManager))), target, target, PopupType.MediumCaution);
         _audio.PlayPredicted(ent.Comp.ExitSound, target, target);
 
         ent.Comp.IsInStasis = false;
