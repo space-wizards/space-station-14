@@ -1,9 +1,7 @@
 using Content.Shared.Body.Components;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Forensics;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Body.Systems;
-using Content.Server.Speech.EntitySystems;
 using Content.Shared.Cloning.Events;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
@@ -49,7 +47,10 @@ public sealed partial class CloningSystem
     [Dependency] private SharedChameleonClothingSystem _chameleonClothing = default!;
     [Dependency] private PullingSystem _pulling = default!;
     [Dependency] private BloodstreamSystem _bloodstream = default!;
+    [Dependency] private SharedCreamPieSystem _creampie = default!;
     [Dependency] private SharedForensicsSystem _forensics = default!;
+    [Dependency] private FlammableSystem _flammable = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
 
     public override void Initialize()
     {
