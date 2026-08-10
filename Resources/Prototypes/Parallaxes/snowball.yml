@@ -1,25 +1,25 @@
 - type: parallax
   id: SnowballStation
   layers:
-    - texture:
-        !type:ImageParallaxTextureSource
-        path: "/Textures/Parallaxes/SnowballParallaxBG.png"
-      slowness: 0.99
-      scale: "1, 1"
-    - texture:
-        !type:GeneratedParallaxTextureSource
-        id: "hq_wizard_stars_dim_warm"
-        configPath: "/Prototypes/Parallaxes/parallax_config_stars_dim-3.toml"
-      slowness: 0.985
-      scale: "1, 1"
-    - texture:
-        !type:ImageParallaxTextureSource
-        path: "/Textures/Parallaxes/SnowballParallaxStars.png"
-      slowness: 0.98
-      scale: "1, 1"
-    - texture:
-        !type:ImageParallaxTextureSource
-        path: "/Textures/Parallaxes/SnowballParallaxSun.png"
-      slowness: 0.97
-      scale: "1, 1"
-      tiled: false
+  - texture:
+      !type:ImageParallaxTextureSource
+      path: "/Textures/Parallaxes/SnowballParallaxBG.png"
+    slowness: 0.99
+    scale: "1, 1"
+  - texture:
+      !type:GeneratedParallaxTextureSource
+      id: "hq_wizard_stars_dim_warm"
+      configPath: "/Prototypes/Parallaxes/parallax_config_stars_dim-3.toml"
+    slowness: 0.985
+    scale: "1, 1"
+  - texture:
+      !type:ImageParallaxTextureSource
+      path: "/Textures/Parallaxes/SnowballParallaxStars.png"
+    slowness: 0.98
+    scale: "1, 1"
+  - texture:
+      !type:ImageParallaxTextureSource
+      path: "/Textures/Parallaxes/SnowballParallaxSun.png"
+    slowness: 0.97
+    scale: "1, 1"
+    tiled: false
