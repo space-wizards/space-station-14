@@ -97,12 +97,14 @@ public sealed partial class SatiationThresholds<T>
     /// When this satiation is expected to change from its current threshold to a different one. This is null when the
     /// current linear change is zero or there is no threshold in the direction of the expected change.
     /// </summary>
-    public TimeSpan? ProjectedThresholdChangeTime;
+    [ViewVariables]
+    public TimeSpan? ProjectedThresholdChangeTime = TimeSpan.Zero; // Initialize to zero to force an update as soon as possible on load
 
     /// <summary>
     /// The current <typeparamref name="T"/> value, at least when maintained by something like
     /// <see cref="BaseSatiationEffectSystem{TComp,T}"/>
     /// </summary>
+    [ViewVariables]
     public T Current;
 }
 

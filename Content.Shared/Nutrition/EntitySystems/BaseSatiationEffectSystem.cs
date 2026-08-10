@@ -56,7 +56,8 @@ public abstract partial class BaseSatiationEffectSystem<TComp, T> : EntitySystem
         {
             foreach (var (type, thresholds) in GetThresholds(comp))
             {
-                if (_timing.CurTime < thresholds.ProjectedThresholdChangeTime)
+                if (thresholds.ProjectedThresholdChangeTime == null ||
+                    _timing.CurTime < thresholds.ProjectedThresholdChangeTime)
                     continue;
 
                 UpdateSatiation((ent, comp), satiation, type);
