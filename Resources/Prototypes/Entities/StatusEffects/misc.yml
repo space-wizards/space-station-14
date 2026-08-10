@@ -63,6 +63,15 @@
   - type: StunnedStatusEffect
   - type: KnockdownStatusEffect
 
+
+# Makes the creature immune to pressure damage.
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectPressureImmunity
+  name: pressure immunity
+  components:
+  - type: PressureImmunityStatusEffect
+
 # Prevents speaking and vocal emotes.
 - type: entity
   abstract: true
