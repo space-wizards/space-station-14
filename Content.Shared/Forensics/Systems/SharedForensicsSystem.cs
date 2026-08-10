@@ -222,7 +222,7 @@ public sealed partial class SharedForensicsSystem : EntitySystem
     /// <returns>True if the target can be cleaned and has some sort of DNA or fingerprints / fibers and false otherwise.</returns>
     public bool TryStartCleaning(Entity<CleansForensicsComponent> cleanForensicsEntity, EntityUid user, EntityUid target)
     {
-        if (!TryComp<ForensicsComponent>(target, out var forensicsComp))
+        if (!_forensicsQuery.TryComp(target, out var forensicsComp))
         {
             _popupSystem.PopupEntity(Loc.GetString("forensics-cleaning-cannot-clean", ("target", Identity.Entity(target, EntityManager))), user, user, PopupType.MediumCaution);
             return false;
