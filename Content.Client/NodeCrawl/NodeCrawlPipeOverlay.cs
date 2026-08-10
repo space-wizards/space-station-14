@@ -29,7 +29,7 @@ public sealed partial class NodeCrawlPipeOverlay : Overlay
     private static readonly Color NodeBaseColor = new(1f, 1f, 1f, 0.5f);
     private EntityUid? _previousOutlined;
     private ShaderInstance _outlineShader;
-    private readonly HashSet<EntityUid> _entities = [];
+    private readonly HashSet<Entity<CrawlableNodeComponent>> _entities = [];
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
@@ -64,15 +64,16 @@ public sealed partial class NodeCrawlPipeOverlay : Overlay
         }
 
         _entities.Clear();
-        _lookup.GetEntitiesIntersecting(args.MapId, args.WorldBounds.CalcBoundingBox(), _entities, LookupFlags.StaticSundries);
+        _lookup.GetEntitiesIntersecting(args.MapId, args.WorldBounds, _entities, LookupFlags.StaticSundries);
         var worldHandle = args.WorldHandle;
         var eyeRotation = _eyeQuery.TryGetComponent(player, out var eye)
             ? eye.Rotation
             : Angle.Zero;
 
         worldHandle.UseShader(null);
-        foreach (var uid in _entities)
+        foreach (var entity in _entities)
         {
+            var uid = entity.Owner;
             if (!reachable.Contains(uid) || !_spriteQuery.TryGetComponent(uid, out var sprite) || !sprite.Visible)
                 continue;
 
