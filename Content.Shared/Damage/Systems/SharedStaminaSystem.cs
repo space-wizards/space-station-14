@@ -65,22 +65,10 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         InitializeModifier();
         InitializeResistance();
 
-        SubscribeLocalEvent<StaminaComponent, ComponentStartup>(OnStartup);
-        SubscribeLocalEvent<StaminaComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<StaminaComponent, AfterAutoHandleStateEvent>(OnStamHandleState);
-        SubscribeLocalEvent<StaminaComponent, DisarmedEvent>(OnDisarmed);
-        SubscribeLocalEvent<StaminaComponent, RejuvenateEvent>(OnRejuvenate);
-
-        SubscribeLocalEvent<StaminaDamageOnEmbedComponent, EmbedEvent>(OnProjectileEmbed);
-
-        SubscribeLocalEvent<StaminaDamageOnCollideComponent, ProjectileHitEvent>(OnProjectileHit);
-        SubscribeLocalEvent<StaminaDamageOnCollideComponent, ThrowDoHitEvent>(OnThrowHit);
-
-        SubscribeLocalEvent<StaminaDamageOnHitComponent, MeleeHitEvent>(OnMeleeHit);
-
         Subs.CVar(_config, CCVars.PlaytestStaminaDamageModifier, value => UniversalStaminaDamageModifier = value, true);
     }
 
+    [SubscribeLocalEvent]
     protected virtual void OnStamHandleState(Entity<StaminaComponent> entity, ref AfterAutoHandleStateEvent args)
     {
         if (entity.Comp.Critical)
@@ -94,6 +82,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     protected virtual void OnShutdown(Entity<StaminaComponent> entity, ref ComponentShutdown args)
     {
         if (MetaData(entity).EntityLifeStage < EntityLifeStage.Terminating)
@@ -103,6 +92,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         _alerts.ClearAlert(entity.Owner, entity.Comp.StaminaAlert);
     }
 
+    [SubscribeLocalEvent]
     private void OnStartup(Entity<StaminaComponent> entity, ref ComponentStartup args)
     {
         // Set the base threshold here since ModifiedCritThreshold can't be modified via yaml.
@@ -119,9 +109,10 @@ public abstract partial class SharedStaminaSystem : EntitySystem
 
         var curTime = Timing.CurTime;
         var pauseTime = _metadata.GetPauseTime(uid);
-        return MathF.Max(0f, component.StaminaDamage - MathF.Max(0f, (float) (curTime - (component.NextUpdate + pauseTime)).TotalSeconds * component.Decay));
+        return MathF.Max(0f, component.StaminaDamage - MathF.Max(0f, (float)(curTime - (component.NextUpdate + pauseTime)).TotalSeconds * component.Decay));
     }
 
+    [SubscribeLocalEvent]
     private void OnRejuvenate(Entity<StaminaComponent> entity, ref RejuvenateEvent args)
     {
         if (entity.Comp.StaminaDamage >= entity.Comp.CritThreshold)
@@ -137,6 +128,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         Dirty(entity);
     }
 
+    [SubscribeLocalEvent]
     private void OnDisarmed(EntityUid uid, StaminaComponent component, ref DisarmedEvent args)
     {
         if (args.Handled)
@@ -154,6 +146,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         args.Handled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnMeleeHit(EntityUid uid, StaminaDamageOnHitComponent component, MeleeHitEvent args)
     {
         if (!args.IsHit ||
@@ -197,11 +190,13 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnProjectileHit(EntityUid uid, StaminaDamageOnCollideComponent component, ref ProjectileHitEvent args)
     {
         OnCollide(uid, component, args.Target);
     }
 
+    [SubscribeLocalEvent]
     private void OnProjectileEmbed(EntityUid uid, StaminaDamageOnEmbedComponent component, ref EmbedEvent args)
     {
         if (!TryComp<StaminaComponent>(args.Embedded, out var stamina))
@@ -210,6 +205,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         TakeStaminaDamage(args.Embedded, component.Damage, stamina, source: uid);
     }
 
+    [SubscribeLocalEvent]
     private void OnThrowHit(EntityUid uid, StaminaDamageOnCollideComponent component, ThrowDoHitEvent args)
     {
         OnCollide(uid, component, args.Target);
@@ -255,7 +251,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
     {
         // you can't inflict stamina damage on things with no stamina component
         // this prevents stun batons from using up charges when throwing it at lockers or lights
-        if (!TryComp<StaminaComponent>(target, out var stamina))
+        if (!_stamQuery.TryComp(target, out var stamina))
             return;
 
         var ev = new StaminaDamageOnHitAttemptEvent();
