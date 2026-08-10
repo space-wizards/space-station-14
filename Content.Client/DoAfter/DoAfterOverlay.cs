@@ -186,7 +186,7 @@ public sealed class DoAfterOverlay : Overlay
                 if (!_entManager.TryGetComponent<SpriteComponent>(iconUid, out var icon))
                     continue;
                 var iconPosition = position with { Y = position.Y};
-                _sprite.RenderSprite((iconUid, icon), handle, rotation, Angle.Zero, iconPosition);
+                _sprite.RenderSprite((iconUid, icon), handle, rotation, _transform.GetWorldRotation(uid), worldPosition);
             }
         }
 
