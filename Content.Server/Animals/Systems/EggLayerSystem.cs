@@ -96,7 +96,7 @@ public sealed partial class EggLayerSystem : EntitySystem
 
         foreach (var ent in EntitySpawnCollection.GetSpawns(egglayer.EggSpawn, _random))
         {
-            Spawn(ent, Transform(uid).Coordinates);
+            SpawnNextToOrDrop(ent, uid);
         }
 
         // Sound + popups
