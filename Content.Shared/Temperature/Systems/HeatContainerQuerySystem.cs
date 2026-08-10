@@ -32,6 +32,7 @@ public sealed partial class HeatContainerQuerySystem : EntitySystem
     [Robust.Shared.IoC.Dependency] private EntityQuery<SolutionManagerComponent> _solutionsManagerQuery = default!;
     [Robust.Shared.IoC.Dependency] private EntityQuery<HeatableComponent> _heatablesQuery = default!;
     [Robust.Shared.IoC.Dependency] private EntityQuery<TemperatureComponent> _temperatureQuery = default!;
+    [Robust.Shared.IoC.Dependency] private EntityQuery<SolutionComponent> _solutionQuery = default!;
     [Robust.Shared.IoC.Dependency] private SharedAtmosphereSystem _atmosphere = default!;
 
     /// <summary>
@@ -50,22 +51,32 @@ public sealed partial class HeatContainerQuerySystem : EntitySystem
 
         [DataField(required: true)]
         public TargetType AddressType { get; set; }
+
         /// <summary>
         /// Name of the container, component or solution addressed.
         /// </summary>
-        [DataField]
+        [DataField(required: true)]
         public string TargetName { get; set; }
+
         /// <summary>
         /// Should the target forward request to entities considered outside the current entity tree?
         /// Best case is <see cref="ItemPlacerComponent"/> which could cause a loop if an entity placed on top of it, also has this component.
+        /// A <see cref="HeatableComponent"/> should never have an address with externals include to avoid loops in the search tree.
         /// </summary>
         [DataField]
         public bool IncludeExternals { get; set; }
+
         /// <summary>
         /// What container should be searched for next.
         /// </summary>
         [DataField]
         public HeatContainerAddress? Next { get; set; }
+
+        public override string ToString()
+        {
+            return
+                $"{Enum.GetName(AddressType)}: {TargetName} ({IncludeExternals.ToString()}){(Next == null ? "" : " -> " + Next.ToString())}";
+        }
     }
 
 
@@ -86,15 +97,14 @@ public sealed partial class HeatContainerQuerySystem : EntitySystem
             case HeatContainerAddress.TargetType.None:
                 return [];
             case HeatContainerAddress.TargetType.Solution:
-                if (_solutionsManagerQuery.TryComp(entityUid, out var comp) &&
-                    _solutions.TryGetSolution(new Entity<SolutionManagerComponent?>(entityUid, comp),
-                        address.TargetName!,
-                        out var solution))
+                if (_solutions.TryGetSolution(entityUid, address.TargetName, out var solution))
                 {
                     var capacity = solution.Value.Comp.Solution.GetHeatCapacity(_prototypeManager);
                     return
                     [
-                        new HeatContainer.HeatContainer(capacity,
+                        new HeatContainer.BoxedHeatContainer(solution.Value.Owner,
+                            solution.Value.Comp,
+                            capacity,
                             solution.Value.Comp.Solution.Temperature)
                     ];
                 }
@@ -127,7 +137,10 @@ public sealed partial class HeatContainerQuerySystem : EntitySystem
         }
 
         if (assertThatFound)
-            Debug.Assert(false, "Invalid container address: " + address.ToString());
+        {
+            Log.Error("Invalid Adress: " + address.ToString());
+        }
+
         return [];
     }
 
@@ -215,7 +228,8 @@ public sealed partial class HeatContainerQuerySystem : EntitySystem
         //check for heatable
         if (_heatablesQuery.TryComp(entityUid, out var heatable))
             return heatable.ExposedContainers.SelectMany(e => FindContainer(e, entityUid));
-        //fallback to temperature, since it is so far always used
+        //fallback to temperature, since it is so far always used as a simple way for heating non solution items.
+        // food uses it primarily, which hopefully gets removed once solutions are heat containers and there are proper ways to integrate their heat change into construction graph.
         if (_temperatureQuery.TryComp(entityUid, out var temperatureComponent))
             return [temperatureComponent];
 

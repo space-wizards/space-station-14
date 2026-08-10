@@ -26,6 +26,7 @@
     whitelist:
       components:
       - Heatable
+      - Temperature
   - type: PlaceableSurface
   - type: ElectricalHeater
     minimumPower: 1
@@ -35,8 +36,8 @@
     distributeHeatTo:
     - type: HeatContainerAddress
       addressType: Component
-      TargetName: ItemPlacer
-      IncludeExternals : true
+      targetName: ItemPlacer
+      includeExternals : true
   - type: Machine
     board: ElectricGrillMachineCircuitboard
   - type: Appearance

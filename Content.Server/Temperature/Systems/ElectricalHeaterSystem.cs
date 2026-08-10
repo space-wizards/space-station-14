@@ -59,7 +59,7 @@ public sealed partial class ElectricalHeaterSystem : EntitySystem
             //calculate input energy
             var heatEnergy = power.PowerReceived - heater.Offset;
             //skip if inefficient
-            if (heater.MinimumPower < power.PowerReceived || heatEnergy <= 0)
+            if (heater.MinimumPower > power.PowerReceived || heatEnergy <= 0)
                 continue;
             //calculate output heat
             heatEnergy *= heater.Efficiency;
