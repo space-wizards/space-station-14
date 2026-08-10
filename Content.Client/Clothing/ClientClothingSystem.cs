@@ -51,7 +51,7 @@ public sealed partial class ClientClothingSystem : ClothingSystem
     [Dependency] private InventorySystem _inventorySystem = default!;
     [Dependency] private SpriteSystem _sprite = default!;
 
-    [Dependency] private EntityQuery<InventorySlotsComponent> _inventorySLotsQuery;
+    [Dependency] private EntityQuery<InventorySlotsComponent> _inventorySlotsQuery;
     [Dependency] private EntityQuery<SpriteComponent> _spriteQuery;
 
     #region Entity Handlers
@@ -139,7 +139,7 @@ public sealed partial class ClientClothingSystem : ClothingSystem
     [SubscribeLocalEvent]
     private void OnDidUnequip(Entity<SpriteComponent> entity, ref DidUnequipEvent args)
     {
-        if (!_inventorySLotsQuery.TryComp(entity, out var inventorySlots))
+        if (!_inventorySlotsQuery.TryComp(entity, out var inventorySlots))
             return;
 
         if (!inventorySlots.VisualLayerKeys.TryGetValue(args.Slot, out var revealedLayers))
