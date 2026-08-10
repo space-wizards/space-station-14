@@ -220,15 +220,16 @@ public sealed partial class ClientClothingSystem : ClothingSystem
     }
 
     /// <summary>
-    /// For each layer in the given set of prototype data, looks to see if there's a particular species-specific state and modifies it accordingly if so.
-    /// Checks the given Clothing
+    /// Checks the given Clothing for species-specific layers.
+    /// Adjusts <paramref name="layers"/> to append "-SPECIES" per layer where SPECIES is given in <paramref name="speciesId"/>
+    /// and that state exists.
     /// </summary>
     /// <remarks>
     /// Useful for avoiding YAML redundancy with species-specific ClothingVisuals.
     /// </remarks>
-    private void CheckForSpeciesSpecificLayers(Entity<ClothingComponent, SpriteComponent> ent, List<(string, PrototypeLayerData)> layers, string speciesId)
+    private void CheckForSpeciesSpecificLayers(Entity<ClothingComponent> ent, SpriteComponent sprite, List<(string, PrototypeLayerData)> layers, string speciesId)
     {
-        var (clothing, sprite) = (ent.Comp1, ent.Comp2);
+        var clothing = ent.Comp;
         // Find fallback RSI
         RSI? baseRSI;
         if (clothing.RsiPath != null)
@@ -308,7 +309,7 @@ public sealed partial class ClientClothingSystem : ClothingSystem
         }
 
         if (!string.IsNullOrEmpty(inventory.SpeciesId))
-            CheckForSpeciesSpecificLayers((equipment, clothingComponent, sprite), ev.Layers, inventory.SpeciesId);
+            CheckForSpeciesSpecificLayers((equipment, clothingComponent), sprite, ev.Layers, inventory.SpeciesId);
 
         // temporary, until layer draw depths get added. Basically: a layer with the key "slot" is being used as a
         // bookmark to determine where in the list of layers we should insert the clothing layers.
