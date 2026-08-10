@@ -22,8 +22,8 @@ public sealed partial class ConnectionManager
                 continue;
             }
             var pos = serverRaw.IndexOf(",", StringComparison.Ordinal);
-            var url = serverRaw[(pos+1)..].Trim();
-            var name = serverRaw[..pos].Trim();
+            var url = serverRaw[(pos+1)..];
+            var name = serverRaw[..pos];
 
             //TODO:ERRANT Under construction
             var players =10;
@@ -32,38 +32,26 @@ public sealed partial class ConnectionManager
 
             UpdateServerDetails(url, name, players, max);
         }
-
-        _fallbackString = PackageFallbacks();
     }
 
     /// <summary>
-    /// Updates the details of a server. Does nothing if the server is not already
+    /// Adds a new server to the fallback list, or updates the details of an existing one.
     /// </summary>
-    /// <param name="url"></param>
-    /// <param name="name"></param>
-    /// <param name="players"></param>
-    /// <param name="max"></param>
-    private void UpdateServerDetails(string url, string name, int players, int max) // Is there a point for this to be a class
+    /// <param name="url">The address of the server. This is used as their unique key for handling</param>
+    /// <param name="name">The displayed name of the server</param>
+    /// <param name="players">Current players on the server</param>
+    /// <param name="max">Maximum players on the server</param>
+    private void UpdateServerDetails(string url, string name, int players, int max)
     {
-        //TODO: various error checking for the values being acceptable
-
-        if (!_fallbackServers.ContainsKey(url))
-        {
-            _fallbackServers.Add(url, (name, players, max));
-            return;
-        }
+        //TODO: Error checking for the input values?
 
         //TODO:ERRANT Under construction
         players = _random.Next(60, 90);
         ///////////////////////////////////
 
-        _fallbackServers[url] = (name, players, max);
-    }
+        _fallbackServers[url.Trim()] = (name.Trim(), players, max);
 
-    //TODO:ERRANT Add a way to get serverinfo, and call UpdateServerDetails when it changes
-
-    private string PackageFallbacks() // Is there a point for this to be a class
-    {
+        // Package all current fallback server data into a single string, that can be sent to the client
         var result = string.Empty;
 
         foreach (var server in _fallbackServers)
@@ -71,6 +59,9 @@ public sealed partial class ConnectionManager
             result += server.Value.name + "," + server.Key + "," + server.Value.players + "," + server.Value.max + ";";
         }
 
-        return result;
+        _fallbackString = result;
     }
+
+    //TODO:ERRANT Add a way to get serverinfo, and call UpdateServerDetails when it changes
+
 }

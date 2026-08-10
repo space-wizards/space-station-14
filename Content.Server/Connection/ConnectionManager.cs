@@ -158,9 +158,7 @@ namespace Content.Server.Connection
                 if (reason == ConnectionDenyReason.Full)
                 {
                     properties["delay"] = _cfg.GetCVar(CCVars.GameServerFullReconnectDelay);
-
-                    if (!string.IsNullOrEmpty(_fallbackString))
-                        properties["fallbackServers"] = _fallbackString;
+                    properties["fallbackServers"] = _fallbackString;
                 }
 
                 e.Deny(new NetDenyReason(msg, properties));
