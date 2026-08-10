@@ -179,12 +179,12 @@ public sealed class DoAfterOverlay : Overlay
                 offset += _barTexture.Height / scale;
 
                 // Here starts code responsible for the transparent icon of something with that player interacts
-                if (doAfter.Args.IconEntity is null)
+                if (doAfter.Args.IconEntity is null ||
+                    !_entManager.TryGetComponent<SpriteComponent>(doAfter.Args.IconEntity, out var icon))
                     continue;
-                var screenHandle = args.ScreenHandle;
                 var iconPosition = position with { Y = position.Y + 1f };
-                var iconScale = new Vector2(scale, scale);
-                screenHandle.DrawEntity(_entManager.GetEntity(doAfter.Args.IconEntity.Value), iconPosition, iconScale, null);
+                handle.DrawTexture(texture, iconPosition, Color.White.WithAlpha(IconColorAlpha));
+                _sprite.RenderSprite((doAfter.Args.IconEntity, icon), );
             }
         }
 
