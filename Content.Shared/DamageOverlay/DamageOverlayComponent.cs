@@ -6,7 +6,7 @@ namespace Content.Shared.DamageOverlay;
 /// <summary>
 /// A component to add overlays to the screen of the controlling player depending on the damage the entity has taken.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(raiseAfterAutoHandleState: true, fieldDeltas: true)]
 [Access(typeof(SharedDamageOverlaySystem))]
 public sealed partial class DamageOverlayComponent : Component
 {
@@ -14,7 +14,7 @@ public sealed partial class DamageOverlayComponent : Component
     /// The mobstate the overlay currently shows.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public MobState State = MobState.Alive;
+    public MobState CurrentState = MobState.Alive;
 
     /// <summary>
     /// Controls the red vignette around the screen, which closes in as you take damage.
@@ -39,10 +39,4 @@ public sealed partial class DamageOverlayComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public float OxygenLevel;
-
-    /// <summary>
-    /// Prevents updates to the overlay from being done by events.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool Locked; // For debugging :)
 }

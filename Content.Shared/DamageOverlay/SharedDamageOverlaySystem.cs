@@ -19,38 +19,37 @@ public abstract partial class SharedDamageOverlaySystem : EntitySystem
     [Dependency] private StatusEffectsSystem _statusEffects = default!;
 
     [SubscribeLocalEvent]
-    private void OnStartup(Entity<DamageOverlayComponent> entity, ref ComponentStartup args)
+    protected virtual void OnStartup(Entity<DamageOverlayComponent> entity, ref ComponentStartup args)
     {
+        EnsureOverlay(entity);
         UpdateOverlays(entity);
-        RefreshOverlay(entity);
     }
 
     [SubscribeLocalEvent]
     private void OnMobStateChanged(Entity<DamageOverlayComponent> entity, ref MobStateChangedEvent args)
     {
-        if (entity.Comp.Locked)
-            return;
-
         UpdateOverlays(entity, args.Component);
     }
 
     [SubscribeLocalEvent]
     private void OnThresholdCheck(Entity<DamageOverlayComponent> entity, ref MobThresholdChecked args)
     {
-        if (entity.Comp.Locked)
-            return;
-
         UpdateOverlays(entity, args.MobState, args.Damageable, args.Threshold);
     }
 
     protected void ClearOverlay(Entity<DamageOverlayComponent> entity)
     {
-        entity.Comp.State = MobState.Alive;
+        entity.Comp.CurrentState = MobState.Alive;
         entity.Comp.DeadLevel = 0f;
         entity.Comp.CritLevel = 0f;
         entity.Comp.PainLevel = 0f;
         entity.Comp.OxygenLevel = 0f;
-        Dirty(entity);
+
+        DirtyField(entity, entity.Comp, nameof(DamageOverlayComponent.CurrentState));
+        DirtyField(entity, entity.Comp, nameof(DamageOverlayComponent.PainLevel));
+        DirtyField(entity, entity.Comp, nameof(DamageOverlayComponent.OxygenLevel));
+        DirtyField(entity, entity.Comp, nameof(DamageOverlayComponent.CritLevel));
+        DirtyField(entity, entity.Comp, nameof(DamageOverlayComponent.DeadLevel));
     }
 
     //TODO: Jezi: adjust oxygen and hp overlays to use appropriate systems once bodysim is implemented
@@ -77,7 +76,7 @@ public abstract partial class SharedDamageOverlaySystem : EntitySystem
 
         var damagePerGroup = _damageable.GetDamagePerGroup((entity, damageable));
         var critThreshold = foundThreshold.Value;
-        entity.Comp.State = mobState.CurrentState;
+        entity.Comp.CurrentState = mobState.CurrentState;
 
         switch (mobState.CurrentState)
         {
@@ -109,6 +108,12 @@ public abstract partial class SharedDamageOverlaySystem : EntitySystem
 
                 entity.Comp.CritLevel = 0;
                 entity.Comp.DeadLevel = 0;
+
+                DirtyField(entity, entity.Comp, nameof(DamageOverlayComponent.PainLevel));
+                DirtyField(entity, entity.Comp, nameof(DamageOverlayComponent.OxygenLevel));
+                DirtyField(entity, entity.Comp, nameof(DamageOverlayComponent.CritLevel));
+                DirtyField(entity, entity.Comp, nameof(DamageOverlayComponent.DeadLevel));
+
                 break;
             }
             case MobState.Critical:
@@ -121,26 +126,27 @@ public abstract partial class SharedDamageOverlaySystem : EntitySystem
 
                 entity.Comp.PainLevel = 0;
                 entity.Comp.DeadLevel = 0;
+
+                DirtyField(entity, entity.Comp, nameof(DamageOverlayComponent.PainLevel));
+                DirtyField(entity, entity.Comp, nameof(DamageOverlayComponent.CritLevel));
+                DirtyField(entity, entity.Comp, nameof(DamageOverlayComponent.DeadLevel));
+
                 break;
             }
             case MobState.Dead:
             {
                 entity.Comp.PainLevel = 0;
                 entity.Comp.CritLevel = 0;
+
+                DirtyField(entity, entity.Comp, nameof(DamageOverlayComponent.PainLevel));
+                DirtyField(entity, entity.Comp, nameof(DamageOverlayComponent.CritLevel));
+
                 break;
             }
         }
 
-        if (!entity.Comp.Locked)
-        {
-            Dirty(entity);
-            RefreshOverlay(entity);
-        }
+        DirtyField(entity, entity.Comp, nameof(DamageOverlayComponent.CurrentState));
     }
 
-    /// <summary>
-    /// Refreshes the overlay, updating it to the new values stored in the component.
-    /// </summary>
-    /// <param name="entity">The affected entity.</param>
-    protected virtual void RefreshOverlay(Entity<DamageOverlayComponent> entity) { }
+    protected virtual void EnsureOverlay(Entity<DamageOverlayComponent> entity) { }
 }

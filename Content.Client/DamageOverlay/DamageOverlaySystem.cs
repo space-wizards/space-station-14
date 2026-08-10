@@ -34,7 +34,6 @@ public sealed partial class DamageOverlaySystem : SharedDamageOverlaySystem
     private void OnPlayerAttached(Entity<DamageOverlayComponent> ent, ref LocalPlayerAttachedEvent args)
     {
         _overlayManager.AddOverlay(_overlay);
-        RefreshOverlay(ent);
     }
 
     [SubscribeLocalEvent]
@@ -43,27 +42,14 @@ public sealed partial class DamageOverlaySystem : SharedDamageOverlaySystem
         _overlayManager.RemoveOverlay(_overlay);
     }
 
-    [SubscribeLocalEvent]
-    private void OnAfterState(Entity<DamageOverlayComponent> ent, ref AfterAutoHandleStateEvent args)
+    protected override void EnsureOverlay(Entity<DamageOverlayComponent> entity)
     {
-        RefreshOverlay(ent);
-    }
-
-    /// <inheritdoc />
-    protected override void RefreshOverlay(Entity<DamageOverlayComponent> entity)
-    {
-        base.RefreshOverlay(entity);
+        base.EnsureOverlay(entity);
 
         if (_player.LocalEntity != entity)
             return;
 
         if (!_overlayManager.HasOverlay<DamageOverlay>())
             _overlayManager.AddOverlay(_overlay);
-
-        _overlay.State = entity.Comp.State;
-        _overlay.CritLevel = entity.Comp.CritLevel;
-        _overlay.DeadLevel = entity.Comp.DeadLevel;
-        _overlay.OxygenLevel = entity.Comp.OxygenLevel;
-        _overlay.PainLevel = entity.Comp.PainLevel;
     }
 }

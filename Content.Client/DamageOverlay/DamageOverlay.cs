@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Shared.DamageOverlay;
 using Content.Shared.Mobs;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
@@ -67,6 +68,14 @@ public sealed partial class DamageOverlay : Overlay
 
         if (args.Viewport.Eye != eyeComp.Eye)
             return;
+
+        if (!_entityManager.TryGetComponent(_playerManager.LocalEntity, out DamageOverlayComponent? damageComp))
+            return;
+
+        State = damageComp.CurrentState;
+        CritLevel = damageComp.CritLevel;
+        OxygenLevel = damageComp.OxygenLevel;
+        PainLevel = damageComp.PainLevel;
 
         /*
          * Here's the rundown:
