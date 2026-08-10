@@ -20,7 +20,6 @@ public sealed class DoAfterOverlay : Overlay
     private readonly IEntityManager _entManager;
     private readonly IGameTiming _timing;
     private readonly IPlayerManager _player;
-    private readonly IResourceCache _resourceCache;
     private readonly SharedTransformSystem _transform;
     private readonly MetaDataSystem _meta;
     private readonly ProgressColorSystem _progressColor;
@@ -54,12 +53,11 @@ public sealed class DoAfterOverlay : Overlay
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
 
-    public DoAfterOverlay(IEntityManager entManager, IPrototypeManager protoManager, IGameTiming timing, IPlayerManager player, IResourceCache resourceCache)
+    public DoAfterOverlay(IEntityManager entManager, IPrototypeManager protoManager, IGameTiming timing, IPlayerManager player)
     {
         _entManager = entManager;
         _timing = timing;
         _player = player;
-        _resourceCache = resourceCache;
         _transform = _entManager.EntitySysManager.GetEntitySystem<SharedTransformSystem>();
         _meta = _entManager.EntitySysManager.GetEntitySystem<MetaDataSystem>();
         _container = _entManager.EntitySysManager.GetEntitySystem<SharedContainerSystem>();
