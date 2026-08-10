@@ -29,6 +29,7 @@ public sealed class DoAfterOverlay : Overlay
 
     private readonly Texture _barTexture;
     private readonly ShaderInstance _unshadedShader;
+    private readonly HashSet<SpriteSpecifier> _iconsToDraw;
 
     /// <summary>
     ///     Flash time for cancelled DoAfters
@@ -49,7 +50,7 @@ public sealed class DoAfterOverlay : Overlay
     private static readonly TimeSpan MaxYPosTime = TimeSpan.FromSeconds(0.5f);
 
     //
-    private static readonly float IconColorAlpha = 0.5f;
+    private static readonly float IconColorAlpha = 0.75f;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
 
@@ -66,6 +67,7 @@ public sealed class DoAfterOverlay : Overlay
         _sprite = _entManager.System<SpriteSystem>();
         var sprite = new SpriteSpecifier.Rsi(new("/Textures/Interface/Misc/progress_bar.rsi"), "icon");
         _barTexture = _entManager.EntitySysManager.GetEntitySystem<SpriteSystem>().Frame0(sprite);
+        _iconsToDraw = new HashSet<SpriteSpecifier>();
 
         _unshadedShader = protoManager.Index(UnshadedShader).Instance();
     }
@@ -75,6 +77,7 @@ public sealed class DoAfterOverlay : Overlay
         var handle = args.WorldHandle;
         var rotation = args.Viewport.Eye?.Rotation ?? Angle.Zero;
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
+        _iconsToDraw.Clear();
 
         // If you use the display UI scale then need to set max(1f, displayscale) because 0 is valid.
         const float scale = 1f;
@@ -181,15 +184,21 @@ public sealed class DoAfterOverlay : Overlay
                 handle.DrawRect(box, color);
                 offset += _barTexture.Height / scale;
 
-                // Here starts code responsible for the transparent icon of something with that player interacts
-                if (doAfter.Args.IconEntity is null)
+                // Here starts code responsible for the transparent icon of <see cref="doAfter.Args.DoafterIcon"/>
+                if (doAfter.Args.DoafterIcon is null ||
+                    _iconsToDraw.Contains(doAfter.Args.DoafterIcon))
                     continue;
 
-                var tex = _sprite.Frame0(doAfter.Args.IconEntity);
-                var iconPosition = position with { X = position.X + 0.6f, Y = position.Y - 0.45f };
+                var tex = _sprite.Frame0(doAfter.Args.DoafterIcon);
+                var iconPosition = position with
+                {
+                    X = position.X + _barTexture.Width / (float)EyeManager.PixelsPerMeter,
+                    Y = position.Y - _barTexture.Height / (float)EyeManager.PixelsPerMeter,
+                };
                 var iconAlpha = MathHelper.Lerp(0f, IconColorAlpha, (float)Math.Clamp(elapsed / MaxAlphaTime, 0.0, 1.0));
 
                 handle.DrawTexture(tex, iconPosition, Color.White.WithAlpha(iconAlpha));
+                _iconsToDraw.Add(doAfter.Args.DoafterIcon);
             }
         }
 

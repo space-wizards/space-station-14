@@ -57,7 +57,7 @@ public sealed partial class DoAfterArgs
     /// foo
     /// </summary>
     [DataField]
-    public SpriteSpecifier? IconEntity;
+    public SpriteSpecifier? DoafterIcon;
 
     #region Event options
     /// <summary>
@@ -262,7 +262,7 @@ public sealed partial class DoAfterArgs
         Used = other.Used;
         Hidden = other.Hidden;
         ExamineText = other.ExamineText;
-        IconEntity = other.IconEntity;
+        DoafterIcon = other.DoafterIcon;
         EventTarget = other.EventTarget;
         Broadcast = other.Broadcast;
         NeedHand = other.NeedHand;
