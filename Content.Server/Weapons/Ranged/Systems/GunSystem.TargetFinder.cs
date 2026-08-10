@@ -7,8 +7,6 @@ namespace Content.Server.Weapons.Ranged.Systems;
 
 public sealed partial class GunSystem
 {
-    [Dependency] private IRobustRandom _random = default!;
-
     [SubscribeLocalEvent]
     public void OnProjectileShot(Entity<TargetAssignComponent> entity, ref AmmoShotEvent args)
     {
