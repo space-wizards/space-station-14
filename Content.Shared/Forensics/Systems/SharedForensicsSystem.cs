@@ -23,7 +23,7 @@ namespace Content.Shared.Forensics.Systems;
 /// <summary>
 /// A system for storing forensics data on entities, and transferring them between entities when interacting.
 /// </summary>
-public sealed partial class SharedForensicsSystem : EntitySystem
+public sealed partial class ForensicsSystem : EntitySystem
 {
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private InventorySystem _inventory = default!;
