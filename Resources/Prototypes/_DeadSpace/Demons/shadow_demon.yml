@@ -87,6 +87,7 @@
         Blunt: 3
         Piercing: 1
         Heat: 5
+        Structural: 40
   - type: NpcFactionMember
     factions:
     - SimpleHostile
