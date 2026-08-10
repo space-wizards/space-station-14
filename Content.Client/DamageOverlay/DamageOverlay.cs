@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Shared.DamageOverlay;
 using Content.Shared.Mobs;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
@@ -6,8 +7,11 @@ using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
-namespace Content.Client.UserInterface.Systems.DamageOverlays.Overlays;
+namespace Content.Client.DamageOverlay;
 
+/// <summary>
+/// The overlay used to display how damaged a player's attached character is.
+/// </summary>
 public sealed partial class DamageOverlay : Overlay
 {
     private static readonly ProtoId<ShaderPrototype> CircleMaskShader = "GradientCircleMask";
@@ -64,6 +68,14 @@ public sealed partial class DamageOverlay : Overlay
 
         if (args.Viewport.Eye != eyeComp.Eye)
             return;
+
+        if (!_entityManager.TryGetComponent(_playerManager.LocalEntity, out DamageOverlayComponent? damageComp))
+            return;
+
+        State = damageComp.CurrentState;
+        CritLevel = damageComp.CritLevel;
+        OxygenLevel = damageComp.OxygenLevel;
+        PainLevel = damageComp.PainLevel;
 
         /*
          * Here's the rundown:
