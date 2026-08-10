@@ -35,8 +35,8 @@
     TriggerConsumeProduce: 0.5
     TriggerInteractStamp: 1
     TriggerInteractShock: 1
-    TriggerEmoteDistress: 1
-    TriggerEmoteHumor: 1
+    TriggerEmoteDistress: 0.1
+    TriggerEmoteHumor: 0.1
 
 - type: xenoArchTrigger
   id: TriggerMusic

@@ -9,40 +9,35 @@ namespace Content.Shared.Xenoarchaeology.Artifact.XAT;
 /// </summary>
 public sealed partial class XATEmoteSystem : BaseXATSystem<XATEmoteComponent>
 {
-
     [Dependency] private SharedTransformSystem _transform = default!;
-    [Dependency] private EntityQuery<XenoArtifactComponent> _xenoArtifactQuery = default!;
+    [Dependency] private EntityQuery<XenoArtifactComponent> _xenoArtifactQuery;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<BeforeEmoteEvent>(OnEmote); //Directly listens for all emote attempts.
-    }
-
+    [SubscribeLocalEvent]
     private void OnEmote(ref BeforeEmoteEvent args)
     {
-        if (args.Cancelled == true)
+        if (args.Cancelled)
             return;
 
-        var targetCoords = Transform(args.Source).Coordinates; // get the coordinates of our emoter.
+        // get the coordinates of our emoter.
+        var targetCoords = Transform(args.Source).Coordinates;
 
-        var query = EntityQueryEnumerator<XATEmoteComponent, XenoArtifactNodeComponent>(); // Find all artifact nodes with this component.
-        while (query.MoveNext(out var uid, out var comp, out var node))  // For each node with this trigger component.
+        // iterate over all artifacts and see if we can trigger any of them with this emote.
+        var query = EntityQueryEnumerator<XATEmoteComponent, XenoArtifactNodeComponent>();
+        while (query.MoveNext(out var uid, out var comp, out var node))
         {
-            if (node.Attached == null) // Is it part of an artifact.
+            if (node.Attached == null)
                 continue;
 
-            if (!comp.Emotes.Contains(args.Emote)) // Does the emote match our list.
+            if (!comp.Emotes.Contains(args.Emote))
                 continue;
 
-            var artifact = _xenoArtifactQuery.Get(node.Attached.Value); // Get the artifact this node is a part of.
+            var artifact = _xenoArtifactQuery.Get(node.Attached.Value);
 
-            if (!CanTrigger(artifact, (uid, node))) // Can this node currently trigger.
+            if (!CanTrigger(artifact, (uid, node)))
                 continue;
 
             var artifactCoords = Transform(artifact).Coordinates;
-            if (_transform.InRange(targetCoords, artifactCoords, comp.Range)) // Are we within range.
+            if (_transform.InRange(targetCoords, artifactCoords, comp.Range)) 
                 Trigger(artifact, (uid, comp, node));
         }
     }

@@ -5,20 +5,20 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Xenoarchaeology.Artifact.XAT.Components;
 
 /// <summary>
-/// This is used for a xenoarch trigger that activates when something emotes nearby.
+/// This is used for a XenoArchology artifact trigger, that is activated when something emotes nearby.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(XATEmoteSystem)), AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, Access(typeof(XATEmoteSystem))]
 public sealed partial class XATEmoteComponent : Component
 {
     /// <summary>
     /// List of accepted emotes.
     /// </summary>
-    [DataField(required: true), AutoNetworkedField]
+    [DataField(required: true)]
     public List<ProtoId<EmotePrototype>> Emotes = new();
 
     /// <summary>
-    /// Range within which artifact reacts to emote events.
+    /// Range, within which artifact reacts to emote events.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public float Range = 10;
 }
