@@ -311,7 +311,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
         if (attemptEv.Cancelled)
         {
             if (attemptEv.Reason != null && showPopups)
-                _popup.PopupEntity(attemptEv.Reason, user, user);
+                _popup.PopupEntity(attemptEv.Reason, user, user, attemptEv.Type);
 
             return false;
         }

@@ -245,7 +245,8 @@ public partial class MobStateSystem
         if (ent.Comp.FailReason != null)
         {
             var states = string.Join(", ", ent.Comp.States.Order().Select(s => Loc.GetString($"mob-state-{s}")));
-            _popup.PopupEntity(Loc.GetString(ent.Comp.FailReason, ("states", states)), args.User, args.User, PopupType.SmallCaution);
+            args.Reason = Loc.GetString(ent.Comp.FailReason, ("states", states));
+            args.Type = PopupType.SmallCaution;
         }
 
         args.Cancelled = true;

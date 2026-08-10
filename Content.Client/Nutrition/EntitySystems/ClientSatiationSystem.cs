@@ -27,6 +27,7 @@ public sealed partial class ClientSatiationSystem : SatiationSystem
                 continue;
 
             args.Amount = (int) amount;
+            return;
         }
     }
 }

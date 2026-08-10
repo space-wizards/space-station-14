@@ -15,7 +15,7 @@ public sealed partial class ActionRequireSatiationComponent : Component
     /// The required satiation type for this ability.
     /// </summary>
     [DataField(required: true)]
-    public ProtoId<SatiationTypePrototype> Satiation = "Hunger";
+    public ProtoId<SatiationTypePrototype> Satiation = SatiationSystem.Hunger;
 
     /// <summary>
     /// The amount of satiation needed for this ability.
@@ -34,4 +34,10 @@ public sealed partial class ActionRequireSatiationComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public LocId? FailReason = "satiation-not-enough-hunger";
+
+    /// <summary>
+    /// The type the popup should show as.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public PopupType FailReasonType = PopupType.SmallCaution;
 }

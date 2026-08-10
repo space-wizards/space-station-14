@@ -17,7 +17,10 @@ public abstract partial class SatiationSystem
             return;
 
         if (ent.Comp.FailReason != null)
+        {
             args.Reason = Loc.GetString(ent.Comp.FailReason);
+            args.Type = ent.Comp.FailReasonType;
+        }
 
         args.Cancelled = true;
     }
