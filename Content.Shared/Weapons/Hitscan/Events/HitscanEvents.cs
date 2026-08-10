@@ -1,7 +1,6 @@
 using System.Numerics;
 using Content.Shared.Damage;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Weapons.Hitscan.Events;
 
@@ -89,21 +88,15 @@ public struct AttemptHitscanRaycastFiredEvent
 }
 
 /// <summary>
-/// Raised on the targeted entity of the hitscan to allow it to respond to being struck
+/// Raised on the targeted entity of the hitscan to allow it to respond to being struck.
 /// </summary>
 [ByRefEvent]
-public struct AttemptHitscanRaycastStrikeEvent
+public struct HitscanRaycastStrikeEvent
 {
     /// <summary>
     /// Data for the hitscan that was fired.
     /// </summary>
     public HitscanRaycastFiredData Data;
-
-    /// <summary>
-    /// Set to true the hitscan is cancelled (e.g. due to reflection).
-    /// Cancelled hitscans should not apply damage or trigger follow-up effects.
-    /// </summary>
-    public bool Cancelled;
 }
 
 

@@ -430,6 +430,6 @@
       max: 3
     whitelist:
       components:
-      - HitscanBasicDamage
+      - LaserProjectile
       tags:
       - EmitterBolt

@@ -76,17 +76,14 @@ public sealed partial class HitscanBasicRaycastSystem : EntitySystem
         if (attemptEvent.Cancelled)
             return;
 
-        if (data.HitEntity != null)
-        {
-            var strikeEvent = new AttemptHitscanRaycastStrikeEvent { Data = data };
-            RaiseLocalEvent(data.HitEntity.Value, ref strikeEvent);
-
-            if (strikeEvent.Cancelled)
-                return;
-        }
-
         var hitEvent = new HitscanRaycastFiredEvent { Data = data };
         RaiseLocalEvent(ent, ref hitEvent);
+
+        if (data.HitEntity != null)
+        {
+            var strikeEvent = new HitscanRaycastStrikeEvent { Data = data };
+            RaiseLocalEvent(data.HitEntity.Value, ref strikeEvent);
+        }
     }
 
     /// <summary>
