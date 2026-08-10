@@ -28,7 +28,7 @@ public sealed partial class StoreSystem : SharedStoreSystem
 
     private void OnMapInit(EntityUid uid, StoreComponent component, MapInitEvent args)
     {
-        RefreshAllListings(component);
+        RefreshAllListingsKeepState(component);
         component.StartingMap = Transform(uid).MapUid;
 
         // Add the bui key if it does not exist already (the check is needed to make sure that we don't overwrite existing InterfaceData).
@@ -41,7 +41,7 @@ public sealed partial class StoreSystem : SharedStoreSystem
         // for traitors, because the StoreComponent for the PDA can be added at any time.
         if (MetaData(uid).EntityLifeStage == EntityLifeStage.MapInitialized)
         {
-            RefreshAllListings(component);
+            RefreshAllListingsKeepState(component);
         }
 
         var ev = new StoreAddedEvent();

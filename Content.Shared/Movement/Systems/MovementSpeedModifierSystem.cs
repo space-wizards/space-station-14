@@ -20,16 +20,12 @@ namespace Content.Shared.Movement.Systems
 
         public override void Initialize()
         {
-            base.Initialize();
-            SubscribeLocalEvent<MovementSpeedModifierComponent, MapInitEvent>(OnModMapInit);
-            SubscribeLocalEvent<MovementSpeedModifierComponent, DownedEvent>(OnDowned);
-            SubscribeLocalEvent<MovementSpeedModifierComponent, StoodEvent>(OnStand);
-
             Subs.CVar(_configManager, CCVars.TileFrictionModifier, value => _frictionModifier = value, true);
             Subs.CVar(_configManager, CCVars.AirFriction, value => _airDamping = value, true);
             Subs.CVar(_configManager, CCVars.OffgridFriction, value => _offGridDamping = value, true);
         }
 
+        [SubscribeLocalEvent]
         private void OnModMapInit(Entity<MovementSpeedModifierComponent> ent, ref MapInitEvent args)
         {
             // TODO: Dirty these smarter.
@@ -44,31 +40,18 @@ namespace Content.Shared.Movement.Systems
             Dirty(ent);
         }
 
+        [SubscribeLocalEvent]
         private void OnDowned(Entity<MovementSpeedModifierComponent> entity, ref DownedEvent args)
         {
             RefreshFrictionModifiers((entity, entity.Comp));
             RefreshMovementModifiers((entity, entity.Comp));
         }
 
+        [SubscribeLocalEvent]
         private void OnStand(Entity<MovementSpeedModifierComponent> entity, ref StoodEvent args)
         {
             RefreshFrictionModifiers((entity, entity.Comp));
             RefreshMovementModifiers((entity, entity.Comp));
-        }
-
-        /// <summary>
-        /// Copy this component's datafields from one entity to another.
-        /// This needs to refresh the modifiers after using CopyComp.
-        /// </summary>
-        public void CopyComponent(Entity<MovementSpeedModifierComponent?> source, EntityUid target)
-        {
-            if (!Resolve(source, ref source.Comp))
-                return;
-
-            CopyComp(source, target, source.Comp);
-            RefreshWeightlessModifiers(target);
-            RefreshMovementSpeedModifiers(target);
-            RefreshFrictionModifiers(target);
         }
 
         /// <summary>

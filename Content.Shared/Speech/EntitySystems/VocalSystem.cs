@@ -1,6 +1,7 @@
 using Content.Shared.Actions;
 using Content.Shared.Chat;
 using Content.Shared.Chat.Prototypes;
+using Content.Shared.Cloning.Events;
 using Content.Shared.Humanoid;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Speech.Components;
@@ -73,23 +74,11 @@ public sealed partial class VocalSystem : EntitySystem
         args.Handled = true;
     }
 
-    /// <summary>
-    /// Copy this component's datafields from one entity to another.
-    /// This can't use CopyComp because of the ScreamActionEntity DataField, which should not be copied.
-    /// </summary>
-    [PublicAPI]
-    public void CopyComponent(Entity<VocalComponent?> source, EntityUid target)
+    [SubscribeLocalEvent]
+    private void OnCloneComponent(Entity<VocalComponent> ent, ref CloningComponentEvent args)
     {
-        if (!Resolve(source, ref source.Comp))
-            return;
-
-        var targetComp = EnsureComp<VocalComponent>(target);
-        targetComp.ScreamId = source.Comp.ScreamId;
-        targetComp.Wilhelm = source.Comp.Wilhelm;
-        targetComp.WilhelmProbability = source.Comp.WilhelmProbability;
-        LoadSounds((target, targetComp));
-
-        Dirty(target, targetComp);
+        if (args.Component is VocalComponent cloneComp)
+            cloneComp.EmoteActionEntity = null;
     }
 
     private bool TryPlayScreamSound(Entity<VocalComponent> ent, EntityUid user)

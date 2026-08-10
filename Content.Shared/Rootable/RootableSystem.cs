@@ -47,22 +47,6 @@ public sealed partial class RootableSystem : EntitySystem
     [Dependency] private EntityQuery<PuddleComponent> _puddleQuery = default!;
     [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<RootableComponent, MapInitEvent>(OnRootableMapInit);
-        SubscribeLocalEvent<RootableComponent, ComponentShutdown>(OnRootableShutdown);
-        SubscribeLocalEvent<RootableComponent, StartCollideEvent>(OnStartCollide);
-        SubscribeLocalEvent<RootableComponent, EndCollideEvent>(OnEndCollide);
-        SubscribeLocalEvent<RootableComponent, ToggleActionEvent>(OnRootableToggle);
-        SubscribeLocalEvent<RootableComponent, MobStateChangedEvent>(OnMobStateChanged);
-        SubscribeLocalEvent<RootableComponent, IsWeightlessEvent>(OnIsWeightless);
-        SubscribeLocalEvent<RootableComponent, SlipAttemptEvent>(OnSlipAttempt);
-        SubscribeLocalEvent<RootableComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovementSpeed);
-        SubscribeLocalEvent<RootableComponent, CloningEvent>(OnCloning);
-    }
-
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -113,22 +97,14 @@ public sealed partial class RootableSystem : EntitySystem
             _logger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(ent):target} absorbed puddle {SharedSolutionContainerSystem.ToPrettyString(transferSolution)}");
     }
 
-    private void OnCloning(Entity<RootableComponent> ent, ref CloningEvent args)
+    [SubscribeLocalEvent]
+    private void OnCloneComponent(Entity<RootableComponent> ent, ref CloningComponentEvent args)
     {
-        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
-            return;
-
-        // Make sure to set the datafields before adding the component so that the correct action gets spawned on map init.
-        var cloneComp = Factory.GetComponent<RootableComponent>();
-        cloneComp.Action = ent.Comp.Action;
-        cloneComp.RootedAlert = ent.Comp.RootedAlert;
-        cloneComp.TransferRate = ent.Comp.TransferRate;
-        cloneComp.TransferFrequency = ent.Comp.TransferFrequency;
-        cloneComp.SpeedModifier = ent.Comp.SpeedModifier;
-        cloneComp.RootSound = ent.Comp.RootSound;
-        AddComp(args.CloneUid, cloneComp, true);
+        if (args.Component is RootableComponent cloneComp)
+            cloneComp.ActionEntity = null;
     }
 
+    [SubscribeLocalEvent]
     private void OnRootableMapInit(Entity<RootableComponent> ent, ref MapInitEvent args)
     {
         if (!TryComp(ent, out ActionsComponent? comp))
@@ -139,6 +115,7 @@ public sealed partial class RootableSystem : EntitySystem
         _actions.AddAction(ent, ref ent.Comp.ActionEntity, ent.Comp.Action, component: comp);
     }
 
+    [SubscribeLocalEvent]
     private void OnRootableShutdown(Entity<RootableComponent> ent, ref ComponentShutdown args)
     {
         if (!TryComp(ent, out ActionsComponent? comp))
@@ -149,11 +126,13 @@ public sealed partial class RootableSystem : EntitySystem
         _alerts.ClearAlert(ent.Owner, ent.Comp.RootedAlert);
     }
 
+    [SubscribeLocalEvent]
     private void OnRootableToggle(Entity<RootableComponent> ent, ref ToggleActionEvent args)
     {
         args.Handled = TryToggleRooting((ent, ent));
     }
 
+    [SubscribeLocalEvent]
     private void OnMobStateChanged(Entity<RootableComponent> ent, ref MobStateChangedEvent args)
     {
         if (ent.Comp.Rooted)
@@ -187,6 +166,7 @@ public sealed partial class RootableSystem : EntitySystem
         return true;
     }
 
+    [SubscribeLocalEvent]
     private void OnIsWeightless(Entity<RootableComponent> ent, ref IsWeightlessEvent args)
     {
         if (args.Handled || !ent.Comp.Rooted)
@@ -200,6 +180,7 @@ public sealed partial class RootableSystem : EntitySystem
         args.Handled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnSlipAttempt(Entity<RootableComponent> ent, ref SlipAttemptEvent args)
     {
         if (!ent.Comp.Rooted)
@@ -211,6 +192,7 @@ public sealed partial class RootableSystem : EntitySystem
         args.NoSlip = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnStartCollide(Entity<RootableComponent> ent, ref StartCollideEvent args)
     {
         if (!_puddleQuery.HasComp(args.OtherEntity))
@@ -224,6 +206,7 @@ public sealed partial class RootableSystem : EntitySystem
         Dirty(ent);
     }
 
+    [SubscribeLocalEvent]
     private void OnEndCollide(Entity<RootableComponent> ent, ref EndCollideEvent args)
     {
         if (ent.Comp.PuddleEntity != args.OtherEntity)
@@ -250,6 +233,7 @@ public sealed partial class RootableSystem : EntitySystem
         Dirty(ent);
     }
 
+    [SubscribeLocalEvent]
     private void OnRefreshMovementSpeed(Entity<RootableComponent> ent, ref RefreshMovementSpeedModifiersEvent args)
     {
         if (ent.Comp.Rooted)

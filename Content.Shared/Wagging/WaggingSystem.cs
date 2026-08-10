@@ -17,22 +17,11 @@ public sealed partial class WaggingSystem : EntitySystem
     [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private SharedVisualBodySystem _visualBody = default!;
 
-    /// <summary>
-    /// Copies the component and its values to the clone.
-    /// </summary>
     [SubscribeLocalEvent]
-    private void OnCloning(Entity<WaggingComponent> ent, ref CloningEvent args)
+    private void OnCloneComponent(Entity<WaggingComponent> ent, ref CloningComponentEvent args)
     {
-        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
-            return;
-
-        // Make sure to set the datafields before adding the component so that the correct action gets spawned on map init.
-        var cloneComp = Factory.GetComponent<WaggingComponent>();
-        cloneComp.Action = ent.Comp.Action;
-        cloneComp.Layer = ent.Comp.Layer;
-        cloneComp.Organ = ent.Comp.Organ;
-        cloneComp.Suffix = ent.Comp.Suffix;
-        AddComp(args.CloneUid, cloneComp, true);
+        if (args.Component is WaggingComponent cloneComp)
+            cloneComp.ActionEntity = null;
     }
 
     /// <summary>

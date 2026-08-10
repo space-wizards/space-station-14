@@ -8,10 +8,10 @@ using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
 using Content.Shared.Storage;
+using Content.Shared.Cloning.Events;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Changeling.Systems;
 
@@ -32,21 +32,8 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
     [Dependency] private SharedChangelingIdentitySystem _changelingIdentity = default!;
 
     private const string ChangelingBuiXmlGeneratedName = "ChangelingTransformBoundUserInterface";
-    public override void Initialize()
-    {
-        base.Initialize();
 
-        SubscribeLocalEvent<ChangelingTransformComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<ChangelingTransformComponent, ChangelingTransformActionEvent>(OnTransformAction);
-        SubscribeLocalEvent<ChangelingTransformComponent, ChangelingTransformIdentitySelectMessage>(OnTransformSelected);
-        SubscribeLocalEvent<ChangelingTransformComponent, ChangelingTransformIdentityDropMessage>(OnTransformDrop);
-        SubscribeLocalEvent<ChangelingTransformComponent, ChangelingTransformDoAfterEvent>(OnSuccessfulTransform);
-        SubscribeLocalEvent<ChangelingTransformComponent, ComponentShutdown>(OnShutdown);
-
-        // Components that need special handling outside of cloning.
-        SubscribeLocalEvent<StorageComponent, BeforeChangelingTransformEvent>(StorageBeforeTransform);
-    }
-
+    [SubscribeLocalEvent]
     private void OnMapInit(Entity<ChangelingTransformComponent> ent, ref MapInitEvent init)
     {
         _actions.AddAction(ent, ref ent.Comp.ChangelingTransformActionEntity, ent.Comp.ChangelingTransformAction);
@@ -55,6 +42,7 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         _ui.SetUi((ent, userInterfaceComp), ChangelingTransformUiKey.Key, new InterfaceData(ChangelingBuiXmlGeneratedName));
     }
 
+    [SubscribeLocalEvent]
     private void OnShutdown(Entity<ChangelingTransformComponent> ent, ref ComponentShutdown args)
     {
         if (ent.Comp.ChangelingTransformActionEntity != null)
@@ -63,6 +51,14 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
+    private void OnCloneComponent(Entity<ChangelingTransformComponent> ent, ref CloningComponentEvent args)
+    {
+        if (args.Component is ChangelingTransformComponent cloneComp)
+            cloneComp.ChangelingTransformActionEntity = null;
+    }
+
+    [SubscribeLocalEvent]
     private void OnTransformAction(Entity<ChangelingTransformComponent> ent,
         ref ChangelingTransformActionEvent args)
     {
@@ -80,6 +76,7 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
           // but pressing the number does.
     }
 
+    [SubscribeLocalEvent]
     private void OnTransformSelected(Entity<ChangelingTransformComponent> ent,
         ref ChangelingTransformIdentitySelectMessage args)
     {
@@ -98,6 +95,7 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         TransformInto(ent.AsNullable(), targetIdentity.Value);
     }
 
+    [SubscribeLocalEvent]
     private void OnTransformDrop(Entity<ChangelingTransformComponent> ent,
         ref ChangelingTransformIdentityDropMessage args)
     {
@@ -161,6 +159,7 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         });
     }
 
+    [SubscribeLocalEvent]
     private void OnSuccessfulTransform(Entity<ChangelingTransformComponent> ent,
         ref ChangelingTransformDoAfterEvent args)
     {
@@ -210,6 +209,7 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         RaiseLocalEvent(args.User, afterTransformEvent);
     }
 
+    [SubscribeLocalEvent]
     private void StorageBeforeTransform(Entity<StorageComponent> ent, ref BeforeChangelingTransformEvent args)
     {
         if (HasComp<StorageComponent>(args.StoredIdentity))

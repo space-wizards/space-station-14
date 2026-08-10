@@ -73,9 +73,8 @@
   - SouthernAccent
   - SpanishAccent
   - StutteringAccent
-  eventComponents:
-  - Puller
   - Vocal # voice sounds
+  - Puller
 
 # for job-specific traits etc.
 - type: cloningSettings
@@ -84,9 +83,12 @@
   - BibleUser
   - CommandStaff
   - MindShield
-  - MimePowers
   - SpaceNinja
   - Thieving
+  - ActionGrant
+  - MimePowers
+  - Store
+  - VoiceMask
 
 # antag roles
 - type: cloningSettings
@@ -95,6 +97,11 @@
   - HeadRevolutionary
   - Revolutionary
   - NukeOperative
+  # Changeling
+  - ChangelingFleshClothingAbility
+  - ChangelingDevour
+  - ChangelingIdentity
+  - ChangelingTransform
 
 - type: cloningSettings
   abstract: true
@@ -144,15 +151,15 @@
   - TemperatureProtection
   - TypingIndicator
   - ScaleVisuals # for dwarf height
-  eventComponents:
-  # these need special treatment in the event subscription
   - Inventory # arachnid pockets and diona feet
   - Wagging # lizard tails
-  - Storage # slime storage
   - Rootable # diona
   - Sericulture # arachnids
   - MovementSpeedModifier # moths when weightless
   - JumpAbility # vulp leaping
+  eventComponents:
+  # these need special treatment in the event subscription
+  - Storage # slime storage
   - Bloodstream # blood reagents
   copyInternalStorage: false
   copyImplants: false
@@ -193,9 +200,8 @@
   id: PlantLifecycleClone
   parent: PlantClone
   components:
+  - PlantHolder
   - PlantHarvest
   # traits
   - PlantTraitSampled
   - PlantTraitSeedless
-  eventComponents:
-  - PlantHolder
