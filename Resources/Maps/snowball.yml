@@ -5807,7 +5807,7 @@ entities:
     - type: Parallax
       parallax: SnowballStation
     - type: MapLight
-      ambientLightColor: "#555555"
+      ambientLightColor: "#423c37"
     - type: GridTree
     - type: Broadphase
     - type: OccluderTree
