@@ -6,12 +6,14 @@
   components:
   - type: Action
     toggled: true
-    icon:
-      sprite: Markers/Waypointers/waypointer_action.rsi
-      state: action_icon_off
-    iconOn:
-      sprite: Markers/Waypointers/waypointer_action.rsi
-      state: action_icon_on
+  - type: Sprite
+    sprite: Markers/Waypointers/waypointer_action.rsi
+    layers:
+    - state: action_icon_off
+      map: [ "enum.ActionVisuals.Icon" ]
+    - state: action_icon_on
+      map: [ "enum.ActionVisuals.IconToggled" ]
+      visible: false
   - type: InstantAction
     event: !type:ActionManageWaypointersEvent
   - type: UserInterface
