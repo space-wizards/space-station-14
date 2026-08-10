@@ -1,18 +1,17 @@
-using Robust.Shared.Network;
-using Robust.Shared.Serialization;
+using Robust.Shared.Player;
 
 namespace Content.Shared.Afk.Events;
 
 /// <summary>
 /// Raised whenever a player is no longer AFK.
 /// </summary>
-[Serializable, NetSerializable]
-public sealed class UnAfkEvent : EntityEventArgs
+[ByRefEvent]
+public readonly struct UnAfkEvent
 {
-    public readonly NetUserId UserId;
+    public readonly ICommonSession Session;
 
-    public UnAfkEvent(NetUserId userId)
+    public UnAfkEvent(ICommonSession session)
     {
-        UserId = userId;
+        Session = session;
     }
 }

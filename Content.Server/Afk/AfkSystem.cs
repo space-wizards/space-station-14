@@ -115,9 +115,8 @@ public sealed partial class AfkSystem : EntitySystem
         if (!_afkPlayers.Remove(session))
             return;
 
-        var ev = new UnAfkEvent(session.UserId);
-        RaiseLocalEvent(ev);
-        RaiseNetworkEvent(ev, session);
+        var ev = new UnAfkEvent(session);
+        RaiseLocalEvent(ref ev);
     }
 
     public override void Update(float frameTime)
@@ -157,17 +156,15 @@ public sealed partial class AfkSystem : EntitySystem
 
             if (isAfk && _afkPlayers.Add(pSession))
             {
-                var ev = new AfkEvent(pSession.UserId);
-                RaiseLocalEvent(ev);
-                RaiseNetworkEvent(ev, pSession);
+                var ev = new AfkEvent(pSession);
+                RaiseLocalEvent(ref ev);
                 continue;
             }
 
             if (!isAfk && _afkPlayers.Remove(pSession))
             {
-                var ev = new UnAfkEvent(pSession.UserId);
-                RaiseLocalEvent(ev);
-                RaiseNetworkEvent(ev, pSession);
+                var ev = new UnAfkEvent(pSession);
+                RaiseLocalEvent(ref ev);
             }
         }
     }

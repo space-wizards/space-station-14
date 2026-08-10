@@ -1,18 +1,17 @@
-using Robust.Shared.Network;
-using Robust.Shared.Serialization;
+using Robust.Shared.Player;
 
 namespace Content.Shared.Afk.Events;
 
 /// <summary>
 /// Raised whenever a player goes afk.
 /// </summary>
-[Serializable, NetSerializable]
-public sealed class AfkEvent : EntityEventArgs
+[ByRefEvent]
+public readonly struct AfkEvent
 {
-    public readonly NetUserId UserId;
+    public readonly ICommonSession Session;
 
-    public AfkEvent(NetUserId userId)
+    public AfkEvent(ICommonSession session)
     {
-        UserId = userId;
+        Session = session;
     }
 }

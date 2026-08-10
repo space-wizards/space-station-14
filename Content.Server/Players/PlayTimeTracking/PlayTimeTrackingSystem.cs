@@ -48,8 +48,8 @@ public sealed partial class PlayTimeTrackingSystem : EntitySystem
         SubscribeLocalEvent<PlayerDetachedEvent>(OnPlayerDetached);
         SubscribeLocalEvent<RoleAddedEvent>(OnRoleEvent);
         SubscribeLocalEvent<RoleRemovedEvent>(OnRoleEvent);
-        SubscribeLocalEvent<AfkEvent>(OnAFK);
-        SubscribeLocalEvent<UnAfkEvent>(OnUnAFK);
+        SubscribeLocalEvent<AfkEvent>(OnAfk);
+        SubscribeLocalEvent<UnAfkEvent>(OnUnAfk);
         SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<PlayerJoinedLobbyEvent>(OnPlayerJoinedLobby);
         SubscribeLocalEvent<StationJobsGetCandidatesEvent>(OnStationJobsGetCandidates);
@@ -134,16 +134,14 @@ public sealed partial class PlayTimeTrackingSystem : EntitySystem
         _tracking.Save();
     }
 
-    private void OnUnAFK(UnAfkEvent ev)
+    private void OnUnAfk(UnAfkEvent ev)
     {
-        var session = _playerManager.GetSessionById(ev.UserId);
-        _tracking.QueueRefreshTrackers(session);
+        _tracking.QueueRefreshTrackers(ev.Session);
     }
 
-    private void OnAFK(AfkEvent ev)
+    private void OnAfk(AfkEvent ev)
     {
-        var session = _playerManager.GetSessionById(ev.UserId);
-        _tracking.QueueRefreshTrackers(session);
+        _tracking.QueueRefreshTrackers(ev.Session);
     }
 
     private void AdminPermsChanged(AdminPermsChangedEventArgs admin)
