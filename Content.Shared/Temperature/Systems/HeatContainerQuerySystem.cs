@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Content.Shared.Atmos.Components;
@@ -40,27 +38,8 @@ public sealed partial class HeatContainerQuerySystem : EntitySystem
     /// An address to a heat container. Shared between relevant components.
     /// </summary>
     [DataDefinition]
-    public sealed partial class HeatContainerAddress : IEquatable<HeatContainerAddress>
+    public sealed partial class HeatContainerAddress
     {
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                var hashCode = (int)AddressType;
-                hashCode = (hashCode * 397) ^ TargetName.GetHashCode();
-                hashCode = (hashCode * 397) ^ IncludeExternals.GetHashCode();
-                hashCode = (hashCode * 397) ^ (Next != null ? Next.GetHashCode() : 0);
-                return hashCode;
-            }
-        }
-
-        public override bool Equals(object? obj)
-        {
-            return ReferenceEquals(this, obj) || obj is HeatContainerAddress other && Equals(other);
-        }
-
-
-
         public enum TargetType
         {
             None,
@@ -70,13 +49,13 @@ public sealed partial class HeatContainerQuerySystem : EntitySystem
         }
 
         [DataField(required: true)]
-        public TargetType AddressType { get; init; }
+        public TargetType AddressType { get; set; }
 
         /// <summary>
         /// Name of the container, component or solution addressed.
         /// </summary>
         [DataField(required: true)]
-        public string TargetName { get; init; }
+        public string TargetName { get; set; }
 
         /// <summary>
         /// Should the target forward request to entities considered outside the current entity tree?
@@ -84,38 +63,18 @@ public sealed partial class HeatContainerQuerySystem : EntitySystem
         /// A <see cref="HeatableComponent"/> should never have an address with externals include to avoid loops in the search tree.
         /// </summary>
         [DataField]
-        public bool IncludeExternals { get; init; }
+        public bool IncludeExternals { get; set; }
 
         /// <summary>
         /// What container should be searched for next.
         /// </summary>
         [DataField]
-        public HeatContainerAddress? Next { get; init; }
+        public HeatContainerAddress? Next { get; set; }
 
         public override string ToString()
         {
             return
                 $"{Enum.GetName(AddressType)}: {TargetName} ({IncludeExternals.ToString()}){(Next == null ? "" : " -> " + Next.ToString())}";
-        }
-
-        public bool Equals(HeatContainerAddress? other)
-        {
-            if (other is null)
-                return false;
-            if (ReferenceEquals(this, other))
-                return true;
-            return AddressType == other.AddressType && TargetName == other.TargetName &&
-                   IncludeExternals == other.IncludeExternals && (Next?.Equals(other.Next) ?? other.Next == null);
-        }
-
-        public static bool operator ==(HeatContainerAddress? left, HeatContainerAddress? right)
-        {
-            return Equals(left, right);
-        }
-
-        public static bool operator !=(HeatContainerAddress? left, HeatContainerAddress? right)
-        {
-            return !Equals(left, right);
         }
     }
 
@@ -139,7 +98,7 @@ public sealed partial class HeatContainerQuerySystem : EntitySystem
             case HeatContainerAddress.TargetType.Solution:
                 if (_solutions.TryGetSolution(entityUid, address.TargetName, out var solution))
                 {
-                    GetContainerFromComponent(solution.Value.Owner, solution.Value.Comp, false);
+                 return GetContainerFromComponent(solution.Value.Owner, solution.Value.Comp, false);
                 }
 
                 break;
@@ -239,8 +198,8 @@ public sealed partial class HeatContainerQuerySystem : EntitySystem
         switch (container.Component)
         {
             case SolutionComponent slnComp:
-                slnComp.Solution.Temperature = container.Temperature;
-                Dirty(container.EntityUid, container.Component);
+                _solutions.SetTemperature(new Entity<SolutionComponent>(container.EntityUid, slnComp),
+                    container.Temperature);
                 break;
             case GasMaxPressureHolderComponent gasMaxPressureHolder:
                 //TODO check: do i need to adjust pressure?

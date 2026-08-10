@@ -62,7 +62,7 @@ public sealed partial class ElectricalHeaterSystem : EntitySystem
             if (heater.MinimumPower > power.PowerReceived || heatEnergy <= 0)
                 continue;
             //calculate output heat
-            heatEnergy *= heater.Efficiency;
+            heatEnergy *= heater.Efficiency*frameTime;
             heatEnergy /= toHeat.Count;
             //apply to all targets
             foreach (var target in toHeat)
