@@ -16,14 +16,15 @@ public sealed partial class XATStaminaDamageThresholdReachedComponent : Componen
     public float AccumulatedDamage = 0;
 
     /// <summary>
-    /// Stamina Damage required to trigger the artifact.
+    /// Amount of Stamina Damage required to trigger the artifact.
     /// </summary>
     [DataField(required: true), AutoNetworkedField]
     public float DamageNeeded;
 
     /// <summary>
-    /// What to say if more interactions are needed
+    /// What to use in popup after stamina damage was received but <see cref="DamageNeeded"/> is not met yet.
+    /// If null - no popup will be shown.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public LocId? InsufficientString = "interact-artifact-more";
+    public LocId? InsufficientDamagePopup = "interact-artifact-more";
 }

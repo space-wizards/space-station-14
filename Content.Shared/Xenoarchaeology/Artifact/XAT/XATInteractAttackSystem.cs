@@ -1,9 +1,6 @@
-using Content.Shared.Damage.Systems;
-using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Popups;
 using Content.Shared.Weapons.Hitscan.Events;
 using Content.Shared.Weapons.Melee.Events;
-using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Whitelist;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Content.Shared.Xenoarchaeology.Artifact.XAT.Components;
@@ -28,7 +25,7 @@ public sealed partial class XATInteractAttackSystem : BaseXATSystem<XATInteractA
 
         XATSubscribeDirectEvent<AttackedEvent>(OnAttacked);
         XATSubscribeDirectEvent<StartCollideEvent>(OnStartCollide);
-        XATSubscribeDirectEvent<AttemptHitscanRaycastStrikeEvent>(OnHitscan);
+        XATSubscribeDirectEvent<HitscanRaycastStrikeEvent>(OnHitscan);
     }
 
     /// <summary>
@@ -61,10 +58,14 @@ public sealed partial class XATInteractAttackSystem : BaseXATSystem<XATInteractA
     /// <summary>
     /// Trigger the node if the striking hitscan matches the whitelist.
     /// </summary>
-    private void OnHitscan(Entity<XenoArtifactComponent> artifact, Entity<XATInteractAttackComponent, XenoArtifactNodeComponent> node, ref AttemptHitscanRaycastStrikeEvent args)
+    private void OnHitscan(Entity<XenoArtifactComponent> artifact, Entity<XATInteractAttackComponent, XenoArtifactNodeComponent> node, ref HitscanRaycastStrikeEvent args)
     {
-        if (_whitelistSystem.IsWhitelistPassOrNull(node.Comp1.Whitelist, args.Data.Hitscan) && DoTriggerCountdown(node, artifact.Owner, args.Data.Shooter))
+        if ((_whitelistSystem.IsWhitelistPassOrNull(node.Comp1.Whitelist, args.Data.Hitscan)
+             || _whitelistSystem.IsWhitelistPassOrNull(node.Comp1.Whitelist, args.Data.Gun))
+            && DoTriggerCountdown(node, artifact.Owner, args.Data.Shooter))
+        {
             Trigger(artifact, node);
+        }
     }
 
     /// <summary>
@@ -80,8 +81,8 @@ public sealed partial class XATInteractAttackSystem : BaseXATSystem<XATInteractA
 
         if (ent.Comp.Count > 0)
         {
-            if (ent.Comp.InsufficientString != null)
-                _popup.PopupEntity(Loc.GetString(ent.Comp.InsufficientString), artifact, user); //tell user they need to interact in the same way more times
+            if (ent.Comp.InsufficientInteractionPopup != null)
+                _popup.PopupEntity(Loc.GetString(ent.Comp.InsufficientInteractionPopup), artifact, user); //tell user they need to interact in the same way more times
 
             Dirty(ent);
             return false;

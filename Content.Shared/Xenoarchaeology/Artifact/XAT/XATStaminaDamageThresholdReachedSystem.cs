@@ -39,8 +39,8 @@ public sealed partial class XATStaminaDamageThresholdReachedSystem : BaseXATSyst
         }
         else
         {
-            if (node.Comp1.InsufficientString != null)
-                _popup.PopupEntity(Loc.GetString(node.Comp1.InsufficientString), artifact); //tell user they need to interact in the same way more times
+            if (node.Comp1.InsufficientDamagePopup != null)
+                _popup.PopupEntity(Loc.GetString(node.Comp1.InsufficientDamagePopup), artifact); //tell user they need to interact in the same way more times
         }
 
 
