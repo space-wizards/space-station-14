@@ -18,7 +18,8 @@
   id: PlatingDamaged
   parent: BasePlating
   name: tiles-plating
-  sprite: /Textures/Tiles/plating.png
+  sprite: /Textures/Tiles/plating-damaged.png
+  variants: 4
 
 - type: tile
   id: PlatingRCD

@@ -69,7 +69,7 @@
   parent: BaseStationTile
   name: tiles-steel-floor
   sprite: /Textures/Tiles/Basic/Gray/gray-damaged.png
-  variants: 5
+  variants: 4
   itemDrop: FloorTileItemSteel #This should probably be made null when it becomes possible to make it such, in SS13 prying destroyed tiles wouldn't give you anything.
 
 #### WHITE
