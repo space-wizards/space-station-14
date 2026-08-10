@@ -16,6 +16,7 @@
     removeOnShutdown: false
     actions:
     - ActionChangelingStore
+    - ActionChangelingStasis
   - type: Store
     balance:
       ChangelingDNA: 60

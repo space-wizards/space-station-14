@@ -26,6 +26,7 @@
     removeOnShutdown: false
     actions:
     - ActionChangelingStore
+    - ActionChangelingStasis
   - type: SatiationGrant
     satiation:
       Chemicals:
