@@ -6057,3 +6057,10 @@ Entries:
   changes:
   - type: Add
     message: Возможность покупки огромного и большого двигателя в отделе снабжения.
+- id: 582
+  author: pe4enkakris
+  time: '2026-08-10T17:35:44.368609+00:00'
+  pr: 2122
+  changes:
+  - type: Tweak
+    message: Время на гостроли АПБТ.
