@@ -184,15 +184,12 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             return;
 
         var msg = new FormattedMessage();
-        var examined = new List<string>();
+        var examined = new HashSet<string>();
 
         foreach (var doAfter in ent.Comp.DoAfters.Values)
         {
-            if (doAfter.Args.ExamineText is not null &&
-                !examined.Contains(doAfter.Args.ExamineText))
-            {
+            if (doAfter.Args.ExamineText is not null)
                 examined.Add(doAfter.Args.ExamineText);
-            }
         }
 
         foreach (var entry in examined)
