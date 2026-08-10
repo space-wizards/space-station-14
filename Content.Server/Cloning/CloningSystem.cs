@@ -152,6 +152,9 @@ public sealed partial class CloningSystem : SharedCloningSystem
                 CopyComp((original, sourceComp), clone, _context);
             }
         }
+
+        var ev = new ClonedEvent(clone);
+        RaiseLocalEvent(original, ref ev);
     }
 
     /// <inheritdoc/>
@@ -195,8 +198,7 @@ public sealed partial class CloningSystem : SharedCloningSystem
 
         var spawned = SpawnAtPosition(prototype, coords);
 
-        // copy over important component data
-        var ev = new CloningItemEvent(spawned);
+        var ev = new ClonedEvent(spawned);
         RaiseLocalEvent(original, ref ev);
 
         // if the original has items inside its storage, copy those as well
@@ -270,7 +272,7 @@ public sealed partial class CloningSystem : SharedCloningSystem
                 continue;
 
             // copy over important component data
-            var ev = new CloningItemEvent(targetImplant.Value);
+            var ev = new ClonedEvent(targetImplant.Value);
             RaiseLocalEvent(originalImplant, ref ev);
 
             if (copyStorage)

@@ -1,23 +1,18 @@
-using Content.Shared.Body.Components;
-using Content.Shared.Body.Systems;
-using Content.Server.Speech.EntitySystems;
 using Content.Shared.Cloning.Events;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Forensics.Components;
 using Content.Shared.Forensics.Systems;
-using Content.Shared.Inventory;
 using Content.Shared.Labels.Components;
 using Content.Shared.Labels.EntitySystems;
-using Content.Shared.Movement.Pulling.Systems;
-using Content.Shared.Movement.Systems;
 using Content.Shared.Paper;
-using Content.Shared.Speech.EntitySystems;
 using Content.Shared.Stacks;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Robust.Shared.Prototypes;
+using Content.Shared.Zombies;
+using Content.Server.Zombies;
 
 namespace Content.Server.Cloning;
 
@@ -30,17 +25,12 @@ namespace Content.Server.Cloning;
 /// </remarks>
 public sealed partial class CloningSystem
 {
-    [Dependency] private SharedStackSystem _stack = default!;
     [Dependency] private LabelSystem _label = default!;
     [Dependency] private PaperSystem _paper = default!;
-    [Dependency] private VocalSystem _vocal = default!;
-    [Dependency] private MovementSpeedModifierSystem _movementSpeedModifier = default!;
     [Dependency] private SharedChameleonClothingSystem _chameleonClothing = default!;
-    [Dependency] private PullingSystem _pulling = default!;
-    [Dependency] private BloodstreamSystem _bloodstream = default!;
     [Dependency] private SharedForensicsSystem _forensics = default!;
-
-    #region CopyItem
+    [Dependency] private SharedStackSystem _stack = default!;
+    [Dependency] private ZombieSystem _zombie = default!;
 
     // These are used for <see cref="CopyItem"/>.
     // Anything not copied over here gets reverted to the values the item had in its prototype.
@@ -48,7 +38,7 @@ public sealed partial class CloningSystem
     // We only consider the most important components so the paradox clone gets similar equipment.
     // This method of using subscriptions was chosen to make it easy for forks to add their own custom components that need to be copied.
     [SubscribeLocalEvent]
-    private void OnCloneItemStack(Entity<StackComponent> ent, ref CloningItemEvent args)
+    private void OnCloneItemStack(Entity<StackComponent> ent, ref ClonedEvent args)
     {
         // if the clone is a stack as well, adjust the count of the copy
         if (TryComp<StackComponent>(args.CloneUid, out var cloneStackComp))
@@ -56,14 +46,14 @@ public sealed partial class CloningSystem
     }
 
     [SubscribeLocalEvent]
-    private void OnCloneItemLabel(Entity<LabelComponent> ent, ref CloningItemEvent args)
+    private void OnCloneItemLabel(Entity<LabelComponent> ent, ref ClonedEvent args)
     {
         // copy the label
         _label.Label(args.CloneUid, ent.Comp.CurrentLabel);
     }
 
     [SubscribeLocalEvent]
-    private void OnCloneItemPaper(Entity<PaperComponent> ent, ref CloningItemEvent args)
+    private void OnCloneItemPaper(Entity<PaperComponent> ent, ref ClonedEvent args)
     {
         // copy the text and any stamps
         if (TryComp<PaperComponent>(args.CloneUid, out var clonePaperComp))
@@ -74,14 +64,14 @@ public sealed partial class CloningSystem
     }
 
     [SubscribeLocalEvent]
-    private void OnCloneItemForensics(Entity<ForensicsComponent> ent, ref CloningItemEvent args)
+    private void OnForensicsCloned(Entity<ForensicsComponent> ent, ref ClonedEvent args)
     {
         // copy any forensics to the cloned item
         _forensics.CopyForensicsFrom(ent.AsNullable(), args.CloneUid);
     }
 
     [SubscribeLocalEvent]
-    private void OnCloneItemStore(Entity<StoreComponent> ent, ref CloningItemEvent args)
+    private void OnStoreCloned(Entity<StoreComponent> ent, ref ClonedEvent args)
     {
         // copy the current amount of currency in the store
         // at the moment this takes care of uplink implants and the portable nukie uplinks
@@ -93,10 +83,16 @@ public sealed partial class CloningSystem
     }
 
     [SubscribeLocalEvent]
-    private void OnCloneItemChameleon(Entity<ChameleonClothingComponent> ent, ref CloningItemEvent args)
+    private void OnChameleonClothingCloned(Entity<ChameleonClothingComponent> ent, ref ClonedEvent args)
     {
         // copy the prototype the original is mimicing
         _chameleonClothing.SetSelectedPrototype(args.CloneUid, ent.Comp.Default);
     }
-    #endregion CopyItem
+
+    [SubscribeLocalEvent]
+    private void OnZombieCloned(Entity<ZombieComponent> ent, ref ClonedEvent args)
+    {
+        // Return the original's appearance to how it was before being zombified.
+        _zombie.UnZombify(ent, args.CloneUid, ent.Comp);
+    }
 }
