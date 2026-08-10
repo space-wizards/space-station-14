@@ -186,7 +186,13 @@ namespace Content.Client.LateJoin
                         jobsAvailable.Add(_prototypeManager.Index<JobPrototype>(jobId));
                     }
 
-                    jobsAvailable.Sort(JobUIComparer.Instance);
+                    if (JobUIComparer.TryCreate(
+                            _prototypeManager,
+                            _gameTicker.JobWeightsByStation.GetValueOrDefault(id),
+                            out var comparer))
+                    {
+                        jobsAvailable.Sort(comparer);
+                    }
 
                     // Do not display departments with no jobs available.
                     if (jobsAvailable.Count == 0)
