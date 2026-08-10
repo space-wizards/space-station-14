@@ -23,7 +23,7 @@ maskseed = 6734
 [[layers]]
 type = "points"
 closecolor = "#b6ac9c"
-count = 50
+count = 150
 seed = 5848
 mask = true
 masknoise_type = "fbm"
@@ -40,7 +40,7 @@ maskseed = 8398
 type = "points"
 closecolor = "#514e42"
 pointsize = 2
-count = 50
+count = 150
 seed = 5848
 mask = true
 masknoise_type = "fbm"
