@@ -1296,6 +1296,8 @@
       Steel: 5
       CableHV: 5
       Cable: 2
+  - type: StealTarget
+    stealGroup: SalvageMagnetMachineCircuitboard
 
 - type: entity
   parent: BaseMachineCircuitboard

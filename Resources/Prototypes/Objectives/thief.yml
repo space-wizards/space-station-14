@@ -207,6 +207,8 @@
   parent: BaseThiefStealObjective
   id: SecurityTechFabCircuitboardStealObjective
   components:
+  - type: NotJobRequirement
+    jobs: [ SecurityOfficer, Detective, Warden ]
   - type: StealCondition
     stealGroup: SecurityTechFabCircuitboard
   - type: Objective
@@ -216,6 +218,8 @@
   parent: BaseThiefStealObjective
   id: WantedListCartridgeStealObjective
   components:
+  - type: NotJobRequirement
+    jobs: [ SecurityOfficer, Detective, Warden ]
   - type: StealCondition
     stealGroup: WantedListCartridge
   - type: Objective
