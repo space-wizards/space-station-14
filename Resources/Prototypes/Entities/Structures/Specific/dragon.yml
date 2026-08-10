@@ -46,4 +46,3 @@
   - type: EmitSoundOnSpawn
     sound:
       path: /Audio/Weapons/Guns/Gunshots/rocket_launcher.ogg
-  - type: WaypointerTrackable
