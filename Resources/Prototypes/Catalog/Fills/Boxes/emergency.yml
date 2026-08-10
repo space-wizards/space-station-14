@@ -171,7 +171,7 @@
       storagebase: !type:AllSelector
         children:
         - id: ClothingMaskBreath
-        - id: ExtendedEmergencyOxygenTankFilled
+        - id: ExtendedEmergencyOxygenTankFilled #DS14
         - id: EmergencyMedipen
         - id: Flare
         - id: FoodSnackNutribrick
@@ -191,7 +191,7 @@
       storagebase: !type:AllSelector
         children:
         - id: ClothingMaskBreath
-        - id: ExtendedEmergencyNitrogenTankFilled
+        - id: ExtendedEmergencyNitrogenTankFilled #DS14
         - id: EmergencyMedipen
         - id: Flare
         - id: FoodSnackNutribrick
@@ -213,7 +213,7 @@
       storagebase: !type:AllSelector
         children:
         - id: ClothingMaskBreath
-        - id: ExtendedEmergencyOxygenTankFilled
+        - id: ExtendedEmergencyOxygenTankFilled #DS14
         - id: EmergencyMedipen
         - id: Flare
         - id: FoodSnackNutribrick
@@ -229,7 +229,7 @@
       storagebase: !type:AllSelector
         children:
         - id: ClothingMaskBreath
-        - id: ExtendedEmergencyOxygenTankFilled
+        - id: ExtendedEmergencyOxygenTankFilled #DS14
         - id: EmergencyMedipen
         - id: Flare
         - id: FoodSnackFabricbrick
@@ -247,7 +247,7 @@
       storagebase: !type:AllSelector
         children:
         - id: ClothingMaskGasSecurity
-        - id: EmergencyOxygenTankFilled
+        - id: ExtendedEmergencyOxygenTankFilled # DS14
         - id: EmergencyMedipen
         - id: Flare
         - id: FoodSnackNutribrick
@@ -267,7 +267,7 @@
       storagebase: !type:AllSelector
         children:
         - id: ClothingMaskGasSecurity
-        - id: EmergencyNitrogenTankFilled
+        - id: ExtendedEmergencyNitrogenTankFilled # DS14
         - id: EmergencyMedipen
         - id: Flare
         - id: FoodSnackNutribrick
@@ -289,7 +289,7 @@
       storagebase: !type:AllSelector
         children:
         - id: ClothingMaskGasSecurity
-        - id: EmergencyOxygenTankFilled
+        - id: ExtendedEmergencyOxygenTankFilled # DS14
         - id: EmergencyMedipen
         - id: Flare
         - id: FoodSnackNutribrick
@@ -305,7 +305,7 @@
       storagebase: !type:AllSelector
         children:
         - id: ClothingMaskGasSecurity
-        - id: EmergencyOxygenTankFilled
+        - id: ExtendedEmergencyOxygenTankFilled # DS14
         - id: EmergencyMedipen
         - id: Flare
         - id: FoodSnackFabricbrick
