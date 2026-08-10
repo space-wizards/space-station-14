@@ -30,6 +30,30 @@
       sprite: _DeadSpace/Mobs/Silicon/station_ai.rsi
       state: ai_dead
 
+- type: stationAiCustomization
+  id: TaipanAiIconMurica
+  name: station-ai-icon-murica
+  parent: TaipanAiIconBase
+  layerData:
+    Occupied:
+      sprite: _DeadSpace/Mobs/Silicon/station_ai_murica.rsi
+      state: ai_murica
+    Dead:
+      sprite: _DeadSpace/Mobs/Silicon/station_ai_murica.rsi
+      state: ai_murica_dead
+
+- type: stationAiCustomization
+  id: TaipanAiIconNanotrasen
+  name: station-ai-icon-nanotrasen
+  parent: TaipanAiIconBase
+  layerData:
+    Occupied:
+      sprite: _DeadSpace/Mobs/Silicon/station_ai_nanotrasen.rsi
+      state: ai_nanotrasen
+    Dead:
+      sprite: Mobs/Silicon/station_ai.rsi
+      state: ai_dead
+
 # Holograms
 - type: stationAiCustomization
   id: TaipanAiHologramFemale

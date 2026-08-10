@@ -12,6 +12,8 @@
   - StationAiIconHeartline
   - StationAiIconSmiley
   - TaipanAiIconKnight #DS14
+  - TaipanAiIconMurica #DS14
+  - TaipanAiIconNanotrasen #DS14
 
 - type: stationAiCustomizationGroup
   id: StationAiHolograms
