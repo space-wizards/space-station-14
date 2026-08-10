@@ -45,9 +45,9 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                 var containerSystem = system.EntityManager.System<SharedContainerSystem>();
                 if (containerSystem.TryGetContainingContainer((owner, null, null), out var container))
                 {
+                    var storageSystem = system.EntityManager.System<SharedStorageSystem>();
                     // Removing the entity clears this location, so save it first.
-                    if (system.EntityManager.System<SharedStorageSystem>()
-                        .TryGetStorageLocation((owner, null), out _, out _, out var location))
+                    if (storageSystem.TryGetStorageLocation((owner, null), out _, out _, out var location))
                         storageLocation = location;
 
                     if (containerSystem.Remove(owner, container, force: true))
