@@ -23,8 +23,8 @@ using Robust.Shared.Serialization.Manager;
 namespace Content.Server.Cloning;
 
 /// <summary>
-///     System responsible for making a copy of a humanoid's body.
-///     For the cloning machines themselves look at CloningPodSystem, CloningConsoleSystem and MedicalScannerSystem instead.
+/// System responsible for making a copy of a humanoid's body.
+/// For the cloning machines themselves look at CloningPodSystem, CloningConsoleSystem and MedicalScannerSystem instead.
 /// </summary>
 public sealed partial class CloningSystem : SharedCloningSystem
 {
@@ -44,7 +44,7 @@ public sealed partial class CloningSystem : SharedCloningSystem
     // A serialization context for cloning components.
     private CloningContext _context = default!;
 
-
+    /// <inheritdoc />
     public override void Initialize()
     {
         base.Initialize();
@@ -109,6 +109,7 @@ public sealed partial class CloningSystem : SharedCloningSystem
         return true;
     }
 
+    /// <inheritdoc/>
     public override void CloneComponents(
         EntityUid original,
         EntityUid clone,
@@ -120,6 +121,7 @@ public sealed partial class CloningSystem : SharedCloningSystem
         CloneComponents(original, clone, proto);
     }
 
+    /// <inheritdoc/>
     public override void CloneComponents(
         EntityUid original,
         EntityUid clone,
@@ -152,6 +154,7 @@ public sealed partial class CloningSystem : SharedCloningSystem
         }
     }
 
+    /// <inheritdoc/>
     public override void CopyEquipment(
         Entity<InventoryComponent?> original,
         Entity<InventoryComponent?> clone,
@@ -175,6 +178,7 @@ public sealed partial class CloningSystem : SharedCloningSystem
         }
     }
 
+    /// <inheritdoc/>
     public override EntityUid? CopyItem(
         EntityUid original,
         EntityCoordinates coords,
@@ -215,6 +219,7 @@ public sealed partial class CloningSystem : SharedCloningSystem
         return spawned;
     }
 
+    /// <inheritdoc/>
     public override void CopyStorage(
         Entity<StorageComponent?> original,
         Entity<StorageComponent?> target,
@@ -238,6 +243,7 @@ public sealed partial class CloningSystem : SharedCloningSystem
         }
     }
 
+    /// <inheritdoc/>
     public override void CopyImplants(
         Entity<ImplantedComponent?> original,
         EntityUid target,
