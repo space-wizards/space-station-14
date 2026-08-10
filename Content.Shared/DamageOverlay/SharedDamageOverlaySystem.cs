@@ -18,6 +18,11 @@ public abstract partial class SharedDamageOverlaySystem : EntitySystem
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private StatusEffectsSystem _statusEffects = default!;
 
+    [Dependency] private EntityQuery<InjurableComponent> _injurableQuery = default!;
+    [Dependency] private EntityQuery<DamageableComponent> _damageableQuery = default!;
+    [Dependency] private EntityQuery<MobStateComponent> _mobStateQuery = default!;
+    [Dependency] private EntityQuery<MobThresholdsComponent> _thresholdsQuery = default!;
+
     [SubscribeLocalEvent]
     protected virtual void OnStartup(Entity<DamageOverlayComponent> entity, ref ComponentStartup args)
     {
@@ -59,10 +64,10 @@ public abstract partial class SharedDamageOverlaySystem : EntitySystem
         MobThresholdsComponent? thresholds = null,
         InjurableComponent? injurable = null)
     {
-        if (mobState == null && !TryComp(entity, out mobState) ||
-            thresholds == null && !TryComp(entity, out thresholds) ||
-            damageable == null && !TryComp(entity, out damageable) ||
-            injurable == null && !TryComp(entity, out injurable))
+        if (mobState == null && !_mobStateQuery.TryComp(entity, out mobState) ||
+            thresholds == null && !_thresholdsQuery.TryComp(entity, out thresholds) ||
+            damageable == null && !_damageableQuery.TryComp(entity, out damageable) ||
+            injurable == null && !_injurableQuery.TryComp(entity, out injurable))
             return;
 
         if (!_mobThresholdSystem.TryGetIncapThreshold(entity, out var foundThreshold, thresholds))
