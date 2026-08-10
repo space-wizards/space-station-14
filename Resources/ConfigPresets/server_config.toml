@@ -61,10 +61,6 @@ id = "unknown_server_id"
 # Controls if the game should run station events. (Meteors, Sleeper Syndicates, etc.)
 enabled = true
 
-[light]
-# Default ambient space light color for maps in hex
-space_light_color = "#404343"
-
 [shuttle]
 # Should the emergency shuttle be allowed to launch early by command staff?
 emergency_early_launch_allowed = false
