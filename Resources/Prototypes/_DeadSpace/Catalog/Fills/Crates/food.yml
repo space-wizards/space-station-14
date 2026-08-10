@@ -46,3 +46,14 @@
     containers:
       entity_storage:
         id: WaterCoolerFlatpack
+
+
+- type: cargoProduct
+  id: FoodEgg
+  icon:
+    sprite: Objects/Consumable/Food/egg.rsi
+    state: icon
+  product: CrateFoodEgg
+  cost: 4000
+  category: cargoproduct-category-name-food
+  group: service # DS14

@@ -47,3 +47,14 @@
   cost: 600
   category: cargoproduct-category-name-food
   group: service # DS14
+
+- type: entity
+  id: CrateFoodEgg
+  parent: CrateFreezer
+  name: Ящик яиц
+  description: Содежит несколько упаковок яиц.
+  components:
+  - type: StorageFill
+    contents:
+    - id: FoodContainerEgg
+      amount: 6
