@@ -52,6 +52,12 @@ public sealed partial class DoAfterArgs
     [DataField]
     public string? ExamineText;
 
+    /// <summary>
+    /// foo
+    /// </summary>
+    [DataField]
+    public NetEntity? IconEntity;
+
     #region Event options
     /// <summary>
     ///     The event that will get raised when the DoAfter has finished. If null, this will simply raise a <see cref="SimpleDoAfterEvent"/>
@@ -255,6 +261,7 @@ public sealed partial class DoAfterArgs
         Used = other.Used;
         Hidden = other.Hidden;
         ExamineText = other.ExamineText;
+        IconEntity = other.IconEntity;
         EventTarget = other.EventTarget;
         Broadcast = other.Broadcast;
         NeedHand = other.NeedHand;

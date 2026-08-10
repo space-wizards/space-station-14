@@ -46,6 +46,9 @@ public sealed class DoAfterOverlay : Overlay
     // Time after which the doafter will lerp to its final y offset.
     private static readonly TimeSpan MaxYPosTime = TimeSpan.FromSeconds(0.5f);
 
+    //
+    private static readonly float IconColorAlpha = 0.5f;
+
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
 
     public DoAfterOverlay(IEntityManager entManager, IPrototypeManager protoManager, IGameTiming timing, IPlayerManager player)
@@ -174,6 +177,14 @@ public sealed class DoAfterOverlay : Overlay
                 box = box.Translated(position);
                 handle.DrawRect(box, color);
                 offset += _barTexture.Height / scale;
+
+                // Here starts code responsible for the transparent icon of something with that player interacts
+                if (doAfter.Args.IconEntity is null)
+                    continue;
+                var screenHandle = args.ScreenHandle;
+                var iconPosition = position with { Y = position.Y + 1f };
+                var iconScale = new Vector2(scale, scale);
+                screenHandle.DrawEntity(_entManager.GetEntity(doAfter.Args.IconEntity.Value), iconPosition, iconScale, null);
             }
         }
 
