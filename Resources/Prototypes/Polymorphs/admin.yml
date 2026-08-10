@@ -36,7 +36,6 @@
     revertOnEat: false
     revertOnCrit: false
 
-
 - type: polymorph
   id: AdminInstrumentSmite
   configuration:
