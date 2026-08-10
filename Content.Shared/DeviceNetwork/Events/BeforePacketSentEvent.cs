@@ -1,41 +1,22 @@
 using System.Numerics;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.DeviceNetwork.Events;
 
 /// <summary>
-/// Event raised before a device network packet is send.
+/// Event raised before a device network packet is sent.
 /// Subscribed to by other systems to prevent the packet from being sent.
 /// </summary>
-public sealed class BeforePacketSentEvent : CancellableEntityEventArgs
-{
-    /// <summary>
-    /// The EntityUid of the entity the packet was sent from.
-    /// </summary>
-    public readonly EntityUid Sender;
-
-    public readonly TransformComponent SenderTransform;
-
-    /// <summary>
-    ///     The senders current position in world coordinates.
-    /// </summary>
-    public readonly Vector2 SenderPosition;
-
-    /// <summary>
-    /// The network the packet will be sent to.
-    /// </summary>
-    public readonly string NetworkId;
-
-    /// <summary>
-    /// The frequency the packet is sent on.
-    /// </summary>
-    public readonly uint Frequency;
-
-    public BeforePacketSentEvent(EntityUid sender, TransformComponent xform, Vector2 senderPosition, string networkId, uint frequency)
-    {
-        Sender = sender;
-        SenderTransform = xform;
-        SenderPosition = senderPosition;
-        NetworkId = networkId;
-        Frequency = frequency;
-    }
-}
+/// <remarks>
+/// It's recommended to make a new device network type to add and remove the entity from it on some event subscriptions.
+/// </remarks>
+[ByRefEvent]
+public record struct BeforePacketSentEvent(
+    ProtoId<DeviceNetworkPrototype> NetId,
+    DeviceAddress? Address,
+    DeviceFrequency Frequency,
+    DeviceAddress SenderAddress,
+    EntityUid Sender,
+    TransformComponent SenderTransform,
+    Vector2 SenderPosition,
+    bool Cancelled = false);

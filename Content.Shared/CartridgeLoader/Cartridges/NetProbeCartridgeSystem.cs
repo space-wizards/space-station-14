@@ -37,7 +37,7 @@ public sealed partial class NetProbeCartridgeSystem : EntitySystem
         // Check if device is already present in list
         foreach (var probedDevice in component.ProbedDevices)
         {
-            if (probedDevice.Address == networkComponent.Address)
+            if (probedDevice.Address == DeviceLocalizationHelpers.GetAddressFromId(networkComponent))
                 return;
         }
 
@@ -55,9 +55,9 @@ public sealed partial class NetProbeCartridgeSystem : EntitySystem
 
         var device = new ProbedNetworkDevice(
             Name(target),
-            networkComponent.Address,
-            networkComponent.ReceiveFrequency?.FrequencyToString() ?? string.Empty,
-            networkComponent.DeviceNetId.DeviceNetIdToLocalizedName()
+            DeviceLocalizationHelpers.GetAddressFromId(networkComponent),
+            DeviceLocalizationHelpers.FrequencyToString(networkComponent.Data.ReceiveFrequency),
+            Loc.GetString(ProtoMan.Index(networkComponent.DeviceNetId).Name)
         );
 
         component.ProbedDevices.Add(device);

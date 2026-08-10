@@ -1,3 +1,4 @@
+using Content.Shared.DeviceNetwork;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.Monitor.Components;
@@ -27,17 +28,10 @@ public enum AirAlarmWireStatus
     DeviceSync
 }
 
-public interface IAtmosDeviceData
-{
-    public bool Enabled { get; set; }
-    public bool Dirty { get; set; }
-    public bool IgnoreAlarms { get; set; }
-}
-
 [Serializable, NetSerializable]
 public sealed class AirAlarmUIState : BoundUserInterfaceState
 {
-    public AirAlarmUIState(string address, int deviceCount, float pressureAverage, float temperatureAverage, List<(string, IAtmosDeviceData)> deviceData, AirAlarmMode mode, AtmosAlarmType alarmType, bool autoMode, bool panicWireCut)
+    public AirAlarmUIState(LocDeviceAddress address, int deviceCount, float pressureAverage, float temperatureAverage, List<(LocDeviceAddress, IAtmosDeviceData)> deviceData, AirAlarmMode mode, AtmosAlarmType alarmType, bool autoMode, bool panicWireCut)
     {
         Address = address;
         DeviceCount = deviceCount;
@@ -50,18 +44,18 @@ public sealed class AirAlarmUIState : BoundUserInterfaceState
         PanicWireCut = panicWireCut;
     }
 
-    public string Address { get; }
+    public LocDeviceAddress Address { get; }
     public int DeviceCount { get; }
     public float PressureAverage { get; }
     public float TemperatureAverage { get; }
     /// <summary>
     ///     Every single device data that can be seen from this
     ///     air alarm. This includes vents, scrubbers, and sensors.
-    ///     Each entry is a tuple of device address and the device
+    ///     Each entry is a tuple of device address, address prefix and the device
     ///     data. The same address may appear multiple times, if
     ///     that device provides multiple functions.
     /// </summary>
-    public List<(string, IAtmosDeviceData)> DeviceData { get; }
+    public List<(LocDeviceAddress, IAtmosDeviceData)> DeviceData { get; }
     public AirAlarmMode Mode { get; }
     public AtmosAlarmType AlarmType { get; }
     public bool AutoMode { get; }
@@ -69,8 +63,7 @@ public sealed class AirAlarmUIState : BoundUserInterfaceState
 }
 
 [Serializable, NetSerializable]
-public sealed class AirAlarmResyncAllDevicesMessage : BoundUserInterfaceMessage
-{}
+public sealed class AirAlarmResyncAllDevicesMessage : BoundUserInterfaceMessage;
 
 [Serializable, NetSerializable]
 public sealed class AirAlarmUpdateAlarmModeMessage : BoundUserInterfaceMessage
@@ -97,10 +90,10 @@ public sealed class AirAlarmUpdateAutoModeMessage : BoundUserInterfaceMessage
 [Serializable, NetSerializable]
 public sealed class AirAlarmUpdateDeviceDataMessage : BoundUserInterfaceMessage
 {
-    public string Address { get; }
+    public DeviceAddress Address { get; }
     public IAtmosDeviceData Data { get; }
 
-    public AirAlarmUpdateDeviceDataMessage(string addr, IAtmosDeviceData data)
+    public AirAlarmUpdateDeviceDataMessage(DeviceAddress addr, IAtmosDeviceData data)
     {
         Address = addr;
         Data = data;
@@ -121,12 +114,12 @@ public sealed class AirAlarmCopyDeviceDataMessage : BoundUserInterfaceMessage
 [Serializable, NetSerializable]
 public sealed class AirAlarmUpdateAlarmThresholdMessage : BoundUserInterfaceMessage
 {
-    public string Address { get; }
+    public DeviceAddress Address { get; }
     public AtmosAlarmThreshold Threshold { get; }
     public AtmosMonitorThresholdType Type { get; }
     public Gas? Gas { get; }
 
-    public AirAlarmUpdateAlarmThresholdMessage(string address, AtmosMonitorThresholdType type, AtmosAlarmThreshold threshold, Gas? gas = null)
+    public AirAlarmUpdateAlarmThresholdMessage(DeviceAddress address, AtmosMonitorThresholdType type, AtmosAlarmThreshold threshold, Gas? gas = null)
     {
         Address = address;
         Threshold = threshold;

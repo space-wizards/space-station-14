@@ -1,6 +1,7 @@
 ﻿using Content.Client.NetworkConfigurator.Systems;
+using Content.Shared.DeviceConfigurator;
+using Content.Shared.DeviceConfigurator.Components;
 using Content.Shared.DeviceNetwork;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 
@@ -8,99 +9,49 @@ namespace Content.Client.NetworkConfigurator;
 
 public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
 {
-    private readonly NetworkConfiguratorSystem _netConfig;
+    private readonly NetworkConfiguratorOverlaySystem _netConfigOverlay;
 
     [ViewVariables]
     private NetworkConfiguratorConfigurationMenu? _configurationMenu;
 
-    [ViewVariables]
-    private NetworkConfiguratorLinkMenu? _linkMenu;
-
-    [ViewVariables]
-    private NetworkConfiguratorListMenu? _listMenu;
-
     public NetworkConfiguratorBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
-        _netConfig = EntMan.System<NetworkConfiguratorSystem>();
+        _netConfigOverlay = EntMan.System<NetworkConfiguratorOverlaySystem>();
     }
 
-    public void OnRemoveButtonPressed(string address)
+    public void OnRemoveButtonPressed(LocDeviceAddress address)
     {
-        SendMessage(new NetworkConfiguratorRemoveDeviceMessage(address));
+        SendPredictedMessage(new NetworkConfiguratorRemoveDeviceMessage(address));
     }
 
     protected override void Open()
     {
         base.Open();
 
-        switch (UiKey)
-        {
-            case NetworkConfiguratorUiKey.List:
-                _listMenu = this.CreateWindow<NetworkConfiguratorListMenu>();
-                _listMenu.ClearButton.OnPressed += _ => OnClearButtonPressed();
-                _listMenu.OnRemoveAddress += OnRemoveButtonPressed;
-                break;
-            case NetworkConfiguratorUiKey.Configure:
-                _configurationMenu = this.CreateWindow<NetworkConfiguratorConfigurationMenu>();
-                _configurationMenu.Set.OnPressed += _ => OnConfigButtonPressed(NetworkConfiguratorButtonKey.Set);
-                _configurationMenu.Add.OnPressed += _ => OnConfigButtonPressed(NetworkConfiguratorButtonKey.Add);
-                //_configurationMenu.Edit.OnPressed += _ => OnConfigButtonPressed(NetworkConfiguratorButtonKey.Edit);
-                _configurationMenu.Clear.OnPressed += _ => OnConfigButtonPressed(NetworkConfiguratorButtonKey.Clear);
-                _configurationMenu.Copy.OnPressed += _ => OnConfigButtonPressed(NetworkConfiguratorButtonKey.Copy);
-                _configurationMenu.Show.OnPressed += OnShowPressed;
-                _configurationMenu.Show.Pressed = _netConfig.ConfiguredListIsTracked(Owner);
-                _configurationMenu.OnRemoveAddress += OnRemoveButtonPressed;
-                break;
-            case NetworkConfiguratorUiKey.Link:
-                _linkMenu = this.CreateWindow<NetworkConfiguratorLinkMenu>();
-                _linkMenu.OnLinkDefaults += args =>
-                {
-                    SendMessage(new NetworkConfiguratorLinksSaveMessage(args));
-                };
-
-                _linkMenu.OnToggleLink += (left, right) =>
-                {
-                    SendMessage(new NetworkConfiguratorToggleLinkMessage(left, right));
-                };
-
-                _linkMenu.OnClearLinks += () =>
-                {
-                    SendMessage(new NetworkConfiguratorClearLinksMessage());
-                };
-                break;
-        }
+        _configurationMenu = this.CreateWindow<NetworkConfiguratorConfigurationMenu>();
+        _configurationMenu.Set.OnPressed += _ => SendPredictedMessage(new NetworkConfiguratorSetMessage());
+        _configurationMenu.Add.OnPressed += _ => SendPredictedMessage(new NetworkConfiguratorAddMessage());
+        //_configurationMenu.Edit.OnPressed += _ => OnConfigButtonPressed(NetworkConfiguratorButtonKey.Edit);
+        _configurationMenu.Clear.OnPressed += _ => SendPredictedMessage(new NetworkConfiguratorClearMessage());
+        _configurationMenu.Copy.OnPressed += _ => SendPredictedMessage(new NetworkConfiguratorCopyMessage());
+        _configurationMenu.Show.OnPressed += OnShowPressed;
+        _configurationMenu.Show.Pressed = _netConfigOverlay.ConfiguredListIsTracked(Owner);
+        _configurationMenu.OnRemoveAddress += OnRemoveButtonPressed;
+        Update();
     }
 
     private void OnShowPressed(BaseButton.ButtonEventArgs args)
     {
-        _netConfig.ToggleVisualization(Owner, args.Button.Pressed);
+        _netConfigOverlay.ToggleVisualization(Owner, args.Button.Pressed);
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
+    public override void Update()
     {
-        base.UpdateState(state);
+        base.Update();
 
-        switch (state)
-        {
-            case NetworkConfiguratorUserInterfaceState configState:
-                _listMenu?.UpdateState(configState);
-                break;
-            case DeviceListUserInterfaceState listState:
-                _configurationMenu?.UpdateState(listState);
-                break;
-            case DeviceLinkUserInterfaceState linkState:
-                _linkMenu?.UpdateState(linkState);
-                break;
-        }
-    }
+        if (!EntMan.TryGetComponent(Owner, out NetworkConfiguratorComponent? config))
+            return;
 
-    private void OnClearButtonPressed()
-    {
-        SendMessage(new NetworkConfiguratorClearDevicesMessage());
-    }
-
-    private void OnConfigButtonPressed(NetworkConfiguratorButtonKey buttonKey)
-    {
-        SendMessage(new NetworkConfiguratorButtonPressedMessage(buttonKey));
+        _configurationMenu?.UpdateState(config.NamedDevices);
     }
 }

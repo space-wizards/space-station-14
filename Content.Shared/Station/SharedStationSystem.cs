@@ -21,14 +21,6 @@ public abstract partial class SharedStationSystem : EntitySystem
     private ValueList<MapId> _mapIds;
     private ValueList<(Box2Rotated Bounds, MapId MapId)> _gridBounds;
 
-    /// <inheritdoc/>
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        InitializeTracker();
-    }
-
     /// <summary>
     /// Gets the largest member grid from a station.
     /// </summary>
