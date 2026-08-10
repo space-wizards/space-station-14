@@ -10,5 +10,6 @@ namespace Content.Shared.Waypointer.Events;
 public record struct WaypointerChangedEvent() : IInventoryRelayEvent
 {
     public HashSet<ProtoId<WaypointerPrototype>> Waypointers = [];
+
     SlotFlags IInventoryRelayEvent.TargetSlots => SlotFlags.WITHOUT_POCKET;
 }

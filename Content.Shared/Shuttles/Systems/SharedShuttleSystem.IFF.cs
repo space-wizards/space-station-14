@@ -60,12 +60,12 @@ public abstract partial class SharedShuttleSystem
     public bool HasIFFFlag(EntityUid gridUid, IFFFlags requiredFlag, IFFComponent? component = null)
     {
         // Check if it's a grid.
-        if (!HasComp<MapGridComponent>(gridUid))
+        if (!_gridQuery.HasComp(gridUid))
             return requiredFlag == IFFFlags.None;
 
         component ??= EnsureComp<IFFComponent>(gridUid);
 
-        return component.Flags.HasFlag(requiredFlag);
+        return component.Flags == requiredFlag;
     }
 
     /// <summary>

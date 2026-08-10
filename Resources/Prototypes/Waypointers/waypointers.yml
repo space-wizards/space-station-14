@@ -9,7 +9,13 @@
   color: White
 
 - type: waypointer
+  abstract: true
   parent: BaseWaypointer
+  id: BaseGridWaypointer
+  tracksGrids: true
+
+- type: waypointer
+  parent: BaseGridWaypointer
   id: NTStationWaypointer
   name: Station Waypointer
   trackedComponents:
@@ -19,7 +25,7 @@
   hideBeyondMaxRange: false
 
 - type: waypointer
-  parent: BaseWaypointer
+  parent: BaseGridWaypointer
   id: TradeStationWaypointer
   name: Trade Station Waypointer
   trackedComponents:
@@ -28,7 +34,7 @@
   radialMenuIconPath: Markers/Waypointers/trade_station_waypointer.rsi
 
 - type: waypointer
-  parent: BaseWaypointer
+  parent: BaseGridWaypointer
   id: WreckWaypointer
   name: Wreck Waypointer
   trackedComponents:

@@ -40,6 +40,13 @@ public sealed partial class WaypointerPrototype : IPrototype, IInheritingPrototy
     public ComponentRegistry TrackedComponents = default!;
 
     /// <summary>
+    /// Whether this waypointer tracks grids or entities.
+    /// Grids are handled differently when getting their coordinates & are already PVS overridden.
+    /// </summary>
+    [DataField]
+    public bool TracksGrids;
+
+    /// <summary>
     /// The path to the rsi folder.
     /// </summary>
     [DataField(required: true)]

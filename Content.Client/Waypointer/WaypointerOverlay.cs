@@ -1,4 +1,5 @@
-﻿using Robust.Client.GameObjects;
+﻿using System.Linq;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
@@ -38,10 +39,15 @@ public sealed partial class WaypointerOverlay : Overlay
     private readonly EntityWhitelistSystem _whitelist;
 
     private readonly ShaderInstance _unshadedShader;
-    // This is used to check if a prototype is tracking the station grid.
-    private readonly string _stationCompName = "StationData";
+
     // Caching the Uid for the station grid.
     private EntityUid? _mainStationGrid;
+
+    /// <summary>
+    /// The last locations of the tracked entity sent by the server.
+    /// The client will disregard them if they can see the entity in their PVS range.
+    /// </summary>
+    public Dictionary<ProtoId<WaypointerPrototype>, List<(NetEntity, Vector2)>> TrackedServerCoordinates = new ();
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
@@ -78,17 +84,21 @@ public sealed partial class WaypointerOverlay : Overlay
             return;
 
         var player = _player.LocalEntity.Value;
+        var playerPosition = _transform.GetWorldPosition(playerXform);
 
         foreach (var waypointerPair in waypointer.WaypointerProtoIds)
         {
-            // The boolean in the dictionary describes if the waypointer is active
-            if (!waypointerPair.Value)
-                continue;
-
-            if (!_prototype.Resolve(waypointerPair.Key, out var prototype)
+            // The boolean in the dictionary dictates if the waypointer is active
+            if (!waypointerPair.Value
+                || !_prototype.Resolve(waypointerPair.Key, out var prototype)
                 || !prototype.WorkOnGrid && playerXform.GridUid != null
                 || !prototype.WorkInCombat && _combatMode.IsInCombatMode(player))
                 continue;
+
+            Dictionary<NetEntity, Vector2> serverPositions = [];
+            // We have to break up the EntityCoordinates into Entities & Coordinates, so we can check for the EntityUid.
+            if (TrackedServerCoordinates.TryGetValue(waypointerPair.Key, out var serverArray))
+                serverPositions = serverArray.ToDictionary(k => k.Item1, k => k.Item2);
 
             var waypointQuery = _entity.CompRegistryQueryEnumerator(prototype.TrackedComponents);
             while (waypointQuery.MoveNext(out var target))
@@ -99,15 +109,16 @@ public sealed partial class WaypointerOverlay : Overlay
                     || _shuttle.HasIFFFlag(target, IFFFlags.Hide)
                     // The station grid cannot be tracked directly due to being in nullspace
                     || CheckForStation(ref target, prototype)
-                    // Check if it has the Transform Component
                     || !_entity.TryGetComponent<TransformComponent>(target, out var targetXform)
                     // Check if the target is even on the same map.
                     || targetXform.MapID != args.MapId)
                     continue;
 
-                var positionA = _transform.GetWorldPosition(playerXform);
-                var positionAndRotationB = _transform.GetWorldPositionRotation(targetXform);
-                var positionB = positionAndRotationB.WorldPosition;
+                // Avoid drawing it twice later on, as we are in PVS range and have more accurate data.
+                serverPositions.Remove(_entity.GetNetEntity(target));
+
+                var targetPositionAndRotation = _transform.GetWorldPositionRotation(targetXform);
+                var targetPosition = targetPositionAndRotation.WorldPosition;
 
                 float distance;
                 if (_entity.TryGetComponent<MapGridComponent>(target, out var map))
@@ -115,32 +126,52 @@ public sealed partial class WaypointerOverlay : Overlay
                     // Grids take a little more work - This calculates the distance to the closest part of the grid.
                     _physics.TryGetDistance(player, target, out distance, playerXform, targetXform);
                     // And then we also want to point towards the center of the grid - Not where the entity actually is.
-                    positionB += positionAndRotationB.WorldRotation.RotateVec(map.LocalAABB.Center);
+                    targetPosition += targetPositionAndRotation.WorldRotation.RotateVec(map.LocalAABB.Center);
                 }
                 else
                     // Else we simply get the distance through this.
-                    distance = (positionA - positionB).Length();
+                    distance = (playerPosition - targetPosition).Length();
 
                 if (prototype.HideBeyondMaxRange && distance > prototype.MaxRange)
                     continue;
 
-                // The NTStationWaypointer has 5 stages and a range of 200. With calculations, it'll check if it's either in:
-                // 0-39, 40-89, 80-119, 120-159, 160-200 range and use the respective waypointer sprite for it.
-                var increments = prototype.MaxRange / prototype.WaypointerStates;
-                var waypointerState = Math.Min(Math.Truncate(distance / increments) + 1, prototype.WaypointerStates);
-                var stateName = "marker" + waypointerState;
-
-                var rsi = new SpriteSpecifier.Rsi(prototype.RsiPath, stateName);
-                var texture = _sprite.Frame0(rsi);
-
-                var offset = new Vector2(texture.Height * 0.5f, texture.Width * 0.5f) / EyeManager.PixelsPerMeter;
-                var direction = positionA - positionB;
-                var angle = direction.ToWorldAngle();
-
-                handle.DrawTexture(texture, positionA - offset, angle, prototype.Color);
+                DrawWaypointerArrow(prototype, distance, playerPosition, targetPosition, handle);
             }
+            // This goes over every entity location sent by the server that is outside PVS range.
+            // This data is very likely outdated, and that is why the client is authoritative above.
+            // We don't need to check for any whitelists or map IDs as the server does that.
+            // We don't need to check for grid stuff either, as grids are PVS overriden and won't be drawn here.
+            foreach (var serverPosition in serverPositions)
+            {
+                // No need to check for grids to calculate the closest distance because of the above.
+                var distance = (playerPosition - serverPosition.Value).Length();
+
+                if (prototype.HideBeyondMaxRange && distance > prototype.MaxRange)
+                    continue;
+
+                DrawWaypointerArrow(prototype, distance, playerPosition, serverPosition.Value, handle);
+            }
+            // Clear the memory of drawn arrows for the next tick.
             handle.SetTransform(Matrix3x2.Identity);
         }
+    }
+
+    private void DrawWaypointerArrow(WaypointerPrototype prototype, float distance, Vector2 playerPosition, Vector2 targetPosition, DrawingHandleWorld handle)
+    {
+        // The WreckWaypointer has 5 stages and a range of 50. With calculations, it'll check if it's either in:
+        // 0-9, 10-19, 20-29, 30-39, 40-50 range and use the respective waypointer sprite for it.
+        var increments = prototype.MaxRange / prototype.WaypointerStates;
+        var waypointerState = Math.Min(Math.Truncate(distance / increments) + 1, prototype.WaypointerStates);
+        var stateName = "marker" + waypointerState;
+
+        var rsi = new SpriteSpecifier.Rsi(prototype.RsiPath, stateName);
+        var texture = _sprite.Frame0(rsi);
+
+        var offset = new Vector2(texture.Height * 0.5f, texture.Width * 0.5f) / EyeManager.PixelsPerMeter;
+        var direction = playerPosition - targetPosition;
+        var angle = direction.ToWorldAngle();
+
+        handle.DrawTexture(texture, playerPosition - offset, angle, prototype.Color);
     }
 
     /// <summary>
@@ -166,7 +197,7 @@ public sealed partial class WaypointerOverlay : Overlay
             return true;
 
         // If we are supposed to track the station grid, but are tracking the station entity in nullspace, replace it.
-        if (prototype.TrackedComponents.ContainsKey(_stationCompName) && _mainStationGrid.HasValue)
+        if (prototype.TrackedComponents.TryGetComponent<StationDataComponent>(_entity.ComponentFactory, out _) && _mainStationGrid.HasValue)
             target = _mainStationGrid.Value;
 
         return false;

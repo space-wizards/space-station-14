@@ -5,9 +5,9 @@ using Content.Shared.Clothing;
 using Content.Shared.Inventory;
 using Content.Shared.Waypointer.Components;
 using Content.Shared.Waypointer.Events;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Waypointer;
 
@@ -16,9 +16,21 @@ namespace Content.Shared.Waypointer;
 /// </summary>
 public abstract partial class SharedWaypointerSystem : EntitySystem
 {
-    [Dependency] protected SharedActionsSystem Actions = default!;
-    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] protected IGameTiming Timing = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private SharedUserInterfaceSystem _ui = default!;
+
+    [SubscribeLocalEvent]
+    protected virtual void OnMapInit(Entity<ActiveWaypointerComponent> player, ref MapInitEvent args)
+    {
+        _actions.AddAction(player, ref player.Comp.ActionEntity, player.Comp.ActionProtoId);
+    }
+
+    [SubscribeLocalEvent]
+    protected virtual void OnShutdown(Entity<ActiveWaypointerComponent> player, ref ComponentShutdown args)
+    {
+        _actions.RemoveAction(player.Owner, player.Comp.ActionEntity);
+    }
 
     [SubscribeLocalEvent]
     private void OnMapInit(Entity<InnateWaypointerComponent> player, ref MapInitEvent args)
@@ -45,7 +57,7 @@ public abstract partial class SharedWaypointerSystem : EntitySystem
             return;
 
         waypointer.Active = args.IsActive;
-        Actions.SetToggled(action.AsNullable(), args.IsActive);
+        _actions.SetToggled(action.AsNullable(), args.IsActive);
 
         Dirty(action.Comp.Container.Value, waypointer);
     }
@@ -89,69 +101,38 @@ public abstract partial class SharedWaypointerSystem : EntitySystem
 
     private void SetWaypointerComponent(EntityUid player)
     {
-        if (_timing.ApplyingState)
+        if (Timing.ApplyingState)
              return;
-
-        var comp = EnsureComp<ActiveWaypointerComponent>(player);
-        // The following is much easier to do with HashSets.
-        HashSet<ProtoId<WaypointerPrototype>>? previousTable = null;
-        HashSet<ProtoId<WaypointerPrototype>>? overridesToRemove = null;
-        if (comp.WaypointerProtoIds != null)
-        {
-            // Store the hashset for comparison later, if not null
-            previousTable = comp.WaypointerProtoIds.Keys.ToHashSet();
-            // The same as above. As an example, these have the values A and B. { A, B }
-            overridesToRemove = comp.WaypointerProtoIds.Keys.ToHashSet();
-        }
 
         // We raise this on the entity to check for anything that could give the entity a waypointer.
         var ev = new WaypointerChangedEvent();
-        RaiseLocalEvent(player, ref ev); // For example purposes, this will return { B, C }
-
-        if (overridesToRemove != null)
-        {
-            // Now we remove all the waypointers that the event gathered from the previous hashset.
-            // Removing { B, C } will leave us with { A }, as we don't have the waypointer A anymore.
-            overridesToRemove.ExceptWith(ev.Waypointers);
-            // We remove the overrides for the waypointer A.
-            RemoveOverrides(player, overridesToRemove);
-        }
+        RaiseLocalEvent(player, ref ev);
 
         if (ev.Waypointers.Count == 0)
         {
-            RemComp<ActiveWaypointerComponent>(player);
+            RemCompDeferred<ActiveWaypointerComponent>(player);
             return;
         }
 
-        // We need to turn it into a dictionary so we can keep track of every waypointer status, not important for overrides.
-        var newDict = ev.Waypointers.ToDictionary(key => key, _ => true);
-        if (comp.WaypointerProtoIds != null)
+        var comp = EnsureComp<ActiveWaypointerComponent>(player);
+
+        foreach (var waypointers in comp.WaypointerProtoIds ??= [])
         {
-            foreach (var pair in comp.WaypointerProtoIds.Where(pair => newDict.ContainsKey(pair.Key)))
-            {
-                // We set the status of every waypointer that persisted to their original value, not important for overrides.
-                newDict[pair.Key] = pair.Value;
-            }
+            // Remove any lost waypointers.
+            if (!ev.Waypointers.Contains(waypointers.Key))
+                comp.WaypointerProtoIds.Remove(waypointers.Key);
+            // If they still have them, we don't need to add them later.
+            else
+                ev.Waypointers.Remove(waypointers.Key);
         }
-        // Then replace the old dictionary with the new one
-        comp.WaypointerProtoIds = newDict;
+        // Now there should be only new waypointers left in the hashset.
+        foreach (var newWaypointer in ev.Waypointers)
+        {
+            // Little sanity check for when it somehow tries to add an existing waypointer.
+            DebugTools.Assert(comp.WaypointerProtoIds.TryAdd(newWaypointer, true));
+        }
 
-        // Here we now remove every waypointer that doesn't need new overrides.
-        // The waypointer B was already overriden, since it's in the earlier hashset { A, B }
-        // So, by removing { A, b} from { B, C }, we get { C }, which is the only new waypointer - thus needing overrides.
-        if (previousTable != null)
-            ev.Waypointers.ExceptWith(previousTable);
-
-        AddOverrides(player, ev.Waypointers);
         Dirty(player, comp);
-    }
-
-    protected virtual void AddOverrides(EntityUid player, HashSet<ProtoId<WaypointerPrototype>> waypointers)
-    {
-    }
-
-    protected virtual void RemoveOverrides(EntityUid player, HashSet<ProtoId<WaypointerPrototype>> waypointers)
-    {
     }
 }
 

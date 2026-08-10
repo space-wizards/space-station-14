@@ -16,7 +16,6 @@ public sealed partial class WaypointerSystem : SharedWaypointerSystem
 {
     [Dependency] private IPlayerManager  _player = default!;
     [Dependency] private IOverlayManager _overlay = default!;
-    [Dependency] private IClientGameTiming _timing = default!;
 
     private WaypointerOverlay _waypointerOverlay = default!;
 
@@ -27,21 +26,21 @@ public sealed partial class WaypointerSystem : SharedWaypointerSystem
         _waypointerOverlay = new WaypointerOverlay();
     }
 
-    [SubscribeLocalEvent]
-    private void OnAddition(Entity<ActiveWaypointerComponent> player, ref ComponentInit args)
+    protected override void OnMapInit(Entity<ActiveWaypointerComponent> player, ref MapInitEvent args)
     {
-        if (_player.LocalEntity == null || player.Owner != _player.LocalEntity.Value
-            || _timing.ApplyingState)
+        base.OnMapInit(player, ref args);
+
+        if (_player.LocalEntity == null || player.Owner != _player.LocalEntity.Value)
             return;
 
         _overlay.AddOverlay(_waypointerOverlay);
     }
 
-    [SubscribeLocalEvent]
-    private void OnRemoval(Entity<ActiveWaypointerComponent> player, ref ComponentRemove args)
+    protected override void OnShutdown(Entity<ActiveWaypointerComponent> player, ref ComponentShutdown args)
     {
-        if (_player.LocalEntity == null || player.Owner != _player.LocalEntity.Value
-            || _timing.ApplyingState)
+        base.OnShutdown(player, ref args);
+
+        if (_player.LocalEntity == null || player.Owner != _player.LocalEntity.Value)
             return;
 
         _overlay.RemoveOverlay(_waypointerOverlay);
@@ -63,6 +62,16 @@ public sealed partial class WaypointerSystem : SharedWaypointerSystem
             return;
 
         _overlay.RemoveOverlay(_waypointerOverlay);
+    }
+
+    /// <summary>
+    /// This only gets networked to entities with the <see cref="ActiveWaypointerComponent"/>.
+    /// </summary>
+    /// <param name="args"></param>
+    [SubscribeNetworkEvent]
+    private void OnWaypointerUpdate(WaypointerUpdatedMessage args)
+    {
+        _waypointerOverlay.TrackedServerCoordinates = args.Coordinates;
     }
 
     protected override void OnWaypointersToggled(Entity<ActionComponent> action, ref WaypointersToggledMessage args)
