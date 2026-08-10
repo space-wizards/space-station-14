@@ -22,14 +22,14 @@ public sealed partial class PlayDeadSystem : EntitySystem
         if (!args.Damage.AnyPositive())
             return;
 
-        if (!ent.Comp.IsPlayingdead)
+        if (!ent.Comp.IsPlayingDead)
         {
             PlayDead(ent, ent.Comp.PlayDeadDuration);
             return;
         }
 
         //Make sure morty doesn't wake up if they're getting the shit beat out of them
-        if (ent.Comp.IsPlayingdead)
+        if (ent.Comp.IsPlayingDead)
         {
             ent.Comp.StopPlayingDeadTime = _timing.CurTime + ent.Comp.PlayDeadDuration;
             Dirty(ent);
@@ -46,14 +46,14 @@ public sealed partial class PlayDeadSystem : EntitySystem
 
         while (query.MoveNext(out var uid, out var comp))
         {
-            if (comp.IsPlayingdead && curTime > comp.StopPlayingDeadTime)
+            if (comp.IsPlayingDead && curTime > comp.StopPlayingDeadTime)
                 StopPlayingDead((uid, comp));
         }
     }
 
     private void PlayDead(Entity<PlayDeadComponent> ent, TimeSpan duration)
     {
-        if (ent.Comp.IsPlayingdead)
+        if (ent.Comp.IsPlayingDead)
             return;
 
         var actions = _action.GetActions(ent);
@@ -68,7 +68,7 @@ public sealed partial class PlayDeadSystem : EntitySystem
                 return;
 
             _stasis.EnterStasis((action, regenStasisComp), ent);
-            ent.Comp.IsPlayingdead = true;
+            ent.Comp.IsPlayingDead = true;
             ent.Comp.StopPlayingDeadTime = _timing.CurTime + duration;
             Dirty(ent);
             return;
@@ -77,7 +77,7 @@ public sealed partial class PlayDeadSystem : EntitySystem
 
     private void StopPlayingDead(Entity<PlayDeadComponent> ent)
     {
-        if (!ent.Comp.IsPlayingdead)
+        if (!ent.Comp.IsPlayingDead)
             return;
 
         var actions = _action.GetActions(ent);
@@ -88,7 +88,7 @@ public sealed partial class PlayDeadSystem : EntitySystem
                 continue;
 
             _stasis.ExitStasis((action, regenStasisComp), ent);
-            ent.Comp.IsPlayingdead = false;
+            ent.Comp.IsPlayingDead = false;
             Dirty(ent);
             return;
         }
