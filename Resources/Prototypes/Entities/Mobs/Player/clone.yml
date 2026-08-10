@@ -194,5 +194,4 @@
   # traits
   - PlantTraitSampled
   - PlantTraitSeedless
-  eventComponents:
   - PlantHolder
