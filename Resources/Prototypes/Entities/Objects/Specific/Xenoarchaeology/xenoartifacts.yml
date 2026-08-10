@@ -49,6 +49,9 @@
       Flammable: [Touch]
       Extinguish: [Touch]
       Acidic: [Touch]
+  - type: LightningTarget
+    priority: 2
+    lightningExplode: false
 
 - type: entity
   parent: BaseAction

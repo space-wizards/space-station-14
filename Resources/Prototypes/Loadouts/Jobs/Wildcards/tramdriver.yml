@@ -20,9 +20,9 @@
 - type: loadout
   id: TramDriverGlovesWhite
   equipment:
-    head: ClothingHandsGlovesColorWhite
+    gloves: ClothingHandsGlovesColorWhite
 
 - type: loadout
   id: TramDriverGlovesBlack
   equipment:
-    head: ClothingHandsGlovesColorBlack
+    gloves: ClothingHandsGlovesColorBlack
