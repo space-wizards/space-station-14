@@ -36,7 +36,7 @@
     TriggerInteractStamp: 1
     TriggerInteractShock: 1
     TriggerEmoteDistress: 0.1
-    TriggerEmoteHumor: 0.1
+    TriggerEmoteChitter: 0.1
 
 - type: xenoArchTrigger
   id: TriggerMusic
@@ -419,10 +419,9 @@
     - Whine
 
 - type: xenoArchTrigger
-  id: TriggerEmoteHumor
-  tip: xenoarch-trigger-tip-humor
+  id: TriggerEmoteChitter
+  tip: xenoarch-trigger-tip-chitter
   components:
   - type: XATEmote
     emotes:
-    - Laugh
-    - Clap
+    - Chitter

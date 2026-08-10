@@ -78,7 +78,7 @@ xenoarch-trigger-tip-produce = Healthy Produce Intake
 xenoarch-trigger-tip-stamp = Bureaucratic Approval
 xenoarch-trigger-tip-shock = Electrical Shock
 xenoarch-trigger-tip-distress = Emotional distress
-xenoarch-trigger-tip-humor = Emotional jubilation
+xenoarch-trigger-tip-chitter = Chittering
 
 ### Description hints
 xenoarch-trigger-examine-wrenching = There's a loose bit spinning around.
