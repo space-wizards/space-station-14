@@ -6078,3 +6078,10 @@ Entries:
   changes:
   - type: Tweak
     message: измененна система щитов
+- id: 585
+  author: pe4enkakris
+  time: '2026-08-10T18:59:31.255975+00:00'
+  pr: 2123
+  changes:
+  - type: Tweak
+    message: В аварийных наборах СБ теперь баллоны повышенной ёмкости.
