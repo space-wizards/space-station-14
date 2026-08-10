@@ -1,5 +1,7 @@
+using System.ComponentModel.DataAnnotations;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
+using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.IconSmoothing;
@@ -21,50 +23,62 @@ public sealed partial class IconSmoothComponent : Component
     public (EntityUid?, Vector2i)? LastPosition;
 
     /// <summary>
-    ///     Objects with this key can smooth with us, and vice versa.
-    ///     TODO: YAML HELL, Make smoothing one way.
+    /// A string whitelist which is checked against an <see cref="ISpriteSmoothState.Mask"/>
+    /// If the mask contains this key, then that mask can smooth with this entity.
     /// </summary>
-    [DataField("key", required: true)]
-    public string SmoothKey { get; private set; }
+    [DataField(required: true)]
+    public string Key { get; private set; }
+
+    /// <summary>
+    /// Array of <see cref="ISpriteSmoothState{T}"/> which each apply custom smoothing for individual sprite layers.
+    /// </summary>
+    [DataField]
+    public ISpriteSmoothState[] States { get; private set; } = [];
+
+    /// <summary>
+    ///     Used by <see cref="IconSmoothSystem"/> to reduce redundant updates.
+    /// </summary>
+    internal int UpdateGeneration { get; set; }
 
     /// <summary>
     ///     We will attempt to smooth with any objects that contain these keys.
     ///     Only works one way, objects with these keys will not smooth with us
     /// </summary>
+    [Obsolete]
     [DataField]
     public List<string> AdditionalKeys = new();
 
     /// <summary>
     /// Index override for our iconsmooth layers. If null, layers will appear on top.
     /// </summary>
+    [Obsolete]
     [DataField]
     public int? Index;
 
     /// <summary>
     ///     Prepended to the RSI state.
     /// </summary>
+    [Obsolete]
     [DataField("base")]
     public string StateBase { get; set; } = string.Empty;
 
+    [Obsolete]
     [DataField]
     public ProtoId<ShaderPrototype>? Shader;
 
     /// <summary>
     ///     Mode that controls how the icon should be selected.
     /// </summary>
+    [Obsolete]
     [DataField]
     public IconSmoothingMode Mode = IconSmoothingMode.Corners;
-
-    /// <summary>
-    ///     Used by <see cref="IconSmoothSystem"/> to reduce redundant updates.
-    /// </summary>
-    internal int UpdateGeneration { get; set; }
 }
 
 /// <summary>
 ///     Controls the mode with which icon smoothing is calculated.
 /// </summary>
 [PublicAPI]
+[Obsolete]
 public enum IconSmoothingMode : byte
 {
     /// <summary>

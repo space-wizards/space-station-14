@@ -50,14 +50,7 @@ public sealed partial class IconSmoothSystem
         {
             var dir = (DirectionFlag)Math.Pow(2, i);
             var edge = GetEdge(dir);
-
-            if ((dir & directions) != 0x0)
-            {
-                _sprite.LayerSetVisible((uid, sprite), edge, false);
-                continue;
-            }
-
-            _sprite.LayerSetVisible((uid, sprite), edge, true);
+            _sprite.LayerSetVisible((uid, sprite), edge, (dir & directions) == 0x0);
         }
     }
 
