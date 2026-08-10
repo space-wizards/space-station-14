@@ -1,19 +1,21 @@
 using Content.Shared.Chat;
-using Content.Shared.Radio;
 
-namespace Content.Server.Radio;
+namespace Content.Shared.Radio;
 
+/// <summary>
+/// Event raised when a radio message is received.
+/// </summary>
 [ByRefEvent]
 public readonly record struct RadioReceiveEvent(string Message, EntityUid MessageSource, RadioChannelPrototype Channel, EntityUid RadioSource, MsgChatMessage ChatMsg);
 
 /// <summary>
-/// Event raised on the parent entity of a headset radio when a radio message is received
+/// Event raised on the parent entity of a headset radio when a radio message is received.
 /// </summary>
 [ByRefEvent]
 public readonly record struct HeadsetRadioReceiveRelayEvent(RadioReceiveEvent RelayedEvent);
 
 /// <summary>
-/// Use this event to cancel sending message per receiver
+/// Use this event to cancel sending message per receiver.
 /// </summary>
 [ByRefEvent]
 public record struct RadioReceiveAttemptEvent(RadioChannelPrototype Channel, EntityUid RadioSource, EntityUid RadioReceiver)
@@ -25,7 +27,7 @@ public record struct RadioReceiveAttemptEvent(RadioChannelPrototype Channel, Ent
 }
 
 /// <summary>
-/// Use this event to cancel sending message to every receiver
+/// Use this event to cancel sending message to every receiver.
 /// </summary>
 [ByRefEvent]
 public record struct RadioSendAttemptEvent(RadioChannelPrototype Channel, EntityUid RadioSource)
