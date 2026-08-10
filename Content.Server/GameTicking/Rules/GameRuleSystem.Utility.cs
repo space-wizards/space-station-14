@@ -3,7 +3,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Station.Components;
 using Content.Shared.GameTicking.Components;
-using Content.Shared.Random.Helpers;
 using Content.Shared.Station.Components;
 using Robust.Shared.Collections;
 using Robust.Shared.Map;
@@ -165,12 +164,13 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
 
             // Invalid tile, try again.
             if (_atmosphere.IsTileSpace(targetGrid, Transform(targetGrid).MapUid, tileRef.GridIndices)
-                || _atmosphere.IsTileAirBlockedCached(targetGrid, tile))
+                || _atmosphere.IsTileAirBlockedCached(targetGrid, tileRef.GridIndices))
             {
                 continue;
             }
 
-            targetCoords = _map.GridTileToLocal(targetGrid, gridComp, tile);
+            targetCoords = _map.GridTileToLocal(targetGrid, gridComp, tileRef.GridIndices);
+            tile = tileRef.GridIndices;
             return true;
         }
 
