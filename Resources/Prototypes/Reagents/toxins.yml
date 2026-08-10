@@ -63,7 +63,6 @@
       effects:
       - !type:Emote
         emote: Yawn
-        showInChat: false
         probability: 0.1
       - !type:MovementSpeedModifier
         walkSpeedModifier: 0.65
@@ -584,7 +583,6 @@
       effects:
       - !type:Emote
         emote: Honk
-        showInChat: false
         showInGuidebook: true
         force: true
         probability: 0.2

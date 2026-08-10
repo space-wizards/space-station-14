@@ -34,7 +34,7 @@ public sealed partial class Emote : EntityEffectBase<Emote>
     ///     If the emote should be recorded in chat.
     /// </summary>
     [DataField]
-    public bool ShowInChat;
+    public bool ShowInChat = false;
 
     /// <summary>
     ///     If the forced emote will be listed in the guidebook.

@@ -438,7 +438,6 @@
           reagent: Felinase
           min: 10
         emote: Cough
-        showInChat: false
         showInGuidebook: true
         force: true
         probability: 0.05
@@ -489,7 +488,6 @@
           reagent: Caninase
           min: 10
         emote: Cough
-        showInChat: false
         showInGuidebook: true
         force: true
         probability: 0.05
