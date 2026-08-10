@@ -57,7 +57,7 @@ public sealed partial class ClumsyStatusEffectSystem : EntitySystem
             : Loc.GetString(status.Comp.SelfFailedMessage, ("item", args.Args.Item));
         var othersMessage = status.Comp.OtherFailedMessage == null
             ? null
-            :  Loc.GetString(status.Comp.OtherFailedMessage, ("item", args.Args.Item), ("catcher", identity));
+            : Loc.GetString(status.Comp.OtherFailedMessage, ("item", args.Args.Item), ("catcher", identity));
 
         _popup.PopupEntity(selfMessage, othersMessage, args.AppliedTo, args.AppliedTo);
 
@@ -154,7 +154,7 @@ public sealed partial class ClumsyStatusEffectSystem : EntitySystem
                 : Loc.GetString(status.Comp.SelfFailedMessage, ("bonkable", args.Args.BeingClimbedOn));
             var othersMessage = status.Comp.OtherFailedMessage == null
                 ? null
-                :  Loc.GetString(status.Comp.OtherFailedMessage, ("victim", putOnTable), ("bonkable", args.Args.BeingClimbedOn));
+                : Loc.GetString(status.Comp.OtherFailedMessage, ("victim", putOnTable), ("bonkable", args.Args.BeingClimbedOn));
 
             _popup.PopupEntity(selfMessage, othersMessage, args.AppliedTo, args.AppliedTo);
         }
