@@ -49,7 +49,7 @@ public sealed class DoAfterOverlay : Overlay
     private static readonly TimeSpan MaxYPosTime = TimeSpan.FromSeconds(0.5f);
 
     //
-    private static readonly float IconColorAlpha = 0.75f;
+    private const float IconColorAlpha = .5f;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
 
