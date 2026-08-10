@@ -21,7 +21,7 @@ public sealed partial class RegenerativeStasisSystem : EntitySystem
     [Dependency] private MetaDataSystem _metaData = default!;
     [Dependency] private MobStateSystem _mobs = default!;
     [Dependency] private DamageableSystem _damage = default!;
-    [Dependency] private SharedBloodstreamSystem _bloodstream = default!;
+    [Dependency] private BloodstreamSystem _bloodstream = default!;
     [Dependency] private SharedDeathgaspSystem _deathgasp = default!;
 
     [SubscribeLocalEvent]
