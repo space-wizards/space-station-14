@@ -582,7 +582,7 @@
     prototype: ComputerSyndicateTeleportersControl
 
 - type: entity
-  parent: BaseComputerCircuitboard
+  parent: [BaseComputerCircuitboard, BaseScienceContraband]
   id: StationAiFixerCircuitboard
   name: AI restoration console board
   description: A computer printed circuit board for an AI restoration console console.
