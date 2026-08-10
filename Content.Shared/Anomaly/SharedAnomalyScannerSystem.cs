@@ -4,6 +4,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Anomaly;
 
@@ -67,7 +68,7 @@ public abstract partial class SharedAnomalyScannerSystem : EntitySystem
         {
             DistanceThreshold = 2f,
             ExamineText = Loc.GetString(component.DoAfterExamineText, ("user", args.User)),
-            IconEntity = GetNetEntity(uid),
+            IconEntity = (new ResPath("Objects/Specific/Research/anomalyscanner.rsi"), "icon"),
         };
         _doAfter.TryStartDoAfter(doAfterArgs);
     }

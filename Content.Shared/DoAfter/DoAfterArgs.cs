@@ -1,5 +1,6 @@
 using Content.Shared.FixedPoint;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.DoAfter;
 
@@ -57,7 +58,7 @@ public sealed partial class DoAfterArgs
     /// </summary>
     [NonSerialized]
     [DataField]
-    public NetEntity? IconEntity;
+    public (ResPath?, string) IconEntity;
 
     #region Event options
     /// <summary>

@@ -5,6 +5,7 @@ using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Client.Player;
+using Robust.Client.ResourceManagement;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -19,6 +20,7 @@ public sealed class DoAfterOverlay : Overlay
     private readonly IEntityManager _entManager;
     private readonly IGameTiming _timing;
     private readonly IPlayerManager _player;
+    private readonly IResourceCache _resourceCache;
     private readonly SharedTransformSystem _transform;
     private readonly MetaDataSystem _meta;
     private readonly ProgressColorSystem _progressColor;
@@ -51,11 +53,12 @@ public sealed class DoAfterOverlay : Overlay
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
 
-    public DoAfterOverlay(IEntityManager entManager, IPrototypeManager protoManager, IGameTiming timing, IPlayerManager player)
+    public DoAfterOverlay(IEntityManager entManager, IPrototypeManager protoManager, IGameTiming timing, IPlayerManager player, IResourceCache resourceCache)
     {
         _entManager = entManager;
         _timing = timing;
         _player = player;
+        _resourceCache = resourceCache;
         _transform = _entManager.EntitySysManager.GetEntitySystem<SharedTransformSystem>();
         _meta = _entManager.EntitySysManager.GetEntitySystem<MetaDataSystem>();
         _container = _entManager.EntitySysManager.GetEntitySystem<SharedContainerSystem>();
@@ -179,14 +182,15 @@ public sealed class DoAfterOverlay : Overlay
                 offset += _barTexture.Height / scale;
 
                 // Here starts code responsible for the transparent icon of something with that player interacts
-                if (doAfter.Args.IconEntity is null)
+                if (doAfter.Args.IconEntity.Item1 is null)
                     continue;
 
-                var iconUid = _entManager.GetEntity(doAfter.Args.IconEntity.Value);
-                if (!_entManager.TryGetComponent<SpriteComponent>(iconUid, out var icon))
+                var fire = _resourceCache.GetResource<RSIResource>(doAfter.Args.IconEntity.Item1.Value).RSI;
+
+                if (!fire.TryGetState(new RSI.StateId(doAfter.Args.IconEntity.Item2), out var state))
                     continue;
-                var iconPosition = position with { Y = position.Y};
-                _sprite.RenderSprite((iconUid, icon), handle, rotation, _transform.GetWorldRotation(uid), worldPosition);
+
+                handle.DrawTexture(state.Frame0, position, Color.White.WithAlpha(IconColorAlpha));
             }
         }
 
