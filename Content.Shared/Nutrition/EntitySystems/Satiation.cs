@@ -21,7 +21,7 @@ namespace Content.Shared.Nutrition.EntitySystems;
 /// concepts which should be familiar to anyone working in Robust C#.
 /// </remarks>
 [DataDefinition, Serializable, NetSerializable, Access(typeof(SatiationSystem))]
-public sealed partial class Satiation
+public sealed partial class Satiation : IRobustCloneable<Satiation>
 {
     /// <summary>
     /// This satiation's <see cref="SatiationTypePrototype"/>.
@@ -70,6 +70,19 @@ public sealed partial class Satiation
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan? NextAlertUpdateTime;
+
+    /// <inheritdoc/>
+    [Access(typeof(SatiationDictionary))]
+    public Satiation Clone() => new()
+    {
+        SatiationType = SatiationType,
+        Prototype = Prototype,
+        LastAuthoritativeValue = LastAuthoritativeValue,
+        LastAuthoritativeChangeTime = LastAuthoritativeChangeTime,
+        ActualChangeRate = ActualChangeRate,
+        NextChangeRateModUpdateTime = NextChangeRateModUpdateTime,
+        NextAlertUpdateTime = NextAlertUpdateTime,
+    };
 }
 
 /// <summary>
@@ -97,8 +110,9 @@ public sealed partial class SatiationThresholds<T>
     /// When this satiation is expected to change from its current threshold to a different one. This is null when the
     /// current linear change is zero or there is no threshold in the direction of the expected change.
     /// </summary>
+    // Initialize to zero to force an update as soon as possible on load
     [ViewVariables]
-    public TimeSpan? ProjectedThresholdChangeTime = TimeSpan.Zero; // Initialize to zero to force an update as soon as possible on load
+    public TimeSpan? ProjectedThresholdChangeTime = TimeSpan.Zero;
 
     /// <summary>
     /// The current <typeparamref name="T"/> value, at least when maintained by something like

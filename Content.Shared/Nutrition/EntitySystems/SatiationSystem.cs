@@ -70,7 +70,7 @@ public sealed partial class SatiationSystem : EntitySystem
             SetAuthoritativeValue(entity, satiation, proto, value);
         }
 
-        DirtyField(entity.AsNullable(), nameof(SatiationComponent.Satiations));
+        DirtyField(entity.AsNullable(), SatiationComponent.SatiationFieldName);
     }
 
     /// <summary>
@@ -228,7 +228,7 @@ public sealed partial class SatiationSystem : EntitySystem
         var updateEvent = new SatiationUpdateEvent(satiation.SatiationType);
         RaiseLocalEvent(entity, ref updateEvent);
 
-        DirtyField(entity.AsNullable(), nameof(SatiationComponent.Satiations));
+        DirtyField(entity.AsNullable(), SatiationComponent.SatiationFieldName);
     }
 
     private void UpdateAlerts(
@@ -261,7 +261,7 @@ public sealed partial class SatiationSystem : EntitySystem
             nextHigherThreshold,
             nextLowerThreshold
         );
-        DirtyField(entity.AsNullable(), nameof(SatiationComponent.Satiations));
+        DirtyField(entity.AsNullable(), SatiationComponent.SatiationFieldName);
     }
 }
 
