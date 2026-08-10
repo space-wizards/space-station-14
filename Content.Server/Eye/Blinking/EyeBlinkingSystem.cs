@@ -7,7 +7,7 @@ namespace Content.Server.Eye.Blinking;
 /// <inheritdoc/>
 public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 {
-    // TODO: Move all this stuff out once chat is predicted.
+    // TODO: Move all this stuff into Shared once chat is predicted.
     [SubscribeLocalEvent]
     private void OnEmote(Entity<EyeBlinkingComponent> ent, ref EmoteEvent args)
     {
