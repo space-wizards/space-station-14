@@ -1,5 +1,5 @@
 using Content.Server.Animals.Systems;
-using Content.Shared.Storage;
+using Content.Shared.EntityTable.EntitySelectors;
 
 namespace Content.Server.Animals.Components;
 
@@ -10,7 +10,7 @@ namespace Content.Server.Animals.Components;
 public sealed partial class EntityProducerComponent : Component
 {
     [DataField(required: true)]
-    public List<EntitySpawnEntry> Spawns = [];
+    public EntityTableSelector Table = default!;
 }
 
 /// <summary>

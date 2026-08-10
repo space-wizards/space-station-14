@@ -280,8 +280,8 @@
     minimumHunger: 60
     automaticForPlayers: false
   - type: EntityProducer
-    spawns:
-    - id: FoodEgg
+    table:
+      id: FoodEgg
   - type: ReplacementAccent
     accent: chicken
   - type: SentienceTarget
@@ -742,8 +742,8 @@
     minimumHunger: 60
     automaticForPlayers: false
   - type: EntityProducer
-    spawns:
-    - id: FoodEgg
+    table:
+      id: FoodEgg
   - type: ReplacementAccent
     accent: duck
   - type: SentienceTarget

@@ -1,6 +1,5 @@
 using Content.Server.Animals.Components;
-using Content.Shared.Storage;
-using Robust.Shared.Random;
+using Content.Shared.EntityTable;
 
 namespace Content.Server.Animals.Systems;
 
@@ -9,14 +8,14 @@ namespace Content.Server.Animals.Systems;
 /// </summary>
 public sealed partial class EntityProducerSystem : EntitySystem
 {
-    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private EntityTableSystem _entityTable = default!;
 
     [SubscribeLocalEvent]
     private void OnProduce(Entity<EntityProducerComponent> ent, ref ProductionAttemptEvent args)
     {
         var produced = new List<EntityUid>();
 
-        foreach (var spawn in EntitySpawnCollection.GetSpawns(ent.Comp.Spawns, _random))
+        foreach (var spawn in _entityTable.GetSpawns(ent.Comp.Table))
         {
             produced.Add(SpawnNextToOrDrop(spawn, args.Owner));
         }
