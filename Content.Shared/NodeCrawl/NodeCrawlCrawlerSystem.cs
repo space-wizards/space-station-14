@@ -58,6 +58,9 @@ public sealed partial class NodeCrawlCrawlerSystem : EntitySystem
     }
 }
 
+/// <summary>
+/// Requests permission for an entity to begin node crawling.
+/// </summary>
 [ByRefEvent]
 public record struct CanNodeCrawlEvent : IInventoryRelayEvent
 {

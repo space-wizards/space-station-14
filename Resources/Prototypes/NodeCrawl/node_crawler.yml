@@ -9,7 +9,7 @@
   id: CrawlablePipeNode
   components:
   - type: CrawlableNode
-    reachableNodeTypes: [ Content.Server.NodeContainer.Nodes.PipeNode ]
+    reachableNodeTypes: [ Pipe ]
 
 - type: entity
   categories: [ HideSpawnMenu ]

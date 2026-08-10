@@ -223,15 +223,12 @@ public abstract partial class SharedMoverController : VirtualController
             inAirHelpless = true;
         }
 
-        UsedMobMovement[uid] = true;
-
-        var beforeMove = new BeforeMoveEvent();
+        var beforeMove = new BeforeMoverMoveEvent();
         RaiseLocalEvent(uid, ref beforeMove);
         if (beforeMove.Handled)
-        {
-            UsedMobMovement[uid] = false;
             return;
-        }
+
+        UsedMobMovement[uid] = true;
 
         var moveSpeedComponent = ModifierQuery.CompOrNull(uid);
 

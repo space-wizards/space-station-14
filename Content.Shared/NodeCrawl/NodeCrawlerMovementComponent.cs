@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Shared.Atmos;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.NodeCrawl;
 
@@ -57,10 +58,10 @@ public sealed partial class NodeCrawlerMovementComponent : Component
     public TimeSpan TraversalSoundDelay = TimeSpan.FromSeconds(2f);
 
     /// <summary>
-    /// When the traversal sound was last played, for throttling.
+    /// The next time a traversal sound can be played.
     /// </summary>
-    [ViewVariables, AutoNetworkedField, AutoPausedField]
-    public TimeSpan LastTraversalSound;
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
+    public TimeSpan NextTraversalSound;
 
     /// <summary>
     /// Sound played periodically while moving through nodes.
@@ -83,7 +84,7 @@ public sealed partial class NodeCrawlerMovementComponent : Component
     /// <summary>
     /// When the layer was last changed, for throttling.
     /// </summary>
-    [ViewVariables, AutoNetworkedField, AutoPausedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
     public TimeSpan LastLayerSwitch;
 }
 

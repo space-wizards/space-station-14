@@ -32,7 +32,7 @@ public partial class NodeCrawlerMovementSystem
             return;
 
         var localDir = (args.Movement.Comp.MoveVector.GetDir().ToAngle() - Transform(ent).LocalRotation).GetCardinalDir();
-        if (!TryGetManifoldLayer(args.Movement.Comp.CurrentLayer, new[] { Direction.North }, localDir, out var newLayer))
+        if (!TryGetManifoldLayer(args.Movement.Comp.CurrentLayer, true, localDir, out var newLayer))
             return;
 
         args.Handled = true;
@@ -52,11 +52,10 @@ public partial class NodeCrawlerMovementSystem
     /// Given the current layer, the manifold's exits, and the player's local move direction,
     /// picks the layer the crawler should turn onto.
     /// </summary>
-    private static bool TryGetManifoldLayer(int currentLayer, Direction[] exits, Direction localDir, out int layer)
+    private static bool TryGetManifoldLayer(int currentLayer, bool hasVerticalExit, Direction localDir, out int layer)
     {
         layer = currentLayer;
-        var hasVerticalExit = Array.IndexOf(exits, Direction.North) >= 0 || Array.IndexOf(exits, Direction.South) >= 0;
-        var hasHorizontalExit = Array.IndexOf(exits, Direction.East) >= 0 || Array.IndexOf(exits, Direction.West) >= 0;
+        var hasHorizontalExit = !hasVerticalExit;
         if (hasVerticalExit == hasHorizontalExit)
             return false;
 

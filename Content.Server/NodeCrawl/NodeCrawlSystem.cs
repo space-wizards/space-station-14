@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Numerics;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
@@ -9,7 +8,6 @@ using Content.Shared.NodeCrawl;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
 using Content.Shared.NodeContainer;
-using Robust.Shared.Reflection;
 using Robust.Shared.Utility;
 
 namespace Content.Server.NodeCrawl;
@@ -18,7 +16,6 @@ public sealed partial class NodeCrawlSystem : SharedNodeCrawlSystem
 {
     [Dependency] private AtmosphereSystem _atmosphere = default!;
     [Dependency] private BarotraumaSystem _barotrauma = default!;
-    [Dependency] private IReflectionManager _reflection = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
 
     [Dependency] private EntityQuery<NodeContainerComponent> _nodeContainerQuery;
@@ -59,20 +56,15 @@ public sealed partial class NodeCrawlSystem : SharedNodeCrawlSystem
         if (!_nodeContainerQuery.TryGetComponent(ent, out var nodeContainer))
             return;
 
-        // TODO ugly workaround for https://github.com/space-wizards/RobustToolbox/issues/6694 not letting List<Type>
-        // get serialized properly
-        var possibleTypes = ent.Comp.ReachableNodeTypes.Select(it => _reflection.GetType(it)).ToList();
-
         ent.Comp.DeadEnd = false;
-        var reachableNodes = new List<EntityUid>();
+        var reachableNodes = ent.Comp.ReachableNodes;
+        reachableNodes.Clear();
         foreach (var node in nodeContainer.Nodes.Values)
         {
             foreach (var reachable in node.ReachableNodes)
             {
-                if (possibleTypes.Count != 0 && possibleTypes.All(type => type?.IsInstanceOfType(reachable) != true))
-                {
+                if (!CanReachNode(ent.Comp, reachable))
                     continue;
-                }
 
                 DebugTools.Assert(_crawlableQuery.HasComponent(reachable.Owner),
                     $"Node {ToPrettyString(reachable.Owner)} reachable from {ToPrettyString(ent)} should be a crawlable node, but wasn't");
@@ -89,8 +81,21 @@ public sealed partial class NodeCrawlSystem : SharedNodeCrawlSystem
         }
 
         ent.Comp.DeadEnd |= reachableNodes.Count == 0;
-        ent.Comp.ReachableNodes = reachableNodes;
         Dirty(ent);
+    }
+
+    private bool CanReachNode(CrawlableNodeComponent component, Node reachable)
+    {
+        if (component.ReachableNodeTypes.Count == 0)
+            return true;
+
+        foreach (var nodeType in component.ReachableNodeTypes)
+        {
+            if (nodeType == reachable.NodeGroupID)
+                return true;
+        }
+
+        return false;
     }
 
     /// <summary>

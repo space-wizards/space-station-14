@@ -1,4 +1,3 @@
-using Content.Shared.Atmos.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
@@ -35,13 +34,6 @@ public sealed partial class NodeCrawlerComponent : Component
     public EntityUid? Mover;
 
     /// <summary>
-    /// Components of entities to reveal while inside a mover
-    /// </summary>
-    // TODO: Replace with ComponentFilter once https://github.com/space-wizards/RobustToolbox/pull/6442 is merged
-    [DataField(readOnly: true)]
-    public Type[] RevealedComponents = [typeof(PipeAppearanceComponent)];
-
-    /// <summary>
     /// Whitelist for entities that will be considered as exit nodes.
     /// </summary>
     [DataField]
@@ -49,7 +41,7 @@ public sealed partial class NodeCrawlerComponent : Component
     {
         Components =
         [
-            "NodeCrawlVentAccess",
+            NodeCrawlVentAccessComponent.ComponentName,
         ]
     };
 

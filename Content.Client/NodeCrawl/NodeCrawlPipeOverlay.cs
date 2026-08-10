@@ -64,7 +64,7 @@ public sealed partial class NodeCrawlPipeOverlay : Overlay
         }
 
         _entities.Clear();
-        _lookup.GetEntitiesIntersecting(args.MapId, args.WorldBounds.CalcBoundingBox(), _entities, LookupFlags.Uncontained);
+        _lookup.GetEntitiesIntersecting(args.MapId, args.WorldBounds.CalcBoundingBox(), _entities, LookupFlags.StaticSundries);
         var worldHandle = args.WorldHandle;
         var eyeRotation = _eyeQuery.TryGetComponent(player, out var eye)
             ? eye.Rotation

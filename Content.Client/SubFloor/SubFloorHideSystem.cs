@@ -64,10 +64,13 @@ public sealed partial class SubFloorHideSystem : SharedSubFloorHideSystem
 
         scannerRevealed &= !ShowAll; // no transparency for show-subfloor mode.
 
-        var revealEv = new GetSubFloorRevealEvent();
-        RaiseLocalEvent(uid, ref revealEv);
-
-        var revealed = !covered || ShowAll || scannerRevealed || revealEv.Revealed;
+        var revealed = !covered || ShowAll || scannerRevealed;
+        if (!revealed)
+        {
+            var revealEv = new GetSubFloorRevealEvent();
+            RaiseLocalEvent(uid, ref revealEv);
+            revealed = revealEv.Revealed;
+        }
 
         // set visibility & color of each layer
         foreach (var layer in args.Sprite.AllLayers)

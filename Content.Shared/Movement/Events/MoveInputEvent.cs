@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 
@@ -8,7 +7,7 @@ namespace Content.Shared.Movement.Events;
 /// Raised on an entity before it processes a movement input change.
 /// </summary>
 [ByRefEvent]
-public record struct BeforeMoveEvent
+public record struct BeforeMoverMoveEvent
 {
     public bool Handled;
 }
@@ -17,7 +16,7 @@ public record struct BeforeMoveEvent
 /// Raised on an entity whenever it has a movement input change.
 /// </summary>
 [ByRefEvent]
-public readonly struct MoveInputEvent(Entity<InputMoverComponent> entity, MoveButtons oldMovement, Vector2 moveVec)
+public readonly struct MoveInputEvent(Entity<InputMoverComponent> entity, MoveButtons oldMovement)
 {
     /// <summary>
     /// Mover whose input changed.
@@ -28,11 +27,6 @@ public readonly struct MoveInputEvent(Entity<InputMoverComponent> entity, MoveBu
     /// Movement buttons held before this input change.
     /// </summary>
     public readonly MoveButtons OldMovement = oldMovement;
-
-    /// <summary>
-    /// Normalized direction vector requested by the current movement buttons.
-    /// </summary>
-    public readonly Vector2 MoveVec = moveVec;
 
     /// <summary>
     /// Whether the current held buttons contain any directional movement.

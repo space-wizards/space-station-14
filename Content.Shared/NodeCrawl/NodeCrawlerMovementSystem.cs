@@ -8,6 +8,9 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.NodeCrawl;
 
+/// <summary>
+/// Handles movement for entities travelling through crawlable node networks.
+/// </summary>
 public sealed partial class NodeCrawlerMovementSystem : EntitySystem
 {
     [Dependency] private SharedTransformSystem _transform = default!;
@@ -27,18 +30,19 @@ public sealed partial class NodeCrawlerMovementSystem : EntitySystem
         if (ent.Comp.Node is null)
             return;
 
-        if (ent.Comp.MoveVector == args.MoveVec)
+        var moveVector = _mover.DirVecForButtons(args.Entity.Comp.HeldMoveButtons);
+        if (ent.Comp.MoveVector == moveVector)
             return;
 
-        ent.Comp.TargetNode = args.MoveVec == Vector2.Zero
+        ent.Comp.TargetNode = moveVector == Vector2.Zero
             ? GetDestination((ent, ent.Comp), ent.Comp.MoveVector)
             : null;
-        ent.Comp.MoveVector = args.MoveVec;
+        ent.Comp.MoveVector = moveVector;
         Dirty(ent);
     }
 
     [SubscribeLocalEvent]
-    private void OnBeforeMoverMove(Entity<NodeCrawlerMovementComponent> ent, ref BeforeMoveEvent args)
+    private void OnBeforeMoverMove(Entity<NodeCrawlerMovementComponent> ent, ref BeforeMoverMoveEvent args)
     {
         if (ent.Comp.Node is null)
             return;
@@ -67,8 +71,8 @@ public sealed partial class NodeCrawlerMovementSystem : EntitySystem
             if (mover.Comp.Node is not { } node)
                 return;
 
-            var nodeComp = Comp<CrawlableNodeComponent>(node);
-            if (!nodeComp.DeadEnd)
+            if (!_crawlableQuery.TryGetComponent(node, out var nodeComp)
+                || !nodeComp.DeadEnd)
                 return;
 
             if (mover.Comp.HeldCrawler is not { } crawler)
@@ -143,11 +147,11 @@ public sealed partial class NodeCrawlerMovementSystem : EntitySystem
 
     private void PlayTraversalSound(Entity<NodeCrawlerMovementComponent> mover)
     {
-        if (_gameTiming.CurTime <= mover.Comp.LastTraversalSound + mover.Comp.TraversalSoundDelay)
+        if (_gameTiming.CurTime < mover.Comp.NextTraversalSound)
             return;
 
-        mover.Comp.LastTraversalSound = _gameTiming.CurTime;
-        Dirty(mover, mover.Comp);
+        mover.Comp.NextTraversalSound = _gameTiming.CurTime + mover.Comp.TraversalSoundDelay;
+        DirtyField(mover.AsNullable(), nameof(NodeCrawlerMovementComponent.NextTraversalSound));
         _audio.PlayPredicted(mover.Comp.TraversalSound, mover, mover);
     }
 
@@ -207,9 +211,11 @@ public sealed partial class NodeCrawlerMovementSystem : EntitySystem
 
         if (ent.Comp.Node is { } oldNode)
         {
-            var oldNodeComp = Comp<CrawlableNodeComponent>(oldNode);
-            oldNodeComp.Crawlers.Remove(ent);
-            DirtyField(oldNode, oldNodeComp, nameof(CrawlableNodeComponent.Crawlers));
+            if (_crawlableQuery.TryGetComponent(oldNode, out var oldNodeComp))
+            {
+                oldNodeComp.Crawlers.Remove(ent);
+                DirtyField(oldNode, oldNodeComp, nameof(CrawlableNodeComponent.Crawlers));
+            }
         }
 
         if (node is { } newNode)

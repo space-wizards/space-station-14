@@ -1,7 +1,7 @@
 using Content.Shared.Eye;
+using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Robust.Shared.Containers;
-using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.NodeCrawl;
 
@@ -12,7 +12,6 @@ public abstract partial class SharedNodeCrawlSystem : EntitySystem
 {
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private SharedMoverController _mover = default!;
-    [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private SharedEyeSystem _eye = default!;
     [Dependency] private SharedTransformSystem _xform = default!;
     [Dependency] private NodeCrawlerMovementSystem _nodeCrawler = default!;
@@ -39,8 +38,8 @@ public abstract partial class SharedNodeCrawlSystem : EntitySystem
         var crawlers = new List<EntityUid>(ent.Comp.Crawlers);
         foreach (var crawler in crawlers)
         {
-            var movement = Comp<NodeCrawlerMovementComponent>(crawler);
-            if (movement.HeldCrawler is not { } held)
+            if (!_movementQuery.TryGetComponent(crawler, out var movement)
+                || movement.HeldCrawler is not { } held)
                 continue;
 
             _nodeCrawler.SetNode((crawler, movement), null);
@@ -74,9 +73,11 @@ public abstract partial class SharedNodeCrawlSystem : EntitySystem
     {
         if (ent.Comp.Node is { } node)
         {
-            var nodeComp = Comp<CrawlableNodeComponent>(node);
-            nodeComp.Crawlers.Remove(ent);
-            DirtyField(node, nodeComp, nameof(CrawlableNodeComponent.Crawlers));
+            if (_crawlableQuery.TryGetComponent(node, out var nodeComp))
+            {
+                nodeComp.Crawlers.Remove(ent);
+                DirtyField(node, nodeComp, nameof(CrawlableNodeComponent.Crawlers));
+            }
         }
 
         if (ent.Comp.HeldCrawler is { } crawler && !TerminatingOrDeleted(crawler))
@@ -100,8 +101,8 @@ public abstract partial class SharedNodeCrawlSystem : EntitySystem
         var crawlers = new List<EntityUid>(ent.Comp.Crawlers);
         foreach (var crawler in crawlers)
         {
-            var movement = Comp<NodeCrawlerMovementComponent>(crawler);
-            if (movement.HeldCrawler is not { } held)
+            if (!_movementQuery.TryGetComponent(crawler, out var movement)
+                || movement.HeldCrawler is not { } held)
                 continue;
 
             ExitNodeCrawl(held);
@@ -122,24 +123,27 @@ public abstract partial class SharedNodeCrawlSystem : EntitySystem
             return;
 
         var mover = PredictedSpawnAttachedTo(ent.Comp.MoverProto, Transform(target).Coordinates);
-        var crawler = Comp<NodeCrawlerMovementComponent>(mover);
-
         var container = _container.GetContainer(mover, MoverContainer);
         _container.Insert(user, container);
 
         ent.Comp.Mover = mover;
         DirtyField(ent.AsNullable(), nameof(NodeCrawlerComponent.Mover));
 
-        var ev = new NodeCrawlerStartedCrawlingEvent((mover, crawler));
+        if (!_movementQuery.TryGetComponent(mover, out var movement))
+        {
+            ExitNodeCrawl(ent);
+            return;
+        }
+
+        var ev = new NodeCrawlerStartedCrawlingEvent((mover, movement));
         RaiseLocalEvent(user, ref ev);
 
-        _nodeCrawler.SetNode((mover, crawler), target);
-        _nodeCrawler.SetHeldCrawler((mover, crawler), user);
+        _nodeCrawler.SetNode((mover, movement), target);
+        _nodeCrawler.SetHeldCrawler((mover, movement), user);
 
-        SetupAir((mover, crawler));
+        SetupAir((mover, movement));
 
         _mover.SetRelay(user, mover);
-        _physics.SetCanCollide(mover, false);
         _eye.RefreshVisibilityMask(user);
     }
 
@@ -184,7 +188,7 @@ public abstract partial class SharedNodeCrawlSystem : EntitySystem
             DirtyField(other, otherCrawler, nameof(NodeCrawlerComponent.Mover));
         }
 
-        _mover.RemoveRelay(user);
+        RemCompDeferred<RelayInputMoverComponent>(user);
         if (!TerminatingOrDeleted(mover))
         {
             if (_movementQuery.TryGetComponent(mover, out var movement))
@@ -196,7 +200,6 @@ public abstract partial class SharedNodeCrawlSystem : EntitySystem
         var ev = new NodeCrawlerStoppedCrawlingEvent();
         RaiseLocalEvent(user, ref ev);
 
-        _physics.SetCanCollide(user, true);
         _eye.RefreshVisibilityMask(user);
     }
 

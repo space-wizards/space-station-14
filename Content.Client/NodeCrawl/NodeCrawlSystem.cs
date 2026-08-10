@@ -23,34 +23,28 @@ public sealed partial class NodeCrawlSystem : SharedNodeCrawlSystem
     private NodeCrawlPipeOverlay? _pipeOverlay;
     private HashSet<EntityUid>? _reachableNodes;
     private readonly Queue<EntityUid> _pendingNodes = new();
+    private bool _reachableDirty = true;
 
     public IReadOnlySet<EntityUid>? ReachableNodes => _reachableNodes;
 
     public override void Initialize()
     {
         base.Initialize();
-        _prototypeManager.PrototypesReloaded += OnPrototypesReloaded;
         _pipeOverlay = new NodeCrawlPipeOverlay(EntityManager, this);
-    }
-
-    public override void Shutdown()
-    {
-        _prototypeManager.PrototypesReloaded -= OnPrototypesReloaded;
-        base.Shutdown();
-    }
-
-    private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
-    {
-        if (args.WasModified<ShaderPrototype>())
-            _pipeOverlay?.SetShader(_prototypeManager.Index(NodeCrawlPipeOverlay.OutlineShader).InstanceUnique());
     }
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        QueueAppearanceUpdates(_reachableNodes);
+        if (!_reachableDirty)
+            return;
+
+        _reachableDirty = false;
+        var oldReachable = _reachableNodes;
         var reachable = GetLocalReachableNodes();
+        QueueAppearanceUpdates(oldReachable);
+        QueueAppearanceUpdates(reachable);
         if (_pipeOverlay != null && _overlayManager.HasOverlay<NodeCrawlPipeOverlay>() != (reachable != null))
         {
             if (reachable != null)
@@ -63,21 +57,27 @@ public sealed partial class NodeCrawlSystem : SharedNodeCrawlSystem
         }
 
         _reachableNodes = reachable;
-        QueueAppearanceUpdates(_reachableNodes);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
+    {
+        if (args.WasModified<ShaderPrototype>())
+            _pipeOverlay?.SetShader(_prototypeManager.Index(NodeCrawlPipeOverlay.OutlineShader).InstanceUnique());
     }
 
     [SubscribeLocalEvent]
     private void OnAttached(Entity<NodeCrawlerComponent> ent, ref LocalPlayerAttachedEvent args)
     {
-        UpdateSubfloor(ent.Comp.Mover is not null);
+        _reachableDirty = true;
     }
 
     [SubscribeLocalEvent]
     private void OnDetached(Entity<NodeCrawlerComponent> ent, ref LocalPlayerDetachedEvent args)
     {
-        var old = _reachableNodes;
+        QueueAppearanceUpdates(_reachableNodes);
         _reachableNodes = null;
-        QueueAppearanceUpdates(old);
+        _reachableDirty = false;
         _pipeOverlay?.RemoveOutline();
     }
 
@@ -89,7 +89,26 @@ public sealed partial class NodeCrawlSystem : SharedNodeCrawlSystem
             || crawler.Owner != ent.Owner)
             return;
 
+        _reachableDirty = true;
         UpdateSubfloor(ent.Comp.Mover is not null);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnMovementAfterAutoHandleState(Entity<NodeCrawlerMovementComponent> ent,
+        ref AfterAutoHandleStateEvent args)
+    {
+        if (_player.LocalEntity is not { } player
+            || !_crawler.TryGetNodeCrawler(player, out var crawler)
+            || crawler.Comp.Mover != ent.Owner)
+            return;
+
+        _reachableDirty = true;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnCrawlableAfterAutoHandleState(Entity<CrawlableNodeComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        _reachableDirty = true;
     }
 
     [SubscribeLocalEvent]
@@ -108,8 +127,7 @@ public sealed partial class NodeCrawlSystem : SharedNodeCrawlSystem
         if (!_movementQuery.TryGetComponent(mover, out var movement) || movement.Node is not { } node)
             return null;
 
-        var reachable = _reachableNodes ??= [];
-        reachable.Clear();
+        var reachable = new HashSet<EntityUid>();
         _pendingNodes.Clear();
         reachable.Add(node);
         _pendingNodes.Enqueue(node);
@@ -144,7 +162,7 @@ public sealed partial class NodeCrawlSystem : SharedNodeCrawlSystem
         }
     }
 
-    private void QueueAppearanceUpdates(HashSet<EntityUid>? nodes)
+    private void QueueAppearanceUpdates(IReadOnlySet<EntityUid>? nodes)
     {
         if (nodes == null)
             return;
