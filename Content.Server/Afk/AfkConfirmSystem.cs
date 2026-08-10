@@ -54,7 +54,7 @@ public sealed partial class AfkConfirmSystem : EntitySystem
         _cfg.UnsubValueChanged(CCVars.AfkTime, OnAfkTimeChanged);
     }
 
-    private void OnAfk(AfkEvent ev)
+    private void OnAfk(ref AfkEvent ev)
     {
         TryStartConfirmation(ev.Session);
     }

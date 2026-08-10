@@ -134,12 +134,12 @@ public sealed partial class PlayTimeTrackingSystem : EntitySystem
         _tracking.Save();
     }
 
-    private void OnUnAfk(UnAfkEvent ev)
+    private void OnUnAfk(ref UnAfkEvent ev)
     {
         _tracking.QueueRefreshTrackers(ev.Session);
     }
 
-    private void OnAfk(AfkEvent ev)
+    private void OnAfk(ref AfkEvent ev)
     {
         _tracking.QueueRefreshTrackers(ev.Session);
     }
