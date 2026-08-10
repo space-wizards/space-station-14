@@ -78,8 +78,8 @@
       Glass: 1
 
 - type: entity
+  parent: [BaseMachineCircuitboard, BaseSecurityContraband]
   id: SecurityTechFabCircuitboard
-  parent: BaseMachineCircuitboard
   name: security techfab machine board
   description: A machine printed circuit board for a security techfab.
   components:
@@ -95,8 +95,8 @@
           defaultPrototype: Beaker
 
 - type: entity
+  parent: [BaseMachineCircuitboard, BaseSecurityContraband]
   id: AmmoTechFabCircuitboard
-  parent: BaseMachineCircuitboard
   name: ammo techfab circuit board
   description: A machine printed circuit board for an ammo techfab.
   components:
@@ -108,8 +108,8 @@
         Manipulator: 2
 
 - type: entity
+  parent: [BaseMachineCircuitboard, BaseMedicalContraband]
   id: MedicalTechFabCircuitboard
-  parent: BaseMachineCircuitboard
   name: medical techfab machine board
   description: A machine printed circuit board for a medical techfab.
   components:
@@ -1235,8 +1235,8 @@
         Steel: 5
 
 - type: entity
+  parent: [BaseMachineCircuitboard, BaseCargoContraband]
   id: MailTeleporterMachineCircuitboard
-  parent: BaseMachineCircuitboard
   name: mail teleporter machine board
   description: A machine printed circuit board for a mail teleporter.
   components:
@@ -1280,7 +1280,7 @@
       Cable: 2
 
 - type: entity
-  parent: BaseMachineCircuitboard
+  parent: [BaseMachineCircuitboard, BaseCargoContraband]
   id: SalvageMagnetMachineCircuitboard
   name: salvage magnet machine board
   description: A machine printed circuit board for a salvage magnet.
