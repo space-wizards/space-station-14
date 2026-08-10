@@ -144,13 +144,11 @@ public sealed partial class CloningSystem : SharedCloningSystem
                 continue;
             }
 
-            // If the original does not have the component, then the clone shouldn't have it either.
+            // Remove all components that we care about on our target,
+            // then copy over any that exist on the original over to the target.
             RemComp(clone, componentRegistration.Type);
-            if (TryComp(original, componentRegistration.Type, out var sourceComp)) // Does the original have this component?
-            {
-                // The CloningContext here handles any oddball fields that shouldn't be copied.
+            if (TryComp(original, componentRegistration.Type, out var sourceComp))
                 CopyComp((original, sourceComp), clone, _context);
-            }
         }
 
         var ev = new ClonedEvent(clone);

@@ -1,6 +1,5 @@
 using Content.Shared.NPC.Prototypes;
 using Content.Server.Actions;
-using Content.Server.Body.Systems;
 using Content.Server.Chat;
 using Content.Server.Chat.Systems;
 using Content.Server.Emoting.Systems;
@@ -9,7 +8,6 @@ using Content.Shared.Anomaly.Components;
 using Content.Shared.Armor;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Body.Systems;
-using Content.Shared.Cloning.Events;
 using Content.Shared.Chat;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Inventory;
@@ -35,6 +33,7 @@ namespace Content.Server.Zombies
     {
         [Dependency] private IGameTiming _timing = default!;
         [Dependency] private IRobustRandom _random = default!;
+        [Dependency] private BloodstreamSystem _bloodstream = default!;
         [Dependency] private DamageableSystem _damageable = default!;
         [Dependency] private ChatSystem _chat = default!;
         [Dependency] private ActionsSystem _actions = default!;
@@ -278,6 +277,29 @@ namespace Content.Server.Zombies
                     args.Handled = true;
                 }
             }
+        }
+
+        /// <summary>
+        ///     This is the function to call if you want to unzombify an entity.
+        /// </summary>
+        /// <param name="source">the entity having the ZombieComponent</param>
+        /// <param name="target">the entity you want to unzombify (different from source in case of cloning, for example)</param>
+        /// <param name="zombiecomp"></param>
+        /// <remarks>
+        ///     this currently only restore the skin/eye color from before zombified
+        ///     TODO: completely rethink how zombies are done to allow reversal.
+        /// </remarks>
+        public bool UnZombify(EntityUid source, EntityUid target, ZombieComponent? zombiecomp)
+        {
+            if (!Resolve(source, ref zombiecomp))
+                return false;
+
+            _visualBody.ApplyProfiles(target, zombiecomp.BeforeZombifiedProfiles);
+            _visualBody.ApplyMarkings(target, zombiecomp.BeforeZombifiedMarkings);
+
+            _bloodstream.ChangeBloodReagents(target, zombiecomp.BeforeZombifiedBloodReagents);
+
+            return true;
         }
 
         // Make sure players that enter a zombie (for example via a ghost role or the mind swap spell) count as an antagonist.

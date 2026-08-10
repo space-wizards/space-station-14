@@ -61,6 +61,7 @@ public sealed partial class ZombieSystem
     [Dependency] private NpcFactionSystem _faction = default!;
     [Dependency] private GhostSystem _ghost = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private SharedVisualBodySystem _visualBody = default!;
     [Dependency] private IdentitySystem _identity = default!;
     [Dependency] private ServerInventorySystem _inventory = default!;
     [Dependency] private MindSystem _mind = default!;
@@ -190,7 +191,7 @@ public sealed partial class ZombieSystem
         if (TryComp<BloodstreamComponent>(target, out var stream) && stream.BloodReferenceSolution is { } reagents)
             zombiecomp.BeforeZombifiedBloodReagents = reagents.Clone();
 
-        if (VisualBody.TryGatherMarkingsData(target, null, out var profiles, out _, out var markings))
+        if (_visualBody.TryGatherMarkingsData(target, null, out var profiles, out _, out var markings))
         {
             // TODO: My kingdom for ZombieSystem just using cloning system
             zombiecomp.BeforeZombifiedProfiles = profiles;
@@ -202,7 +203,7 @@ public sealed partial class ZombieSystem
 
             var zombifiedProfiles = profiles.ToDictionary(pair => pair.Key,
                 pair => pair.Value with { EyeColor = zombiecomp.EyeColor, SkinColor = zombiecomp.SkinColor });
-            VisualBody.ApplyProfiles(target, zombifiedProfiles);
+            _visualBody.ApplyProfiles(target, zombifiedProfiles);
 
             var newMarkings = markings.ToDictionary(
                 kvp => kvp.Key,
@@ -224,7 +225,7 @@ public sealed partial class ZombieSystem
                 }
             }
 
-            VisualBody.ApplyMarkings(target, newMarkings);
+            _visualBody.ApplyMarkings(target, newMarkings);
         }
 
         //We have specific stuff for humanoid zombies because they matter more
@@ -249,9 +250,9 @@ public sealed partial class ZombieSystem
 
         //This makes it so the zombie doesn't take bloodloss damage.
         //NOTE: they are supposed to bleed, just not take damage
-        Bloodstream.SetBloodLossThreshold(target, 0f);
+        _bloodstream.SetBloodLossThreshold(target, 0f);
         //Give them zombie blood
-        Bloodstream.ChangeBloodReagents(target, zombiecomp.NewBloodReagents);
+        _bloodstream.ChangeBloodReagents(target, zombiecomp.NewBloodReagents);
 
         //This is specifically here to combat insuls, because frying zombies on grilles is funny as shit.
         _inventory.TryUnequip(target, "gloves", true, true);

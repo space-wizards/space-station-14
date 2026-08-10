@@ -1,3 +1,4 @@
+using Content.Server.Zombies;
 using Content.Shared.Cloning.Events;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
@@ -10,9 +11,8 @@ using Content.Shared.Paper;
 using Content.Shared.Stacks;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
-using Robust.Shared.Prototypes;
 using Content.Shared.Zombies;
-using Content.Server.Zombies;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Cloning;
 
