@@ -340,11 +340,12 @@ public abstract partial class InventorySystem
     /// <param name="item">The item's component.</param>
     /// <param name="containerSlot">The container for the slot into which the item is being equipped.</param>
     /// <param name="assumeEmpty">If true, checks whether the entity could be inserted if the container were empty.</param>
+    /// <param name="checkActor">If true, checks whether the entity equipping the item can access and equip it.</param>
     /// <returns>Whether the item can be equipped.</returns>
     public bool CanEquip(EntityUid uid, EntityUid itemUid, string slot, [NotNullWhen(false)] out string? reason,
         SlotDefinition? slotDefinition = null, InventoryComponent? inventory = null,
-        ClothingComponent? clothing = null, ItemComponent? item = null, ContainerSlot? containerSlot = null, bool assumeEmpty = false) =>
-        CanEquip(uid, uid, itemUid, slot, out reason, slotDefinition, inventory, clothing, item, containerSlot, assumeEmpty);
+        ClothingComponent? clothing = null, ItemComponent? item = null, ContainerSlot? containerSlot = null, bool assumeEmpty = false, bool checkActor = true) =>
+        CanEquip(uid, uid, itemUid, slot, out reason, slotDefinition, inventory, clothing, item, containerSlot, assumeEmpty, checkActor);
 
     /// <summary>
     /// Checks whether the actor can equip an item on the target.
@@ -360,7 +361,7 @@ public abstract partial class InventorySystem
     /// <param name="item">The item's component.</param>
     /// <param name="containerSlot">The container for the slot into which the item is being equipped.</param>
     /// <param name="assumeEmpty">If true, checks whether the entity could be inserted if the container were empty.</param>
-    /// <param name="checkActor">If true, checks whether the actor can actually equip and access that.</param>
+    /// <param name="checkActor">If true, checks whether the entity equipping the item can access and equip it.</param>
     /// <returns>Whether the item can be equipped.</returns>
     public bool CanEquip(EntityUid actor, EntityUid target, EntityUid itemUid, string slot, [NotNullWhen(false)] out string? reason, SlotDefinition? slotDefinition = null,
         InventoryComponent? inventory = null, ClothingComponent? clothing = null, ItemComponent? item = null, ContainerSlot? containerSlot = null, bool assumeEmpty = false, bool checkActor = true)
