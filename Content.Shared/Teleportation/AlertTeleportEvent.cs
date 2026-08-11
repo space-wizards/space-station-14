@@ -1,4 +1,5 @@
 using Content.Shared.Alert;
+using Content.Shared.Teleportation.Components;
 
 namespace Content.Shared.Teleportation;
 

@@ -12,7 +12,6 @@ using Content.Shared.Coordinates.Helpers;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Ghost.Components;
-using Content.Shared.Ghost.Systems;
 using Content.Shared.Kitchen;
 using Content.Shared.Maps;
 using Content.Shared.Nuke;
@@ -55,7 +54,7 @@ public sealed partial class NukeSystem : EntitySystem
     /// <summary>
     /// Gives all the ghosts this alert when the nuclear bomb was armed
     /// </summary>
-    private static readonly ProtoId<AlertPrototype> _nukeGhostAlert = "NukeArm";
+    private static readonly ProtoId<AlertPrototype> NukeGhostAlert = "NukeArm";
 
     /// <summary>
     ///     Used to calculate when the nuke song should start playing for maximum kino with the nuke sfx
@@ -525,7 +524,7 @@ public sealed partial class NukeSystem : EntitySystem
         // enable the navmap beacon for people to find it
         _navMap.SetBeaconEnabled(uid, true);
 
-        _alertTeleport.MakeTeleportAlert<GhostAlertsComponent>(uid, _nukeGhostAlert, TimeSpan.FromSeconds(20));
+        _alertTeleport.MakeTeleportAlert<GhostAlertsComponent>(uid, NukeGhostAlert, TimeSpan.FromSeconds(20));
 
         _itemSlots.SetLock(uid, component.DiskSlot, true);
         if (!nukeXform.Anchored)

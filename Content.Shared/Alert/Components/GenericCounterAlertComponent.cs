@@ -33,7 +33,7 @@ public sealed partial class GenericCounterAlertComponent : Component
     /// only "000" or "001" would not display
     /// </summary>
     [DataField]
-    public bool HideZeroAndSingleValues = false;
+    public bool HideZeroAndSingleValues;
 
     /// <summary>
     /// The size of the alert sprite.

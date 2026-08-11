@@ -124,6 +124,6 @@ public sealed partial class GhostRoleComponent : Component
     /// Sound of the ghost alert
     /// </summary>
     [DataField]
-    public SoundSpecifier? GhostAlertSound = null;
+    public SoundSpecifier? GhostAlertSound;
 }
 

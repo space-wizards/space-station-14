@@ -363,7 +363,6 @@ public abstract partial class AlertsSystem : EntitySystem
 
     private void ClickAlert(EntityUid? player, ProtoId<AlertPrototype> alertType, bool rightClick)
     {
-
         if (player is null || !HasComp<AlertsComponent>(player))
             return;
 

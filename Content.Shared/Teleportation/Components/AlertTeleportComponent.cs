@@ -1,5 +1,4 @@
 using Content.Shared.Alert;
-using Content.Shared.Teleportation.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;

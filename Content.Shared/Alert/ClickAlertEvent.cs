@@ -7,26 +7,16 @@ namespace Content.Shared.Alert;
 /// A message that calls the click interaction on a alert
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class ClickAlertEvent : EntityEventArgs
+public sealed class ClickAlertEvent(ProtoId<AlertPrototype> alertType) : EntityEventArgs
 {
-    public readonly ProtoId<AlertPrototype> Type;
-
-    public ClickAlertEvent(ProtoId<AlertPrototype> alertType)
-    {
-        Type = alertType;
-    }
+    public readonly ProtoId<AlertPrototype> Type = alertType;
 }
 
 /// <summary>
 /// A message that calls the right click interaction on a alert
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class RightClickAlertEvent : EntityEventArgs
+public sealed class RightClickAlertEvent(ProtoId<AlertPrototype> alertType) : EntityEventArgs
 {
-    public readonly ProtoId<AlertPrototype> Type;
-
-    public RightClickAlertEvent(ProtoId<AlertPrototype> alertType)
-    {
-        Type = alertType;
-    }
+    public readonly ProtoId<AlertPrototype> Type = alertType;
 }
