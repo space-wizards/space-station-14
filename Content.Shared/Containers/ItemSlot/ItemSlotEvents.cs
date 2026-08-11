@@ -9,17 +9,17 @@ namespace Content.Shared.Containers.ItemSlots;
 public sealed class ItemSlotButtonPressedEvent : BoundUserInterfaceMessage
 {
     /// <summary>
-    ///     The ID of the slot/container from which to insert or eject an item.
+    /// The ID of the slot/container from which to insert or eject an item.
     /// </summary>
     public string SlotId;
 
     /// <summary>
-    ///     Whether to attempt to insert an item into the slot if there is not already one inside.
+    /// Whether to attempt to insert an item into the slot if there is not already one inside.
     /// </summary>
     public bool TryInsert;
 
     /// <summary>
-    ///     Whether to attempt to eject the item from the slot if it has one.
+    /// Whether to attempt to eject the item from the slot if it has one.
     /// </summary>
     public bool TryEject;
 
