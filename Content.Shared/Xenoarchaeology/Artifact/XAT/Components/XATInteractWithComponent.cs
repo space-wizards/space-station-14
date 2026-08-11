@@ -64,6 +64,13 @@ public sealed partial class XATInteractWithComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public int? Count;
+
+    /// <summary>
+    /// What to use in popup after an interaction was received but <see cref="MaxCount"/> is not met yet.
+    /// If null - no popup will be shown.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public LocId? InsufficientInteractionPopup = "interact-artifact-more";
 }
 
 /// <summary>
