@@ -266,6 +266,12 @@
   - type: SolutionManager
   - type: InjectableSolution
     solution: bloodstream
+  - type: BloodstreamDripOnDamage
+    allowed:
+      - Blunt
+      - Piercing
+      - Slash
+      - Slash
   - type: Bloodstream
     bloodlossDamage:
       types:
