@@ -17,6 +17,30 @@ public sealed partial class PlayDeadSystem : EntitySystem
     [Dependency] private SharedActionsSystem _action = default!;
     [Dependency] private IGameTiming _timing = default!;
 
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var query = EntityQueryEnumerator<PlayDeadComponent>();
+
+        var curTime = _timing.CurTime;
+
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            if (!comp.AutoWake)
+                continue;
+
+            if (curTime < comp.StopPlayingDeadTime)
+                continue;
+
+            if (_action.GetActions<RegenerativeStasisActionComponent>(uid).FirstOrNull() is not { } action)
+                return;
+
+            if (action.Comp2.IsInStasis)
+                StopPlayingDead((uid, comp));
+        }
+    }
+
     [SubscribeLocalEvent]
     private void OnDamageDealt(Entity<PlayDeadComponent> ent, ref DamageDealtEvent args)
     {
@@ -40,28 +64,11 @@ public sealed partial class PlayDeadSystem : EntitySystem
         }
     }
 
-    public override void Update(float frameTime)
+    [SubscribeLocalEvent]
+    private void OnExitStasis(Entity<PlayDeadComponent> ent, ref ExitChangelingStasisEvent args)
     {
-        base.Update(frameTime);
-
-        var query = EntityQueryEnumerator<PlayDeadComponent>();
-
-        var curTime = _timing.CurTime;
-
-        while (query.MoveNext(out var uid, out var comp))
-        {
-            if (!comp.AutoWake)
-                continue;
-
-            if (curTime < comp.StopPlayingDeadTime)
-                continue;
-
-            if (_action.GetActions<RegenerativeStasisActionComponent>(uid).FirstOrNull() is not { } action)
-                return;
-
-            if (action.Comp2.IsInStasis)
-                StopPlayingDead((uid, comp));
-        }
+        ent.Comp.AutoWake = false;
+        Dirty(ent);
     }
 
     private void PlayDead(Entity<PlayDeadComponent> ent, TimeSpan duration)

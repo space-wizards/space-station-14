@@ -99,6 +99,9 @@ public sealed partial class RegenerativeStasisSystem : EntitySystem
 
         _actions.SetToggled(ent.Owner, ent.Comp.IsInStasis);
         _actions.SetCooldown(ent.Owner, stasisDuration);
+
+        var ev = new EnterChangelingStasisEvent(stasisDuration);
+        RaiseLocalEvent(target, ref ev);
     }
 
     /// <summary>
@@ -131,6 +134,9 @@ public sealed partial class RegenerativeStasisSystem : EntitySystem
 
         ent.Comp.IsInStasis = false;
         Dirty(ent);
+
+        var ev = new ExitChangelingStasisEvent();
+        RaiseLocalEvent(target, ref ev);
 
         if (ent.Comp.InitialName != null)
             _metaData.SetEntityName(ent, ent.Comp.InitialName);
@@ -167,3 +173,16 @@ public sealed partial class RegenerativeStasisSystem : EntitySystem
 /// Action event for entering/leaving the stasis.
 /// </summary>
 public sealed partial class ChangelingStasisActionEvent : InstantActionEvent;
+
+
+/// <summary>
+/// Raised when an entity begins changeling stasis
+/// </summary>
+[ByRefEvent]
+public record struct EnterChangelingStasisEvent(TimeSpan Duration);
+
+/// <summary>
+/// Raised when an entity stops changeling stasis
+/// </summary>
+[ByRefEvent]
+public record struct ExitChangelingStasisEvent();
