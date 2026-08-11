@@ -11,12 +11,14 @@ namespace Content.Shared.Construction.Conditions;
 [DataDefinition]
 public sealed partial class NoImportantParentedWallmounts : IGraphCondition
 {
+    /// <inheritdoc/>
     public bool Condition(EntityUid uid, IEntityManager entMan)
     {
         var parentSys = entMan.System<ParentToWallSystem>();
         return !parentSys.HasImportantWallmounts(uid);
     }
 
+    /// <inheritdoc/>
     public bool DoExamine(ExaminedEvent args)
     {
         var entity = args.Examined;
@@ -30,6 +32,7 @@ public sealed partial class NoImportantParentedWallmounts : IGraphCondition
         return true;
     }
 
+    /// <inheritdoc/>
     public IEnumerable<ConstructionGuideEntry> GenerateGuideEntry()
     {
         yield return new ConstructionGuideEntry()
