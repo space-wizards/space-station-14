@@ -1,9 +1,7 @@
 using Content.Shared.Destructible;
 using Content.Shared.RCD;
-using Content.Shared.Tag;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Wall;
 
@@ -16,7 +14,6 @@ public sealed partial class ParentToWallSystem : EntitySystem
     [Dependency] private SharedDestructibleSystem _destructible = default!;
     [Dependency] private SharedMapSystem _map = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
-    [Dependency] private TagSystem _tag = default!;
 
     [Dependency] private EntityQuery<MapGridComponent> _mapGridQuery = default!;
     [Dependency] private EntityQuery<ParentedWallComponent> _parentWallQuery = default!;

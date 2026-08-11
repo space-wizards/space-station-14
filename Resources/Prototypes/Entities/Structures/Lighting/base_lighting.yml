@@ -257,8 +257,8 @@
   parent: AlwaysPoweredWallLight
   id: SmallLight
   name: small light
-  description: "An always powered light."
   suffix: Always Powered
+  description: "An always powered light."
   components:
     - type: AmbientSound
       volume: -15
