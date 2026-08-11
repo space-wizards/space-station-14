@@ -4,12 +4,7 @@ namespace Content.Shared.Containers.ItemSlots;
 
 public sealed partial class ItemSlotsSystem
 {
-    private void InitializeLock()
-    {
-        SubscribeLocalEvent<ItemSlotsLockComponent, MapInitEvent>(OnLockMapInit);
-        SubscribeLocalEvent<ItemSlotsLockComponent, LockToggledEvent>(OnLockToggled);
-    }
-
+    [SubscribeLocalEvent]
     private void OnLockMapInit(Entity<ItemSlotsLockComponent> ent, ref MapInitEvent args)
     {
         if (!TryComp(ent.Owner, out LockComponent? lockComp))
@@ -18,6 +13,7 @@ public sealed partial class ItemSlotsSystem
         UpdateLocks(ent, lockComp.Locked);
     }
 
+    [SubscribeLocalEvent]
     private void OnLockToggled(Entity<ItemSlotsLockComponent> ent, ref LockToggledEvent args)
     {
         UpdateLocks(ent, args.Locked);
@@ -32,5 +28,31 @@ public sealed partial class ItemSlotsSystem
 
             SetLock(ent.Owner, itemSlot, value);
         }
+    }
+
+    /// <summary>
+    /// Lock an item slot. This stops items from being inserted into or ejected from this slot.
+    /// </summary>
+    public void SetLock(EntityUid uid, string id, bool locked, ItemSlotsComponent? itemSlots = null)
+    {
+        if (!Resolve(uid, ref itemSlots))
+            return;
+
+        if (!itemSlots.Slots.TryGetValue(id, out var slot))
+            return;
+
+        SetLock(uid, slot, locked, itemSlots);
+    }
+
+    /// <summary>
+    /// Lock an item slot. This stops items from being inserted into or ejected from this slot.
+    /// </summary>
+    public void SetLock(EntityUid uid, ItemSlot slot, bool locked, ItemSlotsComponent? itemSlots = null)
+    {
+        if (!Resolve(uid, ref itemSlots))
+            return;
+
+        slot.Locked = locked;
+        Dirty(uid, itemSlots);
     }
 }
