@@ -53,11 +53,11 @@ public sealed partial class BloodstreamSystem
                 continue;
 
             var (min, max) = ent.Comp.Amount;
-            var (minRange, maxRange) = ent.Comp.Range;
-            var (minForce, maxForce) = ent.Comp.Force;
             for (var i = 0; i <= rand.Next(min, max); i++)
             {
-                if (!SpawnDroplet((ent, bloodstream), rand.NextVector2() * rand.NextFloat(minRange, maxRange), rand.NextFloat(minForce, maxForce)))
+                if (!SpawnDroplet((ent, bloodstream),
+                    rand.NextVector2() * rand.NextFloat(ent.Comp.Range.Min, ent.Comp.Range.Max),
+                    rand.NextFloat(ent.Comp.Force.Min, ent.Comp.Force.Max)))
                     return;
             }
 

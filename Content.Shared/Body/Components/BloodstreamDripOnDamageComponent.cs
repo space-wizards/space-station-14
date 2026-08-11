@@ -1,5 +1,6 @@
 using Content.Shared.Body.Systems;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Destructible.Thresholds;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -29,13 +30,13 @@ public sealed partial class BloodstreamDripOnDamageComponent : Component
     /// The range for droplets to fly. From min (inclusive) to max (exclusive).
     /// </summary>
     [DataField, AutoNetworkedField]
-    public (float Min, float Max) Range = (2f, 4f);
+    public MinMax Range = new(2f, 4f);
 
     /// <summary>
     /// The force with which droplets will fly. From min (inclusive) to max (exclusive).
     /// </summary>
     [DataField, AutoNetworkedField]
-    public (float Min, float Max) Force = (2f, 3f);
+    public MinMax Force = new(2f, 3f);
 
     /// <summary>
     /// The number of droplets that will be spawned. From min (inclusive) to max (exclusive).
