@@ -9,9 +9,6 @@
     "states": [
         {
             "name": "magnum"
-        },
-        {
-            "name": "magnum_piercing"
         }
     ]
 }
