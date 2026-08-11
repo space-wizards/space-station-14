@@ -40,5 +40,7 @@ public sealed partial class ItemSlotVisuals
 [Serializable, NetSerializable]
 public enum ItemSlotVisualLayers : byte
 {
-    Fill
+    Fill,
+    Fill1,
+    Fill2,
 }

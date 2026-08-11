@@ -62,8 +62,8 @@ public sealed partial class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVis
             // No need for fillLevels if it'll just fit one item.
             var layerKeyPrefix = heldPrefix + args.Location.ToString().ToLowerInvariant() + visual.InHandsFillBaseName;
 
-            if (GetVisualsLayer(ent, layerKeyPrefix) is not { } layer)
-                return;
+            if (GetVisualsLayer(ent, visual.Layer, layerKeyPrefix) is not { } layer)
+                continue;
 
             args.Layers.Add(layer);
         }
@@ -82,34 +82,29 @@ public sealed partial class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVis
             var equippedPrefix = clothing.EquippedPrefix == null ? $"equipped-{args.Slot}" : $"{clothing.EquippedPrefix}-equipped-{args.Slot}";
             var layerKeyPrefix = equippedPrefix + visual.EquippedFillBaseName;
 
-            if (GetVisualsLayer(ent, layerKeyPrefix) is not { } layer)
-                return;
+            if (GetVisualsLayer(ent, visual.Layer, layerKeyPrefix) is not { } layer)
+                continue;
 
             args.Layers.Add(layer);
         }
     }
 
-    private (string Key, PrototypeLayerData Layer)? GetVisualsLayer(Entity<ItemSlotVisualsComponent> ent, string layerKeyPrefix)
+    private (string Key, PrototypeLayerData Layer)? GetVisualsLayer(Entity<ItemSlotVisualsComponent> ent, Enum visualLayer, string layerKeyPrefix)
     {
-        foreach (var visual in ent.Comp.SlotVisuals.Values)
-        {
-            if (!TryComp<AppearanceComponent>(ent, out var appearance)
-                || !AppearanceSystem.TryGetData(ent, visual.Layer, out bool hasItem, appearance)
-                || !hasItem)
-                return null;
+        if (!TryComp<AppearanceComponent>(ent, out var appearance)
+            || !AppearanceSystem.TryGetData(ent, visualLayer, out bool hasItem, appearance)
+            || !hasItem)
+            return null;
 
-            var layer = new PrototypeLayerData();
-            var key = layerKeyPrefix;
+        var layer = new PrototypeLayerData();
+        var key = layerKeyPrefix;
 
-            // Same check as the one in StorageContainerVisualsSystem.
-            if (!TryComp<SpriteComponent>(ent, out var sprite) || sprite.BaseRSI?.TryGetState(key, out _) != true)
-                return null;
+        // Same check as the one in StorageContainerVisualsSystem.
+        if (!TryComp<SpriteComponent>(ent, out var sprite) || sprite.BaseRSI?.TryGetState(key, out _) != true)
+            return null;
 
-            layer.State = key;
+        layer.State = key;
 
-            return (key, layer);
-        }
-
-        return null;
+        return (key, layer);
     }
 }
