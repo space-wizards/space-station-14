@@ -36,7 +36,12 @@ public sealed partial class PrototypeGenerationSystem : EntitySystem
         if (_net.IsClient)
             return;
 
-        var ev = new PrototypeGenerationEvent(new List<(string Id, EntityBuilder Builder)>());
+        var ev = new PrototypeGenerationEvent(
+            _prototype,
+            _serialization,
+            new List<(string Id, EntityBuilder Builder)>(),
+            new List<PrototypeBuilder>()
+        );
         RaiseLocalEvent(ref ev);
 
         var root = new YamlSequenceNode();
@@ -74,8 +79,12 @@ public sealed partial class PrototypeGenerationSystem : EntitySystem
             root.Add(entity.ToYamlNode());
         }
 
-        var stream = new YamlStream();
-        stream.Add(new YamlDocument(root));
+        foreach (var proto in ev.Protos)
+        {
+            root.Add(proto.Data.ToYaml());
+        }
+
+        var stream = new YamlStream { new YamlDocument(root) };
 
         var writer = new StringWriter();
         stream.Save(new YamlNoDocEndDotsFix(new YamlMappingFix(new Emitter(writer))), false);
@@ -107,6 +116,17 @@ public sealed partial class PrototypeGenerationSystem : EntitySystem
                 });
 
             ev.AddEntity($"GeneratedBottle{reagent.ID}", ent);
+#pragma warning disable RA0039
+            ev.AddProto(
+                "GeneratedReagent",
+                new ReagentPrototype
+                {
+                    Name = reagent.Name,
+                    Description = reagent.Description,
+                    PhysicalDescription = reagent.PhysicalDescription,
+                }
+            );
+#pragma warning restore RA0039
         }
 #pragma warning restore RA0002
     }
