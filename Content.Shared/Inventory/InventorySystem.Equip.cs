@@ -201,7 +201,7 @@ public abstract partial class InventorySystem
         RaiseLocalEvent(target, beforeEquipEvent);
 
         // actually equip the item
-        if (!_containerSystem.Insert(itemUid, slotContainer))
+        if (!_containerSystem.Insert(itemUid, slotContainer, force: force))
         {
             if (!silent)
                 _popup.PopupCursor(Loc.GetString("inventory-component-can-unequip-cannot"), actor);
