@@ -100,8 +100,7 @@ public sealed partial class GunSystem
         }
 
         // If ItemSlotVisuals is in the prototype, then update inhands, only for insert fill visuals.
-        if (TryComp(ent, out AppearanceComponent? _)
-            && TryComp(ent, out ItemSlotVisualsComponent? _))
+        if (TryComp(ent, out ItemSlotVisualsComponent? _))
         {
             _itemSystem.VisualsChanged(ent);
         }

@@ -81,30 +81,33 @@ namespace Content.Shared.Containers.ItemSlots
                     _containers.Insert(item, slot.ContainerSlot);
             }
 
-            UpdateAppearance(uid, itemSlots);
+            UpdateAppearance((uid, itemSlots));
         }
 
-        /// For ItemSlotVisualsSystem & Component.
-        private void UpdateAppearance(EntityUid uid, ItemSlotsComponent itemSlots)
+        /// <summary>
+        /// For updating ItemSlotVisuals, uses HasItem to check if something has been inserted then updates.
+        /// </summary>
+        /// <param name="ent">For accessing ItemSlotsComponent.</param>
+        private void UpdateAppearance(Entity<ItemSlotsComponent> ent)
         {
-            if (!TryComp<ItemSlotVisualsComponent>(uid, out var visuals) || !TryComp<AppearanceComponent>(uid, out _))
+            if (!TryComp<ItemSlotVisualsComponent>(ent, out var visuals) || !TryComp<AppearanceComponent>(ent, out var appearance))
                 return;
 
             foreach (var visual in visuals.SlotVisuals.Values)
             {
                 var contains = false;
 
-                // For the items that have one ItemSlot and the rest.
+                // For the items that have one ItemSlot and for multiple.
                 if (string.IsNullOrEmpty(visual.SlotName))
                 {
-                    contains = itemSlots.Slots.Values.Any(slot => slot.HasItem);
+                    contains = ent.Comp.Slots.Values.Any(slot => slot.HasItem);
                 }
-                else if (itemSlots.Slots.TryGetValue(visual.SlotName, out var slot))
+                else if (ent.Comp.Slots.TryGetValue(visual.SlotName, out var slot))
                 {
                     contains = slot.HasItem;
                 }
 
-                _appearance.SetData(uid, visual.Layer, contains);
+                _appearance.SetData(ent, visual.Layer, contains, appearance);
             }
         }
 
@@ -332,7 +335,7 @@ namespace Content.Shared.Containers.ItemSlots
 
             if (TryComp(uid, out ItemSlotsComponent? itemSlots))
             {
-                UpdateAppearance(uid, itemSlots);
+                UpdateAppearance((uid, itemSlots));
             }
 
             _audioSystem.PlayPredicted(slot.InsertSound, uid, excludeUserAudio ? user : null);
@@ -615,7 +618,7 @@ namespace Content.Shared.Containers.ItemSlots
 
             if (TryComp(uid, out ItemSlotsComponent? itemSlots))
             {
-                UpdateAppearance(uid, itemSlots);
+                UpdateAppearance((uid, itemSlots));
             }
 
             return true;
@@ -964,10 +967,7 @@ namespace Content.Shared.Containers.ItemSlots
                 }
             }
 
-            if (TryComp(uid, out ItemSlotsComponent? itemSlots))
-            {
-                UpdateAppearance(uid, itemSlots);
-            }
+            UpdateAppearance((uid, component));
         }
 
         private void GetItemSlotsState(EntityUid uid, ItemSlotsComponent component, ref ComponentGetState args)
