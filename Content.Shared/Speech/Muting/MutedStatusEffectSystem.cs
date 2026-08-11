@@ -2,7 +2,6 @@ using Content.Shared.Chat;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Popups;
 using Content.Shared.StatusEffectNew;
-using Content.Shared.StatusEffectNew.Components;
 
 namespace Content.Shared.Speech.Muting;
 
