@@ -146,7 +146,7 @@ public abstract partial class InventorySystem
     /// <param name="itemUid">The item being equipped.</param>
     /// <param name="slot">The slot into which the item is being equipped.</param>
     /// <param name="silent">Whether to show popups to the entity.</param>
-    /// <param name="force">If true, skips checks whether the item can actually be equipped. Not recommended, as this makes code unsafe.</param>
+    /// <param name="force">If true, skips checks whether the item can actually be equipped. Not recommended, as this makes code unsafe in most cases.</param>
     /// <param name="predicted">Whether to predict the equip action.</param>
     /// <param name="inventory">The target's inventory component.</param>
     /// <param name="clothing">The item's clothing component.</param>
@@ -166,7 +166,7 @@ public abstract partial class InventorySystem
     /// <param name="itemUid">The item being equipped.</param>
     /// <param name="slot">The slot into which the item is being equipped.</param>
     /// <param name="silent">Whether to show popups to the entity.</param>
-    /// <param name="force">If true, skips checks whether the item can actually be equipped. Not recommended, as this makes code unsafe.</param>
+    /// <param name="force">If true, skips checks whether the item can actually be equipped. Not recommended, as this makes code unsafe in most cases.</param>
     /// <param name="predicted">Whether to predict the equip action.</param>
     /// <param name="inventory">The target's inventory component.</param>
     /// <param name="clothing">The item's clothing component.</param>
