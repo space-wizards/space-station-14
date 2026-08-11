@@ -1,7 +1,4 @@
 ﻿using System.IO;
-using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Labels.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -90,44 +87,5 @@ public sealed partial class PrototypeGenerationSystem : EntitySystem
         stream.Save(new YamlNoDocEndDotsFix(new YamlMappingFix(new Emitter(writer))), false);
 
         _gamePrototypeLoad.SendGamePrototype(writer.ToString());
-    }
-
-    [SubscribeLocalEvent]
-    public void OnGeneration(ref PrototypeGenerationEvent ev)
-    {
-#pragma warning disable RA0002
-        foreach (var reagent in _prototype.EnumeratePrototypes<ReagentPrototype>())
-        {
-            var ent = new EntityBuilder
-                {
-                    Parents = ["BaseChemistryBottleFilled"],
-                    Name = $"{reagent.LocalizedName} bottle",
-                }
-                .AddComp(new LabelComponent { CurrentLabel = reagent.LocalizedName })
-                .AddComp(new SolutionComponent
-                {
-                    Solution = new Solution
-                    {
-                        Contents =
-                        {
-                            new ReagentQuantity(reagent.ID, 30),
-                        },
-                    },
-                });
-
-            ev.AddEntity($"GeneratedBottle{reagent.ID}", ent);
-#pragma warning disable RA0039
-            ev.AddProto(
-                "GeneratedReagent",
-                new ReagentPrototype
-                {
-                    Name = reagent.Name,
-                    Description = reagent.Description,
-                    PhysicalDescription = reagent.PhysicalDescription,
-                }
-            );
-#pragma warning restore RA0039
-        }
-#pragma warning restore RA0002
     }
 }
