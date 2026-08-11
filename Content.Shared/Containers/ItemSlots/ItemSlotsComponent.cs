@@ -246,11 +246,13 @@ public sealed partial class ItemSlot
     {
         // These fields are mutable reference types. But they generally don't get modified, so this should be fine.
         Whitelist = other.Whitelist;
+        Blacklist = other.Blacklist;
         InsertSound = other.InsertSound;
         EjectSound = other.EjectSound;
 
         Name = other.Name;
         Locked = other.Locked;
+        DisableEject = other.DisableEject;
         InsertOnInteract = other.InsertOnInteract;
         EjectOnInteract = other.EjectOnInteract;
         EjectOnUse = other.EjectOnUse;
