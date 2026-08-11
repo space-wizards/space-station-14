@@ -1,5 +1,5 @@
 - type: entity
-  id: Drip
+  id: Droplet
   categories: [ HideSpawnMenu ]
   components:
   - type: DeleteOnSolutionEmpty
@@ -12,9 +12,9 @@
         Quantity: 1
   - type: SolutionContainerVisuals
     maxFillLevels: 1
-    fillBaseName: drip
+    fillBaseName: droplet
   - type: Spillable
-    onSplashPopup: bloodstream-drip-on-splash
+    onSplashPopup: bloodstream-droplet-on-splash
     solution: solution
     playSound: false
   - type: Appearance

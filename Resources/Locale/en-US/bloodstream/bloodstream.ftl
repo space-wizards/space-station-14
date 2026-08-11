@@ -6,4 +6,4 @@ bloodstream-component-massive-bleeding = [color=#d4003c]Blood is pouring out of 
 
 bloodstream-component-wounds-cauterized = You feel your wounds painfully close!
 
-bloodstream-drip-on-splash = A blood droplet lands onto {THE($target)}!
+bloodstream-droplet-on-splash = A blood droplet lands onto {THE($target)}!

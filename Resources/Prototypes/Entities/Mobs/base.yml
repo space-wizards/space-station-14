@@ -266,7 +266,7 @@
   - type: SolutionManager
   - type: InjectableSolution
     solution: bloodstream
-  - type: BloodstreamDripOnDamage
+  - type: BloodstreamDropletOnDamage
     allowed:
       - Blunt
       - Piercing

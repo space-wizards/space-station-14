@@ -17,19 +17,19 @@ public sealed partial class BloodstreamSystem
     [Dependency] private EntityQuery<BloodstreamComponent> _bloodstreamQuery = default!;
 
     /// <summary>
-    /// The blood drip entity id.
+    /// The blood droplet entity id.
     /// </summary>
-    private static readonly EntProtoId DripId = "Drip";
+    private static readonly EntProtoId DropletId = "Droplet";
 
     /// <summary>
-    /// The amount of blood that will be transferred to the blood drip.
+    /// The amount of blood that will be transferred to the blood droplet.
     /// </summary>
-    private static readonly FixedPoint2 DripTransferAmount = 1f;
+    private static readonly FixedPoint2 DropletTransferAmount = 1f;
 
     /// <summary>
-    /// The blood drip solution to which blood will be added.
+    /// The blood droplet solution to which blood will be added.
     /// </summary>
-    private const string DripSolution = "solution";
+    private const string DropletSolution = "solution";
 
     [SubscribeLocalEvent]
     private void OnDamage(Entity<BloodstreamDripOnDamageComponent> ent, ref DamageDealtEvent args)
@@ -57,7 +57,7 @@ public sealed partial class BloodstreamSystem
             var (minForce, maxForce) = ent.Comp.Force;
             for (var i = 0; i <= rand.Next(min, max); i++)
             {
-                SpawnDrip((ent, bloodstream), rand.NextVector2() * rand.NextFloat(minRange, maxRange), rand.NextFloat(minForce, maxForce));
+                SpawnDroplet((ent, bloodstream), rand.NextVector2() * rand.NextFloat(minRange, maxRange), rand.NextFloat(minForce, maxForce));
             }
 
             return;
@@ -65,13 +65,13 @@ public sealed partial class BloodstreamSystem
     }
 
     /// <summary>
-    /// Spawns a blood drip and throws it.
+    /// Spawns a blood droplet and throws it.
     /// </summary>
-    /// <param name="ent">The entity from which to spawn the blood drip.</param>
-    /// <param name="dir">The direction in which the blood drip will fly.</param>
-    /// <param name="force">The force with which the blood drip will fly.</param>
+    /// <param name="ent">The entity from which to spawn the blood droplet.</param>
+    /// <param name="dir">The direction in which the blood droplet will fly.</param>
+    /// <param name="force">The force with which the blood droplet will fly.</param>
     [PublicAPI]
-    public void SpawnDrip(Entity<BloodstreamComponent?> ent, Vector2 dir, float force)
+    public void SpawnDroplet(Entity<BloodstreamComponent?> ent, Vector2 dir, float force)
     {
         if (!_bloodstreamQuery.TryComp(ent, out var bloodstream))
             return;
@@ -79,16 +79,16 @@ public sealed partial class BloodstreamSystem
         if (!_solutionContainer.ResolveSolution(ent.Owner, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution))
             return;
 
-        var drip = PredictedSpawnAtPosition(DripId, Transform(ent).Coordinates);
+        var droplet = PredictedSpawnAtPosition(DropletId, Transform(ent).Coordinates);
 
-        if (_solutionContainer.TryGetSolution(drip, DripSolution, out var solution, true))
+        if (_solutionContainer.TryGetSolution(droplet, DropletSolution, out var solution, true))
         {
             solution.Value.Comp.Solution.RemoveAllSolution();
 
-            var amount = _solutionContainer.SplitSolution(bloodstream.BloodSolution.Value, DripTransferAmount);
+            var amount = _solutionContainer.SplitSolution(bloodstream.BloodSolution.Value, DropletTransferAmount);
             _solutionContainer.TryAddSolution(solution.Value, amount);
         }
 
-        _throwing.TryThrow(drip, dir, force, compensateFriction: true);
+        _throwing.TryThrow(droplet, dir, force, compensateFriction: true);
     }
 }
