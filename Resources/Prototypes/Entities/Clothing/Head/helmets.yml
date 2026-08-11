@@ -288,15 +288,10 @@
       head:
       - state: equipped-helmet-light
         shader: unshaded
-      head-vox:
-      - state: equipped-helmet-light-vox
-        shader: unshaded
   - type: Clothing
     clothingVisuals:
       head:
       - state: equipped-helmet
-      head-vox:
-      - state: equipped-helmet-vox
     quickEquip: true
   - type: IngestionBlocker
   - type: FireProtection
@@ -336,17 +331,12 @@
       head:
       - state: equipped-helmet-light
         shader: unshaded
-      head-vox:
-      - state: equipped-helmet-light-vox
-        shader: unshaded
   - type: Clothing
     sprite: Clothing/Head/Helmets/atmos_firehelmet.rsi
     quickEquip: true
     clothingVisuals:
       head:
       - state: equipped-helmet
-      head-vox:
-      - state: equipped-helmet-vox
   - type: IngestionBlocker
   - type: FireProtection
     reduction: 0.2

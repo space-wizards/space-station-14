@@ -67,8 +67,6 @@
     clothingVisuals:
       head:
       - state: equipped-helmet
-      head-vox:
-      - state: equipped-helmet-vox
   - type: IngestionBlocker
   - type: IdentityBlocker
   - type: PointLight
@@ -83,9 +81,6 @@
     clothingVisuals:
       head:
       - state: equipped-helmet-light
-        shader: unshaded
-      head-vox:
-      - state: equipped-helmet-light-vox
         shader: unshaded
   - type: ItemSlots
     slots:
