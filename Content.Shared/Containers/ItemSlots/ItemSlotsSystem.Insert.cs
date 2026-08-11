@@ -219,14 +219,12 @@ public sealed partial class ItemSlotsSystem
 
     private static int SortEmpty(ItemSlot a, ItemSlot b)
     {
-        var aEnt = a.ContainerSlot?.ContainedEntity;
-        var bEnt = b.ContainerSlot?.ContainedEntity;
-        if (aEnt == null && bEnt == null)
-            return a.Priority.CompareTo(b.Priority);
+        var aEmpty = !a.HasItem;
+        var bEmpty = !b.HasItem;
 
-        if (aEnt == null)
-            return -1;
+        if (aEmpty != bEmpty)
+            return aEmpty ? -1 : 1;
 
-        return 1;
+        return a.Priority.CompareTo(b.Priority);
     }
 }
