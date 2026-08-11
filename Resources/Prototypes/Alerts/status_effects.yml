@@ -1,7 +1,36 @@
 - type: alert
+  id: Adrenaline
+  icons:
+  - sprite: Mobs/Species/Human/organs.rsi
+    state: heart-on
+  name: alerts-adrenaline-name
+  description: alerts-adrenaline-desc
+
+- type: alert
   id: DrunkAlert
   icons:
   - sprite: /Textures/Interface/Alerts/status_effects.rsi
     state: drunk
   name: alerts-drunk-name
   description: alerts-drunk-desc
+
+- type: alert
+  id: Muted
+  icons: [ /Textures/Interface/Alerts/Abilities/silenced.png ]
+  name: alerts-muted-name
+  description: alerts-muted-desc
+
+- type: alert
+  id: Stun
+  icons:
+  - sprite: /Textures/Objects/Weapons/Melee/stunbaton.rsi #Should probably draw a proper icon
+    state: stunbaton_off
+  name: alerts-stunned-name
+  description: alerts-stunned-desc
+
+- type: alert
+  id: VowOfSilence
+  icons: [ /Textures/Interface/Alerts/Abilities/silenced.png ]
+  name: alerts-vow-silence-name
+  clickEvent: !type:BreakVowAlertEvent
+  description: alerts-vow-silence-desc
