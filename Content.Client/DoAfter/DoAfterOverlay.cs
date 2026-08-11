@@ -75,6 +75,7 @@ public sealed class DoAfterOverlay : Overlay
         var handle = args.WorldHandle;
         var rotation = args.Viewport.Eye?.Rotation ?? Angle.Zero;
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
+        _iconsToDraw.Clear();
 
         // If you use the display UI scale then need to set max(1f, displayscale) because 0 is valid.
         const float scale = 1f;
@@ -121,6 +122,7 @@ public sealed class DoAfterOverlay : Overlay
             var offset = 0f;
 
             var isInContainer = _container.IsEntityOrParentInContainer(uid, meta, xform);
+            var iconsToDraw = new List<SpriteSpecifier>();
 
             foreach (var doAfter in comp.DoAfters.Values)
             {
@@ -183,6 +185,7 @@ public sealed class DoAfterOverlay : Overlay
 
                 // Here starts code responsible for transparent icon of <see cref="doAfter.Args.DoafterIcon"/> rendering
                 if (doAfter.Args.DoafterIcon is null ||
+                    _iconsToDraw.Contains(doAfter.Args.DoafterIcon) ||
                     doAfter.Completed)
                     continue;
 
@@ -194,22 +197,18 @@ public sealed class DoAfterOverlay : Overlay
                 };
                 var iconAlpha = MathHelper.Lerp(0f, IconColorAlpha, (float)Math.Clamp(elapsed / MaxAlphaTime, 0.0, 1.0));
 
-                if (doAfter.CancelledTime is not null &&
-                    !_iconsToDraw.Contains(doAfter.Args.DoafterIcon))
+                if (doAfter.CancelledTime is not null && comp.DoAfters.Values.Count <= 1)
                 {
                     iconAlpha = MathHelper.Lerp(iconAlpha, 0f, (float)Math.Clamp((time - doAfter.CancelledTime.Value) / MaxAlphaTime, 0.0, 1.0));
                 }
 
-                if (_iconsToDraw.Count == 0)
-                    handle.DrawTexture(tex, iconPosition, Color.White.WithAlpha(iconAlpha));
-
+                handle.DrawTexture(tex, iconPosition, Color.White.WithAlpha(iconAlpha));
                 _iconsToDraw.Add(doAfter.Args.DoafterIcon);
             }
         }
 
         handle.UseShader(null);
         handle.SetTransform(Matrix3x2.Identity);
-        _iconsToDraw.Clear();
     }
 
     public Color GetProgressColor(float progress, float alpha = 1f)
