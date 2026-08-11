@@ -8,96 +8,80 @@
     },
     "states": [
         {
-        "name": "recycler-b0"
+            "name": "recycler-o0",
+            "directions": 4
         },
         {
-        "name": "recycler-b1",
-        "delays": [
-            [
-                0.04,
-                0.04,
-                0.04,
-                0.04,
-                0.04,
-                0.04
+            "name": "recycler-o0bld",
+            "directions": 4
+        },
+        {
+            "name": "recycler-o1",
+            "directions": 4,
+            "delays": [
+                [
+                    0.04,
+                    0.04,
+                    0.04,
+                    0.04
+                ],
+                [
+                    0.04,
+                    0.04,
+                    0.04,
+                    0.04
+                ],
+                [
+                    0.04,
+                    0.04,
+                    0.04,
+                    0.04
+                ],
+                [
+                    0.04,
+                    0.04,
+                    0.04,
+                    0.04
+                ]
             ]
-        ]
         },
         {
-        "name": "recycler-o0",
-        "directions": 4
-        },
-        {
-        "name": "recycler-o0bld",
-        "directions": 4
-        },
-        {
-        "name": "recycler-o1",
-        "directions": 4,
-        "delays": [
-            [
-                0.04,
-                0.04,
-                0.04,
-                0.04
-            ],
-            [
-                0.04,
-                0.04,
-                0.04,
-                0.04
-            ],
-            [
-                0.04,
-                0.04,
-                0.04,
-                0.04
-            ],
-            [
-                0.04,
-                0.04,
-                0.04,
-                0.04
+            "name": "recycler-o1bld",
+            "directions": 4,
+            "delays": [
+                [
+                    0.04,
+                    0.04,
+                    0.04,
+                    0.04
+                ],
+                [
+                    0.04,
+                    0.04,
+                    0.04,
+                    0.04
+                ],
+                [
+                    0.04,
+                    0.04,
+                    0.04,
+                    0.04
+                ],
+                [
+                    0.04,
+                    0.04,
+                    0.04,
+                    0.04
+                ]
             ]
-        ]
         },
         {
-        "name": "recycler-o1bld",
-        "directions": 4,
-        "delays": [
-            [
-                0.04,
-                0.04,
-                0.04,
-                0.04
-            ],
-            [
-                0.04,
-                0.04,
-                0.04,
-                0.04
-            ],
-            [
-                0.04,
-                0.04,
-                0.04,
-                0.04
-            ],
-            [
-                0.04,
-                0.04,
-                0.04,
-                0.04
-            ]
-        ]
+            "name": "recycler-o2",
+            "directions": 4
         },
         {
-        "name": "recycler-o2",
-        "directions": 4
-        },
-        {
-        "name": "recycler-o2bld",
-        "directions": 4
+            "name": "recycler-o2bld",
+            "directions": 4
         }
     ]
 }
