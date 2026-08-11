@@ -1,11 +1,10 @@
-using Content.Shared.Actions;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Emag.Systems;
+using Content.Shared.Examine;
+using Content.Shared.Interaction;
 using Content.Shared.Light.Components;
-using Content.Shared.Mind.Components;
-using Content.Shared.Toggleable;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
@@ -16,43 +15,42 @@ public sealed partial class UnpoweredFlashlightSystem : EntitySystem
     // TODO: Split some of this to ItemTogglePointLight
 
     [Dependency] private IRobustRandom _random = default!;
-    [Dependency] private SharedActionsSystem _actionsSystem = default!;
-    [Dependency] private ActionContainerSystem _actionContainer = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedAudioSystem _audioSystem = default!;
     [Dependency] private SharedPointLightSystem _light = default!;
     [Dependency] private EmagSystem _emag = default!;
+    [Dependency] private ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] private SharedHandheldLightSystem _handheldLight = default!;
+    [Dependency] private SharedInteractionSystem _interaction = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
+        SubscribeLocalEvent<UnpoweredFlashlightComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<UnpoweredFlashlightComponent, GetVerbsEvent<ActivationVerb>>(AddToggleLightVerbs);
-        SubscribeLocalEvent<UnpoweredFlashlightComponent, GetItemActionsEvent>(OnGetActions);
-        SubscribeLocalEvent<UnpoweredFlashlightComponent, ToggleActionEvent>(OnToggleAction);
-        SubscribeLocalEvent<UnpoweredFlashlightComponent, MindAddedMessage>(OnMindAdded);
         SubscribeLocalEvent<UnpoweredFlashlightComponent, GotEmaggedEvent>(OnGotEmagged);
-        SubscribeLocalEvent<UnpoweredFlashlightComponent, MapInitEvent>(OnMapInit);
+
+        SubscribeAllEvent<ToggleFlashlightEvent>(OnToggleFlashlight);
     }
 
-    private void OnMapInit(EntityUid uid, UnpoweredFlashlightComponent component, MapInitEvent args)
+    private void OnToggleFlashlight(ToggleFlashlightEvent msg, EntitySessionEventArgs args)
     {
-        _actionContainer.EnsureAction(uid, ref component.ToggleActionEntity, component.ToggleAction);
-        Dirty(uid, component);
-    }
-
-    private void OnToggleAction(EntityUid uid, UnpoweredFlashlightComponent component, ToggleActionEvent args)
-    {
-        if (args.Handled)
+        if (args.SenderSession.AttachedEntity is not { } ent ||
+            !TryGetEntity(msg.Flashlight, out var flashlight))
             return;
 
-        TryToggleLight((uid, component), args.Performer);
-        args.Handled = true;
+        if (!_interaction.IsAccessible(ent, flashlight.Value) ||
+            !_actionBlocker.CanInteract(ent, flashlight.Value))
+            return;
+
+        TryToggleLight(flashlight.Value, ent);
+        _handheldLight.TryToggleLight(flashlight.Value, ent);
     }
 
-    private void OnGetActions(EntityUid uid, UnpoweredFlashlightComponent component, GetItemActionsEvent args)
+    private void OnExamine(Entity<UnpoweredFlashlightComponent> ent, ref ExaminedEvent args)
     {
-        args.AddAction(component.ToggleActionEntity);
+        args.PushMarkup(Loc.GetString("flashlight-toggle-examine-keybind"));
     }
 
     private void AddToggleLightVerbs(EntityUid uid, UnpoweredFlashlightComponent component, GetVerbsEvent<ActivationVerb> args)
@@ -69,11 +67,6 @@ public sealed partial class UnpoweredFlashlightSystem : EntitySystem
         };
 
         args.Verbs.Add(verb);
-    }
-
-    private void OnMindAdded(EntityUid uid, UnpoweredFlashlightComponent component, MindAddedMessage args)
-    {
-        _actionsSystem.AddAction(uid, ref component.ToggleActionEntity, component.ToggleAction);
     }
 
     private void OnGotEmagged(EntityUid uid, UnpoweredFlashlightComponent component, ref GotEmaggedEvent args)
@@ -121,7 +114,6 @@ public sealed partial class UnpoweredFlashlightSystem : EntitySystem
         if (!quiet)
             _audioSystem.PlayPredicted(ent.Comp.ToggleSound, ent, user);
 
-        _actionsSystem.SetToggled(ent.Comp.ToggleActionEntity, value);
         RaiseLocalEvent(ent, new LightToggleEvent(value));
     }
 }

@@ -40,14 +40,7 @@ namespace Content.Server.Light.EntitySystems
             SubscribeLocalEvent<HandheldLightComponent, ComponentRemove>(OnRemove);
             SubscribeLocalEvent<HandheldLightComponent, ComponentGetState>(OnGetState);
 
-            SubscribeLocalEvent<HandheldLightComponent, MapInitEvent>(OnMapInit);
-            SubscribeLocalEvent<HandheldLightComponent, ComponentShutdown>(OnShutdown);
-
-
             SubscribeLocalEvent<HandheldLightComponent, ActivateInWorldEvent>(OnActivate);
-
-            SubscribeLocalEvent<HandheldLightComponent, GetItemActionsEvent>(OnGetActions);
-            SubscribeLocalEvent<HandheldLightComponent, ToggleActionEvent>(OnToggleAction);
 
             SubscribeLocalEvent<HandheldLightComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
             SubscribeLocalEvent<HandheldLightComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
@@ -65,40 +58,9 @@ namespace Content.Server.Light.EntitySystems
             UpdateLevel(ent);
         }
 
-        private void OnGetActions(EntityUid uid, HandheldLightComponent component, GetItemActionsEvent args)
-        {
-            args.AddAction(ref component.ToggleActionEntity, component.ToggleAction);
-        }
-
-        private void OnToggleAction(Entity<HandheldLightComponent> ent, ref ToggleActionEvent args)
-        {
-            if (args.Handled)
-                return;
-
-            if (ent.Comp.Activated)
-                TurnOff(ent);
-            else
-                TurnOn(args.Performer, ent);
-
-            args.Handled = true;
-        }
-
         private void OnGetState(Entity<HandheldLightComponent> ent, ref ComponentGetState args)
         {
             args.State = new HandheldLightComponent.HandheldLightComponentState(ent.Comp.Activated, GetLevel(ent));
-        }
-
-        private void OnMapInit(Entity<HandheldLightComponent> ent, ref MapInitEvent args)
-        {
-            var component = ent.Comp;
-            _actionContainer.EnsureAction(ent, ref component.ToggleActionEntity, component.ToggleAction);
-            _actions.AddAction(ent, ref component.SelfToggleActionEntity, component.ToggleAction);
-        }
-
-        private void OnShutdown(EntityUid uid, HandheldLightComponent component, ComponentShutdown args)
-        {
-            _actions.RemoveAction(uid, component.ToggleActionEntity);
-            _actions.RemoveAction(uid, component.SelfToggleActionEntity);
         }
 
         private byte? GetLevel(Entity<HandheldLightComponent> ent)

@@ -79,29 +79,37 @@ namespace Content.Client.Ghost
                 _sprite.SetVisible((uid, sprite), GhostVisibility || uid == _playerManager.LocalEntity);
         }
 
+        public void ToggleGhostLight(Entity<EyeComponent?> ent)
+        {
+            if (!Resolve(ent, ref ent.Comp, false))
+                return;
+
+            if (!ent.Comp.DrawLight)
+            {
+                // normal lighting
+                Popup.PopupEntity(Loc.GetString("ghost-gui-toggle-lighting-manager-popup-normal"), ent);
+                _contentEye.RequestEye(ent.Comp.DrawFov, true);
+            }
+            else if (TryComp<NightVisionComponent>(ent, out var nv) && !nv.Enabled)
+            {
+                Popup.PopupEntity(Loc.GetString("ghost-gui-toggle-lighting-manager-popup-half-bright"), ent);
+                _nv.SetEnabled((ent, nv), true);
+            }
+            else
+            {
+                // fullbright mode
+                Popup.PopupEntity(Loc.GetString("ghost-gui-toggle-lighting-manager-popup-fullbright"), ent);
+                _contentEye.RequestEye(ent.Comp.DrawFov, false);
+                _nv.SetEnabled((ent, nv), false);
+            }
+        }
+
         private void OnToggleLighting(EntityUid uid, EyeComponent component, ToggleLightingActionEvent args)
         {
             if (args.Handled)
                 return;
 
-            if (!component.DrawLight)
-            {
-                // normal lighting
-                Popup.PopupEntity(Loc.GetString("ghost-gui-toggle-lighting-manager-popup-normal"), args.Performer);
-                _contentEye.RequestEye(component.DrawFov, true);
-            }
-            else if (TryComp<NightVisionComponent>(uid, out var nv) && !nv.Enabled)
-            {
-                Popup.PopupEntity(Loc.GetString("ghost-gui-toggle-lighting-manager-popup-half-bright"), args.Performer);
-                _nv.SetEnabled((uid, nv), true);
-            }
-            else
-            {
-                // fullbright mode
-                Popup.PopupEntity(Loc.GetString("ghost-gui-toggle-lighting-manager-popup-fullbright"), args.Performer);
-                _contentEye.RequestEye(component.DrawFov, false);
-                _nv.SetEnabled((uid, nv), false);
-            }
+            ToggleGhostLight((uid, component));
 
             args.Handled = true;
         }
