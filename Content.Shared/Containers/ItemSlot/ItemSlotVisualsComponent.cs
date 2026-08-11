@@ -27,34 +27,29 @@ public sealed partial class ItemSlotVisuals
     public ItemSlotVisualLayers Layer = ItemSlotVisualLayers.Fill;
 
     /// <summary>
-    /// A string to specify which slot to use. Only useful if there's multiple ItemSlots, leave it empty for single slot items.
+    /// A string to specify which slot to use. Only useful if there's multiple ItemSlots or have multiple items that use
+    /// the same slot, it'll default for single slot items when it's empty.
     /// </summary>
     [DataField]
     public string? SlotName;
 
     /// <summary>
-    /// The name used for the Icon Fill.
+    /// The name used for the Icon Fills.
     /// </summary>
     [DataField]
     public string? FillBaseName;
 
+    /// <summary>
+    /// The name used for the Inhand Fills.
+    /// </summary>
     [DataField]
     public string? InHandsFillBaseName;
 
     /// <summary>
-    ///
+    /// The name used for the Back/Belt Fills.
     /// </summary>
-    //[DataField]
-    //public Dictionary<HandLocation, List<PrototypeLayerData>> InhandVisuals = new();
-
     [DataField]
     public string? EquippedFillBaseName;
-
-    /// <summary>
-    ///
-    /// </summary>
-    //[DataField]
-    //public Dictionary<string, List<PrototypeLayerData>> ClothingVisuals = new();
 }
 
 [Serializable, NetSerializable]
