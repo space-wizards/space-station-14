@@ -118,4 +118,27 @@
   - type: ClumsyVaultStatusEffect
     clumsySound: *SoundCatMeow
 
+# Wahey!
+- type: entity
+  parent: [ StatusEffectClumsyAll, MobStatusEffectDebuff ]
+  id: StatusEffectClumsyDrunk
+  components:
+  - type: ClumsyCatchStatusEffect
+    clumsyChance: &ChanceDrunk 0.25 # Less clumsy than clowns
+    clumsySound: &SoundGlug
+      path: /Audio/Effects/Fluids/glug.ogg
+  - type: ClumsyDefibStatusEffect
+    clumsyChance: *ChanceDrunk
+    clumsySound: *SoundGlug
+  - type: ClumsyGunStatusEffect
+    clumsyChance: *ChanceDrunk
+    clumsySound: *SoundGlug
+    stunDuration: 1
+  - type: ClumsyInjectorStatusEffect
+    clumsyChance: *ChanceDrunk
+    clumsySound: *SoundGlug
+  - type: ClumsyVaultStatusEffect
+    clumsyChance: *ChanceDrunk
+    clumsySound: *SoundGlug
+
 #endregion

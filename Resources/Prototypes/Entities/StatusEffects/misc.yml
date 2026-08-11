@@ -130,7 +130,7 @@
 
 # Causes you to get drunk
 - type: entity
-  parent: [ StatusEffectWoozy, StatusEffectSlurred, StatusEffectClumsyAll ]
+  parent: [ StatusEffectWoozy, StatusEffectSlurred, StatusEffectClumsyDrunk ]
   id: StatusEffectDrunk
   name: drunk
   components:
@@ -138,17 +138,6 @@
     messageId: status-effect-examine-drunk
   - type: StatusEffectAlert
     alert: DrunkAlert
-  - type: ClumsyCatchStatusEffect
-    clumsySound: &SoundGlug
-      path: /Audio/Effects/Fluids/glug.ogg
-  - type: ClumsyDefibStatusEffect
-    clumsySound: *SoundGlug
-  - type: ClumsyGunStatusEffect
-    clumsySound: *SoundGlug
-  - type: ClumsyInjectorStatusEffect
-    clumsySound: *SoundGlug
-  - type: ClumsyVaultStatusEffect
-    clumsySound: *SoundGlug
 
 # Prevents the target from seeing
 - type: entity
