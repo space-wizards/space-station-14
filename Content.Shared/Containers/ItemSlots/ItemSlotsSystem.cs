@@ -13,12 +13,8 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Containers.ItemSlots;
 
 /// <summary>
-/// A class that handles interactions related to inserting/ejecting items into/from an item slot.
+/// Handles interactions related to inserting and ejecting items into and from item slots.
 /// </summary>
-/// <remarks>
-/// Note when using popups on entities with many slots with InsertOnInteract, EjectOnInteract, or EjectOnUse:
-/// A single use will try to insert to/eject from every slot and generate a popup for each that fails.
-/// </remarks>
 public sealed partial class ItemSlotsSystem : EntitySystem
 {
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
@@ -72,7 +68,7 @@ public sealed partial class ItemSlotsSystem : EntitySystem
     }
 
     /// <summary>
-    /// Eject items from slots configured to do so when the entity is destroyed.
+    /// Eject items from slots configured to do so when the entity is broken or destroyed.
     /// </summary>
     private void EjectOnBreak(Entity<ItemSlotsComponent> ent)
     {
@@ -80,9 +76,11 @@ public sealed partial class ItemSlotsSystem : EntitySystem
     }
 
     /// <summary>
-    /// Given a new item slot, store it in the <see cref="ItemSlotsComponent"/> and ensure the slot has an item
-    /// container.
+    /// Stores a new item slot in the <see cref="ItemSlotsComponent"/> and ensures that it has a backing container.
     /// </summary>
+    /// <remarks>
+    /// If a local slot replaces one created from component state, the received state is copied onto the local slot.
+    /// </remarks>
     public void AddItemSlot(EntityUid uid, string id, ItemSlot slot, ItemSlotsComponent? itemSlots = null)
     {
         itemSlots ??= EnsureComp<ItemSlotsComponent>(uid);
@@ -106,8 +104,7 @@ public sealed partial class ItemSlotsSystem : EntitySystem
     }
 
     /// <summary>
-    /// Remove an item slot. This should generally be called whenever a component that added a slot is being
-    /// removed.
+    /// Removes an item slot. This should generally be called whenever a component that added a slot is removed.
     /// </summary>
     public void RemoveItemSlot(EntityUid uid, ItemSlot slot, ItemSlotsComponent? itemSlots = null)
     {
@@ -155,7 +152,7 @@ public sealed partial class ItemSlotsSystem : EntitySystem
     }
 
     /// <summary>
-    /// Update the locked state of the managed item slots.
+    /// Reconciles local slot registrations and their serialized configuration with received component state.
     /// </summary>
     /// <remarks>
     /// The slot's ContainerSlot performs its own networking, so the contained entity is not sent here.

@@ -19,19 +19,19 @@ public sealed partial class ItemSlotsSystem
         UpdateLocks(ent, args.Locked);
     }
 
-    private void UpdateLocks(Entity<ItemSlotsLockComponent> ent, bool value)
+    private void UpdateLocks(Entity<ItemSlotsLockComponent> ent, bool locked)
     {
         foreach (var slot in ent.Comp.Slots)
         {
             if (!TryGetSlot(ent.Owner, slot, out var itemSlot))
                 continue;
 
-            SetLock(ent.Owner, itemSlot, value);
+            SetLock(ent.Owner, itemSlot, locked);
         }
     }
 
     /// <summary>
-    /// Lock an item slot. This stops items from being inserted into or ejected from this slot.
+    /// Sets whether an item slot is locked, preventing checked insertion and ejection while locked.
     /// </summary>
     public void SetLock(EntityUid uid, string id, bool locked, ItemSlotsComponent? itemSlots = null)
     {
@@ -45,7 +45,7 @@ public sealed partial class ItemSlotsSystem
     }
 
     /// <summary>
-    /// Lock an item slot. This stops items from being inserted into or ejected from this slot.
+    /// Sets whether an item slot is locked, preventing checked insertion and ejection while locked.
     /// </summary>
     public void SetLock(EntityUid uid, ItemSlot slot, bool locked, ItemSlotsComponent? itemSlots = null)
     {

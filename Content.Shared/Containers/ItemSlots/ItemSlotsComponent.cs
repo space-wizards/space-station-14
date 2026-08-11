@@ -9,8 +9,8 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Containers.ItemSlots;
 
 /// <summary>
-///     Used for entities that can hold items in different slots. Needed by ItemSlotSystem to support basic
-///     insert/eject interactions.
+/// Used for entities that can hold items in different slots. Needed by <see cref="ItemSlotsSystem"/> to support
+/// basic insert/eject interactions.
 /// </summary>
 [RegisterComponent]
 [Access(typeof(ItemSlotsSystem))]
@@ -36,8 +36,7 @@ public sealed partial class ItemSlotsComponent : Component
     //
     // In order to avoid #1 leading to duplicate slots when saving a map, the Slots dictionary is a read-only
     // datafield. This means that if your system/component dynamically changes the item slot (e.g., updating
-    // whitelist or whatever), you should use #1. Alternatively: split the Slots dictionary here into two: one
-    // datafield, one that is actually used by the ItemSlotsSystem for keeping track of slots.
+    // whitelist or whatever), you should use #1.
 }
 
 [Serializable, NetSerializable]
@@ -110,7 +109,7 @@ public sealed partial class ItemSlot
     public bool Locked;
 
     /// <summary>
-    /// Prevents adding the eject alt-verb, but still lets you swap items.
+    /// Prevents adding the eject alt-verb and ejecting through BUI, but still lets you swap items.
     /// </summary>
     /// <remarks>
     ///     This does not affect EjectOnInteract, since if you do that you probably want ejecting to work.
@@ -137,7 +136,7 @@ public sealed partial class ItemSlot
     public bool EjectOnInteract;
 
     /// <summary>
-    ///     If true, and if this slot is attached to an item, then it will attempt to eject slot when to the slot is
+    ///     If true, and if this slot is attached to an item, then it will attempt to eject the slot when the item is
     ///     used in the user's hands.
     /// </summary>
     /// <remarks>
@@ -187,31 +186,28 @@ public sealed partial class ItemSlot
     public bool EjectOnBreak;
 
     /// <summary>
-    ///     When specified, a popup will be generated whenever someone attempts to insert a bad item into this slot.
+    /// The popup shown when a standard insertion interaction uses an item rejected by this slot's filters.
     /// </summary>
     [DataField]
     public LocId? WhitelistFailPopup;
 
     /// <summary>
-    ///     When specified, a popup will be generated whenever someone attempts to insert a valid item, or eject an item
-    ///     from the slot while that slot is locked.
+    /// The popup shown when a standard interaction tries to insert into or eject from this slot while it is locked.
     /// </summary>
     [DataField]
     public LocId? LockedFailPopup;
 
     /// <summary>
-    ///     When specified, a popup will be generated whenever someone successfully inserts a valid item into this slot.
-    ///     This is also used for insertions resulting from swapping.
+    /// The popup shown after a successful standard insertion interaction, including a swap.
     /// </summary>
     [DataField]
     public LocId? InsertSuccessPopup;
 
     /// <summary>
-    ///     If the user interacts with an entity with an already-filled item slot, should they attempt to swap out the item?
+    /// Whether insertion interactions may replace the current item after it passes ejection checks.
     /// </summary>
     /// <remarks>
-    ///     Useful for things like chem dispensers, but undesirable for things like the ID card console, where you
-    ///     want to insert more than one item that matches the same whitelist.
+    /// This only affects standard insertion interactions. Direct insertion APIs do not perform slot swapping.
     /// </remarks>
     [DataField]
     [Access(typeof(ItemSlotsSystem), Other = AccessPermissions.ReadWriteExecute)]
@@ -224,18 +220,29 @@ public sealed partial class ItemSlot
     public EntityUid? Item => ContainerSlot?.ContainedEntity;
 
     /// <summary>
-    ///     Priority for use with the eject & insert verbs for this slot.
+    /// Priority used when selecting and ordering this slot.
     /// </summary>
     [DataField]
     public int Priority;
 
     /// <summary>
-    ///     If false, errors when adding an item slot with a duplicate key are suppressed. Local==true implies that
-    ///     the slot was added via client component state handling.
+    /// Whether this slot originated from local registration rather than received component state.
     /// </summary>
+    /// <remarks>
+    /// A false value suppresses duplicate-key errors and preserves received configuration when a local component
+    /// later registers its corresponding slot.
+    /// </remarks>
     [NonSerialized]
     public bool Local = true;
 
+    /// <summary>
+    /// Copies the fields carried by <see cref="ItemSlotsComponentState"/> from another slot.
+    /// </summary>
+    /// <remarks>
+    /// <see cref="StartingItem"/>, <see cref="ContainerSlot"/>, <see cref="EjectOnDeconstruct"/>,
+    /// <see cref="EjectOnBreak"/>, and <see cref="Local"/> are not part of that state and are left unchanged.
+    /// </remarks>
+    /// <param name="other">The slot whose serialized configuration should be applied.</param>
     public void CopyFrom(ItemSlot other)
     {
         // These fields are mutable reference types. But they generally don't get modified, so this should be fine.
@@ -259,15 +266,3 @@ public sealed partial class ItemSlot
         Priority = other.Priority;
     }
 }
-
-/// <summary>
-/// Event raised on the slot entity and the item being inserted to determine if an item can be inserted into an item slot.
-/// </summary>
-[ByRefEvent]
-public record struct ItemSlotInsertAttemptEvent(EntityUid SlotEntity, EntityUid Item, EntityUid? User, ItemSlot Slot, bool Cancelled = false);
-
-/// <summary>
-/// Event raised on the slot entity and the item being inserted to determine if an item can be ejected from an item slot.
-/// </summary>
-[ByRefEvent]
-public record struct ItemSlotEjectAttemptEvent(EntityUid SlotEntity, EntityUid Item, EntityUid? User, ItemSlot Slot, bool Cancelled = false);

@@ -3,13 +3,13 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Containers.ItemSlots;
 
 /// <summary>
-///     Used for various "eject this item" buttons.
+/// Used for item-slot insert and eject buttons.
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class ItemSlotButtonPressedEvent : BoundUserInterfaceMessage
 {
     /// <summary>
-    ///     The name of the slot/container from which to insert or eject an item.
+    ///     The ID of the slot/container from which to insert or eject an item.
     /// </summary>
     public string SlotId;
 
@@ -30,3 +30,15 @@ public sealed class ItemSlotButtonPressedEvent : BoundUserInterfaceMessage
         TryInsert = tryInsert;
     }
 }
+
+/// <summary>
+/// Event raised on the slot entity and the item being inserted to determine if insertion is allowed.
+/// </summary>
+[ByRefEvent]
+public record struct ItemSlotInsertAttemptEvent(EntityUid SlotEntity, EntityUid Item, EntityUid? User, ItemSlot Slot, bool Cancelled = false);
+
+/// <summary>
+/// Event raised on the slot entity and the item being ejected to determine if ejection is allowed.
+/// </summary>
+[ByRefEvent]
+public record struct ItemSlotEjectAttemptEvent(EntityUid SlotEntity, EntityUid Item, EntityUid? User, ItemSlot Slot, bool Cancelled = false);

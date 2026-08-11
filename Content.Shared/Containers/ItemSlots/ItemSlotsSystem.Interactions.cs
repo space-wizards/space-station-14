@@ -47,8 +47,7 @@ public sealed partial class ItemSlotsSystem
     }
 
     /// <summary>
-    /// Tries to insert a held item in any fitting item slot. If a valid slot already contains an item, it will
-    /// swap it out and place the old one in the user's hand.
+    /// Tries to insert a held item into a fitting slot, swapping the current item when the selected slot allows it.
     /// </summary>
     /// <remarks>
     /// This only handles the event if the user has an applicable entity that can be inserted. This allows for
@@ -85,7 +84,7 @@ public sealed partial class ItemSlotsSystem
                 if (lockedFailPopup == null && slot.LockedFailPopup != null && allowed && slot.Locked)
                     lockedFailPopup = slot.LockedFailPopup;
 
-                if (whitelistFailPopup == null && slot.WhitelistFailPopup != null)
+                if (whitelistFailPopup == null && slot.WhitelistFailPopup != null && !allowed)
                     whitelistFailPopup = slot.WhitelistFailPopup;
             }
         }
@@ -109,7 +108,7 @@ public sealed partial class ItemSlotsSystem
             if (slot.Item != null)
                 _handsSystem.TryPickupAnyHand(args.User, slot.Item.Value, handsComp: hands);
 
-            if (!TryInsert(ent, slot, args.Used, args.User, excludeUserAudio: true))
+            if (!Insert(ent, slot, args.Used, args.User, excludeUserAudio: true))
                 return;
 
             if (slot.InsertSuccessPopup.HasValue)

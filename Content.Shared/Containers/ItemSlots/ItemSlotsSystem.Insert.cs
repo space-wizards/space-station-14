@@ -7,15 +7,9 @@ namespace Content.Shared.Containers.ItemSlots;
 public sealed partial class ItemSlotsSystem
 {
     /// <summary>
-    /// Insert an item into a slot. This does not perform checks, so make sure to also use <see
-    /// cref="CanInsert"/> or just use <see cref="TryInsert"/> instead.
+    /// Inserts an item without performing validation. Returns false without producing success effects if the
+    /// backing container rejects the item.
     /// </summary>
-    /// <param name="user"></param>
-    /// <param name="excludeUserAudio">If true, will exclude the user when playing sound. Does nothing client-side.
-    /// Useful for predicted interactions</param>
-    /// <param name="uid"></param>
-    /// <param name="slot"></param>
-    /// <param name="item"></param>
     private bool Insert(EntityUid uid,
         ItemSlot slot,
         EntityUid item,
@@ -37,9 +31,13 @@ public sealed partial class ItemSlotsSystem
     }
 
     /// <summary>
-    /// Check whether a given item can be inserted into a slot. Unless otherwise specified, this will return
-    /// false if the slot is already filled.
+    /// Checks whether an item can currently be inserted into a slot. Unless <paramref name="swap"/> is true, this
+    /// returns false if the slot is occupied.
     /// </summary>
+    /// <remarks>
+    /// Validation may raise <see cref="ItemSlotInsertAttemptEvent"/> on both the slot owner and the candidate item,
+    /// so callers must not treat this as a pure check.
+    /// </remarks>
     public bool CanInsert(EntityUid uid,
         ItemSlot slot,
         EntityUid item,
@@ -76,9 +74,9 @@ public sealed partial class ItemSlotsSystem
     }
 
     /// <summary>
-    /// Tries to insert item into a specific slot.
+    /// Tries to insert an item into a slot selected by ID.
     /// </summary>
-    /// <returns>False if failed to insert item</returns>
+    /// <returns>True only if the slot exists and the item was inserted.</returns>
     public bool TryInsert(EntityUid uid,
         string id,
         EntityUid item,
@@ -96,9 +94,9 @@ public sealed partial class ItemSlotsSystem
     }
 
     /// <summary>
-    /// Tries to insert item into a specific slot.
+    /// Tries to insert an item into a specific slot.
     /// </summary>
-    /// <returns>False if failed to insert item</returns>
+    /// <returns>True only if validation succeeds and the item was inserted.</returns>
     public bool TryInsert(EntityUid uid,
         ItemSlot slot,
         EntityUid item,
@@ -112,10 +110,12 @@ public sealed partial class ItemSlotsSystem
     }
 
     /// <summary>
-    /// Tries to insert item into a specific slot from an entity's hand.
-    /// Does not check action blockers.
+    /// Tries to insert the item in a user's active hand into a specific slot.
     /// </summary>
-    /// <returns>False if failed to insert item</returns>
+    /// <remarks>
+    /// If insertion fails after the item is dropped, the item remains dropped.
+    /// </remarks>
+    /// <returns>True only if the held item was dropped and inserted.</returns>
     public bool TryInsertFromHand(EntityUid uid,
         ItemSlot slot,
         EntityUid user,
@@ -138,16 +138,16 @@ public sealed partial class ItemSlotsSystem
     }
 
     /// <summary>
-    /// Tries to insert an item into any empty slot.
+    /// Tries to insert an item into any compatible empty slot.
     /// </summary>
     /// <param name="ent">The entity that has the item slots.</param>
     /// <param name="item">The item to be inserted.</param>
     /// <param name="user">The entity performing the interaction.</param>
     /// <param name="excludeUserAudio">
     /// If true, will exclude the user when playing sound. Does nothing client-side.
-    /// Useful for predicted interactions
+    /// Useful for predicted interactions.
     /// </param>
-    /// <returns>False if failed to insert item</returns>
+    /// <returns>True only if a compatible slot was found and the item was inserted.</returns>
     public bool TryInsertEmpty(Entity<ItemSlotsComponent?> ent,
         EntityUid item,
         EntityUid? user,
@@ -170,15 +170,14 @@ public sealed partial class ItemSlotsSystem
     }
 
     /// <summary>
-    /// Tries to get any slot that the <paramref name="item"/> can be inserted into.
+    /// Tries to get a slot that the <paramref name="item"/> can be inserted into.
     /// </summary>
     /// <param name="ent">Entity that <paramref name="item"/> is being inserted into.</param>
     /// <param name="item">Entity being inserted into <paramref name="ent"/>.</param>
     /// <param name="userEnt">Entity inserting <paramref name="item"/> into <paramref name="ent"/>.</param>
     /// <param name="itemSlot">The ItemSlot on <paramref name="ent"/> to insert <paramref name="item"/> into.</param>
-    /// <param name="emptyOnly">True only returns slots that are empty.
-    /// False returns any slot that is able to receive <paramref name="item"/>.</param>
-    /// <returns>True when a slot is found. Otherwise, false.</returns>
+    /// <param name="emptyOnly">If true, occupied slots are skipped before validation.</param>
+    /// <returns>True when a compatible slot is found. Otherwise, false.</returns>
     public bool TryGetAvailableSlot(Entity<ItemSlotsComponent?> ent,
         EntityUid item,
         Entity<HandsComponent?>? userEnt,

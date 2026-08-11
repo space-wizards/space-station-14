@@ -6,10 +6,12 @@ namespace Content.Shared.Containers.ItemSlots;
 public sealed partial class ItemSlotsSystem
 {
     /// <summary>
-    /// Check whether an ejection from a given slot may happen.
+    /// Checks whether an item can currently be ejected from a slot.
     /// </summary>
     /// <remarks>
-    /// If a popup entity is given, this will generate a popup message if any are configured on the item slot.
+    /// Validation may raise <see cref="ItemSlotEjectAttemptEvent"/> on both the slot owner and the contained item,
+    /// so callers must not treat this as a pure check. If <paramref name="popup"/> is provided, a locked slot may
+    /// also show its configured failure popup to that entity.
     /// </remarks>
     public bool CanEject(EntityUid uid, ItemSlot slot, EntityUid? user, EntityUid? popup = null)
     {
@@ -33,15 +35,9 @@ public sealed partial class ItemSlotsSystem
     }
 
     /// <summary>
-    /// Eject an item from a slot. This does not perform checks (e.g., is the slot locked?), so you should
-    /// probably just use <see cref="TryEject"/> instead.
+    /// Ejects an item without performing validation. Returns false without producing success effects if the backing
+    /// container does not remove the item.
     /// </summary>
-    /// <param name="user"></param>
-    /// <param name="excludeUserAudio">If true, will exclude the user when playing sound. Does nothing client-side.
-    /// Useful for predicted interactions</param>
-    /// <param name="uid"></param>
-    /// <param name="slot"></param>
-    /// <param name="item"></param>
     private bool Eject(EntityUid uid, ItemSlot slot, EntityUid item, EntityUid? user, bool excludeUserAudio = false)
     {
         if (slot.ContainerSlot == null || !_containers.Remove(item, slot.ContainerSlot))
@@ -59,9 +55,13 @@ public sealed partial class ItemSlotsSystem
     }
 
     /// <summary>
-    /// Try to eject an item from a slot.
+    /// Tries to eject an item from a slot.
     /// </summary>
-    /// <returns>False if item slot is locked or has no item inserted</returns>
+    /// <remarks>
+    /// If <paramref name="user"/> is provided, the user's pickup action blocker must also allow the item to be
+    /// picked up.
+    /// </remarks>
+    /// <returns>True only if validation succeeds and the item was ejected.</returns>
     public bool TryEject(EntityUid uid,
         ItemSlot slot,
         EntityUid? user,
@@ -82,9 +82,9 @@ public sealed partial class ItemSlotsSystem
     }
 
     /// <summary>
-    /// Try to eject item from a slot.
+    /// Tries to eject an item from a slot selected by ID.
     /// </summary>
-    /// <returns>False if the id is not valid, the item slot is locked, or it has no item inserted</returns>
+    /// <returns>True only if the slot exists and the item was ejected.</returns>
     public bool TryEject(EntityUid uid,
         string id,
         EntityUid? user,
@@ -104,13 +104,9 @@ public sealed partial class ItemSlotsSystem
     }
 
     /// <summary>
-    /// Try to eject item from a slot directly into a user's hands. If they have no hands, the item will still
-    /// be ejected onto the floor.
+    /// Tries to eject an item and then place it in a user's hands or drop it.
     /// </summary>
-    /// <returns>
-    /// False if the id is not valid, the item slot is locked, or it has no item inserted. True otherwise, even
-    /// if the user has no hands.
-    /// </returns>
+    /// <returns>True if the item was ejected, even if it could not be placed in a hand.</returns>
     public bool TryEjectToHands(EntityUid uid, ItemSlot slot, EntityUid? user, bool excludeUserAudio = false)
     {
         if (!TryEject(uid, slot, user, out var item, excludeUserAudio))
@@ -123,7 +119,7 @@ public sealed partial class ItemSlotsSystem
     }
 
     /// <summary>
-    /// Unlocks all slots and ejects items from them on the floor.
+    /// Unlocks every occupied slot and attempts to eject its item.
     /// </summary>
     public void EjectFromAllSlots(Entity<ItemSlotsComponent> entity)
     {
@@ -131,7 +127,7 @@ public sealed partial class ItemSlotsSystem
     }
 
     /// <summary>
-    /// Unlocks all slots and ejects items from them on the floor while <paramref name="shouldEject"/> returns true.
+    /// Unlocks matching occupied slots and attempts to eject their items on the floor.
     /// </summary>
     private void EjectFromAllSlots(Entity<ItemSlotsComponent> entity, Func<ItemSlot, bool> shouldEject)
     {
