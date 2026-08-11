@@ -22,7 +22,7 @@ using Content.Shared.Timing;
 using Content.Shared.Toggleable;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.FixedPoint;
-using Content.Shared.Temperature.Components;
+using JetBrains.Annotations;
 using Robust.Server.Audio;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
@@ -32,27 +32,27 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.EntitySystems
 {
-    public sealed class FlammableSystem : EntitySystem
+    public sealed partial class FlammableSystem : EntitySystem
     {
-        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-        [Dependency] private readonly StunSystem _stunSystem = default!;
-        [Dependency] private readonly TemperatureSystem _temperatureSystem = default!;
-        [Dependency] private readonly SharedIgnitionSourceSystem _ignitionSourceSystem = default!;
-        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-        [Dependency] private readonly AlertsSystem _alertsSystem = default!;
-        [Dependency] private readonly FixtureSystem _fixture = default!;
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly InventorySystem _inventory = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly SharedPopupSystem _popup = default!;
-        [Dependency] private readonly UseDelaySystem _useDelay = default!;
-        [Dependency] private readonly AudioSystem _audio = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private ActionBlockerSystem _actionBlockerSystem = default!;
+        [Dependency] private AtmosphereSystem _atmosphereSystem = default!;
+        [Dependency] private StunSystem _stunSystem = default!;
+        [Dependency] private TemperatureSystem _temperatureSystem = default!;
+        [Dependency] private SharedIgnitionSourceSystem _ignitionSourceSystem = default!;
+        [Dependency] private DamageableSystem _damageableSystem = default!;
+        [Dependency] private AlertsSystem _alertsSystem = default!;
+        [Dependency] private FixtureSystem _fixture = default!;
+        [Dependency] private IAdminLogManager _adminLogger = default!;
+        [Dependency] private InventorySystem _inventory = default!;
+        [Dependency] private SharedAppearanceSystem _appearance = default!;
+        [Dependency] private SharedPopupSystem _popup = default!;
+        [Dependency] private UseDelaySystem _useDelay = default!;
+        [Dependency] private AudioSystem _audio = default!;
+        [Dependency] private IRobustRandom _random = default!;
+        [Dependency] private IGameTiming _timing = default!;
 
-        private EntityQuery<InventoryComponent> _inventoryQuery;
-        private EntityQuery<PhysicsComponent> _physicsQuery;
+        [Dependency] private EntityQuery<InventoryComponent> _inventoryQuery = default!;
+        [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
 
         private static readonly TimeSpan UpdateTime = TimeSpan.FromSeconds(1);
 
@@ -61,9 +61,6 @@ namespace Content.Server.Atmos.EntitySystems
         public override void Initialize()
         {
             UpdatesAfter.Add(typeof(AtmosphereSystem));
-
-            _inventoryQuery = GetEntityQuery<InventoryComponent>();
-            _physicsQuery = GetEntityQuery<PhysicsComponent>();
 
             SubscribeLocalEvent<FlammableComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<FlammableComponent, InteractUsingEvent>(OnInteractUsing);
@@ -88,7 +85,7 @@ namespace Content.Server.Atmos.EntitySystems
         {
             // You know I'm really not sure if having AdjustFireStacks *after* Extinguish,
             // but I'm just moving this code, not questioning it.
-            Extinguish(ent, ent.Comp);
+            TryExtinguish(ent.AsNullable());
             AdjustFireStacks(ent, args.FireStacksAdjustment, ent.Comp);
         }
 
@@ -250,9 +247,9 @@ namespace Content.Server.Atmos.EntitySystems
                 _fireEvents[ent] = tempDelta;
         }
 
-        private void OnRejuvenate(EntityUid uid, FlammableComponent component, RejuvenateEvent args)
+        private void OnRejuvenate(Entity<FlammableComponent> ent, ref RejuvenateEvent args)
         {
-            Extinguish(uid, component);
+            TryExtinguish(ent.AsNullable());
         }
 
         private void OnResistFireAlert(Entity<FlammableComponent> ent, ref ResistFireAlertEvent args)
@@ -271,6 +268,11 @@ namespace Content.Server.Atmos.EntitySystems
 
             _appearance.SetData(uid, FireVisuals.OnFire, flammable.OnFire, appearance);
             _appearance.SetData(uid, FireVisuals.FireStacks, flammable.FireStacks, appearance);
+
+            if (flammable.Displacement != null)
+                _appearance.SetData(uid, FireVisuals.FireDisplacement, flammable.Displacement.Value.Id, appearance);
+            else
+                _appearance.RemoveData(uid, FireVisuals.FireDisplacement);
 
             // Also enable toggleable-light visuals
             // This is intended so that matches & candles can re-use code for un-shaded layers on in-hand sprites.
@@ -296,7 +298,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             if (flammable.FireStacks <= 0)
             {
-                Extinguish(uid, flammable);
+                TryExtinguish((uid, flammable));
             }
             else
             {
@@ -305,24 +307,46 @@ namespace Content.Server.Atmos.EntitySystems
             }
         }
 
+        /// <summary>
+        /// Extinguishes an entity if it can be extinguished.
+        /// </summary>
+        [PublicAPI]
+        [Obsolete("Use TryExtinguish(Entity<FlammableComponent>) instead.")]
         public void Extinguish(EntityUid uid, FlammableComponent? flammable = null)
         {
+            // Maintaining prior resolve behavior.
             if (!Resolve(uid, ref flammable))
                 return;
 
-            if (!flammable.OnFire || !flammable.CanExtinguish)
-                return;
+            TryExtinguish((uid, flammable));
+        }
 
-            _adminLogger.Add(LogType.Flammable, $"{ToPrettyString(uid):entity} stopped being on fire damage");
-            flammable.OnFire = false;
-            flammable.FireStacks = 0;
+        /// <summary>
+        /// Extinguishes an entity if it can be extinguished.
+        /// </summary>
+        /// <returns>
+        /// Whether or not <paramref name="uid"> was extinguished.
+        /// </returns>
+        [PublicAPI]
+        public bool TryExtinguish(Entity<FlammableComponent?> ent)
+        {
+            if (!Resolve(ent, ref ent.Comp, false))
+                return false;
 
-            _ignitionSourceSystem.SetIgnited(uid, false);
+            if (!ent.Comp.OnFire || !ent.Comp.CanExtinguish)
+                return false;
+
+            _adminLogger.Add(LogType.Flammable, $"{ToPrettyString(ent):entity} stopped being on fire damage");
+            ent.Comp.OnFire = false;
+            ent.Comp.FireStacks = 0;
+
+            _ignitionSourceSystem.SetIgnited(ent.Owner, false);
 
             var extinguished = new ExtinguishedEvent();
-            RaiseLocalEvent(uid, ref extinguished);
+            RaiseLocalEvent(ent, ref extinguished);
 
-            UpdateAppearance(uid, flammable);
+            UpdateAppearance(ent, ent.Comp);
+            return true;
         }
 
         public void Ignite(EntityUid uid, EntityUid ignitionSource, FlammableComponent? flammable = null,
@@ -444,15 +468,14 @@ namespace Content.Server.Atmos.EntitySystems
                     // If we're in an oxygenless environment, put the fire out.
                     if (air == null || air.GetMoles(Gas.Oxygen) < 1f)
                     {
-                        Extinguish(uid, flammable);
+                        TryExtinguish((uid, flammable));
                         continue;
                     }
 
                     var source = EnsureComp<IgnitionSourceComponent>(uid);
                     _ignitionSourceSystem.SetIgnited((uid, source));
 
-                    if (TryComp(uid, out TemperatureComponent? temp))
-                        _temperatureSystem.ChangeHeat(uid, 12500 * flammable.FireStacks, false, temp);
+                    _temperatureSystem.ChangeHeat(uid, 12500 * flammable.FireStacks, false);
 
                     var ev = new GetFireProtectionEvent();
                     // let the thing on fire handle it
@@ -467,7 +490,7 @@ namespace Content.Server.Atmos.EntitySystems
                 }
                 else
                 {
-                    Extinguish(uid, flammable);
+                    TryExtinguish((uid, flammable));
                 }
             }
         }
