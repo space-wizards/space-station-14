@@ -91,8 +91,10 @@ public sealed partial class ItemSlotsSystem : EntitySystem
         if (itemSlots.Slots.TryGetValue(id, out var existing))
         {
             if (existing.Local)
+            {
                 Log.Error(
                     $"Duplicate item slot key. Entity: {Comp<MetaDataComponent>(uid).EntityName} ({uid}), key: {id}");
+            }
             else
                 // Server state takes priority.
                 slot.CopyFrom(existing);
@@ -164,10 +166,16 @@ public sealed partial class ItemSlotsSystem : EntitySystem
         if (args.Current is not ItemSlotsComponentState state)
             return;
 
+        var removed = new List<ItemSlot>();
         foreach (var (key, slot) in ent.Comp.Slots)
         {
             if (!state.Slots.ContainsKey(key))
-                RemoveItemSlot(ent, slot, ent.Comp);
+                removed.Add(slot);
+        }
+
+        foreach (var slot in removed)
+        {
+            RemoveItemSlot(ent, slot, ent.Comp);
         }
 
         foreach (var (serverKey, serverSlot) in state.Slots)
