@@ -114,6 +114,8 @@
     - TeslaEngine
     - SingularityTeslaEngine
     - Power
+  - type: Speech
+    speechVerb: Electricity
 
 - type: entity
   id: TeslaMiniEnergyBall

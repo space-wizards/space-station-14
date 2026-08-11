@@ -1455,6 +1455,8 @@
       0: Alive
       200: Critical
       250: Dead
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-organic
 
 - type: entity
   name: kangaroo
