@@ -173,6 +173,8 @@
     sprite: Clothing/OuterClothing/Vests/elitevest.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Vests/elitevest.rsi
+  - type: StaminaResistance 
+    damageCoefficient: 0.60
   - type: Armor
     modifiers:
       coefficients:
