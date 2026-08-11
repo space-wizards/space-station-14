@@ -225,7 +225,7 @@ public sealed partial class ThrowingSystem : EntitySystem
         }
 
         if (user == null)
-            return false;
+            return true;
 
         if (recoil)
             _recoil.KickCamera(user.Value, -direction * 0.04f);
@@ -239,7 +239,7 @@ public sealed partial class ThrowingSystem : EntitySystem
         RaiseLocalEvent(uid, msg);
 
         if (msg.Cancelled)
-            return false;
+            return true;
 
         var pushEv = new ThrowerImpulseEvent();
         RaiseLocalEvent(user.Value, ref pushEv);
