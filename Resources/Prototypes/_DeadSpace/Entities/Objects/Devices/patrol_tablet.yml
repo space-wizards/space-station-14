@@ -17,7 +17,6 @@
       enum.PatrolTabletUiKey.Key:
         type: PatrolTabletBoundUserInterface
   - type: PatrolTablet
-  - type: CrewMonitoringConsole
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: CrewMonitor
