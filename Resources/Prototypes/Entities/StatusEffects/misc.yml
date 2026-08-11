@@ -130,9 +130,23 @@
 
 # Causes you to get drunk
 - type: entity
-  parent: [ StatusEffectWoozy, StatusEffectSlurred ]
+  parent: [ StatusEffectWoozy, StatusEffectSlurred, StatusEffectClumsyAll ]
   id: StatusEffectDrunk
   name: drunk
+  components:
+  - type: ExaminableStatusEffect
+    messageId: status-effect-examine-drunk
+  - type: ClumsyCatchStatusEffect
+    clumsySound: &SoundReptileScream
+      path: /Audio/Voice/Reptilian/reptilian_scream.ogg
+  - type: ClumsyDefibStatusEffect
+    clumsySound: *SoundReptileScream
+  - type: ClumsyGunStatusEffect
+    clumsySound: *SoundReptileScream
+  - type: ClumsyInjectorStatusEffect
+    clumsySound: *SoundReptileScream
+  - type: ClumsyVaultStatusEffect
+    clumsySound: *SoundReptileScream
 
 # Prevents the target from seeing
 - type: entity
