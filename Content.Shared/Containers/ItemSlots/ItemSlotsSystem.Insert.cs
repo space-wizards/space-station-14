@@ -12,15 +12,16 @@ public sealed partial class ItemSlotsSystem
     /// </summary>
     /// <param name="excludeUserAudio">If true, will exclude the user when playing sound. Does nothing client-side.
     /// Useful for predicted interactions</param>
-    private void Insert(EntityUid uid,
+    private bool Insert(EntityUid uid,
         ItemSlot slot,
         EntityUid item,
         EntityUid? user,
         bool excludeUserAudio = false)
     {
-        bool? inserted = slot.ContainerSlot != null ? _containers.Insert(item, slot.ContainerSlot) : null;
+        if (slot.ContainerSlot == null || !_containers.Insert(item, slot.ContainerSlot))
+            return false;
 
-        if (inserted != null && inserted.Value && user != null)
+        if (user != null)
         {
             _adminLogger.Add(LogType.Action,
                 LogImpact.Low,
@@ -28,6 +29,7 @@ public sealed partial class ItemSlotsSystem
         }
 
         _audioSystem.PlayPredicted(slot.InsertSound, uid, excludeUserAudio ? user : null);
+        return true;
     }
 
     /// <summary>
@@ -102,8 +104,7 @@ public sealed partial class ItemSlotsSystem
         if (!CanInsert(uid, item, user, slot))
             return false;
 
-        Insert(uid, slot, item, user, excludeUserAudio: excludeUserAudio);
-        return true;
+        return Insert(uid, slot, item, user, excludeUserAudio: excludeUserAudio);
     }
 
     /// <summary>
@@ -129,8 +130,7 @@ public sealed partial class ItemSlotsSystem
         if (!_handsSystem.TryDrop(user, hands.ActiveHandId!))
             return false;
 
-        Insert(uid, slot, held.Value, user, excludeUserAudio: excludeUserAudio);
-        return true;
+        return Insert(uid, slot, held.Value, user, excludeUserAudio: excludeUserAudio);
     }
 
     /// <summary>
@@ -162,8 +162,7 @@ public sealed partial class ItemSlotsSystem
         if (user != null && !_handsSystem.TryDrop(user.Value, item))
             return false;
 
-        Insert(ent, itemSlot, item, user, excludeUserAudio: excludeUserAudio);
-        return true;
+        return Insert(ent, itemSlot, item, user, excludeUserAudio: excludeUserAudio);
     }
 
     /// <summary>

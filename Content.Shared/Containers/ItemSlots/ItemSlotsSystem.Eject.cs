@@ -38,11 +38,12 @@ public sealed partial class ItemSlotsSystem
     /// </summary>
     /// <param name="excludeUserAudio">If true, will exclude the user when playing sound. Does nothing client-side.
     /// Useful for predicted interactions</param>
-    private void Eject(EntityUid uid, ItemSlot slot, EntityUid item, EntityUid? user, bool excludeUserAudio = false)
+    private bool Eject(EntityUid uid, ItemSlot slot, EntityUid item, EntityUid? user, bool excludeUserAudio = false)
     {
-        bool? ejected = slot.ContainerSlot != null ? _containers.Remove(item, slot.ContainerSlot) : null;
+        if (slot.ContainerSlot == null || !_containers.Remove(item, slot.ContainerSlot))
+            return false;
 
-        if (ejected != null && ejected.Value && user != null)
+        if (user != null)
         {
             _adminLogger.Add(LogType.Action,
                 LogImpact.Low,
@@ -50,6 +51,7 @@ public sealed partial class ItemSlotsSystem
         }
 
         _audioSystem.PlayPredicted(slot.EjectSound, uid, excludeUserAudio ? user : null);
+        return true;
     }
 
     /// <summary>
@@ -72,8 +74,7 @@ public sealed partial class ItemSlotsSystem
         if (user != null && item != null && !_actionBlockerSystem.CanPickup(user.Value, item.Value, showPopup: true))
             return false;
 
-        Eject(uid, slot, item!.Value, user, excludeUserAudio);
-        return true;
+        return Eject(uid, slot, item!.Value, user, excludeUserAudio);
     }
 
     /// <summary>

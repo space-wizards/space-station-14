@@ -109,7 +109,8 @@ public sealed partial class ItemSlotsSystem
             if (slot.Item != null)
                 _handsSystem.TryPickupAnyHand(args.User, slot.Item.Value, handsComp: hands);
 
-            Insert(ent, slot, args.Used, args.User, excludeUserAudio: true);
+            if (!Insert(ent, slot, args.Used, args.User, excludeUserAudio: true))
+                return;
 
             if (slot.InsertSuccessPopup.HasValue)
                 _popupSystem.PopupEntity(Loc.GetString(slot.InsertSuccessPopup), ent, args.User);
