@@ -8,14 +8,14 @@ using Content.Shared.Timing;
 
 namespace Content.Shared.Friends.Systems;
 
-public sealed class PettableFriendSystem : EntitySystem
+public sealed partial class PettableFriendSystem : EntitySystem
 {
-    [Dependency] private readonly NpcFactionSystem _factionException = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly UseDelaySystem _useDelay = default!;
+    [Dependency] private NpcFactionSystem _factionException = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private UseDelaySystem _useDelay = default!;
 
-    [Dependency] private readonly EntityQuery<FactionExceptionComponent> _exceptionQuery = default!;
-    [Dependency] private readonly EntityQuery<UseDelayComponent> _useDelayQuery = default!;
+    [Dependency] private EntityQuery<FactionExceptionComponent> _exceptionQuery = default!;
+    [Dependency] private EntityQuery<UseDelayComponent> _useDelayQuery = default!;
 
     public override void Initialize()
     {
@@ -36,7 +36,7 @@ public sealed class PettableFriendSystem : EntitySystem
         if (!_factionException.IsIgnored(exception, user))
         {
             // you have made a new friend :)
-            _popup.PopupClient(Loc.GetString(comp.SuccessString, ("target", uid)), user, user);
+            _popup.PopupEntity(Loc.GetString(comp.SuccessString, ("target", uid)), user, user);
             _factionException.IgnoreEntity(exception, user);
             args.Handled = true;
             return;
@@ -45,7 +45,7 @@ public sealed class PettableFriendSystem : EntitySystem
         if (_useDelayQuery.TryComp(uid, out var useDelay) && !_useDelay.TryResetDelay((uid, useDelay), true))
             return;
 
-        _popup.PopupClient(Loc.GetString(comp.FailureString, ("target", uid)), user, user);
+        _popup.PopupEntity(Loc.GetString(comp.FailureString, ("target", uid)), user, user);
     }
 
     private void OnRehydrated(Entity<PettableFriendComponent> ent, ref GotRehydratedEvent args)

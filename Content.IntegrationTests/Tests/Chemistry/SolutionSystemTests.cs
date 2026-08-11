@@ -1,7 +1,9 @@
 using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
+using Content.Shared.Fluids.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
@@ -20,10 +22,11 @@ public sealed class SolutionSystemTests : GameTest
 - type: entity
   id: SolutionTarget
   components:
-  - type: SolutionContainerManager
-    solutions:
-      beaker:
-        maxVol: 50
+  - type: Solution
+    id: beaker
+    solution:
+      maxVol: 50
+  - type: Spillable
 
 - type: reagent
   id: TestReagentA
@@ -43,11 +46,28 @@ public sealed class SolutionSystemTests : GameTest
   name: reagent-name-nothing
   desc: reagent-desc-nothing
   physicalDesc: reagent-physical-desc-nothing
+
+- type: reagent
+  id: TestReagentD
+  name: reagent-name-nothing
+  desc: reagent-desc-nothing
+  physicalDesc: reagent-physical-desc-nothing
+
+- type: reaction
+  id: TestReagentA
+  reactants:
+    TestReagentC:
+      amount: 1
+    TestReagentD:
+      amount: 1
+  products:
+    TestReagentA: 20
 ";
 
     private const string TestReagentA = "TestReagentA";
     private const string TestReagentB = "TestReagentB";
     private const string TestReagentC = "TestReagentC";
+    private const string TestReagentD = "TestReagentD";
     private const string Water = "Water";
     private const string Oil = "Oil";
 
@@ -131,6 +151,31 @@ public sealed class SolutionSystemTests : GameTest
                 Assert.That(water, Is.EqualTo(waterQuantity));
                 Assert.That(oil, Is.EqualTo(FixedPoint2.Zero));
             });
+        });
+    }
+
+    [SidedDependency(Side.Server)] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
+
+    [Test]
+    public async Task TryOverflowReaction()
+    {
+        var testMap = await Pair.CreateTestMap();
+
+        await Server.WaitAssertion(() =>
+        {
+            var reagentC = new Solution(TestReagentC, 5);
+            var reagentD = new Solution(TestReagentD, 5);
+
+            var beaker = SSpawnAtPosition("SolutionTarget", testMap.GridCoords);
+
+            Assert.That(_solutionContainer.TryGetSolution(beaker, "beaker", out var solutionEnt, out var solution));
+
+            _solutionContainer.AddSolution(solutionEnt.Value, reagentC);
+            _solutionContainer.AddSolution(solutionEnt.Value, reagentD);
+
+            Assert.That(solution.Volume, Is.EqualTo(FixedPoint2.New(50)));
+            var query = SEntMan.EntityQueryEnumerator<PuddleComponent>();
+            Assert.That(query.MoveNext(out _), "A puddle should have been spawned from the solution");
         });
     }
 

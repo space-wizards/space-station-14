@@ -15,15 +15,14 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Traitor.Uplink;
 
-public sealed class UplinkSystem : EntitySystem
+public sealed partial class UplinkSystem : EntitySystem
 {
-    [Dependency] private readonly InventorySystem _inventorySystem = default!;
-    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly StoreSystem _store = default!;
-    [Dependency] private readonly SharedSubdermalImplantSystem _subdermalImplant = default!;
-    [Dependency] private readonly SharedMindSystem _mind = default!;
-    [Dependency] private readonly RingerSystem _ringer = default!;
+    [Dependency] private InventorySystem _inventorySystem = default!;
+    [Dependency] private SharedHandsSystem _handsSystem = default!;
+    [Dependency] private StoreSystem _store = default!;
+    [Dependency] private SharedSubdermalImplantSystem _subdermalImplant = default!;
+    [Dependency] private SharedMindSystem _mind = default!;
+    [Dependency] private RingerSystem _ringer = default!;
 
     public static readonly EntProtoId<StoreComponent> TraitorUplinkStore = "StorePresetRemoteUplink";
     public static readonly ProtoId<CurrencyPrototype> TelecrystalCurrencyPrototype = "Telecrystal";
@@ -53,7 +52,8 @@ public sealed class UplinkSystem : EntitySystem
         }
 
         // If we didn't have an uplink, make an empty one.
-        SetUplink(args.Implanted, Spawn(TraitorUplinkStore, MapCoordinates.Nullspace), 0, false);
+        entity.Comp.Store = Spawn(TraitorUplinkStore, MapCoordinates.Nullspace);
+        SetUplink(args.Implanted, entity.Comp.Store.Value, 0, false);
         Log.Error($"{ToPrettyString(args.Implanted)} did not have an uplink when they were implanted.");
     }
 
@@ -161,7 +161,7 @@ public sealed class UplinkSystem : EntitySystem
     /// </summary>
     public bool TryImplantUplink(EntityUid user, EntityUid storeEntity, FixedPoint2 balance, bool giveDiscounts)
     {
-        if (!_proto.Resolve(FallbackUplinkCatalog, out var catalog))
+        if (!ProtoMan.Resolve(FallbackUplinkCatalog, out var catalog))
             return false;
 
         if (!catalog.Cost.TryGetValue(TelecrystalCurrencyPrototype, out var cost))

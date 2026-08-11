@@ -22,11 +22,17 @@
   - type: Tool
     qualities:
       - Prying
-    useSound: /Audio/Items/jaws_pry.ogg
+    useSound: !type:SoundPathSpecifier
+      path: /Audio/Items/jaws_pry.ogg
+      params:
+        volume: -2
   - type: Prying
     speedModifier: 1.5
     pryPowered: true
-    useSound: /Audio/Items/jaws_pry.ogg
+    useSound: !type:SoundPathSpecifier
+      path: /Audio/Items/jaws_pry.ogg
+      params:
+        volume: -2
   - type: MultipleTool
     statusShowBehavior: true
     entries:
@@ -34,14 +40,26 @@
         sprite:
           sprite: Objects/Tools/jaws_of_life.rsi
           state: jaws_pry
-        useSound: /Audio/Items/jaws_pry.ogg
-        changeSound: /Audio/Items/change_jaws.ogg
+        useSound: !type:SoundPathSpecifier
+          path: /Audio/Items/jaws_pry.ogg
+          params:
+            volume: -2
+        changeSound: !type:SoundPathSpecifier
+          path: /Audio/Items/change_jaws.ogg
+          params:
+            volume: -5
       - behavior: Cutting
         sprite:
           sprite: Objects/Tools/jaws_of_life.rsi
           state: jaws_cutter
-        useSound: /Audio/Items/jaws_cut.ogg
-        changeSound: /Audio/Items/change_jaws.ogg
+        useSound: !type:SoundPathSpecifier
+          path: /Audio/Items/jaws_cut.ogg
+          params:
+            volume: -4
+        changeSound: !type:SoundPathSpecifier
+          path: /Audio/Items/change_jaws.ogg
+          params:
+            volume: -5
   - type: MeleeWeapon
     wideAnimationRotation: 90
     damage:
@@ -75,14 +93,26 @@
         sprite:
           sprite: Objects/Tools/jaws_of_life.rsi
           state: syn_jaws_pry
-        useSound: /Audio/Items/jaws_pry.ogg
-        changeSound: /Audio/Items/change_jaws.ogg
+        useSound: !type:SoundPathSpecifier
+          path: /Audio/Items/jaws_pry.ogg
+          params:
+            volume: -2
+        changeSound: !type:SoundPathSpecifier
+          path: /Audio/Items/change_jaws.ogg
+          params:
+            volume: -5
       - behavior: Cutting
         sprite:
           sprite: Objects/Tools/jaws_of_life.rsi
           state: syn_jaws_cutter
-        useSound: /Audio/Items/jaws_cut.ogg
-        changeSound: /Audio/Items/change_jaws.ogg
+        useSound: !type:SoundPathSpecifier
+          path: /Audio/Items/jaws_cut.ogg
+          params:
+            volume: -4
+        changeSound: !type:SoundPathSpecifier
+          path: /Audio/Items/change_jaws.ogg
+          params:
+            volume: -5
   - type: MeleeWeapon
     damage:
       types:

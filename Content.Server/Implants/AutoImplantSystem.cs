@@ -2,9 +2,9 @@ using Content.Server.Implants.Components;
 
 namespace Content.Server.Implants;
 
-public sealed class AutoImplantSystem : EntitySystem
+public sealed partial class AutoImplantSystem : EntitySystem
 {
-    [Dependency] private readonly SubdermalImplantSystem _subdermalImplant = default!;
+    [Dependency] private SubdermalImplantSystem _subdermalImplant = default!;
 
     public override void Initialize()
     {
@@ -16,6 +16,5 @@ public sealed class AutoImplantSystem : EntitySystem
     private void OnMapInit(EntityUid uid, AutoImplantComponent comp, MapInitEvent args)
     {
         _subdermalImplant.AddImplants(uid, comp.Implants);
-        RemComp<AutoImplantComponent>(uid);
     }
 }

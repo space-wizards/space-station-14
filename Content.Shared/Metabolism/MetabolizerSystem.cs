@@ -16,38 +16,41 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Metabolism;
 
 /// <inheritdoc/>
-public sealed class MetabolizerSystem : EntitySystem
+public sealed partial class MetabolizerSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
-    [Dependency] private readonly SharedEntityConditionsSystem _entityConditions = default!;
-    [Dependency] private readonly SharedEntityEffectsSystem _entityEffects = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private BodySystem _body = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private MobStateSystem _mobStateSystem = default!;
+    [Dependency] private SharedEntityConditionsSystem _entityConditions = default!;
+    [Dependency] private SharedEntityEffectsSystem _entityEffects = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
-    [Dependency] private readonly EntityQuery<OrganComponent> _organQuery = default!;
-    [Dependency] private readonly EntityQuery<SolutionContainerManagerComponent> _solutionQuery = default!;
+    [Dependency] private EntityQuery<OrganComponent> _organQuery = default!;
+    [Dependency] private EntityQuery<SolutionManagerComponent> _solutionQuery = default!;
 
-    public override void Initialize()
+
+    [SubscribeLocalEvent]
+    private void OnAddMetabolismInit(Entity<AddMetabolismComponent> ent, ref MapInitEvent args)
     {
-        base.Initialize();
+        if (ent.Comp.AddedMetabolizer == null)
+            return;
 
-        SubscribeLocalEvent<MetabolizerComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<MetabolizerComponent, BodyRelayedEvent<ApplyMetabolicMultiplierEvent>>(OnApplyMetabolicMultiplier);
+        AddMetabolizerToBody(ent, ent.Comp.AddedMetabolizer.Value);
     }
 
+    [SubscribeLocalEvent]
     private void OnMapInit(Entity<MetabolizerComponent> ent, ref MapInitEvent args)
     {
         ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.AdjustedUpdateInterval;
         Dirty(ent);
     }
 
+    [SubscribeLocalEvent]
     private void OnApplyMetabolicMultiplier(Entity<MetabolizerComponent> ent, ref BodyRelayedEvent<ApplyMetabolicMultiplierEvent> args)
     {
         ent.Comp.UpdateIntervalMultiplier = args.Args.Multiplier;
@@ -87,7 +90,7 @@ public sealed class MetabolizerSystem : EntitySystem
     }
 
     private bool LookupSolution(
-        Entity<MetabolizerComponent, OrganComponent?, SolutionContainerManagerComponent?> ent,
+        Entity<MetabolizerComponent, OrganComponent?, SolutionManagerComponent?> ent,
         MetabolismSolutionEntry solutionData,
         bool lookupTransfer,
         [NotNullWhen(true)] out Solution? solution,
@@ -106,28 +109,24 @@ public sealed class MetabolizerSystem : EntitySystem
 
         if (lookupTransfer ? solutionData.TransferSolutionOnBody : solutionData.SolutionOnBody)
         {
-            if (ent.Comp2?.Body is { } body)
-            {
-                if (!_solutionQuery.TryComp(body, out var bodySolution))
-                    return false;
-
-                solutionOwner = body;
-                return _solutionContainerSystem.TryGetSolution((body, bodySolution), solutionName, out solutionEntity, out solution);
-            }
-        }
-        else
-        {
-            if (!_solutionQuery.Resolve(ent, ref ent.Comp3, logMissing: false))
+            if (ent.Comp2?.Body is not { } body)
                 return false;
 
-            solutionOwner = ent;
-            return _solutionContainerSystem.TryGetSolution((ent, ent), solutionName, out solutionEntity, out solution);
+            if (!_solutionContainerSystem.TryGetSolution(body, solutionName, out solutionEntity, out solution))
+                return false;
+
+            solutionOwner = body;
+            return true;
         }
 
-        return false;
+        if (!_solutionContainerSystem.TryGetSolution((ent, ent.Comp3), solutionName, out solutionEntity, out solution))
+            return false;
+
+        solutionOwner = ent;
+        return true;
     }
 
-    private void TryMetabolizeStage(Entity<MetabolizerComponent, OrganComponent?, SolutionContainerManagerComponent?> ent, ProtoId<MetabolismStagePrototype> stage)
+    private void TryMetabolizeStage(Entity<MetabolizerComponent, OrganComponent?, SolutionManagerComponent?> ent, ProtoId<MetabolismStagePrototype> stage)
     {
         if (!ent.Comp1.Solutions.TryGetValue(stage, out var solutionData))
             return;
@@ -157,7 +156,7 @@ public sealed class MetabolizerSystem : EntitySystem
         int reagents = 0;
         foreach (var (reagent, quantity) in list)
         {
-            if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.Prototype, out var proto))
+            if (!ProtoMan.TryIndex<ReagentPrototype>(reagent.Prototype, out var proto))
                 continue;
 
             // Skip blood reagents
@@ -261,9 +260,10 @@ public sealed class MetabolizerSystem : EntitySystem
         }
     }
 
-    private void TryMetabolize(Entity<MetabolizerComponent, OrganComponent?, SolutionContainerManagerComponent?> ent)
+    private void TryMetabolize(Entity<MetabolizerComponent, OrganComponent?, SolutionManagerComponent?> ent)
     {
         _organQuery.Resolve(ent, ref ent.Comp2, logMissing: false);
+        _solutionQuery.Resolve(ent, ref ent.Comp3, logMissing: false);
 
         foreach (var stage in ent.Comp1.Stages)
         {
@@ -306,6 +306,39 @@ public sealed class MetabolizerSystem : EntitySystem
         }
 
         return true;
+    }
+
+    /// <summary>
+    /// Adds a metabolizer type to all organs with <see cref="MetabolizerComponent"/> owned by an entity.
+    /// </summary>
+    /// <param name="entity">The entity whose organs to affect.</param>
+    /// <param name="metabolizer">The metabolizer type to add to the organs.</param>
+    public void AddMetabolizerToBody(EntityUid entity, ProtoId<MetabolizerTypePrototype> metabolizer)
+    {
+        var organs = _body.EnumerateOrgans<MetabolizerComponent>(entity);
+
+        foreach (var organ in organs)
+        {
+            TryAddMetabolizerType((organ.Owner, organ.Comp2), metabolizer);
+        }
+    }
+
+    /// <summary>
+    /// Tries to add a new metabolizer type to an entity with <see cref="MetabolizerComponent"/>
+    /// </summary>
+    /// <param name="ent">The metabolizer to add to.</param>
+    /// <param name="metabolizer">The prototype to add.</param>
+    /// <returns>True if the type was added, otherwise False.</returns>
+    public bool TryAddMetabolizerType(Entity<MetabolizerComponent?> ent, ProtoId<MetabolizerTypePrototype> metabolizer)
+    {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return false;
+
+        // If there is no metabolizer types, we still want to add one.
+        if (ent.Comp.MetabolizerTypes == null)
+            ent.Comp.MetabolizerTypes = new HashSet<ProtoId<MetabolizerTypePrototype>>();
+
+        return ent.Comp.MetabolizerTypes.Add(metabolizer);
     }
 }
 
