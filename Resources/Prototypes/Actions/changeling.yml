@@ -170,6 +170,18 @@
     selfMessage: changeling-sting-success
 
 - type: entity
+  parent: BaseAction
+  id: TestSequenceAction
+  components:
+  - type: Action
+    raiseOnAction: true
+  - type: InstantAction
+    event: !type:ActionSequenceInstantEvent
+  - type: ActionSequence
+    sequences:
+    - !type:PopupSequence
+
+- type: entity
   parent: BaseActionChangelingSting
   id: ActionChangelingStingBlind
   name: Blind Sting
