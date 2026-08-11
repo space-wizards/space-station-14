@@ -48,7 +48,7 @@ public sealed class DoAfterOverlay : Overlay
     // Time after which the doafter will lerp to its final y offset.
     private static readonly TimeSpan MaxYPosTime = TimeSpan.FromSeconds(0.5f);
 
-    //
+    // Alpha of the icon near doafter
     private const float IconColorAlpha = .5f;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;

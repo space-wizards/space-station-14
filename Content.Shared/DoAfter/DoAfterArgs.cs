@@ -54,7 +54,7 @@ public sealed partial class DoAfterArgs
     public string? ExamineText;
 
     /// <summary>
-    /// foo
+    /// SpriteSpecifier of the texture that will be used as icon near bar
     /// </summary>
     [DataField]
     public SpriteSpecifier? DoafterIcon;
@@ -96,6 +96,12 @@ public sealed partial class DoAfterArgs
     /// </summary>
     [DataField]
     public bool NeedHand;
+
+    /// <summary>
+    /// Whether or not this do after requires your active hand to be empty,
+    /// </summary>
+    [DataField]
+    public bool NeedFreeHand;
 
     /// <summary>
     ///     Whether we need to keep our active hand as is (i.e. can't change hand or change item). This also covers
@@ -266,6 +272,7 @@ public sealed partial class DoAfterArgs
         EventTarget = other.EventTarget;
         Broadcast = other.Broadcast;
         NeedHand = other.NeedHand;
+        NeedFreeHand = other.NeedFreeHand;
         BreakOnHandChange = other.BreakOnHandChange;
         BreakOnDropItem = other.BreakOnDropItem;
         BreakOnMove = other.BreakOnMove;

@@ -81,9 +81,7 @@
   id: BaseLightTube
   components:
   - type: Sprite
-    sprite:  Objects/Power/light_tube.rsi
-  - type: LightBulb
-    bulb: Tube
+    sprite: Objects/Power/light_tube.rsi
   - type: Destructible
     thresholds:
     - trigger: *DamageTrigger10

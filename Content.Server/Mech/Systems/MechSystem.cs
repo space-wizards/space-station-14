@@ -46,7 +46,7 @@ public sealed partial class MechSystem : SharedMechSystem
     private void OnMechCanMoveEvent(Entity<MechComponent> ent, ref VehicleCanRunEvent args)
     {
         if (ent.Comp.Broken || ent.Comp.Integrity <= 0 || ent.Comp.Energy <= 0)
-            args = args with { CanRun = false };
+            args.CanRun = false;
     }
 
     [SubscribeLocalEvent]
@@ -184,7 +184,8 @@ public sealed partial class MechSystem : SharedMechSystem
                 {
                     if (args.User == uid || args.User == operatorUid)
                     {
-                        TryEject(uid, component);
+                        if(TryEject(uid, component))
+                            _ui.CloseUi(uid, MechUiKey.Key);
                         return;
                     }
 
@@ -226,6 +227,7 @@ public sealed partial class MechSystem : SharedMechSystem
         if (!TryEject(uid, component))
             return;
 
+        _ui.CloseUi(uid, MechUiKey.Key);
         args.Handled = true;
     }
 
