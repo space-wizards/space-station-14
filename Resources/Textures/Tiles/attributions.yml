@@ -26,7 +26,7 @@
   copyright: "Taken from /tg/station at commit 6665eec76c98a4f3f89bebcd10b34b47dcc0b8ae."
   source: "https://github.com/tgstation/tgstation/"
 
-- files: ["blue_circuit.png", "cropped_parallax.png", "eighties.png", "gold.png", "grass.png", "ironsand1.png", "ironsand2.png", "ironsand3.png", "ironsand4.png", "junglegrass.png", "lattice.png", "red_circuit.png", "reinforced.png", "silver.png", "snow.png", "wood.png"]
+- files: ["blue_circuit.png", "cropped_parallax.png", "eighties.png", "gold.png", "grass.png", "ironsand1.png", "ironsand2.png", "ironsand3.png", "ironsand4.png", "grassjungle.png", "lattice.png", "red_circuit.png", "reinforced.png", "silver.png", "snow.png", "wood.png"]
   license: "CC-BY-SA-3.0"
   copyright: "tgstation commit 8abb19545828230d92ba18827feeb42a67a55d49, cropped_parallax modified from parallax."
   source: "https://github.com/tgstation/tgstation/"
@@ -51,7 +51,7 @@
   copyright: "Created by github user @notquitehadouken."
   source: "https://github.com/space-wizards/space-station-14/pull/17948"
 
-- files: [ "bar.png", "lime.png", "blue.png", "kitchen.png", "laundry.png", "mime.png", "steel.png", "steel_diagonal.png", "steel_mini.png", "steel_offset.png", "steel_pavement.png", "white.png", "white_diagonal.png", "white_mini.png", "white_offset.png", "white_pavement.png", "dark.png", "dark_diagonal.png", "dark_mini.png", "dark_offset.png", "dark_pavement.png", "hydro.png", "plastic.png", "dark_plastic.png", "white_plastic.png", "cafeteria.png", "checker_dark.png", "clown.png" ]
+- files: [ "bar.png", "lime.png", "blue.png", "kitchen.png", "laundry.png", "mime.png", "steel.png", "steel_diagonal.png", "steel_diagonal_mini.png", "steel_herringbone.png", "steel_mini.png", "steel_mono.png", "steel_offset.png", "steel_pavement.png", "steel_pavement_vertical.png", "white.png", "white_diagonal.png", "white_diagonal_mini.png", "white_herringbone.png", "white_mini.png", "white_mono.png", "white_offset.png", "white_pavement.png", "white_pavement_vertical.png", "dark.png", "dark_diagonal.png", "dark_diagonal_mini.png", "dark_herringbone.png","dark_mini.png", "dark_mono.png", "dark_offset.png", "dark_pavement.png", "dark_pavement_vertical.png", "hydro.png", "plastic.png", "dark_plastic.png", "white_plastic.png", "cafeteria.png", "checker_dark.png", "clown.png" ]
   license: "CC-BY-SA-3.0"
   copyright: "Created by github user @Flareguy, original, unedited base tiles modified from /tg/station at commit 6665eec76c98a4f3f89bebcd10b34b47dcc0b8ae and github user @moonheart08"
   source: "https://github.com/space-wizards/space-station-14/"
@@ -142,6 +142,11 @@
   source: "https://github.com/space-wizards/space-station-14/"
 
 - files: ["dark_squiggly.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by SlamBamActionman (github) for space-station-14."
+  source: "https://github.com/space-wizards/space-station-14/"
+
+- files: ["tech_maint_dark.png"]
   license: "CC-BY-SA-3.0"
   copyright: "Created by SlamBamActionman (github) for space-station-14."
   source: "https://github.com/space-wizards/space-station-14/"
