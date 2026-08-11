@@ -44,7 +44,10 @@ public sealed partial class CloningSystem : SharedCloningSystem
     // A serialization context for cloning components.
     private CloningContext _context = default!;
 
-    static readonly ProtoId<CloningSettingsPrototype> ItemCloneSettings = "ItemClone";
+    /// <summary>
+    /// Cloning settings to use when cloning items.
+    /// </summary>
+    public static readonly ProtoId<CloningSettingsPrototype> ItemCloneSettings = "ItemClone";
 
     /// <inheritdoc />
     public override void Initialize()
