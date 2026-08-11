@@ -18,7 +18,7 @@
 
 - type: entity
   id: BasicHitscan
-  name: basic laser ray
+  name: basic hitscan
   categories: [ HideSpawnMenu ]
   components:
   - type: HitscanAmmo
@@ -38,6 +38,14 @@
 
 - type: entity
   parent: BasicHitscan
+  id: LaserHitscanBase
+  name: basic laser ray
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: LaserProjectile
+
+- type: entity
+  parent: LaserHitscanBase
   id: RedLightLaser
   name: red light laser ray
   categories: [ HideSpawnMenu ]
@@ -48,7 +56,7 @@
         Heat: 7
 
 - type: entity
-  parent: BasicHitscan
+  parent: LaserHitscanBase
   id: RedLaser
   name: red laser ray
   categories: [ HideSpawnMenu ]
@@ -59,7 +67,7 @@
         Heat: 14
 
 - type: entity
-  parent: BasicHitscan
+  parent: LaserHitscanBase
   id: RedMediumLaser
   name: red amplified laser ray
   categories: [ HideSpawnMenu ]
@@ -70,7 +78,7 @@
         Heat: 17
 
 - type: entity
-  parent: BasicHitscan
+  parent: LaserHitscanBase
   id: RedHeavyLaser
   name: red high-energy laser ray
   categories: [ HideSpawnMenu ]
@@ -91,7 +99,30 @@
       state: impact_beam_heavy
 
 - type: entity
-  parent: BasicHitscan
+  parent: RedMediumLaser
+  id: XenoborgFireLaser
+  name: xenoborg fire laser ray
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Heat: 12
+  - type: HitscanBasicVisuals
+    muzzleFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: muzzle_xeno_fire
+    travelFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: beam_xeno_fire
+    impactFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: impact_xeno_fire
+  - type: HitscanIgnite
+    igniteChance: 0.75
+
+- type: entity
+  parent: LaserHitscanBase
   id: RedLaserPractice
   name: red practice laser ray
   categories: [ HideSpawnMenu ]
@@ -145,7 +176,7 @@
       state: impact_blue
 
 - type: entity
-  parent: BasicHitscan
+  parent: LaserHitscanBase
   id: RedShuttleLaser
   name: shuttle class red laser ray
   categories: [ HideSpawnMenu ]
@@ -169,7 +200,7 @@
       state: impact_beam_heavy2
 
 - type: entity
-  parent: BasicHitscan
+  parent: LaserHitscanBase
   id: DebugLaser
   name: debug laser ray
   suffix: DEBUG
