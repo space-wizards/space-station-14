@@ -1,9 +1,9 @@
 - type: entity
+  parent: BaseStructure
   id: LightPostSmall
   name: post light
-  description: "An always powered light."
   suffix: Always Powered
-  parent: BaseStructure
+  description: "An always powered light."
   components:
   - type: Sprite
     sprite: Structures/Lighting/LightPosts/small_light_post.rsi
@@ -32,9 +32,9 @@
         - BulletImpassable
   - type: PointLight
     radius: 10
-    energy: 2.5
-    softness: 0.9
-    color: "#EEEEFF"
+    energy: 0.8
+    softness: 1
+    color: "#FFE4CE"
   - type: Anchorable
   - type: InteractionOutline
   - type: Damageable
@@ -43,12 +43,6 @@
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 100
@@ -69,11 +63,11 @@
   - type: RequireProjectileTarget
 
 - type: entity
+  parent: LightPostSmall
   id: PoweredLightPostSmallEmpty
   name: post light
-  description: "A small light post."
   suffix: Empty
-  parent: LightPostSmall
+  description: "A small light post. Draws power and produces light when equipped with a light tube."
   components:
   - type: Sprite
     sprite: Structures/Lighting/LightPosts/small_light_post.rsi
@@ -82,6 +76,7 @@
     enabled: false
   - type: PoweredLight
     bulb: Tube
+  - type: SpookyPoweredLight
   - type: ContainerContainer
     containers:
       light_bulb: !type:ContainerSlot
@@ -117,11 +112,10 @@
     popupText: powered-light-component-burn-hand
 
 - type: entity
+  parent: PoweredLightPostSmallEmpty
   id: PoweredLightPostSmall
   name: post light
-  description: "A light fixture. Draws power and produces light when equipped with a light tube."
   suffix: ""
-  parent: PoweredLightPostSmallEmpty
   components:
   - type: Sprite
     state: base
@@ -135,18 +129,12 @@
     range: 3
     sound:
       path: /Audio/Ambience/Objects/light_hum.ogg
-  - type: DamageOnInteract
-    damage:
-      types:
-        Heat: 2
-    popupText: powered-light-component-burn-hand
 
 - type: entity
+  parent: PoweredLightPostSmallEmpty
   id: PoweredLEDLightPostSmall
   name: post light
-  description: "A light fixture. Draws power and produces light when equipped with a light tube."
   suffix: LED
-  parent: PoweredLightPostSmallEmpty
   components:
   - type: Sprite
     state: base

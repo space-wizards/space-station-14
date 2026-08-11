@@ -39,6 +39,7 @@
   - type: Clickable
   - type: Appearance
   - type: AnimationPlayer
+  - type: Damageable
   - type: GuideHelp
     guides:
     - AnomalousResearch
@@ -849,17 +850,17 @@
     damageContainer: Biological
   - type: Destructible
     thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 1
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-          - !type:SpawnEntitiesBehavior
-            spawn:
-              EffectAnomalyFloraBulb:
-                min: 1
-                max: 1
+    - trigger:
+        !type:DamageTrigger
+        damage: 1
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          EffectAnomalyFloraBulb:
+            min: 1
+            max: 1
   - type: PointLight
     radius: 2.0
     energy: 4.5

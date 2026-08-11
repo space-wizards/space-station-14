@@ -6,11 +6,12 @@
     mode: SnapgridCenter
   components:
   - type: Rotatable
-    rotateWhileAnchored: true
+    rotateWhileAnchored: false
   - type: Clickable
   - type: InteractionOutline
   - type: Transform
     anchored: true
+  - type: Anchorable
   - type: Sprite
     sprite: Structures/conveyor.rsi
     state: conveyor_stopped
@@ -71,8 +72,7 @@
 - type: entity
   id: ConveyorBeltAssembly
   parent: BaseItem
-  name: conveyor belt
-  suffix: assembly
+  name: conveyor belt assembly
   description: A conveyor belt assembly. Used to construct a conveyor belt.
   components:
   - type: Sprite

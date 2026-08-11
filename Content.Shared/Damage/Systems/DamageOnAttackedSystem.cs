@@ -81,7 +81,7 @@ public sealed partial class DamageOnAttackedSystem : EntitySystem
             _audioSystem.PlayPredicted(entity.Comp.InteractSound, entity, args.User);
 
             if (entity.Comp.PopupText != null)
-                _popupSystem.PopupClient(Loc.GetString(entity.Comp.PopupText), args.User, args.User);
+                _popupSystem.PopupEntity(Loc.GetString(entity.Comp.PopupText), args.User, args.User);
 
         }
     }
