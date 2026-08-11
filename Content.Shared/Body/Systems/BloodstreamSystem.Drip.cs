@@ -57,7 +57,8 @@ public sealed partial class BloodstreamSystem
             var (minForce, maxForce) = ent.Comp.Force;
             for (var i = 0; i <= rand.Next(min, max); i++)
             {
-                SpawnDroplet((ent, bloodstream), rand.NextVector2() * rand.NextFloat(minRange, maxRange), rand.NextFloat(minForce, maxForce));
+                if (!SpawnDroplet((ent, bloodstream), rand.NextVector2() * rand.NextFloat(minRange, maxRange), rand.NextFloat(minForce, maxForce)))
+                    return;
             }
 
             return;
@@ -71,13 +72,16 @@ public sealed partial class BloodstreamSystem
     /// <param name="dir">The direction in which the blood droplet will fly.</param>
     /// <param name="force">The force with which the blood droplet will fly.</param>
     [PublicAPI]
-    public void SpawnDroplet(Entity<BloodstreamComponent?> ent, Vector2 dir, float force)
+    public bool SpawnDroplet(Entity<BloodstreamComponent?> ent, Vector2 dir, float force)
     {
         if (!_bloodstreamQuery.TryComp(ent, out var bloodstream))
-            return;
+            return false;
 
         if (!_solutionContainer.ResolveSolution(ent.Owner, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution))
-            return;
+            return false;
+
+        if (bloodstream.BloodSolution.Value.Comp.Solution.Volume <= DropletTransferAmount)
+            return false;
 
         var droplet = PredictedSpawnAtPosition(DropletId, Transform(ent).Coordinates);
 
@@ -90,5 +94,7 @@ public sealed partial class BloodstreamSystem
         }
 
         _throwing.TryThrow(droplet, dir, force, compensateFriction: true);
+
+        return true;
     }
 }
