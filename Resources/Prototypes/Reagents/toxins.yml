@@ -413,7 +413,7 @@
       - !type:HealthChange
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [Animal, Arachnid] # Applying damage to the mobs with lower metabolism capabilities
+          type: [ Animal, Arachnid ] # Applying damage to the mobs with lower metabolism capabilities
         damage:
           types:
             Poison: 0.4
@@ -421,7 +421,7 @@
         probability: 0.04 #Scaled for time, not metabolismrate.
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [Animal, Arachnid]
+          type: [ Animal, Arachnid ]
 
 - type: reagent
   id: Amatoxin
