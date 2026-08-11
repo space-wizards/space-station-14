@@ -64,9 +64,9 @@ public sealed partial class TargetObjectiveSystem : EntitySystem
         var jobName = _job.MindTryGetJobName(target);
 
         var deptName = Loc.GetString("department-Unknown");
-        if (_job.MindTryGetJobId(target, out var k))
+        if (_job.MindTryGetJobId(target, out var jobId))
         {
-            if (k.HasValue && _job.TryGetDepartment(k.Value, out var deptProto))
+            if (jobId.HasValue && _job.TryGetDepartment(jobId.Value, out var deptProto))
             {
                 deptName = Loc.GetString(deptProto.Name);
             }

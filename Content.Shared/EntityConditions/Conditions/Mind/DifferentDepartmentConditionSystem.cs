@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Shared.Mind;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Jobs;
+using Content.Shared.Throwing;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions.Conditions.Mind;
@@ -29,14 +30,14 @@ public sealed partial class DifferentDepartmentConditionSystem : EntityCondition
             return false; // target in no department, so all depts are valid
 
         if (!objJob.HasValue || !job.HasValue)
-            return false; // should not get reached, but just in case...
+            throw new Exception("unreachable statement");
 
         // get all departments
-        if (!_jobSystem.TryGetAllDepartments(objJob.Value, out var a) || !_jobSystem.TryGetAllDepartments(job.Value, out var b))
-            return false; // this should not be reached, but just in case...
+        if (!_jobSystem.TryGetAllDepartments(objJob.Value, out var deptsA) || !_jobSystem.TryGetAllDepartments(job.Value, out var deptsB))
+            throw new Exception("job didnt have any department");
 
         // perform the department check
-        if (a.Select(k => k.ID).Intersect(b.Select(k => k.ID)).Any())
+        if (deptsA.Select(dept => dept.ID).Intersect(deptsB.Select(dept => dept.ID)).Any())
             return true;
 
         return false;

@@ -13,7 +13,6 @@ namespace Content.Shared.Roles.Jobs;
 public abstract partial class SharedJobSystem : EntitySystem
 {
     [Dependency] private SharedRoleSystem _roles = default!;
-    [Dependency] private IPrototypeManager _prototypes = default!;
 
     private readonly Dictionary<string, string> _inverseTrackerLookup = new();
 
@@ -109,7 +108,7 @@ public abstract partial class SharedJobSystem : EntitySystem
 
         // not sorting it since there should only be 1 primary department for a job.
         // this is enforced by the job tests.
-        var departmentProtos = _prototypes.EnumeratePrototypes<DepartmentPrototype>();
+        var departmentProtos = ProtoMan.EnumeratePrototypes<DepartmentPrototype>();
         foreach (var department in departmentProtos)
         {
             if (!department.Primary && department.Roles.Contains(jobProto))
