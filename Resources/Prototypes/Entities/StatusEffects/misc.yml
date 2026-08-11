@@ -119,6 +119,8 @@
   name: hallucinations
   components:
   - type: SeeingRainbowsStatusEffect
+  - type: ExaminableStatusEffect
+    messageId: status-effect-examine-seeing-rainbow
 
 # Causes your vision to become blurry and gives me a headache.
 - type: entity
@@ -152,6 +154,8 @@
       - Blindable
       requireAll: true
   - type: BlindnessStatusEffect
+  - type: ExaminableStatusEffect
+    messageId: status-effect-examine-temporary-blindness
 
 # Obstructs the target's vision with the flash overlay.
 - type: entity

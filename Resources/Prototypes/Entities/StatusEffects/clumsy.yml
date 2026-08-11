@@ -120,20 +120,13 @@
 
 # Wahey!
 - type: entity
-  parent: [ StatusEffectClumsyAll, MobStatusEffectDebuff ]
+  parent: MobStatusEffectDebuff
   id: StatusEffectClumsyDrunk
   components:
   - type: ClumsyCatchStatusEffect
-    clumsyChance: &ChanceDrunk 0.25 # Less clumsy than clowns
+    clumsyChance: &ChanceDrunk 0.25 # Ideally scaled by how drunk they are.
     clumsySound: &SoundGlug
       path: /Audio/Effects/Fluids/glug.ogg
-  - type: ClumsyDefibStatusEffect
-    clumsyChance: *ChanceDrunk
-    clumsySound: *SoundGlug
-  - type: ClumsyGunStatusEffect
-    clumsyChance: *ChanceDrunk
-    clumsySound: *SoundGlug
-    stunDuration: 1
   - type: ClumsyInjectorStatusEffect
     clumsyChance: *ChanceDrunk
     clumsySound: *SoundGlug

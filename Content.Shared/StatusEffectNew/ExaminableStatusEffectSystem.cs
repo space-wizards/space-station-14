@@ -12,6 +12,9 @@ public sealed partial class ExaminableStatusEffectSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnExaminedEvent(Entity<ExaminableStatusEffectComponent> ent, ref StatusEffectRelayedEvent<ExaminedEvent> args)
     {
-        args.Args.PushMarkup(Loc.GetString(ent.Comp.MessageId, ("target", Identity.Entity(args.AppliedTo, EntityManager))));
+        using (args.Args.PushGroup(nameof(ExaminableStatusEffectSystem)))
+        {
+            args.Args.PushMarkup(Loc.GetString(ent.Comp.MessageId, ("target", Identity.Entity(args.AppliedTo, EntityManager))));
+        }
     }
 }
