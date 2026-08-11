@@ -12,7 +12,7 @@
         Quantity: 1
   - type: SolutionContainerVisuals
     maxFillLevels: 1
-    fillBaseName: droplet
+    fillBaseName: drip
   - type: Spillable
     onSplashPopup: bloodstream-droplet-on-splash
     solution: solution
