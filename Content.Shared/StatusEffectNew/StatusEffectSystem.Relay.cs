@@ -14,6 +14,7 @@ using Content.Shared.Speech;
 using Content.Shared.Speech.EntitySystems;
 using Content.Shared.StatusEffectNew.Components;
 using Content.Shared.Stunnable;
+using Robust.Shared.Collections;
 using Robust.Shared.Player;
 
 namespace Content.Shared.StatusEffectNew;
@@ -74,7 +75,7 @@ public sealed partial class StatusEffectsSystem
         var ev = new StatusEffectRelayedEvent<T>(args, statusEffect);
 
         // Prevent a collection modified enumeration error by copying the list in case a status adds another status
-        var list = new List<EntityUid>(originalCollection);
+        var list = new ValueList<EntityUid>(originalCollection);
         foreach (var activeEffect in list)
         {
             RaiseLocalEvent(activeEffect, ref ev);
@@ -92,7 +93,7 @@ public sealed partial class StatusEffectsSystem
         var ev = new StatusEffectRelayedEvent<T>(args, statusEffect);
 
         // Prevent a collection modified enumeration error by copying the list in case a status adds another status
-        var list = new List<EntityUid>(originalCollection);
+        var list = new ValueList<EntityUid>(originalCollection);
         foreach (var activeEffect in list)
         {
             RaiseLocalEvent(activeEffect, ref ev);
