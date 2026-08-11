@@ -139,7 +139,7 @@
     color: Red
     softness: 0
     falloff: 20
-    mask: /Textures/Effects/LightMasks/double_cone.png
+    lightMask: ConeDouble
   - type: RotatingLight
     speed: 360
   - type: LightBehaviour

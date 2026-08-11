@@ -21,7 +21,6 @@
   - Narcolepsy
   - ImpairedMobility
   # - LegsParalyzed (you get healed)
-  - Muted
   - PermanentBlindness
   - Snoring
   - Unrevivable
@@ -171,3 +170,32 @@
     state: preview
   - type: RandomCloneSpawner
     settings: BaseClone
+
+# for plant clones
+- type: cloningSettings
+  id: PlantClone
+  components:
+  - Plant
+  - PlantHarvest
+  - PlantChemicals
+  - PlantGrowth
+  - PlantAtmospheric
+  - PlantConsumeExudeGas
+  - PlantWeedPest
+  - PlantToxins
+  # traits
+  - PlantTraitKudzu
+  - PlantTraitLigneous
+  - PlantTraitScream
+  - PlantTraitUnviable
+
+# for plant lifecycle clones
+- type: cloningSettings
+  id: PlantLifecycleClone
+  parent: PlantClone
+  components:
+  # traits
+  - PlantTraitSampled
+  - PlantTraitSeedless
+  eventComponents:
+  - PlantHolder
