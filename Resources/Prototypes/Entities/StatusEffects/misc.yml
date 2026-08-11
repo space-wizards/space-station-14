@@ -136,17 +136,19 @@
   components:
   - type: ExaminableStatusEffect
     messageId: status-effect-examine-drunk
+  - type: StatusEffectAlert
+    alert: DrunkAlert
   - type: ClumsyCatchStatusEffect
-    clumsySound: &SoundReptileScream
-      path: /Audio/Voice/Reptilian/reptilian_scream.ogg
+    clumsySound: &SoundGlug
+      path: /Audio/Effects/Fluids/glug.ogg
   - type: ClumsyDefibStatusEffect
-    clumsySound: *SoundReptileScream
+    clumsySound: *SoundGlug
   - type: ClumsyGunStatusEffect
-    clumsySound: *SoundReptileScream
+    clumsySound: *SoundGlug
   - type: ClumsyInjectorStatusEffect
-    clumsySound: *SoundReptileScream
+    clumsySound: *SoundGlug
   - type: ClumsyVaultStatusEffect
-    clumsySound: *SoundReptileScream
+    clumsySound: *SoundGlug
 
 # Prevents the target from seeing
 - type: entity

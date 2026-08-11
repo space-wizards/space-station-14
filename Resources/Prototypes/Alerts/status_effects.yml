@@ -1,0 +1,7 @@
+- type: alert
+  id: DrunkAlert
+  icons:
+  - sprite: /Textures/Interface/Alerts/status_effects.rsi
+    state: drunk
+  name: alerts-drunk-name
+  description: alerts-drunk-desc
