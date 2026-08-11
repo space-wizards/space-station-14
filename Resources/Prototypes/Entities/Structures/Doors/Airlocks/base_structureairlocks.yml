@@ -126,8 +126,10 @@
   - type: DeviceLinkSource
     ports:
       - DoorStatus
+      - DoorBoltStatus
     lastSignals:
       DoorStatus: false
+      DoorBoltStatus: false
   - type: SoundOnOverload
   - type: SpawnOnOverload
   - type: UserInterface

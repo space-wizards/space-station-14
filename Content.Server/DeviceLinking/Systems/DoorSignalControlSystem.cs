@@ -22,6 +22,7 @@ namespace Content.Server.DeviceLinking.Systems
             SubscribeLocalEvent<DoorSignalControlComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<DoorSignalControlComponent, SignalReceivedEvent>(OnSignalReceived);
             SubscribeLocalEvent<DoorSignalControlComponent, DoorStateChangedEvent>(OnStateChanged);
+            SubscribeLocalEvent<DoorSignalControlComponent, DoorBoltsChangedEvent>(OnBoltsChanged);
         }
 
         private void OnInit(EntityUid uid, DoorSignalControlComponent component, ComponentInit args)
@@ -29,6 +30,10 @@ namespace Content.Server.DeviceLinking.Systems
 
             _signalSystem.EnsureSinkPorts(uid, component.OpenPort, component.ClosePort, component.TogglePort);
             _signalSystem.EnsureSourcePorts(uid, component.OutOpen);
+
+            // only doors that can actually be bolted get the port, e.g. not shutters
+            if (HasComp<DoorBoltComponent>(uid))
+                _signalSystem.EnsureSourcePorts(uid, component.OutBolt);
         }
 
         private void OnSignalReceived(EntityUid uid, DoorSignalControlComponent component, ref SignalReceivedEvent args)
@@ -98,6 +103,11 @@ namespace Content.Server.DeviceLinking.Systems
                 // say the door is open whenever it would be letting air pass
                 _signalSystem.SendSignal(uid, door.OutOpen, true);
             }
+        }
+
+        private void OnBoltsChanged(EntityUid uid, DoorSignalControlComponent door, DoorBoltsChangedEvent args)
+        {
+            _signalSystem.SendSignal(uid, door.OutBolt, args.BoltsDown);
         }
     }
 }
