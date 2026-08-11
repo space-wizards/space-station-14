@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using Content.Shared.Body.Components;
 using Content.Shared.Damage.Systems;
@@ -24,7 +25,7 @@ public sealed partial class BloodstreamSystem
     /// <summary>
     /// The amount of blood that will be transferred to the blood droplet.
     /// </summary>
-    private static readonly FixedPoint2 DropletTransferAmount = 1f;
+    private static readonly FixedPoint2 BasicDropletTransferAmount = 2f;
 
     /// <summary>
     /// The blood droplet solution to which blood will be added.
@@ -55,7 +56,7 @@ public sealed partial class BloodstreamSystem
             var (min, max) = ent.Comp.Amount;
             for (var i = 0; i <= rand.Next(min, max); i++)
             {
-                if (!SpawnDroplet((ent, bloodstream),
+                if (!TrySpawnDroplet((ent, bloodstream),
                     rand.NextVector2() * ent.Comp.Range.NextFloat(rand),
                     ent.Comp.Force.NextFloat(rand)))
                     return;
@@ -66,21 +67,44 @@ public sealed partial class BloodstreamSystem
     }
 
     /// <summary>
+    /// Gets the amount of blood needed for a blood droplet transfer.
+    /// </summary>
+    /// <param name="ent">The entity to check for.</param>
+    /// <param name="amount">The resulting amount.</param>
+    [PublicAPI]
+    public bool TryGetBloodDropletTransferAmount(Entity<BloodstreamComponent?> ent, [NotNullWhen(true)] out FixedPoint2? amount)
+    {
+        amount = null;
+
+        if (!_bloodstreamQuery.Resolve(ent, ref ent.Comp, false))
+            return false;
+
+        var ev = new ModifyBloodDropletEvent();
+        RaiseLocalEvent(ent, ref ev);
+
+        amount = FixedPoint2.Max(BasicDropletTransferAmount * ev.Modifier, 0f);
+        return true;
+    }
+
+    /// <summary>
     /// Spawns a blood droplet and throws it.
     /// </summary>
     /// <param name="ent">The entity from which to spawn the blood droplet.</param>
     /// <param name="dir">The direction in which the blood droplet will fly.</param>
     /// <param name="force">The force with which the blood droplet will fly.</param>
     [PublicAPI]
-    public bool SpawnDroplet(Entity<BloodstreamComponent?> ent, Vector2 dir, float force)
+    public bool TrySpawnDroplet(Entity<BloodstreamComponent?> ent, Vector2 dir, float force)
     {
-        if (!_bloodstreamQuery.TryComp(ent, out var bloodstream))
+        if (!_bloodstreamQuery.Resolve(ent, ref ent.Comp, false))
             return false;
 
-        if (!_solutionContainer.ResolveSolution(ent.Owner, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution))
+        if (!_solutionContainer.ResolveSolution(ent.Owner, ent.Comp.BloodSolutionName, ref ent.Comp.BloodSolution))
             return false;
 
-        if (bloodstream.BloodSolution.Value.Comp.Solution.Volume < DropletTransferAmount)
+        if (!TryGetBloodDropletTransferAmount(ent, out var transferAmount) || transferAmount == 0f)
+            return false;
+
+        if (ent.Comp.BloodSolution.Value.Comp.Solution.Volume < transferAmount)
             return false;
 
         var droplet = PredictedSpawnAtPosition(DropletId, Transform(ent).Coordinates);
@@ -89,7 +113,7 @@ public sealed partial class BloodstreamSystem
         {
             solution.Value.Comp.Solution.RemoveAllSolution();
 
-            var amount = _solutionContainer.SplitSolution(bloodstream.BloodSolution.Value, DropletTransferAmount);
+            var amount = _solutionContainer.SplitSolution(ent.Comp.BloodSolution.Value, transferAmount.Value);
             _solutionContainer.TryAddSolution(solution.Value, amount);
         }
 
@@ -98,3 +122,11 @@ public sealed partial class BloodstreamSystem
         return true;
     }
 }
+
+/// <summary>
+/// Raised to allow other systems to modify the amount of blood transferred to the blood droplet
+/// relative to the base amount <see cref="BloodstreamSystem.BasicDropletTransferAmount"/>.
+/// </summary>
+/// <param name="Modifier">The factor to modify the base amount by.</param>
+[ByRefEvent]
+public record struct ModifyBloodDropletEvent(float Modifier = 1f);

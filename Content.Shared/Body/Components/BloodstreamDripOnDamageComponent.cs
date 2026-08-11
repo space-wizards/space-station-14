@@ -42,7 +42,7 @@ public sealed partial class BloodstreamDripOnDamageComponent : Component
     /// The number of droplets that will be spawned. From min (inclusive) to max (exclusive).
     /// </summary>
     [DataField, AutoNetworkedField]
-    public (int Min, int Max) Amount = (1, 4);
+    public (int Min, int Max) Amount = (1, 4); // TODO: Make MinMax generic for more types.
 
     /// <summary>
     /// The damage types that are allowed.
