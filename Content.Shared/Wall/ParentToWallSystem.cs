@@ -21,8 +21,7 @@ public sealed partial class ParentToWallSystem : EntitySystem
     [Dependency] private EntityQuery<MapGridComponent> _mapGridQuery = default!;
     [Dependency] private EntityQuery<ParentedWallComponent> _parentWallQuery = default!;
     [Dependency] private EntityQuery<ParentToWallComponent> _childWallmountQuery = default!;
-
-    private static readonly ProtoId<TagPrototype> WallTag = "Wall";
+    [Dependency] private EntityQuery<WallComponent> _wallQuery = default!;
 
     #region Handlers
     /// <summary>
@@ -42,10 +41,10 @@ public sealed partial class ParentToWallSystem : EntitySystem
             return;
 
         // Look for an anchored wall by its tag.
-        var anchoredQuery = _map.GetAnchoredEntitiesEnumerator(gridUid, mapGrid, tileRef.GridIndices);
+        var anchoredQuery = _map.GetAnchoredEntities(gridUid, mapGrid, tileRef.GridIndices);
         while (anchoredQuery.MoveNext(out var maybeAnchor))
         {
-            if (maybeAnchor is not { } anchor || !_tag.HasTag(anchor, WallTag))
+            if (maybeAnchor is not { } anchor || !_wallQuery.HasComp(anchor))
                 continue;
 
             // Parent the entity to the wall.
@@ -112,63 +111,63 @@ public sealed partial class ParentToWallSystem : EntitySystem
     /// </summary>
     /// <param name="ent">The wall being unanchored.</param>
     /// <param name="args">The event in question.</param>
-    // [SubscribeLocalEvent]
-    // private void OnWallAnchorChanged(Entity<ParentedWallComponent> ent, ref AnchorStateChangedEvent args)
-    // {
-    //     if (TerminatingOrDeleted(ent))
-    //         return;
+    [SubscribeLocalEvent]
+    private void OnWallAnchorChanged(Entity<ParentedWallComponent> ent, ref AnchorStateChangedEvent args)
+    {
+        if (TerminatingOrDeleted(ent))
+            return;
 
-    //     if (!args.Anchored)
-    //     {
-    //         foreach (var child in ent.Comp.Children)
-    //         {
-    //             // FIXME: load-bearing cope - client is full of invalid entities
-    //             if (TerminatingOrDeleted(child))
-    //             {
-    //                 Log.Warning($"Child {child} is terminating in {ent}");
-    //                 continue;
-    //             }
+        if (!args.Anchored)
+        {
+            foreach (var child in ent.Comp.Children)
+            {
+                // FIXME: load-bearing cope - client is full of invalid entities
+                if (TerminatingOrDeleted(child))
+                {
+                    Log.Warning($"Child {child} is terminating in {ent}");
+                    continue;
+                }
 
-    //             if (_childWallmountQuery.TryComp(child, out var parentToWall)
-    //                 && parentToWall.Anchored)
-    //             {
-    //                 parentToWall.Anchored = false;
-    //                 Dirty(child, parentToWall);
-    //             }
+                if (_childWallmountQuery.TryComp(child, out var parentToWall)
+                    && parentToWall.Anchored)
+                {
+                    parentToWall.Anchored = false;
+                    Dirty(child, parentToWall);
+                }
 
-    //             _transform.SetParent(child, ent);
-    //         }
-    //     }
-    //     else
-    //     {
-    //         foreach (var child in ent.Comp.Children)
-    //         {
-    //             // FIXME: load-bearing cope - client is full of invalid entities
-    //             if (TerminatingOrDeleted(child))
-    //             {
-    //                 Log.Warning($"Child {child} is terminating in {ent}");
-    //                 continue;
-    //             }
+                _transform.SetParent(child, ent);
+            }
+        }
+        else
+        {
+            foreach (var child in ent.Comp.Children)
+            {
+                // FIXME: load-bearing cope - client is full of invalid entities
+                if (TerminatingOrDeleted(child))
+                {
+                    Log.Warning($"Child {child} is terminating in {ent}");
+                    continue;
+                }
 
-    //             // Only reanchor if the child wants to be anchored.
-    //             if (_childWallmountQuery.TryComp(child, out var parentToWall))
-    //             {
-    //                 if (!parentToWall.Anchor)
-    //                     continue;
+                // Only reanchor if the child wants to be anchored.
+                if (_childWallmountQuery.TryComp(child, out var parentToWall))
+                {
+                    if (!parentToWall.Anchor)
+                        continue;
 
-    //                 if (!parentToWall.Anchored)
-    //                 {
-    //                     parentToWall.Anchored = true;
-    //                     Dirty(child, parentToWall);
-    //                 }
-    //             }
+                    if (!parentToWall.Anchored)
+                    {
+                        parentToWall.Anchored = true;
+                        Dirty(child, parentToWall);
+                    }
+                }
 
-    //             var childXform = Transform(child);
-    //             if (!childXform.Anchored)
-    //                 childXform.Anchored = true; // FIXME: TransformSystem.AnchorEntity doesn't play well with uninitialized entities, see RT#6739.
-    //         }
-    //     }
-    // }
+                var childXform = Transform(child);
+                if (!childXform.Anchored)
+                    childXform.Anchored = true; // FIXME: TransformSystem.AnchorEntity doesn't play well with uninitialized entities, see RT#6739.
+            }
+        }
+    }
 
     /// <summary>
     /// Handles the anchor state of a wallmount changing.
@@ -176,16 +175,16 @@ public sealed partial class ParentToWallSystem : EntitySystem
     /// </summary>
     /// <param name="ent">The wall being unanchored.</param>
     /// <param name="args">The event in question.</param>
-    // [SubscribeLocalEvent]
-    // private void OnChildAnchorChanged(Entity<ParentToWallComponent> ent, ref AnchorStateChangedEvent args)
-    // {
-    //     if (!Initialized(ent))
-    //         return;
+    [SubscribeLocalEvent]
+    private void OnChildAnchorChanged(Entity<ParentToWallComponent> ent, ref AnchorStateChangedEvent args)
+    {
+        if (!Initialized(ent))
+            return;
 
-    //     // We've been unexpectedly (un)anchored, farewell parent.
-    //     if (args.Anchored != ent.Comp.Anchored)
-    //         DetachFromParent(ent);
-    // }
+        // We've been unexpectedly (un)anchored, farewell parent.
+        if (args.Anchored != ent.Comp.Anchored)
+            DetachFromParent(ent);
+    }
 
     /// <summary>
     /// Handles RCD deconstruction on a wall.
