@@ -33,9 +33,14 @@ public sealed class ItemSlotButtonPressedEvent : BoundUserInterfaceMessage
 }
 
 [Serializable, NetSerializable]
-public sealed partial class ItemSlotEjectDoAfterEvent(string slotId) : DoAfterEvent
+public sealed partial class ItemSlotEjectDoAfterEvent : DoAfterEvent
 {
-    public string SlotId = slotId;
+    public string SlotId;
+
+    public ItemSlotEjectDoAfterEvent(string slotId)
+    {
+        SlotId = slotId;
+    }
 
     public override DoAfterEvent Clone() => this;
 }
