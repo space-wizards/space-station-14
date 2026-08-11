@@ -78,9 +78,12 @@ public sealed partial class CloningContext :
                 storageTarget.StoredItems.Clear();
                 storageTarget.SavedLocations.Clear();
                 break;
-            case StoreComponent storeTarget: // Keep the balance!
-                storeTarget.FullListingsCatalog.Clear();
+            case StoreComponent storeTarget: // Keep the balance, but treat it as though it's a new store (no purchase history)
                 storeTarget.AccountOwner = null;
+                storeTarget.FullListingsCatalog.Clear();
+                storeTarget.BoughtEntities.Clear();
+                storeTarget.BalanceSpent.Clear();
+                storeTarget.StartingMap = null; // Overwritten on mapinit, but just in case.
                 break;
             case WaggingComponent wagTarget:
                 wagTarget.ActionEntity = null;
