@@ -41,14 +41,9 @@ public sealed partial class ItemSlotsComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed class ItemSlotsComponentState : ComponentState
+public sealed class ItemSlotsComponentState(Dictionary<string, ItemSlot> slots) : ComponentState
 {
-    public readonly Dictionary<string, ItemSlot> Slots;
-
-    public ItemSlotsComponentState(Dictionary<string, ItemSlot> slots)
-    {
-        Slots = slots;
-    }
+    public readonly Dictionary<string, ItemSlot> Slots = slots;
 }
 
 /// <summary>
@@ -112,8 +107,7 @@ public sealed partial class ItemSlot
     ///     cabinet may simply be closed at the moment and needs to be opened first.
     /// </remarks>
     [DataField(readOnly: true)]
-    [ViewVariables(VVAccess.ReadWrite)]
-    public bool Locked = false;
+    public bool Locked;
 
     /// <summary>
     /// Prevents adding the eject alt-verb, but still lets you swap items.
@@ -121,8 +115,8 @@ public sealed partial class ItemSlot
     /// <remarks>
     ///     This does not affect EjectOnInteract, since if you do that you probably want ejecting to work.
     /// </remarks>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public bool DisableEject = false;
+    [DataField]
+    public bool DisableEject;
 
     /// <summary>
     ///     Whether the item slots system will attempt to insert item from the user's hands into this slot when interacted with.
@@ -140,7 +134,7 @@ public sealed partial class ItemSlot
     ///     contents when clicked on normally.
     /// </remarks>
     [DataField]
-    public bool EjectOnInteract = false;
+    public bool EjectOnInteract;
 
     /// <summary>
     ///     If true, and if this slot is attached to an item, then it will attempt to eject slot when to the slot is
@@ -152,7 +146,7 @@ public sealed partial class ItemSlot
     ///     menu, nor will it disable alt-click interactions.
     /// </remarks>
     [DataField]
-    public bool EjectOnUse = false;
+    public bool EjectOnUse;
 
     /// <summary>
     ///     Override the insert verb text. Defaults to using the slot's name (if specified) or the name of the
@@ -169,7 +163,7 @@ public sealed partial class ItemSlot
     public string? EjectVerbText;
 
     [ViewVariables, NonSerialized]
-    public ContainerSlot? ContainerSlot = default!;
+    public ContainerSlot? ContainerSlot;
 
     /// <summary>
     ///     If this slot belongs to some de-constructible component, should the item inside the slot be ejected upon
@@ -190,7 +184,7 @@ public sealed partial class ItemSlot
     [DataField]
     [Access(typeof(ItemSlotsSystem), Other = AccessPermissions.ReadWriteExecute)]
     [NonSerialized]
-    public bool EjectOnBreak = false;
+    public bool EjectOnBreak;
 
     /// <summary>
     ///     When specified, a popup will be generated whenever someone attempts to insert a bad item into this slot.
@@ -233,7 +227,7 @@ public sealed partial class ItemSlot
     ///     Priority for use with the eject & insert verbs for this slot.
     /// </summary>
     [DataField]
-    public int Priority = 0;
+    public int Priority;
 
     /// <summary>
     ///     If false, errors when adding an item slot with a duplicate key are suppressed. Local==true implies that
