@@ -1,3 +1,4 @@
+using Content.Shared.DoAfter;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Containers.ItemSlots;
@@ -29,4 +30,12 @@ public sealed class ItemSlotButtonPressedEvent : BoundUserInterfaceMessage
         TryEject = tryEject;
         TryInsert = tryInsert;
     }
+}
+
+[Serializable, NetSerializable]
+public sealed partial class ItemSlotEjectDoAfterEvent(string slotId) : DoAfterEvent
+{
+    public string SlotId = slotId;
+
+    public override DoAfterEvent Clone() => this;
 }

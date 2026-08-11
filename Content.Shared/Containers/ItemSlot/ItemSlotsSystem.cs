@@ -14,7 +14,6 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Containers.ItemSlots
@@ -970,19 +969,6 @@ namespace Content.Shared.Containers.ItemSlots
         private void GetItemSlotsState(EntityUid uid, ItemSlotsComponent component, ref ComponentGetState args)
         {
             args.State = new ItemSlotsComponentState(component.Slots);
-        }
-
-        [Serializable, NetSerializable]
-        private sealed partial class ItemSlotEjectDoAfterEvent : DoAfterEvent
-        {
-            public string SlotId;
-
-            public ItemSlotEjectDoAfterEvent(string slotId)
-            {
-                SlotId = slotId;
-            }
-
-            public override DoAfterEvent Clone() => this;
         }
     }
 }
