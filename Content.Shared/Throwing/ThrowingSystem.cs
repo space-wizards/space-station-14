@@ -234,7 +234,7 @@ public sealed partial class ThrowingSystem : EntitySystem
         if (pushbackRatio == 0.0f ||
             physics.Mass == 0f ||
             !TryComp(user.Value, out PhysicsComponent? userPhysics))
-            return false;
+            return true;
         var msg = new ThrowPushbackAttemptEvent();
         RaiseLocalEvent(uid, msg);
 
