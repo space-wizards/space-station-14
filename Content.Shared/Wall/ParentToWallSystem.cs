@@ -118,13 +118,6 @@ public sealed partial class ParentToWallSystem : EntitySystem
         {
             foreach (var child in ent.Comp.Children)
             {
-                // FIXME: load-bearing cope - client is full of invalid entities
-                if (TerminatingOrDeleted(child))
-                {
-                    Log.Warning($"Child {child} is terminating in {ent}");
-                    continue;
-                }
-
                 if (_childWallmountQuery.TryComp(child, out var parentToWall)
                     && parentToWall.Anchored)
                 {
@@ -132,20 +125,15 @@ public sealed partial class ParentToWallSystem : EntitySystem
                     Dirty(child, parentToWall);
                 }
 
-                _transform.SetParent(child, ent);
+                // Note: child may be out of PVS for the client.
+                if (TryComp(child, out TransformComponent? childXform))
+                    _transform.SetParent(child, childXform, ent);
             }
         }
         else
         {
             foreach (var child in ent.Comp.Children)
             {
-                // FIXME: load-bearing cope - client is full of invalid entities
-                if (TerminatingOrDeleted(child))
-                {
-                    Log.Warning($"Child {child} is terminating in {ent}");
-                    continue;
-                }
-
                 // Only reanchor if the child wants to be anchored.
                 if (_childWallmountQuery.TryComp(child, out var parentToWall))
                 {
@@ -159,8 +147,8 @@ public sealed partial class ParentToWallSystem : EntitySystem
                     }
                 }
 
-                var childXform = Transform(child);
-                if (!childXform.Anchored)
+                // Note: child may be out of PVS for the client.
+                if (TryComp(child, out TransformComponent? childXform))
                     childXform.Anchored = true; // FIXME: TransformSystem.AnchorEntity doesn't play well with uninitialized entities, see RT#6739.
             }
         }
