@@ -71,7 +71,7 @@ public sealed partial class BloodstreamSystem
     /// <param name="dir">The direction in which the blood drip will fly.</param>
     /// <param name="force">The force with which the blood drip will fly.</param>
     [PublicAPI]
-    private void SpawnDrip(Entity<BloodstreamComponent?> ent, Vector2 dir, float force)
+    public void SpawnDrip(Entity<BloodstreamComponent?> ent, Vector2 dir, float force)
     {
         if (!_bloodstreamQuery.TryComp(ent, out var bloodstream))
             return;
