@@ -87,7 +87,7 @@ public sealed partial class SprayPainterSystem : SharedSprayPainterSystem
         else
         {
             var gridUid = _transform.GetGrid(args.ClickLocation);
-            if (gridUid is not { } grid || !TryComp<DecalGridComponent>(grid, out var decalGridComp))
+            if (gridUid is not { } grid)
             {
                 _popup.PopupEntity(Loc.GetString("spray-painter-interact-nothing-to-remove"), args.User, args.User);
                 return;
@@ -102,7 +102,7 @@ public sealed partial class SprayPainterSystem : SharedSprayPainterSystem
 
             foreach (var decal in decals)
             {
-                _decals.RemoveDecal(grid, decal.Index, decalGridComp);
+                _decals.RemoveDecal(grid, decal.Index);
             }
         }
 
@@ -118,7 +118,7 @@ public sealed partial class SprayPainterSystem : SharedSprayPainterSystem
     /// </summary>
     private bool IsDecalValid(Decal decal)
     {
-        if (!Proto.TryIndex<DecalPrototype>(decal.Id, out var decalProto))
+        if (!ProtoMan.TryIndex<DecalPrototype>(decal.Id, out var decalProto))
             return false;
 
         return (decalProto.Tags.Contains("station")
