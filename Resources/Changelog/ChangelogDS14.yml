@@ -6140,3 +6140,10 @@ Entries:
   changes:
   - type: Tweak
     message: Изменено меню изменения листа(ворд кнопки добавлены)
+- id: 593
+  author: Manstari
+  time: '2026-08-11T15:39:36.616553+00:00'
+  pr: 2133
+  changes:
+  - type: Add
+    message: Нижнее бельё для почти всех гост шаттл-ролей
