@@ -33,11 +33,7 @@ public sealed partial class PlayDeadSystem : EntitySystem
             if (curTime < comp.StopPlayingDeadTime)
                 continue;
 
-            if (_action.GetActions<RegenerativeStasisActionComponent>(uid).FirstOrNull() is not { } action)
-                return;
-
-            if (action.Comp2.IsInStasis)
-                StopPlayingDead((uid, comp));
+            StopPlayingDead((uid, comp));
         }
     }
 
@@ -74,7 +70,10 @@ public sealed partial class PlayDeadSystem : EntitySystem
     private void PlayDead(Entity<PlayDeadComponent> ent, TimeSpan duration)
     {
         if (_action.GetActions<RegenerativeStasisActionComponent>(ent).FirstOrNull() is not { } action)
+        {
+            Log.Error($"Entity {ToPrettyString(ent)} tried to play dead without a stasis action!");
             return;
+        }
 
         if (action.Comp2.IsInStasis)
             return;
