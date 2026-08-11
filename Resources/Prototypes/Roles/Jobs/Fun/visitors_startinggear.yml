@@ -17,6 +17,9 @@
     ears: ClothingHeadsetAltCommand
     outerClothing: ClothingOuterArmorCaptainCarapace
     pocket1: WeaponDisabler
+    underweart: ClothingUnderwearTopBraCaptain ## DS-14
+    underwearb: ClothingUnderwearBottomPantiesCaptain ## DS-14
+    socks: ClothingUnderwearSocksCaptain ## DS-14
 
 - type: startingGear
   id: VisitorCaptainAlt
@@ -33,6 +36,8 @@
     ears: ClothingHeadsetAltCommand
     outerClothing: ClothingOuterArmorCaptainCarapace
     pocket1: WeaponDisabler
+    underwearb: ClothingUnderwearBottomBoxersCaptain ## DS-14
+    socks: ClothingUnderwearSocksCaptain ## DS-14
 
 - type: startingGear
   id: VisitorCE
@@ -47,6 +52,8 @@
     ears: ClothingHeadsetCE
     outerClothing: ClothingOuterVestHazard
     pocket1: WeaponDisabler
+    underwearb: ClothingUnderwearBottomBoxersChiefEngineer ## DS-14
+    socks: ClothingUnderwearSocksChiefEngineer ## DS-14
 
 - type: startingGear
   id: VisitorCEAlt
@@ -61,6 +68,9 @@
     ears: ClothingHeadsetCE
     outerClothing: ClothingOuterWinterCE
     pocket1: WeaponDisabler
+    underweart: ClothingUnderwearTopBraChiefEngineer ## DS-14
+    underwearb: ClothingUnderwearBottomPantiesChiefEngineer ## DS-14
+    socks: ClothingUnderwearSocksChiefEngineer ## DS-14
 
 - type: startingGear
   id: VisitorCMO
@@ -76,6 +86,8 @@
     belt: ClothingBeltMedicalFilled
     outerClothing: ClothingOuterCoatLabCmo
     pocket1: WeaponDisabler
+    underwearb: ClothingUnderwearBottomBoxersCMO ## DS-14
+    socks: ClothingUnderwearSocksCMO ## DS-14
 
 - type: startingGear
   id: VisitorCMOAlt
@@ -91,6 +103,9 @@
     belt: ClothingBeltMedicalFilled
     outerClothing: ClothingOuterCoatLabCmo
     pocket1: WeaponDisabler
+    underweart: ClothingUnderwearTopBraCMO ## DS-14
+    underwearb: ClothingUnderwearBottomPantiesCMO ## DS-14
+    socks: ClothingUnderwearSocksCMO ## DS-14
 
 - type: startingGear
   id: VisitorHOP
@@ -105,6 +120,8 @@
     ears: ClothingHeadsetAltCommand
     outerClothing: ClothingOuterWinterHoP
     pocket1: WeaponDisabler
+    underwearb: ClothingUnderwearBottomBoxersHeadofPersonnel ## DS-14
+    socks: ClothingUnderwearSocksHeadofPersonnel ## DS-14
 
 - type: startingGear
   id: VisitorHOPAlt
@@ -119,6 +136,9 @@
     ears: ClothingHeadsetAltCommand
     outerClothing: ClothingOuterWinterHoP
     pocket1: WeaponDisabler
+    underweart: ClothingUnderwearTopBraHeadofPersonnel ## DS-14
+    underwearb: ClothingUnderwearBottomPantiesHeadofPersonnel ## DS-14
+    socks: ClothingUnderwearSocksHeadofPersonnel ## DS-14
 
 - type: startingGear
   id: VisitorHOS
@@ -136,6 +156,8 @@
     outerClothing: ClothingOuterCoatHoSTrench
     pocket1: WeaponDisabler
     pocket2: MagazinePistolSubMachineGunTopMounted
+    underwearb: ClothingUnderwearBottomBoxersHeadofSecurity ## DS-14
+    socks: ClothingUnderwearSocksHeadOfSecurity ## DS-14
   inhand:
   - WeaponSubMachineGunWt550
 
@@ -154,6 +176,9 @@
     eyes: ClothingEyesGlassesSecurity
     pocket1: WeaponDisabler
     pocket2: MagazinePistolSubMachineGunTopMounted
+    underweart: ClothingUnderwearTopBraHeadofSecurity ## DS-14
+    underwearb: ClothingUnderwearBottomPantiesHeadofSecurity ## DS-14
+    socks: ClothingUnderwearSocksHeadOfSecurity ## DS-14
   inhand:
   - WeaponSubMachineGunWt550
 
@@ -170,6 +195,8 @@
     ears: ClothingHeadsetRD
     outerClothing: ClothingOuterCoatRD
     pocket1: WeaponDisabler
+    underwearb: ClothingUnderwearBottomBoxersResearchDirector ## DS-14
+    socks: ClothingUnderwearSocksResearchDirector ## DS-14
 
 - type: startingGear
   id: VisitorRDAlt
@@ -184,6 +211,9 @@
     ears: ClothingHeadsetRD
     outerClothing: ClothingOuterCoatRD
     pocket1: WeaponDisabler
+    underweart: ClothingUnderwearTopBraResearchDirector ## DS-14
+    underwearb: ClothingUnderwearBottomPantiesResearchDirector ## DS-14
+    socks: ClothingUnderwearSocksResearchDirector ## DS-14
 
 - type: startingGear
   id: VisitorQM
@@ -198,6 +228,8 @@
     outerClothing: ClothingOuterWinterQM
     pocket1: WeaponDisabler
     pocket2: AppraisalTool
+    underwearb: ClothingUnderwearBottomBoxersQuartermaster ## DS-14
+    socks: ClothingUnderwearSocksQuartermaster ## DS-14
 
 - type: startingGear
   id: VisitorQMAlt
@@ -212,6 +244,9 @@
     outerClothing: ClothingOuterWinterQM
     pocket1: WeaponDisabler
     pocket2: AppraisalTool
+    underweart: ClothingUnderwearTopBraQuartermaster ## DS-14
+    underwearb: ClothingUnderwearBottomPantiesQuartermaster ## DS-14
+    socks: ClothingUnderwearSocksQuartermaster ## DS-14
 
 # Security
 
@@ -229,6 +264,8 @@
     outerClothing: ClothingOuterVestArmorSec # DS14
     pocket1: WeaponPistolMk58
     pocket2: MagazinePistol
+    underwearb: ClothingUnderwearBottomBoxersCadet ## DS-14
+    socks: ClothingUnderwearSocksCadet ## DS-14
   inhand:
   - FlashlightSeclite
 
@@ -247,6 +284,9 @@
     outerClothing: ClothingOuterArmorBasicSlim
     pocket1: WeaponPistolMk58
     pocket2: MagazinePistol
+    underweart: ClothingUnderwearTopBraCadet ## DS-14
+    underwearb: ClothingUnderwearBottomPantiesCadet ## DS-14
+    socks: ClothingUnderwearSocksCadet ## DS-14
   inhand:
   - FlashlightSeclite
 
@@ -264,6 +304,8 @@
     outerClothing: ClothingOuterVestArmorSec # DS14
     pocket1: WeaponPistolMk58
     pocket2: MagazinePistol
+    underwearb: ClothingUnderwearBottomBoxersSecurityOfficer ## DS-14
+    socks: ClothingUnderwearSocksSecurityOfficer ## DS-14
   inhand:
   - FlashlightSeclite
 
@@ -282,6 +324,9 @@
     outerClothing: ClothingOuterArmorBasicSlim
     pocket1: WeaponPistolMk58
     pocket2: MagazinePistol
+    underweart: ClothingUnderwearTopBraSecurityOfficer ## DS-14
+    underwearb: ClothingUnderwearBottomPantiesSecurityOfficer ## DS-14
+    socks: ClothingUnderwearSocksSecurityOfficer ## DS-14
   inhand:
   - FlashlightSeclite
 
@@ -300,6 +345,8 @@
     outerClothing: ClothingOuterCoatDetectiveLoadout
     pocket1: ForensicScanner
     pocket2: ForensicPad
+    underwearb: ClothingUnderwearBottomBoxersDetective ## DS-14
+    socks: ClothingUnderwearSocksDetective ## DS-14
   inhand:
   - FlashlightSeclite
 
@@ -318,6 +365,9 @@
     outerClothing: ClothingOuterVestDetective
     pocket1: ForensicScanner
     pocket2: ForensicPad
+    underweart: ClothingUnderwearTopBraDetective ## DS-14
+    underwearb: ClothingUnderwearBottomPantiesDetective ## DS-14
+    socks: ClothingUnderwearSocksDetective ## DS-14
   inhand:
   - FlashlightSeclite
 
@@ -337,6 +387,8 @@
     outerClothing: ClothingOuterCoatWarden
     pocket1: WeaponDisabler
     pocket2: Zipties
+    underwearb: ClothingUnderwearBottomBoxersWarden ## DS-14
+    socks: ClothingUnderwearSocksWarden ## DS-14
   inhand:
   - FlashlightSeclite
   - WeaponShotgunKammerer
@@ -356,6 +408,9 @@
     outerClothing: ClothingOuterWinterWarden
     pocket1: WeaponDisabler
     pocket2: Zipties
+    underweart: ClothingUnderwearTopBraWarden ## DS-14
+    underwearb: ClothingUnderwearBottomPantiesWarden ## DS-14
+    socks: ClothingUnderwearSocksWarden ## DS-14
   inhand:
   - FlashlightSeclite
   - WeaponShotgunKammerer
@@ -373,6 +428,8 @@
     ears: ClothingHeadsetCargo
     pocket1: AppraisalTool
     pocket2: DrinkColaCan
+    underwearb: ClothingUnderwearBottomBoxersCargoTechnician ## DS-14
+    socks: ClothingUnderwearSocksCargoTech ## DS-14
   inhand:
   - DrinkRumBottleFull
 
@@ -388,6 +445,9 @@
     pocket1: AppraisalTool
     pocket2: SpaceCash500
     outerClothing: ClothingOuterWinterCargo
+    underweart: ClothingUnderwearTopBraCargoTechnician ## DS-14
+    underwearb: ClothingUnderwearBottomPantiesCargoTechnician ## DS-14
+    socks: ClothingUnderwearSocksCargoTech ## DS-14
   inhand:
   - FoodBoxPizzaFilled
   - KnifePlastic
@@ -404,6 +464,8 @@
     ears: ClothingHeadsetCargo
     pocket1: SurvivalKnife
     pocket2: HandheldGPSBasic
+    underwearb: ClothingUnderwearBottomBoxersSalvageSpecialist ## DS-14
+    socks: ClothingUnderwearSocksSalvage ## DS-14
   inhand:
   - FoodSnackBoritos
 
@@ -420,6 +482,9 @@
     outerClothing: ClothingOuterWinterCargo
     pocket1: SurvivalKnife
     pocket2: HandheldGPSBasic
+    underweart: ClothingUnderwearTopBraSalvageSpecialist ## DS-14
+    underwearb: ClothingUnderwearBottomPantiesSalvageSpecialist ## DS-14
+    socks: ClothingUnderwearSocksSalvage ## DS-14
   inhand:
   - Shovel
 
@@ -439,6 +504,8 @@
     outerClothing: ClothingOuterSuitAtmosFire
     suitstorage: AirTankFilled
     pocket1: CrowbarRed
+    underwearb: ClothingUnderwearBottomBoxersAtmosphericTechnician ## DS-14
+    socks: ClothingUnderwearSocksAtmos ## DS-14
   inhand:
   - FireExtinguisher
 
@@ -458,6 +525,9 @@
     outerClothing: ClothingOuterWinterAtmos
     pocket1: FlashlightLantern
     pocket2: CrowbarRed
+    underweart: ClothingUnderwearTopBraAtmosphericTechnician ## DS-14
+    underwearb: ClothingUnderwearBottomPantiesAtmosphericTechnician ## DS-14
+    socks: ClothingUnderwearSocksAtmos ## DS-14
   inhand:
   - FoodSnackBoritos
 
@@ -474,6 +544,8 @@
     eyes: ClothingEyesGlassesMeson
     pocket1: LightReplacer
     pocket2: Welder
+    underwearb: ClothingUnderwearBottomBoxersTechnicalAssistant ## DS-14
+    socks: ClothingUnderwearSocksTechnicalAssistant ## DS-14
   inhand:
   - CableApcStack
 
@@ -492,6 +564,9 @@
     outerClothing: ClothingOuterVestHazard
     pocket1: HolofanProjector
     pocket2: GasAnalyzer
+    underweart: ClothingUnderwearTopBraTechnicalAssistant ## DS-14
+    underwearb: ClothingUnderwearBottomPantiesTechnicalAssistant ## DS-14
+    socks: ClothingUnderwearSocksTechnicalAssistant ## DS-14
   inhand:
   - SheetSteel
 
@@ -510,6 +585,8 @@
     outerClothing: ClothingOuterWinterEngi
     pocket1: RCD
     pocket2: RCDAmmo
+    underwearb: ClothingUnderwearBottomBoxersEngineer ## DS-14
+    socks: ClothingUnderwearSocksEngineer ## DS-14
   inhand:
   - trayScanner
   - CableApcStack
@@ -528,6 +605,9 @@
     eyes: ClothingEyesGlassesMeson
     pocket1: RCD
     pocket2: RCDAmmo
+    underweart: ClothingUnderwearTopBraEngineer ## DS-14
+    underwearb: ClothingUnderwearBottomPantiesEngineer ## DS-14
+    socks: ClothingUnderwearSocksEngineer ## DS-14
   inhand:
   - SheetSteel
   - SheetGlass
@@ -548,6 +628,8 @@
     outerClothing: ClothingOuterCoatLabChem
     pocket1: PillCanisterRandom
     pocket2: PillCanisterRandom
+    underwearb: ClothingUnderwearBottomBoxersChemist ## DS-14
+    socks: ClothingUnderwearSocksChemist ## DS-14
   inhand:
   - PillCanisterRandom
   - PillCanisterRandom
@@ -566,6 +648,9 @@
     outerClothing: ClothingOuterWinterChem
     pocket1: PillCanisterRandom
     pocket2: PillCanisterRandom
+    underweart: ClothingUnderwearTopBraChemist ## DS-14
+    underwearb: ClothingUnderwearBottomPantiesChemist ## DS-14
+    socks: ClothingUnderwearSocksChemist ## DS-14
   inhand:
   - PillCanisterRandom
   - PillCanisterRandom
@@ -585,6 +670,8 @@
     outerClothing: ClothingOuterCoatLabGene
     pocket1: PillCanisterCharcoal
     pocket2: PillCanisterRandom
+    underwearb: ClothingUnderwearBottomBoxersDoctor ## DS-14
+    socks: ClothingUnderwearSocksDoctor ## DS-14
   inhand:
   - SyringePhalanximine
 
@@ -603,6 +690,9 @@
     outerClothing: ClothingOuterWinterGen
     pocket1: PillCanisterHyronalin
     pocket2: PillCanisterRandom
+    underweart: ClothingUnderwearTopBraDoctor ## DS-14
+    underwearb: ClothingUnderwearBottomPantiesDoctor ## DS-14
+    socks: ClothingUnderwearSocksDoctor ## DS-14
   inhand:
   - SyringeBicaridine
 
@@ -621,6 +711,8 @@
     outerClothing: ClothingOuterCoatLabViro
     pocket1: PillCanisterTricordrazine
     pocket2: PillCanisterRandom
+    underwearb: ClothingUnderwearBottomBoxersDoctor ## DS-14
+    socks: ClothingUnderwearSocksDoctor ## DS-14
   inhand:
   - SyringeSigynate
 
@@ -640,6 +732,9 @@
     outerClothing: ClothingOuterWinterViro
     pocket1: PillCanisterTricordrazine
     pocket2: PillCanisterRandom
+    underweart: ClothingUnderwearTopBraDoctor ## DS-14
+    underwearb: ClothingUnderwearBottomPantiesDoctor ## DS-14
+    socks: ClothingUnderwearSocksDoctor ## DS-14
   inhand:
   - SyringeEphedrine
 
@@ -659,6 +754,8 @@
     outerClothing: ClothingOuterCoatLab
     pocket1: PillCanisterTricordrazine
     pocket2: PillCanisterDermaline
+    underwearb: ClothingUnderwearBottomBoxersDoctor ## DS-14
+    socks: ClothingUnderwearSocksDoctor ## DS-14
   inhand:
   - SyringeInaprovaline
 
@@ -678,6 +775,9 @@
     outerClothing: ClothingOuterWinterMed
     pocket1: PillCanisterTricordrazine
     pocket2: PillCanisterBicaridine
+    underweart: ClothingUnderwearTopBraDoctor ## DS-14
+    underwearb: ClothingUnderwearBottomPantiesDoctor ## DS-14
+    socks: ClothingUnderwearSocksDoctor ## DS-14
   inhand:
   - SyringeSaline
 
@@ -696,6 +796,8 @@
     eyes: ClothingEyesGlasses
     pocket1: Scalpel
     pocket2: Gauze
+    underwearb: ClothingUnderwearBottomBoxersDoctor ## DS-14
+    socks: ClothingUnderwearSocksDoctor ## DS-14
   inhand:
   - Cautery
   - Drill
@@ -714,6 +816,8 @@
     eyes: ClothingEyesHudMedical
     pocket1: WhoopieCushion
     pocket2: PillSpaceDrugs
+    underwearb: ClothingUnderwearBottomBoxersPsychologist ## DS-14
+    socks: ClothingUnderwearSocksPsychologist ## DS-14
   inhand:
   - CigarCase
   - Lighter
@@ -731,6 +835,9 @@
     eyes: ClothingEyesHudMedical
     pocket1: BulletFoam
     pocket2: PillSpaceDrugs
+    underweart: ClothingUnderwearTopBraPsychologist ## DS-14
+    underwearb: ClothingUnderwearBottomPantiesPsychologist ## DS-14
+    socks: ClothingUnderwearSocksPsychologist ## DS-14
   inhand:
   - FoamCrossbow
   - DrinkWhiskeyBottleFull
@@ -751,6 +858,8 @@
     outerClothing: ClothingOuterWinterPara
     pocket1: CombatMedipen
     pocket2: Brutepack
+    underwearb: ClothingUnderwearBottomBoxersParamedic ## DS-14
+    socks: ClothingUnderwearSocksParamedic ## DS-14
   inhand:
   - SyringeTranexamicAcid
   - Gauze
@@ -771,6 +880,9 @@
     outerClothing: ClothingOuterCoatParamedicWB
     pocket1: CombatMedipen
     pocket2: Brutepack
+    underweart: ClothingUnderwearTopBraParamedic ## DS-14
+    underwearb: ClothingUnderwearBottomPantiesParamedic ## DS-14
+    socks: ClothingUnderwearSocksParamedic ## DS-14
   inhand:
   - AntiPoisonMedipen
   - Gauze
@@ -788,6 +900,8 @@
     eyes: ClothingEyesHudMedical
     pocket1: Ointment
     pocket2: Brutepack
+    underwearb: ClothingUnderwearBottomBoxersIntern ## DS-14
+    socks: ClothingUnderwearSocksIntern ## DS-14
   inhand:
   - Bloodpack
   - Gauze
@@ -805,6 +919,10 @@
     eyes: ClothingEyesHudMedical
     pocket1: Ointment
     pocket2: Brutepack
+    underweart: ClothingUnderwearTopBraIntern ## DS-14
+    underwearb: ClothingUnderwearBottomPantiesIntern ## DS-14
+    socks: ClothingUnderwearSocksIntern ## DS-14
+
   inhand:
   - Bloodpack
   - Gauze
@@ -823,6 +941,8 @@
     eyes: ClothingEyesHudMedical
     pocket1: RegenerativeMesh
     pocket2: PillCanisterBicaridine
+    underwearb: ClothingUnderwearBottomBoxersDoctor ## DS-14
+    socks: ClothingUnderwearSocksDoctor ## DS-14
   inhand:
   - ScalpelAdvanced
   - MedicatedSuture
@@ -841,6 +961,8 @@
     eyes: ClothingEyesHudMedical
     pocket1: RegenerativeMesh
     pocket2: PillCanisterBicaridine
+    underwearb: ClothingUnderwearBottomBoxersDoctor ## DS-14
+    socks: ClothingUnderwearSocksDoctor ## DS-14
   inhand:
   - ScalpelAdvanced
   - MedicatedSuture
@@ -859,6 +981,8 @@
     eyes: ClothingEyesHudMedical
     pocket1: RegenerativeMesh
     pocket2: PillCanisterBicaridine
+    underwearb: ClothingUnderwearBottomBoxersDoctor ## DS-14
+    socks: ClothingUnderwearSocksDoctor ## DS-14
   inhand:
   - ScalpelAdvanced
   - MedicatedSuture
@@ -876,6 +1000,8 @@
     back: ClothingBackpackScience
     ears: ClothingHeadsetScience
     eyes: ClothingEyesGlasses
+    underwearb: ClothingUnderwearBottomBoxersResearchAssistant ## DS-14
+    socks: ClothingUnderwearSocksResearchAssistant ## DS-14
   inhand:
   - NetworkConfigurator
 
@@ -890,6 +1016,9 @@
     back: ClothingBackpackSatchelScience
     ears: ClothingHeadsetScience
     eyes: ClothingEyesGlasses
+    underweart: ClothingUnderwearTopBraResearchAssistant ## DS-14
+    underwearb: ClothingUnderwearBottomPantiesResearchAssistant ## DS-14
+    socks: ClothingUnderwearSocksResearchAssistant ## DS-14
   inhand:
   - DrinkHotCoffee
 
@@ -904,6 +1033,8 @@
     back: ClothingBackpackScience
     ears: ClothingHeadsetScience
     eyes: ClothingEyesGlasses
+    underwearb: ClothingUnderwearBottomBoxersScientist ## DS-14
+    socks: ClothingUnderwearSocksScientist ## DS-14
   inhand:
   - DrinkHotCoffee
 
@@ -919,6 +1050,9 @@
     back: ClothingBackpackSatchelScience
     ears: ClothingHeadsetScience
     eyes: ClothingEyesGlasses
+    underweart: ClothingUnderwearTopBraScientist ## DS-14
+    underwearb: ClothingUnderwearBottomPantiesScientist ## DS-14
+    socks: ClothingUnderwearSocksScientist ## DS-14
   inhand:
   - AnomalyScanner
 
@@ -938,6 +1072,9 @@
     outerClothing: ClothingOuterArmorBasicSlim
     pocket1: DrinkVodkaBottleFull
     pocket2: BarSpoon
+    underwearb: ClothingUnderwearBottomBoxersBartender ## DS-14
+    socks: ClothingUnderwearSocksBartender ## DS-14
+
 
 - type: startingGear
   id: VisitorBartenderAlt
@@ -953,6 +1090,9 @@
     outerClothing: ClothingOuterWinterBar
     pocket1: WeaponShotgunSawn
     pocket2: DrinkTequilaBottleFull
+    underweart: ClothingUnderwearTopBraBartender ## DS-14
+    underwearb: ClothingUnderwearBottomPantiesBartender ## DS-14
+    socks: ClothingUnderwearSocksBartender ## DS-14
 
 - type: startingGear
   id: VisitorBotanist
@@ -963,6 +1103,8 @@
     id: VisitorPDA
     back: ClothingBackpackDuffelHydroponics
     ears: ClothingHeadsetService
+    underwearb: ClothingUnderwearBottomBoxersBotanist ## DS-14
+    socks: ClothingUnderwearSocksBotanist ## DS-14
   inhand:
   - HydroponicsToolScythe
 
@@ -978,6 +1120,10 @@
     ears: ClothingHeadsetService
     pocket1: HydroponicsToolMiniHoe
     pocket2: HydroponicsToolSpade
+    underweart: ClothingUnderwearTopBraBotanist ## DS-14
+    underwearb: ClothingUnderwearBottomPantiesBotanist ## DS-14
+    socks: ClothingUnderwearSocksBotanist ## DS-14
+
 
 - type: startingGear
   id: VisitorBoxer
@@ -990,6 +1136,8 @@
     ears: ClothingHeadsetService
     pocket1: DrinkVodkaBottleFull
     pocket2: SoapDeluxe
+    underwearb: ClothingUnderwearBottomBoxersBoxer ## DS-14
+    socks: ClothingUnderwearSocksBoxer ## DS-14
 
 - type: startingGear
   id: VisitorBoxerAlt
@@ -1003,6 +1151,9 @@
     outerClothing: ClothingOuterSkub
     pocket1: Skub
     pocket2: DrinkSpaceGlue
+    underweart: ClothingUnderwearTopBraBoxer ## DS-14
+    underwearb: ClothingUnderwearBottomPantiesBoxer ## DS-14
+    socks: ClothingUnderwearSocksBoxer ## DS-14
 
 - type: startingGear #!! make sure these are bible users.
   id: VisitorChaplain
@@ -1017,6 +1168,8 @@
     outerClothing: ClothingOuterPlagueSuit
     pocket1: PlushieSharkGrey
     pocket2: FoodSnackEnergy
+    underwearb: ClothingUnderwearBottomBoxersChaplain ## DS-14
+    socks: ClothingUnderwearSocksChaplain ## DS-14
 
 - type: startingGear
   id: VisitorChaplainAlt
@@ -1030,6 +1183,9 @@
     outerClothing: ClothingOuterNunRobe
     pocket1: PlushiePenguin
     pocket2: DrinkCoconutWaterCarton
+    underweart: ClothingUnderwearTopBraChaplain ## DS-14
+    underwearb: ClothingUnderwearBottomPantiesChaplain ## DS-14
+    socks: ClothingUnderwearSocksChaplain ## DS-14
 
 - type: startingGear
   id: VisitorChef
@@ -1045,6 +1201,8 @@
     outerClothing: ClothingOuterJacketChef
     pocket1: ButchCleaver
     pocket2: BookHowToCookForFortySpaceman
+    underwearb: ClothingUnderwearBottomBoxersChef ## DS-14
+    socks: ClothingUnderwearSocksChef ## DS-14
   inhand:
   - ClothingMaskItalianMoustache
   - DrinkWineBottleFull
@@ -1063,6 +1221,9 @@
     outerClothing: ClothingOuterWinterChef
     pocket1: RollingPin
     pocket2: BookHowToCookForFortySpaceman
+    underweart: ClothingUnderwearTopBraChef ## DS-14
+    underwearb: ClothingUnderwearBottomPantiesChef ## DS-14
+    socks: ClothingUnderwearSocksChef ## DS-14
   inhand:
   - ClothingMaskItalianMoustache
   - FoodCheese
@@ -1078,6 +1239,8 @@
     mask: ClothingMaskClown
     pocket1: BikeHorn
     pocket2: ClownRecorder
+    underwearb: ClothingUnderwearBottomBoxersClown ## DS-14
+    socks: ClothingUnderwearSocksChef ## DS-14
 
 - type: startingGear
   id: VisitorJanitor
@@ -1091,6 +1254,8 @@
     belt: ClothingBeltJanitorFilled
     ears: ClothingHeadsetService
     outerClothing: ClothingOuterWinterJani
+    underwearb: ClothingUnderwearBottomBoxersJanitor ## DS-14
+    socks: ClothingUnderwearSocksJanitor ## DS-14
   inhand:
   - MopItem
   - Bucket
@@ -1107,6 +1272,9 @@
     belt: ClothingBeltJanitorFilled
     ears: ClothingHeadsetService
     outerClothing: ClothingOuterBioJanitor
+    underweart: ClothingUnderwearTopBraJanitor ## DS-14
+    underwearb: ClothingUnderwearBottomPantiesJanitor ## DS-14
+    socks: ClothingUnderwearSocksJanitor ## DS-14
   inhand:
   - MopItem
   - Bucket
@@ -1123,6 +1291,8 @@
     ears: ClothingHeadsetAltSecurityOfficer # ds14
     # pocket1: RubberStampLawyer # DS14-disabled due to LawyerStampProviderComponent
     pocket2: LuxuryPen
+    underwearb: ClothingUnderwearBottomBoxersLawyer ## DS-14
+    socks: ClothingUnderwearSockLawyer ## DS-14
   inhand:
   - BriefcaseBrownFilled
 
@@ -1138,6 +1308,8 @@
     ears: ClothingHeadsetAltSecurityOfficer # ds14
     # pocket1: RubberStampLawyer # DS14-disabled due to LawyerStampProviderComponent
     pocket2: SmokingPipeFilledTobacco
+    underwearb: ClothingUnderwearBottomBoxersLawyer ## DS-14
+    socks: ClothingUnderwearSockLawyer ## DS-14
   inhand:
   - BriefcaseBrownFilled
 
@@ -1154,6 +1326,8 @@
     ears: ClothingHeadsetAltSecurityOfficer # ds14
     # pocket1: RubberStampLawyer # DS14-disabled due to LawyerStampProviderComponent
     pocket2: SmokingPipeFilledTobacco
+    underwearb: ClothingUnderwearBottomBoxersLawyer ## DS-14
+    socks: ClothingUnderwearSockLawyer ## DS-14
   inhand:
   - BriefcaseBrownFilled
 
@@ -1172,6 +1346,8 @@
     outerClothing: ClothingOuterCoatExpensive
     # pocket1: RubberStampLawyer # DS14-disabled due to LawyerStampProviderComponent
     pocket2: LuxuryPen
+    underwearb: ClothingUnderwearBottomBoxersLawyer ## DS-14
+    socks: ClothingUnderwearSockLawyer ## DS-14
   inhand:
   - BriefcaseBrownFilled
 
@@ -1188,6 +1364,8 @@
     ears: ClothingHeadsetAltSecurityOfficer # ds14
     # pocket1: RubberStampLawyer # DS14-disabled due to LawyerStampProviderComponent
     pocket2: LuxuryPen
+    underwearb: ClothingUnderwearBottomBoxersLawyer ## DS-14
+    socks: ClothingUnderwearSockLawyer ## DS-14
   inhand:
   - BriefcaseBrownFilled
 
@@ -1222,6 +1400,8 @@
     ears: ClothingHeadsetService
     pocket1: BookJanitorTale
     pocket2: BookRandomStory
+    underwearb: ClothingUnderwearBottomBoxersLibrarian ## DS-14
+    socks: ClothingUnderwearSocksLibrarian ## DS-14
   inhand:
   - Cane
 
@@ -1238,6 +1418,9 @@
     ears: ClothingHeadsetService
     pocket1: BookSun
     pocket2: BookRandomStory
+    underweart: ClothingUnderwearTopBraLibrarian ## DS-14
+    underwearb: ClothingUnderwearBottomPantiesLibrarian ## DS-14
+    socks: ClothingUnderwearSocksLibrarian ## DS-14
   inhand:
   - BoxFolderClipboardThreePapers
 
@@ -1252,6 +1435,8 @@
     ears: ClothingHeadsetService
     pocket1: DrinkGrapeCan
     pocket2: FoodSnackBoritos
+    underwearb: ClothingUnderwearBottomBoxersMusician ## DS-14
+    socks: ClothingUnderwearSocksMusician ## DS-14
   inhand:
   - TromboneInstrument
 
@@ -1266,6 +1451,8 @@
     ears: ClothingHeadsetService
     pocket1: FoodSnackCheesie
     pocket2: DrinkShamblersJuiceCan
+    underwearb: ClothingUnderwearBottomBoxersMusician ## DS-14
+    socks: ClothingUnderwearSocksMusician ## DS-14
   inhand:
   - SynthesizerInstrument
 
@@ -1280,6 +1467,8 @@
     ears: ClothingHeadsetService
     pocket1: FoodSnackPistachios
     pocket2: DrinkNukieCan
+    underwearb: ClothingUnderwearBottomBoxersMusician ## DS-14
+    socks: ClothingUnderwearSocksMusician ## DS-14
   inhand:
   - CelloInstrument
 
@@ -1294,6 +1483,8 @@
     ears: ClothingHeadsetService
     pocket1: DrinkSolDryCan
     pocket2: FoodSnackBoritos
+    underwearb: ClothingUnderwearBottomBoxersMusician ## DS-14
+    socks: ClothingUnderwearSocksMusician ## DS-14
   inhand:
   - ViolinInstrument
 
@@ -1308,6 +1499,8 @@
     ears: ClothingHeadsetService
     pocket1: DrinkEnergyDrinkCan
     pocket2: FoodSnackRaisins
+    underwearb: ClothingUnderwearBottomBoxersMusician ## DS-14
+    socks: ClothingUnderwearSocksMusician ## DS-14
   inhand:
   - ViolaInstrument
 
@@ -1322,6 +1515,8 @@
     ears: ClothingHeadsetService
     pocket1: FoodSnackSus
     pocket2: DrinkFourteenLokoCan
+    underwearb: ClothingUnderwearBottomBoxersMusician ## DS-14
+    socks: ClothingUnderwearSocksMusician ## DS-14
   inhand:
   - ClarinetInstrument
 
@@ -1336,6 +1531,8 @@
     ears: ClothingHeadsetService
     pocket1: FoodSnackCnDs
     pocket2: DrinkDrGibbCan
+    underwearb: ClothingUnderwearBottomBoxersMusician ## DS-14
+    socks: ClothingUnderwearSocksMusician ## DS-14
   inhand:
   - SaxophoneInstrument
 
@@ -1350,6 +1547,8 @@
     ears: ClothingHeadsetService
     pocket1: FoodSnackChips
     pocket2: DrinkRootBeerCan
+    underwearb: ClothingUnderwearBottomBoxersMusician ## DS-14
+    socks: ClothingUnderwearSocksMusician ## DS-14
   inhand:
   - FrenchHornInstrument
 
@@ -1364,6 +1563,8 @@
     ears: ClothingHeadsetService
     pocket1: BluntRainbow
     pocket2: DrinkGrapeCan
+    underwearb: ClothingUnderwearBottomBoxersMusician ## DS-14
+    socks: ClothingUnderwearSocksMusician ## DS-14
   inhand:
   - TrumpetInstrument
 
@@ -1378,6 +1579,8 @@
     ears: ClothingHeadsetService
     pocket1: BluntRainbow
     pocket2: DrinkNukieCan
+    underwearb: ClothingUnderwearBottomBoxersMusician ## DS-14
+    socks: ClothingUnderwearSocksMusician ## DS-14
   inhand:
   - RockGuitarInstrument
 
@@ -1392,6 +1595,8 @@
     ears: ClothingHeadsetService
     pocket1: BluntRainbow
     pocket2: FoodSnackCheesie
+    underwearb: ClothingUnderwearBottomBoxersMusician ## DS-14
+    socks: ClothingUnderwearSocksMusician ## DS-14
   inhand:
   - BanjoInstrument
 
@@ -1406,6 +1611,8 @@
     ears: ClothingHeadsetService
     pocket1: BluntRainbow
     pocket2: FoodSnackPistachios
+    underwearb: ClothingUnderwearBottomBoxersMusician ## DS-14
+    socks: ClothingUnderwearSocksMusician ## DS-14
   inhand:
   - AcousticGuitarInstrument
 
@@ -1420,6 +1627,8 @@
     ears: ClothingHeadsetService
     pocket1: BluntRainbow
     pocket2: DrinkEnergyDrinkCan
+    underwearb: ClothingUnderwearBottomBoxersMusician ## DS-14
+    socks: ClothingUnderwearSocksMusician ## DS-14
   inhand:
   - ElectricGuitarInstrument
 
@@ -1433,6 +1642,8 @@
     ears: ClothingHeadsetService
     pocket1: BluntRainbow
     pocket2: FoodSnackSus
+    underwearb: ClothingUnderwearBottomBoxersMusician ## DS-14
+    socks: ClothingUnderwearSocksMusician ## DS-14
   inhand:
   - TrumpetInstrument
 
@@ -1448,6 +1659,8 @@
     ears: ClothingHeadsetService
     pocket1: BluntRainbow
     pocket2: FoodSnackSus
+    underwearb: ClothingUnderwearBottomBoxersMusician ## DS-14
+    socks: ClothingUnderwearSocksMusician ## DS-14
   inhand:
   - SaxophoneInstrument
 
@@ -1464,6 +1677,8 @@
     outerClothing: ClothingOuterPoncho
     pocket1: BluntRainbow
     pocket2: FoodSnackSus
+    underwearb: ClothingUnderwearBottomBoxersMusician ## DS-14
+    socks: ClothingUnderwearSocksMusician ## DS-14
   inhand:
   - AcousticGuitarInstrument
 
@@ -1481,6 +1696,8 @@
     ears: ClothingHeadsetService
     pocket1: CrayonMime
     pocket2: RubberStampMime
+    underwearb: ClothingUnderwearBottomBoxersMime ## DS-14
+    socks: ClothingUnderwearSocksMime ## DS-14
 
 - type: startingGear
   id: VisitorMimeAlt
@@ -1497,6 +1714,9 @@
     outerClothing: ClothingOuterWinterMime
     pocket1: CrayonMime
     pocket2: RubberStampMime
+    underweart: ClothingUnderwearTopBraMime ## DS-14
+    underwearb: ClothingUnderwearBottomPantiesMime ## DS-14
+    socks: ClothingUnderwearSocksMime ## DS-14
   inhand:
   - FoodBurgerMime
 
@@ -1510,6 +1730,8 @@
     ears: ClothingHeadsetService
     pocket1: MicrophoneInstrument
     pocket2: BoxFolderClipboardThreePapers
+    underwearb: ClothingUnderwearBottomBoxersReporter ## DS-14
+    socks: ClothingUnderwearSocksReporter ## DS-14
 
 - type: startingGear
   id: VisitorReporterAlt
@@ -1521,6 +1743,9 @@
     ears: ClothingHeadsetService
     pocket1: MicrophoneInstrument
     pocket2: BoxFolderClipboardThreePapers
+    underweart: ClothingUnderwearTopBraReporter ## DS-14
+    underwearb: ClothingUnderwearBottomPantiesReporter ## DS-14
+    socks: ClothingUnderwearSocksReporter ## DS-14
 
 - type: startingGear
   id: VisitorServiceWorker
@@ -1533,6 +1758,8 @@
     ears: ClothingHeadsetService
     pocket1: Fork
     pocket2: FoodShakerPepper
+    underwearb: ClothingUnderwearBottomBoxersService ## DS-14
+    socks: ClothingUnderwearSocksService ## DS-14
 
 - type: startingGear
   id: VisitorServiceWorkerAlt
@@ -1546,6 +1773,9 @@
     outerClothing: ClothingOuterApronBar
     pocket1: Fork
     pocket2: FoodShakerPepper
+    underweart: ClothingUnderwearTopBraService ## DS-14
+    underwearb: ClothingUnderwearBottomPantiesService ## DS-14
+    socks: ClothingUnderwearSocksService ## DS-14
 
 - type: startingGear
   id: VisitorZookeeper
@@ -1559,6 +1789,8 @@
     ears: ClothingHeadsetService
     pocket1: WeaponFlareGun
     pocket2: PillCanisterDylovene
+    underwearb: ClothingUnderwearBottomBoxersZoo ## DS-14
+    socks: ClothingUnderwearSocksZoo ## DS-14
 
 - type: startingGear
   id: VisitorZookeeperAlt
@@ -1572,6 +1804,9 @@
     ears: ClothingHeadsetService
     pocket1: WeaponFlareGun
     pocket2: PillCanisterDylovene
+    underweart: ClothingUnderwearTopBraZoo ## DS-14
+    underwearb: ClothingUnderwearBottomPantiesZoo ## DS-14
+    socks: ClothingUnderwearSocksZoo ## DS-14
 
 # Misc
 
@@ -1592,6 +1827,8 @@
     back: ClothingBackpackCargo
     #ears: null # No headsets.
     pocket1: AppraisalTool
+    underwearb: ClothingUnderwearBottomBoxersCargoTechnician ## DS-14
+    socks: ClothingUnderwearSocksCargoTech ## DS-14
 
 - type: startingGear
   id: ChallengeCargoTechGearCoat
@@ -1604,6 +1841,8 @@
     #ears: # No headsets.
     pocket1: AppraisalTool
     outerClothing: ClothingOuterWinterCargo
+    underwearb: ClothingUnderwearBottomBoxersCargoTechnician ## DS-14
+    socks: ClothingUnderwearSocksCargoTech ## DS-14
 
 # CHALLENGE
 # carefully consider everything you add to these. These are meant for roles that are placed in survival situations where every item will be a resource.
@@ -1620,6 +1859,8 @@
     id: VisitorPDA
     back: ClothingBackpackCaptain
     #ears: # No headsets.
+    underwearb: ClothingUnderwearBottomBoxersCaptain ## DS-14
+    socks: ClothingUnderwearSocksCaptain ## DS-14
 
 - type: startingGear
   id: ChallengeVictimCaptainAlt
@@ -1634,6 +1875,9 @@
     back: ClothingBackpackSatchelCaptain
     #ears: # No headsets.
     outerClothing: ClothingOuterWinterCap
+    underweart: ClothingUnderwearTopBraCaptain ## DS-14
+    underwearb: ClothingUnderwearBottomPantiesCaptain ## DS-14
+    socks: ClothingUnderwearSocksCaptain ## DS-14
 
 # CHALLENGE
 # carefully consider everything you add to these. These are meant for roles that are placed in survival situations where every item will be a resource.
@@ -1650,6 +1894,8 @@
     #ears: # No headsets.
     belt: ClothingBeltMedical
     outerClothing: ClothingOuterCoatLabCmo
+    underwearb: ClothingUnderwearBottomBoxersCMO ## DS-14
+    socks: ClothingUnderwearSocksCMO ## DS-14
 
 - type: startingGear
   id: ChallengeVictimCMOAlt
@@ -1663,6 +1909,10 @@
     #ears: # No headsets.
     belt: ClothingBeltMedical
     outerClothing: ClothingOuterCoatLabCmo
+    underweart: ClothingUnderwearTopBraCMO ## DS-14
+    underwearb: ClothingUnderwearBottomPantiesCMO ## DS-14
+    socks: ClothingUnderwearSocksCMO ## DS-14
+
 
 # CHALLENGE
 # carefully consider everything you add to these. These are meant for roles that are placed in survival situations where every item will be a resource.
@@ -1680,6 +1930,8 @@
     #ears: # No headsets.
     outerClothing: ClothingOuterVestHazard
     pocket1: WeaponDisabler
+    underwearb: ClothingUnderwearBottomBoxersChiefEngineer ## DS-14
+    socks: ClothingUnderwearSocksChiefEngineer ## DS-14
 
 - type: startingGear
   id: ChallengeVictimCEAlt
@@ -1694,6 +1946,9 @@
     #ears: # No headsets.
     outerClothing: ClothingOuterWinterCE
     pocket1: WeaponDisabler
+    underweart: ClothingUnderwearTopBraChiefEngineer ## DS-14
+    underwearb: ClothingUnderwearBottomPantiesChiefEngineer ## DS-14
+    socks: ClothingUnderwearSocksChiefEngineer ## DS-14
 
 # CHALLENGE
 # carefully consider everything you add to these. These are meant for roles that are placed in survival situations where every item will be a resource.
@@ -1710,6 +1965,8 @@
     back: ClothingBackpackDebug
     #ears: #No headsets.
     outerClothing: ClothingOuterWinterHoP
+    underwearb: ClothingUnderwearBottomBoxersHeadofPersonnel ## DS-14
+    socks: ClothingUnderwearSocksHeadofPersonnel ## DS-14
 
 - type: startingGear
   id: ChallengeVictimHOPAlt
@@ -1723,6 +1980,9 @@
     back: ClothingBackpackSatchelLeather
     #ears: #No headsets.
     outerClothing: ClothingOuterWinterHoP
+    underweart: ClothingUnderwearTopBraHeadofPersonnel ## DS-14
+    underwearb: ClothingUnderwearBottomPantiesHeadofPersonnel ## DS-14
+    socks: ClothingUnderwearSocksHeadofPersonnel ## DS-14
 
 # CHALLENGE
 # carefully consider everything you add to these. These are meant for roles that are placed in survival situations where every item will be a resource.
@@ -1741,6 +2001,8 @@
     #ears: #No headsets.
     eyes: ClothingEyesGlassesSecurity
     outerClothing: ClothingOuterCoatHoSTrench
+    underwearb: ClothingUnderwearBottomBoxersHeadofSecurity ## DS-14
+    socks: ClothingUnderwearSocksHeadOfSecurity ## DS-14
 
 - type: startingGear
   id: ChallengeVictimHOSAlt
@@ -1755,6 +2017,9 @@
     back: ClothingBackpackSatchelLeather
     #ears: #No headsets.
     eyes: ClothingEyesGlassesSecurity
+    underweart: ClothingUnderwearTopBraHeadofSecurity ## DS-14
+    underwearb: ClothingUnderwearBottomPantiesHeadofSecurity ## DS-14
+    socks: ClothingUnderwearSocksHeadOfSecurity ## DS-14
 
 # CHALLENGE
 # carefully consider everything you add to these. These are meant for roles that are placed in survival situations where every item will be a resource.
@@ -1770,6 +2035,8 @@
     back: ClothingBackpackScience
     #ears: #No headsets.
     outerClothing: ClothingOuterCoatRD
+    underwearb: ClothingUnderwearBottomBoxersResearchDirector ## DS-14
+    socks: ClothingUnderwearSocksResearchDirector ## DS-14
 
 - type: startingGear
   id: ChallengeVictimRDAlt
@@ -1782,6 +2049,9 @@
     back: ClothingBackpackSatchelScience
     #ears: # No headsets.
     outerClothing: ClothingOuterCoatRD
+    underweart: ClothingUnderwearTopBraResearchDirector ## DS-14
+    underwearb: ClothingUnderwearBottomPantiesResearchDirector ## DS-14
+    socks: ClothingUnderwearSocksResearchDirector ## DS-14
 
 # CHALLENGE
 # carefully consider everything you add to these. These are meant for roles that are placed in survival situations where every item will be a resource.
@@ -1798,6 +2068,8 @@
     #ears: # No headsets.
     outerClothing: ClothingOuterWinterQM
     pocket1: AppraisalTool
+    underwearb: ClothingUnderwearBottomBoxersQuartermaster ## DS-14
+    socks: ClothingUnderwearSocksQuartermaster ## DS-14
 
 - type: startingGear
   id: ChallengeVictimQMAlt
@@ -1811,6 +2083,9 @@
     #ears: # No headsets.
     outerClothing: ClothingOuterWinterQM
     pocket1: AppraisalTool
+    underweart: ClothingUnderwearTopBraQuartermaster ## DS-14
+    underwearb: ClothingUnderwearBottomPantiesQuartermaster ## DS-14
+    socks: ClothingUnderwearSocksQuartermaster ## DS-14
 
 # Security
 
