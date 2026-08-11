@@ -56,8 +56,8 @@ public sealed partial class BloodstreamSystem
             for (var i = 0; i <= rand.Next(min, max); i++)
             {
                 if (!SpawnDroplet((ent, bloodstream),
-                    rand.NextVector2() * rand.NextFloat(ent.Comp.Range.Min, ent.Comp.Range.Max),
-                    rand.NextFloat(ent.Comp.Force.Min, ent.Comp.Force.Max)))
+                    rand.NextVector2() * ent.Comp.Range.NextFloat(rand),
+                    ent.Comp.Force.NextFloat(rand)))
                     return;
             }
 
