@@ -293,8 +293,14 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
 
     }
 
+    /// <summary>
+    /// Draws the docking ports: Cargo, Arrivals and General(ShowDocks) on the radar. This is a separate method to avoid cluttering the main Draw method.
+    /// </summary>
     private void DrawDocks(DrawingHandleScreen handle, EntityUid uid, Matrix3x2 gridToView)
     {
+        if (!ShowDocks && !ShowCargoDocks && !ShowArrivalDocks)
+            return;
+
         const float dockScale = 0.6f;
         var topLeft = new Vector2(-dockScale, -dockScale);
         var topRight = new Vector2(dockScale, -dockScale);
