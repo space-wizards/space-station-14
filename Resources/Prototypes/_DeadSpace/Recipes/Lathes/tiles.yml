@@ -35,7 +35,7 @@
   categories:
   - Specialized
   materials:
-    Steel: 50
+    Steel: 25
 
 - type: latheRecipe
   abstract: true
@@ -385,7 +385,7 @@
   categories:
   - Precious
   materials:
-    Gold: 50
+    Gold: 25
 
 - type: latheRecipe
   id: FloorTileItemSilver
@@ -395,7 +395,7 @@
   categories:
   - Precious
   materials:
-    Silver: 50
+    Silver: 25
 
 - type: latheRecipe
   id: FloorTileItemDiamond
@@ -405,7 +405,7 @@
   categories:
   - Precious
   materials:
-    Diamond: 50
+    Diamond: 25
 
 - type: latheRecipe
   id: FloorTileItemPlasma
@@ -415,7 +415,7 @@
   categories:
   - Precious
   materials:
-    Plasma: 50
+    Plasma: 25
 
 - type: latheRecipe
   id: FloorTileItemUranium
@@ -425,4 +425,4 @@
   categories:
   - Precious
   materials:
-    Uranium: 50
+    Uranium: 25

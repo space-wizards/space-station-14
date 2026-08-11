@@ -35,6 +35,7 @@
       - FloorConcreteTilesStatic
       - CircuitFloorsStatic
       - FloorMarbleTilesStatic
+      - SpecialFloorTilesStatic
       dynamicPacks:
       - FauxTiles
 
@@ -89,6 +90,7 @@
       - FloorConcreteTilesStatic
       - CircuitFloorsStatic
       - FloorMarbleTilesStatic
+      - SpecialFloorTilesStatic
       dynamicPacks:
       - FauxTiles
 
