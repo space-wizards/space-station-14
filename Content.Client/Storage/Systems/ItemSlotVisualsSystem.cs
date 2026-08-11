@@ -13,14 +13,6 @@ public sealed partial class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVis
 {
     [Dependency] private ItemSystem _itemSystem = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-        // Have these systems go first & add their visuals, then after that, we add our own. No more conflicting visuals!
-        SubscribeLocalEvent<ItemSlotVisualsComponent, GetInhandVisualsEvent>(OnGetHeldVisuals, after: new[] { typeof(ItemSystem) });
-        SubscribeLocalEvent<ItemSlotVisualsComponent, GetEquipmentVisualsEvent>(OnGetClothingVisuals, after: new[] { typeof(ClothingSystem) });
-    }
-
     protected override void OnAppearanceChange(EntityUid uid, ItemSlotVisualsComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
@@ -47,6 +39,8 @@ public sealed partial class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVis
         _itemSystem.VisualsChanged(uid);
     }
 
+    // Have these systems go first & add their visuals, then after that, we add our own. No more conflicting visuals!
+    [SubscribeLocalEvent(after: [typeof(ItemSystem)])]
     private void OnGetHeldVisuals(Entity<ItemSlotVisualsComponent> ent, ref GetInhandVisualsEvent args)
     {
         foreach (var visual in ent.Comp.SlotVisuals.Values)
@@ -69,6 +63,7 @@ public sealed partial class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVis
         }
     }
 
+    [SubscribeLocalEvent(after: [typeof(ClothingSystem)])]
     private void OnGetClothingVisuals(Entity<ItemSlotVisualsComponent> ent, ref GetEquipmentVisualsEvent args)
     {
         foreach (var visual in ent.Comp.SlotVisuals.Values)
