@@ -383,9 +383,16 @@ namespace Content.Shared.Containers.ItemSlots
         }
 
         /// <summary>
-        /// Handles user-initiated insertion, respecting the slot's configured delay.
-        /// Forced and system-initiated insertions should use <see cref="TryInsert"/> directly.
+        ///     Tries to insert an item held by the user into an item slot. If the slot has an insertion delay, the
+        ///     insertion is performed after a do-after instead of immediately.
         /// </summary>
+        /// <param name="uid">The entity that owns the item slot.</param>
+        /// <param name="slot">The slot to insert the item into.</param>
+        /// <param name="item">The item held by the user.</param>
+        /// <param name="user">The user inserting the item.</param>
+        /// <param name="swap">Whether an item already in the slot may be swapped out.</param>
+        /// <param name="hands">The user's hands component, if it has already been resolved.</param>
+        /// <returns>True if the item was inserted immediately or the do-after was successfully started.</returns>
         private bool TryInsertFromHandWithDoAfter(EntityUid uid,
             ItemSlot slot,
             EntityUid item,
@@ -689,9 +696,13 @@ namespace Content.Shared.Containers.ItemSlots
         }
 
         /// <summary>
-        /// Handles user-initiated ejection, respecting the slot's configured delay.
-        /// Forced and system-initiated ejections should use <see cref="TryEjectToHands"/> directly.
+        ///     Tries to eject an item from a slot into the user's hands. If the slot has an ejection delay, the item is
+        ///     ejected after a do-after instead of immediately.
         /// </summary>
+        /// <param name="uid">The entity that owns the item slot.</param>
+        /// <param name="slot">The slot to eject the item from.</param>
+        /// <param name="user">The user ejecting the item.</param>
+        /// <returns>True if the item was ejected immediately or the do-after was successfully started.</returns>
         private bool TryEjectToHandsWithDoAfter(EntityUid uid, ItemSlot slot, EntityUid user)
         {
             if (slot.EjectDelay <= TimeSpan.Zero)
