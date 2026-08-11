@@ -94,7 +94,7 @@
     - type: NetProbeCartridge
 
 - type: entity
-  parent: [BasePDACartridge, BaseSecurityContraband]
+  parent: BasePDACartridge
   id: LogProbeCartridge
   name: LogProbe cartridge
   description: A program for getting access logs from devices.
