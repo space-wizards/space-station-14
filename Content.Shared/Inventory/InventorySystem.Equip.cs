@@ -164,7 +164,7 @@ public abstract partial class InventorySystem
             return false;
         }
 
-        if (!force && !CanEquip(actor, target, itemUid, slot, out var reason, slotDefinition, inventory, clothing))
+        if (!force && !CanEquip(actor, target, itemUid, slot, out var reason, slotDefinition, inventory, clothing, containerSlot: slotContainer))
         {
             if (!silent)
                 _popup.PopupCursor(Loc.GetString(reason), actor);
@@ -174,8 +174,7 @@ public abstract partial class InventorySystem
         if (checkDoafter &&
             clothing != null &&
             clothing.EquipDelay > TimeSpan.Zero &&
-            (clothing.Slots & slotDefinition.SlotFlags) != 0 &&
-            _containerSystem.CanInsert(itemUid, slotContainer))
+            (clothing.Slots & slotDefinition.SlotFlags) != 0)
         {
             var args = new DoAfterArgs(
                 EntityManager,
