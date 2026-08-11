@@ -11,7 +11,7 @@ public sealed partial class ItemSlotsSystem
     /// <remarks>
     /// If a popup entity is given, this will generate a popup message if any are configured on the item slot.
     /// </remarks>
-    public bool CanEject(EntityUid uid, EntityUid? user, ItemSlot slot, EntityUid? popup = null)
+    public bool CanEject(EntityUid uid, ItemSlot slot, EntityUid? user, EntityUid? popup = null)
     {
         if (slot.Locked)
         {
@@ -70,7 +70,7 @@ public sealed partial class ItemSlotsSystem
     {
         item = null;
 
-        if (!CanEject(uid, user, slot))
+        if (!CanEject(uid, slot, user))
             return false;
 
         item = slot.Item;

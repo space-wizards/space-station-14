@@ -17,7 +17,7 @@ public sealed partial class ItemSlotsSystem
 
         foreach (var slot in ent.Comp.Slots.Values)
         {
-            if (!slot.EjectOnInteract || slot.Item == null || !CanEject(ent, args.User, slot, popup: args.User))
+            if (!slot.EjectOnInteract || slot.Item == null || !CanEject(ent, slot, args.User, popup: args.User))
                 continue;
 
             args.Handled = true;
@@ -37,7 +37,7 @@ public sealed partial class ItemSlotsSystem
 
         foreach (var slot in ent.Comp.Slots.Values)
         {
-            if (!slot.EjectOnUse || slot.Item == null || !CanEject(ent, args.User, slot, popup: args.User))
+            if (!slot.EjectOnUse || slot.Item == null || !CanEject(ent, slot, args.User, popup: args.User))
                 continue;
 
             args.Handled = true;
@@ -75,7 +75,7 @@ public sealed partial class ItemSlotsSystem
             if (!slot.InsertOnInteract)
                 continue;
 
-            if (CanInsert(ent, args.Used, args.User, slot, slot.Swap))
+            if (CanInsert(ent, slot, args.Used, args.User, slot.Swap))
             {
                 slots.Add(slot);
             }

@@ -41,36 +41,36 @@ public sealed partial class ItemSlotsSystem
     /// false if the slot is already filled.
     /// </summary>
     public bool CanInsert(EntityUid uid,
-        EntityUid usedUid,
-        EntityUid? user,
         ItemSlot slot,
+        EntityUid item,
+        EntityUid? user,
         bool swap = false)
     {
         if (slot.ContainerSlot == null)
             return false;
 
-        if (slot.HasItem && (!swap || swap && !CanEject(uid, user, slot)))
+        if (slot.HasItem && (!swap || swap && !CanEject(uid, slot, user)))
             return false;
 
-        if (!CanInsertWhitelist(usedUid, slot))
+        if (!CanInsertWhitelist(item, slot))
             return false;
 
         if (slot.Locked)
             return false;
 
-        var ev = new ItemSlotInsertAttemptEvent(uid, usedUid, user, slot);
+        var ev = new ItemSlotInsertAttemptEvent(uid, item, user, slot);
         RaiseLocalEvent(uid, ref ev);
-        RaiseLocalEvent(usedUid, ref ev);
+        RaiseLocalEvent(item, ref ev);
         if (ev.Cancelled)
             return false;
 
-        return _containers.CanInsert(usedUid, slot.ContainerSlot, assumeEmpty: swap);
+        return _containers.CanInsert(item, slot.ContainerSlot, assumeEmpty: swap);
     }
 
-    private bool CanInsertWhitelist(EntityUid usedUid, ItemSlot slot)
+    private bool CanInsertWhitelist(EntityUid item, ItemSlot slot)
     {
-        if (_whitelistSystem.IsWhitelistFail(slot.Whitelist, usedUid)
-            || _whitelistSystem.IsWhitelistPass(slot.Blacklist, usedUid))
+        if (_whitelistSystem.IsWhitelistFail(slot.Whitelist, item)
+            || _whitelistSystem.IsWhitelistPass(slot.Blacklist, item))
             return false;
         return true;
     }
@@ -105,7 +105,7 @@ public sealed partial class ItemSlotsSystem
         EntityUid? user,
         bool excludeUserAudio = false)
     {
-        if (!CanInsert(uid, item, user, slot))
+        if (!CanInsert(uid, slot, item, user))
             return false;
 
         return Insert(uid, slot, item, user, excludeUserAudio: excludeUserAudio);
@@ -128,7 +128,7 @@ public sealed partial class ItemSlotsSystem
         if (!_handsSystem.TryGetActiveItem((user, hands), out var held))
             return false;
 
-        if (!CanInsert(uid, held.Value, user, slot))
+        if (!CanInsert(uid, slot, held.Value, user))
             return false;
 
         if (!_handsSystem.TryDrop(user, hands.ActiveHandId!))
@@ -204,7 +204,7 @@ public sealed partial class ItemSlotsSystem
             if (emptyOnly && slot.ContainerSlot?.ContainedEntity != null)
                 continue;
 
-            if (CanInsert(ent, item, userEnt, slot))
+            if (CanInsert(ent, slot, item, userEnt))
                 slots.Add(slot);
         }
 

@@ -18,7 +18,7 @@ public sealed partial class ItemSlotsSystem
             var canInsertAny = false;
             foreach (var slot in ent.Comp.Slots.Values)
             {
-                if (slot.InsertOnInteract || !CanInsert(ent, usingEntity, user, slot))
+                if (slot.InsertOnInteract || !CanInsert(ent, slot, usingEntity, user))
                     continue;
 
                 var verbSubject = slot.Name != string.Empty
@@ -63,7 +63,7 @@ public sealed partial class ItemSlotsSystem
             if (slot.EjectOnInteract || slot.DisableEject)
                 continue;
 
-            if (!CanEject(ent, user, slot))
+            if (!CanEject(ent, slot, user))
                 continue;
 
             if (!_actionBlockerSystem.CanPickup(user, slot.Item!.Value))
@@ -103,7 +103,7 @@ public sealed partial class ItemSlotsSystem
         var user = args.User;
         foreach (var slot in ent.Comp.Slots.Values)
         {
-            if (!slot.EjectOnInteract || !CanEject(ent, user, slot))
+            if (!slot.EjectOnInteract || !CanEject(ent, slot, user))
                 continue;
 
             if (!_actionBlockerSystem.CanPickup(user, slot.Item!.Value))
@@ -134,7 +134,7 @@ public sealed partial class ItemSlotsSystem
         var usingEntity = args.Using.Value;
         foreach (var slot in ent.Comp.Slots.Values)
         {
-            if (!slot.InsertOnInteract || !CanInsert(ent, usingEntity, user, slot))
+            if (!slot.InsertOnInteract || !CanInsert(ent, slot, usingEntity, user))
                 continue;
 
             var verbSubject = slot.Name != string.Empty
