@@ -149,7 +149,7 @@ public sealed partial class ChangelingClonerSystem : EntitySystem
         var targetIdentity = Identity.Entity(target, EntityManager);
         var userMsg = Loc.GetString("changeling-cloner-component-draw-user", ("user", userIdentity), ("target", targetIdentity));
         var targetMsg = Loc.GetString("changeling-cloner-component-draw-target", ("user", userIdentity), ("target", targetIdentity));
-        _popup.PopupClient(userMsg, target, user);
+        _popup.PopupEntity(userMsg, target, user);
 
         if (user != target) // don't show the warning if using the item on yourself
             _popup.PopupEntity(targetMsg, user, target, PopupType.LargeCaution);
@@ -185,7 +185,7 @@ public sealed partial class ChangelingClonerSystem : EntitySystem
         var targetIdentity = Identity.Entity(target, EntityManager);
         var userMsg = Loc.GetString("changeling-cloner-component-inject-user", ("user", userIdentity), ("target", targetIdentity));
         var targetMsg = Loc.GetString("changeling-cloner-component-inject-target", ("user", userIdentity), ("target", targetIdentity));
-        _popup.PopupClient(userMsg, target, user);
+        _popup.PopupEntity(userMsg, target, user);
 
         if (user != target) // don't show the warning if using the item on yourself
             _popup.PopupEntity(targetMsg, user, target, PopupType.LargeCaution);
@@ -282,7 +282,7 @@ public sealed partial class ChangelingClonerSystem : EntitySystem
         if (user == null)
             return;
 
-        _popup.PopupClient(Loc.GetString("changeling-cloner-component-reset-popup"), user.Value, user.Value);
+        _popup.PopupEntity(Loc.GetString("changeling-cloner-component-reset-popup"), user.Value, user.Value);
     }
 }
 

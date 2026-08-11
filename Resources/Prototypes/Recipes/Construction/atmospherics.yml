@@ -1,5 +1,4 @@
-# Base
-
+# region Base
 - type: construction
   abstract: true
   id: BaseAtmos
@@ -23,6 +22,13 @@
   conditions:
   - !type:NoUnstackableInTile
 
+# we allow stacking for shit like radiators on top of atmosdevices
+# for now (trademark patent pending)
+- type: construction
+  abstract: true
+  parent: BaseAtmos
+  id: BaseGasDeviceStackable
+
 - type: construction
   abstract: true
   parent: BaseGasDevice
@@ -38,11 +44,19 @@
 
 - type: construction
   abstract: true
+  parent: BaseGasDeviceStackable
+  id: BaseGasBinaryStackable
+  graph: GasBinary
+  placementMode: AlignAtmosPipeLayers
+
+- type: construction
+  abstract: true
   parent: BaseGasDevice
   id: BaseGasTrinary
   graph: GasTrinary
+# endregion Base
 
-# Machines
+# region Machines
 - type: construction
   parent: BaseAtmos
   id: AirAlarmFixture
@@ -89,8 +103,9 @@
   id: GasPipeSensorAlt2
   hide: true
   targetNode: sensorAlt2
+# endregion Machines
 
-# ATMOS PIPES
+# region Pipes
 - type: construction
   parent: BaseGasPipe
   id: GasPipeHalf
@@ -205,8 +220,9 @@
   id: GasPipeManifold
   targetNode: manifold
   placementMode: SnapgridCenter
+# endregion Pipes
 
-# ATMOS UNARY
+# region Unary
 - type: construction
   parent: BaseGasUnary
   id: GasVentPump
@@ -226,8 +242,9 @@
   parent: BaseGasUnary
   id: GasOutletInjector
   targetNode: outletinjector
+# endregion Unary
 
-  # ATMOS BINARY
+# region Binary
 - type: construction
   parent: BaseGasBinary
   id: GasPressurePump
@@ -367,19 +384,20 @@
   placementMode: SnapgridCenter
 
 - type: construction
-  parent: BaseGasBinary
+  parent: BaseGasBinaryStackable
   id: HeatExchanger
   targetNode: radiator
   placementMode: SnapgridCenter
 
 - type: construction
-  parent: BaseGasBinary
+  parent: BaseGasBinaryStackable
   id: HeatExchangerBend
   name: construction-recipe-heat-exchanger-bend
   targetNode: bendradiator
   placementMode: SnapgridCenter
+# endregion Binary
 
-# ATMOS TRINARY
+# region Trinary
 - type: construction
   parent: BaseGasTrinary
   id: GasFilter
@@ -391,6 +409,7 @@
   id: GasFilterFlipped
   hide: true
   targetNode: filterflipped
+  mirror: GasFilter
 
 - type: construction
   parent: BaseGasTrinary
@@ -403,8 +422,10 @@
   id: GasMixerFlipped
   hide: true
   targetNode: mixerflipped
+  mirror: GasMixer
 
 - type: construction
   parent: BaseGasTrinary
   id: PressureControlledValve
   targetNode: pneumaticvalve
+# endregion Trinary

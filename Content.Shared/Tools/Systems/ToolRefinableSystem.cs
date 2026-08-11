@@ -21,7 +21,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Tools.Systems;
 
-public sealed partial class ToolRefinablSystem : EntitySystem
+public sealed partial class ToolRefinableSystem : EntitySystem
 {
     [Dependency] private SharedToolSystem _toolSystem = default!;
     [Dependency] private GibbingSystem _gib = default!;
@@ -56,7 +56,7 @@ public sealed partial class ToolRefinablSystem : EntitySystem
         RaiseLocalEvent(args.Target, ref attemptEvent);
         if (attemptEvent.IsCancelled)
         {
-            _popup.PopupPredicted(attemptEvent.BlockCause, args.User, args.User);
+            _popup.PopupEntity(attemptEvent.BlockCause, args.User, args.User);
             return;
         }
 
@@ -131,7 +131,7 @@ public sealed partial class ToolRefinablSystem : EntitySystem
         RaiseLocalEvent(args.Target.Value, ref getIsBlocked);
         if (getIsBlocked.IsCancelled)
         {
-            _popup.PopupPredicted(getIsBlocked.BlockCause, args.User, args.User);
+            _popup.PopupEntity(getIsBlocked.BlockCause, args.User, args.User);
             return;
         }
 
@@ -218,7 +218,7 @@ public sealed partial class ToolRefinablSystem : EntitySystem
             ? null
             : Loc.GetString(component.PopupForOther, ("user", user), ("target", uid), ("tool", used));
 
-        _popup.PopupPredicted(slicingDoneMessageForUser, slicingDoneMessageForOthers, user, user, component.PopupType);
+        _popup.PopupEntity(slicingDoneMessageForUser, slicingDoneMessageForOthers, user, user, component.PopupType);
     }
 
     /// <summary>
