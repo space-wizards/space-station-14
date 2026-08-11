@@ -44,8 +44,6 @@ public sealed partial class ParentToWallComponent : Component
     /// The last anchored state of the entity.
     /// If the entity is unexpectedly (un)anchored we will unparent it from the wall.
     /// </summary>
-    /// <remarks>
-    /// </remarks>
     [DataField]
     [AutoNetworkedField]
     public bool Anchored;
