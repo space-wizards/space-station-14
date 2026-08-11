@@ -153,7 +153,7 @@ public abstract partial class SharedToolSystem : EntitySystem
             return false;
 
         string examineText;
-        var qualitiesText = GetQualitiesText(toolQualitiesNeeded);
+        var qualitiesText = GetQualitiesText(toolQualitiesNeeded, true);
 
         if (target is not null)
         {
@@ -220,7 +220,7 @@ public abstract partial class SharedToolSystem : EntitySystem
     ///     Method used to get the localized names of the quality prototypes.
     /// </summary>
     /// <returns>Localized combined string from the quality prototypes names</returns>
-    public string GetQualitiesText(IEnumerable<string> qualities)
+    public string GetQualitiesText(IEnumerable<string> qualities, bool lowercase = false)
     {
         // Create a list to store tool quality names
         var toolQualities = new List<string>();
@@ -230,7 +230,11 @@ public abstract partial class SharedToolSystem : EntitySystem
         {
             if (ProtoMan.TryIndex<ToolQualityPrototype>(toolQuality ?? string.Empty, out var protoToolQuality))
             {
-                toolQualities.Add(Loc.GetString(protoToolQuality.Name));
+                var toAdd = Loc.GetString(protoToolQuality.Name);
+                if (lowercase)
+                    toAdd = toAdd.ToLower();
+
+                toolQualities.Add(toAdd);
             }
         }
 
