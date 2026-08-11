@@ -45,6 +45,11 @@ public static class ClumsyTestPrototypes
       types:
         Brute: 0
 
+# Annoying that Defibrillator requires datafield ZapHeal
+- type: damageType
+  id: Brute
+  name: damage-type-blunt
+
 - type: entity
   id: {TableProto}
   components:
