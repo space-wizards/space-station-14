@@ -26,6 +26,9 @@
                             <PanelContainer StyleIdentifier="PaperEditBackground" MinHeight="100"
                                 VerticalAlignment="Stretch" VerticalExpand="True" HorizontalExpand="True">
                                 <TextEdit Name="Input" StyleClasses="PaperLineEdit" Access="Public" />
+                                <!-- DS14-start -->
+                                <RichTextLabel Name="PreviewLabel" StyleClasses="PaperWrittenText" VerticalAlignment="Top" Margin="4" MouseFilter="Ignore" Visible="False"/>
+                                <!-- DS14-end -->
                             </PanelContainer>
                             <Label Name="FillStatus" StyleClasses="LabelSecondaryColor"/>
                         </BoxContainer>
@@ -34,6 +37,32 @@
                 </PanelContainer>
             </ScrollContainer>
         </PanelContainer>
+        <!-- DS14-start -->
+        <WrapContainer Name="FormatToolbar"
+            LayoutAxis="Horizontal"
+            Justification="Center"
+            HorizontalAlignment="Center"
+            HorizontalExpand="True"
+            MaxWidth="244"
+            Margin="6 2"
+            SeparationOverride="0"
+            CrossSeparationOverride="2"
+            Visible="False">
+            <Button Name="BoldButton" Text="B" MinSize="32 30" StyleClasses="OpenBoth" ToolTip="{Loc 'paper-ui-toolbar-bold'}"/>
+            <Button Name="ItalicButton" Text="I" MinSize="32 30" StyleClasses="OpenBoth" ToolTip="{Loc 'paper-ui-toolbar-italic'}"/>
+            <Button Name="UnderlineButton" Text="U" MinSize="32 30" StyleClasses="OpenBoth" ToolTip="{Loc 'paper-ui-toolbar-underline'}"/>
+            <Button Name="StrikeButton" Text="S" MinSize="32 30" StyleClasses="OpenBoth" ToolTip="{Loc 'paper-ui-toolbar-strikethrough'}"/>
+            <Button Name="MonoButton" Text="M" MinSize="32 30" StyleClasses="OpenBoth" ToolTip="{Loc 'paper-ui-toolbar-mono'}"/>
+            <Button Name="SmallButton" Text="Aa" MinSize="38 30" StyleClasses="OpenBoth" ToolTip="{Loc 'paper-ui-toolbar-small'}"/>
+            <Button Name="ShiftButton" Text="&#8801;" MinSize="32 30" StyleClasses="OpenBoth" ToolTip="{Loc 'paper-ui-toolbar-shift'}"/>
+            <Button Name="ConfusionButton" Text="&#8776;" MinSize="32 30" StyleClasses="OpenBoth" ToolTip="{Loc 'paper-ui-toolbar-confusion'}"/>
+            <Button Name="CyrillicConfusionButton" Text="Ж" MinSize="32 30" StyleClasses="OpenBoth" ToolTip="{Loc 'paper-ui-toolbar-cyrillic-confusion'}"/>
+            <Button Name="ColorButton" MinSize="30 30" StyleClasses="OpenBoth" ToolTip="{Loc 'paper-ui-toolbar-color'}"/>
+            <OptionButton Name="FormatDropdown" MinWidth="130" ToolTip="{Loc 'paper-ui-toolbar-format'}"/>
+            <Button Name="BulletButton" Text="&#8226;" MinSize="32 30" StyleClasses="OpenBoth" ToolTip="{Loc 'paper-ui-toolbar-bullet'}"/>
+            <Button Name="PreviewToggleButton" Text="{Loc 'paper-ui-toolbar-preview'}" MinSize="90 30" ToggleMode="True" StyleClasses="OpenBoth" ToolTip="{Loc 'paper-ui-toolbar-preview'}"/>
+        </WrapContainer>
+        <!-- DS14-end -->
         <!-- Bottom buttons for editing -->
         <BoxContainer Name="EditButtons" Orientation="Horizontal" HorizontalAlignment="Right" Margin="6">
             <Button Name="SaveButton" />
