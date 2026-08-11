@@ -71,18 +71,53 @@
     - type: PresetIdCard
       job: CentralCommandGreenBeretOfficer
 
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackGreenBeret
+  name: модифицированный рюкзак офицера "Зелёный Берет"
+  description: Рюкзак офицера "Зелёный Берет" с функцией РИГ.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Back/greenberet.rsi
+  - type: Storage
+    grid:
+    - 0,0,7,5
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 1
+  - type: ToggleableClothing
+    toggleDelay: 1
+    clothingPrototype: ClothingOuterHardsuitGreenBeret
+    requiredSlot: BACK
+    slot: outerClothing
+  - type: Clothing
+    equipDelay: 1
+    unequipDelay: 1
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:ContainerSlot {}
+      storagebase: !type:Container
+        ents: []
+  - type: StorageFill
+    contents:
+      - id: ERTloadoutBlueShieldPrimary
+      - id: HandheldCrewMonitor
+  - type: ExplosionResistance
+    damageCoefficient: 0.6
+
 - type: startingGear
   id: CentcomGreenBeretGear
   equipment:
-    jumpsuit: ClothingUniformTurtleneckTactic
-    # back: ClothingBackpackSatchelBig
+    jumpsuit: ClothingUniformJumpsuitGreenBeret
+    back: ClothingBackpackGreenBeret
     neck: ClothingNeckMantleGreenBerethoulder
-    eyes: ClothingEyesHudERT
+    eyes: ClothingEyesHudGreenBeret
+    head: ClothingHeadHatBeretGreenBeret
+    mask: ClothingMaskGasGreenBeret
     ears: ClothingHeadsetAltCentCom
-    gloves: ClothingHandsGlovesCombat
-    outerClothing: ClothingOuterHardsuitGreenBeret
-    shoes: ADTClothingShoesBootsMagERT
-    suitstorage: JetpackBlackFilled
+    gloves: ClothingHandsGlovesGreenBeret
+    outerClothing: ClothingOuterArmorGreenBeret
+    shoes: ClothingShoesBootsGreenBeret
     id: GreenBeretOfficerPDA
     pocket1: FlashlightSeclite
     pocket2: WeaponDisabler

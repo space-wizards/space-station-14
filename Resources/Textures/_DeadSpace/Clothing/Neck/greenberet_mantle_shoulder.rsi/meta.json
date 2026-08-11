@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Made by x_muted_x (discord) for Space Station 14 server Мёртвый Космос.",
+  "copyright": "Made by kieru01 (discord) for Space Station 14 server Мёртвый Космос, resprite by sastr. (discord) for Space Station 14 server Мёртвый Космос, edited by atrole (discord) for Space Station 14 server Мёртвый Космос",
   "size": {
     "x": 32,
     "y": 32
@@ -10,7 +10,7 @@
     {
       "name": "icon"
     },
-    {
+	{
       "name": "equipped-NECK",
       "directions": 4
     },

@@ -8,3 +8,14 @@
     sprite: _DeadSpace/Clothing/Uniforms/Jumpsuit/blueshield.rsi
   - type: Clothing
     sprite: _DeadSpace/Clothing/Uniforms/Jumpsuit/blueshield.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitGreenBeret
+  name: комбинезон офицера "Зелёный Берет"
+  description: Текстилевый комбинезон, обшитый в некоторых местах толстой кожей.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpsuit/greenberet.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Uniforms/Jumpsuit/greenberet.rsi

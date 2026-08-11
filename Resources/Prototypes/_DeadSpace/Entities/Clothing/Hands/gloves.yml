@@ -78,6 +78,17 @@
     sprite: _DeadSpace/Clothing/Hands/Gloves/blueshield_gloves.rsi
 
 - type: entity
+  parent: ClothingHandsGlovesCombat
+  id: ClothingHandsGlovesGreenBeret
+  name: боевые перчатки офицера "Зелёный Берет"
+  description: Эти тактические перчатки огнеупорны и ударопрочны.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Hands/Gloves/greenberet_gloves.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Hands/Gloves/greenberet_gloves.rsi
+
+- type: entity
   parent: ClothingHandsGlovesCaptain
   id: ClothingHandsGlovesCaptainWhite
   name: белые капитанские перчатки

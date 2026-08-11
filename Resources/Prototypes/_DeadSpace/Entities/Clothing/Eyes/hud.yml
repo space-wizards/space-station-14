@@ -138,13 +138,24 @@
 - type: entity
   parent: ClothingEyesHudAdvanced
   id: ClothingEyesHudBlueShield
-  name: тактические очки офицера "Синий Щит" 
+  name: тактические очки офицера "Синий Щит"
   description: Очки с индикатором на стекле, который сканирует гуманоидов в поле зрения и предоставляет точные данные об их состоянии здоровья, идентификационном статусе и записях в системе безопасности.
   components:
   - type: Sprite
     sprite: _DeadSpace/Clothing/Eyes/Hud/blueshield_hud.rsi
   - type: Clothing
     sprite: _DeadSpace/Clothing/Eyes/Hud/blueshield_hud.rsi
+
+- type: entity
+  parent: ClothingEyesHudAdvanced
+  id: ClothingEyesHudGreenBeret
+  name: тактические очки офицера "Зелёный Берет"
+  description: Очки с индикатором на стекле, который сканирует гуманоидов в поле зрения и предоставляет точные данные об их состоянии здоровья, идентификационном статусе и записях в системе безопасности.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Eyes/Hud/greenberet_hud.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Eyes/Hud/greenberet_hud.rsi
 
 - type: entity
   parent: ClothingEyesHudAdvanced

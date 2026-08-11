@@ -97,6 +97,12 @@
       sprite: _DeadSpace/Clothing/Shoes/Boots/blueshield_boots.rsi
 
 - type: entity
+  parent: ClothingShoesBootsBlueShield
+  id: ClothingShoesBootsGreenBeret
+  name: подкованные сапоги офицера "Зелёный Берет"
+  description: Обувь Офицера "Зелёный Берет", для боевых операций или боевых действий. Борьба — всё, борьба — всегда.
+
+- type: entity
   parent: ClothingShoesBootsJack
   id: ClothingShoesBootsKirzachi
   name: кирзовые сапоги

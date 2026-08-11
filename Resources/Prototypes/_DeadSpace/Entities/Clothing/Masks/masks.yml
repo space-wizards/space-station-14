@@ -58,6 +58,23 @@
     - ears
 
 - type: entity
+  parent: ClothingMaskGasSwat
+  id: ClothingMaskGasGreenBeret
+  name: чёрный боевой противогаз офицера "Зелёный Берет"
+  description: Высокопрочная дыхательная маска с возможностью подключения к дыхательному баллону.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Mask/greenberet_mask.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Mask/greenberet_mask.rsi
+  - type: SpecialDeathSound
+    sound:
+      path: /Audio/_DeadSpace/Voice/Death/sec_death.ogg
+  - type: HideLayerClothing
+    clothingSlots:
+    - ears
+
+- type: entity
   parent: ClothingMaskGas
   id: WhiteNoiseMaskUnknown
   name: "!^~&$*@"

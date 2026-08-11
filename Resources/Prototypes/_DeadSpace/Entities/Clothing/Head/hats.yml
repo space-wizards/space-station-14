@@ -44,6 +44,17 @@
 
 - type: entity
   parent: ClothingHeadBase
+  id: ClothingHeadHatBeretGreenBeret
+  name: берет офицера "Зелёный Берет"
+  description: Зелёный берет с кокардой подразделения "Зелёный Берет".
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Head/Hats/beret_greenberet.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Head/Hats/beret_greenberet.rsi
+
+- type: entity
+  parent: ClothingHeadBase
   id: ClothingHeadHatBeretSeniorOfficer
   name: берет инструктора СБ
   description: Берет, показывающий мастерство и доблесть его владельца.
