@@ -76,6 +76,10 @@ xenoarch-trigger-tip-meat = Protein Intake
 xenoarch-trigger-tip-produce = Healthy Produce Intake
 xenoarch-trigger-tip-stamp = Bureaucratic Approval
 xenoarch-trigger-tip-shock = Electrical Shock
+xenoarch-trigger-tip-particle = Singularity-Effecting Particles
+xenoarch-trigger-tip-anomparticle = Anomaly-Effecting Particles
+xenoarch-trigger-tip-stamina-damage = Organic Exhaustion
+xenoarch-trigger-tip-laser = High-Intensity photon impacts
 
 ### Description hints
 xenoarch-trigger-examine-wrenching = There's a loose bit spinning around.

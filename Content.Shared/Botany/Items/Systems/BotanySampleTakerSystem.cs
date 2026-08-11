@@ -24,7 +24,6 @@ public sealed partial class BotanySampleTakerSystem : EntitySystem
 
     [Dependency] private EntityQuery<PlantHolderComponent> _holderQuery = default!;
     [Dependency] private EntityQuery<PlantDataComponent> _dataQuery = default!;
-    [Dependency] private EntityQuery<PlantHarvestComponent> _harvestQuery = default!;
 
     [SubscribeLocalEvent]
     private void OnAfterInteract(Entity<BotanySampleTakerComponent> ent, ref AfterInteractEvent args)
@@ -45,8 +44,7 @@ public sealed partial class BotanySampleTakerSystem : EntitySystem
             return;
 
         if (!_holderQuery.TryComp(ent.Owner, out var holder)
-            || !_dataQuery.TryComp(ent.Owner, out var plantData)
-            || !_harvestQuery.TryComp(ent.Owner, out var harvest))
+            || !_dataQuery.TryComp(ent.Owner, out var plantData))
             return;
 
         if (_plantHolder.IsDead((ent.Owner, holder)))
@@ -69,7 +67,7 @@ public sealed partial class BotanySampleTakerSystem : EntitySystem
         _plantHolder.AdjustsHealth((ent.Owner, holder), -random.NextFloat(args.Sample.Comp.SampleDamage.Min, args.Sample.Comp.SampleDamage.Max));
 
         // Produce a seed packet snapshot.
-        float? healthOverride = harvest.ReadyForHarvest ? null : holder.Health;
+        float? healthOverride = holder.ReadyForHarvest ? null : holder.Health;
         var protoId = MetaData(ent.Owner).EntityPrototype!.ID;
         _botany.SpawnSeedPacket(plantData, protoId, ent.Owner, Transform(args.User).Coordinates, args.User, healthOverride);
 

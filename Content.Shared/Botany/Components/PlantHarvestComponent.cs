@@ -7,7 +7,7 @@ namespace Content.Shared.Botany.Components;
 /// <summary>
 /// Component for plant harvesting process.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true, raiseAfterAutoHandleState: true)]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 [Access(typeof(PlantHarvestSystem))]
 public sealed partial class PlantHarvestComponent : Component
 {
@@ -16,18 +16,6 @@ public sealed partial class PlantHarvestComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public HarvestType HarvestRepeat = HarvestType.NoRepeat;
-
-    /// <summary>
-    /// Whether the plant is currently ready for harvest.
-    /// </summary>
-    [ViewVariables, AutoNetworkedField]
-    public bool ReadyForHarvest = false;
-
-    /// <summary>
-    /// The age of the plant when last harvested.
-    /// </summary>
-    [ViewVariables, AutoNetworkedField]
-    public int LastHarvest = 0;
 }
 
 /// <summary>

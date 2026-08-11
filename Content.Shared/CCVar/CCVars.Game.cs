@@ -347,10 +347,10 @@ public sealed partial class CCVars
         CVarDef.Create("game.ipintel_alert_admin_warn_rating", 0f, CVar.SERVERONLY);
 
     /// <summary>
-    ///     Make people bonk when trying to climb certain objects like tables.
+    ///     Should clumsy people bonk when trying to climb certain objects like tables?
     /// </summary>
     public static readonly CVarDef<bool> GameTableBonk =
-        CVarDef.Create("game.table_bonk", false, CVar.REPLICATED);
+        CVarDef.Create("game.table_bonk", true, CVar.REPLICATED);
 
     /// <summary>
     ///     Whether or not status icons are rendered for everyone.
