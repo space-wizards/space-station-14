@@ -98684,27 +98684,11 @@ entities:
     - type: Transform
       parent: 2
       pos: 5.488429,-33.41397
-    - type: Blocking
-      blockingToggleActionEntity: 15056
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 15056
   - uid: 15171
     components:
     - type: Transform
       parent: 2
       pos: 5.532593,-33.175583
-    - type: Blocking
-      blockingToggleActionEntity: 15172
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 15172
 - proto: RobocopCircuitBoard
   entities:
   - uid: 5457
