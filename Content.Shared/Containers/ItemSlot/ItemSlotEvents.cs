@@ -44,3 +44,18 @@ public sealed partial class ItemSlotEjectDoAfterEvent : DoAfterEvent
 
     public override DoAfterEvent Clone() => this;
 }
+
+[Serializable, NetSerializable]
+public sealed partial class ItemSlotInsertDoAfterEvent : DoAfterEvent
+{
+    public string SlotId;
+    public bool Swap;
+
+    public ItemSlotInsertDoAfterEvent(string slotId, bool swap)
+    {
+        SlotId = slotId;
+        Swap = swap;
+    }
+
+    public override DoAfterEvent Clone() => this;
+}

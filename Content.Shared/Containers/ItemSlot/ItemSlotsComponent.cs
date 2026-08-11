@@ -81,6 +81,12 @@ namespace Content.Shared.Containers.ItemSlots
         public SoundSpecifier? EjectSound = new SoundPathSpecifier("/Audio/Weapons/Guns/MagOut/revolver_magout.ogg");
 
         /// <summary>
+        ///     How long a user must wait before inserting an item into this slot.
+        /// </summary>
+        [DataField]
+        public TimeSpan InsertDelay;
+
+        /// <summary>
         ///     How long a user must wait before ejecting the item from this slot.
         /// </summary>
         [DataField]
@@ -254,6 +260,7 @@ namespace Content.Shared.Containers.ItemSlots
             Whitelist = other.Whitelist;
             InsertSound = other.InsertSound;
             EjectSound = other.EjectSound;
+            InsertDelay = other.InsertDelay;
             EjectDelay = other.EjectDelay;
 
             Name = other.Name;

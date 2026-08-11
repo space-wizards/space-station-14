@@ -236,21 +236,12 @@ namespace Content.Shared.Containers.ItemSlots
                 return;
             }
 
-            // Drop the held item onto the floor. Return if the user cannot drop.
-            if (!_handsSystem.TryDrop(args.User, args.Used))
-                return;
-
             slots.Sort(SortEmpty);
 
             foreach (var slot in slots)
             {
-                if (slot.Item != null)
-                    _handsSystem.TryPickupAnyHand(args.User, slot.Item.Value, handsComp: hands);
-
-                Insert(uid, slot, args.Used, args.User, excludeUserAudio: true);
-
-                if (slot.InsertSuccessPopup.HasValue)
-                    _popupSystem.PopupEntity(Loc.GetString(slot.InsertSuccessPopup), uid, args.User);
+                if (!TryInsertFromHandWithDoAfter(uid, slot, args.Used, args.User, slot.Swap, hands))
+                    continue;
 
                 args.Handled = true;
                 return;
@@ -389,6 +380,100 @@ namespace Content.Shared.Containers.ItemSlots
 
             Insert(uid, slot, held.Value, user, excludeUserAudio: excludeUserAudio);
             return true;
+        }
+
+        /// <summary>
+        /// Handles user-initiated insertion, respecting the slot's configured delay.
+        /// Forced and system-initiated insertions should use <see cref="TryInsert"/> directly.
+        /// </summary>
+        private bool TryInsertFromHandWithDoAfter(EntityUid uid,
+            ItemSlot slot,
+            EntityUid item,
+            EntityUid user,
+            bool swap = false,
+            HandsComponent? hands = null)
+        {
+            if (!Resolve(user, ref hands, false) ||
+                !_handsSystem.CanDrop((user, hands), item))
+            {
+                return false;
+            }
+
+            if (slot.InsertDelay <= TimeSpan.Zero)
+                return InsertFromHand(uid, slot, item, user, swap, hands);
+
+            if (slot.ID is not { } slotId || !CanInsert(uid, item, user, slot, swap))
+                return false;
+
+            return _doAfter.TryStartDoAfter(new DoAfterArgs(
+                EntityManager,
+                user,
+                slot.InsertDelay,
+                new ItemSlotInsertDoAfterEvent(slotId, swap),
+                uid,
+                target: uid,
+                used: item)
+            {
+                BreakOnMove = true,
+                BreakOnDamage = true,
+                NeedHand = true
+            });
+        }
+
+        private bool TryInsertFromHandWithDoAfter(EntityUid uid,
+            ItemSlot slot,
+            EntityUid user,
+            HandsComponent? hands = null)
+        {
+            if (!Resolve(user, ref hands, false) ||
+                !_handsSystem.TryGetActiveItem((user, hands), out var item))
+            {
+                return false;
+            }
+
+            return TryInsertFromHandWithDoAfter(uid, slot, item.Value, user, hands: hands);
+        }
+
+        private bool InsertFromHand(EntityUid uid,
+            ItemSlot slot,
+            EntityUid item,
+            EntityUid user,
+            bool swap,
+            HandsComponent hands)
+        {
+            if (!CanInsert(uid, item, user, slot, swap) ||
+                !_handsSystem.TryDrop((user, hands), item))
+            {
+                return false;
+            }
+
+            if (slot.Item is { } oldItem)
+                _handsSystem.TryPickupAnyHand(user, oldItem, handsComp: hands);
+
+            Insert(uid, slot, item, user, excludeUserAudio: true);
+
+            if (slot.InsertSuccessPopup.HasValue)
+                _popupSystem.PopupEntity(Loc.GetString(slot.InsertSuccessPopup), uid, user);
+
+            return true;
+        }
+
+        /// <summary>
+        /// Finishes a delayed insertion only if the original item is still held and the slot remains valid.
+        /// </summary>
+        [SubscribeLocalEvent]
+        private void OnInsertDoAfter(Entity<ItemSlotsComponent> ent, ref ItemSlotInsertDoAfterEvent args)
+        {
+            if (args.Cancelled ||
+                args.Handled ||
+                args.Used is not { } item ||
+                !ent.Comp.Slots.TryGetValue(args.SlotId, out var slot) ||
+                !TryComp(args.User, out HandsComponent? hands))
+            {
+                return;
+            }
+
+            args.Handled = InsertFromHand(ent, slot, item, args.User, args.Swap, hands);
         }
 
         /// <summary>
@@ -641,6 +726,7 @@ namespace Content.Shared.Containers.ItemSlots
         private void OnEjectDoAfter(Entity<ItemSlotsComponent> ent, ref ItemSlotEjectDoAfterEvent args)
         {
             if (args.Cancelled ||
+                args.Handled ||
                 args.Used is not { } item ||
                 !ent.Comp.Slots.TryGetValue(args.SlotId, out var slot) ||
                 slot.Item != item)
@@ -648,7 +734,7 @@ namespace Content.Shared.Containers.ItemSlots
                 return;
             }
 
-            TryEjectToHands(ent, slot, args.User, true);
+            args.Handled = TryEjectToHands(ent, slot, args.User, true);
         }
 
         /// <summary>
@@ -829,7 +915,7 @@ namespace Content.Shared.Containers.ItemSlots
                 InteractionVerb insertVerb = new()
                 {
                     IconEntity = GetNetEntity(args.Using),
-                    Act = () => Insert(uid, slot, args.Using.Value, args.User, excludeUserAudio: true)
+                    Act = () => TryInsertFromHandWithDoAfter(uid, slot, args.Using.Value, args.User)
                 };
 
                 if (slot.InsertVerbText != null)
@@ -872,7 +958,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (args.TryEject && slot.HasItem && !slot.DisableEject)
                 TryEjectToHandsWithDoAfter(uid, slot, args.Actor);
             else if (args.TryInsert && !slot.HasItem)
-                TryInsertFromHand(uid, slot, args.Actor);
+                TryInsertFromHandWithDoAfter(uid, slot, args.Actor);
         }
 
         #endregion
