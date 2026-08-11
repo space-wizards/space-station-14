@@ -4,6 +4,7 @@ using Content.Shared.Changeling.Components;
 using Content.Shared.Changeling.Systems;
 using Content.Shared.Damage.Systems;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Animals.Systems;
 
@@ -22,14 +23,17 @@ public sealed partial class PlayDeadSystem : EntitySystem
         if (!args.Damage.AnyPositive())
             return;
 
-        if (!ent.Comp.IsPlayingDead)
+        if (_action.GetActions<RegenerativeStasisActionComponent>(ent).FirstOrNull() is not { } action)
+            return;
+
+        if (!action.Comp2.IsInStasis)
         {
             PlayDead(ent, ent.Comp.PlayDeadDuration);
             return;
         }
 
         //Make sure morty doesn't wake up if they're getting the shit beat out of them
-        if (ent.Comp.IsPlayingDead)
+        if (action.Comp2.IsInStasis && ent.Comp.AutoWake)
         {
             ent.Comp.StopPlayingDeadTime = _timing.CurTime + ent.Comp.PlayDeadDuration;
             Dirty(ent);
@@ -46,51 +50,47 @@ public sealed partial class PlayDeadSystem : EntitySystem
 
         while (query.MoveNext(out var uid, out var comp))
         {
-            if (comp.IsPlayingDead && curTime > comp.StopPlayingDeadTime)
+            if (!comp.AutoWake)
+                continue;
+
+            if (curTime < comp.StopPlayingDeadTime)
+                continue;
+
+            if (_action.GetActions<RegenerativeStasisActionComponent>(uid).FirstOrNull() is not { } action)
+                return;
+
+            if (action.Comp2.IsInStasis)
                 StopPlayingDead((uid, comp));
         }
     }
 
     private void PlayDead(Entity<PlayDeadComponent> ent, TimeSpan duration)
     {
-        if (ent.Comp.IsPlayingDead)
+        if (_action.GetActions<RegenerativeStasisActionComponent>(ent).FirstOrNull() is not { } action)
             return;
 
-        var actions = _action.GetActions(ent);
-
-        //Have to get the action entity to enter stasis
-        foreach (var action in actions)
-        {
-            if (!TryComp<RegenerativeStasisActionComponent>(action, out var regenStasisComp))
-                continue;
-
-            if (regenStasisComp.IsInStasis)
-                return;
-
-            _stasis.EnterStasis((action, regenStasisComp), ent);
-            ent.Comp.IsPlayingDead = true;
-            ent.Comp.StopPlayingDeadTime = _timing.CurTime + duration;
-            Dirty(ent);
+        if (action.Comp2.IsInStasis)
             return;
-        }
+
+        _stasis.EnterStasis((action, action.Comp2), ent);
+
+        ent.Comp.StopPlayingDeadTime = _timing.CurTime + duration;
+        ent.Comp.AutoWake = true;
+        Dirty(ent);
     }
 
     private void StopPlayingDead(Entity<PlayDeadComponent> ent)
     {
-        if (!ent.Comp.IsPlayingDead)
+        if (_action.GetActions<RegenerativeStasisActionComponent>(ent).FirstOrNull() is not { } action)
             return;
 
-        var actions = _action.GetActions(ent);
-
-        foreach (var action in actions)
-        {
-            if (!TryComp<RegenerativeStasisActionComponent>(action, out var regenStasisComp))
-                continue;
-
-            _stasis.ExitStasis((action, regenStasisComp), ent);
-            ent.Comp.IsPlayingDead = false;
-            Dirty(ent);
+        if (!ent.Comp.AutoWake)
             return;
-        }
+
+        ent.Comp.AutoWake = false;
+
+        if (action.Comp2.IsInStasis)
+            _stasis.ExitStasis((action, action.Comp2), ent);
+        Dirty(ent);
     }
 }

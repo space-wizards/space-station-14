@@ -776,6 +776,21 @@ public abstract partial class SharedActionsSystem : EntitySystem
     }
 
     /// <summary>
+    /// Gets an enumerator of actions with a specific component.
+    /// </summary>
+    /// <param name="holderId">The entity to enumerate the actions of.</param>
+    /// <typeparam name="T">The component.</typeparam>
+    /// <returns>The enumerator of the entity's actions with the specified component.</returns>
+    public IEnumerable<Entity<ActionComponent, T>> GetActions<T>(EntityUid holderId) where T : Component
+    {
+        foreach (var action in GetActions(holderId))
+        {
+            if (TryComp<T>(action, out var comp))
+                yield return (action, action.Comp, comp);
+        }
+    }
+
+    /// <summary>
     ///     Remove any actions that were enabled by some other entity. Useful when unequiping items that grant actions.
     /// </summary>
     public void RemoveProvidedActions(EntityUid performer, EntityUid container, ActionsComponent? comp = null)
