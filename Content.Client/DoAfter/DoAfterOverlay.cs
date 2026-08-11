@@ -28,7 +28,7 @@ public sealed class DoAfterOverlay : Overlay
 
     private readonly Texture _barTexture;
     private readonly ShaderInstance _unshadedShader;
-    private readonly HashSet<SpriteSpecifier> _iconsToDraw;
+    private readonly List<SpriteSpecifier> _iconsToDraw;
 
     /// <summary>
     ///     Flash time for cancelled DoAfters
@@ -65,7 +65,7 @@ public sealed class DoAfterOverlay : Overlay
         _sprite = _entManager.System<SpriteSystem>();
         var sprite = new SpriteSpecifier.Rsi(new("/Textures/Interface/Misc/progress_bar.rsi"), "icon");
         _barTexture = _entManager.EntitySysManager.GetEntitySystem<SpriteSystem>().Frame0(sprite);
-        _iconsToDraw = new HashSet<SpriteSpecifier>();
+        _iconsToDraw = new List<SpriteSpecifier>();
 
         _unshadedShader = protoManager.Index(UnshadedShader).Instance();
     }
@@ -75,7 +75,6 @@ public sealed class DoAfterOverlay : Overlay
         var handle = args.WorldHandle;
         var rotation = args.Viewport.Eye?.Rotation ?? Angle.Zero;
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
-        _iconsToDraw.Clear();
 
         // If you use the display UI scale then need to set max(1f, displayscale) because 0 is valid.
         const float scale = 1f;
@@ -201,13 +200,16 @@ public sealed class DoAfterOverlay : Overlay
                     iconAlpha = MathHelper.Lerp(iconAlpha, 0f, (float)Math.Clamp((time - doAfter.CancelledTime.Value) / MaxAlphaTime, 0.0, 1.0));
                 }
 
+                if (_iconsToDraw.Count == 0)
+                    handle.DrawTexture(tex, iconPosition, Color.White.WithAlpha(iconAlpha));
+
                 _iconsToDraw.Add(doAfter.Args.DoafterIcon);
-                handle.DrawTexture(tex, iconPosition, Color.White.WithAlpha(iconAlpha));
             }
         }
 
         handle.UseShader(null);
         handle.SetTransform(Matrix3x2.Identity);
+        _iconsToDraw.Clear();
     }
 
     public Color GetProgressColor(float progress, float alpha = 1f)
