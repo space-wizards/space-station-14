@@ -16,6 +16,13 @@ using YamlDotNet.RepresentationModel;
 
 namespace Content.Shared.Prototypes;
 
+/// <summary>
+///     System that handles generating YML at runtime.
+///     It raises an event that other systems can handle.
+///     <see cref="PrototypeGenerationEvent"/>
+///     The server registers these changes and sends them to clients,
+///     also saving them to replays.
+/// </summary>
 public sealed partial class PrototypeGenerationSystem : EntitySystem
 {
     [Dependency] private IComponentFactory _compFactory = default!;
