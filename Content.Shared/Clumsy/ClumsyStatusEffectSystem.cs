@@ -36,7 +36,7 @@ public sealed partial class ClumsyStatusEffectSystem : EntitySystem
 
     #region Subscriptions
 
-    // Clumsy people are bad at baseball!
+    /// <summary> Clumsy people are bad at baseball! </summary>
     [SubscribeLocalEvent]
     private void OnCatchAttemptEvent(Entity<ClumsyCatchStatusEffectComponent> status, ref StatusEffectRelayedEvent<CatchAttemptEvent> args)
     {
@@ -71,7 +71,7 @@ public sealed partial class ClumsyStatusEffectSystem : EntitySystem
         _audio.PlayPvs(status.Comp.ClumsySound, args.AppliedTo);
     }
 
-    // Clumsy people shock themselves with defibrillators!
+    /// <summary> Clumsy people shock themselves with defibrillators! </summary>
     [SubscribeLocalEvent]
     private void OnBeforeDefibrillatorZapsEvent(Entity<ClumsyDefibStatusEffectComponent> status, ref StatusEffectRelayedEvent<SelfBeforeDefibrillatorZapsEvent> args)
     {
@@ -87,7 +87,7 @@ public sealed partial class ClumsyStatusEffectSystem : EntitySystem
         _audio.PlayPredicted(status.Comp.ClumsySound, args.AppliedTo, args.AppliedTo);
     }
 
-    // Clumsy people can't be trusted with guns!
+    /// <summary> Clumsy people can't be trusted with guns! </summary>
     [SubscribeLocalEvent]
     private void OnBeforeGunShotEvent(Entity<ClumsyGunStatusEffectComponent> status, ref StatusEffectRelayedEvent<SelfBeforeGunShotEvent> args)
     {
@@ -115,7 +115,7 @@ public sealed partial class ClumsyStatusEffectSystem : EntitySystem
         _audio.PlayPvs(status.Comp.ClumsySound, args.AppliedTo);
     }
 
-    // Clumsy people sometimes inject themselves!
+    /// <summary> Clumsy people sometimes inject themselves! </summary>
     [SubscribeLocalEvent]
     private void OnBeforeInjectEvent(Entity<ClumsyInjectorStatusEffectComponent> status, ref StatusEffectRelayedEvent<SelfBeforeInjectEvent> args)
     {
@@ -131,7 +131,7 @@ public sealed partial class ClumsyStatusEffectSystem : EntitySystem
         _audio.PlayPredicted(status.Comp.ClumsySound, args.AppliedTo, args.AppliedTo);
     }
 
-    // Clumsy people have a blood feud with tables!
+    /// <summary> Clumsy people have a blood feud with tables! </summary>
     [SubscribeLocalEvent]
     private void OnBeforeClimbEvent(Entity<ClumsyVaultStatusEffectComponent> status, ref StatusEffectRelayedEvent<SelfBeforeClimbEvent> args)
     {
