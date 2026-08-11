@@ -17,7 +17,6 @@ using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Player;
-using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 /*
@@ -43,7 +42,7 @@ namespace Content.Server.Connection
         /// <param name="duration">How long the bypass should last for.</param>
         void AddTemporaryConnectBypass(NetUserId user, TimeSpan duration);
 
-        void Update();
+        void Update(FrameEventArgs args);
     }
 
     /// <summary>
@@ -64,13 +63,15 @@ namespace Content.Server.Connection
         [Dependency] private IHttpClientHolder _http = default!;
         [Dependency] private IAdminManager _adminManager = default!;
         [Dependency] private IEntityManager _entityManager = default!;
-        [Dependency] private IRobustRandom _random = default!;
 
         private GameTicker? _ticker;
 
         private ISawmill _sawmill = default!;
         private readonly Dictionary<NetUserId, TimeSpan> _temporaryBypasses = [];
         private IPIntel.IPIntel _ipintel = default!;
+        private TimeSpan _timeAccumulated;
+        private TimeSpan _fallbackUpdateNext;
+        private readonly TimeSpan _fallbackUpdateInterval = TimeSpan.FromSeconds(30);
 
         public void PostInit()
         {
@@ -86,7 +87,7 @@ namespace Content.Server.Connection
             _netMgr.Connecting += NetMgrOnConnecting;
             _netMgr.AssignUserIdCallback = AssignUserIdCallback;
             _plyMgr.PlayerStatusChanged += PlayerStatusChanged;
-            _cfg.OnValueChanged(CCVars.FallbackServers, ReadFallbackServers , invokeImmediately: true);
+            _cfg.OnValueChanged(CCVars.FallbackServers, OnFallbackServersCvar , invokeImmediately: true);
 
             // Approval-based IP bans disabled because they don't play well with Happy Eyeballs.
             // _netMgr.HandleApprovalCallback = HandleApproval;
@@ -101,8 +102,17 @@ namespace Content.Server.Connection
                 time = newTime;
         }
 
-        public async void Update()
+        public async void Update(FrameEventArgs args)
         {
+            // Only delta frametime is available, so we must resort to such measures
+            _timeAccumulated += TimeSpan.FromSeconds(args.DeltaSeconds);
+
+            if (_timeAccumulated > _fallbackUpdateNext)
+            {
+                UpdateAllServers();
+                _fallbackUpdateNext = _timeAccumulated + _fallbackUpdateInterval;
+            }
+
             try
             {
                 await _ipintel.Update();
@@ -158,7 +168,7 @@ namespace Content.Server.Connection
                 if (reason == ConnectionDenyReason.Full)
                 {
                     properties["delay"] = _cfg.GetCVar(CCVars.GameServerFullReconnectDelay);
-                    properties["fallbackServers"] = _fallbackString;
+                    properties["fallbackServers"] = StringifyFallbackServers();
                 }
 
                 e.Deny(new NetDenyReason(msg, properties));
