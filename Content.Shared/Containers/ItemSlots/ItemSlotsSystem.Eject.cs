@@ -36,8 +36,12 @@ public sealed partial class ItemSlotsSystem
     /// Eject an item from a slot. This does not perform checks (e.g., is the slot locked?), so you should
     /// probably just use <see cref="TryEject"/> instead.
     /// </summary>
+    /// <param name="user"></param>
     /// <param name="excludeUserAudio">If true, will exclude the user when playing sound. Does nothing client-side.
     /// Useful for predicted interactions</param>
+    /// <param name="uid"></param>
+    /// <param name="slot"></param>
+    /// <param name="item"></param>
     private bool Eject(EntityUid uid, ItemSlot slot, EntityUid item, EntityUid? user, bool excludeUserAudio = false)
     {
         if (slot.ContainerSlot == null || !_containers.Remove(item, slot.ContainerSlot))

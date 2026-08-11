@@ -28,7 +28,7 @@ public sealed partial class ItemSlotsSystem
                 AlternativeVerb verb = new()
                 {
                     IconEntity = GetNetEntity(usingEntity),
-                    Act = () => Insert(ent, slot, usingEntity, user, excludeUserAudio: true)
+                    Act = () => TryInsert(ent, slot, usingEntity, user, excludeUserAudio: true)
                 };
 
                 if (slot.InsertVerbText != null)
@@ -71,7 +71,7 @@ public sealed partial class ItemSlotsSystem
 
             var verbSubject = slot.Name != string.Empty
                 ? Loc.GetString(slot.Name)
-                : Comp<MetaDataComponent>(slot.Item.Value).EntityName ?? string.Empty;
+                : Comp<MetaDataComponent>(slot.Item.Value).EntityName;
 
             AlternativeVerb verb = new()
             {
@@ -144,7 +144,7 @@ public sealed partial class ItemSlotsSystem
             InteractionVerb insertVerb = new()
             {
                 IconEntity = GetNetEntity(usingEntity),
-                Act = () => Insert(ent, slot, usingEntity, user, excludeUserAudio: true)
+                Act = () => TryInsert(ent, slot, usingEntity, user, excludeUserAudio: true)
             };
 
             if (slot.InsertVerbText != null)

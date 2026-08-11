@@ -16,7 +16,7 @@ namespace Content.Shared.Containers.ItemSlots;
 /// A class that handles interactions related to inserting/ejecting items into/from an item slot.
 /// </summary>
 /// <remarks>
-/// Note when using popups on entities with many slots with InsertOnInteract, EjectOnInteract or EjectOnUse:
+/// Note when using popups on entities with many slots with InsertOnInteract, EjectOnInteract, or EjectOnUse:
 /// A single use will try to insert to/eject from every slot and generate a popup for each that fails.
 /// </remarks>
 public sealed partial class ItemSlotsSystem : EntitySystem

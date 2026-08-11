@@ -7,7 +7,7 @@ namespace Content.Shared.Containers.ItemSlots;
 public sealed partial class ItemSlotsSystem
 {
     /// <summary>
-    /// Attempt to take an item from a slot, if any are set to EjectOnInteract.
+    /// Attempt to take an item from a slot if any are set to EjectOnInteract.
     /// </summary>
     [SubscribeLocalEvent]
     private void OnInteractHand(Entity<ItemSlotsComponent> ent, ref InteractHandEvent args)
@@ -109,7 +109,7 @@ public sealed partial class ItemSlotsSystem
             if (slot.Item != null)
                 _handsSystem.TryPickupAnyHand(args.User, slot.Item.Value, handsComp: hands);
 
-            if (!Insert(ent, slot, args.Used, args.User, excludeUserAudio: true))
+            if (!TryInsert(ent, slot, args.Used, args.User, excludeUserAudio: true))
                 return;
 
             if (slot.InsertSuccessPopup.HasValue)

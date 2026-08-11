@@ -10,8 +10,12 @@ public sealed partial class ItemSlotsSystem
     /// Insert an item into a slot. This does not perform checks, so make sure to also use <see
     /// cref="CanInsert"/> or just use <see cref="TryInsert"/> instead.
     /// </summary>
+    /// <param name="user"></param>
     /// <param name="excludeUserAudio">If true, will exclude the user when playing sound. Does nothing client-side.
     /// Useful for predicted interactions</param>
+    /// <param name="uid"></param>
+    /// <param name="slot"></param>
+    /// <param name="item"></param>
     private bool Insert(EntityUid uid,
         ItemSlot slot,
         EntityUid item,
