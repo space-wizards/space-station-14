@@ -17,7 +17,7 @@ namespace Content.Server.Connection;
 public sealed partial class ConnectionManager
 {
     // The list of known fallback servers, and their details
-    // The server urls are used as the dictionary key
+    // The server URIs are used as the dictionary key
     private readonly Dictionary<string, (string name, int players, int max)> _fallbackServers = new();
 
     // The amount of time before a server is considered timed out for status checks.
@@ -51,10 +51,10 @@ public sealed partial class ConnectionManager
                 continue;
             }
             var pos = serverRaw.IndexOf(",", StringComparison.Ordinal);
-            var url = serverRaw[(pos+1)..];
+            var uri = serverRaw[(pos+1)..];
             var name = serverRaw[..pos];
 
-            UpdateServerDetails(url.Trim(), name.Trim());
+            UpdateServerDetails(uri.Trim(), name.Trim());
         }
     }
 
@@ -72,24 +72,24 @@ public sealed partial class ConnectionManager
     /// <summary>
     /// Adds a new server to the fallback list, or updates the details of an existing one.
     /// </summary>
-    /// <param name="url">The address of the server. This is used as their unique key for handling</param>
+    /// <param name="uri">The address of the server. This is used as their unique key for handling</param>
     /// <param name="name">The displayed name of the server. (This will be shown over the </param>
-    private async void UpdateServerDetails(string url, string name)
+    private async void UpdateServerDetails(string uri, string name)
     {
         //TODO: More error checking for the input values?
 
         //TODO: Do we want to copy UriHelper from the Launcher to do these operations properly and consistently across future uses?
 
-        if (!url.StartsWith("ss14s://")
-            && !url.StartsWith("ss14://") )
+        if (!uri.StartsWith("ss14s://")
+            && !uri.StartsWith("ss14://") )
         {
-            _sawmill.Info($"Invalid address in FallbackServers cvar: {url}");
+            _sawmill.Info($"Invalid address in FallbackServers cvar: {uri}");
             return;
         }
 
-        var pos = url.IndexOf("://", StringComparison.Ordinal);
-        var slash = url.EndsWith("/") ? string.Empty : "/";
-        var statusUrl = "http" + url[pos..] + slash + "status";
+        var pos = uri.IndexOf("://", StringComparison.Ordinal);
+        var slash = uri.EndsWith("/") ? string.Empty : "/";
+        var statusUrl = "http" + uri[pos..] + slash + "status";
 
         try
         {
@@ -102,17 +102,17 @@ public sealed partial class ConnectionManager
                 // in which case we need it to no longer show up
                 // Since these servers are specifically picked by the server operator/admins,
                 // we can assume that they are generally supposed to be up, and any outage should be considered temporary
-                _fallbackServers[url] = (name, 0, -1);
+                _fallbackServers[uri] = (name, 0, -1);
                 return;
             }
 
             // We probably want to use the name provided by the cvar, rather than the server's real name
             // in case a shorter/different one was intentionally chosen for presentation reasons
-            _fallbackServers[url] = (name, status.PlayerCount, status.SoftMaxPlayerCount);
+            _fallbackServers[uri] = (name, status.PlayerCount, status.SoftMaxPlayerCount);
         }
         catch
         {
-            _sawmill.Warning($"Error while trying to query Fallback Server '{url}'");
+            _sawmill.Warning($"Error while trying to query Fallback Server '{uri}'");
         }
     }
     // TODO:ERRANT Did the hub mods respond about policy questions?
@@ -121,7 +121,7 @@ public sealed partial class ConnectionManager
     /// <summary>
     /// Returns server status data for the target URL
     /// </summary>
-    private async Task<ServerStatus?> GetServerData(string target, CancellationToken cancel = default)
+    private async Task<ServerStatus?> GetServerData(string url, CancellationToken cancel = default)
     {
         ServerStatus status;
         try
@@ -130,7 +130,7 @@ public sealed partial class ConnectionManager
             {
                 linkedToken.CancelAfter(ServerStatusTimeout);
 
-                status = await _http.Client.GetFromJsonAsync<ServerStatus>(target, linkedToken.Token)
+                status = await _http.Client.GetFromJsonAsync<ServerStatus>(url, linkedToken.Token)
                          ?? throw new InvalidDataException();
             }
 
@@ -139,7 +139,7 @@ public sealed partial class ConnectionManager
         catch (Exception e) when (e is JsonException or HttpRequestException or InvalidDataException or IOException
                                       or SocketException)
         {
-            _sawmill.Info($"A Fallback Server did not respond to the status query - '{target}'");
+            _sawmill.Info($"A Fallback Server did not respond to the status query - '{url}'");
             return null;
         }
 
