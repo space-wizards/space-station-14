@@ -6,7 +6,6 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Shared.Body.Systems;
@@ -65,10 +64,10 @@ public sealed partial class BloodstreamSystem
         if (!_bloodstreamQuery.Resolve(ent, ref ent.Comp, false))
             return false;
 
-        var ev = new ModifyBloodDropletEvent();
+        var ev = new ModifyBloodDropletEvent(ent.Comp.BasicDropletTransferAmount);
         RaiseLocalEvent(ent, ref ev);
 
-        amount = FixedPoint2.Max(ent.Comp.BasicDropletTransferAmount * ev.Modifier, 0f);
+        amount = FixedPoint2.Max(ev.BloodAmount, 0f);
         return true;
     }
 
@@ -99,7 +98,7 @@ public sealed partial class BloodstreamSystem
         {
             solution.Value.Comp.Solution.RemoveAllSolution();
 
-            var amount = _solutionContainer.SplitSolution(ent.Comp.BloodSolution.Value, transferAmount.Value);
+            var amount = _solutionContainer.SplitSolution(ent.Comp.BloodSolution.Value, FixedPoint2.Min(transferAmount.Value, solution.Value.Comp.Solution.AvailableVolume));
             _solutionContainer.TryAddSolution(solution.Value, amount);
         }
 
@@ -110,9 +109,8 @@ public sealed partial class BloodstreamSystem
 }
 
 /// <summary>
-/// Raised to allow other systems to modify the amount of blood transferred to the blood droplet
-/// relative to the base amount <see cref="BloodstreamSystem.BasicDropletTransferAmount"/>.
+/// Raised to allow other systems to modify the amount of blood transferred to the blood droplet.
 /// </summary>
-/// <param name="Modifier">The factor to modify the base amount by.</param>
+/// <param name="BloodAmount">The default amount of blood to modify.</param>
 [ByRefEvent]
-public record struct ModifyBloodDropletEvent(float Modifier = 1f);
+public record struct ModifyBloodDropletEvent(FixedPoint2 BloodAmount);

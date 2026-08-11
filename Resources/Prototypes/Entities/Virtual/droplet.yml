@@ -6,10 +6,10 @@
     solution: solution
   - type: Solution
     solution:
-      maxVol: 1
+      maxVol: 4
       reagents:
       - ReagentId: Blood
-        Quantity: 1
+        Quantity: 4
   - type: SolutionContainerVisuals
     maxFillLevels: 1
     fillBaseName: drip

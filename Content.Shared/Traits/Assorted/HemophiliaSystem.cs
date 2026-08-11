@@ -23,7 +23,7 @@ public sealed class HemophiliaSystem : EntitySystem
     private static void OnBloodDropletModifierEntity(Entity<HemophiliaStatusEffectComponent> ent, ref StatusEffectRelayedEvent<ModifyBloodDropletEvent> args)
     {
         var ev = args.Args;
-        ev.Modifier *= ent.Comp.BleedAmountMultiplier;
+        ev.BloodAmount *= ent.Comp.BleedAmountMultiplier;
         args.Args = ev;
     }
 }
