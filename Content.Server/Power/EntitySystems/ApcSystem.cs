@@ -91,7 +91,7 @@ public sealed partial class ApcSystem : EntitySystem
         component.NeedStateUpdate = true;
     }
 
-    private static void OnApcStartup(EntityUid uid, ApcComponent component, ComponentStartup args)
+    private void OnApcStartup(EntityUid uid, ApcComponent component, ref ComponentStartup args)
     {
         // We cannot update immediately, as various network/battery state is not valid yet.
         // Defer until the next tick.
@@ -142,7 +142,9 @@ public sealed partial class ApcSystem : EntitySystem
             apc.TripFlag = false;
 
         UpdateUIState(uid, apc);
-        _audio.PlayPvs(apc.OnReceiveMessageSound, uid, AudioParams.Default.WithVolume(-2f));
+        var audioParams = apc.OnReceiveMessageSound?.Params ?? AudioParams.Default;
+        audioParams = audioParams.AddVolume(-2f);
+        _audio.PlayPvs(apc.OnReceiveMessageSound, uid, audioParams);
 
         if (user != null)
         {

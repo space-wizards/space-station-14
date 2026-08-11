@@ -1,0 +1,19 @@
+﻿<Control xmlns="https://spacestation14.io"
+         xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+         xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls" HorizontalExpand="True">
+    <PanelContainer Name="ItemPanel">
+        <PanelContainer.PanelOverride>
+            <gfx:StyleBoxFlat BackgroundColor="#00000044" />
+        </PanelContainer.PanelOverride>
+        <BoxContainer Orientation="Horizontal">
+            <Label Name="ChannelNumberLabel" Align="Right" HorizontalAlignment="Left" MinWidth="30" />
+            <controls:VSpacer Spacing="10" />
+            <Label Name="ChannelNameLabel" HorizontalAlignment="Center" />
+            <controls:VSpacer HorizontalExpand="True" />
+            <controls:SwitchButton Name="ChannelEnableSwitchButton"
+                                   HorizontalAlignment="Right"
+                                   OnStateText=""
+                                   OffStateText="" />
+        </BoxContainer>
+    </PanelContainer>
+</Control>
