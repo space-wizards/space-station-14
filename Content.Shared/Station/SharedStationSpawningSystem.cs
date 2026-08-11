@@ -115,7 +115,11 @@ public abstract partial class SharedStationSpawningSystem : EntitySystem
                 if (!string.IsNullOrEmpty(equipmentStr))
                 {
                     var equipmentEntity = Spawn(equipmentStr, xform.Coordinates);
-                    InventorySystem.TryEquip(entity, equipmentEntity, slot.Name, silent: true, force: true);
+
+                    // Target slot may be occupied or don't allow this item.
+                    // Ideally this should never happen, but see corpses and vox.
+                    if (!InventorySystem.TryEquip(entity, equipmentEntity, slot.Name, silent: true, checkActor: false))
+                        _handsSystem.TryPickupAnyHand(entity, equipmentEntity, checkActionBlocker: false);
                 }
             }
         }
