@@ -1305,3 +1305,6 @@ ComputerCargoOrdersService: null
 WeaponTurretLaserNanoTrasen: WeaponEnergyTurretAI
 WeaponTurretLaserHostile: WeaponEnergyTurretTaipanAI
 WeaponTurretLaserTaipan: WeaponEnergyTurretTaipanAI
+
+# 2026-08-10 - DS14
+WaterCooler: WaterCoolerTransfer
