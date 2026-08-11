@@ -219,10 +219,6 @@ public sealed partial class ParentToWallSystem : EntitySystem
 
         foreach (var child in ent.Comp.Children)
         {
-            // FIXME: load-bearing cope - client is full of invalid entities
-            if (TerminatingOrDeleted(child))
-                continue;
-
             if (_childWallmountQuery.TryComp(child, out var parentToWall)
                 && parentToWall.BlockDeconstruction)
             {
