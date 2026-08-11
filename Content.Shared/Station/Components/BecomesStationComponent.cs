@@ -1,12 +1,13 @@
-using Content.Server.GameTicking;
+using Content.Shared.GameTicking;
+using Robust.Shared.GameStates;
 
-namespace Content.Server.Station.Components;
+namespace Content.Shared.Station.Components;
 
 /// <summary>
 ///     Added to grids saved in maps to designate that they are the 'main station' grid.
 /// </summary>
-[RegisterComponent]
-[Access(typeof(GameTicker))]
+[RegisterComponent, NetworkedComponent]
+[Access(typeof(SharedGameTicker))]
 public sealed partial class BecomesStationComponent : Component
 {
     /// <summary>
