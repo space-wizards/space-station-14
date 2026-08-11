@@ -51,7 +51,6 @@ public sealed partial class CloningContext :
         {
             case BloodstreamComponent bloodTarget:
                 bloodTarget.NextUpdate = TimeSpan.Zero;
-                bloodTarget.BleedAmount = 0.0f;
                 bloodTarget.BloodData = null;
                 bloodTarget.BloodSolution = null;
                 bloodTarget.TemporarySolution = null;
