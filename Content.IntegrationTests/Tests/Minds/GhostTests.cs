@@ -1,7 +1,7 @@
-﻿using System.Numerics;
+using System.Numerics;
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Pair;
-using Content.Shared.Ghost;
+using Content.Shared.Ghost.Components;
 using Content.Shared.Mind;
 using Content.Shared.Players;
 using Robust.Server.GameObjects;

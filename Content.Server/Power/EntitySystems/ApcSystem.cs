@@ -91,7 +91,7 @@ public sealed partial class ApcSystem : EntitySystem
         component.NeedStateUpdate = true;
     }
 
-    private static void OnApcStartup(EntityUid uid, ApcComponent component, ComponentStartup args)
+    private void OnApcStartup(EntityUid uid, ApcComponent component, ref ComponentStartup args)
     {
         // We cannot update immediately, as various network/battery state is not valid yet.
         // Defer until the next tick.
