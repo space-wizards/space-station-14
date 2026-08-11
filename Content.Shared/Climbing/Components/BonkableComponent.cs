@@ -7,19 +7,19 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Climbing.Components;
 
 /// <summary>
-/// Damages and stun entities afflicted with <see cref="ClumsyVaultStatusEffectComponent"/>  upon climb interactions.
+/// Damages and stuns entities afflicted with <see cref="ClumsyVaultStatusEffectComponent"/>  upon climb interactions.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(ClimbSystem))]
 public sealed partial class BonkableComponent : Component
 {
     /// <summary>
-    ///     How long to stun players on bonk, in seconds.
+    /// How long to stun players on bonk, in seconds.
     /// </summary>
     [DataField]
     public TimeSpan BonkTime = TimeSpan.FromSeconds(2);
 
     /// <summary>
-    ///     How much damage to apply on bonk.
+    /// How much damage to apply on bonk.
     /// </summary>
     [DataField]
     public DamageSpecifier? BonkDamage;

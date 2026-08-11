@@ -66,9 +66,10 @@ namespace Content.Server.Administration.Systems;
 
 public sealed partial class AdminVerbSystem
 {
+    private static readonly EntProtoId<StatusEffectComponent> MaidStatus = "StatusEffectClumsyMaid";
+
     private readonly ProtoId<PolymorphPrototype> LizardSmite = "AdminLizardSmite";
     private readonly ProtoId<PolymorphPrototype> VulpkaninSmite = "AdminVulpSmite";
-    private static readonly EntProtoId<StatusEffectComponent> maidStatus = "StatusEffectClumsyMaid";
 
     [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private IRobustRandom _random = default!;
@@ -642,7 +643,7 @@ public sealed partial class AdminVerbSystem
                     {
                         if (HasComp<ClothingComponent>(clothing))
                             EnsureComp<UnremoveableComponent>(clothing);
-                        _statusEffects.TrySetStatusEffectDuration(args.Target, maidStatus);
+                        _statusEffects.TrySetStatusEffectDuration(args.Target, MaidStatus);
                     });
                 },
                 Impact = LogImpact.Extreme,
