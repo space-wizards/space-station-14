@@ -167,7 +167,7 @@
       supplyRate: 15000
 
 - type: entity
-  parent: BaseGenerator
+  parent: BaseGeneratorWallmount
   id: GeneratorWallmountBasic
   suffix: Basic, 3kW
   components:

@@ -254,7 +254,7 @@
 
 #Small lights
 - type: entity
-  parent: AlwaysPoweredWallLight
+  parent: BaseWallLight
   id: SmallLight
   name: small light
   suffix: Always Powered
