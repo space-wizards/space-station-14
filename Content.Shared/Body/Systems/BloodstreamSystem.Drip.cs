@@ -80,7 +80,7 @@ public sealed partial class BloodstreamSystem
         if (!_solutionContainer.ResolveSolution(ent.Owner, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution))
             return false;
 
-        if (bloodstream.BloodSolution.Value.Comp.Solution.Volume <= DropletTransferAmount)
+        if (bloodstream.BloodSolution.Value.Comp.Solution.Volume < DropletTransferAmount)
             return false;
 
         var droplet = PredictedSpawnAtPosition(DropletId, Transform(ent).Coordinates);
