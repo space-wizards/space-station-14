@@ -1,5 +1,5 @@
 using Content.IntegrationTests.Tests.Movement;
-using Content.Shared.Chasm;
+using Content.Shared.Chasm.Components;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Misc;
 using Content.Shared.Weapons.Ranged.Components;
@@ -30,13 +30,13 @@ public sealed class ChasmTest : MovementTest
         Assert.That(Delta(), Is.GreaterThan(0.5), "Player did not spawn left of the chasm.");
 
         // Attempt (and fail) to walk past the chasm.
-        // If you are modifying the default value of ChasmFallingComponent.DeletionTime this time might need to be adjusted.
+        // If you are modifying the default value of ChasmFallingComponent.EffectsTime this time might need to be adjusted.
         await Move(DirectionFlag.East, 0.5f);
 
         // We should be falling right now.
         Assert.That(TryComp<ChasmFallingComponent>(Player, out var falling), "Player is not falling after walking over a chasm.");
 
-        var fallTime = (float)falling.DeletionTime.TotalSeconds;
+        var fallTime = (float)falling.EffectsTime.TotalSeconds;
 
         // Wait until we get deleted.
         await Pair.RunSeconds(fallTime);

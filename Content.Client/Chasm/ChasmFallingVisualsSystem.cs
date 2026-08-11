@@ -1,4 +1,5 @@
 using Content.Shared.Chasm;
+using Content.Shared.Chasm.Components;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
@@ -23,47 +24,45 @@ public sealed partial class ChasmFallingVisualsSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ChasmFallingComponent, ComponentInit>(OnComponentInit);
-        SubscribeLocalEvent<ChasmFallingComponent, ComponentRemove>(OnComponentRemove);
+        SubscribeLocalEvent<ChasmFallingVisualsComponent, StartedFallingIntoChasmEvent>(OnStartFalling);
+        SubscribeLocalEvent<ChasmFallingVisualsComponent, ResetChasmVisualsEvent>(OnResetVisuals);
     }
 
-    private void OnComponentInit(Entity<ChasmFallingComponent> entity, ref ComponentInit args)
+    private void OnComponentInit(Entity<ChasmFallingComponent> ent, ref ComponentInit args)
     {
-        if (!_spriteQuery.TryComp(entity, out var sprite) ||
-            TerminatingOrDeleted(entity))
-        {
-            return;
-        }
-
-        entity.Comp.OriginalScale = sprite.Scale;
-
-        if (!_animationPlayerQuery.TryComp(entity, out var player) ||
-            _anim.HasRunningAnimation(player, ChasmFallAnimationKey))
-        {
-            return;
-        }
-
-        _anim.Play((entity, player), GetFallingAnimation(entity.Comp), ChasmFallAnimationKey);
+        var visuals = EnsureComp<ChasmFallingVisualsComponent>(ent.Owner);
+        visuals.AnimationTime = ent.Comp.AnimationTime;
     }
 
-    private void OnComponentRemove(Entity<ChasmFallingComponent> entity, ref ComponentRemove args)
+    private void OnStartFalling(Entity<ChasmFallingVisualsComponent> ent, ref StartedFallingIntoChasmEvent args)
+    {
+        if (!_spriteQuery.TryComp(ent, out var sprite))
+            return;
+
+        ent.Comp.OriginalScale = sprite.Scale;
+        if (!_animationPlayerQuery.TryComp(ent, out var player)
+            || _anim.HasRunningAnimation(player, ChasmFallAnimationKey))
+            return;
+
+        _anim.Play((ent.Owner, player), GetFallingAnimation(ent.Comp), ChasmFallAnimationKey);
+    }
+
+    private void OnResetVisuals(Entity<ChasmFallingVisualsComponent> entity, ref ResetChasmVisualsEvent args)
     {
         if (!_spriteQuery.TryComp(entity, out var sprite))
-        {
             return;
-        }
 
-        _sprite.SetScale((entity, sprite), entity.Comp.OriginalScale);
+        if (entity.Comp.OriginalScale != null)
+            _sprite.SetScale((entity, sprite), entity.Comp.OriginalScale.Value);
 
         if (!_animationPlayerQuery.TryComp(entity, out var player) ||
             !_anim.HasRunningAnimation(player, ChasmFallAnimationKey))
-        {
             return;
-        }
 
         _anim.Stop((entity, player), ChasmFallAnimationKey);
     }
 
-    private static Animation GetFallingAnimation(ChasmFallingComponent component)
+    private static Animation GetFallingAnimation(ChasmFallingVisualsComponent component)
     {
         return new Animation
         {
@@ -76,7 +75,7 @@ public sealed partial class ChasmFallingVisualsSystem : EntitySystem
                     Property = nameof(SpriteComponent.Scale),
                     KeyFrames =
                     {
-                        new AnimationTrackProperty.KeyFrame(component.OriginalScale, 0.0f),
+                        new AnimationTrackProperty.KeyFrame(component.OriginalScale!, 0.0f),
                         new AnimationTrackProperty.KeyFrame(component.AnimationScale, component.AnimationTime.Seconds),
                     },
                     InterpolationMode = AnimationInterpolationMode.Cubic,

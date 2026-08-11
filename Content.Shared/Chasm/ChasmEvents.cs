@@ -1,35 +1,6 @@
-﻿using Content.Shared.Whitelist;
-using Robust.Shared.Audio;
-using Robust.Shared.GameStates;
+﻿using Content.Shared.Chasm.Components;
 
 namespace Content.Shared.Chasm;
-
-/// <summary>
-/// Marks a component that will cause entities to fall into them on a step trigger activation
-/// </summary>
-[NetworkedComponent, RegisterComponent, Access(typeof(ChasmSystem))]
-public sealed partial class ChasmComponent : Component
-{
-    /// <summary>
-    /// Entities allowed to fall into the hole. If null, anything not on the blacklist can fall into the hole. If both
-    /// are null, anything can.
-    /// </summary>
-    [DataField]
-    public EntityWhitelist? Whitelist;
-
-    /// <summary>
-    /// Entities not allowed to fall into the hole. If null, anything on the whitelist can fall into the hole. If both
-    /// are null, anything can.
-    /// </summary>
-    [DataField]
-    public EntityWhitelist? Blacklist;
-
-    /// <summary>
-    /// Sound that should be played when an entity falls into the chasm
-    /// </summary>
-    [DataField]
-    public SoundSpecifier FallingSound = new SoundPathSpecifier("/Audio/Effects/falling.ogg");
-}
 
 /// <summary>
 /// This event is raised on a chasm when <paramref name="Faller"/> tries to start falling into it. This is used to allow
@@ -61,13 +32,40 @@ public readonly record struct StartedFallingIntoChasmEvent(Entity<ChasmComponent
 public readonly record struct EntityStartedFallingIntoChasmEvent(Entity<ChasmFallingComponent> Faller);
 
 /// <summary>
-/// This event is raised on an entity when it has finished falling into <paramref name="FellInto"/>, just before it is deleted.
+/// Raised on an entity with <see cref="ChasmFallingComponent"/> to reset its visuals.
+/// </summary>
+[ByRefEvent]
+public readonly record struct ResetChasmVisualsEvent;
+
+/// <summary>
+/// Raised on an entity that already fell into a chasm in order to
+/// prevent the effects of the chasm in the last moment.
+/// </summary>
+[ByRefEvent]
+public record struct BeforeChasmFallEvent(EntityUid? Chasm, bool Cancelled = false);
+
+/// <summary>
+/// This event is raised on an entity when it has finished falling into <paramref name="FellInto"/>, just before the effects are applied.
 /// </summary>
 [ByRefEvent]
 public readonly record struct CompletedFallingIntoChasmEvent(Entity<ChasmComponent> FellInto);
 
 /// <summary>
-/// This event is raised on a chasm when <paramref name="Faller"/> has finished falling into it, just before it is deleted.
+/// This event is raised on a chasm when <paramref name="Faller"/> has finished falling into it, just before the effects are applied.
 /// </summary>
 [ByRefEvent]
 public readonly record struct EntityCompletedFallingIntoChasmEvent(Entity<ChasmFallingComponent> Faller);
+
+/// <summary>
+/// An event raised on a chasm that does something with the entity that fell into it.
+/// </summary>
+/// <remarks>
+/// If this event is not <see cref="Handled"/>, it will throw a debug assert.
+/// </remarks>
+/// <param name="Faller">The entity that fell into the chasm.</param>
+[ByRefEvent]
+public record struct ChasmFallEffectsEvent(EntityUid Faller)
+{
+    public readonly EntityUid Faller = Faller;
+    public bool Handled = false;
+}
