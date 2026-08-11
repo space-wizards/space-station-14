@@ -175,7 +175,7 @@ public sealed partial class GlueSystem : EntitySystem
 /// <summary>
 /// Raised on an entity to determine if it will be affected by a glued item or not.
 /// </summary>
-[ByRefEvent]
+[ByRefEvent, GenericEvent]
 public record struct GluedEffectAttemptEvent() : IInventoryRelayEvent
 {
     public SlotFlags TargetSlots { get; } = SlotFlags.GLOVES;

@@ -219,6 +219,7 @@ public sealed class StandAttemptEvent : CancellableEntityEventArgs;
 /// <summary>
 /// Raised when an entity becomes standing
 /// </summary>
+[GenericEvent]
 public sealed class StoodEvent : EntityEventArgs, IInventoryRelayEvent
 {
     public SlotFlags TargetSlots { get; } = SlotFlags.FEET;
@@ -227,6 +228,7 @@ public sealed class StoodEvent : EntityEventArgs, IInventoryRelayEvent
 /// <summary>
 /// Raised when an entity is not standing
 /// </summary>
+[GenericEvent]
 public sealed class DownedEvent : EntityEventArgs, IInventoryRelayEvent
 {
     public SlotFlags TargetSlots { get; } = SlotFlags.FEET;

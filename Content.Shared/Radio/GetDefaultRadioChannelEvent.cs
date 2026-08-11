@@ -3,6 +3,7 @@ using Content.Shared.Inventory;
 
 namespace Content.Shared.Radio;
 
+[GenericEvent]
 public sealed class GetDefaultRadioChannelEvent : EntityEventArgs, IInventoryRelayEvent
 {
     /// <summary>

@@ -2,6 +2,7 @@ using Content.Shared.Inventory;
 
 namespace Content.Shared.Electrocution
 {
+    [GenericEvent]
     public sealed class ElectrocutionAttemptEvent : CancellableEntityEventArgs, IInventoryRelayEvent
     {
         public SlotFlags TargetSlots { get; }

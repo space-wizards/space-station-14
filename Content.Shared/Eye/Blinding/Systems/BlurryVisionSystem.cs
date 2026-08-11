@@ -57,6 +57,7 @@ public sealed class BlurryVisionSystem : EntitySystem
     }
 }
 
+[GenericEvent]
 public sealed class GetBlurEvent : EntityEventArgs, IInventoryRelayEvent
 {
     public readonly float BaseBlur;

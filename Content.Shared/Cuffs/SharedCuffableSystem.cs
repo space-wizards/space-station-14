@@ -869,7 +869,7 @@ namespace Content.Shared.Cuffs
     /// Raised on the target when they get handcuffed.
     /// Relayed to their held items.
     /// </summary>
-    [ByRefEvent]
+    [ByRefEvent, GenericEvent]
     public record struct TargetHandcuffedEvent : IInventoryRelayEvent
     {
         /// <summary>

@@ -362,7 +362,7 @@ public sealed partial class SharedForensicsSystem : EntitySystem
 
         RaiseLocalEvent(target, ev);
         if (!ev.Cancelled && TryComp<InventoryComponent>(target, out var inv))
-            _inventory.RelayEvent((target, inv), ev);
+            _inventory.RelayEvent((target, inv), ref ev);
 
         blocker = ev.Blocker;
         return !ev.Cancelled;

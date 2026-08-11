@@ -68,7 +68,7 @@ public static class RelaySubscriptionHelpers
 
         if (inventory)
         {
-            subs.SubscribeLocalEvent((EntityUid uid, TComp component, InventoryRelayedEvent<TEvent> args) =>
+            subs.SubscribeLocalEvent((EntityUid uid, TComp component, ref InventoryRelayedEvent<TEvent> args) =>
             {
                 handler(uid, component, args.Args);
             });

@@ -5,6 +5,7 @@ namespace Content.Shared.Weapons.Ranged.Events;
 /// <summary>
 ///     This event is triggered on an entity right before they shoot a gun.
 /// </summary>
+[GenericEvent]
 public sealed partial class SelfBeforeGunShotEvent : CancellableEntityEventArgs, IInventoryRelayEvent
 {
     public SlotFlags TargetSlots { get; } = SlotFlags.WITHOUT_POCKET;

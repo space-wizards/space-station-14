@@ -27,6 +27,7 @@ public sealed partial class ZombificationResistanceComponent : Component
 /// <summary>
 /// Gets the total resistance from the ZombificationResistanceComponent, i.e. just all of them multiplied together.
 /// </summary>
+[GenericEvent]
 public sealed class ZombificationResistanceQueryEvent : EntityEventArgs, IInventoryRelayEvent
 {
     /// <summary>

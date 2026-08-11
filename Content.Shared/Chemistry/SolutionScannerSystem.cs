@@ -17,6 +17,7 @@ public sealed class SolutionScannerSystem : EntitySystem
     }
 }
 
+[GenericEvent]
 public sealed class SolutionScanEvent : EntityEventArgs, IInventoryRelayEvent
 {
     public bool CanScan;

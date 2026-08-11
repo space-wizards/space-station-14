@@ -187,6 +187,7 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
 /// <summary>
 /// Inventory relayed event telling all fake mindshields with the same ActionTag to try to toggle themselves.
 /// </summary>
+[GenericEvent]
 public sealed partial class FakeMindShieldToggleEvent : InstantActionEvent, IInventoryRelayEvent
 {
     public SlotFlags TargetSlots => SlotFlags.WITHOUT_POCKET;

@@ -20,7 +20,7 @@ public sealed partial class ShowContrabandSystem : EntitySystem
 /// <summary>
 /// Raised on an entity and its inventory to determine if it can see contraband information in the examination window.
 /// </summary>
-[ByRefEvent]
+[ByRefEvent, GenericEvent]
 public record struct GetContrabandDetailsEvent(bool CanShowContraband = false) : IInventoryRelayEvent
 {
     SlotFlags IInventoryRelayEvent.TargetSlots => SlotFlags.EYES;

@@ -1,7 +1,8 @@
 using Content.Shared.Inventory;
 
 namespace Content.Shared.Slippery;
-[ByRefEvent]
+
+[ByRefEvent, GenericEvent]
 public record struct GetSlowedOverSlipperyModifierEvent() : IInventoryRelayEvent
 {
     SlotFlags IInventoryRelayEvent.TargetSlots => ~SlotFlags.POCKET;

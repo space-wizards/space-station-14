@@ -6,5 +6,5 @@ namespace Content.Shared.Overlays;
 /// Makes the entity see air temperature.
 /// When added to a clothing item it will also grant the wearer the same overlay.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, GenericEvent]
 public sealed partial class ThermalSightComponent : Component;

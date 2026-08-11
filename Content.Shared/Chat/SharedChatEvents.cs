@@ -9,6 +9,7 @@ namespace Content.Shared.Chat;
 /// This event should be sent everytime an entity talks (Radio, local chat, etc...).
 /// The event is sent to both the entity itself, and all clothing (For stuff like voice masks).
 /// </summary>
+[GenericEvent]
 public sealed class TransformSpeakerNameEvent : EntityEventArgs, IInventoryRelayEvent
 {
     public SlotFlags TargetSlots { get; } = SlotFlags.WITHOUT_POCKET;
@@ -27,6 +28,7 @@ public sealed class TransformSpeakerNameEvent : EntityEventArgs, IInventoryRelay
 /// <summary>
 /// Raised broadcast in order to transform speech.transmit
 /// </summary>
+[GenericEvent]
 public sealed class TransformSpeechEvent : CancellableEntityEventArgs, IInventoryRelayEvent
 {
     public SlotFlags TargetSlots { get; } = SlotFlags.WITHOUT_POCKET;

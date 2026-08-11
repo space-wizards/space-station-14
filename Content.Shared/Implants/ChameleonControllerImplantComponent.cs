@@ -45,7 +45,7 @@ public sealed class ChameleonControllerSelectedOutfitMessage(ProtoId<ChameleonOu
 /// <param name="CustomRoleLoadout">The users custom loadout for the chameleon outfits job.</param>
 /// <param name="DefaultRoleLoadout">The default loadout for the chameleon outfits job.</param>
 /// <param name="JobStartingGearPrototype">The starting gear of the chameleon outfits job.</param>
-[ByRefEvent]
+[ByRefEvent, GenericEvent]
 public record struct ChameleonControllerOutfitSelectedEvent(
     ChameleonOutfitPrototype ChameleonOutfit,
     RoleLoadout? CustomRoleLoadout,

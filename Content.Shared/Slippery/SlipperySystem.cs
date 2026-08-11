@@ -159,6 +159,7 @@ public sealed partial class SlipperySystem : EntitySystem
 /// <summary>
 ///     Raised on an entity to determine if it can slip or not.
 /// </summary>
+[GenericEvent]
 public sealed class SlipAttemptEvent : EntityEventArgs, IInventoryRelayEvent
 {
     public bool NoSlip;

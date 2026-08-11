@@ -17,7 +17,7 @@ public abstract class SharedHeadsetSystem : EntitySystem
         SubscribeLocalEvent<HeadsetComponent, EmpPulseEvent>(OnEmpPulse);
     }
 
-    private void OnGetDefault(EntityUid uid, HeadsetComponent component, InventoryRelayedEvent<GetDefaultRadioChannelEvent> args)
+    private void OnGetDefault(EntityUid uid, HeadsetComponent component, ref InventoryRelayedEvent<GetDefaultRadioChannelEvent> args)
     {
         if (!component.Enabled || !component.IsEquipped)
         {

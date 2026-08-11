@@ -45,7 +45,7 @@ public record struct AttemptIngestEvent(EntityUid User, EntityUid Ingested, bool
 ///     Raised on an entity that is consuming another entity to see if there is anything attached to the entity
 ///     that is preventing it from doing the consumption.
 /// </summary>
-[ByRefEvent]
+[ByRefEvent, GenericEvent]
 public record struct IngestionAttemptEvent(SlotFlags TargetSlots, bool Cancelled = false) : IInventoryRelayEvent
 {
     /// <summary>

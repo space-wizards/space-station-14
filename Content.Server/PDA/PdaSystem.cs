@@ -72,7 +72,7 @@ namespace Content.Server.PDA
         {
             // Relay it to your ID so it can update as well.
             if (ent.Comp.ContainedId != null)
-                RaiseLocalEvent(ent.Comp.ContainedId.Value, args);
+                RaiseLocalEvent(ent.Comp.ContainedId.Value, ref args);
         }
 
         private void OnEntityRenamed(ref EntityRenamedEvent ev)

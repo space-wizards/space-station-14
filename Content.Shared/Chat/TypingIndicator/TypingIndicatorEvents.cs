@@ -24,7 +24,7 @@ public sealed class TypingChangedEvent : EntityEventArgs
 ///     This event will be broadcast right before displaying an entities typing indicator.
 ///     If _overrideIndicator is not null after the event is finished it will be used.
 /// </summary>
-[Serializable, NetSerializable]
+[Serializable, NetSerializable, GenericEvent]
 public sealed class BeforeShowTypingIndicatorEvent : IInventoryRelayEvent
 {
     public SlotFlags TargetSlots { get; } = SlotFlags.WITHOUT_POCKET;

@@ -13,7 +13,7 @@ public sealed partial class VoiceMaskSetNameEvent : InstantActionEvent
 /// <param name="VoiceMask">VoiceMask component</param>
 /// <param name="OldName">The old name</param>
 /// <param name="NewName">The new name</param>
-[ByRefEvent]
+[ByRefEvent, GenericEvent]
 public readonly record struct VoiceMaskNameUpdatedEvent(Entity<VoiceMaskComponent> VoiceMask, string? OldName, string NewName) : IInventoryRelayEvent
 {
     SlotFlags IInventoryRelayEvent.TargetSlots => SlotFlags.WITHOUT_POCKET;
