@@ -78,7 +78,7 @@
       Glass: 1
 
 - type: entity
-  parent: [BaseMachineCircuitboard, BaseSecurityContraband]
+  parent: BaseMachineCircuitboard
   id: SecurityTechFabCircuitboard
   name: security techfab machine board
   description: A machine printed circuit board for a security techfab.
@@ -97,7 +97,7 @@
       stealGroup: SecurityTechFabCircuitboard
 
 - type: entity
-  parent: [BaseMachineCircuitboard, BaseSecurityContraband]
+  parent: BaseMachineCircuitboard
   id: AmmoTechFabCircuitboard
   name: ammo techfab circuit board
   description: A machine printed circuit board for an ammo techfab.
@@ -110,7 +110,7 @@
         Manipulator: 2
 
 - type: entity
-  parent: [BaseMachineCircuitboard, BaseMedicalContraband]
+  parent: BaseMachineCircuitboard
   id: MedicalTechFabCircuitboard
   name: medical techfab machine board
   description: A machine printed circuit board for a medical techfab.
@@ -1237,7 +1237,7 @@
         Steel: 5
 
 - type: entity
-  parent: [BaseMachineCircuitboard, BaseCargoContraband]
+  parent: BaseMachineCircuitboard
   id: MailTeleporterMachineCircuitboard
   name: mail teleporter machine board
   description: A machine printed circuit board for a mail teleporter.
@@ -1282,7 +1282,7 @@
       Cable: 2
 
 - type: entity
-  parent: [BaseMachineCircuitboard, BaseCargoContraband]
+  parent: BaseMachineCircuitboard
   id: SalvageMagnetMachineCircuitboard
   name: salvage magnet machine board
   description: A machine printed circuit board for a salvage magnet.

@@ -162,7 +162,7 @@
   - type: StealCondition
     stealGroup: LAMP
     minCollectionSize: 1
-    maxCollectionSize: 5
+    maxCollectionSize: 10
     verifyMapExistence: true
   - type: Objective
     difficulty: 0.1 # just for fun, collecting LAMP on Moth

@@ -96,7 +96,7 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: [BaseClothingBeltEngineering, BaseCommandContraband]
+  parent: BaseClothingBeltEngineering
   id: ClothingBeltChiefEngineer
   name: chief engineer's toolbelt
   description: Holds tools, looks snazzy.

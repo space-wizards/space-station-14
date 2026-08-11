@@ -117,7 +117,7 @@
       - Forensics
 
 - type: entity
-  parent: [BasePDACartridge, BaseCommandContraband]
+  parent: BasePDACartridge
   id: WantedListCartridge
   name: Wanted list cartridge
   description: A program to get a list of wanted persons.
@@ -139,7 +139,7 @@
     stealGroup: WantedListCartridge
 
 - type: entity
-  parent: [BasePDACartridge, BaseCommandContraband]
+  parent: BasePDACartridge
   id: MedTekCartridge
   name: MedTek cartridge
   description: A program that provides medical diagnostic tools.
@@ -157,7 +157,7 @@
     - type: MedTekCartridge
 
 - type: entity
-  parent: [BasePDACartridge, BaseCommandContraband]
+  parent: BasePDACartridge
   id: AstroNavCartridge
   name: AstroNav cartridge
   description: A program for navigation that provides GPS coordinates.

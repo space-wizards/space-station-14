@@ -167,8 +167,8 @@
   id: LAMP
   name: steal-target-groups-lamps
   sprite:
-    sprite: Objects/Tools/lantern.rsi
-    state: lantern
+    sprite: Objects/Tools/seclite.rsi
+    state: seclite-on
 
 - type: stealTargetGroup
   id: ClothingEyesHuds
