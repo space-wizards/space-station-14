@@ -25,6 +25,9 @@
   - type: XenoArtifact
     effectsTable: !type:NestedSelector
       tableId: XenoArtifactEffectsDefaultTable
+  - type: ActionGrant
+    actions:
+    - ActionArtifactActivate
   - type: Damageable
   - type: Injurable
   - type: Actions

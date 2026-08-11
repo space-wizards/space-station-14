@@ -7604,16 +7604,6 @@ entities:
     - type: Transform
       parent: 30
       pos: -0.39634466,12.638008
-- proto: ActionToggleInternals
-  entities:
-  - uid: 9163
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 23311
-    - type: Action
-      container: 23311
 - proto: AirAlarm
   entities:
   - uid: 682
@@ -107739,14 +107729,6 @@ entities:
     - type: Transform
       parent: 30
       pos: 4.3357787,-46.395798
-    - type: GasTank
-      toggleActionEntity: 9163
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 9163
 - proto: NitrousOxideCanister
   entities:
   - uid: 7289

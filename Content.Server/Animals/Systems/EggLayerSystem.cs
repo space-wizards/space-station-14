@@ -1,4 +1,3 @@
-using Content.Server.Actions;
 using Content.Server.Animals.Components;
 using Content.Server.Popups;
 using Content.Shared.Actions.Events;
@@ -6,11 +5,9 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
-using Content.Shared.Nutrition.Prototypes;
 using Content.Shared.Storage;
 using Robust.Server.Audio;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -23,7 +20,6 @@ namespace Content.Server.Animals.Systems;
 public sealed partial class EggLayerSystem : EntitySystem
 {
     [Dependency] private IRobustRandom _random = default!;
-    [Dependency] private ActionsSystem _actions = default!;
     [Dependency] private AudioSystem _audio = default!;
     [Dependency] private SatiationSystem _satiation = default!;
     [Dependency] private IGameTiming _timing = default!;
@@ -66,7 +62,6 @@ public sealed partial class EggLayerSystem : EntitySystem
 
     private void OnMapInit(EntityUid uid, EggLayerComponent component, MapInitEvent args)
     {
-        _actions.AddAction(uid, ref component.Action, component.EggLayAction);
         component.NextGrowth = _timing.CurTime + TimeSpan.FromSeconds(_random.NextFloat(component.EggLayCooldownMin, component.EggLayCooldownMax));
     }
 

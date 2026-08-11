@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Content.Shared.Actions;
+using Content.Shared.Actions.Components;
 using Content.Shared.Blocking.Components;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
@@ -18,14 +19,12 @@ using Content.Shared.Toggleable;
 using Content.Shared.Verbs;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Toolshed.Syntax;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Blocking;
 
 public sealed partial class BlockingSystem : EntitySystem
 {
-    [Dependency] private ActionContainerSystem _actionContainer = default!;
     [Dependency] private EntityLookupSystem _lookup = default!;
     [Dependency] private ExamineSystemShared _examine = default!;
     [Dependency] private FixtureSystem _fixtureSystem = default!;
@@ -52,22 +51,11 @@ public sealed partial class BlockingSystem : EntitySystem
         SubscribeLocalEvent<BlockingComponent, GotUnequippedHandEvent>(OnUnequip);
         SubscribeLocalEvent<BlockingComponent, DroppedEvent>(OnDrop);
 
-        SubscribeLocalEvent<BlockingComponent, GetItemActionsEvent>(OnGetActions);
         SubscribeLocalEvent<BlockingComponent, ToggleActionEvent>(OnToggleAction);
 
         SubscribeLocalEvent<BlockingComponent, ComponentShutdown>(OnShutdown);
 
         SubscribeLocalEvent<BlockingComponent, GetVerbsEvent<ExamineVerb>>(OnVerbExamine);
-        SubscribeLocalEvent<BlockingComponent, MapInitEvent>(OnMapInit);
-    }
-
-    private void OnMapInit(Entity<BlockingComponent> entity, ref MapInitEvent args)
-    {
-        if (!CanBlock(entity.AsNullable()))
-            return;
-
-        _actionContainer.EnsureAction(entity, ref entity.Comp.BlockingToggleActionEntity, entity.Comp.BlockingToggleAction);
-        DirtyField(entity, entity.Comp, nameof(BlockingComponent.BlockingToggleActionEntity));
     }
 
     private void OnItemToggled(Entity<BlockingComponent> entity, ref ItemToggledEvent args)
@@ -99,11 +87,6 @@ public sealed partial class BlockingSystem : EntitySystem
         StopBlocking(entity, args.User);
     }
 
-    private void OnGetActions(Entity<BlockingComponent> entity, ref GetItemActionsEvent args)
-    {
-        args.AddAction(ref entity.Comp.BlockingToggleActionEntity, entity.Comp.BlockingToggleAction);
-    }
-
     private void OnToggleAction(Entity<BlockingComponent> entity, ref ToggleActionEvent args)
     {
         if (args.Handled || !CanBlock(entity.AsNullable()))
@@ -127,9 +110,9 @@ public sealed partial class BlockingSystem : EntitySystem
         }
 
         if (entity.Comp.IsRaised)
-            LowerShield(entity, args.Performer);
+            LowerShield(entity, args.Performer, args.Action.AsNullable());
         else
-            RaiseShield(entity, args.Performer);
+            RaiseShield(entity, args.Performer, args.Action.AsNullable());
 
         args.Handled = true;
     }
@@ -151,8 +134,9 @@ public sealed partial class BlockingSystem : EntitySystem
     /// </summary>
     /// <param name="entity"> The entity with the blocking component</param>
     /// <param name="user"> The entity who's using the item to block</param>
+    /// <param name="action">Action that triggered the raising of this entity.</param>
     /// <returns></returns>
-    public bool RaiseShield(Entity<BlockingComponent> entity, EntityUid user)
+    public bool RaiseShield(Entity<BlockingComponent> entity, EntityUid user, Entity<ActionComponent?>? action = null)
     {
         if (entity.Comp.IsRaised)
             return false;
@@ -201,7 +185,7 @@ public sealed partial class BlockingSystem : EntitySystem
             CantBlockError(user);
             return false;
         }
-        _actionsSystem.SetToggled(entity.Comp.BlockingToggleActionEntity, true);
+        _actionsSystem.SetToggled(action, true);
         _popupSystem.PopupEntity(msgUser, msgOther, user, user);
 
         if (TryComp<PhysicsComponent>(user, out var physicsComponent))
@@ -235,10 +219,11 @@ public sealed partial class BlockingSystem : EntitySystem
     /// <summary>
     /// Called where you want the user to stop blocking.
     /// </summary>
-    /// <param name="entity"> The entity with the blocking component</param>
-    /// <param name="user"> The entity who's using the item to block</param>
+    /// <param name="entity"> The entity with the blocking component.</param>
+    /// <param name="user"> The entity who's using the item to block.</param>
+    /// <param name="action">Action that triggered the lowering of this entity.</param>
     /// <returns></returns>
-    public bool LowerShield(Entity<BlockingComponent> entity, EntityUid user)
+    public bool LowerShield(Entity<BlockingComponent> entity, EntityUid user, Entity<ActionComponent?>? action = null)
     {
         if (!entity.Comp.IsRaised)
             return false;
@@ -259,7 +244,7 @@ public sealed partial class BlockingSystem : EntitySystem
             if (xform.Anchored)
                 _transformSystem.Unanchor(user, xform, false);
 
-            _actionsSystem.SetToggled(entity.Comp.BlockingToggleActionEntity, false);
+            _actionsSystem.SetToggled(action, false);
             _fixtureSystem.DestroyFixture(user, BlockingComponent.BlockFixtureId, body: physicsComponent);
             _physics.SetBodyType(user, blockingUserComponent.OriginalBodyType, body: physicsComponent);
             _popupSystem.PopupEntity(msgUser, msgOther, user, user);

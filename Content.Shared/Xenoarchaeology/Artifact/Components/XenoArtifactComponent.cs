@@ -1,5 +1,4 @@
 using Content.Shared.Actions;
-using Content.Shared.Actions.Components;
 using Content.Shared.Destructible.Thresholds;
 using Content.Shared.EntityTable.EntitySelectors;
 using Content.Shared.Xenoarchaeology.Artifact.Prototypes;
@@ -160,12 +159,6 @@ public sealed partial class XenoArtifactComponent : Component
             Variation = 0.1f
         }
     };
-
-    /// <summary>
-    /// Action that allows the artifact to self activate.
-    /// </summary>
-    [DataField]
-    public EntProtoId<InstantActionComponent> SelfActivateAction = "ActionArtifactActivate";
 
     /// <summary>
     /// Message shown on artifact unlock beginning.

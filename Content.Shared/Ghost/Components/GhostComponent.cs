@@ -14,39 +14,6 @@ namespace Content.Shared.Ghost.Components;
 [AutoGenerateComponentState(true)]
 public sealed partial class GhostComponent : Component
 {
-    // Actions
-    [DataField]
-    public EntProtoId ToggleLightingAction = "ActionToggleLighting";
-
-    [DataField, AutoNetworkedField]
-    public EntityUid? ToggleLightingActionEntity;
-
-    [DataField]
-    public EntProtoId ToggleFoVAction = "ActionToggleFov";
-
-    [DataField, AutoNetworkedField]
-    public EntityUid? ToggleFoVActionEntity;
-
-    [DataField]
-    public EntProtoId ToggleGhostsAction = "ActionToggleGhosts";
-
-    [DataField, AutoNetworkedField]
-    public EntityUid? ToggleGhostsActionEntity;
-
-    [DataField]
-    public EntProtoId ToggleGhostHearingAction = "ActionToggleGhostHearing";
-
-    [DataField]
-    public EntityUid? ToggleGhostHearingActionEntity;
-
-    [DataField]
-    public EntProtoId BooAction = "ActionGhostBoo";
-
-    [DataField, AutoNetworkedField]
-    public EntityUid? BooActionEntity;
-
-    // End actions
-
     /// <summary>
     /// Time at which the player died and created this ghost.
     /// Used to determine votekick eligibility.

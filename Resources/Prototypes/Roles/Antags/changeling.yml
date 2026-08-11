@@ -26,6 +26,8 @@
     actions:
     - ActionChangelingStore
     - ActionChangelingStasis
+    - ActionChangelingDevour
+    - ActionChangelingTransform
   - type: Store
     name: store-preset-name-changeling
     categories:

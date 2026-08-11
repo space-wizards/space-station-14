@@ -1,7 +1,6 @@
 using Content.Shared.Actions;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Spider;
 
@@ -9,15 +8,8 @@ namespace Content.Shared.Spider;
 [Access(typeof(SharedSpiderSystem))]
 public sealed partial class SpiderComponent : Component
 {
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("webPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string WebPrototype = "SpiderWeb";
-
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("webAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string WebAction = "ActionSpiderWeb";
-
-    [DataField] public EntityUid? Action;
+    [DataField]
+    public EntProtoId WebPrototype = "SpiderWeb";
 
     /// <summary>
     /// Whether the spider will spawn webs when not controlled by a player.
@@ -38,4 +30,4 @@ public sealed partial class SpiderComponent : Component
     public TimeSpan? NextWebSpawn;
 }
 
-public sealed partial class SpiderWebActionEvent : InstantActionEvent { }
+public sealed partial class SpiderWebActionEvent : InstantActionEvent;

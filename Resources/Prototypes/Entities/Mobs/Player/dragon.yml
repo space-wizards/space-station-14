@@ -147,6 +147,9 @@
       - MobState
       - Door
       - Wall
+  - type: ActionGrant
+    actions:
+    - ActionDevour
   - type: Tag
     tags:
     - CannotSuicide
@@ -176,13 +179,13 @@
   id: MobDragon
   components:
   - type: Dragon
-    spawnRiftAction: ActionSpawnRift
   - type: GhostRole
     mindRoles:
     - MindRoleDragon
   - type: ActionGrant
     actions:
     - ActionDragonsBreath
+    - ActionSpawnRift
   - type: GuideHelp
     guides:
     - MinorAntagonists

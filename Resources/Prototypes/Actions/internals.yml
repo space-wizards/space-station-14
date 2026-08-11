@@ -14,5 +14,9 @@
     - state: internal1
       map: ["enum.ActionVisuals.IconToggled"]
       visible: false
+  - type: ActionUserWhitelist
+    whitelist:
+      components:
+      - Internals # Useless without connectable internals
   - type: InstantAction
     event: !type:ToggleActionEvent

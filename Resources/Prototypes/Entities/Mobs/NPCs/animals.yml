@@ -275,6 +275,9 @@
   - type: EggLayer
     eggSpawn:
     - id: FoodEgg
+  - type: ActionGrant
+    actions:
+    - ActionAnimalLayEgg
   - type: ReplacementAccent
     accent: chicken
   - type: SentienceTarget
@@ -730,6 +733,9 @@
   - type: EggLayer
     eggSpawn:
     - id: FoodEgg
+  - type: ActionGrant
+    actions:
+    - ActionAnimalLayEgg
   - type: ReplacementAccent
     accent: duck
   - type: SentienceTarget
@@ -2726,6 +2732,9 @@
     emoteSounds: UnisexArachnid
   - type: TypingIndicator
     proto: spider
+  - type: ActionGrant
+    actions:
+    - ActionSpiderWeb
   - type: Tag
     tags:
     - DoorBumpOpener

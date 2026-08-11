@@ -1,7 +1,5 @@
 using Content.Shared.Actions;
-using Content.Shared.Inventory;
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Overlays;
 
@@ -29,23 +27,6 @@ public sealed partial class NightVisionComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool RelayOverlay;
-
-    /// <summary>
-    /// The action proto that toggles the night vision.
-    /// </summary>
-    /// <remarks>
-    /// if null, no action is added.
-    /// if <see cref="RelayOverlay"/> is true. it adds the action to the entity wearing this.
-    /// otherwise it adds the action to itself
-    /// </remarks>
-    [DataField]
-    public EntProtoId? Action;
-
-    /// <summary>
-    /// Reference to the action entity
-    /// </summary>
-    [DataField]
-    public EntityUid? ActionEntity;
 
     /// <summary>
     /// Overall color modulation applied on top of the night-vision screen shader.

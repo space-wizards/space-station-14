@@ -18,17 +18,8 @@ public sealed partial class FirestarterComponent : Component
     public float IgnitionRadius = 4f;
 
     /// <summary>
-    /// The action entity.
-    /// </summary>
-    [DataField]
-    public EntProtoId? FireStarterAction = "ActionFireStarter";
-
-    [DataField] public EntityUid? FireStarterActionEntity;
-
-
-    /// <summary>
     /// Radius of objects that will be ignited if flammable.
     /// </summary>
     [DataField]
-    public SoundSpecifier IgniteSound = new SoundPathSpecifier("/Audio/Magic/rumble.ogg");
+    public SoundSpecifier? IgniteSound = new SoundPathSpecifier("/Audio/Magic/rumble.ogg");
 }

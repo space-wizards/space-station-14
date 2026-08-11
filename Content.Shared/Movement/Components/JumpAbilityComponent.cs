@@ -2,7 +2,6 @@ using Content.Shared.Actions;
 using Content.Shared.Movement.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Movement.Components;
 
@@ -14,18 +13,6 @@ namespace Content.Shared.Movement.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(SharedJumpAbilitySystem))]
 public sealed partial class JumpAbilityComponent : Component
 {
-    /// <summary>
-    /// The action prototype that allows you to jump.
-    /// </summary>
-    [DataField]
-    public EntProtoId Action = "ActionGravityJump";
-
-    /// <summary>
-    /// Entity to hold the action prototype.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public EntityUid? ActionEntity;
-
     /// <summary>
     /// How far you will jump (in tiles).
     /// </summary>

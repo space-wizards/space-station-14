@@ -2,7 +2,6 @@ using Content.Server.Fluids.EntitySystems;
 using Content.Server.Objectives.Components;
 using Content.Server.Objectives.Systems;
 using Content.Server.Popups;
-using Content.Shared.Actions;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Dragon;
 using Content.Shared.Gibbing;
@@ -26,7 +25,6 @@ public sealed partial class DragonSystem : EntitySystem
     [Dependency] private MovementSpeedModifierSystem _movement = default!;
     [Dependency] private NpcFactionSystem _faction = default!;
     [Dependency] private PopupSystem _popup = default!;
-    [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private SharedMapSystem _map = default!;
@@ -103,7 +101,6 @@ public sealed partial class DragonSystem : EntitySystem
     private void OnInit(EntityUid uid, DragonComponent component, MapInitEvent args)
     {
         Roar(uid, component);
-        _actions.AddAction(uid, ref component.SpawnRiftActionEntity, component.SpawnRiftAction);
     }
 
     [SubscribeLocalEvent]

@@ -1,6 +1,5 @@
 using Content.Shared.Actions;
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Speech.Components;
@@ -21,15 +20,6 @@ public sealed partial class MeleeSpeechComponent : Component
     [DataField("MaxBattlecryLength")]
     [AutoNetworkedField]
     public int MaxBattlecryLength = 12;
-
-    [DataField]
-    public EntProtoId ConfigureAction = "ActionConfigureMeleeSpeech";
-
-    /// <summary>
-    /// The action to open the battlecry UI
-    /// </summary>
-    [DataField]
-    public EntityUid? ConfigureActionEntity;
 }
 
 /// <summary>

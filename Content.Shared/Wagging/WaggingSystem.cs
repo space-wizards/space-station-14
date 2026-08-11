@@ -1,4 +1,3 @@
-using Content.Shared.Actions;
 using Content.Shared.Body;
 using Content.Shared.Cloning.Events;
 using Content.Shared.Humanoid.Markings;
@@ -14,7 +13,6 @@ namespace Content.Shared.Wagging;
 /// </summary>
 public sealed partial class WaggingSystem : EntitySystem
 {
-    [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private SharedVisualBodySystem _visualBody = default!;
 
     /// <summary>
@@ -28,30 +26,10 @@ public sealed partial class WaggingSystem : EntitySystem
 
         // Make sure to set the datafields before adding the component so that the correct action gets spawned on map init.
         var cloneComp = Factory.GetComponent<WaggingComponent>();
-        cloneComp.Action = ent.Comp.Action;
         cloneComp.Layer = ent.Comp.Layer;
         cloneComp.Organ = ent.Comp.Organ;
         cloneComp.Suffix = ent.Comp.Suffix;
         AddComp(args.CloneUid, cloneComp, true);
-    }
-
-    /// <summary>
-    /// Adds the wagging action during initialization.
-    /// </summary>
-    [SubscribeLocalEvent]
-    private void OnWaggingMapInit(Entity<WaggingComponent> ent, ref MapInitEvent args)
-    {
-        _actions.AddAction(ent, ref ent.Comp.ActionEntity, ent.Comp.Action, ent);
-        DirtyField(ent.AsNullable(), nameof(WaggingComponent.ActionEntity));
-    }
-
-    /// <summary>
-    /// Removes the wagging action during shutdown.
-    /// </summary>
-    [SubscribeLocalEvent]
-    private void OnWaggingShutdown(Entity<WaggingComponent> ent, ref ComponentShutdown args)
-    {
-        _actions.RemoveAction(ent.Owner, ent.Comp.ActionEntity);
     }
 
     /// <summary>

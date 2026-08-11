@@ -78,6 +78,13 @@
     context: "ghost"
   - type: Examiner
     skipChecks: true
+  - type: ActionGrant
+    actions:
+    - ActionGhostBoo
+    - ActionToggleGhostHearing
+    - ActionToggleLighting
+    - ActionToggleFov
+    - ActionToggleGhosts
   - type: Ghost
   - type: GhostSpriteState
     damageMap:

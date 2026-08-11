@@ -21,6 +21,10 @@
           Slash: 10
           Piercing: 10
           Heat: 10
+    - type: ActionGrant
+      actions:
+      - ActionToggleBlock
+    - type: ItemActionGrant
     - type: Damageable
     - type: Injurable
       damageContainer: Shield

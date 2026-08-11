@@ -1,4 +1,5 @@
 using Content.Shared.Actions;
+using Content.Shared.Actions.Components;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.Examine;
@@ -26,7 +27,6 @@ public abstract partial class SharedGasTankSystem : GasMaxPressureSystem<GasTank
         base.Initialize();
         SubscribeLocalEvent<GasTankComponent, ComponentShutdown>(OnGasShutdown);
         SubscribeLocalEvent<GasTankComponent, BeforeActivatableUIOpenEvent>(BeforeUiOpen);
-        SubscribeLocalEvent<GasTankComponent, GetItemActionsEvent>(OnGetActions);
         SubscribeLocalEvent<GasTankComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<GasTankComponent, ToggleActionEvent>(OnActionToggle);
         SubscribeLocalEvent<GasTankComponent, GasTankSetPressureMessage>(OnGasTankSetPressure);
@@ -63,15 +63,6 @@ public abstract partial class SharedGasTankSystem : GasMaxPressureSystem<GasTank
         UpdateUserInterface(ent);
     }
 
-    private void OnGetActions(EntityUid uid, GasTankComponent component, GetItemActionsEvent args)
-    {
-        if (!HasComp<InternalsComponent>(args.User))
-            return;
-
-        args.AddAction(ref component.ToggleActionEntity, component.ToggleAction);
-        Dirty(uid, component);
-    }
-
     private void OnExamined(EntityUid uid, GasTankComponent component, ExaminedEvent args)
     {
         using var _ = args.PushGroup(nameof(GasTankComponent));
@@ -90,7 +81,7 @@ public abstract partial class SharedGasTankSystem : GasMaxPressureSystem<GasTank
         if (args.Handled)
             return;
 
-        ToggleInternals(gasTank, user: args.Performer);
+        ToggleInternals(gasTank, user: args.Performer, args.Action.AsNullable());
         args.Handled = true;
     }
 
@@ -136,7 +127,7 @@ public abstract partial class SharedGasTankSystem : GasMaxPressureSystem<GasTank
         return internalsComp != null && internalsComp.BreathTools.Count != 0 && !ent.Comp.ReleaseValveOpen;
     }
 
-    public bool ConnectToInternals(Entity<GasTankComponent> ent, EntityUid? user = null)
+    public bool ConnectToInternals(Entity<GasTankComponent> ent, EntityUid? user = null, Entity<ActionComponent?>? action = null)
     {
         var (owner, component) = ent;
         if (component.IsConnected || !CanConnectToInternals(ent))
@@ -153,8 +144,8 @@ public abstract partial class SharedGasTankSystem : GasMaxPressureSystem<GasTank
             component.User = internalsUid.Value;
 
         Dirty(ent);
-        _actions.SetToggled(component.ToggleActionEntity, component.IsConnected);
-        _actions.SetCooldown(component.ToggleActionEntity, TimeSpan.FromSeconds(1));
+        _actions.SetToggled(action, component.IsConnected);
+        _actions.SetCooldown(action, TimeSpan.FromSeconds(1));
 
         // Couldn't toggle!
         if (!component.IsConnected)
@@ -204,7 +195,7 @@ public abstract partial class SharedGasTankSystem : GasMaxPressureSystem<GasTank
         return false;
     }
 
-    public bool DisconnectFromInternals(Entity<GasTankComponent> ent, EntityUid? user = null, bool forced = false)
+    public bool DisconnectFromInternals(Entity<GasTankComponent> ent, EntityUid? user = null, Entity<ActionComponent?>? action = null, bool forced = false)
     {
         var (owner, component) = ent;
 
@@ -218,12 +209,12 @@ public abstract partial class SharedGasTankSystem : GasMaxPressureSystem<GasTank
         component.User = null;
         Dirty(ent);
 
-        _actions.SetToggled(component.ToggleActionEntity, false);
+        _actions.SetToggled(action, false);
 
         // I hate this but actions have no easy way to unify this with usedelay.
         if (!forced && _delay.TryGetDelayInfo(ent.Owner, out var delayInfo, id: GasTankDelay))
         {
-            _actions.SetCooldown(component.ToggleActionEntity, delayInfo.Length);
+            _actions.SetCooldown(action, delayInfo.Length);
         }
 
         if (internalsUid != null && internalsComp != null)
@@ -235,15 +226,15 @@ public abstract partial class SharedGasTankSystem : GasMaxPressureSystem<GasTank
         return true;
     }
 
-    private bool ToggleInternals(Entity<GasTankComponent> ent, EntityUid? user = null)
+    private bool ToggleInternals(Entity<GasTankComponent> ent, EntityUid? user = null, Entity<ActionComponent?>? action = null)
     {
         if (ent.Comp.IsConnected)
         {
-            return DisconnectFromInternals(ent, user);
+            return DisconnectFromInternals(ent, user, action);
         }
         else
         {
-            return ConnectToInternals(ent, user);
+            return ConnectToInternals(ent, user, action);
         }
     }
 }

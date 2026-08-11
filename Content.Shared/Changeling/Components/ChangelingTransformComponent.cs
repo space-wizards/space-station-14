@@ -15,18 +15,6 @@ namespace Content.Shared.Changeling.Components;
 public sealed partial class ChangelingTransformComponent : Component
 {
     /// <summary>
-    /// The action Prototype for Transforming
-    /// </summary>
-    [DataField]
-    public EntProtoId? ChangelingTransformAction = "ActionChangelingTransform";
-
-    /// <summary>
-    /// The Action Entity for transforming associated with this Component
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public EntityUid? ChangelingTransformActionEntity;
-
-    /// <summary>
     /// Time it takes to Transform
     /// </summary>
     [DataField, AutoNetworkedField]

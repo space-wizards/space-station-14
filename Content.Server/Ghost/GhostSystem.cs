@@ -85,7 +85,6 @@ namespace Content.Server.Ghost
             base.Initialize();
 
             SubscribeLocalEvent<GhostComponent, ComponentStartup>(OnGhostStartup);
-            SubscribeLocalEvent<GhostComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<GhostComponent, ComponentShutdown>(OnGhostShutdown);
 
             SubscribeLocalEvent<GhostComponent, MindRemovedMessage>(OnMindRemovedMessage);
@@ -126,12 +125,12 @@ namespace Content.Server.Ghost
             if (HasComp<GhostHearingComponent>(uid))
             {
                 RemComp<GhostHearingComponent>(uid);
-                _actions.SetToggled(component.ToggleGhostHearingActionEntity, true);
+                _actions.SetToggled(args.Action.AsNullable(), true);
             }
             else
             {
                 AddComp<GhostHearingComponent>(uid);
-                _actions.SetToggled(component.ToggleGhostHearingActionEntity, false);
+                _actions.SetToggled(args.Action.AsNullable(), false);
             }
 
             var str = HasComp<GhostHearingComponent>(uid)
@@ -199,16 +198,6 @@ namespace Content.Server.Ghost
 
             // Entity can't see ghosts anymore.
             _eye.RefreshVisibilityMask(uid);
-            _actions.RemoveAction(uid, component.BooActionEntity);
-        }
-
-        private void OnMapInit(EntityUid uid, GhostComponent component, MapInitEvent args)
-        {
-            _actions.AddAction(uid, ref component.BooActionEntity, component.BooAction);
-            _actions.AddAction(uid, ref component.ToggleGhostHearingActionEntity, component.ToggleGhostHearingAction);
-            _actions.AddAction(uid, ref component.ToggleLightingActionEntity, component.ToggleLightingAction);
-            _actions.AddAction(uid, ref component.ToggleFoVActionEntity, component.ToggleFoVAction);
-            _actions.AddAction(uid, ref component.ToggleGhostsActionEntity, component.ToggleGhostsAction);
         }
 
         #region Ghost Deletion

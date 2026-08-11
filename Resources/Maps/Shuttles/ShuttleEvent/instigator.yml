@@ -446,28 +446,6 @@ entities:
     - type: GasTileOverlay
     - type: RadiationGridResistance
     - type: ImplicitRoof
-- proto: ActionToggleInternals
-  entities:
-  - uid: 495
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 493
-    - type: Action
-      originalIconColor: '#FFFFFFFF'
-      container: 493
-- proto: ActionToggleJetpack
-  entities:
-  - uid: 494
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 493
-    - type: Action
-      originalIconColor: '#FFFFFFFF'
-      container: 493
 - proto: AirCanister
   entities:
   - uid: 441
@@ -2799,17 +2777,6 @@ entities:
     - type: Transform
       pos: 8.489939,10.312036
       parent: 1
-    - type: GasTank
-      toggleActionEntity: 495
-    - type: Jetpack
-      toggleActionEntity: 494
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 494
-          - 495
 - proto: LockerSyndicate
   entities:
   - uid: 471

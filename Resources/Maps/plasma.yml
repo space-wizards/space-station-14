@@ -9915,24 +9915,6 @@ entities:
     - type: Transform
       parent: 2
       pos: -131.49832,-18.377594
-- proto: ActionToggleInternals
-  entities:
-  - uid: 6670
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 4309
-    - type: Action
-      container: 4309
-  - uid: 23594
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 23345
-    - type: Action
-      container: 23345
 - proto: ActionToggleLight
   entities:
   - uid: 3278
@@ -132151,16 +132133,8 @@ entities:
     components:
     - type: Transform
       parent: 3274
-    - type: GasTank
-      toggleActionEntity: 23594
     - type: Physics
       canCollide: False
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 23594
     - type: InsideEntityStorage
   - uid: 25883
     components:
@@ -133454,14 +133428,6 @@ entities:
     - type: Transform
       parent: 2
       pos: -73.858475,-4.3700285
-    - type: GasTank
-      toggleActionEntity: 6670
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 6670
 - proto: PlasmaTankFilled
   entities:
   - uid: 24490

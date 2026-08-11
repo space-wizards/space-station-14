@@ -1,6 +1,5 @@
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Medical.Stethoscope.Components;
 
@@ -21,11 +20,4 @@ public sealed partial class StethoscopeComponent : Component
     /// </summary>
     [DataField]
     public FixedPoint2? LastMeasuredDamage;
-
-    [DataField]
-    public EntProtoId Action = "ActionStethoscope";
-
-    [DataField]
-    public EntityUid? ActionEntity;
 }
-

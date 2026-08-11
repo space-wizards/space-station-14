@@ -49,12 +49,6 @@ public sealed partial class GasTankComponent : GasMaxPressureHolderComponent
     [ViewVariables]
     public bool CheckUser;
 
-    [DataField]
-    public EntProtoId ToggleAction = "ActionToggleInternals";
-
-    [DataField, AutoNetworkedField]
-    public EntityUid? ToggleActionEntity;
-
     /// <summary>
     ///     Tracks elapsed time between client state updates for <see cref="GasMaxPressureHolderComponent"/>.
     /// </summary>

@@ -1,5 +1,4 @@
 using Content.Shared.Actions;
-using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
@@ -29,14 +28,8 @@ public sealed partial class StethoscopeSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<StethoscopeComponent, InventoryRelayedEvent<GetVerbsEvent<InnateVerb>>>(AddStethoscopeVerb);
-        SubscribeLocalEvent<StethoscopeComponent, GetItemActionsEvent>(OnGetActions);
         SubscribeLocalEvent<StethoscopeComponent, StethoscopeActionEvent>(OnStethoscopeAction);
         SubscribeLocalEvent<StethoscopeComponent, StethoscopeDoAfterEvent>(OnDoAfter);
-    }
-
-    private void OnGetActions(Entity<StethoscopeComponent> ent, ref GetItemActionsEvent args)
-    {
-        args.AddAction(ref ent.Comp.ActionEntity, ent.Comp.Action);
     }
 
     private void OnStethoscopeAction(Entity<StethoscopeComponent> ent, ref StethoscopeActionEvent args)

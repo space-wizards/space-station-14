@@ -13,18 +13,6 @@ namespace Content.Shared.Wagging;
 public sealed partial class WaggingComponent : Component
 {
     /// <summary>
-    /// The prototype id of the wagging action.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public EntProtoId Action = "ActionToggleWagging";
-
-    /// <summary>
-    /// Reference to the action entity.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public EntityUid? ActionEntity;
-
-    /// <summary>
     /// The visual layer of the tail marking.
     /// </summary>
     [DataField, AutoNetworkedField]

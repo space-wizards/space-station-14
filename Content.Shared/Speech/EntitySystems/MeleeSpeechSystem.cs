@@ -1,5 +1,4 @@
 using Content.Shared.Administration.Logs;
-using Content.Shared.Actions;
 using Content.Shared.Database;
 using Content.Shared.Speech.Components;
 using Robust.Shared.Player;
@@ -9,20 +8,7 @@ namespace Content.Shared.Speech.EntitySystems;
 public sealed partial class MeleeSpeechSystem : EntitySystem
 {
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private SharedActionsSystem _action = default!;
     [Dependency] private SharedUserInterfaceSystem _ui = default!;
-
-    [SubscribeLocalEvent]
-    private void OnComponentMapInit(Entity<MeleeSpeechComponent> ent, ref MapInitEvent args)
-    {
-        _action.AddAction(ent, ref ent.Comp.ConfigureActionEntity, ent.Comp.ConfigureAction, ent);
-    }
-
-    [SubscribeLocalEvent]
-    private void OnGetActions(Entity<MeleeSpeechComponent> ent, ref GetItemActionsEvent args)
-    {
-        args.AddAction(ref ent.Comp.ConfigureActionEntity, ent.Comp.ConfigureAction);
-    }
 
     [SubscribeLocalEvent]
     private void OnBattlecryChanged(Entity<MeleeSpeechComponent> ent, ref MeleeSpeechBattlecryChangedMessage args)
