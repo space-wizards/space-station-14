@@ -182,8 +182,9 @@ public sealed class DoAfterOverlay : Overlay
                 handle.DrawRect(box, color);
                 offset += _barTexture.Height / scale;
 
-                // Here starts code responsible for the transparent icon of <see cref="doAfter.Args.DoafterIcon"/>
+                // Here starts code responsible for transparent icon of <see cref="doAfter.Args.DoafterIcon"/> rendering
                 if (doAfter.Args.DoafterIcon is null ||
+                    doAfter.Completed ||
                     _iconsToDraw.Contains(doAfter.Args.DoafterIcon))
                     continue;
 
@@ -195,8 +196,13 @@ public sealed class DoAfterOverlay : Overlay
                 };
                 var iconAlpha = MathHelper.Lerp(0f, IconColorAlpha, (float)Math.Clamp(elapsed / MaxAlphaTime, 0.0, 1.0));
 
-                handle.DrawTexture(tex, iconPosition, Color.White.WithAlpha(iconAlpha));
+                if (doAfter.CancelledTime is not null)
+                {
+                    iconAlpha = MathHelper.Lerp(iconAlpha, 0f, (float)Math.Clamp((time - doAfter.CancelledTime.Value) / MaxAlphaTime, 0.0, 1.0));
+                }
+
                 _iconsToDraw.Add(doAfter.Args.DoafterIcon);
+                handle.DrawTexture(tex, iconPosition, Color.White.WithAlpha(iconAlpha));
             }
         }
 
