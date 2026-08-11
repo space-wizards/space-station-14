@@ -6092,3 +6092,12 @@ Entries:
   changes:
   - type: Add
     message: Два новых спрайта для дисплея ИИ;
+- id: 587
+  author: pe4enkakris
+  time: '2026-08-11T10:02:04.957028+00:00'
+  pr: 2129
+  changes:
+  - type: Add
+    message: Очень много плиток в резательный станок.
+  - type: Tweak
+    message: Стоимость производства новых плиток с 0,5 ресурса до 0,25.
