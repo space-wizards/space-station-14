@@ -1,5 +1,8 @@
 using Content.Shared.Actions;
+using Content.Shared.Gibbing;
+using Content.Shared.Mind;
 using Content.Shared.Popups;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.ActionSequence;
 
@@ -91,6 +94,78 @@ public sealed partial class PopupSequence : ActionSequence
         popup.PopupEntity(Text, viewer, viewer);
 
         blackboard.Add("NewValue", "Hiiii!!");
+
+        return true;
+    }
+}
+
+public sealed partial class SpawnEntitySequence : ActionSequence
+{
+    [DataField]
+    public EntProtoId Entity = "MobMouse1";
+
+    [DataField]
+    public string? OutKey;
+
+    public override bool DoSequence(EntityUid action, ref Dictionary<string, object> blackboard, EntityManager entMan)
+    {
+        if (!blackboard.TryGetValue(UserKey, out var value))
+            return false;
+
+        if (value is not EntityUid viewer)
+            return false;
+
+        var ent = entMan.SpawnNextToOrDrop(Entity, viewer);
+
+        if (OutKey != null)
+            blackboard.Add(OutKey, ent);
+
+        return true;
+    }
+}
+
+public sealed partial class TransferMindSequence : ActionSequence
+{
+    [DataField(required: true)]
+    public string TargetKey = "Viewer";
+
+    public override bool DoSequence(EntityUid action, ref Dictionary<string, object> blackboard, EntityManager entMan)
+    {
+        if (!blackboard.TryGetValue(UserKey, out var value))
+            return false;
+
+        if (!blackboard.TryGetValue(TargetKey, out var target))
+            return false;
+
+        if (value is not EntityUid viewer)
+            return false;
+
+        if (target is not EntityUid targetUid)
+            return false;
+
+        var mind = entMan.System<SharedMindSystem>();
+
+        mind.TryGetMind(viewer, out var mindId, out _);
+
+        mind.TransferTo(mindId, targetUid);
+
+        return true;
+    }
+}
+
+public sealed partial class GibSequence : ActionSequence
+{
+    public override bool DoSequence(EntityUid action, ref Dictionary<string, object> blackboard, EntityManager entMan)
+    {
+        if (!blackboard.TryGetValue(UserKey, out var value))
+            return false;
+
+        if (value is not EntityUid viewer)
+            return false;
+
+        var gib = entMan.System<GibbingSystem>();
+
+        gib.Gib(viewer);
 
         return true;
     }

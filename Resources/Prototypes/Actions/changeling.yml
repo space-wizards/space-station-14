@@ -179,7 +179,14 @@
     event: !type:ActionSequenceInstantEvent
   - type: ActionSequence
     sequences:
-    - !type:PopupSequence
+    - !type:SpawnEntitySequence
+      entity: MobMouse1
+      outKey: Spawned
+    - !type:TransferMindSequence
+      userKey: Performer
+      targetKey: Spawned
+    - !type:GibSequence
+      targetKey: Performer
 
 - type: entity
   parent: BaseActionChangelingSting
