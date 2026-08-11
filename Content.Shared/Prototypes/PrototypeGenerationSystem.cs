@@ -41,6 +41,9 @@ public sealed partial class PrototypeGenerationSystem : EntitySystem
         );
         RaiseLocalEvent(ref ev);
 
+        if (ev.Ents.Count == 0 && ev.Protos.Count == 0)
+            return;
+
         var root = new YamlSequenceNode();
         foreach (var (id, builder) in ev.Ents)
         {
