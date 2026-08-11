@@ -178,14 +178,18 @@
   - type: InstantAction
     event: !type:ActionSequenceInstantEvent
   - type: ActionSequence
-    sequences:
-    - !type:SpawnEntitySequence
+    steps:
+    - !type:GetMindActionStep
+      targetKey: Performer
+      outMindKey: Mind
+    - !type:SpawnEntityActionStep
       entity: MobMouse1
-      outKey: Spawned
-    - !type:TransferMindSequence
-      userKey: Performer
+      locationKey: Performer
+      outSpawnedKey: Spawned
+    - !type:TransferMindActionStep
+      mindKey: Mind
       targetKey: Spawned
-    - !type:GibSequence
+    - !type:GibActionStep
       targetKey: Performer
 
 - type: entity

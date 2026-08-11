@@ -1,19 +1,17 @@
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.ActionSequence;
 
 /// <summary>
 /// Grants actions on MapInit and removes them on shutdown
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-[Access(typeof(ActionSequenceSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 public sealed partial class ActionSequenceComponent : Component
 {
     [DataField(required: true)]
-    public List<ActionSequence> Sequences = [];
+    public List<ActionStep> Steps = [];
 
-    [DataField, AutoNetworkedField]
+    [DataField]
     public Dictionary<string, object> Blackboard = [];
 
     [DataField, AutoNetworkedField]
