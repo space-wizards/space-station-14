@@ -151,12 +151,11 @@
       sprite: Objects/Weapons/Melee/energykatana_storage_64x.rsi #Done in 64x64 because it looks way too puny in 32x32
     shape:
     - 0,0,0,3
-  - type: EnergyKatana
-  - type: DashAbility
-  - type: LimitedCharges
-    maxCharges: 3
-  - type: AutoRecharge
-    rechargeDuration: 20
+  - type: BindItemOnEquip
+  - type: ActionGrant
+    actions:
+    - ActionEnergyKatanaDash
+  - type: ItemActionGrant
   - type: Clothing
     sprite: Objects/Weapons/Melee/energykatana.rsi
     slots:

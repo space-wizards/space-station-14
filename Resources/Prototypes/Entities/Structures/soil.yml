@@ -23,7 +23,7 @@
         - FullTileMask
   - type: Sprite
     noRot: true
-  - type: PlantHolder
+  - type: PlantTray
     drawWarnings: false
   - type: Solution
     id: soil
@@ -41,7 +41,7 @@
         reagent: Water
         solution: soil
   - type: Appearance
-  - type: PlantHolderVisuals
+  - type: PlantTrayVisuals
 
 - type: entity
   parent: BaseHydroponicsSoil
@@ -78,6 +78,6 @@
     sprite: Structures/Hydroponics/misc.rsi
     state: fungal_soil
     noRot: true
-  - type: PlantHolder
+  - type: PlantTray
     waterLevel: 0
     nutritionLevel: 0
