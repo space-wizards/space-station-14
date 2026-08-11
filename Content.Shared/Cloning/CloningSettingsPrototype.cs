@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Cloning;
 
 /// <summary>
-/// Settings for cloning a humanoid.
+/// Settings for cloning entities.
 /// Used to decide which components should be copied.
 /// </summary>
 [Prototype]

@@ -44,6 +44,8 @@ public sealed partial class CloningSystem : SharedCloningSystem
     // A serialization context for cloning components.
     private CloningContext _context = default!;
 
+    static readonly ProtoId<CloningSettingsPrototype> ItemCloneSettings = "ItemClone";
+
     /// <inheritdoc />
     public override void Initialize()
     {
@@ -76,10 +78,14 @@ public sealed partial class CloningSystem : SharedCloningSystem
                 return false; // cannot clone, for example due to the unrevivable trait
         }
 
-        clone = coords == null ? Spawn(speciesPrototype.Prototype) : Spawn(speciesPrototype.Prototype, coords.Value);
-        _visualBody.CopyAppearanceFrom(original, clone.Value);
+        clone = coords == null
+            ? EntityManager.CreateEntityUninitialized(speciesPrototype.Prototype)
+            : EntityManager.CreateEntityUninitialized(speciesPrototype.Prototype, coords.Value);
 
         CloneComponents(original, clone.Value, settings);
+        _visualBody.CopyAppearanceFrom(original, clone.Value);
+
+        EntityManager.InitializeAndStartEntity(clone.Value, doMapInit: true);
 
         // Add equipment first so that SetEntityName also renames the ID card.
         if (settings.CopyEquipment != null)
@@ -194,27 +200,17 @@ public sealed partial class CloningSystem : SharedCloningSystem
         if (prototype == null)
             return null;
 
-        var spawned = SpawnAtPosition(prototype, coords);
+        var spawned = EntityManager.CreateEntityUninitialized(prototype, coords);
+
+        CloneComponents(original, spawned, ItemCloneSettings);
+
+        EntityManager.InitializeAndStartEntity(spawned, doMapInit: true);
 
         var ev = new ClonedEvent(spawned);
         RaiseLocalEvent(original, ref ev);
 
         // if the original has items inside its storage, copy those as well
-        if (TryComp<StorageComponent>(original, out var originalStorage) && TryComp<StorageComponent>(spawned, out var spawnedStorage))
-        {
-            // remove all items that spawned with the entity inside its storage
-            // this ignores other containers, but this should be good enough for our purposes
-            _container.CleanContainer(spawnedStorage.Container);
-
-            // recursively replace them
-            // surely no one will ever create two items that contain each other causing an infinite loop, right?
-            foreach ((var itemUid, var itemLocation) in originalStorage.StoredItems)
-            {
-                var copy = CopyItem(itemUid, coords, whitelist, blacklist);
-                if (copy != null)
-                    _storage.InsertAt((spawned, spawnedStorage), copy.Value, itemLocation, out _, playSound: false);
-            }
-        }
+        CopyStorage(original, spawned, whitelist, blacklist);
 
         return spawned;
     }
@@ -232,9 +228,11 @@ public sealed partial class CloningSystem : SharedCloningSystem
         var coords = Transform(target).Coordinates;
 
         // delete all items in the target storage
+        // this ignores other containers, but this should be good enough for our purposes
         _container.CleanContainer(target.Comp.Container);
 
         // recursively replace them
+        // surely no one will ever create two items that contain each other causing an infinite loop, right?
         foreach ((var itemUid, var itemLocation) in original.Comp.StoredItems)
         {
             var copy = CopyItem(itemUid, coords, whitelist, blacklist);
@@ -264,17 +262,19 @@ public sealed partial class CloningSystem : SharedCloningSystem
             if (implantId == null)
                 continue;
 
-            var targetImplant = _subdermalImplant.AddImplant(target, implantId);
+            var maybeTargetImplant = _subdermalImplant.AddImplant(target, implantId);
 
-            if (targetImplant == null)
+            if (maybeTargetImplant is not { } targetImplant)
                 continue;
 
+            CloneComponents(originalImplant, targetImplant, ItemCloneSettings);
+
             // copy over important component data
-            var ev = new ClonedEvent(targetImplant.Value);
+            var ev = new ClonedEvent(targetImplant);
             RaiseLocalEvent(originalImplant, ref ev);
 
             if (copyStorage)
-                CopyStorage(originalImplant, targetImplant.Value, whitelist, blacklist); // only needed for storage implants
+                CopyStorage(originalImplant, targetImplant, whitelist, blacklist); // only needed for storage implants
         }
     }
 }

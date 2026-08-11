@@ -5,6 +5,7 @@ using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Rootable;
 using Content.Shared.Sericulture;
 using Content.Shared.Storage;
+using Content.Shared.Store.Components;
 using Content.Shared.Wagging;
 using Robust.Shared.Containers;
 using Robust.Shared.Serialization;
@@ -77,6 +78,10 @@ public sealed partial class CloningContext :
             case StorageComponent storageTarget:
                 storageTarget.StoredItems.Clear();
                 storageTarget.SavedLocations.Clear();
+                break;
+            case StoreComponent storeTarget: // Keep the balance!
+                storeTarget.FullListingsCatalog.Clear();
+                storeTarget.AccountOwner = null;
                 break;
             case WaggingComponent wagTarget:
                 wagTarget.ActionEntity = null;

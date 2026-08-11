@@ -106,13 +106,13 @@
 
 # a full clone with all traits and items, but no antag roles
 - type: cloningSettings
-  id: BaseClone
   parent: [Body, Special, Traits, BaseEquipmentBlacklist]
+  id: BaseClone
 
 # for cloning pods
 - type: cloningSettings
-  id: CloningPod
   parent: [BaseClone, Antag]
+  id: CloningPod
   forceCloning: false
   copyEquipment: null
   copyInternalStorage: false
@@ -120,8 +120,8 @@
 
 # for paradox clones
 - type: cloningSettings
-  id: ParadoxCloningSettings
   parent: [BaseClone, Antag]
+  id: ParadoxCloningSettings
   components:
   - Forensics # This is so hugging data is copied to the clone, so you can't hug metagame them
 
@@ -187,11 +187,22 @@
 
 # for plant lifecycle clones
 - type: cloningSettings
-  id: PlantLifecycleClone
   parent: PlantClone
+  id: PlantLifecycleClone
   components:
   - PlantHarvest
   # traits
   - PlantTraitSampled
   - PlantTraitSeedless
   - PlantHolder
+
+# for cloned items
+- type: cloningSettings
+  id: ItemClone
+  components:
+  - Stack
+  - Label
+  - Paper
+  - Forensics
+  - Store
+  - ChameleonClothing
