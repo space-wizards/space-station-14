@@ -33,5 +33,6 @@ public static partial class PoolManager
         (CCVars.InteractionRateLimitCount.Name, "9999999"),
         (CCVars.InteractionRateLimitPeriod.Name, "0.1"),
         (CCVars.MovementMobPushing.Name, "false"),
+        (CCVars.ResourceUploadingStoreDeletionDays.Name, "0"),
     };
 }
