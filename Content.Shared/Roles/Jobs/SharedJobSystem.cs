@@ -103,7 +103,7 @@ public abstract partial class SharedJobSystem : EntitySystem
     /// For all heads (including the captain), it will return Command, but for John Scientist it will return Science.
     /// </summary>
     /// <returns> True if a department was found, False if not </returns>
-    public bool TryGetSecondaryDepartmentsOrFallback(ProtoId<JobPrototype> jobProto, out List<DepartmentPrototype> departmentPrototypes)
+    public bool TryGetSecondaryDepartmentsOrFallback(ProtoId<JobPrototype> jobProto, [NotNullWhen(true)] out List<DepartmentPrototype>? departmentPrototypes)
     {
         departmentPrototypes = new List<DepartmentPrototype>();
 
