@@ -1,13 +1,11 @@
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.StationEvents.Components;
-using Content.Shared.Cargo.Components;
 using Content.Shared.Database;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Station.Components;
-using Content.Shared.Tiles;
+using Content.Shared.Whitelist;
 using JetBrains.Annotations;
-using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
 
@@ -15,6 +13,7 @@ namespace Content.Server.StationEvents.Events;
 public sealed partial class BreakerFlipRule : StationEventSystem<BreakerFlipRuleComponent>
 {
     [Dependency] private ApcSystem _apcSystem = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
     protected override void Added(EntityUid uid, BreakerFlipRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
@@ -25,15 +24,13 @@ public sealed partial class BreakerFlipRule : StationEventSystem<BreakerFlipRule
         stationEvent.StartAnnouncement = str;
 
         base.Added(uid, component, gameRule, args);
-
     }
 
     protected override void Started(EntityUid uid, BreakerFlipRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
         base.Started(uid, component, gameRule, args);
 
-        // We take a valid station but exclude the ATS 
-        if (!TryGetRandomStation(out var chosenStation, uid => !HasComp<ProtectedGridComponent>(uid)))
+        if (!TryGetRandomStation(out var chosenStation, uid => _whitelist.IsWhitelistFail(component.Blacklist, uid)))
             return;
 
         var stationApcs = new List<Entity<ApcComponent>>();
