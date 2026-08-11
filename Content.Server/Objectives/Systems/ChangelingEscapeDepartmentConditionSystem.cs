@@ -26,14 +26,7 @@ public sealed partial class ChangelingEscapeDepartmentConditionSystem : EntitySy
     [Dependency] private SharedJobSystem _job = default!;
     [Dependency] private IRobustRandom _random = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<ChangelingEscapeDepartmentConditionComponent, ObjectiveGetProgressEvent>(OnGetProgress);
-        SubscribeLocalEvent<ChangelingEscapeDepartmentConditionComponent, ObjectiveAfterAssignEvent>(OnAfterAssign);
-    }
-
+    [SubscribeLocalEvent]
     private void OnAfterAssign(Entity<ChangelingEscapeDepartmentConditionComponent> ent, ref ObjectiveAfterAssignEvent args)
     {
         if (!_target.GetTarget(ent, out var target))
@@ -56,6 +49,7 @@ public sealed partial class ChangelingEscapeDepartmentConditionSystem : EntitySy
         ent.Comp.Department = _random.Pick(departmentPrototypes);
     }
 
+    [SubscribeLocalEvent]
     private void OnGetProgress(Entity<ChangelingEscapeDepartmentConditionComponent> ent, ref ObjectiveGetProgressEvent args)
     {
         args.Progress = GetProgress(ent, (args.MindId, args.Mind));
