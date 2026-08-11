@@ -184,8 +184,7 @@ public sealed class DoAfterOverlay : Overlay
 
                 // Here starts code responsible for transparent icon of <see cref="doAfter.Args.DoafterIcon"/> rendering
                 if (doAfter.Args.DoafterIcon is null ||
-                    doAfter.Completed ||
-                    _iconsToDraw.Contains(doAfter.Args.DoafterIcon))
+                    doAfter.Completed)
                     continue;
 
                 var tex = _sprite.Frame0(doAfter.Args.DoafterIcon);
@@ -196,7 +195,8 @@ public sealed class DoAfterOverlay : Overlay
                 };
                 var iconAlpha = MathHelper.Lerp(0f, IconColorAlpha, (float)Math.Clamp(elapsed / MaxAlphaTime, 0.0, 1.0));
 
-                if (doAfter.CancelledTime is not null)
+                if (doAfter.CancelledTime is not null &&
+                    !_iconsToDraw.Contains(doAfter.Args.DoafterIcon))
                 {
                     iconAlpha = MathHelper.Lerp(iconAlpha, 0f, (float)Math.Clamp((time - doAfter.CancelledTime.Value) / MaxAlphaTime, 0.0, 1.0));
                 }
