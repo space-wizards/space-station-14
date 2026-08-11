@@ -90,6 +90,9 @@ public sealed partial class CloningSystem : SharedCloningSystem
 
         EntityManager.InitializeAndStartEntity(clone.Value, doMapInit: true);
 
+        var ev = new ClonedEvent(clone.Value);
+        RaiseLocalEvent(original, ref ev);
+
         // Add equipment first so that SetEntityName also renames the ID card.
         if (settings.CopyEquipment != null)
             CopyEquipment(original, clone.Value, settings.CopyEquipment.Value, settings.EquipmentWhitelist, settings.EquipmentBlacklist);
@@ -159,9 +162,6 @@ public sealed partial class CloningSystem : SharedCloningSystem
             if (TryComp(original, componentRegistration.Type, out var sourceComp))
                 CopyComp((original, sourceComp), clone, _context);
         }
-
-        var ev = new ClonedEvent(clone);
-        RaiseLocalEvent(original, ref ev);
     }
 
     /// <inheritdoc/>
