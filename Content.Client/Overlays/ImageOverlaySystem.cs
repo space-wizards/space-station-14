@@ -31,17 +31,14 @@ public sealed partial class ImageOverlaySystem : EquipmentHudSystem<ImageOverlay
     protected override void UpdateInternal(RefreshEquipmentHudEvent<ImageOverlayComponent> component)
     {
         base.UpdateInternal(component);
-
-        _overlay.UpdateState(component.Components);
-
-        if (component.Components.Count > 0)
-        {
-            _overlayMan.AddOverlay(_overlay);
-        }
-        else
+        if (component.Components.Count == 0)
         {
             _overlayMan.RemoveOverlay(_overlay);
+            return;
         }
+
+        _overlayMan.AddOverlay(_overlay);
+        _overlay.UpdateState(component.Components);
     }
 
     /// <inheritdoc />
@@ -49,6 +46,5 @@ public sealed partial class ImageOverlaySystem : EquipmentHudSystem<ImageOverlay
     {
         base.DeactivateInternal();
         _overlayMan.RemoveOverlay(_overlay);
-        _overlay.UpdateState(new List<ImageOverlayComponent>());
     }
 }
