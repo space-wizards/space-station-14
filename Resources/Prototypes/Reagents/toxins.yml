@@ -412,7 +412,7 @@
       - !type:HealthChange
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [Animal] # Applying damage to the mobs with lower metabolism capabilities
+          type: [Animal, Arachnid] # Applying damage to the mobs with lower metabolism capabilities
         damage:
           types:
             Poison: 0.4
@@ -420,7 +420,7 @@
         probability: 0.04 #Scaled for time, not metabolismrate.
         conditions:
           - !type:MetabolizerTypeCondition
-            type: [Animal]
+            type: [Animal, Arachnid]
 
 - type: reagent
   id: Amatoxin
@@ -488,7 +488,7 @@
       - !type:PopupMessage
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Animal, Vox ]
+          type: [ Animal, Vox, Arachnid ]
           inverted: true
         type: Local
         visualType: MediumCaution
@@ -498,12 +498,12 @@
         probability: 0.1
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Animal, Vox, Plant ]
+          type: [ Animal, Vox, Plant, Arachnid ]
           inverted: true
       - !type:HealthChange
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Animal, Vox, Plant ]
+          type: [ Animal, Vox, Plant, Arachnid ]
           inverted: true
         damage:
           types:
@@ -518,7 +518,7 @@
       - !type:AdjustReagent
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Animal ]
+          type: [ Animal, Arachnid ]
         reagent: Protein
         amount: 0.5
       - !type:AdjustReagent
@@ -546,7 +546,7 @@
           reagent: Allicin
           min: 1
         - !type:MetabolizerTypeCondition
-          type: [Animal]
+          type: [Animal, Arachnid]
         damage:
           types:
             Poison: 0.06
@@ -593,7 +593,7 @@
           reagent: Honk
           min: 1
         - !type:MetabolizerTypeCondition
-          type: [ Animal ]
+          type: [ Animal, Arachnid ]
         damage:
           types:
             Poison: 0.06

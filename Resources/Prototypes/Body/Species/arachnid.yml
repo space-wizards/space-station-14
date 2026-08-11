@@ -245,11 +245,8 @@
   id: OrganArachnidLungs
 
 - type: entity
-  parent: [ OrganBaseHeart, OrganArachnidInternal ]
+  parent: [ OrganBaseHeart, OrganArachnidInternal, OrganArachnidMetabolizer ]
   id: OrganArachnidHeart
-  components:
-  - type: Metabolizer
-    metabolizerTypes: [ Arachnid, Animal ]
 
 - type: entity
   parent: [ OrganBaseStomach, OrganArachnidInternal, OrganAnimalMetabolizer ]
