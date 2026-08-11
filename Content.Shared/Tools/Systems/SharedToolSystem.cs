@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.DoAfter;
@@ -65,21 +66,7 @@ public abstract partial class SharedToolSystem : EntitySystem
             return;
 
         var message = new FormattedMessage();
-
-        // Create a list to store tool quality names
-        var toolQualities = new List<string>();
-
-        // Loop through tool qualities and add localized names to the list
-        foreach (var toolQuality in ent.Comp.Qualities)
-        {
-            if (ProtoMan.TryIndex<ToolQualityPrototype>(toolQuality ?? string.Empty, out var protoToolQuality))
-            {
-                toolQualities.Add(Loc.GetString(protoToolQuality.Name));
-            }
-        }
-
-        // Combine the qualities into a single string and localize the final message
-        var qualitiesString = string.Join(", ", toolQualities);
+        var qualitiesString = GetQualitiesText(ent.Comp.Qualities);
 
         // Add the localized message to the FormattedMessage object
         message.AddMarkupPermissive(Loc.GetString("tool-component-qualities", ("qualities", qualitiesString)));
@@ -165,6 +152,19 @@ public abstract partial class SharedToolSystem : EntitySystem
         if (!CanStartToolUse(tool, user, target, fuel, toolQualitiesNeeded, toolComponent))
             return false;
 
+        string examineText;
+        var qualitiesText = GetQualitiesText(toolQualitiesNeeded);
+
+        if (target is not null)
+        {
+            examineText = Loc.GetString("tool-component-target-doafter-examine",
+                ("user", user),
+                ("quality", qualitiesText),
+                ("target", target.Value));
+        }
+        else
+            examineText = Loc.GetString("tool-component-doafter-examine", ("tool", tool));
+
         var toolEvent = new ToolDoAfterEvent(fuel, doAfterEv, GetNetEntity(target));
         var doAfterArgs = new DoAfterArgs(EntityManager, user, delay / toolComponent.SpeedModifier, toolEvent, tool, target: target, used: tool)
         {
@@ -172,7 +172,8 @@ public abstract partial class SharedToolSystem : EntitySystem
             BreakOnMove = true,
             BreakOnWeightlessMove = false,
             NeedHand = tool != user,
-            AttemptFrequency = fuel > 0 ? AttemptFrequency.EveryTick : AttemptFrequency.Never
+            AttemptFrequency = fuel > 0 ? AttemptFrequency.EveryTick : AttemptFrequency.Never,
+            ExamineText = examineText,
         };
 
         _doAfterSystem.TryStartDoAfter(doAfterArgs, out id);
@@ -213,6 +214,28 @@ public abstract partial class SharedToolSystem : EntitySystem
             out _,
             fuel,
             toolComponent);
+    }
+
+    /// <summary>
+    ///     Method used to get the localized names of the quality prototypes.
+    /// </summary>
+    /// <returns>Localized combined string from the quality prototypes names</returns>
+    public string GetQualitiesText(IEnumerable<string> qualities)
+    {
+        // Create a list to store tool quality names
+        var toolQualities = new List<string>();
+
+        // Loop through tool qualities and add localized names to the list
+        foreach (var toolQuality in qualities)
+        {
+            if (ProtoMan.TryIndex<ToolQualityPrototype>(toolQuality ?? string.Empty, out var protoToolQuality))
+            {
+                toolQualities.Add(Loc.GetString(protoToolQuality.Name));
+            }
+        }
+
+        // Combine the qualities into a single string and localize the final message
+        return string.Join(", ", toolQualities);
     }
 
     /// <summary>
