@@ -25,6 +25,22 @@ public sealed partial class BloodstreamComponent : Component
     public const string DefaultMetabolitesSolutionName = "metabolites";
 
     /// <summary>
+    /// The blood droplet solution to which blood will be added.
+    /// </summary>
+    public const string DropletSolution = "solution";
+
+    /// <summary>
+    /// The blood droplet entity id.
+    /// </summary>
+    public static readonly EntProtoId DropletId = "Droplet";
+
+    /// <summary>
+    /// The amount of blood that will be transferred to the blood droplet.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public FixedPoint2 BasicDropletTransferAmount = 2f;
+
+    /// <summary>
     /// The next time that blood level will be updated and bloodloss damage dealt.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]

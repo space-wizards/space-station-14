@@ -17,20 +17,6 @@ public sealed partial class BloodstreamSystem
 
     [Dependency] private EntityQuery<BloodstreamComponent> _bloodstreamQuery = default!;
 
-    /// <summary>
-    /// The blood droplet entity id.
-    /// </summary>
-    private static readonly EntProtoId DropletId = "Droplet";
-
-    /// <summary>
-    /// The amount of blood that will be transferred to the blood droplet.
-    /// </summary>
-    private static readonly FixedPoint2 BasicDropletTransferAmount = 2f;
-
-    /// <summary>
-    /// The blood droplet solution to which blood will be added.
-    /// </summary>
-    private const string DropletSolution = "solution";
 
     [SubscribeLocalEvent]
     private void OnDamage(Entity<BloodstreamDripOnDamageComponent> ent, ref DamageDealtEvent args)
@@ -82,7 +68,7 @@ public sealed partial class BloodstreamSystem
         var ev = new ModifyBloodDropletEvent();
         RaiseLocalEvent(ent, ref ev);
 
-        amount = FixedPoint2.Max(BasicDropletTransferAmount * ev.Modifier, 0f);
+        amount = FixedPoint2.Max(ent.Comp.BasicDropletTransferAmount * ev.Modifier, 0f);
         return true;
     }
 
@@ -107,9 +93,9 @@ public sealed partial class BloodstreamSystem
         if (ent.Comp.BloodSolution.Value.Comp.Solution.Volume < transferAmount)
             return false;
 
-        var droplet = PredictedSpawnAtPosition(DropletId, Transform(ent).Coordinates);
+        var droplet = PredictedSpawnAtPosition(BloodstreamComponent.DropletId, Transform(ent).Coordinates);
 
-        if (_solutionContainer.TryGetSolution(droplet, DropletSolution, out var solution, true))
+        if (_solutionContainer.TryGetSolution(droplet, BloodstreamComponent.DropletSolution, out var solution, true))
         {
             solution.Value.Comp.Solution.RemoveAllSolution();
 
