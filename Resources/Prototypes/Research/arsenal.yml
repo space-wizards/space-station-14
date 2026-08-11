@@ -30,9 +30,7 @@
   - BoxShotgunIncendiary
   - MagazineRifleIncendiary
   - MagazinePistolIncendiary
-  - MagazinePistolHighCapacityincendiary #DS14
   - MagazinePistolSubMachineGunIncendiary
-  - MagazinePistolSubMachineGunExtendedIncendiary #DS14
   - MagazinePistolSubMachineGunTopMountedIncendiary # DS14
   - MagazineLightRifleIncendiary
   - SpeedLoaderMagnumIncendiary
@@ -82,9 +80,7 @@
   recipeUnlocks:
   - MagazineRifleUranium
   - MagazinePistolUranium
-  - MagazinePistolHighCapacityUranium #DS14
   - MagazinePistolSubMachineGunUranium
-  - MagazinePistolSubMachineGunExtendedUranium #DS14
   - MagazinePistolSubMachineGunTopMountedUranium # DS14
   - MagazineLightRifleUranium
   - SpeedLoaderMagnumUranium
