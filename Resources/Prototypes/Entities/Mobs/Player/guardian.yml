@@ -99,6 +99,9 @@
           Blunt: 20
           Structural: 20
     - type: MeleeSpeech
+    - type: ActionGrant
+      actions:
+      - ActionConfigureMeleeSpeech
     - type: UserInterface
       interfaces:
         enum.MeleeSpeechUiKey.Key:

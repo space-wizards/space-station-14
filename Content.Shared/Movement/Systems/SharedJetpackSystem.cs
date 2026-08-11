@@ -1,4 +1,3 @@
-using Content.Shared.Actions;
 using Content.Shared.Gravity;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Movement.Components;
@@ -18,14 +17,12 @@ public abstract partial class SharedJetpackSystem : EntitySystem
     [Dependency] protected SharedContainerSystem Container = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedPhysicsSystem _physics = default!;
-    [Dependency] private ActionContainerSystem _actionContainer = default!;
 
     [Dependency] private EntityQuery<JetpackComponent> _jetpackQuery = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<JetpackComponent, GetItemActionsEvent>(OnJetpackGetAction);
         SubscribeLocalEvent<JetpackComponent, DroppedEvent>(OnJetpackDropped);
         SubscribeLocalEvent<JetpackComponent, ToggleJetpackEvent>(OnJetpackToggle);
 
@@ -35,7 +32,6 @@ public abstract partial class SharedJetpackSystem : EntitySystem
         SubscribeLocalEvent<JetpackComponent, EntGotInsertedIntoContainerMessage>(OnJetpackMoved);
 
         SubscribeLocalEvent<GravityChangedEvent>(OnJetpackUserGravityChanged);
-        SubscribeLocalEvent<JetpackComponent, MapInitEvent>(OnMapInit);
     }
 
     private void OnJetpackUserWeightlessMovement(Entity<JetpackUserComponent> ent, ref RefreshWeightlessModifiersEvent args)
@@ -45,12 +41,6 @@ public abstract partial class SharedJetpackSystem : EntitySystem
         args.WeightlessModifier = ent.Comp.WeightlessModifier;
         args.WeightlessFriction = ent.Comp.WeightlessFriction;
         args.WeightlessFrictionNoInput = ent.Comp.WeightlessFrictionNoInput;
-    }
-
-    private void OnMapInit(EntityUid uid, JetpackComponent component, MapInitEvent args)
-    {
-        _actionContainer.EnsureAction(uid, ref component.ToggleActionEntity, component.ToggleAction);
-        Dirty(uid, component);
     }
 
     private void OnJetpackUserGravityChanged(ref GravityChangedEvent ev)
@@ -146,11 +136,6 @@ public abstract partial class SharedJetpackSystem : EntitySystem
         // https://discord.com/channels/310555209753690112/310555209753690112/1270067921682694234
         return gridUid == null ||
                (!HasComp<GravityComponent>(gridUid));
-    }
-
-    private void OnJetpackGetAction(EntityUid uid, JetpackComponent component, GetItemActionsEvent args)
-    {
-        args.AddAction(ref component.ToggleActionEntity, component.ToggleAction);
     }
 
     private bool IsEnabled(EntityUid uid)

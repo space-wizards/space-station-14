@@ -1431,28 +1431,6 @@ entities:
     - type: ExplosionAirtightGrid
     - type: TileHistory
       chunkHistory: {}
-- proto: ActionToggleInternals
-  entities:
-  - uid: 1819
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 1635
-    - type: Action
-      originalIconColor: '#FFFFFFFF'
-      container: 1635
-- proto: ActionToggleJetpack
-  entities:
-  - uid: 1783
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 1635
-    - type: Action
-      originalIconColor: '#FFFFFFFF'
-      container: 1635
 - proto: AirAlarm
   entities:
   - uid: 4
@@ -13787,17 +13765,6 @@ entities:
     - type: Transform
       pos: 3.3418293,12.740074
       parent: 2
-    - type: GasTank
-      toggleActionEntity: 1819
-    - type: Jetpack
-      toggleActionEntity: 1783
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 1783
-          - 1819
 - proto: KitchenElectricGrill
   entities:
   - uid: 1636

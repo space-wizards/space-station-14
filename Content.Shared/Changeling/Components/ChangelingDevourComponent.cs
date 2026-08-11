@@ -3,7 +3,6 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
-using Content.Shared.Store;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
@@ -19,18 +18,6 @@ namespace Content.Shared.Changeling.Components;
 [Access(typeof(ChangelingDevourSystem))]
 public sealed partial class ChangelingDevourComponent : Component
 {
-    /// <summary>
-    /// The action for devouring.
-    /// </summary>
-    [DataField]
-    public EntProtoId? ChangelingDevourAction = "ActionChangelingDevour";
-
-    /// <summary>
-    /// The action entity associated with devouring.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public EntityUid? ChangelingDevourActionEntity;
-
     /// <summary>
     /// The whitelist of targets for devouring.
     /// </summary>

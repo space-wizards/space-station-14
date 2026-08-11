@@ -17,20 +17,8 @@ namespace Content.Shared.Devour.Components;
 public sealed partial class DevourerComponent : Component
 {
     /// <summary>
-    /// Action prototype for devouring.
-    /// </summary>
-    [DataField]
-    public EntProtoId DevourAction = "ActionDevour";
-
-    /// <summary>
-    /// The spawned action entity for devouring.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public EntityUid? DevourActionEntity;
-
-    /// <summary>
     /// The amount of time it takes to devour a mob.
-    /// <remarks>
+    /// </summary>
     [DataField, AutoNetworkedField]
     public float DevourTime = 3f;
 
@@ -110,6 +98,4 @@ public sealed partial class DevourerComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public float HealRate = 15f;
-
 }
-

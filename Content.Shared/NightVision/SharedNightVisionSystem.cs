@@ -1,4 +1,3 @@
-using Content.Shared.Actions;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Overlays;
@@ -11,44 +10,27 @@ namespace Content.Shared.NightVision;
 /// </summary>
 public abstract partial class SharedNightVisionSystem : EntitySystem
 {
-    [Dependency] private SharedActionsSystem _actions = default!;
-
     [SubscribeLocalEvent]
     private void OnStartup(Entity<NightVisionComponent> ent, ref MapInitEvent args)
     {
-        if (ent.Comp.RelayOverlay)
-            return;
-
         RefreshOverlay(ent);
-        _actions.AddAction(ent, ref ent.Comp.ActionEntity, ent.Comp.Action);
     }
 
     [SubscribeLocalEvent]
     private void OnRemove(Entity<NightVisionComponent> ent, ref ComponentShutdown args)
     {
-        if (ent.Comp.RelayOverlay)
-            return;
-
         RefreshOverlay(ent);
-        _actions.RemoveAction(ent.Owner, ent.Comp.ActionEntity);
     }
 
     [SubscribeLocalEvent]
     private void OnCompEquip(Entity<NightVisionComponent> ent, ref GotEquippedEvent args)
     {
-        if (!ent.Comp.RelayOverlay)
-            return;
-
         RefreshOverlay(args.EquipTarget);
-        _actions.AddAction(args.EquipTarget, ref ent.Comp.ActionEntity, ent.Comp.Action, ent);
     }
 
     [SubscribeLocalEvent]
     private void OnCompUnequip(Entity<NightVisionComponent> ent, ref GotUnequippedEvent args)
     {
-        if (!ent.Comp.RelayOverlay)
-            return;
-
         RefreshOverlay(args.EquipTarget);
     }
 

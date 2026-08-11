@@ -16,6 +16,8 @@
     actions:
     - ActionChangelingStore
     - ActionChangelingStasis
+    - ActionChangelingDevour
+    - ActionChangelingTransform
   - type: Store
     balance:
       ChangelingDNA: 60
@@ -63,6 +65,9 @@
         Blunt: 5
         Structural: 15 # to destroy lockers in which bodies could be hidden
   - type: ChangelingSlug
+  - type: ActionGrant
+    actions:
+    - ActionChangelingTakeOverCorpse
   - type: Tag # Removes DoorBumpOpener
     tags:
       []
@@ -105,12 +110,14 @@
   components:
   - type: NightVision
     enabled: false # Disabled by default
-    action: ActionChangelingNightVision
     lightingColor: "#AF0909AA"
     noiseAmount: 1
     noiseMultiplier: 2
     overlayColor: "#AB0808AA"
     prioritized: false # Technically eye augments, so we want things such as NVGs to take priority if able
+  - type: ActionGrant
+    actions:
+    - ActionChangelingNightVision
 
 - type: entity # dummy prototype for the store listing
   id: ChangelingFakeMindshieldDummy

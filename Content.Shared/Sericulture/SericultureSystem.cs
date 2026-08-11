@@ -6,9 +6,7 @@ using Robust.Shared.Serialization;
 using Content.Shared.Popups;
 using Robust.Shared.Network;
 using Content.Shared.Nutrition.Components;
-using Content.Shared.Nutrition.Prototypes;
 using Content.Shared.Stacks;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Sericulture;
 
@@ -17,11 +15,7 @@ namespace Content.Shared.Sericulture;
 /// </summary>
 public abstract partial class SharedSericultureSystem : EntitySystem
 {
-    // Managers
     [Dependency] private INetManager _netManager = default!;
-
-    // Systems
-    [Dependency] private SharedActionsSystem _actionsSystem = default!;
     [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private SatiationSystem _satiation = default!;
     [Dependency] private SharedPopupSystem _popupSystem = default!;
@@ -31,8 +25,6 @@ public abstract partial class SharedSericultureSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SericultureComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<SericultureComponent, ComponentShutdown>(OnCompRemove);
         SubscribeLocalEvent<SericultureComponent, SericultureActionEvent>(OnSericultureStart);
         SubscribeLocalEvent<SericultureComponent, SericultureDoAfterEvent>(OnSericultureDoAfter);
         SubscribeLocalEvent<SericultureComponent, CloningEvent>(OnClone);
@@ -47,27 +39,10 @@ public abstract partial class SharedSericultureSystem : EntitySystem
         var cloneComp = Factory.GetComponent<SericultureComponent>();
         cloneComp.PopupText = ent.Comp.PopupText;
         cloneComp.EntityProduced = ent.Comp.EntityProduced;
-        cloneComp.Action = ent.Comp.Action;
         cloneComp.ProductionLength = ent.Comp.ProductionLength;
         cloneComp.HungerCost = ent.Comp.HungerCost;
         cloneComp.MinHungerThreshold = ent.Comp.MinHungerThreshold;
         AddComp(args.CloneUid, cloneComp, true);
-    }
-
-    /// <summary>
-    /// Giveths the action to preform sericulture on the entity
-    /// </summary>
-    private void OnMapInit(EntityUid uid, SericultureComponent comp, MapInitEvent args)
-    {
-        _actionsSystem.AddAction(uid, ref comp.ActionEntity, comp.Action);
-    }
-
-    /// <summary>
-    /// Takeths away the action to preform sericulture from the entity.
-    /// </summary>
-    private void OnCompRemove(EntityUid uid, SericultureComponent comp, ComponentShutdown args)
-    {
-        _actionsSystem.RemoveAction(uid, comp.ActionEntity);
     }
 
     private void OnSericultureStart(EntityUid uid, SericultureComponent comp, SericultureActionEvent args)

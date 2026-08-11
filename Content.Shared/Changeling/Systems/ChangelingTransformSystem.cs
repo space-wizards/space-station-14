@@ -1,4 +1,3 @@
-using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body;
 using Content.Shared.Changeling.Components;
@@ -11,14 +10,12 @@ using Content.Shared.Storage;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Changeling.Systems;
 
 public sealed partial class ChangelingTransformSystem : EntitySystem
 {
     [Dependency] private INetManager _net = default!;
-    [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private SharedUserInterfaceSystem _ui = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private MetaDataSystem _metaData = default!;
@@ -41,7 +38,6 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         SubscribeLocalEvent<ChangelingTransformComponent, ChangelingTransformIdentitySelectMessage>(OnTransformSelected);
         SubscribeLocalEvent<ChangelingTransformComponent, ChangelingTransformIdentityDropMessage>(OnTransformDrop);
         SubscribeLocalEvent<ChangelingTransformComponent, ChangelingTransformDoAfterEvent>(OnSuccessfulTransform);
-        SubscribeLocalEvent<ChangelingTransformComponent, ComponentShutdown>(OnShutdown);
 
         // Components that need special handling outside of cloning.
         SubscribeLocalEvent<StorageComponent, BeforeChangelingTransformEvent>(StorageBeforeTransform);
@@ -49,18 +45,8 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
 
     private void OnMapInit(Entity<ChangelingTransformComponent> ent, ref MapInitEvent init)
     {
-        _actions.AddAction(ent, ref ent.Comp.ChangelingTransformActionEntity, ent.Comp.ChangelingTransformAction);
-
         var userInterfaceComp = EnsureComp<UserInterfaceComponent>(ent);
         _ui.SetUi((ent, userInterfaceComp), ChangelingTransformUiKey.Key, new InterfaceData(ChangelingBuiXmlGeneratedName));
-    }
-
-    private void OnShutdown(Entity<ChangelingTransformComponent> ent, ref ComponentShutdown args)
-    {
-        if (ent.Comp.ChangelingTransformActionEntity != null)
-        {
-            _actions.RemoveAction(ent.Owner, ent.Comp.ChangelingTransformActionEntity);
-        }
     }
 
     private void OnTransformAction(Entity<ChangelingTransformComponent> ent,

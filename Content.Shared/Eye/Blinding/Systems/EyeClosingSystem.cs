@@ -1,4 +1,5 @@
 using Content.Shared.Actions;
+using Content.Shared.Actions.Components;
 using Content.Shared.Eye.Blinding.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
@@ -20,23 +21,14 @@ public sealed partial class EyeClosingSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<EyeClosingComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<EyeClosingComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<EyeClosingComponent, ToggleEyesActionEvent>(OnToggleAction);
         SubscribeLocalEvent<EyeClosingComponent, CanSeeAttemptEvent>(OnTrySee);
         SubscribeLocalEvent<EyeClosingComponent, AfterAutoHandleStateEvent>(OnHandleState);
     }
 
-    private void OnMapInit(Entity<EyeClosingComponent> eyelids, ref MapInitEvent args)
-    {
-        _actionsSystem.AddAction(eyelids, ref eyelids.Comp.EyeToggleActionEntity, eyelids.Comp.EyeToggleAction);
-        Dirty(eyelids);
-    }
-
     private void OnShutdown(Entity<EyeClosingComponent> eyelids, ref ComponentShutdown args)
     {
-        _actionsSystem.RemoveAction(eyelids.Owner, eyelids.Comp.EyeToggleActionEntity);
-
         SetEyelids((eyelids.Owner, eyelids.Comp), false);
     }
 
@@ -46,7 +38,7 @@ public sealed partial class EyeClosingSystem : EntitySystem
             return;
 
         args.Handled = true;
-        SetEyelids((eyelids.Owner, eyelids.Comp), !eyelids.Comp.EyesClosed);
+        SetEyelids((eyelids.Owner, eyelids.Comp), !eyelids.Comp.EyesClosed, args.Action.AsNullable());
     }
 
     private void OnHandleState(Entity<EyeClosingComponent> eyelids, ref AfterAutoHandleStateEvent args)
@@ -75,7 +67,8 @@ public sealed partial class EyeClosingSystem : EntitySystem
     /// </summary>
     /// <param name="eyelids">The entity that contains an EyeClosingComponent</param>
     /// <param name="value">Set to true to close the entity's eyes. Set to false to open them</param>
-    public void SetEyelids(Entity<EyeClosingComponent?> eyelids, bool value)
+    /// <param name="action">Action that triggered the eyelids to change their state.</param>
+    public void SetEyelids(Entity<EyeClosingComponent?> eyelids, bool value, Entity<ActionComponent?>? action = null)
     {
         if (!Resolve(eyelids, ref eyelids.Comp))
             return;
@@ -86,8 +79,7 @@ public sealed partial class EyeClosingSystem : EntitySystem
         eyelids.Comp.EyesClosed = value;
         Dirty(eyelids);
 
-        if (eyelids.Comp.EyeToggleActionEntity != null)
-            _actionsSystem.SetToggled(eyelids.Comp.EyeToggleActionEntity, eyelids.Comp.EyesClosed);
+        _actionsSystem.SetToggled(action, eyelids.Comp.EyesClosed);
 
         _blindableSystem.UpdateIsBlind(eyelids.Owner);
 

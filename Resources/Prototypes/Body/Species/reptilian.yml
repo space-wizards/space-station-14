@@ -164,6 +164,9 @@
       295: 0.8
       285: 0.7
   - type: Wagging
+  - type: ActionGrant
+    actions:
+    - ActionToggleWagging
 
 - type: entity
   parent: OrganBaseOrganic

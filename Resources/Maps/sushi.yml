@@ -8536,16 +8536,6 @@ entities:
     - type: Transform
       parent: 2
       pos: 100.60246,98.63661
-- proto: ActionStethoscope
-  entities:
-  - uid: 6
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 5
-    - type: Action
-      container: 5
 - proto: AirAlarm
   entities:
   - uid: 7
@@ -60940,14 +60930,6 @@ entities:
     - type: Transform
       parent: 2
       pos: 140.60594,112.654175
-    - type: Stethoscope
-      actionEntity: 6
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 6
   - uid: 9158
     components:
     - type: Transform

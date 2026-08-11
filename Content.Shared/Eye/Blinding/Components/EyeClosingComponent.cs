@@ -1,7 +1,6 @@
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Eye.Blinding.Components;
 
@@ -20,18 +19,6 @@ public sealed partial class EyeClosingComponent : Component
     /// Default eyes closing sound.
     /// </summary>
     private static readonly ProtoId<SoundCollectionPrototype> DefaultEyeClose = new("EyeClose");
-
-    /// <summary>
-    /// The prototype to grant to enable eye-toggling action.
-    /// </summary>
-    [DataField("eyeToggleAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string EyeToggleAction = "ActionToggleEyes";
-
-    /// <summary>
-    /// The actual eye toggling action entity itself.
-    /// </summary>
-    [DataField]
-    public EntityUid? EyeToggleActionEntity;
 
     /// <summary>
     /// Sound to play when opening eyes.

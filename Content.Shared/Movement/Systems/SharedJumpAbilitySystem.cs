@@ -1,5 +1,3 @@
-using Content.Shared.Actions;
-using Content.Shared.Actions.Components;
 using Content.Shared.Cloning.Events;
 using Content.Shared.Gravity;
 using Content.Shared.Movement.Components;
@@ -17,7 +15,6 @@ public sealed partial class SharedJumpAbilitySystem : EntitySystem
     [Dependency] private ThrowingSystem _throwing = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedGravitySystem _gravity = default!;
-    [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private SharedStunSystem _stun = default!;
     [Dependency] private StandingStateSystem _standing = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
@@ -26,9 +23,6 @@ public sealed partial class SharedJumpAbilitySystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<JumpAbilityComponent, MapInitEvent>(OnInit);
-        SubscribeLocalEvent<JumpAbilityComponent, ComponentShutdown>(OnShutdown);
-
         SubscribeLocalEvent<JumpAbilityComponent, GravityJumpEvent>(OnGravityJump);
 
         SubscribeLocalEvent<ActiveLeaperComponent, StartCollideEvent>(OnLeaperCollide);
@@ -36,19 +30,6 @@ public sealed partial class SharedJumpAbilitySystem : EntitySystem
         SubscribeLocalEvent<ActiveLeaperComponent, StopThrowEvent>(OnLeaperStopThrow);
 
         SubscribeLocalEvent<JumpAbilityComponent, CloningEvent>(OnClone);
-    }
-
-    private void OnInit(Entity<JumpAbilityComponent> entity, ref MapInitEvent args)
-    {
-        if (!TryComp(entity, out ActionsComponent? comp))
-            return;
-
-        _actions.AddAction(entity, ref entity.Comp.ActionEntity, entity.Comp.Action, component: comp);
-    }
-
-    private void OnShutdown(Entity<JumpAbilityComponent> entity, ref ComponentShutdown args)
-    {
-        _actions.RemoveAction(entity.Owner, entity.Comp.ActionEntity);
     }
 
     private void OnLeaperCollide(Entity<ActiveLeaperComponent> entity, ref StartCollideEvent args)
@@ -101,7 +82,6 @@ public sealed partial class SharedJumpAbilitySystem : EntitySystem
 
         // Make sure to set the datafields before adding the component so that the correct action gets spawned on map init.
         var targetComp = Factory.GetComponent<JumpAbilityComponent>();
-        targetComp.Action = ent.Comp.Action;
         targetComp.JumpDistance = ent.Comp.JumpDistance;
         targetComp.JumpThrowSpeed = ent.Comp.JumpThrowSpeed;
         targetComp.CanCollide = ent.Comp.CanCollide;

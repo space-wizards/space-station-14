@@ -183,9 +183,7 @@
       types:
         Heat: 2.5 # Per second, scales with temperature & other constants
   - type: Wagging
-    action: ActionToggleWaggingVulpkanin
   - type: JumpAbility
-    action: ActionVulpkaninGravityJump
     canCollide: true
     jumpDistance: 3
     jumpSound:
@@ -194,6 +192,10 @@
         pitch: 1.33
         volume: -5
         variation: 0.05
+  - type: ActionGrant
+    actions:
+    - ActionVulpkaninGravityJump
+    - ActionToggleWaggingVulpkanin
   - type: Bloodstream
     bloodReferenceSolution:
       reagents:

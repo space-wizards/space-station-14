@@ -327,6 +327,49 @@ public abstract partial class SharedBorgSystem
     }
     #endregion
 
+
+    #region ComponentBorgModule
+    [SubscribeLocalEvent]
+    private void OnActionModuleInstalled(Entity<ActionBorgModuleComponent> ent, ref BorgModuleInstalledEvent args)
+    {
+        var chassis = args.ChassisEnt;
+        foreach (var action in ent.Comp.Actions)
+        {
+            var actionUid = _actions.AddAction(chassis, action);
+            if (actionUid != null)
+                ent.Comp.ActionUids.Add(actionUid.Value);
+        }
+    }
+
+    [SubscribeLocalEvent]
+    private void OnActionModuleUninstalled(Entity<ActionBorgModuleComponent> ent, ref BorgModuleUninstalledEvent args)
+    {
+        var chassis = args.ChassisEnt;
+        foreach (var action in ent.Comp.ActionUids)
+        {
+            _actions.RemoveAction(chassis, action);
+        }
+    }
+
+    [SubscribeLocalEvent]
+    private void OnActionModuleInstalledRelay(Entity<ActionBorgModuleComponent> ent, ref BorgModuleRelayedEvent<BorgModuleInsertAttemptEvent> args)
+    {
+        if (args.Args.Cancelled ||
+            !TryComp<ActionBorgModuleComponent>(args.Args.ModuleEnt, out var newModule))
+            return;
+
+        foreach (var comp in newModule.Actions)
+        {
+            if (!ent.Comp.Actions.Contains(comp))
+                continue;
+
+            args.Args.Cancelled = true;
+            args.Args.Reason = Loc.GetString("borg-module-incompatible", ("existing", ent));
+        }
+
+    }
+    #endregion
+
     #region ModuleWhitelist
 
     private void OnCheckWhitelist(Entity<BorgModuleWhitelistComponent> ent, ref BorgModuleInsertAttemptEvent args)

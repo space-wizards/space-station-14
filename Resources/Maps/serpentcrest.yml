@@ -7699,147 +7699,6 @@ entities:
     - type: Transform
       parent: 2
       pos: -62.40383,26.552698
-- proto: ActionToggleBlock
-  entities:
-  - uid: 3986
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 12806
-    - type: Action
-      originalIconColor: '#FFFFFFFF'
-      container: 12806
-  - uid: 20971
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 6339
-    - type: Action
-      originalIconColor: '#FFFFFFFF'
-      container: 6339
-  - uid: 20972
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 6340
-    - type: Action
-      originalIconColor: '#FFFFFFFF'
-      container: 6340
-  - uid: 23601
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 6343
-    - type: Action
-      originalIconColor: '#FFFFFFFF'
-      container: 6343
-  - uid: 23602
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 6344
-    - type: Action
-      originalIconColor: '#FFFFFFFF'
-      container: 6344
-- proto: ActionToggleInternals
-  entities:
-  - uid: 2645
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 5954
-    - type: Action
-      originalIconColor: '#FFFFFFFF'
-      container: 5954
-  - uid: 5959
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 5957
-    - type: Action
-      originalIconColor: '#FFFFFFFF'
-      container: 5957
-  - uid: 23596
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 5964
-    - type: Action
-      originalIconColor: '#FFFFFFFF'
-      container: 5964
-  - uid: 24548
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 24547
-    - type: Action
-      originalIconColor: '#FFFFFFFF'
-      container: 24547
-  - uid: 28563
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 28561
-    - type: Action
-      originalIconColor: '#FFFFFFFF'
-      container: 28561
-  - uid: 28672
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 28671
-    - type: Action
-      originalIconColor: '#FFFFFFFF'
-      container: 28671
-- proto: ActionToggleJetpack
-  entities:
-  - uid: 2644
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 5954
-    - type: Action
-      originalIconColor: '#FFFFFFFF'
-      container: 5954
-  - uid: 5958
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 5957
-    - type: Action
-      originalIconColor: '#FFFFFFFF'
-      container: 5957
-  - uid: 23586
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 5964
-    - type: Action
-      originalIconColor: '#FFFFFFFF'
-      container: 5964
-  - uid: 28562
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 28561
-    - type: Action
-      originalIconColor: '#FFFFFFFF'
-      container: 28561
 - proto: ActionToggleLight
   entities:
   - uid: 1794
@@ -72171,14 +72030,6 @@ entities:
     - type: Transform
       parent: 2
       pos: -55.53158,-14.472418
-    - type: Blocking
-      blockingToggleActionEntity: 3986
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 3986
 - proto: ClosetBombFilled
   entities:
   - uid: 5020
@@ -74912,13 +74763,6 @@ entities:
     - type: Transform
       parent: 2
       pos: 22.250744,-64.840576
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 28562
-          - 28563
     missingComponents:
     - GasTank
     - UserInterface
@@ -85715,14 +85559,6 @@ entities:
     - type: Transform
       parent: 2
       pos: 40.315166,9.545124
-    - type: GasTank
-      toggleActionEntity: 28672
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 28672
 - proto: EmergencyOxygenTankFilled
   entities:
   - uid: 16966
@@ -130914,17 +130750,6 @@ entities:
     - type: Transform
       parent: 2
       pos: 12.351956,20.422295
-    - type: GasTank
-      toggleActionEntity: 23596
-    - type: Jetpack
-      toggleActionEntity: 23586
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 23586
-          - 23596
 - proto: JetpackMiniFilled
   entities:
   - uid: 4122
@@ -130957,33 +130782,11 @@ entities:
     - type: Transform
       parent: 2
       pos: 12.718499,20.40857
-    - type: GasTank
-      toggleActionEntity: 2645
-    - type: Jetpack
-      toggleActionEntity: 2644
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 2644
-          - 2645
   - uid: 5957
     components:
     - type: Transform
       parent: 2
       pos: 12.418816,20.630312
-    - type: GasTank
-      toggleActionEntity: 5959
-    - type: Jetpack
-      toggleActionEntity: 5958
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 5958
-          - 5959
 - proto: Jukebox
   entities:
   - uid: 28323
@@ -134928,14 +134731,6 @@ entities:
     - type: Transform
       parent: 2
       pos: -2.5935888,-44.27822
-    - type: GasTank
-      toggleActionEntity: 24548
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 24548
   - uid: 24551
     components:
     - type: Transform
@@ -149397,27 +149192,11 @@ entities:
     - type: Transform
       parent: 2
       pos: 5.694502,21.418985
-    - type: Blocking
-      blockingToggleActionEntity: 20971
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 20971
   - uid: 6340
     components:
     - type: Transform
       parent: 2
       pos: 5.272627,21.43461
-    - type: Blocking
-      blockingToggleActionEntity: 20972
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 20972
 - proto: RiotLaserShield
   entities:
   - uid: 6343
@@ -149425,27 +149204,11 @@ entities:
     - type: Transform
       parent: 2
       pos: 12.601956,21.516045
-    - type: Blocking
-      blockingToggleActionEntity: 23601
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 23601
   - uid: 6344
     components:
     - type: Transform
       parent: 2
       pos: 12.461331,21.62542
-    - type: Blocking
-      blockingToggleActionEntity: 23602
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 23602
 - proto: RiotShield
   entities:
   - uid: 6341

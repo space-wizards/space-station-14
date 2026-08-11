@@ -1,4 +1,3 @@
-using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Armor;
 using Content.Shared.Atmos.Rotting;
@@ -27,7 +26,6 @@ public sealed partial class ChangelingDevourSystem : EntitySystem
     [Dependency] private INetManager _net = default!;
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private MobStateSystem _mobState = default!;
-    [Dependency] private SharedActionsSystem _actionsSystem = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedChangelingIdentitySystem _changelingIdentity = default!;
     [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
@@ -39,24 +37,9 @@ public sealed partial class ChangelingDevourSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ChangelingDevourComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ChangelingDevourComponent, ChangelingDevourActionEvent>(OnDevourAction);
         SubscribeLocalEvent<ChangelingDevourComponent, ChangelingDevourWindupDoAfterEvent>(OnDevourWindup);
         SubscribeLocalEvent<ChangelingDevourComponent, ChangelingDevourConsumeDoAfterEvent>(OnDevourConsume);
-        SubscribeLocalEvent<ChangelingDevourComponent, ComponentShutdown>(OnShutdown);
-    }
-
-    private void OnMapInit(Entity<ChangelingDevourComponent> ent, ref MapInitEvent args)
-    {
-        _actionsSystem.AddAction(ent, ref ent.Comp.ChangelingDevourActionEntity, ent.Comp.ChangelingDevourAction);
-    }
-
-    private void OnShutdown(Entity<ChangelingDevourComponent> ent, ref ComponentShutdown args)
-    {
-        if (ent.Comp.ChangelingDevourActionEntity != null)
-        {
-            _actionsSystem.RemoveAction(ent.Owner, ent.Comp.ChangelingDevourActionEntity);
-        }
     }
 
     // The action was used.

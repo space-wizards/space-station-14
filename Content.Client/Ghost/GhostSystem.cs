@@ -1,5 +1,4 @@
 using Content.Client.Movement.Systems;
-using Content.Shared.Actions;
 using Content.Shared.Ghost.Components;
 using Content.Shared.Ghost.Systems;
 using Content.Shared.NightVision;
@@ -15,7 +14,6 @@ namespace Content.Client.Ghost
     {
         [Dependency] private IClientConsoleHost _console = default!;
         [Dependency] private IPlayerManager _playerManager = default!;
-        [Dependency] private SharedActionsSystem _actions = default!;
         [Dependency] private ContentEyeSystem _contentEye = default!;
         [Dependency] private SpriteSystem _sprite = default!;
         [Dependency] private SharedNightVisionSystem _nv = default!;
@@ -131,11 +129,6 @@ namespace Content.Client.Ghost
 
         private void OnGhostRemove(EntityUid uid, GhostComponent component, ComponentRemove args)
         {
-            _actions.RemoveAction(uid, component.ToggleLightingActionEntity);
-            _actions.RemoveAction(uid, component.ToggleFoVActionEntity);
-            _actions.RemoveAction(uid, component.ToggleGhostsActionEntity);
-            _actions.RemoveAction(uid, component.ToggleGhostHearingActionEntity);
-
             if (uid != _playerManager.LocalEntity)
                 return;
 

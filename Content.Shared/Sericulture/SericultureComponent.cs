@@ -29,18 +29,6 @@ public sealed partial class SericultureComponent : Component
     public EntProtoId EntityProduced;
 
     /// <summary>
-    /// The entity needed to actually preform sericulture. This will be granted (and removed) upon the entity's creation.
-    /// </summary>
-    [DataField]
-    [ViewVariables(VVAccess.ReadWrite)]
-    [AutoNetworkedField]
-    public EntProtoId Action = "ActionSericulture";
-
-    [AutoNetworkedField]
-    [DataField("actionEntity")]
-    public EntityUid? ActionEntity;
-
-    /// <summary>
     /// How long will it take to make.
     /// </summary>
     [DataField("productionLength")]

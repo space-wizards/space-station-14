@@ -17,7 +17,6 @@ namespace Content.Shared.Devour;
 public sealed partial class DevourSystem : EntitySystem
 {
     [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
-    [Dependency] private SharedActionsSystem _actionsSystem = default!;
     [Dependency] private SharedAudioSystem _audioSystem = default!;
     [Dependency] private BloodstreamSystem _bloodstreamSystem = default!;
     [Dependency] private SharedContainerSystem _containerSystem = default!;
@@ -29,8 +28,6 @@ public sealed partial class DevourSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<DevourerComponent, ComponentStartup>(OnStartup);
-        SubscribeLocalEvent<DevourerComponent, MapInitEvent>(OnInit);
-        SubscribeLocalEvent<DevourerComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<DevourerComponent, DevourActionEvent>(OnDevourAction);
         SubscribeLocalEvent<DevourerComponent, DevourDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<DevourerComponent, GibbedBeforeDeletionEvent>(OnGibContents);
@@ -41,16 +38,6 @@ public sealed partial class DevourSystem : EntitySystem
         //Devourer doesn't actually chew, since he sends targets right into his stomach.
         //I did it mom, I added ERP content into upstream. Legally!
         ent.Comp.Stomach = _containerSystem.EnsureContainer<Container>(ent.Owner, DevourerComponent.StomachContainerId);
-    }
-
-    private void OnInit(Entity<DevourerComponent> ent, ref MapInitEvent args)
-    {
-        _actionsSystem.AddAction(ent.Owner, ref ent.Comp.DevourActionEntity, ent.Comp.DevourAction);
-    }
-
-    private void OnShutdown(Entity<DevourerComponent> ent, ref ComponentShutdown args)
-    {
-        _actionsSystem.RemoveAction(ent.Owner, ent.Comp.DevourActionEntity);
     }
 
     /// <summary>

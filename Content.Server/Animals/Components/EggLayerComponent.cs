@@ -19,12 +19,6 @@ public sealed partial class EggLayerComponent : Component
     [DataField(required: true)]
     public List<EntitySpawnEntry> EggSpawn = new();
 
-    /// <summary>
-    ///     Player action.
-    /// </summary>
-    [DataField]
-    public EntProtoId EggLayAction = "ActionAnimalLayEgg";
-
     [DataField]
     public SoundSpecifier EggLaySound = new SoundPathSpecifier("/Audio/Effects/pop.ogg");
 
@@ -45,8 +39,6 @@ public sealed partial class EggLayerComponent : Component
     /// </summary>
     [DataField]
     public float HungerUsage = 60f;
-
-    [DataField] public EntityUid? Action;
 
     /// <summary>
     ///     When to next try to produce.

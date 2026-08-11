@@ -5833,26 +5833,6 @@ entities:
       parent: 1
       rot: -69.11503837897548 rad
       pos: 43.424816,64.62023
-- proto: ActionToggleInternals
-  entities:
-  - uid: 7347
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 7345
-    - type: Action
-      container: 7345
-- proto: ActionToggleJetpack
-  entities:
-  - uid: 7346
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 7345
-    - type: Action
-      container: 7345
 - proto: ActionToggleLight
   entities:
   - uid: 4546
@@ -86864,17 +86844,6 @@ entities:
       parent: 1
       rot: -12.566370614359172 rad
       pos: 56.438934,91.54873
-    - type: GasTank
-      toggleActionEntity: 7347
-    - type: Jetpack
-      toggleActionEntity: 7346
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 7346
-          - 7347
 - proto: JetpackMiniFilled
   entities:
   - uid: 15120

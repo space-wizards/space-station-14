@@ -1,5 +1,4 @@
 using Content.Shared.Mind;
-using Content.Shared.Actions;
 using Content.Shared.Changeling.Components;
 using Content.Shared.Gibbing;
 using Robust.Shared.Audio.Systems;
@@ -12,22 +11,8 @@ public abstract partial class SharedChangelingLastResortSystem : EntitySystem
     [Dependency] private INetManager _net = default!;
     [Dependency] private GibbingSystem _gibbing = default!;
     [Dependency] private SharedMindSystem _mind = default!;
-    [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private DestructionResistanceSystem _destructionResistance = default!;
     [Dependency] protected SharedAudioSystem Audio = default!;
-
-    [SubscribeLocalEvent]
-    private void OnTakeOverMapInit(Entity<ChangelingSlugComponent> ent, ref MapInitEvent args)
-    {
-        _actions.AddAction(ent, ref ent.Comp.ActionEntity, ent.Comp.Action);
-    }
-
-    [SubscribeLocalEvent]
-    private void OnTakeOverShutdown(Entity<ChangelingSlugComponent> ent, ref ComponentShutdown args)
-    {
-        if (ent.Comp.ActionEntity != null)
-            _actions.RemoveAction(ent.Owner, ent.Comp.ActionEntity);
-    }
 
     [SubscribeLocalEvent]
     private void OnLastResortAction(Entity<ChangelingLastResortAbilityComponent> ent,

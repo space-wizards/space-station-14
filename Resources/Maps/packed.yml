@@ -7017,26 +7017,6 @@ entities:
     - type: Transform
       parent: 2
       pos: 12.501018,-34.058125
-- proto: ActionToggleInternals
-  entities:
-  - uid: 6295
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 10308
-    - type: Action
-      container: 10308
-- proto: ActionToggleJetpack
-  entities:
-  - uid: 6125
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 10308
-    - type: Action
-      container: 10308
 - proto: ActionToggleLight
   entities:
   - uid: 6399
@@ -74790,17 +74770,6 @@ entities:
     - type: Transform
       parent: 2
       pos: 8.488525,-9.353134
-    - type: GasTank
-      toggleActionEntity: 6295
-    - type: Jetpack
-      toggleActionEntity: 6125
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 6125
-          - 6295
   - uid: 10309
     components:
     - type: Transform

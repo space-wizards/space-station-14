@@ -227,6 +227,9 @@
       types:
         Slash: 5 # Reduce?
   - type: Wagging
+  - type: ActionGrant
+    actions:
+    - ActionToggleWagging
 
 - type: entity
   parent: OrganBaseOrganic

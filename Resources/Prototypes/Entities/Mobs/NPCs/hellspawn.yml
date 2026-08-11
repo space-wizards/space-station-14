@@ -49,6 +49,9 @@
       Dead:
         Base: dead
   - type: Firestarter
+  - type: ActionGrant
+    actions:
+    - ActionFireStarter
   - type: NameIdentifier
     group: GenericNumber
   - type: SlowOnDamage
