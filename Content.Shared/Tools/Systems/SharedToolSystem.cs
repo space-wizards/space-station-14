@@ -5,6 +5,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Item.ItemToggle;
+using Content.Shared.Localizations;
 using Content.Shared.Maps;
 using Content.Shared.Popups;
 using Content.Shared.Tools.Components;
@@ -163,7 +164,7 @@ public abstract partial class SharedToolSystem : EntitySystem
                 ("target", target.Value));
         }
         else
-            examineText = Loc.GetString("tool-component-doafter-examine", ("tool", tool));
+            examineText = Loc.GetString("tool-component-doafter-examine", ("quality", qualitiesText));
 
         var toolEvent = new ToolDoAfterEvent(fuel, doAfterEv, GetNetEntity(target));
         var doAfterArgs = new DoAfterArgs(EntityManager, user, delay / toolComponent.SpeedModifier, toolEvent, tool, target: target, used: tool)
@@ -228,18 +229,18 @@ public abstract partial class SharedToolSystem : EntitySystem
         // Loop through tool qualities and add localized names to the list
         foreach (var toolQuality in qualities)
         {
-            if (ProtoMan.TryIndex<ToolQualityPrototype>(toolQuality ?? string.Empty, out var protoToolQuality))
-            {
-                var toAdd = Loc.GetString(protoToolQuality.Name);
-                if (lowercase)
-                    toAdd = toAdd.ToLower();
+            if (!ProtoMan.TryIndex<ToolQualityPrototype>(toolQuality ?? string.Empty, out var protoToolQuality))
+                continue;
 
-                toolQualities.Add(toAdd);
-            }
+            var toAdd = Loc.GetString(protoToolQuality.Name);
+            if (lowercase)
+                toAdd = toAdd.ToLower();
+
+            toolQualities.Add(toAdd);
         }
 
         // Combine the qualities into a single string and localize the final message
-        return string.Join(", ", toolQualities);
+        return ContentLocalizationManager.FormatList(toolQualities);
     }
 
     /// <summary>
