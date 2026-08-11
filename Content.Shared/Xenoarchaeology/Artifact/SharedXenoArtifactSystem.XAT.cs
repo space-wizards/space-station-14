@@ -1,6 +1,6 @@
 using System.Linq;
 using Content.Shared.Chemistry;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Events;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Electrocution;
 using Content.Shared.Examine;
@@ -8,9 +8,11 @@ using Content.Shared.Interaction;
 using Content.Shared.Kitchen;
 using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Throwing;
+using Content.Shared.Weapons.Hitscan.Events;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Content.Shared.Xenoarchaeology.Artifact.XAT.Components;
+using Robust.Shared.Physics.Events;
 
 namespace Content.Shared.Xenoarchaeology.Artifact;
 
@@ -18,7 +20,7 @@ public abstract partial class SharedXenoArtifactSystem
 {
     private void InitializeXAT()
     {
-        XATRelayLocalEvent<DamageChangedEvent>();
+        XATRelayLocalEvent<DamageDealtEvent>();
         XATRelayLocalEvent<InteractUsingEvent>();
         XATRelayLocalEvent<PullStartedMessage>();
         XATRelayLocalEvent<AttackedEvent>();
@@ -29,6 +31,9 @@ public abstract partial class SharedXenoArtifactSystem
         XATRelayLocalEvent<BeingMicrowavedEvent>();
         XATRelayLocalEvent<XATInteractWithDoAfterEvent>();
         XATRelayLocalEvent<ElectrocutionAttemptEvent>();
+        XATRelayLocalEvent<StartCollideEvent>();
+        XATRelayLocalEvent<HitscanRaycastStrikeEvent>();
+        XATRelayLocalEvent<BeforeStaminaDamageEvent>();
 
         // special case this one because we need to order the messages
         SubscribeLocalEvent<XenoArtifactComponent, ExaminedEvent>(OnExamined);
