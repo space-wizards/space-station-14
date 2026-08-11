@@ -419,8 +419,8 @@
       - !type:Vomit
         probability: 0.04 #Scaled for time, not metabolismrate.
         conditions:
-          - !type:MetabolizerTypeCondition
-            type: [Animal, Arachnid]
+        - !type:MetabolizerTypeCondition
+          type: [Animal, Arachnid]
 
 - type: reagent
   id: Amatoxin
@@ -546,7 +546,7 @@
           reagent: Allicin
           min: 1
         - !type:MetabolizerTypeCondition
-          type: [Animal, Arachnid]
+          type: [ Animal ]
         damage:
           types:
             Poison: 0.06
