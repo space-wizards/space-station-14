@@ -1,15 +1,15 @@
-using Content.Server.DeviceLinking.Systems;
-using Content.Shared.DeviceLinking;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.DeviceLinking.Components;
+namespace Content.Shared.DeviceLinking.Components;
 
 /// <summary>
 ///     Simple switch that will fire ports when toggled on or off. A button is jsut a switch that signals on the
 ///     same port regardless of its state.
 /// </summary>
-[RegisterComponent, Access(typeof(SignalSwitchSystem))]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class SignalSwitchComponent : Component
 {
     /// <summary>
@@ -36,4 +36,13 @@ public sealed partial class SignalSwitchComponent : Component
 
     [DataField("clickSound")]
     public SoundSpecifier ClickSound = new SoundPathSpecifier("/Audio/Machines/lightswitch.ogg");
+}
+
+/// <summary>
+/// Enum for the appearance system.
+/// </summary>
+[Serializable, NetSerializable]
+public enum SwitchVisuals
+{
+    Visuals,
 }
