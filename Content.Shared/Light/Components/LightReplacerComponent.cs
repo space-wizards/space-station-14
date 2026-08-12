@@ -1,8 +1,7 @@
 using Content.Shared.Light.EntitySystems;
-using Content.Shared.Storage;
 using Robust.Shared.Audio;
-using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Light.Components;
 
@@ -23,26 +22,14 @@ public sealed partial class LightReplacerComponent : Component
     };
 
     /// <summary>
-    /// Bulbs that were inserted inside light replacer
-    /// </summary>
-    [ViewVariables]
-    public Container InsertedBulbs = default!;
-
-    /// <summary>
     /// This string defines what kind of tube will be inserted into light fixtures.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public string ActiveLightTube = "fluorescent light tube";
+    public EntProtoId ActiveLightTube = "LightTube";
 
     /// <summary>
     /// This string defines what kind of bulb will be inserted into light fixtures.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public string ActiveLightBulb = "incandescent light bulb";
-
-    /// <summary>
-    /// The default starting bulbs
-    /// </summary>
-    [DataField]
-    public List<EntitySpawnEntry> StartingContent = [];
+    public EntProtoId ActiveLightBulb = "LightBulb";
 }

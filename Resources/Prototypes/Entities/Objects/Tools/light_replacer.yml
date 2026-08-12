@@ -10,16 +10,12 @@
   - type: Item
     sprite: Objects/Specific/Janitorial/light_replacer.rsi
   - type: LightReplacer
-    startingContent:
-    - id: LightTube
-      amount: 8
-    - id: LightBulb
-      amount: 5
+  - type: EntityProvider
+    whitelist:
+      components:
+      - LightBulb
   - type: StaticPrice
     price: 100
-  - type: ContainerContainer
-    containers:
-      light_replacer_storage: !type:Container
   - type: UserInterface
     interfaces:
       enum.LightReplacerUiKey.Key:
@@ -30,13 +26,13 @@
 
 - type: entity
   parent: LightReplacer
-  id: LightReplacerEmpty
-  suffix: Empty
+  id: LightReplacerFilled
+  suffix: Filled
   components:
-  - type: LightReplacer
-    startingContent:
-    - id: LightTube
-      amount: 0
+  - type: EntityProvider
+    entityCounter:
+      LightTube: 8
+      LightBulb: 5
 
 # The following entities are solely used for sprites in the radial menu.
 - type: entity

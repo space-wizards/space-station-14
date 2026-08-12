@@ -3,6 +3,7 @@ using Content.Client.Stylesheets;
 using Content.Shared.Light.Components;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Light.Controls;
@@ -10,19 +11,22 @@ namespace Content.Client.Light.Controls;
 /// <summary>
 /// Handles the label on the light replacer
 /// </summary>
-public sealed class LightReplacerStatusControl : Control
+public sealed partial class LightReplacerStatusControl : Control
 {
+    [Dependency] private IPrototypeManager _prototype = default!;
 
     private readonly Entity<LightReplacerComponent> _parent;
     private readonly RichTextLabel _label;
 
-    private string? _prevActiveLightTube;
-    private string? _prevActiveLightBulb;
+    private EntProtoId? _prevActiveLightTube;
+    private EntProtoId? _prevActiveLightBulb;
     private string? _labelTube;
     private string? _labelBulb;
 
     public LightReplacerStatusControl(Entity<LightReplacerComponent> parent)
     {
+        IoCManager.InjectDependencies(this);
+
         _parent = parent;
         _label = new RichTextLabel { StyleClasses = { StyleClass.ItemStatus } };
         AddChild(_label);
@@ -39,8 +43,13 @@ public sealed class LightReplacerStatusControl : Control
 
         _prevActiveLightTube = _parent.Comp.ActiveLightTube;
         _prevActiveLightBulb = _parent.Comp.ActiveLightBulb;
-        _labelTube = _prevActiveLightTube;
-        _labelBulb = _prevActiveLightBulb;
+
+        if (!_prototype.Resolve(_prevActiveLightTube, out var tube)
+            || !_prototype.Resolve(_prevActiveLightBulb, out var bulb))
+            return;
+
+        _labelBulb = bulb.Name;
+        _labelTube = tube.Name;
 
         // Remove " light tube" at the end to save precious label space.
         if (_labelTube.EndsWith(" light tube"))

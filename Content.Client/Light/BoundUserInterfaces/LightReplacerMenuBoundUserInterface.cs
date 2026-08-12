@@ -1,6 +1,7 @@
 ﻿using Content.Client.UserInterface.Controls;
 using Content.Shared.Light.Components;
 using Content.Shared.Light.Events;
+using Content.Shared.Storage.Components;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 using Robust.Shared.Prototypes;
@@ -8,10 +9,9 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Light.BoundUserInterfaces;
 
 [UsedImplicitly]
-public sealed class LightReplacerMenuBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
+public sealed partial class LightReplacerMenuBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
-    private EntityQuery<LightBulbComponent> _lightBulbQuery;
-    private EntityQuery<MetaDataComponent> _metaDataQuery;
+    [Dependency] private IPrototypeManager _prototype = default!;
 
     private SimpleRadialMenu? _menu;
 
@@ -21,14 +21,13 @@ public sealed class LightReplacerMenuBoundUserInterface(EntityUid owner, Enum ui
     protected override void Open()
     {
         base.Open();
+        IoCManager.InjectDependencies(this);
 
-        _lightBulbQuery = EntMan.GetEntityQuery<LightBulbComponent>();
-        _metaDataQuery = EntMan.GetEntityQuery<MetaDataComponent>();
-
-        if (!EntMan.TryGetComponent<LightReplacerComponent>(Owner, out var replacer))
+        if (!EntMan.TryGetComponent<LightReplacerComponent>(Owner, out var replacer)
+            || !EntMan.TryGetComponent<EntityProviderComponent>(Owner, out var provider))
             return;
 
-        var lightTypes = CreateButtons(replacer);
+        var lightTypes = CreateButtons(replacer, provider);
 
         if (lightTypes == null)
             return;
@@ -39,33 +38,33 @@ public sealed class LightReplacerMenuBoundUserInterface(EntityUid owner, Enum ui
         _menu.OpenCentered();
     }
 
-    private IEnumerable<RadialMenuOptionBase>? CreateButtons(LightReplacerComponent replacer)
+    private IEnumerable<RadialMenuOptionBase>? CreateButtons(LightReplacerComponent replacer, EntityProviderComponent provider)
     {
         var options = new List<RadialMenuOptionBase>();
 
-        Dictionary<string, EntityUid> tubes = [];
-        Dictionary<string, EntityUid> bulbs = [];
+        Dictionary<EntProtoId, string> tubes = [];
+        Dictionary<EntProtoId, string> bulbs = [];
 
         var hasActiveTubes = false;
         var hasActiveBulbs = false;
 
-        foreach (var light in replacer.InsertedBulbs.ContainedEntities)
+        foreach (var lightProtoId in provider.EntityCounter)
         {
-            if (!_lightBulbQuery.TryComp(light, out var bulb)
-                || !_metaDataQuery.TryComp(light, out var metaData))
+            if (!_prototype.Resolve(lightProtoId.Key, out var light)
+                || !light.Components.TryGetComponent<LightBulbComponent>(EntMan.ComponentFactory, out var bulb))
                 continue;
 
             if (bulb.Type == LightBulbType.Tube)
             {
-                if (metaData.EntityName != replacer.ActiveLightTube)
-                    tubes.TryAdd(metaData.EntityName, light);
+                if (lightProtoId.Key != replacer.ActiveLightTube)
+                    tubes.TryAdd(lightProtoId.Key, light.Name);
                 else
                     hasActiveTubes = true;
             }
             else
             {
-                if (metaData.EntityName != replacer.ActiveLightBulb)
-                    bulbs.TryAdd(metaData.EntityName, light);
+                if (lightProtoId.Key != replacer.ActiveLightBulb)
+                    bulbs.TryAdd(lightProtoId.Key, light.Name);
                 else
                     hasActiveBulbs = true;
             }
@@ -73,7 +72,7 @@ public sealed class LightReplacerMenuBoundUserInterface(EntityUid owner, Enum ui
 
         if (hasActiveTubes)
         {
-            var toggleLightTubes = new RadialMenuActionOption<string>(EjectLights, replacer.ActiveLightTube)
+            var toggleLightTubes = new RadialMenuActionOption<EntProtoId>(EjectLights, replacer.ActiveLightTube)
             {
                 IconSpecifier = RadialMenuIconSpecifier.With(_ejectTubes),
                 ToolTip = Loc.GetString("comp-light-replacer-eject-specified-lights", ("light", replacer.ActiveLightTube)),
@@ -83,7 +82,7 @@ public sealed class LightReplacerMenuBoundUserInterface(EntityUid owner, Enum ui
 
         if (hasActiveBulbs)
         {
-            var toggleLightBulbs = new RadialMenuActionOption<string>(EjectLights, replacer.ActiveLightBulb)
+            var toggleLightBulbs = new RadialMenuActionOption<EntProtoId>(EjectLights, replacer.ActiveLightBulb)
             {
                 IconSpecifier = RadialMenuIconSpecifier.With(_ejectBulbs),
                 ToolTip = Loc.GetString("comp-light-replacer-eject-specified-lights", ("light", replacer.ActiveLightBulb)),
@@ -105,23 +104,23 @@ public sealed class LightReplacerMenuBoundUserInterface(EntityUid owner, Enum ui
         return options;
     }
 
-    private void PopulateOptions(string name, EntityUid uid, LightBulbType lightType, ref List<RadialMenuOptionBase> options)
+    private void PopulateOptions(EntProtoId protoId, string name, LightBulbType lightType, ref List<RadialMenuOptionBase> options)
     {
-        var switchLight = new RadialMenuActionOption<(string, LightBulbType)>(SwitchActiveLight, (name, lightType))
+        var switchLight = new RadialMenuActionOption<(EntProtoId, LightBulbType)>(SwitchActiveLight, (protoId, lightType))
         {
-            IconSpecifier = RadialMenuIconSpecifier.With(uid),
-            ToolTip = Loc.GetString("comp-light-replacer-select-lights", ("light", uid)),
+            IconSpecifier = RadialMenuIconSpecifier.With(protoId),
+            ToolTip = Loc.GetString("comp-light-replacer-select-lights", ("light", name)),
         };
         options.Add(switchLight);
     }
 
-    private void SwitchActiveLight((string, LightBulbType) light)
+    private void SwitchActiveLight((EntProtoId, LightBulbType) light)
     {
         var message = new SwitchLightTypeMessage(light);
         SendPredictedMessage(message);
     }
 
-    private void EjectLights(string lightName)
+    private void EjectLights(EntProtoId lightName)
     {
         var message = new EjectLightTypeMessage(lightName);
         SendPredictedMessage(message);

@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Light.Components;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Light.Events;
@@ -8,18 +9,18 @@ namespace Content.Shared.Light.Events;
 /// </summary>
 /// <param name="light">A mix of the light name and the light bulb type.</param>
 [Serializable, NetSerializable]
-public sealed class SwitchLightTypeMessage((string, LightBulbType) light) : BoundUserInterfaceMessage
+public sealed class SwitchLightTypeMessage((EntProtoId, LightBulbType) light) : BoundUserInterfaceMessage
 {
-    public string LightName = light.Item1;
+    public EntProtoId LightEntProtoId = light.Item1;
     public LightBulbType LightType = light.Item2;
 }
 
 /// <summary>
 /// This message is sent from the client when the player wants to eject all lights of a specific type.
 /// </summary>
-/// <param name="lightName">The name of the lights to be ejected.</param>
+/// <param name="lightEntProtoId">The name of the lights to be ejected.</param>
 [Serializable, NetSerializable]
-public sealed class EjectLightTypeMessage(string lightName) : BoundUserInterfaceMessage
+public sealed class EjectLightTypeMessage(EntProtoId lightEntProtoId) : BoundUserInterfaceMessage
 {
-    public string LightName = lightName;
+    public EntProtoId LightEntProtoId = lightEntProtoId;
 }
