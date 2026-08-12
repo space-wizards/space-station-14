@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Shared.Chemistry;
+using Content.Shared.Damage.Events;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Electrocution;
 using Content.Shared.Examine;
