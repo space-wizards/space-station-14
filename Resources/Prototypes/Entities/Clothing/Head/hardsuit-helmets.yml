@@ -16,18 +16,6 @@
     sprite: Clothing/Head/Hardsuits/atmospherics.rsi
   - type: HandheldLight
     addPrefix: false
-  - type: ToggleableVisuals
-    spriteLayer: light
-    clothingVisuals:
-      head:
-      - state: equipped-head-light
-        shader: unshaded
-  - type: Clothing
-    clothingVisuals:
-      head:
-      - state: equipped-head
-      - state: equipped-head-unshaded
-        shader: unshaded
   - type: PointLight
     color: "#adffe6"
   - type: PressureProtection
@@ -50,18 +38,6 @@
     sprite: Clothing/Head/Hardsuits/engineering.rsi
   - type: HandheldLight
     addPrefix: false
-  - type: ToggleableVisuals
-    spriteLayer: light
-    clothingVisuals:
-      head:
-      - state: equipped-head-light
-        shader: unshaded
-  - type: Clothing
-    clothingVisuals:
-      head:
-      - state: equipped-head
-      - state: equipped-head-unshaded
-        shader: unshaded
   - type: PointLight
     color: "#ffdbad"
   - type: PressureProtection
@@ -82,17 +58,6 @@
     sprite: Clothing/Head/Hardsuits/spatiohelm.rsi
   - type: HandheldLight
     addPrefix: false
-  - type: ToggleableVisuals
-    clothingVisuals:
-      head:
-      - state: equipped-head-light
-        shader: unshaded
-  - type: Clothing
-    clothingVisuals:
-      head:
-      - state: equipped-head
-      - state: equipped-head-unshaded
-        shader: unshaded
   - type: PointLight
     radius: 6
   - type: PressureProtection
@@ -117,17 +82,6 @@
   - type: PointLight
     radius: 7
     energy: 3
-  - type: ToggleableVisuals
-    clothingVisuals:
-      head:
-      - state: equipped-head-light
-        shader: unshaded
-  - type: Clothing
-    clothingVisuals:
-      head:
-      - state: equipped-head
-      - state: equipped-head-unshaded
-        shader: unshaded
   - type: Tag
     tags:
     - WhitelistChameleon
@@ -143,17 +97,6 @@
     sprite: Clothing/Head/Hardsuits/goliathhelm.rsi
   - type: HandheldLight
     addPrefix: false
-  - type: ToggleableVisuals
-    clothingVisuals:
-      head:
-      - state: equipped-head-light
-        shader: unshaded
-  - type: Clothing
-    clothingVisuals:
-      head:
-      - state: equipped-head
-      - state: equipped-head-unshaded
-        shader: unshaded
   - type: PointLight
     radius: 6
   - type: PressureProtection
@@ -173,12 +116,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/maxim.rsi
-  - type: Clothing
-    clothingVisuals:
-      head:
-      - state: equipped-head
-      - state: equipped-head-unshaded
-        shader: unshaded
   - type: PressureProtection
     highPressureMultiplier: 0.08
     lowPressureMultiplier: 1000
@@ -201,17 +138,6 @@
     sprite: Clothing/Head/Hardsuits/security.rsi
   - type: PointLight
     color: "#ffeead"
-  - type: ToggleableVisuals
-    clothingVisuals:
-      head:
-      - state: equipped-head-light
-        shader: unshaded
-  - type: Clothing
-    clothingVisuals:
-      head:
-      - state: equipped-head
-      - state: equipped-head-unshaded
-        shader: unshaded
   - type: PressureProtection
     highPressureMultiplier: 0.525
     lowPressureMultiplier: 1000
@@ -237,17 +163,6 @@
     sprite: Clothing/Head/Hardsuits/brigmedic.rsi
   - type: PointLight
     color: "#00FFFF"
-  - type: ToggleableVisuals
-    clothingVisuals:
-      head:
-      - state: equipped-head-light
-        shader: unshaded
-  - type: Clothing
-    clothingVisuals:
-      head:
-      - state: equipped-head
-      - state: equipped-head-unshaded
-        shader: unshaded
   - type: Armor
     modifiers:
       coefficients:
@@ -272,17 +187,6 @@
     sprite: Clothing/Head/Hardsuits/security-warden.rsi
   - type: PointLight
     color: "#ffeead"
-  - type: ToggleableVisuals
-    clothingVisuals:
-      head:
-      - state: equipped-head-light
-        shader: unshaded
-  - type: Clothing
-    clothingVisuals:
-      head:
-      - state: equipped-head
-      - state: equipped-head-unshaded
-        shader: unshaded
   - type: PressureProtection
     highPressureMultiplier: 0.525
     lowPressureMultiplier: 1000
@@ -303,17 +207,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/capspace.rsi
-  - type: ToggleableVisuals
-    clothingVisuals:
-      head:
-      - state: equipped-head-light
-        shader: unshaded
-  - type: Clothing
-    clothingVisuals:
-      head:
-      - state: equipped-head
-      - state: equipped-head-unshaded
-        shader: unshaded
   - type: PressureProtection
     highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000
@@ -332,18 +225,6 @@
     sprite: Clothing/Head/Hardsuits/engineering-white.rsi
   - type: HandheldLight
     addPrefix: false
-  - type: ToggleableVisuals
-    spriteLayer: light
-    clothingVisuals:
-      head:
-      - state: equipped-head-light
-        shader: unshaded
-  - type: Clothing
-    clothingVisuals:
-      head:
-      - state: equipped-head
-      - state: equipped-head-unshaded
-        shader: unshaded
   - type: PointLight
     color: "#daffad"
   - type: PressureProtection
@@ -366,18 +247,6 @@
     sprite: Clothing/Head/Hardsuits/medical.rsi
   - type: PointLight
     color: "#adf1ff"
-  - type: ToggleableVisuals
-    spriteLayer: light
-    clothingVisuals:
-      head:
-      - state: equipped-head-light
-        shader: unshaded
-  - type: Clothing
-    clothingVisuals:
-      head:
-      - state: equipped-head
-      - state: equipped-head-unshaded
-        shader: unshaded
   - type: PressureProtection
     highPressureMultiplier: 0.6
     lowPressureMultiplier: 1000
@@ -396,17 +265,6 @@
     sprite: Clothing/Head/Hardsuits/rd.rsi
   - type: PointLight
     color: "#d6adff"
-  - type: ToggleableVisuals
-    clothingVisuals:
-      head:
-      - state: equipped-head-light
-        shader: unshaded
-  - type: Clothing
-    clothingVisuals:
-      head:
-      - state: equipped-head
-      - state: equipped-head-unshaded
-        shader: unshaded
   - type: PressureProtection
     highPressureMultiplier: 0.60
     lowPressureMultiplier: 1000
@@ -425,17 +283,6 @@
     sprite: Clothing/Head/Hardsuits/security-red.rsi
   - type: PointLight
     color: "#ffeead"
-  - type: ToggleableVisuals
-    clothingVisuals:
-      head:
-      - state: equipped-head-light
-        shader: unshaded
-  - type: Clothing
-    clothingVisuals:
-      head:
-      - state: equipped-head
-      - state: equipped-head-unshaded
-        shader: unshaded
   - type: PressureProtection
     highPressureMultiplier: 0.45
     lowPressureMultiplier: 1000
@@ -463,17 +310,6 @@
   - type: PointLight
     radius: 7
     energy: 3
-  - type: ToggleableVisuals
-    clothingVisuals:
-      head:
-      - state: equipped-head-light
-        shader: unshaded
-  - type: Clothing
-    clothingVisuals:
-      head:
-      - state: equipped-head
-      - state: equipped-head-unshaded
-        shader: unshaded
 
 #ANTAG HARDSUITS
 #Blood-red Hardsuit
@@ -489,17 +325,6 @@
     color: green
     radius: 5
     energy: 2.5
-  - type: ToggleableVisuals
-    clothingVisuals:
-      head:
-      - state: equipped-head-light
-        shader: unshaded
-  - type: Clothing
-    clothingVisuals:
-      head:
-      - state: equipped-head
-      - state: equipped-head-unshaded
-        shader: unshaded
   - type: PressureProtection
     highPressureMultiplier: 0.08
     lowPressureMultiplier: 1000
@@ -527,17 +352,6 @@
     color: green
     radius: 5
     energy: 2.5
-  - type: ToggleableVisuals
-    clothingVisuals:
-      head:
-      - state: equipped-head-light
-        shader: unshaded
-  - type: Clothing
-    clothingVisuals:
-      head:
-      - state: equipped-head
-      - state: equipped-head-unshaded
-        shader: unshaded
   - type: PressureProtection
     highPressureMultiplier: 0.08
     lowPressureMultiplier: 1000
@@ -562,17 +376,6 @@
     color: red
     radius: 5
     energy: 2.5
-  - type: ToggleableVisuals
-    clothingVisuals:
-      head:
-      - state: equipped-head-light
-        shader: unshaded
-  - type: Clothing
-    clothingVisuals:
-      head:
-      - state: equipped-head
-      - state: equipped-head-unshaded
-        shader: unshaded
   - type: PressureProtection
     highPressureMultiplier: 0.08
     lowPressureMultiplier: 1000
@@ -602,17 +405,6 @@
     color: green
     radius: 5
     energy: 2.5
-  - type: ToggleableVisuals
-    clothingVisuals:
-      head:
-      - state: equipped-head-light
-        shader: unshaded
-  - type: Clothing
-    clothingVisuals:
-      head:
-      - state: equipped-head
-      - state: equipped-head-unshaded
-        shader: unshaded
   - type: PressureProtection
     highPressureMultiplier: 0.08
     lowPressureMultiplier: 1000
@@ -640,17 +432,6 @@
     color: red
     radius: 5
     energy: 4
-  - type: ToggleableVisuals
-    clothingVisuals:
-      head:
-      - state: equipped-head-light
-        shader: unshaded
-  - type: Clothing
-    clothingVisuals:
-      head:
-      - state: equipped-head
-      - state: equipped-head-unshaded
-        shader: unshaded
   - type: PressureProtection
     highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000
@@ -676,17 +457,6 @@
     sprite: Clothing/Head/Hardsuits/wizard.rsi
   - type: PointLight
     color: "#ffadfb"
-  - type: ToggleableVisuals
-    clothingVisuals:
-      head:
-      - state: equipped-head-light
-        shader: unshaded
-  - type: Clothing
-    clothingVisuals:
-      head:
-      - state: equipped-head
-      - state: equipped-head-unshaded
-        shader: unshaded
   - type: PressureProtection
     highPressureMultiplier: 0.27
     lowPressureMultiplier: 1000
@@ -710,12 +480,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/lingspacehelmet.rsi
-  - type: Clothing
-    clothingVisuals:
-      head:
-      - state: equipped-head
-      - state: equipped-head-unshaded
-        shader: unshaded
   - type: PressureProtection
     highPressureMultiplier: 0.225
     lowPressureMultiplier: 1000
@@ -730,12 +494,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/pirateeva.rsi
-  - type: Clothing
-    clothingVisuals:
-      head:
-      - state: equipped-head
-      - state: equipped-head-unshaded
-        shader: unshaded
   - type: PressureProtection
     highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000
@@ -750,18 +508,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/piratecaptainhelm.rsi
-  - type: ToggleableVisuals
-    clothingVisuals:
-      head:
-      - state: equipped-head-light
-        shader: unshaded
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/piratecaptainhelm.rsi
-    clothingVisuals:
-      head:
-      - state: equipped-head
-      - state: equipped-head-unshaded
-        shader: unshaded
   - type: PointLight # Color matches visor colors, radius/energy same as mining hardsuit for the big captain.
     color: "#f3ea9c"
     radius: 7
@@ -789,17 +535,6 @@
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertleader.rsi
   - type: PointLight
     color: "#addbff"
-  - type: ToggleableVisuals
-    clothingVisuals:
-      head:
-      - state: equipped-head-light
-        shader: unshaded
-  - type: Clothing
-    clothingVisuals:
-      head:
-      - state: equipped-head
-      - state: equipped-head-unshaded
-        shader: unshaded
   - type: Armor
     modifiers:
       coefficients:
@@ -819,17 +554,6 @@
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertchaplain.rsi
   - type: PointLight
     color: "#ffffff"
-  - type: ToggleableVisuals
-    clothingVisuals:
-      head:
-      - state: equipped-head-light
-        shader: unshaded
-  - type: Clothing
-    clothingVisuals:
-      head:
-      - state: equipped-head
-      - state: equipped-head-unshaded
-        shader: unshaded
 
 #ERT Engineer Hardsuit
 - type: entity
@@ -842,17 +566,6 @@
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertengineer.rsi
   - type: PointLight
     color: "#f4ffad"
-  - type: ToggleableVisuals
-    clothingVisuals:
-      head:
-      - state: equipped-head-light
-        shader: unshaded
-  - type: Clothing
-    clothingVisuals:
-      head:
-      - state: equipped-head
-      - state: equipped-head-unshaded
-        shader: unshaded
   - type: FireProtection
     reduction: 0.2
   - type: Armor
@@ -874,17 +587,6 @@
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertmedical.rsi
   - type: PointLight
     color: "#adffec"
-  - type: ToggleableVisuals
-    clothingVisuals:
-      head:
-      - state: equipped-head-light
-        shader: unshaded
-  - type: Clothing
-    clothingVisuals:
-      head:
-      - state: equipped-head
-      - state: equipped-head-unshaded
-        shader: unshaded
 
 #ERT Security Hardsuit
 - type: entity
@@ -897,17 +599,6 @@
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertsecurity.rsi
   - type: PointLight
     color: "#ffadc6"
-  - type: ToggleableVisuals
-    clothingVisuals:
-      head:
-      - state: equipped-head-light
-        shader: unshaded
-  - type: Clothing
-    clothingVisuals:
-      head:
-      - state: equipped-head
-      - state: equipped-head-unshaded
-        shader: unshaded
   - type: Armor
     modifiers:
       coefficients:
@@ -927,17 +618,6 @@
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertjanitor.rsi
   - type: PointLight
     color: "#cbadff"
-  - type: ToggleableVisuals
-    clothingVisuals:
-      head:
-      - state: equipped-head-light
-        shader: unshaded
-  - type: Clothing
-    clothingVisuals:
-      head:
-      - state: equipped-head
-      - state: equipped-head-unshaded
-        shader: unshaded
 
 #CBURN Hardsuit
 - type: entity
@@ -948,19 +628,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/cburn.rsi
-  - type: Clothing
-    clothingVisuals:
-      head:
-      - state: equipped-head
-      - state: equipped-head-unshaded
-        shader: unshaded
   - type: PointLight
     color: orange
-  - type: ToggleableVisuals
-    clothingVisuals:
-      head:
-      - state: equipped-head-light
-        shader: unshaded
   - type: PressureProtection
     highPressureMultiplier: 0.08
     lowPressureMultiplier: 1000
@@ -984,12 +653,6 @@
   - type: BreathMask
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/deathsquad.rsi
-  - type: Clothing
-    clothingVisuals:
-      head:
-      - state: equipped-head
-      - state: equipped-head-unshaded
-        shader: unshaded
   - type: PressureProtection
     highPressureMultiplier: 0.08
     lowPressureMultiplier: 1000
@@ -1016,19 +679,9 @@
   - type: BreathMask
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/clown.rsi
-  - type: ToggleableVisuals
-    clothingVisuals:
-      head:
-      - state: equipped-head-light
-        shader: unshaded
   - type: Clothing
     equipSound: /Audio/Mecha/mechmove03.ogg
     unequipSound: /Audio/Effects/Emotes/parp1.ogg
-    clothingVisuals:
-      head:
-      - state: equipped-head
-      - state: equipped-head-unshaded
-        shader: unshaded
 
 #Mime Hardsuit
 - type: entity
@@ -1040,17 +693,6 @@
   - type: BreathMask
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/mime.rsi
-  - type: ToggleableVisuals
-    clothingVisuals:
-      head:
-      - state: equipped-head-light
-        shader: unshaded
-  - type: Clothing
-    clothingVisuals:
-      head:
-      - state: equipped-head
-      - state: equipped-head-unshaded
-        shader: unshaded
 
 #Santas Hardsuit
 - type: entity
@@ -1066,9 +708,3 @@
     color: "#f4ffad"
     radius: 5
     energy: 2
-  - type: Clothing
-    clothingVisuals:
-      head:
-      - state: equipped-head
-      - state: equipped-head-unshaded
-        shader: unshaded
