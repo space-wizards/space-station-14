@@ -238,6 +238,6 @@ public sealed class EntityTableTest : GameTest
     private EntityTablePrototype Table(ProtoId<EntityTablePrototype> id) => SProtoMan.Index(id);
 
     private EntProtoId[] Run(EntityTablePrototype proto, IRobustRandom rand = null, EntityTableContext ctx = null)
-        => _sEntityTable.GetSpawns(proto, rand, ctx)
+        => _sEntityTable.GetSpawns(proto.Table, rand, ctx)
                         .ToArray();
 }
