@@ -7,11 +7,11 @@ using Robust.Shared.Network;
 namespace Content.Client.Commands;
 
 [AnyCommand]
-public sealed class OpenAHelpCommand : LocalizedCommands
+public sealed partial class OpenAHelpCommand : LocalizedCommands
 {
-    [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
+    [Dependency] private IUserInterfaceManager _userInterfaceManager = default!;
 
-    public override string Command => "openahelp";
+    public override string Command => AdminCommandSyntax.NameOpenAdminHelp;
 
     public override string Help => LocalizationManager.GetString($"cmd-{Command}-help", ("command", Command));
 

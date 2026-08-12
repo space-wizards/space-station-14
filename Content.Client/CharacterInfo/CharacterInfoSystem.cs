@@ -1,13 +1,15 @@
-﻿using Content.Shared.CharacterInfo;
+using Content.Shared.CharacterInfo;
 using Content.Shared.Objectives;
+using Content.Shared.Roles;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.CharacterInfo;
 
-public sealed class CharacterInfoSystem : EntitySystem
+public sealed partial class CharacterInfoSystem : EntitySystem
 {
-    [Dependency] private readonly IPlayerManager _players = default!;
+    [Dependency] private IPlayerManager _players = default!;
 
     public event Action<CharacterData>? OnCharacterUpdate;
 
@@ -32,7 +34,7 @@ public sealed class CharacterInfoSystem : EntitySystem
     private void OnCharacterInfoEvent(CharacterInfoEvent msg, EntitySessionEventArgs args)
     {
         var entity = GetEntity(msg.NetEntity);
-        var data = new CharacterData(entity, msg.JobTitle, msg.Objectives, msg.Briefing, Name(entity));
+        var data = new CharacterData(entity, msg.Objectives, msg.Briefing, msg.Job, Name(entity));
 
         OnCharacterUpdate?.Invoke(data);
     }
@@ -46,9 +48,9 @@ public sealed class CharacterInfoSystem : EntitySystem
 
     public readonly record struct CharacterData(
         EntityUid Entity,
-        string Job,
         Dictionary<string, List<ObjectiveInfo>> Objectives,
         string? Briefing,
+        ProtoId<JobPrototype>? JobId,
         string EntityName
     );
 

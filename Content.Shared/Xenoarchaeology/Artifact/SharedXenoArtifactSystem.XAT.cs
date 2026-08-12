@@ -1,14 +1,18 @@
 using System.Linq;
 using Content.Shared.Chemistry;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Events;
 using Content.Shared.Damage.Systems;
+using Content.Shared.Electrocution;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Kitchen;
 using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Throwing;
+using Content.Shared.Weapons.Hitscan.Events;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Content.Shared.Xenoarchaeology.Artifact.XAT.Components;
+using Robust.Shared.Physics.Events;
 
 namespace Content.Shared.Xenoarchaeology.Artifact;
 
@@ -16,7 +20,7 @@ public abstract partial class SharedXenoArtifactSystem
 {
     private void InitializeXAT()
     {
-        XATRelayLocalEvent<DamageChangedEvent>();
+        XATRelayLocalEvent<DamageDealtEvent>();
         XATRelayLocalEvent<InteractUsingEvent>();
         XATRelayLocalEvent<PullStartedMessage>();
         XATRelayLocalEvent<AttackedEvent>();
@@ -24,6 +28,12 @@ public abstract partial class SharedXenoArtifactSystem
         XATRelayLocalEvent<InteractHandEvent>();
         XATRelayLocalEvent<ReactionEntityEvent>();
         XATRelayLocalEvent<LandEvent>();
+        XATRelayLocalEvent<BeingMicrowavedEvent>();
+        XATRelayLocalEvent<XATInteractWithDoAfterEvent>();
+        XATRelayLocalEvent<ElectrocutionAttemptEvent>();
+        XATRelayLocalEvent<StartCollideEvent>();
+        XATRelayLocalEvent<HitscanRaycastStrikeEvent>();
+        XATRelayLocalEvent<BeforeStaminaDamageEvent>();
 
         // special case this one because we need to order the messages
         SubscribeLocalEvent<XenoArtifactComponent, ExaminedEvent>(OnExamined);
@@ -70,8 +80,9 @@ public abstract partial class SharedXenoArtifactSystem
             unlockingComp.EndTime = _timing.CurTime + ent.Comp.UnlockStateDuration;
             Log.Debug($"{ToPrettyString(ent)} entered unlocking state");
 
-            if (_net.IsServer)
-                _popup.PopupEntity(Loc.GetString("artifact-unlock-state-begin"), ent);
+            if (ent.Comp.UnlockBeginMsg != null)
+                _popup.PopupEntity(Loc.GetString(ent.Comp.UnlockBeginMsg), ent);
+
             Dirty(ent);
         }
         else if (node != null)
@@ -87,6 +98,9 @@ public abstract partial class SharedXenoArtifactSystem
                )
                 // we add time on each new trigger, if it is not going to fail us
                 unlockingComp.EndTime += ent.Comp.UnlockStateIncrementPerNode;
+
+            if (ent.Comp.UnlockContinueMsg != null)
+                _popup.PopupEntity(Loc.GetString(ent.Comp.UnlockContinueMsg), ent);
         }
 
         if (node != null && unlockingComp.TriggeredNodeIndexes.Add(GetIndex(ent, node.Value)))
