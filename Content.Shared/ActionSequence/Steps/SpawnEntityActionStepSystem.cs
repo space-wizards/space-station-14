@@ -19,9 +19,9 @@ public sealed partial class SpawnEntityActionStepSystem : ActionStepSystem<Spawn
             SequenceSystem.TryAddBlackboardData(action, args.Step.OutSpawnedKey, spawned);
             args.Handled = true;
         }
-        else if (SequenceSystem.TryGetBlackboardData<EntityCoordinates>(action, args.Step.LocationKey, out var coordinates))
+        else if (SequenceSystem.TryGetBlackboardData<NetCoordinates>(action, args.Step.LocationKey, out var coordinates))
         {
-            var spawned = PredictedSpawnAtPosition(args.Step.Entity, coordinates);
+            var spawned = PredictedSpawnAtPosition(args.Step.Entity, GetCoordinates(coordinates));
 
             SequenceSystem.TryAddBlackboardData(action, args.Step.OutSpawnedKey, spawned);
             args.Handled = true;

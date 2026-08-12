@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Actions;
 using Content.Shared.ActionSequence.Steps;
 using Content.Shared.DoAfter;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.ActionSequence;
@@ -25,7 +26,9 @@ public sealed partial class ActionSequenceSystem : EntitySystem, IActionStepRais
         if (ent.Comp.Awaiting != SequenceAwaiting.None)
             return;
 
-        ent.Comp.Blackboard = new Dictionary<string, object>();
+        ent.Comp.EntityBlackboard = new Dictionary<string, EntityUid>();
+        ent.Comp.CoordinateBlackboard = new Dictionary<string, NetCoordinates>();
+
         TryAddBlackboardData(ent, ActionStepActionKey, ent.Owner);
         TryAddBlackboardData(ent, ActionStepUserKey, args.Performer);
 
@@ -40,7 +43,8 @@ public sealed partial class ActionSequenceSystem : EntitySystem, IActionStepRais
         if (ent.Comp.Awaiting != SequenceAwaiting.None)
             return;
 
-        ent.Comp.Blackboard = new Dictionary<string, object>();
+        ent.Comp.EntityBlackboard = new Dictionary<string, EntityUid>();
+        ent.Comp.CoordinateBlackboard = new Dictionary<string, NetCoordinates>();
         TryAddBlackboardData(ent, ActionStepActionKey, ent.Owner);
         TryAddBlackboardData(ent, ActionStepUserKey, args.Performer);
         TryAddBlackboardData(ent, ActionStepTargetKey, args.Target);
@@ -57,7 +61,8 @@ public sealed partial class ActionSequenceSystem : EntitySystem, IActionStepRais
         if (ent.Comp.Awaiting != SequenceAwaiting.None)
             return;
 
-        ent.Comp.Blackboard = new Dictionary<string, object>();
+        ent.Comp.EntityBlackboard = new Dictionary<string, EntityUid>();
+        ent.Comp.CoordinateBlackboard = new Dictionary<string, NetCoordinates>();
         TryAddBlackboardData(ent, ActionStepActionKey, ent.Owner);
         TryAddBlackboardData(ent, ActionStepUserKey, args.Performer);
         TryAddBlackboardData(ent, ActionStepLocationKey, args.Target);
@@ -120,6 +125,7 @@ public sealed partial class ActionSequenceSystem : EntitySystem, IActionStepRais
         ent.Comp.CurrentStep = 0;
 
         DirtyField(ent, ent.Comp, nameof(ActionSequenceComponent.SequenceOngoing));
+        DirtyField(ent, ent.Comp, nameof(ActionSequenceComponent.CurrentStep));
 
         StepSequence(ent);
     }
@@ -139,8 +145,11 @@ public sealed partial class ActionSequenceSystem : EntitySystem, IActionStepRais
         ent.Comp.SequenceOngoing = false;
         ent.Comp.Awaiting = SequenceAwaiting.None;
         ent.Comp.CurrentStep = 0;
-        ent.Comp.Blackboard = new Dictionary<string, object>();
+        ent.Comp.EntityBlackboard = new Dictionary<string, EntityUid>();
+        ent.Comp.CoordinateBlackboard = new Dictionary<string, NetCoordinates>();
 
+        DirtyField(ent, ent.Comp, nameof(ActionSequenceComponent.EntityBlackboard));
+        DirtyField(ent, ent.Comp, nameof(ActionSequenceComponent.CoordinateBlackboard));
         DirtyField(ent, ent.Comp, nameof(ActionSequenceComponent.SequenceOngoing));
         DirtyField(ent, ent.Comp, nameof(ActionSequenceComponent.Awaiting));
         DirtyField(ent, ent.Comp, nameof(ActionSequenceComponent.CurrentStep));
@@ -177,11 +186,25 @@ public sealed partial class ActionSequenceSystem : EntitySystem, IActionStepRais
         if (key == null)
             return false;
 
-        if (!action.Comp.Blackboard.TryGetValue(key, out var keyData) || keyData is not T dataValue)
-            return false;
+        if (typeof(T) == typeof(EntityUid))
+        {
+            if (action.Comp.EntityBlackboard.TryGetValue(key, out var keyData) && keyData is T dataValue)
+            {
+                data = dataValue;
+                return true;
+            }
 
-        data = dataValue;
-        return true;
+        }
+        else if (typeof(T) == typeof(EntityCoordinates))
+        {
+            if (action.Comp.CoordinateBlackboard.TryGetValue(key, out var keyData) && keyData is T dataValue)
+            {
+                data = dataValue;
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /// <summary>
@@ -196,7 +219,20 @@ public sealed partial class ActionSequenceSystem : EntitySystem, IActionStepRais
         if (key == null)
             return false;
 
-        return action.Comp.Blackboard.TryAdd(key, data);
+        bool added = false;
+        if (data is EntityUid dataUid)
+        {
+            added = action.Comp.EntityBlackboard.TryAdd(key, dataUid);
+            DirtyField(action, action.Comp,  nameof(ActionSequenceComponent.EntityBlackboard));
+        }
+
+        if (data is NetCoordinates dataCoordinates)
+        {
+            added = action.Comp.CoordinateBlackboard.TryAdd(key, dataCoordinates);
+            DirtyField(action, action.Comp,  nameof(ActionSequenceComponent.CoordinateBlackboard));
+        }
+
+        return added;
     }
 }
 

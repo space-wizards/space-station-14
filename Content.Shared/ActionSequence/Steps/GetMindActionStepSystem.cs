@@ -14,10 +14,11 @@ public sealed partial class GetMindActionStepSystem : ActionStepSystem<GetMindAc
         if (!SequenceSystem.TryGetBlackboardData<EntityUid>(action, args.Step.TargetKey, out var target))
             return;
 
-        _mind.TryGetMind(target, out var mindId, out _);
-        SequenceSystem.TryAddBlackboardData(action, args.Step.OutMindKey, mindId);
-
-        args.Handled = true;
+        if (_mind.TryGetMind(target, out var mindId, out _))
+        {
+            SequenceSystem.TryAddBlackboardData(action, args.Step.OutMindKey, mindId);
+            args.Handled = true;
+        }
     }
 }
 
