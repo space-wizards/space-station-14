@@ -411,8 +411,11 @@ public sealed partial class AntagSelectionSystem
                 if (proto.JobBlacklist == null && proto.JobWhitelist == null)
                     continue;
 
-                foreach (var player in set)
+                foreach (var userId in set)
                 {
+                    if (!_playerManager.SessionsDict.TryGetValue(userId, out var player))
+                        continue;
+
                     if (result.TryGetValue(player, out var jobs))
                     {
                         if (proto.JobWhitelist != null)
@@ -465,7 +468,7 @@ public sealed partial class AntagSelectionSystem
                 if (except.Contains(antag))
                     continue;
 
-                if (!comp.PreSelectedSessions.TryGetValue(antag, out var set) || !set.Contains(player))
+                if (!comp.PreSelectedSessions.TryGetValue(antag, out var set) || !set.Contains(player.UserId))
                     continue;
 
                 if (!ProtoMan.Resolve(antag.Proto, out var proto))
@@ -511,8 +514,14 @@ public sealed partial class AntagSelectionSystem
                 if (except.Contains(antag))
                     continue;
 
-                if (comp.PreSelectedSessions.TryGetValue(antag, out var set))
-                    result.UnionWith(set);
+                if (!comp.PreSelectedSessions.TryGetValue(antag, out var set))
+                    continue;
+
+                foreach (var userId in set)
+                {
+                    if (_playerManager.SessionsDict.TryGetValue(userId, out var session))
+                        result.Add(session);
+                }
             }
         }
 
@@ -579,7 +588,7 @@ public sealed partial class AntagSelectionSystem
         foreach (var (_, sessions) in gameRule.Comp.PreSelectedSessions)
         {
             // Session has already been preselected as antagonist, and therefore *has* been assigned antag!
-            if (sessions.Contains(player))
+            if (sessions.Contains(player.UserId))
                 return true;
         }
 
@@ -599,7 +608,7 @@ public sealed partial class AntagSelectionSystem
             return false;
 
         // Session has already been preselected as antagonist, and therefore *has* been assigned antag!
-        return sessions.Contains(player);
+        return sessions.Contains(player.UserId);
     }
 
     /// <summary>
@@ -625,7 +634,7 @@ public sealed partial class AntagSelectionSystem
             foreach (var (_, sessions) in comp.PreSelectedSessions)
             {
                 // Session has already been preselected as antagonist, and therefore *has* been assigned antag!
-                if (sessions.Contains(player))
+                if (sessions.Contains(player.UserId))
                     return true;
             }
         }
@@ -657,7 +666,7 @@ public sealed partial class AntagSelectionSystem
                 if (!ProtoMan.Resolve(proto, out var def))
                     continue; // How did you even get here?
 
-                if (!sessions.Contains(player))
+                if (!sessions.Contains(player.UserId))
                     continue;
 
                 if (def.MultiAntagSetting == AntagAcceptability.None)

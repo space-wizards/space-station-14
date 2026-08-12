@@ -3,7 +3,7 @@ using Content.Server.Antag.Selectors;
 using Content.Server.GameTicking;
 using Content.Shared.Antag;
 using Content.Shared.GameTicking.Components;
-using Robust.Shared.Player;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Antag.Components;
@@ -42,7 +42,7 @@ public sealed partial class AntagSelectionComponent : Component
     /// Players in this dict are not guaranteed to have been assigned the role yet, and may be removed if they fail to initialize as an antag.
     /// </summary>
     [DataField]
-    public Dictionary<ProtoId<AntagSpecifierPrototype>, HashSet<ICommonSession>> PreSelectedSessions = new();
+    public Dictionary<ProtoId<AntagSpecifierPrototype>, HashSet<NetUserId>> PreSelectedSessions = new();
 
     /// <summary>
     /// The minds and original names of the players assigned to be antagonists, as well as their assigned antag.
