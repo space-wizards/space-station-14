@@ -5,9 +5,9 @@
   description: Someone who wears this means business.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/detective.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Security/detective.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/detective.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Security/detective.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -16,9 +16,9 @@
   description: A hard-boiled private investigator's grey suit, complete with tie clip.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/detective_grey.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Security/detective_grey.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/detective_grey.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Security/detective_grey.rsi
 
 - type: entity
   parent: [ClothingUniformSkirtBase, BaseCommandContraband]
@@ -27,23 +27,23 @@
   description: It's bright red and rather crisp, much like security's victims tend to be.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/hos.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Security/hos.rsi
   - type: Item
     inhandVisuals:
       left:
       - state: inhand-left
         color: "#C12D30"
-        sprite: Clothing/Uniforms/Jumpskirt/color.rsi
+        sprite: Clothing/Uniforms/Jumpskirts/Color/color.rsi
       - state: overlay-inhand-left
-        sprite: Clothing/Uniforms/Jumpsuit/hos.rsi
+        sprite: Clothing/Uniforms/Jumpsuits/Security/hos.rsi
       right:
       - state: inhand-right
         color: "#C12D30"
-        sprite: Clothing/Uniforms/Jumpskirt/color.rsi
+        sprite: Clothing/Uniforms/Jumpskirts/Color/color.rsi
       - state: overlay-inhand-right
-        sprite: Clothing/Uniforms/Jumpsuit/hos.rsi
+        sprite: Clothing/Uniforms/Jumpsuits/Security/hos.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/hos.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Security/hos.rsi
 
 - type: entity
   parent: [ClothingUniformSkirtBase, BaseCommandContraband]
@@ -52,9 +52,9 @@
   description: It's a turtleneck worn by those strong and disciplined enough to achieve the position of Head of Security.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/hos_alt.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Security/hos_alt.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/hos_alt.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Security/hos_alt.rsi
 
 - type: entity
   parent: [ClothingUniformSkirtBase, BaseCommandContraband]
@@ -63,9 +63,9 @@
   description: A head of security's luxury-wear, for special occasions.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/hos_parade.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Security/hos_parade.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/hos_parade.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Security/hos_parade.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -74,9 +74,9 @@
   description: This uniform is issued to qualified personnel who have been trained. No one cares that the training took half a day.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/brigmedic.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Security/brigmedic.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/brigmedic.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Security/brigmedic.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -85,7 +85,7 @@
   description: A jumpskirt used for prisoners. It has suit sensors automatically enabled at all times.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/color.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Color/color.rsi
     layers:
     - state: icon
       color: "#ff8300"
@@ -101,7 +101,7 @@
         color: "#ff8300"
       - state: prisoner-inhand-right
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/color.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Color/color.rsi
     clothingVisuals:
       jumpsuit:
       - state: equipped-INNERCLOTHING
@@ -125,23 +125,23 @@
   description: A jumpskirt made of strong material, providing robust protection.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/security.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Security/security.rsi
   - type: Item
     inhandVisuals:
       left:
       - state: inhand-left
         color: "#C12D30"
-        sprite: Clothing/Uniforms/Jumpskirt/color.rsi
+        sprite: Clothing/Uniforms/Jumpskirts/Color/color.rsi
       - state: overlay-inhand-left
-        sprite: Clothing/Uniforms/Jumpsuit/security.rsi
+        sprite: Clothing/Uniforms/Jumpsuits/Security/security.rsi
       right:
       - state: inhand-right
         color: "#C12D30"
-        sprite: Clothing/Uniforms/Jumpskirt/color.rsi
+        sprite: Clothing/Uniforms/Jumpskirts/Color/color.rsi
       - state: overlay-inhand-right
-        sprite: Clothing/Uniforms/Jumpsuit/security.rsi
+        sprite: Clothing/Uniforms/Jumpsuits/Security/security.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/security.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Security/security.rsi
 
 - type: entity
   parent: [ClothingUniformSkirtBase, BaseSecurityContraband]
@@ -150,23 +150,23 @@
   description: A formal security suit for officers complete with Nanotrasen belt buckle.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/warden.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Security/warden.rsi
   - type: Item
     inhandVisuals:
       left:
       - state: inhand-left
         color: "#C12D30"
-        sprite: Clothing/Uniforms/Jumpskirt/color.rsi
+        sprite: Clothing/Uniforms/Jumpskirts/Color/color.rsi
       - state: overlay-inhand-left
-        sprite: Clothing/Uniforms/Jumpsuit/warden.rsi
+        sprite: Clothing/Uniforms/Jumpsuits/Security/warden.rsi
       right:
       - state: inhand-right
         color: "#C12D30"
-        sprite: Clothing/Uniforms/Jumpskirt/color.rsi
+        sprite: Clothing/Uniforms/Jumpskirts/Color/color.rsi
       - state: overlay-inhand-right
-        sprite: Clothing/Uniforms/Jumpsuit/warden.rsi
+        sprite: Clothing/Uniforms/Jumpsuits/Security/warden.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/warden.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Security/warden.rsi
 
 - type: entity
   parent: [ClothingUniformSkirtBase, BaseCommandContraband]
@@ -175,9 +175,9 @@
   description: A dress for special occasions.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/hosformaldress.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Security/hosformaldress.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/hosformaldress.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Security/hosformaldress.rsi
 
 - type: entity
   parent: [ClothingUniformSkirtBase, BaseSecurityContraband]
@@ -186,9 +186,9 @@
   description: A sign of skill and prestige within the security department.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/senior_officer.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Security/senior_officer.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/senior_officer.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Security/senior_officer.rsi
 
 - type: entity
   parent: [ClothingUniformSkirtBase, BaseSecurityContraband]
@@ -197,6 +197,6 @@
   description: A tactical relic of years past before Nanotrasen decided it was cheaper to dye the suits red instead of washing out the blood.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/security_grey.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Security/security_grey.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/security_grey.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Security/security_grey.rsi

@@ -5,6 +5,6 @@
   description: A dress for special occasions.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/centcomformaldress.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Centcomm/centcomformaldress.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/centcomformaldress.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Centcomm/centcomformaldress.rsi

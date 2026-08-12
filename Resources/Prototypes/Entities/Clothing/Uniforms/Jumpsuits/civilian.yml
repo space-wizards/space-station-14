@@ -5,9 +5,9 @@
   description: A terribly ragged and frayed grey jumpsuit. It looks like it hasn't been washed in over a decade.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/ancient.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Civilian/ancient.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/ancient.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Civilian/ancient.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -16,9 +16,9 @@
   description: Traditional chinese clothing.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/kimono.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Civilian/kimono.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/kimono.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Civilian/kimono.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -27,9 +27,9 @@
   description: Black as a starry night.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/hawaiblack.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Civilian/hawaiblack.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/hawaiblack.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Civilian/hawaiblack.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -38,9 +38,9 @@
   description: Blue as a huge ocean.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/hawaiblue.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Civilian/hawaiblue.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/hawaiblue.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Civilian/hawaiblue.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -49,9 +49,9 @@
   description: Red as a juicy watermelons.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/hawaired.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Civilian/hawaired.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/hawaired.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Civilian/hawaired.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -60,9 +60,9 @@
   description: Yellow as a bright sun.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/hawaiyellow.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Civilian/hawaiyellow.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/hawaiyellow.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Civilian/hawaiyellow.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -71,9 +71,9 @@
   description: Smells like someones been grillin'.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/flannel.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Civilian/flannel.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/flannel.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Civilian/flannel.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -82,9 +82,9 @@
   description: A long stretch of fabric that wraps around your body for comfort.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/loungewear.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Civilian/loungewear.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/loungewear.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Civilian/loungewear.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -93,7 +93,7 @@
   description: A loose worn blue shirt with a grey pants, perfect for someone looking to relax.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/casual.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Civilian/casual.rsi
     layers:
     - state: icon-jumpsuit
     - state: icon-shirt
@@ -109,7 +109,7 @@
       - state: inhand-right-shirt
         color: "#134fc1"
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/casual.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Civilian/casual.rsi
     clothingVisuals:
       jumpsuit:
       - state: equipped-INNERCLOTHING-jumpsuit
@@ -123,7 +123,7 @@
   description: A loose worn purple shirt with a grey pants, perfect for someone looking to relax.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/casual.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Civilian/casual.rsi
     layers:
     - state: icon-jumpsuit
     - state: icon-shirt
@@ -139,7 +139,7 @@
       - state: inhand-right-shirt
         color: "#9c0dff"
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/casual.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Civilian/casual.rsi
     clothingVisuals:
       jumpsuit:
       - state: equipped-INNERCLOTHING-jumpsuit
@@ -153,7 +153,7 @@
   description: A loose worn red shirt with a grey pants, perfect for someone looking to relax.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/casual.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Civilian/casual.rsi
     layers:
     - state: icon-jumpsuit
     - state: icon-shirt
@@ -169,7 +169,7 @@
       - state: inhand-right-shirt
         color: "#b30000"
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/casual.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Civilian/casual.rsi
     clothingVisuals:
       jumpsuit:
       - state: equipped-INNERCLOTHING-jumpsuit
@@ -183,7 +183,7 @@
   description: A loose worn green shirt with a grey pants, perfect for someone looking to relax.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/casual.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Civilian/casual.rsi
     layers:
     - state: icon-jumpsuit
     - state: icon-shirt
@@ -199,7 +199,7 @@
       - state: inhand-right-shirt
         color: "#00661D"
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/casual.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Civilian/casual.rsi
     clothingVisuals:
       jumpsuit:
       - state: equipped-INNERCLOTHING-jumpsuit
@@ -213,9 +213,9 @@
   description: Baka mitai...
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/damedaneoutfit.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Civilian/damedaneoutfit.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/damedaneoutfit.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Civilian/damedaneoutfit.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -224,9 +224,9 @@
   description: The good old pants and brigantine.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/cossack.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Civilian/cossack.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/cossack.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Civilian/cossack.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -235,9 +235,9 @@
   description: Made for true gladiators (or Ash Walkers).
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/gladiator.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Civilian/gladiator.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/gladiator.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Civilian/gladiator.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -246,6 +246,6 @@
   description: Makes you remember the time you did something funny.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/familiar_garbs.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Civilian/familiar_garbs.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/familiar_garbs.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Civilian/familiar_garbs.rsi

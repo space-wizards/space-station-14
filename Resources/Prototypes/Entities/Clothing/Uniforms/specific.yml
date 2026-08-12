@@ -6,7 +6,7 @@
   description: A generic black jumpsuit with no rank markings.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/color.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Color/color.rsi
     layers:
     - state: icon
       color: "#3f3f3f"

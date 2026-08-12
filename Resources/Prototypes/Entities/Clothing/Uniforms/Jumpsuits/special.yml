@@ -5,9 +5,9 @@
   description: For those long nights in perma.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/pyjamasyndicateblack.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Special/pyjamasyndicateblack.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/pyjamasyndicateblack.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Special/pyjamasyndicateblack.rsi
 
 - type: entity
   parent: [UnsensoredClothingUniformBase, BaseSyndicateContraband]
@@ -16,9 +16,9 @@
   description: For those long nights in perma.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/pyjamasyndicatepink.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Special/pyjamasyndicatepink.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/pyjamasyndicatepink.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Special/pyjamasyndicatepink.rsi
 
 - type: entity
   parent: [UnsensoredClothingUniformBase, BaseSyndicateContraband]
@@ -27,9 +27,9 @@
   description: For those long nights in perma.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/pyjamasyndicatered.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Special/pyjamasyndicatered.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/pyjamasyndicatered.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Special/pyjamasyndicatered.rsi
 
 - type: entity
   parent: [UnsensoredClothingUniformBase, BaseSyndicateContraband]
@@ -38,9 +38,9 @@
   description: Uniform for elite syndicate operatives performing tactical operations in deep space.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/operative.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Special/operative.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/operative.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Special/operative.rsi
   - type: StaticPrice
     price: 500
 
@@ -51,9 +51,9 @@
   description: Uniform for subpar operative LARPers performing tactical insulated glove theft in deep space.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/tacticool.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Special/tacticool.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/tacticool.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Special/tacticool.rsi
   # Too cool for sensors to be on
   - type: SuitSensor
     randomMode: false
@@ -66,9 +66,9 @@
   description: Clothing for real mercenaries who have gone through fire, water and the jungle of planets flooded with dangerous monsters or targets for which a reward has been assigned.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/mercenary.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Special/mercenary.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/mercenary.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Special/mercenary.rsi
 
 - type: entity
   parent: UnsensoredClothingUniformBase
@@ -77,9 +77,9 @@
   description: Comfortable ninja suit, for convenience when relaxing and when you need to practice.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/ninja.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Special/ninja.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/ninja.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Special/ninja.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -88,9 +88,9 @@
   description: A pirate variation of a space sailor's jumpsuit.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/pirate.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Special/pirate.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/pirate.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Special/pirate.rsi
   - type: PirateAccent
     relayAccent: true
 
@@ -101,9 +101,9 @@
   description: "The syndicate's uniform is made in an elegant style, it's even a pity to do dirty tricks in this."
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/syndieformal.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Special/syndieformal.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/syndieformal.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Special/syndieformal.rsi
 
 - type: entity
   parent: [ClothingUniformBase, BaseSlicingRefinable]
@@ -112,9 +112,9 @@
   description: Makes it clear that you are one with the webs.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/web.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Special/web.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/web.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Special/web.rsi
   - type: ToolRefinable
     refineResult:
     - id: MaterialWebSilk1

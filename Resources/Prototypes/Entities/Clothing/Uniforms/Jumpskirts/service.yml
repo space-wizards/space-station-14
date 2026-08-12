@@ -5,9 +5,9 @@
   description: A nice and tidy uniform. Shame about the bar though.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/bartender.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Service/bartender.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/bartender.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Service/bartender.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -16,9 +16,9 @@
   description: It's a black jumpskirt, often worn by religious folk.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/chaplain.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Service/chaplain.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/chaplain.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Service/chaplain.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -27,9 +27,9 @@
   description: Can't cook without this.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/chef.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Service/chef.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/chef.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Service/chef.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -38,9 +38,9 @@
   description: Has a strong earthy smell to it. Hopefully it's merely dirty as opposed to soiled.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/hydro.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Service/hydro.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/hydro.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Service/hydro.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -49,9 +49,9 @@
   description: The jumpskirt for the poor sop with a mop.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/janitor.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Service/janitor.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/janitor.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Service/janitor.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -60,9 +60,9 @@
   description: ...
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/mime.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Service/mime.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/mime.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Service/mime.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -71,9 +71,9 @@
   description: A cosy green jumper fit for a curator of books.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/librarian.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Service/librarian.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/librarian.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Service/librarian.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -82,9 +82,9 @@
   description: It's sensible. Too sensible...
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/curator.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Service/curator.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/curator.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Service/curator.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -93,9 +93,9 @@
   description: Hi, I'm Scott, president of Donk Pizza. Have you heard of [FAMOUS VIRTUAL PERFORMER]?
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/performer.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Service/performer.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/performer.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Service/performer.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -104,9 +104,9 @@
   description: For professionals, not the posers.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/janimaid.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Service/janimaid.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/janimaid.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Service/janimaid.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -115,9 +115,9 @@
   description: Elite service, not some candy wrappers.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/janimaidmini.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Service/janimaidmini.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/janimaidmini.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Service/janimaidmini.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -126,9 +126,9 @@
   description: A fancy skirt for the musically inclined. Perfect for any lounge act!
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/musician.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Service/musician.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/musician.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Service/musician.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -137,9 +137,9 @@
   description: I don't lose things. I place things in locations which later elude me.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/psychologist.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Service/psychologist.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/psychologist.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Service/psychologist.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -148,9 +148,9 @@
   description: HONK!
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/clown.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Service/clown.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/clown.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Service/clown.rsi
   - type: Tag
     tags:
     - ClownSuit
@@ -163,9 +163,9 @@
   description: A flashy red suitskirt worn by lawyers and show-offs.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/lawyerred.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Service/lawyerred.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/lawyerred.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Service/lawyerred.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -174,9 +174,9 @@
   description: A flashy blue suitskirt worn by lawyers and show-offs.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/lawyerblue.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Service/lawyerblue.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/lawyerblue.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Service/lawyerblue.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -185,9 +185,9 @@
   description: A subtle black suitskirt worn by lawyers and gangsters.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/lawyerblack.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Service/lawyerblack.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/lawyerblack.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Service/lawyerblack.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -196,9 +196,9 @@
   description: A stylish purple piece worn by lawyers and show people.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/lawyerpurple.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Service/lawyerpurple.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/lawyerpurple.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Service/lawyerpurple.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -207,6 +207,6 @@
   description: A tacky suitskirt perfect for a CRIMINAL lawyer!
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/lawyergood.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Service/lawyergood.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/lawyergood.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Service/lawyergood.rsi

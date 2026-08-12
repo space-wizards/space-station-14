@@ -5,9 +5,9 @@
   description: Advanced armored jumpsuit used by special forces in special operations.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/deathsquad.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Centcomm/deathsquad.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/deathsquad.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Centcomm/deathsquad.rsi
 
 - type: entity
   parent: [ ClothingUniformBase, BaseCentcommContraband ]
@@ -16,9 +16,9 @@
   description: A suit worn by CentComm's legal team. Smells of burnt coffee.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/centcom_agent.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Centcomm/centcom_agent.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/centcom_agent.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Centcomm/centcom_agent.rsi
 
 - type: entity
   parent: [ ClothingUniformBase, BaseCentcommContraband ]
@@ -27,9 +27,9 @@
   description: It's a jumpsuit worn by CentComm's officials.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/centcom_official.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Centcomm/centcom_official.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/centcom_official.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Centcomm/centcom_official.rsi
 
 - type: entity
   parent: [ ClothingUniformBase, BaseCentcommContraband ]
@@ -38,9 +38,9 @@
   description: It's a jumpsuit worn by CentComm Officers.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/centcom_officer.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Centcomm/centcom_officer.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/centcom_officer.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Centcomm/centcom_officer.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -49,9 +49,9 @@
   description: A suit for special occasions.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/centcomformal.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Centcomm/centcomformal.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/centcomformal.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Centcomm/centcomformal.rsi
 
 - type: entity
   parent: [ BaseCentcommContraband, ClothingUniformBase ]
@@ -60,9 +60,9 @@
   description: A special suit made for Central Command's elite chaplain corps.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/ert_chaplain.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Centcomm/ert_chaplain.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/ert_chaplain.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Centcomm/ert_chaplain.rsi
 
 - type: entity
   parent: [ BaseCentcommContraband, ClothingUniformBase ]
@@ -71,9 +71,9 @@
   description: A special suit made for the elite engineers under CentComm.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/ert_engineer.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Centcomm/ert_engineer.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/ert_engineer.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Centcomm/ert_engineer.rsi
 
 - type: entity
   parent: [ BaseCentcommContraband, ClothingUniformBase ]
@@ -82,9 +82,9 @@
   description: A special suit made for the elite janitors under CentComm.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/ert_janitor.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Centcomm/ert_janitor.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/ert_janitor.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Centcomm/ert_janitor.rsi
 
 - type: entity
   parent: [ BaseCentcommContraband, ClothingUniformBase ]
@@ -93,9 +93,9 @@
   description: A special suit made for the best of the elites under CentComm.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/ert_leader.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Centcomm/ert_leader.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/ert_leader.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Centcomm/ert_leader.rsi
 
 - type: entity
   parent: [ BaseCentcommContraband, ClothingUniformBase ]
@@ -104,9 +104,9 @@
   description: A special suit made for the elite medics under CentComm.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/ert_medic.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Centcomm/ert_medic.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/ert_medic.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Centcomm/ert_medic.rsi
 
 - type: entity
   parent: [ BaseCentcommContraband, ClothingUniformBase ]
@@ -115,6 +115,6 @@
   description: A special suit made for the elite security under CentComm.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/ert_security.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Centcomm/ert_security.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/ert_security.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Centcomm/ert_security.rsi

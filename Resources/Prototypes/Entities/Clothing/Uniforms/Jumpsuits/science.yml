@@ -5,9 +5,9 @@
   description: It's a turtleneck worn by those with the know-how to achieve the position of Research Director. Its fabric provides minor protection from biological contaminants.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/rnd.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Science/rnd.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/rnd.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Science/rnd.rsi
 
 - type: entity
   parent: [ClothingUniformBase, ClothingUniformFoldableBase]
@@ -16,7 +16,7 @@
   description: It's made of a special fiber that increases perceived intelligence and decreases personal ethics. It has markings that denote the wearer as a scientist.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/scientist.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Science/scientist.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -25,9 +25,9 @@
   description: A uniform for sophisticated scientists, best worn with its matching tie.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/scientist_formal.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Science/scientist_formal.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/scientist_formal.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Science/scientist_formal.rsi
 
 - type: entity
   parent: [ClothingUniformBase, ClothingUniformFoldableBase]
@@ -36,7 +36,7 @@
   description: It's a slimming black with reinforced seams; great for industrial work.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/roboticist.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Science/roboticist.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -45,6 +45,6 @@
   description: A sign of skill and prestige within the science department.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/senior_researcher.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Science/senior_researcher.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/senior_researcher.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Science/senior_researcher.rsi

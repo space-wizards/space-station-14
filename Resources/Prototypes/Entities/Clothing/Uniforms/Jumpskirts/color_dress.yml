@@ -6,7 +6,7 @@
   description: Elegant dress with a beautiful bow.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/elegantdress.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/ColorDress/elegantdress.rsi
     layers:
     - state: icon
     - state: icon-color
@@ -20,7 +20,7 @@
       - state: inhand-right
         color: "#212030"
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/elegantdress.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/ColorDress/elegantdress.rsi
     clothingVisuals:
       jumpsuit:
       - state: color-equipped-INNERCLOTHING
@@ -35,7 +35,7 @@
   description: Elegant dress with a beautiful bow.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/elegantdress.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/ColorDress/elegantdress.rsi
     layers:
     - state: icon
     - state: icon-color
@@ -49,7 +49,7 @@
       - state: inhand-right
         color: "#60171d"
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/elegantdress.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/ColorDress/elegantdress.rsi
     clothingVisuals:
       jumpsuit:
       - state: color-equipped-INNERCLOTHING
@@ -64,7 +64,7 @@
   description: Elegant dress with a beautiful bow.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/elegantdress.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/ColorDress/elegantdress.rsi
     layers:
     - state: icon
     - state: icon-color
@@ -78,7 +78,7 @@
       - state: inhand-right
         color: "#0e6316"
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/elegantdress.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/ColorDress/elegantdress.rsi
     clothingVisuals:
       jumpsuit:
       - state: color-equipped-INNERCLOTHING
@@ -93,7 +93,7 @@
   description: Elegant dress with a beautiful bow.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/elegantdress.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/ColorDress/elegantdress.rsi
     layers:
     - state: icon
     - state: icon-color
@@ -107,7 +107,7 @@
       - state: inhand-right
         color: "#076183"
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/elegantdress.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/ColorDress/elegantdress.rsi
     clothingVisuals:
       jumpsuit:
       - state: color-equipped-INNERCLOTHING
@@ -122,7 +122,7 @@
   description: Elegant dress with a beautiful bow.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/elegantdress.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/ColorDress/elegantdress.rsi
     layers:
     - state: icon
     - state: icon-color
@@ -136,7 +136,7 @@
       - state: inhand-right
         color: "#630767"
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/elegantdress.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/ColorDress/elegantdress.rsi
     clothingVisuals:
       jumpsuit:
       - state: color-equipped-INNERCLOTHING
@@ -151,7 +151,7 @@
   description: Cute striped dress.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/stripeddress.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/ColorDress/stripeddress.rsi
     layers:
     - state: icon
     - state: icon-color
@@ -165,7 +165,7 @@
       - state: inhand-right
         color: "#009a9a"
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/stripeddress.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/ColorDress/stripeddress.rsi
     clothingVisuals:
       jumpsuit:
       - state: color-equipped-INNERCLOTHING
@@ -180,7 +180,7 @@
   description: Cute striped dress.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/stripeddress.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/ColorDress/stripeddress.rsi
     layers:
     - state: icon
     - state: icon-color
@@ -194,7 +194,7 @@
       - state: inhand-right
         color: "#a40000"
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/stripeddress.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/ColorDress/stripeddress.rsi
     clothingVisuals:
       jumpsuit:
       - state: color-equipped-INNERCLOTHING
@@ -209,7 +209,7 @@
   description: Cute striped dress.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/stripeddress.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/ColorDress/stripeddress.rsi
     layers:
     - state: icon
     - state: icon-color
@@ -223,7 +223,7 @@
       - state: inhand-right
         color: "#008c1f"
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/stripeddress.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/ColorDress/stripeddress.rsi
     clothingVisuals:
       jumpsuit:
       - state: color-equipped-INNERCLOTHING
@@ -238,7 +238,7 @@
   description: Cute striped dress.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/stripeddress.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/ColorDress/stripeddress.rsi
     layers:
     - state: icon
     - state: icon-color
@@ -252,7 +252,7 @@
       - state: inhand-right
         color: "#a40086"
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/stripeddress.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/ColorDress/stripeddress.rsi
     clothingVisuals:
       jumpsuit:
       - state: color-equipped-INNERCLOTHING
@@ -267,7 +267,7 @@
   description: Cute striped dress.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/stripeddress.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/ColorDress/stripeddress.rsi
     layers:
     - state: icon
     - state: icon-color
@@ -281,7 +281,7 @@
       - state: inhand-right
         color: "#9d4000"
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/stripeddress.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/ColorDress/stripeddress.rsi
     clothingVisuals:
       jumpsuit:
       - state: color-equipped-INNERCLOTHING
@@ -296,7 +296,7 @@
   description: Turtleneck dress with a unique design.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/turtledress.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/ColorDress/turtledress.rsi
     layers:
     - state: icon
     - state: icon-color
@@ -310,7 +310,7 @@
       - state: inhand-right
         color: "#341255"
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/turtledress.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/ColorDress/turtledress.rsi
     clothingVisuals:
       jumpsuit:
       - state: color-equipped-INNERCLOTHING
@@ -325,7 +325,7 @@
   description: Turtleneck dress with a unique design.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/turtledress.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/ColorDress/turtledress.rsi
     layers:
     - state: icon
     - state: icon-color
@@ -339,7 +339,7 @@
       - state: inhand-right
         color: "#730404"
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/turtledress.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/ColorDress/turtledress.rsi
     clothingVisuals:
       jumpsuit:
       - state: color-equipped-INNERCLOTHING
@@ -354,7 +354,7 @@
   description: Turtleneck dress with a unique design.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/turtledress.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/ColorDress/turtledress.rsi
     layers:
     - state: icon
     - state: icon-color
@@ -368,7 +368,7 @@
       - state: inhand-right
         color: "#0e6316"
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/turtledress.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/ColorDress/turtledress.rsi
     clothingVisuals:
       jumpsuit:
       - state: color-equipped-INNERCLOTHING
@@ -383,7 +383,7 @@
   description: Turtleneck dress with a unique design.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/turtledress.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/ColorDress/turtledress.rsi
     layers:
     - state: icon
     - state: icon-color
@@ -397,7 +397,7 @@
       - state: inhand-right
         color: "#193f68"
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/turtledress.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/ColorDress/turtledress.rsi
     clothingVisuals:
       jumpsuit:
       - state: color-equipped-INNERCLOTHING
@@ -412,7 +412,7 @@
   description: Turtleneck dress with a unique design.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/turtledress.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/ColorDress/turtledress.rsi
     layers:
     - state: icon
     - state: icon-color
@@ -426,7 +426,7 @@
       - state: inhand-right
         color: "#684519"
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/turtledress.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/ColorDress/turtledress.rsi
     clothingVisuals:
       jumpsuit:
       - state: color-equipped-INNERCLOTHING
@@ -441,7 +441,7 @@
   description: Classic western dress.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/dresswestern.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/ColorDress/dresswestern.rsi
     layers:
     - state: icon
   - type: Item
@@ -451,4 +451,4 @@
       right:
       - state: inhand-right
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/dresswestern.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/ColorDress/dresswestern.rsi

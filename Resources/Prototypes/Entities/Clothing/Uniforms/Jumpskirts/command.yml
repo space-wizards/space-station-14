@@ -5,9 +5,9 @@
   description: It's a blue jumpskirt with some gold markings denoting the rank of "Captain".
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/captain.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Command/captain.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/captain.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Command/captain.rsi
 
 - type: entity
   parent: [ClothingUniformSkirtBase, BaseCommandContraband]
@@ -16,9 +16,9 @@
   description: Rather bland and inoffensive. Perfect for vanishing off the face of the universe.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/hop.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Command/hop.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/hop.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Command/hop.rsi
 
 - type: entity
   parent: [ClothingUniformSkirtBase, BaseCommandContraband]
@@ -27,9 +27,9 @@
   description: A generic Command-colored jumpsuit not associated with any particular department.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/commandgeneric.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Command/commandgeneric.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/commandgeneric.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Command/commandgeneric.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -38,6 +38,6 @@
   description: A dress for special occasions.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/capformaldress.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Command/capformaldress.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/capformaldress.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Command/capformaldress.rsi

@@ -5,9 +5,9 @@
   description: It's a blue jumpsuit with some gold markings denoting the rank of "Captain".
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/captain.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Command/captain.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/captain.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Command/captain.rsi
 
 - type: entity
   parent: [ClothingUniformBase, BaseCommandContraband, ClothingUniformFoldableBase]
@@ -16,7 +16,7 @@
   description: Rather bland and inoffensive. Perfect for vanishing off the face of the universe.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/hop.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Command/hop.rsi
 
 - type: entity
   parent: [ ClothingUniformBase, BaseCommandContraband ]
@@ -25,9 +25,9 @@
   description: A generic Command-colored jumpsuit not associated with any particular department.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/commandgeneric.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Command/commandgeneric.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/commandgeneric.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Command/commandgeneric.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -36,9 +36,9 @@
   description: A stately blue jumpsuit to represent NanoTrasen.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/nanotrasen.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Command/nanotrasen.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/nanotrasen.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Command/nanotrasen.rsi
 
 - type: entity
   parent: [ClothingUniformBase, BaseCommandContraband]
@@ -47,6 +47,6 @@
   description: A suit for special occasions.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/capformal.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Command/capformal.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/capformal.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Command/capformal.rsi

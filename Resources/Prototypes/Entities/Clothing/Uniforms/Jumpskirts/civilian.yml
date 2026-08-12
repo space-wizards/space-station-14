@@ -5,7 +5,7 @@
   description: A loose worn blue shirt with a grey skirt, perfect for someone looking to relax.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/casual.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Civilian/casual.rsi
     layers:
     - state: icon-jumpskirt
     - state: icon-shirt
@@ -21,7 +21,7 @@
       - state: inhand-right-shirt
         color: "#134fc1"
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/casual.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Civilian/casual.rsi
     clothingVisuals:
       jumpsuit:
       - state: equipped-INNERCLOTHING-jumpskirt
@@ -35,7 +35,7 @@
   description: A loose worn purple shirt with a grey skirt, perfect for someone looking to relax.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/casual.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Civilian/casual.rsi
     layers:
     - state: icon-jumpskirt
     - state: icon-shirt
@@ -51,7 +51,7 @@
       - state: inhand-right-shirt
         color: "#9c0dff"
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/casual.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Civilian/casual.rsi
     clothingVisuals:
       jumpsuit:
       - state: equipped-INNERCLOTHING-jumpskirt
@@ -65,7 +65,7 @@
   description: A loose worn red shirt with a grey skirt, perfect for someone looking to relax.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/casual.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Civilian/casual.rsi
     layers:
     - state: icon-jumpskirt
     - state: icon-shirt
@@ -81,7 +81,7 @@
       - state: inhand-right-shirt
         color: "#b30000"
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/casual.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Civilian/casual.rsi
     clothingVisuals:
       jumpsuit:
       - state: equipped-INNERCLOTHING-jumpskirt
@@ -95,7 +95,7 @@
   description: A loose worn green shirt with a grey skirt, perfect for someone looking to relax.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/casual.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Civilian/casual.rsi
     layers:
     - state: icon-jumpskirt
     - state: icon-shirt
@@ -111,7 +111,7 @@
       - state: inhand-right-shirt
         color: "#00661D"
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/casual.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/Civilian/casual.rsi
     clothingVisuals:
       jumpsuit:
       - state: equipped-INNERCLOTHING-jumpskirt
@@ -125,9 +125,9 @@
   description: A worn-looking dress from a very long time ago.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/olddress.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Civilian/olddress.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/olddress.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Civilian/olddress.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -136,6 +136,6 @@
   description: A skirt that symbolizes the joy and positivity of our life.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/skirtoflife.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Civilian/skirtoflife.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/skirtoflife.rsi
+    sprite: Clothing/Uniforms/Jumpskirts/Civilian/skirtoflife.rsi

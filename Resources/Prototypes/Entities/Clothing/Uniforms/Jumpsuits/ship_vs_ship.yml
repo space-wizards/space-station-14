@@ -10,9 +10,9 @@
   description: A classy grey jumpsuit with blue trims. Perfect for the dignified helper.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/recruit_nt.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/ShipVsShip/recruit_nt.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/recruit_nt.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/ShipVsShip/recruit_nt.rsi
 
 - type: entity
   parent: [ ClothingUniformBase, BaseSyndicateContraband ]
@@ -21,9 +21,9 @@
   description: A dubious, dark-grey jumpsuit. As if passengers weren't dubious enough already.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/recruit_syndie.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/ShipVsShip/recruit_syndie.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/recruit_syndie.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/ShipVsShip/recruit_syndie.rsi
 
 #Repairman
 - type: entity
@@ -33,9 +33,9 @@
   description: A jumpsuit that reminds you of a certain crew-sector work position. Hopefully, you won't have to do the same job as THOSE freaks.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/repairman_nt.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/ShipVsShip/repairman_nt.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/repairman_nt.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/ShipVsShip/repairman_nt.rsi
 
 - type: entity
   parent: [ ClothingUniformBase, BaseSyndicateContraband ]
@@ -44,9 +44,9 @@
   description: Functional, fashionable, and badass. Nanotrasen's engineers wish they could look as good as this.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/repairman_syndie.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/ShipVsShip/repairman_syndie.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/repairman_syndie.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/ShipVsShip/repairman_syndie.rsi
 
 #Paramedic
 - type: entity
@@ -56,9 +56,9 @@
   description: For some reason, wearing this makes you feel like you're awfully close to violating the Geneva Convention.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/paramedic_syndie.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/ShipVsShip/paramedic_syndie.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/paramedic_syndie.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/ShipVsShip/paramedic_syndie.rsi
 
 #HEADS OF STAFF
 #Chief Engineer
@@ -69,6 +69,6 @@
   description: An evil-looking jumpsuit with a reflective vest & red undershirt. #TODO: Write a better description for this once Ship vs. Ship is real and actual player habits begin forming
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/ce_syndie.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/ShipVsShip/ce_syndie.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/ce_syndie.rsi
+    sprite: Clothing/Uniforms/Jumpsuits/ShipVsShip/ce_syndie.rsi
