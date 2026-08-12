@@ -35,10 +35,16 @@ public sealed partial class BloodstreamComponent : Component
     public static readonly EntProtoId DropletId = "Droplet";
 
     /// <summary>
+    /// The base amount of blood that will be transferred to the blood droplet.
+    /// </summary>
+    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadOnly)]
+    public FixedPoint2 BasicDropletTransferAmount = 2f;
+
+    /// <summary>
     /// The amount of blood that will be transferred to the blood droplet.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public FixedPoint2 BasicDropletTransferAmount = 2f;
+    [ViewVariables, AutoNetworkedField]
+    public FixedPoint2 DropletTransferAmount = 2f;
 
     /// <summary>
     /// The next time that blood level will be updated and bloodloss damage dealt.

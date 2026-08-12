@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using Content.Shared.Body.Components;
 using Content.Shared.Damage.Systems;
@@ -15,7 +14,6 @@ public sealed partial class BloodstreamSystem
     [Dependency] private ThrowingSystem _throwing = default!;
 
     [Dependency] private EntityQuery<BloodstreamComponent> _bloodstreamQuery = default!;
-
 
     [SubscribeLocalEvent]
     private void OnDamage(Entity<BloodstreamDripOnDamageComponent> ent, ref DamageDealtEvent args)
@@ -52,23 +50,20 @@ public sealed partial class BloodstreamSystem
     }
 
     /// <summary>
-    /// Gets the amount of blood needed for a blood droplet transfer.
+    /// Updates the amount of blood needed for a blood droplet transfer.
     /// </summary>
-    /// <param name="ent">The entity to check for.</param>
-    /// <param name="amount">The resulting amount.</param>
+    /// <param name="ent">The entity to update for.</param>
     [PublicAPI]
-    public bool TryGetBloodDropletTransferAmount(Entity<BloodstreamComponent?> ent, [NotNullWhen(true)] out FixedPoint2? amount)
+    public void UpdateBloodDropletTransferAmount(Entity<BloodstreamComponent?> ent)
     {
-        amount = null;
-
         if (!_bloodstreamQuery.Resolve(ent, ref ent.Comp, false))
-            return false;
+            return;
 
         var ev = new ModifyBloodDropletEvent(ent.Comp.BasicDropletTransferAmount);
         RaiseLocalEvent(ent, ref ev);
 
-        amount = FixedPoint2.Max(ev.BloodAmount, 0f);
-        return true;
+        ent.Comp.DropletTransferAmount = FixedPoint2.Max(ev.BloodAmount, 0f);
+        DirtyField(ent, nameof(BloodstreamComponent.DropletTransferAmount));
     }
 
     /// <summary>
@@ -86,10 +81,10 @@ public sealed partial class BloodstreamSystem
         if (!_solutionContainer.ResolveSolution(ent.Owner, ent.Comp.BloodSolutionName, ref ent.Comp.BloodSolution))
             return false;
 
-        if (!TryGetBloodDropletTransferAmount(ent, out var transferAmount) || transferAmount == 0f)
+        if (ent.Comp.DropletTransferAmount == 0f)
             return false;
 
-        if (ent.Comp.BloodSolution.Value.Comp.Solution.Volume < transferAmount)
+        if (ent.Comp.BloodSolution.Value.Comp.Solution.Volume < ent.Comp.DropletTransferAmount)
             return false;
 
         var droplet = PredictedSpawnAtPosition(BloodstreamComponent.DropletId, Transform(ent).Coordinates);
@@ -98,7 +93,10 @@ public sealed partial class BloodstreamSystem
         {
             solution.Value.Comp.Solution.RemoveAllSolution();
 
-            var amount = _solutionContainer.SplitSolution(ent.Comp.BloodSolution.Value, FixedPoint2.Min(transferAmount.Value, solution.Value.Comp.Solution.AvailableVolume));
+            var amount = _solutionContainer.SplitSolution(
+                ent.Comp.BloodSolution.Value,
+                FixedPoint2.Min(ent.Comp.DropletTransferAmount, solution.Value.Comp.Solution.AvailableVolume));
+
             _solutionContainer.TryAddSolution(solution.Value, amount);
         }
 

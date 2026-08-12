@@ -15,6 +15,7 @@ using Content.Shared.Speech.EntitySystems;
 using Content.Shared.StatusEffectNew.Components;
 using Content.Shared.Stunnable;
 using Robust.Shared.Player;
+using Content.Shared.Body.Systems;
 
 namespace Content.Shared.StatusEffectNew;
 
@@ -51,6 +52,7 @@ public sealed partial class StatusEffectsSystem
         SubscribeLocalEvent<StatusEffectContainerComponent, EmoteEvent>(RefRelayStatusEffectEvent, before: new[] { typeof(VocalSystem), typeof(MumbleAccentSystem) });
 
         SubscribeLocalEvent<StatusEffectContainerComponent, BleedModifierEvent>(RefRelayStatusEffectEvent);
+        SubscribeLocalEvent<StatusEffectContainerComponent, ModifyBloodDropletEvent>(RefRelayStatusEffectEvent);
         SubscribeLocalEvent<StatusEffectContainerComponent, DamageModifyEvent>(RelayStatusEffectEvent);
         SubscribeLocalEvent<StatusEffectContainerComponent, RefreshPressureImmunityEvent>(RefRelayStatusEffectEvent);
     }

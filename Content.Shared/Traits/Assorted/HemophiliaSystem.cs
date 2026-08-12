@@ -4,14 +4,23 @@ using Content.Shared.StatusEffectNew;
 
 namespace Content.Shared.Traits.Assorted;
 
-public sealed class HemophiliaSystem : EntitySystem
+public sealed partial class HemophiliaSystem : EntitySystem
 {
-    public override void Initialize()
+    [Dependency] private BloodstreamSystem _bloodstream = default!;
+
+    [SubscribeLocalEvent]
+    private void OnInit(Entity<HemophiliaStatusEffectComponent> ent, ref StatusEffectAppliedEvent args)
     {
-        SubscribeLocalEvent<HemophiliaStatusEffectComponent, StatusEffectRelayedEvent<BleedModifierEvent>>(OnBleedModifier);
-        SubscribeLocalEvent<HemophiliaStatusEffectComponent, StatusEffectRelayedEvent<ModifyBloodDropletEvent>>(OnBloodDropletModifierEntity);
+        _bloodstream.UpdateBloodDropletTransferAmount(args.Target);
     }
 
+    [SubscribeLocalEvent]
+    private void OnRemove(Entity<HemophiliaStatusEffectComponent> ent, ref StatusEffectRemovedEvent args)
+    {
+        _bloodstream.UpdateBloodDropletTransferAmount(args.Target);
+    }
+
+    [SubscribeLocalEvent]
     private static void OnBleedModifier(Entity<HemophiliaStatusEffectComponent> ent, ref StatusEffectRelayedEvent<BleedModifierEvent> args)
     {
         var ev = args.Args;
@@ -20,6 +29,7 @@ public sealed class HemophiliaSystem : EntitySystem
         args.Args = ev;
     }
 
+    [SubscribeLocalEvent]
     private static void OnBloodDropletModifierEntity(Entity<HemophiliaStatusEffectComponent> ent, ref StatusEffectRelayedEvent<ModifyBloodDropletEvent> args)
     {
         var ev = args.Args;
