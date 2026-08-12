@@ -33,6 +33,8 @@ public sealed partial class ApcSystem : EntitySystem
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
 
+    [Dependency] private EntityQuery<AppearanceComponent> _appearanceQuery = default!;
+
     /// <inheritdoc />
     public override void Initialize()
     {
@@ -63,15 +65,12 @@ public sealed partial class ApcSystem : EntitySystem
                 {
                     apc.TripStartTime = curTime;
                 }
-                else
+                else if (curTime - apc.TripStartTime > apc.TripTime)
                 {
-                    if (curTime - apc.TripStartTime > apc.TripTime)
-                    {
-                        apc.TripFlag = true;
-                        ApcToggleBreaker(uid, apc, battery); // off, we already checked MainBreakerEnabled above
-                        apc.NeedStateUpdate = true; // Force an update.
-                        tripped = true;
-                    }
+                    apc.TripFlag = true;
+                    ApcToggleBreaker(uid, apc, battery); // off, we already checked MainBreakerEnabled above
+                    apc.NeedStateUpdate = true; // Force an update.
+                    tripped = true;
                 }
             }
             else
@@ -245,6 +244,10 @@ public sealed partial class ApcSystem : EntitySystem
         apc.NeedStateUpdate = false;
     }
 
+    /// <summary>
+    /// Updates the UI of the given API.
+    /// Sends off a new ApcBoundInterfaceState to anyone with the UI open.
+    /// </summary>
     public void UpdateUIState(EntityUid uid,
         ApcComponent? apc = null,
         PowerNetworkBatteryComponent? netBat = null,
