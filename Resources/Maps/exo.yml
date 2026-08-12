@@ -88,6 +88,8 @@ entities:
     - type: GridTree
     - type: Broadphase
     - type: OccluderTree
+    - type: MapLight
+      ambientLightColor: '#261764'
     - type: Parallax
       parallax: ExoStation
   - uid: 2

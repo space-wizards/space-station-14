@@ -20,6 +20,9 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Light.EntitySystems;
 
+/// <summary>
+/// System for handling PoweredLightComponent events.
+/// </summary>
 public abstract partial class SharedPoweredLightSystem : EntitySystem
 {
     [Dependency] protected IGameTiming GameTiming = default!;
