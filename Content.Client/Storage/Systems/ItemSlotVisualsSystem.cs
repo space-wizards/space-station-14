@@ -96,12 +96,12 @@ public sealed partial class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVis
             if (inventory.SpeciesId != null)
                 visual.ClothingVisuals.TryGetValue($"{args.Slot}-{inventory.SpeciesId}", out layers);
 
-            // No species specific data.  Try to default to generic data.
+            // No species specific data. Try to default to generic data.
             if (layers == null && !visual.ClothingVisuals.TryGetValue(args.Slot, out layers))
                 return;
 
             var i = 0;
-            var defaultKey = $"inhand-{args.Slot}-fill-{visual.Layer}";
+            var defaultKey = $"{args.Slot}-fill-{visual.Layer}";
             foreach (var layer in layers)
             {
                 var key = layer.MapKeys?.FirstOrDefault();
