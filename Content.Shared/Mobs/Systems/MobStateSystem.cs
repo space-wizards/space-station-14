@@ -18,14 +18,13 @@ public partial class MobStateSystem : EntitySystem
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
-    private ISawmill _sawmill = default!;
 
     [Dependency] private EntityQuery<MobStateComponent> _mobStateQuery = default!;
 
     public override void Initialize()
     {
-        _sawmill = LogManager.GetSawmill("MobState");
         base.Initialize();
+
         SubscribeEvents();
     }
 
