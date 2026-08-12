@@ -47,7 +47,7 @@ public sealed partial class NameExamineOverlay : Overlay
         _shader = _prototypeManager.Index(UnshadedShader).Instance();
 
         var cache = IoCManager.Resolve<IResourceCache>();
-        _font = new VectorFont(cache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), 12);
+        _font = new VectorFont(cache.GetResource<FontResource>("/Fonts/Grand9K-Pixel.ttf"), 12);
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -96,8 +96,8 @@ public sealed partial class NameExamineOverlay : Overlay
 
             var drawPosition = (pos - dimensions / 2f) + new Vector2(0, bounds.Box.Extents.Y * matrix.M11);
 
-            var outline = TextOutline.Default with { Thickness = 2f };
-            handle.DrawString(_font, drawPosition, text, scale, Color.LightGray.WithAlpha(235), outline);
+            var outline = new TextOutline(2.5f, Color.Black);
+            handle.DrawString(_font, drawPosition, text, scale, Color.LightGray.WithAlpha(200), outline);
         }
     }
 }
