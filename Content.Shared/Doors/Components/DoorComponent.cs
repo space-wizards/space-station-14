@@ -12,6 +12,10 @@ using DrawDepthTag = Robust.Shared.GameObjects.DrawDepth;
 
 namespace Content.Shared.Doors.Components;
 
+/// <summary>
+/// A component for doors, airlocks, etc.
+///
+/// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 public sealed partial class DoorComponent : Component
 {
@@ -21,7 +25,6 @@ public sealed partial class DoorComponent : Component
     /// <remarks>
     /// This should never be set directly, use <see cref="SharedDoorSystem.SetState(EntityUid, DoorState, DoorComponent?)"/> instead.
     /// </remarks>
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField, AutoNetworkedField]
     [Access(typeof(SharedDoorSystem))]
     public DoorState State = DoorState.Closed;
@@ -81,25 +84,25 @@ public sealed partial class DoorComponent : Component
     /// <summary>
     /// Sound to play when the door opens.
     /// </summary>
-    [DataField("openSound")]
+    [DataField]
     public SoundSpecifier? OpenSound;
 
     /// <summary>
     /// Sound to play when the door closes.
     /// </summary>
-    [DataField("closeSound")]
+    [DataField]
     public SoundSpecifier? CloseSound;
 
     /// <summary>
     /// Sound to play if the door is denied.
     /// </summary>
-    [DataField("denySound")]
+    [DataField]
     public SoundSpecifier? DenySound;
 
     /// <summary>
     /// Sound to play when door has been emagged or possibly electrically tampered
     /// </summary>
-    [DataField("sparkSound")]
+    [DataField]
     public SoundSpecifier SparkSound = new SoundCollectionSpecifier("sparks");
     #endregion
 
@@ -263,7 +266,7 @@ public sealed partial class DoorComponent : Component
     }
     #endregion
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public bool CanPry = true;
 
     [DataField]
@@ -281,21 +284,18 @@ public sealed partial class DoorComponent : Component
     /// <summary>
     /// Whether the door blocks light.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
     public bool Occludes = true;
 
     /// <summary>
     /// Whether the door will open when it is bumped into.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
     public bool BumpOpen = true;
 
     /// <summary>
     /// Whether the door will open when it is activated or clicked.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
     public bool ClickOpen = true;
 
@@ -314,12 +314,16 @@ public sealed partial class DoorComponent : Component
     public bool AllowMachineLayer;
 
     [DataField(customTypeSerializer: typeof(ConstantSerializer<DrawDepthTag>))]
-    public int OpenDrawDepth = (int) DrawDepth.DrawDepth.Doors;
+    public int OpenDrawDepth = (int)DrawDepth.DrawDepth.Doors;
 
     [DataField(customTypeSerializer: typeof(ConstantSerializer<DrawDepthTag>))]
-    public int ClosedDrawDepth = (int) DrawDepth.DrawDepth.Doors;
+    public int ClosedDrawDepth = (int)DrawDepth.DrawDepth.Doors;
 }
 
+/// <summary>
+/// An enumeration for the current status of the door.
+/// </summary>
+/// <seealso cref="DoorVisuals.State"/>
 [Serializable, NetSerializable]
 public enum DoorState : byte
 {
@@ -332,6 +336,9 @@ public enum DoorState : byte
     Emagging
 }
 
+/// <summary>
+/// AppearanceData keys for door data.
+/// </summary>
 [Serializable, NetSerializable]
 public enum DoorVisuals : byte
 {
@@ -341,6 +348,9 @@ public enum DoorVisuals : byte
     ClosedLights,
 }
 
+/// <summary>
+/// Sprite layer keys for door visuals.
+/// </summary>
 public enum DoorVisualLayers : byte
 {
     Base,
