@@ -54,16 +54,8 @@
     fx: EffectRCDDeconstruct6
   - type: Occluder
   - type: BlockWeather
-<<<<<<< Updated upstream
-=======
-  - type: IconSmooth
-    key: walls
-    mode: NoSprite
-  - type: PlacementReplacement
-    key: walls
   - type: SatanAlign
   - type: SatanKind
->>>>>>> Stashed changes
 
 - type: entity
   abstract: true
