@@ -282,6 +282,9 @@
   - type: EntityProducer
     table:
       id: FoodEgg
+  - type: ActionGrant
+    actions:
+    - ActionAnimalLayEgg
   - type: ReplacementAccent
     accent: chicken
   - type: SentienceTarget
@@ -744,6 +747,9 @@
   - type: EntityProducer
     table:
       id: FoodEgg
+  - type: ActionGrant
+    actions:
+    - ActionAnimalLayEgg
   - type: ReplacementAccent
     accent: duck
   - type: SentienceTarget

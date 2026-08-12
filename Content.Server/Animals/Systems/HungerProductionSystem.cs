@@ -105,7 +105,7 @@ public sealed partial class HungerProductionSystem : EntitySystem
         return ent.Comp.OwnerEntity switch
         {
             HungerProductionOwner.Parent => Transform(ent).ParentUid,
-            _ => ent.Owner,
+            _ => ent.Owner
         };
     }
 

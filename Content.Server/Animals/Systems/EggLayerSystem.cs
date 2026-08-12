@@ -1,4 +1,3 @@
-using Content.Server.Actions;
 using Content.Server.Animals.Components;
 using Content.Server.Popups;
 using Content.Shared.Actions.Events;
@@ -12,16 +11,9 @@ namespace Content.Server.Animals.Systems;
 /// </summary>
 public sealed partial class EggLayerSystem : EntitySystem
 {
-    [Dependency] private ActionsSystem _actions = default!;
     [Dependency] private AudioSystem _audio = default!;
     [Dependency] private HungerProductionSystem _hungerProduction = default!;
     [Dependency] private PopupSystem _popup = default!;
-
-    [SubscribeLocalEvent]
-    private void OnMapInit(Entity<EggLayerComponent> ent, ref MapInitEvent args)
-    {
-        _actions.AddAction(ent.Owner, ref ent.Comp.Action, ent.Comp.EggLayAction);
-    }
 
     [SubscribeLocalEvent]
     private void OnEggLayAction(Entity<EggLayerComponent> ent, ref EggLayInstantActionEvent args)
