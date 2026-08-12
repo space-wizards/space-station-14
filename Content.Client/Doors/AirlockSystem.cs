@@ -103,7 +103,7 @@ public sealed partial class AirlockSystem : SharedAirlockSystem
 
             if (!showBolted && !showEmergency)
             {
-                if (state == DoorState.Closing || state == DoorState.Opening || state == DoorState.Denying)
+                if (state == DoorState.Closing || state == DoorState.Opening || state == DoorState.Denying || state == DoorState.Closed)
                     showBaseUnlit = true;
 
                 if (state == DoorState.Open && comp.OpenUnlitVisible)
