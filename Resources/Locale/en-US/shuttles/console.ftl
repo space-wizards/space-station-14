@@ -23,12 +23,11 @@ shuttle-console-iff-label = {$name} ({$distance}m)
 shuttle-console-exclusion = Exclusion area
 
 shuttle-console-nav-settings = Settings
-shuttle-console-iff-toggle = Show IFF
-shuttle-console-poi-toggle = Show points of intrest
-
 shuttle-console-nav-legend = Legend
-shuttle-console-nav-legend-meteor = Meteors
-shuttle-console-nav-legend-airlocks = Docks
+shuttle-console-nav-other-dock = External Docks
+shuttle-console-nav-cargo-dock = Cargo Docks
+shuttle-console-nav-arrivals-dock = Arrivals Docks
+shuttle-console-iff-toggle = Show IFF
 
 # MAP
 
