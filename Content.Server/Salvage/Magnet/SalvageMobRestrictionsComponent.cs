@@ -7,6 +7,6 @@ namespace Content.Server.Salvage.Magnet;
 [RegisterComponent]
 public sealed partial class SalvageMobRestrictionsComponent : Component
 {
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public EntityUid LinkedEntity;
+    [DataField]
+    public EntityUid? LinkedEntity;
 }
