@@ -21,7 +21,7 @@ public sealed partial class EggLayerSystem : EntitySystem
         // Cooldown is handled by ActionAnimalLayEgg in types.yml.
         args.Handled = _hungerProduction.TryProduce(ent.Owner, out var failure);
         if (failure == HungerProductionFailure.Hungry)
-            _popup.PopupEntity(Loc.GetString("action-popup-lay-egg-too-hungry"), ent.Owner, ent.Owner);
+            _popup.PopupEntity(Loc.GetString(ent.Comp.TooHungryPopup), ent.Owner, ent.Owner);
     }
 
     [SubscribeLocalEvent]
@@ -29,8 +29,8 @@ public sealed partial class EggLayerSystem : EntitySystem
     {
         _audio.PlayPvs(ent.Comp.EggLaySound, args.Owner);
         _popup.PopupEntity(
-            Loc.GetString("action-popup-lay-egg-user"),
-            Loc.GetString("action-popup-lay-egg-others", ("entity", Identity.Entity(args.Owner, EntityManager))),
+            Loc.GetString(ent.Comp.UserPopup),
+            Loc.GetString(ent.Comp.OthersPopup, ("entity", Identity.Entity(args.Owner, EntityManager))),
             args.Owner,
             args.Owner);
     }
