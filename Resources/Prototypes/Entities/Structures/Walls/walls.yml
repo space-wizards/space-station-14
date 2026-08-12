@@ -764,7 +764,10 @@
         acts: ["Destruction"]
   - type: IconSmooth
     key: walls
-    base: solid
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls ]
+      base: solid
 
 - type: entity
   parent: WallDiagonalBase

@@ -30,30 +30,10 @@ public sealed partial class IconSmoothComponent : Component
     public string Key { get; private set; }
 
     /// <summary>
-    /// Array of <see cref="ISpriteSmoothState{T}"/> which each apply custom smoothing for individual sprite layers.
+    /// Array of <see cref="ISpriteSmoothState"/> which each apply custom smoothing for individual sprite layers.
     /// </summary>
     [DataField]
     public ISpriteSmoothState[] States { get; private set; } = [];
-
-    /// <summary>
-    ///     Used by <see cref="IconSmoothSystem"/> to reduce redundant updates.
-    /// </summary>
-    internal int UpdateGeneration { get; set; }
-
-    /// <summary>
-    ///     We will attempt to smooth with any objects that contain these keys.
-    ///     Only works one way, objects with these keys will not smooth with us
-    /// </summary>
-    [Obsolete]
-    [DataField]
-    public List<string> AdditionalKeys = new();
-
-    /// <summary>
-    /// Index override for our iconsmooth layers. If null, layers will appear on top.
-    /// </summary>
-    [Obsolete]
-    [DataField]
-    public int? Index;
 
     /// <summary>
     ///     Prepended to the RSI state.
@@ -61,17 +41,6 @@ public sealed partial class IconSmoothComponent : Component
     [Obsolete]
     [DataField("base")]
     public string StateBase { get; set; } = string.Empty;
-
-    [Obsolete]
-    [DataField]
-    public ProtoId<ShaderPrototype>? Shader;
-
-    /// <summary>
-    ///     Mode that controls how the icon should be selected.
-    /// </summary>
-    [Obsolete]
-    [DataField]
-    public IconSmoothingMode Mode = IconSmoothingMode.Corners;
 }
 
 /// <summary>
