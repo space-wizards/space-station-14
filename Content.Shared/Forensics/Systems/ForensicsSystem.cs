@@ -9,24 +9,35 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
-using Content.Shared.Popups;
-using Content.Shared.Verbs;
 using Content.Shared.Gibbing;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Nutrition.EntitySystems;
+using Content.Shared.Popups;
+using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Forensics.Systems;
 
-public sealed partial class SharedForensicsSystem : EntitySystem
+/// <summary>
+/// A system for storing forensics data on entities, and transferring them between entities when interacting.
+/// </summary>
+public sealed partial class ForensicsSystem : EntitySystem
 {
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private InventorySystem _inventory = default!;
     [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private SharedPopupSystem _popupSystem = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainerSystem = default!;
+
+    [Dependency] private EntityQuery<DnaComponent> _dnaQuery = default!;
+    [Dependency] private EntityQuery<FiberComponent> _fiberQuery = default!;
+    [Dependency] private EntityQuery<FingerprintComponent> _fingerprintQuery = default!;
+    [Dependency] private EntityQuery<ForensicsComponent> _forensicsQuery = default!;
+    [Dependency] private EntityQuery<IgnoresFingerprintsComponent> _ignoresFingerprintsQuery = default!;
+    [Dependency] private EntityQuery<InventoryComponent> _inventoryQuery = default!;
+    [Dependency] private EntityQuery<ResidueComponent> _residueQuery = default!;
 
     [SubscribeLocalEvent]
     private void OnSolutionChanged(Entity<DnaSubstanceTraceComponent> ent, ref SolutionChangedEvent ev)
@@ -76,7 +87,7 @@ public sealed partial class SharedForensicsSystem : EntitySystem
     {
         var dna = Loc.GetString("forensics-dna-unknown");
 
-        if (TryComp(ent, out DnaComponent? dnaComp) && dnaComp.DNA != null)
+        if (_dnaQuery.TryComp(ent, out var dnaComp) && dnaComp.DNA != null)
             dna = dnaComp.DNA;
 
         foreach (var part in args.Giblets)
@@ -98,7 +109,7 @@ public sealed partial class SharedForensicsSystem : EntitySystem
 
         foreach (var hitEntity in args.HitEntities)
         {
-            if (TryComp<DnaComponent>(hitEntity, out var hitEntityComp) && hitEntityComp.DNA != null)
+            if (_dnaQuery.TryComp(hitEntity, out var hitEntityComp) && hitEntityComp.DNA != null)
                 weapon.Comp.DNAs.Add(hitEntityComp.DNA);
         }
         Dirty(weapon);
@@ -116,10 +127,8 @@ public sealed partial class SharedForensicsSystem : EntitySystem
     /// </summary>
     public void CopyForensicsFrom(Entity<ForensicsComponent?> src, EntityUid target)
     {
-        if (!Resolve(target, ref src.Comp, false))
-        {
+        if (!Resolve(src, ref src.Comp, false))
             return;
-        }
 
         var targetComp = EnsureComp<ForensicsComponent>(target);
         foreach (var dna in src.Comp.DNAs)
@@ -162,10 +171,8 @@ public sealed partial class SharedForensicsSystem : EntitySystem
         {
             foreach (var data in reagent.Reagent.EnsureReagentData())
             {
-                if (data is DnaData)
-                {
-                    list.Add(((DnaData) data).DNA);
-                }
+                if (data is DnaData dnaData)
+                    list.Add(dnaData.DNA);
             }
         }
         return list;
@@ -213,7 +220,7 @@ public sealed partial class SharedForensicsSystem : EntitySystem
     /// <returns>True if the target can be cleaned and has some sort of DNA or fingerprints / fibers and false otherwise.</returns>
     public bool TryStartCleaning(Entity<CleansForensicsComponent> cleanForensicsEntity, EntityUid user, EntityUid target)
     {
-        if (!TryComp<ForensicsComponent>(target, out var forensicsComp))
+        if (!_forensicsQuery.TryComp(target, out var forensicsComp))
         {
             _popupSystem.PopupEntity(Loc.GetString("forensics-cleaning-cannot-clean", ("target", Identity.Entity(target, EntityManager))), user, user, PopupType.MediumCaution);
             return false;
@@ -253,7 +260,7 @@ public sealed partial class SharedForensicsSystem : EntitySystem
         if (args.Handled || args.Cancelled || args.Args.Target == null)
             return;
 
-        if (!TryComp<ForensicsComponent>(args.Target, out var targetComp))
+        if (!_forensicsQuery.TryComp(args.Target, out var targetComp))
             return;
 
         targetComp.Fibers = [];
@@ -263,10 +270,10 @@ public sealed partial class SharedForensicsSystem : EntitySystem
             targetComp.DNAs = [];
 
         // leave behind evidence it was cleaned
-        if (TryComp<FiberComponent>(args.Used, out var fiber))
+        if (_fiberQuery.TryComp(args.Used, out var fiber))
             targetComp.Fibers.Add(string.IsNullOrEmpty(fiber.FiberColor) ? Loc.GetString("forensic-fibers", ("material", fiber.FiberMaterial)) : Loc.GetString("forensic-fibers-colored", ("color", fiber.FiberColor), ("material", fiber.FiberMaterial)));
 
-        if (TryComp<ResidueComponent>(args.Used, out var residue))
+        if (_residueQuery.TryComp(args.Used, out var residue))
             targetComp.Residues.Add(string.IsNullOrEmpty(residue.ResidueColor) ? Loc.GetString("forensic-residue", ("adjective", residue.ResidueAdjective)) : Loc.GetString("forensic-residue-colored", ("color", residue.ResidueColor), ("adjective", residue.ResidueAdjective)));
 
         Dirty(args.Target.Value, targetComp);
@@ -282,29 +289,29 @@ public sealed partial class SharedForensicsSystem : EntitySystem
     public string GenerateDNA()
     {
         var letters = new[] { "A", "C", "G", "T" };
-        var DNA = string.Empty;
+        var dna = string.Empty;
 
         for (var i = 0; i < 16; i++)
         {
-            DNA += letters[_random.Next(letters.Length)];
+            dna += letters[_random.Next(letters.Length)];
         }
 
-        return DNA;
+        return dna;
     }
 
     private void ApplyEvidence(EntityUid user, EntityUid target)
     {
-        if (HasComp<IgnoresFingerprintsComponent>(target))
+        if (_ignoresFingerprintsQuery.HasComp(target))
             return;
 
         var component = EnsureComp<ForensicsComponent>(target);
         if (_inventory.TryGetSlotEntity(user, "gloves", out var gloves))
         {
-            if (TryComp<FiberComponent>(gloves, out var fiber) && !string.IsNullOrEmpty(fiber.FiberMaterial))
+            if (_fiberQuery.TryComp(gloves, out var fiber) && !string.IsNullOrEmpty(fiber.FiberMaterial))
                 component.Fibers.Add(string.IsNullOrEmpty(fiber.FiberColor) ? Loc.GetString("forensic-fibers", ("material", fiber.FiberMaterial)) : Loc.GetString("forensic-fibers-colored", ("color", fiber.FiberColor), ("material", fiber.FiberMaterial)));
         }
 
-        if (TryComp<FingerprintComponent>(user, out var fingerprint) && CanAccessFingerprint(user, out _))
+        if (_fingerprintQuery.TryComp(user, out var fingerprint) && CanAccessFingerprint(user, out _))
             component.Fingerprints.Add(fingerprint.Fingerprint ?? "");
 
         Dirty(target, component);
@@ -341,7 +348,7 @@ public sealed partial class SharedForensicsSystem : EntitySystem
     /// <param name="canDnaBeCleaned">If this DNA be cleaned off of the recipient. e.g. cleaning a knife vs cleaning a puddle of blood</param>
     public void TransferDna(EntityUid recipient, EntityUid donor, bool canDnaBeCleaned = true)
     {
-        if (!TryComp<DnaComponent>(donor, out var donorComp) || donorComp.DNA == null)
+        if (!_dnaQuery.TryComp(donor, out var donorComp) || donorComp.DNA == null)
             return;
 
         EnsureComp<ForensicsComponent>(recipient, out var recipientComp);
@@ -361,7 +368,7 @@ public sealed partial class SharedForensicsSystem : EntitySystem
         var ev = new TryAccessFingerprintEvent();
 
         RaiseLocalEvent(target, ev);
-        if (!ev.Cancelled && TryComp<InventoryComponent>(target, out var inv))
+        if (!ev.Cancelled && _inventoryQuery.TryComp(target, out var inv))
             _inventory.RelayEvent((target, inv), ev);
 
         blocker = ev.Blocker;

@@ -26,7 +26,7 @@ public sealed partial class SurveillanceCameraRouterComponent : Component
     /// </summary>
     [ViewVariables]
     public uint SubnetFrequency;
-
+    
     [DataField("subnetFrequency")]
     public ProtoId<DeviceFrequencyPrototype>? SubnetFrequencyId { get; set;  }
 
