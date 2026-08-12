@@ -3418,6 +3418,8 @@ entities:
     - type: GridTree
     - type: Broadphase
     - type: OccluderTree
+    - type: MapLight
+      ambientLightColor: '#36252d'
     - type: Parallax
       parallax: BagelStation
     - type: ChunkContainer

@@ -16,41 +16,34 @@ public sealed partial class SericultureComponent : Component
     /// <summary>
     /// The text that pops up whenever sericulture fails for not having enough hunger.
     /// </summary>
-    [DataField]
-    [AutoNetworkedField]
-    public string PopupText = "sericulture-failure-hunger";
+    [DataField, AutoNetworkedField]
+    public LocId PopupText = "sericulture-failure-hunger";
 
     /// <summary>
     /// What will be produced at the end of the action.
     /// </summary>
-    [DataField(required: true)]
-    [AutoNetworkedField]
+    [DataField(required: true), AutoNetworkedField]
     public EntProtoId EntityProduced;
 
     /// <summary>
     /// The entity needed to actually preform sericulture. This will be granted (and removed) upon the entity's creation.
     /// </summary>
-    [DataField]
-    [ViewVariables(VVAccess.ReadWrite)]
-    [AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public EntProtoId Action = "ActionSericulture";
 
-    [AutoNetworkedField]
-    [DataField]
+    [DataField, AutoNetworkedField]
     public EntityUid? ActionEntity;
 
     /// <summary>
     /// How long will it take to make.
     /// </summary>
-    [DataField]
-    [AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public float ProductionLength = 3f;
 
     /// <summary>
     /// This will subtract (not add, don't get this mixed up) from the current hunger of the mob doing sericulture.
     /// </summary>
-    [DataField]
-    [AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public float HungerCost = 5f;
 
     /// <summary>

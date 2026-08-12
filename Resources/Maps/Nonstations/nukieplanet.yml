@@ -1622,6 +1622,8 @@ entities:
         - Syndicate
     - type: Broadphase
     - type: OccluderTree
+    - type: MapLight
+      ambientLightColor: '#afaeae'
     - type: Parallax
       parallax: Sky
     - type: MapAtmosphere
