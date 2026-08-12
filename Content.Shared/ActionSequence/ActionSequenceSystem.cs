@@ -3,9 +3,9 @@ using Content.Shared.Actions;
 namespace Content.Shared.ActionSequence;
 
 /// <summary>
-/// This handles entity effects.
-/// Specifically it handles the receiving of events for causing entity effects, and provides
-/// public API for other systems to take advantage of entity effects.
+/// This handled the general behavior of action sequences.
+/// Action sequences run specified behavior in a sequence one after another, communicating via a blackboard.
+/// This allows to make actions follow a pattern using a generic system, such as DoAfter -> Spawn Entity -> Play Sound.
 /// </summary>
 public sealed partial class ActionSequenceSystem : EntitySystem, IActionStepRaiser
 {
@@ -15,17 +15,15 @@ public sealed partial class ActionSequenceSystem : EntitySystem, IActionStepRais
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<ActionSequenceComponent, ActionSequenceInstantEvent>(OnStartSequence);
+        SubscribeLocalEvent<ActionSequenceComponent, ActionSequenceInstantEvent>(OnStartInstantSequence);
         SubscribeLocalEvent<ActionSequenceComponent, ActionSequenceSteppedEvent>(OnSequenceStep);
     }
 
-    private void OnStartSequence(Entity<ActionSequenceComponent> ent, ref ActionSequenceInstantEvent args)
+    private void OnStartInstantSequence(Entity<ActionSequenceComponent> ent, ref ActionSequenceInstantEvent args)
     {
         ent.Comp.Blackboard = new Dictionary<string, object>();
         ent.Comp.Blackboard.TryAdd(ActionStepActionKey, ent.Owner);
         ent.Comp.Blackboard.TryAdd(ActionStepUserKey, args.Performer);
-
-        Log.Debug("Action sequence initiated");
 
         StartSequence(ent);
     }
@@ -37,15 +35,11 @@ public sealed partial class ActionSequenceSystem : EntitySystem, IActionStepRais
 
         DirtyField(ent, ent.Comp, nameof(ActionSequenceComponent.SequenceOngoing));
 
-        Log.Debug("Action sequence started");
-
         StepSequence(ent);
     }
 
     private void StepSequence(Entity<ActionSequenceComponent> ent)
     {
-        Log.Debug("Action sequence stepped");
-
         var ev = new ActionSequenceSteppedEvent();
         RaiseLocalEvent(ent, ref ev);
     }
@@ -58,48 +52,48 @@ public sealed partial class ActionSequenceSystem : EntitySystem, IActionStepRais
         ent.Comp.CurrentStep++;
         DirtyField(ent, ent.Comp, nameof(ActionSequenceComponent.CurrentStep));
 
+        // If we're at the end of the sequence, stop it.
         if (ent.Comp.CurrentStep > ent.Comp.Steps.Count)
         {
             StopSequence(ent);
             return;
         }
 
-        Log.Debug("Action sequence event raised");
-
-        ent.Comp.Steps[ent.Comp.CurrentStep-1].RaiseEvent(ent.Owner, this);
+        ent.Comp.Steps[ent.Comp.CurrentStep-1].RaiseEvent(ent, this);
     }
 
     private void StopSequence(Entity<ActionSequenceComponent> ent)
     {
+        // The sequence is stopped, so we remove all relevant data and mark it as ready to start again.
         ent.Comp.SequenceOngoing = false;
         ent.Comp.CurrentStep = 0;
         ent.Comp.Blackboard = new Dictionary<string, object>();
 
         DirtyField(ent, ent.Comp, nameof(ActionSequenceComponent.SequenceOngoing));
         DirtyField(ent, ent.Comp, nameof(ActionSequenceComponent.CurrentStep));
-
-        Log.Debug("Action sequence stopped");
     }
 
-    public void RaiseEffectEvent<T>(EntityUid action, T effect) where T : ActionStepBase<T>
+    public void RaiseStepEvent<T>(Entity<ActionSequenceComponent> action, T effect) where T : ActionStepBase<T>
     {
         var effectEv = new ActionStepEvent<T>(effect);
         RaiseLocalEvent(action, ref effectEv);
 
-        if (!effectEv.Handled || effectEv.Await)
+        action.Comp.Awaiting = effectEv.Await;
+        DirtyField(action, action.Comp, nameof(ActionSequenceComponent.Awaiting));
+
+        // We only want to take the next step if the event was actually handled.
+        // And if we aren't waiting for something to continue it for us (like a doAfter)
+        if (!effectEv.Handled && effectEv.Await != SequenceAwaiting.None)
             return;
 
-        Log.Debug("Action sequence handled");
-
-        var stepEv = new ActionSequenceSteppedEvent();
-        RaiseLocalEvent(action, ref stepEv);
+        StepSequence(action);
     }
 }
 
 /// <summary>
-/// This is a basic abstract entity effect containing all the data an entity effect needs to affect entities with effects...
+/// Basic abstract EntitySystem that handles doing the effects of an <see cref="ActionStep"/>
 /// </summary>
-/// <typeparam name="T">The Component that is required for the effect</typeparam>
+/// <typeparam name="T">The type of <see cref="ActionStep"/> this system is for.</typeparam>
 public abstract partial class ActionStepSystem<T> : EntitySystem where T : ActionStepBase<T>
 {
     /// <inheritdoc/>
@@ -111,11 +105,24 @@ public abstract partial class ActionStepSystem<T> : EntitySystem where T : Actio
     protected abstract void Effect(Entity<ActionSequenceComponent> entity, ref ActionStepEvent<T> args);
 }
 
-[ByRefEvent]
-public record struct ActionStepEvent<T>(T Effect, bool Handled = false, bool Await = false) where T : ActionStepBase<T>;
-
+/// <summary>
+/// Event to begin the action sequence when paired with <see cref="InstantActionEvent"/>
+/// </summary>
 [ByRefEvent]
 public sealed partial class ActionSequenceInstantEvent : InstantActionEvent;
 
+/// <summary>
+/// Event that handles the effects of action steps. Gets raised on the action itself and the effects get resolved by the relevant system.
+/// </summary>
+/// <param name="Effect">The <see cref="ActionStep"/> this event is handling.</param>
+/// <param name="Handled">Whether the step was handled. If not handled, the sequence is canceled.</param>
+/// <param name="Await">Whether after this step is complete, the action should await or continue the sequence.</param>
+/// <typeparam name="T">The <see cref="ActionStep"/> this event is handling.</typeparam>
 [ByRefEvent]
-public record struct ActionSequenceSteppedEvent();
+public record struct ActionStepEvent<T>(T Effect, bool Handled = false, SequenceAwaiting Await = SequenceAwaiting.None) where T : ActionStepBase<T>;
+
+/// <summary>
+/// Raised on the Action entity when the sequence has successfully stepped and can proceed to the next one.
+/// </summary>
+[ByRefEvent]
+public record struct ActionSequenceSteppedEvent;
