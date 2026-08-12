@@ -167,6 +167,7 @@ ui-options-function-activate-item-in-world = Activate item in world
 ui-options-function-alt-activate-item-in-world = Alternative activate item in world
 ui-options-function-drop = Drop item
 ui-options-function-examine-entity = Examine
+ui-options-function-name-peek = Peek names
 ui-options-function-swap-hands = Swap hands
 ui-options-function-swap-hands-reverse = Swap hands (other direction)
 ui-options-function-move-stored-item = Move stored item

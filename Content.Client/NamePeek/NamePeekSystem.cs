@@ -42,7 +42,7 @@ public sealed partial class NamePeekSystem : EntitySystem
             _mobstateQuery));
 
         CommandBinds.Builder
-            .Bind(ContentKeyFunctions.ExamineNames, new PointerInputCmdHandler(OnExamineNames, ignoreUp: false, outsidePrediction: true))
+            .Bind(ContentKeyFunctions.NamePeek, new PointerInputCmdHandler(OnExamineNames, ignoreUp: false, outsidePrediction: true))
             .Register<NamePeekSystem>();
     }
 
