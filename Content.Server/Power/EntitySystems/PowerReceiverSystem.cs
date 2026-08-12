@@ -118,7 +118,7 @@ namespace Content.Server.Power.EntitySystems
                     TogglePower(ent, user: user);
                 },
                 Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/Spare/poweronoff.svg.192dpi.png")),
-                Text = Loc.GetString("power-switch-component-toggle-verb"),
+                Text = Loc.GetString("power-receiver-component-toggle-verb"),
                 Priority = -3
             };
             args.Verbs.Add(verb);

@@ -3,6 +3,7 @@ using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.DoAfter;
+using Content.Shared.Power.Components;
 using Content.Shared.Power.Generator;
 using Content.Shared.Verbs;
 using Robust.Server.Audio;
@@ -25,7 +26,7 @@ public sealed partial class PortableGeneratorSystem : SharedPortableGeneratorSys
     [Dependency] private AudioSystem _audio = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private GeneratorSystem _generator = default!;
-    [Dependency] private PowerSwitchableSystem _switchable = default!;
+    [Dependency] private VoltageTogglerSystem _voltageToggler = default!;
     [Dependency] private ActiveGeneratorRevvingSystem _revving = default!;
 
     public override void Initialize()
@@ -50,7 +51,7 @@ public sealed partial class PortableGeneratorSystem : SharedPortableGeneratorSys
         if (fuelGenerator.On)
             return;
 
-        _switchable.Cycle(uid, args.Actor);
+        _voltageToggler.Cycle(uid, args.Actor);
     }
 
     private void GeneratorStopMessage(EntityUid uid, PortableGeneratorComponent component, PortableGeneratorStopMessage args)

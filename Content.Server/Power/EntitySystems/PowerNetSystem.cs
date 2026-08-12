@@ -59,11 +59,13 @@ namespace Content.Server.Power.EntitySystems
             SubscribeLocalEvent<PowerConsumerComponent, ComponentShutdown>(PowerConsumerShutdown);
             SubscribeLocalEvent<PowerConsumerComponent, EntityPausedEvent>(PowerConsumerPaused);
             SubscribeLocalEvent<PowerConsumerComponent, EntityUnpausedEvent>(PowerConsumerUnpaused);
+            SubscribeLocalEvent<PowerConsumerComponent, VoltageChangeEvent>(PowerConsumerVoltageChanged);
 
             SubscribeLocalEvent<PowerSupplierComponent, ComponentInit>(PowerSupplierInit);
             SubscribeLocalEvent<PowerSupplierComponent, ComponentShutdown>(PowerSupplierShutdown);
             SubscribeLocalEvent<PowerSupplierComponent, EntityPausedEvent>(PowerSupplierPaused);
             SubscribeLocalEvent<PowerSupplierComponent, EntityUnpausedEvent>(PowerSupplierUnpaused);
+            SubscribeLocalEvent<PowerSupplierComponent, VoltageChangeEvent>(PowerSupplierVoltageChanged);
 
             Subs.CVar(_cfg, CCVars.DebugPow3rDisableParallel, DebugPow3rDisableParallelChanged);
         }
@@ -151,6 +153,11 @@ namespace Content.Server.Power.EntitySystems
             component.NetworkLoad.Paused = false;
         }
 
+        private void PowerConsumerVoltageChanged(Entity<PowerConsumerComponent> entity, ref VoltageChangeEvent args)
+        {
+            entity.Comp.Voltage = args.NewVoltage.Voltage;
+        }
+
         private void PowerSupplierInit(EntityUid uid, PowerSupplierComponent component, ComponentInit args)
         {
             _powerNetConnector.BaseNetConnectorInit(component);
@@ -170,6 +177,11 @@ namespace Content.Server.Power.EntitySystems
         private static void PowerSupplierUnpaused(EntityUid uid, PowerSupplierComponent component, ref EntityUnpausedEvent args)
         {
             component.NetworkSupply.Paused = false;
+        }
+
+        private void PowerSupplierVoltageChanged(Entity<PowerSupplierComponent> entity, ref VoltageChangeEvent args)
+        {
+            entity.Comp.Voltage = args.NewVoltage.Voltage;
         }
 
         public void InitPowerNet(PowerNet powerNet)
