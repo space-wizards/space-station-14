@@ -1,8 +1,7 @@
-using Content.Shared.EntityEffects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.ActionSequence;
+namespace Content.Shared.ActionSequence.Steps;
 
 /// <summary>
 /// This handles entity effects.
@@ -11,52 +10,50 @@ namespace Content.Shared.ActionSequence;
 /// </summary>
 public sealed partial class SpawnEntityActionStepSystem : ActionStepSystem<SpawnEntityActionStep>
 {
-    protected override void Effect(Entity<ActionSequenceComponent> entity, ref ActionStepEvent<SpawnEntityActionStep> args)
+    protected override void Step(Entity<ActionSequenceComponent> action, ref ActionStepEvent<SpawnEntityActionStep> args)
     {
-        Log.Debug("Spawn detected");
-        if (!entity.Comp.Blackboard.TryGetValue(args.Effect.LocationKey, out var userKey))
-            return;
-
-        if (userKey is EntityUid user)
+        if (SequenceSystem.TryGetBlackboardData<EntityUid>(action, args.Step.LocationKey, out var user))
         {
-            var spawned = PredictedSpawnNextToOrDrop(args.Effect.Entity, user);
+            var spawned = PredictedSpawnNextToOrDrop(args.Step.Entity, user);
 
-            if (args.Effect.OutSpawnedKey != null)
-                entity.Comp.Blackboard.TryAdd(args.Effect.OutSpawnedKey, spawned);
-
+            SequenceSystem.TryAddBlackboardData(action, args.Step.OutSpawnedKey, spawned);
             args.Handled = true;
         }
-        else if (userKey is EntityCoordinates coordinates)
+        else if (SequenceSystem.TryGetBlackboardData<EntityCoordinates>(action, args.Step.LocationKey, out var coordinates))
         {
-            var spawned = PredictedSpawnAtPosition(args.Effect.Entity, coordinates);
+            var spawned = PredictedSpawnAtPosition(args.Step.Entity, coordinates);
 
-            if (args.Effect.OutSpawnedKey != null)
-                entity.Comp.Blackboard.TryAdd(args.Effect.OutSpawnedKey, spawned);
-
+            SequenceSystem.TryAddBlackboardData(action, args.Step.OutSpawnedKey, spawned);
             args.Handled = true;
         }
         else
         {
-            Log.Error($"Sequence {args.Effect} received invalid Key.");
+            Log.Error($"Action step {args.Step} in {ToPrettyString(action)} received invalid LocationKey.");
         }
     }
 }
 
 /// <summary>
-/// See serverside system.
+/// Spawns an entity at the given LocationKey and adds the spawned entity to the blackboard as the OutSpawnedKey.
+/// Can take either an EntityUid or EntityCoordinates.
 /// </summary>
-/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class SpawnEntityActionStep : ActionStepBase<SpawnEntityActionStep>
 {
     /// <summary>
-    ///     The gas we're creating
+    /// The entity we want to spawn.
     /// </summary>
     [DataField(required: true)]
     public EntProtoId Entity = "MobMouse1";
 
-    [DataField(required: true)]
+    /// <summary>
+    /// The location at which we want to spawn the entity.
+    /// </summary>
+    [DataField]
     public string LocationKey = ActionSequenceSystem.ActionStepUserKey;
 
+    /// <summary>
+    /// What key to add the spawned entity as, if any.
+    /// </summary>
     [DataField]
     public string? OutSpawnedKey;
 }

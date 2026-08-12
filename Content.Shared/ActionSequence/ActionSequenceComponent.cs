@@ -42,6 +42,15 @@ public sealed partial class ActionSequenceComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public SequenceAwaiting Awaiting = SequenceAwaiting.None;
+
+    /// <summary>
+    /// Potentially added key when we finish awaiting.
+    /// Should be set by the relevant <see cref="ActionStep"/> when we start awaiting.
+    /// This will be the Target EntityUid when paired with <see cref="ActionSequenceEntityTargetEvent"/>
+    /// Or EntityCoordinates when paired with <see cref="ActionSequenceEntityTargetEvent"/>
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public string? AwaitingKey;
 }
 
 [Serializable, NetSerializable]

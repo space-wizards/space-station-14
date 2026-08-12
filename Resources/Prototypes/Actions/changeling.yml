@@ -179,6 +179,8 @@
     event: !type:ActionSequenceInstantEvent
   - type: ActionSequence
     steps:
+    - !type:PopupActionStep
+      text: Test!
     - !type:GetMindActionStep
       targetKey: Performer
       outMindKey: Mind
@@ -191,6 +193,31 @@
       targetKey: Spawned
     - !type:GibActionStep
       targetKey: Performer
+
+- type: entity
+  parent: BaseAction
+  id: TestSequenceActionTarget
+  components:
+  - type: Action
+    raiseOnAction: true
+  - type: TargetAction
+  - type: WorldTargetAction
+    event: !type:ActionSequenceWorldTargetEvent
+  - type: ActionSequence
+    steps:
+    - !type:DoAfterActionStep
+      delay: 2
+    - !type:AwaitReactivationActionStep
+      outKey: NewLocation
+    - !type:DoAfterActionStep
+      delay: 2
+    - !type:SpawnEntityActionStep
+      entity: PortalBlue
+      locationKey: Location
+    - !type:SpawnEntityActionStep
+      entity: PortalRed
+      locationKey: NewLocation
+
 
 - type: entity
   parent: BaseActionChangelingSting

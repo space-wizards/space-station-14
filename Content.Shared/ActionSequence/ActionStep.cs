@@ -35,24 +35,6 @@ public abstract partial class ActionStep
     /// This should NOT be called directly.
     /// </summary>
     public abstract void RaiseEvent(Entity<ActionSequenceComponent> action, IActionStepRaiser raiser);
-
-    /// <summary>
-    /// Gets the data of a relevant Type from the <see cref="ActionSequenceComponent.Blackboard"/>.
-    /// </summary>
-    /// <param name="action">The <see cref="ActionSequenceComponent"/> entity.</param>
-    /// <param name="key">They key to retrieve the value of.</param>
-    /// <param name="data">The data obtained from the blackboard.</param>
-    /// <typeparam name="T">The type we are looking for.</typeparam>
-    /// <returns>True if the data was found, otherwise False.</returns>
-    public bool TryGetBlackboardData<T>(Entity<ActionSequenceComponent> action, string key, [NotNullWhen(true)] out T? data)
-    {
-        data = default;
-        if (!action.Comp.Blackboard.TryGetValue(key, out var keyData) || keyData is not T dataValue)
-            return false;
-
-        data = dataValue;
-        return true;
-    }
 }
 
 /// <summary>

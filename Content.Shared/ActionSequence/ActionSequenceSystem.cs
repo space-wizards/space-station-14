@@ -1,4 +1,8 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Actions;
+using Content.Shared.ActionSequence.Steps;
+using Content.Shared.DoAfter;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.ActionSequence;
 
@@ -12,41 +16,102 @@ public sealed partial class ActionSequenceSystem : EntitySystem, IActionStepRais
     public const string ActionStepUserKey = "Performer";
     public const string ActionStepTargetKey = "Target";
     public const string ActionStepActionKey = "Action";
+    public const string ActionStepLocationKey = "Location";
 
     public override void Initialize()
     {
         SubscribeLocalEvent<ActionSequenceComponent, ActionSequenceInstantEvent>(OnStartInstantSequence);
+        SubscribeLocalEvent<ActionSequenceComponent, ActionSequenceEntityTargetEvent>(OnStartTargetSequence);
+        SubscribeLocalEvent<ActionSequenceComponent, ActionSequenceWorldTargetEvent>(OnStartWorldTargetSequence);
+
         SubscribeLocalEvent<ActionSequenceComponent, ActionSequenceSteppedEvent>(OnSequenceStep);
+        SubscribeLocalEvent<ActionSequenceComponent, ActionSequenceDoAfterEvent>(OnSequenceDoAfter);
     }
 
+    #region Action Events
     private void OnStartInstantSequence(Entity<ActionSequenceComponent> ent, ref ActionSequenceInstantEvent args)
     {
-        ent.Comp.Blackboard = new Dictionary<string, object>();
-        ent.Comp.Blackboard.TryAdd(ActionStepActionKey, ent.Owner);
-        ent.Comp.Blackboard.TryAdd(ActionStepUserKey, args.Performer);
+        if (ent.Comp.Awaiting == SequenceAwaiting.None)
+        {
+            ent.Comp.Blackboard = new Dictionary<string, object>();
+            TryAddBlackboardData(ent, ActionStepActionKey, ent.Owner);
+            TryAddBlackboardData(ent, ActionStepUserKey, args.Performer);
 
-        StartSequence(ent);
+            args.Handled = true;
+
+            StartSequence(ent);
+        }
     }
 
-    private void StartSequence(Entity<ActionSequenceComponent> ent)
+    private void OnStartTargetSequence(Entity<ActionSequenceComponent> ent, ref ActionSequenceEntityTargetEvent args)
     {
-        ent.Comp.SequenceOngoing = true;
-        ent.Comp.CurrentStep = 0;
+        if (ent.Comp.Awaiting == SequenceAwaiting.None)
+        {
+            ent.Comp.Blackboard = new Dictionary<string, object>();
+            TryAddBlackboardData(ent, ActionStepActionKey, ent.Owner);
+            TryAddBlackboardData(ent, ActionStepUserKey, args.Performer);
+            TryAddBlackboardData(ent, ActionStepTargetKey, args.Target);
 
-        DirtyField(ent, ent.Comp, nameof(ActionSequenceComponent.SequenceOngoing));
+            args.Handled = true;
 
-        StepSequence(ent);
+            StartSequence(ent);
+        }
+        else if (ent.Comp.Awaiting == SequenceAwaiting.Reactivation)
+        {
+            TryAddBlackboardData(ent, ent.Comp.AwaitingKey, args.Target);
+
+            ent.Comp.Awaiting = SequenceAwaiting.None;
+            ent.Comp.AwaitingKey = null;
+            DirtyField(ent, ent.Comp, nameof(ActionSequenceComponent.Awaiting));
+            DirtyField(ent, ent.Comp, nameof(ActionSequenceComponent.AwaitingKey));
+
+            args.Handled = true;
+
+            StepSequence(ent);
+        }
     }
 
-    private void StepSequence(Entity<ActionSequenceComponent> ent)
+    private void OnStartWorldTargetSequence(Entity<ActionSequenceComponent> ent, ref ActionSequenceWorldTargetEvent args)
     {
-        var ev = new ActionSequenceSteppedEvent();
-        RaiseLocalEvent(ent, ref ev);
+        if (ent.Comp.Awaiting == SequenceAwaiting.None)
+        {
+            ent.Comp.Blackboard = new Dictionary<string, object>();
+            TryAddBlackboardData(ent, ActionStepActionKey, ent.Owner);
+            TryAddBlackboardData(ent, ActionStepUserKey, args.Performer);
+            TryAddBlackboardData(ent, ActionStepLocationKey, args.Target);
+
+            if (args.Entity != null)
+            {
+                TryAddBlackboardData(ent, ActionStepTargetKey, args.Entity);
+            }
+
+            args.Handled = true;
+
+            StartSequence(ent);
+        }
+        else if (ent.Comp.Awaiting == SequenceAwaiting.Reactivation)
+        {
+            TryAddBlackboardData(ent, ent.Comp.AwaitingKey, args.Target);
+
+            ent.Comp.Awaiting = SequenceAwaiting.None;
+            ent.Comp.AwaitingKey = null;
+            DirtyField(ent, ent.Comp, nameof(ActionSequenceComponent.Awaiting));
+            DirtyField(ent, ent.Comp, nameof(ActionSequenceComponent.AwaitingKey));
+
+            args.Handled = true;
+
+            StepSequence(ent);
+        }
     }
+    #endregion
 
     private void OnSequenceStep(Entity<ActionSequenceComponent> ent, ref ActionSequenceSteppedEvent args)
     {
         if (!ent.Comp.SequenceOngoing)
+            return;
+
+        // Don't step if we're waiting for something!
+        if (ent.Comp.Awaiting != SequenceAwaiting.None)
             return;
 
         ent.Comp.CurrentStep++;
@@ -62,14 +127,52 @@ public sealed partial class ActionSequenceSystem : EntitySystem, IActionStepRais
         ent.Comp.Steps[ent.Comp.CurrentStep-1].RaiseEvent(ent, this);
     }
 
+    private void OnSequenceDoAfter(Entity<ActionSequenceComponent> ent, ref ActionSequenceDoAfterEvent args)
+    {
+        if (ent.Comp.Awaiting != SequenceAwaiting.DoAfter || !ent.Comp.SequenceOngoing)
+            return;
+
+        if (args.Cancelled)
+        {
+            StopSequence(ent);
+            return;
+        }
+
+        ent.Comp.Awaiting = SequenceAwaiting.None;
+        DirtyField(ent, ent.Comp, nameof(ActionSequenceComponent.Awaiting));
+
+        StepSequence(ent);
+    }
+
+    private void StartSequence(Entity<ActionSequenceComponent> ent)
+    {
+        ent.Comp.SequenceOngoing = true;
+        ent.Comp.CurrentStep = 0;
+
+        DirtyField(ent, ent.Comp, nameof(ActionSequenceComponent.SequenceOngoing));
+
+        StepSequence(ent);
+    }
+
+    private void StepSequence(Entity<ActionSequenceComponent> ent)
+    {
+        if (ent.Comp.Awaiting != SequenceAwaiting.None)
+            return;
+
+        var ev = new ActionSequenceSteppedEvent();
+        RaiseLocalEvent(ent, ref ev);
+    }
+
     private void StopSequence(Entity<ActionSequenceComponent> ent)
     {
         // The sequence is stopped, so we remove all relevant data and mark it as ready to start again.
         ent.Comp.SequenceOngoing = false;
+        ent.Comp.Awaiting = SequenceAwaiting.None;
         ent.Comp.CurrentStep = 0;
         ent.Comp.Blackboard = new Dictionary<string, object>();
 
         DirtyField(ent, ent.Comp, nameof(ActionSequenceComponent.SequenceOngoing));
+        DirtyField(ent, ent.Comp, nameof(ActionSequenceComponent.Awaiting));
         DirtyField(ent, ent.Comp, nameof(ActionSequenceComponent.CurrentStep));
     }
 
@@ -88,6 +191,43 @@ public sealed partial class ActionSequenceSystem : EntitySystem, IActionStepRais
 
         StepSequence(action);
     }
+
+    /// <summary>
+    /// Gets the data of a relevant Type from the <see cref="ActionSequenceComponent.Blackboard"/>.
+    /// </summary>
+    /// <param name="action">The <see cref="ActionSequenceComponent"/> entity.</param>
+    /// <param name="key">They key to retrieve the value of.</param>
+    /// <param name="data">The data obtained from the blackboard.</param>
+    /// <typeparam name="T">The type we are looking for.</typeparam>
+    /// <returns>True if the data was found, otherwise False.</returns>
+    public bool TryGetBlackboardData<T>(Entity<ActionSequenceComponent> action, string? key, [NotNullWhen(true)] out T? data)
+    {
+        data = default;
+
+        if (key == null)
+            return false;
+
+        if (!action.Comp.Blackboard.TryGetValue(key, out var keyData) || keyData is not T dataValue)
+            return false;
+
+        data = dataValue;
+        return true;
+    }
+
+    /// <summary>
+    /// Tries to add new data to the <see cref="ActionSequenceComponent.Blackboard"/> of the action entity.
+    /// </summary>
+    /// <param name="action">The <see cref="ActionSequenceComponent"/> entity.</param>
+    /// <param name="key">They of the data to add/</param>
+    /// <param name="data">The data to add.</param>
+    /// <returns>True if the data was added, otherwise False.</returns>
+    public bool TryAddBlackboardData(Entity<ActionSequenceComponent> action, string? key, object data)
+    {
+        if (key == null)
+            return false;
+
+        return action.Comp.Blackboard.TryAdd(key, data);
+    }
 }
 
 /// <summary>
@@ -96,13 +236,10 @@ public sealed partial class ActionSequenceSystem : EntitySystem, IActionStepRais
 /// <typeparam name="T">The type of <see cref="ActionStep"/> this system is for.</typeparam>
 public abstract partial class ActionStepSystem<T> : EntitySystem where T : ActionStepBase<T>
 {
-    /// <inheritdoc/>
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<ActionSequenceComponent, ActionStepEvent<T>>(Effect);
-    }
+    [Dependency] protected ActionSequenceSystem SequenceSystem = default!;
 
-    protected abstract void Effect(Entity<ActionSequenceComponent> entity, ref ActionStepEvent<T> args);
+    [SubscribeLocalEvent]
+    protected abstract void Step(Entity<ActionSequenceComponent> entity, ref ActionStepEvent<T> args);
 }
 
 /// <summary>
@@ -112,14 +249,33 @@ public abstract partial class ActionStepSystem<T> : EntitySystem where T : Actio
 public sealed partial class ActionSequenceInstantEvent : InstantActionEvent;
 
 /// <summary>
+/// Event to begin the action sequence when paired with <see cref="EntityTargetActionEvent"/>
+/// </summary>
+[ByRefEvent]
+public sealed partial class ActionSequenceEntityTargetEvent : EntityTargetActionEvent;
+
+/// <summary>
+/// Event to begin the action sequence when paired with <see cref="WorldTargetActionEvent"/>
+/// </summary>
+[ByRefEvent]
+public sealed partial class ActionSequenceWorldTargetEvent : WorldTargetActionEvent;
+
+/// <summary>
+/// DoAfter event raised by <see cref="DoAfterActionStep"/> when the doAfter is resolved.
+/// Used to unlock the sequence.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed partial class ActionSequenceDoAfterEvent : SimpleDoAfterEvent;
+
+/// <summary>
 /// Event that handles the effects of action steps. Gets raised on the action itself and the effects get resolved by the relevant system.
 /// </summary>
-/// <param name="Effect">The <see cref="ActionStep"/> this event is handling.</param>
+/// <param name="Step">The <see cref="ActionStep"/> this event is handling.</param>
 /// <param name="Handled">Whether the step was handled. If not handled, the sequence is canceled.</param>
 /// <param name="Await">Whether after this step is complete, the action should await or continue the sequence.</param>
 /// <typeparam name="T">The <see cref="ActionStep"/> this event is handling.</typeparam>
 [ByRefEvent]
-public record struct ActionStepEvent<T>(T Effect, bool Handled = false, SequenceAwaiting Await = SequenceAwaiting.None) where T : ActionStepBase<T>;
+public record struct ActionStepEvent<T>(T Step, bool Handled = false, SequenceAwaiting Await = SequenceAwaiting.None) where T : ActionStepBase<T>;
 
 /// <summary>
 /// Raised on the Action entity when the sequence has successfully stepped and can proceed to the next one.

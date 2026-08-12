@@ -1,31 +1,28 @@
-using Content.Shared.EntityEffects;
 using Content.Shared.Mind;
 
-namespace Content.Shared.ActionSequence;
+namespace Content.Shared.ActionSequence.Steps;
 
-/// <summary>
-/// This handles entity effects.
-/// Specifically it handles the receiving of events for causing entity effects, and provides
-/// public API for other systems to take advantage of entity effects.
-/// </summary>
+/// System handling <see cref="TransferMindActionStep"/>.
 public sealed partial class TrasnferMindActionStepSystem : ActionStepSystem<TransferMindActionStep>
 {
     [Dependency] private SharedMindSystem _mind = default!;
 
-    protected override void Effect(Entity<ActionSequenceComponent> entity, ref ActionStepEvent<TransferMindActionStep> args)
+    protected override void Step(Entity<ActionSequenceComponent> action, ref ActionStepEvent<TransferMindActionStep> args)
     {
-        Log.Debug("Mind detected.");
-        if (!entity.Comp.Blackboard.TryGetValue(args.Effect.TargetKey, out var targetKey) || targetKey is not EntityUid target)
+        if (!SequenceSystem.TryGetBlackboardData<EntityUid>(action, args.Step.TargetKey, out var target))
             return;
 
-        if (!entity.Comp.Blackboard.TryGetValue(args.Effect.MindKey, out var mindKey) || mindKey is not EntityUid mind)
+        if (!SequenceSystem.TryGetBlackboardData<EntityUid>(action, args.Step.MindKey, out var mind))
             return;
 
         if (!HasComp<MindComponent>(mind))
         {
-            Log.Error($"Entity {mind} does not have MindComponent!");
+            Log.Error($"Entity {ToPrettyString(mind)} given to TransferMindActionStep is not a mind!");
             return;
         }
+
+        if (args.Step.MakeSentient)
+            _mind.MakeSentient(target);
 
         _mind.TransferTo(mind, target);
 
@@ -34,11 +31,19 @@ public sealed partial class TrasnferMindActionStepSystem : ActionStepSystem<Tran
 }
 
 /// <summary>
-/// See serverside system.
+/// Transfers the MindKey to the TargetKey entity.
 /// </summary>
-/// <inheritdoc cref="EntityEffect"/>
 public sealed partial class TransferMindActionStep : ActionStepBase<TransferMindActionStep>
 {
+    /// <summary>
+    /// The key used to get the mind.
+    /// </summary>
     [DataField]
     public string MindKey = "Mind";
+
+    /// <summary>
+    /// Whether to make the target sentient when mind is transferred.
+    /// </summary>
+    [DataField]
+    public bool MakeSentient = true;
 }
