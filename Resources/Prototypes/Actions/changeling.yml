@@ -170,31 +170,6 @@
     selfMessage: changeling-sting-success
 
 - type: entity
-  parent: BaseAction
-  id: TestSequenceAction
-  components:
-  - type: Action
-    raiseOnAction: true
-  - type: InstantAction
-    event: !type:ActionSequenceInstantEvent
-  - type: ActionSequence
-    steps:
-    - !type:PopupActionStep
-      text: Test!
-    - !type:GetMindActionStep
-      targetKey: Performer
-      outMindKey: Mind
-    - !type:SpawnEntityActionStep
-      entity: MobMouse1
-      locationKey: Performer
-      outSpawnedKey: Spawned
-    - !type:TransferMindActionStep
-      mindKey: Mind
-      targetKey: Spawned
-    - !type:GibActionStep
-      targetKey: Performe
-
-- type: entity
   parent: BaseActionChangelingSting
   id: ActionChangelingStingBlind
   name: Blind Sting
