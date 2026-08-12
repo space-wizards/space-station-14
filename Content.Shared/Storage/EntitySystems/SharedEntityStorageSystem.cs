@@ -327,32 +327,25 @@ public abstract partial class SharedEntityStorageSystem : EntitySystem
         if (!Resolve(container, ref component))
             return false;
 
-        _container.Remove(toRemove, component.Contents);
+        var toRemoveTransform = Transform(toRemove);
+        if (toRemoveTransform.MapUid is not { } toRemoveMap)
+            return false;
 
         if (_container.IsEntityInContainer(container)
             && _container.TryGetOuterContainer(container, Transform(container), out var outerContainer))
         {
-
             var attemptEvent = new EntityStorageIntoContainerAttemptEvent(outerContainer);
             RaiseLocalEvent(outerContainer.Owner, ref attemptEvent);
             if (!attemptEvent.Cancelled)
-            {
-                _container.Insert(toRemove, outerContainer);
                 return true;
-            }
         }
+
+        var (pos, rot) = TransformSystem.GetWorldPositionRotation(xform);
+        pos += rot.RotateVec(component.EnteringOffset);
+        if (!_container.Remove(toRemove, component.Contents, destination: new(toRemoveMap, pos)))
+            return false;
 
         RemComp<InsideEntityStorageComponent>(toRemove);
-
-        if (!TryComp(toRemove, out TransformComponent? toRemoveTransform) ||
-            !toRemoveTransform.ParentUid.IsValid() ||
-            toRemoveTransform.MapUid == null)
-        {
-            return true;
-        }
-
-        var pos = TransformSystem.GetWorldPosition(xform) + TransformSystem.GetWorldRotation(xform).RotateVec(component.EnteringOffset);
-        TransformSystem.SetWorldPosition((toRemove, toRemoveTransform), pos);
         return true;
     }
 
