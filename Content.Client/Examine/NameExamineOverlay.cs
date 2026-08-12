@@ -55,42 +55,48 @@ public sealed partial class NameExamineOverlay : Overlay
         if (args.ViewportControl == null || !_nameExamineSystem.Held)
             return;
 
-        args.DrawingHandle.SetTransform(Matrix3x2.Identity);
+        if (_playerManager.LocalEntity is not { } playerEnt)
+            return;
+
+    args.DrawingHandle.SetTransform(Matrix3x2.Identity);
         args.DrawingHandle.UseShader(_shader);
         var scale = _configManager.GetCVar(CVars.DisplayUIScale);
 
         if (scale == 0f)
             scale = _uiManager.DefaultUIScale;
 
-        DrawWorld(args.ScreenHandle, args, scale);
+        DrawWorld(args.ScreenHandle, args, playerEnt, scale);
 
         args.DrawingHandle.UseShader(null);
     }
 
-    private void DrawWorld(DrawingHandleScreen handle, OverlayDrawArgs args, float scale)
+    private void DrawWorld(DrawingHandleScreen handle, OverlayDrawArgs args, EntityUid playerEnt, float scale)
     {
         if (args.ViewportControl == null)
             return;
 
         var matrix = args.ViewportControl.GetWorldToScreenMatrix();
-        var ourEntity = _playerManager.LocalEntity;
 
         var query = _entityManager.EntityQueryEnumerator<TransformComponent, SpriteComponent, MobStateComponent>();
 
         while (query.MoveNext(out var uid, out var xform, out var sprite, out _))
         {
-            if (uid == ourEntity)
+            if (uid == playerEnt)
                 continue;
 
-            var mapPos = _transform.ToMapCoordinates(xform.Coordinates);
+            if (!_transform.InRange(playerEnt, uid, 10f))
+               continue;
 
+            var mapPos = _transform.ToMapCoordinates(xform.Coordinates);
             var pos = Vector2.Transform(mapPos.Position, matrix);
 
-            var text = Identity.Name(uid, _entityManager, ourEntity);
+            var text = Identity.Name(uid, _entityManager, playerEnt);
 
+            //Text dimensions
             var dimensions = handle.GetDimensions(_font, text, scale);
 
-            //Get sprite bounding box so we can draw underneath it
+            //Get sprite bounding box so we can draw at the bottom.
+            //Probably a better way to do this but I don't want it drawing over sprites if possible
             var (worldPos, worldRot) = _transform.GetWorldPositionRotation(xform);
             var bounds = _sprite.CalculateBounds((uid, sprite), worldPos, worldRot, args.Viewport.Eye?.Rotation ?? default);
 
