@@ -294,7 +294,7 @@
 - type: rcd
   id: AirlockGlassShuttleXenoborgLocked
   category: XenoborgAirlocks
-  sprite: /Textures/Interface/Radial/RCD/xenoborg_airlock_dock.png
+  sprite: /Textures/Interface/Radial/RCD/glass_airlock.png
   mode: ConstructObject
   prototype: AirlockGlassShuttleXenoborgLocked
   cost: 5
@@ -306,7 +306,7 @@
 - type: rcd
   id: WallXenoborg
   category: XenoborgWallsAndFlooring
-  sprite: /Textures/Interface/Radial/RCD/xenoborg_wall.png
+  sprite: /Textures/Interface/Radial/RCD/solid_wall.png
   mode: ConstructObject
   prototype: WallXenoborg
   cost: 4
@@ -330,7 +330,7 @@
 - type: rcd
   id: XenoborgWindow
   category: XenoborgWindowsAndGrilles
-  sprite: /Textures/Interface/Radial/RCD/xenoborg_window.png
+  sprite: /Textures/Interface/Radial/RCD/window_reinforced.png
   mode: ConstructObject
   prototype: XenoborgWindow
   cost: 4

@@ -671,13 +671,13 @@
   name: xenoborg wall
   components:
   - type: Sprite
-    sprite: Structures/Walls/xenoborg.rsi
+    sprite: Structures/Walls/solid.rsi
   - type: WallReplacementMarker
   - type: Icon
-    sprite: Structures/Walls/xenoborg.rsi
+    sprite: Structures/Walls/solid.rsi
   - type: IconSmooth
     key: walls
-    base: xenoborg
+    base: solid
 
 # Riveting
 - type: entity

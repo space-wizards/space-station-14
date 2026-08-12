@@ -5,13 +5,13 @@
   components:
   - type: Sprite
     drawdepth: WallTops
-    sprite: Structures/Windows/xenoborg.rsi
+    sprite: Structures/Windows/reinforced_window.rsi
   - type: Icon
-    sprite: Structures/Windows/xenoborg.rsi
+    sprite: Structures/Windows/reinforced_window.rsi
     state: full
   - type: IconSmooth
     key: windows
-    base: xenoborg
+    base: rwindow
 
 - type: entity
   parent: PlastitaniumWindow
