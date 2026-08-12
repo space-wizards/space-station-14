@@ -141,7 +141,7 @@
     speedModifier: 3.0
   - type: MultipleTool
     entries:
-    - behavior: Prying
+    - behavior: [ Prying ]
       sprite:
         sprite: Objects/Tools/jaws_of_life.rsi
         state: xorg_jaws_pry
