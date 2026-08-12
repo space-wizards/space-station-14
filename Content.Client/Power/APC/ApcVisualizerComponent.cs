@@ -22,7 +22,7 @@ public sealed partial class ApcVisualsComponent : Component
     /// The suffixes are used for the channel indicator lights.
     /// </summary>
     [DataField("channelIndicatorSuffixes")]
-    public string[] ChannelSuffixes = new string[(byte)ApcChannelState.NumStates] { "off", "on", "disconnected", "tripped" };
+    public string?[] ChannelSuffixes = new string?[(byte)ApcChannelState.NumStates] { null, "on", "disconnected", "tripped" };
 
     #endregion Channel Indicators
 

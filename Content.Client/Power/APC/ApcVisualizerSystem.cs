@@ -3,12 +3,16 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Power.APC;
 
+/// <summary>
+/// A system to update the screen and the channel indicators for an APC.
+/// </summary>
 public sealed partial class ApcVisualizerSystem : VisualizerSystem<ApcVisualsComponent>
 {
     [Dependency] private SharedPointLightSystem _lights = default!;
 
     [Dependency] private EntityQuery<PointLightComponent> _pointLightQuery = default!;
 
+    /// <inheritdoc/>
     protected override void OnAppearanceChange(EntityUid uid, ApcVisualsComponent comp, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
@@ -24,7 +28,8 @@ public sealed partial class ApcVisualizerSystem : VisualizerSystem<ApcVisualsCom
 
             if (AppearanceSystem.TryGetData<ApcChannelState>(uid, ApcVisuals.ChannelState, out var channelState, args.Component))
             {
-                SpriteSystem.LayerSetRsiState((uid, args.Sprite), ApcVisualLayers.Equipment, $"{comp.ChannelPrefix}-{comp.ChannelSuffixes[(sbyte)channelState]}");
+                var state = comp.ChannelSuffixes[(sbyte)channelState] is { } suffix ? $"{comp.ChannelPrefix}-{suffix}" : null;
+                SpriteSystem.LayerSetRsiState((uid, args.Sprite), ApcVisualLayers.Equipment, state);
                 SpriteSystem.LayerSetVisible((uid, args.Sprite), ApcVisualLayers.Equipment, true);
             }
 
