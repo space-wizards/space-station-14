@@ -1,17 +1,14 @@
-using System.Linq;
 using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
 using Content.Shared.Whitelist;
 using Robust.Client.UserInterface;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 namespace Content.Client.Implants.UI;
 
 public sealed partial class DeimplantBoundUserInterface : BoundUserInterface
 {
     [Dependency] private IPrototypeManager _proto = default!;
-    [Dependency] private IEntityManager _entityManager = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
     [ViewVariables]
@@ -32,8 +29,8 @@ public sealed partial class DeimplantBoundUserInterface : BoundUserInterface
         _window.OnStartDeimplant += (target, user) =>
         {
             SendPredictedMessage(new DeimplantTargetStartVerbMessage(
-                _entityManager.GetNetEntity(target),
-                _entityManager.GetNetEntity(user))
+                EntMan.GetNetEntity(target),
+                EntMan.GetNetEntity(user))
             );
 
             _window.Close();
@@ -51,33 +48,20 @@ public sealed partial class DeimplantBoundUserInterface : BoundUserInterface
             return;
 
         Dictionary<string, string> implants = new();
-        List<EntityPrototype> validImplanters = new();
 
         foreach (var implanter in implantedComp.ImplantContainer.ContainedEntities)
         {
             if (!_whitelist.IsValid(implanterComp.DeimplantWhitelist, implanter))
                 continue;
 
-            if (!EntMan.TryGetComponent<MetaDataComponent>(implanter, out var metaComp) || metaComp.EntityPrototype == null)
+            var metaDataComponent = EntMan.GetComponent<MetaDataComponent>(implanter);
+
+            if (metaDataComponent.EntityPrototype == null)
                 continue;
 
-            if (!_proto.TryIndex(metaComp.EntityPrototype.ID, out var proto))
-                continue;
+            var prototype = _proto.Index<EntityPrototype>(metaDataComponent.EntityPrototype.ID);
 
-            validImplanters.Add(proto);
-        }
-
-        var sortedImplanters = validImplanters
-            .OrderBy(proto => proto.Name)
-            .Select(proto => new EntProtoId(proto.ID))
-            .ToList();
-
-        implanterComp.DeimplantChosen ??= sortedImplanters.FirstOrNull();
-
-        foreach (var implant in sortedImplanters)
-        {
-            if(_proto.Resolve(implant, out var proto))
-                implants.Add(proto.ID, proto.Name);
+            implants.Add(prototype.ID, prototype.Name);
         }
 
         if (_window != null)
