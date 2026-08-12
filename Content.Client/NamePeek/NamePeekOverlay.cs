@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Client.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
@@ -12,9 +13,9 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client.Examine;
+namespace Content.Client.NamePeek;
 
-public sealed partial class NameExamineOverlay : Overlay
+public sealed partial class NamePeekOverlay : Overlay
 {
     private static readonly ProtoId<ShaderPrototype> UnshadedShader = "unshaded";
 
@@ -25,7 +26,7 @@ public sealed partial class NameExamineOverlay : Overlay
     [Dependency] private IPrototypeManager _prototypeManager = default!;
 
     private readonly EntityLookupSystem _lookup;
-    private readonly NameExamineSystem _nameExamineSystem;
+    private readonly NamePeekSystem _namePeekSystem;
     private readonly ExamineSystem _examineSystem;
     private readonly SpriteSystem _sprite;
     private readonly SharedTransformSystem _transform;
@@ -40,11 +41,11 @@ public sealed partial class NameExamineOverlay : Overlay
 
     public override OverlaySpace Space => OverlaySpace.ScreenSpace;
 
-    public NameExamineOverlay(
+    public NamePeekOverlay(
         EntityLookupSystem lookup,
         SpriteSystem sprite,
         SharedTransformSystem transform,
-        NameExamineSystem nameExamine,
+        NamePeekSystem namePeek,
         ExamineSystem examine,
         EntityQuery<SpriteComponent> spriteQuery,
         EntityQuery<TransformComponent> transformQuery,
@@ -53,7 +54,7 @@ public sealed partial class NameExamineOverlay : Overlay
         _lookup = lookup;
         _sprite = sprite;
         _transform = transform;
-        _nameExamineSystem = nameExamine;
+        _namePeekSystem = namePeek;
         _examineSystem = examine;
 
         _spriteQuery = spriteQuery;
@@ -71,7 +72,7 @@ public sealed partial class NameExamineOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        if (args.ViewportControl == null || !_nameExamineSystem.Held)
+        if (args.ViewportControl == null || !_namePeekSystem.Held)
             return;
 
         if (_playerManager.LocalEntity is not { } playerEnt)

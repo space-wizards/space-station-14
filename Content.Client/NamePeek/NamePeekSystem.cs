@@ -1,3 +1,4 @@
+using Content.Client.Examine;
 using Content.Shared.Input;
 using Content.Shared.Mobs.Components;
 using Robust.Client.GameObjects;
@@ -6,12 +7,9 @@ using Robust.Client.Player;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 
-namespace Content.Client.Examine;
+namespace Content.Client.NamePeek;
 
-/// <summary>
-/// This handles...
-/// </summary>
-public sealed partial class NameExamineSystem : EntitySystem
+public sealed partial class NamePeekSystem : EntitySystem
 {
     [Dependency] private IPlayerManager _player = default!;
     [Dependency] private IOverlayManager _overlay = default!;
@@ -33,7 +31,7 @@ public sealed partial class NameExamineSystem : EntitySystem
 
         UpdatesOutsidePrediction = true;
 
-        _overlay.AddOverlay(new NameExamineOverlay(
+        _overlay.AddOverlay(new NamePeekOverlay(
             _lookup,
             _sprite,
             _transform,
@@ -45,13 +43,13 @@ public sealed partial class NameExamineSystem : EntitySystem
 
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.ExamineNames, new PointerInputCmdHandler(OnExamineNames, ignoreUp: false, outsidePrediction: true))
-            .Register<NameExamineSystem>();
+            .Register<NamePeekSystem>();
     }
 
     public override void Shutdown()
     {
         base.Shutdown();
-        _overlay.RemoveOverlay<NameExamineOverlay>();
+        _overlay.RemoveOverlay<NamePeekOverlay>();
     }
 
     private bool OnExamineNames(in PointerInputCmdHandler.PointerInputCmdArgs args)
