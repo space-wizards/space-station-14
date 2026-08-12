@@ -1,7 +1,8 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Roles.Components;
+using Content.Shared.StatusIcon;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -12,7 +13,6 @@ namespace Content.Shared.Roles.Jobs;
 /// </summary>
 public abstract partial class SharedJobSystem : EntitySystem
 {
-    [Dependency] private IPrototypeManager _prototypes = default!;
     [Dependency] private SharedRoleSystem _roles = default!;
 
     private readonly Dictionary<string, string> _inverseTrackerLookup = new();
@@ -35,7 +35,7 @@ public abstract partial class SharedJobSystem : EntitySystem
         _inverseTrackerLookup.Clear();
 
         // This breaks if you have N trackers to 1 JobId but future concern.
-        foreach (var job in _prototypes.EnumeratePrototypes<JobPrototype>())
+        foreach (var job in ProtoMan.EnumeratePrototypes<JobPrototype>())
         {
             _inverseTrackerLookup.Add(job.PlayTimeTracker, job.ID);
         }
@@ -48,8 +48,27 @@ public abstract partial class SharedJobSystem : EntitySystem
     /// <returns></returns>
     public string GetJobPrototype(string trackerProto)
     {
-        DebugTools.Assert(_prototypes.HasIndex<PlayTimeTrackerPrototype>(trackerProto));
+        DebugTools.Assert(ProtoMan.HasIndex<PlayTimeTrackerPrototype>(trackerProto));
         return _inverseTrackerLookup[trackerProto];
+    }
+
+    /// <summary>
+    /// Tries to get the first job prototype using the given job icon.
+    /// </summary>
+    public bool TryGetJobFromIcon(ProtoId<JobIconPrototype> jobIcon, [NotNullWhen(true)] out JobPrototype? jobPrototype)
+    {
+        jobPrototype = null;
+
+        foreach (var prototype in ProtoMan.EnumeratePrototypes<JobPrototype>())
+        {
+            if (prototype.Icon != jobIcon)
+                continue;
+
+            jobPrototype = prototype;
+            return true;
+        }
+
+        return false;
     }
 
     /// <summary>
@@ -58,7 +77,7 @@ public abstract partial class SharedJobSystem : EntitySystem
     public bool TryGetDepartment(string jobProto, [NotNullWhen(true)] out DepartmentPrototype? departmentPrototype)
     {
         // Not that many departments so we can just eat the cost instead of storing the inverse lookup.
-        var departmentProtos = _prototypes.EnumeratePrototypes<DepartmentPrototype>().ToList();
+        var departmentProtos = ProtoMan.EnumeratePrototypes<DepartmentPrototype>().ToList();
         departmentProtos.Sort((x, y) => string.Compare(x.ID, y.ID, StringComparison.Ordinal));
 
         foreach (var department in departmentProtos)
@@ -83,7 +102,7 @@ public abstract partial class SharedJobSystem : EntitySystem
     {
         // not sorting it since there should only be 1 primary department for a job.
         // this is enforced by the job tests.
-        var departmentProtos = _prototypes.EnumeratePrototypes<DepartmentPrototype>();
+        var departmentProtos = ProtoMan.EnumeratePrototypes<DepartmentPrototype>();
 
         foreach (var department in departmentProtos)
         {
@@ -105,7 +124,7 @@ public abstract partial class SharedJobSystem : EntitySystem
     {
         // not sorting it since there should only be 1 primary department for a job.
         // this is enforced by the job tests.
-        var departmentProtos = _prototypes.EnumeratePrototypes<DepartmentPrototype>();
+        var departmentProtos = ProtoMan.EnumeratePrototypes<DepartmentPrototype>();
         departmentPrototypes = new List<DepartmentPrototype>();
         var found = false;
 
@@ -137,18 +156,18 @@ public abstract partial class SharedJobSystem : EntitySystem
         return true;
     }
 
-    public bool MindHasJobWithId(EntityUid? mindId, string prototypeId)
+    public bool MindHasJobWithId(EntityUid? mindId, params ProtoId<JobPrototype>[] prototypes)
     {
-
         if (mindId is null)
             return false;
 
-        _roles.MindHasRole<JobRoleComponent>(mindId.Value, out var role);
-
-        if (role is null)
+        if (!_roles.MindHasRole<JobRoleComponent>(mindId.Value, out var role))
             return false;
 
-        return role.Value.Comp1.JobPrototype == prototypeId;
+        if (role.Value.Comp1.JobPrototype is not { } protoId)
+            return false;
+
+        return prototypes.Contains(protoId);
     }
 
     public bool MindTryGetJob(
@@ -158,7 +177,7 @@ public abstract partial class SharedJobSystem : EntitySystem
         prototype = null;
         MindTryGetJobId(mindId, out var protoId);
 
-        return _prototypes.Resolve(protoId, out prototype) || prototype is not null;
+        return ProtoMan.Resolve(protoId, out prototype) || prototype is not null;
     }
 
     public bool MindTryGetJobId(

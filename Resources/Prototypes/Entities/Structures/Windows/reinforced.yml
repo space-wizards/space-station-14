@@ -1,13 +1,13 @@
 - type: entity
+  parent: [BaseDeltaPressureReinforcedGlass, BaseWindowStructure]
   id: ReinforcedWindow
   name: reinforced window
-  parent: [BaseDeltaPressureReinforcedGlass, Window]
   components:
   - type: Sprite
-    drawdepth: WallTops
-    sprite: Structures/Windows/reinforced_window.rsi
+    sprite: Structures/Windows/window-base-reinf.rsi
   - type: Icon
-    sprite: Structures/Windows/reinforced_window.rsi
+    sprite: Structures/Windows/window-base-reinf.rsi
+    state: full
   - type: Repairable
     fuelCost: 10
     doAfterDelay: 2
@@ -21,15 +21,6 @@
     fx: EffectRCDDeconstruct6
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 150 #excess damage (nuke?). avoid computational cost of spawning entities.
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WindowShatter
     - trigger:
         !type:DamageTrigger
         damage: 75
@@ -58,14 +49,9 @@
       sprite: Structures/Windows/cracks.rsi
 
 - type: entity
+  parent: [BaseDeltaPressureReinforcedGlassQuarter, BaseWindowStructureDirectional]
   id: WindowReinforcedDirectional
-  parent: [BaseDeltaPressureReinforcedGlassQuarter, WindowDirectional]
   name: directional reinforced window
-  description: Don't smudge up the glass down there.
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Window
   components:
   - type: Sprite
     sprite: Structures/Windows/directional.rsi
@@ -85,21 +71,14 @@
       sprite: Structures/Windows/cracks_directional.rsi
   - type: Damageable
     damageModifierSet: RGlass
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: RCDDeconstructable
     cost: 4
     delay: 4
     fx: EffectRCDDeconstruct4
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 75
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WindowShatter
     - trigger:
         !type:DamageTrigger
         damage: 37
@@ -127,8 +106,7 @@
     - Window
   components:
   - type: Sprite
-    drawdepth: WallTops
-    sprite: Structures/Windows/reinforced_window_diagonal.rsi
+    sprite: Structures/Windows/window-base-diagonal-reinf.rsi
     state: state0
   - type: Tag
     tags:
@@ -136,10 +114,10 @@
     - Window
   - type: IconSmooth
     mode: Diagonal
-    key: windows
+    key: walls
     base: state
   - type: Icon
-    sprite: Structures/Windows/reinforced_window_diagonal.rsi
+    sprite: Structures/Windows/window-base-diagonal-reinf.rsi
     state: state0
   - type: Fixtures
     fixtures:
@@ -161,7 +139,7 @@
     - East
   - type: DamageVisuals
     damageOverlay:
-      sprite: Structures/Windows/cracks_diagonal.rsi
+      sprite: Structures/Windows/cracks-diagonal.rsi
   - type: Construction
     graph: WindowDiagonal
     node: reinforcedWindowDiagonal

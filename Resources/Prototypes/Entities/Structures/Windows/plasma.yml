@@ -1,28 +1,19 @@
 - type: entity
   id: PlasmaWindow
   name: plasma window
-  parent: [BaseDeltaPressurePlasma, WindowRCDResistant]
+  parent: [BaseDeltaPressurePlasma, BaseWindowStructure, BaseRCDResistant]
   components:
   - type: Sprite
-    drawdepth: WallTops
-    sprite: Structures/Windows/plasma_window.rsi
+    sprite: Structures/Windows/window-plasma.rsi
   - type: Icon
-    sprite: Structures/Windows/plasma_window.rsi
+    sprite: Structures/Windows/window-plasma.rsi
+    state: full
   - type: Damageable
     damageModifierSet: Glass
   - type: Injurable
     damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 150
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WindowShatter
     - trigger:
         !type:DamageTrigger
         damage: 75
@@ -56,13 +47,9 @@
 
 - type: entity
   id: PlasmaWindowDirectional
-  parent: [BaseDeltaPressurePlasmaQuarter, WindowDirectionalRCDResistant]
+  parent: [BaseDeltaPressurePlasmaQuarter, BaseWindowStructureDirectional, BaseRCDResistant]
   name: directional plasma window
   description: Don't smudge up the glass down there.
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Window
   components:
   - type: Sprite
     sprite: Structures/Windows/directional.rsi
@@ -80,17 +67,12 @@
     trackAllDamage: true
     damageOverlay:
       sprite: Structures/Windows/cracks_directional.rsi
+  - type: Damageable
+    damageModifierSet: Glass
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 75
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WindowShatter
     - trigger:
         !type:DamageTrigger
         damage: 37
@@ -121,7 +103,7 @@
   components:
   - type: Sprite
     drawdepth: WallTops
-    sprite: Structures/Windows/plasma_diagonal.rsi
+    sprite: Structures/Windows/window-diagonal-plasma.rsi
     state: state0
   - type: Tag
     tags:
@@ -129,10 +111,10 @@
     - Window
   - type: IconSmooth
     mode: Diagonal
-    key: windows
+    key: walls
     base: state
   - type: Icon
-    sprite: Structures/Windows/plasma_diagonal.rsi
+    sprite: Structures/Windows/window-diagonal-plasma.rsi
     state: state0
   - type: Fixtures
     fixtures:
@@ -154,7 +136,7 @@
     - East
   - type: DamageVisuals
     damageOverlay:
-      sprite: Structures/Windows/cracks_diagonal.rsi
+      sprite: Structures/Windows/cracks-diagonal.rsi
   - type: Construction
     graph: WindowDiagonal
     node: plasmaWindowDiagonal

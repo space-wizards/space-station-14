@@ -7,7 +7,6 @@
   - type: Tag
     tags:
     - Hoe
-    - BotanyHoe
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/hoe.rsi
     state: icon
@@ -25,6 +24,7 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 100
+  - type: BotanyHoe
 
 - type: entity
   name: plant clippers
@@ -32,9 +32,6 @@
   id: HydroponicsToolClippers
   description: A tool used to take samples from plants.
   components:
-  - type: Tag
-    tags:
-    - PlantSampleTaker
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/clippers.rsi
     state: icon
@@ -49,6 +46,7 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 100
+  - type: BotanySampleTaker
   - type: Tool
     qualities:
     - Shearing
@@ -59,7 +57,9 @@
   id: HydroponicsToolScythe
   description: A sharp and curved blade on a long fibremetal handle, this tool makes it easy to reap what you sow.
   components:
-  - type: Sharp
+  - type: Tool
+    qualities:
+    - Slicing
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/scythe.rsi
     state: icon
@@ -87,10 +87,13 @@
   id: HydroponicsToolHatchet
   description: A very sharp axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood.
   components:
+  - type: Tool
+    qualities:
+    - Slicing
+    - Sawing
   - type: Tag
     tags:
     - BotanyHatchet
-  - type: Sharp
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/hatchet.rsi
     state: icon

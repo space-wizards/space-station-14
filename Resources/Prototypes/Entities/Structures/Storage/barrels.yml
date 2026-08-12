@@ -1,5 +1,5 @@
 - type: entity
-  parent: StorageTank
+  parent: StorageTankIndestructible
   id: BaseBarrelChem
   abstract: true
   name: chemical barrel
@@ -22,12 +22,6 @@
         - MachineLayer
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 25

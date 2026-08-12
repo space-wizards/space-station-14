@@ -20,7 +20,7 @@ public sealed partial class PaperVisualsComponent : Component
     ///     the PatchMargin in a <code>StyleBoxTexture</code>
     /// </summary>
     [DataField]
-    public Box2 BackgroundPatchMargin;
+    public Thickness BackgroundPatchMargin;
 
     /// <summary>
     ///     Modulate the background image by this color. Can be used to add colorful
@@ -57,7 +57,7 @@ public sealed partial class PaperVisualsComponent : Component
     ///     Any additional margin to add around the header
     /// </summary>
     [DataField]
-    public Box2 HeaderMargin;
+    public Thickness HeaderMargin;
 
     /// <summary>
     /// A path to an image which will be used as a footer on the paper
@@ -75,7 +75,7 @@ public sealed partial class PaperVisualsComponent : Component
     /// Any additional margin to add around the footer
     /// </summary>
     [DataField]
-    public Box2 FooterMargin;
+    public Thickness FooterMargin;
 
     /// <summary>
     ///     Path to an image to use as the background to the "content" of the paper
@@ -96,7 +96,7 @@ public sealed partial class PaperVisualsComponent : Component
     ///     An additional margin around the content (including header)
     /// </summary>
     [DataField]
-    public Box2 ContentMargin;
+    public Thickness ContentMargin;
 
     /// <summary>
     ///     The number of lines that the content image represents. The
@@ -107,10 +107,12 @@ public sealed partial class PaperVisualsComponent : Component
     public int ContentImageNumLines = 1;
 
     /// <summary>
-    ///     Modulate the style's font by this color
+    ///     Optional default color for text written on the paper. Useful to
+    ///     specify light color text for use on dark backgrounds. Paper text
+    ///     can still use markup to override color for subsections.
     /// </summary>
     [DataField]
-    public Color FontAccentColor = new Color(223, 223, 213);
+    public Color? DefaultTextColor = null;
 
     /// <summary>
     ///     This can enforce that your paper has a limited area to write in.
