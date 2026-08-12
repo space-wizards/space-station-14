@@ -22,6 +22,7 @@
   - type: InteractionOutline
   - type: Sprite
     drawdepth: WallMountedItems
+    offset: 0, 1
     layers:
     - map: ["enum.PoweredLightLayers.Base"]
       state: base
@@ -81,7 +82,7 @@
     graph: LightFixture
     node: tubeLight
   - type: Sprite
-    sprite: Structures/Wallmounts/Lighting/light_tube.rsi
+    sprite: Structures/Wallmounts/Lighting/light-tube.rsi
     layers:
     - map: ["enum.PoweredLightLayers.Base"]
       state: base
@@ -108,7 +109,8 @@
   description: "A light fixture. Draws power and produces light when equipped with a light tube."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/Lighting/light_tube.rsi
+    sprite: Structures/Wallmounts/Lighting/light-tube.rsi
+    offset: 0, 1
     state: empty
   - type: PointLight
     enabled: false
@@ -263,7 +265,7 @@
       sound:
         path: /Audio/Ambience/Objects/light_hum.ogg
     - type: Sprite
-      sprite: Structures/Wallmounts/Lighting/light_small.rsi
+      sprite: Structures/Wallmounts/Lighting/light-small.rsi
       state: base
     - type: PointLight
       color: "#FFD1A3"
@@ -305,7 +307,7 @@
   description: "A light fixture. Draws power and produces light when equipped with a light bulb."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/Lighting/light_small.rsi
+    sprite: Structures/Wallmounts/Lighting/light-small.rsi
     state: empty
   - type: AmbientSound
     enabled: false
@@ -424,7 +426,7 @@
     enabled: false
     radius: 5
     energy: 0.6
-    offset: "0, 0.4"
+    offset: "0, 0.25"
     color: "#7CFC00"
     lightMask: ConeDouble
   - type: ApcPowerReceiver
@@ -441,7 +443,8 @@
   - type: RotatingLight
     speed: 40
   - type: Sprite
-    sprite: Structures/Wallmounts/Lighting/emergency_light.rsi
+    sprite: Structures/Wallmounts/Lighting/emergency-light.rsi
+    offset: 0, 1
     layers:
     - state: base
       map: [ "enum.EmergencyLightVisualLayers.Base" ]

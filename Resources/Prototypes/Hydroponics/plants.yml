@@ -46,7 +46,7 @@
 - type: entity
   parent: BasePlant
   id: WheatPlants
-  name: wheat
+  name: wheat stalk
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/wheat.rsi
@@ -77,7 +77,7 @@
 - type: entity
   parent: BasePlant
   id: MeatWheatPlants
-  name: meatwheat
+  name: meatwheat stalk
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/meatwheat.rsi
@@ -107,7 +107,7 @@
 - type: entity
   parent: BasePlant
   id: OatPlants
-  name: oat
+  name: oat stalk
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/oat.rsi
@@ -137,7 +137,7 @@
 - type: entity
   parent: BasePlant
   id: BananaPlants
-  name: banana
+  name: banana plant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/banana.rsi
@@ -172,7 +172,7 @@
 - type: entity
   parent: BasePlant
   id: MimanaPlants
-  name: mimana
+  name: mimana plant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/mimana.rsi
@@ -241,7 +241,7 @@
 - type: entity
   parent: BasePlant
   id: LaughinPeaPlants
-  name: laughin' peas
+  name: laughin' pea
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/laughin_pea.rsi
@@ -280,7 +280,7 @@
 - type: entity
   parent: BasePlant
   id: LemonPlants
-  name: lemon
+  name: lemon tree
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/lemon.rsi
@@ -311,7 +311,7 @@
 - type: entity
   parent: BasePlant
   id: LemoonPlants
-  name: lemoon
+  name: lemoon tree
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/lemoon.rsi
@@ -341,7 +341,7 @@
 - type: entity
   parent: BasePlant
   id: LimePlants
-  name: lime
+  name: lime tree
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/lime.rsi
@@ -372,7 +372,7 @@
 - type: entity
   parent: BasePlant
   id: OrangePlants
-  name: orange
+  name: orange tree
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/orange.rsi
@@ -403,7 +403,7 @@
 - type: entity
   parent: BasePlant
   id: ExtradimensionalOrangePlants
-  name: extradimensional orange
+  name: extradimensional orange tree
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/extradimensional_orange.rsi
@@ -437,7 +437,7 @@
 - type: entity
   parent: BasePlant
   id: PineapplePlants
-  name: pineapple
+  name: pineapple plant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/pineapple.rsi
@@ -645,7 +645,7 @@
 - type: entity
   parent: BasePlant
   id: TomatoPlants
-  name: tomato
+  name: tomato plant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/tomato.rsi
@@ -686,7 +686,7 @@
 - type: entity
   parent: BasePlant
   id: BlueTomatoPlants
-  name: blue tomato
+  name: blue tomato plant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/blue_tomato.rsi
@@ -726,7 +726,7 @@
 - type: entity
   parent: BasePlant
   id: BloodTomatoPlants
-  name: blood tomato
+  name: blood tomato plant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/blood_tomato.rsi
@@ -763,7 +763,7 @@
 - type: entity
   parent: BasePlant
   id: KillerTomatoPlants
-  name: tomato killer
+  name: tomato killer plant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/tomatokiller.rsi
@@ -899,7 +899,7 @@
 - type: entity
   parent: BasePlant
   id: ApplePlants
-  name: apple
+  name: apple tree
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/apple.rsi
@@ -930,7 +930,7 @@
 - type: entity
   parent: BasePlant
   id: GoldenApplePlants
-  name: golden apple
+  name: golden apple tree
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/golden_apple.rsi
@@ -966,7 +966,7 @@
 - type: entity
   parent: BasePlant
   id: CornPlants
-  name: corn
+  name: ear of corn
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/corn.rsi
@@ -1082,7 +1082,7 @@
 - type: entity
   parent: BasePlant
   id: ChanterellePlants
-  name: chanterelle
+  name: chanterelle mushroom
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/chanterelle.rsi
@@ -1220,7 +1220,7 @@
 - type: entity
   parent: BasePlant
   id: TobaccoPlants
-  name: tobacco
+  name: tobacco plant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/tobacco.rsi
@@ -1320,7 +1320,7 @@
 - type: entity
   parent: BasePlant
   id: ChiliPlants
-  name: chili
+  name: chili pepper
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/chili.rsi
@@ -1358,7 +1358,7 @@
 - type: entity
   parent: BasePlant
   id: ChillyPlants
-  name: chilly
+  name: chilly pepper
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/chilly.rsi
@@ -1687,7 +1687,7 @@
 - type: entity
   parent: BasePlant
   id: GatfruitPlants
-  name: gatfruit
+  name: gatfruit tree
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/gatfruit.rsi
@@ -1717,7 +1717,7 @@
 - type: entity
   parent: BasePlant
   id: FakeCapfruitPlants
-  name: fake capfruit
+  name: capfruit tree
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/capfruit.rsi
@@ -1746,7 +1746,7 @@
 - type: entity
   parent: BasePlant
   id: RealCapfruitPlants
-  name: real capfruit
+  name: capfruit tree
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/capfruit.rsi
@@ -1775,7 +1775,7 @@
 - type: entity
   parent: BasePlant
   id: RicePlants
-  name: rice
+  name: rice stalk
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/rice.rsi
@@ -1807,7 +1807,7 @@
 - type: entity
   parent: BasePlant
   id: SoybeanPlants
-  name: soybeans
+  name: soy plant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/soybeans.rsi
@@ -1835,7 +1835,7 @@
 - type: entity
   parent: BasePlant
   id: SpacemansTrumpetPlants
-  name: spaceman's trumpet
+  name: spaceman's trumpet plant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/spacemans_trumpet.rsi
@@ -1866,7 +1866,7 @@
 - type: entity
   parent: BasePlant
   id: KoibeanPlants
-  name: koibeans
+  name: koibean plant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/koibean.rsi
@@ -1897,7 +1897,7 @@
 - type: entity
   parent: BasePlant
   id: GrapePlants
-  name: grape
+  name: grape plant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/grape.rsi
@@ -1926,7 +1926,7 @@
 - type: entity
   parent: BasePlant
   id: WatermelonPlants
-  name: watermelon
+  name: watermelon vine
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/watermelon.rsi
@@ -1959,7 +1959,7 @@
 - type: entity
   parent: BasePlant
   id: HolymelonPlants
-  name: holymelon
+  name: holymelon vine
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/holymelon.rsi
@@ -1991,7 +1991,7 @@
 - type: entity
   parent: BasePlant
   id: CocoaPlants
-  name: cocoa
+  name: cocoa plant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/cocoa.rsi
@@ -2026,7 +2026,7 @@
 - type: entity
   parent: BasePlant
   id: BerryPlants
-  name: berries
+  name: berry bush
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/berries.rsi
@@ -2057,7 +2057,7 @@
 - type: entity
   parent: BasePlant
   id: BungoPlants
-  name: bungo
+  name: bungo plant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/bungo.rsi
@@ -2093,7 +2093,7 @@
 - type: entity
   parent: BasePlant
   id: PeaPlants
-  name: peas
+  name: pea vine
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/pea.rsi
@@ -2127,7 +2127,7 @@
 - type: entity
   parent: BasePlant
   id: WorldPeaPlants
-  name: world peas
+  name: world pea vine
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/world_pea.rsi
@@ -2233,7 +2233,7 @@
 - type: entity
   parent: BasePlant
   id: CottonPlants
-  name: cotton
+  name: cotton plant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/cotton.rsi
@@ -2261,7 +2261,7 @@
 - type: entity
   parent: BasePlant
   id: PyrottonPlants
-  name: pyrotton
+  name: pyrotton plant
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/pyrotton.rsi
@@ -2292,7 +2292,7 @@
 - type: entity
   parent: BasePlant
   id: CherryPlants
-  name: cherry
+  name: cherry tree
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/cherry.rsi
@@ -2358,7 +2358,7 @@
 - type: entity
   parent: BasePlant
   id: BloonionPlants
-  name: bloonion
+  name: bloonion bulb
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/bloonion.rsi
