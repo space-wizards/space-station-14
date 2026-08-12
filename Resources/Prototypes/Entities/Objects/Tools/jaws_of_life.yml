@@ -36,7 +36,7 @@
   - type: MultipleTool
     statusShowBehavior: true
     entries:
-      - behavior: Prying
+      - behavior: [ Prying ]
         sprite:
           sprite: Objects/Tools/jaws_of_life.rsi
           state: jaws_pry
@@ -48,7 +48,7 @@
           path: /Audio/Items/change_jaws.ogg
           params:
             volume: -5
-      - behavior: Cutting
+      - behavior: [ Cutting ]
         sprite:
           sprite: Objects/Tools/jaws_of_life.rsi
           state: jaws_cutter
@@ -89,7 +89,7 @@
     speedModifier: 3.0
   - type: MultipleTool
     entries:
-      - behavior: Prying
+      - behavior: [ Prying ]
         sprite:
           sprite: Objects/Tools/jaws_of_life.rsi
           state: syn_jaws_pry
@@ -101,7 +101,7 @@
           path: /Audio/Items/change_jaws.ogg
           params:
             volume: -5
-      - behavior: Cutting
+      - behavior: [ Cutting ]
         sprite:
           sprite: Objects/Tools/jaws_of_life.rsi
           state: syn_jaws_cutter

@@ -228,3 +228,9 @@ public sealed class GhostUpdateGhostRoleCountEvent : EntityEventArgs
         AvailableGhostRoles = availableGhostRoleCount;
     }
 }
+
+/// <summary>
+/// Raised on an entity when Its mind is attempting to ghost out.
+/// </summary>
+[ByRefEvent]
+public record struct GhostAttemptEvent(EntityUid Mind, bool Cancelled = false);
