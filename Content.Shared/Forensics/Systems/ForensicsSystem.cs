@@ -31,13 +31,13 @@ public sealed partial class ForensicsSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popupSystem = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
-    [Dependency] private EntityQuery<DnaComponent> _dnaQuery;
-    [Dependency] private EntityQuery<FiberComponent> _fiberQuery;
-    [Dependency] private EntityQuery<FingerprintComponent> _fingerprintQuery;
-    [Dependency] private EntityQuery<ForensicsComponent> _forensicsQuery;
-    [Dependency] private EntityQuery<IgnoresFingerprintsComponent> _ignoresFingerprintsQuery;
-    [Dependency] private EntityQuery<InventoryComponent> _inventoryQuery;
-    [Dependency] private EntityQuery<ResidueComponent> _residueQuery;
+    [Dependency] private EntityQuery<DnaComponent> _dnaQuery = default!;
+    [Dependency] private EntityQuery<FiberComponent> _fiberQuery = default!;
+    [Dependency] private EntityQuery<FingerprintComponent> _fingerprintQuery = default!;
+    [Dependency] private EntityQuery<ForensicsComponent> _forensicsQuery = default!;
+    [Dependency] private EntityQuery<IgnoresFingerprintsComponent> _ignoresFingerprintsQuery = default!;
+    [Dependency] private EntityQuery<InventoryComponent> _inventoryQuery = default!;
+    [Dependency] private EntityQuery<ResidueComponent> _residueQuery = default!;
 
     [SubscribeLocalEvent]
     private void OnSolutionChanged(Entity<DnaSubstanceTraceComponent> ent, ref SolutionChangedEvent ev)
