@@ -27,7 +27,7 @@ public abstract partial class StationEventSystem<T> : GameRuleSystem<T> where T 
     {
         base.Initialize();
 
-        Sawmill = Logger.GetSawmill("stationevents");
+        Sawmill = LogManager.GetSawmill("stationevents");
     }
 
     /// <inheritdoc/>

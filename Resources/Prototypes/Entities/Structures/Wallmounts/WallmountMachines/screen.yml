@@ -6,18 +6,18 @@
   components:
   - type: Rotatable
   - type: TextScreenVisuals
-    textOffset: 0,3
-    timerOffset: 0,-4
+    textOffset: 0,10
+    timerOffset: 0,3
     rows: 2
     scrollEnabled: true
     frameState:
       sprite: Structures/Wallmounts/screen.rsi
       state: outer_frame
   - type: Sprite
+    offset: 0, -0.5
     drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/screen.rsi
     state: screen # Note: outer_frame will be added on top of text layers.
-    noRot: true
   - type: Appearance
   - type: Destructible
     thresholds:
