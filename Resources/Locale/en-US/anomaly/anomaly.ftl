@@ -32,6 +32,7 @@ anomaly-scanner-particle-unstable-unknown = - [color=plum]Unstable type:[/color]
 anomaly-scanner-particle-containment-unknown = - [color=goldenrod]Containment type:[/color] [color=red]ERROR[/color]
 anomaly-scanner-particle-transformation-unknown = - [color=#6b75fa]Transformation type:[/color] [color=red]ERROR[/color]
 anomaly-scanner-pulse-timer = Time until next pulse: [color=gray]{$time}[/color]
+anomaly-scanner-doafter-examine = { CAPITALIZE(SUBJECT($user)) } {CONJUGATE-BE($user)} [color=plum]scanning an anomaly[/color].
 
 anomaly-gorilla-core-slot-name = Anomaly core
 anomaly-gorilla-charge-none = It has no [bold]anomaly core[/bold] inside of it.
@@ -79,7 +80,7 @@ anomaly-generator-flavor-right = v1.1
 
 anomaly-behavior-unknown = [color=red]ERROR. Cannot be read.[/color]
 
-anomaly-behavior-title = behavior deviation analysis:
+anomaly-behavior-title = Behavior Deviation Analysis:
 anomaly-behavior-point = [color=gold]Anomaly produces {$mod}% of the points[/color]
 
 anomaly-behavior-safe = [color=forestgreen]The anomaly is extremely stable. Extremely rare pulsations.[/color]
@@ -97,3 +98,4 @@ anomaly-behavior-inconstancy = [color=crimson]Impermanence has been detected. Pa
 anomaly-behavior-fast = [color=crimson]The pulsation frequency is strongly increased.[/color]
 anomaly-behavior-strenght = [color=crimson]The pulsation power is significantly increased.[/color]
 anomaly-behavior-moving = [color=crimson]Coordinate instability was detected.[/color]
+anomaly-secret-admin = [color=red](ERROR)[/color]

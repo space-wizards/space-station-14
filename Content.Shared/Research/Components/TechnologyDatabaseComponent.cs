@@ -12,13 +12,11 @@ public sealed partial class TechnologyDatabaseComponent : Component
     /// <summary>
     /// A main discipline that locks out other discipline technology past a certain tier.
     /// </summary>
-    [AutoNetworkedField]
-    [DataField]
+    [DataField, AutoNetworkedField]
     public ProtoId<TechDisciplinePrototype>? MainDiscipline;
 
-    [AutoNetworkedField]
-    [DataField]
-    public List<ProtoId<TechnologyPrototype>> CurrentTechnologyCards = new();
+    [DataField, AutoNetworkedField]
+    public List<string> CurrentTechnologyCards = new();
 
     /// <summary>
     /// Which research disciplines are able to be unlocked
