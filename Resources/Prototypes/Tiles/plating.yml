@@ -52,10 +52,6 @@
   name: tiles-plating
   sprite: /Textures/Tiles/plating_damaged.png
   variants: 3
-  placementVariants:
-  - 1.0
-  - 1.0
-  - 1.0
 
 - type: tile
   id: PlatingAsteroid

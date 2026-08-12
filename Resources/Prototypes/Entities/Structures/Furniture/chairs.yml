@@ -1,7 +1,7 @@
 - type: entity
-  name: chair
-  id: SeatBase
   abstract: true
+  id: SeatBase
+  name: chair
   description: You sit in this. Either by will or force.
   placement:
     mode: PlaceFree
@@ -31,23 +31,6 @@
     damageModifierSet: Metallic
   - type: Injurable
     damageContainer: Inorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 50
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
   - type: StaticPrice
     price: 50
 
@@ -84,6 +67,17 @@
   components:
   - type: Rotatable
     rotateWhileAnchored: true
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
 
 #Starts anchored, can be rotated while anchored
 - type: entity
@@ -109,6 +103,17 @@
   - type: Construction
     graph: Seat
     node: chair
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
 
 - type: entity
   name: chair
@@ -130,6 +135,17 @@
   - type: Construction
     graph: Seat
     node: stool
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
 
 - type: entity
   name: bar stool
@@ -186,6 +202,17 @@
   - type: Construction
     graph: Seat
     node: chairComfy
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
 
 - type: entity
   name: pilot seat
@@ -198,6 +225,17 @@
   - type: Construction
     graph: Seat
     node: chairPilotSeat
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
 
 - type: entity
   name: wooden chair
@@ -213,15 +251,6 @@
     damageModifierSet: Wood
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WoodDestroy
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 25
@@ -279,29 +308,13 @@
       collection: MaleScreams
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Voice/Human/womanlaugh.ogg
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
-        damage: 50
+        damage: 25
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Voice/Human/womanlaugh.ogg
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          MaterialWoodPlank:
-            min: 1
-            max: 1
   - type: Construction
     graph: RitualSeat
     node: chairCursed
@@ -324,15 +337,6 @@
     damageModifierSet: Web
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WoodDestroy
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 50
@@ -368,7 +372,6 @@
       visible: false
   - type: Item
     size: Huge
-  - type: Appearance
   - type: MeleeWeapon
     damage:
       types:
@@ -379,6 +382,17 @@
     graph: Seat
     node: chairFolding
   - type: DamageExaminable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
 
 - type: entity
   parent: ChairFolding
@@ -401,6 +415,17 @@
   - type: Construction
     graph: Seat
     node: chairSteelBench
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
 
 - type: entity
   name: cardboard stool
@@ -415,16 +440,8 @@
     node: stoolCard
   - type: Damageable
     damageModifierSet: Card
-  - type: Injurable
-    damageContainer: Inorganic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 40
-      behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 10
@@ -450,15 +467,6 @@
     node: chairWoodBench
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WoodDestroy
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 50

@@ -1,7 +1,7 @@
 - type: entity
   name: laser raptor
   id: MobLaserRaptor
-  parent: SimpleMobBase
+  parent: [SimpleMobBase, BaseSlicingRefinable, BaseMobDestructible]
   description: From the Viking age.
   components:
     - type: NpcFactionMember
@@ -37,8 +37,8 @@
       thresholds:
         0: Alive
         100: Dead
-    - type: Butcherable
-      spawned:
+    - type: ToolRefinable
+      refineResult:
       - id: FoodMeatChicken
         amount: 2
     - type: MovementSpeedModifier
@@ -219,7 +219,7 @@
   - type: PotencyVisuals
   - type: Appearance
   - type: Produce
-    seedId: killerTomato
+    plantId: KillerTomatoPlants
   - type: PassiveDamage # Slight passive damage. 35 hp \ 5 min \ 60 sec = 0.08
     allowedStates:
     - Alive
