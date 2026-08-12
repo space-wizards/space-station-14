@@ -1,20 +1,29 @@
 using Content.Shared.Stealth;
 using Content.Shared.Stealth.Components;
 using Robust.Shared.Light;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Stealth;
 
 public sealed partial class StealthSystem : SharedStealthSystem
 {
     [Dependency] private LightLevelSystem _lightLevelSystem = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<StealthComponent, StealthInDarkComponent>();
-        while (query.MoveNext(out var uid, out var stealth, out var darkStealth))
+        var query = EntityQueryEnumerator<StealthInDarkComponent, StealthComponent>();
+        while (query.MoveNext(out var uid, out var darkStealth, out var stealth))
         {
+            var curTime = _timing.CurTime;
+
+            if (darkStealth.NextVisibilityChange > curTime)
+                continue;
+
+            darkStealth.NextVisibilityChange = curTime + darkStealth.Interval;
+
             if (!_lightLevelSystem.TryCalculateLightLevel(uid, out var lightLevel))
                 continue;
 
