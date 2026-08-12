@@ -144,18 +144,6 @@ public partial class MobStateSystem
     #region Event Subscribers
 
     [SubscribeLocalEvent]
-    private void OnAfterAutoHandleState(Entity<MobStateComponent> ent, ref AfterAutoHandleStateEvent args)
-    {
-        if (ent.Comp.LastReceivedState == ent.Comp.CurrentState)
-            return;
-
-        var ev = new MobStateChangedEvent(ent, ent.Comp, ent.Comp.LastReceivedState, ent.Comp.CurrentState);
-        OnStateChanged(ent, ent.Comp, ent.Comp.LastReceivedState, ent.Comp.CurrentState);
-        RaiseLocalEvent(ent, ev, true);
-        ent.Comp.LastReceivedState = ent.Comp.CurrentState;
-    }
-
-    [SubscribeLocalEvent]
     private void OnSleepAttempt(EntityUid target, MobStateComponent component, ref TryingToSleepEvent args)
     {
         if (IsDead(target, component))

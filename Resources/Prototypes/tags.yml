@@ -153,9 +153,6 @@
   id: BotanyHatchet # Storage whitelist: ClothingBeltPlant. ItemMapper: ClothingBeltPlant
 
 - type: Tag
-  id: BotanyHoe # Storage whitelist: ClothingBeltPlant. ItemMapper: ClothingBeltPlant
-
-- type: Tag
   id: BotanyShovel # Storage whitelist: ClothingBeltPlant. ItemMapper: ClothingBeltPlant
 
 - type: Tag # Used for specifically chemistry bottles.
@@ -489,7 +486,7 @@
   id: DoorBumpOpener # Used by SharedDoorSystem to allow tagged entities to open doors when they collide.
 
 - type: Tag
-  id: DoorElectronics  # ConstructionGraph: PinionAirlock, BlastDoor, Windoor
+  id: DoorElectronics  # ConstructionGraph: BlastDoor, Windoor
                        # Used interchangeably with DoorElectronicsComponent, sometimes even in the same graph. TODO pick one
 
 - type: Tag
@@ -1120,9 +1117,6 @@
 
 - type: Tag
   id: PlantBGone # Storage whitelist: ClothingBeltPlant. ItemMapper: ClothingBeltPlant
-
-- type: Tag
-  id: PlantSampleTaker # Used by PlantHolderSystem to make tagged entities a pseudo-tool for trimming seeds. TODO this sucks!
 
 - type: Tag
   id: PlasmaGlassShard # ConstructionGraph: ImprovisedArrowPlasma, PlasmaShiv, SpearPlasma
