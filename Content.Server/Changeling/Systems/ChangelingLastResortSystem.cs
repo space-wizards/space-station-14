@@ -99,8 +99,6 @@ public sealed partial class ChangelingLastResortSystem : SharedChangelingLastRes
 
     private void TakeOverCorpse(EntityUid user, EntityUid target, EntityUid mindId, MindComponent mind)
     {
-        // TODO: delete this after adding the stasis.
-        _rejuvenate.PerformRejuvenate(target);
         _mind.TransferTo(mindId, target, mind: mind);
 
         _antag.AssignAntagComponents(target, ChangelingAntag);

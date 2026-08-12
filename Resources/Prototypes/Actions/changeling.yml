@@ -192,32 +192,7 @@
       mindKey: Mind
       targetKey: Spawned
     - !type:GibActionStep
-      targetKey: Performer
-
-- type: entity
-  parent: BaseAction
-  id: TestSequenceActionTarget
-  components:
-  - type: Action
-    raiseOnAction: true
-  - type: TargetAction
-  - type: WorldTargetAction
-    event: !type:ActionSequenceWorldTargetEvent
-  - type: ActionSequence
-    steps:
-    - !type:DoAfterActionStep
-      delay: 2
-    - !type:AwaitReactivationActionStep
-      outKey: NewLocation
-    - !type:DoAfterActionStep
-      delay: 2
-    - !type:SpawnEntityActionStep
-      entity: PortalBlue
-      locationKey: Location
-    - !type:SpawnEntityActionStep
-      entity: PortalRed
-      locationKey: NewLocation
-
+      targetKey: Performe
 
 - type: entity
   parent: BaseActionChangelingSting
@@ -320,8 +295,21 @@
     layers:
     - state: last_resort
   - type: InstantAction
-    event: !type:ChangelingLastResortActionEvent
-  - type: ChangelingLastResortAbility
+    event: !type:ActionSequenceInstantEvent
+  - type: ActionSequence
+    steps:
+    - !type:GetMindActionStep
+      targetKey: Performer
+    - !type:SpawnEntityActionStep
+      entity: MobHeadSlug
+      locationKey: Performer
+      outSpawnedKey: Spawned
+    - !type:TransferMindActionStep
+      mindKey: Mind
+      targetKey: Spawned
+    - !type:GibActionStep
+      bypassResistance: true
+      targetKey: Performer
 
 - type: entity
   parent: BaseAction
