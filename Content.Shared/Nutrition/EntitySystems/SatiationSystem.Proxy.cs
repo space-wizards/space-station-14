@@ -238,10 +238,7 @@ public sealed partial class SatiationSystem
     public IEnumerable<string> GetKeysForType(
         Entity<SatiationComponent> entity,
         [ForbidLiteral] ProtoId<SatiationTypePrototype> type
-    )
-    {
-        return GetAndResolveSatiationOfType(entity, type)?.Proto.Thresholds.Keys ?? Enumerable.Empty<string>();
-    }
+    ) => GetAndResolveSatiationOfType(entity, type)?.Proto.Thresholds.Keys ?? Enumerable.Empty<string>();
 
     /// <summary>
     /// Returns the <see cref="SatiationPrototype.MaximumValue"/> of the given <paramref name="type"/> for

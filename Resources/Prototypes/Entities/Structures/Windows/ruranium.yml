@@ -4,9 +4,9 @@
   name: reinforced uranium window
   components:
   - type: Sprite
-    sprite: Structures/Windows/reinforced_uranium_window.rsi
+    sprite: Structures/Windows/window-uranium-reinf.rsi
   - type: Icon
-    sprite: Structures/Windows/reinforced_uranium_window.rsi
+    sprite: Structures/Windows/window-uranium-reinf.rsi
     state: full
   - type: Damageable
     damageModifierSet: RGlass
@@ -108,7 +108,7 @@
   components:
   - type: Sprite
     drawdepth: WallTops
-    sprite: Structures/Windows/reinforced_uranium_diagonal.rsi
+    sprite: Structures/Windows/window-diagonal-uranium-reinf.rsi
     state: state0
   - type: Tag
     tags:
@@ -116,10 +116,10 @@
     - Window
   - type: IconSmooth
     mode: Diagonal
-    key: windows
+    key: walls
     base: state
   - type: Icon
-    sprite: Structures/Windows/reinforced_uranium_diagonal.rsi
+    sprite: Structures/Windows/window-diagonal-uranium-reinf.rsi
     state: state0
   - type: Fixtures
     fixtures:
@@ -141,7 +141,7 @@
     - East
   - type: DamageVisuals
     damageOverlay:
-      sprite: Structures/Windows/cracks_diagonal.rsi
+      sprite: Structures/Windows/cracks-diagonal.rsi
   - type: Construction
     graph: WindowDiagonal
     node: reinforcedUraniumWindowDiagonal
