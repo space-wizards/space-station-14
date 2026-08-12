@@ -104,6 +104,16 @@
     interactSuccessSound:
       collection: FenceRattle
   - type: BlockWeather
+<<<<<<< Updated upstream
+=======
+  - type: PlacementReplacement
+    key: shutters
+  - type: IconSmooth
+    key: walls
+    mode: NoSprite
+  - type: SatanAlign
+  - type: SatanKind
+>>>>>>> Stashed changes
 
 - type: entity
   id: ShuttersNormal

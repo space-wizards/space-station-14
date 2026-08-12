@@ -65,6 +65,7 @@
   - type: StaticPrice
     price: 100
   - type: BlockWeather
+  - type: SatanKind
 
 - type: entity
   parent: BaseWindowStructure

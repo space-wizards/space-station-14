@@ -61,6 +61,13 @@
   id: BaseWall
   components:
   - type: Occluder # Breaks on diagonal walls
+<<<<<<< Updated upstream
+=======
+  - type: PlacementReplacement
+    key: walls
+  - type: SatanKind
+
+>>>>>>> Stashed changes
 
 - type: entity
   abstract: true
