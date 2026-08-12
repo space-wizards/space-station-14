@@ -18,93 +18,62 @@ public sealed partial class ActionSequenceSystem : EntitySystem, IActionStepRais
     public const string ActionStepActionKey = "Action";
     public const string ActionStepLocationKey = "Location";
 
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<ActionSequenceComponent, ActionSequenceInstantEvent>(OnStartInstantSequence);
-        SubscribeLocalEvent<ActionSequenceComponent, ActionSequenceEntityTargetEvent>(OnStartTargetSequence);
-        SubscribeLocalEvent<ActionSequenceComponent, ActionSequenceWorldTargetEvent>(OnStartWorldTargetSequence);
-
-        SubscribeLocalEvent<ActionSequenceComponent, ActionSequenceSteppedEvent>(OnSequenceStep);
-        SubscribeLocalEvent<ActionSequenceComponent, ActionSequenceDoAfterEvent>(OnSequenceDoAfter);
-    }
-
     #region Action Events
+    [SubscribeLocalEvent]
     private void OnStartInstantSequence(Entity<ActionSequenceComponent> ent, ref ActionSequenceInstantEvent args)
     {
-        if (ent.Comp.Awaiting == SequenceAwaiting.None)
-        {
-            ent.Comp.Blackboard = new Dictionary<string, object>();
-            TryAddBlackboardData(ent, ActionStepActionKey, ent.Owner);
-            TryAddBlackboardData(ent, ActionStepUserKey, args.Performer);
+        if (ent.Comp.Awaiting != SequenceAwaiting.None)
+            return;
 
-            args.Handled = true;
+        ent.Comp.Blackboard = new Dictionary<string, object>();
+        TryAddBlackboardData(ent, ActionStepActionKey, ent.Owner);
+        TryAddBlackboardData(ent, ActionStepUserKey, args.Performer);
 
-            StartSequence(ent);
-        }
+        args.Handled = true;
+
+        StartSequence(ent);
     }
 
+    [SubscribeLocalEvent]
     private void OnStartTargetSequence(Entity<ActionSequenceComponent> ent, ref ActionSequenceEntityTargetEvent args)
     {
-        if (ent.Comp.Awaiting == SequenceAwaiting.None)
-        {
-            ent.Comp.Blackboard = new Dictionary<string, object>();
-            TryAddBlackboardData(ent, ActionStepActionKey, ent.Owner);
-            TryAddBlackboardData(ent, ActionStepUserKey, args.Performer);
-            TryAddBlackboardData(ent, ActionStepTargetKey, args.Target);
+        if (ent.Comp.Awaiting != SequenceAwaiting.None)
+            return;
 
-            args.Handled = true;
+        ent.Comp.Blackboard = new Dictionary<string, object>();
+        TryAddBlackboardData(ent, ActionStepActionKey, ent.Owner);
+        TryAddBlackboardData(ent, ActionStepUserKey, args.Performer);
+        TryAddBlackboardData(ent, ActionStepTargetKey, args.Target);
 
-            StartSequence(ent);
-        }
-        else if (ent.Comp.Awaiting == SequenceAwaiting.Reactivation)
-        {
-            TryAddBlackboardData(ent, ent.Comp.AwaitingKey, args.Target);
+        args.Handled = true;
 
-            ent.Comp.Awaiting = SequenceAwaiting.None;
-            ent.Comp.AwaitingKey = null;
-            DirtyField(ent, ent.Comp, nameof(ActionSequenceComponent.Awaiting));
-            DirtyField(ent, ent.Comp, nameof(ActionSequenceComponent.AwaitingKey));
+        StartSequence(ent);
 
-            args.Handled = true;
-
-            StepSequence(ent);
-        }
     }
 
+    [SubscribeLocalEvent]
     private void OnStartWorldTargetSequence(Entity<ActionSequenceComponent> ent, ref ActionSequenceWorldTargetEvent args)
     {
-        if (ent.Comp.Awaiting == SequenceAwaiting.None)
+        if (ent.Comp.Awaiting != SequenceAwaiting.None)
+            return;
+
+        ent.Comp.Blackboard = new Dictionary<string, object>();
+        TryAddBlackboardData(ent, ActionStepActionKey, ent.Owner);
+        TryAddBlackboardData(ent, ActionStepUserKey, args.Performer);
+        TryAddBlackboardData(ent, ActionStepLocationKey, args.Target);
+
+        if (args.Entity != null)
         {
-            ent.Comp.Blackboard = new Dictionary<string, object>();
-            TryAddBlackboardData(ent, ActionStepActionKey, ent.Owner);
-            TryAddBlackboardData(ent, ActionStepUserKey, args.Performer);
-            TryAddBlackboardData(ent, ActionStepLocationKey, args.Target);
-
-            if (args.Entity != null)
-            {
-                TryAddBlackboardData(ent, ActionStepTargetKey, args.Entity);
-            }
-
-            args.Handled = true;
-
-            StartSequence(ent);
+            TryAddBlackboardData(ent, ActionStepTargetKey, args.Entity);
         }
-        else if (ent.Comp.Awaiting == SequenceAwaiting.Reactivation)
-        {
-            TryAddBlackboardData(ent, ent.Comp.AwaitingKey, args.Target);
 
-            ent.Comp.Awaiting = SequenceAwaiting.None;
-            ent.Comp.AwaitingKey = null;
-            DirtyField(ent, ent.Comp, nameof(ActionSequenceComponent.Awaiting));
-            DirtyField(ent, ent.Comp, nameof(ActionSequenceComponent.AwaitingKey));
+        args.Handled = true;
 
-            args.Handled = true;
-
-            StepSequence(ent);
-        }
+        StartSequence(ent);
     }
     #endregion
 
+    [SubscribeLocalEvent]
     private void OnSequenceStep(Entity<ActionSequenceComponent> ent, ref ActionSequenceSteppedEvent args)
     {
         if (!ent.Comp.SequenceOngoing)
@@ -127,6 +96,7 @@ public sealed partial class ActionSequenceSystem : EntitySystem, IActionStepRais
         ent.Comp.Steps[ent.Comp.CurrentStep-1].RaiseEvent(ent, this);
     }
 
+    [SubscribeLocalEvent]
     private void OnSequenceDoAfter(Entity<ActionSequenceComponent> ent, ref ActionSequenceDoAfterEvent args)
     {
         if (ent.Comp.Awaiting != SequenceAwaiting.DoAfter || !ent.Comp.SequenceOngoing)
