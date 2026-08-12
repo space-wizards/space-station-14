@@ -42,9 +42,10 @@ public abstract partial class SharedAlertTeleportSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnAlertTeleport(Entity<AlertTeleportComponent> ent, ref AlertTeleportEvent args)
     {
-        var data = ent.Comp.Targets[args.AlertId];
+        if (!ent.Comp.Targets.TryGetValue(args.AlertId, out var data))
+            return;
 
-        if (data.Targets == null)
+        if (data.Targets.Count == 0)
             return;
 
         data.Queue++;

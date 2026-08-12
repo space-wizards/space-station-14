@@ -2,7 +2,7 @@ using Content.Shared.Alert.Components;
 using Content.Shared.Teleportation.Components;
 using Content.Shared.Teleportation.Systems;
 
-namespace Content.Client.Teleportation.Systems;
+namespace Content.Client.Teleportation;
 
 public sealed partial class AlertTeleportSystem : SharedAlertTeleportSystem
 {
@@ -12,12 +12,12 @@ public sealed partial class AlertTeleportSystem : SharedAlertTeleportSystem
         if (args.Handled)
             return;
 
-        if (!ent.Comp.Targets.ContainsKey(args.Alert))
+        if (!ent.Comp.Targets.TryGetValue(args.Alert, out var target))
             return;
 
-        if (ent.Comp.Targets[args.Alert].Targets == null)
+        if (target.Targets.Count == 0)
             return;
 
-        args.Amount = ent.Comp.Targets[args.Alert].Targets.Count;
+        args.Amount = target.Targets.Count;
     }
 }
