@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: [BaseItem, BaseXenoArtifact]
   id: BaseXenoArtifactItem
   name: artifact
@@ -60,6 +60,15 @@
       - !type:NestedSelector
         tableId: XenoArtifactEffectsHandheldOnlyTable
         weight: 2
+
+- type: entity
+  id: DummyArtifactItem
+  parent: BaseXenoArtifactItem
+  name: artifact
+  suffix: Debug
+  components:
+  - type: XenoArtifact
+    isGenerationRequired: false
 
 - type: entity
   parent: BaseXenoArtifactItem

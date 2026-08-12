@@ -71,6 +71,7 @@
   - type: Damageable
   - type: Injurable
     damageContainer: Biological
+  - type: DamageOverlay
   - type: RadiationReceiver
   - type: Stamina
   - type: StunVisuals
@@ -179,8 +180,6 @@
   components:
   - type: AtmosExposed
   - type: Temperature
-    currentTemperature: 310.15
-    specificHeat: 42
   - type: TemperatureDamage
     heatDamageThreshold: 325
     coldDamageThreshold: 0
@@ -214,9 +213,6 @@
     shiveringHeatRegulation: 500
     normalBodyTemperature: 310.15
     thermalRegulationTemperatureThreshold: 2
-  - type: Temperature
-    currentTemperature: 310.15
-    specificHeat: 42
   - type: TemperatureDamage
     heatDamageThreshold: 325
     coldDamageThreshold: 260
