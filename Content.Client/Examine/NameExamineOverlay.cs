@@ -47,7 +47,7 @@ public sealed partial class NameExamineOverlay : Overlay
         _shader = _prototypeManager.Index(UnshadedShader).Instance();
 
         var cache = IoCManager.Resolve<IResourceCache>();
-        _font = new VectorFont(cache.GetResource<FontResource>("/Fonts/Grand9K-Pixel.ttf"), 12);
+        _font = new VectorFont(cache.GetResource<FontResource>("/Fonts/Grand9k/grand9k-pixel-unicode.otf"), 12);
     }
 
     protected override void Draw(in OverlayDrawArgs args)
