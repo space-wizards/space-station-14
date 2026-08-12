@@ -279,7 +279,7 @@ public sealed partial class ExplosionSystem
                     if (modifiers.Coefficients.TryGetValue(type, out var armorMod))
                         modifier *= armorMod;
 
-                    if (modifiers.FlatReduction.TryGetValue(type, out var flat))
+                    if (modifiers.FlatReductions.TryGetValue(type, out var flat))
                     {
                         if (flat > 0)
                         {
@@ -295,7 +295,7 @@ public sealed partial class ExplosionSystem
                 damagePerIntensity += value * Math.Max(0, modifier);
             }
 
-            explosionTolerance[index] = GetExplosionTolerance(uid, totalDamageTarget, damagePerIntensity, damageThresholds);
+            explosionTolerance[index] += GetExplosionTolerance(uid, totalDamageTarget, damagePerIntensity, damageThresholds);
         }
     }
 

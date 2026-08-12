@@ -56,16 +56,6 @@
   - type: SpaceGarbage
   - type: Damageable
     damageModifierSet: Glass
-  - type: Injurable
-    damageContainer: Inorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: StepTrigger
     intersectRatio: 0.2
   - type: PreventableStepTrigger
@@ -243,7 +233,5 @@
       reagents:
       - ReagentId: Silicon
         Quantity: 5
-      - ReagentId: Zinc
-        Quantity: 1.65
-      - ReagentId: Copper
-        Quantity: 3.35
+      - ReagentId: Brass
+        Quantity: 5

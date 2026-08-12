@@ -43,8 +43,8 @@ public sealed partial class ShuttleSystem
     private float _platingMass;
 
     private const float _sparkChance = 0.2f;
-    // shuttle mass to consider the neutral point for inertia scaling
-    private const float _baseShuttleMass = 50f;
+    // shuttle mass to consider the neutral point for inertia scaling: 100 tiles at standard weight
+    private const float _baseShuttleMass = 100f * TileDensityMultiplier;
     // exists primarily for optimisation so not a cvar
     private const float _minImpulseVelocity = 0.07f;
     // high-speed collisions tend to be a series of increasingly smaller collisions so don't spam admin logs
@@ -138,7 +138,7 @@ public sealed partial class ShuttleSystem
             var coordinates = new EntityCoordinates(ourXform.MapUid.Value, worldPoint);
 
             var volume = MathF.Min(10f, MathF.Pow(jungleDiff, 0.5f) - 5f);
-            var audioParams = AudioParams.Default.WithVariation(SharedContentAudioSystem.DefaultVariation).WithVolume(volume);
+            var audioParams = AudioParams.Default.WithVariation(SharedContentAudioSystem.DefaultVariation).AddVolume(volume);
             _audio.PlayPvs(_shuttleImpactSound, coordinates, audioParams);
 
             // if we're not enabled, stop after playing sound

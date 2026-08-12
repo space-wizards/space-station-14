@@ -98,14 +98,14 @@
 
   - !type:WormCorridorDunGen
     width: 3
-    tile: FloorCaveDrought
+    tile: FloorCave
 
   - !type:CorridorClutterDunGen
     contents: !type:NestedSelector
       tableId: HauntedClutter
 
   - !type:BoundaryWallDunGen
-    tile: FloorCaveDrought
+    tile: FloorCave
     wall: WallRock
 
 - type: entityTable
@@ -213,26 +213,26 @@
 
   - !type:CorridorDunGen
     width: 3
-    tile: FloorCaveDrought
+    tile: FloorCave
 
   - !type:DungeonEntranceDunGen
     count: 2
-    tile: FloorCaveDrought
+    tile: FloorCave
     contents: !type:NestedSelector
       tableId: BaseWoodWall
 
   - !type:RoomEntranceDunGen
-    tile: FloorCaveDrought
+    tile: FloorCave
     contents: !type:NestedSelector
       tableId: BaseWoodWall
 
   - !type:EntranceFlankDunGen
-    tile: FloorCaveDrought
+    tile: FloorCave
     contents: !type:NestedSelector
       tableId: BaseWoodWall
 
   - !type:ExternalWindowDunGen
-    tile: FloorCaveDrought
+    tile: FloorCave
     contents: !type:NestedSelector
       tableId: BaseWoodWall
 
@@ -242,13 +242,13 @@
 
   - !type:JunctionDunGen
     width: 1
-    tile: FloorCaveDrought
+    tile: FloorCave
     contents: !type:NestedSelector
       tableId: BaseWoodSupport
 
   - !type:JunctionDunGen
     width: 3
-    tile: FloorCaveDrought
+    tile: FloorCave
     contents: !type:NestedSelector
       tableId: BaseWoodSupport
 
