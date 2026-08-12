@@ -12,8 +12,6 @@
     - state: sheath
     - state: sheath-sabre
       map: [ "enum.ItemSlotVisualLayers.Fill" ]
-    - state: sheath-son
-      map: [ "enum.ItemSlotVisualLayers.Fill1" ]
   - type: Clothing
     sprite: Clothing/Belt/sheath.rsi
   - type: Item
@@ -42,12 +40,6 @@
         fillBaseName: sheath-sabre
         inHandsFillBaseName: -sabre
         equippedFillBaseName: -sabre
-      item1:
-        layer: Fill1
-        slotName: item1
-        fillBaseName: sheath-son
-        inHandsFillBaseName: -son
-        equippedFillBaseName: -son
   - type: Appearance
 
 - type: entity
