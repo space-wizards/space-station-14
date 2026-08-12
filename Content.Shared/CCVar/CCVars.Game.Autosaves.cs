@@ -15,13 +15,13 @@ public sealed partial class CCVars
     ///     Game state Autosave interval in minutes. Does nothing when <see cref="AutoSavesEnabled"/> is set to false.
     /// </summary>
     public static readonly CVarDef<int>
-        AutoSavesInterval = CVarDef.Create("game.autosave_interval", 3, CVar.SERVERONLY);
+        AutoSavesInterval = CVarDef.Create("game.autosave_interval", 20, CVar.SERVERONLY);
 
     /// <summary>
     ///     Interval between the first message and the autosave in minutes.
     /// </summary>
     public static readonly CVarDef<int>
-        AutoSavesMessageIntervalFirst = CVarDef.Create("game.autosave_message1_interval", 2, CVar.SERVERONLY);
+        AutoSavesMessageIntervalFirst = CVarDef.Create("game.autosave_message1_interval", 5, CVar.SERVERONLY);
 
     /// <summary>
     ///     Interval between the second message and the autosave in minutes.
