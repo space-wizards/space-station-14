@@ -74,7 +74,7 @@ public sealed partial class SimpleToolUsageSystem : EntitySystem
             BreakOnMove = true,
             BreakOnHandChange = true,
             NeedHand = true,
-            ExamineText = Loc.GetString("tool-component-target-doafter-examine", ("user", user), ("quality", quality9), ("target", ent)),
+            ExamineText = Loc.GetString("tool-component-target-doafter-examine", ("user", user), ("quality", quality), ("target", ent)),
         };
 
         _doAfterSystem.TryStartDoAfter(doAfterArgs);
