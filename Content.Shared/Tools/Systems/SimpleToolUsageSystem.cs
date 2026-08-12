@@ -66,6 +66,7 @@ public sealed partial class SimpleToolUsageSystem : EntitySystem
         if (attemptEv.Cancelled)
             return;
 
+        var quality = Loc.GetString(ProtoMan.Index(ent.Comp.Quality).Name).ToLower();
         var doAfterArgs = new DoAfterArgs(EntityManager, user, ent.Comp.DoAfter, new SimpleToolDoAfterEvent(), ent, ent, tool)
         {
             BreakOnDamage = true,
@@ -73,7 +74,7 @@ public sealed partial class SimpleToolUsageSystem : EntitySystem
             BreakOnMove = true,
             BreakOnHandChange = true,
             NeedHand = true,
-            ExamineText = Loc.GetString("tool-component-doafter-examine", ("user", user), ("quality", ProtoMan.Index(ent.Comp.Quality).Name.ToLower()), ("target", ent)),
+            ExamineText = Loc.GetString("tool-component-target-doafter-examine", ("user", user), ("quality", quality), ("target", ent)),
         };
 
         _doAfterSystem.TryStartDoAfter(doAfterArgs);
