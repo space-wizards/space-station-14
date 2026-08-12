@@ -1,5 +1,6 @@
 using Content.Shared.IdentityManagement;
 using Content.Shared.Input;
+using Content.Shared.Mobs.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
@@ -16,9 +17,14 @@ public sealed partial class NameExamineSystem : EntitySystem
 {
     [Dependency] private IPlayerManager _player = default!;
     [Dependency] private IOverlayManager _overlay = default!;
+    [Dependency] private ExamineSystem _examine = default!;
     [Dependency] private SpriteSystem _sprite = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
-    [Dependency] private IdentitySystem _identity = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+
+    [Dependency] private EntityQuery<SpriteComponent> _spriteQuery = default!;
+    [Dependency] private EntityQuery<TransformComponent> _transformQuery = default!;
+    [Dependency] private EntityQuery<MobStateComponent> _mobstateQuery = default!;
 
     public bool Held;
 
@@ -30,9 +36,14 @@ public sealed partial class NameExamineSystem : EntitySystem
         UpdatesOutsidePrediction = true;
 
         _overlay.AddOverlay(new NameExamineOverlay(
+            _lookup,
             _sprite,
             _transform,
-            this));
+            this,
+            _examine,
+            _spriteQuery,
+            _transformQuery,
+            _mobstateQuery));
 
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.ExamineNames, new PointerInputCmdHandler(OnExamineNames, ignoreUp: false, outsidePrediction: true))
