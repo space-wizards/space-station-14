@@ -24,13 +24,6 @@ public sealed partial class NodeCrawlSystem : SharedNodeCrawlSystem
     [Dependency] private EntityQuery<NodeCrawlerMovementComponent> _movementQuery;
     [Dependency] private EntityQuery<InternalsComponent> _internalsQuery;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<NodeCrawlerComponent, InhaleLocationEvent>(OnInhaleLocation, after: [typeof(InternalsSystem)]);
-    }
-
     [SubscribeLocalEvent]
     private void OnExhaleLocation(Entity<NodeCrawlerComponent> ent, ref ExhaleLocationEvent args)
     {
@@ -224,6 +217,7 @@ public sealed partial class NodeCrawlSystem : SharedNodeCrawlSystem
         return null;
     }
 
+    [SubscribeLocalEvent(after: [typeof (InternalsSystem)])]
     private void OnInhaleLocation(Entity<NodeCrawlerComponent> ent, ref InhaleLocationEvent args)
     {
         if (GetAir(ent) is not { } air)

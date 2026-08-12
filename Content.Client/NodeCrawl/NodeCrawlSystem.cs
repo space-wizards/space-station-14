@@ -23,7 +23,6 @@ public sealed partial class NodeCrawlSystem : SharedNodeCrawlSystem
     private NodeCrawlPipeOverlay? _pipeOverlay;
     private HashSet<EntityUid>? _reachableNodes;
     private readonly Queue<EntityUid> _pendingNodes = new();
-    private bool _reachableDirty = true;
 
     public IReadOnlySet<EntityUid>? ReachableNodes => _reachableNodes;
 
@@ -33,14 +32,8 @@ public sealed partial class NodeCrawlSystem : SharedNodeCrawlSystem
         _pipeOverlay = new NodeCrawlPipeOverlay(EntityManager, this);
     }
 
-    public override void Update(float frameTime)
+    private void UpdateReachability()
     {
-        base.Update(frameTime);
-
-        if (!_reachableDirty)
-            return;
-
-        _reachableDirty = false;
         var oldReachable = _reachableNodes;
         var reachable = GetLocalReachableNodes();
         QueueAppearanceUpdates(oldReachable);
@@ -67,9 +60,21 @@ public sealed partial class NodeCrawlSystem : SharedNodeCrawlSystem
     }
 
     [SubscribeLocalEvent]
+    private void OnStartedCrawling(Entity<NodeCrawlerComponent> ent, ref NodeCrawlerStartedCrawlingEvent args)
+    {
+        UpdateReachability();
+    }
+
+    [SubscribeLocalEvent]
+    private void OnStoppedCrawling(Entity<NodeCrawlerComponent> ent, ref NodeCrawlerStoppedCrawlingEvent args)
+    {
+        UpdateReachability();
+    }
+
+    [SubscribeLocalEvent]
     private void OnAttached(Entity<NodeCrawlerComponent> ent, ref LocalPlayerAttachedEvent args)
     {
-        _reachableDirty = true;
+        UpdateReachability();
     }
 
     [SubscribeLocalEvent]
@@ -77,7 +82,6 @@ public sealed partial class NodeCrawlSystem : SharedNodeCrawlSystem
     {
         QueueAppearanceUpdates(_reachableNodes);
         _reachableNodes = null;
-        _reachableDirty = false;
         _pipeOverlay?.RemoveOutline();
     }
 
@@ -89,7 +93,7 @@ public sealed partial class NodeCrawlSystem : SharedNodeCrawlSystem
             || crawler.Owner != ent.Owner)
             return;
 
-        _reachableDirty = true;
+        UpdateReachability();
         UpdateSubfloor(ent.Comp.Mover is not null);
     }
 
@@ -102,13 +106,13 @@ public sealed partial class NodeCrawlSystem : SharedNodeCrawlSystem
             || crawler.Comp.Mover != ent.Owner)
             return;
 
-        _reachableDirty = true;
+        UpdateReachability();
     }
 
     [SubscribeLocalEvent]
     private void OnCrawlableAfterAutoHandleState(Entity<CrawlableNodeComponent> ent, ref AfterAutoHandleStateEvent args)
     {
-        _reachableDirty = true;
+        UpdateReachability();
     }
 
     [SubscribeLocalEvent]

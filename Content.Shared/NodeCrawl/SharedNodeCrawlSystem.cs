@@ -135,16 +135,15 @@ public abstract partial class SharedNodeCrawlSystem : EntitySystem
             return;
         }
 
-        var ev = new NodeCrawlerStartedCrawlingEvent((mover, movement));
-        RaiseLocalEvent(user, ref ev);
-
         _nodeCrawler.SetNode((mover, movement), target);
         _nodeCrawler.SetHeldCrawler((mover, movement), user);
-
         SetupAir((mover, movement));
 
         _mover.SetRelay(user, mover);
         _eye.RefreshVisibilityMask(user);
+
+        var ev = new NodeCrawlerStartedCrawlingEvent((mover, movement));
+        RaiseLocalEvent(user, ref ev);
     }
 
     /// <summary>
@@ -188,19 +187,15 @@ public abstract partial class SharedNodeCrawlSystem : EntitySystem
             DirtyField(other, otherCrawler, nameof(NodeCrawlerComponent.Mover));
         }
 
-        RemCompDeferred<RelayInputMoverComponent>(user);
-        if (!TerminatingOrDeleted(mover))
-        {
-            if (_movementQuery.TryGetComponent(mover, out var movement))
-                EjectAir((mover, movement));
-
-            PredictedDel(mover);
-        }
+        RemComp<RelayInputMoverComponent>(user);
+        if (_movementQuery.TryGetComponent(mover, out var movement))
+            EjectAir((mover, movement));
 
         var ev = new NodeCrawlerStoppedCrawlingEvent();
         RaiseLocalEvent(user, ref ev);
 
         _eye.RefreshVisibilityMask(user);
+        PredictedQueueDel(mover);
     }
 
     /// <summary>

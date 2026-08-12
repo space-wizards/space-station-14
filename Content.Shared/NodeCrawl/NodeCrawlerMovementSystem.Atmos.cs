@@ -44,6 +44,7 @@ public partial class NodeCrawlerMovementSystem
 
         args.Movement.Comp.LastLayerSwitch = _gameTiming.CurTime;
         args.Movement.Comp.CurrentLayer = newLayer;
+        args.Movement.Comp.MoveVector = Vector2.Zero;
         args.Movement.Comp.TargetNode = null;
         Dirty(args.Movement);
     }

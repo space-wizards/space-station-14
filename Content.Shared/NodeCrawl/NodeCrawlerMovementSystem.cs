@@ -3,7 +3,7 @@ using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Physics.Systems;
+using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.NodeCrawl;
@@ -11,18 +11,56 @@ namespace Content.Shared.NodeCrawl;
 /// <summary>
 /// Handles movement for entities travelling through crawlable node networks.
 /// </summary>
-public sealed partial class NodeCrawlerMovementSystem : EntitySystem
+public sealed partial class NodeCrawlerMovementSystem : VirtualController
 {
-    [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private IGameTiming _gameTiming = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedMoverController _mover = default!;
-    [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private SharedNodeCrawlSystem _nodeCrawl = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
     [Dependency] private EntityQuery<MovementRelayTargetComponent> _movementRelayQuery;
     [Dependency] private EntityQuery<InputMoverComponent> _inputMoverQuery;
     [Dependency] private EntityQuery<CrawlableNodeComponent> _crawlableQuery;
+    [Dependency] private EntityQuery<TransformComponent> _transformQuery;
+
+    public override void Initialize()
+    {
+        UpdatesBefore.Add(typeof(SharedMoverController));
+        base.Initialize();
+    }
+
+    public override void UpdateBeforeSolve(bool prediction, float frameTime)
+    {
+        base.UpdateBeforeSolve(prediction, frameTime);
+
+        var query = EntityQueryEnumerator<NodeCrawlerMovementComponent, InputMoverComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out var movement, out _, out var xform))
+        {
+            if (movement.Node is null)
+                continue;
+
+            var beforeMove = new NodeCrawlBeforeMoveEvent((uid, movement), movement.MoveVector);
+            RaiseLocalEvent(movement.Node.Value, ref beforeMove);
+            if (beforeMove.Handled)
+                continue;
+
+            if (movement.MoveVector == Vector2.Zero)
+                continue;
+
+            if (movement.TargetNode is { } target)
+                OngoingMovement((uid, movement), xform, target, frameTime);
+            else
+                StartMovement((uid, movement), xform, frameTime);
+        }
+    }
+
+    [SubscribeLocalEvent]
+    private void OnBeforeMoverMove(Entity<NodeCrawlerMovementComponent> ent, ref BeforeMoverMoveEvent args)
+    {
+        if (ent.Comp.Node is not null)
+            args.Handled = true;
+    }
 
     [SubscribeLocalEvent]
     private void OnMoveInput(Entity<NodeCrawlerMovementComponent> ent, ref MoveInputEvent args)
@@ -38,33 +76,10 @@ public sealed partial class NodeCrawlerMovementSystem : EntitySystem
             ? GetDestination((ent, ent.Comp), ent.Comp.MoveVector)
             : null;
         ent.Comp.MoveVector = moveVector;
-        Dirty(ent);
+        DirtyFields(ent.AsNullable(), null, nameof(NodeCrawlerMovementComponent.TargetNode), nameof(NodeCrawlerMovementComponent.MoveVector));
     }
 
-    [SubscribeLocalEvent]
-    private void OnBeforeMoverMove(Entity<NodeCrawlerMovementComponent> ent, ref BeforeMoverMoveEvent args)
-    {
-        if (ent.Comp.Node is null)
-            return;
-
-        var beforeMove = new NodeCrawlBeforeMoveEvent(ent, ent.Comp.MoveVector);
-        RaiseLocalEvent(ent.Comp.Node!.Value, ref beforeMove);
-        if (beforeMove.Handled)
-        {
-            StopMovement(ent);
-            args.Handled = true;
-            return;
-        }
-
-        if (ent.Comp.TargetNode is { } target)
-            OngoingMovement(ent, target);
-        else
-            StartMovement(ent);
-
-        args.Handled = ent.Comp.Node != null;
-    }
-
-    private void StartMovement(Entity<NodeCrawlerMovementComponent> mover)
+    private void StartMovement(Entity<NodeCrawlerMovementComponent> mover, TransformComponent xform, float frameTime)
     {
         if (GetDestination(mover, mover.Comp.MoveVector) is not { } target)
         {
@@ -86,51 +101,36 @@ public sealed partial class NodeCrawlerMovementSystem : EntitySystem
         mover.Comp.TargetNode = target;
         DirtyField(mover.AsNullable(), nameof(NodeCrawlerMovementComponent.TargetNode));
 
-        OngoingMovement(mover, target);
+        OngoingMovement(mover, xform, target, frameTime);
     }
 
-    private void StopMovement(Entity<NodeCrawlerMovementComponent> mover)
-    {
-        _physics.SetLinearVelocity(mover, Vector2.Zero);
-        _physics.SetAngularVelocity(mover, 0);
-    }
-
-    private void OngoingMovement(Entity<NodeCrawlerMovementComponent> mover, EntityUid target)
+    private void OngoingMovement(Entity<NodeCrawlerMovementComponent> mover, TransformComponent xform, EntityUid target, float frameTime)
     {
         var speed = MoveSpeed(mover);
+        var targetXform = _transformQuery.GetComponent(target);
+        var delta = targetXform.LocalPosition - xform.LocalPosition;
+        var frameMove = speed * frameTime;
 
-        var delta = _transform.GetWorldPosition(target) - _transform.GetWorldPosition(mover);
-        var frameMove = speed * (float)_gameTiming.FrameTime.TotalSeconds;
-
-        // Snap to target if we would reach it this frame.
+        // Snap to target if we would reach it this physics step.
         if (delta.LengthSquared() <= frameMove * frameMove)
         {
-            StopMovement(mover);
-            _transform.SetWorldPosition(mover, _transform.GetWorldPosition(target));
+            _transform.SetLocalPosition(mover, targetXform.LocalPosition, xform);
             PlayTraversalSound(mover);
-            SetNode((mover, mover), target);
+            SetNode(mover, target);
             mover.Comp.TargetNode = null;
-            DirtyField(mover, mover.Comp, nameof(NodeCrawlerMovementComponent.TargetNode));
+            DirtyField(mover.AsNullable(), nameof(NodeCrawlerMovementComponent.TargetNode));
 
             if (_movementRelayQuery.TryGetComponent(mover, out var movementTarget))
             {
-                var ev = new NodeCrawlerArrivedAtNodeEvent(target, (mover.Owner, mover.Comp));
+                var ev = new NodeCrawlerArrivedAtNodeEvent(target, mover);
                 RaiseLocalEvent(movementTarget.Source, ref ev);
             }
 
-            StartMovement(mover);
             return;
         }
 
-        var facing = Angle.FromWorldVec(delta);
-        _transform.SetWorldRotation(mover, facing);
-
-        var velocity = delta;
-        velocity.Normalize();
-        velocity *= speed;
-
-        _physics.SetLinearVelocity(mover, velocity);
-        _physics.SetAngularVelocity(mover, 0);
+        _transform.SetLocalRotation(mover, Angle.FromWorldVec(delta), xform);
+        _transform.SetLocalPosition(mover, xform.LocalPosition + delta.Normalized() * frameMove, xform);
     }
 
     private float MoveSpeed(EntityUid mover)
@@ -163,24 +163,23 @@ public sealed partial class NodeCrawlerMovementSystem : EntitySystem
         if (!_inputMoverQuery.TryGetComponent(ent, out var inputMover))
             return null;
 
-        var target = _mover.GetParentGridAngle(inputMover).RotateVec(moveVector);
+        var target = inputMover.RelativeRotation.RotateVec(moveVector);
         if (ent.Comp.Node is not { } node || !Exists(node) || !_crawlableQuery.TryGetComponent(node, out var nodeCrawl))
             return null;
 
-        var nodeXform = Transform(node);
-        var nodeWorld = _transform.GetWorldPosition(nodeXform);
+        var nodeXform = _transformQuery.GetComponent(node);
+        var nodePosition = nodeXform.LocalPosition;
         var largestTarget = EntityUid.Invalid;
-        var largestDot = 0.5d;
+        var largestDot = 0.5f;
 
         foreach (var reachable in nodeCrawl.ReachableNodes)
         {
             if (!CanTraverseNode((ent, ent.Comp), node, reachable))
                 continue;
 
-            var reachableXform = Transform(reachable);
-            var reachableWorld = _transform.GetWorldPosition(reachableXform);
-            var delta = reachableWorld - nodeWorld;
-            delta.Normalize();
+            var reachableXform = _transformQuery.GetComponent(reachable);
+            var delta = reachableXform.LocalPosition - nodePosition;
+            delta = delta.Normalized();
 
             var deltaTargetDot = Vector2.Dot(delta, target);
 
