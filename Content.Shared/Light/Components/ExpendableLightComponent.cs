@@ -27,13 +27,15 @@ public sealed partial class ExpendableLightComponent : Component
     public string FadeOutBehaviourID = string.Empty;
 
     /// <summary>
-    /// How light will spend in fully glowing state
+    /// How long light will spend in fully glowing state when it's activated. After this time it will start fading out.
+    /// Warning: It should only be used in the Unlit state, it does not update in other states. Use <see cref="FadeOutDuration"/> if you need to know when change to next state happens.
     /// </summary>
     [DataField]
+    [AutoNetworkedField]
     public TimeSpan GlowDuration = TimeSpan.FromMinutes(15);
 
     /// <summary>
-    /// How light will spend in fading out state
+    /// How long light will spend in fading out state
     /// </summary>
     [DataField]
     public TimeSpan FadeOutDuration = TimeSpan.FromMinutes(5);
@@ -117,7 +119,7 @@ public sealed partial class ExpendableLightComponent : Component
     public bool Activated => CurrentState is ExpendableLightState.Lit or ExpendableLightState.Fading;
 
     /// <summary>
-    ///     Time when next change of CurrentState happens.
+    ///     Time when next change of CurrentState happens. It's current time + how long light will spend in current state.
     /// </summary>
     [ViewVariables]
     [AutoNetworkedField]

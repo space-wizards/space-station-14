@@ -118,29 +118,43 @@ public sealed partial class ExpendableLightSystem : EntitySystem
         {
             case ExpendableLightState.Dead:
                 component.CurrentState = ExpendableLightState.Unlit;
-
+                _tagSystem.RemoveTag(uid, TrashTag);
                 component.GlowDuration = component.RefuelMaterialTime;
 
                 _nameModifier.RefreshNameModifiers(uid);
                 UpdateVisualizer((uid, component));
+                Dirty(uid, component);
                 break;
 
             case ExpendableLightState.Unlit:
-                if (component.GlowDuration + component.RefuelMaterialTime >= component.RefuelMaximumDuration)
+                if (component.GlowDuration + component.RefuelMaterialTime >= component.RefuelMaximumDuration) // light cannot hold more fuel
                     return;
                 component.GlowDuration += component.RefuelMaterialTime;
                 break;
 
-            default:
+            case ExpendableLightState.Fading:
+                if (component.StateExpiryTime == null) return;
+                var glowTimeLeft = component.StateExpiryTime.Value - _timing.CurTime; // how long until the light goes out
+                if (glowTimeLeft + component.RefuelMaterialTime > component.FadeOutDuration) //enough fuel to go from fading into lit state
+                {
+                    var newGlowTime = glowTimeLeft + component.RefuelMaterialTime - component.FadeOutDuration;
+                    component.CurrentState = ExpendableLightState.Lit;
+                    component.StateExpiryTime = _timing.CurTime + newGlowTime;
+                    UpdateVisualizer((uid, component));
+                    Dirty(uid, component);
+                }
+                else
+                    component.StateExpiryTime += component.RefuelMaterialTime;
+                break;
+
+            case ExpendableLightState.Lit:
                 if (component.StateExpiryTime == null) return;
 
                 var timeLeft = component.StateExpiryTime.Value - _timing.CurTime;
-
-                if (timeLeft + component.RefuelMaterialTime >= component.RefuelMaximumDuration)
+                if (timeLeft + component.RefuelMaterialTime >= component.RefuelMaximumDuration) // light cannot hold more fuel
                     return;
 
                 component.StateExpiryTime += component.RefuelMaterialTime;
-                Dirty(uid, component);
                 break;
         }
         _stackSystem.ReduceCount((args.Used, stack), 1);
