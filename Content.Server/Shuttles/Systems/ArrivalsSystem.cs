@@ -621,11 +621,11 @@ public sealed partial class ArrivalsSystem : EntitySystem
             _loader.TryLoadGrid(dummyMapId, component.ShuttlePath, out var shuttle))
         {
             component.Shuttle = shuttle.Value;
-            var shuttleComp = Comp<ShuttleComponent>(component.Shuttle);
-            var arrivalsComp = EnsureComp<ArrivalsShuttleComponent>(component.Shuttle);
+            var shuttleComp = Comp<ShuttleComponent>(shuttle.Value);
+            var arrivalsComp = EnsureComp<ArrivalsShuttleComponent>(shuttle.Value);
             arrivalsComp.Station = uid;
             EnsureComp<ProtectedGridComponent>(uid);
-            _shuttles.FTLToDock(component.Shuttle, shuttleComp, arrivals, hyperspaceTime: RoundStartFTLDuration);
+            _shuttles.FTLToDock(shuttle.Value, shuttleComp, arrivals, hyperspaceTime: RoundStartFTLDuration);
             arrivalsComp.NextTransfer = _timing.CurTime + TimeSpan.FromSeconds(_cfgManager.GetCVar(CCVars.ArrivalsCooldown));
         }
 
