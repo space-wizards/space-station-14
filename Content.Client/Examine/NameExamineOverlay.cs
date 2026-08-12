@@ -10,7 +10,6 @@ using Robust.Client.UserInterface;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
-using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Examine;
@@ -46,7 +45,7 @@ public sealed partial class NameExamineOverlay : Overlay
         SpriteSystem sprite,
         SharedTransformSystem transform,
         NameExamineSystem nameExamine,
-        ExamineSystem Examine,
+        ExamineSystem examine,
         EntityQuery<SpriteComponent> spriteQuery,
         EntityQuery<TransformComponent> transformQuery,
         EntityQuery<MobStateComponent> mobStateQuery)
@@ -55,7 +54,7 @@ public sealed partial class NameExamineOverlay : Overlay
         _sprite = sprite;
         _transform = transform;
         _nameExamineSystem = nameExamine;
-        _examineSystem = Examine;
+        _examineSystem = examine;
 
         _spriteQuery = spriteQuery;
         _transformQuery = transformQuery;
@@ -78,6 +77,7 @@ public sealed partial class NameExamineOverlay : Overlay
         if (_playerManager.LocalEntity is not { } playerEnt)
             return;
 
+        //Don't draw names if we're crit
         if (_mobStateQuery.TryComp(playerEnt, out var mobState)
             && (mobState.CurrentState == MobState.Critical))
             return;

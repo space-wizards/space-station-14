@@ -1,10 +1,8 @@
-using Content.Shared.IdentityManagement;
 using Content.Shared.Input;
 using Content.Shared.Mobs.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
-using Robust.Client.UserInterface;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 
@@ -58,7 +56,7 @@ public sealed partial class NameExamineSystem : EntitySystem
 
     private bool OnExamineNames(in PointerInputCmdHandler.PointerInputCmdArgs args)
     {
-        if (_player.LocalEntity is not { } player)
+        if (_player.LocalEntity == null)
             return false;
 
         switch (args.State)
