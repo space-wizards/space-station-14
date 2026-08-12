@@ -207,6 +207,9 @@ binds:
   key: MouseLeft
   canFocus: true
   mod1: Shift
+- function: ExamineNames
+  type: State
+  key: Shift
 - function: ActivateItemInWorld
   type: State
   key: E
