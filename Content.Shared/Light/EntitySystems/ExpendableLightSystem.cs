@@ -30,12 +30,15 @@ public sealed partial class ExpendableLightSystem : EntitySystem
 
     private static readonly ProtoId<TagPrototype> TrashTag = "Trash";
 
+    /// <summary>
+    ///     Checks if any light needs it's state updated.
+    /// </summary>	
     public override void Update(float frameTime)
     {
         var query = EntityQueryEnumerator<ExpendableLightComponent>();
         while (query.MoveNext(out var uid, out var light))
         {
-            if (light.Activated)
+            if (light.Activated) // Only active lights can change state over time
                 UpdateLight((uid, light));
         }
     }
@@ -44,25 +47,23 @@ public sealed partial class ExpendableLightSystem : EntitySystem
     {
         var component = ent.Comp;
 
-        if (_timing.CurTime < component.StateExpiryTime)
+        if (_timing.CurTime < component.StateExpiryTime) // Checks if any timer is expired
             return;
 
-        switch (component.CurrentState)
+        switch (component.CurrentState) // State change time
         {
             case ExpendableLightState.Lit:
                 component.CurrentState = ExpendableLightState.Fading;
 
                 component.StateExpiryTime = _timing.CurTime + component.FadeOutDuration;
-                Dirty(ent);
-
                 UpdateVisualizer(ent);
+                Dirty(ent);
                 break;
 
             case ExpendableLightState.Fading:
             default:
                 component.CurrentState = ExpendableLightState.Dead;
                 component.StateExpiryTime = null;
-                Dirty(ent);
 
                 _nameModifier.RefreshNameModifiers(ent.Owner);
                 _tagSystem.AddTag(ent, TrashTag);
@@ -74,6 +75,7 @@ public sealed partial class ExpendableLightSystem : EntitySystem
                 {
                     _item.SetHeldPrefix(ent, "unlit", component: item);
                 }
+                Dirty(ent);
                 break;
         }
     }
@@ -97,10 +99,10 @@ public sealed partial class ExpendableLightSystem : EntitySystem
             component.CurrentState = ExpendableLightState.Lit;
 
             component.StateExpiryTime = _timing.CurTime + component.GlowDuration;
-            Dirty(ent);
 
             UpdateSounds(ent, user);
             UpdateVisualizer(ent);
+            Dirty(ent);
         }
         return true;
     }
@@ -123,7 +125,6 @@ public sealed partial class ExpendableLightSystem : EntitySystem
 
                 _nameModifier.RefreshNameModifiers(uid);
                 UpdateVisualizer((uid, component));
-                Dirty(uid, component);
                 break;
 
             case ExpendableLightState.Unlit:
@@ -141,7 +142,6 @@ public sealed partial class ExpendableLightSystem : EntitySystem
                     component.CurrentState = ExpendableLightState.Lit;
                     component.StateExpiryTime = _timing.CurTime + newGlowTime;
                     UpdateVisualizer((uid, component));
-                    Dirty(uid, component);
                 }
                 else
                     component.StateExpiryTime += component.RefuelMaterialTime;
@@ -157,6 +157,7 @@ public sealed partial class ExpendableLightSystem : EntitySystem
                 component.StateExpiryTime += component.RefuelMaterialTime;
                 break;
         }
+        Dirty(uid, component);
         _stackSystem.ReduceCount((args.Used, stack), 1);
         args.Handled = true;
 
