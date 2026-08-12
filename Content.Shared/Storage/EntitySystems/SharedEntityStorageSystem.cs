@@ -337,7 +337,10 @@ public abstract partial class SharedEntityStorageSystem : EntitySystem
             var attemptEvent = new EntityStorageIntoContainerAttemptEvent(outerContainer);
             RaiseLocalEvent(outerContainer.Owner, ref attemptEvent);
             if (!attemptEvent.Cancelled)
+            {
+                _container.Insert(toRemove, outerContainer);
                 return true;
+            }
         }
 
         var (pos, rot) = TransformSystem.GetWorldPositionRotation(xform);
