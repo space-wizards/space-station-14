@@ -1,4 +1,3 @@
-using Content.Shared.Abilities.Mime;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.IgnitionSource;
