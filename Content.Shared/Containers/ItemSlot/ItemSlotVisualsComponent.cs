@@ -23,6 +23,9 @@ public sealed partial class ItemSlotVisualsComponent : Component
 [Serializable, NetSerializable]
 public sealed partial class ItemSlotVisuals
 {
+    /// <summary>
+    /// The Layers in ItemSlotVisualLayers, can be used to show three visuals on icons/inhands/clothing.
+    /// </summary>
     [DataField]
     public ItemSlotVisualLayers Layer = ItemSlotVisualLayers.Fill;
 
@@ -40,16 +43,19 @@ public sealed partial class ItemSlotVisuals
     public string? FillBaseName;
 
     /// <summary>
-    /// The name used for the Inhand Fills.
+    /// Layers to add to the sprite of the player that is holding this entity (while the component has an item inserted).
+    /// Works in tandem with Layer to show multiple layers at once.
     /// </summary>
     [DataField]
-    public string? InHandsFillBaseName;
+    public Dictionary<HandLocation, List<PrototypeLayerData>> InhandVisuals = new();
+
 
     /// <summary>
-    /// The name used for the Back/Belt Fills.
+    /// Works the same as the one in ToggleableVisualsComponent, but now it works in tandem with Layer to show
+    /// multiple layers at once.
     /// </summary>
     [DataField]
-    public string? EquippedFillBaseName;
+    public Dictionary<string, List<PrototypeLayerData>> ClothingVisuals = new();
 }
 
 [Serializable, NetSerializable]

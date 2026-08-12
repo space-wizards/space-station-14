@@ -1,9 +1,11 @@
-﻿using Content.Client.Items.Systems;
+﻿using System.Linq;
+using Content.Client.Items.Systems;
 using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Containers.ItemSlot;
 using Content.Shared.Hands;
+using Content.Shared.Inventory;
 using Content.Shared.Item;
 using Robust.Client.GameObjects;
 
@@ -45,21 +47,30 @@ public sealed partial class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVis
     {
         foreach (var visual in ent.Comp.SlotVisuals.Values)
         {
-            if (visual.InHandsFillBaseName == null)
+            if (!TryComp<AppearanceComponent>(ent, out var appearance)
+                || !AppearanceSystem.TryGetData(ent, visual.Layer, out bool hasItem, appearance)
+                || !hasItem)
                 continue;
 
-            if (!TryComp<ItemComponent>(ent, out var item))
+            if (!TryComp<ItemComponent>(ent, out _))
                 return;
 
-            var heldPrefix = item.HeldPrefix == null ? "inhand-" : $"{item.HeldPrefix}-inhand-";
+            if (!visual.InhandVisuals.TryGetValue(args.Location, out var layers))
+                return;
 
-            // No need for fillLevels if it'll just fit one item.
-            var layerKeyPrefix = heldPrefix + args.Location.ToString().ToLowerInvariant() + visual.InHandsFillBaseName;
+            var i = 0;
+            var defaultKey = $"inhand-{args.Location.ToString().ToLowerInvariant()}-fill-{visual.Layer}";
+            foreach (var layer in layers)
+            {
+                var key = layer.MapKeys?.FirstOrDefault();
+                if (key == null)
+                {
+                    key = i == 0 ? defaultKey : $"{defaultKey}-{i}";
+                    i++;
+                }
 
-            if (GetVisualsLayer(ent, visual.Layer, layerKeyPrefix) is not { } layer)
-                continue;
-
-            args.Layers.Add(layer);
+                args.Layers.Add((key, layer));
+            }
         }
     }
 
@@ -68,38 +79,40 @@ public sealed partial class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVis
     {
         foreach (var visual in ent.Comp.SlotVisuals.Values)
         {
-            if (visual.EquippedFillBaseName == null)
+            if (!TryComp(ent, out AppearanceComponent? appearance)
+                || !AppearanceSystem.TryGetData(ent, visual.Layer, out bool hasItem, appearance)
+                || !hasItem)
                 continue;
 
-            if (!TryComp<ClothingComponent>(ent, out var clothing))
+            if (!TryComp<ClothingComponent>(ent, out _))
                 return;
 
-            var equippedPrefix = clothing.EquippedPrefix == null ? $"equipped-{args.Slot}" : $"{clothing.EquippedPrefix}-equipped-{args.Slot}";
-            var layerKeyPrefix = equippedPrefix + visual.EquippedFillBaseName;
+            if (!TryComp(args.Equipee, out InventoryComponent? inventory))
+                return;
 
-            if (GetVisualsLayer(ent, visual.Layer, layerKeyPrefix) is not { } layer)
-                continue;
+            List<PrototypeLayerData>? layers = null;
 
-            args.Layers.Add(layer);
+            // attempt to get species specific data
+            if (inventory.SpeciesId != null)
+                visual.ClothingVisuals.TryGetValue($"{args.Slot}-{inventory.SpeciesId}", out layers);
+
+            // No species specific data.  Try to default to generic data.
+            if (layers == null && !visual.ClothingVisuals.TryGetValue(args.Slot, out layers))
+                return;
+
+            var i = 0;
+            var defaultKey = $"inhand-{args.Slot}-fill-{visual.Layer}";
+            foreach (var layer in layers)
+            {
+                var key = layer.MapKeys?.FirstOrDefault();
+                if (key == null)
+                {
+                    key = i == 0 ? defaultKey : $"{defaultKey}-{i}";
+                    i++;
+                }
+
+                args.Layers.Add((key, layer));
+            }
         }
-    }
-
-    private (string Key, PrototypeLayerData Layer)? GetVisualsLayer(Entity<ItemSlotVisualsComponent> ent, Enum visualLayer, string layerKeyPrefix)
-    {
-        if (!TryComp<AppearanceComponent>(ent, out var appearance)
-            || !AppearanceSystem.TryGetData(ent, visualLayer, out bool hasItem, appearance)
-            || !hasItem)
-            return null;
-
-        var layer = new PrototypeLayerData();
-        var key = layerKeyPrefix;
-
-        // Same check as the one in StorageContainerVisualsSystem.
-        if (!TryComp<SpriteComponent>(ent, out var sprite) || sprite.BaseRSI?.TryGetState(key, out _) != true)
-            return null;
-
-        layer.State = key;
-
-        return (key, layer);
     }
 }

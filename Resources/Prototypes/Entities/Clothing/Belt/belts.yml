@@ -50,14 +50,26 @@
         layer: Fill
         slotName: item
         fillBaseName: sheath-sabre
-        inHandsFillBaseName: -sabre
-        equippedFillBaseName: -sabre
+        inhandVisuals:
+          left:
+          - state: inhand-left-sabre
+          right:
+          - state: inhand-right-sabre
+        clothingVisuals:
+          belt:
+          - state: equipped-belt-sabre
       item1:
         layer: Fill1
         slotName: item1
         fillBaseName: sheath-son
-        inHandsFillBaseName: -son
-        equippedFillBaseName: -son
+        inhandVisuals:
+          left:
+          - state: inhand-left-son
+          right:
+          - state: inhand-right-son
+        clothingVisuals:
+          belt:
+          - state: equipped-belt-son
   - type: Appearance
 
 - type: entity
