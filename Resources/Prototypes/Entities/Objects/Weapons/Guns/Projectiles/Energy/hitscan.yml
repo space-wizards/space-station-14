@@ -3,23 +3,23 @@
   id: HitscanEffect
   categories: [ HideSpawnMenu ]
   components:
+  - type: TimedDespawn
+    lifetime: 2.0
   - type: Sprite
     drawdepth: Effects
     layers:
     - shader: unshaded
-      map: [ "enum.EffectLayers.Unshaded" ]
-  - type: TimedDespawn
-    lifetime: 2.0
+      map: ["enum.EffectLayers.Unshaded"]
+  - type: EffectVisuals
   - type: Tag
     tags:
-    - HideContextMenu
+      - HideContextMenu
   - type: AnimationPlayer
-  - type: EffectVisuals
 
 - type: entity
   id: BasicHitscan
+  name: basic hitscan
   categories: [ HideSpawnMenu ]
-  name: basic laser ray
   components:
   - type: HitscanAmmo
   - type: HitscanBasicRaycast
@@ -38,9 +38,17 @@
 
 - type: entity
   parent: BasicHitscan
-  id: RedLightLaser
+  id: LaserHitscanBase
+  name: basic laser ray
   categories: [ HideSpawnMenu ]
+  components:
+  - type: LaserProjectile
+
+- type: entity
+  parent: LaserHitscanBase
+  id: RedLightLaser
   name: red light laser ray
+  categories: [ HideSpawnMenu ]
   components:
   - type: HitscanBasicDamage
     damage:
@@ -48,10 +56,10 @@
         Heat: 7
 
 - type: entity
-  parent: BasicHitscan
+  parent: LaserHitscanBase
   id: RedLaser
-  categories: [ HideSpawnMenu ]
   name: red laser ray
+  categories: [ HideSpawnMenu ]
   components:
   - type: HitscanBasicDamage
     damage:
@@ -59,10 +67,10 @@
         Heat: 14
 
 - type: entity
-  parent: BasicHitscan
+  parent: LaserHitscanBase
   id: RedMediumLaser
-  categories: [ HideSpawnMenu ]
   name: red amplified laser ray
+  categories: [ HideSpawnMenu ]
   components:
   - type: HitscanBasicDamage
     damage:
@@ -70,10 +78,10 @@
         Heat: 17
 
 - type: entity
-  parent: BasicHitscan
+  parent: LaserHitscanBase
   id: RedHeavyLaser
-  categories: [ HideSpawnMenu ]
   name: red high-energy laser ray
+  categories: [ HideSpawnMenu ]
   components:
   - type: HitscanBasicDamage
     damage:
@@ -114,10 +122,10 @@
     igniteChance: 0.75
 
 - type: entity
-  parent: BasicHitscan
+  parent: LaserHitscanBase
   id: RedLaserPractice
-  categories: [ HideSpawnMenu ]
   name: red practice laser ray
+  categories: [ HideSpawnMenu ]
   components:
   - type: HitscanBasicDamage
     damage:
@@ -127,8 +135,8 @@
 - type: entity
   parent: BasicHitscan
   id: XrayLaser
-  categories: [ HideSpawnMenu ]
   name: X-ray pulse beam
+  categories: [ HideSpawnMenu ]
   components:
   - type: HitscanBasicDamage
     damage:
@@ -149,8 +157,8 @@
 - type: entity
   parent: BasicHitscan
   id: Pulse
-  categories: [ HideSpawnMenu ]
   name: blue high-energy laser ray
+  categories: [ HideSpawnMenu ]
   components:
   - type: HitscanBasicDamage
     damage:
@@ -168,10 +176,10 @@
       state: impact_blue
 
 - type: entity
-  parent: BasicHitscan
+  parent: LaserHitscanBase
   id: RedShuttleLaser
-  categories: [ HideSpawnMenu ]
   name: shuttle class red laser ray
+  categories: [ HideSpawnMenu ]
   components:
   - type: HitscanBasicRaycast
     maxDistance: 60.0
@@ -192,11 +200,11 @@
       state: impact_beam_heavy2
 
 - type: entity
-  parent: BasicHitscan
+  parent: LaserHitscanBase
   id: DebugLaser
-  categories: [ HideSpawnMenu ]
   name: debug laser ray
   suffix: DEBUG
+  categories: [ HideSpawnMenu ]
   components:
   - type: HitscanBasicDamage
     damage:
@@ -216,9 +224,9 @@
 - type: entity
   parent: DebugLaser
   id: DebugLaserGib
-  categories: [ HideSpawnMenu ]
   name: debug gibbing ray
   suffix: DEBUG
+  categories: [ HideSpawnMenu ]
   components:
   - type: HitscanBasicDamage
     damage:

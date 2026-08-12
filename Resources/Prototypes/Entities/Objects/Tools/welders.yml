@@ -55,6 +55,7 @@
   - type: ItemToggleHot
   - type: ComponentToggler
     components:
+    - type: IgniteOnMeleeHit
     - type: DisarmMalus
       malus: 0.6
   - type: ToggleableVisuals
@@ -79,7 +80,7 @@
   - type: Tool
     useSound:
       collection: Welder
-    qualities: Welding
+    qualities: [ Welding ]
   - type: Welder
   - type: PointLight
     enabled: false
