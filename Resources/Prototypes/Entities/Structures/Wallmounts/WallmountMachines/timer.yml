@@ -71,8 +71,8 @@
   - type: Sprite
     drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/signalscreen.rsi
+    offset: 0, -0.5
     state: signalscreen
-    noRot: true
   - type: Construction
     graph: Timer
     node: screen

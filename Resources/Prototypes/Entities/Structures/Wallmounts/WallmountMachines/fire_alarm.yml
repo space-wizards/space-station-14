@@ -32,9 +32,9 @@
   - type: AtmosAlarmableVisuals
     layerMap: "fireAlarmState"
     alarmStates:
-      Normal: fire_off
-      Warning: fire_off # shouldn't be alarming at a warning
-      Danger: fire_on
+      Normal: fire_0
+      Warning: fire_0 # shouldn't be alarming at a warning
+      Danger: fire_2
       Emagged: fire_emagged
     hideOnDepowered: [ "fireAlarmState" ]
   - type: Tag
@@ -69,13 +69,14 @@
     boardName: wires-board-name-firealarm
     layoutId: FireAlarm
   - type: Sprite
-    sprite: Structures/Wallmounts/air_monitors.rsi
+    sprite: Structures/Wallmounts/fire-alarm.rsi
+    offset: 0, -0.25
     layers:
-    - state: fire0
+    - state: base
       map: ["fireAlarmBase"]
-    - state: fire_off
+    - state: fire_0
       map: ["fireAlarmState"]
-    - state: fire_b2
+    - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Construction
     graph: FireAlarm
@@ -109,17 +110,17 @@
   description: A fire alarm assembly. Very mild.
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/air_monitors.rsi
+    sprite: Structures/Wallmounts/fire-alarm.rsi
     layers:
-    - state: fire_b1
+    - state: frame1
       map: [ "enum.ConstructionVisuals.Layer" ]
   - type: Appearance
   - type: GenericVisualizer
     visuals:
       enum.ConstructionVisuals.Key:
         enum.ConstructionVisuals.Layer:
-          assembly: { state: fire_b1 }
-          electronics: { state: fire_b2 }
+          assembly: { state: frame1 }
+          electronics: { state: frame2 }
   - type: Construction
     graph: FireAlarm
     node: assembly
@@ -136,19 +137,3 @@
           collection: MetalGlassBreak
           params:
             volume: -4
-
-- type: entity
-  id: FireAlarmXeno
-  parent: FireAlarm
-  description: An alien fire alarm. Works just the same!
-  components:
-  - type: Sprite
-    sprite: Structures/Wallmounts/air_monitors_xeno.rsi
-
-- type: entity
-  id: FireAlarmAssemblyXeno
-  parent: FireAlarmAssembly
-  description: An alien fire alarm assembly. Good luck with the wires.
-  components:
-  - type: Sprite
-    sprite: Structures/Wallmounts/air_monitors_xeno.rsi

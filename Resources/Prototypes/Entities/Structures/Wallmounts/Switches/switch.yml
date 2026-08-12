@@ -5,15 +5,32 @@
   description: It's a switch for toggling power to things.
   components:
   - type: WallMount
-    arc: 360
+    arc: 175
   - type: ParentToWall
     anchor: false
     blockDeconstruction: false
   - type: StationAiWhitelist
   - type: Sprite
-    drawdepth: SmallObjects
+    offset: 0, -0.25
+    drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/switch.rsi
-    state: on
+    layers:
+    - state: base
+    - map: [ "shaded" ]
+      state: off
+    - map: [ "unshaded" ]
+      state: off-unshaded
+      shader: unshaded
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.SwitchVisuals.Visuals:
+        shaded:
+          True: { state: on }
+          False: { state: off }
+        unshaded:
+          True: { state: on-unshaded }
+          False: { state: off-unshaded }
   - type: SignalSwitch
   - type: UseDelay
     delay: 0.5 # prevent light-toggling auto-clickers.
@@ -54,15 +71,20 @@
   description: It's a button for activating something.
   components:
   - type: WallMount
-    arc: 360
+    arc: 175
   - type: ParentToWall
     anchor: false
     blockDeconstruction: false
   - type: StationAiWhitelist
   - type: Sprite
-    drawdepth: SmallObjects
+    offset: 0, -0.25
+    drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/switch.rsi
-    state: dead
+    layers:
+    - state: base
+    - state: button
+    - state: button-unshaded
+      shader: unshaded
   - type: UseDelay
     delay: 0.5 # prevent light-toggling auto-clickers.
   - type: SignalSwitch
@@ -99,15 +121,33 @@
   name: apc net switch
   description: It's a switch for toggling lights that are connected to the same apc.
   components:
+  - type: Sprite
+    offset: 0, -0.25
+    drawdepth: WallMountedItems
+    sprite: Structures/Wallmounts/switch.rsi
+    layers:
+    - state: base
+    - map: [ "shaded" ]
+      state: off
+    - map: [ "unshaded" ]
+      state: off-unshaded
+      shader: unshaded
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.SwitchVisuals.Visuals:
+        shaded:
+          True: { state: on }
+          False: { state: off }
+        unshaded:
+          True: { state: on-unshaded }
+          False: { state: off-unshaded }
   - type: WallMount
-    arc: 360
+    arc: 175
   - type: ParentToWall
     anchor: false
     blockDeconstruction: false
-  - type: Sprite
-    drawdepth: SmallObjects
-    sprite: Structures/Wallmounts/switch.rsi
-    state: on
+  - type: Rotatable
   - type: ExtensionCableReceiver
   - type: DeviceNetwork
     deviceNetId: Apc
@@ -119,7 +159,6 @@
     node: LightSwitchNode
 
 #directional
-
 - type: entity
   parent: SignalSwitch
   id: SignalSwitchDirectional
@@ -157,25 +196,38 @@
     node: LightSwitchDirectionalNode
 
 # lockable buttons
-
 - type: entity
   parent: SignalButtonDirectional
   id: LockableButton
   name: lockable button
   categories: [ HideSpawnMenu ]
   components:
-  - type: Appearance
   - type: Lock
-  - type: LockVisuals
   - type: AccessReader
   - type: Sprite
+    offset: 0, -0.25
     drawdepth: WallMountedItems
-    sprite: Structures/Wallmounts/locked_switch.rsi
+    sprite: Structures/Wallmounts/switch-lockable.rsi
     layers:
     - state: base
-    - state: locked
-      map: ["enum.LockVisualLayers.Lock"]
+    - state: button
+    - state: button-unshaded
       shader: unshaded
+    - map: [ "lock-shaded" ]
+      state: lock-locked
+    - map: [ "lock-unshaded" ]
+      state: lock-locked-unshaded
+      shader: unshaded
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.LockVisuals.Locked:
+        lock-shaded:
+          True: { state: lock-locked }
+          False: { state: lock-unlocked }
+        lock-unshaded:
+          True: { state: lock-locked-unshaded }
+          False: { state: lock-unlocked-unshaded }
 
 - type: entity
   parent: LockableButton
@@ -435,20 +487,17 @@
   description: It's a frame to help distinguish switches visually.
   placement:
     mode: SnapgridCenter
-    snap:
-    - Wallmount
   components:
   - type: Clickable
   - type: WallMount
-    arc: 360
+    arc: 175
   - type: ParentToWall
     anchor: false
     blockDeconstruction: false
-  - type: Transform
-    anchored: true
   - type: Sprite
+    offset: 0, -0.25
     drawdepth: SmallObjects
-    sprite: Structures/Wallmounts/switch_frame.rsi
+    sprite: Structures/Wallmounts/switch-frame.rsi
     state: grey
 
 - type: entity
@@ -457,8 +506,6 @@
   suffix: grey
   components:
   - type: Sprite
-    drawdepth: SmallObjects
-    sprite: Structures/Wallmounts/switch_frame.rsi
     state: grey
 
 - type: entity
@@ -467,8 +514,6 @@
   suffix: caution
   components:
   - type: Sprite
-    drawdepth: SmallObjects
-    sprite: Structures/Wallmounts/switch_frame.rsi
     state: caution
 
 - type: entity
@@ -477,19 +522,15 @@
   suffix: caution
   components:
   - type: Sprite
-    drawdepth: SmallObjects
-    sprite: Structures/Wallmounts/switch_frame.rsi
-    state: caution_security
+    state: caution-security
 
 - type: entity
-  id: ButtonFrameExit
+  id: ButtonFrameWhite
   parent: ButtonFrame
-  suffix: exit
+  suffix: white
   components:
   - type: Sprite
-    drawdepth: SmallObjects
-    sprite: Structures/Wallmounts/switch_frame.rsi
-    state: exit
+    state: white
 
 - type: entity
   id: ButtonFrameJanitor
@@ -497,6 +538,4 @@
   suffix: janitor
   components:
   - type: Sprite
-    drawdepth: SmallObjects
-    sprite: Structures/Wallmounts/switch_frame.rsi
     state: janitor
