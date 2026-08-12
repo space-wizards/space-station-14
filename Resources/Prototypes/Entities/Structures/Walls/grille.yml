@@ -71,6 +71,7 @@
           True: { visible: True }
           False: { visible: False }
   - type: AnimationPlayer
+  - type: TrayScanReveal
   - type: Destructible
     thresholds:
     - trigger:
@@ -170,6 +171,7 @@
           True: { visible: True }
           False: { visible: False }
   - type: AnimationPlayer
+  - type: TrayScanReveal
   - type: Destructible
     thresholds:
     - trigger:
