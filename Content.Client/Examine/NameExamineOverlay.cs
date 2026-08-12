@@ -108,13 +108,13 @@ public sealed partial class NameExamineOverlay : Overlay
             if (ent == playerEnt)
                 continue;
 
+            if (!_mobStateQuery.HasComp(ent))
+                continue;
+
             if (!_spriteQuery.TryComp(ent, out var sprite))
                 continue;
 
             if (!_transformQuery.TryComp(ent, out var xform))
-                continue;
-
-            if (!_mobStateQuery.HasComp(ent))
                 continue;
 
             if (eye.DrawFov && !_examineSystem.InRangeUnOccluded(playerEnt, ent))
@@ -125,7 +125,7 @@ public sealed partial class NameExamineOverlay : Overlay
 
             var text = Identity.Name(ent, _entityManager, playerEnt);
 
-            //Text dimensions
+            //Text dimensions for centering
             var dimensions = handle.GetDimensions(_font, text, scale);
 
             //Get sprite bounding box so we can draw at the bottom.
