@@ -1,3 +1,4 @@
+using Content.Shared.Maps;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Procedural;
@@ -8,6 +9,6 @@ namespace Content.Server.Procedural;
 [RegisterComponent]
 public sealed partial class DungeonAtlasTemplateComponent : Component
 {
-    [DataField("path", required: true)]
+    [DataField("path", required: true, customTypeSerializer: typeof(MapResPathSerializer))]
     public ResPath Path;
 }

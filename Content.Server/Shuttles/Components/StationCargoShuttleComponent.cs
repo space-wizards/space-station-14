@@ -1,3 +1,4 @@
+using Content.Shared.Maps;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles.Components;
@@ -14,6 +15,6 @@ public sealed partial class StationCargoShuttleComponent : Component
     // If you add more than just make an abstract comp, split them, then use overloads in the system.
     // YAML is filled out so mappers don't have to read here.
 
-    [DataField(required: true)]
+    [DataField(required: true, customTypeSerializer: typeof(MapResPathSerializer))]
     public ResPath Path = new("/Maps/Shuttles/cargo.yml");
 }

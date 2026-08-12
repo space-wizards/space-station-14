@@ -1,4 +1,5 @@
 ﻿using Content.Server.Shuttles.Systems;
+using Content.Shared.Maps;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Utility;
@@ -20,7 +21,7 @@ public sealed partial class StationEmergencyShuttleComponent : Component
     /// <summary>
     /// Emergency shuttle map path for this station.
     /// </summary>
-    [DataField("emergencyShuttlePath", customTypeSerializer: typeof(ResPathSerializer))]
+    [DataField("emergencyShuttlePath", customTypeSerializer: typeof(MapResPathSerializer))]
     public ResPath EmergencyShuttlePath { get; set; } = new("/Maps/Shuttles/emergency.yml");
 
     /// <summary>

@@ -1,3 +1,4 @@
+using Content.Shared.Maps;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -11,7 +12,8 @@ public sealed partial class SalvageMapPrototype : IPrototype
     /// <summary>
     /// Relative directory path to the given map, i.e. `Maps/Salvage/template.yml`
     /// </summary>
-    [DataField(required: true)] public ResPath MapPath;
+    [DataField(required: true, customTypeSerializer: typeof(MapResPathSerializer))]
+    public ResPath MapPath;
 
     /// <summary>
     /// String that describes the size of the map.

@@ -19,7 +19,7 @@ public sealed partial class DungeonRoomPrototype : IPrototype
     /// <summary>
     /// Path to the file to use for the room.
     /// </summary>
-    [DataField("atlas", required: true)]
+    [DataField("atlas", required: true, customTypeSerializer: typeof(MapResPathSerializer))]
     public ResPath AtlasPath;
 
     /// <summary>
