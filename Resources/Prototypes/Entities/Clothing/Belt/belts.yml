@@ -36,7 +36,6 @@
     slotVisuals:
       item:
         layer: Fill
-        slotName: item
         fillBaseName: sheath-sabre
         inHandsFillBaseName: -sabre
         equippedFillBaseName: -sabre
