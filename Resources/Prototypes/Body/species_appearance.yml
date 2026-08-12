@@ -72,7 +72,6 @@
   - InventoryBase
   - BaseSpeciesLayers
   abstract: true
-  save: false
   components:
   - type: Body
   - type: VisualBody

@@ -2,7 +2,6 @@
   parent:
   - BaseSpeciesLayers
   id: DetachedBody
-  save: false
   components:
   - type: Clickable
   - type: Body

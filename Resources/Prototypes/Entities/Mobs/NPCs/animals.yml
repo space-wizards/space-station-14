@@ -2086,7 +2086,6 @@
 - type: entity
   parent: MobMouse
   suffix: Dead
-  save: false
   id: MobMouseDead
   name: mouse
   description: Squeak!

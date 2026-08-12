@@ -2,7 +2,6 @@
   id: EffectVoidBlink
   name: void blink
   categories: [ HideSpawnMenu ]
-  save: false
   components:
   # TODO: PointLight is temp until I can make a shader & overlay for negative light or until this can support it
   - type: PointLight
