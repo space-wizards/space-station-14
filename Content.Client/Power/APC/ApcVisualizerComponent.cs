@@ -2,38 +2,15 @@ using Content.Shared.APC;
 
 namespace Content.Client.Power.APC;
 
+/// <summary>
+/// A component used to update the sprite of APCs.
+/// </summary>
+/// <seealso cref="ApcComponent"/>
 [RegisterComponent]
 [Access(typeof(ApcVisualizerSystem))]
 public sealed partial class ApcVisualsComponent : Component
 {
-    #region Indicators
-
-    #region Locks
-
-    /// <summary>
-    /// The number of lock indicators on the APC.
-    /// </summary>
-    [DataField("numLockIndicators")]
-    public byte LockIndicators = 2;
-
-    /// <summary>
-    /// The prefix used for the sprite state suffix of the lock indicator lights.
-    /// Valid states are of the form \<BASE\>\<PREFIX\>\<IDX>\-\<STATE\>
-    /// </summary>
-    [DataField("lockIndicatorPrefix")]
-    public string LockPrefix = "lock";
-
-    /// <summary>
-    /// The suffixes used for the sprite state suffix of the lock indicator lights.
-    /// Valid states are of the form \<PREFIX\>\<IDX\>-\<STATE\>
-    /// </summary>
-    [DataField("lockIndicatorSuffixes")]
-    public string[] LockSuffixes = new string[(byte)(2 << (sbyte)ApcLockState.LogWidth)] { "unlocked", "locked" };
-
-    #endregion Locks
-
-    #region Channels
-
+    #region Channel Indicators
     /// <summary>
     /// The prefix used for the sprite state suffix of the channel indicator lights.
     /// Valid states are of the form \<PREFIX\>-\<STATE\>
@@ -47,9 +24,7 @@ public sealed partial class ApcVisualsComponent : Component
     [DataField("channelIndicatorSuffixes")]
     public string[] ChannelSuffixes = new string[(byte)ApcChannelState.NumStates] { "off", "on", "disconnected", "tripped" };
 
-    #endregion Channels
-
-    #endregion Indicators
+    #endregion Channel Indicators
 
     #region Screen
 
