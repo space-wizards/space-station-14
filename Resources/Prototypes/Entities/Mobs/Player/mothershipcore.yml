@@ -42,6 +42,7 @@
     idleState: core-idle
     runningState: core-active
     staticPacks:
+    - XenoborgMachines
     - EmptyXenoborgs
     - XenoborgUpgradeModules
   - type: MaterialStorage
