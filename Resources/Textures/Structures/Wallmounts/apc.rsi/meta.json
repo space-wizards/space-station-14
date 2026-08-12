@@ -13,26 +13,12 @@
             "directions": 4
         },
         {
-            "name": "static"
-        },
-        {
             "name": "broken",
-            "directions": 4
-        },
-        {
-            "name": "frame",
-            "directions": 4
-        },
-        {
-            "name": "panel",
             "directions": 4
         },
         {
             "name": "channel-disconnected",
             "directions": 4
-        },
-        {
-            "name": "channel-off"
         },
         {
             "name": "channel-on",
@@ -57,28 +43,6 @@
                 [
                     0.2,
                     0.2
-                ]
-            ]
-        },
-        {
-            "name": "display-lack",
-            "directions": 4,
-            "delays": [
-                [
-                    0.25,
-                    0.25
-                ],
-                [
-                    0.25,
-                    0.25
-                ],
-                [
-                    0.25,
-                    0.25
-                ],
-                [
-                    0.25,
-                    0.25
                 ]
             ]
         },
@@ -123,6 +87,28 @@
         {
             "name": "display-full",
             "directions": 4
+        },
+        {
+            "name": "display-lack",
+            "directions": 4,
+            "delays": [
+                [
+                    0.25,
+                    0.25
+                ],
+                [
+                    0.25,
+                    0.25
+                ],
+                [
+                    0.25,
+                    0.25
+                ],
+                [
+                    0.25,
+                    0.25
+                ]
+            ]
         },
         {
             "name": "display-remote",
@@ -219,6 +205,14 @@
             ]
         },
         {
+            "name": "frame",
+            "directions": 4
+        },
+        {
+            "name": "panel",
+            "directions": 4
+        },
+        {
             "name": "sparks-unlit",
             "delays": [
                 [
@@ -230,6 +224,9 @@
                     0.1
                 ]
             ]
+        },
+        {
+            "name": "static"
         }
     ]
 }
