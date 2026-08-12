@@ -159,6 +159,8 @@ public sealed partial class CloningSystem : SharedCloningSystem
                 RemComp(clone, componentRegistration.Type);
         }
 
+        _context.ClearPersistentFields();
+
         var ev = new ClonedEvent(clone, settings);
         RaiseLocalEvent(original, ref ev);
     }
