@@ -42,7 +42,6 @@ public sealed partial class NameExamineSystem : EntitySystem
     public override void Shutdown()
     {
         base.Shutdown();
-
         _overlay.RemoveOverlay<NameExamineOverlay>();
     }
 
@@ -51,14 +50,14 @@ public sealed partial class NameExamineSystem : EntitySystem
         if (_player.LocalEntity is not { } player)
             return false;
 
-        if (args.State == BoundKeyState.Down)
+        switch (args.State)
         {
-            Held = true;
-        }
-
-        if (args.State == BoundKeyState.Up)
-        {
-            Held = false;
+            case BoundKeyState.Down:
+                Held = true;
+                break;
+            case BoundKeyState.Up:
+                Held = false;
+                break;
         }
 
         return true;
