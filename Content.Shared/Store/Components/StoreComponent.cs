@@ -14,7 +14,7 @@ namespace Content.Shared.Store.Components;
 public sealed partial class StoreComponent : Component
 {
     /// <summary>
-    /// The name to display on the title bar of the store's UI
+    /// The name to display on the title bar of the store's UI.
     /// </summary>
     [DataField]
     public LocId Name = "store-ui-default-title";

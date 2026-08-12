@@ -23,7 +23,6 @@ public sealed partial class VocalSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnMapInit(Entity<VocalComponent> ent, ref MapInitEvent args)
     {
-        LoadSounds(ent);
         // try to add scream action when vocal comp added
         _actions.AddAction(ent.Owner, ref ent.Comp.EmoteActionEntity, ent.Comp.EmoteAction);
         Dirty(ent);
@@ -92,7 +91,7 @@ public sealed partial class VocalSystem : EntitySystem
     /// <summary>
     /// This only works on Humanoids. Mobs should have emoteSounds on <see cref="VocalComponent"/> set directly instead.
     /// </summary>
-    private void LoadSounds(Entity<VocalComponent> ent, ProtoId<EmoteSoundsPrototype>? protoId = null)
+    public void LoadSounds(Entity<VocalComponent> ent, ProtoId<EmoteSoundsPrototype>? protoId = null)
     {
         if (!TryComp<HumanoidProfileComponent>(ent.Owner, out var humanoid))
             return;

@@ -13,4 +13,4 @@ public record struct CloningAttemptEvent(CloningSettingsPrototype Settings, bool
 /// This SHOULD NOT copy data from the original. Do that in CloningContext instead.
 /// </summary>
 [ByRefEvent]
-public record struct ClonedEvent(EntityUid CloneUid);
+public record struct ClonedEvent(EntityUid CloneUid, CloningSettingsPrototype Settings);

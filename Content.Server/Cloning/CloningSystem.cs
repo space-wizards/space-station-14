@@ -81,17 +81,10 @@ public sealed partial class CloningSystem : SharedCloningSystem
                 return false; // cannot clone, for example due to the unrevivable trait
         }
 
-        clone = coords == null
-            ? EntityManager.CreateEntityUninitialized(speciesPrototype.Prototype)
-            : EntityManager.CreateEntityUninitialized(speciesPrototype.Prototype, coords.Value);
+        clone = coords == null ? Spawn(speciesPrototype.Prototype) : Spawn(speciesPrototype.Prototype, coords.Value);
 
         CloneComponents(original, clone.Value, settings);
         _visualBody.CopyAppearanceFrom(original, clone.Value);
-
-        EntityManager.InitializeAndStartEntity(clone.Value, doMapInit: true);
-
-        var ev = new ClonedEvent(clone.Value);
-        RaiseLocalEvent(original, ref ev);
 
         // Add equipment first so that SetEntityName also renames the ID card.
         if (settings.CopyEquipment != null)
@@ -141,6 +134,8 @@ public sealed partial class CloningSystem : SharedCloningSystem
     {
         var componentsToCopy = settings.Components;
 
+        _context.GrabPersistentFields(clone);
+
         // don't make status effects permanent
         if (TryComp<StatusEffectsComponent>(original, out var statusComp))
         {
@@ -158,10 +153,14 @@ public sealed partial class CloningSystem : SharedCloningSystem
 
             // Remove all components that we care about on our target,
             // then copy over any that exist on the original over to the target.
-            RemComp(clone, componentRegistration.Type);
             if (TryComp(original, componentRegistration.Type, out var sourceComp))
                 CopyComp((original, sourceComp), clone, _context);
+            else
+                RemComp(clone, componentRegistration.Type);
         }
+
+        var ev = new ClonedEvent(clone, settings);
+        RaiseLocalEvent(original, ref ev);
     }
 
     /// <inheritdoc/>
@@ -203,14 +202,11 @@ public sealed partial class CloningSystem : SharedCloningSystem
         if (prototype == null)
             return null;
 
-        var spawned = EntityManager.CreateEntityUninitialized(prototype, coords);
+        if (!ProtoMan.Resolve(ItemCloneSettings, out var itemCloneSettingsProto))
+            return null;
 
-        CloneComponents(original, spawned, ItemCloneSettings);
-
-        EntityManager.InitializeAndStartEntity(spawned, doMapInit: true);
-
-        var ev = new ClonedEvent(spawned);
-        RaiseLocalEvent(original, ref ev);
+        var spawned = SpawnAtPosition(prototype, coords);
+        CloneComponents(original, spawned, itemCloneSettingsProto);
 
         // if the original has items inside its storage, copy those as well
         CopyStorage(original, spawned, whitelist, blacklist);
@@ -255,6 +251,9 @@ public sealed partial class CloningSystem : SharedCloningSystem
         if (!Resolve(original, ref original.Comp, false))
             return; // they don't have any implants to copy!
 
+        if (!ProtoMan.Resolve(ItemCloneSettings, out var itemCloneSettingsProto))
+            return; // We don't have cloning settings.
+
         foreach (var originalImplant in original.Comp.ImplantContainer.ContainedEntities)
         {
             if (!HasComp<SubdermalImplantComponent>(originalImplant))
@@ -270,11 +269,7 @@ public sealed partial class CloningSystem : SharedCloningSystem
             if (maybeTargetImplant is not { } targetImplant)
                 continue;
 
-            CloneComponents(originalImplant, targetImplant, ItemCloneSettings);
-
-            // copy over important component data
-            var ev = new ClonedEvent(targetImplant);
-            RaiseLocalEvent(originalImplant, ref ev);
+            CloneComponents(originalImplant, targetImplant, itemCloneSettingsProto);
 
             if (copyStorage)
                 CopyStorage(originalImplant, targetImplant, whitelist, blacklist); // only needed for storage implants

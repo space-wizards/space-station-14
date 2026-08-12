@@ -207,10 +207,6 @@ public abstract partial class SharedStorageSystem : EntitySystem
     {
         UseDelay.SetLength(entity.Owner, entity.Comp.QuickInsertCooldown, QuickInsertUseDelayID);
         UseDelay.SetLength(entity.Owner, entity.Comp.OpenUiCooldown, OpenUiUseDelayID);
-
-        var targetUI = EnsureComp<UserInterfaceComponent>(entity);
-
-        UI.SetUi((entity, targetUI), StorageComponent.StorageUiKey.Key, new InterfaceData("StorageBoundUserInterface"));
     }
 
     private void OnStorageGetState(EntityUid uid, StorageComponent component, ref ComponentGetState args)
@@ -1616,7 +1612,7 @@ public abstract partial class SharedStorageSystem : EntitySystem
     /// <summary>
     /// Updates the occupied grid mask for the entity.
     /// </summary>
-    protected void UpdateOccupied(Entity<StorageComponent> ent)
+    public void UpdateOccupied(Entity<StorageComponent> ent)
     {
         ent.Comp.OccupiedGrid.Clear();
         RemoveOccupied(ent.Comp.Grid, ent.Comp.OccupiedGrid);
