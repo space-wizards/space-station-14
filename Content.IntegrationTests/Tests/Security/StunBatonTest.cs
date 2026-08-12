@@ -38,7 +38,7 @@ public sealed class StunBatonTests : InteractionTest
         var baton = await PlaceInHands(StunBatonProtoId, enableToggleable: true);
         var sBaton = ToServer(baton);
         var batonStaminaDamage = Comp<StaminaDamageOnHitComponent>(baton).Damage;
-        var chargeUsePerHit = _meleeWeapon.GetHitPowerCost(sBaton);
+        var chargeUsePerHit = Comp<MeleeWeaponComponent>(baton).HitPowerCost;
         var batonIntialCharges = _battery.GetRemainingUses(sBaton, chargeUsePerHit);
         var batonMaxCharges = _battery.GetMaxUses(sBaton, chargeUsePerHit);
 
@@ -111,7 +111,7 @@ public sealed class StunBatonTests : InteractionTest
         // Spawn a stun baton in the player's hands without turning it on.
         var baton = await PlaceInHands(StunBatonProtoId, enableToggleable: false);
         var sBaton = ToServer(baton);
-        var chargeUsePerHit = _meleeWeapon.GetHitPowerCost(sBaton);
+        var chargeUsePerHit = Comp<MeleeWeaponComponent>(baton).HitPowerCost;
         var batonIntialCharges = _battery.GetRemainingUses(sBaton, chargeUsePerHit);
         var batonMaxCharges = _battery.GetMaxUses(sBaton, chargeUsePerHit);
 

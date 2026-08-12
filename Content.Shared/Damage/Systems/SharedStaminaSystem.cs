@@ -18,6 +18,7 @@ using Content.Shared.Rounding;
 using Content.Shared.StatusEffectNew;
 using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
+using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
@@ -48,6 +49,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
     [Dependency] private StatusEffectsSystem _status = default!;
     [Dependency] private ItemToggleSystem _itemToggle = default!;
     [Dependency] protected SharedStunSystem StunSystem = default!;
+    [Dependency] private SharedMeleeWeaponSystem _meleeWeapon = default!;
 
     [Dependency] private EntityQuery<StaminaComponent> _stamQuery = default!;
 
@@ -66,6 +68,18 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         InitializeResistance();
 
         Subs.CVar(_config, CCVars.PlaytestStaminaDamageModifier, value => UniversalStaminaDamageModifier = value, true);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnInit(Entity<StaminaDamageOnHitRequiresChargeComponent> ent, ref MapInitEvent args)
+    {
+        _meleeWeapon.UpdateHitPowerCost(ent.Owner);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnRemove(Entity<StaminaDamageOnHitRequiresChargeComponent> ent, ref ComponentRemove args)
+    {
+        _meleeWeapon.UpdateHitPowerCost(ent.Owner);
     }
 
     [SubscribeLocalEvent]
@@ -242,7 +256,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnGetPowerCost(Entity<StaminaDamageOnHitRequiresChargeComponent> ent, ref GetHitPowerCostEvent args)
+    private static void OnGetPowerCost(Entity<StaminaDamageOnHitRequiresChargeComponent> ent, ref ModifyHitPowerCostEvent args)
     {
         args.Cost += ent.Comp.RequiredCharge;
     }

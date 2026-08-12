@@ -18,6 +18,6 @@ public sealed partial class ItemToggleRequiresChargeComponent : Component
     /// <summary>
     /// The popup to show if someone tries to toggle the item on, but there is not enough charge.
     /// </summary>
-    [DataField(required: true)]
-    public LocId FailPopup;
+    [DataField]
+    public LocId FailPopup = "item-toggle-activated-low-charge";
 }

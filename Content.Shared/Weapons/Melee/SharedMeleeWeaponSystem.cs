@@ -71,6 +71,7 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
     [Dependency] private SharedEntityEffectsSystem _effects = default!;
 
     [Dependency] private EntityQuery<DamageableComponent> _damageQuery = default!;
+    [Dependency] private EntityQuery<MeleeWeaponComponent> _meleeWeaponQuery = default!;
 
     private const int AttackMask = (int) (CollisionGroup.MobMask | CollisionGroup.Opaque);
 
@@ -353,16 +354,20 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
     }
 
     /// <summary>
-    /// Returns how much battery power it costs to hit with this weapon.
+    /// Updates how much battery power it costs to hit with this weapon.
     /// </summary>
-    /// <param name="uid">The entity to check.</param>
+    /// <param name="uid">The entity to update for.</param>
     [PublicAPI]
-    public float GetHitPowerCost(EntityUid uid)
+    public void UpdateHitPowerCost(Entity<MeleeWeaponComponent?> ent)
     {
-        var ev = new GetHitPowerCostEvent();
-        RaiseLocalEvent(uid, ref ev);
+        if (!_meleeWeaponQuery.Resolve(ent, ref ent.Comp, false))
+            return;
 
-        return ev.Cost;
+        var ev = new ModifyHitPowerCostEvent();
+        RaiseLocalEvent(ent, ref ev);
+
+        ent.Comp.HitPowerCost = ev.Cost;
+        DirtyField(ent, nameof(MeleeWeaponComponent.HitPowerCost));
     }
 
     public void AttemptLightAttackMiss(EntityUid user, EntityUid weaponUid, MeleeWeaponComponent weapon, EntityCoordinates coordinates)

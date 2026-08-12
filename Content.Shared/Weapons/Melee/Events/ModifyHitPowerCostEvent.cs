@@ -5,4 +5,4 @@ namespace Content.Shared.Weapons.Melee.Events;
 /// </summary>
 /// <param name="Cost">The amount of power used per hit.</param>
 [ByRefEvent]
-public record struct GetHitPowerCostEvent(float Cost = 0);
+public record struct ModifyHitPowerCostEvent(float Cost = 0);

@@ -7,17 +7,17 @@ namespace Content.Shared.Item.ItemToggle.Components;
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(ItemToggleSystem))]
-public sealed partial class ExaminableItemToggleStatusComponent : Component
+public sealed partial class ItemToggleExaminableStatusComponent : Component
 {
     /// <summary>
     /// The text to show if the item is toggled on.
     /// </summary>
-    [DataField(required: true)]
-    public LocId OnText;
+    [DataField]
+    public LocId OnText = "item-toggle-examined-on";
 
     /// <summary>
     /// The text to show if the item is toggled off.
     /// </summary>
-    [DataField(required: true)]
-    public LocId OffText;
+    [DataField]
+    public LocId OffText = "item-toggle-examined-off";
 }

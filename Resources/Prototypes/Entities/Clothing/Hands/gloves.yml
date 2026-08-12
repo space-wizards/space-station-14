@@ -621,12 +621,9 @@
           False: {state: knuckleduster_off}
   - type: ToggleClothing
     action: ActionToggleKnuckleDustersStun
-  - type: ExaminableItemToggleStatus
-    onText: comp-stunbaton-examined-on
-    offText: comp-stunbaton-examined-off
+  - type: ItemToggleExaminableStatus
   - type: ItemToggleRequiresCharge
     requiredCharge: 50
-    failPopup: stunbaton-component-low-charge
   - type: ItemToggle
     predictable: false
     soundActivate:

@@ -10,12 +10,16 @@ namespace Content.Shared.Weapons.Melee;
 public sealed partial class ExaminableBatteryHitsLeftSystem : EntitySystem
 {
     [Dependency] private SharedBatterySystem _battery = default!;
-    [Dependency] private SharedMeleeWeaponSystem _meleeWeapon = default!;
+
+    [Dependency] private EntityQuery<MeleeWeaponComponent> _meleeWeaponQuery = default!;
 
     [SubscribeLocalEvent]
     private void OnExamined(Entity<ExaminableBatteryHitsLeftComponent> ent, ref ExaminedEvent args)
     {
-        var count = _battery.GetRemainingUses(ent.Owner, _meleeWeapon.GetHitPowerCost(ent));
+        if (!_meleeWeaponQuery.TryComp(ent, out var meleeWeapon))
+            return;
+
+        var count = _battery.GetRemainingUses(ent.Owner, meleeWeapon.HitPowerCost);
         args.PushMarkup(Loc.GetString(ent.Comp.ExamineText, ("color", ent.Comp.Color), ("count", count)));
     }
 }
