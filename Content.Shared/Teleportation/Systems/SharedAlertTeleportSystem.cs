@@ -103,13 +103,8 @@ public abstract partial class SharedAlertTeleportSystem : EntitySystem
         var curTime = _timing.CurTime;
         var endTime = _timing.CurTime + cooldown;
 
-        if (!comp.Targets.ContainsKey(alert))
-            comp.Targets.Add(alert, new AlertTeleportData());
-
-        var data = comp.Targets[alert];
-
-        if (data.Targets == null)
-            data.Targets = new();
+        if (!comp.Targets.TryGetValue(alert, out var data))
+            data = new AlertTeleportData();
 
         data.Targets.Add(GetNetEntity(target));
 
