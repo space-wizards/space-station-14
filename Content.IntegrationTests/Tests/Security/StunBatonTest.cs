@@ -24,7 +24,6 @@ public sealed class StunBatonTests : InteractionTest
     private const int NumberOfHitsToStun = 3;
 
     [SidedDependency(Side.Server)] private readonly SharedBatterySystem _battery = default!;
-    [SidedDependency(Side.Server)] private readonly SharedMeleeWeaponSystem _meleeWeapon = default!;
     [SidedDependency(Side.Server)] private readonly DamageableSystem _damageable = default!;
 
     [Test]
