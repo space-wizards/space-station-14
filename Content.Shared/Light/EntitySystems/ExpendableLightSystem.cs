@@ -107,6 +107,9 @@ public sealed partial class ExpendableLightSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    ///     Light refueling logic
+    /// </summary>	
     [SubscribeLocalEvent]
     private void OnInteractUsing(EntityUid uid, ExpendableLightComponent component, ref InteractUsingEvent args)
     {
