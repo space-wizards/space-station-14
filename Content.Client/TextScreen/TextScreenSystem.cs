@@ -395,34 +395,34 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
                 newChar |= newPosition % CharWidth == 0; // Rolled over onto a new character, need to update the sprites.
             }
 
-            if (scrolled)
-            {
-                var charOffset = screen.ScrollPosition[i] % CharWidth; // The amount to scroll each character off to the left by.
-                for (int j = 0; j < screen.RowLength + 1; j++)
-                {
-                    SpriteSystem.LayerSetOffset(
-                        (uid, sprite),
-                        TextMapKey + i + j,
-                        Vector2.Multiply(
-                            new Vector2((j - screen.RowLength / 2f + 0.5f) * CharWidth - charOffset, -i * screen.RowOffset),
-                            TextScreenVisualsComponent.PixelSize
-                            ) + screen.TextOffset
-                    );
-                }
+            if (!scrolled)
+                continue;
 
-                if (newChar)
-                {
-                    var textOffset = screen.ScrollPosition[i] / CharWidth; // The total number of characters scrolled so far.
-                    for (int j = 0; j < screen.RowLength + 1; j++)
-                    {
-                        var chr = (textOffset + j) % screen.TextToDraw[i]!.Length;
-                        SpriteSystem.LayerSetRsiState(
-                            (uid, sprite),
-                            TextMapKey + i + j,
-                            GetStateFromChar(screen.TextToDraw[i]![chr])
-                        );
-                    }
-                }
+            var charOffset = screen.ScrollPosition[i] % CharWidth; // The amount to scroll each character off to the left by.
+            for (int j = 0; j < screen.RowLength + 1; j++)
+            {
+                SpriteSystem.LayerSetOffset(
+                    (uid, sprite),
+                    TextMapKey + i + j,
+                    Vector2.Multiply(
+                        new Vector2((j - screen.RowLength / 2f + 0.5f) * CharWidth - charOffset, -i * screen.RowOffset),
+                        TextScreenVisualsComponent.PixelSize
+                        ) + screen.TextOffset
+                );
+            }
+
+            if (!newChar)
+                continue;
+
+            var textOffset = screen.ScrollPosition[i] / CharWidth; // The total number of characters scrolled so far.
+            for (int j = 0; j < screen.RowLength + 1; j++)
+            {
+                var chr = (textOffset + j) % screen.TextToDraw[i]!.Length;
+                SpriteSystem.LayerSetRsiState(
+                    (uid, sprite),
+                    TextMapKey + i + j,
+                    GetStateFromChar(screen.TextToDraw[i]![chr])
+                );
             }
         }
     }
