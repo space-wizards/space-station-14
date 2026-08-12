@@ -85,7 +85,6 @@
   id: AmbienceRuins
   files:
     - /Audio/Ambience/ambicave.ogg
-    - /Audio/Ambience/ambidanger.ogg
     - /Audio/Ambience/ambidanger2.ogg
     - /Audio/Ambience/ambimaint1.ogg
     - /Audio/Ambience/ambimine.ogg
@@ -97,6 +96,8 @@
     - /Audio/Ambience/ambiruin5.ogg
     - /Audio/Ambience/ambiruin6.ogg
     - /Audio/Ambience/ambiruin7.ogg
+    - /Audio/Ambience/ambireebe1.ogg
+    - /Audio/Ambience/ambireebe3.ogg
 
 - type: soundCollection
   id: AmbienceSpace

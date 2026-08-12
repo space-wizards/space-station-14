@@ -53,6 +53,31 @@
     collection: AmbienceMining
   fadeIn: true
   interruptable: true
-  priority: 1
+  priority: 4
   conditions:
   - !type:OnMapGridCondition
+
+- type: ambientMusic
+  id: Salvage
+  sound:
+    params:
+      volume: -12
+    collection: AmbienceRuins
+  fadeIn: true
+  interruptable: true
+  priority: 4
+  conditions:
+  - !type:GridInRangeCondition # make sure we're on or near a grid
+    range: 4
+  - !type:OnStationGridCondition # make sure that grid isn't the station
+    inverted: true
+  - !type:NearPlayerCondition # only want the spooky sounds to play when the player is somewhat isolated
+    inverted: true
+    count: 2
+    range: 10
+  - !type:NearbyComponentsCondition # make sure we aren't on a shuttle
+    anchored: true
+    count: 1
+    components:
+    - type: Thruster
+    range: 10
