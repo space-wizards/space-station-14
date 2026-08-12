@@ -67,8 +67,8 @@
   - type: Objective
     difficulty: 1
     icon:
-      sprite: Objects/Fun/plushielizard_jobs.rsi
-      state: captain
+      sprite: Objects/Fun/Plushies/atmosian.rsi
+      state: icon
   - type: TargetObjective
     title: objective-escape-department-title
   - type: ChangelingEscapeDepartmentCondition
