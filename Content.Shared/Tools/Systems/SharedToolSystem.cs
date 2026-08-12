@@ -12,6 +12,7 @@ using Content.Shared.Tools.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -102,7 +103,7 @@ public abstract partial class SharedToolSystem : EntitySystem
         EntityUid user,
         EntityUid? target,
         float doAfterDelay,
-        [ForbidLiteral] IEnumerable<string> toolQualitiesNeeded,
+        [ForbidLiteral] IEnumerable<ProtoId<ToolQualityPrototype>> toolQualitiesNeeded,
         DoAfterEvent doAfterEv,
         float fuel = 0,
         ToolComponent? toolComponent = null)
@@ -140,7 +141,7 @@ public abstract partial class SharedToolSystem : EntitySystem
         EntityUid user,
         EntityUid? target,
         TimeSpan delay,
-        [ForbidLiteral] IEnumerable<string> toolQualitiesNeeded,
+        [ForbidLiteral] IEnumerable<ProtoId<ToolQualityPrototype>> toolQualitiesNeeded,
         DoAfterEvent doAfterEv,
         out DoAfterId? id,
         float fuel = 0,
@@ -201,7 +202,7 @@ public abstract partial class SharedToolSystem : EntitySystem
         EntityUid user,
         EntityUid? target,
         float doAfterDelay,
-        [ForbidLiteral] string toolQualityNeeded,
+        [ForbidLiteral] ProtoId<ToolQualityPrototype> toolQualityNeeded,
         DoAfterEvent doAfterEv,
         float fuel = 0,
         ToolComponent? toolComponent = null)
@@ -221,7 +222,7 @@ public abstract partial class SharedToolSystem : EntitySystem
     ///     Method used to get the localized names of the quality prototypes.
     /// </summary>
     /// <returns>Localized combined string from the quality prototypes names</returns>
-    public string GetQualitiesText(IEnumerable<string> qualities, bool lowercase = false)
+    public string GetQualitiesText(IEnumerable<ProtoId<ToolQualityPrototype>> qualities, bool lowercase = false)
     {
         // Create a list to store tool quality names
         var toolQualities = new List<string>();
@@ -229,7 +230,7 @@ public abstract partial class SharedToolSystem : EntitySystem
         // Loop through tool qualities and add localized names to the list
         foreach (var toolQuality in qualities)
         {
-            if (!ProtoMan.TryIndex<ToolQualityPrototype>(toolQuality ?? string.Empty, out var protoToolQuality))
+            if (!ProtoMan.Resolve(toolQuality, out var protoToolQuality))
                 continue;
 
             var toAdd = Loc.GetString(protoToolQuality.Name);
@@ -255,18 +256,18 @@ public abstract partial class SharedToolSystem : EntitySystem
     ///     Whether a tool entity has all specified qualities or not.
     /// </summary>
     [PublicAPI]
-    public bool HasAllQualities(EntityUid uid, [ForbidLiteral] IEnumerable<string> qualities, ToolComponent? tool = null)
+    public bool HasAllQualities(EntityUid uid, [ForbidLiteral] IEnumerable<ProtoId<ToolQualityPrototype>> qualities, ToolComponent? tool = null)
     {
-        return Resolve(uid, ref tool, false) && tool.Qualities.ContainsAll(qualities);
+        return Resolve(uid, ref tool, false) && tool.Qualities.IsSupersetOf(qualities);
     }
 
-    private bool CanStartToolUse(EntityUid tool, EntityUid user, EntityUid? target, float fuel, IEnumerable<string> toolQualitiesNeeded, ToolComponent? toolComponent = null)
+    private bool CanStartToolUse(EntityUid tool, EntityUid user, EntityUid? target, float fuel, IEnumerable<ProtoId<ToolQualityPrototype>> toolQualitiesNeeded, ToolComponent? toolComponent = null)
     {
         if (!Resolve(tool, ref toolComponent))
             return false;
 
         // check if the tool can do what's required
-        if (!toolComponent.Qualities.ContainsAll(toolQualitiesNeeded))
+        if (!toolComponent.Qualities.IsSupersetOf(toolQualitiesNeeded))
             return false;
 
         // check if the user allows using the tool
