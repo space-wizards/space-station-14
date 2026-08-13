@@ -90,9 +90,3 @@
   components:
   - type: StaminaModifierStatusEffect
     modifier: 1.5
-
-- type: entity
-  parent: MobStatusEffectBase
-  id: EyelidsStatusEffectBase
-  abstract: true
-  # Here we need to add a check to see if the entity has eyes that have a blinking component

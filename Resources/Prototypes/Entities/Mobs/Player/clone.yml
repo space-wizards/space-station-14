@@ -75,6 +75,7 @@
   eventComponents:
   - Puller
   - Vocal # voice sounds
+  - EyeBlinking # for rsiPath and other blinking settings
 
 # for job-specific traits etc.
 - type: cloningSettings
@@ -145,7 +146,6 @@
   - ScaleVisuals # for dwarf height
   eventComponents:
   # these need special treatment in the event subscription
-  - EyeBlinking # for rsiPath and other blinking settings
   - Inventory # arachnid pockets and diona feet
   - Wagging # lizard tails
   - Storage # slime storage
