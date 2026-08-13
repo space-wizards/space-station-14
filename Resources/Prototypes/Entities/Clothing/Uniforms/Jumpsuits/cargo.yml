@@ -28,7 +28,7 @@
     sprite: Clothing/Uniforms/Jumpsuits/Cargo/qm.rsi
 
 - type: entity
-  parent: [ClothingUniformBase, BaseCommandContraband]
+  parent: [ClothingUniformBase, ClothingUniformFoldableBase, BaseCommandContraband]
   id: ClothingUniformJumpsuitQMTurtleneck
   name: quartermasters's turtleneck
   description: A sharp turtleneck made for the hardy work environment of supply.
