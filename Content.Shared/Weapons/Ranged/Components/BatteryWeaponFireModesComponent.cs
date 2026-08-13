@@ -1,3 +1,4 @@
+using Content.Shared.DeviceLinking;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
@@ -27,6 +28,12 @@ public sealed partial class BatteryWeaponFireModesComponent : Component
     [DataField]
     [AutoNetworkedField]
     public int CurrentFireMode;
+
+    /// <summary>
+    /// Map of signal ports to entity prototype IDs of the entity that will be fired.
+    /// </summary>
+    [DataField]
+    public Dictionary<ProtoId<SinkPortPrototype>, EntProtoId> SetTypePorts = new();
 }
 
 [DataDefinition, Serializable, NetSerializable]

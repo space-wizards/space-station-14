@@ -1,5 +1,3 @@
-using System.Threading;
-using Content.Shared.DeviceLinking;
 using Content.Shared.Radio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -7,50 +5,9 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Singularity.Components;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class EmitterComponent : Component
 {
-    public CancellationTokenSource? TimerCancel;
-
-    /// <summary>
-    /// Whether the emitter is switched to emitting or now.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool IsOn;
-
-    // Whether the power switch is on AND the machine has enough power (so is actively firing)
-    [ViewVariables] public bool IsPowered;
-
-    /// <summary>
-    /// counts the number of consecutive shots fired.
-    /// </summary>
-    [ViewVariables]
-    public int FireShotCounter;
-
-    /// <summary>
-    /// The amount of shots that are fired in a single "burst"
-    /// </summary>
-    [DataField]
-    public int FireBurstSize = 3;
-
-    /// <summary>
-    /// The time between each shot during a burst.
-    /// </summary>
-    [DataField]
-    public TimeSpan FireInterval = TimeSpan.FromSeconds(2);
-
-    /// <summary>
-    /// The current minimum delay between bursts.
-    /// </summary>
-    [DataField]
-    public TimeSpan FireBurstDelayMin = TimeSpan.FromSeconds(4);
-
-    /// <summary>
-    /// The current maximum delay between bursts.
-    /// </summary>
-    [DataField]
-    public TimeSpan FireBurstDelayMax = TimeSpan.FromSeconds(10);
-
     /// <summary>
     /// The visual state that is set when the emitter is turned on
     /// </summary>
@@ -62,31 +19,7 @@ public sealed partial class EmitterComponent : Component
     /// </summary>
     [DataField]
     public string? UnderpoweredState = "underpowered";
-
-    /// <summary>
-    /// Signal port that turns on the emitter.
-    /// </summary>
-    [DataField]
-    public ProtoId<SinkPortPrototype> OnPort = "On";
-
-    /// <summary>
-    /// Signal port that turns off the emitter.
-    /// </summary>
-    [DataField]
-    public ProtoId<SinkPortPrototype> OffPort = "Off";
-
-    /// <summary>
-    /// Signal port that toggles the emitter on or off.
-    /// </summary>
-    [DataField]
-    public ProtoId<SinkPortPrototype> TogglePort = "Toggle";
-
-    /// <summary>
-    /// Map of signal ports to entity prototype IDs of the entity that will be fired.
-    /// </summary>
-    [DataField]
-    public Dictionary<ProtoId<SinkPortPrototype>, EntProtoId> SetTypePorts = new();
-
+    
     /// <summary>
     /// The radio channel to broadcast on when something happens to this emitter
     /// </summary>
@@ -146,4 +79,4 @@ public enum EmitterVisualState
 
 
 [Serializable, NetSerializable]
-public sealed class EmitterToggleActiveMessage : BoundUserInterfaceMessage;
+public sealed class NetworkPoweredAmmoProviderToggleActiveMessage : BoundUserInterfaceMessage;

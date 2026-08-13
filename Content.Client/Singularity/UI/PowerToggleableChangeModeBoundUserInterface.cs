@@ -9,7 +9,7 @@ namespace Content.Client.Singularity.UI;
 /// <summary>
 /// BUI for simple radial that helps to interact with emitter settings.
 /// </summary>
-public sealed partial class EmitterChangeModeBoundUserInterface(EntityUid owner, Enum uiKey)
+public sealed partial class PowerToggleableChangeModeBoundUserInterface(EntityUid owner, Enum uiKey)
     : BatteryWeaponFireModesBoundUserInterface(owner, uiKey)
 {
     private static readonly SpriteSpecifier.Texture TogglePowerTexture = new(new("/Textures/Interface/Radial/toggle-power.png"));
@@ -17,7 +17,7 @@ public sealed partial class EmitterChangeModeBoundUserInterface(EntityUid owner,
     protected override List<RadialMenuOptionBase> CreateButtons(BatteryWeaponFireModesComponent fireModes)
     {
         var options = base.CreateButtons(fireModes);
-        if (!EntMan.TryGetComponent(Owner, out EmitterComponent? emitter))
+        if (!EntMan.TryGetComponent(Owner, out NetworkPoweredAmmoProviderComponent? emitter))
             return options;
 
         if (options.Count == 1)
@@ -52,7 +52,7 @@ public sealed partial class EmitterChangeModeBoundUserInterface(EntityUid owner,
 
     private void HandleSendToggle()
     {
-        var msg = new EmitterToggleActiveMessage();
+        var msg = new NetworkPoweredAmmoProviderToggleActiveMessage();
         SendPredictedMessage(msg);
     }
 }

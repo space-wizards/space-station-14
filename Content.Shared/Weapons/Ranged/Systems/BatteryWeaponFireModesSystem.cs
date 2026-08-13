@@ -1,7 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Examine;
 using Content.Shared.Popups;
 using Content.Shared.Weapons.Ranged.Components;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
@@ -31,6 +34,15 @@ public sealed partial class BatteryWeaponFireModesSystem : EntitySystem
             return;
 
         args.PushMarkup(Loc.GetString("gun-set-fire-mode-examine", ("mode", proto.Name)));
+    }
+
+    [SubscribeLocalEvent]
+    private void OnSignalReceived(Entity<BatteryWeaponFireModesComponent> ent, ref SignalReceivedEvent args)
+    {
+        if (ent.Comp.SetTypePorts.TryGetValue(args.Port, out var protoId))
+        {
+            TrySetFireMode((ent.Owner, null), protoId);
+        }
     }
 
     private BatteryWeaponFireMode GetMode(BatteryWeaponFireModesComponent component)
