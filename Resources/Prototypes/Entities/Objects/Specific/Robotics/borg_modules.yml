@@ -1508,10 +1508,18 @@
   name: access breaker xenoborg module
   description: Module with a access breaker.
   components:
+  - type: Tag
+    tags:
+    - XenoborgModuleEngi
+    - XenoborgModuleAccessBreaker
   - type: Sprite
     layers:
     - state: xenoborg_engi
     - state: icon-xenoborg-access-breaker
+  - type: BorgModuleWhitelist
+    moduleBlacklist:
+      tags:
+      - XenoborgModuleAccessBreaker
   - type: ItemBorgModule
     hands:
     - item: AccessBreaker
@@ -1556,10 +1564,18 @@
   name: door control xenoborg module
   description: Module that allows Xenoborgs to control airlocks.
   components:
+  - type: Tag
+    tags:
+    - XenoborgModuleEngi
+    - XenoborgModuleAccessBreaker
   - type: Sprite
     layers:
     - state: xenoborg_engi
     - state: icon-xenoborg-access-breaker
+  - type: BorgModuleWhitelist
+    moduleBlacklist:
+      tags:
+      - XenoborgModuleAccessBreaker
   - type: ItemBorgModule
     hands:
     - item: DoorRemoteXenoborg
@@ -1574,10 +1590,18 @@
   name: tile gun xenoborg module
   description: Module with a tile gun. wait, a what?
   components:
+  - type: Tag
+    tags:
+    - XenoborgModuleEngi
+    - XenoborgModuleSecondaryWeapon
   - type: Sprite
     layers:
     - state: xenoborg_engi
     - state: icon-xenoborg-tile
+  - type: BorgModuleWhitelist
+    moduleBlacklist: &secondaryWeapon
+      tags:
+      - XenoborgModuleSecondaryWeapon
   - type: ItemBorgModule
     hands:
     - item: WeaponTileGun
@@ -1608,10 +1632,18 @@
   name: oil gun xenoborg module
   description: Module with a gun that shoots ampoules filled with flammable oil.
   components:
+  - type: Tag
+    tags:
+    - XenoborgModuleEngi
+    - XenoborgModulePrimaryWeapon
   - type: Sprite
     layers:
     - state: xenoborg_engi
     - state: icon-xenoborg-oil
+  - type: BorgModuleWhitelist
+    moduleBlacklist: &primaryWeapon
+      tags:
+      - XenoborgModulePrimaryWeapon
   - type: ItemBorgModule
     hands:
     - item: WeaponOilGun
@@ -1624,10 +1656,16 @@
   name: nanite gun xenoborg module
   description: Module that allows Xenoborgs to have a crystal firing nanite gun.
   components:
+  - type: Tag
+    tags:
+    - XenoborgModuleEngi
+    - XenoborgModulePrimaryWeapon
   - type: Sprite
     layers:
     - state: xenoborg_engi
     - state: icon-xenoborg-nanite-gun
+  - type: BorgModuleWhitelist
+    moduleBlacklist: *primaryWeapon
   - type: ItemBorgModule
     hands:
     - item: WeaponNaniteGun
@@ -1656,10 +1694,16 @@
   name: laser xenoborg module
   description: Module with a laser gun.
   components:
+  - type: Tag
+    tags:
+    - XenoborgModuleHeavy
+    - XenoborgModulePrimaryWeapon
   - type: Sprite
     layers:
     - state: xenoborg_heavy
     - state: icon-xenoborg-laser
+  - type: BorgModuleWhitelist
+    moduleBlacklist: *primaryWeapon
   - type: ItemBorgModule
     hands:
     - item: WeaponLaserGunXenoborg
@@ -1672,10 +1716,16 @@
   name: laser cannon xenoborg module
   description: Module with a laser cannon.
   components:
+  - type: Tag
+    tags:
+    - XenoborgModuleHeavy
+    - XenoborgModulePrimaryWeapon
   - type: Sprite
     layers:
     - state: xenoborg_heavy
     - state: icon-xenoborg-laser2
+  - type: BorgModuleWhitelist
+    moduleBlacklist: *primaryWeapon
   - type: ItemBorgModule
     hands:
     - item: WeaponLaserCannonXenoborg
@@ -1688,10 +1738,16 @@
   name: burst fire laser xenoborg module
   description: Module with a burst fire incendiary laser.
   components:
+  - type: Tag
+    tags:
+    - XenoborgModuleHeavy
+    - XenoborgModulePrimaryWeapon
   - type: Sprite
     layers:
     - state: xenoborg_heavy
     - state: icon-xenoborg-laser3
+  - type: BorgModuleWhitelist
+    moduleBlacklist: *primaryWeapon
   - type: ItemBorgModule
     hands:
     - item: WeaponBurstFireLaserXenoborg
@@ -1704,6 +1760,10 @@
   name: radioactive xenoborg module
   description: Module that causes a xenoborg to emanate radioactive energy.
   components:
+  - type: Tag
+    tags:
+    - XenoborgModuleHeavy
+    - XenoborgModuleWithSimpleOverlay
   - type: PointLight
     color: green
     radius: 5
@@ -1712,6 +1772,10 @@
     layers:
       - state: xenoborg_heavy
       - state: icon-xenoborg-radioactive
+  - type: BorgModuleWhitelist
+    moduleBlacklist: &moduleWithSimpleOverlay
+      tags:
+      - XenoborgModuleWithSimpleOverlay
   - type: ComponentBorgModule
     components:
     - type: SimpleSpriteOverlay
@@ -1772,10 +1836,16 @@
   name: knife xenoborg module
   description: Module with a kukri knife.
   components:
+  - type: Tag
+    tags:
+    - XenoborgModuleScout
+    - XenoborgModulePrimaryWeapon
   - type: Sprite
     layers:
     - state: xenoborg_scout
     - state: icon-xenoborg-sword
+  - type: BorgModuleWhitelist
+    moduleBlacklist: *primaryWeapon
   - type: ItemBorgModule
     hands:
     - item: KukriKnife
@@ -1789,10 +1859,16 @@
   name: energy dagger xenoborg module
   description: Module with an energy dagger.
   components:
+  - type: Tag
+    tags:
+    - XenoborgModuleScout
+    - XenoborgModulePrimaryWeapon
   - type: Sprite
     layers:
     - state: xenoborg_scout
     - state: icon-xenoborg-sword2
+  - type: BorgModuleWhitelist
+    moduleBlacklist: *primaryWeapon
   - type: ItemBorgModule
     hands:
     - item: EnergyDaggerLoudBlue
@@ -1806,10 +1882,16 @@
   name: nocturine hypo xenoborg module
   description: Module with a self-refilling nocturine hypo.
   components:
+  - type: Tag
+    tags:
+    - XenoborgModuleStealth
+    - XenoborgModulePrimaryWeapon
   - type: Sprite
     layers:
     - state: xenoborg_stealth
     - state: icon-xenoborg-hypo
+  - type: BorgModuleWhitelist
+    moduleBlacklist: *primaryWeapon
   - type: ItemBorgModule
     hands:
     - item: NocturineHypo
@@ -1838,10 +1920,18 @@
   name: cloaking device xenoborg module
   description: Module with a device that allows xenoborgs to become semi-invisible for some time.
   components:
+  - type: Tag
+    tags:
+    - XenoborgModuleStealth
+    - XenoborgModuleInvisibility
   - type: Sprite
     layers:
     - state: xenoborg_stealth
     - state: icon-xenoborg-cloak
+  - type: BorgModuleWhitelist
+    moduleBlacklist:
+      tags:
+      - XenoborgModuleInvisibility
   - type: ItemBorgModule
     hands:
     - item: CloakingDevice
@@ -1854,10 +1944,18 @@
   name: invisibility device xenoborg module
   description: Module with a device that allows xenoborgs to become truly invisible for a short amount of time.
   components:
+  - type: Tag
+    tags:
+    - XenoborgModuleStealth
+    - XenoborgModuleInvisibility
   - type: Sprite
     layers:
     - state: xenoborg_stealth
     - state: icon-xenoborg-cloak2
+  - type: BorgModuleWhitelist
+    moduleBlacklist:
+      tags:
+      - XenoborgModuleInvisibility
   - type: ItemBorgModule
     hands:
     - item: SuperCloakingDevice
