@@ -63,7 +63,7 @@ public sealed partial class MapMigrationSystem : EntitySystem
         // Game saves don't apply mapping mode migrations,
         // since some migrated entities are still actually used.
         // TODO make a universal map migration system in the engine
-        if (ev.Category == FileCategory.Save)
+        if (ev.ExpectedCategory == FileCategory.Save)
             return;
 
         if (!TryReadFile(out var mappings))
