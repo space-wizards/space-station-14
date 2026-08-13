@@ -34,12 +34,6 @@
               amount: 2
               doAfter: 3
 
-        - to: clockworkWindowDiagonal
-          steps:
-            - material: ClockworkGlass
-              amount: 2
-              doAfter: 3
-
         - to: windowDiagonal
           steps:
             - material: Glass
@@ -53,14 +47,6 @@
             - material: ReinforcedGlass
               amount: 2
               doAfter: 4
-
-        - to: miningWindowDiagonal
-          steps: 
-            - material: Steel
-              amount: 2
-            - material: ReinforcedGlass
-              amount: 2
-              doAfter: 3
 
     - node: windowDiagonal
       entity: WindowDiagonal
@@ -84,29 +70,6 @@
           completed:
             - !type:GivePrototype
               prototype: SheetRGlass1
-              amount: 2
-            - !type:DeleteEntity {}
-          steps:
-            - tool: Welding
-              doAfter: 5
-            - tool: Screwing
-              doAfter: 1
-            - tool: Prying
-              doAfter: 2
-            - tool: Welding
-              doAfter: 5
-            - tool: Screwing
-              doAfter: 1
-            - tool: Anchoring
-              doAfter: 2
-
-    - node: clockworkWindowDiagonal
-      entity: ClockworkWindowDiagonal
-      edges:
-        - to: start
-          completed:
-            - !type:GivePrototype
-              prototype: SheetClockworkGlass1
               amount: 2
             - !type:DeleteEntity {}
           steps:
@@ -206,7 +169,6 @@
               doAfter: 2
             - tool: Anchoring
               doAfter: 3
-
     - node: shuttleWindowDiagonal
       entity: ShuttleWindowDiagonal
       edges:
@@ -236,25 +198,3 @@
               doAfter: 4
             - tool: Anchoring
               doAfter: 1
-
-    - node: miningWindowDiagonal
-      entity: MiningWindowDiagonal
-      edges:
-      - to: start
-        completed:
-        - !type:GivePrototype
-          prototype: SheetRGlass1
-          amount: 2
-        - !type:GivePrototype
-          prototype: SheetSteel1
-          amount: 2
-        - !type:DeleteEntity {}
-        steps:
-        - tool: Welding
-          doAfter: 4
-        - tool: Screwing
-          doAfter: 1
-        - tool: Prying
-          doAfter: 2
-        - tool: Anchoring
-          doAfter: 2

@@ -53,20 +53,6 @@
             - material: ReinforcedGlass
               amount: 2
               doAfter: 4
-        
-        - to: clockworkWindow
-          steps:
-            - material: ClockworkGlass
-              amount: 2
-              doAfter: 3
-
-        - to: miningWindow
-          steps: 
-            - material: Steel
-              amount: 2
-            - material: ReinforcedGlass
-              amount: 2
-              doAfter: 3
 
     - node: window
       entity: Window
@@ -209,29 +195,6 @@
             - tool: Anchoring
               doAfter: 3
 
-    - node: clockworkWindow
-      entity: ClockworkWindow
-      edges:
-        - to: start
-          completed:
-            - !type:GivePrototype
-              prototype: SheetClockworkGlass1
-              amount: 2
-            - !type:DeleteEntity {}
-          steps:
-            - tool: Welding
-              doAfter: 5
-            - tool: Screwing
-              doAfter: 2
-            - tool: Prying
-              doAfter: 3
-            - tool: Welding
-              doAfter: 5
-            - tool: Screwing
-              doAfter: 2
-            - tool: Anchoring
-              doAfter: 3
-    
     - node: shuttleWindow
       entity: ShuttleWindow
       edges:
@@ -262,25 +225,3 @@
               doAfter: 4
             - tool: Anchoring
               doAfter: 1
-
-    - node: miningWindow
-      entity: MiningWindow
-      edges:
-      - to: start
-        completed:
-        - !type:GivePrototype
-          prototype: SheetRGlass1
-          amount: 2
-        - !type:GivePrototype
-          prototype: SheetSteel1
-          amount: 2
-        - !type:DeleteEntity {}
-        steps:
-        - tool: Welding
-          doAfter: 4
-        - tool: Screwing
-          doAfter: 1
-        - tool: Prying
-          doAfter: 2
-        - tool: Anchoring
-          doAfter: 2

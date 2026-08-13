@@ -81,9 +81,7 @@
   id: BaseLightTube
   components:
   - type: Sprite
-    sprite:  Objects/Power/light_tube.rsi
-  - type: LightBulb
-    bulb: Tube
+    sprite: Objects/Power/light_tube.rsi
   - type: Destructible
     thresholds:
     - trigger: *DamageTrigger10
@@ -216,7 +214,7 @@
   components:
   - type: LightBulb
     color: "#FFE4CE" # 5000K color temp
-    lightEnergy: 0.8
+    lightEnergy: 1.6
     lightRadius: 10
     lightSoftness: 1
     PowerUse: 25
