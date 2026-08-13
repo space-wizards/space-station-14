@@ -27,22 +27,22 @@ public sealed partial class BloodstreamDripOnDamageComponent : Component
     public float Probability = 0.25f;
 
     /// <summary>
-    /// The range for droplets to fly. From min (inclusive) to max (exclusive).
+    /// The range for droplets to fly. From min (inclusive) to max (inclusive).
     /// </summary>
     [DataField, AutoNetworkedField]
     public MinMax Range = new(2f, 4f);
 
     /// <summary>
-    /// The force with which droplets will fly. From min (inclusive) to max (exclusive).
+    /// The force with which droplets will fly. From min (inclusive) to max (inclusive).
     /// </summary>
     [DataField, AutoNetworkedField]
-    public MinMax Force = new(2f, 3f);
+    public MinMax Force = new(4f, 5f);
 
     /// <summary>
-    /// The number of droplets that will be spawned. From min (inclusive) to max (exclusive).
+    /// The number of droplets that will be spawned. From min (inclusive) to max (inclusive).
     /// </summary>
     [DataField, AutoNetworkedField]
-    public (int Min, int Max) Amount = (1, 4); // TODO: Make MinMax generic for more types.
+    public (int Min, int Max) Amount = (1, 3); // TODO: Make MinMax generic for more types.
 
     /// <summary>
     /// The damage types that are allowed.

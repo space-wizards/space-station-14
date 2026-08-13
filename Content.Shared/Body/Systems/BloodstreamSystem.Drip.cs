@@ -24,28 +24,29 @@ public sealed partial class BloodstreamSystem
         if (!_solutionContainer.ResolveSolution(ent.Owner, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution))
             return;
 
+        var qualifyingDamage = FixedPoint2.Zero;
+        foreach (var (damageType, damage) in args.Damage.DamageDict)
+        {
+            if (ent.Comp.Allowed.Contains(damageType))
+                qualifyingDamage += damage;
+        }
+
+        if (qualifyingDamage < ent.Comp.Threshold)
+            return;
+
         var rand = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent));
         if (!rand.Prob(ent.Comp.Probability))
             return;
 
-        foreach (var damage in args.Damage.DamageDict)
-        {
-            if (!ent.Comp.Allowed.Contains(damage.Key))
-                continue;
-
-            if (ent.Comp.Threshold > damage.Value)
-                continue;
-
-            var (min, max) = ent.Comp.Amount;
-            for (var i = 0; i <= rand.Next(min, max); i++)
-            {
-                if (!TrySpawnDroplet((ent, bloodstream),
-                    rand.NextVector2() * ent.Comp.Range.NextFloat(rand),
-                    ent.Comp.Force.NextFloat(rand)))
-                    return;
-            }
-
+        if (ent.Comp.Amount.Min < 0)
             return;
+
+        var amount = rand.Next(ent.Comp.Amount.Min, ent.Comp.Amount.Max + 1);
+        for (var i = 0; i < amount; i++)
+        {
+            var direction = rand.NextAngle().ToVec() * ent.Comp.Range.NextFloat(rand);
+            if (!TrySpawnDroplet((ent, bloodstream), direction, ent.Comp.Force.NextFloat(rand)))
+                return;
         }
     }
 
@@ -88,16 +89,21 @@ public sealed partial class BloodstreamSystem
             return false;
 
         var droplet = PredictedSpawnAtPosition(BloodstreamComponent.DropletId, Transform(ent).Coordinates);
-
-        if (_solutionContainer.TryGetSolution(droplet, BloodstreamComponent.DropletSolution, out var solution, true))
+        if (!_solutionContainer.TryGetSolution(droplet, BloodstreamComponent.DropletSolution, out var solution, true))
         {
-            solution.Value.Comp.Solution.RemoveAllSolution();
+            PredictedQueueDel(droplet);
+            return false;
+        }
 
-            var amount = _solutionContainer.SplitSolution(
-                ent.Comp.BloodSolution.Value,
-                FixedPoint2.Min(ent.Comp.DropletTransferAmount, solution.Value.Comp.Solution.AvailableVolume));
-
-            _solutionContainer.TryAddSolution(solution.Value, amount);
+        solution.Value.Comp.Solution.RemoveAllSolution();
+        var transferred = _solutionContainer.SplitSolution(
+            ent.Comp.BloodSolution.Value,
+            FixedPoint2.Min(ent.Comp.DropletTransferAmount, solution.Value.Comp.Solution.AvailableVolume));
+        if (!_solutionContainer.TryAddSolution(solution.Value, transferred))
+        {
+            _solutionContainer.TryAddSolution(ent.Comp.BloodSolution.Value, transferred);
+            PredictedQueueDel(droplet);
+            return false;
         }
 
         _throwing.TryThrow(droplet, dir, force, compensateFriction: true);
