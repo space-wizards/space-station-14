@@ -33,7 +33,7 @@
                         </PanelContainer.PanelOverride>
                         <Label Text="{Loc grinder-menu-solution}" StyleClasses="LabelHeading" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10 0" />
                     </PanelContainer>
-                    <PanelContainer StyleClasses="Inset" MinHeight="46">
+                    <PanelContainer MinHeight="46">
                         <PanelContainer.PanelOverride>
                             <gfx:StyleBoxFlat BackgroundColor="#1e272a" BorderColor="#2C2F33" BorderThickness="2" />
                         </PanelContainer.PanelOverride>
@@ -50,7 +50,7 @@
             <controls:StripeBack>
                 <Label Text="{Loc grinder-menu-chamber-content-box-label}" StyleClasses="LabelHeading" HorizontalAlignment="Center" Margin="10 0" />
             </controls:StripeBack>
-            <PanelContainer StyleClasses="Inset" Margin="0 0 0 4" VerticalExpand="True" MinWidth="254">
+            <PanelContainer Margin="0 0 0 4" VerticalExpand="True" MinWidth="254">
                 <PanelContainer.PanelOverride>
                     <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" BorderColor="#2C2F33" BorderThickness="2" />
                 </PanelContainer.PanelOverride>
@@ -74,7 +74,7 @@
             <controls:StripeBack>
                 <Label Text="{Loc grinder-menu-beaker-content-box-label}" StyleClasses="LabelHeading" HorizontalAlignment="Center" Margin="10 0" />
             </controls:StripeBack>
-            <PanelContainer StyleClasses="Inset" Margin="0 0 0 4" VerticalExpand="True">
+            <PanelContainer Margin="0 0 0 4" VerticalExpand="True">
                 <PanelContainer.PanelOverride>
                     <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" BorderColor="#2C2F33" BorderThickness="2" />
                 </PanelContainer.PanelOverride>

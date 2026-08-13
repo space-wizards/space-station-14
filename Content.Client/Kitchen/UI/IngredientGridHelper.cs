@@ -95,7 +95,7 @@ public static class IngredientGridHelper
         {
             SetSize = IngredientButtonSize,
             RectClipContent = true,
-            StyleClasses = { "OpenBoth" },
+            StyleClasses = { StyleClass.ButtonOpenBoth },
             ToolTip = toolTip,
             Modulate = Color.White.WithAlpha(0.5f)
         };
