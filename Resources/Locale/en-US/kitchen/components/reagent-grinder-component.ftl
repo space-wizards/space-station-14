@@ -12,7 +12,6 @@ grinder-menu-auto-label = AUTO MODE
 grinder-menu-auto-button-off = Off
 grinder-menu-manual-label = MANUAL MODE
 grinder-menu-solution = SOLUTION
-grinder-menu-no-solution = No solution
 grinder-menu-no-beaker = No beaker inserted
 grinder-menu-beaker-empty = Beaker empty
 grinder-menu-chamber-empty = No ingredients

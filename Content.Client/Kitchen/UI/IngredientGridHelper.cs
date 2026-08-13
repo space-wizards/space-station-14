@@ -23,7 +23,6 @@ public static class IngredientGridHelper
     /// <param name="entities">Collection of entities to display.</param>
     /// <param name="onEject">Action to perform when an ingredient is ejected.</param>
     /// <param name="emptyText">Text to show when there are no ingredients.</param>
-    /// <returns>The populated grid container.</returns>
     public static void PopulateIngredientsGrid(
         GridContainer grid,
         IEntityManager entMan,
