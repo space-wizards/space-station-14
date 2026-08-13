@@ -25,7 +25,7 @@
     price: 2000
 
 - type: entity
-  parent: [BaseItem, BaseXenoborgContraband]
+  parent: [BaseItem, AccessBreaker, BaseXenoborgContraband]
   id: XenoborgAccessBreaker
   suffix: Limited
   name: xenoborg authentication disruptor
@@ -34,8 +34,6 @@
   - type: Emag
     emagImmuneTag: AccessBreakerImmune
     emagType: Access
-  - type: LimitedCharges
-  - type: AutoRecharge
   - type: Sprite
     sprite: Objects/Tools/access_breaker.rsi
     state: xorg-icon

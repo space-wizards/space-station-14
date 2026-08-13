@@ -40,8 +40,6 @@
       tags:
       - XenoborgModuleGeneric
       - XenoborgModuleEngi
-      - BorgModuleEngineering
-      - BorgModuleGeneric
   - type: ContainerFill
     containers:
       borg_brain:

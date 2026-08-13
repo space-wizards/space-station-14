@@ -40,6 +40,7 @@ rcd-component-airlocks = Airlocks
 rcd-component-electrical = Electrical
 rcd-component-lighting = Lighting
 
+
 ### Prototype names (note: constructable items will be puralized)
 
 rcd-component-deconstruct = deconstruct
