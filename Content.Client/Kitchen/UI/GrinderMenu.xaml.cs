@@ -70,9 +70,7 @@ public sealed partial class GrinderMenu : FancyWindow
         if (!_entityManager.TryGetComponent<ReagentGrinderComponent>(_owner, out var grinderComp))
             return;
 
-        var chamberEntities = grinderComp.InputContainer.ContainedEntities
-            .Where(x => x.Valid)
-            .ToArray();
+        var chamberEntities = grinderComp.InputContainer.ContainedEntities;
         var beaker = _slots.GetItemOrNull(_owner, ReagentGrinderComponent.BeakerSlotId);
         var beakerReagents = new List<ReagentQuantity>();
         var currentVolume = FixedPoint2.Zero;
@@ -88,7 +86,7 @@ public sealed partial class GrinderMenu : FancyWindow
 
         var isActive = _grinder.IsActive((_owner, grinderComp));
         var isPowered = _power.IsPowered(_owner);
-        var hasInput = chamberEntities.Length > 0;
+        var hasInput = chamberEntities.Count > 0;
         var canGrind = hasInput && chamberEntities.All(x => _grinder.CanGrind(x));
         var canJuice = hasInput && chamberEntities.All(x => _grinder.CanJuice(x));
 
@@ -112,7 +110,7 @@ public sealed partial class GrinderMenu : FancyWindow
             ChamberGrid,
             _entityManager,
             chamberEntities,
-            netEntity => OnEjectChamber?.Invoke(_entityManager.GetEntity(netEntity)),
+            entity => OnEjectChamber?.Invoke(entity),
             Loc.GetString("grinder-menu-chamber-empty"));
 
         BeakerContents.Children.Clear();

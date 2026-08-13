@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using System.Linq;
 using Content.Client.Stylesheets;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
@@ -27,60 +28,100 @@ public static class IngredientGridHelper
         GridContainer grid,
         IEntityManager entMan,
         IEnumerable<EntityUid> entities,
+        Action<EntityUid> onEject,
+        string? emptyText = null)
+    {
+        grid.Children.Clear();
+
+        foreach (var entity in entities.Where(entity => !entMan.Deleted(entity)))
+        {
+            var button = BuildIngredientButton(entMan, entity);
+            button.OnPressed += _ => onEject(entity);
+            grid.AddChild(button);
+        }
+
+        AddEmptyPlaceholder(grid, emptyText);
+    }
+
+    /// <summary>
+    /// Populates the grid with buttons representing networked ingredients.
+    /// Each button shows the entity's visual and allows ejection.
+    /// </summary>
+    /// <param name="grid">The grid container to populate.</param>
+    /// <param name="entMan">The entity manager.</param>
+    /// <param name="entities">Collection of networked entities to display.</param>
+    /// <param name="onEject">Action to perform when an ingredient is ejected.</param>
+    /// <param name="emptyText">Text to show when there are no ingredients.</param>
+    // TODO: Revisit this overload once microwave uses predicted/local state. See microwave prediction PR #43129.
+    public static void PopulateIngredientsGrid(
+        GridContainer grid,
+        IEntityManager entMan,
+        IEnumerable<NetEntity> entities,
         Action<NetEntity> onEject,
         string? emptyText = null)
     {
         grid.Children.Clear();
-        var added = false;
 
-        foreach (var entity in entities)
+        foreach (var netEntity in entities)
         {
-            if (entMan.Deleted(entity))
-                continue;
-
-            var entityName = entMan.GetComponent<MetaDataComponent>(entity).EntityName;
-            var button = new Button
-            {
-                SetSize = IngredientButtonSize,
-                RectClipContent = true,
-                StyleClasses = { "OpenBoth" },
-                ToolTip = entityName,
-                Modulate = Color.White.WithAlpha(0.5f)
-            };
-
-            button.AddChild(BuildIngredientVisual(entMan, entity, entityName));
-
-            button.OnPressed += _ =>
-            {
-                onEject(entMan.GetNetEntity(entity));
-            };
-
+            var button = BuildIngredientButton(entMan, netEntity);
+            button.OnPressed += _ => onEject(netEntity);
             grid.AddChild(button);
-            added = true;
         }
 
-        if (!added && emptyText != null)
+        AddEmptyPlaceholder(grid, emptyText);
+    }
+
+    private static Button BuildIngredientButton(IEntityManager entMan, EntityUid entity)
+    {
+        var entityName = entMan.GetComponent<MetaDataComponent>(entity).EntityName;
+        var visual = BuildIngredientVisual(entMan, entity, entityName);
+        return BuildIngredientButton(visual, entityName);
+    }
+
+    private static Button BuildIngredientButton(IEntityManager entMan, NetEntity netEntity)
+    {
+        if (entMan.TryGetEntity(netEntity, out var entity) && !entMan.Deleted(entity.Value))
+            return BuildIngredientButton(entMan, entity.Value);
+
+        var spriteView = BuildSpriteView();
+        spriteView.SetEntity(netEntity);
+        return BuildIngredientButton(spriteView);
+    }
+
+    private static Button BuildIngredientButton(Control visual, string? toolTip = null)
+    {
+        var button = new Button
         {
-            grid.AddChild(new Label
-            {
-                Text = emptyText,
-                StyleClasses = { StyleClass.LabelWeak },
-                HorizontalAlignment = Control.HAlignment.Center,
-                VerticalAlignment = Control.VAlignment.Center
-            });
-        }
+            SetSize = IngredientButtonSize,
+            RectClipContent = true,
+            StyleClasses = { "OpenBoth" },
+            ToolTip = toolTip,
+            Modulate = Color.White.WithAlpha(0.5f)
+        };
+        button.AddChild(visual);
+        return button;
+    }
+
+    private static void AddEmptyPlaceholder(GridContainer grid, string? emptyText)
+    {
+        if (grid.ChildCount != 0 || emptyText == null)
+            return;
+
+        grid.AddChild(new Label
+        {
+            Text = emptyText,
+            StyleClasses = { StyleClass.LabelWeak },
+            HorizontalAlignment = Control.HAlignment.Center,
+            VerticalAlignment = Control.VAlignment.Center
+        });
     }
 
     private static Control BuildIngredientVisual(IEntityManager entMan, EntityUid entity, string entityName)
     {
         if (entMan.HasComponent<SpriteComponent>(entity))
         {
-            var spriteView = new SpriteView
-            {
-                Stretch = SpriteView.StretchMode.Fill,
-                HorizontalExpand = true,
-                VerticalExpand = true
-            };
+            var spriteView = BuildSpriteView();
             spriteView.SetEntity(entity);
             return spriteView;
         }
@@ -105,6 +146,16 @@ public static class IngredientGridHelper
             HorizontalAlignment = Control.HAlignment.Center,
             VerticalAlignment = Control.VAlignment.Center,
             Margin = new Thickness(4, 0)
+        };
+    }
+
+    private static SpriteView BuildSpriteView()
+    {
+        return new SpriteView
+        {
+            Stretch = SpriteView.StretchMode.Fill,
+            HorizontalExpand = true,
+            VerticalExpand = true
         };
     }
 }
