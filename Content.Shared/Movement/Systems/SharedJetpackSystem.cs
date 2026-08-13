@@ -48,7 +48,8 @@ public abstract partial class SharedJetpackSystem : EntitySystem
         while (query.MoveNext(out var uid, out var user, out var transform))
         {
             if (transform.GridUid != gridUid || !ev.HasGravity ||
-                !_jetpackQuery.TryGetComponent(user.Jetpack, out var jetpack)) continue;
+                !_jetpackQuery.TryGetComponent(user.Jetpack, out var jetpack))
+                continue;
 
             _popup.PopupEntity(Loc.GetString("jetpack-to-grid"), uid, uid);
             SetEnabled(user.Jetpack, jetpack, false, uid);
