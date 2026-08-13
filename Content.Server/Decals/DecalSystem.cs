@@ -210,7 +210,7 @@ public sealed partial class DecalSystem : SharedDecalSystem
         return TryAddDecal(decal, coordinates, out decalId);
     }
 
-    public bool TryAddDecal(Decal decal, EntityCoordinates coordinates, out DecalIndex decalId)
+    public override bool TryAddDecal(Decal decal, EntityCoordinates coordinates, out DecalIndex decalId)
     {
         decalId = default;
 
