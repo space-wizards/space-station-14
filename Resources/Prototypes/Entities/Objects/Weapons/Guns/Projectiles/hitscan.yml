@@ -45,7 +45,7 @@
   - type: LaserProjectile
 
 - type: entity
-  parent: BasicHitscan
+  parent: LaserHitscanBase
   id: RedLightLaser
   name: red light laser ray
   categories: [ HideSpawnMenu ]
