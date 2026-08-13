@@ -27,6 +27,16 @@ public sealed class PanelSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet,
             BorderColor = sheet.PrimaryPalette.Background,
             BorderThickness = new Thickness(2f),
         };
+        var boxDeep = new StyleBoxFlat
+        {
+            BackgroundColor = Color.FromHex("#1B1B1E"),
+        };
+        var boxInsetDeep = new StyleBoxFlat
+        {
+            BackgroundColor = Color.FromHex("#1B1B1E"),
+            BorderColor = Color.FromHex("#25252A"),
+            BorderThickness = new Thickness(2f)
+        };
 
         var boxPositive = new StyleBoxFlat { BackgroundColor = sheet.PositivePalette.Background };
         var boxNegative = new StyleBoxFlat { BackgroundColor = sheet.NegativePalette.Background };
@@ -42,8 +52,10 @@ public sealed class PanelSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet,
         [
             E<PanelContainer>().Class(StyleClass.PanelLight).Panel(boxLight),
             E<PanelContainer>().Class(StyleClass.PanelDark).Panel(boxDark),
+            E<PanelContainer>().Class(StyleClass.PanelDeep).Panel(boxDeep),
             E<PanelContainer>().Class(StyleClass.PanelDropTarget).Panel(boxDropTarget),
             E<PanelContainer>().Class(StyleClass.PanelInsetDark).Panel(boxInsetDark),
+            E<PanelContainer>().Class(StyleClass.PanelInsetDeep).Panel(boxInsetDeep),
 
             E<PanelContainer>().Class(StyleClass.Positive).Panel(boxPositive),
             E<PanelContainer>().Class(StyleClass.Negative).Panel(boxNegative),
