@@ -211,7 +211,7 @@ public sealed partial class RevenantSystem
 
         essence.Harvested = true;
         ChangeEssenceAmount(uid, essence.EssenceAmount, component);
-        _store.TryAddCurrency(new Dictionary<string, FixedPoint2>
+        _store.TryAddCurrency(new()
             { {component.StolenEssenceCurrencyPrototype, essence.EssenceAmount} }, uid);
 
         if (!_mobStateQuery.HasComp(args.Args.Target))
