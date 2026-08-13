@@ -31,11 +31,6 @@
   - type: Icon
     sprite: Tiles/TileEntities/liquid-phoron.rsi
     state: full
-  - type: IconSmooth
-    key: phoron
-    base: water
-    additionalKeys:
-    - walls
   - type: Physics
     bodyType: Static
   - type: Fixtures

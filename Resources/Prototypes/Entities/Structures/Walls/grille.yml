@@ -27,9 +27,11 @@
   - type: PlacementReplacement
     key: grilles
   - type: IconSmooth
-    index: 0
     key: walls
-    base: grille
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls ]
+      base: grille
   - type: Damageable
     damageModifierSet: PerforatedMetallic
   - type: Injurable

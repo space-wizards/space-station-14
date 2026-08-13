@@ -36,7 +36,11 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: IconSmooth
-    base: rwindow
+    key: walls
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls ]
+      base: rwindow
   - type: Construction
     graph: Window
     node: reinforcedWindow

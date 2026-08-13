@@ -12,7 +12,10 @@
     state: full
   - type: IconSmooth
     key: full
-    base: carpet_
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ full ]
+      base: carpet_
   - type: Tag
     tags:
     - Carpet
@@ -271,9 +274,10 @@
     state: full
   - type: IconSmooth
     key: cardpets
-    additionalKeys:
-    - cards
-    base: carpet_
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ cards ]
+      base: carpet_
   - type: Tag
     tags:
     - Carpet

@@ -11,4 +11,7 @@
     state: full
   - type: IconSmooth
     key: walls
-    base: xenoborg
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls ]
+      base: xenoborg
