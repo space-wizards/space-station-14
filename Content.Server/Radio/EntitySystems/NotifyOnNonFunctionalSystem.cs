@@ -1,6 +1,7 @@
 using Content.Server.Pinpointer;
 using Content.Shared.Radio.Components;
 using Content.Shared.Radio.EntitySystems;
+using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Radio.EntitySystems;
@@ -12,8 +13,8 @@ public sealed partial class NotifyOnNonFunctionalSystem : SharedNotifyOnNonFunct
 
     protected override void AlertRadio(Entity<NotifyOnNonFunctionalComponent> ent, string locString)
     {
-        //if (!ent.Comp.IsOn || !ent.Comp.IsPowered)
-        //    return;
+        if(TryComp<NetworkPoweredAmmoProviderComponent>(ent, out var ammoProvider) && (!ammoProvider.IsOn || !ammoProvider.IsPowered))
+            return;
 
         var message = Loc.GetString(
             locString,

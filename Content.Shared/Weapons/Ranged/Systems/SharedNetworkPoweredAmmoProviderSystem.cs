@@ -35,8 +35,6 @@ public abstract partial class SharedNetworkPoweredAmmoProviderSystem : EntitySys
         ToggleActive(ent, message.Actor);
     }
 
-
-
     // stolen from gun system, do not merge lol
     protected IShootable EnsureShootable(EntityUid uid)
     {

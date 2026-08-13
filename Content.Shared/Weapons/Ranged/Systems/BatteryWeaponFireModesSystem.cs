@@ -3,8 +3,6 @@ using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Examine;
 using Content.Shared.Popups;
 using Content.Shared.Weapons.Ranged.Components;
-using Robust.Shared.Physics;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
