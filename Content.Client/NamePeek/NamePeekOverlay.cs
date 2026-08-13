@@ -15,6 +15,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.NamePeek;
 
+/// <summary>
+/// Handles the name peek overlay.
+/// Overlay will show names underneath mob entities when Visible is true in NamePeekSystem
+/// </summary>
 public sealed partial class NamePeekOverlay : Overlay
 {
     private static readonly ProtoId<ShaderPrototype> UnshadedShader = "unshaded";
@@ -72,7 +76,10 @@ public sealed partial class NamePeekOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        if (args.ViewportControl == null || !_namePeekSystem.Held)
+        if (args.ViewportControl == null || !_namePeekSystem.Visible)
+            return;
+
+        if (args.Viewport.Eye is not { } eye)
             return;
 
         if (_playerManager.LocalEntity is not { } playerEnt)
@@ -90,15 +97,7 @@ public sealed partial class NamePeekOverlay : Overlay
         if (scale == 0f)
             scale = _uiManager.DefaultUIScale;
 
-        DrawWorld(args.ScreenHandle, args, playerEnt, scale);
-
-        args.DrawingHandle.UseShader(null);
-    }
-
-    private void DrawWorld(DrawingHandleScreen handle, OverlayDrawArgs args, EntityUid playerEnt, float scale)
-    {
-        if (args.ViewportControl == null || args.Viewport.Eye is not {} eye)
-            return;
+        var handle = args.ScreenHandle;
 
         var matrix = args.ViewportControl.GetWorldToScreenMatrix();
 
@@ -130,14 +129,20 @@ public sealed partial class NamePeekOverlay : Overlay
             var dimensions = handle.GetDimensions(_font, text, scale);
 
             //Get sprite bounding box so we can draw at the bottom.
-            //Probably a better way to do this but I don't want it drawing over sprites if possible
+            //Probably a better way to do this but I want it drawing at the bottom of entity sprites if possible.
+            //Seems to work with every mob I've tried.
             var (worldPos, worldRot) = _transform.GetWorldPositionRotation(xform);
-            var bounds = _sprite.CalculateBounds((ent, sprite), worldPos, worldRot, args.Viewport.Eye?.Rotation ?? default);
+            var bounds = _sprite.CalculateBounds((ent, sprite),
+                worldPos,
+                worldRot,
+                args.Viewport.Eye?.Rotation ?? default);
 
             var drawPosition = (pos - dimensions / 2f) + new Vector2(0, bounds.Box.Extents.Y * matrix.M11);
 
             var outline = new TextOutline(2.5f, Color.Black);
             handle.DrawString(_font, drawPosition, text, scale, Color.LightGray.WithAlpha(200), outline);
+
+            args.DrawingHandle.UseShader(null);
         }
     }
 }

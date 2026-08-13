@@ -22,7 +22,7 @@ public sealed partial class NamePeekSystem : EntitySystem
     [Dependency] private EntityQuery<TransformComponent> _transformQuery = default!;
     [Dependency] private EntityQuery<MobStateComponent> _mobstateQuery = default!;
 
-    public bool Held;
+    public bool Visible;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -60,10 +60,10 @@ public sealed partial class NamePeekSystem : EntitySystem
         switch (args.State)
         {
             case BoundKeyState.Down:
-                Held = true;
+                Visible = true;
                 break;
             case BoundKeyState.Up:
-                Held = false;
+                Visible = false;
                 break;
         }
 
