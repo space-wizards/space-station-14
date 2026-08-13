@@ -28,4 +28,10 @@ public sealed partial class BonusDamageOnMetabolismComponent : Component
     /// </summary>
     [DataField(required: true)]
     public DamageSpecifier Damage = new();
+
+    /// <summary>
+    /// If true, will only do bonus damage if the mob is alive or critical, but not dead.
+    /// </summary>
+    [DataField]
+    public bool OnlyWorksOnAlive = true;
 }

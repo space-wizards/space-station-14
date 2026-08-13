@@ -1,6 +1,6 @@
 using System.Linq;
-using Content.Shared.Body;
 using Content.Shared.Metabolism;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee.Events;
 
@@ -8,8 +8,8 @@ namespace Content.Shared.Weapons.Melee.Metabolizer;
 
 public sealed partial class BonusDamageOnMetabolismSystem : EntitySystem
 {
-    [Dependency] private BodySystem _body = default!;
     [Dependency] private MetabolizerSystem _metabolizer = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
 
     [SubscribeLocalEvent]
     private void OnGetVerb(Entity<BonusDamageOnMetabolismComponent> ent, ref GetVerbsEvent<Verb> args)
@@ -51,6 +51,9 @@ public sealed partial class BonusDamageOnMetabolismSystem : EntitySystem
 
         foreach (var hitEntity in args.HitEntities)
         {
+            if (ent.Comp.OnlyWorksOnAlive && _mobState.IsDead(hitEntity))
+                continue;
+
             if (!_metabolizer.BodyHasMetabolizer(hitEntity, ent.Comp.SelectedMetabolizer.Value))
                 continue;
 
