@@ -34,7 +34,7 @@ public sealed partial class GroupSelector : EntityTableSelector
         if (children.Count == 0)
             return Array.Empty<EntProtoId>();
 
-        var pick = SharedRandomExtensions.Pick(children, rand);
+        var pick = rand.Pick(children);
 
         return pick.GetSpawns(rand, entMan, proto, ctx);
     }
