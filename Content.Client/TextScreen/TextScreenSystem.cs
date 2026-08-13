@@ -457,12 +457,17 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
         {
             bool scrolled = false;
             bool newChar = false;
-            while (screen.NextScrollTime[i] < _gameTiming.CurTime)
+            // Find the number of pixels we need to scroll.
+            if (screen.NextScrollTime[i] < _gameTiming.CurTime && screen.TimeBetweenScrolls[i] > TimeSpan.Zero)
             {
-                screen.NextScrollTime[i] += screen.TimeBetweenScrolls[i];
-                var newPosition = ++screen.ScrollPosition[i];
+                var difference = (_gameTiming.CurTime - screen.NextScrollTime[i]).TotalSeconds;
+                var increments = (int)Math.Truncate(difference / screen.TimeBetweenScrolls[i].TotalSeconds) + 1;
+
+                newChar = increments >= CharWidth || CharacterWrapped(screen.ScrollPosition[i], increments);
                 scrolled = true;
-                newChar |= newPosition % CharWidth == 0; // Rolled over onto a new character, need to update the sprites.
+
+                screen.ScrollPosition[i] += increments;
+                screen.NextScrollTime[i] += increments * screen.TimeBetweenScrolls[i];
             }
 
             if (!scrolled)
@@ -495,6 +500,16 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
                 );
             }
         }
+    }
+
+    /// <summary>
+    /// Returns true if <paramref name=oldValue"/> wraps onto a
+    /// new character if incremented by <paramref name="increments"/>
+    /// </summary>
+    private bool CharacterWrapped(int oldValue, int increments)
+    {
+        var newValue = oldValue + increments;
+        return newValue % CharWidth < oldValue % CharWidth;
     }
 
     /// <summary>
