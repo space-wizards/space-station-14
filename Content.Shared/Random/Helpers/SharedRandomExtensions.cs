@@ -126,7 +126,7 @@ public static class SharedRandomExtensions
             {
                 accumulated += weight;
 
-                if (accumulated >= rand)
+                if (accumulated > rand) // Check strictly greater than since 0 is included and the max isn't
                 {
                     return key;
                 }
@@ -213,7 +213,7 @@ public static class SharedRandomExtensions
             {
                 accumulated += weight;
 
-                if (accumulated >= rand)
+                if (accumulated > rand) // Check strictly greater than since 0 is included and the max isn't
                 {
                     return key;
                 }
