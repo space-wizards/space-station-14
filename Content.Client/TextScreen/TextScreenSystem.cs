@@ -310,7 +310,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
 
             // If the text will scroll, ensure that we have a buffer between lines.
             if (line.Length > component.RowLength)
-                line.PadRight(line.Length + component.RowLength - 1);
+                line = line.PadRight(line.Length + component.RowLength - 1);
 
             segmented[i] = line;
         }
