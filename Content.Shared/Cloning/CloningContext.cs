@@ -1,6 +1,4 @@
 using Content.Shared.Body.Components;
-using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Inventory;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Pulling.Components;
@@ -10,7 +8,6 @@ using Content.Shared.Speech.Components;
 using Content.Shared.Storage;
 using Content.Shared.Store.Components;
 using Content.Shared.Wagging;
-using Robust.Shared.Containers;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.TypeSerializers.Interfaces;
@@ -71,6 +68,12 @@ public sealed partial class CloningContext :
     /// Grabs the components from the target object if they exist.
     /// Should be called before CopyTo.
     /// </summary>
+    /// <remarks>
+    /// This isn't great, though it works for the case of CopyComponents because
+    /// the state of the components updates before the components are removed and
+    /// added again.
+    /// We need to cache the values of the components before they were removed.
+    /// </remarks>
     public void CacheTarget(EntityUid target)
     {
         _target = target;
