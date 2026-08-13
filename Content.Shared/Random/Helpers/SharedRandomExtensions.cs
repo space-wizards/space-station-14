@@ -10,19 +10,69 @@ namespace Content.Shared.Random.Helpers;
 
 public static class SharedRandomExtensions
 {
-    public static string Pick(this IRobustRandom random, DatasetPrototype prototype)
+    extension(IRobustRandom random)
     {
-        return random.Pick(prototype.Values);
+        public string Pick(DatasetPrototype prototype)
+        {
+            return random.Pick(prototype.Values);
+        }
+
+        /// <summary>
+        /// Randomly selects an entry from <paramref name="prototype"/>, attempts to localize it, and returns the result.
+        /// </summary>
+        public string Pick(LocalizedDatasetPrototype prototype)
+        {
+            var index = random.Next(prototype.Values.Count);
+            return Loc.GetString(prototype.Values[index]);
+        }
+
+#region float
+
+        public T Pick<T>(Dictionary<T, float> weights)
+            where T: notnull
+        {
+            var sum = weights.Values.Sum();
+            var accumulated = 0f;
+
+            var rand = random.NextFloat() * sum;
+
+            foreach (var (key, weight) in weights)
+            {
+                accumulated += weight;
+
+                if (accumulated >= rand)
+                {
+                    return key;
+                }
+            }
+
+            throw new InvalidOperationException("Invalid weighted pick");
+        }
+
+        public T PickAndTake<T>(Dictionary<T, float> weights)
+            where T : notnull
+        {
+            var pick = random.Pick(weights);
+            weights.Remove(pick);
+            return pick;
+        }
+
+        public bool TryPickAndTake<T>(Dictionary<T, float> weights, [NotNullWhen(true)] out T? pick)
+            where T : notnull
+        {
+            if (weights.Count == 0)
+            {
+                pick = default;
+                return false;
+            }
+            pick = random.PickAndTake(weights);
+            return true;
+        }
+
+#endregion
     }
 
-    /// <summary>
-    /// Randomly selects an entry from <paramref name="prototype"/>, attempts to localize it, and returns the result.
-    /// </summary>
-    public static string Pick(this IRobustRandom random, LocalizedDatasetPrototype prototype)
-    {
-        var index = random.Next(prototype.Values.Count);
-        return Loc.GetString(prototype.Values[index]);
-    }
+#region WeightedRandom
 
     public static string Pick(this IWeightedRandomPrototype prototype, IRobustRandom? random = null)
     {
@@ -53,68 +103,6 @@ public static class SharedRandomExtensions
     {
         IoCManager.Resolve(ref random);
         return random.Pick(prototype.Weights);
-    }
-
-    public static T Pick<T>(this IRobustRandom random, Dictionary<T, float> weights)
-        where T: notnull
-    {
-        var sum = weights.Values.Sum();
-        var accumulated = 0f;
-
-        var rand = random.NextFloat() * sum;
-
-        foreach (var (key, weight) in weights)
-        {
-            accumulated += weight;
-
-            if (accumulated >= rand)
-            {
-                return key;
-            }
-        }
-
-        throw new InvalidOperationException("Invalid weighted pick");
-    }
-
-    public static T PickAndTake<T>(this IRobustRandom random, Dictionary<T, float> weights)
-        where T : notnull
-    {
-        var pick = Pick(random, weights);
-        weights.Remove(pick);
-        return pick;
-    }
-
-    public static bool TryPickAndTake<T>(this IRobustRandom random, Dictionary<T, float> weights, [NotNullWhen(true)] out T? pick)
-        where T : notnull
-    {
-        if (weights.Count == 0)
-        {
-            pick = default;
-            return false;
-        }
-        pick = PickAndTake(random, weights);
-        return true;
-    }
-
-    public static T Pick<T>(Dictionary<T, float> weights, IRobustRandom random)
-        where T : notnull
-    {
-        var sum = weights.Values.Sum();
-        var accumulated = 0f;
-
-        var rand = random.NextFloat() * sum;
-
-        foreach (var (key, weight) in weights)
-        {
-            accumulated += weight;
-
-            if (accumulated >= rand)
-            {
-                return key;
-            }
-        }
-
-        throw new InvalidOperationException("Invalid weighted pick");
     }
 
     public static (string reagent, FixedPoint2 quantity) Pick(this WeightedRandomFillSolutionPrototype prototype, IRobustRandom? random = null)
@@ -173,6 +161,31 @@ public static class SharedRandomExtensions
         throw new InvalidOperationException($"Invalid weighted pick for {prototype.ID}!");
     }
 
+#endregion
+
+#region Misc
+
+    public static T Pick<T>(Dictionary<T, float> weights, IRobustRandom random)
+        where T : notnull
+    {
+        var sum = weights.Values.Sum();
+        var accumulated = 0f;
+
+        var rand = random.NextFloat() * sum;
+
+        foreach (var (key, weight) in weights)
+        {
+            accumulated += weight;
+
+            if (accumulated >= rand)
+            {
+                return key;
+            }
+        }
+
+        throw new InvalidOperationException("Invalid weighted pick");
+    }
+
     /// <inheritdoc cref="HashCodeCombine(IReadOnlyCollection{int})"/>
     public static int HashCodeCombine(params int[] values)
     {
@@ -229,4 +242,6 @@ public static class SharedRandomExtensions
         var rand = PredictedRandom(timing, netEnt1, netEnt2);
         return rand.Prob(probability);
     }
+
+#endregion
 }
