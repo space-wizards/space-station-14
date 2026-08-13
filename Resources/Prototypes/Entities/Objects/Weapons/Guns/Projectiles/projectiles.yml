@@ -867,10 +867,12 @@
     radius: 3.5
     color: magenta
     energy: 0.5
+  - type: TimedDespawn
+    lifetime: 15
   - type: TriggerOnSpawn
     keyOut: timerTrigger
   - type: TimerTrigger
-    delay: 9.9 # so it explodes before it despawns
+    delay: 14.9 # so it explodes before it despawns
     keysIn: 
     - timerTrigger
   - type: ExplodeOnTrigger
