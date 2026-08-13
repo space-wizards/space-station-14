@@ -165,25 +165,11 @@ public static class SharedRandomExtensions
 
 #region Misc
 
+    [Obsolete("Use extension method instead.")]
     public static T Pick<T>(Dictionary<T, float> weights, IRobustRandom random)
         where T : notnull
     {
-        var sum = weights.Values.Sum();
-        var accumulated = 0f;
-
-        var rand = random.NextFloat() * sum;
-
-        foreach (var (key, weight) in weights)
-        {
-            accumulated += weight;
-
-            if (accumulated >= rand)
-            {
-                return key;
-            }
-        }
-
-        throw new InvalidOperationException("Invalid weighted pick");
+        return random.Pick(weights);
     }
 
     /// <inheritdoc cref="HashCodeCombine(IReadOnlyCollection{int})"/>
@@ -204,7 +190,7 @@ public static class SharedRandomExtensions
     /// </example>
     public static int HashCodeCombine(IReadOnlyCollection<int> values)
     {
-        int hash = 5381;
+        var hash = 5381;
         foreach (var value in values)
         {
             hash = (hash << 5) + hash + value;
