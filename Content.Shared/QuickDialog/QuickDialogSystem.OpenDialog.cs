@@ -43,7 +43,6 @@ public abstract partial class QuickDialogSystem
             return false;
         }
 
-        // Use CurTick so that players can predict.
         dialogs.Add(uniqueId, (ev =>
         {
             if (ev.Responses == null || ev.Responses.Length != entries.Length)
