@@ -13,10 +13,7 @@
                 <controls:StripeBack>
                     <Label Text="{Loc 'microwave-menu-ingredients'}" StyleClasses="LabelHeading" HorizontalAlignment="Center" Margin="10 2" />
                 </controls:StripeBack>
-                <PanelContainer Name="IngredientsPanel" Access="Public" Margin="0 0 0 5" VerticalExpand="True">
-                    <PanelContainer.PanelOverride>
-                        <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" BorderColor="#2C2F33" BorderThickness="2" />
-                    </PanelContainer.PanelOverride>
+                <PanelContainer Name="IngredientsPanel" Access="Public" StyleClasses="PanelInsetDark" Margin="0 0 0 5" VerticalExpand="True">
                     <ScrollContainer VerticalExpand="True" HorizontalExpand="True" Margin="5">
                         <BoxContainer HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalExpand="True" VerticalExpand="True">
                             <GridContainer Name="IngredientsGrid" Access="Public" Columns="4" HSeparationOverride="5" VSeparationOverride="5" HorizontalExpand="False" VerticalExpand="False">
@@ -28,22 +25,13 @@
             </BoxContainer>
             <customControls:VSeparator StyleClasses="LowDivider" Margin="0 5" />
             <BoxContainer Name="ControlsPane" Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="1" Margin="5 3 0 0">
-                <PanelContainer Margin="0 0 0 5" MinHeight="35">
-                    <PanelContainer.PanelOverride>
-                        <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
-                    </PanelContainer.PanelOverride>
+                <PanelContainer StyleClasses="PanelDark" Margin="0 0 0 5" MinHeight="35">
                     <Label Text="{Loc 'microwave-menu-cook-time'}" StyleClasses="LabelHeading" HorizontalAlignment="Center" Margin="10 2" />
                 </PanelContainer>
-                <PanelContainer Margin="0 0 0 5">
-                    <PanelContainer.PanelOverride>
-                        <gfx:StyleBoxFlat BackgroundColor="#1e272a" BorderColor="#2C2F33" BorderThickness="2" />
-                    </PanelContainer.PanelOverride>
+                <PanelContainer StyleClasses="PanelInsetDark" Margin="0 0 0 5">
                     <Label Name="TimerDisplay" Text="00:00" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="1" />
                 </PanelContainer>
-                <PanelContainer Margin="0 0 0 5" MinHeight="35">
-                    <PanelContainer.PanelOverride>
-                        <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
-                    </PanelContainer.PanelOverride>
+                <PanelContainer StyleClasses="PanelDark" Margin="0 0 0 5" MinHeight="35">
                     <Label Text="{Loc 'microwave-menu-time-selection'}" StyleClasses="LabelHeading" HorizontalAlignment="Center" Margin="10 2" />
                 </PanelContainer>
                 <PanelContainer StyleClasses="BackgroundPanelDark" Margin="0 0 0 5">
@@ -54,10 +42,7 @@
                         </GridContainer>
                     </BoxContainer>
                 </PanelContainer>
-                <PanelContainer Margin="0 0 0 5">
-                    <PanelContainer.PanelOverride>
-                        <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" BorderColor="#2C2F33" BorderThickness="2" />
-                    </PanelContainer.PanelOverride>
+                <PanelContainer StyleClasses="PanelInsetDark" Margin="0 0 0 5">
                     <PanelContainer StyleClasses="BackgroundPanelDark" Margin="5">
                         <BoxContainer Orientation="Vertical" Margin="10 4" VerticalAlignment="Center">
                             <Button Name="StartButton" Access="Public" Text="{Loc 'microwave-menu-start-button'}" StyleClasses="positive" TextAlign="Center" HorizontalExpand="True" />

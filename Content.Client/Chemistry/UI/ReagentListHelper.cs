@@ -19,7 +19,6 @@ public static class ReagentListHelper
     {
         return new PanelContainer
         {
-            PanelOverride = Background1,
             VerticalExpand = fill,
             HorizontalExpand = true,
             Children =
@@ -27,7 +26,6 @@ public static class ReagentListHelper
                 new Label
                 {
                     Text = text,
-                    StyleClasses = { StyleClass.LabelWeak },
                     HorizontalAlignment = Control.HAlignment.Center,
                     VerticalAlignment = fill ? Control.VAlignment.Center : Control.VAlignment.Top,
                     Margin = new Thickness(4, 2)
