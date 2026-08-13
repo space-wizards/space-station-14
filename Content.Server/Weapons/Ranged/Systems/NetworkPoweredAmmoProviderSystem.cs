@@ -1,13 +1,16 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Server.Projectiles;
 using Content.Shared.Database;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Weapons.Ranged.Components;
+using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
+using System.Numerics;
 
 namespace Content.Server.Weapons.Ranged.Systems;
 
@@ -94,6 +97,25 @@ public sealed partial class NetworkPoweredAmmoProviderSystem : SharedNetworkPowe
         else
         {
             Popup.PopupEntity(Loc.GetString("comp-emitter-not-anchored", ("target", uid)), uid, user);
+        }
+    }
+
+    [SubscribeLocalEvent]
+    private void OnNetworkTakeAmmo(Entity<NetworkPoweredAmmoProviderComponent> ent, ref TakeAmmoEvent args)
+    {
+        var shots = args.Shots;
+        if (shots == 0)
+            return;
+
+        if (!FireMode.TryGetFireMode((ent, null), out var fireMode))
+            return;
+
+        var entityCoordinates = args.Coordinates;
+
+        for (var i = 0; i < shots; i++)
+        {
+            var ammo = SpawnAtPosition(fireMode.Prototype, entityCoordinates);
+            args.Ammo.Add((ammo, EnsureShootable(ammo)));
         }
     }
 

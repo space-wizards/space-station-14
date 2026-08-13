@@ -6,7 +6,6 @@ using Content.Shared.UserInterface;
 using Content.Shared.Weapons.Hitscan.Components;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
-using Robust.Shared.Map;
 using System.Numerics;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
@@ -15,7 +14,6 @@ public abstract partial class SharedNetworkPoweredAmmoProviderSystem : EntitySys
 {
     [Dependency] protected BatteryWeaponFireModesSystem FireMode = default!;
     [Dependency] protected SharedPopupSystem Popup = default!;
-
     public override void Initialize()
     {
         SubscribeLocalEvent<NetworkPoweredAmmoProviderComponent, ActivateInWorldEvent>(OnActivate, after: [typeof(ActivatableUISystem)]);
@@ -39,22 +37,7 @@ public abstract partial class SharedNetworkPoweredAmmoProviderSystem : EntitySys
         ToggleActive(ent, message.Actor);
     }
 
-    [SubscribeLocalEvent]
-    private void OnNetworkTakeAmmo(Entity<NetworkPoweredAmmoProviderComponent> ent, ref TakeAmmoEvent args)
-    {
-        var shots = args.Shots;
-        if (shots == 0)
-            return;
 
-        if(!FireMode.TryGetFireMode((ent, null), out var fireMode))
-            return;
-        
-        for (var i = 0; i < shots; i++)
-        {
-            var ammo = SpawnAtPosition(fireMode.Prototype, args.Coordinates);
-            args.Ammo.Add((ent, EnsureShootable(ammo)));
-        }
-    }
 
     // stolen from gun system, do not merge lol
     protected IShootable EnsureShootable(EntityUid uid)
