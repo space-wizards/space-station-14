@@ -56,6 +56,14 @@ public sealed partial class EntityProviderSystem : EntitySystem
             args.Handled = TryFillFromStorage(provider, (args.Used, storage), args.User);
     }
 
+    /// <summary>
+    /// Attempts to insert an entity back into the entityStorage of the provider.
+    /// </summary>
+    /// <param name="provider">The entity providing the entityProvider storage.</param>
+    /// <param name="target">The entity attempted to be put into the provider.</param>
+    /// <param name="user">The user attempting to insert the entity into the provider. Leave null to avoid popups.</param>
+    /// <returns>Returns true if it was able to be inserted, otherwise false.</returns>
+    /// <remarks>This deletes entities, and thus data. An empty gun inserted will be spawned back as a loaded gun.</remarks>
     private bool TryInsertIntoProvider(Entity<EntityProviderComponent> provider, EntityUid target, EntityUid? user = null)
     {
         if (_whitelist.IsWhitelistFail(provider.Comp.Whitelist, target))
@@ -85,18 +93,25 @@ public sealed partial class EntityProviderSystem : EntitySystem
         return true;
     }
 
-    private bool TryFillOtherProvider(Entity<EntityProviderComponent> provider, Entity<EntityProviderComponent> target, EntityUid? user = null)
+    /// <summary>
+    /// Fill the entityStorage of a provider with the entityStorage of another provider.
+    /// </summary>
+    /// <param name="provider">The provider to refill the target.</param>
+    /// <param name="refillTarget">The provider whose entityStorage is to be refilled.</param>
+    /// <param name="user">The user who attempts to refill the provider with the other. Leave null to avoid popups.</param>
+    /// <returns>Returns true if it was able to insert at least one entity, otherwise false.</returns>
+    private bool TryFillOtherProvider(Entity<EntityProviderComponent> provider, Entity<EntityProviderComponent> refillTarget, EntityUid? user = null)
     {
         bool success = false;
         List<EntProtoId> toRemove = [];
 
         foreach (var providedEntities in provider.Comp.EntityCounter)
         {
-            if (_whitelist.IsWhitelistFail(target.Comp.Whitelist, providedEntities.Key))
+            if (_whitelist.IsWhitelistFail(refillTarget.Comp.Whitelist, providedEntities.Key))
                 continue;
 
-            if (!target.Comp.EntityCounter.TryAdd(providedEntities.Key, providedEntities.Value))
-                target.Comp.EntityCounter[providedEntities.Key] += providedEntities.Value;
+            if (!refillTarget.Comp.EntityCounter.TryAdd(providedEntities.Key, providedEntities.Value))
+                refillTarget.Comp.EntityCounter[providedEntities.Key] += providedEntities.Value;
 
             success = true;
             toRemove.Add(providedEntities.Key);
@@ -112,7 +127,7 @@ public sealed partial class EntityProviderSystem : EntitySystem
         else
             Dirty(provider);
 
-        Dirty(target);
+        Dirty(refillTarget);
 
         if (!success)
             return success;
@@ -123,6 +138,13 @@ public sealed partial class EntityProviderSystem : EntitySystem
         return success;
     }
 
+    /// <summary>
+    /// Refill an entityProvider with entities inside a storage.
+    /// </summary>
+    /// <param name="provider">The provider to refill.</param>
+    /// <param name="storage">The storage whose contents will refill the provider.</param>
+    /// <param name="user">The user who attempts to refill the provider with the storage. Leave null to avoid popups.</param>
+    /// <returns>Returns true if it was able to insert at least one entity, otherwise false.</returns>
     private bool TryFillFromStorage(Entity<EntityProviderComponent> provider, Entity<StorageComponent?> storage, EntityUid? user = null)
     {
         if (!Resolve(storage, ref storage.Comp))
