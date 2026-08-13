@@ -28,6 +28,7 @@ namespace Content.Server.Singularity.EntitySystems
             // right now you don't even need to unlock the emitter to deconstruct it. that's almost certainly a bug but even without it it probably still needs an alert
             AlertRadio(ent, ent.Comp.LocDeconstructed);
         }
+
         [SubscribeLocalEvent]
         private void OnLockToggled(Entity<EmitterComponent> ent, ref LockToggledEvent args)
         {
