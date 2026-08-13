@@ -101,7 +101,7 @@ public sealed partial class GameAutoSavesSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnBeforeGameSave(AfterSerializationEvent ev)
+    private void OnAfterGameSave(AfterSerializationEvent ev)
     {
         if (ev.Category != FileCategory.Save)
             return;
