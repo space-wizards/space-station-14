@@ -160,12 +160,12 @@
     zeroVisible: false
   - type: Gun
     fireRate: 2
-    projectileSpeed: 5 # needs to be the same as the speed of the chasing walk component of the projectile
+    projectileSpeed: 6 # needs to be the same as the speed of the chasing walk component of the projectile
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/rpgfire.ogg
   - type: BallisticAmmoProvider
     proto: BulletGuidedXenoborgMissile
-    capacity: 5
+    capacity: 3
   - type: BallisticAmmoSelfRefiller
     autoRefillRate: 10s # takes a while to get a new one
   - type: TargetAssign

@@ -867,15 +867,23 @@
     radius: 3.5
     color: magenta
     energy: 0.5
+  - type: TriggerOnSpawn
+    keyOut: timerTrigger
+  - type: TimerTrigger
+    delay: 9.9 # so it explodes before it despawns
+    keysIn: 
+    - timerTrigger
   - type: ExplodeOnTrigger
+    keysIn:
+    - trigger
+    - timer
   - type: Explosive
-    explosionType: Default
+    explosionType: Minibomb
     totalIntensity: 50
-    intensitySlope: 1
-    maxIntensity: 5
+    intensitySlope: 7
     canCreateVacuum: false
   - type: ChasingWalk
-    speed: 5
+    speed: 6
     impulseInterval: 0.1
     maxAngleVectorChangePerImpulse: 10
     rotateWithImpulse: true
