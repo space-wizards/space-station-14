@@ -52,17 +52,8 @@ public sealed partial class CloningContext :
     [Dependency] private EntityQuery<VocalComponent> _vocalQuery = default!;
     [Dependency] private EntityQuery<WaggingComponent> _waggingQuery = default!;
 
-    // Persistence components
-    private BloodstreamComponent? _bloodstream;
-    private InventoryComponent? _inventory;
-    private JumpAbilityComponent? _jumpAbility;
-    private PullerComponent? _puller;
-    private RootableComponent? _rootable;
-    private SericultureComponent? _sericulture;
-    private StorageComponent? _storage;
-    private StoreComponent? _store;
-    private VocalComponent? _vocal;
-    private WaggingComponent? _wagging;
+    // Persistence entity
+    private EntityUid _target = EntityUid.Invalid;
 
     /// <summary>
     /// Constructs a serialization context for cloning entities.
@@ -80,36 +71,18 @@ public sealed partial class CloningContext :
     /// Grabs the components from the target object if they exist.
     /// Should be called before CopyTo.
     /// </summary>
-    public void CacheTargetComponents(EntityUid target)
+    public void CacheTarget(EntityUid target)
     {
-        _bloodstreamQuery.TryComp(target, out _bloodstream);
-        _inventoryQuery.TryComp(target, out _inventory);
-        _jumpAbilityQuery.TryComp(target, out _jumpAbility);
-        _pullerQuery.TryComp(target, out _puller);
-        _rootableQuery.TryComp(target, out _rootable);
-        _sericultureQuery.TryComp(target, out _sericulture);
-        _storageQuery.TryComp(target, out _storage);
-        _storeQuery.TryComp(target, out _store);
-        _vocalQuery.TryComp(target, out _vocal);
-        _waggingQuery.TryComp(target, out _wagging);
+        _target = target;
     }
 
     /// <summary>
     /// Clears the components from the target object if they exist.
     /// Should be called after CopyTo.
     /// </summary>
-    public void ClearTargetComponents()
+    public void ClearTarget()
     {
-        _bloodstream = null;
-        _inventory = null;
-        _jumpAbility = null;
-        _puller = null;
-        _rootable = null;
-        _sericulture = null;
-        _storage = null;
-        _store = null;
-        _vocal = null;
-        _wagging = null;
+        _target = EntityUid.Invalid;
     }
 
     #region Bloodstream
@@ -125,13 +98,14 @@ public sealed partial class CloningContext :
         serializationManager.CopyTo(source, ref target, notNullableOverride: true);
 
         // Persistent fields
+        _bloodstreamQuery.TryComp(_target, out var bloodstream);
         target.NextUpdate = TimeSpan.Zero;
-        target.BleedAmount = _bloodstream?.BleedAmount ?? 0.0f;
-        target.BloodReferenceSolution = _bloodstream?.BloodReferenceSolution ?? new();
-        target.BloodData = _bloodstream?.BloodData;
-        target.BloodSolution = _bloodstream?.BloodSolution;
-        target.TemporarySolution = _bloodstream?.TemporarySolution;
-        target.MetabolitesSolution = _bloodstream?.MetabolitesSolution;
+        target.BleedAmount = bloodstream?.BleedAmount ?? 0.0f;
+        target.BloodReferenceSolution = bloodstream?.BloodReferenceSolution ?? new();
+        target.BloodData = bloodstream?.BloodData;
+        target.BloodSolution = bloodstream?.BloodSolution;
+        target.TemporarySolution = bloodstream?.TemporarySolution;
+        target.MetabolitesSolution = bloodstream?.MetabolitesSolution;
     }
     #endregion Bloodstream
 
@@ -148,8 +122,9 @@ public sealed partial class CloningContext :
         serializationManager.CopyTo(source, ref target, notNullableOverride: true);
 
         // Persistent fields
-        target.Slots = _inventory?.Slots ?? [];
-        target.Containers = _inventory?.Containers ?? [];
+        _inventoryQuery.TryComp(_target, out var inventory);
+        target.Slots = inventory?.Slots ?? [];
+        target.Containers = inventory?.Containers ?? [];
     }
     #endregion Inventory
 
@@ -166,7 +141,8 @@ public sealed partial class CloningContext :
         serializationManager.CopyTo(source, ref target, notNullableOverride: true);
 
         // Persistent fields
-        target.ActionEntity = _jumpAbility?.ActionEntity;
+        _jumpAbilityQuery.TryComp(_target, out var jumpAbility);
+        target.ActionEntity = jumpAbility?.ActionEntity;
     }
     #endregion JumpAbility
 
@@ -183,8 +159,9 @@ public sealed partial class CloningContext :
         serializationManager.CopyTo(source, ref target, notNullableOverride: true);
 
         // Persistent fields
-        target.Pulling = _puller?.Pulling;
-        target.NextThrow = _puller?.NextThrow ?? TimeSpan.Zero;
+        _pullerQuery.TryComp(_target, out var puller);
+        target.Pulling = puller?.Pulling;
+        target.NextThrow = puller?.NextThrow ?? TimeSpan.Zero;
     }
     #endregion Pulling
 
@@ -201,8 +178,9 @@ public sealed partial class CloningContext :
         serializationManager.CopyTo(source, ref target, notNullableOverride: true);
 
         // Persistent fields
-        target.ActionEntity = _rootable?.ActionEntity;
-        target.PuddleEntity = _rootable?.PuddleEntity;
+        _rootableQuery.TryComp(_target, out var rootable);
+        target.ActionEntity = rootable?.ActionEntity;
+        target.PuddleEntity = rootable?.PuddleEntity;
     }
     #endregion Rootable
 
@@ -219,7 +197,8 @@ public sealed partial class CloningContext :
         serializationManager.CopyTo(source, ref target, notNullableOverride: true);
 
         // Persistent fields
-        target.ActionEntity = _sericulture?.ActionEntity;
+        _sericultureQuery.TryComp(_target, out var sericulture);
+        target.ActionEntity = sericulture?.ActionEntity;
     }
     #endregion Sericulture
 
@@ -236,8 +215,9 @@ public sealed partial class CloningContext :
         serializationManager.CopyTo(source, ref target, notNullableOverride: true);
 
         // Persistent fields
-        target.StoredItems = _storage?.StoredItems ?? new();
-        target.SavedLocations = _storage?.SavedLocations ?? new();
+        _storageQuery.TryComp(_target, out var storage);
+        target.StoredItems = storage?.StoredItems ?? new();
+        target.SavedLocations = storage?.SavedLocations ?? new();
     }
     #endregion Storage
 
@@ -254,11 +234,12 @@ public sealed partial class CloningContext :
         serializationManager.CopyTo(source, ref target, notNullableOverride: true);
 
         // Persistent fields
-        target.AccountOwner = _store?.AccountOwner;
-        target.FullListingsCatalog = _store?.FullListingsCatalog ?? new();
-        target.BoughtEntities = _store?.BoughtEntities ?? new();
-        target.BalanceSpent = _store?.BalanceSpent ?? new();
-        target.StartingMap = _store?.StartingMap ?? new();
+        _storeQuery.TryComp(_target, out var store);
+        target.AccountOwner = store?.AccountOwner;
+        target.FullListingsCatalog = store?.FullListingsCatalog ?? new();
+        target.BoughtEntities = store?.BoughtEntities ?? new();
+        target.BalanceSpent = store?.BalanceSpent ?? new();
+        target.StartingMap = store?.StartingMap ?? new();
     }
     #endregion Store
 
@@ -275,7 +256,8 @@ public sealed partial class CloningContext :
         serializationManager.CopyTo(source, ref target, notNullableOverride: true);
 
         // Persistent fields
-        target.EmoteActionEntity = _vocal?.EmoteActionEntity;
+        _vocalQuery.TryComp(_target, out var vocal);
+        target.EmoteActionEntity = vocal?.EmoteActionEntity;
     }
     #endregion Vocal
 
@@ -292,8 +274,9 @@ public sealed partial class CloningContext :
         serializationManager.CopyTo(source, ref target, notNullableOverride: true);
 
         // Persistent fields
-        target.ActionEntity = _wagging?.ActionEntity;
-        target.Wagging = _wagging?.Wagging ?? false;
+        _waggingQuery.TryComp(_target, out var wagging);
+        target.ActionEntity = wagging?.ActionEntity;
+        target.Wagging = wagging?.Wagging ?? false;
     }
     #endregion Wagging
 }
