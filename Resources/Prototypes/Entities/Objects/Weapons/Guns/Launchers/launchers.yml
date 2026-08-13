@@ -161,6 +161,7 @@
   - type: Gun
     fireRate: 2
     projectileSpeed: 6 # needs to be the same as the speed of the chasing walk component of the projectile
+    # otherwise the missile will be faster if shot without a target
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/rpgfire.ogg
   - type: BallisticAmmoProvider
