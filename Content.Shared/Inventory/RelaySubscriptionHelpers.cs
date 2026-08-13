@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Hands;
+using Content.Shared.Silicons.Borgs;
 
 namespace Content.Shared.Inventory;
 
@@ -15,13 +16,15 @@ public static class RelaySubscriptionHelpers
     /// <param name="baseEvent">Whether to subscribe the base event type.</param>
     /// <param name="inventory">Whether to subscribe for <see cref="T:Content.Shared.Inventory.InventoryRelayedEvent`1"/>.</param>
     /// <param name="held">Whether to subscribe for <see cref="T:Content.Shared.Hands.HeldRelayedEvent`1"/>.</param>
+    /// <param name="borgModule">Whether to subscribe for <see cref="T:Content.Shared.Silicons.Borgs.BorgModuleRelayedEvent`1"/>.</param>
     /// <seealso cref="M:Robust.Shared.GameObjects.EntitySystem.SubscribeLocalEvent``2(Robust.Shared.GameObjects.EntityEventRefHandler{``0,``1},System.Type[],System.Type[])"/>
     public static void SubscribeWithRelay<TComp, TEvent>(
         this EntitySystem.Subscriptions subs,
         EntityEventRefHandler<TComp, TEvent> handler,
         bool baseEvent = true,
         bool inventory = true,
-        bool held = true)
+        bool held = true,
+        bool borgModule = true)
         where TEvent : notnull
         where TComp : IComponent
     {
@@ -43,6 +46,14 @@ public static class RelaySubscriptionHelpers
                 handler(ent, ref ev.Args);
             });
         }
+
+        if (borgModule)
+        {
+            subs.SubscribeLocalEvent((Entity<TComp> ent, ref BorgModuleRelayedEvent<TEvent> ev) =>
+            {
+                handler(ent, ref ev.Args);
+            });
+        }
     }
 
     /// <summary>
@@ -53,13 +64,15 @@ public static class RelaySubscriptionHelpers
     /// <param name="baseEvent">Whether to subscribe the base event type.</param>
     /// <param name="inventory">Whether to subscribe for <see cref="T:Content.Shared.Inventory.InventoryRelayedEvent`1"/>.</param>
     /// <param name="held">Whether to subscribe for <see cref="T:Content.Shared.Hands.HeldRelayedEvent`1"/>.</param>
+    /// <param name="borgModule">Whether to subscribe for <see cref="T:Content.Shared.Silicons.Borgs.BorgModuleRelayedEvent`1"/>.</param>
     /// <seealso cref="M:Robust.Shared.GameObjects.EntitySystem.SubscribeLocalEvent``2(Robust.Shared.GameObjects.ComponentEventHandler{``0,``1},System.Type[],System.Type[])"/>
     public static void SubscribeWithRelay<TComp, TEvent>(
         this EntitySystem.Subscriptions subs,
         ComponentEventHandler<TComp, TEvent> handler,
         bool baseEvent = true,
         bool inventory = true,
-        bool held = true)
+        bool held = true,
+        bool borgModule = true)
         where TEvent : notnull
         where TComp : IComponent
     {
@@ -81,6 +94,14 @@ public static class RelaySubscriptionHelpers
                 handler(uid, component, args.Args);
             });
         }
+
+        if (borgModule)
+        {
+            subs.SubscribeLocalEvent((EntityUid uid, TComp component, ref BorgModuleRelayedEvent<TEvent> ev) =>
+            {
+                handler(uid, component, ev.Args);
+            });
+        }
     }
 
     /// <summary>
@@ -91,13 +112,15 @@ public static class RelaySubscriptionHelpers
     /// <param name="baseEvent">Whether to subscribe the base event type.</param>
     /// <param name="inventory">Whether to subscribe for <see cref="T:Content.Shared.Inventory.InventoryRelayedEvent`1"/>.</param>
     /// <param name="held">Whether to subscribe for <see cref="T:Content.Shared.Hands.HeldRelayedEvent`1"/>.</param>
+    /// <param name="borgModule">Whether to subscribe for <see cref="T:Content.Shared.Silicons.Borgs.BorgModuleRelayedEvent`1"/>.</param>
     /// <seealso cref="M:Robust.Shared.GameObjects.EntitySystem.SubscribeLocalEvent``2(Robust.Shared.GameObjects.ComponentEventRefHandler{``0,``1},System.Type[],System.Type[])"/>
     public static void SubscribeWithRelay<TComp, TEvent>(
         this EntitySystem.Subscriptions subs,
         ComponentEventRefHandler<TComp, TEvent> handler,
         bool baseEvent = true,
         bool inventory = true,
-        bool held = true)
+        bool held = true,
+        bool borgModule = true)
         where TEvent : notnull
         where TComp : IComponent
     {
@@ -117,6 +140,14 @@ public static class RelaySubscriptionHelpers
             subs.SubscribeLocalEvent((EntityUid uid, TComp component, ref HeldRelayedEvent<TEvent> args) =>
             {
                 handler(uid, component, ref args.Args);
+            });
+        }
+
+        if (borgModule)
+        {
+            subs.SubscribeLocalEvent((EntityUid uid, TComp component, ref BorgModuleRelayedEvent<TEvent> ev) =>
+            {
+                handler(uid, component, ref ev.Args);
             });
         }
     }

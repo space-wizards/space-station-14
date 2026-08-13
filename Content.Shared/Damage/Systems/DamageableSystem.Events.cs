@@ -5,6 +5,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
 using Content.Shared.Radiation.Events;
 using Content.Shared.Rejuvenate;
+using Content.Shared.Silicons.Borgs;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -256,13 +257,15 @@ public record struct BeforeDamageChangedEvent(DamageSpecifier Damage, EntityUid?
 ///     For example, armor.
 /// </summary>
 public sealed class DamageModifyEvent(DamageSpecifier damage, EntityUid? origin = null)
-    : EntityEventArgs, IInventoryRelayEvent
+    : EntityEventArgs, IInventoryRelayEvent, IBorgModuleRelayedEvent
 {
     /// <inheritdoc/>
     /// <remarks>
     ///     Whenever locational damage is a thing, this should just check only that bit of armor.
     /// </remarks>
     public SlotFlags TargetSlots => ~SlotFlags.POCKET;
+
+    public bool RelayWhenNotInstalled => false;
 
     /// <summary>
     ///     Contains the original damage, prior to any modifers.
