@@ -9,13 +9,7 @@ public sealed partial class ReagentGrinderSystem : SharedReagentGrinderSystem
 {
     [Dependency] private SharedUserInterfaceSystem _userInterface = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<ReagentGrinderComponent, AfterAutoHandleStateEvent>(OnAfterAutoHandleState);
-    }
-
+    [SubscribeLocalEvent]
     private void OnAfterAutoHandleState(Entity<ReagentGrinderComponent> ent, ref AfterAutoHandleStateEvent args)
     {
         UpdateUi(ent);
