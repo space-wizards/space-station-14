@@ -1,3 +1,5 @@
+using Content.Shared.Power.EntitySystems;
+
 namespace Content.Shared.Power.Components;
 
 /// <summary>
@@ -10,6 +12,7 @@ namespace Content.Shared.Power.Components;
 /// <para>This is also applicable if you would like to add
 /// more complex power behavior that is tied to a generic component.</para></remarks>
 [RegisterComponent]
+[Access(typeof(SharedPowerStateSystem))]
 public sealed partial class PowerStateComponent : Component
 {
     /// <summary>

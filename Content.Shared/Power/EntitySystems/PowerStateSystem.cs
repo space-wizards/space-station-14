@@ -11,7 +11,7 @@ public abstract partial class SharedPowerStateSystem : EntitySystem
 {
     [Dependency] private SharedPowerReceiverSystem _powerReceiverSystem = default!;
 
-    [Dependency] private EntityQuery<PowerStateComponent> _powerStateQuery = default!;
+    [Dependency] protected EntityQuery<PowerStateComponent> _powerStateQuery = default!;
 
     /// <summary>
     /// Sets the working state of the entity, adjusting its power draw accordingly.
@@ -19,13 +19,18 @@ public abstract partial class SharedPowerStateSystem : EntitySystem
     /// <param name="ent">The entity to set the working state for.</param>
     /// <param name="working">Whether the entity should be in the working state.</param>
     [PublicAPI]
-    public void SetWorkingState(Entity<PowerStateComponent?> ent, bool working)
+    public virtual void SetWorkingState(Entity<PowerStateComponent?> ent, bool working)
     {
         if (!_powerStateQuery.Resolve(ent, ref ent.Comp))
             return;
 
-        _powerReceiverSystem.SetLoad(ent.Owner, working ? ent.Comp.WorkingPowerDraw : ent.Comp.IdlePowerDraw);
+        SharedApcPowerReceiverComponent? apcPower = null;
+        if (_powerReceiverSystem.ResolveApc(ent, ref apcPower))
+            _powerReceiverSystem.SetLoad((ent, apcPower), working ? ent.Comp.WorkingPowerDraw : ent.Comp.IdlePowerDraw);
+
         ent.Comp.IsWorking = working;
+        var ev = new PowerStateChanged(working);
+        RaiseLocalEvent(ent, ref ev);
     }
 
     /// <summary>
@@ -45,4 +50,23 @@ public abstract partial class SharedPowerStateSystem : EntitySystem
 
         SetWorkingState(ent, working);
     }
+
+    /// <summary>
+    /// Tries to get working state out of <see cref="PowerStateComponent"/>,
+    /// returns it if found, returns false if not found.
+    /// </summary>
+    [PublicAPI]
+    public bool GetWorkingState(Entity<PowerStateComponent?> ent)
+    {
+        if (!_powerStateQuery.Resolve(ent, ref ent.Comp))
+            return false;
+
+        return ent.Comp.IsWorking;
+    }
 }
+
+/// <summary>
+/// Event of changing power state of entity.
+/// </summary>
+[ByRefEvent]
+public record struct PowerStateChanged(bool IsWorking);
