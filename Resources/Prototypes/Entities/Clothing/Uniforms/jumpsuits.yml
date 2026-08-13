@@ -512,7 +512,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/qm.rsi
 
 - type: entity
-  parent: [ClothingUniformBase, BaseCommandContraband]
+  parent: [ClothingUniformBase, ClothingUniformFoldableBase, BaseCommandContraband]
   id: ClothingUniformJumpsuitQMTurtleneck
   name: quartermasters's turtleneck
   description: A sharp turtleneck made for the hardy work environment of supply.
@@ -893,6 +893,17 @@
     sprite: Clothing/Uniforms/Jumpsuit/psychologist.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/psychologist.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitTramDriver
+  name: tram driver jumpsuit
+  description: Perfectly ironed, for well-prepared professionals.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/tramdriver.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/tramdriver.rsi
 
 - type: entity
   parent: ClothingUniformBase
