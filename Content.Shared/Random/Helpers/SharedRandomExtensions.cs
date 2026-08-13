@@ -85,7 +85,7 @@ public static class SharedRandomExtensions
         }
 
         /// <summary>
-        /// Get random <see cref="FixedPoint2"/> value in range of <paramref name="minValue"/> (included) and <paramref name="maxValue"/> (excluded).
+        /// Get random <see cref="FixedPoint2"/> value in range of 0 (included) and <paramref name="maxValue"/> (excluded).
         /// </summary>
         /// <param name="maxValue">Random value should be less then this value.</param>
         [PublicAPI]
@@ -172,7 +172,7 @@ public static class SharedRandomExtensions
         }
 
         /// <summary>
-        /// Get random <see cref="FixedPoint2"/> value in range of <paramref name="minValue"/> (included) and <paramref name="maxValue"/> (excluded).
+        /// Get random <see cref="FixedPoint2"/> value in range of 0 (included) and <paramref name="maxValue"/> (excluded).
         /// </summary>
         /// <param name="maxValue">Random value should be less then this value.</param>
         [PublicAPI]
