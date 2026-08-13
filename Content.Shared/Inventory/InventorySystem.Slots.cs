@@ -65,6 +65,10 @@ public partial class InventorySystem : EntitySystem
         UpdateInventoryTemplate(ent);
     }
 
+    /// <summary>
+    /// Ensures that an entity's inventory template is up to date.
+    /// Ejects any items in lingering slots.
+    /// </summary>
     public virtual void UpdateInventoryTemplate(Entity<InventoryComponent> ent)
     {
         if (!ProtoMan.Resolve(ent.Comp.TemplateId, out var invTemplate))
