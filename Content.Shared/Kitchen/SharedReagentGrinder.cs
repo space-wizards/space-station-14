@@ -1,5 +1,3 @@
-using Content.Shared.Chemistry.Reagent;
-using Content.Shared.FixedPoint;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Kitchen;
@@ -71,31 +69,4 @@ public enum GrinderAutoMode : byte
     Off,
     Grind,
     Juice
-}
-
-/// <summary>
-/// State for the reagent grinder UI.
-/// </summary>
-[NetSerializable, Serializable]
-public sealed class ReagentGrinderUpdateUserInterfaceState(
-    NetEntity[] chamberEntities,
-    NetEntity? beaker,
-    bool isActive,
-    bool isPowered,
-    GrinderProgram? program,
-    GrinderAutoMode autoMode,
-    List<ReagentQuantity> beakerReagents,
-    FixedPoint2 currentVolume,
-    FixedPoint2 maxVolume)
-    : BoundUserInterfaceState
-{
-    public NetEntity[] ChamberEntities = chamberEntities;
-    public NetEntity? Beaker = beaker;
-    public bool IsActive = isActive;
-    public bool IsPowered = isPowered;
-    public GrinderProgram? Program = program;
-    public GrinderAutoMode AutoMode = autoMode;
-    public List<ReagentQuantity> BeakerReagents = beakerReagents;
-    public FixedPoint2 CurrentVolume = currentVolume;
-    public FixedPoint2 MaxVolume = maxVolume;
 }

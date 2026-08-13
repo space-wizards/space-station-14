@@ -64,62 +64,43 @@ public sealed partial class GrinderMenu : FancyWindow
     ///     Update the UI state of this reagent grinder, including its contents,
     ///     current grinding/juicing status, and button toggle states.
     /// </summary>
-    public void UpdateUi(ReagentGrinderUpdateUserInterfaceState? state = null)
+    public void UpdateUi()
     {
-        if (state == null)
-        {
-            if (!_entityManager.TryGetComponent<ReagentGrinderComponent>(_owner, out var grinderComp))
-                return;
+        if (!_entityManager.TryGetComponent<ReagentGrinderComponent>(_owner, out var grinderComp))
+            return;
 
-            var fallbackBeaker = _slots.GetItemOrNull(_owner, ReagentGrinderComponent.BeakerSlotId);
-            var fallbackBeakerReagents = new List<ReagentQuantity>();
-            var currentVolume = FixedPoint2.Zero;
-            var maxVolume = FixedPoint2.Zero;
-
-            if (fallbackBeaker is { } beakerEnt &&
-                _solutionContainer.TryGetFitsInDispenser(beakerEnt, out _, out var solution))
-            {
-                fallbackBeakerReagents = solution.Contents.ToList();
-                currentVolume = solution.Volume;
-                maxVolume = solution.MaxVolume;
-            }
-
-            state = new ReagentGrinderUpdateUserInterfaceState(
-                grinderComp.InputContainer.ContainedEntities.Select(x => _entityManager.GetNetEntity(x)).ToArray(),
-                fallbackBeaker.HasValue ? _entityManager.GetNetEntity(fallbackBeaker.Value) : null,
-                _grinder.IsActive((_owner, grinderComp)),
-                _power.IsPowered(_owner),
-                grinderComp.Program,
-                grinderComp.AutoMode,
-                fallbackBeakerReagents,
-                currentVolume,
-                maxVolume
-            );
-        }
-
-        var chamberEntities = state.ChamberEntities
-            .Select(x => _entityManager.GetEntity(x))
+        var chamberEntities = grinderComp.InputContainer.ContainedEntities
             .Where(x => x.Valid)
             .ToArray();
+        var beaker = _slots.GetItemOrNull(_owner, ReagentGrinderComponent.BeakerSlotId);
+        var beakerReagents = new List<ReagentQuantity>();
+        var currentVolume = FixedPoint2.Zero;
+        var maxVolume = FixedPoint2.Zero;
 
-        var beaker = state.Beaker.HasValue
-            ? _entityManager.GetEntity(state.Beaker.Value)
-            : (EntityUid?) null;
+        if (beaker is { } beakerEnt &&
+            _solutionContainer.TryGetFitsInDispenser(beakerEnt, out _, out var solution))
+        {
+            beakerReagents = solution.Contents.ToList();
+            currentVolume = solution.Volume;
+            maxVolume = solution.MaxVolume;
+        }
 
+        var isActive = _grinder.IsActive((_owner, grinderComp));
+        var isPowered = _power.IsPowered(_owner);
         var hasInput = chamberEntities.Length > 0;
         var canGrind = hasInput && chamberEntities.All(x => _grinder.CanGrind(x));
         var canJuice = hasInput && chamberEntities.All(x => _grinder.CanJuice(x));
 
-        BeakerEjectButton.Disabled = state.IsActive || !beaker.HasValue;
-        ChamberEjectButton.Disabled = state.IsActive || !hasInput;
-        ChamberDisabledOverlay.Visible = state.IsActive;
-        GrindButton.Disabled = state.IsActive || !canGrind || !state.IsPowered || !beaker.HasValue;
-        JuiceButton.Disabled = state.IsActive || !canJuice || !state.IsPowered || !beaker.HasValue;
+        BeakerEjectButton.Disabled = isActive || !beaker.HasValue;
+        ChamberEjectButton.Disabled = isActive || !hasInput;
+        ChamberDisabledOverlay.Visible = isActive;
+        GrindButton.Disabled = isActive || !canGrind || !isPowered || !beaker.HasValue;
+        JuiceButton.Disabled = isActive || !canJuice || !isPowered || !beaker.HasValue;
 
-        GrindButton.Modulate = state.Program == GrinderProgram.Grind ? Color.Green : Color.White;
-        JuiceButton.Modulate = state.Program == GrinderProgram.Juice ? Color.Green : Color.White;
+        GrindButton.Modulate = grinderComp.Program == GrinderProgram.Grind ? Color.Green : Color.White;
+        JuiceButton.Modulate = grinderComp.Program == GrinderProgram.Juice ? Color.Green : Color.White;
 
-        AutoModeButton.Text = state.AutoMode switch
+        AutoModeButton.Text = grinderComp.AutoMode switch
         {
             GrinderAutoMode.Grind => Loc.GetString("grinder-menu-grind-button"),
             GrinderAutoMode.Juice => Loc.GetString("grinder-menu-juice-button"),
@@ -142,7 +123,7 @@ public sealed partial class GrinderMenu : FancyWindow
 
         BeakerNameLabel.Text = beakerName;
         BeakerVolumeLabel.Text = beaker.HasValue
-            ? $"{state.CurrentVolume}/{state.MaxVolume}"
+            ? $"{currentVolume}/{maxVolume}"
             : " ";
 
         if (!beaker.HasValue)
@@ -151,8 +132,6 @@ public sealed partial class GrinderMenu : FancyWindow
             BeakerContents.Children.Add(ReagentListHelper.BuildPlaceholderRow(Loc.GetString("grinder-menu-no-beaker"), true));
             return;
         }
-
-        var beakerReagents = state.BeakerReagents;
 
         if (beakerReagents.Count == 0)
         {

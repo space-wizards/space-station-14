@@ -33,16 +33,6 @@ public sealed class ReagentGrinderBoundUserInterface(EntityUid owner, Enum uiKey
         _menu?.UpdateUi();
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
-    {
-        base.UpdateState(state);
-
-        if (state is not ReagentGrinderUpdateUserInterfaceState grinderState)
-            return;
-
-        _menu?.UpdateUi(grinderState);
-    }
-
     /// <summary>
     ///     Send a message to toggle automatic grinding mode for this grinder.
     /// </summary>

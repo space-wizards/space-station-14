@@ -42,12 +42,6 @@ public abstract partial class SharedReagentGrinderSystem : EntitySystem
     [Dependency] private SharedPowerStateSystem _powerState = default!;
 
     [SubscribeLocalEvent]
-    private void OnBoundUiOpened(Entity<ReagentGrinderComponent> ent, ref BoundUIOpenedEvent args)
-    {
-        UpdateUi(ent);
-    }
-
-    [SubscribeLocalEvent]
     private void OnBeakerSolutionContainerChanged(Entity<InsideReagentGrinderComponent> ent, ref SolutionChangedEvent args)
     {
         // Update the UI if the reagents inside the beaker are changed.
