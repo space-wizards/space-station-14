@@ -1,23 +1,22 @@
 ﻿using Content.Shared.Effects.Components;
-using Robust.Shared.Containers;
 using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Effects;
 
 public sealed partial class ParticleEmitterSystem : EntitySystem
 {
-    [Dependency] private SharedMapSystem _mapSystem = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
-    [Dependency] private SharedContainerSystem _container = default!;
+
+    private const float MovementEpsilon = 0.001f;
+    private const float MovementEpsilonSquared = MovementEpsilon * MovementEpsilon;
 
     [SubscribeLocalEvent]
     private void OnActiveEmitterInit(Entity<ActiveParticleEmitterComponent> ent, ref ComponentInit args)
     {
-        ent.Comp.LastCoordinates = Transform(ent).Coordinates;
+        var coordinates = _transform.GetMoverCoordinates(ent, Transform(ent));
+        InitializeRuntimeState(ent.Comp, coordinates);
     }
 
     public override void Update(float frameTime)
@@ -31,42 +30,46 @@ public sealed partial class ParticleEmitterSystem : EntitySystem
 
         while (query.MoveNext(out var uid, out var emitter, out var active, out var xform))
         {
-            var inRange = _transform.InRange(xform.Coordinates, active.LastCoordinates, emitter.MaxSpawnDistance);
-            if (inRange && _timing.CurTime < active.NextEmissionTime)
+            var coordinates = _transform.GetMoverCoordinates(uid, xform);
+            if (!coordinates.IsValid(EntityManager))
+            {
+                InitializeRuntimeState(active, EntityCoordinates.Invalid);
+                continue;
+            }
+
+            if (!active.LastPosition.IsValid(EntityManager) ||
+                !active.LastEmissionPosition.IsValid(EntityManager) ||
+                active.LastPosition.EntityId != coordinates.EntityId ||
+                active.LastEmissionPosition.EntityId != coordinates.EntityId)
+            {
+                InitializeRuntimeState(active, coordinates);
+                continue;
+            }
+
+            var movementDelta = coordinates.Position - active.LastPosition.Position;
+            if (movementDelta.LengthSquared() < MovementEpsilonSquared)
                 continue;
 
-            active.LastCoordinates = _transform.GetMoverCoordinates(xform.Coordinates);
-            active.NextEmissionTime = _timing.CurTime + TimeSpan.FromSeconds(emitter.SpawnInterval);
+            active.LastPosition = coordinates;
 
-            SpawnParticles(uid, emitter, xform);
+            var emissionDelta = coordinates.Position - active.LastEmissionPosition.Position;
+            var maxSpawnDistanceSquared = emitter.MaxSpawnDistance * emitter.MaxSpawnDistance;
+            var maxDistanceReached = emissionDelta.LengthSquared() >= maxSpawnDistanceSquared;
+
+            if (_timing.CurTime < active.NextEmissionTime && !maxDistanceReached)
+                continue;
+
+            Spawn(emitter.EffectPrototype, coordinates);
+
+            active.LastEmissionPosition = coordinates;
+            active.NextEmissionTime = _timing.CurTime + TimeSpan.FromSeconds(emitter.SpawnInterval);
         }
     }
 
-    private void SpawnParticles(EntityUid uid, ParticleEmitterComponent component, TransformComponent uidXform)
+    private void InitializeRuntimeState(ActiveParticleEmitterComponent component, EntityCoordinates coordinates)
     {
-        // Don't show particles unless the user is moving.
-        if (_container.TryGetContainingContainer((uid, uidXform, null), out var container) &&
-            TryComp<PhysicsComponent>(container.Owner, out var body) &&
-            body.LinearVelocity.LengthSquared() < 1f)
-        {
-            return;
-        }
-
-        var coordinates = uidXform.Coordinates;
-        var gridUid = _transform.GetGrid(coordinates);
-        if (TryComp<MapGridComponent>(gridUid, out var grid))
-        {
-            coordinates = new EntityCoordinates(gridUid.Value, _mapSystem.WorldToLocal(gridUid.Value, grid, _transform.ToMapCoordinates(coordinates).Position));
-        }
-        else if (uidXform.MapUid != null)
-        {
-            coordinates = new EntityCoordinates(uidXform.MapUid.Value, _transform.GetWorldPosition(uidXform));
-        }
-        else
-        {
-            return;
-        }
-
-        Spawn(component.EffectPrototype, coordinates);
+        component.LastPosition = coordinates;
+        component.LastEmissionPosition = coordinates;
+        component.NextEmissionTime = _timing.CurTime;
     }
 }
