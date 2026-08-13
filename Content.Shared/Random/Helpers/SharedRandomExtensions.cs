@@ -159,6 +159,93 @@ public static class SharedRandomExtensions
         }
 
 #endregion
+
+#region FixedPoint4
+
+        /// <summary>
+        /// Get random <see cref="FixedPoint4"/> value between 0 (included) and 1 (excluded).
+        /// </summary>
+        [PublicAPI]
+        public FixedPoint4 NextFixedPoint4()
+        {
+            return FixedPoint4.FromTenThousandths(random.NextLong(10000));
+        }
+
+        /// <summary>
+        /// Get random <see cref="FixedPoint2"/> value in range of <paramref name="minValue"/> (included) and <paramref name="maxValue"/> (excluded).
+        /// </summary>
+        /// <param name="maxValue">Random value should be less then this value.</param>
+        [PublicAPI]
+        public FixedPoint4 NextFixedPoint4(FixedPoint4 maxValue)
+        {
+            return FixedPoint4.FromTenThousandths(random.NextLong(maxValue.Value));
+        }
+
+        /// <summary>
+        /// Get random <see cref="FixedPoint2"/> value in range of <paramref name="minValue"/> (included) and <paramref name="maxValue"/> (excluded).
+        /// </summary>
+        /// <param name="minValue">Random value should be greater or equal to this value.</param>
+        /// <param name="maxValue">Random value should be less then this value.</param>
+        [PublicAPI]
+        public FixedPoint4 NextFixedPoint4(FixedPoint4 minValue, FixedPoint4 maxValue)
+        {
+            return FixedPoint4.FromTenThousandths(random.NextLong(minValue.Value, maxValue.Value));
+        }
+
+        [PublicAPI]
+        public bool Prob(FixedPoint4 chance)
+        {
+            DebugTools.Assert(chance <= 0 && chance >= 1, $"Chance must be in the range 0-1. It was {chance}.");
+
+            return chance > random.NextFixedPoint4();
+        }
+
+        [PublicAPI]
+        public T Pick<T>(Dictionary<T, FixedPoint4> weights)
+            where T : notnull
+        {
+            var sum = weights.Values.Sum();
+            var accumulated = FixedPoint4.Zero;
+
+            var rand = random.NextFixedPoint4(sum);
+
+            foreach (var (key, weight) in weights)
+            {
+                accumulated += weight;
+
+                if (accumulated >= rand)
+                {
+                    return key;
+                }
+            }
+
+            throw new InvalidOperationException("Invalid weighted pick");
+        }
+
+        [PublicAPI]
+        public T PickAndTake<T>(Dictionary<T, FixedPoint4> weights)
+            where T : notnull
+        {
+            var pick = random.Pick(weights);
+            weights.Remove(pick);
+            return pick;
+        }
+
+        [PublicAPI]
+        public bool TryPickAndTake<T>(Dictionary<T, FixedPoint4> weights, [NotNullWhen(true)] out T? pick)
+            where T : notnull
+        {
+            if (weights.Count == 0)
+            {
+                pick = default;
+                return false;
+            }
+
+            pick = random.PickAndTake(weights);
+            return true;
+        }
+
+#endregion
     }
 
 #region WeightedRandom
