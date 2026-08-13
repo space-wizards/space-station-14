@@ -11,8 +11,6 @@ public sealed class PanelSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet,
 {
     public override StyleRule[] GetRules(T sheet, object config)
     {
-        IPanelConfig panelCfg = sheet;
-
         var boxLight = new StyleBoxFlat
         {
             BackgroundColor = sheet.SecondaryPalette.BackgroundLight
@@ -29,12 +27,12 @@ public sealed class PanelSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet,
         };
         var boxDeep = new StyleBoxFlat
         {
-            BackgroundColor = panelCfg.DeepPanelBackgroundColor
+            BackgroundColor = sheet.DeepPanelBackgroundColor
         };
         var boxInsetDeep = new StyleBoxFlat
         {
-            BackgroundColor = panelCfg.DeepPanelBackgroundColor,
-            BorderColor = panelCfg.DeepPanelBorderColor,
+            BackgroundColor = sheet.DeepPanelBackgroundColor,
+            BorderColor = sheet.DeepPanelBorderColor,
             BorderThickness = new Thickness(2f)
         };
 
