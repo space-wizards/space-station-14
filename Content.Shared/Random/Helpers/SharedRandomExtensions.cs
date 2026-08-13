@@ -106,7 +106,7 @@ public static class SharedRandomExtensions
         }
 
         [PublicAPI]
-        public bool FixedPointProb(FixedPoint2 chance)
+        public bool Prob(FixedPoint2 chance)
         {
             DebugTools.Assert(chance <= 1 && chance >= 0, $"Chance must be in the range 0-1. It was {chance}.");
 
@@ -193,7 +193,7 @@ public static class SharedRandomExtensions
         }
 
         [PublicAPI]
-        public bool FixedPointProb(FixedPoint4 chance)
+        public bool Prob(FixedPoint4 chance)
         {
             DebugTools.Assert(chance <= 1 && chance >= 0, $"Chance must be in the range 0-1. It was {chance}.");
 
@@ -401,8 +401,10 @@ public static class SharedRandomExtensions
     /// </summary>
     public static bool PredictedProb(IGameTiming timing, float probability, NetEntity netEnt1, NetEntity? netEnt2 = null)
     {
+        DebugTools.Assert(probability <= 1 && probability >= 0, $"Chance must be in the range 0-1. It was {probability}.");
+
         var rand = PredictedRandom(timing, netEnt1, netEnt2);
-        return rand.Prob(probability);
+        return rand.NextDouble() < probability; // If I don't redo float prob here it tries to use the versions here.
     }
 
 #endregion
