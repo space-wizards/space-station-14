@@ -1,7 +1,7 @@
 using Content.Client.UserInterface.Controls;
 using Content.Client.Weapons.Ranged.UI;
-using Content.Shared.Singularity.Components;
 using Content.Shared.Weapons.Ranged.Components;
+using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Singularity.UI;

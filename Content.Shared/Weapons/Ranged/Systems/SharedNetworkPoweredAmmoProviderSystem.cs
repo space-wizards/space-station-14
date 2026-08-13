@@ -1,12 +1,10 @@
 using Content.Shared.Interaction;
 using Content.Shared.Lock;
 using Content.Shared.Popups;
-using Content.Shared.Singularity.Components;
 using Content.Shared.UserInterface;
 using Content.Shared.Weapons.Hitscan.Components;
 using Content.Shared.Weapons.Ranged.Components;
-using Content.Shared.Weapons.Ranged.Events;
-using System.Numerics;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
 
@@ -65,3 +63,6 @@ public abstract partial class SharedNetworkPoweredAmmoProviderSystem : EntitySys
 
     }
 }
+
+[Serializable, NetSerializable]
+public sealed class NetworkPoweredAmmoProviderToggleActiveMessage : BoundUserInterfaceMessage;

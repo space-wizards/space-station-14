@@ -38,6 +38,7 @@
   - type: Emitter
     alertRadio: true
   - type: NetworkPoweredAmmoProvider
+  - type: NotifyOnNonFunctional
   - type: BatteryWeaponFireModes
     fireModes:
     - proto: EmitterBolt
