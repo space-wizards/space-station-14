@@ -44,13 +44,13 @@ internal sealed partial class BuckleSystem : SharedBuckleSystem
         if (!_spriteQuery.TryComp(ent, out SpriteComponent? strapSprite))
             return;
 
-        var newAngle = args.NewRotation + _eye.CurrentEye.Rotation;
-        var oldAngle = args.OldRotation + _eye.CurrentEye.Rotation;
+        var newDir = (args.NewRotation + _eye.CurrentEye.Rotation).GetCardinalDir();
+        var oldDir = (args.OldRotation + _eye.CurrentEye.Rotation).GetCardinalDir();
 
-        if (newAngle.GetCardinalDir() == oldAngle.GetCardinalDir())
+        if (newDir == oldDir)
             return;
 
-        var isNorth = newAngle.GetCardinalDir() == Direction.North;
+        var isNorth = newDir == Direction.North;
 
         foreach (var buckledEntity in ent.Comp.BuckledEntities)
         {
