@@ -154,7 +154,7 @@ public sealed partial class NetworkConfiguratorSystem : SharedNetworkConfigurato
         if (!device.SavableAddress)
             return;
 
-        var address = device.Data.Address;
+        var address = device.Address;
         if (string.IsNullOrEmpty(address))
         {
             // This primarily checks if the entity in question is pre-map init or not.
@@ -184,7 +184,7 @@ public sealed partial class NetworkConfiguratorSystem : SharedNetworkConfigurato
 
         device.Configurators.Add(configuratorUid);
         configurator.Devices.Add(address, targetUid.Value);
-        _popupSystem.PopupCursor(Loc.GetString("network-configurator-device-saved", ("address", device.Data.Address), ("device", targetUid)),
+        _popupSystem.PopupCursor(Loc.GetString("network-configurator-device-saved", ("address", device.Address), ("device", targetUid)),
             userUid, PopupType.Medium);
 
         _adminLogger.Add(LogType.DeviceLinking, LogImpact.Low, $"{ToPrettyString(userUid):actor} saved {ToPrettyString(targetUid.Value):subject} to {ToPrettyString(configuratorUid):tool}");
@@ -504,8 +504,8 @@ public sealed partial class NetworkConfiguratorSystem : SharedNetworkConfigurato
         var defaults = _deviceLinkSystem.GetDefaults(sources);
         var sourceIds = sources.Select(s => (ProtoId<SourcePortPrototype>)s.ID).ToArray();
 
-        var sourceAddress = Resolve(sourceUid, ref sourceNetworkComponent, false) ? sourceNetworkComponent.Data.Address : "";
-        var sinkAddress = Resolve(sinkUid, ref sinkNetworkComponent, false) ? sinkNetworkComponent.Data.Address : "";
+        var sourceAddress = Resolve(sourceUid, ref sourceNetworkComponent, false) ? sourceNetworkComponent.Address : "";
+        var sinkAddress = Resolve(sinkUid, ref sinkNetworkComponent, false) ? sinkNetworkComponent.Address : "";
 
         var state = new DeviceLinkUserInterfaceState(sourceIds, sinks, links, sourceAddress, sinkAddress, defaults);
         _uiSystem.SetUiState(configuratorUid, NetworkConfiguratorUiKey.Link, state);

@@ -63,10 +63,10 @@ public sealed partial class SingletonDeviceNetServerSystem : EntitySystem
 
             last = (uid, server, device);
 
-            if (!server.Active || string.IsNullOrEmpty(device.Data.Address))
+            if (!server.Active || string.IsNullOrEmpty(device.Address))
                 continue;
 
-            address = device.Data.Address;
+            address = device.Address;
             return true;
         }
 
@@ -74,7 +74,7 @@ public sealed partial class SingletonDeviceNetServerSystem : EntitySystem
         if (last.HasValue)
         {
             ConnectServer(last.Value.id, last.Value.server, last.Value.device);
-            address = last.Value.device.Data.Address;
+            address = last.Value.device.Address;
             return true;
         }
 

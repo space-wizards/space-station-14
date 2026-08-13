@@ -28,11 +28,11 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
     private void OnMapInit(Entity<DeviceNetworkComponent> ent, ref MapInitEvent args)
     {
         var device = ent.Comp;
-        if (device.Data.ReceiveFrequency == null
+        if (device.ReceiveFrequency == null
             && device.ReceiveFrequencyId != null
             && ProtoMan.TryIndex(device.ReceiveFrequencyId, out var receive))
         {
-            device.Data.ReceiveFrequency = receive.Frequency;
+            device.ReceiveFrequency = receive.Frequency;
         }
 
         if (device.TransmitFrequency == null
@@ -151,8 +151,8 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
             if (!TryGetDevice(packet.NetId, packet.Address, out var device))
                 return;
 
-            if (!device.Value.DeviceData.ReceiveAll &&
-                device.Value.DeviceData.ReceiveFrequency == packet.Frequency)
+            if (!device.Value.ReceiveAll &&
+                device.Value.ReceiveFrequency == packet.Frequency)
             {
                 totalDevices += 1;
                 hasTargetedDevice = true;

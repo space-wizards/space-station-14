@@ -56,7 +56,7 @@ public sealed partial class DeployableTurretControllerSystem : SharedDeployableT
             if (!TryComp<DeviceNetworkComponent>(turretUid, out var turretDeviceNetwork))
                 continue;
 
-            _deviceNetwork.SendPacket((ent.Owner, deviceNetwork), turretDeviceNetwork.Data.Address, ref payload);
+            _deviceNetwork.SendPacket((ent.Owner, deviceNetwork), turretDeviceNetwork.Address, ref payload);
         }
 
         // Remove newly unlinked devices
@@ -68,7 +68,7 @@ public sealed partial class DeployableTurretControllerSystem : SharedDeployableT
             if (!TryComp<DeviceNetworkComponent>(turretUid, out var turretDeviceNetwork))
                 continue;
 
-            if (ent.Comp.LinkedTurrets.Remove(turretDeviceNetwork.Data.Address))
+            if (ent.Comp.LinkedTurrets.Remove(turretDeviceNetwork.Address))
                 refreshUi = true;
         }
 
@@ -79,7 +79,7 @@ public sealed partial class DeployableTurretControllerSystem : SharedDeployableT
     [SubscribeLocalEvent]
     private void OnPacketReceived(Entity<DeployableTurretControllerComponent> ent, ref DeviceNetworkPacketEvent<TurretStatePayload> args)
     {
-        if (!TryComp<DeviceNetworkComponent>(ent, out var deviceNetwork) || deviceNetwork.Data.ReceiveFrequency != args.Frequency)
+        if (!TryComp<DeviceNetworkComponent>(ent, out var deviceNetwork) || deviceNetwork.ReceiveFrequency != args.Frequency)
             return;
 
         // If an update was received from a turret, connect to it and update the UI

@@ -43,7 +43,7 @@ namespace Content.Server.DeviceNetwork.Systems.Devices
         {
             var (uid, component) = ent;
             if (!TryComp(uid, out DeviceNetworkComponent? networkComponent)
-                || args.SenderAddress == networkComponent.Data.Address)
+                || args.SenderAddress == networkComponent.Address)
                 return;
 
             component.State = args.Data.Enabled;

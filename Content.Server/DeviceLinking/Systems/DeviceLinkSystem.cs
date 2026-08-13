@@ -109,7 +109,7 @@ public sealed partial class DeviceLinkSystem : SharedDeviceLinkSystem
         };
 
         // force using wireless network so things like atmos devices are able to send signals
-        _deviceNetworkSystem.SendPacket(source.Owner, sinkNetwork.Data.Address, ref payload, sinkNetwork.Data.ReceiveFrequency, (int) DeviceNetIdDefaults.Wireless);
+        _deviceNetworkSystem.SendPacket(source.Owner, sinkNetwork.Address, ref payload, sinkNetwork.ReceiveFrequency, (int) DeviceNetIdDefaults.Wireless);
     }
 
     /// <summary>
@@ -147,7 +147,7 @@ public sealed partial class DeviceLinkSystem : SharedDeviceLinkSystem
         };
 
         // force using wireless network so things like atmos devices are able to send signals
-        _deviceNetworkSystem.SendPacket(source.Owner, sinkNetwork.Data.Address, ref payload, sinkNetwork.Data.ReceiveFrequency, (int) DeviceNetIdDefaults.Wireless);
+        _deviceNetworkSystem.SendPacket(source.Owner, sinkNetwork.Address, ref payload, sinkNetwork.ReceiveFrequency, (int) DeviceNetIdDefaults.Wireless);
     }
 
     /// <summary>

@@ -109,7 +109,7 @@ public sealed partial class DeployableTurretSystem : SharedDeployableTurretSyste
             if (!_deviceQuery.TryComp(recipient, out var recipientDeviceNetwork))
                 continue;
 
-            recipientDeviceNetworks.Add(new Device(recipient, recipientDeviceNetwork.Data));
+            recipientDeviceNetworks.Add(new Device((recipient, recipientDeviceNetwork)));
         }
 
         if (recipientDeviceNetworks.Count > 0)

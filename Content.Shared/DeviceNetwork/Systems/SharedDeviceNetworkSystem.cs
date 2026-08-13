@@ -15,7 +15,7 @@ public abstract partial class SharedDeviceNetworkSystem : EntitySystem
     private void OnExamine(Entity<DeviceNetworkComponent> ent, ref ExaminedEvent args)
     {
         if (ent.Comp.ExaminableAddress)
-            args.PushText(Loc.GetString("device-address-examine-message", ("address", ent.Comp.Data.Address)));
+            args.PushText(Loc.GetString("device-address-examine-message", ("address", ent.Comp.Address)));
     }
 
     /// <summary>

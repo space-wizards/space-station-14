@@ -171,7 +171,7 @@ public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraS
 
         var name = camera.UseEntityNameAsCameraId ? MetaData(uid).EntityName : camera.CameraId;
         var state = new SurveillanceCameraSetupBoundUiState(name,
-            deviceNet.Data.ReceiveFrequency ?? 0,
+            deviceNet.ReceiveFrequency ?? 0,
             camera.AvailableNetworks,
             camera.NameSet,
             camera.NetworkSet);

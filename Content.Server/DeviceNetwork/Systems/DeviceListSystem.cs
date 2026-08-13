@@ -58,7 +58,7 @@ public sealed partial class DeviceListSystem : SharedDeviceListSystem
                 continue;
 
             var address = MetaData(deviceUid).EntityLifeStage == EntityLifeStage.MapInitialized
-                ? deviceNet.Data.Address
+                ? deviceNet.Address
                 : $"UID: {deviceUid.ToString()}";
 
             devices.Add(address, deviceUid);

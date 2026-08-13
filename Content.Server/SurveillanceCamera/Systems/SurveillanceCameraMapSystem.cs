@@ -90,7 +90,7 @@ public sealed partial class SurveillanceCameraMapSystem : EntitySystem
         var gridMatrix = _transform.GetInvWorldMatrix(Transform(gridUid.Value));
         var localPos = Vector2.Transform(worldPos, gridMatrix);
 
-        var address = deviceNet.Data.Address;
+        var address = deviceNet.Address;
         var subnet = Loc.GetString(name.Value);
         var powered = CompOrNull<ApcPowerReceiverComponent>(uid)?.Powered ?? true;
         var active = comp.Active && powered;

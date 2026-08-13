@@ -82,7 +82,7 @@ public sealed partial class DeviceNetworkRouterSystem : EntitySystem
         if (!_query.Resolve(ref ent) || ent.Comp == null)
             return;
 
-        data.SenderAddress = ent.Comp.Data.Address;
+        data.SenderAddress = ent.Comp.Address;
         data.Sender = ent.Owner;
         var payload = new RoutedNetworkPayload<T>
         {

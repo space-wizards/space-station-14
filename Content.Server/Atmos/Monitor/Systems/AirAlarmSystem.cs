@@ -193,7 +193,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
                 continue;
             }
 
-            _atmosDevNet.Deregister(uid, deviceNet.Data.Address);
+            _atmosDevNet.Deregister(uid, deviceNet.Address);
         }
 
         component.ScrubberData.Clear();
@@ -273,7 +273,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
             var addr = string.Empty;
             if (TryComp<DeviceNetworkComponent>(uid, out var netConn))
             {
-                addr = netConn.Data.Address;
+                addr = netConn.Address;
             }
 
             _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{ToPrettyString(args.Actor)} changed {ToPrettyString(uid)} mode to {args.Mode}");
@@ -392,7 +392,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
         var addr = string.Empty;
         if (TryComp<DeviceNetworkComponent>(uid, out var netConn))
         {
-            addr = netConn.Data.Address;
+            addr = netConn.Address;
         }
 
         if (component.AutoMode)
@@ -647,7 +647,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
         _ui.SetUiState(
             uid,
             SharedAirAlarmInterfaceKey.Key,
-            new AirAlarmUIState(devNet.Data.Address, deviceCount, pressure, temperature, dataToSend, alarm.CurrentMode, highestAlarm.Value, alarm.AutoMode, alarm.PanicWireCut));
+            new AirAlarmUIState(devNet.Address, deviceCount, pressure, temperature, dataToSend, alarm.CurrentMode, highestAlarm.Value, alarm.AutoMode, alarm.PanicWireCut));
     }
 
     private const float Delay = 8f;

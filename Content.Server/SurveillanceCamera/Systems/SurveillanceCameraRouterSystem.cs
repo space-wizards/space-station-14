@@ -133,7 +133,7 @@ public sealed partial class SurveillanceCameraRouterSystem : EntitySystem
         }
 
         var state = new SurveillanceCameraSetupBoundUiState(ent.Comp1.SubnetName,
-            ent.Comp2.Data.ReceiveFrequency ?? 0,
+            ent.Comp2.ReceiveFrequency ?? 0,
             ent.Comp1.AvailableNetworks,
             true,
             ent.Comp1.SubnetFrequencyId != null);

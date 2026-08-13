@@ -16,9 +16,24 @@ public sealed partial class DeviceNetworkComponent : Component
 
     public int DeviceNetId => (int) NetIdEnum;
 
-    /// <inheritdoc cref="DeviceData"/>
-    [IncludeDataField, AutoNetworkedField]
-    public DeviceData Data;
+    /// <summary>
+    ///     The frequency that this device is listening on.
+    /// </summary>
+    [DataField]
+    public uint? ReceiveFrequency;
+
+    /// <summary>
+    ///     The address ID of the device, either on the network it is currently connected to or whatever address it
+    ///     most recently used.
+    /// </summary>
+    [DataField]
+    public string Address = string.Empty;
+
+    /// <summary>
+    ///     Whether the device should listen for all device messages, regardless of the intended recipient.
+    /// </summary>
+    [DataField]
+    public bool ReceiveAll;
 
     /// <summary>
     /// The frequency that this device going to try to transmit on.
@@ -89,29 +104,4 @@ public sealed partial class DeviceNetworkComponent : Component
     [DataField]
     [Access(typeof(SharedNetworkConfiguratorSystem))]
     public HashSet<EntityUid> Configurators = new();
-
-    #region Obsolete
-
-    [Obsolete("Access this field through DeviceNetworkComponent.Data instead")]
-    public uint? ReceiveFrequency
-    {
-        get => Data.ReceiveFrequency;
-        set => Data.ReceiveFrequency = value;
-    }
-
-    [Obsolete("Access this field through DeviceNetworkComponent.Data instead")]
-    public string Address
-    {
-        get => Data.Address;
-        set => Data.Address = value;
-    }
-
-    [Obsolete("Access this field through DeviceNetworkComponent.Data instead")]
-    public bool ReceiveAll
-    {
-        get => Data.ReceiveAll;
-        set => Data.ReceiveAll = value;
-    }
-
-    #endregion
 }

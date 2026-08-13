@@ -182,9 +182,9 @@ public sealed partial class AtmosAlarmableSystem : EntitySystem
             return;
         }
 
-        if (!alarmable.NetworkAlarmStates.TryAdd(devNet.Data.Address, alarmType))
+        if (!alarmable.NetworkAlarmStates.TryAdd(devNet.Address, alarmType))
         {
-            alarmable.NetworkAlarmStates[devNet.Data.Address] = alarmType;
+            alarmable.NetworkAlarmStates[devNet.Address] = alarmType;
         }
 
         var payload = new AtmosAlarmPayload
@@ -206,8 +206,8 @@ public sealed partial class AtmosAlarmableSystem : EntitySystem
             return;
         }
 
-        if (alarmable.NetworkAlarmStates.ContainsKey(device.Data.Address))
-            alarmable.NetworkAlarmStates[device.Data.Address] = AtmosAlarmType.Normal;
+        if (alarmable.NetworkAlarmStates.ContainsKey(device.Address))
+            alarmable.NetworkAlarmStates[device.Address] = AtmosAlarmType.Normal;
 
         if (!alarmable.ReceiveOnly)
         {

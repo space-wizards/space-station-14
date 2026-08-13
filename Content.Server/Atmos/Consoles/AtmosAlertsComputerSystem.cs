@@ -259,7 +259,7 @@ public sealed partial class AtmosAlertsComputerSystem : SharedAtmosAlertsCompute
                 entDevice.Group,
                 alarmState,
                 MetaData(ent).EntityName,
-                entDeviceNetwork.Data.Address);
+                entDeviceNetwork.Address);
 
             // Get the list of sensors attached to the alarm
             var sensorList = TryComp<DeviceListComponent>(ent, out var entDeviceList) ? _deviceListSystem.GetDeviceList(ent, entDeviceList) : null;

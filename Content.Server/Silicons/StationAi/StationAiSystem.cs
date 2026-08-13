@@ -403,7 +403,7 @@ public sealed partial class StationAiSystem : SharedStationAiSystem
             var ev = new ChatNotificationEvent(_turretIsAttackingChatNotificationPrototype, ent);
 
             if (TryComp<DeviceNetworkComponent>(ent, out var deviceNetwork))
-                ev.SourceNameOverride = Loc.GetString("station-ai-turret-component-name", ("name", Name(ent)), ("address", deviceNetwork.Data.Address));
+                ev.SourceNameOverride = Loc.GetString("station-ai-turret-component-name", ("name", Name(ent)), ("address", deviceNetwork.Address));
 
             RaiseLocalEvent(ai, ref ev);
         }

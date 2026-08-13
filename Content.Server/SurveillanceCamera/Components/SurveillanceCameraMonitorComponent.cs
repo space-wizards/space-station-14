@@ -42,7 +42,7 @@ public sealed partial class SurveillanceCameraMonitorComponent : Component
     /// Current active subnet.
     /// </summary>
     [ViewVariables]
-    public string ActiveSubnet { get; set; } = default!;
+    public string ActiveSubnet { get; set; } = string.Empty;
 
     /// <summary>
     /// Known cameras in this subnet by address with name values.

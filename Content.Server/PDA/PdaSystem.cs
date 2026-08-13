@@ -341,7 +341,7 @@ namespace Content.Server.PDA
 
             if (TryComp(uid, out DeviceNetworkComponent? deviceNetworkComponent))
             {
-                address = deviceNetworkComponent.Data.Address;
+                address = deviceNetworkComponent.Address;
             }
 
             return address;
