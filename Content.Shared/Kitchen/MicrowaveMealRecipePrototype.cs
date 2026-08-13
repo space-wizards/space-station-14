@@ -40,9 +40,9 @@ public sealed partial class FoodRecipePrototype : IPrototype
     public bool SecretRecipe;
 
     /// <summary>
-    ///    Count the number of ingredients in a recipe for sorting the recipe list.
-    ///    This makes sure that where ingredient lists overlap, the more complex
-    ///    recipe is picked first.
+    /// Count the number of ingredients in a recipe for sorting the recipe list.
+    /// This makes sure that where ingredient lists overlap, the more complex
+    /// recipe is picked first.
     /// </summary>
     public FixedPoint2 IngredientCount()
     {
