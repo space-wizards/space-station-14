@@ -84,12 +84,9 @@ namespace Content.IntegrationTests.Tests.Doors
         shape:
           !type:PhysShapeAabb
             bounds: ""-0.49,-0.49,0.49,-0.36""
-        mask:
-        - TabletopMachineMask
         layer:
-        - HighImpassable
         - BulletImpassable
-        - InteractImpassable
+        - WindoorImpassable
 
 - type: entity
   name: DoorCollisionTestTable
@@ -151,6 +148,7 @@ namespace Content.IntegrationTests.Tests.Doors
   name: DoorCollisionTestShutter
   id: DoorCollisionTestShutter
   components:
+  - type: Door
   - type: Transform
     anchored: true
   - type: Physics
@@ -162,9 +160,9 @@ namespace Content.IntegrationTests.Tests.Doors
           !type:PhysShapeAabb
             bounds: ""-0.5,-0.5,0.5,0.5""
         mask:
-        - DoorPassable
+        - FullTileMask
         layer:
-        - DoorPassable
+        - AirlockLayer
 
 - type: entity
   name: DoorCollisionTestMob
@@ -361,6 +359,24 @@ namespace Content.IntegrationTests.Tests.Doors
             await Pair.Server.WaitAssertion(() =>
             {
                 Assert.That(doors.CanClose(door), Is.False);
+            });
+        }
+
+        [Test]
+        public async Task ShutterStillCollidesWithMob()
+        {
+            var (_, doors, door, obstacles) = await SpawnDoorCollisionScenario(
+                "DoorCollisionTestShutter",
+                ("DoorCollisionTestMob", Vector2.Zero));
+
+            var mob = obstacles[0];
+
+            await Pair.Server.WaitAssertion(() =>
+            {
+                var colliding = new HashSet<EntityUid>();
+                doors.GetColliding(door, colliding);
+
+                Assert.That(colliding, Does.Contain(mob));
             });
         }
 
