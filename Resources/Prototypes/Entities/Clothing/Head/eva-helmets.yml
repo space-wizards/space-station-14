@@ -87,14 +87,10 @@
     clothingVisuals:
       head:
       - state: equipped-head-light
-      head-vox:
-      - state: equipped-head-light-vox
   - type: Clothing
     clothingVisuals:
       head:
       - state: equipped-head
-      head-vox:
-      - state: equipped-head-vox
   - type: Armor
     modifiers:
       coefficients:
