@@ -28,15 +28,15 @@ public sealed partial class JetpackSystem : SharedJetpackSystem
 
         while (query.MoveNext(out var uid, out var active, out var comp, out var gasTankComp))
         {
-            if (_timing.CurTime < active.TargetTime)
+            if (_timing.CurTime < active.NextGasUsage)
                 continue;
 
             var gasTank = (uid, gasTankComp);
-            active.TargetTime = _timing.CurTime + TimeSpan.FromSeconds(comp.UsageCooldown);
+            active.NextGasUsage = _timing.CurTime + TimeSpan.FromSeconds(comp.GasUsageInterval);
             var usedAir = _gasTank.RemoveAir(gasTank, comp.MoleUsage);
 
             var usedEnoughAir =
-                MathHelper.CloseTo(usedAir.TotalMoles, comp.MoleUsage, comp.MoleUsage/100);
+                MathHelper.CloseTo(usedAir.TotalMoles, comp.MoleUsage, comp.MoleUsage / 100);
 
             if (!usedEnoughAir)
             {

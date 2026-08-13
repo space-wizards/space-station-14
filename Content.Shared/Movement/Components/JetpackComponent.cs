@@ -27,6 +27,9 @@ public sealed partial class JetpackComponent : Component
     [DataField]
     public float WeightlessModifier = 1.2f;
 
+    /// <summary>
+    /// Interval in seconds between gas consumption while the jetpack is active.
+    /// </summary>
     [DataField]
-    public float UsageCooldown = 0.3f;
+    public float GasUsageInterval = 0.3f;
 }
