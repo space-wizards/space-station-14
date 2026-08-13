@@ -38,6 +38,14 @@
 
 - type: entity
   parent: BasicHitscan
+  id: LaserHitscanBase
+  name: basic laser ray
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: LaserProjectile
+
+- type: entity
+  parent: BasicHitscan
   id: RedLightLaser
   name: red light laser ray
   categories: [ HideSpawnMenu ]
