@@ -9,11 +9,13 @@ namespace Content.Shared.APC;
 public enum ApcVisuals : byte
 {
     /// <summary>
-    /// APC channels.
+    /// APC channel state.
+    /// Contains an <see cref="ApcChannelState"/>.
     /// </summary>
     ChannelState,
     /// <summary>
     /// APC lights/HUD.
+    /// Contains an <see cref="ApcChargeState"/>.
     /// </summary>
     ChargeState,
 }
@@ -24,12 +26,14 @@ public enum ApcVisuals : byte
 public enum ApcVisualLayers : byte
 {
     /// <summary>
-    /// The sprite layer used for the equipment channel indicator light overlay.
+    /// Layer used for the status light for the channel.
+    /// "Is power going out of the device? Is the breaker tripped?"
     /// </summary>
     Equipment,
 
     /// <summary>
     /// The sprite layer used for the APC screen overlay.
+    /// "How much energy is contained in the device?"
     /// </summary>
     ChargeState,
 }
