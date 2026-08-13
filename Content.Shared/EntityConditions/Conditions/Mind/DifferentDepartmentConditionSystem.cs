@@ -30,11 +30,11 @@ public sealed partial class DifferentDepartmentConditionSystem : EntityCondition
             return false; // target in no department, so all depts are valid
 
         if (!objJob.HasValue || !job.HasValue)
-            throw new Exception("unreachable statement");
+            throw new Exception("Unreachable statement after getting job proto from mind.");
 
         // get all departments
         if (!_jobSystem.TryGetAllDepartments(objJob.Value, out var deptsA) || !_jobSystem.TryGetAllDepartments(job.Value, out var deptsB))
-            throw new Exception("job didnt have any department");
+            throw new Exception("Job didn't have any department assigned.");
 
         // perform the department check
         if (deptsA.Select(dept => dept.ID).Intersect(deptsB.Select(dept => dept.ID)).Any())
@@ -52,7 +52,7 @@ public sealed partial class DifferentDepartmentCondition : EntityConditionBase<D
 {
     public override string EntityConditionGuidebookText(IPrototypeManager prototype)
     {
-        return String.Empty;
+        return string.Empty;
     }
 }
 

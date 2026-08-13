@@ -101,7 +101,7 @@ public abstract partial class SharedJobSystem : EntitySystem
     /// Like <see cref="TryGetPrimaryDepartment"/> but tries to get any non-primary department(s) first.
     /// For all heads (including the captain), it will return Command, but for John Scientist it will return Science.
     /// </summary>
-    /// <returns> True if a department was found, False if not </returns>
+    /// <returns> True if a department was found, false if not.</returns>
     public bool TryGetSecondaryDepartmentsOrFallback(ProtoId<JobPrototype> jobProto, [NotNullWhen(true)] out List<DepartmentPrototype>? departmentPrototypes)
     {
         departmentPrototypes = new List<DepartmentPrototype>();
@@ -121,9 +121,9 @@ public abstract partial class SharedJobSystem : EntitySystem
             return true;
 
         // if we don't have any secondary dept, try to get a primary
-        if (TryGetPrimaryDepartment(jobProto, out var t))
+        if (TryGetPrimaryDepartment(jobProto, out var primaryDept))
         {
-            departmentPrototypes.Add(t);
+            departmentPrototypes.Add(primaryDept);
             return true;
         }
 
@@ -134,9 +134,9 @@ public abstract partial class SharedJobSystem : EntitySystem
     /// <summary>
     /// Gets all departments for a mind's job (if any) and checks if the chosen department is among them.
     /// </summary>
-    /// <param name="mind">The mind to check for</param>
-    /// <param name="deptProto">The department proto ID to check for</param>
-    /// <returns>True if the mind is a part of the department</returns>
+    /// <param name="mind">The mind to check for.</param>
+    /// <param name="deptProto">The department proto ID to check for.</param>
+    /// <returns>True if the mind is a part of the department.</returns>
     public bool MindIsInDepartment(EntityUid mind, ProtoId<DepartmentPrototype> deptProto)
     {
         if (!MindTryGetJobId(mind, out var job))
@@ -149,14 +149,14 @@ public abstract partial class SharedJobSystem : EntitySystem
     }
 
     /// <summary>
-    /// Checks if the job is contained within a department, and returns true if it does
+    /// Checks if the job is contained within a department, and returns true if it does.
     /// </summary>
     public bool JobIsInDepartment(ProtoId<JobPrototype> jobProto, ProtoId<DepartmentPrototype> deptProto)
     {
         if (!TryGetAllDepartments(jobProto, out var depts))
             return false;
 
-        return depts.Any(k => k.ID == deptProto);
+        return depts.Any(dept => dept.ID == deptProto);
     }
 
     /// <summary>
