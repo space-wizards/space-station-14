@@ -5,6 +5,7 @@ using Content.Shared.Storage.Components;
 using Content.Shared.Storage.Events;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Storage.EntitySystems;
 
@@ -87,19 +88,23 @@ public sealed partial class EntityProviderSystem : EntitySystem
     private bool TryFillOtherProvider(Entity<EntityProviderComponent> provider, Entity<EntityProviderComponent> target, EntityUid? user = null)
     {
         bool success = false;
+        List<EntProtoId> toRemove = [];
 
         foreach (var providedEntities in provider.Comp.EntityCounter)
         {
             if (_whitelist.IsWhitelistFail(target.Comp.Whitelist, providedEntities.Key))
                 continue;
 
-            if (target.Comp.EntityCounter.ContainsKey(providedEntities.Key))
+            if (!target.Comp.EntityCounter.TryAdd(providedEntities.Key, providedEntities.Value))
                 target.Comp.EntityCounter[providedEntities.Key] += providedEntities.Value;
-            else
-                target.Comp.EntityCounter.Add(providedEntities.Key, providedEntities.Value);
 
             success = true;
-            provider.Comp.EntityCounter.Remove(providedEntities.Key);
+            toRemove.Add(providedEntities.Key);
+        }
+
+        foreach (var removedEntProtoId in toRemove)
+        {
+            provider.Comp.EntityCounter.Remove(removedEntProtoId);
         }
 
         if (provider.Comp.DeleteIfEmpty && provider.Comp.EntityCounter.Count == 0)
