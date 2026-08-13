@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Client.Chemistry.UI;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;

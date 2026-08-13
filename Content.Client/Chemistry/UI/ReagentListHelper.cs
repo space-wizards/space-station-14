@@ -4,7 +4,7 @@ using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface;
 
-namespace Content.Client.Kitchen.UI;
+namespace Content.Client.Chemistry.UI;
 
 /// <summary>
 /// Helper class for building reagent list rows.
