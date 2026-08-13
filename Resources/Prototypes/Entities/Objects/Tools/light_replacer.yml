@@ -14,6 +14,9 @@
     whitelist:
       components:
       - LightBulb
+  - type: ContainerContainer
+    containers:
+      entity-provider: !type:Container
   - type: StaticPrice
     price: 100
   - type: UserInterface
