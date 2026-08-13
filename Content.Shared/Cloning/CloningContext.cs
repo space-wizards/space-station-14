@@ -42,14 +42,27 @@ public sealed partial class CloningContext :
 
     // Dependencies
     [Dependency] private EntityQuery<BloodstreamComponent> _bloodstreamQuery = default!;
+    [Dependency] private EntityQuery<InventoryComponent> _inventoryQuery = default!;
+    [Dependency] private EntityQuery<JumpAbilityComponent> _jumpAbilityQuery = default!;
+    [Dependency] private EntityQuery<PullerComponent> _pullerQuery = default!;
+    [Dependency] private EntityQuery<RootableComponent> _rootableQuery = default!;
+    [Dependency] private EntityQuery<SericultureComponent> _sericultureQuery = default!;
+    [Dependency] private EntityQuery<StorageComponent> _storageQuery = default!;
+    [Dependency] private EntityQuery<StoreComponent> _storeQuery = default!;
+    [Dependency] private EntityQuery<VocalComponent> _vocalQuery = default!;
+    [Dependency] private EntityQuery<WaggingComponent> _waggingQuery = default!;
 
-    // Bloodstream persistence fields
-    private float _bleedAmount;
-    private Solution? _bloodReferenceSolution;
-    private List<ReagentData>? _bloodData;
-    private Entity<SolutionComponent>? _bloodSolution;
-    private Entity<SolutionComponent>? _temporarySolution;
-    private Entity<SolutionComponent>? _metabolitesSolution;
+    // Persistence components
+    private BloodstreamComponent? _bloodstream;
+    private InventoryComponent? _inventory;
+    private JumpAbilityComponent? _jumpAbility;
+    private PullerComponent? _puller;
+    private RootableComponent? _rootable;
+    private SericultureComponent? _sericulture;
+    private StorageComponent? _storage;
+    private StoreComponent? _store;
+    private VocalComponent? _vocal;
+    private WaggingComponent? _wagging;
 
     /// <summary>
     /// Constructs a serialization context for cloning entities.
@@ -64,39 +77,39 @@ public sealed partial class CloningContext :
     }
 
     /// <summary>
-    /// Takes fields to be maintained on a given object before it's copied.
+    /// Grabs the components from the target object if they exist.
     /// Should be called before CopyTo.
     /// </summary>
-    public void GrabPersistentFields(EntityUid target)
+    public void CacheTargetComponents(EntityUid target)
     {
-        if (_bloodstreamQuery.TryComp(target, out var bloodstream))
-        {
-            _bleedAmount = bloodstream.BleedAmount;
-            _bloodReferenceSolution = bloodstream.BloodReferenceSolution;
-            _bloodData = bloodstream.BloodData;
-            _bloodSolution = bloodstream.BloodSolution;
-            _temporarySolution = bloodstream.TemporarySolution;
-            _metabolitesSolution = bloodstream.MetabolitesSolution;
-        }
-        else
-        {
-            _bleedAmount = 0.0f;
-            _bloodReferenceSolution = null;
-            _bloodData = null;
-            _bloodSolution = null;
-            _temporarySolution = null;
-            _metabolitesSolution = null;
-        }
+        _bloodstreamQuery.TryComp(target, out _bloodstream);
+        _inventoryQuery.TryComp(target, out _inventory);
+        _jumpAbilityQuery.TryComp(target, out _jumpAbility);
+        _pullerQuery.TryComp(target, out _puller);
+        _rootableQuery.TryComp(target, out _rootable);
+        _sericultureQuery.TryComp(target, out _sericulture);
+        _storageQuery.TryComp(target, out _storage);
+        _storeQuery.TryComp(target, out _store);
+        _vocalQuery.TryComp(target, out _vocal);
+        _waggingQuery.TryComp(target, out _wagging);
     }
 
-    public void ClearPersistentFields()
+    /// <summary>
+    /// Clears the components from the target object if they exist.
+    /// Should be called after CopyTo.
+    /// </summary>
+    public void ClearTargetComponents()
     {
-        _bleedAmount = 0.0f;
-        _bloodReferenceSolution = null;
-        _bloodData = null;
-        _bloodSolution = null;
-        _temporarySolution = null;
-        _metabolitesSolution = null;
+        _bloodstream = null;
+        _inventory = null;
+        _jumpAbility = null;
+        _puller = null;
+        _rootable = null;
+        _sericulture = null;
+        _storage = null;
+        _store = null;
+        _vocal = null;
+        _wagging = null;
     }
 
     #region Bloodstream
@@ -111,16 +124,14 @@ public sealed partial class CloningContext :
     {
         serializationManager.CopyTo(source, ref target, notNullableOverride: true);
 
-        target.NextUpdate = TimeSpan.Zero;
-
         // Persistent fields
-        target.BleedAmount = _bleedAmount;
-        if (_bloodReferenceSolution != null)
-            target.BloodReferenceSolution = _bloodReferenceSolution;
-        target.BloodData = _bloodData;
-        target.BloodSolution = _bloodSolution;
-        target.TemporarySolution = _temporarySolution;
-        target.MetabolitesSolution = _metabolitesSolution;
+        target.NextUpdate = TimeSpan.Zero;
+        target.BleedAmount = _bloodstream?.BleedAmount ?? 0.0f;
+        target.BloodReferenceSolution = _bloodstream?.BloodReferenceSolution ?? new();
+        target.BloodData = _bloodstream?.BloodData;
+        target.BloodSolution = _bloodstream?.BloodSolution;
+        target.TemporarySolution = _bloodstream?.TemporarySolution;
+        target.MetabolitesSolution = _bloodstream?.MetabolitesSolution;
     }
     #endregion Bloodstream
 
@@ -136,8 +147,9 @@ public sealed partial class CloningContext :
     {
         serializationManager.CopyTo(source, ref target, notNullableOverride: true);
 
-        target.Slots = Array.Empty<SlotDefinition>();
-        target.Containers = Array.Empty<ContainerSlot>();
+        // Persistent fields
+        target.Slots = _inventory?.Slots ?? [];
+        target.Containers = _inventory?.Containers ?? [];
     }
     #endregion Inventory
 
@@ -153,7 +165,8 @@ public sealed partial class CloningContext :
     {
         serializationManager.CopyTo(source, ref target, notNullableOverride: true);
 
-        target.ActionEntity = null;
+        // Persistent fields
+        target.ActionEntity = _jumpAbility?.ActionEntity;
     }
     #endregion JumpAbility
 
@@ -169,8 +182,9 @@ public sealed partial class CloningContext :
     {
         serializationManager.CopyTo(source, ref target, notNullableOverride: true);
 
-        target.Pulling = null;
-        target.NextThrow = TimeSpan.Zero;
+        // Persistent fields
+        target.Pulling = _puller?.Pulling;
+        target.NextThrow = _puller?.NextThrow ?? TimeSpan.Zero;
     }
     #endregion Pulling
 
@@ -186,8 +200,9 @@ public sealed partial class CloningContext :
     {
         serializationManager.CopyTo(source, ref target, notNullableOverride: true);
 
-        target.ActionEntity = null;
-        target.PuddleEntity = null;
+        // Persistent fields
+        target.ActionEntity = _rootable?.ActionEntity;
+        target.PuddleEntity = _rootable?.PuddleEntity;
     }
     #endregion Rootable
 
@@ -203,7 +218,8 @@ public sealed partial class CloningContext :
     {
         serializationManager.CopyTo(source, ref target, notNullableOverride: true);
 
-        target.ActionEntity = null;
+        // Persistent fields
+        target.ActionEntity = _sericulture?.ActionEntity;
     }
     #endregion Sericulture
 
@@ -219,8 +235,9 @@ public sealed partial class CloningContext :
     {
         serializationManager.CopyTo(source, ref target, notNullableOverride: true);
 
-        target.StoredItems.Clear();
-        target.SavedLocations.Clear();
+        // Persistent fields
+        target.StoredItems = _storage?.StoredItems ?? new();
+        target.SavedLocations = _storage?.SavedLocations ?? new();
     }
     #endregion Storage
 
@@ -236,11 +253,12 @@ public sealed partial class CloningContext :
     {
         serializationManager.CopyTo(source, ref target, notNullableOverride: true);
 
-        target.AccountOwner = null;
-        target.FullListingsCatalog.Clear();
-        target.BoughtEntities.Clear();
-        target.BalanceSpent.Clear();
-        target.StartingMap = null;
+        // Persistent fields
+        target.AccountOwner = _store?.AccountOwner;
+        target.FullListingsCatalog = _store?.FullListingsCatalog ?? new();
+        target.BoughtEntities = _store?.BoughtEntities ?? new();
+        target.BalanceSpent = _store?.BalanceSpent ?? new();
+        target.StartingMap = _store?.StartingMap ?? new();
     }
     #endregion Store
 
@@ -256,7 +274,8 @@ public sealed partial class CloningContext :
     {
         serializationManager.CopyTo(source, ref target, notNullableOverride: true);
 
-        target.EmoteActionEntity = null;
+        // Persistent fields
+        target.EmoteActionEntity = _vocal?.EmoteActionEntity;
     }
     #endregion Vocal
 
@@ -272,8 +291,9 @@ public sealed partial class CloningContext :
     {
         serializationManager.CopyTo(source, ref target, notNullableOverride: true);
 
-        target.ActionEntity = null;
-        target.Wagging = false;
+        // Persistent fields
+        target.ActionEntity = _wagging?.ActionEntity;
+        target.Wagging = _wagging?.Wagging ?? false;
     }
     #endregion Wagging
 }
