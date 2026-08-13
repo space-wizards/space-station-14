@@ -1702,7 +1702,7 @@
   parent: [ BaseXenoborgModuleEngi, BaseXenoborgContraband ]
   id: XenoborgModuleEngiArmor
   name: armor xenoborg module
-  description: Up armor! Installs some flexible armor
+  description: Up armor! Installs some flexible armor.
   components:
   - type: Sprite
     layers:
@@ -1711,13 +1711,14 @@
   - type: Armor
     modifiers:
       flatReductions:
-        Slash: 2.5
-        Piercing: 2.5
+        Slash: 3
+        Piercing: 3
+        Blunt: 2
   - type: Reflect
     inRightPlace: true # Done so the relay event works properly
     reflects:
     - NonEnergy
-    reflectProb: 0.20
+    reflectProb: 0.25
   - type: ComponentBorgModule
     components:
     - type: SimpleSpriteOverlay
