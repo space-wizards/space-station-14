@@ -149,24 +149,26 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
         // A horizontal base sprite is assumed, with neighbors to the East or West being acceptable.
         // If the entity instead has N or S side neighbors, it will be rotated 90 degrees.
         // If ambiguous (neighbors on all sides, or in an L shape) then no rotation will occur.
-        var targetAngle = Angle.FromDegrees(0);
-        if (northSouth > eastWest)
+        Angle? targetAngle;
+
+        if (eastWest > northSouth)
+        {
+            targetAngle = Angle.FromDegrees(0);
+        }
+        else if (northSouth > eastWest)
         {
             targetAngle = Angle.FromDegrees(90);
         }
-
-        if (eastWest == northSouth) //TODO:ERRANT fix this shit
-        {
-            // Log.Warning($"Airlock {entity} was not rotated");
-        }
+        else
+            return false;
 
         var locRot = Math.Abs(trans.LocalRotation);
         // Don't want to "fix" a 180 degree misalignment
         // Maybe airlocks should only have 2 rot states in the first place?
 
         // rotate sprite
-        if (!MathHelper.CloseTo(locRot, targetAngle, 0.01f)
-            && !MathHelper.CloseTo(locRot, targetAngle + Angle.FromDegrees(180), 0.01f))
+        if (!MathHelper.CloseTo(locRot, targetAngle.Value, 0.01f)
+            && !MathHelper.CloseTo(locRot, targetAngle.Value + Angle.FromDegrees(180), 0.01f))
         {
             _trans.SetLocalRotation(entity, trans.LocalRotation + Angle.FromDegrees(90));
 
