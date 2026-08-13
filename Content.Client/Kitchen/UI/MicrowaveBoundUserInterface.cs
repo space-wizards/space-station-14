@@ -18,15 +18,8 @@ public sealed class MicrowaveBoundUserInterface(EntityUid owner, Enum uiKey) : B
         _menu.EjectButton.OnPressed += _ => SendPredictedMessage(new MicrowaveEjectMessage());
         _menu.OnEjectSolid += netEntity => SendPredictedMessage(new MicrowaveEjectSolidIndexedMessage(netEntity));
 
-        _menu.OnCookTimeSelected += (args, buttonIndex) =>
-        {
-            if (args.Button is MicrowaveMenu.MicrowaveCookTimeButton actualButton)
-            {
-                SendPredictedMessage(new MicrowaveSelectCookTimeMessage(buttonIndex, actualButton.CookTime));
-                return;
-            }
-            SendPredictedMessage(new MicrowaveSelectCookTimeMessage(buttonIndex, 0));
-        };
+        _menu.OnCookTimeSelected += (buttonIndex, cookTime) =>
+            SendPredictedMessage(new MicrowaveSelectCookTimeMessage(buttonIndex, cookTime));
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

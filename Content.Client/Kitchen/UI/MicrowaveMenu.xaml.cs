@@ -21,14 +21,14 @@ public sealed partial class MicrowaveMenu : FancyWindow
     private static readonly StyleBoxFlat BusyStyle = new() { BackgroundColor = Color.FromHex("#947300") };
     private static readonly StyleBoxFlat IdleStyle = new() { BackgroundColor = Color.FromHex("#1B1B1E") };
 
-    public event Action<BaseButton.ButtonEventArgs, int>? OnCookTimeSelected;
+    public event Action<int, uint>? OnCookTimeSelected;
     public event Action<NetEntity>? OnEjectSolid;
 
     private ButtonGroup CookTimeButtonGroup { get; }
 
-    private bool IsBusy;
-    private TimeSpan CurrentCooktimeEnd;
-    private uint _lastSecondsUpdate;
+    private bool _isBusy;
+    private TimeSpan _currentCookTimeEnd;
+    private uint? _lastSecondsUpdate;
 
     public MicrowaveMenu()
     {
@@ -36,10 +36,7 @@ public sealed partial class MicrowaveMenu : FancyWindow
         IoCManager.InjectDependencies(this);
         CookTimeButtonGroup = new ButtonGroup();
         InstantCookButton.Group = CookTimeButtonGroup;
-        InstantCookButton.OnPressed += args =>
-        {
-            OnCookTimeSelected?.Invoke(args, 0);
-        };
+        InstantCookButton.OnPressed += _ => OnCookTimeSelected?.Invoke(0, 0);
 
         for (var i = 1; i <= CookTimeButtonCount; i++)
         {
@@ -51,10 +48,10 @@ public sealed partial class MicrowaveMenu : FancyWindow
 
     public void UpdateUi(MicrowaveUpdateUserInterfaceState state)
     {
-        IsBusy = state.IsMicrowaveBusy;
-        CurrentCooktimeEnd = state.CurrentCookTimeEnd;
+        _isBusy = state.IsMicrowaveBusy;
+        _currentCookTimeEnd = state.CurrentCookTimeEnd;
 
-        ToggleBusyDisableOverlayPanel(state.IsMicrowaveBusy || state.ContainedSolids.Length == 0);
+        DisableCookingPanelOverlay.Visible = state.IsMicrowaveBusy || state.ContainedSolids.Length == 0;
 
         IngredientGridHelper.PopulateIngredientsGrid(
             IngredientsGrid,
@@ -86,33 +83,25 @@ public sealed partial class MicrowaveMenu : FancyWindow
             : IdleStyle;
     }
 
-    private MicrowaveCookTimeButton CreateCookTimeButton(int index)
+    private Button CreateCookTimeButton(int index)
     {
-        var newButton = new MicrowaveCookTimeButton
+        var cookTime = (uint) (index * CookTimeStepSeconds);
+        var newButton = new Button
         {
-            Text = (index * CookTimeStepSeconds).ToString(),
+            Text = cookTime.ToString(),
             TextAlign = Label.AlignMode.Center,
             ToggleMode = true,
-            CookTime = (uint) (index * CookTimeStepSeconds),
             Group = CookTimeButtonGroup,
             HorizontalExpand = true,
         };
         newButton.StyleClasses.Add(index == StyleBreakButtonIndex ? "OpenRight" : "OpenBoth");
-        newButton.OnPressed += args =>
-        {
-            OnCookTimeSelected?.Invoke(args, index);
-        };
+        newButton.OnPressed += _ => OnCookTimeSelected?.Invoke(index, cookTime);
         return newButton;
-    }
-
-    private void ToggleBusyDisableOverlayPanel(bool shouldDisable)
-    {
-        DisableCookingPanelOverlay.Visible = shouldDisable;
     }
 
     private void UpdateTimerDisplay(uint seconds)
     {
-        if (_lastSecondsUpdate == seconds && seconds != 0)
+        if (_lastSecondsUpdate == seconds)
             return;
 
         _lastSecondsUpdate = seconds;
@@ -125,23 +114,18 @@ public sealed partial class MicrowaveMenu : FancyWindow
     {
         base.FrameUpdate(args);
 
-        if (!IsBusy)
+        if (!_isBusy)
             return;
 
         var curTime = _timing.CurTime;
-        if (CurrentCooktimeEnd > curTime)
+        if (_currentCookTimeEnd > curTime)
         {
-            var remaining = (CurrentCooktimeEnd - curTime).TotalSeconds;
-            UpdateTimerDisplay((uint) Math.Max(0, remaining));
+            var remaining = (_currentCookTimeEnd - curTime).TotalSeconds;
+            UpdateTimerDisplay((uint) Math.Ceiling(remaining));
         }
         else
         {
             UpdateTimerDisplay(0);
         }
-    }
-
-    public sealed class MicrowaveCookTimeButton : Button
-    {
-        public uint CookTime;
     }
 }
