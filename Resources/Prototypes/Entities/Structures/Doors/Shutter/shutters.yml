@@ -29,9 +29,9 @@
           bounds: "-0.49,-0.49,0.49,0.49" # don't want this colliding with walls or they won't close
         density: 100
         mask:
-        - FullTileMask
+        - DoorPassable
         layer:
-        - AirlockLayer
+        - DoorPassable
   - type: ContainerFill
     containers:
       board: [ DoorElectronics ]

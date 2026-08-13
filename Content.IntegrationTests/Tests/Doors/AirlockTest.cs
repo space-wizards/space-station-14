@@ -148,6 +148,25 @@ namespace Content.IntegrationTests.Tests.Doors
         - WallLayer
 
 - type: entity
+  name: DoorCollisionTestShutter
+  id: DoorCollisionTestShutter
+  components:
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+            bounds: ""-0.5,-0.5,0.5,0.5""
+        mask:
+        - DoorPassable
+        layer:
+        - DoorPassable
+
+- type: entity
   name: DoorCollisionTestMob
   id: DoorCollisionTestMob
   components:
@@ -316,6 +335,32 @@ namespace Content.IntegrationTests.Tests.Doors
             await Pair.Server.WaitAssertion(() =>
             {
                 Assert.That(doors.CanClose(door), Is.True);
+            });
+        }
+
+        [Test]
+        public async Task WindoorCanCloseOverShutter()
+        {
+            var (_, doors, door, _) = await SpawnDoorCollisionScenario(
+                "DoorCollisionTestWindoor",
+                ("DoorCollisionTestShutter", Vector2.Zero));
+
+            await Pair.Server.WaitAssertion(() =>
+            {
+                Assert.That(doors.CanClose(door), Is.True);
+            });
+        }
+
+        [Test]
+        public async Task WindoorCannotCloseOverMob()
+        {
+            var (_, doors, door, _) = await SpawnDoorCollisionScenario(
+                "DoorCollisionTestWindoor",
+                ("DoorCollisionTestMob", new Vector2(0, -0.2f)));
+
+            await Pair.Server.WaitAssertion(() =>
+            {
+                Assert.That(doors.CanClose(door), Is.False);
             });
         }
 

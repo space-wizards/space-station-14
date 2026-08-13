@@ -101,8 +101,12 @@
       board: !type:Container
   - type: Door
     canCrush: false
-    openingAnimationTime: 0.9
-    closingAnimationTime: 0.9
+    closeTimeOne: 0.4
+    closeTimeTwo: 0.3
+    openTimeOne: 0.4
+    openTimeTwo: 0.3
+    openingAnimationTime: 0.7
+    closingAnimationTime: 0.7
     openSound:
       path: /Audio/Machines/windoor_open.ogg
     closeSound:
