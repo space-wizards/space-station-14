@@ -7,34 +7,34 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Sheetlets;
 
 [CommonSheetlet]
-public sealed class PanelSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet, IButtonConfig
+public sealed class PanelSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet, IButtonConfig, IPanelConfig
 {
     public override StyleRule[] GetRules(T sheet, object config)
     {
-        IButtonConfig buttonCfg = sheet;
+        IPanelConfig panelCfg = sheet;
 
-        var boxLight = new StyleBoxFlat()
+        var boxLight = new StyleBoxFlat
         {
-            BackgroundColor = sheet.SecondaryPalette.BackgroundLight,
+            BackgroundColor = sheet.SecondaryPalette.BackgroundLight
         };
-        var boxDark = new StyleBoxFlat()
+        var boxDark = new StyleBoxFlat
         {
-            BackgroundColor = sheet.SecondaryPalette.BackgroundDark,
+            BackgroundColor = sheet.SecondaryPalette.BackgroundDark
         };
-        var boxInsetDark = new StyleBoxFlat()
+        var boxInsetDark = new StyleBoxFlat
         {
             BackgroundColor = sheet.SecondaryPalette.BackgroundDark,
             BorderColor = sheet.PrimaryPalette.Background,
-            BorderThickness = new Thickness(2f),
+            BorderThickness = new Thickness(2f)
         };
         var boxDeep = new StyleBoxFlat
         {
-            BackgroundColor = Color.FromHex("#1B1B1E"),
+            BackgroundColor = panelCfg.DeepPanelBackgroundColor
         };
         var boxInsetDeep = new StyleBoxFlat
         {
-            BackgroundColor = Color.FromHex("#1B1B1E"),
-            BorderColor = Color.FromHex("#25252A"),
+            BackgroundColor = panelCfg.DeepPanelBackgroundColor,
+            BorderColor = panelCfg.DeepPanelBorderColor,
             BorderThickness = new Thickness(2f)
         };
 
@@ -82,7 +82,7 @@ public sealed class PanelSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet,
             E()
                 .Class(StyleClass.BackgroundPanelOpenRight)
                 .Prop(PanelContainer.StylePropertyPanel, StyleBoxHelpers.OpenRightStyleBox(sheet))
-                .Modulate(sheet.SecondaryPalette.Background),
+                .Modulate(sheet.SecondaryPalette.Background)
         ];
     }
 }
