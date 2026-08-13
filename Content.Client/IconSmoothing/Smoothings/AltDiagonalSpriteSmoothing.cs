@@ -10,12 +10,6 @@ namespace Content.Client.IconSmoothing.Smoothings;
 public sealed partial class AltDiagonalSpriteSmoothing : CornerSpriteSmoothing
 {
     /// <summary>
-    /// Alternative Base for when we match on our <see cref="AltMask"/>
-    /// </summary>
-    [DataField(required:true)]
-    public string AltBase { get; set; }
-
-    /// <summary>
     /// An Alternative Mask of keys which we compare against if <see cref="ISpriteSmoothState.Mask"/> fails
     /// </summary>
     [DataField(required:true)]
@@ -60,7 +54,7 @@ public sealed partial class AltDiagonalSpriteSmoothing : CornerSpriteSmoothing
             return Base + 1;
 
         if (altMatch)
-            return AltBase;
+            return Base + 2;
 
         return Base + 0;
     }

@@ -12,7 +12,7 @@
     key: walls
     states:
     - !type:CornerSpriteSmoothing
-      mask: [ walls ]
+      mask: [ walls, windows, grilles, marble, doors ]
       base: malign
   - type: RadiationBlocker
     resistance: 9

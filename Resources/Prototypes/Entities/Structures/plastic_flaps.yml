@@ -44,7 +44,6 @@
     price: 100
   - type: IconSmooth
     key: walls
-    mode: NoSprite
   - type: PlacementReplacement
     key: walls
 

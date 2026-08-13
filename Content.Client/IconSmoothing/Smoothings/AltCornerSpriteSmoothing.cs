@@ -2,6 +2,7 @@
 
 /// <summary>
 /// An expansion of <see cref="CornerSpriteSmoothing"/> that allows for an alternative state with an alternative lookup key!
+/// TODO: THIS SHIT DON'T WORK AND IS A WORSE VERSION OF 9s!!! KILL THIS AND REPLACE IT WITH 9 SPRITE SMOOTHING!!!
 /// </summary>
 public sealed partial class AltCornerSpriteSmoothing : CornerSpriteSmoothing
 {
@@ -12,7 +13,7 @@ public sealed partial class AltCornerSpriteSmoothing : CornerSpriteSmoothing
     public string AltBase { get; set; }
 
     /// <summary>
-    /// An Alternative Mask of keys which we compare against if <see cref="ISpriteSmoothState.Mask"/> fails
+    /// An Additional mask of keys we compare against, which can provide additional data.
     /// </summary>
     [DataField(required:true)]
     public HashSet<string> AltMask { get; set; }
@@ -36,17 +37,18 @@ public sealed partial class AltCornerSpriteSmoothing : CornerSpriteSmoothing
             if (!GetOrthoganals(i, out var mask))
                 continue;
 
-            yield return (GetLayerKey(i), GetState((byte)(match & mask), (byte)(altmatch & mask), seen));
+            yield return (GetLayerKey(i), GetState(match & mask, altmatch & mask, seen));
             seen += 2;
         }
     }
 
-    private string GetState(byte directions, byte altDirections, byte offset)
+    private string GetState(Direction8Flag directions, Direction8Flag altDirections, byte offset)
     {
-        if (directions == 0 && altDirections > 0)
-            return GetAltState(altDirections, offset);
+        // No new data to be gained from alt directions.
+        if ((directions & altDirections) == altDirections)
+            return Base + GetAppendix((byte)directions, offset);
 
-        return Base + GetAppendix(directions, offset);
+        return GetAltState((byte)(directions | altDirections), offset);
     }
 
     private string GetAltState(byte directions, byte offset)

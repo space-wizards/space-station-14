@@ -13,7 +13,8 @@ public sealed partial class IconSmoothGridComponent : Component
     /// </summary>
     /// <remarks>
     /// Intentionally not saved.
+    /// If you need more than 256 possible different key states, then you may have a problem, change to ushort instead:tm:
     /// </remarks>
     [ViewVariables]
-    public readonly Dictionary<Vector2i, int> Tiles = new();
+    public readonly Dictionary<Vector2i, byte> Tiles = new();
 }

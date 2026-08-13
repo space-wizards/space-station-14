@@ -35,10 +35,8 @@
     key: lava
     states:
     - !type:CornerSpriteSmoothing
-      mask: [ lava ]
+      mask: [ lava, walls ]
       base: water
-    additionalKeys:
-    - walls
   - type: Physics
     bodyType: Static
   - type: Fixtures

@@ -32,10 +32,9 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: IconSmooth
-    key: walls
     states:
     - !type:CornerSpriteSmoothing
-      mask: [ walls ]
+      mask: [ walls, windows, grilles, marble, doors ]
       base: ruwindow
   - type: Construction
     graph: Window
@@ -113,15 +112,15 @@
   - type: Sprite
     drawdepth: WallTops
     sprite: Structures/Windows/window-diagonal-uranium-reinf.rsi
-    state: state0
   - type: Tag
     tags:
     - Diagonal
     - Window
   - type: IconSmooth
-    mode: Diagonal
-    key: walls
-    base: state
+    states:
+    - !type:DiagonalSpriteSmoothing
+      mask: [ walls, windows, grilles, marble, doors ]
+      base: state
   - type: Icon
     sprite: Structures/Windows/window-diagonal-uranium-reinf.rsi
     state: state0

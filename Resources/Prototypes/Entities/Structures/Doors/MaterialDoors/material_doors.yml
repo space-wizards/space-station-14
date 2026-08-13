@@ -55,8 +55,7 @@
   - type: Occluder
   - type: BlockWeather
   - type: IconSmooth
-    key: walls
-    mode: NoSprite
+    key: doors
   - type: PlacementReplacement
     key: walls
 

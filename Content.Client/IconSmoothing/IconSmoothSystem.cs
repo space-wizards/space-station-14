@@ -36,7 +36,7 @@ public sealed partial class IconSmoothSystem : EntitySystem
 
     // First free position in _toleranceData.
     // -1 indicates there are no free slots left and the storage must be expanded.
-    private int _freeListHead = -1;
+    private short _freeListHead = -1;
 
     public override void Initialize()
     {
@@ -194,7 +194,7 @@ public sealed partial class IconSmoothSystem : EntitySystem
     private void PopulateAdjacentKeys(Entity<IconSmoothGridComponent> grid, Angle localRot, Vector2i pos)
     {
         Array.Clear(_adjacentKeys);
-        // TODO: OFFSET!!!
+
         var i = AngleToOffset(localRot);
         foreach (var direction in EnumerateAdjacent(pos))
         {
@@ -345,9 +345,9 @@ public sealed partial class IconSmoothSystem : EntitySystem
     /// Searches for an existing Cache in our keyIndex, and creates a new one if it does not already exist.
     /// </summary>
     /// <returns>The index of the Hashset in our cache.</returns>
-    private int AddOrCreateCacheIndex()
+    private byte AddOrCreateCacheIndex()
     {
-        for (var i = 0; i < _keyCaches.Count; i++)
+        for (byte i = 0; i < _keyCaches.Count; i++)
         {
             if (!_keyCaches[i].Keys?.SetEquals(_workingKeyRing) ?? true)
                 continue;
@@ -364,10 +364,10 @@ public sealed partial class IconSmoothSystem : EntitySystem
         _freeListHead = _keyCaches[index].RefCount;
         _keyCaches[index] = new KeyCache(_workingKeyRing);
 
-        return index;
+        return (byte)index;
     }
 
-    private void DecrementRefCount(int index)
+    private void DecrementRefCount(byte index)
     {
         ref var cacheEntry = ref _keyCaches[index];
 
@@ -384,13 +384,14 @@ public sealed partial class IconSmoothSystem : EntitySystem
     private void ExpandCache()
     {
         var newCacheSize = Math.Max(8, _keyCaches.Count * 2);
+        DebugTools.Assert(newCacheSize <= 256, $"Number of cached keys exceeded what can be stored in a byte.");
         var curSize = _keyCaches.Count;
 
         _keyCaches.EnsureLength(newCacheSize);
         for (var i = curSize; i < newCacheSize; i++)
         {
             _keyCaches[i].RefCount = _freeListHead;
-            _freeListHead = i;
+            _freeListHead = (byte)i;
         }
     }
 
@@ -402,7 +403,7 @@ public sealed partial class IconSmoothSystem : EntitySystem
         /// Stores a reference to the next available index in _keyCache
         /// If there is no reference available, is set to -1
         /// </summary>
-        public int RefCount = 1; // Doubles as freelist chain
+        public short RefCount = 1; // Doubles as freelist chain
     }
 }
 

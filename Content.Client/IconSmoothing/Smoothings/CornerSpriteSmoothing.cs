@@ -30,6 +30,7 @@ public partial class CornerSpriteSmoothing : ISpriteSmoothState
 
     public virtual void InitializeStates(Entity<SpriteComponent> entity, SpriteSystem sprite)
     {
+        // TODO: This should use RsiDirection some day...
         foreach (var offset in Enum.GetValues<DirectionOffset>())
         {
             var key = GetLayerKey(offset);

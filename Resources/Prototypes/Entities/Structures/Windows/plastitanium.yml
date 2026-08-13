@@ -61,12 +61,11 @@
     sprite: Structures/Windows/window-plastitanium.rsi
     state: full
   - type: IconSmooth
-    key: walls
+    key: windows
     states:
     - !type:CornerSpriteSmoothing
-      mask: [ walls ]
+      mask: [ walls, windows, grilles, marble, doors ]
       base: ptwindow
-    base: ptwindow
   - type: Airtight
   - type: Fixtures
     fixtures:
@@ -135,7 +134,6 @@
   - type: Sprite
     drawdepth: WallTops
     sprite: Structures/Windows/window-diagonal-plastitanium.rsi
-    state: state0
   - type: Tag
     tags:
     - Diagonal
@@ -144,9 +142,10 @@
     sprite: Structures/Windows/window-diagonal-plastitanium.rsi
     state: state0
   - type: IconSmooth
-    mode: Diagonal
-    key: walls
-    base: state
+    states:
+    - !type:DiagonalSpriteSmoothing
+      mask: [ walls, windows, grilles, marble, doors ]
+      base: state
   - type: Fixtures
     fixtures:
       fix1:

@@ -27,11 +27,12 @@
   - type: PlacementReplacement
     key: grilles
   - type: IconSmooth
-    key: walls
+    key: grilles
     states:
     - !type:CornerSpriteSmoothing
-      mask: [ walls ]
+      mask: [ walls, windows, grilles, marble, doors ]
       base: grille
+      index: 0
   - type: Damageable
     damageModifierSet: PerforatedMetallic
   - type: Injurable
@@ -112,7 +113,6 @@
     drawdepth: Walls
     sprite: Structures/Walls/grille-diagonal.rsi
     layers:
-    - state: state0
     - state: electrified_diagonal
       sprite: Effects/electricity.rsi
       map: ["enum.ElectrifiedLayers.Sparks"]
@@ -122,9 +122,12 @@
     sprite: Structures/Walls/grille-diagonal.rsi
     state: state0
   - type: IconSmooth
-    index: 0
-    mode: Diagonal
     key: grilles
+    states:
+    - !type:DiagonalSpriteSmoothing
+      mask: [ walls, windows, grilles, marble, doors ]
+      base: state
+      index: 0
     base: state
   - type: PlacementReplacement
     key: grilles

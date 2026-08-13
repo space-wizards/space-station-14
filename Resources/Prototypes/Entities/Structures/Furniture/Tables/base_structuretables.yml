@@ -62,3 +62,9 @@
         - TableMask
         layer:
         - TableLayer
+  - type: IconSmooth
+    key: counter
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ counter ]
+      base: state_

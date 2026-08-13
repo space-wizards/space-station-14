@@ -77,7 +77,7 @@
     key: walls
     states:
     - !type:DiagonalSpriteSmoothing
-      mask: [ walls ]
+      mask: [ walls, windows, grilles, marble, doors ]
       base: state
   - type: Airtight
     noAirWhenFullyAirBlocked: false
@@ -133,7 +133,7 @@
     key: walls
     states:
     - !type:CornerSpriteSmoothing
-      mask: [ walls ]
+      mask: [ walls, windows, grilles, marble, doors ]
       base: brick
 
 - type: entity
@@ -165,7 +165,7 @@
     key: walls
     states:
     - !type:CornerSpriteSmoothing
-      mask: [ walls ]
+      mask: [ walls, windows, grilles, marble, doors ]
       base: brass
 
 - type: entity
@@ -198,10 +198,10 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: IconSmooth
-    key: meatwalls
+    key: walls
     states:
     - !type:CornerSpriteSmoothing
-      mask: [ meatwalls ]
+      mask: [ walls, windows, grilles, marble, doors ]
       base: meat
 
 - type: entity
@@ -231,7 +231,7 @@
     key: walls
     states:
     - !type:CornerSpriteSmoothing
-      mask: [ walls ]
+      mask: [ walls, windows, grilles, marble, doors ]
       base: debug
 
 - type: entity
@@ -278,7 +278,7 @@
     key: walls
     states:
     - !type:CornerSpriteSmoothing
-      mask: [ walls ]
+      mask: [ walls, windows, grilles, marble, doors ]
       base: gold
 
 - type: entity
@@ -314,7 +314,7 @@
     key: walls
     states:
     - !type:CornerSpriteSmoothing
-      mask: [ walls ]
+      mask: [ walls, windows, grilles, marble, doors ]
       base: plasma
   - type: RadiationBlocker
     resistance: 5
@@ -333,7 +333,7 @@
     key: walls
     states:
     - !type:CornerSpriteSmoothing
-      mask: [ walls ]
+      mask: [ walls, windows, grilles, marble, doors ]
       base: plastitanium
   - type: Fixtures
     fixtures:
@@ -382,7 +382,6 @@
   - type: Sprite
     drawdepth: Walls
     sprite: Structures/Walls/plastitanium-diagonal.rsi
-    state: state0
   - type: Icon
     sprite: Structures/Walls/plastitanium-diagonal.rsi
     state: state0
@@ -457,7 +456,7 @@
     key: walls
     states:
     - !type:CornerSpriteSmoothing
-      mask: [ walls ]
+      mask: [ walls, windows, grilles, marble, doors ]
       base: reinf_over
   - type: Appearance
   - type: GenericVisualizer
@@ -505,7 +504,7 @@
     key: walls
     states:
     - !type:CornerSpriteSmoothing
-      mask: [ walls ]
+      mask: [ walls, windows, grilles, marble, doors ]
       base: reinf_over
   - type: Damageable
     damageModifierSet: StructuralMetallic # weaker because rust
@@ -518,7 +517,6 @@
   - type: Sprite
     drawdepth: Walls
     sprite: Structures/Walls/reinforced-diagonal.rsi
-    state: state0
   - type: Icon
     sprite: Structures/Walls/reinforced-diagonal.rsi
     state: state0
@@ -569,11 +567,13 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: IconSmooth
-    key: walls
+    key: marble
     states:
-    - !type:CornerSpriteSmoothing
-      mask: [ walls ]
+    - !type:AltCornerSpriteSmoothing
+      mask: [ marble ]
+      altMask: [ walls, windows, grilles, doors ]
       base: wall
+      altBase: wall-border
   - type: StaticPrice
     price: 150
 
@@ -591,7 +591,7 @@
     key: walls
     states:
     - !type:CornerSpriteSmoothing
-      mask: [ walls ]
+      mask: [ walls, windows, grilles, marble, doors ]
       base: wall
   - type: Fixtures
     fixtures:
@@ -644,7 +644,7 @@
     key: walls
     states:
     - !type:CornerSpriteSmoothing
-      mask: [ walls ]
+      mask: [ walls, windows, grilles, marble, doors ]
       base: silver
 
 #shuttle walls
@@ -656,7 +656,6 @@
   - type: Sprite
     drawdepth: Walls
     sprite: Structures/Walls/shuttle-diagonal.rsi
-    state: state0
   - type: Icon
     sprite: Structures/Walls/shuttle-diagonal.rsi
     state: state0
@@ -745,7 +744,7 @@
     key: walls
     states:
     - !type:CornerSpriteSmoothing
-      mask: [ walls ]
+      mask: [ walls, windows, grilles, marble, doors ]
       base: state
   - type: Appearance
   - type: GenericVisualizer
@@ -807,7 +806,7 @@
     key: walls
     states:
     - !type:CornerSpriteSmoothing
-      mask: [ walls ]
+      mask: [ walls, windows, grilles, marble, doors ]
       base: solid
 
 - type: entity
@@ -818,7 +817,6 @@
   - type: Sprite
     drawdepth: Walls
     sprite: Structures/Walls/solid-diagonal.rsi
-    state: state0
   - type: Icon
     sprite: Structures/Walls/solid-diagonal.rsi
     state: state0
@@ -853,7 +851,7 @@
     key: walls
     states:
     - !type:CornerSpriteSmoothing
-      mask: [ walls ]
+      mask: [ walls, windows, grilles, marble, doors ]
       base: solid
   - type: Damageable
     damageModifierSet: Metallic # weaker because rust
@@ -884,7 +882,7 @@
     key: walls
     states:
     - !type:CornerSpriteSmoothing
-      mask: [ walls ]
+      mask: [ walls, windows, grilles, marble, doors ]
       base: solid
   - type: Construction
     graph: Girder
@@ -941,7 +939,7 @@
     key: walls
     states:
     - !type:CornerSpriteSmoothing
-      mask: [ walls ]
+      mask: [ walls, windows, grilles, marble, doors ]
       base: reinf_over
   - type: Construction
     graph: Girder
@@ -960,7 +958,7 @@
     key: walls
     states:
     - !type:CornerSpriteSmoothing
-      mask: [ walls ]
+      mask: [ walls, windows, grilles, marble, doors ]
       base: xenoborg
 
 - type: entity
@@ -1017,7 +1015,7 @@
     key: walls
     states:
     - !type:CornerSpriteSmoothing
-      mask: [ walls ]
+      mask: [ walls, windows, grilles, marble, doors ]
       base: uranium
   - type: RadiationBlocker
     resistance: 6
@@ -1052,7 +1050,7 @@
     key: walls
     states:
     - !type:CornerSpriteSmoothing
-      mask: [ walls ]
+      mask: [ walls, windows, grilles, marble, doors ]
       base: wood
 
 - type: entity
@@ -1082,17 +1080,17 @@
         acts: [ "Destruction" ]
       - !type:SpawnEntitiesBehavior
         spawn:
-          materialwebsilk:
+          MaterialWebSilk:
             min: 1
             max: 1
       - !type:PlaySoundBehavior
         sound:
-          collection: wooddestroy
+          collection: WoodDestroy
   - type: IconSmooth
     key: webs
     states:
     - !type:CornerSpriteSmoothing
-      mask: [ webs ]
+      mask: [ walls, windows, grilles, marble, doors ]
       base: wall
   - type: Construction
     graph: WebStructures
@@ -1119,7 +1117,7 @@
     key: walls
     states:
     - !type:CornerSpriteSmoothing
-      mask: [ walls ]
+      mask: [ walls, windows, grilles, marble, doors ]
       base: mining
   - type: Appearance
 
@@ -1131,7 +1129,6 @@
   - type: Sprite
     drawdepth: Walls
     sprite: Structures/Walls/mining-diagonal.rsi
-    state: state0
   - type: Icon
     sprite: Structures/Walls/mining-diagonal.rsi
     state: state0
@@ -1231,7 +1228,7 @@
     key: walls
     states:
     - !type:CornerSpriteSmoothing
-      mask: [ walls ]
+      mask: [ walls, windows, grilles, marble, doors ]
       base: concrete
 
 # Cardboard
@@ -1295,7 +1292,7 @@
     key: cards
     states:
     - !type:CornerSpriteSmoothing
-      mask: [ cards ]
+      mask: [ walls, windows, grilles, marble, doors ]
       base: card
   - type: Occluder
   - type: BlockWeather
