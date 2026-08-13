@@ -11,6 +11,7 @@ using Robust.Client.UserInterface;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
+using Robust.Shared.Light;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.NamePeek;
@@ -30,6 +31,7 @@ public sealed partial class NamePeekOverlay : Overlay
     [Dependency] private IPrototypeManager _prototypeManager = default!;
 
     private readonly EntityLookupSystem _lookup;
+    private readonly LightLevelSystem _lightLevel;
     private readonly NamePeekSystem _namePeekSystem;
     private readonly ExamineSystem _examineSystem;
     private readonly SpriteSystem _sprite;
@@ -52,6 +54,7 @@ public sealed partial class NamePeekOverlay : Overlay
         EntityLookupSystem lookup,
         SpriteSystem sprite,
         SharedTransformSystem transform,
+        LightLevelSystem lightLevel,
         NamePeekSystem namePeek,
         ExamineSystem examine,
         EntityQuery<SpriteComponent> spriteQuery,
@@ -61,6 +64,7 @@ public sealed partial class NamePeekOverlay : Overlay
         _lookup = lookup;
         _sprite = sprite;
         _transform = transform;
+        _lightLevel = lightLevel;
         _namePeekSystem = namePeek;
         _examineSystem = examine;
 
@@ -118,6 +122,13 @@ public sealed partial class NamePeekOverlay : Overlay
         foreach (var ent in _nearbyEntities)
         {
             if (ent.Owner == playerEnt)
+                continue;
+
+            var lightLevel = 1f;
+            if (eye.DrawLight)
+                _lightLevel.TryCalculateLightLevel(ent, out lightLevel);
+
+            if (lightLevel < 0.35)
                 continue;
 
             if (!_spriteQuery.TryComp(ent, out var sprite))

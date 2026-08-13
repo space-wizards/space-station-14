@@ -6,6 +6,7 @@ using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
+using Robust.Shared.Light;
 
 namespace Content.Client.NamePeek;
 
@@ -16,6 +17,7 @@ public sealed partial class NamePeekSystem : EntitySystem
     [Dependency] private ExamineSystem _examine = default!;
     [Dependency] private SpriteSystem _sprite = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private LightLevelSystem _lightLevel = default!;
     [Dependency] private EntityLookupSystem _lookup = default!;
 
     [Dependency] private EntityQuery<SpriteComponent> _spriteQuery = default!;
@@ -35,6 +37,7 @@ public sealed partial class NamePeekSystem : EntitySystem
             _lookup,
             _sprite,
             _transform,
+            _lightLevel,
             this,
             _examine,
             _spriteQuery,
