@@ -1711,9 +1711,9 @@
   - type: Armor
     modifiers:
       flatReductions:
-        Slash: 3
+        Slash: 2
         Piercing: 3
-        Blunt: 2
+        Blunt: 3
   - type: Reflect
     inRightPlace: true # Done so the relay event works properly
     reflects:
