@@ -1054,6 +1054,7 @@
   - type: Battery
     maxCharge: 1
     startingCharge: 1
+    showItemStatus: false
   - type: BatteryAmmoProvider
     proto: RangeLaser
     fireCost: 0 # you are shooting a laser pointer, it's unlimited
