@@ -70,7 +70,7 @@ public sealed partial class ChasingWalkComponent : Component
     public TimeSpan NextChangeVectorTime;
 
     /// <summary>
-    /// The component that the entity is chasing
+    /// List of components used to select a target to chase.
     /// </summary>
     [DataField]
     public ComponentRegistry ChasingComponent = [];
@@ -82,7 +82,7 @@ public sealed partial class ChasingWalkComponent : Component
     public float MaxChaseRadius = 25;
 
     /// <summary>
-    /// The entity uid, chasing by the component owner
+    /// The entity uid that is being chased.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public EntityUid? ChasingEntity;
