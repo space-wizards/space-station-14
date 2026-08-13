@@ -21,7 +21,7 @@ public sealed partial class ApcVisualsComponent : Component
     /// <summary>
     /// The suffixes are used for the channel indicator lights.
     /// Must be at least as large as <see cref="ApcChannelState.NumStates"/>
-    /// A null state implies that the state itself should be null.
+    /// A null state is not used as a suffix, it sets the entire state to null.
     /// </summary>
     [DataField("channelIndicatorSuffixes")]
     public string?[] ChannelSuffixes = new string?[(byte)ApcChannelState.NumStates] { null, "on", "disconnected", "tripped" };
@@ -41,7 +41,7 @@ public sealed partial class ApcVisualsComponent : Component
     /// The suffix used to construct the sprite state suffix used for the screen overlay.
     /// Valid sprite states are of the form \<PREFIX\>-\<STATE\>.
     /// Must be at least as large as <see cref="ApcChargeState.NumStates"/>
-    /// A null state implies that the state itself should be null.
+    /// A null state is not used as a suffix, it sets the entire state to null.
     /// </summary>
     [DataField("screenStateSuffixes")]
     public string?[] ScreenSuffixes = new string[(byte)ApcChargeState.NumStates] { "lack", "charging", "full", "remote", "tripped" };
