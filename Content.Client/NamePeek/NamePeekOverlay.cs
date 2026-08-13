@@ -124,9 +124,14 @@ public sealed partial class NamePeekOverlay : Overlay
             if (ent.Owner == playerEnt)
                 continue;
 
+            if (!_transformQuery.TryComp(ent, out var xform))
+                continue;
+
+            var mapPos = _transform.GetMapCoordinates((ent, xform));
+
             var lightLevel = 1f;
             if (eye.DrawLight)
-                _lightLevel.TryCalculateLightLevel(ent, out lightLevel);
+                _lightLevel.TryCalculateLightLevel(mapPos, out lightLevel);
 
             if (lightLevel < 0.35)
                 continue;
@@ -134,13 +139,9 @@ public sealed partial class NamePeekOverlay : Overlay
             if (!_spriteQuery.TryComp(ent, out var sprite))
                 continue;
 
-            if (!_transformQuery.TryComp(ent, out var xform))
-                continue;
-
             if (eye.DrawFov && !_examineSystem.InRangeUnOccluded(playerEnt, ent))
                 continue;
 
-            var mapPos = _transform.ToMapCoordinates(xform.Coordinates);
             var pos = Vector2.Transform(mapPos.Position, matrix);
 
             var text = Identity.Name(ent, _entityManager, playerEnt);
