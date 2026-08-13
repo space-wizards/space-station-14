@@ -18,8 +18,11 @@ public abstract partial class SharedPowerStateSystem : EntitySystem
     /// </summary>
     /// <param name="ent">The entity to set the working state for.</param>
     /// <param name="working">Whether the entity should be in the working state.</param>
+    /// <param name="shouldRaiseEvent">
+    /// Should setting state raise event? Can help omitting events duringinitialization.
+    /// </param>
     [PublicAPI]
-    public virtual void SetWorkingState(Entity<PowerStateComponent?> ent, bool working)
+    public virtual void SetWorkingState(Entity<PowerStateComponent?> ent, bool working, bool shouldRaiseEvent = true)
     {
         if (!_powerStateQuery.Resolve(ent, ref ent.Comp))
             return;
@@ -29,6 +32,9 @@ public abstract partial class SharedPowerStateSystem : EntitySystem
             _powerReceiverSystem.SetLoad((ent, apcPower), working ? ent.Comp.WorkingPowerDraw : ent.Comp.IdlePowerDraw);
 
         ent.Comp.IsWorking = working;
+        if(!shouldRaiseEvent)
+            return;
+
         var ev = new PowerStateChanged(working);
         RaiseLocalEvent(ent, ref ev);
     }

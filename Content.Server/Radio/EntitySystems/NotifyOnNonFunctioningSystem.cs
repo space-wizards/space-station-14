@@ -4,7 +4,6 @@ using Content.Server.Power.EntitySystems;
 using Content.Shared.Construction;
 using Content.Shared.Destructible;
 using Content.Shared.Lock;
-using Content.Shared.Power.Components;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Radio.Components;
 using Robust.Shared.Utility;
@@ -20,14 +19,14 @@ public sealed partial class NotifyOnNonFunctioningSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnDestruction(Entity<NotifyOnNonFunctioningComponent> ent, ref DestructionEventArgs args)
     {
-        if(ent.Comp.LocDestroyed.HasValue)
+        if (ent.Comp.LocDestroyed.HasValue)
             AlertRadioIfWasWorking(ent, ent.Comp.LocDestroyed);
     }
 
     [SubscribeLocalEvent]
     private void OnDeconstructed(Entity<NotifyOnNonFunctioningComponent> ent, ref MachineDeconstructedEvent args)
     {
-        if(ent.Comp.LocDeconstructed.HasValue)
+        if (ent.Comp.LocDeconstructed.HasValue)
             AlertRadioIfWasWorking(ent, ent.Comp.LocDeconstructed);
     }
 
@@ -71,7 +70,7 @@ public sealed partial class NotifyOnNonFunctioningSystem : EntitySystem
     {
         if (ent.Comp.RequirePowered)
         {
-            if(TryComp<ApcPowerReceiverComponent>(ent, out var apc) && !apc.Powered)
+            if (TryComp<ApcPowerReceiverComponent>(ent, out var apc) && !apc.Powered)
                 return;
 
             if (TryComp<PowerConsumerComponent>(ent, out var consumer) && consumer.DrawRate < consumer.ReceivedPower)
