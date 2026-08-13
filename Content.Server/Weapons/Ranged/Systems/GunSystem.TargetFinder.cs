@@ -18,8 +18,7 @@ public sealed partial class GunSystem
 
         foreach (var projectile in args.FiredProjectiles)
         {
-            if (!TryComp<ChasingWalkComponent>(projectile, out var projectileChasingWalkComp))
-                continue;
+            var projectileChasingWalkComp = Comp<ChasingWalkComponent>(projectile);
 
             projectileChasingWalkComp.ChasingEntity = entity.Comp.Target;
             projectileChasingWalkComp.NextChangeVectorTime = TimeSpan.MaxValue;
