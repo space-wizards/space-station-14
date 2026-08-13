@@ -40,6 +40,9 @@ public sealed partial class NamePeekOverlay : Overlay
     private EntityQuery<TransformComponent> _transformQuery;
     private EntityQuery<MobStateComponent> _mobStateQuery;
 
+    private TextOutline _outline = new (2.5f, Color.Black);
+
+    private readonly HashSet<Entity<MobStateComponent>> _nearbyEntities = new();
 
     private readonly Font _font;
 
@@ -74,20 +77,28 @@ public sealed partial class NamePeekOverlay : Overlay
         _font = new VectorFont(cache.GetResource<FontResource>("/Fonts/Grand9k/grand9k-pixel-unicode.otf"), 21);
     }
 
-    protected override void Draw(in OverlayDrawArgs args)
+    protected override bool BeforeDraw(in OverlayDrawArgs args)
     {
         if (args.ViewportControl == null || !_namePeekSystem.Visible)
-            return;
+            return false;
 
-        if (args.Viewport.Eye is not { } eye)
+        //Don't draw names if we're crit
+        if (_mobStateQuery.TryComp(_playerManager.LocalEntity, out var mobState)
+            && (mobState.CurrentState == MobState.Critical))
+            return false;
+
+        return true;
+    }
+
+    protected override void Draw(in OverlayDrawArgs args)
+    {
+        if (args.ViewportControl == null)
             return;
 
         if (_playerManager.LocalEntity is not { } playerEnt)
             return;
 
-        //Don't draw names if we're crit
-        if (_mobStateQuery.TryComp(playerEnt, out var mobState)
-            && (mobState.CurrentState == MobState.Critical))
+        if (args.Viewport.Eye is not { } eye)
             return;
 
         args.DrawingHandle.SetTransform(Matrix3x2.Identity);
@@ -101,14 +112,12 @@ public sealed partial class NamePeekOverlay : Overlay
 
         var matrix = args.ViewportControl.GetWorldToScreenMatrix();
 
-        var lookup = _lookup.GetEntitiesIntersecting(args.MapId, args.WorldBounds, LookupFlags.Uncontained);
+        _nearbyEntities.Clear();
+        _lookup.GetEntitiesIntersecting(args.MapId, args.WorldAABB, _nearbyEntities, LookupFlags.Uncontained);
 
-        foreach (var ent in lookup)
+        foreach (var ent in _nearbyEntities)
         {
-            if (ent == playerEnt)
-                continue;
-
-            if (!_mobStateQuery.HasComp(ent))
+            if (ent.Owner == playerEnt)
                 continue;
 
             if (!_spriteQuery.TryComp(ent, out var sprite))
@@ -139,10 +148,9 @@ public sealed partial class NamePeekOverlay : Overlay
 
             var drawPosition = (pos - dimensions / 2f) + new Vector2(0, bounds.Box.Extents.Y * matrix.M11);
 
-            var outline = new TextOutline(2.5f, Color.Black);
-            handle.DrawString(_font, drawPosition, text, scale, Color.LightGray.WithAlpha(200), outline);
-
-            args.DrawingHandle.UseShader(null);
+            handle.DrawString(_font, drawPosition, text, scale, Color.LightGray.WithAlpha(200), _outline);
         }
+
+        args.DrawingHandle.UseShader(null);
     }
 }
