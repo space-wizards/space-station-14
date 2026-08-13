@@ -1,7 +1,7 @@
 - type: entity
-  id: BaseWeaponBattery
-  parent: BaseItem
   abstract: true
+  parent: BaseItem
+  id: BaseWeaponBatteryNoAmmoCounter
   components:
   - type: Sprite
   - type: Item
@@ -12,7 +12,6 @@
     slots:
     - Back
     - suitStorage
-  - type: AmmoCounter
   - type: Gun
     fireRate: 2
     selectedMode: SemiAuto
@@ -25,6 +24,13 @@
     startingCharge: 1000
   - type: StaticPrice
     price: 500
+
+- type: entity
+  abstract: true
+  parent: BaseWeaponBatteryNoAmmoCounter
+  id: BaseWeaponBattery
+  components:
+  - type: AmmoCounter
 
 - type: entity
   parent: [BaseWeaponBattery, BaseGunWieldable]
@@ -1036,18 +1042,21 @@
     fireCost: 100
 
 - type: entity
-  parent: [WeaponAdvancedLaser, BaseXenoborgContraband]
+  parent: [BaseWeaponBatteryNoAmmoCounter, BaseXenoborgContraband]
   id: WeaponRangeFinderXenoborg
   name: xenoborg range finder
   components:
+  - type: Sprite 
+    sprite: Objects/Weapons/Guns/Battery/xenoborg_range_finder.rsi
+    layers:
+    - state: icon
+      map: [ "enum.GunVisualLayers.Base" ]
   - type: Battery
-    maxCharge: 10
-    startingCharge: 10
-  - type: BatterySelfRecharger
-    autoRechargeRate: 1.5
+    maxCharge: 1
+    startingCharge: 1
   - type: BatteryAmmoProvider
     proto: RangeLaser
-    fireCost: 1 # you are shooting a laser pointer, the fire cost is gonna be low
+    fireCost: 0 # you are shooting a laser pointer, it's unlimited
   - type: EyeCursorOffset
     maxOffset: 3
     pvsIncrease: 0.3
@@ -1058,8 +1067,3 @@
     - TargetSource
   - type: AutoLinkTransmitter
     channel: XenoborgGuidedMissileLauncher
-  - type: Sprite 
-    sprite: Objects/Weapons/Guns/Battery/xenoborg_range_finder.rsi
-    layers:
-    - state: icon
-      map: [ "enum.GunVisualLayers.Base" ]
