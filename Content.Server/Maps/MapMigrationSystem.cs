@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using Robust.Shared.ContentPack;
+using Robust.Shared.EntitySerialization;
 using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.Map.Events;
 using Robust.Shared.Prototypes;
@@ -59,6 +60,12 @@ public sealed partial class MapMigrationSystem : EntitySystem
 
     private void OnBeforeReadEvent(BeforeEntityReadEvent ev)
     {
+        // Game saves don't apply mapping mode migrations,
+        // since some migrated entities are still actually used.
+        // TODO make a universal map migration system in the engine
+        if (ev.Category == FileCategory.Save)
+            return;
+
         if (!TryReadFile(out var mappings))
             return;
 
