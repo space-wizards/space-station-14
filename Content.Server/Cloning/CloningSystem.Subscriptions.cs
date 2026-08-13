@@ -50,7 +50,7 @@ public sealed partial class CloningSystem
         if (!Copied<InventoryComponent>(args.CloneUid, args.Settings, out var cloneComp))
             return;
 
-        _inventory.SetTemplateId((args.CloneUid, cloneComp), cloneComp.TemplateId);
+        _inventory.UpdateInventoryTemplate((args.CloneUid, cloneComp));
     }
 
     [SubscribeLocalEvent]
