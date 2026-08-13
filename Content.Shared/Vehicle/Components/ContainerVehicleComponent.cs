@@ -1,4 +1,5 @@
-﻿using Robust.Shared.GameStates;
+﻿using Content.Shared.Vehicle.Systems;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Vehicle.Components;
 
@@ -13,6 +14,6 @@ public sealed partial class ContainerVehicleComponent : Component
     /// <summary>
     /// The ID of the container for the operator.
     /// </summary>
-    [DataField(required: true, readOnly: true)]
+    [DataField(required: true)]
     public string ContainerId;
 }

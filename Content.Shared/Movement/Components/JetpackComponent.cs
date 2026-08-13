@@ -12,9 +12,11 @@ public sealed partial class JetpackComponent : Component
     [DataField]
     public float MoleUsage = 0.012f;
 
-    [DataField] public EntProtoId ToggleAction = "ActionToggleJetpack";
+    [DataField]
+    public EntProtoId ToggleAction = "ActionToggleJetpack";
 
-    [DataField, AutoNetworkedField] public EntityUid? ToggleActionEntity;
+    [DataField, AutoNetworkedField]
+    public EntityUid? ToggleActionEntity;
 
     [DataField]
     public float Acceleration = 1f;
