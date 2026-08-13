@@ -10,7 +10,10 @@
     sprite: Structures/Walls/malign.rsi
   - type: IconSmooth
     key: walls
-    base: malign
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls ]
+      base: malign
   - type: RadiationBlocker
     resistance: 9
 

@@ -62,6 +62,10 @@
     state: full
   - type: IconSmooth
     key: walls
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls ]
+      base: ptwindow
     base: ptwindow
   - type: Airtight
   - type: Fixtures

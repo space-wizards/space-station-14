@@ -28,7 +28,11 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: IconSmooth
-    base: malign
+    key: walls
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls ]
+      base: malign
   - type: Appearance
   - type: DamageVisuals
     thresholds: [5, 10, 20]

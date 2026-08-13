@@ -35,7 +35,11 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: IconSmooth
-    base: swindow
+    key: walls
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls ]
+      base: swindow
   - type: Construction
     graph: Window
     node: shuttleWindow

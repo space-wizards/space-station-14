@@ -29,7 +29,11 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: IconSmooth
-    base: uwindow
+    key: walls
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls ]
+      base: uwindow
   - type: Construction
     graph: Window
     node: uraniumWindow

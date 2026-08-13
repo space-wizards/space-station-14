@@ -74,9 +74,11 @@
     tags:
     - Diagonal
   - type: IconSmooth
-    mode: Diagonal
     key: walls
-    base: state
+    states:
+    - !type:DiagonalSpriteSmoothing
+      mask: [ walls ]
+      base: state
   - type: Airtight
     noAirWhenFullyAirBlocked: false
     airBlockedDirection:
@@ -129,7 +131,10 @@
         acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
-    base: brick
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls ]
+      base: brick
 
 - type: entity
   parent: BaseWall
@@ -158,7 +163,10 @@
         acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
-    base: brass
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls ]
+      base: brass
 
 - type: entity
   parent: BaseWall
@@ -191,7 +199,10 @@
         acts: [ "Destruction" ]
   - type: IconSmooth
     key: meatwalls
-    base: meat
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ meatwalls ]
+      base: meat
 
 - type: entity
   parent: BaseWall
@@ -218,7 +229,10 @@
         acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
-    base: debug
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls ]
+      base: debug
 
 - type: entity
   parent: BaseWall
@@ -262,7 +276,10 @@
         density: 4000
   - type: IconSmooth
     key: walls
-    base: gold
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls ]
+      base: gold
 
 - type: entity
   parent: BaseWall
@@ -295,7 +312,10 @@
         acts: ["Destruction"]
   - type: IconSmooth
     key: walls
-    base: plasma
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls ]
+      base: plasma
   - type: RadiationBlocker
     resistance: 5
 
@@ -311,7 +331,10 @@
     sprite: Structures/Walls/plastitanium.rsi
   - type: IconSmooth
     key: walls
-    base: plastitanium
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls ]
+      base: plastitanium
   - type: Fixtures
     fixtures:
       fix1:
@@ -432,7 +455,10 @@
         acts: ["Destruction"]
   - type: IconSmooth
     key: walls
-    base: reinf_over
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls ]
+      base: reinf_over
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -477,7 +503,10 @@
     node: reinforcedWallRust
   - type: IconSmooth
     key: walls
-    base: reinf_over
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls ]
+      base: reinf_over
   - type: Damageable
     damageModifierSet: StructuralMetallic # weaker because rust
 
@@ -541,7 +570,10 @@
         acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
-    base: wall
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls ]
+      base: wall
   - type: StaticPrice
     price: 150
 
@@ -557,7 +589,10 @@
     sprite: Structures/Walls/marble.rsi
   - type: IconSmooth
     key: walls
-    base: wall
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls ]
+      base: wall
   - type: Fixtures
     fixtures:
       fix1:
@@ -607,7 +642,10 @@
         acts: ["Destruction"]
   - type: IconSmooth
     key: walls
-    base: silver
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls ]
+      base: silver
 
 #shuttle walls
 - type: entity
@@ -705,7 +743,10 @@
     node: shuttleWall
   - type: IconSmooth
     key: walls
-    base: state
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls ]
+      base: state
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -810,7 +851,10 @@
     node: wallrust
   - type: IconSmooth
     key: walls
-    base: solid
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls ]
+      base: solid
   - type: Damageable
     damageModifierSet: Metallic # weaker because rust
 
@@ -838,7 +882,10 @@
     sprite: Structures/Walls/exo.rsi
   - type: IconSmooth
     key: walls
-    base: solid
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls ]
+      base: solid
   - type: Construction
     graph: Girder
     node: wallChitin
@@ -892,7 +939,10 @@
     resistance: 5
   - type: IconSmooth
     key: walls
-    base: reinf_over
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls ]
+      base: reinf_over
   - type: Construction
     graph: Girder
     node: reinforcedWallChitin
@@ -908,7 +958,10 @@
     sprite: Structures/Walls/exo-borg.rsi
   - type: IconSmooth
     key: walls
-    base: xenoborg
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls ]
+      base: xenoborg
 
 - type: entity
   parent: WallPlastitaniumDiagonal
@@ -962,7 +1015,10 @@
         density: 6000
   - type: IconSmooth
     key: walls
-    base: uranium
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls ]
+      base: uranium
   - type: RadiationBlocker
     resistance: 6
 
@@ -994,7 +1050,10 @@
         acts: ["Destruction"]
   - type: IconSmooth
     key: walls
-    base: wood
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls ]
+      base: wood
 
 - type: entity
   parent: BaseWall
@@ -1023,15 +1082,18 @@
         acts: [ "Destruction" ]
       - !type:SpawnEntitiesBehavior
         spawn:
-          MaterialWebSilk:
+          materialwebsilk:
             min: 1
             max: 1
       - !type:PlaySoundBehavior
         sound:
-          collection: WoodDestroy
+          collection: wooddestroy
   - type: IconSmooth
     key: webs
-    base: wall
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ webs ]
+      base: wall
   - type: Construction
     graph: WebStructures
     node: wall
@@ -1055,7 +1117,10 @@
         acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
-    base: mining
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls ]
+      base: mining
   - type: Appearance
 
 - type: entity
@@ -1164,7 +1229,10 @@
         acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
-    base: concrete
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls ]
+      base: concrete
 
 # Cardboard
 
@@ -1225,7 +1293,10 @@
         acts: [ "Destruction" ]
   - type: IconSmooth
     key: cards
-    base: card
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ cards ]
+      base: card
   - type: Occluder
   - type: BlockWeather
   - type: SunShadowCast

@@ -12,9 +12,11 @@
     noRot: true
   - type: IconSmooth
     key: stone
-    additionalKeys:
-    - doors
     index: 0
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ stone, doors ]
+      base: stone
     base: stone
   - type: Icon
     sprite: Structures/Walls/stone.rsi
@@ -549,7 +551,10 @@
   - type: IconSmooth
     key: stone
     index: 0
-    base: stone
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ stone ]
+      base: state
   - type: Icon
     sprite: Structures/Walls/stone-dirt.rsi
     state: full
