@@ -2,9 +2,11 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Dataset;
 using Content.Shared.FixedPoint;
+using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Random.Helpers;
 
@@ -65,6 +67,93 @@ public static class SharedRandomExtensions
                 pick = default;
                 return false;
             }
+            pick = random.PickAndTake(weights);
+            return true;
+        }
+
+#endregion
+
+#region FixedPoint2
+
+        /// <summary>
+        /// Get random <see cref="FixedPoint2"/> value between 0 (included) and 1 (excluded).
+        /// </summary>
+        [PublicAPI]
+        public FixedPoint2 NextFixedPoint2()
+        {
+            return FixedPoint2.FromCents(random.Next(100));
+        }
+
+        /// <summary>
+        /// Get random <see cref="FixedPoint2"/> value in range of <paramref name="minValue"/> (included) and <paramref name="maxValue"/> (excluded).
+        /// </summary>
+        /// <param name="maxValue">Random value should be less then this value.</param>
+        [PublicAPI]
+        public FixedPoint2 NextFixedPoint2(FixedPoint2 maxValue)
+        {
+            return FixedPoint2.FromCents(random.Next(maxValue.Value));
+        }
+
+        /// <summary>
+        /// Get random <see cref="FixedPoint2"/> value in range of <paramref name="minValue"/> (included) and <paramref name="maxValue"/> (excluded).
+        /// </summary>
+        /// <param name="minValue">Random value should be greater or equal to this value.</param>
+        /// <param name="maxValue">Random value should be less then this value.</param>
+        [PublicAPI]
+        public FixedPoint2 NextFixedPoint2(FixedPoint2 minValue, FixedPoint2 maxValue)
+        {
+            return FixedPoint2.FromCents(random.Next(minValue.Value, maxValue.Value));
+        }
+
+        [PublicAPI]
+        public bool Prob(FixedPoint2 chance)
+        {
+            DebugTools.Assert(chance <= 0 && chance >= 1, $"Chance must be in the range 0-1. It was {chance}.");
+
+            return chance > random.NextFixedPoint2();
+        }
+
+        [PublicAPI]
+        public T Pick<T>(Dictionary<T, FixedPoint2> weights)
+            where T : notnull
+        {
+            var sum = weights.Values.Sum();
+            var accumulated = FixedPoint2.Zero;
+
+            var rand = random.NextFixedPoint2(sum);
+
+            foreach (var (key, weight) in weights)
+            {
+                accumulated += weight;
+
+                if (accumulated >= rand)
+                {
+                    return key;
+                }
+            }
+
+            throw new InvalidOperationException("Invalid weighted pick");
+        }
+
+        [PublicAPI]
+        public T PickAndTake<T>(Dictionary<T, FixedPoint2> weights)
+            where T : notnull
+        {
+            var pick = random.Pick(weights);
+            weights.Remove(pick);
+            return pick;
+        }
+
+        [PublicAPI]
+        public bool TryPickAndTake<T>(Dictionary<T, FixedPoint2> weights, [NotNullWhen(true)] out T? pick)
+            where T : notnull
+        {
+            if (weights.Count == 0)
+            {
+                pick = default;
+                return false;
+            }
+
             pick = random.PickAndTake(weights);
             return true;
         }
