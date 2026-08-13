@@ -105642,9 +105642,6 @@ entities:
       pos: 30.5,2.5
     - type: SignalSwitch
       state: True
-    - type: DeviceNetwork
-      configurators:
-      - invalid
     - type: DeviceLinkSource
       linkedPorts:
         15888:
