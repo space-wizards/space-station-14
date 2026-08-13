@@ -272,7 +272,7 @@
       reagents:
       - ReagentId: Blood
         Quantity: 100
-  - type: EggLayer
+  - type: EntityProducerAction
   - type: HungerProduction
     delay: 60
     delayMax: 120
@@ -737,7 +737,7 @@
       reagents:
       - ReagentId: Blood
         Quantity: 100
-  - type: EggLayer
+  - type: EntityProducerAction
   - type: HungerProduction
     delay: 60
     delayMax: 120
