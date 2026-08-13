@@ -1,6 +1,5 @@
-using Content.Shared.Damage.Systems;
 using Content.Shared.Examine;
-using Content.Shared.Popups;
+using Content.Shared.Pinpointer;
 
 namespace Content.Shared.Mapping;
 
@@ -13,26 +12,10 @@ namespace Content.Shared.Mapping;
 /// </remarks>>
 public sealed partial class SharedSatanSystem : EntitySystem // StructureAlignmentTAgNonsmoothing
 {
-    // [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedTransformSystem _trans = default!;
 
-    //
+    public override void Initialize() { }
 
-    public override void Initialize()
-    {
-
-    }
-
-
-    // Damage a door to align it
-    //TODO:ERRANT For testing only
-    [SubscribeLocalEvent]
-    private void OnExamined(Entity<SatanAlignComponent> entity, ref DamageDealtEvent args)
-    {
-        AlignAll();
-    }
-
-    // Examine to align ALL entities
     //TODO:ERRANT For testing only
     [SubscribeLocalEvent]
     private void OnExamined(Entity<SatanAlignComponent> entity, ref ExaminedEvent args)
@@ -48,12 +31,14 @@ public sealed partial class SharedSatanSystem : EntitySystem // StructureAlignme
     {
         var query = EntityQueryEnumerator<SatanAlignComponent, TransformComponent>();
 
+        var i = 0; //TODO:ERRANT testing only
         foreach (var (ent, comp, transform) in query)
         {
             if (!transform.Anchored)
                 continue;
 
             Align((ent, comp));
+            i++;
         }
     }
 
@@ -69,7 +54,7 @@ public sealed partial class SharedSatanSystem : EntitySystem // StructureAlignme
         if (!TryComp<SatanKindComponent>(entity, out var kind))
             return;
 
-        var trans = Transform(entity);
+        var trans = Transform(entity); //TODO:ERRANT get this from the calling function
 
         if (!trans.Anchored)
             return;
@@ -82,6 +67,11 @@ public sealed partial class SharedSatanSystem : EntitySystem // StructureAlignme
         var ns = 0d;
         var ew = 0d;
         var neighbors = 0;
+
+        if (!HasComp<NavMapDoorComponent>(entity))
+        {
+            var a = entity.Owner;
+        }
 
         foreach (var (ent, comp) in query)
         {
