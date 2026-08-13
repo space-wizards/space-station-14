@@ -106,9 +106,9 @@ public static class SharedRandomExtensions
         }
 
         [PublicAPI]
-        public bool Prob(FixedPoint2 chance)
+        public bool FixedPointProb(FixedPoint2 chance)
         {
-            DebugTools.Assert(chance <= 0 && chance >= 1, $"Chance must be in the range 0-1. It was {chance}.");
+            DebugTools.Assert(chance <= 1 && chance >= 0, $"Chance must be in the range 0-1. It was {chance}.");
 
             return chance > random.NextFixedPoint2();
         }
@@ -193,9 +193,9 @@ public static class SharedRandomExtensions
         }
 
         [PublicAPI]
-        public bool Prob(FixedPoint4 chance)
+        public bool FixedPointProb(FixedPoint4 chance)
         {
-            DebugTools.Assert(chance <= 0 && chance >= 1, $"Chance must be in the range 0-1. It was {chance}.");
+            DebugTools.Assert(chance <= 1 && chance >= 0, $"Chance must be in the range 0-1. It was {chance}.");
 
             return chance > random.NextFixedPoint4();
         }
