@@ -953,10 +953,17 @@
 #Antags
 
 - type: entity
-  parent: [PassengerIDCard, BaseChameleon]
+  parent: [IDCardStandard, BaseChameleon]
   id: AgentIDCard
+  name: passenger ID card
   suffix: Agent
   components:
+  - type: Sprite
+    layers:
+    - state: default
+    - sprite: *icon-rsi
+      offset: *icon-offset
+      state: Passenger
   - type: Access
     tags:
     - Maintenance
