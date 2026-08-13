@@ -60,7 +60,7 @@ public sealed partial class BonusDamageOnMetabolismSystem : EntitySystem
                     continue;
 
                 // Do the bonus damage and quit!
-                args.BonusDamage = ent.Comp.Damage;
+                args.BonusDamage =+ ent.Comp.Damage;
                 return;
             }
         }
