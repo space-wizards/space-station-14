@@ -40,30 +40,35 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/firelock.rsi
-    snapCardinals: true
+    sprite: Structures/Doors/Airlocks/Standard/firelock-base.rsi
     layers:
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
     - state: closed_unlit
       shader: unshaded
+      sprite: Structures/Doors/Airlocks/Effects/airlock-effects-firelock.rsi
       map: ["enum.DoorVisualLayers.BaseUnlit"]
       visible: false
     - state: welded
+      sprite: Structures/Doors/Airlocks/Effects/airlock-effects-firelock.rsi
       map: ["enum.WeldableLayers.BaseWelded"]
     - state: bolted_unlit
       shader: unshaded
+      sprite: Structures/Doors/Airlocks/Effects/airlock-effects-firelock.rsi
       map: ["enum.DoorVisualLayers.BaseBolted"]
       visible: false
     - state: panel_open
+      sprite: Structures/Doors/Airlocks/Effects/airlock-effects.rsi
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
     - state: pressure_unlit
       visible: false
       shader: unshaded
+      sprite: Structures/Doors/Airlocks/Effects/airlock-effects-firelock.rsi
       map: ["enum.FirelockVisualLayersPressure.Base"]
     - state: temperature_unlit
       visible: false
       shader: unshaded
+      sprite: Structures/Doors/Airlocks/Effects/airlock-effects-firelock.rsi
       map: ["enum.FirelockVisualLayersTemperature.Base"]
   - type: GenericVisualizer
     visuals:
@@ -149,6 +154,8 @@
     - Fires
     - Spacing
   - type: SyncSprite
+  - type: PlacementReplacement
+    key: firelocks
 
 - type: entity
   id: Firelock
@@ -174,7 +181,7 @@
   components:
     - type: StationAiWhitelist
     - type: Sprite
-      sprite: Structures/Doors/Airlocks/Glass/firelock.rsi
+      sprite: Structures/Doors/Airlocks/Glass/firelock-base.rsi
     - type: Occluder
       enabled: false
     - type: Fixtures
@@ -200,7 +207,7 @@
   components:
     - type: StationAiWhitelist
     - type: Sprite
-      sprite: Structures/Doors/edge_door_hazard.rsi
+      sprite: Structures/Doors/Misc/edge_door_hazard.rsi
       snapCardinals: false
     - type: Airtight
       airBlocked: false
