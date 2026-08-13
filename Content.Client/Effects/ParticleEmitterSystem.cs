@@ -14,6 +14,12 @@ public sealed partial class ParticleEmitterSystem : EntitySystem
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private SharedContainerSystem _container = default!;
 
+    [SubscribeLocalEvent]
+    private void OnActiveEmitterInit(Entity<ActiveParticleEmitterComponent> ent, ref ComponentInit args)
+    {
+        ent.Comp.LastCoordinates = Transform(ent).Coordinates;
+    }
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -21,19 +27,16 @@ public sealed partial class ParticleEmitterSystem : EntitySystem
         if (!_timing.IsFirstTimePredicted)
             return;
 
-        var query = EntityQueryEnumerator<ParticleEmitterComponent, TransformComponent>();
+        var query = EntityQueryEnumerator<ParticleEmitterComponent, ActiveParticleEmitterComponent, TransformComponent>();
 
-        while (query.MoveNext(out var uid, out var emitter, out var xform))
+        while (query.MoveNext(out var uid, out var emitter, out var active, out var xform))
         {
-            if (!emitter.Enabled || emitter.EffectPrototype == null)
+            var inRange = _transform.InRange(xform.Coordinates, active.LastCoordinates, emitter.MaxSpawnDistance);
+            if (inRange && _timing.CurTime < active.NextEmissionTime)
                 continue;
 
-            var inRange = _transform.InRange(xform.Coordinates, emitter.LastCoordinates, emitter.MaxDistance);
-            if (inRange && _timing.CurTime < emitter.TargetTime)
-                continue;
-
-            emitter.LastCoordinates = _transform.GetMoverCoordinates(xform.Coordinates);
-            emitter.TargetTime = _timing.CurTime + TimeSpan.FromSeconds(emitter.Cooldown);
+            active.LastCoordinates = _transform.GetMoverCoordinates(xform.Coordinates);
+            active.NextEmissionTime = _timing.CurTime + TimeSpan.FromSeconds(emitter.SpawnInterval);
 
             SpawnParticles(uid, emitter, xform);
         }

@@ -179,17 +179,12 @@ public abstract partial class SharedJetpackSystem : EntitySystem
             RemoveUser(user.Value, component);
             RemComp<ActiveJetpackComponent>(uid);
         }
-        if (TryComp<ParticleEmitterComponent>(uid, out var emitter))
+        if (HasComp<ParticleEmitterComponent>(uid))
         {
-            emitter.Enabled = enabled;
-
             if (enabled)
-            {
-                // Reset coordinates to prevent spawning effects from wherever it was last turned off
-                emitter.LastCoordinates = Transform(uid).Coordinates;
-            }
-
-            Dirty(uid, emitter);
+                EnsureComp<ActiveParticleEmitterComponent>(uid);
+            else
+                RemComp<ActiveParticleEmitterComponent>(uid);
         }
 
         Appearance.SetData(uid, JetpackVisuals.Enabled, enabled);

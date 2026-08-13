@@ -1,33 +1,22 @@
-﻿using Robust.Shared.GameStates;
-using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
+﻿using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Effects.Components;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent]
 public sealed partial class ParticleEmitterComponent : Component
 {
-    [DataField, AutoNetworkedField]
-    public bool Enabled;
-
     /// <summary>
     /// The effect that will be spawned.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public EntProtoId? EffectPrototype;
+    [DataField(required: true)]
+    public EntProtoId EffectPrototype;
 
-    [DataField, AutoNetworkedField]
-    public float Cooldown = 0.3f;
+    [DataField]
+    public float SpawnInterval = 0.3f;
 
     /// <summary>
-    /// Distance the entity must travel before a new particle is spawned.
+    /// Maximum desired distance between spawned effects.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public float MaxDistance = 0.7f;
-
-    [ViewVariables, AutoNetworkedField]
-    public EntityCoordinates LastCoordinates;
-
-    [ViewVariables]
-    public TimeSpan TargetTime = TimeSpan.Zero;
+    [DataField]
+    public float MaxSpawnDistance = 0.7f;
 }
