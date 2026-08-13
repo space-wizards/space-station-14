@@ -33,8 +33,6 @@ public sealed partial class ApcSystem : EntitySystem
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
 
-    [Dependency] private EntityQuery<AppearanceComponent> _appearanceQuery = default!;
-
     /// <inheritdoc />
     public override void Initialize()
     {
@@ -217,10 +215,7 @@ public sealed partial class ApcSystem : EntitySystem
                 apc.LastChargeState = newState;
                 apc.LastChargeStateTime = _gameTiming.CurTime;
 
-                if (TryComp(uid, out AppearanceComponent? appearance))
-                {
-                    _appearance.SetData(uid, ApcVisuals.ChargeState, newState, appearance);
-                }
+                _appearance.SetData(uid, ApcVisuals.ChargeState, newState);
             }
         }
 
@@ -228,10 +223,7 @@ public sealed partial class ApcSystem : EntitySystem
         if (channelState != apc.LastChannelState)
         {
             apc.LastChannelState = channelState;
-            if (TryComp(uid, out AppearanceComponent? appearance))
-            {
-                _appearance.SetData(uid, ApcVisuals.ChannelState, channelState, appearance);
-            }
+            _appearance.SetData(uid, ApcVisuals.ChannelState, channelState);
         }
 
         var extPowerState = CalcExtPowerState(uid, battery.NetworkBattery);
