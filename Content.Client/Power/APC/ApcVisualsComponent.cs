@@ -11,6 +11,7 @@ namespace Content.Client.Power.APC;
 public sealed partial class ApcVisualsComponent : Component
 {
     #region Channel Indicators
+
     /// <summary>
     /// The prefix used for the sprite state suffix of the channel indicator lights.
     /// Valid states are of the form \<PREFIX\>-\<STATE\>
