@@ -30,16 +30,16 @@ public sealed partial class CloningSystem : SharedCloningSystem
 {
     [Dependency] private IDependencyCollection _deps = default!;
     [Dependency] private ISerializationManager _seriMan = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private IdentitySystem _identity = default!;
     [Dependency] private InventorySystem _inventory = default!;
     [Dependency] private MetaDataSystem _metaData = default!;
-    [Dependency] private EntityWhitelistSystem _whitelist = default!;
-    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private NameModifierSystem _nameMod = default!;
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private SharedStorageSystem _storage = default!;
     [Dependency] private SharedSubdermalImplantSystem _subdermalImplant = default!;
     [Dependency] private SharedVisualBodySystem _visualBody = default!;
-    [Dependency] private NameModifierSystem _nameMod = default!;
-    [Dependency] private IdentitySystem _identity = default!;
 
     // A serialization context for cloning components.
     private CloningContext _context = default!;
@@ -57,6 +57,11 @@ public sealed partial class CloningSystem : SharedCloningSystem
         _context = new(_deps, _seriMan);
     }
 
+    /// <summary>
+    /// Attempts to create a clone of a humanoid entity.
+    /// If <paramref name="coords"/> is null, the entity will be in nullspace, otherwise it will exist at the given coordinates.
+    /// </summary>
+    /// <returns>If false, no clone was made. If true, <paramref name="clone"/> contains the UID of the cloned entity.</returns>
     public override bool TryCloning(
         EntityUid original,
         MapCoordinates? coords,
