@@ -2,6 +2,9 @@
 
 namespace Content.Shared.Effects.Components;
 
+/// <summary>
+/// Configures a client-side effect emitted while this entity is moving and active.
+/// </summary>
 [RegisterComponent]
 public sealed partial class ParticleEmitterComponent : Component
 {
@@ -11,6 +14,10 @@ public sealed partial class ParticleEmitterComponent : Component
     [DataField(required: true)]
     public EntProtoId EffectPrototype;
 
+    /// <summary>
+    /// Maximum interval in seconds between spawned effects while the emitter is moving.
+    /// An effect may be spawned earlier if <see cref="MaxSpawnDistance"/> is reached.
+    /// </summary>
     [DataField]
     public float SpawnInterval = 0.3f;
 
