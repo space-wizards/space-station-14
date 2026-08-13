@@ -139,7 +139,7 @@ public sealed partial class CloningSystem : SharedCloningSystem
     {
         var componentsToCopy = settings.Components;
 
-        _context.GrabPersistentFields(clone);
+        _context.CacheTargetComponents(clone);
 
         // don't make status effects permanent
         if (TryComp<StatusEffectsComponent>(original, out var statusComp))
@@ -164,7 +164,7 @@ public sealed partial class CloningSystem : SharedCloningSystem
                 RemComp(clone, componentRegistration.Type);
         }
 
-        _context.ClearPersistentFields();
+        _context.ClearTargetComponents();
 
         var ev = new ClonedEvent(clone, settings);
         RaiseLocalEvent(original, ref ev);
