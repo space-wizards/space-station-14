@@ -127,6 +127,7 @@ public sealed class ApcBoundInterfaceState : BoundUserInterfaceState, IEquatable
     public readonly float MaxLoad;
     public readonly bool Tripped;
 
+    /// <inheritdoc cref="ApcBoundInterfaceState">
     public ApcBoundInterfaceState(bool mainBreaker, int power, ApcExternalPowerState apcExternalPower, float charge, float maxLoad, bool tripped)
     {
         MainBreaker = mainBreaker;
@@ -137,6 +138,7 @@ public sealed class ApcBoundInterfaceState : BoundUserInterfaceState, IEquatable
         Tripped = tripped;
     }
 
+    /// <inheritdoc/>
     public bool Equals(ApcBoundInterfaceState? other)
     {
         if (ReferenceEquals(null, other)) return false;
@@ -149,11 +151,13 @@ public sealed class ApcBoundInterfaceState : BoundUserInterfaceState, IEquatable
                 Tripped == other.Tripped;
     }
 
+    /// <inheritdoc/>
     public override bool Equals(object? obj)
     {
         return ReferenceEquals(this, obj) || obj is ApcBoundInterfaceState other && Equals(other);
     }
 
+    /// <inheritdoc/>
     public override int GetHashCode()
     {
         return HashCode.Combine(MainBreaker, Power, (int)ApcExternalPower, Charge, MaxLoad, Tripped);
@@ -170,7 +174,7 @@ public sealed class ApcToggleMainBreakerMessage : BoundUserInterfaceMessage
 
 /// <summary>
 /// The amount of energy stored on the APC.
-///
+/// Used as a traffic light state in BUI states.
 /// </summary>
 public enum ApcExternalPowerState : byte
 {
@@ -179,6 +183,9 @@ public enum ApcExternalPowerState : byte
     Good,
 }
 
+/// <summary>
+/// UI keys for the APC.
+/// </summary>
 [NetSerializable, Serializable]
 public enum ApcUiKey : byte
 {
