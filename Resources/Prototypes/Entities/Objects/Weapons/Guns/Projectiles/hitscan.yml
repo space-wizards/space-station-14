@@ -18,7 +18,7 @@
 
 - type: entity
   id: BasicHitscan
-  name: basic laser ray
+  name: basic hitscan
   categories: [ HideSpawnMenu ]
   components:
   - type: HitscanAmmo
@@ -48,7 +48,7 @@
         Heat: 7
 
 - type: entity
-  parent: BasicHitscan
+  parent: LaserHitscanBase
   id: RedLaser
   name: red laser ray
   categories: [ HideSpawnMenu ]
@@ -59,7 +59,7 @@
         Heat: 14
 
 - type: entity
-  parent: BasicHitscan
+  parent: LaserHitscanBase
   id: RedMediumLaser
   name: red amplified laser ray
   categories: [ HideSpawnMenu ]
@@ -70,7 +70,7 @@
         Heat: 17
 
 - type: entity
-  parent: BasicHitscan
+  parent: LaserHitscanBase
   id: XenoborgLaser
   name: blue amplified laser ray
   categories: [ HideSpawnMenu ]
@@ -91,7 +91,7 @@
       state: impact_beam_xenoborg
 
 - type: entity
-  parent: BasicHitscan
+  parent: LaserHitscanBase
   id: RedHeavyLaser
   name: red high-energy laser ray
   categories: [ HideSpawnMenu ]
@@ -135,7 +135,7 @@
     igniteChance: 0.75
 
 - type: entity
-  parent: BasicHitscan
+  parent: LaserHitscanBase
   id: XenoborgHeavyLaser
   name: blue high-energy laser ray
   categories: [ HideSpawnMenu ]
@@ -156,7 +156,7 @@
       state: impact_beam_xenoborg_heavy
 
 - type: entity
-  parent: BasicHitscan
+  parent: LaserHitscanBase
   id: RedLaserPractice
   name: red practice laser ray
   categories: [ HideSpawnMenu ]
@@ -210,7 +210,7 @@
       state: impact_blue
 
 - type: entity
-  parent: BasicHitscan
+  parent: LaserHitscanBase
   id: RedShuttleLaser
   name: shuttle class red laser ray
   categories: [ HideSpawnMenu ]
@@ -234,7 +234,7 @@
       state: impact_beam_heavy2
 
 - type: entity
-  parent: BasicHitscan
+  parent: LaserHitscanBase
   id: DebugLaser
   name: debug laser ray
   suffix: DEBUG
