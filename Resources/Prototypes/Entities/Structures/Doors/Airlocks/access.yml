@@ -1175,7 +1175,7 @@
       board: [ DoorElectronicsNukeop ]
 
 - type: entity
-  parent: AirlockGlassShuttleXenoborg
+  parent: AirlockShuttleXenoborg
   id: AirlockGlassShuttleXenoborgLocked
   suffix: External, Docking, Xenoborg, Locked
   components:

@@ -11,35 +11,35 @@
             "name": "full"
         },
         {
-            "name": "shuttle_xenoborg0",
+            "name": "xenoborg0",
             "directions": 4
         },
         {
-            "name": "shuttle_xenoborg1",
+            "name": "xenoborg1",
             "directions": 4
         },
         {
-            "name": "shuttle_xenoborg2",
+            "name": "xenoborg2",
             "directions": 4
         },
         {
-            "name": "shuttle_xenoborg3",
+            "name": "xenoborg3",
             "directions": 4
         },
         {
-            "name": "shuttle_xenoborg4",
+            "name": "xenoborg4",
             "directions": 4
         },
         {
-            "name": "shuttle_xenoborg5",
+            "name": "xenoborg5",
             "directions": 4
         },
         {
-            "name": "shuttle_xenoborg6",
+            "name": "xenoborg6",
             "directions": 4
         },
         {
-            "name": "shuttle_xenoborg7",
+            "name": "xenoborg7",
             "directions": 4
         }
     ]

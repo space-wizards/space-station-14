@@ -1507,7 +1507,7 @@
     - item: WelderExperimental
     - item: Multitool
     - item: trayScanner
-    - item: RCDXenoborg
+    - item: RCDRecharging
     - item: SelfRechargingFireExtinguisher
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-adv-tools-module }
@@ -1552,7 +1552,7 @@
           tags:
           - CableCoil
     - hand:
-        emptyRepresentative: FloorTileItemXenoborg
+        emptyRepresentative: FloorTileItemExoBorg
         emptyLabel: borg-slot-tiles-empty
         whitelist:
           components:
