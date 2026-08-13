@@ -94,16 +94,16 @@ public interface ISkinColorationStrategy
     /// </summary>
     bool VerifyClampedSkinColor(Color color, [NotNullWhen(false)] out string? reason)
     {
-        string firstReason = string.Empty;
+        string? firstReason = null;
         for (int i = 0; i < 8; i++)
         {
             Color testColor = color;
             if ((i & 1) != 0)
-                color.R = Math.Min(color.R + SkinColorationUtils.Epsilon, 1.0f);
+                testColor.R = Math.Min(color.R + SkinColorationUtils.Epsilon, 1.0f);
             if ((i & 2) != 0)
-                color.G = Math.Min(color.G + SkinColorationUtils.Epsilon, 1.0f);
+                testColor.G = Math.Min(color.G + SkinColorationUtils.Epsilon, 1.0f);
             if ((i & 4) != 0)
-                color.B = Math.Min(color.B + SkinColorationUtils.Epsilon, 1.0f);
+                testColor.B = Math.Min(color.B + SkinColorationUtils.Epsilon, 1.0f);
 
             if (VerifySkinColor(testColor, out var internalReason))
             {
@@ -111,11 +111,10 @@ public interface ISkinColorationStrategy
                 return true;
             }
 
-            if (firstReason == string.Empty)
-                firstReason = internalReason;
+            firstReason ??= internalReason;
         }
 
-        reason = firstReason;
+        reason = firstReason!;
         return false;
     }
 
