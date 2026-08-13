@@ -11,7 +11,7 @@
         - id: SheetSteel
           amount: 2
         - id: MaterialXenoborgCrystal
-          amount: 2
+          amount: 1
         - id: CableApcStack
         - id: CableMVStack
         - id: CableHVStack
