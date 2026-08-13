@@ -9,6 +9,7 @@ namespace Content.Shared.Weapons.Melee.Metabolizer;
 public sealed partial class BonusDamageOnMetabolismSystem : EntitySystem
 {
     [Dependency] private BodySystem _body = default!;
+    [Dependency] private MetabolizerSystem _metabolizer = default!;
 
     [SubscribeLocalEvent]
     private void OnGetVerb(Entity<BonusDamageOnMetabolismComponent> ent, ref GetVerbsEvent<Verb> args)
@@ -50,19 +51,12 @@ public sealed partial class BonusDamageOnMetabolismSystem : EntitySystem
 
         foreach (var hitEntity in args.HitEntities)
         {
-            var metabolisms = _body.EnumerateOrgans<MetabolizerComponent>(hitEntity);
-            foreach (var metabolizer in metabolisms)
-            {
-                if (metabolizer.Comp2.MetabolizerTypes is null)
-                    continue;
+            if (!_metabolizer.BodyHasMetabolizer(hitEntity, ent.Comp.SelectedMetabolizer.Value))
+                continue;
 
-                if (!metabolizer.Comp2.MetabolizerTypes.Contains(ent.Comp.SelectedMetabolizer.Value))
-                    continue;
-
-                // Do the bonus damage and quit!
-                args.BonusDamage =+ ent.Comp.Damage;
-                return;
-            }
+            // Add the bonus damage and quit!
+            args.BonusDamage =+ ent.Comp.Damage;
+            return;
         }
     }
 }
