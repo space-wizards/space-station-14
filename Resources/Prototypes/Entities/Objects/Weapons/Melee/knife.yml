@@ -204,7 +204,6 @@
         Slash: 10
   - type: Item
     sprite: Objects/Weapons/Melee/bioknife.rsi
-    storedSprite: null
   - type: BonusDamageOnMetabolism
     selectedMetabolizer: Human
     excludedMetabolizers:
