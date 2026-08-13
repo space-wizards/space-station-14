@@ -59,8 +59,8 @@
     mode: NoSprite
   - type: PlacementReplacement
     key: walls
-  - type: SatanAlign
-  - type: SatanKind
+  - type: StructureAligner
+  - type: StructureAlignTo
 
 - type: entity
   abstract: true

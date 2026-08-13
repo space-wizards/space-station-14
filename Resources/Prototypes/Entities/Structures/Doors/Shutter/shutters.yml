@@ -109,8 +109,8 @@
   - type: IconSmooth
     key: walls
     mode: NoSprite
-  - type: SatanAlign
-  - type: SatanKind
+  - type: StructureAligner
+  - type: StructureAlignTo
 
 - type: entity
   id: ShuttersNormal

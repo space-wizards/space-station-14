@@ -1,18 +1,16 @@
 using Content.Shared.Administration;
 using Content.Shared.Mapping;
-using Content.Shared.Maps;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
 
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Mapping)]
-public sealed partial class SatanCommand : IConsoleCommand
+public sealed partial class StructureAlignCommand : IConsoleCommand
 {
     [Dependency] private IEntityManager _entManager = default!;
 
-    public string Command => "satan";
+    public string Command => "align";
 
     public string Description => Loc.GetString("satan-command-description");
 
@@ -25,6 +23,8 @@ public sealed partial class SatanCommand : IConsoleCommand
             shell.WriteError(Loc.GetString("shell-wrong-arguments-number"));
             return;
         }
+
+        //TODO:ERRANT require a safety when in Release conf?
 
         MapId? map = null;
 
@@ -40,7 +40,7 @@ public sealed partial class SatanCommand : IConsoleCommand
         }
 
 
-        var sat = _entManager.System<SharedSatanSystem>();
+        var sat = _entManager.System<SharedStructureAlignerSystem>();
 
         var response = sat.AlignAll(map);
         if (!string.IsNullOrEmpty(response))

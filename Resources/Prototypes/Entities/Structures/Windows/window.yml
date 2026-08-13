@@ -70,7 +70,10 @@
   - type: StaticPrice
     price: 100
   - type: BlockWeather
-  - type: SatanKind
+  - type: StructureAlignTo
+    alignType:
+    - Door
+    - Firelock
 
 - type: entity
   parent: BaseWindowStructure

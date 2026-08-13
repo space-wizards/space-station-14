@@ -157,6 +157,10 @@
   - type: PlacementReplacement
     key: firelocks
 
+#- type: entity TODO:ERRANT fix this inheritance
+#  id: BaseFirelockEdge
+#  parent: BaseFireLock
+
 - type: entity
   id: Firelock
   parent: BaseFirelock
@@ -173,6 +177,12 @@
   - type: ContainerFill
     containers:
       board: [ FirelockElectronics ]
+  - type: StructureAligner
+    alignType:
+    - Firelock
+  - type: StructureAlignTo
+    alignType:
+    - Firelock
 
 - type: entity
   id: FirelockGlass

@@ -203,8 +203,8 @@
     - Airlocks
     - WirePanels
     - Networking
-  - type: SatanAlign
-  - type: SatanKind
+  - type: StructureAligner
+  - type: StructureAlignTo
   placement:
     mode: SnapgridCenter
 

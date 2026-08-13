@@ -63,7 +63,10 @@
   - type: Occluder # Breaks on diagonal walls
   - type: PlacementReplacement
     key: walls
-  - type: SatanKind
+  - type: StructureAlignTo
+    alignType:
+    - Door
+    - Firelock
 
 - type: entity
   abstract: true
