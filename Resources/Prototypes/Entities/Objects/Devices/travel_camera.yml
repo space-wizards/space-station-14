@@ -32,6 +32,7 @@
     slots:
     - NECK
     sprite: Objects/Devices/travel_camera.rsi
+  - type: UseNearObjectiveTrigger
 
 # we have a base prototype so that if we need to add components later on its easier
 - type: entity

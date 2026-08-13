@@ -394,8 +394,11 @@ public sealed partial class IngestionSystem : EntitySystem
             return;
 
         // Tell the food that it's time to die.
-        var finishedEv = new FullyEatenEvent(args.User);
+        var finishedEv = new FullyEatenEvent(args.User, entity);
         RaiseLocalEvent(food, ref finishedEv);
+
+        var finishedUserEv = new FullyAteEvent(food);
+        RaiseLocalEvent(entity, ref finishedUserEv);
 
         var eventArgs = new DestructionEventArgs();
         RaiseLocalEvent(food, eventArgs);

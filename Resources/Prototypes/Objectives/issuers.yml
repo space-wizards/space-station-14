@@ -29,3 +29,7 @@
 - type: objectiveIssuer
   id: Thief
   name: objective-issuer-thief
+
+- type: objectiveIssuer
+  id: Tourist
+  name: objective-issuer-tourist

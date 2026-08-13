@@ -6,11 +6,11 @@ namespace Content.Server.Objectives.Components;
 public sealed partial class TargetObjectiveComponent : Component
 {
     /// <summary>
-    /// Locale id for the objective title.
+    /// Locale id for the objective title. Ignored if left null.
     /// It is passed "targetName" and "job" arguments.
     /// </summary>
-    [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
-    public string Title = string.Empty;
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public string? Title;
 
     /// <summary>
     /// Mind entity id of the target.
