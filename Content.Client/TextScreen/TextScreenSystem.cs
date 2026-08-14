@@ -30,7 +30,6 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
 
     [Dependency] private EntityQuery<SpriteComponent> _spriteQuery = default!;
     [Dependency] private EntityQuery<TextScreenTimerComponent> _screenTimerQuery = default!;
-    [Dependency] private EntityQuery<TextScreenVisualsComponent> _screenVisualsQuery = default!;
 
     /// <summary>
     /// Contains char/state Key/Value pairs. <br/>
@@ -129,11 +128,15 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
         // ScreenText: currently rendered text e.g. the "ETA" accompanying shuttle timers
         if (args.AppearanceData.TryGetValue(TextScreenVisuals.ScreenText, out var screenText) && screenText is string text && text != component.LastText)
         {
+            TimeSpan? startTime = null;
+            if (args.AppearanceData.TryGetValue(TextScreenVisuals.ScreenTextTime, out var screenTextTime) && screenTextTime is TimeSpan scrollStart)
+                startTime = scrollStart;
+
             component.TextToDraw = SegmentText(text, component);
             ResetText((uid, component));
             BuildTextLayers((uid, component, args.Sprite));
             DrawLayers(uid, component.LayerStatesToDraw);
-            ResetScrollingState((uid, component));
+            ResetScrollingState((uid, component), startTime);
         }
 
         if (!args.AppearanceData.TryGetValue(TextScreenVisuals.TargetTime, out var time)
@@ -515,7 +518,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
     /// <summary>
     /// Resets the scrolling state for a particular text screen.
     /// </summary>
-    private void ResetScrollingState(Entity<TextScreenVisualsComponent> ent)
+    private void ResetScrollingState(Entity<TextScreenVisualsComponent> ent, TimeSpan? startTime)
     {
         if (!ent.Comp.ScrollEnabled)
             return;
@@ -533,7 +536,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
                 // Find our desired scroll speed.
                 var newMaxScrollTime = MaxMessageScrollTime / ent.Comp.TextToDraw[i]!.Length / CharWidth;
                 var scrollTime = newMaxScrollTime < MaxPixelScrollTime ? newMaxScrollTime : MaxPixelScrollTime;
-                ent.Comp.NextScrollTime[i] = _gameTiming.CurTime + scrollTime;
+                ent.Comp.NextScrollTime[i] = (startTime ?? _gameTiming.CurTime) + scrollTime;
                 ent.Comp.TimeBetweenScrolls[i] = scrollTime;
             }
             ent.Comp.ScrollPosition[i] = 0;

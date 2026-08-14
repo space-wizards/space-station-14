@@ -14,20 +14,27 @@ public enum TextScreenVisuals : byte
     /// Expects a <see cref="string"/>.
     /// </summary>
     DefaultText,
+
     /// <summary>
-    /// What text to render? <br/>
+    /// What text to render?<br/>
     /// Expects a <see cref="string"/>.
     /// </summary>
     ScreenText,
 
     /// <summary>
-    /// What is the target time? <br/>
+    /// The reference time for the text. Useful for scroll synchronization.<br/>
+    /// Expects a <see cref="TimeSpan"/>.
+    /// </summary>
+    ScreenTextTime,
+
+    /// <summary>
+    /// If this is a timer, this is the time we're counting down to.<br/>
     /// Expects a <see cref="TimeSpan"/>.
     /// </summary>
     TargetTime,
 
     /// <summary>
-    /// Change text color on the entire screen
+    /// Change text color on the entire screen.
     /// Expects a <see cref="Color"/>.
     /// </summary>
     Color
