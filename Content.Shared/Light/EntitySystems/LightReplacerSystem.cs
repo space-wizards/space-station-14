@@ -112,15 +112,6 @@ public sealed partial class LightReplacerSystem : EntitySystem
             args.FailureMessage = Loc.GetString("comp-light-replacer-insert-broken-light");
     }
 
-    [SubscribeLocalEvent]
-    public void OnStorageChanged(Entity<LightReplacerComponent> replacer, ref ProviderStorageChangedEvent args)
-    {
-        if (_ui.TryGetOpenUi(replacer.Owner, LightReplacerUiKey.Key, out var ui))
-        {
-            ui.Update();
-        }
-    }
-
     /// <summary>
     /// Try to replace a light bulb in <paramref name="fixture"/>
     /// using light replacer. Light fixture should have <see cref="PoweredLightComponent"/>.
