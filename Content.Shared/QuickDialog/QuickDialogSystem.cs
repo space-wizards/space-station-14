@@ -148,6 +148,20 @@ public abstract partial class QuickDialogSystem : EntitySystem
     /// <summary>
     ///
     /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="entry"></param>
+    /// <returns></returns>
+    private static (object min, object max) GetMinMax<T>(IQuickDialogEntry entry) where T : INumber<T>
+    {
+        if (entry is not IQuickDialogEntry<T> typedEntry)
+            return (0, 0);
+
+        return (typedEntry.Min, typedEntry.Max);
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
     /// <param name="entry"></param>
     /// <param name="value"></param>
     /// <param name="output"></param>
@@ -190,7 +204,29 @@ public abstract partial class QuickDialogSystem : EntitySystem
             _ when type == typeof(ulong) => "quick-dialog-ui-placeholder-integer",
             _ when type == typeof(float) => "quick-dialog-ui-placeholder-float",
             _ when type == typeof(double) => "quick-dialog-ui-placeholder-float",
-            _ when type == typeof(string) => "quick-dialog-ui-placeholder-string",
+            _ when type == typeof(string) => "quick-dialog-ui-placeholder-text",
+            _ => throw new NotSupportedException($"Type {entry.Type.Name} not supported")
+        };
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="entry"></param>
+    /// <returns></returns>
+    [PublicAPI]
+    public static (object min, object max) GetMinMax(IQuickDialogEntry entry)
+    {
+        var type = entry.Type;
+        return type switch
+        {
+            _ when type == typeof(string) => GetMinMax<int>(entry),
+            _ when type == typeof(int) => GetMinMax<int>(entry),
+            _ when type == typeof(uint) => GetMinMax<uint>(entry),
+            _ when type == typeof(long) => GetMinMax<long>(entry),
+            _ when type == typeof(ulong) => GetMinMax<ulong>(entry),
+            _ when type == typeof(float) => GetMinMax<float>(entry),
+            _ when type == typeof(double) => GetMinMax<double>(entry),
             _ => throw new NotSupportedException($"Type {entry.Type.Name} not supported")
         };
     }

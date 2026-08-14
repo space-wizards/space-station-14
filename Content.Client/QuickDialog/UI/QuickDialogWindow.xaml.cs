@@ -45,7 +45,7 @@ public sealed partial class QuickDialogWindow : FancyWindow
 
         RobustXamlLoader.Load(this);
 
-        Title = title;
+        Title = Loc.GetString(title);
 
         OkButton.Visible = buttons.HasFlag(QuickDialogButtonFlags.OkButton);
         CancelButton.Visible = buttons.HasFlag(QuickDialogButtonFlags.CancelButton);
@@ -56,19 +56,18 @@ public sealed partial class QuickDialogWindow : FancyWindow
             var entryPanel = new QuickDialogEntryPanel();
 
             if (entry.Size.HasValue)
-                entryPanel.Prompt.MinSize = entry.Size.Value;
-
-            var text = entry.Prompt.HasValue ? Loc.GetString(entry.Prompt.Value) + "\n" : "";
-
-            // TODO: Fix
-            /*
-            if (entry.Min != null && entry.Max != null)
-                text += $"({Loc.GetString("quick-dialog-ui-min")} - {entry.Min}, {Loc.GetString("quick-dialog-ui-max")} - {entry.Max})";
-            else if (entry.Min != null)
-                text += $"({Loc.GetString("quick-dialog-ui-min")} - {entry.Min})";
+            {
+                entryPanel.Prompt.MinHeight = Math.Max(entry.Size.Value.X, entryPanel.Prompt.Height);
+                entryPanel.Prompt.MinWidth = Math.Max(entry.Size.Value.X, MinWidth);
+            }
             else
-                text += $"({Loc.GetString("quick-dialog-ui-max")} - {entry.Max})";
-            */
+            {
+                entryPanel.Prompt.MinWidth = MinWidth;
+            }
+
+            var (min, max) = QuickDialogSystem.GetMinMax(entry);
+            entryPanel.Prompt.Text = (entry.Prompt.HasValue ? Loc.GetString(entry.Prompt.Value) + "\n" : "") +
+                $"({Loc.GetString("quick-dialog-ui-min")} - {min}, {Loc.GetString("quick-dialog-ui-max")} - {max})";
 
             entryPanel.Input.IsValid += (value) => QuickDialogSystem.TryParse(entry, value, out _);
 

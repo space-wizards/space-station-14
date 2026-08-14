@@ -1,13 +1,18 @@
 <controls:FancyWindow
     xmlns="https://spacestation14.io"
-    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls">
-    <BoxContainer Orientation="Vertical" Margin="8">
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    MinWidth="350"
+    Resizable="False">
+    <BoxContainer Orientation="Vertical" Margin="10">
         <!-- Populated in constructor -->
-        <BoxContainer Name="Prompts" Orientation="Vertical"/>
+        <BoxContainer Name="Prompts" Margin="0 0 0 10" HorizontalAlignment="Left" Orientation="Vertical" />
 
-        <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Name="OkButton" Text="{Loc 'quick-dialog-ui-ok'}"/>
-            <Button Name="CancelButton" Text="{Loc 'quick-dialog-ui-cancel'}"/>
+        <BoxContainer Orientation="Vertical">
+            <PanelContainer StyleClasses="LowDivider" />
+            <BoxContainer Margin="10 2 5 0" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                <Button Name="OkButton" Margin="0 0 10 0" Text="{Loc 'quick-dialog-ui-ok'}"/>
+                <Button Name="CancelButton" Text="{Loc 'quick-dialog-ui-cancel'}"/>
+            </BoxContainer>
         </BoxContainer>
     </BoxContainer>
 </controls:FancyWindow>

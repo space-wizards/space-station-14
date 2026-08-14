@@ -1,5 +1,8 @@
 <BoxContainer
-    xmlns="https://spacestation14.io">
-    <Label Name="Prompt" Access="Public" HorizontalExpand="True" SizeFlagsStretchRatio="0.5" />
-    <LineEdit Name="Input" Access="Public" HorizontalExpand="True" />
+    xmlns="https://spacestation14.io"
+    Orientation="Vertical"
+    HorizontalAlignment="Center"
+    Margin="0 0 0 10">
+    <Label Name="Prompt" Access="Public" />
+    <LineEdit Name="Input" Access="Public" Margin="0 0 10 0" />
 </BoxContainer>
