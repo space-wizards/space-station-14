@@ -1,0 +1,14 @@
+- type: constructionGraph
+  id: SmallDoughFlat
+  start: start
+  graph:
+  - node: start
+    entity: FoodDoughSmallSlice
+    edges:
+    - to: flat
+      steps:
+      - tool: Rolling
+        doAfter: 1
+  - node: flat
+    entity: FoodDoughSmallFlat
+

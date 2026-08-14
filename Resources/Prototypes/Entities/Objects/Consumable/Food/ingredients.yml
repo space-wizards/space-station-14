@@ -365,6 +365,9 @@
   - type: Tag
     tags:
     - Slice
+  - type: SliceableFood
+    count: 3
+    slice: FoodDoughSmallSlice
   - type: Construction
     graph: DoughRope
     node: start

@@ -1,0 +1,23 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Made by Ma3xak2 for Space Station 14 server Мёртвый Космос",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states": [
+      {
+        "name": "FoodDoughSmallSlice"
+      },
+      {
+        "name": "FoodDoughSmallFlat"
+      },
+      {
+        "name": "FoodMeatSmallBall"
+      },
+      {
+        "name": "dumpling"
+      }
+    ]
+  }

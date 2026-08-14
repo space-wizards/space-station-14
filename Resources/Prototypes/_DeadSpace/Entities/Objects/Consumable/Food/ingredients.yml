@@ -1,0 +1,108 @@
+#Тесто
+- type: entity
+  parent: FoodBakingBase
+  id: FoodDoughSmallSlice
+  name: Маленький кусочек теста
+  description: Маленький кусочек теста, из него можно приготовить... Например пельмени
+  components:
+  - type: Item
+    size: Tiny
+  - type: FlavorProfile
+    flavors:
+      - dough
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Consumable/Food/ingredients.rsi
+    state: FoodDoughSmallSlice
+  - type: Tag
+    tags:
+    - Slice
+    - FoodDoughSmallSlice
+  - type: Construction
+    graph: SmallDoughFlat
+    node: start
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 3
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 1
+
+- type: entity
+  parent: FoodBakingBase
+  id: FoodDoughSmallFlat
+  name: Маленькое плоское тесто
+  description: Сюда можно положить мясо
+  components:
+  - type: Item
+    size: Tiny
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Consumable/Food/ingredients.rsi
+    state: FoodDoughSmallFlat
+  - type: Tag
+    tags:
+    - Slice
+    - FoodDoughSmallFlat
+  - type: Construction
+    graph: SmallDoughFlat
+    node: flat
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 3
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 1
+#Мясо
+- type: entity
+  parent: FoodMeatBase
+  id: FoodMeatSmallBall
+  name: маленький кусочек фарша
+  description: Небольшой кусочек сырого фарша.
+  components:
+  - type: Item
+    size: Tiny
+  - type: Tag
+    tags:
+    - Raw
+    - Meat
+    - FoodMeatSmallBall
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Consumable/Food/ingredients.rsi
+    state: FoodMeatSmallBall
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 3
+        reagents:
+        - ReagentId: Protein
+          Quantity: 2
+
+#Пельмень
+- type: entity
+  parent: FoodMealBase
+  id: FoodDumpling
+  name: Пельмень
+  description: Небольшой кусочек теста с мясной начинкой внутри.
+  components:
+  - type: Sprite
+    sprite: /Textures/_DeadSpace/Objects/Consumable/Food/ingredients.rsi
+    state: dumpling
+  - type: FlavorProfile
+    flavors:
+    - dough
+    - meaty
+  - type: Item
+    size: Tiny
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Protein
+          Quantity: 2
+  - type: Construction
+    graph: DumplingCraft
+    node: start

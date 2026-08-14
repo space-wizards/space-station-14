@@ -25,3 +25,6 @@ construction-graph-tag-command-hud = административный визор
 construction-graph-tag-toy-car = машинка на радиоуправлении
 
 construction-graph-tag-body-camera = нательная камера
+
+construction-graph-tag-dough-small-flat = Маленькое плоское тесто
+construction-graph-tag-meat-small-ball = Маленький шарик фарша
