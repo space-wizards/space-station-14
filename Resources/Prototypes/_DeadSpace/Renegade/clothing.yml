@@ -28,6 +28,7 @@
   - type: Clothing
     sprite: _DeadSpace/Renegade/bondrewd_gloves.rsi
   - type: Insulated
+    lightningProtectionChance: 1
   - type: Fiber
     fiberMaterial: fibers-durathread
     fiberColor: fibers-regal-blue
