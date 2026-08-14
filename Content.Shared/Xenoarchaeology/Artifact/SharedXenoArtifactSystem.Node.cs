@@ -83,7 +83,7 @@ public abstract partial class SharedXenoArtifactSystem
     /// </summary>
     public Entity<XenoArtifactNodeComponent> CreateNode(Entity<XenoArtifactComponent> ent, ProtoId<XenoArchTriggerPrototype> trigger, int depth = 0)
     {
-        var triggerProto = PrototypeManager.Index(trigger);
+        var triggerProto = ProtoMan.Index(trigger);
         return CreateNode(ent, triggerProto, depth);
     }
 
@@ -94,8 +94,15 @@ public abstract partial class SharedXenoArtifactSystem
     {
         var entProtoId = _entityTable.GetSpawns(ent.Comp.EffectsTable)
                                      .First();
+        return CreateNode(ent, entProtoId, trigger, depth);
+    }
 
-        AddNode((ent, ent), entProtoId, out var nodeEnt, dirty: false);
+    /// <summary>
+    /// Creates artifact node entity, attaching trigger and marking depth level for future use.
+    /// </summary>
+    public Entity<XenoArtifactNodeComponent> CreateNode(Entity<XenoArtifactComponent> ent, EntProtoId effect, XenoArchTriggerPrototype trigger, int depth = 0)
+    {
+        AddNode((ent, ent), effect, out var nodeEnt, dirty: false);
         DebugTools.Assert(nodeEnt.HasValue, "Failed to create node on artifact.");
 
         var nodeComponent = nodeEnt.Value.Comp;

@@ -1,0 +1,48 @@
+- type: tile
+  id: FloorShuttleWhite
+  parent: BaseStationTile
+  name: tiles-white-shuttle-floor
+  sprite: /Textures/Tiles/Shuttle/shuttle-white.png
+  itemDrop: FloorTileItemShuttleWhite
+
+- type: tile
+  id: FloorShuttleGrey
+  parent: BaseStationTile
+  name: tiles-grey-shuttle-floor
+  sprite: /Textures/Tiles/Shuttle/shuttle-gray.png
+  itemDrop: FloorTileItemShuttleGrey
+
+- type: tile
+  id: FloorShuttleBlack
+  parent: BaseStationTile
+  name: tiles-black-shuttle-floor
+  sprite: /Textures/Tiles/Shuttle/shuttle-black.png
+  itemDrop: FloorTileItemShuttleBlack
+
+- type: tile
+  id: FloorShuttleBlue
+  parent: BaseStationTile
+  name: tiles-blue-shuttle-floor
+  sprite: /Textures/Tiles/Shuttle/shuttle-blue.png
+  itemDrop: FloorTileItemShuttleBlue
+
+- type: tile
+  id: FloorShuttleOrange
+  parent: BaseStationTile
+  name: tiles-orange-shuttle-floor
+  sprite: /Textures/Tiles/Shuttle/shuttle-orange.png
+  itemDrop: FloorTileItemShuttleOrange
+
+- type: tile
+  id: FloorShuttlePurple
+  parent: BaseStationTile
+  name: tiles-purple-shuttle-floor
+  sprite: /Textures/Tiles/Shuttle/shuttle-purple.png
+  itemDrop: FloorTileItemShuttlePurple
+
+- type: tile
+  id: FloorShuttleRed
+  parent: BaseStationTile
+  name: tiles-red-shuttle-floor
+  sprite: /Textures/Tiles/Shuttle/shuttle-red.png
+  itemDrop: FloorTileItemShuttleRed
