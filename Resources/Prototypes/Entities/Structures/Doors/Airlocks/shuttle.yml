@@ -98,6 +98,9 @@
   - type: DirectionalArrowIndicator
     arrows:
     - offset: 0, -1.5
+  - type: StructureAligner
+    alignType:
+    - DoNotAlign #TODO:ERRANT remove this
 
 - type: entity
   id: AirlockGlassShuttle

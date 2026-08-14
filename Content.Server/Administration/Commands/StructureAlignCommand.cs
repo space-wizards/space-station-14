@@ -12,9 +12,9 @@ public sealed partial class StructureAlignCommand : IConsoleCommand
 
     public string Command => "align";
 
-    public string Description => Loc.GetString("satan-command-description");
+    public string Description => Loc.GetString("align-command-description");
 
-    public string Help => Loc.GetString("satan-command-help-text");
+    public string Help => Loc.GetString("align-command-help-text"); //TODO:ERRANT add locales
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -24,7 +24,7 @@ public sealed partial class StructureAlignCommand : IConsoleCommand
             return;
         }
 
-        //TODO:ERRANT require a safety when in Release conf?
+        //TODO:ERRANT require a safety bool when in Release conf?
 
         MapId? map = null;
 

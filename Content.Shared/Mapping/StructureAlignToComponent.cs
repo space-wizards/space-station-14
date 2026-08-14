@@ -12,4 +12,6 @@ public sealed partial class StructureAlignToComponent : Component
     /// </summary>
     [DataField]
     public List<StructureAlignType> AlignType = new () { StructureAlignType.Door };
+
+    // TODO:ERRANT alignweight?
 }

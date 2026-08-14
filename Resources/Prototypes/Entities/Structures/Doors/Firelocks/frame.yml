@@ -44,3 +44,9 @@
         layer:
         - HighImpassable
         - MidImpassable
+  - type: StructureAligner
+    alignType:
+    - Firelock
+  - type: StructureAlignTo
+    alignType:
+    - Firelock

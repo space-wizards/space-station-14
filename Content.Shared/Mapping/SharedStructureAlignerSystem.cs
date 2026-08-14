@@ -1,5 +1,4 @@
-using Content.Shared.Examine;
-using Content.Shared.Pinpointer;
+using Content.Shared.Construction.Components;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 
@@ -17,7 +16,6 @@ namespace Content.Shared.Mapping;
 /// </remarks>>
 /// TODO But it could also be upgraded to help auto-align construction ghosts for doors, as a potential QOL feature
 public sealed partial class SharedStructureAlignerSystem : EntitySystem
-//TODO:ERRANT come up with a new name for this thing
 {
     [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private IEntityManager _entMan = default!;
@@ -33,14 +31,20 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
 
     public override void Initialize()
     {
-        // _cfg.OnValueChanged(CVars.StructureAlignOnMapInit, _mint, true); //TODO:ERRANT
+        // _cfg.OnValueChanged(CVars.StructureAlignOnMapInit, _mint, true); //TODO:ERRANT Add cvar
     }
 
     //TODO:ERRANT For testing only
+    // [SubscribeLocalEvent]
+    // private void OnExamined(Entity<StructureAlignerComponent> entity, ref ExaminedEvent args)
+    // {
+    //         Align(entity.AsNullable());
+    // }
+
     [SubscribeLocalEvent]
-    private void OnExamined(Entity<StructureAlignerComponent> entity, ref ExaminedEvent args)
+    private void OnAnchored(Entity<StructureAlignerComponent> entity, ref UserAnchoredEvent args)
     {
-            Align(entity.AsNullable());
+        Align(entity.AsNullable());
     }
 
     /// <summary>
@@ -76,7 +80,7 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
             countAll++;
         }
 
-        return ($"Found {countAll} alignable entities, of which {countFixed} were rotated.");  // TODO:ERRANT localize?
+        return ($"Found {countAll} alignable entities, of which {countFixed} were rotated.");  // TODO:ERRANT localize? Make this a log instead of a return?
     }
 
     /// <summary>
@@ -87,7 +91,7 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
         if (!Resolve(entity, ref entity.Comp))
             return false;
 
-        var trans = Transform(entity); //TODO:ERRANT get this from the calling function
+        var trans = Transform(entity);
 
         // Do not align to loose debris
         if (!trans.Anchored)
@@ -100,17 +104,17 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
         var eastWest = 0d;
         var neighbors = 0;
 
-        if (!HasComp<NavMapDoorComponent>(entity)) //TODO:ERRANT testing only
-        {
-            var a = entity.Owner;
-        }
+        // if (!HasComp<NavMapDoorComponent>(entity)) //TODO:ERRANT testing only
+        // {
+        //     var a = entity.Owner;
+        // }
 
         foreach (var (ent, comp) in query)
         {
             if (entity.Owner == ent)
                 continue;
 
-            if (!comp.AlignType.Contains(entity.Comp.AlignType)) //TODO:ERRANT test this
+            if (!comp.AlignType.Contains(entity.Comp.AlignType))
                 continue;
 
             var t = Transform(ent);
@@ -119,7 +123,7 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
             if (t.ParentUid != trans.ParentUid)
                 continue;
 
-            if (!t.Anchored)
+            if (!t.Anchored) //TODO:ERRANT governed via cvar? unanchored frames could have a LITTLE weight
                 continue;
 
             // Only the four adjacent tiles should be considered for alignment, otherwise calculation quickly becomes infeasibly complex
@@ -128,10 +132,8 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
             if (dist > ProximityMax || dist < ProximityMin)
                 continue;
 
-            //TODO:ERRANT which one should be used? Does it matter?
-
-            var inMinRange = _trans.InRange(t.Coordinates, trans.Coordinates, ProximityMax);
-            var inMaxRange = _trans.InRange(t.Coordinates, trans.Coordinates, ProximityMin);
+            // var inMinRange = _trans.InRange(t.Coordinates, trans.Coordinates, ProximityMax); //TODO:ERRANT this one is broken
+            // var inMaxRange = _trans.InRange(t.Coordinates, trans.Coordinates, ProximityMin);
             // if(!(inMaxRange && !inMinRange))
             //     continue;
 
@@ -172,7 +174,7 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
         {
             _trans.SetLocalRotation(entity, trans.LocalRotation + Angle.FromDegrees(90));
 
-            Log.Info($"Aligned entity {entity.Owner} at coordinates {trans.Coordinates.Position}"); //TODO:ERRANT
+            Log.Info($"Aligned entity {entity.Owner} at coordinates {trans.Coordinates.Position}"); //TODO:ERRANT Loglevel to debug?
             return true;
         }
 
@@ -194,4 +196,5 @@ public enum StructureAlignType : byte
     /// (doors, walls, windows, full tile rock)
     /// </summary>
     Firelock,
+    DoNotAlign, //TODO:ERRANT this should be removed and fixed by not inheriting
 }

@@ -156,6 +156,13 @@
   - type: SyncSprite
   - type: PlacementReplacement
     key: firelocks
+  - type: StationAiWhitelist
+  - type: StructureAligner
+    alignType:
+    - Firelock
+  - type: StructureAlignTo
+    alignType:
+    - Firelock
 
 #- type: entity TODO:ERRANT fix this inheritance
 #  id: BaseFirelockEdge
@@ -165,7 +172,6 @@
   id: Firelock
   parent: BaseFirelock
   components:
-  - type: StationAiWhitelist
   - type: ContainerContainer
     containers:
       board: !type:Container
@@ -189,7 +195,6 @@
   parent: Firelock
   name: glass firelock
   components:
-    - type: StationAiWhitelist
     - type: Sprite
       sprite: Structures/Doors/Airlocks/Glass/firelock-base.rsi
     - type: Occluder
@@ -215,7 +220,6 @@
   parent: Firelock
   name: firelock
   components:
-    - type: StationAiWhitelist
     - type: Sprite
       sprite: Structures/Doors/Misc/edge_door_hazard.rsi
       snapCardinals: false
@@ -249,3 +253,6 @@
     - type: Construction
       graph: Firelock
       node: FirelockEdge
+    - type: StructureAligner
+      alignType:
+      - DoNotAlign # TODO:ERRANT fix this properly
