@@ -13,16 +13,20 @@ namespace Content.Shared.Containers.ItemSlot;
 public sealed partial class ItemSlotVisualsComponent : Component
 {
     /// <summary>
-    /// Like <see cref="ItemSlotsComponent"/> but for Visuals.
+    /// A Dictionary that handles multiple instances of ItemSlotVisuals. ItemSlotVisuals is for setting the Name, Layer,
+    /// & sprite of an Icon/Inhand/Equipped Fill Sprites.
     /// </summary>
-    [DataField(readOnly:true)]
+    [DataField]
     public Dictionary<string, ItemSlotVisuals> SlotVisuals = new();
 }
 
 [DataDefinition]
 [Serializable, NetSerializable]
-public sealed partial class ItemSlotVisuals
+public partial struct ItemSlotVisuals()
 {
+    /// <summary>
+    /// Enums from ItemSlotVisualLayers. Used to specify Visuals.
+    /// </summary>
     [DataField]
     public ItemSlotVisualLayers Layer = ItemSlotVisualLayers.Fill;
 
@@ -31,25 +35,25 @@ public sealed partial class ItemSlotVisuals
     /// the same slot, it'll default for single slot items when it's empty.
     /// </summary>
     [DataField]
-    public string? SlotName;
+    public string? SlotName = null;
 
     /// <summary>
     /// The name used for the Icon Fills.
     /// </summary>
     [DataField]
-    public string? FillBaseName;
+    public string? FillBaseName = null;
 
     /// <summary>
     /// The name used for the Inhand Fills.
     /// </summary>
     [DataField]
-    public string? InHandsFillBaseName;
+    public string? InHandsFillBaseName = null;
 
     /// <summary>
     /// The name used for the Back/Belt Fills.
     /// </summary>
     [DataField]
-    public string? EquippedFillBaseName;
+    public string? EquippedFillBaseName = null;
 }
 
 [Serializable, NetSerializable]
