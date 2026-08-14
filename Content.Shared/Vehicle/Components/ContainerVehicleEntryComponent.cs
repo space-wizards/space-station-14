@@ -21,4 +21,16 @@ public sealed partial class ContainerVehicleEntryComponent : Component
     /// </summary>
     [DataField]
     public float ExitDelay = 3;
+
+    /// <summary>
+    /// Popup shown when an entity cannot become the vehicle's operator.
+    /// </summary>
+    [DataField]
+    public LocId EntryDeniedPopup = "container-vehicle-entry-denied";
+
+    /// <summary>
+    /// Popup shown when another entity starts removing the vehicle's operator.
+    /// </summary>
+    [DataField]
+    public LocId OperatorRemovalPopup = "container-vehicle-operator-removal-started";
 }

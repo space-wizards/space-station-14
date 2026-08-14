@@ -6,18 +6,15 @@ using Content.Shared.Atmos;
 using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
-using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Mech;
 using Content.Shared.Mech.Components;
 using Content.Shared.Mech.EntitySystems;
-using Content.Shared.Popups;
 using Content.Shared.Power.Components;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
 using Content.Shared.Tools.Systems;
-using Content.Shared.Vehicle;
 using Content.Shared.Vehicle.Components;
 using Content.Shared.Wires;
 using Robust.Server.Containers;
@@ -35,7 +32,6 @@ public sealed partial class MechSystem : SharedMechSystem
     [Dependency] private ContainerSystem _container = default!;
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
     [Dependency] private SharedToolSystem _toolSystem = default!;
 
@@ -134,18 +130,6 @@ public sealed partial class MechSystem : SharedMechSystem
     {
         if (ent.Comp.Vehicle is { } vehicle && args.Target == vehicle)
             args.Cancelled = true;
-    }
-
-    [SubscribeLocalEvent]
-    private void OnMechEntryOperatorDenied(EntityUid uid, MechComponent component, ContainerVehicleEntryOperatorDeniedEvent args)
-    {
-        _popup.PopupEntity(Loc.GetString("mech-no-enter", ("item", uid)), Identity.Entity(args.Entering, EntityManager));
-    }
-
-    [SubscribeLocalEvent]
-    private void OnMechOperatorRemovalStarted(EntityUid uid, MechComponent component, ContainerVehicleOperatorRemovalStartedEvent args)
-    {
-        _popup.PopupEntity(Loc.GetString("mech-eject-pilot-alert", ("item", uid), ("user", Identity.Entity(args.User, EntityManager))), uid, PopupType.Large);
     }
 
     [SubscribeLocalEvent]

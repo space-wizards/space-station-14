@@ -1,5 +1,7 @@
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
+using Content.Shared.IdentityManagement;
+using Content.Shared.Popups;
 using Content.Shared.Vehicle.Components;
 using Content.Shared.Verbs;
 
@@ -68,8 +70,8 @@ public sealed partial class VehicleSystem
         if (!HasOperator(uid) &&
             !CanOperate(uid, args.User))
         {
-            var denied = new ContainerVehicleEntryOperatorDeniedEvent(args.User);
-            RaiseLocalEvent(uid, denied);
+            _popup.PopupEntity(Loc.GetString(component.EntryDeniedPopup, ("vehicle", uid)),
+                Identity.Entity(args.User, EntityManager));
             return;
         }
 
@@ -137,8 +139,9 @@ public sealed partial class VehicleSystem
         if (!_doAfter.TryStartDoAfter(doAfterEventArgs))
             return;
 
-        var started = new ContainerVehicleOperatorRemovalStartedEvent(user);
-        RaiseLocalEvent(vehicle.Owner, started);
+        _popup.PopupEntity(Loc.GetString(vehicle.Comp.OperatorRemovalPopup,
+            ("vehicle", vehicle.Owner), ("user", Identity.Entity(user, EntityManager))),
+            vehicle.Owner, PopupType.Large);
     }
 
     private bool CanEnterViaInteraction(EntityUid vehicle, EntityUid entering)

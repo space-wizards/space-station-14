@@ -16,14 +16,6 @@ public sealed class ContainerVehicleEntryAttemptEvent(EntityUid entering) : Canc
 }
 
 /// <summary>
-/// Raised when entry is denied because the entering entity cannot operate a vehicle without an operator.
-/// </summary>
-public sealed class ContainerVehicleEntryOperatorDeniedEvent(EntityUid entering)
-{
-    public EntityUid Entering { get; } = entering;
-}
-
-/// <summary>
 /// Do-after event for interaction-based entry into a container vehicle.
 /// </summary>
 [Serializable, NetSerializable]
@@ -37,14 +29,6 @@ public sealed partial class ContainerVehicleEntryEvent : SimpleDoAfterEvent;
 /// Handlers should avoid side effects.
 /// </remarks>
 public sealed class ContainerVehicleExitAttemptEvent(EntityUid user) : CancellableEntityEventArgs
-{
-    public EntityUid User { get; } = user;
-}
-
-/// <summary>
-/// Raised when delayed removal of a container vehicle's operator starts.
-/// </summary>
-public sealed class ContainerVehicleOperatorRemovalStartedEvent(EntityUid user)
 {
     public EntityUid User { get; } = user;
 }
