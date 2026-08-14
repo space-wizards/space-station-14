@@ -14,6 +14,7 @@ namespace Content.Client.Light.Controls;
 public sealed partial class LightReplacerStatusControl : Control
 {
     [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private IEntityManager _entity = default!;
 
     private readonly Entity<LightReplacerComponent> _parent;
     private readonly RichTextLabel _label;
@@ -45,27 +46,13 @@ public sealed partial class LightReplacerStatusControl : Control
         _prevActiveLightBulb = _parent.Comp.ActiveLightBulb;
 
         if (!_prototype.Resolve(_prevActiveLightTube, out var tube)
-            || !_prototype.Resolve(_prevActiveLightBulb, out var bulb))
+            || !tube.Components.TryGetComponent<LightBulbComponent>(_entity.ComponentFactory, out var lightTube)
+            || !_prototype.Resolve(_prevActiveLightBulb, out var bulb)
+            || !bulb.Components.TryGetComponent<LightBulbComponent>(_entity.ComponentFactory, out var lightBulb))
             return;
 
-        _labelBulb = bulb.Name;
-        _labelTube = tube.Name;
-
-        // Remove " light tube" at the end to save precious label space.
-        if (_labelTube.EndsWith(" light tube"))
-        {
-            _labelTube = _labelTube.Remove(_labelTube.Length - 11);
-            // Remove " crystal" in case of colored lights
-            if (_labelTube.EndsWith(" crystal"))
-                _labelTube = _labelTube.Remove(_labelTube.Length - 8);
-        }
-        // Same with bulbs.
-        if (_labelBulb.EndsWith(" light bulb"))
-        {
-            _labelBulb = _labelBulb.Remove(_labelBulb.Length - 11);
-            if (_labelBulb.EndsWith(" crystal"))
-                _labelBulb = _labelBulb.Remove(_labelBulb.Length - 8);
-        }
+        _labelTube = Loc.GetString(lightTube.BulbColorName);
+        _labelBulb = Loc.GetString(lightBulb.BulbColorName);
 
         // Update current active lights
         _label.SetMarkup(Loc.GetString("comp-light-replacer-label",

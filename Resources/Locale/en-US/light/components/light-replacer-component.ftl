@@ -27,3 +27,28 @@ comp-light-replacer-light-listing = {$amount ->
     [one] [color=yellow]{$amount}[/color] [color=gray]{$name}[/color]
     *[other] [color=yellow]{$amount}[/color] [color=gray]{$name}s[/color]
 }
+
+### Status Control
+
+# Bulbs
+comp-light-bulb-incandescent = incandescent
+comp-light-bulb-dim = dim
+comp-light-bulb-warm = warm
+comp-light-bulb-service = service
+
+# Tubes
+comp-light-bulb-fluorescent = fluorescent
+comp-light-bulb-exterior = exterior
+comp-light-bulb-sodium = sodium
+
+# Both
+comp-light-bulb-old = old
+comp-light-bulb-led = led
+comp-light-bulb-cyan = cyan
+comp-light-bulb-blue = blue
+comp-light-bulb-yellow = yellow
+comp-light-bulb-pink = pink
+comp-light-bulb-orange = orange
+comp-light-bulb-black = black
+comp-light-bulb-red = red
+comp-light-bulb-green = green

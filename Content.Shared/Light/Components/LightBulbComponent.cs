@@ -30,6 +30,13 @@ public sealed partial class LightBulbComponent : Component
     public LightBulbState State = LightBulbState.Normal;
 
     /// <summary>
+    /// The ftl string of the light bulb type. Used for the status control of the light replacer.
+    /// </summary>
+    /// <example>Orange light tube has the bulbColorName "orange".</example>
+    [DataField]
+    public string BulbColorName = "";
+
+    /// <summary>
     /// The temperature the air around the lightbulb is exposed to when the lightbulb burns out.
     /// </summary>
     [DataField("BurningTemperature")]
