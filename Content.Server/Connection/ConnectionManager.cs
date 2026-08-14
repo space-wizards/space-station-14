@@ -88,6 +88,12 @@ namespace Content.Server.Connection
             // _netMgr.HandleApprovalCallback = HandleApproval;
         }
 
+        /// <summary>
+        /// Add a temporary bypass to every type of disconnect except bans.
+        /// Does not save to database.
+        /// </summary>
+        /// <param name="user">The user to add a bypass to</param>
+        /// <param name="duration">The duration to apply the bypass for</param>
         public void AddTemporaryConnectBypass(NetUserId user, TimeSpan duration)
         {
             ref var time = ref CollectionsMarshal.GetValueRefOrAddDefault(_temporaryBypasses, user, out _);
