@@ -2,6 +2,13 @@
 lobbyenabled = true
 defaultpreset = "SpaceArena"
 map = "SpaceArenaHub"
+
+[vote]
+enabled = false
+restart_enabled = false
+preset_enabled = false
+map_enabled = false
+votekick_enabled = false
 role_timers = false
 admin_job_tracking = true
 role_loadout_timers = false

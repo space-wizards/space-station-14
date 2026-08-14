@@ -28,6 +28,13 @@ desc = "Just another server, don't mind me!"
 lobbyenabled = true
 defaultpreset = "SpaceArena"
 map = "SpaceArenaHub"
+
+[vote]
+enabled = false
+restart_enabled = false
+preset_enabled = false
+map_enabled = false
+votekick_enabled = false
 # The maximum number of players that can connect to the server. (Exluding admins)
 soft_max_players = 30
 # Controls the lobby timer in seconds.
