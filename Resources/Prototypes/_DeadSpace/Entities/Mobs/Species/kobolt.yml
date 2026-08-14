@@ -97,6 +97,16 @@
     - GeneralLanguage
   - type: SpeedSliding
     minSlideSpeed: 5
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      50: 0.7
+      70: 0.5
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      90: PreCritical
+      110: Critical
+      190: Dead
 
 - type: entity
   parent: BaseSpeciesDummy

@@ -7,10 +7,10 @@
   - type: Sprite
     sprite: _DeadSpace/Objects/Weapons/Melee/syndie_sabre.rsi
   - type: MeleeWeapon
-    attackRate: 1.2
+    attackRate: 1.5
     damage:
       types:
-        Piercing: 17
+        Piercing: 20
     resistanceBypass: true
     heavyAttackResistanceBypass: false
     soundHit:
