@@ -7,13 +7,6 @@ namespace Content.Server.Power.EntitySystems;
 /// <inheritdoc/>>
 public sealed partial class PowerStateSystem : SharedPowerStateSystem
 {
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<PowerStateComponent, ComponentStartup>(OnComponentStartup);
-    }
-
     /// <inheritdoc/>>
     public override void SetWorkingState(Entity<PowerStateComponent?> ent, bool working, bool shouldRaiseEvent = true)
     {
@@ -27,6 +20,7 @@ public sealed partial class PowerStateSystem : SharedPowerStateSystem
     }
 
     /// <summary> Init IsWorking and power values on startup. </summary>
+    [SubscribeLocalEvent]
     private void OnComponentStartup(Entity<PowerStateComponent> ent, ref ComponentStartup args)
     {
         if(ent.Comp.EnsureApc)
