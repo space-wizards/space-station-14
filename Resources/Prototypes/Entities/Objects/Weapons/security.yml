@@ -109,7 +109,10 @@
       collection: MetalThud
     bluntStaminaDamageFactor: 1.5
   - type: Item
-    size: Normal
+    size: Large
+    shape:
+    - 0,0,1,2
+    storedRotation: -45
   - type: Tag
     tags:
     - Truncheon
