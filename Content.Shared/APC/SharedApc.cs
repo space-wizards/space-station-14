@@ -13,6 +13,7 @@ public enum ApcVisuals : byte
     /// Contains an <see cref="ApcChannelState"/>.
     /// </summary>
     ChannelState,
+
     /// <summary>
     /// APC lights/HUD.
     /// Contains an <see cref="ApcChargeState"/>.
