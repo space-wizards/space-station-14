@@ -28,19 +28,18 @@ desc = "Just another server, don't mind me!"
 lobbyenabled = true
 defaultpreset = "SpaceArena"
 map = "SpaceArenaHub"
+# Should roles be restricted based on time?
+role_timers = true
 
 [vote]
 enabled = false
 restart_enabled = false
 preset_enabled = false
 map_enabled = false
-votekick_enabled = false
 # The maximum number of players that can connect to the server. (Exluding admins)
 soft_max_players = 30
 # Controls the lobby timer in seconds.
 lobbyduration = 150
-# Should roles be restricted based on time?
-role_timers = true
 # Check connecting player ip against the IPIntel API (aka stop VPN/Proxy connections). Useful for hosts.
 # Read more here https://getipintel.net/
 ipintel_enabled = false
@@ -48,6 +47,9 @@ ipintel_enabled = false
 ipintel_contact_email = ""
 # IPIntel score to reject connections.
 ipintel_bad_rating = 0.95
+
+[votekick]
+enabled = false
 
 [ic]
 random_characters = false
@@ -71,13 +73,13 @@ id = "unknown_server_id"
 
 [events]
 # Controls if the game should run station events. (Meteors, Sleeper Syndicates, etc.)
-enabled = true
+enabled = false
 
 [shuttle]
 # Should the emergency shuttle be allowed to launch early by command staff?
 emergency_early_launch_allowed = false
 # Time in minutes after round start to auto-call the emergency shuttle. Set to zero to disable.
-auto_call_time = 90
+auto_call_time = 0
 
 [console]
 # If this is true, people connecting from this computer will automatically be elevated to full admin privileges.
