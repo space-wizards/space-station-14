@@ -1,0 +1,137 @@
+SPACEARENA LIMITED USE LICENSE
+Version 1.1
+Copyright (c) 2026 Weh-Group ("Licensor")
+
+1. Purpose
+
+This license governs the use of original SpaceArena materials listed in
+Section 2. By downloading, copying, building, modifying, or running those
+materials, you accept this license.
+
+2. Covered materials
+
+This license applies only to original SpaceArena work located in:
+
+- Content.Client/SpaceArena/
+- Content.Server/SpaceArena/
+- Content.Shared/SpaceArena/
+- Resources/Maps/SpaceArena/
+- Resources/Prototypes/SpaceArena/
+- Resources/Locale/en-US/space-arena/
+- Resources/Locale/ru-RU/space-arena/
+
+Additional files are covered only if they contain a clear SpaceArena
+copyright or license notice.
+
+Where a covered file is a modification of material originally sourced from
+Space Station 14, RobustToolbox, or other upstream/third-party content, that
+file remains additionally subject to the original license under Section 7
+(e.g. CC-BY-SA, CC-BY-NC-SA) alongside this License. Where the two conflict,
+the more restrictive term controls (for example, a modified CC-BY-NC-SA
+asset may not be used commercially even though Section 3 of this License
+would otherwise permit non-commercial personal use). Each such file's
+metadata must identify its origin and original license.
+
+3. Permission
+
+The Licensor grants you a limited, worldwide, royalty-free, non-exclusive,
+non-transferable license to:
+
+- view and download the covered materials;
+- compile and run them for personal, non-commercial use;
+- modify them for private development and testing;
+- submit improvements to the SpaceArena project.
+
+Modifications and other derivative materials you create from the covered
+materials remain subject to this License; you do not receive any greater
+rights in them than you have in the underlying covered materials, and
+Sections 4, 6, and 7 continue to apply to them.
+
+This permission does not include the right to redistribute or publicly host
+the covered materials.
+
+4. Prohibited uses
+
+Without prior written permission from the Licensor, you may not:
+
+- operate a public or publicly accessible server using the covered materials;
+- list a server using the covered materials on any public server hub;
+- redistribute, mirror, sell, or sublicense the covered materials;
+- publish modified or derivative versions;
+- include the covered materials in another project or codebase;
+- use the covered materials for commercial purposes;
+- remove copyright, license, or attribution notices;
+- use the covered materials to create a competing public service.
+
+A private server is one where connection is restricted to the owner and
+specifically invited testers through access controls such as a whitelist,
+invite list, or authentication requirement. A server qualifies as private
+under this definition even if it is technically reachable over a public
+network address, provided unauthorized connections are refused. A server is
+public if it is listed in a server browser or hub, or if it accepts
+connections from users who were not specifically invited by the owner.
+
+5. Written permission
+
+The Licensor may grant exceptions to this license in writing. Permission
+must identify the recipient, permitted use, and duration.
+
+6. Contributions
+
+A contribution is any original code, asset, documentation, or other work
+intentionally submitted to the SpaceArena project.
+
+By submitting a contribution, you grant the Licensor a perpetual, worldwide,
+royalty-free, irrevocable, non-exclusive license to use, reproduce, modify,
+publish, distribute, sublicense, and include the contribution in SpaceArena
+and its official builds.
+
+You confirm that you own the contribution or have sufficient permission to
+grant these rights, and that the contribution does not knowingly violate
+third-party rights.
+
+7. Third-party material
+
+This license does not apply to Space Station 14, RobustToolbox, upstream
+content, or third-party assets.
+
+Those materials remain subject to their original licenses, including MIT,
+CC-BY-SA, CC-BY-NC-SA, or other applicable licenses. Their copyright and
+license notices must be preserved. See also the note in Section 2 regarding
+covered files that are modifications of such material.
+
+8. Termination
+
+If you breach this license, the Licensor will notify you of the breach where
+reasonably possible, and you will have 14 days from that notice to cure it.
+This license terminates automatically, without a cure period, if you: (a)
+redistribute or sell the covered materials, (b) operate a public service
+using them without permission, or (c) breach this license a second time
+after a prior cure.
+
+Upon termination, you must stop using, hosting, distributing, and modifying
+the covered materials and remove unauthorized copies under your control.
+
+The Licensor may pursue remedies available under applicable law, including
+requests to hosting providers and information intermediaries to remove
+unauthorized copies.
+
+9. No warranty
+
+The covered materials are provided "AS IS", without warranties of any kind.
+The Licensor is not liable for damages, losses, or claims arising from use
+of the covered materials, to the maximum extent permitted by law.
+
+10. Trademarks
+
+This license does not grant any right to use the "SpaceArena" name, logo, or
+other branding of the project. Forks, modifications, or private servers
+built on the covered materials may not be represented as official
+SpaceArena, and may not use the SpaceArena name or branding in a way that
+implies endorsement by or affiliation with the Licensor, without separate
+written permission.
+
+11. General terms
+
+This license does not transfer ownership of the covered materials. All
+rights not expressly granted remain with the Licensor.
