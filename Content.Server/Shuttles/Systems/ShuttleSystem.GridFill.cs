@@ -100,7 +100,7 @@ public sealed partial class ShuttleSystem
 
         if (group.MinimumDistance > 0f)
         {
-            var distancePadding = MathF.Max(targetGrid.Comp.LocalAABB.Width, targetGrid.Comp.LocalAABB.Height);
+            var distancePadding = MathF.Max(targetGrid.Comp.LocalAABB.Width, targetGrid.Comp.LocalAABB.Height) / 2f;
 
             if (distancePadding > 1000f)
             {
