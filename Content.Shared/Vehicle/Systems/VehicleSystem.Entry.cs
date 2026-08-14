@@ -64,14 +64,14 @@ public sealed partial class VehicleSystem
         if (args.Cancelled || args.Handled)
             return;
 
-        if (!TryComp<ContainerVehicleComponent>(uid, out var containerVehicle))
+        if (!_vehicleQuery.TryComp(uid, out var vehicleComponent))
             return;
 
         if (!TryValidateEntryOperator((uid, component), args.User))
             return;
 
         if (!CanEnterViaInteraction(uid, args.User) ||
-            !TryEnter((uid, containerVehicle), args.User))
+            !TryEnter((uid, vehicleComponent), args.User))
             return;
 
         args.Handled = true;
@@ -152,8 +152,8 @@ public sealed partial class VehicleSystem
 
     private bool CanEnterViaInteraction(EntityUid vehicle, EntityUid entering)
     {
-        if (!TryComp<ContainerVehicleComponent>(vehicle, out var containerVehicle) ||
-            !CanEnterContainer((vehicle, containerVehicle), entering))
+        if (!_vehicleQuery.TryComp(vehicle, out var vehicleComponent) ||
+            !CanEnterContainer((vehicle, vehicleComponent), entering))
             return false;
 
         var attempt = new ContainerVehicleEntryAttemptEvent(entering);

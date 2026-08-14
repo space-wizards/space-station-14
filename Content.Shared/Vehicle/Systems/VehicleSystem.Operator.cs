@@ -74,36 +74,42 @@ public sealed partial class VehicleSystem
     /// An entity becoming the operator must be able to operate the vehicle.
     /// Additional occupants do not need to be eligible operators.
     /// </remarks>
-    public bool CanEnter(Entity<ContainerVehicleComponent?> vehicle, EntityUid toEnter)
+    public bool CanEnter(Entity<VehicleComponent?> vehicle, EntityUid toEnter)
     {
+        if (!Resolve(vehicle, ref vehicle.Comp, false))
+            return false;
+
         return CanEnterContainer(vehicle, toEnter) &&
-               (HasOperator(vehicle.Owner) || CanOperate(vehicle.Owner, toEnter));
+               (HasOperator(vehicle) || CanOperate(vehicle, toEnter));
     }
 
     /// <summary>
     /// Checks whether an entity can physically enter a container vehicle without checking operator eligibility.
     /// </summary>
-    private bool CanEnterContainer(Entity<ContainerVehicleComponent?> vehicle, EntityUid toEnter)
+    private bool CanEnterContainer(Entity<VehicleComponent?> vehicle, EntityUid toEnter)
     {
+        if (!Resolve(vehicle, ref vehicle.Comp, false))
+            return false;
+
         if (!_actionBlocker.CanMove(toEnter))
             return false;
 
-        if (GetOperatorOrNull(vehicle.Owner) == toEnter)
+        if (GetOperatorOrNull(vehicle) == toEnter)
             return false;
 
-        return TryGetOperatorContainer(vehicle, out var container) &&
+        return TryGetOperatorContainer(vehicle.Owner, out var container) &&
                _container.CanInsert(toEnter, container);
     }
 
     /// <summary>
     /// Attempts to insert an entity into a container vehicle.
     /// </summary>
-    public bool TryEnter(Entity<ContainerVehicleComponent?> vehicle, EntityUid toEnter)
+    public bool TryEnter(Entity<VehicleComponent?> vehicle, EntityUid toEnter)
     {
         if (!CanEnter(vehicle, toEnter))
             return false;
 
-        if (!TryGetOperatorContainer(vehicle, out var container))
+        if (!TryGetOperatorContainer(vehicle.Owner, out var container))
             return false;
 
         return _container.Insert(toEnter, container);
@@ -112,12 +118,12 @@ public sealed partial class VehicleSystem
     /// <summary>
     /// Attempts to remove the current operator from a container vehicle.
     /// </summary>
-    public bool TryExit(Entity<ContainerVehicleComponent?> vehicle)
+    public bool TryExit(Entity<VehicleComponent?> vehicle)
     {
-        if (!TryGetOperatorContainer(vehicle, out var container))
+        if (!TryGetOperator(vehicle, out var operatorEnt))
             return false;
 
-        if (!TryGetOperator(vehicle.Owner, out var operatorEnt))
+        if (!TryGetOperatorContainer(vehicle.Owner, out var container))
             return false;
 
         return _container.Remove(operatorEnt.Value.Owner, container);
