@@ -2,7 +2,7 @@ using Content.Shared.Actions;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.Examine;
-using Content.Shared.Timing;
+using Content.Shared.Timing.Systems;
 using Content.Shared.Toggleable;
 using Content.Shared.UserInterface;
 using Content.Shared.Verbs;

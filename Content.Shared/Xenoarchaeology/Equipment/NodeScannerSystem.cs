@@ -1,5 +1,5 @@
 using Content.Shared.Interaction;
-using Content.Shared.Timing;
+using Content.Shared.Timing.Systems;
 using Content.Shared.Verbs;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Content.Shared.Xenoarchaeology.Equipment.Components;
@@ -80,8 +80,7 @@ public sealed partial class NodeScannerSystem : EntitySystem
         EntityUid actor
     )
     {
-        if (TryComp(device, out UseDelayComponent? useDelay)
-            && !_useDelay.TryResetDelay((device, useDelay), true))
+        if (!_useDelay.TryResetDelay(device, true))
             return;
 
         var connected = EnsureComp<NodeScannerConnectedComponent>(device);

@@ -3,7 +3,7 @@ using Content.Shared.Eye;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.Events;
-using Content.Shared.Timing;
+using Content.Shared.Timing.Systems;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;

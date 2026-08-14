@@ -1,8 +1,8 @@
-using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Timing.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Timing;
 
-namespace Content.Shared.Timing;
+namespace Content.Shared.Timing.Systems;
 
 public sealed partial class UseDelaySystem : EntitySystem
 {
@@ -145,46 +145,4 @@ public sealed partial class UseDelaySystem : EntitySystem
         return last;
     }
 
-    /// <summary>
-    /// Resets the delay with the specified ID for this entity if possible.
-    /// </summary>
-    /// <param name="checkDelayed">Check if the entity has an ongoing delay with the specified ID.
-    /// If it does, return false and don't reset it.
-    /// Otherwise reset it and return true.</param>
-    public bool TryResetDelay(Entity<UseDelayComponent> ent, bool checkDelayed = false, string id = DefaultId)
-    {
-        if (checkDelayed && IsDelayed((ent.Owner, ent.Comp), id))
-            return false;
-
-        if (!ent.Comp.Delays.TryGetValue(id, out var entry))
-            return false;
-
-        var curTime = _gameTiming.CurTime;
-        entry.StartTime = curTime;
-        entry.EndTime = curTime - _metadata.GetPauseTime(ent) + entry.Length;
-        Dirty(ent);
-        return true;
-    }
-
-    public bool TryResetDelay(EntityUid uid, bool checkDelayed = false, UseDelayComponent? component = null, string id = DefaultId)
-    {
-        if (!Resolve(uid, ref component, false))
-            return false;
-
-        return TryResetDelay((uid, component), checkDelayed, id);
-    }
-
-    /// <summary>
-    /// Resets all delays on the entity.
-    /// </summary>
-    public void ResetAllDelays(Entity<UseDelayComponent> ent)
-    {
-        var curTime = _gameTiming.CurTime;
-        foreach (var entry in ent.Comp.Delays.Values)
-        {
-            entry.StartTime = curTime;
-            entry.EndTime = curTime - _metadata.GetPauseTime(ent) + entry.Length;
-        }
-        Dirty(ent);
-    }
 }

@@ -2,7 +2,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
-using Content.Shared.Timing;
+using Content.Shared.Timing.Systems;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Robust.Shared.Map;
 
@@ -65,7 +65,7 @@ public abstract partial class SharedXenoArtifactSystem
         if (xenoArtifactComponent.Suppressed)
             return false;
 
-        if (TryComp<UseDelayComponent>(artifact, out var delay) && !_useDelay.TryResetDelay((artifact, delay), true))
+        if (!_useDelay.TryResetDelay(artifact, true))
             return false;
 
         var success = false;

@@ -6,11 +6,11 @@ using Content.Shared.Fluids.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Popups;
-using Content.Shared.Timing;
+using Content.Shared.Timing.Components;
+using Content.Shared.Timing.Systems;
 using Content.Shared.Weapons.Melee;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Fluids;
