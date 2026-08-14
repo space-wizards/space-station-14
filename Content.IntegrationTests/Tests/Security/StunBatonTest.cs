@@ -9,6 +9,7 @@ using Content.Shared.Power.EntitySystems;
 using Content.Shared.Standing;
 using Content.Shared.Stunnable;
 using Content.Shared.Weapons.Melee;
+using Content.Shared.Weapons.Melee.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
@@ -37,7 +38,7 @@ public sealed class StunBatonTests : InteractionTest
         var baton = await PlaceInHands(StunBatonProtoId, enableToggleable: true);
         var sBaton = ToServer(baton);
         var batonStaminaDamage = Comp<StaminaDamageOnHitComponent>(baton).Damage;
-        var chargeUsePerHit = Comp<MeleeWeaponComponent>(baton).HitPowerCost;
+        var chargeUsePerHit = Comp<MeleeBatteryHitsLeftComponent>(baton).HitPowerCost;
         var batonIntialCharges = _battery.GetRemainingUses(sBaton, chargeUsePerHit);
         var batonMaxCharges = _battery.GetMaxUses(sBaton, chargeUsePerHit);
 
@@ -110,7 +111,7 @@ public sealed class StunBatonTests : InteractionTest
         // Spawn a stun baton in the player's hands without turning it on.
         var baton = await PlaceInHands(StunBatonProtoId, enableToggleable: false);
         var sBaton = ToServer(baton);
-        var chargeUsePerHit = Comp<MeleeWeaponComponent>(baton).HitPowerCost;
+        var chargeUsePerHit = Comp<MeleeBatteryHitsLeftComponent>(baton).HitPowerCost;
         var batonIntialCharges = _battery.GetRemainingUses(sBaton, chargeUsePerHit);
         var batonMaxCharges = _battery.GetMaxUses(sBaton, chargeUsePerHit);
 

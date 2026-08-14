@@ -13,12 +13,6 @@ namespace Content.Shared.Weapons.Melee;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true), AutoGenerateComponentPause]
 public sealed partial class MeleeWeaponComponent : Component
 {
-    /// <summary>
-    /// The amount of battery power required to hit with this weapon.
-    /// </summary>
-    [ViewVariables, AutoNetworkedField]
-    public float HitPowerCost = 0f;
-
     // TODO: This is becoming bloated as shit.
     // This should just be its own component for alt attacks.
     /// <summary>

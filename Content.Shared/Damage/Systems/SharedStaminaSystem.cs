@@ -49,7 +49,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
     [Dependency] private StatusEffectsSystem _status = default!;
     [Dependency] private ItemToggleSystem _itemToggle = default!;
     [Dependency] protected SharedStunSystem StunSystem = default!;
-    [Dependency] private SharedMeleeWeaponSystem _meleeWeapon = default!;
+    [Dependency] private MeleeBatteryHitsLeftSystem _meleeBattery = default!;
 
     [Dependency] private EntityQuery<StaminaComponent> _stamQuery = default!;
 
@@ -73,13 +73,13 @@ public abstract partial class SharedStaminaSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnInit(Entity<StaminaDamageOnHitRequiresChargeComponent> ent, ref MapInitEvent args)
     {
-        _meleeWeapon.UpdateHitPowerCost(ent.Owner);
+        _meleeBattery.UpdateHitPowerCost(ent.Owner);
     }
 
     [SubscribeLocalEvent]
     private void OnRemove(Entity<StaminaDamageOnHitRequiresChargeComponent> ent, ref ComponentRemove args)
     {
-        _meleeWeapon.UpdateHitPowerCost(ent.Owner);
+        _meleeBattery.UpdateHitPowerCost(ent.Owner);
     }
 
     [SubscribeLocalEvent]
@@ -244,7 +244,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnHitCAttemptheckToggle(Entity<StaminaDamageOnHitRequiresToggleComponent> ent, ref StaminaDamageOnHitAttemptEvent args)
+    private void OnHitAttemptCheckToggle(Entity<StaminaDamageOnHitRequiresToggleComponent> ent, ref StaminaDamageOnHitAttemptEvent args)
     {
         if (args.Cancelled)
             return;

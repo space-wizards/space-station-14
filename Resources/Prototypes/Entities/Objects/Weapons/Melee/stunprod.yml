@@ -39,7 +39,7 @@
         Blunt: 9
     angle: 60
     animation: WeaponArcThrust
-  - type: ExaminableBatteryHitsLeft
+  - type: MeleeBatteryHitsLeft
   - type: StaminaDamageOnHitRequiresToggle
   - type: StaminaDamageOnHitRequiresCharge
     requiredCharge: 120
