@@ -10,7 +10,7 @@ uplink-stealth-box-name = Stealth Box
 uplink-stealth-box-desc = A box outfitted with stealth technology. Sneak around unnoticed, but don't move too fast or you'll be revealed!
 
 uplink-chameleon-projector-name = Chameleon Projector
-uplink-chameleon-projector-desc = Disappear in plain sight by creating a hologram of an item around you. Do not use this to play the game "Object Search".
+uplink-chameleon-projector-desc = Disappear in plain sight by creating a hologram of an item around you, disguising you as that object! Do not use this to play the game "Object Search".
 
 uplink-encryption-key-name = Syndicate Encryption Keys
 uplink-encryption-key-desc = Two encryption keys for access to the secret frequency of our special agents. Give the spare to a friend, but make sure it doesn't fall into enemy hands.
@@ -19,7 +19,7 @@ uplink-binary-translator-key-name = Binary Translator Key
 uplink-binary-translator-key-desc = Lets you tap into the silicons' binary channel. Don't talk on it though, at least not without a voice mask.
 
 uplink-cyberpen-name = Cybersun Pen
-uplink-cyberpen-desc = A diamond-tipped pen used by Cybersun Legal. Can be used to modify stamped documents and viciously stab prosecutors. A staple tool for war-profiteering, this pen is mightier than many swords.
+uplink-cyberpen-desc = A diamond-tipped pen used by Cybersun Legal. Can be used to modify stamped documents, viciously stab prosecutors and a screwdriver in a pinch. A staple tool for war-profiteering, this pen is mightier than many swords.
 
 uplink-decoy-disk-name = Decoy Nuclear Disk
 uplink-decoy-disk-desc = A piece of plastic with a lenticular printing, made to look like a nuclear authentication disk.

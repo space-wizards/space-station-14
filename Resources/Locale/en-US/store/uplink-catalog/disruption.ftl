@@ -7,13 +7,13 @@ uplink-access-breaker-name = Access Breaker
 uplink-access-breaker-desc = A hacked access configurator and a good friend of the emag. This device is able to force airlocks open as well as erase access requirements from station equipment. Recharges automatically.
 
 uplink-emag-name = Emag
-uplink-emag-desc = "The business card of the syndicate, this hacking tool is able to tamper with a variety of station devices. Is notably able to unlock unauthorized security prints at lathes and subvert cyborgs with open access panels. Recharges automatically.
+uplink-emag-desc = "The business card of the syndicate", this hacking tool is able to tamper with a variety of station devices. Is notably able to unlock unauthorized security recipes at lathes and subvert cyborgs with open access panels. Recharges automatically.
 
 uplink-radio-jammer-name = Radio Jammer
-uplink-radio-jammer-desc = This device will disrupt any nearby outgoing radio communication as well as suit sensors when activated.
+uplink-radio-jammer-desc = This device will disrupt any nearby outgoing radio communication as well as suit sensors when activated. Battery powered, so you might want to bring a spare.
 
 uplink-syndicate-weapon-module-name = Weapon Cyborg Module
-uplink-syndicate-weapon-module-desc = Upgrades a cyborg with both an energy dagger and an echis pistol.
+uplink-syndicate-weapon-module-desc = Upgrades a cyborg with both an energy dagger and a Viper pistol with self-replicating ammo reserves.
 
 uplink-disposable-turret-name = Disposable Ballistic Turret
 uplink-disposable-turret-desc = Looks and functions like a normal electrical toolbox. Upon hitting the toolbox it will transform into a ballistic turret, theoretically shooting at anyone except members of the syndicate. Can be turned back into a toolbox using a screwdriver and repaired using a wrench.
@@ -40,7 +40,7 @@ uplink-syndimov-law-name = Syndi Law Circuit Kit
 uplink-syndimov-law-desc = A subversive Lawset to use when you want to turn the A.I. to your side, use as much as possible. Comes with a Syndicate ID.
 
 uplink-antimov-law-name = Antimov Law Circuit
-uplink-antimov-law-desc = A very dangerous Lawset to use when you want to cause the A.I. to go haywire, use with caution.
+uplink-antimov-law-desc = A very dangerous Lawset to use when you want to cause the A.I. to murder all station inhabitants, use with caution.
 
 uplink-surplus-bundle-name = Surplus Crate
 uplink-surplus-bundle-desc = Contains 50 telecrystals worth of completely random Syndicate items. It can be useless junk or really good.
@@ -52,4 +52,4 @@ uplink-singularity-beacon-name = Singularity Beacon
 uplink-singularity-beacon-desc = A device that attracts singularities. Has to be anchored and powered. Causes singularities to grow when consumed.
 
 uplink-cameraBug-name = Camera bug
-uplink-cameraBug-desc = A portable device that allows you to view the station's cameras.
+uplink-cameraBug-desc = A portable device that allows you to view the station through the lens of the station's camera systems.

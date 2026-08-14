@@ -1,7 +1,7 @@
 # Chemicals
 
 uplink-hypopen-name = Hypopen
-uplink-hypopen-desc = A chemical hypospray disguised as a pen, capable of instantly injecting up to 10u of reagents. Starts empty.
+uplink-hypopen-desc = A chemical hypospray disguised as a pen, capable of instantly injecting up to 10u of reagents. Takes a moment to refill it, so plan accordingly!
 
 uplink-hypodart-name = Hypodart
 uplink-hypodart-desc = A seemingly unremarkable dart with a hidden 10u liquid reserve. Instantly injects into a target when thrown and pierces hardsuits.
@@ -10,10 +10,10 @@ uplink-chemistry-kit-name = Chemical Synthesis Kit
 uplink-chemistry-kit-desc = A starter kit for the aspiring chemist, includes two vials of vestine for all your criminal needs!
 
 uplink-zombie-bundle-name = Syndicate Zombie Bundle
-uplink-zombie-bundle-desc = An all-in-one kit for unleashing the undead upon a station.
+uplink-zombie-bundle-desc = An all-in-one kit for unleashing the undead upon a station. Take the Ambuzol+ pill for the cure!
 
 uplink-nocturine-chemistry-bottle-name = Nocturine Bottle
-uplink-nocturine-chemistry-bottle-desc = A chemical that puts your target straight to sleep.
+uplink-nocturine-chemistry-bottle-desc = A chemical that puts your target straight to sleep. Frequently bought with the Hypodart or Hypopen.
 
 uplink-combat-medkit-name = Combat Medical Kit
 uplink-combat-medkit-desc = A medkit made for fixing combat injuries.
@@ -31,4 +31,4 @@ uplink-cigarettes-name = Syndicate Smokes Packet
 uplink-cigarettes-desc = Elite cigarettes for elite agents. Infused with omnizine for when you need to do more than calm your nerves.
 
 uplink-meds-bundle-name = Interdyne Medical Bundle
-uplink-meds-bundle-desc = An assortment of autoinjectors and premium medical equipment to cover for every possible situation. Contains an elite compact defibrillator that can be used as a weapon.
+uplink-meds-bundle-desc = An assortment of autoinjectors and combat med kits to cover for every possible situation. Contains an elite compact defibrillator that can be used as a weapon.
