@@ -22,5 +22,5 @@ public sealed partial class IntrinsicUIEntry
     /// The action used for this BUI.
     /// </summary>
     [DataField("toggleActionEntity")]
-    public EntityUid? ToggleActionEntity = new();
+    public EntityUid? ToggleActionEntity;
 }
