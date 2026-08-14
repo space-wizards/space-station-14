@@ -51,6 +51,12 @@ public sealed partial class ChasingWalkComponent : Component
     public float Speed;
 
     /// <summary>
+    /// If the entity should stop moving if they are already on top of the target
+    /// </summary>
+    [DataField]
+    public bool StopAtTarget = true;
+
+    /// <summary>
     /// The minimum time interval in which an object can change its motion target.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]

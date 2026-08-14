@@ -114,7 +114,9 @@ public sealed partial class ChasingWalkSystem : VirtualController
 
         var newDirection = currentDirection.ToAngle() + angleToChange;
 
-        var speed = targetVector.Length() > 0 ? newDirection.ToVec() * component.Speed : Vector2.Zero;
+        var speed = !component.StopAtTarget || targetVector.Length() > 0
+            ? newDirection.ToVec() * component.Speed
+            : Vector2.Zero;
 
         _physics.SetLinearVelocity(uid, speed);
         _physics.SetBodyStatus(uid, physics, BodyStatus.InAir); //If this is not done, from the explosion up close, the tesla will "Fall" to the ground, and almost stop moving.
