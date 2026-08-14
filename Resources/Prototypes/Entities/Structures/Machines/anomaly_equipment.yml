@@ -185,8 +185,10 @@
     radioChannel: Science
     requirePowered: true
   - type: PowerState
-    idlePowerDraw: 1
+    idlePowerDraw: 5
     workingPowerDraw: 100
+  - type: ApcPowerReceiver
+    powerLoad: 5
   - type: GuideHelp
     guides:
     - APE

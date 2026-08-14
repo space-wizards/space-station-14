@@ -37,7 +37,7 @@
       map: ["enum.LockVisualLayers.Lock"]
   - type: Emitter
   - type: PowerState
-    idlePowerDraw: 1
+    idlePowerDraw: 5
     workingPowerDraw: 600
     ensureApc: false
   - type: NotifyOnNonFunctioning
@@ -57,6 +57,7 @@
       path: /Audio/Weapons/emitter.ogg
   - type: PowerConsumer
     voltage: Medium
+    drawRate: 5
   - type: NodeContainer
     examinable: true
     nodes:
