@@ -10,14 +10,14 @@ public abstract partial class QuickDialogSystem
     [Dependency] private SharedUserInterfaceSystem _ui = default!;
 
     /// <summary>
-    /// Opens a dialog for the given client, allowing them to enter in the desired data.
+    ///
     /// </summary>
     /// <param name="uniqueId"></param>
-    /// <param name="session">Client to show a dialog for.</param>
-    /// <param name="title">Title of the dialog.</param>
+    /// <param name="session"></param>
+    /// <param name="title"></param>
     /// <param name="entries"></param>
-    /// <param name="okAction">The action to execute upon Ok being pressed.</param>
-    /// <param name="cancelAction">The action to execute upon the dialog being cancelled.</param>
+    /// <param name="okAction"></param>
+    /// <param name="cancelAction"></param>
     /// <param name="buttons"></param>
     /// <returns></returns>
     [PublicAPI]
@@ -26,9 +26,9 @@ public abstract partial class QuickDialogSystem
         ICommonSession session,
         string title,
         IQuickDialogEntry[] entries,
-        Action<object?[]> okAction,
+        Action<object[]> okAction,
         Action? cancelAction = null,
-        QuickDialogButtonFlag buttons = QuickDialogButtonFlag.OkButton | QuickDialogButtonFlag.CancelButton)
+        QuickDialogButtonFlags buttons = QuickDialogButtonFlags.All)
     {
         if (entries.Length == 0)
             throw new ArgumentException("Must specify at least one entry for the dialog!");
@@ -43,36 +43,7 @@ public abstract partial class QuickDialogSystem
             return false;
         }
 
-        dialogs.Add(uniqueId, (ev =>
-        {
-            if (ev.Responses == null || ev.Responses.Length != entries.Length)
-            {
-                session.Channel.Disconnect("Replied with invalid quick dialog data.");
-                cancelAction?.Invoke();
-                return;
-            }
-
-            var answers = new object?[entries.Length];
-            for (var i = 0; i < entries.Length; i++)
-            {
-                var entry = entries[i];
-                if (!entry.TryParse(ev.Responses[i], out var answer))
-                {
-                    if (entry.Required)
-                    {
-                        session.Channel.Disconnect("Replied with invalid quick dialog data.");
-                        cancelAction?.Invoke();
-                        return;
-                    }
-
-                    continue;
-                }
-
-                answers[i] = answer;
-            }
-
-            okAction.Invoke(answers);
-        }, cancelAction));
+        dialogs.Add(uniqueId, (entries, okAction, cancelAction));
 
         RaiseNetworkEvent(
             new QuickDialogOpenEvent(
@@ -91,8 +62,8 @@ public abstract partial class QuickDialogSystem
     /// </summary>
     /// <param name="uiKey"></param>
     /// <param name="target"></param>
-    /// <param name="actor">Client to show a dialog for.</param>
-    /// <param name="title">Title of the dialog.</param>
+    /// <param name="actor"></param>
+    /// <param name="title"></param>
     /// <param name="entries"></param>
     /// <param name="buttons"></param>
     /// <param name="ignoreOpen"></param>
@@ -104,7 +75,7 @@ public abstract partial class QuickDialogSystem
         EntityUid actor,
         string title,
         IQuickDialogEntry[] entries,
-        QuickDialogButtonFlag buttons = QuickDialogButtonFlag.OkButton | QuickDialogButtonFlag.CancelButton,
+        QuickDialogButtonFlags buttons = QuickDialogButtonFlags.All,
         bool ignoreOpen = false)
     {
         if (entries.Length == 0)

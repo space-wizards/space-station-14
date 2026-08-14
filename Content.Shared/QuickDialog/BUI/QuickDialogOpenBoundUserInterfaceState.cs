@@ -6,7 +6,7 @@ namespace Content.Shared.QuickDialog.BUI;
 ///
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class QuickDialogOpenBoundUserInterfaceState(string title, IQuickDialogEntry[] prompts, QuickDialogButtonFlag buttons) : BoundUserInterfaceState
+public sealed class QuickDialogOpenBoundUserInterfaceState(string title, IQuickDialogEntry[] prompts, QuickDialogButtonFlags buttons) : BoundUserInterfaceState
 {
     /// <summary>
     /// The title of the dialog.
@@ -21,5 +21,5 @@ public sealed class QuickDialogOpenBoundUserInterfaceState(string title, IQuickD
     /// <summary>
     /// The buttons presented for the user.
     /// </summary>
-    public readonly QuickDialogButtonFlag Buttons = buttons;
+    public readonly QuickDialogButtonFlags Buttons = buttons;
 }

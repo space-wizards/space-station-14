@@ -1,10 +1,10 @@
-﻿using Content.Server.Administration;
-using Content.Server.Chat.Systems;
+﻿using Content.Server.Chat.Systems;
 using Content.Server.Popups;
 using Content.Shared.Chat;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.QuickDialog;
 using Content.Shared.Speech.Muting;
 using Content.Shared.StatusEffectNew;
 using Robust.Server.Console;
@@ -25,7 +25,9 @@ public sealed partial class CritMobActionsSystem : EntitySystem
     [Dependency] private QuickDialogSystem _quickDialog = default!;
     [Dependency] private StatusEffectsSystem _statusEffects = default!;
 
-    private const int MaxLastWordsLength = 30;
+    private const int MinLastWordsLength = 1;
+
+    private const int MaxLastWordsLength = 100;
 
     public override void Initialize()
     {
@@ -64,9 +66,17 @@ public sealed partial class CritMobActionsSystem : EntitySystem
         if (!TryComp<ActorComponent>(uid, out var actor))
             return;
 
-        _quickDialog.OpenDialog(actor.PlayerSession, Loc.GetString("action-name-crit-last-words"), "",
-            (string lastWords) =>
+        args.Handled = _quickDialog.TryOpenDialog(
+            "lastWords-" + uid,
+            actor.PlayerSession,
+            Loc.GetString("action-name-crit-last-words"),
+            [
+                new QuickDialogEntryString(MinLastWordsLength, MaxLastWordsLength)
+            ],
+            (values) =>
             {
+                var lastWords = (string)values[0]!;
+
                 // if a person is gibbed/deleted, they can't say last words
                 if (Deleted(uid))
                     return;
@@ -85,7 +95,5 @@ public sealed partial class CritMobActionsSystem : EntitySystem
                 _chat.TrySendInGameICMessage(uid, lastWords, InGameICChatType.Whisper, ChatTransmitRange.Normal, checkRadioPrefix: false, ignoreActionBlocker: true);
                 _host.ExecuteCommand(actor.PlayerSession, "ghost");
             });
-
-        args.Handled = true;
     }
 }

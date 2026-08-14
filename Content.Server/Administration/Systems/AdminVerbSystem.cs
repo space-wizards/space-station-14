@@ -38,6 +38,7 @@ using System.Linq;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Mind;
 using static Content.Shared.Configurable.ConfigurationComponent;
+using Content.Shared.QuickDialog;
 
 namespace Content.Server.Administration.Systems
 {
@@ -127,8 +128,22 @@ namespace Content.Server.Administration.Systems
                     prayerVerb.Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/pray.svg.png"));
                     prayerVerb.Act = () =>
                     {
-                        _quickDialog.OpenDialog(player, "Subtle Message", "Message", "Popup Message", (string message, string popupMessage) =>
+                        _quickDialog.TryOpenDialog(
+                            "subtle-message" + args.Target,
+                            player,
+                            "Subtle Message",
+                            [
+                                new QuickDialogEntryString(0, 100, "Message"),
+                                new QuickDialogEntryString(0, 100, "Popup Message"),
+                            ],
+                            (values) =>
                         {
+                            if (values[0] is not string message)
+                                return;
+
+                            if (values[1] is not string popupMessage)
+                                return;
+
                             _prayerSystem.SendSubtleMessage(targetActor.PlayerSession, player, message, popupMessage == "" ? Loc.GetString("prayer-popup-subtle-default") : popupMessage);
                         });
                     };

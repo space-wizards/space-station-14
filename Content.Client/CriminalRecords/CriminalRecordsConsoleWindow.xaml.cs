@@ -49,7 +49,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
     private uint? _selectedKey;
     private CriminalRecord? _selectedRecord;
 
-    private DialogWindow? _reasonDialog;
+    //private DialogWindow? _reasonDialog;
 
     private StationRecordFilterType _currentFilterType;
 
@@ -90,7 +90,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
             CrewListFilter.AddItem(GetCrewListFilterLocals(item), (int)item);
         }
 
-        OnClose += () => _reasonDialog?.Close();
+        //OnClose += () => _reasonDialog?.Close();
 
         RecordListing.OnItemSelected += args =>
         {
@@ -287,6 +287,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
 
     private void GetReason(SecurityStatus status)
     {
+        /*
         if (_reasonDialog != null)
         {
             _reasonDialog.MoveToFront();
@@ -312,6 +313,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         };
 
         _reasonDialog.OnClose += () => { _reasonDialog = null; };
+        */
     }
     private string GetStatusIcon(SecurityStatus status)
     {

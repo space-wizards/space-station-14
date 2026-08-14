@@ -1,7 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using Content.Shared.QuickDialog.Events;
+using JetBrains.Annotations;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.QuickDialog;
 
@@ -15,7 +19,7 @@ public abstract partial class QuickDialogSystem : EntitySystem
     /// <summary>
     ///
     /// </summary>
-    private readonly Dictionary<NetUserId, Dictionary<string, (Action<QuickDialogResponseEvent> okAction, Action? cancelAction)>> _openDialogsPerUser = [];
+    private readonly Dictionary<NetUserId, Dictionary<string, (IQuickDialogEntry[] Entries, Action<object[]> OkAction, Action? CancelAction)>> _openDialogsPerUser = [];
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -40,7 +44,7 @@ public abstract partial class QuickDialogSystem : EntitySystem
 
         foreach (var (_, actions) in _openDialogsPerUser[e.Session.UserId])
         {
-            actions.cancelAction?.Invoke();
+            actions.CancelAction?.Invoke();
         }
 
         _openDialogsPerUser.Remove(e.Session.UserId);
@@ -49,19 +53,38 @@ public abstract partial class QuickDialogSystem : EntitySystem
     [SubscribeNetworkEvent]
     private void Handler(QuickDialogResponseEvent msg, EntitySessionEventArgs args)
     {
-        if (!_openDialogsPerUser.TryGetValue(args.SenderSession.UserId, out var dialogs) || !dialogs.TryGetValue(msg.DialogId, out var actions))
+        if (!_openDialogsPerUser.TryGetValue(args.SenderSession.UserId, out var dialogs) || !dialogs.TryGetValue(msg.DialogId, out var data))
         {
             args.SenderSession.Channel.Disconnect($"Replied with invalid quick dialog data with id {msg.DialogId}.");
             return;
         }
 
+        if (msg.Responses == null || msg.Responses.Length < data.Entries.Length)
+        {
+            data.CancelAction?.Invoke();
+            return;
+        }
+
+        var responses = new object[data.Entries.Length];
+        for (var i = 0; i < data.Entries.Length; i++)
+        {
+            var entry = data.Entries[i];
+            if (!TryParse(entry, msg.Responses[i], out var value))
+            {
+                data.CancelAction?.Invoke();
+                return;
+            }
+
+            responses[i] = value;
+        }
+
         switch (msg.ButtonPressed)
         {
-            case QuickDialogButtonFlag.OkButton:
-                actions.okAction.Invoke(msg);
+            case QuickDialogButtonFlags.OkButton:
+                data.OkAction.Invoke(responses);
                 break;
-            case QuickDialogButtonFlag.CancelButton:
-                actions.cancelAction?.Invoke();
+            case QuickDialogButtonFlags.CancelButton:
+                data.CancelAction?.Invoke();
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(msg), nameof(msg.ButtonPressed) + ": Invalid button flag.");
@@ -69,21 +92,106 @@ public abstract partial class QuickDialogSystem : EntitySystem
 
         dialogs.Remove(msg.DialogId);
     }
-}
-
-/// <summary>
-/// The buttons available in a quick dialog.
-/// </summary>
-[Flags]
-public enum QuickDialogButtonFlag : byte
-{
-    /// <summary>
-    ///
-    /// </summary>
-    OkButton,
 
     /// <summary>
     ///
     /// </summary>
-    CancelButton,
+    /// <typeparam name="T"></typeparam>
+    /// <param name="entry"></param>
+    /// <param name="value"></param>
+    /// <param name="output"></param>
+    /// <returns></returns>
+    private static bool TryParseNumber<T>(IQuickDialogEntry entry, string value, [NotNullWhen(true)] out object? output) where T : INumber<T>
+    {
+        output = null;
+
+        if (entry is not IQuickDialogEntry<T> typedEntry)
+            return false;
+
+        if (!T.TryParse(value, null, out var result))
+            return false;
+
+        if (result < typedEntry.Min)
+            return false;
+
+        if (result > typedEntry.Max)
+            return false;
+
+        output = result;
+        return true;
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="entry"></param>
+    /// <param name="value"></param>
+    /// <param name="output"></param>
+    /// <returns></returns>
+    private static bool TryParseString(IQuickDialogEntry entry, string value, [NotNullWhen(true)] out object? output)
+    {
+        output = null;
+
+        if (entry is not QuickDialogEntryString typedEntry)
+            return false;
+
+        if (value.Length < typedEntry.Min)
+            return false;
+
+        if (value.Length > typedEntry.Max)
+            return false;
+
+        output = value;
+        return true;
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="entry"></param>
+    /// <param name="value"></param>
+    /// <param name="output"></param>
+    /// <returns></returns>
+    [PublicAPI]
+    public static bool TryParse(IQuickDialogEntry entry, string value, [NotNullWhen(true)] out object? output)
+    {
+        output = null;
+
+        var type = entry.Type;
+        return type switch
+        {
+            _ when type == typeof(string) => TryParseString(entry, value, out output),
+            _ when type == typeof(int) => TryParseNumber<int>(entry, value, out output),
+            _ when type == typeof(uint) => TryParseNumber<uint>(entry, value, out output),
+            _ when type == typeof(long) => TryParseNumber<long>(entry, value, out output),
+            _ when type == typeof(ulong) => TryParseNumber<ulong>(entry, value, out output),
+            _ when type == typeof(float) => TryParseNumber<float>(entry, value, out output),
+            _ when type == typeof(double) => TryParseNumber<double>(entry, value, out output),
+            _ => throw new NotSupportedException($"Type {entry.Type.Name} not supported")
+        };
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="entry"></param>
+    /// <param name="value"></param>
+    /// <param name="output"></param>
+    /// <returns></returns>
+    [PublicAPI]
+    public static LocId? GetPlaceholder(IQuickDialogEntry entry)
+    {
+        var type = entry.Type;
+        return type switch
+        {
+            _ when type == typeof(int) => "quick-dialog-ui-placeholder-integer",
+            _ when type == typeof(uint) => "quick-dialog-ui-placeholder-integer",
+            _ when type == typeof(long) => "quick-dialog-ui-placeholder-integer",
+            _ when type == typeof(ulong) => "quick-dialog-ui-placeholder-integer",
+            _ when type == typeof(float) => "quick-dialog-ui-placeholder-float",
+            _ when type == typeof(double) => "quick-dialog-ui-placeholder-float",
+            _ when type == typeof(string) => "quick-dialog-ui-placeholder-string",
+            _ => throw new NotSupportedException($"Type {entry.Type.Name} not supported")
+        };
+    }
 }

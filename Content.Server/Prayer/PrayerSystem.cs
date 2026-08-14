@@ -1,4 +1,3 @@
-using Content.Server.Administration;
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Managers;
 using Content.Server.Popups;
@@ -7,9 +6,9 @@ using Content.Shared.Popups;
 using Content.Shared.Chat;
 using Content.Shared.Prayer;
 using Content.Shared.Verbs;
-using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Content.Shared.Bible.Components;
+using Content.Shared.QuickDialog;
 
 namespace Content.Server.Prayer;
 /// <summary>
@@ -24,6 +23,10 @@ public sealed partial class PrayerSystem : EntitySystem
     [Dependency] private PopupSystem _popupSystem = default!;
     [Dependency] private IChatManager _chatManager = default!;
     [Dependency] private QuickDialogSystem _quickDialog = default!;
+
+    public const int MinPrayerLength = 1;
+
+    public const int MaxPrayerLength = 200;
 
     public override void Initialize()
     {
@@ -54,8 +57,18 @@ public sealed partial class PrayerSystem : EntitySystem
                     return;
                 }
 
-                _quickDialog.OpenDialog(actor.PlayerSession, Loc.GetString(comp.Verb), Loc.GetString("prayer-popup-notify-pray-ui-message"), (string message) =>
+                _quickDialog.TryOpenDialog(
+                    "prayer-" + uid,
+                    actor.PlayerSession,
+                    Loc.GetString(comp.Verb),
+                    [
+                        new QuickDialogEntryString(MinPrayerLength, MaxPrayerLength, Loc.GetString("prayer-popup-notify-pray-ui-message"))
+                    ],
+                    (values) =>
                 {
+                    if (values[0] is not string message)
+                        return;
+
                     // Make sure the player's entity and the Prayable entity+component still exist
                     if (actor?.PlayerSession != null && HasComp<PrayableComponent>(uid))
                         Pray(actor.PlayerSession, comp, message);

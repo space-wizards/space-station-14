@@ -1,149 +1,174 @@
-using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.QuickDialog;
 
 /// <summary>
-/// An entry in a quick dialog.
+///
 /// </summary>
 public interface IQuickDialogEntry
 {
     /// <summary>
-    /// The prompt to show the user.
+    ///
     /// </summary>
-    string Prompt { get; init; }
+    Type Type { get; }
 
     /// <summary>
     ///
     /// </summary>
-    float Width { get; init; }
+    LocId? Prompt { get; init; }
 
     /// <summary>
     ///
     /// </summary>
-    bool Required { get; init; }
-
-    /// <summary>
-    /// String to replace the type-specific placeholder with.
-    /// </summary>
-    /// <returns></returns>
-    object? GetPlaceholder();
+    LocId? Placeholder { get; init; }
 
     /// <summary>
     ///
     /// </summary>
-    /// <param name="toParse"></param>
-    /// <param name="output"></param>
-    /// <returns></returns>
-    bool TryParse(object? toParse, [NotNullWhen(true)] out object? output);
+    Vector2? Size { get; init; }
 }
 
 /// <summary>
 ///
 /// </summary>
 /// <typeparam name="T"></typeparam>
-/// <typeparam name="T1"></typeparam>
-[Serializable, NetSerializable]
-public abstract class BaseQuickDialogEntry<T, T1> : IQuickDialogEntry
-    where T : notnull
-    where T1 : notnull, INumber<T1>
+public interface IQuickDialogEntry<T> : IQuickDialogEntry
+    where T : INumber<T>
 {
-    /// <inheritdoc/>
-    public string Prompt { get; init; } = "None";
-
-    /// <inheritdoc/>
-    public float Width { get; init; } = 100f;
-
-    /// <inheritdoc/>
-    public bool Required { get; init; } = true;
-
-    /// <inheritdoc/>
-    public object? GetPlaceholder()
-    {
-        return Placeholder;
-    }
-
-    /// <inheritdoc/>
-    bool IQuickDialogEntry.TryParse(object? toParse, [NotNullWhen(true)] out object? output)
-    {
-        var result = TryParse(toParse, out var typedOutput);
-        output = typedOutput;
-        return result;
-    }
+    /// <summary>
+    ///
+    /// </summary>
+    T Min { get; init; }
 
     /// <summary>
     ///
     /// </summary>
-    public abstract T1 Min { get; init; }
-
-    /// <summary>
-    ///
-    /// </summary>
-    public abstract T1 Max { get; init; }
-
-    /// <summary>
-    ///
-    /// </summary>
-    public T? Placeholder { get; init; }
-
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="toParse"></param>
-    /// <param name="output"></param>
-    /// <returns></returns>
-    public abstract bool TryParse(object? toParse, [NotNullWhen(true)] out T? output);
+    T Max { get; init; }
 }
 
 /// <summary>
 ///
 /// </summary>
+/// <param name="Min"></param>
+/// <param name="Max"></param>
+/// <param name="Prompt"></param>
+/// <param name="Placeholder"></param>
+/// <param name="Size"></param>
 [Serializable, NetSerializable]
-public sealed class QuickDialogEntryString : BaseQuickDialogEntry<string, int>
+public readonly record struct QuickDialogEntryString(int Min, int Max, LocId? Prompt = null, LocId? Placeholder = null, Vector2? Size = null) :
+    IQuickDialogEntry<int>
 {
-    /// <inheritdoc/>
-    public override int Min { get; init; } = 0;
-
-    /// <inheritdoc/>
-    public override int Max { get; init; } = int.MaxValue;
-
-    /// <inheritdoc/>
-    public override bool TryParse(object? toParse, [NotNullWhen(true)] out string? output)
-    {
-        output = null;
-        if (toParse is not string value)
-            return false;
-
-        value = value.Trim();
-        if (string.IsNullOrEmpty(value))
-            return false;
-
-        output = value;
-        return true;
-    }
+    /// <summary>
+    ///
+    /// </summary>
+    public readonly Type Type => typeof(string);
 }
 
 /// <summary>
 ///
 /// </summary>
+/// <param name="Min"></param>
+/// <param name="Max"></param>
+/// <param name="Prompt"></param>
+/// <param name="Placeholder"></param>
+/// <param name="Size"></param>
 [Serializable, NetSerializable]
-public sealed class QuickDialogEntryInt : BaseQuickDialogEntry<int, int>
+public readonly record struct QuickDialogEntryInt(int Min, int Max, LocId? Prompt = null, LocId? Placeholder = null, Vector2? Size = null) :
+    IQuickDialogEntry<int>
 {
-    /// <inheritdoc/>
-    public override int Min { get; init; } = int.MinValue;
+    /// <summary>
+    ///
+    /// </summary>
+    public readonly Type Type => typeof(int);
+}
 
-    /// <inheritdoc/>
-    public override int Max { get; init; } = int.MaxValue;
+/// <summary>
+///
+/// </summary>
+/// <param name="Min"></param>
+/// <param name="Max"></param>
+/// <param name="Prompt"></param>
+/// <param name="Placeholder"></param>
+/// <param name="Size"></param>
+[Serializable, NetSerializable]
+public readonly record struct QuickDialogEntryUInt(uint Min, uint Max, LocId? Prompt = null, LocId? Placeholder = null, Vector2? Size = null) :
+    IQuickDialogEntry<uint>
+{
+    /// <summary>
+    ///
+    /// </summary>
+    public readonly Type Type => typeof(uint);
+}
 
-    /// <inheritdoc/>
-    public override bool TryParse(object? toParse, out int output)
-    {
-        output = 0;
-        if (toParse is not int value)
-            return false;
+/// <summary>
+///
+/// </summary>
+/// <param name="Min"></param>
+/// <param name="Max"></param>
+/// <param name="Prompt"></param>
+/// <param name="Placeholder"></param>
+/// <param name="Size"></param>
+[Serializable, NetSerializable]
+public readonly record struct QuickDialogEntryLong(long Min, long Max, LocId? Prompt = null, LocId? Placeholder = null, Vector2? Size = null) :
+    IQuickDialogEntry<long>
+{
+    /// <summary>
+    ///
+    /// </summary>
+    public readonly Type Type => typeof(long);
+}
 
-        output = Math.Clamp(value, Min, Max);
-        return true;
-    }
+/// <summary>
+///
+/// </summary>
+/// <param name="Min"></param>
+/// <param name="Max"></param>
+/// <param name="Prompt"></param>
+/// <param name="Placeholder"></param>
+/// <param name="Size"></param>
+[Serializable, NetSerializable]
+public readonly record struct QuickDialogEntryULong(ulong Min, ulong Max, LocId? Prompt = null, LocId? Placeholder = null, Vector2? Size = null) :
+    IQuickDialogEntry<ulong>
+{
+    /// <summary>
+    ///
+    /// </summary>
+    public readonly Type Type => typeof(ulong);
+}
+
+/// <summary>
+///
+/// </summary>
+/// <param name="Min"></param>
+/// <param name="Max"></param>
+/// <param name="Prompt"></param>
+/// <param name="Placeholder"></param>
+/// <param name="Size"></param>
+[Serializable, NetSerializable]
+public readonly record struct QuickDialogEntryFloat(float Min, float Max, LocId? Prompt = null, LocId? Placeholder = null, Vector2? Size = null) :
+    IQuickDialogEntry<float>
+{
+    /// <summary>
+    ///
+    /// </summary>
+    public readonly Type Type => typeof(float);
+}
+
+/// <summary>
+///
+/// </summary>
+/// <param name="Min"></param>
+/// <param name="Max"></param>
+/// <param name="Prompt"></param>
+/// <param name="Placeholder"></param>
+/// <param name="Size"></param>
+[Serializable, NetSerializable]
+public readonly record struct QuickDialogEntryDouble(double Min, double Max, LocId? Prompt = null, LocId? Placeholder = null, Vector2? Size = null) :
+    IQuickDialogEntry<double>
+{
+    /// <summary>
+    ///
+    /// </summary>
+    public readonly Type Type => typeof(double);
 }
