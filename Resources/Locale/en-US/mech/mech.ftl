@@ -1,5 +1,5 @@
-mech-equipment-begin-install = Installing the {THE($item)}...
-mech-equipment-finish-install = Finished installing the {THE($item)}
+mech-equipment-begin-install = Installing {THE($item)}...
+mech-equipment-finish-install = Finished installing {THE($item)}
 
 mech-equipment-select-popup = {$item} selected
 mech-equipment-select-none-popup = Nothing selected
