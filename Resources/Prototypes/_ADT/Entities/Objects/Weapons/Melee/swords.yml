@@ -16,6 +16,7 @@
     damage:
       types:
         Slash: 25
+    wideAnimationRotation: 135
   - type: Item
     size: Normal
     sprite: _ADT/Objects/Weapons/Melee/murasama.rsi
