@@ -127,3 +127,19 @@
     instant: true
     shootMinInterval: 6 # larger than the timed despawn so that we only shoot once
     shootMaxInterval: 7
+
+- type: entity
+  parent: AdminInstantEffectBase
+  id: AdminInstantEffectScreech
+  suffix: Screech
+  components:
+  - type: ScreechOnTrigger
+    effects:
+    - !type:MovementSpeedModifier
+      walkSpeedModifier: 0.5
+      sprintSpeedModifier: 0.5
+      time: 5
+    - !type:Disarm
+    - !type:ModifyKnockdown
+      probability: 0.5
+

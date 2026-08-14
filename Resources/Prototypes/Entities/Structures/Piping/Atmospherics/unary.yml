@@ -245,7 +245,7 @@
       - AirInjector
 
 - type: entity
-  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  parent: [ BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible ]
   id: BaseGasThermoMachine
   name: thermomachine
   abstract: true
@@ -462,7 +462,7 @@
     board: HellfireHeaterMachineCircuitBoard
 
 - type: entity
-  parent: [ SolutionTank, SolutionHuge, BaseMachinePowered, SmallConstructibleMachine ]
+  parent: [ SolutionTank, SolutionHuge, BaseMachinePowered, SmallConstructibleMachine, BaseSmallConstructibleMachineDestructible ]
   id: !type:CreateVariants
     values: [ BaseGasCondenser, BaseGasCondenserAlt1, BaseGasCondenserAlt2 ]
   name: condenser
@@ -526,8 +526,6 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
       - !type:SpillBehavior
         solution: tank
       - !type:PlaySoundBehavior

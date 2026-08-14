@@ -30,6 +30,7 @@ public sealed partial class AlignAtmosPipeLayers : SnapgridCenter
     private readonly SharedMapSystem _mapSystem;
     private readonly SharedTransformSystem _transformSystem;
     private readonly SpriteSystem _spriteSystem;
+    private readonly ConstructionSystem _constructionSystem;
 
     private const float SearchBoxSize = 2f;
     private EntityCoordinates _unalignedMouseCoords = default;
@@ -46,6 +47,7 @@ public sealed partial class AlignAtmosPipeLayers : SnapgridCenter
         _mapSystem = _entityManager.System<SharedMapSystem>();
         _transformSystem = _entityManager.System<SharedTransformSystem>();
         _spriteSystem = _entityManager.System<SpriteSystem>();
+        _constructionSystem = _entityManager.System<ConstructionSystem>();
     }
 
     /// <inheritdoc/>
@@ -121,10 +123,6 @@ public sealed partial class AlignAtmosPipeLayers : SnapgridCenter
     private void UpdateHijackedPlacer(AtmosPipeLayer layer, ScreenCoordinates mouseScreen)
     {
         var hijack = pManager.Hijack as ConstructionPlacementHijack;
-        var constructionSystem = hijack?.CurrentConstructionSystem;
-
-        if (constructionSystem == null)
-            return;
 
         // Determine the current entity prototype to be constructed
         if (string.IsNullOrEmpty(hijack?.CurrentPrototype?.ID)
@@ -155,13 +153,13 @@ public sealed partial class AlignAtmosPipeLayers : SnapgridCenter
         {
             IsTile = false,
             PlacementOption = newConstructionPrototype.PlacementMode,
-        }, new ConstructionPlacementHijack(constructionSystem, newConstructionPrototype));
+        }, new ConstructionPlacementHijack(newConstructionPrototype));
 
         if (pManager.CurrentMode is AlignAtmosPipeLayers { } newMode)
             newMode.RefreshGrid(mouseScreen);
 
         // Update construction guide
-        constructionSystem.GetGuide(newConstructionPrototype);
+        _constructionSystem.GetGuide(newConstructionPrototype);
     }
 
     private void UpdatePlacer(AtmosPipeLayer layer)

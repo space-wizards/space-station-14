@@ -78,7 +78,7 @@
     mode: AlignAtmosPipeLayers
   components:
   - type: Label
-    currentLabel: gas-pipe-sensor-distribution-loop
+    localizedLabel: gas-pipe-sensor-distribution-loop
 
 - type: entity
   parent: !type:CreateVariants
@@ -90,7 +90,7 @@
     sequences: [ [ ], [ HideSpawnMenu ], [ HideSpawnMenu ] ]
   components:
   - type: Label
-    currentLabel: gas-pipe-sensor-waste-loop
+    localizedLabel: gas-pipe-sensor-waste-loop
 
 - type: entity
   parent: !type:CreateVariants
@@ -102,7 +102,7 @@
     sequences: [ [ ], [ HideSpawnMenu ], [ HideSpawnMenu ] ]
   components:
   - type: Label
-    currentLabel: gas-pipe-sensor-mixed-air
+    localizedLabel: gas-pipe-sensor-mixed-air
 
 - type: entity
   parent: !type:CreateVariants
@@ -114,7 +114,7 @@
     sequences: [ [ ], [ HideSpawnMenu ], [ HideSpawnMenu ] ]
   components:
   - type: Label
-    currentLabel: gas-pipe-sensor-teg-hot-loop
+    localizedLabel: gas-pipe-sensor-teg-hot-loop
 
 - type: entity
   parent: !type:CreateVariants
@@ -126,4 +126,4 @@
     sequences: [ [ ], [ HideSpawnMenu ], [ HideSpawnMenu ] ]
   components:
   - type: Label
-    currentLabel: gas-pipe-sensor-teg-cold-loop
+    localizedLabel: gas-pipe-sensor-teg-cold-loop

@@ -490,6 +490,7 @@
             values: [ Structures/Piping/Atmospherics/pipe.rsi, Structures/Piping/Atmospherics/pipe_alt1.rsi, Structures/Piping/Atmospherics/pipe_alt2.rsi ]
           state: pipeBinaryConnectors
           map: [ "enum.PipeVisualLayers.Pipe" ]
+        - state: vent_direction
         - state: vent_off
           map: [ "enabled", "enum.SubfloorLayers.FirstLayer" ]
     - type: AtmosPipeLayers
@@ -509,16 +510,7 @@
     - type: GasVentPump
       inlet: inlet
       outlet: outlet
-      canLink: true
-    - type: DeviceNetwork
-      deviceNetId: Wireless
-      receiveFrequencyId: BasicDevice
-    - type: WirelessNetworkConnection
-      range: 200
-    - type: DeviceLinkSink
-      ports:
-        - Pressurize
-        - Depressurize
+      canLink: false
     - type: Construction
       graph: !type:CreateVariants
         values: [ GasBinary, GasBinaryAlt1, GasBinaryAlt2 ]
@@ -542,7 +534,7 @@
       - AirVent
 
 - type: entity
-  parent: [ BaseMachine, ConstructibleMachine ]
+  parent: [ BaseMachine, ConstructibleMachine, BaseConstructibleMachineDestructible ]
   id: !type:CreateVariants
     values: [ GasRecycler, GasRecyclerAlt1, GasRecyclerAlt2 ]
   name: gas recycler
@@ -605,15 +597,11 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 175
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak
-      - !type:ChangeConstructionNodeBehavior
-        node: machineFrame
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
   - type: Machine
     board: GasRecyclerMachineCircuitboard
   - type: AtmosMonitoringConsoleDevice
