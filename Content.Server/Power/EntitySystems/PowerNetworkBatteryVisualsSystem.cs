@@ -31,14 +31,27 @@ public sealed partial class PowerNetworkBatteryVisualsSystem : EntitySystem
         base.Initialize();
 
         UpdatesAfter.Add(typeof(PowerNetSystem));
-
-        SubscribeLocalEvent<PowerNetworkBatteryVisualsComponent, MapInitEvent>(OnMapInit, after: [typeof(BatterySystem)]);
     }
 
+    /// <inheritdoc/>
+    public override void Update(float frameTime)
+    {
+        var batteryQuery = EntityQueryEnumerator<PowerNetworkBatteryVisualsComponent>();
+        while (batteryQuery.MoveNext(out var uid, out var batteryComp))
+        {
+            if (batteryComp.NextUpdateTime <= _gameTiming.CurTime)
+            {
+                UpdateChargeState((uid, batteryComp));
+            }
+        }
+    }
+
+    #region Event Handlers
     /// <summary>
     /// Handler for PowerNetworkBatteryCanDischargeChangedEvent, updates the charge capacity of the entity.
     /// Note: BatterySystem's MapInit must run first to get a correct battery charge value.
     /// </summary>
+    [SubscribeLocalEvent(after: [typeof(BatterySystem)])]
     private void OnMapInit(Entity<PowerNetworkBatteryVisualsComponent> ent, ref MapInitEvent args)
     {
         UpdateChargeState(ent);
@@ -62,20 +75,9 @@ public sealed partial class PowerNetworkBatteryVisualsSystem : EntitySystem
     {
         UpdateChargeCapabilities(ent);
     }
+    #endregion Event Handlers
 
-    /// <inheritdoc/>
-    public override void Update(float frameTime)
-    {
-        var batteryQuery = EntityQueryEnumerator<PowerNetworkBatteryVisualsComponent>();
-        while (batteryQuery.MoveNext(out var uid, out var batteryComp))
-        {
-            if (batteryComp.NextUpdateTime <= _gameTiming.CurTime)
-            {
-                UpdateChargeState((uid, batteryComp));
-            }
-        }
-    }
-
+    #region Internal
     /// <summary>
     /// Updates the charge capabilities of the given entity.
     /// Will only send new appearance data if the new state is different than it was.
@@ -169,4 +171,5 @@ public sealed partial class PowerNetworkBatteryVisualsSystem : EntitySystem
 
         return state;
     }
+    #endregion Internal
 }

@@ -9,21 +9,23 @@ namespace Content.Client.Power.Visualizers;
 /// </summary>
 public sealed partial class PowerNetworkBatteryVisualizerSystem : VisualizerSystem<PowerNetworkBatteryVisualsComponent>
 {
+    /// <inheritdoc />
     protected override void OnAppearanceChange(EntityUid uid, PowerNetworkBatteryVisualsComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
 
-        if (AppearanceSystem.TryGetData<int>(uid, PowerNetworkBatteryVisuals.LastChargeLevel, out var chargeLevel, args.Component))
+        if (AppearanceSystem.TryGetData<int>(uid, PowerNetworkBatteryVisuals.LastChargeLevel, out var chargeLevel, args.Component)
+            && SpriteSystem.LayerMapTryGet(uid, PowerNetworkBatteryVisualLayers.ChargeLevel, out var layerIndex, logMissing: false))
         {
             if (chargeLevel == 0 && !component.ChargeLevelZeroVisible)
             {
-                SpriteSystem.LayerSetVisible((uid, args.Sprite), PowerNetworkBatteryVisualLayers.ChargeLevel, false);
+                SpriteSystem.LayerSetVisible((uid, args.Sprite), layerIndex, false);
             }
             else
             {
-                SpriteSystem.LayerSetVisible((uid, args.Sprite), PowerNetworkBatteryVisualLayers.ChargeLevel, true);
-                SpriteSystem.LayerSetRsiState((uid, args.Sprite), PowerNetworkBatteryVisualLayers.ChargeLevel, component.ChargeLevelPrefix + chargeLevel);
+                SpriteSystem.LayerSetVisible((uid, args.Sprite), layerIndex, true);
+                SpriteSystem.LayerSetRsiState((uid, args.Sprite), layerIndex, component.ChargeLevelPrefix + chargeLevel);
             }
         }
 
