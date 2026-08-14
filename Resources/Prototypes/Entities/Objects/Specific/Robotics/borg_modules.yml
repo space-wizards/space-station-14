@@ -573,6 +573,7 @@
     - item: Wirecutter
     - item: WelderIndustrial
     - item: Multitool
+    - item: WeaponPlasmaCutter # DS14
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: tool-module }
 
@@ -639,6 +640,7 @@
   - type: ItemBorgModule
     hands:
     - item: MiningDrill
+    - item: WeaponProtoKineticAccelerator # DS14
     - item: Shovel
     - item: MineralScannerUnpowered
     - item: BorgOreBag
@@ -658,6 +660,7 @@
   - type: ItemBorgModule
     hands:
     - item: MiningDrillDiamond
+    - item: WeaponPlasmaCutter # DS14
     - item: Shovel
     - item: AdvancedMineralScannerUnpowered
     - item: OreBagOfHolding
@@ -707,6 +710,7 @@
     - item: WelderExperimental
     - item: Multitool
     - item: RemoteSignallerAdvanced
+    - item: WeaponPlasmaCutter # DS14
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-tools-module }
 
@@ -729,24 +733,28 @@
     - state: icon-construction
   - type: ItemBorgModule
     hands:
+    - item: HandCuttingMachine # DS14
     - hand:
         emptyRepresentative: BorgModuleConstructionMaterialPlaceholder
         emptyLabel: borg-slot-construction-empty
         whitelist:
           tags:
           - ConstructionMaterial
+          - Diamond # DS14
     - hand:
         emptyRepresentative: BorgModuleConstructionMaterialPlaceholder
         emptyLabel: borg-slot-construction-empty
         whitelist:
           tags:
           - ConstructionMaterial
+          - Diamond # DS14
     - hand:
         emptyRepresentative: BorgModuleConstructionMaterialPlaceholder
         emptyLabel: borg-slot-construction-empty
         whitelist:
           tags:
           - ConstructionMaterial
+          - Diamond # DS14
     - hand:
         emptyRepresentative: DoorElectronics
         emptyLabel: borg-slot-circuitboards-empty
