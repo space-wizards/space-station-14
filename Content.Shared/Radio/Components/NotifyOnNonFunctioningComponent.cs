@@ -37,11 +37,17 @@ public sealed partial class NotifyOnNonFunctioningComponent : Component
     public LocId? LocUnlocked;
 
     /// <summary>
-    /// Localized string to use when this device is unpowered
-    /// (either by manually turning it off, or by lack of power).
+    /// Localized string to use when this device have
+    /// no power supply to keep working.
     /// </summary>
     [DataField]
     public LocId? LocUnpowered;
+
+    /// <summary>
+    /// Localized string to use when this device is turned off.
+    /// </summary>
+    [DataField]
+    public LocId? LocTurnedOff;
 
     /// <summary>
     /// Localized string to use when this device is unanchored

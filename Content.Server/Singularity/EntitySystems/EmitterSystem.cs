@@ -233,7 +233,7 @@ namespace Content.Server.Singularity.EntitySystems
             {
                 state = EmitterVisualState.On;
             }
-            else if (TryComp<PowerStateComponent>(uid, out var powerState) && powerState.IsWorking)
+            else if (_powerState.GetWorkingState(uid))
             {
                 state = EmitterVisualState.Underpowered;
             }

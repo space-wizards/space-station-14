@@ -51,17 +51,17 @@ public sealed partial class NotifyOnNonFunctioningSystem : EntitySystem
     private void OnIsWorkingChanges(Entity<NotifyOnNonFunctioningComponent> ent, ref PowerStateChanged args)
     {
         // deleted entity is working change should be handled during other events
-        if (args.IsWorking || !ent.Comp.LocUnpowered.HasValue || TerminatingOrDeleted(ent))
+        if (args.IsWorking || !ent.Comp.LocTurnedOff.HasValue || TerminatingOrDeleted(ent))
             return;
 
-        AlertRadio(ent, ent.Comp.LocUnpowered);
+        AlertRadio(ent, ent.Comp.LocTurnedOff);
     }
 
     /// <summary> Notify on unanchoring. </summary>
     [SubscribeLocalEvent]
     private void OnAnchorStateChanged(Entity<NotifyOnNonFunctioningComponent> ent, ref AnchorStateChangedEvent args)
     {
-        if (args.Anchored || !ent.Comp.LocUnanchored.HasValue)
+        if (args.Anchored || !ent.Comp.LocUnanchored.HasValue || TerminatingOrDeleted(ent))
             return;
 
         AlertRadioIfWasWorking(ent, ent.Comp.LocUnanchored);

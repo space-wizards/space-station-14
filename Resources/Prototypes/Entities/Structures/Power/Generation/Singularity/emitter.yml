@@ -43,8 +43,8 @@
   - type: NotifyOnNonFunctioning
     locDestroyed: emitter-destroyed-broadcast
     locUnlocked: emitter-unlocked-broadcast
-    locDeconstructed: emitter-deconstructed-broadcast
-    locUnpowered:  emitter-unpowered-broadcast
+    locUnpowered: emitter-unpowered-broadcast
+    locTurnedOff: emitter-turn-off-broadcast
     radioChannel: Engineering
     requirePowered: true
   - type: Gun
