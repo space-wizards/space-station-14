@@ -181,7 +181,7 @@
     fireBurstDelayMin: 2
     fireBurstDelayMax: 6
   - type: NotifyOnNonFunctioning
-    locUnlocked: emitter-unlocked-broadcast
+    locUnlocked: ape-unlocked-broadcast
     radioChannel: Science
     requirePowered: true
   - type: PowerState
