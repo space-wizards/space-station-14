@@ -7,20 +7,12 @@ namespace Content.Shared.Vehicle.Systems;
 
 public sealed partial class VehicleSystem
 {
-    public bool TryGetOperatorContainer(
-        Entity<ContainerVehicleComponent?> vehicle,
-        [NotNullWhen(true)] out BaseContainer? container)
-    {
-        container = null;
-        return Resolve(vehicle, ref vehicle.Comp, false) &&
-            _container.TryGetContainer(vehicle, vehicle.Comp.ContainerId, out container);
-    }
-
     [SubscribeLocalEvent]
     private void OnVehicleStrapped(Entity<StrapVehicleComponent> ent, ref StrappedEvent args)
     {
         if (!_vehicleQuery.TryComp(ent, out var vehicle))
             return;
+
         TrySetOperator((ent, vehicle), args.Buckle);
     }
 
@@ -61,5 +53,64 @@ public sealed partial class VehicleSystem
             return;
 
         TryRemoveOperator((ent, vehicle));
+    }
+
+    /// <summary>
+    /// Attempts to get the container used to determine the operator of a container vehicle.
+    /// </summary>
+    public bool TryGetOperatorContainer(
+        Entity<ContainerVehicleComponent?> vehicle,
+        [NotNullWhen(true)] out BaseContainer? container)
+    {
+        container = null;
+        return Resolve(vehicle, ref vehicle.Comp, false) &&
+            _container.TryGetContainer(vehicle, vehicle.Comp.ContainerId, out container);
+    }
+
+    /// <summary>
+    /// Checks whether an entity can enter a container vehicle.
+    /// </summary>
+    public bool CanEnter(Entity<ContainerVehicleComponent?> vehicle, EntityUid toEnter)
+    {
+        if (!_actionBlocker.CanMove(toEnter))
+            return false;
+
+        if (GetOperatorOrNull(vehicle.Owner) == toEnter)
+            return false;
+
+        if (!HasOperator(vehicle.Owner) &&
+            !CanOperate(vehicle.Owner, toEnter))
+            return false;
+
+        return TryGetOperatorContainer(vehicle, out var container) &&
+               _container.CanInsert(toEnter, container);
+    }
+
+    /// <summary>
+    /// Attempts to insert an entity into a container vehicle's operator container.
+    /// </summary>
+    public bool TryEnter(Entity<ContainerVehicleComponent?> vehicle, EntityUid toEnter)
+    {
+        if (!CanEnter(vehicle, toEnter))
+            return false;
+
+        if (!TryGetOperatorContainer(vehicle, out var container))
+            return false;
+
+        return _container.Insert(toEnter, container);
+    }
+
+    /// <summary>
+    /// Attempts to remove the current operator from a container vehicle.
+    /// </summary>
+    public bool TryExit(Entity<ContainerVehicleComponent?> vehicle)
+    {
+        if (!TryGetOperatorContainer(vehicle, out var container))
+            return false;
+
+        if (!TryGetOperator(vehicle.Owner, out var operatorEnt))
+            return false;
+
+        return _container.Remove(operatorEnt.Value.Owner, container);
     }
 }

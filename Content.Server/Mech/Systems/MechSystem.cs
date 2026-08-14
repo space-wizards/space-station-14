@@ -150,7 +150,7 @@ public sealed partial class MechSystem : SharedMechSystem
         if (!args.CanAccess || !args.CanInteract || component.Broken)
             return;
 
-        if (CanInsert(uid, args.User, component))
+        if (Vehicle.CanEnter(uid, args.User))
         {
             var enterVerb = new AlternativeVerb
             {
@@ -184,7 +184,7 @@ public sealed partial class MechSystem : SharedMechSystem
                 {
                     if (args.User == uid || args.User == operatorUid)
                     {
-                        if(TryEject(uid, component))
+                        if(Vehicle.TryExit(uid))
                             _ui.CloseUi(uid, MechUiKey.Key);
                         return;
                     }
@@ -214,7 +214,7 @@ public sealed partial class MechSystem : SharedMechSystem
             return;
         }
 
-        TryInsert(uid, args.User, component);
+        Vehicle.TryEnter(uid, args.User);
         args.Handled = true;
     }
 
@@ -224,7 +224,7 @@ public sealed partial class MechSystem : SharedMechSystem
         if (args.Cancelled || args.Handled)
             return;
 
-        if (!TryEject(uid, component))
+        if (!Vehicle.TryExit(uid))
             return;
 
         _ui.CloseUi(uid, MechUiKey.Key);

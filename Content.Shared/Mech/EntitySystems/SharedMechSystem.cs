@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
@@ -29,7 +28,6 @@ public abstract partial class SharedMechSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private INetManager _net = default!;
-    [Dependency] private ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedContainerSystem _container = default!;
@@ -54,7 +52,7 @@ public abstract partial class SharedMechSystem : EntitySystem
         if (args.Handled)
             return;
         args.Handled = true;
-        TryEject(uid, component);
+        Vehicle.TryExit(uid);
     }
 
     [SubscribeLocalEvent]
@@ -127,7 +125,7 @@ public abstract partial class SharedMechSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        TryEject(uid, component);
+        Vehicle.TryExit(uid);
         var equipment = new List<EntityUid>(component.EquipmentContainer.ContainedEntities);
         foreach (var ent in equipment)
         {
@@ -294,28 +292,6 @@ public abstract partial class SharedMechSystem : EntitySystem
     }
 
     /// <summary>
-    /// Checks if an entity can be inserted into the mech.
-    /// </summary>
-    /// <param name="uid"></param>
-    /// <param name="toInsert"></param>
-    /// <param name="component"></param>
-    /// <returns></returns>
-    public bool CanInsert(EntityUid uid, EntityUid toInsert, MechComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return false;
-
-        if (!_actionBlocker.CanMove(toInsert))
-            return false;
-
-        if (Vehicle.GetOperatorOrNull(uid) == toInsert)
-            return false;
-
-        return Vehicle.TryGetOperatorContainer(uid, out var pilotContainer) &&
-               _container.CanInsert(toInsert, pilotContainer);
-    }
-
-    /// <summary>
     /// Updates the user interface
     /// </summary>
     /// <remarks>
@@ -323,45 +299,6 @@ public abstract partial class SharedMechSystem : EntitySystem
     /// </remarks>
     public virtual void UpdateUserInterface(EntityUid uid, MechComponent? component = null)
     {
-    }
-
-    /// <summary>
-    /// Attempts to insert a pilot into the mech.
-    /// </summary>
-    /// <param name="uid"></param>
-    /// <param name="toInsert"></param>
-    /// <param name="component"></param>
-    /// <returns>Whether or not the entity was inserted</returns>
-    public bool TryInsert(EntityUid uid, EntityUid toInsert, MechComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return false;
-
-        if (!CanInsert(uid, toInsert, component))
-            return false;
-
-        if (!Vehicle.TryGetOperatorContainer(uid, out var pilotContainer))
-            return false;
-
-        _container.Insert(toInsert, pilotContainer);
-        return true;
-    }
-
-    /// <summary>
-    /// Attempts to eject the current pilot from the mech
-    /// </summary>
-    /// <param name="uid"></param>
-    /// <param name="component"></param>
-    /// <returns>Whether or not the pilot was ejected.</returns>
-    public bool TryEject(EntityUid uid, MechComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return false;
-
-        if (!Vehicle.TryGetOperator(uid, out var operatorEnt))
-            return false;
-
-        return _container.RemoveEntity(uid, operatorEnt.Value);
     }
 
     [SubscribeLocalEvent]
@@ -412,7 +349,7 @@ public abstract partial class SharedMechSystem : EntitySystem
     {
         args.Handled = true;
 
-        args.CanDrop |= !component.Broken && CanInsert(uid, args.Dragged, component);
+        args.CanDrop |= !component.Broken && Vehicle.CanEnter(uid, args.Dragged);
     }
 
     [SubscribeLocalEvent]
