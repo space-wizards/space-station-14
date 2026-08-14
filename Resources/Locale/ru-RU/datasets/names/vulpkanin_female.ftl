@@ -1,0 +1,223 @@
+names-vulpkanin-female-dataset-2 = Агата
+
+names-vulpkanin-female-dataset-3 = Агнеза
+
+names-vulpkanin-female-dataset-4 = Алдона
+
+names-vulpkanin-female-dataset-5 = Амира
+
+names-vulpkanin-female-dataset-6 = Анжела
+
+names-vulpkanin-female-dataset-7 = Аполена
+
+names-vulpkanin-female-dataset-8 = Азия
+
+names-vulpkanin-female-dataset-9 = Барбара
+
+names-vulpkanin-female-dataset-10 = Бася
+
+names-vulpkanin-female-dataset-11 = Беатрис
+
+names-vulpkanin-female-dataset-12 = Бланка
+
+names-vulpkanin-female-dataset-13 = Богумила
+
+names-vulpkanin-female-dataset-14 = Бруна
+
+names-vulpkanin-female-dataset-15 = Сецилия
+
+names-vulpkanin-female-dataset-16 = Цирила
+
+names-vulpkanin-female-dataset-17 = Чеслава
+
+names-vulpkanin-female-dataset-18 = Дагмар
+
+names-vulpkanin-female-dataset-19 = Даяна
+
+names-vulpkanin-female-dataset-20 = Дамира
+
+names-vulpkanin-female-dataset-21 = Данка
+
+names-vulpkanin-female-dataset-22 = Дарья
+
+names-vulpkanin-female-dataset-23 = Диана
+
+names-vulpkanin-female-dataset-24 = Димитрина
+
+names-vulpkanin-female-dataset-25 = Добромила
+
+names-vulpkanin-female-dataset-26 = Домника
+
+names-vulpkanin-female-dataset-27 = Доротея
+
+names-vulpkanin-female-dataset-28 = Драгослава
+
+names-vulpkanin-female-dataset-29 = Эдита
+
+names-vulpkanin-female-dataset-30 = Элиза
+
+names-vulpkanin-female-dataset-31 = Эна
+
+names-vulpkanin-female-dataset-32 = Эрика
+
+names-vulpkanin-female-dataset-33 = Эстер
+
+names-vulpkanin-female-dataset-34 = Эвелина
+
+names-vulpkanin-female-dataset-35 = Фатима
+
+names-vulpkanin-female-dataset-36 = Фикрета
+
+names-vulpkanin-female-dataset-37 = Филиппина
+
+names-vulpkanin-female-dataset-38 = Франка
+
+names-vulpkanin-female-dataset-39 = Габриэла
+
+names-vulpkanin-female-dataset-40 = Галена
+
+names-vulpkanin-female-dataset-41 = Геновефа
+
+names-vulpkanin-female-dataset-42 = Галина
+
+names-vulpkanin-female-dataset-43 = Хана
+
+names-vulpkanin-female-dataset-44 = Елена
+
+names-vulpkanin-female-dataset-45 = Кристина
+
+names-vulpkanin-female-dataset-46 = Иоана
+
+names-vulpkanin-female-dataset-47 = Ирена
+
+names-vulpkanin-female-dataset-48 = Ивайла
+
+names-vulpkanin-female-dataset-49 = Изабелла
+
+names-vulpkanin-female-dataset-50 = Ягода
+
+names-vulpkanin-female-dataset-51 = Йолана
+
+names-vulpkanin-female-dataset-52 = Йовка
+
+names-vulpkanin-female-dataset-53 = Юлия
+
+names-vulpkanin-female-dataset-54 = Кая
+
+names-vulpkanin-female-dataset-55 = Карина
+
+names-vulpkanin-female-dataset-56 = Ката
+
+names-vulpkanin-female-dataset-57 = Катья
+
+names-vulpkanin-female-dataset-58 = Клаудия
+
+names-vulpkanin-female-dataset-59 = Клементина
+
+names-vulpkanin-female-dataset-60 = Кристина
+
+names-vulpkanin-female-dataset-61 = Лаура
+
+names-vulpkanin-female-dataset-62 = Лиляна
+
+names-vulpkanin-female-dataset-63 = Магдалена
+
+names-vulpkanin-female-dataset-64 = Майя
+
+names-vulpkanin-female-dataset-65 = Марика
+
+names-vulpkanin-female-dataset-66 = Матильда
+
+names-vulpkanin-female-dataset-67 = Надежда
+
+names-vulpkanin-female-dataset-68 = Наталья
+
+names-vulpkanin-female-dataset-69 = Наташа
+
+names-vulpkanin-female-dataset-70 = Неделя
+
+names-vulpkanin-female-dataset-71 = Нель
+
+names-vulpkanin-female-dataset-72 = Невена
+
+names-vulpkanin-female-dataset-73 = Николь
+
+names-vulpkanin-female-dataset-74 = Оливия
+
+names-vulpkanin-female-dataset-75 = Патриция
+
+names-vulpkanin-female-dataset-76 = Паулина
+
+names-vulpkanin-female-dataset-77 = Петра
+
+names-vulpkanin-female-dataset-78 = Петья
+
+names-vulpkanin-female-dataset-79 = Радомира
+
+names-vulpkanin-female-dataset-80 = Рахела
+
+names-vulpkanin-female-dataset-81 = Райна
+
+names-vulpkanin-female-dataset-82 = Ранка
+
+names-vulpkanin-female-dataset-83 = Рая
+
+names-vulpkanin-female-dataset-84 = Рената
+
+names-vulpkanin-female-dataset-85 = Роза
+
+names-vulpkanin-female-dataset-86 = Сильвия
+
+names-vulpkanin-female-dataset-87 = Симона
+
+names-vulpkanin-female-dataset-88 = Станислава
+
+names-vulpkanin-female-dataset-89 = Стефания
+
+names-vulpkanin-female-dataset-90 = Сватава
+
+names-vulpkanin-female-dataset-91 = Сильва
+
+names-vulpkanin-female-dataset-92 = Тамара
+
+names-vulpkanin-female-dataset-93 = Тина
+
+names-vulpkanin-female-dataset-94 = Тоня
+
+names-vulpkanin-female-dataset-95 = Траянка
+
+names-vulpkanin-female-dataset-96 = Ула
+
+names-vulpkanin-female-dataset-97 = Урса
+
+names-vulpkanin-female-dataset-98 = Валентина
+
+names-vulpkanin-female-dataset-99 = Валерия
+
+names-vulpkanin-female-dataset-100 = Ванесса
+
+names-vulpkanin-female-dataset-101 = Василина
+
+names-vulpkanin-female-dataset-102 = Венера
+
+names-vulpkanin-female-dataset-103 = Вера
+
+names-vulpkanin-female-dataset-104 = Виктория
+
+names-vulpkanin-female-dataset-105 = Виолетта
+
+names-vulpkanin-female-dataset-106 = Вита
+
+names-vulpkanin-female-dataset-107 = Йоана
+
+names-vulpkanin-female-dataset-108 = Юлия
+
+names-vulpkanin-female-dataset-109 = Иветта
+
+names-vulpkanin-female-dataset-110 = Ивона
+
+names-vulpkanin-female-dataset-111 = Зофия
+
+names-vulpkanin-female-dataset-112 = Зорка
+
+names-vulpkanin-female-dataset-113 = Зузанна

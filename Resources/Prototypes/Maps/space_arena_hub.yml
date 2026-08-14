@@ -1,0 +1,18 @@
+- type: gameMap
+  id: SpaceArenaHub
+  mapName: SpaceArena Hub
+  mapPath: /Maps/SpaceArena/hub.yml
+  minPlayers: 0
+  maxPlayers: 256
+  maxRandomOffset: 0
+  randomRotation: false
+  spaceArenaHubProtection: true
+  stations:
+    Hub:
+      stationProto: SpaceArenaHubStation
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: "SpaceArena Hub"
+      - type: StationJobs
+        availableJobs:
+          Passenger: [ -1, -1 ]

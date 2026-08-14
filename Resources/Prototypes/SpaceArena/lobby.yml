@@ -1,0 +1,67 @@
+- type: entity
+  parent: BaseComputerAiAccess
+  id: ComputerSpaceArenaLobby
+  name: SpaceArena lobby terminal
+  description: Browse player-created rooms, join a match, or host your own.
+  components:
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: entertainment
+    - map: ["computerLayerKeys"]
+      state: generic_keys
+    - map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      state: generic_panel_open
+  - type: SpaceArenaLobbyTerminal
+    modes:
+    - SpaceArenaDeathMatch
+    - SpaceArenaDrawing
+    arenas:
+    - SpaceArenaByblik
+    - SpaceArenaDust
+    - SpaceArenaForest
+    - SpaceArenaFrozen
+    - SpaceArenaIce
+    - SpaceArenaKnights
+    - SpaceArenaKnights3v3
+    - SpaceArenaLaser
+    - SpaceArenaLava
+    - SpaceArenaLava2v2
+    - SpaceArenaMine
+    - SpaceArenaPirates
+    - SpaceArenaTunnel
+    - SpaceArenaDuel
+    - SpaceArenaUplink2v2
+    - SpaceArenaCanvas
+  - type: ActivatableUI
+    key: enum.SpaceArenaLobbyUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+      enum.SpaceArenaLobbyUiKey.Key:
+        type: SpaceArenaLobbyBoundUserInterface
+        interactionRange: 0
+        requireInputValidation: false
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: Computer
+    board: SpaceArenaLobbyComputerCircuitboard
+  - type: PointLight
+    radius: 1.5
+    energy: 4
+    color: "#7c4dff"
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: SpaceArenaLobbyComputerCircuitboard
+  name: SpaceArena lobby terminal board
+  description: A computer printed circuit board for a SpaceArena lobby terminal.
+  components:
+  - type: Sprite
+    state: cpu_service
+  - type: ComputerBoard
+    prototype: ComputerSpaceArenaLobby

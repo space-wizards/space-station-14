@@ -1,0 +1,18 @@
+- type: entity
+  id: SpaceArenaStation
+  parent:
+  - BaseStation
+  - BaseStationNanotrasen
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Transform
+
+- type: entity
+  id: SpaceArenaHubStation
+  parent:
+  - BaseStation
+  - BaseStationJobsSpawning
+  - BaseStationNanotrasen
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Transform

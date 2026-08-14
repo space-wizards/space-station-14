@@ -1,0 +1,21 @@
+pill-label-dexalin-20u = дексалин 20 ед
+
+pill-label-dylovene-20u = диловен 20 ед
+
+pill-label-hyronalin-20u = хироналин 20 ед
+
+pill-label-potassium-iodide-20u = иодид калия 20 ед
+
+pill-label-iron-20u = железо 20 ед
+
+pill-label-copper-20u = медь 20 ед
+
+pill-label-kelotane-20u = келотан 20 ед
+
+pill-label-dermaline-20u = дермалин 20 ед
+
+pill-label-tricordrazine-20u = трикордразин 20 ед
+
+pill-label-bicaridine-20u = бикаридин 20 ед
+
+pill-label-charcoal-20u = уголь 20 ед

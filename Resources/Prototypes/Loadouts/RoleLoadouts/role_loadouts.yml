@@ -42,24 +42,6 @@
 
 # Civilian
 - type: roleLoadout
-  id: JobPassenger
-  groups:
-  - GroupTankHarness
-  - PassengerJumpsuit
-  - CommonBackpack
-  - PassengerNeck
-  - PassengerFace
-  - PassengerGloves
-  - PassengerOuterClothing
-  - PassengerShoes
-  - Glasses
-  - AssistiveItems
-  - Survival
-  - Trinkets
-  #- PassengerJobTrinkets
-  - GroupSpeciesBreathTool
-
-- type: roleLoadout
   id: JobBartender
   groups:
   - GroupTankHarness

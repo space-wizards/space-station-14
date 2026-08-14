@@ -1,0 +1,17 @@
+department-Civilian-description = Удовлетворяйте основные физические и психологические потребности экипажа.
+
+department-Command-description = Управляйте экипажем и обеспечивайте его эффективную работу.
+
+department-CentralCommand-description = Руководите экипажем и обеспечивайте его эффективную работу.
+
+department-Engineering-description = Поддерживайте и чините станцию.
+
+department-Medical-description = Поддерживайте здоровье экипажа.
+
+department-Security-description = Защищайте станцию и поддерживайте порядок.
+
+department-Science-description = Изучайте и разрабатывайте новые технологии для станции.
+
+department-Silicon-description = Следуйте установленным вам законам.
+
+department-Specific-description = Должности, которые есть не на всех станциях.

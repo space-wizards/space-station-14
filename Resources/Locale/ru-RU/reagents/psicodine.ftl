@@ -1,0 +1,3 @@
+psicodine-effect-anxieties-wash-away = Все ваши тревоги улетучиваются!
+
+psicodine-effect-at-peace = Вы чувствуете полное умиротворение.

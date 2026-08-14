@@ -1,0 +1,35 @@
+gas-oxygen = Кислород
+
+gas-oxygen-abbreviation = O₂
+
+gas-nitrogen = Азот
+
+gas-nitrogen-abbreviation = N₂
+
+gas-carbon-dioxide = Углекислый газ
+
+gas-carbon-dioxide-abbreviation = CO₂
+
+gas-plasma = Плазма
+
+gas-plasma-abbreviation = P
+
+gas-tritium = Тритий
+
+gas-tritium-abbreviation = T
+
+gas-water-vapor = Водяной пар
+
+gas-water-vapor-abbreviation = H₂O
+
+gas-ammonia = Аммиак
+
+gas-ammonia-abbreviation = NH₃
+
+gas-nitrous-oxide = Оксид азота
+
+gas-nitrous-oxide-abbreviation = N₂O
+
+gas-frezon = Фрезон
+
+gas-frezon-abbreviation = F

@@ -1,0 +1,252 @@
+- type: entity
+  parent: BaseUplinkRadio40TC
+  id: ArenaUplinkRadio40TC
+  suffix: Arena, 40 TC
+  components:
+  - type: Store
+    categories:
+    - UplinkWeaponry
+    - UplinkAmmo
+    - UplinkExplosives
+    - UplinkChemicals
+    - UplinkDeception
+    - UplinkDisruption
+    - UplinkWearables
+    - UplinkPointless
+    balance:
+      Telecrystal: 40
+
+- type: entity
+  parent: ClothingShoesBootsSpeed
+  id: ClothingShoesBootsSpeedArenaMicroreactor
+  suffix: Arena, Microreactor
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMicroreactor
+
+- type: startingGear
+  id: SpaceArenaHubChameleonGear
+  equipment:
+    back: ClothingBackpackChameleon
+    jumpsuit: ClothingUniformJumpsuitChameleon
+    outerClothing: ClothingOuterChameleon
+    neck: ClothingNeckChameleon
+    mask: ClothingMaskGasChameleon
+    head: ClothingHeadHatChameleon
+    gloves: ClothingHandsChameleon
+    eyes: ClothingEyesChameleon
+    ears: ClothingHeadsetChameleon
+    shoes: ClothingShoesChameleon
+    id: ChameleonPDA
+  storage:
+    back:
+    - ChameleonControllerImplanter
+
+- type: startingGear
+  id: ArenaLoadoutDust
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBrown
+    outerClothing: ClothingOuterCoatDetective
+    shoes: ClothingShoesBootsCowboyBrownFilled
+    head: ClothingHeadHatCowboyBrown
+    mask: ClothingMaskBandBrown
+    eyes: ClothingEyesGlassesSunglasses
+    gloves: ClothingHandsGlovesFingerless
+    belt: ClothingBeltHolster
+  inhand:
+  - WeaponRevolverInspector
+  storage:
+    belt:
+    - SpeedLoaderMagnum
+    - SpeedLoaderMagnum
+    - SpeedLoaderMagnum
+
+- type: startingGear
+  id: ArenaLoadoutLava
+  equipment:
+    neck: ClothingNeckCloakGoliathCloak
+    outerClothing: ClothingOuterHardsuitGoliath
+  inhand:
+  - WeaponEnergyMagnum
+  - WeaponEnergyMagnum
+
+- type: startingGear
+  id: ArenaLoadoutByblik
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    shoes: ClothingShoesBootsSyndieFilled
+    gloves: ClothingHandsGlovesColorBlack
+    outerClothing: ClothingOuterVestWebElite
+    back: ClothingBackpackSyndicate
+  inhand:
+  - WeaponRifleEstoc
+  storage:
+    outerClothing:
+    - MagazineRifle
+    - MagazineRifle
+
+- type: startingGear
+  id: ArenaLoadoutLawyerSniper
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitLawyerBlack
+    neck: ClothingNeckTieRed
+    gloves: ClothingHandsGlovesLatex
+    shoes: ClothingShoesBootsLaceup
+    back: ClothingBackpackSatchelLeather
+  inhand:
+  - WeaponSniperHristov
+  storage:
+    back:
+    - MagazineBoxAntiMateriel
+    - MagazineBoxAntiMateriel
+
+- type: startingGear
+  id: ArenaLoadoutWinter
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorWhite
+    outerClothing: ClothingOuterWinterColorWhite
+    shoes: ClothingShoesBootsSpeedArenaMicroreactor
+  inhand:
+  - WeaponMeleeKnockbackStick
+
+- type: startingGear
+  id: ArenaLoadoutMercenary
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMercenary
+    shoes: ClothingShoesBootsMercFilled
+    head: ClothingHeadHelmetMerc
+    eyes: ClothingEyesGlassesMercenary
+    belt: ClothingBeltMercWebbing
+    pocket1: WeaponPistolCobra
+  inhand:
+  - WeaponRifleAk
+  storage:
+    belt:
+    - MagazineLightRifle
+    - MagazineLightRifle
+    - MagazineLightRifle
+
+- type: startingGear
+  id: ArenaLoadoutFrozen
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMercenary
+    shoes: ClothingShoesBootsMercFilled
+    head: ClothingHeadHelmetMerc
+    eyes: ClothingEyesGlassesMercenary
+    belt: ClothingBeltMercWebbing
+    pocket1: WeaponPistolCobra
+  inhand:
+  - WeaponLightMachineGunL6
+  storage:
+    belt:
+    - MagazineLightRifleBox
+    - MagazineLightRifleBox
+    - MagazineLightRifleBox
+
+- type: startingGear
+  id: ArenaLoadoutOperative
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    shoes: ClothingShoesBootsCombatFilled
+    gloves: ClothingHandsGlovesCombat
+    pocket1: ArenaUplinkRadio40TC
+
+- type: startingGear
+  id: ArenaLoadoutArcher
+  equipment:
+    jumpsuit: UniformScrubsColorGreen
+    mask: ClothingMaskBandGreen
+    gloves: ClothingHandsGlovesColorGreen
+    shoes: ClothingShoesBootsLaceup
+    belt: ClothingBeltQuiver
+  inhand:
+  - BowImprovised
+  storage:
+    belt:
+    - ArrowRegular
+    - ArrowRegular
+    - ArrowRegular
+    - ArrowRegular
+    - ArrowRegular
+    - ArrowRegular
+    - ArrowRegular
+    - ArrowRegular
+    - ArrowRegular
+    - ArrowRegular
+    - ArrowRegular
+    - ArrowRegular
+    - ArrowRegular
+    - ArrowRegular
+    - ArrowRegular
+
+- type: startingGear
+  id: ArenaLoadoutKnight
+  equipment:
+    outerClothing: ClothingOuterArmorMagusred
+    neck: ClothingNeckCloakHerald
+    head: ClothingHeadHelmetTemplar
+  inhand:
+  - Claymore
+  - ClockworkShield
+
+- type: startingGear
+  id: ArenaLoadoutLaser
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorWhite
+    neck: ClothingNeckCloakLesbian
+    mask: ClothingMaskWeldingGas
+    gloves: ClothingHandsGlovesColorWhite
+    shoes: ClothingShoesBootsSpeedArenaMicroreactor
+  inhand:
+  - WeaponAntiqueLaser
+  - WeaponAntiqueLaser
+
+- type: startingGear
+  id: ArenaLoadoutPirate
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitPirate
+    outerClothing: ClothingOuterCoatGentle
+    shoes: ClothingShoesBootsLaceup
+    head: ClothingHeadHatPirateTricord
+    back: ClothingBackpackSatchelLeather
+  inhand:
+  - WeaponShotgunBlunderbuss
+  - WeaponLauncherPirateCannon
+  storage:
+    back:
+    - ShellShotgun
+    - ShellShotgun
+    - ShellShotgun
+    - ShellShotgun
+    - ShellShotgun
+    - ShellShotgun
+    - ShellShotgun
+    - ShellShotgun
+    - ShellShotgun
+    - ShellShotgun
+
+- type: startingGear
+  id: ArenaLoadoutLavaSec
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSec
+    outerClothing: ClothingOuterHardsuitMaxim
+    back: PortableRecharger
+  inhand:
+  - WeaponLaserCannon
+  - WeaponLaserSvalinn
+
+- type: startingGear
+  id: ArenaLoadoutSalvage
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSalvageSpecialist
+    shoes: ClothingShoesBootsSalvage
+    head: ClothingHeadHatHardhatYellowDark
+    back: ClothingBackpackSalvage
+    pocket1: Brutepack
+    pocket2: Ointment
+  inhand:
+  - WeaponShotgunSawn
+  - WeaponMakeshiftLaser

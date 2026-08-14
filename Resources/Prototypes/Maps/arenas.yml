@@ -3,6 +3,7 @@
   mapName: Meteor Arena
   mapPath: /Maps/Nonstations/meteor-arena.yml
   minPlayers: 0
+  maxPlayers: 16
   stations:
     Arena:
       stationProto: StandardStationArena
@@ -17,6 +18,7 @@
   mapName: DM01 Entryway
   mapPath: /Maps/Nonstations/dm01-entryway.yml
   minPlayers: 0
+  maxPlayers: 16
   stations:
     dm01-entryway:
       stationProto: StandardStationArena
@@ -26,3 +28,405 @@
         - type: StationJobs
           availableJobs:
             Passenger: [ -1, -1 ]
+
+- type: gameMap
+  id: SpaceArenaByblik
+  isGrid: true
+  mapName: Byblik Arena
+  mapPath: /Maps/SpaceArena/Arenas/byblik_arena.yml
+  minPlayers: 2
+  maxPlayers: 2
+  maxRandomOffset: 0
+  randomRotation: false
+  spaceArena:
+    lobbyFormat: 1×1
+    previewWeapon: WeaponRifleEstoc
+    modes:
+    - SpaceArenaDeathMatch
+    spawnGroups:
+    - TeamA
+    - TeamB
+    loadout: ArenaLoadoutByblik
+  stations:
+    Arena:
+      stationProto: SpaceArenaStation
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: "Byblik Arena"
+
+- type: gameMap
+  id: SpaceArenaDust
+  isGrid: true
+  mapName: Dust Arena
+  mapPath: /Maps/SpaceArena/Arenas/dust_arena.yml
+  minPlayers: 2
+  maxPlayers: 2
+  maxRandomOffset: 0
+  randomRotation: false
+  spaceArena:
+    lobbyFormat: 1×1
+    previewWeapon: WeaponRevolverInspector
+    modes:
+    - SpaceArenaDeathMatch
+    spawnGroups:
+    - TeamA
+    - TeamB
+    loadout: ArenaLoadoutDust
+  stations:
+    Arena:
+      stationProto: SpaceArenaStation
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: "Dust Arena"
+
+- type: gameMap
+  id: SpaceArenaForest
+  isGrid: true
+  mapName: Forest Arena
+  mapPath: /Maps/SpaceArena/Arenas/forest_arena.yml
+  minPlayers: 2
+  maxPlayers: 2
+  maxRandomOffset: 0
+  randomRotation: false
+  spaceArena:
+    lobbyFormat: 1×1
+    previewWeapon: WeaponRifleAk
+    modes:
+    - SpaceArenaDeathMatch
+    spawnGroups:
+    - TeamA
+    - TeamB
+    loadout: ArenaLoadoutMercenary
+  stations:
+    Arena:
+      stationProto: SpaceArenaStation
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: "Forest Arena"
+
+- type: gameMap
+  id: SpaceArenaFrozen
+  isGrid: true
+  mapName: Frozen Arena
+  mapPath: /Maps/SpaceArena/Arenas/frozen_arena.yml
+  minPlayers: 2
+  maxPlayers: 2
+  maxRandomOffset: 0
+  randomRotation: false
+  spaceArena:
+    lobbyFormat: 1×1
+    previewWeapon: WeaponLightMachineGunL6
+    modes:
+    - SpaceArenaDeathMatch
+    spawnGroups:
+    - TeamA
+    - TeamB
+    loadout: ArenaLoadoutFrozen
+  stations:
+    Arena:
+      stationProto: SpaceArenaStation
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: "Frozen Arena"
+
+- type: gameMap
+  id: SpaceArenaIce
+  isGrid: true
+  mapName: Ice Arena
+  mapPath: /Maps/SpaceArena/Arenas/ice_arena.yml
+  minPlayers: 2
+  maxPlayers: 2
+  maxRandomOffset: 0
+  randomRotation: false
+  spaceArena:
+    lobbyFormat: 1×1
+    previewWeapon: WeaponMeleeKnockbackStick
+    modes:
+    - SpaceArenaDeathMatch
+    spawnGroups:
+    - TeamA
+    - TeamB
+    loadout: ArenaLoadoutWinter
+  stations:
+    Arena:
+      stationProto: SpaceArenaStation
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: "Ice Arena"
+
+- type: gameMap
+  id: SpaceArenaKnights
+  isGrid: true
+  mapName: Knights Arena
+  mapPath: /Maps/SpaceArena/Arenas/knights_arena.yml
+  minPlayers: 2
+  maxPlayers: 2
+  maxRandomOffset: 0
+  randomRotation: false
+  spaceArena:
+    lobbyFormat: 1×1
+    previewWeapon: Claymore
+    modes:
+    - SpaceArenaDeathMatch
+    spawnGroups:
+    - TeamA
+    - TeamB
+    loadout: ArenaLoadoutKnight
+  stations:
+    Arena:
+      stationProto: SpaceArenaStation
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: "Knights Arena"
+
+- type: gameMap
+  id: SpaceArenaKnights3v3
+  isGrid: true
+  mapName: Knights Arena
+  mapPath: /Maps/SpaceArena/Arenas/knights_arena_3v3.yml
+  minPlayers: 2
+  maxPlayers: 6
+  maxRandomOffset: 0
+  randomRotation: false
+  spaceArena:
+    lobbyFormat: 3×3
+    previewWeapon: Claymore
+    modes:
+    - SpaceArenaDeathMatch
+    spawnGroups:
+    - TeamA
+    - TeamB
+    loadouts:
+    - ArenaLoadoutKnight
+    - ArenaLoadoutArcher
+    - ArenaLoadoutArcher
+  stations:
+    Arena:
+      stationProto: SpaceArenaStation
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: "Knights Arena"
+
+- type: gameMap
+  id: SpaceArenaLaser
+  isGrid: true
+  mapName: Laser Arena
+  mapPath: /Maps/SpaceArena/Arenas/laser_arena.yml
+  minPlayers: 2
+  maxPlayers: 2
+  maxRandomOffset: 0
+  randomRotation: false
+  spaceArena:
+    lobbyFormat: 1×1
+    previewWeapon: WeaponAntiqueLaser
+    modes:
+    - SpaceArenaDeathMatch
+    spawnGroups:
+    - TeamA
+    - TeamB
+    loadout: ArenaLoadoutLaser
+  stations:
+    Arena:
+      stationProto: SpaceArenaStation
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: "Laser Arena"
+
+- type: gameMap
+  id: SpaceArenaLava
+  isGrid: true
+  mapName: Lava Arena
+  mapPath: /Maps/SpaceArena/Arenas/lava_arena.yml
+  minPlayers: 2
+  maxPlayers: 2
+  maxRandomOffset: 0
+  randomRotation: false
+  spaceArena:
+    lobbyFormat: 1×1
+    previewWeapon: WeaponEnergyMagnum
+    modes:
+    - SpaceArenaDeathMatch
+    spawnGroups:
+    - TeamA
+    - TeamB
+    loadout: ArenaLoadoutLava
+  stations:
+    Arena:
+      stationProto: SpaceArenaStation
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: "Lava Arena"
+
+- type: gameMap
+  id: SpaceArenaLava2v2
+  isGrid: true
+  mapName: Lava Arena
+  mapPath: /Maps/SpaceArena/Arenas/lava_arena_2v2.yml
+  minPlayers: 2
+  maxPlayers: 4
+  maxRandomOffset: 0
+  randomRotation: false
+  spaceArena:
+    lobbyFormat: 2×2
+    previewWeapon: WeaponLaserCannon
+    modes:
+    - SpaceArenaDeathMatch
+    spawnGroups:
+    - TeamA
+    - TeamB
+    loadout: ArenaLoadoutLavaSec
+  stations:
+    Arena:
+      stationProto: SpaceArenaStation
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: "Lava Arena"
+
+- type: gameMap
+  id: SpaceArenaMine
+  isGrid: true
+  mapName: Mine Arena
+  mapPath: /Maps/SpaceArena/Arenas/mine_arena.yml
+  minPlayers: 2
+  maxPlayers: 2
+  maxRandomOffset: 0
+  randomRotation: false
+  spaceArena:
+    lobbyFormat: 1×1
+    previewWeapon: WeaponShotgunSawn
+    modes:
+    - SpaceArenaDeathMatch
+    spawnGroups:
+    - TeamA
+    - TeamB
+    loadout: ArenaLoadoutSalvage
+  stations:
+    Arena:
+      stationProto: SpaceArenaStation
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: "Mine Arena"
+
+- type: gameMap
+  id: SpaceArenaPirates
+  isGrid: true
+  mapName: Pirates Arena
+  mapPath: /Maps/SpaceArena/Arenas/pirates_arena.yml
+  minPlayers: 2
+  maxPlayers: 4
+  maxRandomOffset: 0
+  randomRotation: false
+  spaceArena:
+    lobbyFormat: 2×2
+    previewWeapon: WeaponShotgunBlunderbuss
+    modes:
+    - SpaceArenaDeathMatch
+    spawnGroups:
+    - TeamA
+    - TeamB
+    loadout: ArenaLoadoutPirate
+  stations:
+    Arena:
+      stationProto: SpaceArenaStation
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: "Pirates Arena"
+
+- type: gameMap
+  id: SpaceArenaTunnel
+  isGrid: true
+  mapName: Tunnel Arena
+  mapPath: /Maps/SpaceArena/Arenas/tunnel_arena.yml
+  minPlayers: 2
+  maxPlayers: 2
+  maxRandomOffset: 0
+  randomRotation: false
+  spaceArena:
+    lobbyFormat: 1×1
+    previewWeapon: WeaponSniperHristov
+    modes:
+    - SpaceArenaDeathMatch
+    spawnGroups:
+    - TeamA
+    - TeamB
+    loadout: ArenaLoadoutLawyerSniper
+  stations:
+    Arena:
+      stationProto: SpaceArenaStation
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: "Tunnel Arena"
+
+- type: gameMap
+  id: SpaceArenaDuel
+  isGrid: true
+  mapName: Duel Arena
+  mapPath: /Maps/SpaceArena/Arenas/two_player_arena.yml
+  minPlayers: 2
+  maxPlayers: 2
+  maxRandomOffset: 0
+  randomRotation: false
+  spaceArena:
+    lobbyFormat: 1×1
+    previewWeapon: ArenaUplinkRadio40TC
+    countdownDuration: 60
+    modes:
+    - SpaceArenaDeathMatch
+    spawnGroups:
+    - TeamA
+    - TeamB
+    loadout: ArenaLoadoutOperative
+  stations:
+    Arena:
+      stationProto: SpaceArenaStation
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: "Duel Arena"
+
+- type: gameMap
+  id: SpaceArenaUplink2v2
+  isGrid: true
+  mapName: Uplink Arena
+  mapPath: /Maps/SpaceArena/Arenas/uplink_arena_2v2.yml
+  minPlayers: 2
+  maxPlayers: 4
+  maxRandomOffset: 0
+  randomRotation: false
+  spaceArena:
+    lobbyFormat: 2×2
+    previewWeapon: ArenaUplinkRadio40TC
+    countdownDuration: 60
+    modes:
+    - SpaceArenaDeathMatch
+    spawnGroups:
+    - TeamA
+    - TeamB
+    loadout: ArenaLoadoutOperative
+  stations:
+    Arena:
+      stationProto: SpaceArenaStation
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: "Uplink Arena"
+
+- type: gameMap
+  id: SpaceArenaCanvas
+  isGrid: true
+  mapName: Canvas
+  mapPath: /Maps/SpaceArena/Activities/canvas.yml
+  minPlayers: 1
+  maxPlayers: 1
+  maxRandomOffset: 0
+  randomRotation: false
+  spaceArena:
+    lobbyFormat: 1×1
+    modes:
+    - SpaceArenaDrawing
+    spawnGroups:
+    - Player
+  stations:
+    Arena:
+      stationProto: SpaceArenaStation
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: "Canvas"
