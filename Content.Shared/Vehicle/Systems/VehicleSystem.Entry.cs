@@ -151,7 +151,7 @@ public sealed partial class VehicleSystem
             return false;
 
         var attempt = new ContainerVehicleEntryAttemptEvent(entering);
-        RaiseLocalEvent(vehicle, attempt);
+        RaiseLocalEvent(vehicle, ref attempt);
         return !attempt.Cancelled;
     }
 
@@ -161,7 +161,7 @@ public sealed partial class VehicleSystem
             return false;
 
         var attempt = new ContainerVehicleExitAttemptEvent(user);
-        RaiseLocalEvent(vehicle, attempt);
+        RaiseLocalEvent(vehicle, ref attempt);
         return !attempt.Cancelled;
     }
 }

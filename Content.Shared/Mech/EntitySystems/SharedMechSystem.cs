@@ -233,7 +233,7 @@ public abstract partial class SharedMechSystem : EntitySystem
     /// <param name="component"></param>
     /// <param name="equipmentComponent"></param>
     /// <param name="forced">
-    ///     Whether or not the removal can be cancelled, and if non-mech equipment should be ejected.
+    /// Whether or not the removal can be cancelled, and if non-mech equipment should be ejected.
     /// </param>
     public void RemoveEquipment(EntityUid uid, EntityUid toRemove, MechComponent? component = null,
         MechEquipmentComponent? equipmentComponent = null, bool forced = false)
@@ -371,14 +371,14 @@ public abstract partial class SharedMechSystem : EntitySystem
     private void OnMechEntryAttempt(Entity<MechComponent> ent, ref ContainerVehicleEntryAttemptEvent args)
     {
         if (ent.Comp.Broken)
-            args.Cancel();
+            args.Cancelled = true;
     }
 
     [SubscribeLocalEvent]
     private void OnMechExitAttempt(Entity<MechComponent> ent, ref ContainerVehicleExitAttemptEvent args)
     {
         if (ent.Comp.Broken)
-            args.Cancel();
+            args.Cancelled = true;
     }
 
     [SubscribeLocalEvent]
@@ -403,8 +403,8 @@ public abstract partial class SharedMechSystem : EntitySystem
 }
 
 /// <summary>
-///     Event raised when the battery is successfully removed from the mech,
-///     on both success and failure
+/// Event raised when the battery is successfully removed from the mech,
+/// on both success and failure
 /// </summary>
 [Serializable, NetSerializable]
 public sealed partial class RemoveBatteryEvent : SimpleDoAfterEvent;

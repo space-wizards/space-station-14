@@ -15,6 +15,7 @@ using Content.Shared.Power.EntitySystems;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
 using Content.Shared.Tools.Systems;
+using Content.Shared.Vehicle;
 using Content.Shared.Vehicle.Components;
 using Content.Shared.Wires;
 using Robust.Server.Containers;
