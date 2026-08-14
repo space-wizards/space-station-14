@@ -1,6 +1,9 @@
 using System.Linq;
 using System.Reflection;
 using Content.Shared.Guidebook;
+using Robust.Server.Player;
+using Robust.Shared.Enums;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Reflection;
 using Robust.Shared.Utility;
@@ -14,25 +17,30 @@ namespace Content.Server.Guidebook;
 public sealed partial class GuidebookDataSystem : EntitySystem
 {
     [Dependency] private IReflectionManager _reflection = default!;
+    [Dependency] private IPlayerManager _player = default!;
 
+    private readonly Dictionary<string, List<MemberInfo>> _tagged = [];
     private GuidebookData _cachedData = new();
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeNetworkEvent<RequestGuidebookDataEvent>(OnRequestRules);
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
+        _player.PlayerStatusChanged += OnPlayerStatusChanged;
 
         // Build initial cache
         GatherData(ref _cachedData);
     }
 
-    private void OnRequestRules(RequestGuidebookDataEvent ev, EntitySessionEventArgs args)
+    private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
     {
-        // Send cached data to requesting client
+        if (e.NewStatus != SessionStatus.Connected)
+            return;
+
+        // Send cached data to newly-connected client.
         var sendEv = new UpdateGuidebookDataEvent(_cachedData);
-        RaiseNetworkEvent(sendEv, args.SenderSession);
+        RaiseNetworkEvent(sendEv, e.Session);
     }
 
     private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
@@ -70,7 +78,7 @@ public sealed partial class GuidebookDataSystem : EntitySystem
 
                 prototypeCount++;
 
-                var data = (IGuidebookData) entry.Component;
+                var data = (IGuidebookData)entry.Component;
                 foreach (var name in data.GetFieldNames())
                 {
                     // Add it into the data cache
