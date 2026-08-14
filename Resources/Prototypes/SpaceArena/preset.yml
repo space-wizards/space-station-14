@@ -1,0 +1,9 @@
+- type: gamePreset
+  id: SpaceArena
+  alias:
+  - spacearena
+  - arena
+  name: space-arena-preset-title
+  description: space-arena-preset-description
+  showInVote: false
+  supportedMaps: SpaceArenaMapPool
