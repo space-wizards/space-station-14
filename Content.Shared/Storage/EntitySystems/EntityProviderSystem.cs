@@ -37,6 +37,7 @@ public sealed partial class EntityProviderSystem : EntitySystem
             args.Handled = true;
             return;
         }
+
         if (_providerQuery.TryComp(args.Target, out var targetComp))
             args.Handled = TryFillOtherProvider(provider, (args.Target.Value, targetComp), args.User);
     }
@@ -52,6 +53,7 @@ public sealed partial class EntityProviderSystem : EntitySystem
             args.Handled = true;
             return;
         }
+
         if (_storageQuery.TryComp(args.Used, out var storage))
             args.Handled = TryFillFromStorage(provider, (args.Used, storage), args.User);
     }
@@ -68,6 +70,7 @@ public sealed partial class EntityProviderSystem : EntitySystem
     {
         if (_whitelist.IsWhitelistFail(provider.Comp.Whitelist, target))
             return false;
+
         // This event allows for a deeper check than a whitelist/blacklist.
         var ev = new EntityProviderInsertCheckEvent();
         RaiseLocalEvent(target, ref ev);
@@ -105,7 +108,7 @@ public sealed partial class EntityProviderSystem : EntitySystem
         var success = false;
         List<EntProtoId> toRemove = [];
 
-        if (!refillTarget.Comp.CanReceive)
+        if (!provider.Comp.CanTransfer || !refillTarget.Comp.CanReceive)
         {
             _popup.PopupEntity(Loc.GetString("comp-entity-provider-cannot-receive", ("refillTarget", refillTarget)), provider, user);
             return false;

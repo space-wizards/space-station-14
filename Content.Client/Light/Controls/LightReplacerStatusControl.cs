@@ -51,8 +51,8 @@ public sealed partial class LightReplacerStatusControl : Control
             || !bulb.Components.TryGetComponent<LightBulbComponent>(_entity.ComponentFactory, out var lightBulb))
             return;
 
-        _labelTube = Loc.GetString(lightTube.BulbColorName);
-        _labelBulb = Loc.GetString(lightBulb.BulbColorName);
+        _labelTube = lightTube.ShortName is { } tubeName ? Loc.GetString(tubeName) : tube.Name;
+        _labelBulb = lightBulb.ShortName is { } bulbName ? Loc.GetString(bulbName) : bulb.Name;
 
         // Update current active lights
         _label.SetMarkup(Loc.GetString("comp-light-replacer-label",

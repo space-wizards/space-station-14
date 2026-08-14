@@ -7,7 +7,6 @@ using Content.Shared.Popups;
 using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Storage.Events;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
@@ -17,7 +16,6 @@ public sealed partial class LightReplacerSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
-    [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private EntityProviderSystem _provider = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedPoweredLightSystem _poweredLight = default!;
@@ -92,14 +90,18 @@ public sealed partial class LightReplacerSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnSwitchMessage(Entity<LightReplacerComponent> replacer, ref SwitchLightTypeMessage args)
     {
+        if (!_prototype.Resolve(args.LightEntProtoId, out var prototype)
+            || !_provider.TryGetEntityCounter(replacer.Owner, out var entities)
+            || !entities.TryGetValue(args.LightEntProtoId, out var amount)
+            || amount <= 0)
+            return;
+
         if (args.LightType == LightBulbType.Tube)
             replacer.Comp.ActiveLightTube = args.LightEntProtoId;
         else
             replacer.Comp.ActiveLightBulb = args.LightEntProtoId;
-        Dirty(replacer);
 
-        if (!_prototype.Resolve(args.LightEntProtoId, out var prototype))
-            return;
+        Dirty(replacer);
 
         var message = Loc.GetString("comp-light-replacer-switch-light", ("light", prototype.Name));
         _popup.PopupEntity(message, replacer, args.Actor);

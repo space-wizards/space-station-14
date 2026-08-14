@@ -29,16 +29,13 @@ public sealed partial class LightReplacerMenuBoundUserInterface(EntityUid owner,
 
         var lightTypes = CreateButtons(replacer, provider);
 
-        if (lightTypes == null)
-            return;
-
         _menu = this.CreateWindow<SimpleRadialMenu>();
         _menu.SetButtons(lightTypes);
 
         _menu.OpenCentered();
     }
 
-    private IEnumerable<RadialMenuOptionBase>? CreateButtons(LightReplacerComponent replacer, EntityProviderComponent provider)
+    private List<RadialMenuOptionBase> CreateButtons(LightReplacerComponent replacer, EntityProviderComponent provider)
     {
         var options = new List<RadialMenuOptionBase>();
 
@@ -118,11 +115,13 @@ public sealed partial class LightReplacerMenuBoundUserInterface(EntityUid owner,
     {
         var message = new SwitchLightTypeMessage(light);
         SendPredictedMessage(message);
+        Close();
     }
 
     private void EjectLights(EntProtoId lightName)
     {
         var message = new EjectLightTypeMessage(lightName);
         SendPredictedMessage(message);
+        Close();
     }
 }
