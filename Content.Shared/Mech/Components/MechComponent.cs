@@ -55,15 +55,6 @@ public sealed partial class MechComponent : Component
     public bool Broken = false;
 
     /// <summary>
-    /// The slot the pilot is stored in.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    public ContainerSlot PilotSlot = default!;
-
-    [ViewVariables]
-    public readonly string PilotSlotId = "mech-pilot-slot";
-
-    /// <summary>
     /// The current selected equipment of the mech.
     /// If null, the mech is using just its fists.
     /// </summary>

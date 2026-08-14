@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Vehicle.Components;
 using Robust.Shared.Containers;
@@ -6,6 +7,15 @@ namespace Content.Shared.Vehicle.Systems;
 
 public sealed partial class VehicleSystem
 {
+    public bool TryGetOperatorContainer(
+        Entity<ContainerVehicleComponent?> vehicle,
+        [NotNullWhen(true)] out BaseContainer? container)
+    {
+        container = null;
+        return Resolve(vehicle, ref vehicle.Comp, false) &&
+            _container.TryGetContainer(vehicle, vehicle.Comp.ContainerId, out container);
+    }
+
     [SubscribeLocalEvent]
     private void OnVehicleStrapped(Entity<StrapVehicleComponent> ent, ref StrappedEvent args)
     {

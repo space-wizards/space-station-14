@@ -76,7 +76,6 @@ public abstract partial class SharedMechSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnStartup(EntityUid uid, MechComponent component, ComponentStartup args)
     {
-        component.PilotSlot = _container.EnsureContainer<ContainerSlot>(uid, component.PilotSlotId);
         component.EquipmentContainer = _container.EnsureContainer<Container>(uid, component.EquipmentContainerId);
         component.BatterySlot = _container.EnsureContainer<ContainerSlot>(uid, component.BatterySlotId);
         UpdateAppearance(uid, component);
@@ -312,10 +311,8 @@ public abstract partial class SharedMechSystem : EntitySystem
         if (Vehicle.GetOperatorOrNull(uid) == toInsert)
             return false;
 
-        if (!_container.CanInsert(toInsert, component.PilotSlot))
-            return false;
-
-        return true;
+        return Vehicle.TryGetOperatorContainer(uid, out var pilotContainer) &&
+               _container.CanInsert(toInsert, pilotContainer);
     }
 
     /// <summary>
@@ -343,7 +340,10 @@ public abstract partial class SharedMechSystem : EntitySystem
         if (!CanInsert(uid, toInsert, component))
             return false;
 
-        _container.Insert(toInsert, component.PilotSlot);
+        if (!Vehicle.TryGetOperatorContainer(uid, out var pilotContainer))
+            return false;
+
+        _container.Insert(toInsert, pilotContainer);
         return true;
     }
 
