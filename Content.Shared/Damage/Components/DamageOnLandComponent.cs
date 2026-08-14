@@ -1,14 +1,12 @@
-using Content.Shared.Damage.Systems;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Damage.Components;
 
 /// <summary>
-/// Makes this entity deal damage when thrown at something.
+/// Inflicts configured damage when this entity lands.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-[Access(typeof(DamageOtherOnHitSystem))]
-public sealed partial class DamageOtherOnHitComponent : Component
+public sealed partial class DamageOnLandComponent : Component
 {
     /// <summary>
     /// Whether to ignore damage modifiers.
@@ -17,7 +15,7 @@ public sealed partial class DamageOtherOnHitComponent : Component
     public bool IgnoreResistances = false;
 
     /// <summary>
-    /// The damage amount to deal on hit.
+    /// The amount of damage to deal when this entity lands.
     /// </summary>
     [DataField(required: true), AutoNetworkedField]
     public DamageSpecifier Damage = new();
