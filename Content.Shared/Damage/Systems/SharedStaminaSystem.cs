@@ -3,6 +3,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
 using Content.Shared.CCVar;
 using Content.Shared.CombatMode;
+using Content.Shared.Cuffs;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Events;
 using Content.Shared.Database;
@@ -140,6 +141,13 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         _status.TryRemoveStatusEffect(entity, StaminaLow);
         UpdateStaminaVisuals(entity);
         Dirty(entity);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnIncapCuffCheck(Entity<StaminaComponent> ent, ref CheckIncapacitatedCuffEvent args)
+    {
+        if (ent.Comp.Critical)
+            args.Incapacitated = true;
     }
 
     [SubscribeLocalEvent]
