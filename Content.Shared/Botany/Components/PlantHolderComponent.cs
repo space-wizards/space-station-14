@@ -1,4 +1,3 @@
-using Content.Shared.Botany.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
@@ -8,7 +7,6 @@ namespace Content.Shared.Botany.Components;
 /// Runtime plant lifecycle data. This component is attached to the plant entity.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true, raiseAfterAutoHandleState: true), AutoGenerateComponentPause]
-[Access(typeof(PlantHolderSystem), typeof(PlantSystem))]
 public sealed partial class PlantHolderComponent : Component
 {
     /// <summary>
@@ -61,6 +59,18 @@ public sealed partial class PlantHolderComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public float Health = 100f;
+
+    /// <summary>
+    /// Whether the plant is currently ready for harvest.
+    /// </summary>
+    [ViewVariables, AutoNetworkedField]
+    public bool ReadyForHarvest = false;
+
+    /// <summary>
+    /// The age of the plant when last harvested.
+    /// </summary>
+    [ViewVariables, AutoNetworkedField]
+    public int LastHarvest = 0;
 
     /// <summary>
     /// Game time for the next plant reagent update.
