@@ -1,6 +1,5 @@
 using Content.Shared.DoAfter;
 using Content.Shared.Vehicle.Components;
-using JetBrains.Annotations;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Vehicle;
@@ -9,27 +8,27 @@ namespace Content.Shared.Vehicle;
 /// Event raised on operator when they begin to operate a vehicle
 /// Values are configured before this event is raised.
 /// </summary>
-[ByRefEvent, UsedImplicitly]
+[ByRefEvent]
 public readonly record struct OnVehicleEnteredEvent(Entity<VehicleComponent> Vehicle, EntityUid Operator);
 
 /// <summary>
 /// Event raised on operator when they stop operating a vehicle.
 /// Values are configured after this event is raised.
 /// </summary>
-[ByRefEvent, UsedImplicitly]
+[ByRefEvent]
 public readonly record struct OnVehicleExitedEvent(Entity<VehicleComponent> Vehicle, EntityUid Operator);
 
 /// <summary>
 /// Event raised on the vehicle after an operator is set.
 /// New operator can be null.
 /// </summary>
-[ByRefEvent, UsedImplicitly]
+[ByRefEvent]
 public readonly record struct VehicleOperatorSetEvent(EntityUid? NewOperator, EntityUid? OldOperator);
 
 /// <summary>
 /// Event raised on a vehicle to check if it can run/move around.
 /// </summary>
-[ByRefEvent, UsedImplicitly]
+[ByRefEvent]
 public record struct VehicleCanRunEvent(Entity<VehicleComponent> Vehicle, bool CanRun = true);
 
 /// <summary>
