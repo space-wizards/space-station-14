@@ -23,268 +23,266 @@ using Robust.Shared.Timing;
  * TODO: Remove baby jail code once a more mature gateway process is established. This code is only being issued as a stopgap to help with potential tiding in the immediate future.
  */
 
-namespace Content.Server.Connection
+namespace Content.Server.Connection;
+
+public interface IConnectionManager
 {
-    public interface IConnectionManager
+    void Initialize();
+    void PostInit();
+
+    /// <summary>
+    /// Temporarily allow a user to bypass regular connection requirements.
+    /// </summary>
+    /// <remarks>
+    /// The specified user will be allowed to bypass regular player cap,
+    /// whitelist and panic bunker restrictions for <paramref name="duration"/>.
+    /// Bans are not bypassed.
+    /// </remarks>
+    /// <param name="user">The user to give a temporary bypass.</param>
+    /// <param name="duration">How long the bypass should last for.</param>
+    void AddTemporaryConnectBypass(NetUserId user, TimeSpan duration);
+
+    void Update();
+}
+
+/// <summary>
+///     Handles various duties like guest username assignment, bans, connection logs, etc...
+/// </summary>
+public sealed partial class ConnectionManager : IConnectionManager
+{
+    [Dependency] private IPlayerManager _plyMgr = default!;
+    [Dependency] private IServerNetManager _netMgr = default!;
+    [Dependency] private IServerDbManager _db = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private ILocalizationManager _loc = default!;
+    [Dependency] private ServerDbEntryManager _serverDbEntry = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private ILogManager _logManager = default!;
+    [Dependency] private IChatManager _chatManager = default!;
+    [Dependency] private IHttpClientHolder _http = default!;
+    [Dependency] private IAdminManager _adminManager = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
+
+    private GameTicker? _ticker;
+
+    private ISawmill _sawmill = default!;
+    private readonly Dictionary<NetUserId, TimeSpan> _temporaryBypasses = [];
+    private IPIntel.IPIntel _ipintel = default!;
+
+    public void PostInit()
     {
-        void Initialize();
-        void PostInit();
+        InitializeWhitelist();
+    }
 
-        /// <summary>
-        /// Temporarily allow a user to bypass regular connection requirements.
-        /// </summary>
-        /// <remarks>
-        /// The specified user will be allowed to bypass regular player cap,
-        /// whitelist and panic bunker restrictions for <paramref name="duration"/>.
-        /// Bans are not bypassed.
-        /// </remarks>
-        /// <param name="user">The user to give a temporary bypass.</param>
-        /// <param name="duration">How long the bypass should last for.</param>
-        void AddTemporaryConnectBypass(NetUserId user, TimeSpan duration);
+    public void Initialize()
+    {
+        _sawmill = _logManager.GetSawmill("connections");
 
-        void Update();
+        _ipintel = new IPIntel.IPIntel(new IPIntelApi(_http, _cfg), _db, _cfg, _logManager, _chatManager, _gameTiming);
+
+        _netMgr.Connecting += NetMgrOnConnecting;
+        _netMgr.AssignUserIdCallback = AssignUserIdCallback;
+        _plyMgr.PlayerStatusChanged += PlayerStatusChanged;
+        // Approval-based IP bans disabled because they don't play well with Happy Eyeballs.
+        // _netMgr.HandleApprovalCallback = HandleApproval;
     }
 
     /// <summary>
-    ///     Handles various duties like guest username assignment, bans, connection logs, etc...
+    /// Add a temporary bypass to every type of disconnect except bans.
+    /// Does not save to database.
     /// </summary>
-    public sealed partial class ConnectionManager : IConnectionManager
+    /// <param name="user">The user to add a bypass to</param>
+    /// <param name="duration">The duration to apply the bypass for</param>
+    public void AddTemporaryConnectBypass(NetUserId user, TimeSpan duration)
     {
-        [Dependency] private IPlayerManager _plyMgr = default!;
-        [Dependency] private IServerNetManager _netMgr = default!;
-        [Dependency] private IServerDbManager _db = default!;
-        [Dependency] private IConfigurationManager _cfg = default!;
-        [Dependency] private ILocalizationManager _loc = default!;
-        [Dependency] private ServerDbEntryManager _serverDbEntry = default!;
-        [Dependency] private IPrototypeManager _prototypeManager = default!;
-        [Dependency] private IGameTiming _gameTiming = default!;
-        [Dependency] private ILogManager _logManager = default!;
-        [Dependency] private IChatManager _chatManager = default!;
-        [Dependency] private IHttpClientHolder _http = default!;
-        [Dependency] private IAdminManager _adminManager = default!;
-        [Dependency] private IEntityManager _entityManager = default!;
+        ref var time = ref CollectionsMarshal.GetValueRefOrAddDefault(_temporaryBypasses, user, out _);
+        var newTime = _gameTiming.RealTime + duration;
+        // Make sure we only update the time if we wouldn't shrink it.
+        if (newTime > time)
+            time = newTime;
+    }
 
-        private GameTicker? _ticker;
-
-        private ISawmill _sawmill = default!;
-        private readonly Dictionary<NetUserId, TimeSpan> _temporaryBypasses = [];
-        private IPIntel.IPIntel _ipintel = default!;
-
-        public void PostInit()
+    public async void Update()
+    {
+        try
         {
-            InitializeWhitelist();
+            await _ipintel.Update();
         }
-
-        public void Initialize()
+        catch (Exception e)
         {
-            _sawmill = _logManager.GetSawmill("connections");
-
-            _ipintel = new IPIntel.IPIntel(new IPIntelApi(_http, _cfg), _db, _cfg, _logManager, _chatManager, _gameTiming);
-
-            _netMgr.Connecting += NetMgrOnConnecting;
-            _netMgr.AssignUserIdCallback = AssignUserIdCallback;
-            _plyMgr.PlayerStatusChanged += PlayerStatusChanged;
-            // Approval-based IP bans disabled because they don't play well with Happy Eyeballs.
-            // _netMgr.HandleApprovalCallback = HandleApproval;
+            _sawmill.Error("IPIntel update failed:" + e);
         }
+    }
 
-        /// <summary>
-        /// Add a temporary bypass to every type of disconnect except bans.
-        /// Does not save to database.
-        /// </summary>
-        /// <param name="user">The user to add a bypass to</param>
-        /// <param name="duration">The duration to apply the bypass for</param>
-        public void AddTemporaryConnectBypass(NetUserId user, TimeSpan duration)
+    /*
+    private async Task<NetApproval> HandleApproval(NetApprovalEventArgs eventArgs)
+    {
+        var ban = await _db.GetServerBanByIpAsync(eventArgs.Connection.RemoteEndPoint.Address);
+        if (ban != null)
         {
-            ref var time = ref CollectionsMarshal.GetValueRefOrAddDefault(_temporaryBypasses, user, out _);
-            var newTime = _gameTiming.RealTime + duration;
-            // Make sure we only update the time if we wouldn't shrink it.
-            if (newTime > time)
-                time = newTime;
-        }
-
-        public async void Update()
-        {
-            try
+            var expires = Loc.GetString("ban-banned-permanent");
+            if (ban.ExpirationTime is { } expireTime)
             {
-                await _ipintel.Update();
+                var duration = expireTime - ban.BanTime;
+                var utc = expireTime.ToUniversalTime();
+                expires = Loc.GetString("ban-expires", ("duration", duration.TotalMinutes.ToString("N0")), ("time", utc.ToString("f")));
             }
-            catch (Exception e)
-            {
-                _sawmill.Error("IPIntel update failed:" + e);
-            }
+            var reason = Loc.GetString("ban-banned-1") + "\n" + Loc.GetString("ban-banned-2", ("reason", this.Reason)) + "\n" + expires;;
+            return NetApproval.Deny(reason);
         }
 
-        /*
-        private async Task<NetApproval> HandleApproval(NetApprovalEventArgs eventArgs)
-        {
-            var ban = await _db.GetServerBanByIpAsync(eventArgs.Connection.RemoteEndPoint.Address);
-            if (ban != null)
-            {
-                var expires = Loc.GetString("ban-banned-permanent");
-                if (ban.ExpirationTime is { } expireTime)
-                {
-                    var duration = expireTime - ban.BanTime;
-                    var utc = expireTime.ToUniversalTime();
-                    expires = Loc.GetString("ban-expires", ("duration", duration.TotalMinutes.ToString("N0")), ("time", utc.ToString("f")));
-                }
-                var reason = Loc.GetString("ban-banned-1") + "\n" + Loc.GetString("ban-banned-2", ("reason", this.Reason)) + "\n" + expires;;
-                return NetApproval.Deny(reason);
-            }
+        return NetApproval.Allow();
+    }
+    */
 
-            return NetApproval.Allow();
+    private async Task NetMgrOnConnecting(NetConnectingArgs e)
+    {
+        var deny = await ShouldDeny(e);
+
+        var addr = e.IP.Address;
+        var userId = e.UserId;
+
+        var serverId = (await _serverDbEntry.ServerEntity).Id;
+
+        var hwid = e.UserData.GetModernHwid();
+        var trust = e.UserData.Trust;
+
+        if (deny != null)
+        {
+            var (reason, msg, banHits) = deny.Value;
+
+            var id = await _db.AddConnectionLogAsync(userId, e.UserName, addr, hwid, trust, reason, serverId);
+            if (banHits is { Count: > 0 })
+                await _db.AddServerBanHitsAsync(id, banHits);
+
+            var properties = new Dictionary<string, object>();
+            if (reason == ConnectionDenyReason.Full)
+                properties["delay"] = _cfg.GetCVar(CCVars.GameServerFullReconnectDelay);
+
+            e.Deny(new NetDenyReason(msg, properties));
         }
-        */
-
-        private async Task NetMgrOnConnecting(NetConnectingArgs e)
+        else
         {
-            var deny = await ShouldDeny(e);
+            await _db.AddConnectionLogAsync(userId, e.UserName, addr, hwid, trust, null, serverId);
 
-            var addr = e.IP.Address;
-            var userId = e.UserId;
-
-            var serverId = (await _serverDbEntry.ServerEntity).Id;
-
-            var hwid = e.UserData.GetModernHwid();
-            var trust = e.UserData.Trust;
-
-            if (deny != null)
-            {
-                var (reason, msg, banHits) = deny.Value;
-
-                var id = await _db.AddConnectionLogAsync(userId, e.UserName, addr, hwid, trust, reason, serverId);
-                if (banHits is { Count: > 0 })
-                    await _db.AddServerBanHitsAsync(id, banHits);
-
-                var properties = new Dictionary<string, object>();
-                if (reason == ConnectionDenyReason.Full)
-                    properties["delay"] = _cfg.GetCVar(CCVars.GameServerFullReconnectDelay);
-
-                e.Deny(new NetDenyReason(msg, properties));
-            }
-            else
-            {
-                await _db.AddConnectionLogAsync(userId, e.UserName, addr, hwid, trust, null, serverId);
-
-                if (!ServerPreferencesManager.ShouldStorePrefs(e.AuthType))
-                    return;
-
-                await _db.UpdatePlayerRecordAsync(userId, e.UserName, addr, hwid);
-            }
-        }
-
-        private async void PlayerStatusChanged(object? sender, SessionStatusEventArgs args)
-        {
-            if (args.NewStatus == SessionStatus.Connected)
-            {
-                AdminAlertIfSharedConnection(args.Session);
-            }
-        }
-
-        private void AdminAlertIfSharedConnection(ICommonSession newSession)
-        {
-            var playerThreshold = _cfg.GetCVar(CCVars.AdminAlertMinPlayersSharingConnection);
-            if (playerThreshold < 0)
+            if (!ServerPreferencesManager.ShouldStorePrefs(e.AuthType))
                 return;
 
-            var addr = newSession.Channel.RemoteEndPoint.Address;
-
-            var otherConnectionsFromAddress = _plyMgr.Sessions.Where(session =>
-                    session.Status is SessionStatus.Connected or SessionStatus.InGame
-                    && session.Channel.RemoteEndPoint.Address.Equals(addr)
-                    && session.UserId != newSession.UserId)
-                .ToList();
-
-            var otherConnectionCount = otherConnectionsFromAddress.Count;
-            if (otherConnectionCount + 1 < playerThreshold) // Add one for the total, not just others, using the address
-                return;
-
-            var username = newSession.Name;
-            var otherUsernames = string.Join(", ",
-                otherConnectionsFromAddress.Select(session => session.Name));
-
-            _chatManager.SendAdminAlert(Loc.GetString("admin-alert-shared-connection",
-                ("player", username),
-                ("otherCount", otherConnectionCount),
-                ("otherList", otherUsernames)));
+            await _db.UpdatePlayerRecordAsync(userId, e.UserName, addr, hwid);
         }
+    }
 
-        /*
-         * TODO: Jesus H Christ what is this utter mess of a function
-         * TODO: Break this apart into is constituent steps.
-         */
-        private async Task<(ConnectionDenyReason, string, List<BanDef>? bansHit)?> ShouldDeny(
-            NetConnectingArgs e)
+    private async void PlayerStatusChanged(object? sender, SessionStatusEventArgs args)
+    {
+        if (args.NewStatus == SessionStatus.Connected)
         {
-            // Check if banned.
-            var banned = await CheckBanned(e);
-
-            if (banned != null)
-                return banned;
-
-            var userId = e.UserId;
-
-            if (HasTemporaryBypass(userId))
-            {
-                _sawmill.Verbose("User {UserId} has temporary bypass, skipping further connection checks", userId);
-                return null;
-            }
-
-            var adminData = await _db.GetAdminDataForAsync(e.UserId);
-            var panicBunkerEnabled = _cfg.GetCVar(CCVars.PanicBunkerEnabled);
-            var panicBunkerDenial = await CheckPanicBunker(e,
-                adminData,
-                panicBunkerEnabled);
-
-            if (panicBunkerDenial != null)
-            {
-                return panicBunkerDenial;
-            }
-
-            var softPlayerCount = _plyMgr.PlayerCount;
-            var playerCountDenial = await CheckPlayerCount(e, adminData, softPlayerCount);
-
-            if (playerCountDenial != null)
-            {
-                return playerCountDenial;
-            }
-
-            var whitelistEnabled = _cfg.GetCVar(CCVars.WhitelistEnabled);
-            var whitelistDenial = await CheckWhitelist(e, adminData, softPlayerCount, whitelistEnabled);
-
-            if (whitelistDenial != null)
-            {
-                return whitelistDenial;
-            }
-
-            var ipIntelEnabled = _cfg.GetCVar(CCVars.GameIPIntelEnabled);
-            var vpnDenial = await CheckVpn(e, adminData, ipIntelEnabled);
-
-            // ALWAYS keep this at the end, to preserve the API limit.
-            return vpnDenial ?? null;
+            AdminAlertIfSharedConnection(args.Session);
         }
+    }
 
-        private bool HasTemporaryBypass(NetUserId user)
+    private void AdminAlertIfSharedConnection(ICommonSession newSession)
+    {
+        var playerThreshold = _cfg.GetCVar(CCVars.AdminAlertMinPlayersSharingConnection);
+        if (playerThreshold < 0)
+            return;
+
+        var addr = newSession.Channel.RemoteEndPoint.Address;
+
+        var otherConnectionsFromAddress = _plyMgr.Sessions.Where(session =>
+                session.Status is SessionStatus.Connected or SessionStatus.InGame
+                && session.Channel.RemoteEndPoint.Address.Equals(addr)
+                && session.UserId != newSession.UserId)
+            .ToList();
+
+        var otherConnectionCount = otherConnectionsFromAddress.Count;
+        if (otherConnectionCount + 1 < playerThreshold) // Add one for the total, not just others, using the address
+            return;
+
+        var username = newSession.Name;
+        var otherUsernames = string.Join(", ",
+            otherConnectionsFromAddress.Select(session => session.Name));
+
+        _chatManager.SendAdminAlert(Loc.GetString("admin-alert-shared-connection",
+            ("player", username),
+            ("otherCount", otherConnectionCount),
+            ("otherList", otherUsernames)));
+    }
+
+    /*
+     * TODO: Jesus H Christ what is this utter mess of a function
+     * TODO: Break this apart into is constituent steps.
+     */
+    private async Task<(ConnectionDenyReason, string, List<BanDef>? bansHit)?> ShouldDeny(
+        NetConnectingArgs e)
+    {
+        var banned = await CheckBanned(e);
+
+        if (banned != null)
+            return banned;
+
+        var userId = e.UserId;
+
+        if (HasTemporaryBypass(userId))
         {
-            return _temporaryBypasses.TryGetValue(user, out var time) && time > _gameTiming.RealTime;
+            _sawmill.Verbose("User {UserId} has temporary bypass, skipping further connection checks", userId);
+            return null;
         }
 
-        private async Task<NetUserId?> AssignUserIdCallback(string name)
+        var adminData = await _db.GetAdminDataForAsync(e.UserId);
+        var panicBunkerEnabled = _cfg.GetCVar(CCVars.PanicBunkerEnabled);
+        var panicBunkerDenial = await CheckPanicBunker(e,
+            adminData,
+            panicBunkerEnabled);
+
+        if (panicBunkerDenial != null)
         {
-            if (!_cfg.GetCVar(CCVars.GamePersistGuests))
-            {
-                return null;
-            }
-
-            var userId = await _db.GetAssignedUserIdAsync(name);
-            if (userId != null)
-            {
-                return userId;
-            }
-
-            var assigned = new NetUserId(Guid.NewGuid());
-            await _db.AssignUserIdAsync(name, assigned);
-            return assigned;
+            return panicBunkerDenial;
         }
+
+        var softPlayerCount = _plyMgr.PlayerCount;
+        var playerCountDenial = await CheckPlayerCount(e, adminData, softPlayerCount);
+
+        if (playerCountDenial != null)
+        {
+            return playerCountDenial;
+        }
+
+        var whitelistEnabled = _cfg.GetCVar(CCVars.WhitelistEnabled);
+        var whitelistDenial = await CheckWhitelist(e, adminData, softPlayerCount, whitelistEnabled);
+
+        if (whitelistDenial != null)
+        {
+            return whitelistDenial;
+        }
+
+        var ipIntelEnabled = _cfg.GetCVar(CCVars.GameIPIntelEnabled);
+        var vpnDenial = await CheckVpn(e, adminData, ipIntelEnabled);
+
+        // ALWAYS keep this at the end, to preserve the API limit.
+        return vpnDenial ?? null;
+    }
+
+    private bool HasTemporaryBypass(NetUserId user)
+    {
+        return _temporaryBypasses.TryGetValue(user, out var time) && time > _gameTiming.RealTime;
+    }
+
+    private async Task<NetUserId?> AssignUserIdCallback(string name)
+    {
+        if (!_cfg.GetCVar(CCVars.GamePersistGuests))
+        {
+            return null;
+        }
+
+        var userId = await _db.GetAssignedUserIdAsync(name);
+        if (userId != null)
+        {
+            return userId;
+        }
+
+        var assigned = new NetUserId(Guid.NewGuid());
+        await _db.AssignUserIdAsync(name, assigned);
+        return assigned;
     }
 }
