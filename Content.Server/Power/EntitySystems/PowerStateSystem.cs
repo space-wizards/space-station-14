@@ -5,7 +5,7 @@ using Content.Shared.Power.EntitySystems;
 namespace Content.Server.Power.EntitySystems;
 
 /// <inheritdoc/>>
-public sealed class PowerStateSystem : SharedPowerStateSystem
+public sealed partial class PowerStateSystem : SharedPowerStateSystem
 {
     public override void Initialize()
     {

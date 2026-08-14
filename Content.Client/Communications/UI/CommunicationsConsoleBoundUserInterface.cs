@@ -1,4 +1,4 @@
-﻿using Content.Shared.CCVar;
+using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.AlertLevel;
 using Content.Shared.Communications;
@@ -23,41 +23,36 @@ public sealed partial class CommunicationsConsoleBoundUserInterface(EntityUid ow
         base.Open();
 
         _menu = this.CreateWindow<CommunicationsConsoleMenu>();
-        _menu.OnAnnounce += AnnounceButtonPressed;
-        _menu.OnBroadcast += BroadcastButtonPressed;
-        _menu.OnAlertLevel += AlertLevelSelected;
-        _menu.OnEmergencyLevel += EmergencyShuttleButtonPressed;
+        _menu.OnRadioAnnounce += RadioAnnounceButtonPressed;
+        _menu.OnScreenBroadcast += ScreenBroadcastButtonPressed;
+        _menu.OnAlertLevelChanged += AlertLevelSelected;
+        _menu.OnShuttleCalled += CallShuttle;
+        _menu.OnShuttleRecalled += RecallShuttle;
+
+        if (EntMan.TryGetComponent<CommunicationsConsoleComponent>(Owner, out var console))
+        {
+            _menu.SetBroadcastDisplayEntity(console.ScreenDisplayId);
+        }
     }
 
     public void AlertLevelSelected(ProtoId<AlertLevelPrototype> level)
     {
-        if (_menu!.AlertLevelSelectable)
-        {
-            // TODO: This does not work until the console UI is predicted and uses component states.
-            // Also someone decided to send BUI states regularly in an update loop, so this just gets randomly bulldozed until the message reaches the server.
-            // _menu.CurrentAlertLevel = level;
-            // _menu.AlertLevelSelectable = false;
-            // _menu.AlertLevelButton.Disabled = true;
-            SendMessage(new CommunicationsConsoleSelectAlertLevelMessage(level));
-        }
+        // TODO: This does not work until the console UI is predicted and uses component states.
+        // Also someone decided to send BUI states regularly in an update loop, so this just gets randomly bulldozed until the message reaches the server.
+        // _menu.CurrentAlertLevel = level;
+        // _menu.AlertLevelSelectable = false;
+        // _menu.AlertLevelButton.Disabled = true;
+        SendMessage(new CommunicationsConsoleSelectAlertLevelMessage(level));
     }
 
-    public void EmergencyShuttleButtonPressed()
-    {
-        if (_menu!.CountdownStarted)
-            RecallShuttle();
-        else
-            CallShuttle();
-    }
-
-    public void AnnounceButtonPressed(string message)
+    public void RadioAnnounceButtonPressed(string message)
     {
         var maxLength = _cfg.GetCVar(CCVars.ChatMaxAnnouncementLength);
         var msg = SharedChatSystem.SanitizeAnnouncement(message, maxLength);
         SendMessage(new CommunicationsConsoleAnnounceMessage(msg));
     }
 
-    public void BroadcastButtonPressed(string message)
+    public void ScreenBroadcastButtonPressed(string message)
     {
         SendMessage(new CommunicationsConsoleBroadcastMessage(message));
     }
@@ -87,23 +82,11 @@ public sealed partial class CommunicationsConsoleBoundUserInterface(EntityUid ow
 
         if (_menu != null)
         {
-            _menu.CanAnnounce = commsState.CanAnnounce;
-            _menu.CanBroadcast = commsState.CanBroadcast;
-            _menu.CanCall = commsState.CanCall;
-            _menu.CountdownStarted = commsState.CountdownStarted;
-            _menu.CountdownEnd = commsState.ExpectedCountdownEnd;
+            var currentAlertLevel = alertComp.CurrentAlertLevel;
+            var selectableAlertLevels = _alertLevel.GetSelectableAlertLevels((stationUid.Value, alertComp));
+            var canChangeAlertLevel = _alertLevel.CanChangeAlertLevel((stationUid.Value, alertComp));
 
-            _menu.CurrentAlertLevel = alertComp.CurrentAlertLevel;
-            _menu.SelectableAlertLevels = _alertLevel.GetSelectableAlertLevels((stationUid.Value, alertComp));
-            _menu.AlertLevelSelectable = _alertLevel.CanChangeAlertLevel((stationUid.Value, alertComp));
-
-            _menu.UpdateCountdown();
-            _menu.UpdateAlertLevels();
-
-            _menu.AlertLevelButton.Disabled = !_menu.AlertLevelSelectable;
-            _menu.EmergencyShuttleButton.Disabled = !_menu.CanCall;
-            _menu.AnnounceButton.Disabled = !_menu.CanAnnounce;
-            _menu.BroadcastButton.Disabled = !_menu.CanBroadcast;
+            _menu.UpdateState(commsState, currentAlertLevel, selectableAlertLevels, canChangeAlertLevel);
         }
     }
 }
