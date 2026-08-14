@@ -10,6 +10,7 @@ public sealed partial class WiresVisualsComponent : Component
 {
     /// <summary>
     /// If true, the maintenance panel should be visible normally.
+    /// If false, it should only be visible when the panel is open.
     /// </summary>
     [DataField]
     public bool Inverted;
