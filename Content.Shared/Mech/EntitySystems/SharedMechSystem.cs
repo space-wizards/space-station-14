@@ -72,7 +72,7 @@ public abstract partial class SharedMechSystem : EntitySystem
             Vehicle.HasOperator(uid))
             return;
 
-        var openUiVerb = new AlternativeVerb // can't hijack someone else's mech
+        var openUiVerb = new AlternativeVerb
         {
             Act = () => ToggleMechUi(uid, component, args.User),
             Text = Loc.GetString("mech-ui-open-verb")

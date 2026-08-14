@@ -4,49 +4,53 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Vehicle;
 
 /// <summary>
-/// Allows vehicle-specific systems to veto an explicit entry attempt.
+/// Allows vehicle-specific systems to veto interaction-based entry.
 /// </summary>
-/// <param name="entering">The entity attempting to enter the vehicle.</param>
+/// <remarks>
+/// May be raised while checking interaction availability before an interaction has started.
+/// Handlers should avoid side effects.
+/// </remarks>
 public sealed class ContainerVehicleEntryAttemptEvent(EntityUid entering) : CancellableEntityEventArgs
 {
     public EntityUid Entering { get; } = entering;
 }
 
 /// <summary>
-/// Raised when an entity cannot enter an unoccupied container vehicle because it cannot operate it.
+/// Raised when entry is denied because the entering entity cannot operate a vehicle without an operator.
 /// </summary>
-/// <param name="entering">The entity that was denied entry.</param>
 public sealed class ContainerVehicleEntryOperatorDeniedEvent(EntityUid entering)
 {
     public EntityUid Entering { get; } = entering;
 }
 
 /// <summary>
-/// Raised when an entity finishes attempting to enter a container vehicle.
+/// Do-after event for interaction-based entry into a container vehicle.
 /// </summary>
 [Serializable, NetSerializable]
 public sealed partial class ContainerVehicleEntryEvent : SimpleDoAfterEvent;
 
 /// <summary>
-/// Allows vehicle-specific systems to veto an explicit exit attempt.
+/// Allows vehicle-specific systems to veto interaction-based operator removal.
 /// </summary>
-/// <param name="user">The entity performing the exit interaction.</param>
+/// <remarks>
+/// May be raised while checking interaction availability before an interaction has started.
+/// Handlers should avoid side effects.
+/// </remarks>
 public sealed class ContainerVehicleExitAttemptEvent(EntityUid user) : CancellableEntityEventArgs
 {
     public EntityUid User { get; } = user;
 }
 
 /// <summary>
-/// Raised when delayed removal of a container vehicle's operator begins.
+/// Raised when delayed removal of a container vehicle's operator starts.
 /// </summary>
-/// <param name="user">The entity removing the operator.</param>
 public sealed class ContainerVehicleOperatorRemovalStartedEvent(EntityUid user)
 {
     public EntityUid User { get; } = user;
 }
 
 /// <summary>
-/// Raised when delayed removal of a container vehicle's operator finishes.
+/// Do-after event for delayed removal of a container vehicle's operator.
 /// </summary>
 [Serializable, NetSerializable]
 public sealed partial class ContainerVehicleExitEvent : SimpleDoAfterEvent;

@@ -56,7 +56,7 @@ public sealed partial class VehicleSystem
     }
 
     /// <summary>
-    /// Attempts to get the container used to determine the operator of a container vehicle.
+    /// Attempts to get the container configured for a container vehicle's operator.
     /// </summary>
     public bool TryGetOperatorContainer(
         Entity<ContainerVehicleComponent?> vehicle,
@@ -70,6 +70,10 @@ public sealed partial class VehicleSystem
     /// <summary>
     /// Checks whether an entity can enter a container vehicle.
     /// </summary>
+    /// <remarks>
+    /// An entity becoming the operator must be able to operate the vehicle.
+    /// Additional occupants do not need to be eligible operators.
+    /// </remarks>
     public bool CanEnter(Entity<ContainerVehicleComponent?> vehicle, EntityUid toEnter)
     {
         if (!_actionBlocker.CanMove(toEnter))
@@ -87,7 +91,7 @@ public sealed partial class VehicleSystem
     }
 
     /// <summary>
-    /// Attempts to insert an entity into a container vehicle's operator container.
+    /// Attempts to insert an entity into a container vehicle.
     /// </summary>
     public bool TryEnter(Entity<ContainerVehicleComponent?> vehicle, EntityUid toEnter)
     {
