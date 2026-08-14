@@ -149,7 +149,8 @@ public sealed partial class VehicleSystem : EntitySystem
         if (entity.Comp.Operator is not null)
             return false;
 
-        if (_operatorQuery.TryComp(operatorUid, out var eOperator) && eOperator.Vehicle is not null)
+        _operatorQuery.TryComp(operatorUid, out var vehicleOperator);
+        if (vehicleOperator?.Vehicle is not null)
             return false;
 
         if (!CanOperate(entity.AsNullable(), operatorUid))
@@ -160,18 +161,9 @@ public sealed partial class VehicleSystem : EntitySystem
 
         entity.Comp.Operator = operatorUid;
 
-        if (_operatorQuery.HasComp(operatorUid))
-        {
-            var vehicleOperator = Comp<VehicleOperatorComponent>(operatorUid);
-            vehicleOperator.Vehicle = entity.Owner;
-            Dirty(operatorUid, vehicleOperator);
-        }
-        else
-        {
-            var vehicleOperator = AddComp<VehicleOperatorComponent>(operatorUid);
-            vehicleOperator.Vehicle = entity.Owner;
-            Dirty(operatorUid, vehicleOperator);
-        }
+        vehicleOperator ??= AddComp<VehicleOperatorComponent>(operatorUid);
+        vehicleOperator.Vehicle = entity.Owner;
+        Dirty(operatorUid, vehicleOperator);
 
         _mover.SetRelay(operatorUid, entity);
 
