@@ -59,11 +59,11 @@
     damageOptions:
     - damage:
         types:
-          Blunt: -15
-          Piercing: -15
-          Slash: -15
-          Heat: -15
-          Shock: -15
+          Blunt: -20
+          Piercing: -20
+          Slash: -20
+          Heat: -20
+          Shock: -20
       whitelist:
         components:
         - BorgChassis

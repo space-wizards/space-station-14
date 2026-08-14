@@ -555,7 +555,7 @@
   name: Jump boost
   components:
   - type: Action
-    useDelay: 8
+    useDelay: 10
   - type: Sprite
     sprite: Interface/Actions/actions_borg.rsi
     layers:

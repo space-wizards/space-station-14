@@ -1720,8 +1720,8 @@
         state: xenoborg_heavy_rad
       shader: unshaded
     - type: RadiationSource
-      intensity: 5
-      slope: 1.2
+      intensity: 4
+      slope: 1
     - type: AmbientSound
       range: 6
       volume: -3
