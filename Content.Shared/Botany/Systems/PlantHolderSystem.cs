@@ -9,6 +9,8 @@ namespace Content.Shared.Botany.Systems;
 /// </summary>
 public sealed partial class PlantHolderSystem : EntitySystem
 {
+    [Dependency] private EntityQuery<PlantComponent> _plantQuery = default!;
+
     [SubscribeLocalEvent]
     private void OnDamageDealt(Entity<PlantHolderComponent> ent, ref DamageDealtEvent args)
     {
@@ -24,7 +26,7 @@ public sealed partial class PlantHolderSystem : EntitySystem
         if (!Resolve(ent.Owner, ref ent.Comp))
             return;
 
-        if (!TryComp<PlantComponent>(ent.Owner, out var plant))
+        if (!_plantQuery.TryComp(ent.Owner, out var plant))
             return;
 
         ent.Comp.Health += amount;
@@ -148,7 +150,7 @@ public sealed partial class PlantHolderSystem : EntitySystem
     public bool GetHealthThreshold(Entity<PlantHolderComponent?> ent)
     {
         if (!Resolve(ent.Owner, ref ent.Comp, false)
-            || !TryComp<PlantComponent>(ent.Owner, out var plant))
+            || !_plantQuery.TryComp(ent.Owner, out var plant))
             return false;
 
         return ent.Comp.Health <= plant.Endurance * 0.5f;
