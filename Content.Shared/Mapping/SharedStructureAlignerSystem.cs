@@ -172,9 +172,12 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
         if (!MathHelper.CloseTo(locRot, targetAngle.Value, 0.01f)
             && !MathHelper.CloseTo(locRot, targetAngle.Value + Angle.FromDegrees(180), 0.01f))
         {
+            var meta = MetaData(entity.Owner);
+
+
             _trans.SetLocalRotation(entity, trans.LocalRotation + Angle.FromDegrees(90));
 
-            Log.Info($"Aligned entity {entity.Owner} at coordinates {trans.Coordinates.Position}"); //TODO:ERRANT Loglevel to debug?
+            Log.Info($"Aligned entity '{entity.Owner }' on map {trans.MapID} at {trans.WorldPosition.Ceiled()} : { meta.EntityName}"); //TODO:ERRANT Loglevel to debug? //Obsolete!
             return true;
         }
 
