@@ -17,7 +17,7 @@ uplink-reinforcement-radio-ancestor-name = Genetic Ancestor Reinforcement Telepo
 uplink-reinforcement-radio-ancestor-desc =  Call in a trained ancestor of your choosing to assist you. Comes with a single syndicate cigarette.
 
 uplink-carp-dehydrated-name = Dehydrated Space Carp
-uplink-carp-dehydrated-desc = Looks like a plush toy carp, but just add water and it becomes a real-life space carp!
+uplink-carp-dehydrated-desc = The power of a space carp in the palm of your hand. Expand with water to unleash a real-life space carp. Pet before use to prevent fishy friendly fire.
 
 uplink-mobcat-microbomb-name = SyndiCat Teleporter
 uplink-mobcat-microbomb-desc = Call in a handy cat equipped with a microbomb implant. Explodes when seriously injured. Can bite painfully.
