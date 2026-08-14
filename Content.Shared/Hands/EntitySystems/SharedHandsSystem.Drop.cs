@@ -204,6 +204,12 @@ public abstract partial class SharedHandsSystem
         var requestedDropDistance = dropVector.Length();
         var dropLength = dropVector.Length();
 
+        // DS14-Start: if the drop vector is degenerate (zero-length or non-finite coords),
+        // keep the item at its current position instead of raycasting with an invalid direction.
+        if (!dropVector.IsValid() || dropLength <= 0f)
+            return origin.Position;
+        // DS14-End
+
         if (ShouldIgnoreRestrictions(user))
         {
             if (dropVector.Length() > SharedInteractionSystem.InteractionRange)

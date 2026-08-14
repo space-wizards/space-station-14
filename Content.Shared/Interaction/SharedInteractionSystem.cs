@@ -620,9 +620,13 @@ namespace Content.Shared.Interaction
             Ignored? predicate = null)
         {
             var dir = other.Position - origin.Position;
+            var dist = dir.Length(); // DS14
 
-            if (dir.LengthSquared().Equals(0f))
+            // DS14-Start: guard against degenerate directions (zero-length, NaN or infinite coordinates),
+            // otherwise the Ray constructor assert fails on a non-unit direction.
+            if (!MathHelper.IsValid(dist) || dist <= 0f)
                 return 0f;
+            // DS14-End
 
             predicate ??= _ => false;
             var ray = new CollisionRay(origin.Position, dir.Normalized(), collisionMask);
