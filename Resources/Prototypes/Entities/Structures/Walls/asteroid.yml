@@ -1,4 +1,5 @@
 #TODO: Someone should probably move the ore vein prototypes into their own file, or otherwise split this up in some way. This should not be 1.5k lines long.
+# I halved it, but we could still split the planet walls from the asteroid walls. Or prototype generation.
 
 # Anyway
 # See WallRock variants for the remappings.
@@ -297,7 +298,7 @@
   id: AsteroidRock
 
 - type: entity
-  parent: [ AsteroidRock, BaseVeinCoal ]
+  parent: [ BaseVeinCoal, AsteroidRock ]
   id: AsteroidRockCoal
 
 - type: entity
@@ -309,7 +310,7 @@
     currentOre: OreCoalCrab
 
 - type: entity
-  parent: [ AsteroidRock, BaseVeinGold ]
+  parent: [ BaseVeinGold, AsteroidRock ]
   id: AsteroidRockGold
 
 - type: entity
@@ -321,15 +322,15 @@
     currentOre: OreGoldCrab
 
 - type: entity
-  parent: [ AsteroidRock, BaseVeinDiamond ]
+  parent: [ BaseVeinDiamond, AsteroidRock ]
   id: AsteroidRockDiamond
 
 - type: entity
-  parent: [ AsteroidRock, BaseVeinPlasma ]
+  parent: [ BaseVeinPlasma, AsteroidRock ]
   id: AsteroidRockPlasma
 
 - type: entity
-  parent: [ AsteroidRock, BaseVeinQuartz ]
+  parent: [ BaseVeinQuartz, AsteroidRock ]
   id: AsteroidRockQuartz
 
 - type: entity
@@ -341,7 +342,7 @@
     currentOre: OreQuartzCrab
 
 - type: entity
-  parent: [ AsteroidRock, BaseVeinSilver ]
+  parent: [ BaseVeinSilver, AsteroidRock ]
   id: AsteroidRockSilver
 
 - type: entity
@@ -354,7 +355,7 @@
 
 # Yes I know it drops steel but we may get smelting at some point
 - type: entity
-  parent: [ AsteroidRock, BaseVeinSteel ]
+  parent: [ BaseVeinSteel, AsteroidRock ]
   id: AsteroidRockTin
 
 - type: entity
@@ -366,7 +367,7 @@
     currentOre: OreIronCrab
 
 - type: entity
-  parent: [ AsteroidRock, BaseVeinUranium ]
+  parent: [ BaseVeinUranium, AsteroidRock ]
   id: AsteroidRockUranium
 
 - type: entity
@@ -378,19 +379,19 @@
     currentOre: OreUraniumCrab
 
 - type: entity
-  parent: [ AsteroidRock, BaseVeinSalt ]
+  parent: [ BaseVeinSalt, AsteroidRock ]
   id: AsteroidRockSalt
 
 - type: entity
-  parent: [ AsteroidRock, BaseVeinArtifactFragment ]
+  parent: [ BaseVeinArtifactFragment, AsteroidRock ]
   id: AsteroidRockArtifactFragment
 
 - type: entity
-  parent: [ BaseAsteroidRockVisuals, BaseAsteroidRock, BaseRockGibtonite ]
+  parent: [ BaseRockGibtonite, BaseAsteroidRockVisuals, BaseAsteroidRock ]
   id: AsteroidRockGibtonite
 
 - type: entity
-  parent: [ AsteroidRock, BaseVeinRandom ]
+  parent: [ BaseVeinRandom, AsteroidRock ]
   id: AsteroidRockMining
 
 #endregion
@@ -413,51 +414,51 @@
   id: IronRock
 
 - type: entity
-  parent: [ IronRock, BaseVeinRandom ]
+  parent: [ BaseVeinRandom, IronRock ]
   id: IronRockMining
 
 - type: entity
-  parent: [ IronRock, BaseVeinCoal ]
+  parent: [ BaseVeinCoal, IronRock ]
   id: IronRockCoal
 
 - type: entity
-  parent: [ IronRock, BaseVeinGold ]
+  parent: [ BaseVeinGold, IronRock ]
   id: IronRockGold
 
 - type: entity
-  parent: [ IronRock, BaseVeinPlasma ]
+  parent: [ BaseVeinPlasma, IronRock ]
   id: IronRockPlasma
 
 - type: entity
-  parent: [ IronRock, BaseVeinQuartz ]
+  parent: [ BaseVeinQuartz, IronRock ]
   id: IronRockQuartz
 
 - type: entity
-  parent: [ IronRock, BaseVeinSilver ]
+  parent: [ BaseVeinSilver, IronRock ]
   id: IronRockSilver
 
 - type: entity
-  parent: [ IronRock, BaseVeinSteel ]
+  parent: [ BaseVeinSteel, IronRock ]
   id: IronRockIron
 
 - type: entity
-  parent: [ IronRock, BaseVeinUranium ]
+  parent: [ BaseVeinUranium, IronRock ]
   id: IronRockUranium
 
 - type: entity
-  parent: [ IronRock, BaseVeinSalt ]
+  parent: [ BaseVeinSalt, IronRock ]
   id: IronRockSalt
 
 - type: entity
-  parent: [ IronRock, BaseVeinArtifactFragment ]
+  parent: [ BaseVeinArtifactFragment, IronRock ]
   id: IronRockArtifactFragment
 
 - type: entity
-  parent: [ BaseIronRockVisuals, IronRock, BaseRockGibtonite ]
+  parent: [ BaseRockGibtonite, BaseIronRockVisuals, IronRock ]
   id: IronRockGibtonite
 
 - type: entity
-  parent: [ IronRock, BaseVeinDiamond ]
+  parent: [ BaseVeinDiamond, IronRock ]
   id: IronRockDiamond
 
 #endregion
@@ -499,7 +500,7 @@
 
 # Ore veins
 - type: entity
-  parent: [ WallRock, BaseVeinCoal ]
+  parent: [ BaseVeinCoal, WallRock ]
   id: WallRockCoal
   components:
   - type: EntityRemap
@@ -510,7 +511,7 @@
       WallRockSnow: WallRockSnowCoal
 
 - type: entity
-  parent: [ WallRock, BaseVeinGold ]
+  parent: [ BaseVeinGold, WallRock ]
   id: WallRockGold
   components:
   - type: EntityRemap
@@ -521,7 +522,7 @@
       WallRockSnow: WallRockSnowGold
 
 - type: entity
-  parent: [ WallRock, BaseVeinDiamond ]
+  parent: [ BaseVeinDiamond, WallRock ]
   id: WallRockDiamond
   components:
   - type: EntityRemap
@@ -532,7 +533,7 @@
       WallRockSnow: WallRockSnowDiamond
 
 - type: entity
-  parent: [ WallRock, BaseVeinPlasma ]
+  parent: [ BaseVeinPlasma, WallRock ]
   id: WallRockPlasma
   components:
   - type: EntityRemap
@@ -543,7 +544,7 @@
       WallRockSnow: WallRockSnowPlasma
 
 - type: entity
-  parent: [ WallRock, BaseVeinQuartz ]
+  parent: [ BaseVeinQuartz, WallRock ]
   id: WallRockQuartz
   components:
   - type: EntityRemap
@@ -554,7 +555,7 @@
       WallRockSnow: WallRockSnowQuartz
 
 - type: entity
-  parent: [ WallRock, BaseVeinSilver ]
+  parent: [ BaseVeinSilver, WallRock ]
   id: WallRockSilver
   components:
   - type: EntityRemap
@@ -565,7 +566,7 @@
       WallRockSnow: WallRockSnowSilver
 
 - type: entity
-  parent: [ WallRock, BaseVeinSteel ]
+  parent: [ BaseVeinSteel, WallRock ]
   id: WallRockTin
   components:
   - type: EntityRemap
@@ -576,7 +577,7 @@
       WallRockSnow: WallRockSnowTin
 
 - type: entity
-  parent: [ WallRock, BaseVeinUranium ]
+  parent: [ BaseVeinUranium, WallRock ]
   id: WallRockUranium
   components:
   - type: EntityRemap
@@ -587,7 +588,7 @@
       WallRockSnow: WallRockSnowUranium
 
 - type: entity
-  parent: [ WallRock, BaseVeinArtifactFragment ]
+  parent: [ BaseVeinArtifactFragment, WallRock ]
   id: WallRockArtifactFragment
   components:
   - type: EntityRemap
@@ -598,7 +599,7 @@
       WallRockSnow: WallRockSnowArtifactFragment
 
 - type: entity
-  parent: [ WallRock, BaseVeinSalt ]
+  parent: [ BaseVeinSalt, WallRock ]
   id: WallRockSalt
   components:
   - type: EntityRemap
@@ -623,43 +624,43 @@
     sprite: Structures/Walls/stone-snow.rsi
 
 - type: entity
-  parent: [ WallRockSnow, BaseVeinCoal ]
+  parent: [ BaseVeinCoal, WallRockSnow ]
   id: WallRockSnowCoal
 
 - type: entity
-  parent: [ WallRockSnow, BaseVeinGold ]
+  parent: [ BaseVeinGold, WallRockSnow ]
   id: WallRockSnowGold
 
 - type: entity
-  parent: [ WallRockSnow, BaseVeinDiamond ]
+  parent: [ BaseVeinDiamond, WallRockSnow ]
   id: WallRockSnowDiamond
 
 - type: entity
-  parent: [ WallRockSnow, BaseVeinPlasma ]
+  parent: [ BaseVeinPlasma, WallRockSnow ]
   id: WallRockSnowPlasma
 
 - type: entity
-  parent: [ WallRockSnow, BaseVeinQuartz ]
+  parent: [ BaseVeinQuartz, WallRockSnow ]
   id: WallRockSnowQuartz
 
 - type: entity
-  parent: [ WallRockSnow, BaseVeinSilver ]
+  parent: [ BaseVeinSilver, WallRockSnow ]
   id: WallRockSnowSilver
 
 - type: entity
-  parent: [ WallRockSnow, BaseVeinSteel ]
+  parent: [ BaseVeinSteel, WallRockSnow ]
   id: WallRockSnowTin
 
 - type: entity
-  parent: [ WallRockSnow, BaseVeinUranium ]
+  parent: [ BaseVeinUranium, WallRockSnow ]
   id: WallRockSnowUranium
 
 - type: entity
-  parent: [ WallRockSnow, BaseVeinArtifactFragment ]
+  parent: [ BaseVeinArtifactFragment, WallRockSnow ]
   id: WallRockSnowArtifactFragment
 
 - type: entity
-  parent: [ WallRockSnow, BaseVeinSalt ]
+  parent: [ BaseVeinSalt, WallRockSnow ]
   id: WallRockSnowSalt
 
 #endregion
@@ -677,43 +678,43 @@
     sprite: Structures/Walls/stone-sand.rsi
 
 - type: entity
-  parent: [ WallRockSand, BaseVeinCoal ]
+  parent: [ BaseVeinCoal, WallRockSand ]
   id: WallRockSandCoal
 
 - type: entity
-  parent: [ WallRockSand, BaseVeinGold ]
+  parent: [ BaseVeinGold, WallRockSand ]
   id: WallRockSandGold
 
 - type: entity
-  parent: [ WallRockSand, BaseVeinDiamond ]
+  parent: [ BaseVeinDiamond, WallRockSand ]
   id: WallRockSandDiamond
 
 - type: entity
-  parent: [ WallRockSand, BaseVeinPlasma ]
+  parent: [ BaseVeinPlasma, WallRockSand ]
   id: WallRockSandPlasma
 
 - type: entity
-  parent: [ WallRockSand, BaseVeinQuartz ]
+  parent: [ BaseVeinQuartz, WallRockSand ]
   id: WallRockSandQuartz
 
 - type: entity
-  parent: [ WallRockSand, BaseVeinSilver ]
+  parent: [ BaseVeinSilver, WallRockSand ]
   id: WallRockSandSilver
 
 - type: entity
-  parent: [ WallRockSand, BaseVeinSteel ]
+  parent: [ BaseVeinSteel, WallRockSand ]
   id: WallRockSandTin
 
 - type: entity
-  parent: [ WallRockSand, BaseVeinUranium ]
+  parent: [ BaseVeinUranium, WallRockSand ]
   id: WallRockSandUranium
 
 - type: entity
-  parent: [ WallRockSand, BaseVeinArtifactFragment ]
+  parent: [ BaseVeinArtifactFragment, WallRockSand ]
   id: WallRockSandArtifactFragment
 
 - type: entity
-  parent: [ WallRockSand, BaseVeinSalt ]
+  parent: [ BaseVeinSalt, WallRockSand ]
   id: WallRockSandSalt
 
 #endregion
@@ -731,43 +732,43 @@
     sprite: Structures/Walls/stone-chromite.rsi
 
 - type: entity
-  parent: [ WallRockChromite, BaseVeinCoal ]
+  parent: [ BaseVeinCoal, WallRockChromite ]
   id: WallRockChromiteCoal
 
 - type: entity
-  parent: [ WallRockChromite, BaseVeinGold ]
+  parent: [ BaseVeinGold, WallRockChromite ]
   id: WallRockChromiteGold
 
 - type: entity
-  parent: [ WallRockChromite, BaseVeinDiamond ]
+  parent: [ BaseVeinDiamond, WallRockChromite ]
   id: WallRockChromiteDiamond
 
 - type: entity
-  parent: [ WallRockChromite, BaseVeinPlasma ]
+  parent: [ BaseVeinPlasma, WallRockChromite ]
   id: WallRockChromitePlasma
 
 - type: entity
-  parent: [ WallRockChromite, BaseVeinQuartz ]
+  parent: [ BaseVeinQuartz, WallRockChromite ]
   id: WallRockChromiteQuartz
 
 - type: entity
-  parent: [ WallRockChromite, BaseVeinSilver ]
+  parent: [ BaseVeinSilver, WallRockChromite ]
   id: WallRockChromiteSilver
 
 - type: entity
-  parent: [ WallRockChromite, BaseVeinSteel ]
+  parent: [ BaseVeinSteel, WallRockChromite ]
   id: WallRockChromiteTin
 
 - type: entity
-  parent: [ WallRockChromite, BaseVeinUranium ]
+  parent: [ BaseVeinUranium, WallRockChromite ]
   id: WallRockChromiteUranium
 
 - type: entity
-  parent: [ WallRockChromite, BaseVeinArtifactFragment ]
+  parent: [ BaseVeinArtifactFragment, WallRockChromite ]
   id: WallRockChromiteArtifactFragment
 
 - type: entity
-  parent: [ WallRockChromite, BaseVeinSalt ]
+  parent: [ BaseVeinSalt, WallRockChromite ]
   id: WallRockChromiteSalt
 
 #endregion

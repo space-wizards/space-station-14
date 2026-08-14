@@ -54,7 +54,6 @@
       components:
       - MobState # no mobs
       - Pullable # no dragging things in
-  - type: Appearance
   - type: Damageable
     damageModifierSet: SteelMod
   - type: Destructible

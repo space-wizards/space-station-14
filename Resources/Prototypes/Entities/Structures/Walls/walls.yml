@@ -684,7 +684,9 @@
     damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
-    - trigger: *DamageWallNormal
+    - trigger: &DamageWallNormal
+        !type:DamageTrigger
+        damage: 250
       behaviors:
       - *ChangeNodeGirder
       - *SoundMetalSlam

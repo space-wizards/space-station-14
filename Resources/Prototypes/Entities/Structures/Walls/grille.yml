@@ -26,7 +26,7 @@
     drawdepth: Walls
     sprite: Structures/Walls/grille-new.rsi
     layers:
-    - state: grille
+    - state: full
     - state: electrified
       sprite: Effects/electricity.rsi
       map: ["enum.ElectrifiedLayers.Sparks"]
@@ -149,11 +149,11 @@
   components:
   - type: Sprite
     drawdepth: Walls
-    sprite: Structures/Walls/grille.rsi
-    state: grille_broken
+    sprite: Structures/Walls/grille-new.rsi
+    state: broken
   - type: Icon
-    sprite: Structures/Walls/grille.rsi
-    state: grille_broken
+    sprite: Structures/Walls/grille-new.rsi
+    state: broken
   - type: RCDDeconstructable
     cost: 6
     delay: 4

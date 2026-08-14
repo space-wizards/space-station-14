@@ -82,10 +82,14 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
-      - *SoundMetalBreak
+      - &SoundMetalBreak !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
       - !type:SpawnEntitiesBehavior
         spawn:
-          SheetPlasma1: *BaseDoorSpawn
+          SheetPlasma1: &BaseDoorSpawn
+            min: 3
+            max: 5
 
 - type: entity
   parent: [ BaseMaterialDoorNavMap, StructureHealthDoorWeak ]
