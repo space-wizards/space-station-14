@@ -42,7 +42,7 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
     [Dependency] private MobStateSystem _mobState = default!;
     [Dependency] private ReactiveSystem _reactive = default!;
     [Dependency] protected SharedAppearanceSystem Appearance = default!;
-    [Dependency] private SharedBloodstreamSystem _bloodstream = default!;
+    [Dependency] private BloodstreamSystem _bloodstream = default!;
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
@@ -441,11 +441,8 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
         }
     }
 
-    protected void OnEmagged(EntityUid uid, CryoPodComponent? cryoPodComponent, ref GotEmaggedEvent args)
+    protected void OnEmagged(EntityUid uid, CryoPodComponent cryoPodComponent, ref GotEmaggedEvent args)
     {
-        if (!Resolve(uid, ref cryoPodComponent))
-            return;
-
         if (!_emag.CompareFlag(args.Type, EmagType.Interaction))
             return;
 

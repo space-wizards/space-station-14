@@ -6,7 +6,7 @@ namespace Content.Client.Wires.Visualizers;
 /// <summary>
 /// A system that automatically updates sprites for entities with maintenance panels.
 /// </summary>
-public sealed class WiresVisualizerSystem : VisualizerSystem<WiresVisualsComponent>
+public sealed partial class WiresVisualizerSystem : VisualizerSystem<WiresVisualsComponent>
 {
     protected override void OnAppearanceChange(EntityUid uid, WiresVisualsComponent component, ref AppearanceChangeEvent args)
     {
