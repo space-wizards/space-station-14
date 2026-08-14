@@ -331,12 +331,13 @@ public abstract partial class SharedMechSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnDragDrop(EntityUid uid, MechComponent component, ref DragDropTargetEvent args)
     {
-        if (args.Handled)
+        if (args.Handled ||
+            !TryComp<ContainerVehicleEntryComponent>(uid, out var entry))
             return;
 
         args.Handled = true;
 
-        var doAfterEventArgs = new DoAfterArgs(EntityManager, args.Dragged, component.EntryDelay, new MechEntryEvent(), uid, target: uid)
+        var doAfterEventArgs = new DoAfterArgs(EntityManager, args.Dragged, entry.EntryDelay, new MechEntryEvent(), uid, target: uid)
         {
             BreakOnMove = true,
         };
@@ -349,7 +350,9 @@ public abstract partial class SharedMechSystem : EntitySystem
     {
         args.Handled = true;
 
-        args.CanDrop |= !component.Broken && Vehicle.CanEnter(uid, args.Dragged);
+        args.CanDrop |= HasComp<ContainerVehicleEntryComponent>(uid) &&
+                        !component.Broken &&
+                        Vehicle.CanEnter(uid, args.Dragged);
     }
 
     [SubscribeLocalEvent]

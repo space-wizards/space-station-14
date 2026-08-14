@@ -147,7 +147,8 @@ public sealed partial class MechSystem : SharedMechSystem
     [SubscribeLocalEvent]
     private void OnAlternativeVerb(EntityUid uid, MechComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || component.Broken)
+        if (!args.CanAccess || !args.CanInteract || component.Broken ||
+            !TryComp<ContainerVehicleEntryComponent>(uid, out var entry))
             return;
 
         if (Vehicle.CanEnter(uid, args.User))
@@ -157,7 +158,7 @@ public sealed partial class MechSystem : SharedMechSystem
                 Text = Loc.GetString("mech-verb-enter"),
                 Act = () =>
                 {
-                    var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.EntryDelay, new MechEntryEvent(), uid, target: uid)
+                    var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, entry.EntryDelay, new MechEntryEvent(), uid, target: uid)
                     {
                         BreakOnMove = true,
                     };
@@ -189,7 +190,7 @@ public sealed partial class MechSystem : SharedMechSystem
                         return;
                     }
 
-                    var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.ExitDelay, new MechExitEvent(), uid, target: uid)
+                    var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, entry.ExitDelay, new MechExitEvent(), uid, target: uid)
                     {
                         BreakOnMove = true,
                     };

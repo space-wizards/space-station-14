@@ -83,19 +83,6 @@ public sealed partial class MechComponent : Component
     public readonly string EquipmentContainerId = "mech-equipment-container";
 
     /// <summary>
-    /// How long it takes to enter the mech.
-    /// </summary>
-    [DataField]
-    public float EntryDelay = 3;
-
-    /// <summary>
-    /// How long it takes to pull *another person*
-    /// outside of the mech. You can exit instantly yourself.
-    /// </summary>
-    [DataField]
-    public float ExitDelay = 3;
-
-    /// <summary>
     /// How long it takes to pull out the battery.
     /// </summary>
     [DataField]

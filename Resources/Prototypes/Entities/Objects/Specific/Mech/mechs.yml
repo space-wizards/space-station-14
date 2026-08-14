@@ -12,6 +12,7 @@
     blockedHands: 2
   - type: ContainerVehicle
     containerId: "mech-pilot-slot"
+  - type: ContainerVehicleEntry
   - type: AirFilter
     # everything except oxygen and nitrogen
     gases:
