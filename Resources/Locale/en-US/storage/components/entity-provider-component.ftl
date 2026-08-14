@@ -6,6 +6,6 @@ comp-entity-provider-cannot-receive = {CAPITALIZE(THE($refillTarget))} cannot be
 # Ejection Messages
 comp-entity-provider-no-ejected = There's nothing to eject!
 comp-entity-provider-ejected = You ejected { $amount ->
-                                                [1] a {$entity}.
-                                                *[other] {$amount} {$entity}s.
+                                                [1] {INDEFINITE($entity)}.
+                                                *[other] {$amount} {MAKEPLURAL($entity)}.
                                             }
