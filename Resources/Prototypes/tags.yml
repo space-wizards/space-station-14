@@ -1387,6 +1387,9 @@
   id: StunImmune # Tagged mob entity cannot gain the stunned status effect. Blacklist on StatusEffectStunned.
 
 - type: Tag
+  id: Stunbaton # Storage whitelist: ClothingBeltSecurity, WeaponCapacitorRecharger, TurboItemRecharger, WallWeaponCapacitorRecharger
+
+- type: Tag
   id: SubdermalImplant # Storage whitelist: BaseImplanter
 
 - type: Tag
