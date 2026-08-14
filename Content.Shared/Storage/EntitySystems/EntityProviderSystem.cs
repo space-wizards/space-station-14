@@ -6,11 +6,13 @@ using Content.Shared.Storage.Events;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Storage.EntitySystems;
 
 public sealed partial class EntityProviderSystem : EntitySystem
 {
+    [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
@@ -54,6 +56,13 @@ public sealed partial class EntityProviderSystem : EntitySystem
         }
         if (_storageQuery.TryComp(args.Used, out var storage))
             args.Handled = TryFillFromStorage(provider, (args.Used, storage), args.User);
+    }
+
+    [SubscribeLocalEvent]
+    public void OnAfterAutoHandle(Entity<EntityProviderComponent> provider, ref AfterAutoHandleStateEvent args)
+    {
+        var ev = new ProviderStorageChangedEvent();
+        RaiseLocalEvent(provider, ref ev);
     }
 
     /// <summary>

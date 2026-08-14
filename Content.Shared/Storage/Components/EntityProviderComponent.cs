@@ -10,7 +10,7 @@ namespace Content.Shared.Storage.Components;
 /// A generic item storage that does not store entities, but instead evaporates inserted entities into a counter.
 /// This deletes entities when inserted and increments the counter, and spawns entities when ejected and decrements the counter.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(EntityProviderSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true), Access(typeof(EntityProviderSystem))]
 public sealed partial class EntityProviderComponent : Component
 {
     /// <summary>

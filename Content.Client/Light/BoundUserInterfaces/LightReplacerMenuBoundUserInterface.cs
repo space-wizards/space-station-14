@@ -5,6 +5,7 @@ using Content.Shared.Storage.Components;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Light.BoundUserInterfaces;
 
@@ -12,6 +13,7 @@ namespace Content.Client.Light.BoundUserInterfaces;
 public sealed partial class LightReplacerMenuBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     private SimpleRadialMenu? _menu;
 
@@ -27,15 +29,32 @@ public sealed partial class LightReplacerMenuBoundUserInterface(EntityUid owner,
             || !EntMan.TryGetComponent<EntityProviderComponent>(Owner, out var provider))
             return;
 
+        SetUpButtons(replacer, provider);
+    }
+
+    public override void Update()
+    {
+        base.Update();
+
+        if (!EntMan.TryGetComponent<LightReplacerComponent>(Owner, out var replacer)
+            || !EntMan.TryGetComponent<EntityProviderComponent>(Owner, out var provider))
+            return;
+
+        SetUpButtons(replacer, provider);
+    }
+
+    private void SetUpButtons(LightReplacerComponent replacer, EntityProviderComponent provider)
+    {
         var lightTypes = CreateButtons(replacer, provider);
 
         if (lightTypes == null)
             return;
 
-        _menu = this.CreateWindow<SimpleRadialMenu>();
+        _menu ??= this.CreateWindow<SimpleRadialMenu>();
         _menu.SetButtons(lightTypes);
 
-        _menu.OpenCentered();
+        if (!IsOpened)
+            _menu.OpenCentered();
     }
 
     private IEnumerable<RadialMenuOptionBase>? CreateButtons(LightReplacerComponent replacer, EntityProviderComponent provider)
