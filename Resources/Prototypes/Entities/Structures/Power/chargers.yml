@@ -162,9 +162,10 @@
       charger_slot:
         ejectOnInteract: true
         whitelist:
+          tags:
+          - Stunbaton
           components:
           - BatteryAmmoProvider
-          - Stunbaton
           - PowerCell
         blacklist:
           tags:
@@ -190,9 +191,10 @@
       charger_slot:
         ejectOnInteract: true
         whitelist:
+          tags:
+          - Stunbaton
           components:
           - BatteryAmmoProvider
-          - Stunbaton
           - PowerCell
         blacklist:
           tags:
@@ -222,9 +224,10 @@
       charger_slot:
         ejectOnInteract: true
         whitelist:
+          tags:
+          - Stunbaton
           components:
           - BatteryAmmoProvider
-          - Stunbaton
         blacklist:
           tags:
           - PotatoBattery
