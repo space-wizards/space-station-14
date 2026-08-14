@@ -1546,6 +1546,7 @@
   - CombatBoots
   - JackBoots
   - ShoesBootsLaceup
+  - SecurityWinterBoots # DS14
 
 - type: loadoutGroup
   id: HeadofSecuritySocks
@@ -1676,7 +1677,7 @@
   - JackSecBoots
   - CombatBoots
   - JackBoots
-  - SecurityWinterBoots
+  - SecurityWinterBoots # DS14
 
 # DS14-disabled
 #- type: loadoutGroup
@@ -1712,13 +1713,13 @@
   - DetectiveGreyFlatCap # DS14
   - DetectiveBrownFlatCap # DS14
 
-- type: loadoutGroup
-  id: DetectiveNeck
-  name: loadout-group-detective-neck
-  minLimit: 0
-  loadouts:
-  - DetectiveTie
-  - DetectiveTieRed # DS14
+#- type: loadoutGroup
+#  id: DetectiveNeck
+#  name: loadout-group-detective-neck
+#  minLimit: 0
+#  loadouts:
+#  - DetectiveTie
+#  - DetectiveTieRed # DS14
 
 - type: loadoutGroup
   id: DetectiveJumpsuit

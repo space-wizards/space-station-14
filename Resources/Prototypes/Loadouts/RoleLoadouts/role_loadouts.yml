@@ -484,7 +484,7 @@
   groups:
   - GroupTankHarness
   - DetectiveHead
-  - DetectiveNeck
+#  - DetectiveNeck # DS14-disabled
   - DetectiveJumpsuit
   - DetectiveBackpack
   - DetectiveOuterClothing

@@ -2,7 +2,7 @@
   parent: BaseComputerCircuitboard
   id: CraftConsoleCircuitboard
   name: плата консоли управление станка
-  description: Строиться турель!
+  description: Строится турель!
   components:
     - type: Sprite
       state: cpu_science
@@ -12,7 +12,7 @@
 - type: entity
   id: CraftMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: станок для создание всего (машинная плата)
+  name: станок создания всего (машинная плата)
   description: Станция погрянет в хаосе безумства НИО!
   components:
   - type: Sprite

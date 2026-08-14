@@ -24,8 +24,8 @@ accent-karshaniil-replacement-6 = terve
 accent-karshaniil-word-7 = здравствуйте
 accent-karshaniil-replacement-7 = hyvää päivää
 
-accent-karshaniil-word-8 = пока
-accent-karshaniil-replacement-8 = hei hei
+accent-karshaniil-word-8 = до свидания
+accent-karshaniil-replacement-8 = näkemiin
 
 accent-karshaniil-word-9 = капитан
 accent-karshaniil-word-9-2 = капитана

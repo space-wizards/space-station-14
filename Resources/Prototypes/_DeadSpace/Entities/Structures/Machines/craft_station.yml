@@ -1,8 +1,8 @@
 - type: entity
   parent: [ BaseMachinePowered, ConstructibleMachine ]
   id: CraftMachineStation
-  name: станок для создание всего
-  description: А вы знали? Если кричать на данный станок когда он будет собирать какую-то вещь, ему будет по-...
+  name: станок создания всего
+  description: А вы знали, что если кричать на данный станок, пока он будет собирать что-либо, то ему будет по-...
   components:
   - type: Sprite
     sprite: _DeadSpace/Structures/Machines/craftmachine.rsi
