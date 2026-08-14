@@ -186,6 +186,7 @@
     tags:
     - WhitelistChameleon
   - type: IdentityBlocker
+  # DS14-start
   - type: HideLayerClothing
     slots:
     - Hair
@@ -193,6 +194,8 @@
     - HeadTop
     - HeadSide
     - FacialHair
+    clothingSlots:
+    - mask
   # DS14-start
   - type: VirusResistance
     virusResistanceCoefficient: 0.1
