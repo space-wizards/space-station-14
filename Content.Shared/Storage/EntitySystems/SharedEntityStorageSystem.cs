@@ -331,6 +331,11 @@ public abstract partial class SharedEntityStorageSystem : EntitySystem
         if (toRemoveTransform.MapUid is not { } toRemoveMap)
             return false;
 
+        var (pos, rot) = TransformSystem.GetWorldPositionRotation(xform);
+        pos += rot.RotateVec(component.EnteringOffset);
+        if (!_container.Remove(toRemove, component.Contents, destination: new(toRemoveMap, pos)))
+            return false;
+
         if (_container.IsEntityInContainer(container)
             && _container.TryGetOuterContainer(container, Transform(container), out var outerContainer))
         {
@@ -342,11 +347,6 @@ public abstract partial class SharedEntityStorageSystem : EntitySystem
                 return true;
             }
         }
-
-        var (pos, rot) = TransformSystem.GetWorldPositionRotation(xform);
-        pos += rot.RotateVec(component.EnteringOffset);
-        if (!_container.Remove(toRemove, component.Contents, destination: new(toRemoveMap, pos)))
-            return false;
 
         RemComp<InsideEntityStorageComponent>(toRemove);
         return true;
