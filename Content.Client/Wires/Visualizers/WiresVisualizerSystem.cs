@@ -8,6 +8,7 @@ namespace Content.Client.Wires.Visualizers;
 /// </summary>
 public sealed partial class WiresVisualizerSystem : VisualizerSystem<WiresVisualsComponent>
 {
+    /// <inheritdoc/>
     protected override void OnAppearanceChange(EntityUid uid, WiresVisualsComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
