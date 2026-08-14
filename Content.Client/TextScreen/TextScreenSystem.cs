@@ -7,6 +7,8 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.TextScreen;
 
+// TODO: This thing needs a refactor.  Distinction between Timer and TextScreen are nasty.
+
 // Overview:
 // Data is passed from server to client through <see cref="SharedAppearanceSystem.SetData"/>,
 // calling <see cref="OnAppearanceChange"/>, which calls almost everything else.
@@ -19,7 +21,6 @@ namespace Content.Client.TextScreen;
 // Because the sprite component stores layers in a dict with no nesting, individual layers
 // have to be mapped to unique ids e.g. {"textMapKey01" : <b>{first row, second char layerstate}</b>}
 // in either the visuals or timer component.
-
 
 /// <summary>
 /// The TextScreenSystem draws text in the game world using 3x5 sprite states for each character.
@@ -135,8 +136,15 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
             component.TextToDraw = SegmentText(text, component);
             ResetText((uid, component));
             BuildTextLayers((uid, component, args.Sprite));
-            DrawLayers(uid, component.LayerStatesToDraw);
             ResetScrollingState((uid, component), startTime);
+
+            // Make sure any static rows are drawn correctly.
+            // TODO: sanity pass over the text and timer screen components, simplify these drawing functions
+            DrawStaticLayers((uid, args.Sprite), component.LayerStatesToDraw);
+
+            // If any layers are scrolled, adjust them to their proper position.
+            if (component.ScrollEnabled && component.NextScrollTime.Any(x => x < _gameTiming.CurTime))
+                DrawScrolledLayers((uid, component, args.Sprite));
         }
 
         if (!args.AppearanceData.TryGetValue(TextScreenVisuals.TargetTime, out var time)
@@ -148,7 +156,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
             var timer = EnsureComp<TextScreenTimerComponent>(uid);
             timer.Target = target;
             BuildTimerLayers((uid, timer, component));
-            DrawLayers(uid, timer.LayerStatesToDraw);
+            DrawStaticLayers(uid, timer.LayerStatesToDraw);
         }
         else
         {
@@ -171,7 +179,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
                 if (_gameTiming.CurTime < timer.Target)
                 {
                     BuildTimerLayers((uid, timer, screen));
-                    DrawLayers(uid, timer.LayerStatesToDraw);
+                    DrawStaticLayers(uid, timer.LayerStatesToDraw);
                 }
                 else
                 {
@@ -288,7 +296,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
 
         ResetText(ent);
         BuildTextLayers((ent.Owner, ent.Comp, sprite));
-        DrawLayers(ent.Owner, ent.Comp.LayerStatesToDraw);
+        DrawStaticLayers(ent.Owner, ent.Comp.LayerStatesToDraw);
     }
 
     /// <summary>
@@ -339,7 +347,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
 
         for (var row = 0; row < screen.Rows; row++)
         {
-            for (var i = 0; i < screen.RowLength + 1; i++) // Extra index needed for scrolling.
+            for (var i = 0; i <= screen.RowLength; i++) // Extra index needed for scrolling.
             {
                 var key = TextMapKey + row + i;
                 var layerIndex = SpriteSystem.LayerMapReserve(sprite, key);
@@ -433,7 +441,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
     /// <summary>
     /// Draws a LayerStates dict by setting the sprite states individually.
     /// </summary>
-    private void DrawLayers(Entity<SpriteComponent?> ent, Dictionary<string, string?> layerStates)
+    private void DrawStaticLayers(Entity<SpriteComponent?> ent, Dictionary<string, string?> layerStates)
     {
         if (!Resolve(ent, ref ent.Comp))
             return;
@@ -458,26 +466,13 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
 
         for (int i = 0; i < screen.Rows; i++)
         {
-            bool scrolled = false;
-            bool newChar = false;
-            // Find the number of pixels we need to scroll.
-            if (screen.NextScrollTime[i] < _gameTiming.CurTime && screen.TimeBetweenScrolls[i] > TimeSpan.Zero)
-            {
-                var difference = (_gameTiming.CurTime - screen.NextScrollTime[i]).TotalSeconds;
-                var increments = (int)Math.Truncate(difference / screen.TimeBetweenScrolls[i].TotalSeconds) + 1;
-
-                newChar = increments >= CharWidth || CharacterWrapped(screen.ScrollPosition[i], increments);
-                scrolled = true;
-
-                screen.ScrollPosition[i] += increments;
-                screen.NextScrollTime[i] += increments * screen.TimeBetweenScrolls[i];
-            }
+            (var scrolled, var newChar) = UpdateScrollPosition(ent, i);
 
             if (!scrolled)
                 continue;
 
             var charOffset = screen.ScrollPosition[i] % CharWidth; // The amount to scroll each character off to the left by.
-            for (int j = 0; j < screen.RowLength + 1; j++)
+            for (int j = 0; j <= screen.RowLength; j++)
             {
                 SpriteSystem.LayerSetOffset(
                     sprite,
@@ -493,7 +488,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
                 continue;
 
             var textOffset = screen.ScrollPosition[i] / CharWidth; // The total number of characters scrolled so far.
-            for (int j = 0; j < screen.RowLength + 1; j++)
+            for (int j = 0; j <= screen.RowLength; j++)
             {
                 var chr = (textOffset + j) % screen.TextToDraw[i]!.Length;
                 SpriteSystem.LayerSetRsiState(
@@ -525,6 +520,8 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
 
         for (int i = 0; i < ent.Comp.Rows; i++)
         {
+            ent.Comp.ScrollPosition[i] = 0;
+
             // Short/null string, shouldn't scroll.
             if (ent.Comp.TextToDraw[i] == null || ent.Comp.TextToDraw[i]!.Length <= ent.Comp.RowLength)
             {
@@ -536,11 +533,44 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
                 // Find our desired scroll speed.
                 var newMaxScrollTime = MaxMessageScrollTime / ent.Comp.TextToDraw[i]!.Length / CharWidth;
                 var scrollTime = newMaxScrollTime < MaxPixelScrollTime ? newMaxScrollTime : MaxPixelScrollTime;
-                ent.Comp.NextScrollTime[i] = (startTime ?? _gameTiming.CurTime) + scrollTime;
+                ent.Comp.NextScrollTime[i] = startTime ?? _gameTiming.CurTime;
                 ent.Comp.TimeBetweenScrolls[i] = scrollTime;
             }
-            ent.Comp.ScrollPosition[i] = 0;
         }
+    }
+
+    /// <summary>
+    /// Updates the scroll position of a given row.
+    /// </summary>
+    /// <returns>
+    /// A two-tuple of booleans:
+    /// The first element, newChar, represents if the row has scrolled onto a new character (and thus all of the states should update)
+    /// and the second, scrolled, represents if the row has scrolled any pixels at all.
+    /// </returns>
+    private (bool newChar, bool scrolled) UpdateScrollPosition(Entity<TextScreenVisualsComponent> ent, int i)
+    {
+        var screen = ent.Comp;
+
+        if (i < 0 || i >= screen.NextScrollTime.Length)
+            return (false, false);
+
+        if (screen.NextScrollTime[i] >= _gameTiming.CurTime)
+            return (false, false);
+
+        if (screen.TimeBetweenScrolls[i] >= _gameTiming.CurTime)
+            return (false, false);
+
+        // Find the number of pixels we need to scroll.
+        var difference = (_gameTiming.CurTime - screen.NextScrollTime[i]).TotalSeconds;
+        var increments = (int)Math.Truncate(difference / screen.TimeBetweenScrolls[i].TotalSeconds) + 1;
+
+        var newChar = increments >= CharWidth || CharacterWrapped(screen.ScrollPosition[i], increments);
+        var scrolled = true;
+
+        screen.ScrollPosition[i] += increments;
+        screen.NextScrollTime[i] += increments * screen.TimeBetweenScrolls[i];
+
+        return (scrolled, newChar);
     }
     #endregion Internal
 }

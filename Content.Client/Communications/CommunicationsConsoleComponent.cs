@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Communications;
 using Robust.Shared.Prototypes;
 
@@ -11,5 +12,11 @@ public sealed partial class CommunicationsConsoleComponent : SharedCommunication
     /// The prototype ID to use in the UI to show what entities a broadcast will display on.
     /// </summary>
     [DataField]
-    public EntProtoId ScreenDisplayId = "ScreenDummy";
+    public EntProtoId ScreenDisplayId = "Screen";
+
+    /// <summary>
+    /// The offset to apply to the sprite.
+    /// </summary>
+    [DataField]
+    public Vector2 SpriteOffset = new Vector2(0f, -0.25f);
 }
