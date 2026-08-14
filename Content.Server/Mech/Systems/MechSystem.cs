@@ -19,12 +19,10 @@ using Content.Shared.Tools.Components;
 using Content.Shared.Tools.Systems;
 using Content.Shared.Vehicle;
 using Content.Shared.Vehicle.Components;
-using Content.Shared.Verbs;
 using Content.Shared.Wires;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Mech.Systems;
@@ -132,35 +130,10 @@ public sealed partial class MechSystem : SharedMechSystem
     }
 
     [SubscribeLocalEvent]
-    private void OnOpenUi(EntityUid uid, MechComponent component, MechOpenUiEvent args)
-    {
-        args.Handled = true;
-        ToggleMechUi(uid, component);
-    }
-
-    [SubscribeLocalEvent]
     private void OnToolUseAttempt(Entity<VehicleOperatorComponent> ent, ref ToolUserAttemptUseEvent args)
     {
         if (ent.Comp.Vehicle is { } vehicle && args.Target == vehicle)
             args.Cancelled = true;
-    }
-
-    [SubscribeLocalEvent]
-    private void OnAlternativeVerb(EntityUid uid, MechComponent component, GetVerbsEvent<AlternativeVerb> args)
-    {
-        if (!args.CanAccess ||
-            !args.CanInteract ||
-            component.Broken ||
-            !Vehicle.CanEnter(uid, args.User))
-            return;
-
-        var openUiVerb = new AlternativeVerb // can't hijack someone else's mech
-        {
-            Act = () => ToggleMechUi(uid, component, args.User),
-            Text = Loc.GetString("mech-ui-open-verb")
-        };
-
-        args.Verbs.Add(openUiVerb);
     }
 
     [SubscribeLocalEvent]
@@ -176,32 +149,10 @@ public sealed partial class MechSystem : SharedMechSystem
     }
 
     [SubscribeLocalEvent]
-    private void OnMechOperatorSet(Entity<MechComponent> ent, ref VehicleOperatorSetEvent args)
-    {
-        if (args.NewOperator is null && args.OldOperator is not null)
-            _ui.CloseUi(ent.Owner, MechUiKey.Key);
-    }
-
-    [SubscribeLocalEvent]
     private void OnDamageChanged(EntityUid uid, MechComponent component, DamageChangedEvent args)
     {
         var integrity = component.MaxIntegrity - _damageable.GetTotalDamage((uid, args.Damageable));
         SetIntegrity(uid, integrity, component);
-    }
-
-    private void ToggleMechUi(EntityUid uid, MechComponent? component = null, EntityUid? user = null)
-    {
-        if (!Resolve(uid, ref component))
-            return;
-        user ??= Vehicle.GetOperatorOrNull(uid);
-        if (user == null)
-            return;
-
-        if (!TryComp<ActorComponent>(user, out var actor))
-            return;
-
-        _ui.TryToggleUi(uid, MechUiKey.Key, actor.PlayerSession);
-        UpdateUserInterface(uid, component);
     }
 
     [SubscribeLocalEvent]

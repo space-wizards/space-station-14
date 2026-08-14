@@ -12,6 +12,7 @@ using Content.Shared.Storage.Components;
 using Content.Shared.Vehicle;
 using Content.Shared.Vehicle.Systems;
 using Content.Shared.Vehicle.Components;
+using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
@@ -33,6 +34,7 @@ public abstract partial class SharedMechSystem : EntitySystem
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private SharedInteractionSystem _interaction = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedUserInterfaceSystem _userInterface = default!;
     [Dependency] protected VehicleSystem Vehicle = default!;
     [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
 
@@ -52,6 +54,31 @@ public abstract partial class SharedMechSystem : EntitySystem
             return;
         args.Handled = true;
         Vehicle.TryExit(uid);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnOpenUi(EntityUid uid, MechComponent component, MechOpenUiEvent args)
+    {
+        args.Handled = true;
+        ToggleMechUi(uid, component);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnAlternativeVerb(EntityUid uid, MechComponent component, GetVerbsEvent<AlternativeVerb> args)
+    {
+        if (!args.CanAccess ||
+            !args.CanInteract ||
+            component.Broken ||
+            Vehicle.HasOperator(uid))
+            return;
+
+        var openUiVerb = new AlternativeVerb // can't hijack someone else's mech
+        {
+            Act = () => ToggleMechUi(uid, component, args.User),
+            Text = Loc.GetString("mech-ui-open-verb")
+        };
+
+        args.Verbs.Add(openUiVerb);
     }
 
     [SubscribeLocalEvent]
@@ -300,6 +327,19 @@ public abstract partial class SharedMechSystem : EntitySystem
     {
     }
 
+    private void ToggleMechUi(EntityUid uid, MechComponent? component = null, EntityUid? user = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        user ??= Vehicle.GetOperatorOrNull(uid);
+        if (user == null)
+            return;
+
+        _userInterface.TryToggleUi(uid, MechUiKey.Key, user.Value);
+        UpdateUserInterface(uid, component);
+    }
+
     [SubscribeLocalEvent]
     private void OnGetMeleeWeapon(Entity<VehicleOperatorComponent> ent, ref GetMeleeWeaponEvent args)
     {
@@ -356,6 +396,9 @@ public abstract partial class SharedMechSystem : EntitySystem
 
         UpdateAppearance(ent);
         UpdateUserInterface(ent, ent);
+
+        if (args.NewOperator is null && args.OldOperator is not null)
+            _userInterface.CloseUi(ent.Owner, MechUiKey.Key);
     }
 }
 
