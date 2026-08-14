@@ -25,7 +25,7 @@
     price: 2000
 
 - type: entity
-  parent: [BaseItem, AccessBreaker, BaseXenoborgContraband]
+  parent: [BaseXenoborgContraband, AccessBreaker]
   id: XenoborgAccessBreaker
   suffix: Limited
   name: xenoborg authentication disruptor
