@@ -232,6 +232,7 @@
   name: syndicate visor
   description: The syndicate's professional head-up display, designed for better detection of humanoids and their subsequent elimination.
   components:
+  - type: FlashImmunity
   - type: Sprite
     sprite: Clothing/Eyes/Hud/synd.rsi
   - type: Clothing
@@ -241,6 +242,8 @@
     tags:
     - PetWearable
     - WhitelistChameleon
+  - type: IdentityBlocker
+    coverage: EYES
 
 - type: entity
   parent: [ClothingEyesHudBase, ShowSecurityIcons, BaseSyndicateContraband]
@@ -248,6 +251,7 @@
   name: syndicate medical visor
   description: The Syndicate Corpsman's professional heads-up display, designed for quick diagnosis of their team's status.
   components:
+  - type: FlashImmunity
   - type: Sprite
     sprite: Clothing/Eyes/Hud/syndagent.rsi
   - type: Clothing
@@ -258,6 +262,8 @@
     tags:
     - PetWearable
     - WhitelistChameleon
+  - type: IdentityBlocker
+    coverage: EYES
 
 - type: entity
   parent: [ClothingEyesGlassesSunglasses, ShowSecurityIcons]
