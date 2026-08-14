@@ -23,6 +23,23 @@
         HorizontalExpand="True"
         AppendStyleClass="{x:Static style:StyleClass.ButtonOpenRight}"
         />
+    <Button
+        Name="SpaceArenaButton"
+        Access="Internal"
+        Text="{Loc 'space-arena-hud-button'}"
+        ToolTip="{Loc 'space-arena-hud-button-tooltip'}"
+        MinSize="110 64"
+        StyleClasses="positive ButtonBig"
+        />
+    <Button
+        Name="SpaceArenaReturnToHubButton"
+        Access="Internal"
+        Text="{Loc 'space-arena-hud-return-to-hub-button'}"
+        ToolTip="{Loc 'space-arena-hud-return-to-hub-tooltip'}"
+        MinSize="110 64"
+        StyleClasses="negative ButtonBig"
+        Visible="False"
+        />
     <ui:MenuButton
         Name="GuidebookButton"
         Access="Internal"

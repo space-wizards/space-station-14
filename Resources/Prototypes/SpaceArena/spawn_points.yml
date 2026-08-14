@@ -1,0 +1,64 @@
+- type: entity
+  id: SpaceArenaSpawnPointBase
+  parent: MarkerBase
+  abstract: true
+  suffix: SpaceArena spawn
+  components:
+  - type: SpaceArenaSpawnPoint
+    group: Player
+  - type: SpawnPoint
+    spawn_type: LateJoin
+
+- type: entity
+  id: SpaceArenaSpawnPoint
+  parent: SpaceArenaSpawnPointBase
+  name: SpaceArena player spawn point
+  components:
+  - type: Sprite
+    state: green
+
+- type: entity
+  id: SpaceArenaSpawnPointTeamA
+  parent: SpaceArenaSpawnPointBase
+  name: SpaceArena Team A spawn point
+  components:
+  - type: SpaceArenaSpawnPoint
+    group: TeamA
+  - type: Sprite
+    state: blue
+
+- type: entity
+  id: SpaceArenaSpawnPointTeamB
+  parent: SpaceArenaSpawnPointBase
+  name: SpaceArena Team B spawn point
+  components:
+  - type: SpaceArenaSpawnPoint
+    group: TeamB
+  - type: Sprite
+    state: red
+
+- type: entity
+  id: SpaceArenaBarrier
+  name: SpaceArena countdown barrier
+  suffix: SpaceArena barrier
+  components:
+  - type: SpaceArenaBarrier
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        mask:
+        - SpecialWallLayer
+        layer:
+        - SpecialWallLayer
+  - type: Airtight
+  - type: Sprite
+    sprite: Structures/Magic/forcewall.rsi
+    state: forcewall
+  - type: Icon
+    sprite: Structures/Magic/forcewall.rsi
+    state: forcewall

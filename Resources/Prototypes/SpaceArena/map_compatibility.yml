@@ -1,0 +1,105 @@
+
+- type: entity
+  id: BarrelBeer
+  parent: BarrelChemFilledEthanol
+  categories: [ HideSpawnMenu ]
+
+- type: entity
+  id: BarrelRustEmpty
+  parent: BarrelChemEmpty
+  categories: [ HideSpawnMenu ]
+
+- type: entity
+  id: CatwalkOrange
+  parent: Catwalk
+  categories: [ HideSpawnMenu ]
+
+- type: entity
+  id: ChairPlastic
+  parent: Chair
+  categories: [ HideSpawnMenu ]
+
+- type: entity
+  id: CrateWood
+  parent: CrateGeneric
+  categories: [ HideSpawnMenu ]
+
+- type: entity
+  id: CurbWood
+  parent: TableWood
+  categories: [ HideSpawnMenu ]
+
+- type: entity
+  id: FloorDirtyWaterEntity
+  parent: FloorWaterEntity
+  categories: [ HideSpawnMenu ]
+
+- type: entity
+  id: FlowerHedgeOrangeSeparate
+  parent: PottedPlant0
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Transform
+    noRot: false
+  - type: Sprite
+    noRot: false
+
+- type: entity
+  id: FlowerHedgeRedSeparate
+  parent: PottedPlant1
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Transform
+    noRot: false
+  - type: Sprite
+    noRot: false
+
+- type: entity
+  id: FlowersBouquet
+  parent: PottedPlant2
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Transform
+    noRot: false
+  - type: Sprite
+    noRot: false
+
+- type: entity
+  id: TrashCan
+  parent: CrateGeneric
+  categories: [ HideSpawnMenu ]
+
+- type: entity
+  id: WallBeton
+  parent: WallBrick
+  categories: [ HideSpawnMenu ]
+
+- type: entity
+  id: WallShuttleDark
+  parent: WallShuttle
+  categories: [ HideSpawnMenu ]
+
+- type: entity
+  id: WallShuttleDarkDiagonal
+  parent: WallShuttleDiagonal
+  categories: [ HideSpawnMenu ]
+
+- type: entity
+  id: WoodStairsLeft
+  parent: StairStageWood
+  categories: [ HideSpawnMenu ]
+
+- type: entity
+  id: WoodStairsMiddle
+  parent: StairWood
+  categories: [ HideSpawnMenu ]
+
+- type: entity
+  id: WoodStairsRight
+  parent: StairStageWood
+  categories: [ HideSpawnMenu ]
+
+- type: entity
+  id: WoodStairsSolo
+  parent: StairWood
+  categories: [ HideSpawnMenu ]

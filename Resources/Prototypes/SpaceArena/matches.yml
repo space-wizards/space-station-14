@@ -1,0 +1,44 @@
+- type: entity
+  id: BaseSpaceArenaMatch
+  abstract: true
+  components:
+  - type: SpaceArenaMatch
+  - type: SpaceArenaMatchRuntime
+
+- type: entity
+  parent: BaseSpaceArenaMatch
+  id: SpaceArenaDeathMatch
+  name: space-arena-mode-team-deathmatch
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SpaceArenaMatch
+    name: space-arena-mode-team-deathmatch
+    minPlayers: 2
+    maxPlayers: 16
+    preparationDuration: 1
+    countdownDuration: 10
+    timeLimit: 300
+    endingDuration: 0
+    resultsDuration: 5
+    disconnectGracePeriod: 12
+  - type: SpaceArenaDeathMatch
+    gear: DeathMatchGear
+
+- type: entity
+  parent: BaseSpaceArenaMatch
+  id: SpaceArenaDrawing
+  name: space-arena-mode-drawing
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SpaceArenaMatch
+    name: space-arena-mode-drawing
+    minPlayers: 1
+    maxPlayers: 1
+    preparationDuration: 0
+    countdownDuration: 0
+    timeLimit: null
+    endingDuration: 0
+    resultsDuration: 0
+    respawnDelay: 3
+    allowVoluntaryLeave: true
+    startingGear: DeathMatchGear

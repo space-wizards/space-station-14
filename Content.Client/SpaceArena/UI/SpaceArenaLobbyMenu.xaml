@@ -1,0 +1,102 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      Title="{Loc 'space-arena-lobby-window-title'}"
+                      MinSize="720 560"
+                      SetSize="820 650"
+                      Resizable="True">
+    <BoxContainer Orientation="Vertical"
+                  HorizontalExpand="True"
+                  VerticalExpand="True"
+                  Margin="14">
+        <PanelContainer StyleClasses="BackgroundDark" Margin="0 0 0 8">
+            <BoxContainer Orientation="Vertical" Margin="16 14">
+                <Label Text="{Loc 'space-arena-lobby-heading'}"
+                       StyleClasses="LabelHeading"
+                       Margin="0 0 0 4" />
+                <Label Text="{Loc 'space-arena-lobby-description'}"
+                       StyleClasses="LabelSubText" />
+            </BoxContainer>
+        </PanelContainer>
+
+        <PanelContainer StyleClasses="PanelInsetDark" Margin="0 0 0 8">
+            <BoxContainer Orientation="Horizontal" Margin="12 9">
+                <Label Name="MembershipLabel"
+                       Text="{Loc 'space-arena-lobby-membership-none'}"
+                       VerticalAlignment="Center"
+                       HorizontalExpand="True" />
+                <Button Name="LeaveButton"
+                        Text="{Loc 'space-arena-lobby-leave-button'}"
+                        Visible="False"
+                        MinWidth="110" />
+            </BoxContainer>
+        </PanelContainer>
+
+        <PanelContainer StyleClasses="BackgroundDark" Margin="0 0 0 8">
+            <BoxContainer Orientation="Vertical" Margin="14 12">
+                <Label Text="{Loc 'space-arena-lobby-create-heading'}"
+                       StyleClasses="LabelHeading"
+                       Margin="0 0 0 10" />
+                <BoxContainer Orientation="Horizontal">
+                    <BoxContainer Orientation="Vertical"
+                                  HorizontalExpand="True"
+                                  Margin="0 0 10 0">
+                        <Label Text="{Loc 'space-arena-lobby-mode-label'}"
+                               StyleClasses="LabelSubText"
+                               Margin="0 0 0 4" />
+                        <OptionButton Name="ModeOption"
+                                      HorizontalExpand="True"
+                                      MinWidth="190" />
+                    </BoxContainer>
+                    <BoxContainer Orientation="Vertical"
+                                  HorizontalExpand="True"
+                                  Margin="0 0 10 0">
+                        <Label Text="{Loc 'space-arena-lobby-arena-label'}"
+                               StyleClasses="LabelSubText"
+                               Margin="0 0 0 4" />
+                        <BoxContainer Orientation="Horizontal"
+                                      HorizontalExpand="True">
+                            <OptionButton Name="ArenaOption"
+                                          HorizontalExpand="True"
+                                          MinWidth="240" />
+                            <PanelContainer Name="WeaponPreviewPanel"
+                                            StyleClasses="PanelInsetDark"
+                                            Margin="6 0 0 0"
+                                            Visible="False"
+                                            ToolTip="{Loc 'space-arena-lobby-weapon-preview-tooltip'}">
+                                <EntityPrototypeView Name="WeaponPreview"
+                                                     MinSize="32 32"
+                                                     Scale="1.35 1.35" />
+                            </PanelContainer>
+                        </BoxContainer>
+                    </BoxContainer>
+                    <Button Name="CreateButton"
+                            Text="{Loc 'space-arena-lobby-create-button'}"
+                            VerticalAlignment="Bottom"
+                            MinWidth="120" />
+                </BoxContainer>
+            </BoxContainer>
+        </PanelContainer>
+
+        <PanelContainer StyleClasses="BackgroundDark"
+                        HorizontalExpand="True"
+                        VerticalExpand="True">
+            <BoxContainer Orientation="Vertical"
+                          HorizontalExpand="True"
+                          VerticalExpand="True"
+                          Margin="14 12">
+                <Label Text="{Loc 'space-arena-lobby-list-heading'}"
+                       StyleClasses="LabelHeading"
+                       Margin="0 0 0 8" />
+                <PanelContainer StyleClasses="LowDivider" Margin="0 0 0 8" />
+                <ScrollContainer HScrollEnabled="False"
+                                 HorizontalExpand="True"
+                                 VerticalExpand="True">
+                    <BoxContainer Name="RoomContainer"
+                                  Orientation="Vertical"
+                                  HorizontalExpand="True"
+                                  VerticalExpand="True" />
+                </ScrollContainer>
+            </BoxContainer>
+        </PanelContainer>
+    </BoxContainer>
+</controls:FancyWindow>

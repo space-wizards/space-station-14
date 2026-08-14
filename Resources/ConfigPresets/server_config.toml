@@ -25,6 +25,9 @@ max_connections = 256
 hostname = "MyServer"
 # Description of the server. This is what will be displayed in the server list.
 desc = "Just another server, don't mind me!"
+lobbyenabled = true
+defaultpreset = "SpaceArena"
+map = "SpaceArenaHub"
 # The maximum number of players that can connect to the server. (Exluding admins)
 soft_max_players = 30
 # Controls the lobby timer in seconds.
@@ -40,6 +43,8 @@ ipintel_contact_email = ""
 ipintel_bad_rating = 0.95
 
 [ic]
+random_characters = false
+restricted_names = false
 # Allows visibility and editing of flavor text (character descriptions)
 flavor_text = false
 
