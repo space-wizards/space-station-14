@@ -867,6 +867,7 @@
     radius: 3.5
     color: magenta
     energy: 0.5
+  - type: AcknowledgeShooter # so the missile can target the shooter and do a acme moment.
   - type: TimedDespawn
     lifetime: 15
   - type: TriggerOnSpawn

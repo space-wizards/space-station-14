@@ -11,6 +11,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Projectiles;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Projectiles;
 
@@ -22,11 +23,27 @@ public sealed partial class ProjectileSystem : SharedProjectileSystem
     [Dependency] private DestructibleSystem _destructibleSystem = default!;
     [Dependency] private GunSystem _guns = default!;
     [Dependency] private SharedCameraRecoilSystem _sharedCameraRecoil = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<ProjectileComponent, StartCollideEvent>(OnStartCollide);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var acknowledgeShooterQuery = EntityQueryEnumerator<AcknowledgeShooterComponent>();
+        while (acknowledgeShooterQuery.MoveNext(out var uid, out var acknowledgeShooterComp))
+        {
+            if (acknowledgeShooterComp.WhenToStopIgnoringShooter > _timing.CurTime)
+                continue;
+
+            var projectileComp = Comp<ProjectileComponent>(uid);
+            projectileComp.IgnoreShooter = false;
+        }
     }
 
     private void OnStartCollide(EntityUid uid, ProjectileComponent component, ref StartCollideEvent args)
