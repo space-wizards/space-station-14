@@ -96,12 +96,18 @@ public sealed partial class ShuttleSystem
             return false;
         }
 
-        var targetPhysics = _physicsQuery.Comp(targetGrid);
-        var spawnCoords = new EntityCoordinates(targetGrid, targetPhysics.LocalCenter);
+        var spawnCoords = new EntityCoordinates(targetGrid, targetGrid.Comp.LocalAABB.Center);
 
         if (group.MinimumDistance > 0f)
         {
             var distancePadding = MathF.Max(targetGrid.Comp.LocalAABB.Width, targetGrid.Comp.LocalAABB.Height);
+
+            if (distancePadding > 1000f)
+            {
+                Log.Error($"Refusing dungeon grid spawn near {ToPrettyString(targetGrid)}: unreasonable grid bounds {targetGrid.Comp.LocalAABB}");
+                return false;
+            }
+
             spawnCoords = spawnCoords.Offset(_random.NextVector2(distancePadding + group.MinimumDistance, distancePadding + group.MaximumDistance));
         }
 
