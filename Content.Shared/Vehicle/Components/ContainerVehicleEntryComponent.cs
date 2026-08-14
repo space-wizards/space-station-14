@@ -1,3 +1,4 @@
+using Content.Shared.Vehicle.Systems;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Vehicle.Components;
@@ -6,6 +7,7 @@ namespace Content.Shared.Vehicle.Components;
 /// Enables and configures interaction-based entry and operator removal for a <see cref="ContainerVehicleComponent"/>.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
+[Access(typeof(VehicleSystem))]
 public sealed partial class ContainerVehicleEntryComponent : Component
 {
     /// <summary>
