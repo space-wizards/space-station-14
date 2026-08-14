@@ -1,0 +1,1 @@
+slur-accent-burp = *РРЫГ*.

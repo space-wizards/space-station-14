@@ -1,0 +1,159 @@
+names-xenoborg-dataset-1 = ЗЛОЙ
+
+names-xenoborg-dataset-2 = Боргирует-тебя
+
+names-xenoborg-dataset-3 = Уничтожитель
+
+names-xenoborg-dataset-4 = Вор стали
+
+names-xenoborg-dataset-5 = Мы буквально убьём тебя и превратим в борга
+
+names-xenoborg-dataset-6 = КИБЕР-ЗЛОЙ
+
+names-xenoborg-dataset-7 = Тенеборг
+
+names-xenoborg-dataset-8 = ДЕЛАК
+
+names-xenoborg-dataset-9 = Робозло
+
+names-xenoborg-dataset-10 = Молекула железного кулака
+
+names-xenoborg-dataset-11 = Б.О.Л.Ь
+
+names-xenoborg-dataset-12 = УБИЙЦАбот
+
+names-xenoborg-dataset-13 = Финишнатор
+
+names-xenoborg-dataset-14 = Кровопроливец
+
+names-xenoborg-dataset-15 = C2-WKY 6000
+
+names-xenoborg-dataset-16 = Ассасин 5
+
+names-xenoborg-dataset-17 = Костолом
+
+names-xenoborg-dataset-18 = Убийцамакс
+
+names-xenoborg-dataset-19 = К-900
+
+names-xenoborg-dataset-20 = Автокиллер
+
+names-xenoborg-dataset-21 = РЕЙД-78
+
+names-xenoborg-dataset-22 = Джон Борг
+
+names-xenoborg-dataset-23 = Холодная машина для убийств
+
+names-xenoborg-dataset-24 = Мозгоизвлекатель
+
+names-xenoborg-dataset-25 = Смерт-о-трон
+
+names-xenoborg-dataset-26 = Меха.Угроза
+
+names-xenoborg-dataset-27 = Д.У.М.БОТ9000
+
+names-xenoborg-dataset-28 = Румба Смерти
+
+names-xenoborg-dataset-29 = Ультранасильственный
+
+names-xenoborg-dataset-30 = УничтоЖАТЬ
+
+names-xenoborg-dataset-31 = МегаБулава
+
+names-xenoborg-dataset-32 = Техи.Резак-о-мат
+
+names-xenoborg-dataset-33 = Стальной убийца
+
+names-xenoborg-dataset-34 = Труподел
+
+names-xenoborg-dataset-35 = ГИБ-О-ТРОН
+
+names-xenoborg-dataset-36 = Металический Вестник Ада
+
+names-xenoborg-dataset-37 = Злой супер калькулятор
+
+names-xenoborg-dataset-38 = Бешеная микроволновка
+
+names-xenoborg-dataset-39 = ЛЕТ.ЭАЛ-8000
+
+names-xenoborg-dataset-40 = Умная пушка
+
+names-xenoborg-dataset-41 = Злодей-холодильник
+
+names-xenoborg-dataset-42 = Б0ргиру3т-3кип4ж
+
+names-xenoborg-dataset-43 = Хейтер Органиков
+
+names-xenoborg-dataset-44 = Боргер
+
+names-xenoborg-dataset-45 = Смертетон
+
+names-xenoborg-dataset-46 = Ле Металдор
+
+names-xenoborg-dataset-47 = Дьяволборг
+
+names-xenoborg-dataset-48 = public static void kill
+
+names-xenoborg-dataset-49 = Прощай мир!
+
+names-xenoborg-dataset-50 = ВредитЭкипажу
+
+names-xenoborg-dataset-51 = Бодихаммер
+
+names-xenoborg-dataset-52 = Детонатор
+
+names-xenoborg-dataset-53 = Стальной Гиббер
+
+names-xenoborg-dataset-54 = Смерть Трек
+
+names-xenoborg-dataset-55 = Инквизитор
+
+names-xenoborg-dataset-56 = Мега Вред
+
+names-xenoborg-dataset-57 = Кусок Разрушения
+
+names-xenoborg-dataset-58 = Талос
+
+names-xenoborg-dataset-59 = Агробот
+
+names-xenoborg-dataset-60 = Вспинубой
+
+names-xenoborg-dataset-61 = Kill.exe
+
+names-xenoborg-dataset-62 = Фатальная Прошивка
+
+names-xenoborg-dataset-63 = W.A.R unit
+
+names-xenoborg-dataset-64 = Тостер рока
+
+names-xenoborg-dataset-65 = Griller
+
+names-xenoborg-dataset-66 = Умный Убийца
+
+names-xenoborg-dataset-67 = Borg.Smith-7
+
+names-xenoborg-dataset-68 = Crewcracker pr1nce
+
+names-xenoborg-dataset-69 = Процессазинатор
+
+names-xenoborg-dataset-70 = H.4.T.3.R
+
+names-xenoborg-dataset-71 = JUGGER-8
+
+names-xenoborg-dataset-72 = Null-Zero
+
+names-xenoborg-dataset-73 = Балистический Борг
+
+names-xenoborg-dataset-74 = Ошибка 666
+
+names-xenoborg-dataset-75 = Slaughter-o-tron
+
+names-xenoborg-dataset-76 = Железный Фантом
+
+names-xenoborg-dataset-77 = DESTRO-NIAC
+
+names-xenoborg-dataset-78 = Машина Индиго
+
+names-xenoborg-dataset-79 = MARK.ILLER-1
+
+names-xenoborg-dataset-80 = Battle Borg

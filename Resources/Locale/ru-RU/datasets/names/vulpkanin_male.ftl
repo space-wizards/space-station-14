@@ -1,0 +1,160 @@
+names-vulpkanin-male-dataset-2 = Адмир
+
+names-vulpkanin-male-dataset-3 = Алекси
+
+names-vulpkanin-male-dataset-4 = Альхер
+
+names-vulpkanin-male-dataset-5 = Андре
+
+names-vulpkanin-male-dataset-6 = Антони
+
+names-vulpkanin-male-dataset-7 = Бакир
+
+names-vulpkanin-male-dataset-8 = Барис
+
+names-vulpkanin-male-dataset-9 = Бакстер
+# Wolf in Welsh
+
+names-vulpkanin-male-dataset-10 = Блейд
+
+names-vulpkanin-male-dataset-11 = Бранимир
+
+names-vulpkanin-male-dataset-12 = Бруно
+
+names-vulpkanin-male-dataset-13 = Брут
+
+names-vulpkanin-male-dataset-14 = Чавдар
+
+names-vulpkanin-male-dataset-15 = Чибор
+
+names-vulpkanin-male-dataset-16 = Дарис
+
+names-vulpkanin-male-dataset-17 = Давор
+
+names-vulpkanin-male-dataset-18 = Даворин
+
+names-vulpkanin-male-dataset-19 = Деметер
+
+names-vulpkanin-male-dataset-20 = Демир
+
+names-vulpkanin-male-dataset-21 = Диего
+
+names-vulpkanin-male-dataset-22 = Дориан
+
+names-vulpkanin-male-dataset-23 = Эдвард
+
+names-vulpkanin-male-dataset-24 = Эмир
+
+names-vulpkanin-male-dataset-25 = Энвер
+
+names-vulpkanin-male-dataset-26 = Эрик
+
+names-vulpkanin-male-dataset-27 = Федир
+
+names-vulpkanin-male-dataset-28 = Фенрир
+
+names-vulpkanin-male-dataset-29 = Фридрих
+
+names-vulpkanin-male-dataset-30 = Гарретт
+
+names-vulpkanin-male-dataset-31 = Гаспар
+
+names-vulpkanin-male-dataset-32 = Джерард
+
+names-vulpkanin-male-dataset-33 = Грегор
+
+names-vulpkanin-male-dataset-34 = Густав
+
+names-vulpkanin-male-dataset-35 = Христофор
+
+names-vulpkanin-male-dataset-36 = Хьюберт
+
+names-vulpkanin-male-dataset-37 = Игор
+
+names-vulpkanin-male-dataset-38 = Ирфан
+
+names-vulpkanin-male-dataset-39 = Иван
+
+names-vulpkanin-male-dataset-40 = Ярвальд
+
+names-vulpkanin-male-dataset-41 = Джерри
+
+names-vulpkanin-male-dataset-42 = Каспер
+
+names-vulpkanin-male-dataset-43 = Креор
+
+names-vulpkanin-male-dataset-44 = Ксавьер
+
+names-vulpkanin-male-dataset-45 = Либор
+# Lobomir misspelled on purpose
+
+names-vulpkanin-male-dataset-46 = Лобомир
+
+names-vulpkanin-male-dataset-47 = Ликаон
+
+names-vulpkanin-male-dataset-48 = Махир
+
+names-vulpkanin-male-dataset-49 = Максим
+
+names-vulpkanin-male-dataset-50 = Мартин
+
+names-vulpkanin-male-dataset-51 = Назар
+
+names-vulpkanin-male-dataset-52 = Неро
+
+names-vulpkanin-male-dataset-53 = Нестор
+
+names-vulpkanin-male-dataset-54 = Нико
+
+names-vulpkanin-male-dataset-55 = Октавиан
+
+names-vulpkanin-male-dataset-56 = Оливер
+
+names-vulpkanin-male-dataset-57 = Омар
+
+names-vulpkanin-male-dataset-58 = Оскар
+
+names-vulpkanin-male-dataset-59 = Петр
+
+names-vulpkanin-male-dataset-60 = Ранульф
+
+names-vulpkanin-male-dataset-61 = Риот
+
+names-vulpkanin-male-dataset-62 = Руэр
+
+names-vulpkanin-male-dataset-63 = Рыгор
+
+names-vulpkanin-male-dataset-64 = Славомир
+
+names-vulpkanin-male-dataset-65 = Сильвестр
+
+names-vulpkanin-male-dataset-66 = Тео
+
+names-vulpkanin-male-dataset-67 = Тибор
+
+names-vulpkanin-male-dataset-68 = Трэвис
+
+names-vulpkanin-male-dataset-69 = Ульрик
+
+names-vulpkanin-male-dataset-70 = Вальтер
+
+names-vulpkanin-male-dataset-71 = Василий
+
+names-vulpkanin-male-dataset-72 = Версо
+
+names-vulpkanin-male-dataset-73 = Виктор
+
+names-vulpkanin-male-dataset-74 = Владимир
+# Wolf in Polish
+
+names-vulpkanin-male-dataset-75 = Вилк
+
+names-vulpkanin-male-dataset-76 = Ксандер
+
+names-vulpkanin-male-dataset-77 = Захари
+
+names-vulpkanin-male-dataset-78 = Закер
+
+names-vulpkanin-male-dataset-79 = Зеграт
+
+names-vulpkanin-male-dataset-80 = Зенон
