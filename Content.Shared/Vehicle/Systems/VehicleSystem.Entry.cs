@@ -67,13 +67,8 @@ public sealed partial class VehicleSystem
         if (!TryComp<ContainerVehicleComponent>(uid, out var containerVehicle))
             return;
 
-        if (!HasOperator(uid) &&
-            !CanOperate(uid, args.User))
-        {
-            _popup.PopupEntity(Loc.GetString(component.EntryDeniedPopup, ("vehicle", uid)),
-                Identity.Entity(args.User, EntityManager));
+        if (!TryValidateEntryOperator((uid, component), args.User))
             return;
-        }
 
         if (!CanEnterViaInteraction(uid, args.User) ||
             !TryEnter((uid, containerVehicle), args.User))
@@ -96,7 +91,8 @@ public sealed partial class VehicleSystem
 
     private void StartEntryInteraction(Entity<ContainerVehicleEntryComponent> vehicle, EntityUid entering)
     {
-        if (!CanEnterViaInteraction(vehicle.Owner, entering))
+        if (!CanEnterViaInteraction(vehicle.Owner, entering) ||
+            !TryValidateEntryOperator(vehicle, entering))
             return;
 
         var doAfterEventArgs = new DoAfterArgs(
@@ -111,6 +107,16 @@ public sealed partial class VehicleSystem
         };
 
         _doAfter.TryStartDoAfter(doAfterEventArgs);
+    }
+
+    private bool TryValidateEntryOperator(Entity<ContainerVehicleEntryComponent> vehicle, EntityUid user)
+    {
+        if (HasOperator(vehicle.Owner) || CanOperate(vehicle.Owner, user))
+            return true;
+
+        _popup.PopupEntity(Loc.GetString(vehicle.Comp.EntryDeniedPopup, ("vehicle", vehicle.Owner)),
+            Identity.Entity(user, EntityManager));
+        return false;
     }
 
     private void StartExitInteraction(Entity<ContainerVehicleEntryComponent> vehicle, EntityUid user)
@@ -147,7 +153,7 @@ public sealed partial class VehicleSystem
     private bool CanEnterViaInteraction(EntityUid vehicle, EntityUid entering)
     {
         if (!TryComp<ContainerVehicleComponent>(vehicle, out var containerVehicle) ||
-            !CanEnter((vehicle, containerVehicle), entering))
+            !CanEnterContainer((vehicle, containerVehicle), entering))
             return false;
 
         var attempt = new ContainerVehicleEntryAttemptEvent(entering);

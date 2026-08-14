@@ -76,14 +76,19 @@ public sealed partial class VehicleSystem
     /// </remarks>
     public bool CanEnter(Entity<ContainerVehicleComponent?> vehicle, EntityUid toEnter)
     {
+        return CanEnterContainer(vehicle, toEnter) &&
+               (HasOperator(vehicle.Owner) || CanOperate(vehicle.Owner, toEnter));
+    }
+
+    /// <summary>
+    /// Checks whether an entity can physically enter a container vehicle without checking operator eligibility.
+    /// </summary>
+    private bool CanEnterContainer(Entity<ContainerVehicleComponent?> vehicle, EntityUid toEnter)
+    {
         if (!_actionBlocker.CanMove(toEnter))
             return false;
 
         if (GetOperatorOrNull(vehicle.Owner) == toEnter)
-            return false;
-
-        if (!HasOperator(vehicle.Owner) &&
-            !CanOperate(vehicle.Owner, toEnter))
             return false;
 
         return TryGetOperatorContainer(vehicle, out var container) &&
