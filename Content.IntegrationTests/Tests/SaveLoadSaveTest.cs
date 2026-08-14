@@ -17,7 +17,7 @@ namespace Content.IntegrationTests.Tests
     ///     Tests that a grid's yaml does not change when saved consecutively.
     /// </summary>
     [TestFixture]
-    public sealed class SaveLoadSaveTest : GameTest
+    public sealed partial class SaveLoadSaveTest : GameTest
     {
         [Test]
         public async Task CreateSaveLoadSaveGrid()
@@ -27,7 +27,6 @@ namespace Content.IntegrationTests.Tests
             var entManager = server.ResolveDependency<IEntityManager>();
             var mapLoader = entManager.System<MapLoaderSystem>();
             var mapSystem = entManager.System<SharedMapSystem>();
-            var mapManager = server.ResolveDependency<IMapManager>();
             var cfg = server.ResolveDependency<IConfigurationManager>();
             Assert.That(cfg.GetCVar(CCVars.GridFill), Is.False);
 
@@ -40,7 +39,7 @@ namespace Content.IntegrationTests.Tests
             await server.WaitPost(() =>
             {
                 mapSystem.CreateMap(out var mapId0);
-                var grid0 = mapManager.CreateGridEntity(mapId0);
+                var grid0 = mapSystem.CreateGridEntity(mapId0);
                 entManager.RunMapInit(grid0.Owner, entManager.GetComponent<MetaDataComponent>(grid0));
                 Assert.That(mapLoader.TrySaveGrid(grid0.Owner, rp1));
                 mapSystem.CreateMap(out var mapId1);
@@ -246,7 +245,7 @@ namespace Content.IntegrationTests.Tests
         /// Simple system that modifies the data saved to a yaml file by removing the timestamp.
         /// Required by some tests that validate that re-saving a map does not modify it.
         /// </summary>
-        private sealed class SaveLoadSaveTestSystem : EntitySystem
+        private sealed partial class SaveLoadSaveTestSystem : EntitySystem
         {
             public bool Enabled;
             public override void Initialize()

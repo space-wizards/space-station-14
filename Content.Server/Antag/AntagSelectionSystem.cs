@@ -26,6 +26,7 @@ using Content.Shared.GameTicking.Components;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Roles;
 using Content.Shared.Whitelist;
+using JetBrains.Annotations;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -780,7 +781,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             $"Game rule {ToPrettyString(gameRule)}, failed to pre-assign {player.Name} to antag {prototype.ID}");
 
         // The following is where we apply components, equipment, and other changes to our antagonist entity.
-        EntityManager.AddComponents(antag, prototype.Components);
+        AssignAntagComponents(antag, prototype);
 
         // Equip the entity's RoleLoadout and LoadoutGroup
         List<ProtoId<StartingGearPrototype>> gear = new();

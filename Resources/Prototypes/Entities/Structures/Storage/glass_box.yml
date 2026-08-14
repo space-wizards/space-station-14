@@ -201,16 +201,8 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WoodDestroy
       - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlassReinforced:
             min: 1
             max: 1
-          MaterialWoodPlank1:
-            min: 2
-            max: 5
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
