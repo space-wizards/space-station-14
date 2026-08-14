@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Shared.Actions;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
-using Content.Shared.DragDrop;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Components;
@@ -10,6 +9,7 @@ using Content.Shared.Mech.Components;
 using Content.Shared.Mech.Equipment.Components;
 using Content.Shared.Popups;
 using Content.Shared.Storage.Components;
+using Content.Shared.Vehicle;
 using Content.Shared.Vehicle.Systems;
 using Content.Shared.Vehicle.Components;
 using Content.Shared.Weapons.Melee;
@@ -33,7 +33,6 @@ public abstract partial class SharedMechSystem : EntitySystem
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private SharedInteractionSystem _interaction = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
-    [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] protected VehicleSystem Vehicle = default!;
     [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
 
@@ -329,30 +328,10 @@ public abstract partial class SharedMechSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnDragDrop(EntityUid uid, MechComponent component, ref DragDropTargetEvent args)
+    private void OnMechEntryAttempt(Entity<MechComponent> ent, ref ContainerVehicleEntryAttemptEvent args)
     {
-        if (args.Handled ||
-            !TryComp<ContainerVehicleEntryComponent>(uid, out var entry))
-            return;
-
-        args.Handled = true;
-
-        var doAfterEventArgs = new DoAfterArgs(EntityManager, args.Dragged, entry.EntryDelay, new MechEntryEvent(), uid, target: uid)
-        {
-            BreakOnMove = true,
-        };
-
-        _doAfter.TryStartDoAfter(doAfterEventArgs);
-    }
-
-    [SubscribeLocalEvent]
-    private void OnCanDragDrop(EntityUid uid, MechComponent component, ref CanDropTargetEvent args)
-    {
-        args.Handled = true;
-
-        args.CanDrop |= HasComp<ContainerVehicleEntryComponent>(uid) &&
-                        !component.Broken &&
-                        Vehicle.CanEnter(uid, args.Dragged);
+        if (ent.Comp.Broken)
+            args.Cancel();
     }
 
     [SubscribeLocalEvent]
@@ -386,9 +365,3 @@ public sealed partial class RemoveBatteryEvent : SimpleDoAfterEvent;
 /// </summary>
 [Serializable, NetSerializable]
 public sealed partial class MechExitEvent : SimpleDoAfterEvent;
-
-/// <summary>
-///     Event raised when a person enters a mech, on both success and failure
-/// </summary>
-[Serializable, NetSerializable]
-public sealed partial class MechEntryEvent : SimpleDoAfterEvent;

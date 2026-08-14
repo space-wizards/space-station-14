@@ -17,6 +17,7 @@ using Content.Shared.Power.EntitySystems;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
 using Content.Shared.Tools.Systems;
+using Content.Shared.Vehicle;
 using Content.Shared.Vehicle.Components;
 using Content.Shared.Verbs;
 using Content.Shared.Wires;
@@ -158,7 +159,7 @@ public sealed partial class MechSystem : SharedMechSystem
                 Text = Loc.GetString("mech-verb-enter"),
                 Act = () =>
                 {
-                    var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, entry.EntryDelay, new MechEntryEvent(), uid, target: uid)
+                    var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, entry.EntryDelay, new ContainerVehicleEntryEvent(), uid, target: uid)
                     {
                         BreakOnMove = true,
                     };
@@ -204,7 +205,7 @@ public sealed partial class MechSystem : SharedMechSystem
     }
 
     [SubscribeLocalEvent]
-    private void OnMechEntry(EntityUid uid, MechComponent component, MechEntryEvent args)
+    private void OnMechEntry(EntityUid uid, MechComponent component, ContainerVehicleEntryEvent args)
     {
         if (args.Cancelled || args.Handled)
             return;
