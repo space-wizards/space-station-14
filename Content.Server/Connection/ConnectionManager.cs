@@ -211,30 +211,12 @@ namespace Content.Server.Connection
             NetConnectingArgs e)
         {
             // Check if banned.
-            var addr = e.IP.Address;
+            var banned = await CheckBanned(e);
+
+            if (banned != null)
+                return banned;
+
             var userId = e.UserId;
-            ImmutableArray<byte>? hwId = e.UserData.HWId;
-            if (hwId.Value.Length == 0 || !_cfg.GetCVar(CCVars.BanHardwareIds))
-            {
-                // HWId not available for user's platform, don't look it up.
-                // Or hardware ID checks disabled.
-                hwId = null;
-            }
-
-            var modernHwid = e.UserData.ModernHWIds;
-
-            if (modernHwid.Length == 0 && e.AuthType == LoginType.LoggedIn && _cfg.GetCVar(CCVars.RequireModernHardwareId))
-            {
-                return (ConnectionDenyReason.NoHwid, Loc.GetString("hwid-required"), null);
-            }
-
-            var bans = await _db.GetBansAsync(addr, userId, hwId, modernHwid, includeUnbanned: false);
-            if (bans.Count > 0)
-            {
-                var firstBan = bans[0];
-                var message = firstBan.FormatBanMessage(_cfg, _loc);
-                return (ConnectionDenyReason.Ban, message, bans);
-            }
 
             if (HasTemporaryBypass(userId))
             {
@@ -243,111 +225,37 @@ namespace Content.Server.Connection
             }
 
             var adminData = await _db.GetAdminDataForAsync(e.UserId);
+            var panicBunkerEnabled = _cfg.GetCVar(CCVars.PanicBunkerEnabled);
+            var panicBunkerDenial = await CheckPanicBunker(e,
+                adminData,
+                panicBunkerEnabled);
 
-            if (_cfg.GetCVar(CCVars.PanicBunkerEnabled) && adminData == null)
+            if (panicBunkerDenial != null)
             {
-                var showReason = _cfg.GetCVar(CCVars.PanicBunkerShowReason);
-                var customReason = _cfg.GetCVar(CCVars.PanicBunkerCustomReason);
-
-                var minMinutesAge = _cfg.GetCVar(CCVars.PanicBunkerMinAccountAge);
-                var record = await _db.GetPlayerRecordByUserId(userId);
-                var validAccountAge = record != null &&
-                                      record.FirstSeenTime.CompareTo(DateTimeOffset.UtcNow - TimeSpan.FromMinutes(minMinutesAge)) <= 0;
-                var bypassAllowed = _cfg.GetCVar(CCVars.BypassBunkerWhitelist) && await _db.GetWhitelistStatusAsync(userId);
-
-                // Use the custom reason if it exists & they don't have the minimum account age
-                if (customReason != string.Empty && !validAccountAge && !bypassAllowed)
-                {
-                    return (ConnectionDenyReason.Panic, customReason, null);
-                }
-
-                if (showReason && !validAccountAge && !bypassAllowed)
-                {
-                    return (ConnectionDenyReason.Panic,
-                        Loc.GetString("panic-bunker-account-denied-reason",
-                            ("reason", Loc.GetString("panic-bunker-account-reason-account", ("minutes", minMinutesAge)))), null);
-                }
-
-                var minOverallMinutes = _cfg.GetCVar(CCVars.PanicBunkerMinOverallMinutes);
-                var overallTime = ( await _db.GetPlayTimes(e.UserId)).Find(p => p.Tracker == PlayTimeTrackingShared.TrackerOverall);
-                var haveMinOverallTime = overallTime != null && overallTime.TimeSpent.TotalMinutes > minOverallMinutes;
-
-                // Use the custom reason if it exists & they don't have the minimum time
-                if (customReason != string.Empty && !haveMinOverallTime && !bypassAllowed)
-                {
-                    return (ConnectionDenyReason.Panic, customReason, null);
-                }
-
-                if (showReason && !haveMinOverallTime && !bypassAllowed)
-                {
-                    return (ConnectionDenyReason.Panic,
-                        Loc.GetString("panic-bunker-account-denied-reason",
-                            ("reason", Loc.GetString("panic-bunker-account-reason-overall", ("minutes", minOverallMinutes)))), null);
-                }
-
-                if (!validAccountAge || !haveMinOverallTime && !bypassAllowed)
-                {
-                    return (ConnectionDenyReason.Panic, Loc.GetString("panic-bunker-account-denied"), null);
-                }
+                return panicBunkerDenial;
             }
 
-            _ticker ??= _entityManager.SystemOrNull<GameTicker>();
-            var wasInGame = _ticker != null &&
-                            _ticker.PlayerGameStatuses.TryGetValue(userId, out var status) &&
-                            status == PlayerGameStatus.JoinedGame;
-            var adminBypass = _cfg.GetCVar(CCVars.AdminBypassMaxPlayers) && adminData != null;
             var softPlayerCount = _plyMgr.PlayerCount;
+            var playerCountDenial = await CheckPlayerCount(e, adminData, softPlayerCount);
 
-            if (!_cfg.GetCVar(CCVars.AdminsCountForMaxPlayers))
+            if (playerCountDenial != null)
             {
-                softPlayerCount -= _adminManager.ActiveAdmins.Count();
+                return playerCountDenial;
             }
 
-            if ((softPlayerCount >= _cfg.GetCVar(CCVars.SoftMaxPlayers) && !adminBypass) && !wasInGame)
+            var whitelistEnabled = _cfg.GetCVar(CCVars.WhitelistEnabled);
+            var whitelistDenial = await CheckWhitelist(e, adminData, softPlayerCount, whitelistEnabled);
+
+            if (whitelistDenial != null)
             {
-                return (ConnectionDenyReason.Full, Loc.GetString("soft-player-cap-full"), null);
+                return whitelistDenial;
             }
 
-            // Checks for whitelist IF it's enabled AND the user isn't an admin. Admins are always allowed.
-            if (_cfg.GetCVar(CCVars.WhitelistEnabled) && adminData is null)
-            {
-                if (_whitelists is null)
-                {
-                    _sawmill.Error("Whitelist enabled but no whitelists loaded.");
-                    // Misconfigured, deny everyone.
-                    return (ConnectionDenyReason.Whitelist, Loc.GetString("generic-misconfigured"), null);
-                }
-
-                foreach (var whitelist in _whitelists)
-                {
-                    if (!IsValid(whitelist, softPlayerCount))
-                    {
-                        // Not valid for current player count.
-                        continue;
-                    }
-
-                    var whitelistStatus = await IsWhitelisted(whitelist, e.UserData, _sawmill);
-                    if (!whitelistStatus.isWhitelisted)
-                    {
-                        // Not whitelisted.
-                        return (ConnectionDenyReason.Whitelist, Loc.GetString("whitelist-fail-prefix", ("msg", whitelistStatus.denyMessage!)), null);
-                    }
-
-                    // Whitelisted, don't check any more.
-                    break;
-                }
-            }
+            var ipIntelEnabled = _cfg.GetCVar(CCVars.GameIPIntelEnabled);
+            var vpnDenial = await CheckVpn(e, adminData, ipIntelEnabled);
 
             // ALWAYS keep this at the end, to preserve the API limit.
-            if (_cfg.GetCVar(CCVars.GameIPIntelEnabled) && adminData == null)
-            {
-                var result = await _ipintel.IsVpnOrProxy(e);
-
-                if (result.IsBad)
-                    return (ConnectionDenyReason.IPChecks, result.Reason, null);
-            }
-
-            return null;
+            return vpnDenial ?? null;
         }
 
         private bool HasTemporaryBypass(NetUserId user)
