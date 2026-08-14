@@ -4,7 +4,7 @@ uplink-hypopen-name = Hypopen
 uplink-hypopen-desc = A chemical hypospray disguised as a pen, capable of instantly injecting up to 10u of reagents. Starts empty.
 
 uplink-hypodart-name = Hypodart
-uplink-hypodart-desc = A seemingly unremarkable dart with an enlarged reservoir for chemicals. It can store up to 10u reagents in itself, and instantly inject when it hits the target. Starts empty.
+uplink-hypodart-desc = A seemingly unremarkable dart with a hidden 10u liquid reserve. Instantly injects into a target when thrown and pierces hardsuits.
 
 uplink-chemistry-kit-name = Chemical Synthesis Kit
 uplink-chemistry-kit-desc = A starter kit for the aspiring chemist, includes two vials of vestine for all your criminal needs!
@@ -25,10 +25,10 @@ uplink-stimpack-name = Hyperzine Injector
 uplink-stimpack-desc = The legendary chemical produced by Donk Co. for the Syndicate. Injecting yourself with this will increase your run speed and let you recover from stuns faster for 60 seconds.
 
 uplink-stimkit-name = Hyperzine Injector Kit
-uplink-stimkit-desc = A medkit containing 6 hyperzine microinjectors, which each inject you with enough hyperzine to last for 30 seconds.
+uplink-stimkit-desc = A standard medkit containing 6 hyperzine microinjectors. Each dose lasts for 30 seconds.
 
 uplink-cigarettes-name = Syndicate Smokes Packet
-uplink-cigarettes-desc = Elite cigarettes for elite agents. Infused with medicine for when you need to do more than calm your nerves.
+uplink-cigarettes-desc = Elite cigarettes for elite agents. Infused with omnizine for when you need to do more than calm your nerves.
 
 uplink-meds-bundle-name = Interdyne Medical Bundle
 uplink-meds-bundle-desc = An assortment of autoinjectors and premium medical equipment to cover for every possible situation. Contains an elite compact defibrillator that can be used as a weapon.
