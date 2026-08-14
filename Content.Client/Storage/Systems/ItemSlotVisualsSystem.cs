@@ -94,10 +94,6 @@ public sealed partial class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVis
         var layer = new PrototypeLayerData();
         var key = layerKeyPrefix;
 
-        // Same check as the one in StorageContainerVisualsSystem.
-        if (!TryComp<SpriteComponent>(ent, out var sprite) || sprite.BaseRSI?.TryGetState(key, out _) != true)
-            return null;
-
         layer.State = key;
 
         return (key, layer);
