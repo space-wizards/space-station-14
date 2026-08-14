@@ -38,6 +38,15 @@
     deviceNetId: Wireless
     receiveFrequencyId: ShuttleTimer
 
+# Dummy entity for comms console without any offset
+- type: entity
+  parent: Screen
+  id: ScreenDummy
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    offset: 0, 0
+
 - type: entity
   id: ArrivalsShuttleTimer
   parent: Screen
