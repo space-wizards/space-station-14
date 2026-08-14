@@ -41,10 +41,10 @@ namespace Content.IntegrationTests.Tests
                 mapSystem.CreateMap(out var mapId0);
                 var grid0 = mapSystem.CreateGridEntity(mapId0);
                 entManager.RunMapInit(grid0.Owner, entManager.GetComponent<MetaDataComponent>(grid0));
-                Assert.That(mapLoader.TrySaveGrid(grid0.Owner, rp1));
+                Assert.That(mapLoader.TrySaveGrid(grid0.Owner, rp1, immediate: true));
                 mapSystem.CreateMap(out var mapId1);
                 Assert.That(mapLoader.TryLoadGrid(mapId1, rp1, out var grid1));
-                Assert.That(mapLoader.TrySaveGrid(grid1!.Value, rp2));
+                Assert.That(mapLoader.TrySaveGrid(grid1!.Value, rp2, immediate: true));
             });
 
             await server.WaitIdleAsync();
@@ -115,7 +115,7 @@ namespace Content.IntegrationTests.Tests
                 var path = new ResPath(TestMap);
                 Assert.That(mapLoader.TryLoadMap(path, out var map, out _), $"Failed to load test map {TestMap}");
                 mapId = map!.Value.Comp.MapId;
-                Assert.That(mapLoader.TrySaveMap(mapId, rp1));
+                Assert.That(mapLoader.TrySaveMap(mapId, rp1, immediate: true));
             });
 
             // Run 5 ticks.
@@ -123,7 +123,7 @@ namespace Content.IntegrationTests.Tests
 
             await server.WaitPost(() =>
             {
-                Assert.That(mapLoader.TrySaveMap(mapId, rp2));
+                Assert.That(mapLoader.TrySaveMap(mapId, rp2, immediate: true));
             });
 
             await server.WaitIdleAsync();
@@ -205,7 +205,7 @@ namespace Content.IntegrationTests.Tests
                 var path = new ResPath(TestMap);
                 Assert.That(mapLoader.TryLoadMap(path, out var map, out _), $"Failed to load test map {TestMap}");
                 mapId1 = map!.Value.Comp.MapId;
-                Assert.That(mapLoader.TrySaveMap(mapId1, fileA));
+                Assert.That(mapLoader.TrySaveMap(mapId1, fileA, immediate: true));
             });
 
             await server.WaitIdleAsync();
@@ -223,7 +223,7 @@ namespace Content.IntegrationTests.Tests
                 var path = new ResPath(TestMap);
                 Assert.That(mapLoader.TryLoadMap(path, out var map, out _), $"Failed to load test map {TestMap}");
                 mapId2 = map!.Value.Comp.MapId;
-                Assert.That(mapLoader.TrySaveMap(mapId2, fileB));
+                Assert.That(mapLoader.TrySaveMap(mapId2, fileB, immediate: true));
             });
 
             await server.WaitIdleAsync();
