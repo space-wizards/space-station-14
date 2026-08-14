@@ -70,7 +70,6 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
     [Dependency] private SharedEntityEffectsSystem _effects = default!;
 
     [Dependency] private EntityQuery<DamageableComponent> _damageQuery = default!;
-    [Dependency] private EntityQuery<MeleeWeaponComponent> _meleeWeaponQuery = default!;
 
     private const int AttackMask = (int) (CollisionGroup.MobMask | CollisionGroup.Opaque);
 
