@@ -35,7 +35,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using static Content.Server.Antag.Components.AntagSelectionTime;
+using static Content.Shared.Antag.AntagSelectionTime;
 
 namespace Content.Server.Antag;
 
