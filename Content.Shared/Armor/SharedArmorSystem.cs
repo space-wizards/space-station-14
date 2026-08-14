@@ -27,6 +27,20 @@ public abstract class SharedArmorSystem : EntitySystem
         SubscribeLocalEvent<ArmorComponent, GetVerbsEvent<ExamineVerb>>(OnArmorVerbExamine);
     }
 
+    // DS14-Start
+    /// <summary>
+    ///     Overrides the armor modifiers on an item. Used for runtime equipment (e.g. arena vests).
+    /// </summary>
+    public void SetModifiers(EntityUid uid, DamageModifierSet modifiers, ArmorComponent? armor = null)
+    {
+        if (!Resolve(uid, ref armor))
+            return;
+
+        armor.Modifiers = modifiers;
+        Dirty(uid, armor);
+    }
+    // DS14-End
+
     /// <summary>
     /// Get the total Damage reduction value of all equipment caught by the relay.
     /// </summary>

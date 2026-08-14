@@ -20,7 +20,7 @@ public sealed class ArenaLoadoutEui : BaseEui
 
     public override EuiStateBase GetNewState()
     {
-        return _arena.GetLoadoutState();
+        return _arena.GetLoadoutState(_session);
     }
 
     public override void HandleMessage(EuiMessageBase msg)
@@ -29,11 +29,23 @@ public sealed class ArenaLoadoutEui : BaseEui
         if (IsShutDown)
             return;
 
-        if (msg is ArenaLoadoutSelectedMessage selected)
+        switch (msg)
         {
-            _arena.SpawnPlayer(this, _session, SourceGhost, selected.WeaponIndex);
-            if (!IsShutDown)
-                Close();
+            case ArenaLoadoutSelectedMessage selected:
+                _arena.SpawnPlayer(this, _session, SourceGhost, selected.WeaponIndex);
+                if (!IsShutDown)
+                    Close();
+                break;
+
+            case ArenaCostumeBuyMessage buy:
+                if (_arena.TryBuyCostume(_session, buy.CostumeIndex))
+                    StateDirty();
+                break;
+
+            case ArenaCostumeEquipMessage equip:
+                _arena.SetEquippedCostumes(_session, equip.CostumeIndexes);
+                StateDirty();
+                break;
         }
     }
 

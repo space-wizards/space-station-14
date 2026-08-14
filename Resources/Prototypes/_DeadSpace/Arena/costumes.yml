@@ -1,0 +1,127 @@
+# == Костюмы для арены. == цены не нужны. надо сохранения сделат
+# Купленная одежда надевается поверх выбранного пресета.
+# Жилетам сервер автоматически выдаёт резисты ClothingOuterArmorBasic. 
+
+# --- Плащи (надеваются на шею) ---
+
+- type: arenaCostume
+  id: ArenaCostumeKnightCloak
+  nameLoc: arena-costume-knightcloak-name
+  descLoc: arena-costume-knightcloak-desc
+  category: cloak
+  item: ADTClothingNeckKnightCloak
+  slot: neck
+  price: 0
+
+- type: arenaCostume
+  id: ArenaCostumeGothicCloak
+  nameLoc: arena-costume-gothiccloak-name
+  descLoc: arena-costume-gothiccloak-desc
+  category: cloak
+  item: ADTClothingNeckGothicCloak
+  slot: neck
+  price: 0
+
+- type: arenaCostume
+  id: ArenaCostumeDarkGreyCloak
+  nameLoc: arena-costume-darkgreycloak-name
+  descLoc: arena-costume-darkgreycloak-desc
+  category: cloak
+  item: ADTClothingNeckDarkGreyCloak
+  slot: neck
+  price: 0
+
+- type: arenaCostume
+  id: ArenaCostumeRaincoat
+  nameLoc: arena-costume-raincoat-name
+  descLoc: arena-costume-raincoat-desc
+  category: cloak
+  item: ADTClothingNeckRaincoatForAShortDress
+  slot: neck
+  price: 0
+
+# --- Комбинезоны ---
+
+- type: arenaCostume
+  id: ArenaCostumeJumpsuitBlack
+  nameLoc: arena-costume-jumpsuit-black-name
+  descLoc: arena-costume-jumpsuit-black-desc
+  category: jumpsuit
+  item: ClothingUniformJumpsuitColorBlack
+  slot: jumpsuit
+  price: 0
+
+- type: arenaCostume
+  id: ArenaCostumeJumpsuitWhite
+  nameLoc: arena-costume-jumpsuit-white-name
+  descLoc: arena-costume-jumpsuit-white-desc
+  category: jumpsuit
+  item: ClothingUniformJumpsuitColorWhite
+  slot: jumpsuit
+  price: 0
+
+- type: arenaCostume
+  id: ArenaCostumeJumpsuitGrey
+  nameLoc: arena-costume-jumpsuit-grey-name
+  descLoc: arena-costume-jumpsuit-grey-desc
+  category: jumpsuit
+  item: ClothingUniformJumpsuitColorGrey
+  slot: jumpsuit
+  price: 0
+
+- type: arenaCostume
+  id: ArenaCostumeJumpsuitBlue
+  nameLoc: arena-costume-jumpsuit-blue-name
+  descLoc: arena-costume-jumpsuit-blue-desc
+  category: jumpsuit
+  item: ClothingUniformJumpsuitColorBlue
+  slot: jumpsuit
+  price: 0
+
+# --- Жилеты ---
+
+- type: arenaCostume
+  id: ArenaCostumeBomber
+  nameLoc: arena-costume-bomber-name
+  descLoc: arena-costume-bomber-desc
+  category: vest
+  item: ClothingOuterCoatBomber
+  slot: outerClothing
+  price: 0
+
+- type: arenaCostume
+  id: ArenaCostumeTrench
+  nameLoc: arena-costume-trench-name
+  descLoc: arena-costume-trench-desc
+  category: vest
+  item: ClothingOuterCoatTrench
+  slot: outerClothing
+  price: 0
+
+- type: arenaCostume
+  id: ArenaCostumeGentle
+  nameLoc: arena-costume-gentle-name
+  descLoc: arena-costume-gentle-desc
+  category: vest
+  item: ClothingOuterCoatGentle
+  slot: outerClothing
+  price: 0
+
+
+- type: arenaCostume
+  id: ArenaCostumeVestSlim
+  nameLoc: arena-costume-vest-slim-name
+  descLoc: arena-costume-vest-slim-desc
+  category: vest
+  item: ClothingOuterArmorBasicSlim
+  slot: outerClothing
+  price: 0
+
+- type: arenaCostume
+  id: ArenaCostumeVestCraft
+  nameLoc: arena-costume-vest-craft-name
+  descLoc: arena-costume-vest-craft-desc
+  category: vest
+  item: ClothingOuterArmorBasicCraft
+  slot: outerClothing
+  price: 0

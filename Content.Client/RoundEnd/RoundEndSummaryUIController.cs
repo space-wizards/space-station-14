@@ -1,4 +1,5 @@
 using Content.Client.GameTicking.Managers;
+using Content.Shared.DeadSpace.Arena;
 using Content.Shared.GameTicking;
 using Content.Shared.Input;
 using JetBrains.Annotations;
@@ -16,6 +17,7 @@ public sealed class RoundEndSummaryUIController : UIController,
     [Dependency] private readonly IInputManager _input = default!;
 
     private RoundEndSummaryWindow? _window;
+    private ArenaManifestEvent? _arenaManifest; // DS14
 
     private void ToggleScoreboardWindow(ICommonSession? session = null)
     {
@@ -44,6 +46,9 @@ public sealed class RoundEndSummaryUIController : UIController,
 
         _window = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundEndText,
             message.RoundDuration, message.RoundId, message.AllPlayersEndInfo, EntityManager);
+
+        if (_arenaManifest != null) // DS14
+            _window.SetArenaManifest(_arenaManifest); // DS14
     }
 
     public void OnSystemLoaded(ClientGameTicker system)
@@ -51,4 +56,17 @@ public sealed class RoundEndSummaryUIController : UIController,
         _input.SetInputCommand(ContentKeyFunctions.ToggleRoundEndSummaryWindow,
             InputCmdHandler.FromDelegate(ToggleScoreboardWindow));
     }
+
+    // DS14-Start
+    public override void Initialize()
+    {
+        SubscribeNetworkEvent<ArenaManifestEvent>(OnArenaManifest);
+    }
+
+    private void OnArenaManifest(ArenaManifestEvent ev, EntitySessionEventArgs args)
+    {
+        _arenaManifest = ev;
+        _window?.SetArenaManifest(ev);
+    }
+    // DS14-End
 }

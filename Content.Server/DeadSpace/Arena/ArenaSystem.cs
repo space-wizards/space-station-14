@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Antag.Components;
 using Content.Server.EUI;
 using Content.Server.Ghost;
@@ -5,13 +6,16 @@ using Content.Server.Mind;
 using Content.Server.Preferences.Managers;
 using Content.Server.DeadSpace.Prison;
 using Content.Server.Chat.Managers;
+using Content.Shared.Armor;
 using Content.Shared.Body.Part;
+using Content.Shared.Damage;
 using Content.Shared.DeadSpace.Arena;
 using Content.Shared.Fluids.Components;
 using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
+using Content.Shared.Inventory;
 using Content.Shared.Mind;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
@@ -19,12 +23,17 @@ using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Jobs;
 using Content.Shared.Station;
+using Content.Shared.Storage;
+using Content.Shared.Storage.EntitySystems;
 using Robust.Server.GameObjects;
+using Robust.Server.Player;
+using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Maths;
 using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.Enums;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -50,6 +59,11 @@ public sealed class ArenaSystem : EntitySystem
     [Dependency] private readonly SharedRoleSystem _roles = default!;
     [Dependency] private readonly PrisonSystem _prison = default!;
     [Dependency] private readonly IChatManager _chat = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly SharedArmorSystem _armor = default!;
+    [Dependency] private readonly SharedStorageSystem _storage = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly IPlayerManager _player = default!;
 
     private const string ArenaMapFile = "/Maps/_DeadSpace/arena.yml";
 
@@ -68,16 +82,23 @@ public sealed class ArenaSystem : EntitySystem
     private EntityUid? _arenaMap;
     private readonly HashSet<NetEntity> _roster = new();
     private readonly List<ArenaLoadoutPresetPrototype> _presets = new();
+    private readonly List<ArenaCostumePrototype> _costumes = new();
     private readonly Dictionary<ICommonSession, ArenaLoadoutEui> _activeEuis = new();
+
+    private readonly Dictionary<NetUserId, int> _killCurrency = new();
+    private readonly Dictionary<NetUserId, HashSet<string>> _ownedCostumes = new();
+    private readonly Dictionary<NetUserId, List<string>> _equippedCostumes = new();
+    private readonly Dictionary<NetUserId, ArenaPlayerRecord> _records = new();
 
     public override void Initialize()
     {
         SubscribeNetworkEvent<ArenaJoinEvent>(OnJoin);
         SubscribeNetworkEvent<ArenaLeaveEvent>(OnLeave);
-        SubscribeLocalEvent<MobStateChangedEvent>(OnDeath);
+        SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<PlayerDetachedEvent>(OnPlayerDetached);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
         SubscribeLocalEvent<PrisonerRegisteredEvent>(OnPrisonerRegistered);
+        SubscribeLocalEvent<RoundEndMessageEvent>(OnRoundEnd);
     }
 
     private void RefreshPresets()
@@ -85,6 +106,10 @@ public sealed class ArenaSystem : EntitySystem
         _presets.Clear();
         foreach (var p in _protos.EnumeratePrototypes<ArenaLoadoutPresetPrototype>())
             _presets.Add(p);
+
+        _costumes.Clear();
+        foreach (var c in _protos.EnumeratePrototypes<ArenaCostumePrototype>())
+            _costumes.Add(c);
     }
 
     private void OnJoin(ArenaJoinEvent msg, EntitySessionEventArgs args)
@@ -136,16 +161,177 @@ public sealed class ArenaSystem : EntitySystem
         RestorePlayer(body, arenaPlayer);
     }
 
-    private void OnDeath(MobStateChangedEvent ev)
+    private void OnMobStateChanged(MobStateChangedEvent ev)
     {
-        if (ev.NewMobState != MobState.Dead)
-            return;
-
         if (!TryComp<ArenaPlayerComponent>(ev.Target, out var arenaPlayer) ||
             !_roster.Contains(GetNetEntity(ev.Target)))
             return;
 
-        RestorePlayer(ev.Target, arenaPlayer);
+        switch (ev.NewMobState)
+        {
+            case MobState.Critical:
+                // Валюта и фраг начисляются за уход в критическое состояние, а не за добивание.
+                AwardKill(ev.Origin);
+                break;
+
+            case MobState.Dead:
+                RecordDeath(ev.Target);
+                RestorePlayer(ev.Target, arenaPlayer);
+                break;
+        }
+    }
+
+    /// <summary>
+    /// Учитывает смерть участника арены в статистике раунда.
+    /// </summary>
+    private void RecordDeath(EntityUid victim)
+    {
+        if (!_minds.TryGetMind(victim, out _, out var mind) || mind.UserId is not { } userId)
+            return;
+
+        var record = GetRecord(userId);
+        record.Deaths++;
+        if (string.IsNullOrEmpty(record.PlayerName) &&
+            _player.TryGetSessionById(userId, out var session))
+        {
+            record.PlayerName = session.Name;
+        }
+    }
+
+    /// <summary>
+    /// Начисляет валюту и фраг игроку, который вывел участника арены в критическое состояние.
+    /// </summary>
+    private void AwardKill(EntityUid? attacker)
+    {
+        if (attacker is not { Valid: true } killer)
+            return;
+
+        // Награда выдаётся только за участие другого участника арены.
+        if (!_roster.Contains(GetNetEntity(killer)))
+            return;
+
+        if (!_minds.TryGetMind(killer, out _, out var mind) || mind.UserId is not { } userId)
+            return;
+
+        var record = GetRecord(userId);
+        record.Kills++;
+        if (string.IsNullOrEmpty(record.PlayerName) &&
+            _player.TryGetSessionById(userId, out var session))
+        {
+            record.PlayerName = session.Name;
+        }
+
+        _killCurrency.TryGetValue(userId, out var current);
+        _killCurrency[userId] = current + ArenaConstants.KillCurrencyReward;
+    }
+
+    private ArenaPlayerRecord GetRecord(NetUserId userId)
+    {
+        if (!_records.TryGetValue(userId, out var record))
+        {
+            record = new ArenaPlayerRecord();
+            _records[userId] = record;
+        }
+
+        return record;
+    }
+
+    private void OnRoundEnd(RoundEndMessageEvent ev)
+    {
+        SendManifest();
+    }
+
+    /// <summary>
+    /// Собирает итоги арены за раунд (K/D) и рассылает их клиентам для вкладки в манифесте.
+    /// </summary>
+    private void SendManifest()
+    {
+        var records = new List<ArenaPlayerRecord>();
+        foreach (var (userId, record) in _records)
+        {
+            // Дозаполняем имена на момент отправки — игрок может успеть отключиться.
+            if (string.IsNullOrEmpty(record.PlayerName) &&
+                _player.TryGetSessionById(userId, out var session))
+            {
+                record.PlayerName = session.Name;
+            }
+
+            record.KD = record.Deaths > 0 ? (double)record.Kills / record.Deaths : record.Kills;
+            records.Add(record);
+        }
+
+        records.Sort((a, b) =>
+        {
+            var byKd = b.KD.CompareTo(a.KD);
+            return byKd != 0 ? byKd : b.Kills.CompareTo(a.Kills);
+        });
+
+        RaiseNetworkEvent(new ArenaManifestEvent { Players = records });
+    }
+
+    /// <summary>
+    /// Покупка костюма за валюту убийств.
+    /// </summary>
+    public bool TryBuyCostume(ICommonSession session, int costumeIndex)
+    {
+        if (costumeIndex < 0 || costumeIndex >= _costumes.Count)
+            return false;
+
+        var costume = _costumes[costumeIndex];
+
+        var owned = GetOwned(session.UserId);
+        if (owned.Contains(costume.ID))
+            return false;
+
+        _killCurrency.TryGetValue(session.UserId, out var balance);
+        if (balance < costume.Price)
+            return false;
+
+        _killCurrency[session.UserId] = balance - costume.Price;
+        owned.Add(costume.ID);
+        return true;
+    }
+
+    /// <summary>
+    /// Сохраняет выбранный набор надетой одежды для игрока.
+    /// </summary>
+    public void SetEquippedCostumes(ICommonSession session, List<int> costumeIndexes)
+    {
+        var owned = GetOwned(session.UserId);
+        var equipped = GetEquipped(session.UserId);
+
+        equipped.Clear();
+        foreach (var index in costumeIndexes)
+        {
+            if (index < 0 || index >= _costumes.Count)
+                continue;
+
+            var costume = _costumes[index];
+            if (owned.Contains(costume.ID))
+                equipped.Add(costume.ID);
+        }
+    }
+
+    private HashSet<string> GetOwned(NetUserId userId)
+    {
+        if (!_ownedCostumes.TryGetValue(userId, out var owned))
+        {
+            owned = new HashSet<string>();
+            _ownedCostumes[userId] = owned;
+        }
+
+        return owned;
+    }
+
+    private List<string> GetEquipped(NetUserId userId)
+    {
+        if (!_equippedCostumes.TryGetValue(userId, out var equipped))
+        {
+            equipped = new List<string>();
+            _equippedCostumes[userId] = equipped;
+        }
+
+        return equipped;
     }
 
     private void OnPlayerDetached(PlayerDetachedEvent ev)
@@ -203,9 +389,13 @@ public sealed class ArenaSystem : EntitySystem
         _activeEuis.Clear();
         _roster.Clear();
         _arenaMap = null;
+        _killCurrency.Clear();
+        _ownedCostumes.Clear();
+        _equippedCostumes.Clear();
+        _records.Clear();
     }
 
-    public ArenaLoadoutEuiState GetLoadoutState()
+    public ArenaLoadoutEuiState GetLoadoutState(ICommonSession session)
     {
         if (_presets.Count == 0)
             RefreshPresets();
@@ -224,7 +414,42 @@ public sealed class ArenaSystem : EntitySystem
             });
         }
 
-        return new ArenaLoadoutEuiState(options);
+        var costumes = new List<ArenaCostumeOption>();
+        for (var i = 0; i < _costumes.Count; i++)
+        {
+            var c = _costumes[i];
+            costumes.Add(new ArenaCostumeOption
+            {
+                Index = i,
+                Id = c.ID,
+                Name = c.NameLoc,
+                Description = c.DescLoc,
+                Category = c.Category,
+                ItemPrototype = c.Item,
+                Slot = c.Slot,
+                Price = c.Price,
+            });
+        }
+
+        _killCurrency.TryGetValue(session.UserId, out var balance);
+
+        var owned = GetOwned(session.UserId);
+        var ownedIndexes = new HashSet<int>();
+        for (var i = 0; i < _costumes.Count; i++)
+        {
+            if (owned.Contains(_costumes[i].ID))
+                ownedIndexes.Add(i);
+        }
+
+        var equipped = GetEquipped(session.UserId);
+        var equippedIndexes = new List<int>();
+        for (var i = 0; i < _costumes.Count; i++)
+        {
+            if (equipped.Contains(_costumes[i].ID))
+                equippedIndexes.Add(i);
+        }
+
+        return new ArenaLoadoutEuiState(options, costumes, balance, ownedIndexes, equippedIndexes);
     }
 
     public bool SpawnPlayer(ArenaLoadoutEui eui, ICommonSession who, EntityUid sourceGhost, int kitIdx)
@@ -275,6 +500,15 @@ public sealed class ArenaSystem : EntitySystem
 
         var profile = _prefs.GetPreferences(who.UserId).SelectedCharacter as HumanoidCharacterProfile;
         string speciesId = profile?.Species ?? SharedHumanoidAppearanceSystem.DefaultSpecies;
+
+        // Блеклист арены: IPC и Vox на арене всегда спавнятся людьми.
+        if (ArenaConstants.SpeciesBlacklist.Contains(speciesId))
+        {
+            speciesId = SharedHumanoidAppearanceSystem.DefaultSpecies;
+            if (profile != null)
+                profile = profile.WithSpecies(speciesId);
+        }
+
         var species = _protos.Index<SpeciesPrototype>(speciesId);
         var fresh = Spawn(species.Prototype, spot);
 
@@ -282,12 +516,15 @@ public sealed class ArenaSystem : EntitySystem
             _humanoid.LoadProfile(fresh, profile);
 
         _meta.SetEntityName(fresh, who.Name);
+        GetRecord(who.UserId).PlayerName = who.Name;
 
         if (_presets.Count > 0)
         {
             var idx = Math.Clamp(kitIdx, 0, _presets.Count - 1);
             _stationSpawning.EquipStartingGear(fresh, _presets[idx], raiseEvent: false);
         }
+
+        EquipCostumes(fresh, who.UserId);
 
         var arenaPlayer = EnsureComp<ArenaPlayerComponent>(fresh);
         arenaPlayer.OriginalMind = originalMindId;
@@ -374,6 +611,121 @@ public sealed class ArenaSystem : EntitySystem
             _ghosts.SpawnGhost((arenaPlayer.OriginalMind, originalMind), returnBody, true);
         else
             _ghosts.SpawnGhost((arenaPlayer.OriginalMind, originalMind), arenaBody, false);
+    }
+
+    /// <summary>
+    /// Надевает купленные костюмы на игрока арены, поверх экипировки пресета.
+    /// </summary>
+    private void EquipCostumes(EntityUid body, NetUserId userId)
+    {
+        var equipped = GetEquipped(userId);
+        if (equipped.Count == 0)
+            return;
+
+        foreach (var costumeId in equipped)
+        {
+            ArenaCostumePrototype? costume = null;
+            foreach (var c in _costumes)
+            {
+                if (c.ID == costumeId)
+                {
+                    costume = c;
+                    break;
+                }
+            }
+
+            if (costume == null)
+                continue;
+
+            if (!_protos.TryIndex<EntityPrototype>(costume.Item, out _))
+                continue;
+
+            // Освобождаем слот от штатного снаряжения пресета, чтобы костюм наделся вместо него.
+            var item = Spawn(costume.Item, Transform(body).Coordinates);
+
+            // Предметы в слотах, зависящих от заменяемого (карманы комбинезона, suitstorage и т.п.),
+            // при снятии старой вещи выпадают на пол. Снимаем их без выброса на землю и
+            // вернём в те же слоты после надевания нового костюма.
+            var dependent = new List<(string Slot, EntityUid Item)>();
+            if (_inventory.TryGetSlotEntity(body, costume.Slot, out var existing))
+            {
+                if (_inventory.TryGetSlots(body, out var slots))
+                {
+                    foreach (var slotDef in slots)
+                    {
+                        if (slotDef.DependsOn != costume.Slot)
+                            continue;
+                        if (_inventory.TryGetSlotEntity(body, slotDef.Name, out var depItem))
+                            dependent.Add((slotDef.Name, depItem.Value));
+                    }
+                }
+
+                foreach (var (slot, _) in dependent)
+                {
+                    if (_inventory.TryGetSlotContainer(body, slot, out var depContainer, out _) &&
+                        depContainer.ContainedEntity is { } depUid)
+                        _container.Remove(depUid, depContainer, reparent: false, force: true);
+                }
+
+                // Переносим содержимое карманов старой вещи в новую, чтобы предметы лоадаута не падали на пол.
+                MoveStorageContents(existing.Value, item);
+
+                _inventory.TryUnequip(body, costume.Slot, silent: true, force: true);
+                QueueDel(existing);
+            }
+
+            var equippedOk = _inventory.TryEquip(body, item, costume.Slot, silent: true, force: true);
+            if (!equippedOk)
+                QueueDel(item);
+
+            // Надеваем сохранённые предметы обратно в зависящие слоты (карманы и т.п.).
+            foreach (var (slot, depItem) in dependent)
+            {
+                if (_inventory.TryGetSlotContainer(body, slot, out var depContainer, out _))
+                    _container.Insert(depItem, depContainer, force: true);
+            }
+
+            if (!equippedOk)
+                continue;
+
+            // На жилеты автоматически применяются резисты уровня ClothingOuterArmorBasic.
+            if (costume.Category == "vest")
+                ApplyBasicArmor(item);
+        }
+    }
+
+    /// <summary>
+    /// Применяет к предмету резисты базовой брони (ClothingOuterArmorBasic: Blunt/Slash/Piercing/Heat 0.7).
+    /// </summary>
+    private void ApplyBasicArmor(EntityUid item)
+    {
+        _armor.SetModifiers(item, new DamageModifierSet
+        {
+            Coefficients = new Dictionary<string, float>
+            {
+                ["Blunt"] = 0.7f,
+                ["Slash"] = 0.7f,
+                ["Piercing"] = 0.7f,
+                ["Heat"] = 0.7f,
+            },
+        }, EnsureComp<ArmorComponent>(item));
+    }
+
+    /// <summary>
+    /// Переносит содержимое хранилища (карманов) старого предмета в новый, чтобы при замене одежды
+    /// предметы из лоадаута не падали на пол.
+    /// </summary>
+    private void MoveStorageContents(EntityUid oldItem, EntityUid newItem)
+    {
+        if (!TryComp<StorageComponent>(oldItem, out var oldStorage) ||
+            oldStorage.Container == null ||
+            !TryComp<StorageComponent>(newItem, out var newStorage))
+            return;
+
+        foreach (var content in oldStorage.Container.ContainedEntities.ToArray())
+        {
+            _storage.Insert(newItem, content, out _, playSound: false, storageComp: newStorage);
+        }
     }
 
     private void EnsureMap()

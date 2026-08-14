@@ -3,6 +3,7 @@ using System.Numerics;
 using Content.Client.DeadSpace.RoundEnd;
 using Content.Client.Message;
 using Content.Client.UserInterface.Controls;
+using Content.Shared.DeadSpace.Arena; 
 using Content.Shared.DeadSpace.RoundEnd;
 using Content.Shared.GameTicking;
 using Robust.Client.GameObjects;
@@ -23,7 +24,9 @@ namespace Content.Client.RoundEnd
         private readonly RoundEndDollPreviewSystem _dollPreviews;
         private readonly List<RoundEndManifestDollView> _manifestDollViews = new();
         private int _dollPreviewOwner;
-        // DS14-end
+        private readonly TabContainer _roundEndTabs;
+        private Control? _arenaManifestTab;
+        // DS14-End
         public int RoundId;
 
         public RoundEndSummaryWindow(string gm, string roundEnd, TimeSpan roundTimeSpan, int roundId,
@@ -50,11 +53,11 @@ namespace Content.Client.RoundEnd
             // Also good for serious info.
 
             RoundId = roundId;
-            var roundEndTabs = new TabContainer();
-            roundEndTabs.AddChild(MakeRoundEndSummaryTab(gm, roundEnd, roundTimeSpan, roundId, info));
-            roundEndTabs.AddChild(MakePlayerManifestTab(info));
+            _roundEndTabs = new TabContainer();
+            _roundEndTabs.AddChild(MakeRoundEndSummaryTab(gm, roundEnd, roundTimeSpan, roundId, info));
+            _roundEndTabs.AddChild(MakePlayerManifestTab(info));
 
-            ContentsContainer.AddChild(roundEndTabs);
+            ContentsContainer.AddChild(_roundEndTabs);
 
             OpenCenteredRight();
             ResumeManifestDollSnapshots(); // DS14
@@ -778,6 +781,235 @@ namespace Content.Client.RoundEnd
             foreach (var view in _manifestDollViews)
                 view.RequestSnapshot(_dollPreviewOwner);
         }
+
+        // DS14-start
+        public void SetArenaManifest(ArenaManifestEvent ev)
+        {
+            if (_arenaManifestTab != null)
+            {
+                _roundEndTabs.RemoveChild(_arenaManifestTab);
+                _arenaManifestTab.Dispose();
+                _arenaManifestTab = null;
+            }
+
+            _arenaManifestTab = MakeArenaManifestTab(ev);
+            if (_arenaManifestTab != null)
+                _roundEndTabs.AddChild(_arenaManifestTab);
+        }
+
+        private static readonly Color ArenaFirstPlaceColor = Color.FromHex("#ffd700");
+        private static readonly Color ArenaSecondPlaceColor = Color.FromHex("#c0c0c0");
+        private static readonly Color ArenaThirdPlaceColor = Color.FromHex("#cd7f32");
+
+        private Control? MakeArenaManifestTab(ArenaManifestEvent ev)
+        {
+            if (ev.Players.Count == 0)
+                return null;
+
+            var tab = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical,
+                Name = Loc.GetString("arena-manifest-tab-title"),
+            };
+
+            var background = new PanelContainer
+            {
+                StyleClasses = { "BackgroundPanelDark" },
+                HorizontalExpand = true,
+                VerticalExpand = true,
+            };
+
+            var scrollbox = new ScrollContainer
+            {
+                VerticalExpand = true,
+                HorizontalExpand = true,
+                HScrollEnabled = false,
+                Margin = new Thickness(10),
+            };
+
+            var container = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical,
+                SeparationOverride = 8,
+                HorizontalExpand = true,
+            };
+
+            var topThree = ev.Players.Take(3).ToArray();
+            if (topThree.Length > 0)
+            {
+                var podium = new BoxContainer
+                {
+                    Orientation = LayoutOrientation.Horizontal,
+                    SeparationOverride = 16,
+                    HorizontalAlignment = HAlignment.Center,
+                    Margin = new Thickness(0, 0, 0, 12),
+                };
+
+                for (var i = 0; i < topThree.Length; i++)
+                    podium.AddChild(MakeArenaPodiumCard(i + 1, topThree[i]));
+
+                container.AddChild(podium);
+            }
+
+            container.AddChild(MakeArenaManifestHeader(ev.Players.Count));
+
+            for (var i = 0; i < ev.Players.Count; i++)
+                container.AddChild(MakeArenaManifestRow(i + 1, ev.Players[i]));
+
+            scrollbox.AddChild(container);
+            background.AddChild(scrollbox);
+            tab.AddChild(background);
+            return tab;
+        }
+
+        private static Control MakeArenaPodiumCard(int place, ArenaPlayerRecord player)
+        {
+            var panel = new PanelContainer
+            {
+                PanelOverride = new StyleBoxFlat
+                {
+                    BackgroundColor = ManifestBodyBackground,
+                    BorderColor = ManifestPanelBorder,
+                    BorderThickness = new Thickness(1),
+                },
+                MinWidth = 200,
+                HorizontalExpand = true,
+            };
+
+            var box = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical,
+                SeparationOverride = 4,
+                Margin = new Thickness(12),
+                HorizontalAlignment = HAlignment.Center,
+                HorizontalExpand = true,
+            };
+
+            var placeColor = place switch
+            {
+                1 => ArenaFirstPlaceColor,
+                2 => ArenaSecondPlaceColor,
+                _ => ArenaThirdPlaceColor,
+            };
+
+            box.AddChild(new Label
+            {
+                Text = Loc.GetString("arena-manifest-place", ("place", place)),
+                StyleClasses = { "LabelBig" },
+                FontColorOverride = placeColor,
+                HorizontalAlignment = HAlignment.Center,
+            });
+            box.AddChild(new Label
+            {
+                Text = string.IsNullOrEmpty(player.PlayerName)
+                    ? Loc.GetString("arena-manifest-unknown-player")
+                    : player.PlayerName,
+                StyleClasses = { "LabelHeading" },
+                FontColorOverride = Color.White,
+                HorizontalAlignment = HAlignment.Center,
+                HorizontalExpand = true,
+            });
+            box.AddChild(new Label
+            {
+                Text = Loc.GetString("arena-manifest-kd",
+                    ("kills", player.Kills),
+                    ("deaths", player.Deaths),
+                    ("kd", player.KD.ToString("0.##"))),
+                StyleClasses = { "LabelSubText" },
+                HorizontalAlignment = HAlignment.Center,
+            });
+
+            panel.AddChild(box);
+            return panel;
+        }
+
+        private static Control MakeArenaManifestHeader(int playerCount)
+        {
+            var panel = new PanelContainer
+            {
+                StyleClasses = { "PanelDark" },
+                HorizontalExpand = true,
+            };
+
+            var box = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical,
+                Margin = new Thickness(10),
+                SeparationOverride = 4,
+                HorizontalExpand = true,
+            };
+
+            box.AddChild(new Label
+            {
+                Text = Loc.GetString("arena-manifest-tab-title"),
+                StyleClasses = { "LabelBig" },
+                HorizontalExpand = true,
+            });
+            box.AddChild(new Label
+            {
+                Text = Loc.GetString("arena-manifest-subtitle", ("count", playerCount)),
+                StyleClasses = { "LabelSubText" },
+                HorizontalExpand = true,
+            });
+
+            panel.AddChild(box);
+            return panel;
+        }
+
+        private static Control MakeArenaManifestRow(int place, ArenaPlayerRecord player)
+        {
+            var panel = new PanelContainer
+            {
+                StyleClasses = { "PanelDark" },
+                HorizontalExpand = true,
+            };
+
+            var box = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Horizontal,
+                Margin = new Thickness(10),
+                SeparationOverride = 10,
+                HorizontalExpand = true,
+            };
+
+            box.AddChild(new Label
+            {
+                Text = Loc.GetString("arena-manifest-row-place", ("place", place)),
+                MinWidth = 60,
+                StyleClasses = { "LabelSubText" },
+            });
+            box.AddChild(new Label
+            {
+                Text = string.IsNullOrEmpty(player.PlayerName)
+                    ? Loc.GetString("arena-manifest-unknown-player")
+                    : player.PlayerName,
+                StyleClasses = { "LabelHeading" },
+                HorizontalExpand = true,
+                ClipText = true,
+            });
+            box.AddChild(new Label
+            {
+                Text = Loc.GetString("arena-manifest-row-kills", ("kills", player.Kills)),
+                MinWidth = 70,
+                HorizontalAlignment = HAlignment.Right,
+            });
+            box.AddChild(new Label
+            {
+                Text = Loc.GetString("arena-manifest-row-deaths", ("deaths", player.Deaths)),
+                MinWidth = 70,
+                HorizontalAlignment = HAlignment.Right,
+            });
+            box.AddChild(new Label
+            {
+                Text = player.KD.ToString("0.##"),
+                MinWidth = 70,
+                HorizontalAlignment = HAlignment.Right,
+            });
+
+            panel.AddChild(box);
+            return panel;
+        }
+        // DS14-end
 
         private Control? MakeManifestDoll(
             RoundEndDollData? dollData,

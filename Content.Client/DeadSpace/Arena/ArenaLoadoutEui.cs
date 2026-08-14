@@ -18,6 +18,14 @@ public sealed class ArenaLoadoutEui : BaseEui
         {
             SendMessage(new ArenaLoadoutSelectedMessage(weaponIdx));
         };
+        _window.OnCostumeBuy += costumeIdx =>
+        {
+            SendMessage(new ArenaCostumeBuyMessage(costumeIdx));
+        };
+        _window.OnCostumeEquip += equipped =>
+        {
+            SendMessage(new ArenaCostumeEquipMessage(equipped));
+        };
     }
 
     public override void Opened()
