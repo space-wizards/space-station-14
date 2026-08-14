@@ -697,7 +697,7 @@ namespace Content.Client.Lobby.UI
                     // Label
                     TraitsList.AddChild(new Label
                     {
-                        Text = category.Name,
+                        Text = Loc.GetString(category.Name), //DS-14
                         Margin = new Thickness(0, 10, 0, 0),
                         StyleClasses = { "DS14MenuProfileSection" }, // DS14
                     });
