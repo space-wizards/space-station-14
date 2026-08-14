@@ -22,8 +22,8 @@
   - type: InteractionOutline
 
 - type: entity
+  parent: [ BaseGirder, StructureHealthBarrier ]
   id: Girder
-  parent: [ BaseGirder, StructureHealthBarrierStrong ]
   name: girder
   description: A large structural assembly made out of metal; It requires a layer of metal before it can be considered a wall.
   components:
@@ -39,13 +39,13 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 120
+        damage: 80
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:
-            min: 1
-            max: 1
+            min: 0
+            max: 2
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
@@ -75,8 +75,8 @@
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetPlasteel1:
-            min: 1
-            max: 1
+            min: 0
+            max: 2
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
@@ -86,31 +86,3 @@
         node: girder
   - type: StaticPrice
     price: 130
-
-- type: entity
-  parent: [ BaseGirder, StructureHealthBarrier ]
-  id: ClockworkGirder
-  name: wall gear
-  description: A large gear with mounting brackets for additional plating; This could be made into a wall with more brass plating.
-  components:
-  - type: Sprite
-    sprite: Structures/Walls/clock.rsi
-    state: wall_gear
-  - type: Construction
-    graph: ClockworkGirder
-    node: clockGirder
-  - type: StaticPrice
-    price: 75
-  - type: Damageable
-    damageModifierSet: BrassMod
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 80
-      behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          SheetBrass1:
-            min: 1
-            max: 2

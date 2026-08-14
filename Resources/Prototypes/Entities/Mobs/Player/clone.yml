@@ -8,7 +8,6 @@
 - type: cloningSettings
   id: TraitsMental
   components:
-  - Clumsy
   - Pacified
   - Paracusia
   - LightweightDrunk

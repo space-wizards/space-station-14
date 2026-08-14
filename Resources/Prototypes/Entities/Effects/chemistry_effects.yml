@@ -197,7 +197,6 @@
     replaceableTiles:
     - Plating
     - Lattice
-    - TrainLattice
     replacementTiles:
     - FloorMetalFoam
 

@@ -11,7 +11,7 @@
   - type: Rotatable
   - type: InteractionOutline
   - type: Sprite
-    sprite: Structures/Doors/MineralDoors/metal_door.rsi
+    sprite: Structures/Doors/MaterialDoors/silver-door.rsi
     layers:
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
@@ -50,6 +50,11 @@
     fx: EffectRCDDeconstruct6
   - type: Occluder
   - type: BlockWeather
+  - type: IconSmooth
+    key: walls
+    mode: NoSprite
+  - type: PlacementReplacement
+    key: walls
 
 - type: entity
   abstract: true
@@ -59,39 +64,13 @@
   - type: NavMapDoor
 
 ### Metal doors ###
-
-- type: entity
-  parent: [ BaseMaterialDoorNavMap, StructureHealthDoorWeak ]
-  id: MetalDoor # steel
-  name: metal door
-  components:
-  - type: Construction
-    graph: DoorGraph
-    node: metalDoor
-  - type: Damageable
-    damageModifierSet: SteelMod
-  - type: Destructible
-    thresholds:
-    - trigger: &DamageDoorWeak
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - &SoundMetalBreak !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          SheetSteel1: &BaseDoorSpawn
-            min: 3
-            max: 5
-
 - type: entity
   parent: [ BaseMaterialDoorNavMap, StructureHealthDoorWeak ]
   id: PlasmaDoor
   name: plasma door
   components:
   - type: Sprite
-    sprite: Structures/Doors/MineralDoors/plasma_door.rsi
+    sprite: Structures/Doors/MaterialDoors/plasma-door.rsi
   - type: Construction
     graph: DoorGraph
     node: plasmaDoor
@@ -99,7 +78,9 @@
     damageModifierSet: PlasmaMod
   - type: Destructible
     thresholds:
-    - trigger: *DamageDoorWeak
+    - trigger: &DamageDoorWeak
+        !type:DamageTrigger
+        damage: 100
       behaviors:
       - *SoundMetalBreak
       - !type:SpawnEntitiesBehavior
@@ -112,7 +93,7 @@
   name: gold door
   components:
   - type: Sprite
-    sprite: Structures/Doors/MineralDoors/gold_door.rsi
+    sprite: Structures/Doors/MaterialDoors/gold-door.rsi
   - type: Construction
     graph: DoorGraph
     node: goldDoor
@@ -133,7 +114,7 @@
   name: silver door
   components:
   - type: Sprite
-    sprite: Structures/Doors/MineralDoors/silver_door.rsi
+    sprite: Structures/Doors/MaterialDoors/silver-door.rsi
   - type: Construction
     graph: DoorGraph
     node: silverDoor
@@ -148,33 +129,6 @@
         spawn:
           IngotSilver1: *BaseDoorSpawn
 
-- type: entity
-  parent: [ BaseMaterialDoorNavMap, StructureHealthDoorWeak ]
-  id: BananiumDoor
-  name: bananium door
-  components:
-  - type: Sprite
-    sprite: Structures/Doors/MineralDoors/bananium_door.rsi
-  - type: Door
-    openSound: &BikeHornSound
-      collection: BikeHorn
-      params:
-        variation: 0.125
-    closeSound: *BikeHornSound
-  - type: Construction
-    graph: DoorGraph
-    node: bananiumDoor
-  - type: Damageable
-    damageModifierSet: BananiumMod
-  - type: Destructible
-    thresholds:
-    - trigger: *DamageDoorWeak
-      behaviors:
-      - *SoundMetalBreak
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          MaterialBananium1: *BaseDoorSpawn
-
 ### Other doors ###
 
 - type: entity
@@ -183,7 +137,7 @@
   name: wooden door
   components:
   - type: Sprite
-    sprite: Structures/Doors/MineralDoors/wood_door.rsi
+    sprite: Structures/Doors/MaterialDoors/wood-door.rsi
   - type: Door
     openSound:
       path: /Audio/Effects/door_open.ogg
@@ -213,7 +167,7 @@
   name: paper door
   components:
   - type: Sprite
-    sprite: Structures/Doors/MineralDoors/paper_door.rsi
+    sprite: Structures/Doors/MaterialDoors/paper-door.rsi
   - type: Door
     openSound:
       path: /Audio/Effects/paperdoor_openclose.ogg
@@ -244,7 +198,7 @@
   description: A door, leading to the lands of the spiders... or a spaced room.
   components:
   - type: Sprite
-    sprite: Structures/Doors/web_door.rsi
+    sprite: Structures/Doors/MaterialDoors/web-door.rsi
   - type: Door
     closeSound:
       path: /Audio/Effects/rustle1.ogg
@@ -274,7 +228,7 @@
   name: cardboard door
   components:
   - type: Sprite
-    sprite: Structures/Doors/MineralDoors/card_door.rsi
+    sprite: Structures/Doors/MaterialDoors/card-door.rsi
   - type: Door
     openSound:
       path: /Audio/Effects/card_drag.ogg
@@ -302,42 +256,3 @@
       - !type:SpawnEntitiesBehavior
         spawn:
           MaterialCardboard: *BaseDoorSpawn
-
-- type: entity
-  parent: [ BaseMaterialDoorNavMap, StructureHealthDoorWeak ]
-  id: IronstoneDoor
-  name: ironstone door
-  description: A mysterious door made of rune-etched stone.
-  components:
-  - type: Sprite
-    sprite: Structures/Doors/MineralDoors/ironstone_door.rsi
-  - type: Door
-    openSound:
-      path: /Audio/Effects/stonedoor_openclose.ogg
-    closeSound:
-      path: /Audio/Effects/stonedoor_openclose.ogg
-  - type: RCDDeconstructable
-    deconstructable: false
-  - type: Damageable
-    damageModifierSet: RockMod
-  - type: Destructible
-    thresholds:
-    - trigger: *DamageDoorWeak
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Effects/break_stone.ogg
-          params:
-            volume: -6
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          SteelOre1: *BaseDoorSpawn
-
-- type: entity
-  parent: IronstoneDoor
-  id: EncrustedIronstoneDoor
-  name: encrusted ironstone door
-  description: A stone door covered in nacreous blobs of an unknown substance.
-  components:
-  - type: Sprite
-    sprite: Structures/Doors/MineralDoors/encrusted_ironstone_door.rsi

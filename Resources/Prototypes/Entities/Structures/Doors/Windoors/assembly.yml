@@ -39,42 +39,19 @@
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
-          SheetSteel1:
-            min: 1
-            max: 3
-  - type: Construction
-    graph: Windoor
-    node: assembly
-
-- type: entity
-  id: WindoorAssemblyClockwork
-  name: clockwork windoor assembly
-  description: It opens, it closes, and you can see through it! This one looks tough.
-  parent: WindoorAssembly
-  components:
-  - type: Sprite
-    sprite: Structures/Doors/Windoors/clockwork_windoor.rsi
-    layers:
-    - state: open
-  - type: Destructible
-    thresholds:
-    - trigger: *DamageDoorWeak
-      behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          SheetBrass1:
+          SheetSteel1: &BaseWindoorDrop
             min: 1
             max: 2
   - type: Construction
     graph: Windoor
-    node: assemblyClockwork
+    node: assembly
 
 #plasma windoor assemblies
 - type: entity
+  parent: WindoorAssembly
   id: WindoorAssemblyPlasma
   name: plasma windoor assembly
   description: It opens, it closes, and you can see through it! This one looks purp-, no, pink. Wait...
-  parent: WindoorAssembly
   components:
   - type: Sprite
     sprite: Structures/Doors/Windoors/plasma.rsi
@@ -86,19 +63,17 @@
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
-          SheetPGlass1:
-            min: 1
-            max: 3
+          SheetPGlass1: *BaseWindoorDrop
   - type: Construction
     graph: Windoor
     node: pglass
 
 #uranium windoor assemblies
 - type: entity
+  parent: WindoorAssembly
   id: WindoorAssemblyUranium
   name: uranium windoor assembly
   description: It opens, it closes, and you can see through it! This one looks sickly green...
-  parent: WindoorAssembly
   components:
   - type: Sprite
     sprite: Structures/Doors/Windoors/uranium.rsi
@@ -110,9 +85,7 @@
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
-          SheetUGlass1:
-            min: 1
-            max: 3
+          SheetUGlass1: *BaseWindoorDrop
   - type: Construction
     graph: Windoor
     node: uglass

@@ -67,6 +67,22 @@
   - type: Rotatable
     rotateWhileAnchored: true
 
+#Starts unanchored, can be used as a vehicle
+- type: entity
+  abstract: true
+  parent: [ OfficeChairBase, BaseVehicleStrap ]
+  id: OfficeChairVehicleBase
+  components:
+  - type: Physics
+    bodyType: KinematicController
+  - type: Vehicle
+    requiresHands: false # you use your feet!
+  - type: MovementSpeedModifier
+    baseAcceleration: 2
+    baseFriction: 2
+    baseWalkSpeed: 2
+    baseSprintSpeed: 3
+
 #Starts anchored, can be rotated while anchored
 - type: entity
   abstract: true
@@ -170,7 +186,7 @@
           SheetBrass1: *Min0Max1
 
 - type: entity
-  parent: [ OfficeChairBase, StructureHealthFurniture ]
+  parent: [ OfficeChairVehicleBase, StructureHealthFurniture ]
   id: ChairOfficeLight
   name: white office chair
   components:
@@ -185,9 +201,9 @@
     thresholds: *ThresholdsFurnitureNormalSteel
 
 - type: entity
-  name: dark office chair
+  parent: OfficeChairVehicleBase
   id: ChairOfficeDark
-  parent: ChairOfficeLight
+  name: dark office chair
   components:
   - type: Sprite
     state: office-dark

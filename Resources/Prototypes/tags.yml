@@ -486,7 +486,7 @@
   id: DoorBumpOpener # Used by SharedDoorSystem to allow tagged entities to open doors when they collide.
 
 - type: Tag
-  id: DoorElectronics  # ConstructionGraph: PinionAirlock, BlastDoor, Windoor
+  id: DoorElectronics  # ConstructionGraph: BlastDoor, Windoor
                        # Used interchangeably with DoorElectronicsComponent, sometimes even in the same graph. TODO pick one
 
 - type: Tag
@@ -1591,6 +1591,9 @@
   id: WriteIgnoreStamps # Used by PaperSystem to allow tagged entity to bypass stamps.
 
 ## X ##
+
+- type: Tag
+  id: XenoborgCrystal # MaterialStorage whitelist: Mothership core
 
 - type: Tag
   id: XenoborgGhostrole # spawn whitelist : SpawnPointGhostRoleXenoborg

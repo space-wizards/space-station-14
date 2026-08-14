@@ -4,9 +4,9 @@
   name: reinforced plasma window
   components:
   - type: Sprite
-    sprite: Structures/Windows/reinforced_plasma_window.rsi
+    sprite: Structures/Windows/window-plasma-reinf.rsi
   - type: Icon
-    sprite: Structures/Windows/reinforced_plasma_window.rsi
+    sprite: Structures/Windows/window-plasma-reinf.rsi
     state: full
   - type: Damageable
     damageModifierSet: GlassReinforcedPlasmaMod
@@ -90,6 +90,37 @@
     price: 66
 
 - type: entity
+  parent: PlasmaReinforcedWindowDirectional
+  id: PlasmaReinforcedWindowDirectionalCorner
+  suffix: Corner
+  components:
+  - type: Sprite
+    sprite: Structures/Windows/directional.rsi
+    state: plasma_reinforced_window_corner
+  - type: Icon
+    sprite: Structures/Windows/directional.rsi
+    state: plasma_reinforced_window_corner
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,-0.28125,-0.28125"
+        density: 1500
+        mask:
+        - FullTileMask
+        layer:
+        - GlassLayer
+  - type: Construction
+    graph: WindowDirectionalCorner
+    node: plasmaReinforcedWindowDirectionalCorner
+  - type: DamageVisuals
+    thresholds: [5, 10, 20]
+    trackAllDamage: true
+    damageOverlay:
+      sprite: Structures/Windows/cracks_directional_corner.rsi
+
+- type: entity
   parent: ReinforcedPlasmaWindow
   id: ReinforcedPlasmaWindowDiagonal
   suffix: diagonal
@@ -100,7 +131,7 @@
   components:
   - type: Sprite
     drawdepth: WallTops
-    sprite: Structures/Windows/reinforced_plasma_diagonal.rsi
+    sprite: Structures/Windows/window-diagonal-plasma-reinf.rsi
     state: state0
   - type: Tag
     tags:
@@ -108,10 +139,10 @@
     - Window
   - type: IconSmooth
     mode: Diagonal
-    key: windows
+    key: walls
     base: state
   - type: Icon
-    sprite: Structures/Windows/reinforced_plasma_diagonal.rsi
+    sprite: Structures/Windows/window-diagonal-plasma-reinf.rsi
     state: state0
   - type: Fixtures
     fixtures:
@@ -134,7 +165,7 @@
     - East
   - type: DamageVisuals
     damageOverlay:
-      sprite: Structures/Windows/cracks_diagonal.rsi
+      sprite: Structures/Windows/cracks-diagonal.rsi
   - type: Construction
     graph: WindowDiagonal
     node: reinforcedPlasmaWindowDiagonal
