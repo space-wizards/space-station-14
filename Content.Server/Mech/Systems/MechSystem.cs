@@ -154,25 +154,11 @@ public sealed partial class MechSystem : SharedMechSystem
 
         if (Vehicle.CanEnter(uid, args.User))
         {
-            var enterVerb = new AlternativeVerb
-            {
-                Text = Loc.GetString("mech-verb-enter"),
-                Act = () =>
-                {
-                    var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, entry.EntryDelay, new ContainerVehicleEntryEvent(), uid, target: uid)
-                    {
-                        BreakOnMove = true,
-                    };
-
-                    _doAfter.TryStartDoAfter(doAfterEventArgs);
-                }
-            };
             var openUiVerb = new AlternativeVerb //can't hijack someone else's mech
             {
                 Act = () => ToggleMechUi(uid, component, args.User),
                 Text = Loc.GetString("mech-ui-open-verb")
             };
-            args.Verbs.Add(enterVerb);
             args.Verbs.Add(openUiVerb);
         }
         else if (Vehicle.HasOperator(uid))

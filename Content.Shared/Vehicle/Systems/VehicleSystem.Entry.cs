@@ -1,6 +1,7 @@
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
 using Content.Shared.Vehicle.Components;
+using Content.Shared.Verbs;
 
 namespace Content.Shared.Vehicle.Systems;
 
@@ -23,22 +24,24 @@ public sealed partial class VehicleSystem
             return;
 
         args.Handled = true;
+        StartEntryInteraction(ent, args.Dragged);
+    }
 
-        if (!CanEnterViaInteraction(ent.Owner, args.Dragged))
+    [SubscribeLocalEvent]
+    private void OnAlternativeVerb(Entity<ContainerVehicleEntryComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
+    {
+        if (!args.CanAccess ||
+            !args.CanInteract ||
+            !CanEnterViaInteraction(ent.Owner, args.User))
             return;
 
-        var doAfterEventArgs = new DoAfterArgs(
-            EntityManager,
-            args.Dragged,
-            ent.Comp.EntryDelay,
-            new ContainerVehicleEntryEvent(),
-            ent.Owner,
-            target: ent.Owner)
+        var entering = args.User;
+        var enterVerb = new AlternativeVerb
         {
-            BreakOnMove = true,
+            Text = Loc.GetString("container-vehicle-verb-enter"),
+            Act = () => StartEntryInteraction(ent, entering)
         };
-
-        _doAfter.TryStartDoAfter(doAfterEventArgs);
+        args.Verbs.Add(enterVerb);
     }
 
     [SubscribeLocalEvent]
@@ -63,6 +66,25 @@ public sealed partial class VehicleSystem
             return;
 
         args.Handled = true;
+    }
+
+    private void StartEntryInteraction(Entity<ContainerVehicleEntryComponent> vehicle, EntityUid entering)
+    {
+        if (!CanEnterViaInteraction(vehicle.Owner, entering))
+            return;
+
+        var doAfterEventArgs = new DoAfterArgs(
+            EntityManager,
+            entering,
+            vehicle.Comp.EntryDelay,
+            new ContainerVehicleEntryEvent(),
+            vehicle.Owner,
+            target: vehicle.Owner)
+        {
+            BreakOnMove = true,
+        };
+
+        _doAfter.TryStartDoAfter(doAfterEventArgs);
     }
 
     private bool CanEnterViaInteraction(EntityUid vehicle, EntityUid entering)
