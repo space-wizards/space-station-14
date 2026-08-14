@@ -51,18 +51,22 @@ public enum ApcChannelState : byte
     /// The APC is operating normally, and is currently not delivering power.
     /// </summary>
     Off = 0,
+
     /// <summary>
     /// The APC is operating normally, and is delivering power to the network.
     /// </summary>
     On = 1,
+
     /// <summary>
     /// The APC's breaker has been opened manually, and cannot deliver power.
     /// </summary>
     BreakerOpen = 2,
+
     /// <summary>
     /// The APC's breaker has been tripped, and cannot deliver power.
     /// </summary>
     BreakerTripped = 3,
+
     /// <summary>
     /// The total number of states to show.
     /// </summary>
