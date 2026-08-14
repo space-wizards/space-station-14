@@ -19,7 +19,7 @@
       department: Command
       time: 144000 # 40 hours
     - !type:OverallPlaytimeRequirement
-      time: 3096000 # 860 hours
+      time: 1944000 # 540 hours
   startingGear: CBURNLeaderGear
   icon: "JobIconERTLeader"
   supervisors: job-supervisors-centcom
@@ -70,7 +70,7 @@
       department: Command
       time: 144000 # 40 hours
     - !type:OverallPlaytimeRequirement
-      time: 3096000 # 860 hours
+      time: 1944000 # 540 hours
   startingGear: SCSTLeaderGear
   icon: "JobIconERTLeader"
   supervisors: job-supervisors-centcom
@@ -121,7 +121,7 @@
       department: Command
       time: 144000 # 40 hours
     - !type:OverallPlaytimeRequirement
-      time: 3096000 # 860 hours
+      time: 1944000 # 540 hours
   startingGear: SCNTLeaderGear
   icon: "JobIconERTLeader"
   supervisors: job-supervisors-centcom
@@ -171,7 +171,7 @@
       department: Command
       time: 144000 # 40 hours
     - !type:OverallPlaytimeRequirement
-      time: 3096000 # 860 hours
+      time: 1944000 # 540 hours
   startingGear: SierraLeaderGear
   icon: "JobIconERTLeader"
   supervisors: job-supervisors-centcom
@@ -220,7 +220,7 @@
       department: Security
       time: 201600 # 56 hours
     - !type:OverallPlaytimeRequirement
-      time: 3096000 # 860 hours
+      time: 1944000 # 540 hours
   startingGear: CBURNAgentGear
   icon: "JobIconERT"
   supervisors: job-supervisors-centcom
@@ -265,7 +265,7 @@
       department: Security
       time: 201600 # 56 hours
     - !type:OverallPlaytimeRequirement
-      time: 3096000 # 860 hours
+      time: 1944000 # 540 hours
   startingGear: CBURNAgentGear
   icon: "JobIconERT"
   supervisors: job-supervisors-centcom
@@ -310,7 +310,7 @@
       department: Security
       time: 201600 # 56 hours
     - !type:OverallPlaytimeRequirement
-      time: 3096000 # 860 hours
+      time: 1944000 # 540 hours
   startingGear: SCNTAgentGear
   icon: "JobIconERT"
   supervisors: job-supervisors-centcom
@@ -355,7 +355,7 @@
       department: Security
       time: 201600 # 56 hours
     - !type:OverallPlaytimeRequirement
-      time: 3096000 # 860 hours
+      time: 1944000 # 540 hours
   startingGear: SierraAgentGear
   icon: "JobIconERT"
   supervisors: job-supervisors-centcom
