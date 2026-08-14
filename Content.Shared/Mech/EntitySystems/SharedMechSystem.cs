@@ -335,6 +335,13 @@ public abstract partial class SharedMechSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
+    private void OnMechExitAttempt(Entity<MechComponent> ent, ref ContainerVehicleExitAttemptEvent args)
+    {
+        if (ent.Comp.Broken)
+            args.Cancel();
+    }
+
+    [SubscribeLocalEvent]
     private void OnOperatorSet(Entity<MechComponent> ent, ref VehicleOperatorSetEvent args)
     {
         if (args.OldOperator is { } oldOperator)
@@ -358,10 +365,3 @@ public abstract partial class SharedMechSystem : EntitySystem
 /// </summary>
 [Serializable, NetSerializable]
 public sealed partial class RemoveBatteryEvent : SimpleDoAfterEvent;
-
-/// <summary>
-///     Event raised when a person removes someone from a mech,
-///     on both success and failure
-/// </summary>
-[Serializable, NetSerializable]
-public sealed partial class MechExitEvent : SimpleDoAfterEvent;

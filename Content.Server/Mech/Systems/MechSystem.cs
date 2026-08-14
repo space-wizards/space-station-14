@@ -148,46 +148,19 @@ public sealed partial class MechSystem : SharedMechSystem
     [SubscribeLocalEvent]
     private void OnAlternativeVerb(EntityUid uid, MechComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || component.Broken ||
-            !TryComp<ContainerVehicleEntryComponent>(uid, out var entry))
+        if (!args.CanAccess ||
+            !args.CanInteract ||
+            component.Broken ||
+            !Vehicle.CanEnter(uid, args.User))
             return;
 
-        if (Vehicle.CanEnter(uid, args.User))
+        var openUiVerb = new AlternativeVerb // can't hijack someone else's mech
         {
-            var openUiVerb = new AlternativeVerb //can't hijack someone else's mech
-            {
-                Act = () => ToggleMechUi(uid, component, args.User),
-                Text = Loc.GetString("mech-ui-open-verb")
-            };
-            args.Verbs.Add(openUiVerb);
-        }
-        else if (Vehicle.HasOperator(uid))
-        {
-            var operatorUid = Vehicle.GetOperatorOrNull(uid);
-            var ejectVerb = new AlternativeVerb
-            {
-                Text = Loc.GetString("mech-verb-exit"),
-                Priority = 1, // Promote to top to make ejecting the ALT-click action
-                Act = () =>
-                {
-                    if (args.User == uid || args.User == operatorUid)
-                    {
-                        if(Vehicle.TryExit(uid))
-                            _ui.CloseUi(uid, MechUiKey.Key);
-                        return;
-                    }
+            Act = () => ToggleMechUi(uid, component, args.User),
+            Text = Loc.GetString("mech-ui-open-verb")
+        };
 
-                    var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, entry.ExitDelay, new MechExitEvent(), uid, target: uid)
-                    {
-                        BreakOnMove = true,
-                    };
-                    _popup.PopupEntity(Loc.GetString("mech-eject-pilot-alert", ("item", uid), ("user", Identity.Entity(args.User, EntityManager))), uid, PopupType.Large);
-
-                    _doAfter.TryStartDoAfter(doAfterEventArgs);
-                }
-            };
-            args.Verbs.Add(ejectVerb);
-        }
+        args.Verbs.Add(openUiVerb);
     }
 
     [SubscribeLocalEvent]
@@ -197,16 +170,16 @@ public sealed partial class MechSystem : SharedMechSystem
     }
 
     [SubscribeLocalEvent]
-    private void OnMechExit(EntityUid uid, MechComponent component, MechExitEvent args)
+    private void OnMechOperatorRemovalStarted(EntityUid uid, MechComponent component, ContainerVehicleOperatorRemovalStartedEvent args)
     {
-        if (args.Cancelled || args.Handled)
-            return;
+        _popup.PopupEntity(Loc.GetString("mech-eject-pilot-alert", ("item", uid), ("user", Identity.Entity(args.User, EntityManager))), uid, PopupType.Large);
+    }
 
-        if (!Vehicle.TryExit(uid))
-            return;
-
-        _ui.CloseUi(uid, MechUiKey.Key);
-        args.Handled = true;
+    [SubscribeLocalEvent]
+    private void OnMechOperatorSet(Entity<MechComponent> ent, ref VehicleOperatorSetEvent args)
+    {
+        if (args.NewOperator is null && args.OldOperator is not null)
+            _ui.CloseUi(ent.Owner, MechUiKey.Key);
     }
 
     [SubscribeLocalEvent]

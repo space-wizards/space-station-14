@@ -1,5 +1,3 @@
-mech-verb-exit = Remove pilot
-
 mech-equipment-begin-install = Installing the {THE($item)}...
 mech-equipment-finish-install = Finished installing the {THE($item)}
 

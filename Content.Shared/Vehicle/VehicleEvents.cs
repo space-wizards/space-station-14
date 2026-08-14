@@ -26,3 +26,27 @@ public sealed class ContainerVehicleEntryOperatorDeniedEvent(EntityUid entering)
 /// </summary>
 [Serializable, NetSerializable]
 public sealed partial class ContainerVehicleEntryEvent : SimpleDoAfterEvent;
+
+/// <summary>
+/// Allows vehicle-specific systems to veto an explicit exit attempt.
+/// </summary>
+/// <param name="user">The entity performing the exit interaction.</param>
+public sealed class ContainerVehicleExitAttemptEvent(EntityUid user) : CancellableEntityEventArgs
+{
+    public EntityUid User { get; } = user;
+}
+
+/// <summary>
+/// Raised when delayed removal of a container vehicle's operator begins.
+/// </summary>
+/// <param name="user">The entity removing the operator.</param>
+public sealed class ContainerVehicleOperatorRemovalStartedEvent(EntityUid user)
+{
+    public EntityUid User { get; } = user;
+}
+
+/// <summary>
+/// Raised when delayed removal of a container vehicle's operator finishes.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed partial class ContainerVehicleExitEvent : SimpleDoAfterEvent;
