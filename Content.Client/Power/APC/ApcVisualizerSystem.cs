@@ -24,7 +24,7 @@ public sealed partial class ApcVisualizerSystem : VisualizerSystem<ApcVisualsCom
 
         if (chargeState < ApcChargeState.NumStates)
         {
-            var screenState = comp.ScreenSuffixes[(byte)chargeState] is { } screenSuffix ? $"{comp.ScreenPrefix}-{screenSuffix}" : null;
+            var screenState = comp.ScreenStateSuffixes[(byte)chargeState] is { } screenSuffix ? $"{comp.ScreenStatePrefix}-{screenSuffix}" : null;
             SpriteSystem.LayerSetRsiState((uid, args.Sprite), ApcVisualLayers.ChargeState, screenState);
 
             // Unlike the charge state, we don't have an emag with special visuals, everything's in the array.
@@ -34,7 +34,7 @@ public sealed partial class ApcVisualizerSystem : VisualizerSystem<ApcVisualsCom
                 channelState = ApcChannelState.Off;
             }
 
-            var state = comp.ChannelSuffixes[(byte)channelState] is { } channelSuffix ? $"{comp.ChannelPrefix}-{channelSuffix}" : null;
+            var state = comp.ChannelIndicatorSuffixes[(byte)channelState] is { } channelSuffix ? $"{comp.ChannelIndicatorPrefix}-{channelSuffix}" : null;
             SpriteSystem.LayerSetRsiState((uid, args.Sprite), ApcVisualLayers.Equipment, state);
             SpriteSystem.LayerSetVisible((uid, args.Sprite), ApcVisualLayers.Equipment, true);
 

@@ -118,25 +118,38 @@ public enum ApcChargeState : byte
 /// Contains the details of the charge, breaker, and power delivery for a given APC.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class ApcBoundInterfaceState : BoundUserInterfaceState, IEquatable<ApcBoundInterfaceState>
+public sealed class ApcBoundInterfaceState(bool mainBreaker, int power, ApcExternalPowerState apcExternalPower, float charge, float maxLoad, bool tripped)
+ : BoundUserInterfaceState, IEquatable<ApcBoundInterfaceState>
 {
-    public readonly bool MainBreaker;
-    public readonly int Power;
-    public readonly ApcExternalPowerState ApcExternalPower;
-    public readonly float Charge;
-    public readonly float MaxLoad;
-    public readonly bool Tripped;
+    /// <summary>
+    /// If true, the breaker is active, and the APC can deliver power.
+    /// </summary>
+    public readonly bool MainBreaker = mainBreaker;
 
-    /// <inheritdoc cref="ApcBoundInterfaceState">
-    public ApcBoundInterfaceState(bool mainBreaker, int power, ApcExternalPowerState apcExternalPower, float charge, float maxLoad, bool tripped)
-    {
-        MainBreaker = mainBreaker;
-        Power = power;
-        ApcExternalPower = apcExternalPower;
-        Charge = charge;
-        MaxLoad = maxLoad;
-        Tripped = tripped;
-    }
+    /// <summary>
+    /// The current amount of power being delivered, in Watts.
+    /// </summary>
+    public readonly int Power = power;
+
+    /// <summary>
+    /// The approximate amount of energy contained within the APC.
+    /// </summary>
+    public readonly ApcExternalPowerState ApcExternalPower = apcExternalPower;
+
+    /// <summary>
+    /// The energy remaining in the APC, in Joules
+    /// </summary>
+    public readonly float Charge = charge;
+
+    /// <summary>
+    /// The maximum allowable load of the APC, in Watts.
+    /// </summary>
+    public readonly float MaxLoad = maxLoad;
+
+    /// <summary>
+    /// Whether or not the breaker has been tripped.
+    /// </summary>
+    public readonly bool Tripped = tripped;
 
     /// <inheritdoc/>
     public bool Equals(ApcBoundInterfaceState? other)
@@ -168,9 +181,7 @@ public sealed class ApcBoundInterfaceState : BoundUserInterfaceState, IEquatable
 /// A request to toggle the main breaker of an APC.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class ApcToggleMainBreakerMessage : BoundUserInterfaceMessage
-{
-}
+public sealed class ApcToggleMainBreakerMessage : BoundUserInterfaceMessage;
 
 /// <summary>
 /// The amount of energy stored on the APC.
