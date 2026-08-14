@@ -70,6 +70,9 @@ internal static class ServerContentIoC
         deps.Register<ServerDbEntryManager>();
         deps.Register<ISharedPlaytimeManager, PlayTimeTrackingManager>();
         deps.Register<ServerApi>();
+#if !FULL_RELEASE || MCP
+        deps.Register<Mcp.McpManager>();
+#endif
         deps.Register<JobWhitelistManager>();
         deps.Register<PlayerRateLimitManager>();
         deps.Register<SharedPlayerRateLimitManager, PlayerRateLimitManager>();

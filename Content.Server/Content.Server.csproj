@@ -24,6 +24,11 @@
   <ItemGroup>
     <Folder Include="EntityEffects\" />
   </ItemGroup>
+  <!-- Compiles the embedded MCP mapping server into a release build: dotnet build -p:EnableMcp=true.
+       Builds without FULL_RELEASE (Debug/DebugOpt/Tools) always include it. -->
+  <PropertyGroup Condition="'$(EnableMcp)' == 'true'">
+    <DefineConstants>$(DefineConstants);MCP</DefineConstants>
+  </PropertyGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
   <Import Project="..\RobustToolbox\MSBuild\Robust.EntitySystemSubscriptionsGenerator.targets" />
 

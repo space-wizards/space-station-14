@@ -127,6 +127,9 @@ namespace Content.Server.Entry
             _ghostKick.Initialize();
             _serverInfo.Initialize();
             _serverApi.Initialize();
+#if !FULL_RELEASE || MCP
+            Dependencies.Resolve<Mcp.McpManager>().Initialize();
+#endif
             _voteManager.Initialize();
             _updateManager.Initialize();
             _playTimeTracking.Initialize();
@@ -202,6 +205,9 @@ namespace Content.Server.Entry
             }
 
             _serverApi.Shutdown();
+#if !FULL_RELEASE || MCP
+            Dependencies.Resolve<Mcp.McpManager>().Shutdown();
+#endif
 
             // We don't care when or how this finishes, just spin the task off into the void.
             _ = _discordLink.Shutdown();
