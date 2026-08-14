@@ -50,7 +50,8 @@ public sealed partial class NotifyOnNonFunctioningSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnIsWorkingChanges(Entity<NotifyOnNonFunctioningComponent> ent, ref PowerStateChanged args)
     {
-        if (args.IsWorking || !ent.Comp.LocUnpowered.HasValue)
+        // deleted entity is working change should be handled during other events
+        if (args.IsWorking || !ent.Comp.LocUnpowered.HasValue || TerminatingOrDeleted(ent))
             return;
 
         AlertRadio(ent, ent.Comp.LocUnpowered);
@@ -64,6 +65,16 @@ public sealed partial class NotifyOnNonFunctioningSystem : EntitySystem
             return;
 
         AlertRadioIfWasWorking(ent, ent.Comp.LocUnanchored);
+    }
+
+    [SubscribeLocalEvent]
+    private void ReceivedChanged(Entity<NotifyOnNonFunctioningComponent> ent, ref PowerConsumerReceivedChanged args)
+    {
+        if (!ent.Comp.LocUnpowered.HasValue ||!_powerState.GetWorkingState(ent.Owner))
+            return;
+
+        if (args.ReceivedPower < args.DrawRate)
+            AlertRadioIfWasWorking(ent, ent.Comp.LocUnpowered);
     }
 
     private void AlertRadioIfWasWorking(Entity<NotifyOnNonFunctioningComponent> ent, string locString)
