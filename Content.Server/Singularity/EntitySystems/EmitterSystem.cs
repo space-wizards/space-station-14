@@ -131,10 +131,6 @@ namespace Content.Server.Singularity.EntitySystems
         public void SwitchOff(EntityUid uid, EmitterComponent component)
         {
             _powerState.SetWorkingState(uid, false);
-            if (TryComp<PowerConsumerComponent>(uid, out var powerConsumer))
-                powerConsumer.DrawRate = 1; // this needs to be not 0 so that the visuals still work.
-            if (TryComp<ApcPowerReceiverComponent>(uid, out var apcReceiver))
-                apcReceiver.Load = 1;
             PowerOff(uid, component);
             UpdateAppearance(uid, component);
         }
@@ -142,11 +138,8 @@ namespace Content.Server.Singularity.EntitySystems
         public void SwitchOn(EntityUid uid, EmitterComponent component)
         {
             _powerState.SetWorkingState(uid, true);
-            if (TryComp<PowerConsumerComponent>(uid, out var powerConsumer))
-                powerConsumer.DrawRate = component.PowerUseActive;
             if (TryComp<ApcPowerReceiverComponent>(uid, out var apcReceiver))
             {
-                apcReceiver.Load = component.PowerUseActive;
                 if (apcReceiver.Powered)
                     PowerOn(uid, component);
             }

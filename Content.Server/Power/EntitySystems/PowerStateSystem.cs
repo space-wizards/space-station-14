@@ -4,6 +4,7 @@ using Content.Shared.Power.EntitySystems;
 
 namespace Content.Server.Power.EntitySystems;
 
+/// <inheritdoc/>>
 public sealed class PowerStateSystem : SharedPowerStateSystem
 {
     public override void Initialize()
@@ -13,6 +14,7 @@ public sealed class PowerStateSystem : SharedPowerStateSystem
         SubscribeLocalEvent<PowerStateComponent, ComponentStartup>(OnComponentStartup);
     }
 
+    /// <inheritdoc/>>
     public override void SetWorkingState(Entity<PowerStateComponent?> ent, bool working, bool shouldRaiseEvent = true)
     {
         if (!_powerStateQuery.Resolve(ent, ref ent.Comp))
@@ -24,9 +26,12 @@ public sealed class PowerStateSystem : SharedPowerStateSystem
             powerConsumer.DrawRate = working ? ent.Comp.WorkingPowerDraw : ent.Comp.IdlePowerDraw;
     }
 
+    /// <summary> Init IsWorking and power values on startup. </summary>
     private void OnComponentStartup(Entity<PowerStateComponent> ent, ref ComponentStartup args)
     {
-        EnsureComp<ApcPowerReceiverComponent>(ent);
+        if(ent.Comp.EnsureApc)
+            EnsureComp<ApcPowerReceiverComponent>(ent);
+
         SetWorkingState(ent.Owner, ent.Comp.IsWorking, false);
     }
 }

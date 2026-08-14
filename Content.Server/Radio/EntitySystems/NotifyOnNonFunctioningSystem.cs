@@ -10,12 +10,17 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Radio.EntitySystems;
 
+/// <summary>
+/// System for sending radio notification upon entity becoming
+/// non-functioning - unpowered / deconstructed / destroyed.
+/// </summary>
 public sealed partial class NotifyOnNonFunctioningSystem : EntitySystem
 {
     [Dependency] private RadioSystem _radio = default!;
     [Dependency] private NavMapSystem _navMap = default!;
     [Dependency] private PowerStateSystem _powerState = default!;
 
+    /// <summary> Notify on entity destruction. </summary>
     [SubscribeLocalEvent]
     private void OnDestruction(Entity<NotifyOnNonFunctioningComponent> ent, ref DestructionEventArgs args)
     {
@@ -23,6 +28,7 @@ public sealed partial class NotifyOnNonFunctioningSystem : EntitySystem
             AlertRadioIfWasWorking(ent, ent.Comp.LocDestroyed);
     }
 
+    /// <summary> Notify on deconstruction. </summary>
     [SubscribeLocalEvent]
     private void OnDeconstructed(Entity<NotifyOnNonFunctioningComponent> ent, ref MachineDeconstructedEvent args)
     {
@@ -30,6 +36,7 @@ public sealed partial class NotifyOnNonFunctioningSystem : EntitySystem
             AlertRadioIfWasWorking(ent, ent.Comp.LocDeconstructed);
     }
 
+    /// <summary> Notify on unlocking already locked entity. </summary>
     [SubscribeLocalEvent]
     private void OnLockToggled(Entity<NotifyOnNonFunctioningComponent> ent, ref LockToggledEvent args)
     {
@@ -39,6 +46,7 @@ public sealed partial class NotifyOnNonFunctioningSystem : EntitySystem
         AlertRadioIfWasWorking(ent, ent.Comp.LocUnlocked);
     }
 
+    /// <summary> Notify on turning off. </summary>
     [SubscribeLocalEvent]
     private void OnIsWorkingChanges(Entity<NotifyOnNonFunctioningComponent> ent, ref PowerStateChanged args)
     {
@@ -48,13 +56,14 @@ public sealed partial class NotifyOnNonFunctioningSystem : EntitySystem
         AlertRadio(ent, ent.Comp.LocUnpowered);
     }
 
+    /// <summary> Notify on unanchoring. </summary>
     [SubscribeLocalEvent]
     private void OnAnchorStateChanged(Entity<NotifyOnNonFunctioningComponent> ent, ref AnchorStateChangedEvent args)
     {
-        if (args.Anchored || !ent.Comp.LocUnpowered.HasValue)
+        if (args.Anchored || !ent.Comp.LocUnanchored.HasValue)
             return;
 
-        AlertRadioIfWasWorking(ent, ent.Comp.LocUnpowered);
+        AlertRadioIfWasWorking(ent, ent.Comp.LocUnanchored);
     }
 
     private void AlertRadioIfWasWorking(Entity<NotifyOnNonFunctioningComponent> ent, string locString)
@@ -77,10 +86,8 @@ public sealed partial class NotifyOnNonFunctioningSystem : EntitySystem
                 return;
         }
 
-        var message = Loc.GetString(
-            locString,
-            ("location", FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString(ent.Owner)))
-        );
+        var locationInfo = FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString(ent.Owner));
+        var message = Loc.GetString(locString, ("location", locationInfo));
         _radio.SendRadioMessage(ent.Owner, message, ent.Comp.RadioChannel, ent.Owner);
     }
 }

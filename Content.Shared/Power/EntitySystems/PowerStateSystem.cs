@@ -19,7 +19,7 @@ public abstract partial class SharedPowerStateSystem : EntitySystem
     /// <param name="ent">The entity to set the working state for.</param>
     /// <param name="working">Whether the entity should be in the working state.</param>
     /// <param name="shouldRaiseEvent">
-    /// Should setting state raise event? Can help omitting events duringinitialization.
+    /// Should setting state raise event? Can help omitting events during initialization.
     /// </param>
     [PublicAPI]
     public virtual void SetWorkingState(Entity<PowerStateComponent?> ent, bool working, bool shouldRaiseEvent = true)

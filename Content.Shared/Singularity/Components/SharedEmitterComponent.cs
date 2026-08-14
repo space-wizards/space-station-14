@@ -30,12 +30,6 @@ public sealed partial class EmitterComponent : Component
     public List<EntProtoId> SelectableTypes = new();
 
     /// <summary>
-    /// The current amount of power being used.
-    /// </summary>
-    [DataField]
-    public int PowerUseActive = 600;
-
-    /// <summary>
     /// The amount of shots that are fired in a single "burst"
     /// </summary>
     [DataField]

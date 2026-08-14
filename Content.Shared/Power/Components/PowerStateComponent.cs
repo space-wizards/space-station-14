@@ -32,4 +32,11 @@ public sealed partial class PowerStateComponent : Component
     /// </summary>
     [DataField]
     public float WorkingPowerDraw = 350f;
+
+    /// <summary>
+    /// Needs to ensure ApcPowerReceiverComponent is attached to entity on startup.
+    /// Entities which work with PowerConsumerComponent do not need that.
+    /// </summary>
+    [DataField]
+    public bool EnsureApc = true;
 }

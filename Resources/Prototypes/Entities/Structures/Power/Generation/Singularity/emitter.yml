@@ -37,12 +37,16 @@
       map: ["enum.LockVisualLayers.Lock"]
   - type: Emitter
   - type: PowerState
+    idlePowerDraw: 1
+    workingPowerDraw: 600
+    ensureApc: false
   - type: NotifyOnNonFunctioning
     locDestroyed: emitter-destroyed-broadcast
     locUnlocked: emitter-unlocked-broadcast
     locDeconstructed: emitter-deconstructed-broadcast
     locUnpowered:  emitter-unpowered-broadcast
     radioChannel: Engineering
+    requirePowered: true
   - type: Gun
     showExamineText: false
     fireRate: 10 #just has to be fast enough to keep up with upgrades

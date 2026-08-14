@@ -44,6 +44,13 @@ public sealed partial class NotifyOnNonFunctioningComponent : Component
     public LocId? LocUnpowered;
 
     /// <summary>
+    /// Localized string to use when this device is unanchored
+    /// (and is most likely is not able to function).
+    /// </summary>
+    [DataField]
+    public LocId? LocUnanchored;
+
+    /// <summary>
     /// Marker, if power is required to send radio message.
     /// </summary>
     [DataField]
