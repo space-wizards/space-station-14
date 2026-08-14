@@ -4,10 +4,19 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Vehicle;
 
 /// <summary>
-/// Raised on a container vehicle before starting an explicit entry interaction.
+/// Allows vehicle-specific systems to veto an explicit entry attempt.
 /// </summary>
 /// <param name="entering">The entity attempting to enter the vehicle.</param>
 public sealed class ContainerVehicleEntryAttemptEvent(EntityUid entering) : CancellableEntityEventArgs
+{
+    public EntityUid Entering { get; } = entering;
+}
+
+/// <summary>
+/// Raised when an entity cannot enter an unoccupied container vehicle because it cannot operate it.
+/// </summary>
+/// <param name="entering">The entity that was denied entry.</param>
+public sealed class ContainerVehicleEntryOperatorDeniedEvent(EntityUid entering)
 {
     public EntityUid Entering { get; } = entering;
 }

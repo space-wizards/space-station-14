@@ -13,7 +13,7 @@ public sealed partial class VehicleSystem
             return;
 
         args.Handled = true;
-        args.CanDrop |= CanBeginEntryInteraction(ent.Owner, args.Dragged);
+        args.CanDrop |= CanEnterViaInteraction(ent.Owner, args.Dragged);
     }
 
     [SubscribeLocalEvent]
@@ -24,7 +24,7 @@ public sealed partial class VehicleSystem
 
         args.Handled = true;
 
-        if (!CanBeginEntryInteraction(ent.Owner, args.Dragged))
+        if (!CanEnterViaInteraction(ent.Owner, args.Dragged))
             return;
 
         var doAfterEventArgs = new DoAfterArgs(
@@ -41,7 +41,31 @@ public sealed partial class VehicleSystem
         _doAfter.TryStartDoAfter(doAfterEventArgs);
     }
 
-    private bool CanBeginEntryInteraction(EntityUid vehicle, EntityUid entering)
+    [SubscribeLocalEvent]
+    private void OnEntryCompleted(EntityUid uid, ContainerVehicleEntryComponent component, ContainerVehicleEntryEvent args)
+    {
+        if (args.Cancelled || args.Handled)
+            return;
+
+        if (!TryComp<ContainerVehicleComponent>(uid, out var containerVehicle))
+            return;
+
+        if (!HasOperator(uid) &&
+            !CanOperate(uid, args.User))
+        {
+            var denied = new ContainerVehicleEntryOperatorDeniedEvent(args.User);
+            RaiseLocalEvent(uid, denied);
+            return;
+        }
+
+        if (!CanEnterViaInteraction(uid, args.User) ||
+            !TryEnter((uid, containerVehicle), args.User))
+            return;
+
+        args.Handled = true;
+    }
+
+    private bool CanEnterViaInteraction(EntityUid vehicle, EntityUid entering)
     {
         if (!TryComp<ContainerVehicleComponent>(vehicle, out var containerVehicle) ||
             !CanEnter((vehicle, containerVehicle), entering))

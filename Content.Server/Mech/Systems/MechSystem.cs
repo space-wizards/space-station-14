@@ -205,19 +205,9 @@ public sealed partial class MechSystem : SharedMechSystem
     }
 
     [SubscribeLocalEvent]
-    private void OnMechEntry(EntityUid uid, MechComponent component, ContainerVehicleEntryEvent args)
+    private void OnMechEntryOperatorDenied(EntityUid uid, MechComponent component, ContainerVehicleEntryOperatorDeniedEvent args)
     {
-        if (args.Cancelled || args.Handled)
-            return;
-
-        if (!Vehicle.CanOperate(uid, args.User))
-        {
-            _popup.PopupEntity(Loc.GetString("mech-no-enter", ("item", uid)), Identity.Entity(args.User, EntityManager));
-            return;
-        }
-
-        Vehicle.TryEnter(uid, args.User);
-        args.Handled = true;
+        _popup.PopupEntity(Loc.GetString("mech-no-enter", ("item", uid)), Identity.Entity(args.Entering, EntityManager));
     }
 
     [SubscribeLocalEvent]
