@@ -69,7 +69,7 @@ public sealed partial class LightReplacerSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void HandleAfterInteract(Entity<LightReplacerComponent> replacer, ref AfterInteractEvent eventArgs)
+    private void OnAfterInteract(Entity<LightReplacerComponent> replacer, ref AfterInteractEvent eventArgs)
     {
         if (eventArgs.Handled
             || !eventArgs.CanReach // standard interaction checks
@@ -109,7 +109,7 @@ public sealed partial class LightReplacerSystem : EntitySystem
     private void OnLightProviderInsertedCheck(Entity<LightBulbComponent> bulb, ref EntityProviderInsertCheckEvent args)
     {
         if (bulb.Comp.State == LightBulbState.Broken)
-            args.FailureMessage =  Loc.GetString("comp-light-replacer-insert-broken-light");
+            args.FailureMessage = Loc.GetString("comp-light-replacer-insert-broken-light");
     }
 
     /// <summary>

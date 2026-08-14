@@ -1,7 +1,7 @@
 ### Interaction Messages
 
 # Shown when player tries to replace light, but there is no lights left
-comp-light-replacer-missing-light = No  {$light-name}s left in {THE($light-replacer)}.
+comp-light-replacer-missing-light = No {$light-name}s left in {THE($light-replacer)}.
 
 # Shown when player tries to insert in light replacer broken light bulb
 comp-light-replacer-insert-broken-light = You can't insert broken lights!

@@ -42,6 +42,8 @@ public sealed partial class EntityProviderSystem
     public bool TryGetEntities(Entity<EntityProviderComponent?> provider, EntProtoId protoId, [NotNullWhen(true)] out List<EntityUid>? entities, int? amount = null)
     {
         entities = [];
+        if (amount <= 0)
+            return false;
 
         if (!Resolve(provider, ref provider.Comp)
             || !provider.Comp.EntityCounter.TryGetValue(protoId, out var value))
@@ -114,7 +116,7 @@ public sealed partial class EntityProviderSystem
             return true;
 
         var ejectedAmount = amount == null ? "all" : entities.Count.ToString();
-        var messageSuccess = Loc.GetString("comp-entity-provider-ejected", ("light", prototype.Name), ("amount", ejectedAmount));
+        var messageSuccess = Loc.GetString("comp-entity-provider-ejected", ("entity", prototype.Name), ("amount", ejectedAmount));
         _popup.PopupEntity(messageSuccess, provider, user, PopupType.Medium);
 
         return true;

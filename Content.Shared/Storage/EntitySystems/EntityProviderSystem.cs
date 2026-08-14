@@ -102,8 +102,14 @@ public sealed partial class EntityProviderSystem : EntitySystem
     /// <returns>Returns true if it was able to insert at least one entity, otherwise false.</returns>
     private bool TryFillOtherProvider(Entity<EntityProviderComponent> provider, Entity<EntityProviderComponent> refillTarget, EntityUid? user = null)
     {
-        bool success = false;
+        var success = false;
         List<EntProtoId> toRemove = [];
+
+        if (!refillTarget.Comp.CanReceive)
+        {
+            _popup.PopupEntity(Loc.GetString("comp-entity-provider-cannot-receive", ("refillTarget", refillTarget)), provider, user);
+            return false;
+        }
 
         foreach (var providedEntities in provider.Comp.EntityCounter)
         {
@@ -124,15 +130,14 @@ public sealed partial class EntityProviderSystem : EntitySystem
 
         if (provider.Comp.DeleteIfEmpty && provider.Comp.EntityCounter.Count == 0)
             PredictedQueueDel(provider);
-        else
-            Dirty(provider);
 
+        Dirty(provider);
         Dirty(refillTarget);
 
         if (!success)
             return success;
 
-        var message = Loc.GetString("comp-entity-provider-refill-from-storage", ("provider", provider));
+        var message = Loc.GetString("comp-entity-provider-refill-from-storage", ("refillTarget", refillTarget));
         _popup.PopupEntity(message, provider, user);
 
         return success;
@@ -141,11 +146,11 @@ public sealed partial class EntityProviderSystem : EntitySystem
     /// <summary>
     /// Refill an entityProvider with entities inside a storage.
     /// </summary>
-    /// <param name="provider">The provider to refill.</param>
+    /// <param name="refillTarget">The provider to refill.</param>
     /// <param name="storage">The storage whose contents will refill the provider.</param>
     /// <param name="user">The user who attempts to refill the provider with the storage. Leave null to avoid popups.</param>
     /// <returns>Returns true if it was able to insert at least one entity, otherwise false.</returns>
-    private bool TryFillFromStorage(Entity<EntityProviderComponent> provider, Entity<StorageComponent?> storage, EntityUid? user = null)
+    private bool TryFillFromStorage(Entity<EntityProviderComponent> refillTarget, Entity<StorageComponent?> storage, EntityUid? user = null)
     {
         if (!Resolve(storage, ref storage.Comp))
             return false;
@@ -155,7 +160,7 @@ public sealed partial class EntityProviderSystem : EntitySystem
 
         foreach (var ent in storedEntities)
         {
-            if (TryInsertIntoProvider(provider, ent)) // Not passing along the user to avoid the popup.
+            if (TryInsertIntoProvider(refillTarget, ent)) // Not passing along the user to avoid the popup.
                 insertionSuccess = true;
         }
 
@@ -163,8 +168,8 @@ public sealed partial class EntityProviderSystem : EntitySystem
         if (!insertionSuccess || user == null)
             return insertionSuccess;
 
-        var message= Loc.GetString("comp-entity-provider-refill-from-storage", ("provider", provider));
-        _popup.PopupEntity(message, provider, user);
+        var message= Loc.GetString("comp-entity-provider-refill-from-storage", ("refillTarget", refillTarget));
+        _popup.PopupEntity(message, refillTarget, user);
 
         return insertionSuccess;
     }

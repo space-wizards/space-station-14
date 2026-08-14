@@ -9,7 +9,7 @@ namespace Content.Shared.Light.Components;
 ///     Device that allows user to quickly change bulbs in <see cref="PoweredLightComponent"/>
 ///     Can be reloaded by new light tubes or light bulbs
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(LightReplacerSystem)), AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(LightReplacerSystem))]
 public sealed partial class LightReplacerComponent : Component
 {
     [DataField]
