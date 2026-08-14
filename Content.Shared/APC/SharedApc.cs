@@ -123,8 +123,12 @@ public enum ApcChargeState : byte
 /// Contains the details of the charge, breaker, and power delivery for a given APC.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class ApcBoundInterfaceState(bool mainBreaker, int power, ApcExternalPowerState apcExternalPower, float charge, float maxLoad, bool tripped)
- : BoundUserInterfaceState, IEquatable<ApcBoundInterfaceState>
+public sealed class ApcBoundInterfaceState(bool mainBreaker,
+    int power,
+    ApcExternalPowerState apcExternalPower,
+    float charge,
+    float maxLoad,
+    bool tripped) : BoundUserInterfaceState, IEquatable<ApcBoundInterfaceState>
 {
     /// <summary>
     /// If true, the breaker is active, and the APC can deliver power.
