@@ -98,11 +98,5 @@ public sealed partial class GunSystem
                 _sprite.LayerSetVisible((ent, sprite), GunVisualLayers.MagUnshaded, false);
             }
         }
-
-        // If ItemSlotVisuals is in the prototype, then update inhands, only for insert fill visuals.
-        if (TryComp(ent, out ItemSlotVisualsComponent? _))
-        {
-            _itemSystem.VisualsChanged(ent);
-        }
     }
 }

@@ -617,9 +617,7 @@ namespace Content.Shared.Containers.ItemSlots
             Eject(uid, slot, item!.Value, user, excludeUserAudio);
 
             if (TryComp(uid, out ItemSlotsComponent? itemSlots))
-            {
                 UpdateAppearance((uid, itemSlots));
-            }
 
             return true;
         }
