@@ -3,6 +3,4 @@ using Content.Shared.Magic.Events;
 
 namespace Content.Client.Magic;
 
-public sealed partial class MagicSystem : SharedMagicSystem
-{
-}
+public sealed partial class MagicSystem : SharedMagicSystem;

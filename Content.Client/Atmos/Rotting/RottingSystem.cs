@@ -2,6 +2,4 @@
 
 namespace Content.Client.Atmos.Rotting;
 
-public sealed partial class RottingSystem : SharedRottingSystem
-{
-}
+public sealed partial class RottingSystem : SharedRottingSystem;
