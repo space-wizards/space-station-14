@@ -2,7 +2,4 @@
 
 namespace Content.Client.Revenant;
 
-public sealed partial class CorporealSystem : SharedCorporealSystem
-{
-
-}
+public sealed partial class CorporealSystem : SharedCorporealSystem;

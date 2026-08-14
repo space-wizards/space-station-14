@@ -4,7 +4,4 @@ using JetBrains.Annotations;
 namespace Content.Server.DoAfter;
 
 [UsedImplicitly]
-public sealed partial class DoAfterSystem : SharedDoAfterSystem
-{
-
-}
+public sealed partial class DoAfterSystem : SharedDoAfterSystem;

@@ -2,6 +2,4 @@
 
 namespace Content.Client.Teleportation;
 
-public sealed partial class PortalSystem : SharedPortalSystem
-{
-}
+public sealed partial class PortalSystem : SharedPortalSystem;

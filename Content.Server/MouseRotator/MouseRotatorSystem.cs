@@ -3,6 +3,4 @@
 namespace Content.Server.MouseRotator;
 
 /// <inheritdoc/>
-public sealed partial class MouseRotatorSystem : SharedMouseRotatorSystem
-{
-}
+public sealed partial class MouseRotatorSystem : SharedMouseRotatorSystem;

@@ -2,7 +2,4 @@
 
 namespace Content.Server.Stealth;
 
-public sealed partial class StealthSystem : SharedStealthSystem
-{
-
-}
+public sealed partial class StealthSystem : SharedStealthSystem;

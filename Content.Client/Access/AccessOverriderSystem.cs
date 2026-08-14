@@ -4,8 +4,6 @@ using JetBrains.Annotations;
 namespace Content.Client.Access
 {
     [UsedImplicitly]
-    public sealed partial class AccessOverriderSystem : SharedAccessOverriderSystem
-    {
+    public sealed partial class AccessOverriderSystem : SharedAccessOverriderSystem;
 
-    }
 }
