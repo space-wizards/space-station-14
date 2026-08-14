@@ -7,7 +7,7 @@
   # DS14-start
   requirements:
     - !type:OverallPlaytimeRequirement
-      time: 1890000 # 525 hours
+      time: 2880000 # 800 hours
     - !type:DepartmentTimeRequirement
       department: Security
       time: 108000 # 30 hours
