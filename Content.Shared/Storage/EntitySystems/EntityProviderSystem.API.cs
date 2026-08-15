@@ -8,8 +8,6 @@ namespace Content.Shared.Storage.EntitySystems;
 
 public sealed partial class EntityProviderSystem
 {
-    [Dependency] private IPrototypeManager _prototype = default!;
-
     /// <summary>
     /// Try to get an entity from the provider and spawn it.
     /// </summary>
@@ -112,7 +110,7 @@ public sealed partial class EntityProviderSystem
             _container.Remove(entity, provider.Comp.Container);
         }
 
-        if (!_prototype.Resolve(protoId, out var prototype))
+        if (!ProtoMan.Resolve(protoId, out var prototype))
             return true;
 
         var ejectedAmount = amount == null ? "all" : entities.Count.ToString();

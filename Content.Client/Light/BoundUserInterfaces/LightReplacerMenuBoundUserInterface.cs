@@ -67,22 +67,22 @@ public sealed partial class LightReplacerMenuBoundUserInterface(EntityUid owner,
             }
         }
 
-        if (hasActiveTubes)
+        if (hasActiveTubes && _prototype.Resolve(replacer.ActiveLightTube, out var ejectTubes))
         {
             var toggleLightTubes = new RadialMenuActionOption<EntProtoId>(EjectLights, replacer.ActiveLightTube)
             {
                 IconSpecifier = RadialMenuIconSpecifier.With(_ejectTubes),
-                ToolTip = Loc.GetString("comp-light-replacer-eject-specified-lights", ("light", replacer.ActiveLightTube)),
+                ToolTip = Loc.GetString("comp-light-replacer-eject-specified-lights", ("light", ejectTubes.Name)),
             };
             options.Add(toggleLightTubes);
         }
 
-        if (hasActiveBulbs)
+        if (hasActiveBulbs && _prototype.Resolve(replacer.ActiveLightBulb, out var ejectBulbs))
         {
             var toggleLightBulbs = new RadialMenuActionOption<EntProtoId>(EjectLights, replacer.ActiveLightBulb)
             {
                 IconSpecifier = RadialMenuIconSpecifier.With(_ejectBulbs),
-                ToolTip = Loc.GetString("comp-light-replacer-eject-specified-lights", ("light", replacer.ActiveLightBulb)),
+                ToolTip = Loc.GetString("comp-light-replacer-eject-specified-lights", ("light", ejectBulbs.Name)),
             };
             options.Add(toggleLightBulbs);
         }

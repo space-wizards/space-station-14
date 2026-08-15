@@ -1,18 +1,18 @@
 ### Interaction Messages
 
 # Shown when player tries to replace light, but there are no lights left
-comp-light-replacer-missing-light = No {$light-name}s left in {THE($light-replacer)}.
+comp-light-replacer-missing-light = No {MAKEPLURAL($light-name)} left in {THE($light-replacer)}.
 
 # Shown when player tries to insert a broken light bulb into the light replacer.
 comp-light-replacer-insert-broken-light = You can't insert broken lights!
 
 # Shown when a player attempts to replace a light with the same color & type as the active light.
-comp-light-replacer-same-light = This fixture already holds a {$light}!
+comp-light-replacer-same-light = This fixture already holds {INDEFINITE($light)} {$light}!
 
 # Radial Menu messages
-comp-light-replacer-switch-light = You switched to {$light}s.
-comp-light-replacer-eject-specified-lights = Eject all {$light}s.
-comp-light-replacer-select-lights = Select {$light}s.
+comp-light-replacer-switch-light = You switched to {MAKEPLURAL($light)}.
+comp-light-replacer-eject-specified-lights = Eject all {MAKEPLURAL($light)}.
+comp-light-replacer-select-lights = Select {MAKEPLURAL($light)}.
 comp-light-replacer-open-empty = {CAPITALIZE(THE($light-replacer))} is completely empty!
 
 # Label
@@ -25,7 +25,7 @@ comp-light-replacer-no-lights = It's empty.
 comp-light-replacer-has-lights = It contains the following:
 comp-light-replacer-light-listing = {$amount ->
     [one] [color=yellow]{$amount}[/color] [color=gray]{$name}[/color]
-    *[other] [color=yellow]{$amount}[/color] [color=gray]{$name}s[/color]
+    *[other] [color=yellow]{$amount}[/color] [color=gray]{MAKEPLURAL($name)}[/color]
 }
 
 ### Status Control

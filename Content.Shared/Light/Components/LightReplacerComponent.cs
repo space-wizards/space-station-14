@@ -6,8 +6,8 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Light.Components;
 
 /// <summary>
-///     Device that allows user to quickly change bulbs in <see cref="PoweredLightComponent"/>
-///     Can be reloaded by new light tubes or light bulbs
+/// Device that allows user to quickly change bulbs in <see cref="PoweredLightComponent"/>
+/// Can be reloaded by new light tubes or light bulbs
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(LightReplacerSystem))]
 public sealed partial class LightReplacerComponent : Component

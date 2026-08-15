@@ -14,7 +14,6 @@ namespace Content.Shared.Light.EntitySystems;
 
 public sealed partial class LightReplacerSystem : EntitySystem
 {
-    [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private EntityProviderSystem _provider = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
@@ -40,7 +39,7 @@ public sealed partial class LightReplacerSystem : EntitySystem
 
             foreach (var bulb in entities)
             {
-                if (!_prototype.Resolve(bulb.Key, out var bulbPrototype))
+                if (!ProtoMan.Resolve(bulb.Key, out var bulbPrototype))
                     continue;
 
                 args.PushMarkup(Loc.GetString("comp-light-replacer-light-listing", ("amount", bulb.Value), ("name", bulbPrototype.Name)));
@@ -90,7 +89,7 @@ public sealed partial class LightReplacerSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnSwitchMessage(Entity<LightReplacerComponent> replacer, ref SwitchLightTypeMessage args)
     {
-        if (!_prototype.Resolve(args.LightEntProtoId, out var prototype)
+        if (!ProtoMan.Resolve(args.LightEntProtoId, out var prototype)
             || !_provider.TryGetEntityCounter(replacer.Owner, out var entities)
             || !entities.TryGetValue(args.LightEntProtoId, out var amount)
             || amount <= 0)
@@ -150,7 +149,7 @@ public sealed partial class LightReplacerSystem : EntitySystem
 
         if (!_provider.TryGetEntity(replacer.Owner, activeType, out var insertedBulb))
         {
-            if (userUid == null || !_prototype.Resolve(activeType, out var bulbPrototype))
+            if (userUid == null || !ProtoMan.Resolve(activeType, out var bulbPrototype))
                 return false;
 
             var msg = Loc.GetString("comp-light-replacer-missing-light",
