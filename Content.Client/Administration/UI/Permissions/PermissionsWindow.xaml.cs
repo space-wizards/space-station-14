@@ -83,7 +83,14 @@ public sealed partial class PermissionsWindow : FancyWindow
 
             var positiveFlags = BitOperations.PopCount((uint)admin.PosFlags);
             var negativeFlags = BitOperations.PopCount((uint)admin.NegFlags);
-            var flagsText = GetFlagsText(admin.PosFlags, $"{positiveFlags}-{negativeFlags}");
+            string flagsText;
+
+            // readability
+            // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
+            if (negativeFlags == 0)
+                flagsText = GetFlagsText(admin.PosFlags);
+            else
+                flagsText = GetFlagsText(admin.PosFlags, $"{positiveFlags}-{negativeFlags}");
 
             AdminsList.AddChild(new Label
             {
