@@ -151,7 +151,7 @@
       - XenoborgModuleBasic
       - XenoborgModuleTool
       - XenoborgModuleLaser
-      - XenoborgModuleRocket
+      - XenoborgModuleJammer
   - type: ItemSlots
     slots:
       cell_slot:
