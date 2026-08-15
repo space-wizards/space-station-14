@@ -38,7 +38,7 @@
   - type: Appearance
   - type: WiresPanel
   - type: WiresVisuals
-    inverted: true
+    visibleWhenClosed: true
   - type: AmbientSound
     enabled: false
     range: 3

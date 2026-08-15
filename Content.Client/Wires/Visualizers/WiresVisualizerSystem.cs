@@ -16,16 +16,16 @@ public sealed partial class WiresVisualizerSystem : VisualizerSystem<WiresVisual
 
         var layer = SpriteSystem.LayerMapReserve((uid, args.Sprite), WiresVisualLayers.MaintenancePanel);
 
-        if (args.AppearanceData.TryGetValue(WiresVisuals.MaintenancePanelState, out var panelStateObject) &&
-            panelStateObject is bool panelState)
+        // Data doesn't exist (e.g. in the spawn menu), act as though the panel's closed
+        if (!args.TryGetData<bool>(WiresVisuals.MaintenancePanelState, out var panelOpen))
         {
-            SpriteSystem.LayerSetVisible((uid, args.Sprite), layer, panelState ^ component.Inverted);
+            SpriteSystem.LayerSetVisible((uid, args.Sprite), layer, component.VisibleWhenClosed);
+            return;
         }
-        else
-        {
-            //Mainly for spawn window
-            SpriteSystem.LayerSetVisible((uid, args.Sprite), layer, !component.Inverted);
-        }
+
+        // Otherwise, set the visibility according to when it's closed.
+        var visible = component.VisibleWhenClosed ? !panelOpen : panelOpen;
+        SpriteSystem.LayerSetVisible((uid, args.Sprite), layer, visible);
     }
 }
 

@@ -13,5 +13,5 @@ public sealed partial class WiresVisualsComponent : Component
     /// If false, it should only be visible when the panel is open.
     /// </summary>
     [DataField]
-    public bool Inverted;
+    public bool VisibleWhenClosed;
 }
