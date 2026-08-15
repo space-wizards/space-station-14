@@ -9,7 +9,7 @@ namespace Content.Client.UserInterface.RichText;
 [GenerateTypedNameReferences]
 public sealed partial class ChatLinkLabel : Label
 {
-    [Dependency] private readonly IEntityManager _entity = default!;
+    [Dependency] private IEntityManager _entity = default!;
 
     private ChatSystem? _Chat;
     private bool _inVisibilityChanged;
