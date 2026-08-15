@@ -7,7 +7,7 @@ namespace Content.Shared.Movement.Systems;
 /// <summary>
 /// Controls the switching of motion and standing still animation
 /// </summary>
-public abstract partial class SharedSpriteMovementSystem : EntitySystem
+public abstract partial class SpriteMovementSystem : EntitySystem
 {
     [Dependency] private EntityQuery<ActiveInputMoverComponent> _activeInputMover = default!;
 

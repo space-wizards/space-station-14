@@ -5,7 +5,7 @@ using Robust.Client.GameObjects;
 namespace Content.Client.Movement.Systems;
 
 /// <inheritdoc/>
-public sealed partial class SpriteMovementSystem : SharedSpriteMovementSystem
+public sealed partial class ClientSpriteMovementSystem : SpriteMovementSystem
 {
     [Dependency] private SpriteSystem _sprite = default!;
 
