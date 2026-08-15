@@ -90,7 +90,7 @@ public sealed partial class PermissionsWindow : FancyWindow
             if (negativeFlags == 0)
                 flagsText = GetFlagsText(admin.PosFlags);
             else
-                flagsText = GetFlagsText(admin.PosFlags, $"{positiveFlags}-{negativeFlags}");
+                flagsText = GetFlagsText(admin.PosFlags | admin.NegFlags, $"{positiveFlags}-{negativeFlags}");
 
             AdminsList.AddChild(new Label
             {
@@ -140,18 +140,25 @@ public sealed partial class PermissionsWindow : FancyWindow
         }
     }
 
-    private string GetFlagsText(AdminFlags rankFlags, object? count = null)
+    private string GetFlagsText(AdminFlags rankFlags, object? countDisplay = null)
     {
-        count ??= BitOperations.PopCount((uint)rankFlags);
+        var count = BitOperations.PopCount((uint)rankFlags);
+        countDisplay ??= count;
+
         string flagsText;
 
         // readability
         // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
         if (rankFlags == AdminFlagsHelper.Everything)
+        {
             flagsText = Loc.GetString("permissions-eui-edit-admin-window-permission-all");
-        else
-            flagsText = Loc.GetString("permissions-eui-edit-admin-window-permission-count", ("count", count));
+            return flagsText;
+        }
 
+        var flagTextLocale = count == 1
+            ? "permissions-eui-edit-admin-window-permission-count-singular"
+            : "permissions-eui-edit-admin-window-permission-count-plural";
+        flagsText = Loc.GetString(flagTextLocale, ("count", countDisplay));
         return flagsText;
     }
 }
