@@ -133,8 +133,8 @@ namespace Content.Server.Administration.Systems
                             player,
                             "Subtle Message",
                             [
-                                new QuickDialogEntryString(0, 100, "Message"),
-                                new QuickDialogEntryString(0, 100, "Popup Message"),
+                                new QuickDialogEntryString((0, 100), "Message"),
+                                new QuickDialogEntryString((0, 100), "Popup Message"),
                             ],
                             (values) =>
                         {

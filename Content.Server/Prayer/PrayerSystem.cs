@@ -62,7 +62,7 @@ public sealed partial class PrayerSystem : EntitySystem
                     actor.PlayerSession,
                     Loc.GetString(comp.Verb),
                     [
-                        new QuickDialogEntryString(MinPrayerLength, MaxPrayerLength, Loc.GetString("prayer-popup-notify-pray-ui-message"))
+                        new QuickDialogEntryString((MinPrayerLength, MaxPrayerLength), Loc.GetString("prayer-popup-notify-pray-ui-message"))
                     ],
                     (values) =>
                 {

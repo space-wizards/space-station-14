@@ -226,7 +226,7 @@ public sealed partial class FaxSystem : EntitySystem
             actor.PlayerSession,
             Loc.GetString("fax-machine-dialog-rename"),
             [
-                new QuickDialogEntryString(MinFaxNameLength, MaxFaxNameLength, Loc.GetString("fax-machine-dialog-field-name"))
+                new QuickDialogEntryString((MinFaxNameLength, MaxFaxNameLength), Loc.GetString("fax-machine-dialog-field-name"))
             ],
             (values) =>
         {

@@ -416,7 +416,7 @@ public sealed partial class AdminVerbSystem
                         player,
                         Loc.GetString("admin-verbs-adjust-stack"),
                         [
-                            new QuickDialogEntryInt(0, _stackSystem.GetMaxCount(stack), Loc.GetString("admin-verbs-dialog-adjust-stack-amount"))
+                            new QuickDialogEntryInt((0, _stackSystem.GetMaxCount(stack)), Loc.GetString("admin-verbs-dialog-adjust-stack-amount"))
                         ],
                         (values) =>
                     {
@@ -460,7 +460,7 @@ public sealed partial class AdminVerbSystem
                     player,
                     Loc.GetString("admin-verbs-dialog-rename-title"),
                     [
-                        new QuickDialogEntryString(0, 100, Loc.GetString("admin-verbs-dialog-rename-name"))
+                        new QuickDialogEntryString((0, 100), Loc.GetString("admin-verbs-dialog-rename-name"))
                     ],
                     (values) =>
                 {
@@ -488,7 +488,7 @@ public sealed partial class AdminVerbSystem
                     player,
                     Loc.GetString("admin-verbs-dialog-redescribe-title"),
                     [
-                        new QuickDialogEntryString(0, 2000, Loc.GetString("admin-verbs-dialog-redescribe-description"))
+                        new QuickDialogEntryString((0, 2000), Loc.GetString("admin-verbs-dialog-redescribe-description"))
                     ],
                     (values) =>
                 {
@@ -516,8 +516,8 @@ public sealed partial class AdminVerbSystem
                     player,
                     Loc.GetString("admin-verbs-dialog-rename-and-redescribe-title"),
                     [
-                        new QuickDialogEntryString(0, 100, Loc.GetString("admin-verbs-dialog-rename-name")),
-                        new QuickDialogEntryString(0, 100, Loc.GetString("admin-verbs-dialog-redescribe-description")),
+                        new QuickDialogEntryString((0, 100), Loc.GetString("admin-verbs-dialog-rename-name")),
+                        new QuickDialogEntryString((0, 100), Loc.GetString("admin-verbs-dialog-redescribe-description")),
                     ],
                     (values) =>
                     {
@@ -764,7 +764,7 @@ public sealed partial class AdminVerbSystem
                         player,
                         Loc.GetString("admin-verbs-dialog-set-bullet-amount-title"),
                         [
-                            new QuickDialogEntryInt(0, ballisticAmmo.Capacity, Loc.GetString("admin-verbs-dialog-set-bullet-amount-amount")),
+                            new QuickDialogEntryInt((0, ballisticAmmo.Capacity), Loc.GetString("admin-verbs-dialog-set-bullet-amount-amount")),
                         ],
                         (values) =>
                     {

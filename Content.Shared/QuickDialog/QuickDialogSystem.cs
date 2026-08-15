@@ -59,6 +59,8 @@ public abstract partial class QuickDialogSystem : EntitySystem
             return;
         }
 
+        dialogs.Remove(msg.DialogId);
+
         if (msg.Responses == null || msg.Responses.Length < data.Entries.Length)
         {
             data.CancelAction?.Invoke();
@@ -89,32 +91,27 @@ public abstract partial class QuickDialogSystem : EntitySystem
             default:
                 throw new ArgumentOutOfRangeException(nameof(msg), nameof(msg.ButtonPressed) + ": Invalid button flag.");
         }
-
-        dialogs.Remove(msg.DialogId);
     }
 
     /// <summary>
     ///
     /// </summary>
     /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T1"></typeparam>
     /// <param name="entry"></param>
-    /// <param name="value"></param>
+    /// <param name="input"></param>
     /// <param name="output"></param>
     /// <returns></returns>
-    private static bool TryParseNumber<T>(IQuickDialogEntry entry, string value, [NotNullWhen(true)] out object? output) where T : INumber<T>
+    private static bool TryParse<T, T1>(IQuickDialogEntry entry, string input, [NotNullWhen(true)] out object? output)
+        where T : INumber<T>
+        where T1 : notnull
     {
-        output = null;
+        output = default;
 
-        if (entry is not IQuickDialogEntry<T> typedEntry)
+        if (entry is not IQuickDialogEntry<T, T1> typedEntry)
             return false;
 
-        if (!T.TryParse(value, null, out var result))
-            return false;
-
-        if (result < typedEntry.Min)
-            return false;
-
-        if (result > typedEntry.Max)
+        if (!typedEntry.TryParse(input, out var result))
             return false;
 
         output = result;
@@ -125,63 +122,64 @@ public abstract partial class QuickDialogSystem : EntitySystem
     ///
     /// </summary>
     /// <param name="entry"></param>
-    /// <param name="value"></param>
-    /// <param name="output"></param>
-    /// <returns></returns>
-    private static bool TryParseString(IQuickDialogEntry entry, string value, [NotNullWhen(true)] out object? output)
-    {
-        output = null;
-
-        if (entry is not QuickDialogEntryString typedEntry)
-            return false;
-
-        if (value.Length < typedEntry.Min)
-            return false;
-
-        if (value.Length > typedEntry.Max)
-            return false;
-
-        output = value;
-        return true;
-    }
-
-    /// <summary>
-    ///
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="entry"></param>
-    /// <returns></returns>
-    private static (object min, object max) GetMinMax<T>(IQuickDialogEntry entry) where T : INumber<T>
-    {
-        if (entry is not IQuickDialogEntry<T> typedEntry)
-            return (0, 0);
-
-        return (typedEntry.Min, typedEntry.Max);
-    }
-
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="entry"></param>
-    /// <param name="value"></param>
+    /// <param name="input"></param>
     /// <param name="output"></param>
     /// <returns></returns>
     [PublicAPI]
-    public static bool TryParse(IQuickDialogEntry entry, string value, [NotNullWhen(true)] out object? output)
+    public static bool TryParse(IQuickDialogEntry entry, string input, [NotNullWhen(true)] out object? output)
     {
         output = null;
 
         var type = entry.Type;
         return type switch
         {
-            _ when type == typeof(string) => TryParseString(entry, value, out output),
-            _ when type == typeof(int) => TryParseNumber<int>(entry, value, out output),
-            _ when type == typeof(uint) => TryParseNumber<uint>(entry, value, out output),
-            _ when type == typeof(long) => TryParseNumber<long>(entry, value, out output),
-            _ when type == typeof(ulong) => TryParseNumber<ulong>(entry, value, out output),
-            _ when type == typeof(float) => TryParseNumber<float>(entry, value, out output),
-            _ when type == typeof(double) => TryParseNumber<double>(entry, value, out output),
-            _ => throw new NotSupportedException($"Type {entry.Type.Name} not supported")
+            _ when type == typeof(string) => TryParse<int, string>(entry, input, out output),
+            _ when type == typeof(int) => TryParse<int, int>(entry, input, out output),
+            _ when type == typeof(uint) => TryParse<uint, uint>(entry, input, out output),
+            _ when type == typeof(long) => TryParse<long, long>(entry, input, out output),
+            _ when type == typeof(ulong) => TryParse<ulong, ulong>(entry, input, out output),
+            _ when type == typeof(float) => TryParse<float, float>(entry, input, out output),
+            _ when type == typeof(double) => TryParse<double, double>(entry, input, out output),
+            _ => throw new NotSupportedException($"Type {entry.Type} not supported")
+        };
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T1"></typeparam>
+    /// <param name="entry"></param>
+    /// <returns></returns>
+    private static (object Min, object Max) GetMinMax<T, T1>(IQuickDialogEntry entry)
+        where T : INumber<T>
+        where T1 : notnull
+    {
+        if (entry is not IQuickDialogEntry<T, T1> typedEntry)
+            return default;
+
+        return typedEntry.MinMax;
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="entry"></param>
+    /// <returns></returns>
+    [PublicAPI]
+    public static (object Min, object Max) GetMinMax(IQuickDialogEntry entry)
+    {
+        var type = entry.Type;
+        return type switch
+        {
+            _ when type == typeof(string) => GetMinMax<int, string>(entry),
+            _ when type == typeof(int) => GetMinMax<int, int>(entry),
+            _ when type == typeof(uint) => GetMinMax<uint, uint>(entry),
+            _ when type == typeof(long) => GetMinMax<long, long>(entry),
+            _ when type == typeof(ulong) => GetMinMax<ulong, ulong>(entry),
+            _ when type == typeof(float) => GetMinMax<float, float>(entry),
+            _ when type == typeof(double) => GetMinMax<double, double>(entry),
+            _ => throw new NotSupportedException($"Type {entry.Type} not supported")
         };
     }
 
@@ -189,7 +187,7 @@ public abstract partial class QuickDialogSystem : EntitySystem
     ///
     /// </summary>
     /// <param name="entry"></param>
-    /// <param name="value"></param>
+    /// <param name="input"></param>
     /// <param name="output"></param>
     /// <returns></returns>
     [PublicAPI]
@@ -198,36 +196,14 @@ public abstract partial class QuickDialogSystem : EntitySystem
         var type = entry.Type;
         return type switch
         {
+            _ when type == typeof(string) => "quick-dialog-ui-placeholder-text",
             _ when type == typeof(int) => "quick-dialog-ui-placeholder-integer",
             _ when type == typeof(uint) => "quick-dialog-ui-placeholder-integer",
             _ when type == typeof(long) => "quick-dialog-ui-placeholder-integer",
             _ when type == typeof(ulong) => "quick-dialog-ui-placeholder-integer",
             _ when type == typeof(float) => "quick-dialog-ui-placeholder-float",
             _ when type == typeof(double) => "quick-dialog-ui-placeholder-float",
-            _ when type == typeof(string) => "quick-dialog-ui-placeholder-text",
-            _ => throw new NotSupportedException($"Type {entry.Type.Name} not supported")
-        };
-    }
-
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="entry"></param>
-    /// <returns></returns>
-    [PublicAPI]
-    public static (object min, object max) GetMinMax(IQuickDialogEntry entry)
-    {
-        var type = entry.Type;
-        return type switch
-        {
-            _ when type == typeof(string) => GetMinMax<int>(entry),
-            _ when type == typeof(int) => GetMinMax<int>(entry),
-            _ when type == typeof(uint) => GetMinMax<uint>(entry),
-            _ when type == typeof(long) => GetMinMax<long>(entry),
-            _ when type == typeof(ulong) => GetMinMax<ulong>(entry),
-            _ when type == typeof(float) => GetMinMax<float>(entry),
-            _ when type == typeof(double) => GetMinMax<double>(entry),
-            _ => throw new NotSupportedException($"Type {entry.Type.Name} not supported")
+            _ => throw new NotSupportedException($"Type {entry.Type} not supported")
         };
     }
 }

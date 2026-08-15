@@ -71,7 +71,7 @@ public sealed partial class CritMobActionsSystem : EntitySystem
             actor.PlayerSession,
             Loc.GetString("action-name-crit-last-words"),
             [
-                new QuickDialogEntryString(MinLastWordsLength, MaxLastWordsLength)
+                new QuickDialogEntryString((MinLastWordsLength, MaxLastWordsLength))
             ],
             (values) =>
             {

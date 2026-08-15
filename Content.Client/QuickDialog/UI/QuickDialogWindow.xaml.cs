@@ -53,17 +53,10 @@ public sealed partial class QuickDialogWindow : FancyWindow
         for (var i = 0; i < entries.Length; i++)
         {
             var entry = entries[i];
-            var entryPanel = new QuickDialogEntryPanel();
-
-            if (entry.Size.HasValue)
+            var entryPanel = new QuickDialogEntryPanel
             {
-                entryPanel.Prompt.MinHeight = Math.Max(entry.Size.Value.X, entryPanel.Prompt.Height);
-                entryPanel.Prompt.MinWidth = Math.Max(entry.Size.Value.X, MinWidth);
-            }
-            else
-            {
-                entryPanel.Prompt.MinWidth = MinWidth;
-            }
+                MinWidth = MinWidth
+            };
 
             var (min, max) = QuickDialogSystem.GetMinMax(entry);
             entryPanel.Prompt.Text = (entry.Prompt.HasValue ? Loc.GetString(entry.Prompt.Value) + "\n" : "") +

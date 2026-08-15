@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using Robust.Shared.Serialization;
 
@@ -22,153 +23,208 @@ public interface IQuickDialogEntry
     ///
     /// </summary>
     LocId? Placeholder { get; init; }
-
-    /// <summary>
-    ///
-    /// </summary>
-    Vector2? Size { get; init; }
 }
 
 /// <summary>
 ///
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public interface IQuickDialogEntry<T> : IQuickDialogEntry
+/// <typeparam name="T1"></typeparam>
+public interface IQuickDialogEntry<T, T1> : IQuickDialogEntry
     where T : INumber<T>
+    where T1 : notnull
 {
     /// <summary>
     ///
     /// </summary>
-    T Min { get; init; }
+    (T Min, T Max) MinMax { get; init; }
 
     /// <summary>
     ///
     /// </summary>
-    T Max { get; init; }
+    /// <param name="input"></param>
+    /// <param name="output"></param>
+    /// <returns></returns>
+    bool TryParse(string input, [NotNullWhen(true)] out T1? output);
 }
 
 /// <summary>
 ///
 /// </summary>
-/// <param name="Min"></param>
-/// <param name="Max"></param>
+/// <param name="MinMax"></param>
 /// <param name="Prompt"></param>
 /// <param name="Placeholder"></param>
-/// <param name="Size"></param>
 [Serializable, NetSerializable]
-public readonly record struct QuickDialogEntryString(int Min, int Max, LocId? Prompt = null, LocId? Placeholder = null, Vector2? Size = null) :
-    IQuickDialogEntry<int>
+public readonly record struct QuickDialogEntryString((int Min, int Max) MinMax, LocId? Prompt = null, LocId? Placeholder = null) :
+    IQuickDialogEntry<int, string>
 {
-    /// <summary>
-    ///
-    /// </summary>
+    /// <inheritdoc/>
     public readonly Type Type => typeof(string);
+
+    /// <inheritdoc/>
+    public bool TryParse(string input, [NotNullWhen(true)] out string? output)
+    {
+        output = null;
+        if (input.Length < MinMax.Min || input.Length > MinMax.Max)
+            return false;
+
+        output = input;
+        return true;
+    }
 }
 
 /// <summary>
 ///
 /// </summary>
-/// <param name="Min"></param>
-/// <param name="Max"></param>
+/// <param name="MinMax"></param>
 /// <param name="Prompt"></param>
 /// <param name="Placeholder"></param>
-/// <param name="Size"></param>
 [Serializable, NetSerializable]
-public readonly record struct QuickDialogEntryInt(int Min, int Max, LocId? Prompt = null, LocId? Placeholder = null, Vector2? Size = null) :
-    IQuickDialogEntry<int>
+public readonly record struct QuickDialogEntryInt((int Min, int Max) MinMax, LocId? Prompt = null, LocId? Placeholder = null) :
+    IQuickDialogEntry<int, int>
 {
-    /// <summary>
-    ///
-    /// </summary>
+    /// <inheritdoc/>
     public readonly Type Type => typeof(int);
+
+    /// <inheritdoc/>
+    public bool TryParse(string input, out int output)
+    {
+        if (!int.TryParse(input, out output))
+            return false;
+
+        if (output < MinMax.Min || output > MinMax.Max)
+            return false;
+
+        return true;
+    }
 }
 
 /// <summary>
 ///
 /// </summary>
-/// <param name="Min"></param>
-/// <param name="Max"></param>
+/// <param name="MinMax"></param>
 /// <param name="Prompt"></param>
 /// <param name="Placeholder"></param>
-/// <param name="Size"></param>
 [Serializable, NetSerializable]
-public readonly record struct QuickDialogEntryUInt(uint Min, uint Max, LocId? Prompt = null, LocId? Placeholder = null, Vector2? Size = null) :
-    IQuickDialogEntry<uint>
+public readonly record struct QuickDialogEntryUInt((uint Min, uint Max) MinMax, LocId? Prompt = null, LocId? Placeholder = null) :
+    IQuickDialogEntry<uint, uint>
 {
-    /// <summary>
-    ///
-    /// </summary>
+    /// <inheritdoc/>
     public readonly Type Type => typeof(uint);
+
+    /// <inheritdoc/>
+    public bool TryParse(string input, out uint output)
+    {
+        if (!uint.TryParse(input, out output))
+            return false;
+
+        if (output < MinMax.Min || output > MinMax.Max)
+            return false;
+
+        return true;
+    }
 }
 
 /// <summary>
 ///
 /// </summary>
-/// <param name="Min"></param>
-/// <param name="Max"></param>
+/// <param name="MinMax"></param>
 /// <param name="Prompt"></param>
 /// <param name="Placeholder"></param>
-/// <param name="Size"></param>
 [Serializable, NetSerializable]
-public readonly record struct QuickDialogEntryLong(long Min, long Max, LocId? Prompt = null, LocId? Placeholder = null, Vector2? Size = null) :
-    IQuickDialogEntry<long>
+public readonly record struct QuickDialogEntryLong((long Min, long Max) MinMax, LocId? Prompt = null, LocId? Placeholder = null) :
+    IQuickDialogEntry<long, long>
 {
-    /// <summary>
-    ///
-    /// </summary>
+    /// <inheritdoc/>
     public readonly Type Type => typeof(long);
+
+    /// <inheritdoc/>
+    public bool TryParse(string input, out long output)
+    {
+        if (!long.TryParse(input, out output))
+            return false;
+
+        if (output < MinMax.Min || output > MinMax.Max)
+            return false;
+
+        return true;
+    }
 }
 
 /// <summary>
 ///
 /// </summary>
-/// <param name="Min"></param>
-/// <param name="Max"></param>
+/// <param name="MinMax"></param>
 /// <param name="Prompt"></param>
 /// <param name="Placeholder"></param>
-/// <param name="Size"></param>
 [Serializable, NetSerializable]
-public readonly record struct QuickDialogEntryULong(ulong Min, ulong Max, LocId? Prompt = null, LocId? Placeholder = null, Vector2? Size = null) :
-    IQuickDialogEntry<ulong>
+public readonly record struct QuickDialogEntryULong((ulong Min, ulong Max) MinMax, LocId? Prompt = null, LocId? Placeholder = null) :
+    IQuickDialogEntry<ulong, ulong>
 {
-    /// <summary>
-    ///
-    /// </summary>
+    /// <inheritdoc/>
     public readonly Type Type => typeof(ulong);
+
+    /// <inheritdoc/>
+    public bool TryParse(string input, out ulong output)
+    {
+        if (!ulong.TryParse(input, out output))
+            return false;
+
+        if (output < MinMax.Min || output > MinMax.Max)
+            return false;
+
+        return true;
+    }
 }
 
 /// <summary>
 ///
 /// </summary>
-/// <param name="Min"></param>
-/// <param name="Max"></param>
+/// <param name="MinMax"></param>
 /// <param name="Prompt"></param>
 /// <param name="Placeholder"></param>
-/// <param name="Size"></param>
 [Serializable, NetSerializable]
-public readonly record struct QuickDialogEntryFloat(float Min, float Max, LocId? Prompt = null, LocId? Placeholder = null, Vector2? Size = null) :
-    IQuickDialogEntry<float>
+public readonly record struct QuickDialogEntryFloat((float Min, float Max) MinMax, LocId? Prompt = null, LocId? Placeholder = null) :
+    IQuickDialogEntry<float, float>
 {
-    /// <summary>
-    ///
-    /// </summary>
+    /// <inheritdoc/>
     public readonly Type Type => typeof(float);
+
+    /// <inheritdoc/>
+    public bool TryParse(string input, out float output)
+    {
+        if (!float.TryParse(input, out output))
+            return false;
+
+        if (output < MinMax.Min || output > MinMax.Max)
+            return false;
+
+        return true;
+    }
 }
 
 /// <summary>
 ///
 /// </summary>
-/// <param name="Min"></param>
-/// <param name="Max"></param>
+/// <param name="MinMax"></param>
 /// <param name="Prompt"></param>
 /// <param name="Placeholder"></param>
-/// <param name="Size"></param>
 [Serializable, NetSerializable]
-public readonly record struct QuickDialogEntryDouble(double Min, double Max, LocId? Prompt = null, LocId? Placeholder = null, Vector2? Size = null) :
-    IQuickDialogEntry<double>
+public readonly record struct QuickDialogEntryDouble((double Min, double Max) MinMax, LocId? Prompt = null, LocId? Placeholder = null) :
+    IQuickDialogEntry<double, double>
 {
-    /// <summary>
-    ///
-    /// </summary>
+    /// <inheritdoc/>
     public readonly Type Type => typeof(double);
+
+    /// <inheritdoc/>
+    public bool TryParse(string input, out double output)
+    {
+        if (!double.TryParse(input, out output))
+            return false;
+
+        if (output < MinMax.Min || output > MinMax.Max)
+            return false;
+
+        return true;
+    }
 }
