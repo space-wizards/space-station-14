@@ -1,0 +1,7 @@
+- type: department
+  id: BorgWarsRedDepartment
+  name: department-borgwars-redteam
+  description: department-borgwars-redteam-description
+  color: "#A46106"
+  roles:
+  - BorgRedGeneric

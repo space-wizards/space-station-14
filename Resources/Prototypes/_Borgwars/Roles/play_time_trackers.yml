@@ -1,0 +1,2 @@
+- type: playTimeTracker # Used as a tracker for red team borgs
+  id: JobBorgRed

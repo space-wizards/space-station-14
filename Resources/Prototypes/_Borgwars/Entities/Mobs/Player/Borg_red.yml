@@ -1,0 +1,18 @@
+- type: entity
+  id: BorgWarChassisGenericRed
+  parent: BorgChassisSyndicateAssault
+  suffix: Borgwars, Red, Generic, WHAT!!!!!!!
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - PositronicBrain
+      borg_module:
+      - BorgModuleOperative
+      - BorgModuleL6C
+      - BorgModuleDoubleEsword
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellAntiqueProto

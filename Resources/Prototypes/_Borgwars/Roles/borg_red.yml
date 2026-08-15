@@ -1,0 +1,9 @@
+- type: job
+  id: BorgRedGeneric
+  name: job-name-borg-red-generic
+  description: job-name-borg-red-generic-desc
+  playTimeTracker: JobBorgRed
+  icon: JobIconBorg
+  supervisors: job-supervisors-rd
+  jobEntity: BorgWarChassisGenericRed
+  applyTraits: false
