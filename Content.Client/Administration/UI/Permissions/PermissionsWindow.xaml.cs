@@ -17,7 +17,10 @@ public sealed partial class PermissionsWindow : FancyWindow
 {
     [Dependency] private IClientAdminManager _adminManager = null!;
 
-    private PermissionsEui _permissionsEui = null!;
+    public event Action? OnAddAdminPressed;
+    public event Action? OnAddAdminRankPressed;
+    public event Action<PermissionsEuiState.AdminData>? OnEditAdminPressed;
+    public event Action<KeyValuePair<int, PermissionsEuiState.AdminRankData>>? OnEditAdminRankPressed;
 
     public PermissionsWindow()
     {
@@ -27,9 +30,8 @@ public sealed partial class PermissionsWindow : FancyWindow
         PermissionTabs.SetTabTitle(0, Loc.GetString("permissions-eui-menu-admins-tab-title"));
         PermissionTabs.SetTabTitle(1, Loc.GetString("permissions-eui-menu-admin-ranks-tab-title"));
 
-        AddAdminButton.OnPressed += AddAdminPressed;
-        AddAdminRankButton.OnPressed += AddAdminRankPressed;
-        OnClose += HandleOnClose;
+        AddAdminButton.OnPressed += _ => OnAddAdminPressed?.Invoke();
+        AddAdminRankButton.OnPressed += _ => OnAddAdminRankPressed?.Invoke();
     }
 
     public void UpdateAdmins(IOrderedEnumerable<PermissionsEuiState.AdminData> adminData,
@@ -87,7 +89,7 @@ public sealed partial class PermissionsWindow : FancyWindow
             });
 
             var editButton = new Button { Text = Loc.GetString("permissions-eui-edit-title-button") };
-            editButton.OnPressed += _ => OnEditAdminPressed(admin);
+            editButton.OnPressed += _ => OnEditAdminPressed?.Invoke(admin);
             AdminsList.AddChild(editButton);
 
             if (!_adminManager.HasFlag(combinedFlags))
@@ -109,6 +111,8 @@ public sealed partial class PermissionsWindow : FancyWindow
 
             string flagsText;
 
+            // readability
+            // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
             if (rank.Flags == AdminFlagsHelper.Everything)
                 flagsText = Loc.GetString("permissions-eui-edit-admin-window-permission-all");
             else
@@ -123,7 +127,7 @@ public sealed partial class PermissionsWindow : FancyWindow
             });
 
             var editButton = new Button { Text = Loc.GetString("permissions-eui-edit-admin-rank-button") };
-            editButton.OnPressed += _ => OnEditRankPressed(adminRankPair);
+            editButton.OnPressed += _ => OnEditAdminRankPressed?.Invoke(adminRankPair);
             AdminRanksList.AddChild(editButton);
 
             if (_adminManager.HasFlag(rank.Flags))
@@ -132,36 +136,6 @@ public sealed partial class PermissionsWindow : FancyWindow
             editButton.Disabled = true;
             editButton.ToolTip = Loc.GetString("permissions-eui-do-not-have-required-flags-to-edit-rank-tooltip");
         }
-    }
-
-    public void SetPermissionsEui(PermissionsEui eui)
-    {
-        _permissionsEui = eui;
-    }
-
-    private void HandleOnClose()
-    {
-        _permissionsEui.CloseEverything();
-    }
-
-    private void AddAdminPressed(BaseButton.ButtonEventArgs obj)
-    {
-        _permissionsEui.AddAdminPressed();
-    }
-
-    private void AddAdminRankPressed(BaseButton.ButtonEventArgs obj)
-    {
-        _permissionsEui.AddAdminRankPressed();
-    }
-
-    private void OnEditAdminPressed(PermissionsEuiState.AdminData admin)
-    {
-        _permissionsEui.OnEditAdminPressed(admin);
-    }
-
-    private void OnEditRankPressed(KeyValuePair<int, PermissionsEuiState.AdminRankData> adminRankPair)
-    {
-        _permissionsEui.OnEditRankPressed(adminRankPair);
     }
 }
 

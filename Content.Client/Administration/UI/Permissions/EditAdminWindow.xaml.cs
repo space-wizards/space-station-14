@@ -17,7 +17,8 @@ public sealed partial class EditAdminWindow : FancyWindow
     public event Action? OnRemovePressed;
 
     public PermissionsEuiState.AdminData? SourceData;
-    public readonly Dictionary<AdminFlags, (Button inherit, Button sub, Button plus)> FlagButtons
+
+    private readonly Dictionary<AdminFlags, (Button inherit, Button sub, Button plus)> _flagButtons
         = new();
 
     public EditAdminWindow()
@@ -115,7 +116,7 @@ public sealed partial class EditAdminWindow : FancyWindow
             FlagGrid.AddChild(sub);
             FlagGrid.AddChild(plus);
 
-            FlagButtons.Add(flag, (inherit, sub, plus));
+            _flagButtons.Add(flag, (inherit, sub, plus));
         }
     }
 
@@ -124,7 +125,7 @@ public sealed partial class EditAdminWindow : FancyWindow
         pos = default;
         neg = default;
 
-        foreach (var (flag, (_, s, p)) in FlagButtons)
+        foreach (var (flag, (_, s, p)) in _flagButtons)
         {
             if (s.Pressed)
             {
@@ -135,11 +136,6 @@ public sealed partial class EditAdminWindow : FancyWindow
                 pos |= flag;
             }
         }
-    }
-
-    public int GetSelectedId()
-    {
-        return RankOption.SelectedId;
     }
 
     private void OnRankSelected(OptionButton.ItemSelectedEventArgs args)

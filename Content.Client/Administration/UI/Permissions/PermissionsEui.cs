@@ -13,8 +13,6 @@ namespace Content.Client.Administration.UI.Permissions;
 [UsedImplicitly]
 public sealed partial class PermissionsEui : BaseEui
 {
-    [Dependency] private IClientAdminManager _adminManager = default!;
-
     public const int NoRank = -1;
 
     private readonly PermissionsWindow _permissionsWindow;
@@ -25,14 +23,18 @@ public sealed partial class PermissionsEui : BaseEui
 
     public PermissionsEui()
     {
-        IoCManager.InjectDependencies(this);
-
         _permissionsWindow = new PermissionsWindow();
-        _permissionsWindow.SetPermissionsEui(this);
+
+        _permissionsWindow.OnAddAdminPressed += AddAdminPressed;
+        _permissionsWindow.OnAddAdminRankPressed += AddAdminRankPressed;
+
+        _permissionsWindow.OnEditAdminPressed += OnEditAdminPressed;
+        _permissionsWindow.OnEditAdminRankPressed += OnEditRankPressed;
     }
 
     public override void Opened()
     {
+        _permissionsWindow.OnClose += CloseEverything;
         _permissionsWindow.OpenCentered();
     }
 
@@ -88,10 +90,10 @@ public sealed partial class PermissionsEui : BaseEui
         }
 
         window.OnClose += () => _subWindows.Remove(window);
-
-        _subWindows.Add(window);
         window.SetAdminData(data, _ranks);
         window.OpenCentered();
+
+        _subWindows.Add(window);
     }
 
 
