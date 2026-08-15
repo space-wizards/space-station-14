@@ -58,10 +58,6 @@ namespace Content.Client.Lathe.UI
                         _menu?.UpdateCategories();
                     }
 
-                    if ((msg.UpdateFlags & LatheUpdateState.UpdateWhat.Materials) != 0)
-                    {
-                        _menu?.UpdateCanProduce();
-                    }
                     break;
             }
         }
@@ -75,6 +71,14 @@ namespace Content.Client.Lathe.UI
         {
             _menu?.PopulateQueueList(remainder);
             _menu?.SetQueueInfo(current);
+        }
+
+        /// <summary>
+        /// Update UI after stored material quantities has changed
+        /// </summary>
+        public void UpdateMaterialAmounts()
+        {
+            _menu?.UpdateMaterialAmounts();
         }
     }
 }

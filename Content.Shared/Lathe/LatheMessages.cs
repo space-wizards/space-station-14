@@ -11,8 +11,7 @@ public sealed class LatheUpdateState : BoundUserInterfaceState
     public enum UpdateWhat
     {
         Recipes = 1 << 0,
-        Materials = 1 << 1,
-        All = Recipes | Materials
+        All = Recipes
     }
 
     // Flags indicating what needs to be updated in the UI

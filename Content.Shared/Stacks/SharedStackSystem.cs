@@ -231,6 +231,47 @@ public abstract partial class SharedStackSystem : EntitySystem
     {
 
     }
+
+    #region Spawning
+    #region Calculate
+
+    /// <summary>
+    /// Calculates how many stacks to spawn that total up to <paramref name="amount"/>.
+    /// </summary>
+    /// <returns>The list of stack counts per entity.</returns>
+    private List<int> CalculateSpawns(int maxCountPerStack, int amount)
+    {
+        var amounts = new List<int>();
+        while (amount > 0)
+        {
+            var countAmount = Math.Min(maxCountPerStack, amount);
+            amount -= countAmount;
+            amounts.Add(countAmount);
+        }
+
+        return amounts;
+    }
+
+    /// <inheritdoc cref="CalculateSpawns(int, int)"/>
+    private List<int> CalculateSpawns(StackPrototype stackProto, int amount)
+    {
+        return CalculateSpawns(GetMaxCount(stackProto), amount);
+    }
+
+    /// <inheritdoc cref="CalculateSpawns(int, int)"/>
+    private List<int> CalculateSpawns(EntityPrototype entityPrototype, int amount)
+    {
+        return CalculateSpawns(GetMaxCount(entityPrototype), amount);
+    }
+
+    /// <inheritdoc cref="CalculateSpawns(int, int)"/>
+    private List<int> CalculateSpawns(EntProtoId entityId, int amount)
+    {
+        return CalculateSpawns(GetMaxCount(entityId), amount);
+    }
+
+    #endregion
+    #endregion
 }
 
 /// <summary>

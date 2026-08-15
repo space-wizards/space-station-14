@@ -76,7 +76,6 @@ namespace Content.Server.Lathe
             SubscribeLocalEvent<LatheComponent, LatheAbortFabricationMessage>(OnLatheAbortFabricationMessage);
 
             SubscribeLocalEvent<LatheComponent, BeforeActivatableUIOpenEvent>((u, c, _) => UpdateUserInterfaceState(u, LatheUpdateState.UpdateWhat.All, c));
-            SubscribeLocalEvent<LatheComponent, MaterialAmountChangedEvent>(OnMaterialAmountChanged);
             SubscribeLocalEvent<TechnologyDatabaseComponent, LatheGetRecipesEvent>(OnGetRecipes);
             SubscribeLocalEvent<EmagLatheRecipesComponent, LatheGetRecipesEvent>(GetEmagLatheRecipes);
             SubscribeLocalEvent<LatheHeatProducingComponent, LatheStartPrintingEvent>(OnHeatStartPrinting);
@@ -323,11 +322,6 @@ namespace Content.Server.Lathe
             component.NextSecond = _timing.CurTime;
         }
 
-        private void OnMaterialAmountChanged(EntityUid uid, LatheComponent component, ref MaterialAmountChangedEvent args)
-        {
-            UpdateUserInterfaceState(uid, LatheUpdateState.UpdateWhat.Materials, component);
-        }
-
         /// <summary>
         /// Initialize the UI and appearance.
         /// Appearance requires initialization or the layers break
@@ -488,8 +482,6 @@ namespace Content.Server.Lathe
                 DirtyField(uid, component, nameof(LatheComponent.CurrentRecipe));
             }
             RemCompDeferred<LatheProducingComponent>(uid);
-            var toUpdate = LatheUpdateState.UpdateWhat.Materials;
-            UpdateUserInterfaceState(uid, toUpdate, component);
             UpdateRunningAppearance(uid, false);
         }
 
@@ -507,8 +499,6 @@ namespace Content.Server.Lathe
                 }
             }
             TryStartProducing(uid, component);
-            var toUpdate = LatheUpdateState.UpdateWhat.Materials;
-            UpdateUserInterfaceState(uid, toUpdate, component);
         }
 
         private void OnLatheSyncRequestMessage(EntityUid uid, LatheComponent component, LatheSyncRequestMessage args)
@@ -543,8 +533,6 @@ namespace Content.Server.Lathe
 
             RefundBatch(uid, component, batch);
             component.Queue.Remove(node);
-            var toUpdate = LatheUpdateState.UpdateWhat.Materials;
-            UpdateUserInterfaceState(uid, toUpdate, component);
             DirtyField(uid, component, nameof(LatheComponent.Queue));
         }
 
@@ -605,8 +593,6 @@ namespace Content.Server.Lathe
             RefundCurrentRecipe(uid, component);
             component.CurrentRecipe = null;
             FinishProducing(uid, component);
-            var toUpdate = LatheUpdateState.UpdateWhat.Materials;
-            UpdateUserInterfaceState(uid, toUpdate, component);
             DirtyField(uid, component, nameof(LatheComponent.CurrentRecipe));
         }
         #endregion

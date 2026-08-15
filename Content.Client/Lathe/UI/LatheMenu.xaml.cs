@@ -142,6 +142,13 @@ public sealed partial class LatheMenu : DefaultWindow
         RecipeList.PopulateList(sortedRecipesToShow.ToList());
     }
 
+    public void UpdateMaterialAmounts()
+    {
+        // MaterialStorageControl handles display of materials (every frame!) so
+        // the only thing we need to do here is enable/disable production buttons.
+        UpdateCanProduce();
+    }
+
     public void UpdateCanProduce()
     {
         if (!_entityManager.TryGetComponent(Entity, out LatheComponent? lathe))

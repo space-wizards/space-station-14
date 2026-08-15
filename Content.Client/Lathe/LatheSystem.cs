@@ -2,6 +2,7 @@ using Robust.Client.GameObjects;
 using Content.Client.Lathe.UI;
 using Content.Client.Power;
 using Content.Shared.Lathe;
+using Content.Shared.Materials;
 using Content.Shared.Power;
 using Content.Shared.Research.Prototypes;
 using Robust.Shared.Timing;
@@ -20,6 +21,7 @@ public sealed class LatheSystem : SharedLatheSystem
 
         SubscribeLocalEvent<LatheComponent, AppearanceChangeEvent>(OnAppearanceChange);
         SubscribeLocalEvent<LatheComponent, AfterAutoHandleStateEvent>(OnHandleState);
+        SubscribeLocalEvent<LatheComponent, MaterialAmountChangedEvent>(OnMaterialAmountChanged);
     }
 
     private void OnAppearanceChange(EntityUid uid, LatheComponent component, ref AppearanceChangeEvent args)
@@ -70,6 +72,15 @@ public sealed class LatheSystem : SharedLatheSystem
             {
                 latheUi.UpdateProductionQueue(lathe.Comp.CurrentRecipe, lathe.Comp.Queue);
             }
+        }
+    }
+
+    private void OnMaterialAmountChanged(Entity<LatheComponent> lathe, ref MaterialAmountChangedEvent evt)
+    {
+        if (_ui.TryGetOpenUi(lathe.Owner, LatheUiKey.Key, out var bui)
+                && bui is LatheBoundUserInterface latheUi)
+        {
+            latheUi.UpdateMaterialAmounts();
         }
     }
 
