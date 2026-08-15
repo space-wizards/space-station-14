@@ -254,24 +254,34 @@ namespace Content.Server.Ghost
 
         #region Warp
 
+        public bool CanGhostWarp(ICommonSession session, out EntityUid entity)
+        {
+            if (session.AttachedEntity is not { Valid: true } sessionEntity
+                || !_ghostQuery.HasComp(sessionEntity))
+            {
+                entity = default;
+                return false;
+            }
+
+            entity = sessionEntity;
+            return true;
+        }
 
         private void OnGhostWarpsRequest(GhostWarpsRequestEvent msg, EntitySessionEventArgs args)
         {
-            if (args.SenderSession.AttachedEntity is not {Valid: true} entity
-                || !_ghostQuery.HasComp(entity))
+            if (!CanGhostWarp(args.SenderSession, out var player))
             {
                 Log.Warning($"User {args.SenderSession.Name} sent a {nameof(GhostWarpsRequestEvent)} without being a ghost.");
                 return;
             }
 
-            var response = new GhostWarpsResponseEvent(GetPlayerWarps(entity).Concat(GetLocationWarps()).ToList());
+            var response = new GhostWarpsResponseEvent(GetPlayerWarps(player).Concat(GetLocationWarps()).ToList());
             RaiseNetworkEvent(response, args.SenderSession.Channel);
         }
 
         private void OnGhostWarpToTargetRequest(GhostWarpToTargetRequestEvent msg, EntitySessionEventArgs args)
         {
-            if (args.SenderSession.AttachedEntity is not {Valid: true} attached
-                || !_ghostQuery.HasComp(attached))
+            if (!CanGhostWarp(args.SenderSession, out var player))
             {
                 Log.Warning($"User {args.SenderSession.Name} tried to warp to {msg.Target} without being a ghost.");
                 return;
@@ -285,7 +295,7 @@ namespace Content.Server.Ghost
                 return;
             }
 
-            WarpTo(attached, target);
+            WarpTo(player, target);
         }
 
         /// <summary>
@@ -293,8 +303,7 @@ namespace Content.Server.Ghost
         /// </summary>
         private void OnGhostnadoRequest(GhostnadoRequestEvent msg, EntitySessionEventArgs args)
         {
-            if (args.SenderSession.AttachedEntity is not {} uid
-                || !_ghostQuery.HasComp(uid))
+            if (!CanGhostWarp(args.SenderSession, out var player))
             {
                 Log.Warning($"User {args.SenderSession.Name} tried to ghostnado without being a ghost.");
                 return;
@@ -304,25 +313,24 @@ namespace Content.Server.Ghost
                 return;
 
             // If there is a ghostnado happening you almost definitely wanna join it, so we automatically follow instead of just warping.
-            _followerSystem.StartFollowingEntity(uid, target);
+            _followerSystem.StartFollowingEntity(player, target);
         }
         /// <summary>
         /// Request to warp to a random player with at least one ghost follower.
         /// </summary>
         private void OnWarpToRandomFollowedRequest(WarpToRandomFollowedRequestEvent msg, EntitySessionEventArgs args)
         {
-            if (args.SenderSession.AttachedEntity is not {} uid
-                || !_ghostQuery.HasComp(uid))
+            if (!CanGhostWarp(args.SenderSession, out var player))
             {
                 Log.Warning($"User {args.SenderSession.Name} tried to warp to a random player with at least one ghost follower without being a ghost.");
                 return;
             }
 
-            var following = _followerQuery.CompOrNull(uid)?.Following;
+            var following = _followerQuery.CompOrNull(player)?.Following;
             if (_followerSystem.GetRandomGhostFollowed(except:following) is not {} target)
                 return;
 
-            _followerSystem.StartFollowingEntity(uid, target);
+            _followerSystem.StartFollowingEntity(player, target);
         }
 
         /// <summary>
@@ -330,14 +338,13 @@ namespace Content.Server.Ghost
         /// </summary>
         private void OnWarpToRandomRequest(WarpToRandomRequestEvent msg, EntitySessionEventArgs args)
         {
-            if (args.SenderSession.AttachedEntity is not {} uid
-                || !_ghostQuery.HasComp(uid))
+            if (!CanGhostWarp(args.SenderSession, out var player))
             {
                 Log.Warning($"User {args.SenderSession.Name} tried to warp to a random player without being a ghost.");
                 return;
             }
 
-            var following = _followerQuery.CompOrNull(uid)?.Following;
+            var following = _followerQuery.CompOrNull(player)?.Following;
             // select player warps cuz no one wants to warp to places.
             if (GetPlayerWarps(following).ToArray() is not {} warps)
                 return;
@@ -345,9 +352,10 @@ namespace Content.Server.Ghost
                 return;
             var warp = _random.Pick(warps);
 
-            var realTarget = GetEntity(warp.Entity);
-            _followerSystem.StartFollowingEntity(uid, realTarget);
+            var target = GetEntity(warp.Entity);
+            _followerSystem.StartFollowingEntity(player, target);
         }
+
         private void WarpTo(EntityUid uid, EntityUid target)
         {
             _adminLog.Add(LogType.GhostWarp, $"{ToPrettyString(uid)} ghost warped to {ToPrettyString(target)}");
