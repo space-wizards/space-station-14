@@ -22,7 +22,7 @@ public sealed partial class MechSystem : SharedMechSystem
 
         var state = ent.Comp.BaseState;
         var drawDepth = DrawDepth.Mobs;
-        if (ent.Comp.BrokenState != null && args.TryGetData<bool>(uid, MechVisuals.Broken, out var broken) && broken)
+        if (ent.Comp.BrokenState != null && args.TryGetData<bool>(MechVisuals.Broken, out var broken) && broken)
         {
             state = ent.Comp.BrokenState;
             drawDepth = DrawDepth.SmallMobs;

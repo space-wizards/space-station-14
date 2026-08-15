@@ -12,7 +12,7 @@ public sealed partial class PowerChargerVisualizerSystem : VisualizerSystem<Powe
             return;
 
         // Update base item
-        if (args.TryGetData<bool>(uid, CellVisual.Occupied, out var occupied, args.Component) && occupied)
+        if (args.TryGetData<bool>(CellVisual.Occupied, out var occupied) && occupied)
         {
             // TODO: don't throw if it doesn't have a full state
             SpriteSystem.LayerSetRsiState((uid, args.Sprite), PowerChargerVisualLayers.Base, comp.OccupiedState);
@@ -23,7 +23,7 @@ public sealed partial class PowerChargerVisualizerSystem : VisualizerSystem<Powe
         }
 
         // Update lighting
-        if (args.TryGetData<CellChargerStatus>(uid, CellVisual.Light, out var status, args.Component)
+        if (args.TryGetData<CellChargerStatus>(CellVisual.Light, out var status)
             && comp.LightStates.TryGetValue(status, out var lightState))
         {
             SpriteSystem.LayerSetRsiState((uid, args.Sprite), PowerChargerVisualLayers.Light, lightState);

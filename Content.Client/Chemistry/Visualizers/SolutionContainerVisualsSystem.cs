@@ -28,6 +28,7 @@ public sealed partial class SolutionContainerVisualsSystem : VisualizerSystem<So
         component.InitialDescription = MetaData(uid).EntityDescription;
     }
 
+    /// <inheritdoc/>
     protected override void OnAppearanceChange(EntityUid uid, SolutionContainerVisualsComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
@@ -35,12 +36,11 @@ public sealed partial class SolutionContainerVisualsSystem : VisualizerSystem<So
 
         // Check if the solution that was updated is the one set as represented
         if (!string.IsNullOrEmpty(component.SolutionName)
-            && args.TryGetData(SolutionContainerVisuals.SolutionName, out string name)
+            && args.TryGetData<string>(SolutionContainerVisuals.SolutionName, out var name)
             && name != component.SolutionName)
             return;
 
-        if (!args.TryGetData(SolutionContainerVisuals.FillFraction,
-                out float fraction))
+        if (!args.TryGetData<float>(SolutionContainerVisuals.FillFraction, out var fraction))
             return;
 
         // C# moment; setting it as nullable (even though it's not) avoids a
@@ -124,10 +124,7 @@ public sealed partial class SolutionContainerVisualsSystem : VisualizerSystem<So
         Entity<SpriteComponent?> ent,
         int fillLayer)
     {
-        if (!AppearanceSystem.TryGetData(uid,
-                SolutionContainerVisuals.BaseOverride,
-                out string baseOverride,
-                args.Component))
+        if (!args.TryGetData<string>(SolutionContainerVisuals.BaseOverride, out var baseOverride))
             return null;
 
         var reagentProto = ProtoMan.Index<ReagentPrototype>(baseOverride);

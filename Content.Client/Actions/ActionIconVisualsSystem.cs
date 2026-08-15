@@ -7,12 +7,13 @@ namespace Content.Client.Actions;
 
 public sealed partial class ActionIconVisualsSystem : VisualizerSystem<ActionComponent>
 {
+    /// <inheritdoc/>
     protected override void OnAppearanceChange(EntityUid uid, ActionComponent comp, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
 
-        if (args.TryGetData<SpriteSpecifier>(uid, ActionState.DynamicIcon, out var icon, args.Component))
+        if (args.TryGetData<SpriteSpecifier>(ActionState.DynamicIcon, out var icon))
         {
             if (icon is SpriteSpecifier.EntityPrototype)
                 SpriteSystem.LayerSetTexture((uid, args.Sprite), ActionVisuals.Icon, SpriteSystem.Frame0(icon));
