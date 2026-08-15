@@ -115,7 +115,7 @@ public sealed partial class MessagingControls : TabContainer
             AnnounceButton.ToolTip = Loc.GetString("comms-console-message-cannot-send");
         }
 
-        AnnounceCharLimitLabel.Text = GetCharacterLimitString(RadioMessageInput.TextLength, maxAnnounceLength);
+        UpdateCharacterLimitLabel(AnnounceCharLimitLabel, RadioMessageInput.TextLength, maxAnnounceLength);
 
         BroadcastButton.Disabled = !_canScreenBroadcast;
     }
@@ -127,8 +127,8 @@ public sealed partial class MessagingControls : TabContainer
         var topCount = strings.Length > 0 ? strings[0].Length : 0;
         var bottomCount = strings.Length > 1 ? strings[1].Length : 0;
 
-        BroadcastTopCharLimitLabel.Text = GetCharacterLimitString(topCount, MaxScreenCharacters);
-        BroadcastBottomCharLimitLabel.Text = GetCharacterLimitString(bottomCount, MaxScreenCharacters);
+        UpdateCharacterLimitLabel(BroadcastTopCharLimitLabel, topCount, MaxScreenCharacters);
+        UpdateCharacterLimitLabel(BroadcastBottomCharLimitLabel, bottomCount, MaxScreenCharacters);
 
         if (!_broadcastDisplayEntity.IsValid())
             return;
@@ -140,16 +140,15 @@ public sealed partial class MessagingControls : TabContainer
     }
 
     /// <summary>
-    /// Returns a character count status string.  The string printed out depends if
-    /// <paramref name="length"/> is less than or equal to <paramref name="maximum"/> or not.
+    /// Updates <paramref name="label"/> based on the given <paramref name="length"/> and <paramref name="maximum"/>.
     /// </summary>
-    private string GetCharacterLimitString(int length, int maximum)
+    private void UpdateCharacterLimitLabel(Label label, int length, int maximum)
     {
-        var charCountLabel = length > maximum
-            ? "comms-console-broadcast-char-limit-exceeded"
-            : "comms-console-broadcast-char-limit";
-
-        return Loc.GetString(charCountLabel,
+        string styleClass = length > maximum
+            ? CommunicationsConsoleSheetlet.CharLimitExceeded
+            : CommunicationsConsoleSheetlet.CharLimit;
+        label.SetOnlyStyleClass(styleClass);
+        label.Text = Loc.GetString("comms-console-char-limit",
             ("count", length),
             ("max", maximum));
     }
