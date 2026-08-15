@@ -37,9 +37,7 @@ public sealed partial class CommunicationsConsoleBoundUserInterface(EntityUid ow
         _menu.OnShuttleRecalled += RecallShuttle;
 
         if (EntMan.TryGetComponent<CommunicationsConsoleComponent>(Owner, out var console))
-        {
-            _menu.SetBroadcastDisplayEntity(console.ScreenDisplayId, console.SpriteOffset);
-        }
+            _menu.SetBroadcastDisplayEntity(console.ScreenDisplayId);
     }
 
     public void AlertLevelSelected(ProtoId<AlertLevelPrototype> level)

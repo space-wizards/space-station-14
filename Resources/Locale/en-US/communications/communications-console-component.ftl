@@ -1,7 +1,7 @@
 # User interface
 comms-console-menu-title = Communications Console
 comms-console-menu-announcement-placeholder = Announcement text...
-comms-console-menu-broadcast-top-placeholder = Screen top line (max 32 characters)
+comms-console-menu-broadcast-placeholder = Broadcast text...
 comms-console-menu-broadcast-bottom-placeholder = Screen bottom line (max 32 characters)
 comms-console-menu-announcement-button = Announce over radio
 comms-console-menu-announcement-button-tooltip = Send your message as a station-wide radio announcement.
@@ -19,6 +19,8 @@ comms-console-station-announcements-header = Station Announcements
 comms-console-station-broadcast-header = Station Broadcast
 comms-console-announce-tab-title = Radio
 comms-console-broadcast-tab-title = Screen
+comms-console-broadcast-char-limit = ({$count}/{$max})
+comms-console-broadcast-char-limit-exceeded = [color=red]({$count}/{$max})[/color]
 
 # Popup
 comms-console-permission-denied = Permission denied

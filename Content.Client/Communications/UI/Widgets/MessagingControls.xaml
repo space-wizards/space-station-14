@@ -10,6 +10,7 @@
             <TextEdit Name="RadioMessageInput" MinHeight="100"
                 HorizontalExpand="True" VerticalExpand="True" />
         </PanelContainer>
+        <RichTextLabel Name="AnnounceCharLimitLabel" StyleClasses="StatusFieldTitle" HorizontalAlignment="Center"/>
         <Button Name="AnnounceButton" HorizontalExpand="True" Margin="10 6 6 6"
             Text="{Loc 'comms-console-menu-announcement-button'}"
             ToolTip="{Loc 'comms-console-menu-announcement-button-tooltip'}" />
@@ -19,13 +20,16 @@
     <BoxContainer Orientation="Vertical" VerticalExpand="True"
         TabContainer.TabTitle="{Loc 'comms-console-broadcast-tab-title'}">
         <Label StyleClasses="StatusFieldTitle" Align="Center" VAlign="Top"
-            VerticalExpand="True" VerticalAlignment="Top"
+            VerticalAlignment="Top"
             Text="{Loc 'comms-console-station-broadcast-header'}" />
-        <SpriteView Name="BroadcastEntityDisplay" Scale="8 8" SpriteOffset="True" />
-        <LineEdit Name="ScreenMessageInputTop" Margin="10 0 6 0"
-            PlaceHolder="{Loc 'comms-console-menu-broadcast-top-placeholder'}" />
-        <LineEdit Name="ScreenMessageInputBottom" Margin="10 0 6 0"
-            PlaceHolder="{Loc 'comms-console-menu-broadcast-bottom-placeholder'}" />
+        <SpriteView Name="BroadcastEntityDisplay" Scale="8 8" SpriteOffset="True"
+            VerticalExpand="True" Margin="0 -90 0 -90" /> <!-- Forgive me for negamargin but there's just too much goddamn space - whatstone -->
+        <PanelContainer StyleClasses="BackgroundDark" Margin="10 6 6 6"
+            HorizontalExpand="True" VerticalExpand="True">
+            <TextEdit Name="ScreenMessageInput" SetHeight="40"
+                HorizontalExpand="True" Margin="10 6 6 6" />
+        </PanelContainer>
+        <RichTextLabel Name="BroadcastCharLimitLabel" StyleClasses="StatusFieldTitle" HorizontalAlignment="Center"/>
         <Button Name="BroadcastButton" HorizontalExpand="True" Margin="10 6 6 6"
             Text="{Loc 'comms-console-menu-broadcast-button'}"
             ToolTip="{Loc 'comms-console-menu-broadcast-button-tooltip'}" />
