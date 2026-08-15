@@ -288,3 +288,6 @@
           MaterialCardboard:
             min: 3
             max: 5
+  - type: IconSmooth
+    key: cards
+    mode: NoSprite
