@@ -8,6 +8,7 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Containers.ItemSlots;
@@ -24,6 +25,7 @@ public sealed partial class ItemSlotsSystem : EntitySystem
     [Dependency] private SharedHandsSystem _handsSystem = default!;
     [Dependency] private SharedAudioSystem _audioSystem = default!;
     [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private ISerializationManager _serializationManager = default!;
 
     /// <summary>
     /// Spawn in starting items for any item slots that should have one.
@@ -75,6 +77,22 @@ public sealed partial class ItemSlotsSystem : EntitySystem
         EjectFromAllSlots(ent, slot => slot.EjectOnBreak);
     }
 
+    private void CopySlotState(ItemSlot source, ref ItemSlot target)
+    {
+        // These fields are DataFields, so SerializationManager would copy them,
+        // but they are excluded from network serialization by NonSerialized.
+        // Preserve the local values when applying received slot state.
+        var startingItem = target.StartingItem;
+        var ejectOnDeconstruct = target.EjectOnDeconstruct;
+        var ejectOnBreak = target.EjectOnBreak;
+
+        _serializationManager.CopyTo(source, ref target, notNullableOverride: true);
+
+        target.StartingItem = startingItem;
+        target.EjectOnDeconstruct = ejectOnDeconstruct;
+        target.EjectOnBreak = ejectOnBreak;
+    }
+
     /// <summary>
     /// Stores a new item slot in the <see cref="ItemSlotsComponent"/> and ensures that it has a backing container.
     /// </summary>
@@ -95,7 +113,7 @@ public sealed partial class ItemSlotsSystem : EntitySystem
             }
             else
                 // Server state takes priority.
-                slot.CopyFrom(existing);
+                CopySlotState(existing, ref slot);
         }
 
         slot.ContainerSlot = _containers.EnsureContainer<ContainerSlot>(ent, id);
@@ -178,15 +196,14 @@ public sealed partial class ItemSlotsSystem : EntitySystem
         {
             if (ent.Comp.Slots.TryGetValue(serverKey, out var itemSlot))
             {
-                itemSlot.CopyFrom(serverSlot);
+                CopySlotState(serverSlot, ref itemSlot);
                 itemSlot.ContainerSlot = _containers.EnsureContainer<ContainerSlot>(ent, serverKey);
             }
             else
             {
-                var slot = new ItemSlot(serverSlot)
-                {
-                    Local = false
-                };
+                var slot = new ItemSlot();
+                CopySlotState(serverSlot, ref slot);
+                slot.Local = false;
                 AddItemSlot((ent.Owner, ent.Comp), serverKey, slot);
             }
         }

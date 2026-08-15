@@ -55,11 +55,6 @@ public sealed partial class ItemSlot
 {
     public ItemSlot() { }
 
-    public ItemSlot(ItemSlot other)
-    {
-        CopyFrom(other);
-    }
-
     [DataField]
     [Access(typeof(ItemSlotsSystem), Other = AccessPermissions.ReadWriteExecute)]
     public EntityWhitelist? Whitelist;
@@ -233,35 +228,4 @@ public sealed partial class ItemSlot
     /// </remarks>
     [NonSerialized]
     public bool Local = true;
-
-    /// <summary>
-    /// Copies the fields carried by <see cref="ItemSlotsComponentState"/> from another slot.
-    /// </summary>
-    /// <remarks>
-    /// <see cref="StartingItem"/>, <see cref="ContainerSlot"/>, <see cref="EjectOnDeconstruct"/>,
-    /// <see cref="EjectOnBreak"/>, and <see cref="Local"/> are not part of that state and are left unchanged.
-    /// </remarks>
-    /// <param name="other">The slot whose serialized configuration should be applied.</param>
-    public void CopyFrom(ItemSlot other)
-    {
-        // These fields are mutable reference types. But they generally don't get modified, so this should be fine.
-        Whitelist = other.Whitelist;
-        Blacklist = other.Blacklist;
-        InsertSound = other.InsertSound;
-        EjectSound = other.EjectSound;
-
-        Name = other.Name;
-        Locked = other.Locked;
-        DisableEject = other.DisableEject;
-        InsertOnInteract = other.InsertOnInteract;
-        EjectOnInteract = other.EjectOnInteract;
-        EjectOnUse = other.EjectOnUse;
-        InsertVerbText = other.InsertVerbText;
-        EjectVerbText = other.EjectVerbText;
-        WhitelistFailPopup = other.WhitelistFailPopup;
-        LockedFailPopup = other.LockedFailPopup;
-        InsertSuccessPopup = other.InsertSuccessPopup;
-        Swap = other.Swap;
-        Priority = other.Priority;
-    }
 }
