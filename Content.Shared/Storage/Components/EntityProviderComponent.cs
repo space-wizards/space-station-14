@@ -1,4 +1,4 @@
-﻿using Content.Shared.Storage.EntitySystems;
+using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
@@ -21,7 +21,7 @@ public sealed partial class EntityProviderComponent : Component
     public Dictionary<EntProtoId, int> EntityCounter = [];
 
     /// <summary>
-    /// The whitelist that the entities have to pass in order to be inserted.
+    /// The whitelist that entities have to pass in order to be inserted.
     /// </summary>
     [DataField(required: true)]
     public EntityWhitelist Whitelist;
@@ -39,7 +39,7 @@ public sealed partial class EntityProviderComponent : Component
     public bool CanReceive = true;
 
     /// <summary>
-    /// Whether this provider should delete after being emptied.
+    /// Whether this provider should be deleted after being emptied.
     /// </summary>
     [DataField]
     public bool DeleteIfEmpty;

@@ -7,11 +7,14 @@ using Content.Shared.Popups;
 using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Storage.Events;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Light.EntitySystems;
 
+/// <summary>
+/// System that handles light replacer tool (which picks proper light entity for socket
+///  and replaces it with other one, hopefully working one!).
+/// </summary>
 public sealed partial class LightReplacerSystem : EntitySystem
 {
     [Dependency] private SharedAudioSystem _audio = default!;
@@ -22,6 +25,7 @@ public sealed partial class LightReplacerSystem : EntitySystem
 
     [Dependency] private EntityQuery<LightBulbComponent> _lightBulbQuery = default!;
 
+    /// <summary> Adds contents info into examine. </summary>
     [SubscribeLocalEvent]
     private void OnExamined(Entity<LightReplacerComponent> replacer, ref ExaminedEvent args)
     {
@@ -35,6 +39,7 @@ public sealed partial class LightReplacerSystem : EntitySystem
                 args.PushMarkup(Loc.GetString("comp-light-replacer-no-lights"));
                 return;
             }
+
             args.PushMarkup(Loc.GetString("comp-light-replacer-has-lights"));
 
             foreach (var bulb in entities)
@@ -47,6 +52,7 @@ public sealed partial class LightReplacerSystem : EntitySystem
         }
     }
 
+    /// <summary> Attempts to open UI for replacer, if there are any viable options to put into it. </summary>
     [SubscribeLocalEvent]
     private void OnUse(Entity<LightReplacerComponent> replacer, ref UseInHandEvent args)
     {
@@ -65,6 +71,7 @@ public sealed partial class LightReplacerSystem : EntitySystem
         _ui.OpenUi(replacer.Owner, LightReplacerUiKey.Key, args.User);
     }
 
+    /// <summary> Tries to replace bulb/tube if applicable. </summary>
     [SubscribeLocalEvent]
     private void OnAfterInteract(Entity<LightReplacerComponent> replacer, ref AfterInteractEvent eventArgs)
     {
@@ -86,6 +93,7 @@ public sealed partial class LightReplacerSystem : EntitySystem
         _provider.TryEjectEntities(replacer.Owner, args.LightEntProtoId, out _, user: args.Actor);
     }
 
+    /// <summary> Attempts to switch currently selected bulb type according to request. </summary>
     [SubscribeLocalEvent]
     private void OnSwitchMessage(Entity<LightReplacerComponent> replacer, ref SwitchLightTypeMessage args)
     {

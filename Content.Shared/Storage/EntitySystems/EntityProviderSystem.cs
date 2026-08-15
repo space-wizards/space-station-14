@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Storage.Components;
@@ -9,17 +9,21 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Storage.EntitySystems;
 
+/// <summary>
+/// System for managing providing entities from storage.
+/// </summary>
 public sealed partial class EntityProviderSystem : EntitySystem
 {
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
-    [Dependency] private EntityQuery<EntityProviderComponent> _providerQuery = default!;
-    [Dependency] private EntityQuery<StorageComponent> _storageQuery = default!;
+    [Dependency] private EntityQuery<EntityProviderComponent> _providerQuery;
+    [Dependency] private EntityQuery<StorageComponent> _storageQuery;
 
     private const string ContainerId = "entity-provider";
 
+    /// <summary> Initialize container on component. </summary>
     [SubscribeLocalEvent]
     private void OnInit(Entity<EntityProviderComponent> provider, ref ComponentInit args)
     {
@@ -60,12 +64,12 @@ public sealed partial class EntityProviderSystem : EntitySystem
 
     /// <summary>
     /// Attempts to insert an entity back into the entityStorage of the provider.
+    /// This deletes entities, and thus data. An empty gun inserted will be spawned back as a loaded gun
     /// </summary>
     /// <param name="provider">The entity providing the entityProvider storage.</param>
     /// <param name="target">The entity attempted to be put into the provider.</param>
     /// <param name="user">The user attempting to insert the entity into the provider. Leave null to avoid popups.</param>
-    /// <returns>Returns true if it was able to be inserted, otherwise false.</returns>
-    /// <remarks>This deletes entities, and thus data. An empty gun inserted will be spawned back as a loaded gun.</remarks>
+    /// <returns>Returns true if it was inserted successfully, otherwise false.</returns>
     private bool TryInsertIntoProvider(Entity<EntityProviderComponent> provider, EntityUid target, EntityUid? user = null)
     {
         if (_whitelist.IsWhitelistFail(provider.Comp.Whitelist, target))
