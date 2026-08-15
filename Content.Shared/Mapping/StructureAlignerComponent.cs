@@ -14,4 +14,10 @@ public sealed partial class StructureAlignerComponent : Component
     /// </summary>
     [DataField]
     public StructureAlignType AlignType = StructureAlignType.Door;
+
+    /// <summary>
+    /// Align the entity when it gets anchored.
+    /// </summary>
+    [DataField]
+    public bool AnchorAlign;
 }

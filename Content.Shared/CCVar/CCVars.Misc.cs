@@ -125,4 +125,8 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<float> PlaytimeMinutesToday =
         CVarDef.Create("playtime.minutes_today", 0f, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    public static readonly CVarDef<bool> MapInitAlign =
+        CVarDef.Create("align.map_init", false, CVar.SERVER | CVar.REPLICATED);
+
 }

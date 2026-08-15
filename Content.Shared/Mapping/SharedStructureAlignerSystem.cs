@@ -1,4 +1,6 @@
+using Content.Shared.CCVar;
 using Content.Shared.Construction.Components;
+using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 
@@ -11,7 +13,7 @@ namespace Content.Shared.Mapping;
 /// <remarks>
 /// This only works for sprites that are symmetrical, so only need to worry about 2 rotation states.
 /// The correct rotation for sprites that (effectively) have 4 states is too fuzzy to be determined via scripted logic,
-/// and they are probably always placed deliberately anyway. So they are exempt from this system. //TODO:ERRANT are external airlocks actually exempt?
+/// and they are probably always placed deliberately anyway. So they are exempt from this system.
 /// This is primarily an assistive tool for fixing maps that were made before door sprites were directional.
 /// </remarks>>
 /// TODO But it could also be upgraded to help auto-align construction ghosts for doors, as a potential QOL feature
@@ -24,26 +26,22 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
     /// <summary>
     /// If enabled, every StructureAlignerComponent will be Aligned when it spawns.
     /// </summary>
-    private static bool _alignOnInit;
+    private static bool _mapInitAlign;
 
     private const float ProximityMin = 0.45f;
     private const float ProximityMax = 1.1f;
 
     public override void Initialize()
     {
-        // _cfg.OnValueChanged(CVars.StructureAlignOnMapInit, _mint, true); //TODO:ERRANT Add cvar
+        _cfg.OnValueChanged(CCVars.MapInitAlign,  (b) => { _mapInitAlign = b; }, true);
     }
-
-    //TODO:ERRANT For testing only
-    // [SubscribeLocalEvent]
-    // private void OnExamined(Entity<StructureAlignerComponent> entity, ref ExaminedEvent args)
-    // {
-    //         Align(entity.AsNullable());
-    // }
 
     [SubscribeLocalEvent]
     private void OnAnchored(Entity<StructureAlignerComponent> entity, ref UserAnchoredEvent args)
     {
+        if (!entity.Comp.AnchorAlign)
+            return;
+
         Align(entity.AsNullable());
     }
 
@@ -54,8 +52,10 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnMapInit(Entity<StructureAlignerComponent> entity, ref MapInitEvent args)
     {
-        if (_alignOnInit)
-            Align(entity.AsNullable());
+        if (!_mapInitAlign)
+            return;
+
+        Align(entity.AsNullable());
     }
 
     /// <summary>
