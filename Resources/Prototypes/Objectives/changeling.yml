@@ -34,8 +34,25 @@
   - type: NumberObjective
     min: 3
     max: 4
-    title: objective-unique-identity-name
-    description: objective-unique-identity-description
+    title: objective-devour-unique-identity-name
+    description: objective-devour-unique-identity-description
+  - type: ChangelingUniqueIdentityCondition
+    requireDevour: true
+
+- type: entity
+  parent: BaseChangelingObjective
+  id: ChangelingIdentityCountObjective
+  components:
+  - type: Objective
+    difficulty: 1
+    icon:
+      sprite: Mobs/Aliens/flesh.rsi
+      state: golem
+  - type: NumberObjective
+    min: 8
+    max: 10
+    title: objective-gain-unique-identity-name
+    description: objective-gain-unique-identity-description
   - type: ChangelingUniqueIdentityCondition
 
 - type: entity
@@ -118,4 +135,18 @@
     icon:
       sprite: Mobs/Aliens/flesh.rsi
       state: golem
-  - type: ChangelingDevourMostCondition
+  - type: ChangelingMostIdentitiesCondition
+    requireDevour: true
+
+- type: entity
+  parent: BaseChangelingObjective
+  id: ChangelingMostIdentitiesObjective
+  name: Acquire the most identities.
+  description: We must acquire the most unique DNA sequences out of all other changelings.
+  components:
+  - type: Objective
+    difficulty: 1
+    icon:
+      sprite: Mobs/Aliens/flesh.rsi
+      state: golem
+  - type: ChangelingMostIdentitiesCondition
