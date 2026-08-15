@@ -260,7 +260,7 @@
     duration: null
     occursDuringRoundEnd: false
     earliestStart: 20
-    reoccurrenceDelay: 20
+    reoccurrenceDelay: 30
     minimumPlayers: 15
   - type: ParadoxCloneRule
     objectiveBlacklist:
