@@ -1,4 +1,5 @@
 using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures.Attributes;
 using Content.IntegrationTests.Utility;
 using Content.Server.Construction.Components;
 using Content.Shared.Construction.Prototypes;
@@ -21,37 +22,31 @@ namespace Content.IntegrationTests.Tests.Construction
         /// </summary>
         [Test]
         [TestOf(typeof(ConstructionComponent))]
+        [RunOnSide(Side.Server)]
         [Description("Tests that a given entity specifies a valid node for construction, and optionally a valid one for deconstruction.")]
         public async Task ConstructionComponentValid()
         {
-            var pair = Pair;
-            var server = pair.Server;
-
-            var protoMan = server.ResolveDependency<IPrototypeManager>();
             var constructablePrototypes = GameDataScrounger.EntitiesWithComponent("Construction");
 
-            await server.WaitAssertion(() =>
+            using (Assert.EnterMultipleScope())
             {
-                using (Assert.EnterMultipleScope())
+                foreach (var protoKey in constructablePrototypes)
                 {
-                    foreach (var protoKey in constructablePrototypes)
-                    {
-                        var proto = protoMan.Index(protoKey);
-                        var construction = (ConstructionComponent)proto.Components["Construction"].Component;
+                    var proto = SProtoMan.Index(protoKey);
+                    var construction = (ConstructionComponent)proto.Components["Construction"].Component;
 
-                        var graph = protoMan.Index<ConstructionGraphPrototype>(construction.Graph);
+                    var graph = SProtoMan.Index(construction.Graph);
 
-                        Assert.That(graph.Nodes.ContainsKey(construction.Node),
-                            $"Found no node \"{construction.Node}\" on graph \"{graph.ID}\" for entity \"{proto.ID}\"!");
+                    Assert.That(graph.Nodes.ContainsKey(construction.Node),
+                        $"Found no node \"{construction.Node}\" on graph \"{graph.ID}\" for entity \"{proto.ID}\"!");
 
-                        if (construction.DeconstructionNode is not { } target)
-                            continue;
+                    if (construction.DeconstructionNode is not { } target)
+                        continue;
 
-                        Assert.That(graph.Nodes.ContainsKey(target),
-                            $"Invalid deconstruction node \"{target}\" on graph \"{graph.ID}\" for construction entity \"{proto.ID}\"!");
-                    }
+                    Assert.That(graph.Nodes.ContainsKey(target),
+                        $"Invalid deconstruction node \"{target}\" on graph \"{graph.ID}\" for construction entity \"{proto.ID}\"!");
                 }
-            });
+            }
         }
 
         [Test]
