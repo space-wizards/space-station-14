@@ -10,6 +10,9 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Communications.UI.Widgets;
 
+/// <summary>
+/// A set of controls to send out announcements or broadcast messages to screens.
+/// </summary>
 [GenerateTypedNameReferences]
 public sealed partial class MessagingControls : TabContainer
 {
@@ -136,6 +139,10 @@ public sealed partial class MessagingControls : TabContainer
         _appearance.SetData(_broadcastDisplayEntity, TextScreenVisuals.ScreenTextTime, _screenTextTime.Value);
     }
 
+    /// <summary>
+    /// Returns a character count status string.  The string printed out depends if
+    /// <paramref name="length"/> is less than or equal to <paramref name="maximum"/> or not.
+    /// </summary>
     private string GetCharacterLimitString(int length, int maximum)
     {
         var charCountLabel = length > maximum
@@ -152,7 +159,7 @@ public sealed partial class MessagingControls : TabContainer
     /// </summary>
     private string[] GetScreenStringArray()
     {
-        return Rope.Collapse(ScreenMessageInput.TextRope).Split(_lineEndings, 2, StringSplitOptions.None);
+        return Rope.Collapse(ScreenMessageInput.TextRope).Split(_lineEndings, StringSplitOptions.None);
     }
 
     /// <summary>

@@ -10,10 +10,13 @@
             <TextEdit Name="RadioMessageInput" MinHeight="100"
                 HorizontalExpand="True" VerticalExpand="True" />
         </PanelContainer>
-        <RichTextLabel Name="AnnounceCharLimitLabel" StyleClasses="StatusFieldTitle" HorizontalAlignment="Center"/>
-        <Button Name="AnnounceButton" HorizontalExpand="True" Margin="10 6 6 6"
-            Text="{Loc 'comms-console-menu-announcement-button'}"
-            ToolTip="{Loc 'comms-console-menu-announcement-button-tooltip'}" />
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <RichTextLabel Name="AnnounceCharLimitLabel" Margin="10 0 0 0"
+                HorizontalAlignment="Left" MinWidth="100" VerticalAlignment="Center" />
+            <Button Name="AnnounceButton" HorizontalExpand="True" Margin="6 6 6 6"
+                Text="{Loc 'comms-console-menu-announcement-button'}"
+                ToolTip="{Loc 'comms-console-menu-announcement-button-tooltip'}" />
+        </BoxContainer>
     </BoxContainer>
 
     <!-- Controls for putting messages on station screens (aka broadcasting) -->
@@ -26,12 +29,15 @@
             VerticalExpand="True" Margin="0 -90 0 -90" /> <!-- Forgive me for negamargin but there's just too much goddamn space - whatstone -->
         <PanelContainer StyleClasses="BackgroundDark" Margin="10 6 6 6"
             HorizontalExpand="True" VerticalExpand="True">
-            <TextEdit Name="ScreenMessageInput" SetHeight="40"
-                HorizontalExpand="True" Margin="10 6 6 6" />
+            <TextEdit Name="ScreenMessageInput" MinHeight="40"
+                HorizontalExpand="True" VerticalExpand="True"/>
         </PanelContainer>
-        <RichTextLabel Name="BroadcastCharLimitLabel" StyleClasses="StatusFieldTitle" HorizontalAlignment="Center"/>
-        <Button Name="BroadcastButton" HorizontalExpand="True" Margin="10 6 6 6"
-            Text="{Loc 'comms-console-menu-broadcast-button'}"
-            ToolTip="{Loc 'comms-console-menu-broadcast-button-tooltip'}" />
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <RichTextLabel Name="BroadcastCharLimitLabel" Margin="10 0 0 0"
+                HorizontalAlignment="Left" MinWidth="100" VerticalAlignment="Center" />
+            <Button Name="BroadcastButton" HorizontalExpand="True" Margin="6 6 6 6"
+                Text="{Loc 'comms-console-menu-broadcast-button'}"
+                ToolTip="{Loc 'comms-console-menu-broadcast-button-tooltip'}" />
+        </BoxContainer>
     </BoxContainer>
 </TabContainer>

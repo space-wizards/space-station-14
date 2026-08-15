@@ -43,6 +43,7 @@
 - type: entity
   parent: Screen
   id: ScreenDummy
+  categories: [HideSpawnMenu]
   components:
   - type: Sprite
     offset: 0, -0.25
