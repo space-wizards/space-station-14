@@ -98,7 +98,7 @@ public sealed partial class SolutionContainerVisualsSystem : VisualizerSystem<So
 
             SpriteSystem.LayerSetRsiState(ent, fillLayer, fillBaseName + closestFillSprite);
 
-            if (changeColor && args.TryGetData(SolutionContainerVisuals.Color, out Color color))
+            if (changeColor && args.TryGetData<Color>(SolutionContainerVisuals.Color, out var color))
                 SpriteSystem.LayerSetColor(ent, fillLayer, color);
             else
                 SpriteSystem.LayerSetColor(ent, fillLayer, Color.White);

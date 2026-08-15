@@ -11,7 +11,6 @@ namespace Content.Client.Fax.System;
 public sealed partial class FaxVisualsSystem : EntitySystem
 {
     [Dependency] private AnimationPlayerSystem _player = default!;
-    [Dependency] private SharedAppearanceSystem _appearance = default!;
 
     [SubscribeLocalEvent]
     private void OnAppearanceChanged(EntityUid uid, FaxMachineComponent component, ref AppearanceChangeEvent args)

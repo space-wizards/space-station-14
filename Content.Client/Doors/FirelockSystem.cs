@@ -5,11 +5,12 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Doors;
 
+/// <inheritdoc/>
 public sealed partial class FirelockSystem : SharedFirelockSystem
 {
-    [Dependency] private SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private SpriteSystem _sprite = default!;
 
+    /// <inheritdoc/>
     protected override void OnComponentStartup(Entity<FirelockComponent> ent, ref ComponentStartup args)
     {
         base.OnComponentStartup(ent, ref args);
@@ -20,18 +21,16 @@ public sealed partial class FirelockSystem : SharedFirelockSystem
         door.OpenSpriteStates.Add((DoorVisualLayers.BaseUnlit, ent.Comp.WarningLightSpriteState));
 
         ((Animation)door.OpeningAnimation).AnimationTracks.Add(new AnimationTrackSpriteFlick()
-            {
-                LayerKey = DoorVisualLayers.BaseUnlit,
-                KeyFrames = { new AnimationTrackSpriteFlick.KeyFrame(ent.Comp.OpeningLightSpriteState, 0f) },
-            }
-        );
+        {
+            LayerKey = DoorVisualLayers.BaseUnlit,
+            KeyFrames = { new AnimationTrackSpriteFlick.KeyFrame(ent.Comp.OpeningLightSpriteState, 0f) },
+        });
 
         ((Animation)door.ClosingAnimation).AnimationTracks.Add(new AnimationTrackSpriteFlick()
-            {
-                LayerKey = DoorVisualLayers.BaseUnlit,
-                KeyFrames = { new AnimationTrackSpriteFlick.KeyFrame(ent.Comp.ClosingLightSpriteState, 0f) },
-            }
-        );
+        {
+            LayerKey = DoorVisualLayers.BaseUnlit,
+            KeyFrames = { new AnimationTrackSpriteFlick.KeyFrame(ent.Comp.ClosingLightSpriteState, 0f) },
+        });
     }
 
     [SubscribeLocalEvent]
