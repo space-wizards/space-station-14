@@ -66,7 +66,6 @@ public abstract partial class QuickDialogSystem
     /// <param name="title"></param>
     /// <param name="entries"></param>
     /// <param name="buttons"></param>
-    /// <param name="ignoreOpen"></param>
     /// <returns></returns>
     [PublicAPI]
     public bool TryOpenDialog(
@@ -75,14 +74,10 @@ public abstract partial class QuickDialogSystem
         EntityUid actor,
         string title,
         IQuickDialogEntry[] entries,
-        QuickDialogButtonFlags buttons = QuickDialogButtonFlags.All,
-        bool ignoreOpen = false)
+        QuickDialogButtonFlags buttons = QuickDialogButtonFlags.All)
     {
         if (entries.Length == 0)
             throw new ArgumentException("Must specify at least one entry for the dialog!");
-
-        if (!ignoreOpen && _ui.IsUiOpen(target, uiKey))
-            return false;
 
         if (!_ui.TryOpenUi(target, uiKey, actor, true))
             return false;
