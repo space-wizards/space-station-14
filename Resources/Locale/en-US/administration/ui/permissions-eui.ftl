@@ -3,7 +3,7 @@ permissions-eui-do-not-have-required-flags-to-edit-rank-tooltip = You do not hav
 
 permissions-eui-menu-title = Permissions Panel
 permissions-eui-menu-add-admin-button = Add Admin
-permissions-eui-menu-add-admin-rank-button = Add Admin rank
+permissions-eui-menu-add-admin-rank-button = Add Admin Rank
 permissions-eui-menu-save-admin-rank-button = Save
 permissions-eui-menu-remove-admin-rank-button = Remove
 permissions-eui-menu-admins-tab-title = Admins
@@ -21,6 +21,8 @@ permissions-eui-edit-admin-rank-button = Edit
 permissions-eui-edit-admin-rank-window-title = Edit Admin Rank
 permissions-eui-edit-admin-window-save-button = Save
 permissions-eui-edit-admin-window-remove-flag-button = Remove
+permissions-eui-edit-admin-window-permission-all = ALL PERMISSIONS
+permissions-eui-edit-admin-window-permission-count = {$count} PERMISSIONS
 
 cmd-permissions-desc = Opens the admin permissions panel.
 cmd-permissions-help = Usage: permissions
