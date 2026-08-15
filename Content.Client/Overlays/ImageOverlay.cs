@@ -50,6 +50,9 @@ public sealed partial class ImageOverlay : Overlay
     /// <inheritdoc />
     protected override void Draw(in OverlayDrawArgs args)
     {
+        if (args.Viewport.Eye != _eyeManager.CurrentEye)
+            return;
+
         var zoomFactor = _eyeManager.CurrentEye.Zoom.X;
         var screenRect = args.ViewportBounds;
 
