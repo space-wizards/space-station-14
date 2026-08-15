@@ -85,7 +85,7 @@ public sealed partial class SinWaveAnimationSystem : EntitySystem
 
                 // TODO: I think this is slightly off
                 var angle = new Angle(Math.Atan(-Math.Sin(a)));
-                rotation += angle + Angle.FromDegrees(90);
+                rotation += angle;
             }
 
             rotationKeyFrames.Add(new AnimationTrackProperty.KeyFrame(rotation, stepValue));
