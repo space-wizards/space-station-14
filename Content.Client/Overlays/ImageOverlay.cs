@@ -37,13 +37,12 @@ public sealed partial class ImageOverlay : Overlay
 
     public void OverlayActivate(ImageOverlayComponent comp, bool isActive)
     {
-        var overlayPair = (comp.PathToOverlayImage, comp.AdditionalColorOverlay);
+        if (comp.Active == isActive) return; // prevents repetitious calls of this method
         comp.Active = isActive;
+
+        var overlayPair = (comp.PathToOverlayImage, comp.AdditionalColorOverlay);
         if (isActive)
-        {
-            if (!_texturesToDraw.Contains(overlayPair))
-                _texturesToDraw.Add(overlayPair);
-        }
+            _texturesToDraw.Add(overlayPair);
         else
             _texturesToDraw.Remove(overlayPair);
     }
