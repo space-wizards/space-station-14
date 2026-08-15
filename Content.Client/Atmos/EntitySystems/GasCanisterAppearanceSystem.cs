@@ -5,10 +5,11 @@ using Robust.Client.GameObjects;
 namespace Content.Client.Atmos.EntitySystems;
 
 /// <summary>
-/// Used to change the appearance of gas canisters.
+/// Used to change the appearance of gas canisters when painted.
 /// </summary>
 public sealed partial class GasCanisterAppearanceSystem : VisualizerSystem<GasCanisterComponent>
 {
+    /// <inheritdoc/>
     protected override void OnAppearanceChange(EntityUid uid, GasCanisterComponent component, ref AppearanceChangeEvent args)
     {
         if (!args.TryGetData<string>(PaintableVisuals.Prototype, out var protoName) || args.Sprite is null)

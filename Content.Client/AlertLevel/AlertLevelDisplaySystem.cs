@@ -8,7 +8,6 @@ namespace Content.Client.AlertLevel;
 public sealed partial class AlertLevelDisplaySystem : EntitySystem
 {
     [Dependency] private SpriteSystem _sprite = default!;
-    [Dependency] private SharedAppearanceSystem _appearance = default!;
 
     [SubscribeLocalEvent]
     private void OnAppearanceChange(EntityUid uid, AlertLevelDisplayComponent alertLevelDisplay, ref AppearanceChangeEvent args)
