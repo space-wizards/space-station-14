@@ -1,5 +1,5 @@
 - type: entity
-  name: moproach
+  name: glockroach
   parent: [MobMothroach, BaseSecurityContraband] # it is contraband because it has a gun!
   id: MobGlockroach
   description: "The unholy result of crossbreeding 'murican cockroaches with the humble mothroach."
@@ -27,33 +27,35 @@
 - type: startingGear
   id: GlockroachGear
   inhand:
-   - WeaponGlockroachGun
+   - WeaponPistolGlockroach
 
 - type: entity
-  name: mothroach-mounted mk58
+  name: glockroach mk 58 # I lied. This isn't a glock 17 or whatever. I actually do not know how IRL guns work at all so a mk58 is what this mothroach gets.
   parent: BaseItem
-  id: WeaponGlockroachGun
+  id: WeaponPistolGlockroach
   description: Oh no.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
     layers:
       - state: base
-        map: ["enum.GunVisualLayers.Base"]
       - state: mag-0
-        map: ["enum.GunVisualLayers.Mag"]
   - type: Gun
     fireRate: 5
     availableModes:
       - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/pistol.ogg
-  - type: ChamberMagazineAmmoProvider
-    soundRack:
-      path: /Audio/Weapons/Guns/Cock/pistol_cock.ogg
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+      - CartridgePistol
+    capacity: 10
+    proto: CartridgePistol
+    cycleable: false # So no infinite ammo
   - type: AmmoCounter
   - type: MagazineVisuals
     magState: mag
