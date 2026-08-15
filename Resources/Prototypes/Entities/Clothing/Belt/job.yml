@@ -421,7 +421,6 @@
       - MagazinePistol
       - MagazineMagnum
       - CombatKnife
-      - Truncheon
       - HandGrenade
       components:
       - Stunbaton
