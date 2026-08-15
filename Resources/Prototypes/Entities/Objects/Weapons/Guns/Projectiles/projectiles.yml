@@ -862,6 +862,8 @@
     - state: mechadermis-missile-unshaded
       shader: unshaded
   - type: ExplodeOnTrigger
+  - type: TimerTrigger
+    delay: 9.9 # Should explode before despawning.
   - type: Explosive
     explosionType: XenoborgAntiStructureExplosion
     totalIntensity: 25
