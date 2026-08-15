@@ -19,7 +19,7 @@ uplink-binary-translator-key-name = Binary Translator Key
 uplink-binary-translator-key-desc = Lets you tap into the silicons' binary channel. Don't talk on it though, at least not without a voice mask.
 
 uplink-cyberpen-name = Cybersun Pen
-uplink-cyberpen-desc = A diamond-tipped pen used by Cybersun Legal. Can be used to modify stamped documents, viciously stab prosecutors and a screwdriver in a pinch. A staple tool for war-profiteering, this pen is mightier than many swords.
+uplink-cyberpen-desc = A diamond-tipped pen used by Cybersun Legal. Can be used to modify stamped documents, viciously stab prosecutors and as a screwdriver in a pinch. A staple tool for war-profiteering, this pen is mightier than many swords.
 
 uplink-decoy-disk-name = Decoy Nuclear Disk
 uplink-decoy-disk-desc = A piece of plastic with a lenticular printing, made to look like a nuclear authentication disk.
