@@ -1,0 +1,66 @@
+- type: entity
+  name: moproach
+  parent: [MobMothroach, BaseSecurityContraband] # it is contraband because it has a gun!
+  id: MobGlockroach
+  description: "The unholy result of crossbreeding 'murican cockroaches with the humble mothroach."
+  components:
+  - type: GhostRole
+    name: ghost-role-information-glockroach-name
+    description: ghost-role-information-glockroach-description
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      45: Critical
+      65: Dead
+  - type: Hands
+    activeHandId: Hand
+    hands:
+      Hand:
+        location: Left
+    canBeStripped: false
+  - type: Loadout
+    prototypes: [ GlockroachGear ]
+  - type: InteractionPopup
+    interactSuccessString: petting-success-glockroach
+    interactFailureString: petting-failure-glockroach
+
+- type: startingGear
+  id: GlockroachGear
+  inhand:
+   - WeaponGlockroachGun
+
+- type: entity
+  name: mothroach-mounted mk58
+  parent: BaseItem
+  id: WeaponGlockroachGun
+  description: Oh no.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.GunVisualLayers.Mag"]
+  - type: Gun
+    fireRate: 5
+    availableModes:
+      - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/pistol.ogg
+  - type: ChamberMagazineAmmoProvider
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/pistol_cock.ogg
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+  - type: AmmoCounter
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: Appearance
+  - type: Unremoveable
+  - type: BallisticAmmoSelfRefiller # the glockroach needs its ammo!
+    autoRefillRate: 4s
+
