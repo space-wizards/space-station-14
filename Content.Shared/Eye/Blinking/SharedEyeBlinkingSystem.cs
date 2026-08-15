@@ -5,7 +5,9 @@ using Content.Shared.Chat;
 using Content.Shared.Cloning.Events;
 using Content.Shared.Eye.Blinding.Systems;
 using Content.Shared.Mobs;
+using Content.Shared.Zombies;
 using Robust.Shared.Serialization;
+using System.Linq;
 
 namespace Content.Shared.Eye.Blinking;
 
@@ -57,7 +59,10 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnApplyOrganProfileData(Entity<EyeBlinkingComponent> ent, ref BodyRelayedEvent<ApplyOrganProfileDataEvent> args)
     {
-        SetEyelidsColor(ent, args.Args.Base?.SkinColor);
+        if (args.Args.Base != null)
+            SetEyelidsColor(ent, args.Args.Base.Value.SkinColor);
+        else if (args.Args.Profiles?.FirstOrDefault() is { } profile)
+            SetEyelidsColor(ent, profile.Value.SkinColor);
 
         if (ent.Comp.EyeToggleActionEntity == null)
             _actionsSystem.AddAction(args.Body.Owner, ref ent.Comp.EyeToggleActionEntity, ent.Comp.EyeToggleAction);
