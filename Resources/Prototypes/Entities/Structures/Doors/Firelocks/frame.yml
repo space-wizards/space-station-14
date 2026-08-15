@@ -47,6 +47,7 @@
   - type: StructureAligner
     alignType:
     - Firelock
+    anchorAlign: true
   - type: StructureAlignTo
     alignType:
     - Firelock

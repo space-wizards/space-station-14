@@ -28,9 +28,6 @@
     cost: 4
     delay: 6
     fx: EffectRCDDeconstruct6
-  - type: Tag
-    tags:
-    - ForceFixRotations # Allow fixrotations to target these
   - type: Destructible
     thresholds:
     - trigger:
@@ -241,9 +238,6 @@
           - GlassAirlockLayer
     - type: Occluder
       enabled: false
-    - type: Tag
-      tags:
-      - ForceNoFixRotations # Prevent fixrotations from targeting these, since the base Firelock is targeted
     - type: Door
       occludes: false
     - type: Physics
@@ -255,4 +249,4 @@
       node: FirelockEdge
     - type: StructureAligner
       alignType:
-      - DoNotAlign # TODO:ERRANT fix this properly
+      - DoNotAlign
