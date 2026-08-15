@@ -1,0 +1,101 @@
+{
+    "version": 1,
+    "license": null,
+    "copyright": null,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "blank"
+        },
+        {
+            "name": "white"
+        },
+        {
+            "name": "block_under"
+        },
+        {
+            "name": "left"
+        },
+        {
+            "name": "right"
+        },
+        {
+            "name": "up"
+        },
+        {
+            "name": "down"
+        },
+        {
+            "name": "corner_left_up"
+        },
+        {
+            "name": "corner_right_up"
+        },
+        {
+            "name": "corner_left_down"
+        },
+        {
+            "name": "corner_right_down"
+        },
+        {
+            "name": "background2"
+        },
+        {
+            "name": "close_overlay"
+        },
+        {
+            "name": "close"
+        },
+        {
+            "name": "close_left"
+        },
+        {
+            "name": "close_mid"
+        },
+        {
+            "name": "close_right"
+        },
+        {
+            "name": "background"
+        },
+        {
+            "name": "up_hueshift"
+        },
+        {
+            "name": "down_hueshift"
+        },
+        {
+            "name": "left_hueshift"
+        },
+        {
+            "name": "right_hueshift"
+        },
+        {
+            "name": "up_fancy"
+        },
+        {
+            "name": "down_fancy"
+        },
+        {
+            "name": "left_fancy"
+        },
+        {
+            "name": "right_fancy"
+        },
+        {
+            "name": "up_hue_fancy"
+        },
+        {
+            "name": "down_hue_fancy"
+        },
+        {
+            "name": "left_hue_fancy"
+        },
+        {
+            "name": "right_hue_fancy"
+        }
+    ]
+}

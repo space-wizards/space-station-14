@@ -3,6 +3,7 @@ using Content.Client.Hands.Systems;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Hands.Controls;
 using Content.Client.UserInterface.Systems.Hotbar.Widgets;
+using Content.Client.UserInterface.Systems.RogueHud.Widgets;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
 using Content.Shared.Inventory.VirtualItem;
@@ -37,6 +38,7 @@ public sealed partial class HandsUIController : UIController, IOnStateEntered<Ga
     private HandButton? _statusHandRight;
 
     private HotbarGui? HandsGui => UIManager.GetActiveUIWidgetOrNull<HotbarGui>();
+    private HandsContainer? ActiveHandContainer => HandsGui?.HandContainer ?? UIManager.GetActiveUIWidgetOrNull<RogueHudGui>()?.HandContainer;
 
     public void OnSystemLoaded(HandsSystem system)
     {
@@ -114,7 +116,7 @@ public sealed partial class HandsUIController : UIController, IOnStateEntered<Ga
     private void UnloadPlayerHands()
     {
         HandsGui?.Visible = false;
-        HandsGui?.HandContainer.ClearButtons();
+        ActiveHandContainer?.ClearButtons();
         _playerHandsComponent = null;
     }
 
@@ -122,7 +124,8 @@ public sealed partial class HandsUIController : UIController, IOnStateEntered<Ga
     {
         DebugTools.Assert(_playerHandsComponent == null);
         HandsGui?.Visible = true;
-        HandsGui?.HandContainer.PlayerHandsComponent = handsComp;
+        if (ActiveHandContainer != null)
+            ActiveHandContainer.PlayerHandsComponent = handsComp;
         _playerHandsComponent = handsComp;
         foreach (var (name, hand) in handsComp.Comp.Hands)
         {
@@ -167,7 +170,7 @@ public sealed partial class HandsUIController : UIController, IOnStateEntered<Ga
 
     private void HandBlocked(string handName)
     {
-        if (HandsGui?.HandContainer.TryGetButton(handName, out var hand) != true)
+        if (ActiveHandContainer?.TryGetButton(handName, out var hand) != true)
             return;
 
         hand!.Blocked = true;
@@ -175,7 +178,7 @@ public sealed partial class HandsUIController : UIController, IOnStateEntered<Ga
 
     private void HandUnblocked(string handName)
     {
-        if (HandsGui?.HandContainer.TryGetButton(handName, out var hand) != true)
+        if (ActiveHandContainer?.TryGetButton(handName, out var hand) != true)
             return;
 
         hand!.Blocked = false;
@@ -277,7 +280,7 @@ public sealed partial class HandsUIController : UIController, IOnStateEntered<Ga
 
     private HandButton? GetHand(string handName)
     {
-        return HandsGui?.HandContainer.GetButton(handName);
+        return ActiveHandContainer?.GetButton(handName);
     }
 
     private HandButton AddHand(string handName, Hand hand)
@@ -286,7 +289,7 @@ public sealed partial class HandsUIController : UIController, IOnStateEntered<Ga
         button.StoragePressed += StorageActivate;
         button.Pressed += HandPressed;
 
-        HandsGui?.HandContainer.TryAddButton(button);
+        ActiveHandContainer?.TryAddButton(button);
 
         if (hand.EmptyRepresentative is { } representative)
         {
@@ -318,7 +321,7 @@ public sealed partial class HandsUIController : UIController, IOnStateEntered<Ga
 
     private void RemoveHand(string handName)
     {
-        if (HandsGui?.HandContainer.TryRemoveButton(handName, out var handButton) != true)
+        if (ActiveHandContainer?.TryRemoveButton(handName, out var handButton) != true)
             return;
 
         if (_statusHandLeft == handButton)
@@ -334,10 +337,10 @@ public sealed partial class HandsUIController : UIController, IOnStateEntered<Ga
         var leftVisible = false;
         var rightVisible = false;
 
-        if (HandsGui is null)
+        if (ActiveHandContainer is null)
             return;
 
-        foreach (var hand in HandsGui.HandContainer.GetButtons())
+        foreach (var hand in ActiveHandContainer.GetButtons())
         {
             if (hand.HandLocation == HandLocation.Left)
             {
@@ -349,23 +352,24 @@ public sealed partial class HandsUIController : UIController, IOnStateEntered<Ga
             }
         }
 
-        HandsGui.UpdateStatusVisibility(leftVisible, rightVisible);
+        HandsGui?.UpdateStatusVisibility(leftVisible, rightVisible);
     }
 
     public void OnStateEntered(GameplayState state)
     {
-        HandsGui?.Visible = _playerHandsComponent != null;
+        if (HandsGui != null)
+            HandsGui.Visible = _playerHandsComponent != null;
     }
 
     public override void FrameUpdate(FrameEventArgs args)
     {
         base.FrameUpdate(args);
 
-        if (HandsGui is not { } handsGui)
+        if (ActiveHandContainer is not { } handContainer)
             return;
 
         // TODO this should be event based but 2 systems modify the same component differently for some reason
-        foreach (var hand in handsGui.HandContainer.GetButtons())
+        foreach (var hand in handContainer.GetButtons())
         {
 
             if (!_entities.TryGetComponent(hand.Entity, out UseDelayComponent? useDelay))

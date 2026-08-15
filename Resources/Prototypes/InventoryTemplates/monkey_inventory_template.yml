@@ -4,27 +4,34 @@
   - name: head
     slotTexture: head
     slotFlags: HEAD
-    uiWindowPos: 1,3
+    uiWindowPos: 1,0
     strippingWindowPos: 0,0
     displayName: Head
   - name: ears
     slotTexture: ears
     slotFlags: EARS
     stripTime: 3
-    uiWindowPos: 0,3
+    uiWindowPos: 2,0
     strippingWindowPos: 1,2
     displayName: Ears
   - name: mask
     slotTexture: mask
     slotFlags: MASK
-    uiWindowPos: 1,2
+    uiWindowPos: 1,1
     strippingWindowPos: 1,1
     displayName: Mask
+  - name: legs
+    slotTexture: legs
+    slotFlags: LEGS
+    stripTime: 3
+    uiWindowPos: 0,3
+    strippingWindowPos: 0,3
+    displayName: Legs
   - name: jumpsuit
     slotTexture: uniform
     slotFlags: INNERCLOTHING
     stripTime: 6
-    uiWindowPos: 0,1
+    uiWindowPos: 0,2
     strippingWindowPos: 0,2
     displayName: Jumpsuit
   - name: id
@@ -52,7 +59,7 @@
     slotTexture: suit
     slotFlags: OUTERCLOTHING
     stripTime: 6
-    uiWindowPos: 1,1
+    uiWindowPos: 1,2
     strippingWindowPos: 1,3
     displayName: Suit
     whitelist:
@@ -61,7 +68,7 @@
   - name: neck
     slotTexture: neck
     slotFlags: NECK
-    uiWindowPos: 0,2
+    uiWindowPos: 0,1
     strippingWindowPos: 0,1
     displayName: Neck
     whitelist:

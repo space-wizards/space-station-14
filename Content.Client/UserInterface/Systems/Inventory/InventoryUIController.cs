@@ -161,6 +161,8 @@ public sealed partial class InventoryUIController : UIController, IOnStateEntere
 
         if (_inventoryButton != null)
             _inventoryButton.Visible = clothing.Count != 0;
+        else
+            _inventoryHotbar.Visible = true;
         if (clothing.Count == 0)
             return;
 

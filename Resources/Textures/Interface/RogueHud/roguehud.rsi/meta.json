@@ -1,0 +1,960 @@
+{
+    "version": 1,
+    "license": null,
+    "copyright": null,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": ""
+        },
+        {
+            "name": "hand_active"
+        },
+        {
+            "name": "intentselected",
+            "delays": [
+                [
+                    1,
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "intentselectedo",
+            "delays": [
+                [
+                    0.5,
+                    0.5
+                ]
+            ]
+        },
+        {
+            "name": "offintent"
+        },
+        {
+            "name": "offintentselected"
+        },
+        {
+            "name": "corner"
+        },
+        {
+            "name": "template"
+        },
+        {
+            "name": "template_active"
+        },
+        {
+            "name": "template_small"
+        },
+        {
+            "name": "slotbroke",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    3
+                ]
+            ]
+        },
+        {
+            "name": "slotdmg",
+            "delays": [
+                [
+                    0.1,
+                    5
+                ]
+            ]
+        },
+        {
+            "name": "genslot"
+        },
+        {
+            "name": "genslotempty"
+        },
+        {
+            "name": "mask"
+        },
+        {
+            "name": "mouth"
+        },
+        {
+            "name": "shirt"
+        },
+        {
+            "name": "ring"
+        },
+        {
+            "name": "pants"
+        },
+        {
+            "name": "neck"
+        },
+        {
+            "name": "hip"
+        },
+        {
+            "name": "head"
+        },
+        {
+            "name": "gloves"
+        },
+        {
+            "name": "shoes"
+        },
+        {
+            "name": "cloak"
+        },
+        {
+            "name": "belt"
+        },
+        {
+            "name": "back"
+        },
+        {
+            "name": "armor"
+        },
+        {
+            "name": "wrist"
+        },
+        {
+            "name": "act_rest_down"
+        },
+        {
+            "name": "act_rest_up"
+        },
+        {
+            "name": "sprint0"
+        },
+        {
+            "name": "sprint1",
+            "delays": [
+                [
+                    0.15,
+                    0.1,
+                    0.15,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "sneak0"
+        },
+        {
+            "name": "sneak1",
+            "delays": [
+                [
+                    0.5,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "def1"
+        },
+        {
+            "name": "def2"
+        },
+        {
+            "name": "def1on",
+            "delays": [
+                [
+                    0.2,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "def2on",
+            "delays": [
+                [
+                    0.2,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "craft"
+        },
+        {
+            "name": "skills"
+        },
+        {
+            "name": "act_resistoff"
+        },
+        {
+            "name": "act_resist"
+        },
+        {
+            "name": "act_submoff"
+        },
+        {
+            "name": "act_subm"
+        },
+        {
+            "name": "resist_1",
+            "delays": [
+                [
+                    6,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "resist_0",
+            "delays": [
+                [
+                    6,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "eye_closed",
+            "delays": [
+                [
+                    2,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "eye_fixed",
+            "delays": [
+                [
+                    3,
+                    0.05,
+                    0.05,
+                    0.05,
+                    1,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.5,
+                    0.05,
+                    0.05,
+                    0.05,
+                    1,
+                    0.05,
+                    0.05,
+                    0.05
+                ]
+            ]
+        },
+        {
+            "name": "eye_target",
+            "delays": [
+                [
+                    3,
+                    0.05,
+                    0.05,
+                    0.05,
+                    1,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.5,
+                    0.05,
+                    0.05,
+                    0.05,
+                    1,
+                    0.05,
+                    0.05,
+                    0.05
+                ]
+            ]
+        },
+        {
+            "name": "eye",
+            "delays": [
+                [
+                    5,
+                    0.01,
+                    0.01,
+                    0.01,
+                    0.01,
+                    0.01,
+                    0.01,
+                    0.01,
+                    0.01,
+                    0.01,
+                    0.01,
+                    0.01,
+                    0.01,
+                    0.01,
+                    0.01,
+                    0.01,
+                    0.01,
+                    0.01,
+                    0.01,
+                    0.01,
+                    0.01,
+                    0.01,
+                    0.01,
+                    0.01,
+                    0.01
+                ]
+            ]
+        },
+        {
+            "name": "oeye_fixed",
+            "delays": [
+                [
+                    3,
+                    0.05,
+                    0.05,
+                    0.05,
+                    1,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.5,
+                    0.05,
+                    0.05,
+                    0.05,
+                    1,
+                    0.05,
+                    0.05,
+                    0.05
+                ]
+            ]
+        },
+        {
+            "name": "oeye_target",
+            "delays": [
+                [
+                    3,
+                    0.05,
+                    0.05,
+                    0.05,
+                    1,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.5,
+                    0.05,
+                    0.05,
+                    0.05,
+                    1,
+                    0.05,
+                    0.05,
+                    0.05
+                ]
+            ]
+        },
+        {
+            "name": "oeye",
+            "delays": [
+                [
+                    5,
+                    0.01,
+                    0.01,
+                    0.01,
+                    0.01,
+                    0.01,
+                    0.01,
+                    0.01,
+                    0.01,
+                    0.01,
+                    0.01,
+                    0.01,
+                    0.01,
+                    0.01,
+                    0.01,
+                    0.01,
+                    0.01,
+                    0.01,
+                    0.01,
+                    0.01,
+                    0.01,
+                    0.01,
+                    0.01,
+                    0.01,
+                    0.01
+                ]
+            ]
+        },
+        {
+            "name": "hand_l"
+        },
+        {
+            "name": "hand_r"
+        },
+        {
+            "name": "oldmoodback"
+        },
+        {
+            "name": "stress16old"
+        },
+        {
+            "name": "stress14old"
+        },
+        {
+            "name": "stress12old"
+        },
+        {
+            "name": "stress10old"
+        },
+        {
+            "name": "stress8old"
+        },
+        {
+            "name": "stress6old"
+        },
+        {
+            "name": "stress4old"
+        },
+        {
+            "name": "stress2old"
+        },
+        {
+            "name": "stress0old",
+            "delays": [
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "stress18old"
+        },
+        {
+            "name": "stress20old"
+        },
+        {
+            "name": "stress22old"
+        },
+        {
+            "name": "stress24old"
+        },
+        {
+            "name": "stress26old"
+        },
+        {
+            "name": "stress28old"
+        },
+        {
+            "name": "stress30old"
+        },
+        {
+            "name": "stress32old"
+        },
+        {
+            "name": "stress34old",
+            "delays": [
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "mmbintents0"
+        },
+        {
+            "name": "mmbintents1",
+            "delays": [
+                [
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "mmbintents2",
+            "delays": [
+                [
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "mmbintents3",
+            "delays": [
+                [
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "mmbintents4",
+            "delays": [
+                [
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "act_drop"
+        },
+        {
+            "name": "catch0"
+        },
+        {
+            "name": "catch1",
+            "delays": [
+                [
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "throw0"
+        },
+        {
+            "name": "throw1",
+            "delays": [
+                [
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "resiswait",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "bahnschrift"
+        },
+        {
+            "name": "intie"
+        },
+        {
+            "name": "infeed"
+        },
+        {
+            "name": "incut"
+        },
+        {
+            "name": "incrush"
+        },
+        {
+            "name": "inchoke"
+        },
+        {
+            "name": "inblock"
+        },
+        {
+            "name": "inclaw"
+        },
+        {
+            "name": "intackle"
+        },
+        {
+            "name": "inbash"
+        },
+        {
+            "name": "ingrab"
+        },
+        {
+            "name": "intwist"
+        },
+        {
+            "name": "intouch"
+        },
+        {
+            "name": "inchop"
+        },
+        {
+            "name": "instrike"
+        },
+        {
+            "name": "instab"
+        },
+        {
+            "name": "inup"
+        },
+        {
+            "name": "indown"
+        },
+        {
+            "name": "insmash"
+        },
+        {
+            "name": "inshove"
+        },
+        {
+            "name": "inshoot"
+        },
+        {
+            "name": "inpunch"
+        },
+        {
+            "name": "inmove"
+        },
+        {
+            "name": "inimpale"
+        },
+        {
+            "name": "inpick"
+        },
+        {
+            "name": "insplash"
+        },
+        {
+            "name": "infill"
+        },
+        {
+            "name": "intake"
+        },
+        {
+            "name": "inthresh"
+        },
+        {
+            "name": "inscoop"
+        },
+        {
+            "name": "inhoe"
+        },
+        {
+            "name": "inuse"
+        },
+        {
+            "name": "incrack"
+        },
+        {
+            "name": "inlash"
+        },
+        {
+            "name": "inlove"
+        },
+        {
+            "name": "inhostage"
+        },
+        {
+            "name": "inarc"
+        },
+        {
+            "name": "cast"
+        },
+        {
+            "name": "insnip"
+        },
+        {
+            "name": "auto"
+        },
+        {
+            "name": "inchisel"
+        },
+        {
+            "name": "peculate"
+        },
+        {
+            "name": "33"
+        },
+        {
+            "name": "rmbintent"
+        },
+        {
+            "name": "rmbaimed"
+        },
+        {
+            "name": "rmbstrong"
+        },
+        {
+            "name": "rmbswift"
+        },
+        {
+            "name": "rmbspecial"
+        },
+        {
+            "name": "rmbfeint"
+        },
+        {
+            "name": "rmbriposte"
+        },
+        {
+            "name": "rmbguard"
+        },
+        {
+            "name": "rmbweak"
+        },
+        {
+            "name": "rmbaimed_x"
+        },
+        {
+            "name": "rmbstrong_x"
+        },
+        {
+            "name": "rmbswift_x"
+        },
+        {
+            "name": "rmbspecial_x"
+        },
+        {
+            "name": "rmbfeint_x"
+        },
+        {
+            "name": "rmbriposte_x"
+        },
+        {
+            "name": "rmbguard_x"
+        },
+        {
+            "name": "rmbweak_x"
+        },
+        {
+            "name": "rmbdef_x"
+        },
+        {
+            "name": "rmbdef"
+        },
+        {
+            "name": "rmmbb"
+        },
+        {
+            "name": "combat0"
+        },
+        {
+            "name": "combat1",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "def1n",
+            "delays": [
+                [
+                    3,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "def2n",
+            "delays": [
+                [
+                    3,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "stressback"
+        },
+        {
+            "name": "stress5"
+        },
+        {
+            "name": "stress4",
+            "delays": [
+                [
+                    5,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "stress3",
+            "delays": [
+                [
+                    5,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "stress2",
+            "delays": [
+                [
+                    5,
+                    0.1,
+                    2,
+                    0.1,
+                    0.1,
+                    0.1,
+                    2,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "stress1",
+            "delays": [
+                [
+                    5,
+                    0.1,
+                    2,
+                    0.1,
+                    0.1,
+                    0.1,
+                    2,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "mood_drunk",
+            "delays": [
+                [
+                    5,
+                    0.1,
+                    2,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "mood_high",
+            "delays": [
+                [
+                    2,
+                    0.05,
+                    0.05,
+                    0.05
+                ]
+            ]
+        },
+        {
+            "name": "mood_fear"
+        },
+        {
+            "name": "mood_dead"
+        },
+        {
+            "name": "insoak"
+        },
+        {
+            "name": "inwring"
+        },
+        {
+            "name": "indaze"
+        },
+        {
+            "name": "inpunish"
+        },
+        {
+            "name": "inattach"
+        },
+        {
+            "name": "inreel"
+        },
+        {
+            "name": "inbless"
+        },
+        {
+            "name": "inweep"
+        },
+        {
+            "name": "inpeel"
+        },
+        {
+            "name": "inrend"
+        },
+        {
+            "name": "intear"
+        },
+        {
+            "name": "inlight"
+        },
+        {
+            "name": "inspark"
+        },
+        {
+            "name": "inclean"
+        },
+        {
+            "name": "invoice"
+        },
+        {
+            "name": "insilence"
+        },
+        {
+            "name": "inshock"
+        },
+        {
+            "name": "give_item"
+        },
+        {
+            "name": "give_item_active"
+        },
+        {
+            "name": "incleave"
+        },
+        {
+            "name": "inslug"
+        },
+        {
+            "name": "injab"
+        },
+        {
+            "name": "inslam"
+        }
+    ]
+}

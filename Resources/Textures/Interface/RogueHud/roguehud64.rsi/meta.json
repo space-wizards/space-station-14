@@ -1,0 +1,397 @@
+{
+    "version": 1,
+    "license": null,
+    "copyright": null,
+    "size": {
+        "x": 64,
+        "y": 64
+    },
+    "states": [
+        {
+            "name": ""
+        },
+        {
+            "name": "f_head"
+        },
+        {
+            "name": "f_skull"
+        },
+        {
+            "name": "f_chest"
+        },
+        {
+            "name": "f_stomach"
+        },
+        {
+            "name": "f_r_arm"
+        },
+        {
+            "name": "f_l_arm"
+        },
+        {
+            "name": "f_r_hand"
+        },
+        {
+            "name": "f_l_hand"
+        },
+        {
+            "name": "f_groin"
+        },
+        {
+            "name": "f_r_leg"
+        },
+        {
+            "name": "f_l_leg"
+        },
+        {
+            "name": "f_r_foot"
+        },
+        {
+            "name": "f_l_foot"
+        },
+        {
+            "name": "f_r_eye"
+        },
+        {
+            "name": "f_l_eye"
+        },
+        {
+            "name": "f_ears"
+        },
+        {
+            "name": "f_mouth"
+        },
+        {
+            "name": "f_neck"
+        },
+        {
+            "name": "f_nose"
+        },
+        {
+            "name": "f_inhand_r"
+        },
+        {
+            "name": "f_inhand_l"
+        },
+        {
+            "name": "m_nose"
+        },
+        {
+            "name": "m_neck"
+        },
+        {
+            "name": "m_mouth"
+        },
+        {
+            "name": "m_ears"
+        },
+        {
+            "name": "m_r_eye"
+        },
+        {
+            "name": "m_l_eye"
+        },
+        {
+            "name": "m_l_foot"
+        },
+        {
+            "name": "m_r_foot"
+        },
+        {
+            "name": "m_l_leg"
+        },
+        {
+            "name": "m_r_leg"
+        },
+        {
+            "name": "m_groin"
+        },
+        {
+            "name": "m_l_hand"
+        },
+        {
+            "name": "m_r_hand"
+        },
+        {
+            "name": "m_l_arm"
+        },
+        {
+            "name": "m_r_arm"
+        },
+        {
+            "name": "m_stomach"
+        },
+        {
+            "name": "m_chest"
+        },
+        {
+            "name": "m_skull"
+        },
+        {
+            "name": "m_head"
+        },
+        {
+            "name": "m_inhand_r"
+        },
+        {
+            "name": "m_inhand_l"
+        },
+        {
+            "name": "m_height_arrow0",
+            "delays": [
+                [
+                    0.1,
+                    5
+                ]
+            ]
+        },
+        {
+            "name": "m_height_arrow1",
+            "delays": [
+                [
+                    0.1,
+                    5
+                ]
+            ]
+        },
+        {
+            "name": "m_height_arrow2",
+            "delays": [
+                [
+                    0.1,
+                    5
+                ]
+            ]
+        },
+        {
+            "name": "m-zone_sel"
+        },
+        {
+            "name": "m-head"
+        },
+        {
+            "name": "m-chest"
+        },
+        {
+            "name": "m-r_arm"
+        },
+        {
+            "name": "m-l_arm"
+        },
+        {
+            "name": "m-r_leg"
+        },
+        {
+            "name": "m-l_leg"
+        },
+        {
+            "name": "f-zone_sel"
+        },
+        {
+            "name": "f-head"
+        },
+        {
+            "name": "f-chest"
+        },
+        {
+            "name": "f-r_arm"
+        },
+        {
+            "name": "f-l_arm"
+        },
+        {
+            "name": "f-r_leg"
+        },
+        {
+            "name": "f-l_leg"
+        },
+        {
+            "name": "mw"
+        },
+        {
+            "name": "mw-head"
+        },
+        {
+            "name": "mw-chest"
+        },
+        {
+            "name": "mw-r_arm"
+        },
+        {
+            "name": "mw-l_arm"
+        },
+        {
+            "name": "mw-r_leg"
+        },
+        {
+            "name": "mw-l_leg"
+        },
+        {
+            "name": "fw"
+        },
+        {
+            "name": "fw-head"
+        },
+        {
+            "name": "fw-chest"
+        },
+        {
+            "name": "fw-r_arm"
+        },
+        {
+            "name": "fw-l_arm"
+        },
+        {
+            "name": "fw-r_leg"
+        },
+        {
+            "name": "fw-l_leg"
+        },
+        {
+            "name": "m-head-bleed",
+            "delays": [
+                [
+                    0.5,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "m-chest-bleed",
+            "delays": [
+                [
+                    0.5,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "m-r_arm-bleed",
+            "delays": [
+                [
+                    0.5,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "m-l_arm-bleed",
+            "delays": [
+                [
+                    0.5,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "m-r_leg-bleed",
+            "delays": [
+                [
+                    0.5,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "m-l_leg-bleed",
+            "delays": [
+                [
+                    0.5,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "f-head-bleed",
+            "delays": [
+                [
+                    0.5,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "f-chest-bleed",
+            "delays": [
+                [
+                    0.5,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "f-r_arm-bleed",
+            "delays": [
+                [
+                    0.5,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "f-l_arm-bleed",
+            "delays": [
+                [
+                    0.5,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "f-r_leg-bleed",
+            "delays": [
+                [
+                    0.5,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "f-l_leg-bleed",
+            "delays": [
+                [
+                    0.5,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "mhb"
+        },
+        {
+            "name": "fhb"
+        }
+    ]
+}
