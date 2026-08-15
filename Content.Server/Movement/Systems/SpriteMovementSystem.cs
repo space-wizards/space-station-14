@@ -4,6 +4,7 @@ using Content.Shared.Movement.Systems;
 
 namespace Content.Server.Movement.Systems;
 
+<<<<<<< HEAD
 /// <inheritdoc/>
 public sealed partial class SpriteMovementSystem : SharedSpriteMovementSystem
 {
@@ -14,3 +15,6 @@ public sealed partial class SpriteMovementSystem : SharedSpriteMovementSystem
         Dirty(ent);
     }
 }
+=======
+public sealed partial class SpriteMovementSystem : SharedSpriteMovementSystem;
+>>>>>>> upstream/master
