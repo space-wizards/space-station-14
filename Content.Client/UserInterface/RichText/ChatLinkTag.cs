@@ -9,7 +9,7 @@ namespace Content.Client.UserInterface.RichText;
 
 public sealed class ChatLinkTag : IMarkupTagHandler
 {
-    [Dependency] private readonly IEntityManager _entity = default!;
+    [Dependency] private IEntityManager _entity = default!;
 
     public const string TagName = "chatlink";
     public const string EntAttributeName = "ent";
