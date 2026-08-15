@@ -312,13 +312,11 @@ public abstract partial class InventorySystem
             }
         }
 
-        Resolve(item, ref item.Comp1, ref item.Comp2, false);
-
         var fittingInPocket = slotDefinition.SlotFlags.HasFlag(SlotFlags.POCKET) &&
-            item.Comp1 != null &&
+            Resolve(item, ref item.Comp1, false) &&
             _item.GetSizePrototype(item.Comp1.Size) <= _item.GetSizePrototype(PocketableItemSize);
 
-        if (!fittingInPocket && (item.Comp2 == null || !item.Comp2.Slots.HasFlag(slotDefinition.SlotFlags)))
+        if (!fittingInPocket && (!Resolve(item, ref item.Comp2, false) || !item.Comp2.Slots.HasFlag(slotDefinition.SlotFlags)))
             return false;
 
         if (!_whitelistSystem.CheckBoth(item, slotDefinition.Blacklist, slotDefinition.Whitelist))
