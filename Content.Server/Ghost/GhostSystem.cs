@@ -288,6 +288,9 @@ namespace Content.Server.Ghost
             WarpTo(attached, target);
         }
 
+        /// <summary>
+        /// Request to warp to the player with the most ghost followers.
+        /// </summary>
         private void OnGhostnadoRequest(GhostnadoRequestEvent msg, EntitySessionEventArgs args)
         {
             if (args.SenderSession.AttachedEntity is not {} uid
