@@ -95,9 +95,6 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
     /// The entity's owner must be valid, and its eyes must not already be closed.</param>
     public void Blink(Entity<EyeBlinkingComponent> ent)
     {
-        if (!ent.Owner.IsValid())
-            return;
-
         if (ent.Comp.Status != BlinkStatus.Normal)
             return;
 
@@ -131,8 +128,8 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         {
             foreach (var effect in effects)
             {
-                maxAsyncBlink = maxAsyncBlink.Add(effect.Comp1.MaxAsyncBlink);
-                maxAsyncOpenBlink = maxAsyncOpenBlink.Add(effect.Comp1.MaxAsyncOpenBlink);
+                maxAsyncBlink += effect.Comp1.MaxAsyncBlink;
+                maxAsyncOpenBlink += effect.Comp1.MaxAsyncOpenBlink;
             }
         }
 
@@ -268,11 +265,10 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         // Clears eyelid states from the client component, if it already exists.
         ent.Comp.Eyelids.Clear();
 
-        var rsiPath = ent.Comp.EyelidsSprite;
-        if (rsiPath == null)
+        if (ent.Comp.EyelidsSprite is not { } rsiPath)
             return;
 
-        if (!_resCache.TryGetResource<RSIResource>(rsiPath.Value, out var rsiRes))
+        if (!_resCache.TryGetResource<RSIResource>(rsiPath, out var rsiRes))
         {
             Log.Error($"EyeBlinkingSystem: can't find RSI '{rsiPath}'");
             return;
@@ -299,7 +295,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
                 || !name.StartsWith(ent.Comp.StatePrefix))
                 continue;
 
-            var specifier = new SpriteSpecifier.Rsi(rsiPath.Value, state.StateId.Name);
+            var specifier = new SpriteSpecifier.Rsi(rsiPath, state.StateId.Name);
             var layerId = $"{LayerPrefix}-{i}";
             if (!_sprite.LayerMapTryGet((body, comp), layerId, out var layerIndex, false))
             {

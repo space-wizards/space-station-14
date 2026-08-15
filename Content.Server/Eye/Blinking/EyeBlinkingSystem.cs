@@ -14,9 +14,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         if (args.Handled)
             return;
 
-        args.Handled = true;
-
-        SendEmoteMessage(ent, args.Emote.ID);
+        args.Handled = TrySendEmoteMessage(ent, args.Emote.ID);
     }
 
     [SubscribeLocalEvent]
@@ -25,20 +23,20 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         if (args.Args.Handled)
             return;
 
-        args.Args = args.Args with { Handled = true };
-
-        SendEmoteMessage(ent, args.Args.Emote.ID);
+        var handled = TrySendEmoteMessage(ent, args.Args.Emote.ID);
+        args.Args = args.Args with { Handled = handled };
     }
 
-    private void SendEmoteMessage(Entity<EyeBlinkingComponent> ent, string emoteId)
+    private bool TrySendEmoteMessage(Entity<EyeBlinkingComponent> ent, string emoteId)
     {
         if (!ent.Comp.BlinkEmoteId.Contains(emoteId))
-            return;
+            return false;
 
         if (ent.Comp.Status != BlinkStatus.Normal)
-            return;
+            return false;
 
         var ev = new BlinkEyeEvent(GetNetEntity(ent.Owner));
         RaiseNetworkEvent(ev);
+        return true;
     }
 }
