@@ -85,7 +85,7 @@ public sealed partial class CCVars
         CVarDef.Create("chat.highlights_color", "#17FFC1FF", CVar.CLIENTONLY | CVar.ARCHIVE, "The color in which the highlights will be displayed.");
 
     /// <summary>
-    /// If true will allow Chat Name Links to make interactable chat fields.S
+    /// If true will allow Chat Name Links to make interactable chat fields.
     /// </summary>
 
     public static readonly CVarDef<bool> ChatNameLinks =
