@@ -1554,7 +1554,7 @@
   parent: [ BaseXenoborgModuleHeavy, BaseProviderBorgModule, BaseXenoborgContraband ]
   id: XenoborgModuleRocket
   name: rocket module
-  description: Module with a self-recharging deflector field projector.
+  description: A module with a rocket launcher designed to destroy structures.
   components:
   - type: Sprite
     layers:

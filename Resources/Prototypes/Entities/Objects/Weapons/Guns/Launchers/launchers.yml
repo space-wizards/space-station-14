@@ -179,7 +179,7 @@
   parent: BaseWeaponLauncher
   id: WeaponRocketLauncherXenoborg
   name: XB MRL-97-D # Xenoborg Multi Rocket Launcher 97 D (Demolition)
-  description: A modified ancient rocket-propelled grenade launcher.
+  description: A alien rocket launcher fitted with special demolition rockets.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/xb_mlr.rsi
