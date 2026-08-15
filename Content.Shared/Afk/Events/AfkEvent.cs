@@ -6,12 +6,7 @@ namespace Content.Shared.Afk.Events;
 /// Raised whenever a player goes afk.
 /// </summary>
 [ByRefEvent]
-public readonly struct AfkEvent
+public readonly struct AfkEvent(ICommonSession session)
 {
-    public readonly ICommonSession Session;
-
-    public AfkEvent(ICommonSession session)
-    {
-        Session = session;
-    }
+    public readonly ICommonSession Session = session;
 }
