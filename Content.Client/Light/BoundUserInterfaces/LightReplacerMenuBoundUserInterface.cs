@@ -1,4 +1,4 @@
-﻿using Content.Client.UserInterface.Controls;
+using Content.Client.UserInterface.Controls;
 using Content.Shared.Light.Components;
 using Content.Shared.Light.Events;
 using Content.Shared.Storage.Components;
@@ -67,48 +67,50 @@ public sealed partial class LightReplacerMenuBoundUserInterface(EntityUid owner,
             }
         }
 
-        if (hasActiveTubes && _prototype.Resolve(replacer.ActiveLightTube, out var ejectTubes))
+        if (hasActiveTubes && _prototype.Resolve(replacer.ActiveLightTube, out var ejectTube))
         {
-            var toggleLightTubes = new RadialMenuActionOption<EntProtoId>(EjectLights, replacer.ActiveLightTube)
-            {
-                IconSpecifier = RadialMenuIconSpecifier.With(_ejectTubes),
-                ToolTip = Loc.GetString("comp-light-replacer-eject-specified-lights", ("light", ejectTubes.Name)),
-            };
-            options.Add(toggleLightTubes);
+            var option = AddEjectOption(replacer.ActiveLightTube, _ejectTubes, ejectTube.Name);
+            options.Add(option);
         }
 
         if (hasActiveBulbs && _prototype.Resolve(replacer.ActiveLightBulb, out var ejectBulbs))
         {
-            var toggleLightBulbs = new RadialMenuActionOption<EntProtoId>(EjectLights, replacer.ActiveLightBulb)
-            {
-                IconSpecifier = RadialMenuIconSpecifier.With(_ejectBulbs),
-                ToolTip = Loc.GetString("comp-light-replacer-eject-specified-lights", ("light", ejectBulbs.Name)),
-            };
-            options.Add(toggleLightBulbs);
+            var option = AddEjectOption(replacer.ActiveLightBulb, _ejectBulbs, ejectBulbs.Name);
+            options.Add(option);
         }
 
         // This iterates through every unique light to add them as options.
         foreach (var light in tubes)
         {
-            PopulateOptions(light.Key, light.Value, LightBulbType.Tube, ref options);
+            var option = CreateOptions(light.Key, light.Value, LightBulbType.Tube);
+            options.Add(option);
         }
 
         foreach (var light in bulbs)
         {
-            PopulateOptions(light.Key, light.Value, LightBulbType.Bulb, ref options);
+            var option = CreateOptions(light.Key, light.Value, LightBulbType.Bulb);
+            options.Add(option);
         }
 
         return options;
     }
 
-    private void PopulateOptions(EntProtoId protoId, string name, LightBulbType lightType, ref List<RadialMenuOptionBase> options)
+    private RadialMenuOptionBase AddEjectOption(EntProtoId protoToUseInAction, EntProtoId protoForIcon, string lightTypeName)
     {
-        var switchLight = new RadialMenuActionOption<(EntProtoId, LightBulbType)>(SwitchActiveLight, (protoId, lightType))
+        return new RadialMenuActionOption<EntProtoId>(EjectLights, protoToUseInAction)
+        {
+            IconSpecifier = RadialMenuIconSpecifier.With(protoForIcon),
+            ToolTip = Loc.GetString("comp-light-replacer-eject-specified-lights", ("light", lightTypeName)),
+        };
+    }
+
+    private RadialMenuOptionBase CreateOptions(EntProtoId protoId, string lightTypeName, LightBulbType lightType)
+    {
+        return new RadialMenuActionOption<(EntProtoId, LightBulbType)>(SwitchActiveLight, (protoId, lightType))
         {
             IconSpecifier = RadialMenuIconSpecifier.With(protoId),
-            ToolTip = Loc.GetString("comp-light-replacer-select-lights", ("light", name)),
+            ToolTip = Loc.GetString("comp-light-replacer-select-lights", ("light", lightTypeName)),
         };
-        options.Add(switchLight);
     }
 
     private void SwitchActiveLight((EntProtoId, LightBulbType) light)
