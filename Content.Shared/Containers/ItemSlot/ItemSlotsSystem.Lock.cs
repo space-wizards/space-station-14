@@ -33,26 +33,26 @@ public sealed partial class ItemSlotsSystem
     /// <summary>
     /// Sets whether an item slot is locked, preventing checked insertion and ejection while locked.
     /// </summary>
-    public void SetLock(EntityUid uid, string id, bool locked, ItemSlotsComponent? itemSlots = null)
+    public void SetLock(Entity<ItemSlotsComponent?> ent, string id, bool locked)
     {
-        if (!Resolve(uid, ref itemSlots))
+        if (!Resolve(ent, ref ent.Comp))
             return;
 
-        if (!itemSlots.Slots.TryGetValue(id, out var slot))
+        if (!ent.Comp.Slots.TryGetValue(id, out var slot))
             return;
 
-        SetLock(uid, slot, locked, itemSlots);
+        SetLock(ent, slot, locked);
     }
 
     /// <summary>
     /// Sets whether an item slot is locked, preventing checked insertion and ejection while locked.
     /// </summary>
-    public void SetLock(EntityUid uid, ItemSlot slot, bool locked, ItemSlotsComponent? itemSlots = null)
+    public void SetLock(Entity<ItemSlotsComponent?> ent, ItemSlot slot, bool locked)
     {
-        if (!Resolve(uid, ref itemSlots))
+        if (!Resolve(ent, ref ent.Comp))
             return;
 
         slot.Locked = locked;
-        Dirty(uid, itemSlots);
+        Dirty(ent);
     }
 }

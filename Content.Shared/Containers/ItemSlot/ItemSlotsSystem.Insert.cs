@@ -77,20 +77,19 @@ public sealed partial class ItemSlotsSystem
     /// Tries to insert an item into a slot selected by ID.
     /// </summary>
     /// <returns>True only if the slot exists and the item was inserted.</returns>
-    public bool TryInsert(EntityUid uid,
+    public bool TryInsert(Entity<ItemSlotsComponent?> ent,
         string id,
         EntityUid item,
         EntityUid? user,
-        ItemSlotsComponent? itemSlots = null,
         bool excludeUserAudio = false)
     {
-        if (!Resolve(uid, ref itemSlots))
+        if (!Resolve(ent, ref ent.Comp))
             return false;
 
-        if (!itemSlots.Slots.TryGetValue(id, out var slot))
+        if (!ent.Comp.Slots.TryGetValue(id, out var slot))
             return false;
 
-        return TryInsert(uid, slot, item, user, excludeUserAudio: excludeUserAudio);
+        return TryInsert(ent, slot, item, user, excludeUserAudio: excludeUserAudio);
     }
 
     /// <summary>
@@ -118,20 +117,19 @@ public sealed partial class ItemSlotsSystem
     /// <returns>True only if the held item was dropped and inserted.</returns>
     public bool TryInsertFromHand(EntityUid uid,
         ItemSlot slot,
-        EntityUid user,
-        HandsComponent? hands = null,
+        Entity<HandsComponent?> user,
         bool excludeUserAudio = false)
     {
-        if (!Resolve(user, ref hands, false))
+        if (!Resolve(user, ref user.Comp, false))
             return false;
 
-        if (!_handsSystem.TryGetActiveItem((user, hands), out var held))
+        if (!_handsSystem.TryGetActiveItem(user, out var held))
             return false;
 
         if (!CanInsert(uid, slot, held.Value, user))
             return false;
 
-        if (!_handsSystem.TryDrop(user, hands.ActiveHandId!))
+        if (!_handsSystem.TryDrop(user, user.Comp.ActiveHandId!))
             return false;
 
         return Insert(uid, slot, held.Value, user, excludeUserAudio: excludeUserAudio);

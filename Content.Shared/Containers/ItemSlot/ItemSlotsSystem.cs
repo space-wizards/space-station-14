@@ -81,74 +81,73 @@ public sealed partial class ItemSlotsSystem : EntitySystem
     /// <remarks>
     /// If a local slot replaces one created from component state, the received state is copied onto the local slot.
     /// </remarks>
-    public void AddItemSlot(EntityUid uid, string id, ItemSlot slot, ItemSlotsComponent? itemSlots = null)
+    public void AddItemSlot(Entity<ItemSlotsComponent?> ent, string id, ItemSlot slot)
     {
-        itemSlots ??= EnsureComp<ItemSlotsComponent>(uid);
-        DebugTools.AssertOwner(uid, itemSlots);
+        ent.Comp ??= EnsureComp<ItemSlotsComponent>(ent);
+        DebugTools.AssertOwner(ent, ent.Comp);
 
-        if (itemSlots.Slots.TryGetValue(id, out var existing))
+        if (ent.Comp.Slots.TryGetValue(id, out var existing))
         {
             if (existing.Local)
             {
                 Log.Error(
-                    $"Duplicate item slot key. Entity: {Comp<MetaDataComponent>(uid).EntityName} ({uid}), key: {id}");
+                    $"Duplicate item slot key. Entity: {Comp<MetaDataComponent>(ent).EntityName} ({ent.Owner}), key: {id}");
             }
             else
                 // Server state takes priority.
                 slot.CopyFrom(existing);
         }
 
-        slot.ContainerSlot = _containers.EnsureContainer<ContainerSlot>(uid, id);
-        itemSlots.Slots[id] = slot;
-        Dirty(uid, itemSlots);
+        slot.ContainerSlot = _containers.EnsureContainer<ContainerSlot>(ent, id);
+        ent.Comp.Slots[id] = slot;
+        Dirty(ent);
     }
 
     /// <summary>
     /// Removes an item slot. This should generally be called whenever a component that added a slot is removed.
     /// </summary>
-    public void RemoveItemSlot(EntityUid uid, ItemSlot slot, ItemSlotsComponent? itemSlots = null)
+    public void RemoveItemSlot(Entity<ItemSlotsComponent?> ent, ItemSlot slot)
     {
-        if (Terminating(uid) || slot.ContainerSlot == null)
+        if (Terminating(ent) || slot.ContainerSlot == null)
             return;
 
         _containers.ShutdownContainer(slot.ContainerSlot);
 
         // Don't log missing resolves. When an entity has all of its components removed, the ItemSlotsComponent may
         // have been removed before some other component that added an item slot (and is now trying to remove it).
-        if (!Resolve(uid, ref itemSlots, logMissing: false))
+        if (!Resolve(ent, ref ent.Comp, logMissing: false))
             return;
 
-        itemSlots.Slots.Remove(slot.ContainerSlot.ID);
+        ent.Comp.Slots.Remove(slot.ContainerSlot.ID);
 
-        if (itemSlots.Slots.Count == 0)
-            RemComp(uid, itemSlots);
+        if (ent.Comp.Slots.Count == 0)
+            RemComp(ent, ent.Comp);
         else
-            Dirty(uid, itemSlots);
+            Dirty(ent);
     }
 
-    public bool TryGetSlot(EntityUid uid,
+    public bool TryGetSlot(Entity<ItemSlotsComponent?> ent,
         string slotId,
-        [NotNullWhen(true)] out ItemSlot? itemSlot,
-        ItemSlotsComponent? component = null)
+        [NotNullWhen(true)] out ItemSlot? itemSlot)
     {
         itemSlot = null;
 
-        if (!Resolve(uid, ref component))
+        if (!Resolve(ent, ref ent.Comp))
             return false;
 
-        return component.Slots.TryGetValue(slotId, out itemSlot);
+        return ent.Comp.Slots.TryGetValue(slotId, out itemSlot);
     }
 
     /// <summary>
     /// Get the contents of some item slot.
     /// </summary>
     /// <returns>The item in the slot, or null if the slot is empty or the entity doesn't have an <see cref="ItemSlotsComponent"/>.</returns>
-    public EntityUid? GetItemOrNull(EntityUid uid, string id, ItemSlotsComponent? itemSlots = null)
+    public EntityUid? GetItemOrNull(Entity<ItemSlotsComponent?> ent, string id)
     {
-        if (!Resolve(uid, ref itemSlots, logMissing: false))
+        if (!Resolve(ent, ref ent.Comp, logMissing: false))
             return null;
 
-        return itemSlots.Slots.GetValueOrDefault(id)?.Item;
+        return ent.Comp.Slots.GetValueOrDefault(id)?.Item;
     }
 
     /// <summary>
@@ -172,7 +171,7 @@ public sealed partial class ItemSlotsSystem : EntitySystem
 
         foreach (var slot in removed)
         {
-            RemoveItemSlot(ent, slot, ent.Comp);
+            RemoveItemSlot((ent.Owner, ent.Comp), slot);
         }
 
         foreach (var (serverKey, serverSlot) in state.Slots)
@@ -188,7 +187,7 @@ public sealed partial class ItemSlotsSystem : EntitySystem
                 {
                     Local = false
                 };
-                AddItemSlot(ent, serverKey, slot);
+                AddItemSlot((ent.Owner, ent.Comp), serverKey, slot);
             }
         }
     }

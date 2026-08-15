@@ -85,22 +85,21 @@ public sealed partial class ItemSlotsSystem
     /// Tries to eject an item from a slot selected by ID.
     /// </summary>
     /// <returns>True only if the slot exists and the item was ejected.</returns>
-    public bool TryEject(EntityUid uid,
+    public bool TryEject(Entity<ItemSlotsComponent?> ent,
         string id,
         EntityUid? user,
         [NotNullWhen(true)] out EntityUid? item,
-        ItemSlotsComponent? itemSlots = null,
         bool excludeUserAudio = false)
     {
         item = null;
 
-        if (!Resolve(uid, ref itemSlots))
+        if (!Resolve(ent, ref ent.Comp))
             return false;
 
-        if (!itemSlots.Slots.TryGetValue(id, out var slot))
+        if (!ent.Comp.Slots.TryGetValue(id, out var slot))
             return false;
 
-        return TryEject(uid, slot, user, out item, excludeUserAudio);
+        return TryEject(ent, slot, user, out item, excludeUserAudio);
     }
 
     /// <summary>
@@ -135,7 +134,7 @@ public sealed partial class ItemSlotsSystem
         {
             if (slot.HasItem && shouldEject(slot))
             {
-                SetLock(entity.Owner, slot, false, entity.Comp);
+                SetLock((entity.Owner, entity.Comp), slot, false);
                 TryEject(entity.Owner, slot, null, out _);
             }
         }
