@@ -64,7 +64,8 @@ public sealed partial class EntityProviderSystem : EntitySystem
 
     /// <summary>
     /// Attempts to insert an entity back into the entityStorage of the provider.
-    /// This deletes entities, and thus data. An empty gun inserted will be spawned back as a loaded gun
+    /// Please be mindful that it deletes entities, and thus data.
+    /// An empty gun inserted will be spawned back as a loaded gun.
     /// </summary>
     /// <param name="provider">The entity providing the entityProvider storage.</param>
     /// <param name="target">The entity attempted to be put into the provider.</param>

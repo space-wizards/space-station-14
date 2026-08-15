@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Popups;
 using Content.Shared.Storage.Components;
 using JetBrains.Annotations;
@@ -51,7 +51,8 @@ public sealed partial class EntityProviderSystem
 
         while (amount > 0)
         {
-            entities.Add(PredictedSpawnInContainerOrDrop(protoId, provider, ContainerId));
+            var spawned = PredictedSpawnInContainerOrDrop(protoId, provider, ContainerId);
+            entities.Add(spawned);
             value--;
             amount--;
         }
