@@ -48,7 +48,7 @@ public sealed partial class PermissionsEui : BaseEui
 
     public Dictionary<int, PermissionsEuiState.AdminRankData> Ranks => _ranks;
 
-    internal void CloseEverything()
+    private void CloseEverything()
     {
         foreach (var subWindow in _subWindows.ToArray())
         {
@@ -58,22 +58,22 @@ public sealed partial class PermissionsEui : BaseEui
         _permissionsWindow.Close();
     }
 
-    internal void AddAdminPressed()
+    private void AddAdminPressed()
     {
         OpenEditWindow(null);
     }
 
-    internal void AddAdminRankPressed()
+    private void AddAdminRankPressed()
     {
         OpenRankEditWindow(null);
     }
 
-    internal void OnEditAdminPressed(PermissionsEuiState.AdminData admin)
+    private void OnEditAdminPressed(PermissionsEuiState.AdminData admin)
     {
         OpenEditWindow(admin);
     }
 
-    internal void OnEditRankPressed(KeyValuePair<int, PermissionsEuiState.AdminRankData> rank)
+    private void OnEditRankPressed(KeyValuePair<int, PermissionsEuiState.AdminRankData> rank)
     {
         OpenRankEditWindow(rank);
     }
