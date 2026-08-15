@@ -58,10 +58,12 @@ public sealed partial class PermissionsWindow : FancyWindow
             bool italic;
             string rank;
             var combinedFlags = admin.PosFlags;
+
             if (admin.RankId is { } rankId)
             {
-                italic = false;
                 var rankData = ranks[rankId];
+                italic = false;
+
                 rank = rankData.Name;
                 combinedFlags |= rankData.Flags;
             }
@@ -79,7 +81,7 @@ public sealed partial class PermissionsWindow : FancyWindow
 
             AdminsList.AddChild(rankControl);
 
-            var flagsText = AdminFlagsHelper.PosNegFlagsText(admin.PosFlags, admin.NegFlags);
+            var flagsText = GetFlagsText(combinedFlags);
 
             AdminsList.AddChild(new Label
             {
@@ -92,11 +94,11 @@ public sealed partial class PermissionsWindow : FancyWindow
             editButton.OnPressed += _ => OnEditAdminPressed?.Invoke(admin);
             AdminsList.AddChild(editButton);
 
-            if (!_adminManager.HasFlag(combinedFlags))
-            {
-                editButton.Disabled = true;
-                editButton.ToolTip = Loc.GetString("permissions-eui-do-not-have-required-flags-to-edit-admin-tooltip");
-            }
+            if (_adminManager.HasFlag(combinedFlags))
+                continue;
+            
+            editButton.Disabled = true;
+            editButton.ToolTip = Loc.GetString("permissions-eui-do-not-have-required-flags-to-edit-admin-tooltip");
         }
     }
 
@@ -107,16 +109,7 @@ public sealed partial class PermissionsWindow : FancyWindow
         foreach (var adminRankPair in ranks)
         {
             var rank = adminRankPair.Value;
-            var count = BitOperations.PopCount((uint)rank.Flags);
-
-            string flagsText;
-
-            // readability
-            // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
-            if (rank.Flags == AdminFlagsHelper.Everything)
-                flagsText = Loc.GetString("permissions-eui-edit-admin-window-permission-all");
-            else
-                flagsText = Loc.GetString("permissions-eui-edit-admin-window-permission-count", ("count", count));
+            var flagsText = GetFlagsText(rank.Flags);
 
             AdminRanksList.AddChild(new Label { Text = rank.Name});
             AdminRanksList.AddChild(new Label
@@ -136,6 +129,21 @@ public sealed partial class PermissionsWindow : FancyWindow
             editButton.Disabled = true;
             editButton.ToolTip = Loc.GetString("permissions-eui-do-not-have-required-flags-to-edit-rank-tooltip");
         }
+    }
+
+    private string GetFlagsText(AdminFlags rankFlags, object? count = null)
+    {
+        count ??= BitOperations.PopCount((uint)rankFlags);
+        string flagsText;
+
+        // readability
+        // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
+        if (rankFlags == AdminFlagsHelper.Everything)
+            flagsText = Loc.GetString("permissions-eui-edit-admin-window-permission-all");
+        else
+            flagsText = Loc.GetString("permissions-eui-edit-admin-window-permission-count", ("count", count));
+
+        return flagsText;
     }
 }
 
