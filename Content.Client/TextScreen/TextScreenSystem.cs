@@ -250,7 +250,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
 
     #region Event Handlers
     [SubscribeLocalEvent]
-    private void OnInit(Entity<TextScreenVisualsComponent> ent, ref ComponentInit args)
+    private void OnStartup(Entity<TextScreenVisualsComponent> ent, ref ComponentStartup args)
     {
         if (!_spriteQuery.TryComp(ent, out var sprite))
             return;
