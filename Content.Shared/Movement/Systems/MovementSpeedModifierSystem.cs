@@ -42,6 +42,8 @@ namespace Content.Shared.Movement.Systems
             ent.Comp.Friction = _frictionModifier * ent.Comp.BaseFriction;
             ent.Comp.FrictionNoInput = _frictionModifier * ent.Comp.BaseFriction;
             Dirty(ent);
+
+            RefreshWeightlessModifiers(ent.AsNullable());
         }
 
         private void OnDowned(Entity<MovementSpeedModifierComponent> entity, ref DownedEvent args)

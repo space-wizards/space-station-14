@@ -16,13 +16,15 @@ public sealed partial class VocalSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private INetManager _net = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedChatSystem _chat = default!;
-    [Dependency] private SharedActionsSystem _actions = default!;
 
     [SubscribeLocalEvent]
     private void OnMapInit(Entity<VocalComponent> ent, ref MapInitEvent args)
     {
+        LoadSounds(ent, ent.Comp.EmoteSounds);
+
         // try to add scream action when vocal comp added
         _actions.AddAction(ent.Owner, ref ent.Comp.EmoteActionEntity, ent.Comp.EmoteAction);
         Dirty(ent);

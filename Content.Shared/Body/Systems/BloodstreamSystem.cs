@@ -115,6 +115,9 @@ public sealed partial class BloodstreamSystem : EntitySystem
         var solution = entity.Comp.BloodReferenceSolution.Clone();
         solution.ScaleTo(entity.Comp.BloodReferenceSolution.Volume - bloodSolution.Comp.Solution.Volume);
         bloodSolution.Comp.Solution.AddSolution(solution, ProtoMan);
+
+        ChangeBloodReagents(entity.AsNullable(), entity.Comp.BloodReferenceSolution);
+        _metabolizer.UpdateMetabolicMultiplier(entity);
     }
 
     // prevent the infamous UdderSystem debug assert, see https://github.com/space-wizards/space-station-14/pull/35314
