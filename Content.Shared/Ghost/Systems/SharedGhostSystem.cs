@@ -5,6 +5,8 @@ using Content.Shared.Hands;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Popups;
+using Content.Shared.Chat;
+using Content.Shared.Follower;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
@@ -18,6 +20,7 @@ public abstract partial class SharedGhostSystem : EntitySystem
 {
     [Dependency] protected SharedPopupSystem Popup = default!;
     [Dependency] protected IGameTiming _gameTiming = default!;
+    [Dependency] private FollowerSystem _follower = default!;
 
     public override void Initialize()
     {
@@ -28,6 +31,8 @@ public abstract partial class SharedGhostSystem : EntitySystem
         SubscribeLocalEvent<GhostComponent, DropAttemptEvent>(OnAttempt);
         SubscribeLocalEvent<GhostComponent, PickupAttemptEvent>(OnAttempt);
         SubscribeLocalEvent<GhostComponent, ExaminedEvent>(OnGhostExamine);
+        SubscribeLocalEvent<GhostComponent, ClickMessageSenderAttemptEvent>(OnGhostClickMessageSenderAttempt);
+        SubscribeLocalEvent<GhostComponent, ClickMessageSenderEvent>(OnGhostClickMessageSender);
     }
 
     private void OnGhostExamine(EntityUid uid, GhostComponent component, ExaminedEvent args)
@@ -115,7 +120,18 @@ public abstract partial class SharedGhostSystem : EntitySystem
         entity.Comp.CanGhostInteract = value;
         Dirty(entity);
     }
+
+    private void OnGhostClickMessageSenderAttempt(Entity<GhostComponent> ent, ref ClickMessageSenderAttemptEvent args)
+    {
+        args.Handled = true;
+    }
+
+    private void OnGhostClickMessageSender(Entity<GhostComponent> ent, ref ClickMessageSenderEvent args)
+    {
+        _follower.StartFollowingEntity(ent, args.Sender);
+    }
 }
+
 
 /// <summary>
 /// A client to server request to get places a ghost can warp to.

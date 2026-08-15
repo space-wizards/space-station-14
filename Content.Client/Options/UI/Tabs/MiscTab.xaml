@@ -1,35 +1,33 @@
-﻿<tabs:MiscTab xmlns="https://spacestation14.io"
-              xmlns:tabs="clr-namespace:Content.Client.Options.UI.Tabs"
-              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-              xmlns:ui="clr-namespace:Content.Client.Options.UI">
+﻿<tabs:MiscTab
+    xmlns="https://spacestation14.io"
+    xmlns:tabs="clr-namespace:Content.Client.Options.UI.Tabs"
+    xmlns:ui="clr-namespace:Content.Client.Options.UI"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <BoxContainer Orientation="Vertical">
-        <ScrollContainer VerticalExpand="True" HorizontalExpand="True">
-            <BoxContainer Orientation="Vertical" Margin="8 8 8 8" VerticalExpand="True">
-                <Label Text="{Loc 'ui-options-general-ui-style'}"
-                       StyleClasses="LabelKeyText"/>
+        <ScrollContainer HorizontalExpand="True" VerticalExpand="True">
+            <BoxContainer
+                Margin="8,8,8,8"
+                Orientation="Vertical"
+                VerticalExpand="True">
+                <Label StyleClasses="LabelKeyText" Text="{Loc 'ui-options-general-ui-style'}" />
                 <ui:OptionDropDown Name="DropDownHudTheme" Title="{Loc 'ui-options-hud-theme'}" />
                 <ui:OptionDropDown Name="DropDownHudLayout" Title="{Loc 'ui-options-hud-layout'}" />
-                <Label Text="{Loc 'ui-options-general-discord'}"
-                       StyleClasses="LabelKeyText"/>
+                <Label StyleClasses="LabelKeyText" Text="{Loc 'ui-options-general-discord'}" />
                 <CheckBox Name="DiscordRich" Text="{Loc 'ui-options-discordrich'}" />
-                <Label Text="{Loc 'ui-options-general-speech'}"
-                       StyleClasses="LabelKeyText"/>
+                <Label StyleClasses="LabelKeyText" Text="{Loc 'ui-options-general-speech'}" />
                 <CheckBox Name="ShowOocPatronColor" Text="{Loc 'ui-options-show-ooc-patron-color'}" />
                 <CheckBox Name="ShowLoocAboveHeadCheckBox" Text="{Loc 'ui-options-show-looc-on-head'}" />
                 <CheckBox Name="FancySpeechBubblesCheckBox" Text="{Loc 'ui-options-fancy-speech'}" />
                 <CheckBox Name="FancyNameBackgroundsCheckBox" Text="{Loc 'ui-options-fancy-name-background'}" />
-                <CheckBox Name="ChatFollowButton" Text="{Loc 'ui-options-chat-follow-button'}" />
-                <Label Text="{Loc 'ui-options-general-cursor'}"
-                       StyleClasses="LabelKeyText"/>
+                <Label StyleClasses="LabelKeyText" Text="{Loc 'ui-options-general-cursor'}" />
                 <CheckBox Name="ShowHeldItemCheckBox" Text="{Loc 'ui-options-show-held-item'}" />
                 <CheckBox Name="ShowCombatModeIndicatorsCheckBox" Text="{Loc 'ui-options-show-combat-mode-indicators'}" />
-                <Label Text="{Loc 'ui-options-general-storage'}"
-                       StyleClasses="LabelKeyText"/>
+                <Label StyleClasses="LabelKeyText" Text="{Loc 'ui-options-general-storage'}" />
                 <CheckBox Name="OpaqueStorageWindowCheckBox" Text="{Loc 'ui-options-opaque-storage-window'}" />
                 <CheckBox Name="StaticStorageUI" Text="{Loc 'ui-options-static-storage-ui'}" />
                 <!-- <CheckBox Name="ToggleWalk" Text="{Loc 'ui-options-hotkey-toggle-walk'}" /> -->
             </BoxContainer>
         </ScrollContainer>
-        <ui:OptionsTabControlRow Name="Control" Access="Public" />
+        <ui:OptionsTabControlRow Access="Public" Name="Control" />
     </BoxContainer>
 </tabs:MiscTab>

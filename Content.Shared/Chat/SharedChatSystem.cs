@@ -1,6 +1,8 @@
 using System.Collections.Frozen;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Content.Shared.ActionBlocker;
+using Content.Shared.CCVar;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Popups;
 using Content.Shared.Radio;
@@ -8,6 +10,7 @@ using Content.Shared.Speech;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -40,6 +43,7 @@ public abstract partial class SharedChatSystem : EntitySystem
         = new SoundPathSpecifier("/Audio/Announcements/announce.ogg");
 
     public static readonly ProtoId<RadioChannelPrototype> CommonChannel = "Common";
+    public bool ChatNameLinks { get; private set; }
 
     public static readonly string DefaultChannelPrefix = $"{RadioChannelPrefix}{DefaultChannelKey}";
     public static readonly ProtoId<SpeechVerbPrototype> DefaultSpeechVerb = "Default";
@@ -50,6 +54,8 @@ public abstract partial class SharedChatSystem : EntitySystem
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private INetManager _net = default!;
+    [Dependency] private ISharedPlayerManager _player = default!;
+    [Dependency] private IConfigurationManager _config = default!;
 
     /// <summary>
     /// Cache of the keycodes for faster lookup.
@@ -63,8 +69,11 @@ public abstract partial class SharedChatSystem : EntitySystem
         DebugTools.Assert(ProtoMan.HasIndex(CommonChannel));
 
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypeReload);
+        SubscribeAllEvent<ClickMessageSenderRequestEvent>(OnClickMessageSenderRequest);
         CacheRadios();
         CacheEmotes();
+
+        Subs.CVar(_config, CCVars.ChatNameLinks, v => ChatNameLinks = v, true);
     }
 
     protected virtual void OnPrototypeReload(PrototypesReloadedEventArgs obj)
@@ -74,6 +83,30 @@ public abstract partial class SharedChatSystem : EntitySystem
 
         if (obj.WasModified<EmotePrototype>())
             CacheEmotes();
+    }
+
+    private void OnClickMessageSenderRequest(ClickMessageSenderRequestEvent msg, EntitySessionEventArgs args)
+    {
+        if (!ChatNameLinks)
+            return;
+
+        if (args.SenderSession.AttachedEntity is not { Valid: true } ent ||
+            !CanClickMessageSender(ent))
+        {
+            return;
+        }
+
+        if (GetEntity(msg.Sender) is not { Valid: true } sender ||
+            !Exists(sender))
+        {
+            return;
+        }
+
+        if (ent == sender)
+            return;
+
+        var ev = new ClickMessageSenderEvent(sender);
+        RaiseLocalEvent(ent, ref ev);
     }
 
     private void CacheRadios()
@@ -273,7 +306,7 @@ public abstract partial class SharedChatSystem : EntitySystem
         return trimmed;
     }
 
-    public static string InjectTagInsideTag(ChatMessage message, string outerTag, string innerTag, string? tagParameter)
+    public static string InjectTagInsideTag(ChatMessage message, string outerTag, string innerTag, string? tagValue = null, params (string Key, string Value)[]? tagParameters)
     {
         var rawmsg = message.WrappedMessage;
         var tagStart = rawmsg.IndexOf($"[{outerTag}]");
@@ -282,9 +315,14 @@ public abstract partial class SharedChatSystem : EntitySystem
             return rawmsg;
         tagStart += outerTag.Length + 2;
 
-        string innerTagProcessed = tagParameter != null ? $"[{innerTag}={tagParameter}]" : $"[{innerTag}]";
-
         rawmsg = rawmsg.Insert(tagEnd, $"[/{innerTag}]");
+        if (tagValue != null)
+            innerTag = $"{innerTag}=\"{FormattedMessage.EscapeText(tagValue)}\"";
+
+        var innerTagProcessed = tagParameters == null
+            ? $"[{innerTag}]"
+            : $"[{innerTag} {string.Join(" ", tagParameters.Select(t => $"{FormattedMessage.EscapeText(t.Key)}=\"{FormattedMessage.RemoveMarkupPermissive(t.Value)}\""))}]";
+
         rawmsg = rawmsg.Insert(tagStart, innerTagProcessed);
 
         return rawmsg;
@@ -302,6 +340,29 @@ public abstract partial class SharedChatSystem : EntitySystem
         rawmsg = Regex.Replace(rawmsg, "(?i)(" + targetString + ")(?-i)(?![^[]*])", $"[{tag}={tagParameter}]$1[/{tag}]");
 #pragma warning restore RA0026
         return rawmsg;
+    }
+
+    public static (int Start, int End) GetTagBounds(ChatMessage message, string tag)
+    {
+        var rawmsg = message.WrappedMessage;
+        var tagStart = rawmsg.IndexOf($"[{tag}]");
+        var tagEnd = rawmsg.IndexOf($"[/{tag}]");
+        return (tagStart, tagEnd);
+    }
+
+
+    public bool CanClickMessageSender(EntityUid? ent)
+    {
+        if (!ChatNameLinks)
+            return false;
+
+        ent ??= _player.LocalEntity;
+        if (ent == null)
+            return false;
+
+        var ev = new ClickMessageSenderAttemptEvent();
+        RaiseLocalEvent(ent.Value, ref ev);
+        return ev.Handled;
     }
 
     public static string GetStringInsideTag(ChatMessage message, string tag)
