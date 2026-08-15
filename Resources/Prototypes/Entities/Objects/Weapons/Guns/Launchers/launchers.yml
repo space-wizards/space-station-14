@@ -186,7 +186,7 @@
     layers:
     - state: mlr
       map: [ "enum.GunVisualLayers.Base" ]
-    - state: mag-0
+    - state: mag-6
       map: [ "enum.GunVisualLayers.Mag" ]
   - type: Gun
     burstFireRate: 12.5
