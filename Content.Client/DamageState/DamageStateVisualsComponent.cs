@@ -5,7 +5,7 @@ namespace Content.Client.DamageState;
 [RegisterComponent]
 public sealed partial class DamageStateVisualsComponent : Component
 {
-    public int? OriginalDrawDepth;
+    public byte? OriginalDrawDepth;
 
     [DataField("states")] public Dictionary<MobState, Dictionary<DamageStateVisualLayers, string>> States = new();
 }
