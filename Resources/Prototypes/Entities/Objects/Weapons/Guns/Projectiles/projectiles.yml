@@ -850,6 +850,34 @@
     energy: 0.5
 
 - type: entity
+  id: XenoborgMechadermisRocket
+  name: mechadermis rocket
+  parent: BaseBulletTrigger
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+    - state: mechadermis-missile-base
+    - state: mechadermis-missile-unshaded
+      shader: unshaded
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: XenoborgAntiStructureExplosion
+    totalIntensity: 25
+    intensitySlope: 3
+    maxIntensity: 3
+    maxTileBreak: 0
+  - type: SinWaveAnimation
+    xWave:
+      amplitude: 0.4
+      frequency: 17
+  - type: PointLight
+    radius: 2.5
+    color: blue
+    energy: 0.4
+
+- type: entity
   id: BulletGrenadeBaton
   name: baton grenade
   parent: BaseBullet

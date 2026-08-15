@@ -1551,6 +1551,29 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-deflector-module }
 
 - type: entity
+  parent: [ BaseXenoborgModuleHeavy, BaseProviderBorgModule, BaseXenoborgContraband ]
+  id: XenoborgModuleRocket
+  name: rocket module
+  description: Module with a self-recharging deflector field projector.
+  components:
+  - type: Sprite
+    layers:
+    - state: xenoborg_heavy
+    - state: icon-xenoborg-rocket
+  - type: ItemBorgModule
+    hands:
+    - item: WeaponRocketLauncherXenoborg
+    - item: WeaponRocketLauncherXenoborg
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-deflector-module } # todo: update this
+  - type: ComponentBorgModule
+    components:
+    - type: SimpleSpriteOverlay
+      overlaySprite:
+        sprite: Mobs/Silicon/rockets.rsi
+        state: heavy_xenoborg_rockets
+
+- type: entity
   parent: [ BaseXenoborgModuleEngi, BaseProviderBorgModule, BaseXenoborgContraband ]
   id: XenoborgModuleDoorControl
   name: door control xenoborg module
