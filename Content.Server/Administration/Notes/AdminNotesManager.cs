@@ -172,11 +172,11 @@ public sealed partial class AdminNotesManager : IAdminNotesManager, IPostInjectI
         );
         NoteAdded?.Invoke(note);
 
-        if (_player.TryGetSessionById(netUserId, out var session) && !secret
-            && type == NoteType.Note)
+        // Send a notification to the player that they received a non-secret note.
+        if (_player.TryGetSessionById(netUserId, out var session) && !secret && type == NoteType.Note)
         {
-            var notifMessage = _config.GetCVar(CCVars.SeeOwnNotes) ? "Your account has received an administration note, for more information, run the command \"adminremarks.\"" +
-                " in the console." : "Your account has received an administration note.";
+            var notifMessage = _config.GetCVar(CCVars.SeeOwnNotes) ? _loc.GetString("admin-notes-manager-note-notification")
+                : _loc.GetString("admin-notes-manager-note-notification-no-cvar");
             var notifAudio = new SoundPathSpecifier("/Audio/Effects/adminhelp.ogg");
             var audioSystem = _systems.GetEntitySystem<SharedAudioSystem>();
 

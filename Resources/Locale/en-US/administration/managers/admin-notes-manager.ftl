@@ -1,0 +1,2 @@
+admin-notes-manager-note-notification = Your account has received an administration note, for more information run the command "adminremarks" in the console.
+admin-notes-manager-note-notification-no-cvar = Your account has received an administration note.
