@@ -1,3 +1,4 @@
+using Content.Shared.Administration.Managers;
 using Content.Shared.Emoting;
 using Content.Shared.Examine;
 using Content.Shared.Ghost.Components;
@@ -20,6 +21,7 @@ public abstract partial class SharedGhostSystem : EntitySystem
 {
     [Dependency] protected SharedPopupSystem Popup = default!;
     [Dependency] protected IGameTiming _gameTiming = default!;
+    [Dependency] private ISharedAdminManager _adminManager = default!;
     [Dependency] private FollowerSystem _follower = default!;
 
     public override void Initialize()
@@ -128,6 +130,8 @@ public abstract partial class SharedGhostSystem : EntitySystem
 
     private void OnGhostClickMessageSender(Entity<GhostComponent> ent, ref ClickMessageSenderEvent args)
     {
+        if (_adminManager.IsAdmin(args.Sender))
+            return;
         _follower.StartFollowingEntity(ent, args.Sender);
     }
 }
