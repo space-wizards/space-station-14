@@ -36,8 +36,10 @@
             <TextEdit Name="ScreenMessageInput" MinHeight="40"
                 HorizontalExpand="True" VerticalExpand="True"/>
         </PanelContainer>
-        <Button Name="BroadcastButton" HorizontalExpand="True" Margin="10 6 6 6"
-            Text="{Loc 'comms-console-menu-broadcast-button'}"
-            ToolTip="{Loc 'comms-console-menu-broadcast-button-tooltip'}" />
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True"> <!-- Ensures consistent button placement vs. announcements -->
+            <Button Name="BroadcastButton" HorizontalExpand="True" Margin="10 6 6 6"
+                Text="{Loc 'comms-console-menu-broadcast-button'}"
+                ToolTip="{Loc 'comms-console-menu-broadcast-button-tooltip'}" />
+        </BoxContainer>
     </BoxContainer>
 </TabContainer>
