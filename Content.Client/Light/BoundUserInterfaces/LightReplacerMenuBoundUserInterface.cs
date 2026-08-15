@@ -115,13 +115,11 @@ public sealed partial class LightReplacerMenuBoundUserInterface(EntityUid owner,
     {
         var message = new SwitchLightTypeMessage(light);
         SendPredictedMessage(message);
-        Close();
     }
 
     private void EjectLights(EntProtoId lightName)
     {
         var message = new EjectLightTypeMessage(lightName);
         SendPredictedMessage(message);
-        Close();
     }
 }
