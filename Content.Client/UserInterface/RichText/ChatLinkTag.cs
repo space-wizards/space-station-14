@@ -7,7 +7,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.RichText;
 
-public partial class ChatLinkTag : IMarkupTagHandler
+public sealed partial class ChatLinkTag : IMarkupTagHandler
 {
     [Dependency] private IEntityManager _entity = default!;
 
