@@ -342,15 +342,6 @@ public abstract partial class SharedChatSystem : EntitySystem
         return rawmsg;
     }
 
-    public static (int Start, int End) GetTagBounds(ChatMessage message, string tag)
-    {
-        var rawmsg = message.WrappedMessage;
-        var tagStart = rawmsg.IndexOf($"[{tag}]");
-        var tagEnd = rawmsg.IndexOf($"[/{tag}]");
-        return (tagStart, tagEnd);
-    }
-
-
     public bool CanClickMessageSender(EntityUid? ent)
     {
         if (!ChatNameLinks)
