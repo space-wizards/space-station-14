@@ -16,7 +16,7 @@ public sealed partial class DeliveryVisualizerSystem : VisualizerSystem<Delivery
         if (args.Sprite == null)
             return;
 
-        _appearance.TryGetData(uid, DeliveryVisuals.JobIcon, out string job, args.Component);
+        args.TryGetData(DeliveryVisuals.JobIcon, out string job);
 
         if (string.IsNullOrEmpty(job))
             job = UnknownIcon;

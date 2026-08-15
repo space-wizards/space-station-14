@@ -109,15 +109,15 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
         if (!Resolve(uid, ref args.Sprite))
             return;
 
-        if (args.AppearanceData.TryGetValue(TextScreenVisuals.Color, out var color) && color is Color)
+        if (args.TryGetData<Color>(TextScreenVisuals.Color, out var color))
             component.Color = (Color)color;
 
         // DefaultText: fallback text e.g. broadcast updates from comms consoles
-        if (args.AppearanceData.TryGetValue(TextScreenVisuals.DefaultText, out var newDefault) && newDefault is string)
+        if (args.TryGetData<string>(TextScreenVisuals.DefaultText, out var newDefault))
             component.Text = SegmentText((string)newDefault, component);
 
         // ScreenText: currently rendered text e.g. the "ETA" accompanying shuttle timers
-        if (args.AppearanceData.TryGetValue(TextScreenVisuals.ScreenText, out var text) && text is string)
+        if (args.TryGetData<string>(TextScreenVisuals.ScreenText, out var text))
         {
             component.TextToDraw = SegmentText((string)text, component);
             ResetText(uid, component);
@@ -125,7 +125,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
             DrawLayers(uid, component.LayerStatesToDraw);
         }
 
-        if (args.AppearanceData.TryGetValue(TextScreenVisuals.TargetTime, out var time) && time is TimeSpan target)
+        if (args.TryGetData<TimeSpan>(TextScreenVisuals.TargetTime, out var target))
         {
             if (target > _gameTiming.CurTime)
             {

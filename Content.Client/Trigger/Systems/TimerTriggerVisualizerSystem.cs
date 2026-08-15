@@ -47,7 +47,7 @@ public sealed partial class TimerTriggerVisualizerSystem : VisualizerSystem<Time
         || !TryComp<AnimationPlayerComponent>(uid, out var animPlayer))
             return;
 
-        if (!AppearanceSystem.TryGetData<TriggerVisualState>(uid, TriggerVisuals.VisualState, out var state, args.Component))
+        if (!args.TryGetData<TriggerVisualState>(TriggerVisuals.VisualState, out var state))
             state = TriggerVisualState.Unprimed;
 
         switch (state)

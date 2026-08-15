@@ -35,14 +35,12 @@ public sealed partial class SolutionContainerVisualsSystem : VisualizerSystem<So
 
         // Check if the solution that was updated is the one set as represented
         if (!string.IsNullOrEmpty(component.SolutionName)
-            && AppearanceSystem.TryGetData(uid, SolutionContainerVisuals.SolutionName, out string name, args.Component)
+            && args.TryGetData(SolutionContainerVisuals.SolutionName, out string name)
             && name != component.SolutionName)
             return;
 
-        if (!AppearanceSystem.TryGetData(uid,
-                SolutionContainerVisuals.FillFraction,
-                out float fraction,
-                args.Component))
+        if (!args.TryGetData(SolutionContainerVisuals.FillFraction,
+                out float fraction))
             return;
 
         // C# moment; setting it as nullable (even though it's not) avoids a
@@ -100,8 +98,7 @@ public sealed partial class SolutionContainerVisualsSystem : VisualizerSystem<So
 
             SpriteSystem.LayerSetRsiState(ent, fillLayer, fillBaseName + closestFillSprite);
 
-            if (changeColor
-                && AppearanceSystem.TryGetData(uid, SolutionContainerVisuals.Color, out Color color, args.Component))
+            if (changeColor && args.TryGetData(SolutionContainerVisuals.Color, out Color color))
                 SpriteSystem.LayerSetColor(ent, fillLayer, color);
             else
                 SpriteSystem.LayerSetColor(ent, fillLayer, Color.White);

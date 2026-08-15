@@ -31,13 +31,13 @@ public sealed partial class AtmosPipeLayersSystem : SharedAtmosPipeLayersSystem
         if (!TryComp<SpriteComponent>(ent, out var sprite))
             return;
 
-        if (_appearance.TryGetData<string>(ent, AtmosPipeLayerVisuals.Sprite, out var spriteRsi) &&
+        if (args.TryGetData<string>(AtmosPipeLayerVisuals.Sprite, out var spriteRsi) &&
             _resourceCache.TryGetResource(SpriteSpecifierSerializer.TextureRoot / spriteRsi, out RSIResource? resource))
         {
             _sprite.SetBaseRsi((ent, sprite), resource.RSI);
         }
 
-        if (_appearance.TryGetData<Dictionary<string, string>>(ent, AtmosPipeLayerVisuals.SpriteLayers, out var pipeState))
+        if (args.TryGetData<Dictionary<string, string>>(AtmosPipeLayerVisuals.SpriteLayers, out var pipeState))
         {
             foreach (var (layerKey, rsiPath) in pipeState)
             {

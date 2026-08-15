@@ -76,7 +76,7 @@ public sealed partial class DisposalUnitSystem : SharedDisposalUnitSystem
     /// <param name="appearance">The disposal unit's appearance.</param>
     private void UpdateState(Entity<DisposalUnitComponent> ent, SpriteComponent sprite, AppearanceComponent appearance)
     {
-        if (!_appearanceSystem.TryGetData<bool>(ent, DisposalUnitVisuals.IsFlushing, out var isFlushing, appearance))
+        if (!args.TryGetData<bool>(DisposalUnitVisuals.IsFlushing, out var isFlushing))
             return;
 
         // This is a transient state so not too worried about replaying in range.

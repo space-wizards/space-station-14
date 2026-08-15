@@ -7,41 +7,30 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Revenant;
 
-public sealed partial class RevenantSystem : EntitySystem
+public sealed partial class RevenantSystem : VisualizerSystem<RevenantComponent>
 {
-    [Dependency] private SharedAppearanceSystem _appearance = default!;
-    [Dependency] private SpriteSystem _sprite = default!;
-
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<RevenantComponent, AppearanceChangeEvent>(OnAppearanceChange);
-        SubscribeLocalEvent<RevenantComponent, GetGenericAlertCounterAmountEvent>(OnGetCounterAmount);
-    }
-
-    private void OnAppearanceChange(EntityUid uid, RevenantComponent component, ref AppearanceChangeEvent args)
+    /// <inheritdoc/>
+    protected override void OnAppearanceChange(EntityUid uid, RevenantComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
 
-        if (_appearance.TryGetData<bool>(uid, RevenantVisuals.Harvesting, out var harvesting, args.Component) && harvesting)
-        {
-            _sprite.LayerSetRsiState((uid, args.Sprite), 0, component.HarvestingState);
-        }
-        else if (_appearance.TryGetData<bool>(uid, RevenantVisuals.Stunned, out var stunned, args.Component) && stunned)
-        {
-            _sprite.LayerSetRsiState((uid, args.Sprite), 0, component.StunnedState);
-        }
-        else if (_appearance.TryGetData<bool>(uid, RevenantVisuals.Corporeal, out var corporeal, args.Component))
+        if (args.TryGetData<bool>(RevenantVisuals.Harvesting, out var harvesting) && harvesting)
+            SpriteSystem.LayerSetRsiState((uid, args.Sprite), 0, component.HarvestingState);
+
+        else if (args.TryGetData<bool>(RevenantVisuals.Stunned, out var stunned) && stunned)
+            SpriteSystem.LayerSetRsiState((uid, args.Sprite), 0, component.StunnedState);
+
+        else if (args.TryGetData<bool>(RevenantVisuals.Corporeal, out var corporeal))
         {
             if (corporeal)
-                _sprite.LayerSetRsiState((uid, args.Sprite), 0, component.CorporealState);
+                SpriteSystem.LayerSetRsiState((uid, args.Sprite), 0, component.CorporealState);
             else
-                _sprite.LayerSetRsiState((uid, args.Sprite), 0, component.State);
+                SpriteSystem.LayerSetRsiState((uid, args.Sprite), 0, component.State);
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnGetCounterAmount(Entity<RevenantComponent> ent, ref GetGenericAlertCounterAmountEvent args)
     {
         if (args.Handled)

@@ -84,10 +84,10 @@ public sealed partial class AirlockSystem : SharedAirlockSystem
         if (args.Sprite == null)
             return;
 
-        if (!_appearanceSystem.TryGetData<DoorState>(uid, DoorVisuals.State, out var state, args.Component))
+        if (!args.TryGetData<DoorState>(DoorVisuals.State, out var state))
             state = DoorState.Closed;
 
-        _appearanceSystem.TryGetData<bool>(uid, PowerDeviceVisuals.Powered, out var hasPower, args.Component);
+        args.TryGetData<bool>(PowerDeviceVisuals.Powered, out var hasPower);
 
         var showBaseUnlit = false;
         var showBolted = false;
@@ -95,10 +95,10 @@ public sealed partial class AirlockSystem : SharedAirlockSystem
 
         if (hasPower)
         {
-            _appearanceSystem.TryGetData<bool>(uid, DoorVisuals.BoltLights, out var boltedVisible, args.Component);
+            args.TryGetData<bool>(DoorVisuals.BoltLights, out var boltedVisible);
             showBolted = boltedVisible && (state == DoorState.Closed || state == DoorState.Welded);
 
-            _appearanceSystem.TryGetData<bool>(uid, DoorVisuals.EmergencyLights, out var emergencyVisible, args.Component);
+            args.TryGetData<bool>(DoorVisuals.EmergencyLights, out var emergencyVisible);
             showEmergency = emergencyVisible;
 
             if (!showBolted && !showEmergency)
@@ -109,7 +109,7 @@ public sealed partial class AirlockSystem : SharedAirlockSystem
                 if (state == DoorState.Open && comp.OpenUnlitVisible)
                     showBaseUnlit = true;
 
-                _appearanceSystem.TryGetData<bool>(uid, DoorVisuals.ClosedLights, out var closedLightsVisible, args.Component);
+                args.TryGetData<bool>(DoorVisuals.ClosedLights, out var closedLightsVisible);
                 if (state == DoorState.Closed && closedLightsVisible)
                     showBaseUnlit = true;
             }

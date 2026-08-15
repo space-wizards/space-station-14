@@ -5,13 +5,14 @@ namespace Content.Client.PowerCell;
 
 public sealed partial class PowerChargerVisualizerSystem : VisualizerSystem<PowerChargerVisualsComponent>
 {
+    /// <inheritdoc/>
     protected override void OnAppearanceChange(EntityUid uid, PowerChargerVisualsComponent comp, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
 
         // Update base item
-        if (AppearanceSystem.TryGetData<bool>(uid, CellVisual.Occupied, out var occupied, args.Component) && occupied)
+        if (args.TryGetData<bool>(uid, CellVisual.Occupied, out var occupied, args.Component) && occupied)
         {
             // TODO: don't throw if it doesn't have a full state
             SpriteSystem.LayerSetRsiState((uid, args.Sprite), PowerChargerVisualLayers.Base, comp.OccupiedState);
@@ -22,7 +23,7 @@ public sealed partial class PowerChargerVisualizerSystem : VisualizerSystem<Powe
         }
 
         // Update lighting
-        if (AppearanceSystem.TryGetData<CellChargerStatus>(uid, CellVisual.Light, out var status, args.Component)
+        if (args.TryGetData<CellChargerStatus>(uid, CellVisual.Light, out var status, args.Component)
             && comp.LightStates.TryGetValue(status, out var lightState))
         {
             SpriteSystem.LayerSetRsiState((uid, args.Sprite), PowerChargerVisualLayers.Light, lightState);

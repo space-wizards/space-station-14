@@ -12,25 +12,20 @@ public sealed partial class ItemCounterSystem : SharedItemCounterSystem
     [Dependency] private AppearanceSystem _appearanceSystem = default!;
     [Dependency] private SpriteSystem _sprite = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-        SubscribeLocalEvent<ItemCounterComponent, AppearanceChangeEvent>(OnAppearanceChange);
-    }
-
+    [SubscribeLocalEvent]
     private void OnAppearanceChange(EntityUid uid, ItemCounterComponent comp, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null || comp.LayerStates.Count < 1)
             return;
 
         // Skip processing if no actual
-        if (!_appearanceSystem.TryGetData<int>(uid, StackVisuals.Actual, out var actual, args.Component))
+        if (!args.TryGetData<int>(StackVisuals.Actual, out var actual))
             return;
 
-        if (!_appearanceSystem.TryGetData<int>(uid, StackVisuals.MaxCount, out var maxCount, args.Component))
+        if (!args.TryGetData<int>(StackVisuals.MaxCount, out var maxCount))
             maxCount = comp.LayerStates.Count;
 
-        if (!_appearanceSystem.TryGetData<bool>(uid, StackVisuals.Hide, out var hidden, args.Component))
+        if (!args.TryGetData<bool>(StackVisuals.Hide, out var hidden))
             hidden = false;
 
         if (comp.IsComposite)

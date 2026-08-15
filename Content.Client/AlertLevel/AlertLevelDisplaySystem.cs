@@ -14,17 +14,14 @@ public sealed partial class AlertLevelDisplaySystem : EntitySystem
     private void OnAppearanceChange(EntityUid uid, AlertLevelDisplayComponent alertLevelDisplay, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
-        {
             return;
-        }
+
         var layer = _sprite.LayerMapReserve((uid, args.Sprite), AlertLevelDisplay.Layer);
 
-        if (_appearance.TryGetData<bool>(uid, AlertLevelDisplay.Powered, out var powered, component: args.Component))
-        {
+        if (args.TryGetData<bool>(AlertLevelDisplay.Powered, out var powered))
             _sprite.LayerSetVisible((uid, args.Sprite), layer, powered);
-        }
 
-        if (!_appearance.TryGetData<ProtoId<AlertLevelPrototype>>(uid, AlertLevelDisplay.CurrentLevel, out var level, component: args.Component))
+        if (!args.TryGetData<ProtoId<AlertLevelPrototype>>(AlertLevelDisplay.CurrentLevel, out var level))
         {
             _sprite.LayerSetRsiState((uid, args.Sprite), layer, alertLevelDisplay.AlertVisuals.Values.First());
             return;

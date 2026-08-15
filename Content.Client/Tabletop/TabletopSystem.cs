@@ -26,7 +26,6 @@ namespace Content.Client.Tabletop
         [Dependency] private IUserInterfaceManager _uiManger = default!;
         [Dependency] private IPlayerManager _playerManager = default!;
         [Dependency] private IGameTiming _gameTiming = default!;
-        [Dependency] private AppearanceSystem _appearance = default!;
         [Dependency] private SharedTransformSystem _transform = default!;
         [Dependency] private SpriteSystem _sprite = default!;
 
@@ -218,15 +217,11 @@ namespace Content.Client.Tabletop
 
             // TODO: maybe this can work more nicely, by maybe only having to set the item to "being dragged", and have
             //  the appearance handle the rest
-            if (_appearance.TryGetData<Vector2>(uid, TabletopItemVisuals.Scale, out var scale, args.Component))
-            {
+            if (args.TryGetData<Vector2>(TabletopItemVisuals.Scale, out var scale))
                 _sprite.SetScale((uid, args.Sprite), scale);
-            }
 
-            if (_appearance.TryGetData<int>(uid, TabletopItemVisuals.DrawDepth, out var drawDepth, args.Component))
-            {
+            if (args.TryGetData<int>(TabletopItemVisuals.DrawDepth, out var drawDepth))
                 _sprite.SetDrawDepth((uid, args.Sprite), drawDepth);
-            }
         }
 
         #endregion

@@ -6,23 +6,15 @@ namespace Content.Client.Singularity.Systems;
 
 public sealed partial class EmitterSystem : SharedEmitterSystem
 {
-    [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SpriteSystem _sprite = default!;
 
-    /// <inheritdoc/>
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<EmitterComponent, AppearanceChangeEvent>(OnAppearanceChange);
-    }
-
+    [SubscribeLocalEvent]
     private void OnAppearanceChange(EntityUid uid, EmitterComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
 
-        if (!_appearance.TryGetData<EmitterVisualState>(uid, EmitterVisuals.VisualState, out var state, args.Component))
+        if (!args.TryGetData<EmitterVisualState>(EmitterVisuals.VisualState, out var state))
             state = EmitterVisualState.Off;
 
         if (!_sprite.LayerMapTryGet((uid, args.Sprite), EmitterVisualLayers.Lights, out var layer, false))
