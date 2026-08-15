@@ -7,6 +7,7 @@
     sprite: Mobs/Plants/Mushrooms/giant_spore.rsi
     layers:
     - state: icon
+      shader: unshaded
       map: [ "enum.DamageStateVisualLayers.Base" ]
   - type: RandomSprite
     available:
@@ -18,8 +19,15 @@
   - type: HTN
     rootTask:
       task: IdleCompound
+  - type: Extractable
+    grindableSolutionName: solution
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Fungalin
+        Quantity: 5
   - type: Item
-    size: Normal
+    size: Tiny
   - type: Fixtures
     fixtures:
       fix1:

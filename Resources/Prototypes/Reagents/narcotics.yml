@@ -523,14 +523,22 @@
       - !type:Emote
         emote: Cough
         showInChat: true
+        probability: 0.1
         conditions:
         - !type:ReagentCondition
           reagent: Fungalin
           min: 5
-        probability: 0.2
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectSeeingRainbow
+        time: 5
+        type: Add
+        conditions:
+        - !type:ReagentCondition
+          reagent: Fungalin
+          min: 15
       - !type:SpawnEntity
         entity: GiantSpore
-        probability: 0.1
+        probability: 0.05
         conditions:
         - !type:ReagentCondition
           reagent: Fungalin
@@ -540,14 +548,22 @@
       - !type:Emote
         emote: Cough
         showInChat: true
+        probability: 0.1
         conditions:
         - !type:ReagentCondition
           reagent: Fungalin
           min: 5
-        probability: 0.2
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectSeeingRainbow
+        time: 5
+        type: Add
+        conditions:
+        - !type:ReagentCondition
+          reagent: Fungalin
+          min: 15
       - !type:SpawnEntity
         entity: GiantSpore
-        probability: 0.1
+        probability: 0.05
         conditions:
         - !type:ReagentCondition
           reagent: Fungalin

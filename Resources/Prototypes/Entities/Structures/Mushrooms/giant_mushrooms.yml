@@ -33,15 +33,15 @@
         gasMixture:
           volume: 1000
           moles:
-            Fungalin: 500  #figure out the proper values for this and the other gas spawning
+            Fungalin: 25  #figure out the proper values for this and the other gas spawning
           temperature: 373.15
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: AtmosDevice
     requireAnchored: false
   - type: GasMiner
-    maxExternalPressure: 300
-    spawnAmount: 20
+    maxExternalPressure: 100
+    spawnAmount: 0.25
     spawnGas: Fungalin
     showStateOnExamine: false
 
@@ -52,10 +52,13 @@
   components:
   - type: Sprite
     sprite: Structures/Specific/Mushrooms/mom_mushroom.rsi
-    state: icon
+    layers:
+      - state: base
+      - state: top
+        shader: unshaded
   - type: TimedSpawner
     prototypes:
-    - GiantSporeSpawner
+    - GiantSpore
     intervalSeconds: 40
     minimumEntitiesSpawned: 2
     maximumEntitiesSpawned: 5
@@ -68,9 +71,9 @@
   - type: Sprite
     sprite: Structures/Specific/Mushrooms/red_mushroom.rsi
     layers:
+    - state: base
     - state: top
       shader: unshaded
-    - state: base
 
 - type: entity
   id: OrangeMushroom
@@ -80,9 +83,9 @@
   - type: Sprite
     sprite: Structures/Specific/Mushrooms/orange_mushroom.rsi
     layers:
+    - state: base
     - state: top
       shader: unshaded
-    - state: base
 
 - type: entity
   id: YellowMushroom
@@ -92,9 +95,10 @@
   - type: Sprite
     sprite: Structures/Specific/Mushrooms/yellow_mushroom.rsi
     layers:
+    - state: base 
     - state: top
       shader: unshaded
-    - state: base
+
 
 - type: entity
   id: GreenMushroom
@@ -104,9 +108,9 @@
   - type: Sprite
     sprite: Structures/Specific/Mushrooms/green_mushroom.rsi
     layers:
+    - state: base
     - state: top
       shader: unshaded
-    - state: base
 
 - type: entity
   id: BlueMushroom
@@ -116,9 +120,9 @@
   - type: Sprite
     sprite: Structures/Specific/Mushrooms/blue_mushroom.rsi
     layers:
+    - state: base
     - state: top
       shader: unshaded
-    - state: base
 
 - type: entity
   id: PurpleMushroom
@@ -128,9 +132,9 @@
   - type: Sprite
     sprite: Structures/Specific/Mushrooms/purple_mushroom.rsi
     layers:
+    - state: base
     - state: top
       shader: unshaded
-    - state: base
 
 - type: entity
   id: PinkMushroom
@@ -140,6 +144,6 @@
   - type: Sprite
     sprite: Structures/Specific/Mushrooms/pink_mushroom.rsi
     layers:
+    - state: base
     - state: top
       shader: unshaded
-    - state: base

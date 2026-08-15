@@ -8,10 +8,24 @@
   },
   "states": [
     {
-      "name": "top"
+      "name": "top",
+      "delays": [
+        [
+          0.4,
+          0.2,
+          0.2
+        ]
+      ]
     },
     {
-      "name": "base"
+      "name": "base",
+      "delays": [
+        [
+          0.4,
+          0.2,
+          0.2
+        ]
+      ]
     }
   ]
 }

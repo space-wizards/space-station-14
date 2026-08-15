@@ -127,7 +127,7 @@
   molarMass: 32
   gasOverlaySprite:
     sprite: /Textures/Effects/atmospherics.rsi
-    state: miasma_old
+    state: fungalin_gas
   gasMolesVisible: 0.6
   color: '#ff0084'
   reagent: Fungalin

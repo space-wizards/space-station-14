@@ -469,6 +469,25 @@
       rolls: 4, 8
       children:
       - id: MobClownSpider
+    
+- type: entity
+  id: GiantMushroomSpawnHorde
+  parent: BaseStationEventShortDelay
+  components:
+    - type: StationEvent
+      startAnnouncement: giant-mushroom-spawn-event
+      startAudio:
+        path: /Audio/Announcements/attention.ogg
+      earliestStart: 1
+      minimumPlayers: 1
+      weight: 3
+      duration: 5
+      maxDuration: 20
+    - type: VentHordeRule
+      table: !type:GroupSelector
+        rolls: 1, 1
+        children:
+          - id: MomMushroom
 
 - type: entity
   id: ZombieOutbreak
