@@ -24,12 +24,12 @@ public sealed partial class JetpackSystem : SharedJetpackSystem
     }
 
     [SubscribeLocalEvent]
-    private void OnJetpackAppearance(EntityUid uid, JetpackComponent component, ref AppearanceChangeEvent args)
+    private void OnJetpackAppearance(Entity<JetpackComponent> ent, ref AppearanceChangeEvent args)
     {
         args.TryGetData<bool>(JetpackVisuals.Enabled, out var enabled);
 
-        if (TryComp<ClothingComponent>(uid, out var clothing))
-            _clothing.SetEquippedPrefix(uid, enabled ? "on" : null, clothing);
+        if (TryComp<ClothingComponent>(ent, out var clothing))
+            _clothing.SetEquippedPrefix(ent, enabled ? "on" : null, clothing);
     }
 
     public override void Update(float frameTime)
