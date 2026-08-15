@@ -7,9 +7,20 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Lathe
 {
-    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true, true)]
     public sealed partial class LatheComponent : Component
     {
+        /// <summary>
+        /// The indices of fields we need to inspect for delta states.
+        /// If you add/remove/reorder fields or add/remove AutoNetworkedField
+        /// to andy field, you *MUST* also update these values.
+        /// </summary>
+        public enum FieldIndices
+        {
+            Queue = 0,
+            CurrentRecipe = 2
+        }
+
         /// <summary>
         /// All of the recipe packs that the lathe has by default
         /// </summary>
@@ -32,7 +43,7 @@ namespace Content.Shared.Lathe
         /// This is a LinkedList to allow for constant time insertion/deletion (vs a List), and more efficient
         /// moves (vs a Queue).
         /// </remarks>
-        [DataField]
+        [DataField, AutoNetworkedField]
         public LinkedList<LatheRecipeBatch> Queue = new();
 
         /// <summary>
@@ -67,7 +78,7 @@ namespace Content.Shared.Lathe
         /// <summary>
         /// The recipe the lathe is currently producing
         /// </summary>
-        [ViewVariables]
+        [ViewVariables, DataField, AutoNetworkedField]
         public ProtoId<LatheRecipePrototype>? CurrentRecipe;
 
         #region MachineUpgrading

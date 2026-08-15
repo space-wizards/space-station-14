@@ -1,7 +1,9 @@
 using Content.Shared.Lathe;
 using Content.Shared.Research.Components;
+using Content.Shared.Research.Prototypes;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Lathe.UI
 {
@@ -34,6 +36,11 @@ namespace Content.Client.Lathe.UI
             _menu.QueueMoveUpAction += index => SendMessage(new LatheMoveRequestMessage(index, -1));
             _menu.QueueMoveDownAction += index => SendMessage(new LatheMoveRequestMessage(index, 1));
             _menu.DeleteFabricatingAction += () => SendMessage(new LatheAbortFabricationMessage());
+
+            if (EntMan.TryGetComponent<LatheComponent>(Owner, out var latheComp))
+            {
+                UpdateProductionQueue(latheComp.CurrentRecipe, latheComp.Queue);
+            }
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
@@ -51,21 +58,23 @@ namespace Content.Client.Lathe.UI
                         _menu?.UpdateCategories();
                     }
 
-                    if ((msg.UpdateFlags & LatheUpdateState.UpdateWhat.ProductionQueue) != 0)
-                    {
-                        if (msg.Queue is { } queue)
-                        {
-                            _menu?.PopulateQueueList(queue);
-                        }
-                        _menu?.SetQueueInfo(msg.CurrentlyProducing);
-                    }
-
                     if ((msg.UpdateFlags & LatheUpdateState.UpdateWhat.Materials) != 0)
                     {
                         _menu?.UpdateCanProduce();
                     }
                     break;
             }
+        }
+
+        /// <summary>
+        /// Update the production queue portion of the UI
+        /// </summary>
+        /// <param name="current">Currently-being-produced item, if any</param>
+        /// <param name="remainder">Iterator for remaining items in production queue</param>
+        public void UpdateProductionQueue(ProtoId<LatheRecipePrototype>? current, IReadOnlyCollection<LatheRecipeBatch> remainder)
+        {
+            _menu?.PopulateQueueList(remainder);
+            _menu?.SetQueueInfo(current);
         }
     }
 }

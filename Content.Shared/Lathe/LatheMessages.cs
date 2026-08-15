@@ -11,9 +11,8 @@ public sealed class LatheUpdateState : BoundUserInterfaceState
     public enum UpdateWhat
     {
         Recipes = 1 << 0,
-        ProductionQueue = 1 << 1,
-        Materials = 1 << 2,
-        All = Recipes | ProductionQueue | Materials
+        Materials = 1 << 1,
+        All = Recipes | Materials
     }
 
     // Flags indicating what needs to be updated in the UI
@@ -27,14 +26,10 @@ public sealed class LatheUpdateState : BoundUserInterfaceState
     public ProtoId<LatheRecipePrototype>? CurrentlyProducing;
 
     public LatheUpdateState(UpdateWhat updateWhat,
-            List<ProtoId<LatheRecipePrototype>>? recipes,
-            LatheRecipeBatch[]? queue,
-            ProtoId<LatheRecipePrototype>? currentlyProducing = null)
+            List<ProtoId<LatheRecipePrototype>>? recipes)
     {
         UpdateFlags = updateWhat;
         Recipes = recipes;
-        Queue = queue;
-        CurrentlyProducing = currentlyProducing;
     }
 }
 

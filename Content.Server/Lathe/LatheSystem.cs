@@ -186,6 +186,7 @@ namespace Content.Server.Lathe
                 node.ValueRef.ItemsRequested += quantity;
             else
                 component.Queue.AddLast(new LatheRecipeBatch(recipe.ID, 0, quantity));
+            DirtyField(uid, component, nameof(LatheComponent.Queue));
 
             return true;
         }
@@ -215,7 +216,8 @@ namespace Content.Server.Lathe
 
             _audio.PlayPvs(component.ProducingSound, uid);
             UpdateRunningAppearance(uid, true);
-            UpdateUserInterfaceState(uid, LatheUpdateState.UpdateWhat.ProductionQueue, component);
+            DirtyField(uid, component, nameof(LatheComponent.Queue));
+            DirtyField(uid, component, nameof(LatheComponent.CurrentRecipe));
 
             if (time == TimeSpan.Zero)
             {
@@ -261,11 +263,11 @@ namespace Content.Server.Lathe
 
             comp.CurrentRecipe = null;
             prodComp.StartTime = _timing.CurTime;
+            DirtyField(uid, comp, nameof(LatheComponent.CurrentRecipe));
 
             if (!TryStartProducing(uid, comp))
             {
                 RemCompDeferred(uid, prodComp);
-                UpdateUserInterfaceState(uid, LatheUpdateState.UpdateWhat.ProductionQueue, comp);
                 UpdateRunningAppearance(uid, false);
             }
         }
@@ -275,17 +277,8 @@ namespace Content.Server.Lathe
             if (!Resolve(uid, ref component))
                 return;
 
-            ProtoId<LatheRecipePrototype>? producing = null;
-            if ((updateWhat & LatheUpdateState.UpdateWhat.ProductionQueue) != 0)
-            {
-                producing = component.CurrentRecipe;
-                if (producing == null && component.Queue.First is { } node)
-                    producing = node.Value.Recipe;
-            }
-
             var recipes = (updateWhat & LatheUpdateState.UpdateWhat.Recipes) != 0 ? GetAvailableRecipes(uid, component) : null;
-            var queue = (updateWhat & LatheUpdateState.UpdateWhat.ProductionQueue) != 0 ? component.Queue.ToArray() : null;
-            var state = new LatheUpdateState(updateWhat, recipes, queue, producing);
+            var state = new LatheUpdateState(updateWhat, recipes);
             _uiSys.SetUiState(uid, LatheUiKey.Key, state);
         }
 
@@ -482,6 +475,7 @@ namespace Content.Server.Lathe
                     {
                         var newBatch = new LatheRecipeBatch(component.CurrentRecipe.Value, 0, 1);
                         component.Queue.AddFirst(newBatch);
+                        DirtyField(uid, component, nameof(LatheComponent.Queue));
                     }
                     else if (batch.ItemsPrinted > 0)
                     {
@@ -491,9 +485,10 @@ namespace Content.Server.Lathe
 
                 RefundCurrentRecipe(uid, component);
                 component.CurrentRecipe = null;
+                DirtyField(uid, component, nameof(LatheComponent.CurrentRecipe));
             }
             RemCompDeferred<LatheProducingComponent>(uid);
-            var toUpdate = LatheUpdateState.UpdateWhat.ProductionQueue | LatheUpdateState.UpdateWhat.Materials;
+            var toUpdate = LatheUpdateState.UpdateWhat.Materials;
             UpdateUserInterfaceState(uid, toUpdate, component);
             UpdateRunningAppearance(uid, false);
         }
@@ -512,7 +507,7 @@ namespace Content.Server.Lathe
                 }
             }
             TryStartProducing(uid, component);
-            var toUpdate = LatheUpdateState.UpdateWhat.ProductionQueue | LatheUpdateState.UpdateWhat.Materials;
+            var toUpdate = LatheUpdateState.UpdateWhat.Materials;
             UpdateUserInterfaceState(uid, toUpdate, component);
         }
 
@@ -548,8 +543,9 @@ namespace Content.Server.Lathe
 
             RefundBatch(uid, component, batch);
             component.Queue.Remove(node);
-            var toUpdate = LatheUpdateState.UpdateWhat.ProductionQueue | LatheUpdateState.UpdateWhat.Materials;
+            var toUpdate = LatheUpdateState.UpdateWhat.Materials;
             UpdateUserInterfaceState(uid, toUpdate, component);
+            DirtyField(uid, component, nameof(LatheComponent.Queue));
         }
 
         public void OnLatheMoveRequestMessage(EntityUid uid, LatheComponent component, ref LatheMoveRequestMessage args)
@@ -594,7 +590,7 @@ namespace Content.Server.Lathe
                 component.Queue.AddBefore(newRelativeNode, node);
             }
 
-            UpdateUserInterfaceState(uid, LatheUpdateState.UpdateWhat.ProductionQueue, component);
+            DirtyField(uid, component, nameof(component.Queue));
         }
 
         public void OnLatheAbortFabricationMessage(EntityUid uid, LatheComponent component, ref LatheAbortFabricationMessage args)
@@ -609,10 +605,9 @@ namespace Content.Server.Lathe
             RefundCurrentRecipe(uid, component);
             component.CurrentRecipe = null;
             FinishProducing(uid, component);
-            // FinishProducing() *may* send a ProductionQueue update, but we need to update both
-            // Materials and ProductionQueue here
-            var toUpdate = LatheUpdateState.UpdateWhat.ProductionQueue | LatheUpdateState.UpdateWhat.Materials;
+            var toUpdate = LatheUpdateState.UpdateWhat.Materials;
             UpdateUserInterfaceState(uid, toUpdate, component);
+            DirtyField(uid, component, nameof(LatheComponent.CurrentRecipe));
         }
         #endregion
     }
