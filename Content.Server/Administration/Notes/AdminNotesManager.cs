@@ -33,11 +33,14 @@ public sealed partial class AdminNotesManager : IAdminNotesManager, IPostInjectI
 
     public const string SawmillId = "admin.notes";
 
+    private readonly SoundPathSpecifier _noteNotificationSound = new("/Audio/Effects/adminhelp.ogg");
+
     public event Action<SharedAdminNote>? NoteAdded;
     public event Action<SharedAdminNote>? NoteModified;
     public event Action<SharedAdminNote>? NoteDeleted;
 
     private ISawmill _sawmill = default!;
+
 
     public bool CanCreate(ICommonSession admin)
     {
@@ -176,12 +179,11 @@ public sealed partial class AdminNotesManager : IAdminNotesManager, IPostInjectI
         if (_player.TryGetSessionById(netUserId, out var session) && !secret && type == NoteType.Note)
         {
             var audioSystem = _systems.GetEntitySystem<SharedAudioSystem>();
-            var notifAudio = new SoundPathSpecifier("/Audio/Effects/adminhelp.ogg");
             var notifMessage = _config.GetCVar(CCVars.SeeOwnNotes) ? _loc.GetString("admin-notes-manager-note-notification")
                 : _loc.GetString("admin-notes-manager-note-notification-no-cvar");
 
             _chat.DispatchServerMessage(session, notifMessage);
-            audioSystem.PlayGlobal(notifAudio, Filter.SinglePlayer(session), false, AudioParams.Default.AddVolume(-7f));
+            audioSystem.PlayGlobal(_noteNotificationSound, Filter.SinglePlayer(session), false, AudioParams.Default.AddVolume(-7f));
         }
     }
 
