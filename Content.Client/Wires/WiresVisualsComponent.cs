@@ -9,8 +9,8 @@ namespace Content.Client.Wires;
 public sealed partial class WiresVisualsComponent : Component
 {
     /// <summary>
-    /// If true, the maintenance panel should be visible normally.
-    /// If false, it should only be visible when the panel is open.
+    /// If true, the maintenance panel should be visible when the panel is closed.
+    /// If false, it should only be visible when the panel is open (typical for most machines).
     /// </summary>
     [DataField]
     public bool VisibleWhenClosed;
