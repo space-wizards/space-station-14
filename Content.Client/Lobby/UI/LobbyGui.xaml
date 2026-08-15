@@ -82,35 +82,18 @@
                     <!-- Voting & misc button bar -->
                     <BoxContainer Orientation="Horizontal" MinSize="0 40" HorizontalAlignment="Center">
                         <Button Name="RoundSummaryButton" Access="Public" ToggleMode="true"
-                            Text="{Loc 'ui-lobby-round-summary-button'}">
-                            <Control.StyleClasses>
-                                <system:String>ButtonBig</system:String>
-                                <system:String>OpenRight</system:String>
-                            </Control.StyleClasses>
+                            StyleClasses="ButtonBig OpenRight" Text="{Loc 'ui-lobby-round-summary-button'}">
                         </Button>
-                        <Button Name="AHelpButton" Access="Public" Text="{Loc 'ui-lobby-ahelp-button'}">
-                            <Control.StyleClasses>
-                                <system:String>ButtonBig</system:String>
-                                <system:String>OpenBoth</system:String>
-                            </Control.StyleClasses>
+                        <Button Name="AHelpButton" Access="Public" Text="{Loc 'ui-lobby-ahelp-button'}"
+                            StyleClasses="ButtonBig OpenBoth">
                         </Button>
-                        <vote:VoteCallMenuButton Name="CallVoteButton">
-                            <Control.StyleClasses>
-                                <system:String>ButtonBig</system:String>
-                                <system:String>OpenBoth</system:String>
-                            </Control.StyleClasses>
+                        <vote:VoteCallMenuButton Name="CallVoteButton" StyleClasses="ButtonBig OpenBoth">
                         </vote:VoteCallMenuButton>
-                        <Button Name="OptionsButton" Access="Public" Text="{Loc 'ui-lobby-options-button'}">
-                            <Control.StyleClasses>
-                                <system:String>ButtonBig</system:String>
-                                <system:String>OpenBoth</system:String>
-                            </Control.StyleClasses>
+                        <Button Name="OptionsButton" Access="Public" Text="{Loc 'ui-lobby-options-button'}"
+                            StyleClasses="ButtonBig OpenBoth">
                         </Button>
-                        <Button Name="LeaveButton" Access="Public" Text="{Loc 'ui-lobby-leave-button'}">
-                            <Control.StyleClasses>
-                                <system:String>ButtonBig</system:String>
-                                <system:String>OpenLeft</system:String>
-                            </Control.StyleClasses>
+                        <Button Name="LeaveButton" Access="Public" Text="{Loc 'ui-lobby-leave-button'}"
+                            StyleClasses="ButtonBig OpenLeft">
                         </Button>
                     </BoxContainer>
                     <controls:HSpacer Spacing="10" />
