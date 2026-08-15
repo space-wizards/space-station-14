@@ -175,10 +175,10 @@ public sealed partial class AdminNotesManager : IAdminNotesManager, IPostInjectI
         // Send a notification to the player that they received a non-secret note.
         if (_player.TryGetSessionById(netUserId, out var session) && !secret && type == NoteType.Note)
         {
+            var audioSystem = _systems.GetEntitySystem<SharedAudioSystem>();
+            var notifAudio = new SoundPathSpecifier("/Audio/Effects/adminhelp.ogg");
             var notifMessage = _config.GetCVar(CCVars.SeeOwnNotes) ? _loc.GetString("admin-notes-manager-note-notification")
                 : _loc.GetString("admin-notes-manager-note-notification-no-cvar");
-            var notifAudio = new SoundPathSpecifier("/Audio/Effects/adminhelp.ogg");
-            var audioSystem = _systems.GetEntitySystem<SharedAudioSystem>();
 
             _chat.DispatchServerMessage(session, notifMessage);
             audioSystem.PlayGlobal(notifAudio, Filter.SinglePlayer(session), false, AudioParams.Default.AddVolume(-7f));
