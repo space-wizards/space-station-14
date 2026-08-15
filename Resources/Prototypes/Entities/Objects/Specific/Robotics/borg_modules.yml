@@ -1599,7 +1599,7 @@
     - type: Electrified
       requirePower: false
       shockDamage: 15
-      shockDelay: 12
+      shockDelay: 6
       shockTime: 0.25
 
 - type: entity
@@ -1720,8 +1720,8 @@
         state: xenoborg_heavy_rad
       shader: unshaded
     - type: RadiationSource
-      intensity: 0.75
-      slope: 0.2
+      intensity: 4
+      slope: 1
     - type: AmbientSound
       range: 6
       volume: -3
