@@ -11,13 +11,14 @@ public sealed partial class ChatLinkLabel : Label
 {
     [Dependency] private IEntityManager _entity = default!;
 
-    private ChatSystem? _Chat;
+    private readonly ChatSystem _Chat;
     private bool _inVisibilityChanged;
 
     public ChatLinkLabel()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
+        _Chat = _entity.System<ChatSystem>();
     }
 
     protected override void VisibilityChanged(bool newVisible)
@@ -48,8 +49,6 @@ public sealed partial class ChatLinkLabel : Label
 
     private void UpdateVisibility()
     {
-        _Chat ??= _entity.System<ChatSystem>();
-        var canClick = _Chat.CanClickMessageSender(null);
-        Visible = canClick;
+            Visible = _Chat.CanClickMessageSender(null);
     }
 }
