@@ -6,6 +6,7 @@ using Content.Shared.Lathe.Prototypes;
 using Content.Shared.Localizations;
 using Content.Shared.Materials;
 using Content.Shared.Research.Prototypes;
+using Content.Shared.Research.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -31,6 +32,8 @@ public abstract class SharedLatheSystem : EntitySystem
         SubscribeLocalEvent<EmagLatheRecipesComponent, GotEmaggedEvent>(OnEmagged);
         SubscribeLocalEvent<LatheComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
+        SubscribeLocalEvent<TechnologyDatabaseComponent, LatheGetRecipesEvent>(OnGetRecipes);
+        SubscribeLocalEvent<EmagLatheRecipesComponent, LatheGetRecipesEvent>(GetEmagLatheRecipes);
 
         BuildInverseRecipeDictionary();
     }
@@ -64,6 +67,60 @@ public abstract class SharedLatheSystem : EntitySystem
             var pack = _proto.Index(id);
             recipes.UnionWith(pack.Recipes);
         }
+    }
+
+    [PublicAPI]
+    public bool TryGetAvailableRecipes(EntityUid uid, [NotNullWhen(true)] out List<ProtoId<LatheRecipePrototype>>? recipes, [NotNullWhen(true)] LatheComponent? component = null, bool getUnavailable = false)
+    {
+        recipes = null;
+        if (!Resolve(uid, ref component))
+            return false;
+        recipes = GetAvailableRecipes(uid, component, getUnavailable);
+        return true;
+    }
+
+    public List<ProtoId<LatheRecipePrototype>> GetAvailableRecipes(EntityUid uid, LatheComponent component, bool getUnavailable = false)
+    {
+        var ev = new LatheGetRecipesEvent((uid, component), getUnavailable);
+        AddRecipesFromPacks(ev.Recipes, component.StaticPacks);
+        RaiseLocalEvent(uid, ev);
+        return ev.Recipes.ToList();
+    }
+
+    /// <summary>
+    /// Adds every unlocked recipe from each pack to the recipes list.
+    /// </summary>
+    public void AddRecipesFromDynamicPacks(ref LatheGetRecipesEvent args, TechnologyDatabaseComponent database, IEnumerable<ProtoId<LatheRecipePackPrototype>> packs)
+    {
+        foreach (var id in packs)
+        {
+            var pack = _proto.Index(id);
+            foreach (var recipe in pack.Recipes)
+            {
+                if (args.GetUnavailable || database.UnlockedRecipes.Contains(recipe))
+                    args.Recipes.Add(recipe);
+            }
+        }
+    }
+
+    private void OnGetRecipes(EntityUid uid, TechnologyDatabaseComponent component, LatheGetRecipesEvent args)
+    {
+        if (uid == args.Lathe)
+            AddRecipesFromDynamicPacks(ref args, component, args.Comp.DynamicPacks);
+    }
+
+    private void GetEmagLatheRecipes(EntityUid uid, EmagLatheRecipesComponent component, LatheGetRecipesEvent args)
+    {
+        if (uid != args.Lathe)
+            return;
+
+        if (!args.GetUnavailable && !_emag.CheckFlag(uid, EmagType.Interaction))
+            return;
+
+        AddRecipesFromPacks(args.Recipes, component.EmagStaticPacks);
+
+        if (TryComp<TechnologyDatabaseComponent>(uid, out var database))
+            AddRecipesFromDynamicPacks(ref args, database, component.EmagDynamicPacks);
     }
 
     private void OnExamined(Entity<LatheComponent> ent, ref ExaminedEvent args)

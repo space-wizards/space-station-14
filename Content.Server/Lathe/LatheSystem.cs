@@ -13,11 +13,9 @@ using Content.Shared.Atmos;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.UserInterface;
 using Content.Shared.Database;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Lathe;
-using Content.Shared.Lathe.Prototypes;
 using Content.Shared.Localizations;
 using Content.Shared.Materials;
 using Content.Shared.Power;
@@ -74,9 +72,6 @@ namespace Content.Server.Lathe
             SubscribeLocalEvent<LatheComponent, LatheMoveRequestMessage>(OnLatheMoveRequestMessage);
             SubscribeLocalEvent<LatheComponent, LatheAbortFabricationMessage>(OnLatheAbortFabricationMessage);
 
-            SubscribeLocalEvent<LatheComponent, BeforeActivatableUIOpenEvent>((u, c, _) => UpdateUserInterfaceState(u, LatheUpdateState.UpdateWhat.All, c));
-            SubscribeLocalEvent<TechnologyDatabaseComponent, LatheGetRecipesEvent>(OnGetRecipes);
-            SubscribeLocalEvent<EmagLatheRecipesComponent, LatheGetRecipesEvent>(GetEmagLatheRecipes);
             SubscribeLocalEvent<LatheHeatProducingComponent, LatheStartPrintingEvent>(OnHeatStartPrinting);
         }
         public override void Update(float frameTime)
@@ -145,24 +140,6 @@ namespace Content.Server.Lathe
 
             var combined = args.Whitelist.Union(materialWhitelist).ToList();
             args.Whitelist = combined;
-        }
-
-        [PublicAPI]
-        public bool TryGetAvailableRecipes(EntityUid uid, [NotNullWhen(true)] out List<ProtoId<LatheRecipePrototype>>? recipes, [NotNullWhen(true)] LatheComponent? component = null, bool getUnavailable = false)
-        {
-            recipes = null;
-            if (!Resolve(uid, ref component))
-                return false;
-            recipes = GetAvailableRecipes(uid, component, getUnavailable);
-            return true;
-        }
-
-        public List<ProtoId<LatheRecipePrototype>> GetAvailableRecipes(EntityUid uid, LatheComponent component, bool getUnavailable = false)
-        {
-            var ev = new LatheGetRecipesEvent((uid, component), getUnavailable);
-            AddRecipesFromPacks(ev.Recipes, component.StaticPacks);
-            RaiseLocalEvent(uid, ev);
-            return ev.Recipes.ToList();
         }
 
         public bool TryAddToQueue(EntityUid uid, LatheRecipePrototype recipe, int quantity, LatheComponent? component = null)
@@ -270,51 +247,6 @@ namespace Content.Server.Lathe
             }
         }
 
-        public void UpdateUserInterfaceState(EntityUid uid, LatheUpdateState.UpdateWhat updateWhat, LatheComponent? component = null)
-        {
-            if (!Resolve(uid, ref component))
-                return;
-
-            var recipes = (updateWhat & LatheUpdateState.UpdateWhat.Recipes) != 0 ? GetAvailableRecipes(uid, component) : null;
-            var state = new LatheUpdateState(updateWhat, recipes);
-            _uiSys.SetUiState(uid, LatheUiKey.Key, state);
-        }
-
-        /// <summary>
-        /// Adds every unlocked recipe from each pack to the recipes list.
-        /// </summary>
-        public void AddRecipesFromDynamicPacks(ref LatheGetRecipesEvent args, TechnologyDatabaseComponent database, IEnumerable<ProtoId<LatheRecipePackPrototype>> packs)
-        {
-            foreach (var id in packs)
-            {
-                var pack = _proto.Index(id);
-                foreach (var recipe in pack.Recipes)
-                {
-                    if (args.GetUnavailable || database.UnlockedRecipes.Contains(recipe))
-                        args.Recipes.Add(recipe);
-                }
-            }
-        }
-
-        private void OnGetRecipes(EntityUid uid, TechnologyDatabaseComponent component, LatheGetRecipesEvent args)
-        {
-            if (uid == args.Lathe)
-                AddRecipesFromDynamicPacks(ref args, component, args.Comp.DynamicPacks);
-        }
-
-        private void GetEmagLatheRecipes(EntityUid uid, EmagLatheRecipesComponent component, LatheGetRecipesEvent args)
-        {
-            if (uid != args.Lathe)
-                return;
-
-            if (!args.GetUnavailable && !_emag.CheckFlag(uid, EmagType.Interaction))
-                return;
-
-            AddRecipesFromPacks(args.Recipes, component.EmagStaticPacks);
-
-            if (TryComp<TechnologyDatabaseComponent>(uid, out var database))
-                AddRecipesFromDynamicPacks(ref args, database, component.EmagDynamicPacks);
-        }
 
         private void OnHeatStartPrinting(EntityUid uid, LatheHeatProducingComponent component, LatheStartPrintingEvent args)
         {
@@ -356,7 +288,7 @@ namespace Content.Server.Lathe
 
         private void OnDatabaseModified(EntityUid uid, LatheComponent component, ref TechnologyDatabaseModifiedEvent args)
         {
-            UpdateUserInterfaceState(uid, LatheUpdateState.UpdateWhat.Recipes, component);
+            _uiSys.ServerSendUiMessage((uid, null), LatheUiKey.Key, new LatheRefreshRecipesMessage());
         }
 
         private void OnTechnologyDatabaseModified(Entity<LatheAnnouncingComponent> ent, ref TechnologyDatabaseModifiedEvent args)
@@ -403,7 +335,7 @@ namespace Content.Server.Lathe
 
         private void OnResearchRegistrationChanged(EntityUid uid, LatheComponent component, ref ResearchRegistrationChangedEvent args)
         {
-            UpdateUserInterfaceState(uid, LatheUpdateState.UpdateWhat.Recipes, component);
+            _uiSys.ServerSendUiMessage((uid, null), LatheUiKey.Key, new LatheRefreshRecipesMessage());
         }
 
         protected override bool HasRecipe(EntityUid uid, LatheRecipePrototype recipe, LatheComponent component)

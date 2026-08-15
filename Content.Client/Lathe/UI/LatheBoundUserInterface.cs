@@ -41,24 +41,16 @@ namespace Content.Client.Lathe.UI
             {
                 UpdateProductionQueue(latheComp.CurrentRecipe, latheComp.Queue);
             }
+            _menu.RefreshRecipes();
         }
 
-        protected override void UpdateState(BoundUserInterfaceState state)
+        protected override void ReceiveMessage(BoundUserInterfaceMessage message)
         {
-            base.UpdateState(state);
+            base.ReceiveMessage(message);
 
-            switch (state)
+            if (message is LatheRefreshRecipesMessage)
             {
-                case LatheUpdateState msg:
-                    if ((msg.UpdateFlags & LatheUpdateState.UpdateWhat.Recipes) != 0)
-                    {
-                        if (_menu != null && msg.Recipes != null)
-                            _menu.Recipes = msg.Recipes;
-                        _menu?.PopulateRecipes();
-                        _menu?.UpdateCategories();
-                    }
-
-                    break;
+                _menu?.RefreshRecipes();
             }
         }
 

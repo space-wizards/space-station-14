@@ -1,35 +1,13 @@
-using Content.Shared.Research.Prototypes;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Lathe;
 
+/// <summary>
+/// Sent to clients when the recipes available in the lathe have changed
+/// </summary>
 [Serializable, NetSerializable]
-public sealed class LatheUpdateState : BoundUserInterfaceState
+public sealed class LatheRefreshRecipesMessage : BoundUserInterfaceMessage
 {
-    [Flags]
-    public enum UpdateWhat
-    {
-        Recipes = 1 << 0,
-        All = Recipes
-    }
-
-    // Flags indicating what needs to be updated in the UI
-    // to minimize update messages
-    public UpdateWhat UpdateFlags;
-
-    public List<ProtoId<LatheRecipePrototype>>? Recipes;
-
-    public LatheRecipeBatch[]? Queue;
-
-    public ProtoId<LatheRecipePrototype>? CurrentlyProducing;
-
-    public LatheUpdateState(UpdateWhat updateWhat,
-            List<ProtoId<LatheRecipePrototype>>? recipes)
-    {
-        UpdateFlags = updateWhat;
-        Recipes = recipes;
-    }
 }
 
 /// <summary>

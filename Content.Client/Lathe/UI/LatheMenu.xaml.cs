@@ -102,6 +102,19 @@ public sealed partial class LatheMenu : DefaultWindow
     }
 
     /// <summary>
+    /// Re-initialize the set of recipes we can print
+    /// </summary>
+    public void RefreshRecipes()
+    {
+        if (_lathe.TryGetAvailableRecipes(Entity, out var recipes))
+        {
+            Recipes = recipes;
+            PopulateRecipes();
+            UpdateCategories();
+        }
+    }
+
+    /// <summary>
     /// Populates the list of all the recipes
     /// </summary>
     public void PopulateRecipes()
