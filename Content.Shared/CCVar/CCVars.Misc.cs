@@ -126,6 +126,10 @@ public sealed partial class CCVars
     public static readonly CVarDef<float> PlaytimeMinutesToday =
         CVarDef.Create("playtime.minutes_today", 0f, CVar.CLIENTONLY | CVar.ARCHIVE);
 
+    /// <summary>
+    ///     If the cvar is enabled, every StructureAlignerComponent will be Aligned when the map initializes.
+    /// </summary>
+    /// <remark>May be considered a stopgap measure when unupgraded maps are in rotation?</remark>
     public static readonly CVarDef<bool> MapInitAlign =
         CVarDef.Create("align.map_init", false, CVar.SERVER | CVar.REPLICATED);
 

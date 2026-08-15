@@ -46,7 +46,7 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
     }
 
     /// <summary>
-    /// If the cvar is enabled, every StructureAlignerComponent will be Aligned when it spawns.
+    /// If the cvar is enabled, every StructureAlignerComponent will be Aligned when the map initializes.
     /// </summary>
     /// <remark>May be considered a stopgap measure when unupgraded maps are in rotation?</remark>
     [SubscribeLocalEvent]
@@ -102,15 +102,11 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
 
         var northSouth = 0d;
         var eastWest = 0d;
-        var neighbors = 0;
 
-        // if (!HasComp<NavMapDoorComponent>(entity)) //TODO:ERRANT testing only
-        // {
-        //     var a = entity.Owner;
-        // }
-
+        int weight;
         foreach (var (ent, comp) in query)
         {
+
             if (entity.Owner == ent)
                 continue;
 
@@ -123,8 +119,10 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
             if (t.ParentUid != trans.ParentUid)
                 continue;
 
-            if (!t.Anchored) //TODO:ERRANT governed via cvar? unanchored frames could have a LITTLE weight
-                continue;
+            // Anchored objects have enough weight in the calculation to make unanchored ones irrelevant,
+            // but if only unanchored ones are present, they will still matter.
+            // For example, if a line of firelock frames are being anchored, with no adjacent walls
+            weight = t.Anchored ? 10 : 1;
 
             // Only the four adjacent tiles should be considered for alignment, otherwise calculation quickly becomes infeasibly complex
             // Minimum range is here to ignore overlapping entities
@@ -132,17 +130,10 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
             if (dist > ProximityMax || dist < ProximityMin)
                 continue;
 
-            // var inMinRange = _trans.InRange(t.Coordinates, trans.Coordinates, ProximityMax); //TODO:ERRANT this one is broken
-            // var inMaxRange = _trans.InRange(t.Coordinates, trans.Coordinates, ProximityMin);
-            // if(!(inMaxRange && !inMinRange))
-            //     continue;
-
-            neighbors++;
-
             var vect = trans.Coordinates.Position - t.Coordinates.Position;
 
-            eastWest += Math.Abs(Math.Round(vect.X));
-            northSouth += Math.Round(Math.Abs(vect.Y));
+            eastWest += Math.Abs(Math.Round(vect.X)) * weight;
+            northSouth += Math.Round(Math.Abs(vect.Y)) * weight;
         }
 
         // Do we care about neighbor count?
@@ -191,7 +182,7 @@ public enum StructureAlignType : byte
     /// Airlocks, doors, shutters, blast doors and everything that would be functionally
     /// considered a room boundary (doors, walls, windows, full tile rock)
     /// No firelocks
-    /// No thin walls/doors //TODO:ERRANT should turnstiles be in either?
+    /// No thin walls/doors //TODO:ERRANT should energy barriers (turnstiles) be in either?
     /// </summary>
     Door,
     /// <summary>
