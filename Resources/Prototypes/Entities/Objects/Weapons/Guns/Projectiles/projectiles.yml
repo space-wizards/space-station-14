@@ -874,7 +874,7 @@
       frequency: 17
   - type: PointLight
     radius: 2.5
-    color: blue
+    color: magenta
     energy: 0.4
 
 - type: entity
