@@ -1,0 +1,5 @@
+<Control xmlns="https://spacestation14.io">
+    <PanelContainer Name="LabelPanel" StyleClasses="" VerticalAlignment="Bottom">
+        <RichTextLabel Name="Label" Margin="4"/>
+    </PanelContainer>
+</Control>

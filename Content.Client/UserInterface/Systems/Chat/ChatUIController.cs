@@ -4,6 +4,7 @@ using System.Numerics;
 using Content.Client.Administration.Managers;
 using Content.Client.Chat;
 using Content.Client.Chat.Managers;
+using Content.Client.Chat.SpeechBubble;
 using Content.Client.Chat.TypingIndicator;
 using Content.Client.Chat.UI;
 using Content.Client.Examine;
@@ -58,6 +59,7 @@ public sealed partial class ChatUIController : UIController
     [Dependency] private IStateManager _state = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IReplayRecordingManager _replayRecording = default!;
+    [Dependency] private IOverlayManager _overlayManager = default!;
 
     [UISystemDependency] private readonly ExamineSystem? _examine = default;
     [UISystemDependency] private readonly GhostSystem? _ghost = default;
@@ -66,6 +68,12 @@ public sealed partial class ChatUIController : UIController
     [UISystemDependency] private readonly TransformSystem? _transform = default;
     [UISystemDependency] private readonly MindSystem? _mindSystem = default!;
     [UISystemDependency] private readonly RoleCodewordSystem? _roleCodewordSystem = default!;
+
+    [UISystemDependency] private readonly EntityLookupSystem? _lookup = default!;
+    [UISystemDependency] private readonly SpriteSystem? _sprite = default!;
+
+    private EntityQuery<TransformComponent> _xformQuery;
+    private EntityQuery<SpriteComponent> _spriteQuery;
 
     private static readonly ProtoId<ColorPalettePrototype> ChatNamePalette = "ChatNames";
     private string[] _chatNameColors = default!;
@@ -128,6 +136,12 @@ public sealed partial class ChatUIController : UIController
     /// </summary>
     private readonly Dictionary<EntityUid, List<SpeechBubble>> _activeSpeechBubbles =
         new();
+
+    /// <summary>
+    ///     Speech bubbles that are currently visible on screen.
+    ///     We track them to push them up when new ones get added.
+    /// </summary>
+    public readonly Dictionary<EntityUid, List<NuSpeechBubble>> NuActiveSpeechBubbles = new();
 
     /// <summary>
     ///     Speech bubbles that are to-be-sent because of the "rate limit" they have.
@@ -243,6 +257,8 @@ public sealed partial class ChatUIController : UIController
         InitializeHighlights();
     }
 
+    private SpeechBubbleOverlay _speechBubbleOverlay = default!;
+
     public void OnScreenLoad()
     {
         SetMainChat(true);
@@ -251,11 +267,40 @@ public sealed partial class ChatUIController : UIController
         SetSpeechBubbleRoot(viewportContainer);
 
         SetChatWindowOpacity(_config.GetCVar(CCVars.ChatWindowOpacity));
-    }
+
+
+        _xformQuery = _ent.GetEntityQuery<TransformComponent>();
+        _spriteQuery = _ent.GetEntityQuery<SpriteComponent>();
+
+        if (_lookup == null)
+            return;
+
+        if (_sprite == null)
+            return;
+
+        if (_transform == null)
+            return;
+
+        if (_examine == null)
+            return;
+
+        _speechBubbleOverlay =
+                new SpeechBubbleOverlay(_lookup,
+                    _sprite,
+                    _transform,
+                    _examine,
+                    _spriteQuery,
+                    _xformQuery);
+
+        _overlayManager.AddOverlay(_speechBubbleOverlay);
+
+        }
 
     public void OnScreenUnload()
     {
         SetMainChat(false);
+
+        _overlayManager.RemoveOverlay<SpeechBubbleOverlay>();
     }
 
     private void OnChatWindowOpacityChanged(float opacity)
@@ -444,6 +489,50 @@ public sealed partial class ChatUIController : UIController
         EnqueueSpeechBubble(ent, msg, speechType);
     }
 
+    private void CreateNuSpeechBubble(EntityUid entity, SpeechBubbleData speechData)
+    {
+        var name = SharedChatSystem.GetStringInsideTag(speechData.Message, "Name");
+        var nameColor = GetNameColor(name);
+
+        var message = SharedChatSystem.GetStringInsideTag(speechData.Message, "BubbleContent");
+
+        var msg = new FormattedMessage();
+        if (Color.TryFromHex(nameColor, out var color))
+            msg.PushColor(color);
+
+        msg.AddMarkupOrThrow(message);
+
+        var bubble = new NuSpeechBubble(msg, entity);
+
+        bubble.OnDied += NuSpeechBubbleDied;
+
+        if (NuActiveSpeechBubbles.TryGetValue(entity, out var existing))
+        {
+            // Push up existing bubbles above the mob's head.
+            foreach (var existingBubble in existing)
+            {
+                existingBubble.VerticalOffset += bubble.DesiredSize.Y;
+            }
+        }
+        else
+        {
+            existing = new List<NuSpeechBubble>();
+            NuActiveSpeechBubbles.Add(entity, existing);
+        }
+
+        existing.Add(bubble);
+        _speechBubbleRoot.AddChild(bubble);
+
+        if (existing.Count > SpeechBubbleCap)
+        {
+            // Get the next speech bubble to fade
+            // Any speech bubbles before it are already fading
+            var last = existing[^(SpeechBubbleCap + 1)];
+            last.FadeNow();
+        }
+
+    }
+
     private void CreateSpeechBubble(EntityUid entity, SpeechBubbleData speechData)
     {
         var bubble =
@@ -482,6 +571,11 @@ public sealed partial class ChatUIController : UIController
         RemoveSpeechBubble(entity, bubble);
     }
 
+    private void NuSpeechBubbleDied(EntityUid entity, NuSpeechBubble bubble)
+    {
+        RemoveNuSpeechBubble(entity, bubble);
+    }
+
     private void EnqueueSpeechBubble(EntityUid entity, ChatMessage message, SpeechBubble.SpeechType speechType)
     {
         // Don't enqueue speech bubbles for other maps. TODO: Support multiple viewports/maps?
@@ -507,6 +601,19 @@ public sealed partial class ChatUIController : UIController
         if (list.Count == 0)
         {
             _activeSpeechBubbles.Remove(entityUid);
+        }
+    }
+
+    public void RemoveNuSpeechBubble(EntityUid entityUid, NuSpeechBubble bubble)
+    {
+        bubble.Dispose();
+
+        var list = NuActiveSpeechBubbles[entityUid];
+        list.Remove(bubble);
+
+        if (list.Count == 0)
+        {
+            NuActiveSpeechBubbles.Remove(entityUid);
         }
     }
 
@@ -627,7 +734,7 @@ public sealed partial class ChatUIController : UIController
 
             // We keep the queue around while it has 0 items. This allows us to keep the timer.
             // When the timer hits 0 and there's no messages left, THEN we can clear it up.
-            CreateSpeechBubble(entity, msg);
+            CreateNuSpeechBubble(entity, msg);
         }
 
         var player = _player.LocalEntity;
