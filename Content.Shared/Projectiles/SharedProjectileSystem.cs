@@ -205,7 +205,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnBeingShot(Entity<AcknowledgeShooterComponent> entity, ref ComponentStartup args)
+    private void OnBeingShot(Entity<AcknowledgeShooterComponent> entity, ref MapInitEvent args)
     {
         entity.Comp.WhenToStopIgnoringShooter = _timing.CurTime + entity.Comp.Delay;
     }
