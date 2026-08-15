@@ -8,13 +8,7 @@ public sealed partial class ScaleVisualsSystem : SharedScaleVisualsSystem
 {
     [Dependency] private SpriteSystem _sprite = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<ScaleVisualsComponent, AppearanceChangeEvent>(OnChangeData);
-    }
-
+    [SubscribeLocalEvent]
     private void OnChangeData(Entity<ScaleVisualsComponent> ent, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null

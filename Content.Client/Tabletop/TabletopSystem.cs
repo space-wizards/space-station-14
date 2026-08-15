@@ -210,7 +210,7 @@ namespace Content.Client.Tabletop
             return false;
         }
 
-        private void OnAppearanceChange(EntityUid uid, TabletopDraggableComponent comp, ref AppearanceChangeEvent args)
+        private void OnAppearanceChange(Entity<TabletopDraggableComponent> ent, ref AppearanceChangeEvent args)
         {
             if (args.Sprite == null)
                 return;
@@ -218,10 +218,10 @@ namespace Content.Client.Tabletop
             // TODO: maybe this can work more nicely, by maybe only having to set the item to "being dragged", and have
             //  the appearance handle the rest
             if (args.TryGetData<Vector2>(TabletopItemVisuals.Scale, out var scale))
-                _sprite.SetScale((uid, args.Sprite), scale);
+                _sprite.SetScale((ent, args.Sprite), scale);
 
             if (args.TryGetData<int>(TabletopItemVisuals.DrawDepth, out var drawDepth))
-                _sprite.SetDrawDepth((uid, args.Sprite), drawDepth);
+                _sprite.SetDrawDepth((ent, args.Sprite), drawDepth);
         }
 
         #endregion

@@ -16,11 +16,13 @@ public sealed partial class RevenantSystem : VisualizerSystem<RevenantComponent>
             return;
 
         if (args.TryGetData<bool>(RevenantVisuals.Harvesting, out var harvesting) && harvesting)
+        {
             SpriteSystem.LayerSetRsiState((uid, args.Sprite), 0, component.HarvestingState);
-
+        }
         else if (args.TryGetData<bool>(RevenantVisuals.Stunned, out var stunned) && stunned)
+        {
             SpriteSystem.LayerSetRsiState((uid, args.Sprite), 0, component.StunnedState);
-
+        }
         else if (args.TryGetData<bool>(RevenantVisuals.Corporeal, out var corporeal))
         {
             if (corporeal)

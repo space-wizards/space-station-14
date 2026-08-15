@@ -10,16 +10,16 @@ public sealed partial class EntityStorageVisualizerSystem : VisualizerSystem<Ent
     /// Sets the base sprite to this layer. Exists to make the inheritance tree less boilerplate-y.
     /// </summary>
     [SubscribeLocalEvent]
-    private void OnComponentInit(EntityUid uid, EntityStorageVisualsComponent comp, ComponentInit args)
+    private void OnComponentInit(Entity<EntityStorageVisualsComponent> ent, ref ComponentInit args)
     {
-        if (comp.StateBaseClosed == null)
+        if (ent.Comp.StateBaseClosed == null)
             return;
 
-        comp.StateBaseOpen ??= comp.StateBaseClosed;
-        if (!TryComp<SpriteComponent>(uid, out var sprite))
+        ent.Comp.StateBaseOpen ??= ent.Comp.StateBaseClosed;
+        if (!TryComp<SpriteComponent>(ent, out var sprite))
             return;
 
-        SpriteSystem.LayerSetRsiState((uid, sprite), StorageVisualLayers.Base, comp.StateBaseClosed);
+        SpriteSystem.LayerSetRsiState((ent, sprite), StorageVisualLayers.Base, ent.Comp.StateBaseClosed);
     }
 
     /// <inheritdoc/>

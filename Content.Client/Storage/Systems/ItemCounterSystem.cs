@@ -13,9 +13,9 @@ public sealed partial class ItemCounterSystem : SharedItemCounterSystem
     [Dependency] private SpriteSystem _sprite = default!;
 
     [SubscribeLocalEvent]
-    private void OnAppearanceChange(EntityUid uid, ItemCounterComponent comp, ref AppearanceChangeEvent args)
+    private void OnAppearanceChange(Entity<ItemCounterComponent> ent, ref AppearanceChangeEvent args)
     {
-        if (args.Sprite == null || comp.LayerStates.Count < 1)
+        if (args.Sprite == null || ent.Comp.LayerStates.Count < 1)
             return;
 
         // Skip processing if no actual
@@ -23,15 +23,15 @@ public sealed partial class ItemCounterSystem : SharedItemCounterSystem
             return;
 
         if (!args.TryGetData<int>(StackVisuals.MaxCount, out var maxCount))
-            maxCount = comp.LayerStates.Count;
+            maxCount = ent.Comp.LayerStates.Count;
 
         if (!args.TryGetData<bool>(StackVisuals.Hide, out var hidden))
             hidden = false;
 
-        if (comp.IsComposite)
-            ProcessCompositeSprite(uid, actual, maxCount, comp.LayerStates, hidden, sprite: args.Sprite);
+        if (ent.Comp.IsComposite)
+            ProcessCompositeSprite(ent, actual, maxCount, ent.Comp.LayerStates, hidden, sprite: args.Sprite);
         else
-            ProcessOpaqueSprite(uid, comp.BaseLayer, actual, maxCount, comp.LayerStates, hidden, sprite: args.Sprite);
+            ProcessOpaqueSprite(ent, ent.Comp.BaseLayer, actual, maxCount, ent.Comp.LayerStates, hidden, sprite: args.Sprite);
     }
 
     public void ProcessOpaqueSprite(EntityUid uid, string layer, int count, int maxCount, List<string> states, bool hide = false, SpriteComponent? sprite = null)

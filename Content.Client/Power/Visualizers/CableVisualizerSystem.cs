@@ -10,7 +10,7 @@ public sealed partial class CableVisualizerSystem : EntitySystem
 
     /// <inheritdoc/>
     [SubscribeLocalEvent(after: [typeof(SubFloorHideSystem)])]
-    private void OnAppearanceChange(EntityUid uid, CableVisualizerComponent component, ref AppearanceChangeEvent args)
+    private void OnAppearanceChange(Entity<CableVisualizerComponent> ent, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
@@ -25,8 +25,8 @@ public sealed partial class CableVisualizerSystem : EntitySystem
         if (!args.TryGetData<WireVisDirFlags>(WireVisVisuals.ConnectedMask, out var mask))
             mask = WireVisDirFlags.None;
 
-        _sprite.LayerSetRsiState((uid, args.Sprite), 0, $"{component.StatePrefix}{(int)mask}");
-        if (component.ExtraLayerPrefix != null)
-            _sprite.LayerSetRsiState((uid, args.Sprite), 1, $"{component.ExtraLayerPrefix}{(int)mask}");
+        _sprite.LayerSetRsiState((ent, args.Sprite), 0, $"{ent.Comp.StatePrefix}{(int)mask}");
+        if (ent.Comp.ExtraLayerPrefix != null)
+            _sprite.LayerSetRsiState((ent, args.Sprite), 1, $"{ent.Comp.ExtraLayerPrefix}{(int)mask}");
     }
 }
