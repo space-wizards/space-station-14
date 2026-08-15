@@ -33,15 +33,6 @@ public sealed class LatheUpdateState : BoundUserInterfaceState
 }
 
 /// <summary>
-///     Sent to the server to sync material storage and the recipe queue.
-/// </summary>
-[Serializable, NetSerializable]
-public sealed class LatheSyncRequestMessage : BoundUserInterfaceMessage
-{
-
-}
-
-/// <summary>
 ///     Sent to the server when a client queues a new recipe.
 /// </summary>
 [Serializable, NetSerializable]

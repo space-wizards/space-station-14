@@ -70,7 +70,6 @@ namespace Content.Server.Lathe
             SubscribeLocalEvent<LatheComponent, ResearchRegistrationChangedEvent>(OnResearchRegistrationChanged);
 
             SubscribeLocalEvent<LatheComponent, LatheQueueRecipeMessage>(OnLatheQueueRecipeMessage);
-            SubscribeLocalEvent<LatheComponent, LatheSyncRequestMessage>(OnLatheSyncRequestMessage);
             SubscribeLocalEvent<LatheComponent, LatheDeleteRequestMessage>(OnLatheDeleteRequestMessage);
             SubscribeLocalEvent<LatheComponent, LatheMoveRequestMessage>(OnLatheMoveRequestMessage);
             SubscribeLocalEvent<LatheComponent, LatheAbortFabricationMessage>(OnLatheAbortFabricationMessage);
@@ -499,12 +498,6 @@ namespace Content.Server.Lathe
                 }
             }
             TryStartProducing(uid, component);
-        }
-
-        private void OnLatheSyncRequestMessage(EntityUid uid, LatheComponent component, LatheSyncRequestMessage args)
-        {
-            // This message seems to be unused?
-            UpdateUserInterfaceState(uid, LatheUpdateState.UpdateWhat.All, component);
         }
 
         /// <summary>
