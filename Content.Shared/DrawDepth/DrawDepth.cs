@@ -6,7 +6,7 @@ namespace Content.Shared.DrawDepth
     [ConstantsFor(typeof(DrawDepthTag))]
     public enum DrawDepth : byte
     {
-        ContentDefault = 32,
+        ContentDefault = DrawDepthTag.Default,
 
         /// <summary>
         ///     This is for sub-floors, the floors you see after prying off a tile.
