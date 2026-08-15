@@ -346,6 +346,7 @@ public sealed partial class DamageVisualsSystem : VisualizerSystem<DamageVisuals
         SpriteSystem.LayerSetVisible(spriteEnt, newLayer, false);
     }
 
+    /// <inheritdoc/>
     protected override void OnAppearanceChange(EntityUid uid, DamageVisualsComponent damageVisComp, ref AppearanceChangeEvent args)
     {
         // how is this still here?
@@ -367,7 +368,7 @@ public sealed partial class DamageVisualsSystem : VisualizerSystem<DamageVisuals
         else
             damageVisComp.Displacement = null;
 
-        HandleDamage(uid, args.Component, damageVisComp);
+        HandleDamage(uid, args, damageVisComp);
     }
 
     private void HandleDamage(EntityUid uid, AppearanceChangeEvent args, DamageVisualsComponent damageVisComp)
