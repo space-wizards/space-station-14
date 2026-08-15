@@ -127,8 +127,8 @@ public sealed partial class MessagingControls : TabContainer
         var topCount = strings.Length > 0 ? strings[0].Length : 0;
         var bottomCount = strings.Length > 1 ? strings[1].Length : 0;
 
-        BroadcastCharLimitLabel.Text = GetCharacterLimitString(topCount, MaxScreenCharacters)
-            + " " + GetCharacterLimitString(bottomCount, MaxScreenCharacters);
+        BroadcastTopCharLimitLabel.Text = GetCharacterLimitString(topCount, MaxScreenCharacters);
+        BroadcastBottomCharLimitLabel.Text = GetCharacterLimitString(bottomCount, MaxScreenCharacters);
 
         if (!_broadcastDisplayEntity.IsValid())
             return;

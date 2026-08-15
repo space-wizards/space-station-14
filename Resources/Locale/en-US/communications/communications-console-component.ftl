@@ -19,8 +19,8 @@ comms-console-station-announcements-header = Station Announcements
 comms-console-station-broadcast-header = Station Broadcast
 comms-console-announce-tab-title = Radio
 comms-console-broadcast-tab-title = Screen
-comms-console-broadcast-char-limit = ({$count}/{$max})
-comms-console-broadcast-char-limit-exceeded = [color=red]({$count}/{$max})[/color]
+comms-console-broadcast-char-limit = {$count}/{$max}
+comms-console-broadcast-char-limit-exceeded = [color=red]{$count}/{$max}[/color]
 
 # Popup
 comms-console-permission-denied = Permission denied
