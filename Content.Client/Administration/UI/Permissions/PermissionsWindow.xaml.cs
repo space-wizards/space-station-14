@@ -81,7 +81,9 @@ public sealed partial class PermissionsWindow : FancyWindow
 
             AdminsList.AddChild(rankControl);
 
-            var flagsText = GetFlagsText(combinedFlags);
+            var positiveFlags = BitOperations.PopCount((uint)admin.PosFlags);
+            var negativeFlags = BitOperations.PopCount((uint)admin.NegFlags);
+            var flagsText = GetFlagsText(admin.PosFlags, $"{positiveFlags}-{negativeFlags}");
 
             AdminsList.AddChild(new Label
             {
@@ -96,7 +98,7 @@ public sealed partial class PermissionsWindow : FancyWindow
 
             if (_adminManager.HasFlag(combinedFlags))
                 continue;
-            
+
             editButton.Disabled = true;
             editButton.ToolTip = Loc.GetString("permissions-eui-do-not-have-required-flags-to-edit-admin-tooltip");
         }
