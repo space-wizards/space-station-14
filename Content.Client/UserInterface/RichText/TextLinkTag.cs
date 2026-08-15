@@ -6,15 +6,27 @@ using Robust.Client.UserInterface.RichText;
 using Robust.Shared.Input;
 using Robust.Shared.Utility;
 using Content.Client.UserInterface.ControlExtensions;
+using Content.Shared.Chat;
 
-namespace Content.Client.Guidebook.RichText;
+namespace Content.Client.RichText;
 
 [UsedImplicitly]
 public sealed class TextLinkTag : IMarkupTagHandler
 {
+    [Dependency] private IEntityManager _entity = default!;
+
     public static Color LinkColor => Color.CornflowerBlue;
 
     public string Name => "textlink";
+
+    public string TextBefore(MarkupNode node)
+    {
+        if (!node.Value.TryGetString(out var text))
+            return string.Empty;
+
+        var sys = _entity.System<SharedChatSystem>();
+        return sys.CanClickMessageSender(null) ? string.Empty : text;
+    }
 
     /// <inheritdoc/>
     public bool TryCreateControl(MarkupNode node, [NotNullWhen(true)] out Control? control)
