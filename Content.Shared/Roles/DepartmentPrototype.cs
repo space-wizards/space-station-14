@@ -42,6 +42,14 @@ public sealed partial class DepartmentPrototype : IPrototype
     [DataField]
     public int Weight { get; private set; }
 
+    // See https://github.com/space-wizards/space-station-14/issues/45214
+    // 
+    /// <summary>
+    /// Whether jobs in this department should skip same-department minimum job fallback.
+    /// </summary>
+    [DataField]
+    public bool IgnoreForDepartmentFallback;
+
     /// <summary>
     /// Toggles the display of the department in the priority setting menu in the character editor.
     /// </summary>

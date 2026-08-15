@@ -283,8 +283,15 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/firehelmet.rsi
+  - type: ToggleableVisuals
+    clothingVisuals:
+      head:
+      - state: equipped-helmet-light
+        shader: unshaded
   - type: Clothing
-    sprite: Clothing/Head/Helmets/firehelmet.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-helmet
     quickEquip: true
   - type: IngestionBlocker
   - type: FireProtection
@@ -303,6 +310,12 @@
     layers:
       Hair: HEAD
       Snout: HEAD
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
 
 #Atmos Fire Helmet
 - type: entity
@@ -313,9 +326,17 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/atmos_firehelmet.rsi
+  - type: ToggleableVisuals
+    clothingVisuals:
+      head:
+      - state: equipped-helmet-light
+        shader: unshaded
   - type: Clothing
     sprite: Clothing/Head/Helmets/atmos_firehelmet.rsi
     quickEquip: true
+    clothingVisuals:
+      head:
+      - state: equipped-helmet
   - type: IngestionBlocker
   - type: FireProtection
     reduction: 0.2
@@ -332,6 +353,12 @@
       Hair: HEAD
       Snout: HEAD
   - type: BreathMask
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
 
 #Chitinous Helmet
 - type: entity
@@ -502,6 +529,7 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/justice.rsi
     equippedPrefix: off
+  - type: ItemToggleExaminableStatus
   - type: ItemToggle
     predictable: false # issues between ToggleCellDraw and ItemToggleActiveSound
     onUse: false
