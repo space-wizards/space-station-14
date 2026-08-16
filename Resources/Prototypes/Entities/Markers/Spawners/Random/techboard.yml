@@ -24,6 +24,7 @@
         - id: SignalTimerElectronics
         - id: APECircuitboard
         - id: SMESMachineCircuitboard
+        - id: FaxMachineCircuitboard
         - id: SubstationMachineCircuitboard
         - id: TelecomServerCircuitboard
       - !type:GroupSelector
