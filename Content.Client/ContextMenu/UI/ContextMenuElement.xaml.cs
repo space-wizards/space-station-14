@@ -26,6 +26,7 @@ namespace Content.Client.ContextMenu.UI
         public ContextMenuPopup? ParentMenu;
 
         private ContextMenuPopup? _subMenu;
+        private bool _hasDeferredSubMenu;
 
         /// <summary>
         ///     The pop-up menu that is opened when hovering over this element.
@@ -36,14 +37,24 @@ namespace Content.Client.ContextMenu.UI
             set
             {
                 _subMenu = value;
-                ExpansionIndicator.Visible = _subMenu != null;
+                UpdateExpansionIndicator();
+            }
+        }
+
+        public bool HasDeferredSubMenu
+        {
+            get => _hasDeferredSubMenu;
+            set
+            {
+                _hasDeferredSubMenu = value;
+                UpdateExpansionIndicator();
             }
         }
 
         /// <summary>
         ///     Convenience property to set label text.
         /// </summary>
-        public virtual string Text { set => Label.SetMessage(FormattedMessage.FromMarkupPermissive(value.Trim())); }
+        public virtual string Text { set => Label.SetMessage(FormattedMessage.FromUnformatted(value.Trim())); }
 
         public ContextMenuElement(string? text = null)
         {
@@ -60,7 +71,13 @@ namespace Content.Client.ContextMenu.UI
             base.ExitedTree();
             _subMenu?.Orphan();
             _subMenu = null;
+            _hasDeferredSubMenu = false;
             ParentMenu = null;
+        }
+
+        private void UpdateExpansionIndicator()
+        {
+            ExpansionIndicator.Visible = _subMenu != null || _hasDeferredSubMenu;
         }
 
         protected override void Draw(DrawingHandleScreen handle)
