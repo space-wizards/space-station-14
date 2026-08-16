@@ -21,10 +21,10 @@ public sealed partial class PassiveDamageSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnDamageTaken(EntityUid ent, PassiveDamageComponent component, DamageDealtEvent args)
     {
-        if (component.IntervalHaltOnDamageTaken == 0f || !args.Damage.AnyPositive())
+        if (component.IntervalHaltOnDamageTaken == TimeSpan.Zero || !args.Damage.AnyPositive())
             return;
 
-        var proposedUpdateTime = _timing.CurTime + TimeSpan.FromSeconds(component.IntervalHaltOnDamageTaken);
+        var proposedUpdateTime = _timing.CurTime + component.IntervalHaltOnDamageTaken;
         if (proposedUpdateTime > component.NextDamage)
         {
             component.NextDamage = proposedUpdateTime;

@@ -114,7 +114,7 @@
   - type: Damageable
     damageModifierSet: Slime
   - type: PassiveDamage # Around 8 damage a minute healed
-    intervalHaltOnDamageTaken: 5
+    intervalHaltOnDamageTaken: 5s
     allowedStates:
     - Alive
     damage:

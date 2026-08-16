@@ -8,7 +8,7 @@ namespace Content.Shared.Damage.Components;
 /// <summary>
 /// Passively damages the entity on a specified interval.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class PassiveDamageComponent : Component
 {
     /// <summary>
@@ -27,7 +27,7 @@ public sealed partial class PassiveDamageComponent : Component
     /// Delay between damage events in seconds
     /// </summary>
     [DataField]
-    public float Interval = 1f;
+    public TimeSpan Interval = TimeSpan.FromSeconds(1);
 
     [DataField("nextDamage", customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField]
     public TimeSpan NextDamage = TimeSpan.Zero;
@@ -36,5 +36,5 @@ public sealed partial class PassiveDamageComponent : Component
     /// How long to pause the passive health change after damage has been taken.
     /// </summary>
     [DataField]
-    public float IntervalHaltOnDamageTaken;
+    public TimeSpan IntervalHaltOnDamageTaken = TimeSpan.Zero;
 }
