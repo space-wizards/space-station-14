@@ -1430,6 +1430,36 @@
 
 - type: entity
   parent: BaseComputer
+  id: ComputerCameraPlayback
+  name: camera playback computer
+  description: Replays recent sighting reports from the station's surveillance network.
+  components:
+  - type: CameraPlaybackConsole
+  - type: UserInterface
+    interfaces:
+      enum.CameraPlaybackConsoleKey.Key:
+        type: CameraPlaybackConsoleBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: ActivatableUI
+    key: enum.CameraPlaybackConsoleKey.Key
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: cameras
+    - map: ["computerLayerKeys"]
+      state: security_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: AccessReader
+    access: [["Security"]]
+
+- type: entity
+  parent: BaseComputer
   id: ComputerSurveillanceWirelessCameraMonitor
   name: wireless camera monitor
   description: A wireless surveillance camera monitor. You're watching them. Maybe.

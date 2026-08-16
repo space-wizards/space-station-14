@@ -90,6 +90,7 @@
           collection: MetalBreak
           params:
             volume: -8
+  - type: SurveillanceCameraSightingRecorder
   placement:
     mode: SnapgridCenter
     snap:
