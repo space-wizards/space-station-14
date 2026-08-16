@@ -211,15 +211,10 @@
     maxCharge: 2000000
     startingCharge: 0
   - type: PowerMonitoringDevice
-<<<<<<< HEAD
     sprite: Structures/Power/wall_substation.rsi
     state: static
-=======
-    sprite: Structures/Power/substation.rsi
-    state: substation_wall_static
   - type: Damageable
     damageModifierSet: SteelMod
->>>>>>> 4e03cf24119945818b27e60b38d142da6a662866
   - type: Destructible
     thresholds:
     - trigger:
