@@ -104,11 +104,6 @@ public sealed partial class AfkConfirmSystem : EntitySystem
             _confirmations.Remove(args.Session);
     }
 
-    private void OnAfkAutomaticChecksToggled(bool value)
-    {
-        _afkAutomaticChecks = value;
-    }
-
     private void OnAfkTimeChanged(float value)
     {
         if (value > 0)
