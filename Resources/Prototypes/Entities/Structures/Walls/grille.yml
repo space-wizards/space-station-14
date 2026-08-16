@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ BaseStructure, StructureHealthBarrierWeak ]
+  parent: [ BaseStructure, StructureHealthBarrier ]
   id: Grille
   name: grille
   description: A flimsy framework of iron rods.
@@ -84,7 +84,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 30
+        damage: 80
       behaviors:
       - &SpawnRod !type:SpawnEntitiesBehavior
         spawn:

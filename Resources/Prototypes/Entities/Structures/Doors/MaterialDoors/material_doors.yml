@@ -196,7 +196,7 @@
           SheetPaper1: *BaseDoorSpawn
 
 - type: entity
-  parent: [ BaseMaterialDoorNavMap, StructureHealthBarrier ]
+  parent: [ BaseMaterialDoorNavMap, StructureHealthBarrierWeak ]
   id: WebDoor
   name: web door
   description: A door, leading to the lands of the spiders... or a spaced room.
