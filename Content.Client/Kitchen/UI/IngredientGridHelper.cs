@@ -1,5 +1,5 @@
-﻿using System.Numerics;
-using System.Linq;
+﻿using System.Linq;
+using System.Numerics;
 using Content.Client.Stylesheets;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
@@ -22,13 +22,11 @@ public static class IngredientGridHelper
     /// <param name="entMan">The entity manager.</param>
     /// <param name="entities">Collection of entities to display.</param>
     /// <param name="onEject">Action to perform when an ingredient is ejected.</param>
-    /// <param name="emptyText">Text to show when there are no ingredients.</param>
     public static void PopulateIngredientsGrid(
         GridContainer grid,
         IEntityManager entMan,
         IEnumerable<EntityUid> entities,
-        Action<EntityUid> onEject,
-        string? emptyText = null)
+        Action<EntityUid> onEject)
     {
         grid.Children.Clear();
 
@@ -38,8 +36,6 @@ public static class IngredientGridHelper
             button.OnPressed += _ => onEject(entity);
             grid.AddChild(button);
         }
-
-        AddEmptyPlaceholder(grid, emptyText);
     }
 
     /// <summary>
@@ -50,14 +46,12 @@ public static class IngredientGridHelper
     /// <param name="entMan">The entity manager.</param>
     /// <param name="entities">Collection of networked entities to display.</param>
     /// <param name="onEject">Action to perform when an ingredient is ejected.</param>
-    /// <param name="emptyText">Text to show when there are no ingredients.</param>
     // TODO: Revisit this overload once microwave uses predicted/local state. See microwave prediction PR #43129.
     public static void PopulateIngredientsGrid(
         GridContainer grid,
         IEntityManager entMan,
         IEnumerable<NetEntity> entities,
-        Action<NetEntity> onEject,
-        string? emptyText = null)
+        Action<NetEntity> onEject)
     {
         grid.Children.Clear();
 
@@ -67,8 +61,6 @@ public static class IngredientGridHelper
             button.OnPressed += _ => onEject(netEntity);
             grid.AddChild(button);
         }
-
-        AddEmptyPlaceholder(grid, emptyText);
     }
 
     private static Button BuildIngredientButton(IEntityManager entMan, EntityUid entity)
@@ -98,22 +90,9 @@ public static class IngredientGridHelper
             ToolTip = toolTip,
             Modulate = Color.White.WithAlpha(0.5f)
         };
+
         button.AddChild(visual);
         return button;
-    }
-
-    private static void AddEmptyPlaceholder(GridContainer grid, string? emptyText)
-    {
-        if (grid.ChildCount != 0 || emptyText == null)
-            return;
-
-        grid.AddChild(new Label
-        {
-            Text = emptyText,
-            StyleClasses = { StyleClass.LabelWeak },
-            HorizontalAlignment = Control.HAlignment.Center,
-            VerticalAlignment = Control.VAlignment.Center
-        });
     }
 
     private static Control BuildIngredientVisual(IEntityManager entMan, EntityUid entity, string entityName)

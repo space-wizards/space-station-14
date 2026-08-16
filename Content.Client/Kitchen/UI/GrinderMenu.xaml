@@ -43,6 +43,13 @@
                             <GridContainer Name="ChamberGrid" Access="Public" Columns="3" HSeparationOverride="4" VSeparationOverride="4" HorizontalExpand="True" VerticalExpand="True" />
                         </BoxContainer>
                     </ScrollContainer>
+                    <Label
+                        Name="ChamberEmptyLabel"
+                        Text="{Loc grinder-menu-chamber-empty}"
+                        StyleClasses="LabelWeak"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Visible="False" />
                     <PanelContainer Name="ChamberDisabledOverlay" Access="Public" Visible="False" MouseFilter="Stop">
                         <PanelContainer.PanelOverride>
                             <gfx:StyleBoxFlat BackgroundColor="#1B1B1E66" />

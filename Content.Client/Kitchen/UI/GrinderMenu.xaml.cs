@@ -110,8 +110,9 @@ public sealed partial class GrinderMenu : FancyWindow
             ChamberGrid,
             _entityManager,
             chamberEntities,
-            entity => OnEjectChamber?.Invoke(entity),
-            Loc.GetString("grinder-menu-chamber-empty"));
+            entity => OnEjectChamber?.Invoke(entity));
+
+        ChamberEmptyLabel.Visible = ChamberGrid.ChildCount == 0;
 
         BeakerContents.Children.Clear();
         BeakerContents.VerticalAlignment = VAlignment.Top;

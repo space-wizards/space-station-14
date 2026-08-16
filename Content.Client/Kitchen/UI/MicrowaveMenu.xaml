@@ -20,6 +20,12 @@
                             </GridContainer>
                         </BoxContainer>
                     </ScrollContainer>
+                    <Label
+                        Name="IngredientsEmptyLabel"
+                        Text="{Loc 'microwave-menu-ingredients-empty'}"
+                        StyleClasses="LabelWeak"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center" />
                 </PanelContainer>
             </BoxContainer>
             <customControls:VSeparator StyleClasses="LowDivider" Margin="0 5" />
