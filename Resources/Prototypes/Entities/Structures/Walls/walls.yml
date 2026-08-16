@@ -177,7 +177,6 @@
   - type: Construction
     graph: Girder
     node: meatWall
-  - type: Damageable
   - type: Injurable
     damageContainer: StructuralBiological
   - type: Destructible
