@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Popups;
 using Content.Shared.Storage.Components;
+using Content.Shared.Storage.Events;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 
@@ -8,6 +9,46 @@ namespace Content.Shared.Storage.EntitySystems;
 
 public sealed partial class EntityProviderSystem
 {
+    /// <summary>
+    /// Attempts to insert an entity back into the entityStorage of the provider.
+    /// They will be saved as an entity and are prioritized over spawning new entities of their kind.
+    /// </summary>
+    /// <param name="provider">The entity providing the entityProvider storage.</param>
+    /// <param name="target">The entity attempted to be put into the provider.</param>
+    /// <param name="user">The user attempting to insert the entity into the provider. Leave null to avoid popups.</param>
+    /// <returns>Returns true if it was inserted successfully, otherwise false.</returns>
+    [PublicAPI]
+    public bool TryInsertIntoProvider(Entity<EntityProviderComponent> provider, EntityUid target, EntityUid? user = null)
+    {
+        if (_whitelist.IsWhitelistFail(provider.Comp.Whitelist, target))
+            return false;
+
+        // This event allows for a deeper check than a whitelist/blacklist.
+        var ev = new EntityProviderInsertCheckEvent();
+        RaiseLocalEvent(target, ref ev);
+
+        if (ev.FailureMessage != null)
+        {
+            _popup.PopupEntity(ev.FailureMessage, provider, user, PopupType.Medium);
+            return false;
+        }
+
+        var meta = MetaData(target);
+        if (meta.EntityPrototype == null)
+            return false;
+
+        if (!provider.Comp.EntityCounter.TryAdd(meta.EntityPrototype, 1))
+            provider.Comp.EntityCounter[meta.EntityPrototype]++;
+
+        _container.Insert(target, provider.Comp.Container);
+
+        var message = Loc.GetString("comp-entity-provider-insert-entity", ("provider", provider), ("entity", target));
+        _popup.PopupEntity(message, provider, user);
+
+        Dirty(provider);
+        return true;
+    }
+
     /// <summary>
     /// Try to get an entity from the provider and spawn it.
     /// </summary>
@@ -40,10 +81,9 @@ public sealed partial class EntityProviderSystem
     public bool TryGetEntities(Entity<EntityProviderComponent?> provider, EntProtoId protoId, [NotNullWhen(true)] out List<EntityUid>? entities, int? amount = null)
     {
         entities = [];
-        if (amount <= 0)
-            return false;
 
-        if (!Resolve(provider, ref provider.Comp)
+        if (amount <= 0
+            || !Resolve(provider, ref provider.Comp)
             || !provider.Comp.EntityCounter.TryGetValue(protoId, out var value))
             return false;
 
@@ -63,6 +103,10 @@ public sealed partial class EntityProviderSystem
             provider.Comp.EntityCounter[protoId] = value;
 
         Dirty(provider);
+
+        if (provider.Comp.DeleteIfEmpty && provider.Comp.EntityCounter.Count == 0)
+            PredictedQueueDel(provider);
+
         return true;
     }
 

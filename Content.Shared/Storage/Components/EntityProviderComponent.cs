@@ -47,5 +47,6 @@ public sealed partial class EntityProviderComponent : Component
     /// <summary>
     /// The container where items will be shortly spawned into when being materialized from the counter.
     /// </summary>
+    [ViewVariables]
     public Container Container;
 }

@@ -1,8 +1,8 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Storage.Components;
-using Content.Shared.Storage.Events;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
@@ -63,45 +63,6 @@ public sealed partial class EntityProviderSystem : EntitySystem
     }
 
     /// <summary>
-    /// Attempts to insert an entity back into the entityStorage of the provider.
-    /// Please be mindful that it deletes entities, and thus data.
-    /// An empty gun inserted will be spawned back as a loaded gun.
-    /// </summary>
-    /// <param name="provider">The entity providing the entityProvider storage.</param>
-    /// <param name="target">The entity attempted to be put into the provider.</param>
-    /// <param name="user">The user attempting to insert the entity into the provider. Leave null to avoid popups.</param>
-    /// <returns>Returns true if it was inserted successfully, otherwise false.</returns>
-    private bool TryInsertIntoProvider(Entity<EntityProviderComponent> provider, EntityUid target, EntityUid? user = null)
-    {
-        if (_whitelist.IsWhitelistFail(provider.Comp.Whitelist, target))
-            return false;
-
-        // This event allows for a deeper check than a whitelist/blacklist.
-        var ev = new EntityProviderInsertCheckEvent();
-        RaiseLocalEvent(target, ref ev);
-
-        if (ev.FailureMessage != null)
-        {
-            _popup.PopupEntity(ev.FailureMessage, provider, user, PopupType.Medium);
-            return false;
-        }
-
-        var meta = MetaData(target);
-        if (meta.EntityPrototype == null)
-            return false;
-
-        if (!provider.Comp.EntityCounter.TryAdd(meta.EntityPrototype, 1))
-            provider.Comp.EntityCounter[meta.EntityPrototype]++;
-
-        var message = Loc.GetString("comp-entity-provider-insert-entity", ("provider", provider), ("entity", target));
-        _popup.PopupEntity(message, provider, user);
-
-        PredictedQueueDel(target);
-        Dirty(provider);
-        return true;
-    }
-
-    /// <summary>
     /// Fill the entityStorage of a provider with the entityStorage of another provider.
     /// </summary>
     /// <param name="provider">The provider to refill the target.</param>
@@ -113,9 +74,14 @@ public sealed partial class EntityProviderSystem : EntitySystem
         var success = false;
         List<EntProtoId> toRemove = [];
 
-        if (!provider.Comp.CanTransfer || !refillTarget.Comp.CanReceive)
+        if (!provider.Comp.CanTransfer)
         {
-            _popup.PopupEntity(Loc.GetString("comp-entity-provider-cannot-receive", ("refillTarget", refillTarget)), provider, user);
+            _popup.PopupEntity(Loc.GetString("comp-entity-provider-cannot-transfer", ("provider", provider)), provider, user);
+            return false;
+        }
+        if (!refillTarget.Comp.CanReceive)
+        {
+            _popup.PopupEntity(Loc.GetString("comp-entity-provider-cannot-receive", ("refillTarget", refillTarget)), refillTarget, user);
             return false;
         }
 
