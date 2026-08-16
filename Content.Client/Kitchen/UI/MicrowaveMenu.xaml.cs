@@ -22,6 +22,8 @@ public sealed partial class MicrowaveMenu : FancyWindow
     private static readonly StyleBoxFlat BusyStyle = new() { BackgroundColor = Color.FromHex("#947300") };
     private static readonly StyleBoxFlat IdleStyle = new() { BackgroundColor = Color.FromHex("#1B1B1E") };
 
+    public event Action? OnStartCook;
+    public event Action? OnEjectAll;
     public event Action<int, uint>? OnCookTimeSelected;
     public event Action<NetEntity>? OnEjectSolid;
 
@@ -35,6 +37,9 @@ public sealed partial class MicrowaveMenu : FancyWindow
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
+
+        StartButton.OnPressed += _ => OnStartCook?.Invoke();
+        EjectButton.OnPressed += _ => OnEjectAll?.Invoke();
 
         CookTimeButtonGroup = new ButtonGroup();
         InstantCookButton.Group = CookTimeButtonGroup;
@@ -54,7 +59,12 @@ public sealed partial class MicrowaveMenu : FancyWindow
         _isBusy = state.IsMicrowaveBusy;
         _currentCookTimeEnd = state.CurrentCookTimeEnd;
 
-        DisableCookingPanelOverlay.Visible = state.IsMicrowaveBusy || state.ContainedSolids.Length == 0;
+        var hasIngredients = state.ContainedSolids.Length > 0;
+        var controlsDisabled = _isBusy || !hasIngredients;
+
+        DisableCookingPanelOverlay.Visible = controlsDisabled;
+        StartButton.Disabled = controlsDisabled;
+        EjectButton.Disabled = controlsDisabled;
 
         IngredientGridHelper.PopulateIngredientsGrid(
             IngredientsGrid,
@@ -63,9 +73,6 @@ public sealed partial class MicrowaveMenu : FancyWindow
             netEntity => OnEjectSolid?.Invoke(netEntity));
 
         IngredientsEmptyLabel.Visible = IngredientsGrid.ChildCount == 0;
-
-        StartButton.Disabled = state.IsMicrowaveBusy || state.ContainedSolids.Length == 0;
-        EjectButton.Disabled = state.IsMicrowaveBusy || state.ContainedSolids.Length == 0;
 
         if (_isBusy)
             UpdateRemainingTime();
@@ -80,12 +87,10 @@ public sealed partial class MicrowaveMenu : FancyWindow
         {
             var buttonIndex = state.ActiveButtonIndex - 1;
             if (buttonIndex >= 0 && buttonIndex < CookTimeButtonGrid.ChildCount)
-            {
                 ((Button) CookTimeButtonGrid.GetChild(buttonIndex)).Pressed = true;
-            }
         }
 
-        IngredientsPanel.PanelOverride = state is { IsMicrowaveBusy: true, ContainedSolids.Length: > 0 }
+        IngredientsPanel.PanelOverride = _isBusy && hasIngredients
             ? BusyStyle
             : IdleStyle;
     }
