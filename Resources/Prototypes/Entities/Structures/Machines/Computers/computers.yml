@@ -622,10 +622,6 @@
     radius: 1.5
     energy: 4.0
     color: "#3c5eb5"
-  - type: Damageable
-    damageModifierSet: StructuralMetallicStrong
-  - type: Injurable
-    damageContainer: StructuralInorganic
 
 - type: entity
   parent: ComputerComms
@@ -1003,10 +999,6 @@
   - type: Speech
     speechVerb: Robotic
     speechSounds: Pai
-  - type: Damageable
-    damageModifierSet: StructuralMetallicStrong
-  - type: Injurable
-    damageContainer: StructuralInorganic
   - type: GuideHelp
     guides:
     - Cloning
