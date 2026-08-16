@@ -30,9 +30,9 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
     /// First parameter contains the camera's address.
     /// Second optional parameter contains a subnet - if possible, the monitor will switch to this subnet.
     /// </summary>
-    public event Action<string, string?>? CameraSelected;
+    public event Action<string, ProtoId<DeviceFrequencyPrototype>?>? CameraSelected;
 
-    public event Action<string>? SubnetOpened;
+    public event Action<ProtoId<DeviceFrequencyPrototype>>? SubnetOpened;
     public event Action? CameraRefresh;
     public event Action? SubnetRefresh;
     public event Action? CameraSwitchTimer;
@@ -41,22 +41,8 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
     private string _currentAddress = string.Empty;
     private bool _isSwitching;
     private readonly FixedEye _defaultEye = new();
-    private readonly Dictionary<string, int> _subnetMap = new();
+    private readonly Dictionary<ProtoId<DeviceFrequencyPrototype>, int> _subnetMap = new();
     private EntityUid? _mapUid;
-
-    private string? SelectedSubnet
-    {
-        get
-        {
-            if (SubnetSelector.ItemCount == 0
-                || SubnetSelector.SelectedMetadata == null)
-            {
-                return null;
-            }
-
-            return (string) SubnetSelector.SelectedMetadata;
-        }
-    }
 
     public SurveillanceCameraMonitorWindow()
     {
@@ -78,7 +64,7 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
         SubnetSelector.OnItemSelected += args =>
         {
             // piss
-            SubnetOpened?.Invoke((string) args.Button.GetItemMetadata(args.Id)!);
+            SubnetOpened?.Invoke((ProtoId<DeviceFrequencyPrototype>)args.Button.GetItemMetadata(args.Id)!);
         };
         SubnetRefreshButton.OnPressed += _ => SubnetRefresh?.Invoke();
         SubnetRefreshButtonMap.OnPressed += _ => SubnetRefresh?.Invoke();
@@ -92,7 +78,11 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
 
     // The UI class should get the eye from the entity, and then
     // pass it here so that the UI can change its view.
-    public void UpdateState(IEye? eye, HashSet<string> subnets, string activeAddress, string activeSubnet, Dictionary<string, string> cameras)
+    public void UpdateState(IEye? eye,
+        HashSet<ProtoId<DeviceFrequencyPrototype>> subnets,
+        string activeAddress,
+        ProtoId<DeviceFrequencyPrototype>? activeSubnet,
+        Dictionary<string, string> cameras)
     {
         CameraMap.SetActiveCameraAddress(activeAddress);
         CameraMap.SetAvailableSubnets(subnets);
@@ -114,7 +104,7 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
         }
 
         // That way, we have *a* subnet selected if this is ever opened.
-        if (string.IsNullOrEmpty(activeSubnet))
+        if (activeSubnet is null)
         {
             SubnetOpened!(subnets.First());
             return;
@@ -134,22 +124,21 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
             }
         }
 
-        if (_subnetMap.TryGetValue(activeSubnet, out var subnetId))
-        {
+        if (_subnetMap.TryGetValue(activeSubnet.Value, out var subnetId))
             SubnetSelector.Select(subnetId);
-        }
 
         PopulateCameraList(cameras);
     }
 
     private void PopulateCameraList(Dictionary<string, string> cameras)
     {
-        var entries = cameras.Select(i => new ItemList.Item(SubnetList) {
+        var entries = cameras.Select(i => new ItemList.Item(SubnetList)
+        {
             Text = $"{i.Value}: {i.Key}",
             Metadata = i.Key
         }).ToList();
         entries.Sort((a, b) => string.Compare(a.Text, b.Text, StringComparison.Ordinal));
-        SubnetList.SetItems(entries, (a,b) => string.Compare(a.Text, b.Text));
+        SubnetList.SetItems(entries, (a, b) => string.Compare(a.Text, b.Text));
     }
 
     private void SetCameraView(IEye? eye)
@@ -190,10 +179,10 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
                             ("address", _currentAddress));
     }
 
-    private int AddSubnet(string subnet)
+    private int AddSubnet(ProtoId<DeviceFrequencyPrototype> subnet)
     {
         var name = subnet;
-        if (_prototypeManager.TryIndex<DeviceFrequencyPrototype>(subnet, out var frequency))
+        if (_prototypeManager.TryIndex(subnet, out var frequency))
         {
             name = Loc.GetString(frequency.Name ?? subnet);
         }
@@ -206,7 +195,7 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
 
     private void OnSubnetListSelect(ItemList.ItemListSelectedEventArgs args)
     {
-        CameraSelected!((string) SubnetList[args.ItemIndex].Metadata!, null);
+        CameraSelected!((ProtoId<DeviceFrequencyPrototype>)SubnetList[args.ItemIndex].Metadata!, null);
     }
 
     public void SetMap(EntityUid mapUid)
