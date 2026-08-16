@@ -8,7 +8,6 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
-
 namespace Content.Server.Chat.Systems;
 
 public sealed partial class ChatSystem
