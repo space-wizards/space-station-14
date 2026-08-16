@@ -245,6 +245,9 @@ namespace Content.IntegrationTests.Tests
 
                 // makes an announcement on mapInit.
                 "AnnounceOnSpawn",
+
+                // May drop items if space is taken (i.e. voxes and corpses).
+                "Loadout",
             };
 
             Assert.That(server.CfgMan.GetCVar(CVars.NetPVS), Is.False);
