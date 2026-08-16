@@ -7,18 +7,18 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Server.Animals.Components;
 
 /// <summary>
-/// Periodically attempts to produce something, consuming hunger on success.
+/// Periodically attempts to produce something, consuming satiation on success.
 /// The actual product is supplied by a handler for <see cref="ProductionAttemptEvent"/>.
 /// </summary>
 [RegisterComponent, AutoGenerateComponentPause]
-[Access(typeof(HungerProductionSystem))]
-public sealed partial class HungerProductionComponent : Component
+[Access(typeof(SatiationProductionSystem))]
+public sealed partial class SatiationProductionComponent : Component
 {
     /// <summary>
-    /// Entity whose life state and hunger are used for production.
+    /// Entity whose life state and satiation are used for production.
     /// </summary>
     [DataField]
-    public HungerProductionOwner Producer = HungerProductionOwner.Self;
+    public SatiationProductionOwner Producer = SatiationProductionOwner.Self;
 
     /// <summary>
     /// Minimum delay between automatic production attempts.
@@ -33,10 +33,10 @@ public sealed partial class HungerProductionComponent : Component
     public TimeSpan? DelayMax;
 
     /// <summary>
-    /// Hunger removed after successful production.
+    /// Satiation removed after successful production.
     /// </summary>
     [DataField]
-    public float HungerUsage = 10f;
+    public float SatiationUsage = 10f;
 
     /// <summary>
     /// Satiation type used for production.
@@ -45,16 +45,16 @@ public sealed partial class HungerProductionComponent : Component
     public ProtoId<SatiationTypePrototype> SatiationType = SatiationSystem.Hunger;
 
     /// <summary>
-    /// Optional hunger satiation threshold which must remain exceeded after production.
+    /// Optional satiation threshold which must remain exceeded after production.
     /// </summary>
     [DataField]
-    public SatiationValue? MinimumHungerThreshold;
+    public SatiationValue? MinimumSatiationThreshold;
 
     /// <summary>
-    /// If set, entities with hunger satiation must have at least this much hunger.
+    /// If set, entities with the configured satiation must have at least this value.
     /// </summary>
     [DataField]
-    public float? MinimumHunger;
+    public float? MinimumSatiation;
 
     /// <summary>
     /// Whether production is attempted automatically.
@@ -73,13 +73,19 @@ public sealed partial class HungerProductionComponent : Component
     public TimeSpan NextProductionTime;
 }
 
-public enum HungerProductionOwner : byte
+/// <summary>
+/// Entity used for production checks and satiation consumption.
+/// </summary>
+public enum SatiationProductionOwner : byte
 {
     Self,
     Parent
 }
 
-public enum HungerProductionFailure : byte
+/// <summary>
+/// Reason a production attempt failed.
+/// </summary>
+public enum SatiationProductionFailure : byte
 {
     None,
     Dead,
@@ -94,5 +100,8 @@ public enum HungerProductionFailure : byte
 [ByRefEvent]
 public record struct ProductionAttemptEvent(EntityUid Owner)
 {
+    /// <summary>
+    /// Set by handlers when production succeeds.
+    /// </summary>
     public bool Produced;
 }

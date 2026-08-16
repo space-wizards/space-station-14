@@ -489,7 +489,7 @@
   id: SolutionWoolSpaceSheep
   categories: [ HideSpawnMenu ]
   components:
-  - type: HungerProduction
+  - type: SatiationProduction
     delay: 120 #2 minutes
   - type: SolutionProducer
     generated:

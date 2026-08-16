@@ -276,11 +276,11 @@
     insufficientSatiationPopup: action-popup-lay-egg-too-hungry
     userPopup: action-popup-lay-egg-user
     othersPopup: action-popup-lay-egg-others
-  - type: HungerProduction
+  - type: SatiationProduction
     delay: 60
     delayMax: 120
-    hungerUsage: 60
-    minimumHunger: 60
+    satiationUsage: 60
+    minimumSatiation: 60
     automaticForPlayers: false
   - type: EntityProducer
     table:
@@ -744,11 +744,11 @@
     insufficientSatiationPopup: action-popup-lay-egg-too-hungry
     userPopup: action-popup-lay-egg-user
     othersPopup: action-popup-lay-egg-others
-  - type: HungerProduction
+  - type: SatiationProduction
     delay: 60
     delayMax: 120
-    hungerUsage: 60
-    minimumHunger: 60
+    satiationUsage: 60
+    minimumSatiation: 60
     automaticForPlayers: false
   - type: EntityProducer
     table:
@@ -982,10 +982,10 @@
       reagents:
       - ReagentId: Milk
         Quantity: 30
-  - type: HungerProduction
+  - type: SatiationProduction
     producer: Parent
     delay: 30
-    minimumHungerThreshold: Okay
+    minimumSatiationThreshold: Okay
   # TODO: toxins from bloodstream !?
   - type: SolutionProducer
     generated:
@@ -1164,7 +1164,7 @@
       reagents:
       - ReagentId: MilkGoat
         Quantity: 30
-  - type: HungerProduction
+  - type: SatiationProduction
     delay: 20
   - type: SolutionProducer
     generated:
@@ -1179,9 +1179,9 @@
   components:
   - type: Solution
     id: wool
-  - type: HungerProduction
+  - type: SatiationProduction
     producer: Parent
-    minimumHungerThreshold: Okay
+    minimumSatiationThreshold: Okay
   - type: SolutionProducer
     generated:
       reagents:
@@ -1321,7 +1321,7 @@
       reagents:
       - ReagentId: MilkSheep
         Quantity: 25
-  - type: HungerProduction
+  - type: SatiationProduction
     delay: 20
   - type: SolutionProducer
     generated:

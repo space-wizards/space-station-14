@@ -12,14 +12,14 @@ namespace Content.Server.Animals.Systems;
 public sealed partial class EntityProducerActionSystem : EntitySystem
 {
     [Dependency] private AudioSystem _audio = default!;
-    [Dependency] private HungerProductionSystem _hungerProduction = default!;
+    [Dependency] private SatiationProductionSystem _satiationProduction = default!;
     [Dependency] private PopupSystem _popup = default!;
 
     [SubscribeLocalEvent]
     private void OnProductionAction(Entity<EntityProducerActionComponent> ent, ref EntityProductionActionEvent args)
     {
-        args.Handled = _hungerProduction.TryProduce(ent.Owner, out var failure);
-        if (failure == HungerProductionFailure.InsufficientSatiation)
+        args.Handled = _satiationProduction.TryProduce(ent.Owner, out var failure);
+        if (failure == SatiationProductionFailure.InsufficientSatiation)
             _popup.PopupEntity(Loc.GetString(ent.Comp.InsufficientSatiationPopup), ent.Owner, ent.Owner);
     }
 

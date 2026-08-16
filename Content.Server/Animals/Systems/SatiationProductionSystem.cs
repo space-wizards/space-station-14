@@ -8,8 +8,8 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Animals.Systems;
 
-/// <inheritdoc cref="HungerProductionComponent"/>
-public sealed partial class HungerProductionSystem : EntitySystem
+/// <inheritdoc cref="SatiationProductionComponent"/>
+public sealed partial class SatiationProductionSystem : EntitySystem
 {
     [Dependency] private SatiationSystem _satiation = default!;
     [Dependency] private IGameTiming _timing = default!;
@@ -20,7 +20,7 @@ public sealed partial class HungerProductionSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<HungerProductionComponent>();
+        var query = EntityQueryEnumerator<SatiationProductionComponent>();
         while (query.MoveNext(out var uid, out var producer))
         {
             if (!producer.Automatic)
@@ -39,7 +39,7 @@ public sealed partial class HungerProductionSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnMapInit(Entity<HungerProductionComponent> ent, ref MapInitEvent args)
+    private void OnMapInit(Entity<SatiationProductionComponent> ent, ref MapInitEvent args)
     {
         ent.Comp.NextProductionTime = _timing.CurTime + GetDelay(ent.Comp);
     }
@@ -48,25 +48,25 @@ public sealed partial class HungerProductionSystem : EntitySystem
     /// Attempts production immediately, independently of the automatic timer.
     /// </summary>
     public bool TryProduce(
-        Entity<HungerProductionComponent?> ent,
-        out HungerProductionFailure failure)
+        Entity<SatiationProductionComponent?> ent,
+        out SatiationProductionFailure failure)
     {
-        failure = HungerProductionFailure.ProductUnavailable;
+        failure = SatiationProductionFailure.ProductUnavailable;
         if (!Resolve(ent, ref ent.Comp))
             return false;
 
         var owner = GetProducer((ent.Owner, ent.Comp));
         if (_mobState.IsDead(owner))
         {
-            failure = HungerProductionFailure.Dead;
+            failure = SatiationProductionFailure.Dead;
             return false;
         }
 
         if (TryComp(owner, out SatiationComponent? satiation) &&
             satiation.Has(ent.Comp.SatiationType) &&
-            !HasEnoughHunger(ent.Comp, (owner, satiation)))
+            !HasEnoughSatiation(ent.Comp, (owner, satiation)))
         {
-            failure = HungerProductionFailure.InsufficientSatiation;
+            failure = SatiationProductionFailure.InsufficientSatiation;
             return false;
         }
 
@@ -76,40 +76,40 @@ public sealed partial class HungerProductionSystem : EntitySystem
             return false;
 
         if (satiation != null)
-            _satiation.ModifyValue((owner, satiation), ent.Comp.SatiationType, -ent.Comp.HungerUsage);
+            _satiation.ModifyValue((owner, satiation), ent.Comp.SatiationType, -ent.Comp.SatiationUsage);
 
-        failure = HungerProductionFailure.None;
+        failure = SatiationProductionFailure.None;
         return true;
     }
 
-    private bool HasEnoughHunger(
-        HungerProductionComponent component,
+    private bool HasEnoughSatiation(
+        SatiationProductionComponent component,
         Entity<SatiationComponent> satiation)
     {
-        if (component.MinimumHungerThreshold is { } threshold &&
+        if (component.MinimumSatiationThreshold is { } threshold &&
             !_satiation.IsValueInRange(
                 satiation,
                 component.SatiationType,
                 above: threshold,
-                hypotheticalValueDelta: -component.HungerUsage))
+                hypotheticalValueDelta: -component.SatiationUsage))
         {
             return false;
         }
 
-        return component.MinimumHunger is not { } minimum ||
+        return component.MinimumSatiation is not { } minimum ||
                _satiation.GetValueOrNull(satiation, component.SatiationType) >= minimum;
     }
 
-    private EntityUid GetProducer(Entity<HungerProductionComponent> ent)
+    private EntityUid GetProducer(Entity<SatiationProductionComponent> ent)
     {
         return ent.Comp.Producer switch
         {
-            HungerProductionOwner.Parent => Transform(ent).ParentUid,
+            SatiationProductionOwner.Parent => Transform(ent).ParentUid,
             _ => ent.Owner
         };
     }
 
-    private TimeSpan GetDelay(HungerProductionComponent component)
+    private TimeSpan GetDelay(SatiationProductionComponent component)
     {
         if (component.DelayMax is not { } maximum)
             return component.Delay;
