@@ -491,7 +491,7 @@
   parent: [MobMothroach, BaseSecurityContraband] # it is contraband because it has a gun!
   id: MobGlockroachMoth
   suffix: Regular
-  description: "The unholy result of crossbreeding 'murican cockroaches with the humble mothroach."
+  description: For some reason, this mothroach was trained for warfare under a special Nanotrasen mercenary program.
   components:
   - type: GhostRole
     name: ghost-role-information-glockroach-name
@@ -507,6 +507,7 @@
       Hand:
         location: Left
     canBeStripped: false
+    showInHands: false
   - type: Loadout
     prototypes: [ GlockroachGear ]
   - type: InteractionPopup
