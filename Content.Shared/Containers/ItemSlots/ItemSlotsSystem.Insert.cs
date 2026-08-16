@@ -26,6 +26,9 @@ public sealed partial class ItemSlotsSystem
                 $"{ToPrettyString(user.Value)} inserted {ToPrettyString(item)} into {slot.ContainerSlot?.ID + " slot of "}{ToPrettyString(uid)}");
         }
 
+        if (TryComp(uid, out ItemSlotsComponent? itemSlots))
+            UpdateAppearance((uid, itemSlots));
+
         _audioSystem.PlayPredicted(slot.InsertSound, uid, excludeUserAudio ? user : null);
         return true;
     }
