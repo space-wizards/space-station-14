@@ -5,6 +5,7 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Events;
 using Content.Shared.Chemistry.Prototypes;
 using Content.Shared.Database;
+using Content.Shared.Disposal.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
 using Content.Shared.Forensics.Systems;
@@ -20,7 +21,6 @@ using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee.Events;
 using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Chemistry.EntitySystems;
 
@@ -42,20 +42,11 @@ public sealed partial class InjectorSystem : EntitySystem
     [Dependency] private StandingStateSystem _standingState = default!;
     [Dependency] private UseDelaySystem _useDelay = default!;
 
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<InjectorComponent, UseInHandEvent>(OnInjectorUse);
-        SubscribeLocalEvent<InjectorComponent, AfterInteractEvent>(OnInjectorAfterInteract);
-        SubscribeLocalEvent<InjectorComponent, InjectorDoAfterEvent>(OnInjectDoAfter);
-        SubscribeLocalEvent<InjectorComponent, MeleeHitEvent>(OnAttack);
-        SubscribeLocalEvent<InjectorComponent, GetVerbsEvent<AlternativeVerb>>(AddVerbs);
-    }
-
     #region Events Handling
+    [SubscribeLocalEvent]
     private void OnInjectorUse(Entity<InjectorComponent> injector, ref UseInHandEvent args)
     {
-        if (args.Handled
-            || !ProtoMan.Resolve(injector.Comp.ActiveModeProtoId, out var activeProto))
+        if (args.Handled || !ProtoMan.Resolve(injector.Comp.ActiveModeProtoId, out var activeProto))
             return;
 
         if (activeProto.InjectOnUse) // Injectors that can't toggle transferAmounts will be used.
@@ -67,6 +58,7 @@ public sealed partial class InjectorSystem : EntitySystem
         args.ApplyDelay = false;
     }
 
+    [SubscribeLocalEvent]
     private void OnInjectorAfterInteract(Entity<InjectorComponent> injector, ref AfterInteractEvent args)
     {
         if (args.Handled || !args.CanReach || args.Target is not { Valid: true } target)
@@ -90,6 +82,7 @@ public sealed partial class InjectorSystem : EntitySystem
         args.Handled |= TryContainerDoAfter(injector, args.User, target);
     }
 
+    [SubscribeLocalEvent]
     private void OnInjectDoAfter(Entity<InjectorComponent> injector, ref InjectorDoAfterEvent args)
     {
         if (args.Cancelled || args.Handled || args.Args.Target == null)
@@ -98,6 +91,7 @@ public sealed partial class InjectorSystem : EntitySystem
         args.Handled |= TryUseInjector(injector, args.Args.User, args.Args.Target.Value);
     }
 
+    [SubscribeLocalEvent]
     private void OnAttack(Entity<InjectorComponent> injector, ref MeleeHitEvent args)
     {
         if (args.HitEntities is [])
@@ -115,6 +109,7 @@ public sealed partial class InjectorSystem : EntitySystem
     /// If they have multiple transferAmounts, they'll be able to switch between them via the verbs.
     /// If they have multiple injector modes and don't toggle when used in hand, they can toggle the mode with the verbs too.
     /// </remarks>
+    [SubscribeLocalEvent]
     private void AddVerbs(Entity<InjectorComponent> injector, ref GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract || args.Hands == null
@@ -338,7 +333,8 @@ public sealed partial class InjectorSystem : EntitySystem
     {
         doAfterTime = TimeSpan.Zero;
 
-        if (!ProtoMan.Resolve(injector.Comp.ActiveModeProtoId, out var activeMode))
+        // Do not show popups when interacting with a disposal unit and do not attempt to transfer liquids to them.
+        if (HasComp<DisposalUnitComponent>(target) || !ProtoMan.Resolve(injector.Comp.ActiveModeProtoId, out var activeMode))
             return false;
 
         // Check if the Injector has a draw time, but only when drawing.
