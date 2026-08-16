@@ -217,7 +217,7 @@
     keyOut: timerTrigger
   - type: TimerTrigger
     delay: 14.9 # so it explodes before it despawns
-    keysIn: 
+    keysIn:
     - timerTrigger
   - type: ExplodeOnTrigger
     keysIn:

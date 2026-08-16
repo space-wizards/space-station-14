@@ -19,7 +19,7 @@
     damage:
       types:
         Blunt: 15
-        Structural: 30
+        Structural: 15
   # Short lifespan
   - type: TimedDespawn
     lifetime: 0.22 # roughly 5.5 tiles
@@ -86,7 +86,7 @@
   - type: TimedDespawn
     lifetime: 0.4
 
-  # Deals less damage, glaive has better HP recovery
+# Deals less damage, glaive has better HP recovery
 - type: entity
   parent: BulletCharge
   id: BulletChargeGlaive
