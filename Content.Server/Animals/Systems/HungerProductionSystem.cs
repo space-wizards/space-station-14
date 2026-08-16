@@ -16,12 +16,6 @@ public sealed partial class HungerProductionSystem : EntitySystem
     [Dependency] private MobStateSystem _mobState = default!;
     [Dependency] private IRobustRandom _random = default!;
 
-    [SubscribeLocalEvent]
-    private void OnMapInit(Entity<HungerProductionComponent> ent, ref MapInitEvent args)
-    {
-        ent.Comp.NextProductionTime = _timing.CurTime + GetDelay(ent.Comp);
-    }
-
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -42,6 +36,12 @@ public sealed partial class HungerProductionSystem : EntitySystem
             producer.NextProductionTime += GetDelay(producer);
             TryProduce((uid, producer), out _);
         }
+    }
+
+    [SubscribeLocalEvent]
+    private void OnMapInit(Entity<HungerProductionComponent> ent, ref MapInitEvent args)
+    {
+        ent.Comp.NextProductionTime = _timing.CurTime + GetDelay(ent.Comp);
     }
 
     /// <summary>
