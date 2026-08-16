@@ -93,6 +93,12 @@ public sealed partial class EntityProviderSystem : EntitySystem
             if (!refillTarget.Comp.EntityCounter.TryAdd(providedEntities.Key, providedEntities.Value))
                 refillTarget.Comp.EntityCounter[providedEntities.Key] += providedEntities.Value;
 
+            // Move all spawned entities over to the new provider.
+            foreach (var spawnedEntity in GetSpawnedEntities(provider.AsNullable(), providedEntities.Key))
+            {
+                _container.Insert(spawnedEntity, refillTarget.Comp.Container);
+            }
+
             success = true;
             toRemove.Add(providedEntities.Key);
         }
@@ -146,5 +152,34 @@ public sealed partial class EntityProviderSystem : EntitySystem
         _popup.PopupEntity(message, refillTarget, user);
 
         return insertionSuccess;
+    }
+
+    /// <summary>
+    /// Attempts to get only the spawned entities of a prototype from the container.
+    /// </summary>
+    /// <param name="provider">The entityProvider with the container.</param>
+    /// <param name="protoId">The entity prototype to check for. </param>
+    /// <param name="amount">The amount of entities to retrieve. If null, it'll retrieve all of them.</param>
+    /// <returns>Returns a list of all currently spawned entities of that prototype. It will NOT spawn more to reach <see cref="amount"/>.</returns>
+    private List<EntityUid> GetSpawnedEntities(Entity<EntityProviderComponent?> provider, EntProtoId protoId, int? amount = null)
+    {
+        if (amount <= 0 || !Resolve(provider, ref provider.Comp))
+            return [];
+
+        List<EntityUid> entities = [];
+        var containedEntities = provider.Comp.Container.ContainedEntities;
+
+        foreach (var containedEntity in containedEntities)
+        {
+            var meta = MetaData(containedEntity).EntityPrototype;
+
+            if (meta != null && meta.ID == protoId)
+                entities.Add(containedEntity);
+            // Check if we have enough.
+            if (amount != null && entities.Count == amount.Value)
+                return entities;
+        }
+
+        return entities;
     }
 }

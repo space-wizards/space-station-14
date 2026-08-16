@@ -89,6 +89,11 @@ public sealed partial class EntityProviderSystem
 
         amount = amount == null ? value : Math.Min(amount.Value, value);
 
+        // Prioritize already spawned entities before spawning new ones.
+        entities = GetSpawnedEntities(provider, protoId, amount);
+        amount -= entities.Count; // We don't need to spawn already spawned ones, so reduce the amount.
+        value -= entities.Count;
+
         while (amount > 0)
         {
             var spawned = PredictedSpawnInContainerOrDrop(protoId, provider, ContainerId);
