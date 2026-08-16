@@ -229,6 +229,7 @@
       shader: unshaded
       map: [ "blade" ]
   - type: EnergySword
+  - type: ItemToggleExaminableStatus
   - type: ItemToggle
     soundActivate:
       path: /Audio/Weapons/ebladeon.ogg

@@ -179,12 +179,10 @@
     moduleWhitelist:
       tags:
       - MothershipModule
-      - BorgModuleEngineering
   - type: ContainerFill
     containers:
       borg_module:
       - MothershipModule
-      - BorgModuleAdvancedTool
   - type: ContainerContainer
     containers:
       cell_slot: !type:ContainerSlot { }
