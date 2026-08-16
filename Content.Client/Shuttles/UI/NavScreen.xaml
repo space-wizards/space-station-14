@@ -56,10 +56,62 @@
             Text="{Loc 'shuttle-console-iff-toggle'}"
             TextAlign="Center"
             ToggleMode="True"/>
-        <Button
-            Name="DockToggle"
-            Text="{Loc 'shuttle-console-dock-toggle'}"
-            TextAlign="Center"
-            ToggleMode="True"/>
+        
+        <controls:StripeBack MinSize="48 48">
+            <Label Text="{Loc 'shuttle-console-nav-legend'}"
+                VerticalExpand="True"
+                HorizontalAlignment="Center" />
+        </controls:StripeBack>
+
+        <!-- Cargo Dock Toggle -->
+        <Button Name="CargoDockToggle"
+            HorizontalAlignment="Stretch"
+            ToggleMode="True">
+            <BoxContainer Orientation="Horizontal" Margin="0 2">
+                <TextureRect
+                    Stretch="KeepAspectCentered"
+                    TexturePath="/Textures/Interface/NavMap/beveled_square.png"
+                    Modulate="LightYellow"
+                    SetSize="20 20"
+                    Margin="10 0 5 0"/>
+                <Label
+                    Text="{Loc 'shuttle-console-nav-cargo-dock'}"
+                    VerticalExpand="True"
+                    HorizontalAlignment="Center" />
+            </BoxContainer>
+        </Button>
+
+        <!-- Arrivals Dock Toggle -->
+        <Button Name="ArrivalDockToggle"
+            HorizontalAlignment="Stretch"
+            ToggleMode="True">
+            <BoxContainer Orientation="Horizontal" Margin="0 2">
+                <TextureRect
+                    Stretch="KeepAspectCentered"
+                    TexturePath="/Textures/Interface/NavMap/beveled_square.png"
+                    Modulate="Red"
+                    SetSize="20 20"
+                    Margin="10 0 5 0"/>
+                <Label
+                    Text="{Loc 'shuttle-console-nav-arrivals-dock'}"
+                    VerticalExpand="True"
+                    HorizontalAlignment="Center" />
+            </BoxContainer>
+        </Button>
+
+        <!-- Other Dock Toggle -->
+        <Button Name="DockToggle"
+            HorizontalAlignment="Stretch"
+            ToggleMode="True">
+            <BoxContainer Orientation="Horizontal" Margin="0 2">
+                <TextureRect
+                    Stretch="KeepAspectCentered"
+                    TexturePath="/Textures/Interface/NavMap/beveled_square.png"
+                    Modulate="Magenta"
+                    SetSize="20 20"
+                    Margin="10 0 5 0"/>
+                <Label VerticalAlignment="Center" Text="{Loc 'shuttle-console-nav-other-dock'}"/>
+            </BoxContainer>
+        </Button>
     </BoxContainer>
 </BoxContainer>
