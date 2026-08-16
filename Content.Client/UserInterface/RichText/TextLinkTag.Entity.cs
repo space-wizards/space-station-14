@@ -7,6 +7,8 @@ namespace Content.Client.UserInterface.RichText;
 
 public sealed partial class TextLinkTag
 {
+    // ent="<NetEntity>" resolver. Clickable only if the local viewer is
+    // currently allowed to click chat names (e.g. ghosts).
     private bool TryResolveEntityLink(MarkupNode node, out TextLinkData data)
     {
         data = default;
