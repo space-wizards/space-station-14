@@ -10,19 +10,21 @@ public sealed partial class ClientQuickDialogSystem : QuickDialogSystem
     [SubscribeNetworkEvent]
     private void OpenDialog(QuickDialogOpenEvent ev)
     {
-        var window = new QuickDialogWindow(ev.Title, ev.Prompts, ev.Buttons);
+        var window = new QuickDialogWindow();
+        window.Update(ev.Title, ev.Entries, ev.Buttons);
 
-        window.OnConfirmed += responses =>
-        {
-            RaiseNetworkEvent(new QuickDialogResponseEvent(ev.DialogId,
-                QuickDialogButtonFlags.OkButton,
-                responses));
-        };
+        window.OnConfirmed += (responses) => OnResponse(ev.DialogId, QuickDialogButtonFlags.OkButton, responses);
+        window.OnCancelled += () => OnResponse(ev.DialogId, QuickDialogButtonFlags.CancelButton);
+    }
 
-        window.OnCancelled += () =>
-        {
-            RaiseNetworkEvent(new QuickDialogResponseEvent(ev.DialogId,
-                QuickDialogButtonFlags.CancelButton));
-        };
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="responses"></param>
+    private void OnResponse(string dialogId, QuickDialogButtonFlags button, string[]? responses = null)
+    {
+        RaiseNetworkEvent(new QuickDialogResponseEvent(dialogId,
+            button,
+            responses));
     }
 }

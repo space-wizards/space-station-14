@@ -6,7 +6,7 @@ namespace Content.Shared.QuickDialog.Events;
 /// A networked event raised when the server wants to open a quick dialog.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class QuickDialogOpenEvent(string dialogId, string title, IQuickDialogEntry[] prompts, QuickDialogButtonFlags buttons) : EntityEventArgs
+public sealed class QuickDialogOpenEvent(string dialogId, string title, IQuickDialogEntry[] entries, QuickDialogButtonFlags buttons) : EntityEventArgs
 {
     /// <summary>
     /// The internal dialog ID.
@@ -19,9 +19,9 @@ public sealed class QuickDialogOpenEvent(string dialogId, string title, IQuickDi
     public readonly string Title = title;
 
     /// <summary>
-    /// The prompts to show the user.
+    /// The entries to show the user.
     /// </summary>
-    public readonly IQuickDialogEntry[] Prompts = prompts;
+    public readonly IQuickDialogEntry[] Entries = entries;
 
     /// <summary>
     /// The buttons presented for the user.

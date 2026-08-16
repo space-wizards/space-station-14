@@ -17,7 +17,7 @@ public interface IQuickDialogEntry
     /// <summary>
     ///
     /// </summary>
-    LocId? Prompt { get; init; }
+    LocId? Title { get; init; }
 
     /// <summary>
     ///
@@ -52,10 +52,10 @@ public interface IQuickDialogEntry<T, T1> : IQuickDialogEntry
 ///
 /// </summary>
 /// <param name="MinMax"></param>
-/// <param name="Prompt"></param>
+/// <param name="Title"></param>
 /// <param name="Placeholder"></param>
 [Serializable, NetSerializable]
-public readonly record struct QuickDialogEntryString((int Min, int Max) MinMax, LocId? Prompt = null, LocId? Placeholder = null) :
+public readonly record struct QuickDialogEntryString((int Min, int Max) MinMax, LocId? Title = null, LocId? Placeholder = null) :
     IQuickDialogEntry<int, string>
 {
     /// <inheritdoc/>
@@ -77,10 +77,10 @@ public readonly record struct QuickDialogEntryString((int Min, int Max) MinMax, 
 ///
 /// </summary>
 /// <param name="MinMax"></param>
-/// <param name="Prompt"></param>
+/// <param name="Title"></param>
 /// <param name="Placeholder"></param>
 [Serializable, NetSerializable]
-public readonly record struct QuickDialogEntryInt((int Min, int Max) MinMax, LocId? Prompt = null, LocId? Placeholder = null) :
+public readonly record struct QuickDialogEntryInt((int Min, int Max) MinMax, LocId? Title = null, LocId? Placeholder = null) :
     IQuickDialogEntry<int, int>
 {
     /// <inheritdoc/>
@@ -103,10 +103,10 @@ public readonly record struct QuickDialogEntryInt((int Min, int Max) MinMax, Loc
 ///
 /// </summary>
 /// <param name="MinMax"></param>
-/// <param name="Prompt"></param>
+/// <param name="Title"></param>
 /// <param name="Placeholder"></param>
 [Serializable, NetSerializable]
-public readonly record struct QuickDialogEntryUInt((uint Min, uint Max) MinMax, LocId? Prompt = null, LocId? Placeholder = null) :
+public readonly record struct QuickDialogEntryUInt((uint Min, uint Max) MinMax, LocId? Title = null, LocId? Placeholder = null) :
     IQuickDialogEntry<uint, uint>
 {
     /// <inheritdoc/>
@@ -129,10 +129,10 @@ public readonly record struct QuickDialogEntryUInt((uint Min, uint Max) MinMax, 
 ///
 /// </summary>
 /// <param name="MinMax"></param>
-/// <param name="Prompt"></param>
+/// <param name="Title"></param>
 /// <param name="Placeholder"></param>
 [Serializable, NetSerializable]
-public readonly record struct QuickDialogEntryLong((long Min, long Max) MinMax, LocId? Prompt = null, LocId? Placeholder = null) :
+public readonly record struct QuickDialogEntryLong((long Min, long Max) MinMax, LocId? Title = null, LocId? Placeholder = null) :
     IQuickDialogEntry<long, long>
 {
     /// <inheritdoc/>
@@ -155,10 +155,10 @@ public readonly record struct QuickDialogEntryLong((long Min, long Max) MinMax, 
 ///
 /// </summary>
 /// <param name="MinMax"></param>
-/// <param name="Prompt"></param>
+/// <param name="Title"></param>
 /// <param name="Placeholder"></param>
 [Serializable, NetSerializable]
-public readonly record struct QuickDialogEntryULong((ulong Min, ulong Max) MinMax, LocId? Prompt = null, LocId? Placeholder = null) :
+public readonly record struct QuickDialogEntryULong((ulong Min, ulong Max) MinMax, LocId? Title = null, LocId? Placeholder = null) :
     IQuickDialogEntry<ulong, ulong>
 {
     /// <inheritdoc/>
@@ -181,10 +181,10 @@ public readonly record struct QuickDialogEntryULong((ulong Min, ulong Max) MinMa
 ///
 /// </summary>
 /// <param name="MinMax"></param>
-/// <param name="Prompt"></param>
+/// <param name="Title"></param>
 /// <param name="Placeholder"></param>
 [Serializable, NetSerializable]
-public readonly record struct QuickDialogEntryFloat((float Min, float Max) MinMax, LocId? Prompt = null, LocId? Placeholder = null) :
+public readonly record struct QuickDialogEntryFloat((float Min, float Max) MinMax, LocId? Title = null, LocId? Placeholder = null) :
     IQuickDialogEntry<float, float>
 {
     /// <inheritdoc/>
@@ -207,10 +207,10 @@ public readonly record struct QuickDialogEntryFloat((float Min, float Max) MinMa
 ///
 /// </summary>
 /// <param name="MinMax"></param>
-/// <param name="Prompt"></param>
+/// <param name="Title"></param>
 /// <param name="Placeholder"></param>
 [Serializable, NetSerializable]
-public readonly record struct QuickDialogEntryDouble((double Min, double Max) MinMax, LocId? Prompt = null, LocId? Placeholder = null) :
+public readonly record struct QuickDialogEntryDouble((double Min, double Max) MinMax, LocId? Title = null, LocId? Placeholder = null) :
     IQuickDialogEntry<double, double>
 {
     /// <inheritdoc/>

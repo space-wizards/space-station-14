@@ -58,8 +58,9 @@ public sealed partial class PrayerSystem : EntitySystem
                 }
 
                 _quickDialog.TryOpenDialog(
-                    "prayer-" + uid,
-                    actor.PlayerSession,
+                    PrayUiKey.Key,
+                    uid,
+                    args.User,
                     Loc.GetString(comp.Verb),
                     [
                         new QuickDialogEntryString((MinPrayerLength, MaxPrayerLength), Loc.GetString("prayer-popup-notify-pray-ui-message"))

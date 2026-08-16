@@ -19,7 +19,7 @@ public sealed class QuickDialogResponseEvent(string dialogId, QuickDialogButtonF
     public readonly QuickDialogButtonFlags ButtonPressed = buttonPressed;
 
     /// <summary>
-    /// The responses to the prompts.
+    /// The responses to the entries.
     /// </summary>
     public readonly string[]? Responses = responses;
 }

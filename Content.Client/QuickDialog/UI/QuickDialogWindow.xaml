@@ -5,7 +5,7 @@
     Resizable="False">
     <BoxContainer Orientation="Vertical" Margin="10">
         <!-- Populated in constructor -->
-        <BoxContainer Name="Prompts" Margin="0 0 0 10" HorizontalAlignment="Left" Orientation="Vertical" />
+        <BoxContainer Name="Entries" Margin="0 0 0 10" HorizontalAlignment="Left" Orientation="Vertical" />
 
         <BoxContainer Orientation="Vertical">
             <PanelContainer StyleClasses="LowDivider" />

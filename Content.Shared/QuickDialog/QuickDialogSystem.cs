@@ -1,11 +1,12 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
+using Content.Shared.Prayer;
 using Content.Shared.QuickDialog.Events;
+using Content.Shared.QuickDialog.Messages;
 using JetBrains.Annotations;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.QuickDialog;
 
@@ -21,12 +22,23 @@ public abstract partial class QuickDialogSystem : EntitySystem
     /// </summary>
     private readonly Dictionary<NetUserId, Dictionary<string, (IQuickDialogEntry[] Entries, Action<object[]> OkAction, Action? CancelAction)>> _openDialogsPerUser = [];
 
+    /// <summary>
+    ///
+    /// </summary>
+    private readonly Dictionary<NetUserId, Dictionary<(NetEntity Entity, Enum UiKey), (IQuickDialogEntry[] Entries, Action<object[]> OkAction, Action? CancelAction)>> _openBUIDialogsPerUser = [];
+
     /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
 
         _playerManager.PlayerStatusChanged += PlayerManagerOnPlayerStatusChanged;
+
+        Subs.BuiEvents<PrayableComponent>(PrayUiKey.Key, subs =>
+        {
+            subs.Event<QuickDialogResponseMessage>(OnBoundUIResponse);
+            subs.Event<BoundUIClosedEvent>(OnBoundUIClosed);
+        });
     }
 
     /// <inheritdoc/>
@@ -48,6 +60,54 @@ public abstract partial class QuickDialogSystem : EntitySystem
         }
 
         _openDialogsPerUser.Remove(e.Session.UserId);
+    }
+
+    private void OnBoundUIResponse<T>(Entity<T> ent, ref QuickDialogResponseMessage args) where T : IComponent
+    {
+        if (!_playerManager.TryGetSessionByEntity(args.Actor, out var session))
+            return;
+
+        var key = (GetNetEntity(ent), args.UiKey);
+        if (!_openBUIDialogsPerUser.TryGetValue(session.UserId, out var dialogs) || !dialogs.TryGetValue(key, out var data))
+            return;
+
+        dialogs.Remove(key);
+
+        if (args.Responses == null || args.Responses.Length < data.Entries.Length)
+        {
+            data.CancelAction?.Invoke();
+            return;
+        }
+
+        var responses = new object[data.Entries.Length];
+        for (var i = 0; i < data.Entries.Length; i++)
+        {
+            var entry = data.Entries[i];
+            if (!TryParse(entry, args.Responses[i], out var value))
+            {
+                data.CancelAction?.Invoke();
+                return;
+            }
+
+            responses[i] = value;
+        }
+
+        switch (args.ButtonPressed)
+        {
+            case QuickDialogButtonFlags.OkButton:
+                data.OkAction.Invoke(responses);
+                break;
+            case QuickDialogButtonFlags.CancelButton:
+                data.CancelAction?.Invoke();
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(args), nameof(args.ButtonPressed) + ": Invalid button flag.");
+        }
+    }
+
+    private void OnBoundUIClosed<T>(Entity<T> ent, ref BoundUIClosedEvent args) where T : IComponent
+    {
+
     }
 
     [SubscribeNetworkEvent]

@@ -1,5 +1,5 @@
-using Content.Shared.QuickDialog.BUI;
 using Content.Shared.QuickDialog.Events;
+using Content.Shared.QuickDialog.Messages;
 using JetBrains.Annotations;
 using Robust.Shared.Player;
 
@@ -30,9 +30,6 @@ public abstract partial class QuickDialogSystem
         Action? cancelAction = null,
         QuickDialogButtonFlags buttons = QuickDialogButtonFlags.All)
     {
-        if (entries.Length == 0)
-            throw new ArgumentException("Must specify at least one entry for the dialog!");
-
         if (!_openDialogsPerUser.TryGetValue(session.UserId, out var dialogs))
         {
             dialogs = [];
@@ -74,16 +71,39 @@ public abstract partial class QuickDialogSystem
         EntityUid actor,
         string title,
         IQuickDialogEntry[] entries,
-        QuickDialogButtonFlags buttons = QuickDialogButtonFlags.All)
+        Action<object[]> okAction,
+        Action? cancelAction = null,
+        QuickDialogButtonFlags buttons = QuickDialogButtonFlags.All,
+        bool predicted = false)
     {
-        if (entries.Length == 0)
-            throw new ArgumentException("Must specify at least one entry for the dialog!");
+        if (!_playerManager.TryGetSessionByEntity(actor, out var session))
+            return false;
+
+        var netEntity = GetNetEntity(target);
+        if (!_openBUIDialogsPerUser.TryGetValue(session.UserId, out var dialogs))
+        {
+            dialogs = [];
+            _openBUIDialogsPerUser.Add(session.UserId, dialogs);
+        }
+        else if (dialogs.ContainsKey((netEntity, uiKey)))
+        {
+            return false;
+        }
 
         if (!_ui.TryOpenUi(target, uiKey, actor, true))
             return false;
 
-        var state = new QuickDialogOpenBoundUserInterfaceState(title, entries, buttons);
-        _ui.SetUiState(target, uiKey, state);
+        if (!_ui.TryGetOpenUi(target, uiKey, out var bui))
+            return false;
+
+        var message = new QuickDialogS(title, entries, buttons);
+
+        if (predicted)
+            _ui.SendPredictedUiMessage(target, bui, message);
+        else
+            _ui.ServerSendUiMessage(target, bui, message);
+
+        dialogs.Add((netEntity, uiKey), (entries, okAction, cancelAction));
 
         return true;
     }

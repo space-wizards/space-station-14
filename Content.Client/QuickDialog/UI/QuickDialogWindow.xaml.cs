@@ -6,7 +6,7 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.QuickDialog.UI;
 
 /// <summary>
-/// Client-side dialog with multiple prompts.
+/// Client-side dialog with multiple entries.
 /// Used by admin tools quick dialog system among other things.
 /// </summary>
 [GenerateTypedNameReferences]
@@ -14,7 +14,7 @@ public sealed partial class QuickDialogWindow : FancyWindow
 {
     /// <summary>
     /// Action for when the ok button is pressed or the last field has enter pressed.
-    /// Results maps prompt FieldIds to the LineEdit's text contents.
+    /// Results maps entry FieldIds to the LineEdit's text contents.
     /// </summary>
     public Action<string[]>? OnConfirmed;
 
@@ -30,36 +30,58 @@ public sealed partial class QuickDialogWindow : FancyWindow
     private bool _confirmed;
 
     /// <summary>
-    /// Create and open a new dialog with some prompts.
+    /// Create and open a new dialog with some entries.
     /// </summary>
     /// <param name="title">String to use for the window title.</param>
-    /// <param name="entries">Quick dialog entries to create prompts with.</param>
+    /// <param name="entries">Quick dialog entries to create entries with.</param>
     /// <param name="buttons"></param>
     /// <remarks>
     /// Won't do anything on its own, you need to handle or network with <see cref="OnConfirmed"/> and <see cref="OnCancelled"/>.
     /// </remarks>
-    public QuickDialogWindow(string title, IQuickDialogEntry[] entries, QuickDialogButtonFlags buttons = QuickDialogButtonFlags.All)
+    public QuickDialogWindow()
     {
-        if (entries.Length == 0)
-            throw new ArgumentException("Must specify at least one entry for the dialog!");
-
         RobustXamlLoader.Load(this);
 
+        OkButton.OnPressed += _ => Confirm();
+
+        CancelButton.OnPressed += _ => Close();
+
+        OpenCentered();
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="title"></param>
+    /// <param name="entries"></param>
+    /// <param name="buttons"></param>
+    public void Update(string title, IQuickDialogEntry[] entries, QuickDialogButtonFlags buttons = QuickDialogButtonFlags.All)
+    {
         Title = Loc.GetString(title);
 
         OkButton.Visible = buttons.HasFlag(QuickDialogButtonFlags.OkButton);
         CancelButton.Visible = buttons.HasFlag(QuickDialogButtonFlags.CancelButton);
 
+        while (Entries.ChildCount > entries.Length)
+            Entries.RemoveChild(0);
+
         for (var i = 0; i < entries.Length; i++)
         {
-            var entry = entries[i];
-            var entryPanel = new QuickDialogEntryPanel
+            if (i >= ChildCount)
             {
-                MinWidth = MinWidth
-            };
+                var newEntryPanel = new QuickDialogEntryPanel
+                {
+                    MinWidth = MinWidth
+                };
+
+                Entries.AddChild(newEntryPanel);
+            }
+
+            var entry = entries[i];
+            var entryPanel = (QuickDialogEntryPanel)Entries.GetChild(i);
 
             var (min, max) = QuickDialogSystem.GetMinMax(entry);
-            entryPanel.Prompt.Text = (entry.Prompt.HasValue ? Loc.GetString(entry.Prompt.Value) + "\n" : "") +
+            entryPanel.Title.Text = (entry.Title.HasValue ? Loc.GetString(entry.Title.Value) + "\n" : "") +
                 $"({Loc.GetString("quick-dialog-ui-min")} - {min}, {Loc.GetString("quick-dialog-ui-max")} - {max})";
 
             entryPanel.Input.IsValid += (value) => QuickDialogSystem.TryParse(entry, value, out _);
@@ -67,20 +89,29 @@ public sealed partial class QuickDialogWindow : FancyWindow
             var placeholder = entry.Placeholder ?? QuickDialogSystem.GetPlaceholder(entry);
             if (placeholder.HasValue)
                 entryPanel.Input.PlaceHolder = Loc.GetString(placeholder.Value);
-
-            Prompts.AddChild(entryPanel);
         }
 
         // Last text box gets enter confirmation.
         // Only the last so you don't accidentally confirm early.
-        var lastPrompt = (QuickDialogEntryPanel)Prompts.Children[entries.Length - 1];
-        lastPrompt.Input.OnTextEntered += _ => Confirm();
+        var lastEntry = (QuickDialogEntryPanel)Entries.Children[entries.Length - 1];
+        lastEntry.Input.OnTextEntered += _ => Confirm();
+    }
 
-        OkButton.OnPressed += _ => Confirm();
+    /// <summary>
+    ///
+    /// </summary>
+    private void Confirm()
+    {
+        var results = new string[Entries.ChildCount];
+        for (var i = 0; i < Entries.ChildCount; i++)
+        {
+            var entry = (QuickDialogEntryPanel)Entries.Children[i];
+            results[i] = entry.Input.Text;
+        }
 
-        CancelButton.OnPressed += _ => Close();
-
-        OpenCentered();
+        _confirmed = true;
+        OnConfirmed?.Invoke(results);
+        Close();
     }
 
     /// <inheritdoc/>
@@ -97,24 +128,7 @@ public sealed partial class QuickDialogWindow : FancyWindow
         base.Opened();
 
         // Grab keyboard focus for the first dialog entry.
-        var firstPrompt = (QuickDialogEntryPanel)Prompts.Children[0];
-        firstPrompt.Input.GrabKeyboardFocus();
-    }
-
-    /// <summary>
-    ///
-    /// </summary>
-    private void Confirm()
-    {
-        var results = new string[Prompts.ChildCount];
-        for (var i = 0; i < Prompts.ChildCount; i++)
-        {
-            var entry = (QuickDialogEntryPanel)Prompts.Children[i];
-            results[i] = entry.Input.Text;
-        }
-
-        _confirmed = true;
-        OnConfirmed?.Invoke(results);
-        Close();
+        var firstEntry = (QuickDialogEntryPanel)Entries.Children[0];
+        firstEntry.Input.GrabKeyboardFocus();
     }
 }

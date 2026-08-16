@@ -3,6 +3,6 @@
     Orientation="Vertical"
     HorizontalAlignment="Center"
     Margin="0 0 0 10">
-    <Label Name="Prompt" Access="Public" />
+    <Label Name="Title" Access="Public" />
     <LineEdit Name="Input" Access="Public" Margin="0 0 10 0" />
 </BoxContainer>
