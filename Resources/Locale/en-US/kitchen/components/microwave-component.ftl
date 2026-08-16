@@ -22,4 +22,3 @@ microwave-menu-footer-flavor-right = v1.5
 microwave-menu-ingredients = INGREDIENTS
 microwave-menu-ingredients-empty = No ingredients
 microwave-menu-cook-time = COOK TIME
-microwave-menu-time-selection = TIME SELECTION
