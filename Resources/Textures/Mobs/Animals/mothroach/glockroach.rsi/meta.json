@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Based on a sprite taken from fulpstation at https://github.com/fulpstation/fulpstation/commit/edb232b692ec9f356ec554ea1971da552b9bc447 and the 'mothroach-moving' state was made by MilenVolf. what_stone(discord) used the mk58 sprite to make the glockroach state, ketufaispikinut modified the other states to conform",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "glockroach",
+      "directions": 4
+    },
+    {
+      "name": "glockroach-moving",
+      "directions": 4,
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "glockroach_lazy",
+      "directions": 4
+    },
+    {
+      "name": "glockroach_sleep",
+      "directions": 4
+    },
+    {
+      "name": "glockroach_dead",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "0-equipped-HELMET",
+      "directions": 4
+    }
+  ]
+}
