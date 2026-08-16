@@ -6,29 +6,25 @@ namespace Content.Shared.Containers.ItemSlots;
 /// Used for item-slot insert and eject buttons.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class ItemSlotButtonPressedEvent : BoundUserInterfaceMessage
+public sealed class ItemSlotButtonPressedEvent(
+    string slotId,
+    bool tryEject = true,
+    bool tryInsert = true) : BoundUserInterfaceMessage
 {
     /// <summary>
     /// The ID of the slot/container from which to insert or eject an item.
     /// </summary>
-    public string SlotId;
+    public string SlotId = slotId;
 
     /// <summary>
     /// Whether to attempt to insert an item into the slot if there is not already one inside.
     /// </summary>
-    public bool TryInsert;
+    public bool TryInsert = tryInsert;
 
     /// <summary>
     /// Whether to attempt to eject the item from the slot if it has one.
     /// </summary>
-    public bool TryEject;
-
-    public ItemSlotButtonPressedEvent(string slotId, bool tryEject = true, bool tryInsert = true)
-    {
-        SlotId = slotId;
-        TryEject = tryEject;
-        TryInsert = tryInsert;
-    }
+    public bool TryEject = tryEject;
 }
 
 /// <summary>

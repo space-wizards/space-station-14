@@ -53,8 +53,6 @@ public sealed class ItemSlotsComponentState(Dictionary<string, ItemSlot> slots) 
 [Serializable, NetSerializable]
 public sealed partial class ItemSlot
 {
-    public ItemSlot() { }
-
     [DataField]
     [Access(typeof(ItemSlotsSystem), Other = AccessPermissions.ReadWriteExecute)]
     public EntityWhitelist? Whitelist;
