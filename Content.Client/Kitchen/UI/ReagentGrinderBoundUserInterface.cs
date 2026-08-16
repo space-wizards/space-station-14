@@ -1,12 +1,10 @@
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Kitchen;
 using Content.Shared.Kitchen.Components;
-using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Kitchen.UI;
 
-[UsedImplicitly]
 public sealed class ReagentGrinderBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [ViewVariables]
