@@ -1,6 +1,8 @@
 using Content.Server.Radiation.Components;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
+using Content.Shared.Weapons.Hitscan.Components;
+using Content.Shared.Weapons.Hitscan.Events;
 using Robust.Shared.Map.Components;
 
 namespace Content.Server.Radiation.Systems;
@@ -18,6 +20,15 @@ public partial class RadiationSystem
         SubscribeLocalEvent<RadiationBlockerComponent, DoorStateChangedEvent>(OnDoorChanged);
 
         SubscribeLocalEvent<RadiationGridResistanceComponent, EntityTerminatingEvent>(OnGridRemoved);
+        SubscribeLocalEvent<RadiationBlockerComponent, HitscanDamageModifierEvent>(OnDamageModifier);
+    }
+
+    private void OnDamageModifier(Entity<RadiationBlockerComponent> ent, ref HitscanDamageModifierEvent args)
+    {
+        if (!TryComp<RadioactiveRayComponent>(args.HitscanUid, out var rayComp))
+            return;
+
+        args.Modifier = -(ent.Comp.RadResistance * rayComp.RadsPerSecondToPercentDamageDecrease / 100.0f);
     }
 
     private void OnInit(EntityUid uid, RadiationBlockerComponent component, ComponentInit args)
