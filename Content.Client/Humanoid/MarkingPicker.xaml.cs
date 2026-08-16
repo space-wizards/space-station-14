@@ -21,9 +21,6 @@ public sealed partial class MarkingPicker : Control
     public void SetModel(MarkingsViewModel model)
     {
         _markingsModel = model;
-
-        _markingsModel.OrganDataChanged += UpdateMarkings;
-        _markingsModel.EnforcementsChanged += UpdateMarkings;
     }
 
     protected override void EnteredTree()
