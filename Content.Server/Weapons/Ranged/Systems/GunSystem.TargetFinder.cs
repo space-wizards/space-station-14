@@ -10,7 +10,7 @@ public sealed partial class GunSystem
     [SubscribeLocalEvent]
     public void OnProjectileShot(Entity<TargetAssignComponent> entity, ref AmmoShotEvent args)
     {
-        if (entity.Comp.Target is null)
+        if (entity.Comp.Target is null || TerminatingOrDeleted(entity.Comp.Target))
             return;
 
         if (args.FiredProjectiles.Count == 0)
