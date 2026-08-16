@@ -45,6 +45,12 @@ public sealed partial class DeployableTurretSystem : SharedDeployableTurretSyste
         SubscribeLocalEvent<DeployableTurretComponent, BeforeBroadcastAttemptEvent>(OnBeforeBroadcast);
     }
 
+    [SubscribeLocalEvent]
+    private void OnNetworkConnection(Entity<DeployableTurretComponent> ent, ref DeviceNetworkConnectedEvent args)
+    {
+        SendStateUpdateToDeviceNetwork(ent);
+    }
+
     private void OnAmmoShot(Entity<DeployableTurretComponent> ent, ref AmmoShotEvent args)
     {
         UpdateAmmoStatus(ent);
