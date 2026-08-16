@@ -161,8 +161,7 @@
   - MobFlammable
   - BaseSpeciesMob
   - BaseMobDestructible
-  - BaseHungerSlowdown
-  - BaseThirstSlowdown
+  - BaseHungerThirstSlowdown
   id: BaseSpeciesMobOrganic
   save: false
   components:
