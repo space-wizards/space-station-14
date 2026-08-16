@@ -168,7 +168,6 @@
     access: [[ "Research" ]]
   - type: Emitter
     onState: firing
-    powerUseActive: 100
     boltType: AnomalousParticleDelta
     underpoweredState: underpowered
     selectableTypes:
@@ -184,8 +183,15 @@
     fireBurstSize: 1
     fireBurstDelayMin: 2
     fireBurstDelayMax: 6
+  - type: NotifyOnNonFunctioning
+    locUnlocked: ape-unlocked-broadcast
+    radioChannel: Science
+    requirePowered: true
+  - type: PowerState
+    idlePowerDraw: 5
+    workingPowerDraw: 100
   - type: ApcPowerReceiver
-    powerLoad: 100
+    powerLoad: 5
   - type: GuideHelp
     guides:
     - APE
