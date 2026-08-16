@@ -6,14 +6,19 @@
   components:
   - type: Rotatable
   - type: TextScreenVisuals
-    textOffset: 0,3
-    timerOffset: 0,-4
+    textOffset: 0,10
+    timerOffset: 0,3
     rows: 2
+    rowLength: 6
+    scrollEnabled: true
+    frameState:
+      sprite: Structures/Wallmounts/screen.rsi
+      state: outer_frame
   - type: Sprite
+    offset: 0, -0.5
     drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/screen.rsi
-    state: screen
-    noRot: true
+    state: screen # Note: outer_frame will be added on top of text layers.
   - type: Appearance
   - type: Destructible
     thresholds:
@@ -33,6 +38,15 @@
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: ShuttleTimer
+
+# Dummy screen for comms console
+- type: entity
+  parent: Screen
+  id: ScreenDummy
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    offset: 0, -0.25
 
 - type: entity
   id: ArrivalsShuttleTimer
