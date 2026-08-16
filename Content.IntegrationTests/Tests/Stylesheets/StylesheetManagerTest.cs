@@ -67,6 +67,7 @@ public sealed class StylesheetManagerTest : GameTest
         void OnStyleChanged(IStylesheetAccessor accessor)
         {
             i++;
+            // ReSharper disable once AccessToModifiedClosure
             control.Stylesheet = sheet ? accessor.SheetSystem : accessor.SheetNanotrasen;
         }
     }

@@ -121,7 +121,9 @@ public sealed class StylesheetDefinitionTest : GameTest
         // We can't directly introspect the logs that PoolTestLogHandler has, so we use the LogCatcher that RT provides
         // for a singular other test...
         var catcher = new LogCatcher();
-        _logManager.GetSawmill("style").AddHandler(catcher);
+        var sawmill = _logManager.GetSawmill("style");
+
+        sawmill.AddHandler(catcher);
 
         var style = new TestMissingConstraintsDefinition();
         var sheet = style.Build();
@@ -136,7 +138,7 @@ public sealed class StylesheetDefinitionTest : GameTest
             Assert.That(catcher.CaughtLogs[0].Level, Is.EqualTo(LogEventLevel.Error));
         }
 
-        _logManager.GetSawmill("style").RemoveHandler(catcher);
+        sawmill.RemoveHandler(catcher);
         Pair.ClientLogHandler.JudgeLog -= JudgeHasStyleError;
     }
 
