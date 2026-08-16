@@ -228,7 +228,6 @@
       components:
       - Airlock
       - Firelock
-      tags:
       - Wall
 
 - type: entity
@@ -300,7 +299,6 @@
       types:
         Piercing: 20
         Cold: 20
-        Structural: 50
 
 - type: entity
   parent: ProjectilePolyboltBase

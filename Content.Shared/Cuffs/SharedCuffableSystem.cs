@@ -550,12 +550,7 @@ namespace Content.Shared.Cuffs
                 if (freeHands == 2)
                     break;
             }
-
-            if (_virtualItem.TrySpawnVirtualItemInHand(handcuff, uid, out var virtItem1))
-                EnsureComp<UnremoveableComponent>(virtItem1.Value);
-
-            if (_virtualItem.TrySpawnVirtualItemInHand(handcuff, uid, out var virtItem2))
-                EnsureComp<UnremoveableComponent>(virtItem2.Value);
+            _virtualItem.TrySpawnUnremoveableVirtualItemInHand(handcuff, uid, count: 2);
         }
 
         /// <summary>
@@ -621,7 +616,10 @@ namespace Content.Shared.Cuffs
 
             var cuffTime = handcuffComponent.CuffTime;
 
-            if (HasComp<StunnedComponent>(target))
+            var stunEv = new CheckIncapacitatedCuffEvent();
+            RaiseLocalEvent(target, ref stunEv);
+
+            if (stunEv.Incapacitated)
                 cuffTime = MathF.Max(0.1f, cuffTime - handcuffComponent.StunBonus);
 
             if (HasComp<DisarmProneComponent>(target))
@@ -979,6 +977,13 @@ namespace Content.Shared.Cuffs
         /// </summary>
         public SlotFlags TargetSlots { get; set; }
     }
+
+    /// <summary>
+    /// Raised on the entity being cuffed to determine if their cuffing doafter should get a stuncuff timer reduction.
+    /// </summary>
+    /// <seealso cref="HandcuffComponent.StunBonus"/>
+    [ByRefEvent]
+    public record struct CheckIncapacitatedCuffEvent(bool Incapacitated);
 
     /// <summary>
     /// Raised on the cuffs when they are applied

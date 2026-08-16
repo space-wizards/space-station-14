@@ -31,11 +31,18 @@ public sealed partial class CCVars
         CVarDef.Create("anomaly.generation_grid_bounds_scale", 0.6f, CVar.SERVERONLY);
 
     /// <summary>
+    ///     If enabled, the server automatically triggers an AFK check popup when a player's inactivity exceeds afk.time (or admin.afk_time for admins)
+    /// </summary>
+    public static readonly CVarDef<bool> AfkAutomaticChecks =
+        CVarDef.Create("afk.automatic_checks", true, CVar.SERVERONLY);
+
+    /// <summary>
     ///     How long a client can go without any input before being considered AFK.
     /// </summary>
     [CVarControl(AdminFlags.VarEdit, min: 0f, max: float.MaxValue)]
     public static readonly CVarDef<float> AfkTime =
-        CVarDef.Create("afk.time", 300f, CVar.SERVER | CVar.REPLICATED);
+        CVarDef.Create("afk.time", 600f, CVar.SERVER | CVar.REPLICATED);
+        // If afk players become an issue again, implement using a more aggressive time limit when server pop is near full
 
     /// <summary>
     ///     How long a player has to confirm they are not AFK before being disconnected.

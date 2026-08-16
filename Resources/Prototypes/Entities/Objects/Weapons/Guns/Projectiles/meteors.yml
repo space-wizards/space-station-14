@@ -73,7 +73,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 50
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
@@ -108,7 +108,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 300
+        damage: 150
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
@@ -148,7 +148,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 500
+        damage: 450
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
@@ -176,7 +176,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 1200
+        damage: 900
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
@@ -216,7 +216,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 3000
+        damage: 1500
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
@@ -255,7 +255,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 3000
+        damage: 1500
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
@@ -295,7 +295,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 3000
+        damage: 1500
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
@@ -323,7 +323,6 @@
   id: MeteorPotato
   name: Space potato
   description: A starchy threat from the depths of the space. Contains 200% of your daily sodium intake!
-  suffix: Meteor
   components:
   - type: Sprite
     state: potato
@@ -338,7 +337,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 3000
+        damage: 1500
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
@@ -349,73 +348,4 @@
           FoodMealFries:
             min: 1
             max: 5
-      - !type:ExplodeBehavior
-
-# Flesh Meteor
-- type: entity
-  parent: BaseMeteor
-  id: MeteorFlesh
-  name: flesh meteor
-  description: A meteor covered in tendons.
-  components:
-  - type: Sprite
-    state: tendons
-  - type: Explosive
-    totalIntensity: 100
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 1000
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-      - !type:WeightedSpawnEntityBehavior
-        weightedEntityTable: "MeteorSpawnFleshMonstersTable"
-        minSpawn: 1
-        maxSpawn: 3
-        spawnOffset: 1
-        spawnAfter: 0.5
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          FleshKudzuSpace:
-            min: 1
-            max: 3
-        spawnAfter: 0.5
-        offset: 1
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          FleshBlocker:
-            min: 1
-            max: 2
-        spawnAfter: 0.5
-        offset: 2
-      - !type:ExplodeBehavior
-
-# Kudzu Meteor
-- type: entity
-  parent: BaseMeteor
-  id: MeteorKudzu
-  name: kudzu meteor
-  description: A meteor overgrown with kudzu.
-  components:
-  - type: Sprite
-    state: kudzu
-  - type: Explosive
-    totalIntensity: 100
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 1000
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          Kudzu:
-            min: 1
-            max: 3
-        spawnAfter: 0.5
-        offset: 1
       - !type:ExplodeBehavior

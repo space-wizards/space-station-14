@@ -1,6 +1,6 @@
 - type: entity
+  parent: [ BaseMachinePowered, ConstructibleMachine, StructureHealthMachine ]
   id: MachineAnomalyVessel
-  parent: [ BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible ]
   name: anomaly vessel
   description: A container able to harness a scan of an anomaly and turn it into research data.
   components:
@@ -38,6 +38,7 @@
   - type: Appearance
   - type: WiresPanel
   - type: WiresVisuals
+    visibleWhenClosed: true
   - type: AmbientSound
     enabled: false
     range: 3
@@ -69,6 +70,8 @@
     intensitySlope: 30
     totalIntensity: 30
     canCreateVacuum: false
+  - type: Damageable
+    damageModifierSet: GlassPlasmaMod
   - type: Destructible
     thresholds:
     - trigger:
@@ -223,7 +226,7 @@
 
 - type: entity
   id: MachineAnomalyGenerator
-  parent: BaseMachinePowered
+  parent: BaseMachinePowered # StructureHealthMachineMassive
   name: anomaly generator
   description: The peak of pseudoscientific technology.
   placement:
@@ -293,14 +296,10 @@
   - type: Wires
     boardName: wires-board-name-anomalygenerator
     layoutId: AnomalyGenerator
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 500
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Breakage"]
+#  - type: Injurable                        Indestructible because
+#    damageContainer: StructuralInorganic
+#  - type: Damageable
+#    damageModifierSet: PlastitaniumMod
   - type: ActivatableUI
     key: enum.AnomalyGeneratorUiKey.Key
   - type: ActivatableUIRequiresAccess

@@ -81,13 +81,13 @@
   id: BaseLightTube
   components:
   - type: Sprite
-    sprite:  Objects/Power/light_tube.rsi
-  - type: LightBulb
-    bulb: Tube
+    sprite: Objects/Power/light_tube.rsi
   - type: Destructible
     thresholds:
     - trigger: *DamageTrigger10
       behaviors: *BehaviorsSpawnShardGlass
+
+#region Bulbs
 
 # Lighting color values gathered from
 # https://andi-siess.de/rgb-to-color-temperature/
@@ -203,6 +203,9 @@
     - LightBulb
     - Trash
 
+#endregion
+#region tube
+
 - type: entity
   parent: BaseLightTube
   name: fluorescent light tube
@@ -211,7 +214,7 @@
   components:
   - type: LightBulb
     color: "#FFE4CE" # 5000K color temp
-    lightEnergy: 0.8
+    lightEnergy: 1.6
     lightRadius: 10
     lightSoftness: 1
     PowerUse: 25
@@ -418,6 +421,9 @@
     - id: SheetGlass1
     - id: ShardCrystalGreen
 
+#endregion
+#region crystal bulbs
+#todo move these to the bulbs region
 
 - type: entity
   parent: BaseLightbulb
@@ -557,3 +563,5 @@
     refineResult:
     - id: SheetGlass1
     - id: ShardCrystalGreen
+
+#endregion
