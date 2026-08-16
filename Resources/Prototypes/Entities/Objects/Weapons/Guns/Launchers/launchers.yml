@@ -168,7 +168,7 @@
     proto: BulletGuidedXenoborgMissile
     capacity: 3
   - type: BallisticAmmoSelfRefiller
-    autoRefillRate: 15s # takes a while to get a new one
+    autoRefillRate: 17s # takes a while to get a new one
   - type: TargetAssign
   - type: DeviceLinkSink
     ports:
