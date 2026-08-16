@@ -161,7 +161,7 @@
   - MobFlammable
   - BaseSpeciesMob
   - BaseMobDestructible
-  - BaseHungerThirstSlowdown # TODO CENT
+  - BaseHungerThirstSlowdown
   id: BaseSpeciesMobOrganic
   save: false
   components:
