@@ -10,6 +10,12 @@ namespace Content.Shared.Charges.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(SharedChargesSystem))]
 public sealed partial class LimitedChargesComponent : Component
 {
+    /// <summary>
+    /// Localization ID of the popup shown when the entity has no charges left.
+    /// </summary>
+    [DataField]
+    public LocId? OnFailPopup;
+
     [DataField, AutoNetworkedField]
     public int LastCharges;
 

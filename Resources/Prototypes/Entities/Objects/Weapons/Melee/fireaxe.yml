@@ -21,7 +21,7 @@
         # axes are kinda like sharp hammers, you know?
         Blunt: 5
         Slash: 10
-        Structural: 10
+        Structural: 5
     soundHit:
       collection: MetalThud
   - type: Wieldable
@@ -29,7 +29,7 @@
     damage:
       types:
         Slash: 10
-        Structural: 40
+        Structural: 15
   - type: Item
     shape:
     - 1,0,2,5
