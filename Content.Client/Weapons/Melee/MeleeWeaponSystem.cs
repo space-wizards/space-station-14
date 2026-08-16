@@ -248,11 +248,11 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         {
             if (ent.Owner == user)
             {
-                PopupSystem.PopupClient(Loc.GetString("melee-self-weapon-dealt-no-damage", ("target", Identity.Entity(target, EntityManager, user))), target, user);
+                PopupSystem.PopupEntity(Loc.GetString("melee-self-weapon-dealt-no-damage", ("target", Identity.Entity(target, EntityManager, user))), target, user);
             }
             else
             {
-                PopupSystem.PopupClient(Loc.GetString("melee-weapon-dealt-no-damage", ("weapon", ent), ("target", Identity.Entity(target, EntityManager, user))), target, user);
+                PopupSystem.PopupEntity(Loc.GetString("melee-weapon-dealt-no-damage", ("weapon", ent), ("target", Identity.Entity(target, EntityManager, user))), target, user);
             }
 
             ent.Comp.UndamagedSwings = 0;
