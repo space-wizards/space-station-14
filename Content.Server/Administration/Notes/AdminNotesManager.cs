@@ -33,8 +33,6 @@ public sealed partial class AdminNotesManager : IAdminNotesManager, IPostInjectI
 
     public const string SawmillId = "admin.notes";
 
-    private readonly SoundPathSpecifier _noteNotificationSound = new("/Audio/Effects/adminhelp.ogg");
-
     public event Action<SharedAdminNote>? NoteAdded;
     public event Action<SharedAdminNote>? NoteModified;
     public event Action<SharedAdminNote>? NoteDeleted;
@@ -176,14 +174,15 @@ public sealed partial class AdminNotesManager : IAdminNotesManager, IPostInjectI
         NoteAdded?.Invoke(note);
 
         // Send a notification to the player that they received a non-secret note.
-        if (_player.TryGetSessionById(netUserId, out var session) && !secret && type == NoteType.Note)
+        if (_player.TryGetSessionById(netUserId, out var session) && !secret && type == NoteType.Note
+            && _config.GetCVar(CCVars.SeeOwnNotes))
         {
-            var audioSystem = _systems.GetEntitySystem<SharedAudioSystem>();
-            var notifMessage = _config.GetCVar(CCVars.SeeOwnNotes) ? _loc.GetString("admin-notes-manager-note-notification")
-                : _loc.GetString("admin-notes-manager-note-notification-no-cvar");
+            _systems.TryGetEntitySystem(out SharedAudioSystem? audio);
+            var notifMessage = _loc.GetString("admin-notes-manager-note-notification");
+            var notifSound = new SoundPathSpecifier(_config.GetCVar(CCVars.AHelpSound));
 
             _chat.DispatchServerMessage(session, notifMessage);
-            audioSystem.PlayGlobal(_noteNotificationSound, Filter.SinglePlayer(session), false, AudioParams.Default.AddVolume(-7f));
+            audio?.PlayGlobal(notifSound, Filter.SinglePlayer(session), false, AudioParams.Default.AddVolume(-7f));
         }
     }
 
