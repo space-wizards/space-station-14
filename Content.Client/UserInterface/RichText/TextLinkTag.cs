@@ -1,19 +1,19 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using Content.Client.UserInterface.ControlExtensions;
 using JetBrains.Annotations;
 using Content.Shared.Chat;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Client.UserInterface.RichText;
 using Robust.Shared.Input;
 using Robust.Shared.Utility;
-using Content.Client.UserInterface.ControlExtensions;
 using Content.Client.UserInterface.Systems.Chat;
+using Robust.Client.UserInterface.RichText;
 using Robust.Shared.GameObjects.Components.Localization;
 
 namespace Content.Client.UserInterface.RichText;
 
 [UsedImplicitly]
-public sealed class TextLinkTag : IMarkupTagHandler
+public sealed partial class TextLinkTag : IMarkupTagHandler
 {
     [Dependency] private IEntityManager _entity = default!;
     [Dependency] private IUserInterfaceManager _ui = default!;
