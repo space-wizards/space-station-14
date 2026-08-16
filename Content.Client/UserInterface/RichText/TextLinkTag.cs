@@ -1,16 +1,25 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using Content.Client.UserInterface.ControlExtensions;
 using JetBrains.Annotations;
 using Content.Shared.Chat;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Client.UserInterface.RichText;
 using Robust.Shared.Input;
 using Robust.Shared.Utility;
+using Content.Client.UserInterface.ControlExtensions;
 using Content.Client.UserInterface.Systems.Chat;
-using Robust.Client.UserInterface.RichText;
 using Robust.Shared.GameObjects.Components.Localization;
 
 namespace Content.Client.UserInterface.RichText;
+
+public readonly record struct TextLinkData(string Link, Color? Color, bool Clickable);
+
+internal enum TextLinkKind
+{
+    None,
+    Entity,
+    Plain,
+}
 
 [UsedImplicitly]
 public sealed partial class TextLinkTag : IMarkupTagHandler
@@ -21,9 +30,11 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
     public static Color DefaultLinkColor => Color.CornflowerBlue;
 
     public string Name => "textlink";
-    public const string ColorableAttributeName = "colorable";
+
+    public const string EntAttributeName = "ent";
     public const string LinkAttributeName = "link";
     public const string ColorAttributeName = "color";
+    public const string ColorableAttributeName = "colorable";
 
     public bool TryCreateControl(MarkupNode node, [NotNullWhen(true)] out Control? control)
     {
@@ -33,97 +44,70 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
             return false;
         }
 
-        string link;
-        var baseColor = DefaultLinkColor;
-        var clickable = false;
+        TextLinkData data;
 
-        if (node.Attributes.TryGetValue("ent", out var entParam) && entParam.TryGetString(out var entStr))
+        switch (GetLinkKind(node))
         {
-            if (!NetEntity.TryParse(entStr, out var netEntity))
-            {
+            case TextLinkKind.Entity:
+                if (!TryResolveEntityLink(node, out data))
+                {
+                    control = null;
+                    return false;
+                }
+                break;
+
+            case TextLinkKind.Plain:
+                if (!TryResolvePlainLink(node, out data))
+                {
+                    control = null;
+                    return false;
+                }
+                break;
+
+            default:
                 control = null;
                 return false;
-            }
-
-            if (GetEntityLinkColor(node, netEntity) is { } entColor)
-                baseColor = entColor;
-
-            var chat = _entity.System<SharedChatSystem>();
-            clickable = chat.CanClickMessageSender(null);
-
-            link = netEntity.ToString();
         }
-        else if (node.Attributes.TryGetValue("link", out var linkParam) && linkParam.TryGetString(out var linkStr))
-        {
-            link = linkStr;
-            clickable = true;
-        }
-        else
-        {
-            control = null;
-            return false;
-        }
+
+        // Explicit color= always wins, regardless of link kind.
+        var color = ResolveColorOverride(node) ?? data.Color ?? DefaultLinkColor;
 
         var label = new Label { Text = text };
-        label.FontColorOverride = baseColor;
+        label.FontColorOverride = color;
 
-        if (clickable)
+        if (data.Clickable)
         {
             label.MouseFilter = Control.MouseFilterMode.Stop;
             label.DefaultCursorShape = Control.CursorShape.Hand;
             label.OnMouseEntered += _ => label.FontColorOverride = Color.LightSkyBlue;
-            label.OnMouseExited += _ => label.FontColorOverride = baseColor;
-            label.OnKeyBindDown += args => OnKeybindDown(args, link, label);
+            label.OnMouseExited += _ => label.FontColorOverride = color;
+            label.OnKeyBindDown += args => OnKeybindDown(args, data.Link, label);
         }
 
         control = label;
         return true;
     }
 
-    private Color? GetEntityLinkColor(MarkupNode node, NetEntity netEntity)
+    private static TextLinkKind GetLinkKind(MarkupNode node)
     {
-        // Explicit override always wins.
-        if (node.Attributes.TryGetValue(ColorAttributeName, out var colorParam)
-            && colorParam.TryGetString(out var colorStr))
-        {
-            try
-            {
-                return Color.FromHex(colorStr);
-            }
-            catch
-            {
+        if (node.Attributes.ContainsKey(EntAttributeName))
+            return TextLinkKind.Entity;
 
-            }
-        }
+        if (node.Attributes.ContainsKey(LinkAttributeName))
+            return TextLinkKind.Plain;
 
-        if (!node.Attributes.TryGetValue(ColorableAttributeName, out var colorableParam)
-            || !colorableParam.TryGetString(out var colorableStr)
-            || !bool.TryParse(colorableStr, out var colorable)
-            || !colorable)
+        return TextLinkKind.None;
+    }
+
+    private static Color? ResolveColorOverride(MarkupNode node)
+    {
+        if (!node.Attributes.TryGetValue(ColorAttributeName, out var colorParam) ||
+            !colorParam.TryGetString(out var colorStr))
         {
             return null;
         }
 
-        var chatUi = _ui.GetUIController<ChatUIController>();
-
-        if (!chatUi.ChatNameColorsEnabled)
-            return null;
-
-        if (!_entity.TryGetEntity(netEntity, out var uid)
-            || !_entity.EntityExists(uid))
-        {
-            return null;
-        }
-
-        if (!_entity.TryGetComponent<GrammarComponent>(uid, out var grammar)
-            || grammar.ProperNoun != true)
-        {
-            return null;
-        }
-
-        var name = _entity.GetComponent<MetaDataComponent>(uid.Value).EntityName;
-
-        return Color.FromHex(chatUi.GetNameColor(name));
+        return Color.TryFromHex(colorStr, out var color) ? color : null;
     }
 
     private void OnKeybindDown(GUIBoundKeyEventArgs args, string link, Control? control)
@@ -142,7 +126,6 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
 }
 
 public interface ILinkClickHandler
-    {
-        public void HandleClick(string link);
-    }
-
+{
+    public void HandleClick(string link);
+}
