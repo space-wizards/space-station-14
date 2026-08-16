@@ -41,14 +41,6 @@
       ]
     },
     {
-      "name": "glockroach_lazy",
-      "directions": 4
-    },
-    {
-      "name": "glockroach_sleep",
-      "directions": 4
-    },
-    {
       "name": "glockroach_dead",
       "directions": 4
     },
