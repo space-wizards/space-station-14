@@ -9,7 +9,7 @@ public abstract partial class SharedChemMasterSystem
 {
     private void TransferReagents(Entity<ChemMasterComponent> chemMaster, ReagentId id, FixedPoint2 amount, bool fromBuffer)
     {
-        var container = _itemSlotsSystem.GetItemOrNull(chemMaster, SharedChemMaster.InputSlotName);
+        var container = _itemSlotsSystem.GetItemOrNull(chemMaster.Owner, SharedChemMaster.InputSlotName);
         if (container is null ||
             !_solutionContainerSystem.TryGetFitsInDispenser(container.Value, out var containerSoln, out var containerSolution) ||
             !_solutionContainerSystem.TryGetSolution(chemMaster.Owner, SharedChemMaster.BufferSolutionName, out _, out var bufferSolution))
@@ -45,7 +45,7 @@ public abstract partial class SharedChemMasterSystem
         }
         else
         {
-            var container = _itemSlotsSystem.GetItemOrNull(chemMaster, SharedChemMaster.InputSlotName);
+            var container = _itemSlotsSystem.GetItemOrNull(chemMaster.Owner, SharedChemMaster.InputSlotName);
             if (container is not null &&
                 _solutionContainerSystem.TryGetFitsInDispenser(container.Value, out var containerSolution, out _))
             {

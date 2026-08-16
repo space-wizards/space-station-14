@@ -133,7 +133,7 @@ public abstract partial class SharedChemMasterSystem : EntitySystem
     private void OnCreatePillsMessage(Entity<ChemMasterComponent> chemMaster, ref ChemMasterCreatePillsMessage message)
     {
         var user = message.Actor;
-        var maybeContainer = _itemSlotsSystem.GetItemOrNull(chemMaster, SharedChemMaster.OutputSlotName);
+        var maybeContainer = _itemSlotsSystem.GetItemOrNull(chemMaster.Owner, SharedChemMaster.OutputSlotName);
         if (maybeContainer is not { Valid: true } container
             || !TryComp(container, out StorageComponent? storage))
         {
@@ -185,7 +185,7 @@ public abstract partial class SharedChemMasterSystem : EntitySystem
     private void OnOutputToBottleMessage(Entity<ChemMasterComponent> chemMaster, ref ChemMasterOutputToBottleMessage message)
     {
         var user = message.Actor;
-        var maybeContainer = _itemSlotsSystem.GetItemOrNull(chemMaster, SharedChemMaster.OutputSlotName);
+        var maybeContainer = _itemSlotsSystem.GetItemOrNull(chemMaster.Owner, SharedChemMaster.OutputSlotName);
         if (maybeContainer is not { Valid: true } container
             || !_solutionContainerSystem.TryGetSolution(container, SharedChemMaster.BottleSolutionName, out var soln, out var solution))
         {
@@ -250,7 +250,7 @@ public abstract partial class SharedChemMasterSystem : EntitySystem
                 break;
 
             case ChemMasterDrawSource.External:
-                if (_itemSlotsSystem.GetItemOrNull(chemMaster, SharedChemMaster.InputSlotName) is not {} container)
+                if (_itemSlotsSystem.GetItemOrNull(chemMaster.Owner, SharedChemMaster.InputSlotName) is not {} container)
                 {
                     if (user.HasValue)
                         _popupSystem.PopupCursor(Loc.GetString("chem-master-window-no-beaker-text"), user.Value);
