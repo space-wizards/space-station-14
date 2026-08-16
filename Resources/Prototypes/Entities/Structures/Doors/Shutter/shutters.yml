@@ -1,8 +1,8 @@
 - type: entity
-  id: BaseShutter
-  parent: BaseStructure
-  name: shutter
   abstract: true
+  parent: BaseStructure
+  id: BaseShutter
+  name: shutter
   description: One shudders to think about what might be behind this shutter.
   placement:
     mode: SnapgridCenter
@@ -70,18 +70,6 @@
   - type: Airtight
   - type: RadiationBlocker
     resistance: 2
-  - type: Damageable
-    damageModifierSet: StructuralMetallic
-  - type: Injurable
-    damageContainer: StructuralInorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 500
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
   - type: DoorSignalControl
   - type: DeviceNetwork
     deviceNetId: Wireless
@@ -112,7 +100,7 @@
 
 - type: entity
   id: ShuttersNormal
-  parent: [BaseDeltaPressureGlass, BaseShutter]
+  parent: [BaseDeltaPressureGlass, BaseShutter, StructureHealthDoorWeak]
   components:
   - type: Occluder
   - type: Construction
@@ -120,6 +108,19 @@
     node: Shutters
     containers:
     - board
+  - type: Damageable
+    damageModifierSet: SteelMod
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+          params:
+            volume: -4
 
 - type: entity
   id: ShuttersNormalOpen
@@ -138,8 +139,8 @@
     enabled: false
 
 - type: entity
+  parent: ShuttersNormal
   id: ShuttersRadiation
-  parent: [BaseDeltaPressureGlass, BaseShutter]
   name: radiation shutters
   description: These come with extra-radiation-resistant paint.
   components:
@@ -177,7 +178,7 @@
 
 - type: entity
   id: ShuttersWindow
-  parent: [BaseDeltaPressureGlass, BaseShutter]
+  parent: [BaseDeltaPressureGlass, BaseShutter, StructureHealthDoorWeak]
   name: window shutters
   description: The Best (TM) place to see your friends explode!
   components:
@@ -195,6 +196,19 @@
     - board
   - type: RadiationBlocker
     resistance: 1
+  - type: Damageable
+    damageModifierSet: SteelMod
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+          params:
+            volume: -4
 
 - type: entity
   id: ShuttersWindowOpen
@@ -212,8 +226,8 @@
 
 # Frame for construction
 - type: entity
+  parent: [ BaseStructureDynamic, StructureHealthDoorWeak ]
   id: ShuttersFrame
-  parent: BaseStructureDynamic
   name: shutter frame
   description: A frame for constructing a shutter.
   components:
@@ -227,17 +241,18 @@
     - board
   - type: InteractionOutline
   - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 500
+        damage: 100
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+          params:
+            volume: -4
   - type: Physics
     bodyType: Dynamic
   - type: Fixtures

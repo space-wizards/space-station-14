@@ -25,7 +25,7 @@
     damage:
       types:
         Piercing: 10
-        Structural: 30
+        Structural: 8
   - type: Item
     size: Normal
     shape:
@@ -63,7 +63,7 @@
     damage:
       types:
         Piercing: 3
-        Structural: 15
+        Structural: 6
 
 - type: entity
   name: diamond tipped mining drill
@@ -75,17 +75,10 @@
     sprite: Objects/Tools/handdrilldiamond.rsi
     state: handdrill
   - type: MeleeWeapon
-    autoAttack: true
-    angle: 0
-    wideAnimationRotation: -90
-    soundHit:
-      path: "/Audio/Items/drill_hit.ogg"
-    attackRate: 4
     damage:
       types:
-        Piercing: 6
-        Structural: 30
-
+        Piercing: 5
+        Structural: 8
 
 - type: entity
   abstract: true
@@ -165,7 +158,7 @@
       types:
         Blunt: 6
         Slash: 2
-        Structural: 30
+        Structural: 8
   - type: GunRequiresWield
   - type: DisarmMalus
   - type: Prying
@@ -264,4 +257,4 @@
       types:
         Blunt: 2
         Slash: 6
-        Structural: 20
+        Structural: 8
