@@ -146,7 +146,7 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsExternal ]
-  - type: Wires TEMP
+  - type: Wires
     layoutId: AirlockExternal
 
 - type: entity
