@@ -11,7 +11,7 @@ public sealed partial class PowerStateSystem : SharedPowerStateSystem
     [SubscribeLocalEvent]
     private void OnComponentStartup(Entity<PowerStateComponent> ent, ref ComponentStartup args)
     {
-        if(ent.Comp.EnsureApc)
+        if (ent.Comp.EnsureApc)
             EnsureComp<ApcPowerReceiverComponent>(ent);
 
         SetPowerLoad(ent, ent.Comp.IsWorking);
