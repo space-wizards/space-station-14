@@ -1,3 +1,5 @@
+using Content.Client.Stylesheets.SheetletConfigs;
+using Content.Client.Stylesheets.StylesheetDefinitions;
 using Content.Client.UserInterface.Screens;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
@@ -6,19 +8,20 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Sheetlets.Hud;
 
-[CommonSheetlet]
-public sealed class ChatGameScreenSheetlet : Sheetlet<PalettedStylesheet>
+[Sheetlet(typeof(CommonStylesheetDefinition))]
+public sealed class ChatGameScreenSheetlet<T> : ISheetlet<T>
+    where T : IPaletteConfig
 {
-    public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
+    public StyleRule[] GetRules(StylesheetDefinition sheet, T config)
     {
         return
         [
             E()
                 .Class(SeparatedChatGameScreen.StyleClassChatContainer)
-                .Panel(new StyleBoxFlat(sheet.SecondaryPalette.Background)),
+                .Panel(new StyleBoxFlat(config.SecondaryPalette.Background)),
             E<OutputPanel>()
                 .Class(SeparatedChatGameScreen.StyleClassChatOutput)
-                .Panel(new StyleBoxFlat(sheet.SecondaryPalette.BackgroundDark)),
+                .Panel(new StyleBoxFlat(config.SecondaryPalette.BackgroundDark)),
         ];
     }
 }

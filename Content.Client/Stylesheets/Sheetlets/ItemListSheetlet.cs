@@ -1,12 +1,15 @@
-﻿using Robust.Client.Graphics;
+﻿using Content.Client.Stylesheets.SheetletConfigs;
+using Content.Client.Stylesheets.StylesheetDefinitions;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Sheetlets;
 
-[CommonSheetlet]
-public sealed class ItemListSheetlet : Sheetlet<PalettedStylesheet>
+[Sheetlet(typeof(CommonStylesheetDefinition))]
+public sealed class ItemListSheetlet<T> : ISheetlet<T>
+    where T : IPaletteConfig
 {
     private static StyleBoxFlat Box(Color c)
     {
@@ -20,12 +23,12 @@ public sealed class ItemListSheetlet : Sheetlet<PalettedStylesheet>
             };
     }
 
-    public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
+    public StyleRule[] GetRules(StylesheetDefinition sheet, T config)
     {
-        var boxBackground = new StyleBoxFlat { BackgroundColor = sheet.PrimaryPalette.Background };
-        var boxItemBackground = Box(sheet.PrimaryPalette.Background);
-        var boxSelected = Box(sheet.PrimaryPalette.Element);
-        var boxDisabled = Box(sheet.PrimaryPalette.BackgroundDark);
+        var boxBackground = new StyleBoxFlat { BackgroundColor = config.PrimaryPalette.Background };
+        var boxItemBackground = Box(config.PrimaryPalette.Background);
+        var boxSelected = Box(config.PrimaryPalette.Element);
+        var boxDisabled = Box(config.PrimaryPalette.BackgroundDark);
 
         return
         [

@@ -1,4 +1,4 @@
-﻿using Content.Client.Resources;
+using Content.Client.Resources;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
@@ -13,6 +13,7 @@ namespace Content.Client.Stylesheets.Fonts;
 /// <param name="resCache"></param>
 /// <param name="variant"></param>
 [PublicAPI]
+[Obsolete("Use FontFamilyStack instead")]
 public sealed class NotoFontFamilyStack(IResourceCache resCache, string variant = "")
 {
     /// <summary>

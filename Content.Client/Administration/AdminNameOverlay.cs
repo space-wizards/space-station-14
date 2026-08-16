@@ -3,13 +3,13 @@ using System.Linq;
 using System.Numerics;
 using Content.Client.Administration.Systems;
 using Content.Client.Stylesheets;
+using Content.Client.Stylesheets.Fonts;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Ghost.Components;
 using Content.Shared.Mind;
 using Content.Shared.Roles;
 using Robust.Client.Graphics;
-using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
@@ -24,10 +24,11 @@ internal sealed class AdminNameOverlay : Overlay
     private readonly IEyeManager _eyeManager;
     private readonly EntityLookupSystem _entityLookup;
     private readonly IUserInterfaceManager _userInterfaceManager;
+    private readonly IStylesheetManager _stylesheets;
     private readonly SharedRoleSystem _roles;
     private readonly IPrototypeManager _prototypeManager;
-    private readonly Font _font;
-    private readonly Font _fontBold;
+    private Font? _font;
+    private Font? _fontBold;
     private AdminOverlayAntagFormat _overlayFormat;
     private AdminOverlayAntagSymbolStyle _overlaySymbolStyle;
     private bool _overlayPlaytime;
@@ -48,7 +49,7 @@ internal sealed class AdminNameOverlay : Overlay
         AdminSystem system,
         IEntityManager entityManager,
         IEyeManager eyeManager,
-        IResourceCache resourceCache,
+        IStylesheetManager stylesheets,
         EntityLookupSystem entityLookup,
         IUserInterfaceManager userInterfaceManager,
         IConfigurationManager config,
@@ -62,10 +63,11 @@ internal sealed class AdminNameOverlay : Overlay
         _userInterfaceManager = userInterfaceManager;
         _roles = roles;
         _prototypeManager = prototypeManager;
+        _stylesheets = stylesheets;
+
         ZIndex = 200;
         // Setting these to a specific ttf would break the antag symbols
-        _font = resourceCache.NotoStack();
-        _fontBold = resourceCache.NotoStack(variation: "Bold");
+        _stylesheets.StyleChanged += OnStyleChanged;
 
         config.OnValueChanged(CCVars.AdminOverlayAntagFormat, (show) => { _overlayFormat = UpdateOverlayFormat(show); }, true);
         config.OnValueChanged(CCVars.AdminOverlaySymbolStyle, (show) => { _overlaySymbolStyle = UpdateOverlaySymbolStyle(show); }, true);
@@ -75,6 +77,12 @@ internal sealed class AdminNameOverlay : Overlay
         config.OnValueChanged(CCVars.AdminOverlayGhostFadeDistance, (f) => { _ghostFadeDistance = f; }, true);
         config.OnValueChanged(CCVars.AdminOverlayStackMax, (i) => { _overlayStackMax = i; }, true);
         config.OnValueChanged(CCVars.AdminOverlayMergeDistance, (f) => { _overlayMergeDistance = f; }, true);
+    }
+
+    private void OnStyleChanged(IStylesheetAccessor accessor)
+    {
+        _font = accessor.FontSystem.BaseFont.GetFont(10);
+        _fontBold = accessor.FontSystem.BaseFont.GetFont(10, FontKind.Bold);
     }
 
     private AdminOverlayAntagFormat UpdateOverlayFormat(string formatString)
@@ -95,8 +103,16 @@ internal sealed class AdminNameOverlay : Overlay
 
     public override OverlaySpace Space => OverlaySpace.ScreenSpace;
 
+    protected override void DisposeBehavior()
+    {
+        _stylesheets.StyleChanged -= OnStyleChanged;
+    }
+
     protected override void Draw(in OverlayDrawArgs args)
     {
+        if (_font is null || _fontBold is null)
+            return;
+
         var viewport = args.WorldAABB;
         var colorDisconnected = Color.White;
         var uiScale = _userInterfaceManager.RootControl.UIScale;

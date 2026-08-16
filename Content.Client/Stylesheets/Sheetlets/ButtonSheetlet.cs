@@ -1,7 +1,7 @@
 using System.Numerics;
 using Content.Client.Stylesheets.Palette;
 using Content.Client.Stylesheets.SheetletConfigs;
-using Content.Client.Stylesheets.Stylesheets;
+using Content.Client.Stylesheets.StylesheetDefinitions;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -9,43 +9,41 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Sheetlets;
 
-[CommonSheetlet]
-public sealed class ButtonSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet, IButtonConfig, IIconConfig
+[Sheetlet(typeof(CommonStylesheetDefinition))]
+public sealed class ButtonSheetlet<T> : ISheetlet<T>
+    where T : IButtonConfig, IIconConfig, IPaletteConfig, IFontConfig
 {
-    public override StyleRule[] GetRules(T sheet, object config)
+    public StyleRule[] GetRules(StylesheetDefinition sheet, T config)
     {
-        IButtonConfig buttonCfg = sheet;
-        IIconConfig iconCfg = sheet;
-
-        var crossTex = sheet.GetTextureOr(iconCfg.CrossIconPath, NanotrasenStylesheet.TextureRoot);
-        var refreshTex = sheet.GetTextureOr(iconCfg.RefreshIconPath, NanotrasenStylesheet.TextureRoot);
-        var helpTex = sheet.GetTextureOr(iconCfg.HelpIconPath, NanotrasenStylesheet.TextureRoot);
+        var crossTex = sheet.GetTexture(config.CrossIconPath);
+        var refreshTex = sheet.GetTexture(config.RefreshIconPath);
+        var helpTex = sheet.GetTexture(config.HelpIconPath);
 
         var rules = new List<StyleRule>
         {
             // Set textures for the kinds of buttons
             CButton()
-                .Box(StyleBoxHelpers.BaseStyleBox(sheet)),
+                .Box(StyleBoxHelpers.BaseStyleBox(sheet, config)),
             CButton()
                 .Class(StyleClass.ButtonOpenLeft)
-                .Box(StyleBoxHelpers.OpenLeftStyleBox(sheet)),
+                .Box(StyleBoxHelpers.OpenLeftStyleBox(sheet, config)),
             CButton()
                 .Class(StyleClass.ButtonOpenRight)
-                .Box(StyleBoxHelpers.OpenRightStyleBox(sheet)),
+                .Box(StyleBoxHelpers.OpenRightStyleBox(sheet, config)),
             CButton()
                 .Class(StyleClass.ButtonOpenBoth)
-                .Box(StyleBoxHelpers.SquareStyleBox(sheet)),
+                .Box(StyleBoxHelpers.SquareStyleBox(sheet, config)),
             CButton()
                 .Class(StyleClass.ButtonSquare)
-                .Box(StyleBoxHelpers.SquareStyleBox(sheet)),
+                .Box(StyleBoxHelpers.SquareStyleBox(sheet, config)),
             CButton()
                 .Class(StyleClass.ButtonSmall)
-                .Box(StyleBoxHelpers.SmallStyleBox(sheet)),
+                .Box(StyleBoxHelpers.SmallStyleBox(sheet, config)),
             CButton()
                 .Class(StyleClass.ButtonSmall)
                 .ParentOf(E<Label>())
-                .Font(sheet.BaseFont.GetFont(8)),
-            CButton().Class(StyleClass.ButtonBig).ParentOf(E<Label>()).Font(sheet.BaseFont.GetFont(16)),
+                .Font(config.BaseFont.GetFont(8)),
+            CButton().Class(StyleClass.ButtonBig).ParentOf(E<Label>()).Font(config.BaseFont.GetFont(16)),
 
             // Cross Button (Red)
             E<TextureButton>()
@@ -74,11 +72,11 @@ public sealed class ButtonSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet
         };
         // Texture button modulation
         MakeButtonRules<TextureButton>(rules, Palettes.AlphaModulate, null);
-        MakeButtonRules<TextureButton>(rules, sheet.NegativePalette, StyleClass.CrossButtonRed);
+        MakeButtonRules<TextureButton>(rules, config.NegativePalette, StyleClass.CrossButtonRed);
 
-        MakeButtonRules(rules, buttonCfg.ButtonPalette, null);
-        MakeButtonRules(rules, buttonCfg.PositiveButtonPalette, StyleClass.Positive);
-        MakeButtonRules(rules, buttonCfg.NegativeButtonPalette, StyleClass.Negative);
+        MakeButtonRules(rules, config.ButtonPalette, null);
+        MakeButtonRules(rules, config.PositiveButtonPalette, StyleClass.Positive);
+        MakeButtonRules(rules, config.NegativeButtonPalette, StyleClass.Negative);
 
         return rules.ToArray();
     }
@@ -132,11 +130,11 @@ public sealed class ButtonSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet
 public static class StyleBoxHelpers
 {
     // TODO: Figure out a nicer way to store/represent these hardcoded margins. This is icky.
-    public static StyleBoxTexture BaseStyleBox<T>(T sheet) where T : PalettedStylesheet, IButtonConfig
+    public static StyleBoxTexture BaseStyleBox<T>(StylesheetDefinition definition, T config) where T : IButtonConfig
     {
         var baseBox = new StyleBoxTexture
         {
-            Texture = sheet.GetTextureOr(sheet.BaseButtonPath, NanotrasenStylesheet.TextureRoot),
+            Texture = definition.GetTexture(config.BaseButtonPath),
         };
         baseBox.SetPatchMargin(StyleBox.Margin.All, 10);
         baseBox.SetPadding(StyleBox.Margin.All, 1);
@@ -145,11 +143,11 @@ public static class StyleBoxHelpers
         return baseBox;
     }
 
-    public static StyleBoxTexture OpenLeftStyleBox<T>(T sheet) where T : PalettedStylesheet, IButtonConfig
+    public static StyleBoxTexture OpenLeftStyleBox<T>(StylesheetDefinition definition, T config) where T : IButtonConfig
     {
-        var openLeftBox = new StyleBoxTexture(BaseStyleBox(sheet))
+        var openLeftBox = new StyleBoxTexture(BaseStyleBox(definition, config))
         {
-            Texture = new AtlasTexture(sheet.GetTextureOr(sheet.OpenLeftButtonPath, NanotrasenStylesheet.TextureRoot),
+            Texture = new AtlasTexture(definition.GetTexture(config.OpenLeftButtonPath),
                 UIBox2.FromDimensions(new Vector2(10, 0), new Vector2(14, 24))),
         };
         openLeftBox.SetPatchMargin(StyleBox.Margin.Left, 0);
@@ -158,11 +156,12 @@ public static class StyleBoxHelpers
         return openLeftBox;
     }
 
-    public static StyleBoxTexture OpenRightStyleBox<T>(T sheet) where T : PalettedStylesheet, IButtonConfig
+    public static StyleBoxTexture OpenRightStyleBox<T>(StylesheetDefinition definition, T config) where T : IButtonConfig
     {
-        var openRightBox = new StyleBoxTexture(BaseStyleBox(sheet))
+        var openRightBox = new StyleBoxTexture(BaseStyleBox(definition, config))
         {
-            Texture = new AtlasTexture(sheet.GetTextureOr(sheet.OpenRightButtonPath, NanotrasenStylesheet.TextureRoot),
+            Texture = new AtlasTexture(
+                definition.GetTexture(config.OpenRightButtonPath),
                 UIBox2.FromDimensions(new Vector2(0, 0), new Vector2(14, 24))),
         };
         openRightBox.SetPatchMargin(StyleBox.Margin.Right, 0);
@@ -171,11 +170,12 @@ public static class StyleBoxHelpers
         return openRightBox;
     }
 
-    public static StyleBoxTexture SquareStyleBox<T>(T sheet) where T : PalettedStylesheet, IButtonConfig
+    public static StyleBoxTexture SquareStyleBox<T>(StylesheetDefinition definition, T config) where T : IButtonConfig
     {
-        var openBothBox = new StyleBoxTexture(BaseStyleBox(sheet))
+        var openBothBox = new StyleBoxTexture(BaseStyleBox(definition, config))
         {
-            Texture = new AtlasTexture(sheet.GetTextureOr(sheet.OpenBothButtonPath, NanotrasenStylesheet.TextureRoot),
+            Texture = new AtlasTexture(
+                definition.GetTexture(config.OpenBothButtonPath),
                 UIBox2.FromDimensions(new Vector2(10, 0), new Vector2(3, 24))),
         };
         openBothBox.SetPatchMargin(StyleBox.Margin.Horizontal, 0);
@@ -184,11 +184,11 @@ public static class StyleBoxHelpers
         return openBothBox;
     }
 
-    public static StyleBoxTexture SmallStyleBox<T>(T sheet) where T : PalettedStylesheet, IButtonConfig
+    public static StyleBoxTexture SmallStyleBox<T>(StylesheetDefinition definition, T config) where T : IButtonConfig
     {
         var smallBox = new StyleBoxTexture
         {
-            Texture = sheet.GetTextureOr(sheet.SmallButtonPath, NanotrasenStylesheet.TextureRoot),
+            Texture = definition.GetTexture(config.SmallButtonPath),
         };
         return smallBox;
     }

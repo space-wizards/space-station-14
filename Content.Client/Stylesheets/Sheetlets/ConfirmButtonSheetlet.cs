@@ -1,32 +1,35 @@
+using Content.Client.Stylesheets.SheetletConfigs;
+using Content.Client.Stylesheets.StylesheetDefinitions;
+using Content.Client.UserInterface.Controls;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Content.Client.Stylesheets;
-using Content.Client.Stylesheets.Stylesheets;
 using static Content.Client.Stylesheets.StylesheetHelpers;
 
-namespace Content.Client.UserInterface.Controls;
+namespace Content.Client.Stylesheets.Sheetlets;
 
-[CommonSheetlet]
-public sealed class ConfirmButtonSheetlet : Sheetlet<NanotrasenStylesheet>
+[Sheetlet(typeof(CommonStylesheetDefinition))]
+public sealed class ConfirmButtonSheetlet<T> : ISheetlet<T>
+    where T : IPaletteConfig
 {
-    public override StyleRule[] GetRules(NanotrasenStylesheet sheet, object config)
+    public StyleRule[] GetRules(StylesheetDefinition sheet, T config)
     {
-        return [
+        return
+        [
             E<ConfirmButton>()
                 .Pseudo(ConfirmButton.ConfirmPrefix + ContainerButton.StylePseudoClassNormal)
-                .Prop(Control.StylePropertyModulateSelf, sheet.NegativePalette.Element),
+                .Prop(Control.StylePropertyModulateSelf, config.NegativePalette.Element),
 
             E<ConfirmButton>()
                 .Pseudo(ConfirmButton.ConfirmPrefix + ContainerButton.StylePseudoClassHover)
-                .Prop(Control.StylePropertyModulateSelf, sheet.NegativePalette.HoveredElement),
+                .Prop(Control.StylePropertyModulateSelf, config.NegativePalette.HoveredElement),
 
             E<ConfirmButton>()
                 .Pseudo(ConfirmButton.ConfirmPrefix + ContainerButton.StylePseudoClassPressed)
-                .Prop(Control.StylePropertyModulateSelf, sheet.NegativePalette.PressedElement),
+                .Prop(Control.StylePropertyModulateSelf, config.NegativePalette.PressedElement),
 
             E<ConfirmButton>()
                 .Pseudo(ConfirmButton.ConfirmPrefix + ContainerButton.StylePseudoClassDisabled)
-                .Prop(Control.StylePropertyModulateSelf, sheet.NegativePalette.DisabledElement),
+                .Prop(Control.StylePropertyModulateSelf, config.NegativePalette.DisabledElement),
         ];
     }
 }

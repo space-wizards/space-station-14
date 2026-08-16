@@ -1,24 +1,23 @@
 ﻿using Content.Client.Stylesheets.SheetletConfigs;
-using Content.Client.Stylesheets.Stylesheets;
+using Content.Client.Stylesheets.StylesheetDefinitions;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Sheetlets;
 
-[CommonSheetlet]
-public sealed class RadialMenuSheetlet<T> : Sheetlet<T> where T: PalettedStylesheet, IRadialMenuConfig
+[Sheetlet(typeof(CommonStylesheetDefinition))]
+public sealed class RadialMenuSheetlet<T> : ISheetlet<T>
+    where T : IRadialMenuConfig
 {
-    public override StyleRule[] GetRules(T sheet, object config)
+    public StyleRule[] GetRules(StylesheetDefinition sheet, T config)
     {
-        IRadialMenuConfig radialCfg = sheet;
-
-        var btnNormalTex = sheet.GetTextureOr(radialCfg.ButtonNormalPath, NanotrasenStylesheet.TextureRoot);
-        var btnHoverTex = sheet.GetTextureOr(radialCfg.ButtonHoverPath, NanotrasenStylesheet.TextureRoot);
-        var closeNormalTex = sheet.GetTextureOr(radialCfg.CloseNormalPath, NanotrasenStylesheet.TextureRoot);
-        var closeHoverTex = sheet.GetTextureOr(radialCfg.CloseHoverPath, NanotrasenStylesheet.TextureRoot);
-        var backNormalTex = sheet.GetTextureOr(radialCfg.BackNormalPath, NanotrasenStylesheet.TextureRoot);
-        var backHoverTex = sheet.GetTextureOr(radialCfg.BackHoverPath, NanotrasenStylesheet.TextureRoot);
+        var btnNormalTex = sheet.GetTexture(config.ButtonNormalPath);
+        var btnHoverTex = sheet.GetTexture(config.ButtonHoverPath);
+        var closeNormalTex = sheet.GetTexture(config.CloseNormalPath);
+        var closeHoverTex = sheet.GetTexture(config.CloseHoverPath);
+        var backNormalTex = sheet.GetTexture(config.BackNormalPath);
+        var backHoverTex = sheet.GetTexture(config.BackHoverPath);
 
         return
         [

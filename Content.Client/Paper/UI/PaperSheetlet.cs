@@ -1,28 +1,30 @@
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
 using Content.Client.Stylesheets.SheetletConfigs;
-using Content.Client.Stylesheets.Stylesheets;
+using Content.Client.Stylesheets.StylesheetDefinitions;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Utility;
 using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Paper.UI;
 
-[CommonSheetlet]
-public sealed class PaperSheetlet : Sheetlet<NanotrasenStylesheet>
+[Sheetlet(typeof(NanotrasenStylesheetDefinition))]
+public sealed class PaperSheetlet<T> : ISheetlet<T>
+    where T : IWindowConfig
 {
-    public override StyleRule[] GetRules(NanotrasenStylesheet sheet, object config)
+    public StyleRule[] GetRules(StylesheetDefinition sheet, T config)
     {
-        var windowCfg = (IWindowConfig)sheet;
-
-        var paperBackground = ResCache.GetTexture("/Textures/Interface/Paper/paper_background_default.svg.96dpi.png")
+        var paperBackground = sheet
+            .GetTexture(new ResPath("Paper/paper_background_default.svg.96dpi.png"))
             .IntoPatch(StyleBox.Margin.All, 16);
         var paperBox = new StyleBoxTexture
-            { Texture = sheet.GetTexture(windowCfg.TransparentWindowBackgroundBorderedPath) };
+            { Texture = sheet.GetTexture(config.TransparentWindowBackgroundBorderedPath) };
         paperBox.SetPatchMargin(StyleBox.Margin.All, 2);
 
-        var borderedTransparentTex = ResCache.GetTexture("/Textures/Interface/Nano/transparent_window_background_bordered.png");
+        var borderedTransparentTex =
+            sheet.GetTexture(new ResPath("transparent_window_background_bordered.png"));
         var borderedTransparentBackground = new StyleBoxTexture
         {
             Texture = borderedTransparentTex,

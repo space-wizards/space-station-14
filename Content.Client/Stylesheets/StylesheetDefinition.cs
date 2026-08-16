@@ -1,0 +1,118 @@
+﻿using System.Linq;
+using System.Reflection;
+using Robust.Client.ResourceManagement;
+using Robust.Client.UserInterface;
+using Robust.Shared.Reflection;
+using Robust.Shared.Sandboxing;
+using Robust.Shared.Utility;
+using static System.Attribute;
+
+namespace Content.Client.Stylesheets;
+
+// StylesheetDefinition inherits from ISheetletConfig due to the GetRules(this, this) call.
+
+/// <summary>
+/// Style definitions aggregate sheetlets together, provide resource resolution functionality, and create a stylesheet.
+/// </summary>
+public abstract partial class StylesheetDefinition : ISheetletConfig
+{
+    [Dependency] private IResourceCache _resourceCache = default!;
+    [Dependency] private ISandboxHelper _sandboxHelper = default!;
+    [Dependency] private IReflectionManager _reflectionManager = default!;
+    [Dependency] private ILogManager _logManager = default!;
+
+    private readonly ISawmill _sawmill;
+
+    protected StylesheetDefinition()
+    {
+        IoCManager.InjectDependencies(this);
+
+        _sawmill = _logManager.GetSawmill("style");
+    }
+
+    /// <summary>
+    /// Builds the style rules from a specified sheetlet type.
+    /// </summary>
+    /// <param name="sheetletType">Type of the sheetlet to instantiate.</param>
+    /// <returns>Sheetlet's style rules, or nothing if the attribute is not set for the definition type.</returns>
+    /// <exception cref="ArgumentException">Missing Sheetlet attribute.</exception>
+    /// <exception cref="Exception">Sandbox instantiation exceptions.</exception>
+    private StyleRule[] BuildSheetlet(Type sheetletType)
+    {
+        Type sheetletClosedType;
+        try
+        {
+            // This supports both:
+            // 1) "class ButtonSheetlet<T> : ISheetlet<T> where T : ..." (preferred), and
+            // 2) "class ButtonSheetlet : ISheetlet<IButtonConfig"
+            sheetletClosedType = sheetletType.ContainsGenericParameters
+                ? sheetletType.MakeGenericType(GetType())
+                : sheetletType;
+        }
+        catch (ArgumentException)
+        {
+            _sawmill.Error($"{this} does not satisfy the constraints for {sheetletType}.");
+            return [];
+        }
+
+        return _sandboxHelper.CreateInstance(sheetletClosedType) is not ISheetlet sheetlet
+            ? throw new Exception($"Failed to create instance of sheetlet type {sheetletClosedType}.")
+            : sheetlet.GetRules(this, this);
+    }
+
+
+    /// <summary>
+    /// Builds the stylesheet.
+    /// </summary>
+    /// <returns>Stylesheet constructed from all the sheetlets.</returns>
+    public Stylesheet Build()
+    {
+        // Sorts sheetlets by how "close" their attribute types are to the specific definition, letting us create an ordering
+        // so that you can make overriding sheetlets.
+        var sheetletTypes = _reflectionManager.FindTypesWithAttribute<SheetletAttribute>()
+            .Where(t => GetSheetletAttribute(t)!.Definitions.Any(ty => ty.IsInstanceOfType(this)))
+            .OrderByDescending(t => GetSheetletDistance(GetSheetletAttribute(t)!))
+            .ThenBy(t => t.Name)
+            .ToList();
+
+        var rules = new List<StyleRule>();
+
+        foreach (var sheetletType in sheetletTypes)
+        {
+            rules.AddRange(BuildSheetlet(sheetletType));
+        }
+
+        return new Stylesheet(rules.ToArray());
+    }
+
+    /// <summary>
+    /// Gets the sheetlet attribute from the provided member info.
+    /// </summary>
+    /// <param name="memberInfo">Member info</param>
+    /// <returns>Sheetlet attribute, or null</returns>
+    private static SheetletAttribute? GetSheetletAttribute(MemberInfo memberInfo)
+    {
+        return GetCustomAttribute(memberInfo, typeof(SheetletAttribute)) as SheetletAttribute;
+    }
+
+    /// <summary>
+    /// Gets the distance from the attribute's types and the definition type in the inheritance hierarchy.
+    /// </summary>
+    /// <param name="attribute">Sheetlet attribute to measure from.</param>
+    /// <returns>Distance from that sheetlet attribute definition to the actual definition type.</returns>
+    private int GetSheetletDistance(SheetletAttribute attribute)
+    {
+        var dist = 0;
+
+        foreach (var type in GetType().GetClassHierarchy())
+        {
+            if (attribute.Definitions.Contains(type))
+                return dist;
+
+            dist++;
+        }
+
+        // Should be unreachable in code paths as we already check that it is in the hierarchy before getting distance.
+        return int.MaxValue;
+    }
+}

@@ -9,12 +9,14 @@ namespace Content.Client.Actions.UI
     /// <summary>
     /// Tooltip for actions or alerts because they are very similar.
     /// </summary>
-    public sealed class ActionAlertTooltip : PanelContainer
+    public sealed partial class ActionAlertTooltip : PanelContainer
     {
+        [Dependency] private IStylesheetManager _stylesheets = default!;
+        [Dependency] private IGameTiming _gameTiming = default!;
+
         private const float TooltipTextMaxWidth = 350;
 
         private readonly RichTextLabel _cooldownLabel;
-        private readonly IGameTiming _gameTiming;
 
         /// <summary>
         /// Current cooldown displayed in this tooltip. Set to null to show no cooldown.
@@ -23,8 +25,7 @@ namespace Content.Client.Actions.UI
 
         public ActionAlertTooltip(FormattedMessage name, FormattedMessage? desc, string? requires = null)
         {
-            Stylesheet = IoCManager.Resolve<IStylesheetManager>().SheetSystem;
-            _gameTiming = IoCManager.Resolve<IGameTiming>();
+            IoCManager.InjectDependencies(this);
 
             SetOnlyStyleClass(StyleClass.TooltipPanel);
 
@@ -75,6 +76,25 @@ namespace Content.Client.Actions.UI
 
                 vbox.AddChild(requiresLabel);
             }
+        }
+
+        protected override void EnteredTree()
+        {
+            base.EnteredTree();
+
+            _stylesheets.StyleChanged += OnStyleChanged;
+        }
+
+        protected override void ExitedTree()
+        {
+            base.ExitedTree();
+
+            _stylesheets.StyleChanged -= OnStyleChanged;
+        }
+
+        private void OnStyleChanged(IStylesheetAccessor accessor)
+        {
+            Stylesheet = accessor.SheetSystem;
         }
 
         protected override void FrameUpdate(FrameEventArgs args)

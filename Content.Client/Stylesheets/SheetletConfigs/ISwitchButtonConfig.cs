@@ -2,7 +2,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Stylesheets.SheetletConfigs;
 
-public interface ISwitchButtonConfig
+public interface ISwitchButtonConfig : ISheetletConfig
 {
     public ResPath SwitchButtonTrackFillPath { get; }
     public ResPath SwitchButtonTrackOutlinePath { get; }
