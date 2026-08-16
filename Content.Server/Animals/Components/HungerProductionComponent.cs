@@ -1,5 +1,7 @@
 using Content.Server.Animals.Systems;
+using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Nutrition.Prototypes;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Animals.Components;
@@ -35,6 +37,12 @@ public sealed partial class HungerProductionComponent : Component
     /// </summary>
     [DataField]
     public float HungerUsage = 10f;
+
+    /// <summary>
+    /// Satiation type used for production.
+    /// </summary>
+    [DataField]
+    public ProtoId<SatiationTypePrototype> SatiationType = SatiationSystem.Hunger;
 
     /// <summary>
     /// Optional hunger satiation threshold which must remain exceeded after production.
@@ -75,12 +83,13 @@ public enum HungerProductionFailure : byte
 {
     None,
     Dead,
-    Hungry,
+    InsufficientSatiation,
     ProductUnavailable
 }
 
 /// <summary>
-/// Raised on an entity producer after one or more entities have been produced.
+/// Raised when production is attempted.
+/// Handlers set <see cref="Produced"/> when something was successfully produced.
 /// </summary>
 [ByRefEvent]
 public record struct ProductionAttemptEvent(EntityUid Owner)

@@ -26,7 +26,7 @@ public sealed partial class HungerProductionSystem : EntitySystem
             if (!producer.Automatic)
                 continue;
 
-            var owner = GetOwner((uid, producer));
+            var owner = GetProducer((uid, producer));
             if (!producer.AutomaticForPlayers && HasComp<ActorComponent>(owner))
                 continue;
 
@@ -55,7 +55,7 @@ public sealed partial class HungerProductionSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp))
             return false;
 
-        var owner = GetOwner((ent.Owner, ent.Comp));
+        var owner = GetProducer((ent.Owner, ent.Comp));
         if (_mobState.IsDead(owner))
         {
             failure = HungerProductionFailure.Dead;
@@ -63,10 +63,10 @@ public sealed partial class HungerProductionSystem : EntitySystem
         }
 
         if (TryComp(owner, out SatiationComponent? satiation) &&
-            satiation.Has(SatiationSystem.Hunger) &&
+            satiation.Has(ent.Comp.SatiationType) &&
             !HasEnoughHunger(ent.Comp, (owner, satiation)))
         {
-            failure = HungerProductionFailure.Hungry;
+            failure = HungerProductionFailure.InsufficientSatiation;
             return false;
         }
 
@@ -76,7 +76,7 @@ public sealed partial class HungerProductionSystem : EntitySystem
             return false;
 
         if (satiation != null)
-            _satiation.ModifyValue((owner, satiation), SatiationSystem.Hunger, -ent.Comp.HungerUsage);
+            _satiation.ModifyValue((owner, satiation), ent.Comp.SatiationType, -ent.Comp.HungerUsage);
 
         failure = HungerProductionFailure.None;
         return true;
@@ -89,7 +89,7 @@ public sealed partial class HungerProductionSystem : EntitySystem
         if (component.MinimumHungerThreshold is { } threshold &&
             !_satiation.IsValueInRange(
                 satiation,
-                SatiationSystem.Hunger,
+                component.SatiationType,
                 above: threshold,
                 hypotheticalValueDelta: -component.HungerUsage))
         {
@@ -97,10 +97,10 @@ public sealed partial class HungerProductionSystem : EntitySystem
         }
 
         return component.MinimumHunger is not { } minimum ||
-               _satiation.GetValueOrNull(satiation, SatiationSystem.Hunger) >= minimum;
+               _satiation.GetValueOrNull(satiation, component.SatiationType) >= minimum;
     }
 
-    private EntityUid GetOwner(Entity<HungerProductionComponent> ent)
+    private EntityUid GetProducer(Entity<HungerProductionComponent> ent)
     {
         return ent.Comp.Producer switch
         {

@@ -13,7 +13,7 @@ public sealed partial class EntityProducerActionComponent : Component
     public SoundSpecifier ProductionSound = new SoundPathSpecifier("/Audio/Effects/pop.ogg");
 
     [DataField]
-    public LocId TooHungryPopup = "entity-producer-action-popup-too-hungry";
+    public LocId InsufficientSatiationPopup = "entity-producer-action-popup-too-hungry";
 
     [DataField]
     public LocId UserPopup = "entity-producer-action-popup-user";
