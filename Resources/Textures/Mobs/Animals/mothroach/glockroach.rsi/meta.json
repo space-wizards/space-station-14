@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Based on a sprite taken from fulpstation at https://github.com/fulpstation/fulpstation/commit/edb232b692ec9f356ec554ea1971da552b9bc447 and the 'mothroach-moving' state was made by MilenVolf. what_stone(discord) used the mk58 sprite to make the glockroach state, ketufaispikinut modified the other states to conform",
+  "copyright": "Based on a sprite taken from fulpstation at https://github.com/fulpstation/fulpstation/commit/edb232b692ec9f356ec554ea1971da552b9bc447 and the 'mothroach-moving' state was made by MilenVolf. what_stone(discord) used the mk58 sprite to make the tactical mothroach state, ketufaispikinut modified the other states to conform",
   "size": {
     "x": 32,
     "y": 32
@@ -11,11 +11,11 @@
       "name": "icon"
     },
     {
-      "name": "glockroach",
+      "name": "tacticalmothroach",
       "directions": 4
     },
     {
-      "name": "glockroach-moving",
+      "name": "tacticalmothroach-moving",
       "directions": 4,
       "delays": [
         [
@@ -41,7 +41,7 @@
       ]
     },
     {
-      "name": "glockroach_dead",
+      "name": "tacticalmothroach_dead",
       "directions": 4
     },
     {

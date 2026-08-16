@@ -487,10 +487,9 @@
     - SimpleHostile
 
 - type: entity
-  name: glockroach
+  name: tactical mothroach
   parent: [MobMothroach, BaseSecurityContraband] # it is contraband because it has a gun!
-  id: MobGlockroachMoth
-  suffix: Regular
+  id: MobTacticalMothroach
   description: For some reason, this mothroach was trained for warfare under a special Nanotrasen mercenary program.
   components:
   - type: GhostRole
@@ -511,46 +510,46 @@
   - type: Loadout
     prototypes: [ GlockroachGear ]
   - type: InteractionPopup
-    interactSuccessString: petting-success-glockroach
-    interactFailureString: petting-failure-glockroach
+    interactSuccessString: petting-success-tactical-mothroach
+    interactFailureString: petting-failure-tactical-mothroach
   - type: Sprite
-    sprite: Mobs/Animals/mothroach/glockroach.rsi
+    sprite: Mobs/Animals/mothroach/tacticalmothroach.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: glockroach
   - type: SpriteMovement
     movementLayers:
       movement:
-        state: glockroach-moving
+        state: tacticalmothroach-moving
     noMovementLayers:
       movement:
-        state: glockroach
+        state: tacticalmothroach
   - type: Item
     size: Normal
   - type: Clothing
     quickEquip: false
-    sprite: Mobs/Animals/mothroach/glockroach.rsi
+    sprite: Mobs/Animals/mothroach/tacticalmothroach.rsi
     equippedPrefix: 0
     slots:
     - HEAD
   - type: DamageStateVisuals
     states:
       Alive:
-        Base: glockroach
+        Base: tacticalmothroach
       Critical:
-        Base: glockroach_dead
+        Base: tacticalmothroach_dead
       Dead:
-        Base: glockroach_dead
+        Base: tacticalmothroach_dead
 
 - type: startingGear
-  id: GlockroachGear
+  id: TacticalMothroachGear
   inhand:
-   - WeaponPistolGlockroach
+   - WeaponPistolTacticalMothroach
 
 - type: entity
-  name: glockroach mk 58 # I lied. This isn't a glock 17 or whatever. I actually do not know how IRL guns work at all so a mk58 is what this mothroach gets.
+  name: tactical mothroach pistol
   parent: BaseItem
-  id: WeaponPistolGlockroach
+  id: WeaponPistolTacticalMothroach
   description: Oh no.
   components:
   - type: Sprite
