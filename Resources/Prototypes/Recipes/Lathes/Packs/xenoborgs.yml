@@ -25,6 +25,7 @@
   - XenoborgModuleNaniteGunRecipe
   # heavy xenoborg
   - XenoborgModuleHeavyLaserRecipe
+  - XenoborgModuleGuidedMissileLauncherRecipe
   - XenoborgModuleBurstFireLaserRecipe
   - XenoborgModuleHeavyRadioactiveRecipe
   # scout xenoborg

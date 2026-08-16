@@ -1742,10 +1742,20 @@
   name: guided missile launcher xenoborg module
   description: Module with guided missile launcher and a range finder to set targets.
   components:
+  - type: Tag
+    tags:
+    - XenoborgModuleHeavy
+    - XenoborgModuleSecondaryWeapon
+    - XenoborgModuleWithSimpleOverlay
   - type: Sprite
     layers:
     - state: xenoborg_heavy
     - state: icon-xenoborg-guided-missile
+  - type: BorgModuleWhitelist
+    moduleBlacklist:
+    tags:
+      - XenoborgModuleSecondaryWeapon
+      - XenoborgModuleWithSimpleOverlay
   - type: ComponentBorgModule
     components:
     - type: SimpleSpriteOverlay
