@@ -217,7 +217,7 @@ namespace Content.Client.Chat.UI
                 OutlineColorOverride = TextOutline.Default.Color,
             };
 
-            label.SetMessage(FormatSpeech(message.WrappedMessage, fontColor));
+            label.SetMessage(FormatSpeech(message.WrappedMessage, fontColor), tagsAllowed: null);
 
             var panel = new PanelContainer
             {
@@ -248,7 +248,7 @@ namespace Content.Client.Chat.UI
                     OutlineColorOverride = TextOutline.Default.Color,
                 };
 
-                label.SetMessage(ExtractAndFormatSpeechSubstring(message, "BubbleContent", fontColor));
+                label.SetMessage(ExtractAndFormatSpeechSubstring(message, "BubbleContent", fontColor), tagsAllowed: null);
 
                 var unfanciedPanel = new PanelContainer
                 {
