@@ -31,7 +31,7 @@ public sealed partial class CCVars
         CVarDef.Create("anomaly.generation_grid_bounds_scale", 0.6f, CVar.SERVERONLY);
 
     /// <summary>
-    ///     Wether the server should mark people as AFK automatically at all. If disabled, AFK checks are admin-only.
+    ///     If enabled, the server automatically triggers an AFK check popup when a player's inactivity exceeds afk.time (or admin.afk_time for admins)
     /// </summary>
     public static readonly CVarDef<bool> AfkAutomaticChecks =
         CVarDef.Create("afk.automatic_checks", true, CVar.SERVERONLY);
