@@ -285,10 +285,9 @@ public sealed partial class ChatUIController : UIController
             return;
 
         _speechBubbleOverlay =
-                new SpeechBubbleOverlay(_lookup,
+                new SpeechBubbleOverlay(
                     _sprite,
                     _transform,
-                    _examine,
                     _spriteQuery,
                     _xformQuery);
 
