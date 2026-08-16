@@ -6,13 +6,13 @@
     <BoxContainer Orientation="Horizontal">
         <BoxContainer Orientation="Vertical" Margin="8" MinWidth="130">
             <BoxContainer Orientation="Vertical">
-                <PanelContainer StyleClasses="PanelDeep" MinHeight="32" Margin="0 0 0 4">
+                <PanelContainer StyleClasses="PanelDark" MinHeight="32" Margin="0 0 0 4">
                     <Label Text="{Loc grinder-menu-auto-label}" StyleClasses="LabelHeading" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10 0" />
                 </PanelContainer>
                 <Button Name="AutoModeButton" Text="{Loc grinder-menu-auto-button-off}" TextAlign="Center" MinSize="64 48" />
             </BoxContainer>
             <BoxContainer Orientation="Vertical" Margin="0 4 0 0">
-                <PanelContainer StyleClasses="PanelDeep" MinHeight="32" Margin="0 0 0 4">
+                <PanelContainer StyleClasses="PanelDark" MinHeight="32" Margin="0 0 0 4">
                     <Label Text="{Loc grinder-menu-manual-label}" StyleClasses="LabelHeading" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10 0" />
                 </PanelContainer>
                 <Button Name="GrindButton" Text="{Loc grinder-menu-grind-button}" TextAlign="Center" MinSize="64 48" Margin="0 0 0 4" />
@@ -20,10 +20,10 @@
             </BoxContainer>
             <Control VerticalExpand="True" />
             <BoxContainer Orientation="Vertical" Margin="0 4 0 0">
-                <PanelContainer StyleClasses="PanelDeep" MinHeight="32" Margin="0 0 0 4">
+                <PanelContainer StyleClasses="PanelDark" MinHeight="32" Margin="0 0 0 4">
                     <Label Text="{Loc grinder-menu-solution}" StyleClasses="LabelHeading" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10 0" />
                 </PanelContainer>
-                <PanelContainer StyleClasses="PanelInsetDeep" MinHeight="46">
+                <PanelContainer StyleClasses="PanelInsetDark" MinHeight="46">
                     <BoxContainer Orientation="Vertical" Margin="10 4" VerticalAlignment="Center">
                         <Label Name="BeakerNameLabel" Text="???" HorizontalAlignment="Center" />
                         <Label Name="BeakerVolumeLabel" Text="0/0" StyleClasses="LabelWeak" HorizontalAlignment="Center" />
