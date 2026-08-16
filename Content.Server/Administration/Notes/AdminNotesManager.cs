@@ -182,7 +182,7 @@ public sealed partial class AdminNotesManager : IAdminNotesManager, IPostInjectI
             var notifSound = new SoundPathSpecifier(_config.GetCVar(CCVars.AHelpSound));
 
             _chat.DispatchServerMessage(session, notifMessage);
-            audio?.PlayGlobal(notifSound, Filter.SinglePlayer(session), false, AudioParams.Default.AddVolume(-7f));
+            audio?.PlayGlobal(notifSound, session, AudioParams.Default.AddVolume(-7f));
         }
     }
 
