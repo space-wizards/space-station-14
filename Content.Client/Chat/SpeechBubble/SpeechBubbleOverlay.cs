@@ -4,6 +4,7 @@ using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Chat.SpeechBubble;
 
@@ -36,6 +37,19 @@ public sealed partial class SpeechBubbleOverlay : Overlay
         IoCManager.InjectDependencies(this);
 
         _chatUIController = _uiManager.GetUIController<ChatUIController>();
+    }
+
+    protected override void FrameUpdate(FrameEventArgs args)
+    {
+        base.FrameUpdate(args);
+
+        foreach (var (ent, controls) in _chatUIController.NuActiveSpeechBubbles)
+        {
+            foreach (var control in controls)
+            {
+                control.Update(args);
+            }
+        }
     }
 
     protected override void Draw(in OverlayDrawArgs args)

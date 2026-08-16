@@ -520,7 +520,6 @@ public sealed partial class ChatUIController : UIController
         }
 
         existing.Add(bubble);
-        _speechBubbleRoot.AddChild(bubble);
 
         if (existing.Count > SpeechBubbleCap)
         {

@@ -63,11 +63,12 @@ public sealed partial class NuSpeechBubble : Control
         OverlaySetup();
     }
 
-
-    protected override void FrameUpdate(FrameEventArgs args)
+    /// <summary>
+    /// These are typically drawn in the overlay, so regular FrameUpdate doesn't apply.
+    /// This is called from the overlay.
+    /// </summary>
+    public void Update(FrameEventArgs args)
     {
-        base.FrameUpdate(args);
-
         var timeLeft = (float)(_deathTime - _timing.RealTime).TotalSeconds;
 
         if (_entityManager.Deleted(_senderEntity) || timeLeft <= 0)
@@ -104,6 +105,13 @@ public sealed partial class NuSpeechBubble : Control
             // Make opaque otherwise, because it might have been hidden before
             Modulate = Color.White;
         }
+    }
+
+    protected override void FrameUpdate(FrameEventArgs args)
+    {
+        base.FrameUpdate(args);
+        //If for some reason this isn't drawn in an overlay
+        Update(args);
     }
 
     //TODO: Replace
