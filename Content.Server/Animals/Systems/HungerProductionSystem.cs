@@ -102,7 +102,7 @@ public sealed partial class HungerProductionSystem : EntitySystem
 
     private EntityUid GetOwner(Entity<HungerProductionComponent> ent)
     {
-        return ent.Comp.OwnerEntity switch
+        return ent.Comp.Producer switch
         {
             HungerProductionOwner.Parent => Transform(ent).ParentUid,
             _ => ent.Owner

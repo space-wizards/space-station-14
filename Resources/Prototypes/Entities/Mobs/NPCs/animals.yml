@@ -983,7 +983,7 @@
       - ReagentId: Milk
         Quantity: 30
   - type: HungerProduction
-    owner: Parent
+    producer: Parent
     delay: 30
     minimumHungerThreshold: Okay
   # TODO: toxins from bloodstream !?
@@ -1180,7 +1180,7 @@
   - type: Solution
     id: wool
   - type: HungerProduction
-    owner: Parent
+    producer: Parent
     minimumHungerThreshold: Okay
   - type: SolutionProducer
     generated:

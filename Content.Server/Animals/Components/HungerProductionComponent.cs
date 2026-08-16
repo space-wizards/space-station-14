@@ -15,8 +15,8 @@ public sealed partial class HungerProductionComponent : Component
     /// <summary>
     /// Entity whose life state and hunger are used for production.
     /// </summary>
-    [DataField("owner")]
-    public HungerProductionOwner OwnerEntity = HungerProductionOwner.Self;
+    [DataField]
+    public HungerProductionOwner Producer = HungerProductionOwner.Self;
 
     /// <summary>
     /// Minimum delay between automatic production attempts.
