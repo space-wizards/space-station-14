@@ -51,7 +51,7 @@
       machine_board: !type:Container
       machine_parts: !type:Container
   - type: Damageable
-    damageModifierSet: StrongMetallic
+    damageModifierSet: GlassMod
   - type: Destructible
     thresholds:
     - trigger:

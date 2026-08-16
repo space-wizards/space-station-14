@@ -51,19 +51,19 @@
     impactEffect: BulletImpactEffectNanite
     damage:
       types:
-        Piercing: 9
-        Poison: 3
+        Piercing: 10
+        Poison: 5
     soundHit:
       collection: NaniteBulletImpact
   - type: ComplexProjectileDamage
     damageOptions:
     - damage:
         types:
-          Blunt: -10
-          Piercing: -10
-          Slash: -10
-          Heat: -10
-          Shock: -10
+          Blunt: -20
+          Piercing: -20
+          Slash: -20
+          Heat: -20
+          Shock: -20
       whitelist:
         components:
         - BorgChassis

@@ -3404,7 +3404,7 @@
       types:
         Slash: 6
         Piercing: 6
-        Structural: 15
+        Structural: 6 # Secondary breaching
 
 - type: entity
   name: space cat
