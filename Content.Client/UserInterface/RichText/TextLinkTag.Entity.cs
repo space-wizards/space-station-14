@@ -7,13 +7,13 @@ namespace Content.Client.UserInterface.RichText;
 
 public sealed partial class TextLinkTag
 {
-    // ent="<NetEntity>" resolver. Clickable only if the local viewer is
-    // currently allowed to click chat names (e.g. ghosts).
-    private bool TryResolveEntityLink(MarkupNode node, out TextLinkData data)
+    // entity="<NetEntity>" resolver. Clickable only if the local viewer is
+    // currently allowed to click chat names.
+    private bool TryResolveEntityLink(MarkupNode node, out LinkData data)
     {
         data = default;
 
-        if (!node.Attributes.TryGetValue(EntAttributeName, out var entParam) ||
+        if (!node.Attributes.TryGetValue(EntityAttributeName, out var entParam) ||
             !entParam.TryGetString(out var entStr))
         {
             return false;
@@ -26,16 +26,16 @@ public sealed partial class TextLinkTag
         var clickable = chat.CanClickMessageSender(null);
         var color = GetEntityNameColor(node, netEntity);
 
-        data = new TextLinkData(netEntity.ToString(), color, clickable);
+        data = new LinkData(netEntity.ToString(), color, clickable);
         return true;
     }
 
     private Color? GetEntityNameColor(MarkupNode node, NetEntity netEntity)
     {
-        if (!node.Attributes.TryGetValue(ColorableAttributeName, out var colorableParam) ||
-            !colorableParam.TryGetString(out var colorableStr) ||
-            !bool.TryParse(colorableStr, out var colorable) ||
-            !colorable)
+        if (!node.Attributes.TryGetValue(UseEntityNameColorAttributeName, out var useNameColorParam) ||
+            !useNameColorParam.TryGetString(out var useNameColorStr) ||
+            !bool.TryParse(useNameColorStr, out var useNameColor) ||
+            !useNameColor)
         {
             return null;
         }

@@ -11,20 +11,23 @@ using Content.Client.UserInterface.Systems.Chat;
 using Robust.Shared.GameObjects.Components.Localization;
 
 namespace Content.Client.UserInterface.RichText;
-
-/// <summary>Resolved link data from a per-kind resolver.</summary>
-public readonly record struct TextLinkData(string Link, Color? Color, bool Clickable);
+// <summary> resolved LinkData</summary>
+public readonly record struct LinkData(string Link, Color? Color, bool Clickable);
 
 /// <summary>Which attribute a [textlink] node carries, i.e. which resolver handles it.</summary>
 internal enum TextLinkKind
 {
     None,
-    Entity, // ent="<NetEntity>" — clickable chat name
+    Entity, // entity="<NetEntity>" — clickable chat name
     Plain,  // link="<string>" — always-clickable plain link (e.g. guidebook)
 }
 
 /// <summary>
-/// Covers plain links and clickable chat entity names, resolves via link= and ent=
+/// Markup tag handler for <c>[textlink="LinkText"]</c> nodes. Renders a link
+/// <see cref="Label"/> in rich text, covering two types:
+/// plain links (<c>link=</c>) and entity links (<c>entity=</c>).
+/// optional <c>color=</c> and <c>entnamecolor=</c> parameters
+/// allow setting a color override and opting into using entity name colors for entity links
 /// </summary>
 [UsedImplicitly]
 public sealed partial class TextLinkTag : IMarkupTagHandler
@@ -36,10 +39,10 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
 
     public string Name => "textlink";
 
-    private const string EntAttributeName = "ent";
+    private const string EntityAttributeName = "entity";
     private const string LinkAttributeName = "link";
-    private const string ColorOverrideAttributeName = "color"; //
-    private const string ColorableAttributeName = "colorable"; // entity links only: opt into per-entity name coloring
+    private const string ColorOverrideAttributeName = "color"; // LinkColor override
+    private const string UseEntityNameColorAttributeName = "entnamecolor"; // entity links only: opt into per-entity name coloring
 
     public bool TryCreateControl(MarkupNode node, [NotNullWhen(true)] out Control? control)
     {
@@ -49,7 +52,7 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
             return false;
         }
 
-        TextLinkData data;
+        LinkData data;
 
         switch (GetLinkKind(node))
         {
@@ -75,17 +78,17 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
         }
 
         // color= > resolver-supplied color > default
-        var color = ResolveColorOverride(node) ?? data.Color ?? DefaultLinkColor;
+        var linkColor = ResolveColorOverride(node) ?? data.Color ?? DefaultLinkColor;
 
         var label = new Label { Text = text };
-        label.FontColorOverride = color;
+        label.FontColorOverride = linkColor;
 
         if (data.Clickable)
         {
             label.MouseFilter = Control.MouseFilterMode.Stop;
             label.DefaultCursorShape = Control.CursorShape.Hand;
             label.OnMouseEntered += _ => label.FontColorOverride = Color.LightSkyBlue;
-            label.OnMouseExited += _ => label.FontColorOverride = color;
+            label.OnMouseExited += _ => label.FontColorOverride = linkColor;
             label.OnKeyBindDown += args => OnKeybindDown(args, data.Link, label);
         }
 
@@ -95,7 +98,7 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
 
     private static TextLinkKind GetLinkKind(MarkupNode node)
     {
-        if (node.Attributes.ContainsKey(EntAttributeName))
+        if (node.Attributes.ContainsKey(EntityAttributeName))
             return TextLinkKind.Entity;
 
         if (node.Attributes.ContainsKey(LinkAttributeName))
