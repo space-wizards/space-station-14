@@ -16,6 +16,9 @@ public sealed partial class SatiationProductionSystem : EntitySystem
     [Dependency] private MobStateSystem _mobState = default!;
     [Dependency] private IRobustRandom _random = default!;
 
+    [Dependency] private EntityQuery<ActorComponent> _actorQuery;
+    [Dependency] private EntityQuery<SatiationComponent> _satiationQuery;
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -26,8 +29,8 @@ public sealed partial class SatiationProductionSystem : EntitySystem
             if (!producer.Automatic)
                 continue;
 
-            var owner = GetProducer((uid, producer));
-            if (!producer.AutomaticForPlayers && HasComp<ActorComponent>(owner))
+            var producerUid = GetProducer((uid, producer));
+            if (!producer.AutomaticForPlayers && _actorQuery.HasComp(producerUid))
                 continue;
 
             if (_timing.CurTime < producer.NextProductionTime)
@@ -62,7 +65,7 @@ public sealed partial class SatiationProductionSystem : EntitySystem
             return false;
         }
 
-        if (TryComp(owner, out SatiationComponent? satiation) &&
+        if (_satiationQuery.TryComp(owner, out var satiation) &&
             satiation.Has(ent.Comp.SatiationType) &&
             !HasEnoughSatiation(ent.Comp, (owner, satiation)))
         {

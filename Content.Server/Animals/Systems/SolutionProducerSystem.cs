@@ -10,10 +10,12 @@ public sealed partial class SolutionProducerSystem : EntitySystem
 {
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
 
+    [Dependency] private EntityQuery<SolutionComponent> _solutionQuery;
+
     [SubscribeLocalEvent]
     private void OnProduce(Entity<SolutionProducerComponent> ent, ref ProductionAttemptEvent args)
     {
-        if (!TryComp(ent, out SolutionComponent? solution))
+        if (!_solutionQuery.TryComp(ent, out var solution))
             return;
 
         var amount = FixedPoint2.Min(solution.Solution.AvailableVolume, ent.Comp.Generated.Volume);

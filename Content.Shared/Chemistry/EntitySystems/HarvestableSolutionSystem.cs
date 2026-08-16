@@ -15,12 +15,14 @@ public sealed partial class HarvestableSolutionSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
 
+    [Dependency] private EntityQuery<RefillableSolutionComponent> _refillableQuery;
+
     [SubscribeLocalEvent]
     private void AddHarvestVerb(Entity<HarvestableSolutionComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
         if (args.Using is not { } container ||
             !args.CanInteract ||
-            !HasComp<RefillableSolutionComponent>(container))
+            !_refillableQuery.HasComp(container))
         {
             return;
         }
