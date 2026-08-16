@@ -7,7 +7,7 @@ using Robust.Shared.Random;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Spawn)]
-public sealed partial class spawnnexttoCommand : LocalizedEntityCommands
+public sealed partial class SpawnNextToCommand : LocalizedEntityCommands
 {
     [Dependency] private IPrototypeManager _prototype = default!;
 
