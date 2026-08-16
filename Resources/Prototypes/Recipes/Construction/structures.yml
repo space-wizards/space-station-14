@@ -541,10 +541,6 @@
   graph: Windoor
   targetNode: windoor
 
-- type: construction
-  parent: Windoor
-  id: SecureWindoor
-  targetNode: windoorSecure
 # endregion Windoors
 
 # region Lighting

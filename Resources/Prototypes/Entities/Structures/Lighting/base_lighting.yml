@@ -35,10 +35,6 @@
     radius: 10
     softness: 1
     offset: "0, 0.495"
-  - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
-    damageContainer: Inorganic
   - type: RCDDeconstructable
     cost: 4
     delay: 2
@@ -56,23 +52,29 @@
         - None
         layer:
         - TabletopMachineLayer
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 50
-      behaviors:
-      - !type:EmptyAllContainersBehaviour
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: GlassBreak
   - type: PlacementReplacement
     key: lights
 
 - type: entity
-  parent: BaseWallLight
+  abstract: true
+  parent: StructureHealthMachineFlimsy
+  id: BaseLightHousingDestructible
+  components:
+  - type: Damageable
+    damageModifierSet: SteelMod
+  - type: Destructible
+    thresholds:
+    - trigger: &DamageMachineFlimsy
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:EmptyAllContainersBehaviour
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+
+- type: entity
+  parent: [ BaseWallLight, BaseLightHousingDestructible ]
   id: AlwaysPoweredWallLight
   name: light
   suffix: Always powered
@@ -91,9 +93,7 @@
       shader: unshaded
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 50
+    - trigger: *DamageMachineFlimsy
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -253,7 +253,7 @@
 
 #Small lights
 - type: entity
-  parent: BaseWallLight
+  parent: [ BaseWallLight, BaseLightHousingDestructible ]
   id: SmallLight
   name: small light
   suffix: Always Powered
@@ -286,9 +286,7 @@
           - TabletopMachineLayer
     - type: Destructible
       thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 50
+      - trigger: *DamageMachineFlimsy
         behaviors:
         - !type:SpawnEntitiesBehavior
           spawn:
@@ -417,7 +415,7 @@
 
 #Emergency Lights
 - type: entity
-  parent: BaseWallLight
+  parent: [ BaseWallLight, BaseLightHousingDestructible ]
   id: EmergencyLight
   name: emergency light
   description: A small light with an internal battery that turns on as soon as it stops receiving any power. Nanotrasen technology allows it to adapt its color to alert crew to the conditions of the station.
@@ -461,9 +459,7 @@
     node: emergencyLight
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 50
+    - trigger: *DamageMachineFlimsy
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
