@@ -508,7 +508,7 @@
     canBeStripped: false
     showInHands: false
   - type: Loadout
-    prototypes: [ GlockroachGear ]
+    prototypes: [ TacticalMothroachGear ]
   - type: InteractionPopup
     interactSuccessString: petting-success-tactical-mothroach
     interactFailureString: petting-failure-tactical-mothroach
