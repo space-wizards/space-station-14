@@ -12,10 +12,10 @@ namespace Content.Shared.Animation;
 public sealed partial class SinWaveAnimationComponent : Component
 {
     /// <summary>
-    /// Length of the animation in seconds.
+    /// Length of the animation.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float AnimationLength = 1;
+    public TimeSpan AnimationLength = TimeSpan.FromSeconds(1);
 
     /// <summary>
     /// How many key frames should there in the animation?
@@ -66,7 +66,7 @@ public sealed partial class SinWaveAnimationComponent : Component
     public SignWaveDefinition? YWave;
 
     [ViewVariables(VVAccess.ReadWrite)]
-    public float LastTime = 0;
+    public TimeSpan LastTime = TimeSpan.Zero;
 }
 
 /// <summary>

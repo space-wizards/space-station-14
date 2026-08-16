@@ -51,11 +51,11 @@ public sealed partial class SinWaveAnimationSystem : EntitySystem
 
     private Animation GetAnimation(SinWaveAnimationComponent sinComp, SpriteComponent sprite)
     {
-        if (sinComp is { LastTime: 0, XWave.PhaseOffset: null })
-            sinComp.LastTime += _random.NextFloat(0, (float)Math.Tau / sinComp.XWave.Value.Frequency);
+        if (sinComp is { LastTime.TotalSeconds: 0, XWave.PhaseOffset: null })
+            sinComp.LastTime += TimeSpan.FromSeconds(_random.NextFloat(0, (float)Math.Tau / sinComp.XWave.Value.Frequency));
 
-        if (sinComp is { LastTime: 0, YWave.PhaseOffset: null })
-            sinComp.LastTime += _random.NextFloat(0, (float)Math.Tau / sinComp.YWave.Value.Frequency);
+        if (sinComp is { LastTime.TotalSeconds: 0, YWave.PhaseOffset: null })
+            sinComp.LastTime += TimeSpan.FromSeconds(_random.NextFloat(0, (float)Math.Tau / sinComp.YWave.Value.Frequency));
 
         var rotationKeyFrames = new List<AnimationTrackProperty.KeyFrame>();
         var offsetKeyFrames = new List<AnimationTrackProperty.KeyFrame>();
@@ -74,7 +74,7 @@ public sealed partial class SinWaveAnimationSystem : EntitySystem
 
             if (sinComp.XWave != null)
             {
-                var a = sinComp.XWave.Value.Frequency * (currTime + sinComp.LastTime);
+                var a = sinComp.XWave.Value.Frequency * (currTime.TotalSeconds + sinComp.LastTime.TotalSeconds);
                 offset.X = (float) (sinComp.XWave.Value.Amplitude * Math.Sin(a));
 
                 var angle = new Angle(Math.Atan(Math.Cos(a)));
@@ -83,7 +83,7 @@ public sealed partial class SinWaveAnimationSystem : EntitySystem
 
             if (sinComp.YWave != null)
             {
-                var a = sinComp.YWave.Value.Frequency * (currTime + sinComp.LastTime);
+                var a = sinComp.YWave.Value.Frequency * (currTime.TotalSeconds + sinComp.LastTime.TotalSeconds);
                 offset.Y = (float) (sinComp.YWave.Value.Amplitude * Math.Cos(a));
 
                 // TODO: I think this is slightly off
@@ -91,15 +91,15 @@ public sealed partial class SinWaveAnimationSystem : EntitySystem
                 rotation += angle;
             }
 
-            rotationKeyFrames.Add(new AnimationTrackProperty.KeyFrame(rotation, stepValue));
-            offsetKeyFrames.Add(new AnimationTrackProperty.KeyFrame(offset, stepValue));
+            rotationKeyFrames.Add(new AnimationTrackProperty.KeyFrame(rotation, (float) stepValue.TotalSeconds));
+            offsetKeyFrames.Add(new AnimationTrackProperty.KeyFrame(offset, (float) stepValue.TotalSeconds));
         }
 
         sinComp.LastTime += sinComp.AnimationLength;
 
         return new Animation
         {
-            Length = TimeSpan.FromSeconds(sinComp.AnimationLength),
+            Length = sinComp.AnimationLength,
             AnimationTracks =
             {
                 new AnimationTrackComponentProperty()
