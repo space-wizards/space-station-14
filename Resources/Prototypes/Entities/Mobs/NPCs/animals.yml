@@ -506,40 +506,13 @@
       Hand:
         location: Left
     canBeStripped: false
-    showInHands: false
   - type: Loadout
     prototypes: [ TacticalMothroachGear ]
   - type: InteractionPopup
     interactSuccessString: petting-success-tactical-mothroach
     interactFailureString: petting-failure-tactical-mothroach
-  - type: Sprite
-    sprite: Mobs/Animals/mothroach/tacticalmothroach.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
-      state: tacticalmothroach
-  - type: SpriteMovement
-    movementLayers:
-      movement:
-        state: tacticalmothroach-moving
-    noMovementLayers:
-      movement:
-        state: tacticalmothroach
   - type: Item
     size: Normal
-  - type: Clothing
-    quickEquip: false
-    sprite: Mobs/Animals/mothroach/tacticalmothroach.rsi
-    equippedPrefix: 0
-    slots:
-    - HEAD
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: tacticalmothroach
-      Critical:
-        Base: tacticalmothroach_dead
-      Dead:
-        Base: tacticalmothroach_dead
 
 - type: startingGear
   id: TacticalMothroachGear
