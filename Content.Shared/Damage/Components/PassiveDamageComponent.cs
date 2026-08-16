@@ -14,22 +14,22 @@ public sealed partial class PassiveDamageComponent : Component
     /// <summary>
     /// The entitys' states that passive damage will apply in
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public List<MobState> AllowedStates = new();
 
     /// <summary>
     /// Damage / Healing per interval dealt to the entity every interval
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public DamageSpecifier Damage = new();
 
     /// <summary>
     /// Delay between damage events in seconds
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public float Interval = 1f;
 
-    [DataField("nextDamage", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("nextDamage", customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField]
     public TimeSpan NextDamage = TimeSpan.Zero;
 
     /// <summary>
