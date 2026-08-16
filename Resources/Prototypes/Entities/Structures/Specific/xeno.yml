@@ -24,7 +24,6 @@
       - state: wardingtower-unshaded
         shader: unshaded
   - type: Damageable
-    damageModifierSet: MeatMod
   - type: Fixtures
     fixtures:
       fix1:

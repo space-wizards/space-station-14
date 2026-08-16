@@ -10,8 +10,8 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 40
-        Structural: 20
+        Piercing: 45
+        Structural: 30
 
 - type: entity
   parent: BaseBullet
@@ -40,6 +40,7 @@
     damage:
       types:
         Piercing: 10
+        Structural: 8
 
 - type: entity
   parent: PelletShotgun

@@ -5,11 +5,11 @@
   name: bullet (.60 anti-materiel)
   components:
   - type: Projectile
-    damage: # Just enough to destroy a solid wall
+    damage:
       types:
         Piercing: 75
-        Structural: 260
-    penetrationThreshold: 360
+        Structural: 100
+    penetrationThreshold: 175
     penetrationDamageTypeRequirement:
     - Structural
   - type: StaminaDamageOnCollide

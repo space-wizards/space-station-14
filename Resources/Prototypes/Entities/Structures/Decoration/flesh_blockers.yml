@@ -29,7 +29,6 @@
           ajar: ""
           open: ""
   - type: Damageable
-    damageModifierSet: MeatMod
   - type: Injurable
     damageContainer: StructuralBiological
   - type: Destructible

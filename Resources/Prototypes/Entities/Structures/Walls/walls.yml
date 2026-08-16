@@ -178,7 +178,6 @@
     graph: Girder
     node: meatWall
   - type: Damageable
-    damageModifierSet: MeatMod
   - type: Injurable
     damageContainer: StructuralBiological
   - type: Destructible
@@ -846,7 +845,7 @@
     graph: Girder
     node: uraniumWall
   - type: Damageable
-    damageModifierSet: PreciousMetalMod
+    damageModifierSet: PlasteelMod
   - type: Destructible
     thresholds:
     - trigger: *DamageWallWeak

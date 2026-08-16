@@ -294,7 +294,6 @@
     graph: Seat
     node: chairMeat
   - type: Damageable
-    damageModifierSet: MeatMod
   - type: Injurable
     damageContainer: StructuralBiological
   - type: Destructible
