@@ -12,21 +12,23 @@
                 <controls:StripeBack>
                     <Label Text="{Loc 'microwave-menu-ingredients'}" StyleClasses="LabelHeading" HorizontalAlignment="Center" Margin="10 2" />
                 </controls:StripeBack>
-                <PanelContainer Name="IngredientsPanel" StyleClasses="PanelInsetDeep" Margin="0 0 0 5" VerticalExpand="True">
-                    <ScrollContainer Margin="5">
-                        <BoxContainer HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalExpand="True" VerticalExpand="True">
-                            <GridContainer Name="IngredientsGrid" Columns="4" HSeparationOverride="5" VSeparationOverride="5">
-                                <!-- Ingredients are added here by code -->
-                            </GridContainer>
-                        </BoxContainer>
-                    </ScrollContainer>
-                    <Label
-                        Name="IngredientsEmptyLabel"
-                        Text="{Loc 'microwave-menu-ingredients-empty'}"
-                        StyleClasses="LabelWeak"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Visible="False" />
+                <PanelContainer StyleClasses="PanelInsetDeep" Margin="0 0 0 5" VerticalExpand="True">
+                    <PanelContainer Name="IngredientsPanel">
+                        <ScrollContainer Margin="5">
+                            <BoxContainer HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalExpand="True" VerticalExpand="True">
+                                <GridContainer Name="IngredientsGrid" Columns="4" HSeparationOverride="5" VSeparationOverride="5">
+                                    <!-- Ingredients are added here by code -->
+                                </GridContainer>
+                            </BoxContainer>
+                        </ScrollContainer>
+                        <Label
+                            Name="IngredientsEmptyLabel"
+                            Text="{Loc 'microwave-menu-ingredients-empty'}"
+                            StyleClasses="LabelWeak"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Visible="False" />
+                    </PanelContainer>
                 </PanelContainer>
             </BoxContainer>
             <customControls:VSeparator Margin="0 5" />
