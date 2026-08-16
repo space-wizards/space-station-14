@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Client.Chat.Managers;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Speech;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
@@ -200,6 +201,12 @@ namespace Content.Client.Chat.UI
             return FormatSpeech(SharedChatSystem.GetStringInsideTag(message, tag), fontColor);
         }
 
+        protected FormattedMessage FormatSenderName(Color? fontColor = null)
+        {
+            var displayName = Identity.Name(_senderEntity, _entityManager);
+            return FormatSpeech(FormattedMessage.EscapeText(displayName), fontColor);
+        }
+
     }
 
     public sealed class TextSpeechBubble : SpeechBubble
@@ -276,7 +283,7 @@ namespace Content.Client.Chat.UI
             };
 
             //We'll be honest. *Yes* this is hacky. Doing this in a cleaner way would require a bottom-up refactor of how saycode handles sending chat messages. -Myr
-            bubbleHeader.SetMessage(ExtractAndFormatSpeechSubstring(message, "BubbleHeader", fontColor));
+            bubbleHeader.SetMessage(FormatSenderName(fontColor));
             bubbleContent.SetMessage(ExtractAndFormatSpeechSubstring(message, "BubbleContent", fontColor));
 
             //As for below: Some day this could probably be converted to xaml. But that is not today. -Myr
