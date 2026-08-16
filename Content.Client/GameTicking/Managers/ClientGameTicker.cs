@@ -35,6 +35,7 @@ namespace Content.Client.GameTicking.Managers
         [ViewVariables] public string? ServerInfoBlob { get; private set; }
         [ViewVariables] public TimeSpan StartTime { get; private set; }
         [ViewVariables] public new bool Paused { get; private set; }
+        [ViewVariables] public RoundEndMessageInfo? LastRoundInfo { get; private set; }
 
         public override IReadOnlyList<(TimeSpan, string)> AllPreviousGameRules => new List<(TimeSpan, string)>();
 
@@ -162,6 +163,7 @@ namespace Content.Client.GameTicking.Managers
         {
             // Force an update in the event of this song being the same as the last.
             RestartSound = message.RestartSound;
+            LastRoundInfo = message.RoundInfo;
 
             var controller = _userInterfaceManager.GetUIController<RoundEndSummaryUIController>();
             controller.OpenRoundEndSummaryWindow(message.RoundInfo);
@@ -169,6 +171,10 @@ namespace Content.Client.GameTicking.Managers
 
         private void PreviousRoundInfoUpdated(PreviousRoundInfoMessageEvent message)
         {
+            LastRoundInfo = message.RoundInfo;
+
+            /// Need to inform the round end summary ui controller of the new info,
+            /// as it's unable to get a reference to this class.
             var controller = _userInterfaceManager.GetUIController<RoundEndSummaryUIController>();
             controller.UpdateRoundInfo(message.RoundInfo);
         }

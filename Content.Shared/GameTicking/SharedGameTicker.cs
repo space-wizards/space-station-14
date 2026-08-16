@@ -194,66 +194,43 @@ namespace Content.Shared.GameTicking
     }
 
     [Serializable, NetSerializable, DataDefinition]
-    public sealed partial class RoundEndMessageInfo
+    public sealed partial class RoundEndMessageInfo(
+        string gamemodeTitle,
+        string roundEndText,
+        TimeSpan roundDuration,
+        int roundId,
+        int playerCount,
+        RoundEndPlayerInfo[] allPlayersEndInfo)
     {
-        public string GamemodeTitle { get; }
-        public string RoundEndText { get; }
-        public TimeSpan RoundDuration { get; }
-        public int RoundId { get; }
-        public int PlayerCount { get; }
-        public RoundEndPlayerInfo[] AllPlayersEndInfo { get; }
-
-        public RoundEndMessageInfo(
-            string gamemodeTitle,
-            string roundEndText,
-            TimeSpan roundDuration,
-            int roundId,
-            int playerCount,
-            RoundEndPlayerInfo[] allPlayersEndInfo)
-        {
-            GamemodeTitle = gamemodeTitle;
-            RoundEndText = roundEndText;
-            RoundDuration = roundDuration;
-            RoundId = roundId;
-            PlayerCount = playerCount;
-            AllPlayersEndInfo = allPlayersEndInfo;
-        }
+        public string GamemodeTitle { get; } = gamemodeTitle;
+        public string RoundEndText { get; } = roundEndText;
+        public TimeSpan RoundDuration { get; } = roundDuration;
+        public int RoundId { get; } = roundId;
+        public int PlayerCount { get; } = playerCount;
+        public RoundEndPlayerInfo[] AllPlayersEndInfo { get; } = allPlayersEndInfo;
     }
 
     [Serializable, NetSerializable, DataDefinition]
-    public sealed partial class RoundEndMessageEvent : EntityEventArgs
+    public sealed partial class RoundEndMessageEvent(RoundEndMessageInfo roundInfo, ResolvedSoundSpecifier? restartSound) : EntityEventArgs
     {
         /// <summary>
         /// Information describing the round
         /// </summary>
-        public RoundEndMessageInfo RoundInfo { get; private set; }
+        public RoundEndMessageInfo RoundInfo { get; private set; } = roundInfo;
 
         /// <summary>
         /// Sound gets networked due to how entity lifecycle works between client / server and to avoid clipping.
         /// </summary>
-        public ResolvedSoundSpecifier? RestartSound;
-
-        public RoundEndMessageEvent(
-            RoundEndMessageInfo roundInfo,
-            ResolvedSoundSpecifier? restartSound)
-        {
-            RoundInfo = roundInfo;
-            RestartSound = restartSound;
-        }
+        public ResolvedSoundSpecifier? RestartSound = restartSound;
     }
 
     [Serializable, NetSerializable, DataDefinition]
-    public sealed partial class PreviousRoundInfoMessageEvent : EntityEventArgs
+    public sealed partial class PreviousRoundInfoMessageEvent(RoundEndMessageInfo info) : EntityEventArgs
     {
         /// <summary>
         /// Information describing the previous round
         /// </summary>
-        public RoundEndMessageInfo RoundInfo { get; private set; }
-
-        public PreviousRoundInfoMessageEvent(RoundEndMessageInfo info)
-        {
-            RoundInfo = info;
-        }
+        public RoundEndMessageInfo RoundInfo { get; private set; } = info;
     }
 
     [Serializable, NetSerializable]
