@@ -1,8 +1,8 @@
 using Content.Client.Stylesheets;
 using Content.Shared.FixedPoint;
 using Robust.Client.Graphics;
-using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Chemistry.UI;
 
@@ -11,8 +11,8 @@ namespace Content.Client.Chemistry.UI;
 /// </summary>
 public static class ReagentListHelper
 {
-    private static readonly StyleBoxFlat Background1 = new() { BackgroundColor = Color.FromHex("#1B1B1E") };
-    private static readonly StyleBoxFlat Background2 = new() { BackgroundColor = Color.FromHex("#202025") };
+    private static readonly StyleBoxFlat EvenRowBackground = new() { BackgroundColor = Color.FromHex("#1B1B1E") };
+    private static readonly StyleBoxFlat OddRowBackground = new() { BackgroundColor = Color.FromHex("#202025") };
     private const int ColorIndicatorWidth = 4;
 
     public static Control BuildPlaceholderRow(string text, bool fill = false)
@@ -41,12 +41,13 @@ public static class ReagentListHelper
     /// <param name="name">The name of the reagent.</param>
     /// <param name="quantity">The quantity of the reagent.</param>
     /// <param name="reagentColor">The color associated with the reagent.</param>
-    /// <param name="rowCount">The row index for alternating colors.</param>
+    /// <param name="rowIndex">The row index for alternating colors.</param>
     /// <returns>A PanelContainer representing the reagent row.</returns>
-    public static Control BuildReagentRow(string name, FixedPoint2 quantity, Color reagentColor, int rowCount)
+    public static Control BuildReagentRow(string name, FixedPoint2 quantity, Color reagentColor, int rowIndex)
     {
-        var currentBackground = (rowCount % 2 == 0) ? Background1 : Background2;
-        var colorToShow = reagentColor == default ? Color.White : reagentColor;
+        var background = rowIndex % 2 == 0
+            ? EvenRowBackground
+            : OddRowBackground;
 
         var rowContainer = new BoxContainer
         {
@@ -71,7 +72,7 @@ public static class ReagentListHelper
                 {
                     VerticalExpand = true,
                     MinWidth = ColorIndicatorWidth,
-                    PanelOverride = new StyleBoxFlat { BackgroundColor = colorToShow },
+                    PanelOverride = new StyleBoxFlat { BackgroundColor = reagentColor },
                     Margin = new Thickness(4, 1, 0, 1)
                 }
             }
@@ -79,7 +80,7 @@ public static class ReagentListHelper
 
         return new PanelContainer
         {
-            PanelOverride = currentBackground,
+            PanelOverride = background,
             Children = { rowContainer }
         };
     }
