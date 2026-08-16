@@ -6240,3 +6240,10 @@ Entries:
   changes:
   - type: Fix
     message: Перевод описания у улучшенных ПКУ
+- id: 604
+  author: banumbas
+  time: '2026-08-16T09:04:57.419939+00:00'
+  pr: 2163
+  changes:
+  - type: Add
+    message: К внешнему виду христова был добавлен прицел 😱😮🙈🫨OMG
