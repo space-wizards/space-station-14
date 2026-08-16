@@ -985,7 +985,7 @@
   - type: SatiationProduction
     producer: Parent
     delay: 30
-    minimumSatiationThreshold: Okay
+    minimumSatiationThreshold: Peckish
   # TODO: toxins from bloodstream !?
   - type: SolutionProducer
     generated:
@@ -1181,7 +1181,7 @@
     id: wool
   - type: SatiationProduction
     producer: Parent
-    minimumSatiationThreshold: Okay
+    minimumSatiationThreshold: Peckish
   - type: SolutionProducer
     generated:
       reagents:

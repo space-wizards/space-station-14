@@ -477,6 +477,7 @@
     price: 600
   - type: SolutionManager
     solutions:
+    - SolutionUdderSheep
     - SolutionWoolSpaceSheep
   - type: Speech
     speechSounds: SheepSpace
