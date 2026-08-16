@@ -21,12 +21,7 @@ public sealed partial class MaterialStorageSystem : SharedMaterialStorageSystem
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-        SubscribeLocalEvent<MaterialStorageComponent, MachineDeconstructedEvent>(OnDeconstructed);
-    }
-
+    [SubscribeLocalEvent]
     private void OnDeconstructed(EntityUid uid, MaterialStorageComponent component, MachineDeconstructedEvent args)
     {
         if (!component.DropOnDeconstruct)

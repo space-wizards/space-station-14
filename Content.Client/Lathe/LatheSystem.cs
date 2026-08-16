@@ -15,15 +15,7 @@ public sealed partial class LatheSystem : SharedLatheSystem
     [Dependency] private SpriteSystem _sprite = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<LatheComponent, AppearanceChangeEvent>(OnAppearanceChange);
-        SubscribeLocalEvent<LatheComponent, AfterAutoHandleStateEvent>(OnHandleState);
-        SubscribeLocalEvent<LatheComponent, MaterialAmountChangedEvent>(OnMaterialAmountChanged);
-    }
-
+    [SubscribeLocalEvent]
     private void OnAppearanceChange(EntityUid uid, LatheComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
@@ -55,6 +47,7 @@ public sealed partial class LatheSystem : SharedLatheSystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnHandleState(Entity<LatheComponent> lathe, ref AfterAutoHandleStateEvent args)
     {
         var lastUpdated = GameTick.Zero;
@@ -75,6 +68,7 @@ public sealed partial class LatheSystem : SharedLatheSystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnMaterialAmountChanged(Entity<LatheComponent> lathe, ref MaterialAmountChangedEvent evt)
     {
         if (_ui.TryGetOpenUi(lathe.Owner, LatheUiKey.Key, out var bui)
