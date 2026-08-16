@@ -493,8 +493,8 @@
   description: For some reason, this mothroach was trained for warfare under a special Nanotrasen mercenary program.
   components:
   - type: GhostRole
-    name: ghost-role-information-glockroach-name
-    description: ghost-role-information-glockroach-description
+    name: ghost-role-information-tactical-mothroach-name
+    description: ghost-role-information-tactical-mothroach-description
   - type: MobThresholds
     thresholds:
       0: Alive
