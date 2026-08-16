@@ -1,16 +1,35 @@
+#todo these need a common parent
+
 - type: entity
-  parent: BaseWallmountMetallic
+  parent: [ BaseWallmountMetallic, StructureHealthMachineFlimsy ]
   id: SignalSwitch
   name: signal switch
   description: It's a switch for toggling power to things.
   components:
   - type: WallMount
-    arc: 360
+    arc: 175
   - type: StationAiWhitelist
   - type: Sprite
-    drawdepth: SmallObjects
+    offset: 0, -0.25
+    drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/switch.rsi
-    state: on
+    layers:
+    - state: base
+    - map: [ "shaded" ]
+      state: off
+    - map: [ "unshaded" ]
+      state: off-unshaded
+      shader: unshaded
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.SwitchVisuals.Visuals:
+        shaded:
+          True: { state: on }
+          False: { state: off }
+        unshaded:
+          True: { state: on-unshaded }
+          False: { state: off-unshaded }
   - type: SignalSwitch
   - type: UseDelay
     delay: 0.5 # prevent light-toggling auto-clickers.
@@ -33,31 +52,34 @@
     anchored: false
   - type: Destructible
     thresholds:
-    - trigger:
+    - trigger: &DamageMachineFlimsy
         !type:DamageTrigger
-        damage: 40
+        damage: 50
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-      - !type:PlaySoundBehavior
+      - &SoundMetalBreak !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
           params:
             volume: -8
 
 - type: entity
-  parent: BaseWallmountMetallic
+  parent: [ BaseWallmountMetallic, StructureHealthMachineFlimsy ]
   id: SignalButton
   name: signal button
   description: It's a button for activating something.
   components:
   - type: WallMount
-    arc: 360
+    arc: 175
   - type: StationAiWhitelist
   - type: Sprite
-    drawdepth: SmallObjects
+    offset: 0, -0.25
+    drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/switch.rsi
-    state: dead
+    layers:
+    - state: base
+    - state: button
+    - state: button-unshaded
+      shader: unshaded
   - type: UseDelay
     delay: 0.5 # prevent light-toggling auto-clickers.
   - type: SignalSwitch
@@ -79,30 +101,39 @@
     anchored: false
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 40
+    - trigger: *DamageMachineFlimsy
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
-          params:
-            volume: -8
+      - *SoundMetalBreak
 
 - type: entity
-  parent: BaseWallmountMetallic
+  parent: [ BaseWallmountMetallic, StructureHealthMachineFlimsy ]
   id: ApcNetSwitch
   name: apc net switch
   description: It's a switch for toggling lights that are connected to the same apc.
   components:
-  - type: WallMount
-    arc: 360
   - type: Sprite
-    drawdepth: SmallObjects
+    offset: 0, -0.25
+    drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/switch.rsi
-    state: on
+    layers:
+    - state: base
+    - map: [ "shaded" ]
+      state: off
+    - map: [ "unshaded" ]
+      state: off-unshaded
+      shader: unshaded
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.SwitchVisuals.Visuals:
+        shaded:
+          True: { state: on }
+          False: { state: off }
+        unshaded:
+          True: { state: on-unshaded }
+          False: { state: off-unshaded }
+  - type: WallMount
+    arc: 175
   - type: Rotatable
   - type: ExtensionCableReceiver
   - type: DeviceNetwork
@@ -115,9 +146,13 @@
   - type: Construction
     graph: LightSwitchGraph
     node: LightSwitchNode
+  - type: Destructible
+    thresholds:
+    - trigger: *DamageMachineFlimsy
+      behaviors:
+      - *SoundMetalBreak
 
 #directional
-
 - type: entity
   parent: SignalSwitch
   id: SignalSwitchDirectional
@@ -155,25 +190,38 @@
     node: LightSwitchDirectionalNode
 
 # lockable buttons
-
 - type: entity
   parent: SignalButtonDirectional
   id: LockableButton
   name: lockable button
   categories: [ HideSpawnMenu ]
   components:
-  - type: Appearance
   - type: Lock
-  - type: LockVisuals
   - type: AccessReader
   - type: Sprite
+    offset: 0, -0.25
     drawdepth: WallMountedItems
-    sprite: Structures/Wallmounts/locked_switch.rsi
+    sprite: Structures/Wallmounts/switch-lockable.rsi
     layers:
     - state: base
-    - state: locked
-      map: ["enum.LockVisualLayers.Lock"]
+    - state: button
+    - state: button-unshaded
       shader: unshaded
+    - map: [ "lock-shaded" ]
+      state: lock-locked
+    - map: [ "lock-unshaded" ]
+      state: lock-locked-unshaded
+      shader: unshaded
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.LockVisuals.Locked:
+        lock-shaded:
+          True: { state: lock-locked }
+          False: { state: lock-unlocked }
+        lock-unshaded:
+          True: { state: lock-locked-unshaded }
+          False: { state: lock-unlocked-unshaded }
 
 - type: entity
   parent: LockableButton
@@ -436,23 +484,23 @@
 # button frames
 
 - type: entity
+  parent: StructureHealthFurnitureWeak
   id: ButtonFrame
   name: button frame
   categories: [ HideSpawnMenu ]
   description: It's a frame to help distinguish switches visually.
   placement:
     mode: SnapgridCenter
-    snap:
-    - Wallmount
   components:
   - type: Clickable
   - type: WallMount
-    arc: 360
+    arc: 175
   - type: Physics
     canCollide: false
   - type: Sprite
+    offset: 0, -0.25
     drawdepth: SmallObjects
-    sprite: Structures/Wallmounts/switch_frame.rsi
+    sprite: Structures/Wallmounts/switch-frame.rsi
     state: grey
   - type: Rotatable
   - type: Fixtures
@@ -463,8 +511,6 @@
   suffix: grey
   components:
   - type: Sprite
-    drawdepth: SmallObjects
-    sprite: Structures/Wallmounts/switch_frame.rsi
     state: grey
 
 - type: entity
@@ -473,8 +519,6 @@
   suffix: caution
   components:
   - type: Sprite
-    drawdepth: SmallObjects
-    sprite: Structures/Wallmounts/switch_frame.rsi
     state: caution
 
 - type: entity
@@ -483,19 +527,15 @@
   suffix: caution
   components:
   - type: Sprite
-    drawdepth: SmallObjects
-    sprite: Structures/Wallmounts/switch_frame.rsi
-    state: caution_security
+    state: caution-security
 
 - type: entity
-  id: ButtonFrameExit
+  id: ButtonFrameWhite
   parent: ButtonFrame
-  suffix: exit
+  suffix: white
   components:
   - type: Sprite
-    drawdepth: SmallObjects
-    sprite: Structures/Wallmounts/switch_frame.rsi
-    state: exit
+    state: white
 
 - type: entity
   id: ButtonFrameJanitor
@@ -503,6 +543,4 @@
   suffix: janitor
   components:
   - type: Sprite
-    drawdepth: SmallObjects
-    sprite: Structures/Wallmounts/switch_frame.rsi
     state: janitor

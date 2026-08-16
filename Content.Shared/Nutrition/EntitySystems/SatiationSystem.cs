@@ -9,16 +9,14 @@ using Robust.Shared.Timing;
 namespace Content.Shared.Nutrition.EntitySystems;
 
 /// <summary>
-/// This system manages the <see cref="SatiationComponent"/>. Broadly, what that means is that it handles the decay of
-/// satiations in <see cref="Update"/>, and external changes to satiations through accessors like
-/// <see cref="ModifyValue"/>.
+/// This system manages <see cref="SatiationComponent"/>. It handles the change of satiations in <see cref="Update"/>
+/// and external changes to satiations through accessors like <see cref="ModifyValue"/>.
 /// </summary>
 public sealed partial class SatiationSystem : EntitySystem
 {
-    [Dependency] private AlertsSystem _alerts = default!;
     [Dependency] private IGameTiming _timing = default!;
 
-    [Dependency] private EntityQuery<SatiationComponent> _satiationQuery;
+    [Dependency] private AlertsSystem _alerts = default!;
 
     /// <summary>
     /// The ID of the <c>Hunger</c> satiation type. Provided because it is so commonly used in Content.
@@ -36,15 +34,18 @@ public sealed partial class SatiationSystem : EntitySystem
         var query = EntityQueryEnumerator<SatiationComponent>();
         while (query.MoveNext(out var uid, out var component))
         {
-            Entity<SatiationComponent> entity = (uid, component);
-            foreach (var (satiation, proto) in GetSatiationsAndTypes(entity))
+            var entity = new Entity<SatiationComponent>(uid, component);
+            foreach (var satiation in component.Satiations.Values)
             {
+                if (!ProtoMan.Resolve(satiation.Prototype, out var proto))
+                    continue;
+
                 if (_timing.CurTime >= satiation.NextAlertUpdateTime)
                 {
                     UpdateAlerts(entity, satiation, proto);
                 }
 
-                if (_timing.CurTime >= satiation.NextDecayRateModUpdateTime)
+                if (_timing.CurTime >= satiation.NextChangeRateModUpdateTime)
                 {
                     SetAuthoritativeValue(entity, satiation, proto, CalculateCurrentValue(satiation, proto));
                 }
@@ -72,7 +73,7 @@ public sealed partial class SatiationSystem : EntitySystem
             SetAuthoritativeValue(entity, satiation, proto, value);
         }
 
-        DirtyField(entity.AsNullable(), nameof(SatiationComponent.Satiations));
+        DirtyField(entity.AsNullable(), SatiationComponent.SatiationFieldName);
     }
 
     /// <summary>
@@ -81,8 +82,11 @@ public sealed partial class SatiationSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnShutdown(Entity<SatiationComponent> entity, ref ComponentShutdown args)
     {
-        foreach (var (_, proto) in GetSatiationsAndTypes(entity))
+        foreach (var satiation in entity.Comp.Satiations.Values)
         {
+            if (!ProtoMan.Resolve(satiation.Prototype, out var proto))
+                continue;
+
             _alerts.ClearAlertCategory(entity.Owner, proto.AlertCategory);
         }
     }
@@ -97,6 +101,19 @@ public sealed partial class SatiationSystem : EntitySystem
         {
             SetValue(entity, type, satiationValue: int.MaxValue);
         }
+    }
+
+    /// <remarks>
+    /// This is basically a special-case reimplementation of <see cref="BaseSatiationEffectSystem{TComp,T}.OnSatiationUpdate"/>.
+    /// </remarks>
+    [SubscribeLocalEvent]
+    private void UpdateAlertsOnSatiationUpdated(Entity<SatiationComponent> entity, ref SatiationUpdateEvent args)
+    {
+        if (entity.Comp.GetOrNull(args.Type) is not { } satiation ||
+            !ProtoMan.Resolve(satiation.Prototype, out var proto))
+            return;
+
+        UpdateAlerts(entity, satiation, proto);
     }
 
     /// <summary>
@@ -117,30 +134,49 @@ public sealed partial class SatiationSystem : EntitySystem
     }
 
     /// <summary>
-    /// Similar to <see cref="GetAndResolveSatiationOfType"/>, this helper returns all <see cref="Satiation"/>s on
-    /// <paramref name="satiations"/> along with their corresponding <see cref="SatiationPrototype"/>s.
-    /// </summary>
-    private IEnumerable<(Satiation, SatiationPrototype)> GetSatiationsAndTypes(SatiationComponent satiations)
-    {
-        foreach (var satiation in satiations.Satiations.Values)
-        {
-            if (!ProtoMan.Resolve(satiation.Prototype, out var proto))
-                continue;
-
-            yield return (satiation, proto);
-        }
-    }
-
-    /// <summary>
     /// Calculates the current value of the given <see cref="Satiation"/> by linearly extrapolating the change of the
     /// value based on <see cref="Satiation.LastAuthoritativeValue"/>, <see cref="Satiation.LastAuthoritativeChangeTime"/>
-    /// and <see cref="Satiation.ActualDecayRate"/>
+    /// and <see cref="Satiation.ActualChangeRate"/>
     /// </summary>
     private float CalculateCurrentValue(Satiation satiation, SatiationPrototype proto)
     {
         var dt = _timing.CurTime - satiation.LastAuthoritativeChangeTime;
-        var value = satiation.LastAuthoritativeValue - (float)dt.TotalSeconds * satiation.ActualDecayRate;
+        var value = satiation.LastAuthoritativeValue + (float)dt.TotalSeconds * satiation.ActualChangeRate;
         return proto.ClampSatiationWithinThresholds(value);
+    }
+
+    /// <summary>
+    /// Calculates when <paramref name="satiation"/>'s value will reach either <paramref name="upperBound"/> or
+    /// <paramref name="lowerBound"/>, or <c>null</c> if neither will happen based on the current expected linear
+    /// evolution of the satiation value. A null bound is treated as unreachable, so if both bounds are null, this
+    /// this function returns null.
+    /// </summary>
+    /// <seealso cref="EvolvesToTargetAt"/>
+    private TimeSpan? EvolvesToBoundAt(
+        Satiation satiation,
+        SatiationPrototype proto,
+        int? upperBound,
+        int? lowerBound
+    ) => satiation.ActualChangeRate switch
+    {
+        > 0 when upperBound is { } t => EvolvesToTargetAt(satiation, proto, t),
+        < 0 when lowerBound is { } t => EvolvesToTargetAt(satiation, proto, t),
+        // Change rate is zero or there's no threshold to decay/grow into: we'll never change without outside modification
+        _ => null,
+    };
+
+    /// <summary>
+    /// Calculates when <paramref name="satiation"/>'s value will reach <paramref name="target"/>, or <c>null</c> if
+    /// the current linear evolution will not reach that value.
+    /// </summary>
+    /// <seealso cref="EvolvesToBoundAt"/>
+    private TimeSpan? EvolvesToTargetAt(Satiation satiation, SatiationPrototype proto, int target)
+    {
+        var seconds = (target - CalculateCurrentValue(satiation, proto)) / satiation.ActualChangeRate;
+        if (!seconds.IsValid() || seconds < 0f)
+            return null;
+
+        return _timing.CurTime + TimeSpan.FromSeconds(seconds);
     }
 
     /// <summary>
@@ -163,43 +199,27 @@ public sealed partial class SatiationSystem : EntitySystem
         if (!TryGetValueByThreshold(
                 entity,
                 satiation.SatiationType,
-                proto.DecayModifiers,
-                out var currentDecayMod,
+                proto.ChangeModifiers,
+                out var currentChangeMod,
+                out var nextHigherThreshold,
                 out var nextLowerThreshold
             ))
         {
-            currentDecayMod = 1f;
+            currentChangeMod = 1f;
         }
 
-        satiation.ActualDecayRate = proto.BaseDecayRate * currentDecayMod;
-
-        if (nextLowerThreshold is { } t)
-        {
-            satiation.NextDecayRateModUpdateTime =
-                _timing.CurTime + TimeSpan.FromSeconds((value - t) / satiation.ActualDecayRate);
-        }
-        else
-        {
-            satiation.NextDecayRateModUpdateTime = null;
-        }
+        satiation.ActualChangeRate = proto.BaseChangeRate * currentChangeMod;
+        satiation.NextChangeRateModUpdateTime = EvolvesToBoundAt(
+            satiation,
+            proto,
+            nextHigherThreshold,
+            nextLowerThreshold
+        );
 
         var updateEvent = new SatiationUpdateEvent(satiation.SatiationType);
         RaiseLocalEvent(entity, ref updateEvent);
 
-        DirtyField(entity.AsNullable(), nameof(SatiationComponent.Satiations));
-    }
-
-    /// <remarks>
-    /// This is basically a reimplementation of <see cref="BaseSatiationEffectSystem{TComp,T}.OnSatiationUpdate"/>.
-    /// </remarks>
-    [SubscribeLocalEvent]
-    private void UpdateAlertsOnSatiationUpdated(Entity<SatiationComponent> entity, ref SatiationUpdateEvent args)
-    {
-        if (entity.Comp.GetOrNull(args.Type) is not { } satiation ||
-            !ProtoMan.Resolve(satiation.Prototype, out var proto))
-            return;
-
-        UpdateAlerts(entity, satiation, proto);
+        DirtyField(entity.AsNullable(), SatiationComponent.SatiationFieldName);
     }
 
     private void UpdateAlerts(
@@ -208,46 +228,38 @@ public sealed partial class SatiationSystem : EntitySystem
         SatiationPrototype proto
     )
     {
-        if (TryGetValueByThreshold(
-                entity,
-                satiation.SatiationType,
-                proto.Alerts,
-                out var result,
-                out var nextLowerThreshold))
+        TryGetValueByThreshold(
+            entity,
+            satiation.SatiationType,
+            proto.Alerts,
+            out var result,
+            out var nextHigherThreshold,
+            out var nextLowerThreshold
+        );
+
+        if (result is { } alert)
         {
-            if (result is { } alert)
-            {
-                _alerts.ShowAlert(entity.Owner, alert);
-                satiation.NextAlertUpdateTime = nextLowerThreshold is { } lower
-                    ? GetTimeToDecay(entity, satiation.SatiationType, lower)
-                    : null;
-            }
-            else
-            {
-                _alerts.ClearAlertCategory(entity.Owner, proto.AlertCategory);
-                satiation.NextAlertUpdateTime = null;
-            }
+            _alerts.ShowAlert(entity.Owner, alert);
         }
         else
         {
             _alerts.ClearAlertCategory(entity.Owner, proto.AlertCategory);
-            satiation.NextAlertUpdateTime = null;
         }
-    }
 
-    public TimeSpan? GetTimeToDecay(Entity<SatiationComponent> entity,
-        ProtoId<SatiationTypePrototype> type,
-        int threshold
-    )
-    {
-        if (GetValueOrNull(entity, type) is not { } value ||
-            entity.Comp.GetOrNull(type) is not { } satiation)
-            return null;
-
-        return _timing.CurTime + TimeSpan.FromSeconds((value - threshold) / satiation.ActualDecayRate);
+        satiation.NextAlertUpdateTime = EvolvesToBoundAt(
+            satiation,
+            proto,
+            nextHigherThreshold,
+            nextLowerThreshold
+        );
+        DirtyField(entity.AsNullable(), SatiationComponent.SatiationFieldName);
     }
 }
 
-// Best effort on change to authoritative value or decay rate
+/// <summary>
+/// This event is raised on entities with <see cref="SatiationComponent"/> when their satiation of <paramref name="Type"/>
+/// is directly set or when the <see cref="Satiation.ActualChangeRate">rate of change</see> to that satiation is changed.
+/// </summary>
+/// <remarks> This event may be raised even when no change has occurred.</remarks>
 [ByRefEvent]
 public readonly record struct SatiationUpdateEvent(ProtoId<SatiationTypePrototype> Type);

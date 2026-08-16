@@ -26,7 +26,7 @@ public sealed partial class SpaceNinjaComponent : Component
     public EntityUid? Gloves;
 
     /// <summary>
-    /// Bound katana, set once picked up and never removed
+    /// Bound katana, set once equipped and never removed.
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntityUid? Katana;

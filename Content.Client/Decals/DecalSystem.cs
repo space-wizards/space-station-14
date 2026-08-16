@@ -66,6 +66,7 @@ namespace Content.Client.Decals
                 return false;
 
             decals.Decals[predictedDecalId] = decal;
+            DirtyField(chunk.Owner, decals, nameof(DecalChunkComponent.Decals));
             decalId = new DecalIndex(ChunkEntitySystem.GetChunkIndices(decal.Coordinates), predictedDecalId);
             return true;
         }
@@ -116,6 +117,7 @@ namespace Content.Client.Decals
                 return false;
             }
 
+            DirtyField(chunkEnt.Value.Owner, decals, nameof(DecalChunkComponent.Decals));
             return true;
         }
 
