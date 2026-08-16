@@ -29,7 +29,7 @@ public sealed partial class PassiveDamageComponent : Component
     [DataField]
     public TimeSpan Interval = TimeSpan.FromSeconds(1);
 
-    [DataField("nextDamage", customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField]
     public TimeSpan NextDamage = TimeSpan.Zero;
 
     /// <summary>

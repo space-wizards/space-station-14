@@ -12,23 +12,23 @@ public sealed partial class PassiveDamageSystem : EntitySystem
     #region Subscriptions
 
     [SubscribeLocalEvent]
-    private void OnPendingMapInit(EntityUid uid, PassiveDamageComponent component, MapInitEvent args)
+    private void OnPendingMapInit(Entity<PassiveDamageComponent> ent, ref MapInitEvent args)
     {
-        component.NextDamage = _timing.CurTime + TimeSpan.FromSeconds(1f);
-        Dirty<PassiveDamageComponent>((uid, component));
+        ent.Comp.NextDamage = _timing.CurTime + TimeSpan.FromSeconds(1f);
+        Dirty(ent);
     }
 
     [SubscribeLocalEvent]
-    private void OnDamageTaken(EntityUid ent, PassiveDamageComponent component, DamageDealtEvent args)
+    private void OnDamageTaken(Entity<PassiveDamageComponent> ent, ref DamageDealtEvent args)
     {
-        if (component.IntervalHaltOnDamageTaken == TimeSpan.Zero || !args.Damage.AnyPositive())
+        if (ent.Comp.IntervalHaltOnDamageTaken == TimeSpan.Zero || !args.Damage.AnyPositive())
             return;
 
-        var proposedUpdateTime = _timing.CurTime + component.IntervalHaltOnDamageTaken;
-        if (proposedUpdateTime > component.NextDamage)
+        var proposedUpdateTime = _timing.CurTime + ent.Comp.IntervalHaltOnDamageTaken;
+        if (proposedUpdateTime > ent.Comp.NextDamage)
         {
-            component.NextDamage = proposedUpdateTime;
-            Dirty<PassiveDamageComponent>((ent, component));
+            ent.Comp.NextDamage = proposedUpdateTime;
+            Dirty(ent);
         }
 
     }
