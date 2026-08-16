@@ -512,6 +512,34 @@
   - type: InteractionPopup
     interactSuccessString: petting-success-glockroach
     interactFailureString: petting-failure-glockroach
+  - type: Sprite
+    sprite: Mobs/Animals/mothroach/glockroach.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: glockroach
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: glockroach-moving
+    noMovementLayers:
+      movement:
+        state: glockroach
+  - type: Item
+    size: Normal
+  - type: Clothing
+    quickEquip: false
+    sprite: Mobs/Animals/mothroach/glockroach.rsi
+    equippedPrefix: 0
+    slots:
+    - HEAD
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: glockroach
+      Critical:
+        Base: glockroach_dead
+      Dead:
+        Base: glockroach_dead
 
 - type: startingGear
   id: GlockroachGear
@@ -554,34 +582,6 @@
   - type: Unremoveable
   - type: BallisticAmmoSelfRefiller # the glockroach needs its ammo!
     autoRefillRate: 4s
-  - type: Sprite
-    sprite: Mobs/Animals/mothroach/glockroach.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
-      state: glockroach
-  - type: SpriteMovement
-    movementLayers:
-      movement:
-        state: glockroach-moving
-    noMovementLayers:
-      movement:
-        state: glockroach
-  - type: Item
-    size: Normal
-  - type: Clothing
-    quickEquip: false
-    sprite: Mobs/Animals/mothroach/glockroach.rsi
-    equippedPrefix: 0
-    slots:
-    - HEAD
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: glockroach
-      Critical:
-        Base: glockroach_dead
-      Dead:
-        Base: glockroach_dead
 
 - type: entity
   name: mothroach
