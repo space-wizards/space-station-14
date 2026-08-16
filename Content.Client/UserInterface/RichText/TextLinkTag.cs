@@ -42,7 +42,7 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
     private const string EntityAttributeName = "entity";
     private const string LinkAttributeName = "link";
     private const string ColorOverrideAttributeName = "color"; // LinkColor override
-    private const string UseEntityNameColorAttributeName = "entnamecolor"; // entity links only: opt into per-entity name coloring
+    private const string UseEntityNameColorAttributeName = "usenamecolor"; // entity links only: opt into per-entity name coloring
 
     public bool TryCreateControl(MarkupNode node, [NotNullWhen(true)] out Control? control)
     {

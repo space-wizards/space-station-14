@@ -62,9 +62,7 @@ public sealed partial class RadioSystem : SharedRadioSystem
         RaiseLocalEvent(messageSource, evt);
 
         var name = evt.VoiceName;
-        name = $"[textlink=\"{FormattedMessage.EscapeStringParameter(name)}\" " +
-               $"ent=\"{GetNetEntity(messageSource)}\" " +
-               $"colorable=\"true\"]";
+        name = _chat.ChatNameLinks ? $"[textlink=\"{FormattedMessage.EscapeStringParameter(name)}\" entity=\"{GetNetEntity(messageSource)}\" usenamecolor=\"true\"]" : FormattedMessage.EscapeText(name);
 
         SpeechVerbPrototype speech;
         if (evt.SpeechVerb != null && ProtoMan.Resolve(evt.SpeechVerb, out var evntProto))
