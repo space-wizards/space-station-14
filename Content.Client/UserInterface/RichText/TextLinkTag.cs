@@ -7,6 +7,8 @@ using Robust.Client.UserInterface.RichText;
 using Robust.Shared.Input;
 using Robust.Shared.Utility;
 using Content.Client.UserInterface.ControlExtensions;
+using Content.Client.UserInterface.Systems.Chat;
+using Robust.Shared.GameObjects.Components.Localization;
 
 namespace Content.Client.UserInterface.RichText;
 
@@ -14,22 +16,11 @@ namespace Content.Client.UserInterface.RichText;
 public sealed class TextLinkTag : IMarkupTagHandler
 {
     [Dependency] private IEntityManager _entity = default!;
+    [Dependency] private IUserInterfaceManager _ui = default!;
 
     public static Color LinkColor => Color.CornflowerBlue;
 
     public string Name => "textlink";
-
-    public string TextBefore(MarkupNode node)
-    {
-        if (!node.Attributes.TryGetValue("ent", out var entParam) || !entParam.TryGetString(out _))
-            return string.Empty;
-
-        if (!node.Value.TryGetString(out var text))
-            return string.Empty;
-
-        var chat = _entity.System<SharedChatSystem>();
-        return chat.CanClickMessageSender(null) ? string.Empty : text;
-    }
 
     public bool TryCreateControl(MarkupNode node, [NotNullWhen(true)] out Control? control)
     {
@@ -40,6 +31,8 @@ public sealed class TextLinkTag : IMarkupTagHandler
         }
 
         string link;
+        var baseColor = LinkColor;
+        var clickable = false;
 
         if (node.Attributes.TryGetValue("ent", out var entParam) && entParam.TryGetString(out var entStr))
         {
@@ -49,18 +42,18 @@ public sealed class TextLinkTag : IMarkupTagHandler
                 return false;
             }
 
+            if (GetEntityLinkColor(netEntity) is { } entColor)
+                baseColor = entColor;
+
             var chat = _entity.System<SharedChatSystem>();
-            if (!chat.CanClickMessageSender(null))
-            {
-                control = null;
-                return false;
-            }
+            clickable = chat.CanClickMessageSender(null);
 
             link = netEntity.ToString();
         }
         else if (node.Attributes.TryGetValue("link", out var linkParam) && linkParam.TryGetString(out var linkStr))
         {
             link = linkStr;
+            clickable = true; // plain guidebook-style links are always clickable
         }
         else
         {
@@ -69,16 +62,37 @@ public sealed class TextLinkTag : IMarkupTagHandler
         }
 
         var label = new Label { Text = text };
-        label.MouseFilter = Control.MouseFilterMode.Stop;
-        label.FontColorOverride = LinkColor;
-        label.DefaultCursorShape = Control.CursorShape.Hand;
-        label.OnMouseEntered += _ => label.FontColorOverride = Color.LightSkyBlue;
-        label.OnMouseExited += _ => label.FontColorOverride = LinkColor;
-        label.OnKeyBindDown += args => OnKeybindDown(args, link, label);
+        label.FontColorOverride = baseColor;
+
+        if (clickable)
+        {
+            label.MouseFilter = Control.MouseFilterMode.Stop;
+            label.DefaultCursorShape = Control.CursorShape.Hand;
+            label.OnMouseEntered += _ => label.FontColorOverride = Color.LightSkyBlue;
+            label.OnMouseExited += _ => label.FontColorOverride = baseColor;
+            label.OnKeyBindDown += args => OnKeybindDown(args, link, label);
+        }
 
         control = label;
         return true;
     }
+
+private Color? GetEntityLinkColor(NetEntity netEntity)
+{
+    var chatUi = _ui.GetUIController<ChatUIController>();
+
+    if (!chatUi.ChatNameColorsEnabled)
+        return null;
+
+    if (!_entity.TryGetEntity(netEntity, out var uid) || !_entity.EntityExists(uid))
+        return null;
+
+    if (!_entity.TryGetComponent<GrammarComponent>(uid, out var grammar) || grammar.ProperNoun != true)
+        return null;
+
+    var name = _entity.GetComponent<MetaDataComponent>(uid.Value).EntityName;
+    return Color.FromHex(chatUi.GetNameColor(name));
+}
 
     private void OnKeybindDown(GUIBoundKeyEventArgs args, string link, Control? control)
     {

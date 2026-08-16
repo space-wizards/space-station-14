@@ -70,6 +70,7 @@ public sealed partial class ChatUIController : UIController
     private static readonly ProtoId<ColorPalettePrototype> ChatNamePalette = "ChatNames";
     private string[] _chatNameColors = default!;
     private bool _chatNameColorsEnabled;
+    public bool ChatNameColorsEnabled => _chatNameColorsEnabled;
 
     private ISawmill _sawmill = default!;
 
