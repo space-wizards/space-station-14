@@ -28,7 +28,7 @@ public sealed class GuidebookRichPrototypeLink : Control, IPrototypeLinkControl
 
         DefaultCursorShape = CursorShape.Hand;
 
-        _richTextLabel.SetMessage(_message, null, TextLinkTag.LinkColor);
+        _richTextLabel.SetMessage(_message, null, TextLinkTag.DefaultLinkColor);
     }
 
     public GuidebookRichPrototypeLink() : base()

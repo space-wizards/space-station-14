@@ -18,11 +18,13 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
     [Dependency] private IEntityManager _entity = default!;
     [Dependency] private IUserInterfaceManager _ui = default!;
 
-    public static Color LinkColor => Color.CornflowerBlue;
+    public static Color DefaultLinkColor => Color.CornflowerBlue;
 
     public string Name => "textlink";
     public const string ColorableAttributeName = "colorable";
-    
+    public const string LinkAttributeName = "link";
+    public const string ColorAttributeName = "color";
+
     public bool TryCreateControl(MarkupNode node, [NotNullWhen(true)] out Control? control)
     {
         if (!node.Value.TryGetString(out var text))
@@ -32,7 +34,7 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
         }
 
         string link;
-        var baseColor = LinkColor;
+        var baseColor = DefaultLinkColor;
         var clickable = false;
 
         if (node.Attributes.TryGetValue("ent", out var entParam) && entParam.TryGetString(out var entStr))
@@ -54,7 +56,7 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
         else if (node.Attributes.TryGetValue("link", out var linkParam) && linkParam.TryGetString(out var linkStr))
         {
             link = linkStr;
-            clickable = true; // plain guidebook-style links are always clickable
+            clickable = true;
         }
         else
         {
@@ -80,9 +82,24 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
 
     private Color? GetEntityLinkColor(MarkupNode node, NetEntity netEntity)
     {
-        if (!(node.Attributes.TryGetValue(ColorableAttributeName, out var colorableParam)
-              && colorableParam.TryGetString(out var colorableStr)
-              && colorableStr == "true"))
+        // Explicit override always wins.
+        if (node.Attributes.TryGetValue(ColorAttributeName, out var colorParam)
+            && colorParam.TryGetString(out var colorStr))
+        {
+            try
+            {
+                return Color.FromHex(colorStr);
+            }
+            catch
+            {
+
+            }
+        }
+
+        if (!node.Attributes.TryGetValue(ColorableAttributeName, out var colorableParam)
+            || !colorableParam.TryGetString(out var colorableStr)
+            || !bool.TryParse(colorableStr, out var colorable)
+            || !colorable)
         {
             return null;
         }
@@ -92,13 +109,20 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
         if (!chatUi.ChatNameColorsEnabled)
             return null;
 
-        if (!_entity.TryGetEntity(netEntity, out var uid) || !_entity.EntityExists(uid))
+        if (!_entity.TryGetEntity(netEntity, out var uid)
+            || !_entity.EntityExists(uid))
+        {
             return null;
+        }
 
-        if (!_entity.TryGetComponent<GrammarComponent>(uid, out var grammar) || grammar.ProperNoun != true)
+        if (!_entity.TryGetComponent<GrammarComponent>(uid, out var grammar)
+            || grammar.ProperNoun != true)
+        {
             return null;
+        }
 
         var name = _entity.GetComponent<MetaDataComponent>(uid.Value).EntityName;
+
         return Color.FromHex(chatUi.GetNameColor(name));
     }
 
