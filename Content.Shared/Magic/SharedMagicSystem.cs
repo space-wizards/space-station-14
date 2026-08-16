@@ -274,6 +274,7 @@ public abstract partial class SharedMagicSystem : EntitySystem
                          fromMap.Position;
         _gunSystem.ShootProjectile(ent, direction, userVelocity, ev.Performer, ev.Performer, ev.ProjectileSpeed);
     }
+
     // End Projectile Spells
     #endregion
     #region Change Component Spells
@@ -484,7 +485,7 @@ public abstract partial class SharedMagicSystem : EntitySystem
 
         // Need performer mind, but target mind is unnecessary, such as taking over a NPC
         // Need to get target mind before putting performer mind into their body if they have one
-        // Thus, assign bool before first transfer, then check afterwards
+        // Thus, assign bool before first transfer, then check after wards
 
         if (!_mind.TryGetMind(ev.Performer, out var perMind, out var perMindComp))
             return;
