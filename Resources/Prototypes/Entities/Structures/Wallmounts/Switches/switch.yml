@@ -1,5 +1,7 @@
+#todo these need a common parent
+
 - type: entity
-  parent: BaseWallmountMetallic
+  parent: [ BaseWallmountMetallic, StructureHealthMachineFlimsy ]
   id: SignalSwitch
   name: signal switch
   description: It's a switch for toggling power to things.
@@ -52,20 +54,18 @@
     anchored: false
   - type: Destructible
     thresholds:
-    - trigger:
+    - trigger: &DamageMachineFlimsy
         !type:DamageTrigger
-        damage: 40
+        damage: 50
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-      - !type:PlaySoundBehavior
+      - &SoundMetalBreak !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
           params:
             volume: -8
 
 - type: entity
-  parent: BaseWallmountMetallic
+  parent: [ BaseWallmountMetallic, StructureHealthMachineFlimsy ]
   id: SignalButton
   name: signal button
   description: It's a button for activating something.
@@ -103,20 +103,12 @@
       - Pressed
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 40
+    - trigger: *DamageMachineFlimsy
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
-          params:
-            volume: -8
+      - *SoundMetalBreak
 
 - type: entity
-  parent: BaseWallmountMetallic
+  parent: [ BaseWallmountMetallic, StructureHealthMachineFlimsy ]
   id: ApcNetSwitch
   name: apc net switch
   description: It's a switch for toggling lights that are connected to the same apc.
@@ -157,6 +149,11 @@
   - type: Construction
     graph: LightSwitchGraph
     node: LightSwitchNode
+  - type: Destructible
+    thresholds:
+    - trigger: *DamageMachineFlimsy
+      behaviors:
+      - *SoundMetalBreak
 
 #directional
 - type: entity
@@ -481,6 +478,7 @@
 
 # NOTE: do not parent this off of wallmount - it should not have an interaction outline or the structure tag.
 - type: entity
+  parent: StructureHealthFurnitureWeak
   id: ButtonFrame
   name: button frame
   categories: [ HideSpawnMenu ]

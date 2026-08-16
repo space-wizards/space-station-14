@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseWallmountMachine
+  parent: [ BaseWallmountMachine, StructureHealthMachineFlimsy ]
   id: SignalTimer
   name: signal timer
   description: It's a timer for sending timed signals to things.
@@ -16,10 +16,8 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 200
+        damage: 50
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak

@@ -1,7 +1,6 @@
 # Base recharging behaviours
 - type: entity
   abstract: true
-  parent: BaseConstructibleMachineDestructible
   id: CoreRecharger
   placement:
     mode: SnapgridCenter
@@ -32,7 +31,7 @@
 # Base physical rechargers
 - type: entity
   abstract: true
-  parent: [CoreRecharger, BaseMachinePowered, ConstructibleMachine]
+  parent: [ CoreRecharger, BaseMachinePowered, ConstructibleMachine ]
   id: BaseRecharger
   components:
   - type: Transform
@@ -40,20 +39,10 @@
     noRot: false
   - type: Anchorable
     delay: 1
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 175
-      behaviors:
-      - !type:EmptyAllContainersBehaviour
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
 
 - type: entity
   abstract: true
-  parent: [CoreItemRecharger, BaseMachinePowered, ConstructibleMachine]
+  parent: [ CoreItemRecharger, ConstructibleMachine, BaseSmallConstructibleMachineDestructible ]
   id: BaseItemRecharger
   components:
   - type: Sprite
@@ -79,9 +68,11 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 175
+        damage: 100
       behaviors:
-      - !type:EmptyAllContainersBehaviour
+      - !type:EmptyContainersBehaviour
+        containers:
+        - charger_slot
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
@@ -144,6 +135,8 @@
         - MachineMask
         layer:
         - MachineLayer
+  - type: Damageable
+    damageModifierSet: PlasteelMod
   - type: LitOnPowered
   - type: PointLight
     radius: 1.5
@@ -183,9 +176,10 @@
       charger_slot:
         ejectOnInteract: true
         whitelist:
+          tags:
+          - Stunbaton
           components:
           - BatteryAmmoProvider
-          - Stunbaton
           - PowerCell
         blacklist:
           tags:
@@ -211,9 +205,10 @@
       charger_slot:
         ejectOnInteract: true
         whitelist:
+          tags:
+          - Stunbaton
           components:
           - BatteryAmmoProvider
-          - Stunbaton
           - PowerCell
         blacklist:
           tags:
@@ -243,15 +238,16 @@
       charger_slot:
         ejectOnInteract: true
         whitelist:
+          tags:
+          - Stunbaton
           components:
           - BatteryAmmoProvider
-          - Stunbaton
         blacklist:
           tags:
           - PotatoBattery
 
 - type: entity
-  parent: BaseRecharger
+  parent: [ BaseRecharger, BaseConstructibleMachineDestructible ]
   id: BorgCharger
   name: cyborg recharging station
   description: A stationary charger for various robotic and cyborg entities. Surprisingly spacious.
@@ -337,6 +333,15 @@
         - MachineMask
         layer:
         - MachineLayer
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 175
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
 
 - type: entity
   parent: BorgCharger
