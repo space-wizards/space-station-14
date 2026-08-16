@@ -33,7 +33,6 @@ public sealed class SurveillanceCameraSetupBoundUi : BoundUserInterface
         _window.OpenCentered();
         _window.OnNameConfirm += SendDeviceName;
         _window.OnNetworkConfirm += SendSelectedNetwork;
-        _window.OnClose += Close;
     }
 
     private void SendSelectedNetwork(int idx)
@@ -57,16 +56,5 @@ public sealed class SurveillanceCameraSetupBoundUi : BoundUserInterface
 
         _window.UpdateState(cast.Name, cast.NameDisabled, cast.NetworkDisabled);
         _window.LoadAvailableNetworks(cast.Network, cast.Networks);
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-
-        if (disposing)
-        {
-            _window?.Dispose();
-            _window = null;
-        }
     }
 }

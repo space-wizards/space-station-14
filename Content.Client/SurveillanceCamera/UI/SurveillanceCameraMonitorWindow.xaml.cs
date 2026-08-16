@@ -195,7 +195,7 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
 
     private void OnSubnetListSelect(ItemList.ItemListSelectedEventArgs args)
     {
-        CameraSelected!((ProtoId<DeviceFrequencyPrototype>)SubnetList[args.ItemIndex].Metadata!, null);
+        CameraSelected!((string)SubnetList[args.ItemIndex].Metadata!, null);
     }
 
     public void SetMap(EntityUid mapUid)

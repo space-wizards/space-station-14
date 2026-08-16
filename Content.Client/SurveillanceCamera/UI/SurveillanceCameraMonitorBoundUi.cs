@@ -123,8 +123,5 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
             _eyeLerpingSystem.RemoveEye(_currentCamera.Value);
             _currentCamera = null;
         }
-
-        if (disposing)
-            _window?.Orphan();
     }
 }
