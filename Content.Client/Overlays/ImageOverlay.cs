@@ -25,6 +25,9 @@ public sealed partial class ImageOverlay : Overlay
         IoCManager.InjectDependencies(this);
     }
 
+    /// <summary>
+    /// updates the list of active overlay textures. 
+    /// </summary>
     public void UpdateState(List<ImageOverlayComponent> components)
     {
         _texturesToDraw.Clear();
@@ -35,7 +38,10 @@ public sealed partial class ImageOverlay : Overlay
         }
     }
 
-    public void OverlayActivate(ImageOverlayComponent comp, bool isActive)
+    /// <summary>
+    /// Activates or deactivates the overlay texture. 
+    /// </summary>
+    public void SetActive(ImageOverlayComponent comp, bool isActive)
     {
         if (comp.Active == isActive) return; // prevents repetitious calls of this method
         comp.Active = isActive;

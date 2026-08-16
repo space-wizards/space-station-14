@@ -24,7 +24,7 @@ public sealed partial class ImageOverlaySystem : EquipmentHudSystem<ImageOverlay
     [SubscribeLocalEvent]
     private void OnItemToggled(Entity<ImageOverlayComponent> ent, ref ItemMaskToggledEvent args)
     {
-        _overlay.OverlayActivate(ent.Comp, !args.Mask.Comp.IsToggled);
+        _overlay.SetActive(ent.Comp, !args.Mask.Comp.IsToggled);
     }
 
     /// <inheritdoc />
