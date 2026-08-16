@@ -1,6 +1,26 @@
 - type: entity
+  abstract: true
+  parent: [ BaseStructure, StructureHealthFurnitureStrong ]
+  id: BaseStatue
+  components:
+  - type: Sprite
+    noRot: true
+    drawdepth: Mobs
+  - type: Damageable
+    damageModifierSet: RockMod
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 80
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/break_stone.ogg
+
+- type: entity
+  parent: BaseStatue
   id: StatueVenusRed
-  parent: BaseStructure
   name: statue of a pure maiden
   suffix: Red
   description: An ancient marble statue. The subject is depicted with a floor-length braid and is wielding a red toolbox.
@@ -13,8 +33,8 @@
     offset: "0.0,0.5"
 
 - type: entity
+  parent: BaseStatue
   id: StatueVenusBlue
-  parent: BaseStructure
   name: statue of a pure maiden
   suffix: Blue
   description: An ancient marble statue. The subject is depicted with a floor-length braid and is wielding a blue toolbox.
@@ -27,8 +47,8 @@
     offset: "0.0,0.5"
 
 - type: entity
+  parent: BaseStatue
   id: StatueBananiumClown
-  parent: BaseStructure
   name: bananium savior statue
   description: A bananium statue. It portrays the return of the savior who will rise up and lead the clowns to the great honk.
   components:
@@ -41,35 +61,23 @@
   - type: Construction
     graph: BananiumStatueClown
     node: bananiumStatue
+  - type: Damageable
+    damageModifierSet: BananiumMod
 
 # Ironsand Statues
 
 - type: entity
   abstract: true
-  parent: BaseStructure
+  parent: BaseStatue
   id: BaseIronsandStatue
   description: A mysterious statue found in a desert of iron sand.
   components:
-  - type: Sprite
-    noRot: true
-    drawdepth: Mobs
-  - type: Damageable
-    damageModifierSet: Rock
-  - type: Injurable
-    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 80
       behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Effects/break_stone.ogg
-          params:
-            volume: -6
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
       - !type:SpawnEntitiesBehavior
         spawn:
           SteelOre1:
