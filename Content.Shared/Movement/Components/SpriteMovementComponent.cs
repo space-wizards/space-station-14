@@ -23,6 +23,6 @@ public sealed partial class SpriteMovementComponent : Component
     /// <summary>
     /// Whether the sprite is moving.
     /// </summary>
-    [ViewVariables, AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public bool IsMoving;
 }
