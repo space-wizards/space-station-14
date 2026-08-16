@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Reflection;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Shared.Reflection;
@@ -69,9 +70,8 @@ public abstract partial class StylesheetDefinition : ISheetletConfig
         // Sorts sheetlets by how "close" their attribute types are to the specific definition, letting us create an ordering
         // so that you can make overriding sheetlets.
         var sheetletTypes = _reflectionManager.FindTypesWithAttribute<SheetletAttribute>()
-            .Where(t => GetCustomAttribute(t, typeof(SheetletAttribute)) is SheetletAttribute)
-            .OrderByDescending(t =>
-                GetSheetletDistance((SheetletAttribute)GetCustomAttribute(t, typeof(SheetletAttribute))!))
+            .Where(t => GetSheetletAttribute(t)!.Definitions.Any(ty => ty.IsInstanceOfType(this)))
+            .OrderByDescending(t => GetSheetletDistance(GetSheetletAttribute(t)!))
             .ThenBy(t => t.Name)
             .ToList();
 
@@ -83,6 +83,16 @@ public abstract partial class StylesheetDefinition : ISheetletConfig
         }
 
         return new Stylesheet(rules.ToArray());
+    }
+
+    /// <summary>
+    /// Gets the sheetlet attribute from the provided member info.
+    /// </summary>
+    /// <param name="memberInfo">Member info</param>
+    /// <returns>Sheetlet attribute, or null</returns>
+    private static SheetletAttribute? GetSheetletAttribute(MemberInfo memberInfo)
+    {
+        return GetCustomAttribute(memberInfo, typeof(SheetletAttribute)) as SheetletAttribute;
     }
 
     /// <summary>
