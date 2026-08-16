@@ -25,9 +25,11 @@ public sealed partial class PassiveDamageSystem : EntitySystem
 
         var proposedUpdateTime = _timing.CurTime + TimeSpan.FromSeconds(component.IntervalHaltOnDamageTaken);
         if (proposedUpdateTime > component.NextDamage)
+        {
             component.NextDamage = proposedUpdateTime;
+            Dirty<PassiveDamageComponent>((ent, component));
+        }
 
-        Dirty<PassiveDamageComponent>((ent, component));
     }
 
     #endregion
