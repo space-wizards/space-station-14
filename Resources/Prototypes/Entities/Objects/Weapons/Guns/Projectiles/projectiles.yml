@@ -881,6 +881,7 @@
     xWave:
       amplitude: 0.4
       frequency: 17
+      phaseOffset: null
   - type: PointLight
     radius: 2.5
     color: magenta

@@ -51,8 +51,11 @@ public sealed partial class SinWaveAnimationSystem : EntitySystem
 
     private Animation GetAnimation(SinWaveAnimationComponent sinComp, SpriteComponent sprite)
     {
-        if (sinComp.LastTime == 0 && sinComp.XWave != null && sinComp.XWave.Value.PhaseOffset == null)
-            sinComp.LastTime = _random.NextFloat(0, 2f*(float)Math.PI / sinComp.XWave.Value.Frequency);
+        if (sinComp is { LastTime: 0, XWave.PhaseOffset: null })
+            sinComp.LastTime += _random.NextFloat(0, (float)Math.Tau / sinComp.XWave.Value.Frequency);
+
+        if (sinComp is { LastTime: 0, YWave.PhaseOffset: null })
+            sinComp.LastTime += _random.NextFloat(0, (float)Math.Tau / sinComp.YWave.Value.Frequency);
 
         var rotationKeyFrames = new List<AnimationTrackProperty.KeyFrame>();
         var offsetKeyFrames = new List<AnimationTrackProperty.KeyFrame>();
