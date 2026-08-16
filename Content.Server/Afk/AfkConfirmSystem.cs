@@ -38,8 +38,6 @@ public sealed partial class AfkConfirmSystem : EntitySystem
     {
         base.Initialize();
 
-        _afkAutomaticChecks = _cfg.GetCVar(CCVars.AfkAutomaticChecks);
-
         // Unafking does NOT clear it, require them to confirm via the window so they don't just random mash buttons.
         SubscribeLocalEvent<AFKEvent>(OnAfk);
         _players.PlayerStatusChanged += OnPlayerStatusChanged;
