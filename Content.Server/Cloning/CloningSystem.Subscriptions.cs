@@ -1,15 +1,23 @@
-using Content.Server.Forensics;
+using Content.Shared.Body.Components;
+using Content.Shared.Body.Systems;
 using Content.Server.Speech.EntitySystems;
 using Content.Shared.Cloning.Events;
+using Content.Shared.Clothing.Components;
+using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.FixedPoint;
+using Content.Shared.Forensics.Components;
+using Content.Shared.Forensics.Systems;
 using Content.Shared.Inventory;
 using Content.Shared.Labels.Components;
 using Content.Shared.Labels.EntitySystems;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Pulling.Components;
+using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Paper;
-using Content.Shared.Stacks;
 using Content.Shared.Speech.Components;
+using Content.Shared.Speech.EntitySystems;
+using Content.Shared.Stacks;
 using Content.Shared.Storage;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
@@ -26,12 +34,15 @@ namespace Content.Server.Cloning;
 /// </remarks>
 public sealed partial class CloningSystem
 {
-    [Dependency] private readonly SharedStackSystem _stack = default!;
-    [Dependency] private readonly LabelSystem _label = default!;
-    [Dependency] private readonly ForensicsSystem _forensics = default!;
-    [Dependency] private readonly PaperSystem _paper = default!;
-    [Dependency] private readonly VocalSystem _vocal = default!;
-    [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
+    [Dependency] private SharedStackSystem _stack = default!;
+    [Dependency] private LabelSystem _label = default!;
+    [Dependency] private PaperSystem _paper = default!;
+    [Dependency] private VocalSystem _vocal = default!;
+    [Dependency] private MovementSpeedModifierSystem _movementSpeedModifier = default!;
+    [Dependency] private SharedChameleonClothingSystem _chameleonClothing = default!;
+    [Dependency] private PullingSystem _pulling = default!;
+    [Dependency] private BloodstreamSystem _bloodstream = default!;
+    [Dependency] private ForensicsSystem _forensics = default!;
 
     public override void Initialize()
     {
@@ -47,13 +58,16 @@ public sealed partial class CloningSystem
         SubscribeLocalEvent<PaperComponent, CloningItemEvent>(OnCloneItemPaper);
         SubscribeLocalEvent<ForensicsComponent, CloningItemEvent>(OnCloneItemForensics);
         SubscribeLocalEvent<StoreComponent, CloningItemEvent>(OnCloneItemStore);
+        SubscribeLocalEvent<ChameleonClothingComponent, CloningItemEvent>(OnCloneItemChameleon);
 
         // These are for cloning components that cannot be cloned using CopyComp.
         // Put them into CloningSettingsPrototype.EventComponents to have them be applied to the clone.
         SubscribeLocalEvent<VocalComponent, CloningEvent>(OnCloneVocal);
         SubscribeLocalEvent<StorageComponent, CloningEvent>(OnCloneStorage);
         SubscribeLocalEvent<InventoryComponent, CloningEvent>(OnCloneInventory);
-        SubscribeLocalEvent<MovementSpeedModifierComponent, CloningEvent>(OnCloneInventory);
+        SubscribeLocalEvent<MovementSpeedModifierComponent, CloningEvent>(OnCloneMovementSpeedModifier);
+        SubscribeLocalEvent<PullerComponent, CloningEvent>(OnClonePuller);
+        SubscribeLocalEvent<BloodstreamComponent, CloningEvent>(OnCloneBloodstream);
     }
 
     private void OnCloneItemStack(Entity<StackComponent> ent, ref CloningItemEvent args)
@@ -82,7 +96,7 @@ public sealed partial class CloningSystem
     private void OnCloneItemForensics(Entity<ForensicsComponent> ent, ref CloningItemEvent args)
     {
         // copy any forensics to the cloned item
-        _forensics.CopyForensicsFrom(ent.Comp, args.CloneUid);
+        _forensics.CopyForensicsFrom(ent.AsNullable(), args.CloneUid);
     }
 
     private void OnCloneItemStore(Entity<StoreComponent> ent, ref CloningItemEvent args)
@@ -94,6 +108,12 @@ public sealed partial class CloningSystem
         {
             cloneStoreComp.Balance = new Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2>(ent.Comp.Balance);
         }
+    }
+
+    private void OnCloneItemChameleon(Entity<ChameleonClothingComponent> ent, ref CloningItemEvent args)
+    {
+        // copy the prototype the original is mimicing
+        _chameleonClothing.SetSelectedPrototype(args.CloneUid, ent.Comp.Default);
     }
 
     private void OnCloneVocal(Entity<VocalComponent> ent, ref CloningEvent args)
@@ -120,11 +140,27 @@ public sealed partial class CloningSystem
         _inventory.CopyComponent(ent.AsNullable(), args.CloneUid);
     }
 
-    private void OnCloneInventory(Entity<MovementSpeedModifierComponent> ent, ref CloningEvent args)
+    private void OnCloneMovementSpeedModifier(Entity<MovementSpeedModifierComponent> ent, ref CloningEvent args)
     {
         if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
             return;
 
         _movementSpeedModifier.CopyComponent(ent.AsNullable(), args.CloneUid);
+    }
+
+    private void OnClonePuller(Entity<PullerComponent> ent, ref CloningEvent args)
+    {
+        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
+            return;
+
+        _pulling.CopyPullerComponent(ent.AsNullable(), args.CloneUid);
+    }
+
+    private void OnCloneBloodstream(Entity<BloodstreamComponent> ent, ref CloningEvent args)
+    {
+        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
+            return;
+
+        _bloodstream.CopyComponent(ent.AsNullable(), args.CloneUid);
     }
 }

@@ -1,3 +1,4 @@
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using JetBrains.Annotations;
@@ -11,70 +12,46 @@ namespace Content.Server.Stack
     /// This is a good example for learning how to code in an ECS manner.
     /// </summary>
     [UsedImplicitly]
-    public sealed class StackSystem : SharedStackSystem
+    public sealed partial class StackSystem : SharedStackSystem
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private SharedHandsSystem _hands = default!;
+        [Dependency] private SharedPopupSystem _popup = default!;
+        [Dependency] private SharedTransformSystem _transform = default!;
+
+        [Dependency] private EntityQuery<StackComponent> _stackQuery;
 
         #region Spawning
 
-        /// <summary>
-        /// Spawns a new entity and moves an amount to it from the stack.
-        /// Moves nothing if amount is greater than ent's stack count.
-        /// </summary>
-        /// <param name="amount"> How much to move to the new entity. </param>
-        /// <returns>Null if StackComponent doesn't resolve, or amount to move is greater than ent has available.</returns>
+        /// <inheritdoc />
         [PublicAPI]
-        public EntityUid? Split(Entity<StackComponent?> ent, int amount, EntityCoordinates spawnPosition)
+        public override EntityUid? Split(Entity<StackComponent?> ent, int amount, EntityCoordinates spawnPosition, EntityUid? user = null)
         {
-            if (!Resolve(ent.Owner, ref ent.Comp))
+            if (!_stackQuery.Resolve(ent.Owner, ref ent.Comp))
                 return null;
 
             // Try to remove the amount of things we want to split from the original stack...
             if (!TryUse(ent, amount))
                 return null;
 
-            if (!_prototypeManager.Resolve(ent.Comp.StackTypeId, out var stackType))
+            if (!ProtoMan.Resolve(ent.Comp.StackTypeId, out var stackType))
                 return null;
 
             // Set the output parameter in the event instance to the newly split stack.
             var newEntity = SpawnAtPosition(stackType.Spawn, spawnPosition);
 
             // There should always be a StackComponent
-            var stackComp = Comp<StackComponent>(newEntity);
+            var stackComp = _stackQuery.Comp(newEntity);
 
             SetCount((newEntity, stackComp), amount);
             stackComp.Unlimited = false; // Don't let people dupe unlimited stacks
             Dirty(newEntity, stackComp);
 
-            var ev = new StackSplitEvent(newEntity);
+            var ev = new StackSplitEvent(newEntity, user);
             RaiseLocalEvent(ent, ref ev);
 
             return newEntity;
         }
 
-
-        #endregion
-        #region Event Handlers
-
-        /// <inheritdoc />
-        protected override void UserSplit(Entity<StackComponent> stack, Entity<TransformComponent?> user, int amount)
-        {
-            if (!Resolve(user.Owner, ref user.Comp, false))
-                return;
-
-            if (amount <= 0)
-            {
-                Popup.PopupCursor(Loc.GetString("comp-stack-split-too-small"), user.Owner, PopupType.Medium);
-                return;
-            }
-
-            if (Split(stack.AsNullable(), amount, user.Comp.Coordinates) is not { } split)
-                return;
-
-            Hands.PickupOrDrop(user.Owner, split);
-
-            Popup.PopupCursor(Loc.GetString("comp-stack-split"), user.Owner);
-        }
         #endregion
     }
 }

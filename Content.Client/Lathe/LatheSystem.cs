@@ -9,11 +9,11 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Lathe;
 
-public sealed class LatheSystem : SharedLatheSystem
+public sealed partial class LatheSystem : SharedLatheSystem
 {
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private UserInterfaceSystem _ui = default!;
 
     public override void Initialize()
     {
@@ -83,7 +83,6 @@ public sealed class LatheSystem : SharedLatheSystem
             latheUi.UpdateMaterialAmounts();
         }
     }
-
 
     ///<remarks>
     /// Whether or not a recipe is available is not really visible to the client,

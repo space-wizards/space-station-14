@@ -21,6 +21,7 @@
     graph: LightFixture
     node: bulbLight
   - type: Sprite
+    offset: 0, 1
     sprite: Structures/Wallmounts/Lighting/strobe_light.rsi
     drawdepth: WallMountedItems
     layers:
@@ -31,12 +32,12 @@
       shader: unshaded
     state: base
   - type: PointLight
-    mask: /Textures/Effects/LightMasks/double_cone.png
+    lightMask: ConeDouble
     color: "#FFE4CE"
     energy: 5
     radius: 10
     softness: 1
-    offset: "0, 0.35"
+    offset: "0, 0.25"
   - type: RotatingLight
   - type: Physics
     bodyType: Static
@@ -52,16 +53,11 @@
         layer:
         - TabletopMachineLayer
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors: #excess damage, don't spawn entities.
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 25
@@ -100,6 +96,7 @@
   - type: PoweredLight
     bulb: Bulb
     on: false
+  - type: SpookyPoweredLight
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: DeviceNetwork

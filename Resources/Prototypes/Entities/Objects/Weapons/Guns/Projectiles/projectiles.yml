@@ -850,6 +850,48 @@
     energy: 0.5
 
 - type: entity
+  parent: BulletRocket
+  id: BulletGuidedXenoborgMissile
+  name: guided xenoborg missile
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/xenoborg_guided_missile.rsi
+    layers:
+    - state: base
+    - state: tip
+      shader: unshaded
+    - state: fire
+      shader: unshaded
+  - type: PointLight
+    radius: 3.5
+    color: magenta
+    energy: 0.5
+  - type: TimedDespawn
+    lifetime: 15
+  - type: TriggerOnSpawn
+    keyOut: timerTrigger
+  - type: TimerTrigger
+    delay: 14.9 # so it explodes before it despawns
+    keysIn: 
+    - timerTrigger
+  - type: ExplodeOnTrigger
+    keysIn:
+    - trigger
+    - timer
+  - type: Explosive
+    explosionType: Minibomb
+    totalIntensity: 50
+    intensitySlope: 7
+    canCreateVacuum: false
+  - type: ChasingWalk
+    speed: 6
+    stopAtTarget: false
+    impulseInterval: 0.1
+    maxAngleVectorChangePerImpulse: 10
+    rotateWithImpulse: true
+
+- type: entity
   id: BulletGrenadeBaton
   name: baton grenade
   parent: BaseBullet
@@ -1012,6 +1054,7 @@
       muzzleFlash: null
 
 - type: entity
+  parent: [SolutionVapor, SolutionSmall]
   id: BulletWaterShot
   name: water
   categories: [ HideSpawnMenu ]
@@ -1034,10 +1077,6 @@
       map: ["enum.VaporVisualLayers.Base"]
   - type: Ammo
     muzzleFlash: null
-  - type: SolutionContainerManager
-    solutions:
-      vapor:
-        maxVol: 50
   - type: Fixtures
     fixtures:
       projectile:
@@ -1407,7 +1446,7 @@
         - Opaque
 
 - type: entity
-  parent: BaseBullet
+  parent: [SolutionAmmo, BaseBullet]
   id: EnergyCrossbowBolt
   categories: [ HideSpawnMenu ]
   name: energy bolt
@@ -1436,13 +1475,12 @@
     drop: false
   - type: StaminaDamageOnCollide #additional stam damage to make repeated pushups less of a viable counter
     damage: 45
-  - type: SolutionContainerManager
-    solutions:
-      bolt:
-        maxVol: 1.5
-        reagents:
-        - ReagentId: Toxin
-          Quantity: 1.5
+  - type: Solution
+    solution:
+      maxVol: 1.5
+      reagents:
+      - ReagentId: Toxin
+        Quantity: 1.5
   - type: SolutionInjectOnProjectileHit
     transferAmount: 1.5
-    solution: bolt
+    solution: ammo

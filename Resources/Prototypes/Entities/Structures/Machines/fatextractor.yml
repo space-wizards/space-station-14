@@ -1,10 +1,11 @@
 ﻿- type: entity
   id: FatExtractor
-  parent: BaseMachinePowered
+  parent: [ BaseMachinePowered, BaseMachineDestructible ]
   name: lipid extractor
   description: Safely and efficiently extracts excess fat from a subject.
   components:
   - type: FatExtractor
+    minHungerThreshold: Peckish
     processSound:
       path: /Audio/Machines/microwave_loop.ogg
       params:
@@ -65,10 +66,6 @@
         enum.PowerDeviceVisualLayers.Powered:
           True: { state: fat_yellow }
           False: { state: fat_red }
-      enum.WiresVisuals.MaintenancePanelState:
-        enum.WiresVisualLayers.MaintenancePanel:
-          True: { visible: true }
-          False: { visible: false }
   - type: Construction
     graph: Machine
     node: machine
@@ -80,24 +77,19 @@
     containers:
      - entity_storage
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallicStrong
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
+    - trigger: !type:DamageTrigger
+        damage: 175
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak
-      - !type:ChangeConstructionNodeBehavior
-        node: machineFrame
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
   - type: Machine
     board: FatExtractorMachineCircuitboard
   - type: WiresPanel
+  - type: WiresVisuals
   - type: Appearance
   - type: Speech
     speechVerb: Robotic

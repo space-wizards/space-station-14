@@ -1,7 +1,7 @@
 - type: entity
-  id: BaseWeaponBattery
-  parent: BaseItem
   abstract: true
+  parent: BaseItem
+  id: BaseWeaponBatteryNoAmmoCounter
   components:
   - type: Sprite
   - type: Item
@@ -12,7 +12,6 @@
     slots:
     - Back
     - suitStorage
-  - type: AmmoCounter
   - type: Gun
     fireRate: 2
     selectedMode: SemiAuto
@@ -25,6 +24,13 @@
     startingCharge: 1000
   - type: StaticPrice
     price: 500
+
+- type: entity
+  abstract: true
+  parent: BaseWeaponBatteryNoAmmoCounter
+  id: BaseWeaponBattery
+  components:
+  - type: AmmoCounter
 
 - type: entity
   parent: [BaseWeaponBattery, BaseGunWieldable]
@@ -344,7 +350,7 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
   - type: Gun
-    selectedMode: SemiAuto
+    selectedMode: FullAuto
     fireRate: 3
     availableModes:
       - SemiAuto
@@ -438,6 +444,8 @@
   components:
     - type: Item
       size: Ginormous
+      shape:
+      - 0,0,7,3
     - type: MultiHandedItem
     - type: ClothingSpeedModifier
       walkModifier: 0.6
@@ -977,14 +985,34 @@
   parent: [WeaponAdvancedLaser, BaseXenoborgContraband]
   id: WeaponLaserGunXenoborg
   name: xenoborg laser gun
+  components:
+  - type: BatteryAmmoProvider
+    proto: XenoborgLaser
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/xenoborg_laser_gun.rsi
+    layers:
+    - state: base
+      map: [ "enum.GunVisualLayers.Base" ]
+    - state: mag-unshaded-4
+      map: [ "enum.GunVisualLayers.MagUnshaded" ]
 
 - type: entity
   parent: [WeaponLaserCannon, BaseXenoborgContraband]
   id: WeaponLaserCannonXenoborg
   name: xenoborg laser cannon
   components:
+  - type: BatteryAmmoProvider
+    proto: XenoborgHeavyLaser
+    fireCost: 100
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/xenoborg_laser_cannon.rsi
+    layers:
+    - state: base
+      map: [ "enum.GunVisualLayers.Base" ]
+    - state: mag-unshaded-4
+      map: [ "enum.GunVisualLayers.MagUnshaded" ]
   - type: BatterySelfRecharger
-    autoRechargeRate: 30
+    autoRechargeRate: 50
   # "remove" wield bonus and penalty so borgs can use it
   - type: GunWieldBonus
     minAngle: 0
@@ -993,3 +1021,62 @@
     fireRate: 2
     minAngle: 1
     maxAngle: 2
+
+- type: entity
+  parent: [WeaponAdvancedLaser, BaseXenoborgContraband]
+  id: WeaponBurstFireLaserXenoborg
+  name: xenoborg burst fire laser
+  description: An alien weapon, channelling a burst-fire laser through a prism, causing targets to burst into fire.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/xenoborg_burstfire.rsi
+    layers:
+    - state: base
+      map: [ "enum.GunVisualLayers.Base" ]
+    - state: mag-unshaded-4
+      map: [ "enum.GunVisualLayers.MagUnshaded" ]
+      shader: unshaded
+  - type: BatterySelfRecharger
+    autoRechargeRate: 60
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/xenofirebeam.ogg
+    selectedMode: Burst
+    availableModes:
+    - Burst
+    minAngle: 2
+    maxAngle: 30
+    angleIncrease: 3
+    angleDecay: 15
+    cameraRecoilScalar: .25
+  - type: BatteryAmmoProvider
+    proto: XenoborgFireLaser
+    fireCost: 100
+
+- type: entity
+  parent: [BaseWeaponBatteryNoAmmoCounter, BaseXenoborgContraband]
+  id: WeaponRangeFinderXenoborg
+  name: xenoborg range finder
+  components:
+  - type: Sprite 
+    sprite: Objects/Weapons/Guns/Battery/xenoborg_range_finder.rsi
+    layers:
+    - state: icon
+      map: [ "enum.GunVisualLayers.Base" ]
+  - type: Battery
+    maxCharge: 1
+    startingCharge: 1
+    showItemStatus: false
+  - type: BatteryAmmoProvider
+    proto: RangeLaser
+    fireCost: 0 # you are shooting a laser pointer, it's unlimited
+  - type: EyeCursorOffset
+    maxOffset: 3
+    pvsIncrease: 0.3
+  - type: CursorOffsetInHand
+  - type: TargetFinder
+  - type: DeviceLinkSource
+    ports:
+    - TargetSource
+  - type: AutoLinkTransmitter
+    channel: XenoborgGuidedMissileLauncher

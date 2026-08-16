@@ -8,8 +8,8 @@
     mode: SnapgridCenter
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/defib_cabinet.rsi
-    noRot: false
+    sprite: Structures/Wallmounts/defib-cabinet.rsi
+    offset: 0, -0.25
     layers:
     - state: frame
     - state: fill
@@ -29,11 +29,6 @@
     node: done
   - type: Destructible
     thresholds:
-    - trigger: !type:DamageTrigger
-        damage: 80
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
     - trigger: !type:DamageTrigger
         damage: 40
       behaviors:

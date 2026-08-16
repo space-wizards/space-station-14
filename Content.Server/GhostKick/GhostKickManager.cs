@@ -12,9 +12,9 @@ namespace Content.Server.GhostKick;
 // Basically we boot the client off the server without telling them, so the game shits itself.
 // Hilarious, isn't it?
 
-public sealed class GhostKickManager
+public sealed partial class GhostKickManager
 {
-    [Dependency] private readonly IServerNetManager _netManager = default!;
+    [Dependency] private IServerNetManager _netManager = default!;
 
     public void Initialize()
     {
@@ -45,10 +45,10 @@ public sealed class GhostKickManager
 }
 
 [AdminCommand(AdminFlags.Moderator)]
-public sealed class GhostKickCommand : LocalizedEntityCommands
+public sealed partial class GhostKickCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly GhostKickManager _ghostKick = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private GhostKickManager _ghostKick = default!;
 
     public override string Command => "ghostkick";
 
