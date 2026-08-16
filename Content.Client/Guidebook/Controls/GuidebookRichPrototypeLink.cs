@@ -1,10 +1,10 @@
-using Content.Client.RichText;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using Content.Client.UserInterface.ControlExtensions;
+using Content.Client.UserInterface.RichText;
 
 namespace Content.Client.Guidebook.Controls;
 

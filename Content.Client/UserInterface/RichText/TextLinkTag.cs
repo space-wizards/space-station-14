@@ -1,14 +1,14 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
+using Content.Shared.Chat;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.RichText;
 using Robust.Shared.Input;
 using Robust.Shared.Utility;
 using Content.Client.UserInterface.ControlExtensions;
-using Content.Shared.Chat;
 
-namespace Content.Client.RichText;
+namespace Content.Client.UserInterface.RichText;
 
 [UsedImplicitly]
 public sealed class TextLinkTag : IMarkupTagHandler
@@ -21,33 +21,59 @@ public sealed class TextLinkTag : IMarkupTagHandler
 
     public string TextBefore(MarkupNode node)
     {
+        if (!node.Attributes.TryGetValue("ent", out var entParam) || !entParam.TryGetString(out _))
+            return string.Empty;
+
         if (!node.Value.TryGetString(out var text))
             return string.Empty;
 
-        var sys = _entity.System<SharedChatSystem>();
-        return sys.CanClickMessageSender(null) ? string.Empty : text;
+        var chat = _entity.System<SharedChatSystem>();
+        return chat.CanClickMessageSender(null) ? string.Empty : text;
     }
 
-    /// <inheritdoc/>
     public bool TryCreateControl(MarkupNode node, [NotNullWhen(true)] out Control? control)
     {
-        if (!node.Value.TryGetString(out var text)
-            || !node.Attributes.TryGetValue("link", out var linkParameter)
-            || !linkParameter.TryGetString(out var link))
+        if (!node.Value.TryGetString(out var text))
         {
             control = null;
             return false;
         }
 
-        var label = new Label();
-        label.Text = text;
+        string link;
 
+        if (node.Attributes.TryGetValue("ent", out var entParam) && entParam.TryGetString(out var entStr))
+        {
+            if (!NetEntity.TryParse(entStr, out var netEntity))
+            {
+                control = null;
+                return false;
+            }
+
+            var chat = _entity.System<SharedChatSystem>();
+            if (!chat.CanClickMessageSender(null))
+            {
+                control = null;
+                return false;
+            }
+
+            link = netEntity.ToString();
+        }
+        else if (node.Attributes.TryGetValue("link", out var linkParam) && linkParam.TryGetString(out var linkStr))
+        {
+            link = linkStr;
+        }
+        else
+        {
+            control = null;
+            return false;
+        }
+
+        var label = new Label { Text = text };
         label.MouseFilter = Control.MouseFilterMode.Stop;
         label.FontColorOverride = LinkColor;
         label.DefaultCursorShape = Control.CursorShape.Hand;
-
         label.OnMouseEntered += _ => label.FontColorOverride = Color.LightSkyBlue;
-        label.OnMouseExited += _ => label.FontColorOverride = Color.CornflowerBlue;
+        label.OnMouseExited += _ => label.FontColorOverride = LinkColor;
         label.OnKeyBindDown += args => OnKeybindDown(args, link, label);
 
         control = label;
@@ -70,6 +96,7 @@ public sealed class TextLinkTag : IMarkupTagHandler
 }
 
 public interface ILinkClickHandler
-{
-    public void HandleClick(string link);
-}
+    {
+        public void HandleClick(string link);
+    }
+

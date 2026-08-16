@@ -1,4 +1,4 @@
-using Content.Client.RichText;
+using Content.Client.UserInterface.RichText;
 using Content.Client.UserInterface.Systems.Chat.Controls;
 using Content.Shared.Chat;
 using Content.Shared.Input;
@@ -158,9 +158,9 @@ public partial class ChatBox : UIWidget, ILinkClickHandler
         ChatInput.ChannelSelector.Select(toSelect);
     }
 
-    public void HandleClick(string link)
+    public void HandleClick(string ent)
     {
-        if (!NetEntity.TryParse(link, out var netEntity))
+        if (!NetEntity.TryParse(ent, out var netEntity))
             return;
 
         _entManager.RaisePredictiveEvent(new ClickMessageSenderRequestEvent(netEntity));
