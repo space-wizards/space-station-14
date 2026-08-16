@@ -31,9 +31,14 @@ public sealed partial class ResearchSystem
 
     private void OnServerDatabaseModified(EntityUid uid, ResearchServerComponent component, ref TechnologyDatabaseModifiedEvent args)
     {
+        var hasServerDatabase = TryComp<TechnologyDatabaseComponent>(uid, out var serverDb);
         foreach (var client in component.Clients)
         {
             RaiseLocalEvent(client, ref args);
+            if (hasServerDatabase && TryComp<TechnologyDatabaseComponent>(client, out var clientDb))
+            {
+                Sync(client, uid, clientDb, serverDb);
+            }
         }
     }
 
