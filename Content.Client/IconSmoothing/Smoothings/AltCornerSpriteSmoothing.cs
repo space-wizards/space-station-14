@@ -1,16 +1,18 @@
-﻿namespace Content.Client.IconSmoothing.Smoothings;
+﻿using Robust.Client.GameObjects;
+using static Robust.Client.GameObjects.SpriteComponent;
+
+namespace Content.Client.IconSmoothing.Smoothings;
 
 /// <summary>
-/// An expansion of <see cref="CornerSpriteSmoothing"/> that allows for an alternative state with an alternative lookup key!
-/// TODO: THIS SHIT DON'T WORK AND IS A WORSE VERSION OF 9s!!! KILL THIS AND REPLACE IT WITH 9 SPRITE SMOOTHING!!!
+/// An alternative of <see cref="CornerSpriteSmoothing"/> which is based off of 9s with more states dedicated to corners:tm:
 /// </summary>
 public sealed partial class AltCornerSpriteSmoothing : CornerSpriteSmoothing
 {
     /// <summary>
-    /// Alternative Base for when we match on our <see cref="AltMask"/>
+    /// Base string for cardinal based states of which 3 files should exist.
     /// </summary>
-    [DataField(required:true)]
-    public string AltBase { get; set; }
+    [DataField(required: true)]
+    public string CardinalBase;
 
     /// <summary>
     /// An Additional mask of keys we compare against, which can provide additional data.
@@ -18,41 +20,98 @@ public sealed partial class AltCornerSpriteSmoothing : CornerSpriteSmoothing
     [DataField(required:true)]
     public HashSet<string> AltMask { get; set; }
 
+    protected override void InitializeOffset(Entity<SpriteComponent> entity, SpriteSystem sprite, DirectionOffset offset)
+    {
+        base.InitializeOffset(entity, sprite, offset);
+        var key = GetCardinalLayerKey((byte)(2 * (byte)offset));
+        sprite.LayerMapSet(entity.AsNullable(), key, sprite.AddRsiLayer(entity.AsNullable(), CardinalBase + 0, index: Index));
+        sprite.LayerSetDirOffset(entity.AsNullable(), key, offset);
+
+        if (Shader != null)
+            entity.Comp.LayerSetShader(key, Shader);
+    }
+
     public override IEnumerable<(string key, string state)> EnumerateStates(HashSet<string>?[] layers)
     {
         var match = Direction8Flag.None;
-        var altmatch = Direction8Flag.None;
+        var altMatch = Direction8Flag.None;
         byte seen = 0;
         for (byte i = 0; i < IconSmoothSystem.Directions; i++)
         {
+            var mask = (Direction8Flag)(1 << i);
             if (layers[i] is { } keys)
             {
                 if (keys.Overlaps(Mask))
-                    match |= (Direction8Flag)(1 << i);
+                    match |= mask;
 
                 if (keys.Overlaps(AltMask))
-                    altmatch |= (Direction8Flag)(1 << i);
+                    altMatch |= mask;
             }
 
-            if (!GetOrthoganals(i, out var mask))
+            // If even, then we're on a cardinal and have a state!
+            if (i % 2 == 0)
+                yield return (GetCardinalLayerKey(i), GetCardinalState(match, altMatch, mask));
+
+            if (!GetCorners(i, out mask))
                 continue;
 
-            yield return (GetLayerKey(i), GetState(match & mask, altmatch & mask, seen));
+            yield return (GetCornerLayerKey(i), GetCornerState((byte)(match & mask), (byte)(altMatch & mask), seen));
             seen += 2;
         }
     }
 
-    private string GetState(Direction8Flag directions, Direction8Flag altDirections, byte offset)
+    private DirectionFlag ConvertToCardinal(byte flag)
     {
-        // No new data to be gained from alt directions.
-        if ((directions & altDirections) == altDirections)
-            return Base + GetAppendix((byte)directions, offset);
+        // Shift bits down, abusing that we only have 8 bits.
+        flag &= 0x55;
+        flag |= (byte)(flag >> 1);
+        flag &= 0x33;
+        flag |= (byte)(flag >> 2);
 
-        return GetAltState((byte)(directions | altDirections), offset);
+        // Trailing 2 bits are dropped in this conversion so we don't have to remove them above.
+        return (DirectionFlag)flag;
     }
 
-    private string GetAltState(byte directions, byte offset)
+    private string GetCardinalLayerKey(byte i)
     {
-        return AltBase + GetAppendix(directions, offset);
+        return LayerKey + (Direction)i;
+    }
+
+    private string GetCardinalState(Direction8Flag directions, Direction8Flag altDirections, Direction8Flag mask)
+    {
+        if ((mask & directions) > 0)
+            return CardinalBase + 1;
+
+        if ((mask & altDirections) > 0)
+            return CardinalBase + 2;
+
+        return CardinalBase + 0;
+    }
+
+    /// <remarks>
+    /// This is very hardcoded and gross, could use a better mathematical solution but codewise it's fine.
+    /// </remarks>
+    private string GetCornerState(byte directions, byte altDirections, byte offset)
+    {
+        directions = Offset(directions, offset);
+        altDirections = Offset(altDirections, offset);
+
+        return GetCornerState(
+            ConvertToCardinal(directions),
+            ConvertToCardinal(altDirections),
+            (directions & 2) == 2 || (altDirections & 2) == 2); // 2 == Direction8Flag.SouthEast, so we check if either have a corner it can smooth with!
+    }
+
+    /// <remarks>
+    /// This is very hardcoded and gross, could use a better mathematical solution but codewise it's fine.
+    /// </remarks>
+    private string GetCornerState(DirectionFlag directions, DirectionFlag altDirections, bool corner)
+    {
+        // No corner data, so alt and normal directions use the same data.
+        byte mask = (byte)(directions | altDirections);
+        if (!corner || mask < 3)
+            return Base + mask;
+
+        return Base + (4 + (byte)altDirections);
     }
 }

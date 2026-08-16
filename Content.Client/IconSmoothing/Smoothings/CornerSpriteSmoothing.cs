@@ -33,13 +33,18 @@ public partial class CornerSpriteSmoothing : ISpriteSmoothState
         // TODO: This should use RsiDirection some day...
         foreach (var offset in Enum.GetValues<DirectionOffset>())
         {
-            var key = GetLayerKey(offset);
-            sprite.LayerMapSet(entity.AsNullable(), key, sprite.AddRsiLayer(entity.AsNullable(), GetState(0, 0), index: Index));
-            sprite.LayerSetDirOffset(entity.AsNullable(), key, offset);
-
-            if (Shader != null)
-                entity.Comp.LayerSetShader(key, Shader);
+            InitializeOffset(entity, sprite, offset);
         }
+    }
+
+    protected virtual void InitializeOffset(Entity<SpriteComponent> entity, SpriteSystem sprite, DirectionOffset offset)
+    {
+        var key = GetCornerLayerKey(offset);
+        sprite.LayerMapSet(entity.AsNullable(), key, sprite.AddRsiLayer(entity.AsNullable(), GetState(0, 0), index: Index));
+        sprite.LayerSetDirOffset(entity.AsNullable(), key, offset);
+
+        if (Shader != null)
+            entity.Comp.LayerSetShader(key, Shader);
     }
 
     public virtual IEnumerable<(string key, string state)> EnumerateStates(HashSet<string>?[] layers)
@@ -51,15 +56,15 @@ public partial class CornerSpriteSmoothing : ISpriteSmoothState
             if (layers[i] is { } keys && keys.Overlaps(Mask))
                 match |= (Direction8Flag)(1 << i);
 
-            if (!GetOrthoganals(i, out var mask))
+            if (!GetCorners(i, out var mask))
                 continue;
 
-            yield return (GetLayerKey(i), GetState((byte)(match & mask), seen));
+            yield return (GetCornerLayerKey(i), GetState((byte)(match & mask), seen));
             seen += 2;
         }
     }
 
-    protected string GetLayerKey(DirectionOffset i)
+    protected string GetCornerLayerKey(DirectionOffset i)
     {
         var direction = i switch
         {
@@ -73,7 +78,7 @@ public partial class CornerSpriteSmoothing : ISpriteSmoothState
         return LayerKey + direction;
     }
 
-    protected string GetLayerKey(byte i)
+    protected string GetCornerLayerKey(byte i)
     {
         var direction = i switch
         {
@@ -97,12 +102,17 @@ public partial class CornerSpriteSmoothing : ISpriteSmoothState
     {
         // Need to shift these to the right so we only get the 3 relevant directions:tm:
         // Amazed that C# doesn't have a circular bitshift built in for bytes. Kinda fucked up.
-        var appendix = offset > 0 ? (byte)((directions >> offset) | (directions << (8 - offset))) : directions;
+        var appendix = Offset(directions, offset);
         DebugTools.Assert(appendix < 8, $"Calculated appendix of {appendix} went above the maximum of 8, directions: {directions}, offset {offset}");
         return appendix;
     }
 
-    protected bool GetOrthoganals(byte i, out Direction8Flag directions)
+    protected byte Offset(byte directions, byte offset)
+    {
+        return offset > 0 ? (byte)((directions >> offset) | (directions << (8 - offset))) : directions;
+    }
+
+    protected bool GetCorners(byte i, out Direction8Flag directions)
     {
         // The stupid way!!!
         switch (i)

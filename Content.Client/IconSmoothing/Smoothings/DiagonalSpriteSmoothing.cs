@@ -19,7 +19,7 @@ public sealed partial class DiagonalSpriteSmoothing : CornerSpriteSmoothing
 
     public override IEnumerable<(string key, string state)> EnumerateStates(HashSet<string>?[] layers)
     {
-        if (!GetOrthoganals(2, out var mask))
+        if (!GetCorners(2, out var mask))
         {
             DebugTools.Assert($"Hardcoded check in {nameof(DiagonalSpriteSmoothing)} failed to return a mask!");
             yield break;

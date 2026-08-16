@@ -235,6 +235,41 @@
       base: debug
 
 - type: entity
+  parent: WallDebug
+  id: WallDebugA
+  name: debug wall
+  suffix: DEBUG, AltA
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/debugalt.rsi
+    state: base
+  - type: Icon
+    sprite: Structures/Walls/debugalt.rsi
+  - type: IconSmooth
+    key: walls
+    states:
+    - !type:AltCornerSpriteSmoothing
+      mask: [ walls ]
+      altMask: [ windows, grilles, marble, doors ]
+      base: debug
+      cardinalBase: debug-cardinal
+
+- type: entity
+  parent: WallDebugA
+  id: WallDebugB
+  name: debug wall
+  suffix: DEBUG, AltB
+  components:
+  - type: IconSmooth
+    key: marble
+    states:
+    - !type:AltCornerSpriteSmoothing
+      mask: [ marble ]
+      altMask: [ windows, grilles, walls, doors ]
+      base: debug
+      cardinalBase: debug-cardinal
+
+- type: entity
   parent: BaseWall
   id: WallGold
   name: gold wall
