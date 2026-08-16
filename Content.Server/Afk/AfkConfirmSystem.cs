@@ -56,7 +56,6 @@ public sealed partial class AfkConfirmSystem : EntitySystem
 
         _confirmations.Clear();
         _players.PlayerStatusChanged -= OnPlayerStatusChanged;
-        _cfg.UnsubValueChanged(CCVars.AfkAutomaticChecks, OnAfkAutomaticChecksToggled);
         _cfg.UnsubValueChanged(CCVars.AfkTime, OnAfkTimeChanged);
     }
 
