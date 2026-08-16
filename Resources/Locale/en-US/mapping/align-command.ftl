@@ -2,3 +2,4 @@ cmd-align-desc = Automatically snap the alignment of all anchored airlocks, door
 cmd-align-help = Usage: {$command} [MapID]
 cmd-align-no-release = You can't use this command if the game is running in RELEASE configuration.
 cmd-hint-align-id = MapID
+cmd-align-feedback = Found {$countAll} alignable entities, of which {$countFixed} were rotated.

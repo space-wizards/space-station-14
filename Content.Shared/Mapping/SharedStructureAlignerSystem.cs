@@ -1,6 +1,5 @@
 using Content.Shared.CCVar;
 using Content.Shared.Construction.Components;
-using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 
@@ -42,7 +41,7 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
         if (!entity.Comp.AnchorAlign)
             return;
 
-        Align(entity.AsNullable());
+        Align(entity);
     }
 
     /// <summary>
@@ -55,7 +54,7 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
         if (!_mapInitAlign)
             return;
 
-        Align(entity.AsNullable());
+        Align(entity);
     }
 
     /// <summary>
@@ -80,17 +79,14 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
             countAll++;
         }
 
-        return ($"Found {countAll} alignable entities, of which {countFixed} were rotated.");  // TODO:ERRANT localize? Make this a log instead of a return?
+        return Loc.GetString("cmd-align-feedback", ("countAll", countAll), ("countFixed", countFixed));
     }
 
     /// <summary>
     /// Aligns the target entity to it's neighboring StructureAlignToComponent-s with matching types.
     /// </summary>
-    private bool Align(Entity<StructureAlignerComponent?> entity)
+    private bool Align(Entity<StructureAlignerComponent> entity)
     {
-        if (!Resolve(entity, ref entity.Comp))
-            return false;
-
         var trans = Transform(entity);
 
         // Do not align to loose debris
@@ -136,8 +132,6 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
             northSouth += Math.Round(Math.Abs(vect.Y)) * weight;
         }
 
-        // Do we care about neighbor count?
-
         // Determine correct orientation
         // A horizontal base sprite is assumed, with neighbors to the East or West being acceptable.
         // If the entity instead has N or S side neighbors, it will be rotated 90 degrees.
@@ -157,18 +151,17 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
 
         var locRot = Math.Abs(trans.LocalRotation);
         // Don't want to "fix" a 180 degree misalignment
-        // Maybe airlocks should only have 2 rot states in the first place?
 
         // rotate sprite
         if (!MathHelper.CloseTo(locRot, targetAngle.Value, 0.01f)
             && !MathHelper.CloseTo(locRot, targetAngle.Value + Angle.FromDegrees(180), 0.01f))
         {
-            var meta = MetaData(entity.Owner);
-
 
             _trans.SetLocalRotation(entity, trans.LocalRotation + Angle.FromDegrees(90));
 
-            Log.Info($"Aligned entity '{entity.Owner }' on map {trans.MapID} at {trans.WorldPosition.Ceiled()} : { meta.EntityName}"); //TODO:ERRANT Loglevel to debug? //Obsolete!
+            var name = MetaData(entity.Owner).EntityName;
+            var pos = _trans.GetWorldPosition(entity.Owner);
+            Log.Info($"Aligned entity '{ entity.Owner }' on map { trans.MapID } at { pos } : { name }");
             return true;
         }
 
@@ -180,15 +173,15 @@ public enum StructureAlignType : byte
 {
     /// <summary>
     /// Airlocks, doors, shutters, blast doors and everything that would be functionally
-    /// considered a room boundary (doors, walls, windows, full tile rock)
-    /// No firelocks
-    /// No thin walls/doors //TODO:ERRANT should energy barriers (turnstiles) be in either?
+    /// considered a room boundary (doors, walls, windows, full tile rocks etc.)
+    /// No firelocks - they are their own category to avoid interference in atypical placement locations
+    /// No thin walls/doors, or docking airlocks - directionality is too important for these and must be decided manually
     /// </summary>
     Door,
     /// <summary>
     /// Firelocks and everything that would be functionally considered a room boundary
-    /// (doors, walls, windows, full tile rock)
+    /// (doors, walls, windows, full tile rocks etc.)
     /// </summary>
     Firelock,
-    DoNotAlign, //TODO:ERRANT this should be removed and fixed by not inheriting
+    DoNotAlign,
 }
