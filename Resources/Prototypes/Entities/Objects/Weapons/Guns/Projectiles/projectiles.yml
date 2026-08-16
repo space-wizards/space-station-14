@@ -850,6 +850,48 @@
     energy: 0.5
 
 - type: entity
+  parent: BulletRocket
+  id: BulletGuidedXenoborgMissile
+  name: guided xenoborg missile
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/xenoborg_guided_missile.rsi
+    layers:
+    - state: base
+    - state: tip
+      shader: unshaded
+    - state: fire
+      shader: unshaded
+  - type: PointLight
+    radius: 3.5
+    color: magenta
+    energy: 0.5
+  - type: TimedDespawn
+    lifetime: 15
+  - type: TriggerOnSpawn
+    keyOut: timerTrigger
+  - type: TimerTrigger
+    delay: 14.9 # so it explodes before it despawns
+    keysIn: 
+    - timerTrigger
+  - type: ExplodeOnTrigger
+    keysIn:
+    - trigger
+    - timer
+  - type: Explosive
+    explosionType: Minibomb
+    totalIntensity: 50
+    intensitySlope: 7
+    canCreateVacuum: false
+  - type: ChasingWalk
+    speed: 6
+    stopAtTarget: false
+    impulseInterval: 0.1
+    maxAngleVectorChangePerImpulse: 10
+    rotateWithImpulse: true
+
+- type: entity
   id: BulletGrenadeBaton
   name: baton grenade
   parent: BaseBullet
