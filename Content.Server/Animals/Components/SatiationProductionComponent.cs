@@ -15,7 +15,7 @@ namespace Content.Server.Animals.Components;
 public sealed partial class SatiationProductionComponent : Component
 {
     /// <summary>
-    /// Entity whose life state and satiation are used for production.
+    /// Selects the entity whose mob state and satiation are used for production checks and consumption.
     /// </summary>
     [DataField]
     public SatiationProductionOwner Producer = SatiationProductionOwner.Self;
@@ -33,25 +33,25 @@ public sealed partial class SatiationProductionComponent : Component
     public TimeSpan? DelayMax;
 
     /// <summary>
-    /// Satiation removed after successful production.
+    /// Amount of the configured satiation removed after successful production.
     /// </summary>
     [DataField]
     public float SatiationUsage = 10f;
 
     /// <summary>
-    /// Satiation type used for production.
+    /// Satiation type checked and consumed by production. Defaults to hunger.
     /// </summary>
     [DataField]
     public ProtoId<SatiationTypePrototype> SatiationType = SatiationSystem.Hunger;
 
     /// <summary>
-    /// Optional satiation threshold which must remain exceeded after production.
+    /// Optional threshold that the configured satiation must still exceed after applying the production cost.
     /// </summary>
     [DataField]
     public SatiationValue? MinimumSatiationThreshold;
 
     /// <summary>
-    /// If set, entities with the configured satiation must have at least this value.
+    /// Optional minimum numeric value of the configured satiation required before production.
     /// </summary>
     [DataField]
     public float? MinimumSatiation;
@@ -63,18 +63,21 @@ public sealed partial class SatiationProductionComponent : Component
     public bool Automatic = true;
 
     /// <summary>
-    /// Whether player-controlled owners use automatic production.
+    /// Whether automatic production is allowed for player-controlled producer entities.
     /// </summary>
     [DataField]
     public bool AutomaticForPlayers = true;
 
+    /// <summary>
+    /// Next scheduled automatic production attempt. Adjusted while the component is paused.
+    /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoPausedField]
     public TimeSpan NextProductionTime;
 }
 
 /// <summary>
-/// Entity used for production checks and satiation consumption.
+/// Selects the entity against which production conditions are evaluated.
 /// </summary>
 public enum SatiationProductionOwner : byte
 {
@@ -89,7 +92,15 @@ public enum SatiationProductionFailure : byte
 {
     None,
     Dead,
+
+    /// <summary>
+    /// The selected producer does not meet the configured satiation requirement.
+    /// </summary>
     InsufficientSatiation,
+
+    /// <summary>
+    /// The production attempt completed without producing a product.
+    /// </summary>
     ProductUnavailable
 }
 
@@ -97,6 +108,7 @@ public enum SatiationProductionFailure : byte
 /// Raised when production is attempted.
 /// Handlers set <see cref="Produced"/> when something was successfully produced.
 /// </summary>
+/// <param name="Owner">Entity selected as the producer for this attempt.</param>
 [ByRefEvent]
 public record struct ProductionAttemptEvent(EntityUid Owner)
 {

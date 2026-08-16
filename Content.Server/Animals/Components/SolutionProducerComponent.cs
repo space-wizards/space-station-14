@@ -10,6 +10,9 @@ namespace Content.Server.Animals.Components;
 [RegisterComponent, Access(typeof(SolutionProducerSystem))]
 public sealed partial class SolutionProducerComponent : Component
 {
+    /// <summary>
+    /// Solution added during a production attempt.
+    /// </summary>
     [DataField(required: true)]
     public Solution Generated = default!;
 }

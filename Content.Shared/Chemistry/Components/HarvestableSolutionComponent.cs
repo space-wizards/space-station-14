@@ -29,12 +29,21 @@ public sealed partial class HarvestableSolutionComponent : Component
     public SpriteSpecifier VerbIcon =
         new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/spill.svg.192dpi.png"));
 
+    /// <summary>
+    /// Popup shown when the source has no harvestable solution available.
+    /// </summary>
     [DataField]
     public LocId EmptyMessage = "harvestable-solution-empty";
 
+    /// <summary>
+    /// Popup shown when the target container cannot accept more solution.
+    /// </summary>
     [DataField]
     public LocId TargetFullMessage = "harvestable-solution-target-full";
 
+    /// <summary>
+    /// Popup shown after solution is successfully transferred.
+    /// </summary>
     [DataField]
     public LocId SuccessMessage = "harvestable-solution-success";
 }
