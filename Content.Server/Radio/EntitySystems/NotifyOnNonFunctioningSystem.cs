@@ -1,11 +1,11 @@
 using Content.Server.Pinpointer;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Server.Radio.Components;
 using Content.Shared.Construction;
 using Content.Shared.Destructible;
 using Content.Shared.Lock;
 using Content.Shared.Power.EntitySystems;
-using Content.Shared.Radio.Components;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Radio.EntitySystems;
@@ -74,26 +74,26 @@ public sealed partial class NotifyOnNonFunctioningSystem : EntitySystem
             return;
 
         if (args.ReceivedPower < args.DrawRate)
-            AlertRadioIfWasWorking(ent, ent.Comp.LocUnpowered);
+            AlertRadioIfWasWorking(ent, ent.Comp.LocUnpowered, true);
     }
 
-    private void AlertRadioIfWasWorking(Entity<NotifyOnNonFunctioningComponent> ent, string locString)
+    private void AlertRadioIfWasWorking(Entity<NotifyOnNonFunctioningComponent> ent, string locString, bool ignorePower = false)
     {
 
         if (!_powerState.GetWorkingState(ent.Owner))
             return;
 
-        AlertRadio(ent, locString);
+        AlertRadio(ent, locString, ignorePower);
     }
 
-    private void AlertRadio(Entity<NotifyOnNonFunctioningComponent> ent, string locString)
+    private void AlertRadio(Entity<NotifyOnNonFunctioningComponent> ent, string locString, bool ignorePower = false)
     {
-        if (ent.Comp.RequirePowered)
+        if (ent.Comp.RequirePowered && !ignorePower)
         {
             if (TryComp<ApcPowerReceiverComponent>(ent, out var apc) && !apc.Powered)
                 return;
 
-            if (TryComp<PowerConsumerComponent>(ent, out var consumer) && consumer.DrawRate < consumer.ReceivedPower)
+            if (TryComp<PowerConsumerComponent>(ent, out var consumer) && consumer.DrawRate > consumer.ReceivedPower)
                 return;
         }
 

@@ -44,6 +44,7 @@
     locDestroyed: emitter-destroyed-broadcast
     locUnlocked: emitter-unlocked-broadcast
     locUnpowered: emitter-unpowered-broadcast
+    locUnanchored: emitter-unpowered-broadcast
     locTurnedOff: emitter-turn-off-broadcast
     radioChannel: Engineering
     requirePowered: true
