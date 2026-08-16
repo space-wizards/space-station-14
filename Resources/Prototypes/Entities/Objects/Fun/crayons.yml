@@ -55,6 +55,7 @@
   parent: Crayon
   id: CrayonMime
   name: mime crayon
+  description: A colorless crayon. Looks tasty. Mmmm...
   components:
   - type: Sprite
     state: mime
