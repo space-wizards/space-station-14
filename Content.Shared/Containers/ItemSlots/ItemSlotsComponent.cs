@@ -36,6 +36,13 @@ public sealed partial class ItemSlotsComponent : Component
     // In order to avoid #1 leading to duplicate slots when saving a map, the Slots dictionary is a read-only
     // datafield. This means that if your system/component dynamically changes the item slot (e.g., updating
     // whitelist or whatever), you should use #1.
+
+    /// <summary>
+    /// Whether to allow the smart-equip feature to work with this item's slots.
+    /// Defaults to false as so many ItemSlots entities do NOT want the smart-equip functionality.
+    /// </summary>
+    [DataField]
+    public bool AllowSmartEquip;
 }
 
 [Serializable, NetSerializable]
