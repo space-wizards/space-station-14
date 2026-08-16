@@ -29,6 +29,7 @@
         - type: StationJobs
           availableJobs:
             Captain: [ -1, -1 ]
+            BorgRedGeneric: [ -1, -1 ]
 
 - type: gameMap
   id: TestTeg

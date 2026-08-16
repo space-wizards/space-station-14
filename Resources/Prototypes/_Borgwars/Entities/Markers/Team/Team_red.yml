@@ -1,0 +1,13 @@
+# Hello everybody and my name is welcome.
+
+- type: entity
+  id: SpawnPointBorgWarGenericRed
+  parent: SpawnPointJobBase
+  name: Generic Red Borg Spawn
+  components:
+  - type: SpawnPoint
+    job_id: BorgRedGeneric
+  - type: Sprite
+    sprite: Markers/cross.rsi
+    layers:
+    - state: red
