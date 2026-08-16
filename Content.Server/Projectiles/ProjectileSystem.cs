@@ -31,21 +31,6 @@ public sealed partial class ProjectileSystem : SharedProjectileSystem
         SubscribeLocalEvent<ProjectileComponent, StartCollideEvent>(OnStartCollide);
     }
 
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        var acknowledgeShooterQuery = EntityQueryEnumerator<AcknowledgeShooterComponent>();
-        while (acknowledgeShooterQuery.MoveNext(out var uid, out var acknowledgeShooterComp))
-        {
-            if (acknowledgeShooterComp.WhenToStopIgnoringShooter > _timing.CurTime)
-                continue;
-
-            var projectileComp = Comp<ProjectileComponent>(uid);
-            projectileComp.IgnoreShooter = false;
-        }
-    }
-
     private void OnStartCollide(EntityUid uid, ProjectileComponent component, ref StartCollideEvent args)
     {
         // This is so entities that shouldn't get a collision are ignored.

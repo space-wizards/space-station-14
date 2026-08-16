@@ -205,9 +205,9 @@ public abstract partial class SharedProjectileSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnBeingShot(Entity<AcknowledgeShooterComponent> entity, ref MapInitEvent args)
+    private void OnBeingShot(Entity<ProjectileComponent> entity, ref MapInitEvent args)
     {
-        entity.Comp.WhenToStopIgnoringShooter = _timing.CurTime + entity.Comp.Delay;
+        entity.Comp.WhenToStopIgnoringShooter = _timing.CurTime + entity.Comp.DelayToAcknowledgeShooter;
     }
 
     public void DetachAllEmbedded(Entity<EmbeddedContainerComponent> container)
@@ -223,7 +223,8 @@ public abstract partial class SharedProjectileSystem : EntitySystem
 
     private void PreventCollision(EntityUid uid, ProjectileComponent component, ref PreventCollideEvent args)
     {
-        if (component.IgnoreShooter && (args.OtherEntity == component.Shooter || args.OtherEntity == component.Weapon))
+        if (_timing.CurTime < component.WhenToStopIgnoringShooter
+            && (args.OtherEntity == component.Shooter || args.OtherEntity == component.Weapon))
         {
             args.Cancelled = true;
         }
