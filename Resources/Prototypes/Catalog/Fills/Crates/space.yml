@@ -2,7 +2,7 @@
   parent: CrateEVASecure
   id: CrateEvaKit
   name: EVA kit
-  description: A set consisting of two prestigious EVA suits and helmets. Requires Command access to open.
+  description: A set consisting of two prestigious EVA suits and helmets. Requires Head of Personnel access to open.
   components:
   - type: EntityTableContainerFill
     containers:
