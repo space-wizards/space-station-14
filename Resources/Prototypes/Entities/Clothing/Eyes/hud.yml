@@ -246,24 +246,19 @@
     coverage: EYES
 
 - type: entity
-  parent: [ClothingEyesHudBase, ShowSecurityIcons, BaseSyndicateContraband]
+  parent: [ClothingEyesHudBase, ShowSecurityIcons, BaseSyndicateContraband, ClothingEyesHudSyndicate]
   id: ClothingEyesHudSyndicateAgent
   name: syndicate medical visor
   description: The Syndicate Corpsman's professional heads-up display, designed for quick diagnosis of their team's status.
   components:
-  - type: FlashImmunity
   - type: Sprite
     sprite: Clothing/Eyes/Hud/syndagent.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Hud/syndagent.rsi
-  - type: ShowSyndicateIcons
-  - type: ShowHealthBars
   - type: Tag
     tags:
-    - PetWearable
-    - WhitelistChameleon
-  - type: IdentityBlocker
-    coverage: EYES
+    - PetWearable # Manually added, for some reason this doesn't work when parented from ClothingEyesHudSyndicate..?
+  - type: ShowHealthBars
 
 - type: entity
   parent: [ClothingEyesGlassesSunglasses, ShowSecurityIcons]
