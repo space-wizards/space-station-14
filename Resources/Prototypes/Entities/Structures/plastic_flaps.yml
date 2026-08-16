@@ -47,6 +47,12 @@
     mode: NoSprite
   - type: PlacementReplacement
     key: walls
+  - type: StructureAligner
+    alignType:
+    - Door
+  - type: StructureAlignTo
+    alignType:
+    - Door
 
 - type: entity
   id: PlasticFlapsClear
