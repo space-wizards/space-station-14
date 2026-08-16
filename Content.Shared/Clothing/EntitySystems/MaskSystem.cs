@@ -78,6 +78,45 @@ public sealed partial class MaskSystem : EntitySystem
         evArgs.Verbs.Add(verb);
     }
 
+    [SubscribeLocalEvent]
+    private void OnToggleMaskDoAfterEvent(Entity<MaskComponent> mask, ref ToggleMaskDoAfterEvent args)
+    {
+        if (_timingSystem.ApplyingState || args.Handled || args.Cancelled)
+            return;
+
+        ToggleMask(mask, args.State, args.Force);
+
+        if (args.ByOther && args.Target.HasValue)
+        {
+            var dir = mask.Comp.IsToggled ? "down" : "up";
+
+            var messageWearer =
+                Loc.GetString($"verb-mask-other-pulled-{dir}-popup-message", ("puller", Identity.Entity(args.User, EntityManager)), ("mask", mask));
+            _popupSystem.PopupEntity(messageWearer, args.Target.Value, args.Target.Value);
+
+            var messagePuller =
+                Loc.GetString($"verb-mask-pulled-{dir}-popup-message", ("wearer", Identity.Entity(args.Target.Value, EntityManager)), ("mask", mask));
+            _popupSystem.PopupEntity(messagePuller, args.User, args.User);
+        }
+
+        args.Handled = true;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnFolded(Entity<MaskComponent> mask, ref FoldedEvent args)
+    {
+        // See FoldableClothingComponent
+        if (!mask.Comp.DisableOnFolded)
+            return;
+
+        // While folded, we force the mask to be toggled / pulled down, so that its functionality as a mask is disabled,
+        // and we also prevent it from being un-toggled. We also automatically untoggle it when it gets unfolded, so it
+        // fully returns to its previous state when folded & unfolded.
+
+        ToggleMask(mask, args.IsFolded, force: true);
+        SetToggleable(mask, !args.IsFolded);
+    }
+
     /// <summary>
     /// This is called when someone attempts to pull a mask down via a verb.
     /// </summary>
@@ -116,30 +155,6 @@ public sealed partial class MaskSystem : EntitySystem
             });
     }
 
-    [SubscribeLocalEvent]
-    private void OnToggleMaskDoAfterEvent(Entity<MaskComponent> mask, ref ToggleMaskDoAfterEvent args)
-    {
-        if (_timingSystem.ApplyingState || args.Handled || args.Cancelled)
-            return;
-
-        ToggleMask(mask, args.State, args.Force);
-
-        if (args.ByOther && args.Target.HasValue)
-        {
-            var dir = mask.Comp.IsToggled ? "down" : "up";
-
-            var messageWearer =
-                Loc.GetString($"verb-mask-other-pulled-{dir}-popup-message", ("puller", Identity.Entity(args.User, EntityManager)), ("mask", mask));
-            _popupSystem.PopupEntity(messageWearer, args.Target.Value, args.Target.Value);
-
-            var messagePuller =
-                Loc.GetString($"verb-mask-pulled-{dir}-popup-message", ("wearer", Identity.Entity(args.Target.Value, EntityManager)), ("mask", mask));
-            _popupSystem.PopupEntity(messagePuller, args.User, args.User);
-        }
-
-        args.Handled = true;
-    }
-
     private void ToggleMask(Entity<MaskComponent> mask, bool? state = null, bool force = false)
     {
         if (_timingSystem.ApplyingState
@@ -171,25 +186,9 @@ public sealed partial class MaskSystem : EntitySystem
         Dirty(mask);
     }
 
-    [SubscribeLocalEvent]
-    private void OnFolded(Entity<MaskComponent> mask, ref FoldedEvent args)
-    {
-        // See FoldableClothingComponent
-        if (!mask.Comp.DisableOnFolded)
-            return;
-
-        // While folded, we force the mask to be toggled / pulled down, so that its functionality as a mask is disabled,
-        // and we also prevent it from being un-toggled. We also automatically untoggle it when it gets unfolded, so it
-        // fully returns to its previous state when folded & unfolded.
-
-        ToggleMask(mask, args.IsFolded, force: true);
-        SetToggleable(mask, !args.IsFolded);
-    }
-
     public void SetToggleable(Entity<MaskComponent> mask, bool toggleable)
     {
-        if (_timingSystem.ApplyingState
-            || mask.Comp.IsToggleable == toggleable)
+        if (_timingSystem.ApplyingState || mask.Comp.IsToggleable == toggleable)
             return;
 
         mask.Comp.IsToggleable = toggleable;
