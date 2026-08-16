@@ -145,8 +145,8 @@ public sealed partial class MessagingControls : TabContainer
     private void UpdateCharacterLimitLabel(Label label, int length, int maximum)
     {
         string styleClass = length > maximum
-            ? CommunicationsConsoleSheetlet.CharLimitExceeded
-            : CommunicationsConsoleSheetlet.CharLimit;
+            ? ICommunicationsConsoleConfig.CharLimitExceeded
+            : ICommunicationsConsoleConfig.CharLimit;
         label.SetOnlyStyleClass(styleClass);
         label.Text = Loc.GetString("comms-console-char-limit",
             ("count", length),
