@@ -1,6 +1,6 @@
 - type: satiation
   id: NormalSatiationThirst
-  baseDecayRate: 0.1
+  baseChangeRate: -0.1
   maximumValue: 600
   thresholds:
     Overhydrated: 600
@@ -10,7 +10,7 @@
     Dead: 0
   startingValueMinimum: Thirsty
   startingValueMaximum: Okay
-  decayModifiers:
+  changeModifiers:
     Overhydrated: 1.2
     Okay: 1.0
     Thirsty: 0.8
@@ -28,7 +28,7 @@
 - type: satiation
   id: MouseThirst
   parent: NormalSatiationThirst
-  baseDecayRate: 0.04
+  baseChangeRate: -0.04
   maximumValue: 35
   thresholds:
     Overhydrated: 35
@@ -40,12 +40,12 @@
 - type: satiation
   id: MouseAdmemeThirst
   parent: MouseThirst
-  baseDecayRate: 10
+  baseChangeRate: -10
 
 - type: satiation
   id: SimpleMobBaseThirst
   parent: NormalSatiationThirst
-  baseDecayRate: 0.04
+  baseChangeRate: -0.04
   maximumValue: 200
   thresholds:
     Overhydrated: 200
@@ -57,13 +57,14 @@
 - type: satiation
   id: DionaThirst
   parent: NormalSatiationThirst
-  baseDecayRate: 0.2
+  baseDecayRate: -0.2
 
 - type: entity
   abstract: true
   id: BaseThirstSlowdown
-  component:
+  components:
   - type: SatiationSpeedModifier
     satiations:
       Thirst:
-        Parched: 0.75
+        thresholds:
+          Parched: 0.75

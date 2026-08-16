@@ -400,6 +400,9 @@
   - type: Item
     size: Tiny
     sprite: Objects/Weapons/Melee/utility_knife.rsi
+  - type: ItemToggleExaminableStatus
+    onText: item-toggle-examined-active
+    offText: item-toggle-examined-not-active
   - type: ItemToggle
     soundActivate:
       path: /Audio/Weapons/utilityknifeopen.ogg
