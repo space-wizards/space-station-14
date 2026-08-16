@@ -67,7 +67,10 @@ public sealed partial class MicrowaveMenu : FancyWindow
         StartButton.Disabled = state.IsMicrowaveBusy || state.ContainedSolids.Length == 0;
         EjectButton.Disabled = state.IsMicrowaveBusy || state.ContainedSolids.Length == 0;
 
-        UpdateTimerDisplay(state.CurrentCookTime);
+        if (_isBusy)
+            UpdateRemainingTime();
+        else
+            UpdateTimerDisplay(state.CurrentCookTime);
 
         if (state.ActiveButtonIndex == 0)
         {
@@ -125,15 +128,12 @@ public sealed partial class MicrowaveMenu : FancyWindow
         if (!_isBusy)
             return;
 
-        var curTime = _timing.CurTime;
-        if (_currentCookTimeEnd > curTime)
-        {
-            var remaining = (_currentCookTimeEnd - curTime).TotalSeconds;
-            UpdateTimerDisplay((uint) Math.Ceiling(remaining));
-        }
-        else
-        {
-            UpdateTimerDisplay(0);
-        }
+        UpdateRemainingTime();
+    }
+
+    private void UpdateRemainingTime()
+    {
+        var remaining = Math.Max((_currentCookTimeEnd - _timing.CurTime).TotalSeconds, 0);
+        UpdateTimerDisplay((uint) Math.Ceiling(remaining));
     }
 }
