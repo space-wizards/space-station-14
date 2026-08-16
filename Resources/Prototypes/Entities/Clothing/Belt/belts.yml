@@ -151,8 +151,6 @@
         ejectOnUse: true
         priority: 1
         whitelist:
-          components:
-          - Stunbaton
           tags:
           - CombatKnife
           - MagazinePistolAll
@@ -165,6 +163,7 @@
           - Truncheon
           - Scanner
           - Flask
+          - Stunbaton
         whitelistFailPopup: clothing-holster-insert-fail
         insertSound: /Audio/Weapons/Guns/Misc/utility_insert.ogg
         ejectSound: /Audio/Weapons/Guns/Misc/utility_eject.ogg
@@ -206,7 +205,7 @@
           - Radio
       icon_stunbaton:
         whitelist:
-          components:
+          tags:
           - Stunbaton
       icon_truncheon:
         whitelist:
@@ -274,8 +273,6 @@
         ejectOnUse: true
         priority: 1
         whitelist:
-          components:
-          - Stunbaton
           tags:
           - CombatKnife
           - MagazinePistolAll
@@ -290,6 +287,7 @@
           - CigPack
           - Radio
           - Truncheon
+          - Stunbaton
           - Scanner
           - Flask
         whitelistFailPopup: clothing-holster-insert-fail
@@ -346,7 +344,7 @@
           - Radio
       icon_stunbaton:
         whitelist:
-          components:
+          tags:
           - Stunbaton
       icon_truncheon:
         whitelist:
