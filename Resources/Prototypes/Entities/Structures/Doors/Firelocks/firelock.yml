@@ -176,12 +176,6 @@
   - type: ContainerFill
     containers:
       board: [ FirelockElectronics ]
-  - type: StructureAligner
-    alignType:
-    - Firelock
-  - type: StructureAlignTo
-    alignType:
-    - Firelock
 
 - type: entity
   id: FirelockGlass
