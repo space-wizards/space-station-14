@@ -15,7 +15,7 @@ namespace Content.Client.UserInterface.RichText;
 public readonly record struct LinkData(string Link, Color? Color, bool Clickable);
 
 /// <summary>Which attribute a [textlink] node carries, i.e. which resolver handles it.</summary>
-internal enum TextLinkKind
+internal enum TextLinkKind : byte
 {
     None,
     Entity, // entity="<NetEntity>" — clickable chat name
@@ -42,7 +42,7 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
     private const string EntityAttributeName = "entity";
     private const string LinkAttributeName = "link";
     private const string ColorOverrideAttributeName = "color"; // LinkColor override
-    private const string UseEntityNameColorAttributeName = "usenamecolor"; // entity links only: opt into per-entity name coloring
+    private const string UseEntityNameColorAttributeName = "entity-name-color"; // entity links only: opt into per-entity name coloring
 
     public bool TryCreateControl(MarkupNode node, [NotNullWhen(true)] out Control? control)
     {
