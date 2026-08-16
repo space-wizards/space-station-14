@@ -1,4 +1,5 @@
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Animals.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Coordinates;
 using Content.Shared.DoAfter;
@@ -11,12 +12,11 @@ using Content.Shared.Random.Helpers;
 using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 
-namespace Content.Shared.Animals;
+namespace Content.Shared.Animals.Systems;
 
 /// <inheritdoc cref="ShearableComponent"/>
 public sealed partial class SharedShearableSystem : EntitySystem
@@ -27,17 +27,6 @@ public sealed partial class SharedShearableSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private SharedToolSystem _tool = default!;
-
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<ShearableComponent, GetVerbsEvent<AlternativeVerb>>(AddShearVerb);
-        SubscribeLocalEvent<ShearableComponent, InteractUsingEvent>(OnInteractUsingEvent);
-        SubscribeLocalEvent<ShearableComponent, ExaminedEvent>(Examined);
-        SubscribeLocalEvent<ShearableComponent, ShearingDoAfterEvent>(OnSheared);
-        SubscribeLocalEvent<ShearableComponent, SolutionChangedEvent>(OnSolutionChange);
-    }
 
     /// <summary>
     ///     Checks if the target entity can currently be sheared.
@@ -115,6 +104,7 @@ public sealed partial class SharedShearableSystem : EntitySystem
     ///     Handles shearing when the player left-clicks an entity.
     ///     Doesn't run any checks, those are handled by <see cref="CanShear(Entity{ShearableComponent}, out FixedPoint2?, EntityUid?, bool)"/>.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnInteractUsingEvent(Entity<ShearableComponent> ent, ref InteractUsingEvent args)
     {
         // If no tool is specified then this might take over empty-hand interaction of an entity.
@@ -161,6 +151,7 @@ public sealed partial class SharedShearableSystem : EntitySystem
     /// <summary>
     ///     Called by the ShearingDoAfter event.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnSheared(Entity<ShearableComponent> ent, ref ShearingDoAfterEvent args)
     {
         // Check the action hasn't been cancelled, or hasn't already been handled.
@@ -222,6 +213,7 @@ public sealed partial class SharedShearableSystem : EntitySystem
     ///     Adds the "shear" verb to the player.
     ///     Checks first if the player is holding an item with the specified toolQuality.
     /// </summary>
+    [SubscribeLocalEvent]
     private void AddShearVerb(Entity<ShearableComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
         // Check if you are allowed to interact currently.
@@ -261,6 +253,7 @@ public sealed partial class SharedShearableSystem : EntitySystem
     /// </summary>
     /// <param name="ent">the entity containing a shearable component that will be checked.</param>
     /// <param name="args">Arguments passed through by the ExaminedEvent.</param>
+    [SubscribeLocalEvent]
     private void Examined(Entity<ShearableComponent> ent, ref ExaminedEvent args)
     {
         // Shearable description additions are optional, return if unset.
@@ -326,6 +319,7 @@ public sealed partial class SharedShearableSystem : EntitySystem
     /// </summary>
     /// <param name="ent">the entity containing a shearable component that will be checked.</param>
     /// <param name="args">Arguments passed through by the ExaminedEvent.</param>
+    [SubscribeLocalEvent]
     private void OnSolutionChange(Entity<ShearableComponent> ent, ref SolutionChangedEvent args)
     {
         // The changes are already networked as part of the same game state.
