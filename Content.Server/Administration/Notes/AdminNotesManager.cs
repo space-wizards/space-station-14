@@ -174,8 +174,8 @@ public sealed partial class AdminNotesManager : IAdminNotesManager, IPostInjectI
         NoteAdded?.Invoke(note);
 
         // Send a notification to the player that they received a non-secret note.
-        if (_player.TryGetSessionById(netUserId, out var session) && !secret && type == NoteType.Note
-            && _config.GetCVar(CCVars.SeeOwnNotes))
+        if (!secret && type == NoteType.Note
+            && _player.TryGetSessionById(netUserId, out var session) && _config.GetCVar(CCVars.SeeOwnNotes))
         {
             _systems.TryGetEntitySystem(out SharedAudioSystem? audio);
             var notifMessage = _loc.GetString("admin-notes-manager-note-notification");
