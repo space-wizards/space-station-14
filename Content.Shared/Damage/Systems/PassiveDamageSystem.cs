@@ -27,6 +27,7 @@ public sealed partial class PassiveDamageSystem : EntitySystem
         if (proposedUpdateTime > component.NextDamage)
             component.NextDamage = proposedUpdateTime;
 
+        Dirty<PassiveDamageComponent>((ent, component));
     }
 
     #endregion
