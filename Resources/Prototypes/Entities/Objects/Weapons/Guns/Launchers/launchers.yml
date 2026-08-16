@@ -205,7 +205,7 @@
     proto: BulletXenoborgMechadermisRocket
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
-  - type: BallisticAmmoSelfRefiller # todo: this somehow breaks prediction. Unknown why... Will not reload properly until 1 refill
+  - type: BallisticAmmoSelfRefiller
     autoRefillRate: 8s
   - type: MagazineVisuals
     magState: mag
