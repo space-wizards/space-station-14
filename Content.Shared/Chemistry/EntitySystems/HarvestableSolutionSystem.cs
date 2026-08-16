@@ -16,6 +16,7 @@ public sealed partial class HarvestableSolutionSystem : EntitySystem
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
 
     [Dependency] private EntityQuery<RefillableSolutionComponent> _refillableQuery;
+    [Dependency] private EntityQuery<HarvestableSolutionComponent> _harvestableQuery;
 
     [SubscribeLocalEvent]
     private void AddHarvestVerb(Entity<HarvestableSolutionComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
@@ -80,7 +81,7 @@ public sealed partial class HarvestableSolutionSystem : EntitySystem
         EntityUid container,
         bool popup = true)
     {
-        if (!Resolve(ent, ref ent.Comp, logMissing: false) ||
+        if (!_harvestableQuery.Resolve(ent, ref ent.Comp, logMissing: false) ||
             !_solutionContainer.TryGetSolution(
                 ent.Owner,
                 ent.Comp.SolutionName,
@@ -130,10 +131,11 @@ public sealed partial class HarvestableSolutionSystem : EntitySystem
         EntityUid user,
         EntityUid container)
     {
-        if (!CanHarvest(ent, user, container) ||
+        if (!_harvestableQuery.Resolve(ent, ref ent.Comp, logMissing: false) ||
+            !CanHarvest(ent, user, container) ||
             !_solutionContainer.TryGetSolution(
                 ent.Owner,
-                ent.Comp!.SolutionName,
+                ent.Comp.SolutionName,
                 out var sourceEntity,
                 out var source,
                 errorOnMissing: false) ||

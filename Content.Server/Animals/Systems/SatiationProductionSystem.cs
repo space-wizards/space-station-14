@@ -18,6 +18,7 @@ public sealed partial class SatiationProductionSystem : EntitySystem
 
     [Dependency] private EntityQuery<ActorComponent> _actorQuery;
     [Dependency] private EntityQuery<SatiationComponent> _satiationQuery;
+    [Dependency] private EntityQuery<SatiationProductionComponent> _productionQuery;
 
     public override void Update(float frameTime)
     {
@@ -55,7 +56,7 @@ public sealed partial class SatiationProductionSystem : EntitySystem
         out SatiationProductionFailure failure)
     {
         failure = SatiationProductionFailure.ProductUnavailable;
-        if (!Resolve(ent, ref ent.Comp))
+        if (!_productionQuery.Resolve(ent, ref ent.Comp))
             return false;
 
         var owner = GetProducer((ent.Owner, ent.Comp));
