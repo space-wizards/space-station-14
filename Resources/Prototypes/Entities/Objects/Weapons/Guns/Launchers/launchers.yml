@@ -239,6 +239,7 @@
   - type: BallisticAmmoProvider
     capacity: 6
     proto: BulletXenoborgMechadermisRocket
+    cycleable: false
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
   - type: BallisticAmmoSelfRefiller
