@@ -662,3 +662,9 @@
   graph: Bonfire
   targetNode: bonfireStake
 # endregion Miscallaneous
+
+- type: construction
+  parent: BaseStructureFullTileDirectional
+  id: BarbedWire
+  graph: BarbedWire
+  targetNode: barbedwire
