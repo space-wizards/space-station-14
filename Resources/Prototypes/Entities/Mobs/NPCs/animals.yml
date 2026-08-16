@@ -516,7 +516,7 @@
     sprite: Mobs/Animals/mothroach/tacticalmothroach.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base", "movement"]
-      state: glockroach
+      state: tacticalmothroach
   - type: SpriteMovement
     movementLayers:
       movement:
