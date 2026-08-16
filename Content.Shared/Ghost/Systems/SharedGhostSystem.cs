@@ -136,7 +136,6 @@ public abstract partial class SharedGhostSystem : EntitySystem
     }
 }
 
-
 /// <summary>
 /// A client to server request to get places a ghost can warp to.
 /// Response is sent via <see cref="GhostWarpsResponseEvent"/>

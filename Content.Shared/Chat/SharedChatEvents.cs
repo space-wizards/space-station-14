@@ -77,7 +77,6 @@ public sealed class EntitySpokeEvent : EntityEventArgs
     }
 }
 
-
 [ByRefEvent]
 public record struct ClickMessageSenderAttemptEvent(bool Handled = false);
 
