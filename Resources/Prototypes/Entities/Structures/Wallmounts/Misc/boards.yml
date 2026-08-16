@@ -58,7 +58,7 @@
     node: noticeBoard
 
 - type: entity
-  parent: [ BaseWallmount, BasePaperLabelableVisualized ]
+  parent: [ BaseWallmountBoard, BasePaperLabelableVisualized ]
   id: PostBoard
   name: post board
   description: Apply paper directly to the boardhead.
