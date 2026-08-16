@@ -100,7 +100,7 @@
     - offset: 0, -1.5
   - type: StructureAligner
     alignType:
-    - DoNotAlign #TODO:ERRANT remove this
+    - DoNotAlign
 
 - type: entity
   id: AirlockGlassShuttle

@@ -161,10 +161,6 @@
     alignType:
     - Firelock
 
-#- type: entity TODO:ERRANT fix this inheritance
-#  id: BaseFirelockEdge
-#  parent: BaseFireLock
-
 - type: entity
   id: Firelock
   parent: BaseFirelock
