@@ -10,7 +10,7 @@ namespace Content.Client.Communications.UI;
 /// <summary>
 /// A sheetlet for the communications console, for the character limit labels.
 /// </summary>
-[Sheetlet(typeof(CommonStylesheetDefinition))]
+[Sheetlet(typeof(NanotrasenStylesheetDefinition))]
 public sealed class CommunicationsConsoleSheetlet<T> : ISheetlet<T>
     where T : IFontConfig, ICommunicationsConsoleConfig
 {

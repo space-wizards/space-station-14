@@ -1,4 +1,5 @@
-﻿using Content.Client.Stylesheets.Palette;
+﻿using Content.Client.Communications.UI;
+using Content.Client.Stylesheets.Palette;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Utility;
 
@@ -8,7 +9,7 @@ namespace Content.Client.Stylesheets.StylesheetDefinitions;
 /// StylesheetDefinition that produces the stylesheet used for IC-related UIs like most of the game's user interfaces.
 /// </summary>
 [Virtual]
-public class NanotrasenStylesheetDefinition : CommonStylesheetDefinition
+public class NanotrasenStylesheetDefinition : CommonStylesheetDefinition, ICommunicationsConsoleConfig
 {
     public override Dictionary<Type, ResPath[]> Roots => new()
     {
