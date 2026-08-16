@@ -41,21 +41,13 @@
 
 - type: entity
   abstract: true
-  parent: GasPipeSansLayersIndestructible
+  parent: [ GasPipeSansLayersIndestructible, StructureHealthContainer ]
   id: GasPipeSansLayers
   components:
   - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
-    - trigger: # for nukes
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
     - trigger: # regular damage trigger (replace with broken pipe)
         !type:DamageTrigger
         damage: 100
@@ -71,8 +63,6 @@
             min: 1
             max: 1
         offset: 0
-      - !type:DoActsBehavior
-        acts: ["Breakage"]
 
 - type: entity
   abstract: true
@@ -312,7 +302,7 @@
 
 - type: entity
   id: GasPipeBroken
-  parent: [ GasPipeSansLayersIndestructible, BaseGasPipeLayers ]
+  parent: [ GasPipeSansLayersIndestructible, BaseGasPipeLayers, StructureHealthFurniture ]
   name: broken pipe
   description: It used to hold gas.
   components:
@@ -331,17 +321,7 @@
   - type: Item
     size: Small
   - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
-    damageContainer: StructuralInorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
+    damageModifierSet: SteelMod
   - type: GuideHelp
     guides:
     - Pipes

@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [ SolutionTank, SolutionHuge, DisposalUnitBase, SeatBase]
+  parent: [ SolutionTank, SolutionHuge, DisposalUnitBase, SeatBase, StructureHealthFurnitureStrong ]
   id: BaseToilet
   name: toilet
   description: The HT-451, a torque rotation-based, waste disposal unit for small matter. This one seems remarkably clean.
@@ -117,14 +117,14 @@
       reagents:
       - ReagentId: Water
         Quantity: 1
+  - type: Damageable
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 50
+        damage: 80
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
@@ -203,11 +203,13 @@
     sprite: Structures/Furniture/golden_toilet.rsi
   - type: StaticPrice
     price: 1500
+  - type: Damageable
+    damageModifierSet: PreciousMetalMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 50
+        damage: 80
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:

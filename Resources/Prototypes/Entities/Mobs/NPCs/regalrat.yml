@@ -120,7 +120,7 @@
     guides:
     - MinorAntagonists
   - type: Tool
-    qualities: Slicing
+    qualities: [ Slicing ]
 
 - type: entity
   id: MobRatKingBuff
