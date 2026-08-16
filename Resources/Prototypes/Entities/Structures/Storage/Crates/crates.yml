@@ -335,7 +335,7 @@
   - type: Sprite
     sprite: Structures/Storage/Crates/command.rsi
   - type: AccessReader
-    access: [["Command"], ["External"]]
+    access: [["HeadOfPersonnel"]]
 
 - type: entity
   parent: CrateBaseSecure
