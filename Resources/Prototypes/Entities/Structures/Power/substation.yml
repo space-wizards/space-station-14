@@ -51,10 +51,6 @@
     collectionName: substation
 
   # Damage
-  - type: Damageable
-    damageModifierSet: StructuralMetallicStrong
-  - type: Injurable
-    damageContainer: StructuralInorganic
   - type: PacifismDangerousAttack
 
   # Guidebook
@@ -154,8 +150,8 @@
 
 # Compact Wall Substation Base
 - type: entity
+  parent: [ CoreSubstation, StructureHealthMachine ]
   id: BaseSubstationWall
-  parent: CoreSubstation
   categories: [ HideSpawnMenu ]
   name: wallmount substation
   description: A substation designed for compact shuttles and spaces.
@@ -215,16 +211,21 @@
     maxCharge: 2000000
     startingCharge: 0
   - type: PowerMonitoringDevice
+<<<<<<< HEAD
     sprite: Structures/Power/wall_substation.rsi
     state: static
+=======
+    sprite: Structures/Power/substation.rsi
+    state: substation_wall_static
+  - type: Damageable
+    damageModifierSet: SteelMod
+>>>>>>> 4e03cf24119945818b27e60b38d142da6a662866
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 175
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
       - !type:ExplodeBehavior
       - !type:PlaySoundBehavior
         sound:

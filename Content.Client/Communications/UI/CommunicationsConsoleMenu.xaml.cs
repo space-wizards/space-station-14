@@ -7,6 +7,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Communications.UI;
 
+/// <summary>
+/// The main menu for the communications console interface.
+/// Contains a series of widgets for the alert, announce/broadcast and shuttle functions.
+/// </summary>
 [GenerateTypedNameReferences]
 public sealed partial class CommunicationsConsoleMenu : FancyWindow
 {
