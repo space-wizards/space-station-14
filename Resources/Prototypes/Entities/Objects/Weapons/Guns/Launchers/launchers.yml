@@ -202,7 +202,7 @@
       path: /Audio/Weapons/Guns/Gunshots/rocket1.ogg
   - type: BallisticAmmoProvider
     capacity: 6
-    proto: XenoborgMechadermisRocket
+    proto: BulletXenoborgMechadermisRocket
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
   - type: BallisticAmmoSelfRefiller # todo: this somehow breaks prediction. Unknown why... Will not reload properly until 1 refill

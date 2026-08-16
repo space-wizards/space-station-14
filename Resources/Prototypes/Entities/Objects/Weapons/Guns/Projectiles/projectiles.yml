@@ -850,9 +850,9 @@
     energy: 0.5
 
 - type: entity
-  id: XenoborgMechadermisRocket
-  name: mechadermis rocket
   parent: BaseBulletTrigger
+  id: BulletXenoborgMechadermisRocket
+  name: mechadermis rocket
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
