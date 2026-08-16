@@ -239,16 +239,6 @@
   - type: AccessReader
     access: [["HeadOfPersonnel"]]
 
-# Primarily intended to be mapped in EVA Storage rooms so the HoP can easily allow crew in during an emergency.
-# We make this its own prototype since we don't want to require mappers to manually set the name/desc on every new map.
-# Might be worthwhile down the line to create similar prototypes if we want similar buttons to exist as a mapping standard elsewhere on the station.
-# If it ever becomes possible to wire buttons to set airlocks to "emergency access" mode, that'd be preferable to bolting doors open, so the description here should be changed.
-- type: entity
-  parent: LockableButtonHeadOfPersonnel
-  id: LockableButtonHeadOfPersonnelEmergency
-  name: emergency door release button
-  description: This button bolts open the room's airlocks.
-
 - type: entity
   parent: LockableButton
   id: LockableButtonChiefEngineer
