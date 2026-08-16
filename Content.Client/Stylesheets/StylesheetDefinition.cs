@@ -1,10 +1,10 @@
 ﻿using System.Linq;
-using System.Reflection;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Shared.Reflection;
 using Robust.Shared.Sandboxing;
-using static Robust.Shared.Utility.TypeHelpers;
+using Robust.Shared.Utility;
+using static System.Attribute;
 
 namespace Content.Client.Stylesheets;
 
@@ -69,9 +69,9 @@ public abstract partial class StylesheetDefinition : ISheetletConfig
         // Sorts sheetlets by how "close" their attribute types are to the specific definition, letting us create an ordering
         // so that you can make overriding sheetlets.
         var sheetletTypes = _reflectionManager.FindTypesWithAttribute<SheetletAttribute>()
-            .Where(t => Attribute.GetCustomAttribute(t, typeof(SheetletAttribute)) is SheetletAttribute)
+            .Where(t => GetCustomAttribute(t, typeof(SheetletAttribute)) is SheetletAttribute)
             .OrderByDescending(t =>
-                GetSheetletDistance((SheetletAttribute)Attribute.GetCustomAttribute(t, typeof(SheetletAttribute))!))
+                GetSheetletDistance((SheetletAttribute)GetCustomAttribute(t, typeof(SheetletAttribute))!))
             .ThenBy(t => t.Name)
             .ToList();
 
