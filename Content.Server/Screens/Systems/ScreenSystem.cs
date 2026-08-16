@@ -1,7 +1,8 @@
-using Content.Shared.TextScreen;
 using Content.Server.Screens.Components;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
+using Content.Shared.TextScreen.Components;
+using Content.Shared.TextScreen.Systems;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Screens.Systems;
@@ -12,7 +13,10 @@ namespace Content.Server.Screens.Systems;
 public sealed partial class ScreenSystem : EntitySystem
 {
     [Dependency] private IGameTiming _gameTiming = default!;
-    [Dependency] private SharedAppearanceSystem _appearanceSystem = default!;
+    [Dependency] private TextScreenSystem _textScreen = default!;
+
+    [Dependency] private EntityQuery<TextScreenTimerComponent> _timerScreenQuery = default!;
+    [Dependency] private EntityQuery<TextScreenComponent> _textScreenQuery = default!;
 
     /// <summary>
     /// Calls either a normal screen text update or shuttle timer update based on the presence of
@@ -34,24 +38,23 @@ public sealed partial class ScreenSystem : EntitySystem
     {
         // don't allow text updates if there's an active timer
         // (and just check here so the server doesn't have to track them)
-        if (_appearanceSystem.TryGetData(ent, TextScreenVisuals.TargetTime, out TimeSpan target)
-            && target > _gameTiming.CurTime)
+        if (!_timerScreenQuery.TryComp(ent, out var timerScreen)
+            || timerScreen.TargetTime > _gameTiming.CurTime)
             return;
 
         var screenMap = Transform(ent).MapUid;
-        var argsMap = Transform(args.Sender).MapUid;
+        if (screenMap == null)
+            return;
 
-        if (screenMap != null
-            && argsMap != null
-            && screenMap == argsMap
-            && args.Data.TryGetValue(ScreenMasks.Text, out string? text)
-            && text != null
-            )
-        {
-            _appearanceSystem.SetData(ent, TextScreenVisuals.DefaultText, text);
-            _appearanceSystem.SetData(ent, TextScreenVisuals.ScreenText, text);
-            _appearanceSystem.SetData(ent, TextScreenVisuals.ScreenTextTime, _gameTiming.CurTime);
-        }
+        var argsMap = Transform(args.Sender).MapUid;
+        if (screenMap != argsMap)
+            return;
+
+        if (!args.Data.TryGetValue(ScreenMasks.Text, out string? text)
+            || text == null)
+            return;
+
+        _textScreen.SetTimerStrings((ent.Owner, timerScreen), text);
     }
 
     /// <summary>
@@ -68,6 +71,10 @@ public sealed partial class ScreenSystem : EntitySystem
 
         // no false positives.
         if (timerXform.MapUid == null)
+            return;
+
+        // Need to have a screen to do anything.
+        if (!_timerScreenQuery.TryComp(ent, out var timer))
             return;
 
         string key;
@@ -100,11 +107,10 @@ public sealed partial class ScreenSystem : EntitySystem
         if (args.Data.TryGetValue(ScreenMasks.Text, out string? label) && label != null)
             text = label;
 
-        _appearanceSystem.SetData(ent, TextScreenVisuals.ScreenText, text);
-        _appearanceSystem.SetData(ent, TextScreenVisuals.TargetTime, _gameTiming.CurTime + duration);
-        _appearanceSystem.SetData(ent, TextScreenVisuals.ScreenTextTime, _gameTiming.CurTime);
+        _textScreen.SetTimerStrings((ent.Owner, timer), text, text);
+        _textScreen.SetTimerTarget((ent.Owner, timer), _gameTiming.CurTime + duration);
 
         if (args.Data.TryGetValue(ScreenMasks.Color, out Color color))
-            _appearanceSystem.SetData(ent, TextScreenVisuals.Color, color);
+            _textScreen.SetColor(ent.Owner, color);
     }
 }
