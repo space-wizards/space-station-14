@@ -7,8 +7,8 @@ roles-antag-maddened-name = Maddened
 
 roles-antag-maddened-objective = Be the last one standing.
 
-maddened-announcement-text =
-    A new bearer steps up to prove their worth.
+maddened-throngler-announcement-text =
+    A new bearer steps up to prove their worth - the Throngler has a new and dangerous host.
 
-maddened-announcement-sender =
+maddened-throngler-announcement-sender =
     Spinward Spiraling
