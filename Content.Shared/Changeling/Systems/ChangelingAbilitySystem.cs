@@ -60,7 +60,7 @@ public sealed partial class ChangelingAbilitySystem : EntitySystem
         var selfPopup = Loc.TryGetString(ent.Comp.ActivatedPopupSelf, out var self, ("user", Identity.Entity(args.Performer, EntityManager)), ("restraint", toDelete.First())) ? self : null;
         var othersPopup = Loc.TryGetString(ent.Comp.ActivatedPopup, out var others, ("user", Identity.Entity(args.Performer, EntityManager)), ("restraint", toDelete.First())) ? others : null;
 
-        _popup.PopupPredicted(selfPopup, othersPopup, args.Performer, args.Performer, PopupType.LargeCaution);
+        _popup.PopupEntity(selfPopup, othersPopup, args.Performer, args.Performer, PopupType.LargeCaution);
         _audio.PlayPredicted(ent.Comp.ActivatedSound, args.Performer, args.Performer);
 
         foreach (var deleted in toDelete)
@@ -80,7 +80,7 @@ public sealed partial class ChangelingAbilitySystem : EntitySystem
         if (!_changelingDevour.CanDevour(ent.Owner, args.Target, checkDead: false, checkProtected: false))
             return;
 
-        _changelingIdentity.GrantIdentity(ent, args.Target);
+        _changelingIdentity.GrantIdentity(ent.AsNullable(), args.Target);
 
         args.Handled = true;
     }

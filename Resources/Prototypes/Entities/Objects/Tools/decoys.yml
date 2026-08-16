@@ -25,7 +25,6 @@
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Effects/pop_high.ogg
-  - type: Appearance
   - type: Item
     size: Normal
   - type: RandomMetadata # No metagaming these, jimbo.

@@ -138,7 +138,7 @@ public sealed partial class ShuttleSystem
             var coordinates = new EntityCoordinates(ourXform.MapUid.Value, worldPoint);
 
             var volume = MathF.Min(10f, MathF.Pow(jungleDiff, 0.5f) - 5f);
-            var audioParams = AudioParams.Default.WithVariation(SharedContentAudioSystem.DefaultVariation).WithVolume(volume);
+            var audioParams = AudioParams.Default.WithVariation(SharedContentAudioSystem.DefaultVariation).AddVolume(volume);
             _audio.PlayPvs(_shuttleImpactSound, coordinates, audioParams);
 
             // if we're not enabled, stop after playing sound

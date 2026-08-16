@@ -1,13 +1,13 @@
 - type: entity
+  parent: [BaseDeltaPressureReinforcedGlass, BaseWindowStructure, BaseRCDResistant]
   id: ShuttleWindow
   name: shuttle window
-  parent: [BaseDeltaPressureReinforcedGlass, WindowRCDResistant]
   components:
   - type: Sprite
-    drawdepth: WallTops
-    sprite: Structures/Windows/shuttle_window.rsi
+    sprite: Structures/Windows/window-shuttle.rsi
   - type: Icon
-    sprite: Structures/Windows/shuttle_window.rsi
+    sprite: Structures/Windows/window-shuttle.rsi
+    state: full
   - type: Repairable
     fuelCost: 15
     doAfterDelay: 3
@@ -60,7 +60,7 @@
   components:
   - type: Sprite
     drawdepth: WallTops
-    sprite: Structures/Windows/shuttle_window_diagonal.rsi
+    sprite: Structures/Windows/window-diagonal-shuttle.rsi
     state: state0
   - type: Tag
     tags:
@@ -68,10 +68,10 @@
     - Window
   - type: IconSmooth
     mode: Diagonal
-    key: windows
+    key: walls
     base: state
   - type: Icon
-    sprite: Structures/Windows/shuttle_window_diagonal.rsi
+    sprite: Structures/Windows/window-diagonal-shuttle.rsi
     state: state0
   - type: Fixtures
     fixtures:
@@ -93,4 +93,4 @@
     - East
   - type: DamageVisuals
     damageOverlay:
-      sprite: Structures/Windows/cracks_diagonal.rsi
+      sprite: Structures/Windows/cracks-diagonal.rsi
