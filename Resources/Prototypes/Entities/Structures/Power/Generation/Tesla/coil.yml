@@ -75,6 +75,10 @@
   - type: PowerNetworkBattery
     maxSupply: 350000
     supplyRampTolerance: 350000
+  - type: Electrified
+    highVoltageNode: input
+  - type: Electrified
+    highVoltageNode: input
   - type: Anchorable
   - type: Rotatable
   - type: Pullable
