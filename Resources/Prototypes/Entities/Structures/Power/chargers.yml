@@ -42,7 +42,7 @@
 
 - type: entity
   abstract: true
-  parent: [ CoreItemRecharger, ConstructibleMachine, BaseSmallConstructibleMachineDestructible ]
+  parent: [ CoreItemRecharger, BaseMachinePowered, ConstructibleMachine, BaseSmallConstructibleMachineDestructible ]
   id: BaseItemRecharger
   components:
   - type: Sprite
@@ -119,7 +119,7 @@
   - type: MultiHandedItem
 
 - type: entity
-  parent: BaseItemRecharger
+  parent: [ BaseItemRecharger, ConstructibleMachine ]
   id: PowerCageRecharger
   name: cage recharger
   description: A specialized machine made for recharging the heavy cage batteries used by ship-mounted weapons.

@@ -233,6 +233,8 @@
     snap:
     - Wallmount
   components:
+    - type: Clickable
+    - type: InteractionOutline
     - type: Construction
       graph: SurveillanceCamera
       node: assembly
