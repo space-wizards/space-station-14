@@ -48,15 +48,15 @@ public sealed partial class MaskSystem : EntitySystem
             || !_inventorySystem.InSlotWithFlags(mask.Owner, SlotFlags.MASK))
             return;
 
-        TryToggleMask(mask, args.Performer, args.Performer);
+        TryToggleMask(mask, args.Performer);
 
         args.Handled = true;
     }
 
     [SubscribeLocalEvent]
-    private void OnGetInteractionVerbs(Entity<MaskComponent> mask, ref InventoryRelayedEvent<GetVerbsEvent<EquipmentVerb>> args)
+    private void OnGetInteractionVerbs(Entity<MaskComponent> mask, ref GetVerbsEvent<EquipmentVerb> args)
     {
-        var evArgs = args.Args;
+        var evArgs = args;
 
         if (!evArgs.CanAccess
             || !evArgs.CanInteract
@@ -69,7 +69,7 @@ public sealed partial class MaskSystem : EntitySystem
         EquipmentVerb verb = new()
         {
             Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/dot.svg.192dpi.png")),
-            Act = () => TryToggleMask(mask, evArgs.User, evArgs.Target),
+            Act = () => TryToggleMask(mask, evArgs.User),
             Text = Loc.GetString($"verb-name-mask-pull-{dir}"),
             Message = Loc.GetString($"verb-description-mask-pull-{dir}"),
             TextStyleClass = "InteractionVerb",
@@ -125,9 +125,10 @@ public sealed partial class MaskSystem : EntitySystem
     /// <param name="wearer"> The person wearing the mask.</param>
     /// <param name="state"> The wanted state of the mask. If undefined/null, it simply toggles the mask.</param>
     /// <param name="force"> If true, it forces the mask to be toggled even if it cannot be toggled.</param>
-    private void TryToggleMask(Entity<MaskComponent> mask, EntityUid puller, EntityUid wearer, bool? state = null, bool force = false)
+    private void TryToggleMask(Entity<MaskComponent> mask, EntityUid puller, bool? state = null, bool force = false)
     {
         TimeSpan delay;
+        var wearer = Transform(mask).ParentUid;
         var dir = mask.Comp.IsToggled ? "up" : "down";
 
         if (puller == wearer)
