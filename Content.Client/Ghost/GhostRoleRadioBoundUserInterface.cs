@@ -27,6 +27,7 @@ public sealed partial class GhostRoleRadioBoundUserInterface(EntityUid owner, En
         var list = ConvertToButtons(comp.SelectablePrototypes);
 
         _ghostRoleRadioMenu.SetButtons(list);
+        _ghostRoleRadioMenu.OpenOverMouseScreenPosition();
     }
 
     private IEnumerable<RadialMenuOptionBase> ConvertToButtons(List<ProtoId<GhostRolePrototype>> protoIds)
