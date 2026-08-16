@@ -47,7 +47,7 @@ public sealed partial class ChatSystem
                 speech = proto;
         }
 
-        name = $"[textlink=\"{FormattedMessage.EscapeStringParameter(name)}\" ent=\"{GetNetEntity(source)}\"]";
+        name = $"[textlink=\"{FormattedMessage.EscapeStringParameter(name)}\" ent=\"{GetNetEntity(source)}\" colorable=\"false\"]";
 
         var wrappedMessage = Loc.GetString(speech.Bold ? "chat-manager-entity-say-bold-wrap-message" : "chat-manager-entity-say-wrap-message",
             ("entityName", name),
@@ -117,7 +117,7 @@ public sealed partial class ChatSystem
             RaiseLocalEvent(source, nameEv);
             name = nameEv.VoiceName;
         }
-        name = $"[textlink=\"{FormattedMessage.EscapeStringParameter(name)}\" ent=\"{GetNetEntity(source)}\"]";
+        name = $"[textlink=\"{FormattedMessage.EscapeStringParameter(name)}\" ent=\"{GetNetEntity(source)}\" colorable=\"false\"]";
 
         var wrappedMessage = Loc.GetString("chat-manager-entity-whisper-wrap-message",
             ("entityName", name), ("message", FormattedMessage.EscapeText(message)));
@@ -213,7 +213,7 @@ public sealed partial class ChatSystem
     private void SendLOOC(EntityUid source, ICommonSession player, string message, bool hideChat)
     {
         var name = FormattedMessage.EscapeText(Identity.Name(source, EntityManager));
-        name = $"[textlink=\"{FormattedMessage.EscapeStringParameter(name)}\" ent=\"{GetNetEntity(source)}\"]";
+        name = $"[textlink=\"{FormattedMessage.EscapeStringParameter(name)}\" ent=\"{GetNetEntity(source)}\" colorable=\"false\"]";
 
         if (_adminManager.IsAdmin(player))
         {
@@ -251,7 +251,7 @@ public sealed partial class ChatSystem
         }
         else
         {
-            playerName = $"[textlink=\"{FormattedMessage.EscapeStringParameter(playerName)}\" ent=\"{GetNetEntity(source)}\"]";
+            playerName = $"[textlink=\"{FormattedMessage.EscapeStringParameter(playerName)}\" ent=\"{GetNetEntity(source)}\" colorable=\"false\"]";
             wrappedMessage = Loc.GetString("chat-manager-send-dead-chat-wrap-message",
                 ("deadChannelName", Loc.GetString("chat-manager-dead-channel-name")),
                 ("playerName", (playerName)),

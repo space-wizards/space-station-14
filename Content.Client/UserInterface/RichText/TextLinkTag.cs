@@ -21,7 +21,8 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
     public static Color LinkColor => Color.CornflowerBlue;
 
     public string Name => "textlink";
-
+    public const string ColorableAttributeName = "colorable";
+    
     public bool TryCreateControl(MarkupNode node, [NotNullWhen(true)] out Control? control)
     {
         if (!node.Value.TryGetString(out var text))
@@ -42,7 +43,7 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
                 return false;
             }
 
-            if (GetEntityLinkColor(netEntity) is { } entColor)
+            if (GetEntityLinkColor(node, netEntity) is { } entColor)
                 baseColor = entColor;
 
             var chat = _entity.System<SharedChatSystem>();
@@ -77,22 +78,29 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
         return true;
     }
 
-private Color? GetEntityLinkColor(NetEntity netEntity)
-{
-    var chatUi = _ui.GetUIController<ChatUIController>();
+    private Color? GetEntityLinkColor(MarkupNode node, NetEntity netEntity)
+    {
+        if (!(node.Attributes.TryGetValue(ColorableAttributeName, out var colorableParam)
+              && colorableParam.TryGetString(out var colorableStr)
+              && colorableStr == "true"))
+        {
+            return null;
+        }
 
-    if (!chatUi.ChatNameColorsEnabled)
-        return null;
+        var chatUi = _ui.GetUIController<ChatUIController>();
 
-    if (!_entity.TryGetEntity(netEntity, out var uid) || !_entity.EntityExists(uid))
-        return null;
+        if (!chatUi.ChatNameColorsEnabled)
+            return null;
 
-    if (!_entity.TryGetComponent<GrammarComponent>(uid, out var grammar) || grammar.ProperNoun != true)
-        return null;
+        if (!_entity.TryGetEntity(netEntity, out var uid) || !_entity.EntityExists(uid))
+            return null;
 
-    var name = _entity.GetComponent<MetaDataComponent>(uid.Value).EntityName;
-    return Color.FromHex(chatUi.GetNameColor(name));
-}
+        if (!_entity.TryGetComponent<GrammarComponent>(uid, out var grammar) || grammar.ProperNoun != true)
+            return null;
+
+        var name = _entity.GetComponent<MetaDataComponent>(uid.Value).EntityName;
+        return Color.FromHex(chatUi.GetNameColor(name));
+    }
 
     private void OnKeybindDown(GUIBoundKeyEventArgs args, string link, Control? control)
     {
