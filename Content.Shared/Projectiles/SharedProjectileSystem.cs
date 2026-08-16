@@ -208,6 +208,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
     private void OnBeingShot(Entity<ProjectileComponent> entity, ref MapInitEvent args)
     {
         entity.Comp.WhenToStopIgnoringShooter = _timing.CurTime + entity.Comp.DelayToAcknowledgeShooter;
+        Dirty(entity);
     }
 
     public void DetachAllEmbedded(Entity<EmbeddedContainerComponent> container)
