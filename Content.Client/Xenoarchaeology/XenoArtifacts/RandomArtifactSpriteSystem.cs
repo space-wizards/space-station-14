@@ -3,7 +3,7 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Xenoarchaeology.XenoArtifacts;
 
-public sealed class RandomArtifactSpriteSystem : VisualizerSystem<RandomArtifactSpriteComponent>
+public sealed partial class RandomArtifactSpriteSystem : VisualizerSystem<RandomArtifactSpriteComponent>
 {
     protected override void OnAppearanceChange(EntityUid uid, RandomArtifactSpriteComponent component, ref AppearanceChangeEvent args)
     {
