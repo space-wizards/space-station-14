@@ -12,10 +12,10 @@
                 <controls:StripeBack>
                     <Label Text="{Loc 'microwave-menu-ingredients'}" StyleClasses="LabelHeading" HorizontalAlignment="Center" Margin="10 2" />
                 </controls:StripeBack>
-                <PanelContainer Name="IngredientsPanel" Access="Public" StyleClasses="PanelInsetDeep" Margin="0 0 0 5" VerticalExpand="True">
+                <PanelContainer Name="IngredientsPanel" StyleClasses="PanelInsetDeep" Margin="0 0 0 5" VerticalExpand="True">
                     <ScrollContainer Margin="5">
                         <BoxContainer HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalExpand="True" VerticalExpand="True">
-                            <GridContainer Name="IngredientsGrid" Access="Public" Columns="4" HSeparationOverride="5" VSeparationOverride="5">
+                            <GridContainer Name="IngredientsGrid" Columns="4" HSeparationOverride="5" VSeparationOverride="5">
                                 <!-- Ingredients are added here by code -->
                             </GridContainer>
                         </BoxContainer>
@@ -25,11 +25,12 @@
                         Text="{Loc 'microwave-menu-ingredients-empty'}"
                         StyleClasses="LabelWeak"
                         HorizontalAlignment="Center"
-                        VerticalAlignment="Center" />
+                        VerticalAlignment="Center"
+                        Visible="False" />
                 </PanelContainer>
             </BoxContainer>
-            <customControls:VSeparator StyleClasses="LowDivider" Margin="0 5" />
-            <BoxContainer Name="ControlsPane" Orientation="Vertical" HorizontalExpand="True" Margin="5 3 0 0">
+            <customControls:VSeparator Margin="0 5" />
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="5 3 0 0">
                 <PanelContainer StyleClasses="PanelDark" Margin="0 0 0 5" MinHeight="35">
                     <Label Text="{Loc 'microwave-menu-cook-time'}" StyleClasses="LabelHeading" HorizontalAlignment="Center" Margin="10 2" />
                 </PanelContainer>
@@ -52,16 +53,16 @@
                 </PanelContainer>
                 <PanelContainer StyleClasses="PanelInsetDark" Margin="0 0 0 5">
                     <BoxContainer Orientation="Vertical" Margin="10 5">
-                        <Button Name="InstantCookButton" Access="Public" Text="{Loc 'microwave-menu-instant-button'}" StyleClasses="OpenLeft" ToggleMode="True" Margin="0 0 2 0" TextAlign="Center" />
-                        <GridContainer Name="CookTimeButtonGrid" HSeparationOverride="1" VSeparationOverride="1" Columns="3" Access="Public">
+                        <Button Name="InstantCookButton" Text="{Loc 'microwave-menu-instant-button'}" StyleClasses="OpenLeft" ToggleMode="True" Margin="0 0 2 0" TextAlign="Center" />
+                        <GridContainer Name="CookTimeButtonGrid" HSeparationOverride="1" VSeparationOverride="1" Columns="3">
                             <!-- Cook time buttons are added here by code -->
                         </GridContainer>
                     </BoxContainer>
                 </PanelContainer>
                 <PanelContainer StyleClasses="PanelInsetDark" Margin="0 0 0 5">
                     <BoxContainer Orientation="Vertical" Margin="15 9" VerticalAlignment="Center">
-                        <Button Name="StartButton" Access="Public" Text="{Loc 'microwave-menu-start-button'}" StyleClasses="positive" TextAlign="Center" />
-                        <Button Name="EjectButton" Access="Public" Text="{Loc 'microwave-menu-eject-all-text'}" ToolTip="{Loc 'microwave-menu-eject-all-tooltip'}" StyleClasses="negative" TextAlign="Center" />
+                        <Button Name="StartButton" Text="{Loc 'microwave-menu-start-button'}" StyleClasses="positive" TextAlign="Center" />
+                        <Button Name="EjectButton" Text="{Loc 'microwave-menu-eject-all-text'}" ToolTip="{Loc 'microwave-menu-eject-all-tooltip'}" StyleClasses="negative" TextAlign="Center" />
                     </BoxContainer>
                 </PanelContainer>
             </BoxContainer>

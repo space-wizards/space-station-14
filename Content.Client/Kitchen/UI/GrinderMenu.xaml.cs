@@ -4,7 +4,6 @@ using Content.Client.UserInterface.Controls;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Containers.ItemSlots;
-using Content.Shared.FixedPoint;
 using Content.Shared.Kitchen;
 using Content.Shared.Kitchen.Components;
 using Content.Shared.Kitchen.EntitySystems;
@@ -39,6 +38,7 @@ public sealed partial class GrinderMenu : FancyWindow
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
+
         _slots = _entityManager.System<ItemSlotsSystem>();
         _power = _entityManager.System<SharedPowerReceiverSystem>();
         _grinder = _entityManager.System<SharedReagentGrinderSystem>();
@@ -52,7 +52,7 @@ public sealed partial class GrinderMenu : FancyWindow
     }
 
     /// <summary>
-    ///     Set the reagent grinder entity associated with this menu.
+    /// Set the reagent grinder entity associated with this menu.
     /// </summary>
     /// <param name="owner">The reagent grinder.</param>
     public void SetEntity(EntityUid owner)
@@ -62,8 +62,8 @@ public sealed partial class GrinderMenu : FancyWindow
     }
 
     /// <summary>
-    ///     Update the UI state of this reagent grinder, including its contents,
-    ///     current grinding/juicing status, and button toggle states.
+    /// Update the UI state of this reagent grinder, including its contents,
+    /// current grinding/juicing status, and button toggle states.
     /// </summary>
     public void UpdateUi()
     {
@@ -72,17 +72,6 @@ public sealed partial class GrinderMenu : FancyWindow
 
         var chamberEntities = grinderComp.InputContainer.ContainedEntities;
         var beaker = _slots.GetItemOrNull(_owner, ReagentGrinderComponent.BeakerSlotId);
-        var beakerReagents = new List<ReagentQuantity>();
-        var currentVolume = FixedPoint2.Zero;
-        var maxVolume = FixedPoint2.Zero;
-
-        if (beaker is { } beakerEnt &&
-            _solutionContainer.TryGetFitsInDispenser(beakerEnt, out _, out var solution))
-        {
-            beakerReagents = solution.Contents.ToList();
-            currentVolume = solution.Volume;
-            maxVolume = solution.MaxVolume;
-        }
 
         var isActive = _grinder.IsActive((_owner, grinderComp));
         var isPowered = _power.IsPowered(_owner);
@@ -114,42 +103,55 @@ public sealed partial class GrinderMenu : FancyWindow
 
         ChamberEmptyLabel.Visible = ChamberGrid.ChildCount == 0;
 
+        UpdateBeaker(beaker);
+    }
+
+    private void UpdateBeaker(EntityUid? beaker)
+    {
         BeakerContents.Children.Clear();
         BeakerContents.VerticalAlignment = VAlignment.Top;
 
-        var beakerName = beaker.HasValue
-            ? _entityManager.GetComponent<MetaDataComponent>(beaker.Value).EntityName
-            : Loc.GetString("grinder-menu-no-beaker");
-
-        BeakerNameLabel.Text = beakerName;
-        BeakerVolumeLabel.Text = beaker.HasValue
-            ? $"{currentVolume}/{maxVolume}"
-            : " ";
-
-        if (!beaker.HasValue)
+        if (beaker is not { } beakerEnt)
         {
-            BeakerContents.VerticalAlignment = VAlignment.Center;
-            BeakerContents.Children.Add(ReagentListHelper.BuildPlaceholderRow(Loc.GetString("grinder-menu-no-beaker"), true));
+            BeakerNameLabel.Text = Loc.GetString("grinder-menu-no-beaker");
+            BeakerVolumeLabel.Text = " ";
+
+            SetBeakerPlaceholder(Loc.GetString("grinder-menu-no-beaker"));
             return;
         }
 
-        if (beakerReagents.Count == 0)
+        BeakerNameLabel.Text = _entityManager.GetComponent<MetaDataComponent>(beakerEnt).EntityName;
+
+        if (!_solutionContainer.TryGetFitsInDispenser(beakerEnt, out _, out var solution))
         {
-            BeakerContents.VerticalAlignment = VAlignment.Center;
-            BeakerContents.Children.Add(ReagentListHelper.BuildPlaceholderRow(Loc.GetString("grinder-menu-beaker-empty"), true));
+            BeakerVolumeLabel.Text = "0/0";
+            SetBeakerPlaceholder(Loc.GetString("grinder-menu-beaker-empty"));
             return;
         }
 
-        for (var i = 0; i < beakerReagents.Count; i++)
-        {
-            var reagent = beakerReagents[i];
+        BeakerVolumeLabel.Text = $"{solution.Volume}/{solution.MaxVolume}";
 
+        if (solution.Contents.Count == 0)
+        {
+            SetBeakerPlaceholder(Loc.GetString("grinder-menu-beaker-empty"));
+            return;
+        }
+
+        var rowIndex = 0;
+        foreach (var reagent in solution.Contents)
+        {
             _prototypeManager.TryIndex(reagent.Reagent.Prototype, out ReagentPrototype? proto);
 
             var reagentName = proto?.LocalizedName ?? Loc.GetString("grinder-menu-unknown-reagent");
             var reagentColor = proto?.SubstanceColor ?? Color.White;
 
-            BeakerContents.Children.Add(ReagentListHelper.BuildReagentRow(reagentName, reagent.Quantity, reagentColor, i));
+            BeakerContents.Children.Add(ReagentListHelper.BuildReagentRow(reagentName, reagent.Quantity, reagentColor, rowIndex++));
         }
+    }
+
+    private void SetBeakerPlaceholder(string text)
+    {
+        BeakerContents.VerticalAlignment = VAlignment.Center;
+        BeakerContents.Children.Add(ReagentListHelper.BuildPlaceholderRow(text));
     }
 }

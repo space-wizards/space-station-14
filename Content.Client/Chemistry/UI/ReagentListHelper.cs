@@ -15,11 +15,11 @@ public static class ReagentListHelper
     private static readonly StyleBoxFlat OddRowBackground = new() { BackgroundColor = Color.FromHex("#202025") };
     private const int ColorIndicatorWidth = 4;
 
-    public static Control BuildPlaceholderRow(string text, bool fill = false)
+    public static Control BuildPlaceholderRow(string text)
     {
         return new PanelContainer
         {
-            VerticalExpand = fill,
+            VerticalExpand = true,
             HorizontalExpand = true,
             Children =
             {
@@ -27,7 +27,7 @@ public static class ReagentListHelper
                 {
                     Text = text,
                     HorizontalAlignment = Control.HAlignment.Center,
-                    VerticalAlignment = fill ? Control.VAlignment.Center : Control.VAlignment.Top,
+                    VerticalAlignment = Control.VAlignment.Center,
                     Margin = new Thickness(4, 2)
                 }
             }
