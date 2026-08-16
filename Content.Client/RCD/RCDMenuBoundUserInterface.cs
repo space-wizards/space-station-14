@@ -21,7 +21,7 @@ public sealed partial class RCDMenuBoundUserInterface : BoundUserInterface
     private const string TopLevelActionCategory = "Main";
 
     private static readonly Dictionary<string, (string Tooltip, SpriteSpecifier Sprite)> PrototypesGroupingInfo
-        = new Dictionary<string, (string Tooltip, SpriteSpecifier Sprite)>
+        = new()
         {
             ["WallsAndFlooring"] = ("rcd-component-walls-and-flooring", new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/Radial/RCD/walls_and_flooring.png"))),
             ["WindowsAndGrilles"] = ("rcd-component-windows-and-grilles", new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/Radial/RCD/windows_and_grilles.png"))),
@@ -53,8 +53,8 @@ public sealed partial class RCDMenuBoundUserInterface : BoundUserInterface
 
     private IEnumerable<RadialMenuOptionBase> ConvertToButtons(HashSet<ProtoId<RCDPrototype>> prototypes)
     {
-        Dictionary<string, List<RadialMenuActionOptionBase>> buttonsByCategory = new();
-        ValueList<RadialMenuActionOptionBase> topLevelActions = new();
+        Dictionary<string, List<RadialMenuOptionBase>> buttonsByCategory = new();
+        ValueList<RadialMenuOptionBase> topLevelActions = new();
         foreach (var protoId in prototypes)
         {
             var prototype = _prototypeManager.Index(protoId);
@@ -74,7 +74,7 @@ public sealed partial class RCDMenuBoundUserInterface : BoundUserInterface
 
             if (!buttonsByCategory.TryGetValue(prototype.Category, out var list))
             {
-                list = new List<RadialMenuActionOptionBase>();
+                list = new List<RadialMenuOptionBase>();
                 buttonsByCategory.Add(prototype.Category, list);
             }
 
