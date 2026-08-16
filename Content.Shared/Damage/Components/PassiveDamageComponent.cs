@@ -31,4 +31,10 @@ public sealed partial class PassiveDamageComponent : Component
 
     [DataField("nextDamage", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan NextDamage = TimeSpan.Zero;
+
+    /// <summary>
+    /// How long to pause the passive health change after damage has been taken.
+    /// </summary>
+    [DataField]
+    public float IntervalHaltOnDamageTaken;
 }

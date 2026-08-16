@@ -9,17 +9,24 @@ public sealed partial class PassiveDamageSystem : EntitySystem
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private IGameTiming _timing = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
+    #region Subscriptions
 
-        SubscribeLocalEvent<PassiveDamageComponent, MapInitEvent>(OnPendingMapInit);
-    }
-
+    [SubscribeLocalEvent]
     private void OnPendingMapInit(EntityUid uid, PassiveDamageComponent component, MapInitEvent args)
     {
         component.NextDamage = _timing.CurTime + TimeSpan.FromSeconds(1f);
     }
+
+    [SubscribeLocalEvent]
+    private void OnDamageTaken(EntityUid ent, PassiveDamageComponent component, DamageDealtEvent args)
+    {
+        if (component.IntervalHaltOnDamageTaken == 0f || !args.Damage.AnyPositive())
+            return;
+
+        component.NextDamage = _timing.CurTime + TimeSpan.FromSeconds(1f + component.IntervalHaltOnDamageTaken);
+    }
+
+    #endregion
 
     // Every tick, attempt to damage entities
     public override void Update(float frameTime)

@@ -178,6 +178,7 @@
         Blunt: 0.50
         Heat: 0.1
   - type: PassiveDamage
+    intervalHaltOnDamageTaken: 5
     allowedStates:
     - Alive
     damage:
