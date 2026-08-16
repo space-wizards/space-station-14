@@ -57,6 +57,24 @@
 
 - type: entity
   parent: LaserHitscanBase
+  id: RangeLaser
+  name: green laser
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TargetFinderHitscan
+  - type: HitscanBasicVisuals
+    muzzleFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: muzzle_laser_pointer
+    travelFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: laser_pointer
+    impactFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: impact_laser_pointer
+
+- type: entity
+  parent: LaserHitscanBase
   id: RedLaser
   name: red laser ray
   categories: [ HideSpawnMenu ]
