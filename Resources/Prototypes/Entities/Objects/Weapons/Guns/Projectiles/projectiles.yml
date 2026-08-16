@@ -1397,8 +1397,8 @@
     spread: 9
 
 - type: entity
-  name: magnum laser bolt
-  id: BulletLaserMagnum
+  name: magnum window-piercing bolt
+  id: BulletLaserWindowPiercingMagnum
   categories: [ HideSpawnMenu ]
   parent: BulletLaser
   components:
@@ -1414,27 +1414,7 @@
     impactEffect: BulletImpactEffectOrangeDisabler
     damage:
       types:
-        Heat: 30
-
-- type: entity
-  name: magnum window-piercing bolt
-  id: BulletLaserWindowPiercingMagnum
-  categories: [ HideSpawnMenu ]
-  parent: BulletLaser
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles_magnum.rsi
-    layers:
-    - state: magnum_piercing
-      shader: unshaded
-  - type: PointLight
-    enabled: true
-    color: "#ff4300"
-  - type: Projectile
-    impactEffect: BulletImpactEffectOrangeDisabler
-    damage:
-      types:
-        Heat: 20
+        Heat: 25
   - type: Fixtures
     fixtures:
       projectile:
