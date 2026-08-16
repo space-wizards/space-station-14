@@ -1,4 +1,4 @@
-﻿using Content.Client.FeedbackPopup;
+using Content.Client.FeedbackPopup;
 using Content.Client.Gameplay;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Guidebook;
@@ -101,6 +101,12 @@ public sealed partial class EscapeUIController : UIController, IOnStateEntered<G
             _console.ExecuteCommand("quit");
         };
 
+        _escapeWindow.AdminRemarksButton.OnPressed += _ =>
+        {
+            CloseEscapeWindow();
+            _console.ExecuteCommand("adminremarks");
+        };
+
         _escapeWindow.WikiButton.OnPressed += _ =>
         {
             _uri.OpenUri(_cfg.GetCVar(CCVars.InfoLinksWiki));
@@ -113,6 +119,7 @@ public sealed partial class EscapeUIController : UIController, IOnStateEntered<G
 
         // Hide wiki button if we don't have a link for it.
         _escapeWindow.WikiButton.Visible = _cfg.GetCVar(CCVars.InfoLinksWiki) != "";
+        _escapeWindow.AdminRemarksButton.Disabled = !_cfg.GetCVar(CCVars.SeeOwnNotes);
 
         CommandBinds.Builder
             .Bind(EngineKeyFunctions.EscapeMenu,
