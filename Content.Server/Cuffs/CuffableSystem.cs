@@ -6,7 +6,7 @@ using Robust.Shared.GameStates;
 namespace Content.Server.Cuffs
 {
     [UsedImplicitly]
-    public sealed class CuffableSystem : SharedCuffableSystem
+    public sealed partial class CuffableSystem : SharedCuffableSystem
     {
         public override void Initialize()
         {

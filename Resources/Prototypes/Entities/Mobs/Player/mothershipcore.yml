@@ -42,14 +42,14 @@
     idleState: core-idle
     runningState: core-active
     staticPacks:
+    - XenoborgMachines
     - EmptyXenoborgs
     - XenoborgUpgradeModules
   - type: MaterialStorage
     whitelist:
       tags:
+      - XenoborgCrystal
       - Sheet
-      - RawMaterial
-      - Ingot
   - type: PointLight
     color: "#0033ff"
     enabled: true
@@ -179,12 +179,10 @@
     moduleWhitelist:
       tags:
       - MothershipModule
-      - BorgModuleEngineering
   - type: ContainerFill
     containers:
       borg_module:
       - MothershipModule
-      - BorgModuleAdvancedTool
   - type: ContainerContainer
     containers:
       cell_slot: !type:ContainerSlot { }
