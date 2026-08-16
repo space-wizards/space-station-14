@@ -93,12 +93,3 @@
   id: DionaHunger
   parent: NormalSatiationHunger
   baseChangeRate: -0.0083
-
-- type: entity
-  abstract: true
-  id: BaseHungerSlowdown
-  component:
-  - type: SatiationSpeedModifier
-    satiations:
-      Hunger:
-        Peckish: 0.75

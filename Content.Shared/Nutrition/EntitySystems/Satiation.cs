@@ -6,6 +6,8 @@ using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown;
 using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Serialization.Markdown.Validation;
+using Robust.Shared.Serialization.Markdown.Value;
+using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Interfaces;
 
@@ -99,40 +101,73 @@ public sealed partial class Satiation : IRobustCloneable<Satiation>
 [DataDefinition, Serializable]
 public sealed partial class SatiationThresholds<T>
 {
+    // They're not redundant if I have to implement the serializer manually! :^)
+#pragma warning disable RA0027
     /// <summary>
     /// The <typeparamref name="T"/> values keyed by the satiation values at or below which the T value becomes "active".
     /// </summary>
     /// <seealso cref="SatiationSystem.TryGetValueByThreshold"/>
-    [IncludeDataField]
+    [DataField(ThresholdsTag)]
     public Dictionary<SatiationValue, T> Thresholds = [];
 
     /// <summary>
     /// When this satiation is expected to change from its current threshold to a different one. This is null when the
     /// current linear change is zero or there is no threshold in the direction of the expected change.
     /// </summary>
-    // Initialize to zero to force an update as soon as possible on load
-    [ViewVariables]
-    public TimeSpan? ProjectedThresholdChangeTime = TimeSpan.Zero;
+    [DataField(ProjectedThresholdChangeTimeTag)]
+#pragma warning restore RA0027
+    public TimeSpan? ProjectedThresholdChangeTime;
 
     /// <summary>
     /// The current <typeparamref name="T"/> value, at least when maintained by something like
     /// <see cref="BaseSatiationEffectSystem{TComp,T}"/>
     /// </summary>
+    // TODO This OUGHT to be serialized, but something in the generated state management code chokes on the `T` type
+    //  parameter. So, instead, we immediately calculate this value in `BaseSatiationEffectSystem.OnMapInit`.
     [ViewVariables]
     public T Current;
+
+    public const string ThresholdsTag = "thresholds";
+    public const string ProjectedThresholdChangeTimeTag = "projectedThresholdChangeTime";
 }
 
+/// <summary>
+/// The serializer for <see cref="SatiationThresholds{T}"/>. Manually implemented because scary generic <c>T</c>.
+/// </summary>
 [TypeSerializer]
-public sealed partial class SatiationThresholdsSerializer<T> : ITypeSerializer<SatiationThresholds<T>, MappingDataNode>,
-    ITypeCopier<SatiationThresholds<T>>
+public sealed partial class SatiationThresholdsSerializer<T> : ITypeSerializer<SatiationThresholds<T>, MappingDataNode>
 {
+    // ReSharper disable once StaticMemberInGenericType // I mean, it's one immutable reference, ReSharper! What could it cost? 100 bytes?
+    private static readonly TimespanSerializer TimeSpanSerializer = new();
+
+    /// <inheritdoc/>
     public ValidationNode Validate(
         ISerializationManager serializationManager,
         MappingDataNode node,
         IDependencyCollection dependencies,
         ISerializationContext? context = null
-    ) => serializationManager.ValidateNode<Dictionary<SatiationValue, T>>(node, context);
+    )
+    {
+        var ret = new Dictionary<ValidationNode, ValidationNode>();
 
+        if (node.TryGetValue(SatiationThresholds<T>.ThresholdsTag, out var thresholds))
+        {
+            ret[new ValidatedValueNode(node.GetKeyNode(SatiationThresholds<T>.ThresholdsTag))] =
+                serializationManager.ValidateNode<Dictionary<SatiationValue, T>>(thresholds, context);
+        }
+
+        if (node.TryGetValue(SatiationThresholds<T>.ProjectedThresholdChangeTimeTag, out var changeTime))
+        {
+            ret[new ValidatedValueNode(node.GetKeyNode(SatiationThresholds<T>.ProjectedThresholdChangeTimeTag))] =
+                changeTime is ValueDataNode v
+                    ? serializationManager.ValidateNode(TimeSpanSerializer, v, context)
+                    : new ErrorNode(changeTime, $"Expected {typeof(ValueDataNode)}, got {changeTime.GetType()}");
+        }
+
+        return new ValidatedMappingNode(ret);
+    }
+
+    /// <inheritdoc/>
     public SatiationThresholds<T> Read(
         ISerializationManager serializationManager,
         MappingDataNode node,
@@ -142,29 +177,44 @@ public sealed partial class SatiationThresholdsSerializer<T> : ITypeSerializer<S
         ISerializationManager.InstantiationDelegate<SatiationThresholds<T>>? instanceProvider = null
     ) => new()
     {
-        Thresholds = serializationManager.Read<Dictionary<SatiationValue, T>>(
-            node,
-            context,
-            hookCtx.SkipHooks,
-            instanceProvider is { } ip ? () => ip().Thresholds : null,
-            true
-        ),
+        Thresholds = node.TryGetValue(SatiationThresholds<T>.ThresholdsTag, out var thresholdsNode)
+            ? serializationManager.Read<Dictionary<SatiationValue, T>>(
+                thresholdsNode,
+                context,
+                notNullableOverride: true
+            )
+            : [],
+        ProjectedThresholdChangeTime =
+            node.TryGetValue(SatiationThresholds<T>.ProjectedThresholdChangeTimeTag, out var changeTime)
+                ? serializationManager.Read(TimeSpanSerializer, (ValueDataNode)changeTime, context)
+                : null,
     };
 
+    /// <inheritdoc/>
     public DataNode Write(
         ISerializationManager serializationManager,
         SatiationThresholds<T> value,
         IDependencyCollection dependencies,
         bool alwaysWrite = false,
         ISerializationContext? context = null
-    ) => serializationManager.WriteValue(value.Thresholds, alwaysWrite, context, true);
+    )
+    {
+        var ret = new Dictionary<string, DataNode>
+        {
+            [SatiationThresholds<T>.ThresholdsTag] =
+                serializationManager.WriteValue(value.Thresholds, alwaysWrite, context, true),
+        };
 
-    public void CopyTo(
-        ISerializationManager serializationManager,
-        SatiationThresholds<T> source,
-        ref SatiationThresholds<T> target,
-        IDependencyCollection dependencies,
-        SerializationHookContext hookCtx,
-        ISerializationContext? context = null
-    ) => serializationManager.CopyTo(source.Thresholds, ref target.Thresholds, context, true, true);
+        if (value.ProjectedThresholdChangeTime is { } changeTime)
+        {
+            ret[SatiationThresholds<T>.ProjectedThresholdChangeTimeTag] = serializationManager.WriteValue(
+                TimeSpanSerializer,
+                changeTime,
+                alwaysWrite,
+                context
+            );
+        }
+
+        return new MappingDataNode(ret);
+    }
 }

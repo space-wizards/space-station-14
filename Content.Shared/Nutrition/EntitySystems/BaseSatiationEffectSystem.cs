@@ -96,7 +96,7 @@ public abstract partial class BaseSatiationEffectSystem<TComp, T> : EntitySystem
             return;
         var satiation = new Entity<SatiationComponent>(entity, comp);
 
-        _satiation.TryGetValueByThreshold(
+        var gotThreshold = _satiation.TryGetValueByThreshold(
             satiation,
             type,
             thresholds.Thresholds,
@@ -105,7 +105,7 @@ public abstract partial class BaseSatiationEffectSystem<TComp, T> : EntitySystem
             out var nextLowerThreshold
         );
 
-        thresholds.Current = result ?? DefaultValue();
+        thresholds.Current = gotThreshold ? result ?? DefaultValue() : DefaultValue();
         thresholds.ProjectedThresholdChangeTime = _satiation.GetTimeToBound(
             satiation,
             type,

@@ -62,8 +62,9 @@
 - type: entity
   abstract: true
   id: BaseThirstSlowdown
-  component:
+  components:
   - type: SatiationSpeedModifier
     satiations:
       Thirst:
-        Parched: 0.75
+        thresholds:
+          Parched: 0.75
