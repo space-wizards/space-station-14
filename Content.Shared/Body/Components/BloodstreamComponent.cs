@@ -17,11 +17,12 @@ namespace Content.Shared.Body.Components;
 /// </summary>
 [RegisterComponent, NetworkedComponent,]
 [AutoGenerateComponentState(fieldDeltas: true), AutoGenerateComponentPause]
-[Access(typeof(SharedBloodstreamSystem))]
+[Access(typeof(BloodstreamSystem))]
 public sealed partial class BloodstreamComponent : Component
 {
     public const string DefaultBloodSolutionName = "bloodstream";
     public const string DefaultBloodTemporarySolutionName = "bloodstreamTemporary";
+    public const string DefaultMetabolitesSolutionName = "metabolites";
 
     /// <summary>
     /// The next time that blood level will be updated and bloodloss damage dealt.
@@ -125,14 +126,14 @@ public sealed partial class BloodstreamComponent : Component
     /// <summary>
     /// The sound to be played when some damage actually heals bleeding rather than starting it.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public SoundSpecifier BloodHealedSound = new SoundPathSpecifier("/Audio/Effects/lightburn.ogg");
 
     /// <summary>
     /// The minimum amount damage reduction needed to play the healing sound/popup.
     /// This prevents tiny amounts of heat damage from spamming the sound, e.g. spacing.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float BloodHealedSoundThreshold = -0.1f;
 
     // TODO probably damage bleed thresholds.
@@ -147,16 +148,16 @@ public sealed partial class BloodstreamComponent : Component
     /// Defines which reagents are considered as 'blood' and how much of it is normal.
     /// </summary>
     /// <remarks>
-    /// Slime-people might use slime as their blood or something like that.
+    /// Default is human blood at 5 liters (600u) of blood.
     /// </remarks>
     [DataField, AutoNetworkedField]
-    public Solution BloodReferenceSolution = new([new("Blood", 300)]);
+    public Solution BloodReferenceSolution = new([new("Blood", 600)]);
 
     /// <summary>
     /// Caches the blood data of an entity.
     /// This is modified by DNA on init so it's not savable.
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
+    [ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
     public List<ReagentData>? BloodData;
 
     /// <summary>
@@ -172,6 +173,12 @@ public sealed partial class BloodstreamComponent : Component
     public string BloodTemporarySolutionName = DefaultBloodTemporarySolutionName;
 
     /// <summary>
+    /// Name/Key that <see cref="MetabolitesSolution"/> is indexed by.
+    /// </summary>
+    [DataField]
+    public string MetabolitesSolutionName = DefaultMetabolitesSolutionName;
+
+    /// <summary>
     /// Internal solution for blood storage
     /// </summary>
     [ViewVariables]
@@ -184,6 +191,12 @@ public sealed partial class BloodstreamComponent : Component
     /// </summary>
     [ViewVariables]
     public Entity<SolutionComponent>? TemporarySolution;
+
+    /// <summary>
+    /// Internal solution for metabolite storage
+    /// </summary>
+    [ViewVariables]
+    public Entity<SolutionComponent>? MetabolitesSolution;
 
     /// <summary>
     /// Alert to show when bleeding.

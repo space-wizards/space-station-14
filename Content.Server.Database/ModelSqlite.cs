@@ -58,13 +58,7 @@ namespace Content.Server.Database
             );
 
             modelBuilder
-                .Entity<ServerBan>()
-                .Property(e => e.Address)
-                .HasColumnType("TEXT")
-                .HasConversion(ipMaskConverter);
-
-            modelBuilder
-                .Entity<ServerRoleBan>()
+                .Entity<BanAddress>()
                 .Property(e => e.Address)
                 .HasColumnType("TEXT")
                 .HasConversion(ipMaskConverter);

@@ -69,7 +69,55 @@
   abstract: true
   components:
   - type: Damageable
+  - type: Injurable
     damageContainer: Biological
+  - type: DamageOverlay
+  - type: RadiationReceiver
+  - type: Stamina
+  - type: StunVisuals
+  - type: MobState
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      100: Critical
+      200: Dead
+  - type: MobStateActions
+    actions:
+      Critical:
+      - ActionCritSuccumb
+      - ActionCritFakeDeath
+      - ActionCritLastWords
+  - type: StoreDamageTakenOnMind
+  - type: Deathgasp
+  - type: HealthExaminable
+    examinableTypes:
+    - Blunt
+    - Slash
+    - Piercing
+    - Heat
+    - Shock
+    - Cold
+    - Caustic
+    - Asphyxiation
+    - Radiation
+  - type: DamageOnHighSpeedImpact
+    damage:
+      types:
+        Blunt: 5
+    soundHit:
+      path: /Audio/Effects/hit_kick.ogg
+  - type: Pullable
+  - type: LightningTarget
+    priority: 2
+    lightningExplode: false
+  - type: GhostOnMove
+    mustBeDead: true
+
+# Used as a simple default for mob destruction
+- type: entity
+  abstract: true
+  id: BaseMobDestructible
+  components:
   - type: Destructible
     thresholds:
     - trigger:
@@ -108,43 +156,6 @@
         damage: 40
       behaviors:
       - !type:VomitBehavior
-  - type: RadiationReceiver
-  - type: Stamina
-  - type: StunVisuals
-  - type: MobState
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      100: Critical
-      200: Dead
-  - type: MobStateActions
-    actions:
-      Critical:
-      - ActionCritSuccumb
-      - ActionCritFakeDeath
-      - ActionCritLastWords
-  - type: Deathgasp
-  - type: HealthExaminable
-    examinableTypes:
-    - Blunt
-    - Slash
-    - Piercing
-    - Heat
-    - Shock
-    - Cold
-    - Caustic
-    - Asphyxiation
-    - Radiation
-  - type: DamageOnHighSpeedImpact
-    damage:
-      types:
-        Blunt: 5
-    soundHit:
-      path: /Audio/Effects/hit_kick.ogg
-  - type: Pullable
-  - type: LightningTarget
-    priority: 2
-    lightningExplode: false
 
 # Used for mobs that can enter combat mode and can attack.
 - type: entity
@@ -158,8 +169,8 @@
     soundHit:
       collection: MetalThud
     damage:
-      groups:
-        Brute: 5
+      types:
+        Blunt: 5
 
 # Used for mobs that are affected by atmospherics, pressure, and heat
 - type: entity
@@ -169,8 +180,6 @@
   components:
   - type: AtmosExposed
   - type: Temperature
-    currentTemperature: 310.15
-    specificHeat: 42
   - type: TemperatureDamage
     heatDamageThreshold: 325
     coldDamageThreshold: 0
@@ -204,9 +213,6 @@
     shiveringHeatRegulation: 500
     normalBodyTemperature: 310.15
     thermalRegulationTemperatureThreshold: 2
-  - type: Temperature
-    currentTemperature: 310.15
-    specificHeat: 42
   - type: TemperatureDamage
     heatDamageThreshold: 325
     coldDamageThreshold: 260
@@ -258,7 +264,7 @@
   id: MobBloodstream
   abstract: true
   components:
-  - type: SolutionContainerManager
+  - type: SolutionManager
   - type: InjectableSolution
     solution: bloodstream
   - type: Bloodstream
@@ -268,3 +274,14 @@
     bloodlossHealDamage:
       types:
         Bloodloss: -1
+
+# Used for mobs that should slightly see in the dark
+- type: entity
+  save: false
+  id: MobNightVision
+  abstract: true
+  components:
+  - type: NightVision
+    prioritized: false
+    relayOverlay: false # In case default value ever changes
+    lightingColor: '#FFFFFF15' # Basically makes it impossible for things to be "Pitch black" but can still be dark.

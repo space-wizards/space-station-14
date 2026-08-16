@@ -11,16 +11,16 @@ using Robust.Shared.Physics;
 
 namespace Content.Client.Light;
 
-public sealed class RoofOverlay : Overlay
+public sealed partial class RoofOverlay : Overlay
 {
     private readonly IEntityManager _entManager;
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly IOverlayManager _overlay = default!;
+    [Dependency] private IOverlayManager _overlay = default!;
 
     private readonly EntityLookupSystem _lookup;
     private readonly SharedMapSystem _mapSystem;
     private readonly SharedRoofSystem _roof = default!;
     private readonly SharedTransformSystem _xformSystem;
+    private readonly TurfSystem _turf;
 
     private List<Entity<MapGridComponent>> _grids = new();
 
@@ -37,6 +37,7 @@ public sealed class RoofOverlay : Overlay
         _mapSystem = _entManager.System<SharedMapSystem>();
         _roof = _entManager.System<SharedRoofSystem>();
         _xformSystem = _entManager.System<SharedTransformSystem>();
+        _turf = _entManager.System<TurfSystem>();
 
         ZIndex = ContentZIndex;
     }
@@ -56,7 +57,7 @@ public sealed class RoofOverlay : Overlay
         var target = lightRes.EnlargedLightTarget;
 
         _grids.Clear();
-        _mapManager.FindGridsIntersecting(args.MapId, bounds, ref _grids, approx: true, includeMap: true);
+        _mapSystem.FindGridsIntersecting(args.MapId, bounds, ref _grids, approx: true, includeMap: true);
         var lightScale = viewport.LightRenderTarget.Size / (Vector2) viewport.Size;
         var scale = viewport.RenderScale / (Vector2.One / lightScale);
 
@@ -82,6 +83,9 @@ public sealed class RoofOverlay : Overlay
 
                     while (tileEnumerator.MoveNext(out var tileRef))
                     {
+                        if (_turf.IsSpace(tileRef))
+                            continue;
+
                         var local = _lookup.GetLocalBounds(tileRef, grid.Comp.TileSize);
                         worldHandle.DrawRect(local, color);
                     }
@@ -113,6 +117,9 @@ public sealed class RoofOverlay : Overlay
                     // Due to stencilling we essentially draw on unrooved tiles
                     while (tileEnumerator.MoveNext(out var tileRef))
                     {
+                        if (_turf.IsSpace(tileRef))
+                            continue;
+
                         var color = _roof.GetColor(roofEnt, tileRef.GridIndices);
 
                         if (color == null)

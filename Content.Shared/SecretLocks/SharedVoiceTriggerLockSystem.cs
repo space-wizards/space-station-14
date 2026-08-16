@@ -6,7 +6,7 @@ namespace Content.Shared.SecretLocks;
 
 public sealed partial class SharedVoiceTriggerLockSystem : EntitySystem
 {
-    [Dependency] private readonly ItemToggleSystem _toggle = default!;
+    [Dependency] private ItemToggleSystem _toggle = default!;
 
     public override void Initialize()
     {

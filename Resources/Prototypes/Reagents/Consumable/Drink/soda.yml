@@ -14,9 +14,10 @@
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
   metabolisms:
-    Drink:
+    Digestion:
       effects:
-      - !type:SatiateThirst
+      - !type:Satiate
+        satiationType: Thirst
         factor: 2
       - !type:ModifyStatusEffect
         effectProto: StatusEffectDrowsiness
@@ -38,9 +39,10 @@
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
   metabolisms:
-    Drink:
+    Digestion:
       effects:
-      - !type:SatiateThirst
+      - !type:Satiate
+        satiationType: Thirst
         factor: 4
 
 - type: reagent
@@ -76,17 +78,17 @@
   flavor: energydrink
   color: "#ffffbf"
   metabolisms:
-    Drink:
+    Digestion:
+      metabolites:
+        Theobromine: 0.2
       effects:
-      - !type:SatiateThirst
+      - !type:Satiate
+        satiationType: Thirst
         factor: 2
       - !type:ModifyStatusEffect
         effectProto: StatusEffectDrowsiness
         time: 2
         type: Remove
-      - !type:AdjustReagent
-        reagent: Theobromine
-        amount: 0.1
   fizziness: 0.4
 
 - type: reagent
@@ -204,9 +206,10 @@
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
   metabolisms:
-    Drink:
+    Digestion:
       effects:
-      - !type:SatiateThirst
+      - !type:Satiate
+        satiationType: Thirst
         factor: 4
 
 - type: reagent
@@ -263,15 +266,13 @@
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
   metabolisms:
-    Drink:
+    Digestion:
+      metabolites:
+        Theobromine: 0.2
       effects:
-      - !type:SatiateThirst
+      - !type:Satiate
+        satiationType: Thirst
         factor: 2
-      - !type:AdjustReagent
-        reagent: Theobromine
-        amount: 0.1
-    Poison:
-      effects:
       - !type:HealthChange
         conditions:
         - !type:MetabolizerTypeCondition

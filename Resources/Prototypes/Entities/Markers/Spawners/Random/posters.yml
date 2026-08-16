@@ -1,3 +1,129 @@
+- type: entityTable
+  id: ContrabandPosterTable
+  table: !type:GroupSelector
+    children:
+    - id: PosterContrabandFreeTonto
+    - id: PosterContrabandAtmosiaDeclarationIndependence
+    - id: PosterContrabandFunPolice
+    - id: PosterContrabandRealExomorph
+    - id: PosterContrabandSyndicateRecruitment
+    - id: PosterContrabandClown
+    - id: PosterContrabandSmoke
+    - id: PosterContrabandGreyTide
+    - id: PosterContrabandMissingGloves
+    - id: PosterContrabandHackingGuide
+    - id: PosterContrabandRIPBadger
+    - id: PosterContrabandAmbrosiaVulgaris
+    - id: PosterContrabandDonutCorp
+    - id: PosterContrabandEAT
+    - id: PosterContrabandTools
+    - id: PosterContrabandPower
+    - id: PosterContrabandSpaceCube
+    - id: PosterContrabandCommunistState
+    - id: PosterContrabandLamarr
+    - id: PosterContrabandBorgFancy
+    - id: PosterContrabandBorgFancyv2
+    - id: PosterContrabandKosmicheskayaStantsiya
+    - id: PosterContrabandRebelsUnite
+    - id: PosterContrabandC20r
+    - id: PosterContrabandHaveaPuff
+    - id: PosterContrabandRevolver
+    - id: PosterContrabandDDayPromo
+    - id: PosterContrabandSyndicatePistol
+    - id: PosterContrabandEnergySwords
+    - id: PosterContrabandRedRum
+    - id: PosterContrabandCC64KAd
+    - id: PosterContrabandPunchShit
+    - id: PosterContrabandTheGriffin
+    - id: PosterContrabandFreeDrone
+    - id: PosterContrabandRouny
+    - id: PosterContrabandRobustSoftdrinks
+    - id: PosterContrabandShamblersJuice
+    - id: PosterContrabandPwrGame
+    - id: PosterContrabandSunkist
+    - id: PosterContrabandSpaceCola
+    - id: PosterContrabandSpaceUp
+    - id: PosterContrabandKudzu
+    - id: PosterContrabandMaskedMen
+    - id: PosterContrabandUnreadableAnnouncement
+    - id: PosterContrabandFreeSyndicateEncryptionKey
+    - id: PosterContrabandBountyHunters
+    - id: PosterContrabandTheBigGasTruth
+    - id: PosterContrabandWehWatches
+    - id: PosterContrabandVoteWeh
+    - id: PosterContrabandBeachStarYamamoto
+    - id: PosterContrabandHighEffectEngineering
+    - id: PosterContrabandNuclearDeviceInformational
+    - id: PosterContrabandRevolt
+    - id: PosterContrabandRise
+    - id: PosterContrabandMoth
+    - id: PosterContrabandCybersun600
+    - id: PosterContrabandDonk
+    - id: PosterContrabandEnlistGorlex
+    - id: PosterContrabandInterdyne
+    - id: PosterContrabandWaffleCorp
+    - id: PosterContrabandMissingSpacepen
+    - id: PosterContrabandExoAcid
+    - id: PosterContrabandExoRun
+    - id: PosterContrabandExoChomp
+
+- type: entityTable
+  id: LegitPosterTable
+  table: !type:GroupSelector
+    children:
+    - id: PosterLegitHereForYourSafety
+    - id: PosterLegitNanotrasenLogo
+    - id: PosterLegitCleanliness
+    - id: PosterLegitHelpOthers
+    - id: PosterLegitBuild
+    - id: PosterLegitBlessThisSpess
+    - id: PosterLegitScience
+    - id: PosterLegitIan
+    - id: PosterLegitObey
+    - id: PosterLegitWalk
+    - id: PosterLegitStateLaws
+    - id: PosterLegitLoveIan
+    - id: PosterLegitSpaceCops
+    - id: PosterLegitUeNo
+    - id: PosterLegitGetYourLEGS
+    - id: PosterLegitDoNotQuestion
+    - id: PosterLegitWorkForAFuture
+    - id: PosterLegitSoftCapPopArt
+    - id: PosterLegitSafetyInternals
+    - id: PosterLegitSafetyEyeProtection
+    - id: PosterLegitSafetyReport
+    - id: PosterLegitReportCrimes
+    - id: PosterLegitIonRifle
+    - id: PosterLegitFoamForceAd
+    - id: PosterLegitCohibaRobustoAd
+    - id: PosterLegit50thAnniversaryVintageReprint
+    - id: PosterLegitFruitBowl
+    - id: PosterLegitPDAAd
+    - id: PosterLegitEnlist
+    - id: PosterLegitNanomichiAd
+    - id: PosterLegit12Gauge
+    - id: PosterLegitHighClassMartini
+    - id: PosterLegitTheOwl
+    - id: PosterLegitNoERP
+    - id: PosterLegitCarbonDioxide
+    - id: PosterLegitDickGumshue
+    - id: PosterLegitThereIsNoGasGiant
+    - id: PosterLegitJustAWeekAway
+    - id: PosterLegitSecWatch
+    - id: PosterLegitVacation
+    - id: PosterLegitRenault
+    - id: PosterLegitNTTGC
+    - id: PosterLegitSafetyMothDelam
+    - id: PosterLegitSafetyMothEpi
+    - id: PosterLegitSafetyMothPiping
+    - id: PosterLegitSafetyMothMeth
+    - id: PosterLegitSafetyMothHardhat
+    - id: PosterLegitSafetyMothSSD
+    - id: PosterLegitOppenhopper
+    - id: PosterLegitTyrone
+    - id: PosterLegitHelio
+    - id: PosterLegitBotanyFear
+
 - type: entity
   parent: MarkerBase
   id: RandomPosterAny
@@ -5,18 +131,23 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Wallmounts/posters.rsi
-        state: random_anything
-  - type: RandomSpawner
+    - state: red
+    - sprite: Structures/Wallmounts/posters.rsi
+      state: random_anything
+  - type: EntityTableSpawner
     offset: 0
-    prototypes:
-      - RandomPosterContraband
-      - RandomPosterLegit
-    chance: 0.95
-    rarePrototypes:
-      - PosterBroken
-    rareChance: 0.05
+    table: !type:GroupSelector
+      children:
+      - id: PosterBroken
+        weight: 0.05
+      - !type:GroupSelector
+        weight: 0.95
+        prob: 0.95
+        children:
+        - !type:NestedSelector
+          tableId: ContrabandPosterTable
+        - !type:NestedSelector
+          tableId: LegitPosterTable
 
 - type: entity
   parent: MarkerBase
@@ -25,77 +156,13 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Wallmounts/posters.rsi
-        state: random_contraband
-  - type: RandomSpawner
+    - state: red
+    - sprite: Structures/Wallmounts/posters.rsi
+      state: random_contraband
+  - type: EntityTableSpawner
     offset: 0
-    prototypes:
-      - PosterContrabandFreeTonto
-      - PosterContrabandAtmosiaDeclarationIndependence
-      - PosterContrabandFunPolice
-      - PosterContrabandRealExomorph
-      - PosterContrabandSyndicateRecruitment
-      - PosterContrabandClown
-      - PosterContrabandSmoke
-      - PosterContrabandGreyTide
-      - PosterContrabandMissingGloves
-      - PosterContrabandHackingGuide
-      - PosterContrabandRIPBadger
-      - PosterContrabandAmbrosiaVulgaris
-      - PosterContrabandDonutCorp
-      - PosterContrabandEAT
-      - PosterContrabandTools
-      - PosterContrabandPower
-      - PosterContrabandSpaceCube
-      - PosterContrabandCommunistState
-      - PosterContrabandLamarr
-      - PosterContrabandBorgFancy
-      - PosterContrabandBorgFancyv2
-      - PosterContrabandKosmicheskayaStantsiya
-      - PosterContrabandRebelsUnite
-      - PosterContrabandC20r
-      - PosterContrabandHaveaPuff
-      - PosterContrabandRevolver
-      - PosterContrabandDDayPromo
-      - PosterContrabandSyndicatePistol
-      - PosterContrabandEnergySwords
-      - PosterContrabandRedRum
-      - PosterContrabandCC64KAd
-      - PosterContrabandPunchShit
-      - PosterContrabandTheGriffin
-      - PosterContrabandFreeDrone
-      - PosterContrabandRouny
-      - PosterContrabandRobustSoftdrinks
-      - PosterContrabandShamblersJuice
-      - PosterContrabandPwrGame
-      - PosterContrabandSunkist
-      - PosterContrabandSpaceCola
-      - PosterContrabandSpaceUp
-      - PosterContrabandKudzu
-      - PosterContrabandMaskedMen
-      - PosterContrabandUnreadableAnnouncement
-      - PosterContrabandFreeSyndicateEncryptionKey
-      - PosterContrabandBountyHunters
-      - PosterContrabandTheBigGasTruth
-      - PosterContrabandWehWatches
-      - PosterContrabandVoteWeh
-      - PosterContrabandBeachStarYamamoto
-      - PosterContrabandHighEffectEngineering
-      - PosterContrabandNuclearDeviceInformational
-      - PosterContrabandRevolt
-      - PosterContrabandRise
-      - PosterContrabandMoth
-      - PosterContrabandCybersun600
-      - PosterContrabandDonk
-      - PosterContrabandEnlistGorlex
-      - PosterContrabandInterdyne
-      - PosterContrabandWaffleCorp
-      - PosterContrabandMissingSpacepen
-      - PosterContrabandExoAcid
-      - PosterContrabandExoRun
-      - PosterContrabandExoChomp
-    chance: 1
+    table: !type:NestedSelector
+      tableId: ContrabandPosterTable
 
 - type: entity
   parent: MarkerBase
@@ -104,62 +171,10 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Wallmounts/posters.rsi
-        state: random_legit
-  - type: RandomSpawner
+    - state: red
+    - sprite: Structures/Wallmounts/posters.rsi
+      state: random_legit
+  - type: EntityTableSpawner
     offset: 0
-    prototypes:
-      - PosterLegitHereForYourSafety
-      - PosterLegitNanotrasenLogo
-      - PosterLegitCleanliness
-      - PosterLegitHelpOthers
-      - PosterLegitBuild
-      - PosterLegitBlessThisSpess
-      - PosterLegitScience
-      - PosterLegitIan
-      - PosterLegitObey
-      - PosterLegitWalk
-      - PosterLegitStateLaws
-      - PosterLegitLoveIan
-      - PosterLegitSpaceCops
-      - PosterLegitUeNo
-      - PosterLegitGetYourLEGS
-      - PosterLegitDoNotQuestion
-      - PosterLegitWorkForAFuture
-      - PosterLegitSoftCapPopArt
-      - PosterLegitSafetyInternals
-      - PosterLegitSafetyEyeProtection
-      - PosterLegitSafetyReport
-      - PosterLegitReportCrimes
-      - PosterLegitIonRifle
-      - PosterLegitFoamForceAd
-      - PosterLegitCohibaRobustoAd
-      - PosterLegit50thAnniversaryVintageReprint
-      - PosterLegitFruitBowl
-      - PosterLegitPDAAd
-      - PosterLegitEnlist
-      - PosterLegitNanomichiAd
-      - PosterLegit12Gauge
-      - PosterLegitHighClassMartini
-      - PosterLegitTheOwl
-      - PosterLegitNoERP
-      - PosterLegitCarbonDioxide
-      - PosterLegitDickGumshue
-      - PosterLegitThereIsNoGasGiant
-      - PosterLegitJustAWeekAway
-      - PosterLegitSecWatch
-      - PosterLegitVacation
-      - PosterLegitRenault
-      - PosterLegitNTTGC
-      - PosterLegitSafetyMothDelam
-      - PosterLegitSafetyMothEpi
-      - PosterLegitSafetyMothPiping
-      - PosterLegitSafetyMothMeth
-      - PosterLegitSafetyMothHardhat
-      - PosterLegitSafetyMothSSD
-      - PosterLegitOppenhopper
-      - PosterLegitTyrone
-      - PosterLegitHelio
-      - PosterLegitBotanyFear
-    chance: 1
+    table: !type:NestedSelector
+      tableId: LegitPosterTable

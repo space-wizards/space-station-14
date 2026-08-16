@@ -206,6 +206,10 @@
       prob: 0.10
       rolls: !type:RangeNumberSelector
         range: 1, 2
+    - !type:NestedSelector
+      tableId: MaintenancePlushies
+      prob: 0.02
+
     # Weapons
     - !type:NestedSelector
       tableId: MaintWeaponTable
@@ -217,6 +221,19 @@
     # Recursive
     - id: ClosetMaintenanceFilledRandom
       prob: 0.01
+
+- type: entityTable
+  id: MaintenancePlushies
+  table: !type:GroupSelector
+    children:
+    - id: PlushieLizardJobBoxer
+    - id: PlushieLizardJobClown
+    - id: PlushieLizardJobLibrarian
+    - id: PlushieLizardJobMime
+    - id: PlushieLizardJobMusician
+    - id: PlushieLizardJobPassenger
+    - id: PlushieLizardJobReporter
+    - id: PlushieLizardJobZookeeper
 
 - type: entity
   id: ClosetMaintenanceFilledRandom

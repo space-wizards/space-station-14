@@ -10,14 +10,14 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.DeviceLinking.Systems;
 
-public sealed class SignalTimerSystem : EntitySystem
+public sealed partial class SignalTimerSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
-    [Dependency] private readonly AccessReaderSystem _accessReader = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private DeviceLinkSystem _signalSystem = default!;
+    [Dependency] private SharedAppearanceSystem _appearanceSystem = default!;
+    [Dependency] private UserInterfaceSystem _ui = default!;
+    [Dependency] private AccessReaderSystem _accessReader = default!;
 
     /// <summary>
     /// Per-tick timer cache.
@@ -41,6 +41,7 @@ public sealed class SignalTimerSystem : EntitySystem
     {
         _appearanceSystem.SetData(uid, TextScreenVisuals.DefaultText, component.Label);
         _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, component.Label);
+        _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenTextTime, _gameTiming.CurTime);
         _signalSystem.EnsureSinkPorts(uid, component.Trigger);
     }
 
@@ -140,6 +141,7 @@ public sealed class SignalTimerSystem : EntitySystem
             // if you delved deep into appearance update batching
             _appearanceSystem.SetData(uid, TextScreenVisuals.DefaultText, component.Label);
             _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, component.Label);
+            _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenTextTime, _gameTiming.CurTime);
         }
     }
 

@@ -40,6 +40,7 @@
     noRot: false
     drawdepth: SmallObjects
     sprite: Structures/Wallmounts/intercom.rsi
+    offset: 0, -0.25
     layers:
     - state: base
     - state: unshaded
@@ -78,23 +79,17 @@
     - key_slots
   - type: Destructible
     thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 200
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-      - trigger:
-          !type:DamageTrigger
-          damage: 100
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-          - !type:PlaySoundBehavior
-            sound:
-              collection: MetalGlassBreak
-              params:
-                volume: -4
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+          params:
+            volume: -4
   - type: GenericVisualizer
     visuals:
       enum.WiresVisualLayers.MaintenancePanel:
@@ -115,6 +110,7 @@
           False: { visible: false }
 
 - type: entity
+  parent: BaseWallmountMetallic
   id: IntercomAssembly
   name: intercom assembly
   description: An intercom. It doesn't seem very helpful right now.
@@ -122,11 +118,25 @@
   - type: Sprite
     drawdepth: SmallObjects
     sprite: Structures/Wallmounts/intercom.rsi
+    offset: 0, -0.25
     layers:
     - state: build
     - state: panel
       visible: false
       map: [ "wires" ]
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+          params:
+            volume: -4
   - type: Appearance
   - type: GenericVisualizer
     visuals:

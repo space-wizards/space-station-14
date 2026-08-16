@@ -3,19 +3,23 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
 using Content.Shared.CCVar;
 using Content.Shared.CombatMode;
+using Content.Shared.Cuffs;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Events;
 using Content.Shared.Database;
 using Content.Shared.Effects;
 using Content.Shared.FixedPoint;
+using Content.Shared.Item.ItemToggle;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Power.EntitySystems;
 using Content.Shared.Projectiles;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Rounding;
 using Content.Shared.StatusEffectNew;
 using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
+using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
@@ -33,17 +37,22 @@ public abstract partial class SharedStaminaSystem : EntitySystem
 {
     public static readonly EntProtoId StaminaLow = "StatusEffectStaminaLow";
 
-    [Dependency] private readonly IConfigurationManager _config = default!;
-    [Dependency] protected readonly IGameTiming Timing = default!;
-    [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly AlertsSystem _alerts = default!;
-    [Dependency] private readonly MetaDataSystem _metadata = default!;
-    [Dependency] private readonly MovementModStatusSystem _movementMod = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
-    [Dependency] private readonly StatusEffectsSystem _status = default!;
-    [Dependency] protected readonly SharedStunSystem StunSystem = default!;
+    [Dependency] private IConfigurationManager _config = default!;
+    [Dependency] protected IGameTiming Timing = default!;
+    [Dependency] private INetManager _net = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private AlertsSystem _alerts = default!;
+    [Dependency] private SharedBatterySystem _battery = default!;
+    [Dependency] private MetaDataSystem _metadata = default!;
+    [Dependency] private MovementModStatusSystem _movementMod = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedColorFlashEffectSystem _color = default!;
+    [Dependency] private StatusEffectsSystem _status = default!;
+    [Dependency] private ItemToggleSystem _itemToggle = default!;
+    [Dependency] protected SharedStunSystem StunSystem = default!;
+    [Dependency] private MeleeBatteryHitsLeftSystem _meleeBattery = default!;
+
+    [Dependency] private EntityQuery<StaminaComponent> _stamQuery = default!;
 
     /// <summary>
     /// How much of a buffer is there between the stun duration and when stuns can be re-applied.
@@ -59,22 +68,22 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         InitializeModifier();
         InitializeResistance();
 
-        SubscribeLocalEvent<StaminaComponent, ComponentStartup>(OnStartup);
-        SubscribeLocalEvent<StaminaComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<StaminaComponent, AfterAutoHandleStateEvent>(OnStamHandleState);
-        SubscribeLocalEvent<StaminaComponent, DisarmedEvent>(OnDisarmed);
-        SubscribeLocalEvent<StaminaComponent, RejuvenateEvent>(OnRejuvenate);
-
-        SubscribeLocalEvent<StaminaDamageOnEmbedComponent, EmbedEvent>(OnProjectileEmbed);
-
-        SubscribeLocalEvent<StaminaDamageOnCollideComponent, ProjectileHitEvent>(OnProjectileHit);
-        SubscribeLocalEvent<StaminaDamageOnCollideComponent, ThrowDoHitEvent>(OnThrowHit);
-
-        SubscribeLocalEvent<StaminaDamageOnHitComponent, MeleeHitEvent>(OnMeleeHit);
-
         Subs.CVar(_config, CCVars.PlaytestStaminaDamageModifier, value => UniversalStaminaDamageModifier = value, true);
     }
 
+    [SubscribeLocalEvent]
+    private void OnInit(Entity<StaminaDamageOnHitRequiresChargeComponent> ent, ref MapInitEvent args)
+    {
+        _meleeBattery.UpdateHitPowerCost(ent.Owner);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnRemove(Entity<StaminaDamageOnHitRequiresChargeComponent> ent, ref ComponentRemove args)
+    {
+        _meleeBattery.UpdateHitPowerCost(ent.Owner);
+    }
+
+    [SubscribeLocalEvent]
     protected virtual void OnStamHandleState(Entity<StaminaComponent> entity, ref AfterAutoHandleStateEvent args)
     {
         if (entity.Comp.Critical)
@@ -88,6 +97,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     protected virtual void OnShutdown(Entity<StaminaComponent> entity, ref ComponentShutdown args)
     {
         if (MetaData(entity).EntityLifeStage < EntityLifeStage.Terminating)
@@ -97,6 +107,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         _alerts.ClearAlert(entity.Owner, entity.Comp.StaminaAlert);
     }
 
+    [SubscribeLocalEvent]
     private void OnStartup(Entity<StaminaComponent> entity, ref ComponentStartup args)
     {
         // Set the base threshold here since ModifiedCritThreshold can't be modified via yaml.
@@ -113,9 +124,10 @@ public abstract partial class SharedStaminaSystem : EntitySystem
 
         var curTime = Timing.CurTime;
         var pauseTime = _metadata.GetPauseTime(uid);
-        return MathF.Max(0f, component.StaminaDamage - MathF.Max(0f, (float) (curTime - (component.NextUpdate + pauseTime)).TotalSeconds * component.Decay));
+        return MathF.Max(0f, component.StaminaDamage - MathF.Max(0f, (float)(curTime - (component.NextUpdate + pauseTime)).TotalSeconds * component.Decay));
     }
 
+    [SubscribeLocalEvent]
     private void OnRejuvenate(Entity<StaminaComponent> entity, ref RejuvenateEvent args)
     {
         if (entity.Comp.StaminaDamage >= entity.Comp.CritThreshold)
@@ -131,6 +143,14 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         Dirty(entity);
     }
 
+    [SubscribeLocalEvent]
+    private void OnIncapCuffCheck(Entity<StaminaComponent> ent, ref CheckIncapacitatedCuffEvent args)
+    {
+        if (ent.Comp.Critical)
+            args.Incapacitated = true;
+    }
+
+    [SubscribeLocalEvent]
     private void OnDisarmed(EntityUid uid, StaminaComponent component, ref DisarmedEvent args)
     {
         if (args.Handled)
@@ -148,6 +168,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         args.Handled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnMeleeHit(EntityUid uid, StaminaDamageOnHitComponent component, MeleeHitEvent args)
     {
         if (!args.IsHit ||
@@ -162,13 +183,12 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         if (ev.Cancelled)
             return;
 
-        var stamQuery = GetEntityQuery<StaminaComponent>();
         var toHit = new List<(EntityUid Entity, StaminaComponent Component)>();
 
         // Split stamina damage between all eligible targets.
         foreach (var ent in args.HitEntities)
         {
-            if (!stamQuery.TryGetComponent(ent, out var stam))
+            if (!_stamQuery.TryGetComponent(ent, out var stam))
                 continue;
 
             toHit.Add((ent, stam));
@@ -192,11 +212,13 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnProjectileHit(EntityUid uid, StaminaDamageOnCollideComponent component, ref ProjectileHitEvent args)
     {
         OnCollide(uid, component, args.Target);
     }
 
+    [SubscribeLocalEvent]
     private void OnProjectileEmbed(EntityUid uid, StaminaDamageOnEmbedComponent component, ref EmbedEvent args)
     {
         if (!TryComp<StaminaComponent>(args.Embedded, out var stamina))
@@ -205,16 +227,53 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         TakeStaminaDamage(args.Embedded, component.Damage, stamina, source: uid);
     }
 
+    [SubscribeLocalEvent]
     private void OnThrowHit(EntityUid uid, StaminaDamageOnCollideComponent component, ThrowDoHitEvent args)
     {
         OnCollide(uid, component, args.Target);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnHitTakeCharge(Entity<StaminaDamageOnHitRequiresChargeComponent> ent, ref StaminaMeleeHitEvent args)
+    {
+        _battery.TryUseCharge(ent.Owner, ent.Comp.RequiredCharge);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnHitAttemptCheckCharge(Entity<StaminaDamageOnHitRequiresChargeComponent> ent, ref StaminaDamageOnHitAttemptEvent args)
+    {
+        if (args.Cancelled)
+            return;
+
+        if (_battery.GetCharge(ent.Owner) >= ent.Comp.RequiredCharge)
+            return;
+
+        args.Cancelled = true;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnHitAttemptCheckToggle(Entity<StaminaDamageOnHitRequiresToggleComponent> ent, ref StaminaDamageOnHitAttemptEvent args)
+    {
+        if (args.Cancelled)
+            return;
+
+        if (_itemToggle.IsActivated(ent.Owner))
+            return;
+
+        args.Cancelled = true;
+    }
+
+    [SubscribeLocalEvent]
+    private static void OnGetPowerCost(Entity<StaminaDamageOnHitRequiresChargeComponent> ent, ref ModifyHitPowerCostEvent args)
+    {
+        args.Cost += ent.Comp.RequiredCharge;
     }
 
     private void OnCollide(EntityUid uid, StaminaDamageOnCollideComponent component, EntityUid target)
     {
         // you can't inflict stamina damage on things with no stamina component
         // this prevents stun batons from using up charges when throwing it at lockers or lights
-        if (!HasComp<StaminaComponent>(target))
+        if (!_stamQuery.TryComp(target, out var stamina))
             return;
 
         var ev = new StaminaDamageOnHitAttemptEvent();
@@ -222,7 +281,15 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         if (ev.Cancelled)
             return;
 
-        TakeStaminaDamage(target, component.Damage, source: uid, sound: component.Sound);
+        var toHit = new List<(EntityUid Entity, StaminaComponent Component)>()
+        {
+            (target, stamina)
+        };
+
+        var hitEvent = new StaminaMeleeHitEvent(toHit);
+        RaiseLocalEvent(uid, hitEvent);
+
+        TakeStaminaDamage(target, component.Damage, stamina, uid, sound: component.Sound);
     }
 
     private void UpdateStaminaVisuals(Entity<StaminaComponent> entity)
@@ -351,14 +418,13 @@ public abstract partial class SharedStaminaSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var stamQuery = GetEntityQuery<StaminaComponent>();
         var query = EntityQueryEnumerator<ActiveStaminaComponent>();
         var curTime = Timing.CurTime;
 
         while (query.MoveNext(out var uid, out _))
         {
             // Just in case we have active but not stamina we'll check and account for it.
-            if (!stamQuery.TryGetComponent(uid, out var comp) ||
+            if (!_stamQuery.TryComp(uid, out var comp) ||
                 comp.StaminaDamage <= 0f && !comp.Critical)
             {
                 RemComp<ActiveStaminaComponent>(uid);
@@ -397,8 +463,8 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         component.Critical = true;
         component.StaminaDamage = component.CritThreshold;
 
-        if (StunSystem.TryUpdateParalyzeDuration(uid, component.StunTime))
-            StunSystem.TrySeeingStars(uid);
+        StunSystem.TryUpdateParalyzeDuration(uid, component.StunTime, true);
+
 
         // Give them buffer before being able to be re-stunned
         component.NextUpdate = Timing.CurTime + component.StunTime + StamCritBufferTime;
