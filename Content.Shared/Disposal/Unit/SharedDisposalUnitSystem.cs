@@ -67,7 +67,6 @@ public abstract partial class SharedDisposalUnitSystem : EntitySystem
         SubscribeLocalEvent<DisposalUnitComponent, AnchorStateChangedEvent>(OnAnchorChanged);
         SubscribeLocalEvent<DisposalUnitComponent, PreventCollideEvent>(OnPreventCollide);
         SubscribeLocalEvent<DisposalUnitComponent, GotEmaggedEvent>(OnEmagged);
-        SubscribeLocalEvent<DisposalUnitComponent, DestructionEventArgs>(OnDestruction);
 
         // See SharedDisposalUnitSystem.Interactions
         SubscribeLocalEvent<DisposalUnitComponent, GetVerbsEvent<InteractionVerb>>(AddInteractionVerb);
@@ -129,12 +128,6 @@ public abstract partial class SharedDisposalUnitSystem : EntitySystem
     {
         ent.Comp.DisablePressure = true;
         args.Handled = true;
-    }
-
-    private void OnDestruction(Entity<DisposalUnitComponent> ent, ref DestructionEventArgs args)
-    {
-        EjectContents(ent);
-        ent.Comp.IsDeleted = true;
     }
 
     private void OnGetDumpableVerb(Entity<DisposalUnitComponent> ent, ref GetDumpableVerbEvent args)
