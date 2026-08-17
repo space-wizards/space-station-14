@@ -132,7 +132,7 @@ public sealed partial class ChatUIController : UIController
     ///     Speech bubbles that are currently visible on screen.
     ///     We track them to push them up when new ones get added.
     /// </summary>
-    public readonly Dictionary<EntityUid, List<NuSpeechBubble>> NuActiveSpeechBubbles = new();
+    public readonly Dictionary<EntityUid, List<NuSpeechBubble>> ActiveSpeechBubbles = new();
 
     /// <summary>
     ///     Speech bubbles that are to-be-sent because of the "rate limit" they have.
@@ -481,10 +481,10 @@ public sealed partial class ChatUIController : UIController
 
     private void CreateNuSpeechBubble(EntityUid entity, SpeechBubbleData speechData)
     {
-        if (!NuActiveSpeechBubbles.TryGetValue(entity, out var existing))
+        if (!ActiveSpeechBubbles.TryGetValue(entity, out var existing))
         {
             existing = new List<NuSpeechBubble>();
-            NuActiveSpeechBubbles.Add(entity, existing);
+            ActiveSpeechBubbles.Add(entity, existing);
         }
 
         var nameColor = GetNameColor(SharedChatSystem.GetStringInsideTag(speechData.Message, "Name"));
@@ -528,12 +528,12 @@ public sealed partial class ChatUIController : UIController
     {
         bubble.Dispose();
 
-        var list = NuActiveSpeechBubbles[entityUid];
+        var list = ActiveSpeechBubbles[entityUid];
         list.Remove(bubble);
 
         if (list.Count == 0)
         {
-            NuActiveSpeechBubbles.Remove(entityUid);
+            ActiveSpeechBubbles.Remove(entityUid);
         }
     }
 
@@ -666,7 +666,7 @@ public sealed partial class ChatUIController : UIController
 
         var occluded = player != null && _examine.IsOccluded(player.Value);
 
-        foreach (var (ent, bubs) in NuActiveSpeechBubbles)
+        foreach (var (ent, bubs) in ActiveSpeechBubbles)
         {
             if (EntityManager.Deleted(ent))
             {

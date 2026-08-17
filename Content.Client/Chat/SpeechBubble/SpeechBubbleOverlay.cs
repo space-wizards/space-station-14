@@ -77,7 +77,7 @@ public sealed partial class SpeechBubbleOverlay : Overlay
 
         //Frame updating all of the bubbles to handle fade.
         //FrameUpdate on controls only runs if they're parented to something and these aren't
-        foreach (var (_, controls) in _chatUIController.NuActiveSpeechBubbles)
+        foreach (var (_, controls) in _chatUIController.ActiveSpeechBubbles)
         {
             foreach (var control in controls)
             {
@@ -102,7 +102,7 @@ public sealed partial class SpeechBubbleOverlay : Overlay
 
         _layoutCache.Clear();
 
-        foreach (var (ent, controls) in _chatUIController.NuActiveSpeechBubbles)
+        foreach (var (ent, controls) in _chatUIController.ActiveSpeechBubbles)
         {
             if (!_transformQuery.TryComp(ent, out var xform))
                 continue;

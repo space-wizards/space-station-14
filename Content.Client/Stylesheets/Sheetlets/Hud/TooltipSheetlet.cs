@@ -44,21 +44,6 @@ public sealed class TooltipSheetlet<T> : Sheetlet<T> where T: PalettedStylesheet
             E<PanelContainer>()
                 .Class(ExamineSystem.StyleClassEntityTooltip)
                 .Panel(tooltipBox)
-            // E<PanelContainer>()
-            //     .Class("speechBox", "sayBox")
-            //     .Panel(tooltipBox),
-            // E<PanelContainer>()
-            //     .Class("speechBox", "whisperBox")
-            //     .Panel(whisperBox),
-            //
-            // E<PanelContainer>()
-            //     .Class("speechBox", "whisperBox")
-            //     .ParentOf(E<RichTextLabel>().Class("bubbleContent"))
-            //     .Prop(Label.StylePropertyFont, sheet.BaseFont.GetFont(12, FontKind.Italic)),
-            // E<PanelContainer>()
-            //     .Class("speechBox", "emoteBox")
-            //     .ParentOf(E<RichTextLabel>().Class("bubbleContent"))
-            //     .Prop(Label.StylePropertyFont, sheet.BaseFont.GetFont(12, FontKind.Italic)),
         ];
     }
 }
