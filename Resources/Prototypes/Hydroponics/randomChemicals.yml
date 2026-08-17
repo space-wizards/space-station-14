@@ -4,122 +4,115 @@
   - quantity: 5
     weight: 0.5
     reagents:
-    - Omnizine
-    - Impedrezene
-    - Fresium
-    - HeartbreakerToxin
-    - Honk
-    - BuzzochloricBees
+    - Omnizine # Rarest heal chem
+    - Plasma # Rarest raw element chem
+    - Fresium # Rare gimmick chem
+    - HeartbreakerToxin # Rarest toxin
+    - Honk # Rarest funni chem
+    - BuzzochloricBees # Rare gimmick chem
   - quantity: 5
     weight: 1
     reagents:
-    - Cognizine
-    - Toxin
-    - Leporazine
-    - Epinephrine
-    - CarpoToxin
-    - SulfuricAcid
-    - Licoxide
-    - Napalm
-    - ChlorineTrifluoride
-    - Radium
-    - Gold
-    - Uranium
-    - Phosphorus
-    - AtomicBomb
-    - Neurotoxin
-    - ChangelingSting
-    - CogChamp
-    - JuiceThatMakesYouWeh
-    - TearGas
-    - Lipolicide
-    - Benzene
+    - Heparin # Intersting Poison
+    - Toxin # Basic poison
+    - Leporazine # Useful T3 chem FILLER
+    - Epinephrine # Boring chem FILLER
+    - CarpoToxin # Useful poison/intermediary
+    - SulfuricAcid # Useful intermediary
+    - Licoxide # Funny shock poison
+    - Napalm # Evil Chem
+    - ChlorineTrifluoride # Evil Chem
+    - Radium # Raw Element
+    - Gold # Raw Element
+    - Uranium # Raw Element
+    - Phosphorus # Raw Element
+    - TearGas # Interesting poison
+    - Lipolicide # Interesting poison
+    - Benzene # Cellular poison
   - quantity: 5
     weight: 2
     reagents:
-    - Desoxyephedrine
-    - ChloralHydrate
-    - Ipecac
-    - Hyronalin
-    - Pax
-    - Cryoxadone
-    - Ethylredoxrazine
-    - Dylovene
-    - Histamine
-    - Blood
-    - WeldingFuel
-    - Mercury
-    - Silver
-    - Phenol
-    - Ultravasculine
-    - Carbon
-    - THC
-    - Nicotine
-    - DoctorsDelight
-    - IceCream
-    - Cola
-    - Diphenhydramine
-    - Iron
-    - Bleach
-    - Mannitol
+    - Desoxyephedrine # Interesting chem FILLER
+    - ChloralHydrate # Interesting chem FILLER
+    - Ipecac # Funny chem FILLER
+    - Hyronalin # Useful T1 Chem FILLER
+    - Pax # Interesting Chem
+    - Cryoxadone # Interesting T1 Chem
+    - Ethylredoxrazine # Interesting chem FILLER
+    - Dylovene # Useful T1 Chem
+    - Blood # Flavor FILLER
+    - WeldingFuel # Useful intermediary FILLER
+    - Mercury # Raw Element
+    - Silver # Raw Element
+    - Phenol # Basic poison, intermediary for epinephrine FILLER
+    - Ultravasculine # Weird anti-poison chem with interesting OD
+    - Carbon # Raw Element
+    - THC # Funny get high chem
+    - DoctorsDelight # Useful healing drink
+    - Iron # Raw Element
+    - Bleach # Basic poison
   - quantity: 10
     weight: 3
     reagents:
-    - Bicaridine
-    - Dermaline
-    - Ephedrine
-    - NorepinephricAcid
-    - Tricordrazine
-    - Saline
-    - PulpedBananaPeel
-    - Cryptobiolin
-    - EZNutrient
-    - Ammonia
-    - RobustHarvest
-    - SpaceLube
-    - Theobromine
-    - Allicin
-    - Acetone
-    - Ash
-    - SodiumCarbonate
-    - SpaceDrugs
-    - SpaceGlue
-    - JuiceBerryPoison
-    - Pilk
-    - Posca
-    - Ethanol
-    - FourteenLoko
-    - LemonLime
-    - LemonLimeCranberry
-    - Enzyme
-    - Vinegar
-    - Potassium
-    - Fluorine
-    - Aluminium
-    - Wine
-    - Coffee
-    - Beer
+    - Theobromine # maybe bad but like has some potential uses for poison
+    - NorepinephricAcid # Gimmicky Chem for poisoning
+    - Bicaridine # Useful T2 Chem FILLER
+    - Dermaline # Useful T2 Chem FILLER
+    - Ephedrine # Useful T2 Chem
+    - Tricordrazine # Useful T1 Chem
+    - Saline # Useful T1 Chem
+    - Cryptobiolin # Funny Chem
+    - EZNutrient # Useful for botanists FILLER
+    - RobustHarvest # Useful for botanists FILLER
+    - Ammonia # Useful intermediary chem
+    - Acetone # Useful intermediary chem
+    - Ash # Useful intermediary chem
+    - Oil # Useful intermediary chem
+    - Slime # Useful intermediary chem
+    - SpaceLube # Useful chem
+    - SpaceGlue # Useful chem
+    - Potassium # Raw Element
+    - Fluorine # Raw Element
+    - Aluminium # Raw Element
+    - Chlorine # Raw Element
+
+- type: weightedRandomFillSolution
+  id: RandomPickFarmReagent
+  fills:
   - quantity: 10
-    weight: 3.5
+    weight: 5
     reagents:
-    - Vitamin
-    - Kelotane
-    - Inaprovaline
-    - Oil
-    - Slime
-    - Fiber
-    - Water
-    - Sugar
-    - Cream
-    - SodaWater
-    - Ice
-    - JuiceCarrot
-    - Protein
-    - Flour
-    - Soysauce
-    - TableSalt
-    - Chlorine
-    - Mercury
+    - Vitamin # Food
+    - Fiber  # Food
+    - Water # Food
+    - Sugar # Food
+    - Cream  # Food
+    - Ice # Food
+    - Protein # Food
+    - Flour # Food
+    - Soysauce # Food
+    - TableSalt # Food
+    - Enzyme # Food
+    - Vinegar # Food
+    - Ethanol # Food
+    - Wine # Food
+    - Mayonnaise # Food
+    - IceCream # Food
+  - quantity: 5
+    weight: 1
+    reagents:
+    - SpaceDrugs # Funny get high
+    - Kelotane # T1 Burn med no OD
+    - Inaprovaline # T1 Crit med no OD
+    - Lipozine # Makes people hungry funny
+    - JuiceThatMakesYouWeh # weh
+    - CogChamp # Funny weird talk
+  - quantity: 5
+    weight: 0.05
+    reagents:
+      - Cognizine # Fun cool exciting roll
+
+
 
 - type: weightedRandomFillSolution
   id: EvilRandomFillSolution
