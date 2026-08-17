@@ -1569,7 +1569,7 @@
     - item: WeaponRocketLauncherXenoborg
     - item: WeaponRocketLauncherXenoborg
   - type: BorgModuleIcon
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-deflector-module } # todo: update this
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-rocket-module }
   - type: ComponentBorgModule
     components:
     - type: SimpleSpriteOverlay
