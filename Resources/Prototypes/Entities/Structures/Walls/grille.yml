@@ -21,12 +21,10 @@
   - type: Anchorable
     flags:
     - Anchorable
-  - type: Rotatable
   - type: Sprite
     drawdepth: Walls
     sprite: Structures/Walls/grille-new.rsi
     layers:
-    - state: full
     - state: electrified
       sprite: Effects/electricity.rsi
       map: ["enum.ElectrifiedLayers.Sparks"]
