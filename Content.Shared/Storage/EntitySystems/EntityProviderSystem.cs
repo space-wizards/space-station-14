@@ -4,6 +4,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Storage.Components;
 using Content.Shared.Whitelist;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 
@@ -15,6 +16,7 @@ namespace Content.Shared.Storage.EntitySystems;
 /// </summary>
 public sealed partial class EntityProviderSystem : EntitySystem
 {
+    [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
@@ -118,9 +120,8 @@ public sealed partial class EntityProviderSystem : EntitySystem
 
         if (!success)
             return success;
-
-        var message = Loc.GetString("comp-entity-provider-refill-from-storage", ("refillTarget", refillTarget));
-        _popup.PopupEntity(message, provider, user);
+        // The refilling provider dictates the sound happening at the refillTarget.
+        _audio.PlayPredicted(provider.Comp.StorageTransferSound, refillTarget, user);
 
         return success;
     }
@@ -150,8 +151,7 @@ public sealed partial class EntityProviderSystem : EntitySystem
         if (!insertionSuccess || user == null)
             return insertionSuccess;
 
-        var message= Loc.GetString("comp-entity-provider-refill-from-storage", ("refillTarget", refillTarget));
-        _popup.PopupEntity(message, refillTarget, user);
+        _audio.PlayPredicted(refillTarget.Comp.StorageTransferSound, refillTarget, user);
 
         return insertionSuccess;
     }

@@ -1,5 +1,6 @@
 using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Whitelist;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -46,6 +47,12 @@ public sealed partial class EntityProviderComponent : Component
     /// </summary>
     [DataField]
     public bool DeleteIfEmpty;
+
+    /// <summary>
+    /// The sound played whenever the provider is being refilled by a storage or another provider.
+    /// </summary>
+    [DataField]
+    public SoundSpecifier? StorageTransferSound = new SoundPathSpecifier("/Audio/Effects/trashbag1.ogg");
 
     /// <summary>
     /// The container where items will be shortly spawned into when being materialized from the counter.
