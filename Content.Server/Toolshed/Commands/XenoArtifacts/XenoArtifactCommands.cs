@@ -164,7 +164,7 @@ public sealed partial class XenoArtifactCommand : ToolshedCommand
         if (target.AttachedEntity == null)
             return;
 
-        var entity = EntityManager.SpawnNextToOrDrop(artifactType, target.AttachedEntity.Value);
+        var entity = EntityManager.SpawnNextToOrDrop(artifactType.Id, target.AttachedEntity.Value); // TODO implicit conversion of ProtoId<EntityPrototype> to EntProtoId
         if (!TryComp(entity, out XenoArtifactComponent? artifactComp))
         {
             return;
