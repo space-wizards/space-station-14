@@ -122,7 +122,8 @@ public sealed partial class EntityProviderSystem
     }
 
     /// <summary>
-    /// Returns the Dictionary containing the EntProtoIds and their corresponding stored amounts.
+    /// Returns a readonly Dictionary containing the EntProtoIds and their corresponding stored amounts.
+    /// This cannot be used for editing, only for knowing what and how much is stored.
     /// </summary>
     /// <param name="provider">The entity providing the entityProvider storage.</param>
     /// <param name="entityCounter">The dictionary containing the stored entities.</param>
