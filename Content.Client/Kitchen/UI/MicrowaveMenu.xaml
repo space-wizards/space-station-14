@@ -14,6 +14,11 @@
                 </controls:StripeBack>
                 <PanelContainer StyleClasses="PanelInsetDeep" Margin="0 0 0 5" VerticalExpand="True">
                     <PanelContainer Name="IngredientsPanel">
+                        <PanelContainer Name="IngredientsBusyBackground" Visible="False" MouseFilter="Ignore">
+                            <PanelContainer.PanelOverride>
+                                <gfx:StyleBoxFlat BackgroundColor="#947300" />
+                            </PanelContainer.PanelOverride>
+                        </PanelContainer>
                         <ScrollContainer Margin="5">
                             <BoxContainer HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalExpand="True" VerticalExpand="True">
                                 <GridContainer Name="IngredientsGrid" Columns="4" HSeparationOverride="5" VSeparationOverride="5">
