@@ -9,6 +9,8 @@ using Robust.Shared.Collections;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using Robust.Shared.Configuration;
+using Content.Shared.CCVar;
 
 namespace Content.Client.RCD;
 
@@ -19,6 +21,8 @@ public sealed partial class RCDMenuBoundUserInterface : BoundUserInterface
     [Dependency] private ISharedPlayerManager _playerManager = default!;
     [Dependency] private PopupSystem _popup = default!;
     [Dependency] private RCDSystem _rcd = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+
 
     private const string TopLevelActionCategory = "Main";
 
@@ -46,6 +50,8 @@ public sealed partial class RCDMenuBoundUserInterface : BoundUserInterface
             return;
 
         _menu = this.CreateWindow<SimpleRadialMenu>();
+        if (!_cfg.GetCVar(CCVars.ControlRadialLocation))
+            _menu.Track(Owner);
         var models = ConvertToButtons(rcd.AvailablePrototypes);
         _menu.SetButtons(models);
 

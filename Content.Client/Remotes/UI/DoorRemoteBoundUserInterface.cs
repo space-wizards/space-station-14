@@ -3,11 +3,15 @@ using Content.Client.UserInterface.Controls;
 using Content.Shared.Remotes.Components;
 using Content.Shared.Remotes.EntitySystems;
 using Robust.Client.UserInterface;
+using Robust.Shared.Configuration;
+using Content.Shared.CCVar;
 
 namespace Content.Client.Remotes.UI;
 
 public sealed class DoorRemoteBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
+    [Dependency] private IConfigurationManager _cfg = default!;
+
     private static readonly Color SelectedOptionColor = Palettes.Green.Element.WithAlpha(128);
     private static readonly Color SelectedOptionHoverColor = Palettes.Green.HoveredElement.WithAlpha(128);
 
@@ -21,6 +25,8 @@ public sealed class DoorRemoteBoundUserInterface(EntityUid owner, Enum uiKey) : 
             return;
 
         _menu = this.CreateWindow<SimpleRadialMenu>();
+        if (!_cfg.GetCVar(CCVars.ControlRadialLocation))
+            _menu.Track(Owner);
         var models = CreateButtons(remote.Mode, remote.Options);
         _menu.SetButtons(models);
 
