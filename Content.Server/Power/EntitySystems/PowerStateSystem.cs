@@ -14,15 +14,32 @@ public sealed partial class PowerStateSystem : SharedPowerStateSystem
         if (ent.Comp.EnsureApc)
             EnsureComp<ApcPowerReceiverComponent>(ent);
 
-        SetPowerLoad(ent, ent.Comp.IsWorking);
+        var isPowered = TrySetPowerLoad(ent, ent.Comp.IsWorking);
+        UpdateAppearance(ent, isPowered);
+    }
+
+    /// <summary> Updates appearance according to powered situation. </summary>
+    [SubscribeLocalEvent]
+    private void ReceivedChanged(Entity<PowerStateComponent> ent, ref PowerConsumerReceivedChanged args)
+    {
+        if (!ent.Comp.IsWorking)
+            return;
+
+        bool isPowered = args.ReceivedPower >= args.DrawRate;
+        UpdateAppearance(ent, isPowered);
     }
 
     /// <inheritdoc/>>
-    protected override void SetPowerLoad(Entity<PowerStateComponent> ent, bool isWorking)
+    protected override bool TrySetPowerLoad(Entity<PowerStateComponent> ent, bool isWorking)
     {
-        base.SetPowerLoad(ent, isWorking);
+        var isEnough = base.TrySetPowerLoad(ent, isWorking);
 
         if (TryComp<PowerConsumerComponent>(ent, out var powerConsumer))
+        {
             powerConsumer.DrawRate = isWorking ? ent.Comp.WorkingPowerDraw : ent.Comp.IdlePowerDraw;
+            return powerConsumer.DrawRate > powerConsumer.ReceivedPower;
+        }
+
+        return isEnough;
     }
 }

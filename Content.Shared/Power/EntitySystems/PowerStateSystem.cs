@@ -10,8 +10,9 @@ namespace Content.Shared.Power.EntitySystems;
 public abstract partial class SharedPowerStateSystem : EntitySystem
 {
     [Dependency] private SharedPowerReceiverSystem _powerReceiverSystem = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
 
-    [Dependency] protected EntityQuery<PowerStateComponent> _powerStateQuery = default!;
+    [Dependency] private EntityQuery<PowerStateComponent> _powerStateQuery;
 
     /// <summary>
     /// Sets the working state of the entity, adjusting its power draw accordingly.
@@ -24,9 +25,11 @@ public abstract partial class SharedPowerStateSystem : EntitySystem
         if (!_powerStateQuery.Resolve(ent, ref ent.Comp))
             return;
 
-        SetPowerLoad((ent, ent.Comp), isWorking);
-
         ent.Comp.IsWorking = isWorking;
+
+        var powerStateEnt = (ent, ent.Comp);
+        var isPowered = TrySetPowerLoad(powerStateEnt, isWorking);
+        UpdateAppearance(powerStateEnt, isPowered);
 
         var ev = new PowerStateChanged(isWorking);
         RaiseLocalEvent(ent, ref ev);
@@ -64,14 +67,35 @@ public abstract partial class SharedPowerStateSystem : EntitySystem
     }
 
     /// <summary> Sets up power load for provided working state. </summary>
-    protected virtual void SetPowerLoad(Entity<PowerStateComponent> ent, bool isWorking)
+    protected virtual bool TrySetPowerLoad(Entity<PowerStateComponent> ent, bool isWorking)
     {
         SharedApcPowerReceiverComponent? apcPower = null;
         if (_powerReceiverSystem.ResolveApc(ent, ref apcPower))
         {
             var powerLoadToSet = isWorking ? ent.Comp.WorkingPowerDraw : ent.Comp.IdlePowerDraw;
             _powerReceiverSystem.SetLoad((ent, apcPower), powerLoadToSet);
+            return apcPower.Powered;
         }
+
+        return false;
+    }
+
+    protected void UpdateAppearance(Entity<PowerStateComponent> ent, bool isPowered)
+    {
+        PowerStateDeviceVisualState state;
+        if (isPowered)
+        {
+            state = PowerStateDeviceVisualState.On;
+        }
+        else if (ent.Comp.IsWorking)
+        {
+            state = PowerStateDeviceVisualState.Underpowered;
+        }
+        else
+        {
+            state = PowerStateDeviceVisualState.Off;
+        }
+        _appearance.SetData(ent, PowerStateDeviceVisuals.VisualState, state);
     }
 }
 

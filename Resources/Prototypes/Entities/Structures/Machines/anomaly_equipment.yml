@@ -131,7 +131,7 @@
     - state: firing
       shader: unshaded
       visible: false
-      map: ["enum.EmitterVisualLayers.Lights"]
+      map: ["enum.PowerStateDeviceVisualLayers.Lights"]
     - state: locked
       shader: unshaded
       visible: false
@@ -166,10 +166,9 @@
   - type: LockedWiresPanel
   - type: AccessReader
     access: [[ "Research" ]]
+  - type: NetworkPoweredAmmoProvider
+    prototype: AnomalousParticleDelta
   - type: Emitter
-    onState: firing
-    boltType: AnomalousParticleDelta
-    underpoweredState: underpowered
     selectableTypes:
     - AnomalousParticleDelta
     - AnomalousParticleEpsilon
@@ -180,9 +179,6 @@
       SetParticleEpsilon: AnomalousParticleEpsilon
       SetParticleZeta: AnomalousParticleZeta
       SetParticleSigma: AnomalousParticleSigma
-    fireBurstSize: 1
-    fireBurstDelayMin: 2
-    fireBurstDelayMax: 6
   - type: NotifyOnNonFunctioning
     locUnlocked: ape-unlocked-broadcast
     radioChannel: Science
@@ -190,6 +186,8 @@
   - type: PowerState
     idlePowerDraw: 5
     workingPowerDraw: 100
+    onState: firing
+    underpoweredState: underpowered
   - type: ApcPowerReceiver
     powerLoad: 5
   - type: GuideHelp
@@ -197,13 +195,14 @@
     - APE
   - type: Gun
     projectileSpeed: 10
-    fireRate: 10 #just has to be fast enough to keep up with upgrades
-    showExamineText: false
-    selectedMode: SemiAuto
+    burstCooldown: 1.4
+    burstFireRate: 0.5
+    selectedMode: Burst
     availableModes:
-      - SemiAuto
+      - Burst
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
+  - type: AutoShootGun
   - type: Appearance
   - type: WiresPanel
   - type: WiresVisuals
