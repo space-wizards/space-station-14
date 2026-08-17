@@ -137,7 +137,7 @@ public sealed partial class EntityProviderSystem : EntitySystem
         if (!Resolve(storage, ref storage.Comp))
             return false;
 
-        var storedEntities = storage.Comp.Container.ContainedEntities;
+        var storedEntities = storage.Comp.Container.ContainedEntities.ToArray();
         var insertionSuccess = false;
 
         foreach (var ent in storedEntities)
