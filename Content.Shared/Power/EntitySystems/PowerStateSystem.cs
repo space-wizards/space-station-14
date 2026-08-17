@@ -66,7 +66,9 @@ public abstract partial class SharedPowerStateSystem : EntitySystem
         return ent.Comp.IsWorking;
     }
 
-    /// <summary> Sets up power load for provided working state. </summary>
+    /// <summary>
+    /// Sets up power load for provided working state and return if device is sufficiently powered.
+    /// </summary>
     protected virtual bool SetPowerLoadGetIsPowered(Entity<PowerStateComponent> ent, bool isWorking)
     {
         SharedApcPowerReceiverComponent? apcPower = null;
