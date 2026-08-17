@@ -5,6 +5,7 @@
   components:
   - type: Item
     size: Normal
+  - type: ItemToggleExaminableStatus
   - type: ItemToggle
     onUse: false
   - type: ToggleableVisuals

@@ -1,5 +1,5 @@
 - type: entity
-  parent: [BaseDeltaPressureReinforcedGlass, BaseWindowStructure]
+  parent: [BaseDeltaPressureReinforcedGlass, BaseWindowStructure, StructureHealthBarrierStrong]
   id: ReinforcedWindow
   name: reinforced window
   components:
@@ -12,9 +12,7 @@
     fuelCost: 10
     doAfterDelay: 2
   - type: Damageable
-    damageModifierSet: RGlass
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: GlassReinforcedMod
   - type: RCDDeconstructable
     cost: 6
     delay: 6
@@ -23,7 +21,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 75
+        damage: 120
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -33,8 +31,6 @@
           ShardGlassReinforced:
             min: 1
             max: 2
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: IconSmooth
     states:
     - !type:CornerSpriteSmoothing
@@ -52,7 +48,7 @@
       sprite: Structures/Windows/cracks.rsi
 
 - type: entity
-  parent: [BaseDeltaPressureReinforcedGlassQuarter, BaseWindowStructureDirectional]
+  parent: [BaseDeltaPressureReinforcedGlassQuarter, BaseWindowStructureDirectional, StructureHealthBarrier]
   id: WindowReinforcedDirectional
   name: directional reinforced window
   components:
@@ -73,9 +69,7 @@
     damageOverlay:
       sprite: Structures/Windows/cracks_directional.rsi
   - type: Damageable
-    damageModifierSet: RGlass
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: GlassReinforcedMod
   - type: RCDDeconstructable
     cost: 4
     delay: 4
@@ -84,7 +78,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 37
+        damage: 80
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -94,10 +88,39 @@
           ShardGlassReinforced:
             min: 1
             max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: StaticPrice
     price: 22.5
+
+- type: entity
+  parent: WindowReinforcedDirectional
+  id: WindowReinforcedDirectionalCorner
+  suffix: Corner
+  components:
+  - type: Sprite
+    sprite: Structures/Windows/directional.rsi
+    state: reinforced_window_corner
+  - type: Icon
+    sprite: Structures/Windows/directional.rsi
+    state: reinforced_window_corner
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,-0.28125,-0.28125"
+        density: 1500
+        mask:
+        - FullTileMask
+        layer:
+        - GlassLayer
+  - type: Construction
+    graph: WindowDirectionalCorner
+    node: windowReinforcedDirectionalCorner
+  - type: DamageVisuals
+    thresholds: [5, 10, 20]
+    trackAllDamage: true
+    damageOverlay:
+      sprite: Structures/Windows/cracks_directional_corner.rsi
 
 - type: entity
   parent: ReinforcedWindow

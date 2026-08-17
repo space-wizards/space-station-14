@@ -1,6 +1,6 @@
 - type: entity
+  parent: [ BaseStructure, StructureHealthDoor ]
   id: EnergyGate
-  parent: BaseStructure
   name: energy gate
   description: An advanced gate that permits one-way access and prevents tailgating.
   components:
@@ -55,17 +55,16 @@
       - MobState # no mobs
       - Pullable # no dragging things in
   - type: Damageable
-    damageModifierSet: StrongMetallic
-  - type: Injurable
-    damageContainer: Inorganic
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 500
+        damage: 200
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
   - type: AccessReader
   - type: Construction
     graph: EnergyGate
@@ -99,8 +98,8 @@
 
 # Airtight
 - type: entity
-  id: EnergyGateAirtight
   parent: EnergyGate
+  id: EnergyGateAirtight
   name: airtight energy gate
   suffix: Airtight
   components:

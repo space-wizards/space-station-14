@@ -196,7 +196,7 @@ public abstract partial class SharedPuddleSystem : EntitySystem
             if (!_turf.IsSpace(change.NewTile))
                 continue;
 
-            var anchored = _map.GetAnchoredEntitiesEnumerator(ev.Entity, ev.Entity.Comp, change.GridIndices);
+            var anchored = _map.GetAnchoredEntities(ev.Entity, ev.Entity.Comp, change.GridIndices);
             while (anchored.MoveNext(out var ent))
             {
                 if (!_puddleQuery.HasComponent(ent))

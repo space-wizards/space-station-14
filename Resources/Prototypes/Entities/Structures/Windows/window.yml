@@ -75,7 +75,7 @@
   - type: BlockWeather
 
 - type: entity
-  parent: BaseWindowStructure
+  parent: [ BaseWindowStructure, StructureHealthBarrier ]
   id: Window
   components:
   - type: Sprite
@@ -84,14 +84,12 @@
     sprite: Structures/Windows/window-base.rsi
     state: full
   - type: Damageable
-    damageModifierSet: Glass
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: GlassMod
   - type: Destructible
     thresholds:
-    - trigger:
+    - trigger: &DamageBarrierNormal
         !type:DamageTrigger
-        damage: 50
+        damage: 80
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -101,8 +99,6 @@
           ShardGlass:
             min: 1
             max: 2
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
 
 - type: entity
   parent: Window
@@ -200,7 +196,7 @@
     node: windowDirectional
 
 - type: entity
-  parent: BaseWindowStructureDirectional
+  parent: [ BaseWindowStructureDirectional, StructureHealthBarrierWeak ]
   id: WindowDirectional
   components:
   - type: Sprite
@@ -210,14 +206,12 @@
     sprite: Structures/Windows/directional.rsi
     state: window
   - type: Damageable
-    damageModifierSet: Glass
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: GlassMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 25
+        damage: 30
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -227,8 +221,37 @@
           ShardGlass:
             min: 1
             max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+
+- type: entity
+  parent: WindowDirectional
+  id: WindowDirectionalCorner
+  suffix: Corner
+  components:
+  - type: Sprite
+    sprite: Structures/Windows/directional.rsi
+    state: window_corner
+  - type: Icon
+    sprite: Structures/Windows/directional.rsi
+    state: window_corner
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,-0.28125,-0.28125"
+        density: 1500
+        mask:
+        - FullTileMask
+        layer:
+        - GlassLayer
+  - type: Construction
+    graph: WindowDirectionalCorner
+    node: windowDirectionalCorner
+  - type: DamageVisuals
+    thresholds: [5, 10, 20]
+    trackAllDamage: true
+    damageOverlay:
+      sprite: Structures/Windows/cracks_directional_corner.rsi
 
 - type: entity
   abstract: true
@@ -253,6 +276,34 @@
     state: frosted_window
   - type: StaticPrice
     price: 35
+
+- type: entity
+  parent: WindowFrostedDirectional
+  id: WindowFrostedDirectionalCorner
+  suffix: Corner
+  components:
+  - type: Sprite
+    sprite: Structures/Windows/directional.rsi
+    state: frosted_window_corner
+  - type: Icon
+    sprite: Structures/Windows/directional.rsi
+    state: frosted_window_corner
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,-0.28125,-0.28125"
+        density: 1500
+        mask:
+        - FullTileMask
+        layer:
+        - GlassLayer
+  - type: DamageVisuals
+    thresholds: [5, 10, 20]
+    trackAllDamage: true
+    damageOverlay:
+      sprite: Structures/Windows/cracks_directional_corner.rsi
 
 - type: entity
   parent: Window

@@ -1,13 +1,13 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Clothing;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Fluids.Components;
+using Content.Shared.Foldable;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Storage;
-using Content.Shared.Weapons.Ranged.Systems;
 
 namespace Content.Shared.Nutrition.EntitySystems;
 
@@ -19,6 +19,7 @@ public sealed partial class IngestionSystem
     {
         SubscribeLocalEvent<UnremoveableComponent, IngestibleEvent>(OnUnremovableIngestion);
         SubscribeLocalEvent<IngestionBlockerComponent, ItemMaskToggledEvent>(OnBlockerMaskToggled);
+        SubscribeLocalEvent<IngestionBlockerComponent, FoldedEvent>(OnBlockerFolded);
         SubscribeLocalEvent<IngestionBlockerComponent, IngestionAttemptEvent>(OnIngestionBlockerAttempt);
         SubscribeLocalEvent<IngestionBlockerComponent, InventoryRelayedEvent<IngestionAttemptEvent>>(OnIngestionBlockerAttempt);
 
@@ -46,6 +47,12 @@ public sealed partial class IngestionSystem
     private void OnBlockerMaskToggled(Entity<IngestionBlockerComponent> entity, ref ItemMaskToggledEvent args)
     {
         entity.Comp.Enabled = !args.Mask.Comp.IsToggled;
+        Dirty(entity);
+    }
+
+    private void OnBlockerFolded(Entity<IngestionBlockerComponent> entity, ref FoldedEvent args)
+    {
+        entity.Comp.Enabled = !args.IsFolded;
         Dirty(entity);
     }
 
