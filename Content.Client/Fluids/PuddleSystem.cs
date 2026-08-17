@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Client.IconSmoothing;
 using Content.Shared.CCVar;
 using Content.Shared.Chemistry.Components;
@@ -43,6 +44,27 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     {
         if (_blendEnabled && _spriteQuery.TryComp(entity, out var sprite))
             EnsureBlendShader(entity.Owner, sprite, PuddleFallbackColor);
+    }
+
+    protected override void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
+    {
+        base.OnPrototypesReloaded(args);
+
+        if (!_blendEnabled ||
+            !args.TryGetModified<ShaderPrototype>(out var modified) ||
+            !modified.Contains(PuddleColorBlendShader.Id))
+        {
+            return;
+        }
+
+        var query = AllEntityQuery<PuddleColorBlendComponent, SpriteComponent>();
+        while (query.MoveNext(out var uid, out var blend, out var sprite))
+        {
+            blend.Shader?.Dispose();
+            blend.Shader = null;
+            EnsureBlendShader(uid, sprite, blend.SelfColor);
+            UpdateBlendShader(uid);
+        }
     }
 
     [SubscribeLocalEvent]
