@@ -112,7 +112,6 @@
     - Wine
     - Mayonnaise
     - IceCream
-    - Sugar
     - Sap
   - quantity: 5
     weight: 1
@@ -123,6 +122,7 @@
     - Lipozine
     - JuiceThatMakesYouWeh
     - CogChamp
+    - Laughter
   - quantity: 5
     weight: 0.05
     reagents:
