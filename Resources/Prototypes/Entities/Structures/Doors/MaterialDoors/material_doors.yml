@@ -134,7 +134,7 @@
           IngotSilver1: *BaseDoorSpawn
 
 - type: entity
-  parent: BaseMaterialDoorNavMap
+  parent: [ BaseMaterialDoorNavMap, StructureHealthDoorWeak]
   id: SteelDoor # used to be MetalDoor
   name: steel door
   components:
@@ -143,22 +143,16 @@
   - type: Construction
     graph: DoorGraph
     node: steelDoor
+  - type: Damageable
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
-    - trigger: &DamageDoorWeak # this is broken, fix needed
-        !type:DamageTrigger
-        damage: 150 # TODO check with structure rebalance for the number
+    - trigger: *DamageDoorWeak
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
+      - *SoundMetalBreak
       - !type:SpawnEntitiesBehavior
         spawn:
-          SheetSteel1:
-            min: 3
-            max: 5
+          SheetSteel1: *BaseDoorSpawn
 
 ### Other doors ###
 

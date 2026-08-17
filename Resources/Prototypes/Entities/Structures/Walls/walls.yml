@@ -162,7 +162,7 @@
     base: brass
 
 - type: entity
-  parent: BaseWall
+  parent: [ BaseWall, StructureHealthWallWeak]
   id: WallClown # PLACEHOLDER FOR BANANIUM WALLS
   suffix: [ Bananium, Placeholder ]
   name: golden wall # bananium wall
@@ -178,19 +178,14 @@
     cost: 6
     delay: 8
     fx: EffectRCDDeconstruct8
+  - type: Damageable
+    damageModifierSet: BananiumMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 300
+    - trigger: *DamageWallWeak
       behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          Girder:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+      - *SoundMetalSlam
+      - *ChangeNodeGirder
   - type: IconSmooth
     key: walls
     base: clown
