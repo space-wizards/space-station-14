@@ -63,10 +63,16 @@ public sealed partial class ItemSlotInsertDoAfterEvent : DoAfterEvent
     /// </summary>
     public bool Swap;
 
-    public ItemSlotInsertDoAfterEvent(string slotId, bool swap)
+    /// <summary>
+    /// The item that was in the slot when insertion started, if any.
+    /// </summary>
+    public NetEntity? OriginalItem;
+
+    public ItemSlotInsertDoAfterEvent(string slotId, bool swap, NetEntity? originalItem)
     {
         SlotId = slotId;
         Swap = swap;
+        OriginalItem = originalItem;
     }
 
     public override DoAfterEvent Clone() => this;

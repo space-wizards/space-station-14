@@ -149,7 +149,7 @@ public sealed partial class ItemSlotsSystem
             !CanInsert(uid, slot, item, user, swap))
             return;
 
-        StartInsertFromHandWithDoAfter(uid, slot, item, user, swap);
+        StartInsertFromHandWithDoAfter(uid, slot, item, (user.Owner, user.Comp), swap);
     }
 
     /// <summary>
@@ -158,24 +158,21 @@ public sealed partial class ItemSlotsSystem
     private bool StartInsertFromHandWithDoAfter(EntityUid uid,
         ItemSlot slot,
         EntityUid item,
-        Entity<HandsComponent?> user,
+        Entity<HandsComponent> user,
         bool swap)
     {
-        if (!Resolve(user, ref user.Comp, false) ||
-            !_handsSystem.CanDrop(user, item))
-            return false;
-
         if (slot.InsertDelay <= TimeSpan.Zero)
             return InsertFromHand(uid, slot, item, user);
 
-        if (slot.ID is not { } slotId)
+        if (!_handsSystem.CanDrop(user.AsNullable(), item) ||
+            slot.ID is not { } slotId)
             return false;
 
         return _doAfter.TryStartDoAfter(new DoAfterArgs(
             EntityManager,
             user,
             slot.InsertDelay,
-            new ItemSlotInsertDoAfterEvent(slotId, swap),
+            new ItemSlotInsertDoAfterEvent(slotId, swap, GetNetEntity(slot.Item)),
             uid,
             target: uid,
             used: item)
@@ -192,10 +189,9 @@ public sealed partial class ItemSlotsSystem
     private bool InsertFromHand(EntityUid uid,
         ItemSlot slot,
         EntityUid item,
-        Entity<HandsComponent?> user)
+        Entity<HandsComponent> user)
     {
-        if (!Resolve(user, ref user.Comp, false) ||
-            !_handsSystem.TryDrop(user, item))
+        if (!_handsSystem.TryDrop(user.AsNullable(), item))
             return false;
 
         if (slot.Item is { } oldItem)
@@ -211,7 +207,7 @@ public sealed partial class ItemSlotsSystem
     }
 
     /// <summary>
-    /// Finishes a delayed insertion only if the original item is still held and the slot remains valid.
+    /// Finishes a delayed insertion only if the slot still has its original contents and remains valid.
     /// </summary>
     [SubscribeLocalEvent]
     private void OnInsertDoAfter(Entity<ItemSlotsComponent> ent, ref ItemSlotInsertDoAfterEvent args)
@@ -220,6 +216,7 @@ public sealed partial class ItemSlotsSystem
             args.Handled ||
             args.Used is not { } item ||
             !ent.Comp.Slots.TryGetValue(args.SlotId, out var slot) ||
+            GetNetEntity(slot.Item) != args.OriginalItem ||
             !TryComp(args.User, out HandsComponent? hands) ||
             !CanInsert(ent, slot, item, args.User, args.Swap))
             return;

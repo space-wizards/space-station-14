@@ -133,24 +133,24 @@ public sealed partial class ItemSlotsSystem
     /// <summary>
     /// Starts an ejection that has already passed slot validation.
     /// </summary>
-    private bool StartEjectToHandsWithDoAfter(EntityUid uid, ItemSlot slot, EntityUid item, EntityUid user)
+    private void StartEjectToHandsWithDoAfter(EntityUid uid, ItemSlot slot, EntityUid item, EntityUid user)
     {
         if (!_actionBlockerSystem.CanPickup(user, item, showPopup: true))
-            return false;
+            return;
 
         if (slot.EjectDelay <= TimeSpan.Zero)
         {
             if (!Eject(uid, slot, item, user, excludeUserAudio: true))
-                return false;
+                return;
 
             _handsSystem.PickupOrDrop(user, item);
-            return true;
+            return;
         }
 
         if (slot.ID is not { } slotId)
-            return false;
+            return;
 
-        return _doAfter.TryStartDoAfter(new DoAfterArgs(
+        _doAfter.TryStartDoAfter(new DoAfterArgs(
             EntityManager,
             user,
             slot.EjectDelay,
