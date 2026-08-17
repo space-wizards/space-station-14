@@ -34,6 +34,10 @@
     TriggerConsumeProduce: 0.5
     TriggerInteractStamp: 1
     TriggerInteractShock: 1
+    TriggerAttackParticleEngine: 0.1
+    TriggerAttackParticleAnomaly: 1
+    TriggerAttackStaminaDamage: 1
+    TriggerAttackLaser: 0.5
     TriggerReactiveEnergyDrink: 1
     TriggerReactiveDrinkHard: 0.5
     TriggerReactiveReagentEasy: 1
@@ -396,6 +400,43 @@
   - type: XATDamageThresholdReached
     typesNeeded:
       Shock: 5
+
+  id: TriggerAttackParticleEngine
+  tip: xenoarch-trigger-tip-particle
+  components:
+  - type: XATInteractAttack
+    whitelist:
+      components:
+      - ParticleProjectile
+
+- type: xenoArchTrigger
+  id: TriggerAttackParticleAnomaly
+  tip: xenoarch-trigger-tip-anomparticle
+  components:
+  - type: XATInteractAttack
+    whitelist:
+      components:
+      - AnomalousParticle
+
+- type: xenoArchTrigger
+  id: TriggerAttackStaminaDamage
+  tip: xenoarch-trigger-tip-stamina-damage
+  components:
+  - type: XATStaminaDamageThresholdReached
+    damageNeeded: 8 # half a practice disabler capacity
+
+- type: xenoArchTrigger
+  id: TriggerAttackLaser
+  tip: xenoarch-trigger-tip-laser
+  components:
+  - type: XATInteractAttack
+    interactionCount:
+      max: 3
+    whitelist:
+      components:
+      - LaserProjectile
+      tags:
+      - EmitterBolt
 
 - type: xenoArchTrigger
   id: TriggerReactiveEnergyDrink
