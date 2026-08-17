@@ -156,7 +156,6 @@
             volume: -4
       - &ChangeNodeGirder !type:ChangeConstructionNodeBehavior
         node: girder
-      - *SoundMetalSlam
   - type: IconSmooth
     key: walls
     base: brass
