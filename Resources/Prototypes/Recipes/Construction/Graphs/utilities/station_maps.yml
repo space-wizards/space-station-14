@@ -3,12 +3,17 @@
   start: start
   graph:
   - node: start
+    actions: # This action on the start node ensures we delete regardless of how we get here (sometimes reduces code duplication)
+    - !type:DeleteEntity {}
     edges:
     - to: assembly
       steps:
       - material: Steel
         amount: 2
-        doAfter: 2.0
+        doAfter: 2
+      completed:
+      - !type:PlaySound
+        sound: /Audio/Items/genhit.ogg
 
   - node: assembly
     entity: StationMapAssembly
@@ -20,15 +25,17 @@
       - material: Cable
         amount: 2
         doAfter: 1
+      completed:
+      - !type:PlaySound
+        sound: /Audio/Items/genhit.ogg
     - to: start
+      steps:
+      - tool: Welding
+        doAfter: 2
       completed:
       - !type:GivePrototype
         prototype: SheetSteel1
         amount: 2
-      - !type:DeleteEntity {}
-      steps:
-      - tool: Welding
-        doAfter: 2
 
   - node: wired
     entity: StationMapAssembly
@@ -38,22 +45,26 @@
     - to: electronics
       steps:
       - tag: StationMapElectronics
-        store: board
+        store: &Container board
         name: construction-graph-tag-station-map-electronics
         icon:
           sprite: "Objects/Misc/module.rsi"
           state: "door_electronics"
         doAfter: 1
+      completed:
+      - !type:PlaySound
+        sound: /Audio/Items/genhit.ogg
     - to: assembly
+      steps:
+      - tool: Cutting
+        doAfter: 1
       completed:
       - !type:GivePrototype
         prototype: CableApcStack1
         amount: 2
-      steps:
-      - tool: Cutting
-        doAfter: 1
 
   - node: electronics
+    entity: StationMapAssembly
     actions:
     - !type:AppearanceChange
     edges:
@@ -61,17 +72,18 @@
       steps:
       - material: Glass
         amount: 2
+      completed:
+      - !type:PlaySound
+        sound: /Audio/Items/genhit.ogg
+    - to: electronics
     - to: wired
-      conditions:
-      - !type:ContainerNotEmpty
-        container: board
       steps:
-      - tool: Prying
+      - tool: Cutting
         doAfter: 1
       completed:
-      - !type:EmptyAllContainers
+      - !type:EmptyContainer
+        container: *Container
         pickup: true
-        emptyAtUser: true
 
   - node: screen
     entity: StationMapAssembly
@@ -82,10 +94,14 @@
       steps:
       - tool: Screwing
         doAfter: 2
+      completed:
+      - !type:PlaySound
+        sound: /Audio/Machines/light_tube_on.ogg
     - to: electronics
-      conditions:
+      conditions: # Safety condition. Should never be false but surfaces something went wrong
       - !type:ContainerNotEmpty
-        container: board
+        container: *Container
+        examineText: deconstructible-verb-activate-no-target-text
       steps:
       - tool: Prying
         doAfter: 1
@@ -94,6 +110,7 @@
         prototype: SheetGlass1
         amount: 2
 
+  # Final destination
   - node: station_map
     entity: StationMap
     edges:
@@ -102,17 +119,24 @@
       - tool: Screwing
         doAfter: 2
 
+  # The entity prototype has a random fill so there's two nodes to cover both possibilities
   - node: broken
     entity: StationMapBroken
     edges:
     - to: wired
-      completed:
-      - !type:EmptyAllContainers
-        pickup: true
-        emptyAtUser: true
+      conditions:
+      - !type:ContainerEmpty
+        container: *Container
+      steps: &StepsBroken
+      - tool: Screwing
+        doAfter: 3
+      completed: &CompletedBroken
       - !type:GivePrototype
         prototype: ShardGlass
         amount: 2
-      steps:
-      - tool: Prying
-        doAfter: 3
+    - to: electronics
+      conditions:
+      - !type:ContainerNotEmpty
+        container: *Container
+      steps: *StepsBroken
+      completed: *CompletedBroken
