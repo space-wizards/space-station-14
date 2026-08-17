@@ -17,6 +17,12 @@ namespace Content.Shared.Ninja.Components;
 public sealed partial class NinjaGlovesComponent : Component
 {
     /// <summary>
+    /// ID of the use delay to disable gloves abilities.
+    /// </summary>
+    [DataField]
+    public string DisableDelayId = "GlovesDisabledDelay";
+
+    /// <summary>
     /// Entity of the ninja using these gloves, usually means enabled
     /// </summary>
     [DataField, AutoNetworkedField]

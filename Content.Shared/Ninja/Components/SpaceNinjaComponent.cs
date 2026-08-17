@@ -2,6 +2,7 @@ using Content.Shared.Alert;
 using Content.Shared.Ninja.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Ninja.Components;
 
@@ -9,7 +10,7 @@ namespace Content.Shared.Ninja.Components;
 /// Component placed on a mob to make it a space ninja, able to use suit and glove powers.
 /// Contains ids of all ninja equipment.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 [Access(typeof(SharedSpaceNinjaSystem))]
 public sealed partial class SpaceNinjaComponent : Component
 {
@@ -30,6 +31,12 @@ public sealed partial class SpaceNinjaComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntityUid? Katana;
+
+    /// <summary>
+    /// How long their abilities will be disabled after being hit while cloaked.
+    /// </summary>
+    [DataField]
+    public TimeSpan DisableDelay = TimeSpan.FromSeconds(5);
 
     /// <summary>
     /// Objective to complete after calling in a threat.

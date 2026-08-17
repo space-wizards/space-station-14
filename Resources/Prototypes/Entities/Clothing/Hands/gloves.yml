@@ -276,6 +276,11 @@
   - type: ToggleClothing
     action: ActionToggleNinjaGloves
     disableOnUnequip: true
+  - type: UseDelay
+    delay: 1
+    delays:
+      GlovesDisabledDelay: !type:UseDelayInfo
+        length: 5
   - type: NinjaGloves
     abilities:
     - components:

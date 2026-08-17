@@ -1,14 +1,14 @@
 using Content.Shared.Actions;
 using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;
-using Content.Shared.Emp;
+using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Ninja.Components;
+using Content.Shared.Ninja.Events;
 using Content.Shared.Popups;
 using Content.Shared.Timing;
-using Robust.Shared.Audio.Systems;
 
 namespace Content.Shared.Ninja.Systems;
 
@@ -19,25 +19,11 @@ public abstract partial class SharedNinjaSuitSystem : EntitySystem
 {
     [Dependency] private ActionContainerSystem _actionContainer = default!;
     [Dependency] private ItemToggleSystem _toggle = default!;
-    [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] protected SharedPopupSystem Popup = default!;
     [Dependency] private SharedSpaceNinjaSystem _ninja = default!;
     [Dependency] private UseDelaySystem _useDelay = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<NinjaSuitComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<NinjaSuitComponent, ClothingGotEquippedEvent>(OnEquipped);
-        SubscribeLocalEvent<NinjaSuitComponent, GetItemActionsEvent>(OnGetItemActions);
-        SubscribeLocalEvent<NinjaSuitComponent, ToggleClothingCheckEvent>(OnCloakCheck);
-        SubscribeLocalEvent<NinjaSuitComponent, CheckItemCreatorEvent>(OnStarCheck);
-        SubscribeLocalEvent<NinjaSuitComponent, CreateItemAttemptEvent>(OnCreateStarAttempt);
-        SubscribeLocalEvent<NinjaSuitComponent, ItemToggleActivateAttemptEvent>(OnActivateAttempt);
-        SubscribeLocalEvent<NinjaSuitComponent, GotUnequippedEvent>(OnUnequipped);
-    }
-
+    [SubscribeLocalEvent]
     private void OnEquipped(Entity<NinjaSuitComponent> ent, ref ClothingGotEquippedEvent args)
     {
         var user = args.Wearer;
@@ -51,6 +37,7 @@ public abstract partial class SharedNinjaSuitSystem : EntitySystem
         _ninja.AssignSuit(user, ent);
     }
 
+    [SubscribeLocalEvent]
     private void OnMapInit(Entity<NinjaSuitComponent> ent, ref MapInitEvent args)
     {
         var (uid, comp) = ent;
@@ -62,6 +49,7 @@ public abstract partial class SharedNinjaSuitSystem : EntitySystem
     /// <summary>
     /// Add all the actions when a suit is equipped by a ninja.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnGetItemActions(Entity<NinjaSuitComponent> ent, ref GetItemActionsEvent args)
     {
         if (!_ninja.IsNinja(args.User))
@@ -72,21 +60,30 @@ public abstract partial class SharedNinjaSuitSystem : EntitySystem
         args.AddAction(ref comp.EmpActionEntity, comp.EmpAction);
     }
 
+    [SubscribeLocalEvent]
+    private void OnAbilitiesDisabled(Entity<NinjaSuitComponent> suit, ref InventoryRelayedEvent<NinjaAbilitiesDisabledEvent> args)
+    {
+        _useDelay.TryResetDelay(suit, id: suit.Comp.DisableDelayId);
+    }
+
     /// <summary>
     /// Only add toggle cloak action when equipped by a ninja.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnCloakCheck(Entity<NinjaSuitComponent> ent, ref ToggleClothingCheckEvent args)
     {
         if (!_ninja.IsNinja(args.User))
             args.Cancelled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnStarCheck(Entity<NinjaSuitComponent> ent, ref CheckItemCreatorEvent args)
     {
         if (!_ninja.IsNinja(args.User))
             args.Cancelled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnCreateStarAttempt(Entity<NinjaSuitComponent> ent, ref CreateItemAttemptEvent args)
     {
         if (CheckDisabled(ent, args.User))
@@ -96,6 +93,7 @@ public abstract partial class SharedNinjaSuitSystem : EntitySystem
     /// <summary>
     /// Call the shared and serverside code for when anyone unequips a suit.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnUnequipped(Entity<NinjaSuitComponent> ent, ref GotUnequippedEvent args)
     {
         var user = args.EquipTarget;
@@ -104,24 +102,20 @@ public abstract partial class SharedNinjaSuitSystem : EntitySystem
     }
 
     /// <summary>
-    /// Force uncloaks the user and disables suit abilities.
+    /// Uncloaks the user.
     /// </summary>
-    public void RevealNinja(Entity<NinjaSuitComponent?> ent, EntityUid user, bool disable = true)
+    /// <returns>True if the cloak has been deactivated, otherwise false.</returns>
+    public bool RevealNinja(Entity<NinjaSuitComponent?> suit, EntityUid user)
     {
-        if (!Resolve(ent, ref ent.Comp))
-            return;
+        if (!Resolve(suit, ref suit.Comp))
+            return false;
 
-        var uid = ent.Owner;
-        var comp = ent.Comp;
-        if (_toggle.TryDeactivate(uid, user) || !disable)
-            return;
-
-        // previously cloaked, disable abilities for a short time
-        _audio.PlayPredicted(comp.RevealSound, uid, user);
-        Popup.PopupEntity(Loc.GetString("ninja-revealed"), user, user, PopupType.MediumCaution);
-        _useDelay.TryResetDelay(uid, id: comp.DisableDelayId);
+        var wasActive = _toggle.IsActivated(suit.Owner);
+        _toggle.TryDeactivate(suit.Owner, user);
+        return wasActive;
     }
 
+    [SubscribeLocalEvent]
     private void OnActivateAttempt(Entity<NinjaSuitComponent> ent, ref ItemToggleActivateAttemptEvent args)
     {
         if (!_ninja.IsNinja(args.User))

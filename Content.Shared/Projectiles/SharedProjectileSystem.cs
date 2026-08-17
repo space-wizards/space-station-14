@@ -201,7 +201,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
             return;
         }
     }
-    
+
     public void DetachAllEmbedded(Entity<EmbeddedContainerComponent> container)
     {
         foreach (var embedded in container.Comp.EmbeddedObjects)
@@ -270,3 +270,9 @@ public record struct ProjectileHitEvent(DamageSpecifier Damage, EntityUid Target
 /// </summary>
 [ByRefEvent]
 public record struct BeforeProjectileHitEvent(DamageSpecifier Damage, EntityUid Target, EntityUid? Shooter = null);
+
+/// <summary>
+/// Raised on the target when they are hit by a projectile.
+/// </summary>
+[ByRefEvent]
+public record struct HitByProjectileEvent;
