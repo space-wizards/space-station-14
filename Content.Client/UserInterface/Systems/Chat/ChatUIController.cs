@@ -12,7 +12,6 @@ using Content.Client.Gameplay;
 using Content.Client.Ghost;
 using Content.Client.Mind;
 using Content.Client.Roles;
-using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Screens;
 using Content.Client.UserInterface.Systems.Chat.Widgets;
 using Content.Client.UserInterface.Systems.Gameplay;
@@ -129,13 +128,6 @@ public sealed partial class ChatUIController : UIController
     private const int SpeechBubbleCap = 4;
 
     private LayoutContainer _speechBubbleRoot = default!;
-
-    /// <summary>
-    ///     Speech bubbles that are currently visible on screen.
-    ///     We track them to push them up when new ones get added.
-    /// </summary>
-    private readonly Dictionary<EntityUid, List<SpeechBubble>> _activeSpeechBubbles =
-        new();
 
     /// <summary>
     ///     Speech bubbles that are currently visible on screen.
@@ -511,45 +503,6 @@ public sealed partial class ChatUIController : UIController
             var last = existing[^(SpeechBubbleCap + 1)];
             last.FadeNow();
         }
-
-    }
-
-    private void CreateSpeechBubble(EntityUid entity, SpeechBubbleData speechData)
-    {
-        var bubble =
-            SpeechBubble.CreateSpeechBubble(speechData.Type, speechData.Message, entity);
-
-        bubble.OnDied += SpeechBubbleDied;
-
-        if (_activeSpeechBubbles.TryGetValue(entity, out var existing))
-        {
-            // Push up existing bubbles above the mob's head.
-            foreach (var existingBubble in existing)
-            {
-                existingBubble.VerticalOffset += bubble.ContentSize.Y;
-            }
-        }
-        else
-        {
-            existing = new List<SpeechBubble>();
-            _activeSpeechBubbles.Add(entity, existing);
-        }
-
-        existing.Add(bubble);
-        _speechBubbleRoot.AddChild(bubble);
-
-        if (existing.Count > SpeechBubbleCap)
-        {
-            // Get the next speech bubble to fade
-            // Any speech bubbles before it are already fading
-            var last = existing[^(SpeechBubbleCap + 1)];
-            last.FadeNow();
-        }
-    }
-
-    private void SpeechBubbleDied(EntityUid entity, SpeechBubble bubble)
-    {
-        RemoveSpeechBubble(entity, bubble);
     }
 
     private void NuSpeechBubbleDied(EntityUid entity, NuSpeechBubble bubble)
@@ -570,19 +523,6 @@ public sealed partial class ChatUIController : UIController
         }
 
         queueData.MessageQueue.Enqueue(new SpeechBubbleData(message, speechType));
-    }
-
-    public void RemoveSpeechBubble(EntityUid entityUid, SpeechBubble bubble)
-    {
-        bubble.Dispose();
-
-        var list = _activeSpeechBubbles[entityUid];
-        list.Remove(bubble);
-
-        if (list.Count == 0)
-        {
-            _activeSpeechBubbles.Remove(entityUid);
-        }
     }
 
     public void RemoveNuSpeechBubble(EntityUid entityUid, NuSpeechBubble bubble)
@@ -727,7 +667,7 @@ public sealed partial class ChatUIController : UIController
 
         var occluded = player != null && _examine.IsOccluded(player.Value);
 
-        foreach (var (ent, bubs) in _activeSpeechBubbles)
+        foreach (var (ent, bubs) in NuActiveSpeechBubbles)
         {
             if (EntityManager.Deleted(ent))
             {
@@ -756,7 +696,7 @@ public sealed partial class ChatUIController : UIController
         }
     }
 
-    private void SetBubbles(List<SpeechBubble> bubbles, bool visible)
+    private void SetBubbles(List<NuSpeechBubble> bubbles, bool visible)
     {
         foreach (var bubble in bubbles)
         {

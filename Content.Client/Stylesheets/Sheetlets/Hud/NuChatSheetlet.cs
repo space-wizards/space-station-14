@@ -23,16 +23,19 @@ public sealed class NuChatSheetlet : Sheetlet<PalettedStylesheet>
 
             E<PanelContainer>()
                 .Class("speechBox")
+                .ParentOf(E<BoxContainer>())
                 .ParentOf(E<RichTextLabel>().Class("bubbleContent"))
                 .Prop(Label.StylePropertyFontOutlineThickness, 2f),
 
             E<PanelContainer>()
                 .Class("speechBox", "whisperBox")
+                .ParentOf(E<BoxContainer>())
                 .ParentOf(E<RichTextLabel>().Class("bubbleContent"))
                 .Font(whisper),
 
             E<PanelContainer>()
                 .Class("speechBox", "emoteBox")
+                .ParentOf(E<BoxContainer>())
                 .ParentOf(E<RichTextLabel>().Class("bubbleContent"))
                 .Prop(Label.StylePropertyFont, sheet.BaseFont.GetFont(12, FontKind.Italic)),
         ];

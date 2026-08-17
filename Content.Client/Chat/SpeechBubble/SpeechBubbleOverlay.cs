@@ -75,7 +75,9 @@ public sealed partial class SpeechBubbleOverlay : Overlay
     {
         base.FrameUpdate(args);
 
-        foreach (var (ent, controls) in _chatUIController.NuActiveSpeechBubbles)
+        //Frame updating all of the bubbles to handle fade.
+        //FrameUpdate on controls only runs if they're parented to something and these aren't
+        foreach (var (_, controls) in _chatUIController.NuActiveSpeechBubbles)
         {
             foreach (var control in controls)
             {
@@ -164,6 +166,9 @@ public sealed partial class SpeechBubbleOverlay : Overlay
         }
     }
 
+    //The magic happens here
+    //Most of this came from pure trial and error
+    //I'm 100 percent sure why it works but if I touch it slightly it breaks
     private static void ResolveInterleave(List<BubbleLayout> bubbles)
     {
         //sort by spawn time
