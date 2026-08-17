@@ -51,7 +51,7 @@ public sealed partial class PassiveDamageSystem : EntitySystem
 
             // Set the next time they can take damage
             comp.NextDamage = curTime + TimeSpan.FromSeconds(1f);
-            Dirty<PassiveDamageComponent>((uid, comp));
+            Dirty(uid, comp);
 
             // Damage them
             foreach (var allowedState in comp.AllowedStates)
