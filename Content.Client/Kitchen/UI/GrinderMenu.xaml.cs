@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Client.Chemistry.UI;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Kitchen;
 using Content.Shared.Kitchen.Components;
@@ -114,6 +113,7 @@ public sealed partial class GrinderMenu : FancyWindow
         if (beaker is not { } beakerEnt)
         {
             BeakerNameLabel.Text = Loc.GetString("grinder-menu-no-beaker");
+            // Keep the volume line from collapsing so the beaker info doesn't shift vertically.
             BeakerVolumeLabel.Text = " ";
 
             SetBeakerPlaceholder(Loc.GetString("grinder-menu-no-beaker"));
@@ -140,7 +140,7 @@ public sealed partial class GrinderMenu : FancyWindow
         var rowIndex = 0;
         foreach (var reagent in solution.Contents)
         {
-            _prototypeManager.TryIndex(reagent.Reagent.Prototype, out ReagentPrototype? proto);
+            _prototypeManager.TryIndex(reagent.Reagent.Prototype, out var proto);
 
             var reagentName = proto?.LocalizedName ?? Loc.GetString("grinder-menu-unknown-reagent");
             var reagentColor = proto?.SubstanceColor ?? Color.White;

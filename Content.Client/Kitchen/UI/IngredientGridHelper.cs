@@ -88,6 +88,7 @@ public static class IngredientGridHelper
             RectClipContent = true,
             StyleClasses = { StyleClass.ButtonOpenBoth },
             ToolTip = toolTip,
+            // Tone down the whole button a bit so the ingredient grid isn't too visually noisy.
             Modulate = Color.White.WithAlpha(0.5f)
         };
 

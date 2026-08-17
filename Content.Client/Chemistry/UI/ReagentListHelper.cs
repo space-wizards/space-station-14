@@ -15,6 +15,9 @@ public static class ReagentListHelper
     private static readonly StyleBoxFlat OddRowBackground = new() { BackgroundColor = Color.FromHex("#202025") };
     private const int ColorIndicatorWidth = 4;
 
+    /// <summary>
+    /// Builds a centered placeholder for an empty or unavailable reagent list.
+    /// </summary>
     public static Control BuildPlaceholderRow(string text)
     {
         return new PanelContainer

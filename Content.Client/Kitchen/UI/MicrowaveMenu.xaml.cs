@@ -132,6 +132,7 @@ public sealed partial class MicrowaveMenu : FancyWindow
     private void UpdateRemainingTime()
     {
         var remaining = Math.Max((_currentCookTimeEnd - _timing.CurTime).TotalSeconds, 0);
+        // Don't tick the display down until the current second has actually elapsed.
         UpdateTimerDisplay((uint) Math.Ceiling(remaining));
     }
 }
