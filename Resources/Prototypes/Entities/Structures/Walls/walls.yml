@@ -22,9 +22,7 @@
       Heat:
         collection:
           MetalLaserImpact
-  - type: Tag
-    tags:
-    - Wall
+  - type: Wall
   - type: IsRoof
   - type: Sprite
     drawdepth: Walls
@@ -63,6 +61,8 @@
   id: BaseWall
   components:
   - type: Occluder # Breaks on diagonal walls
+  - type: PlacementReplacement
+    key: walls
 
 - type: entity
   abstract: true
@@ -72,7 +72,6 @@
   components:
   - type: Tag
     tags:
-    - Wall
     - Diagonal
   - type: IconSmooth
     mode: Diagonal
@@ -83,6 +82,11 @@
     airBlockedDirection:
     - South
     - East
+  - type: Occluder
+    polygon:
+    - "-0.5,-0.5"
+    - "0.5,0.5"
+    - "0.5,-0.5"
   - type: Fixtures
     fixtures:
       fix1:
@@ -129,49 +133,16 @@
 
 - type: entity
   parent: BaseWall
-  id: WallClock
-  name: clock wall
+  id: WallBrass
+  name: brass wall
   components:
   - type: Sprite
-    sprite: Structures/Walls/clock.rsi
+    sprite: Structures/Walls/brass.rsi
   - type: Icon
-    sprite: Structures/Walls/clock.rsi
-  - type: Construction
-    graph: ClockworkGirder
-    node: clockworkWall
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 300
-      behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          ClockworkGirder:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-  - type: IconSmooth
-    key: walls
-    base: clock
-
-- type: entity
-  parent: BaseWall
-  id: WallClown
-  name: bananium wall
-  components:
-  - type: Sprite
-    sprite: Structures/Walls/clown.rsi
-  - type: Icon
-    sprite: Structures/Walls/clown.rsi
+    sprite: Structures/Walls/brass.rsi
   - type: Construction
     graph: Girder
-    node: bananiumWall
-  - type: RCDDeconstructable
-    cost: 6
-    delay: 8
-    fx: EffectRCDDeconstruct8
+    node: brassWall
   - type: Destructible
     thresholds:
     - trigger:
@@ -187,18 +158,7 @@
         acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
-    base: clown
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.5"
-        mask:
-        - FullTileMask
-        layer:
-        - WallLayer
-        density: 8000 # really good ramming wall, bananium is rare so it's probably fine
+    base: brass
 
 - type: entity
   parent: BaseWall
@@ -208,7 +168,6 @@
   components:
   - type: Tag
     tags:
-    - Wall
     - Structure
   - type: Sprite
     sprite: Structures/Walls/meat.rsi
@@ -231,34 +190,8 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: IconSmooth
-    key: walls
+    key: meatwalls
     base: meat
-
-- type: entity
-  parent: BaseWall
-  id: WallCult
-  name: cult wall
-  components:
-  - type: Sprite
-    sprite: Structures/Walls/cult.rsi
-  - type: Icon
-    sprite: Structures/Walls/cult.rsi
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 300
-      behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          Girder:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-  - type: IconSmooth
-    key: walls
-    base: cult
 
 - type: entity
   parent: BaseWall
@@ -266,9 +199,6 @@
   name: debug wall
   suffix: DEBUG
   components:
-  - type: Tag
-    tags:
-    - Wall
   - type: Sprite
     sprite: Structures/Walls/debug.rsi
   - type: Icon
@@ -289,36 +219,6 @@
   - type: IconSmooth
     key: walls
     base: debug
-
-- type: entity
-  parent: BaseWall
-  id: WallDiamond
-  name: diamond wall
-  components:
-  - type: Sprite
-    sprite: Structures/Walls/diamond.rsi
-  - type: Icon
-    sprite: Structures/Walls/diamond.rsi
-  - type: RCDDeconstructable
-    cost: 6
-    delay: 8
-    fx: EffectRCDDeconstruct8
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 300
-      behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          Girder:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-  - type: IconSmooth
-    key: walls
-    base: diamond
 
 - type: entity
   parent: BaseWall
@@ -366,32 +266,6 @@
 
 - type: entity
   parent: BaseWall
-  id: WallIce
-  name: ice wall
-  components:
-  - type: Sprite
-    sprite: Structures/Walls/ice.rsi
-  - type: Icon
-    sprite: Structures/Walls/ice.rsi
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 300
-      behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          Girder:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-  - type: IconSmooth
-    key: walls
-    base: ice
-
-- type: entity
-  parent: BaseWall
   id: WallPlasma
   name: plasma wall
   components:
@@ -424,39 +298,6 @@
     base: plasma
   - type: RadiationBlocker
     resistance: 5
-
-- type: entity
-  parent: BaseWall
-  id: WallPlastic
-  name: plastic wall
-  components:
-  - type: Sprite
-    sprite: Structures/Walls/plastic.rsi
-  - type: Icon
-    sprite: Structures/Walls/plastic.rsi
-  - type: Construction
-    graph: Girder
-    node: plasticWall
-  - type: RCDDeconstructable
-    cost: 6
-    delay: 8
-    fx: EffectRCDDeconstruct8
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 150
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalSlam
-      - !type:ChangeConstructionNodeBehavior
-        node: girder
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-  - type: IconSmooth
-    key: walls
-    base: plastic
 
 - type: entity
   parent: BaseWall
@@ -517,10 +358,10 @@
   components:
   - type: Sprite
     drawdepth: Walls
-    sprite: Structures/Walls/plastitanium_diagonal.rsi
+    sprite: Structures/Walls/plastitanium-diagonal.rsi
     state: state0
   - type: Icon
-    sprite: Structures/Walls/plastitanium_diagonal.rsi
+    sprite: Structures/Walls/plastitanium-diagonal.rsi
     state: state0
   - type: Damageable
     damageModifierSet: StructuralMetallicStrong
@@ -537,10 +378,10 @@
   components:
   - type: Sprite
     drawdepth: Walls
-    sprite: Structures/Walls/plastitanium_diagonal.rsi
+    sprite: Structures/Walls/plastitanium-diagonal.rsi
     state: state0
   - type: Icon
-    sprite: Structures/Walls/plastitanium_diagonal.rsi
+    sprite: Structures/Walls/plastitanium-diagonal.rsi
     state: state0
   - type: Destructible
     thresholds:
@@ -647,10 +488,10 @@
   components:
   - type: Sprite
     drawdepth: Walls
-    sprite: Structures/Walls/reinforced_diagonal.rsi
+    sprite: Structures/Walls/reinforced-diagonal.rsi
     state: state0
   - type: Icon
-    sprite: Structures/Walls/reinforced_diagonal.rsi
+    sprite: Structures/Walls/reinforced-diagonal.rsi
     state: state0
   - type: Damageable
     damageModifierSet: StructuralMetallicStrong
@@ -672,16 +513,15 @@
   - type: RadiationBlocker
     resistance: 5
 
-# Riveting
 - type: entity
   parent: BaseWall
-  id: WallRiveted
-  name: riveted wall
+  id: WallMarble
+  name: marble wall
   components:
   - type: Sprite
-    sprite: Structures/Walls/riveted.rsi
+    sprite: Structures/Walls/marble.rsi
   - type: Icon
-    sprite: Structures/Walls/riveted.rsi
+    sprite: Structures/Walls/marble.rsi
   - type: Damageable
     damageModifierSet: StructuralMetallicStrong
   - type: Injurable
@@ -701,39 +541,40 @@
         acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
-    base: riveted
+    base: wall
   - type: StaticPrice
     price: 150
 
 - type: entity
   parent: BaseWall
-  id: WallSandstone
-  name: sandstone wall
+  id: WallMarbleIndestructible
+  name: marble wall
+  suffix: indestructible
   components:
   - type: Sprite
-    sprite: Structures/Walls/sandstone.rsi
+    sprite: Structures/Walls/marble.rsi
   - type: Icon
-    sprite: Structures/Walls/sandstone.rsi
-  - type: RCDDeconstructable
-    cost: 6
-    delay: 8
-    fx: EffectRCDDeconstruct8
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 300
-      behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          Girder:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+    sprite: Structures/Walls/marble.rsi
   - type: IconSmooth
     key: walls
-    base: sandstone
+    base: wall
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+        density: 4000
+  - type: Damageable
+    damageModifierSet: StructuralMetallicStrong
+  - type: Injurable
+    damageContainer: StructuralInorganic
+  - type: RadiationBlocker
+    resistance: 5
 
 - type: entity
   parent: BaseWall
@@ -776,10 +617,10 @@
   components:
   - type: Sprite
     drawdepth: Walls
-    sprite: Structures/Walls/shuttle_diagonal.rsi
+    sprite: Structures/Walls/shuttle-diagonal.rsi
     state: state0
   - type: Icon
-    sprite: Structures/Walls/shuttle_diagonal.rsi
+    sprite: Structures/Walls/shuttle-diagonal.rsi
     state: state0
   - type: Reflect
     reflectProb: 1
@@ -932,10 +773,10 @@
   components:
   - type: Sprite
     drawdepth: Walls
-    sprite: Structures/Walls/solid_diagonal.rsi
+    sprite: Structures/Walls/solid-diagonal.rsi
     state: state0
   - type: Icon
-    sprite: Structures/Walls/solid_diagonal.rsi
+    sprite: Structures/Walls/solid-diagonal.rsi
     state: state0
   - type: Destructible
     thresholds:
@@ -973,11 +814,8 @@
 - type: entity
   parent: BaseWall
   id: WallSolidChitin
-  name: solid chitin
+  name: exodermis wall
   components:
-  - type: Tag
-    tags:
-    - Wall
   - type: Destructible
     thresholds:
     - trigger:
@@ -992,11 +830,11 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Sprite
-    sprite: Structures/Walls/xeno.rsi
+    sprite: Structures/Walls/exo.rsi
   - type: Icon
-    sprite: Structures/Walls/xeno.rsi
+    sprite: Structures/Walls/exo.rsi
   - type: IconSmooth
-    key: chitin
+    key: walls
     base: solid
   - type: Construction
     graph: Girder
@@ -1009,12 +847,12 @@
 - type: entity
   parent: BaseWall
   id: WallReinforcedChitin
-  name: reinforced chitin
+  name: reinforced exodermis
   components:
   - type: Sprite
-    sprite: Structures/Walls/xeno.rsi
+    sprite: Structures/Walls/exo.rsi
   - type: Icon
-    sprite: Structures/Walls/xeno.rsi
+    sprite: Structures/Walls/exo.rsi
     state: rgeneric
   - type: Damageable
     damageModifierSet: StructuralMetallicStrong
@@ -1050,7 +888,7 @@
   - type: RadiationBlocker
     resistance: 5
   - type: IconSmooth
-    key: chitin
+    key: walls
     base: reinf_over
   - type: Construction
     graph: Girder
@@ -1059,12 +897,12 @@
 - type: entity
   parent: WallPlastitanium
   id: WallXenoborg
-  name: xenoborg wall
+  name: mechadermis wall
   components:
   - type: Sprite
-    sprite: Structures/Walls/xenoborg.rsi
+    sprite: Structures/Walls/exo-borg.rsi
   - type: Icon
-    sprite: Structures/Walls/xenoborg.rsi
+    sprite: Structures/Walls/exo-borg.rsi
   - type: IconSmooth
     key: walls
     base: xenoborg
@@ -1072,15 +910,15 @@
 - type: entity
   parent: WallPlastitaniumDiagonal
   id: WallXenoborgDiagonal
-  name: xenoborg wall
+  name: mechadermis wall
   suffix: diagonal
   components:
   - type: Sprite
     drawdepth: Walls
-    sprite: Structures/Walls/xenoborg_diagonal.rsi
+    sprite: Structures/Walls/exo-borg-diagonal.rsi
     state: state0
   - type: Icon
-    sprite: Structures/Walls/xenoborg_diagonal.rsi
+    sprite: Structures/Walls/exo-borg-diagonal.rsi
     state: state0
 
 - type: entity
@@ -1152,7 +990,7 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: IconSmooth
-    key: woods
+    key: walls
     base: wood
 
 - type: entity
@@ -1195,30 +1033,6 @@
     graph: WebStructures
     node: wall
 
-
-# Lavalend Walls
-
-- type: entity
-  parent: BaseWall
-  id: WallNecropolis
-  name: stone wall
-  components:
-  - type: Sprite
-    sprite: Structures/Walls/necropolis.rsi
-  - type: Icon
-    sprite: Structures/Walls/necropolis.rsi
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 1000
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-  - type: IconSmooth
-    key: walls
-    base: necropolis
-
 - type: entity
   parent: BaseWall
   id: WallMining
@@ -1239,10 +1053,6 @@
   - type: IconSmooth
     key: walls
     base: mining
-  - type: RandomIconSmooth
-    randomStates:
-    - mining
-    - miningB
   - type: Appearance
 
 - type: entity
@@ -1252,10 +1062,10 @@
   components:
   - type: Sprite
     drawdepth: Walls
-    sprite: Structures/Walls/mining_diagonal.rsi
+    sprite: Structures/Walls/mining-diagonal.rsi
     state: state0
   - type: Icon
-    sprite: Structures/Walls/mining_diagonal.rsi
+    sprite: Structures/Walls/mining-diagonal.rsi
     state: state0
   - type: Damageable
     damageModifierSet: StructuralMetallicStrong
@@ -1278,54 +1088,6 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
 
-
-# Vault Walls
-
-- type: entity
-  parent: BaseWall
-  id: WallVaultAlien
-  name: alien vault wall
-  description: A mysterious ornate looking wall. There may be ancient dangers inside.
-  components:
-  - type: Sprite
-    sprite: Structures/Walls/vault.rsi
-    state: alienvault
-  - type: Icon
-    sprite: Structures/Walls/vault.rsi
-    state: alienvault
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 500
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-
-- type: entity
-  parent: WallVaultAlien
-  id: WallVaultRock
-  name: rock vault wall
-  components:
-  - type: Sprite
-    sprite: Structures/Walls/vault.rsi
-    state: rockvault
-  - type: Icon
-    sprite: Structures/Walls/vault.rsi
-    state: rockvault
-
-- type: entity
-  parent: WallVaultAlien
-  id: WallVaultSandstone
-  name: sandstone vault wall
-  components:
-  - type: Sprite
-    sprite: Structures/Walls/vault.rsi
-    state: sandstonevault
-  - type: Icon
-    sprite: Structures/Walls/vault.rsi
-    state: sandstonevault
-
 # Mime
 
 - type: entity
@@ -1334,9 +1096,7 @@
   components:
   - type: TimedDespawn
     lifetime: 15
-  - type: Tag
-    tags:
-    - Wall
+  - type: Wall
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -1357,9 +1117,7 @@
   components:
   - type: TimedDespawn
     lifetime: 10
-  - type: Tag
-    tags:
-    - Wall
+  - type: Wall
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -1382,14 +1140,13 @@
 
 - type: entity
   parent: BaseWall
-  id: WallCobblebrick
-  name: cobblestone brick wall
-  description: Stone by stone, perfectly fitted together to form a wall.
+  id: WallConcrete
+  name: concrete wall
   components:
   - type: Sprite
-    sprite: Structures/Walls/cobblebrick.rsi
+    sprite: Structures/Walls/concrete.rsi
   - type: Icon
-    sprite: Structures/Walls/cobblebrick.rsi
+    sprite: Structures/Walls/concrete.rsi
   - type: RCDDeconstructable
     cost: 6
     delay: 8
@@ -1403,119 +1160,8 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: IconSmooth
-    key: cobblebricks
-    base: cobblebrick
-
-- type: entity
-  parent: WallCobblebrick
-  id: WallBasaltCobblebrick
-  name: basalt brick wall
-  components:
-  - type: Sprite
-    sprite: Structures/Walls/cobblebrick_basalt.rsi
-  - type: Icon
-    sprite: Structures/Walls/cobblebrick_basalt.rsi
-  - type: IconSmooth
-    key: cobblebricks
-    base: cobblebrick
-
-- type: entity
-  parent: WallCobblebrick
-  id: WallSnowCobblebrick
-  name: snow brick wall
-  description: A cold, not-so-impenetrable wall.
-  components:
-  - type: Sprite
-    sprite: Structures/Walls/cobblebrick_snow.rsi
-  - type: Icon
-    sprite: Structures/Walls/cobblebrick_snow.rsi
-  - type: IconSmooth
-    key: cobblebricks
-    base: cobblebrick
-
-- type: entity
-  parent: WallCobblebrick
-  id: WallAsteroidCobblebrick
-  name: asteroid stone brick wall
-  components:
-  - type: Sprite
-    sprite: Structures/Walls/cobblebrick_asteroid.rsi
-  - type: Icon
-    sprite: Structures/Walls/cobblebrick_asteroid.rsi
-  - type: IconSmooth
-    key: cobblebricks
-    base: cobblebrick
-
-- type: entity
-  parent: WallCobblebrick
-  id: WallSandCobblebrick
-  name: sandstone brick wall
-  components:
-  - type: Sprite
-    sprite: Structures/Walls/cobblebrick_sand.rsi
-  - type: Icon
-    sprite: Structures/Walls/cobblebrick_sand.rsi
-  - type: IconSmooth
-    key: cobblebricks
-    base: cobblebrick
-
-- type: entity
-  parent: WallCobblebrick
-  id: WallChromiteCobblebrick
-  name: chromite brick wall
-  components:
-  - type: Sprite
-    sprite: Structures/Walls/cobblebrick_chromite.rsi
-  - type: Icon
-    sprite: Structures/Walls/cobblebrick_chromite.rsi
-  - type: IconSmooth
-    key: cobblebricks
-    base: cobblebrick
-
-- type: entity
-  parent: WallCobblebrick
-  id: WallAndesiteCobblebrick
-  name: andesite brick wall
-  components:
-  - type: Sprite
-    sprite: Structures/Walls/cobblebrick_andesite.rsi
-  - type: Icon
-    sprite: Structures/Walls/cobblebrick_andesite.rsi
-  - type: IconSmooth
-    key: cobblebricks
-    base: cobblebrick
-
-- type: entity
-  parent: WallCobblebrick
-  id: WallIronsandCobblebrick
-  name: ironsand brick wall
-  description: The pale, rounded shapes that make up this wall look strikingly different from the iron sands they were allegedly made from.
-  components:
-  - type: Sprite
-    sprite: Structures/Walls/cobblebrick_ironsand.rsi
-  - type: Icon
-    sprite: Structures/Walls/cobblebrick_ironsand.rsi
-  - type: IconSmooth
-    key: cobblebricks
-    base: cobblebrick
-  - type: RCDDeconstructable
-    deconstructable: false
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Effects/break_stone.ogg
-          params:
-            volume: -6
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          SteelOre1:
-            min: 0
-            max: 2
+    key: walls
+    base: concrete
 
 # Cardboard
 
@@ -1534,9 +1180,7 @@
       Brute:
         path:
           "/Audio/Weapons/pierce.ogg"
-  - type: Tag
-    tags:
-    - Wall
+  - type: Wall
   - type: Sprite
     drawdepth: SmallObjects #so bullets pass 'through'
     sprite: Structures/Walls/card.rsi

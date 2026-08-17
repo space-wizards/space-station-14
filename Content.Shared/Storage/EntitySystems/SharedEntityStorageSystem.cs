@@ -1,12 +1,14 @@
 using System.Linq;
 using System.Numerics;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Destructible;
+using Content.Shared.Explosion;
 using Content.Shared.Foldable;
 using Content.Shared.Hands.Components;
-using Content.Shared.Explosion;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Lock;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
 using Content.Shared.Storage.Components;
@@ -14,8 +16,6 @@ using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
 using Content.Shared.Wall;
 using Content.Shared.Whitelist;
-using Content.Shared.ActionBlocker;
-using Content.Shared.Mobs.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
@@ -327,12 +327,18 @@ public abstract partial class SharedEntityStorageSystem : EntitySystem
         if (!Resolve(container, ref component))
             return false;
 
-        _container.Remove(toRemove, component.Contents);
+        var toRemoveTransform = Transform(toRemove);
+        if (toRemoveTransform.MapUid is not { } toRemoveMap)
+            return false;
+
+        var (pos, rot) = TransformSystem.GetWorldPositionRotation(xform);
+        pos += rot.RotateVec(component.EnteringOffset);
+        if (!_container.Remove(toRemove, component.Contents, destination: new(toRemoveMap, pos)))
+            return false;
 
         if (_container.IsEntityInContainer(container)
             && _container.TryGetOuterContainer(container, Transform(container), out var outerContainer))
         {
-
             var attemptEvent = new EntityStorageIntoContainerAttemptEvent(outerContainer);
             RaiseLocalEvent(outerContainer.Owner, ref attemptEvent);
             if (!attemptEvent.Cancelled)
@@ -343,9 +349,6 @@ public abstract partial class SharedEntityStorageSystem : EntitySystem
         }
 
         RemComp<InsideEntityStorageComponent>(toRemove);
-
-        var pos = TransformSystem.GetWorldPosition(xform) + TransformSystem.GetWorldRotation(xform).RotateVec(component.EnteringOffset);
-        TransformSystem.SetWorldPosition(toRemove, pos);
         return true;
     }
 
