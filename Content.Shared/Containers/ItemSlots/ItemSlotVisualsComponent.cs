@@ -1,6 +1,6 @@
 ﻿using Content.Shared.Chemistry.Components;
 using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Hands.Components;
+using Content.Shared.Whitelist;
 using Robust.Shared.Serialization;
 using Robust.Shared.GameStates;
 
@@ -25,17 +25,31 @@ public sealed partial class ItemSlotVisualsComponent : Component
 public partial struct ItemSlotVisuals()
 {
     /// <summary>
-    /// Enums from ItemSlotVisualLayers. Used to specify Visuals.
+    /// Enums from ItemSlotVisualLayers, makes multiple visuals possible. Used to specify Visuals.
     /// </summary>
     [DataField]
     public ItemSlotVisualLayers Layer = ItemSlotVisualLayers.Fill;
 
     /// <summary>
-    /// A string to specify which slot to use. Only useful if there's multiple ItemSlots or have multiple items that use
-    /// the same slot, it'll default for single slot items when it's empty.
+    /// A string to specify which slot to use from ItemSlots. Specifically the second string e.g. indicated by the arrow.
+    ///
+    ///   - type: ItemSlots
+    ///     slots:
+    ///    --> item:
+    ///           name: Example
+    ///
+    /// Only useful if there's 2 or more tags of the same name but both are in different slots, so it doesn't lead to duplicate
+    /// visuals one of them is inserted.
     /// </summary>
     [DataField]
     public string? SlotName = null;
+
+    /// <summary>
+    /// A Whitelist to check if an item with the same tag/component has been inserted into the ItemSlot. Is made to be
+    /// used with <see cref="ItemSlot"/> Whitelist.
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? Whitelist;
 
     /// <summary>
     /// The name used for the Icon Fills.

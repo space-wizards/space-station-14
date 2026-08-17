@@ -64,17 +64,25 @@ public sealed partial class ItemSlotsSystem : EntitySystem
             var contains = false;
 
             // For the items that have one ItemSlot and for multiple.
+            // Also checks the ItemSlotsVisuals Whitelist if null/true through ItemMatchesVisual, then assigns a Layer when finished.
             if (string.IsNullOrEmpty(visual.SlotName))
             {
-                contains = ent.Comp.Slots.Values.Any(slot => slot.HasItem);
+                contains = ent.Comp.Slots.Values.Any(slot =>
+                    slot is { HasItem: true, Item: not null } && ItemMatchesVisual(slot.Item.Value, visual));
             }
             else if (ent.Comp.Slots.TryGetValue(visual.SlotName, out var slot))
             {
-                contains = slot.HasItem;
+                if (slot.Item != null)
+                    contains = slot.HasItem && ItemMatchesVisual(slot.Item.Value, visual);
             }
 
             _appearance.SetData(ent, visual.Layer, contains, appearance);
         }
+    }
+
+    private bool ItemMatchesVisual(EntityUid item, ItemSlotVisuals visual)
+    {
+        return visual.Whitelist == null || _whitelistSystem.IsValid(visual.Whitelist, item);
     }
 
     /// <summary>
