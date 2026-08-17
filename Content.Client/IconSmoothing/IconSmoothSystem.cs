@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using System.Diagnostics.CodeAnalysis;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Collections;
 using Robust.Shared.Map.Components;
@@ -23,6 +24,9 @@ public sealed partial class IconSmoothSystem : EntitySystem
 
     // If there ever exists more than 256 compass directions I will kill someone.
     public static byte Directions = (byte)DirectionExtensions.AllDirections.Length;
+
+    // Cannot access Chunk size in content even as read :P
+    private static ushort ChunkSize => MapGridComponent.DefaultChunkSize;
 
     private readonly Queue<Entity<IconSmoothComponent>> _dirtyEntities = new();
 
@@ -55,34 +59,34 @@ public sealed partial class IconSmoothSystem : EntitySystem
 
         // Performance: This could be spread over multiple updates, or made parallel.
         // TODO: IParallelRobustJob
-        while (_dirtyEntities.TryDequeue(out var uid))
+        while (_dirtyEntities.TryDequeue(out var entity))
         {
-            CalculateNewSprite(uid);
+            CalculateNewSprite(entity);
         }
     }
 
-    private void CalculateNewSprite(EntityUid uid)
+    private void CalculateNewSprite(Entity<IconSmoothComponent> entity)
     {
         // Don't update our state if we can't :(
-        if (!_iconSmoothQuery.TryComp(uid, out var iconSmooth) || !_spriteQuery.TryComp(uid, out var sprite))
+        if (!_spriteQuery.TryComp(entity, out var sprite))
             return;
 
         // If this entity is not eligible for IconSmooth, or the grid stores no IconSmooth data for us to use, then skip populating the array.
-        var xform = Transform(uid);
+        var xform = Transform(entity);
         if (xform.GridUid is not { } grid
             || !xform.Anchored
-            || !iconSmooth.Enabled
+            || !entity.Comp.Enabled
             || !_mapGridQuery.TryComp(grid, out var mapGrid)
             || !EnsureComp<IconSmoothGridComponent>(grid, out var iconGrid))
         {
             Array.Clear(_adjacentKeys);
-            ApplyStates((uid, iconSmooth, sprite));
+            ApplyStates((entity, entity.Comp, sprite));
             return;
         }
 
         var tile = _map.TileIndicesFor(grid, mapGrid, xform.Coordinates);
-        PopulateAdjacentKeys((grid, iconGrid), xform.LocalRotation, tile);
-        ApplyStates((uid, iconSmooth, sprite));
+        PopulateAdjacentKeys((grid, iconGrid, mapGrid), xform.LocalRotation, tile);
+        ApplyStates((entity, entity.Comp, sprite));
     }
 
     private void ApplyStates(Entity<IconSmoothComponent, SpriteComponent> entity)
@@ -197,21 +201,46 @@ public sealed partial class IconSmoothSystem : EntitySystem
         }
     }
 
-    private void PopulateAdjacentKeys(Entity<IconSmoothGridComponent> grid, Angle localRot, Vector2i pos)
+    private void PopulateAdjacentKeys(Entity<IconSmoothGridComponent, MapGridComponent> grid, Angle localRot, Vector2i pos)
     {
         Array.Clear(_adjacentKeys);
 
-        var i = AngleToOffset(localRot);
-        foreach (var direction in EnumerateAdjacent(pos))
+        var seen = 0;
+        var offset = AngleToOffset(localRot);
+        var bounds = new Box2i(pos + Vector2i.DownLeft, pos + Vector2i.UpRight);
+        var chunkEnumerator = new ChunkIndicesEnumerator(bounds, ChunkSize);
+        while (chunkEnumerator.MoveNext(out var chunk))
         {
-            if (grid.Comp.Tiles.TryGetValue(direction, out var index))
-                _adjacentKeys[i] = _keyCaches[index].Keys;
+            if (!grid.Comp1.Chunks.TryGetValue(chunk.Value, out var cache))
+                continue;
 
-            // Increment i even if we don't update AdjacentKeys...
-            i++;
-            if (i >= Directions) // If we would go out of bounds, don't!
-                i = 0;
+            var chunkOrigin = chunk.Value * ChunkSize;
+            var left = Math.Max(chunkOrigin.X, bounds.Left);
+            var bottom = Math.Max(chunkOrigin.Y, bounds.Bottom);
+            var top = Math.Min(chunkOrigin.Y + ChunkSize - 1, bounds.Top);
+            var right = Math.Min(chunkOrigin.X + ChunkSize - 1, bounds.Right);
+
+            for (var y = bottom; y <= top; y++)
+            {
+                for (var x = left; x <= right; x++)
+                {
+                    var gridCoords = new Vector2i(x, y);
+                    var vector = gridCoords - pos;
+                    seen++;
+                    if (vector == Vector2i.Zero
+                        || !cache.TryGetTileCache(SharedMapSystem.GetChunkRelative(gridCoords, ChunkSize), out var index))
+                        continue;
+
+                    var i = (byte)vector.AsDirection() + offset;
+                    if (i > 7)
+                        i -= 8;
+
+                    _adjacentKeys[i] = _keyCaches[(int)index].Keys;
+                }
+            }
         }
+
+        DebugTools.Assert(seen <= 9, $"{nameof(ChunkIndicesEnumerator)} enumerated through a different number of tiles {seen} than expected!");
     }
 
     /// <summary>
@@ -222,14 +251,6 @@ public sealed partial class IconSmoothSystem : EntitySystem
     {
         angle *= -1;
         return (byte)angle.GetCardinalDir();
-    }
-
-    private IEnumerable<Vector2i> EnumerateAdjacent(Vector2i pos)
-    {
-        foreach (var vector in EnumerateDirections())
-        {
-            yield return vector + pos;
-        }
     }
 
     private IEnumerable<Vector2i> EnumerateDirections()
@@ -278,25 +299,41 @@ public sealed partial class IconSmoothSystem : EntitySystem
 
     private void AddTileKey(Entity<MapGridComponent> grid, Vector2i tile, string key)
     {
-        if (!EnsureComp<IconSmoothGridComponent>(grid, out var cacheComp)
-            || !cacheComp.Tiles.TryGetValue(tile, out var tileEntry))
+        byte? cache;
+        IconChunkData chunkData;
+        var (chunk, relative) = (_map.GridTileToChunkIndices(grid, grid.Comp, tile), SharedMapSystem.GetChunkRelative(tile, ChunkSize));
+        if (!EnsureComp<IconSmoothGridComponent>(grid, out var cacheComp))
         {
             _workingKeyRing = new HashSet<string> {key};
-            cacheComp.Tiles[tile] = AddOrCreateCacheIndex();
+            AddTileCache((grid,cacheComp), (chunk, relative));
             return;
         }
 
-        _workingKeyRing = _keyCaches[tileEntry].Keys ?? new (2);
+        if (!TryGetCache((grid, cacheComp), (chunk, relative), out chunkData, out cache))
+        {
+            _workingKeyRing = new HashSet<string> {key};
+            AddTileCache((grid,cacheComp), (chunk, relative), chunkData);
+            return;
+        }
+
+        if (_keyCaches[(ushort)cache].Keys is not { } keys)
+        {
+            _workingKeyRing = new HashSet<string> {key};
+            AddTileCache((grid,cacheComp), (chunk, relative), chunkData);
+            Log.Error($"Cache {cache} for grid {ToPrettyString(grid)}, at {tile} chunk: {chunk}, relative {relative} did not correlate to a cached value!");
+            return;
+        }
+
+        _workingKeyRing = new HashSet<string>(keys);
 
         // New key added, get an appropriate index for the new key!
         if (_workingKeyRing.Add(key))
         {
-            tileEntry = AddOrCreateCacheIndex();
-            cacheComp.Tiles[tile] = tileEntry;
+            AddTileCache((grid,cacheComp), (chunk, relative), chunkData);
             return;
         }
 
-        _keyCaches[tileEntry].RefCount++;
+        _keyCaches[(int)cache].RefCount++;
     }
 
     private void RemoveTile(Entity<IconSmoothComponent, TransformComponent> entity, bool update = true)
@@ -321,13 +358,14 @@ public sealed partial class IconSmoothSystem : EntitySystem
         if (!_iconSmoothGridQuery.TryComp(grid, out var cacheComp))
             return;
 
-        if (!cacheComp.Tiles.TryGetValue(tile, out var tileEntry))
+        var (chunk, relative) = (_map.GridTileToChunkIndices(grid, grid.Comp, tile), SharedMapSystem.GetChunkRelative(tile, ChunkSize));
+        if (!TryGetCache((grid, cacheComp), (chunk, relative), out var chunkData, out var tileEntry))
         {
             Log.Error($"{tile} on grid {ToPrettyString(grid)} was not cached despite an entity with {nameof(IconSmoothComponent)} existing there.");
             return;
         }
 
-        DecrementRefCount(tileEntry);
+        DecrementRefCount(tileEntry.Value);
         var tileEnumerator = _map.GetAnchoredEntities(grid, grid.Comp, tile);
         _workingKeyRing = new (4);
         while (tileEnumerator.MoveNext(out var uid))
@@ -340,11 +378,39 @@ public sealed partial class IconSmoothSystem : EntitySystem
 
         if (_workingKeyRing.Count == 0)
         {
-            cacheComp.Tiles.Remove(tile);
+            chunkData.SetTileCache(relative, tileEntry);
             return;
         }
 
-        cacheComp.Tiles[tile] = AddOrCreateCacheIndex();
+        AddTileCache((grid, cacheComp), (chunk, relative), chunkData);
+    }
+
+    private void AddTileCache(Entity<IconSmoothGridComponent> grid, (Vector2i Chunk, Vector2i Relative) index)
+    {
+        AddTileCache(grid, index, new IconChunkData());
+    }
+
+    private void AddTileCache(Entity<IconSmoothGridComponent> grid, (Vector2i Chunk, Vector2i Relative) index, IconChunkData chunkData)
+    {
+        AddTileCache(grid, index, chunkData, AddOrCreateCacheIndex());
+    }
+
+    private void AddTileCache(Entity<IconSmoothGridComponent> grid, (Vector2i Chunk, Vector2i Relative) index, IconChunkData chunkData, byte cache)
+    {
+        chunkData.SetTileCache(index.Relative, cache);
+        grid.Comp.Chunks[index.Chunk] = chunkData;
+    }
+
+    private bool TryGetCache(Entity<IconSmoothGridComponent> grid, (Vector2i Chunk, Vector2i Relative) index, out IconChunkData chunkData, [NotNullWhen(true)] out byte? cache)
+    {
+        cache = null;
+        if (!grid.Comp.Chunks.TryGetValue(index.Chunk, out chunkData))
+        {
+            chunkData = new IconChunkData();
+            return false;
+        }
+
+        return chunkData.TryGetTileCache(index.Relative, out cache);
     }
 
     /// <summary>
@@ -353,24 +419,46 @@ public sealed partial class IconSmoothSystem : EntitySystem
     /// <returns>The index of the Hashset in our cache.</returns>
     private byte AddOrCreateCacheIndex()
     {
-        for (byte i = 0; i < _keyCaches.Count; i++)
+        // Faster to iterate backwards since our cache populates top down!
+        for (var i = _keyCaches.Count - 1; i >= 0; i--)
         {
             if (!_keyCaches[i].Keys?.SetEquals(_workingKeyRing) ?? true)
                 continue;
 
             // Cache found, increment ref count
             _keyCaches[i].RefCount++;
-            return i;
+            return (byte)i;
         }
 
         if (_freeListHead < 0)
             ExpandCache();
 
         var index = _freeListHead;
+        Log.Debug($"Index: {index} Count: {_keyCaches.Count}");
         _freeListHead = _keyCaches[index].RefCount;
         _keyCaches[index] = new KeyCache(_workingKeyRing);
+        Log.Debug($"FreeList: {_freeListHead} Caches = {DumpCache()}");
 
         return (byte)index;
+    }
+
+    private string DumpCache()
+    {
+        var dump = "";
+        foreach (var value in _keyCaches)
+        {
+            dump += "/n values: [";
+            if (value.Keys is { } keys)
+            {
+                foreach (var key in keys)
+                {
+                    dump += $"{key}";
+                }
+            }
+            dump += $"] refs: {value.RefCount} || ";
+        }
+
+        return dump;
     }
 
     private void DecrementRefCount(byte index)
@@ -378,7 +466,7 @@ public sealed partial class IconSmoothSystem : EntitySystem
         ref var cacheEntry = ref _keyCaches[index];
 
         DebugTools.Assert(cacheEntry.RefCount > 0);
-        cacheEntry.RefCount -= 1;
+        cacheEntry.RefCount--;
         if (cacheEntry.RefCount > 0)
             return;
 
@@ -390,7 +478,7 @@ public sealed partial class IconSmoothSystem : EntitySystem
     private void ExpandCache()
     {
         var newCacheSize = Math.Max(8, _keyCaches.Count * 2);
-        DebugTools.Assert(newCacheSize <= 256, $"Number of cached keys exceeded what can be stored in a byte.");
+        DebugTools.Assert(newCacheSize <= 256, "Number of cached keys exceeded what can be stored in a byte.");
         var curSize = _keyCaches.Count;
 
         _keyCaches.EnsureLength(newCacheSize);
