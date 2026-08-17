@@ -84,7 +84,7 @@ public sealed partial class ItemSlotsSystem
         EntityUid? user,
         bool excludeUserAudio = false)
     {
-        if (!Resolve(ent, ref ent.Comp))
+        if (!_itemSlotsQuery.Resolve(ent, ref ent.Comp))
             return false;
 
         if (!ent.Comp.Slots.TryGetValue(id, out var slot))
@@ -121,7 +121,7 @@ public sealed partial class ItemSlotsSystem
         Entity<HandsComponent?> user,
         bool excludeUserAudio = false)
     {
-        if (!Resolve(user, ref user.Comp, false))
+        if (!_handsQuery.Resolve(user, ref user.Comp, false))
             return false;
 
         if (!_handsSystem.TryGetActiveItem(user, out var held))
@@ -145,7 +145,7 @@ public sealed partial class ItemSlotsSystem
         Entity<HandsComponent?> user,
         bool swap = false)
     {
-        if (!Resolve(user, ref user.Comp, false) ||
+        if (!_handsQuery.Resolve(user, ref user.Comp, false) ||
             !CanInsert(uid, slot, item, user, swap))
             return;
 
@@ -217,7 +217,7 @@ public sealed partial class ItemSlotsSystem
             args.Used is not { } item ||
             !ent.Comp.Slots.TryGetValue(args.SlotId, out var slot) ||
             GetNetEntity(slot.Item) != args.OriginalItem ||
-            !TryComp(args.User, out HandsComponent? hands) ||
+            !_handsQuery.TryComp(args.User, out var hands) ||
             !CanInsert(ent, slot, item, args.User, args.Swap))
             return;
 
@@ -244,7 +244,7 @@ public sealed partial class ItemSlotsSystem
         EntityUid? user,
         bool excludeUserAudio = false)
     {
-        if (!Resolve(ent, ref ent.Comp, false))
+        if (!_itemSlotsQuery.Resolve(ent, ref ent.Comp, false))
             return false;
 
         if (!TryGetAvailableSlot(ent,
@@ -278,14 +278,14 @@ public sealed partial class ItemSlotsSystem
         itemSlot = null;
 
         if (userEnt is { } user
-            && Resolve(user, ref user.Comp)
+            && _handsQuery.Resolve(user, ref user.Comp)
             && _handsSystem.IsHolding(user, item))
         {
             if (!_handsSystem.CanDrop(user, item))
                 return false;
         }
 
-        if (!Resolve(ent, ref ent.Comp, false))
+        if (!_itemSlotsQuery.Resolve(ent, ref ent.Comp, false))
             return false;
 
         var slots = new List<ItemSlot>();

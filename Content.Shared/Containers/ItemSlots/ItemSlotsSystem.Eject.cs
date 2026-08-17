@@ -94,7 +94,7 @@ public sealed partial class ItemSlotsSystem
     {
         item = null;
 
-        if (!Resolve(ent, ref ent.Comp))
+        if (!_itemSlotsQuery.Resolve(ent, ref ent.Comp))
             return false;
 
         if (!ent.Comp.Slots.TryGetValue(id, out var slot))

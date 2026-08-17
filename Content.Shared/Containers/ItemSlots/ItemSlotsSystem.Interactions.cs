@@ -1,4 +1,3 @@
-using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 
@@ -59,7 +58,7 @@ public sealed partial class ItemSlotsSystem
         if (args.Handled)
             return;
 
-        if (!TryComp(args.User, out HandsComponent? hands))
+        if (!_handsQuery.TryComp(args.User, out var hands))
             return;
 
         if (ent.Comp.Slots.Count == 0)
@@ -123,7 +122,7 @@ public sealed partial class ItemSlotsSystem
         }
 
         if (!args.TryInsert || slot.HasItem ||
-            !TryComp(args.Actor, out HandsComponent? hands) ||
+            !_handsQuery.TryComp(args.Actor, out var hands) ||
             !_handsSystem.TryGetActiveItem((args.Actor, hands), out var item))
             return;
 
