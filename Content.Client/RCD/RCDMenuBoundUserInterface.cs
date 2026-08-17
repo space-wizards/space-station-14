@@ -46,7 +46,6 @@ public sealed partial class RCDMenuBoundUserInterface : BoundUserInterface
             return;
 
         _menu = this.CreateWindow<SimpleRadialMenu>();
-        _menu.Track(Owner);
         var models = ConvertToButtons(rcd.AvailablePrototypes);
         _menu.SetButtons(models);
 
