@@ -61,10 +61,10 @@
   - UplinkWearables
 
 - type: listing
-  id: UplinkClothingOuterVestWebElite
-  name: uplink-clothing-outer-vest-web-elite-name
-  description: uplink-clothing-outer-vest-web-elite-desc
-  productEntity: ClothingOuterVestWebElite
+  id: UplinkClothingOuterVestWebEnergy
+  name: uplink-clothing-outer-vest-web-energy-name
+  description: uplink-clothing-outer-vest-web-energy-desc
+  productEntity: ClothingOuterVestWebEnergy
   discountCategory: usualDiscounts
   discountDownTo:
     Telecrystal: 3

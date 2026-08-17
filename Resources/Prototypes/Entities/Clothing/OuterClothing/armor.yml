@@ -184,6 +184,7 @@
         Caustic: 0.5
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetEnergywebvesthood
+    action: ActionToggleSuitPiece
   - type: FireProtection
     reduction: 0.85
   - type: StaticPrice
