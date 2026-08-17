@@ -52,7 +52,19 @@ public sealed partial class EntityProviderComponent : Component
     /// The sound played whenever the provider is being refilled by a storage or another provider.
     /// </summary>
     [DataField]
-    public SoundSpecifier? StorageTransferSound = new SoundPathSpecifier("/Audio/Effects/trashbag1.ogg");
+    public SoundSpecifier? PluralTransferSound = new SoundPathSpecifier("/Audio/Effects/trashbag1.ogg");
+
+    /// <summary>
+    /// The sound played whenever a singular, eligible entity is inserted into the provider.
+    /// </summary>
+    [DataField]
+    public SoundSpecifier? SingularTransferSound = new SoundPathSpecifier("/Audio/Weapons/click.ogg")
+    {
+        Params = new AudioParams
+        {
+            Volume = -4f,
+        }
+    };
 
     /// <summary>
     /// The container where items will be shortly spawned into when being materialized from the counter.

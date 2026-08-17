@@ -42,8 +42,8 @@ public sealed partial class EntityProviderSystem
 
         _container.Insert(target, provider.Comp.Container);
 
-        var message = Loc.GetString("comp-entity-provider-insert-entity", ("provider", provider), ("entity", target));
-        _popup.PopupEntity(message, provider, user);
+        if (user.HasValue) // This ensures not causing multiple sounds when refilled via storage.
+            _audio.PlayPredicted(provider.Comp.SingularTransferSound, provider, user.Value);
 
         Dirty(provider);
         return true;
@@ -176,9 +176,7 @@ public sealed partial class EntityProviderSystem
         if (!ProtoMan.Resolve(protoId, out var prototype))
             return true;
 
-        var ejectedAmount = requestedAmount == null ? "all" : entities.Count.ToString();
-        var messageSuccess = Loc.GetString("comp-entity-provider-ejected", ("entity", prototype.Name), ("amount", ejectedAmount));
-        _popup.PopupEntity(messageSuccess, provider, user, PopupType.Medium);
+        _audio.PlayPredicted(provider.Comp.PluralTransferSound, provider, user);
 
         return true;
     }

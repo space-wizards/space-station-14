@@ -121,7 +121,7 @@ public sealed partial class EntityProviderSystem : EntitySystem
         if (!success)
             return success;
         // The refilling provider dictates the sound happening at the refillTarget.
-        _audio.PlayPredicted(provider.Comp.StorageTransferSound, refillTarget, user);
+        _audio.PlayPredicted(provider.Comp.PluralTransferSound, refillTarget, user);
 
         return success;
     }
@@ -151,7 +151,7 @@ public sealed partial class EntityProviderSystem : EntitySystem
         if (!insertionSuccess || user == null)
             return insertionSuccess;
 
-        _audio.PlayPredicted(refillTarget.Comp.StorageTransferSound, refillTarget, user);
+        _audio.PlayPredicted(refillTarget.Comp.PluralTransferSound, refillTarget, user);
 
         return insertionSuccess;
     }
