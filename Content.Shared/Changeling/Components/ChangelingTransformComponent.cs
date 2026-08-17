@@ -55,7 +55,7 @@ public sealed partial class ChangelingTransformComponent : Component
     /// <summary>
     /// If true, then the changeling can manually drop identities. If false, then whenever they transform, the changeling will drop their former identity.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool ManualDrop = true;
 }
 

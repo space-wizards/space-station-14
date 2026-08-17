@@ -185,7 +185,7 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
 
         EntityUid? previousIdentity = null;
 
-        if (TryComp<ChangelingIdentityComponent>(ent.Owner, out var identityComp) && ent.Comp.ManualDrop)
+        if (TryComp<ChangelingIdentityComponent>(ent.Owner, out var identityComp) && !ent.Comp.ManualDrop)
             previousIdentity = identityComp.CurrentIdentity;
 
         var beforeTransformEvent = new BeforeChangelingTransformEvent(targetIdentity);
