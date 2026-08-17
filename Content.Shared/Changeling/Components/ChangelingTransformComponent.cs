@@ -51,5 +51,11 @@ public sealed partial class ChangelingTransformComponent : Component
     public ProtoId<CloningSettingsPrototype> TransformCloningSettings = "ChangelingCloningSettings";
 
     public override bool SendOnlyToOwner => true;
+
+    /// <summary>
+    /// If true, then the changeling can manually drop identities. If false, then whenever they transform, the changeling will drop their former identity.
+    /// </summary>
+    [DataField]
+    public bool ManualDrop = true;
 }
 
