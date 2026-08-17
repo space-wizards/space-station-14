@@ -11,6 +11,7 @@ namespace Content.Shared.Storage.EntitySystems;
 
 /// <summary>
 /// System for managing providing entities from storage.
+/// <seealso cref="EntityProviderComponent"/>
 /// </summary>
 public sealed partial class EntityProviderSystem : EntitySystem
 {

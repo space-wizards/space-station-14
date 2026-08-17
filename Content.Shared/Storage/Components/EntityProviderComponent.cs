@@ -7,9 +7,12 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Storage.Components;
 
 /// <summary>
-/// A generic item storage that does not store entities, but instead evaporates inserted entities into a counter.
-/// This deletes entities when inserted and increments the counter, and spawns entities when ejected and decrements the counter.
+/// A generic entity storage that does not spawn entities in its storage until they're needed to be entities for other systems.
+/// Useful for when an item stores a lot of entities without needing them to be entities in said storage.
+/// Entities that are inserted back into the storage will remain entities, and are prioritized over non-spawned entities.
+/// Refilling other entity providers will not spawn entities, as the end destination is also an entity provider storage.
 /// </summary>
+/// <example>Light replacers don't need their lights to be entities while in storage, but when they are used to replace a light.</example>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(EntityProviderSystem))]
 public sealed partial class EntityProviderComponent : Component
 {
