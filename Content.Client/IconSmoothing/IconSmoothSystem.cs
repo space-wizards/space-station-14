@@ -24,7 +24,7 @@ public sealed partial class IconSmoothSystem : EntitySystem
     // If there ever exists more than 256 compass directions I will kill someone.
     public static byte Directions = (byte)DirectionExtensions.AllDirections.Length;
 
-    private readonly Queue<EntityUid> _dirtyEntities = new();
+    private readonly Queue<Entity<IconSmoothComponent>> _dirtyEntities = new();
 
     // Storage for similar key hashsets which exist. Entries form a free linked list when not occupied by a set of real values.
     [ViewVariables]
@@ -63,6 +63,7 @@ public sealed partial class IconSmoothSystem : EntitySystem
 
     private void CalculateNewSprite(EntityUid uid)
     {
+        // Don't update our state if we can't :(
         if (!_iconSmoothQuery.TryComp(uid, out var iconSmooth) || !_spriteQuery.TryComp(uid, out var sprite))
             return;
 
@@ -70,6 +71,7 @@ public sealed partial class IconSmoothSystem : EntitySystem
         var xform = Transform(uid);
         if (xform.GridUid is not { } grid
             || !xform.Anchored
+            || !iconSmooth.Enabled
             || !_mapGridQuery.TryComp(grid, out var mapGrid)
             || !EnsureComp<IconSmoothGridComponent>(grid, out var iconGrid))
         {
@@ -104,8 +106,9 @@ public sealed partial class IconSmoothSystem : EntitySystem
     /// </summary>
     /// <param name="entity">Entity whose IconSmooth we're changing the status of.</param>
     /// <param name="enabled">Status we are changing to.</param>
+    /// <param name="update">Should we also update ourselves immediately?</param>
     [PublicAPI]
-    public void SetEnabled(Entity<IconSmoothComponent?> entity, bool enabled)
+    public void SetEnabled(Entity<IconSmoothComponent?> entity, bool enabled, bool update = true)
     {
         if (!_iconSmoothQuery.Resolve(entity, ref entity.Comp) || entity.Comp.Enabled == enabled)
             return;
@@ -113,15 +116,17 @@ public sealed partial class IconSmoothSystem : EntitySystem
         entity.Comp.Enabled = enabled;
         var xform = Transform(entity);
 
-        if (!enabled)
-            RemoveTile((entity, xform));
+        if (enabled)
+            AddTile((entity, entity.Comp, xform), entity.Comp.Key, update);
+        else
+            RemoveTile((entity, entity.Comp, xform), update);
     }
 
     [SubscribeLocalEvent]
     private void OnAnchorChanged(Entity<IconSmoothComponent> entity, ref AnchorStateChangedEvent args)
     {
         if (entity.Comp.Enabled)
-            UpdateTile((entity, args.Transform), entity.Comp.Key);
+            UpdateTile((entity, entity.Comp, args.Transform), entity.Comp.Key);
     }
 
     [SubscribeLocalEvent]
@@ -137,7 +142,7 @@ public sealed partial class IconSmoothSystem : EntitySystem
         if (!xform.Anchored)
             return;
 
-        AddTile((entity, xform), entity.Comp.Key);
+        AddTile((entity, entity.Comp, xform), entity.Comp.Key);
     }
 
     [SubscribeLocalEvent]
@@ -145,7 +150,7 @@ public sealed partial class IconSmoothSystem : EntitySystem
     {
         var xform = Transform(entity);
         if (xform.Anchored)
-            RemoveTile((entity, xform));
+            RemoveTile((entity, entity.Comp, xform));
     }
 
     private void StartupLayers(Entity<IconSmoothComponent> entity)
@@ -162,14 +167,14 @@ public sealed partial class IconSmoothSystem : EntitySystem
         }
     }
 
-    private void UpdateNeighbors(Entity<TransformComponent> entity, Entity<MapGridComponent> grid, bool updateSelf = true)
+    private void UpdateNeighbors(Entity<IconSmoothComponent, TransformComponent> entity, Entity<MapGridComponent> grid, bool updateSelf = true)
     {
-        var pos = _map.TileIndicesFor(grid, entity.Comp.Coordinates);
+        var pos = _map.TileIndicesFor(grid, entity.Comp2.Coordinates);
 
         UpdateNeighbors(entity, grid, pos, updateSelf);
     }
 
-    private void UpdateNeighbors(Entity<TransformComponent> entity, Entity<MapGridComponent> grid, Vector2i pos, bool updateSelf = true)
+    private void UpdateNeighbors(Entity<IconSmoothComponent, TransformComponent> entity, Entity<MapGridComponent> grid, Vector2i pos, bool updateSelf = true)
     {
         if (updateSelf)
             _dirtyEntities.Enqueue(entity);
@@ -187,7 +192,8 @@ public sealed partial class IconSmoothSystem : EntitySystem
         // require one less component fetch/check.
         while (entities.MoveNext(out var entity))
         {
-            _dirtyEntities.Enqueue(entity.Value);
+            if (_iconSmoothQuery.TryComp(entity, out var iconSmooth) && iconSmooth.Enabled)
+                _dirtyEntities.Enqueue((entity.Value, iconSmooth));
         }
     }
 
@@ -234,20 +240,20 @@ public sealed partial class IconSmoothSystem : EntitySystem
         }
     }
 
-    private void UpdateTile(Entity<TransformComponent> entity, string key)
+    private void UpdateTile(Entity<IconSmoothComponent, TransformComponent> entity, string key)
     {
         // Wasn't attached to a grid, no tile to update :)
-        if (entity.Comp.GridUid is not { } grid || !_mapGridQuery.TryComp(grid, out var mapGrid))
+        if (entity.Comp2.GridUid is not { } grid || !_mapGridQuery.TryComp(grid, out var mapGrid))
             return;
 
         UpdateTile(entity, (grid, mapGrid), key);
     }
 
-    private void UpdateTile(Entity<TransformComponent> entity, Entity<MapGridComponent> grid, string key)
+    private void UpdateTile(Entity<IconSmoothComponent, TransformComponent> entity, Entity<MapGridComponent> grid, string key)
     {
-        var pos = _map.TileIndicesFor(grid, entity.Comp.Coordinates);
+        var pos = _map.TileIndicesFor(grid, entity.Comp2.Coordinates);
 
-        if (entity.Comp.Anchored)
+        if (entity.Comp2.Anchored)
             AddTileKey(grid, pos, key);
         else
             RemoveTileKey(grid, entity, pos);
@@ -255,19 +261,19 @@ public sealed partial class IconSmoothSystem : EntitySystem
         UpdateNeighbors(entity, (grid, grid.Comp));
     }
 
-    private void AddTile(Entity<TransformComponent> entity, string key)
+    private void AddTile(Entity<IconSmoothComponent, TransformComponent> entity, string key, bool update = true)
     {
-        if (entity.Comp.GridUid is { } grid)
-            AddTile(entity, grid, key);
+        if (entity.Comp2.GridUid is { } grid)
+            AddTile(entity, grid, key, update);
     }
 
-    private void AddTile(Entity<TransformComponent> entity, Entity<MapGridComponent?> grid, string key)
+    private void AddTile(Entity<IconSmoothComponent, TransformComponent> entity, Entity<MapGridComponent?> grid, string key, bool update = true)
     {
         if (!_mapGridQuery.Resolve(grid, ref grid.Comp))
             return;
 
-        AddTileKey((grid, grid.Comp), _map.TileIndicesFor((grid, grid.Comp), entity.Comp.Coordinates), key);
-        UpdateNeighbors(entity, (grid, grid.Comp));
+        AddTileKey((grid, grid.Comp), _map.TileIndicesFor((grid, grid.Comp), entity.Comp2.Coordinates), key);
+        UpdateNeighbors(entity, (grid, grid.Comp), update);
     }
 
     private void AddTileKey(Entity<MapGridComponent> grid, Vector2i tile, string key)
@@ -293,21 +299,21 @@ public sealed partial class IconSmoothSystem : EntitySystem
         _keyCaches[tileEntry].RefCount++;
     }
 
-    private void RemoveTile(Entity<TransformComponent> entity)
+    private void RemoveTile(Entity<IconSmoothComponent, TransformComponent> entity, bool update = true)
     {
-        if (entity.Comp.GridUid is { } grid)
-            RemoveTile(entity, grid);
+        if (entity.Comp2.GridUid is { } grid)
+            RemoveTile(entity, grid, update);
     }
 
-    private void RemoveTile(Entity<TransformComponent> entity, Entity<MapGridComponent?> grid)
+    private void RemoveTile(Entity<IconSmoothComponent, TransformComponent> entity, Entity<MapGridComponent?> grid, bool update = true)
     {
         if (!_mapGridQuery.Resolve(grid, ref grid.Comp))
             return;
 
-        var tile = _map.TileIndicesFor((grid, grid.Comp), entity.Comp.Coordinates);
+        var tile = _map.TileIndicesFor((grid, grid.Comp), entity.Comp2.Coordinates);
 
         RemoveTileKey((grid, grid.Comp), entity, tile);
-        UpdateNeighbors(entity, (grid, grid.Comp));
+        UpdateNeighbors(entity, (grid, grid.Comp), update);
     }
 
     private void RemoveTileKey(Entity<MapGridComponent> grid, EntityUid removed, Vector2i tile)
