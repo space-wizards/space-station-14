@@ -7,6 +7,9 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Objectives.Systems;
 
+/// <summary>
+/// See <see cref="KillLimitConditionComponent"/>.
+/// </summary>
 public sealed partial class KillLimitConditionSystem : EntitySystem
 {
     [Dependency] private IRobustRandom _random = default!;
@@ -22,9 +25,7 @@ public sealed partial class KillLimitConditionSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnAfterAssign(Entity<KillLimitConditionComponent> condition, ref ObjectiveAfterAssignEvent args)
     {
-        string title;
-        title = Loc.GetString(condition.Comp.ObjectiveTitle, ("limit", condition.Comp.PermissibleKillCount));
-
+        var title = Loc.GetString(condition.Comp.ObjectiveTitle, ("limit", condition.Comp.PermissibleKillCount));
         _metaData.SetEntityName(condition.Owner, title, args.Meta);
     }
 
@@ -33,8 +34,7 @@ public sealed partial class KillLimitConditionSystem : EntitySystem
     {
         args.Progress = condition.Comp.PermissibleKillCount >= condition.Comp.KillList.Count ? 1f : 0f;
 
-        string description;
-        description = Loc.GetString(condition.Comp.ObjectiveDescription, ("limit", condition.Comp.PermissibleKillCount), ("value", condition.Comp.KillList.Count));
+        var description = Loc.GetString(condition.Comp.ObjectiveDescription, ("limit", condition.Comp.PermissibleKillCount), ("value", condition.Comp.KillList.Count));
         _metaData.SetEntityDescription(condition.Owner, description);
     }
 

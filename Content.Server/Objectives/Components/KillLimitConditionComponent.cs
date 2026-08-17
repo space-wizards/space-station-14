@@ -9,7 +9,7 @@ namespace Content.Server.Objectives.Components;
 public sealed partial class KillLimitConditionComponent : Component
 {
     /// <summary>
-    /// The number of kills that are permissible for this condition; set upon the objective being assigned.
+    /// Tracker for the entities that are considered killed by the owner of the objective.
     /// </summary>
     [DataField]
     public HashSet<EntityUid> KillList = new();
