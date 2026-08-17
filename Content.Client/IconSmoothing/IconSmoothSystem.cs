@@ -12,6 +12,11 @@ namespace Content.Client.IconSmoothing;
 /// This handles the inner workings of <see cref="IconSmoothComponent"/>
 /// TODO: Have this inherit from a generic SpriteSmoothSystemT :P
 /// </summary>
+/// <remarks>
+/// Make no mistake from the commit history. This system was so bad that I just rewrote it from scratch and blew up the old system.
+/// IconSmooth is one of the original sins from 2019, and worse is that its tentacles stretch into the renderer for some godforsaken reason.
+/// If you can make this more generic, do so please! I wasted way too many hours rewriting this.
+/// </remarks>
 public sealed partial class IconSmoothSystem : EntitySystem
 {
     [Dependency] private SharedMapSystem _map = default!;
@@ -57,8 +62,9 @@ public sealed partial class IconSmoothSystem : EntitySystem
         if (_dirtyEntities.Count == 0)
             return;
 
-        // Performance: This could be spread over multiple updates, or made parallel.
-        // TODO: IParallelRobustJob
+        // Right now performance for this isn't a huge issue.
+        // If it ever does become an issue, make this a parallel job.
+        // However, I'm pretty sure the caching behavior is more taxing, although that can't be made parallel without engine changes.
         while (_dirtyEntities.TryDequeue(out var entity))
         {
             CalculateNewSprite(entity);
