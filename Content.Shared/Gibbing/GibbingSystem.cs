@@ -19,8 +19,12 @@ public sealed partial class GibbingSystem : EntitySystem
     private static readonly SoundSpecifier? GibSound = new SoundCollectionSpecifier("gib", AudioParams.Default.WithVariation(0.025f));
 
     /// <summary>
-    /// Gibs an entity.
+    /// Attempts to gib an entity.
     /// </summary>
+    /// <remarks>
+    /// <see cref="SharedDestructibleSystem.DestroyEntity" /> gets the final say on if an entity ends up deleted.
+    /// If you want to intercept gibbing, intercept <see cref="DestructionAttemptEvent" />
+    /// </remarks>
     /// <param name="ent">The entity to gib.</param>
     /// <param name="dropGiblets">Whether or not to drop giblets.</param>
     /// <param name="user">The user gibbing the entity, if any.</param>

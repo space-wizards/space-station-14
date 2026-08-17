@@ -10,7 +10,6 @@
   - !type:DepartmentTimeRequirement
     department: Science
     time: 10h
-  weight: 10
   startingGear: ResearchDirectorGear
   icon: "JobIconResearchDirector"
   supervisors: job-supervisors-captain

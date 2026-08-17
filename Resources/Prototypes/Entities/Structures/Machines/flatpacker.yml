@@ -1,6 +1,6 @@
 ﻿- type: entity
   id: MachineFlatpacker
-  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  parent: [ BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible ]
   name: Flatpacker 1001
   description: An industrial machine used for expediting machine construction across the station.
   components:
@@ -30,6 +30,14 @@
         anim:
           True: { visible: true }
           False: { visible: false }
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 175
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
   - type: FlatpackCreator
     baseMachineCost:
       Steel: 750

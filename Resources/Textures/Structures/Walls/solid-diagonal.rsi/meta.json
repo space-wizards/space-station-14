@@ -1,0 +1,20 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "By rye-rice (GitHub) and 20nypercent, modified by AftrLite (GitHub)",
+    "source": "https://github.com/rye-rice/Shiptest/blob/30760c66503e00e13c20c6cc714e9c7df1a52565/icons/turf/walls/wall.dmi",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "state0",
+            "directions": 4
+        },
+        {
+            "name": "state1",
+            "directions": 4
+        }
+    ]
+}

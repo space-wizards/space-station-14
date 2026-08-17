@@ -6,8 +6,6 @@
   description: A rooty tooty point and shooty.
   components:
   - type: Sprite
-  - type: Item
-    size: Ginormous
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
@@ -17,6 +15,10 @@
     quickEquip: false
     slots:
     - Back
+  - type: Item
+    size: Ginormous
+    shape:
+      - 0,0,6,3
   - type: StaticPrice
     price: 500
   - type: Gun
@@ -137,6 +139,42 @@
     steps: 2
     zeroVisible: false
   - type: Appearance
+
+- type: entity
+  parent: [ BaseWeaponLauncher, BaseXenoborgContraband ]
+  id: WeaponXenoborgGuidedMissileLauncher
+  name: XB GML-78
+  description: A guided missile launcher.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Launchers/xenoborg_guided_missile_launcher.rsi
+    layers:
+    - state: base
+      map: [ "enum.GunVisualLayers.Base" ]
+    - state: mag-3
+      map: [ "enum.GunVisualLayers.Mag" ]
+  - type: Appearance
+  - type: MagazineVisuals
+    magState: mag
+    steps: 4
+    zeroVisible: false
+  - type: Gun
+    fireRate: 2
+    projectileSpeed: 6 # needs to be the same as the speed of the chasing walk component of the projectile
+    # otherwise the missile will be faster if shot without a target
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/rpgfire.ogg
+  - type: BallisticAmmoProvider
+    proto: BulletGuidedXenoborgMissile
+    capacity: 3
+  - type: BallisticAmmoSelfRefiller
+    autoRefillRate: 17s # takes a while to get a new one
+  - type: TargetAssign
+  - type: DeviceLinkSink
+    ports:
+    - TargetReceiver
+  - type: AutoLinkReceiver
+    channel: XenoborgGuidedMissileLauncher
 
 - type: entity
   parent: BaseWeaponLauncher
