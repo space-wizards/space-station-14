@@ -242,13 +242,12 @@
   components:
   - type: Sprite
     sprite: Structures/Walls/debugalt.rsi
-    state: base
   - type: Icon
     sprite: Structures/Walls/debugalt.rsi
   - type: IconSmooth
     key: walls
     states:
-    - !type:AltCornerSpriteSmoothing
+    - !type:CardinalCornerSpriteSmoothing
       mask: [ walls ]
       altMask: [ windows, grilles, marble, doors ]
       base: debug
@@ -263,7 +262,7 @@
   - type: IconSmooth
     key: marble
     states:
-    - !type:AltCornerSpriteSmoothing
+    - !type:CardinalCornerSpriteSmoothing
       mask: [ marble ]
       altMask: [ windows, grilles, walls, doors ]
       base: debug
@@ -577,13 +576,41 @@
 
 - type: entity
   parent: BaseWall
-  id: WallMarble
+  id: WallMarbleIndestructible
   name: marble wall
+  suffix: indestructible
   components:
   - type: Sprite
     sprite: Structures/Walls/marble.rsi
   - type: Icon
     sprite: Structures/Walls/marble.rsi
+  - type: IconSmooth
+    key: marble
+    states:
+    - !type:CardinalCornerSpriteSmoothing
+      mask: [ marble ]
+      altMask: [ walls, windows, grilles, doors ]
+      base: wall
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+        density: 4000
+  - type: RadiationBlocker
+    resistance: 5
+
+- type: entity
+  parent: WallMarbleIndestructible
+  id: WallMarble
+  name: marble wall
+  suffix:
+  components:
   - type: Damageable
     damageModifierSet: StructuralMetallicStrong
   - type: Injurable
@@ -601,50 +628,8 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: IconSmooth
-    key: marble
-    states:
-    - !type:AltCornerSpriteSmoothing
-      mask: [ marble ]
-      altMask: [ walls, windows, grilles, doors ]
-      base: wall
-      altBase: wall-border
   - type: StaticPrice
     price: 150
-
-- type: entity
-  parent: BaseWall
-  id: WallMarbleIndestructible
-  name: marble wall
-  suffix: indestructible
-  components:
-  - type: Sprite
-    sprite: Structures/Walls/marble.rsi
-  - type: Icon
-    sprite: Structures/Walls/marble.rsi
-  - type: IconSmooth
-    key: walls
-    states:
-    - !type:CornerSpriteSmoothing
-      mask: [ walls, windows, grilles, marble, doors ]
-      base: wall
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.5"
-        mask:
-        - FullTileMask
-        layer:
-        - WallLayer
-        density: 4000
-  - type: Damageable
-    damageModifierSet: StructuralMetallicStrong
-  - type: Injurable
-    damageContainer: StructuralInorganic
-  - type: RadiationBlocker
-    resistance: 5
 
 - type: entity
   parent: BaseWall

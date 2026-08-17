@@ -32,27 +32,19 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         }
 
         // Update smoothing and sprite based on volume.
-        // if (TryComp<IconSmoothComponent>(uid, out var smooth))
+        // if (volume < LowThreshold)
         // {
-        //     if (volume < LowThreshold)
-        //     {
-        //         _sprite.LayerSetRsiState((uid, args.Sprite), 0, $"{smooth.StateBase}a");
-        //         _smooth.SetEnabled(uid, false, smooth);
-        //     }
-        //     else if (volume < MediumThreshold)
-        //     {
-        //         _sprite.LayerSetRsiState((uid, args.Sprite), 0, $"{smooth.StateBase}b");
-        //         _smooth.SetEnabled(uid, false, smooth);
-        //     }
-        //     else
-        //     {
-        //         if (!smooth.Enabled)
-        //         {
-        //             _sprite.LayerSetRsiState((uid, args.Sprite), 0, $"{smooth.StateBase}0");
-        //             _smooth.SetEnabled(uid, true, smooth);
-        //             _smooth.DirtyNeighbours(uid);
-        //         }
-        //     }
+        //     _sprite.LayerSetRsiState((uid, args.Sprite), 0, $"{smooth.StateBase}a");
+        //     _smooth.SetEnabled(uid, false);
+        // }
+        // else if (volume < MediumThreshold)
+        // {
+        //     _sprite.LayerSetRsiState((uid, args.Sprite), 0, $"{smooth.StateBase}b");
+        //     _smooth.SetEnabled(uid, false);
+        // }
+        // else
+        // {
+        //     _smooth.SetEnabled(uid, true);
         // }
 
         var baseColor = Color.White;

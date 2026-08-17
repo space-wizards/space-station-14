@@ -169,10 +169,10 @@
         hard: false
   - type: IconSmooth
     key: puddles
-    additionalKeys:
-    - walls
-    base: splat
-    mode: CardinalFlags
+    states:
+    - !type:DirectionSpriteSmoothing
+      mask: [ walls, windows, marble ]
+      base: splat
   - type: Puddle
   - type: Solution
     id: puddle

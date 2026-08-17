@@ -49,6 +49,10 @@
   - type: Airtight
   - type: IconSmooth
     key: windows
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls, windows, grilles, marble, doors ]
+      base: window
   - type: PlacementReplacement
     key: walls
   - type: InteractionPopup

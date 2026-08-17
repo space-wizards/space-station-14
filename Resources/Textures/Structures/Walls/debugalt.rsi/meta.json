@@ -43,19 +43,28 @@
             "directions": 4
         },
         {
-            "name": "debug-cardinal0",
+            "name": "debug8",
             "directions": 4
         },
         {
-            "name": "debug-cardinal1",
+            "name": "debug9",
             "directions": 4
         },
         {
-            "name": "debug-cardinal2",
+            "name": "debug10",
             "directions": 4
         },
         {
-            "name": "base"
+            "name": "debug11",
+            "directions": 4
+        },
+        {
+            "name": "debug12",
+            "directions": 4
+        },
+        {
+            "name": "debug13",
+            "directions": 4
         }
     ]
 }

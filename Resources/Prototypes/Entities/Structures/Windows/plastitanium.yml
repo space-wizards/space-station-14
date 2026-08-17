@@ -47,6 +47,12 @@
         density: 4000
   - type: PlacementReplacement
     key: walls
+  - type: IconSmooth
+    key: windows
+    states:
+    - !type:CornerSpriteSmoothing
+      mask: [ walls, windows, grilles, marble, doors ]
+      base: ptwindow
 
 - type: entity
   id: PlastitaniumWindowSquareBase
@@ -60,12 +66,6 @@
   - type: Icon
     sprite: Structures/Windows/window-plastitanium.rsi
     state: full
-  - type: IconSmooth
-    key: windows
-    states:
-    - !type:CornerSpriteSmoothing
-      mask: [ walls, windows, grilles, marble, doors ]
-      base: ptwindow
   - type: Airtight
   - type: Fixtures
     fixtures:
