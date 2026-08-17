@@ -29,10 +29,7 @@ public sealed partial class ItemSlotsSystem
         var ev = new ItemSlotEjectAttemptEvent(uid, item, user, slot);
         RaiseLocalEvent(uid, ref ev);
         RaiseLocalEvent(item, ref ev);
-        if (ev.Cancelled)
-            return false;
-
-        return _containers.CanRemove(item, slot.ContainerSlot);
+        return !ev.Cancelled && _containers.CanRemove(item, slot.ContainerSlot);
     }
 
     /// <summary>
@@ -195,11 +192,11 @@ public sealed partial class ItemSlotsSystem
     {
         foreach (var slot in entity.Comp.Slots.Values)
         {
-            if (slot.HasItem && shouldEject(slot))
-            {
-                SetLock((entity.Owner, entity.Comp), slot, false);
-                TryEject(entity.Owner, slot, null, out _);
-            }
+            if (!slot.HasItem || !shouldEject(slot))
+                continue;
+
+            SetLock((entity.Owner, entity.Comp), slot, false);
+            TryEject(entity.Owner, slot, null, out _);
         }
     }
 }

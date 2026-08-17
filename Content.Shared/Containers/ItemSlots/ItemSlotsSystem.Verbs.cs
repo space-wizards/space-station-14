@@ -116,15 +116,13 @@ public sealed partial class ItemSlotsSystem
             InteractionVerb takeVerb = new()
             {
                 IconEntity = GetNetEntity(slot.Item),
-                Act = () => TryEjectToHandsWithDoAfter(ent, slot, user)
+                Act = () => TryEjectToHandsWithDoAfter(ent, slot, user),
+                Text = slot.EjectVerbText == null
+                    ? Loc.GetString("take-item-verb-text", ("subject", verbSubject))
+                    : Loc.GetString(slot.EjectVerbText),
+                Priority = slot.Priority
             };
 
-            if (slot.EjectVerbText == null)
-                takeVerb.Text = Loc.GetString("take-item-verb-text", ("subject", verbSubject));
-            else
-                takeVerb.Text = Loc.GetString(slot.EjectVerbText);
-
-            takeVerb.Priority = slot.Priority;
             args.Verbs.Add(takeVerb);
         }
 
