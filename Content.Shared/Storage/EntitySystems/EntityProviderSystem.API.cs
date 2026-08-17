@@ -75,37 +75,43 @@ public sealed partial class EntityProviderSystem
     /// <param name="provider">The entity providing the entityProvider storage.</param>
     /// <param name="protoId">The entity prototype ID to be spawned.</param>
     /// <param name="entities">The uid list of the spawned entities.</param>
-    /// <param name="amount">The amount of entities to spawn. If null, it'll spawn all of them.</param>
+    /// <param name="requestedAmount">The amount of entities to spawn. If null, it'll spawn all of them.</param>
     /// <returns>Returns true when it was able to spawn them, otherwise false.</returns>
     [PublicAPI]
-    public bool TryGetEntities(Entity<EntityProviderComponent?> provider, EntProtoId protoId, [NotNullWhen(true)] out List<EntityUid>? entities, int? amount = null)
+    public bool TryGetEntities(
+        Entity<EntityProviderComponent?> provider,
+        EntProtoId protoId,
+        [NotNullWhen(true)] out List<EntityUid>? entities,
+        int? requestedAmount = null
+    )
     {
-        entities = [];
+        entities = null;
 
-        if (amount <= 0
+        if (requestedAmount <= 0
             || !Resolve(provider, ref provider.Comp)
-            || !provider.Comp.EntityCounter.TryGetValue(protoId, out var value))
+            || !provider.Comp.EntityCounter.TryGetValue(protoId, out var amountInEntityProvider))
             return false;
 
-        amount = amount == null ? value : Math.Min(amount.Value, value);
+        requestedAmount = requestedAmount == null ? amountInEntityProvider : Math.Min(requestedAmount.Value, amountInEntityProvider);
 
         // Prioritize already spawned entities before spawning new ones.
-        entities = GetSpawnedEntities(provider, protoId, amount);
-        amount -= entities.Count; // We don't need to spawn already spawned ones, so reduce the amount.
-        value -= entities.Count;
+        entities = new List<EntityUid>(GetEntitiesFromContainer(provider, protoId, requestedAmount));
 
-        while (amount > 0)
+        requestedAmount -= entities.Count; // We don't need to spawn already spawned ones, so reduce the amount.
+        amountInEntityProvider -= entities.Count;
+
+        while (requestedAmount > 0)
         {
             var spawned = PredictedSpawnInContainerOrDrop(protoId, provider, ContainerId);
             entities.Add(spawned);
-            value--;
-            amount--;
+            amountInEntityProvider--;
+            requestedAmount--;
         }
 
-        if (value == 0)
+        if (amountInEntityProvider == 0)
             provider.Comp.EntityCounter.Remove(protoId);
         else
-            provider.Comp.EntityCounter[protoId] = value;
+            provider.Comp.EntityCounter[protoId] = amountInEntityProvider;
 
         Dirty(provider);
 
@@ -122,7 +128,7 @@ public sealed partial class EntityProviderSystem
     /// <param name="entityCounter">The dictionary containing the stored entities.</param>
     /// <returns>Returns true if the provider has one, otherwise false.</returns>
     [PublicAPI]
-    public bool TryGetEntityCounter(Entity<EntityProviderComponent?> provider, [NotNullWhen(true)] out Dictionary<EntProtoId, int>? entityCounter)
+    public bool TryGetEntityCounter(Entity<EntityProviderComponent?> provider, [NotNullWhen(true)] out IReadOnlyDictionary<EntProtoId, int>? entityCounter)
     {
         entityCounter = null;
         if (!Resolve(provider, ref provider.Comp))
@@ -138,14 +144,20 @@ public sealed partial class EntityProviderSystem
     /// <param name="provider">The entity providing the entityProvider storage.</param>
     /// <param name="protoId">The entity prototype ID to be spawned.</param>
     /// <param name="entities">The uid list of the spawned and ejected entities.</param>
-    /// <param name="amount">The amount of entities to spawn and eject. If null, it'll spawn all of them.</param>
+    /// <param name="requestedAmount">The amount of entities to spawn and eject. If null, it'll spawn all of them.</param>
     /// <param name="user">The user ejecting the items.</param>
     /// <returns>Returns true when the entities were spawned and ejected, otherwise false.</returns>
     [PublicAPI]
-    public bool TryEjectEntities(Entity<EntityProviderComponent?> provider, EntProtoId protoId, [NotNullWhen(true)] out List<EntityUid>? entities, int? amount = null, EntityUid? user = null)
+    public bool TryEjectEntities(
+        Entity<EntityProviderComponent?> provider,
+        EntProtoId protoId,
+        [NotNullWhen(true)] out List<EntityUid>? entities,
+        int? requestedAmount = null,
+        EntityUid? user = null
+    )
     {
-        entities = [];
-        if (!Resolve(provider, ref provider.Comp) || !TryGetEntities(provider, protoId, out entities, amount))
+        entities = null;
+        if (!Resolve(provider, ref provider.Comp) || !TryGetEntities(provider, protoId, out entities, requestedAmount))
             return false;
 
         if (entities.Count == 0)
@@ -163,7 +175,7 @@ public sealed partial class EntityProviderSystem
         if (!ProtoMan.Resolve(protoId, out var prototype))
             return true;
 
-        var ejectedAmount = amount == null ? "all" : entities.Count.ToString();
+        var ejectedAmount = requestedAmount == null ? "all" : entities.Count.ToString();
         var messageSuccess = Loc.GetString("comp-entity-provider-ejected", ("entity", prototype.Name), ("amount", ejectedAmount));
         _popup.PopupEntity(messageSuccess, provider, user, PopupType.Medium);
 

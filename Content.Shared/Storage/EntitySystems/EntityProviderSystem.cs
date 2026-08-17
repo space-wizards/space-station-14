@@ -79,28 +79,29 @@ public sealed partial class EntityProviderSystem : EntitySystem
             _popup.PopupEntity(Loc.GetString("comp-entity-provider-cannot-transfer", ("provider", provider)), provider, user);
             return false;
         }
+
         if (!refillTarget.Comp.CanReceive)
         {
             _popup.PopupEntity(Loc.GetString("comp-entity-provider-cannot-receive", ("refillTarget", refillTarget)), refillTarget, user);
             return false;
         }
 
-        foreach (var providedEntities in provider.Comp.EntityCounter)
+        foreach (var (entProtoId, count) in provider.Comp.EntityCounter)
         {
-            if (_whitelist.IsWhitelistFail(refillTarget.Comp.Whitelist, providedEntities.Key))
+            if (_whitelist.IsWhitelistFail(refillTarget.Comp.Whitelist, entProtoId))
                 continue;
 
-            if (!refillTarget.Comp.EntityCounter.TryAdd(providedEntities.Key, providedEntities.Value))
-                refillTarget.Comp.EntityCounter[providedEntities.Key] += providedEntities.Value;
+            if (!refillTarget.Comp.EntityCounter.TryAdd(entProtoId, count))
+                refillTarget.Comp.EntityCounter[entProtoId] += count;
 
             // Move all spawned entities over to the new provider.
-            foreach (var spawnedEntity in GetSpawnedEntities(provider.AsNullable(), providedEntities.Key))
+            foreach (var spawnedEntity in GetEntitiesFromContainer(provider.AsNullable(), entProtoId))
             {
                 _container.Insert(spawnedEntity, refillTarget.Comp.Container);
             }
 
             success = true;
-            toRemove.Add(providedEntities.Key);
+            toRemove.Add(entProtoId);
         }
 
         foreach (var removedEntProtoId in toRemove)
@@ -135,7 +136,7 @@ public sealed partial class EntityProviderSystem : EntitySystem
         if (!Resolve(storage, ref storage.Comp))
             return false;
 
-        var storedEntities = storage.Comp.Container.ContainedEntities.ToArray();
+        var storedEntities = storage.Comp.Container.ContainedEntities;
         var insertionSuccess = false;
 
         foreach (var ent in storedEntities)
@@ -155,31 +156,31 @@ public sealed partial class EntityProviderSystem : EntitySystem
     }
 
     /// <summary>
-    /// Attempts to get only the spawned entities of a prototype from the container.
+    /// Attempts to get only the spawned entities of a certain prototype from the container.
     /// </summary>
     /// <param name="provider">The entityProvider with the container.</param>
     /// <param name="protoId">The entity prototype to check for. </param>
-    /// <param name="amount">The amount of entities to retrieve. If null, it'll retrieve all of them.</param>
-    /// <returns>Returns a list of all currently spawned entities of that prototype. It will NOT spawn more to reach <see cref="amount"/>.</returns>
-    private List<EntityUid> GetSpawnedEntities(Entity<EntityProviderComponent?> provider, EntProtoId protoId, int? amount = null)
+    /// <param name="requestedAmount">The amount of entities to retrieve. If null, it'll retrieve all of them.</param>
+    /// <returns>Returns a list of all currently spawned entities of that prototype. It will NOT spawn more to reach <see cref="requestedAmount"/>.</returns>
+    private IEnumerable<EntityUid> GetEntitiesFromContainer(Entity<EntityProviderComponent?> provider, EntProtoId protoId, int? requestedAmount = null)
     {
-        if (amount <= 0 || !Resolve(provider, ref provider.Comp))
-            return [];
+        if (requestedAmount <= 0 || !Resolve(provider, ref provider.Comp))
+            yield break;
 
-        List<EntityUid> entities = [];
         var containedEntities = provider.Comp.Container.ContainedEntities;
-
+        var count = 0;
         foreach (var containedEntity in containedEntities)
         {
             var meta = MetaData(containedEntity).EntityPrototype;
 
             if (meta != null && meta.ID == protoId)
-                entities.Add(containedEntity);
+            {
+                yield return containedEntity;
+                count++;
+            }
             // Check if we have enough.
-            if (amount != null && entities.Count == amount.Value)
-                return entities;
+            if (count == requestedAmount)
+                yield break;
         }
-
-        return entities;
     }
 }

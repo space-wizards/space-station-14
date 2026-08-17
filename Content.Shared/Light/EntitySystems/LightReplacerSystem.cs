@@ -122,35 +122,35 @@ public sealed partial class LightReplacerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Try to replace a light bulb in <paramref name="fixture"/>
+    /// Try to replace a light bulb in <paramref name="lightHolder"/>
     /// using light replacer. Light fixture should have <see cref="PoweredLightComponent"/>.
     /// </summary>
     /// <param name="replacer">The light replacer used to replace the bulb.</param>
-    /// <param name="fixture">The fixture whose light is being replaced.</param>
+    /// <param name="lightHolder">The fixture whose light is being replaced.</param>
     /// <param name="userUid">The user who is replacing the light.</param>
     /// <returns>True if successfully replaced light, false otherwise</returns>
-    public bool TryReplaceBulb(Entity<LightReplacerComponent?> replacer, Entity<PoweredLightComponent?> fixture, EntityUid? userUid = null)
+    public bool TryReplaceBulb(Entity<LightReplacerComponent?> replacer, Entity<PoweredLightComponent?> lightHolder, EntityUid? userUid = null)
     {
         if (!Resolve(replacer, ref replacer.Comp)
-            || !Resolve(fixture, ref fixture.Comp))
+            || !Resolve(lightHolder, ref lightHolder.Comp))
             return false;
 
-        var activeType = fixture.Comp.BulbType == LightBulbType.Tube
+        var activeType = lightHolder.Comp.BulbType == LightBulbType.Tube
             ? replacer.Comp.ActiveLightTube
             : replacer.Comp.ActiveLightBulb;
 
         // check if light bulb is broken or missing
-        var fixtureBulbUid = _poweredLight.GetBulb(fixture, fixture.Comp);
-        if (fixtureBulbUid != null)
+        EntityUid? currentBulbInHolder = _poweredLight.GetBulb(lightHolder, lightHolder.Comp);
+        if (currentBulbInHolder != null)
         {
-            if (!_lightBulbQuery.TryComp(fixtureBulbUid.Value, out var fixtureBulb))
+            if (!_lightBulbQuery.TryComp(currentBulbInHolder.Value, out var fixtureBulb))
                 return false;
 
-            var prototype = MetaData(fixtureBulbUid.Value).EntityPrototype;
+            var prototype = MetaData(currentBulbInHolder.Value).EntityPrototype;
 
             if (fixtureBulb.State == LightBulbState.Normal && prototype != null && prototype.ID == activeType)
             {
-                _popup.PopupEntity(Loc.GetString("comp-light-replacer-same-light", ("light", fixtureBulbUid)), fixture, userUid, PopupType.Medium);
+                _popup.PopupEntity(Loc.GetString("comp-light-replacer-same-light", ("light", currentBulbInHolder)), lightHolder, userUid, PopupType.Medium);
                 return false;
             }
         }
@@ -168,7 +168,7 @@ public sealed partial class LightReplacerSystem : EntitySystem
         }
 
         // insert it into fixture
-        var wasReplaced = _poweredLight.ReplaceBulb(fixture, insertedBulb.Value, fixture.Comp);
+        var wasReplaced = _poweredLight.ReplaceBulb(lightHolder, insertedBulb.Value, lightHolder.Comp);
         if (wasReplaced)
         {
             _audio.PlayPredicted(replacer.Comp.Sound, replacer, userUid);
