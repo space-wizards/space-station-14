@@ -10,7 +10,7 @@ public partial interface ISpriteSmoothState
     /// <summary>
     /// The Base string that we use to build the desired sprite state.
     /// </summary>
-    public string Base { get; protected set;  }
+    public string Base { get; set;  }
 
     /// <summary>
     /// List of keys that this sprite state smooths with.
