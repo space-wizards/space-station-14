@@ -31,6 +31,8 @@
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/shuttle-base.rsi
     layers:
+    - state: docking-clamp
+      offset: 0, -1
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
     - state: closed_unlit
