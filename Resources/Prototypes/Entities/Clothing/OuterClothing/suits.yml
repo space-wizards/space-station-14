@@ -166,9 +166,6 @@
     - ActionCreateThrowingStar
     - ActionCreateNanostraps
   - type: ItemActionGrant
-    actions:
-    - ActionCreateThrowingStar
-    - ActionCreateNanostraps
     activeIfWorn: true
   # core ninja suit stuff
   - type: NinjaSuit

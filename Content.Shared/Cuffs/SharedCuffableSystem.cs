@@ -67,6 +67,7 @@ namespace Content.Shared.Cuffs
         public override void Initialize()
         {
             base.Initialize();
+            InitializeRelay();
 
             SubscribeLocalEvent<CuffableComponent, HandCountChangedEvent>(OnHandCountChanged);
             SubscribeLocalEvent<UncuffAttemptEvent>(OnUncuffAttempt);
@@ -383,20 +384,6 @@ namespace Content.Shared.Cuffs
 
             args.CancelExecution = true;
             args.CancelMessage = Loc.GetString("handcuff-component-cuffs-broke");
-        }
-
-        [SubscribeLocalEvent]
-        private void OnAttemptAccent(Entity<CuffableComponent> ent, ref AccentGetEvent args)
-        {
-            foreach (var cuffsEnt in GetAllCuffs((ent, ent)))
-            {
-                if (!HasComp<HandcuffComponent>(cuffsEnt) && !HasComp<AccentRequireCuffedComponent>(cuffsEnt))
-                    return;
-
-                var relayEv = new AccentGetEvent(args.Entity, args.Message);
-                RaiseLocalEvent(cuffsEnt, ref relayEv);
-                args.Message = relayEv.Message;
-            }
         }
 
         private void OnCuffAfterInteract(EntityUid uid, HandcuffComponent component, AfterInteractEvent args)

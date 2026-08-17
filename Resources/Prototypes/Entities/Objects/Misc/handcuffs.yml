@@ -163,6 +163,7 @@
 - type: entity
   parent: Handcuffs
   id: Nanostraps
+  suffix: No Despawn
   name: nanostraps
   description: Hi-tech temporary restraints made of nanomachines. Breaks on the wearer taking damage.
   components:
@@ -187,7 +188,10 @@
     startBreakoutSound:
       path: /Audio/Items/Handcuffs/rope_takeoff.ogg
   - type: MumbleAccent
-  - type: AccentRequireCuffed
+    relayAccent: true
+  - type: EmoteBlocker
+    blocksCategories:
+    - Vocal
 
 - type: entity
   parent: Nanostraps

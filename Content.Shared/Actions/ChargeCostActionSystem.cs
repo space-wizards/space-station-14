@@ -7,7 +7,7 @@ using Content.Shared.PowerCell;
 namespace Content.Shared.Actions;
 
 /// <summary>
-/// <see cref="ChargeCostActionComponent"/>
+/// See <see cref="ChargeCostActionComponent"/>.
 /// </summary>
 public sealed partial class ChargeCostActionSystem : EntitySystem
 {
@@ -24,10 +24,20 @@ public sealed partial class ChargeCostActionSystem : EntitySystem
         if (!TryComp<ActionComponent>(ent, out var action) || action.Container == null)
             return;
 
-        if (!_powerCell.TryGetBatteryFromSlotOrEntity((action.Container.Value, null), out var battery) || !_battery.TryUseCharge(battery.Value.AsNullable(), ent.Comp.Charge))
+        if (!_powerCell.TryGetBatteryFromSlotOrEntity((action.Container.Value, null), out var battery) || !(_battery.GetCharge(battery.Value.AsNullable()) >= ent.Comp.Charge))
         {
             _popup.PopupEntity(Loc.GetString(ent.Comp.NoPowerPopup), args.User, args.User);
             args.Cancelled = true;
         }
+    }
+
+    [SubscribeLocalEvent]
+    private void OnActionPerformed(Entity<ChargeCostActionComponent> ent, ref ActionPerformedEvent args)
+    {
+        if (!TryComp<ActionComponent>(ent, out var action) || action.Container == null)
+            return;
+
+        if (_powerCell.TryGetBatteryFromSlotOrEntity((action.Container.Value, null), out var battery))
+            _battery.UseCharge(battery.Value.AsNullable(), ent.Comp.Charge);
     }
 }

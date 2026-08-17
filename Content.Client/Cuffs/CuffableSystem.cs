@@ -53,17 +53,18 @@ public sealed partial class CuffableSystem : SharedCuffableSystem
             return;
         _sprite.LayerSetColor((uid, sprite), HumanoidVisualLayers.Handcuffs, cuffState.Color!.Value);
 
-
         // species specific
         var rsiString = cuffState.RSI ?? component.CurrentRSI;
-        if (rsiString == null)
-            return;
-
-        var rsi = _cache.GetResource<RSIResource>(SpriteSpecifierSerializer.TextureRoot / rsiString).RSI;
 
         var state = cuffState.IconState;
-        if (TryComp(uid, out InventoryComponent? inventory) && inventory.SpeciesId != null && rsi.TryGetState($"{cuffState.IconState}-{inventory.SpeciesId}", out _))
+
+        if (TryComp(uid, out InventoryComponent? inventory) && inventory.SpeciesId != null &&
+            rsiString != null &&
+            _cache.GetResource<RSIResource>(SpriteSpecifierSerializer.TextureRoot / rsiString)
+                .RSI.TryGetState($"{cuffState.IconState}-{inventory.SpeciesId}", out _))
+        {
             state = $"{cuffState.IconState}-{inventory.SpeciesId}";
+        }
 
         if (!Equals(component.CurrentRSI, cuffState.RSI) && cuffState.RSI != null) // we don't want to keep loading the same RSI
         {
