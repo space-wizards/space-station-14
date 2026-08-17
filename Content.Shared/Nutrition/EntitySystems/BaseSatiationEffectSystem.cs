@@ -21,9 +21,11 @@ namespace Content.Shared.Nutrition.EntitySystems;
 /// <remarks>Note that this <b>is not</b> related to <see cref="EntityEffects"/></remarks>
 public abstract partial class BaseSatiationEffectSystem<TComp, T> : EntitySystem where TComp : Component
 {
-    [Dependency] private SatiationSystem _satiation = default!;
-    [Dependency] private EntityQuery<SatiationComponent> _satiationQuery;
     [Dependency] private IGameTiming _timing = default!;
+
+    [Dependency] private SatiationSystem _satiation = default!;
+
+    [Dependency] private EntityQuery<SatiationComponent> _satiationQuery;
 
     /// <summary>
     /// How to access <see cref="SatiationThresholds{T}"/> via a <typeparamref name="TComp"/>.
@@ -54,7 +56,8 @@ public abstract partial class BaseSatiationEffectSystem<TComp, T> : EntitySystem
         {
             foreach (var (type, thresholds) in GetThresholds(comp))
             {
-                if (_timing.CurTime < thresholds.ProjectedThresholdChangeTime)
+                if (thresholds.ProjectedThresholdChangeTime == null ||
+                    _timing.CurTime < thresholds.ProjectedThresholdChangeTime)
                     continue;
 
                 UpdateSatiation((ent, comp), satiation, type);
@@ -89,30 +92,26 @@ public abstract partial class BaseSatiationEffectSystem<TComp, T> : EntitySystem
     /// </summary>
     private void UpdateSatiation(Entity<TComp> entity, SatiationComponent comp, ProtoId<SatiationTypePrototype> type)
     {
-        // Get the current satiation value...
         if (!GetThresholds(entity.Comp).TryGetValue(type, out var thresholds))
             return;
+        var satiation = new Entity<SatiationComponent>(entity, comp);
 
-        // ... and then use it to get the appropriate threshold T value.
-        if (_satiation.TryGetValueByThreshold(
-                (entity, comp),
-                type,
-                thresholds.Thresholds,
-                out var result,
-                out var nextLowerThreshold))
-        {
-            thresholds.Current = result ?? DefaultValue();
+        var gotThreshold = _satiation.TryGetValueByThreshold(
+            satiation,
+            type,
+            thresholds.Thresholds,
+            out var result,
+            out var nextHigherThreshold,
+            out var nextLowerThreshold
+        );
 
-            // Predict when our satiation will decay to the next threshold down.
-            thresholds.ProjectedThresholdChangeTime = nextLowerThreshold is { } lower
-                ? _satiation.GetTimeToDecay((entity, comp), type, lower)
-                : null;
-        }
-        else
-        {
-            thresholds.Current = DefaultValue();
-            thresholds.ProjectedThresholdChangeTime = null;
-        }
+        thresholds.Current = gotThreshold ? result ?? DefaultValue() : DefaultValue();
+        thresholds.ProjectedThresholdChangeTime = _satiation.GetTimeToBound(
+            satiation,
+            type,
+            nextHigherThreshold,
+            nextLowerThreshold
+        );
 
         Dirty(entity);
 

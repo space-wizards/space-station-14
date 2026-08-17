@@ -14,13 +14,13 @@ public sealed partial class DungeonJob
     private async Task PostGen(CorridorClutterDunGen gen, Dungeon dungeon, HashSet<Vector2i> reservedTiles, IRobustRandom random)
     {
         var physicsQuery = _entManager.GetEntityQuery<PhysicsComponent>();
-        var count = (int) Math.Ceiling(dungeon.CorridorTiles.Count * gen.Chance);
+        var count = (int)Math.Ceiling(dungeon.CorridorTiles.Count * gen.Chance);
 
         while (count > 0)
         {
             var tile = random.Pick(dungeon.CorridorTiles);
 
-            var enumerator = _maps.GetAnchoredEntitiesEnumerator(_gridUid, _grid, tile);
+            var enumerator = _maps.GetAnchoredEntities(_gridUid, _grid, tile);
             var blocked = false;
 
             while (enumerator.MoveNext(out var ent))
