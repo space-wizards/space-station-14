@@ -434,31 +434,10 @@ public sealed partial class IconSmoothSystem : EntitySystem
             ExpandCache();
 
         var index = _freeListHead;
-        Log.Debug($"Index: {index} Count: {_keyCaches.Count}");
         _freeListHead = _keyCaches[index].RefCount;
         _keyCaches[index] = new KeyCache(_workingKeyRing);
-        Log.Debug($"FreeList: {_freeListHead} Caches = {DumpCache()}");
 
         return (byte)index;
-    }
-
-    private string DumpCache()
-    {
-        var dump = "";
-        foreach (var value in _keyCaches)
-        {
-            dump += "/n values: [";
-            if (value.Keys is { } keys)
-            {
-                foreach (var key in keys)
-                {
-                    dump += $"{key}";
-                }
-            }
-            dump += $"] refs: {value.RefCount} || ";
-        }
-
-        return dump;
     }
 
     private void DecrementRefCount(byte index)
