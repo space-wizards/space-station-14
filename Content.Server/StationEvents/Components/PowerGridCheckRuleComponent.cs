@@ -6,6 +6,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.StationEvents.Components;
 
 [RegisterComponent, Access(typeof(PowerGridCheckRule))]
+[AutoGenerateEntityRelations]
 public sealed partial class PowerGridCheckRuleComponent : Component
 {
     /// <summary>
@@ -27,20 +28,20 @@ public sealed partial class PowerGridCheckRuleComponent : Component
     /// <summary>
     /// Station affected by the power grid event.
     /// </summary>
-    [DataField]
-    public EntityUid AffectedStation;
+    [DataField, AutoRelationField]
+    public EntityRelation AffectedStation;
 
     /// <summary>
     /// List of APC entities that will be sequentially turned off during the event.
     /// </summary>
-    [DataField]
-    public List<EntityUid> Powered = new();
+    [DataField, AutoRelationField]
+    public List<EntityRelation> Powered = new();
 
     /// <summary>
     /// List of APC entities that have been turned off.
     /// </summary>
-    [DataField]
-    public List<EntityUid> Unpowered = new();
+    [DataField, AutoRelationField]
+    public List<EntityRelation> Unpowered = new();
 
     /// <summary>
     /// Time delay in seconds before starting to turn off APCs.

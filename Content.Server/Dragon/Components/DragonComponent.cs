@@ -6,15 +6,14 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Dragon
 {
     // TODO: use timespans for logic
-    [RegisterComponent]
+    [RegisterComponent, AutoGenerateEntityRelations(shutdownEvent: false)]
     public sealed partial class DragonComponent : Component
     {
-
         /// <summary>
         /// If we have active rifts.
         /// </summary>
-        [DataField]
-        public List<EntityUid> Rifts = new();
+        [DataField, AutoRelationField]
+        public List<EntityRelation> Rifts = new();
 
         public bool Weakened => WeakenedAccumulator > 0f;
 

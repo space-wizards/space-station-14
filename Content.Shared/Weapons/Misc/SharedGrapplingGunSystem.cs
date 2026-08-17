@@ -248,7 +248,9 @@ public abstract partial class SharedGrapplingGunSystem : VirtualController
             {
                 // Just in case.
                 if (grappling.Stream.HasValue && Timing.IsFirstTimePredicted)
-                    grappling.Stream = _audio.Stop(grappling.Stream);
+                {
+                    _audio.Stop(grappling.Stream);
+                }
 
                 continue;
             }
@@ -380,12 +382,13 @@ public abstract partial class SharedGrapplingGunSystem : VirtualController
         if (value)
         {
             // We null-coalesce here because playing the sound again will cause it to become eternally stuck playing
-            entity.Comp.Stream ??= _audio.PlayPredicted(entity.Comp.ReelSound, entity.Owner, user)?.Entity;
+            if (!entity.Comp.Stream.HasValue)
+                SetRelation(entity.Owner, ref entity.Comp.Stream, _audio.PlayPredicted(entity.Comp.ReelSound, entity.Owner, user)?.Entity);
         }
         else if (!value && entity.Comp.Stream.HasValue && Timing.IsFirstTimePredicted)
         {
             // The IsFirstTimePredicted check is important here because otherwise component.Stream will be set to null from an early cancellation if this isn't FirstTimePredicted
-            entity.Comp.Stream = _audio.Stop(entity.Comp.Stream);
+            _audio.Stop(entity.Comp.Stream);
         }
 
         entity.Comp.Reeling = value;

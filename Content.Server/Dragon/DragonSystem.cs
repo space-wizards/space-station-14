@@ -166,8 +166,8 @@ public sealed partial class DragonSystem : EntitySystem
 
         var carpUid = Spawn(component.RiftPrototype, new MapCoordinates(position, xform.MapID), rotation: Transform(xform.GridUid.Value).LocalRotation);
 
-        component.Rifts.Add(carpUid);
-        Comp<DragonRiftComponent>(carpUid).Dragon = uid;
+        SetRelation(uid, component.Rifts, carpUid);
+        SetRelation(carpUid, ref Comp<DragonRiftComponent>(carpUid).Dragon, uid);
     }
 
     // TODO: just make this a move speed modifier component???

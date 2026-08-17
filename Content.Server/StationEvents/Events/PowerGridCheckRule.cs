@@ -35,7 +35,7 @@ namespace Content.Server.StationEvents.Events
             if (!TryGetRandomStation(out var chosenStation))
                 return;
 
-            component.AffectedStation = chosenStation.Value;
+            SetRelation(uid, ref component.AffectedStation, chosenStation);
 
             var largestGrid = _stationSystem.GetLargestGrid(chosenStation.Value);
 
@@ -54,7 +54,7 @@ namespace Content.Server.StationEvents.Events
                 if (transform.GridUid != largestGrid.Value)
                     continue;
 
-                component.Powered.Add(apcUid);
+                SetRelation(uid, component.Powered, apcUid);
             }
 
             RobustRandom.Shuffle(component.Powered);
@@ -74,11 +74,11 @@ namespace Content.Server.StationEvents.Events
                 return;
             }
 
-            PowerGridCheckRuleComponent? rule = GetRuleAffectingEntity(apcUid);
+            var rule = GetRuleAffectingEntity(apcUid);
             if (rule != null && apcComp.MainBreakerEnabled)
             {
                 _apcSystem.ApcToggleBreaker(apcUid, apcComp);
-                rule.Unpowered.Add(apcUid);
+                SetRelation(rule.Value.Owner, rule.Value.Comp.Unpowered, apcUid);
             }
         }
 
@@ -90,7 +90,7 @@ namespace Content.Server.StationEvents.Events
         /// <summary>
         /// Returns the PowerGridCheckRuleComponent affecting the uid, or null if none
         /// </summary>
-        private PowerGridCheckRuleComponent? GetRuleAffectingEntity(EntityUid uid)
+        private Entity<PowerGridCheckRuleComponent>? GetRuleAffectingEntity(EntityUid uid)
         {
             if (!TryComp(uid, out TransformComponent? xform))
             {
@@ -103,12 +103,15 @@ namespace Content.Server.StationEvents.Events
             }
 
             var activeRules = AllEntityQuery<PowerGridCheckRuleComponent, ActiveGameRuleComponent>();
-            while (activeRules.MoveNext(out var _entity, out var powerGridRule, out var _activeGameRule))
+            while (activeRules.MoveNext(out var entity, out var powerGridRule, out var _activeGameRule))
             {
+                if (powerGridRule.AffectedStation.Entity == null)
+                    continue; // The station was deleted...
+
                 if (stationMemberComp.Station != powerGridRule.AffectedStation)
                     continue;
 
-                var largestGrid = _stationSystem.GetLargestGrid(powerGridRule.AffectedStation);
+                var largestGrid = _stationSystem.GetLargestGrid(powerGridRule.AffectedStation.Entity.Value);
 
                 if (largestGrid == null)
                     continue;
@@ -116,7 +119,7 @@ namespace Content.Server.StationEvents.Events
                 if (xform.GridUid != largestGrid.Value)
                     continue;
 
-                return powerGridRule;
+                return (entity, powerGridRule);
             }
 
             return null;
@@ -126,16 +129,18 @@ namespace Content.Server.StationEvents.Events
         {
             base.Ended(uid, component, gameRule, args);
 
-            foreach (var entity in component.Unpowered)
+            foreach (var relation in component.Unpowered)
             {
-                if (Deleted(entity))
+                if (relation.Entity == null)
                     continue;
 
-                if (TryComp(entity, out ApcComponent? apcComponent))
-                {
-                    if (!apcComponent.MainBreakerEnabled)
-                        _apcSystem.ApcToggleBreaker(entity, apcComponent);
-                }
+                var entity = relation.Entity.Value;
+
+                if (!TryComp(entity, out ApcComponent? apcComponent))
+                    continue;
+
+                if (!apcComponent.MainBreakerEnabled)
+                    _apcSystem.ApcToggleBreaker(entity, apcComponent);
             }
 
             // Can't use the default EndAudio
@@ -165,15 +170,19 @@ namespace Content.Server.StationEvents.Events
                 if (component.Powered.Count == 0)
                     break;
 
-                var selected = component.Powered.Pop();
-                if (Deleted(selected))
+                var relation = component.Powered.Pop();
+                if (relation.Entity == null)
                     continue;
+
+                var selected = relation.Entity.Value;
+
                 if (TryComp<ApcComponent>(selected, out var apcComponent))
                 {
                     if (apcComponent.MainBreakerEnabled)
                         _apcSystem.ApcToggleBreaker(selected, apcComponent);
                 }
-                component.Unpowered.Add(selected);
+
+                component.Unpowered.Add(relation);
             }
         }
     }
