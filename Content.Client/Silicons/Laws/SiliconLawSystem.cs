@@ -3,7 +3,4 @@
 namespace Content.Client.Silicons.Laws;
 
 /// <inheritdoc/>
-public sealed class SiliconLawSystem : SharedSiliconLawSystem
-{
-
-}
+public sealed partial class SiliconLawSystem : SharedSiliconLawSystem;
