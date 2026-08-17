@@ -37,15 +37,25 @@ public sealed partial class EdgeSpriteSmoothing : ISpriteSmoothState
     {
         for (byte i = 0; i < 8; i+= 2)
         {
-            var direction = (Direction)i;
-
             // We actually don't want to smooth if it overlaps!
             if (layers[i] is { } keys && keys.Overlaps(Mask))
-                sprite.LayerSetVisible(entity.AsNullable(), LayerKey + direction, false);
+                sprite.LayerSetVisible(entity.AsNullable(), LayerKey + GetSuffix(i), false);
             else
-                sprite.LayerSetVisible(entity.AsNullable(), LayerKey + direction, true);
+                sprite.LayerSetVisible(entity.AsNullable(), LayerKey + GetSuffix(i), true);
         }
 
         yield break;
+    }
+
+    public string GetSuffix(byte i)
+    {
+        return i switch
+        {
+            0 => "south",
+            2 => "east",
+            4 => "north",
+            6 => "west",
+            _ => throw new ArgumentOutOfRangeException(nameof(i), i, null)
+        };
     }
 }
