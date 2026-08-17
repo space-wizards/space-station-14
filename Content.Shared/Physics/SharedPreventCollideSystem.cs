@@ -2,7 +2,7 @@
 
 namespace Content.Shared.Physics;
 
-public sealed class SharedPreventCollideSystem : EntitySystem
+public sealed partial class SharedPreventCollideSystem : EntitySystem
 {
     public override void Initialize()
     {
