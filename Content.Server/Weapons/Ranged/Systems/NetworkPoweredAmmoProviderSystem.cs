@@ -3,6 +3,7 @@ using Content.Server.Power.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Examine;
+using Content.Shared.Power;
 using Content.Shared.Power.Components;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
@@ -76,6 +77,23 @@ public sealed partial class NetworkPoweredAmmoProviderSystem : SharedNetworkPowe
         }
     }
 
+    /// <summary> Turn on/off based on power feed. </summary>
+    [SubscribeLocalEvent]
+    private void OnApcChanged(Entity<NetworkPoweredAmmoProviderComponent> ent, ref PowerChangedEvent args)
+    {
+        if (!_powerState.GetWorkingState(ent.Owner))
+            return;
+
+        if (!args.Powered)
+        {
+            PowerOff(ent);
+        }
+        else
+        {
+            PowerOn(ent);
+        }
+    }
+
     /// <summary> Spawn ammo if we are ON. </summary>
     [SubscribeLocalEvent]
     private void OnNetworkTakeAmmo(Entity<NetworkPoweredAmmoProviderComponent> ent, ref TakeAmmoEvent args)
@@ -98,7 +116,7 @@ public sealed partial class NetworkPoweredAmmoProviderSystem : SharedNetworkPowe
     private void OnExamined(Entity<NetworkPoweredAmmoProviderComponent> ent, ref ExaminedEvent args)
     {
         var proto = ProtoMan.Index(ent.Comp.Prototype);
-        args.PushMarkup(Loc.GetString("gun-selected-mode-examine", ("type", proto.Name)));
+        args.PushMarkup(Loc.GetString("gun-selected-mode-examine", ("color", "yellow"), ("mode", proto.Name)));
     }
 
     protected override void ToggleActive(Entity<NetworkPoweredAmmoProviderComponent> ent, EntityUid user)
@@ -144,8 +162,7 @@ public sealed partial class NetworkPoweredAmmoProviderSystem : SharedNetworkPowe
         _powerState.SetWorkingState((ent.Owner, powerState), true);
 
         Dirty(ent);
-        // Do not directly PowerOn().
-        // OnReceivedPowerChanged will get fired due to DrawRate change which will turn it on.
+        PowerOn(ent);
     }
 
     private void SwitchOff(Entity<NetworkPoweredAmmoProviderComponent> ent)

@@ -66,6 +66,16 @@ public abstract partial class SharedPowerStateSystem : EntitySystem
         return ent.Comp.IsWorking;
     }
 
+    /// <summary> Updates appearance according to powered situation. </summary>
+    [SubscribeLocalEvent]
+    private void OnApcChanged(Entity<PowerStateComponent> ent, ref PowerChangedEvent args)
+    {
+        if (!ent.Comp.IsWorking)
+            return;
+
+        UpdateAppearance(ent, args.Powered);
+    }
+
     /// <summary>
     /// Sets up power load for provided working state and return if device is sufficiently powered.
     /// </summary>

@@ -166,8 +166,6 @@
   - type: LockedWiresPanel
   - type: AccessReader
     access: [[ "Research" ]]
-  - type: NetworkPoweredAmmoProvider
-    prototype: AnomalousParticleDelta
   - type: Emitter
     selectableTypes:
     - AnomalousParticleDelta
@@ -186,8 +184,7 @@
   - type: PowerState
     idlePowerDraw: 5
     workingPowerDraw: 100
-    onState: firing
-    underpoweredState: underpowered
+    workingState: firing
   - type: ApcPowerReceiver
     powerLoad: 5
   - type: GuideHelp
@@ -203,6 +200,8 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
   - type: AutoShootGun
+  - type: NetworkPoweredAmmoProvider
+    prototype: AnomalousParticleDelta
   - type: Appearance
   - type: WiresPanel
   - type: WiresVisuals
