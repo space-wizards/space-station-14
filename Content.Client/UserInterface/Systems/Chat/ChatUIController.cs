@@ -490,26 +490,17 @@ public sealed partial class ChatUIController : UIController
 
     private void CreateNuSpeechBubble(EntityUid entity, SpeechBubbleData speechData)
     {
-        var name = SharedChatSystem.GetStringInsideTag(speechData.Message, "Name");
-        var nameColor = GetNameColor(name);
-
-        var message = SharedChatSystem.GetStringInsideTag(speechData.Message, "BubbleContent");
-
-        var msg = new FormattedMessage();
-        if (Color.TryFromHex(nameColor, out var color))
-            msg.PushColor(color);
-
-        msg.AddMarkupOrThrow(message);
-
-        var bubble = new NuSpeechBubble(msg, entity);
-
-        bubble.OnDied += NuSpeechBubbleDied;
-
         if (!NuActiveSpeechBubbles.TryGetValue(entity, out var existing))
         {
             existing = new List<NuSpeechBubble>();
             NuActiveSpeechBubbles.Add(entity, existing);
         }
+
+        var nameColor = GetNameColor(SharedChatSystem.GetStringInsideTag(speechData.Message, "Name"));
+        Color.TryFromHex(nameColor, out var color);
+
+        var bubble = new NuSpeechBubble(speechData.Message, speechData.Type, entity, color);
+        bubble.OnDied += NuSpeechBubbleDied;
 
         existing.Add(bubble);
 
