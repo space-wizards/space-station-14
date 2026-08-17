@@ -3,7 +3,6 @@
   mapName: 'Box Station'
   mapPath: /Maps/box.yml
   minPlayers: 45
-  maxPlayers: 65
   stations:
     Boxstation:
       stationProto: StandardNanotrasenStation
@@ -31,8 +30,8 @@
             Chef: [ 1, 1 ]
             Janitor: [ 2, 2 ]
             Chaplain: [ 1, 1 ]
-            Librarian: [ 0, 1 ]
-            ServiceWorker: [ 1, 2 ]
+            Librarian: [ 1, 1 ]
+            ServiceWorker: [ 1, 1 ]
             Reporter: [ 1, 1 ]
             #engineering (6-8)
             AtmosphericTechnician: [ 2, 2 ]
@@ -48,7 +47,7 @@
             ResearchAssistant: [ 2, 2 ]
             #security (10-11)
             Warden: [ 1, 1 ]
-            SecurityOfficer: [ 5, 6 ]
+            SecurityOfficer: [ 5, 5 ]
             Detective: [ 1, 1 ]
             SecurityCadet: [ 2, 2 ]
             Lawyer: [ 1, 1 ]
@@ -59,7 +58,7 @@
             Passenger: [ -1, -1 ] #infinite, not counted
             Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]
-            Musician: [ 0, 1 ]
+            Musician: [ 1, 1 ]
             #silicon (3)
             StationAi: [ 1, 1 ]
             Borg: [ 2, 2 ]
