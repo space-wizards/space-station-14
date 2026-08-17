@@ -10,71 +10,85 @@
     - HeartbreakerToxin # Rarest toxin
     - Honk # Rarest funni chem
     - BuzzochloricBees # Rare gimmick chem
-  - quantity: 5
+
+  - quantity: 5 # Evil chems
     weight: 1
     reagents:
-    - Heparin # Intersting Poison
-    - Toxin # Basic poison
-    - Leporazine # Useful T3 chem FILLER
-    - Epinephrine # Boring chem FILLER
-    - CarpoToxin # Useful poison/intermediary
-    - SulfuricAcid # Useful intermediary
-    - Licoxide # Funny shock poison
-    - Napalm # Evil Chem
-    - ChlorineTrifluoride # Evil Chem
-    - Radium # Raw Element
-    - Gold # Raw Element
-    - Uranium # Raw Element
-    - Phosphorus # Raw Element
-    - TearGas # Interesting poison
-    - Lipolicide # Interesting poison
-    - Benzene # Cellular poison
-  - quantity: 5
+    - Heparin
+    - Toxin
+    - Napalm
+    - ChlorineTrifluoride
+    - TearGas
+    - Lipolicide
+    - Benzene
+    - Phenol
+    - Bleach
+    - Pax
+
+  - quantity: 5 # Medical chems
     weight: 2
     reagents:
-    - Desoxyephedrine # Interesting chem FILLER
-    - ChloralHydrate # Interesting chem FILLER
-    - Ipecac # Funny chem FILLER
-    - Hyronalin # Useful T1 Chem FILLER
-    - Pax # Interesting Chem
-    - Cryoxadone # Interesting T1 Chem
-    - Ethylredoxrazine # Interesting chem FILLER
-    - Dylovene # Useful T1 Chem
-    - Blood # Flavor FILLER
-    - WeldingFuel # Useful intermediary FILLER
-    - Mercury # Raw Element
-    - Silver # Raw Element
-    - Phenol # Basic poison, intermediary for epinephrine FILLER
-    - Ultravasculine # Weird anti-poison chem with interesting OD
-    - Carbon # Raw Element
-    - THC # Funny get high chem
-    - DoctorsDelight # Useful healing drink
-    - Iron # Raw Element
-    - Bleach # Basic poison
-  - quantity: 10
-    weight: 3
+    - Bicaridine
+    - Dermaline
+    - Ephedrine
+    - Tricordrazine
+    - Saline
+    - Ultravasculine
+    - Cryoxadone
+    - DoctorsDelight
+    - Hyronalin
+    - Dylovene
+
+  - quantity: 10 # Intermediary
+    weight: 2
     reagents:
-    - Theobromine # maybe bad but like has some potential uses for poison
-    - NorepinephricAcid # Gimmicky Chem for poisoning
-    - Bicaridine # Useful T2 Chem FILLER
-    - Dermaline # Useful T2 Chem FILLER
-    - Ephedrine # Useful T2 Chem
-    - Tricordrazine # Useful T1 Chem
-    - Saline # Useful T1 Chem
-    - Cryptobiolin # Funny Chem
-    - EZNutrient # Useful for botanists FILLER
-    - RobustHarvest # Useful for botanists FILLER
-    - Ammonia # Useful intermediary chem
-    - Acetone # Useful intermediary chem
-    - Ash # Useful intermediary chem
-    - Oil # Useful intermediary chem
-    - Slime # Useful intermediary chem
-    - SpaceLube # Useful chem
-    - SpaceGlue # Useful chem
-    - Potassium # Raw Element
-    - Fluorine # Raw Element
-    - Aluminium # Raw Element
-    - Chlorine # Raw Element
+    - Ammonia
+    - Acetone
+    - Ash
+    - Oil
+    - Slime
+    - WeldingFuel
+    - CarpoToxin
+    - SulfuricAcid
+    - Fersilicite
+    - EZNutrient
+
+  - quantity: 10 # Gimmick chems
+    weight: 2
+    reagents:
+    - SpaceLube
+    - SpaceGlue
+    - THC
+    - Ipecac
+    - Licoxide
+    - Theobromine
+    - NorepinephricAcid
+    - Cryptobiolin
+    - Ethylredoxrazine
+    - Blood
+    - Desoxyephedrine
+    - ChloralHydrate
+
+  - quantity: 15 # Basic Element Table
+    weight: 5
+    reagents:
+    - Potassium
+    - Fluorine
+    - Aluminium
+    - Chlorine
+    - Mercury
+    - Carbon
+    - Iron
+    - Radium
+    - Phosphorus
+    - Gold
+    - Uranium
+    - Silver
+    - Nitrogen
+    - Copper
+    - Sulfur
+    - Lithium
+
 
 - type: weightedRandomFillSolution
   id: RandomPickFarmReagent
@@ -82,35 +96,37 @@
   - quantity: 10
     weight: 5
     reagents:
-    - Vitamin # Food
-    - Fiber  # Food
-    - Water # Food
-    - Sugar # Food
-    - Cream  # Food
-    - Ice # Food
-    - Protein # Food
-    - Flour # Food
-    - Soysauce # Food
-    - TableSalt # Food
-    - Enzyme # Food
-    - Vinegar # Food
-    - Ethanol # Food
-    - Wine # Food
-    - Mayonnaise # Food
-    - IceCream # Food
+    - Vitamin
+    - Fiber
+    - Water
+    - Sugar
+    - Cream
+    - Ice
+    - Protein
+    - Flour
+    - Soysauce
+    - TableSalt
+    - Enzyme
+    - Vinegar
+    - Ethanol
+    - Wine
+    - Mayonnaise
+    - IceCream
+    - Sugar
+    - Sap
   - quantity: 5
     weight: 1
     reagents:
-    - SpaceDrugs # Funny get high
-    - Kelotane # T1 Burn med no OD
-    - Inaprovaline # T1 Crit med no OD
-    - Lipozine # Makes people hungry funny
-    - JuiceThatMakesYouWeh # weh
-    - CogChamp # Funny weird talk
+    - SpaceDrugs
+    - Kelotane
+    - Inaprovaline
+    - Lipozine
+    - JuiceThatMakesYouWeh
+    - CogChamp
   - quantity: 5
     weight: 0.05
     reagents:
-      - Cognizine # Fun cool exciting roll
+      - Cognizine
 
 
 
