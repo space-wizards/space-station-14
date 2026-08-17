@@ -1,8 +1,11 @@
 ﻿- type: entity
-  parent: [ BaseStructure, StructureHealthDoor ]
-  id: Airlock
+  abstract: true
+  parent: BaseStructure
+  id: BaseAirlockSecure
   name: airlock
   description: It opens, it closes, and maybe crushes you.
+  placement:
+    mode: SnapgridCenter
   components:
   - type: Anchorable
     flags:
@@ -56,8 +59,10 @@
       visible: false
   - type: IconSmooth
     key: walls
-    additionalKeys:
-    - woods
+    # This key didn't seem to actually be doing anything, and the one who put it there had no memory what it was for.
+    # Remove it fully a month, if no issue comes up from commenting it out
+#    additionalKeys:
+#    - woods
     mode: NoSprite
   - type: AnimationPlayer
   - type: Physics
@@ -71,13 +76,13 @@
         mask:
         - FullTileMask
         layer:
-        - AirlockLayer
-  - type: LayerChangeOnWeld
-    unWeldedLayer: AirlockLayer
-    weldedLayer: WallLayer
+        - WallLayer # Unlike airlocks, this blocks LowImpassable (mice, rat king etc)
   - type: ContainerFill
     containers:
       board: [ DoorElectronics ]
+  - type: ContainerContainer
+    containers:
+      board: !type:Container # HS doors don't have this, but why?
   - type: AccessReader
     containerAccessProvider: board
   - type: Door
@@ -90,9 +95,6 @@
       path: /Audio/Machines/airlock_close.ogg
     denySound:
       path: /Audio/Machines/airlock_deny.ogg
-  - type: ContainerContainer
-    containers:
-      board: !type:Container
   - type: Weldable
     fuel: 5
     time: 3
@@ -121,6 +123,49 @@
   - type: Wires
     boardName: wires-board-name-airlock
     layoutId: Airlock
+  - type: UserInterface
+    interfaces:
+      enum.AiUi.Key:
+        type: StationAiBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: Airtight
+    noAirWhenFullyAirBlocked: false
+  - type: RadiationBlocker
+    resistance: 3
+  - type: Occluder
+  - type: Damageable
+    damageModifierSet: SteelMod
+  - type: Construction
+    graph: Airlock
+    node: airlock
+    containers: # Not on the parent so you can't steal the board from a high sec door?
+    - board
+  - type: PlacementReplacement
+    key: walls
+  - type: LightningTarget
+    priority: 1
+  - type: Tag
+    tags:
+    - HighSecDoor
+    # This tag is used to nagivate the Airlock construction graph. It's needed because this construction graph is shared between Airlock, AirlockGlass, and HighSecDoor
+    - DoorRemoteWhitelist
+    # This tag is used by door remotes to allow or not a door remote to normally be able to interact with a door
+  - type: BlockWeather
+  - type: GuideHelp
+    guides:
+    - Airlocks
+    - WirePanels
+
+- type: entity
+  parent: [ BaseAirlockSecure, StructureHealthDoor ]
+  id: Airlock
+  name: airlock
+  description: It opens, it closes, and maybe crushes you.
+  components:
+  - type: LayerChangeOnWeld
+    unWeldedLayer: AirlockLayer
+    weldedLayer: WallLayer
   - type: DoorSignalControl
   - type: DeviceNetwork
     deviceNetId: Wireless
@@ -141,24 +186,6 @@
       DoorStatus: false
   - type: SoundOnOverload
   - type: SpawnOnOverload
-  - type: UserInterface
-    interfaces:
-      enum.AiUi.Key:
-        type: StationAiBoundUserInterface
-      enum.WiresUiKey.Key:
-        type: WiresBoundUserInterface
-  - type: Airtight
-    noAirWhenFullyAirBlocked: false
-  - type: RadiationBlocker
-    resistance: 3
-  - type: Occluder
-    polygon:
-    - "-0.5, 0.5"
-    - "0.5, 0.5"
-    - "0.5, -0.5"
-    - "-0.5, -0.5"
-  - type: Damageable
-    damageModifierSet: SteelMod
   - type: RCDDeconstructable
     cost: 6
     delay: 8
@@ -173,19 +200,10 @@
       - !type:PlaySoundBehavior
         sound:
           collection: MetalSlam
-  - type: Construction
-    graph: Airlock
-    node: airlock
-    containers:
-    - board
-  - type: PlacementReplacement
-    key: walls
   - type: Paintable
     group: AirlockStandard
   - type: StaticPrice
-    price: 150
-  - type: LightningTarget
-    priority: 1
+    price: 150 # TODO why is this here?
   - type: Tag
     tags:
       - Airlock
@@ -193,14 +211,11 @@
       - DoorRemoteWhitelist
       # This tag is used by door remotes to allow or not a door remote to normally be able to interact with a door
   - type: PryUnpowered
-  - type: BlockWeather
   - type: GuideHelp
     guides:
     - Airlocks
     - WirePanels
     - Networking
-  placement:
-    mode: SnapgridCenter
 
 - type: entity
   id: AirlockRCDResistant
