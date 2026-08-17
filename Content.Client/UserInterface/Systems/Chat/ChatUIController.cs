@@ -505,15 +505,7 @@ public sealed partial class ChatUIController : UIController
 
         bubble.OnDied += NuSpeechBubbleDied;
 
-        if (NuActiveSpeechBubbles.TryGetValue(entity, out var existing))
-        {
-            // Push up existing bubbles above the mob's head.
-            foreach (var existingBubble in existing)
-            {
-                existingBubble.VerticalOffset += bubble.DesiredSize.Y;
-            }
-        }
-        else
+        if (!NuActiveSpeechBubbles.TryGetValue(entity, out var existing))
         {
             existing = new List<NuSpeechBubble>();
             NuActiveSpeechBubbles.Add(entity, existing);

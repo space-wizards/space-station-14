@@ -20,7 +20,7 @@ public sealed partial class NuSpeechBubble : Control
     /// <summary>
     ///     The total time a speech bubble stays on screen.
     /// </summary>
-    private static readonly TimeSpan TotalTime = TimeSpan.FromSeconds(4);
+    private static readonly TimeSpan TotalTime = TimeSpan.FromSeconds(4f);
 
     /// <summary>
     ///     The amount of time at the end of the bubble's life at which it starts fading.
@@ -28,14 +28,16 @@ public sealed partial class NuSpeechBubble : Control
     private static readonly TimeSpan FadeTime = TimeSpan.FromSeconds(0.25f);
 
     /// <summary>
+    /// The time this bubble was created
+    /// </summary>
+    public TimeSpan SpawnTime;
+
+    /// <summary>
     /// The time at which this bubble will die.
     /// </summary>
     private TimeSpan _deathTime;
 
     private readonly EntityUid _senderEntity;
-
-    public float VerticalOffset { get; set; }
-    public float VerticalOffsetAchieved { get; private set; }
 
     public event Action<EntityUid, NuSpeechBubble>? OnDied;
 
@@ -58,7 +60,7 @@ public sealed partial class NuSpeechBubble : Control
         LabelPanel.Measure(Vector2Helpers.Infinity);
         ContentSize = LabelPanel.DesiredSize;
 
-        VerticalOffsetAchieved = -ContentSize.Y;
+        SpawnTime = _timing.RealTime;
         _deathTime = _timing.RealTime + TotalTime;
         OverlaySetup();
     }
@@ -76,16 +78,6 @@ public sealed partial class NuSpeechBubble : Control
             // Timer spawn to prevent concurrent modification exception.
             Timer.Spawn(0, Die);
             return;
-        }
-
-        // Lerp to our new vertical offset if it's been modified.
-        if (MathHelper.CloseToPercent(VerticalOffsetAchieved - VerticalOffset, 0, 0.1))
-        {
-            VerticalOffsetAchieved = VerticalOffset;
-        }
-        else
-        {
-            VerticalOffsetAchieved = MathHelper.Lerp(VerticalOffsetAchieved, VerticalOffset, 10 * args.DeltaSeconds);
         }
 
         //Hide if offscreen
@@ -110,7 +102,8 @@ public sealed partial class NuSpeechBubble : Control
     protected override void FrameUpdate(FrameEventArgs args)
     {
         base.FrameUpdate(args);
-        //If for some reason this isn't drawn in an overlay
+        //If for some reason this isn't drawn in an overlay.
+        //Probably shouldn't happen.
         Update(args);
     }
 
