@@ -72,6 +72,7 @@
     sprite: Structures/Wallmounts/signalscreen.rsi
     offset: 0, -0.5
     state: signalscreen
+    # noRot: true # TODO From acessibility standpoint, screens with text shouln't be rotattable (Check it with acessibility team)
   - type: Construction
     graph: Timer
     node: screen

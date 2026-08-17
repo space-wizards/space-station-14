@@ -43,7 +43,7 @@
           - SlipLayer
         mask:
           - ItemMask
-        density: 1000
+        density: 4000
         hard: false
   - type: FootstepModifier
     footstepSoundCollection:

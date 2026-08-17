@@ -43,12 +43,12 @@
       fix1:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.5"
+          bounds: "-0.25, -0.25, 0.25, 0.25" # match water hitbox
         layer:
         - SlipLayer
         mask:
         - ItemMask
-        density: 1000
+        density: 4000
         hard: false
   - type: Tag
     tags:

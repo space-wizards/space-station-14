@@ -1,5 +1,5 @@
 - type: constructionGraph
-  id: EnergyGate
+  id: EnergyGate # used to be metal turnstile
   start: start
   graph:
   - node: start
@@ -9,7 +9,7 @@
     - to: energyGate
       completed:
       - !type:SnapToGrid
-      steps:
+      steps: # TODO: Change material composition to better match the asthetic
       - material: MetalRod
         amount: 4
       - material: Steel

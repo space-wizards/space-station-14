@@ -51,6 +51,7 @@
     AsteroidRockPlasma: 2
     AsteroidRockDiamond: 2
     AsteroidRockUranium: 0.5
+    AsteroidRockBananium: 0.5
 
 # Event Schedulers
 

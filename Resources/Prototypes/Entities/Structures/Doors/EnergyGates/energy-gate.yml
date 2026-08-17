@@ -102,7 +102,7 @@
   parent: EnergyGate
   id: EnergyGateAirtight
   name: airtight energy gate
-  suffix: Airtight
+  suffix: [Arrivals, Airtight]
   components:
   - type: Airtight
   - type: RadiationBlocker

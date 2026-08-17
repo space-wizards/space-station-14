@@ -108,6 +108,11 @@
 
 - type: construction
   parent: Girder
+  id: ClownWall
+  targetNode: bananiumWall
+
+- type: construction
+  parent: Girder
   id: MeatWall
   targetNode: meatWall
 
@@ -348,6 +353,17 @@
     - Lattice
     - Plating
 
+- type: construction
+  parent: BaseStructureFullTile
+  id: FloorBananium
+  graph: FloorBananium
+  targetNode: BananiumFloor
+  conditions:
+  - !type:TileNotBlocked
+    failIfSpace: false
+  - !type:TileType
+    targets:
+    - Plating
 # endregion Floors
 
 # region Barricades
@@ -568,6 +584,11 @@
 
 - type: construction
   parent: SilverDoor
+  id: SteelDoor
+  targetNode: steelDoor
+
+- type: construction
+  parent: SilverDoor
   id: PaperDoor
   targetNode: paperDoor
 
@@ -575,6 +596,11 @@
   parent: SilverDoor
   id: CardDoor
   targetNode: cardDoor
+
+- type: construction
+  parent: SilverDoor
+  id: BananiumDoor
+  targetNode: bananiumDoor
 # endregion Material Doors
 
 # region Plastic Flaps

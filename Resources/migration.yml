@@ -851,9 +851,9 @@ WallVaultAlien: WallSolid
 WallVaultRock: WallSolid
 WallVaultSandstone: WallSolid
 WallSandstone: WallSolid
-WallDiamond: WallReinforced
+# WallDiamond: WallReinforced ### need discussion
 WallCult: WallBrick
-WallClown: WallGold
+# WallClown: WallGold ### should keep proto for later, change old proto to gold for now
 WallClock: WallBrass
 WallPlastic: WallSolid
 ClockworkGrille: Grille
@@ -867,15 +867,15 @@ WindoorAssemblyClockwork: WindoorAssembly
 PinionAirlock: Airlock
 PinionAirlockGlass: AirlockGlass
 PinionAirlockAssembly: AirlockAssembly
-BananiumDoor: GoldDoor
-EncrustedIronstoneDoor: SilverDoor
-IronstoneDoor: SilverDoor
+# BananiumDoor: GoldDoor ### should keep proto for later, change old proto to gold like for now
+EncrustedIronstoneDoor: SteelDoor # iron stone to steel door
+IronstoneDoor: SteelDoor # iron stone to steel door
 WallSnowCobblebrick: WallBrick
 WallSandCobblebrick: WallBrick
 WallChromiteCobblebrick: WallBrick
 WallAndesiteCobblebrick: WallBrick
 WallIronsandCobblebrick: WallBrick
-WallCobblebrick: WallConcrete
+WallCobblebrick: WallConcrete # discrepency between other cobblebricks
 WallAsteroidCobblebrick: WallConcrete
 WallBasaltCobblebrick: WallConcrete
 WallIce: WallRockSnow
@@ -941,13 +941,13 @@ CrateEngineeringThruster: CrateSpaceThruster
 BlastDoorXenoborg: BlastDoorXeno
 BlastDoorXenoborgOpen: BlastDoorXenoOpen
 
-# Dark
+### Dark Tiles
 FloorTileItemDarkDiagonalMini: FloorTileItemDark
 FloorTileItemDarkDiagonal: FloorTileItemDark
 FloorTileItemDarkOffset: FloorTileItemDark
 FloorTileItemDarkSlatsContinuous: FloorTileItemDark
 
-# Steel
+### Steel Tiles
 FloorTileItemSteelDiagonalMini: FloorTileItemSteel
 FloorTileItemSteelDiagonal: FloorTileItemSteel
 FloorTileItemSteelOffset: FloorTileItemSteel
@@ -955,13 +955,13 @@ FloorTileItemSteelMono: FloorTileItemSteel
 FloorTileItemShowroom: FloorTileItemSteel
 FloorTileItemSteelSlatsContinuous: FloorTileItemSteel
 
-# White
+### White Tiles
 FloorTileItemWhiteDiagonalMini: FloorTileItemWhite
 FloorTileItemWhiteDiagonal: FloorTileItemWhite
 FloorTileItemWhiteOffset: FloorTileItemWhite
 FloorTileItemWhiteSlatsContinuous: FloorTileItemWhite
 
-# Misc
+### Misc Tiles
 FloorTileItemUraniumMarble: FloorTileItemDarkMarble
 FloorTileItemPlasmaMarble: FloorTileItemWhiteMarble
 FloorTileItemEighties: FloorTileItemArcadeBlue
@@ -991,7 +991,7 @@ IronsandStep: null
 TurnstileGenpopEnter: EnergyGateGenpopEnter
 TurnstileGenpopLeave: EnergyGateGenpopLeave
 Turnstile: EnergyGate
-MetalDoor: SilverDoor
+# MetalDoor: SilverDoor ### Steel door should stay, this changes map ballance
 MiningWindow: ReinforcedWindow
 MiningWindowDiagonal: ReinforcedWindowDiagonal
 FloorTileItemLightAstroGrass: null
@@ -1006,14 +1006,14 @@ FloorTileItemIronsandConcreteMono: null
 FloorTileItemIronsandConcreteSmooth: null
 IronSandstone: IronRock
 IronSandstoneMining: IronRock
-AsteroidRockBananium: AsteroidRock
-AsteroidRockBananiumCrab: AsteroidRock
-IronRockBananium: IronRock
-WallRockBananium: WallRock
-WallRockChromiteBananium: WallRockChromite
-WallRockSandBananium: WallRockSand
-WallRockSnowBananium: WallRockSnow
-MeteorRockBananium: AsteroidRock
+# AsteroidRockBananium: AsteroidRock ### Don't remove bananium
+# AsteroidRockBananiumCrab: AsteroidRock
+# IronRockBananium: IronRock
+# WallRockBananium: WallRock
+# WallRockChromiteBananium: WallRockChromite
+# WallRockSandBananium: WallRockSand
+# WallRockSnowBananium: WallRockSnow
+# MeteorRockBananium: AsteroidRock
 WallRockBasalt: WallRock
 WallRockBasaltCoal: WallRockCoal
 WallRockBasaltGold: WallRockGold
@@ -1021,7 +1021,7 @@ WallRockBasaltDiamond: WallRockDiamond
 WallRockBasaltPlasma: WallRockPlasma
 WallRockBasaltQuartz: WallRockQuartz
 WallRockBasaltSilver: WallRockSilver
-WallRockBasaltBananium: WallRock
+WallRockBasaltBananium: WallRockBananium # banana
 WallRockBasaltTin: WallRockTin
 WallRockBasaltUranium: WallRockUranium
 WallRockBasaltArtifactFragment: WallRockArtifactFragment
@@ -1033,7 +1033,7 @@ WallRockAndesiteDiamond: WallRockDiamond
 WallRockAndesitePlasma: WallRockPlasma
 WallRockAndesiteQuartz: WallRockQuartz
 WallRockAndesiteSilver: WallRockSilver
-WallRockAndesiteBananium: WallRock
+WallRockAndesiteBananium: WallRockBananium # banana
 WallRockAndesiteTin: WallRockTin
 WallRockAndesiteUranium: WallRockUranium
 WallRockAndesiteArtifactFragment: WallRockArtifactFragment
@@ -1053,14 +1053,14 @@ FloorChromiteChasm: FloorChasmEntity
 
 # 2026-08-06
 FloorTileItemHydro: null
-WallRiveted: WallMarble
-WallSpawnAsteroidBananium: null
-WallSpawnAsteroidBananiumCrab: null
+WallRiveted: WallMarble # why not add a new proto? one is a super reinforced steel wall, other is a rock # TODO need discussion
+# WallSpawnAsteroidBananium: null
+# WallSpawnAsteroidBananiumCrab: null
 
 # 2026-08-11
 FloorTileItemDirty: null
 PinionAirlockAssemblyGlass: AirlockAssemblyGlass
-AnomalyRockBananium: AnomalyRockCoal
+# AnomalyRockBananium: AnomalyRockCoal
 ClockworkGirder: Girder
 BaseAsteroidRock: AsteroidRock
 ButtonFrameExit: ButtonFrameWhite
@@ -1122,3 +1122,7 @@ MeteorRockGold: AsteroidRockGold
 MeteorRockPlasma: AsteroidRockPlasma
 MeteorRockDiamond: AsteroidRockDiamond
 MeteorRockUranium: AsteroidRockUranium
+
+# add date gua
+MeteorRockBananium: AsteroidRockBananium
+MetalDoor: SteelDoor

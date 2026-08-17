@@ -18,7 +18,7 @@
     radius: 1.5
     energy: 0.45
     softness: 3
-    offset: "0, 0"
+    offset: 0, 0 # TODO check if that fixed the light possition
     enabled: false
   - type: PoweredLight
     bulb: Bulb

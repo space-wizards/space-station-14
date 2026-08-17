@@ -133,6 +133,33 @@
         spawn:
           IngotSilver1: *BaseDoorSpawn
 
+- type: entity
+  parent: BaseMaterialDoorNavMap
+  id: SteelDoor # used to be MetalDoor
+  name: steel door
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/MaterialDoors/silver-door.rsi # TODO Add steel door sprite
+  - type: Construction
+    graph: DoorGraph
+    node: steelDoor
+  - type: Destructible
+    thresholds:
+    - trigger: &DamageDoorWeak # this is broken, fix needed
+        !type:DamageTrigger
+        damage: 150 # TODO check with structure rebalance for the number
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 3
+            max: 5
+
 ### Other doors ###
 
 - type: entity
