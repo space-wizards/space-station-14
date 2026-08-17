@@ -28,7 +28,7 @@ public sealed partial class ItemSlotsSystem
                 AlternativeVerb verb = new()
                 {
                     IconEntity = GetNetEntity(usingEntity),
-                    Act = () => TryInsert(ent, slot, usingEntity, user, excludeUserAudio: true)
+                    Act = () => TryInsertFromHandWithDoAfter(ent, slot, usingEntity, user)
                 };
 
                 if (slot.InsertVerbText != null)
@@ -76,7 +76,7 @@ public sealed partial class ItemSlotsSystem
             AlternativeVerb verb = new()
             {
                 IconEntity = GetNetEntity(slot.Item),
-                Act = () => TryEjectToHands(ent, slot, user, excludeUserAudio: true)
+                Act = () => TryEjectToHandsWithDoAfter(ent, slot, user)
             };
 
             if (slot.EjectVerbText == null)
@@ -116,7 +116,7 @@ public sealed partial class ItemSlotsSystem
             InteractionVerb takeVerb = new()
             {
                 IconEntity = GetNetEntity(slot.Item),
-                Act = () => TryEjectToHands(ent, slot, user, excludeUserAudio: true)
+                Act = () => TryEjectToHandsWithDoAfter(ent, slot, user)
             };
 
             if (slot.EjectVerbText == null)
@@ -144,7 +144,7 @@ public sealed partial class ItemSlotsSystem
             InteractionVerb insertVerb = new()
             {
                 IconEntity = GetNetEntity(usingEntity),
-                Act = () => TryInsert(ent, slot, usingEntity, user, excludeUserAudio: true)
+                Act = () => TryInsertFromHandWithDoAfter(ent, slot, usingEntity, user)
             };
 
             if (slot.InsertVerbText != null)

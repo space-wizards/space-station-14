@@ -1,3 +1,4 @@
+using Content.Shared.DoAfter;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Containers.ItemSlots;
@@ -25,6 +26,50 @@ public sealed class ItemSlotButtonPressedEvent(
     /// Whether to attempt to eject the item from the slot if it has one.
     /// </summary>
     public bool TryEject = tryEject;
+}
+
+/// <summary>
+/// Do-after event used to finish ejecting an item from a specific item slot.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed partial class ItemSlotEjectDoAfterEvent : DoAfterEvent
+{
+    /// <summary>
+    /// The ID of the slot the item is being ejected from.
+    /// </summary>
+    public string SlotId;
+
+    public ItemSlotEjectDoAfterEvent(string slotId)
+    {
+        SlotId = slotId;
+    }
+
+    public override DoAfterEvent Clone() => this;
+}
+
+/// <summary>
+/// Do-after event used to finish inserting an item into a specific item slot.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed partial class ItemSlotInsertDoAfterEvent : DoAfterEvent
+{
+    /// <summary>
+    /// The ID of the slot the item is being inserted into.
+    /// </summary>
+    public string SlotId;
+
+    /// <summary>
+    /// Whether an existing item in the slot may be swapped out during insertion.
+    /// </summary>
+    public bool Swap;
+
+    public ItemSlotInsertDoAfterEvent(string slotId, bool swap)
+    {
+        SlotId = slotId;
+        Swap = swap;
+    }
+
+    public override DoAfterEvent Clone() => this;
 }
 
 /// <summary>

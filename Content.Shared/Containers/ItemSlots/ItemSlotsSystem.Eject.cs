@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Database;
+using Content.Shared.DoAfter;
 
 namespace Content.Shared.Containers.ItemSlots;
 
@@ -115,6 +116,68 @@ public sealed partial class ItemSlotsSystem
             _handsSystem.PickupOrDrop(user.Value, item.Value);
 
         return true;
+    }
+
+    /// <summary>
+    /// Tries to eject an item into the user's hands, respecting the slot's configured ejection delay.
+    /// </summary>
+    private void TryEjectToHandsWithDoAfter(EntityUid uid, ItemSlot slot, EntityUid user)
+    {
+        if (!CanEject(uid, slot, user) ||
+            slot.Item is not { } item)
+            return;
+
+        StartEjectToHandsWithDoAfter(uid, slot, item, user);
+    }
+
+    /// <summary>
+    /// Starts an ejection that has already passed slot validation.
+    /// </summary>
+    private bool StartEjectToHandsWithDoAfter(EntityUid uid, ItemSlot slot, EntityUid item, EntityUid user)
+    {
+        if (!_actionBlockerSystem.CanPickup(user, item, showPopup: true))
+            return false;
+
+        if (slot.EjectDelay <= TimeSpan.Zero)
+        {
+            if (!Eject(uid, slot, item, user, excludeUserAudio: true))
+                return false;
+
+            _handsSystem.PickupOrDrop(user, item);
+            return true;
+        }
+
+        if (slot.ID is not { } slotId)
+            return false;
+
+        return _doAfter.TryStartDoAfter(new DoAfterArgs(
+            EntityManager,
+            user,
+            slot.EjectDelay,
+            new ItemSlotEjectDoAfterEvent(slotId),
+            uid,
+            target: uid,
+            used: item)
+        {
+            BreakOnMove = true,
+            BreakOnDamage = true
+        });
+    }
+
+    /// <summary>
+    /// Finishes a delayed ejection only if the original item is still in the original slot.
+    /// </summary>
+    [SubscribeLocalEvent]
+    private void OnEjectDoAfter(Entity<ItemSlotsComponent> ent, ref ItemSlotEjectDoAfterEvent args)
+    {
+        if (args.Cancelled ||
+            args.Handled ||
+            args.Used is not { } item ||
+            !ent.Comp.Slots.TryGetValue(args.SlotId, out var slot) ||
+            slot.Item != item)
+            return;
+
+        args.Handled = TryEjectToHands(ent, slot, args.User, true);
     }
 
     /// <summary>

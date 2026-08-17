@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Database;
+using Content.Shared.DoAfter;
 using Content.Shared.Hands.Components;
 
 namespace Content.Shared.Containers.ItemSlots;
@@ -47,7 +48,7 @@ public sealed partial class ItemSlotsSystem
         if (slot.ContainerSlot == null)
             return false;
 
-        if (slot.HasItem && (!swap || swap && !CanEject(uid, slot, user)))
+        if (slot.HasItem && (!swap || slot.EjectDelay > TimeSpan.Zero || !CanEject(uid, slot, user)))
             return false;
 
         if (!CanInsertWhitelist(item, slot))
@@ -133,6 +134,101 @@ public sealed partial class ItemSlotsSystem
             return false;
 
         return Insert(uid, slot, held.Value, user, excludeUserAudio: excludeUserAudio);
+    }
+
+    /// <summary>
+    /// Tries to insert a held item, respecting the slot's configured insertion delay.
+    /// </summary>
+    private void TryInsertFromHandWithDoAfter(EntityUid uid,
+        ItemSlot slot,
+        EntityUid item,
+        Entity<HandsComponent?> user,
+        bool swap = false)
+    {
+        if (!Resolve(user, ref user.Comp, false) ||
+            !CanInsert(uid, slot, item, user, swap))
+            return;
+
+        StartInsertFromHandWithDoAfter(uid, slot, item, user, swap);
+    }
+
+    /// <summary>
+    /// Starts an insertion that has already passed slot validation.
+    /// </summary>
+    private bool StartInsertFromHandWithDoAfter(EntityUid uid,
+        ItemSlot slot,
+        EntityUid item,
+        Entity<HandsComponent?> user,
+        bool swap)
+    {
+        if (!Resolve(user, ref user.Comp, false) ||
+            !_handsSystem.CanDrop(user, item))
+            return false;
+
+        if (slot.InsertDelay <= TimeSpan.Zero)
+            return InsertFromHand(uid, slot, item, user);
+
+        if (slot.ID is not { } slotId)
+            return false;
+
+        return _doAfter.TryStartDoAfter(new DoAfterArgs(
+            EntityManager,
+            user,
+            slot.InsertDelay,
+            new ItemSlotInsertDoAfterEvent(slotId, swap),
+            uid,
+            target: uid,
+            used: item)
+        {
+            BreakOnMove = true,
+            BreakOnDamage = true,
+            NeedHand = true
+        });
+    }
+
+    /// <summary>
+    /// Performs an insertion that has already passed slot validation.
+    /// </summary>
+    private bool InsertFromHand(EntityUid uid,
+        ItemSlot slot,
+        EntityUid item,
+        Entity<HandsComponent?> user)
+    {
+        if (!Resolve(user, ref user.Comp, false) ||
+            !_handsSystem.TryDrop(user, item))
+            return false;
+
+        if (slot.Item is { } oldItem)
+            _handsSystem.TryPickupAnyHand(user, oldItem, handsComp: user.Comp);
+
+        if (!Insert(uid, slot, item, user, excludeUserAudio: true))
+            return false;
+
+        if (slot.InsertSuccessPopup.HasValue)
+            _popupSystem.PopupEntity(Loc.GetString(slot.InsertSuccessPopup), uid, user);
+
+        return true;
+    }
+
+    /// <summary>
+    /// Finishes a delayed insertion only if the original item is still held and the slot remains valid.
+    /// </summary>
+    [SubscribeLocalEvent]
+    private void OnInsertDoAfter(Entity<ItemSlotsComponent> ent, ref ItemSlotInsertDoAfterEvent args)
+    {
+        if (args.Cancelled ||
+            args.Handled ||
+            args.Used is not { } item ||
+            !ent.Comp.Slots.TryGetValue(args.SlotId, out var slot) ||
+            !TryComp(args.User, out HandsComponent? hands) ||
+            !CanInsert(ent, slot, item, args.User, args.Swap))
+            return;
+
+        args.Handled = InsertFromHand(
+            ent,
+            slot,
+            item,
+            (args.User, hands));
     }
 
     /// <summary>
