@@ -141,8 +141,8 @@
 - type: entity
   parent: BaseChangelingObjective
   id: ChangelingMostIdentitiesObjective
-  name: Acquire the most identities.
-  description: We must acquire the most unique DNA sequences out of all other changelings.
+  name: Extract the most identities.
+  description: We must extract the most unique DNA sequences out of all other changelings, via devouring or otherwise.
   components:
   - type: Objective
     difficulty: 1
