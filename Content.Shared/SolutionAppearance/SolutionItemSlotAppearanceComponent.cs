@@ -12,3 +12,9 @@ public sealed partial class SolutionItemSlotAppearanceComponent : Component
     [DataField(required: true)]
     public string ContainerID = default!;
 }
+
+/// <summary>
+/// Raised directed on a container owner to check if the given container ID is valid for relaying solution visuals.
+/// </summary>
+[ByRefEvent]
+public record struct IsValidSolutionContainerEvent(string ContainerId, bool IsValid = false);

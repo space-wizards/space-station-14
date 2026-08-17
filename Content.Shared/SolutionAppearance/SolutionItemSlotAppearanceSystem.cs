@@ -51,6 +51,16 @@ public sealed partial class SolutionItemSlotAppearanceSystem : EntitySystem
         UpdateAppearance(ent, args.Solution);
     }
 
+    [SubscribeLocalEvent]
+    private void OnIsValidSolutionContainer(Entity<SolutionItemSlotAppearanceComponent> ent, ref IsValidSolutionContainerEvent args)
+    {
+        if (args.IsValid)
+            return;
+
+        if (ent.Comp.ContainerID == args.ContainerId)
+            args.IsValid = true;
+    }
+
     private void UpdateAppearance(Entity<SolutionAppearanceComponent> ent, SolutionComponent? solutionComp = null)
     {
         var container = ent.Comp.CachedContainer;
@@ -71,9 +81,9 @@ public sealed partial class SolutionItemSlotAppearanceSystem : EntitySystem
 
     private bool IsValidSolutionContainer(EntityUid owner, string containerId)
     {
-        if (!TryComp<SolutionItemSlotAppearanceComponent>(owner, out var appearance))
-            return false;
+        var ev = new IsValidSolutionContainerEvent(containerId);
+        RaiseLocalEvent(owner, ref ev);
 
-        return appearance.ContainerID == containerId;
+        return ev.IsValid;
     }
 }
