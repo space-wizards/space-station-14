@@ -116,13 +116,14 @@ public sealed partial class EntityProviderSystem
     }
 
     /// <summary>
-    /// Returns the Dictionary containing the EntProtoIds and their corresponding stored amounts.
+    /// Returns a readonly Dictionary containing the EntProtoIds and their corresponding stored amounts.
+    /// This cannot be used for editing, only for knowing what and how much is stored.
     /// </summary>
     /// <param name="provider">The entity providing the entityProvider storage.</param>
     /// <param name="entityCounter">The dictionary containing the stored entities.</param>
     /// <returns>Returns true if the provider has one, otherwise false.</returns>
     [PublicAPI]
-    public bool TryGetEntityCounter(Entity<EntityProviderComponent?> provider, [NotNullWhen(true)] out Dictionary<EntProtoId, int>? entityCounter)
+    public bool TryGetEntityCounter(Entity<EntityProviderComponent?> provider, [NotNullWhen(true)] out IReadOnlyDictionary<EntProtoId, int>? entityCounter)
     {
         entityCounter = null;
         if (!Resolve(provider, ref provider.Comp))
