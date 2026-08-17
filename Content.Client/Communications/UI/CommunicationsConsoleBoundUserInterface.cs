@@ -9,6 +9,12 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Communications.UI;
 
+/// <summary>
+/// The BUI for the communications console.
+/// Handles sending messages back to the server to call the shuttle,
+/// send messages, set the alert level, and set the text on screens.
+/// </summary>
+/// <seealso cref="CommunicationsConsoleComponent"/>
 public sealed partial class CommunicationsConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [Dependency] private IConfigurationManager _cfg = default!;
@@ -18,6 +24,7 @@ public sealed partial class CommunicationsConsoleBoundUserInterface(EntityUid ow
     [ViewVariables]
     private CommunicationsConsoleMenu? _menu;
 
+    /// <inheritdoc/>
     protected override void Open()
     {
         base.Open();
@@ -30,9 +37,7 @@ public sealed partial class CommunicationsConsoleBoundUserInterface(EntityUid ow
         _menu.OnShuttleRecalled += RecallShuttle;
 
         if (EntMan.TryGetComponent<CommunicationsConsoleComponent>(Owner, out var console))
-        {
             _menu.SetBroadcastDisplayEntity(console.ScreenDisplayId);
-        }
     }
 
     public void AlertLevelSelected(ProtoId<AlertLevelPrototype> level)

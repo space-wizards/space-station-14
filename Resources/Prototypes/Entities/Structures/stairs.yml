@@ -11,8 +11,8 @@
     drawdepth: FloorTiles
 
 - type: entity
+  parent: [ BaseFloorDecoration, StructureHealthFurnitureStrong ]
   id: Stairs
-  parent: BaseFloorDecoration
   name: stairs
   suffix: Steel
   description: The greatest invention since rocket-propelled grenades.
@@ -24,22 +24,21 @@
     sprite: Structures/stairs.rsi
     state: stairs_steel
   - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 50
+        damage: 80
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:
             min: 2
             max: 4
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
 
 - type: entity
   id: StairStage
