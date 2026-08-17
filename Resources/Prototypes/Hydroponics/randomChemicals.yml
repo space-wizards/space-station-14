@@ -10,7 +10,6 @@
     - HeartbreakerToxin # Rarest toxin
     - Honk # Rarest funni chem
     - BuzzochloricBees # Rare gimmick chem
-
   - quantity: 5 # Evil chems
     weight: 1
     reagents:
@@ -24,7 +23,6 @@
     - Phenol
     - Bleach
     - Pax
-
   - quantity: 5 # Medical chems
     weight: 2
     reagents:
@@ -38,7 +36,6 @@
     - DoctorsDelight
     - Hyronalin
     - Dylovene
-
   - quantity: 10 # Intermediary
     weight: 2
     reagents:
@@ -52,7 +49,6 @@
     - SulfuricAcid
     - Fersilicite
     - EZNutrient
-
   - quantity: 10 # Gimmick chems
     weight: 2
     reagents:
@@ -68,7 +64,6 @@
     - Blood
     - Desoxyephedrine
     - ChloralHydrate
-
   - quantity: 15 # Basic Element Table
     weight: 5
     reagents:
@@ -88,12 +83,7 @@
     - Copper
     - Sulfur
     - Lithium
-
-
-- type: weightedRandomFillSolution
-  id: RandomPickFarmReagent
-  fills:
-  - quantity: 10
+  - quantity: 10 # Basic Farming Table
     weight: 5
     reagents:
     - Vitamin
@@ -113,7 +103,7 @@
     - Mayonnaise
     - IceCream
     - Sap
-  - quantity: 5
+  - quantity: 5 # Interesting Farming Table
     weight: 1
     reagents:
     - SpaceDrugs
@@ -124,7 +114,7 @@
     - CogChamp
     - Laughter
   - quantity: 5
-    weight: 0.05
+    weight: 0.02 # Ultra rare mega hit farming table
     reagents:
       - Cognizine
 
