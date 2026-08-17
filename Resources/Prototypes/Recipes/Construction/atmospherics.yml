@@ -154,7 +154,7 @@
 
 # region Unary
 - type: construction
-  parent: BaseUnary
+  parent: BaseGasUnary
   id: !type:CreateVariants
     values: [ GasVentPump, GasVentPumpAlt1, GasVentPumpAlt2 ]
   hide: !type:CreateVariants
@@ -164,7 +164,7 @@
   targetNode: ventpump
 
 - type: construction
-  parent: BaseUnary
+  parent: BaseGasUnary
   id: !type:CreateVariants
     values: [ GasPassiveVent, GasPassiveVentAlt1, GasPassiveVentAlt2 ]
   hide: !type:CreateVariants
@@ -174,7 +174,7 @@
   targetNode: passivevent
 
 - type: construction
-  parent: BaseUnary
+  parent: BaseGasUnary
   id: !type:CreateVariants
     values: [ GasVentScrubber, GasVentScrubberAlt1, GasVentScrubberAlt2 ]
   hide: !type:CreateVariants
@@ -184,7 +184,7 @@
   targetNode: ventscrubber
 
 - type: construction
-  parent: BaseUnary
+  parent: BaseGasUnary
   id: !type:CreateVariants
     values: [ GasOutletInjector, GasOutletInjectorAlt1, GasOutletInjectorAlt2 ]
   hide: !type:CreateVariants
