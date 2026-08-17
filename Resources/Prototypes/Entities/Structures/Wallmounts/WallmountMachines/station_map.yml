@@ -46,6 +46,13 @@
           CableApcStack1: *Min0Max1
   - type: Construction
     node: broken
+  - type: EntityTableContainerFill
+    containers:
+      board:
+        id: StationMapCircuitboard
+        prob: 0.50 # The board might be broken
+        conditions:
+        - !type:EmptyContainerCondition # If this entity is spawned via construction the circuitboard already exists
 
 - type: entity
   parent: [ BaseStationMap, BaseWallmountMachine, StructureHealthMachineWeak ]
