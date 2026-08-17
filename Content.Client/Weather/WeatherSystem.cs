@@ -56,7 +56,7 @@ public sealed partial class WeatherSystem : SharedWeatherSystem
             if (weather.Sound == null || status.AppliedTo != playerXform.MapUid)
             {
                 _audio.Stop(weather.Stream);
-                return;
+                continue;
             }
 
             if (!weather.Stream.HasValue)
@@ -66,7 +66,7 @@ public sealed partial class WeatherSystem : SharedWeatherSystem
             }
 
             if (!_audioQuery.TryComp(weather.Stream, out var audio))
-                return;
+                continue;
 
             var occlusion = 0f;
 

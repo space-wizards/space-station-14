@@ -2,4 +2,4 @@
 
 namespace Content.Server.StationRecords;
 
-public sealed class GeneralStationRecordConsoleSystem : SharedGeneralStationRecordConsoleSystem;
+public sealed partial class GeneralStationRecordConsoleSystem : SharedGeneralStationRecordConsoleSystem;

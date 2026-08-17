@@ -1,7 +1,10 @@
 using System.Numerics;
+using Content.Client.Hands.Systems;
 using Content.Client.Movement.Components;
 using Content.Client.Viewport;
 using Content.Shared.Camera;
+using Content.Shared.Hands;
+using Content.Shared.Movement.Components;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Shared.Map;
@@ -12,6 +15,7 @@ public sealed partial class EyeCursorOffsetSystem : EntitySystem
 {
     [Dependency] private IEyeManager _eyeManager = default!;
     [Dependency] private IInputManager _inputManager = default!;
+    [Dependency] private HandsSystem _handsSystem = default!;
 
     // This value is here to make sure the user doesn't have to move their mouse
     // all the way out to the edge of the screen to get the full offset.
@@ -22,6 +26,19 @@ public sealed partial class EyeCursorOffsetSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<EyeCursorOffsetComponent, GetEyeOffsetEvent>(OnGetEyeOffsetEvent);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnHeldRelayedOffset(Entity<CursorOffsetInHandComponent> entity, ref HeldRelayedEvent<GetEyeOffsetRelayedEvent> args)
+    {
+        if (entity.Comp.UseActiveHand && (!_handsSystem.IsHeld(entity.Owner, out var holder) || _handsSystem.GetActiveItem(holder.Value) != entity))
+            return;
+
+        var offset = OffsetAfterMouse(entity.Owner, null);
+        if (offset == null)
+            return;
+
+        args.Args.Offset += offset.Value;
     }
 
     private void OnGetEyeOffsetEvent(EntityUid uid, EyeCursorOffsetComponent component, ref GetEyeOffsetEvent args)
