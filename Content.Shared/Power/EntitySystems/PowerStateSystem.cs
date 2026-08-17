@@ -28,7 +28,7 @@ public abstract partial class SharedPowerStateSystem : EntitySystem
         ent.Comp.IsWorking = isWorking;
 
         var powerStateEnt = (ent, ent.Comp);
-        var isPowered = TrySetPowerLoad(powerStateEnt, isWorking);
+        var isPowered = SetPowerLoadGetIsPowered(powerStateEnt, isWorking);
         UpdateAppearance(powerStateEnt, isPowered);
 
         var ev = new PowerStateChanged(isWorking);
@@ -67,7 +67,7 @@ public abstract partial class SharedPowerStateSystem : EntitySystem
     }
 
     /// <summary> Sets up power load for provided working state. </summary>
-    protected virtual bool TrySetPowerLoad(Entity<PowerStateComponent> ent, bool isWorking)
+    protected virtual bool SetPowerLoadGetIsPowered(Entity<PowerStateComponent> ent, bool isWorking)
     {
         SharedApcPowerReceiverComponent? apcPower = null;
         if (_powerReceiverSystem.ResolveApc(ent, ref apcPower))
@@ -83,7 +83,7 @@ public abstract partial class SharedPowerStateSystem : EntitySystem
     protected void UpdateAppearance(Entity<PowerStateComponent> ent, bool isPowered)
     {
         PowerStateDeviceVisualState state;
-        if (isPowered)
+        if (isPowered && ent.Comp.IsWorking)
         {
             state = PowerStateDeviceVisualState.On;
         }
