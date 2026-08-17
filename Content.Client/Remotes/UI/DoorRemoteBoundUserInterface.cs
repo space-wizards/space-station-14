@@ -8,7 +8,7 @@ using Content.Shared.CCVar;
 
 namespace Content.Client.Remotes.UI;
 
-public sealed class DoorRemoteBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
+public sealed partial class DoorRemoteBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [Dependency] private IConfigurationManager _cfg = default!;
 
