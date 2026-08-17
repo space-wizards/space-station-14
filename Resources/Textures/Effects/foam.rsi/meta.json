@@ -11,61 +11,61 @@
             "name": "foam"
         },
         {
-            "name": "foam-West"
+            "name": "foam-west"
         },
         {
-            "name": "foam-East"
+            "name": "foam-east"
         },
         {
-            "name": "foam-North"
+            "name": "foam-north"
         },
         {
-            "name": "foam-South"
+            "name": "foam-south"
         },
         {
             "name": "iron_foam"
         },
         {
-            "name": "iron_foam-North"
+            "name": "iron_foam-north"
         },
         {
-            "name": "iron_foam-East"
+            "name": "iron_foam-east"
         },
         {
-            "name": "iron_foam-South"
+            "name": "iron_foam-south"
         },
         {
-            "name": "iron_foam-West"
+            "name": "iron_foam-west"
         },
         {
             "name": "metal_foam"
         },
         {
-            "name": "metal_foam-North"
+            "name": "metal_foam-north"
         },
         {
-            "name": "metal_foam-East"
+            "name": "metal_foam-east"
         },
         {
-            "name": "metal_foam-South"
+            "name": "metal_foam-south"
         },
         {
-            "name": "metal_foam-West"
+            "name": "metal_foam-west"
         },
         {
             "name": "m_foam"
         },
         {
-            "name": "m_foam-North"
+            "name": "m_foam-north"
         },
         {
-            "name": "m_foam-East"
+            "name": "m_foam-east"
         },
         {
-            "name": "m_foam-South"
+            "name": "m_foam-south"
         },
         {
-            "name": "m_foam-West"
+            "name": "m_foam-west"
         },
         {
             "name": "m_foam-dissolve",
