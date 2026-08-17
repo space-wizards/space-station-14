@@ -33,7 +33,7 @@ public sealed partial class DirectionSpriteSmoothing : ISpriteSmoothState
             entity.Comp.LayerSetShader(LayerKey, Shader);
     }
 
-    public IEnumerable<(string key, string state)> EnumerateStates(HashSet<string>?[] layers)
+    public IEnumerable<(string key, string state)> EnumerateStates(HashSet<string>?[] layers, Entity<SpriteComponent> entity, SpriteSystem sprite)
     {
         var match = DirectionFlag.None;
         for (byte i = 0; 2 * i < IconSmoothSystem.Directions; i++)

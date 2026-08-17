@@ -1,4 +1,6 @@
-﻿namespace Content.Client.IconSmoothing.Smoothings;
+﻿using Robust.Client.GameObjects;
+
+namespace Content.Client.IconSmoothing.Smoothings;
 
 /// <summary>
 /// An alternative of <see cref="CornerSpriteSmoothing"/> which is based off of 9s with more states dedicated to corners:tm:
@@ -11,7 +13,7 @@ public sealed partial class CardinalCornerSpriteSmoothing : CornerSpriteSmoothin
     [DataField(required:true)]
     public HashSet<string> AltMask { get; set; }
 
-    public override IEnumerable<(string key, string state)> EnumerateStates(HashSet<string>?[] layers)
+    public override IEnumerable<(string key, string state)> EnumerateStates(HashSet<string>?[] layers, Entity<SpriteComponent> entity, SpriteSystem sprite)
     {
         var match = Direction8Flag.None;
         var altMatch = Direction8Flag.None;

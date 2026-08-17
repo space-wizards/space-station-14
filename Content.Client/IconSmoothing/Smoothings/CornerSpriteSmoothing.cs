@@ -30,7 +30,7 @@ public partial class CornerSpriteSmoothing : ISpriteSmoothState
 
     public virtual void InitializeStates(Entity<SpriteComponent> entity, SpriteSystem sprite)
     {
-        // TODO: This should use RsiDirection some day...
+        // TODO: This should use Direction some day...
         foreach (var offset in Enum.GetValues<DirectionOffset>())
         {
             InitializeOffset(entity, sprite, offset);
@@ -47,7 +47,7 @@ public partial class CornerSpriteSmoothing : ISpriteSmoothState
             entity.Comp.LayerSetShader(key, Shader);
     }
 
-    public virtual IEnumerable<(string key, string state)> EnumerateStates(HashSet<string>?[] layers)
+    public virtual IEnumerable<(string key, string state)> EnumerateStates(HashSet<string>?[] layers, Entity<SpriteComponent> entity, SpriteSystem sprite)
     {
         var match = Direction8Flag.None;
         byte seen = 0;

@@ -1,5 +1,3 @@
-using JetBrains.Annotations;
-
 namespace Content.Client.IconSmoothing;
 
 /// <summary>
@@ -15,8 +13,6 @@ public sealed partial class IconSmoothComponent : Component
 {
     [DataField]
     public bool Enabled = true;
-
-    public (EntityUid?, Vector2i)? LastPosition;
 
     /// <summary>
     /// A string whitelist which is checked against an <see cref="ISpriteSmoothState.Mask"/>

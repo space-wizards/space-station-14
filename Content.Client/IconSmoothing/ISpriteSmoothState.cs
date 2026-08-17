@@ -32,5 +32,5 @@ public partial interface ISpriteSmoothState
 
     void InitializeStates(Entity<SpriteComponent> entity, SpriteSystem sprite);
 
-    IEnumerable<(string key, string state)> EnumerateStates(HashSet<string>?[] layers);
+    IEnumerable<(string key, string state)> EnumerateStates(HashSet<string>?[] layers, Entity<SpriteComponent> entity, SpriteSystem sprite);
 }

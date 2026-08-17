@@ -23,7 +23,7 @@ public sealed partial class AltDiagonalSpriteSmoothing : CornerSpriteSmoothing
             entity.Comp.LayerSetShader(LayerKey, Shader);
     }
 
-    public override IEnumerable<(string key, string state)> EnumerateStates(HashSet<string>?[] layers)
+    public override IEnumerable<(string key, string state)> EnumerateStates(HashSet<string>?[] layers, Entity<SpriteComponent> entity, SpriteSystem sprite)
     {
         if (!GetCorners(2, out var mask))
         {

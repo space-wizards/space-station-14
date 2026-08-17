@@ -95,7 +95,7 @@ public sealed partial class IconSmoothSystem : EntitySystem
 
     private void ApplyState<T>(Entity<SpriteComponent> entity, T smoothState) where T : ISpriteSmoothState
     {
-        foreach (var (key, state) in smoothState.EnumerateStates(_adjacentKeys))
+        foreach (var (key, state) in smoothState.EnumerateStates(_adjacentKeys, entity, _sprite))
         {
             _sprite.LayerSetRsiState(entity.AsNullable(), key, state);
         }

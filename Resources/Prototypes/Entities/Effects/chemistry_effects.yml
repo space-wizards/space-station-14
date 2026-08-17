@@ -91,17 +91,12 @@
     layers:
     - state: foam
       map: ["enum.FoamVisualLayers.Base"]
-    - map: [ "enum.EdgeLayer.South" ]
-      state: foam-south
-    - map: [ "enum.EdgeLayer.East" ]
-      state: foam-east
-    - map: [ "enum.EdgeLayer.North" ]
-      state: foam-north
-    - map: [ "enum.EdgeLayer.West" ]
-      state: foam-west
-  - type: SmoothEdge
   - type: IconSmooth
     key: foam
+    states:
+    - !type:EdgeSpriteSmoothing
+      mask: [ foam, walls, windows, marble ]
+      base: foam-
   - type: FoamVisuals
     animationTime: 0.6
     animationState: foam-dissolve
@@ -123,14 +118,12 @@
     layers:
     - state: m_foam
       map: ["enum.FoamVisualLayers.Base"]
-    - map: [ "enum.EdgeLayer.South" ]
-      state: m_foam-south
-    - map: [ "enum.EdgeLayer.East" ]
-      state: m_foam-east
-    - map: [ "enum.EdgeLayer.North" ]
-      state: m_foam-north
-    - map: [ "enum.EdgeLayer.West" ]
-      state: m_foam-west
+  - type: IconSmooth
+    key: foam
+    states:
+    - !type:EdgeSpriteSmoothing
+      mask: [ foam, walls, windows, marble ]
+      base: m_foam-
   - type: EdgeSpreader
     id: MetalFoam
   - type: FoamVisuals
@@ -185,10 +178,12 @@
         - WallLayer
   - type: Occluder
   - type: Appearance
-  - type: SmoothEdge
   - type: IconSmooth
-    key: walls
-    mode: NoSprite
+    key: foam
+    states:
+    - !type:EdgeSpriteSmoothing
+      mask: [ foam, walls, windows, marble ]
+      base: foam-
   - type: Transform
     anchored: true
   - type: Airtight
@@ -212,14 +207,12 @@
     layers:
     - state: iron_foam
       map: ["enum.FoamVisualLayers.Base"]
-    - map: [ "enum.EdgeLayer.South" ]
-      state: iron_foam-south
-    - map: [ "enum.EdgeLayer.East" ]
-      state: iron_foam-east
-    - map: [ "enum.EdgeLayer.North" ]
-      state: iron_foam-north
-    - map: [ "enum.EdgeLayer.West" ]
-      state: iron_foam-west
+  - type: IconSmooth
+    key: foam
+    states:
+    - !type:EdgeSpriteSmoothing
+      mask: [ foam, walls, windows, marble ]
+      base: iron_foam-
 
 - type: entity
   parent: BaseFoamedMetal
@@ -234,14 +227,12 @@
     layers:
     - state: metal_foam
       map: ["enum.FoamVisualLayers.Base"]
-    - map: [ "enum.EdgeLayer.South" ]
-      state: metal_foam-south
-    - map: [ "enum.EdgeLayer.East" ]
-      state: metal_foam-east
-    - map: [ "enum.EdgeLayer.North" ]
-      state: metal_foam-north
-    - map: [ "enum.EdgeLayer.West" ]
-      state: metal_foam-west
+  - type: IconSmooth
+    key: foam
+    states:
+    - !type:EdgeSpriteSmoothing
+      mask: [ foam, walls, windows, marble ]
+      base: metal_foam-
   - type: Destructible
     thresholds:
     - trigger:
