@@ -7,6 +7,7 @@ using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
+using Content.Shared.StatusIcon.Components;
 using Content.Shared.Storage;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
@@ -45,6 +46,13 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
 
         // Components that need special handling outside of cloning.
         SubscribeLocalEvent<StorageComponent, BeforeChangelingTransformEvent>(StorageBeforeTransform);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnGetStatusIcon(Entity<ChangelingTransformComponent> ent, ref GetStatusIconsEvent args)
+    {
+        var iconPrototype = ProtoMan.Index(ent.Comp.StatusIcon);
+        args.StatusIcons.Add(iconPrototype);
     }
 
     private void OnMapInit(Entity<ChangelingTransformComponent> ent, ref MapInitEvent init)

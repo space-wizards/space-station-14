@@ -1,5 +1,6 @@
 using Content.Shared.Changeling.Systems;
 using Content.Shared.Cloning;
+using Content.Shared.StatusIcon;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -51,5 +52,11 @@ public sealed partial class ChangelingTransformComponent : Component
     public ProtoId<CloningSettingsPrototype> TransformCloningSettings = "ChangelingCloningSettings";
 
     public override bool SendOnlyToOwner => true;
+
+    /// <summary>
+    /// Status icon displayed by the changeling
+    /// </summary>
+    [DataField("statusIcon")]
+    public ProtoId<FactionIconPrototype> StatusIcon { get; set; } = "ChangelingFaction";
 }
 
