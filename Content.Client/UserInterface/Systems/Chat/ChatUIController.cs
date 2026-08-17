@@ -126,8 +126,6 @@ public sealed partial class ChatUIController : UIController
     /// </summary>
     private const int SpeechBubbleCap = 4;
 
-    private LayoutContainer _speechBubbleRoot = default!;
-
     /// <summary>
     ///     Speech bubbles that are currently visible on screen.
     ///     We track them to push them up when new ones get added.
@@ -192,8 +190,6 @@ public sealed partial class ChatUIController : UIController
         _config.OnValueChanged(CCVars.ChatEnableColorName, (value) => { _chatNameColorsEnabled = value; });
         _chatNameColorsEnabled = _config.GetCVar(CCVars.ChatEnableColorName);
 
-        _speechBubbleRoot = new LayoutContainer();
-
         UpdateChannelPermissions();
 
         _input.SetInputCommand(ContentKeyFunctions.FocusChat,
@@ -253,9 +249,6 @@ public sealed partial class ChatUIController : UIController
     public void OnScreenLoad()
     {
         SetMainChat(true);
-
-        var viewportContainer = UIManager.ActiveScreen!.FindControl<LayoutContainer>("ViewportContainer");
-        SetSpeechBubbleRoot(viewportContainer);
 
         SetChatWindowOpacity(_config.GetCVar(CCVars.ChatWindowOpacity));
 
@@ -449,14 +442,6 @@ public sealed partial class ChatUIController : UIController
         }
 
         UpdateChannelPermissions();
-    }
-
-    public void SetSpeechBubbleRoot(LayoutContainer root)
-    {
-        _speechBubbleRoot.Orphan();
-        root.AddChild(_speechBubbleRoot);
-        LayoutContainer.SetAnchorPreset(_speechBubbleRoot, LayoutContainer.LayoutPreset.Wide);
-        _speechBubbleRoot.SetPositionLast();
     }
 
     private void OnAttachedChanged(EntityUid uid)
