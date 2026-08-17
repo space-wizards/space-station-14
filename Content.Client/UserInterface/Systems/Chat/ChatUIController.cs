@@ -6,7 +6,6 @@ using Content.Client.Chat;
 using Content.Client.Chat.Managers;
 using Content.Client.Chat.SpeechBubble;
 using Content.Client.Chat.TypingIndicator;
-using Content.Client.Chat.UI;
 using Content.Client.Examine;
 using Content.Client.Gameplay;
 using Content.Client.Ghost;
@@ -467,7 +466,7 @@ public sealed partial class ChatUIController : UIController
         UpdateAutoFillHighlights();
     }
 
-    private void AddSpeechBubble(ChatMessage msg, SpeechBubble.SpeechType speechType)
+    private void AddSpeechBubble(ChatMessage msg, NuSpeechBubble.SpeechType speechType)
     {
         var ent = EntityManager.GetEntity(msg.SenderEntity);
 
@@ -510,7 +509,7 @@ public sealed partial class ChatUIController : UIController
         RemoveNuSpeechBubble(entity, bubble);
     }
 
-    private void EnqueueSpeechBubble(EntityUid entity, ChatMessage message, SpeechBubble.SpeechType speechType)
+    private void EnqueueSpeechBubble(EntityUid entity, ChatMessage message, NuSpeechBubble.SpeechType speechType)
     {
         // Don't enqueue speech bubbles for other maps. TODO: Support multiple viewports/maps?
         if (EntityManager.GetComponent<TransformComponent>(entity).MapID != _eye.CurrentEye.Position.MapId)
@@ -900,11 +899,11 @@ public sealed partial class ChatUIController : UIController
         switch (msg.Channel)
         {
             case ChatChannel.Local:
-                AddSpeechBubble(msg, SpeechBubble.SpeechType.Say);
+                AddSpeechBubble(msg, NuSpeechBubble.SpeechType.Say);
                 break;
 
             case ChatChannel.Whisper:
-                AddSpeechBubble(msg, SpeechBubble.SpeechType.Whisper);
+                AddSpeechBubble(msg, NuSpeechBubble.SpeechType.Whisper);
                 break;
 
             case ChatChannel.Dead:
@@ -912,16 +911,16 @@ public sealed partial class ChatUIController : UIController
                     break;
 
                 if (_ghost.GhostVisibility)
-                    AddSpeechBubble(msg, SpeechBubble.SpeechType.Say);
+                    AddSpeechBubble(msg, NuSpeechBubble.SpeechType.Say);
                 break;
 
             case ChatChannel.Emotes:
-                AddSpeechBubble(msg, SpeechBubble.SpeechType.Emote);
+                AddSpeechBubble(msg, NuSpeechBubble.SpeechType.Emote);
                 break;
 
             case ChatChannel.LOOC:
                 if (_config.GetCVar(CCVars.LoocAboveHeadShow))
-                    AddSpeechBubble(msg, SpeechBubble.SpeechType.Looc);
+                    AddSpeechBubble(msg, NuSpeechBubble.SpeechType.Looc);
                 break;
         }
     }
@@ -980,7 +979,7 @@ public sealed partial class ChatUIController : UIController
         return _chatNameColors[colorIdx];
     }
 
-    private readonly record struct SpeechBubbleData(ChatMessage Message, SpeechBubble.SpeechType Type);
+    private readonly record struct SpeechBubbleData(ChatMessage Message, NuSpeechBubble.SpeechType Type);
 
     private sealed class SpeechBubbleQueueData
     {
