@@ -1019,7 +1019,7 @@
 
 - type: entity
   parent: [ BaseWall, StructureHealthWall ]
-  id: WallMining #TODO this wall got migrated for some reason, please fix
+  id: WallMining
   name: mining wall
   components:
   - type: Sprite
