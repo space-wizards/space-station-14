@@ -19,7 +19,6 @@ namespace Content.Shared.Mapping;
 public sealed partial class SharedStructureAlignerSystem : EntitySystem
 {
     [Dependency] private IConfigurationManager _cfg = default!;
-    [Dependency] private IEntityManager _entMan = default!;
     [Dependency] private SharedTransformSystem _trans = default!;
 
     /// <summary>
@@ -64,7 +63,7 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
     public string? AlignAll(MapId? map = null)
     {
         // It needs to be an All Entity Query so it works on pre-init maps during Mapping
-        var query = _entMan.AllEntityQueryEnumerator<StructureAlignerComponent, TransformComponent>();
+        var query = AllEntityQuery<StructureAlignerComponent, TransformComponent>();
 
         var countAll = 0;
         var countFixed = 0;
@@ -94,39 +93,36 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
             return false;
 
         // Locate adjacent walls and doors
-        var query = _entMan.AllEntityQueryEnumerator<StructureAlignToComponent>();
+        var query = AllEntityQuery<StructureAlignToComponent, TransformComponent>();
 
         var northSouth = 0d;
         var eastWest = 0d;
 
         int weight;
-        foreach (var (ent, comp) in query)
+        foreach (var (neighborEnt, neighborComp, neighborTrans) in query)
         {
-
-            if (entity.Owner == ent)
+            if (entity.Owner == neighborEnt)
                 continue;
 
-            if (!comp.AlignType.Contains(entity.Comp.AlignType))
+            if (!neighborComp.AlignType.Contains(entity.Comp.AlignType))
                 continue;
-
-            var t = Transform(ent);
 
             // They must be anchored to the same parent to matter
-            if (t.ParentUid != trans.ParentUid)
+            if (neighborTrans.ParentUid != trans.ParentUid)
                 continue;
 
             // Anchored objects have enough weight in the calculation to make unanchored ones irrelevant,
             // but if only unanchored ones are present, they will still matter.
             // For example, if a line of firelock frames are being anchored, with no adjacent walls
-            weight = t.Anchored ? 10 : 1;
+            weight = neighborTrans.Anchored ? 10 : 1;
 
             // Only the four adjacent tiles should be considered for alignment, otherwise calculation quickly becomes infeasibly complex
             // Minimum range is here to ignore overlapping entities
-            trans.Coordinates.TryDistance(EntityManager, t.Coordinates, out var dist);
+            trans.Coordinates.TryDistance(EntityManager, _trans, neighborTrans.Coordinates, out var dist);
             if (dist > ProximityMax || dist < ProximityMin)
                 continue;
 
-            var vect = trans.Coordinates.Position - t.Coordinates.Position;
+            var vect = trans.Coordinates.Position - neighborTrans.Coordinates.Position;
 
             eastWest += Math.Abs(Math.Round(vect.X)) * weight;
             northSouth += Math.Round(Math.Abs(vect.Y)) * weight;
@@ -160,7 +156,7 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
             _trans.SetLocalRotation(entity, trans.LocalRotation + Angle.FromDegrees(90));
 
             var name = MetaData(entity.Owner).EntityName;
-            var pos = _trans.GetWorldPosition(entity.Owner);
+            var pos = _trans.GetWorldPosition(trans);
             Log.Info($"Aligned entity '{ entity.Owner }' on map { trans.MapID } at { pos } : { name }");
             return true;
         }
