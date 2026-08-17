@@ -401,6 +401,7 @@
     typesNeeded:
       Shock: 5
 
+- type: xenoArchTrigger
   id: TriggerAttackParticleEngine
   tip: xenoarch-trigger-tip-particle
   components:
