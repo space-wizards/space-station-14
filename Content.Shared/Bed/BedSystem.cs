@@ -111,7 +111,6 @@ public sealed partial class BedSystem : EntitySystem
         args.Multiplier *= stasis.Multiplier;
     }
 
-    [SubscribeLocalEvent]
     private void UpdateMetabolisms(Entity<StrapComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp, false))
