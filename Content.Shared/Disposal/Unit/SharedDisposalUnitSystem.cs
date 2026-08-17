@@ -29,7 +29,6 @@ using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 using System.Linq;
-using Content.Shared.Destructible;
 
 namespace Content.Shared.Disposal.Unit;
 
