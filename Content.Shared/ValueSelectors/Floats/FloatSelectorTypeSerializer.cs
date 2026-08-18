@@ -9,7 +9,7 @@ namespace Content.Shared.ValueSelectors.Floats;
 
 [TypeSerializer]
 public sealed class FloatSelectorTypeSerializer :
-    BaseValueSelectorTypeSerializer<float, float>,
+    BaseValueSelectorTypeSerializer<float, float, FloatSelector>,
     ITypeReader<FloatSelector, ValueDataNode>
 {
     public ValidationNode Validate(ISerializationManager serializationManager,
@@ -27,15 +27,15 @@ public sealed class FloatSelectorTypeSerializer :
         ISerializationContext? context = null,
         ISerializationManager.InstantiationDelegate<FloatSelector>? instanceProvider = null)
     {
-        return (FloatSelector) ReadImpl(serializationManager, node, dependencies, hookCtx, context, instanceProvider);
+        return ReadImpl(serializationManager, node, dependencies, hookCtx, context, instanceProvider);
     }
 
-    protected override IBaseValueSelector<float, float> GetConstantSelector(float constant)
+    protected override FloatSelector GetConstantSelector(float constant)
     {
         return new ConstantFloatSelector(constant);
     }
 
-    protected override IBaseValueSelector<float, float> GetRangeSelector(float min, float max)
+    protected override FloatSelector GetRangeSelector(float min, float max)
     {
         return new RangeFloatSelector(new Vector2(min, max));
     }

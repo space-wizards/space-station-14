@@ -8,7 +8,7 @@ namespace Content.Shared.ValueSelectors.Numbers;
 
 [TypeSerializer]
 public sealed class NumberSelectorTypeSerializer :
-    BaseValueSelectorTypeSerializer<int, float>,
+    BaseValueSelectorTypeSerializer<int, float, NumberSelector>,
     ITypeReader<NumberSelector, ValueDataNode>
 {
     public ValidationNode Validate(ISerializationManager serializationManager,
@@ -26,15 +26,15 @@ public sealed class NumberSelectorTypeSerializer :
         ISerializationContext? context = null,
         ISerializationManager.InstantiationDelegate<NumberSelector>? instanceProvider = null)
     {
-        return (NumberSelector) ReadImpl(serializationManager, node, dependencies, hookCtx, context, instanceProvider);
+        return ReadImpl(serializationManager, node, dependencies, hookCtx, context, instanceProvider);
     }
 
-    protected override IBaseValueSelector<int, float> GetConstantSelector(int constant)
+    protected override NumberSelector GetConstantSelector(int constant)
     {
         return new ConstantNumberSelector(constant);
     }
 
-    protected override IBaseValueSelector<int, float> GetRangeSelector(int min, int max)
+    protected override NumberSelector GetRangeSelector(int min, int max)
     {
         return new RangeNumberSelector(new Vector2i(min, max));
     }

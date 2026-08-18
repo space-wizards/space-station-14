@@ -11,15 +11,16 @@ namespace Content.Shared.ValueSelectors;
 /// <summary>
 /// Base serializer for all types implementing <see cref="IBaseValueSelector{TMain,TFrac}"/>.
 /// </summary>
-public abstract class BaseValueSelectorTypeSerializer<TMain, TFrac>
+public abstract class BaseValueSelectorTypeSerializer<TMain, TFrac, TSelector>
     where TMain : INumber<TMain>, IParsable<TMain>
     where TFrac : INumber<TFrac>, IParsable<TFrac>
+    where TSelector : IBaseValueSelector<TMain, TFrac>
 {
     // Abstract methods used for creation because IDynamicTypeFactory will be slower since it's not compile-time
     // And alternative solutions probably require using methods that are outside of sandbox.
-    protected abstract IBaseValueSelector<TMain, TFrac> GetConstantSelector(TMain constant);
+    protected abstract TSelector GetConstantSelector(TMain constant);
 
-    protected abstract IBaseValueSelector<TMain, TFrac> GetRangeSelector(TMain min, TMain max);
+    protected abstract TSelector GetRangeSelector(TMain min, TMain max);
 
     protected ValidationNode ValidateImpl(ISerializationManager serializationManager,
         ValueDataNode node,
@@ -43,12 +44,12 @@ public abstract class BaseValueSelectorTypeSerializer<TMain, TFrac>
         return new ErrorNode(node, "Custom validation not supported! Please specify the type manually!");
     }
 
-    protected IBaseValueSelector<TMain, TFrac> ReadImpl(ISerializationManager serializationManager,
+    protected TSelector ReadImpl(ISerializationManager serializationManager,
         ValueDataNode node,
         IDependencyCollection dependencies,
         SerializationHookContext hookCtx,
         ISerializationContext? context = null,
-        ISerializationManager.InstantiationDelegate<IBaseValueSelector<TMain, TFrac>>? instanceProvider = null)
+        ISerializationManager.InstantiationDelegate<TSelector>? instanceProvider = null)
     {
         if (TMain.TryParse(node.Value, CultureInfo.InvariantCulture, out var result))
             return GetConstantSelector(result);
@@ -60,6 +61,6 @@ public abstract class BaseValueSelectorTypeSerializer<TMain, TFrac>
             return GetRangeSelector(x, y);
         }
 
-        return (IBaseValueSelector<TMain, TFrac>) serializationManager.Read(typeof(IBaseValueSelector<TMain, TFrac>), node, context)!;
+        return serializationManager.Read<TSelector>(node, context, notNullableOverride: true);
     }
 }
