@@ -28,9 +28,6 @@ using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Popups;
 using Content.Shared.Pulling.Events;
 using Content.Shared.Rejuvenate;
-using Content.Shared.Speech;
-using Content.Shared.Speech.Components;
-using Content.Shared.Stunnable;
 using Content.Shared.Timing;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee.Events;
@@ -362,25 +359,21 @@ namespace Content.Shared.Cuffs
         [SubscribeLocalEvent]
         private void OnExecutionStarted(Entity<CuffableComponent> ent, ref ExecutionStartedEvent args)
         {
-            // We assume any execution will deal enough damage to break the cuffs.
-            var destroyableCuffs = new List<Entity<HandcuffComponent>>();
-
-            foreach (var cuffsEnt in GetAllCuffs((ent, ent)))
+            var foundDestroyedCuffs = false;
+            foreach (var cuffsEnt in GetAllCuffs(ent.AsNullable()))
             {
                 if (!TryComp<HandcuffComponent>(cuffsEnt, out var handcuff))
                     return;
 
                 if (handcuff.BreakOnDamageThreshold != null)
-                    destroyableCuffs.Add((cuffsEnt, handcuff));
+                {
+                    Uncuff(ent.Owner, null, cuffsEnt, ent.Comp, handcuff);
+                    foundDestroyedCuffs = true;
+                }
             }
 
-            if (destroyableCuffs.Count == 0)
+            if(!foundDestroyedCuffs)
                 return;
-
-            foreach (var cuffsEnt in destroyableCuffs)
-            {
-                Uncuff(ent.Owner, null, cuffsEnt.Owner, ent.Comp, cuffsEnt.Comp);
-            }
 
             args.CancelExecution = true;
             args.CancelMessage = Loc.GetString("handcuff-component-cuffs-broke");
@@ -973,13 +966,13 @@ namespace Content.Shared.Cuffs
     public record struct CheckIncapacitatedCuffEvent(bool Incapacitated);
 
     /// <summary>
-    /// Raised on the cuffs when they are applied
+    /// Raised on the cuffs when they are applied.
     /// </summary>
     [ByRefEvent]
     public record struct CuffsAppliedEvent(EntityUid Target);
 
     /// <summary>
-    /// Raised on the cuffs when they are removed
+    /// Raised on the cuffs when they are removed.
     /// </summary>
     [ByRefEvent]
     public record struct CuffsRemovedEvent(EntityUid Target);

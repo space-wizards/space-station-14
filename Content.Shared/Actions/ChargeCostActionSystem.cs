@@ -24,7 +24,8 @@ public sealed partial class ChargeCostActionSystem : EntitySystem
         if (!TryComp<ActionComponent>(ent, out var action) || action.Container == null)
             return;
 
-        if (!_powerCell.TryGetBatteryFromSlotOrEntity((action.Container.Value, null), out var battery) || !(_battery.GetCharge(battery.Value.AsNullable()) >= ent.Comp.Charge))
+        if (!_powerCell.TryGetBatteryFromSlotOrEntity((action.Container.Value, null), out var battery)
+            || _battery.GetCharge(battery.Value.AsNullable()) < ent.Comp.Charge)
         {
             _popup.PopupEntity(Loc.GetString(ent.Comp.NoPowerPopup), args.User, args.User);
             args.Cancelled = true;

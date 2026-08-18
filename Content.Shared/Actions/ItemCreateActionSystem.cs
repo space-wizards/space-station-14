@@ -11,6 +11,7 @@ public sealed partial class ItemCreateActionSystem : EntitySystem
 {
     [Dependency] private SharedHandsSystem _hands = default!;
 
+    /// <summary> Spawns item that action should create. </summary>
     [SubscribeLocalEvent]
     private void OnCreateItem(Entity<ActionsContainerComponent> ent, ref CreateItemEvent args)
     {
@@ -33,6 +34,9 @@ public sealed partial class ItemCreateActionSystem : EntitySystem
 [ByRefEvent]
 public record struct CreateItemAttemptEvent(EntityUid User, bool Cancelled = false);
 
+/// <summary>
+/// Raised when item is created by action.
+/// </summary>
 public sealed partial class CreateItemEvent : InstantActionEvent
 {
     /// <summary>

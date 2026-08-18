@@ -21,5 +21,5 @@ public sealed partial class ChargeCostActionComponent : Component
     /// Popup shown to the user when there isn't enough power to create an item.
     /// </summary>
     [DataField(required: true)]
-    public LocId NoPowerPopup = string.Empty;
+    public LocId NoPowerPopup;
 }

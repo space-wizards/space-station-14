@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chat;
+using Content.Shared.Chat;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Speech;
 
@@ -44,17 +44,11 @@ public abstract partial class SharedCuffableSystem
 /// </summary>
 /// <remarks>
 /// Handcuffs are not actually in the user's hands or inventory; they are stored in a separate container on the entity,
-/// with virtual blocker objects taking up the user's hands. Hence the need for this dedicated relay event.
+/// with virtual blocker objects taking up the user's hands. Hence, the need for this dedicated relay event.
 /// </remarks>
-public sealed class CuffedRelayEvent<TEvent> : EntityEventArgs
+public sealed class CuffedRelayEvent<TEvent>(TEvent args, EntityUid owner) : EntityEventArgs
 {
-    public TEvent Args;
+    public TEvent Args = args;
 
-    public EntityUid Cuffed;
-
-    public CuffedRelayEvent(TEvent args, EntityUid owner)
-    {
-        Args = args;
-        Cuffed = owner;
-    }
+    public EntityUid Cuffed = owner;
 }

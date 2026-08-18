@@ -58,10 +58,11 @@ public sealed partial class CuffableSystem : SharedCuffableSystem
 
         var state = cuffState.IconState;
 
-        if (TryComp(uid, out InventoryComponent? inventory) && inventory.SpeciesId != null &&
-            rsiString != null &&
-            _cache.GetResource<RSIResource>(SpriteSpecifierSerializer.TextureRoot / rsiString)
-                .RSI.TryGetState($"{cuffState.IconState}-{inventory.SpeciesId}", out _))
+        if (TryComp(uid, out InventoryComponent? inventory)
+            && inventory.SpeciesId != null
+            && rsiString != null
+            && _cache.GetResource<RSIResource>(SpriteSpecifierSerializer.TextureRoot / rsiString)
+                     .RSI.TryGetState($"{cuffState.IconState}-{inventory.SpeciesId}", out _))
         {
             state = $"{cuffState.IconState}-{inventory.SpeciesId}";
         }
