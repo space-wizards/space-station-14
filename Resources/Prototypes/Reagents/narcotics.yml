@@ -36,9 +36,8 @@
       - !type:ModifyStatusEffect
         effectProto: StatusEffectDesoxyStamina # You are on meth. You keep going.
         time: 3
-      - !type:GenericStatusEffect
-        key: Adrenaline
-        component: IgnoreSlowOnDamage
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectAdrenaline
         time: 3
       # Side effects
       - !type:Jitter
@@ -154,9 +153,8 @@
         effectProto: StatusEffectForcedSleeping
         time: 3
         type: Remove
-      - !type:GenericStatusEffect
-        key: Adrenaline
-        component: IgnoreSlowOnDamage
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectAdrenaline
         time: 3
       # Side effects
       - !type:Jitter
@@ -204,9 +202,11 @@
             Asphyxiation: -2
       # Side effects
       - !type:ResetNarcolepsy
-      - !type:SatiateHunger
+      - !type:Satiate
+        satiationType: Hunger
         factor: 1
-      - !type:SatiateThirst
+      - !type:Satiate
+        satiationType: Thirst
         factor: 1
 
 - type: reagent
@@ -343,9 +343,8 @@
   metabolisms:
     Bloodstream:
       effects:
-      - !type:GenericStatusEffect
-        key: Muted
-        component: Muted
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectMuted
         type: Add
         time: 10
 
@@ -388,9 +387,9 @@
           min: 20
         probability: 0.03
         #If anyone wants to add a light dimming or grayscale effect when under 20u, be my guest
-      - !type:GenericStatusEffect
-        key: TemporaryBlindness
-        component: TemporaryBlindness
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectBlindness
+        type: Add
         conditions:
         - !type:ReagentCondition
           reagent: NorepinephricAcid
@@ -441,9 +440,9 @@
       - !type:Emote
         emote: Cough
         probability: 0.08
-      - !type:GenericStatusEffect
-        key: TemporaryBlindness
-        component: TemporaryBlindness
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectBlindness
+        type: Add
         conditions:
         - !type:ReagentCondition
           reagent: TearGas
@@ -456,6 +455,112 @@
         - !type:ReagentCondition
           reagent: TearGas
           min: 4
+
+- type: reagent
+  id: StrawberryIce
+  name: reagent-name-StrawberryIce
+  group: Narcotics
+  desc: reagent-desc-StrawberryIce
+  physicalDesc: reagent-physical-desc-fizzy
+  flavor: fizzy
+  color: "#FF36AE"
+  metabolisms:
+    Digestion:
+      metabolismRate: 1.0
+      effects:
+      # OD
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: StrawberryIce
+          min: 20
+        damage:
+          types:
+            Cellular: 1.5
+            Poison: 1.5
+      # Bad effect
+      - !type:HealthChange
+        damage:
+          types:
+            Cellular: 0.05
+      - !type:AdjustReagent # TODO: MAKE THIS USE METABOLITES INSTEAD!!!
+        reagent: Hydroxysomnolene
+        amount: 1
+
+      # Main effects
+      - !type:MovementSpeedModifier
+        walkSpeedModifier: 1.50
+        sprintSpeedModifier: 1.50
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectDesoxyStamina # You are on Ice. You keep going.
+        time: 10
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectAdrenaline
+        time: 10
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectPainNumbness
+        time: 10
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectDrowsiness
+        time: null
+        type: Remove
+      - !type:ResetNarcolepsy
+        conditions:
+        - !type:ReagentCondition
+          reagent: StrawberryIce
+          min: 10
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectSeeingRainbow
+        time: 10
+      # Side effects
+      - !type:GenericStatusEffect
+        key: Stutter
+        component: StutteringAccent
+      - !type:Jitter
+
+- type: reagent
+  id: Hydroxysomnolene
+  name: reagent-name-Hydroxysomnolene
+  group: Toxins
+  desc: reagent-desc-Hydroxysomnolene
+  physicalDesc: reagent-physical-desc-gloopy
+  flavor: bitter
+  color: "#b51472"
+  metabolisms:
+    Digestion: # TODO: Make this metabolize as a metabolite!
+      effects:
+      # Slow
+      - !type:MovementSpeedModifier
+        conditions:
+        - !type:ReagentCondition
+          reagent: StrawberryIce
+          max: 0.1
+        walkSpeedModifier: 0.65
+        sprintSpeedModifier: 0.65
+
+      # Sleepy
+      - !type:ModifyStatusEffect
+        conditions:
+        - !type:ReagentCondition
+          reagent: StrawberryIce
+          max: 0.1
+        effectProto: StatusEffectDrowsiness
+        time: 2
+        type: Add
+
+      # Needs more strawberry Ice!
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentCondition
+          reagent: StrawberryIce
+          max: 0.1
+        type: Local
+        visualType: MediumCaution
+        messages:
+        - hydroxysomnolene-effect-flavor
+        - hydroxysomnolene-effect-another-hit
+        - hydroxysomnolene-effect-sluggish
+        probability: 0.15
 
 - type: reagent
   id: Happiness

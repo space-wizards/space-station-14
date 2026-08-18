@@ -4,31 +4,22 @@
   id: FloorDarkTilesStatic
   recipes:
   - FloorTileItemDark
-  - FloorTileItemDarkDiagonalMini
-  - FloorTileItemDarkDiagonal
   - FloorTileItemDarkHerringbone
   - FloorTileItemDarkMini
   - FloorTileItemDarkMono
-  - FloorTileItemDarkSlatsContinuous
   - FloorTileItemDarkVerticalSlatsBordered
   - FloorTileItemDarkHorizontalSlatsBordered
   - FloorTileItemDarkPavement
   - FloorTileItemDarkPavementVertical
-  - FloorTileItemDarkOffset
 
 - type: latheRecipePack
   id: FloorSteelTilesStatic
   recipes:
   - FloorTileItemSteel
-  - FloorTileItemSteelOffset
-  - FloorTileItemSteelDiagonalMini
-  - FloorTileItemSteelDiagonal
   - FloorTileItemSteelHerringbone
   - FloorTileItemSteelMini
-  - FloorTileItemSteelSlatsContinuous
   - FloorTileItemSteelVerticalSlatsBordered
   - FloorTileItemSteelHorizontalSlatsBordered
-  - FloorTileItemSteelMono
   - FloorTileItemSteelPavement
   - FloorTileItemSteelPavementVertical
   - FloorTileItemSteelCheckerDark
@@ -38,13 +29,9 @@
   id: FloorWhiteTilesStatic
   recipes:
   - FloorTileItemWhite
-  - FloorTileItemWhiteOffset
-  - FloorTileItemWhiteDiagonalMini
-  - FloorTileItemWhiteDiagonal
   - FloorTileItemWhiteHerringbone
   - FloorTileItemWhiteMini
   - FloorTileItemWhiteMono
-  - FloorTileItemWhiteSlatsContinuous
   - FloorTileItemWhiteVerticalSlatsBordered
   - FloorTileItemWhiteHorizontalSlatsBordered
   - FloorTileItemWhitePavement
@@ -54,9 +41,14 @@
   id: FloorMaintsTilesStatic
   recipes:
   - FloorTileItemGratingMaint
-  - FloorTileItemTechmaint
   - FloorTileItemSteelMaint
   - FloorTileItemTechmaintDark
+
+- type: latheRecipePack
+  id: FloorIndustrialTilesStatic
+  recipes:
+  - FloorTileItemMetalDiamond
+  - FloorTileItemFreezer
 
 - type: latheRecipePack
   id: FloorWoodTilesStatic
@@ -71,15 +63,6 @@
   - FloorTileItemConcrete
   - FloorTileItemConcreteMono
   - FloorTileItemConcreteSmooth
-  - FloorTileItemGrayConcrete
-  - FloorTileItemGrayConcreteMono
-  - FloorTileItemGrayConcreteSmooth
-  - FloorTileItemOldConcrete
-  - FloorTileItemOldConcreteMono
-  - FloorTileItemOldConcreteSmooth
-  - FloorTileItemIronsandConcrete
-  - FloorTileItemIronsandConcreteMono
-  - FloorTileItemIronsandConcreteSmooth
 
 - type: latheRecipePack
   id: CircuitFloorsStatic
@@ -94,6 +77,38 @@
   - FloorTileItemWhiteMarble
   - FloorTileItemDarkMarble
 
+- type: latheRecipePack
+  id: FloorShuttleTilesStatic
+  recipes:
+  - FloorTileItemShuttleWhite
+  - FloorTileItemShuttleBlue
+  - FloorTileItemShuttleOrange
+  - FloorTileItemShuttlePurple
+  - FloorTileItemShuttleRed
+  - FloorTileItemShuttleGrey
+  - FloorTileItemShuttleBlack
+
+- type: latheRecipePack
+  id: PlasticTilesStatic
+  recipes:
+  - FloorTileItemLino
+  - FloorTileItemBoxing
+  - FloorTileItemGym
+
+- type: latheRecipePack
+  id: CarpetTilesStatic
+  recipes:
+  - FloorTileItemArcadeBlue
+  - FloorTileItemArcadeRed
+  - FloorTileItemCarpetClown
+  - FloorTileItemCarpetOffice
+
+- type: latheRecipePack
+  id: PreciousTilesStatic
+  recipes:
+  - FloorTileItemGold
+  - FloorTileItemSilver
+
 ## Dynamic
 
 - type: latheRecipePack
@@ -103,10 +118,10 @@
   - FauxTileMowedAstroGrass
   - FauxTileJungleAstroGrass
   - FauxTileDarkAstroGrass
-  - FauxTileLightAstroGrass
   - FauxTileAstroIce
   - FauxTileAstroSnow
   - FauxTileAstroAsteroidSand
+  - FauxTileAstroAsteroidSandBorderless
   - FauxTileDesertAstroSand
   - FauxTileAstroIronsand
   - FauxTileAstroIronsandBorderless

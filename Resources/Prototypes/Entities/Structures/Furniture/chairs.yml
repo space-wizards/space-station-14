@@ -1,7 +1,10 @@
+
+#region Bases
+
 - type: entity
-  name: chair
-  id: SeatBase
   abstract: true
+  id: SeatBase
+  name: chair
   description: You sit in this. Either by will or force.
   placement:
     mode: PlaceFree
@@ -27,45 +30,25 @@
     position: Stand
     buckleOffset: "0,-0.05"
   - type: Pullable
-  - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 50
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
   - type: StaticPrice
     price: 50
 
 #Starts unanchored, cannot be rotated while anchored
 - type: entity
-  name: chair
-  id: UnanchoredChairBase
-  parent: SeatBase
   abstract: true
+  parent: SeatBase
+  id: UnanchoredChairBase
+  name: chair
   components:
   - type: Anchorable
   - type: Rotatable
 
 #Start anchored, cannot be rotated while anchored
 - type: entity
-  name: chair
-  id: ChairBase
   abstract: true
   parent: UnanchoredChairBase
+  id: ChairBase
+  name: chair
   placement:
     mode: SnapgridCenter
   components:
@@ -76,38 +59,70 @@
 
 #Starts unanchored, can be rotated while anchored
 - type: entity
-  name: chair
-  id: OfficeChairBase
-  parent: UnanchoredChairBase
   abstract: true
+  parent: UnanchoredChairBase
+  id: OfficeChairBase
+  name: chair
   components:
   - type: Rotatable
     rotateWhileAnchored: true
 
+#Starts unanchored, can be used as a vehicle
+- type: entity
+  abstract: true
+  parent: [ OfficeChairBase, BaseVehicleStrap ]
+  id: OfficeChairVehicleBase
+  components:
+  - type: Physics
+    bodyType: KinematicController
+  - type: Vehicle
+    requiresHands: false # you use your feet!
+  - type: MovementSpeedModifier
+    baseAcceleration: 2
+    baseFriction: 2
+    baseWalkSpeed: 2
+    baseSprintSpeed: 3
+
 #Starts anchored, can be rotated while anchored
 - type: entity
-  name: stool
-  id: StoolBase
-  parent: OfficeChairBase
   abstract: true
-  placement:
-    mode: SnapgridCenter
+  parent: OfficeChairBase
+  id: StoolBase
+  name: stool
   components:
   - type: Physics
     bodyType: Static
   - type: Transform
     anchored: true
 
+#endregion
+
 - type: entity
-  name: chair
+  parent: [ ChairBase, StructureHealthFurniture ]
   id: Chair
-  parent: ChairBase
+  name: chair
   components:
   - type: Sprite
     state: chair
   - type: Construction
     graph: Seat
     node: chair
+  - type: Damageable
+    damageModifierSet: SteelMod
+  - type: Destructible
+    thresholds: &ThresholdsFurnitureNormalSteel
+    - trigger: &DamageFurnitureNormal
+        !type:DamageTrigger
+        damage: 40
+      behaviors:
+      - &SoundMetalBreak !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - &SpawnSteel01 !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1: &Min0Max1
+            min: 0
+            max: 1
 
 - type: entity
   name: chair
@@ -119,9 +134,9 @@
     state: chair-greyscale
 
 - type: entity
-  name: stool
+  parent: [ ChairBase, StructureHealthFurniture ]
   id: Stool
-  parent: UnanchoredChairBase
+  name: stool
   description: Apply butt.
   components:
   - type: Sprite
@@ -129,44 +144,66 @@
   - type: Construction
     graph: Seat
     node: stool
+  - type: Damageable
+    damageModifierSet: SteelMod
+  - type: Destructible
+    thresholds: *ThresholdsFurnitureNormalSteel
 
 - type: entity
-  name: bar stool
+  parent: [ StoolBase, StructureHealthFurniture ]
   id: StoolBar
-  parent: StoolBase
+  name: bar stool
   components:
   - type: Sprite
     state: bar
   - type: Construction
     graph: Seat
     node: stoolBar
+  - type: Damageable
+    damageModifierSet: SteelMod
+  - type: Destructible
+    thresholds: *ThresholdsFurnitureNormalSteel
 
 - type: entity
-  name: brass chair
+  parent: [ StoolBase, StructureHealthFurniture ]
   id: ChairBrass
-  parent: StoolBase
+  name: brass chair
   components:
   - type: Sprite
     state: brass_chair
   - type: Construction
     graph: Seat
     node: chairBrass
+  - type: Damageable
+    damageModifierSet: BrassMod
+  - type: Destructible
+    thresholds:
+    - trigger: *DamageFurnitureNormal
+      behaviors:
+      - *SoundMetalBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetBrass1: *Min0Max1
 
 - type: entity
-  name: white office chair
+  parent: [ OfficeChairVehicleBase, StructureHealthFurniture ]
   id: ChairOfficeLight
-  parent: OfficeChairBase
+  name: white office chair
   components:
   - type: Sprite
     state: office-white
   - type: Construction
     graph: Seat
     node: chairOffice
+  - type: Damageable
+    damageModifierSet: SteelMod
+  - type: Destructible
+    thresholds: *ThresholdsFurnitureNormalSteel
 
 - type: entity
-  name: dark office chair
+  parent: OfficeChairVehicleBase
   id: ChairOfficeDark
-  parent: ChairOfficeLight
+  name: dark office chair
   components:
   - type: Sprite
     state: office-dark
@@ -175,9 +212,9 @@
     node: chairOfficeDark
 
 - type: entity
-  name: comfy chair
+  parent: [ ChairBase, StructureHealthFurniture ]
   id: ComfyChair
-  parent: ChairBase
+  name: comfy chair
   description: It looks comfy.
   components:
   - type: Sprite
@@ -185,11 +222,15 @@
   - type: Construction
     graph: Seat
     node: chairComfy
+  - type: Damageable
+    damageModifierSet: SteelMod
+  - type: Destructible
+    thresholds: *ThresholdsFurnitureNormalSteel
 
 - type: entity
-  name: pilot seat
+  parent: [ ChairBase, StructureHealthFurniture ]
   id: ChairPilotSeat
-  parent: ChairBase
+  name: pilot seat
   description: The pilot seat of a prestigious ship.
   components:
   - type: Sprite
@@ -197,11 +238,15 @@
   - type: Construction
     graph: Seat
     node: chairPilotSeat
+  - type: Damageable
+    damageModifierSet: SteelMod
+  - type: Destructible
+    thresholds: *ThresholdsFurnitureNormalSteel
 
 - type: entity
-  name: wooden chair
+  parent: [ UnanchoredChairBase, StructureHealthFurniture ]
   id: ChairWood
-  parent: UnanchoredChairBase
+  name: wooden chair
   components:
   - type: Sprite
     state: wooden
@@ -209,42 +254,26 @@
     graph: Seat
     node: chairWood
   - type: Damageable
-    damageModifierSet: Wood
+    damageModifierSet: WoodMod
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
-        !type:DamageTrigger
-        damage: 100
+    - trigger: *DamageFurnitureNormal
       behaviors:
-      - !type:PlaySoundBehavior
+      - &SoundWoodDestroy !type:PlaySoundBehavior
         sound:
           collection: WoodDestroy
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-    - trigger:
-        !type:DamageTrigger
-        damage: 25
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WoodDestroy
+          params:
+            volume: -3
       - !type:SpawnEntitiesBehavior
         spawn:
-          MaterialWoodPlank:
-            min: 1
-            max: 1
-  - type: Tag
-    tags:
-    - Wooden
+          MaterialWoodPlank1: *Min0Max1
   - type: StaticPrice
     price: 75
 
 - type: entity
-  name: ritual chair
-  id: ChairRitual
   parent: ChairWood
+  id: ChairRitual
+  name: ritual chair
   description: Looks uncomfortable.
   components:
   - type: Sprite
@@ -254,9 +283,9 @@
     node: chairRitual
 
 - type: entity
-  id: ChairMeat
-  parent: UnanchoredChairBase
+  parent: [ UnanchoredChairBase, StructureHealthFurniture ]
   name: meat chair
+  id: ChairMeat
   description: Uncomfortably sweaty.
   components:
   - type: Sprite
@@ -264,6 +293,18 @@
   - type: Construction
     graph: Seat
     node: chairMeat
+  - type: Injurable
+    damageContainer: StructuralBiological
+  - type: Destructible
+    thresholds:
+    - trigger: *DamageFurnitureNormal
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: gib
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialSheetMeat1: *Min0Max1
 
 - type: entity
   name: cursed chair
@@ -278,38 +319,20 @@
       collection: MaleScreams
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
-        !type:DamageTrigger
-        damage: 100
+    - trigger: *DamageFurnitureNormal
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Voice/Human/womanlaugh.ogg
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-    - trigger:
-        !type:DamageTrigger
-        damage: 50
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Voice/Human/womanlaugh.ogg
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          MaterialWoodPlank:
-            min: 1
-            max: 1
   - type: Construction
     graph: RitualSeat
     node: chairCursed
 
 - type: entity
-  name: web chair
+  parent: [ UnanchoredChairBase, StructureHealthFurniture ]
   id: ChairWeb
+  name: web chair
   description: For true web developers.
-  parent: UnanchoredChairBase
   components:
   - type: Sprite
     sprite: Structures/Web/chair.rsi
@@ -320,38 +343,21 @@
         path:
           "/Audio/Weapons/slash.ogg"
   - type: Damageable
-    damageModifierSet: Web
+    damageModifierSet: ThreadMod
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
-        !type:DamageTrigger
-        damage: 100
+    - trigger: *DamageFurnitureNormal
       behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WoodDestroy
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-    - trigger:
-        !type:DamageTrigger
-        damage: 50
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WoodDestroy
+      - *SoundWoodDestroy
       - !type:SpawnEntitiesBehavior
         spawn:
-          MaterialWebSilk:
-            min: 1
-            max: 1
+          MaterialWebSilk1: *Min0Max1
   - type: Construction
     graph: WebStructures
     node: chair
 
 - type: entity
-  parent: [SeatBase, BaseDeployFoldable]
+  parent: [SeatBase, BaseDeployFoldable, StructureHealthFurniture]
   id: ChairFolding
   name: folding chair
   description: If you carry six of these you become the coolest kid at church.
@@ -367,7 +373,6 @@
       visible: false
   - type: Item
     size: Huge
-  - type: Appearance
   - type: MeleeWeapon
     damage:
       types:
@@ -378,6 +383,17 @@
     graph: Seat
     node: chairFolding
   - type: DamageExaminable
+  - type: Damageable
+    damageModifierSet: PlasticMod
+  - type: Destructible
+    thresholds:
+    - trigger: *DamageFurnitureNormal
+      behaviors:
+      - *SoundMetalBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetPlastic1: *Min0Max1
+          PartRodMetal1: *Min0Max1
 
 - type: entity
   parent: ChairFolding
@@ -390,9 +406,9 @@
     enabled: False
 
 - type: entity
-  name: steel bench
+  parent: [ ChairBase, StructureHealthFurniture ]
   id: SteelBench
-  parent: ChairBase
+  name: steel bench
   description: A long chair made for a metro. Really standard design.
   components:
   - type: Sprite
@@ -400,11 +416,15 @@
   - type: Construction
     graph: Seat
     node: chairSteelBench
+  - type: Damageable
+    damageModifierSet: SteelMod
+  - type: Destructible
+    thresholds: *ThresholdsFurnitureNormalSteel
 
 - type: entity
-  name: cardboard stool
+  parent: [ UnanchoredChairBase, StructureHealthFurnitureWeak ]
   id: CardStool
-  parent: UnanchoredChairBase
+  name: cardboard stool
   description: Make sure you sit *really* gently.
   components:
   - type: Sprite
@@ -413,32 +433,24 @@
     graph: Seat
     node: stoolCard
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Card
+    damageModifierSet: CardboardMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 40
+        damage: 5
       behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 10
-      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/poster_broken.ogg
       - !type:SpawnEntitiesBehavior
         spawn:
-          MaterialCardboard:
-            min: 1
-            max: 2
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
+          MaterialCardboard: *Min0Max1
 
 - type: entity
-  name: wooden bench
+  parent: [ ChairBase, StructureHealthFurniture ]
   id: WoodenBench
-  parent: ChairBase
+  name: wooden bench
   description: Did you get a splinter? Well, at least it’s eco friendly.
   components:
   - type: Sprite
@@ -446,26 +458,13 @@
   - type: Construction
     graph: Seat
     node: chairWoodBench
+  - type: Damageable
+    damageModifierSet: WoodMod
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
-        !type:DamageTrigger
-        damage: 100
+    - trigger: *DamageFurnitureNormal
       behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WoodDestroy
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-    - trigger:
-        !type:DamageTrigger
-        damage: 50
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WoodDestroy
+      - *SoundWoodDestroy
       - !type:SpawnEntitiesBehavior
         spawn:
           MaterialWoodPlank:
@@ -475,9 +474,13 @@
     price: 50
 
 - type: entity
-  parent: StoolBase
+  parent: [ StoolBase, StructureHealthFurniture ]
   id: ChairXeno
   name: xeno chair
   components:
   - type: Sprite
     state: xeno-chair
+  - type: Damageable
+    damageModifierSet: SteelMod
+  - type: Destructible
+    thresholds: *ThresholdsFurnitureNormalSteel

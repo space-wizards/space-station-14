@@ -19,14 +19,24 @@
   showRoundEnd: false
 
 - type: feedbackPopup
-  id: ForceVentCrittersToAttackFeedback
+  id: XenoborgExtractorFeedback
   popupOrigin: wizden_master
-  title: "[bold]Played an antagonist vent critter role?[/bold]"
+  title: "[bold]The [color=deepskyblue]xenoborg[/color] extractor [scramble chars=\"xenoborg-##][{}||,.<>\" rate=40 length=5][/bold]"
   description: >-
-    If you've played or interacted with a player-controlled antagonist vent critter (spiders, slimes, clown spiders), please leave your feedback on how the new auto-attack feature went.
+    Please share feedback on the new xenoborg extractor and crystal, and how these additions affect xenoborg gameplay.
   responseType: "Feedback Thread"
-  responseLink: "https://forum.spacestation14.com/t/force-vent-critters-to-attack-feedback/26861"
+  responseLink: "https://forum.spacestation14.com/t/xenoborg-extractor/26689"
   showRoundEnd: true
   ruleWhitelist:
     components:
-      - VentHordeRule
+    - XenoborgsRule
+
+- type: feedbackPopup
+  id: StructureRebalanceFeedback
+  popupOrigin: wizden_master
+  title: "[bold]Feedback for structure health rebalance.[/bold]"
+  description: >-
+    Please share feedback on the changes to damage resistances, health values, and destruction behaviors for structures.
+  responseType: "Feedback Thread"
+  responseLink: "https://forum.spacestation14.com/t/structure-rebalance-discussion-and-feedback/28228"
+  showRoundEnd: true
