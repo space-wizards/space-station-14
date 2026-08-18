@@ -145,8 +145,8 @@
 - type: weightedRandom
   id: ChangelingObjectiveGroupDevour
   weights:
-    ChangelingUniqueIdentityObjective: 1
-    ChangelingDevourMostObjective: 1
+    ChangelingDevouredCountObjective: 1
+    ChangelingMostDevouredObjective: 1
 
 - type: weightedRandom
   id: ChangelingObjectiveGroupEscapeDummy
