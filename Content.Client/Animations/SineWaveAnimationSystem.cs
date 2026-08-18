@@ -55,7 +55,7 @@ public sealed partial class SineWaveAnimationSystem : EntitySystem
             sineComp.TotalTimeX += TimeSpan.FromSeconds(_random.NextFloat(0, (float)Math.Tau / sineComp.XWave.Value.Frequency));
 
         if (sineComp is { TotalTimeY.TotalSeconds: 0, YWave.PhaseOffset: null })
-            sineComp.TotalTimeX += TimeSpan.FromSeconds(_random.NextFloat(0, (float)Math.Tau / sineComp.YWave.Value.Frequency));
+            sineComp.TotalTimeY += TimeSpan.FromSeconds(_random.NextFloat(0, (float)Math.Tau / sineComp.YWave.Value.Frequency));
 
         var rotationKeyFrames = new List<AnimationTrackProperty.KeyFrame>();
         var offsetKeyFrames = new List<AnimationTrackProperty.KeyFrame>();
