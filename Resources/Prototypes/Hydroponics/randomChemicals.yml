@@ -65,7 +65,7 @@
     - Blood
     - Desoxyephedrine
     - ChloralHydrate
-  - quantity: 15 # Basic Element Table
+  - quantity: 12 # Basic Element Table
     weight: 5
     reagents:
     - Potassium
