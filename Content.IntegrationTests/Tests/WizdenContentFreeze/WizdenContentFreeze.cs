@@ -10,6 +10,10 @@ namespace Content.IntegrationTests.Tests.WizdenContentFreeze;
 /// </summary>
 public sealed class WizdenContentFreeze : GameTest
 {
+    /// <summary>
+    /// The current number of microwave recipes in the freeze.
+    /// If any are removed, update this count.
+    /// </summary>
     public const int RecipesLimit = 218;
 
     /// <summary>
