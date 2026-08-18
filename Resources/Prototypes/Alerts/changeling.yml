@@ -29,8 +29,10 @@
   - type: GenericCounterAlert
     centerGlyph: false
     hideLeadingZeroes: false
+  - type: SatiationCounterAlert
+    satiationType: Chemicals
   - type: Sprite
-    sprite: /Textures/Interface/Alerts/essence_counter.rsi
+    sprite: /Textures/Interface/Alerts/chemicals_counter.rsi
     layers:
     - map: [ "enum.AlertVisualLayers.Base" ]
     - map: [ "1" ]

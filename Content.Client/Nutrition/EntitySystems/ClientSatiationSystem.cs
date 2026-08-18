@@ -13,21 +13,17 @@ public sealed partial class ClientSatiationSystem : SatiationSystem
         if (args.Handled)
             return;
 
-        var values = entity.Comp.Satiations.Values;
-
-        foreach (var value in values)
-        {
-            if (!ProtoMan.Resolve(value.Prototype, out var satiation))
-                continue;
-
-            if (!satiation.Alerts.ContainsValue(args.Alert))
-                continue;
-
-            if (GetValueOrNull(entity, value.SatiationType) is not { } amount)
-                continue;
-
-            args.Amount = (int) amount;
+        // We use a seperate component to avoid having to resolve every single satiation type on an entity.
+        // Instead, we just have a component that specifies which one we're looking for.
+        if (!TryComp<SatiationCounterAlertComponent>(args.SpriteView, out var alert))
             return;
-        }
+
+        if (!ProtoMan.Resolve(alert.SatiationType, out var satiation))
+            return;
+
+        if (GetValueOrNull(entity, satiation) is not { } amount)
+            return;
+
+        args.Amount = (int) amount;
     }
 }

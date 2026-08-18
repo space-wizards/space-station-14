@@ -1,6 +1,6 @@
 - type: satiation
   id: ChemicalsChangeling
-  baseDecayRate: -0.5 # actually slowly goes up
+  baseChangeRate: 0.5 # actually slowly goes up
   maximumValue: 100
   thresholds:
     Full: 100
