@@ -57,7 +57,7 @@ public sealed partial class RummagerSystem : EntitySystem
 
         _audio.PlayPredicted(ent.Comp.Sound, ent, args.User);
 
-        if (!_net.IsClient)
+        if (_net.IsClient)
             return;
 
         var spawns = _entityTable.GetSpawns(ent.Comp.Table);
