@@ -114,7 +114,9 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
             return;
 
         if (control.TryGetParentHandler<ILinkClickHandler>(out var handler))
+        {
             handler.HandleClick(link);
+        }
     }
 }
 
