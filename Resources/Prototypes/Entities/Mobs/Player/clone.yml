@@ -38,23 +38,9 @@
   - Dna
   - Fingerprint
   - Grammar # Pronouns
-  - Hands # diplacements and intrinsic hands
   - HumanoidProfile # Age, Sex, Gender
   - MeleeWeapon # Attack animation, damage and sound
   - NpcFactionMember
-  # traits
-  - BlackAndWhiteOverlay
-  - Clumsy
-  - ImpairedMobility
-  # - LegsParalyzed (you get healed)
-  - LightweightDrunk
-  - Muted
-  - Narcolepsy
-  - Pacified
-  - Paracusia
-  - PermanentBlindness
-  - Snoring
-  - Unrevivable
   - RandomPrice
   - TemperatureDamage
   - TemperatureSpeed
@@ -87,6 +73,7 @@
   - SpanishAccent
   - StutteringAccent
   eventComponents:
+  - Hands # diplacements and intrinsic hands
   - Puller
   - Vocal # voice sounds
 
