@@ -10,41 +10,44 @@ public abstract partial class SharedRatKingSystem : EntitySystem
     [Dependency] private SharedActionsSystem _action = default!;
 
     [SubscribeLocalEvent]
-    private void OnShutdown(EntityUid uid, RatKingComponent component, ComponentShutdown args)
+    private void OnShutdown(Entity<RatKingComponent> ent, ref ComponentShutdown args)
     {
-        foreach (var servant in component.Servants)
+        foreach (var servant in ent.Comp.Servants)
         {
-            if (TryComp(servant, out RatKingServantComponent? servantComp))
-                servantComp.King = null;
+            if (!TryComp(servant, out RatKingServantComponent? servantComp))
+                continue;
+
+            servantComp.King = null;
+            Dirty(servant, servantComp);
         }
     }
 
     [SubscribeLocalEvent]
-    private void OnOrderAction(EntityUid uid, RatKingComponent component, RatKingOrderActionEvent args)
+    private void OnOrderAction(Entity<RatKingComponent> ent, ref RatKingOrderActionEvent args)
     {
-        if (component.CurrentOrder == args.Type)
+        if (ent.Comp.CurrentOrder == args.Type)
             return;
 
         args.Handled = true;
 
-        component.CurrentOrder = args.Type;
-        Dirty(uid, component);
+        ent.Comp.CurrentOrder = args.Type;
+        Dirty(ent);
 
-        DoCommandCallout(uid, component);
-        UpdateOrderActions(uid, component);
-        UpdateAllServants(component);
+        DoCommandCallout(ent);
+        UpdateOrderActions(ent);
+        UpdateAllServants(ent);
     }
 
     [SubscribeLocalEvent]
-    private void OnServantShutdown(EntityUid uid, RatKingServantComponent component, ComponentShutdown args)
+    private void OnServantShutdown(Entity<RatKingServantComponent> ent, ref ComponentShutdown args)
     {
-        if (TryComp(component.King, out RatKingComponent? ratKingComponent))
-            ratKingComponent.Servants.Remove(uid);
+        if (TryComp(ent.Comp.King, out RatKingComponent? ratKingComponent))
+            ratKingComponent.Servants.Remove(ent.Owner);
     }
 
-    private void UpdateOrderActions(EntityUid uid, RatKingComponent component)
+    private void UpdateOrderActions(Entity<RatKingComponent> ent)
     {
-        if (!TryComp<ActionsComponent>(uid, out var actions))
+        if (!TryComp<ActionsComponent>(ent.Owner, out var actions))
             return;
 
         foreach (var action in actions.Actions)
@@ -53,20 +56,20 @@ public abstract partial class SharedRatKingSystem : EntitySystem
                 instant.Event is not RatKingOrderActionEvent order)
                 continue;
 
-            _action.SetToggled(action, order.Type == component.CurrentOrder);
+            _action.SetToggled(action, order.Type == ent.Comp.CurrentOrder);
             _action.StartUseDelay(action);
         }
     }
 
-    public void UpdateAllServants(RatKingComponent component)
+    private void UpdateAllServants(Entity<RatKingComponent> ent)
     {
-        foreach (var servant in component.Servants)
+        foreach (var servant in ent.Comp.Servants)
         {
-            UpdateServantNpc(servant, component.CurrentOrder);
+            UpdateServantNpc(servant, ent.Comp.CurrentOrder);
         }
     }
 
-    public virtual void UpdateServantNpc(EntityUid uid, RatKingOrderType orderType) { }
+    protected virtual void UpdateServantNpc(EntityUid uid, RatKingOrderType orderType) { }
 
-    public virtual void DoCommandCallout(EntityUid uid, RatKingComponent component) { }
+    protected virtual void DoCommandCallout(Entity<RatKingComponent> ent) { }
 }
