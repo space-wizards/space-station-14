@@ -16,7 +16,8 @@ public abstract partial class SharedBorgSystem
         SubscribeLocalEvent<BorgChassisComponent, ProjectileReflectAttemptEvent>(RelayRefToModule);
     }
 
-    protected void RelayToModule<T>(EntityUid uid, BorgChassisComponent component, T args) where T : EntityEventArgs, IBorgModuleRelayedEvent
+    protected void RelayToModule<T>(EntityUid uid, BorgChassisComponent component, T args)
+        where T : EntityEventArgs, IBorgModuleRelayedEvent
     {
         var ev = new BorgModuleRelayedEvent<T>(args);
 
@@ -29,7 +30,8 @@ public abstract partial class SharedBorgSystem
         }
     }
 
-    protected void RelayRefToModule<T>(EntityUid uid, BorgChassisComponent component, ref T args) where T : IBorgModuleRelayedEvent
+    protected void RelayRefToModule<T>(EntityUid uid, BorgChassisComponent component, ref T args)
+        where T : IBorgModuleRelayedEvent
     {
         var ev = new BorgModuleRelayedEvent<T>(args);
 
@@ -44,13 +46,23 @@ public abstract partial class SharedBorgSystem
     }
 }
 
+/// <summary>
+/// Relay event for borg modules
+/// </summary>
 [ByRefEvent]
 public record struct BorgModuleRelayedEvent<TEvent>(TEvent Args)
 {
     public TEvent Args = Args;
 }
 
+/// <summary>
+/// Add this to relay events if you want them to be able to be relayed to borgs modules.
+/// </summary>
 public interface IBorgModuleRelayedEvent
 {
+    /// <summary>
+    /// Should it relay to modules that are not installed? If true, will relay to any modules in the borg if they are
+    /// on or off. This means if the borg is out of battery, the relay will still go off on all modules true.
+    /// </summary>
     bool RelayWhenNotInstalled { get; }
 }
