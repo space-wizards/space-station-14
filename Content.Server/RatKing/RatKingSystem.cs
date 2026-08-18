@@ -99,8 +99,6 @@ public sealed partial class RatKingSystem : SharedRatKingSystem
 
     public override void UpdateServantNpc(EntityUid uid, RatKingOrderType orderType)
     {
-        base.UpdateServantNpc(uid, orderType);
-
         if (!TryComp<HTNComponent>(uid, out var htn))
             return;
 
@@ -113,8 +111,6 @@ public sealed partial class RatKingSystem : SharedRatKingSystem
 
     public override void DoCommandCallout(EntityUid uid, RatKingComponent component)
     {
-        base.DoCommandCallout(uid, component);
-
         if (!component.OrderCallouts.TryGetValue(component.CurrentOrder, out var datasetId) ||
             !ProtoMan.TryIndex(datasetId, out var datasetPrototype))
             return;
