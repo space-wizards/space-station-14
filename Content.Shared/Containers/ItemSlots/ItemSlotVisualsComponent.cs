@@ -28,18 +28,13 @@ public partial struct ItemSlotVisuals()
     /// Enums from ItemSlotVisualLayers, makes multiple visuals possible. Used to specify Visuals.
     /// </summary>
     [DataField]
-    public ItemSlotVisualLayers Layer = ItemSlotVisualLayers.Fill;
+    public ItemSlotVisualLayers Layer = ItemSlotVisualLayers.Fill0;
 
     /// <summary>
-    /// A string to specify which slot to use from ItemSlots. Specifically the second string e.g. indicated by the arrow.
+    /// A string to specify which slot to use from ItemSlots. Specifically the third string below the slots Dictionary.
     ///
-    ///   - type: ItemSlots
-    ///     slots:
-    ///    --> item:
-    ///           name: Example
-    ///
-    /// Only useful if there's 2 or more tags of the same name but both are in different slots, so it doesn't lead to duplicate
-    /// visuals one of them is inserted.
+    /// Useful if there's 2 or more tags of the same name but both are in different slots, or if you want to check
+    /// if the slot has been filled in general, without specifying the tag. Checks if anything has been inserted by default.
     /// </summary>
     [DataField]
     public string? SlotName = null;
@@ -73,7 +68,7 @@ public partial struct ItemSlotVisuals()
 [Serializable, NetSerializable]
 public enum ItemSlotVisualLayers : byte
 {
-    Fill,
+    Fill0,
     Fill1,
     Fill2,
 }
