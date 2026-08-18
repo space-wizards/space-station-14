@@ -25,13 +25,6 @@ changeling-catalog-lethal-sting-desc = Causes very slow damage to the target. Us
 changeling-catalog-hallucinogenic-sting-name = Hallucinogenic Sting
 changeling-catalog-hallucinogenic-sting-desc = Causes the target to get high and have difficulty speaking. Causes confusion among the crew. Can be used on self.
 
-<<<<<<< HEAD
-changeling-catalog-fleshmend-name = Flesh Mend
-changeling-catalog-fleshmend-desc = We fill our bloodstream with fact acting chemicals to heal most of our wounds.
-
-changeling-catalog-epinephrine-name = Epinephrine Overdose
-changeling-catalog-epinephrine-desc = We force ourselves to produce extreme quantities of epinephrine, protecting from stuns at a cost of toxin damage.
-=======
 changeling-catalog-screech-name = Screech [TEMPORARY]
 changeling-catalog-screech-desc = We let out a powerful screech that disarms people who hear it without adequate ear protection. THIS ACTION WILL BE MOVED TO THE HORROR FORM WHEN IT IS IMPLEMENTED.
 
@@ -45,4 +38,3 @@ changeling-catalog-voice-mindshield-desc = Modify your neuron's natural waves to
 
 changeling-catalog-night-vision-name = Night Vision
 changeling-catalog-night-vision-desc = You modify your photoreceptors and heighten your senses as to become able to see in complete darkness.
->>>>>>> master
