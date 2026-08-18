@@ -339,12 +339,12 @@
   id: Histamine
   reactants:
     Carbon:
-      amount: 6
+      amount: 6 # If we ever add Histidine, replace the non catalysts here with that.
     Ammonia:
       amount: 3
     Oxygen:
       amount: 2
-    PhosphoricAcid: # Really shitty simulation of ATP ADP nonsense for synthesizing histamine... Should probably use Enzyme in the future :P
+    PhosphoricAcid: # Really shitty simulation of ATP ADP nonsense for synthesizing histamine... Should probably use Enzyme in the future :P, or be replaced with a Phoron acid with this as a derivative.
       amount: 1
       catalyst: true
   effects:
