@@ -851,9 +851,9 @@ WallVaultAlien: WallSolid
 WallVaultRock: WallSolid
 WallVaultSandstone: WallSolid
 WallSandstone: WallSolid
-# WallDiamond: WallReinforced ### need discussion
+WallDiamond: WallReinforced
 WallCult: WallBrick
-# WallClown: WallGold ### should keep proto for later, change old proto to gold for now
+WallClown: WallGold
 WallClock: WallBrass
 WallPlastic: WallSolid
 ClockworkGrille: Grille
@@ -867,7 +867,7 @@ WindoorAssemblyClockwork: WindoorAssembly
 PinionAirlock: Airlock
 PinionAirlockGlass: AirlockGlass
 PinionAirlockAssembly: AirlockAssembly
-# BananiumDoor: GoldDoor ### should keep proto for later, change old proto to gold like for now
+BananiumDoor: GoldDoor
 EncrustedIronstoneDoor: SteelDoor # iron stone to steel door
 IronstoneDoor: SteelDoor # iron stone to steel door
 WallSnowCobblebrick: WallBrick
@@ -875,7 +875,7 @@ WallSandCobblebrick: WallBrick
 WallChromiteCobblebrick: WallBrick
 WallAndesiteCobblebrick: WallBrick
 WallIronsandCobblebrick: WallBrick
-WallCobblebrick: WallConcrete # discrepency between other cobblebricks
+WallCobblebrick: WallConcrete
 WallAsteroidCobblebrick: WallConcrete
 WallBasaltCobblebrick: WallConcrete
 WallIce: WallRockSnow
@@ -1006,14 +1006,14 @@ FloorTileItemIronsandConcreteMono: null
 FloorTileItemIronsandConcreteSmooth: null
 IronSandstone: IronRock
 IronSandstoneMining: IronRock
-# AsteroidRockBananium: AsteroidRock ### Don't remove bananium
-# AsteroidRockBananiumCrab: AsteroidRock
-# IronRockBananium: IronRock
-# WallRockBananium: WallRock
-# WallRockChromiteBananium: WallRockChromite
-# WallRockSandBananium: WallRockSand
-# WallRockSnowBananium: WallRockSnow
-# MeteorRockBananium: AsteroidRock
+AsteroidRockBananium: AsteroidRock
+AsteroidRockBananiumCrab: AsteroidRock
+IronRockBananium: IronRock
+WallRockBananium: WallRock
+WallRockChromiteBananium: WallRockChromite
+WallRockSandBananium: WallRockSand
+WallRockSnowBananium: WallRockSnow
+MeteorRockBananium: AsteroidRock
 WallRockBasalt: WallRock
 WallRockBasaltCoal: WallRockCoal
 WallRockBasaltGold: WallRockGold
@@ -1021,7 +1021,7 @@ WallRockBasaltDiamond: WallRockDiamond
 WallRockBasaltPlasma: WallRockPlasma
 WallRockBasaltQuartz: WallRockQuartz
 WallRockBasaltSilver: WallRockSilver
-WallRockBasaltBananium: WallRockBananium # banana
+WallRockBasaltBananium: WallRock
 WallRockBasaltTin: WallRockTin
 WallRockBasaltUranium: WallRockUranium
 WallRockBasaltArtifactFragment: WallRockArtifactFragment
@@ -1033,7 +1033,7 @@ WallRockAndesiteDiamond: WallRockDiamond
 WallRockAndesitePlasma: WallRockPlasma
 WallRockAndesiteQuartz: WallRockQuartz
 WallRockAndesiteSilver: WallRockSilver
-WallRockAndesiteBananium: WallRockBananium # banana
+WallRockAndesiteBananium: WallRock
 WallRockAndesiteTin: WallRockTin
 WallRockAndesiteUranium: WallRockUranium
 WallRockAndesiteArtifactFragment: WallRockArtifactFragment
@@ -1054,13 +1054,13 @@ FloorChromiteChasm: FloorChasmEntity
 # 2026-08-06
 FloorTileItemHydro: null
 WallRiveted: WallMarble # why not add a new proto? one is a super reinforced steel wall, other is a rock # TODO need discussion
-# WallSpawnAsteroidBananium: null
-# WallSpawnAsteroidBananiumCrab: null
+WallSpawnAsteroidBananium: null
+WallSpawnAsteroidBananiumCrab: null
 
 # 2026-08-11
 FloorTileItemDirty: null
 PinionAirlockAssemblyGlass: AirlockAssemblyGlass
-# AnomalyRockBananium: AnomalyRockCoal
+AnomalyRockBananium: AnomalyRockCoal
 ClockworkGirder: Girder
 BaseAsteroidRock: AsteroidRock
 ButtonFrameExit: ButtonFrameWhite
@@ -1128,5 +1128,4 @@ MeteorRockUranium: AsteroidRockUranium
 DrinkNeurotoxinGlass: null
 
 # add date gua
-MeteorRockBananium: AsteroidRockBananium
 MetalDoor: SteelDoor

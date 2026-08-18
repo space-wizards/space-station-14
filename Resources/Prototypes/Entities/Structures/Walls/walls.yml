@@ -160,45 +160,7 @@
     key: walls
     base: brass
 
-- type: entity
-  parent: [ BaseWall, StructureHealthWallWeak]
-  id: WallClown # PLACEHOLDER FOR BANANIUM WALLS
-  suffix: [ Bananium, Placeholder ]
-  name: golden wall # bananium wall
-  components:
-  - type: Sprite
-    sprite: Structures/Walls/gold.rsi # change to bananium in the future
-  - type: Icon
-    sprite: Structures/Walls/gold.rsi # change to bananium in the future
-  - type: Construction
-    graph: Girder
-    node: bananiumWall
-  - type: RCDDeconstructable
-    cost: 6
-    delay: 8
-    fx: EffectRCDDeconstruct8
-  - type: Damageable
-    damageModifierSet: BananiumMod
-  - type: Destructible
-    thresholds:
-    - trigger: *DamageWallWeak
-      behaviors:
-      - *SoundMetalSlam
-      - *ChangeNodeGirder
-  - type: IconSmooth
-    key: walls
-    base: clown
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.5"
-        mask:
-        - FullTileMask
-        layer:
-        - WallLayer
-        density: 8000 # really good ramming wall, bananium is rare so it's probably fine
+
 
 - type: entity
   parent: [ BaseWall, StructureHealthWallWeak ]
@@ -255,37 +217,6 @@
   - type: IconSmooth
     key: walls
     base: debug
-
-### Why not have diamond wall if other types of walls got left?
-#- type: entity
-#  parent: BaseWall
-#  id: WallDiamond
-#  name: diamond wall
-#  components:
-#  - type: Sprite
-#    sprite: Structures/Walls/diamond.rsi
-#  - type: Icon
-#    sprite: Structures/Walls/diamond.rsi
-#  - type: RCDDeconstructable
-#    cost: 6
-#    delay: 8
-#    fx: EffectRCDDeconstruct8
-#  - type: Destructible
-#    thresholds:
-#    - trigger:
-#        !type:DamageTrigger
-#        damage: 300
-#      behaviors:
-#      - !type:SpawnEntitiesBehavior
-#        spawn:
-#          Girder:
-#            min: 1
-#            max: 1
-#      - !type:DoActsBehavior
-#        acts: [ "Destruction" ]
-#  - type: IconSmooth
-#    key: walls
-#    base: diamond
 
 - type: entity
   parent: [ BaseWall, StructureHealthWallWeak ]

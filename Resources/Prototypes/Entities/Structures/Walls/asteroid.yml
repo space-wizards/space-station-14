@@ -239,21 +239,6 @@
 
 - type: entity
   abstract: true
-  id: BaseVeinBananium
-  suffix: Bananium
-  description: An ore vein rich with bananium.
-  components:
-  - type: OreVein
-    oreChance: 1.0
-    currentOre: OreBananium
-  - type: Sprite
-    layers:
-    - state: rock_bananium
-      sprite: Structures/Walls/stone-ore.rsi
-      map: [ "enum.MiningScannerVisualLayers.Overlay" ]
-
-- type: entity
-  abstract: true
   id: BaseVeinSalt
   suffix: Salt
   description: An ore vein rich with salt.
@@ -392,18 +377,6 @@
   components:
   - type: OreVein
     currentOre: OreUraniumCrab
-
-- type: entity
-  parent: [ BaseVeinUranium, AsteroidRock ]
-  id: AsteroidRockBananium
-
-- type: entity
-  id: AsteroidRockBananiumCrab
-  parent: AsteroidRockBananium
-  suffix: Bananium Crab
-  components:
-  - type: OreVein
-    currentOre: OreBananiumCrab
 
 - type: entity
   parent: [ BaseVeinSalt, AsteroidRock ]
@@ -615,17 +588,6 @@
       WallRockSnow: WallRockSnowUranium
 
 - type: entity
-  parent: [ BaseVeinBananium, WallRock ]
-  id: WallRockBananium
-  components:
-  - type: EntityRemap
-    mask:
-      AsteroidRock: AsteroidRockBananium
-      WallRockChromite: WallRockChromiteBananium
-      WallRockSand: WallRockSandBananium
-      WallRockSnow: WallRockSnowBananium
-
-- type: entity
   parent: [ BaseVeinArtifactFragment, WallRock ]
   id: WallRockArtifactFragment
   components:
@@ -694,10 +656,6 @@
   id: WallRockSnowUranium
 
 - type: entity
-  parent: [ BaseVeinBananium, WallRockSnow ]
-  id: WallRockSnowBananium
-
-- type: entity
   parent: [ BaseVeinArtifactFragment, WallRockSnow ]
   id: WallRockSnowArtifactFragment
 
@@ -752,10 +710,6 @@
   id: WallRockSandUranium
 
 - type: entity
-  parent: [ BaseVeinBananium, WallRockSand ]
-  id: WallRockSandBananium
-
-- type: entity
   parent: [ BaseVeinArtifactFragment, WallRockSand ]
   id: WallRockSandArtifactFragment
 
@@ -808,10 +762,6 @@
 - type: entity
   parent: [ BaseVeinUranium, WallRockChromite ]
   id: WallRockChromiteUranium
-
-- type: entity
-  parent: [ BaseVeinBananium, WallRockChromite ]
-  id: WallRockChromiteBananium
 
 - type: entity
   parent: [ BaseVeinArtifactFragment, WallRockChromite ]
