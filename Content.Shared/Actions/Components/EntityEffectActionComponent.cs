@@ -14,7 +14,7 @@ public sealed partial class EntityEffectActionComponent : Component
     /// List of entity effects to apply to the target when this action is performed.
     /// </summary>
     [DataField(required: true)]
-    public List<EntityEffect> Effects = [];
+    public EntityEffect[]? Effects;
 }
 
 /// <summary>
