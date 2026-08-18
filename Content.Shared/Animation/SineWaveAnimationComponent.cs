@@ -100,6 +100,8 @@ public partial struct SignWaveDefinition
     [DataField]
     public float Frequency = 1;
 
+    public TimeSpan Period => TimeSpan.FromSeconds(1 / Frequency);
+
     /// <summary>
     /// The time offset to start the animation. If set to null, it will be set to a random number
     /// between 0 and the Period (which is 1 / <see cref="Frequency"/>). Set to 0 for no offset.
