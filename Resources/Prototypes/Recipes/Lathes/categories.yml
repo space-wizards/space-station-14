@@ -8,6 +8,10 @@
   name: lathe-category-clothing
 
 - type: latheCategory
+  id: Containers
+  name: lathe-category-containers
+
+- type: latheCategory
   id: Lights
   name: lathe-category-lights
 
@@ -26,6 +30,15 @@
 - type: latheCategory
   id: Weapons
   name: lathe-category-weapons
+
+# Medical
+- type: latheCategory
+  id: Medicinal
+  name: lathe-category-medicinal
+
+- type: latheCategory
+  id: Surgical
+  name: lathe-category-surgical
 
 # Biogen
 - type: latheCategory

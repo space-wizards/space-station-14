@@ -1,6 +1,8 @@
 - type: latheRecipe
   id: Beaker
   result: Beaker
+  categories:
+  - Containers
   completetime: 2
   materials:
     Glass: 200
@@ -8,6 +10,8 @@
 - type: latheRecipe
   id: LargeBeaker
   result: LargeBeaker
+  categories:
+  - Containers
   completetime: 2
   materials:
     Glass: 400
@@ -15,6 +19,8 @@
 - type: latheRecipe
   id: CryostasisBeaker
   result: CryostasisBeaker
+  categories:
+  - Containers
   completetime: 2
   materials:
     Steel: 250
@@ -23,6 +29,8 @@
 - type: latheRecipe
   id: SyringeCryostasis
   result: SyringeCryostasis
+  categories:
+  - Tools
   completetime: 2
   materials:
     Steel: 200
@@ -31,6 +39,8 @@
 - type: latheRecipe
   id: Dropper
   result: Dropper
+  categories:
+  - Tools
   completetime: 2
   materials:
     Glass: 50
@@ -39,6 +49,8 @@
 - type: latheRecipe
   id: Syringe
   result: Syringe
+  categories:
+  - Tools
   completetime: 2
   materials:
     Plastic: 100
@@ -47,6 +59,8 @@
 - type: latheRecipe
   id: BluespaceBeaker
   result: BluespaceBeaker
+  categories:
+  - Containers
   completetime: 2
   materials:
     Steel: 500
@@ -57,6 +71,8 @@
 - type: latheRecipe
   id: SyringeBluespace
   result: SyringeBluespace
+  categories:
+  - Tools
   completetime: 2
   materials:
     Steel: 100
@@ -68,6 +84,8 @@
 - type: latheRecipe
   id: PillCanister
   result: PillCanister
+  categories:
+  - Containers
   completetime: 2
   materials:
     Plastic: 100
@@ -75,6 +93,8 @@
 - type: latheRecipe
   id: ChemistryEmptyBottle01
   result: ChemistryEmptyBottle01
+  categories:
+  - Containers
   completetime: 2
   materials:
     Glass: 100
@@ -93,6 +113,8 @@
 - type: latheRecipe
   id: ChemistryEmptyVial
   result: ChemistryEmptyVial
+  categories:
+  - Containers
   completetime: 2
   materials:
     Glass: 100
@@ -101,6 +123,8 @@
 - type: latheRecipe
   id: ChemistryEmptyVialSmall
   result: ChemistryEmptyVialSmall
+  categories:
+  - Containers
   completetime: 2
   materials:
     Glass: 50
@@ -109,6 +133,8 @@
 - type: latheRecipe
   id: ClothingEyesGlassesChemical
   result: ClothingEyesGlassesChemical
+  categories:
+  - Clothing
   completetime: 2
   materials:
     Steel: 200
