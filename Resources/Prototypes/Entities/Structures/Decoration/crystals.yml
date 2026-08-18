@@ -3,17 +3,16 @@
   parent: [ BaseStructure, StructureHealthFurnitureWeak ]
   id: BaseCrystalStalagmite
   name: crystal
-  description: A crystaline solid.
+  description: An outcrop of jagged crystals.
   components:
   - type: Sprite
-    noRot: true
-    sprite: Structures/Decoration/crystal.rsi
     layers:
+    - sprite: Structures/Decoration/crystal.rsi
       state: big0
-      map: [ "crystal" ]
+      map: [ "enum.DamageStateVisualLayers.Base" ]
   - type: RandomSprite
     available:
-    - crystal:
+    - enum.DamageStateVisualLayers.Base:
         big0: ""
         big1: ""
         big2: ""
