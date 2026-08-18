@@ -23,9 +23,6 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
     public static Color DefaultLinkColor => Color.CornflowerBlue;
     [Dependency] private IEntityManager _entity = default!;
     [Dependency] private IUserInterfaceManager _ui = default!;
-    [Dependency] private readonly ILogManager _logManager = default!;
-    private ISawmill _sawmill = default!;
-
     private readonly (string AttributeName, TryResolveLink Resolver)[] _resolvers;
     private delegate bool TryResolveLink(MarkupNode node, out LinkData data);
     private readonly record struct LinkData(string Link, Color? Color, bool Clickable);
@@ -37,7 +34,6 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
             (EntityAttributeName, TryResolveEntityLink),
             (LinkAttributeName, TryResolvePlainLink),
         ];
-        _sawmill = _logManager.GetSawmill("richtext");
     }
 
     public string Name => "textlink";
@@ -119,8 +115,6 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
 
         if (control.TryGetParentHandler<ILinkClickHandler>(out var handler))
             handler.HandleClick(link);
-        else
-            _sawmill.Warning("Warning! No valid ILinkClickHandler found.");
     }
 }
 
