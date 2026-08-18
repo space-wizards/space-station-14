@@ -26,6 +26,9 @@
     actions:
     - ActionChangelingStore
     - ActionChangelingStasis
+  - type: DisplayStatusIcon
+    icons:
+    - ChangelingFaction
   - type: Store
     name: store-preset-name-changeling
     categories:

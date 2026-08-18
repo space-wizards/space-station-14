@@ -48,13 +48,6 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         SubscribeLocalEvent<StorageComponent, BeforeChangelingTransformEvent>(StorageBeforeTransform);
     }
 
-    [SubscribeLocalEvent]
-    private void OnGetStatusIcon(Entity<ChangelingTransformComponent> ent, ref GetStatusIconsEvent args)
-    {
-        var iconPrototype = ProtoMan.Index(ent.Comp.StatusIcon);
-        args.StatusIcons.Add(iconPrototype);
-    }
-
     private void OnMapInit(Entity<ChangelingTransformComponent> ent, ref MapInitEvent init)
     {
         _actions.AddAction(ent, ref ent.Comp.ChangelingTransformActionEntity, ent.Comp.ChangelingTransformAction);

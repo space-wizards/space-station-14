@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.CCVar;
 using Content.Shared.Ghost.Components;
 using Content.Shared.StatusIcon;
@@ -93,5 +94,14 @@ public sealed partial class StatusIconSystem : SharedStatusIconSystem
             return false;
 
         return true;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnGetStatusIconDisplay(Entity<DisplayStatusIconComponent> ent, ref GetStatusIconsEvent args)
+    {
+        foreach (var icon in ent.Comp.Icons)
+        {
+            args.StatusIcons.Add(ProtoMan.Index(icon));
+        }
     }
 }

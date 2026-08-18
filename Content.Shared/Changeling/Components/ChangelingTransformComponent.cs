@@ -52,11 +52,5 @@ public sealed partial class ChangelingTransformComponent : Component
     public ProtoId<CloningSettingsPrototype> TransformCloningSettings = "ChangelingCloningSettings";
 
     public override bool SendOnlyToOwner => true;
-
-    /// <summary>
-    /// Status icon displayed by the changeling
-    /// </summary>
-    [DataField("statusIcon")]
-    public ProtoId<FactionIconPrototype> StatusIcon { get; set; } = "ChangelingFaction";
 }
 

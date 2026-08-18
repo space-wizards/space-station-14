@@ -12,6 +12,9 @@
   - type: DestructionResistance
   - type: RevolutionaryImmune
   - type: ZombieImmune
+  - type: DisplayStatusIcon
+    icons:
+    - ChangelingFaction
   - type: ActionGrant
     actions:
     - ActionChangelingStore
