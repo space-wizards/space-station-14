@@ -10,7 +10,7 @@ public sealed partial class RatKingDomainActionEvent : InstantActionEvent;
 public sealed partial class RatKingOrderActionEvent : InstantActionEvent
 {
     /// <summary>
-    /// The type of order being given
+    /// The type of order being given.
     /// </summary>
     [DataField(required: true)]
     public RatKingOrderType Type;

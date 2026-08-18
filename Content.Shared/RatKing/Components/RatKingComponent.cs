@@ -29,7 +29,7 @@ public sealed partial class RatKingComponent : Component
     public float HungerPerDomainUse = 50f;
 
     /// <summary>
-    /// How many moles of ammonia are released after one us of Domain.
+    /// How many moles of ammonia are released after one use of Domain.
     /// </summary>
     [DataField]
     public float MolesAmmoniaPerDomain = 200f;
