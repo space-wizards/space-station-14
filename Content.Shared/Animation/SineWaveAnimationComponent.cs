@@ -66,17 +66,17 @@ public sealed partial class SineWaveAnimationComponent : Component
     public SignWaveDefinition? YWave;
 
     /// <summary>
-    /// Stores the last time for both the x and y waves. Needed for smooth looping so it doesn't
+    /// Stores the total time for the x wave spent doing then animation. Needed for smooth looping so it doesn't
     /// offset in an odd way when restarting.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan LastTimeX;
+    public TimeSpan TotalTimeX;
 
     /// <summary>
     /// Same as LastTimeX, but with Y.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan LastTimeY;
+    public TimeSpan TotalTimeY;
 }
 
 /// <summary>
