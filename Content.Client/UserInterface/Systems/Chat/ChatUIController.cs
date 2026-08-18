@@ -470,7 +470,11 @@ public sealed partial class ChatUIController : UIController
 
     private void CreateNuSpeechBubble(EntityUid entity, SpeechBubbleData speechData)
     {
-        var nameColor = GetNameColor(SharedChatSystem.GetStringInsideTag(speechData.Message, "Name"));
+        var name = SharedChatSystem.GetStringInsideTag(speechData.Message, "Name");
+        //TODO better way of this
+        name = FormattedMessage.RemoveMarkupPermissive(name).ToString();
+
+        var nameColor = GetNameColor(name);
         Color.TryFromHex(nameColor, out var color);
 
         if (!ActiveSpeechBubbles.TryGetValue(entity, out var existing))
@@ -489,13 +493,18 @@ public sealed partial class ChatUIController : UIController
             //Add name tag if they are enabled
             if (NameTags && !ActiveSpeechBubbleNameTags.ContainsKey(entity))
             {
-                var nameTag = new NuSpeechBubbleNameTag(entity, color);
+                var nameTag = new NuSpeechBubbleNameTag(entity, name, color);
                 ActiveSpeechBubbleNameTags.Add(entity, nameTag);
                 nameTag.OnDied += NuSpeechBubbleNameTagDied;
             }
 
             if (ActiveSpeechBubbleNameTags.TryGetValue(entity, out var existingNameTag))
+            {
                 existingNameTag.SetDeathTime(bubble.DeathTime);
+                //incase our name changes mid conversation.
+                //behaves kind of weird. idk
+                existingNameTag.Update(name, color);
+            }
         }
 
         existing.Add(bubble);
