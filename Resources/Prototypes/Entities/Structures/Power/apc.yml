@@ -24,7 +24,8 @@
     access: [["Engineering"]]
   - type: Sprite
     drawdepth: WallMountedItems
-    sprite: Structures/Power/apc.rsi
+    sprite: Structures/Wallmounts/apc.rsi
+    offset: 0, -0.25
     layers:
     - state: base
     - state: panel
@@ -78,7 +79,7 @@
     sourceNode: input
     loadNode: output
     collectionName: apc
-    sprite: Structures/Power/apc.rsi
+    sprite: Structures/Wallmounts/apc.rsi
     state: static
   - type: BatteryCharger
     voltage: Medium
@@ -143,6 +144,7 @@
     priority: 1
   - type: StaticPrice
     price: 500
+  - type: PowerGridCheckNotify
   - type: GuideHelp
     guides:
     - VoltageNetworks
@@ -159,7 +161,7 @@
     mode: SnapgridCenter
   components:
   - type: Sprite
-    sprite: Structures/Power/apc.rsi
+    sprite: Structures/Wallmounts/apc.rsi
     state: frame
   - type: Construction
     graph: APC

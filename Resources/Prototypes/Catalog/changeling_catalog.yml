@@ -34,7 +34,7 @@
   description: changeling-catalog-voice-mimic-desc
   icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: mimicry}
   cost:
-    ChangelingDNA: 20
+    ChangelingDNA: 10
   categories:
   - ChangelingStoreUtility
   conditions:
@@ -49,7 +49,7 @@
   icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: biodegrade }
   applyToMob: true
   cost:
-    ChangelingDNA: 20
+    ChangelingDNA: 10
   categories:
   - ChangelingStoreUtility
   conditions:
@@ -132,25 +132,39 @@
   productAction: ActionChangelingStingHallucinogenic
 
 - type: listing
-  id: ChangelingFleshMend
-  name: changeling-catalog-fleshmend-name
-  description: changeling-catalog-fleshmend-desc
-  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: fleshmend }
+  id: ChangelingLastResort
+  name: changeling-catalog-last-resort-name
+  description: changeling-catalog-last-resort-desc
   applyToMob: true
   cost:
-    ChangelingDNA: 15
+    ChangelingDNA: 20
   categories:
-  - ChangelingStoreCombat
+  - ChangelingStoreUtility
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
-  productAction: ActionChangelingFleshMend
+  productAction: ActionChangelingLastResort
 
 - type: listing
-  id: ChangelingEpinephrine
-  name: changeling-catalog-epinephrine-name
-  description: changeling-catalog-epinephrine-desc
-  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: epinephrine }
+  id: ChangelingNightVision
+  name: changeling-catalog-night-vision-name
+  description: changeling-catalog-night-vision-desc
+  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: nv_on }
+  applyToMob: true
+  cost:
+    ChangelingDNA: 5
+  categories:
+  - ChangelingStoreUtility
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  productComponents: ChangelingNightVisionDummy
+
+- type: listing
+  id: ChangelingScreech
+  name: changeling-catalog-screech-name
+  description: changeling-catalog-screech-desc
+  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: screech }
   applyToMob: true
   cost:
     ChangelingDNA: 20
@@ -159,4 +173,18 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
-  productAction: ActionChangelingEpinephrine
+  productAction: ActionChangelingScreech
+
+- type: listing
+  id: ChangelingFakeMindshield
+  name: changeling-catalog-voice-mindshield-name
+  description: changeling-catalog-voice-mindshield-desc
+  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: mindshield_on }
+  cost:
+    ChangelingDNA: 10
+  categories:
+  - ChangelingStoreStealth
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  productComponents: ChangelingFakeMindshieldDummy
