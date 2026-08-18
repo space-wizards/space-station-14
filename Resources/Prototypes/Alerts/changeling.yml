@@ -16,8 +16,8 @@
   id: ChemicalsChangeling
   category: Chemicals
   icons:
-  - sprite: /Textures/Interface/Alerts/essence_counter.rsi
-    state: essence0
+  - sprite: /Textures/Interface/Alerts/chemicals_counter.rsi
+    state: chemicals
   alertViewEntity: AlertChemicalsSpriteView
   name: alerts-changeling-chemicals-name
   description: alerts-changeling-chemicals-desc
@@ -36,7 +36,8 @@
     layers:
     - map: [ "enum.AlertVisualLayers.Base" ]
     - map: [ "1" ]
-      offset: 0.25, 0
+      offset: 0.425, 0.25
     - map: [ "10" ]
-      offset: 0.125, 0
+      offset: 0.3, 0.25
     - map: [ "100" ]
+      offset: 0.175, 0.25

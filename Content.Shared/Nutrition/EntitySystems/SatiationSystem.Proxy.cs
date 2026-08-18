@@ -306,7 +306,7 @@ public abstract partial class SatiationSystem
 
         SetAuthoritativeValue((entity, entity.Comp), satiation, proto, value);
 
-        DirtyField(entity, entity.Comp, nameof(SatiationComponent.Satiations));
+        DirtyField(entity, entity.Comp, nameof(SatiationComponent.SatiationFieldName));
     }
 
     /// <summary>
@@ -319,12 +319,12 @@ public abstract partial class SatiationSystem
         if (!Resolve(entity, ref entity.Comp))
             return;
 
-        if (!entity.Comp.Satiations.Remove(type))
-            return;
-
         if (GetAndResolveSatiationOfType(entity.Comp, type) is { } satiation)
+        {
             _alerts.ClearAlertCategory(entity.Owner, satiation.Proto.AlertCategory);
+            entity.Comp.Satiations.Remove(type);
+        }
 
-        DirtyField(entity, entity.Comp, nameof(SatiationComponent.Satiations));
+        DirtyField(entity, entity.Comp, nameof(SatiationComponent.SatiationFieldName));
     }
 }
