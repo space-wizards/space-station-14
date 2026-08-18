@@ -189,9 +189,9 @@ public sealed partial class IconSmoothSystem : EntitySystem
         if (updateSelf)
             _dirtyEntities.Enqueue(entity);
 
-        foreach (var direction in EnumerateDirections())
+        foreach (var direction in DirectionExtensions.AllDirections)
         {
-            UpdateAnchored(_map.GetAnchoredEntities(grid, grid, pos + direction));
+            UpdateAnchored(_map.GetAnchoredEntities(grid, grid, pos + direction.ToIntVec()));
         }
     }
 
@@ -253,14 +253,6 @@ public sealed partial class IconSmoothSystem : EntitySystem
     {
         angle *= -1;
         return (byte)angle.GetCardinalDir();
-    }
-
-    private IEnumerable<Vector2i> EnumerateDirections()
-    {
-        foreach (var direction in DirectionExtensions.AllDirections)
-        {
-            yield return direction.ToIntVec();
-        }
     }
 
     private void UpdateTile(Entity<IconSmoothComponent, TransformComponent> entity, string key)
