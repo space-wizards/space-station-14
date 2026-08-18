@@ -24,4 +24,3 @@ public sealed partial class AdminShuttleWindow : DefaultWindow
         _callShuttleButton.Command = $"callshuttle {obj.Text}";
     }
 }
-
