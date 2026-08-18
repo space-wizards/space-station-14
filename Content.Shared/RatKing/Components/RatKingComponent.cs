@@ -1,9 +1,10 @@
 using Content.Shared.Dataset;
+using Content.Shared.RatKing.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.RatKing;
+namespace Content.Shared.RatKing.Components;
 
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedRatKingSystem))]
 [AutoGenerateComponentState]
@@ -13,19 +14,19 @@ public sealed partial class RatKingComponent : Component
     public EntProtoId ActionRaiseArmy = "ActionRatKingRaiseArmy";
 
     /// <summary>
-    ///     The action for the Raise Army ability
+    /// The action for the Raise Army ability
     /// </summary>
     [DataField]
     public EntityUid? ActionRaiseArmyEntity;
 
     /// <summary>
-    ///     The amount of hunger one use of Raise Army consumes
+    /// The amount of hunger one use of Raise Army consumes
     /// </summary>
     [DataField(required: true)]
     public float HungerPerArmyUse = 25f;
 
     /// <summary>
-    ///     The entity prototype of the mob that Raise Army summons
+    /// The entity prototype of the mob that Raise Army summons
     /// </summary>
     [DataField]
     public EntProtoId ArmyMobSpawnId = "MobRatServant";
@@ -34,19 +35,19 @@ public sealed partial class RatKingComponent : Component
     public EntProtoId ActionDomain = "ActionRatKingDomain";
 
     /// <summary>
-    ///     The action for the Domain ability
+    /// The action for the Domain ability
     /// </summary>
     [DataField]
     public EntityUid? ActionDomainEntity;
 
     /// <summary>
-    ///     The amount of hunger one use of Domain consumes
+    /// The amount of hunger one use of Domain consumes
     /// </summary>
     [DataField(required: true)]
     public float HungerPerDomainUse = 50f;
 
     /// <summary>
-    ///     How many moles of ammonia are released after one us of Domain
+    /// How many moles of ammonia are released after one us of Domain
     /// </summary>
     [DataField]
     public float MolesAmmoniaPerDomain = 200f;

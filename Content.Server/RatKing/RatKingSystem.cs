@@ -13,6 +13,8 @@ using Content.Shared.Random.Helpers;
 using Content.Shared.RatKing;
 using Robust.Shared.Map;
 using Content.Shared.Chat;
+using Content.Shared.RatKing.Components;
+using Content.Shared.RatKing.Systems;
 
 namespace Content.Server.RatKing;
 

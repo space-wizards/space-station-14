@@ -1,8 +1,9 @@
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
+using Content.Shared.RatKing.Components;
 using Robust.Shared.Random;
 
-namespace Content.Shared.RatKing;
+namespace Content.Shared.RatKing.Systems;
 
 public abstract partial class SharedRatKingSystem : EntitySystem
 {
