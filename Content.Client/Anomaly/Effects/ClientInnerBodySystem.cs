@@ -55,7 +55,7 @@ public sealed partial class ClientInnerBodyAnomalySystem : SharedInnerBodyAnomal
         }
         else
         {
-            _displacement.EnsureDisplacementIsNotOnSprite((ent.Owner, sprite), ent.Comp1.LayerMap, index);
+            _displacement.EnsureDisplacementIsNotOnSprite((ent.Owner, sprite), ent.Comp1.LayerMap);
         }
     }
 
@@ -79,7 +79,7 @@ public sealed partial class ClientInnerBodyAnomalySystem : SharedInnerBodyAnomal
         var index = _sprite.LayerMapGet((ent.Owner, sprite), ent.Comp.LayerMap);
         _sprite.LayerSetVisible((ent.Owner, sprite), index, false);
 
-        _displacement.EnsureDisplacementIsNotOnSprite((ent.Owner, sprite), ent.Comp.LayerMap, index);
+        _displacement.EnsureDisplacementIsNotOnSprite((ent.Owner, sprite), ent.Comp.LayerMap);
     }
 
     private void OnVisualsShutdown(Entity<InnerBodyAnomalyVisualsComponent> ent, ref ComponentShutdown args)
@@ -92,6 +92,6 @@ public sealed partial class ClientInnerBodyAnomalySystem : SharedInnerBodyAnomal
 
         var index = _sprite.LayerMapGet((ent.Owner, sprite), anomaly.LayerMap);
 
-        _displacement.EnsureDisplacementIsNotOnSprite((ent.Owner, sprite), anomaly.LayerMap, index);
+        _displacement.EnsureDisplacementIsNotOnSprite((ent.Owner, sprite), anomaly.LayerMap);
     }
 }

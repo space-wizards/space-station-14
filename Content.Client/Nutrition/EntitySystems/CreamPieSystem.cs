@@ -29,9 +29,8 @@ public sealed partial class CreamPieSystem : SharedCreamPieSystem
 
     private void OnComponentShutdown(Entity<CreamPiedComponent> ent, ref ComponentShutdown args)
     {
-        _sprite.LayerMapTryGet(ent.Owner, CreamPiedVisualLayer.Key, out var index, false);
+        _displacement.EnsureDisplacementIsNotOnSprite((ent, Comp<SpriteComponent>(ent)), CreamPiedVisualLayer.Key);
         _sprite.RemoveLayer(ent.Owner, CreamPiedVisualLayer.Key);
-        _displacement.EnsureDisplacementIsNotOnSprite((ent, Comp<SpriteComponent>(ent)), CreamPiedVisualLayer.Key, index);
     }
 
     private void OnAppearanceChange(Entity<CreamPiedComponent> ent, ref AppearanceChangeEvent args)
@@ -59,7 +58,7 @@ public sealed partial class CreamPieSystem : SharedCreamPieSystem
         if (creamPied.Sprite == null)
         {
             _sprite.RemoveLayer((ent.Owner, sprite), CreamPiedVisualLayer.Key);
-            _displacement.EnsureDisplacementIsNotOnSprite((ent.Owner, sprite), CreamPiedVisualLayer.Key, index);
+            _displacement.EnsureDisplacementIsNotOnSprite((ent.Owner, sprite), CreamPiedVisualLayer.Key);
             return;
         }
 
@@ -73,7 +72,7 @@ public sealed partial class CreamPieSystem : SharedCreamPieSystem
         }
         else
         {
-            _displacement.EnsureDisplacementIsNotOnSprite((ent.Owner, sprite), CreamPiedVisualLayer.Key, index);
+            _displacement.EnsureDisplacementIsNotOnSprite((ent.Owner, sprite), CreamPiedVisualLayer.Key);
         }
     }
 }

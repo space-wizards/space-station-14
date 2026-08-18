@@ -14,6 +14,7 @@ public sealed partial class DisplacementMapSystem : EntitySystem
 
     //needs to be replaced later: see comment on line 48
     private static readonly ProtoId<ShaderPrototype> UnshadedID = "unshaded";
+    public static readonly ProtoId<ShaderPrototype> DisplacedUnshaded = "DisplacedDrawUnshaded";
 
     private static string? BuildDisplacementLayerKey(object key)
     {
@@ -119,17 +120,27 @@ public sealed partial class DisplacementMapSystem : EntitySystem
     /// </summary>
     /// <param name="sprite">The sprite to remove the displacement layer from.</param>
     /// <param name="key">The key of the layer that is referenced by the displacement layer we want to remove.</param>
-    /// <param name="index">The index of the layer that had the displacement layer applied to it. Used to reset the shader.</param>
     /// <returns>Returns true if the displacement existed and was removed.</returns>
-    public bool EnsureDisplacementIsNotOnSprite(Entity<SpriteComponent> sprite, object key, int? index = null)
+    public bool EnsureDisplacementIsNotOnSprite(Entity<SpriteComponent> sprite, object key)
     {
         var displacementLayerKey = BuildDisplacementLayerKey(key);
         if (displacementLayerKey is null)
             return false;
 
-        if (index != null)
-            sprite.Comp.LayerSetShader(index.Value, null, null);
+        if (_sprite.RemoveLayer(sprite.AsNullable(), displacementLayerKey, false))
+        {
+            var shader = sprite.Comp[key] is SpriteComponent.Layer layer && layer.ShaderPrototype == DisplacedUnshaded
+                ? SpriteSystem.UnshadedId.Id
+                : null;
 
-        return _sprite.RemoveLayer(sprite.AsNullable(), displacementLayerKey, false);
+            if (shader != null)
+                sprite.Comp.LayerSetShader(key, shader);
+            else
+                sprite.Comp.LayerSetShader(key, null, null);
+
+            return true;
+        }
+
+        return false;
     }
 }
