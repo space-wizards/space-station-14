@@ -20,7 +20,7 @@ public abstract partial class ListingCondition
     /// If true, then this conditions will cause the listing to be locked instead of disappearing from the shop UI.
     /// </summary>
     [DataField]
-    public bool Locks = false;
+    public bool Lock;
 }
 
 /// <param name="Buyer">Either the account owner, user, or an inanimate object (e.g., surplus bundle)</param>

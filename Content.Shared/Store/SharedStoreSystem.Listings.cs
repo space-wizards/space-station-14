@@ -126,7 +126,7 @@ public abstract partial class SharedStoreSystem
                 {
                     if (!condition.Condition(args))
                     {
-                        if (condition.Locks)
+                        if (condition.Lock)
                             locked = true;
                         else
                             failed = true;
