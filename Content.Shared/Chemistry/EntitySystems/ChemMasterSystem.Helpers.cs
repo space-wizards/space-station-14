@@ -5,14 +5,14 @@ using Robust.Shared.Audio;
 
 namespace Content.Shared.Chemistry.EntitySystems;
 
-public abstract partial class SharedChemMasterSystem
+public abstract partial class ChemMasterSystem
 {
     private void TransferReagents(Entity<ChemMasterComponent> chemMaster, ReagentId id, FixedPoint2 amount, bool fromBuffer)
     {
-        var container = _itemSlotsSystem.GetItemOrNull(chemMaster.Owner, SharedChemMaster.InputSlotName);
+        var container = _itemSlotsSystem.GetItemOrNull(chemMaster.Owner, ChemMasterConstants.InputSlotName);
         if (container is null ||
             !_solutionContainerSystem.TryGetFitsInDispenser(container.Value, out var containerSoln, out var containerSolution) ||
-            !_solutionContainerSystem.TryGetSolution(chemMaster.Owner, SharedChemMaster.BufferSolutionName, out _, out var bufferSolution))
+            !_solutionContainerSystem.TryGetSolution(chemMaster.Owner, ChemMasterConstants.BufferSolutionName, out _, out var bufferSolution))
         {
             return;
         }
@@ -38,14 +38,14 @@ public abstract partial class SharedChemMasterSystem
     {
         if (fromBuffer)
         {
-            if (_solutionContainerSystem.TryGetSolution(chemMaster.Owner, SharedChemMaster.BufferSolutionName, out _, out var bufferSolution))
+            if (_solutionContainerSystem.TryGetSolution(chemMaster.Owner, ChemMasterConstants.BufferSolutionName, out _, out var bufferSolution))
                 bufferSolution.RemoveReagent(id, amount, preserveOrder: true);
             else
                 return;
         }
         else
         {
-            var container = _itemSlotsSystem.GetItemOrNull(chemMaster.Owner, SharedChemMaster.InputSlotName);
+            var container = _itemSlotsSystem.GetItemOrNull(chemMaster.Owner, ChemMasterConstants.InputSlotName);
             if (container is not null &&
                 _solutionContainerSystem.TryGetFitsInDispenser(container.Value, out var containerSolution, out _))
             {

@@ -7,7 +7,7 @@ namespace Content.Shared.Chemistry;
 /// <summary>
 /// This class holds constants that are shared between client and server.
 /// </summary>
-public sealed class SharedChemMaster
+public sealed class ChemMasterConstants
 {
     public const uint PillTypes = 20;
     public const string BufferSolutionName = "buffer";

@@ -8,4 +8,4 @@ namespace Content.Server.Chemistry.EntitySystems;
 /// <seealso cref="Shared.Chemistry.Components.ChemMasterComponent"/>
 /// </summary>
 [UsedImplicitly]
-public sealed partial class ChemMasterSystem : SharedChemMasterSystem;
+public sealed partial class ServerChemMasterSystem : SharedChemMasterSystem;

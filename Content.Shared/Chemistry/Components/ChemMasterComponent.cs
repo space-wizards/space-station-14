@@ -6,10 +6,10 @@ namespace Content.Shared.Chemistry.Components;
 
 /// <summary>
 /// An industrial grade chemical manipulator with pill and bottle production included.
-/// <seealso cref="Content.Shared.Chemistry.EntitySystems.SharedChemMasterSystem"/>
+/// <seealso cref="Content.Shared.Chemistry.EntitySystems.ChemMasterSystem"/>
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
-[Access(typeof(SharedChemMasterSystem))]
+[Access(typeof(ChemMasterSystem))]
 public sealed partial class ChemMasterComponent : Component
 {
     [DataField]

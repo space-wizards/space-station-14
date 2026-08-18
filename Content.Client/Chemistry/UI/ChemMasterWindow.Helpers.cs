@@ -25,33 +25,24 @@ public sealed partial class ChemMasterWindow
     private ContainerInfo? BuildOutputContainerInfo(EntityUid? container)
     {
         if (container is not { Valid: true })
-        {
-            Log.Info("No output container found");
             return null;
-        }
 
         var name = EntityName(container.Value);
         if (_solutionContainer.TryGetSolution(
                 container.Value,
-                SharedChemMaster.BottleSolutionName,
+                ChemMasterConstants.BottleSolutionName,
                 out _,
                 out var solution))
-        {
-            Log.Info("Output container found");
             return BuildContainerInfo(name, solution);
-        }
 
 
         if (!_entityManager.TryGetComponent(container, out StorageComponent? storage))
-        {
-            Log.Info("no storage");
             return null;
-        }
 
         var pills = storage.Container.ContainedEntities
             .Select((Func<EntityUid, (string, FixedPoint2 quantity)>) (pill =>
         {
-            _solutionContainer.TryGetSolution(pill, SharedChemMaster.PillSolutionName, out _, out solution);
+            _solutionContainer.TryGetSolution(pill, ChemMasterConstants.PillSolutionName, out _, out solution);
             var quantity = solution?.Volume ?? FixedPoint2.Zero;
             return (EntityName(pill), quantity);
         }))

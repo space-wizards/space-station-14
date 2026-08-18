@@ -12,7 +12,6 @@ using Content.Shared.Storage.EntitySystems;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Chemistry.EntitySystems;
 
@@ -20,9 +19,8 @@ namespace Content.Shared.Chemistry.EntitySystems;
 /// This handles shared logic for ChemMasters.
 /// <seealso cref="ChemMasterComponent"/>
 /// </summary>
-public abstract partial class SharedChemMasterSystem : EntitySystem
+public abstract partial class ChemMasterSystem : EntitySystem
 {
-    [Dependency] private IGameTiming _timing = null!;
     [Dependency] private ISharedAdminLogManager _adminLogger = null!;
     [Dependency] private ItemSlotsSystem _itemSlotsSystem = null!;
     [Dependency] private LabelSystem _labelSystem = null!;
@@ -63,10 +61,6 @@ public abstract partial class SharedChemMasterSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnSetModeMessage(Entity<ChemMasterComponent> chemMaster, ref ChemMasterSetModeMessage message)
     {
-        // Ensure the mode is valid, either Transfer or Discard.
-        if (!Enum.IsDefined(typeof(ChemMasterMode), message.ChemMasterMode))
-            return;
-
         chemMaster.Comp.Mode = message.ChemMasterMode;
         Dirty(chemMaster);
         ClickSound(chemMaster, message.Actor);
@@ -86,7 +80,7 @@ public abstract partial class SharedChemMasterSystem : EntitySystem
     private void OnSetPillTypeMessage(Entity<ChemMasterComponent> chemMaster, ref ChemMasterSetPillTypeMessage message)
     {
         // Ensure valid pill type. There are 20 pills selectable, 0-19.
-        if (message.PillType > SharedChemMaster.PillTypes - 1)
+        if (message.PillType > ChemMasterConstants.PillTypes - 1)
             return;
 
         chemMaster.Comp.PillType = message.PillType;
@@ -97,10 +91,6 @@ public abstract partial class SharedChemMasterSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnReagentButtonMessage(Entity<ChemMasterComponent> chemMaster, ref ChemMasterReagentAmountButtonMessage message)
     {
-        // Ensure the amount corresponds to one of the reagent amount buttons.
-        if (!Enum.IsDefined(typeof(ChemMasterReagentAmount), message.Amount))
-            return;
-
         switch (chemMaster.Comp.Mode)
         {
             case ChemMasterMode.Transfer:
@@ -120,10 +110,6 @@ public abstract partial class SharedChemMasterSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnSetDrawSourceMessage(Entity<ChemMasterComponent> chemMaster, ref ChemMasterOutputDrawSourceMessage message)
     {
-        //Ensure draw source is valid, either from the internal buffer or the inserted beaker
-        if (!Enum.IsDefined(message.DrawSource))
-            return;
-
         chemMaster.Comp.DrawSource = message.DrawSource;
         Dirty(chemMaster);
         ClickSound(chemMaster, message.Actor);
@@ -133,7 +119,7 @@ public abstract partial class SharedChemMasterSystem : EntitySystem
     private void OnCreatePillsMessage(Entity<ChemMasterComponent> chemMaster, ref ChemMasterCreatePillsMessage message)
     {
         var user = message.Actor;
-        var maybeContainer = _itemSlotsSystem.GetItemOrNull(chemMaster.Owner, SharedChemMaster.OutputSlotName);
+        var maybeContainer = _itemSlotsSystem.GetItemOrNull(chemMaster.Owner, ChemMasterConstants.OutputSlotName);
         if (maybeContainer is not { Valid: true } container
             || !TryComp(container, out StorageComponent? storage))
         {
@@ -149,7 +135,7 @@ public abstract partial class SharedChemMasterSystem : EntitySystem
             return;
 
         // Ensure label length is within the character limit.
-        if (message.Label.Length > SharedChemMaster.LabelMaxLength)
+        if (message.Label.Length > ChemMasterConstants.LabelMaxLength)
             return;
 
         var needed = message.Dosage * message.Number;
@@ -164,7 +150,7 @@ public abstract partial class SharedChemMasterSystem : EntitySystem
             _storageSystem.Insert(container, item, out _, user: user, storage);
             _labelSystem.Label(item, message.Label);
 
-            _solutionContainerSystem.EnsureSolution(item, SharedChemMaster.PillSolutionName, out var itemSolution);
+            _solutionContainerSystem.EnsureSolution(item, ChemMasterConstants.PillSolutionName, out var itemSolution);
             itemSolution.Comp.Solution.MaxVolume = message.Dosage;
 
             _solutionContainerSystem.TryAddSolution(itemSolution, withdrawal.SplitSolution(message.Dosage));
@@ -185,9 +171,9 @@ public abstract partial class SharedChemMasterSystem : EntitySystem
     private void OnOutputToBottleMessage(Entity<ChemMasterComponent> chemMaster, ref ChemMasterOutputToBottleMessage message)
     {
         var user = message.Actor;
-        var maybeContainer = _itemSlotsSystem.GetItemOrNull(chemMaster.Owner, SharedChemMaster.OutputSlotName);
+        var maybeContainer = _itemSlotsSystem.GetItemOrNull(chemMaster.Owner, ChemMasterConstants.OutputSlotName);
         if (maybeContainer is not { Valid: true } container
-            || !_solutionContainerSystem.TryGetSolution(container, SharedChemMaster.BottleSolutionName, out var soln, out var solution))
+            || !_solutionContainerSystem.TryGetSolution(container, ChemMasterConstants.BottleSolutionName, out var soln, out var solution))
         {
             return; // output can't fit reagents
         }
@@ -197,7 +183,7 @@ public abstract partial class SharedChemMasterSystem : EntitySystem
             return;
 
         // Ensure label length is within the character limit.
-        if (message.Label.Length > SharedChemMaster.LabelMaxLength)
+        if (message.Label.Length > ChemMasterConstants.LabelMaxLength)
             return;
 
         if (!WithdrawFromSource(chemMaster, message.Dosage, user, out var withdrawal))
@@ -229,7 +215,7 @@ public abstract partial class SharedChemMasterSystem : EntitySystem
         switch (chemMaster.Comp.DrawSource)
         {
             case ChemMasterDrawSource.Internal:
-                if (!_solutionContainerSystem.TryGetSolution(chemMaster.Owner, SharedChemMaster.BufferSolutionName, out _, out solution))
+                if (!_solutionContainerSystem.TryGetSolution(chemMaster.Owner, ChemMasterConstants.BufferSolutionName, out _, out solution))
                     return false;
 
                 if (solution.Volume == 0)
@@ -250,7 +236,7 @@ public abstract partial class SharedChemMasterSystem : EntitySystem
                 break;
 
             case ChemMasterDrawSource.External:
-                if (_itemSlotsSystem.GetItemOrNull(chemMaster.Owner, SharedChemMaster.InputSlotName) is not {} container)
+                if (_itemSlotsSystem.GetItemOrNull(chemMaster.Owner, ChemMasterConstants.InputSlotName) is not {} container)
                 {
                     if (user.HasValue)
                         _popupSystem.PopupCursor(Loc.GetString("chem-master-window-no-beaker-text"), user.Value);

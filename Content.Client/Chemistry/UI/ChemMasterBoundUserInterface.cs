@@ -10,14 +10,10 @@ namespace Content.Client.Chemistry.UI;
 /// Initializes a <see cref="ChemMasterWindow"/> and updates it when new server messages are received.
 /// </summary>
 [UsedImplicitly]
-public sealed class ChemMasterBoundUserInterface : BoundUserInterface
+public sealed class ChemMasterBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [ViewVariables]
     private ChemMasterWindow? _window;
-
-    public ChemMasterBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-    }
 
     /// <summary>
     /// Called each time a chem master UI instance is opened. Generates the window and fills it with
@@ -33,9 +29,9 @@ public sealed class ChemMasterBoundUserInterface : BoundUserInterface
 
         // Setup static button actions.
         _window.InputEjectButton.OnPressed += _ => SendPredictedMessage(
-            new ItemSlotButtonPressedEvent(SharedChemMaster.InputSlotName));
+            new ItemSlotButtonPressedEvent(ChemMasterConstants.InputSlotName));
         _window.OutputEjectButton.OnPressed += _ => SendPredictedMessage(
-            new ItemSlotButtonPressedEvent(SharedChemMaster.OutputSlotName));
+            new ItemSlotButtonPressedEvent(ChemMasterConstants.OutputSlotName));
         _window.BufferTransferButton.OnPressed += _ => SendPredictedMessage(
             new ChemMasterSetModeMessage(ChemMasterMode.Transfer));
         _window.BufferDiscardButton.OnPressed += _ => SendPredictedMessage(
@@ -65,7 +61,8 @@ public sealed class ChemMasterBoundUserInterface : BoundUserInterface
         if (EntMan.TryGetComponent(Owner, out ChemMasterComponent? chemMaster))
             _window.SetupButtonPress((Owner, chemMaster));
 
-        _window.OnReagentButtonPressed += (args, button) => SendPredictedMessage(new ChemMasterReagentAmountButtonMessage(button.Id, button.Amount, button.IsBuffer));
+        _window.OnReagentButtonPressed += (_, button) =>
+            SendPredictedMessage(new ChemMasterReagentAmountButtonMessage(button.Id, button.Amount, button.IsBuffer));
     }
 
     /// <summary>
