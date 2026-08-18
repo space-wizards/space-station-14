@@ -10,7 +10,7 @@ using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Pointing;
 using Content.Shared.Random.Helpers;
-using Content.Shared.RatKing;
+using Content.Shared.RatKing.Events;
 using Robust.Shared.Map;
 using Content.Shared.Chat;
 using Content.Shared.RatKing.Components;

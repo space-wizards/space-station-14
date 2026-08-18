@@ -1,6 +1,7 @@
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
 using Content.Shared.RatKing.Components;
+using Content.Shared.RatKing.Events;
 using Robust.Shared.Random;
 
 namespace Content.Shared.RatKing.Systems;

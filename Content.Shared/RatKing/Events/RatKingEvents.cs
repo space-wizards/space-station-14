@@ -1,7 +1,7 @@
 ﻿using Content.Shared.Actions;
 using Content.Shared.RatKing.Components;
 
-namespace Content.Shared.RatKing;
+namespace Content.Shared.RatKing.Events;
 
 public sealed partial class RatKingRaiseArmyActionEvent : InstantActionEvent;
 
