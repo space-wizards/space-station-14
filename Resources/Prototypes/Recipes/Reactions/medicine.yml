@@ -339,11 +339,20 @@
   id: Histamine
   reactants:
     Carbon:
-      amount: 2
+      amount: 6
     Ammonia:
+      amount: 3
+    Oxygen:
+      amount: 2
+    PhosphoricAcid: # Really shitty simulation of ATP ADP nonsense for synthesizing histamine... Should probably use Enzyme in the future :P
       amount: 1
+      catalyst: true
+  effects:
+  - !type:CreateGas
+    gas: CarbonDioxide
+    moles: 0.3 # Check my math on this, but 1u carbon 2u oxygen = about this many mols of CO2
   products:
-    Histamine: 1
+    Histamine: 8
 
 - type: reaction
   id: Oculine
