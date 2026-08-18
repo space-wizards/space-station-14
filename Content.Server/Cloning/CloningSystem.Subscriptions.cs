@@ -42,7 +42,7 @@ public sealed partial class CloningSystem
     [Dependency] private SharedChameleonClothingSystem _chameleonClothing = default!;
     [Dependency] private PullingSystem _pulling = default!;
     [Dependency] private BloodstreamSystem _bloodstream = default!;
-    [Dependency] private SharedForensicsSystem _forensics = default!;
+    [Dependency] private ForensicsSystem _forensics = default!;
 
     public override void Initialize()
     {
