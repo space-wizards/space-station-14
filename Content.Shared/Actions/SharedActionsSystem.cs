@@ -6,10 +6,12 @@ using Content.Shared.Actions.Events;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
+using Content.Shared.Examine;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Mind;
+using Content.Shared.Popups;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
@@ -27,10 +29,12 @@ public abstract partial class SharedActionsSystem : EntitySystem
     [Dependency] private ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private ActionContainerSystem _actionContainer = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private ExamineSystemShared _examine = default!;
     [Dependency] private RotateToFaceSystem _rotateToFace = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedInteractionSystem _interaction = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
 
@@ -434,6 +438,9 @@ public abstract partial class SharedActionsSystem : EntitySystem
 
         var targetAction = Comp<TargetActionComponent>(uid);
 
+        if (!ValidateLineOfSight(user, target, targetAction))
+            return false;
+
         // not using the ValidateBaseTarget logic since its raycast fails if the target is e.g. a wall
         if (targetAction.CheckCanAccess)
             return _interaction.InRangeAndAccessible(user, target, targetAction.Range, targetAction.AccessMask);
@@ -456,6 +463,10 @@ public abstract partial class SharedActionsSystem : EntitySystem
     private bool ValidateBaseTarget(EntityUid user, EntityCoordinates coords, Entity<TargetActionComponent> ent)
     {
         var comp = ent.Comp;
+
+        if (!ValidateLineOfSight(user, coords, comp))
+            return false;
+
         if (comp.CheckCanAccess)
             return _interaction.InRangeUnobstructed(user, coords, range: comp.Range);
 
@@ -468,6 +479,32 @@ public abstract partial class SharedActionsSystem : EntitySystem
             return true;
 
         return _transform.InRange(coords, xform.Coordinates, comp.Range);
+    }
+
+    private bool ValidateLineOfSight(EntityUid user, EntityUid target, TargetActionComponent comp)
+    {
+        if (!comp.CheckCanSee)
+            return true;
+
+        var range = comp.Range > 0 ? comp.Range : SharedInteractionSystem.MaxRaycastRange;
+        if (_examine.InRangeUnOccluded(user, target, range))
+            return true;
+
+        _popup.PopupEntity(Loc.GetString("target-action-popup-cant-see"), user, user);
+        return false;
+    }
+
+    private bool ValidateLineOfSight(EntityUid user, EntityCoordinates target, TargetActionComponent comp)
+    {
+        if (!comp.CheckCanSee)
+            return true;
+
+        var range = comp.Range > 0 ? comp.Range : SharedInteractionSystem.MaxRaycastRange;
+        if (_examine.InRangeUnOccluded(user, target, range))
+            return true;
+
+        _popup.PopupEntity(Loc.GetString("target-action-popup-cant-see"), user, user);
+        return false;
     }
 
     private void OnInstantGetEvent(Entity<InstantActionComponent> ent, ref ActionGetEventEvent args)
