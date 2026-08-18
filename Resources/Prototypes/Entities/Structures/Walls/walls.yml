@@ -249,7 +249,6 @@
       mask: [ walls ]
       altMask: [ windows, grilles, marble, doors ]
       base: debug
-      cardinalBase: debug-cardinal
 
 - type: entity
   parent: WallDebugA
@@ -264,7 +263,6 @@
       mask: [ marble ]
       altMask: [ windows, grilles, walls, doors ]
       base: debug
-      cardinalBase: debug-cardinal
 
 - type: entity
   parent: [ BaseWall, StructureHealthWallWeak ]
