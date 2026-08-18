@@ -8,7 +8,6 @@
 - type: cloningSettings
   id: TraitsMental
   components:
-  - Clumsy
   - Pacified
   - Paracusia
   - LightweightDrunk
@@ -179,6 +178,7 @@
   id: PlantClone
   components:
   - Plant
+  - PlantHarvest
   - PlantChemicals
   - PlantGrowth
   - PlantAtmospheric
@@ -196,7 +196,6 @@
   id: PlantLifecycleClone
   parent: PlantClone
   components:
-  - PlantHarvest
   # traits
   - PlantTraitSampled
   - PlantTraitSeedless
