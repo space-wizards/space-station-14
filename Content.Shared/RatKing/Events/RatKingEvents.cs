@@ -12,6 +12,6 @@ public sealed partial class RatKingOrderActionEvent : InstantActionEvent
     /// <summary>
     /// The type of order being given
     /// </summary>
-    [DataField]
+    [DataField(required: true)]
     public RatKingOrderType Type;
 }

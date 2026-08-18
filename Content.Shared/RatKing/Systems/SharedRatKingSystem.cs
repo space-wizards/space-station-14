@@ -31,7 +31,7 @@ public abstract partial class SharedRatKingSystem : EntitySystem
         Dirty(uid, component);
 
         DoCommandCallout(uid, component);
-        UpdateActions(uid, component);
+        UpdateOrderActions(uid, component);
         UpdateAllServants(uid, component);
     }
 
@@ -42,7 +42,7 @@ public abstract partial class SharedRatKingSystem : EntitySystem
             ratKingComponent.Servants.Remove(uid);
     }
 
-    private void UpdateActions(EntityUid uid, RatKingComponent component)
+    private void UpdateOrderActions(EntityUid uid, RatKingComponent component)
     {
         if (!TryComp<ActionsComponent>(uid, out var actions))
             return;
