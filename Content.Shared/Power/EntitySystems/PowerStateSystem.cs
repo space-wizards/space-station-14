@@ -92,6 +92,13 @@ public abstract partial class SharedPowerStateSystem : EntitySystem
         return false;
     }
 
+    /// <summary>
+    /// Updates flags for visual state according to <see cref="PowerStateComponent.IsWorking"/>
+    /// and <see cref="isPowered"/> flags (making 3 states of <see cref="PowerStateDeviceVisualState"/>
+    /// as a result).
+    /// </summary>
+    /// <param name="ent">Entity that requires visual state update.</param>
+    /// <param name="isPowered">Is device sufficiently powered?</param>
     protected void UpdateAppearance(Entity<PowerStateComponent> ent, bool isPowered)
     {
         PowerStateDeviceVisualState state;
