@@ -1128,7 +1128,7 @@ MeteorRockUranium: AsteroidRockUranium
 DrinkNeurotoxinGlass: null
 
 #2026-08-18
-CheckerCrownBlack: CheckersPieceBlack
-CheckerCrownWhite: CheckersPieceRed
-CheckerPieceBlack: CheckersKingBlack
-CheckerPieceWhite: CheckersKingRed
+CheckerCrownBlack: CheckersKingBlack
+CheckerCrownWhite: CheckersKingRed
+CheckerPieceBlack: CheckersPieceBlack
+CheckerPieceWhite: CheckersPieceRed
