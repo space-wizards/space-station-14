@@ -30,6 +30,13 @@ public sealed partial class LightBulbComponent : Component
     public LightBulbState State = LightBulbState.Normal;
 
     /// <summary>
+    /// The localized short name of the light. Used for the status control of the light replacer.
+    /// </summary>
+    /// <example>An orange light tube uses "orange" as its short name.</example>
+    [DataField]
+    public LocId? ShortName;
+
+    /// <summary>
     /// The temperature the air around the lightbulb is exposed to when the lightbulb burns out.
     /// </summary>
     [DataField("BurningTemperature")]
@@ -63,7 +70,7 @@ public sealed partial class LightBulbComponent : Component
     /// The sound produced when the lightbulb breaks.
     /// </summary>
     [DataField]
-    public SoundSpecifier BreakSound = new SoundCollectionSpecifier("GlassBreak", AudioParams.Default.WithVolume(-6f));
+    public SoundSpecifier BreakSound = new SoundCollectionSpecifier("GlassBreak", AudioParams.Default.AddVolume(-6f));
 
     #region Appearance
 

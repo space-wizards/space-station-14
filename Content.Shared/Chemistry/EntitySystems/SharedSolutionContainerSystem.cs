@@ -14,6 +14,7 @@ using Content.Shared.Localizations;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
+using Robust.Shared.ColorNaming;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Network;
@@ -74,6 +75,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     [Dependency] protected SharedAppearanceSystem AppearanceSystem = default!;
     [Dependency] protected SharedContainerSystem ContainerSystem = default!;
     [Dependency] protected SharedHandsSystem Hands = default!;
+    [Dependency] private ILocalizationManager _localization = default!;
 
     [Dependency] protected EntityQuery<ContainedSolutionComponent> ContainedQuery = default!;
     [Dependency] protected EntityQuery<SolutionComponent> SolutionQuery = default!;
@@ -434,20 +436,6 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
         var splitSol = solution.SplitSolution(quantity / stackCount);
         solution.SplitSolution(quantity - splitSol.Volume);
-        UpdateChemicals(soln);
-        return splitSol;
-    }
-
-    /// <summary>
-    /// Splits a solution without the specified reagent(s).
-    /// </summary>
-    [Obsolete("Use SplitSolutionWithout with params ProtoId<ReagentPrototype>")]
-    public Solution SplitSolutionWithout(Entity<SolutionComponent> soln, FixedPoint2 quantity, params string[] reagents)
-    {
-        var (uid, comp) = soln;
-        var solution = comp.Solution;
-
-        var splitSol = solution.SplitSolutionWithout(quantity, reagents);
         UpdateChemicals(soln);
         return splitSol;
     }
@@ -913,6 +901,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
             args.PushMarkup(Loc.GetString(entity.Comp.LocPhysicalQuality,
                                         ("color", colorHex),
+                                        ("colorName", ColorNaming.Describe(solution.GetColor(ProtoMan), _localization)),
                                         ("desc", primary.LocalizedPhysicalDescription),
                                         ("chemCount", solution.Contents.Count)));
 

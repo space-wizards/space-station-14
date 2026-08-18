@@ -113,7 +113,7 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         if (!_changelingIdentity.TryGetDataFromIdentity((ent.Owner, identity), targetIdentity.Value, out _))
             return; // this identity does not belong to this player
 
-        _popup.PopupClient(Loc.GetString("changeling-transform-bui-drop-identity-entity-popup", ("entity", targetIdentity.Value)), ent.Owner, PopupType.Large);
+        _popup.PopupEntity(Loc.GetString("changeling-transform-bui-drop-identity-entity-popup", ("entity", targetIdentity.Value)), ent.Owner, ent.Owner, PopupType.Large);
         _changelingIdentity.DropStoredIdentity(ent.Owner, targetIdentity.Value);
     }
 
@@ -129,7 +129,7 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
 
         var selfMessage = Loc.GetString("changeling-transform-attempt-self", ("user", Identity.Entity(ent.Owner, EntityManager)));
         var othersMessage = Loc.GetString("changeling-transform-attempt-others", ("user", Identity.Entity(ent.Owner, EntityManager)));
-        _popup.PopupPredicted(
+        _popup.PopupEntity(
             selfMessage,
             othersMessage,
             ent,
@@ -195,6 +195,7 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
             _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(ent.Owner):player} successfully transformed into \"{Name(targetIdentity)}\"");
 
         _metaData.SetEntityName(ent, Name(targetIdentity), raiseEvents: false); // Don't raise events because we don't want to rename the ID card.
+        _metaData.SetEntityDescription(ent, Description(targetIdentity));
         _identity.QueueIdentityUpdate(ent); // We have to manually refresh the identity because we did not raise events.
 
         Dirty(ent);
