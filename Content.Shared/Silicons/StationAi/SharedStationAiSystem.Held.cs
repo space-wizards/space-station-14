@@ -115,7 +115,7 @@ public abstract partial class SharedStationAiSystem
             return;
 
         ev.Event.User = ev.Actor;
-        RaiseLocalEvent(target.Value, (object) ev.Event);
+        RaiseLocalEvent(target.Value, (object)ev.Event);
     }
 
     private void OnMessageAttempt(Entity<StationAiWhitelistComponent> ent, ref BoundUserInterfaceMessageAttempt ev)
@@ -220,11 +220,25 @@ public sealed class StationAiRadialMessage : BoundUserInterfaceMessage
 /// </summary>
 public sealed class StationAiRadial : BaseStationAiAction
 {
+    /// <summary>
+    /// The sprite to use as the icon for this menu item.
+    /// </summary>
     public SpriteSpecifier? Sprite;
 
-    public string? Tooltip;
+    /// <summary>
+    /// The string to display when the item is selected.
+    /// </summary>
+    public LocId? Tooltip;
 
+    /// <summary>
+    /// The event type to raise when this action is selected.
+    /// </summary>
     public BaseStationAiAction Event = default!;
+
+    /// <summary>
+    /// The relative order to show this item in the menu.
+    /// </summary>
+    public int? Order;
 }
 
 /// <summary>
@@ -234,7 +248,7 @@ public sealed class StationAiRadial : BaseStationAiAction
 [Serializable, NetSerializable]
 public abstract class BaseStationAiAction
 {
-    [field:NonSerialized]
+    [field: NonSerialized]
     public EntityUid User { get; set; }
 }
 

@@ -124,6 +124,12 @@ public sealed partial class RCDPrototype : IPrototype
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadOnly)]
     public RcdRotation Rotation { get; private set; } = RcdRotation.User;
+
+    /// <summary>
+    /// The relative order to use in the rotary menu.
+    /// </summary>
+    [DataField]
+    public int? MenuOrder { get; private set; }
 }
 
 public enum RcdMode : byte

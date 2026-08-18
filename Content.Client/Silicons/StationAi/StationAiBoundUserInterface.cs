@@ -19,7 +19,7 @@ public sealed class StationAiBoundUserInterface(EntityUid owner, Enum uiKey) : B
         _menu.Track(Owner);
         var buttonModels = ConvertToButtons(ev.Actions);
         _menu.SetButtons(buttonModels);
-        
+
         _menu.Open();
     }
 
@@ -32,7 +32,8 @@ public sealed class StationAiBoundUserInterface(EntityUid owner, Enum uiKey) : B
             models[i] = new RadialMenuActionOption<BaseStationAiAction>(HandleRadialMenuClick, action.Event)
             {
                 IconSpecifier = RadialMenuIconSpecifier.With(action.Sprite),
-                ToolTip = action.Tooltip
+                ToolTip = action.Tooltip,
+                Order = i
             };
         }
 

@@ -86,10 +86,10 @@ public sealed partial class SimpleRadialMenu : RadialMenu
         switch (models)
         {
             case RadialMenuOptionBase[] asArray:
-                asArray.Sort(CompareByTooltip);
+                Array.Sort(asArray, CompareRadialMenuOptions);
                 return asArray;
             case List<RadialMenuOptionBase> asList:
-                asList.Sort(CompareByTooltip);
+                asList.Sort(CompareRadialMenuOptions);
                 return asList;
             default:
                 return models.OrderBy(x => x.ToolTip);
@@ -154,7 +154,7 @@ public sealed partial class SimpleRadialMenu : RadialMenu
             _ => null
         };
 
-        if(imageControl != null)
+        if (imageControl != null)
             button.AddChild(imageControl);
 
         if (model is RadialMenuActionOptionBase actionOption)
@@ -251,16 +251,30 @@ public sealed partial class SimpleRadialMenu : RadialMenu
         }
     }
 
-    private static int CompareByTooltip(RadialMenuOptionBase x, RadialMenuOptionBase y)
+    private static int CompareRadialMenuOptions(RadialMenuOptionBase x, RadialMenuOptionBase y)
     {
         if (ReferenceEquals(x, y))
             return 0;
 
+        // First sort by order, then by tooltip.
+        // Any non-null order value comes before null.
+        if (y.Order != x.Order)
+        {
+            if (y?.Order is null)
+                return -1;
+
+            if (x?.Order is null)
+                return 1;
+
+            return x.Order < y.Order ? 1 : -1;
+        }
+
+        // Sort by tooltip: non-null order values come before null ones.
         if (y?.ToolTip is null)
-            return 1;
+            return -1;
 
         if (x?.ToolTip is null)
-            return -1;
+            return 1;
 
         return string.Compare(x.ToolTip, y.ToolTip, StringComparison.Ordinal);
     }
@@ -350,14 +364,24 @@ public sealed record RadialMenuEntityPrototypeIconSpecifier(EntProtoId ProtoId) 
 /// <summary> Container for common options for radial menu button. </summary>
 public abstract class RadialMenuOptionBase
 {
-    /// <summary> Tooltip to be displayed when button is hovered. </summary>
+    /// <summary>
+    /// Tooltip to be displayed when button is hovered.
+    /// Used for ordering if no order is given.
+    /// </summary>
     public string? ToolTip { get; init; }
+
+    /// <summary>
+    /// The relative order of the option in the menu.
+    /// Lower values will be placed before higher values, and any null values will be ordered after.
+    /// </summary>
+    public int? Order { get; init; }
 
     /// <summary>
     /// Color for button background.
     /// Is used only with sector radial (<see cref="SimpleRadialMenuSettings.UseSectors"/>).
     /// </summary>
     public Color? BackgroundColor { get; set; }
+
     /// <summary>
     /// Color for button background when it is hovered.
     /// Is used only with sector radial (<see cref="SimpleRadialMenuSettings.UseSectors"/>).
