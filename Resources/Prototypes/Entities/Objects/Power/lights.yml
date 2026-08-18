@@ -220,7 +220,7 @@
   components:
   - type: LightBulb
     color: "#FFE4CE" # 5000K color temp
-    lightEnergy: 0.8 # 1.6 new TODO Discuss lights
+    lightEnergy: 1.6
     lightRadius: 10
     lightSoftness: 1
     PowerUse: 25
