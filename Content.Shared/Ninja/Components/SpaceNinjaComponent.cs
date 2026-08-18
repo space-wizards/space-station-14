@@ -10,7 +10,7 @@ namespace Content.Shared.Ninja.Components;
 /// Component placed on a mob to make it a space ninja, able to use suit and glove powers.
 /// Contains ids of all ninja equipment.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SharedSpaceNinjaSystem))]
 public sealed partial class SpaceNinjaComponent : Component
 {
