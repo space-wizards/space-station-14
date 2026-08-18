@@ -526,7 +526,9 @@
       - !type:GenericStatusEffect
         key: Stutter
         component: StutteringAccent
-      - !type:Jitter
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectFastJitter
+        type: Add
 
 - type: reagent
   id: Hydroxysomnolene
