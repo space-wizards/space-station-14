@@ -24,7 +24,7 @@
 
 - type: entity
   parent: BaseChangelingObjective
-  id: ChangelingUniqueIdentityObjective
+  id: ChangelingDevouredCountObjective
   components:
   - type: Objective
     difficulty: 1
@@ -41,7 +41,7 @@
 
 - type: entity
   parent: BaseChangelingObjective
-  id: ChangelingIdentityCountObjective
+  id: ChangelingExtractedCountObjective
   components:
   - type: Objective
     difficulty: 1
@@ -126,7 +126,7 @@
 
 - type: entity
   parent: BaseChangelingObjective
-  id: ChangelingDevourMostObjective
+  id: ChangelingMostDevouredObjective
   name: Devour the most humanoids.
   description: We must devour the most unique humanoids out of all other changelings.
   components:
@@ -140,7 +140,7 @@
 
 - type: entity
   parent: BaseChangelingObjective
-  id: ChangelingMostIdentitiesObjective
+  id: ChangelingMostExtractedObjective
   name: Extract the most identities.
   description: We must extract the most unique DNA sequences out of all other changelings, via devouring or otherwise.
   components:
