@@ -26,7 +26,6 @@
     drawdepth: Walls
     sprite: Structures/Walls/grille-new.rsi
     layers:
-    - state: full
     - state: electrified
       sprite: Effects/electricity.rsi
       map: ["enum.ElectrifiedLayers.Sparks"]
@@ -41,7 +40,7 @@
     key: grilles
     states:
     - !type:CornerSpriteSmoothing
-      mask: [ walls, windows, grilles, marble, doors ]
+      mask: [ walls, grilles, marble ]
       base: grille
       index: 0
   - type: Electrified
