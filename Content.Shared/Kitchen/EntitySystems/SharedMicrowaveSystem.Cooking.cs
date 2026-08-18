@@ -243,7 +243,10 @@ public abstract partial class SharedMicrowaveSystem
         if (active.PortionedRecipe != null)
             SpawnFinishedRecipe(microwaveEnt, active.PortionedRecipe.Value);
 
-        AudioSys.PlayPredicted(microwave.FoodDoneSound, ent, active.User); // beep... beep... beep
+        // TODO: Audio prediction sucks. Predict this properly when audio prediction is less broken
+        // https://github.com/space-wizards/RobustToolbox/issues/6436
+        if (_net.IsServer)
+            AudioSys.PlayPvs(microwave.FoodDoneSound, ent); // beep... beep... beep
 
         // Clean up the microwave.
         ContainerSys.EmptyContainer(microwave.Storage);

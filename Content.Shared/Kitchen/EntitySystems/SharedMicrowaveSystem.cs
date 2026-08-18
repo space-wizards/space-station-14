@@ -12,6 +12,7 @@ using Content.Shared.Stacks;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
@@ -32,6 +33,7 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
     [Dependency] private SharedDeviceLinkSystem _deviceLink = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private SharedItemSystem _item = default!;
+    [Dependency] private INetManager _net = default!;
     [Dependency] private SharedPowerReceiverSystem _power = default!;
     [Dependency] private SharedPowerStateSystem _powerState = default!;
     [Dependency] private RecipeSystem _recipes = default!;
