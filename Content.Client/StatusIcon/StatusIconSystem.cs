@@ -74,8 +74,7 @@ public sealed partial class StatusIconSystem : SharedStatusIconSystem
     {
         var viewer = _playerManager.LocalSession?.AttachedEntity;
 
-        // Always show our icons to our entity
-        if (viewer == ent.Owner)
+        if (viewer == ent.Owner && data.AlwaysShowToOwner)
             return true;
 
         if (data.VisibleToGhosts && HasComp<GhostComponent>(viewer))
@@ -97,7 +96,7 @@ public sealed partial class StatusIconSystem : SharedStatusIconSystem
     }
 
     [SubscribeLocalEvent]
-    private void OnGetStatusIconDisplay(Entity<DisplayStatusIconComponent> ent, ref GetStatusIconsEvent args)
+    private void OnGetStatusIconDisplay(Entity<DisplayFactionIconComponent> ent, ref GetStatusIconsEvent args)
     {
         foreach (var icon in ent.Comp.Icons)
         {

@@ -26,7 +26,7 @@
     actions:
     - ActionChangelingStore
     - ActionChangelingStasis
-  - type: DisplayStatusIcon
+  - type: DisplayFactionIcon
     icons:
     - ChangelingFaction
   - type: Store

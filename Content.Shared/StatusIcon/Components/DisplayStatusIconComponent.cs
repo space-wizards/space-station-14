@@ -4,14 +4,14 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 /// <summary>
-/// This component just displays status icons. That's it.
+/// This component just displays faction icons. That's it.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(SharedStatusIconSystem))]
-public sealed partial class DisplayStatusIconComponent : Component
+public sealed partial class DisplayFactionIconComponent : Component
 {
     /// <summary>
-    /// Status icons that will be displayed
+    /// Factions icons that will be displayed
     /// </summary>
-    [DataField, AutoNetworkedField, AlwaysPushInheritance]
-    public List<ProtoId<StatusIconPrototype>> Icons;
+    [DataField(required: true), AutoNetworkedField, AlwaysPushInheritance]
+    public List<ProtoId<FactionIconPrototype>> Icons = [];
 }
