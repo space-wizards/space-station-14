@@ -73,7 +73,7 @@
   - SpanishAccent
   - StutteringAccent
   eventComponents:
-  - Hands # diplacements and intrinsic hands
+  - Hands # displacements
   - Puller
   - Vocal # voice sounds
 
