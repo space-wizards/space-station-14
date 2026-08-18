@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -98,7 +97,9 @@ public sealed partial class EntityProviderSystem : EntitySystem
                 refillTarget.Comp.EntityCounter[entProtoId] += count;
 
             // Move all spawned entities over to the new provider.
-            foreach (var spawnedEntity in GetEntitiesFromContainer(provider.AsNullable(), entProtoId))
+            var existingEntities = GetEntitiesFromContainer(provider.AsNullable(), entProtoId)
+                .ToArray();
+            foreach (var spawnedEntity in existingEntities)
             {
                 _container.Insert(spawnedEntity, refillTarget.Comp.Container);
             }
@@ -112,7 +113,7 @@ public sealed partial class EntityProviderSystem : EntitySystem
             provider.Comp.EntityCounter.Remove(removedEntProtoId);
         }
 
-        if (provider.Comp.DeleteIfEmpty && provider.Comp.EntityCounter.Count == 0)
+        if (provider.Comp is { DeleteIfEmpty: true, EntityCounter.Count: 0 })
             PredictedQueueDel(provider);
 
         Dirty(provider);
