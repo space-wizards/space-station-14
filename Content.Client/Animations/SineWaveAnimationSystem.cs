@@ -86,7 +86,6 @@ public sealed partial class SineWaveAnimationSystem : EntitySystem
                 var a = sineComp.YWave.Value.Frequency * (currTime.TotalSeconds + sineComp.LastTime.TotalSeconds);
                 offset.Y = (float) (sineComp.YWave.Value.Amplitude * Math.Cos(a));
 
-                // TODO: I think this is slightly off
                 var angle = new Angle(Math.Atan(-Math.Sin(a)));
                 rotation += angle;
             }
