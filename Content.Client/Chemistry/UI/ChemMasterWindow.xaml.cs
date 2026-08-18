@@ -68,6 +68,14 @@ public sealed partial class ChemMasterWindow : FancyWindow
 
         _metaQuery = _entityManager.GetEntityQuery<MetaDataComponent>();
 
+        PillTypeButtons = new Button[20];
+    }
+
+    protected override void EnteredTree()
+    {
+        base.EnteredTree();
+
+        // TODO: figure out why fakelag makes this take longer??
         var bufferButtons = new ButtonGroup(false);
         BufferTransferButton.Group = bufferButtons;
         BufferDiscardButton.Group = bufferButtons;
@@ -80,7 +88,7 @@ public sealed partial class ChemMasterWindow : FancyWindow
         // Pill rsi file should have states named as pill1, pill2, and so on.
         var resourcePath = _pillsRsiPath;
         var pillTypeGroup = new ButtonGroup();
-        PillTypeButtons = new Button[20];
+
         for (uint i = 0; i < PillTypeButtons.Length; i++)
         {
             // For every button decide which stylebase to have
@@ -117,15 +125,15 @@ public sealed partial class ChemMasterWindow : FancyWindow
             Grid.AddChild(PillTypeButtons[i]);
         }
 
-        PillDosage.InitDefaultButtons();
-        PillNumber.InitDefaultButtons();
-        BottleDosage.InitDefaultButtons();
-
         // Ensure label length is within the character limit.
         LabelLineEdit.IsValid = s => s.Length <= ChemMasterConstants.LabelMaxLength;
 
         Tabs.SetTabTitle(0, Loc.GetString("chem-master-window-input-tab"));
         Tabs.SetTabTitle(1, Loc.GetString("chem-master-window-output-tab"));
+
+        PillDosage.InitDefaultButtons();
+        PillNumber.InitDefaultButtons();
+        BottleDosage.InitDefaultButtons();
     }
 
     private ReagentButton MakeReagentButton(string text, ChemMasterReagentAmount amount, ReagentId id, bool isBuffer, string styleClass)
@@ -424,14 +432,17 @@ public sealed partial class ChemMasterWindow : FancyWindow
     /// </summary>
     private Control BuildReagentRow(Color reagentColor, int rowCount, string name, ReagentId reagent, FixedPoint2 quantity, bool isBuffer, bool addReagentButtons)
     {
-        //Colors rows and sets fallback for reagentcolor to the same as background, this will hide colorPanel for entities hopefully
+        // Colors rows and sets fallback for reagentcolor to the same as background,
+        // this will hide colorPanel for entities hopefully
         var rowColor1 = Color.FromHex("#1B1B1E");
         var rowColor2 = Color.FromHex("#202025");
-        var currentRowColor = (rowCount % 2 == 1) ? rowColor1 : rowColor2;
-        if ((reagentColor == default(Color))|(!addReagentButtons))
+        var currentRowColor = rowCount % 2 == 1 ? rowColor1 : rowColor2;
+
+        if ((reagentColor == default) | !addReagentButtons)
         {
             reagentColor = currentRowColor;
         }
+
         //this calls the separated button builder, and stores the return to render after labels
         var reagentButtonConstructors = CreateReagentTransferButtons(reagent, isBuffer, addReagentButtons);
 

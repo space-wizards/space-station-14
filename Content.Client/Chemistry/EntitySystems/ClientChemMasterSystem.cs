@@ -10,7 +10,7 @@ namespace Content.Client.Chemistry.EntitySystems;
 /// This handles client-side logic for ChemMasters.
 /// <seealso cref="ChemMasterComponent"/>
 /// </summary>
-public sealed partial class ChemMasterSystem : SharedChemMasterSystem
+public sealed partial class ClientChemMasterSystem : ChemMasterSystem
 {
     [Dependency] private UserInterfaceSystem _ui = null!;
 
