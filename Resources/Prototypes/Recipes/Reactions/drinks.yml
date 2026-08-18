@@ -881,17 +881,6 @@
   products:
     Moonshine: 3
 
-# - type: reaction
-#   id: Neurotoxin
-#   reactants:
-#     GargleBlaster:
-#       amount: 1
-#     Morphine:
-#       amount: 1
-#   products:
-#     Neurotoxin: 2
-# Waiting until Morphine added
-
 - type: reaction
   id: NuclearCola
   reactants:
