@@ -89,6 +89,7 @@
   - quantity: 10 # Basic Farming Table
     weight: 5
     reagents:
+    - Allicin
     - Vitamin
     - Fiber
     - Water
