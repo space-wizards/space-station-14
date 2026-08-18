@@ -289,13 +289,13 @@
 
 - type: entity
   parent: SeedBase
-  name: packet of green apple seeds
+  name: packet of red apple seeds
   id: AppleSeeds
   components:
     - type: Seed
       plantId: ApplePlants
     - type: Sprite
-      sprite: Objects/Specific/Hydroponics/apple_green.rsi
+      sprite: Objects/Specific/Hydroponics/apple_red.rsi
 
 - type: entity
   parent: SeedBase
@@ -303,19 +303,19 @@
   id: AppleYellowSeeds
   components:
     - type: Seed
-      seedId: appleYellow
+      plantId: AppleYellowPlants
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/apple_yellow.rsi
 
 - type: entity
   parent: SeedBase
-  name: packet of red apple seeds
-  id: AppleRedSeeds
+  name: packet of green apple seeds
+  id: AppleGreenSeeds
   components:
     - type: Seed
-      seedId: appleRed
+      plantId: AppleGreenPlants
     - type: Sprite
-      sprite: Objects/Specific/Hydroponics/apple_red.rsi
+      sprite: Objects/Specific/Hydroponics/apple_green.rsi
 
 - type: entity
   parent: SeedBase

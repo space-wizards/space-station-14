@@ -711,10 +711,10 @@
   - Fruit
 
 - type: foodSequenceElement
-  id: AppleRed
+  id: AppleGreen
   name: food-sequence-content-apple
   sprites:
-  - sprite: Objects/Specific/Hydroponics/apple_red.rsi
+  - sprite: Objects/Specific/Hydroponics/apple_green.rsi
     state: produce
   tags:
   - Fruit
