@@ -20,7 +20,12 @@ public abstract class BaseSpeechBubble : Control
     /// <summary>
     ///     The amount of time at the end of the bubble's life at which it starts fading.
     /// </summary>
-    private static readonly TimeSpan FadeTime = TimeSpan.FromSeconds(0.25f);
+    private static readonly TimeSpan FadeOutTime = TimeSpan.FromSeconds(0.25f);
+
+    /// <summary>
+    ///     The amount of time at the end of the bubble's life at which it starts fading.
+    /// </summary>
+    private static readonly TimeSpan FadeInTime = TimeSpan.FromSeconds(0.10f);
 
     /// <summary>
     /// The time this bubble was created
@@ -50,6 +55,9 @@ public abstract class BaseSpeechBubble : Control
         SpawnTime = _timing.RealTime;
         DeathTime = _timing.RealTime + TotalTime;
         OverlaySetup();
+
+        //for fade in
+        Modulate = Color.White.WithAlpha(0);
     }
 
     /// <summary>
@@ -58,6 +66,8 @@ public abstract class BaseSpeechBubble : Control
     /// </summary>
     public void Update(FrameEventArgs args)
     {
+        var timeAlive = (float)(_timing.RealTime - SpawnTime).TotalSeconds;
+
         var timeLeft = (float)(DeathTime - _timing.RealTime).TotalSeconds;
 
         if (_entityManager.Deleted(_senderEntity) || timeLeft <= 0)
@@ -74,10 +84,14 @@ public abstract class BaseSpeechBubble : Control
             return;
         }
 
-        if (timeLeft <= FadeTime.TotalSeconds)
+        if (timeAlive < FadeInTime.TotalSeconds)
+        {
+            Modulate = Color.White.WithAlpha(timeAlive / (float)FadeInTime.TotalSeconds);
+        }
+        else if (timeLeft <= FadeOutTime.TotalSeconds)
         {
             // Update alpha if we're fading.
-            Modulate = Color.White.WithAlpha(timeLeft / (float)FadeTime.TotalSeconds);
+            Modulate = Color.White.WithAlpha(timeLeft / (float)FadeOutTime.TotalSeconds);
         }
         else
         {
@@ -117,7 +131,7 @@ public abstract class BaseSpeechBubble : Control
     {
         if (DeathTime > _timing.RealTime)
         {
-            DeathTime = _timing.RealTime + FadeTime;
+            DeathTime = _timing.RealTime + FadeOutTime;
         }
     }
 
