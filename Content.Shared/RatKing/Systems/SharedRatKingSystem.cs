@@ -12,22 +12,6 @@ public abstract partial class SharedRatKingSystem : EntitySystem
     [Dependency] private SharedActionsSystem _action = default!;
 
     [SubscribeLocalEvent]
-    private void OnStartup(EntityUid uid, RatKingComponent component, ComponentStartup args)
-    {
-        if (!TryComp(uid, out ActionsComponent? comp))
-            return;
-
-        _action.AddAction(uid, ref component.ActionRaiseArmyEntity, component.ActionRaiseArmy, component: comp);
-        _action.AddAction(uid, ref component.ActionDomainEntity, component.ActionDomain, component: comp);
-        _action.AddAction(uid, ref component.ActionOrderStayEntity, component.ActionOrderStay, component: comp);
-        _action.AddAction(uid, ref component.ActionOrderFollowEntity, component.ActionOrderFollow, component: comp);
-        _action.AddAction(uid, ref component.ActionOrderCheeseEmEntity, component.ActionOrderCheeseEm, component: comp);
-        _action.AddAction(uid, ref component.ActionOrderLooseEntity, component.ActionOrderLoose, component: comp);
-
-        UpdateActions(uid, component);
-    }
-
-    [SubscribeLocalEvent]
     private void OnShutdown(EntityUid uid, RatKingComponent component, ComponentShutdown args)
     {
         foreach (var servant in component.Servants)
@@ -35,17 +19,6 @@ public abstract partial class SharedRatKingSystem : EntitySystem
             if (TryComp(servant, out RatKingServantComponent? servantComp))
                 servantComp.King = null;
         }
-
-        if (!TryComp(uid, out ActionsComponent? comp))
-            return;
-
-        var actions = new Entity<ActionsComponent?>(uid, comp);
-        _action.RemoveAction(actions, component.ActionRaiseArmyEntity);
-        _action.RemoveAction(actions, component.ActionDomainEntity);
-        _action.RemoveAction(actions, component.ActionOrderStayEntity);
-        _action.RemoveAction(actions, component.ActionOrderFollowEntity);
-        _action.RemoveAction(actions, component.ActionOrderCheeseEmEntity);
-        _action.RemoveAction(actions, component.ActionOrderLooseEntity);
     }
 
     [SubscribeLocalEvent]
@@ -53,6 +26,7 @@ public abstract partial class SharedRatKingSystem : EntitySystem
     {
         if (component.CurrentOrder == args.Type)
             return;
+
         args.Handled = true;
 
         component.CurrentOrder = args.Type;
@@ -70,19 +44,20 @@ public abstract partial class SharedRatKingSystem : EntitySystem
             ratKingComponent.Servants.Remove(uid);
     }
 
-    private void UpdateActions(EntityUid uid, RatKingComponent? component = null)
+    private void UpdateActions(EntityUid uid, RatKingComponent component)
     {
-        if (!Resolve(uid, ref component))
+        if (!TryComp<ActionsComponent>(uid, out var actions))
             return;
 
-        _action.SetToggled(component.ActionOrderStayEntity, component.CurrentOrder == RatKingOrderType.Stay);
-        _action.SetToggled(component.ActionOrderFollowEntity, component.CurrentOrder == RatKingOrderType.Follow);
-        _action.SetToggled(component.ActionOrderCheeseEmEntity, component.CurrentOrder == RatKingOrderType.CheeseEm);
-        _action.SetToggled(component.ActionOrderLooseEntity, component.CurrentOrder == RatKingOrderType.Loose);
-        _action.StartUseDelay(component.ActionOrderStayEntity);
-        _action.StartUseDelay(component.ActionOrderFollowEntity);
-        _action.StartUseDelay(component.ActionOrderCheeseEmEntity);
-        _action.StartUseDelay(component.ActionOrderLooseEntity);
+        foreach (var action in actions.Actions)
+        {
+            if (!TryComp<InstantActionComponent>(action, out var instant) ||
+                instant.Event is not RatKingOrderActionEvent order)
+                continue;
+
+            _action.SetToggled(action, order.Type == component.CurrentOrder);
+            _action.StartUseDelay(action);
+        }
     }
 
     public void UpdateAllServants(EntityUid uid, RatKingComponent component)
@@ -93,13 +68,7 @@ public abstract partial class SharedRatKingSystem : EntitySystem
         }
     }
 
-    public virtual void UpdateServantNpc(EntityUid uid, RatKingOrderType orderType)
-    {
+    public virtual void UpdateServantNpc(EntityUid uid, RatKingOrderType orderType) { }
 
-    }
-
-    public virtual void DoCommandCallout(EntityUid uid, RatKingComponent component)
-    {
-
-    }
+    public virtual void DoCommandCallout(EntityUid uid, RatKingComponent component) { }
 }
