@@ -37,31 +37,20 @@
     - id: CowSwarm
     - id: PotatoSwarm
     - id: FunSwarm
-    - id: MeteorSwarmFlesh
-    - id: MeteorSwarmKudzu
     - id: ImmovableRodSpawn
 
 - type: weightedRandomEntity
   id: MeteorSpawnAsteroidWallTable
   weights:
-    MeteorRock: 10
-    MeteorRockCoal: 5
-    MeteorRockQuartz: 5
-    MeteorRockTin: 5
-    MeteorRockSilver: 2
-    MeteorRockGold: 2
-    MeteorRockPlasma: 2
-    MeteorRockDiamond: 2
-    MeteorRockUranium: 0.5
-    MeteorRockBananium: 0.5
-
-- type: weightedRandomEntity
-  id: MeteorSpawnFleshMonstersTable
-  weights:
-    MobFleshGolemSalvage: 1
-    MobFleshClampSalvage: 1
-    MobFleshLoverSalvage: 1
-    MobFleshJaredSalvage: 1
+    AsteroidRock: 10
+    AsteroidRockCoal: 5
+    AsteroidRockQuartz: 5
+    AsteroidRockTin: 5
+    AsteroidRockSilver: 2
+    AsteroidRockGold: 2
+    AsteroidRockPlasma: 2
+    AsteroidRockDiamond: 2
+    AsteroidRockUranium: 0.5
 
 # Event Schedulers
 
@@ -326,39 +315,3 @@
     meteorsPerWave:
       min: 8
       max: 12
-
-- type: entity
-  parent: MeteorSwarm
-  id: MeteorSwarmFlesh
-  components:
-  - type: StationEvent
-    weight: 4
-  - type: MeteorSwarm
-    announcement: station-event-bio-swarm-start-announcement
-    announcementSound: /Audio/Announcements/attention.ogg
-    meteors:
-      MeteorFlesh: 1
-    waves:
-      min: 2
-      max: 3
-    meteorsPerWave:
-      min: 5
-      max: 6
-
-- type: entity
-  parent: MeteorSwarm
-  id: MeteorSwarmKudzu
-  components:
-  - type: StationEvent
-    weight: 5
-  - type: MeteorSwarm
-    announcement: station-event-bio-swarm-start-announcement
-    announcementSound: /Audio/Announcements/attention.ogg
-    meteors:
-      MeteorKudzu: 1
-    waves:
-      min: 2
-      max: 3
-    meteorsPerWave:
-      min: 3
-      max: 5

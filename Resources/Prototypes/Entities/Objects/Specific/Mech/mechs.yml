@@ -1,7 +1,8 @@
 - type: entity
+  abstract: true
+  parent: StructureHealthMachineMassive
   id: BaseMech
   save: false
-  abstract: true
   components:
   - type: MobMover
   - type: Mech
@@ -10,6 +11,7 @@
     canAttack: true
   - type: ContainerVehicle
     containerId: "mech-pilot-slot"
+  - type: ContainerVehicleEntry
   - type: AirFilter
     # everything except oxygen and nitrogen
     gases:
@@ -51,7 +53,7 @@
     damage:
       types:
         Blunt: 25 #thwack
-        Structural: 20
+        Structural: 8
     soundHit:
       collection: MetalThud
   - type: Puller
@@ -89,9 +91,7 @@
       mech-equipment-container: !type:Container
       mech-battery-slot: !type:ContainerSlot
   - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
-    damageContainer: Inorganic
+    damageModifierSet: SteelMod
   - type: FootstepModifier
     footstepSoundCollection:
       path: /Audio/Mecha/mechmove03.ogg
@@ -107,10 +107,13 @@
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
-      - !type:ChangeConstructionNodeBehavior
-        node: start
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 275
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
 
 - type: entity
   id: MechRipley
@@ -144,6 +147,8 @@
     operatorWhitelist:
       components:
         - HumanoidProfile
+  - type: VehicleHandBlocker
+    blockedHands: 2
   - type: MeleeWeapon
     hidden: true
     attackRate: 1
@@ -199,6 +204,8 @@
     operatorWhitelist:
       components:
       - HumanoidProfile
+  - type: VehicleHandBlocker
+    blockedHands: 2
 
 - type: entity
   parent: MechHonker
@@ -236,6 +243,7 @@
       tags:
       - SmallMech
   - type: Vehicle
+    requiresHands: false
     transferDamageModifier:
       coefficients:
         Blunt: 0.2
@@ -253,7 +261,6 @@
     damage:
       types:
         Blunt: 10 #thwack
-        Structural: 2
   - type: MovementSpeedModifier
     baseWalkSpeed: 2.4
     baseSprintSpeed: 3.7
@@ -306,6 +313,7 @@
     maxEquipmentAmount: 0
     airtight: true
   - type: Vehicle
+    requiresHands: false
     transferDamageModifier:
       coefficients:
         Blunt: 0.1
@@ -323,7 +331,6 @@
     damage:
       types:
         Blunt: 10 #thwack
-        Structural: 2
   - type: MovementSpeedModifier
     baseWalkSpeed: 2.25
     baseSprintSpeed: 3.6

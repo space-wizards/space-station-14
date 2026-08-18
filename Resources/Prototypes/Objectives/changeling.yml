@@ -17,7 +17,7 @@
   description: We must stay alive at all cost.
   components:
   - type: Objective
-    difficulty: 1
+    difficulty: 0.5
     icon:
       sprite: Mobs/Species/Human/organs.rsi
       state: heart-on
@@ -53,11 +53,37 @@
   - type: ChangelingEscapeIdentityCondition
   - type: PickRandomPerson
     conditions:
-    - !type:ObjectiveTargetCondition
+    - !type:RoleCondition
+      inverted: true # Do not roll changelings here. Their initial identity will be basically impossible to get after they transform.
+      whitelist:
+        components:
+        - ChangelingRole
+
+- type: entity
+  parent: [BaseChangelingObjective, BaseLivingObjective]
+  id: ChangelingEscapeDepartmentObjective
+  description: We must escape with the identity & ID card of any member of this department.
+  components:
+  - type: Objective
+    difficulty: 1
+    icon:
+      sprite: Objects/Fun/Plushies/atmosian.rsi
+      state: icon
+  - type: TargetObjective
+    title: objective-escape-department-title
+  - type: ChangelingEscapeDepartmentCondition
+  - type: PickRandomPerson
+    conditions:
+    - !type:RoleCondition # Do not roll changelings here. It will cause problems with weird job mindroles as they transform n stuff.
       inverted: true
       whitelist:
         components:
         - ChangelingRole
+    - !type:RoleCondition
+      whitelist:
+        components:
+        - JobRole # Our target has to be employed, obviously.
+    - !type:DifferentDepartmentCondition # I love spawning as a scientist and having to escape as a scientist
 
 - type: entity
   parent: [BaseChangelingObjective, BaseKillObjective]
@@ -80,3 +106,16 @@
   - type: KillPersonCondition
     requireDead: true
     requireMaroon: true
+
+- type: entity
+  parent: BaseChangelingObjective
+  id: ChangelingDevourMostObjective
+  name: Devour the most humanoids.
+  description: We must devour the most unique humanoids out of all other changelings.
+  components:
+  - type: Objective
+    difficulty: 1
+    icon:
+      sprite: Mobs/Aliens/flesh.rsi
+      state: golem
+  - type: ChangelingDevourMostCondition

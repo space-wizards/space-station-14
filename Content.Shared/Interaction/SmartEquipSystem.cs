@@ -222,7 +222,7 @@ public sealed partial class SmartEquipSystem : EntitySystem
                 return;
             }
 
-            _slots.TryInsertFromHand(slotItem, toInsertTo, uid, hands, excludeUserAudio: true);
+            _slots.TryInsertFromHand(slotItem, toInsertTo, (uid, hands), excludeUserAudio: true);
             return;
         }
 
