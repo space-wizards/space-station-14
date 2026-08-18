@@ -30,6 +30,12 @@
 
   ### Evolution
 
+  <Box>
+    <GuideEntityEmbed Entity="ActionRetractableItemArmBlade" Caption="ArmBlade"/>
+    <GuideEntityEmbed Entity="ActionChangelingStingDna" Caption="Extract DNA"/>
+    <GuideEntityEmbed Entity="ActionChangelingNightVision" Caption="Night Vision"/>
+  </Box>
+
   Being a scary monster who changes identities is neat; however, it is not enough to survive the dangers of space. Thankfully, all those pesky security officers you snacked on will be useful for something. Every time you devour a new crewmember, you obtain 10 DNA to spend in the [bold]Evolution Store[/bold]. Here you can buy things like additional abilities to become even more of a threat.
 
   - [bold]Utility[/bold] abilities are useful for deception. They can also give you short-term or lasting benefits, often making the behaviour of your prey more predictable.
@@ -37,11 +43,15 @@
   - [bold]Combat[/bold] abilities let you pack quite a punch when trying to set up an ambush for single targets, but are not sustainable for prolonged use or open combat.
 
   Some of the more interesting picks might include:
-  - [bold]The Armblade[/bold], allowing you to slice up the crew with style.
+  - [bold]The ArmBlade[/bold], allowing you to slice up the crew with style.
   - [bold]Chemical Stings[/bold], to disorient the victim before attacking.
   - [bold]Horror Form[/bold], a temporary transformation that will allow you to turn the station upside down.
 
   ### Resilience
+
+  <Box>
+    <GuideEntityEmbed Entity="ActionChangelingStasis" Caption="Regenerative Stasis"/>
+  </Box>
 
   Changelings are known for their durability. They [bold]cannot be disposed of by any means short of cremation or ashing[/bold].
   This by itself wouldn't be so bad; however, issues arise when they enter [bold]Regenerative Stasis[/bold].
@@ -63,9 +73,13 @@
 
   You are durable [italic]to an extent[/italic], so do not fool yourself into thinking no one can take you down. However, this doesn’t mean you can’t come out on top during a surprise encounter.
   It’s not recommended to rely entirely on your abilities for fighting. Consider other weaponry or forms of protection to help you in fending off attackers.
-  If you must use your abilities, try combining them with each other. Armblades and Chemical Stings can give you a combat advantage if used in time, but remember, they are not great for fighting more than one attacker.
+  If you must use your abilities, try combining them with each other. ArmBlades and Chemical Stings can give you a combat advantage if used in time, but remember, they are not great for fighting more than one attacker.
 
   ## Identifying Changelings
+
+  <Box>
+    <GuideEntityEmbed Entity="SyringeHivarol" Caption="Hivarol Syringe"/>
+  </Box>
 
   Remember, Changelings can physically transform their body. For example, if you see a Changeling transform their appearance, devour someone, or have their clothing fall apart into fleshy remains, that quickly gives away who they truly are.
 
