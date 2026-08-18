@@ -84,6 +84,11 @@ public sealed partial class SpeechBubbleOverlay : Overlay
                 control.Update(args);
             }
         }
+
+        foreach (var (_, control) in _chatUIController.ActiveSpeechBubbleNameTags)
+        {
+            control.Update(args);
+        }
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -121,12 +126,20 @@ public sealed partial class SpeechBubbleOverlay : Overlay
                 worldRot,
                 eye.Rotation);
 
+            var offset = (-eye.Rotation).ToWorldVec() * (bounds.Box.Extents.Y);
+            var offsetWorldPos = worldPos - offset;
+            var pos = Vector2.Transform(offsetWorldPos, matrix);
+
+            if (_chatUIController.ActiveSpeechBubbleNameTags.TryGetValue(ent, out var nameTag))
+            {
+                var nameTagPos = pos - new Vector2(nameTag.ContentSize.X / 2, nameTag.ContentSize.Y);
+                _uiManager.RenderControl(args.RenderHandle, nameTag, nameTagPos.Floored());
+
+                pos -= new Vector2(0, nameTag.ContentSize.Y);
+            }
+
             foreach (var control in controls)
             {
-                var offset = (-eye.Rotation).ToWorldVec() * (bounds.Box.Extents.Y);
-                var offsetWorldPos = worldPos - offset;
-                var pos = Vector2.Transform(offsetWorldPos, matrix);
-
                 _layoutCache.Add(new BubbleLayout
                 {
                     Bubble = control,

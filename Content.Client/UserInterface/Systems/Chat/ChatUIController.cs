@@ -132,6 +132,10 @@ public sealed partial class ChatUIController : UIController
     /// </summary>
     public readonly Dictionary<EntityUid, List<NuSpeechBubble>> ActiveSpeechBubbles = new();
 
+    public readonly Dictionary<EntityUid, NuSpeechBubbleNameTag> ActiveSpeechBubbleNameTags = new();
+
+    public bool NameTags = true;
+
     /// <summary>
     ///     Speech bubbles that are to-be-sent because of the "rate limit" they have.
     /// </summary>
@@ -466,17 +470,33 @@ public sealed partial class ChatUIController : UIController
 
     private void CreateNuSpeechBubble(EntityUid entity, SpeechBubbleData speechData)
     {
+        var nameColor = GetNameColor(SharedChatSystem.GetStringInsideTag(speechData.Message, "Name"));
+        Color.TryFromHex(nameColor, out var color);
+
         if (!ActiveSpeechBubbles.TryGetValue(entity, out var existing))
         {
             existing = new List<NuSpeechBubble>();
             ActiveSpeechBubbles.Add(entity, existing);
         }
 
-        var nameColor = GetNameColor(SharedChatSystem.GetStringInsideTag(speechData.Message, "Name"));
-        Color.TryFromHex(nameColor, out var color);
-
         var bubble = new NuSpeechBubble(speechData.Message, speechData.Type, entity, color);
         bubble.OnDied += NuSpeechBubbleDied;
+
+        //emotes don't count, their name is already inline
+        if (speechData.Message.Channel != ChatChannel.Emotes)
+        {
+            //Add name tag if they are enabled
+            if (NameTags && !ActiveSpeechBubbleNameTags.ContainsKey(entity) && speechData.Message.Channel != ChatChannel.Emotes)
+            {
+                var nameTag = new NuSpeechBubbleNameTag(entity, color);
+                ActiveSpeechBubbleNameTags.Add(entity, nameTag);
+                nameTag.OnDied += NuSpeechBubbleNameTagDied;
+            }
+
+
+            if (ActiveSpeechBubbleNameTags.TryGetValue(entity, out var existingNameTag))
+                existingNameTag.SetDeathTime(bubble.DeathTime);
+        }
 
         existing.Add(bubble);
 
@@ -487,6 +507,11 @@ public sealed partial class ChatUIController : UIController
             var last = existing[^(SpeechBubbleCap + 1)];
             last.FadeNow();
         }
+    }
+
+    private void NuSpeechBubbleNameTagDied(EntityUid entity, NuSpeechBubbleNameTag tag)
+    {
+        RemoveNuSpeechBubbleNameTag(entity, tag);
     }
 
     private void NuSpeechBubbleDied(EntityUid entity, NuSpeechBubble bubble)
@@ -520,6 +545,14 @@ public sealed partial class ChatUIController : UIController
         {
             ActiveSpeechBubbles.Remove(entityUid);
         }
+    }
+
+    public void RemoveNuSpeechBubbleNameTag(EntityUid entityUid, NuSpeechBubbleNameTag bubble)
+    {
+        bubble.Dispose();
+
+        if (ActiveSpeechBubbleNameTags.ContainsKey(entityUid))
+            ActiveSpeechBubbleNameTags.Remove(entityUid);
     }
 
     private void UpdateChannelPermissions()

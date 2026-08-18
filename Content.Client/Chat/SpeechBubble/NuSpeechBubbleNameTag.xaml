@@ -1,0 +1,7 @@
+<Control xmlns="https://spacestation14.io">
+    <PanelContainer Name="LabelPanel" StyleClasses="speechBox" VerticalAlignment="Bottom">
+        <BoxContainer Orientation="Vertical" Align="Center">
+            <RichTextLabel Name="NameLabel" Margin="2 2 2 2" HorizontalAlignment="Center" Align="Center" StyleClasses="bubbleContent fontChat"/>
+        </BoxContainer>
+    </PanelContainer>
+</Control>
