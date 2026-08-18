@@ -61,8 +61,8 @@ public record struct BorgModuleRelayedEvent<TEvent>(TEvent Args)
 public interface IBorgModuleRelayedEvent
 {
     /// <summary>
-    /// Should it relay to modules that are not installed? If true, will relay to any modules in the borg if they are
-    /// on or off. This means if the borg is out of battery, the relay will still go off on all modules true.
+    /// Should it relay to modules that are not installed? If true, will relay to any modules in the cyborg.
+    /// If false, it will only relay to active modules. (Modules become inactive when the borg is out of battery)
     /// </summary>
     bool RelayWhenNotInstalled { get; }
 }
