@@ -61,7 +61,9 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
         var query = EntityQueryEnumerator<ActiveMicrowaveComponent, MicrowaveComponent>();
         while (query.MoveNext(out var uid, out var active, out var microwave))
         {
-            var timeElapsed = (float)microwave.UpdateInterval.TotalSeconds;
+            var lastUpdated = active.NextCookUpdate - microwave.UpdateInterval;
+            var timeSinceUpdate = curTime - lastUpdated;
+            var timeElapsed = (float)timeSinceUpdate.TotalSeconds;
 
             // Roll malfunctions
             if (active.Malfunctioning && active.NextMalfunction < curTime)
