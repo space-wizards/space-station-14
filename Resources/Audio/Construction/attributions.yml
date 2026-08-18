@@ -1,0 +1,16 @@
+- files: ["slot_electronics_1.ogg", "slot_electronics_2.ogg"]
+  license: "CC0-1.0"
+  copyright: 'Foley created by izzl on freesound.org. Mixed by iaada (GitHub).'
+  source: "https://freesound.org/people/izzl/sounds/790525/"
+
+- files: ["connect_wires_1.ogg"]
+  license: "CC-BY-4.0"
+  copyright: 'Foley created by SiriusBizdness and Sheyvan on freesound.org. Mixed by iaada (GitHub).'
+  source: "https://freesound.org/people/SiriusBizdness/sounds/565193/
+           https://freesound.org/people/Sheyvan/sounds/523292/"
+
+- files: ["connect_wires_2.ogg"]
+  license: "CC-BY-4.0"
+  copyright: 'Foley created by SiriusBizdness and deleted_user_7146007 on freesound.org. Mixed by iaada (GitHub).'
+  source: "https://freesound.org/people/SiriusBizdness/sounds/565193/
+           https://freesound.org/people/deleted_user_7146007/sounds/383449/"

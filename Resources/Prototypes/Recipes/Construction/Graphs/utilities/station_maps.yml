@@ -27,7 +27,8 @@
         doAfter: 1
       completed:
       - !type:PlaySound
-        sound: /Audio/Items/genhit.ogg
+        sound:
+          collection: ConnectWires
     - to: start
       steps:
       - tool: Welding
@@ -53,7 +54,8 @@
         doAfter: 1
       completed:
       - !type:PlaySound
-        sound: /Audio/Items/genhit.ogg
+        sound:
+          collection: SlotElectronics
     - to: assembly
       steps:
       - tool: Cutting

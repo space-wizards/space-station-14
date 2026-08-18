@@ -1,0 +1,11 @@
+- type: soundCollection
+  id: SlotElectronics
+  files:
+  - /Audio/Construction/slot_electronics_1.ogg
+  - /Audio/Construction/slot_electronics_2.ogg
+
+- type: soundCollection
+  id: ConnectWires
+  files:
+  - /Audio/Construction/connect_wires_1.ogg
+  - /Audio/Construction/connect_wires_2.ogg
