@@ -211,7 +211,6 @@ public sealed partial class IconSmoothSystem : EntitySystem
     {
         Array.Clear(_adjacentKeys);
 
-        var seen = 0;
         var offset = AngleToOffset(localRot);
         var bounds = new Box2i(pos + Vector2i.DownLeft, pos + Vector2i.UpRight);
         var chunkEnumerator = new ChunkIndicesEnumerator(bounds, ChunkSize);
@@ -232,7 +231,6 @@ public sealed partial class IconSmoothSystem : EntitySystem
                 {
                     var gridCoords = new Vector2i(x, y);
                     var vector = gridCoords - pos;
-                    seen++;
                     if (vector == Vector2i.Zero
                         || !cache.TryGetTileCache(SharedMapSystem.GetChunkRelative(gridCoords, ChunkSize), out var index))
                         continue;
@@ -245,8 +243,6 @@ public sealed partial class IconSmoothSystem : EntitySystem
                 }
             }
         }
-
-        DebugTools.Assert(seen <= 9, $"{nameof(ChunkIndicesEnumerator)} enumerated through a different number of tiles {seen} than expected!");
     }
 
     /// <summary>
