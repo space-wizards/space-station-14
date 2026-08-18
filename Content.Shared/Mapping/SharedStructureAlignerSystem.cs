@@ -69,6 +69,8 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
         var countAll = 0;
         var countFixed = 0;
 
+        //TODO: check if map exists?
+
         foreach (var (ent, comp, trans) in query)
         {
             if (map is not null && trans.MapID != map)
@@ -88,7 +90,7 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
             message = Loc.GetString("cmd-align-feedback", ("fixed", countFixed), ("dry", dryRun));
 
         // Logging both alignable and misaligned entities, console only gets the latter
-        Log.Info($"AlignAll found {countAll} entities. {countFixed} were misaligned { (dryRun ? ". Dry run, no rotations were performed." : " and has been fixed.") }");
+        Log.Info($"AlignAll found {countAll} entities. {countFixed} were misaligned { (dryRun ? ". Dry run, no rotations were performed." : " and have been fixed.") }");
         return message;
     }
 
