@@ -9,12 +9,15 @@ public abstract partial class SharedRatKingSystem : EntitySystem
 {
     [Dependency] private SharedActionsSystem _action = default!;
 
+    [Dependency] private EntityQuery<InstantActionComponent> _instantActionQuery;
+    [Dependency] private EntityQuery<RatKingServantComponent> _servantQuery;
+
     [SubscribeLocalEvent]
     private void OnShutdown(Entity<RatKingComponent> ent, ref ComponentShutdown args)
     {
         foreach (var servant in ent.Comp.Servants)
         {
-            if (!TryComp(servant, out RatKingServantComponent? servantComp))
+            if (!_servantQuery.TryComp(servant, out var servantComp))
                 continue;
 
             servantComp.King = null;
@@ -41,8 +44,11 @@ public abstract partial class SharedRatKingSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnServantShutdown(Entity<RatKingServantComponent> ent, ref ComponentShutdown args)
     {
-        if (TryComp(ent.Comp.King, out RatKingComponent? ratKingComponent))
-            ratKingComponent.Servants.Remove(ent.Owner);
+        if (ent.Comp.King is not { } king ||
+            !TryComp<RatKingComponent>(king, out var ratKing))
+            return;
+
+        ratKing.Servants.Remove(ent.Owner);
     }
 
     private void UpdateOrderActions(Entity<RatKingComponent> ent)
@@ -52,7 +58,7 @@ public abstract partial class SharedRatKingSystem : EntitySystem
 
         foreach (var action in actions.Actions)
         {
-            if (!TryComp<InstantActionComponent>(action, out var instant) ||
+            if (!_instantActionQuery.TryComp(action, out var instant) ||
                 instant.Event is not RatKingOrderActionEvent order)
                 continue;
 

@@ -30,6 +30,8 @@ public sealed partial class RatKingSystem : SharedRatKingSystem
     [Dependency] private PopupSystem _popup = default!;
     [Dependency] private IRobustRandom _random = default!;
 
+    [Dependency] private EntityQuery<HTNComponent> _htnQuery;
+
     /// <summary>
     /// Summons an allied rat servant at the King, costing a small amount of hunger.
     /// </summary>
@@ -102,7 +104,7 @@ public sealed partial class RatKingSystem : SharedRatKingSystem
 
     protected override void UpdateServantNpc(EntityUid uid, RatKingOrderType orderType)
     {
-        if (!TryComp<HTNComponent>(uid, out var htn))
+        if (!_htnQuery.TryComp(uid, out var htn))
             return;
 
         if (htn.Plan != null)

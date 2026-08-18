@@ -10,15 +10,17 @@ namespace Content.Shared.RatKing.Systems;
 
 public sealed partial class RummagerSystem : EntitySystem
 {
-    [Dependency] private EntityTableSystem _entityTable =  default!;
+    [Dependency] private EntityTableSystem _entityTable = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private INetManager _net = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
 
+    [Dependency] private EntityQuery<RummagerComponent> _rummagerQuery;
+
     [SubscribeLocalEvent]
     private void OnGetVerb(Entity<RummageableComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!HasComp<RummagerComponent>(args.User) || ent.Comp.Looted)
+        if (!_rummagerQuery.HasComp(args.User) || ent.Comp.Looted)
             return;
 
         var user = args.User;
@@ -26,7 +28,6 @@ public sealed partial class RummagerSystem : EntitySystem
         args.Verbs.Add(new AlternativeVerb
         {
             Text = Loc.GetString("rat-king-rummage-text"),
-            Priority = 0,
             Act = () =>
             {
                 _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager,
@@ -52,10 +53,11 @@ public sealed partial class RummagerSystem : EntitySystem
             return;
 
         ent.Comp.Looted = true;
-        Dirty(ent, ent.Comp);
+        Dirty(ent);
+
         _audio.PlayPredicted(ent.Comp.Sound, ent, args.User);
 
-        if (_net.IsClient)
+        if (!_net.IsClient)
             return;
 
         var spawns = _entityTable.GetSpawns(ent.Comp.Table);
