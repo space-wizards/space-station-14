@@ -32,7 +32,7 @@ public abstract partial class SharedRatKingSystem : EntitySystem
 
         DoCommandCallout(uid, component);
         UpdateOrderActions(uid, component);
-        UpdateAllServants(uid, component);
+        UpdateAllServants(component);
     }
 
     [SubscribeLocalEvent]
@@ -58,7 +58,7 @@ public abstract partial class SharedRatKingSystem : EntitySystem
         }
     }
 
-    public void UpdateAllServants(EntityUid uid, RatKingComponent component)
+    public void UpdateAllServants(RatKingComponent component)
     {
         foreach (var servant in component.Servants)
         {
