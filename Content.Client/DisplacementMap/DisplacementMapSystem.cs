@@ -129,6 +129,9 @@ public sealed partial class DisplacementMapSystem : EntitySystem
 
         if (_sprite.RemoveLayer(sprite.AsNullable(), displacementLayerKey, false))
         {
+            //TODO : this is a kinda janky workaround for the fact that the current rendering pipeline does not have
+            //proper support for multiple shaders on a given layer (or an ubershader to handle stacking all of the effects well)
+            //Same reason as where the displacement is added initially
             var shader = sprite.Comp[key] is SpriteComponent.Layer layer && layer.ShaderPrototype == DisplacedUnshaded
                 ? SpriteSystem.UnshadedId.Id
                 : null;
