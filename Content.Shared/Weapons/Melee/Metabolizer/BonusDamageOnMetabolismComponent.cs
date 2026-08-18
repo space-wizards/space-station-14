@@ -1,5 +1,6 @@
 using Content.Shared.Damage;
 using Content.Shared.Metabolism;
+using Content.Shared.Mobs;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -30,8 +31,8 @@ public sealed partial class BonusDamageOnMetabolismComponent : Component
     public DamageSpecifier Damage = new();
 
     /// <summary>
-    /// If true, will only do bonus damage if the mob is alive or critical, but not dead.
+    /// Will only do damage to mobs in one of these states. If null, doesn't care about the state of the mob.
     /// </summary>
     [DataField]
-    public bool OnlyWorksOnAlive = true;
+    public HashSet<MobState> ValidMobStates = [ MobState.Alive, MobState.Critical ];
 }
