@@ -10,7 +10,6 @@ comp-light-replacer-insert-broken-light = You can't insert broken lights!
 comp-light-replacer-same-light = This fixture already holds {INDEFINITE($light)} {$light}!
 
 # Radial Menu messages
-comp-light-replacer-switch-light = You switched to {MAKEPLURAL($light)}.
 comp-light-replacer-eject-specified-lights = Eject all {MAKEPLURAL($light)}.
 comp-light-replacer-select-lights = Select {MAKEPLURAL($light)}.
 comp-light-replacer-open-empty = {CAPITALIZE(THE($light-replacer))} is completely empty!

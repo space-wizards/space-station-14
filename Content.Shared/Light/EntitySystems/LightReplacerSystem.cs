@@ -71,7 +71,7 @@ public sealed partial class LightReplacerSystem : EntitySystem
         _ui.OpenUi(replacer.Owner, LightReplacerUiKey.Key, args.User);
     }
 
-    /// <summary> Tries to replace bulb/tube if applicable. </summary>
+    /// <summary> Tries to replace bulb/tube if applicable.</summary>
     [SubscribeLocalEvent]
     private void OnAfterInteract(Entity<LightReplacerComponent> replacer, ref AfterInteractEvent eventArgs)
     {
@@ -110,8 +110,7 @@ public sealed partial class LightReplacerSystem : EntitySystem
 
         Dirty(replacer);
 
-        var message = Loc.GetString("comp-light-replacer-switch-light", ("light", prototype.Name));
-        _popup.PopupEntity(message, replacer, args.Actor);
+        _audio.PlayPredicted(replacer.Comp.Sound, replacer, args.Actor);
     }
 
     [SubscribeLocalEvent]
