@@ -23,6 +23,7 @@ public sealed partial class MicrowaveBoundUserInterface(EntityUid owner, Enum ui
     protected override void Open()
     {
         base.Open();
+
         _menu = this.CreateWindow<MicrowaveMenu>();
         _menu.StartButton.OnPressed += _ => SendPredictedMessage(new MicrowaveStartCookMessage());
         _menu.EjectButton.OnPressed += _ => SendPredictedMessage(new MicrowaveEjectMessage());
@@ -37,6 +38,8 @@ public sealed partial class MicrowaveBoundUserInterface(EntityUid owner, Enum ui
             _menu.CookTimeInfoLabel.Text = Loc.GetString("microwave-bound-user-interface-cook-time-label",
                 ("time", name));
         };
+
+        Update();
     }
 
     public override void Update()
