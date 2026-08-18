@@ -11,8 +11,6 @@ namespace Content.Client.Chat.SpeechBubble;
 [GenerateTypedNameReferences]
 public sealed partial class NuSpeechBubble : BaseSpeechBubble
 {
-    [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private IEyeManager _eyeManager = default!;
     [Dependency] private IEntityManager _entityManager = default!;
 
     public enum SpeechType : byte
@@ -88,7 +86,7 @@ public sealed partial class NuSpeechBubble : BaseSpeechBubble
         {
             SpeechType.Emote => "emoteBox",
             SpeechType.Whisper => "whisperBox",
-            SpeechType.Looc => "emoteBox",
+            SpeechType.Looc => "maldBox",
             _ => "sayBox",
         };
     }

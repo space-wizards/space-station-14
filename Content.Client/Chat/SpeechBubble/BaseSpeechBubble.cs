@@ -6,7 +6,7 @@ using Robust.Shared.Timing;
 namespace Content.Client.Chat.SpeechBubble;
 
 //TODO: Move things to this
-public abstract class BaseSpeechBubble : Control
+public abstract partial class BaseSpeechBubble : Control
 {
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IEyeManager _eyeManager = default!;

@@ -1,3 +1,4 @@
+using Content.Client.Resources;
 using Content.Client.Stylesheets.Fonts;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
@@ -12,15 +13,23 @@ public sealed class SpeechBubbleSheetlet : Sheetlet<PalettedStylesheet>
 {
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
-        var medium = sheet.BaseFont.GetFont(12);
+        var loocMald = sheet.BaseFont.GetFont(12);
 
-        var whisper = sheet.BaseFont.GetFont(12, FontKind.Italic);
+        var nameFont = sheet.ResCache.GetFont("/Fonts/Macs-Minecraft/macs-minecraft.ttf", 9);
+
+        var speechFont = sheet.ResCache.GetFont("/Fonts/Macs-Minecraft/macs-minecraft.ttf", 12);
+
+        var whisperFont = sheet.ResCache.GetFont("/Fonts/Macs-Minecraft/macs-minecraft-italic.ttf", 12);
 
         return
         [
             E()
                 .Class("fontChat")
-                .Font(medium),
+                .Font(speechFont),
+
+            E()
+                .Class("fontChatName")
+                .Font(nameFont),
 
             E<PanelContainer>()
                 .Class("speechBox")
@@ -32,13 +41,25 @@ public sealed class SpeechBubbleSheetlet : Sheetlet<PalettedStylesheet>
                 .Class("speechBox", "whisperBox")
                 .ParentOf(E<BoxContainer>())
                 .ParentOf(E<RichTextLabel>().Class("bubbleContent"))
-                .Font(whisper),
+                .Font(whisperFont),
 
             E<PanelContainer>()
                 .Class("speechBox", "emoteBox")
                 .ParentOf(E<BoxContainer>())
                 .ParentOf(E<RichTextLabel>().Class("bubbleContent"))
-                .Prop(Label.StylePropertyFont, sheet.BaseFont.GetFont(12, FontKind.Italic)),
+                .Font(whisperFont),
+
+            E<PanelContainer>()
+                .Class("speechBox", "maldBox")
+                .ParentOf(E<BoxContainer>())
+                .ParentOf(E<RichTextLabel>().Class("bubbleContent"))
+                .Font(loocMald),
+
+            E<PanelContainer>()
+                .Class("speechBox", "nameBox")
+                .ParentOf(E<BoxContainer>())
+                .ParentOf(E<RichTextLabel>().Class("bubbleContent"))
+                .Prop(Label.StylePropertyFontOutlineThickness, 2f),
 
             E<PanelContainer>()
                 .Class("nameDivider")

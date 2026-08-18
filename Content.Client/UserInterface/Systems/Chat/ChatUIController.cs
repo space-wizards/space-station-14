@@ -483,7 +483,8 @@ public sealed partial class ChatUIController : UIController
         bubble.OnDied += NuSpeechBubbleDied;
 
         //emotes don't count, their name is already inline
-        if (speechData.Message.Channel != (ChatChannel.Emotes | ChatChannel.Dead))
+        if (speechData.Message.Channel != ChatChannel.Emotes &&
+            speechData.Message.Channel != ChatChannel.Dead)
         {
             //Add name tag if they are enabled
             if (NameTags && !ActiveSpeechBubbleNameTags.ContainsKey(entity))
@@ -492,7 +493,6 @@ public sealed partial class ChatUIController : UIController
                 ActiveSpeechBubbleNameTags.Add(entity, nameTag);
                 nameTag.OnDied += NuSpeechBubbleNameTagDied;
             }
-
 
             if (ActiveSpeechBubbleNameTags.TryGetValue(entity, out var existingNameTag))
                 existingNameTag.SetDeathTime(bubble.DeathTime);
