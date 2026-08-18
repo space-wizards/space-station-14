@@ -1,0 +1,51 @@
+- type: tile
+  id: FloorIce
+  name: tiles-ice
+  sprite: /Textures/Tiles/Ice/ice.png
+  variants: 4
+  isSubfloor: true
+  friction: 0.05
+  heatCapacity: 10000
+  weather: true
+  mobAcceleration: 0.1
+  indestructible: true
+
+- type: tile
+  id: FloorSnow
+  parent: BaseFloorPlanet
+  name: tiles-snow
+  sprite: /Textures/Tiles/Snow/snow.png
+  variants: 6
+  edgeSpritePriority: 8
+  edgeSprites:
+    SouthEast: /Textures/Tiles/Snow/single_edge_SE.png
+    NorthEast: /Textures/Tiles/Snow/single_edge_NE.png
+    NorthWest: /Textures/Tiles/Snow/single_edge_NW.png
+    SouthWest: /Textures/Tiles/Snow/single_edge_SW.png
+    South: /Textures/Tiles/Snow/double_edge_S.png
+    East: /Textures/Tiles/Snow/double_edge_E.png
+    North: /Textures/Tiles/Snow/double_edge_N.png
+    West: /Textures/Tiles/Snow/double_edge_W.png
+  footstepSounds:
+    collection: FootstepSnow
+
+### ASTRO TILES
+- type: tile
+  parent: BaseStationTile
+  id: FloorAstroIce
+  name: tiles-astro-ice
+  sprite: /Textures/Tiles/Ice/ice.png
+  variants: 4
+  friction: 0.05
+  mobFriction: 0.05
+  mobAcceleration: 0.1
+  footstepSounds: null
+  itemDrop: FloorTileItemAstroIce
+
+- type: tile
+  parent: [ BaseStationTile, FloorSnow ]
+  id: FloorAstroSnow
+  name: tiles-astro-snow
+  footstepSounds:
+    collection: FootstepSnow
+  itemDrop: FloorTileItemAstroSnow

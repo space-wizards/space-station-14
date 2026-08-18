@@ -2,6 +2,7 @@ using Content.Shared.Actions.Events;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Buckle.Components;
 using Content.Shared.CombatMode.Pacification;
+using Content.Shared.Cuffs;
 using Content.Shared.Damage.ForceSay;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Emoting;
@@ -145,18 +146,6 @@ public partial class MobStateSystem
     #region Event Subscribers
 
     [SubscribeLocalEvent]
-    private void OnAfterAutoHandleState(Entity<MobStateComponent> ent, ref AfterAutoHandleStateEvent args)
-    {
-        if (ent.Comp.LastReceivedState == ent.Comp.CurrentState)
-            return;
-
-        var ev = new MobStateChangedEvent(ent, ent.Comp, ent.Comp.LastReceivedState, ent.Comp.CurrentState);
-        OnStateChanged(ent, ent.Comp, ent.Comp.LastReceivedState, ent.Comp.CurrentState);
-        RaiseLocalEvent(ent, ev, true);
-        ent.Comp.LastReceivedState = ent.Comp.CurrentState;
-    }
-
-    [SubscribeLocalEvent]
     private void OnSleepAttempt(EntityUid target, MobStateComponent component, ref TryingToSleepEvent args)
     {
         if (IsDead(target, component))
@@ -250,6 +239,13 @@ public partial class MobStateSystem
         }
 
         args.Cancelled = true;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnIncapCuffCheck(Entity<MobStateComponent> ent, ref CheckIncapacitatedCuffEvent args)
+    {
+        if (IsIncapacitated(ent, ent.Comp))
+            args.Incapacitated = true;
     }
 
     #endregion
