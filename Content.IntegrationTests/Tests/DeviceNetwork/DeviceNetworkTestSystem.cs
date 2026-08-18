@@ -9,7 +9,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.IntegrationTests.Tests.DeviceNetwork;
 
 [Reflect(false)]
-public sealed class DeviceNetworkTestSystem : EntitySystem
+public sealed partial class DeviceNetworkTestSystem : EntitySystem
 {
     public override void Initialize()
     {

@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 namespace Content.Server.DeviceNetwork.Systems
 {
     [UsedImplicitly]
-    public sealed class WiredNetworkSystem : EntitySystem
+    public sealed partial class WiredNetworkSystem : EntitySystem
     {
         public override void Initialize()
         {

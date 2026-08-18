@@ -161,8 +161,7 @@
   - MobFlammable
   - BaseSpeciesMob
   - BaseMobDestructible
-  - BaseHungerSlowdown
-  - BaseThirstSlowdown
+  - BaseHungerThirstSlowdown
   id: BaseSpeciesMobOrganic
   save: false
   components:
@@ -178,6 +177,7 @@
         Blunt: 0.50
         Heat: 0.1
   - type: PassiveDamage
+    intervalHaltOnDamageTaken: 5s
     allowedStates:
     - Alive
     damage:
