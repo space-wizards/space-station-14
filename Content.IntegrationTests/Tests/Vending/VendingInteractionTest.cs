@@ -16,11 +16,15 @@ namespace Content.IntegrationTests.Tests.Vending;
 
 public sealed class VendingInteractionTest : InteractionTest
 {
+    // Entity prototypes
     private const string VendingMachineProtoId = "InteractionTestVendingMachine";
     private const string VendedItemProtoId = "InteractionTestItem";
     private const string RestockBoxProtoId = "InteractionTestRestockBox";
     private const string RestockBoxOtherProtoId = "InteractionTestRestockBoxOther";
     private const string APCProtoId = "APCBasic";
+    // Vending machine inventory prototypes
+    private const string Pack1 = "InteractionTestVendingInventory";
+    private const string Pack2 = "InteractionTestVendingInventoryOther";
     private static readonly ProtoId<DamageTypePrototype> TestDamageType = "Blunt";
 
     [TestPrototypes]
@@ -31,12 +35,12 @@ public sealed class VendingInteractionTest : InteractionTest
   name: {VendedItemProtoId}
 
 - type: vendingMachineInventory
-  id: InteractionTestVendingInventory
+  id: {Pack1}
   startingInventory:
     {VendedItemProtoId}: 5
 
 - type: vendingMachineInventory
-  id: InteractionTestVendingInventoryOther
+  id: {Pack2}
   startingInventory:
     {VendedItemProtoId}: 5
 
@@ -46,7 +50,7 @@ public sealed class VendingInteractionTest : InteractionTest
   components:
   - type: VendingMachineRestock
     canRestock:
-    - InteractionTestVendingInventory
+    - {Pack1}
 
 - type: entity
   parent: BaseVendingMachineRestock
@@ -54,14 +58,14 @@ public sealed class VendingInteractionTest : InteractionTest
   components:
   - type: VendingMachineRestock
     canRestock:
-    - InteractionTestVendingInventoryOther
+    - {Pack2}
 
 - type: entity
   parent: BaseVendingMachine
   id: {VendingMachineProtoId}
   components:
   - type: VendingMachine
-    pack: InteractionTestVendingInventory
+    pack: {Pack1}
   - type: VendingMachineEject
     ejectDelay: 0 # no delay to speed up tests
   - type: Sprite
