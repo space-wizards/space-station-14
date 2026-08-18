@@ -2777,6 +2777,7 @@
     useSound:
       path: /Audio/Items/crowbar.ogg
   - type: PassiveDamage # Slight passive regen. Assuming one damage type, comes out to about 4 damage a minute from base.yml.
+    intervalHaltOnDamageTaken: 5s
     allowedStates:
     - Alive
     damage:
