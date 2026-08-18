@@ -106,8 +106,8 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
 
         if (!TryComp<ChangelingIdentityComponent>(ent, out var identity))
             return;
-        
-        if (ent.Comp.ManualDrop)
+
+        if (!ent.Comp.ManualDrop)
             return; // can't drop identities in this mode
 
         if (identity.CurrentIdentity == targetIdentity)
