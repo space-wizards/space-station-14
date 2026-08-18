@@ -1111,6 +1111,7 @@ UraniumWindoorSecureNukeopLocked: UraniumWindoorNukeopLocked
 WindoorAssemblySecure: WindoorAssembly
 WindoorAssemblySecurePlasma: WindoorAssemblyPlasma
 WindoorAssemblySecureUranium: WindoorAssemblyUranium
+LightReplacer: LightReplacerFilled
 
 #2026-08-14
 MeteorRock: AsteroidRock
@@ -1122,3 +1123,6 @@ MeteorRockGold: AsteroidRockGold
 MeteorRockPlasma: AsteroidRockPlasma
 MeteorRockDiamond: AsteroidRockDiamond
 MeteorRockUranium: AsteroidRockUranium
+
+#2026-08-18
+DrinkNeurotoxinGlass: null
