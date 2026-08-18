@@ -2,13 +2,11 @@ using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
 using Content.Shared.RatKing.Components;
 using Content.Shared.RatKing.Events;
-using Robust.Shared.Random;
 
 namespace Content.Shared.RatKing.Systems;
 
 public abstract partial class SharedRatKingSystem : EntitySystem
 {
-    [Dependency] protected IRobustRandom Random = default!;
     [Dependency] private SharedActionsSystem _action = default!;
 
     [SubscribeLocalEvent]

@@ -15,6 +15,7 @@ using Robust.Shared.Map;
 using Content.Shared.Chat;
 using Content.Shared.RatKing.Components;
 using Content.Shared.RatKing.Systems;
+using Robust.Shared.Random;
 
 namespace Content.Server.RatKing;
 
@@ -27,6 +28,7 @@ public sealed partial class RatKingSystem : SharedRatKingSystem
     [Dependency] private SatiationSystem _satiation = default!;
     [Dependency] private NPCSystem _npc = default!;
     [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     /// <summary>
     /// Summons an allied rat servant at the King, costing a small amount of hunger
@@ -115,7 +117,7 @@ public sealed partial class RatKingSystem : SharedRatKingSystem
             !ProtoMan.TryIndex(datasetId, out var datasetPrototype))
             return;
 
-        var msg = Random.Pick(datasetPrototype);
+        var msg = _random.Pick(datasetPrototype);
         _chat.TrySendInGameICMessage(uid, msg, InGameICChatType.Speak, true);
     }
 }
