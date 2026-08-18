@@ -1111,6 +1111,7 @@ UraniumWindoorSecureNukeopLocked: UraniumWindoorNukeopLocked
 WindoorAssemblySecure: WindoorAssembly
 WindoorAssemblySecurePlasma: WindoorAssemblyPlasma
 WindoorAssemblySecureUranium: WindoorAssemblyUranium
+LightReplacer: LightReplacerFilled
 
 #2026-08-14
 MeteorRock: AsteroidRock
