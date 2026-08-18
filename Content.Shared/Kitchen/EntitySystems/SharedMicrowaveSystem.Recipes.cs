@@ -41,8 +41,8 @@ public abstract partial class SharedMicrowaveSystem
         if (TryGetSolidId(item, out var solidId))
             ingredients.AddSolid(solidId.Value);
 
-        if (TryGetStackId(item, out var stackId, out var stack))
-            ingredients.AddStack(stackId.Value, stack.Value.Comp.Count);
+        if (TryComp<StackComponent>(item, out var stack) && TryGetStackId(item, out var stackId))
+            ingredients.AddStack(stackId.Value, stack.Count);
 
         if (TryGetUsableIngredientSolution(item, out _, out var solution))
         {
@@ -147,9 +147,12 @@ public abstract partial class SharedMicrowaveSystem
     /// </remarks>
     /// <param name="ent">The stack entity.</param>
     /// <param name="ingredientsToSpend">The struct representing ingredients we still need to spend.</param>
-    private void SubtractStackContents(Entity<StackComponent> ent,
+    private void SubtractStackContents(Entity<StackComponent?> ent,
         CookingIngredients ingredientsToSpend)
     {
+        if (!Resolve(ent.Owner, ref ent.Comp))
+            return;
+
         var stack = ent.Comp;
         var stackId = stack.StackTypeId;
         var startingQuantity = stack.Count;
@@ -207,25 +210,20 @@ public abstract partial class SharedMicrowaveSystem
     /// <summary>
     ///     Attempt to get the stack ID of a given entity.
     /// </summary>
-    /// <param name="item">The entity to retrieve a stack ID for</param>
+    /// <param name="ent">The stack entity.</param>
     /// <param name="stack">The stack prototype associated with this entity, if any.</param>
-    /// <param name="stackEnt">This entity represented as an entity with StackComponent, if feasible.</param>
     /// <returns>
     ///     Whether or not a stack ID is successfully retrieved. False if this entity is not a stack.
     /// </returns>
-    private bool TryGetStackId(EntityUid item,
-        [NotNullWhen(true)] out ProtoId<StackPrototype>? stack,
-        [NotNullWhen(true)] out Entity<StackComponent>? stackEnt)
+    private bool TryGetStackId(Entity<StackComponent?> ent,
+        [NotNullWhen(true)] out ProtoId<StackPrototype>? stack)
     {
         stack = null;
-        stackEnt = null;
 
-        if (!TryComp<StackComponent>(item, out var stackComp))
+        if (!Resolve(ent.Owner, ref ent.Comp, logMissing: false))
             return false;
 
-        stack = stackComp.StackTypeId;
-        stackEnt = (item, stackComp);
-
+        stack = ent.Comp.StackTypeId;
         return true;
     }
 
@@ -264,11 +262,12 @@ public abstract partial class SharedMicrowaveSystem
             }
 
             if (stacksToSpend.Count > 0
-                && TryGetStackId(item, out var stackId, out var stack)
+                && TryComp<StackComponent>(item, out var stack)
+                && TryGetStackId((item, stack), out var stackId)
                 && stacksToSpend.ContainsKey(stackId.Value))
             {
-                SubtractStackContents(stack.Value, ingredientsToSpend);
-                if (Deleted(stack) || stack.Value.Comp.Count <= 0)
+                SubtractStackContents((item, stack), ingredientsToSpend);
+                if (Deleted(item) || stack.Count <= 0)
                     continue;
                 // We're exiting early here - if the stack is empty, then the stack entity
                 // is gonna be deleted. Which means we shouldn't be using its reagents.
