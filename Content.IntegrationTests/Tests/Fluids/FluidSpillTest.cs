@@ -22,7 +22,6 @@ public sealed class FluidSpill : GameTest
     private static readonly ProtoId<ReagentPrototype> SpilledReagent = "Blood";
 
     [SidedDependency(Side.Server)] private PuddleSystem _sPuddleSystem = null!;
-    [SidedDependency(Side.Server)] private IMapManager _sMapManager = null!;
     [SidedDependency(Side.Server)] private SharedMapSystem _sMapSystem = null!;
 
     private static PuddleComponent? GetPuddle(IEntityManager entityManager, Entity<MapGridComponent> mapGrid, Vector2i pos)
@@ -57,7 +56,7 @@ public sealed class FluidSpill : GameTest
         await Server.WaitPost(() =>
         {
             _sMapSystem.CreateMap(out mapId);
-            var grid = _sMapManager.CreateGridEntity(mapId);
+            var grid = _sMapSystem.CreateGridEntity(mapId);
             gridId = grid.Owner;
 
             for (var x = 0; x < 3; x++)

@@ -229,9 +229,6 @@ reagent-desc-monkey-business = You’ve got to wonder how the monkeys feel about
 reagent-name-moonshine = moonshine
 reagent-desc-moonshine = Artisanal homemade liquor. What could go wrong?
 
-reagent-name-neurotoxin = neurotoxin
-reagent-desc-neurotoxin = A strong neurotoxin that puts the subject into a death-like state.
-
 reagent-name-painkiller = painkiller
 reagent-desc-painkiller = A cure for what ails you.
 

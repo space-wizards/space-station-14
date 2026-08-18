@@ -1,7 +1,7 @@
 ﻿- type: entity
   name: basic slime
   id: BaseMobAdultSlimes
-  parent: [ BaseMobSlimes, SimpleMobBase, MobCombat, BaseSlicingRefinable ]
+  parent: [ BaseMobSlimes, SimpleMobBase, MobCombat, BaseSlicingRefinable, MobNightVision, BaseMobDestructible ]
   abstract: true
   description: It looks so much like jelly. I wonder what it tastes like?
   components:
@@ -96,7 +96,6 @@
     damage:
       types:
         Blunt: 6
-        Structural: 4
         Caustic: 4
   - type: InteractionPopup
     successChance: 0.5
@@ -186,7 +185,6 @@
       damage:
         types:
           Blunt: 6
-          Structural: 4
           Caustic: 1
           Poison: 4
 
@@ -226,7 +224,6 @@
       damage:
         types:
           Blunt: 6
-          Structural: 4
           Caustic: 4
 
 - type: entity

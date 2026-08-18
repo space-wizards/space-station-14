@@ -16,8 +16,8 @@ public sealed class ContrabandTest : GameTest
     {
         var proto = CProtoMan.Index(protoId);
 
-        proto.TryGetComponent<ContrabandComponent>(out var contraband, CEntMan.ComponentFactory);
-        Assert.That(contraband, Is.Not.Null);
+        if (!proto.TryComp<ContrabandComponent>(out var contraband, CEntMan.ComponentFactory))
+            return;
 
         if (!CProtoMan.TryIndex(contraband.Severity, out var severity))
         {

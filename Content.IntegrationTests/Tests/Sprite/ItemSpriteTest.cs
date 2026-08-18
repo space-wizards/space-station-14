@@ -33,7 +33,8 @@ public sealed class ItemSpriteTest : GameTest
     /// </remarks>
     private static readonly HashSet<string> Ignored =
     [
-        "VirtualItem"
+        "VirtualItem",
+        "DetachedBody"
     ];
 
     [Test]

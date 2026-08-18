@@ -49,10 +49,10 @@ public sealed class TraitorRuleTest : GameTest
         {
             var gameRuleEnt = SProtoMan.Index(TraitorGameRuleProtoId);
 
-            Assert.That(gameRuleEnt.TryGetComponent<GameRuleComponent>(out var gameRule, SEntMan.ComponentFactory),
+            Assert.That(gameRuleEnt.TryComp<GameRuleComponent>(out var gameRule, SEntMan.ComponentFactory),
                 $"Game rule entity {TraitorGameRuleProtoId} does not have a {nameof(GameRuleComponent)}!");
 
-            Assert.That(gameRuleEnt.TryGetComponent<AntagRandomObjectivesComponent>(out var randomObjectives, SEntMan.ComponentFactory),
+            Assert.That(gameRuleEnt.TryComp<AntagRandomObjectivesComponent>(out var randomObjectives, SEntMan.ComponentFactory),
                 $"Game rule entity {TraitorGameRuleProtoId} does not have an {nameof(AntagRandomObjectivesComponent)}!");
 
             minPlayers = gameRule!.MinPlayers;

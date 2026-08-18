@@ -28,8 +28,8 @@ public sealed class LatheTest : GameTest
     {
         var latheProto = SProtoMan.Index(latheProtoId);
 
-        Assert.That(latheProto.TryGetComponent<LatheComponent>(out var latheComp, SEntMan.ComponentFactory));
-        Assert.That(latheProto.TryGetComponent<MaterialStorageComponent>(out var storageComp, SEntMan.ComponentFactory));
+        Assert.That(latheProto.TryComp<LatheComponent>(out var latheComp, SEntMan.ComponentFactory));
+        Assert.That(latheProto.TryComp<MaterialStorageComponent>(out var storageComp, SEntMan.ComponentFactory));
 
         // Test which material-containing entities are accepted by this lathe
         var acceptedMaterials = new HashSet<ProtoId<MaterialPrototype>>();
@@ -38,7 +38,7 @@ public sealed class LatheTest : GameTest
             if (_sWhitelistSystem.IsWhitelistFail(storageComp!.Whitelist, materialProtoId))
                 continue;
 
-            Assert.That(SProtoMan.Index(materialProtoId).TryGetComponent<PhysicalCompositionComponent>(out var compositionComponent, SEntMan.ComponentFactory));
+            Assert.That(SProtoMan.Index(materialProtoId).TryComp<PhysicalCompositionComponent>(out var compositionComponent, SEntMan.ComponentFactory));
 
             // Mark the lathe as accepting each material in the entity
             foreach (var (material, _) in compositionComponent!.MaterialComposition)
@@ -51,7 +51,7 @@ public sealed class LatheTest : GameTest
         var recipes = new HashSet<ProtoId<LatheRecipePrototype>>();
         _sLatheSystem.AddRecipesFromPacks(recipes, latheComp!.StaticPacks);
         _sLatheSystem.AddRecipesFromPacks(recipes, latheComp.DynamicPacks);
-        if (latheProto.TryGetComponent<EmagLatheRecipesComponent>(out var emagRecipesComp, SEntMan.ComponentFactory))
+        if (latheProto.TryComp<EmagLatheRecipesComponent>(out var emagRecipesComp, SEntMan.ComponentFactory))
         {
             _sLatheSystem.AddRecipesFromPacks(recipes, emagRecipesComp.EmagStaticPacks);
             _sLatheSystem.AddRecipesFromPacks(recipes, emagRecipesComp.EmagDynamicPacks);

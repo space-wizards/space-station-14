@@ -1,62 +1,77 @@
-#nullable enable
+using System.Collections.Generic;
 using Content.IntegrationTests.Fixtures;
-using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Coordinates;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
+using Robust.Shared.Maths;
 
-namespace Content.IntegrationTests.Tests.Fluids;
-
-[TestOf(typeof(PuddleComponent))]
-public sealed class PuddleTest : GameTest
+namespace Content.IntegrationTests.Tests.Fluids
 {
-    private static readonly ProtoId<ReagentPrototype> TestReagent = "Water";
-
-    [SidedDependency(Side.Server)] private PuddleSystem _sPuddleSystem = null!;
-    [SidedDependency(Side.Server)] private SharedMapSystem _sMapSystem = null!;
-
-    [Test]
-    [Description("Checks that spilling a solution on a grid tile succeeds.")]
-    public async Task TilePuddleTest()
+    [TestFixture]
+    [TestOf(typeof(PuddleComponent))]
+    public sealed class PuddleTest : GameTest
     {
-        await Pair.CreateTestMap();
-
-        await Server.WaitAssertion(() =>
+        [Test]
+        public async Task TilePuddleTest()
         {
-            var solution = new Solution(TestReagent, FixedPoint2.New(20));
-            Assert.That(_sPuddleSystem.TrySpillAt(TestMap!.GridCoords, solution, out _), Is.True);
-        });
-    }
+            var pair = Pair;
+            var server = pair.Server;
 
-    [Test]
-    [Description("Tests that spilling a solution in space does not succeed.")]
-    public async Task SpaceNoPuddleTest()
-    {
-        await Pair.CreateTestMap();
-        var grid = TestMap!.Grid;
+            var testMap = await pair.CreateTestMap();
 
-        // Remove all tiles
-        await Server.WaitPost(() =>
-        {
-            var tiles = _sMapSystem.GetAllTiles(grid.Owner, grid.Comp);
-            foreach (var tile in tiles)
+            var spillSystem = server.System<PuddleSystem>();
+
+            await server.WaitAssertion(() =>
             {
-                _sMapSystem.SetTile(grid, tile.GridIndices, Tile.Empty);
-            }
-        });
+                var solution = new Solution("Water", FixedPoint2.New(20));
+                var tile = testMap.Tile;
+                var gridUid = tile.GridUid;
+                var (x, y) = tile.GridIndices;
+                var coordinates = new EntityCoordinates(gridUid, x, y);
 
-        await RunTicksSync(5);
+                Assert.That(spillSystem.TrySpillAt(coordinates, solution, out _), Is.True);
+            });
+        }
 
-        await Server.WaitAssertion(() =>
+        [Test]
+        public async Task SpaceNoPuddleTest()
         {
-            var solution = new Solution(TestReagent, FixedPoint2.New(20));
+            var pair = Pair;
+            var server = pair.Server;
 
-            Assert.That(_sPuddleSystem.TrySpillAt(TestMap.GridCoords, solution, out _), Is.False);
-        });
+            var testMap = await pair.CreateTestMap();
+            var grid = testMap.Grid;
+
+            var spillSystem = server.System<PuddleSystem>();
+            var mapSystem = server.System<SharedMapSystem>();
+
+            // Remove all tiles
+            await server.WaitPost(() =>
+            {
+                var tiles = new List<(Vector2i GridIndices, Tile Tile)>();
+                var tileEnumerator = mapSystem.GetAllTiles(grid.Owner, grid.Comp);
+
+                foreach (var tile in tileEnumerator)
+                {
+                    tiles.Add((tile.GridIndices, Tile.Empty));
+                }
+
+                mapSystem.SetTiles(grid, tiles);
+            });
+
+            await pair.RunTicksSync(5);
+
+            await server.WaitAssertion(() =>
+            {
+                var coordinates = grid.Owner.ToCoordinates();
+                var solution = new Solution("Water", FixedPoint2.New(20));
+
+                Assert.That(spillSystem.TrySpillAt(coordinates, solution, out _), Is.False);
+            });
+        }
     }
 }

@@ -47,7 +47,7 @@ public sealed class ResearchTest : GameTest
         {
             _sLatheSystem.AddRecipesFromPacks(latheTechs, latheComp.DynamicPacks);
 
-            if (proto.TryGetComponent<EmagLatheRecipesComponent>(out var emag, SEntMan.ComponentFactory))
+            if (proto.TryComp<EmagLatheRecipesComponent>(out var emag, SEntMan.ComponentFactory))
                 _sLatheSystem.AddRecipesFromPacks(latheTechs, emag.EmagDynamicPacks);
         }
 
