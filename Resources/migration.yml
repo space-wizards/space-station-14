@@ -1122,3 +1122,6 @@ MeteorRockGold: AsteroidRockGold
 MeteorRockPlasma: AsteroidRockPlasma
 MeteorRockDiamond: AsteroidRockDiamond
 MeteorRockUranium: AsteroidRockUranium
+
+#2026-08-18
+DrinkNeurotoxinGlass: null
