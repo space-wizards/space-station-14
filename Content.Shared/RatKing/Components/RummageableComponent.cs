@@ -15,14 +15,14 @@ public sealed partial class RummageableComponent : Component
     /// <summary>
     /// Whether or not this entity has been rummaged through already.
     /// </summary>
-    [DataField("looted"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     [AutoNetworkedField]
     public bool Looted;
 
     /// <summary>
     /// How long it takes to rummage through a rummageable container.
     /// </summary>
-    [DataField("rummageDuration"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     [AutoNetworkedField]
     public float RummageDuration = 3f;
 
@@ -35,6 +35,6 @@ public sealed partial class RummageableComponent : Component
     /// <summary>
     /// Sound played on rummage completion.
     /// </summary>
-    [DataField("sound")]
+    [DataField]
     public SoundSpecifier? Sound = new SoundCollectionSpecifier("storageRustle");
 }

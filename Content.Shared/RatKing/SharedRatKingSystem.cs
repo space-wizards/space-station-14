@@ -9,15 +9,7 @@ public abstract partial class SharedRatKingSystem : EntitySystem
     [Dependency] protected IRobustRandom Random = default!;
     [Dependency] private SharedActionsSystem _action = default!;
 
-    /// <inheritdoc/>
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<RatKingComponent, ComponentStartup>(OnStartup);
-        SubscribeLocalEvent<RatKingComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<RatKingComponent, RatKingOrderActionEvent>(OnOrderAction);
-        SubscribeLocalEvent<RatKingServantComponent, ComponentShutdown>(OnServantShutdown);
-    }
-
+    [SubscribeLocalEvent]
     private void OnStartup(EntityUid uid, RatKingComponent component, ComponentStartup args)
     {
         if (!TryComp(uid, out ActionsComponent? comp))
@@ -33,6 +25,7 @@ public abstract partial class SharedRatKingSystem : EntitySystem
         UpdateActions(uid, component);
     }
 
+    [SubscribeLocalEvent]
     private void OnShutdown(EntityUid uid, RatKingComponent component, ComponentShutdown args)
     {
         foreach (var servant in component.Servants)
@@ -53,6 +46,7 @@ public abstract partial class SharedRatKingSystem : EntitySystem
         _action.RemoveAction(actions, component.ActionOrderLooseEntity);
     }
 
+    [SubscribeLocalEvent]
     private void OnOrderAction(EntityUid uid, RatKingComponent component, RatKingOrderActionEvent args)
     {
         if (component.CurrentOrder == args.Type)
@@ -67,6 +61,7 @@ public abstract partial class SharedRatKingSystem : EntitySystem
         UpdateAllServants(uid, component);
     }
 
+    [SubscribeLocalEvent]
     private void OnServantShutdown(EntityUid uid, RatKingServantComponent component, ComponentShutdown args)
     {
         if (TryComp(component.King, out RatKingComponent? ratKingComponent))

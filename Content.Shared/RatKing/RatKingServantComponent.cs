@@ -9,7 +9,6 @@ public sealed partial class RatKingServantComponent : Component
     /// <summary>
     /// The king this rat belongs to.
     /// </summary>
-    [DataField("king")]
-    [AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public EntityUid? King;
 }
