@@ -483,10 +483,10 @@ public sealed partial class ChatUIController : UIController
         bubble.OnDied += NuSpeechBubbleDied;
 
         //emotes don't count, their name is already inline
-        if (speechData.Message.Channel != ChatChannel.Emotes)
+        if (speechData.Message.Channel != (ChatChannel.Emotes | ChatChannel.Dead))
         {
             //Add name tag if they are enabled
-            if (NameTags && !ActiveSpeechBubbleNameTags.ContainsKey(entity) && speechData.Message.Channel != ChatChannel.Emotes)
+            if (NameTags && !ActiveSpeechBubbleNameTags.ContainsKey(entity))
             {
                 var nameTag = new NuSpeechBubbleNameTag(entity, color);
                 ActiveSpeechBubbleNameTags.Add(entity, nameTag);
@@ -509,12 +509,12 @@ public sealed partial class ChatUIController : UIController
         }
     }
 
-    private void NuSpeechBubbleNameTagDied(EntityUid entity, NuSpeechBubbleNameTag tag)
+    private void NuSpeechBubbleNameTagDied(EntityUid entity, BaseSpeechBubble tag)
     {
         RemoveNuSpeechBubbleNameTag(entity, tag);
     }
 
-    private void NuSpeechBubbleDied(EntityUid entity, NuSpeechBubble bubble)
+    private void NuSpeechBubbleDied(EntityUid entity, BaseSpeechBubble bubble)
     {
         RemoveNuSpeechBubble(entity, bubble);
     }
@@ -534,12 +534,16 @@ public sealed partial class ChatUIController : UIController
         queueData.MessageQueue.Enqueue(new SpeechBubbleData(message, speechType));
     }
 
-    public void RemoveNuSpeechBubble(EntityUid entityUid, NuSpeechBubble bubble)
+    public void RemoveNuSpeechBubble(EntityUid entityUid, BaseSpeechBubble bubble)
     {
-        bubble.Dispose();
+        var speechBubble = bubble as NuSpeechBubble;
+        if (speechBubble is null)
+            return;
+
+        speechBubble.Dispose();
 
         var list = ActiveSpeechBubbles[entityUid];
-        list.Remove(bubble);
+        list.Remove(speechBubble);
 
         if (list.Count == 0)
         {
@@ -547,7 +551,7 @@ public sealed partial class ChatUIController : UIController
         }
     }
 
-    public void RemoveNuSpeechBubbleNameTag(EntityUid entityUid, NuSpeechBubbleNameTag bubble)
+    public void RemoveNuSpeechBubbleNameTag(EntityUid entityUid, BaseSpeechBubble bubble)
     {
         bubble.Dispose();
 

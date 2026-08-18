@@ -1,7 +1,10 @@
-<Control xmlns="https://spacestation14.io">
+<speechBubble:BaseSpeechBubble
+    xmlns="https://spacestation14.io"
+    xmlns:speechBubble="clr-namespace:Content.Client.Chat.SpeechBubble">
     <PanelContainer Name="LabelPanel" StyleClasses="speechBox" VerticalAlignment="Bottom">
         <BoxContainer Orientation="Vertical" Align="Center">
-            <RichTextLabel Name="NameLabel" Margin="2 2 2 2" HorizontalAlignment="Center" Align="Center" StyleClasses="bubbleContent fontChat"/>
+            <PanelContainer StyleClasses="LowDivider" Margin="0 2.5 0 2.5" />
+            <RichTextLabel Name="NameLabel" HorizontalAlignment="Center" Align="Center" StyleClasses="bubbleContent fontChat"/>
         </BoxContainer>
     </PanelContainer>
-</Control>
+</speechBubble:BaseSpeechBubble>

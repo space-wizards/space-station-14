@@ -1,4 +1,5 @@
 using Content.Client.Stylesheets.Fonts;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using static Content.Client.Stylesheets.StylesheetHelpers;
@@ -38,6 +39,17 @@ public sealed class SpeechBubbleSheetlet : Sheetlet<PalettedStylesheet>
                 .ParentOf(E<BoxContainer>())
                 .ParentOf(E<RichTextLabel>().Class("bubbleContent"))
                 .Prop(Label.StylePropertyFont, sheet.BaseFont.GetFont(12, FontKind.Italic)),
+
+            E<PanelContainer>()
+                .Class("nameDivider")
+                .ParentOf(E<BoxContainer>())
+                .Prop(PanelContainer.StylePropertyPanel,
+                    new StyleBoxFlat
+                {
+                    BackgroundColor = Color.DarkGray,
+                    ContentMarginLeftOverride = 2,
+                    ContentMarginBottomOverride = 2
+                }),
         ];
     }
 }
