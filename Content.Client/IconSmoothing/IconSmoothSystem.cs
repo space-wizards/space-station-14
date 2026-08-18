@@ -235,11 +235,11 @@ public sealed partial class IconSmoothSystem : EntitySystem
                         || !cache.TryGetTileCache(SharedMapSystem.GetChunkRelative(gridCoords, ChunkSize), out var index))
                         continue;
 
-                    var i = (byte)vector.AsDirection() + offset;
+                    var i = (int)vector.AsDirection() + offset;
                     if (i > 7)
                         i -= 8;
 
-                    _adjacentKeys[i] = _keyCaches[(short)index].Keys;
+                    _adjacentKeys[i] = _keyCaches[(int)index].Keys;
                 }
             }
         }
