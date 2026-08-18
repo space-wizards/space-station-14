@@ -7,6 +7,8 @@ namespace Content.Client.Nutrition.EntitySystems;
 /// <inheritdoc/>
 public sealed partial class ClientSatiationSystem : SatiationSystem
 {
+    [Dependency] private EntityQuery<SatiationCounterAlertComponent> _counterQuery = default!;
+
     [SubscribeLocalEvent]
     private void OnGenericCounter(Entity<SatiationComponent> entity, ref GetGenericAlertCounterAmountEvent args)
     {
@@ -15,7 +17,7 @@ public sealed partial class ClientSatiationSystem : SatiationSystem
 
         // We use a seperate component to avoid having to resolve every single satiation type on an entity.
         // Instead, we just have a component that specifies which one we're looking for.
-        if (!TryComp<SatiationCounterAlertComponent>(args.SpriteView, out var alert))
+        if (!_counterQuery.TryComp(args.SpriteView, out var alert))
             return;
 
         if (!ProtoMan.Resolve(alert.SatiationType, out var satiation))
