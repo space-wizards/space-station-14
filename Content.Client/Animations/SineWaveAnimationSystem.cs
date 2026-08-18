@@ -51,11 +51,11 @@ public sealed partial class SineWaveAnimationSystem : EntitySystem
 
     private Animation GetAnimation(SineWaveAnimationComponent sineComp, SpriteComponent sprite)
     {
-        if (sineComp is { LastTime.TotalSeconds: 0, XWave.PhaseOffset: null })
-            sineComp.LastTime += TimeSpan.FromSeconds(_random.NextFloat(0, (float)Math.Tau / sineComp.XWave.Value.Frequency));
+        if (sineComp is { LastTimeX.TotalSeconds: 0, XWave.PhaseOffset: null })
+            sineComp.LastTimeX += TimeSpan.FromSeconds(_random.NextFloat(0, (float)Math.Tau / sineComp.XWave.Value.Frequency));
 
-        if (sineComp is { LastTime.TotalSeconds: 0, YWave.PhaseOffset: null })
-            sineComp.LastTime += TimeSpan.FromSeconds(_random.NextFloat(0, (float)Math.Tau / sineComp.YWave.Value.Frequency));
+        if (sineComp is { LastTimeY.TotalSeconds: 0, YWave.PhaseOffset: null })
+            sineComp.LastTimeX += TimeSpan.FromSeconds(_random.NextFloat(0, (float)Math.Tau / sineComp.YWave.Value.Frequency));
 
         var rotationKeyFrames = new List<AnimationTrackProperty.KeyFrame>();
         var offsetKeyFrames = new List<AnimationTrackProperty.KeyFrame>();
@@ -74,7 +74,7 @@ public sealed partial class SineWaveAnimationSystem : EntitySystem
 
             if (sineComp.XWave != null)
             {
-                var a = sineComp.XWave.Value.Frequency * (currTime.TotalSeconds + sineComp.LastTime.TotalSeconds);
+                var a = sineComp.XWave.Value.Frequency * (currTime.TotalSeconds + sineComp.LastTimeX.TotalSeconds);
                 offset.X = (float) (sineComp.XWave.Value.Amplitude * Math.Sin(a));
 
                 var angle = new Angle(Math.Atan(Math.Cos(a)));
@@ -83,7 +83,7 @@ public sealed partial class SineWaveAnimationSystem : EntitySystem
 
             if (sineComp.YWave != null)
             {
-                var a = sineComp.YWave.Value.Frequency * (currTime.TotalSeconds + sineComp.LastTime.TotalSeconds);
+                var a = sineComp.YWave.Value.Frequency * (currTime.TotalSeconds + sineComp.LastTimeY.TotalSeconds);
                 offset.Y = (float) (sineComp.YWave.Value.Amplitude * Math.Cos(a));
 
                 var angle = new Angle(Math.Atan(-Math.Sin(a)));
@@ -94,7 +94,8 @@ public sealed partial class SineWaveAnimationSystem : EntitySystem
             offsetKeyFrames.Add(new AnimationTrackProperty.KeyFrame(offset, (float) stepValue.TotalSeconds));
         }
 
-        sineComp.LastTime += sineComp.AnimationLength;
+        sineComp.LastTimeX += sineComp.AnimationLength;
+        sineComp.LastTimeY += sineComp.AnimationLength;
 
         return new Animation
         {

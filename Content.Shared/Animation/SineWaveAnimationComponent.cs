@@ -65,8 +65,18 @@ public sealed partial class SineWaveAnimationComponent : Component
     [DataField, AutoNetworkedField]
     public SignWaveDefinition? YWave;
 
+    /// <summary>
+    /// Stores the last time for both the x and y waves. Needed for smooth looping so it doesn't
+    /// offset in an odd way when restarting.
+    /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan LastTime = TimeSpan.Zero;
+    public TimeSpan LastTimeX;
+
+    /// <summary>
+    /// Same as LastTimeX, but with Y.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan LastTimeY;
 }
 
 /// <summary>

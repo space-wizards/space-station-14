@@ -263,7 +263,7 @@
     intensitySlope: 3
     maxIntensity: 3
     maxTileBreak: 0
-  - type: SinWaveAnimation
+  - type: SineWaveAnimation
     xWave:
       amplitude: 0.4
       frequency: 17
