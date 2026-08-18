@@ -988,9 +988,9 @@ IronsandStepConcaveCorner: null
 IronsandStep: null
 
 # 2026-07-27
-TurnstileGenpopEnter: EnergyGateGenpopEnter
-TurnstileGenpopLeave: EnergyGateGenpopLeave
-Turnstile: EnergyGate
+# TurnstileGenpopEnter: EnergyGateGenpopEnter # Turnstills don't have to migrate to a new proto, just change the visial and name, dont change the id
+# TurnstileGenpopLeave: EnergyGateGenpopLeave
+# Turnstile: EnergyGate
 # MetalDoor: SilverDoor ### Steel door should stay, this changes map ballance
 MiningWindow: ReinforcedWindow
 MiningWindowDiagonal: ReinforcedWindowDiagonal
@@ -1122,6 +1122,9 @@ MeteorRockGold: AsteroidRockGold
 MeteorRockPlasma: AsteroidRockPlasma
 MeteorRockDiamond: AsteroidRockDiamond
 MeteorRockUranium: AsteroidRockUranium
+
+#2026-08-18
+DrinkNeurotoxinGlass: null
 
 # add date gua
 MeteorRockBananium: AsteroidRockBananium

@@ -1,12 +1,12 @@
 - type: constructionGraph
-  id: EnergyGate # used to be metal turnstile
+  id: Turnstile # used to be metal turnstile
   start: start
   graph:
   - node: start
     actions:
     - !type:DeleteEntity { }
     edges:
-    - to: energyGate
+    - to: turnstile
       completed:
       - !type:SnapToGrid
       steps: # TODO: Change material composition to better match the asthetic
@@ -16,8 +16,8 @@
         amount: 1
         doAfter: 6
 
-  - node: energyGate
-    entity: EnergyGate
+  - node: turnstile
+    entity: Turnstile
     edges:
     - to: start
       completed:
