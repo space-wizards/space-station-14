@@ -9,7 +9,7 @@ namespace Content.Shared.Animation;
 /// Can do both axies and also rotate.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class SinWaveAnimationComponent : Component
+public sealed partial class SineWaveAnimationComponent : Component
 {
     /// <summary>
     /// Length of the animation.

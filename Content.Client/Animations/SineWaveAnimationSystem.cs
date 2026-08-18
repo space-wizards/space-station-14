@@ -6,16 +6,16 @@ using Robust.Shared.Random;
 
 namespace Content.Client.Animations;
 
-public sealed partial class SinWaveAnimationSystem : EntitySystem
+public sealed partial class SineWaveAnimationSystem : EntitySystem
 {
     [Dependency] private AnimationPlayerSystem _animationPlayer = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SpriteSystem _sprite = default!;
 
-    private readonly string _sinWaveAnimationKey = "sinWave";
+    private readonly string _sineWaveAnimationKey = "sinWave";
 
     [SubscribeLocalEvent]
-    private void OnStartup(Entity<SinWaveAnimationComponent> ent, ref ComponentStartup args)
+    private void OnStartup(Entity<SineWaveAnimationComponent> ent, ref ComponentStartup args)
     {
         var sprite = Comp<SpriteComponent>(ent);
 
@@ -24,38 +24,38 @@ public sealed partial class SinWaveAnimationSystem : EntitySystem
 
         var animationPlayer = EnsureComp<AnimationPlayerComponent>(ent);
 
-        _animationPlayer.Play((ent, animationPlayer), GetAnimation(ent.Comp, sprite), _sinWaveAnimationKey);
+        _animationPlayer.Play((ent, animationPlayer), GetAnimation(ent.Comp, sprite), _sineWaveAnimationKey);
     }
 
     [SubscribeLocalEvent]
-    private void OnShutdown(Entity<SinWaveAnimationComponent> ent, ref ComponentShutdown args)
+    private void OnShutdown(Entity<SineWaveAnimationComponent> ent, ref ComponentShutdown args)
     {
         TryResetFields(ent);
 
         var animationPlayer = Comp<AnimationPlayerComponent>(ent);
-        _animationPlayer.Stop(ent, animationPlayer, _sinWaveAnimationKey);
+        _animationPlayer.Stop(ent, animationPlayer, _sineWaveAnimationKey);
     }
 
     [SubscribeLocalEvent]
-    private void OnAnimationCompleted(Entity<SinWaveAnimationComponent> ent, ref AnimationCompletedEvent args)
+    private void OnAnimationCompleted(Entity<SineWaveAnimationComponent> ent, ref AnimationCompletedEvent args)
     {
-        if (args.Key != _sinWaveAnimationKey || !args.Finished || !ent.Comp.Repeat)
+        if (args.Key != _sineWaveAnimationKey || !args.Finished || !ent.Comp.Repeat)
         {
             TryResetFields(ent);
             return;
         }
 
         var sprite = Comp<SpriteComponent>(ent);
-        _animationPlayer.Play((ent, args.AnimationPlayer), GetAnimation(ent.Comp, sprite), _sinWaveAnimationKey);
+        _animationPlayer.Play((ent, args.AnimationPlayer), GetAnimation(ent.Comp, sprite), _sineWaveAnimationKey);
     }
 
-    private Animation GetAnimation(SinWaveAnimationComponent sinComp, SpriteComponent sprite)
+    private Animation GetAnimation(SineWaveAnimationComponent sineComp, SpriteComponent sprite)
     {
-        if (sinComp is { LastTime.TotalSeconds: 0, XWave.PhaseOffset: null })
-            sinComp.LastTime += TimeSpan.FromSeconds(_random.NextFloat(0, (float)Math.Tau / sinComp.XWave.Value.Frequency));
+        if (sineComp is { LastTime.TotalSeconds: 0, XWave.PhaseOffset: null })
+            sineComp.LastTime += TimeSpan.FromSeconds(_random.NextFloat(0, (float)Math.Tau / sineComp.XWave.Value.Frequency));
 
-        if (sinComp is { LastTime.TotalSeconds: 0, YWave.PhaseOffset: null })
-            sinComp.LastTime += TimeSpan.FromSeconds(_random.NextFloat(0, (float)Math.Tau / sinComp.YWave.Value.Frequency));
+        if (sineComp is { LastTime.TotalSeconds: 0, YWave.PhaseOffset: null })
+            sineComp.LastTime += TimeSpan.FromSeconds(_random.NextFloat(0, (float)Math.Tau / sineComp.YWave.Value.Frequency));
 
         var rotationKeyFrames = new List<AnimationTrackProperty.KeyFrame>();
         var offsetKeyFrames = new List<AnimationTrackProperty.KeyFrame>();
@@ -63,28 +63,28 @@ public sealed partial class SinWaveAnimationSystem : EntitySystem
         rotationKeyFrames.Add(new AnimationTrackProperty.KeyFrame(sprite.Rotation, 0f));
         offsetKeyFrames.Add(new AnimationTrackProperty.KeyFrame(sprite.Offset, 0f));
 
-        var stepValue = sinComp.AnimationLength / sinComp.KeyFrames;
+        var stepValue = sineComp.AnimationLength / sineComp.KeyFrames;
 
-        for (var i = 1; i <= sinComp.KeyFrames; i++)
+        for (var i = 1; i <= sineComp.KeyFrames; i++)
         {
             var currTime = stepValue * i;
 
             var offset = new Vector2();
             var rotation = new Angle();
 
-            if (sinComp.XWave != null)
+            if (sineComp.XWave != null)
             {
-                var a = sinComp.XWave.Value.Frequency * (currTime.TotalSeconds + sinComp.LastTime.TotalSeconds);
-                offset.X = (float) (sinComp.XWave.Value.Amplitude * Math.Sin(a));
+                var a = sineComp.XWave.Value.Frequency * (currTime.TotalSeconds + sineComp.LastTime.TotalSeconds);
+                offset.X = (float) (sineComp.XWave.Value.Amplitude * Math.Sin(a));
 
                 var angle = new Angle(Math.Atan(Math.Cos(a)));
                 rotation += angle;
             }
 
-            if (sinComp.YWave != null)
+            if (sineComp.YWave != null)
             {
-                var a = sinComp.YWave.Value.Frequency * (currTime.TotalSeconds + sinComp.LastTime.TotalSeconds);
-                offset.Y = (float) (sinComp.YWave.Value.Amplitude * Math.Cos(a));
+                var a = sineComp.YWave.Value.Frequency * (currTime.TotalSeconds + sineComp.LastTime.TotalSeconds);
+                offset.Y = (float) (sineComp.YWave.Value.Amplitude * Math.Cos(a));
 
                 // TODO: I think this is slightly off
                 var angle = new Angle(Math.Atan(-Math.Sin(a)));
@@ -95,11 +95,11 @@ public sealed partial class SinWaveAnimationSystem : EntitySystem
             offsetKeyFrames.Add(new AnimationTrackProperty.KeyFrame(offset, (float) stepValue.TotalSeconds));
         }
 
-        sinComp.LastTime += sinComp.AnimationLength;
+        sineComp.LastTime += sineComp.AnimationLength;
 
         return new Animation
         {
-            Length = sinComp.AnimationLength,
+            Length = sineComp.AnimationLength,
             AnimationTracks =
             {
                 new AnimationTrackComponentProperty()
@@ -119,7 +119,7 @@ public sealed partial class SinWaveAnimationSystem : EntitySystem
         };
     }
 
-    private void TryResetFields(Entity<SinWaveAnimationComponent> ent)
+    private void TryResetFields(Entity<SineWaveAnimationComponent> ent)
     {
         if (ent.Comp.ResetOffsetOnEnd)
             _sprite.SetOffset(ent.Owner, ent.Comp.StartOffset);
