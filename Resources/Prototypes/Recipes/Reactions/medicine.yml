@@ -209,24 +209,14 @@
 - type: reaction
   id: Ambuzol
   reactants:
-    Dylovene:
+    Ultravasculine:
       amount: 1
-    Ammonia:
+    Mannitol:
       amount: 1
     ZombieBlood:
       amount: 2
   products:
     Ambuzol: 4
-
-- type: reaction
-  id: AmbuzolPlus
-  reactants:
-    Ambuzol:
-      amount: 5
-    Omnizine:
-      amount: 5
-  products:
-    AmbuzolPlus: 10
 
 - type: reaction
   id: Synaptizine
@@ -342,9 +332,18 @@
       amount: 2
     Plasma:
       amount: 1
-      catalyst: true
   products:
     Ultravasculine: 2
+
+- type: reaction
+  id: Histamine
+  reactants:
+    Carbon:
+      amount: 2
+    Ammonia:
+      amount: 1
+  products:
+    Histamine: 1
 
 - type: reaction
   id: Oculine
