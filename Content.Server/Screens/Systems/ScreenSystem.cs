@@ -89,8 +89,6 @@ public sealed partial class ScreenSystem : EntitySystem
         if (text != null)
             _appearanceSystem.SetData(ent, TextScreenVisuals.ScreenText, text);
 
-        _appearanceSystem.SetData(ent, TextScreenVisuals.TargetTime, _gameTiming.CurTime + duration);
-
         if (payload.OverrideColor != null)
             _appearanceSystem.SetData(ent, TextScreenVisuals.Color, payload.OverrideColor);
     }
