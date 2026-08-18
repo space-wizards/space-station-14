@@ -33,7 +33,7 @@ public sealed class StationAiBoundUserInterface(EntityUid owner, Enum uiKey) : B
             {
                 IconSpecifier = RadialMenuIconSpecifier.With(action.Sprite),
                 ToolTip = action.Tooltip,
-                Order = i
+                Order = action.Order,
             };
         }
 
