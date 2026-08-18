@@ -235,7 +235,7 @@ public partial class MobStateSystem
         {
             var states = string.Join(", ", ent.Comp.States.Order().Select(s => Loc.GetString($"mob-state-{s}")));
             args.Reason = Loc.GetString(ent.Comp.FailReason, ("states", states));
-            args.Type = PopupType.SmallCaution;
+            args.Type = ent.Comp.FailReasonPopupType;
         }
 
         args.Cancelled = true;

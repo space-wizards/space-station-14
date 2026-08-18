@@ -6,12 +6,12 @@ namespace Content.Shared.Nutrition.EntitySystems;
 
 public abstract partial class SatiationSystem
 {
-    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private EntityQuery<SatiationComponent> _satiationQuery = default!;
 
     [SubscribeLocalEvent]
     private void OnActionAttempt(Entity<ActionRequireSatiationComponent> ent, ref ActionAttemptEvent args)
     {
-        if (TryComp<SatiationComponent>(args.User, out var satiation)
+        if (_satiationQuery.TryComp(args.User, out var satiation)
             && GetValueOrNull((args.User, satiation), ent.Comp.Satiation) is {} value
             && value >= ent.Comp.Amount)
             return;
@@ -31,7 +31,7 @@ public abstract partial class SatiationSystem
         if (!ent.Comp.Spend)
             return;
 
-        if (!TryComp<SatiationComponent>(args.Performer, out var satiation))
+        if (!_satiationQuery.TryComp(args.Performer, out var satiation))
             return;
 
         ModifyValue((args.Performer, satiation), ent.Comp.Satiation, -ent.Comp.Amount.Float());
