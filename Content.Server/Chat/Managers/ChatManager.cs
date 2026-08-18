@@ -368,7 +368,6 @@ internal sealed partial class ChatManager : IChatManager
         var netSource = _entityManager.GetNetEntity(source);
         user?.AddEntity(netSource);
 
-
         var msg = new ChatMessage(channel, message, wrappedMessage, netSource, user?.Key, hideChat, colorOverride, audioPath, audioVolume);
         _netManager.ServerSendToMany(new MsgChatMessage() { Message = msg }, clients);
 
@@ -438,7 +437,6 @@ internal sealed partial class ChatManager : IChatManager
     }
 
     #endregion
-
 }
 
 public enum OOCChatType : byte
