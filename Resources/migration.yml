@@ -944,22 +944,22 @@ BlastDoorXenoborgOpen: BlastDoorXenoOpen
 ### Dark Tiles
 FloorTileItemDarkDiagonalMini: FloorTileItemDark
 FloorTileItemDarkDiagonal: FloorTileItemDark
-FloorTileItemDarkOffset: FloorTileItemDark
-FloorTileItemDarkSlatsContinuous: FloorTileItemDark
+FloorTileItemDarkOffset: FloorTileItemDark #readd
+FloorTileItemDarkSlatsContinuous: FloorTileItemDark #slats
 
 ### Steel Tiles
 FloorTileItemSteelDiagonalMini: FloorTileItemSteel
 FloorTileItemSteelDiagonal: FloorTileItemSteel
-FloorTileItemSteelOffset: FloorTileItemSteel
-FloorTileItemSteelMono: FloorTileItemSteel
+FloorTileItemSteelOffset: FloorTileItemSteel #readd
+FloorTileItemSteelMono: FloorTileItemSteel #mono
 FloorTileItemShowroom: FloorTileItemSteel
-FloorTileItemSteelSlatsContinuous: FloorTileItemSteel
+FloorTileItemSteelSlatsContinuous: FloorTileItemSteel #should be slats
 
 ### White Tiles
 FloorTileItemWhiteDiagonalMini: FloorTileItemWhite
 FloorTileItemWhiteDiagonal: FloorTileItemWhite
-FloorTileItemWhiteOffset: FloorTileItemWhite
-FloorTileItemWhiteSlatsContinuous: FloorTileItemWhite
+FloorTileItemWhiteOffset: FloorTileItemWhite # readd plz
+FloorTileItemWhiteSlatsContinuous: FloorTileItemWhite # there is white slats?
 
 ### Misc Tiles
 FloorTileItemUraniumMarble: FloorTileItemDarkMarble
@@ -967,7 +967,7 @@ FloorTileItemPlasmaMarble: FloorTileItemWhiteMarble
 FloorTileItemEighties: FloorTileItemArcadeBlue
 FloorTileItemArcadeBlue2: FloorTileItemArcadeBlue
 FloorTileItemElevatorShaft: null
-FloorTileItemMining: null
+FloorTileItemMining: null # at least replace them with something similar
 FloorTileItemMiningLight: null
 FloorTileItemMiningDark: null
 FloorTileItemRockVault: null
@@ -994,7 +994,7 @@ IronsandStep: null
 # MetalDoor: SilverDoor ### Steel door should stay, this changes map ballance
 MiningWindow: ReinforcedWindow
 MiningWindowDiagonal: ReinforcedWindowDiagonal
-FloorTileItemLightAstroGrass: null
+FloorTileItemLightAstroGrass: null  # at least replace them with something similar
 FloorTileItemGrayConcrete: null
 FloorTileItemGrayConcreteMono: null
 FloorTileItemGrayConcreteSmooth: null
@@ -1044,7 +1044,7 @@ FloorTileItemXenoSteel: FloorTileItemExoHull
 FloorTileItemXenoSteelCorner: FloorTileItemExoCornerSW
 FloorTileItemXenoMaint: FloorTileItemExoTechmaint
 FloorTileItemXenoborg: FloorTileItemExoBorg
-FloorTileItemDarkSquiggly: FloorTileItemExoHorizontal
+FloorTileItemDarkSquiggly: FloorTileItemExoHorizontal # TODO check this
 
 # 2026-08-04
 FloorSnowChasm: FloorChasmEntity
