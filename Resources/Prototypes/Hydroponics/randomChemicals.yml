@@ -58,6 +58,7 @@
     - Ipecac
     - Licoxide
     - Theobromine
+    - Allicin
     - NorepinephricAcid
     - Cryptobiolin
     - Ethylredoxrazine
@@ -89,7 +90,6 @@
   - quantity: 10 # Basic Farming Table
     weight: 5
     reagents:
-    - Allicin
     - Vitamin
     - Fiber
     - Water
