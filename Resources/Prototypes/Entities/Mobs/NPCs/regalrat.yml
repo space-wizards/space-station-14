@@ -344,6 +344,7 @@
   components:
   - type: Action
     useDelay: 1
+    startDelay: true
     priority: 5
   - type: Sprite
     sprite: Interface/Actions/actions_rat_king.rsi
@@ -365,6 +366,8 @@
   components:
   - type: Action
     useDelay: 1
+    startDelay: true
+    toggled: true
     priority: 6
   - type: Sprite
     sprite: Interface/Actions/actions_rat_king.rsi
@@ -386,6 +389,7 @@
   components:
   - type: Action
     useDelay: 1
+    startDelay: true
     priority: 7
   - type: Sprite
     sprite: Interface/Actions/actions_rat_king.rsi
@@ -407,6 +411,7 @@
   components:
   - type: Action
     useDelay: 1
+    startDelay: true
     priority: 8
   - type: Sprite
     sprite: Interface/Actions/actions_rat_king.rsi
@@ -417,6 +422,5 @@
       map: ["enum.ActionVisuals.IconToggled"]
       visible: false
   - type: InstantAction
-    event:
-      !type:RatKingOrderActionEvent
+    event: !type:RatKingOrderActionEvent
       type: Loose

@@ -22,7 +22,7 @@ public sealed partial class RummageableComponent : Component
     /// <summary>
     /// How long it takes to rummage through a rummageable container.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float RummageDuration = 3f;
 
     /// <summary>
