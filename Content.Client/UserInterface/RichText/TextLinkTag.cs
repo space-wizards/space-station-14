@@ -1,26 +1,14 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
-using Content.Shared.Chat;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.RichText;
 using Robust.Shared.Input;
 using Robust.Shared.Utility;
 using Content.Client.UserInterface.ControlExtensions;
-using Content.Client.UserInterface.Systems.Chat;
-using Robust.Shared.GameObjects.Components.Localization;
 
 namespace Content.Client.UserInterface.RichText;
-// <summary> resolved LinkData</summary>
-public readonly record struct LinkData(string Link, Color? Color, bool Clickable);
 
-/// <summary>Which attribute a [textlink] node carries, i.e. which resolver handles it.</summary>
-internal enum TextLinkKind : byte
-{
-    None,
-    Entity, // entity="<NetEntity>" — clickable chat name
-    Plain,  // link="<string>" — always-clickable plain link (e.g. guidebook)
-}
 
 /// <summary>
 /// Markup tag handler for <c>[textlink="LinkText"]</c> nodes. Renders a link
@@ -32,10 +20,22 @@ internal enum TextLinkKind : byte
 [UsedImplicitly]
 public sealed partial class TextLinkTag : IMarkupTagHandler
 {
+    public static Color DefaultLinkColor => Color.CornflowerBlue;
     [Dependency] private IEntityManager _entity = default!;
     [Dependency] private IUserInterfaceManager _ui = default!;
+    [Dependency] private ISawmill _sawmill = default!;
+    private readonly (string AttributeName, TryResolveLink Resolver)[] _resolvers;
+    private delegate bool TryResolveLink(MarkupNode node, out LinkData data);
+    private readonly record struct LinkData(string Link, Color? Color, bool Clickable);
 
-    public static Color DefaultLinkColor => Color.CornflowerBlue;
+    public TextLinkTag()
+    {
+        _resolvers =
+        [
+            (EntityAttributeName, TryResolveEntityLink),
+            (LinkAttributeName, TryResolvePlainLink),
+        ];
+    }
 
     public string Name => "textlink";
 
@@ -46,35 +46,32 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
 
     public bool TryCreateControl(MarkupNode node, [NotNullWhen(true)] out Control? control)
     {
+
+        control = null;
+        LinkData data = default;
+
+        var linkTypeResolved = false;
+
         if (!node.Value.TryGetString(out var text))
         {
-            control = null;
             return false;
         }
 
-        LinkData data;
-
-        switch (GetLinkKind(node))
+        foreach (var (attrname, resolver) in _resolvers)
         {
-            case TextLinkKind.Entity:
-                if (!TryResolveEntityLink(node, out data))
+            if (node.Attributes.ContainsKey(attrname))
+            {
+                if(!resolver(node, out data))
                 {
-                    control = null;
                     return false;
                 }
+                linkTypeResolved = true;
                 break;
-
-            case TextLinkKind.Plain:
-                if (!TryResolvePlainLink(node, out data))
-                {
-                    control = null;
-                    return false;
-                }
-                break;
-
-            default:
-                control = null;
-                return false;
+            }
+        }
+        if (!linkTypeResolved)
+        {
+            return false;
         }
 
         // color= > resolver-supplied color > default
@@ -94,17 +91,6 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
 
         control = label;
         return true;
-    }
-
-    private static TextLinkKind GetLinkKind(MarkupNode node)
-    {
-        if (node.Attributes.ContainsKey(EntityAttributeName))
-            return TextLinkKind.Entity;
-
-        if (node.Attributes.ContainsKey(LinkAttributeName))
-            return TextLinkKind.Plain;
-
-        return TextLinkKind.None;
     }
 
     private static Color? ResolveColorOverride(MarkupNode node)
@@ -131,7 +117,7 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
         if (control.TryGetParentHandler<ILinkClickHandler>(out var handler))
             handler.HandleClick(link);
         else
-            Logger.Warning("Warning! No valid ILinkClickHandler found.");
+            _sawmill.Warning("Warning! No valid ILinkClickHandler found.");
     }
 }
 
