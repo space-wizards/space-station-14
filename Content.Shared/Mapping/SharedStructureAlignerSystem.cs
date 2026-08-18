@@ -59,8 +59,9 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
     /// <summary>
     /// Aligns every StructureAlignerComponent on the target map, or on every map if not specified.
     /// </summary>
-    /// <remarks>This is very expensive and will likely lag the game for seconds. It should never be ran once players are in the game.</remarks>
-    public string? AlignAll(MapId? map = null)
+    /// <returns> The feedback to be displayed to the user, if the command was triggered from the console</returns>>
+    /// <remarks>This can be expensive and lag the game for seconds. It should not be called after players are in the game.</remarks>
+    public string AlignAll(MapId? map = null, bool dryRun = false)
     {
         // It needs to be an All Entity Query so it works on pre-init maps during Mapping
         var query = AllEntityQuery<StructureAlignerComponent, TransformComponent>();
@@ -73,18 +74,28 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
             if (map is not null && trans.MapID != map)
                 continue;
 
-            if (Align((ent, comp)))
+            if (Align((ent, comp), dryRun))
                 countFixed++;
             countAll++;
         }
 
-        return Loc.GetString("cmd-align-feedback", ("countAll", countAll), ("countFixed", countFixed));
+        string message;
+        if (countAll == 0)
+            message = Loc.GetString("cmd-align-feedback-none", ("dry", dryRun));
+        else if (countFixed == 0)
+            message = Loc.GetString("cmd-align-feedback-good", ("dry", dryRun));
+        else
+            message = Loc.GetString("cmd-align-feedback", ("fixed", countFixed), ("dry", dryRun));
+
+        // Logging both alignable and misaligned entities, console only gets the latter
+        Log.Info($"AlignAll found {countAll} entities. {countFixed} were misaligned { (dryRun ? ". Dry run, no rotations were performed." : " and has been fixed.") }");
+        return message;
     }
 
     /// <summary>
     /// Aligns the target entity to it's neighboring StructureAlignToComponent-s with matching types.
     /// </summary>
-    private bool Align(Entity<StructureAlignerComponent> entity)
+    private bool Align(Entity<StructureAlignerComponent> entity, bool dryRun = false)
     {
         var trans = Transform(entity);
 
@@ -152,12 +163,13 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
         if (!MathHelper.CloseTo(locRot, targetAngle.Value, 0.01f)
             && !MathHelper.CloseTo(locRot, targetAngle.Value + Angle.FromDegrees(180), 0.01f))
         {
-
-            _trans.SetLocalRotation(entity, trans.LocalRotation + Angle.FromDegrees(90));
-
             var name = MetaData(entity.Owner).EntityName;
             var pos = _trans.GetWorldPosition(trans);
-            Log.Info($"Aligned entity '{ entity.Owner }' on map { trans.MapID } at { pos } : { name }");
+
+            if (!dryRun)
+                _trans.SetLocalRotation(entity, trans.LocalRotation + Angle.FromDegrees(90));
+
+            Log.Info($"Misaligned entity '{ entity.Owner }' on map { trans.MapID } at { pos } : { name }");
             return true;
         }
 
