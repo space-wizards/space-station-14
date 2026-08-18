@@ -177,6 +177,31 @@
         probability: 0.25
 
 - type: reagent
+  id: Romerodone
+  name: reagent-name-romerodone
+  group: Biological
+  desc: reagent-desc-romerodone
+  physicalDesc: reagent-physical-desc-undead
+  flavor: metallic
+  color: "#e62600"
+  metabolisms:
+    Digestion:
+      # Disgusting!
+      effects:
+      - !type:Satiate
+        satiationType: Thirst
+        factor: -0.5
+    Bloodstream:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 2
+      - !type:Vomit
+        probability: 0.5
+
+
+- type: reagent
   id: Ichor
   name: reagent-name-ichor
   group: Biological
