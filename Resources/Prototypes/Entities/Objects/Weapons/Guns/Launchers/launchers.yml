@@ -212,6 +212,49 @@
   - type: Appearance
 
 - type: entity
+  parent: BaseItem
+  id: WeaponRocketLauncherXenoborg
+  name: XB MRL-97-D # Xenoborg Multi Rocket Launcher 97 D (Demolition)
+  description: A alien rocket launcher fitted with special demolition rockets.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Launchers/xb_mlr.rsi
+    layers:
+    - state: mlr
+      map: [ "enum.GunVisualLayers.Base" ]
+    - state: mag-6
+      map: [ "enum.GunVisualLayers.Mag" ]
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
+  - type: Gun
+    burstFireRate: 12.5
+    selectedMode: Burst
+    availableModes:
+    - Burst
+    shotsPerBurst: 6
+    minAngle: 10
+    angleIncrease: 10
+    maxAngle: 60
+    projectileSpeed: 12.5
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/rocket1.ogg
+  - type: BallisticAmmoProvider
+    capacity: 6
+    proto: BulletXenoborgMechadermisRocket
+    cycleable: false
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+  - type: BallisticAmmoSelfRefiller
+    autoRefillRate: 12s
+  - type: MagazineVisuals
+    magState: mag
+    steps: 7
+    zeroVisible: false
+  - type: Appearance
+
+- type: entity
   parent: BaseWeaponLauncher
   id: WeaponLauncherPirateCannon
   name: pirate cannon
