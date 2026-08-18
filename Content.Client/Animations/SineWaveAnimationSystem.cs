@@ -51,11 +51,17 @@ public sealed partial class SineWaveAnimationSystem : EntitySystem
 
     private Animation GetAnimation(SineWaveAnimationComponent sineComp, SpriteComponent sprite)
     {
-        if (sineComp is { TotalTimeX.TotalSeconds: 0, XWave.PhaseOffset: null })
-            sineComp.TotalTimeX += TimeSpan.FromSeconds(_random.NextFloat(0, (float)Math.Tau / sineComp.XWave.Value.Frequency));
+        if (sineComp is { TotalTimeX.TotalSeconds: 0, XWave: not null })
+        {
+            sineComp.TotalTimeX = sineComp.XWave.Value.PhaseOffset ??
+                                  TimeSpan.FromSeconds(_random.NextDouble(0, sineComp.XWave.Value.Period.TotalSeconds));
+        }
 
-        if (sineComp is { TotalTimeY.TotalSeconds: 0, YWave.PhaseOffset: null })
-            sineComp.TotalTimeY += TimeSpan.FromSeconds(_random.NextFloat(0, (float)Math.Tau / sineComp.YWave.Value.Frequency));
+        if (sineComp is { TotalTimeY.TotalSeconds: 0, YWave: not null })
+        {
+            sineComp.TotalTimeY = sineComp.YWave.Value.PhaseOffset ??
+                                  TimeSpan.FromSeconds(_random.NextDouble(0, sineComp.YWave.Value.Period.TotalSeconds));
+        }
 
         var rotationKeyFrames = new List<AnimationTrackProperty.KeyFrame>();
         var offsetKeyFrames = new List<AnimationTrackProperty.KeyFrame>();
@@ -72,18 +78,18 @@ public sealed partial class SineWaveAnimationSystem : EntitySystem
             var offset = new Vector2();
             var rotation = new Angle();
 
-            if (sineComp.XWave != null)
+            if (sineComp.XWave is not null)
             {
-                var a = sineComp.XWave.Value.Frequency * (currTime.TotalSeconds + sineComp.TotalTimeX.TotalSeconds);
+                var a = (currTime + sineComp.TotalTimeX) / sineComp.XWave.Value.Period;
                 offset.X = (float) (sineComp.XWave.Value.Amplitude * Math.Sin(a));
 
                 var angle = new Angle(Math.Atan(Math.Cos(a)));
                 rotation += angle;
             }
 
-            if (sineComp.YWave != null)
+            if (sineComp.YWave is not null)
             {
-                var a = sineComp.YWave.Value.Frequency * (currTime.TotalSeconds + sineComp.TotalTimeY.TotalSeconds);
+                var a = (currTime + sineComp.TotalTimeY) / sineComp.YWave.Value.Period;
                 offset.Y = (float) (sineComp.YWave.Value.Amplitude * Math.Cos(a));
 
                 var angle = new Angle(Math.Atan(-Math.Sin(a)));

@@ -266,7 +266,7 @@
   - type: SineWaveAnimation
     xWave:
       amplitude: 0.4
-      frequency: 17
+      period: 0.058 # 17 Hz
       phaseOffset: null
   - type: PointLight
     radius: 2.5

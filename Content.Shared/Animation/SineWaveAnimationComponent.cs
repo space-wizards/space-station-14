@@ -82,9 +82,7 @@ public sealed partial class SineWaveAnimationComponent : Component
 /// <summary>
 /// Definition of a sin wave. This is the equation that's used:
 ///
-/// x = Amplitude * Sin(Frequency * (time + PhaseOffset))
-///
-/// If PhaseOffset is set to null, it will choose a random number between 0 and (2π / Frequency)
+/// x = Amplitude * Sin((time + PhaseOffset) / Period)
 /// </summary>
 [Serializable, NetSerializable, DataDefinition]
 public partial struct SignWaveDefinition
@@ -96,17 +94,17 @@ public partial struct SignWaveDefinition
     public float Amplitude = 1;
 
     /// <summary>
-    /// Frequency for the equation in Hz (1 = 1 cycle per second)
+    /// Period of the wave. (How long it takes from one peak to the next on the wave)
     /// </summary>
     [DataField]
-    public float Frequency = 1;
+    public TimeSpan Period = TimeSpan.FromSeconds(1);
 
     /// <summary>
-    /// The phase to start the animation. If set to null, it will be set to a random number
-    /// between 0 and (2π / Frequency). Set to 0 for no offset.
+    /// The time offset to start the animation. If set to null, it will be set to a random number
+    /// between 0 and <see cref="Period"/>. Set to 0 for no offset.
     /// </summary>
     [DataField]
-    public float? PhaseOffset = 0;
+    public TimeSpan? PhaseOffset = TimeSpan.Zero;
 
     /// <summary>
     /// If true, the sprite will also be rotated to follow the slope of the wave.
