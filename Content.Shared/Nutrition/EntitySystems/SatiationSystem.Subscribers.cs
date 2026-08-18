@@ -37,4 +37,3 @@ public abstract partial class SatiationSystem
         ModifyValue((args.Performer, satiation), ent.Comp.Satiation, -ent.Comp.Amount.Float());
     }
 }
-
