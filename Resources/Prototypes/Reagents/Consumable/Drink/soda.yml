@@ -48,7 +48,7 @@
 - type: reagent
   id: ChangelingSting
   name: reagent-name-changeling-sting
-  parent: BaseSoda
+  parent: [ BaseSoda, BaseAlcohol ]
   desc: reagent-desc-changeling-sting
   physicalDesc: reagent-physical-desc-fizzy
   flavor: soda
