@@ -239,7 +239,7 @@ public sealed partial class IconSmoothSystem : EntitySystem
                     if (i > 7)
                         i -= 8;
 
-                    _adjacentKeys[i] = _keyCaches[(int)index].Keys;
+                    _adjacentKeys[i] = _keyCaches[(short)index].Keys;
                 }
             }
         }
@@ -335,7 +335,7 @@ public sealed partial class IconSmoothSystem : EntitySystem
             return;
         }
 
-        _keyCaches[(int)cache].RefCount++;
+        _keyCaches[(short)cache].RefCount++;
     }
 
     private void RemoveTile(Entity<IconSmoothComponent, TransformComponent> entity, bool update = true)
