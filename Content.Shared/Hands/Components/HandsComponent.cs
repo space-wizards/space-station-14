@@ -16,10 +16,10 @@ namespace Content.Shared.Hands.Components;
 public sealed partial class HandsComponent : Component, IComponentDelta
 {
     /// <inheritdoc />
-    public GameTick LastFieldUpdate { get; set; }
-
-    /// <inheritdoc />
     public GameTick[] LastModifiedFields { get; set; }
+
+    /// <inheritdoc/>
+    public GameTick LastUnclassifiedDirty { get; set; }
 
     /// <summary>
     /// The currently active hand.
