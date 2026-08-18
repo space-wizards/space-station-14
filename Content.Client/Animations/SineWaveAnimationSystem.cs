@@ -51,7 +51,6 @@ public sealed partial class SineWaveAnimationSystem : EntitySystem
 
     private Animation GetAnimation(SineWaveAnimationComponent sineComp, SpriteComponent sprite)
     {
-
         if (sineComp is { TotalTimeX.TotalSeconds: 0, XWave: not null })
         {
             sineComp.TotalTimeX = sineComp.XWave.Value.PhaseOffset ??

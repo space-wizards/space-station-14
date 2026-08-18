@@ -224,6 +224,10 @@
       map: [ "enum.GunVisualLayers.Base" ]
     - state: mag-6
       map: [ "enum.GunVisualLayers.Mag" ]
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
   - type: Gun
     burstFireRate: 12.5
     selectedMode: Burst
