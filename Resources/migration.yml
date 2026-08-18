@@ -1122,3 +1122,9 @@ MeteorRockGold: AsteroidRockGold
 MeteorRockPlasma: AsteroidRockPlasma
 MeteorRockDiamond: AsteroidRockDiamond
 MeteorRockUranium: AsteroidRockUranium
+
+# 2026-08-18
+ClothingHeadsetQM: ClothingHeadsetAltCargo
+ClothingHeadsetCE: ClothingHeadsetAltEngineering
+ClothingHeadsetCMO: ClothingHeadsetAltMedical
+ClothingHeadsetRD: ClothingHeadsetAltScience
