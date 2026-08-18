@@ -6,9 +6,22 @@
   description: A crystaline solid.
   components:
   - type: Sprite
-    sprite: Structures/Decoration/crystal.rsi
-    state: crystal_grey
     noRot: true
+    sprite: Structures/Decoration/crystal.rsi
+    layers:
+      state: big0
+      map: [ "crystal" ]
+  - type: RandomSprite
+    available:
+    - crystal:
+        big0: ""
+        big1: ""
+        big2: ""
+        medium0: ""
+        medium1: ""
+        medium2: ""
+        medium3: ""
+        medium4: ""
   - type: Reflect
     reflectProb: 0.5
     reflects:

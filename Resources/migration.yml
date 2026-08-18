@@ -951,7 +951,6 @@ FloorTileItemDarkSlatsContinuous: FloorTileItemDark
 FloorTileItemSteelDiagonalMini: FloorTileItemSteel
 FloorTileItemSteelDiagonal: FloorTileItemSteel
 FloorTileItemSteelOffset: FloorTileItemSteel
-FloorTileItemSteelMono: FloorTileItemSteel
 FloorTileItemShowroom: FloorTileItemSteel
 FloorTileItemSteelSlatsContinuous: FloorTileItemSteel
 
@@ -1122,3 +1121,4 @@ MeteorRockGold: AsteroidRockGold
 MeteorRockPlasma: AsteroidRockPlasma
 MeteorRockDiamond: AsteroidRockDiamond
 MeteorRockUranium: AsteroidRockUranium
+StatueBananiumClown: StatueOrnateClown
