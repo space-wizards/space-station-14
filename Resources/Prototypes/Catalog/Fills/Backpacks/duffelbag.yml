@@ -349,7 +349,7 @@
         - id: SyringeRomerol
         - id: WeaponRevolverPython
         - id: MagazineBoxMagnumIncendiary
-        - id: PillAmbuzol
+        - id: PillCanisterAmbuzol
           amount: 5
 
 - type: entity

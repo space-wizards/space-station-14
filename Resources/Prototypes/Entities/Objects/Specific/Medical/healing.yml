@@ -693,6 +693,20 @@
         id: PillTricordrazine
         amount: 5
 
+-  type: entity
+   name: pill canister
+   parent: PillCanister
+   id: PillCanisterAmbuzol
+   suffix: Ambuzol 15u, 2
+   components:
+   - type: Label
+     localizedLabel: pill-label-ambuzol-15u
+   - type: EntityTableContainerFill
+     containers:
+       storagebase:
+         id: PillAmbuzol
+         amount: 2
+
 - type: entity
   name: pill
   suffix: Bicaridine 20u
