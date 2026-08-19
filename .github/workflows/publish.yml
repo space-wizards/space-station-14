@@ -37,29 +37,64 @@ jobs:
     - name: Install dependencies
       run: dotnet restore
 
-    - name: Build Packaging
-      run: dotnet build Content.Packaging --configuration Release --no-restore /m
-
-    - name: Package server
-      run: dotnet run --project Content.Packaging server --platform win-x64 --platform win-arm64 --platform linux-x64 --platform linux-arm64 --platform osx-x64 --platform osx-arm64
-
-    - name: Package client
-      run: dotnet run --project Content.Packaging client --no-wipe-release
-
-    - name: Publish version
-      run: Tools/publish_multi_request.py
+    - name: Update changelog
+      run: |
+        dotnet tool install --global SpaceWizards.ChangelogTool --version 1.0.3
+        ss14-changelog update -d Resources/Changelog
       env:
-        PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
-        GITHUB_REPOSITORY: ${{ vars.GITHUB_REPOSITORY }}
+        REPO: ${{ github.repository }}
+        BRANCH: stable
+        CHANGELOG_REPO_PATH: Resources/Changelog
+        EXTRA_CATEGORIES: Admin,Maps,Rules
+        GITHUB_TOKEN: ${{ secrets.CL_ACCESS_TOKEN }}
 
-    - name: Publish changelog (Discord)
-      run: Tools/actions_changelogs_since_last_run.py
+    - name: Commit and push changelog changes
+      id: changelog
+      run: |
+        git config user.name "Space-Wizards-Bot"
+        git config user.email "support@spacestation14.com"
+        if [ -n "$(git status --porcelain Resources/Changelog)" ]; then
+          git add Resources/Changelog
+          git commit -m "Update changelog"
+          git remote set-url origin "https://x-access-token:${CL_ACCESS_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+          echo "committed=true" >> "$GITHUB_OUTPUT"
+        fi
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        DISCORD_WEBHOOK_URL: ${{ secrets.CHANGELOG_DISCORD_WEBHOOK }}
+        CL_ACCESS_TOKEN: ${{ secrets.CL_ACCESS_TOKEN }}
 
-    - name: Publish changelog (RSS)
-      continue-on-error: true
-      run: Tools/actions_changelog_rss.py
+    - name: Create PR from stable to master
+      if: steps.changelog.outputs.committed == 'true'
       env:
-        CHANGELOG_RSS_KEY: ${{ secrets.CHANGELOG_RSS_KEY }}
+        GH_TOKEN: ${{ secrets.CL_ACCESS_TOKEN }}
+      run: |
+        if [ -z "$(gh pr list --repo "$GITHUB_REPOSITORY" --head stable --base master --state open --json number --jq '.[].number')" ]; then
+          gh pr create --repo "$GITHUB_REPOSITORY" --base master --head stable --title "Update changelog" --body "Sync from release to master."
+        fi
+
+    # - name: Build Packaging
+    #   run: dotnet build Content.Packaging --configuration Release --no-restore /m
+
+    # - name: Package server
+    #   run: dotnet run --project Content.Packaging server --platform win-x64 --platform win-arm64 --platform linux-x64 --platform linux-arm64 --platform osx-x64 --platform osx-arm64
+
+    # - name: Package client
+    #   run: dotnet run --project Content.Packaging client --no-wipe-release
+
+    # - name: Publish version
+    #   run: Tools/publish_multi_request.py
+    #   env:
+    #     PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
+    #     GITHUB_REPOSITORY: ${{ vars.GITHUB_REPOSITORY }}
+
+    # - name: Publish changelog (Discord)
+    #   run: Tools/actions_changelogs_since_last_run.py
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    #     DISCORD_WEBHOOK_URL: ${{ secrets.CHANGELOG_DISCORD_WEBHOOK }}
+
+    # - name: Publish changelog (RSS)
+    #   continue-on-error: true
+    #   run: Tools/actions_changelog_rss.py
+    #   env:
+    #     CHANGELOG_RSS_KEY: ${{ secrets.CHANGELOG_RSS_KEY }}
