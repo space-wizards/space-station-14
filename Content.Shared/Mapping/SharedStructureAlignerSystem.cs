@@ -6,7 +6,7 @@ using Robust.Shared.Map;
 namespace Content.Shared.Mapping;
 
 /// <summary>
-/// This system can fix the rotation of structures like doors and firelocks, based on the surrounding walls/windows.
+/// This system can fix the rotation of structures like doors and firelocks, based on the surrounding walls/windows/doors.
 /// See StructureAlignerComponent and StructureAlignToComponent.
 /// </summary>
 /// <remarks>
@@ -33,7 +33,7 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
 
     public override void Initialize()
     {
-        _cfg.OnValueChanged(CCVars.MapInitAlign,  (b) => { _mapInitAlign = b; }, true);
+        Subs.CVar(_cfg, CCVars.MapInitAlign,  (b) => { _mapInitAlign = b; }, true);
     }
 
     [SubscribeLocalEvent]
@@ -116,7 +116,6 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
         var northSouth = 0d;
         var eastWest = 0d;
 
-        int weight;
         foreach (var neighborEnt in near)
         {
             if (entity.Owner == neighborEnt)
@@ -134,10 +133,7 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
             if (neighborTrans.ParentUid != trans.ParentUid)
                 continue;
 
-            // Anchored objects have enough weight in the calculation to make unanchored ones irrelevant,
-            // but if only unanchored ones are present, they will still matter.
-            // For example, if a line of firelock frames are being anchored, with no adjacent walls
-            weight = neighborTrans.Anchored ? 10 : 1;
+
 
             // The searchbox catches diagonally adjacent tiles, but we don't want those. So we filter them out with a maximum distance
             // Minimum range is here to ignore overlapping entities
@@ -145,37 +141,43 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
             if (dist > ProximityMax || dist < ProximityMin)
                 continue;
 
-            var vect = trans.Coordinates.Position - neighborTrans.Coordinates.Position;
-
-            //TODO:ERRANT use Directions
-
-            eastWest += Math.Abs(Math.Round(vect.X)) * weight;
-            northSouth += Math.Round(Math.Abs(vect.Y)) * weight;
+            // Anchored objects have enough weight in the calculation to make unanchored ones irrelevant,
+            // but if only unanchored ones are present, they will still matter.
+            // For example, if a line of firelock frames are being anchored, with no adjacent walls
+            var weight = neighborTrans.Anchored ? 10 : 1;
+            var neighborDir = (trans.Coordinates.Position - neighborTrans.Coordinates.Position).GetDir();
+            switch (neighborDir)
+            {
+                case Direction.South or Direction.North:
+                    northSouth += weight;
+                    break;
+                case Direction.East or Direction.West:
+                    eastWest += weight;
+                    break;
+                default:
+                    Log.Warning("Welp"); //TODO:ERRANT
+                    break;
+            }
         }
 
         // Determine correct orientation
         // A horizontal base sprite is assumed, with neighbors to the East or West being acceptable.
         // If the entity instead has N or S side neighbors, it will be rotated 90 degrees.
         // If ambiguous (neighbors on all sides, or in an L shape) then no rotation will occur.
-        Angle? targetAngle;
+        Direction targetDir;
 
         if (eastWest > northSouth)
         {
-            targetAngle = Angle.FromDegrees(0);
+            targetDir = Direction.East;
         }
         else if (northSouth > eastWest)
         {
-            targetAngle = Angle.FromDegrees(90);
+            targetDir = Direction.South;
         }
         else
             return false;
 
-        var locRot = Math.Abs(trans.LocalRotation);
-        // Don't want to "fix" a 180 degree misalignment
-
-        // rotate sprite
-        if (!MathHelper.CloseTo(locRot, targetAngle.Value, 0.01f)
-            && !MathHelper.CloseTo(locRot, targetAngle.Value + Angle.FromDegrees(180), 0.01f))
+        if (targetDir == trans.LocalRotation.GetDir() || targetDir == trans.LocalRotation.Opposite().GetDir())
         {
             var name = MetaData(entity.Owner).EntityName;
             var pos = _trans.GetWorldPosition(trans);
