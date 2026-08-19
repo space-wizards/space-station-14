@@ -121,6 +121,8 @@ public sealed partial class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponen
             _popup.PopupEntity(Loc.GetString("zombie-alone"), healthy[0], healthy[0]);
 
         if (GetInfectedFraction(false) > zombieRuleComponent.ZombieShuttleCallPercentage && !_roundEnd.IsRoundEndRequested())
+            _roundEnd.DoRoundEndBehavior(zombieRuleComponent.ZombieRoundEndBehavior,
+                zombieRuleComponent.ZombieEvacShuttleTime);
         {
             foreach (var station in _station.GetStations())
             {
