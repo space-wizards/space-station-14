@@ -54,13 +54,14 @@ public sealed partial class CreamPieSystem : SharedCreamPieSystem
         var appearance = ent.Comp3;
 
         // If there is no sprite to use, remove the layer. Otherwise ensure that it exists and set the visuals accordingly.
-        int index = _sprite.LayerMapReserve((ent.Owner, sprite), CreamPiedVisualLayer.Key);
         if (creamPied.Sprite == null)
         {
             _sprite.RemoveLayer((ent.Owner, sprite), CreamPiedVisualLayer.Key);
             _displacement.EnsureDisplacementIsNotOnSprite((ent.Owner, sprite), CreamPiedVisualLayer.Key);
             return;
         }
+
+        int index = _sprite.LayerMapReserve((ent.Owner, sprite), CreamPiedVisualLayer.Key);
 
         _appearance.TryGetData<bool>(ent.Owner, CreamPiedVisuals.Creamed, out var isCreamPied, appearance);
         _sprite.LayerSetSprite((ent.Owner, sprite), index, creamPied.Sprite);
