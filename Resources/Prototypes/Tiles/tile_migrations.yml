@@ -142,9 +142,9 @@
   id: FloorArcadeBlue2
   target: FloorArcadeBlue
 
-- type: tileAlias
-  id: FloorSteelMono
-  target: FloorSteel #gray mono
+#- type: tileAlias
+#  id: FloorSteelMono # this shouldn't have been migrated?
+#  target: FloorSteel
 
 - type: tileAlias
   id: FloorHydro
@@ -156,15 +156,15 @@
 
 - type: tileAlias
   id: FloorMining
-  target: FloorSteel # shouldnt this be dark plastic?
+  target: FloorDarkPlastic
 
 - type: tileAlias
   id: FloorMiningLight
-  target: FloorSteel # shouldnt this be dark steel?
+  target: FloorPlastic
 
 - type: tileAlias
   id: FloorMiningDark
-  target: FloorSteel # shouldnt this be dark maints?
+  target: FloorDarkPlastic
 
 - type: tileAlias
   id: FloorRockVault
@@ -176,19 +176,19 @@
 
 - type: tileAlias
   id: FloorSteelSlatsContinuous
-  target: FloorSteel #gray slats
+  target: FloorSteelVerticalSlatsBordered
 
 - type: tileAlias
   id: FloorDarkSlatsContinuous
-  target: FloorDark #dark slats
+  target: FloorDarkVerticalSlatsBordered
 
 - type: tileAlias
   id: FloorWhiteSlatsContinuous
-  target: FloorWhite #white slats
+  target: FloorWhiteVerticalSlatsBordered
 
 - type: tileAlias
   id: FloorMono
-  target: FloorSteel #gray mono
+  target: FloorSteel
 
 - type: tileAlias
   id: TrainLattice
@@ -246,7 +246,7 @@
 
 - type: tileAlias
   id: IronsandPacked
-  target: FloorAsteroidIronsand # why astro?
+  target: FloorAsteroidIronsand
 
 - type: tileAlias
   id: IronsandPaved
@@ -278,7 +278,7 @@
 
 - type: tileAlias
   id: FloorLowDesert
-  target: FloorDesertAstroSand # why is this astro?
+  target: FloorDesert
 
 - type: tileAlias
   id: FloorAsteroidSandUnvariantizedBorderless
@@ -302,7 +302,7 @@
 
 - type: tileAlias
   id: FloorTechMaint
-  target: FloorTechMaint2 # the second? seems like a mistake? should probablly do it other way around
+  target: FloorTechMaint2 # should have done migration of 2 into 1, but eh
 
 - type: tileAlias
   id: FloorXenoborg
@@ -326,7 +326,7 @@
 
 - type: tileAlias
   id: FloorDarkSquiggly
-  target: FloorExoHorizontal # needs to be vertical and horizontal at the same time...
+  target: FloorExoVertical # TODO check vertical variant # needs to be vertical and horizontal at the same time...
 
 - type: tileAlias
   id: FloorAsphalt
