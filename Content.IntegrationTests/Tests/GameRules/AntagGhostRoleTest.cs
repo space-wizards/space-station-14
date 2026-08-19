@@ -157,7 +157,18 @@ public sealed partial class AntagGhostRoleTest : AntagTest
                 AssertGhostRoleTaken(spawner, role, xform);
                 var newMind = ServerSession!.GetMind();
                 Assert.That(newMind, Is.Not.EqualTo(mind));
-                Assert.That(!SEntMan.TryGetComponent(newMind, out HijackTradeStationConditionComponent? hack_ats), "A reinforcement traitor was given the 'hack ATS' objective!!!");
+
+                bool Condition()
+                {
+                    if (SEntMan.TryGetComponent(newMind, out TraitorProfileBlacklistComponent? roleBlacklist))
+                    {
+                        return !roleBlacklist.Profiles.Contains("TraitorReinforcement");
+                    }
+
+                    return true;
+                }
+
+                Assert.That(Condition, "A reinforcement traitor was given a blacklisted objective!");
                 mind = newMind;
             }
         }

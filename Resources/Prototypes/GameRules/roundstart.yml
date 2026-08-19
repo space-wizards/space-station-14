@@ -200,10 +200,6 @@
   - type: TraitorRule
     giveUplink: false
     giveBriefing: false
-  - type: AntagRandomObjectives
-    sets:
-      - groups: TraitorReinforcementObjectiveGroups
-    maxDifficulty: 5
   - type: AntagSelection
     antags:
     - !type:FixedAntagCount
