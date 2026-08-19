@@ -83,4 +83,8 @@
 
   Note! The availability of the tissue is [bold]greatly limited[/bold]. Use what you manage to gather wisely!
 
+  <GuideReagentEmbed Reagent="LivingTissue"/>
+  <GuideReagentEmbed Reagent="Hivarol"/>
+  <GuideReagentEmbed Reagent="Opporozidone"/>
+
 </Document>
