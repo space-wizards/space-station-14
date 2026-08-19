@@ -11,6 +11,9 @@ namespace Content.Shared.Nutrition.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(SatiationGrantSystem))]
 public sealed partial class SatiationGrantComponent : Component
 {
+    /// <summary>
+    /// The list of satiation types to add to this entity on <see cref="MapInitEvent"/>.
+    /// </summary>
     [DataField(required: true), AutoNetworkedField, AlwaysPushInheritance]
     public Dictionary<ProtoId<SatiationTypePrototype>, Satiation> Satiation = new();
 
