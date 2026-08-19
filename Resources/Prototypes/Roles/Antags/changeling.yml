@@ -2,7 +2,7 @@
   id: Changeling
   name: roles-antag-changeling-name
   antagonist: true
-  setPreference: false # TODO: set this to true once Changeling exits WIP status
+  setPreference: true
   objective: roles-antag-changeling-objective
 
 - type: antagSpecifier
