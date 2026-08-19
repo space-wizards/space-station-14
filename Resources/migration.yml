@@ -1128,5 +1128,6 @@ MeteorRockUranium: AsteroidRockUranium
 DrinkNeurotoxinGlass: null
 
 #2026-08-19
+# TODO: reverse this when AirlockAssembly* has construction graphs.
 AirlockAssemblyShuttle: AirlockShuttleAssembly
 AirlockAssemblyShuttleGlass: AirlockShuttleAssembly
