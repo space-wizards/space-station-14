@@ -79,3 +79,5 @@
   - type: StatusEffectAlert
     alert: Stun
   - type: StunnedStatusEffect
+  - type: ExaminableStatusEffect
+    messageId: status-effect-examine-stunned

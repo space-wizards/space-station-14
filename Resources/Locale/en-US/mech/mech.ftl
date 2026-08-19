@@ -1,8 +1,5 @@
-mech-verb-enter = Enter
-mech-verb-exit = Remove pilot
-
-mech-equipment-begin-install = Installing the {THE($item)}...
-mech-equipment-finish-install = Finished installing the {THE($item)}
+mech-equipment-begin-install = Installing {THE($item)}...
+mech-equipment-finish-install = Finished installing {THE($item)}
 
 mech-equipment-select-popup = {$item} selected
 mech-equipment-select-none-popup = Nothing selected
@@ -15,9 +12,5 @@ mech-integrity-display = Integrity: {$amount}%
 mech-energy-display = Energy: {$amount}%
 mech-energy-missing = Energy: MISSING
 mech-slot-display = Open Slots: {$amount}
-
-mech-no-enter = You cannot pilot this.
-
-mech-eject-pilot-alert = {$user} is pulling the pilot out of the {$item}!
 
 mech-construction-guide-string = All mech parts must be attached to the harness.

@@ -1,29 +1,14 @@
 - type: entity
-  parent: ReinforcedWindow
   id: XenoborgWindow
-  name: xenoborg window
-  components:
-  - type: Sprite
-    drawdepth: WallTops
-    sprite: Structures/Windows/xenoborg.rsi
-  - type: Icon
-    sprite: Structures/Windows/xenoborg.rsi
-    state: full
-  - type: IconSmooth
-    key: windows
-    base: xenoborg
-
-- type: entity
   parent: PlastitaniumWindow
-  id: ShuttleXenoborgWindow
-  name: xenoborg shuttle window
+  name: mechadermis window
   components:
   - type: Sprite
     drawdepth: WallTops
-    sprite: Structures/Windows/shuttle_xenoborg.rsi
+    sprite: Structures/Windows/exo-resin-borg.rsi
   - type: Icon
-    sprite: Structures/Windows/shuttle_xenoborg.rsi
+    sprite: Structures/Windows/exo-resin-borg.rsi
     state: full
   - type: IconSmooth
-    key: windows
-    base: shuttle_xenoborg
+    key: walls
+    base: xenoborg

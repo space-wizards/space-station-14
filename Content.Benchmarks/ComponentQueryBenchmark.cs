@@ -259,7 +259,7 @@ public struct QueryBenchEvent
     public int HashCode;
 }
 
-public sealed class QueryBenchSystem : EntitySystem
+public sealed partial class QueryBenchSystem : EntitySystem
 {
     public override void Initialize()
     {
