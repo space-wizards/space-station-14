@@ -1,11 +1,13 @@
+using Content.Shared.Radio;
 using Content.Shared.Radio.EntitySystems;
 using Content.Shared.Radio.Components;
+using Content.Shared.FixedPoint;
 
 namespace Content.Server.Radio.EntitySystems;
 
-public sealed class JammerSystem : SharedJammerSystem
+public sealed partial class JammerSystem : SharedJammerSystem
 {
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -27,7 +29,7 @@ public sealed class JammerSystem : SharedJammerSystem
             args.Cancelled = true;
     }
 
-    private bool ShouldCancel(EntityUid sourceUid, int frequency)
+    private bool ShouldCancel(EntityUid sourceUid, FixedPoint2 frequency)
     {
         var source = Transform(sourceUid).Coordinates;
         var query = EntityQueryEnumerator<ActiveRadioJammerComponent, RadioJammerComponent, TransformComponent>();

@@ -1,5 +1,4 @@
 ﻿<controls:FancyWindow xmlns="https://spacestation14.io"
-                      xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                       xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
                       Title="{Loc 'borg-ui-menu-title'}"
@@ -17,10 +16,7 @@
                 <Button Name="EjectBatteryButton" Text="{Loc 'borg-ui-remove-battery'}" StyleClasses="OpenLeft"/>
             </BoxContainer>
             <customControls:HSeparator Margin="0 10 0 10"/>
-            <PanelContainer VerticalExpand="True">
-                <PanelContainer.PanelOverride>
-                    <gfx:StyleBoxFlat BackgroundColor="#1B1B1E"/>
-                </PanelContainer.PanelOverride>
+            <PanelContainer VerticalExpand="True" StyleClasses="PanelDeep">
                 <BoxContainer HorizontalAlignment="Center" VerticalAlignment="Center">
                     <SpriteView Name="BorgSprite" Scale="5 5"/>
                 </BoxContainer>
@@ -38,10 +34,7 @@
         <customControls:VSeparator/>
         <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" Margin="15 10 15 15">
             <Label Text="{Loc 'borg-ui-modules-label'}" Margin="0 0 0 5"/>
-            <PanelContainer VerticalExpand="True">
-                <PanelContainer.PanelOverride>
-                    <gfx:StyleBoxFlat BackgroundColor="#1B1B1E"/>
-                </PanelContainer.PanelOverride>
+            <PanelContainer VerticalExpand="True" StyleClasses="PanelDeep">
                 <BoxContainer VerticalExpand="True" Orientation="Vertical">
                     <ScrollContainer HScrollEnabled="False" HorizontalExpand="True" VerticalExpand="True">
                         <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Name="ModuleContainer" RectClipContent="True"/>

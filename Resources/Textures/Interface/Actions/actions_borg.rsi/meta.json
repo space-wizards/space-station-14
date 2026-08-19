@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from vgstation at commit https://github.com/vgstation-coders/vgstation13/commit/cdbcb1e858b11f083994a7a269ed67ef5b452ce9, inflatable module by FungiFellow (GitHub), Module actions by Scarky0. chem, adv-chem, and adv-mining by mubururu_, xenoborg actions by Samuka-C (github), advclown by ThatGuyUSA.  c20r and esword by RedBookcase on Github, artistry-module by Kittygyat, with help from TiniestShark",
+    "copyright": "Taken from vgstation at commit https://github.com/vgstation-coders/vgstation13/commit/cdbcb1e858b11f083994a7a269ed67ef5b452ce9, inflatable module by FungiFellow (GitHub), Module actions by Scarky0. chem, adv-chem, and adv-mining by mubururu_, xenoborg actions by Samuka-C (github), advclown by ThatGuyUSA.  c20r and esword by RedBookcase on Github, artistry-module by Kittygyat, with help from TiniestShark, xenoborg-laser3-module and xenoborg-deflector-module by august-sun(GitHub), Xenoborg Nanite action and xenoborg-bio-knife by YoungThugSS14 (Gihutb), xenoborg-rocket-module by Beck Thompson and Samuka-C (github) and AftrLite (GitHub)",
     "size": {
         "x": 32,
         "y": 32
@@ -134,6 +134,9 @@
             "name":"xenoborg-basic-module"
         },
         {
+            "name":"xenoborg-jump-module"
+        },
+        {
             "name":"xenoborg-camera-computer"
         },
         {
@@ -152,6 +155,9 @@
             "name":"xenoborg-eye2-module"
         },
         {
+            "name":"xenoborg-guided-missile-module"
+        },
+        {
             "name":"xenoborg-hypo-module"
         },
         {
@@ -164,10 +170,19 @@
             "name":"xenoborg-laser2-module"
         },
         {
+            "name":"xenoborg-laser3-module"
+        },
+        {
             "name":"xenoborg-module-module"
         },
         {
-            "name":"xenoborg-projector-module"
+            "name":"xenoborg-oil-gun-module"
+        },
+        {
+            "name": "xenoborg-nanite-module"
+        },
+        {
+            "name": "xenoborg-projector-module"
         },
         {
             "name":"xenoborg-space-movement-module"
@@ -179,7 +194,19 @@
             "name":"xenoborg-sword2-module"
         },
         {
+            "name":"xenoborg-bio-knife"
+        },
+        {
+            "name":"xenoborg-tile-module"
+        },
+        {
             "name":"xenoborg-tool-module"
+        },
+        {
+            "name":"xenoborg-deflector-module"
+        },
+        {
+            "name":"xenoborg-rocket-module"
         },
         {
             "name": "select-type"

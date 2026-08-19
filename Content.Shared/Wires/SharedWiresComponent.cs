@@ -6,13 +6,17 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Wires
 {
     [Serializable, NetSerializable]
-    public sealed partial class WirePanelDoAfterEvent : SimpleDoAfterEvent
-    {
-    }
+    public sealed partial class WirePanelDoAfterEvent : SimpleDoAfterEvent;
 
+    /// <summary>
+    /// AppearanceData keys for maintenance panel.
+    /// </summary>
     [Serializable, NetSerializable]
     public enum WiresVisuals : byte
     {
+        /// <summary>
+        /// bool: true when the panel is open (accessible), false when it is closed (inaccessible)
+        /// </summary>
         MaintenancePanelState
     }
 
@@ -242,7 +246,7 @@ namespace Content.Shared.Wires
                 WireLetter.γ => "wire-letter-name-gamma",
                 WireLetter.δ => "wire-letter-name-delta",
                 WireLetter.ε => "wire-letter-name-epsilon",
-                WireLetter.ζ => "wire-letter-name-zeta ",
+                WireLetter.ζ => "wire-letter-name-zeta",
                 WireLetter.η => "wire-letter-name-eta",
                 WireLetter.θ => "wire-letter-name-theta",
                 WireLetter.ι => "wire-letter-name-iota",

@@ -1,34 +1,29 @@
 - type: entity
+  parent: [ BaseStructure, StructureHealthContainerWeak ]
   id: Dresser
-  parent: BaseStructure
   name: dresser
   description: Wooden dresser, can store things inside itself, ideal for underwear, and someone's kidneys?...
   components:
   - type: Sprite
     sprite: Structures/Furniture/furniture.rsi
+    snapCardinals: true
     state: dresser
   - type: Damageable
-    damageModifierSet: Wood
-    damageContainer: StructuralInorganic
+    damageModifierSet: WoodMod
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
-        damage: 50
+        damage: 60
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
           MaterialWoodPlank1:
             min: 3
             max: 3
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
   - type: Storage
     grid:
     - 0,0,7,4
@@ -46,7 +41,6 @@
     tags:
     - Wooden
   - type: Anchorable
-  - type: Rotatable
   - type: Construction
     graph: Dresser
     node: dresser

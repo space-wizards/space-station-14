@@ -1,5 +1,5 @@
 ﻿- type: entity
-  parent: BaseWallmount
+  parent: [ BaseWallmount, StructureHealthFurniture ]
   id: NoticeBoard
   name: notice board
   description: Is there a job for a witcher?
@@ -16,13 +16,12 @@
     fillBaseName: notice
   - type: Appearance
   - type: Damageable
-    damageModifierSet: Wood
-    damageContainer: StructuralInorganic
+    damageModifierSet: WoodMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 30
+        damage: 40
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -32,8 +31,6 @@
           MaterialWoodPlank:
             min: 1
             max: 2
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
   - type: Storage
     grid:
     - 0,0,4,3

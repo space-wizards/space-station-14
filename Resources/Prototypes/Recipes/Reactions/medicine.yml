@@ -209,24 +209,14 @@
 - type: reaction
   id: Ambuzol
   reactants:
-    Dylovene:
+    Ultravasculine:
       amount: 1
-    Ammonia:
-      amount: 1
-    ZombieBlood:
+    Mannitol:
       amount: 2
+    Romerodone:
+      amount: 1
   products:
     Ambuzol: 4
-
-- type: reaction
-  id: AmbuzolPlus
-  reactants:
-    Ambuzol:
-      amount: 5
-    Omnizine:
-      amount: 5
-  products:
-    AmbuzolPlus: 10
 
 - type: reaction
   id: Synaptizine
@@ -342,9 +332,27 @@
       amount: 2
     Plasma:
       amount: 1
-      catalyst: true
   products:
     Ultravasculine: 2
+
+- type: reaction
+  id: Histamine
+  reactants:
+    Carbon:
+      amount: 6 # If we ever add Histidine, replace the non catalysts here with that.
+    Ammonia:
+      amount: 3
+    Oxygen:
+      amount: 2
+    PhosphoricAcid: # Really shitty simulation of ATP ADP nonsense for synthesizing histamine... Should probably use Enzyme in the future :P, or be replaced with a Phoron acid with this as a derivative.
+      amount: 1
+      catalyst: true
+  effects:
+  - !type:CreateGas
+    gas: CarbonDioxide
+    moles: 0.3 # Check my math on this, but 1u carbon 2u oxygen = about this many mols of CO2
+  products:
+    Histamine: 8
 
 - type: reaction
   id: Oculine
@@ -571,6 +579,19 @@
     Opporozidone: 3
 
 - type: reaction
+  id: OpporozidoneLivingTissue
+  minTemp: 400
+  reactants:
+    LivingTissue: # Do you want to save the victim from rotting, or check if the dude is a changeling? Hmm...
+      amount: 2
+    Plasma:
+      amount: 2
+    Doxarubixadone:
+      amount: 2
+  products:
+    Opporozidone: 6
+
+- type: reaction
   id: Arcryox
   minTemp: 370
   reactants:
@@ -582,20 +603,6 @@
       amount: 1
   products:
     Arcryox: 3
-
-- type: reaction
-  id: Necrosol
-  impact: Medium
-  minTemp: 370
-  reactants:
-    Blood:
-      amount: 3
-    Omnizine:
-      amount: 1
-    Cryoxadone:
-      amount: 2
-  products:
-    Necrosol: 2
 
 - type: reaction
   id: Aloxadone

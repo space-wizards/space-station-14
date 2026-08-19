@@ -18,15 +18,14 @@
       params:
         volume: -3
     damage:
-      groups:
-        Brute: 5
+      types:
+        Piercing: 5
   - type: Wieldable
   - type: IncreaseDamageOnWield
     damage:
-      groups:
-        Brute: 10
       types:
-        Structural: 30
+        Piercing: 10
+        Structural: 8
   - type: Item
     size: Normal
     shape:
@@ -62,10 +61,9 @@
       path: "/Audio/Items/drill_hit.ogg"
     attackRate: 4
     damage:
-      groups:
-        Brute: 3
       types:
-        Structural: 15
+        Piercing: 3
+        Structural: 6
 
 - type: entity
   name: diamond tipped mining drill
@@ -77,18 +75,10 @@
     sprite: Objects/Tools/handdrilldiamond.rsi
     state: handdrill
   - type: MeleeWeapon
-    autoAttack: true
-    angle: 0
-    wideAnimationRotation: -90
-    soundHit:
-      path: "/Audio/Items/drill_hit.ogg"
-    attackRate: 4
     damage:
-      groups:
-        Brute: 6
       types:
-        Structural: 30
-
+        Piercing: 5
+        Structural: 8
 
 - type: entity
   abstract: true
@@ -97,7 +87,9 @@
   name: crusher
   description: An early design of the proto-kinetic accelerator.
   components:
-  - type: Sharp
+  - type: Tool
+    qualities:
+    - Slicing
   - type: Execution
     doAfterDuration: 4.0
   - type: UnpoweredFlashlight
@@ -119,6 +111,9 @@
     state: icon
   - type: Item
     size: Ginormous
+    shape:
+    - 0,0,3,6
+    storedRotation: -45
     sprite: Objects/Weapons/Melee/crusher-inhands.rsi
   - type: Clothing
     sprite: Objects/Weapons/Melee/crusher.rsi
@@ -132,8 +127,10 @@
     delay: 0.9
   - type: LeechOnMarker
     leech:
-      groups:
-        Brute: -6
+      types:
+        Blunt: -2
+        Slash: -2
+        Piercing: -2
   - type: Gun
     soundGunshot: /Audio/Weapons/plasma_cutter.ogg
     fireRate: 1
@@ -161,7 +158,7 @@
       types:
         Blunt: 6
         Slash: 2
-        Structural: 30
+        Structural: 8
   - type: GunRequiresWield
   - type: DisarmMalus
   - type: Prying
@@ -223,6 +220,9 @@
     state: icon
   - type: Item
     size: Ginormous
+    shape:
+    - 0,0,3,6
+    storedRotation: -45
     sprite: Objects/Weapons/Melee/crusher_glaive-inhands.rsi
   - type: Clothing
     sprite: Objects/Weapons/Melee/crusher_glaive.rsi
@@ -238,8 +238,10 @@
     count: 1
   - type: LeechOnMarker
     leech:
-      groups:
-        Brute: -21
+      types:
+        Blunt: -5
+        Piercing: -5
+        Slash: -5
   - type: Tag
     tags:
       - Pickaxe
@@ -255,4 +257,4 @@
       types:
         Blunt: 2
         Slash: 6
-        Structural: 20
+        Structural: 8

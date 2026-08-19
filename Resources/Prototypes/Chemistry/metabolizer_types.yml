@@ -34,9 +34,17 @@
   name: metabolizer-type-plant
 
 - type: metabolizerType
+  id: Dwarf
+  name: metabolizer-type-dwarf
+
+- type: metabolizerType
   id: Moth
   name: metabolizer-type-moth
 
 - type: metabolizerType
   id: Arachnid
   name: metabolizer-type-arachnid
+
+- type: metabolizerType
+  id: Changeling
+  name: metabolizer-type-changeling
