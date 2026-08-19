@@ -27,16 +27,6 @@ namespace Content.Shared.Entry
         public override void PreInit()
         {
             Dependencies.InjectDependencies(this);
-
-            // This is where you should mark directories as partial downstream
-            // For documentation on how partial prototypes work,
-            // see the documentation on IPrototypeManager.PartialDirectory
-            // You can uncomment the code below and navigate to the method to see it.
-            // The order matters, partials are applied in the order in which they are marked here.
-            // For example, if two directories modify the same prototype, the first patch will be applied first,
-            // and then the second.
-            // _prototypeManager.PartialDirectory(new ResPath("/Prototypes/_ForkOne"));
-            // _prototypeManager.PartialDirectory(new ResPath("/Prototypes/_ForkTwo"));
         }
 
         public override void Init()
