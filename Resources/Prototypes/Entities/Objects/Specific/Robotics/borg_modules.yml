@@ -1952,10 +1952,16 @@
   name: bio knife xenoborg module
   description: Module with an bio knife.
   components:
+  - type: Tag
+    tags:
+    - XenoborgModuleScout
+    - XenoborgModulePrimaryWeapon
   - type: Sprite
     layers:
     - state: xenoborg_scout
     - state: icon-xenoborg-sword2
+  - type: BorgModuleWhitelist
+    moduleBlacklist: *primaryWeapon
   - type: ItemBorgModule
     hands:
     - item: XenoborgBioKnife

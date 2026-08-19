@@ -159,6 +159,13 @@
   materials:
     XenoborgCrystal: 100
 
+- type: latheRecipe
+  parent: BaseXenoborgModulesRecipe
+  id: XenoborgModuleBioKinfeRecipe
+  result: XenoborgModuleBioKinfe
+  materials:
+    XenoborgCrystal: 200
+
 ## stealth xenoborg modules
 
 - type: latheRecipe

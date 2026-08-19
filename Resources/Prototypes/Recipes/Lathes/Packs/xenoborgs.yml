@@ -32,5 +32,6 @@
   # scout xenoborg
   - XenoborgModuleEnergySwordRecipe
   - XenoborgModuleJumpRecipe
+  - XenoborgModuleBioKinfeRecipe
   # stealth xenoborg
   - XenoborgModuleSuperCloakDeviceRecipe
