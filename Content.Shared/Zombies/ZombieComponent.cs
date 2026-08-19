@@ -156,5 +156,5 @@ public sealed partial class ZombieComponent : Component
     /// The blood reagents to give the zombie. In case you want zombies that bleed milk, or something.
     /// </summary>
     [DataField]
-    public Solution NewBloodReagents = new([new("ZombieBlood", 1)]);
+    public Solution NewBloodReagents = new([new("ZombieBlood", 600)]);
 }
