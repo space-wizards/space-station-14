@@ -122,8 +122,8 @@
         color: "#DEC343"
 
 - type: entity
-  parent: BaseBorgModule
   id: BaseBorgModuleJanitor
+  parent: BaseBorgModule
   abstract: true
   components:
   - type: BorgModule
@@ -597,8 +597,8 @@
 
 # cargo modules
 - type: entity
-  parent: [ BaseBorgModuleCargo, BaseProviderBorgModule ]
   id: BorgModuleAppraisal
+  parent: [ BaseBorgModuleCargo, BaseProviderBorgModule ]
   name: appraisal cyborg module
   components:
   - type: Sprite
@@ -701,8 +701,8 @@
     state: generic_materials
 
 - type: entity
-  parent: [ BaseBorgModuleEngineering, BaseProviderBorgModule ]
   id: BorgModuleConstruction
+  parent: [ BaseBorgModuleEngineering, BaseProviderBorgModule ]
   name: construction cyborg module
   components:
   - type: Sprite
@@ -1220,8 +1220,8 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: clowning-module }
 
 - type: entity
-  parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
   id: BorgModuleAdvancedClowning
+  parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
   name: advanced clowning cyborg module
   description: Advanced service module for only the silliest cyborgs! Comes with a built-in oven that bakes pies automatically over time, a holopeel projector, and a push horn.
   components:
