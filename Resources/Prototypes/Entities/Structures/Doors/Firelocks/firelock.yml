@@ -135,7 +135,7 @@
   - type: WallMount
     arc: 360
   - type: StaticPrice
-    price: 150
+    price: 200
   - type: AccessReader
     access: [ [ "Engineering" ] ]
     examinationText: access-reader-examination-functionality-restricted
@@ -234,8 +234,6 @@
       occludes: false
     - type: Physics
       canCollide: false
-    - type: StaticPrice
-      price: 100
     - type: Construction
       graph: Firelock
       node: FirelockEdge
