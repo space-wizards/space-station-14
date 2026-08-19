@@ -1759,7 +1759,7 @@
         state: xenoborg_heavy_missile_launcher
   - type: ItemBorgModule
     hands:
-    - item: WeaponXenoborgGuidedMissileLauncher
+    - item: WeaponGuidedMissileLauncherXenoborg
     - item: WeaponRangeFinderXenoborg
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-guided-missile-module }
