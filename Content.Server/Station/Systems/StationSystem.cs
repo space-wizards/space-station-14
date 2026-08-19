@@ -242,7 +242,7 @@ public sealed partial class StationSystem : SharedStationSystem
 
         var stationMember = EnsureComp<StationMemberComponent>(mapGrid);
         SetRelation(mapGrid, ref stationMember.Station, station);
-        SetRelation(station, stationData.Grids, mapGrid);
+        AddRelation(station, stationData.Grids, mapGrid);
         Dirty(station, stationData);
         Dirty(mapGrid, stationMember);
 

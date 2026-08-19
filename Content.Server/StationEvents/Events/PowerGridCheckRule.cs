@@ -54,7 +54,7 @@ namespace Content.Server.StationEvents.Events
                 if (transform.GridUid != largestGrid.Value)
                     continue;
 
-                SetRelation(uid, component.Powered, apcUid);
+                AddRelation(uid, component.Powered, apcUid);
             }
 
             RobustRandom.Shuffle(component.Powered);
@@ -78,7 +78,7 @@ namespace Content.Server.StationEvents.Events
             if (rule != null && apcComp.MainBreakerEnabled)
             {
                 _apcSystem.ApcToggleBreaker(apcUid, apcComp);
-                SetRelation(rule.Value.Owner, rule.Value.Comp.Unpowered, apcUid);
+                AddRelation(rule.Value.Owner, rule.Value.Comp.Unpowered, apcUid);
             }
         }
 
