@@ -1,11 +1,26 @@
 - type: soundCollection
-  id: SlotElectronics
+  id: ConnectElectronics
   files:
-  - /Audio/Construction/slot_electronics_1.ogg
-  - /Audio/Construction/slot_electronics_2.ogg
+  - /Audio/Construction/connect_electronics_1.ogg
+  - /Audio/Construction/connect_electronics_2.ogg
 
 - type: soundCollection
   id: ConnectWires
   files:
   - /Audio/Construction/connect_wires_1.ogg
   - /Audio/Construction/connect_wires_2.ogg
+
+- type: soundCollection
+  id: PlaceGlass
+  files:
+  - /Audio/Construction/place_glass_1.ogg
+  - /Audio/Construction/place_glass_2.ogg
+  - /Audio/Construction/place_glass_3.ogg
+
+- type: soundCollection
+  id: PlaceMetal
+  files:
+  - /Audio/Construction/place_metal_1.ogg
+  - /Audio/Construction/place_metal_2.ogg
+  - /Audio/Construction/place_metal_3.ogg
+  - /Audio/Construction/place_metal_4.ogg

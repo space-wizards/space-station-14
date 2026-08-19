@@ -1,16 +1,37 @@
-- files: ["slot_electronics_1.ogg", "slot_electronics_2.ogg"]
+- files: ["connect_electronics_1.ogg", "connect_electronics_2.ogg"]
   license: "CC0-1.0"
-  copyright: 'Foley created by izzl on freesound.org. Mixed by iaada (GitHub).'
+  copyright: "Foley by izzl on freesound.org. Mixed by iaada (GitHub)."
   source: "https://freesound.org/people/izzl/sounds/790525/"
 
 - files: ["connect_wires_1.ogg"]
   license: "CC-BY-4.0"
-  copyright: 'Foley created by SiriusBizdness and Sheyvan on freesound.org. Mixed by iaada (GitHub).'
+  copyright: "Foley by SiriusBizdness and Sheyvan on freesound.org. Mixed by iaada (GitHub)."
   source: "https://freesound.org/people/SiriusBizdness/sounds/565193/
            https://freesound.org/people/Sheyvan/sounds/523292/"
 
 - files: ["connect_wires_2.ogg"]
   license: "CC-BY-4.0"
-  copyright: 'Foley created by SiriusBizdness and deleted_user_7146007 on freesound.org. Mixed by iaada (GitHub).'
+  copyright: "Foley by SiriusBizdness and deleted_user_7146007 on freesound.org. Mixed by iaada (GitHub)."
   source: "https://freesound.org/people/SiriusBizdness/sounds/565193/
            https://freesound.org/people/deleted_user_7146007/sounds/383449/"
+
+- files: ["place_glass_1.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "By lsprice on freesound.org."
+  source:
+
+- files: ["place_glass_2.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "By lsprice on freesound.org."
+  source: "https://freesound.org/people/lsprice/sounds/88852/"
+
+- files: ["place_glass_3.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "By lsprice on freesound.org."
+  source: "https://freesound.org/people/lsprice/sounds/88853/"
+
+- files: ["/Audio/Construction/place_metal_1.ogg", "/Audio/Construction/place_metal_2.ogg",
+          "/Audio/Construction/place_metal_3.ogg", "/Audio/Construction/place_metal_4.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "Foley by jerry.berumen on freesound.org. Mixed by iaada (GitHub)."
+  source: "https://freesound.org/people/jerry.berumen/sounds/770810/"

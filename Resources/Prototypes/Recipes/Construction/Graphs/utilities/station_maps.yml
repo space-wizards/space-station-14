@@ -13,7 +13,8 @@
         doAfter: 2
       completed:
       - !type:PlaySound
-        sound: /Audio/Items/genhit.ogg
+        sound:
+          collection: PlaceMetal
 
   - node: assembly
     entity: StationMapAssembly
@@ -51,11 +52,10 @@
         icon:
           sprite: "Objects/Misc/module.rsi"
           state: "door_electronics"
-        doAfter: 1
       completed:
       - !type:PlaySound
         sound:
-          collection: SlotElectronics
+          collection: ConnectElectronics
     - to: assembly
       steps:
       - tool: Cutting
@@ -76,12 +76,13 @@
         amount: 2
       completed:
       - !type:PlaySound
-        sound: /Audio/Items/genhit.ogg
+        sound:
+          collection: PlaceGlass
     - to: electronics
     - to: wired
       steps:
       - tool: Cutting
-        doAfter: 1
+        doAfter: 0.5
       completed:
       - !type:EmptyContainer
         container: *Container
