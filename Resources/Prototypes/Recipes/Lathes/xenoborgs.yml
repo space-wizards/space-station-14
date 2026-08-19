@@ -124,6 +124,13 @@
 
 - type: latheRecipe
   parent: BaseXenoborgModulesRecipe
+  id: XenoborgModuleRocketRecipe
+  result: XenoborgModuleRocket
+  materials:
+    XenoborgCrystal: 300
+
+- type: latheRecipe
+  parent: BaseXenoborgModulesRecipe
   id: XenoborgModuleBurstFireLaserRecipe
   result: XenoborgModuleBurstFireLaser
   materials:

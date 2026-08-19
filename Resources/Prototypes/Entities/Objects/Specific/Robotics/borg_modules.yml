@@ -1563,29 +1563,6 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-deflector-module }
 
 - type: entity
-  parent: [ BaseXenoborgModuleHeavy, BaseProviderBorgModule, BaseXenoborgContraband ]
-  id: XenoborgModuleRocket
-  name: rocket module
-  description: A module with a rocket launcher designed to destroy structures.
-  components:
-  - type: Sprite
-    layers:
-    - state: xenoborg_heavy
-    - state: icon-xenoborg-rocket
-  - type: ItemBorgModule
-    hands:
-    - item: WeaponRocketLauncherXenoborg
-    - item: WeaponRocketLauncherXenoborg
-  - type: BorgModuleIcon
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-rocket-module }
-  - type: ComponentBorgModule
-    components:
-    - type: SimpleSpriteOverlay
-      overlaySprite:
-        sprite: Mobs/Silicon/rockets.rsi
-        state: heavy_xenoborg_rockets
-
-- type: entity
   parent: [ BaseXenoborgModuleEngi, BaseProviderBorgModule, BaseXenoborgContraband ]
   id: XenoborgModuleDoorControl
   name: door control xenoborg module
@@ -1791,6 +1768,39 @@
     - item: WeaponRangeFinderXenoborg
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-guided-missile-module }
+
+- type: entity
+  parent: [ BaseXenoborgModuleHeavy, BaseProviderBorgModule, BaseXenoborgContraband ]
+  id: XenoborgModuleRocket
+  name: rocket module
+  description: A module with a rocket launcher designed to destroy structures.
+  components:
+  - type: Tag
+    tags:
+    - XenoborgModuleHeavy
+    - XenoborgModuleSecondaryWeapon
+    - XenoborgModuleWithSimpleOverlay
+  - type: Sprite
+    layers:
+    - state: xenoborg_heavy
+    - state: icon-xenoborg-rocket
+  - type: BorgModuleWhitelist
+    moduleBlacklist:
+    tags:
+      - XenoborgModuleSecondaryWeapon
+      - XenoborgModuleWithSimpleOverlay
+  - type: ItemBorgModule
+    hands:
+    - item: WeaponRocketLauncherXenoborg
+    - item: WeaponRocketLauncherXenoborg
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-rocket-module }
+  - type: ComponentBorgModule
+    components:
+    - type: SimpleSpriteOverlay
+      overlaySprite:
+        sprite: Mobs/Silicon/rockets.rsi
+        state: heavy_xenoborg_rockets
 
 - type: entity
   parent: [ BaseXenoborgModuleHeavy, BaseProviderBorgModule, BaseXenoborgContraband ]
