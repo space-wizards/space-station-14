@@ -803,7 +803,7 @@
     - state: icon-light-replacer
   - type: ItemBorgModule
     hands:
-    - item: LightReplacer
+    - item: LightReplacerFilled
     - item: BorgTrashBag
     - item: Plunger
     - item: SoapNT
@@ -1430,6 +1430,12 @@
           components:
           - BorgModule
     - hand:
+        emptyRepresentative: MaterialXenoborgCrystal
+        emptyLabel: borg-slot-xenoborg-crystal-empty
+        whitelist:
+          tags:
+          - XenoborgCrystal
+    - hand:
         emptyRepresentative: BorgModuleConstructionMaterialPlaceholder
         emptyLabel: borg-slot-construction-empty
         whitelist:
@@ -1441,6 +1447,10 @@
         whitelist:
           components:
           - PowerCell
+    - item: JawsOfLife
+    - item: PowerDrill
+    - item: WelderExperimental
+    - item: Multitool
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-module-module }
 
@@ -1457,6 +1467,12 @@
     - state: icon-xenoborg-basic
   - type: ItemBorgModule
     hands:
+    - hand:
+        emptyRepresentative: MaterialXenoborgCrystal
+        emptyLabel: borg-slot-xenoborg-crystal-empty
+        whitelist:
+          tags:
+          - XenoborgCrystal
     - hand:
         emptyRepresentative: BorgModuleConstructionMaterialPlaceholder
         emptyLabel: borg-slot-construction-empty
@@ -1646,7 +1662,7 @@
     - type: Electrified
       requirePower: false
       shockDamage: 15
-      shockDelay: 12
+      shockDelay: 6
       shockTime: 0.25
 
 - type: entity
@@ -1731,6 +1747,29 @@
 
 - type: entity
   parent: [ BaseXenoborgModuleHeavy, BaseProviderBorgModule, BaseXenoborgContraband ]
+  id: XenoborgModuleGuidedMissileLauncher
+  name: guided missile launcher xenoborg module
+  description: Module with guided missile launcher and a range finder to set targets.
+  components:
+  - type: Sprite
+    layers:
+    - state: xenoborg_heavy
+    - state: icon-xenoborg-guided-missile
+  - type: ComponentBorgModule
+    components:
+    - type: SimpleSpriteOverlay
+      overlaySprite:
+        sprite: Mobs/Silicon/chassis.rsi
+        state: xenoborg_heavy_missile_launcher
+  - type: ItemBorgModule
+    hands:
+    - item: WeaponXenoborgGuidedMissileLauncher
+    - item: WeaponRangeFinderXenoborg
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-guided-missile-module }
+
+- type: entity
+  parent: [ BaseXenoborgModuleHeavy, BaseProviderBorgModule, BaseXenoborgContraband ]
   id: XenoborgModuleBurstFireLaser
   name: burst fire laser xenoborg module
   description: Module with a burst fire incendiary laser.
@@ -1767,8 +1806,8 @@
         state: xenoborg_heavy_rad
       shader: unshaded
     - type: RadiationSource
-      intensity: 0.75
-      slope: 0.2
+      intensity: 4
+      slope: 1
     - type: AmbientSound
       range: 6
       volume: -3
@@ -1846,6 +1885,23 @@
     - item: JetpackXenoborg
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-sword2-module }
+
+- type: entity
+  parent: [ BaseXenoborgModuleScout, BaseProviderBorgModule, BaseXenoborgContraband ]
+  id: XenoborgModuleBioKinfe
+  name: bio knife xenoborg module
+  description: Module with an bio knife.
+  components:
+  - type: Sprite
+    layers:
+    - state: xenoborg_scout
+    - state: icon-xenoborg-sword2
+  - type: ItemBorgModule
+    hands:
+    - item: XenoborgBioKnife
+    - item: JetpackXenoborg
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-bio-knife }
 
 - type: entity
   parent: [ BaseXenoborgModuleStealth, BaseProviderBorgModule, BaseXenoborgContraband ]
