@@ -1512,10 +1512,6 @@
   name: access breaker xenoborg module
   description: Module with a access breaker.
   components:
-  - type: Tag
-    tags:
-    - XenoborgModuleEngi
-    - XenoborgModuleAccessBreaker
   - type: Sprite
     layers:
     - state: xenoborg_engi
@@ -1529,6 +1525,10 @@
     - item: AccessBreaker
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-access-breaker-module }
+  - type: Tag
+    tags:
+    - XenoborgModuleEngi
+    - XenoborgModuleAccessBreaker
 
 - type: entity
   parent: [ BaseXenoborgModuleEngi, BaseProviderBorgModule, BaseXenoborgContraband ]
@@ -1568,10 +1568,6 @@
   name: door control xenoborg module
   description: Module that allows Xenoborgs to control airlocks.
   components:
-  - type: Tag
-    tags:
-    - XenoborgModuleEngi
-    - XenoborgModuleAccessBreaker
   - type: Sprite
     layers:
     - state: xenoborg_engi
@@ -1587,6 +1583,10 @@
     - item: AccessConfiguratorXenoborg
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-door-remote-module }
+  - type: Tag
+    tags:
+    - XenoborgModuleEngi
+    - XenoborgModuleAccessBreaker
 
 - type: entity
   parent: [ BaseXenoborgModuleEngi, BaseProviderBorgModule, BaseXenoborgContraband ]
@@ -1594,10 +1594,6 @@
   name: tile gun xenoborg module
   description: Module with a tile gun. wait, a what?
   components:
-  - type: Tag
-    tags:
-    - XenoborgModuleEngi
-    - XenoborgModuleSecondaryWeapon
   - type: Sprite
     layers:
     - state: xenoborg_engi
@@ -1611,6 +1607,10 @@
     - item: WeaponTileGun
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-tile-module }
+  - type: Tag
+    tags:
+    - XenoborgModuleEngi
+    - XenoborgModuleSecondaryWeapon
 
 - type: entity
   parent: [ BaseXenoborgModuleEngi, BaseXenoborgContraband ]
@@ -1636,10 +1636,6 @@
   name: oil gun xenoborg module
   description: Module with a gun that shoots ampoules filled with flammable oil.
   components:
-  - type: Tag
-    tags:
-    - XenoborgModuleEngi
-    - XenoborgModulePrimaryWeapon
   - type: Sprite
     layers:
     - state: xenoborg_engi
@@ -1653,6 +1649,10 @@
     - item: WeaponOilGun
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-oil-gun-module }
+  - type: Tag
+    tags:
+    - XenoborgModuleEngi
+    - XenoborgModulePrimaryWeapon
 
 - type: entity
   parent: [ BaseXenoborgModuleEngi, BaseProviderBorgModule, BaseXenoborgContraband ]
@@ -1660,10 +1660,6 @@
   name: nanite gun xenoborg module
   description: Module that allows Xenoborgs to have a crystal firing nanite gun.
   components:
-  - type: Tag
-    tags:
-    - XenoborgModuleEngi
-    - XenoborgModulePrimaryWeapon
   - type: Sprite
     layers:
     - state: xenoborg_engi
@@ -1675,6 +1671,10 @@
     - item: WeaponNaniteGun
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-nanite-module }
+  - type: Tag
+    tags:
+    - XenoborgModuleEngi
+    - XenoborgModulePrimaryWeapon
 
 - type: entity
   parent: [ BaseXenoborgModuleHeavy, BaseProviderBorgModule, BaseXenoborgContraband ]
@@ -1698,10 +1698,6 @@
   name: laser xenoborg module
   description: Module with a laser gun.
   components:
-  - type: Tag
-    tags:
-    - XenoborgModuleHeavy
-    - XenoborgModulePrimaryWeapon
   - type: Sprite
     layers:
     - state: xenoborg_heavy
@@ -1713,6 +1709,10 @@
     - item: WeaponLaserGunXenoborg
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-laser-module }
+  - type: Tag
+    tags:
+    - XenoborgModuleHeavy
+    - XenoborgModulePrimaryWeapon
 
 - type: entity
   parent: [ BaseXenoborgModuleHeavy, BaseProviderBorgModule, BaseXenoborgContraband ]
@@ -1720,10 +1720,6 @@
   name: laser cannon xenoborg module
   description: Module with a laser cannon.
   components:
-  - type: Tag
-    tags:
-    - XenoborgModuleHeavy
-    - XenoborgModulePrimaryWeapon
   - type: Sprite
     layers:
     - state: xenoborg_heavy
@@ -1735,6 +1731,10 @@
     - item: WeaponLaserCannonXenoborg
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-laser2-module }
+  - type: Tag
+    tags:
+    - XenoborgModuleHeavy
+    - XenoborgModulePrimaryWeapon
 
 - type: entity
   parent: [ BaseXenoborgModuleHeavy, BaseProviderBorgModule, BaseXenoborgContraband ]
@@ -1742,11 +1742,6 @@
   name: guided missile launcher xenoborg module
   description: Module with guided missile launcher and a range finder to set targets.
   components:
-  - type: Tag
-    tags:
-    - XenoborgModuleHeavy
-    - XenoborgModuleSecondaryWeapon
-    - XenoborgModuleWithSimpleOverlay
   - type: Sprite
     layers:
     - state: xenoborg_heavy
@@ -1768,6 +1763,11 @@
     - item: WeaponRangeFinderXenoborg
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-guided-missile-module }
+  - type: Tag
+    tags:
+    - XenoborgModuleHeavy
+    - XenoborgModuleSecondaryWeapon
+    - XenoborgModuleWithSimpleOverlay
 
 - type: entity
   parent: [ BaseXenoborgModuleHeavy, BaseProviderBorgModule, BaseXenoborgContraband ]
@@ -1775,11 +1775,6 @@
   name: rocket module
   description: A module with a rocket launcher designed to destroy structures.
   components:
-  - type: Tag
-    tags:
-    - XenoborgModuleHeavy
-    - XenoborgModuleSecondaryWeapon
-    - XenoborgModuleWithSimpleOverlay
   - type: Sprite
     layers:
     - state: xenoborg_heavy
@@ -1801,6 +1796,11 @@
       overlaySprite:
         sprite: Mobs/Silicon/rockets.rsi
         state: heavy_xenoborg_rockets
+  - type: Tag
+    tags:
+    - XenoborgModuleHeavy
+    - XenoborgModuleSecondaryWeapon
+    - XenoborgModuleWithSimpleOverlay
 
 - type: entity
   parent: [ BaseXenoborgModuleHeavy, BaseProviderBorgModule, BaseXenoborgContraband ]
@@ -1808,10 +1808,6 @@
   name: burst fire laser xenoborg module
   description: Module with a burst fire incendiary laser.
   components:
-  - type: Tag
-    tags:
-    - XenoborgModuleHeavy
-    - XenoborgModulePrimaryWeapon
   - type: Sprite
     layers:
     - state: xenoborg_heavy
@@ -1823,6 +1819,10 @@
     - item: WeaponBurstFireLaserXenoborg
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-laser3-module }
+  - type: Tag
+    tags:
+    - XenoborgModuleHeavy
+    - XenoborgModulePrimaryWeapon
 
 - type: entity
   parent: [ BaseXenoborgModuleHeavy, BaseXenoborgContraband ]
@@ -1830,10 +1830,6 @@
   name: radioactive xenoborg module
   description: Module that causes a xenoborg to emanate radioactive energy.
   components:
-  - type: Tag
-    tags:
-    - XenoborgModuleHeavy
-    - XenoborgModuleWithSimpleOverlay
   - type: PointLight
     color: green
     radius: 5
@@ -1861,6 +1857,10 @@
       volume: -3
       sound:
         path: /Audio/Ambience/Objects/xenoborg_radioactive.ogg
+  - type: Tag
+    tags:
+    - XenoborgModuleHeavy
+    - XenoborgModuleWithSimpleOverlay
 
 - type: entity
   parent: [ BaseXenoborgModuleScout, BaseProviderBorgModule, BaseXenoborgContraband ]
@@ -1906,10 +1906,6 @@
   name: knife xenoborg module
   description: Module with a kukri knife.
   components:
-  - type: Tag
-    tags:
-    - XenoborgModuleScout
-    - XenoborgModulePrimaryWeapon
   - type: Sprite
     layers:
     - state: xenoborg_scout
@@ -1922,6 +1918,10 @@
     - item: JetpackXenoborg
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-sword-module }
+  - type: Tag
+    tags:
+    - XenoborgModuleScout
+    - XenoborgModulePrimaryWeapon
 
 - type: entity
   parent: [ BaseXenoborgModuleScout, BaseProviderBorgModule, BaseXenoborgContraband ]
@@ -1929,10 +1929,6 @@
   name: energy dagger xenoborg module
   description: Module with an energy dagger.
   components:
-  - type: Tag
-    tags:
-    - XenoborgModuleScout
-    - XenoborgModulePrimaryWeapon
   - type: Sprite
     layers:
     - state: xenoborg_scout
@@ -1945,6 +1941,10 @@
     - item: JetpackXenoborg
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-sword2-module }
+  - type: Tag
+    tags:
+    - XenoborgModuleScout
+    - XenoborgModulePrimaryWeapon
 
 - type: entity
   parent: [ BaseXenoborgModuleScout, BaseProviderBorgModule, BaseXenoborgContraband ]
@@ -1952,10 +1952,6 @@
   name: bio knife xenoborg module
   description: Module with an bio knife.
   components:
-  - type: Tag
-    tags:
-    - XenoborgModuleScout
-    - XenoborgModulePrimaryWeapon
   - type: Sprite
     layers:
     - state: xenoborg_scout
@@ -1968,6 +1964,10 @@
     - item: JetpackXenoborg
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-bio-knife }
+  - type: Tag
+    tags:
+    - XenoborgModuleScout
+    - XenoborgModulePrimaryWeapon
 
 - type: entity
   parent: [ BaseXenoborgModuleStealth, BaseProviderBorgModule, BaseXenoborgContraband ]
@@ -1975,10 +1975,6 @@
   name: nocturine hypo xenoborg module
   description: Module with a self-refilling nocturine hypo.
   components:
-  - type: Tag
-    tags:
-    - XenoborgModuleStealth
-    - XenoborgModulePrimaryWeapon
   - type: Sprite
     layers:
     - state: xenoborg_stealth
@@ -1990,6 +1986,10 @@
     - item: NocturineHypo
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-hypo-module }
+  - type: Tag
+    tags:
+    - XenoborgModuleStealth
+    - XenoborgModulePrimaryWeapon
 
 - type: entity
   parent: [ BaseXenoborgModuleStealth, BaseProviderBorgModule, BaseXenoborgContraband ]
@@ -2013,10 +2013,6 @@
   name: cloaking device xenoborg module
   description: Module with a device that allows xenoborgs to become semi-invisible for some time.
   components:
-  - type: Tag
-    tags:
-    - XenoborgModuleStealth
-    - XenoborgModuleInvisibility
   - type: Sprite
     layers:
     - state: xenoborg_stealth
@@ -2030,6 +2026,10 @@
     - item: CloakingDevice
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-eye-module }
+  - type: Tag
+    tags:
+    - XenoborgModuleStealth
+    - XenoborgModuleInvisibility
 
 - type: entity
   parent: [ BaseXenoborgModuleStealth, BaseProviderBorgModule, BaseXenoborgContraband ]
@@ -2037,10 +2037,6 @@
   name: invisibility device xenoborg module
   description: Module with a device that allows xenoborgs to become truly invisible for a short amount of time.
   components:
-  - type: Tag
-    tags:
-    - XenoborgModuleStealth
-    - XenoborgModuleInvisibility
   - type: Sprite
     layers:
     - state: xenoborg_stealth
@@ -2054,3 +2050,7 @@
     - item: SuperCloakingDevice
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-eye2-module }
+  - type: Tag
+    tags:
+    - XenoborgModuleStealth
+    - XenoborgModuleInvisibility
