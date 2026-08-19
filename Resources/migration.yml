@@ -944,13 +944,13 @@ BlastDoorXenoborgOpen: BlastDoorXenoOpen
 ### Dark Tiles
 FloorTileItemDarkDiagonalMini: FloorTileItemDark
 FloorTileItemDarkDiagonal: FloorTileItemDark
-FloorTileItemDarkOffset: FloorTileItemDark #readd
+FloorTileItemDarkOffset: FloorTileItemDark
 FloorTileItemDarkSlatsContinuous: FloorTileItemDark #slats
 
 ### Steel Tiles
 FloorTileItemSteelDiagonalMini: FloorTileItemSteel
 FloorTileItemSteelDiagonal: FloorTileItemSteel
-FloorTileItemSteelOffset: FloorTileItemSteel #readd
+FloorTileItemSteelOffset: FloorTileItemSteel
 FloorTileItemSteelMono: FloorTileItemSteel #mono
 FloorTileItemShowroom: FloorTileItemSteel
 FloorTileItemSteelSlatsContinuous: FloorTileItemSteel #should be slats
@@ -958,7 +958,7 @@ FloorTileItemSteelSlatsContinuous: FloorTileItemSteel #should be slats
 ### White Tiles
 FloorTileItemWhiteDiagonalMini: FloorTileItemWhite
 FloorTileItemWhiteDiagonal: FloorTileItemWhite
-FloorTileItemWhiteOffset: FloorTileItemWhite # readd plz
+FloorTileItemWhiteOffset: FloorTileItemWhite
 FloorTileItemWhiteSlatsContinuous: FloorTileItemWhite # there is white slats?
 
 ### Misc Tiles
@@ -988,10 +988,10 @@ IronsandStepConcaveCorner: null
 IronsandStep: null
 
 # 2026-07-27
-# TurnstileGenpopEnter: EnergyGateGenpopEnter # Turnstills don't have to migrate to a new proto, just change the visial and name, dont change the id
+# TurnstileGenpopEnter: EnergyGateGenpopEnter # Just change the visial and name, don't create migration hell
 # TurnstileGenpopLeave: EnergyGateGenpopLeave
 # Turnstile: EnergyGate
-# MetalDoor: SilverDoor ### Steel door should stay, this changes map ballance
+# MetalDoor: SilverDoor ### It shouldn't be removed just becouse it looks like silver door...
 MiningWindow: ReinforcedWindow
 MiningWindowDiagonal: ReinforcedWindowDiagonal
 FloorTileItemLightAstroGrass: null  # at least replace them with something similar
@@ -1044,7 +1044,7 @@ FloorTileItemXenoSteel: FloorTileItemExoHull
 FloorTileItemXenoSteelCorner: FloorTileItemExoCornerSW
 FloorTileItemXenoMaint: FloorTileItemExoTechmaint
 FloorTileItemXenoborg: FloorTileItemExoBorg
-FloorTileItemDarkSquiggly: FloorTileItemExoHorizontal # TODO check this
+FloorTileItemDarkSquiggly: FloorTileItemExoVertical # check if this helps
 
 # 2026-08-04
 FloorSnowChasm: FloorChasmEntity
@@ -1053,7 +1053,7 @@ FloorChromiteChasm: FloorChasmEntity
 
 # 2026-08-06
 FloorTileItemHydro: null
-WallRiveted: WallMarble # why not add a new proto? one is a super reinforced steel wall, other is a rock # TODO need discussion
+WallRiveted: WallMarble
 WallSpawnAsteroidBananium: null
 WallSpawnAsteroidBananiumCrab: null
 

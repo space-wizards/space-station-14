@@ -95,7 +95,7 @@
   target: FloorDark
 
 - type: tileAlias
-  id: FloorDarkOffset # still somewhat good for mapping with decals # TODO need discussion
+  id: FloorDarkOffset
   target: FloorDark
 
 - type: tileAlias
@@ -107,7 +107,7 @@
   target: FloorSteel
 
 - type: tileAlias
-  id: FloorSteelOffset # still somewhat good for mapping with decals # TODO need discussion
+  id: FloorSteelOffset
   target: FloorSteel
 
 - type: tileAlias
@@ -123,7 +123,7 @@
   target: FloorWhite
 
 - type: tileAlias
-  id: FloorWhiteOffset # still somewhat good for mapping with decals # TODO need discussion
+  id: FloorWhiteOffset
   target: FloorWhite
 
 - type: tileAlias
@@ -246,7 +246,7 @@
 
 - type: tileAlias
   id: IronsandPacked
-  target: FloorAsteroidIronsand
+  target: FloorAsteroidIronsand # why astro?
 
 - type: tileAlias
   id: IronsandPaved
@@ -326,7 +326,7 @@
 
 - type: tileAlias
   id: FloorDarkSquiggly
-  target: FloorExoHorizontal
+  target: FloorExoHorizontal # needs to be vertical and horizontal at the same time...
 
 - type: tileAlias
   id: FloorAsphalt
