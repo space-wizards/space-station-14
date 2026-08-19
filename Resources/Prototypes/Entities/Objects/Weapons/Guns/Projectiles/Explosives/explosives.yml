@@ -234,3 +234,41 @@
     impulseInterval: 0.1
     maxAngleVectorChangePerImpulse: 10
     rotateWithImpulse: true
+
+- type: entity
+  parent: BaseBulletTrigger
+  id: BulletXenoborgMechadermisRocket
+  name: mechadermis rocket
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+    - state: mechadermis-missile-base
+    - state: mechadermis-missile-unshaded
+      shader: unshaded
+  - type: TriggerOnSpawn
+    keyOut: timerTrigger
+  - type: TimerTrigger
+    delay: 9.9 # so it explodes before it despawns
+    keysIn:
+    - timerTrigger
+  - type: ExplodeOnTrigger
+    keysIn:
+    - trigger
+    - timer
+  - type: Explosive
+    explosionType: XenoborgAntiStructureExplosion
+    totalIntensity: 25
+    intensitySlope: 3
+    maxIntensity: 3
+    maxTileBreak: 0
+  - type: SineWaveAnimation
+    xWave:
+      amplitude: 0.4
+      frequency: 17
+      phaseOffset: null
+  - type: PointLight
+    radius: 2.5
+    color: magenta
+    energy: 0.4
