@@ -160,7 +160,7 @@ entities:
     - type: GasTileOverlay
     - type: RadiationGridResistance
     - type: ExplosionAirtightGrid
-- proto: AirlockGlassShuttleXenoborgLocked
+- proto: AirlockShuttleXenoborgLocked
   entities:
   - uid: 107
     components:

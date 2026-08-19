@@ -292,11 +292,11 @@
   fx: EffectRCDConstruct4
 
 - type: rcd
-  id: AirlockGlassShuttleXenoborgLocked
+  id: AirlockShuttleXenoborgLocked
   category: XenoborgAirlocks
   sprite: /Textures/Interface/Radial/RCD/xenoborg_airlock_dock.png
   mode: ConstructObject
-  prototype: AirlockGlassShuttleXenoborgLocked
+  prototype: AirlockShuttleXenoborgLocked
   cost: 5
   delay: 4
   collisionMask: FullTileMask
