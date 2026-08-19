@@ -97,6 +97,7 @@ public abstract partial class SharedHandsSystem
         // A lot of hand related stuff is done via organs.
         // Because of that we cannot sanely clone hands, but we can still clone over displacements etc.
         // Organ cloning logic cannot be worked on until body system work progresses enough to allow us to do that.
+        // TODO: Clone hands properly once we can do organ cloning.
         targetComp.DisableExplosionRecursion = ent.Comp.DisableExplosionRecursion;
         targetComp.BaseThrowspeed = ent.Comp.BaseThrowspeed;
         targetComp.ThrowRange = ent.Comp.ThrowRange;
