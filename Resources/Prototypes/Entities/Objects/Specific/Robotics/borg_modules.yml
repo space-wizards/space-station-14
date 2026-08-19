@@ -803,7 +803,7 @@
     - state: icon-light-replacer
   - type: ItemBorgModule
     hands:
-    - item: LightReplacer
+    - item: LightReplacerFilled
     - item: BorgTrashBag
     - item: Plunger
     - item: SoapNT
@@ -1563,6 +1563,29 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-deflector-module }
 
 - type: entity
+  parent: [ BaseXenoborgModuleHeavy, BaseProviderBorgModule, BaseXenoborgContraband ]
+  id: XenoborgModuleRocket
+  name: rocket module
+  description: A module with a rocket launcher designed to destroy structures.
+  components:
+  - type: Sprite
+    layers:
+    - state: xenoborg_heavy
+    - state: icon-xenoborg-rocket
+  - type: ItemBorgModule
+    hands:
+    - item: WeaponRocketLauncherXenoborg
+    - item: WeaponRocketLauncherXenoborg
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-rocket-module }
+  - type: ComponentBorgModule
+    components:
+    - type: SimpleSpriteOverlay
+      overlaySprite:
+        sprite: Mobs/Silicon/rockets.rsi
+        state: heavy_xenoborg_rockets
+
+- type: entity
   parent: [ BaseXenoborgModuleEngi, BaseProviderBorgModule, BaseXenoborgContraband ]
   id: XenoborgModuleDoorControl
   name: door control xenoborg module
@@ -1912,6 +1935,23 @@
     - item: JetpackXenoborg
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-sword2-module }
+
+- type: entity
+  parent: [ BaseXenoborgModuleScout, BaseProviderBorgModule, BaseXenoborgContraband ]
+  id: XenoborgModuleBioKinfe
+  name: bio knife xenoborg module
+  description: Module with an bio knife.
+  components:
+  - type: Sprite
+    layers:
+    - state: xenoborg_scout
+    - state: icon-xenoborg-sword2
+  - type: ItemBorgModule
+    hands:
+    - item: XenoborgBioKnife
+    - item: JetpackXenoborg
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-bio-knife }
 
 - type: entity
   parent: [ BaseXenoborgModuleStealth, BaseProviderBorgModule, BaseXenoborgContraband ]

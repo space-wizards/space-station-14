@@ -50,3 +50,5 @@
           SheetSteel1:
             min: 1
             max: 2
+  - type: StaticPrice
+    price: 300
