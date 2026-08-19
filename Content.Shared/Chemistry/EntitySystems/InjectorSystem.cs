@@ -333,8 +333,15 @@ public sealed partial class InjectorSystem : EntitySystem
     {
         doAfterTime = TimeSpan.Zero;
 
-        // Do not show popups when interacting with a disposal unit and do not attempt to transfer liquids to them.
-        if (HasComp<DisposalUnitComponent>(target) || !ProtoMan.Resolve(injector.Comp.ActiveModeProtoId, out var activeMode))
+        if (!ProtoMan.Resolve(injector.Comp.ActiveModeProtoId, out var activeMode))
+            return false;
+
+        Solution? drawableSol = null;
+
+        if (activeMode.Behavior.HasAnyFlag(InjectorBehavior.Dynamic | InjectorBehavior.Draw)
+            && !_solutionContainer.TryGetDrawableSolution(target, out _, out drawableSol)
+            || activeMode.Behavior.HasAnyFlag(InjectorBehavior.Dynamic | InjectorBehavior.Inject)
+            && !_solutionContainer.TryGetInjectableSolution(target, out _, out _))
             return false;
 
         // Check if the Injector has a draw time, but only when drawing.
@@ -347,14 +354,8 @@ public sealed partial class InjectorSystem : EntitySystem
             _popup.PopupEntity(Loc.GetString("injector-component-cannot-toggle-draw-message"), user, user);
             return false; // If already full, fail drawing.
         }
-
-        if (!_solutionContainer.TryGetDrawableSolution(target, out _, out var drawableSol))
-        {
-            _popup.PopupEntity(Loc.GetString("injector-component-cannot-draw-message", ("target", Identity.Entity(target, EntityManager))), injector, user);
-            return false;
-        }
-
-        if (drawableSol.Volume == 0)
+        // Avoid getting drawableSolution twice if we already got it above.
+        if ((drawableSol != null || _solutionContainer.TryGetDrawableSolution(target, out _, out drawableSol)) && drawableSol.Volume == 0)
         {
             _popup.PopupEntity(Loc.GetString("injector-component-target-is-empty-message", ("target", Identity.Entity(target, EntityManager))), injector, user);
             return false;
