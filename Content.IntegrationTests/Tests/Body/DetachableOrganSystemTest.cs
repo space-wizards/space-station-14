@@ -1,14 +1,12 @@
+#nullable enable
 using System.Linq;
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Shared.Body;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
 
 namespace Content.IntegrationTests.Tests.Body;
 
-[TestFixture]
 [TestOf(typeof(DetachableOrganSystem))]
 public sealed class DetachableOrganSystemTest : GameTest
 {
@@ -87,25 +85,29 @@ public sealed class DetachableOrganSystemTest : GameTest
 
         var newBody = _detachableOrgan.Detach(root);
 
-        Assert.That(newBody, Is.Not.Null);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(newBody, Is.Not.Null);
 
-        var newBodyContained = _container.GetContainer(newBody!.Value, BodyComponent.ContainerID).ContainedEntities.ToList();
-        Assert.That(newBodyContained, Is.EquivalentTo(new[] { root, child }));
+            var newBodyContained = _container.GetContainer(newBody!.Value, BodyComponent.ContainerID).ContainedEntities.ToList();
+            Assert.That(newBodyContained, Is.EquivalentTo([root, child]));
 
-        var oldBodyContained = oldBodyContainer.ContainedEntities.ToList();
-        Assert.That(oldBodyContained, Is.EquivalentTo(new[] { grandParent, sibling }));
+            var oldBodyContained = oldBodyContainer.ContainedEntities.ToList();
+            Assert.That(oldBodyContained, Is.EquivalentTo([grandParent, sibling]));
 
-        var grandParentComp = SComp<ParentOrganComponent>(grandParent);
-        Assert.That(grandParentComp.Children, Does.Not.Contain(root));
-        Assert.That(grandParentComp.Children, Does.Contain(sibling));
+            var grandParentComp = SComp<ParentOrganComponent>(grandParent);
+            Assert.That(grandParentComp.Children, Does.Not.Contain(root));
+            Assert.That(grandParentComp.Children, Does.Contain(sibling));
 
-        Assert.That(SComp<ChildOrganComponent>(root).Parent, Is.Null);
-        Assert.That(SComp<ParentOrganComponent>(root).Children, Does.Contain(child));
-        Assert.That(SComp<ChildOrganComponent>(child).Parent, Is.EqualTo(root));
+            Assert.That(SComp<ChildOrganComponent>(root).Parent, Is.Null);
+            Assert.That(SComp<ParentOrganComponent>(root).Children, Does.Contain(child));
+            Assert.That(SComp<ChildOrganComponent>(child).Parent, Is.EqualTo(root));
 
-        Assert.That(SComp<OrganComponent>(root).Body, Is.EqualTo(newBody));
-        Assert.That(SComp<OrganComponent>(child).Body, Is.EqualTo(newBody));
-        Assert.That(SComp<OrganComponent>(grandParent).Body, Is.EqualTo(oldBody));
-        Assert.That(SComp<OrganComponent>(sibling).Body, Is.EqualTo(oldBody));
+            Assert.That(SComp<OrganComponent>(root).Body, Is.EqualTo(newBody));
+            Assert.That(SComp<OrganComponent>(child).Body, Is.EqualTo(newBody));
+            Assert.That(SComp<OrganComponent>(grandParent).Body, Is.EqualTo(oldBody));
+            Assert.That(SComp<OrganComponent>(sibling).Body, Is.EqualTo(oldBody));
+        }
+
     }
 }
