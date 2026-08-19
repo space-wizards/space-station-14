@@ -78,7 +78,7 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyExternal
-  suffix: External
+  name: external airlock assembly
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/airlock-external.rsi
@@ -87,7 +87,8 @@
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyExternalGlass
-  suffix: External, Glass
+  suffix: Glass
+  name: external airlock assembly
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/airlock-external.rsi
@@ -227,25 +228,6 @@
     sprite: Structures/Doors/Airlocks/Glass/security-base.rsi
     state: "assembly"
 
-#Shuttle
-- type: entity
-  parent: AirlockAssembly
-  id: AirlockAssemblyShuttle
-  suffix: Shuttle
-  components:
-  - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/shuttle-base.rsi
-    state: "assembly"
-
-- type: entity
-  parent: AirlockAssembly
-  id: AirlockAssemblyShuttleGlass
-  suffix: Shuttle, Glass
-  components:
-  - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/shuttle-base.rsi
-    state: "assembly"
-
 #Virology
 - type: entity
   parent: AirlockAssembly
@@ -304,6 +286,7 @@
     state: "assembly"
 
 #Syndicate
+# NOTE: syndicate assembly assets exist, but are unused.
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblySyndicate
@@ -320,25 +303,6 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/syndicate-base.rsi
-    state: "assembly"
-
-#ShuttleSyndicate
-- type: entity
-  parent: AirlockAssembly
-  id: AirlockAssemblyShuttleSyndicate
-  suffix: ShuttleSyndicate
-  components:
-  - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/shuttle-syndicate.rsi
-    state: "assembly"
-
-- type: entity
-  parent: AirlockAssembly
-  id: AirlockAssemblyShuttleSyndicateGlass
-  suffix: ShuttleSyndicate, Glass
-  components:
-  - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/shuttle-syndicate.rsi
     state: "assembly"
 
 #High Security

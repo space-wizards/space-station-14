@@ -1126,3 +1126,7 @@ MeteorRockUranium: AsteroidRockUranium
 
 #2026-08-18
 DrinkNeurotoxinGlass: null
+
+#2026-08-19
+AirlockAssemblyShuttle: AirlockShuttleAssembly
+AirlockAssemblyShuttleGlass: AirlockShuttleAssembly

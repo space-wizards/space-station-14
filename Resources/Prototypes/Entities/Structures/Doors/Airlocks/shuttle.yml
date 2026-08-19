@@ -115,6 +115,7 @@
         layer:     #removed opaque from the layer, allowing lasers to pass through glass airlocks
         - GlassAirlockLayer
 
+# TODO: migrate into assembly with the others
 - type: entity
   id: AirlockShuttleAssembly
   parent: AirlockAssembly
@@ -122,8 +123,8 @@
   description: An incomplete structure necessary for connecting two space craft together.
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/shuttle-base.rsi
-    state: closed
+    sprite: Structures/Doors/Airlocks/Standard/shuttle-base.rsi
+    state: "assembly"
     snapCardinals: false
   - type: Construction
     graph: AirlockShuttle
@@ -132,6 +133,7 @@
 - type: entity
   id: AirlockGlassShuttleSyndicate
   parent: AirlockGlassShuttle
+  suffix: Syndicate, Glass
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/shuttle-syndicate.rsi
@@ -139,6 +141,7 @@
 - type: entity
   parent: AirlockShuttle
   id: AirlockShuttleSyndicate
+  suffix: Syndicate
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/shuttle-syndicate.rsi
