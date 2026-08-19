@@ -120,9 +120,12 @@ public sealed partial class UseDelaySystem
     /// <param name="id">The specified id of the delay. If null, it'll use the standard delay.</param>
     /// <returns>Returns true if it was able to find & reset the delay, otherwise false.</returns>
     [PublicAPI]
-    public bool TryResetDelay(Entity<UseDelayComponent> delayed, bool checkDelayed = false, string id = DefaultId)
+    public bool TryResetDelay(Entity<UseDelayComponent?> delayed, bool checkDelayed = false, string id = DefaultId)
     {
-        if (checkDelayed && IsDelayed((delayed.Owner, delayed.Comp), id))
+        if (!Resolve(delayed, ref delayed.Comp, false))
+            return false;
+
+        if (checkDelayed && IsDelayed(delayed, id))
             return false;
 
         if (!delayed.Comp.Delays.TryGetValue(id, out var entry))
@@ -136,23 +139,6 @@ public sealed partial class UseDelaySystem
         entry.EndTime = curTime - _metadata.GetPauseTime(delayed) + entry.Length;
         Dirty(delayed);
         return true;
-    }
-
-    /// <summary>
-    /// Try to reset the specified delay of the entity.
-    /// </summary>
-    /// <param name="delayed">The entity whose specified delay is being reset.</param>
-    /// <param name="checkDelayed">Whether to check if the delay is already active. If so, it'll not reset it.</param>
-    /// <param name="component">The useDelayComponent of the entity.</param>
-    /// <param name="id">The specified id of the delay. If null, it'll use the standard delay.</param>
-    /// <returns>Returns true if it was able to find & reset the delay, otherwise false.</returns>
-    [PublicAPI]
-    public bool TryResetDelay(EntityUid delayed, bool checkDelayed = false, UseDelayComponent? component = null, string id = DefaultId)
-    {
-        if (!Resolve(delayed, ref component, false))
-            return false;
-
-        return TryResetDelay((delayed, component), checkDelayed, id);
     }
 
     /// <summary>

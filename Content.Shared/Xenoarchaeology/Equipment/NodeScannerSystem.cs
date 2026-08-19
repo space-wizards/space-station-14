@@ -80,7 +80,7 @@ public sealed partial class NodeScannerSystem : EntitySystem
         EntityUid actor
     )
     {
-        if (!_useDelay.TryResetDelay(device, true))
+        if (!_useDelay.TryResetDelay(device.Owner, true))
             return;
 
         var connected = EnsureComp<NodeScannerConnectedComponent>(device);

@@ -190,6 +190,6 @@ public sealed partial class SpraySystem : SharedSpraySystem
         audioParams = audioParams.WithVariation(0.125f);
         _audio.PlayPvs(entity.Comp.SpraySound, entity, audioParams);
 
-        _useDelay.TryResetDelay(entity);
+        _useDelay.TryResetDelay(entity.Owner);
     }
 }

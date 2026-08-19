@@ -1182,7 +1182,7 @@ namespace Content.Shared.Interaction
                     _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}");
 
                 if (delayComponent != null)
-                    _useDelay.TryResetDelay(used, component: delayComponent);
+                    _useDelay.TryResetDelay((used, delayComponent));
                 return true;
             }
 
@@ -1195,7 +1195,7 @@ namespace Content.Shared.Interaction
             DoContactInteraction(user, used);
             // Still need to call this even without checkUseDelay in case this gets relayed from Activate.
             if (delayComponent != null)
-                _useDelay.TryResetDelay(used, component: delayComponent);
+                _useDelay.TryResetDelay((used, delayComponent));
 
             _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}");
             return true;

@@ -630,7 +630,7 @@ namespace Content.Shared.Cuffs
 
             if (isOwner)
             {
-                if (!_delay.TryResetDelay(cuff, true))
+                if (!_delay.TryResetDelay(cuff.Owner, true))
                 {
                     return;
                 }

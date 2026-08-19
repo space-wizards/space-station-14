@@ -69,7 +69,7 @@ public abstract partial class SharedTrayScannerSystem : EntitySystem
             return;
 
         // Prevents ping spam
-        if (!_delay.TryResetDelay(scanner, checkDelayed: true))
+        if (!_delay.TryResetDelay(scanner.Owner, checkDelayed: true))
             return;
 
         scanner.Comp.Mode = Next(scanner.Comp.Mode);

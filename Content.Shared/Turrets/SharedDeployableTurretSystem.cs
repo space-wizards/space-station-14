@@ -62,7 +62,7 @@ public abstract partial class SharedDeployableTurretSystem : EntitySystem
 
     private void OnActivate(Entity<DeployableTurretComponent> ent, ref ActivateInWorldEvent args)
     {
-        if (!_useDelay.TryResetDelay(ent, true))
+        if (!_useDelay.TryResetDelay(ent.Owner, true))
             return;
 
         if (!_accessReader.IsAllowed(args.User, ent))

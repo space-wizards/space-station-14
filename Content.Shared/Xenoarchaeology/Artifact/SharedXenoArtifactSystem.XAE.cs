@@ -65,7 +65,7 @@ public abstract partial class SharedXenoArtifactSystem
         if (xenoArtifactComponent.Suppressed)
             return false;
 
-        if (!_useDelay.TryResetDelay(artifact, true))
+        if (!_useDelay.TryResetDelay(artifact.Owner, true))
             return false;
 
         var success = false;

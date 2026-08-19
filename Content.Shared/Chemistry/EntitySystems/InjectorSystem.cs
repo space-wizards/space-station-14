@@ -647,7 +647,7 @@ public sealed partial class InjectorSystem : EntitySystem
         _forensics.TransferDna(injector, target);
         // Reset the delay, if present.
 
-        _useDelay.TryResetDelay(injector);
+        _useDelay.TryResetDelay(injector.Owner);
 
         // Automatically set syringe to draw after completely draining it.
         if (!_solutionContainer.ResolveSolution(injector.Owner, injector.Comp.SolutionName, ref injector.Comp.Solution, out var solution)
