@@ -7,7 +7,8 @@ using Content.Shared.Roles;
 namespace Content.Server.Objectives.Systems;
 
 /// <summary>
-/// This handles...
+/// This handles the blacklisting of certain traitor objectives from certain traitor profiles. <br/>
+/// Can be used to prevent syndie reinforcements from being given certain objectives, and vice versa.
 /// </summary>
 public sealed partial class TraitorProfileBlacklistSystem : EntitySystem
 {
@@ -34,7 +35,7 @@ public sealed partial class TraitorProfileBlacklistSystem : EntitySystem
             foreach (var blacklistedProfile in comp.Profiles)
             {
                 if (!blacklistedProfile.Equals(traitorComps.Profile)) continue;
-                Log.Warning($"Profile {traitorComps.Profile} is blacklisted by this objective");
+                Log.Debug($"Profile {traitorComps.Profile} is blacklisted by this objective");
                 args.Cancelled = true;
                 return;
 
