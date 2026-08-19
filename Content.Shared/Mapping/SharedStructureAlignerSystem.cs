@@ -19,6 +19,7 @@ namespace Content.Shared.Mapping;
 public sealed partial class SharedStructureAlignerSystem : EntitySystem
 {
     [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
     [Dependency] private SharedTransformSystem _trans = default!;
 
     /// <summary>
@@ -28,6 +29,7 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
 
     private const float ProximityMin = 0.45f;
     private const float ProximityMax = 1.1f;
+    private const float SearchBoxScale = 1.25f;
 
     public override void Initialize()
     {
@@ -69,7 +71,7 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
         var countAll = 0;
         var countFixed = 0;
 
-        //TODO: check if map exists?
+        //TODO: check if map exists so we can quit early
 
         foreach (var (ent, comp, trans) in query)
         {
@@ -101,26 +103,34 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
     {
         var trans = Transform(entity);
 
-        // Do not align to loose debris
-        if (!trans.Anchored)
+        // Do not align loose entities
+        if (!trans.Anchored || trans.GridUid is null)
             return false;
 
-        // Locate adjacent walls and doors
-        var query = AllEntityQuery<StructureAlignToComponent, TransformComponent>();
+        // Get nearby entities, so we don't need to check through all entities
+        // Searchbox is scaled up because adjacent airlocks would otherwise not be caught, due to smaller hitboxes
+        var searchBox = _lookup.GetWorldAABB(entity, trans).Scale(SearchBoxScale);
+        HashSet<EntityUid> near = new();
+        _lookup.GetEntitiesIntersecting(trans.GridUid.Value, searchBox, near);
 
         var northSouth = 0d;
         var eastWest = 0d;
 
         int weight;
-        foreach (var (neighborEnt, neighborComp, neighborTrans) in query)
+        foreach (var neighborEnt in near)
         {
             if (entity.Owner == neighborEnt)
                 continue;
 
+            if (!TryComp<StructureAlignToComponent>(neighborEnt, out var neighborComp))
+                    continue;
+
             if (!neighborComp.AlignType.Contains(entity.Comp.AlignType))
                 continue;
 
-            // They must be anchored to the same parent to matter
+            var neighborTrans = Transform(neighborEnt);
+
+            // Ignore space debris or docked grids
             if (neighborTrans.ParentUid != trans.ParentUid)
                 continue;
 
@@ -129,13 +139,15 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
             // For example, if a line of firelock frames are being anchored, with no adjacent walls
             weight = neighborTrans.Anchored ? 10 : 1;
 
-            // Only the four adjacent tiles should be considered for alignment, otherwise calculation quickly becomes infeasibly complex
+            // The searchbox catches diagonally adjacent tiles, but we don't want those. So we filter them out with a maximum distance
             // Minimum range is here to ignore overlapping entities
             trans.Coordinates.TryDistance(EntityManager, _trans, neighborTrans.Coordinates, out var dist);
             if (dist > ProximityMax || dist < ProximityMin)
                 continue;
 
             var vect = trans.Coordinates.Position - neighborTrans.Coordinates.Position;
+
+            //TODO:ERRANT use Directions
 
             eastWest += Math.Abs(Math.Round(vect.X)) * weight;
             northSouth += Math.Round(Math.Abs(vect.Y)) * weight;
