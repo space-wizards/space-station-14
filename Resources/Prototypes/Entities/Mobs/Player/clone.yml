@@ -76,6 +76,7 @@
   - Damageable # Sprites and damage modifier
   - Flammable # Displacements
   - CreamPied # Displacements
+  - Hands # displacements
   - Puller
   - Vocal # voice sounds
 
