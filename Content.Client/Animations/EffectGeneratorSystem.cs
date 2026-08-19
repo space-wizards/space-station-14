@@ -43,10 +43,14 @@ public sealed partial class EffectGeneratorSystem : EntitySystem
     private void SpawnEffect(Entity<EffectGeneratorComponent> entity)
     {
         var entityXform = Transform(entity);
-        var entitySpeed = _physics.GetLinearVelocity(entity, Vector2.Zero);
+
+        var parent = _transform.GetParentUid(entity);
+        var speed = HasComp<MapGridComponent>(parent) || HasComp<MapComponent>(parent)
+            ? _physics.GetLinearVelocity(entity, Vector2.Zero)
+            : _physics.GetLinearVelocity(parent, Vector2.Zero);
 
         // Don't show particles unless the user is moving.
-        if (entitySpeed.LengthSquared() < 1f)
+        if (speed.LengthSquared() < 1f)
             return;
 
         var coordinates = entityXform.Coordinates;
@@ -64,7 +68,7 @@ public sealed partial class EffectGeneratorSystem : EntitySystem
         switch (entity.Comp.RotationPolicy)
         {
             case RotationPolicy.FollowMotionDirection:
-                _transform.SetWorldRotation(effect, entitySpeed.ToAngle());
+                _transform.SetWorldRotation(effect, speed.ToWorldAngle());
                 break;
 
             case RotationPolicy.Random:
