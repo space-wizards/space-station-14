@@ -803,7 +803,7 @@
     - state: icon-light-replacer
   - type: ItemBorgModule
     hands:
-    - item: LightReplacer
+    - item: LightReplacerFilled
     - item: BorgTrashBag
     - item: Plunger
     - item: SoapNT
@@ -1508,9 +1508,31 @@
 
 - type: entity
   parent: [ BaseXenoborgModuleEngi, BaseProviderBorgModule, BaseXenoborgContraband ]
+  id: XenoborgModuleAdvancedTool
+  name: advanced tool xenoborg module
+  description: Advanced engineering module containing advanced xenoborg technology.
+  components:
+  - type: Sprite
+    layers:
+    - state: xenoborg_engi
+    - state: icon-xenoborg-construction
+  - type: ItemBorgModule
+    hands:
+    - item: XenoborgJawsOfLife
+    - item: PowerDrill
+    - item: WelderExperimental
+    - item: Multitool
+    - item: trayScanner
+    - item: RCDRecharging
+    - item: SelfRechargingFireExtinguisher
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-adv-tools-module }
+
+- type: entity
+  parent: [ BaseXenoborgModuleEngi, BaseProviderBorgModule, BaseXenoborgContraband ]
   id: XenoborgModuleAccessBreaker
   name: access breaker xenoborg module
-  description: Module with a access breaker.
+  description: Module with an access breaker.
   components:
   - type: Sprite
     layers:
@@ -1518,25 +1540,62 @@
     - state: icon-xenoborg-access-breaker
   - type: ItemBorgModule
     hands:
-    - item: AccessBreaker
+    - item: XenoborgAccessBreaker
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-access-breaker-module }
 
 - type: entity
   parent: [ BaseXenoborgModuleEngi, BaseProviderBorgModule, BaseXenoborgContraband ]
-  id: XenoborgModuleFireExtinguisher
-  name: fire extinguisher xenoborg module
-  description: Module with a self-refueling fire extinguisher.
+  id: XenoborgModuleConstruction
+  name: construction xenoborg module
   components:
   - type: Sprite
     layers:
     - state: xenoborg_engi
-    - state: icon-xenoborg-fire-extinguisher
+    - state: icon-xenoborg-construction
   - type: ItemBorgModule
     hands:
-    - item: SelfRechargingFireExtinguisher
+    - hand:
+        emptyRepresentative: BorgModuleConstructionMaterialPlaceholder
+        emptyLabel: borg-slot-construction-empty
+        whitelist:
+          tags:
+          - ConstructionMaterial
+    - hand:
+        emptyRepresentative: CableApcStack10
+        emptyLabel: borg-slot-cables-empty
+        whitelist:
+          tags:
+          - CableCoil
+    - hand:
+        emptyRepresentative: FloorTileItemExoBorg
+        emptyLabel: borg-slot-tiles-empty
+        whitelist:
+          components:
+          - FloorTile
+    - hand:
+        emptyRepresentative: MicroManipulatorStockPart
+        emptyLabel: borg-slot-construction-empty
+        whitelist:
+          tags:
+          - ConstructionMaterial
+    - hand:
+        emptyRepresentative: DoorElectronics
+        emptyLabel: borg-slot-circuitboards-empty
+        whitelist:
+          components:
+          - Circuitboard
+        blacklist:
+          components:
+          - SiliconLawProvider
+    - hand:
+        emptyRepresentative: SpaceHeaterFlatpack
+        emptyLabel: borg-slot-flatpacks-empty
+        whitelist:
+          components:
+          - Flatpack
   - type: BorgModuleIcon
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-extinguisher-module }
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-construction-module }
 
 - type: entity
   parent: [ BaseXenoborgModuleEngi, BaseProviderBorgModule, BaseXenoborgContraband ]
@@ -1555,6 +1614,29 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-deflector-module }
 
 - type: entity
+  parent: [ BaseXenoborgModuleHeavy, BaseProviderBorgModule, BaseXenoborgContraband ]
+  id: XenoborgModuleRocket
+  name: rocket module
+  description: A module with a rocket launcher designed to destroy structures.
+  components:
+  - type: Sprite
+    layers:
+    - state: xenoborg_heavy
+    - state: icon-xenoborg-rocket
+  - type: ItemBorgModule
+    hands:
+    - item: WeaponRocketLauncherXenoborg
+    - item: WeaponRocketLauncherXenoborg
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-rocket-module }
+  - type: ComponentBorgModule
+    components:
+    - type: SimpleSpriteOverlay
+      overlaySprite:
+        sprite: Mobs/Silicon/rockets.rsi
+        state: heavy_xenoborg_rockets
+
+- type: entity
   parent: [ BaseXenoborgModuleEngi, BaseProviderBorgModule, BaseXenoborgContraband ]
   id: XenoborgModuleDoorControl
   name: door control xenoborg module
@@ -1567,7 +1649,7 @@
   - type: ItemBorgModule
     hands:
     - item: DoorRemoteXenoborg
-    - item: AccessBreaker
+    - item: XenoborgAccessBreaker
     - item: AccessConfiguratorXenoborg
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-door-remote-module }
@@ -1704,7 +1786,7 @@
         state: xenoborg_heavy_missile_launcher
   - type: ItemBorgModule
     hands:
-    - item: WeaponXenoborgGuidedMissileLauncher
+    - item: WeaponGuidedMissileLauncherXenoborg
     - item: WeaponRangeFinderXenoborg
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-guided-missile-module }
@@ -1826,6 +1908,23 @@
     - item: JetpackXenoborg
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-sword2-module }
+
+- type: entity
+  parent: [ BaseXenoborgModuleScout, BaseProviderBorgModule, BaseXenoborgContraband ]
+  id: XenoborgModuleBioKinfe
+  name: bio knife xenoborg module
+  description: Module with an bio knife.
+  components:
+  - type: Sprite
+    layers:
+    - state: xenoborg_scout
+    - state: icon-xenoborg-sword2
+  - type: ItemBorgModule
+    hands:
+    - item: XenoborgBioKnife
+    - item: JetpackXenoborg
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-bio-knife }
 
 - type: entity
   parent: [ BaseXenoborgModuleStealth, BaseProviderBorgModule, BaseXenoborgContraband ]
