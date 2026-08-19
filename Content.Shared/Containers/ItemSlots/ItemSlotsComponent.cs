@@ -41,14 +41,15 @@ public sealed partial class ItemSlotsComponent : Component
     /// Whether to allow the smart-equip feature to work with this item's slots.
     /// Defaults to false as so many ItemSlots entities do NOT want the smart-equip functionality.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public bool AllowSmartEquip;
 }
 
 [Serializable, NetSerializable]
-public sealed class ItemSlotsComponentState(Dictionary<string, ItemSlot> slots) : ComponentState
+public sealed class ItemSlotsComponentState(Dictionary<string, ItemSlot> slots, bool allowSmartEquip) : ComponentState
 {
     public readonly Dictionary<string, ItemSlot> Slots = slots;
+    public readonly bool AllowSmartEquip = allowSmartEquip;
 }
 
 /// <summary>
