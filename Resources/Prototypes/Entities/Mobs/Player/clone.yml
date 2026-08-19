@@ -8,7 +8,6 @@
 - type: cloningSettings
   id: TraitsMental
   components:
-  - Clumsy
   - Pacified
   - Paracusia
   - LightweightDrunk
@@ -74,6 +73,7 @@
   - SpanishAccent
   - StutteringAccent
   eventComponents:
+  - Hands # displacements
   - Puller
   - Vocal # voice sounds
 
@@ -176,6 +176,7 @@
   id: PlantClone
   components:
   - Plant
+  - PlantHarvest
   - PlantChemicals
   - PlantGrowth
   - PlantAtmospheric
@@ -193,7 +194,6 @@
   id: PlantLifecycleClone
   parent: PlantClone
   components:
-  - PlantHarvest
   # traits
   - PlantTraitSampled
   - PlantTraitSeedless

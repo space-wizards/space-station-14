@@ -1,7 +1,6 @@
 using Content.Server.StationEvents.Events;
 using Content.Shared.Radio;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Server.StationEvents.Components;
 
@@ -20,8 +19,8 @@ public sealed partial class SolarFlareRuleComponent : Component
     /// <summary>
     ///     Channels that will be disabled for a duration of event
     /// </summary>
-    [DataField("affectedChannels", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>))]
-    public HashSet<string> AffectedChannels = new();
+    [DataField]
+    public HashSet<ProtoId<RadioChannelPrototype>> AffectedChannels = new();
 
     /// <summary>
     ///     List of extra channels that can be random disabled on top of the starting channels.
