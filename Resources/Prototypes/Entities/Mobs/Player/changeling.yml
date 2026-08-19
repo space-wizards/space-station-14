@@ -68,10 +68,6 @@
     - ActionChangelingStasisWeak
   - type: ReplacementAccent
     accent: genericAggressive
-  - type: Speech # its an oozey thing so it speaks like a slime
-    speechVerb: Slime
-    speechSounds: Slime
-    allowedEmotes: ['Squish']
   - type: Tag # Removes DoorBumpOpener
     tags:
       []
