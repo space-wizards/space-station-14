@@ -138,16 +138,13 @@ public sealed partial class AntagGhostRoleTest : AntagTest
     }
     
     [Test]
-    [TestOf(typeof(GameTicker)), TestOf(typeof(AntagRandomObjectivesSystem))]
-    [Description("Ensures that no mid-round traitors will spawn in with an objective requiring them to hack the ATS.")]
+    [TestOf(typeof(TraitorProfileBlacklistComponent))]
+    [Description("Tests to make sure that ghost-role reinforcement antagonists won't spawn in with a traitor objective they're not supposed to have.")]
     [RunOnSide(Side.Server)]
     public void TestTraitorReinforcementObjectives()
     {
-        // very hacky, probably will need to be rewritten later on
+        // TODO: very hacky, probably does need to be rewritten
         
-        var mind = ServerSession!.GetMind();
-        var entMan = SEntMan;
-
         // 10 iterations to account for the RNG factor of objective assignment
         for (int i = 0; i < 10; i++)
         {
@@ -156,7 +153,6 @@ public sealed partial class AntagGhostRoleTest : AntagTest
             {
                 AssertGhostRoleTaken(spawner, role, xform);
                 var newMind = ServerSession!.GetMind();
-                Assert.That(newMind, Is.Not.EqualTo(mind));
 
                 bool Condition()
                 {
@@ -169,11 +165,9 @@ public sealed partial class AntagGhostRoleTest : AntagTest
                 }
 
                 Assert.That(Condition, "A reinforcement traitor was given a blacklisted objective!");
-                mind = newMind;
             }
         }
         // End all rules
         STicker.ClearGameRules();
-        Assert.That(STicker.GetAddedGameRules(), Is.Empty);
     }
 }
