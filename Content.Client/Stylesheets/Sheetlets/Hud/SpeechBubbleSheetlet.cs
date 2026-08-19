@@ -1,5 +1,4 @@
 using Content.Client.Resources;
-using Content.Client.Stylesheets.Fonts;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;

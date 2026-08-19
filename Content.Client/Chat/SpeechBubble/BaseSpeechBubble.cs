@@ -6,7 +6,8 @@ using Robust.Shared.Timing;
 namespace Content.Client.Chat.SpeechBubble;
 
 //TODO: Move things to this
-public abstract partial class BaseSpeechBubble : Control
+[Virtual]
+public partial class BaseSpeechBubble : Control
 {
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IEyeManager _eyeManager = default!;
@@ -43,11 +44,11 @@ public abstract partial class BaseSpeechBubble : Control
 
     public Vector2 ContentSize { get; internal set; }
 
-    protected BaseSpeechBubble()
+    public BaseSpeechBubble()
     {
     }
 
-    protected BaseSpeechBubble(EntityUid senderEntity)
+    public BaseSpeechBubble(EntityUid senderEntity)
     {
         _senderEntity = senderEntity;
         IoCManager.InjectDependencies(this);

@@ -66,7 +66,6 @@ public sealed partial class ChatUIController : UIController
     [UISystemDependency] private readonly TransformSystem? _transform = default;
     [UISystemDependency] private readonly MindSystem? _mindSystem = default!;
     [UISystemDependency] private readonly RoleCodewordSystem? _roleCodewordSystem = default!;
-
     [UISystemDependency] private readonly EntityLookupSystem? _lookup = default!;
     [UISystemDependency] private readonly SpriteSystem? _sprite = default!;
 
@@ -128,13 +127,19 @@ public sealed partial class ChatUIController : UIController
 
     /// <summary>
     ///     Speech bubbles that are currently visible on screen.
-    ///     We track them to push them up when new ones get added.
+    ///     Rendering is handled in SpeechBubbleOverlay
     /// </summary>
     public readonly Dictionary<EntityUid, List<NuSpeechBubble>> ActiveSpeechBubbles = new();
 
+    /// <summary>
+    /// Speech bubble name tags currently visible on screen
+    /// </summary>
     public readonly Dictionary<EntityUid, NuSpeechBubbleNameTag> ActiveSpeechBubbleNameTags = new();
 
-    public bool NameTags = true;
+    /// <summary>
+    /// Whether or not Name tags are enabled for speech bubbles
+    /// </summary>
+    public bool ChatBubbleNameTags;
 
     /// <summary>
     ///     Speech bubbles that are to-be-sent because of the "rate limit" they have.
@@ -192,7 +197,10 @@ public sealed partial class ChatUIController : UIController
         _net.RegisterNetMessage<MsgDeleteChatMessagesBy>(OnDeleteChatMessagesBy);
         SubscribeNetworkEvent<DamageForceSayEvent>(OnDamageForceSay);
         _config.OnValueChanged(CCVars.ChatEnableColorName, (value) => { _chatNameColorsEnabled = value; });
+        _config.OnValueChanged(CCVars.ChatBubbleEnableNames, (value) => { ChatBubbleNameTags = value; });
+
         _chatNameColorsEnabled = _config.GetCVar(CCVars.ChatEnableColorName);
+        ChatBubbleNameTags = _config.GetCVar(CCVars.ChatBubbleEnableNames);
 
         UpdateChannelPermissions();
 
@@ -471,8 +479,8 @@ public sealed partial class ChatUIController : UIController
     private void CreateNuSpeechBubble(EntityUid entity, SpeechBubbleData speechData)
     {
         var name = SharedChatSystem.GetStringInsideTag(speechData.Message, "Name");
-        //TODO better way of this
-        name = FormattedMessage.RemoveMarkupPermissive(name).ToString();
+        //TODO better way of this, probably put sender name in ChatMessage
+        name = FormattedMessage.RemoveMarkupPermissive(name);
 
         var nameColor = GetNameColor(name);
         Color.TryFromHex(nameColor, out var color);
@@ -483,15 +491,15 @@ public sealed partial class ChatUIController : UIController
             ActiveSpeechBubbles.Add(entity, existing);
         }
 
-        var bubble = new NuSpeechBubble(speechData.Message, speechData.Type, entity, color);
+        var bubble = new NuSpeechBubble(speechData.Message, speechData.Type, name, entity, color);
         bubble.OnDied += NuSpeechBubbleDied;
 
-        //emotes don't count, their name is already inline
+        //emotes don't count, their name is already inline. same with dead chat
         if (speechData.Message.Channel != ChatChannel.Emotes &&
             speechData.Message.Channel != ChatChannel.Dead)
         {
             //Add name tag if they are enabled
-            if (NameTags && !ActiveSpeechBubbleNameTags.ContainsKey(entity))
+            if (ChatBubbleNameTags && !ActiveSpeechBubbleNameTags.ContainsKey(entity))
             {
                 var nameTag = new NuSpeechBubbleNameTag(entity, name, color);
                 ActiveSpeechBubbleNameTags.Add(entity, nameTag);
@@ -562,6 +570,7 @@ public sealed partial class ChatUIController : UIController
 
     public void RemoveNuSpeechBubbleNameTag(EntityUid entityUid, BaseSpeechBubble bubble)
     {
+        //do we dispose if they were never added to a UI tree? how do it work?
         bubble.Dispose();
 
         if (ActiveSpeechBubbleNameTags.ContainsKey(entityUid))
