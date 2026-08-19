@@ -80,13 +80,6 @@
 
 - type: latheRecipe
   parent: BaseXenoborgModulesRecipe
-  id: XenoborgModuleTileGunRecipe
-  result: XenoborgModuleTileGun
-  materials:
-    XenoborgCrystal: 100
-
-- type: latheRecipe
-  parent: BaseXenoborgModulesRecipe
   id: XenoborgModuleZapRecipe
   result: XenoborgModuleZap
   materials:

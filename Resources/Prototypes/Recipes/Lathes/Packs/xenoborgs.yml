@@ -19,7 +19,6 @@
   # engi xenoborg
   - XenoborgModuleDoorControlRecipe
   - XenoborgModuleDeflectorFieldRecipe
-  - XenoborgModuleTileGunRecipe
   - XenoborgModuleZapRecipe
   - XenoborgModuleOilGunRecipe
   - XenoborgModuleNaniteGunRecipe
