@@ -41,7 +41,7 @@ public sealed partial class ItemSlotsComponent : Component
     /// Whether to allow the smart-equip feature to work with this item's slots.
     /// Defaults to false as so many ItemSlots entities do NOT want the smart-equip functionality.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool AllowSmartEquip;
 }
 
