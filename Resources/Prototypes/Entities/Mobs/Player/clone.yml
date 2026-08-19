@@ -36,12 +36,12 @@
   id: Body
   components:
   # general
-  - CreamPied
   - DetailExaminable
   - Dna
   - Fingerprint
   - Grammar # Pronouns
   - HumanoidProfile # Age, Sex, Gender
+  - InnerBodyAnomalyVisuals # How you look with anomalies
   - MeleeWeapon # Attack animation, damage and sound
   - NpcFactionMember
   - RandomPrice
@@ -75,6 +75,13 @@
   - SouthernAccent
   - SpanishAccent
   - StutteringAccent
+<<<<<<< HEAD
+=======
+  eventComponents:
+  - Damageable # Sprites and damage modifier
+  - Flammable # Displacements
+  - CreamPied # Displacements
+>>>>>>> fe0c7e07422bae44d219eaa3cc8e76dc3406b2d5
   - Hands # displacements
   - Puller
   - Vocal # voice sounds

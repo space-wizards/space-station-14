@@ -1,14 +1,18 @@
+using Content.Shared.Atmos.Components;
 using Content.Shared.Body.Components;
+using Content.Shared.Damage.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Pulling.Components;
+using Content.Shared.Nutrition.Components;
 using Content.Shared.Rootable;
 using Content.Shared.Sericulture;
 using Content.Shared.Speech.Components;
 using Content.Shared.Storage;
 using Content.Shared.Store.Components;
 using Content.Shared.Wagging;
+using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.TypeSerializers.Interfaces;
@@ -22,6 +26,8 @@ namespace Content.Shared.Cloning;
 public sealed partial class CloningContext :
     ISerializationContext,
     ITypeCopier<BloodstreamComponent>,
+    ITypeCopier<CreamPiedComponent>,
+    ITypeCopier<DamageableComponent>,
     ITypeCopier<HandsComponent>,
     ITypeCopier<InventoryComponent>,
     ITypeCopier<JumpAbilityComponent>,
@@ -41,6 +47,9 @@ public sealed partial class CloningContext :
 
     // Dependencies
     [Dependency] private EntityQuery<BloodstreamComponent> _bloodstreamQuery = default!;
+    [Dependency] private EntityQuery<CreamPiedComponent> _creamPiedQuery = default!;
+    [Dependency] private EntityQuery<DamageableComponent> _damageableQuery = default!;
+    [Dependency] private EntityQuery<FlammableComponent> _flammableQuery = default!;
     [Dependency] private EntityQuery<HandsComponent> _handsQuery = default!;
     [Dependency] private EntityQuery<InventoryComponent> _inventoryQuery = default!;
     [Dependency] private EntityQuery<JumpAbilityComponent> _jumpAbilityQuery = default!;
@@ -118,6 +127,68 @@ public sealed partial class CloningContext :
         target.MetabolitesSolution = bloodstream?.MetabolitesSolution;
     }
     #endregion Bloodstream
+
+    #region CreamPied
+    /// <inheritdoc/>
+    public void CopyTo(
+        ISerializationManager serializationManager,
+        CreamPiedComponent source,
+        ref CreamPiedComponent target,
+        IDependencyCollection dependencies,
+        SerializationHookContext hookCtx,
+        ISerializationContext? context = null)
+    {
+        serializationManager.CopyTo(source, ref target, notNullableOverride: true);
+
+        // Persistent fields
+        _creamPiedQuery.TryComp(_target, out var creamPied);
+        target.CreamPied = creamPied?.CreamPied ?? false;
+    }
+    #endregion CreamPied
+
+    #region Damageable
+    /// <inheritdoc/>
+    public void CopyTo(
+        ISerializationManager serializationManager,
+        DamageableComponent source,
+        ref DamageableComponent target,
+        IDependencyCollection dependencies,
+        SerializationHookContext hookCtx,
+        ISerializationContext? context = null)
+    {
+        serializationManager.CopyTo(source, ref target, notNullableOverride: true);
+
+        // Persistent fields
+        _damageableQuery.TryComp(_target, out var damageable);
+        target.Damage = damageable?.Damage ?? new();
+        target.DamagePerGroup = damageable?.DamagePerGroup ?? new();
+        target.TotalDamage = damageable?.TotalDamage ?? new();
+    }
+    #endregion Damageable
+
+    #region Flammable
+    /// <inheritdoc/>
+    public void CopyTo(
+        ISerializationManager serializationManager,
+        FlammableComponent source,
+        ref FlammableComponent target,
+        IDependencyCollection dependencies,
+        SerializationHookContext hookCtx,
+        ISerializationContext? context = null)
+    {
+        serializationManager.CopyTo(source, ref target, notNullableOverride: true);
+
+        // Persistent fields
+        _flammableQuery.TryComp(_target, out var flammable);
+        target.ResistCompleteTime = flammable?.ResistCompleteTime ?? new();
+        target.NextUpdate = flammable?.NextUpdate ?? TimeSpan.Zero;
+        target.OnFire = flammable?.OnFire ?? false;
+        target.FireStacks = flammable?.FireStacks ?? 0;
+        target.FlammableFixtureID = flammable?.FlammableFixtureID ?? "flammable"; // NOTE: must match the component default!
+        target.FlammableCollisionShape = flammable?.FlammableCollisionShape ?? new PhysShapeCircle(0.35f); // NOTE: must match the component default!
+        target.FireAlert = flammable?.FireAlert ?? "Fire"; // NOTE: must match the component default!
+    }
+    #endregion Flammable
 
     #region Hands
     /// <inheritdoc/>

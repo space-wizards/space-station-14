@@ -1,6 +1,4 @@
-using System.Diagnostics.CodeAnalysis;
 using Content.Server.Zombies;
-using Content.Shared.Cloning;
 using Content.Shared.Cloning.Events;
 using Content.Shared.Zombies;
 
@@ -26,16 +24,4 @@ public sealed partial class CloningSystem
         _zombie.UnZombify(ent, args.CloneUid, ent.Comp);
     }
     #endregion Event Handlers
-
-    /// <summary>
-    /// Checks if a target entity has had the given component copied over to it, returning it into <paramref name="component"/>
-    /// </summary>
-    private bool Copied<T>(EntityUid target, CloningSettingsPrototype cloneSettings, [NotNullWhen(true)] out T? component) where T : Component
-    {
-        component = null;
-        if (!cloneSettings.Components.Contains(Factory.GetRegistration(typeof(T)).Name))
-            return false;
-
-        return Resolve(target, ref component);
-    }
 }

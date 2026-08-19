@@ -1,9 +1,8 @@
+using Content.Shared.Cloning;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
 using Content.Shared.DisplacementMap;
 using Content.Shared.FixedPoint;
-using Content.Shared.Mobs;
-using Content.Shared.StatusIcon;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -19,7 +18,7 @@ namespace Content.Shared.Damage.Components;
 /// </remarks>
 [RegisterComponent]
 [NetworkedComponent]
-[Access(typeof(DamageableSystem), Other = AccessPermissions.ReadExecute)]
+[Access(typeof(DamageableSystem), typeof(CloningContext), Other = AccessPermissions.ReadExecute)]
 public sealed partial class DamageableComponent : Component
 {
     /// <summary>
@@ -40,7 +39,7 @@ public sealed partial class DamageableComponent : Component
     ///     If this data-field is specified, this allows damageable components to be initialized with non-zero damage.
     /// </remarks>
     [DataField]
-    [Access(typeof(DamageableSystem), Other = AccessPermissions.None)]
+    [Access(typeof(DamageableSystem), typeof(CloningContext), Other = AccessPermissions.None)]
     public DamageSpecifier Damage = new();
 
     /// <summary>
@@ -51,14 +50,14 @@ public sealed partial class DamageableComponent : Component
     ///     dictionary.
     /// </remarks>
     [ViewVariables]
-    [Access(typeof(DamageableSystem), Other = AccessPermissions.None)]
+    [Access(typeof(DamageableSystem), typeof(CloningContext), Other = AccessPermissions.None)]
     public Dictionary<ProtoId<DamageGroupPrototype>, FixedPoint2> DamagePerGroup = new();
 
     /// <summary>
     ///     The sum of all damages in the DamageableComponent.
     /// </summary>
     [ViewVariables]
-    [Access(typeof(DamageableSystem), Other = AccessPermissions.None)]
+    [Access(typeof(DamageableSystem), typeof(CloningContext), Other = AccessPermissions.None)]
     public FixedPoint2 TotalDamage;
 
     [DataField("radiationDamageTypes")]
@@ -76,9 +75,11 @@ public sealed partial class DamageableComponent : Component
 [Serializable, NetSerializable]
 public sealed class DamageableComponentState(
     DamageSpecifier damage,
-    ProtoId<DamageModifierSetPrototype>? modifierSetId)
+    ProtoId<DamageModifierSetPrototype>? modifierSetId,
+    ProtoId<DisplacementDataPrototype>? displacement)
     : ComponentState
 {
     public readonly DamageSpecifier Damage = damage;
     public readonly ProtoId<DamageModifierSetPrototype>? ModifierSetId = modifierSetId;
+    public readonly ProtoId<DisplacementDataPrototype>? Displacement = displacement;
 }
