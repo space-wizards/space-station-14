@@ -9,7 +9,7 @@ namespace Content.Server.Mapping;
 [AdminCommand(AdminFlags.Mapping)]
 public sealed partial class StructureAlignCommand : LocalizedEntityCommands
 {
-    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private SharedStructureAlignerSystem _aligner = default!;
 
     public override string Command => "align";
 
@@ -44,9 +44,7 @@ public sealed partial class StructureAlignCommand : LocalizedEntityCommands
             }
         }
 
-        var sat = _entManager.System<SharedStructureAlignerSystem>();
-
-        var response = sat.AlignAll(map, dry);
+        var response = _aligner.AlignAll(map, dry);
         if (!string.IsNullOrEmpty(response))
             shell.WriteLine(response);
     }
@@ -55,7 +53,7 @@ public sealed partial class StructureAlignCommand : LocalizedEntityCommands
     {
         return args.Length switch
         {
-            1 => CompletionResult.FromHintOptions(CompletionHelper.MapIds(_entManager),
+            1 => CompletionResult.FromHintOptions(CompletionHelper.MapIds(EntityManager),
                 Loc.GetString("cmd-align-hint-id")),
             2 => CompletionResult.FromHintOptions(["false", "true"], Loc.GetString("cmd-align-hint-dry")),
             _ => CompletionResult.Empty
