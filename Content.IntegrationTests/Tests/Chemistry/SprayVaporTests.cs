@@ -23,6 +23,7 @@ public sealed class SprayVaporTests : GameTest
     private static readonly EntProtoId SprayBottleSpaceCleaner = "SprayBottleSpaceCleaner";
     private const string BloodPuddle = "SprayVaporTestBloodPuddle";
     private const int BloodVolume = 5;
+    private const string SolutionId = "puddle";
 
     [TestPrototypes]
     private static readonly string Prototypes = @$"
@@ -32,7 +33,7 @@ public sealed class SprayVaporTests : GameTest
   suffix: Blood
   components:
   - type: Solution
-    id: puddle
+    id: {SolutionId}
     solution:
       maxVol: 1000
       reagents:
@@ -59,7 +60,7 @@ public sealed class SprayVaporTests : GameTest
 
             var puddleUid = SSpawnAtPosition(BloodPuddle, testMap.GridCoords);
             Assume.That(puddleUid, Has.Comp<PuddleComponent>(Server));
-            Assume.That(_solutionContainer.TryGetSolution(puddleUid, "puddle", out var puddleSolution, out _));
+            Assume.That(_solutionContainer.TryGetSolution(puddleUid, SolutionId, out var puddleSolution, out _));
             puddle = puddleSolution!.Value;
             Assume.That(puddle.Comp.Solution.ContainsPrototype(Blood));
 

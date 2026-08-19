@@ -10,7 +10,6 @@ using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests.Chemistry;
 
-[TestFixture]
 [TestOf(typeof(ChemicalReactionSystem))]
 public sealed class SolutionRoundingTest : GameTest
 {
