@@ -10,6 +10,16 @@
     TraitorObjectiveGroupOther: 1
 
 - type: weightedRandom
+  id: TraitorReinforcementObjectiveGroups
+  weights:
+    TraitorObjectiveGroupSteal: 1
+    TraitorObjectiveGroupKill: 1
+    TraitorObjectiveGroupState: 1 #As in, something about your character. Alive, dead, arrested, gained an ability...
+    TraitorObjectiveGroupSocial: 1 #Involves helping/harming others without killing them or stealing their stuff
+    TraitorObjectiveGroupSabotage: 1
+    TraitorReinforcementObjectiveGroupOther: 1
+
+- type: weightedRandom
   id: TraitorObjectiveGroupSteal
   weights:
     CaptainIDStealObjective: 1
@@ -58,6 +68,11 @@
     HijackTradeStationObjective: 1
     MailFraudObjective: 1
 
+#misc objectives that don't fall other another category
+- type: weightedRandom
+  id: TraitorReinforcementObjectiveGroupOther
+  weights:
+    MailFraudObjective: 1
 
 #Thief groups
 - type: weightedRandom

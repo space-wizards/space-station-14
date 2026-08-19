@@ -36,7 +36,8 @@ public sealed partial class AntagRandomObjectivesSystem : EntitySystem
         {
             if (!_random.Prob(set.Prob))
                 continue;
-
+            
+            Log.Debug($"Adding objectives from group {set.Groups} to {ToPrettyString(args.EntityUid):player}");
             for (var pick = 0; pick < set.MaxPicks && ent.Comp.MaxDifficulty > difficulty; pick++)
             {
                 var remainingDifficulty = ent.Comp.MaxDifficulty - difficulty;
