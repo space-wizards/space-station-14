@@ -7,7 +7,6 @@ using Robust.Shared.Console;
 
 namespace Content.IntegrationTests.Tests.Commands;
 
-[TestFixture]
 public sealed class ForceMapTest : GameTest
 {
     private const string DefaultMapName = "Empty";

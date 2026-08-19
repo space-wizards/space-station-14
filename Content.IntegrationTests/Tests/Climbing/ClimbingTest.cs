@@ -1,4 +1,5 @@
 #nullable enable
+using Content.IntegrationTests.Fixtures.Attributes;
 using Content.IntegrationTests.Tests.Movement;
 using Content.Shared.Climbing.Components;
 using Content.Shared.Climbing.Systems;
@@ -10,6 +11,8 @@ namespace Content.IntegrationTests.Tests.Climbing;
 public sealed class ClimbingTest : MovementTest
 {
     private static readonly EntProtoId Table = "Table";
+
+    [SidedDependency(Side.Server)] private ClimbSystem _sClimbSystem = default!;
 
     [Test]
     public async Task ClimbTableTest()
@@ -31,8 +34,7 @@ public sealed class ClimbingTest : MovementTest
         Assert.That(Delta(), Is.GreaterThan(0));
 
         // Try to start climbing
-        var sys = SEntMan.System<ClimbSystem>();
-        await Server.WaitPost(() => sys.TryClimb(SPlayer, SPlayer, STarget.Value, out _));
+        await Server.WaitPost(() => _sClimbSystem.TryClimb(SPlayer, SPlayer, STarget.Value, out _));
         await AwaitDoAfters();
 
         // Player should now be climbing
@@ -59,7 +61,7 @@ public sealed class ClimbingTest : MovementTest
         Assert.That(Delta(), Is.LessThan(0));
 
         // Start climbing
-        await Server.WaitPost(() => sys.TryClimb(SPlayer, SPlayer, STarget.Value, out _));
+        await Server.WaitPost(() => _sClimbSystem.TryClimb(SPlayer, SPlayer, STarget.Value, out _));
         await AwaitDoAfters();
 
         using (Assert.EnterMultipleScope())
@@ -70,6 +72,7 @@ public sealed class ClimbingTest : MovementTest
 
         // Walk past table and stop climbing again.
         await Move(DirectionFlag.West, 1f);
+
         using (Assert.EnterMultipleScope())
         {
             Assert.That(Delta(), Is.GreaterThan(0));
