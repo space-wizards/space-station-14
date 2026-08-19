@@ -10,7 +10,7 @@ namespace Content.Server.KillTracking;
 /// <summary>
 /// This handles <see cref="KillTrackerComponent"/> and recording who is damaging and killing entities.
 /// </summary>
-public sealed class KillTrackingSystem : EntitySystem
+public sealed partial class KillTrackingSystem : EntitySystem
 {
     /// <inheritdoc/>
     public override void Initialize()

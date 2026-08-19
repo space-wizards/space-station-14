@@ -1,10 +1,8 @@
 - type: entity
-  id: BaseStructureComputer
-  parent: BaseStructure
   abstract: true
+  parent: BaseStructure
+  id: BaseStructureComputerIndestructible
   components:
-  - type: Physics
-    bodyType: Static
   - type: Fixtures
     fixtures:
       fix1:
@@ -21,13 +19,19 @@
   - type: Anchorable
   - type: Construction
     graph: Computer
-    node: frameUnsecured
   - type: Sprite
     drawdepth: Objects
+
+- type: entity
+  abstract: true
+  parent: [ BaseStructureComputerIndestructible, StructureHealthMachineWeak ]
+  id: BaseStructureComputer
+  components:
+  - type: Construction
+    graph: Computer
+    node: frameUnsecured
   - type: Damageable
-    damageModifierSet: Electronic
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: GlassReinforcedMod
   - type: Destructible
     thresholds:
     - trigger:
@@ -39,8 +43,6 @@
           collection: GlassBreak
       - !type:ChangeConstructionNodeBehavior
         node: monitorBroken
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
 
 - type: entity
   id: ComputerFrame
@@ -65,7 +67,7 @@
           monitorUnsecured: { state: 4 }
 
 - type: entity
-  parent: BaseStructureComputer
+  parent: [ BaseStructureComputerIndestructible, StructureHealthMachineFlimsy ]
   id: ComputerBroken
   name: broken computer
   description: This computer has seen better days.
@@ -77,6 +79,8 @@
     sprite: Structures/Machines/computers.rsi
     drawdepth: Objects
     state: broken
+  - type: Damageable
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
     - trigger:
@@ -91,7 +95,8 @@
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+            min: 0
+            max: 2
+          ShardGlass:
+            min: 0
+            max: 2

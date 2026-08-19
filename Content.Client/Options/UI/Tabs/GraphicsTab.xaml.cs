@@ -24,6 +24,13 @@ public sealed partial class GraphicsTab : Control
         Control.AddOption(new OptionFullscreen(Control, _cfg, FullscreenCheckBox));
         Control.AddOption(new OptionLightingQuality(Control, _cfg, DropDownLightingQuality));
 
+        Control.AddOptionSlider(
+            CCVars.ViewportSharpnessStrength,
+            SharpnessSlider,
+            0,
+            20,
+            (_, value) => Loc.GetString("ui-options-value-percent", ("value", value / 10f)));
+
         Control.AddOptionDropDown(
             CVars.DisplayUIScale,
             DropDownUIScale,

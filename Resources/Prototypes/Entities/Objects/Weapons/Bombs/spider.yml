@@ -25,8 +25,9 @@
     # can only stick it in target area, no reason to unstick
     canUnstick: false
     whitelist:
-      tags:
+      components:
       - Wall
+      tags:
       - Window
   - type: Explosive # Powerful explosion in a large radius. Will break underplating.
     explosionType: DemolitionCharge
