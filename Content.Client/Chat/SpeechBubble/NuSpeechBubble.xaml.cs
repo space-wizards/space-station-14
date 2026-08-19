@@ -28,10 +28,13 @@ public sealed partial class NuSpeechBubble : BaseSpeechBubble
 
         RectClipContent = true;
 
+        if (fontColor == null)
+            fontColor = Color.White;
+
         if (_config.GetCVar(CCVars.ChatBubbleContrastBackground))
         {
             LabelPanel.StyleClasses.Add(StyleClass.TooltipPanel);
-            LabelPanel.ModulateSelfOverride = Color.White.WithAlpha(_config.GetCVar(CCVars.SpeechBubbleBackgroundOpacity));
+            LabelPanel.ModulateSelfOverride = fontColor.Value.WithAlpha(_config.GetCVar(CCVars.SpeechBubbleBackgroundOpacity));
         }
 
         var styleClass = GetStyle(type);
