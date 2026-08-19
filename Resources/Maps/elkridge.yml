@@ -4,7 +4,7 @@ meta:
   engineVersion: 288.0.1
   forkId: ""
   forkVersion: ""
-  time: 08/13/2026 03:49:22
+  time: 08/13/2026 13:21:03
   entityCount: 18763
 maps:
 - 1
@@ -4471,32 +4471,32 @@ entities:
     - type: Transform
       parent: 2
       pos: 31.5,24.5
-- proto: AirlockCommandGlass
+- proto: AirlockCommandGlassLocked
   entities:
   - uid: 694
     components:
     - type: Transform
       parent: 2
       rot: -1.5707963267948966 rad
-      pos: -27.5,-7.5
+      pos: -27.5,-9.5
   - uid: 1037
     components:
     - type: Transform
       parent: 2
       rot: -1.5707963267948966 rad
-      pos: -23.5,-9.5
+      pos: -23.5,-7.5
   - uid: 1089
     components:
     - type: Transform
       parent: 2
       rot: -1.5707963267948966 rad
-      pos: -23.5,-7.5
+      pos: -27.5,-7.5
   - uid: 1159
     components:
     - type: Transform
       parent: 2
       rot: -1.5707963267948966 rad
-      pos: -27.5,-9.5
+      pos: -23.5,-9.5
 - proto: AirlockCommandLocked
   entities:
   - uid: 50
@@ -4740,7 +4740,7 @@ entities:
       pos: -15.5,-9.5
     - type: Door
       state: Opening
-      secondsUntilStateChange: -3645.83
+      secondsUntilStateChange: -3849.303
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True
@@ -5566,7 +5566,7 @@ entities:
       pos: 16.5,24.5
     - type: Door
       state: Opening
-      secondsUntilStateChange: -3422.2302
+      secondsUntilStateChange: -3625.7031
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True
@@ -6368,12 +6368,11 @@ entities:
     - type: Transform
       parent: 2
       pos: -34.5,-36.5
-  - uid: 7471
+  - uid: 4613
     components:
-    - type: MetaData
-      name: glass airlock (Checkpoint)
     - type: Transform
       parent: 2
+      rot: -1.5707963267948966 rad
       pos: -4.5,27.5
   - uid: 10796
     components:
@@ -97814,16 +97813,12 @@ entities:
       pos: 19.5,-37.5
 - proto: PlasticFlapsAirtightClear
   entities:
-  - uid: 4613
-    components:
-    - type: Transform
-      parent: 2
-      pos: 15.5,-1.5
   - uid: 5095
     components:
     - type: Transform
       parent: 2
-      pos: 15.5,2.5
+      rot: -1.5707963267948966 rad
+      pos: 15.5,-1.5
   - uid: 6517
     components:
     - type: Transform
@@ -97844,6 +97839,12 @@ entities:
     - type: Transform
       parent: 2
       pos: 10.5,40.5
+  - uid: 7471
+    components:
+    - type: Transform
+      parent: 2
+      rot: -1.5707963267948966 rad
+      pos: 15.5,2.5
   - uid: 7652
     components:
     - type: Transform

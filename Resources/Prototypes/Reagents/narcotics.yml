@@ -556,7 +556,10 @@
           max: 0.1
         type: Local
         visualType: MediumCaution
-        messages: [ "You feel a need for fizzy pink flavor" ]
+        messages:
+        - hydroxysomnolene-effect-flavor
+        - hydroxysomnolene-effect-another-hit
+        - hydroxysomnolene-effect-sluggish
         probability: 0.15
 
 - type: reagent

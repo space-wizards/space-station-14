@@ -1,4 +1,5 @@
 using Content.Shared.Body.Components;
+using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Pulling.Components;
@@ -21,6 +22,7 @@ namespace Content.Shared.Cloning;
 public sealed partial class CloningContext :
     ISerializationContext,
     ITypeCopier<BloodstreamComponent>,
+    ITypeCopier<HandsComponent>,
     ITypeCopier<InventoryComponent>,
     ITypeCopier<JumpAbilityComponent>,
     ITypeCopier<PullerComponent>,
@@ -39,6 +41,7 @@ public sealed partial class CloningContext :
 
     // Dependencies
     [Dependency] private EntityQuery<BloodstreamComponent> _bloodstreamQuery = default!;
+    [Dependency] private EntityQuery<HandsComponent> _handsQuery = default!;
     [Dependency] private EntityQuery<InventoryComponent> _inventoryQuery = default!;
     [Dependency] private EntityQuery<JumpAbilityComponent> _jumpAbilityQuery = default!;
     [Dependency] private EntityQuery<PullerComponent> _pullerQuery = default!;
@@ -88,6 +91,10 @@ public sealed partial class CloningContext :
         _target = EntityUid.Invalid;
     }
 
+    // Clone functions below.
+    // Keep in alphabetical order by name of component,
+    // and keep fields within the component in the order they were defined in.
+
     #region Bloodstream
     /// <inheritdoc/>
     public void CopyTo(
@@ -111,6 +118,37 @@ public sealed partial class CloningContext :
         target.MetabolitesSolution = bloodstream?.MetabolitesSolution;
     }
     #endregion Bloodstream
+
+    #region Hands
+    /// <inheritdoc/>
+    public void CopyTo(
+        ISerializationManager serializationManager,
+        HandsComponent source,
+        ref HandsComponent target,
+        IDependencyCollection dependencies,
+        SerializationHookContext hookCtx,
+        ISerializationContext? context = null)
+    {
+        serializationManager.CopyTo(source, ref target, notNullableOverride: true);
+
+        // Persistent fields
+        _handsQuery.TryComp(_target, out var hands);
+        target.ActiveHandId = hands?.ActiveHandId;
+        target.StartingHands = hands?.StartingHands ?? new();
+        target.Hands = hands?.Hands ?? new();
+        target.SortedHands = hands?.SortedHands ?? new();
+        target.RevealedLayers.Clear();
+        if (hands != null)
+        {
+            target.RevealedLayers.Clear();
+            foreach ((var hand, var layers) in hands.RevealedLayers)
+            {
+                target.RevealedLayers[hand] = new(layers);
+            }
+        }
+        target.NextThrowTime = hands?.NextThrowTime ?? TimeSpan.Zero;
+    }
+    #endregion Hands
 
     #region Inventory
     /// <inheritdoc/>

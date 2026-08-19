@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Cloning.Events;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
@@ -30,6 +31,7 @@ public abstract partial class SharedHandsSystem
     public event Action<Entity<HandsComponent>, string, HandLocation>? OnPlayerAddHand;
     public event Action<Entity<HandsComponent>, string>? OnPlayerRemoveHand;
     protected event Action<Entity<HandsComponent>?>? OnHandSetActive;
+    protected byte ActiveHandIdIndex;
 
     public override void Initialize()
     {
@@ -43,6 +45,19 @@ public abstract partial class SharedHandsSystem
 
         SubscribeLocalEvent<HandsComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<HandsComponent, MapInitEvent>(OnMapInit);
+
+        // Needed for manual delta states.
+        EntityManager.ComponentFactory.RegisterNetworkedFields<HandsComponent>(
+            nameof(HandsComponent.ActiveHandId),
+            nameof(HandsComponent.Hands),
+            nameof(HandsComponent.SortedHands),
+            nameof(HandsComponent.ShowInHands),
+            nameof(HandsComponent.HandDisplacement),
+            nameof(HandsComponent.LeftHandDisplacement),
+            nameof(HandsComponent.RightHandDisplacement),
+            nameof(HandsComponent.CanBeStripped));
+
+        ActiveHandIdIndex = 0; // Corresponds to HandsComponentActiveHandDeltaState
     }
 
     public override void Shutdown()
@@ -63,6 +78,9 @@ public abstract partial class SharedHandsSystem
 
     private void OnMapInit(Entity<HandsComponent> ent, ref MapInitEvent args)
     {
+        foreach (var (handId, hand) in ent.Comp.StartingHands)
+            AddHand(ent.AsNullable(), handId, hand);
+
         if (ent.Comp.ActiveHandId == null)
             SetActiveHand(ent.AsNullable(), ent.Comp.SortedHands.FirstOrDefault());
     }
@@ -338,7 +356,7 @@ public abstract partial class SharedHandsSystem
         if (TryGetHeldItem(ent, handId, out var newHeld))
             RaiseLocalEvent(newHeld.Value, new HandSelectedEvent(ent));
 
-        Dirty(ent);
+        DirtyField(ent, nameof(HandsComponent.ActiveHandId));
         return true;
     }
 
