@@ -32,7 +32,7 @@ public sealed class RetractableItemActionTest : InteractionTest
             var armBladeActionProto = ProtoMan.Index(ArmBladeActionProtoId);
 
             // Find the component
-            Assert.That(armBladeActionProto.TryGetComponent<RetractableItemActionComponent>(out var actionComp, SEntMan.ComponentFactory));
+            Assert.That(armBladeActionProto.TryComp<RetractableItemActionComponent>(out var actionComp, SEntMan.ComponentFactory));
             // Get the item protoId from the component
             var spawnedProtoId = actionComp!.SpawnedPrototype;
 

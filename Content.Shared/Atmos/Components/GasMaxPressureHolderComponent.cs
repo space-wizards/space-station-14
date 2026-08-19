@@ -58,7 +58,7 @@ public abstract partial class GasMaxPressureHolderComponent : Component, IGasMax
     /// The mixture of air contained in this device.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public GasMixture Air { get; set; }
+    public GasMixture Air { get; set; } = new();
 
     // TODO ATMOS: Proper loud BANG sound, these are lethal concussive blast waves
     [DataField]

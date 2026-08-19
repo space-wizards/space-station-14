@@ -53,10 +53,10 @@
       fix1:
         shape: !type:PolygonShape
           vertices:
-          - -0.475,-0.225
-          - -0.225,-0.475
-          - 0.525,0.275
-          - 0.275,0.525
+          - -0.35,-0.2
+          - -0.2,-0.35
+          - 0.4,0.25
+          - 0.25,0.4
         density: 20 # derived from base_item
         mask:
         - ItemMask
@@ -94,10 +94,10 @@
       fix1:
         shape: !type:PolygonShape
           vertices:
-          - -0.58,-0.12
-          - -0.34,-0.55
-          - 0.6,-0.075
-          - 0.375,0.375
+          - -0.48,-0.15
+          - -0.3,-0.48
+          - 0.48,-0.075
+          - 0.3,0.3
         density: 20 # derived from base_item
         mask:
         - ItemMask
@@ -368,10 +368,10 @@
         shape: !type:PolygonShape
           radius: 0.01
           vertices:
-          - -0.475,-0.225
-          - -0.225,-0.475
-          - 0.525,0.275
-          - 0.275,0.525
+          - -0.35,-0.2
+          - -0.2,-0.35
+          - 0.4,0.25
+          - 0.25,0.4
         density: 20 # derived from base_item
         mask:
         - ItemMask

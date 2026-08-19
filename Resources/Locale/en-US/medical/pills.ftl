@@ -1,0 +1,11 @@
+pill-label-dexalin-20u = dexalin 20u
+pill-label-dylovene-20u = dylovene 20u
+pill-label-hyronalin-20u = hyronalin 20u
+pill-label-potassium-iodide-20u = potassium iodide 20u
+pill-label-iron-20u = iron 20u
+pill-label-copper-20u = copper 20u
+pill-label-kelotane-20u = kelotane 20u
+pill-label-dermaline-20u = dermaline 20u
+pill-label-tricordrazine-20u = tricordrazine 20u
+pill-label-bicaridine-20u = bicaridine 20u
+pill-label-charcoal-20u = charcoal 20u

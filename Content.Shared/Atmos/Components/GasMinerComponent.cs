@@ -3,11 +3,16 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Atmos.Components;
 
-[NetworkedComponent]
+[RegisterComponent, NetworkedComponent]
 [AutoGenerateComponentState]
-[RegisterComponent]
 public sealed partial class GasMinerComponent : Component
 {
+    /// <summary>
+    /// If it should show the examine text
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool ShowExamineText = true;
+
     /// <summary>
     ///     Operational state of the miner.
     /// </summary>

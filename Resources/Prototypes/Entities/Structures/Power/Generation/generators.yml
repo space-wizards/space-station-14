@@ -6,8 +6,6 @@
   id: BaseGenerator
   description: A high efficiency thermoelectric generator.
   name: generator
-  placement:
-    mode: SnapgridCenter
   components:
   - type: AmbientSound
     range: 5
@@ -226,28 +224,67 @@
 # RTG - no fuel requirement
 
 - type: entity
-  parent: BaseGenerator
+  abstract: true
+  parent: BaseMachine
+  id: BaseRTG
+  components:
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.5,0.4,0.3"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: PowerSupplier
+    supplyRate: 10000 # supposed to be low power at no fuel cost to power derelicts
+    supplyRampRate: 500
+    supplyRampTolerance: 500
+  - type: AmbientSound
+    range: 5
+    sound:
+      path: /Audio/Ambience/Objects/buzzing.ogg
+  - type: Sprite
+    sprite: Structures/Power/Generation/rtg.rsi
+    snapCardinals: true
+  - type: PowerMonitoringDevice
+    group: Generator
+    loadNode: output
+    sprite: Structures/Power/Generation/rtg.rsi
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      output:
+        !type:CableDeviceNode
+        nodeGroupID: HVPower
+  - type: PacifismDangerousAttack
+  - type: StaticPrice
+    price: 500
+  - type: Electrified
+    onHandInteract: false
+    onInteractUsing: false
+    onBump: false
+    requirePower: true
+    highVoltageNode: output
+  - type: GuideHelp
+    guides:
+    - RTG
+    - Power
+
+- type: entity
+  parent: BaseRTG
   id: GeneratorRTG
   name: RTG
   description: A Radioisotope Thermoelectric Generator for long term power.
   suffix: 10kW
   components:
-  - type: PowerSupplier
-    supplyRate: 10000 # supposed to be low power at no fuel cost to power derelicts
   - type: Sprite
-    sprite: Structures/Power/Generation/rtg.rsi
     state: rtg
   - type: PowerMonitoringDevice
-    sprite: Structures/Power/Generation/rtg.rsi
     state: rtg
-  - type: AmbientSound
-    range: 5
-    sound:
-      path: /Audio/Ambience/Objects/buzzing.ogg
-  - type: GuideHelp
-    guides:
-    - RTG
-    - Power
   - type: Destructible
     thresholds:
     - trigger:
@@ -258,6 +295,7 @@
         sound:
           collection: MetalBreak
       - !type:SpawnEntitiesBehavior
+        offset: 0
         spawn:
           GeneratorRTGDamaged:
             min: 1
@@ -268,21 +306,17 @@
 # TODO: need radioactive fallout when destroyed
 
 - type: entity
-  parent: GeneratorRTG
+  parent: BaseRTG
   id: GeneratorRTGDamaged
   name: damaged RTG
   description: A Radioisotope Thermoelectric Generator for long term power. This one has damaged shielding.
   suffix: 10kW
   components:
-  - type: PowerSupplier
-    supplyRate: 10000
   - type: Sprite
-    sprite: Structures/Power/Generation/rtg.rsi
     layers:
     - state: rtg_damaged
     - state: rtg_glow
   - type: PowerMonitoringDevice
-    sprite: Structures/Power/Generation/rtg.rsi
     state: rtg_damaged
   - type: RadiationSource # ideally only when opened.
     intensity: 2

@@ -16,7 +16,7 @@
       - !type:Oxygenate
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Human, Animal, Rat, Plant ]
+          type: [ Human, Animal, Rat, Plant, Arachnid ]
       # Convert Oxygen into CO2.
       - !type:ModifyLungGas
         conditions:

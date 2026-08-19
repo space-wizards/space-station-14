@@ -114,7 +114,7 @@
 
                     <controls:StripeBack>
                         <PanelContainer>
-                            <Label Text="{Loc 'Controls'}"
+                            <Label Text="{Loc 'station-ai-fixer-console-window-controls'}"
                                    HorizontalExpand="True"
                                    HorizontalAlignment="Center"/>
                         </PanelContainer>

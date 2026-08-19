@@ -528,9 +528,7 @@
     destroyOnEmpty: false
     utensil: None # don't conflict with stirring
   - type: SolutionTransfer
-    canChangeTransferAmount: true
-    minTransferAmount: 5
-    maxTransferAmount: 20
+    transferAmount: 1
   - type: Destructible
     thresholds:
     - trigger:

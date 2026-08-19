@@ -1,6 +1,7 @@
-﻿- type: entity
-  id: BasePortal
+﻿# Standing portals
+- type: entity
   abstract: true
+  id: BasePortal
   name: bluespace portal
   description: Transports you to a linked destination!
   components:
@@ -20,14 +21,19 @@
           bounds: "-0.25,-0.48,0.25,0.48"
         mask:
         - FullTileMask
+        - GhostImpassable
         layer:
         - WallLayer
         hard: false
   - type: Portal
+  - type: PointLight
+    radius: 3
+    energy: 1
+    netsync: false
 
 - type: entity
-  id: PortalRed
   parent: BasePortal
+  id: PortalRed
   description: This one looks more like a redspace portal.
   components:
   - type: Sprite
@@ -35,77 +41,36 @@
     - state: portal-red
   - type: PointLight
     color: OrangeRed
-    radius: 3
-    energy: 1
-    netsync: false
 
 - type: entity
-  id: PortalBlue
   parent: BasePortal
+  id: PortalBlue
   components:
   - type: Sprite
     layers:
     - state: portal-blue
   - type: PointLight
     color: SkyBlue
-    radius: 3
-    energy: 1
-    netsync: false
-    
+
 - type: entity
-  id: PortalArtifact
   parent: BasePortal
+  id: PortalArtifact
   components:
   - type: Sprite
     layers:
     - state: portal-artifact
   - type: PointLight
     color: "#ed85c2"
-    radius: 3
-    energy: 1
-    netsync: false
   - type: TimedDespawn
     lifetime: 1
   - type: Portal
     canTeleportToOtherMaps: true
 
 - type: entity
-  id: PortalGatewayBlue
-  parent: BasePortal
-  components:
-  - type: Sprite
-    noRot: true
-    sprite: Structures/Machines/gateway.rsi
-    color: SkyBlue
-    layers:
-    - state: portal
-  - type: PointLight
-    color: SkyBlue
-    radius: 3
-    energy: 1
-    netsync: false
-
-- type: entity
-  id: PortalGatewayOrange
-  parent: BasePortal
-  components:
-  - type: Sprite
-    noRot: true
-    sprite: Structures/Machines/gateway.rsi
-    color: OrangeRed
-    layers:
-    - state: portal
-  - type: PointLight
-    color: OrangeRed
-    radius: 3
-    energy: 1
-    netsync: false
-
-- type: entity
+  parent: [ BasePortal, BaseShadow ]
   id: ShadowPortal
   name: shadow rift
   description: Looks unstable.
-  parent: [ BasePortal, BaseShadow ]
   components:
   - type: Portal
     arrivalSound: /Audio/Items/hiss.ogg
@@ -115,11 +80,53 @@
     color: "#793a80dd"
   - type: PointLight
     color: "#793a80dd"
-    radius: 3
-    energy: 1
-    netsync: false
   - type: AmbientSound
     range: 6
     volume: -3
     sound:
       path: /Audio/Ambience/anomaly_scary.ogg
+
+# Large, circular gateway portals
+- type: entity
+  abstract: true
+  parent: BasePortal
+  id: BasePortalGateway
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: Structures/Machines/gateway.rsi
+  - type: Fixtures
+    fixtures:
+      portalFixture:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.6
+          position: 0, 0.26
+        mask:
+        - FullTileMask
+        - GhostImpassable
+        layer:
+        - WallLayer
+        hard: false
+
+- type: entity
+  parent: BasePortalGateway
+  id: PortalGatewayBlue
+  components:
+  - type: Sprite
+    color: SkyBlue
+    layers:
+    - state: portal
+  - type: PointLight
+    color: SkyBlue
+
+- type: entity
+  parent: BasePortalGateway
+  id: PortalGatewayOrange
+  components:
+  - type: Sprite
+    color: OrangeRed
+    layers:
+    - state: portal
+  - type: PointLight
+    color: OrangeRed

@@ -145,9 +145,9 @@ public abstract partial class SharedDeliverySystem : EntitySystem
             {
                 _audio.PlayPredicted(ent.Comp.OpenSound, ent.Owner, user);
 
-                if(ent.Comp.ContainedDeliveryAmount == 0)
+                if (ent.Comp.ContainedDeliveryAmount == 0)
                 {
-                    _popup.PopupPredicted(Loc.GetString("delivery-teleporter-empty", ("entity", ent)), null, ent, user);
+                    _popup.PopupEntity(Loc.GetString("delivery-teleporter-empty", ("entity", ent)), ent, user);
                     return;
                 }
 
@@ -184,8 +184,9 @@ public abstract partial class SharedDeliverySystem : EntitySystem
             GrantSpesoReward(ent.AsNullable());
 
         if (!force)
-            _popup.PopupPredicted(Loc.GetString("delivery-unlocked-self", ("delivery", deliveryName)),
-                Loc.GetString("delivery-unlocked-others", ("delivery", deliveryName), ("recipient", Identity.Entity(user, EntityManager)), ("possadj", user)), user, user);
+            _popup.PopupEntity(Loc.GetString("delivery-unlocked-self", ("delivery", deliveryName)),
+                Loc.GetString("delivery-unlocked-others", ("delivery", deliveryName), ("recipient", Identity.Entity(user, EntityManager)), ("possadj", user)),
+                user, user);
 
         return true;
     }
@@ -212,8 +213,9 @@ public abstract partial class SharedDeliverySystem : EntitySystem
         DirtyField(ent.Owner, ent.Comp, nameof(DeliveryComponent.IsOpened));
 
         if (!force)
-            _popup.PopupPredicted(Loc.GetString("delivery-opened-self", ("delivery", deliveryName)),
-                Loc.GetString("delivery-opened-others", ("delivery", deliveryName), ("recipient", Identity.Entity(user, EntityManager)), ("possadj", user)), user, user);
+            _popup.PopupEntity(Loc.GetString("delivery-opened-self", ("delivery", deliveryName)),
+                Loc.GetString("delivery-opened-others", ("delivery", deliveryName), ("recipient", Identity.Entity(user, EntityManager)), ("possadj", user)),
+                user, user);
 
         if (!_container.TryGetContainer(ent, ent.Comp.Container, out var container))
             return;

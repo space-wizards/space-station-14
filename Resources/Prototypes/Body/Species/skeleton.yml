@@ -71,6 +71,7 @@
   parent:
   - AppearanceSkeletonPerson
   - BaseSpeciesMob
+  - MobFlammable
   id: MobSkeletonPerson
   name: Urist McBones
   components:
@@ -88,14 +89,13 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      100: Critical
-      150: Dead
+      100: Dead
   - type: TransferMindOnGib
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 150
+        damage: 100
       behaviors:
       - !type:GibBehavior
   - type: SlowOnDamage
@@ -106,10 +106,7 @@
     speechVerb: Skeleton
   - type: ZombieImmune
   - type: Vocal
-    sounds:
-      Male: Skeleton
-      Female: Skeleton
-      Unsexed: Skeleton
+    emoteSounds: Skeleton
   - type: SkeletonAccent
   - type: Fixtures
     fixtures:
@@ -158,6 +155,16 @@
           probability: 0.5
   - type: FireVisuals
     alternateState: Standing
+  - type: Flammable
+    minIgnitionTemperature: 873.15 # Lower bound of when bone begins to burn. These skeletons are ancient so this is probably accurate. Currently does nothing.
+  - type: Temperature
+  - type: TemperatureDamage
+    heatDamageThreshold: 373.15 # Beyond boiling point bone begins to slowly fracture and shrink, even though it doesn't burn till about 600 C
+    coldDamageThreshold: 0
+    heatDamage:
+      types:
+        Heat: 0.1 # bones don't burn easily.
+        Blunt: 0.5 #oof ouch oof my bones are micro-fracturing!!!
   - type: FlashImmunity
     showInExamine: false
   - type: Instrument
@@ -203,6 +210,7 @@
   - type: VisualOrganMarkings
     markingData:
       group: Skeleton
+  - type: GibbableOrgan
 
 - type: entity
   parent: [ OrganBaseTorsoSexed, OrganBaseTorso, OrganSkeletonPersonExternal ]
@@ -211,6 +219,9 @@
 - type: entity
   parent: [ OrganBaseHead, OrganSkeletonPersonExternal ]
   id: OrganSkeletonPersonHead
+  components:
+  - type: Sprite
+    state: skull_icon
 
 - type: entity
   parent: [ OrganBaseArmLeft, OrganSkeletonPersonExternal ]

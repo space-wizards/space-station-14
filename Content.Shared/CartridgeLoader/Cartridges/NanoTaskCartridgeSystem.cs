@@ -1,0 +1,140 @@
+using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Interaction;
+using Content.Shared.Paper;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Audio;
+using Robust.Shared.Timing;
+using Robust.Shared.Utility;
+
+namespace Content.Shared.CartridgeLoader.Cartridges;
+
+public sealed partial class NanoTaskCartridgeSystem : EntitySystem
+{
+    [Dependency] private CartridgeLoaderSystem _cartridgeLoader = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private PaperSystem _paper = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<NanoTaskCartridgeComponent, CartridgeMessageEvent>(OnUiMessage);
+        SubscribeLocalEvent<NanoTaskCartridgeComponent, CartridgeUiReadyEvent>(OnUiReady);
+        SubscribeLocalEvent<NanoTaskCartridgeComponent, CartridgeRelayedEvent<InteractUsingEvent>>(OnInteractUsing);
+    }
+
+    private void OnInteractUsing(Entity<NanoTaskCartridgeComponent> ent, ref CartridgeRelayedEvent<InteractUsingEvent> args)
+    {
+        if (!TryComp<NanoTaskPrintedComponent>(args.Args.Used, out var printed))
+            return;
+
+        if (printed.Task is NanoTaskItem item)
+        {
+            ent.Comp.Tasks.Add(new(ent.Comp.Counter++, printed.Task));
+            args.Args.Handled = true;
+            PredictedQueueDel(args.Args.Used);
+            Dirty(ent);
+            UpdateUiState(ent, args.Loader);
+        }
+    }
+
+    /// <summary>
+    /// This gets called when the ui fragment needs to be updated for the first time after activating
+    /// </summary>
+    private void OnUiReady(Entity<NanoTaskCartridgeComponent> ent, ref CartridgeUiReadyEvent args)
+    {
+        UpdateUiState(ent, args.Loader);
+    }
+
+    private void SetupPrintedTask(EntityUid uid, NanoTaskItem item)
+    {
+        PaperComponent? paper = null;
+        NanoTaskPrintedComponent? printed = null;
+        if (!Resolve(uid, ref paper, ref printed))
+            return;
+
+        printed.Task = item;
+        var msg = new FormattedMessage();
+        msg.AddMarkupOrThrow(Loc.GetString("nano-task-printed-description", ("description", FormattedMessage.EscapeText(item.Description))));
+        msg.PushNewline();
+        msg.AddMarkupOrThrow(Loc.GetString("nano-task-printed-requester", ("requester", FormattedMessage.EscapeText(item.TaskIsFor))));
+        msg.PushNewline();
+        msg.AddMarkupOrThrow(item.Priority switch {
+            NanoTaskPriority.High => Loc.GetString("nano-task-printed-high-priority"),
+            NanoTaskPriority.Medium => Loc.GetString("nano-task-printed-medium-priority"),
+            NanoTaskPriority.Low => Loc.GetString("nano-task-printed-low-priority"),
+            _ => "",
+        });
+
+        _paper.SetContent((uid, paper), msg.ToMarkup());
+    }
+
+    /// <summary>
+    /// The ui messages received here get wrapped by a CartridgeMessageEvent and are relayed from the <see cref="CartridgeLoaderSystem"/>
+    /// </summary>
+    /// <remarks>
+    /// The cartridge specific ui message event needs to inherit from the CartridgeMessageEvent
+    /// </remarks>
+    private void OnUiMessage(Entity<NanoTaskCartridgeComponent> ent, ref CartridgeMessageEvent args)
+    {
+        if (args is not NanoTaskUiMessageEvent message)
+            return;
+
+        switch (message.Payload)
+        {
+            case NanoTaskAddTask task:
+            {
+                if (!task.Item.Validate())
+                    return;
+
+                ent.Comp.Tasks.Add(new(ent.Comp.Counter++, task.Item));
+                Dirty(ent);
+                break;
+            }
+            case NanoTaskUpdateTask task:
+            {
+                if (!task.Item.Data.Validate())
+                    return;
+
+                var idx = ent.Comp.Tasks.FindIndex(t => t.Id == task.Item.Id);
+                if (idx != -1)
+                    ent.Comp.Tasks[idx] = task.Item;
+
+                Dirty(ent);
+                break;
+            }
+            case NanoTaskDeleteTask task:
+            {
+                ent.Comp.Tasks.RemoveAll(t => t.Id == task.Id);
+                Dirty(ent);
+                break;
+            }
+            case NanoTaskPrintTask task:
+            {
+                if (!task.Item.Validate())
+                    return;
+
+                if (_timing.CurTime < ent.Comp.NextPrintAllowedAfter)
+                    return;
+
+                ent.Comp.NextPrintAllowedAfter = _timing.CurTime + ent.Comp.PrintDelay;
+                var printed = PredictedSpawnAtPosition("PaperNanoTaskItem", Transform(message.Actor).Coordinates);
+                _hands.PickupOrDrop(message.Actor, printed);
+                _audio.PlayPredicted(new SoundPathSpecifier("/Audio/Machines/printer.ogg"), ent.Owner, args.User);
+                SetupPrintedTask(printed, task.Item);
+                Dirty(ent);
+                break;
+            }
+        }
+
+        UpdateUiState(ent, GetEntity(args.LoaderUid));
+    }
+
+    private void UpdateUiState(Entity<NanoTaskCartridgeComponent> ent, EntityUid loaderUid)
+    {
+        var state = new NanoTaskUiState(ent.Comp.Tasks);
+        _cartridgeLoader.UpdateCartridgeUiState(loaderUid, state);
+    }
+}

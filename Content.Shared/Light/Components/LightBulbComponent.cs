@@ -63,7 +63,7 @@ public sealed partial class LightBulbComponent : Component
     /// The sound produced when the lightbulb breaks.
     /// </summary>
     [DataField]
-    public SoundSpecifier BreakSound = new SoundCollectionSpecifier("GlassBreak", AudioParams.Default.WithVolume(-6f));
+    public SoundSpecifier BreakSound = new SoundCollectionSpecifier("GlassBreak", AudioParams.Default.AddVolume(-6f));
 
     #region Appearance
 

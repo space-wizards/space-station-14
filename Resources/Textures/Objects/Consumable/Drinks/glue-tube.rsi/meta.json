@@ -1,11 +1,11 @@
 {
     "version": 1,
+    "license": "CC-BY-NC-SA-4.0",
+    "copyright": "Created by discord: brainfood#7460 / github: brainfood1183. Inhands by Tiniest Shark (Github)",
     "size": {
         "x": 32,
         "y": 32
     },
-    "license": "CC-BY-NC-SA-4.0",
-    "copyright": "Created by discord: brainfood#7460 / github: brainfood1183. Inhands by Tiniest Shark (Github)",
     "states": [
         {
             "name": "icon_empty"

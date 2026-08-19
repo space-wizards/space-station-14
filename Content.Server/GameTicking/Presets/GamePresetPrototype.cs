@@ -1,6 +1,5 @@
 using Content.Server.Maps;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.GameTicking.Presets
 {
@@ -13,22 +12,22 @@ namespace Content.Server.GameTicking.Presets
         [IdDataField]
         public string ID { get; private set; } = default!;
 
-        [DataField("alias")]
+        [DataField]
         public string[] Alias = Array.Empty<string>();
 
         [DataField("name")]
         public string ModeTitle = "????";
 
-        [DataField("description")]
+        [DataField]
         public string Description = string.Empty;
 
-        [DataField("showInVote")]
+        [DataField]
         public bool ShowInVote;
 
-        [DataField("minPlayers")]
+        [DataField]
         public int? MinPlayers;
 
-        [DataField("maxPlayers")]
+        [DataField]
         public int? MaxPlayers;
 
         [DataField]
@@ -38,7 +37,7 @@ namespace Content.Server.GameTicking.Presets
         /// If specified, the gamemode will only be run with these maps.
         /// If none are elligible, the global fallback will be used.
         /// </summary>
-        [DataField("supportedMaps", customTypeSerializer: typeof(PrototypeIdSerializer<GameMapPoolPrototype>))]
-        public string? MapPool;
+        [DataField("supportedMaps")]
+        public ProtoId<GameMapPoolPrototype>? MapPool;
     }
 }

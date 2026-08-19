@@ -8,7 +8,7 @@
   - Say you have a generator that outputs 100 kW of power.
   - If you have a device that draws 50 kW of power, the generator will output 50 kW of power to match the grid's demand to its supply.
   - If you then turn on a device that draws another 50 kW of power, the generator will take time to ramp up to 100 kW of power. It will not provide this power instantly.
-  - During this time, devices will not recieve the power they need, and the grid will experience a temporary brownout.
+  - During this time, devices will not receive the power they need, and the grid will experience a temporary brownout.
   - After some seconds have passed, the generator will have ramped up to 100 kW of power, and the brownout will end. All devices are now satisfied with the power they are receiving.
 
   During a shift, this is most commonly observed when a generator runs out of fuel and suddenly stops producing power.

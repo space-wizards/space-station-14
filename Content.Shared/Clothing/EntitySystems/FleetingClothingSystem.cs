@@ -77,13 +77,13 @@ public sealed partial class FleetingClothingSystem : EntitySystem
                 othersMessage = Loc.GetString(ent.Comp.SelfUnquipPopupOthers, ("item", ent.Owner));
 
             // Use the wearer for the popup location because the item item itself will get deleted.
-            _popup.PopupPredicted(selfMessage, othersMessage, args.EquipTarget, args.User, PopupType.LargeCaution);
+            _popup.PopupEntity(selfMessage, othersMessage, args.EquipTarget, args.User, PopupType.LargeCaution);
         }
         else
         {
             // Show the same popup message for everyone.
             if (ent.Comp.RemovedPopup != null)
-                _popup.PopupPredicted(Loc.GetString(ent.Comp.RemovedPopup, ("item", ent.Owner)), args.EquipTarget, args.User, PopupType.LargeCaution);
+                _popup.PopupEntity(Loc.GetString(ent.Comp.RemovedPopup, ("item", ent.Owner)), args.EquipTarget, PopupType.LargeCaution);
         }
     }
 

@@ -41,7 +41,7 @@
 
 - type: entity
   id: ShuttleGunSvalinnMachineGun
-  parent: [ ShuttleGunBase, ConstructibleMachine]
+  parent: [ ShuttleGunBase, ConstructibleMachine, BaseConstructibleMachineDestructible]
   name: LSE-400c "Svalinn machine gun"
   description: Basic stationary laser unit. Effective against live targets and electronics. Uses regular power cells to fire, and has an extremely high rate of fire.
   categories: [ DoNotMap ]
@@ -58,16 +58,6 @@
       machine_board: !type:Container
       machine_parts: !type:Container
       cell_slot: !type:ContainerSlot
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 150
-      behaviors:
-      - !type:ChangeConstructionNodeBehavior
-        node: machineFrame
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
   - type: Gun
     fireRate: 5
     useKey: false
@@ -99,7 +89,7 @@
 
 - type: entity
   id: ShuttleGunPerforator
-  parent: [ ShuttleGunBase, ConstructibleMachine]
+  parent: [ ShuttleGunBase, ConstructibleMachine, BaseConstructibleMachineDestructible]
   name: LSE-1200c "Perforator"
   description: Advanced stationary laser unit. Annihilates electronics and is extremely dangerous to health! Uses the power cage to fire.
   categories: [ DoNotMap ]
@@ -116,16 +106,6 @@
       machine_board: !type:Container
       machine_parts: !type:Container
       cell_slot: !type:ContainerSlot
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 300
-      behaviors:
-      - !type:ChangeConstructionNodeBehavior
-        node: machineFrame
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
   - type: Gun
     fireRate: 1
     soundGunshot:
@@ -159,7 +139,7 @@
 
 - type: entity
   id: ShuttleGunFriendship
-  parent: [ShuttleGunBase, ConstructibleMachine]
+  parent: [ShuttleGunBase, ConstructibleMachine, BaseConstructibleMachineDestructible]
   name: EXP-320g "Friendship"
   description: A small stationary grenade launcher that holds 2 grenades.
   categories: [ DoNotMap ]
@@ -175,16 +155,6 @@
       machine_board: !type:Container
       machine_parts: !type:Container
       ballistic-ammo: !type:Container
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:ChangeConstructionNodeBehavior
-        node: machineFrame
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
   - type: Gun
     projectileSpeed: 80
     fireRate: 1
@@ -213,7 +183,7 @@
 
 - type: entity
   id: ShuttleGunDuster
-  parent: [ShuttleGunBase, ConstructibleMachine]
+  parent: [ShuttleGunBase, ConstructibleMachine, BaseConstructibleMachineDestructible]
   name: EXP-2100g "Duster"
   description: A powerful stationary grenade launcher. A cartridge is required for use.
   categories: [ DoNotMap ]
@@ -229,16 +199,6 @@
       machine_board: !type:Container
       machine_parts: !type:Container
       gun_magazine: !type:ContainerSlot
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 350
-      behaviors:
-      - !type:ChangeConstructionNodeBehavior
-        node: machineFrame
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
   - type: Gun
     projectileSpeed: 40
     fireRate: 0.3
@@ -312,7 +272,7 @@
 
 - type: entity
   id: ShuttleGunKinetic
-  parent: [ ShuttleGunBase, ConstructibleMachine]
+  parent: [ ShuttleGunBase, ConstructibleMachine, BaseConstructibleMachineDestructible]
   name: PTK-800 "Matter Dematerializer"
   description: Salvage stationary mining turret. Gradually accumulates charges on its own, extremely effective for asteroid excavation.
   categories: [ DoNotMap ]
@@ -326,16 +286,6 @@
     containers:
       machine_board: !type:Container
       machine_parts: !type:Container
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:ChangeConstructionNodeBehavior
-        node: machineFrame
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
   - type: Gun
     projectileSpeed: 20
     fireRate: 2

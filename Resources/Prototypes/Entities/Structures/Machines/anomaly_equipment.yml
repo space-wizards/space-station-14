@@ -1,6 +1,6 @@
 - type: entity
   id: MachineAnomalyVessel
-  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  parent: [ BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible ]
   name: anomaly vessel
   description: A container able to harness a scan of an anomaly and turn it into research data.
   components:
@@ -37,6 +37,7 @@
     color: "#fca3c0"
   - type: Appearance
   - type: WiresPanel
+  - type: WiresVisuals
   - type: AmbientSound
     enabled: false
     range: 3
@@ -62,10 +63,6 @@
           Stable: { state: anomaly-1 }
           Decaying: { state: anomaly-2 }
           Growing: { state: anomaly-3 }
-      enum.WiresVisuals.MaintenancePanelState:
-        enum.WiresVisualLayers.MaintenancePanel:
-          True: { visible: false }
-          False: { visible: true }
   - type: Explosive
     explosionType: Default
     maxIntensity: 20
@@ -76,10 +73,8 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 150
+        damage: 175
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak
@@ -116,7 +111,7 @@
 
 - type: entity
   id: MachineAPE
-  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  parent: [ BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible ]
   name: A.P.E.
   description: An Anomalous Particle Emitter, capable of shooting out unstable particles which can interface with anomalies.
   components:
@@ -151,6 +146,14 @@
         - MachineMask
         layer:
         - MachineLayer
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 175
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
   - type: Rotatable
     rotateWhileAnchored: true
   - type: Machine

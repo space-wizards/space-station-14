@@ -229,9 +229,7 @@
 - type: damageModifierSet
   id: Skeleton
   coefficients:
-    Blunt: 1.1
-    Slash: 0.8
-    Piercing: 0.6
+    Blunt: 1.5 # Oof ouch my bones
     Cold: 0.0
     Poison: 0.0
     Radiation: 0.0
@@ -239,8 +237,6 @@
     Bloodloss: 0.0
     Cellular: 0.0
     Holy: 0.5
-  flatReductions:
-    Blunt: 5
 
 # hurt a lot by blunt, immune to a good amount of other stuff because they're a cookie
 - type: damageModifierSet

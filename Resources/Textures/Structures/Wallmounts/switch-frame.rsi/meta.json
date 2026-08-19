@@ -1,0 +1,31 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-4.0",
+    "copyright": "By AftrLite (GitHub)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "caution",
+            "directions": 4
+        },
+        {
+            "name": "caution-security",
+            "directions": 4
+        },
+        {
+            "name": "white",
+            "directions": 4
+        },
+        {
+            "name": "grey",
+            "directions": 4
+        },
+        {
+            "name": "janitor",
+            "directions": 4
+        }
+    ]
+}

@@ -132,7 +132,6 @@ public sealed class LungTest : GameTest
         var pair = Pair;
         var server = pair.Server;
 
-        var mapManager = server.ResolveDependency<IMapManager>();
         var entityManager = server.ResolveDependency<IEntityManager>();
         var cfg = server.ResolveDependency<IConfigurationManager>();
         var mapLoader = entityManager.System<MapLoaderSystem>();

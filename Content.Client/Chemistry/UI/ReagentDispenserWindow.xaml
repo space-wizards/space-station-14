@@ -44,7 +44,8 @@
         </BoxContainer>
         <SplitContainer Orientation="Vertical"
                         HorizontalExpand="True"
-                        VerticalExpand="True">
+                        VerticalExpand="True"
+                        MouseFilter="Ignore">
             <ScrollContainer HScrollEnabled="False"
                              HorizontalExpand="True"
                              VerticalExpand="True"

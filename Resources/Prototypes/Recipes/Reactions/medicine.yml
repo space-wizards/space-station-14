@@ -571,6 +571,19 @@
     Opporozidone: 3
 
 - type: reaction
+  id: OpporozidoneLivingTissue
+  minTemp: 400
+  reactants:
+    LivingTissue: # Do you want to save the victim from rotting, or check if the dude is a changeling? Hmm...
+      amount: 2
+    Plasma:
+      amount: 2
+    Doxarubixadone:
+      amount: 2
+  products:
+    Opporozidone: 6
+
+- type: reaction
   id: Arcryox
   minTemp: 370
   reactants:

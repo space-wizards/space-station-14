@@ -23,15 +23,3 @@
   id: FloorTileDarkMarble
   name: stack-dark-marble-floor
   spawn: FloorTileItemDarkMarble
-
-- type: stack
-  parent: BaseTileStack
-  id: FloorTilePlasmaMarble
-  name: stack-plasma-marble-floor
-  spawn: FloorTileItemPlasmaMarble
-
-- type: stack
-  parent: BaseTileStack
-  id: FloorTileUraniumMarble
-  name: stack-uranium-marble-floor
-  spawn: FloorTileItemUraniumMarble

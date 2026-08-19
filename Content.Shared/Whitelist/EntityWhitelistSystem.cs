@@ -6,9 +6,9 @@ namespace Content.Shared.Whitelist;
 
 public sealed partial class EntityWhitelistSystem : EntitySystem
 {
-    [Dependency] private IComponentFactory _factory = default!;
     [Dependency] private TagSystem _tag = default!;
-    [Dependency] private EntityQuery<ItemComponent> _itemQuery;
+
+    [Dependency] private EntityQuery<ItemComponent> _itemQuery = default!;
 
     private CompName _itemComponentName = default;
     private CompName _tagComponentName = default;
@@ -18,8 +18,8 @@ public sealed partial class EntityWhitelistSystem : EntitySystem
         base.Initialize();
 
         // caching for minor performance improvement
-        _itemComponentName = CompName.Get<ItemComponent>(_factory);
-        _tagComponentName = CompName.Get<TagComponent>(_factory);
+        _itemComponentName = CompName.Get<ItemComponent>(Factory);
+        _tagComponentName = CompName.Get<TagComponent>(Factory);
     }
 
     /// <summary>

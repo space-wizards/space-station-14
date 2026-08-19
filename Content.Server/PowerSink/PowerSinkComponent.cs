@@ -38,7 +38,7 @@ namespace Content.Server.PowerSink
             new SoundPathSpecifier("/Audio/Effects/PowerSink/electric.ogg")
             {
                 Params = AudioParams.Default
-                    .WithVolume(15f) // audible even behind walls
+                    .AddVolume(15f) // audible even behind walls
                     .WithRolloffFactor(10)
             };
     }

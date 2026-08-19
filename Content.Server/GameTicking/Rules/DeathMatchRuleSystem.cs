@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Clothing.Systems;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.KillTracking;
@@ -6,11 +5,10 @@ using Content.Server.Mind;
 using Content.Server.Points;
 using Content.Server.RoundEnd;
 using Content.Server.Station.Systems;
+using Content.Shared.EntityTable;
 using Content.Shared.GameTicking;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Points;
-using Content.Shared.Storage;
-using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Utility;
 
@@ -28,7 +26,7 @@ public sealed partial class DeathMatchRuleSystem : GameRuleSystem<DeathMatchRule
     [Dependency] private RespawnRuleSystem _respawn = default!;
     [Dependency] private RoundEndSystem _roundEnd = default!;
     [Dependency] private StationSpawningSystem _stationSpawning = default!;
-    [Dependency] private TransformSystem _transform = default!;
+    [Dependency] private EntityTableSystem _entityTable = default!;
 
     public override void Initialize()
     {
@@ -100,8 +98,10 @@ public sealed partial class DeathMatchRuleSystem : GameRuleSystem<DeathMatchRule
             if (ev.Assist is KillPlayerSource assist && dm.Victor == null)
                 _point.AdjustPointValue(assist.PlayerId, 1, uid, point);
 
-            var spawns = EntitySpawnCollection.GetSpawns(dm.RewardSpawns).Cast<string?>().ToList();
-            EntityManager.SpawnEntities(_transform.GetMapCoordinates(ev.Entity), spawns);
+            foreach (var spawn in _entityTable.GetSpawns(dm.RewardSpawns))
+            {
+                SpawnNextToOrDrop(spawn, ev.Entity);
+            }
         }
     }
 

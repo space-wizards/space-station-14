@@ -68,5 +68,6 @@ public sealed partial class PlanetLightSystem : EntitySystem
         _overlayMan.RemoveOverlay<LightBlurOverlay>();
         _overlayMan.RemoveOverlay<SunShadowOverlay>();
         _overlayMan.RemoveOverlay<AfterLightTargetOverlay>();
+        _overlayMan.RemoveOverlay<AmbientOcclusionOverlay>();
     }
 }

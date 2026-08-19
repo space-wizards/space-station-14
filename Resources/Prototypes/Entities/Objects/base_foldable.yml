@@ -1,0 +1,22 @@
+- type: entity
+  abstract: true
+  id: BaseFoldable
+  components:
+  - type: Foldable
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.FoldedVisuals.State:
+        foldedLayer:
+          True: {visible: true}
+          False: {visible: false}
+        unfoldedLayer:
+          True: {visible: false}
+          False: {visible: true}
+
+- type: entity
+  abstract: true
+  parent: BaseFoldable
+  id: BaseDeployFoldable
+  components:
+  - type: DeployFoldable

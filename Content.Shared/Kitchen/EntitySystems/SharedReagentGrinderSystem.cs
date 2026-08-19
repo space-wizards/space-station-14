@@ -159,7 +159,7 @@ public abstract partial class SharedReagentGrinderSystem : EntitySystem
             if (!HasComp<FitsInDispenserComponent>(heldEnt))
             {
                 // This is ugly but we can't use whitelistFailPopup because there are 2 containers with different whitelists.
-                _popupSystem.PopupClient(Loc.GetString("reagent-grinder-component-cannot-put-entity-message"), ent.Owner, args.User);
+                _popupSystem.PopupEntity(Loc.GetString("reagent-grinder-component-cannot-put-entity-message"), ent.Owner, args.User);
             }
 
             // Entity did NOT pass the whitelist for grind/juice.
@@ -267,8 +267,11 @@ public abstract partial class SharedReagentGrinderSystem : EntitySystem
         // Unpredicted because we don't have the user in the update loop
         // TODO: Make the audio API sane https://github.com/space-wizards/RobustToolbox/issues/6436
         if (_net.IsServer)
-            ent.Comp.AudioStream = _audioSystem.PlayPvs(sound, ent,
-            AudioParams.Default.WithPitchScale(1 / ent.Comp.WorkTimeMultiplier))?.Entity; //slightly higher pitched
+        {
+            ent.Comp.AudioStream = _audioSystem
+                .PlayPvs(sound, ent, sound.Params.WithPitchScale(1 / ent.Comp.WorkTimeMultiplier))
+                ?.Entity; //slightly higher pitched
+        }
     }
 
     /// <summary>

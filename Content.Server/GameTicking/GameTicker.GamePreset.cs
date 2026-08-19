@@ -147,10 +147,10 @@ public sealed partial class GameTicker
 
     public GamePresetPrototype? FindGamePreset(string preset)
     {
-        if (_prototypeManager.TryIndex(preset, out GamePresetPrototype? presetProto))
+        if (ProtoMan.TryIndex(preset, out GamePresetPrototype? presetProto))
             return presetProto;
 
-        foreach (var proto in _prototypeManager.EnumeratePrototypes<GamePresetPrototype>())
+        foreach (var proto in ProtoMan.EnumeratePrototypes<GamePresetPrototype>())
         {
             foreach (var alias in proto.Alias)
             {
@@ -174,7 +174,7 @@ public sealed partial class GameTicker
         if (Preset == null)
             return true;
 
-        if (Preset.MapPool == null || !_prototypeManager.TryIndex<GameMapPoolPrototype>(Preset.MapPool, out var pool))
+        if (Preset.MapPool == null || !ProtoMan.TryIndex<GameMapPoolPrototype>(Preset.MapPool, out var pool))
             return true;
 
         return pool.Maps.Contains(map.ID);
@@ -186,7 +186,7 @@ public sealed partial class GameTicker
             return;
 
         if (Preset.MapPool == null ||
-            !_prototypeManager.TryIndex<GameMapPoolPrototype>(Preset.MapPool, out var pool))
+            !ProtoMan.TryIndex<GameMapPoolPrototype>(Preset.MapPool, out var pool))
             return;
 
         if (pool.Maps.Contains(map.ID))
@@ -232,7 +232,7 @@ public sealed partial class GameTicker
     [PublicAPI]
     public int GetMinimumPlayerCount(ProtoId<GamePresetPrototype> proto)
     {
-        if (!_prototypeManager.Resolve(proto, out var preset))
+        if (!ProtoMan.Resolve(proto, out var preset))
             return 0;
 
         return GetMinimumPlayerCount(preset);
@@ -250,10 +250,10 @@ public sealed partial class GameTicker
         var min = proto.MinPlayers ?? 0;
         foreach (var entProto in proto.Rules)
         {
-            if (!_prototypeManager.Resolve(entProto, out var ent))
+            if (!ProtoMan.Resolve(entProto, out var ent))
                 continue;
 
-            if (!ent.TryGetComponent<GameRuleComponent>(out var rule, Factory))
+            if (!ent.TryComp<GameRuleComponent>(out var rule, Factory))
                 continue;
 
             min = Math.Max(min, rule.MinPlayers);

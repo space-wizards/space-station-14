@@ -4,6 +4,7 @@ loadout-group-species-restriction = This item is not available for your current 
 # Miscellaneous
 loadout-group-trinkets = Trinkets
 loadout-group-jobtrinkets = Job trinkets
+loadout-group-assistive-items = Assistive items
 loadout-group-glasses = Glasses
 loadout-group-backpack = Backpack
 loadout-group-instruments = Instruments
@@ -207,3 +208,8 @@ loadout-group-reporter-head = Reporter hat
 loadout-group-reporter-outerclothing = Reporter vest
 
 loadout-group-psychologist-jumpsuit = Psychologist jumpsuit
+
+loadout-group-tramdriver-jumpsuit = Tram driver jumpsuit
+loadout-group-tramdriver-outerclothing = Tram driver suit
+loadout-group-tramdriver-hat = Tram driver hat
+loadout-group-tramdriver-gloves = Tram driver gloves

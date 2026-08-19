@@ -20,7 +20,6 @@
   - type: Anchorable
     flags:
     - Anchorable
-  - type: Rotatable
   - type: Sprite
     sprite: Structures/stairs.rsi
     state: stairs_steel

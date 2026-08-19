@@ -1,92 +1,89 @@
+# region Base
 - type: construction
+  abstract: true
+  id: BaseCrate
+  category: construction-category-storage
+  canRotate: false
+
+- type: construction
+  abstract: true
+  id: BaseBox
+  category: construction-category-storage
+  objectType: Item
+# endregion Base
+
+# region Crates
+- type: construction
+  parent: BaseCrate
   id: CrateLivestock
   graph: CrateLivestock
-  startNode: start
   targetNode: cratelivestock
-  category: construction-category-storage
-  objectType: Structure
 
 - type: construction
+  parent: BaseCrate
   id: CrateGenericSteel
   graph: CrateGenericSteel
-  startNode: start
   targetNode: crategenericsteel
-  category: construction-category-storage
-  objectType: Structure
 
 - type: construction
+  parent: BaseCrate
   id: CrateSecure
   graph: CrateSecure
-  startNode: start
   targetNode: cratesecure
-  category: construction-category-storage
-  objectType: Structure
 
 - type: construction
+  parent: BaseCrate
   id: CrateFreezer
   name: construction-recipe-crate-freezer
   graph: CrateFreezer
-  startNode: start
   targetNode: done
-  category: construction-category-storage
-  objectType: Structure
 
 - type: construction
+  parent: BaseCrate
   id: CratePlastic
   graph: CratePlastic
-  startNode: start
   targetNode: crateplastic
-  category: construction-category-storage
-  objectType: Structure
 
 - type: construction
+  parent: BaseCrate
   id: BigBox
   name: construction-recipe-big-box
   graph: BaseBigBox
-  startNode: start
   targetNode: basebigbox
-  category: construction-category-storage
-  objectType: Structure
 
 - type: construction
+  parent: BaseCrate
   id: BoxCardboard
   name: construction-recipe-box-cardboard
   graph: BoxCardboard
-  startNode: start
   targetNode: boxcardboard
-  category: construction-category-storage
-  objectType: Item
 
 - type: construction
+  parent: BaseCrate
+  id: CrateCoffin
+  graph: CrateCoffin
+  targetNode: cratecoffin
+# endregion Crates
+
+# region Boxes
+- type: construction
+  parent: BaseBox
   id: BoxCardboardSmall
   name: construction-recipe-box-cardboard-small
   graph: BoxCardboardSmall
-  startNode: start
   targetNode: boxcardboardsmall
-  category: construction-category-storage
-  objectType: Item
 
 - type: construction
+  parent: BaseBox
   id: ToteBase
   name: construction-recipe-box-tote
   graph: ToteBase
-  startNode: start
   targetNode: totebase
-  category: construction-category-storage
-  objectType: Item
 
 - type: construction
+  parent: BaseBox
   id: FoodBoxPizza
   graph: FoodBoxPizza
   startNode: start
   targetNode: foodboxpizza
-  category: construction-category-storage
-  objectType: Item
-
-- type: construction
-  id: CrateCoffin
-  graph: CrateCoffin
-  startNode: start
-  targetNode: cratecoffin
-  category: construction-category-storage
-  objectType: Structure
+# endregion Boxes

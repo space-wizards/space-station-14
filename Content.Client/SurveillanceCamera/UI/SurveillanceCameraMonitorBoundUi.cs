@@ -36,7 +36,7 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
         _window.CameraDisconnect += OnCameraDisconnect;
 
         var xform = EntMan.GetComponent<TransformComponent>(Owner);
-        var gridUid = xform.GridUid ?? xform.MapUid;
+        var gridUid = xform.GridUid;
 
         if (gridUid is not null)
             _window?.SetMap(gridUid.Value);

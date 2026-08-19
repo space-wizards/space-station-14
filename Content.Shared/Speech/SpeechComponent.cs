@@ -46,7 +46,7 @@ namespace Content.Shared.Speech
         };
 
         [DataField]
-        public AudioParams AudioParams = AudioParams.Default.WithVolume(-2f).WithRolloffFactor(4.5f);
+        public AudioParams AudioParams = AudioParams.Default.AddVolume(-2f).WithRolloffFactor(4.5f);
 
         [DataField]
         public float SoundCooldownTime { get; set; } = 0.5f;

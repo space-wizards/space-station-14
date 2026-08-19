@@ -117,6 +117,17 @@
       reagents:
       - ReagentId: Water
         Quantity: 1
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
 
 # constructed toilets don't come with Rummageable or plungeruse component to avoid infinite item spawning.
 - type: entity
@@ -196,15 +207,8 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 50
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
-          params:
-            volume: -6
       - !type:SpawnEntitiesBehavior
         spawn:
           IngotGold1:

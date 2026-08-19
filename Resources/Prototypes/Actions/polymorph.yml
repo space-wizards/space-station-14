@@ -4,10 +4,15 @@
   name: Revert
   description: Revert back into your original form.
   components:
-  - type: ConfirmableAction
-    popup: revert-polymorph-action-popup
   - type: InstantAction
     event: !type:RevertPolymorphActionEvent
+
+- type: entity
+  parent: ActionRevertPolymorph
+  id: ActionRevertPolymorphConfirm
+  components:
+  - type: ConfirmableAction
+    popup: revert-polymorph-action-popup
 
 - type: entity
   abstract: true
@@ -27,9 +32,10 @@
   description: Polymorphs you into a Spider.
   components:
   - type: Action
-    icon:
-      sprite: Mobs/Animals/spider.rsi
-      state: tarantula
+  - type: Sprite
+    sprite: Mobs/Animals/spider.rsi
+    layers:
+    - state: tarantula
   - type: InstantAction
     event: !type:PolymorphActionEvent
       protoId: WizardSpider
@@ -41,9 +47,10 @@
   description: CLANG!
   components:
   - type: Action
-    icon:
-      sprite: Objects/Fun/immovable_rod.rsi
-      state: icon
+  - type: Sprite
+    sprite: Objects/Fun/immovable_rod.rsi
+    layers:
+    - state: icon
   - type: InstantAction
     event: !type:PolymorphActionEvent
       protoId: WizardRod
@@ -57,9 +64,10 @@
   - type: Magic
   - type: Action
     useDelay: 30
-    icon:
-      sprite: Objects/Magic/magicactions.rsi
-      state: jaunt
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: jaunt
   - type: InstantAction
     event: !type:PolymorphActionEvent
       protoId: Jaunt

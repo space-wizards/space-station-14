@@ -38,7 +38,7 @@ public sealed partial class CheckAfkCommand : LocalizedEntityCommands
             return;
         }
 
-        if (!_afkConfirm.TryStartConfirmation(session, requireAttached: true))
+        if (!_afkConfirm.TryStartConfirmation(session))
         {
             shell.WriteError(Loc.GetString("cmd-checkafk-failed"));
             return;

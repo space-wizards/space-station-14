@@ -10,7 +10,6 @@
     OrePlasma: 0.20
     OreUranium: 0.20
     OreArtifactFragment: 0.10
-    OreBananium: 0.10
 
 - type: oreDunGen
   id: OreIron
@@ -75,14 +74,6 @@
   count: 4
   minGroupSize: 5
   maxGroupSize: 7
-
-- type: oreDunGen
-  id: OreBananium
-  replacement: AsteroidRock
-  entity: AsteroidRockBananium
-  count: 6
-  minGroupSize: 3
-  maxGroupSize: 6
 
 - type: oreDunGen
   id: OreArtifactFragment

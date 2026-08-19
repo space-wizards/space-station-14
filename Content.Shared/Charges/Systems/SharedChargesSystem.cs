@@ -1,6 +1,7 @@
 using Content.Shared.Actions.Events;
 using Content.Shared.Charges.Components;
 using Content.Shared.Examine;
+using Content.Shared.Popups;
 using Content.Shared.Rejuvenate;
 using JetBrains.Annotations;
 using Robust.Shared.Timing;
@@ -10,6 +11,8 @@ namespace Content.Shared.Charges.Systems;
 public abstract partial class SharedChargesSystem : EntitySystem
 {
     [Dependency] protected IGameTiming _timing = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
 
     /*
      * Despite what a bunch of systems do you don't need to continuously tick linear number updates and can just derive it easily.
@@ -59,12 +62,14 @@ public abstract partial class SharedChargesSystem : EntitySystem
         if (args.Cancelled)
             return;
 
-        var charges = GetCurrentCharges((ent.Owner, ent.Comp, null));
+        // Only block the action when it has no charges remaining.
+        if (HasCharges((ent.Owner, ent.Comp), 1))
+            return;
 
-        if (charges <= 0)
-        {
-            args.Cancelled = true;
-        }
+        args.Cancelled = true;
+
+        if (ent.Comp.OnFailPopup is { } popup)
+            _popup.PopupEntity(Loc.GetString(popup), args.User, args.User);
     }
 
     private void OnChargesPerformed(Entity<LimitedChargesComponent> ent, ref ActionPerformedEvent args)
@@ -87,6 +92,13 @@ public abstract partial class SharedChargesSystem : EntitySystem
 
         ent.Comp.LastUpdate = _timing.CurTime;
         Dirty(ent);
+        UpdateChargeVisuals((ent.Owner, ent.Comp, null));
+    }
+
+    protected void UpdateChargeVisuals(Entity<LimitedChargesComponent?, AutoRechargeComponent?> entity)
+    {
+        var current = GetCurrentCharges(entity);
+        _appearance.SetData(entity.Owner, LimitedChargesState.HasCharges, current != 0);
     }
 
     [Pure]
@@ -138,6 +150,7 @@ public abstract partial class SharedChargesSystem : EntitySystem
 
         action.Comp1.LastCharges = Math.Clamp(action.Comp1.LastCharges + addCharges, 0, action.Comp1.MaxCharges);
         Dirty(action.Owner, action.Comp1);
+        UpdateChargeVisuals(action);
     }
 
     public bool TryUseCharge(Entity<LimitedChargesComponent?> entity)
@@ -208,6 +221,7 @@ public abstract partial class SharedChargesSystem : EntitySystem
         action.Comp.LastCharges = adjusted;
         action.Comp.LastUpdate = _timing.CurTime;
         Dirty(action);
+        UpdateChargeVisuals((action.Owner, action.Comp, null));
     }
 
     /// <summary>

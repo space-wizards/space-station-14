@@ -21,18 +21,15 @@ public sealed partial class HumanoidProfileEditor
         NameEdit.Text = Profile?.Name ?? "";
     }
 
-    private void RandomizeEverything()
+    /// <summary>
+    /// Randomize values selectively while respecting locked values.
+    /// </summary>
+    private void RandomizeProfile()
     {
-        Profile = HumanoidCharacterProfile.Random();
+        Profile = Profile == null
+            ? HumanoidCharacterProfile.Random()
+            : HumanoidCharacterProfile.Random(RandomizeLockButton.RandomizeCfg, Profile!);
         SetProfile(Profile, CharacterSlot);
         SetDirty();
-    }
-
-    private void RandomizeName()
-    {
-        if (Profile == null) return;
-        var name = HumanoidCharacterProfile.GetName(Profile.Species, Profile.Gender);
-        SetName(name);
-        UpdateNameEdit();
     }
 }

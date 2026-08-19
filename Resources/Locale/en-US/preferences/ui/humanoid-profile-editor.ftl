@@ -1,6 +1,13 @@
-humanoid-profile-editor-randomize-everything-button = Randomize everything
+humanoid-profile-editor-randomize = Randomize
+humanoid-profile-editor-randomize-unlocked-button = Randomize unlocked
+humanoid-profile-editor-randomize-name-button = Name
+humanoid-profile-editor-randomize-species-button = Species
+humanoid-profile-editor-randomize-age-button = Age
+humanoid-profile-editor-randomize-sex-button = Sex
+humanoid-profile-editor-randomize-skin-button = Skin color
+humanoid-profile-editor-randomize-eye-button = Eye color
+humanoid-profile-editor-randomize-markings-button = Markings
 humanoid-profile-editor-name-label = Name:
-humanoid-profile-editor-name-random-button = Randomize
 humanoid-profile-editor-appearance-tab = Appearance
 humanoid-profile-editor-clothing = Show clothing
 humanoid-profile-editor-clothing-show = Show
@@ -8,9 +15,11 @@ humanoid-profile-editor-sex-label = Sex:
 humanoid-profile-editor-sex-male-text = Male
 humanoid-profile-editor-sex-female-text = Female
 humanoid-profile-editor-sex-unsexed-text = None
+humanoid-profile-editor-voice-label = Voice:
 humanoid-profile-editor-age-label = Age:
 humanoid-profile-editor-skin-color-label = Skin color:
 humanoid-profile-editor-species-label = Species:
+humanoid-profile-editor-randomizer-lock-tooltip = Prevents the value from being randomized
 humanoid-profile-editor-pronouns-label = Pronouns:
 humanoid-profile-editor-pronouns-male-text = He / Him
 humanoid-profile-editor-pronouns-female-text = She / Her
@@ -62,3 +71,9 @@ humanoid-profile-editor-trait-count-hint = Points available: [{$current}/{$max}]
 trait-category-disabilities = Disabilities
 trait-category-speech = Speech traits
 trait-category-quirks = Quirks
+
+# Voices
+humanoid-profile-editor-voice-masculine = Masculine
+humanoid-profile-editor-voice-feminine = Feminine
+humanoid-profile-editor-voice-neutral = Neutral
+humanoid-profile-editor-voice-none = Unnamed Voice

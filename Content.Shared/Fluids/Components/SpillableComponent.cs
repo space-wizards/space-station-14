@@ -18,6 +18,12 @@ public sealed partial class SpillableComponent : Component
     public float? SpillDelay;
 
     /// <summary>
+    /// If you can spill the reagent from the container from your hands with the the spill verb
+    /// </summary>
+    [DataField]
+    public bool CanSpillFromHand = true;
+
+    /// <summary>
     ///     At most how much reagent can be splashed on someone at once?
     /// </summary>
     [DataField]

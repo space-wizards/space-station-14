@@ -16,5 +16,8 @@ reagent-desc-foaming-agent = Makes foam such as that's required in metal foam gr
 reagent-name-welding-fuel = welding fuel
 reagent-desc-welding-fuel = Used by welders to weld.
 
+reagent-name-xenoborg-oil = xenoborg oil
+reagent-desc-xenoborg-oil = A light oil used to slip and burn organics.
+
 reagent-name-fluorosurfactant = fluorosurfactant
 reagent-desc-fluorosurfactant = A perfluoronated sulfonic acid that forms a foam when mixed with water.

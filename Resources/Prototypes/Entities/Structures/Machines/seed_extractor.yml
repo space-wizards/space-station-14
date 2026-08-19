@@ -1,7 +1,7 @@
 ﻿- type: entity
   id: SeedExtractor
   name: seed extractor
-  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  parent: [ BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible ]
   description: Extracts seeds from produce.
   components:
   - type: Sprite
@@ -25,6 +25,14 @@
         - MachineMask
         layer:
         - MachineLayer
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 175
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
   - type: Appearance
   - type: GenericVisualizer
     visuals:

@@ -81,7 +81,7 @@
     price: 5000
 
 - type: entity
-  parent: [ GravityGenerator, ConstructibleMachine ]
+  parent: [ GravityGenerator, ConstructibleMachine, BaseConstructibleMachineDestructible ]
   id: GravityGeneratorMini
   name: mini gravity generator
   suffix: Charged
@@ -115,18 +115,11 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 500
+        damage: 175
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          MachineFrameDestroyed:
-            min: 1
-            max: 1
   - type: WiresPanel
   - type: Machine
     board: MiniGravityGeneratorCircuitboard

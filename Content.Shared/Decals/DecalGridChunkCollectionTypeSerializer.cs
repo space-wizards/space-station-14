@@ -1,6 +1,7 @@
 using System.Globalization;
 using System.Linq;
 using System.Numerics;
+using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager;
@@ -15,13 +16,27 @@ using static Content.Shared.Decals.DecalGridComponent;
 
 namespace Content.Shared.Decals
 {
+    [Obsolete("Chunk entities use DecalChunksDecalSerializer instead")]
     [TypeSerializer]
     public sealed partial class DecalGridChunkCollectionTypeSerializer : ITypeSerializer<DecalGridChunkCollection, MappingDataNode>
     {
+        private const int VersionUnspecified = 1;
+        private const int VersionGroupedByData = 2;
+        private const int VersionChunkLocalIds = 3;
+
         public ValidationNode Validate(ISerializationManager serializationManager, MappingDataNode node,
             IDependencyCollection dependencies, ISerializationContext? context = null)
         {
-            return serializationManager.ValidateNode<Dictionary<Vector2i, Dictionary<uint, Decal>>>(node, context);
+            node.TryGetValue("version", out var versionNode);
+            var version = ((ValueDataNode?) versionNode)?.AsInt() ?? VersionUnspecified;
+
+            return version switch
+            {
+                VersionUnspecified => serializationManager.ValidateNode<Dictionary<Vector2i, Dictionary<uint, Decal>>>(node, context),
+                VersionGroupedByData => new InconclusiveNode(node),
+                VersionChunkLocalIds => new InconclusiveNode(node),
+                _ => new ErrorNode(node, $"Unsupported decal chunk collection version {version}."),
+            };
         }
 
         public DecalGridChunkCollection Read(ISerializationManager serializationManager,
@@ -30,60 +45,103 @@ namespace Content.Shared.Decals
             ISerializationManager.InstantiationDelegate<DecalGridChunkCollection>? _ = default)
         {
             node.TryGetValue("version", out var versionNode);
-            var version = ((ValueDataNode?) versionNode)?.AsInt() ?? 1;
-            Dictionary<Vector2i, DecalChunk> dictionary;
-            uint nextIndex = 0;
-            var ids = new HashSet<uint>();
+            var version = ((ValueDataNode?) versionNode)?.AsInt() ?? VersionUnspecified;
 
-            // TODO: Dump this when we don't need support anymore.
-            if (version > 1)
+            return version switch
             {
-                var nodes = (SequenceDataNode) node["nodes"];
-                dictionary = new Dictionary<Vector2i, DecalChunk>();
+                VersionUnspecified => ReadVersionUnspecified(serializationManager, node, hookCtx, context),
+                VersionGroupedByData => ReadVersionGroupedByData(serializationManager, node, hookCtx, context),
+                // New hotness
+                VersionChunkLocalIds => ReadVersionChunkLocalIds(serializationManager, node, hookCtx, context),
+                // PRAY WE DON'T HIT IT
+                _ => throw new InvalidOperationException($"Unsupported decal chunk collection version {version}."),
+            };
+        }
 
-                foreach (var dNode in nodes)
-                {
-                    var aNode = (MappingDataNode) dNode;
-                    var data = serializationManager.Read<DecalData>(aNode["node"], hookCtx, context);
-                    var deckNodes = (MappingDataNode) aNode["decals"];
+        private static DecalGridChunkCollection ReadVersionChunkLocalIds(
+            ISerializationManager serializationManager,
+            MappingDataNode node,
+            SerializationHookContext hookCtx,
+            ISerializationContext? context)
+        {
+            var nodes = (SequenceDataNode) node["nodes"];
+            var dictionary = new Dictionary<Vector2i, DecalChunk>(nodes.Count);
+            ushort nextIndex = 0;
 
-                    foreach (var (decalUidNode, decalData) in deckNodes)
-                    {
-                        var dUid = uint.Parse(decalUidNode, CultureInfo.InvariantCulture);
-                        var coords = serializationManager.Read<Vector2>(decalData, hookCtx, context);
-
-                        var chunkOrigin = SharedMapSystem.GetChunkIndices(coords, SharedDecalSystem.ChunkSize);
-                        var chunk = dictionary.GetOrNew(chunkOrigin);
-                        var decal = new Decal(coords, data.Id, data.Color, data.Angle, data.ZIndex, data.Cleanable);
-
-                        nextIndex = Math.Max(nextIndex, dUid);
-
-                        // Re-used ID somehow
-                        // This will bump all IDs by up to 1 but will ensure the map is still readable.
-                        if (!ids.Add(dUid))
-                        {
-                            dUid = nextIndex++;
-                            ids.Add(dUid);
-                        }
-
-                        chunk.Decals[dUid] = decal;
-                    }
-                }
-            }
-            else
+            foreach (var dNode in nodes)
             {
-                dictionary = serializationManager.Read<Dictionary<Vector2i, DecalChunk>>(node, hookCtx, context, notNullableOverride: true);
+                var aNode = (MappingDataNode) dNode;
+                var chunkOrigin = serializationManager.Read<Vector2i>(aNode["chunk"], hookCtx, context);
+                var decals = serializationManager.Read<Dictionary<ushort, Decal>>(aNode["decals"], hookCtx, context, notNullableOverride: true);
+                var chunk = dictionary.GetOrNew(chunkOrigin);
 
-                foreach (var decals in dictionary.Values)
+                foreach (var (uid, decal) in decals)
                 {
-                    foreach (var uid in decals.Decals.Keys)
-                    {
-                        nextIndex = Math.Max(uid, nextIndex);
-                    }
+                    var index = new DecalIndex(chunkOrigin, uid);
+                    chunk.Decals[index.Id] = decal;
+
+                    if (uid <= DecalChunkComponent.MaxServerDecalId)
+                        nextIndex = Math.Max(nextIndex, (ushort) (uid + 1));
                 }
             }
 
-            nextIndex++;
+            return new DecalGridChunkCollection(dictionary) { NextDecalId = nextIndex };
+        }
+
+        private static DecalGridChunkCollection ReadVersionGroupedByData(
+            ISerializationManager serializationManager,
+            MappingDataNode node,
+            SerializationHookContext hookCtx,
+            ISerializationContext? context)
+        {
+            var nodes = (SequenceDataNode) node["nodes"];
+            var dictionary = new Dictionary<Vector2i, DecalChunk>();
+            var usedIds = new Dictionary<Vector2i, HashSet<ushort>>();
+            ushort nextIndex = 0;
+
+            foreach (var dNode in nodes)
+            {
+                var aNode = (MappingDataNode) dNode;
+                var data = serializationManager.Read<DecalData>(aNode["node"], hookCtx, context);
+                var deckNodes = (MappingDataNode) aNode["decals"];
+
+                foreach (var (decalUidNode, decalData) in deckNodes)
+                {
+                    var coords = serializationManager.Read<Vector2>(decalData, hookCtx, context);
+                    // V2 stores decal data once and references it by grid-wide id. Rebuild chunk-local ids from coordinates.
+                    var chunkOrigin = ChunkEntitySystem.GetChunkIndices(coords);
+                    var index = RemapDecalIndex(uint.Parse(decalUidNode, CultureInfo.InvariantCulture), chunkOrigin, usedIds, ref nextIndex);
+                    var decal = new Decal(coords, data.Id, data.Color, data.Angle, data.ZIndex, data.Cleanable);
+
+                    AddDecal(dictionary, index, decal);
+                }
+            }
+
+            return new DecalGridChunkCollection(dictionary) { NextDecalId = nextIndex };
+        }
+
+        private static DecalGridChunkCollection ReadVersionUnspecified(
+            ISerializationManager serializationManager,
+            MappingDataNode node,
+            SerializationHookContext hookCtx,
+            ISerializationContext? context)
+        {
+            var oldDictionary = serializationManager.Read<Dictionary<Vector2i, Dictionary<uint, Decal>>>(node, hookCtx, context, notNullableOverride: true);
+            var dictionary = new Dictionary<Vector2i, DecalChunk>(oldDictionary.Count);
+            var usedIds = new Dictionary<Vector2i, HashSet<ushort>>();
+            ushort nextIndex = 0;
+
+            foreach (var (_, decals) in oldDictionary)
+            {
+                foreach (var (uid, decal) in decals)
+                {
+                    // V1 keys used 32x32 decal-grid buckets; coordinates are authoritative for current chunks.
+                    var chunkOrigin = ChunkEntitySystem.GetChunkIndices(decal.Coordinates);
+                    var index = RemapDecalIndex(uid, chunkOrigin, usedIds, ref nextIndex);
+                    AddDecal(dictionary, index, decal);
+                }
+            }
+
             return new DecalGridChunkCollection(dictionary) { NextDecalId = nextIndex };
         }
 
@@ -92,57 +150,94 @@ namespace Content.Shared.Decals
             bool alwaysWrite = false,
             ISerializationContext? context = null)
         {
-            var lookup = new Dictionary<DecalData, List<uint>>();
-            var decalLookup = new Dictionary<uint, Decal>();
-
             var allData = new MappingDataNode();
             // Want consistent chunk + decal ordering so diffs aren't mangled
             var nodes = new SequenceDataNode();
 
-            // Assuming decal indices stay consistent:
-            // We'll write decals by
-            // - decaldata
-            // - decal uid
-            // - additional decal data
+            var indices = new List<DecalIndex>();
 
-            // Build all of the decal lookups first.
-            foreach (var chunk in value.ChunkCollection.Values)
+            foreach (var (chunkIndices, chunk) in value.ChunkCollection)
             {
-                foreach (var (uid, decal) in chunk.Decals)
+                foreach (var decalId in chunk.Decals.Keys)
                 {
-                    var data = new DecalData(decal);
-                    var existing = lookup.GetOrNew(data);
-                    existing.Add(uid);
-                    decalLookup[uid] = decal;
+                    indices.Add(new DecalIndex(chunkIndices, decalId));
                 }
             }
 
-            var lookupNodes = lookup.Keys.ToList();
-            lookupNodes.Sort();
+            indices.Sort(CompareDecalIndex);
 
-            foreach (var data in lookupNodes)
+            var currentChunk = new Vector2i(int.MinValue, int.MinValue);
+            MappingDataNode? decalNodes = null;
+
+            foreach (var index in indices)
             {
-                var uids = lookup[data];
-                var lookupNode = new MappingDataNode { { "node", serializationManager.WriteValue(data, alwaysWrite, context) } };
-                var decks = new MappingDataNode();
-
-                uids.Sort();
-
-                foreach (var uid in uids)
+                if (index.Chunk != currentChunk)
                 {
-                    var decal = decalLookup[uid];
-                    // Inline coordinates
-                    decks.Add(uid.ToString(), serializationManager.WriteValue(decal.Coordinates, alwaysWrite, context));
+                    currentChunk = index.Chunk;
+                    decalNodes = new MappingDataNode();
+
+                    nodes.Add(new MappingDataNode
+                    {
+                        { "chunk", serializationManager.WriteValue(index.Chunk, alwaysWrite, context) },
+                        { "decals", decalNodes },
+                    });
                 }
 
-                lookupNode.Add("decals", decks);
-                nodes.Add(lookupNode);
+                // Preserve chunk-local ids so adding or removing one decal does not renumber the rest of the chunk.
+                var decal = value.ChunkCollection[index.Chunk].Decals[index.Id];
+                decalNodes!.Add(index.Id.ToString(CultureInfo.InvariantCulture), serializationManager.WriteValue(decal, alwaysWrite, context, notNullableOverride: true));
             }
 
-            allData.Add("version", 2.ToString(CultureInfo.InvariantCulture));
+            allData.Add("version", VersionChunkLocalIds.ToString(CultureInfo.InvariantCulture));
             allData.Add("nodes", nodes);
 
             return allData;
+        }
+
+        private static int CompareDecalIndex(DecalIndex x, DecalIndex y)
+        {
+            var chunkCompare = CompareVector2i(x.Chunk, y.Chunk);
+            return chunkCompare != 0 ? chunkCompare : x.Id.CompareTo(y.Id);
+        }
+
+        private static int CompareVector2i(Vector2i x, Vector2i y)
+        {
+            var xCompare = x.X.CompareTo(y.X);
+            return xCompare != 0 ? xCompare : x.Y.CompareTo(y.Y);
+        }
+
+        private static void AddDecal(Dictionary<Vector2i, DecalChunk> dictionary, DecalIndex index, Decal decal)
+        {
+            var chunk = dictionary.GetOrNew(index.Chunk);
+            chunk.Decals[index.Id] = decal;
+        }
+
+        private static DecalIndex RemapDecalIndex(
+            uint id,
+            Vector2i chunk,
+            Dictionary<Vector2i, HashSet<ushort>> usedIds,
+            ref ushort nextIndex)
+        {
+            var used = usedIds.GetOrNew(chunk);
+
+            if (id <= DecalChunkComponent.MaxServerDecalId && used.Add((ushort) id))
+            {
+                nextIndex = Math.Max(nextIndex, (ushort) (id + 1));
+                return new DecalIndex(chunk, (ushort) id);
+            }
+
+            for (var i = 0; i <= DecalChunkComponent.MaxServerDecalId; i++)
+            {
+                var remapped = (ushort) i;
+
+                if (!used.Add(remapped))
+                    continue;
+
+                nextIndex = Math.Max(nextIndex, (ushort) (remapped + 1));
+                return new DecalIndex(chunk, remapped);
+            }
+
+            throw new InvalidOperationException("Too many decals to fit in the server decal ID range for a single chunk.");
         }
 
         [DataDefinition]

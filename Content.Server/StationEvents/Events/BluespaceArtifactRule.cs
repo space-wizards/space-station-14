@@ -12,7 +12,7 @@ public sealed class BluespaceArtifactRule : StationEventSystem<BluespaceArtifact
             return;
 
         var str = Loc.GetString("bluespace-artifact-event-announcement",
-            ("sighting", Loc.GetString(RobustRandom.Pick(component.PossibleSighting))));
+            ("sighting", Loc.GetString(RobustRandom.Pick(component.PossibleSightings))));
         stationEvent.StartAnnouncement = str;
 
         base.Added(uid, component, gameRule, args);

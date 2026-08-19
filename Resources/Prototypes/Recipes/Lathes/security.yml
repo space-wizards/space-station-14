@@ -139,6 +139,13 @@
 
 - type: latheRecipe
   parent: BaseToolRecipe
+  id: SecurityBola
+  result: SecurityBola
+  materials:
+    Steel: 500
+
+- type: latheRecipe
+  parent: BaseToolRecipe
   id: Zipties
   result: Zipties
   materials:

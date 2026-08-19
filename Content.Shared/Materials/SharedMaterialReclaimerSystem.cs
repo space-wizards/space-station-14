@@ -124,7 +124,7 @@ public abstract partial class SharedMaterialReclaimerSystem : EntitySystem
         if (!CanStart(uid, component))
             return false;
 
-        if (HasComp<MobStateComponent>(item) && !CanGib(uid, item, component)) // whitelist? We be gibbing, boy!
+        if (HasComp<MobStateComponent>(item) && !CanDamageAndGib(uid, item, component)) // whitelist? We be gibbing, boy!
             return false;
 
         if (_whitelistSystem.IsWhitelistFail(component.Whitelist, item) ||
@@ -237,7 +237,7 @@ public abstract partial class SharedMaterialReclaimerSystem : EntitySystem
     /// Whether or not the reclaimer satisfies the conditions
     /// allowing it to gib/reclaim a living creature.
     /// </summary>
-    public bool CanGib(EntityUid uid, EntityUid victim, MaterialReclaimerComponent component)
+    public bool CanDamageAndGib(EntityUid uid, EntityUid victim, MaterialReclaimerComponent component)
     {
         return component.Powered &&
                component.Enabled &&

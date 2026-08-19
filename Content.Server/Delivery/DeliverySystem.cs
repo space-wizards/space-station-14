@@ -1,7 +1,6 @@
 using Content.Server.Cargo.Systems;
 using Content.Server.Chat.Systems;
 using Content.Server.Station.Systems;
-using Content.Server.StationRecords.Systems;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Chat;
@@ -9,6 +8,7 @@ using Content.Shared.Delivery;
 using Content.Shared.FingerprintReader;
 using Content.Shared.Labels.EntitySystems;
 using Content.Shared.StationRecords;
+using Content.Shared.StationRecords.Systems;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
@@ -30,7 +30,6 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
     [Dependency] private LabelSystem _label = default!;
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private ChatSystem _chat = default!;
-    [Dependency] private IPrototypeManager _protoMan = default!;
 
     /// <summary>
     /// Default reason to use if the penalization is triggered
@@ -53,7 +52,7 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         if (_station.GetStationInMap(Transform(ent).MapID) is not { } stationId)
             return;
 
-        if (!_records.TryGetRandomRecord<GeneralStationRecord>(stationId, out var entry))
+        if (!_records.TryGetRandomRecord<GeneralStationRecord>(stationId, out var entry, seedEntity: ent))
             return;
 
         ent.Comp.RecipientName = entry.Name;
@@ -103,7 +102,7 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         if (ent.Comp.WasPenalized)
             return;
 
-        if (!_protoMan.Resolve(ent.Comp.PenaltyBankAccount, out var accountInfo))
+        if (!ProtoMan.Resolve(ent.Comp.PenaltyBankAccount, out var accountInfo))
             return;
 
         var multiplier = GetDeliveryMultiplier(ent);

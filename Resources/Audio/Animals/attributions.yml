@@ -184,3 +184,8 @@
   copyright: "created by FairlySadPanda"
   license: "CC-BY-4.0"
   source: "https://github.com/space-wizards/space-station-14/pull/37936"
+
+- files: ["space_dragon_breath.ogg"]
+  license: "CC0-1.0"
+  copyright: "Modified from 'Dragon Roar' by freesound user 'frasbr'. The original audio was trimmed and converted to OGG."
+  source: "https://freesound.org/people/frasbr/sounds/145729/"

@@ -1,0 +1,46 @@
+- type: entity
+  parent: [ MaterialBase, BaseXenoborgContraband ]
+  id: MaterialXenoborgCrystal
+  name: xenoborg crystal
+  description: A special crystal created from nuclear fusion. It's used to make xenoborgs.
+  suffix: 10
+  components:
+  - type: Item
+    storedRotation: 0
+  - type: Appearance
+  - type: Stack
+    stackType: XenoborgCrystal
+    count: 10
+    baseLayer: base
+    layerStates:
+    - crystal-1
+    - crystal-2
+    - crystal-3
+  - type: Sprite
+    sprite: Objects/Materials/xenoborg_crystal.rsi
+    layers:
+    - state: crystal-3
+      map: [ "base" ]
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      XenoborgCrystal: 100
+  - type: Tag
+    tags:
+    - XenoborgCrystal
+
+- type: entity
+  parent: MaterialXenoborgCrystal
+  id: MaterialXenoborgCrystal5
+  suffix: 5
+  components:
+  - type: Stack
+    count: 5
+
+- type: entity
+  parent: MaterialXenoborgCrystal
+  id: MaterialXenoborgCrystal1
+  suffix: 1
+  components:
+  - type: Stack
+    count: 1

@@ -1,7 +1,7 @@
 using Content.Server.Administration;
-using Content.Server.Toolshed.TypeParsers.StatusEffects;
 using Content.Shared.Administration;
 using Content.Shared.StatusEffectNew;
+using Content.Shared.Toolshed.TypeParsers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Toolshed;
 

@@ -48,12 +48,12 @@
             </ContainerButton>
         </BoxContainer>
         <ScrollContainer HorizontalExpand="True" VerticalExpand="True" HScrollEnabled="True">
-            <BoxContainer Orientation="Vertical"
-                          VerticalExpand="True"
-                          HorizontalExpand="True"
-                          MinSize="50 50"
-                          Name="ProgramList"
-                          Margin="4"/>
+            <GridContainer VerticalExpand="True"
+                           HorizontalExpand="True"
+                           MinSize="50 50"
+                           Name="ProgramList"
+                           Margin="4"
+                           Columns="2" />
         </ScrollContainer>
         <ScrollContainer HorizontalExpand="True" VerticalExpand="True" HScrollEnabled="True">
             <BoxContainer Orientation="Vertical"

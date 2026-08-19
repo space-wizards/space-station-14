@@ -60,20 +60,6 @@ public sealed partial class MoverController : SharedMoverController
         UpdateMoverStatus((ent, ent.Comp));
     }
 
-    protected override void OnInputMoverCanMoveUpdated(Entity<InputMoverComponent> ent, ref CanMoveUpdatedEvent args)
-    {
-        base.OnInputMoverCanMoveUpdated(ent, ref args);
-
-        if (!args.CanMove)
-        {
-            // Remove from active mover query when entity cannot move
-            RemCompDeferred<ActiveInputMoverComponent>(ent);
-            return;
-        }
-
-        UpdateMoverStatus((ent, ent.Comp));
-    }
-
     protected override void OnMoverStartup(Entity<InputMoverComponent> ent, ref ComponentStartup args)
     {
         base.OnMoverStartup(ent, ref args);
@@ -556,12 +542,12 @@ public sealed partial class MoverController : SharedMoverController
                     if (!torque.Equals(0f))
                     {
                         PhysicsSystem.ApplyTorque(shuttleUid, torque, body: body);
-                        _thruster.SetAngularThrust(shuttle, true);
+                        _thruster.SetAngularThrustVisualState(shuttle, true);
                     }
                 }
                 else
                 {
-                    _thruster.SetAngularThrust(shuttle, false);
+                    _thruster.SetAngularThrustVisualState(shuttle, false);
                 }
             }
 
@@ -656,7 +642,7 @@ public sealed partial class MoverController : SharedMoverController
                 PhysicsSystem.SetSleepingAllowed(shuttleUid, body, true);
 
                 if (brakeInput <= 0f)
-                    _thruster.SetAngularThrust(shuttle, false);
+                    _thruster.SetAngularThrustVisualState(shuttle, false);
             }
             else
             {
@@ -674,7 +660,7 @@ public sealed partial class MoverController : SharedMoverController
                 if (!torque.Equals(0f))
                 {
                     PhysicsSystem.ApplyTorque(shuttleUid, torque, body: body);
-                    _thruster.SetAngularThrust(shuttle, true);
+                    _thruster.SetAngularThrustVisualState(shuttle, true);
                 }
             }
         }

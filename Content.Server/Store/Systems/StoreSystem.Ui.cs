@@ -1,19 +1,18 @@
 using System.Linq;
 using Content.Server.Actions;
 using Content.Server.Administration.Logs;
+using Content.Shared.Mindshield;
 using Content.Server.Stack;
 using Content.Server.Store.Components;
 using Content.Shared.Actions;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Mindshield.Components;
 using Content.Shared.NPC.Systems;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Content.Shared.UserInterface;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Store.Systems;
 
@@ -27,7 +26,7 @@ public sealed partial class StoreSystem
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private StackSystem _stack = default!;
-    [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private MindShieldSystem _mindShield = default!;
 
     private void InitializeUi()
     {
@@ -126,7 +125,7 @@ public sealed partial class StoreSystem
         //apply components
         if (listing.ProductComponents != null)
         {
-            if (_proto.Resolve(listing.ProductComponents, out var productComponentsEntity))
+            if (ProtoMan.Resolve(listing.ProductComponents, out var productComponentsEntity))
                 EntityManager.AddComponents(buyer, productComponentsEntity.Components);
         }
 
@@ -223,7 +222,8 @@ public sealed partial class StoreSystem
             logImpact = LogImpact.High;
             logExtraInfo = ", but was not from an expected faction";
 
-            if (HasComp<MindShieldComponent>(buyer))
+            _mindShield.GetMindshieldStatus(buyer, out var isMindshielded, out _);
+            if (isMindshielded)
             {
                 logImpact = LogImpact.Extreme;
                 logExtraInfo += " while also possessing a mindshield";

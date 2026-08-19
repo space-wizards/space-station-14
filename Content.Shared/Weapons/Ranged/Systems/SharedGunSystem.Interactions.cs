@@ -81,7 +81,7 @@ public abstract partial class SharedGunSystem
         }
 
         Audio.PlayPredicted(component.SoundMode, uid, user);
-        Popup(Loc.GetString("gun-selected-mode", ("mode", GetLocSelector(fire))), uid, user);
+        PopupSystem.PopupEntity(Loc.GetString("gun-selected-mode", ("mode", GetLocSelector(fire))), uid, user);
         Dirty(uid, component);
     }
 

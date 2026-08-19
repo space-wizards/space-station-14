@@ -195,12 +195,12 @@ public abstract partial class SharedStationAiSystem
 
     private void ShowDeviceNotRespondingPopup(EntityUid toEntity)
     {
-        _popup.PopupClient(Loc.GetString("ai-device-not-responding"), toEntity, PopupType.MediumCaution);
+        _popup.PopupEntity(Loc.GetString("ai-device-not-responding"), toEntity, toEntity, PopupType.MediumCaution);
     }
 
     private void ShowDeviceNoAccessPopup(EntityUid toEntity)
     {
-        _popup.PopupClient(Loc.GetString("ai-device-no-access"), toEntity, PopupType.MediumCaution);
+        _popup.PopupEntity(Loc.GetString("ai-device-no-access"), toEntity, toEntity, PopupType.MediumCaution);
     }
 }
 

@@ -65,7 +65,8 @@ public abstract partial class SharedAnomalyScannerSystem : EntitySystem
             used: uid
         )
         {
-            DistanceThreshold = 2f
+            DistanceThreshold = 2f,
+            ExamineText = Loc.GetString(component.DoAfterExamineText, ("user", args.User)),
         };
         _doAfter.TryStartDoAfter(doAfterArgs);
     }
@@ -76,7 +77,7 @@ public abstract partial class SharedAnomalyScannerSystem : EntitySystem
             return;
 
         Audio.PlayPredicted(component.CompleteSound, uid, args.User);
-        Popup.PopupPredicted(Loc.GetString("anomaly-scanner-component-scan-complete"), uid, args.User);
+        Popup.PopupEntity(Loc.GetString("anomaly-scanner-component-scan-complete"), uid, args.User);
 
         UI.OpenUi(uid, AnomalyScannerUiKey.Key, args.User);
 

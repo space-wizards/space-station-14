@@ -11,21 +11,6 @@ public sealed partial class CCVars
     public static readonly CVarDef<float> ChatWindowOpacity =
         CVarDef.Create("accessibility.chat_window_transparency", 0.85f, CVar.CLIENTONLY | CVar.ARCHIVE);
 
-    /// <summary>
-    ///     Toggle for visual effects that may potentially cause motion sickness.
-    ///     Where reasonable, effects affected by this CVar should use an alternate effect.
-    ///     Please do not use this CVar as a bandaid for effects that could otherwise be made accessible without issue.
-    /// </summary>
-    public static readonly CVarDef<bool> ReducedMotion =
-        CVarDef.Create("accessibility.reduced_motion", false, CVar.CLIENTONLY | CVar.ARCHIVE);
-
-    /// <summary>
-    ///     Replaces the AI static camera effect with a plain gradient.
-    ///     Used for photosensitivity triggers.
-    /// </summary>
-    public static readonly CVarDef<bool> DisableAiStatic =
-        CVarDef.Create("accessibility.disable_ai_static", false, CVar.CLIENTONLY | CVar.ARCHIVE);
-
     public static readonly CVarDef<bool> ChatEnableColorName =
         CVarDef.Create("accessibility.enable_color_name",
             true,

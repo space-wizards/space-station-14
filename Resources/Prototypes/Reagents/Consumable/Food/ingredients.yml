@@ -13,7 +13,8 @@
         Sugar: 0.4
         Nutriment: 0.2
       effects:
-      - !type:SatiateThirst
+      - !type:Satiate
+        satiationType: Thirst
         factor: -0.2 #its flour
 
 - type: reagent
@@ -29,7 +30,8 @@
       metabolites:
         Nutriment: 0.2
       effects:
-      - !type:SatiateThirst
+      - !type:Satiate
+        satiationType: Thirst
         factor: -0.2 #its cornflour
 
 - type: reagent
@@ -223,7 +225,8 @@
   metabolisms:
     Digestion:
       effects:
-      - !type:SatiateHunger
+      - !type:Satiate
+        satiationType: Hunger
         conditions:
         - !type:ReagentCondition #Only satiates when eaten with nutriment
           reagent: Nutriment
@@ -266,7 +269,8 @@
       metabolites:
         Nutriment: 0.2
       effects:
-      - !type:SatiateThirst
+      - !type:Satiate
+        satiationType: Thirst
         factor: -0.2
 
 - type: reagent

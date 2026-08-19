@@ -1,6 +1,6 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Managers;
-using Content.Shared.Ghost;
+using Content.Shared.Ghost.Components;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -218,7 +218,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
         if (aui.SingleUser && aui.CurrentSingleUser != null && user != aui.CurrentSingleUser)
         {
             var message = Loc.GetString("machine-already-in-use", ("machine", uiEntity));
-            _popupSystem.PopupClient(message, uiEntity, user);
+            _popupSystem.PopupEntity(message, uiEntity, user);
 
             if (_uiSystem.IsUiOpen(uiEntity, aui.Key))
                 return true;

@@ -1,0 +1,60 @@
+- type: cargoProduct
+  id: EvaKit
+  icon:
+    sprite: Clothing/Head/Helmets/eva.rsi
+    state: icon
+  product: CrateEvaKit
+  cost: 5000
+  category: cargoproduct-category-name-space
+  group: market
+
+- type: cargoProduct
+  id: SpaceJetpack
+  icon:
+    sprite: Objects/Tanks/Jetpacks/blue.rsi
+    state: icon
+  product: CrateSpaceJetpack
+  cost: 1000
+  category: cargoproduct-category-name-space
+  group: market
+
+- type: cargoProduct
+  id: SpaceMiniJetpack
+  icon:
+    sprite: Objects/Tanks/Jetpacks/mini.rsi
+    state: icon
+  product: CrateSpaceMiniJetpack
+  cost: 750
+  category: cargoproduct-category-name-space
+  group: market
+
+- type: cargoProduct
+  id: SpaceGyroscope
+  icon:
+    sprite: Structures/Shuttles/gyroscope.rsi
+    state: base
+  product: CrateSpaceGyroscope
+  cost: 4000
+  category: cargoproduct-category-name-space
+  group: market
+
+- type: cargoProduct
+  id: SpaceThruster
+  icon:
+    sprite: Structures/Shuttles/thruster.rsi
+    state: base
+  product: CrateSpaceThruster
+  cost: 1500
+  category: cargoproduct-category-name-space
+  group: market
+
+# - type: cargoProduct
+  # id: SpaceShuttlePower
+  # icon:
+    # sprite: Structures/Machines/computers.rsi
+    # state: avionics-systems
+  # product: CrateSpaceShuttlePower
+  # cost: 3000
+  # category: cargoproduct-category-name-space
+  # group: market
+#  locked: true   # only the QM has permission to order by default

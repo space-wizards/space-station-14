@@ -36,6 +36,9 @@ public sealed partial class AdjustReagent : EntityEffectBase<AdjustReagent>
     [DataField(required: true)]
     public ProtoId<ReagentPrototype> Reagent;
 
+    /// <summary>
+    /// The amount by which to adjust the reagent volume.
+    /// </summary>
     [DataField(required: true)]
     public FixedPoint2 Amount;
 

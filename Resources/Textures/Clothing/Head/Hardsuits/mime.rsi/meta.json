@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/4f6190e2895e09116663ef282d3ce1d8b35c032e, sprited by Fazansen(https://github.com/Fazansen), modified for Vox by TrixxedHeart",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/4f6190e2895e09116663ef282d3ce1d8b35c032e, sprited by Fazansen(https://github.com/Fazansen), modified for Vox by TrixxedHeart. Left/Right sprite mirroring fixed by Dogbone10.",
   "size": {
     "x": 32,
     "y": 32

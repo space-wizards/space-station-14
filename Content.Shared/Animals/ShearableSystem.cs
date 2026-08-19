@@ -139,7 +139,7 @@ public sealed partial class SharedShearableSystem : EntitySystem
                 var feedbackPopupString = Loc.GetString("shearable-system-no-product",
                     ("target", Identity.Entity(ent.Owner, EntityManager)),
                     ("product", shearedProduct.Name));
-                _popup.PopupClient(feedbackPopupString, ent.Owner, userUid);
+                _popup.PopupEntity(feedbackPopupString, ent.Owner, userUid);
             }
 
             // Fail
@@ -191,7 +191,7 @@ public sealed partial class SharedShearableSystem : EntitySystem
             var feedbackPopupString = Loc.GetString("shearable-system-no-product",
                 ("target", Identity.Entity(ent.Owner, EntityManager)),
                 ("product", shearedProduct.Name));
-            _popup.PopupClient(feedbackPopupString, ent.Owner, args.Args.User);
+            _popup.PopupEntity(feedbackPopupString, ent.Owner, args.Args.User);
             return;
         }
 
@@ -215,7 +215,7 @@ public sealed partial class SharedShearableSystem : EntitySystem
         }
 
         // Success message.
-        _popup.PopupClient(Loc.GetString("shearable-system-success", ("target", Identity.Entity(ent.Owner, EntityManager)), ("product", shearedProduct.Name)), ent.Owner, args.Args.User, PopupType.Medium);
+        _popup.PopupEntity(Loc.GetString("shearable-system-success", ("target", Identity.Entity(ent.Owner, EntityManager)), ("product", shearedProduct.Name)), ent.Owner, args.Args.User, PopupType.Medium);
     }
 
     /// <summary>

@@ -14,7 +14,6 @@ namespace Content.Shared.Shuttles.Systems;
 
 public abstract partial class SharedShuttleSystem : EntitySystem
 {
-    [Dependency] private IMapManager _mapManager = default!;
     [Dependency] private ItemSlotsSystem _itemSlots = default!;
     [Dependency] protected FixtureSystem Fixtures = default!;
     [Dependency] protected SharedMapSystem Maps = default!;
@@ -24,7 +23,7 @@ public abstract partial class SharedShuttleSystem : EntitySystem
 
     public const float FTLRange = 256f;
     public const float FTLBufferRange = 8f;
-    public const float TileDensityMultiplier = 0.5f;
+    public const float TileDensityMultiplier = 800f;
 
     [Dependency] private EntityQuery<MapGridComponent> _gridQuery = default!;
     [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
@@ -137,7 +136,7 @@ public abstract partial class SharedShuttleSystem : EntitySystem
         if (!Resolve(gridUid, ref physics))
             return true;
 
-        if (physics.BodyType != BodyType.Static && physics.Mass < 10f)
+        if (physics.BodyType != BodyType.Static && physics.Mass < (20f * TileDensityMultiplier)) // A grid of approx 20 tiles, to not draw tiny grids.
         {
             return false;
         }
@@ -224,7 +223,7 @@ public abstract partial class SharedShuttleSystem : EntitySystem
         var ourFTLBuffer = GetFTLBufferRange(shuttleUid);
         var circle = new PhysShapeCircle(ourFTLBuffer + FTLBufferRange, targetPosition);
 
-        _mapManager.FindGridsIntersecting(mapCoordinates.MapId, circle, Robust.Shared.Physics.Transform.Empty,
+        Maps.FindGridsIntersecting(mapCoordinates.MapId, circle, Robust.Shared.Physics.Transform.Empty,
             ref _grids, includeMap: false);
 
         // If any grids in range that aren't us then can't FTL.

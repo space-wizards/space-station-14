@@ -107,7 +107,7 @@ public sealed partial class HolopadWindow : FancyWindow
 
         if (!_accessReaderSystem.IsAllowed(player.Value, _owner.Value))
         {
-            _popupSystem.PopupClient(Loc.GetString("holopad-window-access-denied"), _owner.Value, player.Value);
+            _popupSystem.PopupEntity(Loc.GetString("holopad-window-access-denied"), _owner.Value, player.Value);
             return;
         }
 

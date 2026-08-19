@@ -5,7 +5,6 @@ using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
 using Content.Shared.Objectives.Systems;
 using Robust.Shared.Containers;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Systems;
@@ -18,7 +17,6 @@ namespace Content.Server.Objectives.Systems;
 public sealed partial class StealConditionSystem : EntitySystem
 {
     [Dependency] private IRobustRandom _random = default!;
-    [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private MetaDataSystem _metaData = default!;
     [Dependency] private MobStateSystem _mobState = default!;
     [Dependency] private SharedInteractionSystem _interaction = default!;
@@ -41,31 +39,32 @@ public sealed partial class StealConditionSystem : EntitySystem
     /// start checks of target acceptability, and generation of start values.
     private void OnAssigned(Entity<StealConditionComponent> condition, ref ObjectiveAssignedEvent args)
     {
-        List<StealTargetComponent?> targetList = new();
+        var minSize = condition.Comp.MinCollectionSize;
+        var maxSize = condition.Comp.MaxCollectionSize;
 
-        var query = AllEntityQuery<StealTargetComponent>();
-        while (query.MoveNext(out var target))
+        if (condition.Comp.VerifyMapExistence)
         {
-            if (condition.Comp.StealGroup != target.StealGroup)
-                continue;
+            // TODO: Use entity pools someday
+            List<StealTargetComponent?> targetList = new();
 
-            targetList.Add(target);
+            var query = AllEntityQuery<StealTargetComponent>();
+            while (query.MoveNext(out var target))
+            {
+                if (condition.Comp.StealGroup != target.StealGroup)
+                    continue;
+
+                targetList.Add(target);
+            }
+
+            if (targetList.Count == 0)
+            {
+                args.Cancelled = true;
+                return;
+            }
+
+            maxSize = Math.Min(targetList.Count, maxSize);
+            minSize = Math.Min(targetList.Count, minSize);
         }
-
-        // cancel if the required items do not exist
-        if (targetList.Count == 0 && condition.Comp.VerifyMapExistence)
-        {
-            args.Cancelled = true;
-            return;
-        }
-
-        //setup condition settings
-        var maxSize = condition.Comp.VerifyMapExistence
-            ? Math.Min(targetList.Count, condition.Comp.MaxCollectionSize)
-            : condition.Comp.MaxCollectionSize;
-        var minSize = condition.Comp.VerifyMapExistence
-            ? Math.Min(targetList.Count, condition.Comp.MinCollectionSize)
-            : condition.Comp.MinCollectionSize;
 
         condition.Comp.CollectionSize = _random.Next(minSize, maxSize);
     }
@@ -73,7 +72,7 @@ public sealed partial class StealConditionSystem : EntitySystem
     //Set the visual, name, icon for the objective.
     private void OnAfterAssign(Entity<StealConditionComponent> condition, ref ObjectiveAfterAssignEvent args)
     {
-        var group = _proto.Index(condition.Comp.StealGroup);
+        var group = ProtoMan.Index(condition.Comp.StealGroup);
         string localizedName = Loc.GetString(group.Name);
 
         var title = condition.Comp.OwnerText == null

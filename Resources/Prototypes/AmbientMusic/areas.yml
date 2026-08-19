@@ -4,8 +4,14 @@
     params:
       volume: -12
     collection: AmbienceSpooky
-  rules: NearMorgue
   priority: 4
+  conditions:
+  - !type:NearbyComponentsCondition
+    anchored: true
+    count: 2
+    components:
+    - type: Morgue
+    range: 3
 
 - type: ambientMusic
   id: Maintenance
@@ -13,8 +19,14 @@
     params:
       volume: -12
     collection: AmbienceMaintenance
-  rules: NearMaintenance
   priority: 2
+  conditions:
+  - !type:NearbyTilesPercentCondition
+    ignoreAnchored: true
+    percent: 0.25
+    tiles:
+    - Plating
+    range: 2
 
 - type: ambientMusic
   id: Space
@@ -24,8 +36,14 @@
     collection: AmbienceSpace
   fadeIn: true
   interruptable: true
-  rules: InSpace
   priority: 1
+  conditions:
+  - !type:InSpaceCondition
+  - !type:GridInRangeCondition
+    inverted: true
+    range: 3
+  - !type:IsGhostCondition
+    inverted: true
 
 - type: ambientMusic
   id: Mining
@@ -33,7 +51,8 @@
     params:
       volume: -12
     collection: AmbienceMining
-  rules: OnMapGrid
   fadeIn: true
   interruptable: true
   priority: 1
+  conditions:
+  - !type:OnMapGridCondition

@@ -85,6 +85,10 @@
         Structural: 10
   - type: Item
     size: Ginormous
+    shape:
+    - 0,0,2,1
+    - 1,2,1,5
+    storedRotation: -45
   - type: Clothing
     sprite: Objects/Weapons/Melee/cult_halberd.rsi
     quickEquip: false

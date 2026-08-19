@@ -7,7 +7,6 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Kitchen.Components;
-using Content.Shared.Prototypes;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Chemistry.EntitySystems;
@@ -31,7 +30,7 @@ public sealed partial class ChemistryGuideDataSystem : SharedChemistryGuideDataS
 
         SubscribeNetworkEvent<ReagentGuideRegistryChangedEvent>(OnReceiveRegistryUpdate);
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
-        OnPrototypesReloaded(null);
+        LoadPrototypes(null);
     }
 
     private void OnReceiveRegistryUpdate(ReagentGuideRegistryChangedEvent message)
@@ -48,7 +47,12 @@ public sealed partial class ChemistryGuideDataSystem : SharedChemistryGuideDataS
         }
     }
 
-    private void OnPrototypesReloaded(PrototypesReloadedEventArgs? ev)
+    private void OnPrototypesReloaded(PrototypesReloadedEventArgs ev)
+    {
+        LoadPrototypes(ev);
+    }
+
+    private void LoadPrototypes(PrototypesReloadedEventArgs? args)
     {
         // this doesn't check what prototypes are being reloaded because, to be frank, we use a lot of them.
         _reagentSources.Clear();
@@ -89,15 +93,15 @@ public sealed partial class ChemistryGuideDataSystem : SharedChemistryGuideDataS
             if (entProto.Abstract || usedNames.Contains(entProto.Name))
                 continue;
 
-            if (!entProto.TryGetComponent<ExtractableComponent>(out var extractableComponent, EntityManager.ComponentFactory))
+            if (!entProto.TryComp(out ExtractableComponent? extractableComponent, Factory))
                 continue;
 
             //these bloat the hell out of blood/fat
-            if (entProto.HasComponent<OrganComponent>())
+            if (entProto.HasComp<OrganComponent>(Factory))
                 continue;
 
             //these feel obvious...
-            if (entProto.HasComponent<PillComponent>())
+            if (entProto.HasComp<PillComponent>(Factory))
                 continue;
 
             if (extractableComponent.JuiceSolution is { } juiceSolution)

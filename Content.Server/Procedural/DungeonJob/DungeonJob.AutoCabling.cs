@@ -65,6 +65,8 @@ public sealed partial class DungeonJob
             {
                 var newStart = remaining.First();
                 frontier.Enqueue(newStart, 0f);
+                if (!costSoFar.ContainsKey(newStart))
+                    costSoFar[newStart] = 0f;
                 lastDirection[newStart] = Direction.Invalid;
             }
 
