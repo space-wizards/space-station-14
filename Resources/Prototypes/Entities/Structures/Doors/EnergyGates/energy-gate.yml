@@ -67,8 +67,8 @@
           collection: MetalBreak
   - type: AccessReader
   - type: Construction
-    graph: EnergyGate
-    node: energyGate
+    graph: Turnstile
+    node: turnstile
   - type: DirectionalArrowIndicator
   - type: IconSmooth
     key: walls
