@@ -25,16 +25,20 @@
   parent: BaseAction
   id: ActionChangelingBiodegrade
   name: Biodegrade
-  description: Vomit acid over your restraints, setting yourself free.
+  description: "Vomit acid over your restraints, setting yourself free. \n\nRequires 20 Chemicals."
   components:
   - type: Action
-    useDelay: 60 # TODO: Short cooldown but chemical cost
+    useDelay: 10
     raiseOnAction: true
     checkCanInteract: false
   - type: Sprite
     sprite: Interface/Actions/changeling2.rsi
     layers:
     - state: biodegrade
+  - type: ActionRequireSatiation
+    satiation: Chemicals
+    amount: 20
+    failReason: changeling-not-enough-chemicals
   - type: InstantAction
     event: !type:ChangelingBiodegradeActionEvent
   - type: ChangelingBiodegradeAbility
@@ -93,8 +97,19 @@
     checkCanInteract: false # You can heal even if you are killed
     checkConsciousness: false
   - type: RegenerativeStasisAction
+    minStasisCooldown: 45
+    maxStasisCooldown: 90
   - type: InstantAction
     event: !type:ChangelingStasisActionEvent
+
+- type: entity
+  parent: ActionChangelingStasis
+  id: ActionChangelingStasisWeak
+  components:
+  - type: RegenerativeStasisAction
+    bonusCooldownPerDamage: 1.2 # 50 damage should bring you to 120
+    minStasisCooldown: 60
+    maxStasisCooldown: 120
 
 - type: entity
   parent: ActionIntrinsicStore
@@ -127,12 +142,12 @@
   parent: BaseAction
   id: ActionChangelingStingDna
   name: Extract DNA
-  description: Sneakily absorb the identity of unsuspecting victims. Does not grant DNA to your store or objective progress.
+  description: "Sneakily absorb the identity of unsuspecting victims. Does not grant DNA to your store or objective progress. \n\nRequires 50 Chemicals."
   components:
   - type: Action
     itemIconStyle: BigAction
     priority: 1
-    useDelay: 90 # TODO: Chemical cost, maybe this could be a DoAfter action?
+    useDelay: 20
     raiseOnUser: true
   - type: Sprite
     sprite: Interface/Actions/changeling2.rsi
@@ -142,6 +157,10 @@
     - state: "extract_dna_on"
       map: ["enum.ActionVisuals.IconToggled"]
       visible: false
+  - type: ActionRequireSatiation
+    satiation: Chemicals
+    amount: 50
+    failReason: changeling-not-enough-chemicals
   - type: TargetAction
   - type: EntityTargetAction
     canTargetSelf: false
@@ -165,6 +184,10 @@
       components:
       - Bloodstream
     event: !type:EntityEffectActionEvent
+  - type: ActionRequireSatiation
+    satiation: Chemicals
+    amount: 30
+    failReason: changeling-not-enough-chemicals
   - type: PopupOnAction
     popupType: Medium
     selfMessage: changeling-sting-success
@@ -173,10 +196,10 @@
   parent: BaseActionChangelingSting
   id: ActionChangelingStingBlind
   name: Blind Sting
-  description: Silently sting a target and worsen their sight for a short duration.
+  description: "Silently sting a target and worsen their sight for a short duration. \n\nRequires 30 Chemicals."
   components:
   - type: Action
-    useDelay: 60 # TODO: Chemical cost
+    useDelay: 10
     raiseOnAction: true
     itemIconStyle: BigAction
   - type: Sprite
@@ -193,10 +216,10 @@
   parent: BaseActionChangelingSting
   id: ActionChangelingStingCryogenic
   name: Cryogenic Sting
-  description: Silently sting a target and slow down their movement drastically.
+  description: "Silently sting a target and slow down their movement drastically. \n\nRequires 30 Chemicals."
   components:
   - type: Action
-    useDelay: 60 # TODO: Chemical cost
+    useDelay: 10
     raiseOnAction: true
     itemIconStyle: BigAction
   - type: Sprite
@@ -213,16 +236,18 @@
   parent: BaseActionChangelingSting
   id: ActionChangelingStingLead
   name: Lethal Sting
-  description: Silently sting a target and inject them with a lethal dose of a slow acting poison.
+  description: "Silently sting a target and inject them with a lethal dose of a slow acting poison. \n\nRequires 50 Chemicals."
   components:
   - type: Action
-    useDelay: 180 # TODO: Chemical cost
+    useDelay: 60
     raiseOnAction: true
     itemIconStyle: BigAction
   - type: Sprite
     sprite: Interface/Actions/changeling2.rsi
     layers:
     - state: lethal_sting
+  - type: ActionRequireSatiation
+    amount: 50
   - type: EntityEffectAction
     effects:
     - !type:AddReagentToBloodstream
@@ -233,10 +258,10 @@
   parent: BaseActionChangelingSting
   id: ActionChangelingStingHallucinogenic
   name: Hallucinogenic Sting
-  description: Silently sting a target and inject them with chemicals that slow down their higher brain functions.
+  description: "Silently sting a target and inject them with chemicals that slow down their higher brain functions. \n\nRequires 30 Chemicals."
   components:
   - type: Action
-    useDelay: 90 # TODO: Chemical cost
+    useDelay: 10
     raiseOnAction: true
     itemIconStyle: BigAction
   - type: Sprite

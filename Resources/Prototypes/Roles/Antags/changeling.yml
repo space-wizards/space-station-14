@@ -27,9 +27,14 @@
   - type: RevolutionaryImmune
   - type: ZombieImmune
   - type: ActionGrant
+    removeOnShutdown: false
     actions:
     - ActionChangelingStore
     - ActionChangelingStasis
+  - type: SatiationGrant
+    satiation:
+      Chemicals:
+        prototype: ChemicalsChangeling
   - type: Store
     name: store-preset-name-changeling
     categories:

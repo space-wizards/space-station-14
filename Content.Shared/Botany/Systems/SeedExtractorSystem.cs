@@ -16,13 +16,15 @@ public sealed partial class SeedExtractorSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedPowerReceiverSystem _powerReceiver = default!;
 
+    [Dependency] private EntityQuery<ProduceComponent> _produceQuery = default!;
+
     [SubscribeLocalEvent]
     private void OnInteractUsing(Entity<SeedExtractorComponent> ent, ref InteractUsingEvent args)
     {
         if (!_powerReceiver.IsPowered(ent.Owner))
             return;
 
-        if (!TryComp<ProduceComponent>(args.Used, out var produce))
+        if (!_produceQuery.TryComp(args.Used, out var produce))
             return;
 
         if (produce.PlantProtoId == null)
