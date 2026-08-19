@@ -257,7 +257,7 @@
 
 #Shuttle
 - type: entity
-  parent: AirlockAssembly
+  parent: AirlockShuttleAssembly
   id: AirlockAssemblyShuttle
   categories: [HideSpawnMenu]
   suffix: Shuttle
@@ -267,7 +267,7 @@
     state: "assembly"
 
 - type: entity
-  parent: AirlockAssembly
+  parent: AirlockShuttleAssembly
   id: AirlockAssemblyShuttleGlass
   categories: [HideSpawnMenu]
   suffix: Shuttle, Glass
@@ -362,7 +362,7 @@
 
 #ShuttleSyndicate
 - type: entity
-  parent: AirlockAssembly
+  parent: AirlockShuttleAssembly
   id: AirlockAssemblyShuttleSyndicate
   categories: [HideSpawnMenu]
   suffix: ShuttleSyndicate
@@ -372,7 +372,7 @@
     state: "assembly"
 
 - type: entity
-  parent: AirlockAssembly
+  parent: AirlockShuttleAssembly
   id: AirlockAssemblyShuttleSyndicateGlass
   categories: [HideSpawnMenu]
   suffix: ShuttleSyndicate, Glass
