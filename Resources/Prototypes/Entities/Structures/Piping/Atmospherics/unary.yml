@@ -77,6 +77,7 @@
       guides:
       - AirVent
       - DeviceMonitoringAndControl
+    - type: NodeCrawlVentAccess
 
 - type: entity
   parent: GasUnaryBase
@@ -109,6 +110,7 @@
     - type: GuideHelp
       guides:
       - PassiveVent
+    - type: NodeCrawlVentAccess
 
 - type: entity
   parent: [GasUnaryBase, AirSensorBase]
@@ -167,6 +169,7 @@
       guides:
       - AirScrubber
       - DeviceMonitoringAndControl
+    - type: NodeCrawlVentAccess
 
 - type: entity
   parent: GasUnaryBase
@@ -211,9 +214,10 @@
     - type: GuideHelp
       guides:
       - AirInjector
+    - type: NodeCrawlVentAccess
 
 - type: entity
-  parent: [ BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible ]
+  parent: [ BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible, CrawlablePipeNode ]
   id: BaseGasThermoMachine
   name: thermomachine
   abstract: true
@@ -388,7 +392,7 @@
     board: HellfireHeaterMachineCircuitBoard
 
 - type: entity
-  parent: [ SolutionTank, SolutionHuge, BaseMachinePowered, SmallConstructibleMachine, BaseSmallConstructibleMachineDestructible ]
+  parent: [ SolutionTank, SolutionHuge, BaseMachinePowered, SmallConstructibleMachine, BaseSmallConstructibleMachineDestructible, CrawlablePipeNode ]
   id: BaseGasCondenser
   name: condenser
   description: Condenses gases into liquids. Now we just need some plumbing.

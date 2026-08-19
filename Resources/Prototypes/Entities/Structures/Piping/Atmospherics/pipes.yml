@@ -66,6 +66,7 @@
 
 - type: entity
   abstract: true
+  parent: CrawlablePipeNode
   id: BaseGasPipeLayers
   components:
   - type: AtmosPipeLayers
@@ -327,7 +328,7 @@
     - PipeNetworks
 
 - type: entity
-  parent: GasPipeSansLayers
+  parent: [ GasPipeSansLayers, CrawlablePipeNode ]
   id: GasPipeManifold
   name: gas pipe manifold
   description: Allows gas pipes of different configurations to be connected together.

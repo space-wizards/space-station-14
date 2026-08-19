@@ -289,7 +289,7 @@
 - type: entity
   name: space cobra
   id: MobCobraSpace
-  parent: [MobSpaceBasic, BaseSlicingRefinable, BaseMobDestructible]
+  parent: [MobSpaceBasic, BaseSlicingRefinable, BaseMobDestructible, MobNodeCrawler]
   description: Long fangs and a glowing hood, and the alluring look begs to come closer.
   components:
     - type: Sprite
@@ -499,7 +499,7 @@
         Quantity: 10
 
 - type: entity
-  parent: [SimpleSpaceMobBase, BaseMobAnimal, SolutionVermin, MobNightVision]
+  parent: [SimpleSpaceMobBase, BaseMobAnimal, SolutionVermin, MobNightVision, MobNodeCrawler]
   id: MobSnail
   name: snail
   description: Revolting unless you're french.

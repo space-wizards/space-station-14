@@ -109,7 +109,7 @@
   id: TegCirculator
   name: circulator
   description: Passes gas through the thermo-electric generator to exchange heat. Has an inlet and outlet port.
-  parent: [ BaseMachine, BaseMachineDestructible ]
+  parent: [ BaseMachine, BaseMachineDestructible, CrawlablePipeNode ]
   placement:
     mode: SnapgridCenter
   components:

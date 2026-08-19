@@ -399,7 +399,7 @@
     - SignalValve
 
 - type: entity
-  parent: GasBinaryBase
+  parent: [ GasBinaryBase, CrawlablePipeNode ]
   id: GasPort
   name: connector port
   description: For connecting portable devices related to atmospherics control.
@@ -436,6 +436,7 @@
     - type: GuideHelp
       guides:
       - GasCanisters
+    - type: NodeCrawlVentAccess
 
 - type: entity
   parent: GasVentPump
@@ -494,9 +495,10 @@
     - type: GuideHelp
       guides:
       - AirVent
+    - type: NodeCrawlVentAccess
 
 - type: entity
-  parent: [ BaseMachine, ConstructibleMachine, BaseConstructibleMachineDestructible ]
+  parent: [ BaseMachine, ConstructibleMachine, BaseConstructibleMachineDestructible, CrawlablePipeNode ]
   id: GasRecycler
   name: gas recycler
   description: Recycles carbon dioxide and nitrous oxide. Heater and compressor not included.

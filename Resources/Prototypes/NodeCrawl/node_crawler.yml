@@ -1,0 +1,40 @@
+- type: entity
+  abstract: true
+  id: MobNodeCrawler
+  components:
+  - type: NodeCrawler
+
+- type: entity
+  abstract: true
+  id: CrawlablePipeNode
+  components:
+  - type: CrawlableNode
+    reachableNodeTypes: [ Pipe ]
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  id: NodeCrawlMover
+  components:
+  - type: InputMover
+  - type: NodeCrawlerMovement
+  - type: Physics
+    bodyType: KinematicController
+    canCollide: false
+  - type: ContainerContainer
+    containers:
+      mover-container: !type:Container
+  - type: LagCompensation
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 4
+    baseSprintSpeed: 6
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 15
+        layer:
+        - GhostImpassable
+  - type: Input
+    context: "human"
