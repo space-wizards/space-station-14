@@ -71,6 +71,22 @@
     - Trash
 
 - type: entity
+  id: MagicCrayonMime
+  parent: BaseItem
+  name: magic crayon
+  description: A magic crayon infused with the vow's power.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/crayons.rsi
+    state: mime
+  - type: Item
+    size: Tiny
+    heldPrefix: mime
+  - type: MagicCrayon
+  - type: LimitedCharges
+    maxCharges: 10
+
+- type: entity
   parent: Crayon
   id: CrayonRainbow
   name: rainbow crayon
