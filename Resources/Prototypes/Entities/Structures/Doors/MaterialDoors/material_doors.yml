@@ -135,7 +135,7 @@
 
 - type: entity
   parent: [ BaseMaterialDoorNavMap, StructureHealthDoorWeak]
-  id: SteelDoor # used to be MetalDoor
+  id: SteelDoor
   name: steel door
   components:
   - type: Sprite

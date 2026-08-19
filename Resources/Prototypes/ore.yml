@@ -85,10 +85,6 @@
   oreEntity: MobSpawnCrabGold
 
 - type: ore
-  id: OreBananiumCrab
-  oreEntity: MobSpawnCrabBananium
-
-- type: ore
   id: OreUraniumCrab
   oreEntity: MobSpawnCrabUranium
 

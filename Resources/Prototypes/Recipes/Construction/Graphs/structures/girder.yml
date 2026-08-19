@@ -111,19 +111,6 @@
             - tool: Welding
               doAfter: 20
 
-        - to: bananiumWall
-          completed:
-          - !type:SnapToGrid
-            southRotation: true
-          conditions:
-          - !type:EntityAnchored {}
-          steps:
-          - material: Bananium
-            amount: 2
-            doAfter: 2
-          - tool: Welding
-            doAfter: 20
-
         - to: meatWall
           completed:
             - !type:SnapToGrid
@@ -228,20 +215,6 @@
               doAfter: 20
             - tool: Prying
               doAfter: 10
-
-    - node: bananiumWall
-      entity: WallClown
-      edges:
-      - to: girder
-        completed:
-        - !type:GivePrototype
-          prototype: MaterialBananium1
-          amount: 2
-        steps:
-        - tool: Welding
-          doAfter: 20
-        - tool: Prying
-          doAfter: 10
 
     - node: meatWall
       entity: WallMeat

@@ -160,8 +160,6 @@
     key: walls
     base: brass
 
-
-
 - type: entity
   parent: [ BaseWall, StructureHealthWallWeak ]
   id: WallMeat
@@ -1037,8 +1035,8 @@
 
 - type: entity
   parent: [ BaseWall, StructureHealthBarrierStrong ]
-  id: WallConcrete # WallCobblebrick - look similar enough, its fine
-  name: concrete wall # used to be "cobblestone brick wall"
+  id: WallConcrete
+  name: concrete wall
   components:
   - type: Sprite
     sprite: Structures/Walls/concrete.rsi

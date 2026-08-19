@@ -1,5 +1,5 @@
 - type: constructionGraph
-  id: Turnstile # used to be metal turnstile
+  id: Turnstile
   start: start
   graph:
   - node: start
@@ -9,7 +9,7 @@
     - to: turnstile
       completed:
       - !type:SnapToGrid
-      steps: # TODO: Change material composition to better match the asthetic
+      steps:
       - material: MetalRod
         amount: 4
       - material: Steel
