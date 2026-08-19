@@ -10,7 +10,7 @@ public abstract partial class SharedActionsSystem
         SubscribeLocalEvent<DoAfterArgsComponent, ActionDoAfterEvent>(OnActionDoAfter);
     }
 
-    private bool TryStartActionDoAfter(Entity<DoAfterArgsComponent> ent, Entity<DoAfterComponent?> performer, TimeSpan? originalUseDelay, RequestPerformActionEvent input)
+    private bool TryStartActionDoAfter(Entity<DoAfterArgsComponent> ent, Entity<DoAfterComponent?> performer, TimeSpan? originalUseDelay, ActionArgs input)
     {
         // relay to user
         if (!Resolve(performer, ref performer.Comp))
@@ -76,7 +76,7 @@ public abstract partial class SharedActionsSystem
             args.Args.Delay = ent.Comp.DelayReduction.Value;
 
         // Validate again for charges, blockers, etc
-        if (TryPerformAction(args.Input, performer, skipDoActionRequest: true))
+        if (TryPerformAction(performer, args.Input, skipDoActionRequest: true))
             return;
 
         // Cancel this doafter if we can't validate the action
