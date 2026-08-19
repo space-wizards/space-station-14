@@ -260,6 +260,20 @@
     stackType: FloorTileSteelMini
 
 - type: entity
+  name: steel mono tile
+  parent: FloorTileItemSteel
+  id: FloorTileItemSteelMono
+  components:
+  - type: Sprite
+    state: steel-mono
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorSteelMono
+  - type: Stack
+    stackType: FloorTileSteelMono
+
+- type: entity
   name: steel pavement
   parent: FloorTileItemSteel
   id: FloorTileItemSteelPavement
