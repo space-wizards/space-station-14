@@ -17,8 +17,6 @@ namespace Content.Shared.Nutrition.Components;
 /// <see cref="SatiationTypePrototype"/>s.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
-// Nothing should modify the dictionary once it's deserialized. Perhaps satiations can be dynamically
-// added and removed in the future, but not today.
 [Access(typeof(SatiationSystem))]
 public sealed partial class SatiationComponent : Component
 {
