@@ -104,8 +104,6 @@
     bonusCooldownPerDamage: 1.2 # 50 damage should bring you to 120
     minStasisCooldown: 60
     maxStasisCooldown: 120
-  - type: InstantAction
-    event: !type:ChangelingStasisActionEvent
 
 - type: entity
   parent: ActionIntrinsicStore
