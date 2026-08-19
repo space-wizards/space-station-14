@@ -7,7 +7,10 @@ using Content.Server.Antag.Components;
 using Content.Server.GameTicking;
 using Content.Server.Ghost.Roles;
 using Content.Server.Ghost.Roles.Components;
+using Content.Server.Objectives.Components;
 using Content.Shared.Antag;
+using Content.Shared.Mind;
+using Content.Shared.Objectives.Components;
 using Content.Shared.Players;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -132,5 +135,34 @@ public sealed partial class AntagGhostRoleTest : AntagTest
         // I will not get heisentest due to floating point errors
         Assert.That(MathHelper.CloseTo(sessionXform.Coordinates.X, xform.Coordinates.X, 0.001f), Is.True);
         Assert.That(MathHelper.CloseTo(sessionXform.Coordinates.Y, xform.Coordinates.Y, 0.001f), Is.True);
+    }
+    
+    [Test]
+    [TestOf(typeof(GameTicker)), TestOf(typeof(AntagRandomObjectivesSystem))]
+    [Description("Ensures that no mid-round traitors will spawn in with an objective requiring them to hack the ATS.")]
+    [RunOnSide(Side.Server)]
+    public void TestTraitorReinforcementObjectives()
+    {
+        // very hacky, probably will need to be rewritten later on
+        
+        var mind = ServerSession!.GetMind();
+        var entMan = SEntMan;
+
+        // 10 iterations to account for the RNG factor of objective assignment
+        for (int i = 0; i < 10; i++)
+        {
+            var roleEnumerator = SEntMan.EntityQueryEnumerator<GhostRoleAntagSpawnerComponent, GhostRoleComponent, TransformComponent>();
+            while (roleEnumerator.MoveNext(out var spawner, out var role, out var xform))
+            {
+                AssertGhostRoleTaken(spawner, role, xform);
+                var newMind = ServerSession!.GetMind();
+                Assert.That(newMind, Is.Not.EqualTo(mind));
+                Assert.That(!SEntMan.TryGetComponent(newMind, out HijackTradeStationConditionComponent? hack_ats), "A reinforcement traitor was given the 'hack ATS' objective!!!");
+                mind = newMind;
+            }
+        }
+        // End all rules
+        STicker.ClearGameRules();
+        Assert.That(STicker.GetAddedGameRules(), Is.Empty);
     }
 }
