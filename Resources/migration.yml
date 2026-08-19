@@ -945,36 +945,36 @@ BlastDoorXenoborgOpen: BlastDoorXenoOpen
 FloorTileItemDarkDiagonalMini: FloorTileItemDark
 FloorTileItemDarkDiagonal: FloorTileItemDark
 FloorTileItemDarkOffset: FloorTileItemDark
-FloorTileItemDarkSlatsContinuous: FloorTileItemDark #slats
+FloorTileItemDarkSlatsContinuous: FloorTileItemDarkVerticalSlatsBordered
 
 ### Steel Tiles
 FloorTileItemSteelDiagonalMini: FloorTileItemSteel
 FloorTileItemSteelDiagonal: FloorTileItemSteel
 FloorTileItemSteelOffset: FloorTileItemSteel
-FloorTileItemSteelMono: FloorTileItemSteel #mono
+# FloorTileItemSteelMono: FloorTileItemSteel # no migration for something that is in the game
 FloorTileItemShowroom: FloorTileItemSteel
-FloorTileItemSteelSlatsContinuous: FloorTileItemSteel #should be slats
+FloorTileItemSteelSlatsContinuous: FloorTileItemSteelVerticalSlatsBordered
 
 ### White Tiles
 FloorTileItemWhiteDiagonalMini: FloorTileItemWhite
 FloorTileItemWhiteDiagonal: FloorTileItemWhite
 FloorTileItemWhiteOffset: FloorTileItemWhite
-FloorTileItemWhiteSlatsContinuous: FloorTileItemWhite # there is white slats?
+FloorTileItemWhiteSlatsContinuous: FloorTileItemWhiteVerticalSlatsBordered
 
 ### Misc Tiles
 FloorTileItemUraniumMarble: FloorTileItemDarkMarble
 FloorTileItemPlasmaMarble: FloorTileItemWhiteMarble
 FloorTileItemEighties: FloorTileItemArcadeBlue
 FloorTileItemArcadeBlue2: FloorTileItemArcadeBlue
-FloorTileItemElevatorShaft: null
-FloorTileItemMining: null # at least replace them with something similar
-FloorTileItemMiningLight: null
-FloorTileItemMiningDark: null
-FloorTileItemRockVault: null
+FloorTileItemElevatorShaft: FloorTileItemSteel
+FloorTileItemMining: FloorTileItemDarkPlastic
+FloorTileItemMiningLight: FloorTileItemPlastic
+FloorTileItemMiningDark: FloorTileItemDarkPlastic
+FloorTileItemRockVault: FloorTileItemSteel
 FloorTileItemBrassReebe: null
 FloorTileItemBrassFilled: null
-FloorBananiumEntity: null
-FloorTileItemMono: null
+FloorBananiumEntity: FloorTileItemGold
+FloorTileItemMono: FloorTileItemSteel
 
 # 2026-07-23
 AirAlarmAssemblyXeno: AirAlarmAssembly
@@ -994,13 +994,13 @@ IronsandStep: null
 # MetalDoor: SilverDoor ### It shouldn't be removed just becouse it looks like silver door...
 MiningWindow: ReinforcedWindow
 MiningWindowDiagonal: ReinforcedWindowDiagonal
-FloorTileItemLightAstroGrass: null  # at least replace them with something similar
-FloorTileItemGrayConcrete: null
-FloorTileItemGrayConcreteMono: null
-FloorTileItemGrayConcreteSmooth: null
-FloorTileItemOldConcrete: null
-FloorTileItemOldConcreteMono: null
-FloorTileItemOldConcreteSmooth: null
+FloorTileItemLightAstroGrass: FloorTileItemAstroGrass  # at least replace them with something similar
+FloorTileItemGrayConcrete: FloorTileItemConcrete
+FloorTileItemGrayConcreteMono: FloorTileItemConcreteMono
+FloorTileItemGrayConcreteSmooth: FloorTileItemConcreteSmooth
+FloorTileItemOldConcrete: FloorTileItemConcrete
+FloorTileItemOldConcreteMono: FloorTileItemConcreteMono
+FloorTileItemOldConcreteSmooth: FloorTileItemConcreteSmooth
 FloorTileItemIronsandConcrete: null
 FloorTileItemIronsandConcreteMono: null
 FloorTileItemIronsandConcreteSmooth: null
@@ -1052,7 +1052,7 @@ FloorDesertChasm: FloorChasmEntity
 FloorChromiteChasm: FloorChasmEntity
 
 # 2026-08-06
-FloorTileItemHydro: null
+FloorTileItemHydro: FloorTileItemSteel
 WallRiveted: WallMarble
 WallSpawnAsteroidBananium: null
 WallSpawnAsteroidBananiumCrab: null
