@@ -951,7 +951,7 @@ FloorTileItemDarkSlatsContinuous: FloorTileItemDarkVerticalSlatsBordered
 FloorTileItemSteelDiagonalMini: FloorTileItemSteel
 FloorTileItemSteelDiagonal: FloorTileItemSteel
 FloorTileItemSteelOffset: FloorTileItemSteel
-# FloorTileItemSteelMono: FloorTileItemSteel # no migration for something that is in the game
+# FloorTileItemSteelMono: FloorTileItemSteel # mistake
 FloorTileItemShowroom: FloorTileItemSteel
 FloorTileItemSteelSlatsContinuous: FloorTileItemSteelVerticalSlatsBordered
 
@@ -994,7 +994,7 @@ IronsandStep: null
 # MetalDoor: SilverDoor ### It shouldn't be removed just becouse it looks like silver door...
 MiningWindow: ReinforcedWindow
 MiningWindowDiagonal: ReinforcedWindowDiagonal
-FloorTileItemLightAstroGrass: FloorTileItemAstroGrass  # at least replace them with something similar
+FloorTileItemLightAstroGrass: FloorTileItemAstroGrass
 FloorTileItemGrayConcrete: FloorTileItemConcrete
 FloorTileItemGrayConcreteMono: FloorTileItemConcreteMono
 FloorTileItemGrayConcreteSmooth: FloorTileItemConcreteSmooth
@@ -1044,7 +1044,7 @@ FloorTileItemXenoSteel: FloorTileItemExoHull
 FloorTileItemXenoSteelCorner: FloorTileItemExoCornerSW
 FloorTileItemXenoMaint: FloorTileItemExoTechmaint
 FloorTileItemXenoborg: FloorTileItemExoBorg
-FloorTileItemDarkSquiggly: FloorTileItemExoVertical # check if this helps
+FloorTileItemDarkSquiggly: FloorTileItemExoVertical
 
 # 2026-08-04
 FloorSnowChasm: FloorChasmEntity

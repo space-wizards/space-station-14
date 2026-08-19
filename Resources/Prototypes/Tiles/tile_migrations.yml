@@ -326,7 +326,7 @@
 
 - type: tileAlias
   id: FloorDarkSquiggly
-  target: FloorExoVertical # TODO check vertical variant # needs to be vertical and horizontal at the same time...
+  target: FloorExoVertical # needs to be vertical and horizontal at the same time...
 
 - type: tileAlias
   id: FloorAsphalt
