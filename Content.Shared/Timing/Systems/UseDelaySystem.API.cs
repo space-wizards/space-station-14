@@ -99,7 +99,7 @@ public sealed partial class UseDelaySystem
     public bool GetLastActiveDelay(Entity<UseDelayComponent> delayed, out UseDelayInfo info)
     {
         var success = false;
-        info = new UseDelayInfo();
+        info = new UseDelayInfo(TimeSpan.Zero);
 
         foreach (var entry in delayed.Comp.Delays)
         {
