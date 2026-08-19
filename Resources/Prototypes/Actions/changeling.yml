@@ -282,7 +282,6 @@
     event: !type:ChangelingLastResortActionEvent
   - type: ChangelingLastResortAbility
 
-
 - type: entity
   parent: BaseAction
   id: ActionChangelingTakeOverCorpse
