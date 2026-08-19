@@ -20,11 +20,17 @@ namespace Content.Client.UserInterface.RichText;
 [UsedImplicitly]
 public sealed partial class TextLinkTag : IMarkupTagHandler
 {
-    public static Color DefaultLinkColor => Color.CornflowerBlue;
     [Dependency] private IEntityManager _entity = default!;
     [Dependency] private IUserInterfaceManager _ui = default!;
-    private readonly (string AttributeName, TryResolveLink Resolver)[] _resolvers;
+
+    private const string EntityAttributeName = "entity";
+    private const string LinkAttributeName = "link";
+    private const string ColorOverrideAttributeName = "color"; // LinkColor override
+    private const string UseEntityNameColorAttributeName = "entitynamecolor"; // entity links only: opt into per-entity name coloring
+
     private delegate bool TryResolveLink(MarkupNode node, out LinkData data);
+    private readonly (string AttributeName, TryResolveLink Resolver)[] _resolvers;
+
     private readonly record struct LinkData(string Link, Color? Color, bool Clickable);
 
     public TextLinkTag()
@@ -37,11 +43,7 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
     }
 
     public string Name => "textlink";
-
-    private const string EntityAttributeName = "entity";
-    private const string LinkAttributeName = "link";
-    private const string ColorOverrideAttributeName = "color"; // LinkColor override
-    private const string UseEntityNameColorAttributeName = "entitynamecolor"; // entity links only: opt into per-entity name coloring
+    public static Color DefaultLinkColor => Color.CornflowerBlue;
 
     public bool TryCreateControl(MarkupNode node, [NotNullWhen(true)] out Control? control)
     {
