@@ -18,10 +18,10 @@ public sealed partial class EffectGeneratorComponent : Component
     public EntProtoId EffectPrototype = "JetpackEffect";
 
     /// <summary>
-    /// How it should rotate the effect entity after it spawns
+    /// If it should add a random rotation to the effect
     /// </summary>
     [DataField]
-    public RotationPolicy RotationPolicy = RotationPolicy.NoRotation;
+    public bool RandomRotation;
 
     /// <summary>
     /// Cooldown time between spawning effects
@@ -49,22 +49,4 @@ public sealed partial class EffectGeneratorComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public EntityCoordinates LastCoordinates;
-}
-
-public enum RotationPolicy
-{
-    /// <summary>
-    /// Doesn't rotate the effect entity
-    /// </summary>
-    NoRotation,
-
-    /// <summary>
-    /// Rotate the effect entity to match the direction of motion
-    /// </summary>
-    FollowMotionDirection,
-
-    /// <summary>
-    /// Rotate the effect randomly
-    /// </summary>
-    Random,
 }

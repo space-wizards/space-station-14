@@ -65,15 +65,9 @@ public sealed partial class EffectGeneratorSystem : EntitySystem
 
         var effect = Spawn(entity.Comp.EffectPrototype, coordinates);
 
-        switch (entity.Comp.RotationPolicy)
-        {
-            case RotationPolicy.FollowMotionDirection:
-                _transform.SetWorldRotation(effect, speed.ToWorldAngle());
-                break;
+        if (!entity.Comp.RandomRotation)
+            return;
 
-            case RotationPolicy.Random:
-                _transform.SetWorldRotation(effect, _random.NextAngle());
-                break;
-        }
+        _transform.SetWorldRotation(effect, _random.NextAngle());
     }
 }
