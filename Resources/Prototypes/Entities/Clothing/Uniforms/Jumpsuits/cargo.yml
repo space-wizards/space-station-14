@@ -55,7 +55,7 @@
   name: quartermaster's formal dress
   description: Inspired by the quartermasters of militaries past, the perfect outfit for supplying a formal occasion.
   components:
-    - type: Sprite
-      sprite: Clothing/Uniforms/Jumpsuits/Cargo/qmformaldress.rsi
-    - type: Clothing
-      sprite: Clothing/Uniforms/Jumpsuits/Cargo/qmformaldress.rsi
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuits/Cargo/qmformaldress.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuits/Cargo/qmformaldress.rsi
