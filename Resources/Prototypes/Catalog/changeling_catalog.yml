@@ -143,6 +143,10 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
+  - !type:BuyerChangelingIdentityCountCondition
+    requireDevour: true
+    count: 1
+    lock: true
   productAction: ActionChangelingLastResort
 
 - type: listing

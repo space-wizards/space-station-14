@@ -293,7 +293,6 @@
   - type: Construction
     graph: Seat
     node: chairMeat
-  - type: Damageable
   - type: Injurable
     damageContainer: StructuralBiological
   - type: Destructible
