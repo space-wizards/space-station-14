@@ -4,13 +4,24 @@ using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Hands.Components;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentPause]
 [Access(typeof(SharedHandsSystem))]
-public sealed partial class HandsComponent : Component
+public sealed partial class HandsComponent : Component, IComponentDelta
 {
+    public const uint HandsField = 1 << 0;
+    public const uint SortedHandsField = 1 << 1;
+    public const uint ActiveHandIdField = 1 << 2;
+
+    /// <inheritdoc />
+    public GameTick LastFieldUpdate { get; set; }
+
+    /// <inheritdoc />
+    public GameTick[] LastModifiedFields { get; set; } = default!;
+
     /// <summary>
     ///     The currently active hand.
     /// </summary>
@@ -153,16 +164,42 @@ public partial record struct Hand
 [Serializable, NetSerializable]
 public sealed class HandsComponentState : ComponentState
 {
-    public readonly Dictionary<string, Hand> Hands;
-    public readonly List<string> SortedHands;
-    public readonly string? ActiveHandId;
+    public Dictionary<string, Hand> Hands = default!;
+    public List<string> SortedHands = default!;
+    public string? ActiveHandId;
+}
 
-    public HandsComponentState(HandsComponent handComp)
+[Serializable, NetSerializable]
+public sealed class HandsComponentDeltaState : ComponentState, IComponentDeltaState<HandsComponentState>
+{
+    public uint DirtyFields;
+    public Dictionary<string, Hand>? Hands;
+    public List<string>? SortedHands;
+    public string? ActiveHandId;
+
+    public void ApplyToFullState(HandsComponentState state)
     {
-        // cloning lists because of test networking.
-        Hands = new(handComp.Hands);
-        SortedHands = new(handComp.SortedHands);
-        ActiveHandId = handComp.ActiveHandId;
+        if ((DirtyFields & HandsComponent.HandsField) != 0 && Hands != null)
+            state.Hands = Hands;
+
+        if ((DirtyFields & HandsComponent.SortedHandsField) != 0 && SortedHands != null)
+            state.SortedHands = SortedHands;
+
+        if ((DirtyFields & HandsComponent.ActiveHandIdField) != 0)
+            state.ActiveHandId = ActiveHandId;
+    }
+
+    public HandsComponentState CreateNewFullState(HandsComponentState state)
+    {
+        var fullState = new HandsComponentState
+        {
+            Hands = new(state.Hands),
+            SortedHands = new(state.SortedHands),
+            ActiveHandId = state.ActiveHandId,
+        };
+
+        ApplyToFullState(fullState);
+        return fullState;
     }
 }
 

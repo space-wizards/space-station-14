@@ -67,7 +67,35 @@ namespace Content.Server.Hands.Systems
 
         private void GetComponentState(EntityUid uid, HandsComponent hands, ref ComponentGetState args)
         {
-            args.State = new HandsComponentState(hands);
+            if (args.FromTick > hands.CreationTick && hands.LastFieldUpdate >= args.FromTick)
+            {
+                var dirtyFields = EntityManager.GetModifiedFields(hands, args.FromTick);
+                const uint allFields = HandsComponent.HandsField
+                    | HandsComponent.SortedHandsField
+                    | HandsComponent.ActiveHandIdField;
+
+                // If every field is dirty, this is effectively an initial state. Send a full state so the client
+                // does not receive a component delta before it has a full component state cached.
+                if ((dirtyFields & allFields) != allFields)
+                {
+                    args.State = new HandsComponentDeltaState
+                    {
+                        DirtyFields = dirtyFields,
+                        Hands = (dirtyFields & HandsComponent.HandsField) != 0 ? hands.Hands : null,
+                        SortedHands = (dirtyFields & HandsComponent.SortedHandsField) != 0 ? hands.SortedHands : null,
+                        ActiveHandId = hands.ActiveHandId,
+                    };
+
+                    return;
+                }
+            }
+
+            args.State = new HandsComponentState
+            {
+                Hands = hands.Hands,
+                SortedHands = hands.SortedHands,
+                ActiveHandId = hands.ActiveHandId,
+            };
         }
 
 

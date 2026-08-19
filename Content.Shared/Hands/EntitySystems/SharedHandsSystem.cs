@@ -41,6 +41,11 @@ public abstract partial class SharedHandsSystem
         InitializeRelay();
         InitializeEventListeners();
 
+        EntityManager.ComponentFactory.RegisterNetworkedFields<HandsComponent>(
+            nameof(HandsComponent.Hands),
+            nameof(HandsComponent.SortedHands),
+            nameof(HandsComponent.ActiveHandId));
+
         SubscribeLocalEvent<HandsComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<HandsComponent, MapInitEvent>(OnMapInit);
     }
@@ -93,7 +98,7 @@ public abstract partial class SharedHandsSystem
         ent.Comp.SortedHands.Add(handName);
         // we use LINQ + ToList instead of the list sort because it's a stable sort vs the list sort
         ent.Comp.SortedHands = ent.Comp.SortedHands.OrderBy(handId => ent.Comp.Hands[handId].Location).ToList();
-        Dirty(ent);
+        DirtyFields(ent, null, nameof(HandsComponent.Hands), nameof(HandsComponent.SortedHands));
 
         OnPlayerAddHand?.Invoke((ent, ent.Comp), handName, hand.Location);
 
@@ -122,6 +127,8 @@ public abstract partial class SharedHandsSystem
             return;
 
         ent.Comp.SortedHands.Remove(handName);
+        DirtyFields(ent, null, nameof(HandsComponent.Hands), nameof(HandsComponent.SortedHands));
+
         if (ent.Comp.ActiveHandId == handName)
             TrySetActiveHand(ent, ent.Comp.SortedHands.FirstOrDefault());
 
@@ -329,6 +336,8 @@ public abstract partial class SharedHandsSystem
         if (handId == null)
         {
             ent.Comp.ActiveHandId = null;
+            OnHandSetActive?.Invoke((ent, ent.Comp));
+            DirtyField(ent, nameof(HandsComponent.ActiveHandId));
             return true;
         }
 
@@ -338,7 +347,7 @@ public abstract partial class SharedHandsSystem
         if (TryGetHeldItem(ent, handId, out var newHeld))
             RaiseLocalEvent(newHeld.Value, new HandSelectedEvent(ent));
 
-        Dirty(ent);
+        DirtyField(ent, nameof(HandsComponent.ActiveHandId));
         return true;
     }
 
