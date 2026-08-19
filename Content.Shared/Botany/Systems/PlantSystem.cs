@@ -19,6 +19,8 @@ public sealed partial class PlantSystem : EntitySystem
     [Dependency] private PlantHolderSystem _plantHolder = default!;
 
     [Dependency] private EntityQuery<PlantHolderComponent> _holderQuery = default!;
+    [Dependency] private EntityQuery<PlantToxinsComponent> _toxinsQuery = default!;
+    [Dependency] private EntityQuery<PlantWeedPestComponent> _weedPestQuery = default!;
     [Dependency] private EntityQuery<PlantTrayComponent> _trayQuery = default!;
 
     private readonly List<Entity<PlantHolderComponent>> _holdersToUpdate = [];
@@ -84,29 +86,15 @@ public sealed partial class PlantSystem : EntitySystem
         if (!args.IsInDetailsRange)
             return;
 
-        if (!_holderQuery.TryComp(ent.Owner, out var holder))
+        if (!_holderQuery.HasComp(ent.Owner))
             return;
 
         using (args.PushGroup(nameof(PlantComponent)))
         {
-            if (_plantHolder.IsDead(ent.Owner))
-                args.PushMarkup(Loc.GetString("plant-component-dead-plant-matter-message"));
-
-            if (_plantHolder.GetHealthThreshold(ent.Owner))
+            args.PushMarkup(GetPlantExamineMarkup(ent.AsNullable()));
+            foreach (var mutation in GetPlantMutationDescriptions(ent.Owner))
             {
-                args.PushMarkup(Loc.GetString(
-                    "plant-component-something-already-growing-low-health-message",
-                    ("healthState",
-                        Loc.GetString(holder.Age > ent.Comp.Lifespan
-                            ? "plant-component-plant-old-adjective"
-                            : "plant-component-plant-unhealthy-adjective"))));
-            }
-
-            foreach (var trait in AllComps<PlantTraitsComponent>(ent.Owner)
-                         .OrderBy(trait => trait.GetType().FullName))
-            {
-                if (trait.TraitState is { } traitState)
-                    args.PushMarkup(Loc.GetString(traitState));
+                args.PushMarkup(Loc.GetString(mutation));
             }
         }
     }
@@ -297,6 +285,26 @@ public sealed partial class PlantSystem : EntitySystem
     }
 
     /// <summary>
+    /// Gets the age at which the plant will next become ready for harvest.
+    /// </summary>
+    /// <returns>The plant age at the next harvest, or zero if the plant is unavailable.</returns>
+    [PublicAPI]
+    public int GetNextHarvestAge(Entity<PlantComponent?> ent)
+    {
+        if (!Resolve(ent.Owner, ref ent.Comp, false)
+            || !_holderQuery.TryComp(ent.Owner, out var holder))
+            return 0;
+
+        if (holder.ReadyForHarvest)
+            return holder.Age;
+
+        var productionCycles = (int)MathF.Floor(ent.Comp.Production) + 1;
+        var lastHarvest = holder.Age < ent.Comp.Maturation ? (int)MathF.Ceiling(ent.Comp.Maturation) - 1 : holder.LastHarvest;
+
+        return Math.Max(holder.Age, lastHarvest + productionCycles);
+    }
+
+    /// <summary>
     /// Planting a plant.
     /// </summary>
     [PublicAPI]
@@ -323,15 +331,71 @@ public sealed partial class PlantSystem : EntitySystem
 
         var markup = new List<string>();
         if (ent.Comp.ImproperHeat)
-            markup.Add(Loc.GetString("plant-component-heat-improper-warning"));
+            markup.Add(Loc.GetString("plant-component-improper-heat-warning"));
 
         if (ent.Comp.ImproperPressure)
-            markup.Add(Loc.GetString("plant-component-pressure-improper-warning"));
+            markup.Add(Loc.GetString("plant-component-improper-pressure-warning"));
 
         if (ent.Comp.MissingGas)
-            markup.Add(Loc.GetString("plant-component-gas-missing-warning"));
+            markup.Add(Loc.GetString("plant-component-missing-gas-warning"));
+
+        if (TryGetTray(ent.Owner, out var tray))
+        {
+            if (_toxinsQuery.TryComp(ent.Owner, out var toxins)
+                && tray.Comp.ToxinLevel > toxins.ToxinsTolerance)
+            {
+                markup.Add(Loc.GetString("plant-component-toxins-high-warning"));
+            }
+
+            if (_weedPestQuery.TryComp(ent.Owner, out var weedPest))
+            {
+                if (tray.Comp.WeedLevel > weedPest.WeedTolerance)
+                    markup.Add(Loc.GetString("plant-component-weeds-high-warning"));
+
+                if (tray.Comp.PestLevel > weedPest.PestTolerance)
+                    markup.Add(Loc.GetString("plant-component-pests-high-warning"));
+            }
+        }
 
         return string.Join("\n", markup);
+    }
+
+    /// <summary>
+    /// Gets the non-mutation markup shown when examining a growing plant.
+    /// </summary>
+    [PublicAPI]
+    public string GetPlantExamineMarkup(Entity<PlantComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp, false) || !_holderQuery.TryComp(ent.Owner, out var holder))
+            return string.Empty;
+
+        var markup = new List<string>();
+        if (_plantHolder.IsDead(ent.Owner))
+            markup.Add(Loc.GetString("plant-component-dead-plant-matter-message"));
+
+        if (_plantHolder.GetHealthThreshold(ent.Owner))
+        {
+            markup.Add(Loc.GetString(
+                "plant-component-something-already-growing-low-health-message",
+                ("healthState",
+                    Loc.GetString(holder.Age > ent.Comp.Lifespan
+                        ? "plant-component-plant-old-adjective"
+                        : "plant-component-plant-unhealthy-adjective"))));
+        }
+
+        return string.Join("\n", markup);
+    }
+
+    /// <summary>
+    /// Gets the mutation descriptions shown when examining a growing plant.
+    /// </summary>
+    [PublicAPI]
+    public IEnumerable<LocId> GetPlantMutationDescriptions(EntityUid uid)
+    {
+        return AllComps<PlantTraitsComponent>(uid)
+            .OrderBy(trait => trait.GetType().FullName)
+            .Select(trait => trait.TraitState)
+            .OfType<LocId>();
     }
 
     /// <summary>

@@ -1,0 +1,105 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      xmlns:chemistry="clr-namespace:Content.Client.Chemistry.UI"
+                      xmlns:botany="clr-namespace:Content.Client.Botany.UI"
+                      MinWidth="700"
+                      MinHeight="500">
+    <ScrollContainer VerticalExpand="True"
+                     Margin="5"
+                     ReturnMeasure="True">
+        <BoxContainer Orientation="Vertical"
+                      MinWidth="600">
+            <BoxContainer VerticalExpand="True"
+                          Orientation="Horizontal"
+                          Margin="6 4 6 8"
+                          SeparationOverride="6">
+
+                <PanelContainer StyleClasses="PanelInsetDark">
+                    <GridContainer MinWidth="250"
+                                   MaxWidth="250"
+                                   VerticalExpand="True"
+                                   HorizontalExpand="True"
+                                   Margin="6">
+                        <Label Name="TrayName"
+                               StyleClasses="LabelKeyText"
+                               HorizontalAlignment="Center" />
+                        <SpriteView Name="TraySprite"
+                                    OverrideDirection="South"
+                                    Scale="2 2"
+                                    SetSize="96 96"
+                                    HorizontalAlignment="Center" />
+
+                        <!-- Status -->
+                        <PanelContainer StyleClasses="BackgroundPanel"
+                                        HorizontalExpand="True">
+                            <GridContainer Margin="0 8">
+                                <Label Text="{Loc 'botany-ui-status'}"
+                                       StyleClasses="LabelKeyText" />
+                                <RichTextLabel Name="Status" />
+                            </GridContainer>
+                        </PanelContainer>
+
+                        <!-- Warnings -->
+                        <PanelContainer VerticalExpand="True"
+                                        StyleClasses="BackgroundPanel"
+                                        HorizontalExpand="True">
+                            <GridContainer Margin="0 8">
+                                <Label Text="{Loc 'botany-ui-section-warnings'}"
+                                       StyleClasses="LabelKeyText" />
+                                <BoxContainer Name="Warnings"
+                                              Orientation="Vertical" />
+                            </GridContainer>
+                        </PanelContainer>
+                    </GridContainer>
+                </PanelContainer>
+
+                <BoxContainer Name="Content"
+                              Orientation="Vertical"
+                              HorizontalExpand="True"
+                              SeparationOverride="4">
+
+                    <!-- Resources -->
+                    <PanelContainer VerticalExpand="True"
+                                    StyleClasses="BackgroundPanelDark"
+                                    HorizontalExpand="True">
+                        <GridContainer Margin="0 8">
+                            <Label Text="{Loc 'botany-ui-section-tray'}"
+                                   StyleClasses="LabelKeyText"
+                                   Name="ResourcesHeading"
+                                   Margin="0 0 0 2" />
+                            <GridContainer Name="Resources"
+                                           Columns="2"
+                                           VSeparationOverride="6"
+                                           HSeparationOverride="6"
+                                           HorizontalExpand="True">
+                                <botany:BotanyMetricControl Name="Water"
+                                                            AccentColor="#56B6C2" />
+                                <botany:BotanyMetricControl Name="Nutrients"
+                                                            AccentColor="#E5C07B" />
+                                <botany:BotanyMetricControl Name="Weeds"
+                                                            AccentColor="#7AAB55" />
+                                <botany:BotanyMetricControl Name="Pests"
+                                                            AccentColor="#D19A66" />
+                                <botany:BotanyMetricControl Name="Toxins"
+                                                            AccentColor="#C678DD" />
+                            </GridContainer>
+                        </GridContainer>
+                    </PanelContainer>
+
+                    <!-- Reagents -->
+                    <PanelContainer VerticalExpand="True"
+                                    StyleClasses="BackgroundPanelDark"
+                                    HorizontalExpand="True">
+                        <GridContainer Margin="0 8">
+                            <Label Text="{Loc 'botany-ui-section-reagents'}"
+                                   StyleClasses="LabelKeyText"
+                                   Name="ReagentsHeading"
+                                   Margin="0 0 0 2" />
+                            <chemistry:ReagentDisplayControl Name="Reagents" />
+                        </GridContainer>
+                    </PanelContainer>
+                </BoxContainer>
+            </BoxContainer>
+        </BoxContainer>
+    </ScrollContainer>
+</controls:FancyWindow>

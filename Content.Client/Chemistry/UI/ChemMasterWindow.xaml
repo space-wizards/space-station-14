@@ -1,7 +1,8 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
                 xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+                 xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+                 xmlns:chemistry="clr-namespace:Content.Client.Chemistry.UI"
                 MinSize="620 670"
                 Title="{Loc 'chem-master-bound-user-interface-title'}">
     <TabContainer Name="Tabs" Margin="5 5 7 5">
@@ -20,9 +21,9 @@
 
                 <ScrollContainer HorizontalExpand="True" MinSize="0 200">
                     <!-- Initially empty, when server sends state data this will have container contents and fill volume.-->
-                    <BoxContainer Name="InputContainerInfo" Orientation="Vertical" Margin="4" HorizontalExpand="True">
+                    <chemistry:ReagentDisplayControl Name="InputContainerInfo" Margin="4">
                         <Label Text="{Loc 'chem-master-window-no-container-loaded-text'}" />
-                    </BoxContainer>
+                    </chemistry:ReagentDisplayControl>
                 </ScrollContainer>
             </PanelContainer>
 
@@ -46,9 +47,9 @@
 
                 <ScrollContainer HorizontalExpand="True" MinSize="0 200">
                     <!-- Buffer reagent list -->
-                    <BoxContainer Name="BufferInfo" Orientation="Vertical" Margin="4" HorizontalExpand="True">
+                    <chemistry:ReagentDisplayControl Name="BufferInfo" Margin="4">
                         <Label Text="{Loc 'chem-master-window-buffer-empty-text'}" />
-                    </BoxContainer>
+                    </chemistry:ReagentDisplayControl>
                 </ScrollContainer>
             </PanelContainer>
         </BoxContainer>
@@ -68,9 +69,9 @@
 
                 <ScrollContainer HorizontalExpand="True" MinSize="0 200">
                     <!-- Initially empty, when server sends state data this will have container contents and fill volume.-->
-                    <BoxContainer Name="OutputContainerInfo" Orientation="Vertical" Margin="4" HorizontalExpand="True">
+                    <chemistry:ReagentDisplayControl Name="OutputContainerInfo" Margin="4">
                         <Label Text="{Loc 'chem-master-window-no-container-loaded-text'}" />
-                    </BoxContainer>
+                    </chemistry:ReagentDisplayControl>
                 </ScrollContainer>
             </PanelContainer>
 

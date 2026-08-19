@@ -2,7 +2,6 @@ using JetBrains.Annotations;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Botany.Components;
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.EntityEffects;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
@@ -28,6 +27,7 @@ public sealed partial class PlantTraySystem : EntitySystem
     [Dependency] private SharedTransformSystem _transform = default!;
 
     [Dependency] private EntityQuery<PlantDataComponent> _dataQuery = default!;
+    [Dependency] private EntityQuery<PlantHolderComponent> _holderQuery = default!;
     [Dependency] private EntityQuery<PlantWeedPestComponent> _weedPestQuery = default!;
 
     [SubscribeLocalEvent]
@@ -41,11 +41,11 @@ public sealed partial class PlantTraySystem : EntitySystem
             if (!TryGetPlant(ent.AsNullable(), out var plantUid))
             {
                 args.PushMarkup(Loc.GetString("tray-component-nothing-planted-message"));
-                if (_dataQuery.TryComp(plantUid, out var plantData))
-                {
-                    var name = Loc.GetString(plantData.Name);
-                    args.PushMarkup(Loc.GetString("plant-component-something-already-growing-message", ("seedName", name)));
-                }
+            }
+            else if (_dataQuery.TryComp(plantUid, out var plantData))
+            {
+                var name = Loc.GetString(plantData.Name);
+                args.PushMarkup(Loc.GetString("plant-component-something-already-growing-message", ("seedName", name)));
             }
 
             args.PushMarkup(Loc.GetString("tray-component-water-level-message",
@@ -54,8 +54,6 @@ public sealed partial class PlantTraySystem : EntitySystem
                 ("nutritionLevel", (int)ent.Comp.NutritionLevel)));
 
             args.PushMarkup(GetTrayWarningsMarkup(ent.AsNullable()));
-            if (plantUid != null && ent.Comp.DrawWarnings)
-                args.PushMarkup(_plant.GetPlantWarningsMarkup(plantUid.Value));
         }
     }
 
@@ -121,7 +119,7 @@ public sealed partial class PlantTraySystem : EntitySystem
 
         foreach (var entry in contents)
         {
-            var reagentProto = ProtoMan.Index<ReagentPrototype>(entry.Reagent.Prototype);
+            var reagentProto = ProtoMan.Index(entry.Reagent.Prototype);
             _entityEffects.ApplyEffects(trayUid, [.. reagentProto.PlantMetabolisms], entry.Quantity.Float());
             _entityEffects.ApplyEffects(plantUid.Value, [.. reagentProto.PlantMetabolisms], entry.Quantity.Float());
         }
@@ -252,6 +250,16 @@ public sealed partial class PlantTraySystem : EntitySystem
         return ent.Comp.ToxinLevel >= ent.Comp.MaxToxinLevel * 0.5f;
     }
 
+
+    /// <summary>
+    /// Checks whether the tray contains a plant entity.
+    /// </summary>
+    [PublicAPI]
+    public bool HasPlant(Entity<PlantTrayComponent?> ent)
+    {
+        return TryGetPlant(ent, out _);
+    }
+
     /// <summary>
     /// Tries to get the plant entity in the tray.
     /// </summary>
@@ -273,7 +281,11 @@ public sealed partial class PlantTraySystem : EntitySystem
         return true;
     }
 
-    public bool TryGetAlivePlant(Entity<PlantTrayComponent?> ent)
+    /// <summary>
+    /// Checks whether the tray contains a living plant entity.
+    /// </summary>
+    [PublicAPI]
+    public bool HasAlivePlant(Entity<PlantTrayComponent?> ent)
     {
         return TryGetAlivePlant(ent, out _);
     }
@@ -305,19 +317,32 @@ public sealed partial class PlantTraySystem : EntitySystem
 
         var markup = new List<string>();
         if (GetWeedThreshold(ent))
-            markup.Add(Loc.GetString("tray-component-weed-high-level-warning"));
+            markup.Add(Loc.GetString("tray-component-weeds-high-warning"));
 
         if (GetWaterThreshold(ent))
             markup.Add(Loc.GetString("tray-component-water-low-warning"));
 
         if (GetNutrientThreshold(ent))
-            markup.Add(Loc.GetString("tray-component-nutrient-low-warning"));
+            markup.Add(Loc.GetString("tray-component-nutrients-low-warning"));
 
         if (GetToxinThreshold(ent))
-            markup.Add(Loc.GetString("tray-component-toxin-high-level-warning"));
+            markup.Add(Loc.GetString("tray-component-toxins-high-warning"));
 
         if (GetPestThreshold(ent))
-            markup.Add(Loc.GetString("tray-component-pest-high-level-warning"));
+            markup.Add(Loc.GetString("tray-component-pests-high-warning"));
+
+        if (ent.Comp.DrawWarnings && TryGetPlant(ent, out var plantUid)
+            && _holderQuery.TryComp(plantUid.Value, out var holder))
+        {
+            if (holder.ImproperHeat)
+                markup.Add(Loc.GetString("tray-component-plant-improper-heat-warning"));
+
+            if (holder.ImproperPressure)
+                markup.Add(Loc.GetString("tray-component-plant-improper-pressure-warning"));
+
+            if (holder.MissingGas)
+                markup.Add(Loc.GetString("tray-component-plant-missing-gas-warning"));
+        }
 
         return string.Join("\n", markup);
     }
