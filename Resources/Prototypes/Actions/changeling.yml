@@ -97,26 +97,11 @@
     event: !type:ChangelingStasisActionEvent
 
 - type: entity
-  parent: BaseMentalAction
+  parent: ActionChangelingStasis
   id: ActionChangelingStasisWeak
-  name: "[color=red]Enter Stasis[/color]"
-  description: Enter a regenerative stasis, faking death and allowing to regenerate all damage.
   components:
-  - type: Sprite
-    sprite: Interface/Actions/changeling.rsi
-    layers:
-    - state: "stasis_enter"
-      map: [ "enum.ActionVisuals.Icon" ]
-    - state: "stasis_exit"
-      map: [ "enum.ActionVisuals.IconToggled" ]
-      visible: false
-  - type: Action
-    raiseOnAction: true
-    useDelay: 2
-    checkCanInteract: false # You can heal even if you are killed
-    checkConsciousness: false
   - type: RegenerativeStasisAction
-    bonusCooldownPerDamage: 2.4 # 25 damage should bring you to 120
+    bonusCooldownPerDamage: 1.2 # 50 damage should bring you to 120
     minStasisCooldown: 60
     maxStasisCooldown: 120
   - type: InstantAction
