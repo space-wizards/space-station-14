@@ -144,12 +144,12 @@
   # that means we only need to copy them over when switching between species.
   # So these don't need to be part of the Body settings, unless someone makes a trait that adjusts these components.
   - BodyEmotes
-  - MessyDrinker
   # - Fixtures TODO: A better way to clone fixtures or a fixture fix. Currently if you devour someone on the ground and transform, you lose collision with tables as they were knocked down when they were copied.
+  - MessyDrinker
+  - ScaleVisuals # for dwarf height
   - Speech
   - TemperatureProtection
   - TypingIndicator
-  - ScaleVisuals # for dwarf height
   # CloningContext components
   - Bloodstream # blood reagents
   - Inventory # arachnid pockets and diona feet
@@ -181,13 +181,13 @@
   id: PlantClone
   components:
   - Plant
-  - PlantHarvest
-  - PlantChemicals
-  - PlantGrowth
   - PlantAtmospheric
+  - PlantChemicals
   - PlantConsumeExudeGas
-  - PlantWeedPest
+  - PlantGrowth
+  - PlantHarvest
   - PlantToxins
+  - PlantWeedPest
   # traits
   - PlantTraitKudzu
   - PlantTraitLigneous
@@ -199,10 +199,10 @@
   parent: PlantClone
   id: PlantLifecycleClone
   components:
+  - PlantHolder
   # traits
   - PlantTraitSampled
   - PlantTraitSeedless
-  - PlantHolder
 
 # for cloned items
 - type: cloningSettings
