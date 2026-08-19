@@ -116,7 +116,7 @@
     checkCanInteract: false # You can heal even if you are killed
     checkConsciousness: false
   - type: RegenerativeStasisAction
-    bonusCooldownPerDamage: 0.3 # 200 damage should bring you to 120
+    bonusCooldownPerDamage: 2.4 # 25 damage should bring you to 120
     minStasisCooldown: 60
     maxStasisCooldown: 120
   - type: InstantAction
