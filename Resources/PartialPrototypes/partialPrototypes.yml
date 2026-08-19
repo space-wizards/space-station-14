@@ -1,0 +1,13 @@
+﻿# This is where you should mark directories as partial downstream, allowing you to modify upstream prototypes from files different from the original.
+# Partial prototypes allow you to add and remove data, and remove components.
+# For up-to-date documentation on how partial prototypes work, see the documentation on IPrototypeManager.PartialDirectory
+# The order matters, partials are applied in the order in which they are marked here.
+# For example, if two directories modify the same prototype, the first patch will be applied first, and then the second.
+
+# You can specify both directories and specific files by adding lines like:
+#
+# - /Prototypes/_ForkOne
+# - /Prototypes/Catalog/uplink_catalog.yml
+
+# You can also use multiple files in this directory instead of only this one.
+# Files are ordered by their name, so prototypes found in paths specified inside a.yml will be applied first, and b.yml second.
