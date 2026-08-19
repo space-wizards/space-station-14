@@ -75,13 +75,10 @@
   - SouthernAccent
   - SpanishAccent
   - StutteringAccent
-<<<<<<< HEAD
-=======
-  eventComponents:
+  # CloningContext fields
   - Damageable # Sprites and damage modifier
   - Flammable # Displacements
   - CreamPied # Displacements
->>>>>>> fe0c7e07422bae44d219eaa3cc8e76dc3406b2d5
   - Hands # displacements
   - Puller
   - Vocal # voice sounds
@@ -153,14 +150,15 @@
   - TemperatureProtection
   - TypingIndicator
   - ScaleVisuals # for dwarf height
+  # CloningContext components
+  - Bloodstream # blood reagents
   - Inventory # arachnid pockets and diona feet
-  - Wagging # lizard tails
-  - Storage # slime storage
+  - JumpAbility # vulp leaping
+  - MovementSpeedModifier # moths when weightless
   - Rootable # diona
   - Sericulture # arachnids
-  - MovementSpeedModifier # moths when weightless
-  - JumpAbility # vulp leaping
-  - Bloodstream # blood reagents
+  - Storage # slime storage
+  - Wagging # lizard tails
   copyInternalStorage: false
   copyImplants: false
   raiseEntityRenamedEvent: false
@@ -210,9 +208,10 @@
 - type: cloningSettings
   id: ItemClone
   components:
-  - Stack
+  - ChameleonClothing
+  - Forensics
   - Label
   - Paper
-  - Forensics
+  - Stack
+  # CloningContext components
   - Store
-  - ChameleonClothing
