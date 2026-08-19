@@ -1,8 +1,7 @@
 ﻿- type: entity
   parent: AirlockRCDResistant
   id: AirlockShuttle
-  suffix: Docking
-  name: external airlock
+  name: docking airlock
   description: Necessary for connecting two space craft together.
   components:
   - type: Docking
@@ -102,7 +101,7 @@
 - type: entity
   id: AirlockGlassShuttle
   parent: AirlockShuttle
-  suffix: Glass, Docking
+  suffix: Glass
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/shuttle-base.rsi
@@ -119,14 +118,9 @@
 - type: entity
   id: AirlockShuttleAssembly
   parent: AirlockAssembly
-  name: external airlock assembly
-  suffix: Docking
+  name: docking airlock assembly
   description: An incomplete structure necessary for connecting two space craft together.
   components:
-  - type: Transform
-    anchored: true
-    noRot: false
-  - type: Rotatable
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/shuttle-base.rsi
     state: closed
@@ -152,7 +146,7 @@
 - type: entity
   parent: AirlockShuttle
   id: AirlockShuttleXenoborg
-  name: external mechadermis airlock
+  name: docking mechadermis airlock
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/shuttle-xenoborg.rsi
