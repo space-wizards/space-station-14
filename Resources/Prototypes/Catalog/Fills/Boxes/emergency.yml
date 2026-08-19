@@ -14,7 +14,7 @@
   parent: BaseBoxSurvival
   id: BoxSurvival
   name: O2 survival box
-  description: A small box containing a breath mask, an emergency oxygen tank, and an emergency medipen. Standard-issue for most oxygen-breathing crew.
+  description: A small box containing a breath mask, an emergency oxygen tank, an emergency medipen, a flare, and a utility knife. Standard-issue for most oxygen-breathing crew.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -24,6 +24,7 @@
         - id: EmergencyOxygenTankFilled
         - id: EmergencyMedipen
         - id: Flare
+        - id: UtilityKnife
   - type: Sprite
     layers:
     - state: internals
@@ -33,7 +34,7 @@
   parent: BaseBoxSurvival
   id: BoxSurvivalNitrogen
   name: N2 survival box
-  description: A small box containing a breath mask, an emergency nitrogen tank, and an emergency medipen. Standard-issue for most nitrogen-breathing crew.
+  description: A small box containing a breath mask, an emergency nitrogen tank, an emergency medipen, a flare, and a utility knife. Standard-issue for most nitrogen-breathing crew.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -43,6 +44,7 @@
         - id: EmergencyNitrogenTankFilled
         - id: EmergencyMedipen
         - id: Flare
+        - id: UtilityKnife
   - type: Sprite
     layers:
     - state: internals
@@ -52,7 +54,7 @@
   parent: BoxSurvival
   id: BoxSurvivalEngineering
   name: extended-capacity O2 survival box
-  description: A small box containing a breath mask, an extended-capacity emergency oxygen tank, and an emergency medipen. Issued to oxygen-breathing crew whose job responsibilities often take them to places with no atmosphere.
+  description: A small box containing a breath mask, an extended-capacity emergency oxygen tank, an emergency medipen, a flare, and a utility knife. Issued to oxygen-breathing crew whose job responsibilities often take them to places with no atmosphere.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -62,6 +64,7 @@
         - id: ExtendedEmergencyOxygenTankFilled
         - id: EmergencyMedipen
         - id: Flare
+        - id: UtilityKnife
   - type: Sprite
     layers:
     - state: internals
@@ -71,7 +74,7 @@
   parent: BoxSurvivalNitrogen
   id: BoxSurvivalEngineeringNitrogen
   name: extended-capacity N2 survival box
-  description: A small box containing a breath mask, an extended-capacity emergency nitrogen tank, and an emergency medipen. Issued to nitrogen-breathing crew whose job responsibilities often take them to places with no atmosphere.
+  description: A small box containing a breath mask, an extended-capacity emergency nitrogen tank, an emergency medipen, a flare, and a utility knife. Issued to nitrogen-breathing crew whose job responsibilities often take them to places with no atmosphere.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -81,6 +84,7 @@
         - id: ExtendedEmergencyNitrogenTankFilled
         - id: EmergencyMedipen
         - id: Flare
+        - id: UtilityKnife
   - type: Sprite
     layers:
     - state: internals
@@ -90,7 +94,7 @@
   parent: BoxSurvival
   id: BoxSurvivalSecurity
   name: security O2 survival box
-  description: A small box containing a gas mask, an emergency oxygen tank, and an emergency medipen. Issued to oxygen-breathing members of the security staff.
+  description: A small box containing a gas mask, an emergency oxygen tank, an emergency medipen, a flare, and a utility knife. Issued to oxygen-breathing members of the security staff.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -100,12 +104,13 @@
         - id: EmergencyOxygenTankFilled
         - id: EmergencyMedipen
         - id: Flare
+        - id: UtilityKnife
 
 - type: entity
   parent: BoxSurvivalNitrogen
   id: BoxSurvivalSecurityNitrogen
   name: security N2 survival box
-  description: A small box containing a gas mask, an emergency nitrogen tank, and an emergency medipen. Issued to nitrogen-breathing members of the security staff.
+  description: A small box containing a gas mask, an emergency nitrogen tank, an emergency medipen, a flare, and a utility knife. Issued to nitrogen-breathing members of the security staff.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -115,6 +120,7 @@
         - id: EmergencyNitrogenTankFilled
         - id: EmergencyMedipen
         - id: Flare
+        - id: UtilityKnife
   - type: Sprite
     layers:
     - state: internals
@@ -124,7 +130,7 @@
   parent: BoxSurvival
   id: BoxSurvivalMedical
   name: medical O2 survival box
-  description: A small box containing a medical mask, an emergency oxygen tank, and an emergency medipen. Issued to oxygen-breathing members of the medical staff.
+  description: A small box containing a medical mask, an emergency oxygen tank, an emergency medipen, a flare, and a utility knife. Issued to oxygen-breathing members of the medical staff.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -134,12 +140,13 @@
         - id: EmergencyOxygenTankFilled
         - id: EmergencyMedipen
         - id: Flare
+        - id: UtilityKnife
 
 - type: entity
   parent: BoxSurvivalNitrogen
   id: BoxSurvivalMedicalNitrogen
   name: medical N2 survival box
-  description: A small box containing a medical mask, an emergency nitrogen tank, and an emergency medipen. Issued to nitrogen-breathing members of the medical staff.
+  description: A small box containing a medical mask, an emergency nitrogen tank, an emergency medipen, a flare, and a utility knife. Issued to nitrogen-breathing members of the medical staff.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -149,6 +156,7 @@
         - id: EmergencyNitrogenTankFilled
         - id: EmergencyMedipen
         - id: Flare
+        - id: UtilityKnife
   - type: Sprite
     layers:
     - state: internals
@@ -167,6 +175,7 @@
         - id: EmergencyFunnyOxygenTankFilled
         - id: EmergencyMedipen
         - id: Flare
+        - id: UtilityKnife
 
 - type: entity
   parent: BoxSurvivalHug
@@ -181,6 +190,7 @@
         - id: EmergencyNitrogenTankFilled # This should probably be replaced by an equivalent to the funny emergency oxygen tank, once that exists
         - id: EmergencyMedipen
         - id: Flare
+        - id: UtilityKnife
 
 # Primarily intended for antagonists that spawn outside the station (e.g ninjas, wizards)
 # Contains food and water because, unlike normal crew, we don't want to force them to seek food mid-round.
@@ -189,7 +199,7 @@
   parent: BoxCardboard
   id: BoxSurvivalDeluxeExtended
   name: deluxe extended-capacity O2 survival box
-  description: A deluxe survival box containing a breath mask, an extended-capacity emergency oxygen tank, an emergency medipen, an emergency flare, and a bit of food and water.
+  description: A deluxe survival box containing a breath mask, an extended-capacity emergency oxygen tank, an emergency medipen, a flare, and a bit of food and water.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -210,7 +220,7 @@
   parent: BoxSurvivalDeluxeExtended
   id: BoxSurvivalDeluxeExtendedNitrogen
   name: deluxe extended-capacity N2 survival box
-  description: A deluxe survival box containing a breath mask, an extended-capacity emergency oxygen tank, an emergency medipen, an emergency flare, and a bit of food and water.
+  description: A deluxe survival box containing a breath mask, an extended-capacity emergency oxygen tank, an emergency medipen, a flare, and a bit of food and water.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -234,7 +244,7 @@
   parent: BoxCardboard
   id: BoxSurvivalSyndicate
   name: syndicate O2 survival box
-  description: A Syndicate-designed survival box containing a syndicate gas mask, an extended-capacity emergency oxygen tank, an emergency medipen, an emergency flare, and a bit of food.
+  description: A Syndicate-designed survival box containing a syndicate gas mask, an extended-capacity emergency oxygen tank, an emergency medipen, a flare, and a bit of food.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -254,7 +264,7 @@
   parent: BoxSurvivalSyndicate
   id: BoxSurvivalSyndicateNitrogen
   name: syndicate N2 survival box
-  description: A Syndicate-designed survival box containing a syndicate gas mask, an extended-capacity emergency nitrogen tank, an emergency medipen, an emergency flare, and a bit of food.
+  description: A Syndicate-designed survival box containing a syndicate gas mask, an extended-capacity emergency nitrogen tank, an emergency medipen, a flare, and a bit of food.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -277,7 +287,7 @@
   parent: BoxCardboardSmall
   id: BoxSurvivalMilitaryDouble
   name: military O2 survival box
-  description: A military-grade survival box containing a double-capacity emergency oxygen tank, an emergency medipen, and an emergency flare.
+  description: A military-grade survival box containing a double-capacity emergency oxygen tank, an emergency medipen, and a flare.
   components:
   - type: EntityTableContainerFill
     containers:
