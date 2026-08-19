@@ -602,6 +602,18 @@
   id: CarpStatue
   graph: CarpStatue
   targetNode: statue
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: BananiumClownStatue
+  graph: BananiumStatueClown
+  targetNode: bananiumStatue
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: BananiumAltar
+  graph: BananiumAltarGraph
+  targetNode: bananiumAltar
 # endregion Decoration
 
 # region Miscallaneous
