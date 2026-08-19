@@ -50,7 +50,7 @@ public sealed class WireLayoutTest : GameTest
             layoutId: WireLayoutTest3
         """;
 
-    [SidedDependency(Side.Server)] private EntityQuery<WiresComponent> _sQuery;
+    [SidedDependency(Side.Server)] private EntityQuery<WiresComponent> _sQuery = default!;
 
     [Test]
     public async Task TestLayoutInheritance()
