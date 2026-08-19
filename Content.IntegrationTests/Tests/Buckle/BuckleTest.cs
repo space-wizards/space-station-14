@@ -1,6 +1,8 @@
 #nullable enable
 using System.Numerics;
 using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures.Attributes;
+using Content.IntegrationTests.NUnit.Constraints;
 using Content.Shared.Buckle;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Buckle.Components;
@@ -8,7 +10,6 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Standing;
 using Robust.Shared.GameObjects;
-using Content.IntegrationTests.Fixtures.Attributes;
 
 namespace Content.IntegrationTests.Tests.Buckle;
 
@@ -252,7 +253,7 @@ public sealed partial class BuckleTest : GameTest
             using (Assert.EnterMultipleScope())
             {
                 Assert.That(STryComp(human, out buckle));
-                Assert.That(STryComp<StrapComponent>(chair, out _));
+                Assert.That(chair, Has.Comp<StrapComponent>(Server));
                 Assert.That(STryComp(human, out hands));
             }
 
