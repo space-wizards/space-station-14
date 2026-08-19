@@ -181,7 +181,7 @@
   name: reagent-name-romerodone
   group: Biological
   desc: reagent-desc-romerodone
-  physicalDesc: reagent-physical-desc-undead
+  physicalDesc: reagent-physical-desc-necrotic
   flavor: metallic
   color: "#e62600"
   metabolisms:
