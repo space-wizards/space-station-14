@@ -1748,7 +1748,7 @@
     - state: icon-xenoborg-guided-missile
   - type: BorgModuleWhitelist
     moduleBlacklist:
-    tags:
+      tags:
       - XenoborgModuleSecondaryWeapon
       - XenoborgModuleWithSimpleOverlay
   - type: ComponentBorgModule
@@ -1781,7 +1781,7 @@
     - state: icon-xenoborg-rocket
   - type: BorgModuleWhitelist
     moduleBlacklist:
-    tags:
+      tags:
       - XenoborgModuleSecondaryWeapon
       - XenoborgModuleWithSimpleOverlay
   - type: ItemBorgModule
