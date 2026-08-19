@@ -97,7 +97,7 @@ public sealed partial class ExplosionSystem
         var tolerance = new FixedPoint2[_explosionTypes.Count];
         var blockedDirections = AtmosDirection.Invalid;
 
-        var anchoredEnumerator = _map.GetAnchoredEntitiesEnumerator(gridId, grid, tile);
+        var anchoredEnumerator = _map.GetAnchoredEntities(gridId, grid, tile);
 
         while (anchoredEnumerator.MoveNext(out var uid))
         {
