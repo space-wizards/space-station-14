@@ -189,7 +189,7 @@
     Bloodstream:
       effects:
       - !type:AdjustTemperature
-        amount: 80000 # Heats you up as it metabolizes necessitating constant cooling.
+        amount: 40000 # Heats you up as it metabolizes necessitating constant cooling.
       - !type:EvenHealthChange
         conditions:
         - !type:TemperatureCondition
@@ -1334,7 +1334,7 @@
     Bloodstream:
       effects:
       - !type:AdjustTemperature
-        amount: 80000 # Heats you up as it metabolizes necessitating constant cooling.
+        amount: 40000 # Heats you up as it metabolizes necessitating constant cooling.
       - !type:EvenHealthChange
         conditions:
         - !type:TemperatureCondition
