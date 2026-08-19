@@ -28,6 +28,7 @@ public sealed partial class CloningContext :
     ITypeCopier<BloodstreamComponent>,
     ITypeCopier<CreamPiedComponent>,
     ITypeCopier<DamageableComponent>,
+    ITypeCopier<FlammableComponent>,
     ITypeCopier<HandsComponent>,
     ITypeCopier<InventoryComponent>,
     ITypeCopier<JumpAbilityComponent>,
