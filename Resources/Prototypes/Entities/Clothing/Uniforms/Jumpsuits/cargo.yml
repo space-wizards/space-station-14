@@ -48,14 +48,3 @@
     sprite: Clothing/Uniforms/Jumpsuits/Cargo/qmformal.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuits/Cargo/qmformal.rsi
-
-- type: entity
-  parent: [ClothingUniformBase, BaseCommandContraband]
-  id: ClothingUniformJumpsuitQMFormalDress
-  name: quartermaster's formal dress
-  description: Inspired by the quartermasters of militaries past, the perfect outfit for supplying a formal occasion.
-  components:
-  - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuits/Cargo/qmformaldress.rsi
-  - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuits/Cargo/qmformaldress.rsi
