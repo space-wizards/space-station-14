@@ -25,6 +25,7 @@
   - type: ActionGrant
     actions:
     - ActionChangelingStore
+    - ActionChangelingStasis
   - type: Store
     name: store-preset-name-changeling
     categories:
