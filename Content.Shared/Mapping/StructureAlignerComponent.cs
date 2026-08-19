@@ -1,3 +1,5 @@
+using Robust.Shared.GameStates;
+
 namespace Content.Shared.Mapping;
 
 /// <summary>
@@ -7,17 +9,19 @@ namespace Content.Shared.Mapping;
 /// See StructureAlignerSystem.
 /// </summary>
 [RegisterComponent]
+[NetworkedComponent]
+[AutoGenerateComponentState]
 public sealed partial class StructureAlignerComponent : Component
 {
     /// <summary>
     /// The type that this entity will align to.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public StructureAlignType AlignType = StructureAlignType.Door;
 
     /// <summary>
     /// Align the entity when it gets anchored.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool AnchorAlign;
 }
