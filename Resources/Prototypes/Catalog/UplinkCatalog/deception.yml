@@ -173,3 +173,14 @@
     Telecrystal: 1
   categories:
   - UplinkDeception
+
+  #- type: listing
+#  id: uplinkd2DiceTricked
+#  name: uplink-weighted-coin-name
+#  description: uplink-weighted-coin-desc
+#  productEntity: d2DiceTricked
+#  cost:
+#    Telecrystal: 1
+#  categories:
+#    - UplinkDeception
+#   TODO: Make it so that the traitor can choose which side of the coin is weighted, or if its fair. Lock it like chameleon items.

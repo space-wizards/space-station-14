@@ -97,7 +97,7 @@
       damage:
         types:
           Blunt: 20
-          Structural: 20
+          Structural: 8 # Activate Star Platinum's signature move: Digging a hole
     - type: MeleeSpeech
     - type: UserInterface
       interfaces:
@@ -232,9 +232,8 @@
     - type: Inventory
       templateId: holoclown
     - type: Hands
-      activeHandId: Hand
-      hands:
-        Hand:
+      startingHands:
+        hand_left:
           location: Left
     - type: ComplexInteraction
     - type: MeleeWeapon

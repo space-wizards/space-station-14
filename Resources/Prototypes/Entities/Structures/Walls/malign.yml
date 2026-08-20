@@ -1,0 +1,54 @@
+- type: entity
+  abstract: true
+  parent: BaseStructureWall
+  id: WallMalignBase
+  name: malign wall
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/malign.rsi
+  - type: Icon
+    sprite: Structures/Walls/malign.rsi
+  - type: IconSmooth
+    key: walls
+    base: malign
+  - type: RadiationBlocker
+    resistance: 9
+
+- type: entity
+  parent: WallMalignBase
+  id: WallMalignIndestructibleNoOcclusion
+  name: malign wall
+  suffix: indestructible, no occlusion
+  components:
+  - type: Godmode
+
+- type: entity
+  parent: WallMalignBase
+  id: WallMalignIndestructible
+  name: malign wall
+  suffix: indestructible
+  components:
+  - type: Occluder
+  - type: Godmode
+
+- type: entity
+  parent: WallMalignBase
+  id: WallMalign
+  name: malign wall
+  components:
+  - type: Occluder
+  - type: Damageable
+    damageModifierSet: StructuralMetallicStrong
+  - type: Injurable
+    damageContainer: StructuralInorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
