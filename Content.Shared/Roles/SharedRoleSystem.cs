@@ -171,7 +171,7 @@ public abstract partial class SharedRoleSystem : EntitySystem
 
         // RoleType refresh, Role time tracking, Update Admin playerlist
 
-        var message = new RoleAddedEvent(mindId, mind, update, silent);
+        var message = new RoleAddedEvent((mindRoleId.Value, mindRoleComp), (mindId, mind), update, silent);
         RaiseLocalEvent(mindId, message, true);
 
         var name = Loc.GetString(protoEnt.Name);
@@ -406,7 +406,7 @@ public abstract partial class SharedRoleSystem : EntitySystem
 
         var update = MindRolesUpdate(mind);
 
-        var message = new RoleRemovedEvent(mind.Owner, mind.Comp, update);
+        var message = new RoleRemovedEvent((mind.Owner, mind.Comp), update);
         RaiseLocalEvent(mind, message, true);
 
         _adminLogger.Add(LogType.Mind,

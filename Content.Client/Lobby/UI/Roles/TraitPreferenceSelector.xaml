@@ -1,7 +1,17 @@
 <Control xmlns="https://spacestation14.io"
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-        <BoxContainer Name="Container"
-                      Orientation="Horizontal">
-            <CheckBox Name="Checkbox" Access="Public"/>
+    <PanelContainer Name="Container"
+                  Access="Public">
+        <BoxContainer>
+            <CheckBox Name="Checkbox"
+                      Access="Public"
+                      SizeFlagsStretchRatio="3"
+                      HorizontalExpand="True"/>
+            <CheckBox Name="CheckboxAntagDisable"
+                      Access="Public"
+                      SizeFlagsStretchRatio="3"
+                      HorizontalExpand="True"
+                      ClipText="True"/>
         </BoxContainer>
+    </PanelContainer>
 </Control>

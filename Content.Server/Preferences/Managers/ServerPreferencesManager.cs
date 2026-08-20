@@ -96,6 +96,7 @@ namespace Content.Server.Preferences.Managers
             var jobs = profile.Jobs.ToDictionary(j => new ProtoId<JobPrototype>(j.JobName), j => (JobPriority) j.Priority);
             var antags = profile.Antags.Select(a => new ProtoId<AntagPrototype>(a.AntagName));
             var traits = profile.Traits.Select(t => new ProtoId<TraitPrototype>(t.TraitName));
+            var antagDisableTraits = profile.Traits.Where(x => x.AntagDisable).Select(t => new ProtoId<TraitPrototype>(t.TraitName));
 
             var sex = Sex.Male;
             if (Enum.TryParse<Sex>(profile.Sex, true, out var sexVal))
@@ -195,6 +196,7 @@ namespace Content.Server.Preferences.Managers
                 (PreferenceUnavailableMode) profile.PreferenceUnavailable,
                 antags.ToHashSet(),
                 traits.ToHashSet(),
+                antagDisableTraits.ToHashSet(),
                 loadouts
             );
         }

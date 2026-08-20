@@ -62,6 +62,12 @@ namespace Content.Shared.Preferences
         private HashSet<ProtoId<TraitPrototype>> _traitPreferences = new();
 
         /// <summary>
+        /// Traits that should be disabled if an antag is selected for the character.
+        /// </summary>
+        [DataField]
+        private HashSet<ProtoId<TraitPrototype>> _antagDisableTraitPreferences = new();
+
+        /// <summary>
         /// <see cref="_loadouts"/>
         /// </summary>
         public IReadOnlyDictionary<string, RoleLoadout> Loadouts => _loadouts;
@@ -124,6 +130,11 @@ namespace Content.Shared.Preferences
         public IReadOnlySet<ProtoId<TraitPrototype>> TraitPreferences => _traitPreferences;
 
         /// <summary>
+        /// <see cref="_antagDisableTraitPreferences"/>
+        /// </summary>
+        public HashSet<ProtoId<TraitPrototype>> AntagDisableTraitPreferences => _antagDisableTraitPreferences;
+
+        /// <summary>
         /// If we're unable to get one of our preferred jobs do we spawn as a fallback job or do we stay in lobby.
         /// </summary>
         [DataField]
@@ -144,6 +155,7 @@ namespace Content.Shared.Preferences
             PreferenceUnavailableMode preferenceUnavailable,
             HashSet<ProtoId<AntagPrototype>> antagPreferences,
             HashSet<ProtoId<TraitPrototype>> traitPreferences,
+            HashSet<ProtoId<TraitPrototype>> antagDisableTraitPreferences,
             Dictionary<string, RoleLoadout> loadouts)
         {
             Name = name;
@@ -159,6 +171,7 @@ namespace Content.Shared.Preferences
             PreferenceUnavailable = preferenceUnavailable;
             _antagPreferences = antagPreferences;
             _traitPreferences = traitPreferences;
+            _antagDisableTraitPreferences = antagDisableTraitPreferences;
             _loadouts = loadouts;
 
             var hasHighPrority = false;
@@ -191,6 +204,7 @@ namespace Content.Shared.Preferences
                 other.PreferenceUnavailable,
                 new HashSet<ProtoId<AntagPrototype>>(other.AntagPreferences),
                 new HashSet<ProtoId<TraitPrototype>>(other.TraitPreferences),
+                new HashSet<ProtoId<TraitPrototype>>(other.AntagDisableTraitPreferences),
                 new Dictionary<string, RoleLoadout>(other.Loadouts))
         {
         }
@@ -623,6 +637,7 @@ namespace Content.Shared.Preferences
             if (!_jobPriorities.SequenceEqual(other._jobPriorities)) return false;
             if (!_antagPreferences.SequenceEqual(other._antagPreferences)) return false;
             if (!_traitPreferences.SequenceEqual(other._traitPreferences)) return false;
+            if (!_antagDisableTraitPreferences.SequenceEqual(other._antagDisableTraitPreferences)) return false;
             if (!Loadouts.SequenceEqual(other.Loadouts)) return false;
             if (FlavorText != other.FlavorText) return false;
             return Appearance.Equals(other.Appearance);
@@ -756,6 +771,11 @@ namespace Content.Shared.Preferences
                          .Where(prototypeManager.HasIndex)
                          .ToList();
 
+
+            var antagDisableTraits = AntagDisableTraitPreferences
+                .Where(id => prototypeManager.TryIndex(id, out var trait) && trait.AllowAntagDisable)
+                .ToList();
+
             Name = name;
             FlavorText = flavortext;
             Age = age;
@@ -779,6 +799,9 @@ namespace Content.Shared.Preferences
 
             _traitPreferences.Clear();
             _traitPreferences.UnionWith(GetValidTraits(traits, prototypeManager));
+
+            _antagDisableTraitPreferences.Clear();
+            _antagDisableTraitPreferences.UnionWith(GetValidAntagDisableTraits(antagDisableTraits, prototypeManager).Where(trait => _traitPreferences.Contains(trait)));
 
             // Checks prototypes exist for all loadouts and dump / set to default if not.
             var toRemove = new ValueList<string>();
@@ -842,6 +865,27 @@ namespace Content.Shared.Preferences
             return result;
         }
 
+        /// <summary>
+        /// Takes in an IEnumerable of traits and returns a List of the traits that are eligible to be disabled.
+        /// </summary>
+        public List<ProtoId<TraitPrototype>> GetValidAntagDisableTraits(IEnumerable<ProtoId<TraitPrototype>> traits, IPrototypeManager protoManager)
+        {
+            var result = new List<ProtoId<TraitPrototype>>();
+
+            foreach (var trait in traits)
+            {
+                if (!protoManager.TryIndex(trait, out var traitProto))
+                    continue;
+
+                if (!traitProto.AllowAntagDisable)
+                    continue;
+
+                result.Add(trait);
+            }
+
+            return result;
+        }
+
         public HumanoidCharacterProfile Validated(ICommonSession session, IDependencyCollection collection)
         {
             var profile = new HumanoidCharacterProfile(this);
@@ -875,6 +919,7 @@ namespace Content.Shared.Preferences
             hashCode.Add(_jobPriorities);
             hashCode.Add(_antagPreferences);
             hashCode.Add(_traitPreferences);
+            hashCode.Add(_antagDisableTraitPreferences);
             hashCode.Add(_loadouts);
             hashCode.Add(Name);
             hashCode.Add(FlavorText);

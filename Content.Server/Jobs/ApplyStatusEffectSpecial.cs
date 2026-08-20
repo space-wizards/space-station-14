@@ -24,4 +24,14 @@ public sealed partial class ApplyStatusEffectSpecial : JobSpecial
             statusSystem.TrySetStatusEffectDuration(mob, effect);
         }
     }
+
+    public override void AfterUnequip(EntityUid mob)
+    {
+        var entMan = IoCManager.Resolve<IEntityManager>();
+        var statusSystem = entMan.System<StatusEffectsSystem>();
+        foreach (var effect in StatusEffects)
+        {
+            statusSystem.TryRemoveStatusEffect(mob, effect);
+        }
+    }
 }

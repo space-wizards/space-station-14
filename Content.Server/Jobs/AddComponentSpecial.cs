@@ -19,4 +19,14 @@ public sealed partial class AddComponentSpecial : JobSpecial
         var entMan = IoCManager.Resolve<IEntityManager>();
         entMan.AddComponents(mob, Components, removeExisting: RemoveExisting);
     }
+
+    public override void AfterUnequip(EntityUid mob)
+    {
+        var entMan = IoCManager.Resolve<IEntityManager>();
+        foreach (var component in Components)
+        {
+            if (entMan.HasComponent(mob, component.GetType()))
+                entMan.RemoveComponent(mob, component.GetType());
+        }
+    }
 }

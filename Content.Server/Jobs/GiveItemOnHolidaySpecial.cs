@@ -29,5 +29,12 @@ namespace Content.Server.Jobs
 
             sysMan.GetEntitySystem<SharedHandsSystem>().PickupOrDrop(mob, entity);
         }
+
+        public override void AfterUnequip(EntityUid mob)
+        {
+            // You could arguably store and then delete the entity, but that seems kinda risky.
+            // Best to just accept this one isn't revertible.
+            return;
+        }
     }
 }

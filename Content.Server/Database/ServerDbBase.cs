@@ -257,7 +257,7 @@ namespace Content.Server.Database
             profile.Traits.Clear();
             profile.Traits.AddRange(
                 humanoid.TraitPreferences
-                        .Select(t => new Trait {TraitName = t})
+                        .Select(t => new Trait {TraitName = t, AntagDisable = humanoid.AntagDisableTraitPreferences.Contains(t)})
             );
 
             profile.Loadouts.Clear();

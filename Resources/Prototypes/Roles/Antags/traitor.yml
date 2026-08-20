@@ -3,6 +3,7 @@
   name: roles-antag-syndicate-agent-name
   antagonist: true
   setPreference: true
+  revertTraits: true
   objective: roles-antag-syndicate-agent-objective
   guides: [ Traitors ]
   requirements:
@@ -108,7 +109,7 @@
     - WeaponPistolViper
     - Syringe
     - Syringe
-    
+
 - type: startingGear
   id: SyndicateReinforcementSpy
   equipment:
