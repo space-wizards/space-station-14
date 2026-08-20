@@ -1,0 +1,247 @@
+#### STEEL / GRAY
+- type: tile
+  id: FloorSteel
+  parent: BaseStationTile
+  name: tiles-steel-floor
+  sprite: /Textures/Tiles/Basic/Gray/gray.png
+  itemDrop: FloorTileItemSteel
+
+- type: tile
+  id: FloorSteelMono
+  parent: BaseStationTile
+  name: tiles-steel-floor-mono
+  sprite: /Textures/Tiles/Basic/Gray/gray-mono.png
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemSteelMono
+
+- type: tile
+  id: FloorSteelMini
+  parent: BaseStationTile
+  name: tiles-steel-floor-mini
+  sprite: /Textures/Tiles/Basic/Gray/gray-mini.png
+  itemDrop: FloorTileItemSteelMini
+
+- type: tile
+  id: FloorSteelPavement
+  parent: BaseStationTile
+  name: tiles-steel-floor-pavement
+  sprite: /Textures/Tiles/Basic/Gray/gray-pavement.png
+  itemDrop: FloorTileItemSteelPavement
+
+- type: tile
+  id: FloorSteelPavementVertical
+  parent: BaseStationTile
+  name: tiles-steel-floor-pavement-vertical
+  sprite: /Textures/Tiles/Basic/Gray/gray-pavement-vertical.png
+  itemDrop: FloorTileItemSteelPavementVertical
+
+- type: tile
+  id: FloorSteelHerringbone
+  parent: BaseStationTile
+  name: tiles-steel-floor-herringbone
+  sprite: /Textures/Tiles/Basic/Gray/gray-herringbone.png
+  itemDrop: FloorTileItemSteelHerringbone
+
+- type: tile
+  parent: BaseStationTile
+  id: FloorSteelVerticalSlatsBordered
+  name: tiles-steel-floor-vertical-slats-bordered
+  sprite: /Textures/Tiles/Basic/Gray/gray-vertical-slats.png
+  itemDrop: FloorTileItemSteelVerticalSlatsBordered
+
+- type: tile
+  parent: BaseStationTile
+  id: FloorSteelHorizontalSlatsBordered
+  name: tiles-steel-floor-horizontal-slats-bordered
+  sprite: /Textures/Tiles/Basic/Gray/gray-horizontal-slats.png
+  itemDrop: FloorTileItemSteelHorizontalSlatsBordered
+
+- type: tile
+  id: FloorTechMaint2
+  parent: BaseStationTile
+  name: tiles-techmaint2-floor
+  sprite: /Textures/Tiles/Basic/Gray/gray-maint.png
+  footstepSounds:
+    collection: FootstepHull
+  itemDrop: FloorTileItemSteelMaint
+
+- type: tile
+  id: FloorPlastic
+  parent: BaseStationTile
+  name: tiles-plastic-floor
+  sprite: /Textures/Tiles/Basic/Gray/gray-plastic.png
+  itemDrop: FloorTileItemSteel
+
+- type: tile
+  id: FloorSteelDamaged
+  parent: BaseStationTile
+  name: tiles-steel-floor
+  sprite: /Textures/Tiles/Basic/Gray/gray-damaged.png
+  variants: 4
+  itemDrop: FloorTileItemSteel #This should probably be made null when it becomes possible to make it such, in SS13 prying destroyed tiles wouldn't give you anything.
+
+#### WHITE
+- type: tile
+  id: FloorWhite
+  parent: BaseStationTile
+  name: tiles-white-floor
+  sprite: /Textures/Tiles/Basic/White/white.png
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemWhite
+
+- type: tile
+  id: FloorWhiteMini
+  parent: BaseStationTile
+  name: tiles-white-floor-mini
+  sprite: /Textures/Tiles/Basic/White/white-mini.png
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemWhiteMini
+
+- type: tile
+  parent: BaseStationTile
+  id: FloorWhiteVerticalSlatsBordered
+  name: tiles-white-floor-vertical-slats-bordered
+  sprite: /Textures/Tiles/Basic/White/white-vertical-slats.png
+  itemDrop: FloorTileItemWhiteVerticalSlatsBordered
+
+- type: tile
+  parent: BaseStationTile
+  id: FloorWhiteHorizontalSlatsBordered
+  name: tiles-white-floor-horizontal-slats-bordered
+  sprite: /Textures/Tiles/Basic/White/white-horizontal-slats.png
+  itemDrop: FloorTileItemWhiteHorizontalSlatsBordered
+
+- type: tile
+  id: FloorWhitePavement
+  parent: BaseStationTile
+  name: tiles-white-floor-pavement
+  sprite: /Textures/Tiles/Basic/White/white-pavement.png
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemWhitePavement
+
+- type: tile
+  id: FloorWhiteMono
+  parent: BaseStationTile
+  name: tiles-white-floor-mono
+  sprite: /Textures/Tiles/Basic/White/white-mono.png
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemWhiteMono
+
+- type: tile
+  id: FloorWhitePavementVertical
+  parent: BaseStationTile
+  name: tiles-white-floor-pavement-vertical
+  sprite: /Textures/Tiles/Basic/White/white-pavement-vertical.png
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemWhitePavementVertical
+
+- type: tile
+  id: FloorWhiteHerringbone
+  parent: BaseStationTile
+  name: tiles-white-floor-herringbone
+  sprite: /Textures/Tiles/Basic/White/white-herringbone.png
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemWhiteHerringbone
+
+- type: tile
+  id: FloorWhitePlastic
+  parent: BaseStationTile
+  name: tiles-plastic-white-floor
+  sprite: /Textures/Tiles/Basic/White/white-plastic.png
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemWhite
+
+### DARK
+- type: tile
+  id: FloorDark
+  parent: BaseStationTile
+  name: tiles-dark-floor
+  sprite: /Textures/Tiles/Basic/Dark/dark.png
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemDark
+
+- type: tile
+  id: FloorDarkMini
+  parent: BaseStationTile
+  name: tiles-dark-floor-mini
+  sprite: /Textures/Tiles/Basic/Dark/dark-mini.png
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemDarkMini
+
+- type: tile
+  parent: BaseStationTile
+  id: FloorDarkVerticalSlatsBordered
+  name: tiles-dark-floor-vertical-slats-bordered
+  sprite: /Textures/Tiles/Basic/Dark/dark-vertical-slats.png
+  itemDrop: FloorTileItemDarkVerticalSlatsBordered
+
+- type: tile
+  parent: BaseStationTile
+  id: FloorDarkHorizontalSlatsBordered
+  name: tiles-dark-floor-horizontal-slats-bordered
+  sprite: /Textures/Tiles/Basic/Dark/dark-horizontal-slats.png
+  itemDrop: FloorTileItemDarkHorizontalSlatsBordered
+
+- type: tile
+  id: FloorDarkPavement
+  parent: BaseStationTile
+  name: tiles-dark-floor-pavement
+  sprite: /Textures/Tiles/Basic/Dark/dark-pavement.png
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemDarkPavement
+
+- type: tile
+  id: FloorDarkMono
+  parent: BaseStationTile
+  name: tiles-dark-floor-mono
+  sprite: /Textures/Tiles/Basic/Dark/dark-mono.png
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemDarkMono
+
+- type: tile
+  id: FloorDarkPavementVertical
+  parent: BaseStationTile
+  name: tiles-dark-floor-pavement-vertical
+  sprite: /Textures/Tiles/Basic/Dark/dark-pavement-vertical.png
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemDarkPavementVertical
+
+- type: tile
+  id: FloorDarkHerringbone
+  parent: BaseStationTile
+  name: tiles-dark-floor-herringbone
+  sprite: /Textures/Tiles/Basic/Dark/dark-herringbone.png
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemDarkHerringbone
+
+- type: tile
+  id: FloorDarkPlastic
+  parent: BaseStationTile
+  name: tiles-plastic-dark-floor
+  sprite: /Textures/Tiles/Basic/Dark/dark-plastic.png
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemDark
+
+- type: tile
+  id: FloorTechMaintDark
+  parent: BaseStationTile
+  name: tiles-techmaint-floor-dark
+  sprite: /Textures/Tiles/Basic/Dark/dark-maint.png
+  footstepSounds:
+    collection: FootstepHull
+  itemDrop: FloorTileItemTechmaintDark

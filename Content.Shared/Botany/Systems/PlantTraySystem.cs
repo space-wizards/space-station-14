@@ -27,6 +27,9 @@ public sealed partial class PlantTraySystem : EntitySystem
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
 
+    [Dependency] private EntityQuery<PlantDataComponent> _dataQuery = default!;
+    [Dependency] private EntityQuery<PlantWeedPestComponent> _weedPestQuery = default!;
+
     [SubscribeLocalEvent]
     private void OnExamine(Entity<PlantTrayComponent> ent, ref ExaminedEvent args)
     {
@@ -38,7 +41,7 @@ public sealed partial class PlantTraySystem : EntitySystem
             if (!TryGetPlant(ent.AsNullable(), out var plantUid))
             {
                 args.PushMarkup(Loc.GetString("tray-component-nothing-planted-message"));
-                if (TryComp<PlantDataComponent>(plantUid, out var plantData))
+                if (_dataQuery.TryComp(plantUid, out var plantData))
                 {
                     var name = Loc.GetString(plantData.Name);
                     args.PushMarkup(Loc.GetString("plant-component-something-already-growing-message", ("seedName", name)));
@@ -136,7 +139,7 @@ public sealed partial class PlantTraySystem : EntitySystem
 
         if (TryGetPlant(ent, out var plantUid))
         {
-            if (!TryComp<PlantWeedPestComponent>(plantUid.Value, out var weedPestGrowth))
+            if (!_weedPestQuery.TryComp(plantUid.Value, out var weedPestGrowth))
                 return;
 
             if (ent.Comp.WeedLevel > weedPestGrowth.WeedTolerance)

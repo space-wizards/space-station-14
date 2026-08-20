@@ -17,7 +17,6 @@ public sealed partial class ChangelingLastResortSystem : SharedChangelingLastRes
 {
     private static readonly ProtoId<AntagSpecifierPrototype> ChangelingAntag = "Changeling";
 
-    [Dependency] private RejuvenateSystem _rejuvenate = default!;
     [Dependency] private SharedMindSystem _mind = default!;
     [Dependency] private MobStateSystem _mobState = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
