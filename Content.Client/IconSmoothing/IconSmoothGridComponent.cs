@@ -96,6 +96,29 @@ public record struct IconChunkData()
     /// <param name="value">Cached value</param>
     public void SetTileCache(byte index, byte value)
     {
+        DebugTools.Assert(Tiles[index] != null, $"SetTileCache overwrote an empty index without incrementing the ref count!");
+        Tiles[index] = value;
+    }
+
+    public void AddTileCache(Vector2i index, byte value)
+    {
+        AddTileCache(index.X, index.Y, value);
+    }
+
+    public void AddTileCache(int x, int y, byte value)
+    {
+        DebugTools.Assert(x < MapGridComponent.DefaultChunkSize && y < MapGridComponent.DefaultChunkSize, "Vector2i passed exceeded the bounds of our jagged array!!!");
+        AddTileCache((byte)(x + (y << 4)), value);
+    }
+
+    /// <summary>
+    /// Adds the cached value at a given tile on this chunk, and increments the number of filled chunks
+    /// </summary>
+    /// <param name="index">Index of our cache, top 4 bits represent Y, bottom for represent X</param>
+    /// <param name="value">Cached value</param>
+    public void AddTileCache(byte index, byte value)
+    {
+        DebugTools.Assert(Tiles[index] == null, $"AddTileCache overwrote an existing value, and incremented the cache as if it were empty. Use SetTileCache!");
         Count++;
         Tiles[index] = value;
     }
@@ -117,6 +140,7 @@ public record struct IconChunkData()
     /// <param name="index">Index of our cache, top 4 bits represent Y, bottom for represent X</param>
     public void RemoveTileCache(byte index)
     {
+        DebugTools.Assert(Tiles[index] != null, $"RemoveTileCache tried to remove a non-existent value!");
         Count--;
         Tiles[index] = null;
     }

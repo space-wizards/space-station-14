@@ -291,7 +291,7 @@ public sealed partial class IconSmoothSystem : EntitySystem
         if (_keyCaches[(ushort)cache].Keys is not { } keys)
         {
             _workingKeyRing = new HashSet<string> {key};
-            AddTileCache((grid,cacheComp), (chunk, relative), chunkData);
+            SetTileCache((grid,cacheComp), (chunk, relative), chunkData);
             Log.Error($"Cache {cache} for grid {ToPrettyString(grid)}, at {tile} chunk: {chunk}, relative {relative} did not correlate to a cached value!");
             return;
         }
@@ -301,7 +301,7 @@ public sealed partial class IconSmoothSystem : EntitySystem
         // New key added, get an appropriate index for the new key!
         if (_workingKeyRing.Add(key))
         {
-            AddTileCache((grid, cacheComp), (chunk, relative), chunkData);
+            SetTileCache((grid, cacheComp), (chunk, relative), chunkData);
             // Properly remove the old cache!
             DecrementRefCount(cache.Value);
             return;
@@ -356,7 +356,7 @@ public sealed partial class IconSmoothSystem : EntitySystem
             return;
         }
 
-        AddTileCache((grid, cacheComp), (chunk, relative), chunkData);
+        SetTileCache((grid, cacheComp), (chunk, relative), chunkData);
     }
 
     private void RemoveTileCache(Entity<IconSmoothGridComponent> grid, IconChunkData chunkData, Vector2i pos)
@@ -377,6 +377,17 @@ public sealed partial class IconSmoothSystem : EntitySystem
     }
 
     private void AddTileCache(Entity<IconSmoothGridComponent> grid, (Vector2i Chunk, Vector2i Relative) index, IconChunkData chunkData, byte cache)
+    {
+        chunkData.AddTileCache(index.Relative, cache);
+        grid.Comp.Chunks[index.Chunk] = chunkData;
+    }
+
+    private void SetTileCache(Entity<IconSmoothGridComponent> grid, (Vector2i Chunk, Vector2i Relative) index, IconChunkData chunkData)
+    {
+        SetTileCache(grid, index, chunkData, AddOrCreateCacheIndex());
+    }
+
+    private void SetTileCache(Entity<IconSmoothGridComponent> grid, (Vector2i Chunk, Vector2i Relative) index, IconChunkData chunkData, byte cache)
     {
         chunkData.SetTileCache(index.Relative, cache);
         grid.Comp.Chunks[index.Chunk] = chunkData;
