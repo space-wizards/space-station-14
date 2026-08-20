@@ -3,7 +3,7 @@ using Content.Shared.Charges.Systems;
 using Content.Shared.Crayon;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
-using System.ComponentModel;
+using Content.Shared.Nutrition.EntitySystems;
 
 namespace Content.Server.Crayon;
 
@@ -30,7 +30,7 @@ public sealed partial class MagicCrayonSystem : EntitySystem
             return;
 
         var doAfterArgs = new DoAfterArgs(EntityManager, args.User, TimeSpan.FromSeconds(2.0f),
-            new MagicCrayonDoAfterEvent(), uid, used: uid)
+            new MagicCrayonDoAfterEvent(GetNetCoordinates(args.ClickLocation)), uid, used: uid)
         {
             BreakOnMove = true,
             BreakOnDamage = true,
@@ -49,7 +49,9 @@ public sealed partial class MagicCrayonSystem : EntitySystem
         if (_charges.IsEmpty(uid))
             return;
 
-        Spawn(component.SpawnProto, Transform(args.User).Coordinates);
+        var spawnCoords = GetCoordinates(args.ClickLocation);
+        Spawn(component.SpawnProto, spawnCoords);
+
         _charges.TryUseCharge(uid);
 
         if (_charges.IsEmpty(uid))
