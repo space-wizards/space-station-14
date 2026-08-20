@@ -193,20 +193,18 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
 [Flags]
 public enum StructureAlignerType : byte
 {
-    // 0 value bitmask will match any "HasFlag" checks, and should not be assigned
-    Invalid,
     /// <summary>
     /// Airlocks, doors, shutters, blast doors and everything that would be functionally
     /// considered a room boundary (doors, walls, windows, full tile rocks etc.)
     /// No firelocks - they are their own category to avoid interference in atypical placement locations
     /// No thin walls/doors, or docking airlocks - directionality is too important for these and must be decided manually
     /// </summary>
-    Door,
+    Door = 1,
     /// <summary>
     /// Firelocks and everything that would be functionally considered a room boundary
     /// (doors, walls, windows, full tile rocks etc.)
     /// </summary>
-    Firelock,
+    Firelock = 2,
     /// Go go gadget OverrideInheritance
-    DoNotAlign,
+    DoNotAlign = 4,
 }
