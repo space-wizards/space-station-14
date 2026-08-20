@@ -4,7 +4,7 @@ meta:
   engineVersion: 288.1.0
   forkId: ""
   forkVersion: ""
-  time: 08/20/2026 15:08:06
+  time: 08/20/2026 18:31:24
   entityCount: 839
 maps: []
 grids:
@@ -373,6 +373,7 @@ entities:
     components:
     - type: Transform
       parent: 1
+      rot: 1.5707963267948966 rad
       pos: 0.5,3.5
   - uid: 382
     components:
@@ -383,6 +384,7 @@ entities:
     components:
     - type: Transform
       parent: 1
+      rot: 1.5707963267948966 rad
       pos: 3.5,-4.5
 - proto: AirlockMaint
   entities:
