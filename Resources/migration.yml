@@ -868,8 +868,8 @@ PinionAirlock: Airlock
 PinionAirlockGlass: AirlockGlass
 PinionAirlockAssembly: AirlockAssembly
 BananiumDoor: GoldDoor
-EncrustedIronstoneDoor: SteelDoor # iron stone to steel door
-IronstoneDoor: SteelDoor # iron stone to steel door
+EncrustedIronstoneDoor: SteelDoor
+IronstoneDoor: SteelDoor
 WallSnowCobblebrick: WallBrick
 WallSandCobblebrick: WallBrick
 WallChromiteCobblebrick: WallBrick
@@ -951,7 +951,6 @@ FloorTileItemDarkSlatsContinuous: FloorTileItemDarkVerticalSlatsBordered
 FloorTileItemSteelDiagonalMini: FloorTileItemSteel
 FloorTileItemSteelDiagonal: FloorTileItemSteel
 FloorTileItemSteelOffset: FloorTileItemSteel
-# FloorTileItemSteelMono: FloorTileItemSteel # mistake
 FloorTileItemShowroom: FloorTileItemSteel
 FloorTileItemSteelSlatsContinuous: FloorTileItemSteelVerticalSlatsBordered
 
@@ -967,9 +966,9 @@ FloorTileItemPlasmaMarble: FloorTileItemWhiteMarble
 FloorTileItemEighties: FloorTileItemArcadeBlue
 FloorTileItemArcadeBlue2: FloorTileItemArcadeBlue
 FloorTileItemElevatorShaft: FloorTileItemSteel
-FloorTileItemMining: FloorTileItemDarkPlastic
-FloorTileItemMiningLight: FloorTileItemPlastic
-FloorTileItemMiningDark: FloorTileItemDarkPlastic
+FloorTileItemMining: null # FloorTileItemDarkPlastic
+FloorTileItemMiningLight: null # FloorTileItemPlastic
+FloorTileItemMiningDark: null # FloorTileItemDarkPlastic
 FloorTileItemRockVault: FloorTileItemSteel
 FloorTileItemBrassReebe: null
 FloorTileItemBrassFilled: null
@@ -988,10 +987,9 @@ IronsandStepConcaveCorner: null
 IronsandStep: null
 
 # 2026-07-27
-# TurnstileGenpopEnter: EnergyGateGenpopEnter # Just change the visial and name, don't create migration hell
-# TurnstileGenpopLeave: EnergyGateGenpopLeave
-# Turnstile: EnergyGate
-# MetalDoor: SilverDoor ### It shouldn't be removed just becouse it looks like silver door...
+TurnstileGenpopEnter: EnergyGateGenpopEnter
+TurnstileGenpopLeave: EnergyGateGenpopLeave
+Turnstile: EnergyGate
 MiningWindow: ReinforcedWindow
 MiningWindowDiagonal: ReinforcedWindowDiagonal
 FloorTileItemLightAstroGrass: FloorTileItemAstroGrass

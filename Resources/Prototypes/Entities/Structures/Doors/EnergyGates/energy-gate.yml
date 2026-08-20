@@ -1,6 +1,6 @@
 - type: entity
   parent: [ BaseStructure, StructureHealthDoor ]
-  id: Turnstile
+  id: EnergyGate
   name: energy gate
   description: An advanced gate that permits one-way access and prevents tailgating.
   components:
@@ -67,8 +67,8 @@
           collection: MetalBreak
   - type: AccessReader
   - type: Construction
-    graph: Turnstile
-    node: turnstile
+    graph: EnergyGate
+    node: energyGate
   - type: DirectionalArrowIndicator
   - type: IconSmooth
     key: walls
@@ -82,16 +82,16 @@
 
 # Genpop
 - type: entity
-  id: TurnstileGenpopEnter
-  parent: Turnstile
+  id: EnergyGateGenpopEnter
+  parent: EnergyGate
   suffix: Genpop Enter
   components:
   - type: AccessReader
     access: [["GenpopEnter"], ["Security"]]
 
 - type: entity
-  id: TurnstileGenpopLeave
-  parent: Turnstile
+  id: EnergyGateGenpopLeave
+  parent: EnergyGate
   suffix: Genpop Leave
   components:
   - type: AccessReader
@@ -99,8 +99,8 @@
 
 # Airtight
 - type: entity
-  parent: Turnstile
-  id: TurnstileAirtight
+  parent: EnergyGate
+  id: EnergyGateAirtight
   name: airtight energy gate
   suffix: [Arrivals, Airtight]
   components:
