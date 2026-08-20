@@ -280,6 +280,13 @@
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/ninjavisor.rsi
   - type: FlashImmunity
+  - type: NightVision
+    relayOverlay: true
+    action: ActionToggleNightVision
+    lightingColor: "#00FF0001"
+    overlayColor: "#00FF0044"
+    noiseAmount: 10
+    noiseMultiplier: 10
 
 - type: entity
   parent: [ClothingEyesBase, ShowSecurityIcons, BaseSecurityContraband]
