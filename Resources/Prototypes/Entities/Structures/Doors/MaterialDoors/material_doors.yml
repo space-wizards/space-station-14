@@ -145,7 +145,7 @@
     node: steelDoor
   - type: Damageable
     damageModifierSet: SteelMod
-  - type: DestructibleExpand
+  - type: Destructible
     thresholds:
     - trigger: *DamageDoorWeak
       behaviors:
