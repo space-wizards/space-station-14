@@ -22,7 +22,7 @@ public sealed partial class MaterialStorageSystem : SharedMaterialStorageSystem
     [Dependency] private SharedPopupSystem _popup = default!;
 
     [SubscribeLocalEvent]
-    private void OnDeconstructed(Entity<MaterialStorageComponent> ent, MachineDeconstructedEvent _)
+    private void OnDeconstructed(Entity<MaterialStorageComponent> ent, ref MachineDeconstructedEvent _)
     {
         var component = ent.Comp;
         if (!component.DropOnDeconstruct)
