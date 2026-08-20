@@ -142,27 +142,9 @@ public sealed partial class IconSmoothSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnStartup(Entity<IconSmoothComponent> entity, ref ComponentStartup args)
+    private void OnStartup(Entity<IconSmoothComponent> entity, ref ComponentInit args)
     {
         StartupLayers(entity);
-
-        if (!entity.Comp.Enabled)
-            return;
-
-        // If we're not anchored, no need to update any neighboring entities
-        var xform = Transform(entity);
-        if (!xform.Anchored)
-            return;
-
-        AddTile((entity, entity.Comp, xform), entity.Comp.Key);
-    }
-
-    [SubscribeLocalEvent]
-    private void OnShutdown(Entity<IconSmoothComponent> entity, ref ComponentShutdown args)
-    {
-        var xform = Transform(entity);
-        if (xform.Anchored)
-            RemoveTile((entity, entity.Comp, xform));
     }
 
     private void StartupLayers(Entity<IconSmoothComponent> entity)
@@ -446,7 +428,7 @@ public sealed partial class IconSmoothSystem : EntitySystem
         if (cacheEntry.RefCount > 0)
             return;
 
-        cacheEntry.Keys = [];
+        cacheEntry.Keys = null;
         cacheEntry.RefCount = _freeListHead;
         _freeListHead = index;
     }
