@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [ ClosetBase, StructureHealthContainer ]
+  parent: [ ClosetBase, StructureHealthContainerWeak ]
   id: LockerBase
   components:
   - type: AccessReader
@@ -32,13 +32,11 @@
     - entity_storage
   - type: Paintable
     group: Locker
-  - type: Damageable
-    damageModifierSet: PlasteelMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 60
       behaviors:
       - !type:PlaySoundBehavior
         sound:

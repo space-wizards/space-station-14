@@ -38,6 +38,14 @@
 
 - type: entity
   abstract: true
+  parent: BaseWallmountGlass
+  id: BaseWallmountReinforcedGlass
+  components:
+  - type: Damageable
+    damageModifierSet: GlassReinforcedMod
+
+- type: entity
+  abstract: true
   parent: BaseWallmount
   id: BaseWallmountMetallic
   components:
