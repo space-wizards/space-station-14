@@ -1,5 +1,17 @@
 - type: entity
   parent: BoxCardboardSmall
+  id: BaseBoxSurvival
+  abstract: true
+  components:
+  - type: Item
+    shape:
+      - 0,0,1,2
+  - type: Storage
+    grid:
+      - "0,0,1,2"
+
+- type: entity
+  parent: BaseBoxSurvival
   id: BoxSurvival
   name: O2 survival box
   description: A small box containing a breath mask, an emergency oxygen tank, and an emergency medipen. Standard-issue for most oxygen-breathing crew.
@@ -11,13 +23,14 @@
         - id: ClothingMaskBreath
         - id: EmergencyOxygenTankFilled
         - id: EmergencyMedipen
+        - id: Flare
   - type: Sprite
     layers:
     - state: internals
     - state: emergencytank
 
 - type: entity
-  parent: BoxSurvival
+  parent: BaseBoxSurvival
   id: BoxSurvivalNitrogen
   name: N2 survival box
   description: A small box containing a breath mask, an emergency nitrogen tank, and an emergency medipen. Standard-issue for most nitrogen-breathing crew.
@@ -29,6 +42,7 @@
         - id: ClothingMaskBreath
         - id: EmergencyNitrogenTankFilled
         - id: EmergencyMedipen
+        - id: Flare
   - type: Sprite
     layers:
     - state: internals
@@ -47,13 +61,14 @@
         - id: ClothingMaskBreath
         - id: ExtendedEmergencyOxygenTankFilled
         - id: EmergencyMedipen
+        - id: Flare
   - type: Sprite
     layers:
     - state: internals
     - state: extendedtank
 
 - type: entity
-  parent: BoxSurvivalEngineering
+  parent: BoxSurvivalNitrogen
   id: BoxSurvivalEngineeringNitrogen
   name: extended-capacity N2 survival box
   description: A small box containing a breath mask, an extended-capacity emergency nitrogen tank, and an emergency medipen. Issued to nitrogen-breathing crew whose job responsibilities often take them to places with no atmosphere.
@@ -65,6 +80,7 @@
         - id: ClothingMaskBreath
         - id: ExtendedEmergencyNitrogenTankFilled
         - id: EmergencyMedipen
+        - id: Flare
   - type: Sprite
     layers:
     - state: internals
@@ -83,9 +99,10 @@
         - id: ClothingMaskGasSecurity
         - id: EmergencyOxygenTankFilled
         - id: EmergencyMedipen
+        - id: Flare
 
 - type: entity
-  parent: BoxSurvivalSecurity
+  parent: BoxSurvivalNitrogen
   id: BoxSurvivalSecurityNitrogen
   name: security N2 survival box
   description: A small box containing a gas mask, an emergency nitrogen tank, and an emergency medipen. Issued to nitrogen-breathing members of the security staff.
@@ -97,6 +114,7 @@
         - id: ClothingMaskGasSecurity
         - id: EmergencyNitrogenTankFilled
         - id: EmergencyMedipen
+        - id: Flare
   - type: Sprite
     layers:
     - state: internals
@@ -115,9 +133,10 @@
         - id: ClothingMaskBreathMedical
         - id: EmergencyOxygenTankFilled
         - id: EmergencyMedipen
+        - id: Flare
 
 - type: entity
-  parent: BoxSurvivalMedical
+  parent: BoxSurvivalNitrogen
   id: BoxSurvivalMedicalNitrogen
   name: medical N2 survival box
   description: A small box containing a medical mask, an emergency nitrogen tank, and an emergency medipen. Issued to nitrogen-breathing members of the medical staff.
@@ -129,6 +148,7 @@
         - id: ClothingMaskBreathMedical
         - id: EmergencyNitrogenTankFilled
         - id: EmergencyMedipen
+        - id: Flare
   - type: Sprite
     layers:
     - state: internals
@@ -146,6 +166,7 @@
         - id: ClothingMaskBreath
         - id: EmergencyFunnyOxygenTankFilled
         - id: EmergencyMedipen
+        - id: Flare
 
 - type: entity
   parent: BoxSurvivalHug
@@ -159,6 +180,7 @@
         - id: ClothingMaskBreath
         - id: EmergencyNitrogenTankFilled # This should probably be replaced by an equivalent to the funny emergency oxygen tank, once that exists
         - id: EmergencyMedipen
+        - id: Flare
 
 # Primarily intended for antagonists that spawn outside the station (e.g ninjas, wizards)
 # Contains food and water because, unlike normal crew, we don't want to force them to seek food mid-round.
@@ -252,7 +274,7 @@
 # Uses a 2x2 box mostly just because the 3x3 boxes don't fit into already-filled ERT backpacks.
 # "Military" might be a misnomer, since NT isn't technically a government entity, but whatever.
 - type: entity
-  parent: BoxSurvival
+  parent: BoxCardboardSmall
   id: BoxSurvivalMilitaryDouble
   name: military O2 survival box
   description: A military-grade survival box containing a double-capacity emergency oxygen tank, an emergency medipen, and an emergency flare.

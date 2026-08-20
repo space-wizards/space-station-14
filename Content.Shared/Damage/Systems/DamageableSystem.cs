@@ -108,4 +108,17 @@ public sealed partial class DamageableSystem : EntitySystem
         }
         return damageTypes;
     }
+
+    public void CopyComponent(Entity<DamageableComponent?> entity, EntityUid clone)
+    {
+        if (!Resolve(entity, ref entity.Comp, false))
+            return;
+
+        // Don't clone current damage values.
+        var cloneComp = EnsureComp<DamageableComponent>(clone);
+        cloneComp.Displacement = entity.Comp.Displacement;
+        cloneComp.DamageModifierSetId = entity.Comp.DamageModifierSetId;
+        cloneComp.RadiationDamageTypeIDs = new (entity.Comp.RadiationDamageTypeIDs);
+        Dirty(clone, cloneComp);
+    }
 }

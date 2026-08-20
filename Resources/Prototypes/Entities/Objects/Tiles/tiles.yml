@@ -204,6 +204,20 @@
     node: steeltile
 
 - type: entity
+  name: steel mono tile
+  parent: FloorTileItemSteel
+  id: FloorTileItemSteelMono
+  components:
+  - type: Sprite
+    state: steel-mono
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorSteelMono
+  - type: Stack
+    stackType: FloorTileSteelMono
+
+- type: entity
   parent: FloorTileItemSteel
   id: FloorTileItemSteelVerticalSlatsBordered
   name: steel vertical bordered slat tile
@@ -867,38 +881,3 @@
   - type: Construction
     graph: WebObjects
     node: tile
-
-# Marble
-- type: entity
-  name: white marble tile
-  description: A chiseled, polished square of the finest Space Marble. Best not to lose it.
-  parent: FloorTileItemBase
-  id: FloorTileItemWhiteMarble
-  components:
-  - type: Sprite
-    state: white-marble
-  - type: Item
-    heldPrefix: white-marble
-  - type: FloorTile
-    outputs:
-      - Plating
-      - FloorWhiteMarble
-  - type: Stack
-    stackType: FloorTileWhiteMarble
-
-- type: entity
-  name: dark marble tile
-  description: A chiseled, polished square of the finest Space Marble. Best not to lose it.
-  parent: FloorTileItemWhiteMarble
-  id: FloorTileItemDarkMarble
-  components:
-  - type: Sprite
-    state: dark-marble
-  - type: Item
-    heldPrefix: dark-marble
-  - type: FloorTile
-    outputs:
-      - Plating
-      - FloorDarkMarble
-  - type: Stack
-    stackType: FloorTileDarkMarble
