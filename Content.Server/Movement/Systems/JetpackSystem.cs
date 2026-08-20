@@ -12,18 +12,18 @@ public sealed partial class JetpackSystem : SharedJetpackSystem
     [Dependency] private GasTankSystem _gasTank = default!;
     [Dependency] private IGameTiming _timing = default!;
 
-    protected override bool CanEnable(EntityUid uid, JetpackComponent component)
+    protected override bool CanEnable(Entity<JetpackComponent> ent)
     {
-        return base.CanEnable(uid, component) &&
-               TryComp<GasTankComponent>(uid, out var gasTank) &&
-               !(gasTank.Air.TotalMoles < component.MoleUsage);
+        return base.CanEnable(ent) &&
+               TryComp<GasTankComponent>(ent.Owner, out var gasTank) &&
+               !(gasTank.Air.TotalMoles < ent.Comp.MoleUsage);
     }
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        var toDisable = new ValueList<(EntityUid Uid, JetpackComponent Component)>();
+        var toDisable = new ValueList<Entity<JetpackComponent>>();
         var query = EntityQueryEnumerator<ActiveJetpackComponent, JetpackComponent, GasTankComponent>();
 
         while (query.MoveNext(out var uid, out var active, out var comp, out var gasTankComp))
@@ -39,16 +39,14 @@ public sealed partial class JetpackSystem : SharedJetpackSystem
                 MathHelper.CloseTo(usedAir.TotalMoles, comp.MoleUsage, comp.MoleUsage / 100);
 
             if (!usedEnoughAir)
-            {
                 toDisable.Add((uid, comp));
-            }
 
             _gasTank.UpdateUserInterface(gasTank);
         }
 
-        foreach (var (uid, comp) in toDisable)
+        foreach (var ent in toDisable)
         {
-            SetEnabled(uid, comp, false);
+            SetEnabled(ent.AsNullable(), false);
         }
     }
 }

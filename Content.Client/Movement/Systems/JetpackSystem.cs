@@ -10,18 +10,18 @@ public sealed partial class JetpackSystem : SharedJetpackSystem
 {
     [Dependency] private ClothingSystem _clothing = default!;
 
-    protected override bool CanEnable(EntityUid uid, JetpackComponent component)
+    protected override bool CanEnable(Entity<JetpackComponent> ent)
     {
         // No predicted atmos so you'd have to do a lot of funny to get this working.
         return false;
     }
 
     [SubscribeLocalEvent]
-    private void OnJetpackAppearance(EntityUid uid, JetpackComponent component, ref AppearanceChangeEvent args)
+    private void OnJetpackAppearance(Entity<JetpackComponent> ent, ref AppearanceChangeEvent args)
     {
-        Appearance.TryGetData<bool>(uid, JetpackVisuals.Enabled, out var enabled, args.Component);
+        Appearance.TryGetData<bool>(ent.Owner, JetpackVisuals.Enabled, out var enabled, args.Component);
 
-        if (TryComp<ClothingComponent>(uid, out var clothing))
-            _clothing.SetEquippedPrefix(uid, enabled ? "on" : null, clothing);
+        if (TryComp<ClothingComponent>(ent.Owner, out var clothing))
+            _clothing.SetEquippedPrefix(ent.Owner, enabled ? "on" : null, clothing);
     }
 }
