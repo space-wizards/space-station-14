@@ -227,7 +227,6 @@ public sealed partial class SmartEquipSystem : EntitySystem
 
                 _slots.TryEjectToHands(slotItem, toEjectFrom, uid, excludeUserAudio: true);
                 return;
-
             }
         }
 
