@@ -17,10 +17,10 @@
     - type: Blocking
       passiveBlockModifier:
         flatReductions:
-          Blunt: 10
-          Slash: 10
-          Piercing: 10
-          Heat: 10
+          Blunt: 6
+          Slash: 6
+          Piercing: 6
+          Heat: 6
     - type: Damageable
     - type: Injurable
       damageContainer: Shield
@@ -84,10 +84,10 @@
     - type: Blocking
       passiveBlockModifier:
         flatReductions:
-          Blunt: 15
-          Slash: 15
-          Piercing: 5
-          Heat: 5
+          Blunt: 9
+          Slash: 9
+          Piercing: 3
+          Heat: 3
 
 - type: entity
   name: laser shield
@@ -102,10 +102,10 @@
     - type: Blocking
       passiveBlockModifier:
         flatReductions:
-          Blunt: 5
-          Slash: 10
-          Piercing: 5
-          Heat: 20
+          Blunt: 3
+          Slash: 6
+          Piercing: 3
+          Heat: 12
 
 - type: entity
   name: ballistic shield
@@ -120,10 +120,10 @@
     - type: Blocking
       passiveBlockModifier:
         flatReductions:
-          Blunt: 10
-          Slash: 5
-          Piercing: 20
-          Heat: 5
+          Blunt: 6
+          Slash: 3
+          Piercing: 12
+          Heat: 3
 
 #Craftable shields
 
@@ -140,10 +140,10 @@
     - type: Blocking
       passiveBlockModifier:
         flatReductions:
-          Blunt: 5
-          Slash: 5
-          Piercing: 5
-          Heat: 5
+          Blunt: 6
+          Slash: 6
+          Piercing: 3
+          Heat: 3
     - type: Construction
       graph: WoodenBuckler
       node: woodenBuckler
@@ -151,7 +151,7 @@
       thresholds:
       - trigger:
           !type:DamageTrigger
-          damage: 75 #Weaker shield
+          damage: 50 #Weaker shield
         behaviors:
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
@@ -249,7 +249,7 @@
     - type: Blocking
       passiveBlockModifier:
         flatReductions:
-          Blunt: 5
+          Blunt: 6
           Piercing: 1 # Scar told me to.
     - type: Construction
       graph: WebObjects
@@ -304,10 +304,10 @@
         coefficients:
           Heat: 0.5
         flatReductions:
-          Blunt: 5
-          Slash: 10
-          Piercing: 5
-          Heat: 25
+          Blunt: 3
+          Slash: 6
+          Piercing: 3
+          Heat: 24
       blockSound: !type:SoundPathSpecifier
         path: /Audio/Effects/glass_step.ogg
     - type: Destructible
@@ -390,10 +390,10 @@
         coefficients:
           Heat: 0.5
         flatReductions:
-          Blunt: 5
-          Piercing: 10
-          Slash: 5
-          Heat: 25
+          Blunt: 3
+          Piercing: 9
+          Slash: 3
+          Heat: 24
     - type: Appearance
     - type: Damageable
     - type: Injurable
