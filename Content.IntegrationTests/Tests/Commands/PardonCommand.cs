@@ -3,7 +3,6 @@ using System.Linq;
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server.Database;
-using Robust.Server.Console;
 using Robust.Server.Player;
 using Robust.Shared.Network;
 
@@ -15,7 +14,6 @@ public sealed class PardonCommand : GameTest
     private static readonly TimeSpan MarginOfError = TimeSpan.FromMinutes(1);
 
     [SidedDependency(Side.Server)] private IPlayerManager _sPlayerManager = default!;
-    [SidedDependency(Side.Server)] private IServerConsoleHost _sConsole = default!;
     [SidedDependency(Side.Server)] private IServerDbManager _sDatabaseManager = default!;
     [SidedDependency(Side.Client)] private IClientNetManager _cNetManager = default!;
 
