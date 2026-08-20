@@ -63,7 +63,7 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
     /// </summary>
     /// <returns> The feedback to be displayed to the user, if the command was triggered from the console</returns>>
     /// <remarks>This can be expensive and lag the game for seconds. It should not be called after players are in the game.</remarks>
-    public string AlignAll(MapId? map = null, bool dryRun = false)
+    public string AlignAll(MapId? map = null, bool dryRun = false, bool verbose = false)
     {
         // It needs to be an All Entity Query so it works on pre-init maps during Mapping
         var query = AllEntityQuery<StructureAlignerComponent, TransformComponent>();
@@ -78,7 +78,7 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
             if (map is not null && trans.MapID != map)
                 continue;
 
-            if (Align((ent, comp), dryRun))
+            if (Align((ent, comp), dryRun, verbose))
                 countFixed++;
             countAll++;
         }
@@ -99,7 +99,7 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
     /// <summary>
     /// Aligns the target entity if there are any adjacent StructureAlignerPylonComponents with matching types.
     /// </summary>
-    private bool Align(Entity<StructureAlignerComponent> entity, bool dryRun = false)
+    private bool Align(Entity<StructureAlignerComponent> entity, bool dryRun = false, bool verbose = false)
     {
         var trans = Transform(entity);
 
@@ -172,19 +172,21 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
         else
             return false;
 
-        if (targetDir == trans.LocalRotation.GetDir() || targetDir == trans.LocalRotation.Opposite().GetDir())
-        {
-            var name = MetaData(entity.Owner).EntityName;
-            var pos = _trans.GetWorldPosition(trans);
+        // For our purposes the opposite of the target direction also works, as it's the same alignment axis
+        if (targetDir != trans.LocalRotation.GetDir() && targetDir != trans.LocalRotation.Opposite().GetDir())
+            return false;
 
-            if (!dryRun)
-                _trans.SetLocalRotation(entity, trans.LocalRotation + Angle.FromDegrees(90));
+        var name = MetaData(entity.Owner).EntityName;
+        var pos = _trans.GetWorldPosition(trans);
 
+        if (!dryRun)
+            _trans.SetLocalRotation(entity, trans.LocalRotation + Angle.FromDegrees(90));
+
+        // Only generate individual logs if the user triggered alignment using the command
+        if (verbose)
             Log.Info($"Misaligned entity '{ entity.Owner }' on map { trans.MapID } at { pos } : { name }");
-            return true;
-        }
 
-        return false;
+        return true;
     }
 }
 

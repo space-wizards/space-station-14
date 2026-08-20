@@ -44,7 +44,7 @@ public sealed partial class StructureAlignCommand : LocalizedEntityCommands
             }
         }
 
-        var response = _aligner.AlignAll(map, dry);
+        var response = _aligner.AlignAll(map, dry, verbose: true);
         if (!string.IsNullOrEmpty(response))
             shell.WriteLine(response);
     }
