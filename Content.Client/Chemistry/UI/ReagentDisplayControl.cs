@@ -26,9 +26,10 @@ public sealed partial class ReagentDisplayControl : StripedDisplayControl
     /// <param name="trailingControls">Optional controls appended to the row.</param>
     public void AddReagent(ReagentId reagent, FixedPoint2 quantity, IEnumerable<Control>? trailingControls = null)
     {
-        _prototypeManager.TryIndex(reagent.Prototype, out var prototype);
-        var name = prototype?.LocalizedName ?? Loc.GetString("chem-master-window-unknown-reagent-text");
-        AddRow(name, $"{quantity}{Loc.GetString("units-u")}", prototype?.SubstanceColor, trailingControls);
+        if (!_prototypeManager.Resolve(reagent.Prototype, out var prototype))
+            return;
+
+        AddRow(prototype.LocalizedName, $"{quantity}{Loc.GetString("units-u")}", prototype.SubstanceColor, trailingControls);
     }
 
     /// <summary>

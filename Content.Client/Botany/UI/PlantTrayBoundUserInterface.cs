@@ -23,6 +23,7 @@ public sealed class PlantTrayBoundUserInterface(EntityUid owner, Enum uiKey) : B
     /// <inheritdoc />
     public override void Update()
     {
+        base.Update();
         _window?.Update(Owner);
     }
 }

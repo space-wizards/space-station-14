@@ -32,20 +32,23 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
         _plantSystem = _entityManager.System<PlantSystem>();
     }
 
-    public void Update(EntityUid target, BotanyAnalyzerState state)
+    public void Update(BotanyAnalyzerState state)
     {
-        if (!_entityManager.TryGetComponent<PlantComponent>(target, out var plant)
-            || !_entityManager.TryGetComponent<PlantDataComponent>(target, out var data))
+        if (!_entityManager.TryGetEntity(state.Target, out var target))
             return;
 
-        PlantSprite.SetEntity(target);
+        if (!_entityManager.TryGetComponent<PlantComponent>(target.Value, out var plant)
+            || !_entityManager.TryGetComponent<PlantDataComponent>(target.Value, out var data))
+            return;
+
+        PlantSprite.SetEntity(target.Value);
         PlantName.Text = Loc.GetString(data.Name);
-        UpdateWarnings(target, plant);
-        UpdatePlantStatus(target, plant);
-        UpdateTraits(target, plant);
-        UpdateConditions(target, plant);
-        UpdateGases(target);
-        UpdateChemicals(target, plant);
+        UpdateWarnings(target.Value, plant);
+        UpdatePlantStatus(target.Value, plant);
+        UpdateTraits(target.Value, plant);
+        UpdateConditions(target.Value, plant);
+        UpdateGases(target.Value);
+        UpdateChemicals(target.Value, plant);
         UpdateMutations(state.Mutations);
     }
 

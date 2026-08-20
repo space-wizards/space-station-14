@@ -25,25 +25,21 @@ public sealed class PlantAnalyzerBoundUserInterface(EntityUid owner, Enum uiKey)
     /// <inheritdoc />
     protected override void UpdateState(BoundUserInterfaceState state)
     {
+        base.UpdateState(state);
         if (state is not BotanyAnalyzerState botany)
             return;
 
         _state = botany;
-        UpdateWindow();
     }
 
     /// <inheritdoc />
     public override void Update()
     {
         base.Update();
-        UpdateWindow();
-    }
 
-    private void UpdateWindow()
-    {
-        if (_state is not { } state || !EntMan.TryGetEntity(state.Target, out var target))
+        if (_state is not { } state)
             return;
 
-        _window?.Update(target.Value, state);
+        _window?.Update(state);
     }
 }

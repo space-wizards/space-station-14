@@ -17,7 +17,15 @@ public sealed partial class BotanyMetricControl : PanelContainer
     /// <summary>
     /// Gets or sets the accent color used by the metric border and progress bar.
     /// </summary>
-    public Color AccentColor { get; set; } = Color.White;
+    public Color AccentColor
+    {
+        get;
+        set
+        {
+            field = value;
+            ApplyAccentColor();
+        }
+    }
 
     /// <summary>
     /// Gets or sets the optional color used when a progress value requests it.
@@ -28,7 +36,7 @@ public sealed partial class BotanyMetricControl : PanelContainer
     {
         RobustXamlLoader.Load(this);
         Progress.ForegroundStyleBoxOverride = _progressStyle;
-        ApplyAccentColor();
+        AccentColor = Color.White;
     }
 
     protected override void StylePropertiesChanged()
@@ -36,8 +44,6 @@ public sealed partial class BotanyMetricControl : PanelContainer
         base.StylePropertiesChanged();
         if (TryGetStyleProperty<Color>(StylePropertyAccent, out var accent))
             AccentColor = accent;
-
-        ApplyAccentColor();
     }
 
     /// <summary>
