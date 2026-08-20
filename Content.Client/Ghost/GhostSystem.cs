@@ -22,25 +22,19 @@ namespace Content.Client.Ghost
 
         public int AvailableGhostRoleCount { get; private set; }
 
-        private bool _ghostVisibility = true;
+        private GhostVisibilityMode _ghostVisibility = GhostVisibilityMode.ShowAllGhosts;
 
-        public bool GhostVisibility
+        private GhostVisibilityMode GhostVisibility
         {
             get => _ghostVisibility;
             private set
             {
                 if (_ghostVisibility == value)
-                {
                     return;
-                }
 
                 _ghostVisibility = value;
 
-                var query = AllEntityQuery<GhostComponent, SpriteComponent>();
-                while (query.MoveNext(out var uid, out _, out var sprite))
-                {
-                    _sprite.SetVisible((uid, sprite), value || uid == _playerManager.LocalEntity);
-                }
+                ApplyGhostVisibility();
             }
         }
 
@@ -75,8 +69,18 @@ namespace Content.Client.Ghost
 
         private void OnStartup(EntityUid uid, GhostComponent component, ComponentStartup args)
         {
-            if (TryComp(uid, out SpriteComponent? sprite))
-                _sprite.SetVisible((uid, sprite), GhostVisibility || uid == _playerManager.LocalEntity);
+            if (!TryComp(uid, out SpriteComponent? sprite))
+                return;
+
+            var visible = GhostVisibility switch
+            {
+                GhostVisibilityMode.ShowAllGhosts => true,
+                GhostVisibilityMode.HideOtherGhosts => uid == _playerManager.LocalEntity,
+                GhostVisibilityMode.HideOtherGhostsAndSelf => false,
+                _ => throw new ArgumentOutOfRangeException()
+            };
+
+            _sprite.SetVisible((uid, sprite), visible);
         }
 
         private void OnToggleLighting(EntityUid uid, EyeComponent component, ToggleLightingActionEvent args)
@@ -121,7 +125,21 @@ namespace Content.Client.Ghost
             if (args.Handled)
                 return;
 
-            var locId = GhostVisibility ? "ghost-gui-toggle-ghost-visibility-popup-off" : "ghost-gui-toggle-ghost-visibility-popup-on";
+            var locId = string.Empty;
+
+            switch (GhostVisibility)
+            {
+                case GhostVisibilityMode.ShowAllGhosts:
+                    locId = "ghost-gui-toggle-ghost-visibility-popup-off";
+                    break;
+                case GhostVisibilityMode.HideOtherGhosts:
+                    locId = "ghost-gui-toggle-all-ghosts-visibility-popup-off";
+                    break;
+                case GhostVisibilityMode.HideOtherGhostsAndSelf:
+                    locId = "ghost-gui-toggle-ghost-visibility-popup-on";
+                    break;
+            }
+
             Popup.PopupEntity(Loc.GetString(locId), args.Performer);
             if (uid == _playerManager.LocalEntity)
                 ToggleGhostVisibility();
@@ -139,13 +157,13 @@ namespace Content.Client.Ghost
             if (uid != _playerManager.LocalEntity)
                 return;
 
-            GhostVisibility = false;
+            GhostVisibility = GhostVisibilityMode.HideOtherGhosts;
             PlayerRemoved?.Invoke(component);
         }
 
         private void OnGhostPlayerAttach(EntityUid uid, GhostComponent component, LocalPlayerAttachedEvent localPlayerAttachedEvent)
         {
-            GhostVisibility = true;
+            GhostVisibility = GhostVisibilityMode.ShowAllGhosts;
             PlayerAttached?.Invoke(component);
         }
 
@@ -162,7 +180,7 @@ namespace Content.Client.Ghost
 
         private void OnGhostPlayerDetach(EntityUid uid, GhostComponent component, LocalPlayerDetachedEvent args)
         {
-            GhostVisibility = false;
+            GhostVisibility = GhostVisibilityMode.HideOtherGhosts;
             PlayerDetached?.Invoke();
         }
 
@@ -198,9 +216,39 @@ namespace Content.Client.Ghost
             _console.RemoteExecuteCommand(null, "ghostroles");
         }
 
-        public void ToggleGhostVisibility(bool? visibility = null)
+        public void ToggleGhostVisibility()
         {
-            GhostVisibility = visibility ?? !GhostVisibility;
+            // difficult ass implementation for toggling Enum ghost visibility cyclically
+            // (after 1 is 2, after 2 is 3, and after 3 is 1 again)
+            // is needed in case somebody would want to add another mode to GhostVisibilityMode Enum so it won't break
+            var count = Enum.GetValues(typeof(GhostVisibilityMode)).Length;
+            GhostVisibility = (GhostVisibilityMode)(((int)GhostVisibility + 1) % count);
         }
+
+        private void ApplyGhostVisibility()
+        {
+            var query = AllEntityQuery<GhostComponent, SpriteComponent>();
+
+            while (query.MoveNext(out var uid, out _, out var sprite))
+            {
+                var visible = _ghostVisibility switch
+                {
+                    GhostVisibilityMode.ShowAllGhosts => true,
+                    GhostVisibilityMode.HideOtherGhosts => uid == _playerManager.LocalEntity,
+                    GhostVisibilityMode.HideOtherGhostsAndSelf => false,
+                    _ => throw new ArgumentOutOfRangeException()
+                };
+
+                _sprite.SetVisible((uid, sprite), visible);
+            }
+        }
+
+    }
+
+    public enum GhostVisibilityMode : byte
+    {
+        ShowAllGhosts,
+        HideOtherGhosts,
+        HideOtherGhostsAndSelf,
     }
 }
