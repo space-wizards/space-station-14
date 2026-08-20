@@ -262,7 +262,7 @@ namespace Content.Client.Chemistry.UI
 
             if (!state.BufferReagents.Any())
             {
-                BufferInfo.AddChild(new Label { Text = Loc.GetString("chem-master-window-buffer-empty-text") });
+                BufferInfo.ShowEmptyMessage();
 
                 return;
             }
@@ -277,7 +277,7 @@ namespace Content.Client.Chemistry.UI
             bufferHBox.AddChild(bufferLabel);
             var bufferVol = new Label
             {
-                Text = $"{state.BufferCurrentVolume}u",
+                Text = $"{state.BufferCurrentVolume}{Loc.GetString("units-u")}",
                 StyleClasses = { StyleClass.LabelWeak }
             };
             bufferHBox.AddChild(bufferVol);
@@ -328,10 +328,7 @@ namespace Content.Client.Chemistry.UI
 
             if (info is null)
             {
-                control.Children.Add(new Label
-                {
-                    Text = Loc.GetString("chem-master-window-no-container-loaded-text")
-                });
+                control.ShowEmptyMessage();
                 return;
             }
 

@@ -56,8 +56,8 @@ public sealed partial class PlantTrayWindow : FancyWindow
 
     private void UpdateResources(PlantTrayComponent tray)
     {
-        UpdateResource(Water, "botany-ui-water", tray.WaterLevel, tray.MaxWaterLevel, "botany-ui-unit-u");
-        UpdateResource(Nutrients, "botany-ui-nutrients", tray.NutritionLevel, tray.MaxNutritionLevel, "botany-ui-unit-u");
+        UpdateResource(Water, "botany-ui-water", tray.WaterLevel, tray.MaxWaterLevel, "units-u");
+        UpdateResource(Nutrients, "botany-ui-nutrients", tray.NutritionLevel, tray.MaxNutritionLevel, "units-u");
         UpdateResource(Weeds, "botany-ui-weeds", tray.WeedLevel, tray.MaxWeedLevel);
         UpdateResource(Pests, "botany-ui-pests", tray.PestLevel, tray.MaxPestLevel);
         UpdateResource(Toxins, "botany-ui-toxins", tray.ToxinLevel, tray.MaxToxinLevel);

@@ -11,6 +11,7 @@ public sealed class PlantTrayBoundUserInterface(EntityUid owner, Enum uiKey) : B
 {
     private PlantTrayWindow? _window;
 
+    /// <inheritdoc />
     protected override void Open()
     {
         base.Open();
@@ -19,9 +20,7 @@ public sealed class PlantTrayBoundUserInterface(EntityUid owner, Enum uiKey) : B
         Update();
     }
 
-    /// <summary>
-    /// Refreshes the open plant tray window.
-    /// </summary>
+    /// <inheritdoc />
     public override void Update()
     {
         _window?.Update(Owner);

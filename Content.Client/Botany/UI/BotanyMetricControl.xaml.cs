@@ -11,20 +11,13 @@ namespace Content.Client.Botany.UI;
 [GenerateTypedNameReferences]
 public sealed partial class BotanyMetricControl : PanelContainer
 {
-    private readonly bool _loaded;
+    private readonly StyleBoxFlat _progressStyle = new();
+    public const string StylePropertyAccent = "accentColor";
 
     /// <summary>
     /// Gets or sets the accent color used by the metric border and progress bar.
     /// </summary>
-    public Color AccentColor
-    {
-        get;
-        set
-        {
-            field = value;
-            ApplyAccentColor();
-        }
-    } = Color.White;
+    public Color AccentColor { get; set; } = Color.White;
 
     /// <summary>
     /// Gets or sets the optional color used when a progress value requests it.
@@ -34,7 +27,16 @@ public sealed partial class BotanyMetricControl : PanelContainer
     public BotanyMetricControl()
     {
         RobustXamlLoader.Load(this);
-        _loaded = true;
+        Progress.ForegroundStyleBoxOverride = _progressStyle;
+        ApplyAccentColor();
+    }
+
+    protected override void StylePropertiesChanged()
+    {
+        base.StylePropertiesChanged();
+        if (TryGetStyleProperty<Color>(StylePropertyAccent, out var accent))
+            AccentColor = accent;
+
         ApplyAccentColor();
     }
 
@@ -57,19 +59,17 @@ public sealed partial class BotanyMetricControl : PanelContainer
         Target.Text = target;
         Target.Visible = target != null;
         Progress.Visible = progress != null;
-        ((StyleBoxFlat)Progress.ForegroundStyleBoxOverride!).BackgroundColor =
-            useProgressColor ? ProgressColor ?? AccentColor : AccentColor;
+        _progressStyle.BackgroundColor = useProgressColor ? ProgressColor ?? AccentColor : AccentColor;
         if (progress != null)
             Progress.Value = Math.Clamp(progress.Value, 0f, 1f);
     }
 
     private void ApplyAccentColor()
     {
-        if (!_loaded || PanelOverride is not StyleBoxFlat panelStyle ||
-            Progress.ForegroundStyleBoxOverride is not StyleBoxFlat progressStyle)
+        if (PanelOverride is not StyleBoxFlat panelStyle)
             return;
 
         panelStyle.BorderColor = AccentColor;
-        progressStyle.BackgroundColor = AccentColor;
+        _progressStyle.BackgroundColor = AccentColor;
     }
 }

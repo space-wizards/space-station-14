@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" ?>
 <controls:FancyWindow xmlns="https://spacestation14.io"
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                       xmlns:chemistry="clr-namespace:Content.Client.Chemistry.UI"
@@ -5,238 +6,231 @@
                       xmlns:atmos="clr-namespace:Content.Client.Atmos.UI"
                       MinWidth="700"
                       MinHeight="500">
-    <ScrollContainer VerticalExpand="True"
-                     Margin="5"
-                     ReturnMeasure="True">
-        <BoxContainer Orientation="Vertical"
-                      MinWidth="600"
+    <BoxContainer Orientation="Vertical"
+                  MinWidth="600"
+                  Margin="5"
+                  VerticalExpand="True">
+        <BoxContainer Orientation="Horizontal"
+                      Margin="6 4 6 8"
+                      SeparationOverride="6"
                       VerticalExpand="True">
-            <BoxContainer Orientation="Horizontal"
-                          Margin="6 4 6 8"
-                          SeparationOverride="6"
-                          VerticalExpand="True">
-                <PanelContainer StyleClasses="PanelInsetDark">
-                    <GridContainer MinWidth="250"
-                                   MaxWidth="250"
-                                   VerticalExpand="True"
-                                   HorizontalExpand="True"
-                                   Margin="6">
-                        <Label Name="PlantName"
+
+            <PanelContainer StyleClasses="PanelInsetDark">
+                <GridContainer MinWidth="250"
+                               MaxWidth="250"
+                               VerticalExpand="True"
+                               HorizontalExpand="True"
+                               Margin="6">
+                    <Label Name="PlantName"
+                           StyleClasses="LabelKeyText"
+                           HorizontalAlignment="Center" />
+                    <SpriteView Name="PlantSprite"
+                                OverrideDirection="South"
+                                Scale="2 2"
+                                SetSize="64 64"
+                                HorizontalAlignment="Center" />
+
+                    <!-- Traits -->
+                    <PanelContainer StyleClasses="BackgroundPanel"
+                                    HorizontalExpand="True">
+                        <GridContainer Margin="0 8">
+                            <Label Text="{Loc 'botany-ui-section-traits'}"
+                                   StyleClasses="LabelKeyText"
+                                   Name="TraitsHeading" />
+                            <GridContainer Name="Traits"
+                                           Columns="3"
+                                           HorizontalExpand="True">
+                                <Label Text="{Loc 'botany-ui-age'}"
+                                       Margin="0 0 8 0" />
+                                <Label Name="Age"
+                                       StyleClasses="LabelWeak" />
+                                <Control />
+                                <Label Text="{Loc 'botany-ui-growth-stage'}"
+                                       Margin="0 0 8 0" />
+                                <Label Name="GrowthStage"
+                                       StyleClasses="LabelWeak" />
+                                <Control />
+                                <Label Text="{Loc 'botany-ui-harvest-type'}"
+                                       Margin="0 0 8 0" />
+                                <Label Name="GrowthType"
+                                       StyleClasses="LabelWeak" />
+                                <Control />
+                                <Label Text="{Loc 'botany-ui-endurance'}"
+                                       Margin="0 0 8 0" />
+                                <Label Name="Endurance"
+                                       StyleClasses="LabelWeak" />
+                                <Label Name="EnduranceDelta" />
+                                <Label Text="{Loc 'botany-ui-yield'}"
+                                       Margin="0 0 8 0" />
+                                <Label Name="Yield"
+                                       StyleClasses="LabelWeak" />
+                                <Label Name="YieldDelta" />
+                                <Label Text="{Loc 'botany-ui-lifespan'}"
+                                       Margin="0 0 8 0" />
+                                <Label Name="Lifespan"
+                                       StyleClasses="LabelWeak" />
+                                <Label Name="LifespanDelta" />
+                                <Label Text="{Loc 'botany-ui-maturation'}"
+                                       Margin="0 0 8 0" />
+                                <Label Name="Maturation"
+                                       StyleClasses="LabelWeak" />
+                                <Label Name="MaturationDelta" />
+                                <Label Text="{Loc 'botany-ui-production'}"
+                                       Margin="0 0 8 0" />
+                                <Label Name="Production"
+                                       StyleClasses="LabelWeak" />
+                                <Label Name="ProductionDelta" />
+                                <Label Text="{Loc 'botany-ui-potency'}"
+                                       Margin="0 0 8 0" />
+                                <Label Name="Potency"
+                                       StyleClasses="LabelWeak" />
+                                <Label Name="PotencyDelta" />
+                            </GridContainer>
+                        </GridContainer>
+                    </PanelContainer>
+
+                    <!-- Warnings -->
+                    <PanelContainer StyleClasses="BackgroundPanel"
+                                    HorizontalExpand="True"
+                                    VerticalExpand="True">
+                        <GridContainer Margin="0 8">
+                            <Label Text="{Loc 'botany-ui-section-warnings'}"
+                                   StyleClasses="LabelKeyText" />
+                            <BoxContainer Name="Warnings"
+                                          Orientation="Vertical" />
+                        </GridContainer>
+                    </PanelContainer>
+                </GridContainer>
+            </PanelContainer>
+
+            <BoxContainer Name="Content"
+                          Orientation="Vertical"
+                          HorizontalExpand="True"
+                          SeparationOverride="4">
+
+                <!-- Status -->
+                <PanelContainer StyleClasses="BackgroundPanelDark"
+                                HorizontalExpand="True">
+                    <GridContainer Margin="0 8">
+                        <Label Text="{Loc 'botany-ui-section-plant'}"
                                StyleClasses="LabelKeyText"
-                               HorizontalAlignment="Center" />
-                        <SpriteView Name="PlantSprite"
-                                    OverrideDirection="South"
-                                    Scale="2 2"
-                                    SetSize="64 64"
-                                    HorizontalAlignment="Center" />
-
-                        <!-- Traits -->
-                        <PanelContainer StyleClasses="BackgroundPanel"
-                                        HorizontalExpand="True">
-                            <GridContainer Margin="0 8">
-                                <Label Text="{Loc 'botany-ui-section-traits'}"
-                                       StyleClasses="LabelKeyText"
-                                       Name="TraitsHeading" />
-                                <GridContainer Name="Traits"
-                                               Columns="3"
-                                               HorizontalExpand="True">
-                                    <Label Text="{Loc 'botany-ui-age'}"
-                                           Margin="0 0 8 0" />
-                                    <Label Name="Age"
-                                           StyleClasses="LabelWeak" />
-                                    <Label />
-                                    <Label Text="{Loc 'botany-ui-growth-stage'}"
-                                           Margin="0 0 8 0" />
-                                    <Label Name="GrowthStage"
-                                           StyleClasses="LabelWeak" />
-                                    <Label />
-                                    <Label Text="{Loc 'botany-ui-harvest-type'}"
-                                           Margin="0 0 8 0" />
-                                    <Label Name="GrowthType"
-                                           StyleClasses="LabelWeak" />
-                                    <Label />
-                                    <Label Text="{Loc 'botany-ui-endurance'}"
-                                           Margin="0 0 8 0" />
-                                    <Label Name="Endurance"
-                                           StyleClasses="LabelWeak" />
-                                    <Label Name="EnduranceDelta" />
-                                    <Label Text="{Loc 'botany-ui-yield'}"
-                                           Margin="0 0 8 0" />
-                                    <Label Name="Yield"
-                                           StyleClasses="LabelWeak" />
-                                    <Label Name="YieldDelta" />
-                                    <Label Text="{Loc 'botany-ui-lifespan'}"
-                                           Margin="0 0 8 0" />
-                                    <Label Name="Lifespan"
-                                           StyleClasses="LabelWeak" />
-                                    <Label Name="LifespanDelta" />
-                                    <Label Text="{Loc 'botany-ui-maturation'}"
-                                           Margin="0 0 8 0" />
-                                    <Label Name="Maturation"
-                                           StyleClasses="LabelWeak" />
-                                    <Label Name="MaturationDelta" />
-                                    <Label Text="{Loc 'botany-ui-production'}"
-                                           Margin="0 0 8 0" />
-                                    <Label Name="Production"
-                                           StyleClasses="LabelWeak" />
-                                    <Label Name="ProductionDelta" />
-                                    <Label Text="{Loc 'botany-ui-potency'}"
-                                           Margin="0 0 8 0" />
-                                    <Label Name="Potency"
-                                           StyleClasses="LabelWeak" />
-                                    <Label Name="PotencyDelta" />
-                                </GridContainer>
-                            </GridContainer>
-                        </PanelContainer>
-
-                        <!-- Warnings -->
-                        <PanelContainer StyleClasses="BackgroundPanel"
-                                        HorizontalExpand="True"
-                                        VerticalExpand="True">
-                            <GridContainer Margin="0 8">
-                                <Label Text="{Loc 'botany-ui-section-warnings'}"
-                                       StyleClasses="LabelKeyText" />
-                                <BoxContainer Name="Warnings"
-                                              Orientation="Vertical" />
-                            </GridContainer>
-                        </PanelContainer>
+                               Name="PlantHeading"
+                               Margin="0 0 0 2" />
+                        <GridContainer Columns="2"
+                                       VSeparationOverride="6"
+                                       HSeparationOverride="6"
+                                       HorizontalExpand="True">
+                            <botany:BotanyMetricControl Name="Health"
+                                                        StyleClasses="MetricHealth" />
+                            <botany:BotanyMetricControl Name="Growth"
+                                                        StyleClasses="MetricGrowth" />
+                        </GridContainer>
                     </GridContainer>
                 </PanelContainer>
 
-                <BoxContainer Name="Content"
-                              Orientation="Vertical"
-                              HorizontalExpand="True"
-                              SeparationOverride="4">
-
-                    <!-- Status -->
-                    <PanelContainer StyleClasses="BackgroundPanelDark"
-                                    HorizontalExpand="True">
-                        <GridContainer Margin="0 8">
-                            <Label Text="{Loc 'botany-ui-section-plant'}"
-                                   StyleClasses="LabelKeyText"
-                                   Name="PlantHeading"
-                                   Margin="0 0 0 2" />
-                            <GridContainer Columns="2"
-                                           VSeparationOverride="6"
-                                           HSeparationOverride="6"
-                                           HorizontalExpand="True">
-                                <botany:BotanyMetricControl Name="Health"
-                                                            AccentColor="#E06C75" />
-                                <botany:BotanyMetricControl Name="Growth"
-                                                            AccentColor="#98C379" />
-                            </GridContainer>
+                <!-- Required conditions -->
+                <PanelContainer StyleClasses="BackgroundPanelDark"
+                                HorizontalExpand="True">
+                    <GridContainer Margin="0 8">
+                        <Label Text="{Loc 'botany-ui-section-conditions'}"
+                               StyleClasses="LabelKeyText"
+                               Name="ConditionsHeading"
+                               Margin="0 0 0 2" />
+                        <GridContainer Columns="2"
+                                       VSeparationOverride="6"
+                                       HSeparationOverride="6"
+                                       HorizontalExpand="True">
+                            <botany:BotanyMetricControl Name="Temperature"
+                                                        StyleClasses="MetricTemperature" />
+                            <botany:BotanyMetricControl Name="Pressure"
+                                                        StyleClasses="MetricPressure" />
+                            <botany:BotanyMetricControl Name="Water"
+                                                        StyleClasses="MetricWater" />
+                            <botany:BotanyMetricControl Name="Nutrients"
+                                                        StyleClasses="MetricNutrients" />
                         </GridContainer>
-                    </PanelContainer>
-
-                    <!-- Required conditions -->
-                    <PanelContainer StyleClasses="BackgroundPanelDark"
-                                    HorizontalExpand="True">
-                        <GridContainer Margin="0 8">
-                            <Label Text="{Loc 'botany-ui-section-conditions'}"
-                                   StyleClasses="LabelKeyText"
-                                   Name="ConditionsHeading"
-                                   Margin="0 0 0 2" />
-                            <GridContainer Columns="2"
-                                           VSeparationOverride="6"
-                                           HSeparationOverride="6"
-                                           HorizontalExpand="True">
-                                <botany:BotanyMetricControl Name="Temperature"
-                                                            AccentColor="#E06C75" />
-                                <botany:BotanyMetricControl Name="Pressure"
-                                                            AccentColor="#61AFEF" />
-                                <botany:BotanyMetricControl Name="Water"
-                                                            AccentColor="#56B6C2" />
-                                <botany:BotanyMetricControl Name="Nutrients"
-                                                            AccentColor="#E5C07B" />
-                            </GridContainer>
-                        </GridContainer>
-                    </PanelContainer>
-
-                    <!-- Gas exchange -->
-                    <GridContainer Columns="2">
-                        <PanelContainer StyleClasses="BackgroundPanelDark"
-                                        HorizontalExpand="True"
-                                        VerticalExpand="True">
-                            <GridContainer Margin="0 8">
-                                <Label Text="{Loc 'botany-ui-section-consumed-gases'}"
-                                       StyleClasses="LabelKeyText"
-                                       Name="ConsumedHeading"
-                                       Margin="0 0 0 2" />
-                                <atmos:GasDisplayControl Name="Consumed" />
-                                <Label Name="ConsumedEmpty"
-                                       Text="{Loc 'botany-ui-gases-none'}"
-                                       StyleClasses="LabelWeak"
-                                       Visible="False" />
-                            </GridContainer>
-                        </PanelContainer>
-                        <PanelContainer StyleClasses="BackgroundPanelDark"
-                                        HorizontalExpand="True"
-                                        VerticalExpand="True">
-                            <GridContainer Margin="0 8">
-                                <Label Text="{Loc 'botany-ui-section-exuded-gases'}"
-                                       StyleClasses="LabelKeyText"
-                                       Name="ExudedHeading"
-                                       Margin="0 0 0 2" />
-                                <atmos:GasDisplayControl Name="Exuded" />
-                                <Label Name="ExudedEmpty"
-                                       Text="{Loc 'botany-ui-gases-none'}"
-                                       StyleClasses="LabelWeak"
-                                       Visible="False" />
-                            </GridContainer>
-                        </PanelContainer>
                     </GridContainer>
+                </PanelContainer>
 
-                    <!-- Harvest chemicals -->
+                <!-- Gas exchange -->
+                <GridContainer Columns="2">
                     <PanelContainer StyleClasses="BackgroundPanelDark"
                                     HorizontalExpand="True"
                                     VerticalExpand="True">
                         <GridContainer Margin="0 8">
-                            <Label Text="{Loc 'botany-ui-section-chemicals'}"
+                            <Label Text="{Loc 'botany-ui-section-consumed-gases'}"
                                    StyleClasses="LabelKeyText"
-                                   Name="ChemicalsHeading"
+                                   Name="ConsumedHeading"
                                    Margin="0 0 0 2" />
-                            <chemistry:ReagentDisplayControl Name="Chemicals" />
+                            <atmos:GasDisplayControl Name="Consumed"
+                                                     EmptyMessage="{Loc 'botany-ui-gases-none'}" />
                         </GridContainer>
                     </PanelContainer>
-
-                    <!-- Mutations -->
                     <PanelContainer StyleClasses="BackgroundPanelDark"
                                     HorizontalExpand="True"
                                     VerticalExpand="True">
-                        <GridContainer Margin="0 8"
+                        <GridContainer Margin="0 8">
+                            <Label Text="{Loc 'botany-ui-section-exuded-gases'}"
+                                   StyleClasses="LabelKeyText"
+                                   Name="ExudedHeading"
+                                   Margin="0 0 0 2" />
+                            <atmos:GasDisplayControl Name="Exuded"
+                                                     EmptyMessage="{Loc 'botany-ui-gases-none'}" />
+                        </GridContainer>
+                    </PanelContainer>
+                </GridContainer>
+
+                <!-- Harvest chemicals -->
+                <PanelContainer StyleClasses="BackgroundPanelDark"
+                                HorizontalExpand="True"
+                                VerticalExpand="True">
+                    <GridContainer Margin="0 8">
+                        <Label Text="{Loc 'botany-ui-section-chemicals'}"
+                               StyleClasses="LabelKeyText"
+                               Name="ChemicalsHeading"
+                               Margin="0 0 0 2" />
+                        <chemistry:ReagentDisplayControl Name="Chemicals" />
+                    </GridContainer>
+                </PanelContainer>
+
+                <!-- Mutations -->
+                <PanelContainer StyleClasses="BackgroundPanelDark"
+                                HorizontalExpand="True"
+                                VerticalExpand="True">
+                    <GridContainer Margin="0 8"
+                                   HorizontalExpand="True"
+                                   VerticalExpand="True">
+                        <Label Text="{Loc 'botany-ui-section-mutations'}"
+                               StyleClasses="LabelKeyText"
+                               Name="MutationsHeading"
+                               Margin="0 0 0 2" />
+                        <GridContainer Columns="3"
                                        HorizontalExpand="True"
                                        VerticalExpand="True">
-                            <Label Text="{Loc 'botany-ui-section-mutations'}"
-                                   StyleClasses="LabelKeyText"
-                                   Name="MutationsHeading"
-                                   Margin="0 0 0 2" />
-                            <GridContainer Columns="3"
-                                           HorizontalExpand="True"
-                                           VerticalExpand="True">
-                                <BoxContainer Name="Mutations"
-                                              Orientation="Vertical"
-                                              HorizontalExpand="True" />
-                                <PanelContainer StyleClasses="LowDivider"
-                                                VerticalExpand="True"
-                                                SetWidth="2"
-                                                Margin="8 0" />
-                                <GridContainer Columns="3">
-                                    <Label Text="{Loc 'botany-ui-mutation'}"
-                                           Margin="0 0 8 0" />
-                                    <Label Name="Mutation"
-                                           StyleClasses="LabelWeak" />
-                                    <Label />
-                                    <Label Text="{Loc 'botany-ui-mutation-mod'}"
-                                           Margin="0 0 8 0" />
-                                    <Label Name="MutationMod"
-                                           StyleClasses="LabelWeak" />
-                                    <Label Name="MutationModDelta" />
-                                </GridContainer>
+                            <BoxContainer Name="Mutations"
+                                          Orientation="Vertical"
+                                          HorizontalExpand="True" />
+                            <PanelContainer StyleClasses="LowDivider"
+                                            VerticalExpand="True"
+                                            SetWidth="2"
+                                            Margin="8 0" />
+                            <GridContainer Columns="3">
+                                <Label Text="{Loc 'botany-ui-mutation'}"
+                                       Margin="0 0 8 0" />
+                                <Label Name="Mutation"
+                                       StyleClasses="LabelWeak" />
+                                <Control />
+                                <Label Text="{Loc 'botany-ui-mutation-mod'}"
+                                       Margin="0 0 8 0" />
+                                <Label Name="MutationMod"
+                                       StyleClasses="LabelWeak" />
+                                <Label Name="MutationModDelta" />
                             </GridContainer>
                         </GridContainer>
-                    </PanelContainer>
-                </BoxContainer>
+                    </GridContainer>
+                </PanelContainer>
             </BoxContainer>
+
         </BoxContainer>
-    </ScrollContainer>
+    </BoxContainer>
 </controls:FancyWindow>

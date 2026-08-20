@@ -1,5 +1,6 @@
 using Content.Shared.Botany.Components;
 using System.Linq;
+using JetBrains.Annotations;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -19,44 +20,8 @@ public sealed partial class PlantAnalyzerSystem : EntitySystem
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private ItemToggleSystem _toggle = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
-    [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private SharedUserInterfaceSystem _ui = default!;
-    [Dependency] private IGameTiming _timing = default!;
     [Dependency] private PlantSystem _plant = default!;
-
-    /// <inheritdoc />
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        var curTime = _timing.CurTime;
-        var query = EntityQueryEnumerator<PlantAnalyzerComponent>();
-        while (query.MoveNext(out var uid, out var analyzer))
-        {
-            if (analyzer.Target is not { } target || analyzer.User is not { } user)
-                continue;
-
-            if (!_ui.IsUiOpen(uid, PlantAnalyzerUiKey.Key))
-            {
-                Stop((uid, analyzer));
-                continue;
-            }
-
-            if (analyzer.NextUpdate > curTime)
-                continue;
-
-            analyzer.NextUpdate += analyzer.UpdateInterval;
-            DirtyField(uid, analyzer, nameof(analyzer.NextUpdate));
-            if (Deleted(target) || Deleted(user) ||
-                !_transform.InRange(Transform(uid).Coordinates, Transform(target).Coordinates, 2f))
-            {
-                Stop((uid, analyzer));
-                continue;
-            }
-
-            UpdateUi((uid, analyzer));
-        }
-    }
 
     [SubscribeLocalEvent]
     private void OnAfterInteract(Entity<PlantAnalyzerComponent> ent, ref AfterInteractEvent args)
@@ -96,12 +61,11 @@ public sealed partial class PlantAnalyzerSystem : EntitySystem
 
         ent.Comp.Target = target;
         ent.Comp.User = args.Args.User;
-        ent.Comp.NextUpdate = _timing.CurTime;
         Dirty(ent);
 
         _toggle.TryActivate(ent.Owner);
         _ui.OpenUi(ent.Owner, PlantAnalyzerUiKey.Key, args.Args.User, true);
-        UpdateUi(ent);
+        UpdateAnalyzerUi(ent);
 
         args.Handled = true;
     }
@@ -125,7 +89,23 @@ public sealed partial class PlantAnalyzerSystem : EntitySystem
         Stop(ent);
     }
 
-    private void UpdateUi(Entity<PlantAnalyzerComponent> ent)
+    /// <summary>
+    /// Updates the analyzer currently observing the specified plant.
+    /// </summary>
+    [PublicAPI]
+    public void UpdatePlantUi(EntityUid plantUid)
+    {
+        var query = EntityQueryEnumerator<PlantAnalyzerComponent>();
+        while (query.MoveNext(out var analyzerUid, out var analyzer))
+        {
+            if (analyzer.Target != plantUid)
+                continue;
+
+            UpdateAnalyzerUi((analyzerUid, analyzer));
+        }
+    }
+
+    private void UpdateAnalyzerUi(Entity<PlantAnalyzerComponent> ent)
     {
         if (ent.Comp.Target is not { } target || !_ui.IsUiOpen(ent.Owner, PlantAnalyzerUiKey.Key))
             return;

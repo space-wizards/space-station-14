@@ -17,9 +17,8 @@
 
                 <ScrollContainer HorizontalExpand="True" MinSize="0 200">
                     <!-- Initially empty, when server sends state data this will have container contents and fill volume.-->
-                    <chemistry:ReagentDisplayControl Name="InputContainerInfo" Margin="4">
-                        <Label Text="{Loc 'chem-master-window-no-container-loaded-text'}" />
-                    </chemistry:ReagentDisplayControl>
+                    <chemistry:ReagentDisplayControl Name="InputContainerInfo" Margin="4"
+                                                       EmptyMessage="{Loc 'chem-master-window-no-container-loaded-text'}" />
                 </ScrollContainer>
             </PanelContainer>
 
@@ -40,9 +39,8 @@
 
                 <ScrollContainer HorizontalExpand="True" MinSize="0 200">
                     <!-- Buffer reagent list -->
-                    <chemistry:ReagentDisplayControl Name="BufferInfo" Margin="4">
-                        <Label Text="{Loc 'chem-master-window-buffer-empty-text'}" />
-                    </chemistry:ReagentDisplayControl>
+                    <chemistry:ReagentDisplayControl Name="BufferInfo" Margin="4"
+                                                       EmptyMessage="{Loc 'chem-master-window-buffer-empty-text'}" />
                 </ScrollContainer>
             </PanelContainer>
         </BoxContainer>
@@ -59,9 +57,8 @@
 
                 <ScrollContainer HorizontalExpand="True" MinSize="0 200">
                     <!-- Initially empty, when server sends state data this will have container contents and fill volume.-->
-                    <chemistry:ReagentDisplayControl Name="OutputContainerInfo" Margin="4">
-                        <Label Text="{Loc 'chem-master-window-no-container-loaded-text'}" />
-                    </chemistry:ReagentDisplayControl>
+                    <chemistry:ReagentDisplayControl Name="OutputContainerInfo" Margin="4"
+                                                       EmptyMessage="{Loc 'chem-master-window-no-container-loaded-text'}" />
                 </ScrollContainer>
             </PanelContainer>
 

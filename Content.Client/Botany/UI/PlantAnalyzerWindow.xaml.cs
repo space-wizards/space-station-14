@@ -51,7 +51,9 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
 
     private void UpdatePlantStatus(EntityUid target, PlantComponent plant)
     {
-        var holder = _entityManager.GetComponent<PlantHolderComponent>(target);
+        if (!_entityManager.TryGetComponent<PlantHolderComponent>(target, out var holder))
+            return;
+
         var harvestAge = _plantSystem.GetNextHarvestAge((target, plant));
 
         Health.Update(Loc.GetString("botany-ui-health"), $"{holder.Health:0.#} / {plant.Endurance:0.#}", progress: plant.Endurance > 0f ? holder.Health / plant.Endurance : 1f);
@@ -93,16 +95,9 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
         UpdateDelta(MutationModDelta, holder.MutationMod, prototypeHolder.MutationMod);
     }
 
-    private static void UpdateDelta(Label label, float value, float? prototypeValue)
+    private static void UpdateDelta(Label label, float value, float prototypeValue)
     {
-        if (prototypeValue is not { } baseline)
-        {
-            label.Text = string.Empty;
-            label.FontColorOverride = null;
-            return;
-        }
-
-        var delta = value - baseline;
+        var delta = value - prototypeValue;
         label.Text = $"({delta:+#.#;-#.#;0})";
         label.FontColorOverride = delta switch
         {
@@ -119,16 +114,14 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
 
         UpdateCondition(Temperature,
             "botany-ui-temperature",
-            null,
             atmospheric.LowHeatTolerance,
             atmospheric.HighHeatTolerance,
-            "botany-ui-unit-k");
+            "units-kelvin");
         UpdateCondition(Pressure,
             "botany-ui-pressure",
-            null,
             atmospheric.LowPressureTolerance,
             atmospheric.HighPressureTolerance,
-            "botany-ui-unit-kpa");
+            "units-k-pascal");
 
         if (!_plantSystem.TryGetTray((target, plant), out var tray) ||
             !_entityManager.TryGetComponent<PlantGrowthComponent>(target, out var growth))
@@ -136,22 +129,19 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
 
         UpdateCondition(Water,
             "botany-ui-water",
-            tray.Comp.WaterLevel,
             growth.WaterConsumption * tray.Comp.TrayConsumptionMultiplier,
             null,
-            "botany-ui-unit-u");
+            "units-u");
         UpdateCondition(Nutrients,
             "botany-ui-nutrients",
-            tray.Comp.NutritionLevel,
             growth.NutrientConsumption * tray.Comp.TrayConsumptionMultiplier,
             null,
-            "botany-ui-unit-u");
+            "units-u");
     }
 
     private static void UpdateCondition(
         BotanyMetricControl control,
         string name,
-        float? value,
         float? minimum,
         float? maximum,
         string unit)
@@ -178,36 +168,39 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
             _ => Loc.GetString("botany-ui-condition-current-missing"),
         };
 
-        if (value != null)
-            control.Update(Loc.GetString(name), target, $"{value:0.#}");
-        else
-            control.Update(Loc.GetString(name), target);
+        control.Update(Loc.GetString(name), target);
     }
 
     private void UpdateGases(EntityUid target)
     {
         if (!_entityManager.TryGetComponent<PlantConsumeExudeGasComponent>(target, out var gases))
-        {
-            Consumed.Populate([]);
-            Exuded.Populate([]);
-            ConsumedEmpty.Visible = true;
-            ExudedEmpty.Visible = true;
             return;
-        }
 
+        Consumed.ClearDisplay();
         var consumed = gases.ConsumeGasses
             .Where(x => x.Value > 0f)
             .Select(x => new GasEntry(x.Key, x.Value))
             .ToArray();
+        foreach (var gas in consumed)
+        {
+            Consumed.AddGas(gas);
+        }
+
+        if (consumed.Length == 0)
+            Consumed.ShowEmptyMessage();
+
+        Exuded.ClearDisplay();
         var exuded = gases.ExudeGasses
             .Where(x => x.Value > 0f)
             .Select(x => new GasEntry(x.Key, x.Value))
             .ToArray();
+        foreach (var gas in exuded)
+        {
+            Exuded.AddGas(gas);
+        }
 
-        Consumed.Populate(consumed);
-        Exuded.Populate(exuded);
-        ConsumedEmpty.Visible = consumed.Length == 0;
-        ExudedEmpty.Visible = exuded.Length == 0;
+        if (exuded.Length == 0)
+            Exuded.ShowEmptyMessage();
     }
 
     private string GetGrowthType(EntityUid target)

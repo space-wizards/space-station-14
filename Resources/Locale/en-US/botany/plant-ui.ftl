@@ -56,7 +56,4 @@ botany-ui-mutation-mod = Modifier
 botany-ui-section-warnings = Warnings
 botany-ui-warnings-none = No warnings detected.
 
-botany-ui-unit-u = u
-botany-ui-unit-k = K
-botany-ui-unit-kpa = kPa
 botany-ui-unit-cycles = cycles

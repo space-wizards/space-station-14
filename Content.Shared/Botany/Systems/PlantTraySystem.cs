@@ -317,19 +317,19 @@ public sealed partial class PlantTraySystem : EntitySystem
 
         var markup = new List<string>();
         if (GetWeedThreshold(ent))
-            markup.Add(Loc.GetString("tray-component-weeds-high-warning"));
+            markup.Add(Loc.GetString("tray-component-weed-high-level-warning"));
 
         if (GetWaterThreshold(ent))
             markup.Add(Loc.GetString("tray-component-water-low-warning"));
 
         if (GetNutrientThreshold(ent))
-            markup.Add(Loc.GetString("tray-component-nutrients-low-warning"));
+            markup.Add(Loc.GetString("tray-component-nutrient-low-warning"));
 
         if (GetToxinThreshold(ent))
-            markup.Add(Loc.GetString("tray-component-toxins-high-warning"));
+            markup.Add(Loc.GetString("tray-component-toxin-high-level-warning"));
 
         if (GetPestThreshold(ent))
-            markup.Add(Loc.GetString("tray-component-pests-high-warning"));
+            markup.Add(Loc.GetString("tray-component-pest-high-level-warning"));
 
         if (ent.Comp.DrawWarnings && TryGetPlant(ent, out var plantUid)
             && _holderQuery.TryComp(plantUid.Value, out var holder))
