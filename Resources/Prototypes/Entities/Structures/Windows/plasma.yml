@@ -138,7 +138,7 @@
     states:
     - !type:DiagonalSpriteSmoothing
       mask: [ walls, windows, grilles, marble, doors ]
-      base: malign
+      base: state
   - type: Icon
     sprite: Structures/Windows/window-diagonal-plasma.rsi
     state: state0
