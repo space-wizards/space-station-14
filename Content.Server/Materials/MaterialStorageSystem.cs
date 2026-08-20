@@ -22,14 +22,15 @@ public sealed partial class MaterialStorageSystem : SharedMaterialStorageSystem
     [Dependency] private SharedPopupSystem _popup = default!;
 
     [SubscribeLocalEvent]
-    private void OnDeconstructed(EntityUid uid, MaterialStorageComponent component, MachineDeconstructedEvent args)
+    private void OnDeconstructed(Entity<MaterialStorageComponent> ent, MachineDeconstructedEvent _)
     {
+        var component = ent.Comp;
         if (!component.DropOnDeconstruct)
             return;
 
         foreach (var (material, amount) in component.Storage)
         {
-            SpawnMultipleFromMaterial(amount, material, Transform(uid).Coordinates);
+            SpawnMultipleFromMaterial(amount, material, Transform(ent).Coordinates);
         }
     }
 

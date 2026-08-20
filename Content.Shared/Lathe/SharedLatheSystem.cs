@@ -68,10 +68,12 @@ public abstract partial class SharedLatheSystem : EntitySystem
         recipes = null;
         if (!Resolve(uid, ref component))
             return false;
+
         recipes = GetAvailableRecipes(uid, component, getUnavailable);
         return true;
     }
 
+    [PublicAPI]
     public List<ProtoId<LatheRecipePrototype>> GetAvailableRecipes(EntityUid uid, LatheComponent component, bool getUnavailable = false)
     {
         var ev = new LatheGetRecipesEvent((uid, component), getUnavailable);
@@ -83,6 +85,7 @@ public abstract partial class SharedLatheSystem : EntitySystem
     /// <summary>
     /// Adds every unlocked recipe from each pack to the recipes list.
     /// </summary>
+    [PublicAPI]
     public void AddRecipesFromDynamicPacks(ref LatheGetRecipesEvent args, TechnologyDatabaseComponent database, IEnumerable<ProtoId<LatheRecipePackPrototype>> packs)
     {
         foreach (var id in packs)

@@ -470,10 +470,10 @@ public abstract partial class SharedMaterialStorageSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Spawn an amount of a material in stack entities.
-    ///     Note the 'amount' is material dependent.
-    ///     1 biomass = 1 biomass in its stack,
-    ///     but 100 plasma = 1 sheet of plasma, etc.
+    /// Spawn an amount of a material in stack entities.
+    /// Note the 'amount' is material dependent.
+    /// 1 biomass = 1 biomass in its stack,
+    /// but 100 plasma = 1 sheet of plasma, etc.
     /// </summary>
     public List<EntityUid> SpawnMultipleFromMaterial(int amount, string material, EntityCoordinates coordinates)
     {
@@ -481,10 +481,10 @@ public abstract partial class SharedMaterialStorageSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Spawn an amount of a material in stack entities.
-    ///     Note the 'amount' is material dependent.
-    ///     1 biomass = 1 biomass in its stack,
-    ///     but 100 plasma = 1 sheet of plasma, etc.
+    /// Spawn an amount of a material in stack entities.
+    /// Note the 'amount' is material dependent.
+    /// 1 biomass = 1 biomass in its stack,
+    /// but 100 plasma = 1 sheet of plasma, etc.
     /// </summary>
     public List<EntityUid> SpawnMultipleFromMaterial(int amount, string material, EntityCoordinates coordinates, out int overflowMaterial)
     {
@@ -499,10 +499,10 @@ public abstract partial class SharedMaterialStorageSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Spawn an amount of a material in stack entities.
-    ///     Note the 'amount' is material dependent.
-    ///     1 biomass = 1 biomass in its stack,
-    ///     but 100 plasma = 1 sheet of plasma, etc.
+    /// Spawn an amount of a material in stack entities.
+    /// Note the 'amount' is material dependent.
+    /// 1 biomass = 1 biomass in its stack,
+    /// but 100 plasma = 1 sheet of plasma, etc.
     /// </summary>
     [PublicAPI]
     public List<EntityUid> SpawnMultipleFromMaterial(int amount, MaterialPrototype materialProto, EntityCoordinates coordinates)
@@ -511,10 +511,10 @@ public abstract partial class SharedMaterialStorageSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Spawn an amount of a material in stack entities.
-    ///     Note the 'amount' is material dependent.
-    ///     1 biomass = 1 biomass in its stack,
-    ///     but 100 plasma = 1 sheet of plasma, etc.
+    /// Spawn an amount of a material in stack entities.
+    /// Note the 'amount' is material dependent.
+    /// 1 biomass = 1 biomass in its stack,
+    /// but 100 plasma = 1 sheet of plasma, etc.
     /// </summary>
     public List<EntityUid> SpawnMultipleFromMaterial(int amount, MaterialPrototype materialProto, EntityCoordinates coordinates, out int overflowMaterial)
     {
@@ -524,7 +524,7 @@ public abstract partial class SharedMaterialStorageSystem : EntitySystem
             return new List<EntityUid>();
 
         var entProto = ProtoMan.Index<EntityPrototype>(materialProto.StackEntity);
-        if (!entProto.TryGetComponent<PhysicalCompositionComponent>(out var composition, EntityManager.ComponentFactory))
+        if (!entProto.TryComp<PhysicalCompositionComponent>(out var composition, EntityManager.ComponentFactory))
             return new List<EntityUid>();
 
         var materialPerStack = composition.MaterialComposition[materialProto.ID];
@@ -536,6 +536,4 @@ public abstract partial class SharedMaterialStorageSystem : EntitySystem
 
         return _sharedStackSystem.SpawnMultipleAtPosition(materialProto.StackEntity.Value, amountToSpawn, coordinates);
     }
-
-
 }
