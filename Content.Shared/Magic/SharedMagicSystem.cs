@@ -291,6 +291,7 @@ public abstract partial class SharedMagicSystem : EntitySystem
         EntityManager.AddComponents(ev.Target, ev.ToAdd);
     }
 
+    [SubscribeLocalEvent]
     private void OnChangeOwnComponentsSpell(ChangeOwnComponentsSpellEvent ev)
     {
         if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))
