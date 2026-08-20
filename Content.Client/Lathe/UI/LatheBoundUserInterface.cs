@@ -41,6 +41,7 @@ namespace Content.Client.Lathe.UI
             {
                 UpdateProductionQueue(latheComp.CurrentRecipe, latheComp.Queue);
             }
+
             _menu.RefreshRecipes();
         }
 
@@ -55,10 +56,10 @@ namespace Content.Client.Lathe.UI
         }
 
         /// <summary>
-        /// Update the production queue portion of the UI
+        /// Update the production queue portion of the UI.
         /// </summary>
-        /// <param name="current">Currently-being-produced item, if any</param>
-        /// <param name="remainder">Iterator for remaining items in production queue</param>
+        /// <param name="current">Currently-being-produced item, if any.</param>
+        /// <param name="remainder">Collection of remaining items in production queue.</param>
         public void UpdateProductionQueue(ProtoId<LatheRecipePrototype>? current, IReadOnlyCollection<LatheRecipeBatch> remainder)
         {
             _menu?.PopulateQueueList(remainder);
@@ -66,7 +67,7 @@ namespace Content.Client.Lathe.UI
         }
 
         /// <summary>
-        /// Update UI after stored material quantities has changed
+        /// Update UI after stored material quantities has changed.
         /// </summary>
         public void UpdateMaterialAmounts()
         {

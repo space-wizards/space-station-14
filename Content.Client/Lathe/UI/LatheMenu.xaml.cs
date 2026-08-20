@@ -169,10 +169,11 @@ public sealed partial class LatheMenu : FancyWindow
             return;
         }
 
-        foreach (KeyValuePair<RecipeListData, RecipeControl> pair in _dataToControls)
+        var quantity = GetQuantity();
+        foreach (var (data, control) in _dataToControls)
         {
-            var canProduce = _lathe.CanProduce(Entity, pair.Key.Recipe, GetQuantity(), component: lathe);
-            pair.Value.SetCanProduce(canProduce);
+            var canProduce = _lathe.CanProduce(Entity, data.Recipe, quantity, component: lathe);
+            control.SetCanProduce(canProduce);
         }
     }
 
@@ -385,6 +386,7 @@ public sealed partial class LatheMenu : FancyWindow
     {
         if (!int.TryParse(AmountLineEdit.Text, out var quantity) || quantity <= 0)
             quantity = 1;
+
         return quantity;
     }
 }
