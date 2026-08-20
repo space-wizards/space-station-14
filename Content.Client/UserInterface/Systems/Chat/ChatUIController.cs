@@ -480,10 +480,9 @@ public sealed partial class ChatUIController : UIController
 
     private void CreateNuSpeechBubble(EntityUid entity, SpeechBubbleData speechData)
     {
-        var name = SharedChatSystem.GetStringInsideTag(speechData.Message, "Name");
-        //TODO better way of this, probably put sender name in ChatMessage
-        //It gets color tags added to the message earlier so we have to remove markup again here to get the color
-        //gah dude it's so fucked
+        var name = SharedChatSystem.GetStringInsideTag(speechData.Message, "BubbleHeader");
+
+        //gah dude it's so fucked. fuck it.
         name = FormattedMessage.RemoveMarkupPermissive(name);
 
         var nameColor = GetNameColor(name);
@@ -498,6 +497,7 @@ public sealed partial class ChatUIController : UIController
         var bubble = new SpeechBubble(speechData.Message, speechData.Type, name, entity, color);
         bubble.OnDied += NuSpeechBubbleDied;
 
+        //Show names unless we're in a snowflake chat channel.
         //emotes don't count, their name is already inline. same with dead chat
         if (speechData.Message.Channel != ChatChannel.Emotes &&
             speechData.Message.Channel != ChatChannel.Dead)
@@ -513,8 +513,8 @@ public sealed partial class ChatUIController : UIController
             if (ActiveSpeechBubbleNameTags.TryGetValue(entity, out var existingNameTag))
             {
                 existingNameTag.SetDeathTime(bubble.DeathTime);
-                //incase our name changes mid conversation.
-                //behaves kind of weird. idk
+                //incase our name changes mid conversation. behaves kind of weird. idk.
+                //I'll look into it if this ever even happens in game and someone notices.
                 existingNameTag.Update(name, color);
             }
         }

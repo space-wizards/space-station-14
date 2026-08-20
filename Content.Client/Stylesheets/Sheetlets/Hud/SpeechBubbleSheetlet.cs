@@ -1,4 +1,5 @@
 using Content.Client.Resources;
+using Content.Client.Stylesheets.Fonts;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -13,11 +14,9 @@ public sealed class SpeechBubbleSheetlet : Sheetlet<PalettedStylesheet>
     {
         var loocMald = sheet.BaseFont.GetFont(12);
 
-        var nameFont = sheet.ResCache.GetFont("/Fonts/Macs-Minecraft/macs-minecraft.ttf", 9);
-
-        var speechFont = sheet.ResCache.GetFont("/Fonts/Macs-Minecraft/macs-minecraft.ttf", 12);
-
-        var whisperFont = sheet.ResCache.GetFont("/Fonts/Macs-Minecraft/macs-minecraft-italic.ttf", 12);
+        var nameFont = sheet.BaseFont.GetFont(10);
+        var speechFont = sheet.BaseFont.GetFont(12);
+        var whisperFont = sheet.BaseFont.GetFont(12, FontKind.Italic);
 
         var bubbleBackgroundTexture = sheet.ResCache.GetTexture("/Textures/Interface/Nano/chat_bubble_background.png");
         var bubbleBackground = new StyleBoxTexture
