@@ -412,10 +412,6 @@ public sealed partial class BloodstreamSystem : EntitySystem
     public bool TryModifyBloodLevel(Entity<BloodstreamComponent?> ent, FixedPoint2 amount)
     {
         var reference = 1f;
-        if(_tagSystem.HasTag(ent, CannotRegainBlood) && amount > 0)
-        {
-            return false;
-        }
 
         if (amount < 0)
         {
@@ -439,6 +435,9 @@ public sealed partial class BloodstreamSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp, logMissing: false)
             || !_solutionContainer.ResolveSolution(ent.Owner, ent.Comp.BloodSolutionName, ref ent.Comp.BloodSolution, out var bloodSolution)
             || amount == 0)
+            return false;
+
+        if (!ent.Comp.BloodIncreaseEnabled && amount > 0)
             return false;
 
         // TODO: Either make this percentage based regeneration and pre-pass the percentage.
@@ -625,6 +624,17 @@ public sealed partial class BloodstreamSystem : EntitySystem
         }
         ent.Comp.BloodRefreshAmount = amount;
         DirtyField(ent, ent.Comp, nameof(BloodstreamComponent.BloodRefreshAmount));
+    }
+
+    /// <summary>
+    /// Change whether or not blood can be increased in a bloodstream.
+    /// </summary>
+    public void ChangeBloodIncreaseEnabled(Entity<BloodstreamComponent?> ent, bool status = true)
+    {
+        if (!Resolve(ent, ref ent.Comp, logMissing: false))
+            return;
+        ent.Comp.BloodIncreaseEnabled = status;
+        DirtyField(ent, ent.Comp, nameof(BloodstreamComponent.BloodIncreaseEnabled));
     }
 
     /// <summary>

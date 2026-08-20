@@ -306,9 +306,9 @@ namespace Content.Server.Zombies
 
             // Restore the blood refresh amount to what it was before zombification. They can't regain blood otherwise.
             _bloodstream.ChangeBloodRefreshAmount(target, zombiecomp.BeforeZombifiedBloodRefresh);
+            _bloodstream.ChangeBloodIncreaseEnabled(target, true);
 
             // Remove the tags that we added during Zombification
-            _tag.RemoveTag(target, CannotRegainBlood);
             _tag.RemoveTag(target, CannotSuicideTag);
             _tag.RemoveTag(target, InvalidForGlobalSpawnSpellTag);
             return true;
