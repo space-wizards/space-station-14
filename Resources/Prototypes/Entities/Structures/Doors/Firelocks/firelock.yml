@@ -209,6 +209,35 @@
     - type: Sprite
       sprite: Structures/Doors/Misc/edge_door_hazard.rsi
       snapCardinals: false
+      layers:
+      - state: closed
+        map: [ "enum.DoorVisualLayers.Base" ]
+      - state: closed_unlit
+        shader: unshaded
+        sprite: Structures/Doors/Misc/edge_door_hazard.rsi
+        map: [ "enum.DoorVisualLayers.BaseUnlit" ]
+        visible: false
+      - state: welded
+        sprite: Structures/Doors/Misc/edge_door_hazard.rsi
+        map: [ "enum.WeldableLayers.BaseWelded" ]
+      - state: bolted_unlit
+        shader: unshaded
+        sprite: Structures/Doors/Misc/edge_door_hazard.rsi
+        map: [ "enum.DoorVisualLayers.BaseBolted" ]
+        visible: false
+      - state: panel_open
+        sprite: Structures/Doors/Airlocks/Effects/airlock-effects.rsi
+        map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      - state: pressure_unlit
+        visible: false
+        shader: unshaded
+        sprite: Structures/Doors/Misc/edge_door_hazard.rsi
+        map: [ "enum.FirelockVisualLayersPressure.Base" ]
+      - state: temperature_unlit
+        visible: false
+        shader: unshaded
+        sprite: Structures/Doors/Misc/edge_door_hazard.rsi
+        map: [ "enum.FirelockVisualLayersTemperature.Base" ]
     - type: Airtight
       airBlocked: false
       noAirWhenFullyAirBlocked: false
