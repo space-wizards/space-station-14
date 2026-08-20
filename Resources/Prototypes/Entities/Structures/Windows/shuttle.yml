@@ -44,10 +44,6 @@
       sprite: Structures/Windows/cracks.rsi
   - type: StaticPrice
     price: 150
-  - type: StructureAlignerPylon
-    pylons:
-    - Door
-    - Firelock
 
 - type: entity
   parent: ShuttleWindow
