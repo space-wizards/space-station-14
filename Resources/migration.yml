@@ -868,8 +868,6 @@ PinionAirlock: Airlock
 PinionAirlockGlass: AirlockGlass
 PinionAirlockAssembly: AirlockAssembly
 BananiumDoor: GoldDoor
-EncrustedIronstoneDoor: SilverDoor
-IronstoneDoor: SilverDoor
 WallSnowCobblebrick: WallBrick
 WallSandCobblebrick: WallBrick
 WallChromiteCobblebrick: WallBrick
@@ -990,7 +988,6 @@ IronsandStep: null
 TurnstileGenpopEnter: EnergyGateGenpopEnter
 TurnstileGenpopLeave: EnergyGateGenpopLeave
 Turnstile: EnergyGate
-MetalDoor: SilverDoor
 MiningWindow: ReinforcedWindow
 MiningWindowDiagonal: ReinforcedWindowDiagonal
 FloorTileItemLightAstroGrass: null
@@ -1130,3 +1127,7 @@ DrinkNeurotoxinGlass: null
 #2026-08-19
 JanitorServiceLight: null
 
+#2026-08-20
+MetalDoor: SteelDoor
+EncrustedIronstoneDoor: SteelDoor
+IronstoneDoor: SteelDoor

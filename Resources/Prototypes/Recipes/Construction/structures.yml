@@ -568,6 +568,11 @@
 
 - type: construction
   parent: SilverDoor
+  id: SteelDoor
+  targetNode: steelDoor
+
+- type: construction
+  parent: SilverDoor
   id: PaperDoor
   targetNode: paperDoor
 
