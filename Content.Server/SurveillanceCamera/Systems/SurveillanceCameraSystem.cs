@@ -1,17 +1,14 @@
 using Content.Server.Administration.Logs;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Shared.Database;
-using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
+using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Power;
 using Content.Shared.SurveillanceCamera;
 using Content.Shared.SurveillanceCamera.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
-using Content.Shared.DeviceNetwork.Components;
-using Content.Shared.DeviceNetwork.Systems;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.SurveillanceCamera;
 
