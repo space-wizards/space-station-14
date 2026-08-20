@@ -44,7 +44,7 @@ public sealed partial class Clocks : Control
 
             if (minutesToday < 60)
             {
-                TimeButton.Text = Loc.GetString("clocks-playtime-minutes", ("minutes", minutesToday));
+                TimeButton.Text = Loc.GetString("clocks-playtime-minutes", ("minutes", (int)minutesToday));
                 return;
             }
 

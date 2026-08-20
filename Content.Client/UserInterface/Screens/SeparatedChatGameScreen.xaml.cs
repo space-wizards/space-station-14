@@ -27,7 +27,7 @@ public sealed partial class SeparatedChatGameScreen : InGameScreen
         SetAnchorAndMarginPreset(Ghost, LayoutPreset.BottomWide, margin: 80);
         SetAnchorAndMarginPreset(Hotbar, LayoutPreset.BottomWide, margin: 5);
         SetAnchorAndMarginPreset(Alerts, LayoutPreset.CenterRight, margin: 10);
-        SetAnchorAndMarginPreset(Clocks, LayoutPreset.BottomLeft, margin: 10);
+        SetAnchorAndMarginPreset(Clocks, LayoutPreset.BottomWide);
 
         ScreenContainer.OnSplitResizeFinished += () =>
             OnChatResized?.Invoke(new Vector2(ScreenContainer.SplitFraction, 0));
