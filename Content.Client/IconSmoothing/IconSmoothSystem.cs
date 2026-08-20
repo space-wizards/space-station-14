@@ -301,7 +301,9 @@ public sealed partial class IconSmoothSystem : EntitySystem
         // New key added, get an appropriate index for the new key!
         if (_workingKeyRing.Add(key))
         {
-            AddTileCache((grid,cacheComp), (chunk, relative), chunkData);
+            AddTileCache((grid, cacheComp), (chunk, relative), chunkData);
+            // Properly remove the old cache!
+            DecrementRefCount(cache.Value);
             return;
         }
 
