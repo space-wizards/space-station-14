@@ -4,7 +4,7 @@
   parent: BaseMediumStack
   id: Diamond
   name: stack-diamond
-  icon: { sprite: /Textures/Objects/Materials/bananium.rsi, state: bananium-1 }
+  icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: diamond }
   spawn: MaterialDiamond1
 
 - type: stack
