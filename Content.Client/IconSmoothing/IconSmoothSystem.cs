@@ -335,7 +335,7 @@ public sealed partial class IconSmoothSystem : EntitySystem
         var (chunk, relative) = (_map.GridTileToChunkIndices(grid, grid.Comp, tile), SharedMapSystem.GetChunkRelative(tile, ChunkSize));
         if (!TryGetCache((grid, cacheComp), (chunk, relative), out var chunkData, out var tileEntry))
         {
-            Log.Error($"{tile} on grid {ToPrettyString(grid)} was not cached despite an entity with {nameof(IconSmoothComponent)} existing there.");
+            Log.Error($"{tile} on grid {ToPrettyString(grid)} was not cached despite an entity {ToPrettyString(removed)} with {nameof(IconSmoothComponent)} existing there.");
             return;
         }
 
