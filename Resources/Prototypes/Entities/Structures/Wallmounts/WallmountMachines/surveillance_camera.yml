@@ -14,10 +14,10 @@
   - type: Sprite
     drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/camera.rsi
+    offset: 0, -0.5
     layers:
     - map: [ "enum.SurveillanceCameraVisualsKey.Layer" ]
       state: camera
-      cycle: true
   - type: Appearance
   - type: Physics
     bodyType: Static
