@@ -1,8 +1,6 @@
 using Content.Server.Objectives.Components;
 using Content.Server.Traitor.Components;
-using Content.Server.Traitor.Systems;
 using Content.Shared.Objectives.Components;
-using Content.Shared.Roles;
 
 namespace Content.Server.Objectives.Systems;
 
@@ -24,18 +22,18 @@ public sealed partial class TraitorProfileBlacklistSystem : EntitySystem
     {
         if (args.Cancelled)
             return;
-
-        if ((!args.Mind.OwnedEntity.HasValue) || !HasComp<AutoTraitorComponent>(args.Mind.OwnedEntity.Value))
+        
+        if (!args.Mind.OwnedEntity.HasValue)
         {
             return;
         }
 
-        foreach (var traitorComps in AllComps<AutoTraitorComponent>(args.Mind.OwnedEntity.Value))
+        foreach (var traitorComp in AllComps<AutoTraitorComponent>(args.Mind.OwnedEntity.Value))
         {
             foreach (var blacklistedProfile in comp.Profiles)
             {
-                if (!blacklistedProfile.Equals(traitorComps.Profile)) continue;
-                Log.Debug($"Profile {traitorComps.Profile} is blacklisted by this objective");
+                if (!blacklistedProfile.Equals(traitorComp.Profile)) continue;
+                Log.Debug($"Profile {traitorComp.Profile} is blacklisted by this objective");
                 args.Cancelled = true;
                 return;
 

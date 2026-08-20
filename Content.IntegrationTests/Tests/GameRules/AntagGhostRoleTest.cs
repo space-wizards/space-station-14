@@ -9,8 +9,6 @@ using Content.Server.Ghost.Roles;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Objectives.Components;
 using Content.Shared.Antag;
-using Content.Shared.Mind;
-using Content.Shared.Objectives.Components;
 using Content.Shared.Players;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
