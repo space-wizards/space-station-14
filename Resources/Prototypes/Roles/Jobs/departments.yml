@@ -12,7 +12,7 @@
   id: Civilian
   name: department-Civilian
   description: department-Civilian-description
-  color: "#9FED58"
+  color: "#7F7F7F"
   weight: -10
   ignoreForDepartmentFallback: true
   roles:
@@ -115,7 +115,7 @@
   id: Service
   name: department-Service
   description: department-Service-description
-  color: "#DE3A3A"
+  color: "#9FED58"
   roles:
   - Bartender
   - Botanist
