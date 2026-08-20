@@ -22,21 +22,7 @@ namespace Content.Client.Ghost
 
         public int AvailableGhostRoleCount { get; private set; }
 
-        private GhostVisibilityMode _ghostVisibility = GhostVisibilityMode.ShowAllGhosts;
-
-        private GhostVisibilityMode GhostVisibility
-        {
-            get => _ghostVisibility;
-            private set
-            {
-                if (_ghostVisibility == value)
-                    return;
-
-                _ghostVisibility = value;
-
-                ApplyGhostVisibility();
-            }
-        }
+        public GhostVisibilityMode GhostVisibility { get; private set; } = GhostVisibilityMode.ShowAllGhosts;
 
         public GhostComponent? Player => CompOrNull<GhostComponent>(_playerManager.LocalEntity);
         public bool IsGhost => Player != null;
@@ -157,13 +143,13 @@ namespace Content.Client.Ghost
             if (uid != _playerManager.LocalEntity)
                 return;
 
-            GhostVisibility = GhostVisibilityMode.HideOtherGhosts;
+            ApplyGhostVisibility(GhostVisibilityMode.HideOtherGhosts);
             PlayerRemoved?.Invoke(component);
         }
 
         private void OnGhostPlayerAttach(EntityUid uid, GhostComponent component, LocalPlayerAttachedEvent localPlayerAttachedEvent)
         {
-            GhostVisibility = GhostVisibilityMode.ShowAllGhosts;
+            ApplyGhostVisibility(GhostVisibilityMode.ShowAllGhosts);
             PlayerAttached?.Invoke(component);
         }
 
@@ -180,7 +166,7 @@ namespace Content.Client.Ghost
 
         private void OnGhostPlayerDetach(EntityUid uid, GhostComponent component, LocalPlayerDetachedEvent args)
         {
-            GhostVisibility = GhostVisibilityMode.HideOtherGhosts;
+            ApplyGhostVisibility(GhostVisibilityMode.HideOtherGhosts);
             PlayerDetached?.Invoke();
         }
 
@@ -222,16 +208,21 @@ namespace Content.Client.Ghost
             // (after 1 is 2, after 2 is 3, and after 3 is 1 again)
             // is needed in case somebody would want to add another mode to GhostVisibilityMode Enum so it won't break
             var count = Enum.GetValues(typeof(GhostVisibilityMode)).Length;
-            GhostVisibility = (GhostVisibilityMode)(((int)GhostVisibility + 1) % count);
+            ApplyGhostVisibility((GhostVisibilityMode)(((int)GhostVisibility + 1) % count));
         }
 
-        private void ApplyGhostVisibility()
+        private void ApplyGhostVisibility(GhostVisibilityMode mode)
         {
+            if (GhostVisibility == mode)
+                return;
+
+            GhostVisibility = mode;
+
             var query = AllEntityQuery<GhostComponent, SpriteComponent>();
 
             while (query.MoveNext(out var uid, out _, out var sprite))
             {
-                var visible = _ghostVisibility switch
+                var visible = mode switch
                 {
                     GhostVisibilityMode.ShowAllGhosts => true,
                     GhostVisibilityMode.HideOtherGhosts => uid == _playerManager.LocalEntity,
