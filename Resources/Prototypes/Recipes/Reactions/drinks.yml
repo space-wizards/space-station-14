@@ -1560,3 +1560,17 @@
     Fluorine: 2
     Hydrogen: 0.5
     Oxygen: 0.5
+
+- type: reaction
+  id: ChangelingSting
+  reactants:
+    AcidSpit:
+      amount: 1
+    Whiskey:
+      amount: 1
+    SodaWater:
+      amount: 1
+    Ice:
+      amount: 1
+  products:
+    ChangelingSting: 2
