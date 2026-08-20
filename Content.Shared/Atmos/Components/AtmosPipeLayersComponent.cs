@@ -59,7 +59,7 @@ public sealed partial class AtmosPipeLayersComponent : Component
     /// <summary>
     /// The pipe layers of this entity cannot be changed when this value is true.
     /// </summary>
-    [DataField("locked")]
+    [DataField]
     public bool PipeLayersLocked;
 
     /// <summary>

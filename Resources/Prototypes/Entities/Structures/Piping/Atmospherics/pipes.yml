@@ -360,7 +360,7 @@
     - { sprite: Structures/Piping/Atmospherics/manifold.rsi, state: pipeConnector_alt1 }
     - { sprite: Structures/Piping/Atmospherics/manifold.rsi, state: pipeConnector_alt2 }
   - type: AtmosPipeLayers
-    locked: true
+    pipeLayersLocked: true
   - type: Construction
     graph: GasPipeSpecial
     node: manifold
