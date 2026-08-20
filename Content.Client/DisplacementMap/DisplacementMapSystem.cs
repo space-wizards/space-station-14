@@ -14,6 +14,7 @@ public sealed partial class DisplacementMapSystem : EntitySystem
 
     //needs to be replaced later: see comment on line 48
     private static readonly ProtoId<ShaderPrototype> UnshadedID = "unshaded";
+    public static readonly ProtoId<ShaderPrototype> DisplacedUnshaded = "DisplacedDrawUnshaded";
 
     private static string? BuildDisplacementLayerKey(object key)
     {
@@ -41,7 +42,8 @@ public sealed partial class DisplacementMapSystem : EntitySystem
         if (displacementKey is null)
             return false;
 
-        EnsureDisplacementIsNotOnSprite(sprite, key);
+        if (EnsureDisplacementIsNotOnSprite(sprite, key))
+            index--;
 
         if (data.ShaderOverride is not null)
         {
@@ -91,10 +93,21 @@ public sealed partial class DisplacementMapSystem : EntitySystem
 
         var displacementLayer = _serialization.CreateCopy(displacementDataLayer, notNullableOverride: true);
 
-        // This previously assigned a string reading "this is impossible" if key.ToString eval'd to false.
-        // However, for the sake of sanity, we've changed this to assert non-null - !.
-        // If this throws an error, we're not sorry. Nanotrasen thanks you for your service fixing this bug.
-        displacementLayer.CopyToShaderParameters!.LayerKey = key.ToString()!;
+        if (key is Enum)
+        {
+            // We are doing this enum-to-string conversion here because CopyToShaderParameters.LayerKey only takes a string,
+            // but LayerMap keys are stored as objects, and therefore can take enums.
+            // There is a key parser in SpriteComponent but it requires the qualified (i.e. full) enum name.
+            // It feels like CopyToShaderParameters should be able to just take objects, but until then:
+            displacementLayer.CopyToShaderParameters!.LayerKey = $"enum.{key.GetType().Name}.{key}";
+        }
+        else
+        {
+            // This previously assigned a string reading "this is impossible" if key.ToString eval'd to false.
+            // However, for the sake of sanity, we've changed this to assert non-null - !.
+            // If this throws an error, we're not sorry. Nanotrasen thanks you for your service fixing this bug.
+            displacementLayer.CopyToShaderParameters!.LayerKey = key.ToString()!;
+        }
 
         _sprite.AddLayer(sprite.AsNullable(), displacementLayer, index);
         _sprite.LayerMapSet(sprite.AsNullable(), displacementKey, index);
@@ -107,13 +120,30 @@ public sealed partial class DisplacementMapSystem : EntitySystem
     /// </summary>
     /// <param name="sprite">The sprite to remove the displacement layer from.</param>
     /// <param name="key">The key of the layer that is referenced by the displacement layer we want to remove.</param>
-    /// <param name="logMissing">Whether to report an error if the displacement map isn't on the sprite.</param>
-    public void EnsureDisplacementIsNotOnSprite(Entity<SpriteComponent> sprite, object key)
+    /// <returns>Returns true if the displacement existed and was removed.</returns>
+    public bool EnsureDisplacementIsNotOnSprite(Entity<SpriteComponent> sprite, object key)
     {
         var displacementLayerKey = BuildDisplacementLayerKey(key);
         if (displacementLayerKey is null)
-            return;
+            return false;
 
-        _sprite.RemoveLayer(sprite.AsNullable(), displacementLayerKey, false);
+        if (_sprite.RemoveLayer(sprite.AsNullable(), displacementLayerKey, false))
+        {
+            //TODO : this is a kinda janky workaround for the fact that the current rendering pipeline does not have
+            //proper support for multiple shaders on a given layer (or an ubershader to handle stacking all of the effects well)
+            //Same reason as where the displacement is added initially
+            var shader = sprite.Comp[key] is SpriteComponent.Layer layer && layer.ShaderPrototype == DisplacedUnshaded
+                ? SpriteSystem.UnshadedId.Id
+                : null;
+
+            if (shader != null)
+                sprite.Comp.LayerSetShader(key, shader);
+            else
+                sprite.Comp.LayerSetShader(key, null, null);
+
+            return true;
+        }
+
+        return false;
     }
 }

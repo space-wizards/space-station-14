@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Cloning.Events;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
@@ -30,6 +31,7 @@ public abstract partial class SharedHandsSystem
     public event Action<Entity<HandsComponent>, string, HandLocation>? OnPlayerAddHand;
     public event Action<Entity<HandsComponent>, string>? OnPlayerRemoveHand;
     protected event Action<Entity<HandsComponent>?>? OnHandSetActive;
+    protected byte ActiveHandIdIndex;
 
     public override void Initialize()
     {
@@ -43,6 +45,20 @@ public abstract partial class SharedHandsSystem
 
         SubscribeLocalEvent<HandsComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<HandsComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<HandsComponent, CloningEvent>(OnClone);
+
+        // Needed for manual delta states.
+        EntityManager.ComponentFactory.RegisterNetworkedFields<HandsComponent>(
+            nameof(HandsComponent.ActiveHandId),
+            nameof(HandsComponent.Hands),
+            nameof(HandsComponent.SortedHands),
+            nameof(HandsComponent.ShowInHands),
+            nameof(HandsComponent.HandDisplacement),
+            nameof(HandsComponent.LeftHandDisplacement),
+            nameof(HandsComponent.RightHandDisplacement),
+            nameof(HandsComponent.CanBeStripped));
+
+        ActiveHandIdIndex = 0; // Corresponds to HandsComponentActiveHandDeltaState
     }
 
     public override void Shutdown()
@@ -56,14 +72,43 @@ public abstract partial class SharedHandsSystem
         var container = EnsureComp<ContainerManagerComponent>(ent);
         foreach (var id in ent.Comp.Hands.Keys)
         {
-            ContainerSystem.EnsureContainer<ContainerSlot>(ent, id, container);
+            var slot = ContainerSystem.EnsureContainer<ContainerSlot>(ent, id, container);
+            slot.OccludesLight = false;
         }
     }
 
     private void OnMapInit(Entity<HandsComponent> ent, ref MapInitEvent args)
     {
+        foreach (var (handId, hand) in ent.Comp.StartingHands)
+            AddHand(ent.AsNullable(), handId, hand);
+
         if (ent.Comp.ActiveHandId == null)
             SetActiveHand(ent.AsNullable(), ent.Comp.SortedHands.FirstOrDefault());
+    }
+
+    private void OnClone(Entity<HandsComponent> ent, ref CloningEvent args)
+    {
+        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
+            return;
+
+        var targetComp = EnsureComp<HandsComponent>(args.CloneUid);
+        // Don't copy the Hands or SortedHands datafields since those are dynamically added and removed on map init or through other components
+        // targetComp.StartingHands = ent.Comp.StartingHands;
+        // A lot of hand related stuff is done via organs.
+        // Because of that we cannot sanely clone hands, but we can still clone over displacements etc.
+        // Organ cloning logic cannot be worked on until body system work progresses enough to allow us to do that.
+        // TODO: Clone hands properly once we can do organ cloning.
+        targetComp.DisableExplosionRecursion = ent.Comp.DisableExplosionRecursion;
+        targetComp.BaseThrowspeed = ent.Comp.BaseThrowspeed;
+        targetComp.ThrowRange = ent.Comp.ThrowRange;
+        targetComp.ShowInHands = ent.Comp.ShowInHands;
+        targetComp.ThrowCooldown = ent.Comp.ThrowCooldown;
+        targetComp.HandDisplacement = ent.Comp.HandDisplacement;
+        targetComp.LeftHandDisplacement = ent.Comp.LeftHandDisplacement;
+        targetComp.RightHandDisplacement = ent.Comp.RightHandDisplacement;
+        targetComp.CanBeStripped = ent.Comp.CanBeStripped;
+
+        Dirty(args.CloneUid, targetComp);
     }
 
     /// <summary>
@@ -114,11 +159,11 @@ public abstract partial class SharedHandsSystem
 
         TryDrop(ent, handName, null, false);
 
-        if (!ent.Comp.Hands.Remove(handName))
-            return;
-
         if (ContainerSystem.TryGetContainer(ent, handName, out var container))
             ContainerSystem.ShutdownContainer(container);
+
+        if (!ent.Comp.Hands.Remove(handName))
+            return;
 
         ent.Comp.SortedHands.Remove(handName);
         if (ent.Comp.ActiveHandId == handName)
@@ -337,7 +382,7 @@ public abstract partial class SharedHandsSystem
         if (TryGetHeldItem(ent, handId, out var newHeld))
             RaiseLocalEvent(newHeld.Value, new HandSelectedEvent(ent));
 
-        Dirty(ent);
+        DirtyField(ent, nameof(HandsComponent.ActiveHandId));
         return true;
     }
 
@@ -360,6 +405,23 @@ public abstract partial class SharedHandsSystem
         var nextHand = ent.Comp.SortedHands[newActiveIndex];
 
         TrySetActiveHand(ent, nextHand);
+    }
+
+    /// <summary>
+    /// Checks if an item is being held by another entity.
+    /// </summary>
+    /// <param name="item">Item that we are checking.</param>
+    /// <param name="user">User who is holding our item.</param>
+    /// <returns>Returns true if our item is being held.</returns>
+    public bool IsHeld(Entity<TransformComponent?> item, [NotNullWhen(true)] out EntityUid? user)
+    {
+        user = null;
+        item.Comp ??= Transform(item);
+        if (!IsHolding(item.Comp.ParentUid, item))
+            return false;
+
+        user = item.Comp.ParentUid;
+        return true;
     }
 
     public bool IsHolding(Entity<HandsComponent?> entity, [NotNullWhen(true)] EntityUid? item)
@@ -409,18 +471,27 @@ public abstract partial class SharedHandsSystem
     }
 
     /// <summary>
-    /// Gets the item currently held in the entity's specified hand. Returns null if no hands are present or there is no item.
+    /// Retrieves the item currently held in the specified hand of an entity.
     /// </summary>
-    public EntityUid? GetHeldItem(Entity<HandsComponent?> ent, string? handId)
+    /// <param name="ent">The entity whose hands are being checked.</param>
+    /// <param name="handId">The ID of the specific hand to check.</param>
+    /// <param name="hideVirtualItems">If true, treats hands holding virtual items as if they are empty.</param>
+    /// <returns>The UID of the held item, or null if the hand is empty, the hand ID is invalid, or the entity has no hands.</returns>
+    public EntityUid? GetHeldItem(Entity<HandsComponent?> ent, string? handId, bool hideVirtualItems = false)
     {
-        TryGetHeldItem(ent, handId, out var held);
+        TryGetHeldItem(ent, handId, out var held, hideVirtualItems);
         return held;
     }
 
     /// <summary>
-    /// Gets the item currently held in the entity's specified hand. Returns false if no hands are present or there is no item.
+    /// Attempts to retrieve the item currently held in the specified hand of an entity.
     /// </summary>
-    public bool TryGetHeldItem(Entity<HandsComponent?> ent, string? handId, [NotNullWhen(true)] out EntityUid? held)
+    /// <param name="ent">The entity whose hands are being checked.</param>
+    /// <param name="handId">The ID of the specific hand to check.</param>
+    /// <param name="held">Outputs the UID of the held item, if one is found.</param>
+    /// <param name="hideVirtualItems">If true, ignores virtual items and returns false if only a virtual item is present.</param>
+    /// <returns>True if a valid item is found in the hand; otherwise, false.</returns>
+    public bool TryGetHeldItem(Entity<HandsComponent?> ent, string? handId, [NotNullWhen(true)] out EntityUid? held, bool hideVirtualItems = false)
     {
         held = null;
         if (!Resolve(ent, ref ent.Comp, false))
@@ -434,6 +505,10 @@ public abstract partial class SharedHandsSystem
             return false;
 
         held = container.ContainedEntities.FirstOrNull();
+
+        if (hideVirtualItems && HasComp<VirtualItemComponent>(held))
+            held = null;
+
         return held != null;
     }
 

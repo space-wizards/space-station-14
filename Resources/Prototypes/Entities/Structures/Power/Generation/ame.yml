@@ -1,4 +1,5 @@
 - type: entity
+  parent: StructureHealthMachineStrong
   id: AmeController
   name: AME controller
   description: It's a controller for the antimatter engine.
@@ -29,28 +30,18 @@
         layer:
         - WallLayer
   - type: Damageable
-    damageModifierSet: StructuralMetallicStrong
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: PlasteelMod
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 275
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
-          SheetSteel1:
+          SheetPlasteel1:
             min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
+            max: 3
   - type: Transform
     anchored: true
     noRot: true
@@ -115,6 +106,7 @@
     requirePower: true
     highVoltageNode: input
     mediumVoltageNode: ame
+  - type: AmbientMusicMarkerEngineering
 
 - type: entity
   categories: [ HideSpawnMenu ]
@@ -128,6 +120,7 @@
     bodyType: Dynamic
 
 - type: entity
+  parent: StructureHealthMachineStrong
   id: AmeShielding
   name: AME shielding
   description: Keeps the antimatter in and the matter out.
@@ -162,28 +155,18 @@
         layer:
         - WallLayer
   - type: Damageable
-    damageModifierSet: StructuralMetallicStrong
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: PlasteelMod
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 275
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
-          SheetSteel1:
+          SheetPlasteel1:
             min: 1
             max: 2
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
   - type: Transform
     anchored: true
   - type: IconSmooth

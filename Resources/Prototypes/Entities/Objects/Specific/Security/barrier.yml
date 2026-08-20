@@ -1,8 +1,8 @@
 - type: entity
-  name: deployable barrier
+  parent: [ BaseStructure, StructureHealthBarrierStrong ]
   id: DeployableBarrier
+  name: deployable barrier
   description: A deployable barrier. Swipe your ID card to lock/unlock it.
-  parent: BaseStructure
   components:
   - type: Transform
     anchored: false
@@ -44,31 +44,21 @@
     lockTime: 5
     unlockTime: 5
   - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: PlasteelMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 600
-      behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 300
+        damage: 120
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
-          SheetSteel:
-            min: 5
+          SheetPlasteel1:
+            min: 3
             max: 5
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: PointLight
     enabled: false
     radius: 3
