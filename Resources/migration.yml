@@ -951,7 +951,6 @@ FloorTileItemDarkSlatsContinuous: FloorTileItemDark
 FloorTileItemSteelDiagonalMini: FloorTileItemSteel
 FloorTileItemSteelDiagonal: FloorTileItemSteel
 FloorTileItemSteelOffset: FloorTileItemSteel
-FloorTileItemSteelMono: FloorTileItemSteel
 FloorTileItemShowroom: FloorTileItemSteel
 FloorTileItemSteelSlatsContinuous: FloorTileItemSteel
 
@@ -1123,11 +1122,15 @@ MeteorRockGold: AsteroidRockGold
 MeteorRockPlasma: AsteroidRockPlasma
 MeteorRockDiamond: AsteroidRockDiamond
 MeteorRockUranium: AsteroidRockUranium
+StatueBananiumClown: StatueOrnateClown
 
 #2026-08-18
 DrinkNeurotoxinGlass: null
 
-#2026-08-18
+#2026-08-19
+JanitorServiceLight: null
+
+#2026-08-20
 CheckerCrownBlack: CheckersKingBlack
 CheckerCrownWhite: CheckersKingRed
 CheckerPieceBlack: CheckersPieceBlack

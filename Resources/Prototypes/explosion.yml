@@ -135,3 +135,17 @@
   fireStates: 3
   fireStacks: 2
   temperature: 1500
+
+- type: explosion
+  id: XenoborgAntiStructureExplosion
+  damagePerIntensity:
+    types:
+      Heat: 3
+      Blunt: 3
+      Piercing: 3
+      Structural: 200
+  lightColor: Blue
+  fireColor: Blue
+  texturePath: /Textures/Effects/fire_greyscale.rsi
+  fireStates: 3
+  temperature: 800

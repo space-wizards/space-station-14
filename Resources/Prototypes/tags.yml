@@ -1613,6 +1613,21 @@
 - type: Tag
   id: XenoborgModuleStealth # Cyborg module category for evil stealth xenoborg
 
+- type: Tag
+  id: XenoborgModuleAccessBreaker # Used for module blacklisting
+
+- type: Tag
+  id: XenoborgModuleInvisibility # Used for module blacklisting
+
+- type: Tag
+  id: XenoborgModulePrimaryWeapon # Used for module blacklisting
+
+- type: Tag
+  id: XenoborgModuleSecondaryWeapon # Used for module blacklisting
+
+- type: Tag
+  id: XenoborgModuleWithSimpleOverlay # Used for module blacklisting
+
 ## Y ##
 ## Z ##
 # ALPHABETICAL
