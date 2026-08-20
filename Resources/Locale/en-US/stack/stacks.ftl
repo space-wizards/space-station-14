@@ -80,6 +80,10 @@ stack-artifact-fragment = artifact {$amount ->
     [1] fragment
     *[other] fragments
 }
+stack-xenoborg-crystal = xenoborg {$amount ->
+    [1] crystal
+    *[other] crystals
+}
 stack-conveyor-belt = {$amount ->
     [1] conveyor belt
     *[other] conveyor belts
@@ -255,7 +259,9 @@ stack-red-circuit-floor = red-circuit floor
 stack-asteroid-astro-sand-floor = asteroid astro-sand floor
 stack-desert-astro-sand-floor = desert astro-sand floor
 stack-white-marble-floor = white marble floor
+stack-white-marble-mono-floor = white marble mono floor
 stack-dark-marble-floor = dark marble floor
+stack-dark-marble-mono-floor = dark marble mono floor
 stack-plasma-marble-floor = plasmarble floor
 stack-uranium-marble-floor = uranium marble floor
 stack-astro-ironsand-floor = astro-ironsand floor
