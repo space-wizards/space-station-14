@@ -97,8 +97,20 @@
     checkCanInteract: false # You can heal even if you are killed
     checkConsciousness: false
   - type: RegenerativeStasisAction
+    bonusCooldownPerDamage: 0.675 # Bonus 135s (total 180s) at 200 damage
+    minStasisCooldown: 45
+    maxStasisCooldown: 180
   - type: InstantAction
     event: !type:ChangelingStasisActionEvent
+
+- type: entity
+  parent: ActionChangelingStasis
+  id: ActionChangelingStasisWeak
+  components:
+  - type: RegenerativeStasisAction
+    bonusCooldownPerDamage: 1.2 # 50 damage should bring you to 120
+    minStasisCooldown: 60
+    maxStasisCooldown: 120
 
 - type: entity
   parent: ActionIntrinsicStore
