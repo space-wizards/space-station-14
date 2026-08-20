@@ -1,5 +1,5 @@
 <Control xmlns="https://spacestation14.io">
     <BoxContainer Orientation="Horizontal" >
-        <Label Name="TimeLabel"/>
+        <Button Name="TimeLabel"/>
     </BoxContainer>
 </Control>

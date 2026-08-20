@@ -15,6 +15,6 @@ public sealed partial class Clocks : Control
             return;
         }
 
-        TimeLabel.Text = DateTime.Now.ToString(CultureInfo.CurrentCulture);
+        TimeLabel.Text = DateTime.Now.ToString("h:mm:ss tt");
     }
 }

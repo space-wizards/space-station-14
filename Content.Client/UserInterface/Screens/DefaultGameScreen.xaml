@@ -9,6 +9,7 @@
     xmlns:hotbar="clr-namespace:Content.Client.UserInterface.Systems.Hotbar.Widgets"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     xmlns:inventory="clr-namespace:Content.Client.UserInterface.Systems.Inventory.Widgets"
+    xmlns:clocks="clr-namespace:Content.Client.UserInterface.Controls"
     Name="DefaultHud"
     VerticalExpand="False"
     VerticalAlignment="Bottom"
@@ -30,4 +31,5 @@
     <hotbar:HotbarGui Name="Hotbar" Access="Protected" />
     <chat:ResizableChatBox Name="Chat" Access="Protected" />
     <alerts:AlertsUI Name="Alerts" Access="Protected" />
+    <controls:Clocks Name="Clocks" Access="Protected" />
 </screens:DefaultGameScreen>

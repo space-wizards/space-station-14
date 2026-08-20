@@ -58,13 +58,7 @@ namespace Content.Client.Gameplay
             _fpsCounter.Visible = _configurationManager.GetCVar(CCVars.HudFpsCounterVisible);
             _configurationManager.OnValueChanged(CCVars.HudFpsCounterVisible, (show) => { _fpsCounter.Visible = show; });
 
-            // Clocks (if enabled)
-            if (_configurationManager.GetCVar(CCVars.ClocksEnabled))
-            {
-                _clocks = new Clocks();
-                UserInterfaceManager.PopupRoot.AddChild(_clocks);
-                LayoutContainer.SetPosition(_clocks, new Vector2(_eyeManager.GetWorldViewport().Height - 50, _eyeManager.GetWorldViewport().Width - 50));
-            }
+            // _configurationManager.GetCVar(CCVars.ClocksEnabled)
 
             // Version number watermark.
             _version = new Label();
