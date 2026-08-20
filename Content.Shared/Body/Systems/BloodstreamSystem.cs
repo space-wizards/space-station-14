@@ -20,7 +20,6 @@ using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Rejuvenate;
 using Content.Shared.StatusEffectNew;
-using Content.Shared.Tag;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
@@ -42,7 +41,6 @@ public sealed partial class BloodstreamSystem : EntitySystem
     [Dependency] private MobStateSystem _mobStateSystem = default!;
     [Dependency] private DamageableSystem _damageableSystem = default!;
     [Dependency] private MetabolizerSystem _metabolizer = default!;
-    [Dependency] private TagSystem _tagSystem = default!;
 
     public override void Update(float frameTime)
     {
@@ -596,7 +594,12 @@ public sealed partial class BloodstreamSystem : EntitySystem
             currentVolume += bloodSolution.RemoveReagent(reagent.Reagent, quantity: bloodSolution.Volume, ignoreReagentData: true);
         }
 
-        ent.Comp.BloodReferenceSolution = reagents.Clone();
+        // Scale the solution to the volume of the blood.
+        var newReagentsSolution = reagents.Clone();
+        newReagentsSolution.ScaleTo(ent.Comp.BloodReferenceSolution.MaxVolume);
+
+        // Set the scaled solution as the new blood reference.
+        ent.Comp.BloodReferenceSolution = newReagentsSolution;
         DirtyField(ent, ent.Comp, nameof(BloodstreamComponent.BloodReferenceSolution));
 
         if (currentVolume == FixedPoint2.Zero)
