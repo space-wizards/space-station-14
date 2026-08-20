@@ -84,7 +84,7 @@
     - type: Blocking
       passiveBlockModifier:
         flatReductions:
-          Blunt: 9
+          Blunt: 12
           Slash: 9
           Piercing: 3
           Heat: 3
@@ -105,7 +105,7 @@
           Blunt: 3
           Slash: 6
           Piercing: 3
-          Heat: 12
+          Heat: 15
 
 - type: entity
   name: ballistic shield
@@ -122,7 +122,7 @@
         flatReductions:
           Blunt: 6
           Slash: 3
-          Piercing: 12
+          Piercing: 15
           Heat: 3
 
 #Craftable shields
