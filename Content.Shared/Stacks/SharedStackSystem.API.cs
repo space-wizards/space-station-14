@@ -454,17 +454,12 @@ public abstract partial class SharedStackSystem
     /// </summary>
     /// <returns>The entities spawned.</returns>
     /// <remarks> If the entity to spawn doesn't have stack component this will spawn a bunch of single items. </remarks>
-    private List<EntityUid> SpawnMultipleAtPosition(EntProtoId entityPrototype,
-                                                    List<int> amounts,
-                                                    EntityCoordinates spawnPosition)
+    private List<EntityUid> SpawnMultipleAtPosition(
+        EntProtoId entityPrototype,
+        IEnumerable<int> amounts,
+        EntityCoordinates spawnPosition
+    )
     {
-        if (amounts.Count <= 0)
-        {
-            Log.Error(
-                $"Attempted to spawn stacks of nothing: {entityPrototype}, {amounts}. Trace: {Environment.StackTrace}");
-            return new();
-        }
-
         var spawnedEnts = new List<EntityUid>();
         foreach (var count in amounts)
         {
@@ -474,10 +469,22 @@ public abstract partial class SharedStackSystem
                 SetCount((entity, stackComp), count);
         }
 
+        if (spawnedEnts.Count == 0)
+        {
+            Log.Error(
+                "Attempted to spawn stacks of nothing:"
+                + " {entityPrototype}, {amounts}. Trace: {Environment.StackTrace}",
+                entityPrototype,
+                amounts,
+                Environment.StackTrace
+            );
+            return new();
+        }
+
         return spawnedEnts;
     }
 
-    /// <inheritdoc cref="SpawnMultipleAtPosition(EntProtoId, List{int}, EntityCoordinates)"/>
+    /// <inheritdoc cref="SpawnMultipleAtPosition(EntProtoId, IEnumerable{int}, EntityCoordinates)"/>
     [PublicAPI]
     public List<EntityUid> SpawnMultipleAtPosition(EntProtoId entityPrototypeId,
                                                     int amount,
@@ -488,7 +495,7 @@ public abstract partial class SharedStackSystem
                                         spawnPosition);
     }
 
-    /// <inheritdoc cref="SpawnMultipleAtPosition(EntProtoId, List{int}, EntityCoordinates)"/>
+    /// <inheritdoc cref="SpawnMultipleAtPosition(EntProtoId, IEnumerable{int}, EntityCoordinates)"/>
     [PublicAPI]
     public List<EntityUid> SpawnMultipleAtPosition(EntityPrototype entityProto,
                                                     int amount,
@@ -499,7 +506,7 @@ public abstract partial class SharedStackSystem
                                         spawnPosition);
     }
 
-    /// <inheritdoc cref="SpawnMultipleAtPosition(EntProtoId, List{int}, EntityCoordinates)"/>
+    /// <inheritdoc cref="SpawnMultipleAtPosition(EntProtoId, IEnumerable{int}, EntityCoordinates)"/>
     [PublicAPI]
     public List<EntityUid> SpawnMultipleAtPosition(StackPrototype stack,
                                                     int amount,
@@ -510,7 +517,7 @@ public abstract partial class SharedStackSystem
                                         spawnPosition);
     }
 
-    /// <inheritdoc cref="SpawnMultipleAtPosition(EntProtoId, List{int}, EntityCoordinates)"/>
+    /// <inheritdoc cref="SpawnMultipleAtPosition(EntProtoId, IEnumerable{int}, EntityCoordinates)"/>
     [PublicAPI]
     public List<EntityUid> SpawnMultipleAtPosition(ProtoId<StackPrototype> stackId,
                                                     int amount,
@@ -542,18 +549,13 @@ public abstract partial class SharedStackSystem
         return SpawnNextToOrDrop(amount, proto, source);
     }
 
-    /// <inheritdoc cref="SpawnMultipleAtPosition(EntProtoId, List{int}, EntityCoordinates)"/>
-    private List<EntityUid> SpawnMultipleNextToOrDrop(EntProtoId entityPrototype,
-                                                        List<int> amounts,
-                                                        EntityUid target)
+    /// <inheritdoc cref="SpawnMultipleAtPosition(EntProtoId, IEnumerable{int}, EntityCoordinates)"/>
+    private List<EntityUid> SpawnMultipleNextToOrDrop(
+        EntProtoId entityPrototype,
+        IEnumerable<int> amounts,
+        EntityUid target
+    )
     {
-        if (amounts.Count <= 0)
-        {
-            Log.Error(
-                $"Attempted to spawn stacks of nothing: {entityPrototype}, {amounts}. Trace: {Environment.StackTrace}");
-            return new();
-        }
-
         var spawnedEnts = new List<EntityUid>();
         foreach (var count in amounts)
         {
@@ -563,10 +565,23 @@ public abstract partial class SharedStackSystem
                 SetCount((entity, stackComp), count);
         }
 
+        if (spawnedEnts.Count == 0)
+        {
+            Log.Error(
+                "Attempted to spawn stacks of nothing:"
+                + " {entityPrototype}, {amounts}. Trace: {Environment.StackTrace}",
+                entityPrototype,
+                amounts,
+                Environment.StackTrace
+            );
+            return new();
+        }
+
+
         return spawnedEnts;
     }
 
-    /// <inheritdoc cref="SpawnMultipleNextToOrDrop(EntProtoId, List{int}, EntityUid)"/>
+    /// <inheritdoc cref="SpawnMultipleNextToOrDrop(EntProtoId, IEnumerable{int}, EntityUid)"/>
     [PublicAPI]
     public List<EntityUid> SpawnMultipleNextToOrDrop(EntProtoId stack,
                                                         int amount,
@@ -577,7 +592,7 @@ public abstract partial class SharedStackSystem
                                             target);
     }
 
-    /// <inheritdoc cref="SpawnMultipleNextToOrDrop(EntProtoId, List{int}, EntityUid)"/>
+    /// <inheritdoc cref="SpawnMultipleNextToOrDrop(EntProtoId, IEnumerable{int}, EntityUid)"/>
     [PublicAPI]
     public List<EntityUid> SpawnMultipleNextToOrDrop(EntityPrototype stack,
                                                         int amount,
@@ -588,7 +603,7 @@ public abstract partial class SharedStackSystem
                                             target);
     }
 
-    /// <inheritdoc cref="SpawnMultipleNextToOrDrop(EntProtoId, List{int}, EntityUid)"/>
+    /// <inheritdoc cref="SpawnMultipleNextToOrDrop(EntProtoId, IEnumerable{int}, EntityUid)"/>
     [PublicAPI]
     public List<EntityUid> SpawnMultipleNextToOrDrop(StackPrototype stack,
                                                         int amount,
@@ -599,7 +614,7 @@ public abstract partial class SharedStackSystem
                                             target);
     }
 
-    /// <inheritdoc cref="SpawnMultipleNextToOrDrop(EntProtoId, List{int}, EntityUid)"/>
+    /// <inheritdoc cref="SpawnMultipleNextToOrDrop(EntProtoId, IEnumerable{int}, EntityUid)"/>
     [PublicAPI]
     public List<EntityUid> SpawnMultipleNextToOrDrop(ProtoId<StackPrototype> stackId,
                                                         int amount,

@@ -1,4 +1,3 @@
-using Content.Shared.Construction.Prototypes;
 using Content.Shared.Lathe.Prototypes;
 using Content.Shared.Research.Prototypes;
 using Robust.Shared.Audio;
@@ -13,7 +12,7 @@ namespace Content.Shared.Lathe
         /// <summary>
         /// The indices of fields we need to inspect for delta states.
         /// If you add/remove/reorder fields or add/remove AutoNetworkedField
-        /// to andy field, you *MUST* also update these values.
+        /// to any field, you *MUST* also update these values.
         /// </summary>
         public enum FieldIndices
         {
@@ -85,13 +84,13 @@ namespace Content.Shared.Lathe
         /// <summary>
         /// A modifier that changes how long it takes to print a recipe
         /// </summary>
-        [DataField, ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         public float TimeMultiplier = 1;
 
         /// <summary>
         /// A modifier that changes how much of a material is needed to print a recipe
         /// </summary>
-        [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+        [DataField, AutoNetworkedField]
         public float MaterialUseMultiplier = 1;
         #endregion
     }
