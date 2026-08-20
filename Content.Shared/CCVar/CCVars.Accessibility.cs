@@ -34,8 +34,8 @@ public sealed partial class CCVars
     /// <summary>
     /// When enabled, displays a background behind overhead chat text to help with contrast.
     /// </summary>
-    public static readonly CVarDef<bool> ChatBubbleContrastBackground =
-        CVarDef.Create("chat.enable_bubble_contrast_background",
+    public static readonly CVarDef<bool> ChatBubbleBackground =
+        CVarDef.Create("chat.enable_bubble_background",
             false,
             CVar.CLIENTONLY | CVar.ARCHIVE,
             "Toggles displaying a background behind overhead chat text");

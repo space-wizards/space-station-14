@@ -4,7 +4,6 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using static Content.Client.Stylesheets.StylesheetHelpers;
 
-
 namespace Content.Client.Stylesheets.Sheetlets.Hud;
 
 [CommonSheetlet]
@@ -20,6 +19,13 @@ public sealed class SpeechBubbleSheetlet : Sheetlet<PalettedStylesheet>
 
         var whisperFont = sheet.ResCache.GetFont("/Fonts/Macs-Minecraft/macs-minecraft-italic.ttf", 12);
 
+        var bubbleBackgroundTexture = sheet.ResCache.GetTexture("/Textures/Interface/Nano/chat_bubble_background.png");
+        var bubbleBackground = new StyleBoxTexture
+        {
+            Texture = bubbleBackgroundTexture,
+        };
+        bubbleBackground.SetPatchMargin(StyleBox.Margin.All, 5);
+
         return
         [
             E()
@@ -29,6 +35,10 @@ public sealed class SpeechBubbleSheetlet : Sheetlet<PalettedStylesheet>
             E()
                 .Class("fontChatName")
                 .Font(nameFont),
+
+            E()
+                .Class("bubblePanel")
+                .Panel(bubbleBackground),
 
             E<PanelContainer>()
                 .Class("speechBox")

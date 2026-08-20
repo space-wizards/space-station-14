@@ -3,8 +3,8 @@
     xmlns:speechBubble="clr-namespace:Content.Client.Chat.SpeechBubble">
     <PanelContainer Name="LabelPanel" StyleClasses="speechBox" VerticalAlignment="Bottom">
         <BoxContainer Orientation="Vertical" Align="Center">
-            <RichTextLabel Name="NameLabel" Visible="False" Margin="2 15 2 2" HorizontalAlignment="Center" Align="Center" StyleClasses="bubbleContent fontChat"/>
-            <RichTextLabel Name="Label" MaxWidth="256" Margin="4 4" HorizontalAlignment="Center" Align="Center" StyleClasses="bubbleContent fontChat"/>
+            <RichTextLabel Name="NameLabel" Visible="False" Margin="2 2 2 2" HorizontalAlignment="Center" Align="Center" StyleClasses="bubbleContent fontChatName"/>
+            <RichTextLabel Name="Label" MaxWidth="256" Margin="2 4" HorizontalAlignment="Center" Align="Center" StyleClasses="bubbleContent fontChat"/>
         </BoxContainer>
     </PanelContainer>
 </speechBubble:BaseSpeechBubble>
