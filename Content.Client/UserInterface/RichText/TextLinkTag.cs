@@ -6,6 +6,7 @@ using Robust.Client.UserInterface.RichText;
 using Robust.Shared.Input;
 using Robust.Shared.Utility;
 using Content.Client.UserInterface.ControlExtensions;
+using Content.Client.UserInterface.Controls;
 
 namespace Content.Client.UserInterface.RichText;
 
@@ -29,7 +30,7 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
     private const string UseEntityNameColorAttributeName = "entitynamecolor"; // entity links only: opt into per-entity name coloring
 
     private delegate bool TryResolveLink(MarkupNode node, out LinkData data);
-    private readonly (string AttributeName, TryResolveLink Resolver)[] _resolvers;
+    private readonly (string AttributeName, TryResolveLink Resolver)[] _resolvers; //lookup table for parsing link to correct solver
 
     private readonly record struct LinkData(string Link, Color? Color, bool Clickable);
 
@@ -78,19 +79,19 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
         // color= > resolver-supplied color > default
         var linkColor = ResolveColorOverride(node) ?? data.Color ?? DefaultLinkColor;
 
-        var label = new Label { Text = text };
-        label.FontColorOverride = linkColor;
+        var link = new TextLink() { Text = text };
+        link.FontColorOverride = linkColor;
 
         if (data.Clickable)
         {
-            label.MouseFilter = Control.MouseFilterMode.Stop;
-            label.DefaultCursorShape = Control.CursorShape.Hand;
-            label.OnMouseEntered += _ => label.FontColorOverride = Color.LightSkyBlue;
-            label.OnMouseExited += _ => label.FontColorOverride = linkColor;
-            label.OnKeyBindDown += args => OnKeybindDown(args, data.Link, label);
+            link.MouseFilter = Control.MouseFilterMode.Stop;
+            link.DefaultCursorShape = Control.CursorShape.Hand;
+            link.OnMouseEntered += _ => link.FontColorOverride = Color.LightSkyBlue;
+            link.OnMouseExited += _ => link.FontColorOverride = linkColor;
+            link.OnKeyBindDown += args => OnKeybindDown(args, data.Link, link);
         }
 
-        control = label;
+        control = link;
         return true;
     }
 
@@ -105,8 +106,10 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
         return Color.TryFromHex(colorStr, out var color) ? color : null;
     }
 
-    // Delegates to the nearest ancestor ILinkClickHandler; this class has no
-    // idea what a click actually does.
+    /// <summary>
+    /// Delegates to the nearest ancestor ILinkClickHandler; this TextLinkTag has no
+    /// idea what a click actually does.
+    /// </summary>
     private void OnKeybindDown(GUIBoundKeyEventArgs args, string link, Control? control)
     {
         if (args.Function != EngineKeyFunctions.UIClick)
@@ -122,7 +125,9 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
     }
 }
 
-/// <summary>Implement on a control to receive clicks on nested [textlink] nodes.</summary>
+/// <summary>
+/// Implement on a control to receive clicks on nested [textlink] nodes.
+/// </summary>
 public interface ILinkClickHandler
 {
     public void HandleClick(string link);

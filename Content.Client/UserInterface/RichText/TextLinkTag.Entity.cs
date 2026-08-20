@@ -7,8 +7,10 @@ namespace Content.Client.UserInterface.RichText;
 
 public sealed partial class TextLinkTag
 {
-    // entity="<NetEntity>" resolver. Clickable only if the local viewer is
-    // currently allowed to click chat names.
+    /// <summary>
+    /// entity="<NetEntity>" resolver. Clickable only if the local viewer is
+    /// currently allowed to click chat names.
+    /// </summary>
     private bool TryResolveEntityLink(MarkupNode node, out LinkData data)
     {
         data = default;
