@@ -38,13 +38,23 @@ public sealed partial class ItemSlotsComponent : Component
     // whitelist or whatever), you should use #1.
 
     /// <summary>
-    /// Whether to allow the smart-equip feature to work with this item's slots.
-    /// Defaults to false as so many ItemSlots entities do NOT want the smart-equip functionality.
+    /// When trying to smart-equip this item, decide whether to allow smart-equip to work on the item slots within this entity.
     /// </summary>
+    /// <remarks>
+    /// Defaults to false as so many ItemSlots entities do NOT want the smart-equip functionality.
+    /// False: Items that you more often want to equip than their contents (Guns, battery-powered tools)
+    /// True: Items that you want to equip their contents more often then themselves (Sabre sheathes, portable rechargers)
+    /// </remarks>
     [DataField]
     public bool AllowSmartEquip;
 }
 
+/// <summary>
+/// The component state for <see cref="ItemSlotsComponent"/>. Any new parameters must be added here and to the correct events in <see cref="ItemSlotsSystem"/>.
+/// </summary>
+/// <remarks>
+/// This can't be auto-generated due to the complexity of <paramref name="Slots"/>.
+/// </remarks>
 [Serializable, NetSerializable]
 public sealed class ItemSlotsComponentState(Dictionary<string, ItemSlot> slots, bool allowSmartEquip) : ComponentState
 {
