@@ -18,6 +18,8 @@ public sealed partial class SimpleRadialMenu : RadialMenu
 {
     private EntityUid? _attachMenuToEntity;
 
+    private RadialMenuOptionComparer _comparer = new();
+
     [Dependency] private IClyde _clyde = default!;
     [Dependency] private IEntityManager _entManager = default!;
     [Dependency] private IInputManager _inputManager = default!;
@@ -81,18 +83,18 @@ public sealed partial class SimpleRadialMenu : RadialMenu
         }
     }
 
-    private IEnumerable<RadialMenuOptionBase> SortOptions(IEnumerable<RadialMenuOptionBase> models)
+    public IEnumerable<RadialMenuOptionBase> SortOptions(IEnumerable<RadialMenuOptionBase> models)
     {
         switch (models)
         {
             case RadialMenuOptionBase[] asArray:
-                Array.Sort(asArray, CompareRadialMenuOptions);
+                Array.Sort(asArray, _comparer);
                 return asArray;
             case List<RadialMenuOptionBase> asList:
-                asList.Sort(CompareRadialMenuOptions);
+                asList.Sort(_comparer);
                 return asList;
             default:
-                return models.OrderBy(x => x.ToolTip);
+                return models.Order(_comparer);
         }
     }
 
