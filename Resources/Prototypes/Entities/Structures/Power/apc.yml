@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseWallmount
+  parent: [ BaseWallmount, StructureHealthMachineWeak ]
   categories: [ HideSpawnMenu ]
   id: BaseAPC
   name: APC
@@ -97,9 +97,7 @@
     layoutId: APC
   - type: WiresVisuals
   - type: Damageable
-    damageModifierSet: StructuralMetallicStrong
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
     - trigger:
@@ -109,10 +107,8 @@
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+            min: 0
+            max: 2
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak
@@ -136,7 +132,7 @@
 
 # APC under construction
 - type: entity
-  parent: BaseWallmountMetallic
+  parent: [ BaseWallmountMetallic, StructureHealthMachineFlimsy ]
   categories: [ HideSpawnMenu ]
   id: APCFrame
   name: APC frame
@@ -159,14 +155,11 @@
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:
-            min: 1
-            max: 1
+            min: 0
+            max: 2
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-
 # Constructed APC
 - type: entity
   parent: BaseAPC

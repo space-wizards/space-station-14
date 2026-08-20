@@ -1,0 +1,313 @@
+# This file contains the standardized health values for structures.
+# Minute health differences between similar entities does very little for actual gameplay,
+# and by keeping consistent values durability can be better intuited and expected in relation to other entities.
+# As a general guide: Furniture < Windows < Machines < Doors < Walls
+
+- type: entity
+  abstract: true
+  id: BaseStructureHealth
+  components:
+  - type: Destructible
+  - type: Damageable
+  - type: Injurable
+    damageContainer: StructuralInorganic
+
+#region Furniture
+
+# Poster / faberge egg
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthFurnitureWeak
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 5
+      behaviors: &DoDestruction
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+# General furniture like tables and chairs
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthFurniture
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 40
+      behaviors: *DoDestruction
+
+# Landmark furniture like statues and trees
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthFurnitureStrong
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 80
+      behaviors: *DoDestruction
+
+#endregion
+#region Barriers / Windows
+# Barriers are full tile entities that block movement. Basically a lower tier of wall.
+
+# Directional window / small fence / grille
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthBarrierWeak
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 30
+      behaviors: *DoDestruction
+
+# full window / reinforced direction window
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthBarrier
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 80
+      behaviors: *DoDestruction
+
+# reinforced full window / deployable security barrier / girder
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthBarrierStrong
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 120
+      behaviors: *DoDestruction
+
+#endregion
+#region Containers
+
+# Liquid tank / animal crate
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthContainerFlimsy
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 20
+      behaviors: *DoDestruction
+
+# Crate / wall closet
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthContainerWeak
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 60
+      behaviors: *DoDestruction
+
+# Locker / closet
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthContainer
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 100
+      behaviors: *DoDestruction
+
+# Suit storage / gas canister
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthContainerStrong
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 140
+      behaviors: *DoDestruction
+
+#endregion
+#region Machines
+
+# Not build from a proper frame. Light fixtures and other small electronics.
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthMachineFlimsy
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 50
+      behaviors: *DoDestruction
+    - trigger: !type:DamageTrigger
+        damage: 25
+      behaviors: &DoBreakage
+      - !type:DoActsBehavior
+        acts: [ "Breakage" ]
+
+# Computer / tabletop machine
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthMachineWeak
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 100
+      behaviors: *DoDestruction
+    - trigger: !type:DamageTrigger
+        damage: 50
+      behaviors: *DoBreakage
+
+# Regular full tile machine
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthMachine
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 175
+      behaviors: *DoDestruction
+    - trigger: !type:DamageTrigger
+        damage: 75
+      behaviors: *DoBreakage
+
+# Important game piece like a recycler or server
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthMachineStrong
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 275
+      behaviors: *DoDestruction
+    - trigger: !type:DamageTrigger
+        damage: 175
+      behaviors: *DoBreakage
+
+# Multi-tile machine
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthMachineMassive
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 400
+      behaviors: *DoDestruction
+    - trigger: !type:DamageTrigger
+        damage: 275
+      behaviors: *DoBreakage
+
+#endregion
+#region Doors
+
+# Windoors / material doors
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthDoorWeak
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 100
+      behaviors: *DoDestruction
+    - trigger: !type:DamageTrigger
+        damage: 50
+      behaviors: *DoBreakage
+
+# Airlocks / firelocks
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthDoor
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 200
+      behaviors: *DoDestruction
+    - trigger: !type:DamageTrigger
+        damage: 100
+      behaviors: *DoBreakage
+
+# High-security airlocks / blast doors
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthDoorStrong
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 350
+      behaviors: *DoDestruction
+    - trigger: !type:DamageTrigger
+        damage: 250
+      behaviors: *DoBreakage
+
+#endregion
+#region Walls
+
+# Walls made of unusual materials
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthWallWeak
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 150
+      behaviors: *DoDestruction
+
+# Basic steel wall
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthWall
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 250
+      behaviors: *DoDestruction
+
+# Heavy walls like plasteel
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthWallStrong
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 350
+      behaviors: *DoDestruction
+
+#endregion
