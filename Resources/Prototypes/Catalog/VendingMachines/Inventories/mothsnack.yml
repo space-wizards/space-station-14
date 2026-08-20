@@ -1,9 +1,10 @@
 - type: vendingMachineInventory
   id: MothSnackInventory
   startingInventory:
-    FoodBoxCloth: 2 #moth food
     FoodSnackMothSpheres: 3 #moth food
     FoodSnackCottonPuffs: 3 #moth food
     FoodSnackMothJerky: 3 #moth food
-    FoodBoxDonkpocketMoth: 3 #moth food
     FoodSnackMothCakes: 2 #moth food
+    FoodBoxDonkpocketMoth: 2 #moth food
+    FoodBoxCloth: 2 #moth food
+
