@@ -98,6 +98,7 @@
     checkConsciousness: false
   - type: ConfirmableAction
     popup: suicide-regen-action-popup
+    confirmWhenToggled: false
   - type: RegenerativeStasisAction
     bonusCooldownPerDamage: 0.675 # Bonus 135s (total 180s) at 200 damage
     minStasisCooldown: 45
