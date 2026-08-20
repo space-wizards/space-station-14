@@ -438,7 +438,7 @@ public sealed partial class IconSmoothSystem : EntitySystem
     {
         ref var cacheEntry = ref _keyCaches[index];
 
-        DebugTools.Assert(cacheEntry.RefCount > 0);
+        DebugTools.Assert(cacheEntry.RefCount > 0, $"Cache entry ref count was not greater than zero. Cache count: {cacheEntry.RefCount}");
         cacheEntry.RefCount--;
         if (cacheEntry.RefCount > 0)
             return;
