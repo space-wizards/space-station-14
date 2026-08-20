@@ -56,7 +56,6 @@ public sealed partial class SurveillanceCameraMonitorComponent : Component
 
     /// <summary>
     /// The subnets known by this camera monitor.
-    /// Key is a pair of router's address and transmit frequency of the subnet.
     /// </summary>
     [ViewVariables]
     public Dictionary<ProtoId<DeviceFrequencyPrototype>, string> KnownSubnets { get; } = new();

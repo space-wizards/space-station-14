@@ -104,7 +104,7 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
         // That way, we have *a* subnet selected if this is ever opened.
         if (activeSubnet is null)
         {
-            SubnetOpened!(subnets.First().Name);
+            SubnetOpened!(subnets.First());
             return;
         }
 
@@ -117,8 +117,8 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
 
             foreach (var subnet in subnets)
             {
-                var id = AddSubnet(subnet.Name);
-                _subnetMap.Add(subnet.Name, id);
+                var id = AddSubnet(subnet);
+                _subnetMap.Add(subnet, id);
             }
         }
 
@@ -180,9 +180,10 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
     private int AddSubnet(ProtoId<DeviceFrequencyPrototype> subnet)
     {
         var name = subnet;
-        if (_prototypeManager.TryIndex(subnet, out var frequency))
+        if (_prototypeManager.TryIndex(subnet, out var frequency)
+            && frequency.Name != null)
         {
-            name = Loc.GetString(frequency.Name ?? subnet);
+            name = Loc.GetString(frequency.Name);
         }
 
         SubnetSelector.AddItem(name);

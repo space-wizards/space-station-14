@@ -14,6 +14,7 @@ public sealed partial class SurveillanceCameraRouterSystem : EntitySystem
     [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
     [Dependency] private ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private UserInterfaceSystem _userInterface = default!;
+
     [Dependency] private EntityQuery<SurveillanceCameraRouterComponent> _query = default!;
 
     public override void Initialize()
@@ -54,10 +55,13 @@ public sealed partial class SurveillanceCameraRouterSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnSubnetPing(Entity<SurveillanceCameraRouterComponent> ent, ref DeviceNetworkPacketEvent<SurveillanceCameraPingSubnetPayload> args)
     {
+        if (ent.Comp.SubnetFrequencyId == null)
+            return;
+
         var response = new SurveillanceCameraSubnetDataPayload
         {
             Subnet = ent.Comp.SubnetName,
-            TransmitFrequency = ent.Comp.SubnetFrequency,
+            TransmitFrequency = ent.Comp.SubnetFrequencyId.Value,
         };
         _deviceNetworkSystem.SendPacket(ent.Owner, args.SenderAddress, ref response);
     }
@@ -166,7 +170,6 @@ public sealed partial class SurveillanceCameraRouterSystem : EntitySystem
         var payload = new SurveillanceCameraPingPayload
         {
             Subnet = ent.Comp.SubnetName,
-            Frequency = router.SubnetFrequencyId,
         };
         _deviceNetworkSystem.SendPacket(ent.Owner, null, ref payload, ent.Comp.SubnetFrequency);
     }

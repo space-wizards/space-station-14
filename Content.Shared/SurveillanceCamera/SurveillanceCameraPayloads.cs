@@ -1,5 +1,6 @@
 ﻿using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Payloads;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.SurveillanceCamera;
 
@@ -109,5 +110,5 @@ public partial record struct SurveillanceCameraSubnetDataPayload : INetworkPaylo
     public string Subnet;
 
     [DataField]
-    public uint TransmitFrequency;
+    public ProtoId<DeviceFrequencyPrototype> TransmitFrequency;
 }
