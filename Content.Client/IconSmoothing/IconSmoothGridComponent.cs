@@ -98,6 +98,7 @@ public record struct IconChunkData()
     {
         DebugTools.Assert(Tiles[index] != null, $"SetTileCache overwrote an empty index without incrementing the ref count!");
         Tiles[index] = value;
+        ValidateChunkData();
     }
 
     public void AddTileCache(Vector2i index, byte value)
@@ -121,6 +122,7 @@ public record struct IconChunkData()
         DebugTools.Assert(Tiles[index] == null, $"AddTileCache overwrote an existing value, and incremented the cache as if it were empty. Use SetTileCache!");
         Count++;
         Tiles[index] = value;
+        ValidateChunkData();
     }
 
     public void RemoveTileCache(Vector2i index)
@@ -143,5 +145,17 @@ public record struct IconChunkData()
         DebugTools.Assert(Tiles[index] != null, $"RemoveTileCache tried to remove a non-existent value!");
         Count--;
         Tiles[index] = null;
+        ValidateChunkData();
+    }
+
+    private void ValidateChunkData()
+    {
+        short count = 0;
+        foreach (var value in Tiles)
+        {
+            if (value != null)
+                count++;
+        }
+        DebugTools.Assert(count == Count, $"Number of cached tiles in this chunk did not match counted tiles counted: {Count} actual: {count}");
     }
 }

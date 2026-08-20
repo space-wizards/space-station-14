@@ -271,8 +271,6 @@ public sealed partial class IconSmoothSystem : EntitySystem
 
     private void AddTileKey(Entity<MapGridComponent> grid, Vector2i tile, string key)
     {
-        byte? cache;
-        IconChunkData chunkData;
         var (chunk, relative) = (_map.GridTileToChunkIndices(grid, grid.Comp, tile), SharedMapSystem.GetChunkRelative(tile, ChunkSize));
         if (!EnsureComp<IconSmoothGridComponent>(grid, out var cacheComp))
         {
@@ -281,7 +279,7 @@ public sealed partial class IconSmoothSystem : EntitySystem
             return;
         }
 
-        if (!TryGetCache((grid, cacheComp), (chunk, relative), out chunkData, out cache))
+        if (!TryGetCache((grid, cacheComp), (chunk, relative), out var chunkData, out var cache))
         {
             _workingKeyRing = new HashSet<string> {key};
             AddTileCache((grid,cacheComp), (chunk, relative), chunkData);
@@ -291,23 +289,20 @@ public sealed partial class IconSmoothSystem : EntitySystem
         if (_keyCaches[(ushort)cache].Keys is not { } keys)
         {
             _workingKeyRing = new HashSet<string> {key};
-            SetTileCache((grid,cacheComp), (chunk, relative), chunkData);
+            SetTileCache((grid,cacheComp), (chunk, relative), chunkData, cache.Value);
             Log.Error($"Cache {cache} for grid {ToPrettyString(grid)}, at {tile} chunk: {chunk}, relative {relative} did not correlate to a cached value!");
             return;
         }
 
         _workingKeyRing = new HashSet<string>(keys);
 
-        // New key added, get an appropriate index for the new key!
-        if (_workingKeyRing.Add(key))
-        {
-            SetTileCache((grid, cacheComp), (chunk, relative), chunkData);
-            // Properly remove the old cache!
-            DecrementRefCount(cache.Value);
+        // Cached keys on this tile has not changed, do not update!
+        if (!_workingKeyRing.Add(key))
             return;
-        }
 
-        _keyCaches[(short)cache].RefCount++;
+        SetTileCache((grid, cacheComp), (chunk, relative), chunkData);
+        // Properly remove the old cache!
+        DecrementRefCount(cache.Value);
     }
 
     private void RemoveTile(Entity<IconSmoothComponent, TransformComponent> entity, bool update = true)
@@ -335,11 +330,14 @@ public sealed partial class IconSmoothSystem : EntitySystem
         var (chunk, relative) = (_map.GridTileToChunkIndices(grid, grid.Comp, tile), SharedMapSystem.GetChunkRelative(tile, ChunkSize));
         if (!TryGetCache((grid, cacheComp), (chunk, relative), out var chunkData, out var tileEntry))
         {
-            Log.Error($"{tile} on grid {ToPrettyString(grid)} was not cached despite an entity {ToPrettyString(removed)} with {nameof(IconSmoothComponent)} existing there.");
+            /*
+             * This is a warning and not an error because PVS will sometimes apply the Anchoring event twice to an entity in some circumstances.
+             * This exists before we DecrementRefCount so we should be fine, if DecrementRefCount ever doesn't represent the actual count, then we'll get real test fails!
+             */
+            Log.Warning($"{tile} on grid {ToPrettyString(grid)} was not cached despite an entity {ToPrettyString(removed)} with {nameof(IconSmoothComponent)} existing there.");
             return;
         }
 
-        DecrementRefCount(tileEntry.Value);
         var tileEnumerator = _map.GetAnchoredEntities(grid, grid.Comp, tile);
         _workingKeyRing = new (4);
         while (tileEnumerator.MoveNext(out var uid))
@@ -350,20 +348,28 @@ public sealed partial class IconSmoothSystem : EntitySystem
             _workingKeyRing.Add(iconSmooth.Key);
         }
 
-        if (_workingKeyRing.Count == 0)
+        if (_workingKeyRing.Count > 0)
         {
-            RemoveTileCache((grid, cacheComp), chunkData, relative);
+            // Tile has not changed, don't do anything!
+            if (SetMatches(tileEntry.Value))
+                return;
+
+            DecrementRefCount(tileEntry.Value);
+            SetTileCache((grid, cacheComp), (chunk, relative), chunkData, CreateCacheIndex());
             return;
         }
 
-        SetTileCache((grid, cacheComp), (chunk, relative), chunkData);
+        DecrementRefCount(tileEntry.Value);
+        RemoveTileCache((grid, cacheComp), (chunk, relative), chunkData);
     }
 
-    private void RemoveTileCache(Entity<IconSmoothGridComponent> grid, IconChunkData chunkData, Vector2i pos)
+    private void RemoveTileCache(Entity<IconSmoothGridComponent> grid, (Vector2i Chunk, Vector2i Relative) index, IconChunkData chunkData)
     {
-        chunkData.RemoveTileCache(pos);
+        chunkData.RemoveTileCache(index.Relative);
         if (chunkData.Count == 0)
-            grid.Comp.Chunks.Remove(pos);
+            grid.Comp.Chunks.Remove(index.Chunk);
+        else
+            grid.Comp.Chunks[index.Chunk] = chunkData;
     }
 
     private void AddTileCache(Entity<IconSmoothGridComponent> grid, (Vector2i Chunk, Vector2i Relative) index)
@@ -405,6 +411,23 @@ public sealed partial class IconSmoothSystem : EntitySystem
         return chunkData.TryGetTileCache(index.Relative, out cache);
     }
 
+    private bool SetMatches(int i)
+    {
+        return _keyCaches[i].Keys?.SetEquals(_workingKeyRing) ?? false;
+    }
+
+    private byte CreateCacheIndex()
+    {
+        if (_freeListHead < 0)
+            ExpandCache();
+
+        var index = _freeListHead;
+        _freeListHead = _keyCaches[index].RefCount;
+        _keyCaches[index] = new KeyCache(_workingKeyRing);
+
+        return (byte)index;
+    }
+
     /// <summary>
     /// Searches for an existing Cache in our keyIndex, and creates a new one if it does not already exist.
     /// </summary>
@@ -414,7 +437,7 @@ public sealed partial class IconSmoothSystem : EntitySystem
         // Faster to iterate backwards since our cache populates top down!
         for (var i = _keyCaches.Count - 1; i >= 0; i--)
         {
-            if (!_keyCaches[i].Keys?.SetEquals(_workingKeyRing) ?? true)
+            if (!SetMatches(i))
                 continue;
 
             // Cache found, increment ref count
@@ -422,14 +445,7 @@ public sealed partial class IconSmoothSystem : EntitySystem
             return (byte)i;
         }
 
-        if (_freeListHead < 0)
-            ExpandCache();
-
-        var index = _freeListHead;
-        _freeListHead = _keyCaches[index].RefCount;
-        _keyCaches[index] = new KeyCache(_workingKeyRing);
-
-        return (byte)index;
+        return CreateCacheIndex();
     }
 
     private void DecrementRefCount(byte index)
@@ -465,7 +481,8 @@ public sealed partial class IconSmoothSystem : EntitySystem
         public HashSet<string>? Keys = keys;
 
         /// <summary>
-        /// Stores a reference to the next available index in _keyCache
+        /// Stores the number of tiles which have this set of keys.
+        /// When empty, stores a reference to the next available index in _keyCache
         /// If there is no reference available, is set to -1
         /// </summary>
         public short RefCount = 1; // Doubles as freelist chain
