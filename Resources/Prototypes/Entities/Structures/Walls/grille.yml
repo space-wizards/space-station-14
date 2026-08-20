@@ -98,7 +98,7 @@
     graph: Grille
     node: grille
 
-### BROKEN
+### DIAGONAL
 - type: entity
   parent: Grille
   id: GrilleDiagonal
@@ -138,7 +138,7 @@
     graph: GrilleDiagonal
     node: grilleDiagonal
 
-### Broken state
+### BROKEN
 - type: entity
   parent: [ BaseStructure, StructureHealthFurnitureWeak ]
   id: GrilleBroken
