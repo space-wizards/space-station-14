@@ -164,7 +164,7 @@ public sealed partial class DoorComponent : Component
     /// <summary>
     /// The sprite states used for the door while it's open.
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
+    [ViewVariables]
     public List<(Enum, string?)> OpenSpriteStates = default!;
 
     /// <summary>
@@ -176,7 +176,7 @@ public sealed partial class DoorComponent : Component
     /// <summary>
     /// The sprite states used for the door while it's closed.
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
+    [ViewVariables]
     public List<(Enum, string?)> ClosedSpriteStates = default!;
 
     /// <summary>
@@ -353,9 +353,14 @@ public enum DoorVisuals : byte
 /// </summary>
 public enum DoorVisualLayers : byte
 {
+    /// <summary>The body of the door.</summary>
     Base,
+    /// <summary>Any lights on the body of the door.</summary>
     BaseUnlit,
+    /// <summary>An indicator that the door is bolted.</summary>
     BaseBolted,
+    /// <summary>An indicator that anyone is permited to open/close the door.</summary>
     BaseEmergencyAccess,
+    /// <summary>A reaction on the door when emagged, typically sparks.</summary>
     BaseEmagging,
 }
