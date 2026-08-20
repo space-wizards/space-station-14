@@ -205,8 +205,6 @@
     layers:
     - state: smoke_gray_scale
       map: ["enum.EffectLayers.Unshaded"]
-  - type: EffectVisuals
-  - type: AnimationPlayer
 
 - type: entity
   parent: BulletRocket
