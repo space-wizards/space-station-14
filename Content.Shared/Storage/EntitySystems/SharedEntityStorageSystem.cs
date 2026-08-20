@@ -326,7 +326,7 @@ public abstract partial class SharedEntityStorageSystem : EntitySystem
             return false;
 
         // Get our new parent: either the grid the entity is on, or the
-        var newParent = xform.GridUid ?? xform.MapUid ?? EntityUid.Invalid;
+        var newParent = xform.GridUid ?? xform.MapUid;
         if (!TryComp(newParent, out TransformComponent? parentXform))
             return false;
 
@@ -334,7 +334,7 @@ public abstract partial class SharedEntityStorageSystem : EntitySystem
         var (pos, rot) = TransformSystem.GetWorldPositionRotation(xform);
         pos += rot.RotateVec(component.EnteringOffset);
         pos = Vector2.Transform(pos, TransformSystem.GetInvWorldMatrix(parentXform));
-        if (!_container.Remove(toRemove, component.Contents, destination: new(newParent, pos)))
+        if (!_container.Remove(toRemove, component.Contents, destination: new(newParent.Value, pos)))
             return false;
 
         if (_container.IsEntityInContainer(container)
