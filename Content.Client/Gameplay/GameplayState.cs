@@ -63,7 +63,7 @@ namespace Content.Client.Gameplay
             {
                 _clocks = new Clocks();
                 UserInterfaceManager.PopupRoot.AddChild(_clocks);
-                LayoutContainer.SetPosition(_clocks, new Vector2(70, 0));
+                LayoutContainer.SetPosition(_clocks, new Vector2(_eyeManager.GetWorldViewport().Height - 50, _eyeManager.GetWorldViewport().Width - 50));
             }
 
             // Version number watermark.
