@@ -57,13 +57,12 @@ public sealed partial class LatheSystem : SharedLatheSystem
                 lastUpdated = mtime;
         }
 
-        if (lathe.Comp.LastModifiedFields[(int)LatheComponent.FieldIndices.Queue] >= lastUpdated ||
-                lathe.Comp.LastModifiedFields[(int)LatheComponent.FieldIndices.CurrentRecipe] >= lastUpdated)
+        if (lathe.Comp.LastModifiedFields[(int)LatheComponent.FieldIndices.Queue] >= lastUpdated
+            || lathe.Comp.LastModifiedFields[(int)LatheComponent.FieldIndices.CurrentRecipe] >= lastUpdated)
         {
-            if (_ui.TryGetOpenUi(lathe.Owner, LatheUiKey.Key, out var bui)
-                && bui is LatheBoundUserInterface latheUi)
+            if (_ui.TryGetOpenUi<LatheBoundUserInterface>(lathe.Owner, LatheUiKey.Key, out var bui))
             {
-                latheUi.UpdateProductionQueue(lathe.Comp.CurrentRecipe, lathe.Comp.Queue);
+                bui.UpdateProductionQueue(lathe.Comp.CurrentRecipe, lathe.Comp.Queue);
             }
         }
     }
@@ -71,10 +70,9 @@ public sealed partial class LatheSystem : SharedLatheSystem
     [SubscribeLocalEvent]
     private void OnMaterialAmountChanged(Entity<LatheComponent> lathe, ref MaterialAmountChangedEvent evt)
     {
-        if (_ui.TryGetOpenUi(lathe.Owner, LatheUiKey.Key, out var bui)
-                && bui is LatheBoundUserInterface latheUi)
+        if (_ui.TryGetOpenUi<LatheBoundUserInterface>(lathe.Owner, LatheUiKey.Key, out var bui))
         {
-            latheUi.UpdateMaterialAmounts();
+            bui.UpdateMaterialAmounts();
         }
     }
 
