@@ -8,7 +8,7 @@ namespace Content.Server.Stealth;
 public sealed partial class StealthSystem : SharedStealthSystem
 {
     [Dependency] private LightLevelSystem _lightLevelSystem = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public override void Update(float frameTime)
     {

@@ -8,7 +8,7 @@ public sealed partial class LightLevelEntityEffectSystem : EntitySystem
 {
     [Dependency] private LightLevelSystem _lightLevelSystem = default!;
     [Dependency] private SharedEntityEffectsSystem _entityEffect = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public override void Update(float frameTime)
     {
