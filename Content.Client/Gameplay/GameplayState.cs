@@ -28,7 +28,6 @@ namespace Content.Client.Gameplay
 
         private FpsCounter _fpsCounter = default!;
         private Label _version = default!;
-        private Clocks _clocks = default!;
 
         public MainViewport Viewport => _uiManager.ActiveScreen!.GetWidget<MainViewport>()!;
 
@@ -57,8 +56,6 @@ namespace Content.Client.Gameplay
             UserInterfaceManager.PopupRoot.AddChild(_fpsCounter);
             _fpsCounter.Visible = _configurationManager.GetCVar(CCVars.HudFpsCounterVisible);
             _configurationManager.OnValueChanged(CCVars.HudFpsCounterVisible, (show) => { _fpsCounter.Visible = show; });
-
-            // _configurationManager.GetCVar(CCVars.ClocksEnabled)
 
             // Version number watermark.
             _version = new Label();
