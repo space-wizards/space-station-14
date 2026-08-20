@@ -45,6 +45,12 @@ public record struct IconChunkData()
         return cache != null;
     }
 
+    /// <summary>
+    /// Gets the cached value at a given tile on this chunk.
+    /// </summary>
+    /// <param name="index">Index of our cache, top 4 bits represent Y, bottom for represent X</param>
+    /// <param name="cache">The cached value. Not null when true.</param>
+    /// <returns>Whether a value existed or not.</returns>
     public bool TryGetTileCache(byte index, [NotNullWhen(true)] out byte? cache)
     {
         cache = GetTileCache(index);
@@ -62,6 +68,11 @@ public record struct IconChunkData()
         return GetTileCache((byte)(x + (y << 4)));
     }
 
+    /// <summary>
+    /// Gets the cached value at a given tile on this chunk.
+    /// </summary>
+    /// <param name="index">Index of our cache, top 4 bits represent Y, bottom for represent X</param>
+    /// <returns>The cached value</returns>
     public byte? GetTileCache(byte index)
     {
         return Tiles[index];
@@ -78,6 +89,11 @@ public record struct IconChunkData()
         SetTileCache((byte)(x + (y << 4)), value);
     }
 
+    /// <summary>
+    /// Sets the cached value at a given tile on this chunk.
+    /// </summary>
+    /// <param name="index">Index of our cache, top 4 bits represent Y, bottom for represent X</param>
+    /// <param name="value">Cached value</param>
     public void SetTileCache(byte index, byte value)
     {
         Count++;
@@ -95,6 +111,10 @@ public record struct IconChunkData()
         RemoveTileCache((byte)(x + (y << 4)));
     }
 
+    /// <summary>
+    /// Clears the cached value at a given tile on this chunk.
+    /// </summary>
+    /// <param name="index">Index of our cache, top 4 bits represent Y, bottom for represent X</param>
     public void RemoveTileCache(byte index)
     {
         Count--;
