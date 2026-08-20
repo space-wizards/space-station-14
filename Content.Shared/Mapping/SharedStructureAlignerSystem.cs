@@ -193,6 +193,8 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
 [Flags]
 public enum StructureAlignerType : byte
 {
+    // 0 value bitmask will match any "HasFlag" checks, and should not be assigned
+    Invalid,
     /// <summary>
     /// Airlocks, doors, shutters, blast doors and everything that would be functionally
     /// considered a room boundary (doors, walls, windows, full tile rocks etc.)
