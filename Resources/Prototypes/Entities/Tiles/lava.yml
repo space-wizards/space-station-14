@@ -43,7 +43,7 @@
       fix1:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.5, -0.5, 0.5, 0.5"
+          bounds: "-0.5,-0.5,0.5,0.5"
         layer:
           - SlipLayer
         mask:
