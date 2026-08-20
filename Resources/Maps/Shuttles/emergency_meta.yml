@@ -1,10 +1,10 @@
 meta:
   format: 7
   category: Grid
-  engineVersion: 288.0.1
+  engineVersion: 288.1.0
   forkId: ""
   forkVersion: ""
-  time: 08/12/2026 22:28:05
+  time: 08/20/2026 15:13:30
   entityCount: 981
 maps: []
 grids:
@@ -2945,6 +2945,7 @@ entities:
     components:
     - type: Transform
       parent: 1
+      rot: 1.5707963267948966 rad
       pos: 0.5,-2.5
 - proto: Flare
   entities:
@@ -8190,7 +8191,7 @@ entities:
       pos: 11.5,-7.5
     - type: Physics
       canCollide: False
-- proto: WindoorSecureEngineeringLocked
+- proto: WindoorEngineeringLocked
   entities:
   - uid: 569
     components:

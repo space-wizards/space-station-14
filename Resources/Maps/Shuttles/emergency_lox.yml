@@ -1,10 +1,10 @@
 meta:
   format: 7
   category: Grid
-  engineVersion: 288.0.1
+  engineVersion: 288.1.0
   forkId: ""
   forkVersion: ""
-  time: 08/12/2026 22:14:55
+  time: 08/20/2026 15:13:08
   entityCount: 666
 maps: []
 grids:
@@ -411,21 +411,25 @@ entities:
     components:
     - type: Transform
       parent: 670
+      rot: 1.5707963267948966 rad
       pos: -7.5,10.5
   - uid: 657
     components:
     - type: Transform
       parent: 670
+      rot: 1.5707963267948966 rad
       pos: 2.5,-8.5
   - uid: 658
     components:
     - type: Transform
       parent: 670
+      rot: 1.5707963267948966 rad
       pos: 2.5,-6.5
   - uid: 659
     components:
     - type: Transform
       parent: 670
+      rot: 1.5707963267948966 rad
       pos: 2.5,-4.5
 - proto: CableApcExtension
   entities:
@@ -2538,11 +2542,13 @@ entities:
     components:
     - type: Transform
       parent: 670
+      rot: 1.5707963267948966 rad
       pos: -4.5,5.5
   - uid: 610
     components:
     - type: Transform
       parent: 670
+      rot: 1.5707963267948966 rad
       pos: -0.5,5.5
   - uid: 611
     components:
@@ -2553,11 +2559,13 @@ entities:
     components:
     - type: Transform
       parent: 670
+      rot: 1.5707963267948966 rad
       pos: -0.5,-0.5
   - uid: 620
     components:
     - type: Transform
       parent: 670
+      rot: 1.5707963267948966 rad
       pos: -4.5,-0.5
   - uid: 638
     components:
@@ -4578,7 +4586,7 @@ entities:
     - type: Transform
       parent: 670
       pos: -7.5,12.5
-- proto: WindoorSecure
+- proto: Windoor
   entities:
   - uid: 230
     components:
@@ -4586,7 +4594,7 @@ entities:
       parent: 670
       rot: 3.141592653589793 rad
       pos: -2.5,6.5
-- proto: WindoorSecureMedicalLocked
+- proto: WindoorMedicalLocked
   entities:
   - uid: 258
     components:
@@ -4594,7 +4602,7 @@ entities:
       parent: 670
       rot: 1.5707963267948966 rad
       pos: -4.5,10.5
-- proto: WindoorSecureSecurityLocked
+- proto: WindoorSecurityLocked
   entities:
   - uid: 287
     components:

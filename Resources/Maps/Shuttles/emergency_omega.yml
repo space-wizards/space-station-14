@@ -1,10 +1,10 @@
 meta:
   format: 7
   category: Grid
-  engineVersion: 288.0.1
+  engineVersion: 288.1.0
   forkId: ""
   forkVersion: ""
-  time: 08/12/2026 22:29:27
+  time: 08/20/2026 15:14:22
   entityCount: 623
 maps: []
 grids:
@@ -437,58 +437,66 @@ entities:
     components:
     - type: Transform
       parent: 603
+      rot: 1.5707963267948966 rad
       pos: -10.5,5.5
   - uid: 542
     components:
     - type: Transform
       parent: 603
+      rot: 1.5707963267948966 rad
       pos: -10.5,6.5
   - uid: 543
     components:
     - type: Transform
       parent: 603
+      rot: 1.5707963267948966 rad
       pos: -10.5,7.5
   - uid: 544
     components:
     - type: Transform
       parent: 603
+      rot: 1.5707963267948966 rad
       pos: -10.5,2.5
   - uid: 545
     components:
     - type: Transform
       parent: 603
+      rot: 1.5707963267948966 rad
       pos: 5.5,2.5
   - uid: 546
     components:
     - type: Transform
       parent: 603
+      rot: 1.5707963267948966 rad
       pos: 5.5,5.5
   - uid: 547
     components:
     - type: Transform
       parent: 603
+      rot: 1.5707963267948966 rad
       pos: 5.5,6.5
   - uid: 548
     components:
     - type: Transform
       parent: 603
+      rot: 1.5707963267948966 rad
       pos: 5.5,7.5
   - uid: 549
     components:
     - type: Transform
       parent: 603
+      rot: 1.5707963267948966 rad
       pos: 5.5,10.5
   - uid: 550
     components:
     - type: Transform
       parent: 603
-      rot: -1.5707963267948966 rad
       pos: 3.5,15.5
   - uid: 551
     components:
     - type: Transform
       parent: 603
-      rot: 1.5707963267948966 rad
+      rot: 3.141592653589793 rad
       pos: 2.5,15.5
   - uid: 552
     components:
@@ -2370,11 +2378,13 @@ entities:
     components:
     - type: Transform
       parent: 603
+      rot: 1.5707963267948966 rad
       pos: -6.5,5.5
   - uid: 334
     components:
     - type: Transform
       parent: 603
+      rot: 1.5707963267948966 rad
       pos: 1.5,6.5
   - uid: 336
     components:
@@ -2385,6 +2395,7 @@ entities:
     components:
     - type: Transform
       parent: 603
+      rot: 1.5707963267948966 rad
       pos: -6.5,6.5
   - uid: 345
     components:
@@ -2405,6 +2416,7 @@ entities:
     components:
     - type: Transform
       parent: 603
+      rot: 1.5707963267948966 rad
       pos: 1.5,5.5
   - uid: 520
     components:
@@ -2415,16 +2427,19 @@ entities:
     components:
     - type: Transform
       parent: 603
+      rot: 1.5707963267948966 rad
       pos: -6.5,9.5
   - uid: 568
     components:
     - type: Transform
       parent: 603
+      rot: 1.5707963267948966 rad
       pos: -6.5,1.5
   - uid: 597
     components:
     - type: Transform
       parent: 603
+      rot: 1.5707963267948966 rad
       pos: -6.5,-1.5
 - proto: GasPassiveVent
   entities:
@@ -4342,7 +4357,7 @@ entities:
     - type: Transform
       parent: 603
       pos: -3.5,9.5
-- proto: WindoorSecureEngineeringLocked
+- proto: WindoorEngineeringLocked
   entities:
   - uid: 525
     components:
@@ -4350,7 +4365,7 @@ entities:
       parent: 603
       rot: -1.5707963267948966 rad
       pos: 1.5,-1.5
-- proto: WindoorSecureSecurityLocked
+- proto: WindoorSecurityLocked
   entities:
   - uid: 536
     components:

@@ -1,10 +1,10 @@
 meta:
   format: 7
   category: Grid
-  engineVersion: 288.0.1
+  engineVersion: 288.1.0
   forkId: ""
   forkVersion: ""
-  time: 08/12/2026 22:24:18
+  time: 08/20/2026 15:11:01
   entityCount: 976
 maps: []
 grids:
@@ -271,11 +271,13 @@ entities:
     components:
     - type: Transform
       parent: 1
+      rot: 1.5707963267948966 rad
       pos: -14.5,0.5
   - uid: 137
     components:
     - type: Transform
       parent: 1
+      rot: 1.5707963267948966 rad
       pos: -14.5,1.5
 - proto: AirlockExternalGlassLocked
   entities:
@@ -3223,6 +3225,7 @@ entities:
     components:
     - type: Transform
       parent: 1
+      rot: 1.5707963267948966 rad
       pos: -9.5,-12.5
   - uid: 64
     components:
@@ -3243,6 +3246,7 @@ entities:
     components:
     - type: Transform
       parent: 1
+      rot: 1.5707963267948966 rad
       pos: -9.5,-5.5
   - uid: 534
     components:
@@ -3268,11 +3272,13 @@ entities:
     components:
     - type: Transform
       parent: 1
+      rot: 1.5707963267948966 rad
       pos: -9.5,-4.5
   - uid: 715
     components:
     - type: Transform
       parent: 1
+      rot: 1.5707963267948966 rad
       pos: -9.5,-13.5
   - uid: 731
     components:
@@ -6180,7 +6186,7 @@ entities:
     - type: Transform
       parent: 1
       pos: -10.5,-7.5
-- proto: WindoorSecureEngineeringLocked
+- proto: WindoorEngineeringLocked
   entities:
   - uid: 700
     components:
@@ -6188,7 +6194,7 @@ entities:
       parent: 1
       rot: 1.5707963267948966 rad
       pos: -1.5,-20.5
-- proto: WindoorSecureSecurityLocked
+- proto: WindoorSecurityLocked
   entities:
   - uid: 37
     components:

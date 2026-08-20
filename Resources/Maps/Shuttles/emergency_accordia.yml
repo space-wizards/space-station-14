@@ -1,10 +1,10 @@
 meta:
   format: 7
   category: Grid
-  engineVersion: 288.0.1
+  engineVersion: 288.1.0
   forkId: ""
   forkVersion: ""
-  time: 08/12/2026 22:16:59
+  time: 08/20/2026 15:06:59
   entityCount: 1031
 maps: []
 grids:
@@ -3098,7 +3098,6 @@ entities:
     components:
     - type: Transform
       parent: 1
-      rot: -1.5707963267948966 rad
       pos: 2.5,8.5
     - type: DeviceNetwork
       deviceLists:
@@ -3110,7 +3109,6 @@ entities:
     components:
     - type: Transform
       parent: 1
-      rot: -1.5707963267948966 rad
       pos: -1.5,8.5
     - type: DeviceNetwork
       deviceLists:
@@ -3170,7 +3168,6 @@ entities:
     components:
     - type: Transform
       parent: 1
-      rot: -1.5707963267948966 rad
       pos: 4.5,-4.5
     - type: DeviceNetwork
       deviceLists:
@@ -5216,7 +5213,7 @@ entities:
       parent: 1
       rot: 3.141592653589793 rad
       pos: -3.5,-16.5
-- proto: PlasmaWindoorSecureCommandLocked
+- proto: PlasmaWindoorCommandLocked
   entities:
   - uid: 408
     components:
@@ -7266,7 +7263,7 @@ entities:
       parent: 1
       rot: 3.141592653589793 rad
       pos: 0.5,14.5
-- proto: WindoorSecure
+- proto: Windoor
   entities:
   - uid: 205
     components:

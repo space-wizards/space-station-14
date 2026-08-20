@@ -1,10 +1,10 @@
 meta:
   format: 7
   category: Grid
-  engineVersion: 288.0.1
+  engineVersion: 288.1.0
   forkId: ""
   forkVersion: ""
-  time: 08/12/2026 22:25:36
+  time: 08/20/2026 15:11:44
   entityCount: 1024
 maps: []
 grids:
@@ -2986,21 +2986,25 @@ entities:
     components:
     - type: Transform
       parent: 2
+      rot: 1.5707963267948966 rad
       pos: -1.5,2.5
   - uid: 181
     components:
     - type: Transform
       parent: 2
+      rot: 1.5707963267948966 rad
       pos: -1.5,1.5
   - uid: 182
     components:
     - type: Transform
       parent: 2
+      rot: 1.5707963267948966 rad
       pos: 2.5,-0.5
   - uid: 183
     components:
     - type: Transform
       parent: 2
+      rot: 1.5707963267948966 rad
       pos: 2.5,-1.5
   - uid: 184
     components:
@@ -3011,31 +3015,37 @@ entities:
     components:
     - type: Transform
       parent: 2
+      rot: 1.5707963267948966 rad
       pos: 6.5,8.5
   - uid: 588
     components:
     - type: Transform
       parent: 2
+      rot: 1.5707963267948966 rad
       pos: 6.5,9.5
   - uid: 691
     components:
     - type: Transform
       parent: 2
+      rot: 1.5707963267948966 rad
       pos: 11.5,0.5
   - uid: 692
     components:
     - type: Transform
       parent: 2
+      rot: 1.5707963267948966 rad
       pos: 11.5,-0.5
   - uid: 693
     components:
     - type: Transform
       parent: 2
+      rot: 1.5707963267948966 rad
       pos: 11.5,-3.5
   - uid: 694
     components:
     - type: Transform
       parent: 2
+      rot: 1.5707963267948966 rad
       pos: 11.5,-2.5
 - proto: FoodBurgerHuman
   entities:
@@ -6667,7 +6677,7 @@ entities:
     - type: Transform
       parent: 2
       pos: 8.5,-6.5
-- proto: WindoorSecureEngineeringLocked
+- proto: WindoorEngineeringLocked
   entities:
   - uid: 123
     components:
@@ -6681,7 +6691,7 @@ entities:
       parent: 2
       rot: 3.141592653589793 rad
       pos: -3.5,10.5
-- proto: WindoorSecureSecurityLocked
+- proto: WindoorSecurityLocked
   entities:
   - uid: 261
     components:

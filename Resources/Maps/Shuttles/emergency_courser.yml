@@ -1,10 +1,10 @@
 meta:
   format: 7
   category: Grid
-  engineVersion: 288.0.1
+  engineVersion: 288.1.0
   forkId: ""
   forkVersion: ""
-  time: 08/12/2026 22:21:32
+  time: 08/20/2026 15:09:39
   entityCount: 680
 maps: []
 grids:
@@ -2299,31 +2299,37 @@ entities:
     components:
     - type: Transform
       parent: 656
+      rot: 1.5707963267948966 rad
       pos: 2.5,5.5
   - uid: 153
     components:
     - type: Transform
       parent: 656
+      rot: 1.5707963267948966 rad
       pos: -2.5,-9.5
   - uid: 155
     components:
     - type: Transform
       parent: 656
+      rot: 1.5707963267948966 rad
       pos: -2.5,5.5
   - uid: 197
     components:
     - type: Transform
       parent: 656
+      rot: 1.5707963267948966 rad
       pos: -2.5,-8.5
   - uid: 201
     components:
     - type: Transform
       parent: 656
+      rot: 1.5707963267948966 rad
       pos: 2.5,-9.5
   - uid: 222
     components:
     - type: Transform
       parent: 656
+      rot: 1.5707963267948966 rad
       pos: 2.5,-5.5
   - uid: 263
     components:
@@ -2349,21 +2355,25 @@ entities:
     components:
     - type: Transform
       parent: 656
+      rot: 1.5707963267948966 rad
       pos: 2.5,-8.5
   - uid: 631
     components:
     - type: Transform
       parent: 656
+      rot: 1.5707963267948966 rad
       pos: -2.5,-5.5
   - uid: 654
     components:
     - type: Transform
       parent: 656
+      rot: 1.5707963267948966 rad
       pos: -2.5,9.5
   - uid: 655
     components:
     - type: Transform
       parent: 656
+      rot: 1.5707963267948966 rad
       pos: 2.5,9.5
 - proto: Flash
   entities:

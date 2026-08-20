@@ -1,10 +1,10 @@
 meta:
   format: 7
   category: Grid
-  engineVersion: 288.0.1
+  engineVersion: 288.1.0
   forkId: ""
   forkVersion: ""
-  time: 08/12/2026 22:30:41
+  time: 08/20/2026 15:15:06
   entityCount: 1185
 maps: []
 grids:
@@ -436,6 +436,7 @@ entities:
     components:
     - type: Transform
       parent: 2
+      rot: 1.5707963267948966 rad
       pos: 16.5,5.5
     - type: DeviceLinkSink
       invokeCounter: 1
@@ -448,6 +449,7 @@ entities:
     components:
     - type: Transform
       parent: 2
+      rot: 1.5707963267948966 rad
       pos: 14.5,5.5
     - type: DeviceLinkSink
       invokeCounter: 1
@@ -874,6 +876,7 @@ entities:
     components:
     - type: Transform
       parent: 2
+      rot: 1.5707963267948966 rad
       pos: 0.5,-11.5
     - type: DeviceLinkSink
       invokeCounter: 1
@@ -1014,6 +1017,7 @@ entities:
     components:
     - type: Transform
       parent: 2
+      rot: 1.5707963267948966 rad
       pos: 1.5,-3.5
     - type: DeviceLinkSink
       invokeCounter: 1
@@ -1021,6 +1025,7 @@ entities:
     components:
     - type: Transform
       parent: 2
+      rot: 1.5707963267948966 rad
       pos: 0.5,2.5
     - type: DeviceLinkSink
       invokeCounter: 1
@@ -1042,6 +1047,7 @@ entities:
     components:
     - type: Transform
       parent: 2
+      rot: 1.5707963267948966 rad
       pos: 1.5,-4.5
     - type: DeviceLinkSink
       invokeCounter: 1
@@ -1049,6 +1055,7 @@ entities:
     components:
     - type: Transform
       parent: 2
+      rot: 1.5707963267948966 rad
       pos: 1.5,-5.5
     - type: DeviceLinkSink
       invokeCounter: 1
@@ -1077,6 +1084,7 @@ entities:
     components:
     - type: Transform
       parent: 2
+      rot: 1.5707963267948966 rad
       pos: 16.5,-11.5
     - type: DeviceLinkSink
       invokeCounter: 1
@@ -1084,6 +1092,7 @@ entities:
     components:
     - type: Transform
       parent: 2
+      rot: 1.5707963267948966 rad
       pos: 15.5,-5.5
     - type: DeviceLinkSink
       invokeCounter: 1
@@ -1091,6 +1100,7 @@ entities:
     components:
     - type: Transform
       parent: 2
+      rot: 1.5707963267948966 rad
       pos: 15.5,-4.5
     - type: DeviceLinkSink
       invokeCounter: 1
@@ -1098,6 +1108,7 @@ entities:
     components:
     - type: Transform
       parent: 2
+      rot: 1.5707963267948966 rad
       pos: 15.5,-3.5
     - type: DeviceLinkSink
       invokeCounter: 1
@@ -1105,6 +1116,7 @@ entities:
     components:
     - type: Transform
       parent: 2
+      rot: 1.5707963267948966 rad
       pos: 16.5,1.5
     - type: DeviceLinkSink
       invokeCounter: 1
@@ -1112,6 +1124,7 @@ entities:
     components:
     - type: Transform
       parent: 2
+      rot: 1.5707963267948966 rad
       pos: 16.5,2.5
     - type: DeviceLinkSink
       invokeCounter: 1
@@ -3469,21 +3482,25 @@ entities:
     components:
     - type: Transform
       parent: 2
+      rot: 1.5707963267948966 rad
       pos: 10.5,-1.5
   - uid: 140
     components:
     - type: Transform
       parent: 2
+      rot: 1.5707963267948966 rad
       pos: 10.5,-6.5
   - uid: 144
     components:
     - type: Transform
       parent: 2
+      rot: 1.5707963267948966 rad
       pos: 10.5,-7.5
   - uid: 154
     components:
     - type: Transform
       parent: 2
+      rot: 1.5707963267948966 rad
       pos: 6.5,-2.5
   - uid: 164
     components:
@@ -3499,11 +3516,13 @@ entities:
     components:
     - type: Transform
       parent: 2
+      rot: 1.5707963267948966 rad
       pos: 6.5,1.5
   - uid: 167
     components:
     - type: Transform
       parent: 2
+      rot: 1.5707963267948966 rad
       pos: 10.5,1.5
   - uid: 168
     components:
@@ -3519,21 +3538,25 @@ entities:
     components:
     - type: Transform
       parent: 2
+      rot: 1.5707963267948966 rad
       pos: 10.5,-2.5
   - uid: 215
     components:
     - type: Transform
       parent: 2
+      rot: 1.5707963267948966 rad
       pos: 6.5,-1.5
   - uid: 217
     components:
     - type: Transform
       parent: 2
+      rot: 1.5707963267948966 rad
       pos: 6.5,-7.5
   - uid: 223
     components:
     - type: Transform
       parent: 2
+      rot: 1.5707963267948966 rad
       pos: 6.5,-6.5
   - uid: 236
     components:
