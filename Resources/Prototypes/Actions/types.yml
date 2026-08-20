@@ -376,7 +376,7 @@
     layers:
     - state: icon
   - type: InstantAction
-    event: !type:EggLayInstantActionEvent
+    event: !type:EntityProductionActionEvent
 
 - type: entity
   parent: BaseMentalAction
@@ -555,7 +555,7 @@
   name: Jump boost
   components:
   - type: Action
-    useDelay: 16
+    useDelay: 10
   - type: Sprite
     sprite: Interface/Actions/actions_borg.rsi
     layers:
