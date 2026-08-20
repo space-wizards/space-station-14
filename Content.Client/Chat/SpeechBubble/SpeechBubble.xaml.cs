@@ -1,4 +1,3 @@
-using Content.Client.Stylesheets;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.IdentityManagement;
@@ -10,7 +9,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.Chat.SpeechBubble;
 
 [GenerateTypedNameReferences]
-public sealed partial class NuSpeechBubble : BaseSpeechBubble
+public sealed partial class SpeechBubble : BaseSpeechBubble
 {
     [Dependency] private IEntityManager _entityManager = default!;
     [Dependency] private IConfigurationManager _config = default!;
@@ -23,7 +22,7 @@ public sealed partial class NuSpeechBubble : BaseSpeechBubble
         Looc
     }
 
-    public NuSpeechBubble(ChatMessage message, SpeechType type, string name, EntityUid senderEntity, Color? fontColor = null) : base(senderEntity)
+    public SpeechBubble(ChatMessage message, SpeechType type, string name, EntityUid senderEntity, Color? fontColor = null) : base(senderEntity)
     {
         IoCManager.InjectDependencies(this);
         RobustXamlLoader.Load(this);
@@ -37,6 +36,7 @@ public sealed partial class NuSpeechBubble : BaseSpeechBubble
         if (message.Channel == ChatChannel.Dead)
         {
             fontColor = Color.MediumPurple;
+            //Why don't ghosts have name, probably some stupid ass regex shit as usual
             NameLabel.SetMessage(Identity.Name(senderEntity, _entityManager), Color.MediumSlateBlue);
             NameLabel.Visible = true;
         }
@@ -47,7 +47,6 @@ public sealed partial class NuSpeechBubble : BaseSpeechBubble
         if (_config.GetCVar(CCVars.ChatBubbleBackground))
         {
             LabelPanel.StyleClasses.Add("bubblePanel");
-            var backgroundColor = fontColor.Value.GetOneComplementary();
             LabelPanel.ModulateSelfOverride = fontColor.Value.WithAlpha(_config.GetCVar(CCVars.SpeechBubbleBackgroundOpacity));
         }
 

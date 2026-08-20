@@ -129,15 +129,17 @@ public sealed partial class ChatUIController : UIController
     ///     Speech bubbles that are currently visible on screen.
     ///     Rendering is handled in SpeechBubbleOverlay
     /// </summary>
-    public readonly Dictionary<EntityUid, List<NuSpeechBubble>> ActiveSpeechBubbles = new();
+    public readonly Dictionary<EntityUid, List<SpeechBubble>> ActiveSpeechBubbles = new();
 
     /// <summary>
     /// Speech bubble name tags currently visible on screen
+    /// These are the name tags that appear UNDER the stack of messages.
     /// </summary>
-    public readonly Dictionary<EntityUid, NuSpeechBubbleNameTag> ActiveSpeechBubbleNameTags = new();
+    public readonly Dictionary<EntityUid, SpeechBubbleNameTag> ActiveSpeechBubbleNameTags = new();
 
     /// <summary>
     /// Whether or not Name tags are enabled for speech bubbles
+    /// These appear underneath the stack of messages.
     /// </summary>
     public bool ChatBubbleNameTags;
 
@@ -463,7 +465,7 @@ public sealed partial class ChatUIController : UIController
         UpdateAutoFillHighlights();
     }
 
-    private void AddSpeechBubble(ChatMessage msg, NuSpeechBubble.SpeechType speechType)
+    private void AddSpeechBubble(ChatMessage msg, SpeechBubble.SpeechType speechType)
     {
         var ent = EntityManager.GetEntity(msg.SenderEntity);
 
@@ -480,6 +482,8 @@ public sealed partial class ChatUIController : UIController
     {
         var name = SharedChatSystem.GetStringInsideTag(speechData.Message, "Name");
         //TODO better way of this, probably put sender name in ChatMessage
+        //It gets color tags added to the message earlier so we have to remove markup again here to get the color
+        //gah dude it's so fucked
         name = FormattedMessage.RemoveMarkupPermissive(name);
 
         var nameColor = GetNameColor(name);
@@ -487,11 +491,11 @@ public sealed partial class ChatUIController : UIController
 
         if (!ActiveSpeechBubbles.TryGetValue(entity, out var existing))
         {
-            existing = new List<NuSpeechBubble>();
+            existing = new List<SpeechBubble>();
             ActiveSpeechBubbles.Add(entity, existing);
         }
 
-        var bubble = new NuSpeechBubble(speechData.Message, speechData.Type, name, entity, color);
+        var bubble = new SpeechBubble(speechData.Message, speechData.Type, name, entity, color);
         bubble.OnDied += NuSpeechBubbleDied;
 
         //emotes don't count, their name is already inline. same with dead chat
@@ -501,7 +505,7 @@ public sealed partial class ChatUIController : UIController
             //Add name tag if they are enabled
             if (ChatBubbleNameTags && !ActiveSpeechBubbleNameTags.ContainsKey(entity))
             {
-                var nameTag = new NuSpeechBubbleNameTag(entity, name, color);
+                var nameTag = new SpeechBubbleNameTag(entity, name, color);
                 ActiveSpeechBubbleNameTags.Add(entity, nameTag);
                 nameTag.OnDied += NuSpeechBubbleNameTagDied;
             }
@@ -536,7 +540,7 @@ public sealed partial class ChatUIController : UIController
         RemoveNuSpeechBubble(entity, bubble);
     }
 
-    private void EnqueueSpeechBubble(EntityUid entity, ChatMessage message, NuSpeechBubble.SpeechType speechType)
+    private void EnqueueSpeechBubble(EntityUid entity, ChatMessage message, SpeechBubble.SpeechType speechType)
     {
         // Don't enqueue speech bubbles for other maps. TODO: Support multiple viewports/maps?
         if (EntityManager.GetComponent<TransformComponent>(entity).MapID != _eye.CurrentEye.Position.MapId)
@@ -553,7 +557,7 @@ public sealed partial class ChatUIController : UIController
 
     public void RemoveNuSpeechBubble(EntityUid entityUid, BaseSpeechBubble bubble)
     {
-        var speechBubble = bubble as NuSpeechBubble;
+        var speechBubble = bubble as SpeechBubble;
         if (speechBubble is null)
             return;
 
@@ -735,7 +739,7 @@ public sealed partial class ChatUIController : UIController
         }
     }
 
-    private void SetBubbles(List<NuSpeechBubble> bubbles, bool visible)
+    private void SetBubbles(List<SpeechBubble> bubbles, bool visible)
     {
         foreach (var bubble in bubbles)
         {
@@ -939,11 +943,11 @@ public sealed partial class ChatUIController : UIController
         switch (msg.Channel)
         {
             case ChatChannel.Local:
-                AddSpeechBubble(msg, NuSpeechBubble.SpeechType.Say);
+                AddSpeechBubble(msg, SpeechBubble.SpeechType.Say);
                 break;
 
             case ChatChannel.Whisper:
-                AddSpeechBubble(msg, NuSpeechBubble.SpeechType.Whisper);
+                AddSpeechBubble(msg, SpeechBubble.SpeechType.Whisper);
                 break;
 
             case ChatChannel.Dead:
@@ -951,16 +955,16 @@ public sealed partial class ChatUIController : UIController
                     break;
 
                 if (_ghost.GhostVisibility)
-                    AddSpeechBubble(msg, NuSpeechBubble.SpeechType.Say);
+                    AddSpeechBubble(msg, SpeechBubble.SpeechType.Say);
                 break;
 
             case ChatChannel.Emotes:
-                AddSpeechBubble(msg, NuSpeechBubble.SpeechType.Emote);
+                AddSpeechBubble(msg, SpeechBubble.SpeechType.Emote);
                 break;
 
             case ChatChannel.LOOC:
                 if (_config.GetCVar(CCVars.LoocAboveHeadShow))
-                    AddSpeechBubble(msg, NuSpeechBubble.SpeechType.Looc);
+                    AddSpeechBubble(msg, SpeechBubble.SpeechType.Looc);
                 break;
         }
     }
@@ -1019,7 +1023,7 @@ public sealed partial class ChatUIController : UIController
         return _chatNameColors[colorIdx];
     }
 
-    private readonly record struct SpeechBubbleData(ChatMessage Message, NuSpeechBubble.SpeechType Type);
+    private readonly record struct SpeechBubbleData(ChatMessage Message, SpeechBubble.SpeechType Type);
 
     private sealed class SpeechBubbleQueueData
     {

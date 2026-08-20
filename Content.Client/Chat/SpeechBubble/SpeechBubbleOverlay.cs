@@ -12,7 +12,7 @@ namespace Content.Client.Chat.SpeechBubble;
 public sealed class ViewportBubbleOffset : IDisposable
 {
     //Offset achieved, used for lerping
-    public readonly Dictionary<NuSpeechBubble, float> Achieved = [];
+    public readonly Dictionary<SpeechBubble, float> Achieved = [];
 
     public void Dispose()
     {
@@ -22,7 +22,7 @@ public sealed class ViewportBubbleOffset : IDisposable
 
 public sealed class BubbleLayout
 {
-    public NuSpeechBubble Bubble = default!;
+    public SpeechBubble Bubble = default!;
 
     //I tried getting this to work with box2 but I couldn't figure it. idk do it yourself
     public float CenterX;
@@ -50,7 +50,7 @@ public sealed partial class SpeechBubbleOverlay : Overlay
 
     private readonly List<BubbleLayout> _layoutCache = [];
 
-    private readonly HashSet<NuSpeechBubble> _seenBubbles = [];
+    private readonly HashSet<SpeechBubble> _seenBubbles = [];
 
     private const float VerticalMargin = 2f;
 
