@@ -1,5 +1,5 @@
 using Content.Shared.Actions;
-using Content.Shared.Effects.Components;
+using Content.Shared.Effects.Systems;
 using Content.Shared.Gravity;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Movement.Components;
@@ -20,6 +20,7 @@ public abstract partial class SharedJetpackSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private ActionContainerSystem _actionContainer = default!;
+    [Dependency] private SharedParticleEmitterSystem _particleEmitter = default!;
 
     [Dependency] private EntityQuery<JetpackComponent> _jetpackQuery;
 
@@ -180,13 +181,8 @@ public abstract partial class SharedJetpackSystem : EntitySystem
             RemoveUser(user.Value, component);
             RemComp<ActiveJetpackComponent>(uid);
         }
-        if (HasComp<ParticleEmitterComponent>(uid))
-        {
-            if (enabled)
-                EnsureComp<ActiveParticleEmitterComponent>(uid);
-            else
-                RemComp<ActiveParticleEmitterComponent>(uid);
-        }
+
+        _particleEmitter.SetEnabled(uid, enabled);
 
         Appearance.SetData(uid, JetpackVisuals.Enabled, enabled);
         Dirty(uid, component);

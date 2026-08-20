@@ -1,10 +1,11 @@
 ﻿using Content.Shared.Effects.Components;
+using Content.Shared.Effects.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Effects;
 
-public sealed partial class ParticleEmitterSystem : EntitySystem
+public sealed partial class ParticleEmitterSystem : SharedParticleEmitterSystem
 {
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
