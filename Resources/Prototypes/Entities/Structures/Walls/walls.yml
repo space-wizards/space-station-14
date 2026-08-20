@@ -1206,7 +1206,7 @@
     key: cards
     states:
     - !type:CornerSpriteSmoothing
-      mask: [ walls, windows, grilles, marble, doors ]
+      mask: [ cards ]
       base: card
   - type: Occluder
   - type: BlockWeather
