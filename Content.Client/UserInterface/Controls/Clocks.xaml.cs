@@ -10,25 +10,25 @@ using Robust.Shared.Timing;
 namespace Content.Client.UserInterface.Controls;
 
 [GenerateTypedNameReferences]
-public sealed partial class Clocks : Control
+public sealed partial class Clock : Control
 {
     [Dependency] private IConfigurationManager _configurationManager = default!;
     [Dependency] private ClientsidePlaytimeTrackingManager _playtimeTracking = default!;
 
     private bool _format24 = true;
 
-    public Clocks()
+    public Clock()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
         TimeButton.OnPressed += _ => _format24 = !_format24;
-        _configurationManager.OnValueChanged(CCVars.ClocksEnabled, p => Visible = p);
+        _configurationManager.OnValueChanged(CCVars.ClockEnabled, p => Visible = p);
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
     {
-        if (!_configurationManager.GetCVar(CCVars.ClocksEnabled))
+        if (!_configurationManager.GetCVar(CCVars.ClockEnabled))
         {
             Visible = false;
             return;
@@ -36,12 +36,12 @@ public sealed partial class Clocks : Control
         Visible = true;
 
         var minutesToday = _playtimeTracking.PlaytimeMinutesToday;
-        var msg = Loc.GetString("clocks-playtime-minutes", ("minutes", (int)minutesToday));
+        var msg = Loc.GetString("clock-playtime-minutes", ("minutes", (int)minutesToday));
 
         if (minutesToday >= 60)
         {
             var hoursToday = Math.Round(minutesToday / 60f, 1);
-            msg = Loc.GetString("clocks-playtime-hours", ("hours", hoursToday));
+            msg = Loc.GetString("clock-playtime-hours", ("hours", hoursToday));
         }
 
         var format = "h:mm tt";

@@ -53,7 +53,7 @@ public sealed partial class MiscTab : Control
         Control.AddOptionCheckBox(CCVars.ChatFancyNameBackground, FancyNameBackgroundsCheckBox);
         Control.AddOptionCheckBox(CCVars.StaticStorageUI, StaticStorageUI);
         Control.AddOptionCheckBox(CCVars.InterfaceChatFollowButton, ChatFollowButton);
-        Control.AddOptionCheckBox(CCVars.ClocksEnabled, ClocksCheckBox);
+        Control.AddOptionCheckBox(CCVars.ClockEnabled, ClockCheckBox);
 
         Control.Initialize();
     }

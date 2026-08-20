@@ -23,10 +23,10 @@ public sealed partial class CCVars
         CVarDef.Create("ui.layout", "Default", CVar.CLIENTONLY | CVar.ARCHIVE);
 
     /// <summary>
-    /// When true enables clocks at the corner of the game.
+    /// When true enables clock at the corner of the screen.
     /// </summary>
-    public static readonly CVarDef<bool> ClocksEnabled =
-        CVarDef.Create("ui.clocks.enabled", false, CVar.CLIENTONLY | CVar.ARCHIVE);
+    public static readonly CVarDef<bool> ClockEnabled =
+        CVarDef.Create("ui.clock.enabled", false, CVar.CLIENTONLY | CVar.ARCHIVE);
 
     /// <summary>
     /// The dimensions for the chat window in Default UI mode
