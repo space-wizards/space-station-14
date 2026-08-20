@@ -6,6 +6,9 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Doors;
 
+// TODO: Consolidate redundant code from the AirlockSystem.
+
+/// <inheritdoc/>
 public sealed partial class FirelockSystem : SharedFirelockSystem
 {
     [Dependency] private SharedAppearanceSystem _appearanceSystem = default!;
@@ -17,6 +20,7 @@ public sealed partial class FirelockSystem : SharedFirelockSystem
         SubscribeLocalEvent<FirelockComponent, AppearanceChangeEvent>(OnAppearanceChange);
     }
 
+    /// <inheritdoc/>
     protected override void OnComponentStartup(Entity<FirelockComponent> ent, ref ComponentStartup args)
     {
         base.OnComponentStartup(ent, ref args);
