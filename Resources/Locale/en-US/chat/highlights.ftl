@@ -32,7 +32,7 @@ highlights-paramedic = Paramedic, "Para", "Medic", Medbay, Medical, "Med"
 highlights-scientist = Scientist, Science, "Sci", "RND", "R&D"
 highlights-researchassistant = Research Assistant, Science, "Sci", "RND", "R&D"
 
-# Civilian
+# Service
 highlights-bartender = Bartender, Barkeeper, Barkeep, "Bar", Service, "Serv"
 highlights-botanist = Botanist, Botany, Hydroponics, Service, "Serv"
 highlights-chaplain = Chaplain, "Chap", Chapel, Service, "Serv"
