@@ -20,6 +20,7 @@ using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Rejuvenate;
 using Content.Shared.StatusEffectNew;
+using Content.Shared.Tag;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
@@ -41,6 +42,9 @@ public sealed partial class BloodstreamSystem : EntitySystem
     [Dependency] private MobStateSystem _mobStateSystem = default!;
     [Dependency] private DamageableSystem _damageableSystem = default!;
     [Dependency] private MetabolizerSystem _metabolizer = default!;
+    [Dependency] private TagSystem _tagSystem = default!;
+
+    private static readonly ProtoId<TagPrototype> CannotRegainBlood = "CannotRegainBlood";
 
     public override void Update(float frameTime)
     {
@@ -408,6 +412,10 @@ public sealed partial class BloodstreamSystem : EntitySystem
     public bool TryModifyBloodLevel(Entity<BloodstreamComponent?> ent, FixedPoint2 amount)
     {
         var reference = 1f;
+        if(_tagSystem.HasTag(ent, CannotRegainBlood) && amount > 0)
+        {
+            return false;
+        }
 
         if (amount < 0)
         {
@@ -600,6 +608,23 @@ public sealed partial class BloodstreamSystem : EntitySystem
         var solution = ent.Comp.BloodReferenceSolution.Clone();
         solution.ScaleSolution(currentVolume / solution.Volume);
         _solutionContainer.AddSolution(ent.Comp.BloodSolution.Value, solution);
+    }
+
+    /// <summary>
+    /// Change how much blood is recovered in a bloodstream.
+    /// </summary>
+    public void ChangeBloodRefreshAmount(Entity<BloodstreamComponent?> ent, FixedPoint2 amount)
+    {
+        if(!Resolve(ent, ref ent.Comp, logMissing: false))
+        {
+            return;
+        }
+        if(amount < 0f)
+        {
+            amount = 0f;
+        }
+        ent.Comp.BloodRefreshAmount = amount;
+        DirtyField(ent, ent.Comp, nameof(BloodstreamComponent.BloodRefreshAmount));
     }
 
     /// <summary>

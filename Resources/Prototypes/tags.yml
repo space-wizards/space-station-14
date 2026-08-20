@@ -224,6 +224,9 @@
   id: CannonBall # Ammo: WeaponLauncherPirateCannon, ShuttleGunPirateCannon
 
 - type: Tag
+  id: CannotRegainBlood # Used by BloodlossSystem to block regaining blood, used by Zombies.
+
+- type: Tag
   id: CannotSuicide # Used by SuicideSystem. Tagged entities ghost when attempting to suicide.
 
 - type: Tag

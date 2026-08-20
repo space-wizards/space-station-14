@@ -74,6 +74,7 @@ public sealed partial class ZombieSystem
 
     private static readonly ProtoId<TagPrototype> InvalidForGlobalSpawnSpellTag = "InvalidForGlobalSpawnSpell";
     private static readonly ProtoId<TagPrototype> CannotSuicideTag = "CannotSuicide";
+    private static readonly ProtoId<TagPrototype> CannotRegainBlood = "CannotRegainBlood";
     private static readonly ProtoId<NpcFactionPrototype> ZombieFaction = "Zombie";
     private static readonly string MindRoleZombie = "MindRoleZombie";
     private static readonly List<ProtoId<AntagPrototype>> BannableZombiePrototypes = ["Zombie"];
@@ -189,7 +190,11 @@ public sealed partial class ZombieSystem
         }
 
         if (TryComp<BloodstreamComponent>(target, out var stream) && stream.BloodReferenceSolution is { } reagents)
+        {
             zombiecomp.BeforeZombifiedBloodReagents = reagents.Clone();
+            // Store the blood refresh amount for cloning later.
+            zombiecomp.BeforeZombifiedBloodRefresh = stream.BloodRefreshAmount;
+        }
 
         if (_visualBody.TryGatherMarkingsData(target, null, out var profiles, out _, out var markings))
         {
@@ -253,6 +258,8 @@ public sealed partial class ZombieSystem
         _bloodstream.SetBloodLossThreshold(target, 0f);
         //Give them zombie blood
         _bloodstream.ChangeBloodReagents(target, zombiecomp.NewBloodReagents);
+        //Stop their blood from automatically regenerating
+        _bloodstream.ChangeBloodRefreshAmount(target, 0f);
 
         //This is specifically here to combat insuls, because frying zombies on grilles is funny as shit.
         _inventory.TryUnequip(target, "gloves", true, true);
@@ -336,5 +343,7 @@ public sealed partial class ZombieSystem
         // Also prevents them from becoming a Survivor. They're undead.
         _tag.AddTag(target, InvalidForGlobalSpawnSpellTag);
         _tag.AddTag(target, CannotSuicideTag);
+        // Also, stop them from regaining blood.
+        _tag.AddTag(target, CannotRegainBlood);
     }
 }
