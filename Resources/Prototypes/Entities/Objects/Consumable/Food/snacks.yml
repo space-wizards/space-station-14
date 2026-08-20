@@ -856,7 +856,7 @@
   categories: [ HideSpawnMenu ]
   parent: FoodPacketTrash
   id: FoodPacketMothTrash
-  name: moth jerky
+  name: cot'n strips
   components:
   - type: Sprite
     state: mothjerky-trash
@@ -873,7 +873,7 @@
   categories: [ HideSpawnMenu ]
   parent: FoodPacketTrash
   id: FoodPacketMothSpheresTrash
-  name: moth spheres
+  name: mothSpheres
   components:
   - type: Sprite
     state: mothsphere-trash
@@ -890,7 +890,7 @@
   categories: [ HideSpawnMenu ]
   parent: FoodPacketTrash
   id: FoodPacketPuffTrash
-  name: Cot'n Puffs
+  name: cot'n puffs
   components:
   - type: Sprite
     state: mothpuffs-trash
