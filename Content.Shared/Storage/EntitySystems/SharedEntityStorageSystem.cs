@@ -35,7 +35,6 @@ public abstract partial class SharedEntityStorageSystem : EntitySystem
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private SharedInteractionSystem _interaction = default!;
     [Dependency] private SharedJointSystem _joints = default!;
-    [Dependency] private SharedMapSystem _map = default!;
     [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] protected SharedPopupSystem Popup = default!;
     [Dependency] protected SharedTransformSystem TransformSystem = default!;
