@@ -21,10 +21,9 @@
   - type: Anchorable
     flags:
     - Anchorable
-  - type: Rotatable
   - type: Sprite
     drawdepth: Walls
-    sprite: Structures/Walls/grille-new.rsi
+    sprite: Structures/Walls/grille.rsi
     layers:
     - state: electrified
       sprite: Effects/electricity.rsi
@@ -32,7 +31,7 @@
       shader: unshaded
       visible: false
   - type: Icon
-    sprite: Structures/Walls/grille-new.rsi
+    sprite: Structures/Walls/grille.rsi
     state: full
   - type: PlacementReplacement
     key: grilles
@@ -153,10 +152,10 @@
   components:
   - type: Sprite
     drawdepth: Walls
-    sprite: Structures/Walls/grille-new.rsi
+    sprite: Structures/Walls/grille.rsi
     state: broken
   - type: Icon
-    sprite: Structures/Walls/grille-new.rsi
+    sprite: Structures/Walls/grille.rsi
     state: broken
   - type: RCDDeconstructable
     cost: 6

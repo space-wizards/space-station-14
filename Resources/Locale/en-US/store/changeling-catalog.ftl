@@ -11,7 +11,7 @@ changeling-catalog-biodegrade-name = Biodegrade
 changeling-catalog-biodegrade-desc = You learn to utilize acid glands within your body to vomit acid over constraints, setting yourself free.
 
 changeling-catalog-sting-dna-name = Extract DNA
-changeling-catalog-sting-dna-desc = Learn to utilize your stinger to absorb the identity of unsuspecting victims. Does not grant DNA to your store or objective progress.
+changeling-catalog-sting-dna-desc = Learn to utilize your stinger to absorb the identity of unsuspecting victims. Does not grant DNA to your store or count as devouring.
 
 changeling-catalog-blind-sting-name = Blind Sting
 changeling-catalog-blind-sting-desc = Causes temporary blindness in the target. Good to escape or initiate a fight. Can be used on self.
@@ -29,7 +29,7 @@ changeling-catalog-screech-name = Screech [TEMPORARY]
 changeling-catalog-screech-desc = We let out a powerful screech that disarms people who hear it without adequate ear protection. THIS ACTION WILL BE MOVED TO THE HORROR FORM WHEN IT IS IMPLEMENTED.
 
 changeling-catalog-last-resort-name = Last Resort
-changeling-catalog-last-resort-desc = Gib your current body and escape as a weak head slug. If you infest a humanoid corpse, you can return to a full changeling body.
+changeling-catalog-last-resort-desc = Gib your current body and escape as a weak head slug. If you infest a humanoid corpse, you can return to a full changeling body. Can only be bought when at least one body has been devoured.
 
                                       Warning! This resets your progress as a changeling, removing your store purchases and absorbed identities!
 
