@@ -96,6 +96,8 @@
     useDelay: 2
     checkCanInteract: false # You can heal even if you are killed
     checkConsciousness: false
+  - type: ConfirmableAction
+    popup: suicide-regen-action-popup
   - type: RegenerativeStasisAction
     bonusCooldownPerDamage: 0.675 # Bonus 135s (total 180s) at 200 damage
     minStasisCooldown: 45
