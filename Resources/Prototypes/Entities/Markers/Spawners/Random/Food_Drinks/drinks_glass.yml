@@ -132,7 +132,6 @@
         - id: DrinkAtomicBombGlass
         - id: DrinkDemonsBlood
         - id: DrinkDoctorsDelightGlass
-        - id: DrinkNeurotoxinGlass
         - id: DrinkNuclearColaGlass
         - id: DrinkSilencerGlass
         - id: DrinkShakeMeat

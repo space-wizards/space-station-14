@@ -156,7 +156,7 @@ namespace Content.Shared.Friction
                 return tileModifier;
 
             // Check for anchored ents that modify friction
-            var anc = _map.GetAnchoredEntitiesEnumerator(xform.GridUid.Value, grid, tile.GridIndices);
+            var anc = _map.GetAnchoredEntities(xform.GridUid.Value, grid, tile.GridIndices);
             while (anc.MoveNext(out var tileEnt))
             {
                 if (_frictionQuery.TryGetComponent(tileEnt, out var friction))

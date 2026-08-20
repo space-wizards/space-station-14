@@ -13,6 +13,7 @@
   - type: RevolutionaryImmune
   - type: ZombieImmune
   - type: ActionGrant
+    removeOnShutdown: false
     actions:
     - ActionChangelingStore
     - ActionChangelingStasis
@@ -21,7 +22,12 @@
       ChangelingDNA: 60
 
 - type: entity
-  parent: [ SimpleSpaceMobBase, MobNightVision, BaseMobDestructible ]
+  parent:
+  - MobRespirator
+  - MobAtmosStandard
+  - SimpleSpaceMobBase
+  - MobNightVision
+  - BaseMobDestructible
   id: MobHeadSlug
   name: headslug
   description: A small, slug-like creature with a large, gaping maw. It's covered in a thick, slimy mucus.
@@ -47,12 +53,33 @@
     states:
       Alive:
         Base: slug
+      Critical:
+        Base: slug_dead
       Dead:
         Base: slug_dead
+  - type: Deathgasp
+  - type: MobStateActions
+    actions:
+      Critical:
+      - ActionCritSuccumb
+      - ActionCritFakeDeath
+      - ActionCritLastWords
   - type: MobThresholds
     thresholds:
       0: Alive
+      25: Critical
       50: Dead
+  - type: Respirator
+    damage:
+      types:
+        Asphyxiation: 0.25
+    damageRecovery:
+      types:
+        Asphyxiation: -0.25
+  - type: Barotrauma
+    damage:
+      types:
+        Blunt: 0.1
   - type: MovementSpeedModifier # Slightly faster than regular mobs
     baseWalkSpeed: 3
     baseSprintSpeed: 5
@@ -63,6 +90,11 @@
         Blunt: 5
         Structural: 15 # to destroy lockers in which bodies could be hidden
   - type: ChangelingSlug
+  - type: ActionGrant
+    actions:
+    - ActionChangelingStasisWeak
+  - type: ReplacementAccent
+    accent: genericAggressive
   - type: Tag # Removes DoorBumpOpener
     tags:
       []

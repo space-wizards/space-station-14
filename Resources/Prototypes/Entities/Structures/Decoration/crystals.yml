@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: BaseStructure
+  parent: [ BaseStructure, StructureHealthFurnitureWeak ]
   id: BaseCrystalStalagmite
   name: crystal
   description: A crystaline solid.
@@ -36,20 +36,16 @@
     radius: 3
     energy: 3
   - type: Damageable
-    damageModifierSet: Glass
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: GlassMod
   - type: Destructible
     thresholds:
-    - trigger: &DamageTrigger20
+    - trigger: &DamageFurnitureWeak
         !type:DamageTrigger
-        damage: 20
+        damage: 5
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           collection: GlassBreak
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
 
 - type: entity
   parent: BaseCrystalStalagmite
@@ -62,7 +58,7 @@
     color: "#52ff39"
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger20
+    - trigger: *DamageFurnitureWeak
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -81,7 +77,7 @@
     color: "#ff66cc"
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger20
+    - trigger: *DamageFurnitureWeak
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -98,7 +94,7 @@
     color: "#fb4747"
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger20
+    - trigger: *DamageFurnitureWeak
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -115,7 +111,7 @@
     color: "#ff8227"
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger20
+    - trigger: *DamageFurnitureWeak
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -132,7 +128,7 @@
       color: "#363636"
     - type: Destructible
       thresholds:
-      - trigger: *DamageTrigger20
+      - trigger: *DamageFurnitureWeak
         behaviors:
         - !type:SpawnEntitiesBehavior
           spawn:
@@ -149,7 +145,7 @@
     color: "#39a1ff"
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger20
+    - trigger: *DamageFurnitureWeak
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -166,7 +162,7 @@
     color: "#ffde46"
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger20
+    - trigger: *DamageFurnitureWeak
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -183,7 +179,7 @@
     color: "#47f8ff"
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger20
+    - trigger: *DamageFurnitureWeak
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
