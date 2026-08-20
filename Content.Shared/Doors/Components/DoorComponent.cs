@@ -14,7 +14,7 @@ namespace Content.Shared.Doors.Components;
 
 /// <summary>
 /// A component for doors, airlocks, etc.
-///
+/// Stores animation data and
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 public sealed partial class DoorComponent : Component
@@ -58,7 +58,7 @@ public sealed partial class DoorComponent : Component
     public TimeSpan OpenTimeTwo = TimeSpan.FromSeconds(0.2f);
 
     /// <summary>
-    ///     Interval between deny sounds & visuals;
+    /// Interval between deny sounds & visuals;
     /// </summary>
     [DataField]
     public TimeSpan DenyDuration = TimeSpan.FromSeconds(0.45f);
@@ -67,14 +67,14 @@ public sealed partial class DoorComponent : Component
     public TimeSpan EmagDuration = TimeSpan.FromSeconds(0.8f);
 
     /// <summary>
-    ///     When the door is active, this is the time when the state will next update.
+    /// When the door is active, this is the time when the state will next update.
     /// </summary>
     [AutoNetworkedField, ViewVariables]
     public TimeSpan? NextStateChange;
 
     /// <summary>
-    ///     Whether the door is currently partially closed or open. I.e., when the door is "closing" and is already opaque,
-    ///     but not yet actually closed.
+    /// Whether the door is currently partially closed or open. I.e., when the door is "closing" and is already opaque,
+    /// but not yet actually closed.
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool Partial;
@@ -108,8 +108,8 @@ public sealed partial class DoorComponent : Component
 
     #region Crushing
     /// <summary>
-    ///     This is how long a door-crush will stun you. This also determines how long it takes the door to open up
-    ///     again. Total stun time is actually given by this plus <see cref="OpenTimeOne"/>.
+    /// This is how long a door-crush will stun you. This also determines how long it takes the door to open up
+    /// again. Total stun time is actually given by this plus <see cref="OpenTimeOne"/>.
     /// </summary>
     [DataField]
     public TimeSpan DoorStunTime = TimeSpan.FromSeconds(2f);
@@ -140,41 +140,48 @@ public sealed partial class DoorComponent : Component
 
     #region Graphics
 
-
+    /// <summary>
+    /// The animation key used when the door is opening.
+    /// </summary>
     public const string OpenKey = "door_animation_open";
 
+    /// <summary>
+    /// The animation key used when the door is closing.
+    /// </summary>
     public const string CloseKey = "door_animation_close";
 
     /// <summary>
-    /// The key used when playing door deny animations.
+    /// The animation key used when the door has denied someone access.
     /// </summary>
     public const string DenyKey = "door_animation_deny";
 
     /// <summary>
-    /// The key used when playing door emag animations.
+    /// The animation key used when the door has been emagged.
     /// </summary>
     public const string EmagKey = "door_animation_emag";
 
     /// <summary>
-    /// The sprite state used for the door when it's open.
+    /// The sprite state used for the door's base layer when it's open.
     /// </summary>
     [DataField]
     public string? OpenSpriteState = "open";
 
     /// <summary>
-    /// The sprite states used for the door while it's open.
+    /// The map of keyed sprite states used for the door while it's open.
+    /// When the door finishes opening, any mapped layer contained will be updated.
     /// </summary>
     [ViewVariables]
     public List<(Enum, string?)> OpenSpriteStates = default!;
 
     /// <summary>
-    /// The sprite state used for the door when it's closed.
+    /// The sprite state used for the door's base layer when it's closed.
     /// </summary>
     [DataField]
     public string? ClosedSpriteState = "closed";
 
     /// <summary>
-    /// The sprite states used for the door while it's closed.
+    /// The map of keyed sprite states used for the door while it's closed.
+    /// When the door finishes closing, any mapped layer contained will be updated.
     /// </summary>
     [ViewVariables]
     public List<(Enum, string?)> ClosedSpriteStates = default!;
@@ -239,7 +246,7 @@ public sealed partial class DoorComponent : Component
 
     #region Serialization
     /// <summary>
-    ///     Time until next state change. Because apparently <see cref="IGameTiming.CurTime"/> might not get saved/restored.
+    /// Time until next state change. Because apparently <see cref="IGameTiming.CurTime"/> might not get saved/restored.
     /// </summary>
     [DataField]
     private float? SecondsUntilStateChange
@@ -266,9 +273,15 @@ public sealed partial class DoorComponent : Component
     }
     #endregion
 
+    /// <summary>
+    /// Whether or not the door can be pried open with a tool.
+    /// </summary>
     [DataField]
     public bool CanPry = true;
 
+    /// <summary>
+    /// The quality of the tool needed to pry the door open.
+    /// </summary>
     [DataField]
     public ProtoId<ToolQualityPrototype> PryingQuality = "Prying";
 
@@ -278,6 +291,9 @@ public sealed partial class DoorComponent : Component
     [DataField]
     public TimeSpan PryTime = TimeSpan.FromSeconds(1.5f);
 
+    /// <summary>
+    /// If true, the door toggles airtight status when opening or closing.
+    /// </summary>
     [DataField]
     public bool ChangeAirtight = true;
 
@@ -313,9 +329,15 @@ public sealed partial class DoorComponent : Component
     [DataField]
     public bool AllowMachineLayer;
 
+    /// <summary>
+    /// The draw depth of the door when it is open.
+    /// </summary>
     [DataField(customTypeSerializer: typeof(ConstantSerializer<DrawDepthTag>))]
     public int OpenDrawDepth = (int)DrawDepth.DrawDepth.Doors;
 
+    /// <summary>
+    /// The draw depth of the door when it is closed.
+    /// </summary>
     [DataField(customTypeSerializer: typeof(ConstantSerializer<DrawDepthTag>))]
     public int ClosedDrawDepth = (int)DrawDepth.DrawDepth.Doors;
 }
