@@ -57,6 +57,12 @@
           - !type:MaxRuleOccurenceCondition
           - !type:PlayerCountCondition
             min: 30
+        - id: Changeling
+          prob: 0.25
+          conditions:
+          - !type:HasBudgetCondition
+          - !type:MaxRuleOccurenceCondition
+
       # Midround rules
       - !type:GroupSelector
         conditions:
