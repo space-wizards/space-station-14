@@ -4,6 +4,7 @@ using Robust.Client.GameObjects;
 using Robust.Shared.Collections;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Map.Enumerators;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Client.IconSmoothing;
@@ -19,6 +20,7 @@ namespace Content.Client.IconSmoothing;
 /// </remarks>
 public sealed partial class IconSmoothSystem : EntitySystem
 {
+    [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedMapSystem _map = default!;
     [Dependency] private SpriteSystem _sprite = default!;
 
@@ -135,8 +137,10 @@ public sealed partial class IconSmoothSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnAnchorChanged(Entity<IconSmoothComponent> entity, ref AnchorStateChangedEvent args)
     {
-        if (entity.Comp.Enabled)
-            UpdateTile((entity, entity.Comp, args.Transform), entity.Comp.Key);
+        if (_timing.ApplyingState || !entity.Comp.Enabled)
+            return;
+
+        UpdateTile((entity, entity.Comp, args.Transform), entity.Comp.Key);
     }
 
     [SubscribeLocalEvent]
