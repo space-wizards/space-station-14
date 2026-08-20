@@ -36,7 +36,18 @@
       visible: false
       map: ["enum.LockVisualLayers.Lock"]
   - type: Emitter
-    alertRadio: true
+  - type: PowerState
+    idlePowerDraw: 5
+    workingPowerDraw: 600
+    ensureApc: false
+  - type: NotifyOnNonFunctioning
+    locDestroyed: emitter-destroyed-broadcast
+    locUnlocked: emitter-unlocked-broadcast
+    locUnpowered: emitter-unpowered-broadcast
+    locUnanchored: emitter-unpowered-broadcast
+    locTurnedOff: emitter-turn-off-broadcast
+    radioChannel: Engineering
+    requirePowered: true
   - type: Gun
     showExamineText: false
     fireRate: 10 #just has to be fast enough to keep up with upgrades
@@ -47,6 +58,7 @@
       path: /Audio/Weapons/emitter.ogg
   - type: PowerConsumer
     voltage: Medium
+    drawRate: 5
   - type: NodeContainer
     examinable: true
     nodes:
