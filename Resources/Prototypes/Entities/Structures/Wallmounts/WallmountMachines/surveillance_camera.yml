@@ -1,8 +1,13 @@
 - type: entity
   abstract: true
+  parent: StructureHealthMachineFlimsy
   id: SurveillanceCameraBase
   name: camera
   description: A surveillance camera. It's watching you. Kinda.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount
   components:
   - type: Physics
     bodyType: Static
@@ -52,17 +57,13 @@
   - type: Wires
     alwaysRandomize: true
     layoutId: SurveillanceCamera
-  - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
-    damageContainer: StructuralInorganic
   - type: Sprite
     drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/camera.rsi
+    offset: 0, -0.5
     layers:
       - map: [ "enum.SurveillanceCameraVisualsKey.Layer" ]
         state: camera
-        cycle: true
   - type: Appearance
   - type: SurveillanceCameraVisuals
     sprites:
@@ -77,29 +78,24 @@
         type: WiresBoundUserInterface
   - type: StaticPrice
     price: 200
+  - type: Damageable
+    damageModifierSet: SteelMod
   - type: Destructible
-    thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 200
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-      - trigger:
-          !type:DamageTrigger
-          damage: 100
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-          - !type:PlaySoundBehavior
-            sound:
-              collection: MetalBreak
-              params:
-                volume: -8
-  placement:
-    mode: SnapgridCenter
-    snap:
-      - Wallmount
+    thresholds: &ThresholdsSurveilCamera
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+          params:
+            volume: -8
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 0
+            max: 1
 
 - type: entity
   parent: SurveillanceCameraBase
@@ -226,9 +222,14 @@
     networkSet: true
 
 - type: entity
+  parent: StructureHealthMachineFlimsy
   id: SurveillanceCameraAssembly
   name: camera
   description: A surveillance camera. Doesn't seem to be watching anybody any time soon. Probably.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount
   components:
     - type: Clickable
     - type: InteractionOutline
@@ -239,15 +240,11 @@
     - type: Transform
       anchored: true
     - type: Damageable
-      damageModifierSet: Metallic
-    - type: Injurable
-      damageContainer: StructuralInorganic
+      damageModifierSet: SteelMod
+    - type: Destructible
+      thresholds: *ThresholdsSurveilCamera
     - type: Sprite
       drawdepth: WallMountedItems
       sprite: Structures/Wallmounts/camera.rsi
       layers:
         - state: camera_off
-  placement:
-    mode: SnapgridCenter
-    snap:
-      - Wallmount

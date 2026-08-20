@@ -1,28 +1,20 @@
 - type: entity
+  parent: [BaseDeltaPressureReinforcedPlasma, BaseWindowStructure, BaseRCDResistant, StructureHealthBarrierStrong]
   id: ReinforcedUraniumWindow
   name: reinforced uranium window
-  parent: [BaseDeltaPressureReinforcedPlasma, WindowRCDResistant]
   components:
   - type: Sprite
-    drawdepth: WallTops
-    sprite: Structures/Windows/reinforced_uranium_window.rsi
+    sprite: Structures/Windows/window-uranium-reinf.rsi
   - type: Icon
-    sprite: Structures/Windows/reinforced_uranium_window.rsi
+    sprite: Structures/Windows/window-uranium-reinf.rsi
+    state: full
   - type: Damageable
-    damageModifierSet: RGlass
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: GlassReinforcedMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 450
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 225
+        damage: 120
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -35,8 +27,6 @@
           PartRodMetal:
             min: 1
             max: 2
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: IconSmooth
     base: ruwindow
   - type: Construction
@@ -55,14 +45,9 @@
     resistance: 5
 
 - type: entity
+  parent: [BaseDeltaPressureReinforcedPlasmaQuarter, BaseWindowStructureDirectional, BaseRCDResistant, StructureHealthBarrier]
   id: UraniumReinforcedWindowDirectional
-  parent: [BaseDeltaPressureReinforcedPlasmaQuarter, WindowDirectionalRCDResistant]
   name: directional reinforced uranium window
-  description: Don't smudge up the glass down there.
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Window
   components:
   - type: Sprite
     sprite: Structures/Windows/directional.rsi
@@ -81,18 +66,12 @@
     damageOverlay:
       sprite: Structures/Windows/cracks_directional.rsi
   - type: Damageable
-    damageModifierSet: RGlass
+    damageModifierSet: GlassReinforcedMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 225
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 113
+        damage: 80
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -105,12 +84,41 @@
           PartRodMetal:
             min: 1
             max: 2
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: StaticPrice
     price: 110
   - type: RadiationBlocker
     resistance: 2.5
+
+- type: entity
+  parent: UraniumReinforcedWindowDirectional
+  id: UraniumReinforcedWindowDirectionalCorner
+  suffix: Corner
+  components:
+  - type: Sprite
+    sprite: Structures/Windows/directional.rsi
+    state: uranium_reinforced_window_corner
+  - type: Icon
+    sprite: Structures/Windows/directional.rsi
+    state: uranium_reinforced_window_corner
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,-0.28125,-0.28125"
+        density: 1500
+        mask:
+        - FullTileMask
+        layer:
+        - GlassLayer
+  - type: Construction
+    graph: WindowDirectionalCorner
+    node: uraniumReinforcedWindowDirectionalCorner
+  - type: DamageVisuals
+    thresholds: [5, 10, 20]
+    trackAllDamage: true
+    damageOverlay:
+      sprite: Structures/Windows/cracks_directional_corner.rsi
 
 - type: entity
   parent: ReinforcedUraniumWindow
@@ -123,7 +131,7 @@
   components:
   - type: Sprite
     drawdepth: WallTops
-    sprite: Structures/Windows/reinforced_uranium_diagonal.rsi
+    sprite: Structures/Windows/window-diagonal-uranium-reinf.rsi
     state: state0
   - type: Tag
     tags:
@@ -131,10 +139,10 @@
     - Window
   - type: IconSmooth
     mode: Diagonal
-    key: windows
+    key: walls
     base: state
   - type: Icon
-    sprite: Structures/Windows/reinforced_uranium_diagonal.rsi
+    sprite: Structures/Windows/window-diagonal-uranium-reinf.rsi
     state: state0
   - type: Fixtures
     fixtures:
@@ -156,7 +164,7 @@
     - East
   - type: DamageVisuals
     damageOverlay:
-      sprite: Structures/Windows/cracks_diagonal.rsi
+      sprite: Structures/Windows/cracks-diagonal.rsi
   - type: Construction
     graph: WindowDiagonal
     node: reinforcedUraniumWindowDiagonal

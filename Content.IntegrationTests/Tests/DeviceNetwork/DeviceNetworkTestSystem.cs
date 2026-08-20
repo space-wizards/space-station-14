@@ -7,7 +7,7 @@ using Content.Shared.DeviceNetwork.Components;
 namespace Content.IntegrationTests.Tests.DeviceNetwork;
 
 [Reflect(false)]
-public sealed class DeviceNetworkTestSystem : EntitySystem
+public sealed partial class DeviceNetworkTestSystem : EntitySystem
 {
     public NetworkPayload LastPayload = default;
 
