@@ -315,6 +315,49 @@
     },
     {
       "name": "fortune"
+    },
+    {
+      "name": "mothjerky"
+    },
+    {
+      "name": "mothjerky-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "mothjerky-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "mothjerky-trash"
+    },
+    {
+      "name": "mothsphere"
+    },
+    {
+      "name": "mothsphere-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "mothsphere-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "mothsphere-trash"
+    },
+    {
+      "name": "mothpuffs"
+    },
+    {
+      "name": "mothpuffs-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "mothpuffs-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "mothpuffs-trash"
     }
+    
   ]
 }

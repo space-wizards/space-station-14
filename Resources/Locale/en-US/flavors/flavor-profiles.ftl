@@ -74,6 +74,8 @@ flavor-complex-mustard = like mustard
 flavor-complex-nutriment = like nutrition
 flavor-complex-vitamin = like vitamins
 flavor-complex-protein = like protein
+flavor-complex-chemicals = like chemicals
+flavor-complex-imitation = like imitation
 
 ## Generic food taste. This should be replaced with an actual flavor profile,
 ## if you have food that looks like this.

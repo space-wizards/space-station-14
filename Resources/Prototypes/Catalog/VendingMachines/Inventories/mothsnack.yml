@@ -1,0 +1,11 @@
+- type: vendingMachineInventory
+  id: MothSnackInventory
+  startingInventory:
+    FoodBoxCloth: 2 #moth food
+    FoodSnackMothSpheres: 3 #moth food
+    FoodSnackCottonPuffs: 3 #moth food
+    FoodSnackMothJerky: 3 #moth food
+    FoodBoxDonkpocketMoth: 3 #moth food
+  contrabandInventory:
+    FoodSnackSwirlLollipop: 2
+    FoodSnackSyndi: 3

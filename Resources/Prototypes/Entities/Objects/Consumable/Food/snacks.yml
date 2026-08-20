@@ -284,6 +284,71 @@
     - Meat
 
 - type: entity
+  name: cotton strips
+  parent: FoodSnackBase
+  id: FoodSnackMothJerky
+  description: Immitation cotton jerky? How does that work? Oh well, you're too busy moffing about to care.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - imitation
+      - cotton
+  - type: Sprite
+    state: mothjerky
+  - type: Item
+    heldPrefix: mothjerky
+  - type: Edible
+    requiresSpecialDigestion: true
+    trash:
+    - FoodPacketMothTrash
+  - type: Tag
+    tags:
+    - ClothMade
+
+- type: entity
+  name: Mothspheres
+  parent: FoodSnackBase
+  id: FoodSnackMothSpheres
+  description: It's full of chemicals! Er, are you sure you want to eat these?
+  components:
+  - type: FlavorProfile
+    flavors:
+      - chemicals
+      - cotton
+  - type: Sprite
+    state: mothsphere
+  - type: Item
+    heldPrefix: mothsphere
+  - type: Edible
+    requiresSpecialDigestion: true
+    trash:
+    - FoodPacketMothSpheresTrash
+  - type: Tag
+    tags:
+    - ClothMade
+
+- type: entity
+  name: Cot'n Puffs
+  parent: FoodSnackBase
+  id: FoodSnackCottonPuffs
+  description: Straight up cotton balls, not even any flavoring. You can probably use these to clean your ears.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - cotton
+  - type: Sprite
+    state: mothpuffs
+  - type: Item
+    heldPrefix: mothpuffs
+  - type: Edible
+    requiresSpecialDigestion: true
+    trash:
+    - FoodPacketPuffTrash
+  - type: Tag
+    tags:
+    - ClothMade
+
+- type: entity
   name: syndi-cakes
   parent: FoodSnackBase
   id: FoodSnackSyndi
@@ -763,6 +828,58 @@
       right:
       - state: trash-inhand-right
         color: "#990033"
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: FoodPacketTrash
+  id: FoodPacketMothTrash
+  name: moth jerky
+  components:
+  - type: Sprite
+    state: mothjerky-trash
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: trash-inhand-left
+        color: "#ca8a34"
+      right:
+      - state: trash-inhand-right
+        color: "#ca8a34"
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: FoodPacketTrash
+  id: FoodPacketMothSpheresTrash
+  name: moth spheres
+  components:
+  - type: Sprite
+    state: mothsphere-trash
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: trash-inhand-left
+        color: "#3db83b"
+      right:
+      - state: trash-inhand-right
+        color: "#3db83b"
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: FoodPacketTrash
+  id: FoodPacketPuffTrash
+  name: Cot'n Puffs
+  components:
+  - type: Sprite
+    state: mothpuffs-trash
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: trash-inhand-left
+        color: "#e5c484"
+      right:
+      - state: trash-inhand-right
+        color: "#e5c484"
+
 
 - type: entity
   categories: [ HideSpawnMenu ]

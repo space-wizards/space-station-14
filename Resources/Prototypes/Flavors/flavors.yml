@@ -285,6 +285,16 @@
   description: flavor-complex-chocolate
 
 - type: flavor
+  id: chemicals
+  flavorType: Complex
+  description: flavor-complex-chemicals
+
+- type: flavor
+  id: imitation
+  flavorType: Complex
+  description: flavor-complex-imitation
+
+- type: flavor
   id: pasta
   flavorType: Complex
   description: flavor-complex-pasta
