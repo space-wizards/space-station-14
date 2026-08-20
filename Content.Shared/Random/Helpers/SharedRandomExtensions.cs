@@ -173,7 +173,7 @@ namespace Content.Shared.Random.Helpers
         private static RandomFillSolution PickRandomFill(
             this IEnumerable<RandomFillSolution> fills,
             IRobustRandom? random,
-            string source = "unknown source")
+            string source)
         {
             IoCManager.Resolve(ref random);
 

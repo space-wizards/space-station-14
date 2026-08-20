@@ -4,11 +4,11 @@
   - quantity: 5
     weight: 0.5
     reagents:
-    - Omnizine # Rarest heal chem
-    - Plasma # Rarest raw element chem
-    - Fresium # Rare gimmick chem
-    - HeartbreakerToxin # Rarest toxin
-    - Honk # Rarest funni chem
+    - Omnizine
+    - Plasma
+    - Fresium
+    - HeartbreakerToxin
+    - Honk
     - BuzzochloricBees # Rare gimmick chem
   - quantity: 5 # Evil chems
     weight: 1
@@ -85,8 +85,6 @@
     - Sulfur
     - Lithium
 
-
-
 - type: weightedRandomFillSolution
   id: RandomPickFarmReagent
   fills:
@@ -124,8 +122,6 @@
     weight: 0.02 # Ultra rare mega hit farming table
     reagents:
       - Cognizine
-
-
 
 - type: weightedRandomFillSolution
   id: EvilRandomFillSolution
