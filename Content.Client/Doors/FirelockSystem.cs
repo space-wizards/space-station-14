@@ -1,3 +1,4 @@
+using Content.Client.Wires.Visualizers;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Robust.Client.Animations;
@@ -44,6 +45,24 @@ public sealed partial class FirelockSystem : SharedFirelockSystem
                 }
             );
         }
+
+        if (!ent.Comp.AnimatePanel)
+            return;
+
+        door.OpenSpriteStates.Add((WiresVisualLayers.MaintenancePanel, null));
+        door.ClosedSpriteStates.Add((WiresVisualLayers.MaintenancePanel, ent.Comp.OpenPanelSpriteState));
+
+        ((Animation)door.OpeningAnimation).AnimationTracks.Add(new AnimationTrackSpriteFlick()
+        {
+            LayerKey = WiresVisualLayers.MaintenancePanel,
+            KeyFrames = { new AnimationTrackSpriteFlick.KeyFrame(ent.Comp.OpeningPanelSpriteState, 0f) },
+        });
+
+        ((Animation)door.ClosingAnimation).AnimationTracks.Add(new AnimationTrackSpriteFlick
+        {
+            LayerKey = WiresVisualLayers.MaintenancePanel,
+            KeyFrames = { new AnimationTrackSpriteFlick.KeyFrame(ent.Comp.ClosingPanelSpriteState, 0f) },
+        });
     }
 
     private void OnAppearanceChange(EntityUid uid, FirelockComponent comp, ref AppearanceChangeEvent args)

@@ -97,10 +97,22 @@ public sealed partial class FirelockComponent : Component
     public string? ClosingLightSpriteState = "closing_unlit";
 
     /// <summary>
+    /// Whether or not the maintenance panel on this door should be animated.
+    /// </summary>
+    [DataField]
+    public bool AnimatePanel = true;
+
+    /// <summary>
     /// The sprite state used to animate the airlock panel when the airlock opens.
     /// </summary>
     [DataField]
     public string? OpeningPanelSpriteState = "panel_opening";
+
+    /// <summary>
+    /// The sprite state used to draw when the door is closed, but the panel is open.
+    /// </summary>
+    [DataField]
+    public string? OpenPanelSpriteState = "panel_open";
 
     /// <summary>
     /// The sprite state used to animate the airlock panel when the airlock closes.

@@ -217,6 +217,7 @@
       - state: panel_open
         sprite: Structures/Doors/Airlocks/Effects/airlock-effects.rsi
         map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+        offset: 0, -0.4675 # 15 pixels down
       - state: pressure_unlit
         visible: false
         shader: unshaded
@@ -248,13 +249,13 @@
       - ForceNoFixRotations # Prevent fixrotations from targeting these, since the base Firelock is targeted
     - type: Door
       occludes: false
+    - type: Firelock # Remove absent unlit states
+      openingLightSpriteState: null
+      closingLightSpriteState: null
+      warningLightSpriteState: null
+      denySpriteState: null
     - type: Physics
       canCollide: false
     - type: Construction
       graph: Firelock
       node: FirelockEdge
-    - type: Firelock
-      openingLightSpriteState: null # Remove absent unlit states
-      closingLightSpriteState: null
-      warningLightSpriteState: null
-      denySpriteState: null
