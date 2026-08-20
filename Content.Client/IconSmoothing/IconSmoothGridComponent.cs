@@ -32,7 +32,7 @@ public record struct IconChunkData()
     // We use short instead of ushort since I doubt we'll ever need more than 32767 values cached. Plus we need -1 to indicate "needs expansion"
     public short?[] Tiles = new short?[MapGridComponent.DefaultChunkSize * MapGridComponent.DefaultChunkSize];
 
-    public byte Count;
+    public short Count;
 
     public bool TryGetTileCache(Vector2i index, [NotNullWhen(true)] out short? cache)
     {
@@ -151,6 +151,7 @@ public record struct IconChunkData()
 
     private void ValidateChunkData()
     {
+        DebugTools.Assert(Count <= 256, $"Number of counted chunks exceeded what was possible to be stored in our 256 entry array. count: {Count}");
         short count = 0;
         foreach (var value in Tiles)
         {
