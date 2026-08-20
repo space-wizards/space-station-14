@@ -166,6 +166,7 @@ public sealed partial class SurveillanceCameraRouterSystem : EntitySystem
         var payload = new SurveillanceCameraPingPayload
         {
             Subnet = ent.Comp.SubnetName,
+            Frequency = router.SubnetFrequencyId,
         };
         _deviceNetworkSystem.SendPacket(ent.Owner, null, ref payload, ent.Comp.SubnetFrequency);
     }
