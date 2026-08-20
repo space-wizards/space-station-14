@@ -31,5 +31,5 @@
     <hotbar:HotbarGui Name="Hotbar" Access="Protected" />
     <chat:ResizableChatBox Name="Chat" Access="Protected" />
     <alerts:AlertsUI Name="Alerts" Access="Protected" />
-    <controls:Clocks Name="Clocks" Access="Protected" />
+    <controls:Clocks Name="Clocks" Margin="0 30 70 20" />
 </screens:DefaultGameScreen>
