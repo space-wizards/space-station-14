@@ -33,15 +33,21 @@ public sealed partial class ChangelingTransformBoundUserInterface(EntityUid owne
 
         if (!EntMan.TryGetComponent<ChangelingIdentityComponent>(Owner, out var lingIdentity))
             return;
+        
+        var manualDrop = true;
 
-        var models = ConvertToButtons(lingIdentity.ConsumedIdentities, lingIdentity.CurrentIdentity);
+        if (EntMan.TryGetComponent<ChangelingTransformComponent>(Owner, out var lingTransform))
+            manualDrop = lingTransform.ManualDrop;
+            
+        var models = ConvertToButtons(lingIdentity.ConsumedIdentities, lingIdentity.CurrentIdentity, manualDrop);
 
         _menu.SetButtons(models);
     }
 
     private IEnumerable<RadialMenuOptionBase> ConvertToButtons(
         IEnumerable<ChangelingIdentityData> identities,
-        EntityUid? currentIdentity
+        EntityUid? currentIdentity,
+        bool canDrop
     )
     {
         var buttons = new List<RadialMenuOptionBase>();
@@ -62,6 +68,9 @@ public sealed partial class ChangelingTransformBoundUserInterface(EntityUid owne
             };
             buttons.Add(option);
 
+            if (!canDrop)
+                continue;
+
             // Options for dropping identities.
             var dropOption = new RadialMenuActionOption<NetEntity>(SendIdentityDrop, EntMan.GetNetEntity(identity.Identity.Value))
             {
@@ -74,14 +83,17 @@ public sealed partial class ChangelingTransformBoundUserInterface(EntityUid owne
             };
             dropButtons.Add(dropOption);
         }
-
-        // Menu category for dropping identities.
-        var dropMenuButton = new RadialMenuNestedLayerOption(dropButtons)
+        
+        if (canDrop)
         {
-            IconSpecifier = RadialMenuIconSpecifier.With(new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/delete.svg.192dpi.png"))),
-            ToolTip = Loc.GetString("changeling-transform-bui-drop-identity-menu")
-        };
-        buttons.Add(dropMenuButton);
+            // Menu category for dropping identities.
+            var dropMenuButton = new RadialMenuNestedLayerOption(dropButtons)
+            {
+                IconSpecifier = RadialMenuIconSpecifier.With(new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/delete.svg.192dpi.png"))),
+                ToolTip = Loc.GetString("changeling-transform-bui-drop-identity-menu")
+            };
+            buttons.Add(dropMenuButton);
+        }
 
         return buttons;
     }
