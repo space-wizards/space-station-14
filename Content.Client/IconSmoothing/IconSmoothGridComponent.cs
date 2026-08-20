@@ -27,18 +27,11 @@ public sealed partial class IconSmoothGridComponent : Component
 /// A simple struct that stores chunk data in a jagged array to be easily retrieved later.
 /// Stores a byte which corresponds to a cache for similar <see cref="IconSmoothComponent.Key"/> Hashsets.
 /// </summary>
-public record struct IconChunkData
+public record struct IconChunkData()
 {
-    public byte?[][] Tiles;
+    public byte?[] Tiles = new byte?[MapGridComponent.DefaultChunkSize * MapGridComponent.DefaultChunkSize];
 
-    public IconChunkData()
-    {
-        Tiles = new byte?[MapGridComponent.DefaultChunkSize][];
-        for (var i = 0; i < Tiles.Length; i++)
-        {
-            Tiles[i] = new byte?[MapGridComponent.DefaultChunkSize];
-        }
-    }
+    public byte Count;
 
     public bool TryGetTileCache(Vector2i index, [NotNullWhen(true)] out byte? cache)
     {
@@ -66,22 +59,45 @@ public record struct IconChunkData
     public byte? GetTileCache(int x, int y)
     {
         DebugTools.Assert(x < MapGridComponent.DefaultChunkSize && y < MapGridComponent.DefaultChunkSize, "Vector2i passed exceeded the bounds of our jagged array!!!");
-        return Tiles[x][y];
+        return GetTileCache((byte)(x + (y << 4)));
     }
 
     public byte? GetTileCache(byte index)
     {
-        return Tiles[index & 0xF][index & 0x10F3D8];
+        return Tiles[index];
     }
 
-    public void SetTileCache(Vector2i index, byte? value)
+    public void SetTileCache(Vector2i index, byte value)
     {
-        DebugTools.Assert(index.X < MapGridComponent.DefaultChunkSize && index.Y < MapGridComponent.DefaultChunkSize, "Vector2i passed exceeded the bounds of our jagged array!!!");
-        Tiles[index.X][index.Y] = value;
+        SetTileCache(index.X, index.Y, value);
     }
 
-    public void SetTileCache(byte index, byte? value)
+    public void SetTileCache(int x, int y, byte value)
     {
-        Tiles[index & 0xF][index & 0x10F3D8] = value;
+        DebugTools.Assert(x < MapGridComponent.DefaultChunkSize && y < MapGridComponent.DefaultChunkSize, "Vector2i passed exceeded the bounds of our jagged array!!!");
+        SetTileCache((byte)(x + (y << 4)), value);
+    }
+
+    public void SetTileCache(byte index, byte value)
+    {
+        Count++;
+        Tiles[index] = value;
+    }
+
+    public void RemoveTileCache(Vector2i index)
+    {
+        RemoveTileCache(index.X, index.Y);
+    }
+
+    public void RemoveTileCache(int x, int y)
+    {
+        DebugTools.Assert(x < MapGridComponent.DefaultChunkSize && y < MapGridComponent.DefaultChunkSize, "Vector2i passed exceeded the bounds of our jagged array!!!");
+        RemoveTileCache((byte)(x + (y << 4)));
+    }
+
+    public void RemoveTileCache(byte index)
+    {
+        Count--;
+        Tiles[index] = null;
     }
 }

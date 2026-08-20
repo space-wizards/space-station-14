@@ -4,7 +4,6 @@ using Robust.Client.GameObjects;
 using Robust.Shared.Collections;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Map.Enumerators;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Client.IconSmoothing;
@@ -20,7 +19,6 @@ namespace Content.Client.IconSmoothing;
 /// </remarks>
 public sealed partial class IconSmoothSystem : EntitySystem
 {
-    [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedMapSystem _map = default!;
     [Dependency] private SpriteSystem _sprite = default!;
 
@@ -137,10 +135,10 @@ public sealed partial class IconSmoothSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnAnchorChanged(Entity<IconSmoothComponent> entity, ref AnchorStateChangedEvent args)
     {
-        if (_timing.ApplyingState || !entity.Comp.Enabled)
+        if (!entity.Comp.Enabled)
             return;
 
-        UpdateTile((entity, entity.Comp, args.Transform), entity.Comp.Key);
+        UpdateTile((entity, entity.Comp, args.Transform));
     }
 
     [SubscribeLocalEvent]
@@ -179,13 +177,6 @@ public sealed partial class IconSmoothSystem : EntitySystem
         {
             state.InitializeStates((entity, sprite), _sprite);
         }
-    }
-
-    private void UpdateNeighbors(Entity<IconSmoothComponent, TransformComponent> entity, Entity<MapGridComponent> grid, bool updateSelf = true)
-    {
-        var pos = _map.TileIndicesFor(grid, entity.Comp2.Coordinates);
-
-        UpdateNeighbors(entity, grid, pos, updateSelf);
     }
 
     private void UpdateNeighbors(Entity<IconSmoothComponent, TransformComponent> entity, Entity<MapGridComponent> grid, Vector2i pos, bool updateSelf = true)
@@ -259,25 +250,25 @@ public sealed partial class IconSmoothSystem : EntitySystem
         return (byte)angle.GetCardinalDir();
     }
 
-    private void UpdateTile(Entity<IconSmoothComponent, TransformComponent> entity, string key)
+    private void UpdateTile(Entity<IconSmoothComponent, TransformComponent> entity)
     {
         // Wasn't attached to a grid, no tile to update :)
         if (entity.Comp2.GridUid is not { } grid || !_mapGridQuery.TryComp(grid, out var mapGrid))
             return;
 
-        UpdateTile(entity, (grid, mapGrid), key);
+        UpdateTile(entity, (grid, mapGrid));
     }
 
-    private void UpdateTile(Entity<IconSmoothComponent, TransformComponent> entity, Entity<MapGridComponent> grid, string key)
+    private void UpdateTile(Entity<IconSmoothComponent, TransformComponent> entity, Entity<MapGridComponent> grid)
     {
         var pos = _map.TileIndicesFor(grid, entity.Comp2.Coordinates);
 
         if (entity.Comp2.Anchored)
-            AddTileKey(grid, pos, key);
+            AddTileKey(grid, pos, entity.Comp1.Key);
         else
             RemoveTileKey(grid, entity, pos);
 
-        UpdateNeighbors(entity, (grid, grid.Comp));
+        UpdateNeighbors(entity, (grid, grid.Comp), pos);
     }
 
     private void AddTile(Entity<IconSmoothComponent, TransformComponent> entity, string key, bool update = true)
@@ -291,8 +282,9 @@ public sealed partial class IconSmoothSystem : EntitySystem
         if (!_mapGridQuery.Resolve(grid, ref grid.Comp))
             return;
 
-        AddTileKey((grid, grid.Comp), _map.TileIndicesFor((grid, grid.Comp), entity.Comp2.Coordinates), key);
-        UpdateNeighbors(entity, (grid, grid.Comp), update);
+        var pos = _map.TileIndicesFor((grid, grid.Comp), entity.Comp2.Coordinates);
+        AddTileKey((grid, grid.Comp), pos, key);
+        UpdateNeighbors(entity, (grid, grid.Comp), pos, update);
     }
 
     private void AddTileKey(Entity<MapGridComponent> grid, Vector2i tile, string key)
@@ -348,7 +340,7 @@ public sealed partial class IconSmoothSystem : EntitySystem
         var tile = _map.TileIndicesFor((grid, grid.Comp), entity.Comp2.Coordinates);
 
         RemoveTileKey((grid, grid.Comp), entity, tile);
-        UpdateNeighbors(entity, (grid, grid.Comp), update);
+        UpdateNeighbors(entity, (grid, grid.Comp), tile, update);
     }
 
     private void RemoveTileKey(Entity<MapGridComponent> grid, EntityUid removed, Vector2i tile)
@@ -376,11 +368,18 @@ public sealed partial class IconSmoothSystem : EntitySystem
 
         if (_workingKeyRing.Count == 0)
         {
-            chunkData.SetTileCache(relative, tileEntry);
+            RemoveTileCache((grid, cacheComp), chunkData, relative);
             return;
         }
 
         AddTileCache((grid, cacheComp), (chunk, relative), chunkData);
+    }
+
+    private void RemoveTileCache(Entity<IconSmoothGridComponent> grid, IconChunkData chunkData, Vector2i pos)
+    {
+        chunkData.RemoveTileCache(pos);
+        if (chunkData.Count == 0)
+            grid.Comp.Chunks.Remove(pos);
     }
 
     private void AddTileCache(Entity<IconSmoothGridComponent> grid, (Vector2i Chunk, Vector2i Relative) index)
@@ -454,7 +453,7 @@ public sealed partial class IconSmoothSystem : EntitySystem
 
     private void ExpandCache()
     {
-        var newCacheSize = Math.Max(32, _keyCaches.Count * 2);
+        var newCacheSize = Math.Max(16, _keyCaches.Count * 2);
         DebugTools.Assert(newCacheSize <= 256, "Number of cached keys exceeded what can be stored in a byte.");
         var curSize = _keyCaches.Count;
 
