@@ -357,6 +357,20 @@
     },
     {
       "name": "mothpuffs-trash"
+    },
+    {
+      "name": "mothcakes"
+    },
+    {
+      "name": "mothcakes-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "mothcakes-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "mothcakes-trash"
     }
     
   ]

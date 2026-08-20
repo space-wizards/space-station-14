@@ -1107,7 +1107,7 @@
   parent: VendingMachine
   id: VendingMachineMothSnacks
   name: Vend-O-Moth
-  description: A vending machine for Moff snacks.
+  description: Any moth's second favorite vending machine.
   components:
   - type: VendingMachine
     pack: MothSnackInventory

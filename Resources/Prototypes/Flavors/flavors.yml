@@ -1513,3 +1513,8 @@
   id: motivating
   flavorType: Base
   description: flavor-base-motivating
+
+- type: flavor
+  id: nostalgic
+  flavorType: Base
+  description: flavor-base-nostalgic
