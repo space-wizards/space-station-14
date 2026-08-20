@@ -98,7 +98,7 @@
     graph: Grille
     node: grille
 
-### Diagonal
+### BROKEN
 - type: entity
   parent: Grille
   id: GrilleDiagonal

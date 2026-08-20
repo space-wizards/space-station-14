@@ -172,11 +172,6 @@
 
 - type: latheRecipe
   parent: BaseSteelTileRecipe
-  id: FloorTileItemSteelMono
-  result: FloorTileItemSteelMono
-
-- type: latheRecipe
-  parent: BaseSteelTileRecipe
   id: FloorTileItemSteelPavement
   result: FloorTileItemSteelPavement
 

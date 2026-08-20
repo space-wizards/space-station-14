@@ -475,7 +475,6 @@
   parent: [ BaseWall, StructureHealthWallStrong ]
   id: WallMarble
   name: marble wall
-  suffix: Durable
   components:
   - type: Sprite
     sprite: Structures/Walls/marble.rsi

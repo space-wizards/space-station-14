@@ -132,28 +132,6 @@
       - !type:SpawnEntitiesBehavior
         spawn:
           IngotSilver1: *BaseDoorSpawn
-
-- type: entity
-  parent: [ BaseMaterialDoorNavMap, StructureHealthDoorWeak]
-  id: SteelDoor
-  name: steel door
-  components:
-  - type: Sprite
-    sprite: Structures/Doors/MaterialDoors/silver-door.rsi # TODO Add steel door sprite
-  - type: Construction
-    graph: DoorGraph
-    node: steelDoor
-  - type: Damageable
-    damageModifierSet: SteelMod
-  - type: Destructible
-    thresholds:
-    - trigger: *DamageDoorWeak
-      behaviors:
-      - *SoundMetalBreak
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          SheetSteel1: *BaseDoorSpawn
-
 ### Other doors ###
 
 - type: entity

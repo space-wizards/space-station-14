@@ -142,10 +142,6 @@
   id: FloorArcadeBlue2
   target: FloorArcadeBlue
 
-#- type: tileAlias
-#  id: FloorSteelMono # this shouldn't have been migrated?
-#  target: FloorSteel
-
 - type: tileAlias
   id: FloorHydro
   target: FloorSteel
