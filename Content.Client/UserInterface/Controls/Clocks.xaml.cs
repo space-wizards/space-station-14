@@ -15,10 +15,15 @@ public sealed partial class Clocks : Control
     [Dependency] private IConfigurationManager _configurationManager = default!;
     [Dependency] private ClientsidePlaytimeTrackingManager _playtimeTracking = default!;
 
+    private bool _format24 = true;
+
     public Clocks()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
+
+        TimeButton.OnPressed += _ => _format24 = !_format24;
+        _configurationManager.OnValueChanged(CCVars.ClocksEnabled, p => Visible = p);
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
@@ -40,7 +45,7 @@ public sealed partial class Clocks : Control
         }
 
         var format = "h:mm tt";
-        if (_configurationManager.GetCVar(CCVars.Clocks24HoursFormat))
+        if (_format24)
             format = "H:mm";
 
         TimeButton.ToolTip = msg;
