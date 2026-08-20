@@ -314,8 +314,9 @@ public sealed partial class ZombieSystem
 
         if (TryComp<HandsComponent>(target, out var handsComp))
         {
-            _hands.RemoveHands(target);
-            RemComp(target, handsComp);
+            _hands.FakeHands(target);
+            //_hands.RemoveHands(target);
+            //RemComp(target, handsComp);
         }
 
         // Sloth: What the fuck?

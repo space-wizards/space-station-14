@@ -187,6 +187,55 @@ public abstract partial class SharedHandsSystem
             RemoveHand(ent, handId);
         }
     }
+    
+    /// <summary>
+    /// Turn the specified hand into a fake hand
+    /// </summary>
+    public virtual void FakeThisHand(Entity<HandsComponent?> ent, string handName)
+    {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return;
+
+        OnPlayerRemoveHand?.Invoke((ent, ent.Comp), handName);
+
+        TryDrop(ent, handName, null, false);
+
+        if (ContainerSystem.TryGetContainer(ent, handName, out var container))
+            ContainerSystem.ShutdownContainer(container);
+        
+        var oldHand =  ent.Comp.Hands[handName];
+        var newHand = new Hand(oldHand.Location, oldHand.EmptyLabel, oldHand.EmptyRepresentative, new EntityWhitelist
+        {
+            Components = ["VirtualItem"]
+        });
+
+        if (!ent.Comp.Hands.Remove(handName))
+            return;
+
+        ent.Comp.SortedHands.Remove(handName);
+        if (ent.Comp.ActiveHandId == handName)
+            TrySetActiveHand(ent, ent.Comp.SortedHands.FirstOrDefault());
+
+        RaiseLocalEvent(ent, new HandCountChangedEvent(ent));
+        Dirty(ent);
+        
+        ent.Comp.Hands.Add(handName, newHand);
+        
+        RaiseLocalEvent(ent, new HandCountChangedEvent(ent));
+        Dirty(ent);
+    }
+
+    public void FakeHands(Entity<HandsComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return;
+
+        var handIds = new List<string>(ent.Comp.Hands.Keys);
+        foreach (var handId in handIds)
+        {
+            FakeThisHand(ent, handId);
+        }
+    }
 
     private void HandleSetHand(RequestSetHandEvent msg, EntitySessionEventArgs eventArgs)
     {
