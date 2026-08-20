@@ -155,10 +155,10 @@
     key: firelocks
   - type: StationAiWhitelist
   - type: StructureAligner
-    alignType:
+    alignerType:
     - Firelock
-  - type: StructureAlignTo
-    alignType:
+  - type: StructureAlignerPylon
+    pylons:
     - Firelock
 
 - type: entity
@@ -238,5 +238,5 @@
       graph: Firelock
       node: FirelockEdge
     - type: StructureAligner
-      alignType:
+      alignerType:
       - DoNotAlign

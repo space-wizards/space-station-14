@@ -200,7 +200,7 @@
     - WirePanels
     - Networking
   - type: StructureAligner
-  - type: StructureAlignTo
+  - type: StructureAlignerPylon
   placement:
     mode: SnapgridCenter
 

@@ -56,7 +56,7 @@
   - type: PlacementReplacement
     key: walls
   - type: StructureAligner
-  - type: StructureAlignTo
+  - type: StructureAlignerPylon
 
 - type: entity
   abstract: true

@@ -99,7 +99,7 @@
     arrows:
     - offset: 0, -1.5
   - type: StructureAligner
-    alignType:
+    alignerType:
     - DoNotAlign
 
 - type: entity

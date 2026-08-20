@@ -7,7 +7,7 @@ namespace Content.Shared.Mapping;
 
 /// <summary>
 /// This system can fix the rotation of structures like doors and firelocks, based on the surrounding walls/windows/doors.
-/// See StructureAlignerComponent and StructureAlignToComponent.
+/// See StructureAlignerComponent and StructureAlignerPylonComponent.
 /// </summary>
 /// <remarks>
 /// This only works for sprites that are symmetrical, so only need to worry about 2 rotation states.
@@ -97,7 +97,7 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Aligns the target entity to it's neighboring StructureAlignToComponent-s with matching types.
+    /// Aligns the target entity if there are any adjacent StructureAlignerPylonComponents with matching types.
     /// </summary>
     private bool Align(Entity<StructureAlignerComponent> entity, bool dryRun = false)
     {
@@ -121,10 +121,10 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
             if (entity.Owner == neighborEnt)
                 continue;
 
-            if (!TryComp<StructureAlignToComponent>(neighborEnt, out var neighborComp))
+            if (!TryComp<StructureAlignerPylonComponent>(neighborEnt, out var pylonComp))
                     continue;
 
-            if (!neighborComp.AlignType.Contains(entity.Comp.AlignType))
+            if (!pylonComp.AlignerPylonTypes.HasFlag(entity.Comp.AlignerType))
                 continue;
 
             var neighborTrans = Transform(neighborEnt);
@@ -132,8 +132,6 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
             // Ignore space debris or docked grids
             if (neighborTrans.ParentUid != trans.ParentUid)
                 continue;
-
-
 
             // The searchbox catches diagonally adjacent tiles, but we don't want those. So we filter them out with a maximum distance
             // Minimum range is here to ignore overlapping entities
@@ -153,9 +151,6 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
                     break;
                 case Direction.East or Direction.West:
                     eastWest += weight;
-                    break;
-                default:
-                    Log.Warning("Welp"); //TODO:ERRANT
                     break;
             }
         }
@@ -193,7 +188,8 @@ public sealed partial class SharedStructureAlignerSystem : EntitySystem
     }
 }
 
-public enum StructureAlignType : byte
+[Flags]
+public enum StructureAlignerType : byte
 {
     /// <summary>
     /// Airlocks, doors, shutters, blast doors and everything that would be functionally
@@ -207,5 +203,6 @@ public enum StructureAlignType : byte
     /// (doors, walls, windows, full tile rocks etc.)
     /// </summary>
     Firelock,
+    /// Go go gadget OverrideInheritance
     DoNotAlign,
 }

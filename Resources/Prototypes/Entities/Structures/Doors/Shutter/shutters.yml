@@ -98,7 +98,7 @@
     key: walls
     mode: NoSprite
   - type: StructureAligner
-  - type: StructureAlignTo
+  - type: StructureAlignerPylon
 
 - type: entity
   id: ShuttersNormal

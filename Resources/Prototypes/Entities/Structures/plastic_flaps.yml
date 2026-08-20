@@ -49,11 +49,7 @@
   - type: PlacementReplacement
     key: walls
   - type: StructureAligner
-    alignType:
-    - Door
-  - type: StructureAlignTo
-    alignType:
-    - Door
+  - type: StructureAlignerPylon
 
 - type: entity
   id: PlasticFlapsClear

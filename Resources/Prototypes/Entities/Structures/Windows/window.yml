@@ -70,8 +70,8 @@
   - type: StaticPrice
     price: 100
   - type: BlockWeather
-  - type: StructureAlignTo
-    alignType:
+  - type: StructureAlignerPylon
+    pylons:
     - Door
     - Firelock
 

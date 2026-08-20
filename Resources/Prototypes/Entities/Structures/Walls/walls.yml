@@ -59,8 +59,8 @@
   - type: Occluder # Breaks on diagonal walls
   - type: PlacementReplacement
     key: walls
-  - type: StructureAlignTo
-    alignType:
+  - type: StructureAlignerPylon
+    pylons:
     - Door
     - Firelock
 
