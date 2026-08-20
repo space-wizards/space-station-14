@@ -26,8 +26,8 @@ public sealed partial class EdgeSpriteSmoothing : ISpriteSmoothState
         for (byte i = 0; i < 8; i+= 2)
         {
             var direction = (Direction)i;
-            var key = LayerKey + direction;
-            sprite.LayerMapSet(entity.AsNullable(), key, sprite.AddRsiLayer(entity.AsNullable(), Base + direction, index: Index));
+            var key = LayerKey + GetSuffix(i);
+            sprite.LayerMapSet(entity.AsNullable(), key, sprite.AddRsiLayer(entity.AsNullable(), Base + GetSuffix(i), index: Index));
             sprite.LayerSetOffset(entity.AsNullable(), key, direction.ToIntVec());
             sprite.LayerSetVisible(entity.AsNullable(), key, false);
         }
