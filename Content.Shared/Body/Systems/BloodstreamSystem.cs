@@ -44,8 +44,6 @@ public sealed partial class BloodstreamSystem : EntitySystem
     [Dependency] private MetabolizerSystem _metabolizer = default!;
     [Dependency] private TagSystem _tagSystem = default!;
 
-    private static readonly ProtoId<TagPrototype> CannotRegainBlood = "CannotRegainBlood";
-
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
