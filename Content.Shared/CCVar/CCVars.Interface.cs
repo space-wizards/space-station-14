@@ -23,6 +23,12 @@ public sealed partial class CCVars
         CVarDef.Create("ui.layout", "Default", CVar.CLIENTONLY | CVar.ARCHIVE);
 
     /// <summary>
+    /// The layout style of the UI
+    /// </summary>
+    public static readonly CVarDef<bool> ClocksEnabled =
+        CVarDef.Create("ui.clocks.enabled", true, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
     /// The dimensions for the chat window in Default UI mode
     /// </summary>
     public static readonly CVarDef<string> DefaultScreenChatSize =
