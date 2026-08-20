@@ -6,20 +6,16 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Doors;
 
+/// <inheritdoc/>
 public sealed partial class DoorSystem : SharedDoorSystem
 {
     [Dependency] private AnimationPlayerSystem _animationSystem = default!;
     [Dependency] private SpriteSystem _sprite = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-        SubscribeLocalEvent<DoorComponent, AppearanceChangeEvent>(OnAppearanceChange);
-        SubscribeLocalEvent<DoorComponent, AnimationCompletedEvent>(OnAnimationCompleted);
-    }
-
+    /// <inheritdoc/>
     protected override void OnComponentInit(Entity<DoorComponent> ent, ref ComponentInit args)
     {
+        // Base call deferred until end of function.
         var comp = ent.Comp;
         comp.OpenSpriteStates = new(2);
         comp.ClosedSpriteStates = new(2);
@@ -74,8 +70,11 @@ public sealed partial class DoorSystem : SharedDoorSystem
                 },
             },
         };
+
+        base.OnComponentInit(ent, ref args);
     }
 
+    [SubscribeLocalEvent]
     private void OnAnimationCompleted(Entity<DoorComponent> ent, ref AnimationCompletedEvent args)
     {
         if (args.Key != DoorComponent.OpenKey && args.Key != DoorComponent.CloseKey)
@@ -105,6 +104,7 @@ public sealed partial class DoorSystem : SharedDoorSystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnAppearanceChange(Entity<DoorComponent> entity, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)

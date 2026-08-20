@@ -204,6 +204,7 @@
   id: FirelockEdge
   parent: Firelock
   name: firelock
+  suffix: Edge
   components:
     - type: StationAiWhitelist
     - type: Sprite
@@ -215,9 +216,7 @@
       - state: welded
         map: [ "enum.WeldableLayers.BaseWelded" ]
       - state: panel_open
-        sprite: Structures/Doors/Airlocks/Effects/airlock-effects.rsi
         map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
-        offset: 0, -0.46875 # 15 pixels down
       - state: pressure_unlit
         visible: false
         shader: unshaded
