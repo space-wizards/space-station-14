@@ -1123,9 +1123,13 @@ MeteorRockGold: AsteroidRockGold
 MeteorRockPlasma: AsteroidRockPlasma
 MeteorRockDiamond: AsteroidRockDiamond
 MeteorRockUranium: AsteroidRockUranium
+StatueBananiumClown: StatueOrnateClown
 
 #2026-08-18
 DrinkNeurotoxinGlass: null
+
+#2026-08-19
+JanitorServiceLight: null
 
 # add date gua
 MetalDoor: SteelDoor

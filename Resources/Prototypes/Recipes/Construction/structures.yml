@@ -605,9 +605,9 @@
 
 - type: construction
   parent: BaseStructureFullTile
-  id: BananiumClownStatue
-  graph: BananiumStatueClown
-  targetNode: bananiumStatue
+  id: OrnateClownStatue
+  graph: OrnateStatueClown
+  targetNode: ornateStatueClown
 
 - type: construction
   parent: BaseStructureFullTile
