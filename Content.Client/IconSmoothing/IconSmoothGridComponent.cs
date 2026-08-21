@@ -32,8 +32,10 @@ public record struct IconChunkData()
     // We use short instead of ushort since I doubt we'll ever need more than 32767 values cached. Plus we need -1 to indicate "needs expansion"
     public short?[] Tiles = new short?[MapGridComponent.DefaultChunkSize * MapGridComponent.DefaultChunkSize];
 
+    // 0 actually means 256.
     public byte Count;
 
+    // This is set to true when it's *actually* zero
     public bool Empty;
 
     public bool TryGetTileCache(Vector2i index, [NotNullWhen(true)] out short? cache)
