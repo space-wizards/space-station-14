@@ -171,6 +171,18 @@ public sealed class EntityTableTest : GameTest
                weight: 1
              - id: {EntProto2}
                weight: 1
+               
+         - type: entityTable
+           id: EntityTableTestLocalizedChildConditions
+           table: !type:AllSelector
+             children:
+             - !type:AllSelector
+               conditionsForChildren:
+               - !type:IsNotRepeatingCondition
+               children:
+                - id: {EntProto1}
+                - id: {EntProto2}
+             - id: {EntProto2}
          """;
 
     [Test]
@@ -295,12 +307,12 @@ public sealed class EntityTableTest : GameTest
         // EntProto1 already recorded as spawned => blocked.
         var used = new HashSet<EntProtoId> { new(EntProto1) };
         var blocked = Run(Table("EntityTableTestNotRepeating"),
-            ctx: new EntityTableContext(new() { [IsNotRepeatingCondition.UsedSpawnsKey] = used }));
+            ctx: new EntityTableContext(new() { [ExcludeEntitiesFromContextCondition.EntitiesToExclude] = used }));
         Assert.That(blocked, Is.Empty);
 
         // Tracking enabled, but EntProto1 has not been spawned yet => allowed.
         var allowed = Run(Table("EntityTableTestNotRepeating"),
-            ctx: new EntityTableContext(new() { [IsNotRepeatingCondition.UsedSpawnsKey] = new HashSet<EntProtoId>() }));
+            ctx: new EntityTableContext(new() { [ExcludeEntitiesFromContextCondition.EntitiesToExclude] = new HashSet<EntProtoId>() }));
         Assert.That(allowed, Is.EquivalentTo([new EntProtoId(EntProto1)]));
     }
 
@@ -310,7 +322,7 @@ public sealed class EntityTableTest : GameTest
     {
         var used = new HashSet<EntProtoId> { new(EntProto1) };
         var result = Run(Table("EntityTableTestAllNotRepeating"),
-            ctx: new EntityTableContext(new() { [IsNotRepeatingCondition.UsedSpawnsKey] = used }));
+            ctx: new EntityTableContext(new() { [ExcludeEntitiesFromContextCondition.EntitiesToExclude] = used }));
         Assert.That(result, Is.EqualTo(new[] { new EntProtoId(EntProto2) }));
     }
 
@@ -324,7 +336,7 @@ public sealed class EntityTableTest : GameTest
     {
         var used = new HashSet<EntProtoId> { new(EntProto1) };
         var result = Run(Table("EntityTableTestChainNotRepeating"), SeededRand(1),
-            new EntityTableContext(new() { [IsNotRepeatingCondition.UsedSpawnsKey] = used }));
+            new EntityTableContext(new() { [ExcludeEntitiesFromContextCondition.EntitiesToExclude] = used }));
         Assert.That(result, Is.EqualTo(new[] { new EntProtoId(EntProto2) }));
     }
 
@@ -368,22 +380,39 @@ public sealed class EntityTableTest : GameTest
 
         // Without the injected condition, the UsedSpawns tracking alone has no effect.
         var unconstrained = Run(Table("EntityTableTestEntSelector"),
-            ctx: new EntityTableContext(new() { [IsNotRepeatingCondition.UsedSpawnsKey] = used }));
+            ctx: new EntityTableContext(new() { [ExcludeEntitiesFromContextCondition.EntitiesToExclude] = used }));
         Assert.That(unconstrained, Is.EquivalentTo([new EntProtoId(EntProto1)]));
 
         // Injecting IsNotRepeatingCondition gates the selector: EntProto1 is already used => blocked.
-        var ctx = new EntityTableContext(new() { [IsNotRepeatingCondition.UsedSpawnsKey] = used });
+        var ctx = new EntityTableContext(new() { [ExcludeEntitiesFromContextCondition.EntitiesToExclude] = used });
         ctx.SetData(EntityTableSelector.AdditionalConditionsKey,
-            new List<EntityTableCondition> { new IsNotRepeatingCondition() });
+            new List<EntityTableCondition> { new ExcludeEntitiesFromContextCondition() });
         var blocked = Run(Table("EntityTableTestEntSelector"), ctx: ctx);
         Assert.That(blocked, Is.Empty);
 
         // With the condition injected but EntProto1 not yet used, the spawn is allowed.
-        var fresh = new EntityTableContext(new() { [IsNotRepeatingCondition.UsedSpawnsKey] = new HashSet<EntProtoId>() });
+        var fresh = new EntityTableContext(new() { [ExcludeEntitiesFromContextCondition.EntitiesToExclude] = new HashSet<EntProtoId>() });
         fresh.SetData(EntityTableSelector.AdditionalConditionsKey,
-            new List<EntityTableCondition> { new IsNotRepeatingCondition() });
+            new List<EntityTableCondition> { new ExcludeEntitiesFromContextCondition() });
         var allowed = Run(Table("EntityTableTestEntSelector"), ctx: fresh);
         Assert.That(allowed, Is.EquivalentTo([new EntProtoId(EntProto1)]));
+    }
+
+    [Test]
+    [RunOnSide(Side.Server)]
+    public void AdditionalConditions_RemainLocal()
+    {
+        var used = new HashSet<EntProtoId> { new(EntProto2) };
+        var ctx = new EntityTableContext(new() { [ExcludeEntitiesFromContextCondition.EntitiesToExclude] = used });
+
+        var result = Run(Table("EntityTableTestLocalizedChildConditions"), ctx: ctx);
+
+        ctx.TryGetData<object>(EntityTableSelector.AdditionalConditionsKey, out var empty);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(empty, Is.Null);
+            Assert.That(result, Is.EquivalentTo([new EntProtoId(EntProto1), new EntProtoId(EntProto2)]));
+        }
     }
 
     private static IRobustRandom SeededRand(int seed)

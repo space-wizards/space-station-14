@@ -20,14 +20,17 @@ public abstract partial class EntityTableSelectorWithChildrenBase : EntityTableS
     /// <inheritdoc/>>
     public override bool CheckConditions(IEntityManager entMan, IPrototypeManager proto, EntityTableContext ctx)
     {
-        var result = base.CheckConditions(entMan, proto, ctx);
-        var nestedSuccess = false;
+        if (!base.CheckConditions(entMan, proto, ctx))
+            return false;
+
         foreach (var selector in Children)
         {
-            nestedSuccess |= selector.CheckConditions(entMan, proto, ctx);
+            // If any child succeeds this is a valid node
+            if (selector.CheckConditions(entMan, proto, ctx))
+                return true;
         }
 
-        return result && nestedSuccess;
+        return false;
     }
 }
 
