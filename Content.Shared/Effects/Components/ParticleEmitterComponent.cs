@@ -12,7 +12,7 @@ public sealed partial class ParticleEmitterComponent : Component
     /// The effect that will be spawned.
     /// </summary>
     [DataField(required: true)]
-    public EntProtoId EffectPrototype;
+    public EntProtoId? EffectPrototype;
 
     /// <summary>
     /// Maximum interval in seconds between spawned effects while the emitter is moving.

@@ -16,7 +16,7 @@ public abstract partial class SharedJetpackSystem : EntitySystem
 {
     [Dependency] private MovementSpeedModifierSystem _movementSpeedModifier = default!;
     [Dependency] protected SharedAppearanceSystem Appearance = default!;
-    [Dependency] protected SharedContainerSystem Container = default!;
+    [Dependency] private SharedContainerSystem Container = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private ActionContainerSystem _actionContainer = default!;

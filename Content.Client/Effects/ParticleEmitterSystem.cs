@@ -31,6 +31,9 @@ public sealed partial class ParticleEmitterSystem : SharedParticleEmitterSystem
 
         while (query.MoveNext(out var uid, out var emitter, out var active, out var xform))
         {
+            if (emitter.EffectPrototype is not { } effectPrototype)
+                continue;
+
             var coordinates = _transform.GetMoverCoordinates(uid, xform);
             if (!coordinates.IsValid(EntityManager))
             {
@@ -60,7 +63,7 @@ public sealed partial class ParticleEmitterSystem : SharedParticleEmitterSystem
             if (_timing.CurTime < active.NextEmissionTime && !maxDistanceReached)
                 continue;
 
-            Spawn(emitter.EffectPrototype, coordinates);
+            Spawn(effectPrototype, coordinates);
 
             active.LastEmissionPosition = coordinates;
             active.NextEmissionTime = _timing.CurTime + TimeSpan.FromSeconds(emitter.SpawnInterval);
