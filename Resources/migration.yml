@@ -966,9 +966,9 @@ FloorTileItemPlasmaMarble: FloorTileItemWhiteMarble
 FloorTileItemEighties: FloorTileItemArcadeBlue
 FloorTileItemArcadeBlue2: FloorTileItemArcadeBlue
 FloorTileItemElevatorShaft: FloorTileItemDark
-FloorTileItemMining: null # FloorTileItemDarkPlastic
-FloorTileItemMiningLight: null # FloorTileItemPlastic
-FloorTileItemMiningDark: null # FloorTileItemDarkPlastic
+FloorTileItemMining: FloorTileItemDarkPlastic
+FloorTileItemMiningLight: FloorTileItemDarkPlastic
+FloorTileItemMiningDark: FloorTileItemDarkPlastic
 FloorTileItemRockVault: FloorTileItemSteel
 FloorTileItemBrassReebe: null
 FloorTileItemBrassFilled: null
