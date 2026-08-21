@@ -1,0 +1,19 @@
+# Tiles that come straight from the eighties
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileStackPlastic
+  name: stack-plastic-floor
+  spawn: FloorTileItemPlastic
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileStackDarkPlastic
+  name: stack-plastic-dark-floor
+  spawn: FloorTileItemDarkPlastic
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileStackWhitePlastic
+  name: stack-plastic-white-floor
+  spawn: FloorTileItemWhitePlastic
