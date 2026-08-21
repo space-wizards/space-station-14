@@ -301,6 +301,117 @@ public sealed partial class CargoSystem
         return FulfillOrder(order, account, spawn, paperProto);
     }
 
+    public void RemoveOrder(
+        EntityUid dbUid,
+        ProtoId<CargoAccountPrototype> account,
+        int index,
+        StationCargoOrderDatabaseComponent orderDB
+    )
+    {
+        var sequenceIdx = orderDB.Orders[account].FindIndex(order => order.OrderId == index);
+        if (sequenceIdx != -1)
+        {
+            orderDB.Orders[account].RemoveAt(sequenceIdx);
+        }
+        UpdateOrders(dbUid);
+    }
+
+    public void ClearOrders(StationCargoOrderDatabaseComponent component)
+    {
+        if (component.Orders.Count == 0)
+            return;
+
+        component.Orders.Clear();
+    }
+
+
+    public int GetOutstandingOrderCount(
+        Entity<StationCargoOrderDatabaseComponent> station,
+        ProtoId<CargoAccountPrototype> account
+    )
+    {
+        var amount = 0;
+
+        if (!TryComp<StationBankAccountComponent>(station, out var bank))
+            return amount;
+
+        foreach (var order in station.Comp.Orders[account])
+        {
+            if (!order.Approved)
+                continue;
+            amount += order.OrderQuantity - order.NumDispatched;
+        }
+
+        if (account == bank.PrimaryAccount)
+            return amount;
+
+        foreach (var order in station.Comp.Orders[bank.PrimaryAccount])
+        {
+            if (order.Account != account || !order.Approved)
+                continue;
+            amount += order.OrderQuantity - order.NumDispatched;
+        }
+
+        return amount;
+    }
+
+    public List<ProtoId<CargoProductPrototype>> GetAvailableProducts(Entity<CargoOrderConsoleComponent> ent)
+    {
+        if (
+            _station.GetOwningStation(ent) is not { } station
+            || !TryComp<StationCargoOrderDatabaseComponent>(station, out var db)
+        )
+        {
+            return new List<ProtoId<CargoProductPrototype>>();
+        }
+
+        var products = new List<ProtoId<CargoProductPrototype>>();
+
+        // Note that a market must be both on the station and on the console to be available.
+        var markets = ent.Comp.AllowedGroups.Intersect(db.Markets).ToList();
+        foreach (var product in ProtoMan.EnumeratePrototypes<CargoProductPrototype>())
+        {
+            if (!markets.Contains(product.Group))
+                continue;
+
+            products.Add(product.ID);
+        }
+
+        return products;
+    }
+
+    public bool AddAndApproveOrder(
+        EntityUid dbUid,
+        CargoProductPrototype product,
+        int qty,
+        string sender,
+        string description,
+        string dest,
+        StationCargoOrderDatabaseComponent component,
+        ProtoId<CargoAccountPrototype> account,
+        Entity<StationDataComponent> stationData
+    )
+    {
+        // Make an order
+        var id = GenerateOrderId(component);
+        var order = new CargoOrderData(id, product, qty, sender, description, account);
+
+        // Approve it now
+        order.SetApproverData(dest, sender);
+        order.Approved = true;
+
+        // Log order addition
+        _adminLogger.Add(
+            LogType.Action,
+            LogImpact.Low,
+            $"AddAndApproveOrder {description} added order [orderId:{order.OrderId}, quantity:{order.OrderQuantity}, product:{order.Product}, requester:{order.Requester}, reason:{order.Reason}]"
+        );
+
+        // Add it to the list
+        return TryAddOrder(dbUid, account, order, component)
+            && TryFulfillOrder(stationData, account, order, component).HasValue;
+    }
+
     private void OnInteractUsingSlip(
         Entity<CargoOrderConsoleComponent> ent,
         ref InteractUsingEvent args,
@@ -402,39 +513,6 @@ public sealed partial class CargoSystem
         slip.OrderQuantity = args.Amount;
         slip.Account = ent.Comp.Account;
     }
-
-    public bool AddAndApproveOrder(
-        EntityUid dbUid,
-        CargoProductPrototype product,
-        int qty,
-        string sender,
-        string description,
-        string dest,
-        StationCargoOrderDatabaseComponent component,
-        ProtoId<CargoAccountPrototype> account,
-        Entity<StationDataComponent> stationData
-    )
-    {
-        // Make an order
-        var id = GenerateOrderId(component);
-        var order = new CargoOrderData(id, product, qty, sender, description, account);
-
-        // Approve it now
-        order.SetApproverData(dest, sender);
-        order.Approved = true;
-
-        // Log order addition
-        _adminLogger.Add(
-            LogType.Action,
-            LogImpact.Low,
-            $"AddAndApproveOrder {description} added order [orderId:{order.OrderId}, quantity:{order.OrderQuantity}, product:{order.Product}, requester:{order.Requester}, reason:{order.Reason}]"
-        );
-
-        // Add it to the list
-        return TryAddOrder(dbUid, account, order, component)
-            && TryFulfillOrder(stationData, account, order, component).HasValue;
-    }
-
 
     private EntityUid? TryFulfillOrder(
         Entity<StationDataComponent> stationData,
@@ -607,29 +685,6 @@ public sealed partial class CargoSystem
         return ++orderDB.NumOrdersCreated;
     }
 
-    public void RemoveOrder(
-        EntityUid dbUid,
-        ProtoId<CargoAccountPrototype> account,
-        int index,
-        StationCargoOrderDatabaseComponent orderDB
-    )
-    {
-        var sequenceIdx = orderDB.Orders[account].FindIndex(order => order.OrderId == index);
-        if (sequenceIdx != -1)
-        {
-            orderDB.Orders[account].RemoveAt(sequenceIdx);
-        }
-        UpdateOrders(dbUid);
-    }
-
-    public void ClearOrders(StationCargoOrderDatabaseComponent component)
-    {
-        if (component.Orders.Count == 0)
-            return;
-
-        component.Orders.Clear();
-    }
-
     private void UpdateConsole()
     {
         var stationQuery = EntityQueryEnumerator<StationBankAccountComponent>();
@@ -736,61 +791,6 @@ public sealed partial class CargoSystem
     )
     {
         return new CargoOrderData(id, cargoProduct, args.Amount, args.Requester, args.Reason, account);
-    }
-
-    public int GetOutstandingOrderCount(
-        Entity<StationCargoOrderDatabaseComponent> station,
-        ProtoId<CargoAccountPrototype> account
-    )
-    {
-        var amount = 0;
-
-        if (!TryComp<StationBankAccountComponent>(station, out var bank))
-            return amount;
-
-        foreach (var order in station.Comp.Orders[account])
-        {
-            if (!order.Approved)
-                continue;
-            amount += order.OrderQuantity - order.NumDispatched;
-        }
-
-        if (account == bank.PrimaryAccount)
-            return amount;
-
-        foreach (var order in station.Comp.Orders[bank.PrimaryAccount])
-        {
-            if (order.Account != account || !order.Approved)
-                continue;
-            amount += order.OrderQuantity - order.NumDispatched;
-        }
-
-        return amount;
-    }
-
-    public List<ProtoId<CargoProductPrototype>> GetAvailableProducts(Entity<CargoOrderConsoleComponent> ent)
-    {
-        if (
-            _station.GetOwningStation(ent) is not { } station
-            || !TryComp<StationCargoOrderDatabaseComponent>(station, out var db)
-        )
-        {
-            return new List<ProtoId<CargoProductPrototype>>();
-        }
-
-        var products = new List<ProtoId<CargoProductPrototype>>();
-
-        // Note that a market must be both on the station and on the console to be available.
-        var markets = ent.Comp.AllowedGroups.Intersect(db.Markets).ToList();
-        foreach (var product in ProtoMan.EnumeratePrototypes<CargoProductPrototype>())
-        {
-            if (!markets.Contains(product.Group))
-                continue;
-
-            products.Add(product.ID);
-        }
-
-        return products;
     }
 
     private void PlayDenySound(Entity<CargoOrderConsoleComponent> ent)
