@@ -1,6 +1,8 @@
+using Content.Client.DisplacementMap;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Robust.Client.GameObjects;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Nutrition.EntitySystems;
 
@@ -8,6 +10,7 @@ public sealed partial class CreamPieSystem : SharedCreamPieSystem
 {
     [Dependency] private SpriteSystem _sprite = default!;
     [Dependency] private AppearanceSystem _appearance = default!;
+    [Dependency] private DisplacementMapSystem _displacement = default!;
 
     public override void Initialize()
     {
@@ -26,6 +29,7 @@ public sealed partial class CreamPieSystem : SharedCreamPieSystem
 
     private void OnComponentShutdown(Entity<CreamPiedComponent> ent, ref ComponentShutdown args)
     {
+        _displacement.EnsureDisplacementIsNotOnSprite((ent, Comp<SpriteComponent>(ent)), CreamPiedVisualLayer.Key);
         _sprite.RemoveLayer(ent.Owner, CreamPiedVisualLayer.Key);
     }
 
@@ -50,17 +54,26 @@ public sealed partial class CreamPieSystem : SharedCreamPieSystem
         var appearance = ent.Comp3;
 
         // If there is no sprite to use, remove the layer. Otherwise ensure that it exists and set the visuals accordingly.
-        int index;
         if (creamPied.Sprite == null)
         {
             _sprite.RemoveLayer((ent.Owner, sprite), CreamPiedVisualLayer.Key);
+            _displacement.EnsureDisplacementIsNotOnSprite((ent.Owner, sprite), CreamPiedVisualLayer.Key);
             return;
         }
 
-        index = _sprite.LayerMapReserve((ent.Owner, sprite), CreamPiedVisualLayer.Key);
+        int index = _sprite.LayerMapReserve((ent.Owner, sprite), CreamPiedVisualLayer.Key);
 
         _appearance.TryGetData<bool>(ent.Owner, CreamPiedVisuals.Creamed, out var isCreamPied, appearance);
         _sprite.LayerSetSprite((ent.Owner, sprite), index, creamPied.Sprite);
         _sprite.LayerSetVisible((ent.Owner, sprite), index, isCreamPied);
+
+        if (ProtoMan.Resolve(ent.Comp1.Displacement, out var displacementProto))
+        {
+            _displacement.TryAddDisplacement(displacementProto.Displacement, (ent.Owner, sprite), index, CreamPiedVisualLayer.Key, out _);
+        }
+        else
+        {
+            _displacement.EnsureDisplacementIsNotOnSprite((ent.Owner, sprite), CreamPiedVisualLayer.Key);
+        }
     }
 }

@@ -218,6 +218,9 @@
       collection: BaseWhistle
   - type: Whistle
     distance: 3
+  - type: Tag
+    tags:
+    - MonkeyWearable
 
 - type: entity
   parent: BaseWhistle

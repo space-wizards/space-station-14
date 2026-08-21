@@ -484,5 +484,13 @@ public enum LogType
     /// </summary>
     Connection = 104,
 
-    GameDirector = 105,
+    /// <summary>
+    /// Silicon law changes.
+    /// </summary>
+    SiliconLaw = 105,
+    
+    /// <summary>
+    /// Dynamic events.
+    /// </summary>
+    GameDirector = 106,
 }
