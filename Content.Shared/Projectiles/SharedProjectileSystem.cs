@@ -4,6 +4,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
+using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Throwing;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
@@ -102,6 +103,15 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         RaiseLocalEvent(embeddable, ref ev);
     }
 
+    public void EmbedWhileActive(Entity<ItemToggleComponent> embeddable, ref ItemToggleComponent args)
+    {
+        if (EntityManager.HasComponent<ItemToggleComponent>(uid:false))
+        {
+            EmbedWhileActive(embeddable, ref args);
+            return;
+        }
+
+    }
     private void EmbedAttach(EntityUid uid, EntityUid target, EntityUid? user, EmbeddableProjectileComponent component)
     {
         TryComp<PhysicsComponent>(uid, out var physics);

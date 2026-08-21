@@ -91,6 +91,14 @@
       visible: false
       shader: unshaded
       map: [ "blade" ]
+  - type: EmbeddableProjectile
+  - type: LandAtCursor
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 15
+        Heat: 15
+        Structural: 12
   - type: Item
     sprite: Objects/Weapons/Melee/e_sword-inhands.rsi
   - type: StaticPrice
