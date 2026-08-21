@@ -252,7 +252,7 @@
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
   - type: BallisticAmmoSelfRefiller
-    autoRefillRate: 12s
+    autoRefillRate: 17s
   - type: MagazineVisuals
     magState: mag
     steps: 7
