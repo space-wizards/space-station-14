@@ -25,6 +25,9 @@ changeling-catalog-lethal-sting-desc = Causes very slow damage to the target. Us
 changeling-catalog-hallucinogenic-sting-name = Hallucinogenic Sting
 changeling-catalog-hallucinogenic-sting-desc = Causes the target to get high and have difficulty speaking. Causes confusion among the crew. Can be used on self.
 
+changeling-catalog-mute-sting-name = Mute Sting
+changeling-catalog-mute-sting-desc = Causes the target to be incapable of speech. Imperceptable until the target tries to speak. Can be used on self.
+
 changeling-catalog-screech-name = Screech [TEMPORARY]
 changeling-catalog-screech-desc = We let out a powerful screech that disarms people who hear it without adequate ear protection. THIS ACTION WILL BE MOVED TO THE HORROR FORM WHEN IT IS IMPLEMENTED.
 

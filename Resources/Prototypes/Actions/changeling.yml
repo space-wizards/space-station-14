@@ -279,6 +279,26 @@
       quantity: 10 # About 20s of your speech being scrambled
 
 - type: entity
+  parent: BaseActionChangelingSting
+  id: ActionChangelingStingMute
+  name: Mute Sting
+  description: "Silently sting a target and inject them with chemicals that prevent them from speaking. \n\nRequires 30 Chemicals."
+  components:
+  - type: Action
+    useDelay: 10
+    raiseOnAction: true
+    itemIconStyle: BigAction
+  - type: Sprite
+    sprite: Interface/Actions/changeling2.rsi
+    layers:
+    - state: mute_sting
+  - type: EntityEffectAction
+    effects:
+    - !type:AddReagentToBloodstream
+      reagent: ChangelingMuteToxin
+      quantity: 5 # 100s of imperceptible mute
+
+- type: entity
   parent: BaseAction
   id: ActionChangelingLastResort
   name: "[color=red]Last Resort[/color]"

@@ -31,6 +31,9 @@ reagent-desc-nocturine = A highly effective sedative and hypnotic, developed by 
 reagent-name-mute-toxin = mute toxin
 reagent-desc-mute-toxin = A thick chemical that coats the vocal cords, making the user unable to speak during metabolization.
 
+reagent-name-changeling-mute-toxin = changeling mute toxin
+reagent-desc-changeling-mute-toxin = A mute toxin isomer evolved by changelings which is imperceptible to the user until they attempt to speak. 
+
 reagent-name-norepinephric-acid = norepinephric acid
 reagent-desc-norepinephric-acid = A smooth chemical that blocks the optical receptors, rendering the user blind during metabolization.
 

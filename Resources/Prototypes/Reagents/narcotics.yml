@@ -349,6 +349,24 @@
         time: 10
 
 - type: reagent
+  id: ChangelingMuteToxin
+  name: reagent-name-changeling-mute-toxin
+  group: Narcotics
+  desc: reagent-desc-changeling-mute-toxin
+  physicalDesc: reagent-physical-desc-syrupy
+  contrabandSeverity: Major
+  color: "#000000"
+  boilingPoint: 255.0
+  meltingPoint: 36.0
+  metabolisms:
+    Bloodstream:
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectChangelingMuted
+        type: Add
+        time: 10
+
+- type: reagent
   id: NorepinephricAcid
   name: reagent-name-norepinephric-acid
   group: Narcotics
