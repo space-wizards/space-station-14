@@ -1,4 +1,5 @@
 ﻿<DefaultWindow xmlns="https://spacestation14.io"
+               xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                Title="{Loc 'credits-window-title'}"
                SetSize="650 650">
     <TabContainer Name="MasterTabContainer">
@@ -26,11 +27,29 @@
                 <!-- Licenses get added here by code -->
             </BoxContainer>
         </ScrollContainer>
-        <ScrollContainer Name="AttributionsTab"
-                         HScrollEnabled="False">
-            <BoxContainer Name="AttributionsContainer"
-                          Orientation="Vertical"
-                          Margin="2 2 0 0" />
-        </ScrollContainer>
+        <BoxContainer Name="AttributionsTab"
+                      Orientation="Vertical">
+            <BoxContainer Orientation="Horizontal"
+                          Align="Center"
+                          SetHeight="32"
+                          Margin="2">
+                <RichTextLabel Text="{Loc 'credits-window-page-label'}"/>
+                <controls:IntegerLineEdit Name="PageJumpLineEdit"
+                                      SelectAllOnFocus="True"
+                                      SetWidth="40"/>
+                <BoxContainer Name="ButtonsContainer"
+                              Orientation="Horizontal"
+                              Margin="8 0"/>
+                    <!-- Page buttons are generated here so that their invokes can be reset -->
+            </BoxContainer>
+            <ScrollContainer HScrollEnabled="False"
+                             VerticalExpand="True">
+                <BoxContainer Name="AttributionsContainer"
+                              Orientation="Vertical"
+                              Margin="2">
+                    <!-- .rsi and .rga Attributions go here get added here by code -->
+                </BoxContainer>
+            </ScrollContainer>
+        </BoxContainer>
     </TabContainer>
 </DefaultWindow>
