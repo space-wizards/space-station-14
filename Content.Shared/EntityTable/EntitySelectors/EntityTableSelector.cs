@@ -49,7 +49,7 @@ public abstract partial class EntityTableSelector
     /// <summary>
     /// Samples an output for this selector.
     /// </summary>
-    public virtual IEnumerable<EntProtoId> GetSpawns(
+    public IEnumerable<EntProtoId> GetSpawns(
         IRobustRandom rand,
         IEntityManager entMan,
         IPrototypeManager proto,

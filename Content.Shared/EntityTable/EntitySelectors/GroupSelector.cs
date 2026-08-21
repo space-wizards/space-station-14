@@ -15,6 +15,8 @@ public sealed partial class GroupSelector : EntityTableSelectorWithChildrenBase
         IPrototypeManager proto,
         EntityTableContext ctx)
     {
+        using var scoped = ScopedConditions(ctx);
+
         var children = new Dictionary<EntityTableSelector, float>(Children.Count);
         foreach (var child in Children)
         {
@@ -26,11 +28,14 @@ public sealed partial class GroupSelector : EntityTableSelectorWithChildrenBase
         }
 
         if (children.Count == 0)
-            return Array.Empty<EntProtoId>();
+            yield break;
 
         var pick = SharedRandomExtensions.Pick(children, rand);
 
-        return pick.GetSpawns(rand, entMan, proto, ctx);
+        foreach (var spawn in pick.GetSpawns(rand, entMan, proto, ctx))
+        {
+            yield return spawn;
+        }
     }
 
     protected override IEnumerable<(EntProtoId spawn, double)> ListSpawnsImplementation(IEntityManager entMan, IPrototypeManager proto, EntityTableContext ctx)

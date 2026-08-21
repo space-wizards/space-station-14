@@ -13,6 +13,8 @@ public sealed partial class AllSelector : EntityTableSelectorWithChildrenBase
         IPrototypeManager proto,
         EntityTableContext ctx)
     {
+        using var scoped = ScopedConditions(ctx);
+
         foreach (var child in Children)
         {
             foreach (var spawn in child.GetSpawns(rand, entMan, proto, ctx))

@@ -119,4 +119,13 @@ public sealed class EntityTableContext
     {
         _data[key] = data;
     }
+
+    /// <summary>
+    /// Removes data from the context, if the key exists.
+    /// </summary>
+    [PublicAPI]
+    public void RemoveData([ForbidLiteral] string key)
+    {
+        _data.Remove(key);
+    }
 }

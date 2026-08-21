@@ -18,6 +18,7 @@ public sealed partial class NestedSelector : EntityTableSelectorWithNestedBase
     /// <inheritdoc/>>
     public override bool CheckConditions(IEntityManager entMan, IPrototypeManager proto, EntityTableContext ctx)
     {
+        using var scoped = ScopedConditions(ctx);
         return base.CheckConditions(entMan, proto, ctx) && proto.Index(TableId).Table.CheckConditions(entMan, proto, ctx);
     }
 
@@ -27,7 +28,12 @@ public sealed partial class NestedSelector : EntityTableSelectorWithNestedBase
         IPrototypeManager proto,
         EntityTableContext ctx)
     {
-        return proto.Index(TableId).Table.GetSpawns(rand, entMan, proto, ctx);
+        using var scoped = ScopedConditions(ctx);
+
+        foreach (var spawn in proto.Index(TableId).Table.GetSpawns(rand, entMan, proto, ctx))
+        {
+            yield return spawn;
+        }
     }
 
     /// <inheritdoc/>>
