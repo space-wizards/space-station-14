@@ -35,7 +35,7 @@ namespace Content.Server.Hands.Systems
         [Dependency] private PullingSystem _pullingSystem = default!;
         [Dependency] private ThrowingSystem _throwingSystem = default!;
         [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
-        [Dependency] private readonly PopupSystem _popup = default!;
+        [Dependency] private PopupSystem _popup = default!;
 
         /// <summary>
         /// Items dropped when the holder falls down will be launched in

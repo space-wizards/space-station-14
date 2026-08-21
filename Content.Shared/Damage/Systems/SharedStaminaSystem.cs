@@ -53,6 +53,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
     [Dependency] private ItemToggleSystem _itemToggle = default!;
     [Dependency] protected SharedStunSystem StunSystem = default!;
     [Dependency] private MeleeBatteryHitsLeftSystem _meleeBattery = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
 
     [Dependency] private EntityQuery<StaminaComponent> _stamQuery = default!;
 
@@ -243,6 +244,17 @@ public abstract partial class SharedStaminaSystem : EntitySystem
 
         if (hands.NextThrowTime < melee.NextAttack)
             _hands.ResetThrowCooldown(args.User, hands, melee.NextAttack);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnThrown(Entity<StaminaDamageOnCollideComponent> ent, ref ThrownEvent args)
+    {
+        if (!TryComp<HandsComponent>(args.User, out var hands) || !TryComp<MeleeWeaponComponent>(ent.Owner, out var melee))
+            return;
+
+        var throwCooldown = Timing.CurTime + TimeSpan.FromSeconds(1 / melee.AttackRate);
+        if (hands.NextThrowTime < throwCooldown)
+            _hands.ResetThrowCooldown(args.User.Value, hands, throwCooldown);
     }
 
     [SubscribeLocalEvent]

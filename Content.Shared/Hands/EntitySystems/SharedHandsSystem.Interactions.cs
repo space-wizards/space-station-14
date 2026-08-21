@@ -214,7 +214,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
     }
 
     /// <summary>
-    /// Resets the throw cooldown to allow for throwing, and optionally sets a new throw tim if given.
+    /// Resets the throw cooldown to allow for throwing, and optionally sets a new throw time if given.
     /// </summary>
     /// <param name="customTime">If set, this will be the new NextThrowTime.</param>
     public void ResetThrowCooldown(EntityUid uid, HandsComponent? handsComp, TimeSpan? customTime = null)
@@ -229,6 +229,5 @@ public abstract partial class SharedHandsSystem : EntitySystem
         }
 
         handsComp.NextThrowTime = (TimeSpan)customTime;
-
     }
 }
