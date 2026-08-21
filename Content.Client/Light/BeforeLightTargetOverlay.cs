@@ -49,7 +49,7 @@ public sealed partial class BeforeLightTargetOverlay : Overlay
         args.WorldHandle.RenderInRenderTarget(res.EnlargedLightTarget,
             () =>
             {
-            }, _clyde.GetClearColor(args.MapUid));
+            }, _clyde.GetClearColor(args.MapUid, args.MapId, args.ZLevelOffset));
     }
 
     internal CachedResources GetCachedForViewport(IClydeViewport viewport)

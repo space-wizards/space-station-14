@@ -84,7 +84,5 @@ public sealed partial class MappingOverlay : Overlay
                 break;
             }
         }
-
-        handle.UseShader(null);
     }
 }

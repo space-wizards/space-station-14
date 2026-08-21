@@ -125,9 +125,6 @@ public sealed partial class ScreechShockWaveOverlay : Overlay
         var worldHandle = args.WorldHandle;
         worldHandle.UseShader(_shader);
         worldHandle.DrawRect(args.WorldBounds, Color.White);
-
-        // i wonder what would happen if this line wasn't there :godo:
-        worldHandle.UseShader(null);
     }
 
     /// <summary>
