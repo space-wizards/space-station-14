@@ -23,11 +23,13 @@ public sealed partial class BotanySeedSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
 
     [Dependency] private EntityQuery<PlantDataComponent> _dataQuery = default!;
+    [Dependency] private EntityQuery<PlantTrayComponent> _trayQuery = default!;
+    [Dependency] private EntityQuery<PaperLabelComponent> _labelQuery = default!;
 
     [SubscribeLocalEvent]
     private void OnAfterInteract(Entity<SeedComponent> ent, ref AfterInteractEvent args)
     {
-        if (args.Handled || !args.CanReach || !HasComp<PlantTrayComponent>(args.Target))
+        if (args.Handled || !args.CanReach || !_trayQuery.HasComp(args.Target))
             return;
 
         var ev = new PlantingSeedAttemptEvent(ent, args.User);
@@ -65,7 +67,7 @@ public sealed partial class BotanySeedSystem : EntitySystem
             args.User,
             PopupType.Medium);
 
-        if (TryComp<PaperLabelComponent>(args.Seed, out var paperLabel))
+        if (_labelQuery.TryComp(args.Seed, out var paperLabel))
             _itemSlots.TryEjectToHands(args.Seed, paperLabel.LabelSlot, args.User);
 
         _plantTray.PlantingPlantInTray(ent.Owner, plantUid, args.Seed.Comp.HealthOverride);

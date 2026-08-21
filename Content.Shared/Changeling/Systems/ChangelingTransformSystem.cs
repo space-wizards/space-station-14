@@ -108,6 +108,9 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         if (!TryComp<ChangelingIdentityComponent>(ent, out var identity))
             return;
 
+        if (!ent.Comp.ManualDrop)
+            return; // can't drop identities in this mode
+
         if (identity.CurrentIdentity == targetIdentity)
             return; // don't drop our current identity
 
@@ -181,6 +184,11 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         if (args.Target is not { } targetIdentity)
             return;
 
+        EntityUid? previousIdentity = null;
+
+        if (TryComp<ChangelingIdentityComponent>(ent.Owner, out var identityComp) && !ent.Comp.ManualDrop)
+            previousIdentity = identityComp.CurrentIdentity;
+
         var beforeTransformEvent = new BeforeChangelingTransformEvent(targetIdentity);
         RaiseLocalEvent(args.User, beforeTransformEvent);
 
@@ -209,6 +217,9 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
 
         var afterTransformEvent = new AfterChangelingTransformEvent(targetIdentity);
         RaiseLocalEvent(args.User, afterTransformEvent);
+
+        if (previousIdentity != null)
+            _changelingIdentity.DropStoredIdentity(ent.Owner, previousIdentity.Value);
     }
 
     private void StorageBeforeTransform(Entity<StorageComponent> ent, ref BeforeChangelingTransformEvent args)
