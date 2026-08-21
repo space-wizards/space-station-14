@@ -965,14 +965,14 @@ FloorTileItemUraniumMarble: FloorTileItemDarkMarble
 FloorTileItemPlasmaMarble: FloorTileItemWhiteMarble
 FloorTileItemEighties: FloorTileItemArcadeBlue
 FloorTileItemArcadeBlue2: FloorTileItemArcadeBlue
-FloorTileItemElevatorShaft: FloorTileItemSteel
+FloorTileItemElevatorShaft: FloorTileItemDark
 FloorTileItemMining: null # FloorTileItemDarkPlastic
 FloorTileItemMiningLight: null # FloorTileItemPlastic
 FloorTileItemMiningDark: null # FloorTileItemDarkPlastic
 FloorTileItemRockVault: FloorTileItemSteel
 FloorTileItemBrassReebe: null
 FloorTileItemBrassFilled: null
-FloorBananiumEntity: FloorTileItemGold
+FloorBananiumEntity: null
 FloorTileItemMono: FloorTileItemSteel
 
 # 2026-07-23
@@ -1043,7 +1043,7 @@ FloorTileItemXenoSteel: FloorTileItemExoHull
 FloorTileItemXenoSteelCorner: FloorTileItemExoCornerSW
 FloorTileItemXenoMaint: FloorTileItemExoTechmaint
 FloorTileItemXenoborg: FloorTileItemExoBorg
-FloorTileItemDarkSquiggly: FloorTileItemExoVertical
+FloorTileItemDarkSquiggly: FloorTileItemExoHorizontal
 
 # 2026-08-04
 FloorSnowChasm: FloorChasmEntity
@@ -1129,3 +1129,4 @@ DrinkNeurotoxinGlass: null
 
 #2026-08-19
 JanitorServiceLight: null
+

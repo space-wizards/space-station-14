@@ -152,7 +152,7 @@
 
 - type: tileAlias
   id: FloorElevatorShaft
-  target: FloorSteel
+  target: FloorDark
 
 - type: tileAlias
   id: FloorMining
@@ -326,7 +326,7 @@
 
 - type: tileAlias
   id: FloorDarkSquiggly
-  target: FloorExoVertical # needs to be vertical and horizontal at the same time...
+  target: FloorExoHorizontal # needs to be vertical and horizontal at the same time...
 
 - type: tileAlias
   id: FloorAsphalt
