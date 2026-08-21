@@ -486,7 +486,7 @@
   - type: StationEvent
     earliestStart: 45
     minimumPlayers: 40
-    weight: 1 # Zombies was happening basically every single survival round, so now it's super rare
+    weight: 1
     duration: 1
     occursDuringRoundEnd: false
   - type: ZombieRule

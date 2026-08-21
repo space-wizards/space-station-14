@@ -121,14 +121,14 @@ public sealed partial class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponen
             _popup.PopupEntity(Loc.GetString("zombie-alone"), healthy[0], healthy[0]);
 
         if (GetInfectedFraction(false) > zombieRuleComponent.ZombieShuttleCallPercentage && !_roundEnd.IsRoundEndRequested())
-            _roundEnd.DoRoundEndBehavior(zombieRuleComponent.ZombieRoundEndBehavior,
-                zombieRuleComponent.ZombieEvacShuttleTime);
         {
             foreach (var station in _station.GetStations())
             {
                 _chat.DispatchStationAnnouncement(station, Loc.GetString("zombie-shuttle-call"), colorOverride: Color.Crimson);
             }
-            _roundEnd.RequestRoundEnd(checkCooldown: false);
+
+            _roundEnd.DoRoundEndBehavior(zombieRuleComponent.ZombieRoundEndBehavior,
+            zombieRuleComponent.ZombieEvacShuttleTime);
         }
 
         // we include dead for this count because we don't want to end the round
