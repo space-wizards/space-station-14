@@ -488,7 +488,7 @@
     - Plating
     - FloorPlastic
   - type: Stack
-    stackType: FloorTileStackPlasticq
+    stackType: FloorTileStackPlastic
 
 - type: entity
   parent: FloorTileItemPlastic
