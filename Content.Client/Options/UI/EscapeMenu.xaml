@@ -7,6 +7,8 @@
                 Resizable="False">
 
     <BoxContainer Orientation="Vertical" SeparationOverride="4" MinWidth="150">
+        <Label Access="Public" Name="RealTime"/>
+        <Label Access="Public" Name="PlayerPlaytime"/>
         <ui:VoteCallMenuButton />
         <PanelContainer StyleClasses="LowDivider" Margin="0 2.5 0 2.5" />
         <Button Access="Public" Name="RulesButton" Text="{Loc 'ui-escape-rules'}" StyleClasses="OpenLeft" />
