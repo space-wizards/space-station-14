@@ -260,8 +260,8 @@
   - type: Explosive
     explosionType: XenoborgAntiStructureExplosion
     totalIntensity: 15.0
-    intensitySlope: 1.5
-    maxIntensity: 2.0
+    intensitySlope: 1.6
+    maxIntensity: 1.8
     maxTileBreak: 0
   - type: SineWaveAnimation
     xWave:
