@@ -331,9 +331,9 @@ public abstract partial class SharedEntityStorageSystem : EntitySystem
             var parent = parentContainer.Owner;
             var xform = Transform(parent);
 
-            if (!_container.IsEntityInContainer(parent) && TryComp<EntityStorageComponent>(parent, out var entStorageComp))
+            if (!_container.IsEntityInContainer(parent))
             {
-                if (entStorageComp.EnteringOffset == Vector2.Zero)
+                if (!TryComp<EntityStorageComponent>(parent, out var entStorageComp) || entStorageComp.EnteringOffset == Vector2.Zero)
                 {
                     if (!_container.Remove(toRemove, parentContainer))
                         return false;
