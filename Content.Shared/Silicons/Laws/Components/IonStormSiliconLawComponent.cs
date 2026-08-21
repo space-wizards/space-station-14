@@ -5,7 +5,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Silicons.Laws.Components;
 
 /// <summary>
-/// This is used for an entity which has its laws adjusted on an ion storm.
+/// This is used for an entity which can have its laws adjusted by an ion storm.
 /// </summary>
 /// <remarks>
 /// Note: You'll also need to give the entity <see cref="IonStormTargetComponent"/> for it to be affected.
