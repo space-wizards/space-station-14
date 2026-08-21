@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Numerics;
+using Content.Client.Examine;
 using Content.Client.Graphics;
 using Content.Client.UserInterface.Systems.Chat;
 using Robust.Client.GameObjects;
@@ -40,6 +41,7 @@ public sealed partial class SpeechBubbleOverlay : Overlay
 
     private readonly ChatUIController _chatUIController;
 
+    private readonly ExamineSystem _examineSystem;
     private readonly SpriteSystem _sprite;
     private readonly SharedTransformSystem _transform;
 
@@ -55,11 +57,13 @@ public sealed partial class SpeechBubbleOverlay : Overlay
     private const float VerticalMargin = 2f;
 
     public SpeechBubbleOverlay(
+        ExamineSystem examineSystem,
         SpriteSystem sprite,
         SharedTransformSystem transform,
         EntityQuery<SpriteComponent> spriteQuery,
         EntityQuery<TransformComponent> transformQuery)
     {
+        _examineSystem = examineSystem;
         _sprite = sprite;
         _transform = transform;
 
@@ -89,6 +93,7 @@ public sealed partial class SpeechBubbleOverlay : Overlay
         {
             control.Update(args);
         }
+
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -116,6 +121,12 @@ public sealed partial class SpeechBubbleOverlay : Overlay
                 continue;
 
             if (xform.MapID != eye.Position.MapId)
+                continue;
+
+            var entCoords = _transform.GetMapCoordinates(ent);
+            var eyeCoords = eye.Position;
+
+            if (eye.DrawFov && !_examineSystem.InRangeUnOccluded(entCoords, eyeCoords, 0, null))
                 continue;
 
             //Get sprite bounding box so we can draw at the bottom.

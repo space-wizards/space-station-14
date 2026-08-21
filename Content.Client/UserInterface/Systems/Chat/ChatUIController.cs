@@ -284,6 +284,7 @@ public sealed partial class ChatUIController : UIController
 
         _speechBubbleOverlay =
                 new SpeechBubbleOverlay(
+                    _examine,
                     _sprite,
                     _transform,
                     _spriteQuery,
@@ -699,51 +700,6 @@ public sealed partial class ChatUIController : UIController
             // We keep the queue around while it has 0 items. This allows us to keep the timer.
             // When the timer hits 0 and there's no messages left, THEN we can clear it up.
             CreateNuSpeechBubble(entity, msg);
-        }
-
-        var player = _player.LocalEntity;
-        var predicate = static (EntityUid uid, (EntityUid compOwner, EntityUid? attachedEntity) data)
-            => uid == data.compOwner || uid == data.attachedEntity;
-        var playerPos = player != null
-            ? _eye.CurrentEye.Position
-            : MapCoordinates.Nullspace;
-
-        var occluded = player != null && _examine.IsOccluded(player.Value);
-
-        foreach (var (ent, bubs) in ActiveSpeechBubbles)
-        {
-            if (EntityManager.Deleted(ent))
-            {
-                SetBubbles(bubs, false);
-                continue;
-            }
-
-            if (ent == player)
-            {
-                SetBubbles(bubs, true);
-                continue;
-            }
-
-            var otherPos = _transform?.GetMapCoordinates(ent) ?? MapCoordinates.Nullspace;
-
-            if (occluded && !_examine.InRangeUnOccluded(
-                    playerPos,
-                    otherPos, 0f,
-                    (ent, player), predicate))
-            {
-                SetBubbles(bubs, false);
-                continue;
-            }
-
-            SetBubbles(bubs, true);
-        }
-    }
-
-    private void SetBubbles(List<SpeechBubble> bubbles, bool visible)
-    {
-        foreach (var bubble in bubbles)
-        {
-            bubble.Visible = visible;
         }
     }
 
