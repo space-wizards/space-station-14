@@ -15,22 +15,27 @@ public sealed partial class EscapeMenu : DefaultWindow
     [Dependency] private ClientsidePlaytimeTrackingManager _playtimeTracking = default!;
 
     private bool _format24 = true;
+    private bool _showPlaytime = false;
 
     public EscapeMenu()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
-        OnOpen += UpdatePlaytime;
+        Time.OnPressed += _ => _showPlaytime = !_showPlaytime;
+        Time.OnPressed += _ => UpdatePlaytime();
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
     {
+        if (_showPlaytime)
+            return;
+
         var format = "h:mm tt";
         if (_format24)
             format = "H:mm";
 
-        RealTime.Text = DateTime.Now.ToString(format);
+        Time.Text = DateTime.Now.ToString(format);
     }
 
     private void UpdatePlaytime()
@@ -44,6 +49,6 @@ public sealed partial class EscapeMenu : DefaultWindow
             msg = Loc.GetString("clock-playtime-hours", ("hours", hoursToday));
         }
 
-        PlayerPlaytime.Text = msg;
+        Time.Text = msg;
     }
 }
