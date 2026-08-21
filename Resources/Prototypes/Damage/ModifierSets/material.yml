@@ -62,7 +62,7 @@
     Slash: 5
     Piercing: 5
     Shock: 30 # Way less electrical resistance compared to steel
-    Caustic: 10
+    Caustic: 5
 
 # Metals that you really shouldn't be building things out of. Gold, silver, etc.
 - type: damageModifierSet

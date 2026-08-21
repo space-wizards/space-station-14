@@ -77,7 +77,7 @@
           False: { visible: False }
   - type: AnimationPlayer
   - type: Damageable
-    damageModifierSet: SteelMod
+    damageModifierSet: BrassMod
   - type: Destructible
     thresholds:
     - trigger:
