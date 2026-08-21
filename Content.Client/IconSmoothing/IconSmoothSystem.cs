@@ -465,7 +465,7 @@ public sealed partial class IconSmoothSystem : EntitySystem
     private void ExpandCache()
     {
         var newCacheSize = Math.Max(16, _keyCaches.Count * 2);
-        DebugTools.Assert(newCacheSize < 32768, "Number of cached keys exceeded what can be stored in a short.");
+        DebugTools.Assert(newCacheSize < 256, "Number of cached keys exceeded what can be stored in a short.");
         var curSize = _keyCaches.Count;
 
         _keyCaches.EnsureLength(newCacheSize);
