@@ -54,12 +54,24 @@ public sealed partial class ExplosionSystem
         ReloadMap();
     }
 
+    /// <summary>
+    /// Update the map of explosion blockers.
+    /// </summary>
+    /// <param name="gridId">The entity of the grid.</param>
+    /// <param name="tile">Coordinates of the tile.</param>
+    /// <param name="grid">Grid entity's MapGrid component.</param>
+    /// <seealso cref="UpdateAirtightMap(EntityUid, MapGridComponent, Vector2i)"/>
     public void UpdateAirtightMap(EntityUid gridId, Vector2i tile, MapGridComponent? grid = null)
     {
         if (Resolve(gridId, ref grid, false))
             UpdateAirtightMap(gridId, grid, tile);
     }
 
+    /// <summary>
+    /// Gets a copy of local tolerance data given its index.
+    /// </summary>
+    /// <param name="idx">A TileData.ToleranceCacheIndex value.</param>
+    /// <seealso cref="TileData.ToleranceCacheIndex"/>
     [Access(typeof(ExplosionGridTileFlood))]
     public ToleranceValues GetToleranceValues(int idx)
     {
@@ -85,7 +97,7 @@ public sealed partial class ExplosionSystem
         var tolerance = new FixedPoint2[_explosionTypes.Count];
         var blockedDirections = AtmosDirection.Invalid;
 
-        var anchoredEnumerator = _map.GetAnchoredEntitiesEnumerator(gridId, grid, tile);
+        var anchoredEnumerator = _map.GetAnchoredEntities(gridId, grid, tile);
 
         while (anchoredEnumerator.MoveNext(out var uid))
         {
@@ -267,7 +279,7 @@ public sealed partial class ExplosionSystem
                     if (modifiers.Coefficients.TryGetValue(type, out var armorMod))
                         modifier *= armorMod;
 
-                    if (modifiers.FlatReduction.TryGetValue(type, out var flat))
+                    if (modifiers.FlatReductions.TryGetValue(type, out var flat))
                     {
                         if (flat > 0)
                         {
@@ -283,7 +295,7 @@ public sealed partial class ExplosionSystem
                 damagePerIntensity += value * Math.Max(0, modifier);
             }
 
-            explosionTolerance[index] = GetExplosionTolerance(uid, totalDamageTarget, damagePerIntensity, damageThresholds);
+            explosionTolerance[index] += GetExplosionTolerance(uid, totalDamageTarget, damagePerIntensity, damageThresholds);
         }
     }
 

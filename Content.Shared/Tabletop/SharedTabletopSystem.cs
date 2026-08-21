@@ -101,7 +101,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
         EnsureComp<TabletopHologramComponent>(hologram);
         session.Entities.Add(hologram);
 
-        _popup.PopupClient(Loc.GetString("tabletop-added-piece"), ent.Owner, args.User);
+        _popup.PopupEntity(Loc.GetString("tabletop-added-piece"), ent.Owner, args.User);
     }
 
     /// <summary>

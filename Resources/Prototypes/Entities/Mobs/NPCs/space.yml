@@ -74,7 +74,7 @@
 - type: entity
   name: space bear
   id: MobBearSpace
-  parent: [MobSpaceBasic, BaseSlicingRefinable]
+  parent: [MobSpaceBasic, BaseSlicingRefinable, BaseMobDestructible]
   description: It looks friendly. Why don't you give it a hug?
   components:
   - type: Sprite
@@ -105,8 +105,7 @@
   - type: ReplacementAccent
     accent: genericAggressive
   - type: Vocal
-    sounds:
-      Unsexed: Bear
+    emoteSounds: Bear
   - type: InteractionPopup
     successChance: 0.25
     interactSuccessString: petting-success-bear
@@ -124,7 +123,7 @@
 - type: entity
   name: space kangaroo
   id: MobKangarooSpace
-  parent: [MobSpaceBasic, StripableInventoryBase, BaseSlicingRefinable]
+  parent: [MobSpaceBasic, StripableInventoryBase, BaseSlicingRefinable, BaseMobDestructible]
   description: It looks friendly. Why don't you give it a hug?
   components:
   - type: Sprite
@@ -163,8 +162,7 @@
     speciesId: kangaroo
     templateId: spacekangaroo
   - type: Vocal
-    sounds:
-      Unsexed: Kangaroo
+    emoteSounds: Kangaroo
   - type: ReplacementAccent
     accent: kangaroo
   - type: ToolRefinable
@@ -186,7 +184,7 @@
 - type: entity
   name: space spider
   id: MobSpiderSpace
-  parent: [MobSpaceBasic, BaseSlicingRefinable]
+  parent: [MobSpaceBasic, BaseSlicingRefinable, BaseMobDestructible]
   description: It's so glowing, it looks dangerous.
   components:
   - type: Sprite
@@ -266,10 +264,7 @@
     speechSounds: Arachnid
     allowedEmotes: ['Click', 'Chitter']
   - type: Vocal
-    sounds:
-      Male: UnisexArachnid
-      Female: UnisexArachnid
-      Unsexed: UnisexArachnid
+    emoteSounds: UnisexArachnid
   - type: TypingIndicator
     proto: spider
 
@@ -294,7 +289,7 @@
 - type: entity
   name: space cobra
   id: MobCobraSpace
-  parent: [MobSpaceBasic, BaseSlicingRefinable]
+  parent: [MobSpaceBasic, BaseSlicingRefinable, BaseMobDestructible]
   description: Long fangs and a glowing hood, and the alluring look begs to come closer.
   components:
     - type: Sprite
@@ -399,7 +394,7 @@
     - type: SalvageMobRestrictions
 
 - type: entity
-  parent: [ SimpleSpaceMobBase, FlyingMobBase, MobSheepBase ]
+  parent: [ SimpleSpaceMobBase, FlyingMobBase, MobSheepBase, BaseMobDestructible ]
   id: MobSheepSpace
   name: space sheep
   description: A sheep... in space!
@@ -480,17 +475,28 @@
         variation: 0.05
   - type: MobPrice
     price: 600
-  - type: Wooly
-    quantity: 10
-    growthDelay: 120 #2 minutes
+  - type: SolutionManager
+    solutions:
+    - SolutionUdderSheep
+    - SolutionWoolSpaceSheep
   - type: Speech
     speechSounds: SheepSpace
     speechVerb: Sheep
   - type: Vocal
-    sounds:
-      Female: SheepSpace
-      Male: SheepSpace
-      Unsexed: SheepSpace
+    emoteSounds: SheepSpace
+
+- type: entity
+  parent: SolutionWool
+  id: SolutionWoolSpaceSheep
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SatiationProduction
+    delay: 120 #2 minutes
+  - type: SolutionProducer
+    generated:
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 10
 
 - type: entity
   parent: [SimpleSpaceMobBase, BaseMobAnimal, SolutionVermin, MobNightVision]
@@ -561,6 +567,8 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 2
     baseSprintSpeed : 3
+  - type: NameIdentifier
+    group: AdjectivePrefix
   - type: DamageStateVisuals
     states:
       Alive:
@@ -579,23 +587,12 @@
         Quantity: 3
       - ReagentId: Water
         Quantity: 4 #It makes saline if you add salt!
-  - type: Thirst
-    startingThirst: 25  # spawn with Okay thirst state
-    thresholds:
-      OverHydrated: 35
-      Okay: 25
-      Thirsty: 15
-      Parched: 10
-      Dead: 0
-    baseDecayRate: 0.04
-  - type: Hunger
-    thresholds:
-      Overfed: 35
-      Okay: 25
-      Peckish: 15
-      Starving: 10
-      Dead: 0
-    baseDecayRate: 0.1
+  - type: Satiation
+    satiations:
+      Hunger:
+        prototype: SnailHunger
+      Thirst:
+        prototype: MouseThirst
   - type: Extractable
     grindableSolutionName: food
   - type: Tag
@@ -687,7 +684,7 @@
 - type: entity
   parent: [ BaseMobMothroach, MobSnail ]
   id: MobSnailMoth
-  name: Snoth
+  name: snoth
   components:
   - type: GhostRole
     name: ghost-role-information-snoth-name

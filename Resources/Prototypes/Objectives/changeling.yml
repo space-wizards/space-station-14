@@ -17,14 +17,14 @@
   description: We must stay alive at all cost.
   components:
   - type: Objective
-    difficulty: 1
+    difficulty: 0.5
     icon:
       sprite: Mobs/Species/Human/organs.rsi
       state: heart-on
 
 - type: entity
   parent: BaseChangelingObjective
-  id: ChangelingUniqueIdentityObjective
+  id: ChangelingDevouredCountObjective
   components:
   - type: Objective
     difficulty: 1
@@ -34,8 +34,25 @@
   - type: NumberObjective
     min: 3
     max: 4
-    title: objective-unique-identity-name
-    description: objective-unique-identity-description
+    title: objective-devour-unique-identity-name
+    description: objective-devour-unique-identity-description
+  - type: ChangelingUniqueIdentityCondition
+    requireDevour: true
+
+- type: entity
+  parent: BaseChangelingObjective
+  id: ChangelingExtractedCountObjective
+  components:
+  - type: Objective
+    difficulty: 1
+    icon:
+      sprite: Mobs/Aliens/flesh.rsi
+      state: golem
+  - type: NumberObjective
+    min: 8
+    max: 10
+    title: objective-gain-unique-identity-name
+    description: objective-gain-unique-identity-description
   - type: ChangelingUniqueIdentityCondition
 
 - type: entity
@@ -52,11 +69,38 @@
     title: objective-escape-identity-title
   - type: ChangelingEscapeIdentityCondition
   - type: PickRandomPerson
-    filters:
-    - !type:TargetObjectiveMindFilter
-      blacklist:
+    conditions:
+    - !type:RoleCondition
+      inverted: true # Do not roll changelings here. Their initial identity will be basically impossible to get after they transform.
+      whitelist:
         components:
         - ChangelingRole
+
+- type: entity
+  parent: [BaseChangelingObjective, BaseLivingObjective]
+  id: ChangelingEscapeDepartmentObjective
+  description: We must escape with the identity & ID card of any member of this department.
+  components:
+  - type: Objective
+    difficulty: 1
+    icon:
+      sprite: Objects/Fun/Plushies/atmosian.rsi
+      state: icon
+  - type: TargetObjective
+    title: objective-escape-department-title
+  - type: ChangelingEscapeDepartmentCondition
+  - type: PickRandomPerson
+    conditions:
+    - !type:RoleCondition # Do not roll changelings here. It will cause problems with weird job mindroles as they transform n stuff.
+      inverted: true
+      whitelist:
+        components:
+        - ChangelingRole
+    - !type:RoleCondition
+      whitelist:
+        components:
+        - JobRole # Our target has to be employed, obviously.
+    - !type:DifferentDepartmentCondition # I love spawning as a scientist and having to escape as a scientist
 
 - type: entity
   parent: [BaseChangelingObjective, BaseKillObjective]
@@ -69,12 +113,40 @@
   - type: TargetObjective
     title: objective-condition-kill-maroon-title
   - type: PickRandomPerson
-    filters:
+    conditions:
     # Can't have multiple objectives to kill the same person.
-    - !type:TargetObjectiveMindFilter
-      blacklist:
+    - !type:ObjectiveTargetCondition
+      inverted: true
+      whitelist:
         components:
         - KillPersonCondition
   - type: KillPersonCondition
     requireDead: true
     requireMaroon: true
+
+- type: entity
+  parent: BaseChangelingObjective
+  id: ChangelingMostDevouredObjective
+  name: Devour the most humanoids.
+  description: We must devour the most unique humanoids out of all other changelings.
+  components:
+  - type: Objective
+    difficulty: 1
+    icon:
+      sprite: Mobs/Aliens/flesh.rsi
+      state: golem
+  - type: ChangelingMostIdentitiesCondition
+    requireDevour: true
+
+- type: entity
+  parent: BaseChangelingObjective
+  id: ChangelingMostExtractedObjective
+  name: Extract the most identities.
+  description: We must extract the most unique DNA sequences out of all other changelings, via devouring or otherwise.
+  components:
+  - type: Objective
+    difficulty: 1
+    icon:
+      sprite: Mobs/Aliens/flesh.rsi
+      state: golem
+  - type: ChangelingMostIdentitiesCondition

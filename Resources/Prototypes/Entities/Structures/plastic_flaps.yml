@@ -1,7 +1,7 @@
 - type: entity
-  id: PlasticFlapsBase
-  parent: BaseStructureDynamic
   abstract: true
+  parent: [ BaseStructureDynamic, StructureHealthBarrier ]
+  id: PlasticFlapsBase
   placement:
     mode: SnapgridCenter
   components:
@@ -10,7 +10,7 @@
     - Anchorable
   - type: Rotatable
   - type: Sprite
-    sprite: Structures/plastic_flaps.rsi
+    sprite: Structures/Specific/plastic-flaps.rsi
     state: plasticflaps
     drawdepth: Mobs
   - type: Physics
@@ -29,19 +29,25 @@
         layer:
         - MidImpassable
   - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: PlasticMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 80
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetPlastic1:
+            min: 1
+            max: 3
   - type: StaticPrice
     price: 100
+  - type: IconSmooth
+    key: walls
+    mode: NoSprite
+  - type: PlacementReplacement
+    key: walls
 
 - type: entity
   id: PlasticFlapsClear
@@ -85,14 +91,6 @@
   suffix: Airtight, Clear
   description: Heavy duty, slightly stronger, airtight plastic flaps. Definitely can't get past those. No way.
   components:
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 150
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
   - type: Airtight
   - type: StaticPrice
     price: 100
@@ -104,14 +102,6 @@
   suffix: Airtight, Opaque
   description: Heavy duty, slightly stronger, airtight plastic flaps. Definitely can't get past those. No way.
   components:
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 150
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
   - type: Airtight
   - type: StaticPrice
     price: 100
