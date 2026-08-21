@@ -47,9 +47,21 @@ highlights-passenger = Passenger, Greytider, Graytider, "Tider", "Tide"
 highlights-serviceworker = Service Worker, Service, "Serv"
 
 # Station-specific
-highlights-reporter = Reporter, Journalist, Newsroom, News
 highlights-psychologist = Psychologist, Psychology, "Psych", Medbay, Medical, "Med"
+highlights-reporter = Reporter, Journalist, Newsroom, News
+highlights-tramdriver = Tram, "Driver", Service, "Serv"
 
 # Silicon
 highlights-borg = Cyborg, Silicon, Borg, Robotics, "Robot"
 highlights-stationai = Station AI, Silicon, "AI", "sAI"
+
+# Central Command
+highlights-centralcommandofficial = "Official", "Central Command", CentCom, CentComm, "CC"
+highlights-cburn = "CBURN"
+highlights-deathsquad = Deathsquad
+highlights-ertleader = Leader, "ERT", "Emergency Response Team"
+highlights-ertchaplain = Chaplain, "Chap", "ERT", "Emergency Response Team"
+highlights-ertengineer = Engineer, "Engi", "ERT", "Emergency Response Team"
+highlights-ertsecurity = Security, "ERT", "Emergency Response Team"
+highlights-ertmedical = "Medic", "ERT", "Emergency Response Team"
+highlights-ertjanitor = Janitor, "Jani", "ERT", "Emergency Response Team"
