@@ -328,10 +328,10 @@
     - ClothMade
 
 - type: entity
-  name: cot'n puffs
+  name: fluff puffs
   parent: FoodSnackBase
   id: FoodSnackCottonPuffs
-  description: Straight up cotton balls, not even any flavoring. You can probably use these to clean your ears.
+  description: Straight up cotton balls, not even any flavoring. You can probably use these to clean your ears. Tasty either way.
   components:
   - type: FlavorProfile
     flavors:

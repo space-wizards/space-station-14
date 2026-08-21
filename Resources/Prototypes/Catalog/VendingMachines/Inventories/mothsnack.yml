@@ -7,4 +7,6 @@
     FoodSnackMothCakes: 2 #moth food
     FoodBoxDonkpocketMoth: 2 #moth food
     FoodBoxCloth: 2 #moth food
-
+  contrabandInventory:
+    PlushieMoth: 2
+    ClothingNeckCloakMoth: 1
