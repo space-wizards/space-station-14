@@ -295,7 +295,7 @@
   - type: EntityEffectAction
     effects:
     - !type:AddReagentToBloodstream
-      reagent: ChangelingMuteToxin
+      reagent: TaciticAcid
       quantity: 5 # 100s of imperceptible mute
 
 - type: entity
