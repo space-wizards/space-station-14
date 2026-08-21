@@ -1,3 +1,4 @@
+using System.IO;
 using System.Linq;
 using Content.Shared.CCVar;
 using Content.Shared.Instruments;
@@ -12,16 +13,21 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Instruments;
 
-public sealed class InstrumentSystem : SharedInstrumentSystem
+public sealed partial class InstrumentSystem : SharedInstrumentSystem
 {
-    [Dependency] private readonly IClientNetManager _netManager = default!;
-    [Dependency] private readonly IMidiManager _midiManager = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
+    private const int MidiMinVolume = 0;
+    private const int MidiMaxVolume = 127;
+
+    [Dependency] private IClientNetManager _netManager = default!;
+    [Dependency] private IMidiManager _midiManager = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
 
     public readonly TimeSpan OneSecAgo = TimeSpan.FromSeconds(-1);
     public int MaxMidiEventsPerBatch { get; private set; }
     public int MaxMidiEventsPerSecond { get; private set; }
+
+    public event Action? OnChannelsUpdated;
 
     public override void Initialize()
     {
@@ -35,9 +41,30 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
         SubscribeNetworkEvent<InstrumentMidiEventEvent>(OnMidiEventRx);
         SubscribeNetworkEvent<InstrumentStartMidiEvent>(OnMidiStart);
         SubscribeNetworkEvent<InstrumentStopMidiEvent>(OnMidiStop);
+        SubscribeNetworkEvent<InstrumentSetMidiMinVolumeEvent>(OnSetMidiMinVolume);
 
         SubscribeLocalEvent<InstrumentComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<InstrumentComponent, ComponentHandleState>(OnHandleState);
+        SubscribeLocalEvent<ActiveInstrumentComponent, AfterAutoHandleStateEvent>(OnActiveInstrumentAfterHandleState);
+    }
+
+    private bool _isUpdateQueued = false;
+
+    private void OnActiveInstrumentAfterHandleState(Entity<ActiveInstrumentComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        // Called in the update loop so that the components update client side for resolving them in TryComps.
+        _isUpdateQueued = true;
+    }
+
+    public override void FrameUpdate(float frameTime)
+    {
+        base.FrameUpdate(frameTime);
+
+        if (!_isUpdateQueued)
+            return;
+
+        _isUpdateQueued = false;
+        OnChannelsUpdated?.Invoke();
     }
 
     private void OnHandleState(EntityUid uid, SharedInstrumentComponent component, ref ComponentHandleState args)
@@ -52,6 +79,7 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
         component.AllowProgramChange = state.AllowProgramChange;
         component.RespectMidiLimits = state.RespectMidiLimits;
         component.Master = EnsureEntity<InstrumentComponent>(state.Master, uid);
+        component.MinVolume = state.MinVolume;
         component.FilteredChannels = state.FilteredChannels;
 
         if (component.Playing)
@@ -71,6 +99,18 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
             return;
 
         RaiseNetworkEvent(new InstrumentSetMasterEvent(GetNetEntity(uid), GetNetEntity(masterUid)));
+    }
+
+    public void SetMinVolume(EntityUid uid, int volume)
+    {
+        if (!TryComp(uid, out InstrumentComponent? instrument))
+            return;
+
+        var byteMinVolume = (byte)Math.Min(Math.Max(MidiMinVolume, volume), MidiMaxVolume);
+        instrument.MinVolume = byteMinVolume;
+
+        RaiseNetworkEvent(new InstrumentSetMidiMinVolumeEvent(GetNetEntity(uid), byteMinVolume));
+        UpdateRenderer(uid);
     }
 
     public void SetFilteredChannel(EntityUid uid, int channel, bool value)
@@ -145,7 +185,9 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
         instrument.Renderer.FilteredChannels.SetAll(false);
         instrument.Renderer.FilteredChannels.Or(instrument.FilteredChannels);
 
-        instrument.Renderer.DisablePercussionChannel = !instrument.AllowPercussion;
+        instrument.Renderer.DisablePercussionChannel = !instrument.AllowPercussion |
+                                                       instrument.FilteredChannels[RobustMidiEvent.PercussionChannel];
+
         instrument.Renderer.DisableProgramChangeEvent = !instrument.AllowProgramChange;
 
         for (int i = 0; i < RobustMidiEvent.MaxChannels; i++)
@@ -163,6 +205,7 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
         UpdateRendererMaster(instrument);
 
         instrument.Renderer.LoopMidi = instrument.LoopMidi;
+        instrument.Renderer.MinVolume = instrument.MinVolume;
     }
 
     private void UpdateRendererMaster(InstrumentComponent instrument)
@@ -252,7 +295,13 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
 
     }
 
+    [Obsolete("Use overload that takes in byte[] instead.")]
     public bool OpenMidi(EntityUid uid, ReadOnlySpan<byte> data, InstrumentComponent? instrument = null)
+    {
+        return OpenMidi(uid, data.ToArray(), instrument);
+    }
+
+    public bool OpenMidi(EntityUid uid, byte[] data, InstrumentComponent? instrument = null)
     {
         if (!Resolve(uid, ref instrument))
             return false;
@@ -263,7 +312,8 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
             return false;
 
         SetMaster(uid, null);
-        instrument.MidiEventBuffer.Clear();
+        TrySetChannels(uid, data);
+
         instrument.Renderer.OnMidiEvent += instrument.MidiEventBuffer.Add;
         return true;
     }
@@ -386,6 +436,15 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
     private void OnMidiStop(InstrumentStopMidiEvent ev)
     {
         EndRenderer(GetEntity(ev.Uid), true);
+    }
+
+    private void OnSetMidiMinVolume(InstrumentSetMidiMinVolumeEvent ev)
+    {
+        if (!TryComp(GetEntity(ev.Uid), out InstrumentComponent? instrument))
+            return;
+
+        instrument.MinVolume = ev.MinVolume;
+        UpdateRenderer(GetEntity(ev.Uid), instrument);
     }
 
     public override void Update(float frameTime)

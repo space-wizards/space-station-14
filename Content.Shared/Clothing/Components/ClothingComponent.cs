@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.DoAfter;
 using Content.Shared.Inventory;
@@ -9,14 +10,20 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Clothing.Components;
 
 /// <summary>
-///     This handles entities which can be equipped.
+/// This handles entities that can be equipped.
 /// </summary>
-[NetworkedComponent]
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 [Access(typeof(ClothingSystem), typeof(InventorySystem))]
 public sealed partial class ClothingComponent : Component
 {
-    [DataField("clothingVisuals")]
+    /// <summary>
+    /// A set of clothing visuals per layer by the name of the inventory slot (e.g. "head").
+    /// Species-specific layers are expected at the name of the layer suffixed with the species (e.g. "head-vox")
+    /// NOTE: if your species-specific layers consist entirely of default layers or layers
+    ///       suffixed with your species (e.g. "helmet-unshaded" to "helmet-unshaded-vox")
+    ///       this can be omitted entirely!
+    /// </summary>
+    [DataField]
     public Dictionary<string, List<PrototypeLayerData>> ClothingVisuals = new();
 
     /// <summary>
@@ -25,8 +32,7 @@ public sealed partial class ClothingComponent : Component
     [DataField]
     public string? MappedLayer;
 
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("quickEquip")]
+    [DataField]
     public bool QuickEquip = true;
 
     /// <summary>
@@ -36,22 +42,24 @@ public sealed partial class ClothingComponent : Component
     /// <remarks>
     /// Note that this may be a combination of different slot flags, not a singular bit.
     /// </remarks>
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField(required: true)]
     [Access(typeof(ClothingSystem), typeof(InventorySystem), Other = AccessPermissions.ReadExecute)]
     public SlotFlags Slots = SlotFlags.NONE;
 
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("equipSound")]
+    /// <summary>
+    /// The sound that plays when this entity is equipped.
+    /// </summary>
+    [DataField]
     public SoundSpecifier? EquipSound;
 
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("unequipSound")]
+    /// <summary>
+    /// The sound that plays when this entity is unequipped.
+    /// </summary>
+    [DataField]
     public SoundSpecifier? UnequipSound;
 
     [Access(typeof(ClothingSystem))]
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("equippedPrefix")]
+    [DataField, AutoNetworkedField]
     public string? EquippedPrefix;
 
     /// <summary>
@@ -59,11 +67,9 @@ public sealed partial class ClothingComponent : Component
     /// useful when prototyping INNERCLOTHING items into OUTERCLOTHING items without duplicating/modifying RSIs etc.
     /// </summary>
     [Access(typeof(ClothingSystem))]
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("equippedState")]
+    [DataField, AutoNetworkedField]
     public string? EquippedState;
 
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("sprite")]
     public string? RsiPath;
 
@@ -72,7 +78,7 @@ public sealed partial class ClothingComponent : Component
     /// Note that this being non-null does not mean the clothing is considered "worn" or "equipped" unless the slot
     /// satisfies the <see cref="Slots"/> flags.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public string? InSlot;
     // TODO CLOTHING
     // Maybe keep this null unless its in a valid slot?
@@ -82,17 +88,26 @@ public sealed partial class ClothingComponent : Component
     /// <summary>
     /// Slot flags of the slot the clothing is currently in. See also <see cref="InSlot"/>.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public SlotFlags? InSlotFlag;
     // TODO CLOTHING
     // Maybe keep this null unless its in a valid slot?
     // And when doing this, combine InSlot and InSlotFlag, as it'd be a breaking change for downstreams anyway
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public TimeSpan EquipDelay = TimeSpan.Zero;
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public TimeSpan UnequipDelay = TimeSpan.Zero;
+
+    /// <summary>
+    /// Only works when EquipDelay or UnequipDelay > 0.
+    /// Prevents clothing from being put on or taken off while moving.
+    /// Some clothing can logically be put on while running (hats),
+    /// while other types of clothing may require stopping (shoes, hard suits).
+    /// </summary>
+    [DataField]
+    public bool EquipWhileMoving = false;
 
     /// <summary>
     /// Offset for the strip time for an entity with this component.
@@ -100,17 +115,12 @@ public sealed partial class ClothingComponent : Component
     /// </summary>
     [DataField]
     public TimeSpan StripDelay = TimeSpan.Zero;
-}
 
-[Serializable, NetSerializable]
-public sealed class ClothingComponentState : ComponentState
-{
-    public string? EquippedPrefix;
-
-    public ClothingComponentState(string? equippedPrefix)
-    {
-        EquippedPrefix = equippedPrefix;
-    }
+    /// <summary>
+    ///     A scale applied to all layers.
+    /// </summary>
+    [DataField]
+    public Vector2 Scale = Vector2.One;
 }
 
 public enum ClothingMask : byte

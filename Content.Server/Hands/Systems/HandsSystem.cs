@@ -4,16 +4,13 @@ using Content.Server.Popups;
 using Content.Server.Stack;
 using Content.Server.Stunnable;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Body.Part;
 using Content.Shared.CombatMode;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Explosion;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Input;
-using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Movement.Pulling.Components;
-using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Stacks;
 using Content.Shared.Standing;
@@ -25,22 +22,20 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Hands.Systems
 {
-    public sealed class HandsSystem : SharedHandsSystem
+    public sealed partial class HandsSystem : SharedHandsSystem
     {
-        [Dependency] private readonly IGameTiming _timing = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly StackSystem _stackSystem = default!;
-        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-        [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
-        [Dependency] private readonly PullingSystem _pullingSystem = default!;
-        [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
+        [Dependency] private IGameTiming _timing = default!;
+        [Dependency] private IRobustRandom _random = default!;
+        [Dependency] private StackSystem _stackSystem = default!;
+        [Dependency] private ActionBlockerSystem _actionBlockerSystem = default!;
+        [Dependency] private SharedTransformSystem _transformSystem = default!;
+        [Dependency] private PullingSystem _pullingSystem = default!;
+        [Dependency] private ThrowingSystem _throwingSystem = default!;
+        [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
-
-        private EntityQuery<PhysicsComponent> _physicsQuery;
 
         /// <summary>
         /// Items dropped when the holder falls down will be launched in
@@ -55,9 +50,6 @@ namespace Content.Server.Hands.Systems
 
             SubscribeLocalEvent<HandsComponent, DisarmedEvent>(OnDisarmed, before: new[] {typeof(StunSystem), typeof(SharedStaminaSystem)});
 
-            SubscribeLocalEvent<HandsComponent, BodyPartAddedEvent>(HandleBodyPartAdded);
-            SubscribeLocalEvent<HandsComponent, BodyPartRemovedEvent>(HandleBodyPartRemoved);
-
             SubscribeLocalEvent<HandsComponent, ComponentGetState>(GetComponentState);
 
             SubscribeLocalEvent<HandsComponent, BeforeExplodeEvent>(OnExploded);
@@ -67,8 +59,6 @@ namespace Content.Server.Hands.Systems
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.ThrowItemInHand, new PointerInputCmdHandler(HandleThrowItem))
                 .Register<HandsSystem>();
-
-            _physicsQuery = GetEntityQuery<PhysicsComponent>();
         }
 
         public override void Shutdown()
@@ -80,7 +70,28 @@ namespace Content.Server.Hands.Systems
 
         private void GetComponentState(EntityUid uid, HandsComponent hands, ref ComponentGetState args)
         {
-            args.State = new HandsComponentState(hands);
+            // If we only switch hands don't send a full state.
+            if (args.FromTick > hands.CreationTick && hands.LastUnclassifiedDirty >= args.FromTick)
+            {
+                var aspects = EntityManager.GetModifiedAspects(hands, args.FromTick);
+
+                if (aspects == ActiveHandIdIndex)
+                {
+                    args.State = new HandsComponentActiveHandDeltaState(hands.ActiveHandId);
+                    return;
+                }
+            }
+
+            // Get full state.
+            args.State = new HandsComponentState(
+                hands.ActiveHandId,
+                hands.Hands,
+                hands.SortedHands,
+                hands.ShowInHands,
+                hands.HandDisplacement,
+                hands.LeftHandDisplacement,
+                hands.RightHandDisplacement,
+                hands.CanBeStripped);
         }
 
 
@@ -89,10 +100,9 @@ namespace Content.Server.Hands.Systems
             if (ent.Comp.DisableExplosionRecursion)
                 return;
 
-            foreach (var hand in ent.Comp.Hands.Values)
+            foreach (var held in EnumerateHeld(ent.AsNullable()))
             {
-                if (hand.HeldEntity is { } uid)
-                    args.Contents.Add(uid);
+                args.Contents.Add(held);
             }
         }
 
@@ -112,32 +122,6 @@ namespace Content.Server.Hands.Systems
             args.PopupPrefix = "disarm-action-";
 
             args.Handled = true; // no shove/stun.
-        }
-
-        private void HandleBodyPartAdded(EntityUid uid, HandsComponent component, ref BodyPartAddedEvent args)
-        {
-            if (args.Part.Comp.PartType != BodyPartType.Hand)
-                return;
-
-            // If this annoys you, which it should.
-            // Ping Smugleaf.
-            var location = args.Part.Comp.Symmetry switch
-            {
-                BodyPartSymmetry.None => HandLocation.Middle,
-                BodyPartSymmetry.Left => HandLocation.Left,
-                BodyPartSymmetry.Right => HandLocation.Right,
-                _ => throw new ArgumentOutOfRangeException(nameof(args.Part.Comp.Symmetry))
-            };
-
-            AddHand(uid, args.Slot, location);
-        }
-
-        private void HandleBodyPartRemoved(EntityUid uid, HandsComponent component, ref BodyPartRemovedEvent args)
-        {
-            if (args.Part.Comp.PartType != BodyPartType.Hand)
-                return;
-
-            RemoveHand(uid, args.Slot);
         }
 
         #region interactions
@@ -162,8 +146,8 @@ namespace Content.Server.Hands.Systems
         {
             if (ContainerSystem.IsEntityInContainer(player) ||
                 !TryComp(player, out HandsComponent? hands) ||
-                hands.ActiveHandEntity is not { } throwEnt ||
-                !_actionBlockerSystem.CanThrow(player, throwEnt))
+                !TryGetActiveItem((player, hands), out var throwEnt) ||
+                !_actionBlockerSystem.CanThrow(player, throwEnt.Value))
                 return false;
 
             if (!forcePlayerThrow && _timing.CurTime < hands.NextThrowTime)
@@ -173,9 +157,9 @@ namespace Content.Server.Hands.Systems
             }
             hands.NextThrowTime = _timing.CurTime + hands.ThrowCooldown;
 
-            if (EntityManager.TryGetComponent(throwEnt, out StackComponent? stack) && stack.Count > 1 && stack.ThrowIndividually)
+            if (TryComp(throwEnt, out StackComponent? stack) && stack.Count > 1 && stack.ThrowIndividually)
             {
-                var splitStack = _stackSystem.Split(throwEnt, 1, EntityManager.GetComponent<TransformComponent>(player).Coordinates, stack);
+                var splitStack = _stackSystem.Split((throwEnt.Value, stack), 1, Comp<TransformComponent>(player).Coordinates);
 
                 if (splitStack is not {Valid: true})
                     return false;
@@ -195,14 +179,14 @@ namespace Content.Server.Hands.Systems
 
             // Let other systems change the thrown entity (useful for virtual items)
             // or the throw strength.
-            var ev = new BeforeThrowEvent(throwEnt, direction, throwSpeed, player);
+            var ev = new BeforeThrowEvent(throwEnt.Value, direction, throwSpeed, player);
             RaiseLocalEvent(player, ref ev);
 
             if (ev.Cancelled)
                 return true;
 
             // This can grief the above event so we raise it afterwards
-            if (IsHolding(player, throwEnt, out _, hands) && !TryDrop(player, throwEnt, handsComp: hands))
+            if (IsHolding((player, hands), throwEnt, out _) && !TryDrop(player, throwEnt.Value))
                 return false;
 
             _throwingSystem.TryThrow(ev.ItemUid, ev.Direction, ev.ThrowSpeed, ev.PlayerUid, compensateFriction: !HasComp<LandAtCursorComponent>(ev.ItemUid));
@@ -216,21 +200,18 @@ namespace Content.Server.Hands.Systems
             var holderVelocity = _physicsQuery.TryComp(entity, out var physics) ? physics.LinearVelocity : Vector2.Zero;
             var spreadMaxAngle = Angle.FromDegrees(DropHeldItemsSpread);
 
-            var fellEvent = new FellDownEvent(entity);
-            RaiseLocalEvent(entity, fellEvent, false);
-
-            foreach (var hand in entity.Comp.Hands.Values)
+            foreach (var hand in entity.Comp.Hands.Keys)
             {
-                if (hand.HeldEntity is not EntityUid held)
+                if (!TryGetHeldItem(entity.AsNullable(), hand, out var heldEntity))
                     continue;
 
                 var throwAttempt = new FellDownThrowAttemptEvent(entity);
-                RaiseLocalEvent(hand.HeldEntity.Value, ref throwAttempt);
+                RaiseLocalEvent(heldEntity.Value, ref throwAttempt);
 
                 if (throwAttempt.Cancelled)
                     continue;
 
-                if (!TryDrop(entity, hand, null, checkActionBlocker: false, handsComp: entity.Comp))
+                if (!TryDrop(entity.AsNullable(), hand, checkActionBlocker: false))
                     continue;
 
                 // Rotate the item's throw vector a bit for each item
@@ -241,12 +222,12 @@ namespace Content.Server.Hands.Systems
                 itemVelocity *= _random.NextFloat(1f);
                 // Heavier objects don't get thrown as far
                 // If the item doesn't have a physics component, it isn't going to get thrown anyway, but we'll assume infinite mass
-                itemVelocity *= _physicsQuery.TryComp(held, out var heldPhysics) ? heldPhysics.InvMass : 0;
+                itemVelocity *= _physicsQuery.TryComp(heldEntity, out var heldPhysics) ? heldPhysics.InvMass : 0;
                 // Throw at half the holder's intentional throw speed and
                 // vary the speed a little to make it look more interesting
                 var throwSpeed = entity.Comp.BaseThrowspeed * _random.NextFloat(0.45f, 0.55f);
 
-                _throwingSystem.TryThrow(held,
+                _throwingSystem.TryThrow(heldEntity.Value,
                     itemVelocity,
                     throwSpeed,
                     entity,

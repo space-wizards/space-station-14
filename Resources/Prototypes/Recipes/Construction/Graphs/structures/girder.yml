@@ -1,4 +1,4 @@
-﻿- type: constructionGraph
+- type: constructionGraph
   id: Girder
   start: start
   graph:
@@ -75,16 +75,17 @@
             - tool: Welding
               doAfter: 20
 
-        - to: plasticWall
+        - to: brassWall
           completed:
             - !type:SnapToGrid
               southRotation: true
           conditions:
             - !type:EntityAnchored {}
           steps:
-            - material: Plastic
+            - material: Brass
               amount: 2
-              doAfter: 2
+            - tool: Welding
+              doAfter: 20
 
         - to: plasmaWall
           completed:
@@ -110,19 +111,6 @@
             - tool: Welding
               doAfter: 20
 
-        - to: bananiumWall
-          completed:
-            - !type:SnapToGrid
-              southRotation: true
-          conditions:
-            - !type:EntityAnchored {}
-          steps:
-            - material: Bananium
-              amount: 2
-              doAfter: 2
-            - tool: Welding
-              doAfter: 20
-
         - to: meatWall
           completed:
             - !type:SnapToGrid
@@ -136,6 +124,18 @@
 
     - node: wall
       entity: WallSolid
+      edges:
+        - to: girder
+          completed:
+            - !type:GivePrototype
+              prototype: SheetSteel1
+              amount: 2
+          steps:
+            - tool: Welding
+              doAfter: 10
+
+    - node: wallChitin
+      entity: WallSolidChitin
       edges:
         - to: girder
           completed:
@@ -174,17 +174,19 @@
             - tool: Prying
               doAfter: 10
 
-    - node: plasticWall
-      entity: WallPlastic
+    - node: brassWall
+      entity: WallBrass
       edges:
-        - to: girder
-          completed:
-            - !type:GivePrototype
-              prototype: SheetPlastic1
-              amount: 2
-          steps:
-            - tool: Prying
-              doAfter: 10
+      - to: girder
+        completed:
+        - !type:GivePrototype
+          prototype: SheetBrass1
+          amount: 2
+        steps:
+          - tool: Welding
+            doAfter: 20
+          - tool: Prying
+            doAfter: 10
 
     - node: plasmaWall
       entity: WallPlasma
@@ -207,20 +209,6 @@
           completed:
             - !type:GivePrototype
               prototype: IngotGold1
-              amount: 2
-          steps:
-            - tool: Welding
-              doAfter: 20
-            - tool: Prying
-              doAfter: 10
-
-    - node: bananiumWall
-      entity: WallClown
-      edges:
-        - to: girder
-          completed:
-            - !type:GivePrototype
-              prototype: MaterialBananium1
               amount: 2
           steps:
             - tool: Welding
@@ -298,6 +286,58 @@
 
     - node: reinforcedWall
       entity: WallReinforced
+      edges:
+        - to: reinforcedGirder
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetPlasteel1
+              amount: 2
+          steps:
+            - tool: Cutting
+              doAfter: 1
+              completed:
+                - !type:VisualizerDataInt
+                  key: "enum.ReinforcedWallVisuals.DeconstructionStage"
+                  data: 5
+            - tool: Screwing
+              doAfter: 1
+            - tool: Welding
+              doAfter: 5
+              completed:
+                - !type:VisualizerDataInt
+                  key: "enum.ReinforcedWallVisuals.DeconstructionStage"
+                  data: 4
+            - tool: Prying
+              doAfter: 1
+            - tool: Anchoring
+              doAfter: 1
+              completed:
+                - !type:VisualizerDataInt
+                  key: "enum.ReinforcedWallVisuals.DeconstructionStage"
+                  data: 3
+            - tool: Welding
+              doAfter: 10
+              completed:
+                - !type:VisualizerDataInt
+                  key: "enum.ReinforcedWallVisuals.DeconstructionStage"
+                  data: 2
+            - tool: Prying
+              doAfter: 1
+              completed:
+                - !type:VisualizerDataInt
+                  key: "enum.ReinforcedWallVisuals.DeconstructionStage"
+                  data: 1
+            - tool: Screwing
+              doAfter: 1
+              completed:
+                - !type:VisualizerDataInt
+                  key: "enum.ReinforcedWallVisuals.DeconstructionStage"
+                  data: 0
+            - tool: Cutting
+              doAfter: 1
+
+    - node: reinforcedWallChitin
+      entity: WallReinforcedChitin
       edges:
         - to: reinforcedGirder
           completed:
@@ -445,7 +485,11 @@
         - to: wall
           steps:
             - tool: Welding
-              doAfter: 5
+              doAfter: 2
+        - to: wall
+          steps:
+            - tool: Brushing
+              doAfter: 4
 
     - node: reinforcedWallRust
       entity: WallReinforcedRust
@@ -453,4 +497,8 @@
         - to: reinforcedWall
           steps:
             - tool: Welding
-              doAfter: 5
+              doAfter: 2
+        - to: reinforcedWall
+          steps:
+            - tool: Brushing
+              doAfter: 4

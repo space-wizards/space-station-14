@@ -1,9 +1,13 @@
 ﻿- type: entity
+  parent: [ BaseStructure, StructureHealthDoor ]
   id: Airlock
-  parent: BaseStructure
   name: airlock
   description: It opens, it closes, and maybe crushes you.
   components:
+  - type: Anchorable
+    flags:
+    - Anchorable
+  - type: Rotatable
   - type: StationAiWhitelist
   - type: MeleeSound
     soundGroups:
@@ -12,24 +16,28 @@
           "/Audio/Weapons/smash.ogg"
   - type: InteractionOutline
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/basic.rsi
-    snapCardinals: true
+    sprite: Structures/Doors/Airlocks/Standard/airlock-base.rsi
     layers:
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
     - state: closed_unlit
       shader: unshaded
+      sprite: Structures/Doors/Airlocks/Effects/airlock-effects.rsi
       map: ["enum.DoorVisualLayers.BaseUnlit"]
-      visible: false
+      visible: true
     - state: welded
+      sprite: Structures/Doors/Airlocks/Effects/airlock-effects.rsi
       map: ["enum.WeldableLayers.BaseWelded"]
     - state: bolted_unlit
       shader: unshaded
+      sprite: Structures/Doors/Airlocks/Effects/airlock-effects.rsi
       map: ["enum.DoorVisualLayers.BaseBolted"]
     - state: emergency_unlit
+      sprite: Structures/Doors/Airlocks/Effects/airlock-effects.rsi
       map: ["enum.DoorVisualLayers.BaseEmergencyAccess"]
       shader: unshaded
     - state: panel_open
+      sprite: Structures/Doors/Airlocks/Effects/airlock-effects.rsi
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
     - state: electrified_ai
       sprite: Interface/Misc/ai_hud.rsi
@@ -41,6 +49,16 @@
       shader: unshaded
       visible: false
       map: ["enum.ElectrifiedLayers.Sparks"]
+    - state: sparks
+      sprite: Structures/Doors/Airlocks/Effects/airlock-effects.rsi
+      map: ["enum.DoorVisualLayers.BaseEmagging"]
+      shader: unshaded
+      visible: false
+  - type: IconSmooth
+    key: walls
+    additionalKeys:
+    - woods
+    mode: NoSprite
   - type: AnimationPlayer
   - type: Physics
   - type: Fixtures
@@ -79,6 +97,7 @@
     fuel: 5
     time: 3
   - type: Airlock
+    openUnlitVisible: true
   - type: NavMapDoor
   - type: DoorBolt
   - type: Appearance
@@ -96,6 +115,7 @@
   - type: Electrified
     enabled: false
     usesApcPower: true
+    onActivateInWorld: true
   - type: WiresPanel
   - type: WiresPanelSecurity
   - type: Wires
@@ -132,9 +152,13 @@
   - type: RadiationBlocker
     resistance: 3
   - type: Occluder
+    polygon:
+    - "-0.5, 0.5"
+    - "0.5, 0.5"
+    - "0.5, -0.5"
+    - "-0.5, -0.5"
   - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: StrongMetallic
+    damageModifierSet: SteelMod
   - type: RCDDeconstructable
     cost: 6
     delay: 8
@@ -143,10 +167,8 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 500
+        damage: 200
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
       # TODO this should go to the broken node first
       - !type:PlaySoundBehavior
         sound:
@@ -158,12 +180,8 @@
     - board
   - type: PlacementReplacement
     key: walls
-  - type: IconSmooth
-    key: walls
-    mode: NoSprite
-  - type: PaintableAirlock
-    group: Standard
-    department: Civilian
+  - type: Paintable
+    group: AirlockStandard
   - type: StaticPrice
     price: 150
   - type: LightningTarget
@@ -172,6 +190,8 @@
     tags:
       - Airlock
       # This tag is used to nagivate the Airlock construction graph. It's needed because the construction graph is shared between Airlock, AirlockGlass, and HighSecDoor
+      - DoorRemoteWhitelist
+      # This tag is used by door remotes to allow or not a door remote to normally be able to interact with a door
   - type: PryUnpowered
   - type: BlockWeather
   - type: GuideHelp
@@ -204,7 +224,7 @@
   - type: Occluder
     enabled: false
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/glass.rsi
+    sprite: Structures/Doors/Airlocks/Glass/airlock-base.rsi
   - type: AnimationPlayer
   - type: Fixtures
     fixtures:
@@ -223,11 +243,13 @@
   - type: Construction
     graph: Airlock
     node: glassAirlock
-  - type: PaintableAirlock
-    group: Glass
+  - type: Paintable
+    group: AirlockGlass
   - type: RadiationBlocker
     resistance: 2
   - type: Tag
     tags:
       - GlassAirlock
       # This tag is used to nagivate the Airlock construction graph. It's needed because the construction graph is shared between Airlock, AirlockGlass, and HighSecDoor
+      - DoorRemoteWhitelist
+      # This tag is used by door remotes to allow or not a door remote to normally be able to interact with a door

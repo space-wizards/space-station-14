@@ -8,12 +8,12 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Orbit;
 
-public sealed class OrbitVisualsSystem : EntitySystem
+public sealed partial class OrbitVisualsSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _robustRandom = default!;
-    [Dependency] private readonly AnimationPlayerSystem _animations = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private IRobustRandom _robustRandom = default!;
+    [Dependency] private AnimationPlayerSystem _animations = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
     private readonly string _orbitStopKey = "orbiting_stop";
 
@@ -64,7 +64,7 @@ public sealed class OrbitVisualsSystem : EntitySystem
     {
         base.FrameUpdate(frameTime);
 
-        var query = EntityManager.EntityQueryEnumerator<OrbitVisualsComponent, SpriteComponent>();
+        var query = EntityQueryEnumerator<OrbitVisualsComponent, SpriteComponent>();
         while (query.MoveNext(out var uid, out var orbit, out var sprite))
         {
             var progress = (float)(_timing.CurTime.TotalSeconds / orbit.OrbitLength) % 1;

@@ -90,6 +90,15 @@
     state: d6_6
 
 - type: entity
+  parent: d6Dice
+  id: d6DiceTricked
+  suffix: Tricked
+  components:
+  - type: Dice
+    weightedProb: 0.5
+    weightedValue: 6
+
+- type: entity
   parent: BaseDice
   id: d4Dice
   name: d4
@@ -127,8 +136,71 @@
       path: /Audio/Effects/glass_step.ogg
     slipData:
       launchForwardsMultiplier: 0
-  - type: DamageUserOnTrigger
+  - type: DamageOnTrigger
+    targetUser: true
     damage:
       types:
         Piercing: 5
     # I love this
+
+- type: entity
+  parent: BaseCoin
+  id: d2Dice
+  name: Heads or Tails Coin
+  description: Some sort of two-sided die. Designed to represent the struggle between Nanotrasen and the Syndicate.
+  components:
+  - type: Sprite
+    state: d2_1
+
+- type: entity
+  parent: d2Dice
+  id: d2DiceTricked
+  suffix: Tricked
+  components:
+  - type: Dice
+    weightedValue: 2
+
+
+# bags
+
+- type: entity
+  parent: BaseStorageItem
+  id: DiceBag
+  name: bag of dice
+  description: Contains all the luck you'll ever need.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: d4Dice
+        - id: d6Dice
+        - id: d8Dice
+        - id: d10Dice
+        - id: d12Dice
+        - id: d20Dice
+        - id: PercentileDie
+        - id: d2Dice
+  - type: Sprite
+    sprite: Objects/Fun/dice.rsi
+    state: dicebag
+  - type: Item
+    size: Small
+  - type: Storage
+    grid:
+    - 0,0,3,1
+    whitelist:
+      tags:
+      - Dice
+
+- type: entity
+  parent: DiceBag
+  id: MagicDiceBag
+  name: bag of dice
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/dice.rsi
+    state: magicdicebag
+  - type: Storage
+    grid:
+    - 0,0,4,3

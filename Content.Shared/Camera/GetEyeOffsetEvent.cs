@@ -20,13 +20,18 @@ namespace Content.Shared.Camera;
 public record struct GetEyeOffsetEvent(Vector2 Offset);
 
 /// <summary>
+///     Raised before the <see cref="GetEyeOffsetEvent"/> and <see cref="GetEyeOffsetRelayedEvent"/>, to check if any of the subscribed
+///     systems want to cancel offset changes.
+/// </summary>
+[ByRefEvent]
+public record struct GetEyeOffsetAttemptEvent(bool Cancelled);
+
+/// <summary>
 ///     Raised on any equipped and in-hand items that may modify the eye offset.
 ///     Pockets and suitstorage are excluded.
 /// </summary>
 [ByRefEvent]
-public sealed class GetEyeOffsetRelayedEvent : EntityEventArgs, IInventoryRelayEvent
+public record struct GetEyeOffsetRelayedEvent(Vector2 Offset = default) : IInventoryRelayEvent
 {
-    public SlotFlags TargetSlots { get; } = ~(SlotFlags.POCKET & SlotFlags.SUITSTORAGE);
-
-    public Vector2 Offset;
+    SlotFlags IInventoryRelayEvent.TargetSlots => ~(SlotFlags.POCKET & SlotFlags.SUITSTORAGE);
 }

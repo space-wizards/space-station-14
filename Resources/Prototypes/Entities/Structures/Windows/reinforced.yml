@@ -1,19 +1,18 @@
 - type: entity
+  parent: [BaseDeltaPressureReinforcedGlass, BaseWindowStructure, StructureHealthBarrierStrong]
   id: ReinforcedWindow
   name: reinforced window
-  parent: Window
   components:
   - type: Sprite
-    drawdepth: WallTops
-    sprite: Structures/Windows/reinforced_window.rsi
+    sprite: Structures/Windows/window-base-reinf.rsi
   - type: Icon
-    sprite: Structures/Windows/reinforced_window.rsi
+    sprite: Structures/Windows/window-base-reinf.rsi
+    state: full
   - type: Repairable
     fuelCost: 10
     doAfterDelay: 2
   - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: RGlass
+    damageModifierSet: GlassReinforcedMod
   - type: RCDDeconstructable
     cost: 6
     delay: 6
@@ -22,16 +21,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 150 #excess damage (nuke?). avoid computational cost of spawning entities.
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WindowShatter
-    - trigger:
-        !type:DamageTrigger
-        damage: 75
+        damage: 120
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -41,8 +31,6 @@
           ShardGlassReinforced:
             min: 1
             max: 2
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: IconSmooth
     base: rwindow
   - type: Construction
@@ -57,14 +45,9 @@
       sprite: Structures/Windows/cracks.rsi
 
 - type: entity
+  parent: [BaseDeltaPressureReinforcedGlassQuarter, BaseWindowStructureDirectional, StructureHealthBarrier]
   id: WindowReinforcedDirectional
-  parent: WindowDirectional
   name: directional reinforced window
-  description: Don't smudge up the glass down there.
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Window
   components:
   - type: Sprite
     sprite: Structures/Windows/directional.rsi
@@ -83,7 +66,7 @@
     damageOverlay:
       sprite: Structures/Windows/cracks_directional.rsi
   - type: Damageable
-    damageModifierSet: RGlass
+    damageModifierSet: GlassReinforcedMod
   - type: RCDDeconstructable
     cost: 4
     delay: 4
@@ -92,16 +75,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 75
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WindowShatter
-    - trigger:
-        !type:DamageTrigger
-        damage: 37
+        damage: 80
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -111,10 +85,39 @@
           ShardGlassReinforced:
             min: 1
             max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: StaticPrice
     price: 22.5
+
+- type: entity
+  parent: WindowReinforcedDirectional
+  id: WindowReinforcedDirectionalCorner
+  suffix: Corner
+  components:
+  - type: Sprite
+    sprite: Structures/Windows/directional.rsi
+    state: reinforced_window_corner
+  - type: Icon
+    sprite: Structures/Windows/directional.rsi
+    state: reinforced_window_corner
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,-0.28125,-0.28125"
+        density: 1500
+        mask:
+        - FullTileMask
+        layer:
+        - GlassLayer
+  - type: Construction
+    graph: WindowDirectionalCorner
+    node: windowReinforcedDirectionalCorner
+  - type: DamageVisuals
+    thresholds: [5, 10, 20]
+    trackAllDamage: true
+    damageOverlay:
+      sprite: Structures/Windows/cracks_directional_corner.rsi
 
 - type: entity
   parent: ReinforcedWindow
@@ -126,18 +129,18 @@
     - Window
   components:
   - type: Sprite
-    drawdepth: WallTops
-    sprite: Structures/Windows/reinforced_window_diagonal.rsi
+    sprite: Structures/Windows/window-base-diagonal-reinf.rsi
     state: state0
   - type: Tag
     tags:
     - Diagonal
+    - Window
   - type: IconSmooth
     mode: Diagonal
-    key: windows
+    key: walls
     base: state
   - type: Icon
-    sprite: Structures/Windows/reinforced_window_diagonal.rsi
+    sprite: Structures/Windows/window-base-diagonal-reinf.rsi
     state: state0
   - type: Fixtures
     fixtures:
@@ -159,7 +162,7 @@
     - East
   - type: DamageVisuals
     damageOverlay:
-      sprite: Structures/Windows/cracks_diagonal.rsi
+      sprite: Structures/Windows/cracks-diagonal.rsi
   - type: Construction
     graph: WindowDiagonal
     node: reinforcedWindowDiagonal

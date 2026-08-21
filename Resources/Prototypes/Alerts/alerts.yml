@@ -24,7 +24,9 @@
     - category: Hunger
     - category: Thirst
     - alertType: Magboots
+    - alertType: Rooted
     - alertType: Pacified
+    - alertType: Stealthy
 
 - type: entity
   id: AlertSpriteView
@@ -137,12 +139,13 @@
   clientHandled: true
 
 - type: alert
-  id: Stun
+  id: Knockdown
+  clickEvent: !type:KnockedDownAlertEvent
   icons:
-  - sprite: /Textures/Objects/Weapons/Melee/stunbaton.rsi #Should probably draw a proper icon
-    state: stunbaton_off
-  name: alerts-stunned-name
-  description: alerts-stunned-desc
+  - sprite: /Textures/Interface/Alerts/stunnable.rsi
+    state: knocked-down
+  name: alerts-knockdown-name
+  description: alerts-knockdown-desc
 
 - type: alert
   id: Handcuffed
@@ -272,6 +275,7 @@
   description: alerts-battery-desc
   minSeverity: 0
   maxSeverity: 10
+  clientHandled: true # the power cell is read on the client so that we don't have to periodically network the charge
 
 - type: alert
   id: BorgBatteryNone
@@ -281,6 +285,12 @@
     state: battery-none
   name: alerts-no-battery-name
   description: alerts-no-battery-desc
+  clientHandled: true # the power cell battery is read on the client so that we don't have to periodically network the charge
+
+- type: alert
+  parent: BorgBattery
+  id: AiBattery
+  clientHandled: false # the station AI does not have a predicted battery, so we need to send the alert from the server
 
 - type: alert
   id: Internals
@@ -302,7 +312,9 @@
   id: PilotingShuttle
   category: Piloting
   clickEvent: !type:StopPilotingAlertEvent
-  icons: [ /Textures/Interface/Alerts/piloting.png ]
+  icons:
+  - sprite: /Textures/Interface/Alerts/shuttle.rsi
+    state: piloting
   name: alerts-piloting-name
   description: alerts-piloting-desc
 
@@ -366,19 +378,6 @@
   description: alerts-parched-desc
 
 - type: alert
-  id: Muted
-  icons: [ /Textures/Interface/Alerts/Abilities/silenced.png ]
-  name: alerts-muted-name
-  description: alerts-muted-desc
-
-- type: alert
-  id: VowOfSilence
-  icons: [ /Textures/Interface/Alerts/Abilities/silenced.png ]
-  name: alerts-vow-silence-name
-  clickEvent: !type:BreakVowAlertEvent
-  description: alerts-vow-silence-desc
-
-- type: alert
   id: VowBroken
   icons: [ /Textures/Interface/Actions/scream.png ]
   name: alerts-vow-broken-name
@@ -438,12 +437,28 @@
   description: alerts-pacified-desc
 
 - type: alert
-  id: Adrenaline
+  id: Stealthy
+  clickEvent: !type:ToggleThievingEvent
   icons:
-  - sprite: Mobs/Species/Human/organs.rsi
-    state: heart-on
-  name: alerts-adrenaline-name
-  description: alerts-adrenaline-desc
+  - sprite: /Textures/Interface/Alerts/stealthy.rsi
+    state: stealthy-off
+  - sprite: /Textures/Interface/Alerts/stealthy.rsi
+    state: stealthy-on
+  name: alerts-stealthy-name
+  description: alerts-stealthy-desc
+  minSeverity: 0
+  maxSeverity: 1
+
+# Making alerts for innate abilities like this should generally be avoided by turning them into actions or giving better UX.
+# This was done this way because several entities currently can pry innately and have no indicator for this whatsoever.
+# The ideal solution would be to clean up actions to handle this sort of thing easier while avoiding bloating the action UI.
+- type: alert
+  id: Prying
+  icons:
+  - sprite: /Textures/Objects/Tools/crowbar.rsi
+    state: icon
+  name: alerts-prying-name
+  description: alerts-prying-desc
 
 - type: alert
   id: Debug1

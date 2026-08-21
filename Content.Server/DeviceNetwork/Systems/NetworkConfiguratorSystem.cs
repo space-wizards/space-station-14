@@ -18,24 +18,26 @@ using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Map.Events;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.DeviceNetwork.Systems;
 
 [UsedImplicitly]
-public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
+public sealed partial class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
 {
-    [Dependency] private readonly DeviceListSystem _deviceListSystem = default!;
-    [Dependency] private readonly DeviceLinkSystem _deviceLinkSystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-    [Dependency] private readonly AccessReaderSystem _accessSystem = default!;
-    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-    [Dependency] private readonly AudioSystem _audioSystem = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private DeviceListSystem _deviceListSystem = default!;
+    [Dependency] private DeviceLinkSystem _deviceLinkSystem = default!;
+    [Dependency] private SharedPopupSystem _popupSystem = default!;
+    [Dependency] private UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private AccessReaderSystem _accessSystem = default!;
+    [Dependency] private SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private AudioSystem _audioSystem = default!;
+    [Dependency] private SharedAppearanceSystem _appearanceSystem = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private IAdminLogManager _adminLogger = default!;
+    [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceNetworkQuery = default!;
 
     public override void Initialize()
     {
@@ -247,7 +249,9 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         if (_accessSystem.IsAllowed(user.Value, target, reader))
             return true;
 
-        _audioSystem.PlayPvs(component.SoundNoAccess, user.Value, AudioParams.Default.WithVolume(-2f).WithPitchScale(1.2f));
+        var audioParams = component.SoundNoAccess?.Params ?? AudioParams.Default;
+        audioParams = audioParams.AddVolume(-2f).WithPitchScale(1.2f);
+        _audioSystem.PlayPvs(component.SoundNoAccess, user.Value, audioParams);
         _popupSystem.PopupEntity(Loc.GetString("network-configurator-device-access-denied"), target, user.Value);
 
         return false;
@@ -299,7 +303,9 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         _appearanceSystem.SetData(configuratorUid, NetworkConfiguratorVisuals.Mode, configurator.LinkModeActive);
 
         var pitch = configurator.LinkModeActive ? 1 : 0.8f;
-        _audioSystem.PlayPvs(configurator.SoundSwitchMode, userUid, AudioParams.Default.WithVolume(1.5f).WithPitchScale(pitch));
+        var audioParams = configurator.SoundSwitchMode?.Params ?? AudioParams.Default;
+        audioParams = audioParams.AddVolume(1.5f).WithPitchScale(pitch);
+        _audioSystem.PlayPvs(configurator.SoundSwitchMode, userUid, audioParams);
     }
 
     /// <summary>
@@ -360,14 +366,11 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         if (hasLinking && HasComp<DeviceListComponent>(target) || hasLinking == configurator.LinkModeActive)
             return;
 
-        if (hasLinking)
-        {
-            SetMode(configuratorUid, configurator, userUid, true);
-            return;
-        }
-
-        if (HasComp<DeviceNetworkComponent>(target))
+        var hasNetworking = HasComp<DeviceNetworkComponent>(target);
+        if (hasNetworking)
             SetMode(configuratorUid, configurator, userUid, false);
+        else if (hasLinking)
+            SetMode(configuratorUid, configurator, userUid, true);
     }
 
     #endregion
@@ -496,14 +499,15 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
             return;
 
         var sources = _deviceLinkSystem.GetSourcePorts(sourceUid, sourceComponent);
-        var sinks = _deviceLinkSystem.GetSinkPorts(sinkUid, sinkComponent);
+        var sinks = _deviceLinkSystem.GetSinkPortIds((sinkUid, sinkComponent));
         var links = _deviceLinkSystem.GetLinks(sourceUid, sinkUid, sourceComponent);
         var defaults = _deviceLinkSystem.GetDefaults(sources);
+        var sourceIds = sources.Select(s => (ProtoId<SourcePortPrototype>)s.ID).ToArray();
 
         var sourceAddress = Resolve(sourceUid, ref sourceNetworkComponent, false) ? sourceNetworkComponent.Address : "";
         var sinkAddress = Resolve(sinkUid, ref sinkNetworkComponent, false) ? sinkNetworkComponent.Address : "";
 
-        var state = new DeviceLinkUserInterfaceState(sources, sinks, links, sourceAddress, sinkAddress, defaults);
+        var state = new DeviceLinkUserInterfaceState(sourceIds, sinks, links, sourceAddress, sinkAddress, defaults);
         _uiSystem.SetUiState(configuratorUid, NetworkConfiguratorUiKey.Link, state);
     }
 
@@ -633,10 +637,9 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
 
     private void ClearDevices(EntityUid uid, NetworkConfiguratorComponent component)
     {
-        var query = GetEntityQuery<DeviceNetworkComponent>();
         foreach (var device in component.Devices.Values)
         {
-            if (query.TryGetComponent(device, out var comp))
+            if (_deviceNetworkQuery.TryGetComponent(device, out var comp))
                 comp.Configurators.Remove(uid);
         }
 
@@ -795,10 +798,9 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
 
                 ClearDevices(uid, component);
 
-                var query = GetEntityQuery<DeviceNetworkComponent>();
                 foreach (var (addr, device) in _deviceListSystem.GetDeviceList(component.ActiveDeviceList.Value))
                 {
-                    if (query.TryGetComponent(device, out var comp))
+                    if (_deviceNetworkQuery.TryGetComponent(device, out var comp))
                     {
                         component.Devices.Add(addr, device);
                         comp.Configurators.Add(uid);
@@ -839,12 +841,6 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         }
 
         UpdateListUiState(conf, conf.Comp);
-    }
-
-    private void OnUiOpenAttempt(EntityUid uid, NetworkConfiguratorComponent configurator, ActivatableUIOpenAttemptEvent args)
-    {
-        if (configurator.LinkModeActive)
-            args.Cancel();
     }
     #endregion
 }

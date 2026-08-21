@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
+using Content.IntegrationTests.Fixtures;
 using Content.Shared.Tag;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Reflection;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.IntegrationTests.Tests.Linter;
 
@@ -12,12 +12,12 @@ namespace Content.IntegrationTests.Tests.Linter;
 /// Verify that the yaml linter successfully validates static fields
 /// </summary>
 [TestFixture]
-public sealed class StaticFieldValidationTest
+public sealed class StaticFieldValidationTest : GameTest
 {
     [Test]
     public async Task TestStaticFieldValidation()
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var pair = Pair;
         var protoMan = pair.Server.ProtoMan;
 
         var protos = new Dictionary<Type, HashSet<string>>();
@@ -50,8 +50,6 @@ public sealed class StaticFieldValidationTest
         Assert.That(protoMan.ValidateStaticFields(typeof(ProtoIdListInvalid), protos), Has.Count.EqualTo(2));
         Assert.That(protoMan.ValidateStaticFields(typeof(ProtoIdSetInvalid), protos), Has.Count.EqualTo(2));
         Assert.That(protoMan.ValidateStaticFields(typeof(PrivateProtoIdArrayInvalid), protos), Has.Count.EqualTo(2));
-
-        await pair.CleanReturnAsync();
     }
 
     [TestPrototypes]
@@ -66,25 +64,25 @@ public sealed class StaticFieldValidationTest
     [Reflect(false)]
     private sealed class StringValid
     {
-        [ValidatePrototypeId<TagPrototype>] public static string Tag = "StaticFieldTestTag";
+        public static readonly ProtoId<TagPrototype> Tag = "StaticFieldTestTag";
     }
 
     [Reflect(false)]
     private sealed class StringInvalid
     {
-        [ValidatePrototypeId<TagPrototype>] public static string Tag = string.Empty;
+        public static readonly ProtoId<TagPrototype> Tag = string.Empty;
     }
 
     [Reflect(false)]
     private sealed class StringArrayValid
     {
-        [ValidatePrototypeId<TagPrototype>] public static string[] Tag = ["StaticFieldTestTag", "StaticFieldTestTag"];
+        public static readonly ProtoId<TagPrototype>[] Tag = ["StaticFieldTestTag", "StaticFieldTestTag"];
     }
 
     [Reflect(false)]
     private sealed class StringArrayInvalid
     {
-        [ValidatePrototypeId<TagPrototype>] public static string[] Tag = [string.Empty, "StaticFieldTestTag", string.Empty];
+        public static readonly ProtoId<TagPrototype>[] Tag = [string.Empty, "StaticFieldTestTag", string.Empty];
     }
 
     [Reflect(false)]

@@ -1,0 +1,59 @@
+- type: entity
+  parent: [ BaseWallmountMachine, StructureHealthMachineWeak ]
+  id: Screen
+  name: screen
+  description: Displays text or time.
+  components:
+  - type: Rotatable
+  - type: TextScreenVisuals
+    textOffset: 0,10
+    timerOffset: 0,3
+    rows: 2
+    rowLength: 6
+    scrollEnabled: true
+    frameState:
+      sprite: Structures/Wallmounts/screen.rsi
+      state: outer_frame
+  - type: Sprite
+    offset: 0, -0.5
+    drawdepth: WallMountedItems
+    sprite: Structures/Wallmounts/screen.rsi
+    state: screen # Note: outer_frame will be added on top of text layers.
+  - type: Appearance
+  - type: Damageable
+    damageModifierSet: GlassMod
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+  - type: ApcPowerReceiver
+    powerLoad: 100
+  - type: ExtensionCableReceiver
+  - type: Screen
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: ShuttleTimer
+
+# Dummy screen for comms console
+- type: entity
+  parent: Screen
+  id: ScreenDummy
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    offset: 0, -0.25
+
+- type: entity
+  id: ArrivalsShuttleTimer
+  parent: Screen
+  name: arrivals screen
+  description: Displays time of arrivals shuttle ETA.
+  components:
+  - type: DeviceNetwork
+    deviceNetId: Private
+    receiveFrequencyId: ArrivalsShuttleTimer

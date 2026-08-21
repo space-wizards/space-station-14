@@ -1,5 +1,4 @@
 using Content.Server.Administration.Logs;
-using Content.Server.AlertLevel;
 using Content.Server.Chat.Systems;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Popups;
@@ -9,6 +8,7 @@ using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Systems;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
+using Content.Shared.AlertLevel;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Communications;
@@ -19,22 +19,24 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Communications
 {
-    public sealed class CommunicationsConsoleSystem : EntitySystem
+    public sealed partial class CommunicationsConsoleSystem : EntitySystem
     {
-        [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
-        [Dependency] private readonly AlertLevelSystem _alertLevelSystem = default!;
-        [Dependency] private readonly ChatSystem _chatSystem = default!;
-        [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
-        [Dependency] private readonly EmergencyShuttleSystem _emergency = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
-        [Dependency] private readonly StationSystem _stationSystem = default!;
-        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-        [Dependency] private readonly IConfigurationManager _cfg = default!;
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private AccessReaderSystem _accessReaderSystem = default!;
+        [Dependency] private AlertLevelSystem _alertLevelSystem = default!;
+        [Dependency] private ChatSystem _chatSystem = default!;
+        [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
+        [Dependency] private EmergencyShuttleSystem _emergency = default!;
+        [Dependency] private PopupSystem _popupSystem = default!;
+        [Dependency] private RoundEndSystem _roundEndSystem = default!;
+        [Dependency] private StationSystem _stationSystem = default!;
+        [Dependency] private UserInterfaceSystem _uiSystem = default!;
+        [Dependency] private IConfigurationManager _cfg = default!;
+        [Dependency] private IAdminLogManager _adminLogger = default!;
+        [Dependency] private IdentitySystem _identity = default!;
 
         private const float UIUpdateInterval = 5.0f;
 
@@ -42,9 +44,8 @@ namespace Content.Server.Communications
         {
             // All events that refresh the BUI
             SubscribeLocalEvent<AlertLevelChangedEvent>(OnAlertLevelChanged);
-            SubscribeLocalEvent<CommunicationsConsoleComponent, ComponentInit>((uid, comp, _) => UpdateCommsConsoleInterface(uid, comp));
             SubscribeLocalEvent<RoundEndSystemChangedEvent>(_ => OnGenericBroadcastEvent());
-            SubscribeLocalEvent<AlertLevelDelayFinishedEvent>(_ => OnGenericBroadcastEvent());
+            SubscribeLocalEvent<AlertLevelDelayFinishedEvent>((ref AlertLevelDelayFinishedEvent ev) => OnGenericBroadcastEvent());
 
             // Messages from the BUI
             SubscribeLocalEvent<CommunicationsConsoleComponent, CommunicationsConsoleSelectAlertLevelMessage>(OnSelectAlertLevelMessage);
@@ -85,6 +86,7 @@ namespace Content.Server.Communications
         public void OnCommunicationsConsoleMapInit(EntityUid uid, CommunicationsConsoleComponent comp, MapInitEvent args)
         {
             comp.AnnouncementCooldownRemaining = comp.InitialDelay;
+            UpdateCommsConsoleInterface(uid, comp);
         }
 
         /// <summary>
@@ -103,7 +105,7 @@ namespace Content.Server.Communications
         /// Updates all comms consoles belonging to the station that the alert level was set on
         /// </summary>
         /// <param name="args">Alert level changed event arguments</param>
-        private void OnAlertLevelChanged(AlertLevelChangedEvent args)
+        private void OnAlertLevelChanged(ref AlertLevelChangedEvent args)
         {
             var query = EntityQueryEnumerator<CommunicationsConsoleComponent>();
             while (query.MoveNext(out var uid, out var comp))
@@ -131,39 +133,10 @@ namespace Content.Server.Communications
         /// </summary>
         public void UpdateCommsConsoleInterface(EntityUid uid, CommunicationsConsoleComponent comp)
         {
-            var stationUid = _stationSystem.GetOwningStation(uid);
-            List<string>? levels = null;
-            string currentLevel = default!;
-            float currentDelay = 0;
-
-            if (stationUid != null)
-            {
-                if (TryComp(stationUid.Value, out AlertLevelComponent? alertComp) &&
-                    alertComp.AlertLevels != null)
-                {
-                    if (alertComp.IsSelectable)
-                    {
-                        levels = new();
-                        foreach (var (id, detail) in alertComp.AlertLevels.Levels)
-                        {
-                            if (detail.Selectable)
-                            {
-                                levels.Add(id);
-                            }
-                        }
-                    }
-
-                    currentLevel = alertComp.CurrentLevel;
-                    currentDelay = _alertLevelSystem.GetAlertLevelDelay(stationUid.Value, alertComp);
-                }
-            }
-
+            // TODO: Use component states and predict the UI
             _uiSystem.SetUiState(uid, CommunicationsConsoleUiKey.Key, new CommunicationsConsoleInterfaceState(
                 CanAnnounce(comp),
                 CanCallOrRecall(comp),
-                levels,
-                currentLevel,
-                currentDelay,
                 _roundEndSystem.ExpectedCountdownEnd
             ));
         }
@@ -221,7 +194,7 @@ namespace Content.Server.Communications
             var stationUid = _stationSystem.GetOwningStation(uid);
             if (stationUid != null)
             {
-                _alertLevelSystem.SetLevel(stationUid.Value, message.Level, true, true);
+                _alertLevelSystem.SetLevel(stationUid.Value, message.Level);
             }
         }
 
@@ -244,9 +217,7 @@ namespace Content.Server.Communications
                     return;
                 }
 
-                var tryGetIdentityShortInfoEvent = new TryGetIdentityShortInfoEvent(uid, mob);
-                RaiseLocalEvent(tryGetIdentityShortInfoEvent);
-                author = tryGetIdentityShortInfoEvent.Title;
+                author = _identity.GetIdentityShortInfo(mob, uid) ?? author;
             }
 
             comp.AnnouncementCooldownRemaining = comp.Delay;
@@ -312,7 +283,7 @@ namespace Content.Server.Communications
                 return;
             }
 
-            _roundEndSystem.RequestRoundEnd(uid);
+            _roundEndSystem.RequestRoundEnd(mob, uid);
             _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(mob):player} has called the shuttle.");
         }
 
@@ -321,13 +292,15 @@ namespace Content.Server.Communications
             if (!CanCallOrRecall(comp))
                 return;
 
-            if (!CanUse(message.Actor, uid))
+            var mob = message.Actor;
+
+            if (!CanUse(mob, uid))
             {
                 _popupSystem.PopupEntity(Loc.GetString("comms-console-permission-denied"), uid, message.Actor);
                 return;
             }
 
-            _roundEndSystem.CancelRoundEndCountdown(uid);
+            _roundEndSystem.CancelRoundEndCountdown(mob, uid);
             _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(message.Actor):player} has recalled the shuttle.");
         }
     }

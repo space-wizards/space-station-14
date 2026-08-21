@@ -8,6 +8,10 @@
     sprite: Clothing/OuterClothing/Misc/apron.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/apron.rsi
+  - type: Tag
+    tags:
+    - Apron
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -20,6 +24,10 @@
     sprite: Clothing/OuterClothing/Misc/apronbar.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/apronbar.rsi
+  - type: Tag
+    tags:
+    - Apron
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -32,6 +40,10 @@
     sprite: Clothing/OuterClothing/Misc/apronbotanist.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/apronbotanist.rsi
+  - type: Tag
+    tags:
+    - Apron
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -44,6 +56,10 @@
     sprite: Clothing/OuterClothing/Misc/apronchef.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/apronchef.rsi
+  - type: Tag
+    tags:
+    - Apron
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -117,8 +133,8 @@
     sprite: Clothing/OuterClothing/Misc/classicponcho.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/classicponcho.rsi
-  - type: AddAccentClothing
-    accent: SpanishAccent
+  - type: SpanishAccent
+    relayAccent: true
 
 - type: entity
   parent: ClothingOuterBase
@@ -152,8 +168,8 @@
     sprite: Clothing/OuterClothing/Misc/poncho.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/poncho.rsi
-  - type: AddAccentClothing
-    accent: SpanishAccent
+  - type: SpanishAccent
+    relayAccent: true
 
 - type: entity
   parent: ClothingOuterBase
@@ -184,6 +200,9 @@
     sprite: Clothing/OuterClothing/Misc/violetwizard.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/violetwizard.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingOuterWizardBase
@@ -195,6 +214,10 @@
     sprite: Clothing/OuterClothing/Misc/wizard.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/wizard.rsi
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingOuterWizardBase
@@ -206,6 +229,20 @@
     sprite: Clothing/OuterClothing/Misc/redwizard.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/redwizard.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterWizardFake
+  name: fake wizard robes
+  description: Covered in glittery stars and mystery stains. Instantly boosts your arcane fashion sense.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Misc/wizard_fake.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Misc/wizard_fake.rsi
 
 - type: entity
   parent: ClothingOuterBase
@@ -267,7 +304,7 @@
     sprite: Clothing/OuterClothing/Misc/hospitalgown.rsi
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterJacketBase
   id: ClothingOuterFlannelRed
   name: red flannel jacket
   description: An old fashioned red flannel jacket for space autumn.
@@ -299,11 +336,9 @@
         color: "#670a09"
       - state: equipped-OUTERCLOTHING-lines
         color: "#000000"
-  - type: TemperatureProtection
-    coolingCoefficient: 0.3
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterJacketBase
   id: ClothingOuterFlannelBlue
   name: blue flannel jacket
   description: An old fashioned blue flannel jacket for space autumn.
@@ -335,11 +370,9 @@
         color: "#3232a6"
       - state: equipped-OUTERCLOTHING-lines
         color: "#000000"
-  - type: TemperatureProtection
-    coolingCoefficient: 0.3
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterJacketBase
   id: ClothingOuterFlannelGreen
   name: green flannel jacket
   description: An old fashioned green flannel jacket for space autumn.
@@ -371,8 +404,6 @@
         color: "#164d0f"
       - state: equipped-OUTERCLOTHING-lines
         color: "#000000"
-  - type: TemperatureProtection
-    coolingCoefficient: 0.3
 
 - type: entity
   parent: ClothingOuterBase

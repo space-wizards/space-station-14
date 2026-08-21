@@ -18,9 +18,9 @@ namespace Content.Client.TurretController;
 [GenerateTypedNameReferences]
 public sealed partial class TurretControllerWindow : BaseWindow
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IResourceCache _cache = default!;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private IResourceCache _cache = default!;
 
     private readonly AccessReaderSystem _accessReaderSystem;
 
@@ -115,6 +115,7 @@ public sealed partial class TurretControllerWindow : BaseWindow
             TurretArmamentSetting.Safe => SafeButton,
             TurretArmamentSetting.Stun => StunButton,
             TurretArmamentSetting.Lethal => LethalButton,
+            _ => throw new NotImplementedException(),
         };
         setPressedOn.Pressed = true;
 

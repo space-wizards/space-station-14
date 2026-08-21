@@ -1,107 +1,59 @@
-using Content.Server.Access.Components;
-using Content.Server.Popups;
-using Content.Shared.UserInterface;
+using Content.Server.Clothing.Systems;
+using Content.Server.Implants;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
-using Content.Shared.Interaction;
-using Content.Shared.StatusIcon;
-using Robust.Server.GameObjects;
-using Robust.Shared.Prototypes;
-using Content.Shared.Roles;
-using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Clothing.Components;
+using Content.Shared.Implants;
+using Content.Shared.Inventory;
+using Content.Shared.PDA;
 
-namespace Content.Server.Access.Systems
+namespace Content.Server.Access.Systems;
+
+/// <inheritdoc />
+public sealed partial class AgentIdCardSystem : SharedAgentIdCardSystem
 {
-    public sealed class AgentIDCardSystem : SharedAgentIdCardSystem
+    [Dependency] private SharedIdCardSystem _card = default!;
+    [Dependency] private ChameleonClothingSystem _chameleon = default!;
+    [Dependency] private ChameleonControllerSystem _chamController = default!;
+
+    [SubscribeLocalEvent]
+    private void OnChameleonControllerOutfitChangedItem(Entity<AgentIDCardComponent> ent, ref InventoryRelayedEvent<ChameleonControllerOutfitSelectedEvent> args)
     {
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly IdCardSystem _cardSystem = default!;
-        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        if (!TryComp<IdCardComponent>(ent, out var idCardComp))
+            return;
 
-        public override void Initialize()
-        {
-            base.Initialize();
-            SubscribeLocalEvent<AgentIDCardComponent, AfterInteractEvent>(OnAfterInteract);
-            // BUI
-            SubscribeLocalEvent<AgentIDCardComponent, AfterActivatableUIOpenEvent>(AfterUIOpen);
-            SubscribeLocalEvent<AgentIDCardComponent, AgentIDCardNameChangedMessage>(OnNameChanged);
-            SubscribeLocalEvent<AgentIDCardComponent, AgentIDCardJobChangedMessage>(OnJobChanged);
-            SubscribeLocalEvent<AgentIDCardComponent, AgentIDCardJobIconChangedMessage>(OnJobIconChanged);
-        }
+        ProtoMan.Resolve(args.Args.ChameleonOutfit.Job, out var jobProto);
 
-        private void OnAfterInteract(EntityUid uid, AgentIDCardComponent component, AfterInteractEvent args)
-        {
-            if (args.Target == null || !args.CanReach || !TryComp<AccessComponent>(args.Target, out var targetAccess) || !HasComp<IdCardComponent>(args.Target))
-                return;
+        var jobIcon = args.Args.ChameleonOutfit.Icon ?? jobProto?.Icon;
+        var jobName = args.Args.ChameleonOutfit.Name ?? jobProto?.Name ?? "";
 
-            if (!TryComp<AccessComponent>(uid, out var access) || !HasComp<IdCardComponent>(uid))
-                return;
+        if (jobIcon != null)
+            _card.TryChangeJobIcon(ent, ProtoMan.Index(jobIcon.Value), idCardComp);
 
-            var beforeLength = access.Tags.Count;
-            access.Tags.UnionWith(targetAccess.Tags);
-            var addedLength = access.Tags.Count - beforeLength;
+        if (jobName != "")
+            _card.TryChangeJobTitle(ent, Loc.GetString(jobName), idCardComp);
 
-            _popupSystem.PopupEntity(Loc.GetString("agent-id-new", ("number", addedLength), ("card", args.Target)), args.Target.Value, args.User);
-            if (addedLength > 0)
-                Dirty(uid, access);
-        }
+        // If you have forced departments use those over the jobs actual departments.
+        if (args.Args.ChameleonOutfit.Departments?.Count > 0)
+            _card.TryChangeJobDepartment(ent, args.Args.ChameleonOutfit.Departments, idCardComp);
+        else if (jobProto != null)
+            _card.TryChangeJobDepartment(ent, jobProto, idCardComp);
 
-        private void AfterUIOpen(EntityUid uid, AgentIDCardComponent component, AfterActivatableUIOpenEvent args)
-        {
-            if (!_uiSystem.HasUi(uid, AgentIDCardUiKey.Key))
-                return;
+        // Ensure that you chameleon IDs in PDAs correctly. Yes this is sus...
 
-            if (!TryComp<IdCardComponent>(uid, out var idCard))
-                return;
+        // There is one weird interaction: If the job / icon don't match the PDAs job the chameleon will be updated
+        // to the PDAs IDs sprite but the icon and job title will not match. There isn't a way to get around this
+        // really as there is no tie between job -> pda or pda -> job.
 
-            var state = new AgentIDCardBoundUserInterfaceState(idCard.FullName ?? "", idCard.LocalizedJobTitle ?? "", idCard.JobIcon);
-            _uiSystem.SetUiState(uid, AgentIDCardUiKey.Key, state);
-        }
+        var idSlotGear = _chamController.GetGearForSlot(args, "id");
+        if (idSlotGear == null)
+            return;
 
-        private void OnJobChanged(EntityUid uid, AgentIDCardComponent comp, AgentIDCardJobChangedMessage args)
-        {
-            if (!TryComp<IdCardComponent>(uid, out var idCard))
-                return;
+        var proto = ProtoMan.Index(idSlotGear);
+        if (!proto.TryComp<PdaComponent>(out var comp, EntityManager.ComponentFactory))
+            return;
 
-            _cardSystem.TryChangeJobTitle(uid, args.Job, idCard);
-        }
-
-        private void OnNameChanged(EntityUid uid, AgentIDCardComponent comp, AgentIDCardNameChangedMessage args)
-        {
-            if (!TryComp<IdCardComponent>(uid, out var idCard))
-                return;
-
-            _cardSystem.TryChangeFullName(uid, args.Name, idCard);
-        }
-
-        private void OnJobIconChanged(EntityUid uid, AgentIDCardComponent comp, AgentIDCardJobIconChangedMessage args)
-        {
-            if (!TryComp<IdCardComponent>(uid, out var idCard))
-                return;
-
-            if (!_prototypeManager.TryIndex(args.JobIconId, out var jobIcon))
-                return;
-
-            _cardSystem.TryChangeJobIcon(uid, jobIcon, idCard);
-
-            if (TryFindJobProtoFromIcon(jobIcon, out var job))
-                _cardSystem.TryChangeJobDepartment(uid, job, idCard);
-        }
-
-        private bool TryFindJobProtoFromIcon(JobIconPrototype jobIcon, [NotNullWhen(true)] out JobPrototype? job)
-        {
-            foreach (var jobPrototype in _prototypeManager.EnumeratePrototypes<JobPrototype>())
-            {
-                if (jobPrototype.Icon == jobIcon.ID)
-                {
-                    job = jobPrototype;
-                    return true;
-                }
-            }
-
-            job = null;
-            return false;
-        }
+        if (TryComp<ChameleonClothingComponent>(ent, out var chameleonComp) && chameleonComp.CanBeSetByController)
+            _chameleon.SetSelectedPrototype(ent, comp.IdCard, component: chameleonComp);
     }
 }

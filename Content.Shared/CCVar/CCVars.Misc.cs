@@ -1,5 +1,8 @@
 ﻿using Robust.Shared.Configuration;
 
+using Content.Shared.Administration;
+using Content.Shared.CCVar.CVarAccess;
+
 namespace Content.Shared.CCVar;
 
 public sealed partial class CCVars
@@ -28,17 +31,39 @@ public sealed partial class CCVars
         CVarDef.Create("anomaly.generation_grid_bounds_scale", 0.6f, CVar.SERVERONLY);
 
     /// <summary>
+    ///     If enabled, the server automatically triggers an AFK check popup when a player's inactivity exceeds afk.time (or admin.afk_time for admins)
+    /// </summary>
+    public static readonly CVarDef<bool> AfkAutomaticChecks =
+        CVarDef.Create("afk.automatic_checks", true, CVar.SERVERONLY);
+
+    /// <summary>
     ///     How long a client can go without any input before being considered AFK.
     /// </summary>
+    [CVarControl(AdminFlags.VarEdit, min: 0f, max: float.MaxValue)]
     public static readonly CVarDef<float> AfkTime =
-        CVarDef.Create("afk.time", 60f, CVar.SERVERONLY);
+        CVarDef.Create("afk.time", 600f, CVar.SERVER | CVar.REPLICATED);
+        // If afk players become an issue again, implement using a more aggressive time limit when server pop is near full
+
+    /// <summary>
+    ///     How long a player has to confirm they are not AFK before being disconnected.
+    /// </summary>
+    [CVarControl(AdminFlags.Server, min: 10f, max: float.MaxValue)]
+    public static readonly CVarDef<float> AfkConfirmTimeout =
+        CVarDef.Create("afk.confirm_timeout", 60f, CVar.SERVER | CVar.REPLICATED);
+
+    /// <summary>
+    ///     Sound played when the AFK confirmation window opens.
+    /// </summary>
+    [CVarControl(AdminFlags.Server)]
+    public static readonly CVarDef<string> AfkConfirmSound =
+        CVarDef.Create("afk.confirm_sound", "/Audio/Items/airhorn.ogg", CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
     ///     Flavor limit. This is to ensure that having a large mass of flavors in
     ///     some food object won't spam a user with flavors.
     /// </summary>
     public static readonly CVarDef<int>
-        FlavorLimit = CVarDef.Create("flavor.limit", 10, CVar.SERVERONLY);
+        FlavorLimit = CVarDef.Create("flavor.limit", 10, CVar.SERVER | CVar.REPLICATED);
 
     public static readonly CVarDef<string> DestinationFile =
         CVarDef.Create("autogen.destination_file", "", CVar.SERVER | CVar.SERVERONLY);
@@ -83,9 +108,6 @@ public sealed partial class CCVars
     public static readonly CVarDef<int> GCMaximumTimeMs =
         CVarDef.Create("entgc.maximum_time_ms", 5, CVar.SERVERONLY);
 
-    public static readonly CVarDef<bool> GatewayGeneratorEnabled =
-        CVarDef.Create("gateway.generator_enabled", true);
-
     public static readonly CVarDef<string> TippyEntity =
         CVarDef.Create("tippy.entity", "Tippy", CVar.SERVER | CVar.REPLICATED);
 
@@ -94,4 +116,19 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<float> PointingCooldownSeconds =
         CVarDef.Create("pointing.cooldown_seconds", 0.5f, CVar.SERVERONLY);
+
+    /// <summary>
+    ///     The last time the client recorded a valid connection to a game server.
+    ///     Used in conjunction with <see cref="PlaytimeMinutesToday"/> to track how long the player has been playing for the given day.
+    /// </summary>
+    public static readonly CVarDef<string> PlaytimeLastConnectDate =
+        CVarDef.Create("playtime.last_connect_date", "", CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
+    ///     The total minutes that the client has spent since the date of last connection.
+    ///     This is reset to 0 when the last connect date is updated.
+    ///     Do not read this value directly, use <code>ClientsidePlaytimeTrackingManager</code> instead.
+    /// </summary>
+    public static readonly CVarDef<float> PlaytimeMinutesToday =
+        CVarDef.Create("playtime.minutes_today", 0f, CVar.CLIENTONLY | CVar.ARCHIVE);
 }

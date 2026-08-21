@@ -6,10 +6,11 @@
   description: A hacked access configurator, specialized to unlock and erase access from digital locks.
   components:
   - type: Emag
+    emagImmuneTag: AccessBreakerImmune
     emagType: Access
   - type: Sprite
     sprite: Objects/Tools/access_breaker.rsi
-    state: icon
+    state: syndi-icon
   - type: Item
     sprite: Objects/Tools/access_breaker.rsi
 
@@ -20,3 +21,19 @@
   components:
   - type: LimitedCharges
   - type: AutoRecharge
+  - type: StaticPrice
+    price: 2000
+
+- type: entity
+  parent: [ BaseXenoborgContraband, AccessBreaker ]
+  id: XenoborgAccessBreaker
+  suffix: Limited
+  name: xenoborg authentication disruptor
+  description: An access scrubbing device, engineered by xenoborgs for disrupting digital locks.
+  components:
+  - type: Emag
+    emagImmuneTag: AccessBreakerImmune
+    emagType: Access
+  - type: Sprite
+    sprite: Objects/Tools/access_breaker.rsi
+    state: xorg-icon

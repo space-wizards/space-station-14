@@ -1,5 +1,5 @@
 {
-  "copyright" : "Taken from https://github.com/tgstation/tgstation at at https://github.com/tgstation/tgstation/commit/40d89d11ea4a5cb81d61dc1018b46f4e7d32c62a",
+  "copyright" : "Taken from https://github.com/tgstation/tgstation at at https://github.com/tgstation/tgstation/commit/40d89d11ea4a5cb81d61dc1018b46f4e7d32c62a, Clamp/Honker Inhands by TiniestShark (Github)",
   "license" : "CC-BY-SA-3.0",
   "version": 1,
   "size": {
@@ -15,6 +15,14 @@
     },
     {
       "name": "mecha_honker"
+    },
+    {
+      "name": "inhand-left-honk",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right-honk",
+      "directions": 4
     },
     {
       "name": "mecha_mime"
@@ -65,7 +73,23 @@
       "name": "mecha_clamp"
     },
     {
+      "name": "inhand-left-big",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right-big",
+      "directions": 4
+    },
+    {
       "name": "mecha_clamp_small"
+    },
+    {
+      "name": "inhand-left-small",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right-small",
+      "directions": 4
     },
     {
       "name": "mecha_wire"

@@ -64,17 +64,24 @@
   - type: Sprite
     sprite: Clothing/Head/Misc/pumpkin.rsi
   - type: Clothing
-    sprite: Clothing/Head/Misc/pumpkin.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-helmet
   - type: IngestionBlocker
   - type: IdentityBlocker
   - type: PointLight
     enabled: false
     radius: 3
     energy: 1
-    mask: /Textures/Effects/LightMasks/cone.png
+    lightMask: ConeSingle
     autoRot: true
     color: "#cc6600"
     netsync: false
+  - type: ToggleableVisuals
+    clothingVisuals:
+      head:
+      - state: equipped-helmet-light
+        shader: unshaded
   - type: ItemSlots
     slots:
       cell_slot:
@@ -85,6 +92,12 @@
     - HeadTop
     - HeadSide
     - FacialHair
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
 
 - type: entity
   parent: ClothingHeadBase
@@ -121,6 +134,8 @@
     sprite: Clothing/Head/Misc/richard.rsi
   - type: Clothing
     sprite: Clothing/Head/Misc/richard.rsi
+  - type: Item
+    storedRotation: 0
   - type: IngestionBlocker
   - type: IdentityBlocker
   - type: HideLayerClothing
@@ -198,10 +213,10 @@
     sprite: Clothing/Head/Misc/fancycrown.rsi
   - type: TypingIndicatorClothing
     proto: regal
-  - type: MobPrice
+  - type: StaticPrice
     price: 3000
-  - type: AddAccentClothing
-    accent: MobsterAccent
+  - type: MobsterAccent
+    relayAccent: true
 
 - type: entity
   parent: [ ClothingHeadBase, BaseSyndicateContraband ]
@@ -216,8 +231,10 @@
     sprite: Clothing/Head/Hats/catears.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/catears.rsi
-  - type: AddAccentClothing
-    accent: OwOAccent
+  - type: OwOAccent
+    relayAccent: true
+  - type: StaticPrice
+    price: 15000
 
 - type: entity
   parent: [ClothingHeadHatCatEars, BaseToggleClothing]
@@ -238,17 +255,14 @@
     sprite: Clothing/Head/Hats/catears.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/catears.rsi
-  - type: AddAccentClothing
-    accent: OwOAccent
+  - type: OwOAccent
+    relayAccent: true
 
 - type: entity
-  categories: [ Actions, HideSpawnMenu ]
+  parent: BaseToggleAction
   id: ActionBecomeValid
   name: Become Valid
   description: "*notices your killsign* owo whats this"
-  components:
-  - type: InstantAction
-    event: !type:ToggleActionEvent
 
 - type: entity
   parent: ClothingHeadBase
@@ -261,8 +275,8 @@
     sprite: Clothing/Head/Hats/dogears.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/dogears.rsi
-  - type: AddAccentClothing
-    accent: BarkAccent
+  - type: BarkAccent
+    relayAccent: true
 
 - type: entity
   parent: ClothingHeadBase
@@ -301,7 +315,7 @@
     - FacialHair
 
 - type: entity
-  parent: Clothing
+  parent: [SolutionDrink, Clothing]
   id: WaterDropletHat
   name: water droplet
   description: Makes 8-eyed friends 8 times more adorable!
@@ -316,28 +330,30 @@
   - type: Clothing
     slots:
     - HEAD
-  - type: Food
+  - type: Edible
+    edible: Drink
     solution: drink
-    useSound: /Audio/Items/drink.ogg
-    eatMessage: drink-component-try-use-drink-success-slurp
     delay: 0.5
     forceFeedDelay: 1.5
+    utensil: Spoon
   - type: FlavorProfile
     flavors:
       - water
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 2
-        reagents:
-        - ReagentId: Water
-          Quantity: 2
+  - type: DrainableSolution
+    solution: drink
+  - type: Solution
+    solution:
+      maxVol: 2 # Droplets are pretty small.
+      reagents:
+      - ReagentId: Water
+        Quantity: 2
   - type: DamageOnHighSpeedImpact
     minimumSpeed: 0.1
     damage:
       types:
         Blunt: 1
   - type: Damageable
+  - type: Injurable
     damageContainer: Biological
   - type: Destructible
     thresholds:

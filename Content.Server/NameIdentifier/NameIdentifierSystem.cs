@@ -7,126 +7,150 @@ using Robust.Shared.Random;
 
 namespace Content.Server.NameIdentifier;
 
-/// <summary>
-///     Handles unique name identifiers for entities e.g. `monkey (MK-912)`
-/// </summary>
-public sealed class NameIdentifierSystem : EntitySystem
+/// <inheritdoc cref="SharedNameIdentifierSystem"/>
+public sealed partial class NameIdentifierSystem : SharedNameIdentifierSystem
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IRobustRandom _robustRandom = default!;
-    [Dependency] private readonly NameModifierSystem _nameModifier = default!;
+    [Dependency] private IRobustRandom _robustRandom = default!;
+    [Dependency] private NameModifierSystem _nameModifier = default!;
 
     /// <summary>
     /// Free IDs available per <see cref="NameIdentifierGroupPrototype"/>.
     /// </summary>
     [ViewVariables]
-    public readonly Dictionary<string, List<int>> CurrentIds = new();
+    public readonly Dictionary<string, List<int>> CurrentIds = [];
 
+    /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<NameIdentifierComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<NameIdentifierComponent, ComponentShutdown>(OnComponentShutdown);
-        SubscribeLocalEvent<NameIdentifierComponent, RefreshNameModifiersEvent>(OnRefreshNameModifiers);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(CleanupIds);
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnReloadPrototypes);
 
         InitialSetupPrototypes();
     }
 
-    private void OnComponentShutdown(EntityUid uid, NameIdentifierComponent component, ComponentShutdown args)
+    private void OnComponentShutdown(Entity<NameIdentifierComponent> ent, ref ComponentShutdown args)
     {
-        if (CurrentIds.TryGetValue(component.Group, out var ids))
+        if (ent.Comp.Group is null)
+            return;
+
+        if (!CurrentIds.TryGetValue(ent.Comp.Group, out var ids))
+        {
+            _nameModifier.RefreshNameModifiers(ent.Owner);
+            return;
+        }
+
+        // Not a valid value
+        if (ent.Comp.Identifier == -1)
+            return;
+
+        if (ids.Count > 0)
         {
             // Avoid inserting the value right back at the end or shuffling in place:
             // just pick a random spot to put it and then move that one to the end.
             var randomIndex = _robustRandom.Next(ids.Count);
             var random = ids[randomIndex];
-            ids[randomIndex] = component.Identifier;
+            ids[randomIndex] = ent.Comp.Identifier;
             ids.Add(random);
         }
-        _nameModifier.RefreshNameModifiers(uid);
+        else
+        {
+            ids.Add(ent.Comp.Identifier);
+        }
+
+        _nameModifier.RefreshNameModifiers(ent.Owner);
     }
 
     /// <summary>
-    ///     Generates a new unique name/suffix for a given entity and adds it to <see cref="CurrentIds"/>
-    ///     but does not set the entity's name.
+    /// <inheritdoc cref="GenerateUniqueNameModifier(Content.Shared.NameIdentifier.NameIdentifierGroupPrototype,out int)" path="/summary"/>
     /// </summary>
-    public string GenerateUniqueName(EntityUid uid, ProtoId<NameIdentifierGroupPrototype> proto, out int randomVal)
+    /// <remarks>
+    /// This overload resolves the ProtoId of the NameIdentifierGroupPrototype first.
+    /// </remarks>
+    /// <param name="proto">A ProtoId that will be resolved and passed on.</param>
+    /// <param name="randomVal">The index value of the randomly selected modifier.</param>
+    public string GenerateUniqueNameModifier(ProtoId<NameIdentifierGroupPrototype> proto, out int randomVal)
     {
-        return GenerateUniqueName(uid, _prototypeManager.Index(proto), out randomVal);
+        return GenerateUniqueNameModifier(ProtoMan.Index(proto), out randomVal);
     }
 
     /// <summary>
-    ///     Generates a new unique name/suffix for a given entity and adds it to <see cref="CurrentIds"/>
-    ///     but does not set the entity's name.
+    /// Generates a new unique name modifier for a given entity and removes it from <see cref="CurrentIds"/>
+    /// but does not set the entity's name.
     /// </summary>
-    public string GenerateUniqueName(EntityUid uid, NameIdentifierGroupPrototype proto, out int randomVal)
+    /// <param name="proto">The <see cref="NameIdentifierGroupPrototype"/> prototype to retrieve from.</param>
+    /// <param name="randomVal">The index value of the randomly selected modifier.</param>
+    /// <returns>A formatted and/or localized modifier. Empty string if invalid.</returns>
+    public string GenerateUniqueNameModifier(NameIdentifierGroupPrototype proto, out int randomVal)
     {
-        randomVal = 0;
-        var entityName = Name(uid);
+        randomVal = -1;
         if (!CurrentIds.TryGetValue(proto.ID, out var set))
-            return entityName;
+            return string.Empty;
 
         if (set.Count == 0)
         {
             // Oh jeez. We're outta numbers.
-            return entityName;
+            return string.Empty;
         }
 
         randomVal = set[^1];
         set.RemoveAt(set.Count - 1);
 
-        return proto.Prefix is not null
-            ? $"{proto.Prefix}-{randomVal}"
-            : $"{randomVal}";
+        return FormatAndLocalize(randomVal, proto);
     }
 
-    private void OnMapInit(EntityUid uid, NameIdentifierComponent component, MapInitEvent args)
+    /// <summary>
+    /// Format and localize the provided integer against the prototype.
+    /// </summary>
+    /// <param name="value">The selected value to process.</param>
+    /// <param name="proto">The prototype that defines optional localization and formatting.</param>
+    /// <returns>A formatted and/or localized string.</returns>
+    private string FormatAndLocalize(int value, NameIdentifierGroupPrototype proto)
     {
-        if (!_prototypeManager.TryIndex<NameIdentifierGroupPrototype>(component.Group, out var group))
+        var formatted = value.ToString();
+
+        if (proto.IdentifierDataset is not null)
+        {
+            var identifiers = ProtoMan.Index(proto.IdentifierDataset);
+            formatted = Loc.GetString(identifiers.Values.Prefix+formatted);
+        }
+
+        return proto.Format is not null
+            ? Loc.GetString(proto.Format, ("number", formatted))
+            : formatted;
+    }
+
+    /// <summary>
+    /// Initializes the component when initialized on the map.
+    /// This will use the existing identifier, if present, or generate a new one and update the component appropriately.
+    /// </summary>
+    /// <param name="ent">The entity component tuple being initialized.</param>
+    /// <param name="args">The arguments for the event. Unused.</param>
+    private void OnMapInit(Entity<NameIdentifierComponent> ent, ref MapInitEvent args)
+    {
+        if (ent.Comp.Group is null)
             return;
 
-        int id;
-        string uniqueName;
+        if (!ProtoMan.Resolve(ent.Comp.Group, out var group))
+            return;
 
         // If it has an existing valid identifier then use that, otherwise generate a new one.
-        if (component.Identifier != -1 &&
-            CurrentIds.TryGetValue(component.Group, out var ids) &&
-            ids.Remove(component.Identifier))
+        if (ent.Comp.Identifier != -1 &&
+            CurrentIds.TryGetValue(ent.Comp.Group, out var ids) &&
+            ids.Remove(ent.Comp.Identifier))
         {
-            id = component.Identifier;
-            uniqueName = group.Prefix is not null
-                ? $"{group.Prefix}-{id}"
-                : $"{id}";
+            ent.Comp.FullIdentifier = FormatAndLocalize(ent.Comp.Identifier, group);
         }
         else
         {
-            uniqueName = GenerateUniqueName(uid, group, out id);
-            component.Identifier = id;
+            ent.Comp.FullIdentifier = GenerateUniqueNameModifier(group, out ent.Comp.Identifier);
         }
 
-        component.FullIdentifier = group.FullName
-            ? uniqueName
-            : $"({uniqueName})";
-
-        Dirty(uid, component);
-        _nameModifier.RefreshNameModifiers(uid);
-    }
-
-    private void OnRefreshNameModifiers(Entity<NameIdentifierComponent> ent, ref RefreshNameModifiersEvent args)
-    {
-        // Don't apply the modifier if the component is being removed
-        if (ent.Comp.LifeStage > ComponentLifeStage.Running)
-            return;
-
-        if (!_prototypeManager.TryIndex<NameIdentifierGroupPrototype>(ent.Comp.Group, out var group))
-            return;
-        var format = group.FullName ? "name-identifier-format-full" : "name-identifier-format-append";
-        // We apply the modifier with a low priority to keep it near the base name
-        // "Beep (Si-4562) the zombie" instead of "Beep the zombie (Si-4562)"
-        args.AddModifier(format, -10, ("identifier", ent.Comp.FullIdentifier));
+        Dirty(ent);
+        _nameModifier.RefreshNameModifiers(ent.Owner);
     }
 
     private void InitialSetupPrototypes()
@@ -134,10 +158,24 @@ public sealed class NameIdentifierSystem : EntitySystem
         EnsureIds();
     }
 
+    /// <summary>
+    /// Fill a provided list with a range of numbers corresponding to a prototype's defined range.
+    /// </summary>
+    /// <param name="proto">The <see cref="NameIdentifierGroupPrototype"/> prototype to retrieve from.</param>
+    /// <param name="values">Reference to the list where values should be placed.</param>
     private void FillGroup(NameIdentifierGroupPrototype proto, List<int> values)
     {
         values.Clear();
-        for (var i = proto.MinValue; i < proto.MaxValue; i++)
+
+        var (max, min) = (proto.MaxValue, proto.MinValue);
+
+        if (proto.IdentifierDataset is not null)
+        {
+            max = ProtoMan.Index(proto.IdentifierDataset).Values.Count;
+            min = 1;
+        }
+
+        for (var i = min; i <= max; i++)
         {
             values.Add(i);
         }
@@ -145,20 +183,29 @@ public sealed class NameIdentifierSystem : EntitySystem
         _robustRandom.Shuffle(values);
     }
 
+    /// <summary>
+    /// Retrieve the appropriate list or create a new one if one does not already exist.
+    /// </summary>
+    /// <param name="proto">The <see cref="NameIdentifierGroupPrototype"/> prototype to retrieve from.</param>
+    /// <returns>The list corresponding to the prototype, a new empty list if not already extant.</returns>
     private List<int> GetOrCreateIdList(NameIdentifierGroupPrototype proto)
     {
-        if (!CurrentIds.TryGetValue(proto.ID, out var ids))
-        {
-            ids = new List<int>(proto.MaxValue - proto.MinValue);
-            CurrentIds.Add(proto.ID, ids);
-        }
+        // The ID list already exists.
+        if (CurrentIds.TryGetValue(proto.ID, out var ids))
+            return ids;
 
+        // If we're using a dataset, grab the count. Otherwise, use (max - min).
+        ids =  new List<int>(proto.IdentifierDataset is null
+            ? proto.MaxValue - proto.MinValue
+            : ProtoMan.Index(proto.IdentifierDataset).Values.Count);
+
+        CurrentIds.Add(proto.ID, ids);
         return ids;
     }
 
     private void EnsureIds()
     {
-        foreach (var proto in _prototypeManager.EnumeratePrototypes<NameIdentifierGroupPrototype>())
+        foreach (var proto in ProtoMan.EnumeratePrototypes<NameIdentifierGroupPrototype>())
         {
             var ids = GetOrCreateIdList(proto);
 
@@ -175,7 +222,7 @@ public sealed class NameIdentifierSystem : EntitySystem
 
         foreach (var proto in CurrentIds.Keys)
         {
-            if (!_prototypeManager.HasIndex<NameIdentifierGroupPrototype>(proto))
+            if (!ProtoMan.HasIndex<NameIdentifierGroupPrototype>(proto))
             {
                 toRemove.Add(proto);
             }
@@ -188,17 +235,16 @@ public sealed class NameIdentifierSystem : EntitySystem
 
         foreach (var proto in set.Modified.Values)
         {
-            var name_proto = (NameIdentifierGroupPrototype) proto;
+            var nameProto = (NameIdentifierGroupPrototype)proto;
 
             // Only bother adding new ones.
             if (CurrentIds.ContainsKey(proto.ID))
                 continue;
 
-            var ids  = GetOrCreateIdList(name_proto);
-            FillGroup(name_proto, ids);
+            var ids = GetOrCreateIdList(nameProto);
+            FillGroup(nameProto, ids);
         }
     }
-
 
     private void CleanupIds(RoundRestartCleanupEvent ev)
     {

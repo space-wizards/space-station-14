@@ -7,7 +7,6 @@
   - type: Tag
     tags:
     - FireAxe
-  - type: Sharp
   - type: Execution
     doAfterDuration: 4.0
   - type: Sprite
@@ -22,7 +21,7 @@
         # axes are kinda like sharp hammers, you know?
         Blunt: 5
         Slash: 10
-        Structural: 10
+        Structural: 5
     soundHit:
       collection: MetalThud
   - type: Wieldable
@@ -30,17 +29,26 @@
     damage:
       types:
         Slash: 10
-        Structural: 40
+        Structural: 15
   - type: Item
+    shape:
+    - 1,0,2,5
+    - 0,0,0,2
+    storedSprite:
+      state: storage
+      sprite: Objects/Weapons/Melee/fireaxe.rsi
     size: Ginormous
   - type: Clothing
     sprite: Objects/Weapons/Melee/fireaxe.rsi
     quickEquip: false
     slots:
     - back
+    - suitStorage
   - type: Tool
     qualities:
-      - Prying
+    - Prying
+    - Slicing
+    - Sawing
   - type: ToolTileCompatible
   - type: Prying
   - type: UseDelay
@@ -57,7 +65,16 @@
   description: Why fight fire with an axe when you can fight with fire and axe? Now featuring rugged rubberized handle!
   components:
   - type: MeleeWeapon
-    wideAnimationRotation: 90
+    wideAnimationRotation: 135
+    swingLeft: true
+  - type: Item
+    shape:
+    - 1,0,2,5
+    - 0,0,0,2
+    storedSprite:
+      state: storage
+      sprite: Objects/Weapons/Melee/fireaxeflaming.rsi
+    size: Ginormous
   - type: IgniteOnMeleeHit
     fireStacks: 1
   - type: Sprite
@@ -68,3 +85,4 @@
     quickEquip: false
     slots:
     - back
+    - suitStorage

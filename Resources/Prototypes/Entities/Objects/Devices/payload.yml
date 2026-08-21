@@ -9,6 +9,7 @@
     tags:
     - Payload
   - type: Damageable
+  - type: Injurable
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
@@ -21,7 +22,7 @@
 
 - type: entity
   name: explosive payload
-  parent: BasePayload
+  parent: [ BasePayload, BaseSecurityContraband ]
   id: ExplosivePayload
   components:
   - type: Sprite
@@ -34,24 +35,10 @@
     intensitySlope: 3
     totalIntensity: 120 # about a ~4 tile radius
   - type: ExplodeOnTrigger
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTypeTrigger
-        damageType: Heat
-        damage: 25
-      behaviors:
-      - !type:ExplodeBehavior
-    - trigger:
-        !type:DamageTrigger
-        damage: 50
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
 
 - type: entity
   name: chemical payload
-  parent: BasePayload
+  parent: [ BasePayload, BaseMedicalScienceContraband ]
   id: ChemicalPayload
   description: A chemical payload. Has space to store two beakers. In combination with a trigger and a case, this can be used to initiate chemical reactions.
   components:
@@ -87,7 +74,7 @@
 
 - type: entity
   name: flash payload
-  parent: BasePayload
+  parent: [ BasePayload, BaseSecurityScienceCommandContraband ]
   id: FlashPayload
   description: A single-use flash payload.
   components:
@@ -100,3 +87,4 @@
     - type: EmitSoundOnTrigger
       sound:
         path: "/Audio/Effects/flash_bang.ogg"
+      positional: true

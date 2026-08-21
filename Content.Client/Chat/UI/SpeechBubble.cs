@@ -12,11 +12,12 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Chat.UI
 {
-    public abstract class SpeechBubble : Control
+    public abstract partial class SpeechBubble : Control
     {
-        [Dependency] private readonly IEyeManager _eyeManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] protected readonly IConfigurationManager ConfigManager = default!;
+        [Dependency] private IGameTiming _timing = default!;
+        [Dependency] private IEyeManager _eyeManager = default!;
+        [Dependency] private IEntityManager _entityManager = default!;
+        [Dependency] protected IConfigurationManager ConfigManager = default!;
         private readonly SharedTransformSystem _transformSystem;
 
         public enum SpeechType : byte
@@ -30,12 +31,12 @@ namespace Content.Client.Chat.UI
         /// <summary>
         ///     The total time a speech bubble stays on screen.
         /// </summary>
-        private const float TotalTime = 4;
+        private static readonly TimeSpan TotalTime = TimeSpan.FromSeconds(4);
 
         /// <summary>
         ///     The amount of time at the end of the bubble's life at which it starts fading.
         /// </summary>
-        private const float FadeTime = 0.25f;
+        private static readonly TimeSpan FadeTime = TimeSpan.FromSeconds(0.25f);
 
         /// <summary>
         ///     The distance in world space to offset the speech bubble from the center of the entity.
@@ -50,7 +51,10 @@ namespace Content.Client.Chat.UI
 
         private readonly EntityUid _senderEntity;
 
-        private float _timeLeft = TotalTime;
+        /// <summary>
+        /// The time at which this bubble will die.
+        /// </summary>
+        private TimeSpan _deathTime;
 
         public float VerticalOffset { get; set; }
         private float _verticalOffsetAchieved;
@@ -99,6 +103,7 @@ namespace Content.Client.Chat.UI
             bubble.Measure(Vector2Helpers.Infinity);
             ContentSize = bubble.DesiredSize;
             _verticalOffsetAchieved = -ContentSize.Y;
+            _deathTime = _timing.RealTime + TotalTime;
         }
 
         protected abstract Control BuildBubble(ChatMessage message, string speechStyleClass, Color? fontColor = null);
@@ -107,8 +112,8 @@ namespace Content.Client.Chat.UI
         {
             base.FrameUpdate(args);
 
-            _timeLeft -= args.DeltaSeconds;
-            if (_entityManager.Deleted(_senderEntity) || _timeLeft <= 0)
+            var timeLeft = (float)(_deathTime - _timing.RealTime).TotalSeconds;
+            if (_entityManager.Deleted(_senderEntity) || timeLeft <= 0)
             {
                 // Timer spawn to prevent concurrent modification exception.
                 Timer.Spawn(0, Die);
@@ -131,10 +136,10 @@ namespace Content.Client.Chat.UI
                 return;
             }
 
-            if (_timeLeft <= FadeTime)
+            if (timeLeft <= FadeTime.TotalSeconds)
             {
                 // Update alpha if we're fading.
-                Modulate = Color.White.WithAlpha(_timeLeft / FadeTime);
+                Modulate = Color.White.WithAlpha(timeLeft / (float)FadeTime.TotalSeconds);
             }
             else
             {
@@ -144,7 +149,7 @@ namespace Content.Client.Chat.UI
 
             var baseOffset = 0f;
 
-           if (_entityManager.TryGetComponent<SpeechComponent>(_senderEntity, out var speech))
+            if (_entityManager.TryGetComponent<SpeechComponent>(_senderEntity, out var speech))
                 baseOffset = speech.SpeechBubbleOffset;
 
             var offset = (-_eyeManager.CurrentEye.Rotation).ToWorldVec() * -(EntityVerticalOffset + baseOffset);
@@ -175,9 +180,9 @@ namespace Content.Client.Chat.UI
         /// </summary>
         public void FadeNow()
         {
-            if (_timeLeft > FadeTime)
+            if (_deathTime > _timing.RealTime)
             {
-                _timeLeft = FadeTime;
+                _deathTime = _timing.RealTime + FadeTime;
             }
         }
 
@@ -209,6 +214,7 @@ namespace Content.Client.Chat.UI
             var label = new RichTextLabel
             {
                 MaxWidth = SpeechMaxWidth,
+                OutlineColorOverride = TextOutline.Default.Color,
             };
 
             label.SetMessage(FormatSpeech(message.WrappedMessage, fontColor));
@@ -238,7 +244,8 @@ namespace Content.Client.Chat.UI
             {
                 var label = new RichTextLabel
                 {
-                    MaxWidth = SpeechMaxWidth
+                    MaxWidth = SpeechMaxWidth,
+                    OutlineColorOverride = TextOutline.Default.Color,
                 };
 
                 label.SetMessage(ExtractAndFormatSpeechSubstring(message, "BubbleContent", fontColor));
@@ -255,15 +262,17 @@ namespace Content.Client.Chat.UI
             var bubbleHeader = new RichTextLabel
             {
                 ModulateSelfOverride = Color.White.WithAlpha(ConfigManager.GetCVar(CCVars.SpeechBubbleSpeakerOpacity)),
-                Margin = new Thickness(1, 1, 1, 1),
+                Margin = new Thickness(2, 0, 2, 0),
+                OutlineColorOverride = TextOutline.Default.Color,
             };
 
             var bubbleContent = new RichTextLabel
             {
                 ModulateSelfOverride = Color.White.WithAlpha(ConfigManager.GetCVar(CCVars.SpeechBubbleTextOpacity)),
                 MaxWidth = SpeechMaxWidth,
-                Margin = new Thickness(2, 6, 2, 2),
+                Margin = new Thickness(2, 0, 2, 0),
                 StyleClasses = { "bubbleContent" },
+                OutlineColorOverride = TextOutline.Default.Color,
             };
 
             //We'll be honest. *Yes* this is hacky. Doing this in a cleaner way would require a bottom-up refactor of how saycode handles sending chat messages. -Myr
@@ -278,7 +287,7 @@ namespace Content.Client.Chat.UI
                 ModulateSelfOverride = Color.White.WithAlpha(ConfigManager.GetCVar(CCVars.SpeechBubbleBackgroundOpacity)),
                 HorizontalAlignment = HAlignment.Center,
                 VerticalAlignment = VAlignment.Bottom,
-                Margin = new Thickness(4, 14, 4, 2)
+                Margin = new Thickness(4, 20, 4, 2)
             };
 
             var headerPanel = new PanelContainer

@@ -1,6 +1,6 @@
 - type: entity
+  parent: [ BaseStructure, StructureHealthFurniture ]
   id: Bookshelf
-  parent: BaseStructure
   name: "bookshelf"
   description: Mostly filled with books.
   components:
@@ -16,22 +16,12 @@
     maxFillLevels: 21
     fillBaseName: book
   - type: Damageable
-    damageModifierSet: Wood
-    damageContainer: StructuralInorganic
+    damageModifierSet: WoodMod
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WoodDestroyHeavy
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
-        damage: 30
+        damage: 40
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -41,12 +31,9 @@
           MaterialWoodPlank:
             min: 2
             max: 3
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
   - type: Tag
     tags:
     - Structure
-    - Wooden
   - type: Transform
     anchored: true
     noRot: true
@@ -57,7 +44,7 @@
   - type: Occluder
   - type: Storage
     grid:
-    - 0,0,15,3
+    - 0,0,9,3
     maxItemSize: Normal
     whitelist:
       tags:

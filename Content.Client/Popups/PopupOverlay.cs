@@ -16,6 +16,8 @@ namespace Content.Client.Popups;
 /// </summary>
 public sealed class PopupOverlay : Overlay
 {
+    private static readonly ProtoId<ShaderPrototype> UnshadedShader = "unshaded";
+
     private readonly IConfigurationManager _configManager;
     private readonly IEntityManager _entManager;
     private readonly IPlayerManager _playerMgr;
@@ -48,7 +50,7 @@ public sealed class PopupOverlay : Overlay
         _popup = popup;
         _controller = controller;
 
-        _shader = protoManager.Index<ShaderPrototype>("unshaded").Instance();
+        _shader = protoManager.Index(UnshadedShader).Instance();
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -94,7 +96,7 @@ public sealed class PopupOverlay : Overlay
 
             // Should handle fade here too wyci.
             if (!args.WorldBounds.Contains(mapPos.Position) || !_examine.InRangeUnOccluded(viewPos, mapPos, distance,
-                    e => e == popup.InitialPos.EntityId || e == ourEntity, entMan: _entManager))
+                    e => e == popup.InitialPos.EntityId || e == ourEntity))
                 continue;
 
             var pos = Vector2.Transform(mapPos.Position, matrix);

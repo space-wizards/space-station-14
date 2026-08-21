@@ -1,9 +1,11 @@
 ﻿- type: entity
-  id: BaseLandMine
   abstract: true
+  parent: StructureHealthMachineFlimsy
+  id: BaseLandMine
   components:
   - type: Clickable
   - type: InteractionOutline
+  - type: ItemToggleExaminableStatus
   - type: ItemToggle
     soundActivate:
       path: /Audio/Weapons/click.ogg
@@ -27,17 +29,19 @@
     drawdepth: Items
     sprite: Objects/Misc/landmine.rsi
     layers:
-    - state: landmine-inactive
-      map: [ "enum.ToggleVisuals.Layer" ]
+    - state: landmine
+    - state: landmine-unshaded
+      shader: unshaded
+      map: [ "enum.ToggleableVisuals.Layer" ]
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.ToggleVisuals.Toggled:
-        enum.ToggleVisuals.Layer:
-          True: {state: landmine}
-          False: {state: landmine-inactive}
+      enum.ToggleableVisuals.Enabled:
+        enum.ToggleableVisuals.Layer:
+          True: {visible: true}
+          False: {visible: false}
   - type: Damageable
-    damageContainer: Inorganic
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
     - trigger:
@@ -45,8 +49,6 @@
         damage: 50
       behaviors:
       - !type:TriggerBehavior
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: LandMine
     sound:
         path: /Audio/Effects/beep_landmine.ogg
@@ -62,7 +64,8 @@
   name: kick mine
   parent: BaseLandMine
   components:
-  - type: GhostKickUserOnTrigger
+  - type: GhostKickOnTrigger
+    targetUser: true
   - type: DeleteOnTrigger
 
 - type: entity
@@ -74,9 +77,6 @@
     activated: true
     onActivate: false
   - type: Armable
-  - type: Sprite
-    layers:
-    - state: landmine
 
 - type: entity
   name: modular mine
@@ -98,9 +98,6 @@
     activated: true
     onActivate: false
   - type: Armable
-  - type: Sprite
-    layers:
-    - state: landmine
 
 - type: entity
   name: explosive mine
@@ -124,6 +121,3 @@
     activated: true
     onActivate: false
   - type: Armable
-  - type: Sprite
-    layers:
-    - state: landmine

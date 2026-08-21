@@ -232,6 +232,11 @@
   license: "CC-BY-SA-3.0"
   source: https://github.com/YuriyKiss/space-station-14/commit/971a135a9c83aed46e967aac9302ab5b35562b5f
 
+- files: [gateway_off.ogg]
+  copyright: 'by RunnerPack of Freesound.org'
+  license: "CC-BY-4.0"
+  source: https://freesound.org/people/RunnerPack/sounds/87040/
+
 - files: [inneranomaly.ogg]
   copyright: 'created by waveplaySFX on Freesound'
   license: "CC0-1.0"
@@ -246,3 +251,28 @@
   license: "CC-BY-SA-3.0"
   copyright: "Created by mattroks101 for Bee Station. cig_snuff converted to mono"
   source: "https://github.com/BeeStation/BeeStation-Hornet/pull/29"
+
+- files: [stealthoff.ogg]
+  copyright: 'TGStation at d4f678a1772007ff8d7eddd21cf7218c8e07bfc0'
+  license: "CC-BY-SA-3.0"
+  source: https://github.com/tgstation/tgstation/commit/d4f678a1772007ff8d7eddd21cf7218c8e07bfc0
+
+- files: ["soft_thump.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "Clipped by FairlySadPanda (Github) from a sound created by CheChoDj (Freesound)"
+  source: "https://freesound.org/people/CheChoDj/sounds/609353/"
+
+- files: [card_drag.ogg]
+  copyright: 'created by Tao7891; perryprog (GitHub) downmixed to mono'
+  license: CC0-1.0
+  source: https://github.com/space-wizards/space-station-14/pull/37363
+
+- files: ["balloon_hits.ogg"]
+  copyright: "by brokendot(github)"
+  license: "CC0-1.0"
+  source: https://github.com/space-wizards/space-station-14/pull/41102
+
+- files: ["quick_exhale.ogg"]
+  copyright: "by petercornell (Freesound), sampled and sped up to 400% by whatston3 (GitHub)"
+  license: "CC0-1.0"
+  source: https://freesound.org/people/petercornell/sounds/837240/

@@ -5,7 +5,8 @@ using Content.Shared.Explosion;
 using Content.Shared.Nuke;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Nuke
 {
@@ -56,7 +57,7 @@ namespace Content.Server.Nuke
         ///     How long a user must wait to disarm the bomb.
         /// </summary>
         [DataField("disarmDoafterLength")]
-        public float DisarmDoafterLength = 30.0f;
+        public float DisarmDoAfterLength = 30.0f;
 
         [DataField("alertLevelOnActivate")] public string AlertLevelOnActivate = default!;
         [DataField("alertLevelOnDeactivate")] public string AlertLevelOnDeactivate = default!;
@@ -96,31 +97,27 @@ namespace Content.Server.Nuke
         ///     The explosion prototype. This determines the damage types, the tile-break chance, and some visual
         ///     information (e.g., the light that the explosion gives off).
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("explosionType", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<ExplosionPrototype>))]
-        public string ExplosionType = default!;
+        [DataField(required: true)]
+        public ProtoId<ExplosionPrototype> ExplosionType;
 
         /// <summary>
         ///     The maximum intensity the explosion can have on a single time. This limits the maximum damage and tile
         ///     break chance the explosion can achieve at any given location.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("maxIntensity")]
+        [DataField]
         public float MaxIntensity = 100;
 
         /// <summary>
         ///     How quickly the intensity drops off as you move away from the epicenter.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("intensitySlope")]
+        [DataField]
         public float IntensitySlope = 5;
 
         /// <summary>
         ///     The total intensity of this explosion. The radius of the explosion scales like the cube root of this
         ///     number (see <see cref="ExplosionSystem.RadiusToIntensity"/>).
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("totalIntensity")]
+        [DataField]
         public float TotalIntensity = 100000;
 
         /// <summary>
@@ -163,6 +160,14 @@ namespace Content.Server.Nuke
         /// </summary>
         [DataField]
         public string EnteredCode = "";
+
+        /// <summary>
+        ///     Time at which the last nuke code was entered.
+        ///     Used to apply a cooldown to prevent clients from attempting to brute force the nuke code by sending keypad messages every tick.
+        ///     <seealso cref="SharedNukeComponent.EnterCodeCooldown"/>
+        /// </summary>
+        [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+        public TimeSpan LastCodeEnteredAt = TimeSpan.Zero;
 
         /// <summary>
         ///     Current status of a nuclear bomb.

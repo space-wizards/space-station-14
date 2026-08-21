@@ -1,7 +1,7 @@
 - type: entity
-  id: LockerBase
-  parent: ClosetBase
   abstract: true
+  parent: [ ClosetBase, StructureHealthContainer ]
+  id: LockerBase
   components:
   - type: AccessReader
   - type: Lock
@@ -25,20 +25,21 @@
       sprite: Structures/Storage/closet_labels.rsi
       offset: "-0.065,0"
       map: ["enum.PaperLabelVisuals.Layer"]
+  - type: Construction
+    graph: ClosetSteelSecure
+    node: done
+    containers:
+    - entity_storage
+  - type: Paintable
+    group: Locker
+  - type: Damageable
+    damageModifierSet: PlasteelMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
         damage: 100
       behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 50
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
@@ -49,25 +50,5 @@
           SheetSteel1:
             min: 1
             max: 2
-  - type: Construction
-    graph: ClosetSteelSecure
-    node: done
-    containers:
-    - entity_storage
-
-- type: entity
-  id: LockerBaseSecure
-  parent: LockerBase
-  abstract: true
-  components:
-  - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: StructuralMetallic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 75
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
+  - type: StaticPrice
+    price: 300

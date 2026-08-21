@@ -8,7 +8,10 @@
     sprite: Objects/Weapons/Melee/stunprod.rsi
     layers:
     - state: stunprod_off
-      map: [ "enum.ToggleVisuals.Layer" ]
+      map: [ "enum.ToggleableVisuals.Layer" ]
+  - type: ItemToggleExaminableStatus
+  - type: ItemToggleRequiresCharge
+    requiredCharge: 120
   - type: ItemToggle
     soundActivate:
       collection: sparks
@@ -22,12 +25,13 @@
       path: /Audio/Machines/button.ogg
       params:
         variation: 0.250
+  - type: ItemTogglePrefix
+    prefixOn: on
+    prefixOff: off
   - type: ItemToggleMeleeWeapon
     activatedDamage:
       types:
         Shock: 5
-  - type: Stunbaton
-    energyPerUse: 120
   - type: MeleeWeapon
     wideAnimationRotation: -135
     damage:
@@ -35,6 +39,10 @@
         Blunt: 9
     angle: 60
     animation: WeaponArcThrust
+  - type: MeleeBatteryHitsLeft
+  - type: StaminaDamageOnHitRequiresToggle
+  - type: StaminaDamageOnHitRequiresCharge
+    requiredCharge: 120
   - type: StaminaDamageOnHit
     damage: 35
     sound: /Audio/Weapons/egloves.ogg
@@ -59,8 +67,8 @@
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.ToggleVisuals.Toggled:
-        enum.ToggleVisuals.Layer:
+      enum.ToggleableVisuals.Enabled:
+        enum.ToggleableVisuals.Layer:
           True: {state: stunprod_on}
           False: {state: stunprod_off}
   - type: StaticPrice
@@ -68,3 +76,6 @@
   - type: Construction
     graph: makeshiftstunprod
     node: msstunprod
+  - type: Tag
+    tags:
+    - Stunbaton

@@ -45,6 +45,8 @@
         layer:
         - WallLayer
         density: 4000
+  - type: PlacementReplacement
+    key: walls
 
 - type: entity
   id: PlastitaniumWindowSquareBase
@@ -54,12 +56,12 @@
   components:
   - type: Sprite
     drawdepth: WallTops
-    sprite: Structures/Windows/plastitanium_window.rsi
+    sprite: Structures/Windows/window-plastitanium.rsi
   - type: Icon
-    sprite: Structures/Windows/plastitanium_window.rsi
+    sprite: Structures/Windows/window-plastitanium.rsi
     state: full
   - type: IconSmooth
-    key: windows
+    key: walls
     base: ptwindow
   - type: Airtight
   - type: Fixtures
@@ -77,23 +79,20 @@
   name: plastitanium window
   parent: PlastitaniumWindowSquareBase
   suffix: indestructible
+  components:
+  - type: ExaminableDamage
+    messages: null
 
 - type: entity
+  parent: [ PlastitaniumWindowSquareBase, StructureHealthBarrierStrong ]
   id: PlastitaniumWindow
   name: plastitanium window
-  parent: PlastitaniumWindowSquareBase
   components:
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 1000
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 500
+        damage: 120
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -106,8 +105,6 @@
           PartRodMetal:
             min: 1
             max: 2
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: DamageVisuals
     thresholds: [5, 10, 20]
     damageDivisor: 20
@@ -118,8 +115,7 @@
     fuelCost: 15
     doAfterDelay: 3
   - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: RGlass
+    damageModifierSet: PlastitaniumMod
 
 - type: entity
   id: PlastitaniumWindowDiagonalBase
@@ -130,17 +126,18 @@
   components:
   - type: Sprite
     drawdepth: WallTops
-    sprite: Structures/Windows/plastitanium_window_diagonal.rsi
+    sprite: Structures/Windows/window-diagonal-plastitanium.rsi
     state: state0
   - type: Tag
     tags:
     - Diagonal
+    - Window
   - type: Icon
-    sprite: Structures/Windows/plastitanium_window_diagonal.rsi
+    sprite: Structures/Windows/window-diagonal-plastitanium.rsi
     state: state0
   - type: IconSmooth
     mode: Diagonal
-    key: windows
+    key: walls
     base: state
   - type: Fixtures
     fixtures:
@@ -167,24 +164,21 @@
   name: plastitanium window
   parent: PlastitaniumWindowDiagonalBase
   suffix: diagonal, indestructible
+  components:
+  - type: ExaminableDamage
+    messages: null
 
 - type: entity
   id: PlastitaniumWindowDiagonal
   name: plastitanium window
-  parent: PlastitaniumWindowDiagonalBase
+  parent: [ PlastitaniumWindowDiagonalBase, StructureHealthBarrierStrong ]
   suffix: diagonal
   components:
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 1000
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 500
+        damage: 120
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -197,17 +191,14 @@
           PartRodMetal:
             min: 1
             max: 2
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: DamageVisuals
     thresholds: [5, 10, 20]
     damageDivisor: 20
     trackAllDamage: true
     damageOverlay:
-      sprite: Structures/Windows/cracks_diagonal.rsi
+      sprite: Structures/Windows/cracks-diagonal.rsi
   - type: Repairable
     fuelCost: 15
     doAfterDelay: 3
   - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: RGlass
+    damageModifierSet: PlastitaniumMod

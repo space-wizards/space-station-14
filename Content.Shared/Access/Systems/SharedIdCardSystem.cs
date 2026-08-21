@@ -3,7 +3,7 @@ using Content.Shared.Access.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
-using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
@@ -15,15 +15,17 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Access.Systems;
 
-public abstract class SharedIdCardSystem : EntitySystem
+public abstract partial class SharedIdCardSystem : EntitySystem
 {
-    [Dependency] private readonly IConfigurationManager _cfgManager = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedAccessSystem _access = default!;
-    [Dependency] private readonly InventorySystem _inventorySystem = default!;
-    [Dependency] private readonly MetaDataSystem _metaSystem = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IConfigurationManager _cfgManager = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedAccessSystem _access = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private InventorySystem _inventorySystem = default!;
+    [Dependency] private MetaDataSystem _metaSystem = default!;
+    [Dependency] private SharedJobStatusSystem _jobStatus = default!;
+    [Dependency] private SharedAgentIdCardSystem _agentIdCard = default!;
 
     // CCVar.
     private int _maxNameLength;
@@ -34,6 +36,7 @@ public abstract class SharedIdCardSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<IdCardComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<IdCardComponent, AfterAutoHandleStateEvent>(OnHandleState);
         SubscribeLocalEvent<TryGetIdentityShortInfoEvent>(OnTryGetIdentityShortInfo);
         SubscribeLocalEvent<EntityRenamedEvent>(OnRename);
 
@@ -62,18 +65,20 @@ public abstract class SharedIdCardSystem : EntitySystem
     private void OnTryGetIdentityShortInfo(TryGetIdentityShortInfoEvent ev)
     {
         if (ev.Handled)
-        {
             return;
-        }
 
-        string? title = null;
-        if (TryFindIdCard(ev.ForActor, out var idCard) && !(ev.RequestForAccessLogging && idCard.Comp.BypassLogging))
+        if (TryFindIdCard(ev.Target, out var idCard) && !(ev.RequestForAccessLogging && idCard.Comp.BypassLogging))
         {
-            title = ExtractFullTitle(idCard);
+            ev.Title = ExtractFullTitle(idCard);
+            ev.Handled = true;
         }
+    }
 
-        ev.Title = title;
-        ev.Handled = true;
+    private void OnHandleState(Entity<IdCardComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        // Try to update the job status icon of the player owning the ID, if any.
+        _jobStatus.UpdateIdHolderStatus(ent);
+        _agentIdCard.UpdateUi(ent);
     }
 
     /// <summary>
@@ -83,8 +88,7 @@ public abstract class SharedIdCardSystem : EntitySystem
     public bool TryFindIdCard(EntityUid uid, out Entity<IdCardComponent> idCard)
     {
         // check held item?
-        if (TryComp(uid, out HandsComponent? hands) &&
-            hands.ActiveHandEntity is EntityUid heldItem &&
+        if (_hands.GetActiveItem(uid) is { } heldItem &&
             TryGetIdCard(heldItem, out idCard))
         {
             return true;
@@ -132,6 +136,7 @@ public abstract class SharedIdCardSystem : EntitySystem
     /// If provided with a player's EntityUid to the player parameter, adds the change to the admin logs.
     /// Actually works with the LocalizedJobTitle DataField and not with JobTitle.
     /// </remarks>
+    /// <returns> True if the job title changed, false if nothing changed. </returns>
     public bool TryChangeJobTitle(EntityUid uid, string? jobTitle, IdCardComponent? id = null, EntityUid? player = null)
     {
         if (!Resolve(uid, ref id))
@@ -150,7 +155,7 @@ public abstract class SharedIdCardSystem : EntitySystem
         }
 
         if (id.LocalizedJobTitle == jobTitle)
-            return true;
+            return false;
         id.LocalizedJobTitle = jobTitle;
         Dirty(uid, id);
         UpdateEntityName(uid, id);
@@ -163,6 +168,7 @@ public abstract class SharedIdCardSystem : EntitySystem
         return true;
     }
 
+    /// <returns> True if the job icon changed, false if nothing changed. </returns>
     public bool TryChangeJobIcon(EntityUid uid, JobIconPrototype jobIcon, IdCardComponent? id = null, EntityUid? player = null)
     {
         if (!Resolve(uid, ref id))
@@ -172,7 +178,7 @@ public abstract class SharedIdCardSystem : EntitySystem
 
         if (id.JobIcon == jobIcon.ID)
         {
-            return true;
+            return false;
         }
 
         id.JobIcon = jobIcon.ID;
@@ -193,10 +199,26 @@ public abstract class SharedIdCardSystem : EntitySystem
             return false;
 
         id.JobDepartments.Clear();
-        foreach (var department in _prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
+        foreach (var department in ProtoMan.EnumeratePrototypes<DepartmentPrototype>())
         {
             if (department.Roles.Contains(job.ID))
                 id.JobDepartments.Add(department.ID);
+        }
+
+        Dirty(uid, id);
+
+        return true;
+    }
+
+    public bool TryChangeJobDepartment(EntityUid uid, List<ProtoId<DepartmentPrototype>> departments, IdCardComponent? id = null)
+    {
+        if (!Resolve(uid, ref id))
+            return false;
+
+        id.JobDepartments.Clear();
+        foreach (var department in departments)
+        {
+            id.JobDepartments.Add(department);
         }
 
         Dirty(uid, id);
@@ -211,6 +233,7 @@ public abstract class SharedIdCardSystem : EntitySystem
     /// <remarks>
     /// If provided with a player's EntityUid to the player parameter, adds the change to the admin logs.
     /// </remarks>
+    /// <returns> True if the name changed, false if nothing changed. </returns>
     public bool TryChangeFullName(EntityUid uid, string? fullName, IdCardComponent? id = null, EntityUid? player = null)
     {
         if (!Resolve(uid, ref id))
@@ -228,7 +251,7 @@ public abstract class SharedIdCardSystem : EntitySystem
         }
 
         if (id.FullName == fullName)
-            return true;
+            return false;
         id.FullName = fullName;
         Dirty(uid, id);
         UpdateEntityName(uid, id);
@@ -275,28 +298,24 @@ public abstract class SharedIdCardSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp))
             return;
         ent.Comp.ExpireTime = time;
-        Dirty(ent);
-    }
-
-    public void SetPermanent(Entity<ExpireIdCardComponent?> ent, bool val)
-    {
-        if (!Resolve(ent, ref ent.Comp))
-            return;
-        ent.Comp.Permanent = val;
+        ent.Comp.Expired = false;
         Dirty(ent);
     }
 
     /// <summary>
     /// Marks an <see cref="ExpireIdCardComponent"/> as expired, setting the accesses.
     /// </summary>
-    public virtual void ExpireId(Entity<ExpireIdCardComponent> ent)
+    public virtual bool ExpireId(Entity<ExpireIdCardComponent> ent)
     {
         if (ent.Comp.Expired)
-            return;
+            return false;
 
         _access.TrySetTags(ent, ent.Comp.ExpiredAccess);
+        var pauseTime = _metaSystem.GetPauseTime(ent.Owner);
+        ent.Comp.ExpireTime ??= _timing.CurTime - pauseTime - TimeSpan.FromTicks(1);
         ent.Comp.Expired = true;
         Dirty(ent);
+        return true;
     }
 
     public override void Update(float frameTime)
@@ -305,10 +324,14 @@ public abstract class SharedIdCardSystem : EntitySystem
         var query = EntityQueryEnumerator<ExpireIdCardComponent>();
         while (query.MoveNext(out var uid, out var comp))
         {
-            if (comp.Expired || comp.Permanent)
+            if (comp.Expired || comp.ExpireTime is not { } expireTime)
                 continue;
 
-            if (_timing.CurTime < comp.ExpireTime)
+            var pauseTime = _metaSystem.GetPauseTime(uid);
+            if (expireTime > TimeSpan.MaxValue - pauseTime)
+                continue;
+
+            if (_timing.CurTime <= expireTime + pauseTime)
                 continue;
 
             ExpireId((uid, comp));

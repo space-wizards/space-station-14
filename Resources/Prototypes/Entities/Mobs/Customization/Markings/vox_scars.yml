@@ -1,0 +1,155 @@
+- type: marking
+  id: VoxScarEyeRight
+  bodyPart: Head
+  groupWhitelist: [Vox]
+  sprites:
+  - sprite: Mobs/Customization/vox_scars.rsi
+    state: vox_scar_eye_right
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+
+- type: marking
+  id: VoxScarEyeLeft
+  bodyPart: Head
+  groupWhitelist: [Vox]
+  sprites:
+  - sprite: Mobs/Customization/vox_scars.rsi
+    state: vox_scar_eye_left
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+
+- type: marking
+  id: VoxScarTopSurgeryShort
+  bodyPart: Chest
+  groupWhitelist: [Vox]
+  sprites:
+  - sprite: Mobs/Customization/vox_scars.rsi
+    state: vox_top_surgery_short
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+
+- type: marking
+  id: VoxScarTopSurgeryLong
+  bodyPart: Chest
+  groupWhitelist: [Vox]
+  sprites:
+  - sprite: Mobs/Customization/vox_scars.rsi
+    state: vox_top_surgery_long
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+
+- type: marking
+  id: VoxScarChest
+  bodyPart: Chest
+  groupWhitelist: [Vox]
+  sprites:
+  - sprite: Mobs/Customization/vox_scars.rsi
+    state: vox_scar_chest
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+
+- type: marking
+  id: VoxScarNeck
+  bodyPart: Head
+  groupWhitelist: [Vox]
+  sprites:
+  - sprite: Mobs/Customization/vox_scars.rsi
+    state: vox_scar_neck
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+
+- type: marking
+  id: VoxScarChestBullets
+  bodyPart: Chest
+  groupWhitelist: [Vox]
+  sprites:
+  - sprite: Mobs/Customization/vox_scars.rsi
+    state: vox_scar_chest_bullets
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+
+- type: marking
+  id: VoxScarStomachBullets
+  bodyPart: Chest
+  groupWhitelist: [Vox]
+  sprites:
+  - sprite: Mobs/Customization/vox_scars.rsi
+    state: vox_scar_stomach_bullets
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+
+- type: marking
+  id: VoxScarFace1
+  bodyPart: Head
+  groupWhitelist: [Vox]
+  sprites:
+  - sprite: Mobs/Customization/vox_scars.rsi
+    state: vox_scar_face_1
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+
+- type: marking
+  id: VoxScarFace2
+  bodyPart: Head
+  groupWhitelist: [Vox]
+  sprites:
+  - sprite: Mobs/Customization/vox_scars.rsi
+    state: vox_scar_face_2
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+
+- type: marking
+  id: VoxScarEyeRightSmall
+  bodyPart: Head
+  groupWhitelist: [Vox]
+  sprites:
+  - sprite: Mobs/Customization/vox_scars.rsi
+    state: vox_scar_eye_right_small
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+
+- type: marking
+  id: VoxScarEyeLeftSmall
+  bodyPart: Head
+  groupWhitelist: [Vox]
+  sprites:
+  - sprite: Mobs/Customization/vox_scars.rsi
+    state: vox_scar_eye_left_small
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"

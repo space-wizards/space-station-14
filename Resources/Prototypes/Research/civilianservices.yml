@@ -98,9 +98,14 @@
   - FauxTileAstroGrass
   - FauxTileMowedAstroGrass
   - FauxTileJungleAstroGrass
+  - FauxTileDarkAstroGrass
   - FauxTileAstroIce
   - FauxTileAstroSnow
   - FauxTileAstroAsteroidSand
+  - FauxTileAstroAsteroidSandBorderless
+  - FauxTileDesertAstroSand
+  - FauxTileAstroIronsand
+  - FauxTileAstroIronsandBorderless
 
 - type: technology
   id: BiochemicalStasis
@@ -127,7 +132,8 @@
   tier: 2
   cost: 5000
   recipeUnlocks:
-  - BorgModuleAdvancedChemical
+  - BorgModuleAdvancedTopical
+  - AdvancedJetInjector
 
 - type: technology
   id: AdvancedCleaning
@@ -142,6 +148,7 @@
   - AdvMopItem
   - MegaSprayBottle
   - BorgModuleAdvancedCleaning
+  - TrashBagHolding
 
 - type: technology
   id: HONKMech
@@ -199,6 +206,7 @@
   cost: 4000
   recipeUnlocks:
   - PushHorn
+  - BorgModuleAdvancedClowning
 
 # Tier 3
 

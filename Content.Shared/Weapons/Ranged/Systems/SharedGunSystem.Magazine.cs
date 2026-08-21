@@ -8,8 +8,6 @@ namespace Content.Shared.Weapons.Ranged.Systems;
 
 public abstract partial class SharedGunSystem
 {
-    protected const string MagazineSlot = "gun_magazine";
-
     protected virtual void InitializeMagazine()
     {
         SubscribeLocalEvent<MagazineAmmoProviderComponent, MapInitEvent>(OnMagazineMapInit);
@@ -184,6 +182,7 @@ public abstract partial class SharedGunSystem
         // Copy the magazine's appearance data
         Appearance.SetData(uid, AmmoVisuals.MagLoaded, magLoaded, appearance);
         Appearance.SetData(uid, AmmoVisuals.HasAmmo, count != 0, appearance);
+        Appearance.SetData(uid, AmmoVisuals.IsFull, count == capacity, appearance);
         Appearance.SetData(uid, AmmoVisuals.AmmoCount, count, appearance);
         Appearance.SetData(uid, AmmoVisuals.AmmoMax, capacity, appearance);
     }

@@ -53,6 +53,7 @@ flavor-base-terrible = terrible
 flavor-base-mindful = mindful
 flavor-base-chewy = chewy
 flavor-base-trashy = trashy
+flavor-base-motivating = motivating
 
 # Complex flavors. Put a flavor here when you want something that's more
 # specific.
@@ -114,7 +115,7 @@ flavor-complex-tomato = like tomatoes
 flavor-complex-corn = like corn
 flavor-complex-banana = like bananas
 flavor-complex-apple = like apples
-flavor-complex-cotton = like cottons
+flavor-complex-cotton = like cotton
 flavor-complex-bungo = like tropical sweetness
 flavor-complex-raisins = like dried grapes
 flavor-complex-orange = like oranges
@@ -181,6 +182,8 @@ flavor-complex-true-nature = like the true nature of reality
 flavor-complex-false-meat = not entirely unlike meat
 flavor-complex-paper = like mushy pulp
 flavor-complex-compressed-meat = like compressed meat
+flavor-complex-dog-food = like dog food
+flavor-complex-canned-tuna = like canned tuna
 
 # Drink-specific flavors.
 
@@ -287,7 +290,7 @@ flavor-complex-moscowmule = like vodka and ginger ale
 flavor-complex-thesunalsorises = like an absinthe daiquiri
 flavor-complex-whiskeysour = like whiskey and egg
 flavor-complex-zombiecocktail = like eating brains
-flavor-complex-absinthe = like anise
+flavor-complex-absinthe = like bitter anise
 flavor-complex-blue-curacao = like orange flowers
 flavor-complex-acidspit = like French battery acid
 flavor-complex-allies-cocktail = like medicinal tincture
@@ -315,7 +318,6 @@ flavor-complex-manhattan-project = like I am become Death, the destroyer of worl
 flavor-complex-margarita = like a very bad hangover
 flavor-complex-martini = like a spy movie
 flavor-complex-mojito = like going into the shade after being in the hot sun
-flavor-complex-neurotoxin = like an underground testing facility
 flavor-complex-patron = like being serenaded by mariachi
 flavor-complex-radler = like spiked lemonade
 flavor-complex-red-mead = like a viking battle
@@ -341,5 +343,6 @@ flavor-complex-bee = unbeelievable
 flavor-complex-sax = like jazz
 flavor-complex-bottledlightning = like lightning in a bottle
 flavor-complex-punishment = like punishment
+flavor-complex-artifact-glue = like crushed artifacts
 flavor-weh = like weh
 flavor-hew = like hew

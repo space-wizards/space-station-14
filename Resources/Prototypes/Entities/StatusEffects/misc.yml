@@ -1,0 +1,172 @@
+- type: entity
+  id: StatusEffectBase
+  abstract: true
+  components:
+  - type: StatusEffect
+  - type: Sprite
+    drawdepth: Effects
+  - type: Tag
+    tags:
+    - HideContextMenu
+
+- type: entity
+  parent: StatusEffectBase
+  id: MobStatusEffectBase
+  abstract: true
+  components:
+  - type: StatusEffect
+    whitelist:
+      components:
+      - MobState
+
+# Things that should be removed by rejuvenation should parent to this
+# Also blocks the status effect being added to godmode-ed entities.
+- type: entity
+  parent: MobStatusEffectBase
+  id: MobStatusEffectDebuff
+  abstract: true
+  components:
+  - type: RejuvenateRemovedStatusEffect
+
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: MobStandStatusEffectBase
+  abstract: true
+  components:
+  - type: StatusEffect
+    whitelist:
+      components:
+      - MobState
+      - StandingState
+      requireAll: true
+    blacklist: # This blacklist exists because mob prototypes are smelly and everything needs a standing state component.
+      tags:
+      - KnockdownImmune
+
+# The creature sleeps so heavily that nothing can wake him up. Not even its own death.
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectForcedSleeping
+  name: forced sleep
+  components:
+  - type: ForcedSleepingStatusEffect
+  - type: StunnedStatusEffect
+  - type: KnockdownStatusEffect
+
+# This creature is asleep because it's disconnected from the game.
+- type: entity
+  parent: MobStatusEffectBase # Not even rejuvenate can cure SSD...
+  id: StatusEffectSSDSleeping
+  name: forced sleep
+  components:
+  - type: ForcedSleepingStatusEffect
+  - type: StunnedStatusEffect
+  - type: KnockdownStatusEffect
+
+
+# Makes the creature immune to pressure damage.
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectPressureImmunity
+  name: pressure immunity
+  components:
+  - type: PressureImmunityStatusEffect
+
+# Prevents speaking and vocal emotes.
+- type: entity
+  abstract: true
+  parent: MobStatusEffectBase
+  id: MutedStatusEffectBase
+  name: muted
+  components:
+  - type: StatusEffectAlert
+    alert: Muted
+  - type: MutedStatusEffect
+
+- type: entity
+  parent: [ MutedStatusEffectBase, MobStatusEffectDebuff ]
+  id: StatusEffectMuted
+
+- type: entity
+  parent: MutedStatusEffectBase
+  id: StatusEffectMimeMuted
+  components:
+  - type: StatusEffectAlert
+    alert: VowOfSilence
+  - type: MutedStatusEffect
+    speakPopup: mime-cant-speak
+    actionPopup: mime-cant-speak
+
+- type: entity
+  parent: MutedStatusEffectBase
+  id: StatusEffectVentriloquistPuppetMuted
+  components:
+  - type: MutedStatusEffect
+    speakPopup: ventriloquist-puppet-cant-speak
+
+# Blurs your vision and makes you randomly fall asleep
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectDrowsiness
+  name: drowsiness
+  components:
+  - type: DrowsinessStatusEffect
+
+# Adds drugs overlay
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectSeeingRainbow
+  name: hallucinations
+  components:
+  - type: SeeingRainbowsStatusEffect
+  - type: ExaminableStatusEffect
+    messageId: status-effect-examine-seeing-rainbow
+
+# Causes your vision to become blurry and gives me a headache.
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectWoozy
+  name: woozy
+  components:
+  - type: DrunkStatusEffect
+
+# Causes you to get drunk
+- type: entity
+  parent: [ StatusEffectWoozy, StatusEffectSlurred, StatusEffectClumsyDrunk ]
+  id: StatusEffectDrunk
+  name: drunk
+  components:
+  - type: ExaminableStatusEffect
+    messageId: status-effect-examine-drunk
+  - type: StatusEffectAlert
+    alert: DrunkAlert
+
+# Prevents the target from seeing
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectBlindness
+  name: temporary blindness
+  components:
+  - type: StatusEffect
+    whitelist:
+      components:
+      - MobState
+      - Blindable
+      requireAll: true
+  - type: BlindnessStatusEffect
+  - type: ExaminableStatusEffect
+    messageId: status-effect-examine-temporary-blindness
+
+# Obstructs the target's vision with the flash overlay.
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectFlashed
+  name: flashed
+  components:
+  - type: StatusEffect
+    whitelist:
+      components:
+      - MobState
+      - Blindable
+      requireAll: true
+  - type: FlashedStatusEffect

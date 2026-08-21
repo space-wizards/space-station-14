@@ -1,17 +1,18 @@
 ﻿- type: entity
+  parent: [ BaseShutter, StructureHealthDoorStrong ]
   id: BlastDoor
-  parent: BaseShutter
   name: blast door
-  description: This one says 'BLAST DONGER'.
+  description: Blast-retardant AND fire-retardant!
   components:
   - type: AccessReader
     containerAccessProvider: board
   - type: Sprite
-    sprite: Structures/Doors/Shutters/blastdoor.rsi
+    sprite: Structures/Doors/Airlocks/Standard/airlock-blastdoor.rsi
     layers:
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
     - state: welded
+      sprite: Structures/Doors/Airlocks/Effects/airlock-effects.rsi
       map: ["enum.WeldableLayers.BaseWelded"]
   - type: Door
     closeTimeOne: 0.4
@@ -33,8 +34,16 @@
   - type: RadiationBlocker
     resistance: 8
   - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: StrongMetallic
+    damageModifierSet: PlasteelMod
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 350
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
   - type: ContainerFill
     containers:
       board: [ DoorElectronics ]
@@ -50,10 +59,15 @@
     messagePerceivedByOthers: comp-window-knock
     interactSuccessSound:
       path: /Audio/Effects/glass_knock.ogg
+  - type: IconSmooth
+    key: walls
+    mode: NoSprite
+  - type: PlacementReplacement
+    key: blastdoors
 
 - type: entity
-  id: BlastDoorOpen
   parent: BlastDoor
+  id: BlastDoorOpen
   suffix: Open
   components:
   - type: Door
@@ -68,26 +82,26 @@
     enabled: false
 
 - type: entity
+  parent: [ BaseStructureDynamic, StructureHealthDoor ]
   id: BlastDoorFrame
-  parent: BaseStructureDynamic
   name: blast door frame
-  description: This one says 'BLAST DONGER'.
+  description: Blast-retardant AND fire-retardant!
   components:
   - type: Sprite
-    sprite: Structures/Doors/Shutters/blastdoor.rsi
+    sprite: Structures/Doors/Airlocks/Standard/airlock-blastdoor.rsi
     state: assembly
   - type: InteractionOutline
   - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: StructuralMetallicStrong
+    damageModifierSet: PlasteelMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 300
+        damage: 200
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -107,5 +121,98 @@
   - type: Construction
     graph: BlastDoor
     node: frame1
-  placement:
-    mode: SnapgridCenter
+
+- type: entity
+  parent: BlastDoor
+  id: BlastDoorXeno
+  name: exodermis blast door
+  description: Don't lose an arm!
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/exo-blastdoor.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+    - state: welded
+      sprite: Structures/Doors/Airlocks/Effects/airlock-effects.rsi
+      map: ["enum.WeldableLayers.BaseWelded"]
+  - type: Door
+    closeTimeOne: 0.4
+    closeTimeTwo: 0.7
+    openTimeOne: 0.4
+    openTimeTwo: 0.7
+    openingAnimationTime: 1.1
+    closingAnimationTime: 1.0
+    canPry: false
+    crushDamage:
+      types:
+        Blunt: 25 # yowch
+
+- type: entity
+  parent: BlastDoorXeno
+  id: BlastDoorXenoOpen
+  suffix: Open
+  components:
+  - type: Door
+    state: Open
+  - type: Occluder
+    enabled: false
+  - type: Physics
+    canCollide: false
+  - type: Airtight
+    airBlocked: false
+  - type: RadiationBlocker
+    enabled: false
+
+- type: entity
+  parent: BlastDoorFrame
+  id: BlastDoorXenoFrame
+  name: exodermis blast door frame
+  description: Blast-retardant AND fire-retardant!
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/exo-blastdoor.rsi
+    state: assembly
+
+- type: entity
+  parent: BlastDoor
+  id: BlastDoorXenoborg
+  name: mechadermis blast door
+  description: Don't lose a head!
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/airlock-blastdoor.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+    - state: welded
+      sprite: Structures/Doors/Airlocks/Effects/airlock-effects.rsi
+      map: ["enum.WeldableLayers.BaseWelded"]
+      visible: true
+  - type: Door
+    closeTimeOne: 0.4
+    closeTimeTwo: 0.7
+    openTimeOne: 0.4
+    openTimeTwo: 0.7
+    openingAnimationTime: 1.1
+    closingAnimationTime: 1.0
+    canPry: false
+    crushDamage:
+      types:
+        Blunt: 25 # yowch
+
+- type: entity
+  parent: BlastDoorXenoborg
+  id: BlastDoorXenoborgOpen
+  suffix: Open
+  components:
+  - type: Door
+    state: Open
+  - type: Occluder
+    enabled: false
+  - type: Physics
+    canCollide: false
+  - type: Airtight
+    airBlocked: false
+  - type: RadiationBlocker
+    enabled: false

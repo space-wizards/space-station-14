@@ -1,6 +1,8 @@
+using Content.Shared.Roles.Components;
+
 namespace Content.Server.Roles;
 
-public sealed class RoleBriefingSystem : EntitySystem
+public sealed partial class RoleBriefingSystem : EntitySystem
 {
     public override void Initialize()
     {

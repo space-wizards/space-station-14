@@ -18,9 +18,22 @@ public abstract partial class SharedBuckleSystem
         SubscribeLocalEvent<StrapComponent, InteractHandEvent>(OnStrapInteractHand, before: [typeof(InteractionPopupSystem)]);
         SubscribeLocalEvent<StrapComponent, DragDropTargetEvent>(OnStrapDragDropTarget);
         SubscribeLocalEvent<StrapComponent, CanDropTargetEvent>(OnCanDropTarget);
+        SubscribeLocalEvent<StrapComponent, GetInteractingEntitiesEvent>(OnGetInteractingForStrap);
 
+        SubscribeLocalEvent<BuckleComponent, GetInteractingEntitiesEvent>(OnGetInteractingForBuckle);
         SubscribeLocalEvent<BuckleComponent, InteractHandEvent>(OnBuckleInteractHand, before: [typeof(InteractionPopupSystem)]);
         SubscribeLocalEvent<BuckleComponent, GetVerbsEvent<InteractionVerb>>(AddUnbuckleVerb);
+    }
+
+    private void OnGetInteractingForBuckle(Entity<BuckleComponent> ent, ref GetInteractingEntitiesEvent args)
+    {
+        if (ent.Comp.BuckledTo.HasValue)
+            args.InteractingEntities.Add(ent.Comp.BuckledTo.Value);
+    }
+
+    private void OnGetInteractingForStrap(Entity<StrapComponent> ent, ref GetInteractingEntitiesEvent args)
+    {
+        args.InteractingEntities.UnionWith(ent.Comp.BuckledEntities);
     }
 
     private void OnCanDropTarget(EntityUid uid, StrapComponent component, ref CanDropTargetEvent args)
@@ -43,6 +56,10 @@ public abstract partial class SharedBuckleSystem
         }
         else
         {
+            if (!TryComp(args.Dragged, out BuckleComponent? buckle) ||
+                !CanBuckle(args.Dragged, args.User, uid, true, out var _, buckle))
+                return;
+
             var doAfterArgs = new DoAfterArgs(EntityManager, args.User, component.BuckleDoafterTime, new BuckleDoAfterEvent(), args.Dragged, args.Dragged, uid)
             {
                 BreakOnMove = true,
@@ -200,6 +217,9 @@ public abstract partial class SharedBuckleSystem
         if (!args.CanAccess || !args.CanInteract || !component.Buckled)
             return;
 
+        if (!CanUnbuckle((uid, component), args.User, false))
+            return;
+
         InteractionVerb verb = new()
         {
             Act = () => TryUnbuckle(uid, args.User, buckleComp: component),
@@ -216,5 +236,4 @@ public abstract partial class SharedBuckleSystem
 
         args.Verbs.Add(verb);
     }
-
 }

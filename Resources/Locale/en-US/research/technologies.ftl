@@ -39,10 +39,12 @@ research-technology-kinetic-modifications = Kinetic Modifications
 research-technology-basic-shuttle-armament = Shuttle Basic Armament
 research-technology-advanced-shuttle-weapon = Advanced Shuttle Weapons
 research-technology-thermal-weaponry = Thermal Weaponry
+research-technology-dual-wielding-technology = Dual Wielding Technology
 
 research-technology-basic-robotics = Basic Robotics
 research-technology-basic-anomalous-research = Basic Anomalous Research
 research-technology-basic-xenoarcheology = Basic XenoArcheology
+research-technology-telesci = TeleSci
 research-technology-alternative-research = Alternative Research
 research-technology-magnets-tech = Localized Magnetism
 research-technology-advanced-parts = Advanced Parts

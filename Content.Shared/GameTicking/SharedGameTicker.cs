@@ -7,19 +7,25 @@ using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Serialization.Markdown.Value;
 using Robust.Shared.Timing;
 using Robust.Shared.Audio;
+using Content.Shared.GameTicking.Prototypes;
 
 namespace Content.Shared.GameTicking
 {
-    public abstract class SharedGameTicker : EntitySystem
+    public abstract partial class SharedGameTicker : EntitySystem
     {
-        [Dependency] private readonly IReplayRecordingManager _replay = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private IReplayRecordingManager _replay = default!;
+        [Dependency] private IGameTiming _gameTiming = default!;
+
+        /// <summary>
+        ///     A list storing the start times of all game rules that have been started this round.
+        ///     Game rules can be started and stopped at any time, including midround.
+        /// </summary>
+        public abstract IReadOnlyList<(TimeSpan, string)> AllPreviousGameRules { get; }
 
         // See ideally these would be pulled from the job definition or something.
         // But this is easier, and at least it isn't hardcoded.
         //TODO: Move these, they really belong in StationJobsSystem or a cvar.
-        [ValidatePrototypeId<JobPrototype>]
-        public const string FallbackOverflowJob = "Passenger";
+        public static readonly ProtoId<JobPrototype> FallbackOverflowJob = "Passenger";
 
         public const string FallbackOverflowJobName = "job-name-passenger";
 
@@ -90,14 +96,14 @@ namespace Content.Shared.GameTicking
     public sealed class TickerLobbyStatusEvent : EntityEventArgs
     {
         public bool IsRoundStarted { get; }
-        public string? LobbyBackground { get; }
+        public ProtoId<LobbyBackgroundPrototype>? LobbyBackground { get; }
         public bool YouAreReady { get; }
         // UTC.
         public TimeSpan StartTime { get; }
         public TimeSpan RoundStartTimeSpan { get; }
         public bool Paused { get; }
 
-        public TickerLobbyStatusEvent(bool isRoundStarted, string? lobbyBackground, bool youAreReady, TimeSpan startTime, TimeSpan preloadTime, TimeSpan roundStartTimeSpan, bool paused)
+        public TickerLobbyStatusEvent(bool isRoundStarted, ProtoId<LobbyBackgroundPrototype>? lobbyBackground, bool youAreReady, TimeSpan startTime, TimeSpan preloadTime, TimeSpan roundStartTimeSpan, bool paused)
         {
             IsRoundStarted = isRoundStarted;
             LobbyBackground = lobbyBackground;
@@ -142,7 +148,8 @@ namespace Content.Shared.GameTicking
     [Serializable, NetSerializable]
     public sealed class TickerJobsAvailableEvent(
         Dictionary<NetEntity, string> stationNames,
-        Dictionary<NetEntity, Dictionary<ProtoId<JobPrototype>, int?>> jobsAvailableByStation)
+        Dictionary<NetEntity, Dictionary<ProtoId<JobPrototype>, int?>> jobsAvailableByStation,
+        Dictionary<NetEntity, ProtoId<JobWeightPrototype>?> jobWeightsByStation)
         : EntityEventArgs
     {
         /// <summary>
@@ -151,6 +158,8 @@ namespace Content.Shared.GameTicking
         public Dictionary<NetEntity, Dictionary<ProtoId<JobPrototype>, int?>> JobsAvailableByStation { get; } = jobsAvailableByStation;
 
         public Dictionary<NetEntity, string> StationNames { get; } = stationNames;
+
+        public Dictionary<NetEntity, ProtoId<JobWeightPrototype>?> JobWeightsByStation { get; } = jobWeightsByStation;
     }
 
     [Serializable, NetSerializable, DataDefinition]

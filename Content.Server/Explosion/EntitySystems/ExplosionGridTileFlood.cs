@@ -1,7 +1,8 @@
 using System.Numerics;
 using Content.Shared.Atmos;
-using Robust.Shared.Map;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Map.Components;
+using static Content.Server.Explosion.Components.ExplosionAirtightGridComponent;
 using static Content.Server.Explosion.EntitySystems.ExplosionSystem;
 
 namespace Content.Server.Explosion.EntitySystems;
@@ -11,6 +12,8 @@ namespace Content.Server.Explosion.EntitySystems;
 /// </summary>
 public sealed class ExplosionGridTileFlood : ExplosionTileFlood
 {
+    private readonly ExplosionSystem _explosionSystem;
+
     public Entity<MapGridComponent> Grid;
     private bool _needToTransform = false;
 
@@ -45,7 +48,8 @@ public sealed class ExplosionGridTileFlood : ExplosionTileFlood
         Dictionary<Vector2i, NeighborFlag> edgeTiles,
         EntityUid? referenceGrid,
         Matrix3x2 spaceMatrix,
-        Angle spaceAngle)
+        Angle spaceAngle,
+        ExplosionSystem explosionSystem)
     {
         Grid = grid;
         _airtightMap = airtightMap;
@@ -53,6 +57,7 @@ public sealed class ExplosionGridTileFlood : ExplosionTileFlood
         _intensityStepSize = intensityStepSize;
         _typeIndex = typeIndex;
         _edgeTiles = edgeTiles;
+        _explosionSystem = explosionSystem;
 
         // initialise SpaceTiles
         foreach (var (tile, spaceNeighbors) in _edgeTiles)
@@ -193,11 +198,11 @@ public sealed class ExplosionGridTileFlood : ExplosionTileFlood
             NewBlockedTiles.Add(tile);
 
             // At what explosion iteration would this blocker be destroyed?
-            var required = tileData.ExplosionTolerance[_typeIndex];
+            var required = _explosionSystem.GetToleranceValues(tileData.ToleranceCacheIndex).Values[_typeIndex];
             if (required > _maxIntensity)
                 return; // blocker is never destroyed.
 
-            var clearIteration = iteration + (int) MathF.Ceiling(required / _intensityStepSize);
+            var clearIteration = iteration + (int) MathF.Ceiling((float)required / _intensityStepSize);
             if (FreedTileLists.TryGetValue(clearIteration, out var list))
                 list.Add(tile);
             else
@@ -261,13 +266,13 @@ public sealed class ExplosionGridTileFlood : ExplosionTileFlood
         foreach (var tile in tiles)
         {
             var blockedDirections = AtmosDirection.Invalid;
-            float sealIntegrity = 0;
+            FixedPoint2 sealIntegrity = 0;
 
             // Note that if (grid, tile) is not a valid key, then airtight.BlockedDirections will default to 0 (no blocked directions)
             if (_airtightMap.TryGetValue(tile, out var tileData))
             {
                 blockedDirections = tileData.BlockedDirections;
-                sealIntegrity = tileData.ExplosionTolerance[_typeIndex];
+                sealIntegrity = _explosionSystem.GetToleranceValues(tileData.ToleranceCacheIndex).Values[_typeIndex];
             }
 
             // First, yield any neighboring tiles that are not blocked by airtight entities on this tile
@@ -290,7 +295,7 @@ public sealed class ExplosionGridTileFlood : ExplosionTileFlood
                 continue;
 
             // At what explosion iteration would this blocker be destroyed?
-            var clearIteration = iteration + (int) MathF.Ceiling(sealIntegrity / _intensityStepSize);
+            var clearIteration = iteration + (int) MathF.Ceiling((float) sealIntegrity / _intensityStepSize);
 
             // Get the delayed neighbours list
             if (!_delayedNeighbors.TryGetValue(clearIteration, out var list))

@@ -28,36 +28,42 @@
             - Impassable
     - type: Item
       size: Normal
+      inhandVisuals:
+        left:
+        - state: inhand-left-beacon
+        right:
+        - state: inhand-right-beacon
     - type: Foldable
       folded: true
     - type: Clickable
     - type: InteractionOutline
     - type: FultonBeacon
-    - type: Appearance
-    - type: GenericVisualizer
-      visuals:
-        enum.FoldedVisuals.State:
-          foldedLayer:
-            True: { state: folded_extraction }
-            False: { state: extraction_point }
     - type: Sprite
       sprite: Objects/Tools/fulton.rsi
       drawdepth: SmallObjects
       noRot: true
       layers:
         - state: extraction_point
-          map: [ "foldedLayer" ]
+          map: ["unfoldedLayer"]
+          visible: false
+        - state: folded_extraction
+          map: ["foldedLayer"]
 
 - type: entity
+  parent: [ BaseItem, BaseItemDestructible ]
   id: Fulton
-  parent: BaseItem
-  suffix: Full
   name: fulton
+  suffix: Full
   description: Used to extract containers, items, or forcibly recruit people into your base of operations.
   components:
   - type: Fulton
   - type: Item
     size: Normal
+    inhandVisuals:
+      left:
+      - state: inhand-left-fulton
+      right:
+      - state: inhand-right-fulton
   - type: Stack
     stackType: Fulton
     count: 10
@@ -65,16 +71,6 @@
     drawdepth: SmallObjects
     sprite: Objects/Tools/fulton.rsi
     state: extraction_pack
-  - type: Damageable
-    damageContainer: Inorganic
-  - type: Destructible
-    thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 100
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
 
 - type: entity
   id: Fulton1
