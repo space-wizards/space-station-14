@@ -643,8 +643,7 @@
   color: "#435166"
   plantMetabolism:
   - !type:PlantMutateChemicals
-    randomPickBotanyReagents:
-    - EvilRandomFillSolution
+    randomPickBotanyReagent: EvilRandomFillSolution
   - !type:PlantAdjustToxins
     amount: 10
   metabolisms:

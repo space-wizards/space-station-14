@@ -31,9 +31,7 @@ public sealed partial class PlantChemicalsSystem : EntitySystem
     /// Adds a random chemical to the plant chemicals.
     /// </summary>
     [PublicAPI]
-    public void MutateRandomChemical(
-        Entity<PlantChemicalsComponent?> ent,
-        IReadOnlyList<WeightedRandomFillSolutionPrototype> randomChems)
+    public void MutateRandomChemical(Entity<PlantChemicalsComponent?> ent, WeightedRandomFillSolutionPrototype randomChems)
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return;

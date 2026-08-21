@@ -84,10 +84,6 @@
     - Copper
     - Sulfur
     - Lithium
-
-- type: weightedRandomFillSolution
-  id: RandomPickFarmReagent
-  fills:
   - quantity: 10 # Basic Farming Table
     weight: 5
     reagents:

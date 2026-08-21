@@ -121,29 +121,6 @@ namespace Content.Shared.Random.Helpers
         {
             var randomFill = prototype.PickRandomFill(random);
 
-            return PickReagent(randomFill, random, prototype.ID);
-        }
-
-        /// <summary>
-        /// Picks from the combined fills of several weighted random solution prototypes.
-        /// Each fill retains its own weight in the combined pool.
-        /// </summary>
-        public static (string reagent, FixedPoint2 quantity) Pick(
-            this IReadOnlyList<WeightedRandomFillSolutionPrototype> prototypes,
-            IRobustRandom? random = null)
-        {
-            IoCManager.Resolve(ref random);
-
-            var source = string.Join(", ", prototypes.Select(prototype => prototype.ID));
-            var randomFill = prototypes.SelectMany(prototype => prototype.Fills).PickRandomFill(random, source);
-            return PickReagent(randomFill, random, source);
-        }
-
-        private static (string reagent, FixedPoint2 quantity) PickReagent(
-            RandomFillSolution randomFill,
-            IRobustRandom? random,
-            string source)
-        {
             IoCManager.Resolve(ref random);
 
             var sum = randomFill.Reagents.Count;
@@ -162,21 +139,14 @@ namespace Content.Shared.Random.Helpers
             }
 
             // Shouldn't happen
-            throw new InvalidOperationException($"Invalid weighted pick for {source}!");
+            throw new InvalidOperationException($"Invalid weighted pick for {prototype.ID}!");
         }
 
         public static RandomFillSolution PickRandomFill(this WeightedRandomFillSolutionPrototype prototype, IRobustRandom? random = null)
         {
-            return prototype.Fills.PickRandomFill(random, prototype.ID);
-        }
-
-        private static RandomFillSolution PickRandomFill(
-            this IEnumerable<RandomFillSolution> fills,
-            IRobustRandom? random,
-            string source)
-        {
             IoCManager.Resolve(ref random);
 
+            var fills = prototype.Fills;
             Dictionary<RandomFillSolution, float> picks = new();
 
             foreach (var fill in fills)
@@ -200,7 +170,7 @@ namespace Content.Shared.Random.Helpers
             }
 
             // Shouldn't happen
-            throw new InvalidOperationException($"Invalid weighted pick for {source}!");
+            throw new InvalidOperationException($"Invalid weighted pick for {prototype.ID}!");
         }
 
         /// <inheritdoc cref="HashCodeCombine(IReadOnlyCollection{int})"/>
