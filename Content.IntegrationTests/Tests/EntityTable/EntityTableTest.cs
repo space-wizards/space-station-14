@@ -132,13 +132,13 @@ public sealed class EntityTableTest : GameTest
            table: !type:EntSelector
              id: {EntProto1}
              conditions:
-             - !type:IsNotRepeatingCondition
+             - !type:ExcludeEntitiesFromContextCondition
          
          - type: entityTable
            id: EntityTableTestAllNotRepeating
            table: !type:AllSelector
              conditionsForChildren:
-             - !type:IsNotRepeatingCondition
+             - !type:ExcludeEntitiesFromContextCondition
              children:
              - id: {EntProto1}
              - id: {EntProto2}
@@ -148,7 +148,7 @@ public sealed class EntityTableTest : GameTest
            table: !type:NestedSelector
              tableId: EntityTableTestNestedTable
              conditionsForChildren:
-             - !type:IsNotRepeatingCondition
+             - !type:ExcludeEntitiesFromContextCondition
          
          - type: entityTable
            id: EntityTableTestNestedTableWithCost
@@ -178,7 +178,7 @@ public sealed class EntityTableTest : GameTest
              children:
              - !type:AllSelector
                conditionsForChildren:
-               - !type:IsNotRepeatingCondition
+               - !type:ExcludeEntitiesFromContextCondition
                children:
                 - id: {EntProto1}
                 - id: {EntProto2}
@@ -298,7 +298,7 @@ public sealed class EntityTableTest : GameTest
 
     [Test]
     [RunOnSide(Side.Server)]
-    public void IsNotRepeatingCondition_GatesEntSelector()
+    public void ExcludeEntitiesFromContextCondition_GatesEntSelector()
     {
         // No UsedSpawns tracking in context => condition passes and the ent spawns.
         var noTracking = Run(Table("EntityTableTestNotRepeating"), ctx: new EntityTableContext());
@@ -369,7 +369,7 @@ public sealed class EntityTableTest : GameTest
     }
 
     /// <summary>
-    /// Demonstrates how injecting IsNotRepeatingCondition through the context's
+    /// Demonstrates how injecting ExcludeEntitiesFromContextCondition through the context's
     /// AdditionalConditionsKey can change the behavior of an otherwise unconstrained table.
     /// </summary>
     [Test]
@@ -383,7 +383,7 @@ public sealed class EntityTableTest : GameTest
             ctx: new EntityTableContext(new() { [ExcludeEntitiesFromContextCondition.EntitiesToExclude] = used }));
         Assert.That(unconstrained, Is.EquivalentTo([new EntProtoId(EntProto1)]));
 
-        // Injecting IsNotRepeatingCondition gates the selector: EntProto1 is already used => blocked.
+        // Injecting ExcludeEntitiesFromContextCondition gates the selector: EntProto1 is already used => blocked.
         var ctx = new EntityTableContext(new() { [ExcludeEntitiesFromContextCondition.EntitiesToExclude] = used });
         ctx.SetData(EntityTableSelector.AdditionalConditionsKey,
             new List<EntityTableCondition> { new ExcludeEntitiesFromContextCondition() });
