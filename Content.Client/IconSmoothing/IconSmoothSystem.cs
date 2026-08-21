@@ -465,7 +465,7 @@ public sealed partial class IconSmoothSystem : EntitySystem
     private void ExpandCache()
     {
         var newCacheSize = Math.Max(16, _keyCaches.Count * 2);
-        DebugTools.Assert(newCacheSize < 256, "Number of cached keys exceeded what can be stored in a short.");
+        DebugTools.Assert(newCacheSize < 256, $"Number of cached keys exceeded what can be stored in a short. {DumpCache()}");
         var curSize = _keyCaches.Count;
 
         _keyCaches.EnsureLength(newCacheSize);
@@ -474,6 +474,27 @@ public sealed partial class IconSmoothSystem : EntitySystem
             _keyCaches[i].RefCount = _freeListHead;
             _freeListHead = (short)i;
         }
+    }
+
+    private string DumpCache()
+    {
+        var log = $"Keycache in {nameof(IconSmoothSystem)} contained the following items: ";
+        for (var i = 0; i < _keyCaches.Count; i++)
+        {
+            log += $"Cache {i}, RefCount: {_keyCaches[i].RefCount} Keys: ";
+            if (_keyCaches[i].Keys is not { } keys)
+            {
+                log += "null;";
+                continue;
+            }
+
+            foreach (var key in keys)
+            {
+                log += $"{key}, ";
+            }
+        }
+
+        return log;
     }
 
     private struct KeyCache(HashSet<string> keys)
