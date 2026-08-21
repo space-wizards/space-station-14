@@ -8,8 +8,9 @@ namespace Content.Client.UserInterface.RichText;
 public sealed partial class TextLinkTag
 {
     /// <summary>
-    /// entity="<NetEntity>" resolver. Clickable only if the local viewer is
-    /// currently allowed to click chat names.
+    ///entity="<NetEntity>" resolver. Clickable only if the local viewer is
+    /// currently allowed to click chat names. Sets LinkColor if TextLink
+    /// param and ChatNameColors Cvar allow.
     /// </summary>
     private bool TryResolveEntityLink(MarkupNode node, out LinkData data)
     {
@@ -26,13 +27,13 @@ public sealed partial class TextLinkTag
 
         var chat = _entity.System<SharedChatSystem>();
         var clickable = chat.CanClickMessageSender(null);
-        var color = GetEntityNameColor(node, netEntity);
+        var color = GetLinkColor(node, netEntity);
 
-        data = new LinkData(netEntity.ToString(), color, clickable);
+        data = new LinkData(LinkString: null, LinkEntity: netEntity, Color: color, Clickable: clickable);
         return true;
     }
 
-    private Color? GetEntityNameColor(MarkupNode node, NetEntity netEntity)
+    private Color? GetLinkColor(MarkupNode node, NetEntity netEntity)
     {
         if (!node.Attributes.TryGetValue(UseEntityNameColorAttributeName, out var useNameColorParam) ||
             !useNameColorParam.TryGetString(out var useNameColorStr) ||

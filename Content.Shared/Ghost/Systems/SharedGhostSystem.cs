@@ -130,9 +130,7 @@ public abstract partial class SharedGhostSystem : EntitySystem
 
     private void OnGhostClickMessageSender(Entity<GhostComponent> ent, ref ClickMessageSenderEvent args)
     {
-        if (_adminManager.IsAdmin(args.Sender))
-            return;
-        _follower.StartFollowingEntity(ent, args.Sender);
+        _follower.StartFollowingEntity(ent, args.Sender); //only admins out of ghost form can be teleported to, no need for a filter
     }
 }
 

@@ -24,15 +24,20 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
     [Dependency] private IEntityManager _entity = default!;
     [Dependency] private IUserInterfaceManager _ui = default!;
 
+    public string Name => "textlink";
+    public static Color DefaultLinkColor => Color.CornflowerBlue;
+
     private const string EntityAttributeName = "entity";
     private const string LinkAttributeName = "link";
-    private const string ColorOverrideAttributeName = "color"; // LinkColor override
+    private const string ColorOverrideAttributeName = "color"; // DefaultLinkColor override
     private const string UseEntityNameColorAttributeName = "entitynamecolor"; // entity links only: opt into per-entity name coloring
 
     private delegate bool TryResolveLink(MarkupNode node, out LinkData data);
-    private readonly (string AttributeName, TryResolveLink Resolver)[] _resolvers; //lookup table for parsing link to correct solver
-
-    private readonly record struct LinkData(string Link, Color? Color, bool Clickable);
+    private readonly (string AttributeName, TryResolveLink Resolver)[] _resolvers; // for parsing link to correct resolver
+    /// <summary>
+    /// Resolved Link Data, LinkString and LinkEntity should not be populated at the same time
+    /// </summary>
+    private readonly record struct LinkData(string? LinkString, NetEntity? LinkEntity, Color? Color, bool Clickable);
 
     public TextLinkTag()
     {
@@ -43,14 +48,15 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
         ];
     }
 
-    public string Name => "textlink";
-    public static Color DefaultLinkColor => Color.CornflowerBlue;
-
+    /// <summary>
+    ///  Takes a TextLink <see cref="MarkupNode"/>, parses it and creates a TextLink <see cref="Label"/>.
+    /// Fails if it cannot parse link content, or if the resolver cannot create valid <see cref="LinkData"/>.
+    /// </summary>
     public bool TryCreateControl(MarkupNode node, [NotNullWhen(true)] out Control? control)
     {
 
         control = null;
-        LinkData data = default;
+        LinkData linkData = default;
 
         var linkTypeResolved = false;
 
@@ -63,7 +69,7 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
         {
             if (node.Attributes.ContainsKey(attrname))
             {
-                if(!resolver(node, out data))
+                if(!resolver(node, out linkData))
                 {
                     return false;
                 }
@@ -77,21 +83,21 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
         }
 
         // color= > resolver-supplied color > default
-        var linkColor = ResolveColorOverride(node) ?? data.Color ?? DefaultLinkColor;
+        var linkColor = ResolveColorOverride(node) ?? linkData.Color ?? DefaultLinkColor;
 
-        var link = new TextLink() { Text = text };
-        link.FontColorOverride = linkColor;
+        var linkLabel = new TextLinkLabel() { Text = text, LinkString = linkData.LinkString, LinkEntity = linkData.LinkEntity };
+        linkLabel.FontColorOverride = linkColor;
 
-        if (data.Clickable)
+        if (linkData.Clickable)
         {
-            link.MouseFilter = Control.MouseFilterMode.Stop;
-            link.DefaultCursorShape = Control.CursorShape.Hand;
-            link.OnMouseEntered += _ => link.FontColorOverride = Color.LightSkyBlue;
-            link.OnMouseExited += _ => link.FontColorOverride = linkColor;
-            link.OnKeyBindDown += args => OnKeybindDown(args, data.Link, link);
+            linkLabel.MouseFilter = Control.MouseFilterMode.Stop;
+            linkLabel.DefaultCursorShape = Control.CursorShape.Hand;
+            linkLabel.OnMouseEntered += _ => linkLabel.FontColorOverride = Color.LightSkyBlue;
+            linkLabel.OnMouseExited += _ => linkLabel.FontColorOverride = linkColor;
+            linkLabel.OnKeyBindDown += args => OnKeybindDown(args, linkLabel);
         }
 
-        control = link;
+        control = linkLabel;
         return true;
     }
 
@@ -107,10 +113,10 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
     }
 
     /// <summary>
-    /// Delegates to the nearest ancestor ILinkClickHandler; this TextLinkTag has no
-    /// idea what a click actually does.
+    /// Delegates to the nearest ancestor ILinkClickHandler or IEntityLinkClickHandler;
+    /// TextLinkTag has no idea what a click actually does.
     /// </summary>
-    private void OnKeybindDown(GUIBoundKeyEventArgs args, string link, Control? control)
+    private void OnKeybindDown(GUIBoundKeyEventArgs args, TextLinkLabel? control)
     {
         if (args.Function != EngineKeyFunctions.UIClick)
             return;
@@ -118,17 +124,29 @@ public sealed partial class TextLinkTag : IMarkupTagHandler
         if (control == null)
             return;
 
-        if (control.TryGetParentHandler<ILinkClickHandler>(out var handler))
+        if (control.LinkEntity is { } entity && control.TryGetParentHandler<IEntityLinkClickHandler>(out var entityLinkClickHandler))
         {
-            handler.HandleClick(link);
+                entityLinkClickHandler.HandleClick(entity);
+        }
+        else if (control.LinkString != null && control.TryGetParentHandler<ILinkClickHandler>(out var linkClickHandler))
+        {
+            linkClickHandler.HandleClick(control.LinkString);
         }
     }
 }
 
 /// <summary>
-/// Implement on a control to receive clicks on nested [textlink] nodes.
+/// Implement on a control to receive clicks on nested [textlink link=] nodes.
 /// </summary>
 public interface ILinkClickHandler
 {
     public void HandleClick(string link);
+}
+
+/// <summary>
+/// Implement on a control to receive clicks on nested [textlink entity=] nodes.
+/// </summary>
+public interface IEntityLinkClickHandler
+{
+    public void HandleClick(NetEntity netEntity);
 }

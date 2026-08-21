@@ -4,7 +4,7 @@ namespace Content.Client.UserInterface.RichText;
 
 public sealed partial class TextLinkTag
 {
-    // link="<string>" resolver. Always clickable, uses DefaultLinkColor for color.
+    ///<summary>link="<string>" resolver. Always clickable, uses DefaultLinkColor for color.</summary>
     private bool TryResolvePlainLink(MarkupNode node, out LinkData data)
     {
         data = default;
@@ -15,7 +15,7 @@ public sealed partial class TextLinkTag
             return false;
         }
 
-        data = new LinkData(linkStr, null, true);
+        data = new LinkData(LinkString: linkStr, LinkEntity: null, Color: null, Clickable: true);
         return true;
     }
 }

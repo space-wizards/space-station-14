@@ -18,7 +18,7 @@ namespace Content.Client.UserInterface.Systems.Chat.Widgets;
 
 [GenerateTypedNameReferences]
 [Virtual]
-public partial class ChatBox : UIWidget, ILinkClickHandler
+public partial class ChatBox : UIWidget, IEntityLinkClickHandler
 {
     [Dependency] private IEntityManager _entManager = default!;
     [Dependency] private ILogManager _log = default!;
@@ -158,11 +158,8 @@ public partial class ChatBox : UIWidget, ILinkClickHandler
         ChatInput.ChannelSelector.Select(toSelect);
     }
 
-    public void HandleClick(string ent)
+    public void HandleClick(NetEntity netEntity)
     {
-        if (!NetEntity.TryParse(ent, out var netEntity))
-            return;
-
         _entManager.RaisePredictiveEvent(new ClickMessageSenderRequestEvent(netEntity));
     }
 
