@@ -364,7 +364,7 @@
       - !type:ModifyStatusEffect
         effectProto: StatusEffectChangelingMuted
         type: Add
-        time: 10
+        time: 5
 
 - type: reagent
   id: NorepinephricAcid

@@ -200,7 +200,7 @@
   description: "Silently sting a target and worsen their sight for a short duration. \n\nRequires 30 Chemicals."
   components:
   - type: Action
-    useDelay: 10
+    useDelay: 30
     raiseOnAction: true
     itemIconStyle: BigAction
   - type: Sprite
@@ -285,7 +285,7 @@
   description: "Silently sting a target and inject them with chemicals that prevent them from speaking. \n\nRequires 30 Chemicals."
   components:
   - type: Action
-    useDelay: 10
+    useDelay: 30
     raiseOnAction: true
     itemIconStyle: BigAction
   - type: Sprite
@@ -296,7 +296,7 @@
     effects:
     - !type:AddReagentToBloodstream
       reagent: TaciticAcid
-      quantity: 5 # 100s of imperceptible mute
+      quantity: 5 # 50s of imperceptible mute
 
 - type: entity
   parent: BaseAction
