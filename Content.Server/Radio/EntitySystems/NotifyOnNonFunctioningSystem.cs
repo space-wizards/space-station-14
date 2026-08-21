@@ -82,13 +82,12 @@ public sealed partial class NotifyOnNonFunctioningSystem : EntitySystem
             AlertRadioIfWasWorking(ent, ent.Comp.LocUnpowered, true);
     }
 
-    private bool AlertRadioIfWasWorking(Entity<NotifyOnNonFunctioningComponent> ent, string locString, bool ignorePower = false)
+    private void AlertRadioIfWasWorking(Entity<NotifyOnNonFunctioningComponent> ent, string locString, bool ignorePower = false)
     {
         if (!_powerState.GetWorkingState(ent.Owner))
-            return false;
+            return;
 
         AlertRadio(ent, locString, ignorePower);
-        return true;
     }
 
     private void AlertRadio(Entity<NotifyOnNonFunctioningComponent> ent, string locString, bool ignorePower = false)
