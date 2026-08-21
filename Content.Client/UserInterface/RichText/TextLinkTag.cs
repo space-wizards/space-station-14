@@ -15,7 +15,7 @@ namespace Content.Client.UserInterface.RichText;
 /// Markup tag handler for <c>[textlink="LinkText"]</c> nodes. Renders a link
 /// <see cref="Label"/> in rich text, covering two types:
 /// plain links (<c>link=</c>) and entity links (<c>entity=</c>).
-/// optional <c>color=</c> and <c>entnamecolor=</c> parameters
+/// optional <c>color=</c> and <c>entitynamecolor=</c> parameters
 /// allow setting a color override and opting into using entity name colors for entity links
 /// </summary>
 [UsedImplicitly]
