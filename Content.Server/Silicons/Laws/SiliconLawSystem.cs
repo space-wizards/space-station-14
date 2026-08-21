@@ -310,15 +310,15 @@ public sealed partial class SiliconLawSystem : SharedSiliconLawSystem
         }
     }
 
-    private void OnIonStormEvent(EntityUid uid, IonStormSiliconLawComponent component, ref IonStormEvent args)
+    private void OnIonStormEvent(Entity<IonStormSiliconLawComponent> ent, ref IonStormEvent args)
     {
-        if (!TryComp<SiliconLawBoundComponent>(uid, out var lawBound))
+        if (!TryComp<SiliconLawBoundComponent>(ent, out var lawBound))
             return;
 
-        if (!TryComp<IonStormSiliconLawComponent>(uid, out var target))
+        if (!TryComp<IonStormSiliconLawComponent>(ent, out var target))
             return;
 
-        var laws = GetLaws(uid, lawBound);
+        var laws = GetLaws(ent, lawBound);
         if (laws.Laws.Count == 0)
             return;
 
@@ -327,9 +327,9 @@ public sealed partial class SiliconLawSystem : SharedSiliconLawSystem
 
         SwapRandomLawset(target.RandomLawsetChance, ref laws, target.IonRandomLawsets);
 
-        ShuffleLaws(target.ShuffleChance, ref laws);
+        ShuffleLaws(target.ShuffleChance, laws.Laws);
 
-        RemoveRandomLaw(target.RemoveChance, ref laws);
+        RemoveRandomLaw(target.RemoveChance, laws.Laws);
 
         // generate a new law...
         var newLaw = _ionLaw.GetIonLaw();
@@ -337,14 +337,14 @@ public sealed partial class SiliconLawSystem : SharedSiliconLawSystem
         if (string.IsNullOrEmpty(newLaw))
             return;
 
-        RandomReplaceOrAddLaw(target.ReplaceChance, ref laws, newLaw);
+        RandomReplaceOrAddGlitchedLaw(target.ReplaceChance, laws.Laws, newLaw);
 
         RankLaws(laws.Laws);
 
         // laws unique to this silicon, dont use station laws anymore
-        var lawProvider = EnsureComp<SiliconLawProviderComponent>(uid);
+        var lawProvider = EnsureComp<SiliconLawProviderComponent>(ent);
 
-        SetAlteredLawset(uid, lawProvider, laws);
+        SetAlteredLawset((ent, lawProvider), laws);
     }
 
     /// <summary>
@@ -369,7 +369,7 @@ public sealed partial class SiliconLawSystem : SharedSiliconLawSystem
     /// </summary>
     /// <param name="chance">The chance to shuffle</param>
     /// <param name="laws">The lawset you might shuffle</param>
-    public void ShuffleLaws(float chance, ref SiliconLawset laws)
+    public void ShuffleLaws(float chance, List<SiliconLaw> laws)
     {
         // shuffle them all
         if (!_robustRandom.Prob(chance))
@@ -377,18 +377,18 @@ public sealed partial class SiliconLawSystem : SharedSiliconLawSystem
 
         // hopefully work with existing glitched laws if there are multiple ion storms
         var baseOrder = FixedPoint2.New(1);
-        foreach (var law in laws.Laws)
+        foreach (var law in laws)
         {
             if (law.Order < baseOrder)
                 baseOrder = law.Order;
         }
 
-        _robustRandom.Shuffle(laws.Laws);
+        _robustRandom.Shuffle(laws);
 
         // change order based on shuffled position
-        for (int i = 0; i < laws.Laws.Count; i++)
+        for (int i = 0; i < laws.Count; i++)
         {
-            laws.Laws[i].Order = baseOrder + i;
+            laws[i].Order = baseOrder + i;
         }
     }
 
@@ -397,14 +397,14 @@ public sealed partial class SiliconLawSystem : SharedSiliconLawSystem
     /// </summary>
     /// <param name="chance">The chance to remove a law</param>
     /// <param name="laws">The lawset you might remove from</param>
-    public void RemoveRandomLaw(float chance, ref SiliconLawset laws)
+    public void RemoveRandomLaw(float chance, List<SiliconLaw> laws)
     {
         // see if we can remove a random law
-        if (laws.Laws.Count <= 0 || !_robustRandom.Prob(chance))
+        if (laws.Count <= 0 || !_robustRandom.Prob(chance))
             return;
 
-        var i = _robustRandom.Next(laws.Laws.Count);
-        laws.Laws.RemoveAt(i);
+        var i = _robustRandom.Next(laws.Count);
+        laws.RemoveAt(i);
     }
 
     /// <summary>
@@ -414,16 +414,16 @@ public sealed partial class SiliconLawSystem : SharedSiliconLawSystem
     /// <param name="laws">The lawset you might replace from</param>
     /// <param name="newLaw">The string of the new law</param>
     /// <returns></returns>
-    public void RandomReplaceOrAddLaw(float chance, ref SiliconLawset laws, string newLaw)
+    public void RandomReplaceOrAddGlitchedLaw(float chance, List<SiliconLaw> laws, string newLaw)
     {
         // see if the law we add will replace a random existing law or be a new glitched order one
-        if (laws.Laws.Count > 0 && _robustRandom.Prob(chance))
+        if (laws.Count > 0 && _robustRandom.Prob(chance))
         {
-            var i = _robustRandom.Next(laws.Laws.Count);
-            laws.Laws[i] = new SiliconLaw()
+            var i = _robustRandom.Next(laws.Count);
+            laws[i] = new SiliconLaw()
             {
                 LawString = newLaw,
-                Order = laws.Laws[i].Order
+                Order = laws[i].Order
             };
         }
         else
@@ -444,7 +444,7 @@ public sealed partial class SiliconLawSystem : SharedSiliconLawSystem
                 ),
                 Corrupted = true
             };
-            laws.Laws.Insert(0, glitchedLaw);
+            laws.Insert(0, glitchedLaw);
         }
     }
 
@@ -455,22 +455,22 @@ public sealed partial class SiliconLawSystem : SharedSiliconLawSystem
     /// <param name="uid">Entity you would like to set</param>
     /// <param name="lawProvider">The law provider of the entity</param>
     /// <param name="laws">The lawset you would like to set the provider to</param>
-    public void SetAlteredLawset(EntityUid uid, SiliconLawProviderComponent lawProvider, SiliconLawset laws)
+    public void SetAlteredLawset(Entity<SiliconLawProviderComponent> ent, SiliconLawset laws)
     {
         // Emagged borgs are immune to ion storm
-        if (_emag.CheckFlag(uid, EmagType.Interaction))
+        if (_emag.CheckFlag(ent, EmagType.Interaction))
             return;
 
-        lawProvider.Lawset = laws;
+        ent.Comp.Lawset = laws;
 
         // gotta tell player to check their laws
-        NotifyLawsChanged(uid, lawProvider.LawUploadSound);
+        NotifyLawsChanged(ent, ent.Comp.LawUploadSound);
 
         // Show the silicon has been subverted.
-        lawProvider.Subverted = true;
+        ent.Comp.Subverted = true;
 
         // new laws may allow antagonist behaviour so make it clear for admins
-        if(_mind.TryGetMind(uid, out var mindId, out _))
+        if(_mind.TryGetMind(ent, out var mindId, out _))
             EnsureSubvertedSiliconRole(mindId);
     }
 

@@ -1,6 +1,3 @@
-using Content.Shared.Random;
-using Robust.Shared.Prototypes;
-
 namespace Content.Shared.Silicons.Laws.Components;
 
 /// <summary>
@@ -22,4 +19,4 @@ public sealed partial class IonStormTargetComponent : Component
 /// Event raised on an entity with <see cref="IonStormTargetComponent"/> when an ion storm occurs on the attached station.
 /// </summary>
 [ByRefEvent]
-public record struct IonStormEvent(bool Adminlog = true);
+public record struct IonStormEvent;
