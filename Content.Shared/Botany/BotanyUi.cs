@@ -1,5 +1,6 @@
 using Content.Shared.DoAfter;
 using Robust.Shared.Serialization;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Botany;
 
@@ -31,6 +32,16 @@ public sealed class BotanyAnalyzerState : BoundUserInterfaceState
     /// The plant being analyzed.
     /// </summary>
     public NetEntity Target;
+
+    /// <summary>
+    /// The entity containing the plant data used for the analysis.
+    /// </summary>
+    public NetEntity? Plant;
+
+    /// <summary>
+    /// The prototype ID of the plant being analyzed.
+    /// </summary>
+    public EntProtoId? PlantProtoId;
 
     /// <summary>
     /// Localized identifiers describing persistent plant mutations.

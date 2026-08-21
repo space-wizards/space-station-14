@@ -15,11 +15,13 @@
                       VerticalExpand="True">
 
             <PanelContainer StyleClasses="PanelInsetDark">
-                <GridContainer MinWidth="250"
-                               MaxWidth="250"
-                               VerticalExpand="True"
-                               HorizontalExpand="True"
-                               Margin="6">
+                <BoxContainer Orientation="Vertical"
+                              MinWidth="250"
+                              MaxWidth="250"
+                              VerticalExpand="True"
+                              HorizontalExpand="True"
+                              Margin="6"
+                              SeparationOverride="4">
                     <Label Name="PlantName"
                            StyleClasses="LabelKeyText"
                            HorizontalAlignment="Center" />
@@ -32,7 +34,8 @@
                     <!-- Traits -->
                     <PanelContainer StyleClasses="BackgroundPanel"
                                     HorizontalExpand="True">
-                        <GridContainer Margin="0 8">
+                        <BoxContainer Orientation="Vertical"
+                                      Margin="0 8">
                             <Label Text="{Loc 'botany-ui-section-traits'}"
                                    StyleClasses="LabelKeyText"
                                    Name="TraitsHeading" />
@@ -85,21 +88,22 @@
                                        StyleClasses="LabelWeak" />
                                 <Label Name="PotencyDelta" />
                             </GridContainer>
-                        </GridContainer>
+                        </BoxContainer>
                     </PanelContainer>
 
                     <!-- Warnings -->
                     <PanelContainer StyleClasses="BackgroundPanel"
                                     HorizontalExpand="True"
                                     VerticalExpand="True">
-                        <GridContainer Margin="0 8">
+                        <BoxContainer Orientation="Vertical"
+                                      Margin="0 8">
                             <Label Text="{Loc 'botany-ui-section-warnings'}"
                                    StyleClasses="LabelKeyText" />
                             <BoxContainer Name="Warnings"
                                           Orientation="Vertical" />
-                        </GridContainer>
+                        </BoxContainer>
                     </PanelContainer>
-                </GridContainer>
+                </BoxContainer>
             </PanelContainer>
 
             <BoxContainer Name="Content"
@@ -110,7 +114,8 @@
                 <!-- Status -->
                 <PanelContainer StyleClasses="BackgroundPanelDark"
                                 HorizontalExpand="True">
-                    <GridContainer Margin="0 8">
+                    <BoxContainer Orientation="Vertical"
+                                  Margin="0 8">
                         <Label Text="{Loc 'botany-ui-section-plant'}"
                                StyleClasses="LabelKeyText"
                                Name="PlantHeading"
@@ -124,13 +129,14 @@
                             <botany:BotanyMetricControl Name="Growth"
                                                         StyleClasses="MetricGrowth" />
                         </GridContainer>
-                    </GridContainer>
+                    </BoxContainer>
                 </PanelContainer>
 
                 <!-- Required conditions -->
                 <PanelContainer StyleClasses="BackgroundPanelDark"
                                 HorizontalExpand="True">
-                    <GridContainer Margin="0 8">
+                    <BoxContainer Orientation="Vertical"
+                                  Margin="0 8">
                         <Label Text="{Loc 'botany-ui-section-conditions'}"
                                StyleClasses="LabelKeyText"
                                Name="ConditionsHeading"
@@ -148,7 +154,7 @@
                             <botany:BotanyMetricControl Name="Nutrients"
                                                         StyleClasses="MetricNutrients" />
                         </GridContainer>
-                    </GridContainer>
+                    </BoxContainer>
                 </PanelContainer>
 
                 <!-- Gas exchange -->
@@ -156,26 +162,28 @@
                     <PanelContainer StyleClasses="BackgroundPanelDark"
                                     HorizontalExpand="True"
                                     VerticalExpand="True">
-                        <GridContainer Margin="0 8">
+                        <BoxContainer Orientation="Vertical"
+                                      Margin="0 8">
                             <Label Text="{Loc 'botany-ui-section-consumed-gases'}"
                                    StyleClasses="LabelKeyText"
                                    Name="ConsumedHeading"
                                    Margin="0 0 0 2" />
                             <atmos:GasDisplayControl Name="Consumed"
                                                      EmptyMessage="{Loc 'botany-ui-gases-none'}" />
-                        </GridContainer>
+                        </BoxContainer>
                     </PanelContainer>
                     <PanelContainer StyleClasses="BackgroundPanelDark"
                                     HorizontalExpand="True"
                                     VerticalExpand="True">
-                        <GridContainer Margin="0 8">
+                        <BoxContainer Orientation="Vertical"
+                                      Margin="0 8">
                             <Label Text="{Loc 'botany-ui-section-exuded-gases'}"
                                    StyleClasses="LabelKeyText"
                                    Name="ExudedHeading"
                                    Margin="0 0 0 2" />
                             <atmos:GasDisplayControl Name="Exuded"
                                                      EmptyMessage="{Loc 'botany-ui-gases-none'}" />
-                        </GridContainer>
+                        </BoxContainer>
                     </PanelContainer>
                 </GridContainer>
 
@@ -183,22 +191,24 @@
                 <PanelContainer StyleClasses="BackgroundPanelDark"
                                 HorizontalExpand="True"
                                 VerticalExpand="True">
-                    <GridContainer Margin="0 8">
+                    <BoxContainer Orientation="Vertical"
+                                  Margin="0 8">
                         <Label Text="{Loc 'botany-ui-section-chemicals'}"
                                StyleClasses="LabelKeyText"
                                Name="ChemicalsHeading"
                                Margin="0 0 0 2" />
                         <chemistry:ReagentDisplayControl Name="Chemicals" />
-                    </GridContainer>
+                    </BoxContainer>
                 </PanelContainer>
 
                 <!-- Mutations -->
                 <PanelContainer StyleClasses="BackgroundPanelDark"
                                 HorizontalExpand="True"
                                 VerticalExpand="True">
-                    <GridContainer Margin="0 8"
-                                   HorizontalExpand="True"
-                                   VerticalExpand="True">
+                    <BoxContainer Orientation="Vertical"
+                                  Margin="0 8"
+                                  HorizontalExpand="True"
+                                  VerticalExpand="True">
                         <Label Text="{Loc 'botany-ui-section-mutations'}"
                                StyleClasses="LabelKeyText"
                                Name="MutationsHeading"
@@ -226,7 +236,7 @@
                                 <Label Name="MutationModDelta" />
                             </GridContainer>
                         </GridContainer>
-                    </GridContainer>
+                    </BoxContainer>
                 </PanelContainer>
             </BoxContainer>
 

@@ -1,13 +1,15 @@
-using Content.Shared.Botany.Components;
 using System.Linq;
-using JetBrains.Annotations;
+using Content.Shared.Botany.Components;
+using Content.Shared.Botany.Events;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Item.ItemToggle.Components;
+using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Botany.Systems;
 
@@ -25,7 +27,7 @@ public sealed partial class PlantAnalyzerSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnAfterInteract(Entity<PlantAnalyzerComponent> ent, ref AfterInteractEvent args)
     {
-        if (args.Handled || args.Target is not { } target || !args.CanReach || !HasComp<PlantComponent>(target))
+        if (args.Handled || args.Target is not { } target || !args.CanReach)
             return;
 
         args.Handled = _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager,
@@ -53,17 +55,24 @@ public sealed partial class PlantAnalyzerSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnDoAfter(Entity<PlantAnalyzerComponent> ent, ref PlantAnalyzerDoAfterEvent args)
     {
-        if (args.Handled || args.Cancelled || args.Args.Target is not { } target || !HasComp<PlantComponent>(target))
+        if (args.Handled || args.Cancelled || args.Args.Target is not { } target)
+            return;
+
+        var analyze = new PlantAnalyzerAttemptEvent(args.Args.User);
+        RaiseLocalEvent(target, ref analyze);
+        if (!analyze.Handled)
             return;
 
         _audio.PlayPredicted(ent.Comp.ScanningEndSound, ent.Owner, args.Args.User);
 
         ent.Comp.Target = target;
+        ent.Comp.Plant = analyze.PlantData;
+        ent.Comp.PlantProtoId = analyze.PlantProtoId;
         ent.Comp.User = args.Args.User;
         Dirty(ent);
 
         _toggle.TryActivate(ent.Owner);
-        _ui.OpenUi(ent.Owner, PlantAnalyzerUiKey.Key, args.Args.User, true);
+        _ui.OpenUi(ent.Owner, PlantAnalyzerUiKey.Key, args.Args.User);
         UpdateAnalyzerUi(ent);
 
         args.Handled = true;
@@ -109,15 +118,17 @@ public sealed partial class PlantAnalyzerSystem : EntitySystem
         if (ent.Comp.Target is not { } target || !_ui.IsUiOpen(ent.Owner, PlantAnalyzerUiKey.Key))
             return;
 
-        _ui.SetUiState(ent.Owner, PlantAnalyzerUiKey.Key, BuildAnalyzerState(target));
+        _ui.SetUiState(ent.Owner, PlantAnalyzerUiKey.Key, BuildAnalyzerState(target, ent.Comp.Plant, ent.Comp.PlantProtoId));
     }
 
     private void Stop(Entity<PlantAnalyzerComponent> ent, bool deactivate = true)
     {
-        if (ent.Comp.Target == null && ent.Comp.User == null)
+        if (ent.Comp.Target == null && ent.Comp.Plant == null && ent.Comp.PlantProtoId == null && ent.Comp.User == null)
             return;
 
         ent.Comp.Target = null;
+        ent.Comp.Plant = null;
+        ent.Comp.PlantProtoId = null;
         ent.Comp.User = null;
         Dirty(ent);
         if (deactivate)
@@ -126,14 +137,19 @@ public sealed partial class PlantAnalyzerSystem : EntitySystem
         _ui.CloseUi(ent.Owner, PlantAnalyzerUiKey.Key);
     }
 
-    private BotanyAnalyzerState BuildAnalyzerState(EntityUid target)
+    private BotanyAnalyzerState BuildAnalyzerState(EntityUid target, EntityUid? plant, EntProtoId? plantProtoId)
     {
-        var state = new BotanyAnalyzerState { Target = GetNetEntity(target) };
-        if (Deleted(target))
+        var state = new BotanyAnalyzerState
+        {
+            Target = GetNetEntity(target),
+            Plant = plant is { } plantUid ? GetNetEntity(plantUid) : null,
+            PlantProtoId = plantProtoId,
+        };
+        if (Deleted(target) || plant is not { } plantEntity || Deleted(plantEntity))
             return state;
 
         state.Mutations.AddRange(_plant
-            .GetPlantMutationDescriptions(target)
+            .GetPlantMutationDescriptions(plantEntity)
             .Select(mutation => mutation.Id));
 
         return state;

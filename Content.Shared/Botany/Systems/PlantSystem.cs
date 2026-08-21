@@ -54,6 +54,14 @@ public sealed partial class PlantSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
+    private void OnPlantAnalyzerAttempt(Entity<PlantComponent> ent, ref PlantAnalyzerAttemptEvent args)
+    {
+        args.PlantData = ent.Owner;
+        args.PlantProtoId = MetaData(ent.Owner).EntityPrototype?.ID;
+        args.Handled = true;
+    }
+
+    [SubscribeLocalEvent]
     private void OnCrossPollinate(Entity<PlantComponent> ent, ref PlantCrossPollinateEvent args)
     {
         if (!_botany.TryGetPlantComponent<PlantComponent>(args.PollenData, args.PollenProtoId, out var pollenData))

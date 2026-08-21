@@ -1,6 +1,7 @@
 using Content.Shared.Botany.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Botany.Components;
 
@@ -15,7 +16,7 @@ public sealed partial class PlantAnalyzerComponent : Component
     /// The delay before an analyzer finishes scanning a plant.
     /// </summary>
     [DataField]
-    public TimeSpan ScanDelay = TimeSpan.FromSeconds(5);
+    public TimeSpan ScanDelay = TimeSpan.FromSeconds(0.8);
 
     /// <summary>
     /// Sound played when scanning finishes.
@@ -28,6 +29,18 @@ public sealed partial class PlantAnalyzerComponent : Component
     /// </summary>
     [ViewVariables, AutoNetworkedField]
     public EntityUid? Target;
+
+    /// <summary>
+    /// The entity containing the plant data used for the current analysis.
+    /// </summary>
+    [ViewVariables, AutoNetworkedField]
+    public EntityUid? Plant;
+
+    /// <summary>
+    /// The prototype ID of the plant used for the current analysis.
+    /// </summary>
+    [ViewVariables, AutoNetworkedField]
+    public EntProtoId? PlantProtoId;
 
     /// <summary>
     /// The user who started the current analysis.

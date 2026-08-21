@@ -13,11 +13,13 @@
                       SeparationOverride="6">
 
             <PanelContainer StyleClasses="PanelInsetDark">
-                <GridContainer MinWidth="250"
-                               MaxWidth="250"
-                               VerticalExpand="True"
-                               HorizontalExpand="True"
-                               Margin="6">
+                <BoxContainer Orientation="Vertical"
+                              MinWidth="250"
+                              MaxWidth="250"
+                              VerticalExpand="True"
+                              HorizontalExpand="True"
+                              Margin="6"
+                              SeparationOverride="4">
                     <Label Name="TrayName"
                            StyleClasses="LabelKeyText"
                            HorizontalAlignment="Center" />
@@ -30,25 +32,27 @@
                     <!-- Status -->
                     <PanelContainer StyleClasses="BackgroundPanel"
                                     HorizontalExpand="True">
-                        <GridContainer Margin="0 8">
+                        <BoxContainer Orientation="Vertical"
+                                      Margin="0 8">
                             <Label Text="{Loc 'botany-ui-status'}"
                                    StyleClasses="LabelKeyText" />
                             <RichTextLabel Name="Status" />
-                        </GridContainer>
+                        </BoxContainer>
                     </PanelContainer>
 
                     <!-- Warnings -->
                     <PanelContainer VerticalExpand="True"
                                     StyleClasses="BackgroundPanel"
                                     HorizontalExpand="True">
-                        <GridContainer Margin="0 8">
+                        <BoxContainer Orientation="Vertical"
+                                      Margin="0 8">
                             <Label Text="{Loc 'botany-ui-section-warnings'}"
                                    StyleClasses="LabelKeyText" />
                             <BoxContainer Name="Warnings"
                                           Orientation="Vertical" />
-                        </GridContainer>
+                        </BoxContainer>
                     </PanelContainer>
-                </GridContainer>
+                </BoxContainer>
             </PanelContainer>
 
             <BoxContainer Name="Content"
@@ -60,7 +64,8 @@
                 <PanelContainer VerticalExpand="True"
                                 StyleClasses="BackgroundPanelDark"
                                 HorizontalExpand="True">
-                    <GridContainer Margin="0 8">
+                    <BoxContainer Orientation="Vertical"
+                                  Margin="0 8">
                         <Label Text="{Loc 'botany-ui-section-tray'}"
                                StyleClasses="LabelKeyText"
                                Name="ResourcesHeading"
@@ -81,20 +86,21 @@
                             <botany:BotanyMetricControl Name="Toxins"
                                                         StyleClasses="MetricToxins" />
                         </GridContainer>
-                    </GridContainer>
+                    </BoxContainer>
                 </PanelContainer>
 
                 <!-- Reagents -->
                 <PanelContainer VerticalExpand="True"
                                 StyleClasses="BackgroundPanelDark"
                                 HorizontalExpand="True">
-                    <GridContainer Margin="0 8">
+                    <BoxContainer Orientation="Vertical"
+                                  Margin="0 8">
                         <Label Text="{Loc 'botany-ui-section-reagents'}"
                                StyleClasses="LabelKeyText"
                                Name="ReagentsHeading"
                                Margin="0 0 0 2" />
                         <chemistry:ReagentDisplayControl Name="Reagents" />
-                    </GridContainer>
+                    </BoxContainer>
                 </PanelContainer>
             </BoxContainer>
 

@@ -14,4 +14,3 @@ plant-component-missing-gas-warning = The plant is missing the [color=cyan]gases
 plant-component-toxins-high-warning = The [color=purple]toxin level[/color] is dangerous for this plant.
 plant-component-weeds-high-warning = The [color=green]weed level[/color] is dangerous for this plant.
 plant-component-pests-high-warning = The [color=gray]pest level[/color] is dangerous for this plant.
-plant-analyzer-no-genes = The {$target} has no unique genes.
