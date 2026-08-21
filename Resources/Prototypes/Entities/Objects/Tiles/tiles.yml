@@ -480,7 +480,7 @@
   id: FloorTileItemPlastic
   components:
   - type: Sprite
-    state: steel # need plastic sprite?
+    state: steel # TODO need plastic sprite
   - type: Item
     heldPrefix: plastic
   - type: FloorTile
@@ -496,7 +496,7 @@
   name: dark plastic floor
   components:
   - type: Sprite
-    state: dark # need dark plastic sprite?
+    state: dark # TODO need dark plastic sprite
   - type: FloorTile
     outputs:
     - Plating
@@ -510,7 +510,7 @@
   name: white plastic floor
   components:
   - type: Sprite
-    state: white # need white plastic sprite?
+    state: white # TODO need white plastic sprite
   - type: FloorTile
     outputs:
     - Plating
