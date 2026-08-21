@@ -87,7 +87,10 @@ public sealed partial class VocalSystem : EntitySystem
         targetComp.ScreamId = source.Comp.ScreamId;
         targetComp.Wilhelm = source.Comp.Wilhelm;
         targetComp.WilhelmProbability = source.Comp.WilhelmProbability;
+        targetComp.EmoteSounds = source.Comp.EmoteSounds;
+        targetComp.EmoteAction = source.Comp.EmoteAction;
         LoadSounds((target, targetComp));
+        LoadSounds((target, targetComp), source.Comp.EmoteSounds);
 
         Dirty(target, targetComp);
     }
