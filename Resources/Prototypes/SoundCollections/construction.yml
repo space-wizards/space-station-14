@@ -1,14 +1,8 @@
 - type: soundCollection
-  id: ConnectElectronics
+  id: PlaceElectronics
   files:
-  - /Audio/Construction/connect_electronics_1.ogg
-  - /Audio/Construction/connect_electronics_2.ogg
-
-- type: soundCollection
-  id: ConnectWires
-  files:
-  - /Audio/Construction/connect_wires_1.ogg
-  - /Audio/Construction/connect_wires_2.ogg
+  - /Audio/Construction/place_electronics_1.ogg
+  - /Audio/Construction/place_electronics_2.ogg
 
 - type: soundCollection
   id: PlaceGlass
@@ -24,3 +18,9 @@
   - /Audio/Construction/place_metal_2.ogg
   - /Audio/Construction/place_metal_3.ogg
   - /Audio/Construction/place_metal_4.ogg
+
+- type: soundCollection
+  id: PlaceWires
+  files:
+  - /Audio/Construction/place_wires_1.ogg
+  - /Audio/Construction/place_wires_2.ogg

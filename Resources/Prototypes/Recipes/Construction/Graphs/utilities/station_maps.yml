@@ -25,11 +25,10 @@
       steps:
       - material: Cable
         amount: 2
-        doAfter: 1
       completed:
       - !type:PlaySound
         sound:
-          collection: ConnectWires
+          collection: PlaceWires
     - to: start
       steps:
       - tool: Welding
@@ -47,6 +46,7 @@
     - to: electronics
       steps:
       - tag: StationMapElectronics
+        doAfter: 1
         store: &Container board
         name: construction-graph-tag-station-map-electronics
         icon:
@@ -55,7 +55,7 @@
       completed:
       - !type:PlaySound
         sound:
-          collection: ConnectElectronics
+          collection: PlaceElectronics
     - to: assembly
       steps:
       - tool: Cutting
@@ -82,7 +82,7 @@
     - to: wired
       steps:
       - tool: Cutting
-        doAfter: 0.5
+        doAfter: 1
       completed:
       - !type:EmptyContainer
         container: *Container
