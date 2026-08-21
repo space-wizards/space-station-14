@@ -172,9 +172,7 @@ public abstract partial class SharedJetpackSystem : EntitySystem
             if (TryComp<JetpackUserComponent>(user, out var userComp) &&
                 userComp.Jetpack != ent.Owner &&
                 _jetpackQuery.TryGetComponent(userComp.Jetpack, out var oldJetpack))
-            {
                 SetEnabled((userComp.Jetpack, oldJetpack), false, user);
-            }
 
             SetupUser((ent.Owner, ent.Comp), user.Value);
             EnsureComp<ActiveJetpackComponent>(ent.Owner);

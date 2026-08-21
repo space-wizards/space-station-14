@@ -10,9 +10,6 @@ namespace Content.Shared.Movement.Components;
 [Access(typeof(SharedJetpackSystem))]
 public sealed partial class ActiveJetpackComponent : Component
 {
-    /// <summary>
-    /// The next time the server should consume gas for the active jetpack.
-    /// </summary>
     [ViewVariables]
     public TimeSpan NextGasUsage = TimeSpan.Zero;
 }
