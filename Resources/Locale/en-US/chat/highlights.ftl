@@ -45,11 +45,12 @@ highlights-mime = Mime, Theatre, Theater, Service, "Serv"
 highlights-musician = Musician, Theatre, Theater, Service, "Serv"
 highlights-passenger = Passenger, Greyshirt, Grayshirt, Greytider, Graytider, "Tider", "Tide"
 highlights-serviceworker = Service Worker, Service, "Serv"
+highlights-visitor = Visitor
 
 # Station-specific
 highlights-psychologist = Psychologist, Psychology, "Psych", Medbay, Medical, "Med"
 highlights-reporter = Reporter, Journalist, Newsroom, News
-highlights-tramdriver = Tram, "Driver", Service, "Serv"
+highlights-tramdriver = Tram Driver, Tram, "Driver", Service, "Serv"
 
 # Silicon
 highlights-borg = Cyborg, Silicon, Borg, Robotics, "Robot", "Law", "Laws", "Lawset"
