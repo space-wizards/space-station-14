@@ -382,7 +382,7 @@ public sealed partial class IconSmoothSystem : EntitySystem
         AddTileCache(grid, index, chunkData, AddOrCreateCacheIndex());
     }
 
-    private void AddTileCache(Entity<IconSmoothGridComponent> grid, (Vector2i Chunk, Vector2i Relative) index, IconChunkData chunkData, short cache)
+    private void AddTileCache(Entity<IconSmoothGridComponent> grid, (Vector2i Chunk, Vector2i Relative) index, IconChunkData chunkData, byte cache)
     {
         chunkData.AddTileCache(index.Relative, cache);
         grid.Comp.Chunks[index.Chunk] = chunkData;
@@ -393,13 +393,13 @@ public sealed partial class IconSmoothSystem : EntitySystem
         SetTileCache(grid, index, chunkData, AddOrCreateCacheIndex());
     }
 
-    private void SetTileCache(Entity<IconSmoothGridComponent> grid, (Vector2i Chunk, Vector2i Relative) index, IconChunkData chunkData, short cache)
+    private void SetTileCache(Entity<IconSmoothGridComponent> grid, (Vector2i Chunk, Vector2i Relative) index, IconChunkData chunkData, byte cache)
     {
         chunkData.SetTileCache(index.Relative, cache);
         grid.Comp.Chunks[index.Chunk] = chunkData;
     }
 
-    private bool TryGetCache(Entity<IconSmoothGridComponent> grid, (Vector2i Chunk, Vector2i Relative) index, out IconChunkData chunkData, [NotNullWhen(true)] out short? cache)
+    private bool TryGetCache(Entity<IconSmoothGridComponent> grid, (Vector2i Chunk, Vector2i Relative) index, out IconChunkData chunkData, [NotNullWhen(true)] out byte? cache)
     {
         cache = null;
         if (!grid.Comp.Chunks.TryGetValue(index.Chunk, out chunkData))
@@ -416,7 +416,7 @@ public sealed partial class IconSmoothSystem : EntitySystem
         return _keyCaches[i].Keys?.SetEquals(_workingKeyRing) ?? false;
     }
 
-    private short CreateCacheIndex()
+    private byte CreateCacheIndex()
     {
         if (_freeListHead < 0)
             ExpandCache();
@@ -425,14 +425,14 @@ public sealed partial class IconSmoothSystem : EntitySystem
         _freeListHead = _keyCaches[index].RefCount;
         _keyCaches[index] = new KeyCache(_workingKeyRing);
 
-        return index;
+        return (byte)index;
     }
 
     /// <summary>
     /// Searches for an existing Cache in our keyIndex, and creates a new one if it does not already exist.
     /// </summary>
     /// <returns>The index of the Hashset in our cache.</returns>
-    private short AddOrCreateCacheIndex()
+    private byte AddOrCreateCacheIndex()
     {
         // Faster to iterate backwards since our cache populates top down!
         for (var i = _keyCaches.Count - 1; i >= 0; i--)
@@ -442,13 +442,13 @@ public sealed partial class IconSmoothSystem : EntitySystem
 
             // Cache found, increment ref count
             _keyCaches[i].RefCount++;
-            return (short)i;
+            return (byte)i;
         }
 
         return CreateCacheIndex();
     }
 
-    private void DecrementRefCount(short index)
+    private void DecrementRefCount(byte index)
     {
         ref var cacheEntry = ref _keyCaches[index];
 
@@ -465,14 +465,14 @@ public sealed partial class IconSmoothSystem : EntitySystem
     private void ExpandCache()
     {
         var newCacheSize = Math.Max(16, _keyCaches.Count * 2);
-        DebugTools.Assert(newCacheSize < 256, $"Number of cached keys exceeded what can be stored in a short. {DumpCache()}");
+        DebugTools.Assert(newCacheSize <= 256, $"Number of cached keys exceeded what can be stored in a short. {DumpCache()}");
         var curSize = _keyCaches.Count;
 
         _keyCaches.EnsureLength(newCacheSize);
         for (var i = curSize; i < newCacheSize; i++)
         {
             _keyCaches[i].RefCount = _freeListHead;
-            _freeListHead = (short)i;
+            _freeListHead = (byte)i;
         }
     }
 
