@@ -97,6 +97,14 @@ public sealed partial class CreditsWindow : DefaultWindow
 
             _attributions.AddRange(rsi);
             _attributions.AddRange(rga);
+
+            // A page can't be entered that we can't go to
+            PageJumpLineEdit.OnTextChanged +=
+                _ =>
+                {
+                    if (PageJumpLineEdit.Value() > _attributions.Count / AttributionsSourcesPerPage)
+                        PageJumpLineEdit.Text = (_attributions.Count / AttributionsSourcesPerPage + 1).ToString();
+                };
         }
 
         // Pick the attributions for this page
