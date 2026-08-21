@@ -48,7 +48,7 @@ public sealed partial class VariantizeCommand : LocalizedEntityCommands
         return args.Length switch
         {
             1 => CompletionResult.FromHintOptions(CompletionHelper.Components<MapGridComponent>(args[0], EntityManager),
-                Loc.GetString($"{Command}-hint-map")),
+                Loc.GetString($"cmd-{Command}-hint-grid")),
             _ => CompletionResult.Empty,
         };
     }
