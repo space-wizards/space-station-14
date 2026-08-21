@@ -481,17 +481,19 @@ public sealed partial class IconSmoothSystem : EntitySystem
         var log = $"Keycache in {nameof(IconSmoothSystem)} contained the following items: ";
         for (var i = 0; i < _keyCaches.Count; i++)
         {
-            log += $"Cache {i}, RefCount: {_keyCaches[i].RefCount} Keys: ";
+            log += $" Cache {i}, RefCount: {_keyCaches[i].RefCount} Keys: [";
             if (_keyCaches[i].Keys is not { } keys)
             {
-                log += "null;";
+                log += "null";
                 continue;
             }
 
             foreach (var key in keys)
             {
-                log += $"{key}, ";
+                log += $"{key} ";
             }
+
+            log += "]";
         }
 
         return log;
