@@ -355,7 +355,7 @@ public sealed partial class IconSmoothSystem : EntitySystem
                 return;
 
             DecrementRefCount(tileEntry.Value);
-            SetTileCache((grid, cacheComp), (chunk, relative), chunkData, CreateCacheIndex());
+            SetTileCache((grid, cacheComp), (chunk, relative), chunkData);
             return;
         }
 
