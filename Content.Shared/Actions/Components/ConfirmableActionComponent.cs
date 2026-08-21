@@ -54,13 +54,13 @@ public sealed partial class ConfirmableActionComponent : Component
     /// If true, this action must be confirmed when untoggled.
     /// True by default.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool ConfirmWhenUntoggled = true;
 
     /// <summary>
     /// If true, this action must be confirmed when toggled.
     /// True by default.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool ConfirmWhenToggled = true;
 }
