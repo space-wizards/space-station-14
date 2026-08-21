@@ -19,7 +19,7 @@ public sealed class IntegerLineEdit : LineEdit
     /// <summary>
     /// A value entered that's smaller than this will be rewritten to this.
     /// </summary>
-    /// <remarks>This becomes annoying when set above 9.</remarks>
+    /// <remarks>This becomes annoying when set above 1.</remarks>
     [ViewVariables(VVAccess.ReadWrite)]
     public int? MinValue { get; set; }
 
