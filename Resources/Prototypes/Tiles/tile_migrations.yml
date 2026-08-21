@@ -160,7 +160,7 @@
 
 - type: tileAlias
   id: FloorMiningLight
-  target: FloorPlastic
+  target: FloorDarkPlastic
 
 - type: tileAlias
   id: FloorMiningDark
