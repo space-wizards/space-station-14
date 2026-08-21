@@ -72,8 +72,8 @@
 
 - type: latheRecipe
   parent: BaseGoldBorgModuleRecipe
-  id: BorgModuleAdvancedChemical
-  result: BorgModuleAdvancedChemical
+  id: BorgModuleAdvancedTopical
+  result: BorgModuleAdvancedTopical
 
 # Science Modules
 
@@ -87,4 +87,4 @@
     Steel: 500
     Glass: 500
     Plastic: 250
-    Bananium: 375
+    Gold: 375

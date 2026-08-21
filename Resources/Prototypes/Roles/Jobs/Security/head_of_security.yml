@@ -6,7 +6,7 @@
   requirements:
     - !type:RoleTimeRequirement
       role: JobWarden
-      time: 1h
+      time: 3h
     - !type:RoleTimeRequirement
       role: JobDetective
       time: 1h # knowing how to use the tools is important
@@ -16,11 +16,9 @@
     - !type:DepartmentTimeRequirement
       department: Security
       time: 10h
-  weight: 10
   startingGear: HoSGear
   icon: "JobIconHeadOfSecurity"
   supervisors: job-supervisors-captain
-  canBeAntag: false
   access:
   - HeadOfSecurity
   - Command
@@ -58,5 +56,6 @@
   job: HeadOfSecurity
   hasMindShield: true
   equipment:
+    head: ClothingHeadHatBeretHoS
     mask: ClothingMaskGasSecurity
     neck: ClothingNeckCloakHos

@@ -1,6 +1,6 @@
 - type: entity
+  parent: [ BaseStructure, StructureHealthDoorStrong ]
   id: HighSecDoor
-  parent: BaseStructure
   name: high security door
   description: Keeps the bad out and keeps the good in.
   placement:
@@ -13,24 +13,28 @@
   - type: StationAiWhitelist
   - type: InteractionOutline
   - type: Sprite
-    snapCardinals: true
-    sprite: Structures/Doors/Airlocks/highsec/highsec.rsi
+    sprite: Structures/Doors/Airlocks/Standard/airlock-vault.rsi
     layers:
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
     - state: closed_unlit
       shader: unshaded
+      sprite: Structures/Doors/Airlocks/Effects/airlock-effects-vault.rsi
       map: ["enum.DoorVisualLayers.BaseUnlit"]
-      visible: false
+      visible: true
     - state: welded
+      sprite: Structures/Doors/Airlocks/Effects/airlock-effects-vault.rsi
       map: ["enum.WeldableLayers.BaseWelded"]
     - state: bolted_unlit
       shader: unshaded
+      sprite: Structures/Doors/Airlocks/Effects/airlock-effects-vault.rsi
       map: ["enum.DoorVisualLayers.BaseBolted"]
     - state: emergency_unlit
+      sprite: Structures/Doors/Airlocks/Effects/airlock-effects-vault.rsi
       map: ["enum.DoorVisualLayers.BaseEmergencyAccess"]
       shader: unshaded
     - state: panel_open
+      sprite: Structures/Doors/Airlocks/Effects/airlock-effects.rsi
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
     - state: electrified_ai
       sprite: Interface/Misc/ai_hud.rsi
@@ -43,6 +47,7 @@
       visible: false
       map: ["enum.ElectrifiedLayers.Sparks"]
     - state: sparks
+      sprite: Structures/Doors/Airlocks/Effects/airlock-effects.rsi
       map: ["enum.DoorVisualLayers.BaseEmagging"]
       shader: unshaded
       visible: false
@@ -79,6 +84,7 @@
     fuel: 10
     time: 10
   - type: Airlock
+    openUnlitVisible: true
   - type: NavMapDoor
   - type: DoorBolt
   - type: AccessReader
@@ -114,16 +120,23 @@
   - type: Airtight
   - type: Occluder
   - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: StrongMetallic
+    damageModifierSet: PlasteelMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 1500
+        damage: 350
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetPlasteel1:
+            min: 1
+            max: 2
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
+          params:
+            volume: -4
   - type: Construction
     graph: Airlock
     node: highSecDoor
@@ -131,3 +144,8 @@
     tags:
       - HighSecDoor
       # This tag is used to nagivate the Airlock construction graph. It's needed because this construction graph is shared between Airlock, AirlockGlass, and HighSecDoor
+      - DoorRemoteWhitelist
+      # This tag is used by door remotes to allow or not a door remote to normally be able to interact with a door
+  - type: IconSmooth
+    key: walls
+    mode: NoSprite

@@ -10,14 +10,14 @@
   boilingPoint: 212.0  # Dexosyephedrine vape when?
   meltingPoint: 170.0
   metabolisms:
-    Poison:
+    Bloodstream:
       # Main effects
       effects:
       - !type:HealthChange
         damage:
           types:
             Poison: 0.55
-            Blunt: 0.5
+            Blunt: 1.1 # meant to be slightly more than tricordrazine heals
       # OD
       - !type:HealthChange
         conditions:
@@ -28,8 +28,7 @@
           types:
             Poison: 3 # this is added to the base damage of the meth.
             Asphyxiation: 2
-    Narcotic:
-      effects:
+
       # Main effects
       - !type:MovementSpeedModifier
         walkSpeedModifier: 1.20
@@ -37,9 +36,8 @@
       - !type:ModifyStatusEffect
         effectProto: StatusEffectDesoxyStamina # You are on meth. You keep going.
         time: 3
-      - !type:GenericStatusEffect
-        key: Adrenaline
-        component: IgnoreSlowOnDamage
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectAdrenaline
         time: 3
       # Side effects
       - !type:Jitter
@@ -58,8 +56,7 @@
         effectProto: StatusEffectDrowsiness
         time: 10
         type: Remove
-    Medicine:
-      effects:
+
       # Side effects
       - !type:ResetNarcolepsy
         conditions:
@@ -78,7 +75,7 @@
   boilingPoint: 255.0
   meltingPoint: 36.0
   metabolisms:
-    Narcotic:
+    Bloodstream:
       effects:
       # Main effects
       - !type:MovementSpeedModifier
@@ -117,8 +114,6 @@
         effectProto: StatusEffectDrowsiness
         time: 10
         type: Remove
-    Medicine:
-      effects:
       # Side effects
       - !type:ResetNarcolepsy
         conditions:
@@ -138,7 +133,7 @@
   boilingPoint: 212.0
   meltingPoint: 170.0
   metabolisms:
-    Narcotic:
+    Bloodstream:
       effects:
       # Main effects
       - !type:MovementSpeedModifier
@@ -158,9 +153,8 @@
         effectProto: StatusEffectForcedSleeping
         time: 3
         type: Remove
-      - !type:GenericStatusEffect
-        key: Adrenaline
-        component: IgnoreSlowOnDamage
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectAdrenaline
         time: 3
       # Side effects
       - !type:Jitter
@@ -169,10 +163,10 @@
         conditions:
         - !type:ReagentCondition
           reagent: Stimulants
-          min: 50
+          min: 45
         damage:
           types:
-            Poison: 1
+            Poison: 3
       # Interactions
       - !type:ModifyStatusEffect
         conditions:
@@ -189,30 +183,30 @@
           min: 1
         reagent: ChloralHydrate
         amount: -10
-    Medicine:
-      effects:
       # Main effects
       - !type:ModifyBleed
         amount: -1.5
       - !type:EvenHealthChange
         conditions:
-        - !type:TotalDamageCondition
-          min: 70 # only heals when you're more dead than alive
+        - !type:MobStateCondition
+          mobstate: Critical
         damage: # Doesn't heal poison because if you OD'd I'm not giving you a safety net
           Burn: -0.5
           Brute: -0.5
       - !type:HealthChange
         conditions:
-        - !type:TotalDamageCondition
-          min: 95 # Just to bring you back from the brink of death
+        - !type:MobStateCondition
+          mobstate: Critical
         damage:
           types:
             Asphyxiation: -2
       # Side effects
       - !type:ResetNarcolepsy
-      - !type:SatiateHunger
+      - !type:Satiate
+        satiationType: Hunger
         factor: 1
-      - !type:SatiateThirst
+      - !type:Satiate
+        satiationType: Thirst
         factor: 1
 
 - type: reagent
@@ -230,7 +224,7 @@
   - !type:PlantAdjustHealth
     amount: -1
   metabolisms:
-    Narcotic:
+    Bloodstream:
       effects:
       - !type:ModifyStatusEffect
         effectProto: StatusEffectSeeingRainbow
@@ -260,7 +254,7 @@
   flavor: bitter
   color: "#215263"
   metabolisms:
-    Narcotic:
+    Bloodstream:
       effects:
       - !type:MovementSpeedModifier
         walkSpeedModifier: 0.65
@@ -287,7 +281,7 @@
   flavor: bitter
   color: "#63806e"
   metabolisms:
-    Narcotic:
+    Bloodstream:
       effects:
       - !type:ModifyStatusEffect
         effectProto: StatusEffectSeeingRainbow
@@ -303,7 +297,7 @@
   flavor: bitter
   color: "#ffff00"
   metabolisms:
-    Narcotic:
+    Bloodstream:
       effects:
       - !type:ModifyStatusEffect
         effectProto: StatusEffectSeeingRainbow
@@ -322,7 +316,7 @@
   boilingPoint: 444.0
   meltingPoint: 128.0
   metabolisms:
-    Narcotic:
+    Bloodstream:
       effects: # It would be nice to have speech slurred or mumbly, but accents are a bit iffy atm. Same for distortion effects.
       - !type:MovementSpeedModifier
         walkSpeedModifier: 0.65
@@ -333,7 +327,7 @@
           reagent: Nocturine
           min: 8
         effectProto: StatusEffectForcedSleeping
-        time: 6
+        time: 9
         delay: 5
 
 - type: reagent
@@ -347,11 +341,10 @@
   boilingPoint: 255.0
   meltingPoint: 36.0
   metabolisms:
-    Narcotic:
+    Bloodstream:
       effects:
-      - !type:GenericStatusEffect
-        key: Muted
-        component: Muted
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectMuted
         type: Add
         time: 10
 
@@ -367,7 +360,7 @@
   boilingPoint: 255.0
   meltingPoint: 36.0
   metabolisms:
-    Narcotic:
+    Bloodstream:
       effects:
       - !type:PopupMessage
         type: Local
@@ -394,9 +387,9 @@
           min: 20
         probability: 0.03
         #If anyone wants to add a light dimming or grayscale effect when under 20u, be my guest
-      - !type:GenericStatusEffect
-        key: TemporaryBlindness
-        component: TemporaryBlindness
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectBlindness
+        type: Add
         conditions:
         - !type:ReagentCondition
           reagent: NorepinephricAcid
@@ -415,7 +408,7 @@
   boilingPoint: 255.0
   meltingPoint: 36.0
   metabolisms:
-    Narcotic:
+    Bloodstream:
       effects:
       - !type:PopupMessage
         type: Local
@@ -447,9 +440,9 @@
       - !type:Emote
         emote: Cough
         probability: 0.08
-      - !type:GenericStatusEffect
-        key: TemporaryBlindness
-        component: TemporaryBlindness
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectBlindness
+        type: Add
         conditions:
         - !type:ReagentCondition
           reagent: TearGas
@@ -464,6 +457,112 @@
           min: 4
 
 - type: reagent
+  id: StrawberryIce
+  name: reagent-name-StrawberryIce
+  group: Narcotics
+  desc: reagent-desc-StrawberryIce
+  physicalDesc: reagent-physical-desc-fizzy
+  flavor: fizzy
+  color: "#FF36AE"
+  metabolisms:
+    Digestion:
+      metabolismRate: 1.0
+      effects:
+      # OD
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: StrawberryIce
+          min: 20
+        damage:
+          types:
+            Cellular: 1.5
+            Poison: 1.5
+      # Bad effect
+      - !type:HealthChange
+        damage:
+          types:
+            Cellular: 0.05
+      - !type:AdjustReagent # TODO: MAKE THIS USE METABOLITES INSTEAD!!!
+        reagent: Hydroxysomnolene
+        amount: 1
+
+      # Main effects
+      - !type:MovementSpeedModifier
+        walkSpeedModifier: 1.50
+        sprintSpeedModifier: 1.50
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectDesoxyStamina # You are on Ice. You keep going.
+        time: 10
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectAdrenaline
+        time: 10
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectPainNumbness
+        time: 10
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectDrowsiness
+        time: null
+        type: Remove
+      - !type:ResetNarcolepsy
+        conditions:
+        - !type:ReagentCondition
+          reagent: StrawberryIce
+          min: 10
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectSeeingRainbow
+        time: 10
+      # Side effects
+      - !type:GenericStatusEffect
+        key: Stutter
+        component: StutteringAccent
+      - !type:Jitter
+
+- type: reagent
+  id: Hydroxysomnolene
+  name: reagent-name-Hydroxysomnolene
+  group: Toxins
+  desc: reagent-desc-Hydroxysomnolene
+  physicalDesc: reagent-physical-desc-gloopy
+  flavor: bitter
+  color: "#b51472"
+  metabolisms:
+    Digestion: # TODO: Make this metabolize as a metabolite!
+      effects:
+      # Slow
+      - !type:MovementSpeedModifier
+        conditions:
+        - !type:ReagentCondition
+          reagent: StrawberryIce
+          max: 0.1
+        walkSpeedModifier: 0.65
+        sprintSpeedModifier: 0.65
+
+      # Sleepy
+      - !type:ModifyStatusEffect
+        conditions:
+        - !type:ReagentCondition
+          reagent: StrawberryIce
+          max: 0.1
+        effectProto: StatusEffectDrowsiness
+        time: 2
+        type: Add
+
+      # Needs more strawberry Ice!
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentCondition
+          reagent: StrawberryIce
+          max: 0.1
+        type: Local
+        visualType: MediumCaution
+        messages:
+        - hydroxysomnolene-effect-flavor
+        - hydroxysomnolene-effect-another-hit
+        - hydroxysomnolene-effect-sluggish
+        probability: 0.15
+
+- type: reagent
   id: Happiness
   name: reagent-name-happiness
   group: Narcotics
@@ -472,11 +571,11 @@
   flavor: paintthinner
   color: "#EE35FF"
   metabolisms:
-    Narcotic:
+    Bloodstream:
       effects:
       - !type:Emote
         emote: Laugh
-        showInChat: true
+        showInChat: false
         probability: 0.1
         conditions:
         - !type:ReagentCondition
@@ -484,7 +583,7 @@
           max: 20
       - !type:Emote
         emote: Whistle
-        showInChat: true
+        showInChat: false
         probability: 0.1
         conditions:
         - !type:ReagentCondition
@@ -492,7 +591,7 @@
           max: 20
       - !type:Emote
         emote: Crying
-        showInChat: true
+        showInChat: false
         probability: 0.1
         conditions:
         - !type:ReagentCondition

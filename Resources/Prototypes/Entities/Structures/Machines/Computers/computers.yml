@@ -34,10 +34,6 @@
           2: { state: alert-1 }
           3: { state: alert-2 }
           4: { state: alert-2 }
-      enum.WiresVisuals.MaintenancePanelState:
-        enum.WiresVisualLayers.MaintenancePanel:
-          True: { visible: false }
-          False: { visible: true }
   - type: AtmosAlertsComputer
   - type: ActivatableUI
     singleUser: true
@@ -52,6 +48,7 @@
     guides:
     - AtmosphericAlertsComputer
     - DeviceMonitoringAndControl
+  - type: AmbientMusicMarkerEngineering
 
 - type: entity
   parent: BaseComputerAiAccess
@@ -130,8 +127,6 @@
         enum.WiresUiKey.Key:
           type: WiresBoundUserInterface
   - type: RadarConsole
-  - type: WorldLoader
-    radius: 256
   - type: PointLight
     radius: 1.5
     energy: 4.0
@@ -200,8 +195,6 @@
       - Syndicate
   - type: RadarConsole
     maxRange: 384
-  - type: WorldLoader
-    radius: 1536
   - type: PointLight
     radius: 1.5
     energy: 4.0
@@ -283,6 +276,7 @@
     allowedFlags:
       - Hide
       - HideLabel
+    hideOnInit: true
   - type: ActivatableUI
     key: enum.IFFConsoleUiKey.Key
   - type: UserInterface
@@ -335,6 +329,7 @@
         type: PowerMonitoringConsoleBoundUserInterface
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
+  - type: AmbientMusicMarkerEngineering
 
 - type: entity
   parent: BaseComputerAiAccess
@@ -360,6 +355,7 @@
     color: "#1f8c28"
   - type: Computer
     board: MedicalRecordsComputerCircuitboard
+  - type: AmbientMusicMarkerMedical
 
 - type: entity
   parent: BaseComputerAiAccess
@@ -463,7 +459,106 @@
     receiveFrequencyId: CrewMonitor
   - type: WirelessNetworkConnection
     range: 1200
+  - type: AmbientMusicMarkerMedical
 
+- type: entity
+  parent: BaseComputerAiAccess
+  id: ComputerStationTeleportersControl
+  name: station teleporters control console
+  description: Used to monitor station teleport system operations.
+  components:
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: teleporters_station
+    - map: ["computerLayerKeys"]
+      state: telesci_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#3493c2"
+  - type: Computer
+    board: StationTeleportersControlCircuitboard
+  - type: ActivatableUIRequiresAccess
+  - type: ActivatableUI
+    key: enum.StationTeleporterConsoleUIKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.StationTeleporterConsoleUIKey.Key:
+        type: StationTeleporterConsoleBoundUserInterface
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: StationTeleporterConsole
+    portalColor: "#81ddeb"
+  - type: Storage
+    grid:
+    - 0,0,4,2
+    maxItemSize: Small
+    openOnActivate: false
+    storageOpenSound: /Audio/Machines/door_lock_off.ogg
+    storageCloseSound: /Audio/Machines/door_lock_on.ogg
+    storageInsertSound: /Audio/Machines/id_insert.ogg
+    storageRemoveSound: /Audio/Machines/id_swipe.ogg
+    whitelist:
+      tags:
+      - FitInTeleporterConsole
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        showEnts: False
+        occludes: True
+        ents: []
+      board: !type:Container
+        showEnts: False
+        occludes: True
+        ents: []
+  - type: AccessReader
+    access: [["Command"]]
+  - type: Lock
+    unlockOnClick: false
+
+- type: entity
+  parent: ComputerStationTeleportersControl
+  id: ComputerStationTeleportersControlFilled
+  suffix: Autofilled, Nanotrasen Network
+  components:
+  - type: StationTeleporterConsole
+    autoLinkKey: Nanotrasen
+  
+- type: entity
+  parent: ComputerStationTeleportersControl
+  id: ComputerSyndicateTeleportersControl
+  name: syndicate teleporters control console
+  components:
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: teleporters_syndicate
+    - map: ["computerLayerKeys"]
+      state: syndie_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: PointLight
+    color: "#c61414"
+  - type: Computer
+    board: SyndicateTeleportersControlCircuitboard
+  - type: AccessReader
+    access: [["SyndicateAgent"]]
+  - type: StationTeleporterConsole
+    portalColor: "#c61414"
+  
 - type: entity
   parent: BaseComputerAiAccess
   id: ComputerResearchAndDevelopment
@@ -499,7 +594,10 @@
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
   - type: ApcPowerReceiver
-    powerLoad: 1000
+    powerLoad: 50
+  - type: PowerState
+    idlePowerDraw: 50
+    workingPowerDraw: 1000
   - type: Computer
     board: ResearchComputerCircuitboard
   - type: AccessReader
@@ -550,7 +648,10 @@
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
   - type: ApcPowerReceiver
-    powerLoad: 1000
+    powerLoad: 50
+  - type: PowerState
+    idlePowerDraw: 50
+    workingPowerDraw: 1000
   - type: Computer
     board: AnalysisComputerCircuitboard
   - type: PointLight
@@ -630,14 +731,13 @@
   name: body scanner computer
   description: A body scanner.
   components:
-  - type: ApcPowerReceiver
-    powerLoad: 500
   - type: Computer
     board: BodyScannerComputerCircuitboard
   - type: PointLight
     radius: 1.5
     energy: 4.0
     color: "#1f8c28"
+  - type: AmbientMusicMarkerMedical
 
 - type: entity
   parent: BaseComputerAiAccess
@@ -678,9 +778,6 @@
     radius: 1.5
     energy: 4.0
     color: "#3c5eb5"
-  - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: StructuralMetallicStrong
 
 - type: entity
   parent: ComputerComms
@@ -939,6 +1036,7 @@
     color: "#c9c042"
   - type: AccessReader
     access: [["Engineering"]]
+  - type: AmbientMusicMarkerEngineering
 
 - type: entity
   id: ComputerCargoOrdersMedical
@@ -972,6 +1070,7 @@
     color: "#41e0fc"
   - type: AccessReader
     access: [["Medical"]]
+  - type: AmbientMusicMarkerMedical
 
 - type: entity
   id: ComputerCargoOrdersScience
@@ -1171,8 +1270,6 @@
       state: generic_keys
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
-  - type: ApcPowerReceiver
-    powerLoad: 3100 #We want this to fail first so I transferred most of the scanner and pod's power here. (3500 in total)
   - type: Computer
     board: CloningConsoleComputerCircuitboard
   - type: PointLight
@@ -1195,9 +1292,6 @@
   - type: Speech
     speechVerb: Robotic
     speechSounds: Pai
-  - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: StructuralMetallicStrong
   - type: GuideHelp
     guides:
     - Cloning
@@ -1265,10 +1359,6 @@
             False: { visible: false }
           computerLayerKeys:
             True: { visible: true, shader: unshaded }
-            False: { visible: true }
-        enum.WiresVisuals.MaintenancePanelState:
-          enum.WiresVisualLayers.MaintenancePanel:
-            True: { visible: false }
             False: { visible: true }
     - type: SalvageExpeditionConsole
     - type: ActivatableUI
@@ -1542,7 +1632,11 @@
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
   - type: ApcPowerReceiver
-    powerLoad: 1000
+    powerLoad: 5
+  - type: PowerState
+    idlePowerDraw: 5
+    workingPowerDraw: 1000
+  - type: UIPowerState
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: RoboticsConsole
@@ -1587,7 +1681,10 @@
     channels:
     - Xenoborg
   - type: ApcPowerReceiver
-    powerLoad: 1000
+    powerLoad: 50
+  - type: PowerState
+    idlePowerDraw: 50
+    workingPowerDraw: 1000
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: Mothership
@@ -1614,7 +1711,10 @@
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
   - type: ApcPowerReceiver
-    powerLoad: 1000
+    powerLoad: 50
+  - type: PowerState
+    idlePowerDraw: 50
+    workingPowerDraw: 1000
   - type: Computer
     board: StationAiUploadCircuitboard
   - type: AccessReader
@@ -1685,12 +1785,11 @@
           Occupied: { state: ai-fixer-full }
           Rebooting: { state: ai-fixer-404 }
           Dead: { state: ai-fixer-404 }
-      enum.WiresVisuals.MaintenancePanelState:
-        enum.WiresVisualLayers.MaintenancePanel:
-          True: { visible: false }
-          False: { visible: true }
   - type: ApcPowerReceiver
-    powerLoad: 1000
+    powerLoad: 50
+  - type: PowerState
+    idlePowerDraw: 50
+    workingPowerDraw: 1000
   - type: Computer
     board: StationAiFixerCircuitboard
   - type: AccessReader
@@ -1725,3 +1824,41 @@
         type: StationAiFixerConsoleBoundUserInterface
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
+
+- type: entity
+  parent: BaseComputer
+  id: ComputerNukieDelivery
+  name: syndicate delivery computer
+  description: "A computer that can bluespace in certain equipment for Nuclear Operations. \nThe circuitboard is integrated into the frame and can't be recovered if deconstructed."
+  components:
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: request-syndie
+    - map: ["computerLayerKeys"]
+      state: syndie_generic_keys
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  # - type: Computer
+  #   board: SyndicateCommsComputerCircuitboard
+  - type: Anchorable
+    flags:
+    - Anchorable # No taking the console along!
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#f71713"
+  - type: UserInterface
+    interfaces:
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
+  - type: ActivatableUI
+    key: enum.StoreUiKey.Key
+  - type: Store
+    name: store-preset-name-nukie-delivery
+    categories:
+    - NukieDelivery

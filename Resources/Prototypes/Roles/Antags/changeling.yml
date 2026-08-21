@@ -2,5 +2,49 @@
   id: Changeling
   name: roles-antag-changeling-name
   antagonist: true
-  setPreference: false # TODO: set this to true once Changeling exits WIP status
+  setPreference: true
   objective: roles-antag-changeling-objective
+  guides: [ Changelings ]
+  requirements:
+  - !type:OverallPlaytimeRequirement
+    time: 5h
+
+- type: antagSpecifier
+  parent: RestrictedAntag
+  id: Changeling
+  prefRoles: [ Changeling ]
+  briefing:
+    text: changeling-role-greeting
+    color: Red
+    sound: /Audio/Ambience/Antag/changeling_start.ogg
+  components: # When updating components, remember to copy the changes over to MobLing !!!!!
+  - type: ChangelingDevour
+  - type: ChangelingIdentity
+  - type: ChangelingTransform
+  - type: AddMetabolism
+    addedMetabolizer: Changeling
+  - type: DestructionResistance
+  - type: RevolutionaryImmune
+  - type: ZombieImmune
+  - type: ActionGrant
+    removeOnShutdown: false
+    actions:
+    - ActionChangelingStore
+    - ActionChangelingStasis
+  - type: SatiationGrant
+    removeOnShutdown: false
+    satiation:
+      Chemicals:
+        prototype: ChemicalsChangeling
+  - type: Store
+    name: store-preset-name-changeling
+    categories:
+    - ChangelingStoreCombat
+    - ChangelingStoreStealth
+    - ChangelingStoreUtility
+    currencyWhitelist:
+    - ChangelingDNA
+    balance:
+      ChangelingDNA: 60
+  mindRoles:
+  - MindRoleChangeling

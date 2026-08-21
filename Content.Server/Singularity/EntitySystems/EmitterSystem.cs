@@ -11,6 +11,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Lock;
 using Content.Shared.Popups;
 using Content.Shared.Power;
+using Content.Shared.Power.Components;
 using Content.Shared.Projectiles;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Singularity.EntitySystems;
@@ -18,21 +19,21 @@ using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.Singularity.EntitySystems
 {
-    public sealed class EmitterSystem : SharedEmitterSystem
+    public sealed partial class EmitterSystem : SharedEmitterSystem
     {
-        [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly SharedPopupSystem _popup = default!;
-        [Dependency] private readonly ProjectileSystem _projectile = default!;
-        [Dependency] private readonly GunSystem _gun = default!;
+        [Dependency] private IRobustRandom _random = default!;
+        [Dependency] private IAdminLogManager _adminLogger = default!;
+        [Dependency] private SharedAppearanceSystem _appearance = default!;
+        [Dependency] private SharedPopupSystem _popup = default!;
+        [Dependency] private ProjectileSystem _projectile = default!;
+        [Dependency] private GunSystem _gun = default!;
+        [Dependency] private PowerStateSystem _powerState = default!;
 
         public override void Initialize()
         {
@@ -65,9 +66,10 @@ namespace Content.Server.Singularity.EntitySystems
                 return;
             }
 
+            var isOn = _powerState.GetWorkingState(uid);
             if (TryComp(uid, out PhysicsComponent? phys) && phys.BodyType == BodyType.Static)
             {
-                if (!component.IsOn)
+                if (!isOn)
                 {
                     SwitchOn(uid, component);
                     _popup.PopupEntity(Loc.GetString("comp-emitter-turned-on",
@@ -80,9 +82,10 @@ namespace Content.Server.Singularity.EntitySystems
                         ("target", uid)), uid, args.User);
                 }
 
+                var stateText = isOn ? "on" : "off";
                 _adminLogger.Add(LogType.FieldGeneration,
-                    component.IsOn ? LogImpact.Medium : LogImpact.High,
-                    $"{ToPrettyString(args.User):player} toggled {ToPrettyString(uid):emitter}");
+                    isOn ? LogImpact.Medium : LogImpact.High,
+                    $"{ToPrettyString(args.User):player} toggled {ToPrettyString(uid):emitter} to {stateText}");
                 args.Handled = true;
             }
             else
@@ -97,10 +100,8 @@ namespace Content.Server.Singularity.EntitySystems
             EmitterComponent component,
             ref PowerConsumerReceivedChanged args)
         {
-            if (!component.IsOn)
-            {
+            if (!_powerState.GetWorkingState(uid))
                 return;
-            }
 
             if (args.ReceivedPower < args.DrawRate)
             {
@@ -114,10 +115,8 @@ namespace Content.Server.Singularity.EntitySystems
 
         private void OnApcChanged(EntityUid uid, EmitterComponent component, ref PowerChangedEvent args)
         {
-            if (!component.IsOn)
-            {
+            if (!_powerState.GetWorkingState(uid))
                 return;
-            }
 
             if (!args.Powered)
             {
@@ -131,23 +130,16 @@ namespace Content.Server.Singularity.EntitySystems
 
         public void SwitchOff(EntityUid uid, EmitterComponent component)
         {
-            component.IsOn = false;
-            if (TryComp<PowerConsumerComponent>(uid, out var powerConsumer))
-                powerConsumer.DrawRate = 1; // this needs to be not 0 so that the visuals still work.
-            if (TryComp<ApcPowerReceiverComponent>(uid, out var apcReceiver))
-                apcReceiver.Load = 1;
+            _powerState.SetWorkingState(uid, false);
             PowerOff(uid, component);
             UpdateAppearance(uid, component);
         }
 
         public void SwitchOn(EntityUid uid, EmitterComponent component)
         {
-            component.IsOn = true;
-            if (TryComp<PowerConsumerComponent>(uid, out var powerConsumer))
-                powerConsumer.DrawRate = component.PowerUseActive;
+            _powerState.SetWorkingState(uid, true);
             if (TryComp<ApcPowerReceiverComponent>(uid, out var apcReceiver))
             {
-                apcReceiver.Load = component.PowerUseActive;
                 if (apcReceiver.Powered)
                     PowerOn(uid, component);
             }
@@ -197,7 +189,6 @@ namespace Content.Server.Singularity.EntitySystems
             // Any power-off condition should result in the timer for this method being cancelled
             // and thus not firing
             DebugTools.Assert(component.IsPowered);
-            DebugTools.Assert(component.IsOn);
 
             Fire(uid, component);
 
@@ -232,7 +223,7 @@ namespace Content.Server.Singularity.EntitySystems
 
             var targetPos = new EntityCoordinates(uid, new Vector2(0, -1));
 
-            _gun.Shoot(uid, gunComponent, ent, xform.Coordinates, targetPos, out _);
+            _gun.Shoot((uid, gunComponent), ent, xform.Coordinates, targetPos, out _);
         }
 
         private void UpdateAppearance(EntityUid uid, EmitterComponent component)
@@ -242,7 +233,7 @@ namespace Content.Server.Singularity.EntitySystems
             {
                 state = EmitterVisualState.On;
             }
-            else if (component.IsOn)
+            else if (_powerState.GetWorkingState(uid))
             {
                 state = EmitterVisualState.Underpowered;
             }
@@ -269,7 +260,7 @@ namespace Content.Server.Singularity.EntitySystems
             }
             else if (args.Port == component.TogglePort)
             {
-                if (component.IsOn)
+                if (_powerState.GetWorkingState(uid))
                 {
                     SwitchOff(uid, component);
                 }

@@ -169,7 +169,19 @@
       sprite: Clothing/Back/Satchels/salvage.rsi
 
 - type: entity
-  parent: ClothingBackpackSatchel
+  parent: [ClothingBackpackSatchel, BaseHighlyIllegalContraband]
+  id: ClothingBackpackSatchelNinja
+  name: spider clan satchel
+  description: A robust satchel for stashing your loot.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Satchels/ninja.rsi
+  - type: Storage # Backpack sounds are null due to silent ninja tech
+    storageOpenSound: null
+    storageInsertSound: null
+
+- type: entity
+  parent: ClothingBackpackHoldingBase #Standardized Bluespace Bags
   id: ClothingBackpackSatchelHolding
   name: satchel of holding
   description: A satchel that opens into a localized pocket of bluespace.
@@ -181,12 +193,6 @@
     - state: icon
     - state: icon-unlit
       shader: unshaded
-  - type: Item
-    size: Ginormous
-  - type: Storage
-    maxItemSize: Huge
-    grid:
-    - 0,0,19,9
 
 - type: entity
   parent: ClothingBackpackSatchelHolding
@@ -197,3 +203,7 @@
   components:
   - type: ExplosionResistance
     damageCoefficient: 0
+  - type: Storage
+    maxItemSize: Colossal # Can hold ANYTHING
+    grid:
+    - 0,0,19,9

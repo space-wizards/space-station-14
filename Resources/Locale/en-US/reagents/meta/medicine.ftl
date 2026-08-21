@@ -56,8 +56,12 @@ reagent-desc-phalanximine = An advanced chemical used in the treatment of cancer
 reagent-name-polypyrylium-oligomers = Polypyrylium Oligomers
 reagent-desc-polypyrylium-oligomers = A purple mixture of short polyelectrolyte chains not easily synthesized in the laboratory. Heals asphyxiation and brute damage. Stops bleeding over time.
 
+reagent-name-romerodone = romerodone
+reagent-desc-romerodone = A byproduct of centrifuging zombie blood, perhaps you could make a cure with this.
+
+
 reagent-name-ambuzol = ambuzol
-reagent-desc-ambuzol = A highly engineered substance able to halt the progression of a zombie infection.
+reagent-desc-ambuzol = A highly engineered substance able to cure the zombie infection.
 
 reagent-name-ambuzol-plus = ambuzol plus
 reagent-desc-ambuzol-plus = Further engineered with omnizine, inoculates the living against the infection.
@@ -111,7 +115,7 @@ reagent-name-saline = saline
 reagent-desc-saline = A mixture of salt and water. Commonly used to treat dehydration or low fluid presence in blood.
 
 reagent-name-lacerinol = lacerinol
-reagent-desc-lacerinol = A fairly unreactive chemical that boosts collagen sythesis to incredible levels, healing slash trauma.
+reagent-desc-lacerinol = A fairly unreactive chemical that boosts collagen synthesis to incredible levels, healing slash trauma.
 
 reagent-name-puncturase = puncturase
 reagent-name-puncturase-tranexamic = puncturase & tranexamic
@@ -136,9 +140,6 @@ reagent-desc-opporozidone= A difficult to synthesize cryogenic drug used to rege
 reagent-name-arcryox = arcryox
 reagent-desc-arcryox = A sickeningly blue cryogenics chemical that is able to heal extreme wounds even on the dead. It has trouble stabilizing patients however.
 
-reagent-name-necrosol = necrosol
-reagent-desc-necrosol = A necrotic substance that seems to be able to heal frozen corpses. It can treat and rejuvenate plants when applied in small doses.
-
 reagent-name-aloxadone = aloxadone
 reagent-desc-aloxadone = A cryogenics chemical. Used to treat severe burns and frostbite via regeneration of the affected tissue. Works regardless of the patient being alive or dead.
 
@@ -154,5 +155,5 @@ reagent-desc-potassium-iodide = Will reduce the damaging effects of radiation by
 reagent-name-haloperidol = haloperidol
 reagent-desc-haloperidol = Removes most stimulating and hallucinogenic drugs. Reduces druggy effects and jitteriness. Causes drowsiness.
 
-reagent-name-warfarin = warfarin
-reagent-desc-warfarin = Commonly used as an anticoagulant medication. Causes blood to have difficulty forming clots. Can cause internal bleeding when overdosed.
+reagent-name-heparin = heparin
+reagent-desc-heparin = Commonly used as an anticoagulant medication. Causes blood to have difficulty forming clots. Can cause internal bleeding when overdosed.

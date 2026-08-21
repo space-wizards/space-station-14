@@ -1,4 +1,4 @@
-﻿name: Publish Testing
+name: Publish Testing
 
 concurrency:
   group: publish-testing
@@ -14,13 +14,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3.6.0
+    - uses: actions/checkout@v7
       with:
         submodules: 'recursive'
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v3.2.0
+      uses: actions/setup-dotnet@v5
       with:
-        dotnet-version: 9.0.x
+        dotnet-version: 10.0.x
+
+    - name: Install dependencies
+      run: sudo apt-get install -y python3-paramiko python3-lxml
 
     - name: Get Engine Tag
       run: |
@@ -29,6 +32,17 @@ jobs:
 
     - name: Install dependencies
       run: dotnet restore
+
+    - name: Update changelog
+      run: |
+        dotnet tool install --global SpaceWizards.ChangelogTool --version 1.0.7
+        ss14-changelog update -d Resources/Changelog
+      env:
+        REPO: ${{ github.repository }}
+        BRANCH: master
+        CHANGELOG_REPO_PATH: Resources/Changelog
+        EXTRA_CATEGORIES: Admin,Maps,Rules
+        GITHUB_TOKEN: ${{ secrets.CL_ACCESS_TOKEN }}
 
     - name: Build Packaging
       run: dotnet build Content.Packaging --configuration Release --no-restore /m
@@ -44,3 +58,9 @@ jobs:
       env:
         PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
         GITHUB_REPOSITORY: ${{ vars.GITHUB_REPOSITORY }}
+
+    - name: Publish changelog (RSS)
+      continue-on-error: true
+      run: Tools/actions_changelog_rss.py
+      env:
+        CHANGELOG_RSS_KEY: ${{ secrets.CHANGELOG_RSS_KEY }}

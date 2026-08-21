@@ -80,6 +80,14 @@ stack-artifact-fragment = artifact {$amount ->
     [1] fragment
     *[other] fragments
 }
+stack-xenoborg-crystal = xenoborg {$amount ->
+    [1] crystal
+    *[other] crystals
+}
+stack-conveyor-belt = {$amount ->
+    [1] conveyor belt
+    *[other] conveyor belts
+}
 
 # best materials
 stack-ground-tobacco = ground tobacco
@@ -134,28 +142,37 @@ stack-dark-tile = dark tile
 stack-dark-steel-diagonal-mini-tile = dark steel diagonal mini tile
 stack-dark-steel-diagonal-tile = dark steel diagonal tile
 stack-dark-steel-herringbone = dark steel herringbone
+stack-dark-steel-horizontal-slats-tile-bordered = dark steel bordered horizontal slat tile
 stack-dark-steel-mini-tile = dark steel mini tile
 stack-dark-steel-mono-tile = dark steel mono tile
 stack-dark-steel-pavement = dark steel pavement
 stack-dark-steel-vertical-pavement = dark steel vertical pavement
+stack-dark-steel-vertical-slats-tile-bordered = dark steel bordered vertical slat tile
+stack-dark-steel-slats-tile-continuous = dark steel continuous slat tile
 stack-offset-dark-steel-tile = offset dark steel tile
 stack-offset-steel-tile = offset steel tile
 stack-steel-diagonal-mini-tile = steel diagonal mini tile
 stack-steel-diagonal-tile = steel diagonal tile
 stack-steel-herringbone = steel herringbone
+stack-steel-horizontal-slats-tile-bordered = steel bordered horizontal slat tile
 stack-steel-mini-tile = steel mini tile
 stack-steel-mono-tile = steel mono tile
 stack-steel-pavement = steel pavement
 stack-steel-vertical-pavement = steel vertical pavement
+stack-steel-vertical-slats-tile-bordered = steel bordered vertical slat tile
+stack-steel-slats-tile-continuous = steel continuous slat tile
 stack-white-tile = white tile
 stack-offset-white-steel-tile = offset white steel tile
 stack-white-steel-diagonal-mini-tile = white steel diagonal mini tile
 stack-white-steel-diagonal-tile = white steel diagonal tile
 stack-white-steel-herringbone = white steel herringbone
+stack-white-steel-horizontal-slats-tile-bordered = white steel bordered horizontal slat tile
 stack-white-steel-mini-tile = white steel mini tile
 stack-white-steel-mono-tile = white steel mono tile
 stack-white-steel-pavement = white steel pavement
 stack-white-steel-vertical-pavement = white steel vertical pavement
+stack-white-steel-vertical-slats-tile-bordered = white steel bordered vertical slat tile
+stack-white-steel-slats-tile-continuous = white steel continuous slat tile
 stack-steel-dark-checker-tile = steel dark checker tile
 stack-steel-light-checker-tile = steel light checker tile
 stack-steel-tile = steel tile
@@ -217,6 +234,9 @@ stack-gray-concrete-smooth = gray concrete smooth
 stack-old-concrete-tile = old concrete tile
 stack-old-concrete-mono-tile = old concrete mono tile
 stack-old-concrete-smooth = old concrete smooth
+stack-ironsand-concrete-tile = ironsand concrete tile
+stack-ironsand-concrete-mono-tile = ironsand concrete mono tile
+stack-ironsand-concrete-smooth = ironsand concrete smooth
 stack-silver-floor-tile = silver floor tile
 stack-bcircuit-floor-tile = bcircuit floor tile
 stack-grass-floor-tile = grass floor tile
@@ -238,13 +258,21 @@ stack-large-wood-floor = large wood floor
 stack-red-circuit-floor = red-circuit floor
 stack-asteroid-astro-sand-floor = asteroid astro-sand floor
 stack-desert-astro-sand-floor = desert astro-sand floor
-stack-xeno-floor = xeno floor
-stack-xeno-steel = xeno steel tile
-stack-xeno-steel-corner = xeno steel corner tile
-stack-xenoborg = xenoborg tile
-stack-xeno-maint = xeno techmaint
-stack-dark-squiggly = dark steel squiggly tile
 stack-white-marble-floor = white marble floor
+stack-white-marble-mono-floor = white marble mono floor
 stack-dark-marble-floor = dark marble floor
+stack-dark-marble-mono-floor = dark marble mono floor
 stack-plasma-marble-floor = plasmarble floor
 stack-uranium-marble-floor = uranium marble floor
+stack-astro-ironsand-floor = astro-ironsand floor
+stack-astro-ironsand-floor-borderless = borderless astro-ironsand floor
+stack-exo-hull-floor = exodermis hull floor
+stack-exo-viscera-floor = exodermis viscera floor
+stack-exo-techmaint-floor = exodermis techmaint floor
+stack-exo-horizontal-floor = exodermis horizontal floor
+stack-exo-vertical-floor = exodermis vertical floor
+stack-exo-corner-ne-floor = exodermis NE corner floor
+stack-exo-corner-nw-floor = exodermis NW corner floor
+stack-exo-corner-se-floor = exodermis SE corner floor
+stack-exo-corner-sw-floor = exodermis SW corner floor
+stack-exo-borg-floor = mechadermis floor

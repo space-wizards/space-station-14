@@ -1,0 +1,83 @@
+using Content.Shared.Administration.Logs;
+using Content.Shared.Botany.Components;
+using Content.Shared.Botany.Events;
+using Content.Shared.Botany.Items.Components;
+using Content.Shared.Botany.Systems;
+using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Database;
+using Content.Shared.Interaction;
+using Content.Shared.Labels.Components;
+using Content.Shared.Popups;
+
+namespace Content.Shared.Botany.Items.Systems;
+
+/// <summary>
+/// System for taking a sample of a plant.
+/// </summary>
+public sealed partial class BotanySeedSystem : EntitySystem
+{
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private BotanySystem _botany = default!;
+    [Dependency] private ItemSlotsSystem _itemSlots = default!;
+    [Dependency] private PlantTraySystem _plantTray = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+
+    [Dependency] private EntityQuery<PlantDataComponent> _dataQuery = default!;
+    [Dependency] private EntityQuery<PlantTrayComponent> _trayQuery = default!;
+    [Dependency] private EntityQuery<PaperLabelComponent> _labelQuery = default!;
+
+    [SubscribeLocalEvent]
+    private void OnAfterInteract(Entity<SeedComponent> ent, ref AfterInteractEvent args)
+    {
+        if (args.Handled || !args.CanReach || !_trayQuery.HasComp(args.Target))
+            return;
+
+        var ev = new PlantingSeedAttemptEvent(ent, args.User);
+        RaiseLocalEvent(args.Target.Value, ref ev);
+
+        args.Handled = true;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnPlantingSeedAttempt(Entity<PlantTrayComponent> ent, ref PlantingSeedAttemptEvent args)
+    {
+        if (args.Cancelled)
+            return;
+
+        if (_plantTray.TryGetPlant(ent.AsNullable(), out _))
+        {
+            _popup.PopupCursor(
+                Loc.GetString("plant-component-already-seeded-popup", ("name", MetaData(ent.Owner).EntityName)),
+                args.User,
+                PopupType.Medium);
+            return;
+        }
+
+        var plantUid = PredictedSpawnAtPosition(args.Seed.Comp.PlantProtoId, Transform(ent.Owner).Coordinates);
+        _botany.ApplyPlantSnapshotData(args.Seed.Comp.PlantData, plantUid);
+
+        if (!_dataQuery.TryComp(plantUid, out var plantData))
+            return;
+
+        var name = Loc.GetString(plantData.Name);
+        var noun = Loc.GetString(plantData.Noun);
+        _popup.PopupCursor(Loc.GetString("plant-component-plant-success-popup",
+                ("seedName", name),
+                ("seedNoun", noun)),
+            args.User,
+            PopupType.Medium);
+
+        if (_labelQuery.TryComp(args.Seed, out var paperLabel))
+            _itemSlots.TryEjectToHands(args.Seed, paperLabel.LabelSlot, args.User);
+
+        _plantTray.PlantingPlantInTray(ent.Owner, plantUid, args.Seed.Comp.HealthOverride);
+        PredictedQueueDel(args.Seed);
+
+        if (plantData.PlantLogImpact != null)
+        {
+            _adminLogger.Add(LogType.Botany,
+                plantData.PlantLogImpact.Value,
+                $"{ToPrettyString(args.User):player} planted {Loc.GetString(plantData.Name):seed} at Pos:{Transform(ent.Owner).Coordinates}.");
+        }
+    }
+}

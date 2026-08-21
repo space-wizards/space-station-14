@@ -1,8 +1,9 @@
 ﻿- type: entity
+  abstract: true
+  parent: StructureHealthContainerFlimsy
   id: BaseBigBox
   name: cardboard box #it's still just a box
   description: Huh? Just a box...
-  abstract: true
   components:
     - type: Transform
       noRot: true
@@ -22,6 +23,9 @@
             - MobLayer
           hard: true
     - type: Pullable
+    - type: Vehicle
+    - type: ContainerVehicle
+      containerId: entity_storage
     - type: CardboardBox
       effectSound: /Audio/Effects/chime.ogg
     - type: InputMover
@@ -34,7 +38,21 @@
       containers:
         entity_storage: !type:Container
     - type: Damageable
-      damageContainer: Box
+      damageModifierSet: CardboardMod
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 20
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            path: /Audio/Effects/poster_broken.ogg
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            MaterialCardboard1:
+              min: 1
+              max: 2
     - type: Sprite
       noRot: true
       sprite: Structures/Storage/closet.rsi
@@ -56,6 +74,11 @@
       containers:
         - entity_storage
     - type: GravityAffected
+    - type: MovementSpeedModifier
+      weightlessModifier: 0
+      acceleration: 2
+      friction: 2
+      frictionNoInput: 6
 
 - type: entity
   id: StealthBox
@@ -64,13 +87,14 @@
   description: Kept ya waiting, huh?
   components:
     - type: Damageable
-      damageModifierSet: FlimsyMetallic #Syndicate boxes should have a bit of protection
+      damageModifierSet: WoodMod #Syndicate boxes should have a bit of protection
     - type: CardboardBox
       quiet: true
     - type: Stealth
       hadOutline: true
+      shimmerFrequency: 0.05
     - type: StealthOnMove
-      passiveVisibilityRate: -0.37
+      passiveVisibilityRate: -1 # very useful for going around the station concealed, if you start jitterstrafing you get seen
       movementVisibilityRate: 0.20
 
 - type: entity
@@ -78,15 +102,6 @@
   parent: BaseBigBox
   components:
   - type: InteractionOutline
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 15
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-
 
 #For admin spawning only
 - type: entity

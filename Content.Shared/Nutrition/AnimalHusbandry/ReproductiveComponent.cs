@@ -1,4 +1,5 @@
-﻿using Content.Shared.Storage;
+﻿using Content.Shared.Nutrition.Prototypes;
+using Content.Shared.Storage;
 using Content.Shared.Whitelist;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
@@ -85,6 +86,18 @@ public sealed partial class ReproductiveComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float HungerPerBirth = 75f;
+
+    /// <summary>
+    /// If the entity's hunger satiation is below this value, it cannot reproduce.
+    /// </summary>
+    [DataField]
+    public SatiationValue? MinHungerThreshold;
+
+    /// <summary>
+    /// If the entity's thirst satiation is below this value, it cannot reproduce.
+    /// </summary>
+    [DataField]
+    public SatiationValue? MinThirstThreshold;
 
     /// <summary>
     /// Popup shown when an entity gives birth.

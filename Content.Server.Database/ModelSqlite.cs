@@ -58,13 +58,7 @@ namespace Content.Server.Database
             );
 
             modelBuilder
-                .Entity<ServerBan>()
-                .Property(e => e.Address)
-                .HasColumnType("TEXT")
-                .HasConversion(ipMaskConverter);
-
-            modelBuilder
-                .Entity<ServerRoleBan>()
+                .Entity<BanAddress>()
                 .Property(e => e.Address)
                 .HasColumnType("TEXT")
                 .HasConversion(ipMaskConverter);
@@ -83,6 +77,10 @@ namespace Content.Server.Database
 
             modelBuilder.Entity<Profile>()
                 .Property(log => log.Markings)
+                .HasConversion(jsonByteArrayConverter);
+
+            modelBuilder.Entity<Profile>()
+                .Property(log => log.OrganMarkings)
                 .HasConversion(jsonByteArrayConverter);
 
             // EF core can make this automatically unique on sqlite but not psql.

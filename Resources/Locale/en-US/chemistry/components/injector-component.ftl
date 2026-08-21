@@ -8,9 +8,9 @@ injector-toggle-verb-text = Toggle Injector Mode
 
 ## Entity
 
-injector-component-inject-mode-name = Inject
-injector-component-draw-mode-name = Draw
-injector-component-dynamic-mode-name = Dynamic
+injector-component-inject-mode-name = inject
+injector-component-draw-mode-name = draw
+injector-component-dynamic-mode-name = dynamic
 injector-component-mode-changed-text = Now {$mode}
 injector-component-transfer-success-message = You transfer {$amount}u into {THE($target)}.
 injector-component-transfer-success-message-self = You transfer {$amount}u into yourself.
@@ -45,6 +45,8 @@ injector-component-needle-injecting-user = You start injecting the needle.
 injector-component-needle-injecting-target = {CAPITALIZE(THE($user))} is trying to inject a needle into you!
 injector-component-needle-drawing-user = You start drawing the needle.
 injector-component-needle-drawing-target = {CAPITALIZE(THE($user))} is trying to use a needle to draw from you!
+injector-component-spray-injecting-user = You start preparing the spray nozzle.
+injector-component-spray-injecting-target = {CAPITALIZE(THE($user))} is trying to place a spray nozzle onto you!
 
 ## Target Popup Success messages
 injector-component-feel-prick-message = You feel a tiny prick!

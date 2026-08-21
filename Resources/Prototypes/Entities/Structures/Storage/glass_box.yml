@@ -27,7 +27,7 @@
     delay: 4
 
 - type: entity
-  parent: [BaseGlassBox, BaseItemCabinetGlass]
+  parent: [BaseGlassBox, BaseItemCabinetGlass, StructureHealthContainer]
   id: GlassBox
   name: glass box
   description: A sturdy showcase for an expensive exhibit.
@@ -69,33 +69,17 @@
     trackAllDamage: true
     damageOverlay:
       sprite: Structures/Storage/glassbox.rsi
-  - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: Glass
   - type: MeleeSound
     soundGroups:
       Brute:
         collection: GlassSmash
+  - type: Damageable
+    damageModifierSet: GlassMod
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
-        !type:DamageTrigger
-        damage: 300
-      behaviors:
-      - !type:EmptyAllContainersBehaviour
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WindowShatter
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Machines/warning_buzzer.ogg
-          params:
-            volume: 10
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
-        damage: 150
+        damage: 100
       behaviors:
       - !type:EmptyAllContainersBehaviour
       - !type:PlaySoundBehavior
@@ -113,8 +97,6 @@
             max: 2
       - !type:ChangeConstructionNodeBehavior
         node: brokenGlassBox
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
 
 - type: entity
   parent: GlassBox
@@ -161,7 +143,7 @@
   suffix: AntiqueLaser, Filled, Open
 
 - type: entity
-  parent: BaseGlassBox
+  parent: [ BaseGlassBox, StructureHealthContainerWeak ]
   id: GlassBoxFrame
   name: glass box frame
   description: A glassless sturdy showcase for an expensive exhibit.
@@ -175,21 +157,12 @@
     node: boxMissingWires
   - type: Climbable
   - type: Damageable
-    damageModifierSet: Wood
+    damageModifierSet: WoodMod
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WoodDestroy
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 60
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -199,8 +172,6 @@
           MaterialWoodPlank1:
             min: 2
             max: 5
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
 
 - type: entity
   parent: GlassBoxFrame
@@ -218,29 +189,12 @@
     node: brokenGlassBox
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WoodDestroy
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 60
       behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WoodDestroy
       - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlassReinforced:
             min: 1
             max: 1
-          MaterialWoodPlank1:
-            min: 2
-            max: 5
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
