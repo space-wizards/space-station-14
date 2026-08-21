@@ -169,7 +169,6 @@ public abstract partial class SharedJetpackSystem : EntitySystem
 
         if (enabled)
         {
-            // If the user is already using another jetpack, disable it first.
             if (TryComp<JetpackUserComponent>(user, out var userComp) &&
                 userComp.Jetpack != ent.Owner &&
                 _jetpackQuery.TryGetComponent(userComp.Jetpack, out var oldJetpack))
