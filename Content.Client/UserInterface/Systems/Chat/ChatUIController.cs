@@ -70,7 +70,7 @@ public sealed partial class ChatUIController : UIController
     private static readonly ProtoId<ColorPalettePrototype> ChatNamePalette = "ChatNames";
     private string[] _chatNameColors = default!;
     private bool _chatNameColorsEnabled;
-    public bool ChatNameColorsEnabled => _chatNameColorsEnabled;
+    public bool ChatNameColorsEnabled { get; private set; }
 
     private ISawmill _sawmill = default!;
 
@@ -187,7 +187,7 @@ public sealed partial class ChatUIController : UIController
         SubscribeNetworkEvent<DamageForceSayEvent>(OnDamageForceSay);
         _config.OnValueChanged(CCVars.ChatEnableColorName, (value) => { _chatNameColorsEnabled = value; });
         _chatNameColorsEnabled = _config.GetCVar(CCVars.ChatEnableColorName);
-
+        ChatNameColorsEnabled = _chatNameColorsEnabled;
         _speechBubbleRoot = new LayoutContainer();
 
         UpdateChannelPermissions();
