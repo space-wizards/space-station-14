@@ -1,11 +1,11 @@
 ﻿# base
 
 - type: entity
-  id: BaseVendingMachine
+  abstract: true
   parent: [ BaseMachinePowered, BaseMachineDestructible ]
+  id: BaseVendingMachine
   name: vending machine
   description: Just add capitalism!
-  abstract: true
   components:
   - type: ActionGrant
     actions:
@@ -36,19 +36,19 @@
         layer:
         - MachineLayer
         density: 200
+  - type: Damageable
+    damageModifierSet: GlassReinforcedMod
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
         damage: 175
-      behaviors:
+      behaviors: &BehaviorVendorDestroy
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak
     - trigger: !type:DamageTrigger
         damage: 75
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Breakage" ]
+      behaviors: &BehaviorVendorBreak
       - !type:EjectVendorItems
   - type: Repairable
     doAfterDelay: 8
@@ -115,8 +115,8 @@
     normalState: normal-unshaded
 
 - type: entity
+  parent: [ BaseWallmountMachine, StructureHealthMachineWeak ]
   id: VendingMachineWallmount
-  parent: BaseWallmountMachine
   name: vending machine
   abstract: true
   components:
@@ -128,29 +128,18 @@
     enabled: false
     sound:
       path: /Audio/Ambience/Objects/vending_machine_hum.ogg
+  - type: Damageable
+    damageModifierSet: GlassReinforcedMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
         damage: 100
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Breakage"]
-      - !type:EjectVendorItems
+      behaviors: *BehaviorVendorDestroy
     - trigger:
         !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          SheetSteel1:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalGlassBreak
+        damage: 50
+      behaviors: *BehaviorVendorBreak
   - type: Repairable
     doAfterDelay: 8
   - type: ActivatableUI

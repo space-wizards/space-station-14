@@ -22,6 +22,7 @@
   - type: Item
     size: Small
     sprite: Objects/Tools/welder.rsi
+  - type: ItemToggleExaminableStatus
   - type: ItemToggle
     predictable: false
     soundActivate:
@@ -80,7 +81,7 @@
   - type: Tool
     useSound:
       collection: Welder
-    qualities: Welding
+    qualities: [ Welding ]
   - type: Welder
   - type: PointLight
     enabled: false
