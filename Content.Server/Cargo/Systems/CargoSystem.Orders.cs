@@ -26,65 +26,11 @@ public sealed partial class CargoSystem
     [Dependency] private EmagSystem _emag = default!;
     [Dependency] private SharedTransformSystem _transformSystem = default!;
 
-    private void OnInteractUsingCash(Entity<CargoOrderConsoleComponent> ent, ref InteractUsingEvent args)
+    [SubscribeLocalEvent]
+    private void OnInit(Entity<CargoOrderConsoleComponent> ent, ref ComponentInit args)
     {
-        var price = _pricing.GetPrice(args.Used);
-
-        if (price == 0)
-            return;
-
-        var stationUid = _station.GetOwningStation(args.Used);
-
-        if (!TryComp(stationUid, out StationBankAccountComponent? bank))
-            return;
-
-        _audio.PlayPvs(ApproveSound, ent.Owner);
-        UpdateBankAccount((stationUid.Value, bank), (int)price, ent.Comp.Account);
-        QueueDel(args.Used);
-        args.Handled = true;
-    }
-
-    private void OnInteractUsingSlip(
-        Entity<CargoOrderConsoleComponent> ent,
-        ref InteractUsingEvent args,
-        CargoSlipComponent slip
-    )
-    {
-        if (slip.OrderQuantity <= 0)
-            return;
-
-        var stationUid = _station.GetOwningStation(ent);
-
-        if (!TryGetOrderDatabase(stationUid, out var orderDatabase))
-            return;
-
-        if (!ProtoMan.TryIndex(slip.Product, out var product))
-        {
-            Log.Error($"Tried to add invalid cargo product {slip.Product} as order!");
-            return;
-        }
-
-        if (!ent.Comp.AllowedGroups.Contains(product.Group))
-            return;
-
-        var orderId = GenerateOrderId(orderDatabase);
-        var data = new CargoOrderData(orderId, product, slip.OrderQuantity, slip.Requester, slip.Reason, slip.Account);
-
-        if (!TryAddOrder(stationUid.Value, ent.Comp.Account, data, orderDatabase))
-        {
-            PlayDenySound(ent);
-            return;
-        }
-
-        // Log order addition
-        _audio.PlayPvs(ent.Comp.ScanSound, ent);
-        _adminLogger.Add(
-            LogType.Action,
-            LogImpact.Low,
-            $"{ToPrettyString(args.User):user} inserted order slip [orderId:{data.OrderId}, quantity:{data.OrderQuantity}, product:{data.Product}, requester:{data.Requester}, reason:{data.Reason}]"
-        );
-        QueueDel(args.Used);
-        args.Handled = true;
+        var station = _station.GetOwningStation(ent.Owner);
+        UpdateOrderState(ent.Owner, station);
     }
 
     [SubscribeLocalEvent]
@@ -104,13 +50,6 @@ public sealed partial class CargoSystem
     }
 
     [SubscribeLocalEvent]
-    private void OnInit(Entity<CargoOrderConsoleComponent> ent, ref ComponentInit args)
-    {
-        var station = _station.GetOwningStation(ent.Owner);
-        UpdateOrderState(ent.Owner, station);
-    }
-
-    [SubscribeLocalEvent]
     private void OnEmagged(Entity<CargoOrderConsoleComponent> ent, ref GotEmaggedEvent args)
     {
         if (!_emag.CompareFlag(args.Type, EmagType.Interaction))
@@ -122,21 +61,83 @@ public sealed partial class CargoSystem
         args.Handled = true;
     }
 
-    private void UpdateConsole()
+    [SubscribeLocalEvent]
+    private void OnRemoveOrderMessage(Entity<CargoOrderConsoleComponent> ent, ref CargoConsoleRemoveOrderMessage args)
     {
-        var stationQuery = EntityQueryEnumerator<StationBankAccountComponent>();
-        while (stationQuery.MoveNext(out var uid, out var bank))
-        {
-            if (Timing.CurTime < bank.NextIncomeTime)
-                continue;
-            bank.NextIncomeTime += bank.IncomeDelay;
+        var station = _station.GetOwningStation(ent.Owner);
 
-            var balanceToAdd = (int)Math.Round(bank.IncreasePerSecond * bank.IncomeDelay.TotalSeconds);
-            UpdateBankAccount((uid, bank), balanceToAdd, bank.RevenueDistribution);
-        }
+        if (ent.Comp.Mode == CargoOrderConsoleMode.PrintSlip)
+            return;
+
+        if (!TryGetOrderDatabase(station, out var orderDatabase))
+            return;
+
+        if (!TryComp<StationBankAccountComponent>(station, out var bank))
+            return;
+
+        var targetAccount =
+            ent.Comp.Mode == CargoOrderConsoleMode.SendToPrimary ? bank.PrimaryAccount : ent.Comp.Account;
+
+        RemoveOrder(station.Value, targetAccount, args.OrderId, orderDatabase);
     }
 
-    #region Interface
+    [SubscribeLocalEvent]
+    private void OnOrderUIOpened(Entity<CargoOrderConsoleComponent> ent, ref BoundUIOpenedEvent args)
+    {
+        var station = _station.GetOwningStation(ent.Owner);
+        UpdateOrderState(ent.Owner, station);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnAddOrderMessage(Entity<CargoOrderConsoleComponent> ent, ref CargoConsoleAddOrderMessage args)
+    {
+        if (args.Actor is not { Valid: true } player)
+            return;
+
+        if (args.Amount <= 0)
+            return;
+
+        var stationUid = _station.GetOwningStation(ent.Owner);
+
+        if (!TryGetOrderDatabase(stationUid, out var orderDatabase))
+            return;
+
+        if (!TryComp<StationBankAccountComponent>(stationUid, out var bank))
+            return;
+
+        if (!ProtoMan.TryIndex<CargoProductPrototype>(args.CargoProductId, out var product))
+        {
+            Log.Error($"Tried to add invalid cargo product {args.CargoProductId} as order!");
+            return;
+        }
+
+        if (!GetAvailableProducts(ent).Contains(args.CargoProductId))
+            return;
+
+        if (ent.Comp.Mode == CargoOrderConsoleMode.PrintSlip)
+        {
+            OnAddOrderMessageSlipPrinter(ent, args, product);
+            return;
+        }
+
+        var targetAccount =
+            ent.Comp.Mode == CargoOrderConsoleMode.SendToPrimary ? bank.PrimaryAccount : ent.Comp.Account;
+
+        var data = GetOrderData(args, product, GenerateOrderId(orderDatabase), ent.Comp.Account);
+
+        if (!TryAddOrder(stationUid.Value, targetAccount, data, orderDatabase))
+        {
+            PlayDenySound(ent);
+            return;
+        }
+
+        // Log order addition
+        _adminLogger.Add(
+            LogType.Action,
+            LogImpact.Low,
+            $"{ToPrettyString(player):user} added order [orderId:{data.OrderId}, quantity:{data.OrderQuantity}, product:{data.Product}, requester:{data.Requester}, reason:{data.Reason}]"
+        );
+    }
 
     [SubscribeLocalEvent]
     private void OnApproveOrderMessage(Entity<CargoOrderConsoleComponent> ent, ref CargoConsoleApproveOrderMessage args)
@@ -283,77 +284,82 @@ public sealed partial class CargoSystem
         UpdateOrders(station.Value);
     }
 
-    private EntityUid? TryFulfillOrder(
-        Entity<StationDataComponent> stationData,
+    /// <summary>
+    /// Tries to fulfill the next outstanding order.
+    /// </summary>
+    [PublicAPI]
+    private bool FulfillNextOrder(
+        StationCargoOrderDatabaseComponent orderDB,
         ProtoId<CargoAccountPrototype> account,
-        CargoOrderData order,
-        StationCargoOrderDatabaseComponent orderDatabase
+        EntityCoordinates spawn,
+        string? paperProto
     )
     {
-        // No slots at the trade station
-        _listEnts.Clear();
-        GetTradeStations(stationData, ref _listEnts);
-        EntityUid? tradeDestination = null;
+        if (!PopFrontOrder(orderDB, account, out var order))
+            return false;
 
-        // Try to fulfill from any station where possible, if the pad is not occupied.
-        foreach (var trade in _listEnts)
-        {
-            var tradePads = GetCargoPallets(trade, BuySellType.Buy);
-            _random.Shuffle(tradePads);
-
-            var freePads = GetFreeCargoPallets(trade, tradePads);
-            if (freePads.Count < order.OrderQuantity) //check if the station has enough free pallets
-                continue;
-
-            foreach (var pad in freePads)
-            {
-                var coordinates = new EntityCoordinates(trade, pad.Transform.LocalPosition);
-
-                if (!FulfillOrder(order, account, coordinates, orderDatabase.PrinterOutput))
-                    continue;
-
-                tradeDestination = trade;
-                order.NumDispatched++;
-                if (order.OrderQuantity <= order.NumDispatched) //Spawn a crate on free pellets until the order is fulfilled.
-                    break;
-            }
-
-            if (tradeDestination != null)
-                break;
-        }
-
-        return tradeDestination;
+        return FulfillOrder(order, account, spawn, paperProto);
     }
 
-    private void GetTradeStations(StationDataComponent data, ref List<EntityUid> ents)
+    private void OnInteractUsingSlip(
+        Entity<CargoOrderConsoleComponent> ent,
+        ref InteractUsingEvent args,
+        CargoSlipComponent slip
+    )
     {
-        foreach (var gridUid in data.Grids)
-        {
-            if (!_tradeStationQuery.HasComponent(gridUid))
-                continue;
+        if (slip.OrderQuantity <= 0)
+            return;
 
-            ents.Add(gridUid);
+        var stationUid = _station.GetOwningStation(ent);
+
+        if (!TryGetOrderDatabase(stationUid, out var orderDatabase))
+            return;
+
+        if (!ProtoMan.TryIndex(slip.Product, out var product))
+        {
+            Log.Error($"Tried to add invalid cargo product {slip.Product} as order!");
+            return;
         }
+
+        if (!ent.Comp.AllowedGroups.Contains(product.Group))
+            return;
+
+        var orderId = GenerateOrderId(orderDatabase);
+        var data = new CargoOrderData(orderId, product, slip.OrderQuantity, slip.Requester, slip.Reason, slip.Account);
+
+        if (!TryAddOrder(stationUid.Value, ent.Comp.Account, data, orderDatabase))
+        {
+            PlayDenySound(ent);
+            return;
+        }
+
+        // Log order addition
+        _audio.PlayPvs(ent.Comp.ScanSound, ent);
+        _adminLogger.Add(
+            LogType.Action,
+            LogImpact.Low,
+            $"{ToPrettyString(args.User):user} inserted order slip [orderId:{data.OrderId}, quantity:{data.OrderQuantity}, product:{data.Product}, requester:{data.Requester}, reason:{data.Reason}]"
+        );
+        QueueDel(args.Used);
+        args.Handled = true;
     }
 
-    [SubscribeLocalEvent]
-    private void OnRemoveOrderMessage(Entity<CargoOrderConsoleComponent> ent, ref CargoConsoleRemoveOrderMessage args)
+    private void OnInteractUsingCash(Entity<CargoOrderConsoleComponent> ent, ref InteractUsingEvent args)
     {
-        var station = _station.GetOwningStation(ent.Owner);
+        var price = _pricing.GetPrice(args.Used);
 
-        if (ent.Comp.Mode == CargoOrderConsoleMode.PrintSlip)
+        if (price == 0)
             return;
 
-        if (!TryGetOrderDatabase(station, out var orderDatabase))
+        var stationUid = _station.GetOwningStation(args.Used);
+
+        if (!TryComp(stationUid, out StationBankAccountComponent? bank))
             return;
 
-        if (!TryComp<StationBankAccountComponent>(station, out var bank))
-            return;
-
-        var targetAccount =
-            ent.Comp.Mode == CargoOrderConsoleMode.SendToPrimary ? bank.PrimaryAccount : ent.Comp.Account;
-
-        RemoveOrder(station.Value, targetAccount, args.OrderId, orderDatabase);
+        _audio.PlayPvs(ApproveSound, ent.Owner);
+        UpdateBankAccount((stationUid.Value, bank), (int)price, ent.Comp.Account);
+        QueueDel(args.Used);
+        args.Handled = true;
     }
 
     private void OnAddOrderMessageSlipPrinter(
@@ -397,180 +403,6 @@ public sealed partial class CargoSystem
         slip.Account = ent.Comp.Account;
     }
 
-    [SubscribeLocalEvent]
-    private void OnAddOrderMessage(Entity<CargoOrderConsoleComponent> ent, ref CargoConsoleAddOrderMessage args)
-    {
-        if (args.Actor is not { Valid: true } player)
-            return;
-
-        if (args.Amount <= 0)
-            return;
-
-        var stationUid = _station.GetOwningStation(ent.Owner);
-
-        if (!TryGetOrderDatabase(stationUid, out var orderDatabase))
-            return;
-
-        if (!TryComp<StationBankAccountComponent>(stationUid, out var bank))
-            return;
-
-        if (!ProtoMan.TryIndex<CargoProductPrototype>(args.CargoProductId, out var product))
-        {
-            Log.Error($"Tried to add invalid cargo product {args.CargoProductId} as order!");
-            return;
-        }
-
-        if (!GetAvailableProducts(ent).Contains(args.CargoProductId))
-            return;
-
-        if (ent.Comp.Mode == CargoOrderConsoleMode.PrintSlip)
-        {
-            OnAddOrderMessageSlipPrinter(ent, args, product);
-            return;
-        }
-
-        var targetAccount =
-            ent.Comp.Mode == CargoOrderConsoleMode.SendToPrimary ? bank.PrimaryAccount : ent.Comp.Account;
-
-        var data = GetOrderData(args, product, GenerateOrderId(orderDatabase), ent.Comp.Account);
-
-        if (!TryAddOrder(stationUid.Value, targetAccount, data, orderDatabase))
-        {
-            PlayDenySound(ent);
-            return;
-        }
-
-        // Log order addition
-        _adminLogger.Add(
-            LogType.Action,
-            LogImpact.Low,
-            $"{ToPrettyString(player):user} added order [orderId:{data.OrderId}, quantity:{data.OrderQuantity}, product:{data.Product}, requester:{data.Requester}, reason:{data.Reason}]"
-        );
-    }
-
-    [SubscribeLocalEvent]
-    private void OnOrderUIOpened(Entity<CargoOrderConsoleComponent> ent, ref BoundUIOpenedEvent args)
-    {
-        var station = _station.GetOwningStation(ent.Owner);
-        UpdateOrderState(ent.Owner, station);
-    }
-
-    #endregion
-
-    private void UpdateOrderState(EntityUid consoleUid, EntityUid? station)
-    {
-        if (!TryComp<CargoOrderConsoleComponent>(consoleUid, out var console))
-            return;
-
-        if (!TryComp<StationCargoOrderDatabaseComponent>(station, out var orderDatabase))
-            return;
-
-        if (!_uiSystem.HasUi(consoleUid, CargoConsoleUiKey.Orders))
-            return;
-
-        _uiSystem.SetUiState(consoleUid,
-            CargoConsoleUiKey.Orders,
-            new CargoConsoleInterfaceState(
-            MetaData(station.Value).EntityName,
-            GetOutstandingOrderCount((station!.Value, orderDatabase), console.Account),
-            orderDatabase.Capacity,
-            GetNetEntity(station.Value),
-            RelevantOrders((station!.Value, orderDatabase), (consoleUid, console)),
-            GetAvailableProducts((consoleUid, console))
-        ));
-    }
-
-    /// <summary>
-    /// Gets orders relevant to this account, i.e. orders on the account directly or orders on behalf of the account in the primary account.
-    /// </summary>
-    private List<CargoOrderData> RelevantOrders(
-        Entity<StationCargoOrderDatabaseComponent> station,
-        Entity<CargoOrderConsoleComponent> console
-    )
-    {
-        if (!TryComp<StationBankAccountComponent>(station, out var bank))
-            return [];
-
-        var ourOrders = station.Comp.Orders[console.Comp.Account];
-
-        if (console.Comp.Account == bank.PrimaryAccount)
-            return ourOrders;
-
-        var otherOrders = station
-            .Comp.Orders[bank.PrimaryAccount]
-            .Where(order => order.Account == console.Comp.Account);
-
-        return ourOrders.Concat(otherOrders).ToList();
-    }
-
-    private void PlayDenySound(Entity<CargoOrderConsoleComponent> ent)
-    {
-        if (_timing.CurTime >= ent.Comp.NextDenySoundTime)
-        {
-            ent.Comp.NextDenySoundTime = _timing.CurTime + ent.Comp.DenySoundDelay;
-            _audio.PlayPvs(_audio.ResolveSound(ent.Comp.ErrorSound), ent.Owner);
-        }
-    }
-
-    private static CargoOrderData GetOrderData(
-        CargoConsoleAddOrderMessage args,
-        CargoProductPrototype cargoProduct,
-        int id,
-        ProtoId<CargoAccountPrototype> account
-    )
-    {
-        return new CargoOrderData(id, cargoProduct, args.Amount, args.Requester, args.Reason, account);
-    }
-
-    public int GetOutstandingOrderCount(
-        Entity<StationCargoOrderDatabaseComponent> station,
-        ProtoId<CargoAccountPrototype> account
-    )
-    {
-        var amount = 0;
-
-        if (!TryComp<StationBankAccountComponent>(station, out var bank))
-            return amount;
-
-        foreach (var order in station.Comp.Orders[account])
-        {
-            if (!order.Approved)
-                continue;
-            amount += order.OrderQuantity - order.NumDispatched;
-        }
-
-        if (account == bank.PrimaryAccount)
-            return amount;
-
-        foreach (var order in station.Comp.Orders[bank.PrimaryAccount])
-        {
-            if (order.Account != account || !order.Approved)
-                continue;
-            amount += order.OrderQuantity - order.NumDispatched;
-        }
-
-        return amount;
-    }
-
-    /// <summary>
-    /// Updates all of the cargo-related consoles for a particular station.
-    /// This should be called whenever orders change.
-    /// </summary>
-    private void UpdateOrders(EntityUid dbUid)
-    {
-        // Order added so all consoles need updating.
-        var orderQuery = AllEntityQuery<CargoOrderConsoleComponent>();
-
-        while (orderQuery.MoveNext(out var uid, out var _))
-        {
-            var station = _station.GetOwningStation(uid);
-            if (station != dbUid)
-                continue;
-
-            UpdateOrderState(uid, station);
-        }
-    }
-
     public bool AddAndApproveOrder(
         EntityUid dbUid,
         CargoProductPrototype product,
@@ -603,87 +435,47 @@ public sealed partial class CargoSystem
             && TryFulfillOrder(stationData, account, order, component).HasValue;
     }
 
-    private bool TryAddOrder(
-        EntityUid dbUid,
+
+    private EntityUid? TryFulfillOrder(
+        Entity<StationDataComponent> stationData,
         ProtoId<CargoAccountPrototype> account,
-        CargoOrderData data,
-        StationCargoOrderDatabaseComponent component
+        CargoOrderData order,
+        StationCargoOrderDatabaseComponent orderDatabase
     )
     {
-        component.Orders[account].Add(data);
-        UpdateOrders(dbUid);
-        return true;
-    }
+        // No slots at the trade station
+        _listEnts.Clear();
+        GetTradeStations(stationData, ref _listEnts);
+        EntityUid? tradeDestination = null;
 
-    private static int GenerateOrderId(StationCargoOrderDatabaseComponent orderDB)
-    {
-        // We need an arbitrary unique ID to identify orders, since they may
-        // want to be cancelled later.
-        return ++orderDB.NumOrdersCreated;
-    }
-
-    public void RemoveOrder(
-        EntityUid dbUid,
-        ProtoId<CargoAccountPrototype> account,
-        int index,
-        StationCargoOrderDatabaseComponent orderDB
-    )
-    {
-        var sequenceIdx = orderDB.Orders[account].FindIndex(order => order.OrderId == index);
-        if (sequenceIdx != -1)
+        // Try to fulfill from any station where possible, if the pad is not occupied.
+        foreach (var trade in _listEnts)
         {
-            orderDB.Orders[account].RemoveAt(sequenceIdx);
-        }
-        UpdateOrders(dbUid);
-    }
+            var tradePads = GetCargoPallets(trade, BuySellType.Buy);
+            _random.Shuffle(tradePads);
 
-    public void ClearOrders(StationCargoOrderDatabaseComponent component)
-    {
-        if (component.Orders.Count == 0)
-            return;
+            var freePads = GetFreeCargoPallets(trade, tradePads);
+            if (freePads.Count < order.OrderQuantity) //check if the station has enough free pallets
+                continue;
 
-        component.Orders.Clear();
-    }
+            foreach (var pad in freePads)
+            {
+                var coordinates = new EntityCoordinates(trade, pad.Transform.LocalPosition);
 
-    private static bool PopFrontOrder(
-        StationCargoOrderDatabaseComponent orderDB,
-        ProtoId<CargoAccountPrototype> account,
-        [NotNullWhen(true)] out CargoOrderData? orderOut
-    )
-    {
-        var orderIdx = orderDB.Orders[account].FindIndex(order => order.Approved);
-        if (orderIdx == -1)
-        {
-            orderOut = null;
-            return false;
+                if (!FulfillOrder(order, account, coordinates, orderDatabase.PrinterOutput))
+                    continue;
+
+                tradeDestination = trade;
+                order.NumDispatched++;
+                if (order.OrderQuantity <= order.NumDispatched) //Spawn a crate on free pellets until the order is fulfilled.
+                    break;
+            }
+
+            if (tradeDestination != null)
+                break;
         }
 
-        orderOut = orderDB.Orders[account][orderIdx];
-        orderOut.NumDispatched++;
-
-        if (orderOut.NumDispatched >= orderOut.OrderQuantity)
-        {
-            // Order is complete. Remove from the queue.
-            orderDB.Orders[account].RemoveAt(orderIdx);
-        }
-        return true;
-    }
-
-    /// <summary>
-    /// Tries to fulfill the next outstanding order.
-    /// </summary>
-    [PublicAPI]
-    private bool FulfillNextOrder(
-        StationCargoOrderDatabaseComponent orderDB,
-        ProtoId<CargoAccountPrototype> account,
-        EntityCoordinates spawn,
-        string? paperProto
-    )
-    {
-        if (!PopFrontOrder(orderDB, account, out var order))
-            return false;
-
-        return FulfillOrder(order, account, spawn, paperProto);
+        return tradeDestination;
     }
 
     /// <summary>
@@ -772,6 +564,210 @@ public sealed partial class CargoSystem
         return true;
     }
 
+    private static bool PopFrontOrder(
+        StationCargoOrderDatabaseComponent orderDB,
+        ProtoId<CargoAccountPrototype> account,
+        [NotNullWhen(true)] out CargoOrderData? orderOut
+    )
+    {
+        var orderIdx = orderDB.Orders[account].FindIndex(order => order.Approved);
+        if (orderIdx == -1)
+        {
+            orderOut = null;
+            return false;
+        }
+
+        orderOut = orderDB.Orders[account][orderIdx];
+        orderOut.NumDispatched++;
+
+        if (orderOut.NumDispatched >= orderOut.OrderQuantity)
+        {
+            // Order is complete. Remove from the queue.
+            orderDB.Orders[account].RemoveAt(orderIdx);
+        }
+        return true;
+    }
+
+    private bool TryAddOrder(
+        EntityUid dbUid,
+        ProtoId<CargoAccountPrototype> account,
+        CargoOrderData data,
+        StationCargoOrderDatabaseComponent component
+    )
+    {
+        component.Orders[account].Add(data);
+        UpdateOrders(dbUid);
+        return true;
+    }
+
+    private static int GenerateOrderId(StationCargoOrderDatabaseComponent orderDB)
+    {
+        // We need an arbitrary unique ID to identify orders, since they may
+        // want to be cancelled later.
+        return ++orderDB.NumOrdersCreated;
+    }
+
+    public void RemoveOrder(
+        EntityUid dbUid,
+        ProtoId<CargoAccountPrototype> account,
+        int index,
+        StationCargoOrderDatabaseComponent orderDB
+    )
+    {
+        var sequenceIdx = orderDB.Orders[account].FindIndex(order => order.OrderId == index);
+        if (sequenceIdx != -1)
+        {
+            orderDB.Orders[account].RemoveAt(sequenceIdx);
+        }
+        UpdateOrders(dbUid);
+    }
+
+    public void ClearOrders(StationCargoOrderDatabaseComponent component)
+    {
+        if (component.Orders.Count == 0)
+            return;
+
+        component.Orders.Clear();
+    }
+
+    private void UpdateConsole()
+    {
+        var stationQuery = EntityQueryEnumerator<StationBankAccountComponent>();
+        while (stationQuery.MoveNext(out var uid, out var bank))
+        {
+            if (Timing.CurTime < bank.NextIncomeTime)
+                continue;
+            bank.NextIncomeTime += bank.IncomeDelay;
+
+            var balanceToAdd = (int)Math.Round(bank.IncreasePerSecond * bank.IncomeDelay.TotalSeconds);
+            UpdateBankAccount((uid, bank), balanceToAdd, bank.RevenueDistribution);
+        }
+    }
+
+    /// <summary>
+    /// Updates all of the cargo-related consoles for a particular station.
+    /// This should be called whenever orders change.
+    /// </summary>
+    private void UpdateOrders(EntityUid dbUid)
+    {
+        // Order added so all consoles need updating.
+        var orderQuery = AllEntityQuery<CargoOrderConsoleComponent>();
+
+        while (orderQuery.MoveNext(out var uid, out var _))
+        {
+            var station = _station.GetOwningStation(uid);
+            if (station != dbUid)
+                continue;
+
+            UpdateOrderState(uid, station);
+        }
+    }
+
+    private void UpdateOrderState(EntityUid consoleUid, EntityUid? station)
+    {
+        if (!TryComp<CargoOrderConsoleComponent>(consoleUid, out var console))
+            return;
+
+        if (!TryComp<StationCargoOrderDatabaseComponent>(station, out var orderDatabase))
+            return;
+
+        if (!_uiSystem.HasUi(consoleUid, CargoConsoleUiKey.Orders))
+            return;
+
+        _uiSystem.SetUiState(consoleUid,
+            CargoConsoleUiKey.Orders,
+            new CargoConsoleInterfaceState(
+            MetaData(station.Value).EntityName,
+            GetOutstandingOrderCount((station!.Value, orderDatabase), console.Account),
+            orderDatabase.Capacity,
+            GetNetEntity(station.Value),
+            RelevantOrders((station!.Value, orderDatabase), (consoleUid, console)),
+            GetAvailableProducts((consoleUid, console))
+        ));
+    }
+
+    /// <summary>
+    /// Gets orders relevant to this account, i.e. orders on the account directly or orders on behalf of the account in the primary account.
+    /// </summary>
+    private List<CargoOrderData> RelevantOrders(
+        Entity<StationCargoOrderDatabaseComponent> station,
+        Entity<CargoOrderConsoleComponent> console
+    )
+    {
+        if (!TryComp<StationBankAccountComponent>(station, out var bank))
+            return [];
+
+        var ourOrders = station.Comp.Orders[console.Comp.Account];
+
+        if (console.Comp.Account == bank.PrimaryAccount)
+            return ourOrders;
+
+        var otherOrders = station
+            .Comp.Orders[bank.PrimaryAccount]
+            .Where(order => order.Account == console.Comp.Account);
+
+        return ourOrders.Concat(otherOrders).ToList();
+    }
+
+    private bool TryGetOrderDatabase(
+        [NotNullWhen(true)] EntityUid? stationUid,
+        [MaybeNullWhen(false)] out StationCargoOrderDatabaseComponent dbComp
+    )
+    {
+        return TryComp(stationUid, out dbComp);
+    }
+
+    private void GetTradeStations(StationDataComponent data, ref List<EntityUid> ents)
+    {
+        foreach (var gridUid in data.Grids)
+        {
+            if (!_tradeStationQuery.HasComponent(gridUid))
+                continue;
+
+            ents.Add(gridUid);
+        }
+    }
+
+    private static CargoOrderData GetOrderData(
+        CargoConsoleAddOrderMessage args,
+        CargoProductPrototype cargoProduct,
+        int id,
+        ProtoId<CargoAccountPrototype> account
+    )
+    {
+        return new CargoOrderData(id, cargoProduct, args.Amount, args.Requester, args.Reason, account);
+    }
+
+    public int GetOutstandingOrderCount(
+        Entity<StationCargoOrderDatabaseComponent> station,
+        ProtoId<CargoAccountPrototype> account
+    )
+    {
+        var amount = 0;
+
+        if (!TryComp<StationBankAccountComponent>(station, out var bank))
+            return amount;
+
+        foreach (var order in station.Comp.Orders[account])
+        {
+            if (!order.Approved)
+                continue;
+            amount += order.OrderQuantity - order.NumDispatched;
+        }
+
+        if (account == bank.PrimaryAccount)
+            return amount;
+
+        foreach (var order in station.Comp.Orders[bank.PrimaryAccount])
+        {
+            if (order.Account != account || !order.Approved)
+                continue;
+            amount += order.OrderQuantity - order.NumDispatched;
+        }
+
+        return amount;
+    }
+
     public List<ProtoId<CargoProductPrototype>> GetAvailableProducts(Entity<CargoOrderConsoleComponent> ent)
     {
         if (
@@ -797,15 +793,13 @@ public sealed partial class CargoSystem
         return products;
     }
 
-    #region Station
-
-    private bool TryGetOrderDatabase(
-        [NotNullWhen(true)] EntityUid? stationUid,
-        [MaybeNullWhen(false)] out StationCargoOrderDatabaseComponent dbComp
-    )
+    private void PlayDenySound(Entity<CargoOrderConsoleComponent> ent)
     {
-        return TryComp(stationUid, out dbComp);
+        if (_timing.CurTime >= ent.Comp.NextDenySoundTime)
+        {
+            ent.Comp.NextDenySoundTime = _timing.CurTime + ent.Comp.DenySoundDelay;
+            _audio.PlayPvs(_audio.ResolveSound(ent.Comp.ErrorSound), ent.Owner);
+        }
     }
 
-    #endregion
 }
