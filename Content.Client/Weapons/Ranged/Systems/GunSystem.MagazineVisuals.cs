@@ -9,7 +9,6 @@ namespace Content.Client.Weapons.Ranged.Systems;
 
 public sealed partial class GunSystem
 {
-    [Dependency] private ItemSystem _itemSystem = default!;
 
     private void InitializeMagazineVisuals()
     {
