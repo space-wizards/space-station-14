@@ -108,6 +108,17 @@ public sealed class EntityTableTest : GameTest
                costOverride: 0
          
          - type: entityTable
+           id: EntityTableTestEntRequireAnyAllFail
+           table: !type:EntSelector
+             id: {EntProto1}
+             requireAll: false
+             conditions:
+             - !type:HasBudgetCondition
+               costOverride: 100
+             - !type:HasBudgetCondition
+               costOverride: 200
+         
+         - type: entityTable
            id: EntityTableTestDeepComposition
            table: !type:AllSelector
              children:
@@ -285,6 +296,17 @@ public sealed class EntityTableTest : GameTest
         // RequireAll = false, one passes => spawns.
         var requireAnyResult = Run(Table("EntityTableTestEntRequireAny"), ctx: new EntityTableContext(new() { ["Budget"] = 50f }));
         Assert.That(requireAnyResult, Is.EquivalentTo(new[] { new EntProtoId(EntProto1) }));
+    }
+
+    [Test]
+    [RunOnSide(Side.Server)]
+    public void RequireAny_AllConditionsFail_ReturnsEmpty()
+    {
+        // RequireAll = false but every condition fails => no spawns.
+        // Regression test: previously the OR-ing was seeded with `true`, so
+        // RequireAll = false always passed regardless of the actual results.
+        var result = Run(Table("EntityTableTestEntRequireAnyAllFail"), ctx: new EntityTableContext(new() { ["Budget"] = 50f }));
+        Assert.That(result, Is.Empty);
     }
 
     [Test]

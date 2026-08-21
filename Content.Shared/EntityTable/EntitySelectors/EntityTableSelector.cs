@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.EntityTable.Conditions;
 using Content.Shared.EntityTable.ValueSelector;
 using JetBrains.Annotations;
@@ -75,10 +76,12 @@ public abstract partial class EntityTableSelector
     /// </summary>
     public virtual bool CheckConditions(IEntityManager entMan, IPrototypeManager proto, EntityTableContext ctx)
     {
-        var combined = GetConditions(ctx);
+        // No conditions to evaluate (own or injected into the context) => always valid.
+        if (!TryGetConditions(ctx, out var conditions))
+            return true;
 
-        var success = true;
-        foreach (var condition in combined)
+        var success = false;
+        foreach (var condition in conditions)
         {
             var res = condition.Evaluate(this, entMan, proto, ctx);
 
@@ -136,21 +139,28 @@ public abstract partial class EntityTableSelector
         EntityTableContext ctx);
 
     /// <summary>
-    /// Gets list of conditions for this selector, respecting conditions provided by context.
+    /// Gets the effective conditions for this selector, respecting conditions injected into the context.
+    /// Returns false when there are no conditions to evaluate.
     /// </summary>
-    private IEnumerable<EntityTableCondition> GetConditions(EntityTableContext ctx)
+    private bool TryGetConditions(EntityTableContext ctx, [NotNullWhen(true)] out List<EntityTableCondition>? conditions)
     {
-        foreach (var condition in Conditions)
+        var hasAdditionalConditions = ctx.TryGetData<List<EntityTableCondition>>(AdditionalConditionsKey, out var additionalConditions);
+
+        if (Conditions.Count == 0 && !hasAdditionalConditions)
         {
-            yield return condition;
+            conditions = null;
+            return false;
         }
 
-        if (!ctx.TryGetData<List<EntityTableCondition>>(AdditionalConditionsKey, out var additionalConditions))
-            yield break;
-
-        foreach (var additionalCondition in additionalConditions)
+        if (!hasAdditionalConditions)
         {
-            yield return additionalCondition;
+            conditions = Conditions;
+            return true;
         }
+
+        conditions = new List<EntityTableCondition>(Conditions.Count + additionalConditions!.Count);
+        conditions.AddRange(Conditions);
+        conditions.AddRange(additionalConditions);
+        return true;
     }
 }
