@@ -217,7 +217,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 80
+        damage: 30
       behaviors:
       - *SoundWoodDestroy
       - !type:SpawnEntitiesBehavior
@@ -260,3 +260,6 @@
       - !type:SpawnEntitiesBehavior
         spawn:
           MaterialCardboard: *BaseDoorSpawn
+  - type: IconSmooth
+    key: cards
+    mode: NoSprite

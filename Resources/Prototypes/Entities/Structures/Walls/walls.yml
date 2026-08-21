@@ -156,7 +156,6 @@
             volume: -4
       - &ChangeNodeGirder !type:ChangeConstructionNodeBehavior
         node: girder
-      - *SoundMetalSlam
   - type: IconSmooth
     key: walls
     base: brass
@@ -177,7 +176,6 @@
   - type: Construction
     graph: Girder
     node: meatWall
-  - type: Damageable
   - type: Injurable
     damageContainer: StructuralBiological
   - type: Destructible
@@ -437,9 +435,9 @@
   suffix: rusted
   components:
   - type: Sprite
-    sprite: Structures/Walls/solid_rust.rsi
+    sprite: Structures/Walls/solid-rust.rsi
   - type: Icon
-    sprite: Structures/Walls/solid_rust.rsi
+    sprite: Structures/Walls/solid-rust.rsi
     state: rgeneric
   - type: Construction
     graph: Girder
@@ -722,9 +720,9 @@
   suffix: rusted
   components:
   - type: Sprite
-    sprite: Structures/Walls/solid_rust.rsi
+    sprite: Structures/Walls/solid-rust.rsi
   - type: Icon
-    sprite: Structures/Walls/solid_rust.rsi
+    sprite: Structures/Walls/solid-rust.rsi
     state: full
   - type: Construction
     graph: Girder

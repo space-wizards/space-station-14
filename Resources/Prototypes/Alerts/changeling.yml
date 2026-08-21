@@ -11,3 +11,33 @@
   description: changeling-flesh-clothing-alert-desc
   minSeverity: 0
   maxSeverity: 1
+
+- type: alert
+  id: ChemicalsChangeling
+  category: Chemicals
+  icons:
+  - sprite: /Textures/Interface/Alerts/chemicals_counter.rsi
+    state: chemicals
+  alertViewEntity: AlertChemicalsSpriteView
+  name: alerts-changeling-chemicals-name
+  description: alerts-changeling-chemicals-desc
+
+- type: entity
+  id: AlertChemicalsSpriteView
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: GenericCounterAlert
+    centerGlyph: false
+    hideLeadingZeroes: false
+  - type: SatiationCounterAlert
+    satiationType: Chemicals
+  - type: Sprite
+    sprite: /Textures/Interface/Alerts/chemicals_counter.rsi
+    layers:
+    - map: [ "enum.AlertVisualLayers.Base" ]
+    - map: [ "1" ]
+      offset: 0.425, 0.25
+    - map: [ "10" ]
+      offset: 0.3, 0.25
+    - map: [ "100" ]
+      offset: 0.175, 0.25

@@ -57,7 +57,7 @@
 - type: satiation
   id: DionaThirst
   parent: NormalSatiationThirst
-  baseChangeRate: -0.0083
+  baseChangeRate: -0.2
 
 - type: entity
   abstract: true

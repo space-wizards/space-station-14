@@ -248,12 +248,14 @@ public sealed partial class ItemSlotsSystem : EntitySystem
             }
         }
 
+        ent.Comp.AllowSmartEquip = state.AllowSmartEquip;
+
         UpdateAppearance(ent);
     }
 
     [SubscribeLocalEvent]
     private void GetItemSlotsState(Entity<ItemSlotsComponent> ent, ref ComponentGetState args)
     {
-        args.State = new ItemSlotsComponentState(ent.Comp.Slots);
+        args.State = new ItemSlotsComponentState(ent.Comp.Slots, ent.Comp.AllowSmartEquip);
     }
 }
